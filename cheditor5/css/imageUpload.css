@@ -1,0 +1,99 @@
+#uploadWindow {
+    position:absolute;
+    display: none;
+	background-color: #ebe9ed;
+}
+
+.clear { clear: both; }
+
+#container {
+	padding: 8px;
+    font-family: gulim,tahoma,helvetica;
+}
+
+#imageListWrapper {
+	background-color: #fff;
+	border:1px #c5c5cc solid;
+	position: absolute;
+}
+#imageInfoBox {
+	padding: 7px;
+	background-color: #fff;
+	border:1px #c5c5cc solid;
+	float: right;
+}
+.button {
+	width: 77px;
+	height: 22px;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.imageBox, .imageBoxHighlighted {
+	width: 124px;
+	height: 94px;
+	margin: 3px;
+	float:left;
+}
+.imageBox_theImage,.imageBox_theImage_over {
+	width:100%;
+	height:100%;
+}
+.imageBox .imageBox_theImage{
+	border: 1px solid #ddd;
+	background-image: url('../icons/dot.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.imageBox .imageBox_theImage_over {
+	border: 1px solid #000;
+	background-image: url('../icons/dot.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.imageBoxHighlighted .imageBox_theImage {
+	border: 1px solid #ff6600;
+}
+.imageBoxHighlighted .imageBox_theImage_over {
+	border: 1px solid #ff6600;
+	background-image: url('../icons/dot.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+#removeImage {
+	display: none;
+	width: 28px;
+	height: 16px;
+	position:absolute;
+	cursor: pointer;
+	z-index: 100;
+}
+
+#insertionMarker {
+	height:102px;
+	width:6px;
+	position:absolute;
+	display:none;
+}
+	
+#insertionMarkerLine {
+	width:6px;
+	height:100px;
+}
+#insertionMarker img {
+	float:left;
+}
+	
+#dragDropContent{
+	position:absolute;
+	z-index:10;
+	display:none;
+}
+
+body {
+	background-color: #ebe9ed;
+	margin: 0px;
+	border: none;
+	padding: 0px;
+	overflow: hidden;
+}
