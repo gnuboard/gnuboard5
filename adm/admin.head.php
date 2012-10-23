@@ -160,24 +160,17 @@ function layer_view(link_id, menu_id, opt, x, y)
 </script>
 
 <link rel="stylesheet" href="<?=$g4['admin_path']?>/admin.style.css" type="text/css">
-<style>
-.bg_menu1 { height:22px; 
-            padding-left:15px; 
-            padding-right:15px; } 
-.bg_line1 { height:1px; background-color:#EFCA95; } 
 
-.bg_menu2 { height:22px; 
-            padding-left:25px; } 
-.bg_line2 { background-image:url('<?=$g4['admin_path']?>/img/dot.gif'); height:3px; } 
-.dot {color:#D6D0C8;border-style:dotted;}
+<body>
 
-#csshelp1 { border:0px; background:#FFFFFF; padding:6px; }
-#csshelp2 { border:2px solid #BDBEC6; padding:0px; }
-#csshelp3 { background:#F9F9F9; padding:6px; width:200px; color:#222222; line-height:120%; text-align:left; }
-</style>
 
-<body leftmargin=0 topmargin=0>
-<a name='gnuboard4_admin_head'></a>
+<header>
+<div></div>
+</header>
+
+
+
+
 <table width=1004 cellpadding=0 cellspacing=0 border=0>
 <colgroup width=180>
 <colgroup>
