@@ -22,7 +22,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     echo "<p>\n";
 }
 ?>
-같이 배워봐요.
 </td></tr></table>
 <!-- 메인화면 최신글 끝 -->
 
