@@ -58,29 +58,31 @@ $result = sql_query($sql);
 $colspan = 12;
 ?>
 
-<?=subtitle("신규가입회원 {$new_member_rows}건", "./member_list.php");?>
+<section id='idx_newbies'>
+<h2><a href='<?=$g4['admin_path']?>/member_list.php'><span></span>신규가입회원 <?=$new_member_rows?>건</strong></a></h2>
 
+<p>
 <?//=$listall?> (총회원수 : <?=number_format($total_count)?>, 차단 : <?=number_format($intercept_count)?>, 탈퇴 : <?=number_format($leave_count)?>)
+</p>
 
 <table>
-<input type='hidden' name='sst'  value='<?=$sst?>'>
-<input type='hidden' name='sod'  value='<?=$sod?>'>
-<input type='hidden' name='sfl'  value='<?=$sfl?>'>
-<input type='hidden' name='stx'  value='<?=$stx?>'>
-<input type='hidden' name='page' value='<?=$page?>'>
+<caption>신규가입회원 목록</caption>
+<thead>
 <tr>
-    <td>회원아이디</td>
-    <td>이름</td>
-    <td>별명</td>
-    <td>권한</td>
-    <td>포인트</td>
-    <td>최종접속</td>
-    <td>수신</td>
-    <td>공개</td>
-    <td>인증</td>
-    <td>차단</td>
-    <td>그룹</td>
+    <th scope='col'>회원아이디</th>
+    <th scope='col'>이름</th>
+    <th scope='col'>별명</th>
+    <th scope='col'>권한</th>
+    <th scope='col'>포인트</th>
+    <th scope='col'>최종접속</th>
+    <th scope='col'>수신</th>
+    <th scope='col'>공개</th>
+    <th scope='col'>인증</th>
+    <th scope='col'>차단</th>
+    <th scope='col'>그룹</th>
 </tr>
+</thead>
+<tbody>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
@@ -98,8 +100,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     } 
     else 
     {
-        $s_mod = "<a href=\"./member_form.php?$qstr&w=u&mb_id=$row[mb_id]\"><img src='img/icon_modify.gif' border=0 title='수정'></a>";
-        $s_del = "<a href=\"javascript:del('./member_delete.php?$qstr&w=d&mb_id=$row[mb_id]&url=$_SERVER[PHP_SELF]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
+        $s_mod = "<a href=\"./member_form.php?$qstr&amp;w=u&amp;mb_id=$row[mb_id]\">수정</a>";
+        $s_del = "<a href=\"javascript:del('./member_delete.php?$qstr&amp;w=d&amp;mb_id=$row[mb_id]&amp;url=$_SERVER[PHP_SELF]');\">삭제</a>";
     }
     $s_grp = "<a href='./boardgroupmember_form.php?mb_id=$row[mb_id]'><img src='img/icon_group.gif' border=0 title='그룹'></a>";
 
@@ -114,29 +116,28 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     else if ($row['mb_intercept_date'])
         $mb_id = "$mb_id";
 
-    $list = $i%2;
-    echo "
-    <input type='hidden' name='mb_id[$i]' value='$row[mb_id]'>
+?>
     <tr>
-        <td>$mb_id</td>
-        <td>$row[mb_name]</td>
-        <td>$mb_nick</td>
-        <td>$row[mb_level]</td>
-        <td><a href='./point_list.php?sfl=mb_id&stx=$row[mb_id]' class=tt>".number_format($row['mb_point'])."</a>&nbsp;</td>
-        <td>".substr($row['mb_today_login'],2,8)."</td>
-        <td>".($row['mb_mailling']?'&radic;':'&nbsp;')."</td>
-        <td>".($row['mb_open']?'&radic;':'&nbsp;')."</td>
-        <td>".(preg_match('/[1-9]/', $row['mb_email_certify'])?'&radic;':'&nbsp;')."</td>
-        <td>".($row['mb_intercept_date']?'&radic;':'&nbsp;')."</td>
-        <td>$group</td>               
-    </tr>";
-}
-
+        <td><?=$mb_id?></td>
+        <td><?=$row['mb_name']?></td>
+        <td><?=$mb_nick?></td>
+        <td><?=$row[mb_level]?></td>
+        <td><a href='./point_list.php?sfl=mb_id&amp;stx=<?=$row[mb_id]?>'><?=number_format($row['mb_point'])?></td>
+        <td><?=substr($row['mb_today_login'],2,8)?></td>
+        <td><?=$row['mb_mailling']?'예':'아니오';?></td>
+        <td><?=$row['mb_open']?'예':'아니오';?></td>
+        <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
+        <td><?=$row['mb_intercept_date']?'예':'아니오';?></td>
+        <td><?=$group?></td>
+    </tr>
+<?
+    }
 if ($i == 0)
     echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
-echo "</table>";
 ?>
-
+</tbody>
+</table>
+</section>
 
 
 <?
@@ -160,21 +161,21 @@ $total_count = $row['cnt'];
 $colspan = 5;
 ?>
 
-<?=subtitle("최근게시물 {$new_write_rows}건", "$g4[bbs_path]/new.php");?>
+<section id='idx_latest'>
+<h2><span></span><a href='<?=$g4['bbs_path']?>/new.php'>최근게시물 <strong><?=$new_write_rows?>건</strong></a></h2>
 
 <table>
-<input type='hidden' name='sst'  value='<?=$sst?>'>
-<input type='hidden' name='sod'  value='<?=$sod?>'>
-<input type='hidden' name='sfl'  value='<?=$sfl?>'>
-<input type='hidden' name='stx'  value='<?=$stx?>'>
-<input type='hidden' name='page' value='<?=$page?>'>
+<caption>최근게시물 목록</caption>
+<thead>
 <tr>
-    <td>그룹</td>
-    <td>게시판</td>
-    <td>제목</td>
-    <td>이름</td>
-    <td>일시</td>
+    <th scope='col'>그룹</th>
+    <th scope='col'>게시판</th>
+    <th scope='col'>제목</th>
+    <th scope='col'>이름</th>
+    <th scope='col'>일시</th>
 </tr>
+</thead>
+<tbody>
 <?
 $sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id
           $sql_common
@@ -217,23 +218,24 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         else
             $datetime2 = substr($datetime2,5,5);
     }
-
-    $list = $i%2;
-    echo "
-    <tr>
-        <td><a href='$g4[bbs_path]/new.php?gr_id=$row[gr_id]'>".cut_str($row['gr_subject'],10)."</a></td>
-        <td><a href='$g4[bbs_path]/board.php?bo_table=$row[bo_table]'>".cut_str($row['bo_subject'],20)."</a></td>
-        <td>&nbsp;<a href='$g4[bbs_path]/board.php?bo_table=$row[bo_table]&wr_id=$row2[wr_id]{$comment_link}'>{$comment}".conv_subject($row2['wr_subject'], 100)."</a></td>
-        <td>$name</td>
-        <td>$datetime</td>
-    </tr> ";  
-}
-
-if ($i == 0)
-    echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
-echo "</table>";
 ?>
 
+    <tr>
+        <td><a href='<?=$g4['bbs_path']?>/new.php?gr_id=<?=$row[gr_id]?>'><?=cut_str($row['gr_subject'],10)?></a></td>
+        <td><a href='<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>'><?=cut_str($row['bo_subject'],20)?></a></td>
+        <td><a href='<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2[wr_id]?><?=$comment_link?>'><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
+        <td><?=$name?></td>
+        <td><?=$datetime?></td>
+    </tr>
+
+<?
+}
+if ($i == 0)
+    echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
+?>
+</tbody>
+</table>
+</section>
 
 
 <?
@@ -258,38 +260,31 @@ $result = sql_query($sql);
 $colspan = 7;
 ?>
 
-<br><br>
-<?=subtitle("최근포인트 {$new_point_rows}건", "./point_list.php");?>
+<section id='idx_point'>
+<h2><a href='<?=$g4['admin_path']?>/adm/point_list.php'><span><span>최근포인트 <strong><?=$new_point_rows?>건</strong></a></h2>
 
-<table width=100%>
-<tr>
-    <td width=50% align=left>
-        <?//=$listall?> (건수 : <?=number_format($total_count)?>)
-        <? 
-        //$row2 = sql_fetch(" select sum(po_point) as sum_point from $g4[point_table] ");
-        //echo "&nbsp;(전체 포인트 합계 : " . number_format($row2[sum_point]) . "점)";
-        ?>
-        
-    </td>
-    <td width=50% align=right></td>
-</tr>
-</table>
+<p>
+<?//=$listall?> 건수 : <?=number_format($total_count)?>
+<? 
+//$row2 = sql_fetch(" select sum(po_point) as sum_point from $g4[point_table] ");
+//echo "&nbsp;(전체 포인트 합계 : " . number_format($row2[sum_point]) . "점)";
+?>
+</p>
 
 <table>
-<input type='hidden' name='sst'  value='<?=$sst?>'>
-<input type='hidden' name='sod'  value='<?=$sod?>'>
-<input type='hidden' name='sfl'  value='<?=$sfl?>'>
-<input type='hidden' name='stx'  value='<?=$stx?>'>
-<input type='hidden' name='page' value='<?=$page?>'>
+<caption>최근 포인트 기록</caption>
+<thead>
 <tr>
-    <td>회원아이디</td>
-    <td>이름</td>
-    <td>별명</td>
-    <td>일시</td>
-    <td>포인트 내용</td>
-    <td>포인트</td>
-    <td>포인트합</td>
+    <th scope='col'>회원아이디</th>
+    <th scope='col'>이름</th>
+    <th scope='col'>별명</th>
+    <th scope='col'>일시</th>
+    <th scope='col'>포인트 내용</th>
+    <th scope='col'>포인트</th>
+    <th scope='col'>포인트합</th>
 </tr>
+</thead>
+<tbody>
 <?
 $row2['mb_id'] = '';
 for ($i=0; $row=sql_fetch_array($result); $i++) 
@@ -305,30 +300,28 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $link1 = $link2 = "";
     if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table'])
     {
-        $link1 = "<a href='$g4[bbs_path]/board.php?bo_table=$row[po_rel_table]&wr_id=$row[po_rel_id]' target=_blank>";
+        $link1 = "<a href='".$g4['bbs_path']."/board.php?bo_table=".$row['po_rel_table']."&amp;wr_id=".$row[po_rel_id]."' target='_blank'>";
         $link2 = "</a>";
     }
-
-    $list = $i%2;
-    echo "
-    <input type='hidden' name='po_id[$i]' value='$row[po_id]'>
-    <input type='hidden' name='mb_id[$i]' value='$row[mb_id]'>
+?>
     <tr>
-        <td><a href='./point_list.php?sfl=mb_id&stx=$row[mb_id]'>$row[mb_id]</a></td>
-        <td>$row2[mb_name]</td>
-        <td>$mb_nick</td>
-        <td>$row[po_datetime]</td>
-        <td>&nbsp;{$link1}$row[po_content]{$link2}</td>
-        <td>".number_format($row['po_point'])."&nbsp;</td>
-        <td>".number_format($row2['mb_point'])."&nbsp;</td>
-    </tr> ";
+        <td><a href='./point_list.php?sfl=mb_id&amp;stx=$row[mb_id]'><?=$row['mb_id']?></a></td>
+        <td><?=$row2['mb_name']?></td>
+        <td><?=$mb_nick?></td>
+        <td><?=$row['po_datetime']?></td>
+        <td><?=$link1.$row['po_content'].$link2?></td>
+        <td><?=number_format($row[po_point])?></td>
+        <td><?=number_format($row2[mb_point])?></td>
+    </tr>
+<?
 } 
 
 if ($i == 0)
     echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
-echo "</table>";
 ?>
-
+</tbody>
+</table>
+</section>
 
 <?
 include_once ("./admin.tail.php");

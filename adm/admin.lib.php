@@ -236,16 +236,6 @@ function help($help="", $left=0, $top=0)
     return $str;
 }
 
-function subtitle($title, $more="") 
-{
-    global $g4;
-
-    $s = "<h2><span></span>$title</h2>";
-    if ($more)
-        $s .= "<a href='$more'>더보기</a>";
-    return $s;
-}
-
 // 출력순서
 function order_select($fld, $sel="") 
 {

@@ -19,14 +19,14 @@ function print_menu2($key, $no)
 {
     global $menu, $auth_menu, $is_admin, $auth, $g4;
 
-    $str = "<ul>";
+    $str = "<ul class='gnb_2depth'>";
     for($i=1; $i<count($menu[$key]); $i++)
     {
         if ($is_admin != "super" && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], "r")))
             continue;
 
         // if ($no == 2) $str .= "&nbsp;&nbsp;<img src='{$g4[admin_path]}/img/icon.gif' align=absmiddle> ";
-        $str .= "<li><a href='".$menu[$key][$i][2]."'>".$menu[$key][$i][1]."</a></li>";
+        $str .= "<li id='gnb_".$menu[$key][$i][0]."'><a href='".$menu[$key][$i][2]."'>".$menu[$key][$i][1]."</a></li>";
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
@@ -97,11 +97,18 @@ function textarea_size(fld, size)
 <body>
 
 <header>
-<a href='<?=$g4['admin_path']?>/'>로고제목</a>
-<?=$g4['title']?><?=$member['mb_id']?>님</td>
-<a href='<?=$g4['path']?>/'>홈으로</a><a href='<?=$g4['bbs_path']?>/logout.php'>로그아웃</a>
-<nav>
+<h1><span></span>그누보드 관리자 <?=$g4['title']?></h1>
+<?=$member['mb_id']?>님</td>
+<aside>
 <ul>
+<li id='skip_to_main'><a href='#wrapper'>본문 바로가기</a></li>
+<li><a href='<?=$g4['admin_path']?>/'>관리자메인</a></li>
+<li><a href='<?=$g4['path']?>/'>홈페이지</a></li>
+<li><a href='<?=$g4['bbs_path']?>/logout.php'>로그아웃</a></li>
+</ul>
+</aside>
+<nav>
+<ul id='gnb_parents'>
 <?
 foreach($amenu as $key=>$value)
 {
@@ -113,14 +120,15 @@ foreach($amenu as $key=>$value)
     }
     echo "<li id='gnb_".$menu["menu{$key}"][0][3]."'>";
     echo $href1 . $menu["menu{$key}"][0][1] . $href2;
-    echo "</li>";
     echo print_menu1("menu{$key}", 1);
+    echo "</li>";
 }
 ?>
 </ul>
+</nav>
 
+<div id='current_location'>
 <?
-/*
 $tmp_menu = "";
 if (isset($sub_menu))
     $tmp_menu = substr($sub_menu, 0, 3);
@@ -135,7 +143,9 @@ if (isset($menu["menu{$tmp_menu}"][0][1]))
     else
         echo $menu["menu{$tmp_menu}"][0][1];
 }
-*/
 ?>
-</nav>
+</div>
+
 </header>
+
+<div id='wrapper'>
