@@ -60,45 +60,27 @@ $colspan = 12;
 
 <?=subtitle("신규가입회원 {$new_member_rows}건", "./member_list.php");?>
 
-<table width=100%>
-<tr>
-    <td width=50% align=left><?//=$listall?> (총회원수 : <?=number_format($total_count)?>, <font color=orange>차단 : <?=number_format($intercept_count)?></font>, <font color=crimson>탈퇴 : <?=number_format($leave_count)?></font>)</td>
-    <td width=50% align=right></td>
-</tr>
-</table>
+<?//=$listall?> (총회원수 : <?=number_format($total_count)?>, 차단 : <?=number_format($intercept_count)?>, 탈퇴 : <?=number_format($leave_count)?>)
 
-<table width=100% cellpadding=0 cellspacing=0>
-<input type=hidden name=sst  value='<?=$sst?>'>
-<input type=hidden name=sod  value='<?=$sod?>'>
-<input type=hidden name=sfl  value='<?=$sfl?>'>
-<input type=hidden name=stx  value='<?=$stx?>'>
-<input type=hidden name=page value='<?=$page?>'>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=>
-<colgroup width=40>
-<colgroup width=50>
-<colgroup width=80>
-<colgroup width=40>
-<colgroup width=40>
-<colgroup width=40>
-<colgroup width=40>
-<colgroup width=40>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
+<table>
+<input type='hidden' name='sst'  value='<?=$sst?>'>
+<input type='hidden' name='sod'  value='<?=$sod?>'>
+<input type='hidden' name='sfl'  value='<?=$sfl?>'>
+<input type='hidden' name='stx'  value='<?=$stx?>'>
+<input type='hidden' name='page' value='<?=$page?>'>
+<tr>
     <td>회원아이디</td>
     <td>이름</td>
     <td>별명</td>
     <td>권한</td>
     <td>포인트</td>
     <td>최종접속</td>
-    <td title='메일수신허용여부'>수신</td>
-    <td title='정보공개여부'>공개</td>
-    <td title='이메일인증'>인증</td>
+    <td>수신</td>
+    <td>공개</td>
+    <td>인증</td>
     <td>차단</td>
-    <td title='접근가능한 그룹수'>그룹</td>
+    <td>그룹</td>
 </tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
@@ -128,32 +110,30 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $mb_id = $row['mb_id'];
     if ($row['mb_leave_date'])
-        $mb_id = "<font color=crimson>$mb_id</font>";
+        $mb_id = "$mb_id";
     else if ($row['mb_intercept_date'])
-        $mb_id = "<font color=orange>$mb_id</font>";
+        $mb_id = "$mb_id";
 
     $list = $i%2;
     echo "
-    <input type=hidden name=mb_id[$i] value='$row[mb_id]'>
-    <tr class='list$list col1 ht center'>
-        <td title='$row[mb_id]'><nobr style='display:block; overflow:hidden; width:100px;'>&nbsp;$mb_id</nobr></td>
+    <input type='hidden' name='mb_id[$i]' value='$row[mb_id]'>
+    <tr>
+        <td>$mb_id</td>
         <td>$row[mb_name]</td>
         <td>$mb_nick</td>
         <td>$row[mb_level]</td>
-        <td align=right><a href='./point_list.php?sfl=mb_id&stx=$row[mb_id]' class=tt>".number_format($row['mb_point'])."</a>&nbsp;</td>
+        <td><a href='./point_list.php?sfl=mb_id&stx=$row[mb_id]' class=tt>".number_format($row['mb_point'])."</a>&nbsp;</td>
         <td>".substr($row['mb_today_login'],2,8)."</td>
         <td>".($row['mb_mailling']?'&radic;':'&nbsp;')."</td>
         <td>".($row['mb_open']?'&radic;':'&nbsp;')."</td>
-        <td title='$row[mb_email_certify]'>".(preg_match('/[1-9]/', $row['mb_email_certify'])?'&radic;':'&nbsp;')."</td>
-        <td title='$row[mb_intercept_date]'>".($row['mb_intercept_date']?'&radic;':'&nbsp;')."</td>
+        <td>".(preg_match('/[1-9]/', $row['mb_email_certify'])?'&radic;':'&nbsp;')."</td>
+        <td>".($row['mb_intercept_date']?'&radic;':'&nbsp;')."</td>
         <td>$group</td>               
     </tr>";
 }
 
 if ($i == 0)
-    echo "<tr><td colspan='$colspan' align=center height=100 class=contentbg>자료가 없습니다.</td></tr>";
-
-echo "<tr><td colspan='$colspan' class='line2'></td></tr>";
+    echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
 echo "</table>";
 ?>
 
@@ -180,29 +160,21 @@ $total_count = $row['cnt'];
 $colspan = 5;
 ?>
 
-<br><br>
 <?=subtitle("최근게시물 {$new_write_rows}건", "$g4[bbs_path]/new.php");?>
 
-<table width=100% cellpadding=0 cellspacing=1>
-<input type=hidden name=sst  value='<?=$sst?>'>
-<input type=hidden name=sod  value='<?=$sod?>'>
-<input type=hidden name=sfl  value='<?=$sfl?>'>
-<input type=hidden name=stx  value='<?=$stx?>'>
-<input type=hidden name=page value='<?=$page?>'>
-<colgroup width=100>
-<colgroup width=100>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=80>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
+<table>
+<input type='hidden' name='sst'  value='<?=$sst?>'>
+<input type='hidden' name='sod'  value='<?=$sod?>'>
+<input type='hidden' name='sfl'  value='<?=$sfl?>'>
+<input type='hidden' name='stx'  value='<?=$stx?>'>
+<input type='hidden' name='page' value='<?=$page?>'>
+<tr>
     <td>그룹</td>
     <td>게시판</td>
     <td>제목</td>
     <td>이름</td>
     <td>일시</td>
 </tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 <?
 $sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id
           $sql_common
@@ -248,19 +220,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $list = $i%2;
     echo "
-    <tr class='list$list col1 ht center'>
-        <td class=small><a href='$g4[bbs_path]/new.php?gr_id=$row[gr_id]'>".cut_str($row['gr_subject'],10)."</a></td>
-        <td class=small><a href='$g4[bbs_path]/board.php?bo_table=$row[bo_table]'>".cut_str($row['bo_subject'],20)."</a></td>
-        <td align=left style='word-break:break-all;'>&nbsp;<a href='$g4[bbs_path]/board.php?bo_table=$row[bo_table]&wr_id=$row2[wr_id]{$comment_link}'>{$comment}".conv_subject($row2['wr_subject'], 100)."</a></td>
+    <tr>
+        <td><a href='$g4[bbs_path]/new.php?gr_id=$row[gr_id]'>".cut_str($row['gr_subject'],10)."</a></td>
+        <td><a href='$g4[bbs_path]/board.php?bo_table=$row[bo_table]'>".cut_str($row['bo_subject'],20)."</a></td>
+        <td>&nbsp;<a href='$g4[bbs_path]/board.php?bo_table=$row[bo_table]&wr_id=$row2[wr_id]{$comment_link}'>{$comment}".conv_subject($row2['wr_subject'], 100)."</a></td>
         <td>$name</td>
         <td>$datetime</td>
     </tr> ";  
 }
 
 if ($i == 0)
-    echo "<tr><td colspan='$colspan' align=center height=100 bgcolor=#ffffff>자료가 없습니다.</td></tr>";
-
-echo "<tr><td colspan='$colspan' class='line2'></td></tr>";
+    echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
 echo "</table>";
 ?>
 
@@ -305,21 +275,13 @@ $colspan = 7;
 </tr>
 </table>
 
-<table width=100% cellpadding=0 cellspacing=1>
-<input type=hidden name=sst  value='<?=$sst?>'>
-<input type=hidden name=sod  value='<?=$sod?>'>
-<input type=hidden name=sfl  value='<?=$sfl?>'>
-<input type=hidden name=stx  value='<?=$stx?>'>
-<input type=hidden name=page value='<?=$page?>'>
-<colgroup width=100>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=140>
-<colgroup width=''>
-<colgroup width=50>
-<colgroup width=80>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
+<table>
+<input type='hidden' name='sst'  value='<?=$sst?>'>
+<input type='hidden' name='sod'  value='<?=$sod?>'>
+<input type='hidden' name='sfl'  value='<?=$sfl?>'>
+<input type='hidden' name='stx'  value='<?=$stx?>'>
+<input type='hidden' name='page' value='<?=$page?>'>
+<tr>
     <td>회원아이디</td>
     <td>이름</td>
     <td>별명</td>
@@ -328,7 +290,6 @@ $colspan = 7;
     <td>포인트</td>
     <td>포인트합</td>
 </tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 <?
 $row2['mb_id'] = '';
 for ($i=0; $row=sql_fetch_array($result); $i++) 
@@ -350,26 +311,23 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $list = $i%2;
     echo "
-    <input type=hidden name=po_id[$i] value='$row[po_id]'>
-    <input type=hidden name=mb_id[$i] value='$row[mb_id]'>
-    <tr class='list$list col1 ht center'>
+    <input type='hidden' name='po_id[$i]' value='$row[po_id]'>
+    <input type='hidden' name='mb_id[$i]' value='$row[mb_id]'>
+    <tr>
         <td><a href='./point_list.php?sfl=mb_id&stx=$row[mb_id]'>$row[mb_id]</a></td>
         <td>$row2[mb_name]</td>
         <td>$mb_nick</td>
         <td>$row[po_datetime]</td>
-        <td align=left>&nbsp;{$link1}$row[po_content]{$link2}</td>
-        <td align=right>".number_format($row['po_point'])."&nbsp;</td>
-        <td align=right>".number_format($row2['mb_point'])."&nbsp;</td>
+        <td>&nbsp;{$link1}$row[po_content]{$link2}</td>
+        <td>".number_format($row['po_point'])."&nbsp;</td>
+        <td>".number_format($row2['mb_point'])."&nbsp;</td>
     </tr> ";
 } 
 
 if ($i == 0)
-    echo "<tr><td colspan='$colspan' align=center height=100 bgcolor=#ffffff>자료가 없습니다.</td></tr>";
-
-echo "<tr><td colspan='$colspan' class='line2'></td></tr>";
+    echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
 echo "</table>";
 ?>
-
 
 
 <?

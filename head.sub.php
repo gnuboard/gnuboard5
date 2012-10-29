@@ -43,14 +43,18 @@ header("Expires: 0"); // rfc2616 - Section 14.21
 header("Pragma: no-cache"); // HTTP/1.0
 */
 ?>
-<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> -->
-<html>
+<!doctype html>
+<html lang='ko'>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=<?=$g4['charset']?>">
+<meta charset='<?=$g4['charset']?>'>
 <title><?=$g4['title']?></title>
-<link rel="stylesheet" href="<?=$g4['path']?>/style.css" type="text/css">
+<? if ($administrator) { ?>
+<link rel='stylesheet' href='<?=$g4['path']?>/css/admin.css?=<?=date("md")?>'>
+<? } else { ?>
+<link rel='stylesheet' href='<?=$g4['path']?>/css/default.css?=<?=date("md")?>'>
+<?}?>
 </head>
-<script type="text/javascript">
+<script>
 // 자바스크립트에서 사용하는 전역변수 선언
 var g4_path      = "<?=$g4['path']?>";
 var g4_bbs       = "<?=$g4['bbs']?>";
@@ -66,7 +70,7 @@ var g4_is_gecko  = navigator.userAgent.toLowerCase().indexOf("gecko") != -1;
 var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
 <? if ($is_admin) { echo "var g4_admin = '{$g4['admin']}';"; } ?>
 </script>
-<script type="text/javascript" src="<?=$g4['path']?>/js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="<?=$g4['path']?>/js/common.js"></script>
-<body topmargin="0" leftmargin="0" <?=isset($g4['body_script']) ? $g4['body_script'] : "";?>>
-<a name="g4_head"></a>
+<script src='<?=$g4['path']?>/js/jquery-1.4.2.min.js'></script>
+<script src='<?=$g4['path']?>/js/common.js'></script>
+<body>
+<a id='g4_head'></a>
