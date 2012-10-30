@@ -114,7 +114,7 @@ function get_member_level_select($name, $start_id=0, $end_id=10, $selected='', $
 {
     global $g4;
 
-    $str = "<select name='$name' $event>";
+    $str = "<select id='$name' name='$name' $event>";
     for ($i=$start_id; $i<=$end_id; $i++)
     {
         $str .= "<option value='$i'";
@@ -134,7 +134,7 @@ function get_member_id_select($name, $level, $selected='', $event='')
 
     $sql = " select mb_id from $g4[member_table] where mb_level >= '$level' ";
     $result = sql_query($sql);
-    $str = "<select name='$name' $event><option value=''>선택안함";
+    $str = "<select id='$name' name='$name' $event><option value=''>선택안함";
     for ($i=0; $row=sql_fetch_array($result); $i++) 
     {
         $str .= "<option value='$row[mb_id]'";

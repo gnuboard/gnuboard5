@@ -17,8 +17,22 @@ if (typeof(WREST_JS) == 'undefined') // 한번만 실행
     // subject 속성값을 얻어 return, 없으면 tag의 name을 넘김
     function wrestItemname(fld)
     {
-        var itemname = fld.getAttribute("itemname");
-        if (itemname != null && itemname != "")
+        //input id 값과 같은 for 값을 가진 label 을 찾아 해당 텍스트를 itemname 으로 넘겨줍니다.:지운아빠 2012-07-04
+        var itemname = '';
+        var id = fld.getAttribute('id');
+        var labelname = document.getElementsByTagName('label');
+        for(i=0;i<labelname.length;i++){
+            if (labelname[i].getAttribute('for') == id)
+            {
+                itemname = labelname[i].innerHTML.replace('<span>*</span>','');
+                //itemname = labelname[i].innerTEXT;
+            }
+        }
+        // labelname 없을 경우에 title 로 반환
+        if (itemname == '') {
+            itemname = fld.getAttribute('title');
+        }
+        if (itemname != null && itemname != '')
             return itemname;
         else
             return fld.name;

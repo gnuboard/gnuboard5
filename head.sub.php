@@ -44,14 +44,14 @@ header("Pragma: no-cache"); // HTTP/1.0
 */
 ?>
 <!doctype html>
-<html lang='ko'>
+<html lang="ko">
 <head>
-<meta charset='<?=$g4['charset']?>'>
+<meta charset="<?=$g4['charset']?>">
 <title><?=$g4['title']?></title>
 <? if ($administrator) { ?>
-<link rel='stylesheet' href='<?=$g4['path']?>/css/admin.css?=<?=date("md")?>'>
+<link rel="stylesheet" href="<?=$g4['path']?>/css/admin.css?=<?=date("md")?>">
 <? } else { ?>
-<link rel='stylesheet' href='<?=$g4['path']?>/css/default.css?=<?=date("md")?>'>
+<link rel="stylesheet" href="<?=$g4['path']?>/css/default.css?=<?=date("md")?>">
 <?}?>
 </head>
 <script>
@@ -70,7 +70,7 @@ var g4_is_gecko  = navigator.userAgent.toLowerCase().indexOf("gecko") != -1;
 var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
 <? if ($is_admin) { echo "var g4_admin = '{$g4['admin']}';"; } ?>
 </script>
-<script src='<?=$g4['path']?>/js/jquery-1.4.2.min.js'></script>
-<script src='<?=$g4['path']?>/js/common.js'></script>
+<script src="<?=$g4['path']?>/js/jquery-1.4.2.min.js"></script>
+<script src="<?=$g4['path']?>/js/common.js"></script>
 <body>
-<a id='g4_head'></a>
+<a id="g4_head"></a>
