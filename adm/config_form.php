@@ -87,7 +87,7 @@ include_once ("./admin.head.php");
 </tr>
 <tr>
     <th  scope="row" id="th115"><label for="cf_new_skin">최근게시물 스킨</label></th>
-    <td headers="th115"><select id=cf_new_skin id="cf_new_skin" name="cf_new_skin" required >
+    <td headers="th115"><select id="cf_new_skin" name="cf_new_skin" required >
         <?
         $arr = get_skin_dir("new");
         for ($i=0; $i<count($arr); $i++) {
