@@ -125,12 +125,8 @@ if ($i==0)
 $pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");
 ?>
 
-<table>
-<tr>
-    <td><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></td>
-    <td><?=$pagelist?></td>
-</tr>
-</table>
+<div><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>
+<div><?=$pagelist?></div>
 
 <?
 if ($stx)
