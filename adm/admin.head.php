@@ -94,8 +94,7 @@ function textarea_size(fld, size)
 <script src='<?=$g4['path']?>/js/sideview.js'></script>
 
 <header>
-<h1><span></span>그누보드 관리자 <?=$g4['title']?></h1>
-<?=$member['mb_id']?>님
+<strong>사이트제목</strong> <?=$member['mb_id']?>님
 <aside>
 <ul>
 <li id='skip_to_main'><a href='#wrapper'>본문 바로가기</a></li>
@@ -146,3 +145,4 @@ if (isset($menu["menu{$tmp_menu}"][0][1]))
 </header>
 
 <div id='wrapper'>
+    <h1><span></span>그누보드 관리자 <?=$g4['title']?></h1>
