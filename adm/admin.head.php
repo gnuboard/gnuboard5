@@ -25,7 +25,7 @@ function print_menu2($key, $no)
             continue;
 
         // if ($no == 2) $str .= "&nbsp;&nbsp;<img src='{$g4[admin_path]}/img/icon.gif' align=absmiddle> ";
-        $str .= '<li id="gnb_'.$menu[$key][$i][0].'"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>'.PHP_EOL;
+        $str .= '<li id="gnb_'.$menu[$key][$i][3].'"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>'.PHP_EOL;
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
@@ -33,7 +33,6 @@ function print_menu2($key, $no)
 
     return $str;
 }
-
 ?>
 
 <script>
@@ -94,11 +93,9 @@ function textarea_size(fld, size)
 <script src='<?=$g4['path']?>/js/common.js'></script>
 <script src='<?=$g4['path']?>/js/sideview.js'></script>
 
-<body>
-
 <header>
 <h1><span></span>그누보드 관리자 <?=$g4['title']?></h1>
-<?=$member['mb_id']?>님</td>
+<?=$member['mb_id']?>님
 <aside>
 <ul>
 <li id='skip_to_main'><a href='#wrapper'>본문 바로가기</a></li>

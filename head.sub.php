@@ -53,7 +53,6 @@ header("Pragma: no-cache"); // HTTP/1.0
 <? } else { ?>
 <link rel="stylesheet" href="<?=$g4['path']?>/css/default.css?=<?=date("md")?>">
 <?}?>
-</head>
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
 var g4_path      = "<?=$g4['path']?>";
@@ -72,5 +71,6 @@ var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
 </script>
 <script src="<?=$g4['path']?>/js/jquery-1.4.2.min.js"></script>
 <script src="<?=$g4['path']?>/js/common.js"></script>
+</head>
 <body>
 <a id="g4_head"></a>

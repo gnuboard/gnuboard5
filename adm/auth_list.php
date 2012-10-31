@@ -45,7 +45,8 @@ $sql = " select *
           limit $from_record, $rows ";
 $result = sql_query($sql);
 
-$listall = "<a href='$_SERVER[PHP_SELF]' class=tt>처음</a>";
+if ($sfl || $stx || $sod) // 검색 혹은 정렬일 때만 처음 버튼을 보여줌 : 지운아빠 2012-10-31
+    $listall = '<a href="'.$_SERVER[PHP_SELF].'">처음으로</a>';
 
 $g4[title] = "관리권한설정";
 include_once("./admin.head.php");
@@ -53,51 +54,43 @@ include_once("./admin.head.php");
 $colspan = 5;
 ?>
 
-<script type="text/javascript" src="<?=$g4[path]?>/js/sideview.js"></script>
-<script type="text/javascript">
+<script src="<?=$g4[path]?>/js/sideview.js"></script>
+<script>
 var list_update_php = "";
 var list_delete_php = "auth_list_delete.php";
 </script>
 
-<table width=100%>
-<form name=fsearch method=get>
-<tr>
-    <td width=50% align=left>
-        <?=$listall?> (건수 : <?=number_format($total_count)?>)
-    </td>
-    <td width=50% align=right>
-        <select name=sfl class=cssfl>
-            <option value='a.mb_id'>회원아이디</option>
-        </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle></td>
-</tr>
+<form id="fsearch" name="fsearch" method="get">
+<fieldset>
+    <legend>관리권한 검색</legend>
+    <div><span><?=$listall?></span> 설정된 관리권한 <?=number_format($total_count)?>건</div>
+    <input type="hidden" id="sfl" name="sfl" value="a.mb_id">
+    <label for="stx">회원아이디</label>
+    <input type="text" id="stx" name="stx" required value="<?=$stx?>">
+    <input type="submit" id="fsearch_submit" value="검색">
+</fieldset>
 </form>
-</table>
 
-<form name=fauthlist method=post>
-<input type=hidden name=sst   value='<?=$sst?>'>
-<input type=hidden name=sod   value='<?=$sod?>'>
-<input type=hidden name=sfl   value='<?=$sfl?>'>
-<input type=hidden name=stx   value='<?=$stx?>'>
-<input type=hidden name=page  value='<?=$page?>'>
-<input type=hidden name=token value='<?=$token?>'>
-
-<table width=100% cellpadding=0 cellspacing=0>
-<colgroup width=30>
-<colgroup width=120>
-<colgroup width=150>
-<colgroup width=''>
-<colgroup width=100>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td><input type=checkbox name=chkall value='1' onclick='check_all(this.form)'></td>
-    <td><?=subject_sort_link('a.mb_id')?>회원아이디</a></td>
-    <td><?=subject_sort_link('mb_nick')?>별명</a></td>
-	<td>메뉴</td>
-	<td>권한</td>
+<form id="fauthlist" name="fauthlist" method="post">
+<input type="hidden" name="sst"   value="<?=$sst?>">
+<input type="hidden" name="sod"   value="<?=$sod?>">
+<input type="hidden" name="sfl"   value="<?=$sfl?>">
+<input type="hidden" name="stx"   value="<?=$stx?>">
+<input type="hidden" name="page"  value="<?=$page?>">
+<input type="hidden" name="token" value="<?=$token?>">
+<input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row[mb_id]?>">
+<input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row[au_menu]?>">
+<table>
+<thead>
+<tr>
+    <th scope="col" id="th1"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
+    <th scope="col" id="th2"><?=subject_sort_link('a.mb_id')?>회원아이디</a></th>
+    <th scope="col" id="th3"><?=subject_sort_link('mb_nick')?>별명</a></th>
+    <th scope="col" id="th4">메뉴</th>
+    <th scope="col" id="th5">권한</th>
 </tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
+</thead>
+<tbody>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
@@ -111,33 +104,37 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
 
     $list = $i%2;
-    echo "
-    <input type=hidden name=mb_id[$i] value='$row[mb_id]'>
-    <input type=hidden name=au_menu[$i] value='$row[au_menu]'>
-    <tr class='list$list col1 ht center'>
-        <td><input type=checkbox name=chk[] value='$i'></td>
-        <td><a href='?sfl=a.mb_id&stx=$row[mb_id]'>$row[mb_id]</a></td>
-        <td>$mb_nick</td>
-        <td align=left>&nbsp; [$row[au_menu]] {$auth_menu[$row[au_menu]]}</td>
-        <td>$row[au_auth]</td>
-    </tr>";
+    ?>
+    <tr>
+        <td headers="th1"><input type="checkbox" id="chk" name="chk[]" value="'.$i.'"></td>
+        <td headers="th2"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row[mb_id]?></a></td>
+        <td headers="th3"><?=$mb_nick?></td>
+        <td headers="th4"><?=$row['au_menu']?><?=$auth_menu[$row['au_menu']]?></td>
+        <td headers="th5"><?=$row['au_auth']?></td>
+    </tr>
+    <?
 }
 
 if ($i==0) 
-    echo "<tr><td colspan='$colspan' height=100 align=center bgcolor='#FFFFFF'>자료가 없습니다.</td></tr>";
+    echo '<tr><td colspan="'.$colspan.'">자료가 없습니다.</td></tr>';
+?>
+</tbody>
+</table>
 
-echo "<tr><td colspan='$colspan' class='line2'></td></tr>";
-echo "</table>";
+<?
+$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");
+?>
 
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
-echo "<table width=100% cellpadding=3 cellspacing=1>";
-echo "<tr><td width=50%>";
-echo "<input type=button class='btn1' value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
-echo "</td>";
-echo "<td width=50% align=right>$pagelist</td></tr></table>\n";
+<table>
+<tr>
+    <td><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></td>
+    <td><?=$pagelist?></td>
+</tr>
+</table>
 
+<?
 if ($stx)
-    echo "<script type='text/javascript'>document.fsearch.sfl.value = '$sfl';</script>\n";
+    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'.PHP_EOL;
 
 if (strstr($sfl, "mb_id"))
     $mb_id = $stx;
@@ -149,67 +146,45 @@ else
 <script type='text/javascript'> document.fsearch.stx.focus(); </script>
 
 <?$colspan=5?>
-<p>
 
-<form name=fauthlist2 method=post onsubmit="return fauthlist2_submit(this);" autocomplete="off">
-<input type=hidden name=sfl   value='<?=$sfl?>'>
-<input type=hidden name=stx   value='<?=$stx?>'>
-<input type=hidden name=sst   value='<?=$sst?>'>
-<input type=hidden name=sod   value='<?=$sod?>'>
-<input type=hidden name=page  value='<?=$page?>'>
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fauthlist2" name="fauthlist2" method="post" onsubmit="return fauthlist2_submit(this);" autocomplete="off">
+<input type="hidden" name="sfl"   value="<?=$sfl?>">
+<input type="hidden" name="stx"   value="<?=$stx?>">
+<input type="hidden" name="sst"   value="<?=$sst?>">
+<input type="hidden" name="sod"   value="<?=$sod?>">
+<input type="hidden" name="page"  value="<?=$page?>">
+<input type="hidden" name="token" value="<?=$token?>">
 
-<table width='100%' cellpadding=0 cellspacing=0>
-<colgroup width=150>
-<colgroup width=''>
-<colgroup width=150>
-<colgroup width=120>
-<colgroup width=100>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td>회원아이디</td>
-    <td>접근가능메뉴</td>
-    <td>권한</td>
-    <td>관리자패스워드</td>
-    <td>입력</td>
-</tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
-<tr class='ht center'>
-    <td><input type=text class=ed name=mb_id required itemname='회원아이디' value='<?=$mb_id?>'></td>
-    <td>
-        <select name=au_menu required itemname='접근가능메뉴'>
-        <option value=''>-- 선택하세요
-        <?
-        foreach($auth_menu as $key=>$value)
-        {
-            if (!(substr($key, -3) == "000" || $key == "-" || !$key))
-                echo "<option value='$key'>[$key] $value";
-        }
-        ?>
-        </select>
-    </td>
-    <td>
-        <table width=210 align=center>
-        <tr align=center>
-        	<td width=33%><input type=checkbox name='r' value='r' checked></td>
-        	<td width=33%><input type=checkbox name='w' value='w'></td>
-        	<td width=33%><input type=checkbox name='d' value='d'></td>
-        </tr>
-        <tr align=center>
-        	<td>r<br>(읽기)</td>
-        	<td>w<br>(입력,수정)</td>
-        	<td>d<br>(삭제)</td>
-        </tr>
-        </table></td>
-    <td><input type=password class=ed name=admin_password required itemname='관리자 패스워드'></td>
-    <td><input type=submit class=btn1 value='  확  인  '></td>
-</tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
-</table>
+<fieldset>
+<legend>관리권한 추가</legend>
+<p>아래 양식에서 회원에게 관리권한을 부여하실 수 있습니다. <strong>r</strong>은 읽기권한, <strong>w</strong>은 입력 혹은 수정권한, <strong>d</strong>는 삭제권한입니다.</p>
+<label for="mb_id">회원아이디</label>
+<input type="text" id="mb_id" name="mb_id" required value='<?=$mb_id?>'>
+<label for="au_menu">접근가능메뉴</label>
+<select id="au_menu" name="au_menu" required>
+<option value=''>-- 선택하세요
+<?
+foreach($auth_menu as $key=>$value)
+{
+    if (!(substr($key, -3) == "000" || $key == "-" || !$key))
+        echo '<option value="'.$key.'">'.$key.' '.$value;
+}
+?>
+</select>
+<input type="checkbox" id="r" name="r" value="r" checked>
+<label for="r">r</label>
+<input type="checkbox" id="w" name="w" value="w">
+<label for="w">w</label>
+<input type="checkbox" id="d" name="d" value="d">
+<label for="d">d</label>
+<label for="admin_password">관리자 패스워드</label>
+<input type="password" id="admin_password" name="admin_password" required>
+<input type="submit" value="확인">
+</fieldset>
 
 </form>
 
-<script type="text/javascript">
+<script>
 function fauthlist2_submit(f)
 {
     f.action = "./auth_update.php";

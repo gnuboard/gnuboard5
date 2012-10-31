@@ -314,11 +314,11 @@ include_once ("./admin.head.php");
 <section id="config_mail">
 <h2><span></span>메일 설정</h2>
 <table>
-<caption>홈페이지에서 사용할 메일 기능을 설정합니다.</caption>
+<caption>기본 메일환경 설정</caption>
 <tbody>
 <tr>
     <th  scope="row" id="th401"><label for="cf_email_use">메일발송 사용</label></th>
-    <td headers="th401" colspan="3"><input type="checkbox" id="cf_email_use" name="cf_email_use" value="1" <?=$config[cf_email_use]?'checked':'';?>> 사용 (체크하지 않으면 메일발송을 아예 사용하지 않습니다. 메일 테스트도 불가합니다.)</td>
+    <td headers="th401"><input type="checkbox" id="cf_email_use" name="cf_email_use" value="1" <?=$config[cf_email_use]?'checked':'';?>> 사용 (체크하지 않으면 메일발송을 아예 사용하지 않습니다. 메일 테스트도 불가합니다.)</td>
 </tr>
 <tr>
     <th  scope="row" id="th402"><label for="cf_use_email_certify">메일인증 사용</label></th>
@@ -330,46 +330,52 @@ include_once ("./admin.head.php");
     <td headers="th403"><input type="checkbox" id="cf_formmail_is_member" name="cf_formmail_is_member" value="1" <?=$config[cf_formmail_is_member]?'checked':'';?>> 회원만 사용
         <?=help("체크하지 않으면 비회원도 사용 할 수 있습니다.")?></td>
 </tr>
-<tr>
-    <th><label for="cf_"><span class=title>게시판 글 작성시</span></td>
-</tr>
+</table>
+<table>
+<caption>게시판 글 작성 시 메일 설정</caption>
+<tbody>
 <tr>
     <th  scope="row" id="th404"><label for="cf_email_wr_super_admin">최고관리자 메일발송</label></th>
-    <td headers="th404" colspan="3"><input type="checkbox" id="cf_email_wr_super_admin" name="cf_email_wr_super_admin" value="1" <?=$config[cf_email_wr_super_admin]?'checked':'';?>> 사용 (최고관리자에게 메일을 발송합니다.)</td>
+    <td headers="th404"><input type="checkbox" id="cf_email_wr_super_admin" name="cf_email_wr_super_admin" value="1" <?=$config[cf_email_wr_super_admin]?'checked':'';?>> 사용 (최고관리자에게 메일을 발송합니다.)</td>
 </tr>
 <tr>
     <th  scope="row" id="th405"><label for="cf_email_wr_group_admin">그룹관리자 메일발송</label></th>
-    <td headers="th405" colspan="3"><input type="checkbox" id="cf_email_wr_group_admin" name="cf_email_wr_group_admin" value="1" <?=$config[cf_email_wr_group_admin]?'checked':'';?>> 사용 (그룹관리자에게 메일을 발송합니다.)</td>
+    <td headers="th405"><input type="checkbox" id="cf_email_wr_group_admin" name="cf_email_wr_group_admin" value="1" <?=$config[cf_email_wr_group_admin]?'checked':'';?>> 사용 (그룹관리자에게 메일을 발송합니다.)</td>
 </tr>
 <tr>
     <th  scope="row" id="th406"><label for="cf_email_wr_board_admin">게시판관리자 메일발송</label></th>
-    <td headers="th406" colspan="3"><input type="checkbox" id="cf_email_wr_board_admin" name="cf_email_wr_board_admin" value="1" <?=$config[cf_email_wr_board_admin]?'checked':'';?>> 사용 (게시판관리자에게 메일을 발송합니다.)</td>
+    <td headers="th406"><input type="checkbox" id="cf_email_wr_board_admin" name="cf_email_wr_board_admin" value="1" <?=$config[cf_email_wr_board_admin]?'checked':'';?>> 사용 (게시판관리자에게 메일을 발송합니다.)</td>
 </tr>
 <tr>
     <th  scope="row" id="th407"><label for="cf_email_wr_write">원글 메일발송</label></th>
-    <td headers="th407" colspan="3"><input type="checkbox" id="cf_email_wr_write" name="cf_email_wr_write" value="1" <?=$config[cf_email_wr_write]?'checked':'';?>> 사용 (게시자님께 메일을 발송합니다.)</td>
+    <td headers="th407"><input type="checkbox" id="cf_email_wr_write" name="cf_email_wr_write" value="1" <?=$config[cf_email_wr_write]?'checked':'';?>> 사용 (게시자님께 메일을 발송합니다.)</td>
 </tr>
 <tr>
     <th  scope="row" id="th408"><label for="cf_email_wr_comment_all">코멘트 메일발송</label></th>
-    <td headers="th408" colspan="3"><input type="checkbox" id="cf_email_wr_comment_all" name="cf_email_wr_comment_all" value="1" <?=$config[cf_email_wr_comment_all]?'checked':'';?>> 사용 (원글에 코멘트가 올라오는 경우 코멘트 쓴 모든 분들께 메일을 발송합니다.)</td>
+    <td headers="th408"><input type="checkbox" id="cf_email_wr_comment_all" name="cf_email_wr_comment_all" value="1" <?=$config[cf_email_wr_comment_all]?'checked':'';?>> 사용 (원글에 코멘트가 올라오는 경우 코멘트 쓴 모든 분들께 메일을 발송합니다.)</td>
 </tr>
-<tr>
-    <td headers="th"><span class=title>회원 가입시</span></td>
-</tr>
+</tbody>
+</table>
+
+<table>
+<caption>회원가입 시 메일 설정</caption>
+<tbody>
 <tr>
     <th  scope="row" id="th409"><label for="cf_email_mb_super_admin">최고관리자 메일발송</label></th>
-    <td headers="th409" colspan="3"><input type="checkbox" id="cf_email_mb_super_admin" name="cf_email_mb_super_admin" value="1" <?=$config[cf_email_mb_super_admin]?'checked':'';?>> 사용 (최고관리자에게 메일을 발송합니다.)</td>
+    <td headers="th409"><input type="checkbox" id="cf_email_mb_super_admin" name="cf_email_mb_super_admin" value="1" <?=$config[cf_email_mb_super_admin]?'checked':'';?>> 사용 (최고관리자에게 메일을 발송합니다.)</td>
 </tr>
 <tr>
     <th  scope="row" id="th410"><label for="cf_email_mb_member">회원님께 메일발송</label></th>
-    <td headers="th410" colspan="3"><input type="checkbox" id="cf_email_mb_member" name="cf_email_mb_member" value="1" <?=$config[cf_email_mb_member]?'checked':'';?>> 사용 (회원가입한 회원님께 메일을 발송합니다.)</td>
+    <td headers="th410"><input type="checkbox" id="cf_email_mb_member" name="cf_email_mb_member" value="1" <?=$config[cf_email_mb_member]?'checked':'';?>> 사용 (회원가입한 회원님께 메일을 발송합니다.)</td>
 </tr>
-<tr>
-    <th  scope="row"><label for="cf_"><span class=title>투표 기타의견 작성시</span></td>
-</tr>
+</tbody>
+</table>
+<table>
+<caption>투표 기타의견 작성시 메일 설정</caption>
+<tbody>
 <tr>
     <th  scope="row" id="th411"><label for="cf_email_po_super_admin">최고관리자 메일발송</label></th>
-    <td headers="th411" colspan="3"><input type="checkbox" id="cf_email_po_super_admin" name="cf_email_po_super_admin" value="1" <?=$config[cf_email_po_super_admin]?'checked':'';?>> 사용 (최고관리자에게 메일을 발송합니다.)</td>
+    <td headers="th411"><input type="checkbox" id="cf_email_po_super_admin" name="cf_email_po_super_admin" value="1" <?=$config[cf_email_po_super_admin]?'checked':'';?>> 사용 (최고관리자에게 메일을 발송합니다.)</td>
 </tr>
 </tbody>
 </table>
@@ -403,8 +409,8 @@ include_once ("./admin.head.php");
 <caption>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</caption>
 <tbody>
 <tr>
-    <th  scope="row" id="th601"><label for="admin_password">관리자 패스워드</label></td>
-    <td headers="th601" colspan="3">
+    <th  scope="row" id="th601"><label for="admin_password">관리자 패스워드</label></th>
+    <td headers="th601">
         <input type="password" id="admin_password" name="admin_password" required>
     </td>
 </tr>
