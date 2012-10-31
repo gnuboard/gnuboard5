@@ -13,19 +13,13 @@ $g4[title] = "버전확인";
 include_once("./admin.head.php"); 
 include_once("$g4[path]/lib/mailer.lib.php"); 
 
-echo "현재버전 : <b>";
+echo "현재버전 : <strong>";
 $args = "head -1 ".$g4[path]."/HISTORY"; 
 system($args); 
-echo "</b>";
+echo "</strong>";
 ?> 
 
-<table width=100% border="0" align="left" cellpadding="0" cellspacing="0"> 
-<tr> 
-    <td> 
-        <textarea name="textarea" style='width:100%; line-height:150%; padding:10px;' rows="25" class=tx readonly><?=implode("", file("$g4[path]/HISTORY"));?></textarea> 
-    </td> 
-</tr> 
-</table> 
+<p><?=implode("", file("$g4[path]/HISTORY"));?></p>
 
 <? 
 include_once("./admin.tail.php"); 
