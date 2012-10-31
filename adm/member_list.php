@@ -130,7 +130,10 @@ var list_delete_php = "member_list_delete.php";
 <a href="./member_form.php">회원추가</a>
 
 <table>
-<caption>각 제목열의 항목을 클릭하시면 해당 조건으로 정렬하실 수 있습니다</caption>
+<caption>
+각 제목열의 항목을 클릭하시면 해당 조건으로 정렬하실 수 있습니다.<br>
+회원자료 삭제시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.
+</caption>
 <thead>
 <tr>
     <th scope="col" id="th1"><label for="chkall">전체선택</label><input type="checkbox" id="chkall" name="chkall" value='1' onclick='check_all(this.form)'></th>
@@ -192,9 +195,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <td headers="th5"><?=get_member_level_select("mb_level[$i]", 1, $member[mb_level], $row[mb_level])?></td>
         <td headers="th6"><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></a></td>
         <td headers="th7"><?=substr($row[mb_today_login],2,8)?></td>
-        <td headers="th8"><?$row[mb_mailling]?'예':'아니오'?></td>
-        <td headers="th9"><?$row[mb_open]?'예':'아니오'?></td>
-        <!-- <td headers="th10"><?$row[mb_leave_date]?'예':'아니오';?></td> -->
+        <td headers="th8"><?=$row[mb_mailling]?'예':'아니오'?></td>
+        <td headers="th9"><?=$row[mb_open]?'예':'아니오'?></td>
+        <!-- <td headers="th10"><?=$row[mb_leave_date]?'예':'아니오';?></td> -->
         <td headers="th11"><?=preg_match('/[1-9]/', $row[mb_email_certify])?'예':'아니오'?></td>
         <td headers="th12"><input type="checkbox" name="mb_intercept_date[<?=$i?>]" <?$row['mb_intercept_date']?'checked':''?> value="<?=$intercept_date?>"></td>
         <td headers="th13"><?=$group?></td>
@@ -226,10 +229,6 @@ if ($stx)
     echo "<script>document.fsearch.sfl.value = '$sfl';</script>\n";
 ?>
 </form>
-
-<p>
-* 회원자료 삭제시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.
-</p>
 
 <script>
 // POST 방식으로 삭제
