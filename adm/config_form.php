@@ -23,12 +23,11 @@ $g4['title'] = "환경설정";
 include_once ("./admin.head.php");
 ?>
 
-<h2><span></span>기본환경설정</h2>
-
 <form id="fconfigform" name="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 
 <section id="config_basic">
+<h2><span></span>기본환경설정</h2>
 <table>
 <caption>홈페이지의 기본환경을 설정합니다.</caption>
 <tbody>
@@ -127,10 +126,8 @@ include_once ("./admin.head.php");
 <tr>
     <th  scope="row" id="th119"><label for="cf_use_copy_log">복사, 이동시 로그</label></th>
     <td headers="th119" colspan="3"><input type="checkbox" id="cf_use_copy_log" name="cf_use_copy_log" value="1" <?=$config[cf_use_copy_log]?'checked':'';?>> 남김
-        <?=help("게시물 아래에 누구로 부터 복사, 이동됨 표시")?></td>
-    <!-- <td headers="th">자동등록방지 사용</td>
-    <td headers="th"><input type="checkbox" id="cf_use_norobot" name="cf_use_norobot" value="1" <?=$config[cf_use_norobot]?'checked':'';?>> 사용
-        <?=help("자동 회원가입과 글쓰기를 방지")?></td> -->
+        <?=help("게시물 아래에 누구로 부터 복사, 이동됨 표시")?>
+    </td>
 </tr>
 <tr>
     <th  scope="row" id="th120"><label for="cf_possible_ip">접근가능 IP</label></th>

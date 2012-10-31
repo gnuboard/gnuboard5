@@ -106,7 +106,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list = $i%2;
     ?>
     <tr>
-        <td headers="th1"><input type="checkbox" id="chk" name="chk[]" value="'.$i.'"></td>
+        <td headers="th1"><input type="checkbox" id="chk" name="chk[]" value="<?=$i?>"></td>
         <td headers="th2"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row[mb_id]?></a></td>
         <td headers="th3"><?=$mb_nick?></td>
         <td headers="th4"><?=$row['au_menu']?><?=$auth_menu[$row['au_menu']]?></td>
@@ -157,12 +157,12 @@ else
 
 <fieldset>
 <legend>관리권한 추가</legend>
-<p>아래 양식에서 회원에게 관리권한을 부여하실 수 있습니다. <strong>r</strong>은 읽기권한, <strong>w</strong>은 입력 혹은 수정권한, <strong>d</strong>는 삭제권한입니다.</p>
+<p>아래 양식에서 회원에게 관리권한을 부여하실 수 있습니다. <strong>r</strong>은 읽기권한, <strong>w</strong>는 입력 혹은 수정권한, <strong>d</strong>는 삭제권한입니다.</p>
 <label for="mb_id">회원아이디</label>
 <input type="text" id="mb_id" name="mb_id" required value='<?=$mb_id?>'>
 <label for="au_menu">접근가능메뉴</label>
 <select id="au_menu" name="au_menu" required>
-<option value=''>-- 선택하세요
+<option value=''>선택하세요
 <?
 foreach($auth_menu as $key=>$value)
 {
