@@ -11,6 +11,8 @@ include_once("./_head.php");
 chicpro 님도 참가합니다.<br>
 반갑습니다.
 ZZZZZ
+하하하
+
 
 <?
 include_once("./_tail.php");
