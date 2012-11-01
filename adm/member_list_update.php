@@ -31,7 +31,7 @@ for ($i=0; $i<count($chk); $i++)
 }
 
 if ($msg)
-    echo "<script type='text/javascript'> alert('$msg'); </script>";
+    echo "<script> alert('$msg'); </script>";
 
 goto_url("./member_list.php?$qstr");
 ?>
