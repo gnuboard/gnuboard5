@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit;
 
 $begin_time = get_microtime();
 $administrator = 1;
-include_once("$g4[path]/head.sub.php");
+include_once($g4['path'].'/head.sub.php');
 
 function print_menu1($key, $no)
 {
@@ -24,7 +24,7 @@ function print_menu2($key, $no)
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
             continue;
 
-        // if ($no == 2) $str .= "&nbsp;&nbsp;<img src='{$g4[admin_path]}/img/icon.gif' align=absmiddle> ";
+        // if ($no == 2) $str .= "&nbsp;&nbsp;<img src='{$g4['admin_path']}/img/icon.gif' align=absmiddle> ";
         $str .= '<li id="gnb_'.$menu[$key][$i][3].'"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>'.PHP_EOL;
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
@@ -87,36 +87,37 @@ function textarea_size(fld, size)
 <?
 foreach($amenu as $key=>$value)
 {
-    $href1 = $href2 = "";
-    if ($menu["menu{$key}"][0][2])
+    $href1 = $href2 = '';
+    if ($menu['menu'.$key][0][2])
     {
-        $href1 = "<a href='".$menu["menu{$key}"][0][2]."'>";
-        $href2 = "</a>";
+        $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
+        $href2 = '</a>';
     }
-    echo "<li id='gnb_".$menu["menu{$key}"][0][3]."'>";
-    echo $href1 . $menu["menu{$key}"][0][1] . $href2;
-    echo print_menu1("menu{$key}", 1);
-    echo "</li>";
+    echo '<li id="gnb_'.$menu['menu'.$key][0][3].'">';
+    echo $href1 . $menu['menu'.$key][0][1] . $href2;
+    echo print_menu1('menu'.$key, 1);
+    echo '</li>';
 }
+
 ?>
 </ul>
 </nav>
 
 <div id='current_location'>
 <?
-$tmp_menu = "";
+$tmp_menu = '';
 if (isset($sub_menu))
     $tmp_menu = substr($sub_menu, 0, 3);
-if (isset($menu["menu{$tmp_menu}"][0][1]))
+if (isset($menu['menu'.$tmp_menu][0][1]))
 {
-    if ($menu["menu{$tmp_menu}"][0][2])
+    if ($menu['menu'.$tmp_menu][0][2])
     {
-        echo "<a href='".$menu["menu{$tmp_menu}"][0][2];
-        echo $menu["menu{$tmp_menu}"][0][1];
-        echo "</a> > ";
+        echo '<a href="'.$menu['menu'.$tmp_menu][0][2];
+        echo $menu['menu'.$tmp_menu][0][1];
+        echo '</a> > ';
     }
     else
-        echo $menu["menu{$tmp_menu}"][0][1];
+        echo $menu['menu'.$tmp_menu][0][1];
 }
 ?>
 </div>

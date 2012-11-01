@@ -72,27 +72,27 @@ var list_delete_php = 'popular_list.php';
 </script>
 
 <table width=100% cellpadding=3 cellspacing=1>
-<form name=fsearch method=get>
+<form id="fsearch" name="fsearch" method=get>
 <tr>
     <td width=50% align=left><?=$listall?> (건수 : <?=number_format($total_count)?>개)</td>
     <td width=50% align=right>
-        <select name=sfl>
-            <option value='pp_word'>검색어</option>
-            <option value='pp_date'>등록일</option>
+        <select id="sfl" name="sfl">
+            <option value="pp_word">검색어</option>
+            <option value="pp_date">등록일</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" class=ed required value='<?=$stx?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
 
-<form name=fpopularlist method=post>
-<input type=hidden name=sst   value="<?=$sst?>">
-<input type=hidden name=sod   value="<?=$sod?>">
-<input type=hidden name=sfl   value="<?=$sfl?>">
-<input type=hidden name=stx   value="<?=$stx?>">
-<input type=hidden name=page  value="<?=$page?>">
-<input type=hidden name=token value="<?=$token?>">
+<form id="fpopularlist" name="fpopularlist" method=post>
+<input type="hidden" id="sst" name="sst"   value="<?=$sst?>">
+<input type="hidden" id="sod" name="sod"   value="<?=$sod?>">
+<input type="hidden" id="sfl" name="sfl"   value="<?=$sfl?>">
+<input type="hidden" id="stx" name="stx"   value="<?=$stx?>">
+<input type="hidden" id="page" name="page"  value="<?=$page?>">
+<input type="hidden" id="token" name="token" value="<?=$token?>">
 <table width=100% cellpadding=0 cellspacing=1>
 <colgroup width=30>
 <colgroup width=>
@@ -100,7 +100,7 @@ var list_delete_php = 'popular_list.php';
 <colgroup width=150>
 <tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
 <tr class='bgcol1 bold col1 ht center'>
-    <td><input type=checkbox name=chkall value="1" onclick="check_all(this.form)"></td>
+    <td><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></td>
     <td><?=subject_sort_link("pp_word")?>검색어</a></td>
     <td>등록일</td>
     <td>등록IP</td>
@@ -112,9 +112,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $word = get_text($row[pp_word]);
 
     $list = $i % 2;
-    echo "<input type=hidden name=pp_id[$i] value='$row[pp_id]'>";
+    echo "<input type="hidden" id="pp_id" name="pp_id"[$i] value='$row[pp_id]'>";
     echo "<tr class='list$list col1 ht center'>";
-    echo "<td height=25><input type=checkbox name=chk[] value='$i'></td>";
+    echo "<td height=25><input type="checkbox" id="chk" name="chk"[] value='$i'></td>";
     echo "<td align='left'>&nbsp; <a href='$_SERVER[PHP_SELF]?sfl=pp_word&stx=$word'>$word</a></td>";
     echo "<td>$row[pp_date]</td>";
     echo "<td>$row[pp_ip]</td>";
@@ -134,7 +134,7 @@ echo "<table width=100% cellpadding=3 cellspacing=1>";
 echo "<tr><td width=50%>";
 
 if ($is_admin == "super")
-    echo "<input type=button class='btn1' value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
+    echo "<input type="button" class='btn1' value='선택삭제' onclick="btn_check(this.form, 'delete')">";
 
 echo "</td>";
 echo "<td width=50% align=right>$pagelist</td></tr></table>\n";

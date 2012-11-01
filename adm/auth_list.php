@@ -1,13 +1,13 @@
 <?
 $sub_menu = "100200";
-include_once("./_common.php");
+include_once('./_common.php');
 
-if ($is_admin != "super")
-    alert("최고관리자만 접근 가능합니다.");
+if ($is_admin != 'super')
+    alert('최고관리자만 접근 가능합니다.');
 
 $token = get_token();
 
-$sql_common = " from $g4[auth_table] a left join $g4[member_table] b on (a.mb_id=b.mb_id) ";
+$sql_common = " from {$g4['auth_table']} a left join {$g4['member_table']} b on (a.mb_id=b.mb_id) ";
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -46,7 +46,7 @@ $sql = " select *
 $result = sql_query($sql);
 
 if ($sfl || $stx || $sod) // 검색 혹은 정렬일 때만 처음 버튼을 보여줌 : 지운아빠 2012-10-31
-    $listall = '<a href="'.$_SERVER[PHP_SELF].'">처음으로</a>';
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음으로</a>';
 
 $g4[title] = "관리권한설정";
 include_once("./admin.head.php");
@@ -54,10 +54,10 @@ include_once("./admin.head.php");
 $colspan = 5;
 ?>
 
-<script src="<?=$g4[path]?>/js/sideview.js"></script>
+<script src="<?=$g4['path']?>/js/sideview.js"></script>
 <script>
-var list_update_php = "";
-var list_delete_php = "auth_list_delete.php";
+var list_update_php = '';
+var list_delete_php = 'auth_list_delete.php';
 </script>
 
 <form id="fsearch" name="fsearch" method="get">
@@ -78,8 +78,6 @@ var list_delete_php = "auth_list_delete.php";
 <input type="hidden" name="stx"   value="<?=$stx?>">
 <input type="hidden" name="page"  value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row[mb_id]?>">
-<input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row[au_menu]?>">
 <table>
 <thead>
 <tr>
@@ -94,22 +92,26 @@ var list_delete_php = "auth_list_delete.php";
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
-    $mb_nick = get_sideview($row[mb_id], $row[mb_nick], $row[mb_email], $row[mb_homepage]);
+    $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
     // 메뉴번호가 바뀌는 경우에 현재 없는 저장된 메뉴는 삭제함
     if (!isset($auth_menu[$row[au_menu]]))
     {
-        sql_query(" delete from $g4[auth_table] where au_menu = '$row[au_menu]' ");
+        sql_query(" delete from {$g4['auth_table']} where au_menu = '{$row[au_menu]}' ");
         continue;
     }
 
     $list = $i%2;
     ?>
     <tr>
-        <td headers="th1"><input type="checkbox" id="chk" name="chk[]" value="<?=$i?>"></td>
-        <td headers="th2"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row[mb_id]?></a></td>
+        <td headers="th1">
+            <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>">
+            <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
+            <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row[au_menu]?>">
+        </td>
+        <td headers="th2"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
         <td headers="th3"><?=$mb_nick?></td>
-        <td headers="th4"><?=$row['au_menu']?><?=$auth_menu[$row['au_menu']]?></td>
+        <td headers="th4"><?=$row[au_menu]?><?=$auth_menu[$row[au_menu]]?></td>
         <td headers="th5"><?=$row['au_auth']?></td>
     </tr>
     <?
@@ -122,7 +124,7 @@ if ($i==0)
 </table>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");
+$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 
 <div><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>
@@ -152,30 +154,30 @@ else
 <input type="hidden" name="token" value="<?=$token?>">
 
 <fieldset>
-<legend>관리권한 추가</legend>
-<p>아래 양식에서 회원에게 관리권한을 부여하실 수 있습니다. <strong>r</strong>은 <strong>읽기</strong>권한, <strong>w</strong>는 <strong>입력</strong> 혹은 <strong>수정</strong>권한, <strong>d</strong>는 <strong>삭제</strong>권한입니다.</p>
-<label for="mb_id">회원아이디</label>
-<input type="text" id="mb_id" name="mb_id" required value='<?=$mb_id?>'>
-<label for="au_menu">접근가능메뉴</label>
-<select id="au_menu" name="au_menu" required>
-<option value=''>선택하세요
-<?
-foreach($auth_menu as $key=>$value)
-{
-    if (!(substr($key, -3) == "000" || $key == "-" || !$key))
-        echo '<option value="'.$key.'">'.$key.' '.$value;
-}
-?>
-</select>
-<input type="checkbox" id="r" name="r" value="r" checked>
-<label for="r">r</label>
-<input type="checkbox" id="w" name="w" value="w">
-<label for="w">w</label>
-<input type="checkbox" id="d" name="d" value="d">
-<label for="d">d</label>
-<label for="admin_password">관리자 패스워드</label>
-<input type="password" id="admin_password" name="admin_password" required>
-<input type="submit" value="확인">
+    <legend>관리권한 추가</legend>
+    <p>아래 양식에서 회원에게 관리권한을 부여하실 수 있습니다. <strong>r</strong>은 <strong>읽기</strong>권한, <strong>w</strong>는 <strong>입력</strong> 혹은 <strong>수정</strong>권한, <strong>d</strong>는 <strong>삭제</strong>권한입니다.</p>
+    <label for="mb_id">회원아이디</label>
+    <input type="text" id="mb_id" name="mb_id" required value='<?=$mb_id?>'>
+    <label for="au_menu">접근가능메뉴</label>
+    <select id="au_menu" name="au_menu" required>
+        <option value=''>선택하세요
+        <?
+        foreach($auth_menu as $key=>$value)
+        {
+            if (!(substr($key, -3) == "000" || $key == "-" || !$key))
+                echo '<option value="'.$key.'">'.$key.' '.$value;
+        }
+        ?>
+    </select>
+    <input type="checkbox" id="r" name="r" value="r" checked>
+    <label for="r">r</label>
+    <input type="checkbox" id="w" name="w" value="w">
+    <label for="w">w</label>
+    <input type="checkbox" id="d" name="d" value="d">
+    <label for="d">d</label>
+    <label for="admin_password">관리자 패스워드</label>
+    <input type="password" id="admin_password" name="admin_password" required>
+    <input type="submit" value="추가">
 </fieldset>
 
 </form>

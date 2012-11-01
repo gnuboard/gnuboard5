@@ -105,11 +105,11 @@ $sql = " insert into $g4[board_table]
 sql_query($sql);
 
 // 게시판 폴더 생성
-@mkdir("$g4[path]/data/file/$target_table", 0707);
-@chmod("$g4[path]/data/file/$target_table", 0707);
+@mkdir("$g4['path']/data/file/$target_table", 0707);
+@chmod("$g4['path']/data/file/$target_table", 0707);
 
 // 디렉토리에 있는 파일의 목록을 보이지 않게 한다.
-$board_path = "$g4[path]/data/file/$target_table";
+$board_path = "$g4['path']/data/file/$target_table";
 $file = $board_path . "/index.php";
 $f = @fopen($file, "w");
 @fwrite($f, "");
@@ -119,34 +119,34 @@ $f = @fopen($file, "w");
 $copy_file = 0;
 if ($copy_case == "schema_data_both") 
 {
-    $d = dir("$g4[path]/data/file/$bo_table");
+    $d = dir("$g4['path']/data/file/$bo_table");
     while ($entry = $d->read()) 
     {
         if ($entry == "." || $entry == "..") continue;
 
         /*
-        @copy("$g4[path]/data/file/$bo_table/$entry", "$g4[path]/data/file/$target_table/$entry");
-        @chmod("$g4[path]/data/file/$target_table/$entry", 0707);
+        @copy("$g4['path']/data/file/$bo_table/$entry", "$g4['path']/data/file/$target_table/$entry");
+        @chmod("$g4['path']/data/file/$target_table/$entry", 0707);
 
         $copy_file++;
         */
 
         // 김선용 201007 :
-        if(is_dir("$g4[path]/data/file/$bo_table/$entry")){
-            $dd = dir("$g4[path]/data/file/$bo_table/$entry");
-            @mkdir("$g4[path]/data/file/$target_table/$entry", 0707);
-            @chmod("$g4[path]/data/file/$target_table/$entry", 0707);
+        if(is_dir("$g4['path']/data/file/$bo_table/$entry")){
+            $dd = dir("$g4['path']/data/file/$bo_table/$entry");
+            @mkdir("$g4['path']/data/file/$target_table/$entry", 0707);
+            @chmod("$g4['path']/data/file/$target_table/$entry", 0707);
             while ($entry2 = $dd->read()) {
                 if ($entry2 == "." || $entry2 == "..") continue;
-                @copy("$g4[path]/data/file/$bo_table/$entry/$entry2", "$g4[path]/data/file/$target_table/$entry/$entry2");
-                @chmod("$g4[path]/data/file/$target_table/$entry/$entry2", 0707);
+                @copy("$g4['path']/data/file/$bo_table/$entry/$entry2", "$g4['path']/data/file/$target_table/$entry/$entry2");
+                @chmod("$g4['path']/data/file/$target_table/$entry/$entry2", 0707);
                 $copy_file++;
             }
             $dd->close();
         }
         else {
-            @copy("$g4[path]/data/file/$bo_table/$entry", "$g4[path]/data/file/$target_table/$entry");
-            @chmod("$g4[path]/data/file/$target_table/$entry", 0707);
+            @copy("$g4['path']/data/file/$bo_table/$entry", "$g4['path']/data/file/$target_table/$entry");
+            @chmod("$g4['path']/data/file/$target_table/$entry", 0707);
             $copy_file++;
         }
     }
@@ -198,10 +198,10 @@ if (count($file_copy))
 
 echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
 echo "<script type='text/javascript'>";
-echo "alert(\"게시판 복사 : {$bo_table} -> {$target_table}";
+echo "alert("게시판 복사 : {$bo_table} -> {$target_table}";
 if ($copy_file)
     echo "\\n\\n복사한 파일 : 총 {$copy_file}개";
-echo "\");";
+echo "");";
 echo "opener.document.location.reload();";
 echo "</script>";
 

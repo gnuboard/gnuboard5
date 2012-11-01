@@ -87,11 +87,11 @@ $colspan = 12;
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
     // 접근가능한 그룹수
-    $sql2 = " select count(*) as cnt from $g4[group_member_table] where mb_id = '$row[mb_id]' ";
+    $sql2 = " select count(*) as cnt from $g4[group_member_table] where mb_id = '{$row['mb_id']}' ";
     $row2 = sql_fetch($sql2);
     $group = "";
     if ($row2['cnt'])
-        $group = "<a href='./boardgroupmember_form.php?mb_id=$row[mb_id]'>$row2[cnt]</a>";
+        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">$row2[cnt]</a>';
 
     if ($is_admin == 'group') 
     {
@@ -100,10 +100,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     } 
     else 
     {
-        $s_mod = "<a href=\"./member_form.php?$qstr&amp;w=u&amp;mb_id=$row[mb_id]\">수정</a>";
-        $s_del = "<a href=\"javascript:del('./member_delete.php?$qstr&amp;w=d&amp;mb_id=$row[mb_id]&amp;url=$_SERVER[PHP_SELF]');\">삭제</a>";
+        $s_mod = '<a href="./member_form.php?$qstr&amp;w=u&amp;mb_id='.$row['mb_id'].'">수정</a>';
+        $s_del = '<a href="javascript:del(\'./member_delete.php?$qstr&amp;w=d&amp;mb_id='.$row['mb_id'].'&amp;url='.$_SERVER['PHP_SELF'].'\');">삭제</a>';
     }
-    $s_grp = "<a href='./boardgroupmember_form.php?mb_id=$row[mb_id]'><img src='img/icon_group.gif' border=0 title='그룹'></a>";
+    $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">그룹</a>';
 
     $leave_date = $row['mb_leave_date'] ? $row['mb_leave_date'] : date("Ymd", $g4['server_time']);
     $intercept_date = $row['mb_intercept_date'] ? $row['mb_intercept_date'] : date("Ymd", $g4['server_time']);
@@ -122,7 +122,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <td><?=$row['mb_name']?></td>
         <td><?=$mb_nick?></td>
         <td><?=$row[mb_level]?></td>
-        <td><a href='./point_list.php?sfl=mb_id&amp;stx=<?=$row[mb_id]?>'><?=number_format($row['mb_point'])?></td>
+        <td><a href='./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>'><?=number_format($row['mb_point'])?></td>
         <td><?=substr($row['mb_today_login'],2,8)?></td>
         <td><?=$row['mb_mailling']?'예':'아니오';?></td>
         <td><?=$row['mb_open']?'예':'아니오';?></td>
@@ -291,7 +291,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     if ($row2['mb_id'] != $row['mb_id'])
     {
-        $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from $g4[member_table] where mb_id = '$row[mb_id]' ";
+        $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from $g4[member_table] where mb_id = '{$row['mb_id']}' ";
         $row2 = sql_fetch($sql2);
     }
 
@@ -305,7 +305,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
 ?>
     <tr>
-        <td><a href='./point_list.php?sfl=mb_id&amp;stx=$row[mb_id]'><?=$row['mb_id']?></a></td>
+        <td><a href='./point_list.php?sfl=mb_id&amp;stx=$row['mb_id']'><?=$row['mb_id']?></a></td>
         <td><?=$row2['mb_name']?></td>
         <td><?=$mb_nick?></td>
         <td><?=$row['po_datetime']?></td>

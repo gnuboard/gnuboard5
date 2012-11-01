@@ -53,15 +53,15 @@ $colspan = 6;
 ?>
 
 <table width=100%>
-<form name=fsearch method=get>
+<form id="fsearch" name="fsearch" method=get>
 <tr>
     <td width=50% align=left><?=$listall?> (투표수 : <?=number_format($total_count)?>개)</td>
     <td width=50% align=right>
-        <select name=sfl>
-            <option value='po_subject'>제목</option>
+        <select id="sfl" name="sfl">
+            <option value="po_subject">제목</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" class=ed required value='<?=$stx?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
@@ -80,7 +80,7 @@ $colspan = 6;
 	<td>투표권한</td>
 	<td>투표수</td>
 	<td>기타의견</td>
-	<td><a href="./poll_form.php"><img src='<?=$g4[admin_path]?>/img/icon_insert.gif' border=0 title='생성'></a></td>
+	<td><a href="./poll_form.php"><img src='<?=$g4['admin_path']?>/img/icon_insert.gif' border=0 title='생성'></a></td>
 </tr>
 <tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 <?
@@ -90,8 +90,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $po_etc = ($row[po_etc]) ? "사용" : "미사용";
 
     $s_mod = "<a href='./poll_form.php?$qstr&w=u&po_id=$row[po_id]'><img src='img/icon_modify.gif' border=0 title='수정'></a>";
-    //$s_del = "<a href=\"javascript:del('./poll_form_update.php?$qstr&w=d&po_id=$row[po_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
-    $s_del = "<a href=\"javascript:post_delete('poll_form_update.php', '$row[po_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
+    //$s_del = "<a href="javascript:del('./poll_form_update.php?$qstr&w=d&po_id=$row[po_id]');"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
+    $s_del = "<a href="javascript:post_delete('poll_form_update.php', '$row[po_id]');"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
 
     $list = $i%2;
     echo "
@@ -138,15 +138,15 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='w'    value='d'>
-<input type='hidden' name='po_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<input type="hidden" id="w" name="w"    value="d">
+<input type="hidden" id="po_id" name="po_id">
 </form>
 
 <?

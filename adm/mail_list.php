@@ -39,7 +39,7 @@ $colspan = 6;
     <td width=120>작성일시</td>
     <td width=50>테스트</td>
     <td width=50>보내기</td>
-    <td width=80><a href='./mail_form.php'><img src='<?=$g4[admin_path]?>/img/icon_insert.gif' border=0></a></td>
+    <td width=80><a href='./mail_form.php'><img src='<?=$g4['admin_path']?>/img/icon_insert.gif' border=0></a></td>
 </tr>
 <tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 
@@ -47,7 +47,7 @@ $colspan = 6;
 for ($i=0; $row=mysql_fetch_array($result); $i++) {
     $s_mod = icon("수정", "./mail_form.php?w=u&ma_id=$row[ma_id]");
     //$s_del = icon("삭제", "javascript:del('./mail_update.php?w=d&ma_id=$row[ma_id]');");
-    $s_del = "<a href=\"javascript:post_delete('mail_update.php', '$row[ma_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제' align='absmiddle'></a>";
+    $s_del = "<a href="javascript:post_delete('mail_update.php', '$row[ma_id]');"><img src='img/icon_delete.gif' border=0 title='삭제' align='absmiddle'></a>";
     $s_vie = icon("보기", "./mail_preview.php?ma_id=$row[ma_id]", "_blank");
 
     $num = number_format($total_count - ($page - 1) * $config[cf_page_rows] - $i);
@@ -84,14 +84,14 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'  value='<?=$sst?>'>
-<input type='hidden' name='sod'  value='<?=$sod?>'>
-<input type='hidden' name='sfl'  value='<?=$sfl?>'>
-<input type='hidden' name='stx'  value='<?=$stx?>'>
-<input type='hidden' name='page' value='<?=$page?>'>
-<input type='hidden' name='w'    value='d'>
-<input type='hidden' name='ma_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"  value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"  value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"  value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"  value='<?=$stx?>'>
+<input type="hidden" id="page" name="page" value='<?=$page?>'>
+<input type="hidden" id="w" name="w"    value="d">
+<input type="hidden" id="ma_id" name="ma_id">
 </form>
 
 <?

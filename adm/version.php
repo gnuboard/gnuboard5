@@ -11,15 +11,15 @@ auth_check($auth[$sub_menu], "r");
 $g4[title] = "버전확인"; 
 
 include_once("./admin.head.php"); 
-include_once("$g4[path]/lib/mailer.lib.php"); 
+include_once("$g4['path']/lib/mailer.lib.php"); 
 
 echo "현재버전 : <strong>";
-$args = "head -1 ".$g4[path]."/HISTORY"; 
+$args = "head -1 ".$g4['path']."/HISTORY"; 
 system($args); 
 echo "</strong>";
 ?> 
 
-<p><?=implode("", file("$g4[path]/HISTORY"));?></p>
+<p><?=implode("", file("$g4['path']/HISTORY"));?></p>
 
 <? 
 include_once("./admin.tail.php"); 

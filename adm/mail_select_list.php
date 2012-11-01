@@ -49,7 +49,7 @@ if ($gr_id)
     $result2 = sql_query($sql2);
     for ($k=0; $row2=sql_fetch_array($result2); $k++)
     {
-        $group_member .= "{$comma}'$row2[mb_id]'"; 
+        $group_member .= "{$comma}'$row2['mb_id']'"; 
         $comma = ",";
     }
 
@@ -93,13 +93,13 @@ include_once("./admin.head.php");
 <?//=subtitle_bar($html_title)?><p>
 
 <div align=right>선택된 회원수 : <?=number_format($cnt)?> 명</div>
-<form name=fmailselectlist method=post onsubmit="return fmailselectlist_submit(this);">
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fmailselectlist" name="fmailselectlist" method=post onsubmit="return fmailselectlist_submit(this);">
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
 <table cellpadding=4 cellspacing=1 width=100% class=tablebg>
-<input type="hidden" name="ma_id" value="<? echo $ma_id ?>">
+<input type="hidden" id="ma_id" name="ma_id" value="<? echo $ma_id ?>">
 <tr>
     <td align=center>
-        <select size=25 name='list' style='width:500px;'>
+        <select size=25 id="list" name="list" style='width:500px;'>
         <option>번호 . 회원아이디 / 이름 / 별명 / 생일 / E-mail
         <?
             $sql = " select mb_id, mb_name, mb_nick, mb_email, mb_birth, mb_datetime $sql_common $sql_where order by mb_id ";
@@ -110,20 +110,20 @@ include_once("./admin.head.php");
             while ($row=sql_fetch_array($result)) 
             {
                 $i++;
-                echo "<option>$i . $row[mb_id] / $row[mb_name] / $row[mb_nick] / $row[mb_birth] / $row[mb_email]";
-                $ma_list .= $cr . $row[mb_email] . "||" . $row[mb_id] . "||" . $row[mb_name] . "||" . $row[mb_nick] . "||" . $row[mb_birth] . "||" . $row[mb_datetime];
+                echo "<option>$i . $row['mb_id'] / $row[mb_name] / $row[mb_nick] / $row[mb_birth] / $row[mb_email]";
+                $ma_list .= $cr . $row[mb_email] . "||" . $row['mb_id'] . "||" . $row[mb_name] . "||" . $row[mb_nick] . "||" . $row[mb_birth] . "||" . $row[mb_datetime];
                 $cr = "\n";
             }
         ?>
         </select>
-        <textarea name="ma_list" style="display:none"><?=$ma_list?></textarea>
+        <textarea id="ma_list" name="ma_list" style="display:none"><?=$ma_list?></textarea>
     </td>
 </tr>
 </table>
 
 <p align=center>
-    <input type=submit class=btn1 value='  메일 보내기  '>&nbsp;
-    <input type=button class=btn1 value='  뒤  로  ' onclick="history.go(-1);">
+    <input type="submit" class=btn1 value='  메일 보내기  '>&nbsp;
+    <input type="button" class=btn1 value='  뒤  로  ' onclick="history.go(-1);">
 </form>
 
 </td></tr></table>

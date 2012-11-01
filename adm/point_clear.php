@@ -37,7 +37,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $total = 0;
     $sql2 = " select po_id, po_point
                 from $g4[point_table] 
-               where mb_id = '$row[mb_id]'
+               where mb_id = '$row['mb_id']'
                order by po_id desc 
                limit $max_count, $row[cnt] ";
     $result2 = sql_query($sql2);
@@ -49,9 +49,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         sql_query(" delete from $g4[point_table] where po_id = '$row2[po_id]' ");
     }
 
-    insert_point($row[mb_id], $total, "포인트 {$count}건 정리", "@clear", $row[mb_id], $g4[time_ymd]."-".uniqid(""));
+    insert_point($row['mb_id'], $total, "포인트 {$count}건 정리", "@clear", $row['mb_id'], $g4[time_ymd]."-".uniqid(""));
 
-    $str = $row[mb_id]."님 포인트 내역 ".number_format($count)."건 ".number_format($total)."점 정리<br>";
+    $str = $row['mb_id']."님 포인트 내역 ".number_format($count)."건 ".number_format($total)."점 정리<br>";
     echo "<script>document.getElementById('ct').innerHTML += '$str';</script>\n";
     flush();
 }

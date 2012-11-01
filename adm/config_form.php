@@ -1,26 +1,26 @@
 <?
 $sub_menu = "100100";
-include_once("./_common.php");
+include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
 $token = get_token();
 
 if ($is_admin != 'super')
-    alert("최고관리자만 접근 가능합니다.");
+    alert('최고관리자만 접근 가능합니다.');
 
 // 쪽지보낼시 차감 포인트 필드 추가 : 061218
-sql_query(" ALTER TABLE `$g4[config_table]` ADD `cf_memo_send_point` INT NOT NULL AFTER `cf_login_point` ", FALSE);
+sql_query(" ALTER TABLE '{$g4['config_table']}' ADD 'cf_memo_send_point' INT NOT NULL AFTER 'cf_login_point' ", FALSE);
 
 // 개인정보보호정책 필드 추가 : 061121
-$sql = " ALTER TABLE `$g4[config_table]` ADD `cf_privacy` TEXT NOT NULL AFTER `cf_stipulation` ";
+$sql = " ALTER TABLE '{$g4['config_table']}' ADD 'cf_privacy' TEXT NOT NULL AFTER 'cf_stipulation' ";
 sql_query($sql, FALSE);
-if (!trim($config[cf_privacy])) {
-    $config[cf_privacy] = "해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.";
+if (!trim($config['cf_privacy'])) {
+    $config['cf_privacy'] = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.';
 }
 
-$g4['title'] = "환경설정";
-include_once ("./admin.head.php");
+$g4['title'] = '환경설정';
+include_once ('./admin.head.php');
 ?>
 
 <form id="fconfigform" name="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
@@ -33,9 +33,9 @@ include_once ("./admin.head.php");
 <tbody>
 <tr>
     <th scope="row" id="th101"><label for="cf_title">홈페이지 제목</label></th>
-    <td headers="th101"><input type="text" id="cf_title" name="cf_title" required value="<?=$config[cf_title]?>"></td>
+    <td headers="th101"><input type="text" id="cf_title" name="cf_title" required value="<?=$config['cf_title']?>"></td>
     <th scope="row" id="th102"><label for="cf_admin">최고관리자</label></th>
-    <td headers="th102"><?=get_member_id_select("cf_admin", 10, $config[cf_admin], "required")?></td>
+    <td headers="th102"><?=get_member_id_select("cf_admin", 10, $config['cf_admin'], "required")?></td>
 </tr>
 <tr>
     <th scope="row" id="th103"><label for="cf_use_point">포인트 사용</label></th>
@@ -43,16 +43,13 @@ include_once ("./admin.head.php");
 </tr>
 <tr>
     <th scope="row" id="th104"><label for="cf_login_point">로그인시 포인트</label></th>
-    <td headers="th104"><input type="text" id="cf_login_point" name="cf_login_point" required value="<?=$config[cf_login_point]?>"> 점
-        <?=help("회원에게 하루에 한번만 부여")?></td>
+    <td headers="th104"><input type="text" id="cf_login_point" name="cf_login_point" required value="<?=$config[cf_login_point]?>"> 점 <?=help("회원에게 하루에 한번만 부여")?></td>
     <th scope="row" id="th105"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트</label></th>
-    <td headers="th105"><input type="text" id="cf_memo_send_point" name="cf_memo_send_point" required value="<?=$config[cf_memo_send_point]?>"> 점
-        <?=help("양수로 입력하십시오.<br>0으로 입력하시면 쪽지보낼시 포인트를 차감하지 않습니다.")?></td>
+    <td headers="th105"><input type="text" id="cf_memo_send_point" name="cf_memo_send_point" required value="<?=$config[cf_memo_send_point]?>"> 점 <?=help("양수로 입력하십시오.<br>0으로 입력하시면 쪽지보낼시 포인트를 차감하지 않습니다.")?></td>
 </tr>
 <tr>
     <th scope="row" id="th106"><label for="cf_cut_name">이름(별명) 표시</label></th>
-    <td headers="th106" colspan="3"><input type="text" id="cf_cut_name" name="cf_cut_name" value="<?=$config[cf_cut_name]?>"> 자리만 표시
-        <?=help("영숫자 2글자 = 한글 1글자")?></td>
+    <td headers="th106" colspan="3"><input type="text" id="cf_cut_name" name="cf_cut_name" value="<?=$config[cf_cut_name]?>"> 자리만 표시 <?=help("영숫자 2글자 = 한글 1글자")?></td>
 </tr>
 <tr>
     <th scope="row" id="th107"><label for="cf_nick_modify">별명 수정</label></th>
@@ -62,33 +59,27 @@ include_once ("./admin.head.php");
 </tr>
 <tr>
     <th scope="row" id="th109"><label for="cf_new_del">최근게시물 삭제</label></th>
-    <td headers="th109"><input type="text" id="cf_new_del" name="cf_new_del" value="<?=$config[cf_new_del]?>"> 일
-        <?=help("설정일이 지난 최근게시물 자동 삭제")?></td>
+    <td headers="th109"><input type="text" id="cf_new_del" name="cf_new_del" value="<?=$config[cf_new_del]?>"> 일 <?=help("설정일이 지난 최근게시물 자동 삭제")?></td>
     <th scope="row" id="th110"><label for="cf_memo_del">쪽지 삭제</label></th>
-    <td headers="th110"><input type="text" id="cf_memo_del" name="cf_memo_del" value="<?=$config[cf_memo_del]?>"> 일
-        <?=help("설정일이 지난 쪽지 자동 삭제")?></td>
+    <td headers="th110"><input type="text" id="cf_memo_del" name="cf_memo_del" value="<?=$config[cf_memo_del]?>"> 일 <?=help("설정일이 지난 쪽지 자동 삭제")?></td>
 </tr>
 <tr>
     <th  scope="row" id="th111"><label for="cf_visit_del">접속자로그 삭제</label></th>
-    <td headers="th111"><input type="text" id="cf_visit_del" name="cf_visit_del" value="<?=$config[cf_visit_del]?>"> 일
-        <?=help("설정일이 지난 접속자 로그 자동 삭제")?></td>
+    <td headers="th111"><input type="text" id="cf_visit_del" name="cf_visit_del" value="<?=$config[cf_visit_del]?>"> 일 <?=help("설정일이 지난 접속자 로그 자동 삭제")?></td>
     <th  scope="row" id="th112"><label for="cf_popular_del">인기검색어 삭제</label></th>
-    <td headers="th112"><input type="text" id="cf_popular_del" name="cf_popular_del" value="<?=$config[cf_popular_del]?>"> 일
-        <?=help("설정일이 지난 인기검색어 자동 삭제")?></td>
+    <td headers="th112"><input type="text" id="cf_popular_del" name="cf_popular_del" value="<?=$config[cf_popular_del]?>"> 일 <?=help("설정일이 지난 인기검색어 자동 삭제")?></td>
 </tr>
 <tr>
     <th  scope="row" id="th113"><label for="cf_login_minutes">현재 접속자</label></th>
-    <td headers="th113"><input type="text" id="cf_login_minutes" name="cf_login_minutes" value="<?=$config[cf_login_minutes]?>"> 분
-        <?=help("설정값 이내의 접속자를 현재 접속자로 인정")?></td>
+    <td headers="th113"><input type="text" id="cf_login_minutes" name="cf_login_minutes" value="<?=$config[cf_login_minutes]?>"> 분 <?=help("설정값 이내의 접속자를 현재 접속자로 인정")?></td>
     <th  scope="row" id="th114"><label for="cf_page_rows">한페이지당 라인수</label></th>
-    <td headers="th114"><input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config[cf_page_rows]?>"> 라인
-        <?=help("목록(리스트) 한페이지당 라인수")?></td>
+    <td headers="th114"><input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config[cf_page_rows]?>"> 라인 <?=help("목록(리스트) 한페이지당 라인수")?></td>
 </tr>
 <tr>
     <th  scope="row" id="th115"><label for="cf_new_skin">최근게시물 스킨</label></th>
     <td headers="th115"><select id="cf_new_skin" name="cf_new_skin" required >
         <?
-        $arr = get_skin_dir("new");
+        $arr = get_skin_dir('new');
         for ($i=0; $i<count($arr); $i++) {
             echo '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
         }
@@ -96,12 +87,11 @@ include_once ("./admin.head.php");
         <script> document.getElementById('cf_new_skin').value="<?=$config[cf_new_skin]?>";</script>
     </td>
     <th  scope="row" id="th116"><label for="cf_new_rows">최근게시물 라인수</label></th>
-    <td headers="th116"><input type="text" id="cf_new_rows" name="cf_new_rows" value="<?=$config[cf_new_rows]?>"> 라인
-        <?=help("목록 한페이지당 라인수")?></td>
+    <td headers="th116"><input type="text" id="cf_new_rows" name="cf_new_rows" value="<?=$config[cf_new_rows]?>"> 라인 <?=help("목록 한페이지당 라인수")?></td>
 </tr>
 <tr>
     <th  scope="row" id="th117"><label for="cf_search_skin">검색 스킨</label></th>
-    <td headers="th117" colspan="3"><select id=cf_search_skin id="cf_search_skin" name="cf_search_skin" required>
+    <td headers="th117" colspan="3"><select id="cf_search_skin" name="cf_search_skin" required>
         <?
         $arr = get_skin_dir("search");
         for ($i=0; $i<count($arr); $i++) {
@@ -206,13 +196,15 @@ include_once ("./admin.head.php");
 <tbody>
 <tr>
     <th  scope="row" id="th301"><label for="cf_member_skin">회원 스킨</label></th>
-    <td headers="th301" colspan="3"><select id="cf_member_skin" name="cf_member_skin" required>
+    <td headers="th301" colspan="3">
+        <select id="cf_member_skin" name="cf_member_skin" required>
         <?
-        $arr = get_skin_dir("member");
+        $arr = get_skin_dir('member');
         for ($i=0; $i<count($arr); $i++) {
             echo '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
         }
-        ?></select>
+        ?>
+        </select>
         <script> document.getElementById('cf_member_skin').value="<?=$config[cf_member_skin]?>";</script>
     </td>
 </tr>
@@ -266,11 +258,12 @@ include_once ("./admin.head.php");
     <th  scope="row" id="th311"><label for="cf_use_member_icon">회원아이콘 사용</label></th>
     <td headers="th311">
         <select id="cf_use_member_icon" name="cf_use_member_icon">
-            <option value="0"<? if ($config[cf_use_member_icon] == 0) echo ' selected';?>>미사용
-            <option value="1"<? if ($config[cf_use_member_icon] == 1) echo ' selected';?>>아이콘만 표시
-            <option value="2"<? if ($config[cf_use_member_icon] == 2) echo ' selected';?>>아이콘+이름 표시
+            <option value="0">미사용
+            <option value="1">아이콘만 표시
+            <option value="2">아이콘+이름 표시
         </select>
         <?=help("게시물에 게시자 별명 대신 아이콘 사용")?>
+        <script> document.getElementById('cf_use_member_icon').value="<?=$config[cf_use_member_icon]?>";</script>
     </td>
     <th  scope="row" id="th312"><label for="cf_icon_level">아이콘 업로드 권한</label></th>
     <td headers="th312" colspan="3"><? echo get_member_level_select('cf_icon_level', 1, 9, $config[cf_icon_level]) ?> 이상</td>
@@ -290,18 +283,18 @@ include_once ("./admin.head.php");
 <tr>
     <th  scope="row" id="th317"><label for="cf_prohibit_id">아이디,별명 금지단어
         <?=help("입력된 단어가 포함된 내용은 회원아이디, 별명으로 사용할 수 없습니다.\n\n단어와 단어 사이는 , 로 구분합니다.")?></label></th>
-    <td headers="th317"><textarea id="cf_prohibit_id" name="cf_prohibit_id" rows="5"><?=$config[cf_prohibit_id]?> </textarea></td>
+    <td headers="th317"><textarea id="cf_prohibit_id" name="cf_prohibit_id" rows="5"><?=$config['cf_prohibit_id']?> </textarea></td>
     <th  scope="row" id="th318"><label for="cf_prohibit_email">입력 금지 메일
         <?=help("hanmail.net과 같은 메일 주소는 입력을 못합니다.\n\n엔터로 구분합니다.")?></label></th>
-    <td headers="th318"><textarea id="cf_prohibit_email" name="cf_prohibit_email" rows="5"><?=$config[cf_prohibit_email]?> </textarea><br></td>
+    <td headers="th318"><textarea id="cf_prohibit_email" name="cf_prohibit_email" rows="5"><?=$config['cf_prohibit_email']?> </textarea><br></td>
 </tr>
 <tr>
     <th  scope="row" id="th319"><label for="cf_stipulation">회원가입약관</label></th>
-    <td headers="th319" colspan="3"><textarea id="cf_stipulation" name="cf_stipulation" rows="10"><?=$config[cf_stipulation]?> </textarea></td>
+    <td headers="th319" colspan="3"><textarea id="cf_stipulation" name="cf_stipulation" rows="10"><?=$config['cf_stipulation']?> </textarea></td>
 </tr>
 <tr>
     <th  scope="row" id="th320"><label for="cf_privacy">개인정보취급방침</label></th>
-    <td headers="th320" colspan="3"><textarea id="cf_privacy" name="cf_privacy" rows="10"><?=$config[cf_privacy]?> </textarea></td>
+    <td headers="th320" colspan="3"><textarea id="cf_privacy" name="cf_privacy" rows="10"><?=$config['cf_privacy']?> </textarea></td>
 </tr>
 </tbody>
 </table>
@@ -318,13 +311,11 @@ include_once ("./admin.head.php");
 </tr>
 <tr>
     <th  scope="row" id="th402"><label for="cf_use_email_certify">메일인증 사용</label></th>
-    <td headers="th402"><input type="checkbox" id="cf_use_email_certify" name="cf_use_email_certify" value="1" <?=$config[cf_use_email_certify]?'checked':'';?>> 사용
-        <?=help("메일에 배달된 인증 주소를 클릭하여야 회원으로 인정합니다.");?></td>
+    <td headers="th402"><input type="checkbox" id="cf_use_email_certify" name="cf_use_email_certify" value="1" <?=$config[cf_use_email_certify]?'checked':'';?>> 사용 <?=help("메일에 배달된 인증 주소를 클릭하여야 회원으로 인정합니다.");?></td>
 </tr>
 <tr>
     <th  scope="row" id="th403"><label for="cf_formmail_is_member">폼메일 사용 여부</label></th>
-    <td headers="th403"><input type="checkbox" id="cf_formmail_is_member" name="cf_formmail_is_member" value="1" <?=$config[cf_formmail_is_member]?'checked':'';?>> 회원만 사용
-        <?=help("체크하지 않으면 비회원도 사용 할 수 있습니다.")?></td>
+    <td headers="th403"><input type="checkbox" id="cf_formmail_is_member" name="cf_formmail_is_member" value="1" <?=$config[cf_formmail_is_member]?'checked':'';?>> 회원만 사용 <?=help("체크하지 않으면 비회원도 사용 할 수 있습니다.")?></td>
 </tr>
 </table>
 <table>
@@ -385,36 +376,27 @@ include_once ("./admin.head.php");
 <? for ($i=1; $i<=10; $i=$i+2) { $k=$i+1; ?>
 <tr>
     <th  scope="row" id="th5a<?=$i?>"><label for="cf_<?=$i?>_subj">여분필드<?=$i?>제목</label></th>
-    <td headers="th5a<?=$i?>"><input type="text" id="cf_<?=$i?>_subj" name="cf_<?=$i?>_subj" value="<?=get_text($config["cf_{$i}_subj"])?>"></td>
+    <td headers="th5a<?=$i?>"><input type="text" id="cf_<?=$i?>_subj" name="cf_<?=$i?>_subj" value="<?=get_text($config['cf_'.$i.'_subj'])?>"></td>
     <th  scope="row" id="th5b<?=$i?>"><label for="cf_<?=$i?>">여분필드<?=$i?>설명</label></th>
-    <td headers="th5b<?=$i?>"><input type="text" id="cf_<?=$i?>" name="cf_<?=$i?>" value="<?=$config["cf_$i"]?>"></td>
+    <td headers="th5b<?=$i?>"><input type="text" id="cf_<?=$i?>" name="cf_<?=$i?>" value="<?=$config['cf_'.$i]?>"></td>
     <th  scope="row" id="th5a<?=$k?>"><label for="cf_<?=$k?>_subj">여분필드<?=$k?>제목</label></th>
-    <td headers="th5a<?=$k?>"><input type="text" id="cf_<?=$k?>_subj" name="cf_<?=$k?>_subj" value="<?=get_text($config["cf_{$k}_subj"])?>"></td>
+    <td headers="th5a<?=$k?>"><input type="text" id="cf_<?=$k?>_subj" name="cf_<?=$k?>_subj" value="<?=get_text($config['cf_'.$k.'_subj'])?>"></td>
     <th  scope="row" id="th5b<?=$k?>"><label for="cf_<?=$k?>">여분필드<?=$k?>설명</label></th>
-    <td headers="th5b<?=$k?>"><input type="text" id="cf_<?=$k?>" name="cf_<?=$k?>" value="<?=$config["cf_$k"]?>"></td>
+    <td headers="th5b<?=$k?>"><input type="text" id="cf_<?=$k?>" name="cf_<?=$k?>" value="<?=$config['cf_'.$k]?>"></td>
 </tr>
 <? } ?>
 </tbody>
 </table>
 </section>
 
-
-<section id="config_confirm">
-<h2><span></span>XSS 혹은 CSRF 방지</h2>
-<table>
-<caption>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</caption>
-<tbody>
-<tr>
-    <th  scope="row" id="th601"><label for="admin_password">관리자 패스워드</label></th>
-    <td headers="th601">
-        <input type="password" id="admin_password" name="admin_password" required>
-    </td>
-</tr>
-</tbody>
-</table>
-</section>
-
+<fieldset>
+<legend><span></span>XSS 혹은 CSRF 방지</legend>
+<p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
+<label for="admin_password">관리자 패스워드</label>
+<input type="password" id="admin_password" name="admin_password" required>
 <input type="submit" accesskey="s" value="확인">
+</fieldset>
+
 </form>
 
 <script>

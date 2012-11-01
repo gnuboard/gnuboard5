@@ -27,5 +27,5 @@ sql_query(" delete from $g4[board_file_table] where bo_table = '$tmp_bo_table' "
 sql_query(" drop table $g4[write_prefix]$tmp_bo_table ", FALSE);
 
 // 게시판 폴더 전체 삭제
-rm_rf("$g4[path]/data/file/$tmp_bo_table");
+rm_rf("$g4['path']/data/file/$tmp_bo_table");
 ?>

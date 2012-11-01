@@ -9,7 +9,7 @@ if ($w == "")
     auth_check($auth[$sub_menu], "w");
 
     $mb = get_member($mb_id);
-    if (!$mb[mb_id]) { 
+    if (!$mb['mb_id']) { 
         alert("존재하지 않는 회원입니다."); 
     }
 
@@ -32,7 +32,7 @@ if ($w == "")
 
         $sql = " insert into $g4[group_member_table]
                     set gr_id       = '$_POST[gr_id]',
-                        mb_id       = '$_POST[mb_id]',
+                        mb_id       = '$_POST['mb_id']',
                         gm_datetime = '$g4[time_ymdhis]' ";
         sql_query($sql);
     }
@@ -49,7 +49,7 @@ else if ($w == 'd' || $w == 'listdelete')
     check_token();
 
     $gr_id = $gm[gr_id];
-    $mb_id = $gm[mb_id];
+    $mb_id = $gm['mb_id'];
 
     $sql = " delete from $g4[group_member_table] where gm_id = '$_POST[gm_id]' ";
     sql_query($sql);

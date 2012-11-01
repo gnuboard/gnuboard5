@@ -1,26 +1,26 @@
 <?
 $sub_menu = "200100";
-include_once("./_common.php");
+include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
 $token = get_token();
 
-$sql_common = " from $g4[member_table] ";
+$sql_common = " from {$g4['member_table']} ";
 
 $sql_search = " where (1) ";
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
-        case "mb_point" :
+        case 'mb_point' :
             $sql_search .= " ($sfl >= '$stx') ";
             break;
-        case "mb_level" :
+        case 'mb_level' :
             $sql_search .= " ($sfl = '$stx') ";
             break;
-        case "mb_tel" :
-        case "mb_hp" :
-            $sql_search .= " ($sfl like '%$stx') ";
+        case 'mb_tel' :
+        case 'mb_hp' :
+            $sql_search .=  " ($sfl like '%$stx') ";
             break;
         default :
             $sql_search .= " ($sfl like '$stx%') ";
@@ -31,7 +31,7 @@ if ($stx) {
 
 //if ($is_admin == 'group') $sql_search .= " and mb_level = '$member[mb_level]' ";
 if ($is_admin != 'super') 
-    $sql_search .= " and mb_level <= '$member[mb_level]' ";
+    $sql_search .= " and mb_level <= '{$member[mb_level]}' ";
 
 if (!$sst) {
     $sst = "mb_datetime";
@@ -53,7 +53,7 @@ if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 // 탈퇴회원수
-$sql = " select count(*) as cnt
+$sql = "select count(*) as cnt
          $sql_common
          $sql_search
             and mb_leave_date <> ''
@@ -71,10 +71,10 @@ $row = sql_fetch($sql);
 $intercept_count = $row[cnt];
 
 if ($sfl || $stx)
-    $listall = "<a href='$_SERVER[PHP_SELF]' class=tt>처음으로</a>";
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음으로</a>';
 
-$g4[title] = "회원관리";
-include_once("./admin.head.php");
+$g4[title] = '회원관리';
+include_once('./admin.head.php');
 
 $sql = " select *
           $sql_common
@@ -86,20 +86,20 @@ $result = sql_query($sql);
 $colspan = 15;
 ?>
 
-<script src="<?=$g4[path]?>/js/sideview.js"></script>
+<script src="<?=$g4['path']?>/js/sideview.js"></script>
 <script>
-var list_update_php = "member_list_update.php";
-var list_delete_php = "member_list_delete.php";
+var list_update_php = 'member_list_update.php';
+var list_delete_php = 'member_list_delete.php';
 </script>
 
-<form id="fsearch" name="fsearch" method="get">
+<form id="fsearch" id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>회원검색</legend>
     <?=$listall?>
     <span>총회원 <?=number_format($total_count)?></span> 중
     <a href='?sst=mb_intercept_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>' title='차단된 회원부터 출력'>차단 : <?=number_format($intercept_count)?></a>, 
     <a href='?sst=mb_leave_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>' title='탈퇴한 회원부터 출력'>탈퇴 : <?=number_format($leave_count)?></a>
-    <select id="sfl" name="sfl">
+    <select id="sfl" id="sfl" name="sfl">
         <option value="mb_id">회원아이디</option>
         <option value="mb_name">이름</option>
         <option value="mb_nick">별명</option>
@@ -113,18 +113,18 @@ var list_delete_php = "member_list_delete.php";
         <option value="mb_recommend">추천인</option>
     </select>
     <label for="stx">검색어</label>
-    <input type="text" id="stx" name="stx" required  value='<? echo $stx ?>'>
+    <input type="text" id="stx" id="stx" name="stx" required  value='<?=$stx?>'>
     <input type="submit" value="검색">
 </fieldset>
 </form>
 
-<form id="fmemberlist" name="fmemberlist" method="post">
-<input type="hidden" name="sst"   value="<?=$sst?>">
-<input type="hidden" name="sod"   value="<?=$sod?>">
-<input type="hidden" name="sfl"   value="<?=$sfl?>">
-<input type="hidden" name="stx"   value="<?=$stx?>">
-<input type="hidden" name="page"  value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
+<form id="fmemberlist" id="fmemberlist" name="fmemberlist" method="post">
+<input type="hidden" id="sst" name="sst"   value="<?=$sst?>">
+<input type="hidden" id="sod" name="sod"   value="<?=$sod?>">
+<input type="hidden" id="sfl" name="sfl"   value="<?=$sfl?>">
+<input type="hidden" id="stx" name="stx"   value="<?=$stx?>">
+<input type="hidden" id="page" name="page"  value="<?=$page?>">
+<input type="hidden" id="token" name="token" value="<?=$token?>">
 
 <a href="./member_form.php">회원추가</a>
 
@@ -135,7 +135,7 @@ var list_delete_php = "member_list_delete.php";
 </caption>
 <thead>
 <tr>
-    <th scope="col" id="th1"><label for="chkall">전체선택</label><input type="checkbox" id="chkall" name="chkall" value='1' onclick='check_all(this.form)'></th>
+    <th scope="col" id="th1"><label for="chkall">전체선택</label><input type="checkbox" id="chkall" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
     <th scope="col" id="th2"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
     <th scope="col" id="th3"><?=subject_sort_link('mb_name')?>이름</a></th>
     <th scope="col" id="th4"><?=subject_sort_link('mb_nick')?>별명</a></th>
@@ -155,18 +155,18 @@ var list_delete_php = "member_list_delete.php";
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     // 접근가능한 그룹수
-    $sql2 = " select count(*) as cnt from $g4[group_member_table] where mb_id = '$row[mb_id]' ";
+    $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
     $row2 = sql_fetch($sql2);
     $group = "";
     if ($row2[cnt])
-        $group = "<a href='./boardgroupmember_form.php?mb_id=$row[mb_id]'>$row2[cnt]</a>";
+        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2[cnt].'</a>';
 
     if ($is_admin == 'group') 
     {
-        $s_mod = "";
-        $s_del = "";
-    } 
-    else 
+        $s_mod = '';
+        $s_del = '';
+    }
+    else
     {
         $s_mod = '<a href="./member_form.php?$qstr&amp;w=u&amp;mb_id='.$row[mb_id].'">수정</a>';
         //$s_del = '<a href="javascript:del('./member_delete.php?$qstr&amp;w=d&amp;mb_id=$row[mb_id]');">삭제</a>';
@@ -174,23 +174,23 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     }
     $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row[mb_id].'">그룹</a>';
 
-    $leave_date = $row[mb_leave_date] ? $row[mb_leave_date] : date("Ymd", $g4[server_time]);
-    $intercept_date = $row[mb_intercept_date] ? $row[mb_intercept_date] : date("Ymd", $g4[server_time]);
+    $leave_date = $row['mb_leave_date'] ? $row['mb_leave_date'] : date("Ymd", $g4[server_time]);
+    $intercept_date = $row['mb_intercept_date'] ? $row['mb_intercept_date'] : date("Ymd", $g4[server_time]);
 
-    $mb_nick = get_sideview($row[mb_id], $row[mb_nick], $row[mb_email], $row[mb_homepage]);
+    $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
-    $mb_id = $row[mb_id];
-    if ($row[mb_leave_date])
-        $mb_id = "<font color=crimson>$mb_id</font>";
-    else if ($row[mb_intercept_date])
-        $mb_id = "<font color=orange>$mb_id</font>";
+    $mb_id = $row['mb_id'];
+    if ($row['mb_leave_date'])
+        $mb_id = $mb_id;
+    else if ($row['mb_intercept_date'])
+        $mb_id = $mb_id;
 
     ?>
     <tr>
         <td headers="th1">
             <label for="chk[<?=$i?>]">이 회원을 선택</label>
-            <input type="checkbox" id="chk[<?=$i?>]" name="chk[]" value="<?=$i?>">
-            <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
+            <input type="checkbox" id="chk[<?=$i?>]" id="chk[]" name="chk[]" value="<?=$i?>">
+            <input type="hidden" id="mb_id[<?=$i?>]" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
         </td>
         <td headers="th2"><?=$mb_id?></td>
         <td headers="th3"><?=$row['mb_name']?></td>
@@ -202,7 +202,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <td headers="th9"><?=$row[mb_open]?'예':'아니오'?></td>
         <!-- <td headers="th10"><?=$row[mb_leave_date]?'예':'아니오';?></td> -->
         <td headers="th11"><?=preg_match('/[1-9]/', $row[mb_email_certify])?'예':'아니오'?></td>
-        <td headers="th12"><input type="checkbox" name="mb_intercept_date[<?=$i?>]" <?$row['mb_intercept_date']?'checked':''?> value="<?=$intercept_date?>"></td>
+        <td headers="th12"><input type="checkbox" id="mb_intercept_date[<?=$i?>]" name="mb_intercept_date[<?=$i?>]" <?$row['mb_intercept_date']?'checked':''?> value="<?=$intercept_date?>"></td>
         <td headers="th13"><?=$group?></td>
         <td headers="th14"><?=$s_mod?> <?=$s_del?> <?=$s_grp?></td>
     </tr>
@@ -248,14 +248,14 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name="fpost" method="post">
-<input type="hidden" name="sst"   value="<?=$sst?>">
-<input type="hidden" name="sod"   value="<?=$sod?>">
-<input type="hidden" name="sfl"   value="<?=$sfl?>">
-<input type="hidden" name="stx"   value="<?=$stx?>">
-<input type="hidden" name="page"  value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="mb_id">
+<form id="fpost" name="fpost" method="post">
+<input type="hidden" id="sst" name="sst" value="<?=$sst?>">
+<input type="hidden" id="sod" name="sod" value="<?=$sod?>">
+<input type="hidden" id="sfl" name="sfl" value="<?=$sfl?>">
+<input type="hidden" id="stx" name="stx" value="<?=$stx?>">
+<input type="hidden" id="page" name="page" value="<?=$page?>">
+<input type="hidden" id="token" name="token" value="<?=$token?>">
+<input type="hidden" id="mb_id" name="mb_id">
 </form>
 
 <?

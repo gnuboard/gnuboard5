@@ -50,34 +50,34 @@ $sql_common = " mb_name         = '$_POST[mb_name]',
 if ($w == "")
 {
     $mb = get_member($mb_id);
-    if ($mb[mb_id])
-        alert("이미 존재하는 회원입니다.\\n\\nＩＤ : $mb[mb_id]\\n\\n이름 : $mb[mb_name]\\n\\n별명 : $mb[mb_nick]\\n\\n메일 : $mb[mb_email]");
+    if ($mb['mb_id'])
+        alert("이미 존재하는 회원입니다.\\n\\nＩＤ : $mb['mb_id']\\n\\n이름 : $mb[mb_name]\\n\\n별명 : $mb[mb_nick]\\n\\n메일 : $mb[mb_email]");
 
     if ($mb[mb_nick] == $mb_nick)
-        alert("이미 존재하는 별명입니다.\\n\\nＩＤ : $mb[mb_id]\\n\\n이름 : $mb[mb_name]\\n\\n별명 : $mb[mb_nick]\\n\\n메일 : $mb[mb_email]");
+        alert("이미 존재하는 별명입니다.\\n\\nＩＤ : $mb['mb_id']\\n\\n이름 : $mb[mb_name]\\n\\n별명 : $mb[mb_nick]\\n\\n메일 : $mb[mb_email]");
 
     if ($mb[mb_email] == $mb_email)
-        alert("이미 존재하는 E-mail 입니다.\\n\\nＩＤ : $mb[mb_id]\\n\\n이름 : $mb[mb_name]\\n\\n별명 : $mb[mb_nick]\\n\\n메일 : $mb[mb_email]");
+        alert("이미 존재하는 E-mail 입니다.\\n\\nＩＤ : $mb['mb_id']\\n\\n이름 : $mb[mb_name]\\n\\n별명 : $mb[mb_nick]\\n\\n메일 : $mb[mb_email]");
 
     sql_query(" insert into $g4[member_table] set mb_id = '$mb_id', mb_password = '".sql_password($mb_password)."', mb_datetime = '$g4[time_ymdhis]', mb_ip = '$_SERVER[REMOTE_ADDR]', mb_email_certify = '$g4[time_ymdhis]', $sql_common  ");
 }
 else if ($w == "u")
 {
     $mb = get_member($mb_id);
-    if (!$mb[mb_id])
+    if (!$mb['mb_id'])
         alert("존재하지 않는 회원자료입니다.");
 
     if ($is_admin != "super" && $mb[mb_level] >= $member[mb_level])
         alert("자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.");
 
-    if ($_POST[mb_id] == $member[mb_id] && $_POST[mb_level] != $mb[mb_level])
-        alert("$mb[mb_id] : 로그인 중인 관리자 레벨은 수정 할 수 없습니다.");
+    if ($_POST['mb_id'] == $member['mb_id'] && $_POST[mb_level] != $mb[mb_level])
+        alert("$mb['mb_id'] : 로그인 중인 관리자 레벨은 수정 할 수 없습니다.");
 
     $mb_dir = substr($mb_id,0,2);
 
     // 회원 아이콘 삭제
     if ($del_mb_icon)
-        @unlink("$g4[path]/data/member/$mb_dir/$mb_id.gif");
+        @unlink("$g4['path']/data/member/$mb_dir/$mb_id.gif");
 
     // 아이콘 업로드
     if (is_uploaded_file($_FILES[mb_icon][tmp_name])) {
@@ -86,10 +86,10 @@ else if ($w == "u")
         }
 
         if (preg_match("/(\.gif)$/i", $_FILES[mb_icon][name])) {
-            @mkdir("$g4[path]/data/member/$mb_dir", 0707);
-            @chmod("$g4[path]/data/member/$mb_dir", 0707);
+            @mkdir("$g4['path']/data/member/$mb_dir", 0707);
+            @chmod("$g4['path']/data/member/$mb_dir", 0707);
 
-            $dest_path = "$g4[path]/data/member/$mb_dir/$mb_id.gif";
+            $dest_path = "$g4['path']/data/member/$mb_dir/$mb_id.gif";
 
             move_uploaded_file($_FILES[mb_icon][tmp_name], $dest_path);
             chmod($dest_path, 0606);

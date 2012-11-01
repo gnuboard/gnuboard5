@@ -16,11 +16,11 @@ function get_skin_dir($skin, $len='')
 
     $result_array = array();
 
-    $dirname = "$g4[path]/skin/$skin/";
+    $dirname = $g4['path'].'/skin/'.$skin.'/';
     $handle = opendir($dirname);
     while ($file = readdir($handle)) 
     {
-        if($file == "."||$file == "..") continue;
+        if($file == '.'||$file == '..') continue;
 
         if (is_dir($dirname.$file)) $result_array[] = $file;
     }
@@ -104,7 +104,7 @@ function member_delete($mb_id)
     sql_query(" update $g4[board_table] set bo_admin = '' where bo_admin = '$mb_id' ");
 
     // 아이콘 삭제
-    @unlink("$g4[path]/data/member/".substr($mb_id,0,2)."/$mb_id.gif");
+    @unlink("$g4['path']/data/member/".substr($mb_id,0,2)."/$mb_id.gif");
     */
 }
 
@@ -137,9 +137,9 @@ function get_member_id_select($name, $level, $selected='', $event='')
     $str = "<select id='$name' name='$name' $event><option value=''>선택안함";
     for ($i=0; $row=sql_fetch_array($result); $i++) 
     {
-        $str .= "<option value='$row[mb_id]'";
-        if ($row[mb_id] == $selected) $str .= " selected";
-        $str .= ">$row[mb_id]</option>";
+        $str .= '<option value="'.$row['mb_id'].'"';
+        if ($row['mb_id'] == $selected) $str .= " selected";
+        $str .= '>'.$row['mb_id'].'</option>';
     }
     $str .= "</select>";
     return $str;
@@ -176,10 +176,10 @@ function textarea_size($fld)
     global $g4;
 
     $size = 10;
-    $s  = "<table cellpadding=2 cellspacing=0 border=0 width=100%><tr><td align=right>";
-    $s .= "<span onclick=\"javascript:textarea_size(document.getElementById('$fld'), {$size})\"><img src='$g4[admin_path]/img/btn_up.gif' border=0 align=absmiddle></span> ";
-    $s .= "<span onclick=\"javascript:textarea_size(document.getElementById('$fld'), ".$size*(-1).")\"><img src='$g4[admin_path]/img/btn_down.gif' border=0 align=absmiddle></span>";
-    $s .= "&nbsp;&nbsp;</td></tr></table>";
+    $s  = '<table cellpadding=2 cellspacing=0 border=0 width=100%><tr><td align=right>';
+    $s .= '<span onclick="javascript:textarea_size(document.getElementById(\'$fld\'), {$size})"><img src="'.$g4['admin_path'].'/img/btn_up.gif"></span> ';
+    $s .= '<span onclick="javascript:textarea_size(document.getElementById(\'$fld\'), ".$size*(-1).")"><img src="'.$g4['admin_path'].'/img/btn_down.gif"></span>';
+    $s .= '</td></tr></table>';
     return $s;
 }
 
@@ -190,10 +190,10 @@ function icon($act, $link="", $target="_parent")
     global $g4;
 
     $img = array("입력"=>"insert", "추가"=>"insert", "생성"=>"insert", "수정"=>"modify", "삭제"=>"delete", "이동"=>"move", "그룹"=>"move", "보기"=>"view", "미리보기"=>"view", "복사"=>"copy");
-    $icon = "<img src='{$g4[admin_path]}/img/icon_{$img[$act]}.gif' border=0 align=absmiddle title='$act' width=22 height=21>";
+    $icon = "<img src='{$g4['admin_path']}/img/icon_{$img[$act]}.gif' border=0 align=absmiddle title='$act' width=22 height=21>";
     if ($link)
-        //$s = "<a href=\"$link\" target=\"$target\">$icon</a>";
-        $s = "<a href=\"$link\">$icon</a>";
+        //$s = "<a href="$link" target="$target">$icon</a>";
+        $s = '<a href="'.$link.'">'.$icon.'</a>';
     else
         $s = $icon;
     return $s;
@@ -219,21 +219,10 @@ function rm_rf($file)
     }
 }
 
+// 삭제 대상 : 지운아빠 2012-11-01 : github issue #8의 comment 추가내용의 1. 내용 참조
+// 프로그램 오류 때문에 임시로 살려둠
 function help($help="", $left=0, $top=0)
 {
-    global $g4;
-    static $idx = 0;
-
-    $idx++;
-
-    $help = preg_replace("/\n/", "<br>", $help);
-    
-    $str  = "<img src='$g4[admin_path]/img/icon_help.gif' border=0 width=15 height=15 align=absmiddle onclick=\"help('help$idx', $left, $top);\" style='cursor:hand;'>";
-    $str .= "<div id='help$idx' style='position:absolute; display:none; z-index:9999;'>";
-    $str .= "<div id='csshelp1'><div id='csshelp2'><div id='csshelp3'>$help</div></div></div>";
-    $str .= "</div>";
-
-    return $str;
 }
 
 // 출력순서
@@ -267,7 +256,7 @@ if (!$member['mb_id'])
 else if ($is_admin != "super") 
 {
     $auth = array();
-    $sql = " select au_menu, au_auth from $g4[auth_table] where mb_id = '$member[mb_id]' ";
+    $sql = " select au_menu, au_auth from $g4[auth_table] where mb_id = '{$member['mb_id']}' ";
     $result = sql_query($sql);
     for($i=0; $row=sql_fetch_array($result); $i++) 
     {
@@ -276,7 +265,7 @@ else if ($is_admin != "super")
 
     if (!$i)
     {
-        alert("최고관리자 또는 관리권한이 있는 회원만 접근 가능합니다.", $g4[path]);
+        alert("최고관리자 또는 관리권한이 있는 회원만 접근 가능합니다.", $g4['path']);
     }
 }
 
@@ -286,7 +275,7 @@ if (get_session("ss_mb_key") !== $admin_key) {
 
     session_destroy();
 
-    include_once("$g4[path]/lib/mailer.lib.php");
+    include_once($g4['path'].'/lib/mailer.lib.php');
     // 메일 알림
     mailer($member['mb_nick'], $member['mb_email'], $member['mb_email'], "XSS 공격 알림", "{$_SERVER['REMOTE_ADDR']} 아이피로 XSS 공격이 있었습니다.\n\n관리자 권한을 탈취하려는 접근이므로 주의하시기 바랍니다.\n\n해당 아이피는 차단하시고 의심되는 게시물이 있는지 확인하시기 바랍니다.\n\n$g4[url]", 0);
 

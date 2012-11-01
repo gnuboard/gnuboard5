@@ -18,7 +18,7 @@ for ($i=0; $i<count($chk); $i++)
         $sql = " select count(*) as cnt from $g4[board_table] a, $g4[group_table] b
                   where a.gr_id = '{$_POST['gr_id'][$k]}' 
                     and a.gr_id = b.gr_id 
-                    and b.gr_admin = '$member[mb_id]' ";
+                    and b.gr_admin = '$member['mb_id']' ";
         $row = sql_fetch($sql);
         if (!$row[cnt])
             alert("최고관리자가 아닌 경우 다른 관리자의 게시판($board_table[$k])은 수정이 불가합니다.");

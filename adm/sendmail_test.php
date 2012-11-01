@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 if (!$config[cf_email_use])
     alert("환경설정에서 \'메일발송 사용\'에 체크하셔야 메일을 발송할 수 있습니다.");
 
-include_once("$g4[path]/lib/mailer.lib.php");
+include_once("$g4['path']/lib/mailer.lib.php");
 
 $g4[title] = "메일 테스트";
 include_once("./admin.head.php");
@@ -32,8 +32,8 @@ HEREDOC;
 $token = get_token();
 ?>
 
-<form id="fsendmailtest" name="fsendmailtest" method="post">
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fsendmailtest" id="fsendmailtest" name="fsendmailtest" method="post">
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
 <p>
 고객님들께서 메일이 오지 않는다고 하면 사용하는 메뉴입니다.<br>
 아래 테스트메일 발송하기에 입력한 메일주소로 테스트 메일을 발송합니다.<br>
@@ -44,7 +44,7 @@ $token = get_token();
 <fieldset>
 <legend>테스트메일 발송하기</legend>
 <label for="mail">받는 메일주소</label>
-<input type="text" id="mail" name="mail" required value="<?=$member[mb_email]?>">
+<input type="text" id="mail" id="mail" name="mail" required value="<?=$member[mb_email]?>">
 <input type="submit" value="발송">
 </fieldset>
 </form>

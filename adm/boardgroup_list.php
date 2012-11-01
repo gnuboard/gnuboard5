@@ -10,7 +10,7 @@ $sql_common = " from $g4[group_table] ";
 
 $sql_search = " where (1) ";
 if ($is_admin != "super")
-    $sql_search .= " and (gr_admin = '$member[mb_id]') ";
+    $sql_search .= " and (gr_admin = '$member['mb_id']') ";
 
 if ($stx) {
     $sql_search .= " and ( ";
@@ -63,28 +63,28 @@ var list_update_php = "./boardgroup_list_update.php";
 </script>
 
 <table width=100% cellpadding=3 cellspacing=1>
-<form name=fsearch method=get>
+<form id="fsearch" name="fsearch" method=get>
 <tr>
     <td width=50% align=left><?=$listall?> (그룹수 : <?=number_format($total_count)?>개)</td>
     <td width=50% align=right>
-        <select name=sfl>
+        <select id="sfl" name="sfl">
             <option value="gr_subject">제목</option>
             <option value="gr_id">ID</option>
             <option value="gr_admin">그룹관리자</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" class=ed required value='<?=$stx?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
 
-<form name=fboardgrouplist method=post>
-<input type=hidden name=sst   value='<?=$sst?>'>
-<input type=hidden name=sod   value='<?=$sod?>'>
-<input type=hidden name=sfl   value='<?=$sfl?>'>
-<input type=hidden name=stx   value='<?=$stx?>'>
-<input type=hidden name=page  value='<?=$page?>'>
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fboardgrouplist" name="fboardgrouplist" method=post>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
 <table width=100% cellpadding=0 cellspacing=1 border=0>
 <colgroup width=30>
 <colgroup width=120>
@@ -96,14 +96,14 @@ var list_update_php = "./boardgroup_list_update.php";
 <colgroup width=60>
 <tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
 <tr class='bgcol1 bold col1 ht center'>
-    <td><input type=checkbox name=chkall value="1" onclick="check_all(this.form)"></td>
+    <td><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></td>
     <td><?=subject_sort_link("gr_id")?>그룹아이디</a></td>
     <td><?=subject_sort_link("gr_subject")?>제목</a></td>
     <td><?=subject_sort_link("gr_admin")?>그룹관리자</a></td>
     <td>게시판</td>
     <td>접근사용</td>
     <td>접근회원수</td>
-    <td><? if ($is_admin == "super") { echo "<a href='./boardgroup_form.php'><img src='$g4[admin_path]/img/icon_insert.gif' border=0 title='생성'></a>"; } ?></td>
+    <td><? if ($is_admin == "super") { echo "<a href='./boardgroup_form.php'><img src='$g4['admin_path']/img/icon_insert.gif' border=0 title='생성'></a>"; } ?></td>
 </tr>
 <tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 <?
@@ -120,25 +120,25 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $s_upd = "<a href='./boardgroup_form.php?$qstr&w=u&gr_id=$row[gr_id]'><img src='img/icon_modify.gif' border=0 title='수정'></a>";
     $s_del = "";
     if ($is_admin == "super") {
-        //$s_del = "<a href=\"javascript:del('./boardgroup_delete.php?$qstr&gr_id=$row[gr_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
-        $s_del = "<a href=\"javascript:post_delete('boardgroup_delete.php', '$row[gr_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
+        //$s_del = "<a href="javascript:del('./boardgroup_delete.php?$qstr&gr_id=$row[gr_id]');"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
+        $s_del = "<a href="javascript:post_delete('boardgroup_delete.php', '$row[gr_id]');"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
     }
 
     $list = $i%2;
-    echo "<input type=hidden name=gr_id[$i] value='$row[gr_id]'>";
-    echo "<tr class='list$list' onmouseover=\"this.className='mouseover';\" onmouseout=\"this.className='list$list';\" height=27 align=center>";
-    echo "<td><input type=checkbox name=chk[] value='$i'></td>";
+    echo "<input type="hidden" id="gr_id" name="gr_id"[$i] value='$row[gr_id]'>";
+    echo "<tr class='list$list' onmouseover="this.classid="mouseover" name="mouseover";" onmouseout="this.className='list$list';" height=27 align=center>";
+    echo "<td><input type="checkbox" id="chk" name="chk"[] value='$i'></td>";
     echo "<td><a href='$g4[bbs_path]/group.php?gr_id=$row[gr_id]'><b>$row[gr_id]</b></a></td>";
-    echo "<td><input type=text class=ed name=gr_subject[$i] value='".get_text($row[gr_subject])."' size=30></td>";
+    echo "<td><input type="text" class=ed id="gr_subject" name="gr_subject"[$i] value='".get_text($row[gr_subject])."' size=30></td>";
 
     if ($is_admin == "super")
         //echo "<td>".get_member_id_select("gr_admin[$i]", 9, $row[gr_admin])."</td>";
-        echo "<td><input type=text class=ed name=gr_admin[$i] value='$row[gr_admin]' maxlength=20></td>";
+        echo "<td><input type="text" class=ed id="gr_admin" name="gr_admin"[$i] value='$row[gr_admin]' maxlength=20></td>";
     else
-        echo "<input type=hidden name='gr_admin[$i]' value='$row[gr_admin]'><td>$row[gr_admin]</td>";
+        echo "<input type="hidden" name='gr_admin[$i]' value='$row[gr_admin]'><td>$row[gr_admin]</td>";
 
     echo "<td><a href='./board_list.php?sfl=a.gr_id&stx=$row[gr_id]'>$row2[cnt]</a></td>";
-    echo "<td><input type=checkbox name=gr_use_access[$i] ".($row[gr_use_access]?'checked':'')." value='1'></td>";
+    echo "<td><input type="checkbox" id="gr_use_access" name="gr_use_access"[$i] ".($row[gr_use_access]?'checked':'')." value="1"></td>";
     echo "<td><a href='./boardgroupmember_list.php?gr_id=$row[gr_id]'>$row1[cnt]</a></td>";
     echo "<td>$s_upd $s_del</td>";
     echo "</tr>\n";
@@ -153,8 +153,8 @@ echo "</table>";
 $pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
 echo "<table width=100% cellpadding=3 cellspacing=1>";
 echo "<tr><td width=70%>";
-echo "<input type=button class='btn1' value='선택수정' onclick=\"btn_check(this.form, 'update')\">";
-//echo " <input type=button value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
+echo "<input type="button" class='btn1' value='선택수정' onclick="btn_check(this.form, 'update')">";
+//echo " <input type="button" value='선택삭제' onclick="btn_check(this.form, 'delete')">";
 echo "</td>";
 echo "<td width=30% align=right>$pagelist</td></tr></table>\n";
 
@@ -177,14 +177,14 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='gr_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<input type="hidden" id="gr_id" name="gr_id">
 </form>
 
 <?

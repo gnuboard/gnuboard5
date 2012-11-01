@@ -13,5 +13,5 @@ if (!defined("_GNUBOARD_")) exit;
 <script src="<?=$g4['admin_path']?>/admin.js"></script>
 
 <?
-include_once("$g4[path]/tail.sub.php");
+include_once($g4['path'].'/tail.sub.php');
 ?>

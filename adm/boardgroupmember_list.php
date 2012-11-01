@@ -55,19 +55,19 @@ include_once("./admin.head.php");
 $colspan = 7;
 ?>
 
-<script type="text/javascript" src="<?=$g4[path]?>/js/sideview.js"></script>
+<script type="text/javascript" src="<?=$g4['path']?>/js/sideview.js"></script>
 
 <table width=100% cellpadding=3 cellspacing=1>
-<form name=fsearch method=get>
-<input type=hidden name=gr_id value='<?=$gr_id?>'>
+<form id="fsearch" name="fsearch" method=get>
+<input type="hidden" id="gr_id" name="gr_id" value='<?=$gr_id?>'>
 <tr>
     <td width=50% align=left>* <? echo "'<b>[$gr[gr_id]] $gr[gr_subject]</b>' 그룹의 접근가능한 회원 목록"; ?></td>
     <td width=50% align=right>
-        <select name=sfl class=cssfl>
+        <select id="sfl" name="sfl" class=cssfl>
             <option value='a.mb_id'>회원아이디</option>
         </select>
-        <input type=text name=stx required itemname='검색어' value='<? echo $stx ?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" required value='<? echo $stx ?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
@@ -96,21 +96,21 @@ $colspan = 7;
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
     // 접근가능한 그룹수
-    $sql2 = " select count(*) as cnt from $g4[group_member_table] where mb_id = '$row[mb_id]' ";
+    $sql2 = " select count(*) as cnt from $g4[group_member_table] where mb_id = '$row['mb_id']' ";
     $row2 = sql_fetch($sql2);
     $group = "";
     if ($row2[cnt])
-        $group = "<a href='./boardgroupmember_form.php?mb_id=$row[mb_id]'>$row2[cnt]</a>";
+        $group = "<a href='./boardgroupmember_form.php?mb_id=$row['mb_id']'>$row2[cnt]</a>";
 
-    //$s_del = "<a href=\"javascript:del('./boardgroupmember_update.php?w=listdelete&gm_id=$row[gm_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
-    $s_del = "<a href=\"javascript:post_delete('boardgroupmember_update.php', '$row[gm_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
+    //$s_del = "<a href="javascript:del('./boardgroupmember_update.php?w=listdelete&gm_id=$row[gm_id]');"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
+    $s_del = "<a href="javascript:post_delete('boardgroupmember_update.php', '$row[gm_id]');"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
 
-    $mb_nick = get_sideview($row[mb_id], $row[mb_nick], $row[mb_email], $row[mb_homepage]);
+    $mb_nick = get_sideview($row['mb_id'], $row[mb_nick], $row[mb_email], $row[mb_homepage]);
 
     $list = $i%2;
     echo "
     <tr class='list$list col1 ht center'>
-        <td>$row[mb_id]</td>
+        <td>$row['mb_id']</td>
         <td>$row[mb_name]</td>
         <td>$mb_nick</td>
         <td>".substr($row[mb_today_login],2,8)."</td>
@@ -150,15 +150,15 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='w'     value='listdelete'>
-<input type='hidden' name='gm_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<input type="hidden" id="w" name="w"     value="listdelete">
+<input type="hidden" id="gm_id" name="gm_id">
 </form>
 
 <?

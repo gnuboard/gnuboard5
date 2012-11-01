@@ -5,7 +5,7 @@ include_once("./_common.php");
 check_demo();
 
 if ($is_admin != "super")
-    alert("최고관리자만 접근 가능합니다.", $g4[path]);
+    alert("최고관리자만 접근 가능합니다.", $g4['path']);
 
 $g4[title] = "업그레이드";
 include_once("./admin.head.php");
@@ -73,7 +73,7 @@ sql_query("CREATE TABLE `$g4[token_table]` (
   PRIMARY KEY  (`to_token`),
   KEY `to_datetime` (`to_datetime`),
   KEY `to_ip` (`to_ip`)
-) TYPE=MyISAM", FALSE);
+) type="MyISAM"", FALSE);
 
 // 4.09.00
 // 기본환경설정 테이블 필드 추가
@@ -140,7 +140,7 @@ sql_query(" CREATE TABLE `{$g4[board_good_table]}` (
   `bg_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`bg_id`),
   UNIQUE KEY `fkey1` (`bo_table`,`wr_id`,`mb_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ", false);
+) type="MyISAM" AUTO_INCREMENT=1 ", false);
 
 
 // 4.07.00
@@ -156,7 +156,7 @@ for ($i=0; $row=sql_fetch_array($res); $i++)
     $sql2 = " select mb_id from $ttmp where wr_id = '$row[wr_id]' ";
     $row2 = sql_fetch($sql2);
 
-    $sql3 = " update $g4[board_new_table] set mb_id = '$row2[mb_id]' where bn_id = '$row[bn_id]' ";
+    $sql3 = " update $g4[board_new_table] set mb_id = '$row2['mb_id']' where bn_id = '$row[bn_id]' ";
     sql_query($sql3, false);
 }
 
@@ -285,7 +285,7 @@ $sql = " CREATE TABLE $g4[popular_table] (
   pp_ip varchar(50) NOT NULL default '',
   PRIMARY KEY  (pp_id),
   UNIQUE KEY index1 (pp_date,pp_word,pp_ip)
-) TYPE=MyISAM ";
+) type="MyISAM" ";
 sql_query($sql, FALSE);
 
 sql_query(" ALTER TABLE `$g4[board_new_table]` ADD `wr_parent` INT NOT NULL AFTER `wr_id` ", FALSE);
@@ -321,7 +321,7 @@ $sql = " CREATE TABLE $g4[mail_table] (
   ma_ip varchar(255) NOT NULL default '',
   ma_last_option text NOT NULL,
   PRIMARY KEY  (ma_id)
-) TYPE=MyISAM ";
+) type="MyISAM" ";
 sql_query($sql, FALSE);
 
 
@@ -331,7 +331,7 @@ $sql = " CREATE TABLE $g4[auth_table] (
   au_menu varchar(20) NOT NULL default '',
   au_auth set('r','w','d') NOT NULL default '',
   PRIMARY KEY  (mb_id,au_menu)
-) TYPE=MyISAM ";
+) type="MyISAM" ";
 sql_query($sql, FALSE);
 */
 

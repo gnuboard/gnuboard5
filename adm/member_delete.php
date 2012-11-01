@@ -8,7 +8,7 @@ auth_check($auth[$sub_menu], "d");
 
 $mb = get_member($_POST['mb_id']);
 
-if (!$mb[mb_id])
+if (!$mb['mb_id'])
     alert("회원자료가 존재하지 않습니다.");
 else if ($member['mb_id'] == $mb['mb_id'])
     alert("로그인 중인 관리자는 삭제 할 수 없습니다.");

@@ -14,7 +14,7 @@ if ($member[mb_password] != sql_password($_POST['admin_password'])) {
 }
 
 $mb = get_member($cf_admin);
-if (!$mb[mb_id])
+if (!$mb['mb_id'])
     alert("최고관리자 회원아이디가 존재하지 않습니다.");
 
 check_token();

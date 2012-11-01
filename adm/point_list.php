@@ -58,7 +58,7 @@ include_once ("./admin.head.php");
 $colspan = 8;
 ?>
 
-<script type="text/javascript" src="<?=$g4[path]?>/js/sideview.js"></script>
+<script type="text/javascript" src="<?=$g4['path']?>/js/sideview.js"></script>
 <script type="text/javascript">
 var list_update_php = "";
 var list_delete_php = "point_list_delete.php";
@@ -75,13 +75,13 @@ function point_clear()
 </script>
 
 <table width=100%>
-<form name=fsearch method=get>
+<form id="fsearch" name="fsearch" method=get>
 <tr>
     <td width=50% align=left>
         <?=$listall?> (건수 : <?=number_format($total_count)?>)
         <? 
-        if ($mb[mb_id]) 
-            echo "&nbsp;(" . $mb[mb_id] ." 님 포인트 합계 : " . number_format($mb[mb_point]) . "점)";
+        if ($mb['mb_id']) 
+            echo "&nbsp;(" . $mb['mb_id'] ." 님 포인트 합계 : " . number_format($mb[mb_point]) . "점)";
         else {
             $row2 = sql_fetch(" select sum(po_point) as sum_point from $g4[point_table] ");
             echo "&nbsp;(전체 포인트 합계 : " . number_format($row2[sum_point]) . "점)";
@@ -90,23 +90,23 @@ function point_clear()
         <? if ($is_admin == "super") { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><? } ?>
     </td>
     <td width=50% align=right>
-        <select name=sfl class=cssfl>
-            <option value='mb_id'>회원아이디</option>
-            <option value='po_content'>내용</option>
+        <select id="sfl" name="sfl" class=cssfl>
+            <option value="mb_id">회원아이디</option>
+            <option value="po_content">내용</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" class=ed required value='<?=$stx?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
 
-<form name=fpointlist method=post>
-<input type=hidden name=sst   value='<?=$sst?>'>
-<input type=hidden name=sod   value='<?=$sod?>'>
-<input type=hidden name=sfl   value='<?=$sfl?>'>
-<input type=hidden name=stx   value='<?=$stx?>'>
-<input type=hidden name=page  value='<?=$page?>'>
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fpointlist" name="fpointlist" method=post>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
 
 <table width=100% cellpadding=0 cellspacing=1>
 <colgroup width=30>
@@ -119,7 +119,7 @@ function point_clear()
 <colgroup width=80>
 <tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
 <tr class='bgcol1 bold col1 ht center'>
-    <td><input type=checkbox name=chkall value='1' onclick='check_all(this.form)'></td>
+    <td><input type="checkbox" id="chkall" name="chkall" value="1" onclick='check_all(this.form)'></td>
     <td><?=subject_sort_link('mb_id')?>회원아이디</a></td>
     <td>이름</td>
     <td>별명</td>
@@ -132,13 +132,13 @@ function point_clear()
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
-    if ($row2[mb_id] != $row[mb_id])
+    if ($row2['mb_id'] != $row['mb_id'])
     {
-        $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from $g4[member_table] where mb_id = '$row[mb_id]' ";
+        $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from $g4[member_table] where mb_id = '$row['mb_id']' ";
         $row2 = sql_fetch($sql2);
     }
 
-    $mb_nick = get_sideview($row[mb_id], $row2[mb_nick], $row2[mb_email], $row2[mb_homepage]);
+    $mb_nick = get_sideview($row['mb_id'], $row2[mb_nick], $row2[mb_email], $row2[mb_homepage]);
 
     $link1 = $link2 = "";
     if (!preg_match("/^\@/", $row[po_rel_table]) && $row[po_rel_table])
@@ -149,11 +149,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $list = $i%2;
     echo "
-    <input type=hidden name=po_id[$i] value='$row[po_id]'>
-    <input type=hidden name=mb_id[$i] value='$row[mb_id]'>
+    <input type="hidden" id="po_id" name="po_id"[$i] value='$row[po_id]'>
+    <input type="hidden" id="mb_id" name="mb_id"[$i] value='$row['mb_id']'>
     <tr class='list$list col1 ht center'>
-        <td><input type=checkbox name=chk[] value='$i'></td>
-        <td><a href='?sfl=mb_id&stx=$row[mb_id]'>$row[mb_id]</a></td>
+        <td><input type="checkbox" id="chk" name="chk"[] value='$i'></td>
+        <td><a href='?sfl=mb_id&stx=$row['mb_id']'>$row['mb_id']</a></td>
         <td>$row2[mb_name]</td>
         <td>$mb_nick</td>
         <td>$row[po_datetime]</td>
@@ -172,7 +172,7 @@ echo "</table>";
 $pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
 echo "<table width=100% cellpadding=3 cellspacing=1>";
 echo "<tr><td width=50%>";
-echo "<input type=button class='btn1' value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
+echo "<input type="button" class='btn1' value='선택삭제' onclick="btn_check(this.form, 'delete')">";
 echo "</td>";
 echo "<td width=50% align=right>$pagelist</td></tr></table>\n";
 
@@ -190,13 +190,13 @@ else
 
 <?$colspan=5?>
 <p>
-<form name=fpointlist2 method=post onsubmit="return fpointlist2_submit(this);" autocomplete="off">
-<input type=hidden name=sfl   value='<?=$sfl?>'>
-<input type=hidden name=stx   value='<?=$stx?>'>
-<input type=hidden name=sst   value='<?=$sst?>'>
-<input type=hidden name=sod   value='<?=$sod?>'>
-<input type=hidden name=page  value='<?=$page?>'>
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fpointlist2" name="fpointlist2" method=post onsubmit="return fpointlist2_submit(this);" autocomplete="off">
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
 <table width=100% cellpadding=0 cellspacing=1 class=tablebg>
 <colgroup width=150>
 <colgroup width=''>
@@ -213,11 +213,11 @@ else
 </tr>
 <tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 <tr class='ht center'>
-    <td><input type=text class=ed name=mb_id required itemname='회원아이디' value='<?=$mb_id?>'></td>
-    <td><input type=text class=ed name=po_content required itemname='내용' style='width:99%;'></td>
-    <td><input type=text class=ed name=po_point required itemname='포인트' size=10></td>
-    <td><input type=password class=ed name=admin_password required itemname='관리자 패스워드'></td>
-    <td><input type=submit class=btn1 value='  확  인  '></td>
+    <td><input type="text" class=ed id="mb_id" name="mb_id" required value='<?=$mb_id?>'></td>
+    <td><input type="text" class=ed id="po_content" name="po_content" required style='width:99%;'></td>
+    <td><input type="text" class=ed id="po_point" name="po_point" required size=10></td>
+    <td><input type="password" class=ed id="admin_password" name="admin_password" required 패스워드'></td>
+    <td><input type="submit" class=btn1 value='  확  인  '></td>
 </tr>
 <tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 </form>

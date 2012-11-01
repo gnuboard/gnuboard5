@@ -47,7 +47,7 @@ if ($i) {
 
         $rate = ($count / $sum_count * 100);
         $s_rate = number_format($rate, 1);
-        $graph = "<img src='{$g4[admin_path]}/img/graph.gif' width='$rate%' height='18'>";
+        $graph = "<img src='{$g4['admin_path']}/img/graph.gif' width='$rate%' height='18'>";
 
         $list = ($k++%2);
         echo "

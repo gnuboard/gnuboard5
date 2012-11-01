@@ -3,7 +3,7 @@ $sub_menu = "100700";
 include_once("./_common.php");
 
 if ($is_admin != "super")
-    alert("최고관리자만 접근 가능합니다.", $g4[path]);
+    alert("최고관리자만 접근 가능합니다.", $g4['path']);
 
 $g4[title] = "테이블 복구 및 최적화";
 include_once("./admin.head.php");
@@ -41,7 +41,7 @@ $result = sql_query($sql);
 while ($row=sql_fetch_array($result)) 
 {
     // 회원자료 삭제
-    member_delete($row[mb_id]);
+    member_delete($row['mb_id']);
 }
 
 

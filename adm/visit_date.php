@@ -52,7 +52,7 @@ if (count($arr)) {
         $s_rate = number_format($rate, 1);
 
         $bar = (int)($count / $max * 100);
-        $graph = "<img src='{$g4[admin_path]}/img/graph.gif' width='$bar%' height='18'>";
+        $graph = "<img src='{$g4['admin_path']}/img/graph.gif' width='$bar%' height='18'>";
 
         $list = ($k++%2);
         echo "
