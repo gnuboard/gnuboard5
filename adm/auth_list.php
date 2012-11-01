@@ -153,7 +153,7 @@ else
 
 <fieldset>
 <legend>관리권한 추가</legend>
-<p>아래 양식에서 회원에게 관리권한을 부여하실 수 있습니다. <strong>r</strong>은 읽기권한, <strong>w</strong>는 입력 혹은 수정권한, <strong>d</strong>는 삭제권한입니다.</p>
+<p>아래 양식에서 회원에게 관리권한을 부여하실 수 있습니다. <strong>r</strong>은 <strong>읽기</strong>권한, <strong>w</strong>는 <strong>입력</strong> 혹은 <strong>수정</strong>권한, <strong>d</strong>는 <strong>삭제</strong>권한입니다.</p>
 <label for="mb_id">회원아이디</label>
 <input type="text" id="mb_id" name="mb_id" required value='<?=$mb_id?>'>
 <label for="au_menu">접근가능메뉴</label>
