@@ -313,10 +313,10 @@ while ($entry = $tmp->read())
 @ksort($amenu);
 
 $qstr = "";
-if (isset($sst)) $qstr .= "&sst=$sst";
-if (isset($sod)) $qstr .= "&sod=$sod";
-if (isset($sfl)) $qstr .= "&sfl=$sfl";
-if (isset($stx)) $qstr .= "&stx=$stx";
-if (isset($page)) $qstr .= "&page=$page";
+if (isset($sst)) $qstr .= "&amp;sst=$sst";
+if (isset($sod)) $qstr .= "&amp;sod=$sod";
+if (isset($sfl)) $qstr .= "&amp;sfl=$sfl";
+if (isset($stx)) $qstr .= "&amp;stx=$stx";
+if (isset($page)) $qstr .= "&amp;page=$page";
 //$qstr = "sst=$sst&sod=$sod&sfl=$sfl&stx=$stx&page=$page";
 ?>

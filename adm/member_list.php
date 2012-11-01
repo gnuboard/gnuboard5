@@ -125,7 +125,6 @@ var list_delete_php = "member_list_delete.php";
 <input type="hidden" name="stx"   value="<?=$stx?>">
 <input type="hidden" name="page"  value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
 
 <a href="./member_form.php">회원추가</a>
 
@@ -169,11 +168,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     } 
     else 
     {
-        $s_mod = "<a href=\"./member_form.php?$qstr&amp;w=u&amp;mb_id=$row[mb_id]\">수정</a>";
-        //$s_del = "<a href=\"javascript:del('./member_delete.php?$qstr&amp;w=d&amp;mb_id=$row[mb_id]');\">삭제</a>";
-        $s_del = "<a href=\"javascript:post_delete('member_delete.php', '$row[mb_id]');\">삭제</a>";
+        $s_mod = '<a href="./member_form.php?$qstr&amp;w=u&amp;mb_id='.$row[mb_id].'">수정</a>';
+        //$s_del = '<a href="javascript:del('./member_delete.php?$qstr&amp;w=d&amp;mb_id=$row[mb_id]');">삭제</a>';
+        $s_del = '<a href="javascript:post_delete(\'member_delete.php\', \'$row[mb_id]\');">삭제</a>';
     }
-    $s_grp = "<a href='./boardgroupmember_form.php?mb_id=$row[mb_id]'>그룹</a>";
+    $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row[mb_id].'">그룹</a>';
 
     $leave_date = $row[mb_leave_date] ? $row[mb_leave_date] : date("Ymd", $g4[server_time]);
     $intercept_date = $row[mb_intercept_date] ? $row[mb_intercept_date] : date("Ymd", $g4[server_time]);
@@ -188,13 +187,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     ?>
     <tr>
-        <td headers="th1"><input type="checkbox" id="chk[<?=$i?>]" name="chk[]" value="<?=$i?>"></td>
+        <td headers="th1">
+            <label for="chk[<?=$i?>]">이 회원을 선택</label>
+            <input type="checkbox" id="chk[<?=$i?>]" name="chk[]" value="<?=$i?>">
+            <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
+        </td>
         <td headers="th2"><?=$mb_id?></td>
         <td headers="th3"><?=$row['mb_name']?></td>
         <td headers="th4"><?=$mb_nick?></td>
         <td headers="th5"><?=get_member_level_select("mb_level[$i]", 1, $member[mb_level], $row[mb_level])?></td>
         <td headers="th6"><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></a></td>
-        <td headers="th7"><?=substr($row[mb_today_login],2,8)?></td>
+        <td headers="th7"><?=substr($row['mb_today_login'],2,8)?></td>
         <td headers="th8"><?=$row[mb_mailling]?'예':'아니오'?></td>
         <td headers="th9"><?=$row[mb_open]?'예':'아니오'?></td>
         <!-- <td headers="th10"><?=$row[mb_leave_date]?'예':'아니오';?></td> -->
@@ -213,16 +216,17 @@ if ($i == 0)
 </tbody>
 </table>
 
-<?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "?$qstr&amp;page=");
-?>
-
 <div>
     <input type="button" value='선택수정' onclick="btn_check(this.form, 'update')">
     <input type="button" value='선택삭제' onclick="btn_check(this.form, 'delete')">
 </div>
 
-<div><?=$pagelist?></div>
+<div>
+<?
+$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "?$qstr&amp;page=");
+echo $pagelist;
+?>
+</div>
 
 <?
 if ($stx)
