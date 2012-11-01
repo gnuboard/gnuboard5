@@ -23,7 +23,7 @@ check_token();
 member_delete($mb[mb_id]);
 
 if ($url)
-    goto_url("{$url}?$qstr&w=u&mb_id=$mb_id");
+    goto_url("{$url}?$qstr&amp;w=u&amp;mb_id=$mb_id");
 else
     goto_url("./member_list.php?$qstr");
 ?>
