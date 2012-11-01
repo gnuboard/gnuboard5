@@ -266,13 +266,12 @@ include_once ("./admin.head.php");
     <th  scope="row" id="th311"><label for="cf_use_member_icon">회원아이콘 사용</label></th>
     <td headers="th311">
         <select id="cf_use_member_icon" name="cf_use_member_icon">
-            <option value="0">미사용
-            <option value="1">아이콘만 표시
-            <option value="2">아이콘+이름 표시
+            <option value="0"<? if ($config[cf_use_member_icon] == 0) echo ' selected';?>>미사용
+            <option value="1"<? if ($config[cf_use_member_icon] == 1) echo ' selected';?>>아이콘만 표시
+            <option value="2"<? if ($config[cf_use_member_icon] == 2) echo ' selected';?>>아이콘+이름 표시
         </select>
         <?=help("게시물에 게시자 별명 대신 아이콘 사용")?>
     </td>
-    <script> document.fconfigform.cf_use_member_icon.value = "<?=$config[cf_use_member_icon]?>;"></script>
     <th  scope="row" id="th312"><label for="cf_icon_level">아이콘 업로드 권한</label></th>
     <td headers="th312" colspan="3"><? echo get_member_level_select('cf_icon_level', 1, 9, $config[cf_icon_level]) ?> 이상</td>
 </tr>

@@ -36,12 +36,8 @@ function print_menu2($key, $no)
 ?>
 
 <script>
-if (!g4_is_ie) document.captureEvents(Event.MOUSEMOVE)
-document.onmousemove = getMouseXY;
 var tempX = 0;
 var tempY = 0;
-var prevdiv = null;
-var timerID = null;
 
 function imageview(id, w, h)
 {
@@ -54,23 +50,6 @@ function imageview(id, w, h)
     submenu = el_id.style;
     submenu.left = tempX - ( w + 11 );
     submenu.top  = tempY - ( h / 2 );
-
-    selectBoxVisible();
-
-    if (el_id.style.display != 'none')
-        selectBoxHidden(id);
-}
-
-function help(id, left, top)
-{
-    menu(id);
-
-    var el_id = document.getElementById(id);
-
-    //submenu = eval(name+".style");
-    submenu = el_id.style;
-    submenu.left = tempX - 50 + left;
-    submenu.top  = tempY + 15 + top;
 
     selectBoxVisible();
 
