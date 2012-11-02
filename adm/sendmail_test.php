@@ -1,30 +1,30 @@
 <?
-$sub_menu = "100300";
-include_once("./_common.php");
+$sub_menu = '100300';
+include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
 if (!$config[cf_email_use])
-    alert("환경설정에서 \'메일발송 사용\'에 체크하셔야 메일을 발송할 수 있습니다.");
+    alert('환경설정에서 \"메일발송 사용\"에 체크하셔야 메일을 발송할 수 있습니다.');
 
-include_once("$g4['path']/lib/mailer.lib.php");
+include_once('$g4['path']/lib/mailer.lib.php');
 
-$g4[title] = "메일 테스트";
-include_once("./admin.head.php");
+$g4[title] = '메일 테스트';
+include_once('./admin.head.php');
 
 if ($mail) {
     check_token();
 
-    $from_name  = "메일검사";
-    $from_email = "mail@mail";
+    $from_name  = '메일검사';
+    $from_email = 'mail@mail';
 
-    $email = explode(",", $mail);
+    $email = explode(',', $mail);
     for ($i=0; $i<count($email); $i++)
-        mailer($from_name, $from_email, trim($email[$i]), "[메일검사] 제목", "<span style='font-size:9pt;'>[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>".date("Y-m-d H:i:s")."<p>이 메일 주소로는 회신되지 않습니다.</span>", 1);
+        mailer($from_name, $from_email, trim($email[$i]), '[메일검사] 제목', '<span style="font-size:9pt;">[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>'.date('Y-m-d H:i:s').'<p>이 메일 주소로는 회신되지 않습니다.</span>', 1);
 
     echo <<<HEREDOC
-    <SCRIPT type="text/javascript">
-        alert("{$mail} (으)로 메일을 발송 하였습니다.\\n\\n해당 주소로 메일이 왔는지 확인하여 주십시오.\\n\\n메일이 오지 않는다면 프로그램의 오류가 아닌 메일 서버(sendmail)의 오류일 가능성이 있습니다.\\n\\n이런 경우에는 웹 서버관리자에게 문의하여 주십시오.");
+    <SCRIPT type='text/javascript'>
+        alert('{$mail} (으)로 메일을 발송 하였습니다.\\n\\n해당 주소로 메일이 왔는지 확인하여 주십시오.\\n\\n메일이 오지 않는다면 프로그램의 오류가 아닌 메일 서버(sendmail)의 오류일 가능성이 있습니다.\\n\\n이런 경우에는 웹 서버관리자에게 문의하여 주십시오.');
     </SCRIPT>
 HEREDOC;
 }
@@ -32,8 +32,8 @@ HEREDOC;
 $token = get_token();
 ?>
 
-<form id="fsendmailtest" id="fsendmailtest" name="fsendmailtest" method="post">
-<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<form id='fsendmailtest' id='fsendmailtest' name='fsendmailtest' method='post'>
+<input type='hidden' id='token' name='token' value="<?=$token?>">
 <p>
 고객님들께서 메일이 오지 않는다고 하면 사용하는 메뉴입니다.<br>
 아래 테스트메일 발송하기에 입력한 메일주소로 테스트 메일을 발송합니다.<br>
@@ -43,12 +43,12 @@ $token = get_token();
 </p>
 <fieldset>
 <legend>테스트메일 발송하기</legend>
-<label for="mail">받는 메일주소</label>
-<input type="text" id="mail" id="mail" name="mail" required value="<?=$member[mb_email]?>">
-<input type="submit" value="발송">
+<label for='mail'>받는 메일주소</label>
+<input type='text' id='mail' id='mail' name='mail' required value='<?=$member[mb_email]?>'>
+<input type='submit' value='발송'>
 </fieldset>
 </form>
 
 <?
-include_once("./admin.tail.php");
+include_once('./admin.tail.php');
 ?>

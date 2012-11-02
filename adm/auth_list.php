@@ -45,10 +45,11 @@ $sql = " select *
           limit $from_record, $rows ";
 $result = sql_query($sql);
 
+$listall = '';
 if ($sfl || $stx || $sod) // 검색 혹은 정렬일 때만 처음 버튼을 보여줌 : 지운아빠 2012-10-31
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음으로</a>';
 
-$g4[title] = "관리권한설정";
+$g4['title'] = "관리권한설정";
 include_once("./admin.head.php");
 
 $colspan = 5;
@@ -95,9 +96,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
     // 메뉴번호가 바뀌는 경우에 현재 없는 저장된 메뉴는 삭제함
-    if (!isset($auth_menu[$row[au_menu]]))
+    if (!isset($auth_menu[$row['au_menu']]))
     {
-        sql_query(" delete from {$g4['auth_table']} where au_menu = '{$row[au_menu]}' ");
+        sql_query(" delete from {$g4['auth_table']} where au_menu = '{$row['au_menu']}' ");
         continue;
     }
 
@@ -107,11 +108,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <td headers="th1">
             <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>">
             <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-            <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row[au_menu]?>">
+            <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row['au_menu']?>">
         </td>
         <td headers="th2"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
         <td headers="th3"><?=$mb_nick?></td>
-        <td headers="th4"><?=$row[au_menu]?><?=$auth_menu[$row[au_menu]]?></td>
+        <td headers="th4"><?=$row['au_menu']?><?=$auth_menu[$row['au_menu']]?></td>
         <td headers="th5"><?=$row['au_auth']?></td>
     </tr>
     <?
@@ -124,7 +125,7 @@ if ($i==0)
 </table>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 
 <div><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>

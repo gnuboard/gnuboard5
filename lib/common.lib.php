@@ -684,7 +684,7 @@ function subject_sort_link($col, $query_string='', $flag='asc')
         }
     }
 
-    return '<a href="'.$_SERVER[PHP_SELF].'?'.$query_string.'&amp;'.$q1.'&amp;'.$q2.'&amp;sfl='.$sfl.'&amp;stx='.$stx.'&amp;page='.$page.'">';
+    return '<a href="'.$_SERVER['PHP_SELF'].'?'.$query_string.'&amp;'.$q1.'&amp;'.$q2.'&amp;sfl='.$sfl.'&amp;stx='.$stx.'&amp;page='.$page.'">';
 }
 
 

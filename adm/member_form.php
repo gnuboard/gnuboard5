@@ -1,10 +1,6 @@
 <?
 $sub_menu = "200100";
-<<<<<<< HEAD
-include_once('./_common.php');
-=======
 include_once("./_common.php");
->>>>>>> 2d05a76a0161bcafd2836640f07f6cc165015584
 
 auth_check($auth[$sub_menu], "w");
 
@@ -12,13 +8,8 @@ $token = get_token();
 
 if ($w == "") 
 {
-<<<<<<< HEAD
     $required_mb_id = 'required minlength="3" alphanumericunderline id="회원아이디" name="회원아이디"';
     $required_mb_password = 'required id="패스워드" name="패스워드"';
-=======
-    $required_mb_id = "required minlength=3 alphanumericunderline itemname='회원아이디'";
-    $required_mb_password = "required itemname='패스워드'";
->>>>>>> 2d05a76a0161bcafd2836640f07f6cc165015584
 
     $mb[mb_mailling] = 1;
     $mb[mb_open] = 1;
@@ -28,13 +19,9 @@ if ($w == "")
 else if ($w == "u") 
 {
     $mb = get_member($mb_id);
-<<<<<<< HEAD
+
     if (!$mb['mb_id'])
         alert('존재하지 않는 회원자료입니다.'); 
-=======
-    if (!$mb[mb_id])
-        alert("존재하지 않는 회원자료입니다."); 
->>>>>>> 2d05a76a0161bcafd2836640f07f6cc165015584
 
     if ($is_admin != 'super' && $mb[mb_level] >= $member[mb_level])
         alert("자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.");
@@ -69,19 +56,11 @@ else if ($w == "u")
 else 
     alert("제대로 된 값이 넘어오지 않았습니다.");
 
-<<<<<<< HEAD
 if ($mb[mb_mailling]) $mailling_checked = 'checked'; // 메일 수신
 if ($mb[mb_sms]) $sms_checked = 'checked'; // SMS 수신
 if ($mb[mb_open]) $open_checked = 'checked'; // 정보 공개
 
 $g4['title'] = '회원정보 ' . $html_title;
-=======
-if ($mb[mb_mailling]) $mailling_checked = "checked"; // 메일 수신
-if ($mb[mb_sms])      $sms_checked = "checked"; // SMS 수신
-if ($mb[mb_open])     $open_checked = "checked"; // 정보 공개
-
-$g4[title] = "회원정보 " . $html_title;
->>>>>>> 2d05a76a0161bcafd2836640f07f6cc165015584
 include_once("./admin.head.php");
 ?>
 
