@@ -1,28 +1,28 @@
 <?
 $sub_menu = "200300";
-include_once("./_common.php");
+include_once('./_common.php');
 
-if (!$config[cf_email_use])
-    alert("환경설정에서 \'메일발송 사용\'에 체크하셔야 메일을 발송할 수 있습니다.");
+if (!$config['cf_email_use'])
+    alert('환경설정에서 \'메일발송 사용\'에 체크하셔야 메일을 발송할 수 있습니다.');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
-$sql = "select * from $g4[mail_table] where ma_id = '$ma_id' ";
+$sql = "select * from {$g4['mail_table']} where ma_id = '$ma_id' ";
 $ma = sql_fetch($sql);
-if (!$ma[ma_id])
-    alert("보내실 내용을 선택하여 주십시오.");
+if (!$ma['ma_id'])
+    alert('보내실 내용을 선택하여 주십시오.');
 
 // 전체회원수
-$sql = "select COUNT(*) as cnt from $g4[member_table] ";
+$sql = "select COUNT(*) as cnt from {$g4['member_table']} ";
 $row = sql_fetch($sql);
-$tot_cnt = $row[cnt];
+$tot_cnt = $row['cnt'];
 
 // 탈퇴대기회원수
-$sql = "select COUNT(*) as cnt from $g4[member_table] where mb_leave_date <> '' ";
+$sql = "select COUNT(*) as cnt from {$g4['member_table']} where mb_leave_date <> '' ";
 $row = sql_fetch($sql);
-$finish_cnt = $row[cnt];
+$finish_cnt = $row['cnt'];
 
-$last_option = explode("||", $ma[ma_last_option]);
+$last_option = explode("||", $ma['ma_last_option']);
 for ($i=0; $i<count($last_option); $i++) {
     $option = explode("=", $last_option[$i]);
     // 동적변수
@@ -37,8 +37,8 @@ if (!isset($mb_mailling)) $mb_mailling = 1;
 if (!isset($mb_sex)) $mb_sex = 1;
 if (!isset($mb_area)) $mb_area = 1;
 
-$g4[title] = "회원메일발송";
-include_once("./admin.head.php");
+$g4['title'] = '회원메일발송';
+include_once('./admin.head.php');
 ?>
 
 
@@ -55,7 +55,7 @@ include_once("./admin.head.php");
         <colgroup width=80% class='col2 pad2'>
         <tr>
             <td></td>
-            
+
         </tr>
         <tr><td colspan='2' class='line1'></td></tr>
         <tr class='ht'>
@@ -64,7 +64,7 @@ include_once("./admin.head.php");
                 <input type=radio name='mb_id1' value='1' onclick="mb_id1_click(1);" <?=$mb_id1?"checked":"";?>> 전체
                 <input type=radio name='mb_id1' value='0' onclick="mb_id1_click(0);" <?=!$mb_id1?"checked":"";?>> 구간
                 <br>
-                <input type=text class=ed id=mb_id1_from name=mb_id1_from value="<?=$mb_id1_from?>"> 에서 
+                <input type=text class=ed id=mb_id1_from name=mb_id1_from value="<?=$mb_id1_from?>"> 에서
                 <input type=text class=ed id=mb_id1_to name=mb_id1_to value="<?=$mb_id1_to?>"> 까지
 
                 <script type="text/javascript">
@@ -89,7 +89,7 @@ include_once("./admin.head.php");
         <tr class='ht'>
             <td>생일</td>
             <td>
-                <input type=text name='mb_birth_from' size=4 maxlength=4 class=ed value="<?=$mb_birth_from?>"> 부터 
+                <input type=text name='mb_birth_from' size=4 maxlength=4 class=ed value="<?=$mb_birth_from?>"> 부터
                 <input type=text name='mb_birth_to' size=4 maxlength=4 class=ed value="<?=$mb_birth_to?>"> 까지 (예 : 5월5일 인 경우, 0505 와 같이 입력 , 둘다 입력해야함)</td>
         </tr>
         <tr class='ht'>
@@ -149,7 +149,7 @@ include_once("./admin.head.php");
                 <? for ($i=1; $i<=10; $i++) { ?>
                     <option value='<? echo $i ?>'><? echo $i ?>
                 <? } ?>
-                </select> 에서 
+                </select> 에서
                 <select id=mb_level_to name=mb_level_to>
                 <? for ($i=1; $i<=10; $i++) { ?>
                     <option value='<? echo $i ?>'><? echo $i ?>
@@ -165,11 +165,11 @@ include_once("./admin.head.php");
                 <select id=gr_id name=gr_id>
                 <option value=''>전체
                 <?
-                $sql = " select gr_id, gr_subject from $g4[group_table] order by gr_subject ";
+                $sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_subject ";
                 $result = sql_query($sql);
                 for ($i=0; $row=sql_fetch_array($result); $i++)
                 {
-                    echo "<option value='$row[gr_id]'>$row[gr_subject]";
+                    echo "<option value='{$row['gr_id']}'>{$row['gr_subject']}";
                 }
                 ?>
                 </select>
@@ -188,5 +188,5 @@ include_once("./admin.head.php");
 
 
 <?
-include_once("./admin.tail.php");
+include_once('./admin.tail.php');
 ?>

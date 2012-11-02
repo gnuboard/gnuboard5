@@ -1,16 +1,16 @@
 <?
 $sub_menu = "200300";
-include_once("./_common.php");
+include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
 $token = get_token();
 
-$html_title = "선택된 회원메일리스트";
+$html_title = '선택된 회원메일리스트';
 
 $ma_last_option = "";
 
-$sql_common = " from $g4[member_table] ";
+$sql_common = " from {$g4['member_table']} ";
 $sql_where = " where (1) ";
 
 // 회원ID ..에서 ..까지
@@ -45,16 +45,16 @@ if ($gr_id)
 {
     $group_member = "";
     $comma = "";
-    $sql2 = " select mb_id from $g4[group_member_table] where gr_id = '$gr_id' order by mb_id ";
+    $sql2 = " select mb_id from {$g4['group_member_table']} where gr_id = '$gr_id' order by mb_id ";
     $result2 = sql_query($sql2);
     for ($k=0; $row2=sql_fetch_array($result2); $k++)
     {
-        $group_member .= "{$comma}'$row2[mb_id]'"; 
+        $group_member .= "{$comma}'{$row2['mb_id']}'";
         $comma = ",";
     }
 
     if (!$group_member)
-        alert("선택하신 게시판 그룹회원이 한명도 없습니다.");
+        alert('선택하신 게시판 그룹회원이 한명도 없습니다.');
 
     $sql_where .= " and mb_id in ($group_member) ";
 }
@@ -64,9 +64,9 @@ $sql_where .= " and mb_leave_date = '' and mb_intercept_date = '' ";
 
 $sql = " select COUNT(*) as cnt $sql_common $sql_where ";
 $row = sql_fetch($sql);
-$cnt = $row[cnt];
+$cnt = $row['cnt'];
 if ($cnt == 0)
-    alert("선택하신 내용으로는 해당되는 회원자료가 없습니다.");
+    alert('선택하신 내용으로는 해당되는 회원자료가 없습니다.');
 
 // 마지막 옵션을 저장합니다.
 $ma_last_option .= "mb_id1=$mb_id1";
@@ -82,10 +82,10 @@ $ma_last_option .= "||mb_level_from=$mb_level_from";
 $ma_last_option .= "||mb_level_to=$mb_level_to";
 $ma_last_option .= "||gr_id=$gr_id";
 
-sql_query(" update $g4[mail_table] set ma_last_option = '$ma_last_option' where ma_id = '$ma_id' ");
+sql_query(" update {$g4['mail_table']} set ma_last_option = '$ma_last_option' where ma_id = '$ma_id' ");
 
 
-include_once("./admin.head.php");
+include_once('./admin.head.php');
 ?>
 
 <table width=500 align=center><tr><td>
@@ -107,11 +107,11 @@ include_once("./admin.head.php");
             $i=0;
             $ma_list = "";
             $cr = "";
-            while ($row=sql_fetch_array($result)) 
+            while ($row=sql_fetch_array($result))
             {
                 $i++;
-                echo "<option>$i . $row[mb_id] / $row[mb_name] / $row[mb_nick] / $row[mb_birth] / $row[mb_email]";
-                $ma_list .= $cr . $row[mb_email] . "||" . $row[mb_id] . "||" . $row[mb_name] . "||" . $row[mb_nick] . "||" . $row[mb_birth] . "||" . $row[mb_datetime];
+                echo "<option>$i . {$row['mb_id']} / {$row['mb_name']} / {$row['mb_nick']} / {$row['mb_birth']} / {$row['mb_email']}";
+                $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row[mb_birth] . "||" . $row[mb_datetime];
                 $cr = "\n";
             }
         ?>
@@ -128,7 +128,7 @@ include_once("./admin.head.php");
 
 </td></tr></table>
 
-<script type='text/javascript'> 
+<script type='text/javascript'>
 function fmailselectlist_submit(f)
 {
     f.action = "./mail_select_update.php";
@@ -137,5 +137,5 @@ function fmailselectlist_submit(f)
 </script>
 
 <?
-include_once("./admin.tail.php");
+include_once('./admin.tail.php');
 ?>
