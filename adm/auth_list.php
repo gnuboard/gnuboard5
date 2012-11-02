@@ -125,7 +125,7 @@ if ($i==0)
 </table>
 
 <?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 ?>
 
 <div><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>
@@ -135,10 +135,10 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER
 if ($stx)
     echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'.PHP_EOL;
 
-if (strstr($sfl, "mb_id"))
+if (strstr($sfl, 'mb_id'))
     $mb_id = $stx;
 else
-    $mb_id = "";
+    $mb_id = '';
 ?>
 </form>
 
@@ -165,7 +165,7 @@ else
         <?
         foreach($auth_menu as $key=>$value)
         {
-            if (!(substr($key, -3) == "000" || $key == "-" || !$key))
+            if (!(substr($key, -3) == '000' || $key == '-' || !$key))
                 echo '<option value="'.$key.'">'.$key.' '.$value;
         }
         ?>
@@ -192,5 +192,5 @@ function fauthlist2_submit(f)
 </script>
 
 <?
-include_once ("./admin.tail.php");
+include_once ('./admin.tail.php');
 ?>

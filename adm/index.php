@@ -1,20 +1,20 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
-$g4['title'] = "관리자메인";
-include_once ("./admin.head.php");
+$g4['title'] = '관리자메인';
+include_once ('./admin.head.php');
 
 $new_member_rows = 5;
 $new_point_rows = 5;
 $new_write_rows = 5;
 
-$sql_common = " from $g4[member_table] ";
+$sql_common = " from {$g4['member_table']} ";
 
 $sql_search = " where (1) ";
 
 //if ($is_admin == 'group') $sql_search .= " and mb_level = '$member[mb_level]' ";
-if ($is_admin != 'super') 
-    $sql_search .= " and mb_level <= '$member[mb_level]' ";
+if ($is_admin != 'super')
+    $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
 
 if (!isset($sst)) {
     $sst = "mb_datetime";
@@ -84,24 +84,24 @@ $colspan = 12;
 </thead>
 <tbody>
 <?
-for ($i=0; $row=sql_fetch_array($result); $i++) 
+for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     // 접근가능한 그룹수
-    $sql2 = " select count(*) as cnt from $g4[group_member_table] where mb_id = '{$row['mb_id']}' ";
+    $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
     $row2 = sql_fetch($sql2);
     $group = "";
     if ($row2['cnt'])
-        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">$row2[cnt]</a>';
+        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2['cnt'].'</a>';
 
-    if ($is_admin == 'group') 
+    if ($is_admin == 'group')
     {
-        $s_mod = "";
-        $s_del = "";
-    } 
-    else 
+        $s_mod = '';
+        $s_del = '';
+    }
+    else
     {
         $s_mod = '<a href="./member_form.php?$qstr&amp;w=u&amp;mb_id='.$row['mb_id'].'">수정</a>';
-        $s_del = '<a href="javascript:del(\'./member_delete.php?$qstr&amp;w=d&amp;mb_id='.$row['mb_id'].'&amp;url='.$_SERVER['PHP_SELF'].'\');">삭제</a>';
+        $s_del = '<a href="javascript:del(\'./member_delete.php?'.$qstr.'&amp;w=d&amp;mb_id='.$row['mb_id'].'&amp;url='.$_SERVER['PHP_SELF'].'\');">삭제</a>';
     }
     $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">그룹</a>';
 
@@ -112,16 +112,16 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $mb_id = $row['mb_id'];
     if ($row['mb_leave_date'])
-        $mb_id = "$mb_id";
+        $mb_id = $mb_id;
     else if ($row['mb_intercept_date'])
-        $mb_id = "$mb_id";
+        $mb_id = $mb_id;
 
 ?>
     <tr>
         <td><?=$mb_id?></td>
         <td><?=$row['mb_name']?></td>
         <td><?=$mb_nick?></td>
-        <td><?=$row[mb_level]?></td>
+        <td><?=$row['mb_level']?></td>
         <td><a href='./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>'><?=number_format($row['mb_point'])?></td>
         <td><?=substr($row['mb_today_login'],2,8)?></td>
         <td><?=$row['mb_mailling']?'예':'아니오';?></td>
@@ -142,7 +142,7 @@ if ($i == 0)
 
 <?
 //$sql_common = " from $g4[board_new_table] a, $g4[board_table] b, $g4[group_table] c where a.bo_table = b.bo_table and b.gr_id = c.gr_id and b.bo_use_search = '1' ";
-$sql_common = " from $g4[board_new_table] a, $g4[board_table] b, $g4[group_table] c where a.bo_table = b.bo_table and b.gr_id = c.gr_id ";
+$sql_common = " from {$g4['board_new_table']} a, {$g4['board_table']} b, {$g4['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id ";
 
 if (isset($gr_id))
     $sql_common .= " and b.gr_id = '$gr_id' ";
@@ -182,7 +182,7 @@ $sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id
           $sql_order
           limit $new_write_rows ";
 $result = sql_query($sql);
-for ($i=0; $row=sql_fetch_array($result); $i++) 
+for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $tmp_write_table = $g4['write_prefix'] . $row['bo_table'];
 
@@ -190,7 +190,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $comment = "";
         $comment_link = "";
-        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '$row[wr_id]' ");
+        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '{$row['wr_id']}' ");
 
         $name = get_sideview($row2['mb_id'], cut_str($row2['wr_name'], $config['cf_cut_name']), $row2['wr_email'], $row2['wr_homepage']);
         // 당일인 경우 시간으로 표시함
@@ -205,9 +205,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     else // 코멘트
     {
         $comment = "[코] ";
-        $comment_link = "#c_{$row[wr_id]}";
-        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '$row[wr_parent]' ");
-        $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from $tmp_write_table where wr_id = '$row[wr_id]' ");
+        $comment_link = "#c_{$row['wr_id']}";
+        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '{$row['wr_parent']}' ");
+        $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from $tmp_write_table where wr_id = '{$row['wr_id']}' ");
 
         $name = get_sideview($row3['mb_id'], cut_str($row3['wr_name'], $config['cf_cut_name']), $row3['wr_email'], $row3['wr_homepage']);
         // 당일인 경우 시간으로 표시함
@@ -221,9 +221,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
     <tr>
-        <td><a href='<?=$g4['bbs_path']?>/new.php?gr_id=<?=$row[gr_id]?>'><?=cut_str($row['gr_subject'],10)?></a></td>
+        <td><a href='<?=$g4['bbs_path']?>/new.php?gr_id=<?=$row['gr_id']?>'><?=cut_str($row['gr_subject'],10)?></a></td>
         <td><a href='<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>'><?=cut_str($row['bo_subject'],20)?></a></td>
-        <td><a href='<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2[wr_id]?><?=$comment_link?>'><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
+        <td><a href='<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2['wr_id']?><?=$comment_link?>'><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
         <td><?=$name?></td>
         <td><?=$datetime?></td>
     </tr>
@@ -239,13 +239,13 @@ if ($i == 0)
 
 
 <?
-$sql_common = " from $g4[point_table] ";
+$sql_common = " from {$g4['point_table']} ";
 $sql_search = " where (1) ";
 $sql_order = " order by po_id desc ";
 
 $sql = " select count(*) as cnt
-         $sql_common 
-         $sql_search 
+         $sql_common
+         $sql_search
          $sql_order ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
@@ -265,7 +265,7 @@ $colspan = 7;
 
 <p>
 <?//=$listall?> 건수 : <?=number_format($total_count)?>
-<? 
+<?
 //$row2 = sql_fetch(" select sum(po_point) as sum_point from $g4[point_table] ");
 //echo "&nbsp;(전체 포인트 합계 : " . number_format($row2[sum_point]) . "점)";
 ?>
@@ -287,11 +287,11 @@ $colspan = 7;
 <tbody>
 <?
 $row2['mb_id'] = '';
-for ($i=0; $row=sql_fetch_array($result); $i++) 
+for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     if ($row2['mb_id'] != $row['mb_id'])
     {
-        $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from $g4[member_table] where mb_id = '{$row['mb_id']}' ";
+        $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
         $row2 = sql_fetch($sql2);
     }
 
@@ -300,21 +300,21 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $link1 = $link2 = "";
     if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table'])
     {
-        $link1 = "<a href='".$g4['bbs_path']."/board.php?bo_table=".$row['po_rel_table']."&amp;wr_id=".$row[po_rel_id]."' target='_blank'>";
-        $link2 = "</a>";
+        $link1 = '<a href="'.$g4['bbs_path'].'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
+        $link2 = '</a>';
     }
 ?>
     <tr>
-        <td><a href='./point_list.php?sfl=mb_id&amp;stx=$row['mb_id']'><?=$row['mb_id']?></a></td>
+        <td><a href='./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>'><?=$row['mb_id']?></a></td>
         <td><?=$row2['mb_name']?></td>
         <td><?=$mb_nick?></td>
         <td><?=$row['po_datetime']?></td>
         <td><?=$link1.$row['po_content'].$link2?></td>
-        <td><?=number_format($row[po_point])?></td>
-        <td><?=number_format($row2[mb_point])?></td>
+        <td><?=number_format($row['po_point'])?></td>
+        <td><?=number_format($row2['mb_point'])?></td>
     </tr>
 <?
-} 
+}
 
 if ($i == 0)
     echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
@@ -324,5 +324,5 @@ if ($i == 0)
 </section>
 
 <?
-include_once ("./admin.tail.php");
+include_once ('./admin.tail.php');
 ?>
