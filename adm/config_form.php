@@ -23,6 +23,8 @@ $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 ?>
 
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
 <form id="fconfigform" name="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 
@@ -148,7 +150,7 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th  scope="row" id="th205"><label for="cf_link_target">LINK TARGET</label></th>
-    <td headers="th205"><input type="text" id="cf_link_target" name="cf_link_target" value="<?=$config[cf_link_target]?>"> 
+    <td headers="th205"><input type="text" id="cf_link_target" name="cf_link_target" value="<?=$config[cf_link_target]?>">
         <?=help("게시판 내용중 자동으로 링크되는 창의 타켓을 지정합니다.\n\n_self, _top, _blank, _new 를 주로 지정합니다.")?></td>
     <th  scope="row" id="th206"><label for="cf_search_part">검색 단위</label></th>
     <td headers="th206"><input type="text" id="cf_search_part" name="cf_search_part" value="<?=$config[cf_search_part]?>"> 건 단위로 검색</td>
@@ -393,13 +395,16 @@ include_once ('./admin.head.php');
 <legend><span></span>XSS 혹은 CSRF 방지</legend>
 <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
 <label for="admin_password">관리자 패스워드</label>
-<input type="password" id="admin_password" name="admin_password" required>
+<input type="password" id="admin_password" name="admin_password" required title="관리자 패스워드">
 <input type="submit" accesskey="s" value="확인">
 </fieldset>
 
 </form>
 
 <script>
+$(function() {
+    $( document ).tooltip();
+});
 function fconfigform_submit(f)
 {
     f.action = "./config_form_update.php";

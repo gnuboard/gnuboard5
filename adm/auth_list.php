@@ -13,7 +13,7 @@ $sql_search = " where (1) ";
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
-        default : 
+        default :
             $sql_search .= " ($sfl like '%$stx%') ";
             break;
     }
@@ -27,18 +27,18 @@ if (!$sst) {
 $sql_order = " order by $sst $sod ";
 
 $sql = " select count(*) as cnt
-         $sql_common 
-         $sql_search 
+         $sql_common
+         $sql_search
          $sql_order ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = " select * 
+$sql = " select *
           $sql_common
           $sql_search
           $sql_order
@@ -50,7 +50,7 @@ if ($sfl || $stx || $sod) // 검색 혹은 정렬일 때만 처음 버튼을 보
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음으로</a>';
 
 $g4['title'] = "관리권한설정";
-include_once("./admin.head.php");
+include_once('./admin.head.php');
 
 $colspan = 5;
 ?>
@@ -91,7 +91,7 @@ var list_delete_php = 'auth_list_delete.php';
 </thead>
 <tbody>
 <?
-for ($i=0; $row=sql_fetch_array($result); $i++) 
+for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
@@ -118,7 +118,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <?
 }
 
-if ($i==0) 
+if ($i==0)
     echo '<tr><td colspan="'.$colspan.'">자료가 없습니다.</td></tr>';
 ?>
 </tbody>

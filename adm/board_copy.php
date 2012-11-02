@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], 'w');
 $token = get_token();
 
 $g4[title] = '게시판 복사';
-include_once('$g4['path']/head.sub.php');
+include_once($g4['path'].'/head.sub.php');
 ?>
 
 <link rel='stylesheet' href='./admin.style.css' type='text/css'>
@@ -20,7 +20,7 @@ include_once('$g4['path']/head.sub.php');
 <colgroup width=70% class="col2 pad2">
 <tr><td colspan=2 height=5></td></tr>
 <tr>
-    <td colspan=2 class=title align=left><img src="<?=$g4["admin_path"]?>/img/icon_title.gif"> <?=$g4[title]?></td>
+    <td colspan=2 class=title align=left><img src="<?=$g4['admin_path']?>/img/icon_title.gif"> <?=$g4['title']?></td>
 </tr>
 <tr><td colspan=2 class="line1"></td></tr>
 <tr class="ht">
@@ -33,7 +33,7 @@ include_once('$g4['path']/head.sub.php');
 </tr>
 <tr class="ht">
 	<td>게시판 제목</td>
-	<td><input type='text' class=ed id='target_subject' name='target_subject' size=60 maxlength=120 required 제목" value="[복사본] <?=$board[bo_subject]?>"></td>
+	<td><input type='text' class=ed id='target_subject' name='target_subject' size=60 maxlength=120 required 제목" value="[복사본] <?=$board['bo_subject']?>"></td>
 </tr>
 <tr class="ht">
 	<td>복사 유형</td>
@@ -62,5 +62,5 @@ function fboardcopy_check(f)
 </script>
 
 <?
-include_once('$g4['path']/tail.sub.php');
+include_once($g4['path'].'/tail.sub.php');
 ?>
