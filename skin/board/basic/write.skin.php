@@ -282,7 +282,7 @@ with (document.fwrite)
 
     if (typeof(ca_name) != "undefined")
         if (w.value == "u")
-            ca_name.value = "<?=$write[ca_name]?>";
+            ca_name.value = "<?=$write['ca_name']?>";
 }
 
 function html_auto_br(obj)

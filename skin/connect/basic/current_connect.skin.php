@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <style>
@@ -8,7 +8,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </style>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr> 
+<tr>
     <td width="4" height="33" bgcolor="#7BB2D6"><img src="<?=$connect_skin_path?>/img/list_top_01.gif" width="4" height="33"></td>
     <td width="60" align="center" bgcolor="#7BB2D6"><font class=n_title1><strong>번호</strong></font></td>
     <td width="5" align="center" valign="middle" bgcolor="#7BB2D6"><img src="<?=$connect_skin_path?>/img/list_top_02.gif" width="5" height="33"></td>
@@ -22,16 +22,16 @@ for ($i=0; $i<count($list); $i++)
 {
     echo <<<HEREDOC
     <tr>
-        <td colspan=3 align='center' height='30'>{$list[$i][num]}</td>
-        <td colspan=2 align='center'>{$list[$i][name]}</td>
+        <td colspan=3 align='center' height='30'>{$list[$i]['num']}</td>
+        <td colspan=2 align='center'>{$list[$i]['name']}</td>
 HEREDOC;
 
-    $location = conv_content($list[$i][lo_location], 0);
+    $location = conv_content($list[$i]['lo_location'], 0);
 
     // 최고관리자에게만 허용
     // 이 조건문은 가능한 변경하지 마십시오.
-    if ($list[$i][lo_url] && $is_admin == "super")
-        echo "<td colspan=2>&nbsp;<a href='{$list[$i][lo_url]}'>{$location}</a></td>";
+    if ($list[$i]['lo_url'] && $is_admin == 'super')
+        echo "<td colspan=2>&nbsp;<a href='{$list[$i]['lo_url']}'>{$location}</a></td>";
     else
         echo "<td colspan=2>&nbsp;{$location}</td>";
 
@@ -44,7 +44,7 @@ HEREDOC;
 if ($i == 0)
     echo "<tr><td colspan=7 height=50 align=center>현재 접속자가 없습니다.</td></tr>";
 ?>
-<tr> 
+<tr>
     <td colspan="7" height="30" align="center"><?=$write_pages;?></td>
 </tr>
 </table>
