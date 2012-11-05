@@ -1,12 +1,12 @@
 <?
 $sub_menu = "200800";
-include_once("./_common.php");
+include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
-$g4[title] = "브라우저별 접속자현황";
-include_once("./admin.head.php");
-include_once("./visit.sub.php");
+$g4['title'] = '브라우저별 접속자현황';
+include_once('./admin.head.php');
+include_once('./visit.sub.php');
 
 $colspan = 5;
 ?>
@@ -29,11 +29,11 @@ $colspan = 5;
 <?
 $max = 0;
 $sum_count = 0;
-$sql = " select * from $g4[visit_table]
+$sql = " select * from {$g4['visit_table']}
           where vi_date between '$fr_date' and '$to_date' ";
 $result = sql_query($sql);
 while ($row=sql_fetch_array($result)) {
-    $s = get_brow($row[vi_agent]);
+    $s = get_brow($row['vi_agent']);
 
     $arr[$s]++;
 
@@ -62,7 +62,7 @@ if (count($arr)) {
         $s_rate = number_format($rate, 1);
 
         $bar = (int)($count / $max * 100);
-        $graph = "<img src='{$g4[admin_path]}/img/graph.gif' width='$bar%' height='18'>";
+        $graph = "<img src='{$g4['admin_path']}/img/graph.gif' width='$bar%' height='18'>";
 
         $list = ($k++%2);
         echo "
@@ -90,5 +90,5 @@ if (count($arr)) {
 </table>
 
 <?
-include_once("./admin.tail.php");
+include_once('./admin.tail.php');
 ?>

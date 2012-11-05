@@ -1,14 +1,14 @@
 <?
 $sub_menu = "100600";
-include_once("./_common.php");
+include_once('./_common.php');
 
 check_demo();
 
-if ($is_admin != "super")
-    alert("최고관리자만 접근 가능합니다.", $g4[path]);
+if ($is_admin != 'super')
+    alert('최고관리자만 접근 가능합니다.', $g4['path']);
 
-$g4[title] = "업그레이드";
-include_once("./admin.head.php");
+$g4['title'] = '업그레이드';
+include_once('./admin.head.php');
 
 /*
 // 4.20.00
@@ -59,14 +59,14 @@ sql_query($sql, false);
 */
 
 // 회원테이블의 주키를 mb_no 로 교체
-sql_query(" ALTER TABLE `$g4[member_table]` DROP PRIMARY KEY ", false);
-sql_query(" ALTER TABLE `$g4[member_table]` ADD `mb_no` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST ", false);
-sql_query(" ALTER TABLE `$g4[member_table]` ADD UNIQUE `mb_id` ( `mb_id` ) ", false);
+sql_query(" ALTER TABLE `{$g4['member_table']}` DROP PRIMARY KEY ", false);
+sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_no` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST ", false);
+sql_query(" ALTER TABLE `{$g4['member_table']}` ADD UNIQUE `mb_id` ( `mb_id` ) ", false);
 
 
 // 4.11.00
 // 트랙백 토큰
-sql_query("CREATE TABLE `$g4[token_table]` (
+sql_query("CREATE TABLE `{$g4['token_table']}` (
   `to_token` varchar(32) NOT NULL default '',
   `to_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `to_ip` varchar(255) NOT NULL default '',
@@ -114,15 +114,15 @@ sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_9_subj` VARCHAR( 255 ) NO
 sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_10_subj` VARCHAR( 255 ) NOT NULL AFTER `bo_9_subj` ", FALSE);
 
 // 게시판 리스트에서 코멘트를 포함하여 최근에 올라온 글을 확인하는 시간 필드 생성
-$sql = " select bo_table from $g4[board_table] ";
+$sql = " select bo_table from {$g4['board_table']} ";
 $res = sql_query($sql);
 for($i=0;$row=sql_fetch_array($res);$i++)
 {
-    sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row[bo_table]}` ADD `wr_last` VARCHAR( 19 ) NOT NULL AFTER `wr_datetime` ", FALSE);
-    $sql2 = " select count(*) as cnt from `{$g4['write_prefix']}{$row[bo_table]}` where wr_last <> '' ";
+    sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}` ADD `wr_last` VARCHAR( 19 ) NOT NULL AFTER `wr_datetime` ", FALSE);
+    $sql2 = " select count(*) as cnt from `{$g4['write_prefix']}{$row['bo_table']}` where wr_last <> '' ";
     $row2 = sql_fetch_array($sql2);
-    if (!$row2[cnt]) // 원글에만 최근시간을 반영합니다.
-        sql_query(" UPDATE `{$g4['write_prefix']}{$row[bo_table]}` set wr_last = wr_datetime WHERE wr_is_comment = 0 ");
+    if (!$row2['cnt']) // 원글에만 최근시간을 반영합니다.
+        sql_query(" UPDATE `{$g4['write_prefix']}{$row['bo_table']}` set wr_last = wr_datetime WHERE wr_is_comment = 0 ");
 }
 
 
@@ -131,7 +131,7 @@ for($i=0;$row=sql_fetch_array($res);$i++)
 sql_query(" ALTER TABLE `{$g4[member_table]}` ADD `mb_open_date` DATE NOT NULL AFTER `mb_open` ", false);
 sql_query(" ALTER TABLE `{$g4[config_table]}` ADD `cf_open_modify` INT NOT NULL AFTER `cf_stipulation` ", false);
 // 게시물 추천테이블 생성
-sql_query(" CREATE TABLE `{$g4[board_good_table]}` (
+sql_query(" CREATE TABLE `{$g4['board_good_table']}` (
   `bg_id` int(11) NOT NULL auto_increment,
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` int(11) NOT NULL default '0',
@@ -148,15 +148,15 @@ sql_query(" CREATE TABLE `{$g4[board_good_table]}` (
 sql_query(" ALTER TABLE `{$g4['board_new_table']}` ADD `mb_id` VARCHAR( 20 ) NOT NULL ", false);
 sql_query(" ALTER TABLE `{$g4['board_new_table']}` ADD INDEX `mb_id` ( `mb_id` ) ", false);
 
-$sql = " select * from $g4[board_new_table] ";
+$sql = " select * from {$g4['board_new_table']} ";
 $res = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($res); $i++)
 {
-    $ttmp = $g4[write_prefix].$row[bo_table];
-    $sql2 = " select mb_id from $ttmp where wr_id = '$row[wr_id]' ";
+    $ttmp = $g4['write_prefix'].$row['bo_table'];
+    $sql2 = " select mb_id from $ttmp where wr_id = '{$row['wr_id']}' ";
     $row2 = sql_fetch($sql2);
 
-    $sql3 = " update $g4[board_new_table] set mb_id = '$row2[mb_id]' where bn_id = '$row[bn_id]' ";
+    $sql3 = " update {$g4['board_new_table']} set mb_id = '{$row2['mb_id']}' where bn_id = '{$row['bn_id']}' ";
     sql_query($sql3, false);
 }
 
@@ -171,7 +171,7 @@ sql_query(" ALTER TABLE `$g4[login_table]` DROP INDEX `lo_datetime` ", false);
 sql_query(" ALTER TABLE `$g4[member_table]` ADD INDEX `mb_datetime` ( `mb_datetime` ) ", false);
 
 // 게시판설정 테이블에 업로드 갯수, 이메일 사용 필드 추가
-sql_query(" ALTER TABLE `$g4[board_table]` 
+sql_query(" ALTER TABLE `$g4[board_table]`
     ADD `bo_upload_count` TINYINT NOT NULL AFTER `bo_notice` ,
     ADD `bo_use_email` TINYINT NOT NULL AFTER `bo_upload_count` ", FALSE);
 */
@@ -179,16 +179,16 @@ sql_query(" ALTER TABLE `$g4[board_table]`
 /*
 // 050831 막음
 // 환경설정 테이블에 메일발송 설정 추가
-sql_query(" ALTER TABLE `$g4[config_table]` 
-    ADD `cf_email_use` TINYINT NOT NULL AFTER `cf_search_part` , 
-    ADD `cf_email_wr_super_admin` TINYINT NOT NULL AFTER `cf_email_use` , 
-    ADD `cf_email_wr_group_admin` TINYINT NOT NULL AFTER `cf_email_wr_super_admin` , 
-    ADD `cf_email_wr_board_admin` TINYINT NOT NULL AFTER `cf_email_wr_group_admin` , 
+sql_query(" ALTER TABLE `$g4[config_table]`
+    ADD `cf_email_use` TINYINT NOT NULL AFTER `cf_search_part` ,
+    ADD `cf_email_wr_super_admin` TINYINT NOT NULL AFTER `cf_email_use` ,
+    ADD `cf_email_wr_group_admin` TINYINT NOT NULL AFTER `cf_email_wr_super_admin` ,
+    ADD `cf_email_wr_board_admin` TINYINT NOT NULL AFTER `cf_email_wr_group_admin` ,
     ADD `cf_email_wr_write` TINYINT NOT NULL AFTER `cf_email_wr_board_admin` ", FALSE);
-sql_query(" ALTER TABLE `$g4[config_table]` 
+sql_query(" ALTER TABLE `$g4[config_table]`
     CHANGE `cf_comment_all_email` `cf_email_wr_comment_all` TINYINT DEFAULT '0' NOT NULL ", FALSE);
-sql_query(" ALTER TABLE `$g4[config_table]` 
-    ADD `cf_email_mb_super_admin` TINYINT NOT NULL AFTER `cf_email_wr_comment_all` , 
+sql_query(" ALTER TABLE `$g4[config_table]`
+    ADD `cf_email_mb_super_admin` TINYINT NOT NULL AFTER `cf_email_wr_comment_all` ,
     ADD `cf_email_mb_member` TINYINT NOT NULL AFTER `cf_email_mb_super_admin` ,
     ADD `cf_email_po_super_admin` TINYINT NOT NULL AFTER `cf_email_mb_member` ", FALSE);
 
@@ -291,7 +291,7 @@ sql_query($sql, FALSE);
 sql_query(" ALTER TABLE `$g4[board_new_table]` ADD `wr_parent` INT NOT NULL AFTER `wr_id` ", FALSE);
 
 sql_query(" ALTER TABLE `$g4[board_new_table]` CHANGE `wr_id` `wr_id` INT NOT NULL ", FALSE);
-                                             
+
 sql_query(" ALTER TABLE `$g4[poll_table]` ADD `po_point` INT NOT NULL AFTER `po_level` ", FALSE);
 
 sql_query(" ALTER TABLE `$g4[point_table]` ADD `po_point` INT NOT NULL AFTER `po_level` ", FALSE);
@@ -336,7 +336,7 @@ sql_query($sql, FALSE);
 */
 
 
-echo "UPGRADE 완료.";
+echo 'UPGRADE 완료.';
 
-include_once("./admin.tail.php");
+include_once('./admin.tail.php');
 ?>
