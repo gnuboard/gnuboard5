@@ -9,10 +9,10 @@ if (!$g4['title'])
 
 // 쪽지를 받았나?
 if ($member['mb_memo_call']) {
-    $mb = get_member($member[mb_memo_call], "mb_nick");
-    sql_query(" update {$g4[member_table]} set mb_memo_call = '' where mb_id = '$member[mb_id]' ");
+    $mb = get_member($member['mb_memo_call'], "mb_nick");
+    sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
 
-    alert($mb[mb_nick]."님으로부터 쪽지가 전달되었습니다.", $_SERVER[REQUEST_URI]);
+    alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI']);
 }
 
 
@@ -25,7 +25,7 @@ if (!$lo_location)
     $lo_location = $_SERVER['REQUEST_URI'];
 //$lo_url = $g4[url] . $_SERVER['REQUEST_URI'];
 $lo_url = $_SERVER['REQUEST_URI'];
-if (strstr($lo_url, "/$g4[admin]/") || $is_admin == "super") $lo_url = "";
+if (strstr($lo_url, "/$g4[admin]/") || $is_admin == 'super') $lo_url = '';
 
 // 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면
 // 캐쉬의 내용을 가져옴. 완전한지는 검증되지 않음

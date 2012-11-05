@@ -2,11 +2,11 @@
 if (!defined('_GNUBOARD_')) exit;
 
 // 방문자수 출력
-function visit($skin_dir="basic")
+function visit($skin_dir='basic')
 {
     global $config, $g4;
 
-    // visit 배열변수에 
+    // visit 배열변수에
     // $visit[1] = 오늘
     // $visit[2] = 어제
     // $visit[3] = 최대
@@ -19,8 +19,8 @@ function visit($skin_dir="basic")
     settype($visit[3], "integer");
 
     ob_start();
-    $visit_skin_path = "$g4[path]/skin/visit/$skin_dir";
-    include_once ("$visit_skin_path/visit.skin.php");
+    $visit_skin_path = $g4['path'].'/skin/visit/'.$skin_dir;
+    include_once ($visit_skin_path.'/visit.skin.php');
     $content = ob_get_contents();
     ob_end_clean();
 

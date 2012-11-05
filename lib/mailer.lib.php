@@ -1,9 +1,9 @@
 <?
-if (!defined("_GNUBOARD_")) exit;
+if (!defined('_GNUBOARD_')) exit;
 
 // 메일 보내기 (파일 여러개 첨부 가능)
 // type : text=0, html=1, text+html=2
-function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="") 
+function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file='', $cc='', $bcc='')
 {
     global $config;
     global $g4;
@@ -23,10 +23,10 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
     $header .= "MIME-Version: 1.0\n";
     //$header .= "X-Mailer: SIR Mailer 0.91 (sir.co.kr) : $_SERVER[SERVER_ADDR] : $_SERVER[REMOTE_ADDR] : $g4[url] : $_SERVER[PHP_SELF] : $_SERVER[HTTP_REFERER] \n";
     // UTF-8 관련 수정
-    $header .= "X-Mailer: SIR Mailer 0.92 (sir.co.kr) : $_SERVER[SERVER_ADDR] : $_SERVER[REMOTE_ADDR] : $g4[url] : $_SERVER[PHP_SELF] : $_SERVER[HTTP_REFERER] \n";
+    $header .= "X-Mailer: SIR Mailer 0.92 (sir.co.kr) : {$_SERVER['SERVER_ADDR']} : {$_SERVER['REMOTE_ADDR']} : {$g4['url']} : {$_SERVER['PHP_SELF']} : {$_SERVER['HTTP_REFERER']} \n";
 
-    if ($file != "") {
-        $boundary = uniqid("http://sir.co.kr/");
+    if ($file != '') {
+        $boundary = uniqid('http://sir.co.kr/');
 
         $header .= "Content-type: MULTIPART/MIXED; BOUNDARY=\"$boundary\"\n\n";
         $header .= "--$boundary\n";
@@ -43,15 +43,15 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
     $header .= "Content-Transfer-Encoding: BASE64\n\n";
     $header .= chunk_split(base64_encode($content)) . "\n";
 
-    if ($file != "") {
+    if ($file != '') {
         foreach ($file as $f) {
             $header .= "\n--$boundary\n";
-            $header .= "Content-Type: APPLICATION/OCTET-STREAM; name=\"$f[name]\"\n";
+            $header .= "Content-Type: APPLICATION/OCTET-STREAM; name=\"{$f['name']}\"\n";
             $header .= "Content-Transfer-Encoding: BASE64\n";
-            $header .= "Content-Disposition: inline; filename=\"$f[name]\"\n";
+            $header .= "Content-Disposition: inline; filename=\"{$f['name']}\"\n";
 
             $header .= "\n";
-            $header .= chunk_split(base64_encode($f[data]));
+            $header .= chunk_split(base64_encode($f['data']));
             $header .= "\n";
         }
         $header .= "--$boundary--\n";
@@ -94,7 +94,7 @@ function verify_email($address, &$error)
     if (checkdnsrr($domain, "MX")) {
         // 메일 교환기 레코드들을 얻는다
         if (!getmxrr($domain, $mxhost, $mxweight)) {
-            $error = "메일 교환기를 회수할 수 없음";
+            $error = '메일 교환기를 회수할 수 없음';
             return false;
         }
     } else {
@@ -116,20 +116,20 @@ function verify_email($address, &$error)
         // 220 메세지들은 건너뜀
         // 3초가 지나도 응답이 없으면 포기
         socket_set_blocking($fp, false);
-        $stoptime = $g4[server_time] + $WAIT_SECOND;
+        $stoptime = $g4['server_time'] + $WAIT_SECOND;
         $gotresponse = false;
 
         while (true) {
             // 메일서버로부터 한줄 얻음
             $line = fgets($fp, 1024);
 
-            if (substr($line, 0, 3) == "220") {
+            if (substr($line, 0, 3) == '220') {
                 // 타이머를 초기화
-                $stoptime = $g4[server_time] + $WAIT_SECOND;
+                $stoptime = $g4['server_time'] + $WAIT_SECOND;
                 $gotresponse = true;
-            } else if ($line == "" && $gotresponse)
+            } else if ($line == '' && $gotresponse)
                 break;
-            else if ($g4[server_time] > $stoptime)
+            else if ($g4['server_time'] > $stoptime)
                 break;
         }
 
@@ -139,8 +139,8 @@ function verify_email($address, &$error)
         socket_set_blocking($fp, true);
 
         // SMTP 서버와의 대화를 시작
-        fputs($fp, "HELO $_SERVER[SERVER_NAME]\r\n");
-        echo "HELO $_SERVER[SERVER_NAME]\r\n";
+        fputs($fp, "HELO {$_SERVER['SERVER_NAME']}\r\n");
+        echo "HELO {$_SERVER['SERVER_NAME']}\r\n";
         fgets($fp, 1024);
 
         // From을 설정
@@ -157,7 +157,7 @@ function verify_email($address, &$error)
         fputs($fp, "QUIT\r\n");
         fclose($fp);
 
-        if (substr($line, 0, 3) != "250") {
+        if (substr($line, 0, 3) != '250') {
             // SMTP 서버가 이 주소를 인식하지 못하므로 잘못된 주소임
             $error = $line;
             return false;
@@ -166,8 +166,8 @@ function verify_email($address, &$error)
             return true;
 
     }
-    
-    $error = "메일 교환기에 도달하지 못하였습니다.";
+
+    $error = '메일 교환기에 도달하지 못하였습니다.';
     return false;
 }
 ?>

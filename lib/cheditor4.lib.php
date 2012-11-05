@@ -1,10 +1,10 @@
 <?
 if (!defined('_GNUBOARD_')) exit;
 
-if ($g4['is_cheditor5']) 
+if ($g4['is_cheditor5'])
 {
-    $g4['cheditor4']      = "cheditor5";
-    $g4['cheditor4_path'] = $g4['path'] . "/" . $g4['cheditor4'];
+    $g4['cheditor4']      = 'cheditor5';
+    $g4['cheditor4_path'] = $g4['path'] . '/' . $g4['cheditor4'];
 
     function cheditor1($id, $width='100%', $height='250')
     {
@@ -19,7 +19,7 @@ if ($g4['is_cheditor5'])
         </script>";
     }
 }
-else 
+else
 {
     function cheditor1($id, $width='100%', $height='250')
     {
@@ -48,7 +48,7 @@ function cheditor2($id, $content='')
     ed_{$id}.run();
     </script>";
 }
- 
+
 function cheditor3($id)
 {
     return "document.getElementById('tx_{$id}').value = ed_{$id}.outputBodyHTML();";

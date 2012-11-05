@@ -216,25 +216,25 @@ $g4     = array();
 // php 인젝션 ( 임의로 변수조작으로 인한 리모트공격) 취약점에 대비한 코드
 // prosper 님께서 알려주셨습니다.
 if (!$g4_path || preg_match("/:\/\//", $g4_path))
-    die("<meta http-equiv='content-type' content='text/html; charset=$g4[charset]'><script type='text/javascript'> alert('잘못된 방법으로 변수가 정의되었습니다.'); </script>");
+    die("<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'><script type='text/javascript'> alert('잘못된 방법으로 변수가 정의되었습니다.'); </script>");
 //if (!$g4_path) $g4_path = ".";
 $g4['path'] = $g4_path;
 
 // 경로의 오류를 없애기 위해 $g4_path 변수는 해제
 unset($g4_path);
 
-include_once("$g4[path]/lib/constant.php");  // 상수 정의
-include_once("$g4[path]/config.php");  // 설정 파일
-include_once("$g4[path]/lib/common.lib.php"); // 공통 라이브러리
+include_once($g4['path'].'/lib/constant.php');  // 상수 정의
+include_once($g4['path'].'/config.php');  // 설정 파일
+include_once($g4['path'].'/lib/common.lib.php'); // 공통 라이브러리
 
 // config.php 가 있는곳의 웹경로
 if (!$g4['url'])
 {
     $g4['url'] = 'http://' . $_SERVER['HTTP_HOST'];
-    $dir = dirname($_SERVER["PHP_SELF"]);
-    if (!file_exists("config.php"))
+    $dir = dirname($_SERVER['PHP_SELF']);
+    if (!file_exists('config.php'))
         $dir = dirname($dir);
-    $cnt = substr_count($g4['path'], "..");
+    $cnt = substr_count($g4['path'], '..');
     for ($i=2; $i<=$cnt; $i++)
         $dir = dirname($dir);
     $g4['url'] .= $dir;
@@ -248,20 +248,20 @@ $g4['url'] = preg_replace("/\/$/", "", $g4['url']);
 // 공통
 //==============================================================================
 $dirname = dirname(__FILE__).'/';
-$dbconfig_file = "data/dbconfig.php";
-if (file_exists("$g4[path]/$dbconfig_file"))
+$dbconfig_file = 'data/dbconfig.php';
+if (file_exists($g4['path'].'/'.$dbconfig_file))
 {
     //if (is_dir("$g4[path]/install")) die("<meta http-equiv='content-type' content='text/html; charset=$g4[charset]'><script type='text/javascript'> alert('install 디렉토리를 삭제하여야 정상 실행됩니다.'); </script>");
 
-    include_once("$g4[path]/$dbconfig_file");
+    include_once($g4['path'].'/'.$dbconfig_file);
     $connect_db = sql_connect($mysql_host, $mysql_user, $mysql_password);
     $select_db = sql_select_db($mysql_db, $connect_db);
     if (!$select_db)
-        die("<meta http-equiv='content-type' content='text/html; charset=$g4[charset]'><script type='text/javascript'> alert('DB 접속 오류'); </script>");
+        die("<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'><script type='text/javascript'> alert('DB 접속 오류'); </script>");
 }
 else
 {
-    echo "<meta http-equiv='content-type' content='text/html; charset=$g4[charset]'>";
+    echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
     echo <<<HEREDOC
     <script type="text/javascript">
     alert("DB 설정 파일이 존재하지 않습니다.\\n\\n프로그램 설치 후 실행하시기 바랍니다.");
@@ -280,7 +280,7 @@ unset($my); // DB 설정값을 클리어 해줍니다.
 ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
 ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
-session_save_path("{$g4['path']}/data/session");
+session_save_path($g4['path'].'/data/session');
 
 if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
@@ -292,7 +292,7 @@ else
 //==============================================================================
 // 기본환경설정
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
-$config = sql_fetch(" select * from $g4[config_table] ");
+$config = sql_fetch(" select * from {$g4['config_table']} ");
 
 ini_set("session.cache_expire", 180); // 세션 캐쉬 보관시간 (분)
 ini_set("session.gc_maxlifetime", 10800); // session data의 garbage collection 존재 기간을 지정 (초)
@@ -312,53 +312,53 @@ if (strpos($_SERVER[PHP_SELF], $g4['admin']) === false)
 
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
 if ($_REQUEST['PHPSESSID'] && $_REQUEST['PHPSESSID'] != session_id())
-    goto_url("{$g4['bbs_path']}/logout.php");
+    goto_url($g4['bbs_path'].'/logout.php');
 
 // QUERY_STRING
-$qstr = "";
+$qstr = '';
 /*
 if (isset($bo_table))   $qstr .= 'bo_table=' . urlencode($bo_table);
 if (isset($wr_id))      $qstr .= '&wr_id=' . urlencode($wr_id);
 */
 if (isset($sca))  {
     $sca = mysql_real_escape_string($sca);
-    $qstr .= '&sca=' . urlencode($sca);
+    $qstr .= '&amp;sca=' . urlencode($sca);
 }
 
 if (isset($sfl))  {
     $sfl = mysql_real_escape_string($sfl);
     //$sfl = preg_replace("/[^\w\,\|]+/", "", $sfl);
-    $qstr .= '&sfl=' . urlencode($sfl); // search field (검색 필드)
+    $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
 }
 
 if (isset($stx))  { // search text (검색어)
     $stx = mysql_real_escape_string($stx);
-    $qstr .= '&stx=' . urlencode($stx);
+    $qstr .= '&amp;stx=' . urlencode($stx);
 }
 
 if (isset($sst))  {
     $sst = mysql_real_escape_string($sst);
-    $qstr .= '&sst=' . urlencode($sst); // search sort (검색 정렬 필드)
+    $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 }
 
 if (isset($sod))  { // search order (검색 오름, 내림차순)
-    $sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : "";
-    $qstr .= '&sod=' . urlencode($sod);
+    $sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : '';
+    $qstr .= '&amp;sod=' . urlencode($sod);
 }
 
 if (isset($sop))  { // search operator (검색 or, and 오퍼레이터)
-    $sop = preg_match("/^(or|and)$/i", $sop) ? $sop : "";
-    $qstr .= '&sop=' . urlencode($sop);
+    $sop = preg_match("/^(or|and)$/i", $sop) ? $sop : '';
+    $qstr .= '&amp;sop=' . urlencode($sop);
 }
 
 if (isset($spt))  { // search part (검색 파트[구간])
     $spt = (int)$spt;
-    $qstr .= '&spt=' . urlencode($spt);
+    $qstr .= '&amp;spt=' . urlencode($spt);
 }
 
 if (isset($page)) { // 리스트 페이지
     $page = (int)$page;
-    $qstr .= '&page=' . urlencode($page);
+    $qstr .= '&amp;page=' . urlencode($page);
 }
 
 if ($wr_id) {
@@ -366,7 +366,7 @@ if ($wr_id) {
 }
 
 if ($bo_table) {
-    $bo_table = preg_match("/^[a-zA-Z0-9_]+$/", $bo_table) ? $bo_table : "";
+    $bo_table = preg_match("/^[a-zA-Z0-9_]+$/", $bo_table) ? $bo_table : '';
 }
 
 // URL ENCODING
@@ -376,7 +376,7 @@ if (isset($url)) {
 else {
     // 2008.01.25 Cross Site Scripting 때문에 수정
     //$urlencode = $_SERVER['REQUEST_URI'];
-    $urlencode = urlencode($_SERVER[REQUEST_URI]);
+    $urlencode = urlencode($_SERVER['REQUEST_URI']);
 }
 //===================================
 
@@ -402,7 +402,7 @@ else
 {
     // 자동로그인 ---------------------------------------
     // 회원아이디가 쿠키에 저장되어 있다면 (3.27)
-    if ($tmp_mb_id = get_cookie("ck_mb_id"))
+    if ($tmp_mb_id = get_cookie('ck_mb_id'))
     {
         $tmp_mb_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $tmp_mb_id), 0, 20);
         // 최고관리자는 자동로그인 금지
@@ -412,16 +412,16 @@ else
             $row = sql_fetch($sql);
             $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
             // 쿠키에 저장된 키와 같다면
-            $tmp_key = get_cookie("ck_auto");
+            $tmp_key = get_cookie('ck_auto');
             if ($tmp_key == $key && $tmp_key)
             {
                 // 차단, 탈퇴가 아니고 메일인증이 사용이면서 인증을 받았다면
-                if ($row['mb_intercept_date'] == "" &&
-                    $row['mb_leave_date'] == "" &&
+                if ($row['mb_intercept_date'] == '' &&
+                    $row['mb_leave_date'] == '' &&
                     (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) )
                 {
                     // 세션에 회원아이디를 저장하여 로그인으로 간주
-                    set_session("ss_mb_id", $tmp_mb_id);
+                    set_session('ss_mb_id', $tmp_mb_id);
 
                     // 페이지를 재실행
                     echo "<script type='text/javascript'> window.location.reload(); </script>";
@@ -437,8 +437,8 @@ else
 
 // 첫방문 쿠키
 // 1년간 저장
-if (!get_cookie("ck_first_call"))     set_cookie("ck_first_call", $g4[server_time], 86400 * 365);
-if (!get_cookie("ck_first_referer"))  set_cookie("ck_first_referer", $_SERVER[HTTP_REFERER], 86400 * 365);
+if (!get_cookie('ck_first_call'))     set_cookie('ck_first_call', $g4['server_time'], 86400 * 365);
+if (!get_cookie('ck_first_referer'))  set_cookie('ck_first_referer', $_SERVER['HTTP_REFERER'], 86400 * 365);
 
 // 회원이 아니라면 권한을 방문객 권한으로 함
 if (!($member['mb_id']))
@@ -448,7 +448,7 @@ else
 
 //$member['mb_level_title'] = $g4['member_level'][$member['mb_level']]; // 권한명
 
-$write_table = "";
+$write_table = '';
 if (isset($bo_table)) {
     $board = sql_fetch(" select * from {$g4['board_table']} where bo_table = '$bo_table' ");
     if ($board['bo_table']) {
@@ -473,7 +473,7 @@ else
 
 
 $is_admin = is_admin($member['mb_id']);
-if ($is_admin != "super") {
+if ($is_admin != 'super') {
     // 접근가능 IP
     $cf_possible_ip = trim($config['cf_possible_ip']);
     if ($cf_possible_ip) {
@@ -514,17 +514,17 @@ if ($is_admin != "super") {
 // 스킨경로
 $board_skin_path = '';
 if (isset($board['bo_skin']))
-    $board_skin_path = "{$g4['path']}/skin/board/{$board['bo_skin']}"; // 게시판 스킨 경로
+    $board_skin_path = $g4['path'].'/skin/board/'.$board['bo_skin']; // 게시판 스킨 경로
 
 // 방문자수의 접속을 남김
-include_once("{$g4['bbs_path']}/visit_insert.inc.php");
+include_once($g4['bbs_path'].'/visit_insert.inc.php');
 
 
 // common.php 파일을 수정할 필요가 없도록 확장합니다.
-$tmp = dir("$g4[path]/extend");
+$tmp = dir($g4['path'].'/extend');
 while ($entry = $tmp->read()) {
     // php 파일만 include 함
     if (preg_match("/(\.php)$/i", $entry))
-        include_once("$g4[path]/extend/$entry");
+        include_once($g4['path'].'/extend/'.$entry);
 }
 ?>

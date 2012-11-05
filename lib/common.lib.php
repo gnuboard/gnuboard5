@@ -95,7 +95,7 @@ function set_cookie($cookie_name, $value, $expire)
 {
     global $g4;
 
-    setcookie(md5($cookie_name), base64_encode($value), $g4[server_time] + $expire, '/', $g4[cookie_domain]);
+    setcookie(md5($cookie_name), base64_encode($value), $g4['server_time'] + $expire, '/', $g4['cookie_domain']);
 }
 
 
@@ -114,7 +114,7 @@ function alert($msg='', $url='')
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
 
 	//header("Content-Type: text/html; charset=$g4[charset]");
-	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=$g4[charset]\">";
+	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
 	echo "<script type='text/javascript'>alert('$msg');";
     if (!$url)
         echo "history.go(-1);";
@@ -132,7 +132,7 @@ function alert_close($msg)
 {
 	global $g4;
 
-	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=$g4[charset]\">";
+	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
     echo "<script type='text/javascript'> alert('$msg'); window.close(); </script>";
     exit;
 }
@@ -150,14 +150,14 @@ function url_auto_link($str)
     $str = preg_replace("/&amp;/", "&", $str);
     $str = preg_replace("/&quot;/", "\"", $str);
     $str = preg_replace("/&nbsp;/", "\t_nbsp_\t", $str);
-    $str = preg_replace("/([^(http:\/\/)]|\(|^)(www\.[^[:space:]]+)/i", "\\1<A HREF=\"http://\\2\" TARGET='$config[cf_link_target]'>\\2</A>", $str);
+    $str = preg_replace("/([^(http:\/\/)]|\(|^)(www\.[^[:space:]]+)/i", "\\1<A HREF=\"http://\\2\" TARGET='{$config['cf_link_target']}'>\\2</A>", $str);
     //$str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,]+)/i", "\\1<A HREF=\"\\2\" TARGET='$config[cf_link_target]'>\\2</A>", $str);
     // 100825 : () 추가
     // 120315 : CHARSET 에 따라 링크시 글자 잘림 현상이 있어 수정
     if (strtoupper($g4['charset']) == 'UTF-8') {
-        $str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[가-힣\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET='$config[cf_link_target]'>\\2</A>", $str);
+        $str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[가-힣\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET='{$config['cf_link_target']}'>\\2</A>", $str);
     } else {
-        $str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET='$config[cf_link_target]'>\\2</A>", $str);
+        $str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET='{$config['cf_link_target']}'>\\2</A>", $str);
     }
     // 이메일 정규표현식 수정 061004
     //$str = preg_replace("/(([a-z0-9_]|\-|\.)+@([^[:space:]]*)([[:alnum:]-]))/i", "<a href='mailto:\\1'>\\1</a>", $str);
@@ -203,32 +203,32 @@ function get_file($bo_table, $wr_id)
 {
     global $g4, $qstr;
 
-    $file["count"] = 0;
-    $sql = " select * from $g4[board_file_table] where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
+    $file['count'] = 0;
+    $sql = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
     $result = sql_query($sql);
     while ($row = sql_fetch_array($result))
     {
-        $no = $row[bf_no];
-        $file[$no][href] = "./download.php?bo_table=$bo_table&wr_id=$wr_id&no=$no" . $qstr;
-        $file[$no][download] = $row[bf_download];
+        $no = $row['bf_no'];
+        $file[$no]['href'] = "./download.php?bo_table=$bo_table&wr_id=$wr_id&no=$no" . $qstr;
+        $file[$no]['download'] = $row['bf_download'];
         // 4.00.11 - 파일 path 추가
-        $file[$no][path] = "$g4[path]/data/file/$bo_table";
+        $file[$no]['path'] = $g4['path'].'/data/file/'.$bo_table;
         //$file[$no][size] = get_filesize("{$file[$no][path]}/$row[bf_file]");
-        $file[$no][size] = get_filesize($row[bf_filesize]);
+        $file[$no]['size'] = get_filesize($row['bf_filesize']);
         //$file[$no][datetime] = date("Y-m-d H:i:s", @filemtime("$g4[path]/data/file/$bo_table/$row[bf_file]"));
-        $file[$no][datetime] = $row[bf_datetime];
-        $file[$no][source] = addslashes($row[bf_source]);
-        $file[$no][bf_content] = $row[bf_content];
-        $file[$no][content] = get_text($row[bf_content]);
+        $file[$no]['datetime'] = $row['bf_datetime'];
+        $file[$no]['source'] = addslashes($row['bf_source']);
+        $file[$no]['bf_content'] = $row['bf_content'];
+        $file[$no]['content'] = get_text($row['bf_content']);
         //$file[$no][view] = view_file_link($row[bf_file], $file[$no][content]);
-        $file[$no][view] = view_file_link($row[bf_file], $row[bf_width], $row[bf_height], $file[$no][content]);
-        $file[$no][file] = $row[bf_file];
+        $file[$no]['view'] = view_file_link($row['bf_file'], $row['bf_width'], $row['bf_height'], $file[$no]['content']);
+        $file[$no]['file'] = $row['bf_file'];
         // prosper 님 제안
         //$file[$no][imgsize] = @getimagesize("{$file[$no][path]}/$row[bf_file]");
-        $file[$no][image_width] = $row[bf_width] ? $row[bf_width] : 640;
-        $file[$no][image_height] = $row[bf_height] ? $row[bf_height] : 480;
-        $file[$no][image_type] = $row[bf_type];
-        $file["count"]++;
+        $file[$no]['image_width'] = $row['bf_width'] ? $row['bf_width'] : 640;
+        $file[$no]['image_height'] = $row['bf_height'] ? $row['bf_height'] : 480;
+        $file[$no]['image_type'] = $row['bf_type'];
+        $file['count']++;
     }
 
     return $file;
@@ -241,8 +241,8 @@ function get_dirsize($dir)
     $size = 0;
     $d = dir($dir);
     while ($entry = $d->read()) {
-        if ($entry != "." && $entry != "..") {
-            $size += filesize("$dir/$entry");
+        if ($entry != '.' && $entry != '..') {
+            $size += filesize($dir.'/'.$entry);
         }
     }
     $d->close();
@@ -272,25 +272,25 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     $list['is_notice'] = preg_match("/[^0-9]{0,1}{$list['wr_id']}[\r]{0,1}/",$board['bo_notice']);
 
     if ($subject_len)
-        $list['subject'] = conv_subject($list['wr_subject'], $subject_len, "…");
+        $list['subject'] = conv_subject($list['wr_subject'], $subject_len, '…');
     else
-        $list['subject'] = conv_subject($list['wr_subject'], $board['bo_subject_len'], "…");
+        $list['subject'] = conv_subject($list['wr_subject'], $board['bo_subject_len'], '…');
 
     // 목록에서 내용 미리보기 사용한 게시판만 내용을 변환함 (속도 향상) : kkal3(커피)님께서 알려주셨습니다.
     if ($board['bo_use_list_content'])
 	{
 		$html = 0;
-		if (strstr($list['wr_option'], "html1"))
+		if (strstr($list['wr_option'], 'html1'))
 			$html = 1;
-		else if (strstr($list['wr_option'], "html2"))
+		else if (strstr($list['wr_option'], 'html2'))
 			$html = 2;
 
         $list['content'] = conv_content($list['wr_content'], $html);
 	}
 
-    $list['comment_cnt'] = "";
+    $list['comment_cnt'] = '';
     if ($list['wr_comment'])
-        $list['comment_cnt'] = "($list[wr_comment])";
+        $list['comment_cnt'] = '('.$list['wr_comment'].')';
 
     // 당일인 경우 시간으로 표시함
     $list['datetime'] = substr($list['wr_datetime'],0,10);
@@ -313,52 +313,52 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     if ($board['bo_use_sideview'])
         $list['name'] = get_sideview($list['mb_id'], $tmp_name, $list['wr_email'], $list['wr_homepage']);
     else
-        $list['name'] = "<span class='".($list['mb_id']?'member':'guest')."'>$tmp_name</span>";
+        $list['name'] = '<span class="'.($list['mb_id']?'member':'guest').'">'.$tmp_name.'</span>';
 
     $reply = $list['wr_reply'];
 
-    $list['reply'] = "";
+    $list['reply'] = '';
     if (strlen($reply) > 0)
     {
         for ($k=0; $k<strlen($reply); $k++)
             $list['reply'] .= ' &nbsp;&nbsp; ';
     }
 
-    $list['icon_reply'] = "";
+    $list['icon_reply'] = '';
     if ($list['reply'])
-        $list['icon_reply'] = "<img src='$skin_path/img/icon_reply.gif' align='absmiddle'>";
+        $list['icon_reply'] = '<img src="'.$skin_path.'/img/icon_reply.gif" align="absmiddle">';
 
-    $list['icon_link'] = "";
+    $list['icon_link'] = '';
     if ($list['wr_link1'] || $list['wr_link2'])
-        $list['icon_link'] = "<img src='$skin_path/img/icon_link.gif' align='absmiddle'>";
+        $list['icon_link'] = '<img src="'.$skin_path.'/img/icon_link.gif" align="absmiddle">';
 
     // 분류명 링크
-    $list['ca_name_href'] = "$g4[bbs_path]/board.php?bo_table=$board[bo_table]&sca=".urlencode($list['ca_name']);
+    $list['ca_name_href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
 
-    $list['href'] = "$g4[bbs_path]/board.php?bo_table=$board[bo_table]&wr_id=$list[wr_id]" . $qstr;
+    $list['href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
     //$list['href'] = "$g4[bbs_path]/board.php?bo_table=$board[bo_table]&wr_id=$list[wr_id]";
     if ($board['bo_use_comment'])
-        $list['comment_href'] = "javascript:win_comment('$g4[bbs_path]/board.php?bo_table=$board[bo_table]&wr_id=$list[wr_id]&cwin=1');";
+        $list['comment_href'] = "javascript:win_comment('$g4[bbs_path]/board.php?bo_table=$board[bo_table]&amp;wr_id={$list['wr_id']}&amp;cwin=1');";
     else
         $list['comment_href'] = $list['href'];
 
-    $list['icon_new'] = "";
+    $list['icon_new'] = '';
     if ($list['wr_datetime'] >= date("Y-m-d H:i:s", $g4['server_time'] - ($board['bo_new'] * 3600)))
-        $list['icon_new'] = "<img src='$skin_path/img/icon_new.gif' align='absmiddle'>";
+        $list['icon_new'] = '<img src="'.$skin_path.'/img/icon_new.gif" align="absmiddle">';
 
-    $list['icon_hot'] = "";
+    $list['icon_hot'] = '';
     if ($list['wr_hit'] >= $board['bo_hot'])
-        $list['icon_hot'] = "<img src='$skin_path/img/icon_hot.gif' align='absmiddle'>";
+        $list['icon_hot'] = '<img src="'.$skin_path.'/img/icon_hot.gif" align="absmiddle">';
 
-    $list['icon_secret'] = "";
-    if (strstr($list['wr_option'], "secret"))
-        $list['icon_secret'] = "<img src='$skin_path/img/icon_secret.gif' align='absmiddle'>";
+    $list['icon_secret'] = '';
+    if (strstr($list['wr_option'], 'secret'))
+        $list['icon_secret'] = '<img src="'.$skin_path.'/img/icon_secret.gif" align="absmiddle">';
 
     // 링크
     for ($i=1; $i<=$g4['link_count']; $i++)
     {
         $list['link'][$i] = set_http(get_text($list["wr_link{$i}"]));
-        $list['link_href'][$i] = "$g4[bbs_path]/link.php?bo_table=$board[bo_table]&wr_id=$list[wr_id]&no=$i" . $qstr;
+        $list['link_href'][$i] = $g4['bbs_path'].'/link.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].'&amp;no='.$i.$qstr;
         $list['link_hit'][$i] = (int)$list["wr_link{$i}_hit"];
     }
 
@@ -366,7 +366,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     $list['file'] = get_file($board['bo_table'], $list['wr_id']);
 
     if ($list['file']['count'])
-        $list['icon_file'] = "<img src='$skin_path/img/icon_file.gif' align='absmiddle'>";
+        $list['icon_file'] = '<img src="'.$skin_path.'/img/icon_file.gif" align="absmiddle">';
 
     return $list;
 }
@@ -384,19 +384,19 @@ function search_font($stx, $str)
     global $config;
 
     // 문자앞에 \ 를 붙입니다.
-    $src = array("/", "|");
-    $dst = array("\/", "\|");
+    $src = array('/', '|');
+    $dst = array('\/', '\|');
 
     if (!trim($stx)) return $str;
 
     // 검색어 전체를 공란으로 나눈다
-    $s = explode(" ", $stx);
+    $s = explode(' ', $stx);
 
     // "/(검색1|검색2)/i" 와 같은 패턴을 만듬
-    $pattern = "";
-    $bar = "";
+    $pattern = '';
+    $bar = '';
     for ($m=0; $m<count($s); $m++) {
-        if (trim($s[$m]) == "") continue;
+        if (trim($s[$m]) == '') continue;
         // 태그는 포함하지 않아야 하는데 잘 안되는군. ㅡㅡa
         //$pattern .= $bar . '([^<])(' . quotemeta($s[$m]) . ')';
         //$pattern .= $bar . quotemeta($s[$m]);
@@ -408,14 +408,14 @@ function search_font($stx, $str)
     }
 
     // 지정된 검색 폰트의 색상, 배경색상으로 대체
-    $replace = "<span style='background-color:$config[cf_search_bgcolor]; color:$config[cf_search_color];'>\\1</span>";
+    $replace = "<span style='background-color:{$config['cf_search_bgcolor']}; color:{$config['cf_search_color']};'>\\1</span>";
 
     return preg_replace("/($pattern)/i", $replace, $str);
 }
 
 
 // 제목을 변환
-function conv_subject($subject, $len, $suffix="")
+function conv_subject($subject, $len, $suffix='')
 {
     return cut_str(get_text($subject), $len, $suffix);
 }
@@ -464,7 +464,7 @@ function conv_content($content, $html)
 
         // XSS (Cross Site Script) 막기
         // 완벽한 XSS 방지는 없다.
-        
+
         // 이런 경우를 방지함 <IMG STYLE="xss:expr/*XSS*/ession(alert('XSS'))">
         $content = preg_replace("#\/\*.*\*\/#iU", "", $content);
 
@@ -563,7 +563,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         if ($search_str == "") continue;
 
         // 인기검색어
-        $sql = " insert into $g4[popular_table] set pp_word = '$search_str', pp_date = '$g4[time_ymd]', pp_ip = '$_SERVER[REMOTE_ADDR]' ";
+        $sql = " insert into {$g4['popular_table']} set pp_word = '$search_str', pp_date = '{$g4['time_ymd']}', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql, FALSE);
 
         $str .= $op1;
@@ -631,7 +631,7 @@ function get_next_num($table)
     $sql = " select min(wr_num) as min_wr_num from $table ";
     $row = sql_fetch($sql);
     // 가장 작은 번호에 1을 빼서 넘겨줌
-    return (int)($row[min_wr_num] - 1);
+    return (int)($row['min_wr_num'] - 1);
 }
 
 
@@ -640,7 +640,7 @@ function get_group($gr_id)
 {
     global $g4;
 
-    return sql_fetch(" select * from $g4[group_table] where gr_id = '$gr_id' ");
+    return sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
 }
 
 
@@ -649,7 +649,7 @@ function get_member($mb_id, $fields='*')
 {
     global $g4;
 
-    return sql_fetch(" select $fields from $g4[member_table] where mb_id = TRIM('$mb_id') ");
+    return sql_fetch(" select $fields from {$g4['member_table']} where mb_id = TRIM('$mb_id') ");
 }
 
 
@@ -696,17 +696,17 @@ function get_admin($admin='super')
 
     $is = false;
     if ($admin == 'board') {
-        $mb = sql_fetch("select * from $g4[member_table] where mb_id in ('$board[bo_admin]') limit 1 ");
+        $mb = sql_fetch("select * from {$g4['member_table']} where mb_id in ('$board[bo_admin]') limit 1 ");
         $is = true;
     }
 
-    if (($is && !$mb[mb_id]) || $admin == 'group') {
-        $mb = sql_fetch("select * from $g4[member_table] where mb_id in ('$group[gr_admin]') limit 1 ");
+    if (($is && !$mb['mb_id']) || $admin == 'group') {
+        $mb = sql_fetch("select * from {$g4['member_table']} where mb_id in ('{$group['gr_admin']}') limit 1 ");
         $is = true;
     }
 
-    if (($is && !$mb[mb_id]) || $admin == 'super') {
-        $mb = sql_fetch("select * from $g4[member_table] where mb_id in ('$config[cf_admin]') limit 1 ");
+    if (($is && !$mb['mb_id']) || $admin == 'super') {
+        $mb = sql_fetch("select * from {$g4['member_table']} where mb_id in ('{$config['cf_admin']}') limit 1 ");
     }
 
     return $mb;
@@ -753,10 +753,10 @@ function get_group_select($name, $selected='', $event='')
 {
     global $g4, $is_admin, $member;
 
-    $sql = " select gr_id, gr_subject from $g4[group_table] a ";
+    $sql = " select gr_id, gr_subject from {$g4['group_table']} a ";
     if ($is_admin == "group") {
-        $sql .= " left join $g4[member_table] b on (b.mb_id = a.gr_admin)
-                  where b.mb_id = '$member[mb_id]' ";
+        $sql .= " left join {$g4['member_table']} b on (b.mb_id = a.gr_admin)
+                  where b.mb_id = '{$member['mb_id']}' ";
     }
     $sql .= " order by a.gr_id ";
 
@@ -764,9 +764,9 @@ function get_group_select($name, $selected='', $event='')
     $str = "<select name='$name' $event>";
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $str .= "<option value='$row[gr_id]'";
+        $str .= "<option value='{$row['gr_id']}'";
         if ($row[gr_id] == $selected) $str .= " selected";
-        $str .= ">$row[gr_subject]</option>";
+        $str .= ">{$row['gr_subject']}</option>";
     }
     $str .= "</select>";
     return $str;
@@ -797,20 +797,20 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     global $is_admin;
 
     // 포인트 사용을 하지 않는다면 return
-    if (!$config[cf_use_point]) { return 0; }
+    if (!$config['cf_use_point']) { return 0; }
 
     // 포인트가 없다면 업데이트 할 필요 없음
     if ($point == 0) { return 0; }
 
     // 회원아이디가 없다면 업데이트 할 필요 없음
-    if ($mb_id == "") { return 0; }
-    $mb = sql_fetch(" select mb_id from $g4[member_table] where mb_id = '$mb_id' ");
+    if ($mb_id == '') { return 0; }
+    $mb = sql_fetch(" select mb_id from {$g4['member_table']} where mb_id = '$mb_id' ");
     if (!$mb[mb_id]) { return 0; }
 
     // 이미 등록된 내역이라면 건너뜀
     if ($rel_table || $rel_id || $rel_action)
     {
-        $sql = " select count(*) as cnt from $g4[point_table]
+        $sql = " select count(*) as cnt from {$g4['point_table']}
                   where mb_id = '$mb_id'
                     and po_rel_table = '$rel_table'
                     and po_rel_id = '$rel_id'
@@ -821,9 +821,9 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     }
 
     // 포인트 건별 생성
-    $sql = " insert into $g4[point_table]
+    $sql = " insert into {$g4['point_table']}
                 set mb_id = '$mb_id',
-                    po_datetime = '$g4[time_ymdhis]',
+                    po_datetime = '{$g4['time_ymdhis']}',
                     po_content = '".addslashes($content)."',
                     po_point = '$point',
                     po_rel_table = '$rel_table',
@@ -832,12 +832,12 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     sql_query($sql);
 
     // 포인트 내역의 합을 구하고
-    $sql = " select sum(po_point) as sum_po_point from $g4[point_table] where mb_id = '$mb_id' ";
+    $sql = " select sum(po_point) as sum_po_point from {$g4['point_table']} where mb_id = '$mb_id' ";
     $row = sql_fetch($sql);
-    $sum_point = $row[sum_po_point];
+    $sum_point = $row['sum_po_point'];
 
     // 포인트 UPDATE
-    $sql = " update $g4[member_table] set mb_point = '$sum_point' where mb_id = '$mb_id' ";
+    $sql = " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '$mb_id' ";
     sql_query($sql);
 
     return 1;
@@ -851,19 +851,19 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
     $result = false;
     if ($rel_table || $rel_id || $rel_action)
     {
-        $result = sql_query(" delete from $g4[point_table]
+        $result = sql_query(" delete from {$g4['point_table']}
                      where mb_id = '$mb_id'
                        and po_rel_table = '$rel_table'
                        and po_rel_id = '$rel_id'
                        and po_rel_action = '$rel_action' ", false);
 
         // 포인트 내역의 합을 구하고
-        $sql = " select sum(po_point) as sum_po_point from $g4[point_table] where mb_id = '$mb_id' ";
+        $sql = " select sum(po_point) as sum_po_point from {$g4['point_table']} where mb_id = '$mb_id' ";
         $row = sql_fetch($sql);
-        $sum_point = $row[sum_po_point];
+        $sum_point = $row['sum_po_point'];
 
         // 포인트 UPDATE
-        $sql = " update $g4[member_table] set mb_point = '$sum_point' where mb_id = '$mb_id' ";
+        $sql = " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '$mb_id' ";
         $result = sql_query($sql);
     }
 
@@ -871,7 +871,7 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
 }
 
 // 회원 레이어
-function get_sideview($mb_id, $name="", $email="", $homepage="")
+function get_sideview($mb_id, $name='', $email='', $homepage='')
 {
     global $config;
     global $g4;
@@ -889,7 +889,7 @@ function get_sideview($mb_id, $name="", $email="", $homepage="")
 
         if ($config['cf_use_member_icon']) {
             $mb_dir = substr($mb_id,0,2);
-            $icon_file = "$g4[path]/data/member/$mb_dir/$mb_id.gif";
+            $icon_file = $g4['path'].'/data/member/'.$mb_dir.'/'.$mb_id.'.gif';
 
             //if (file_exists($icon_file) && is_file($icon_file)) {
             if (file_exists($icon_file)) {
@@ -898,16 +898,16 @@ function get_sideview($mb_id, $name="", $email="", $homepage="")
                 //$height = $size[1];
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
-                $tmp_name = "<img src='$icon_file' width='$width' height='$height' align='absmiddle' border='0'>";
+                $tmp_name = '<img src="'.$icon_file.'" width="'.$width.'" height="'.$height.'" align="absmiddle" border="0">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-                    $tmp_name = $tmp_name . " <span class='member'>$name</span>";
+                    $tmp_name = $tmp_name . ' <span class="member">'.$name.'</span>';
             }
         }
-        $title_mb_id = "[$mb_id]";
+        $title_mb_id = '['.$mb_id.']';
     } else {
-        $tmp_name = "<span class='guest'>$name</span>";
-        $title_mb_id = "[비회원]";
+        $tmp_name = '<span class="guest">'.$name.'</span>';
+        $title_mb_id = '[비회원]';
     }
 
     $name     = get_text($name);
@@ -919,7 +919,7 @@ function get_sideview($mb_id, $name="", $email="", $homepage="")
 
 
 // 파일을 보이게 하는 링크 (이미지, 플래쉬, 동영상)
-function view_file_link($file, $width, $height, $content="")
+function view_file_link($file, $width, $height, $content='')
 {
     global $config, $board;
     global $g4;
@@ -930,23 +930,23 @@ function view_file_link($file, $width, $height, $content="")
     $ids++;
 
     // 파일의 폭이 게시판설정의 이미지폭 보다 크다면 게시판설정 폭으로 맞추고 비율에 따라 높이를 계산
-    if ($width > $board[bo_image_width] && $board[bo_image_width])
+    if ($width > $board['bo_image_width'] && $board['bo_image_width'])
     {
-        $rate = $board[bo_image_width] / $width;
-        $width = $board[bo_image_width];
+        $rate = $board['bo_image_width'] / $width;
+        $width = $board['bo_image_width'];
         $height = (int)($height * $rate);
     }
 
     // 폭이 있는 경우 폭과 높이의 속성을 주고, 없으면 자동 계산되도록 코드를 만들지 않는다.
     if ($width)
-        $attr = " width='$width' height='$height' ";
+        $attr = ' width="'.$width.'" height="'.$height.'" ';
     else
-        $attr = "";
+        $attr = '';
 
-    if (preg_match("/\.($config[cf_image_extension])$/i", $file))
+    if (preg_match("/\.({$config['cf_image_extension']})$/i", $file))
         // 이미지에 속성을 주지 않는 이유는 이미지 클릭시 원본 이미지를 보여주기 위한것임
         // 게시판설정 이미지보다 크다면 스킨의 자바스크립트에서 이미지를 줄여준다
-        return "<img src='$g4[path]/data/file/$board[bo_table]/".urlencode($file)."' name='target_resize_image[]' onclick='image_window(this);' style='cursor:pointer;' title='$content'>";
+        return "<img src='{$g4['path']}/data/file/{$board['bo_table']}/".urlencode($file)."' name='target_resize_image[]' onclick='image_window(this);' style='cursor:pointer;' title='$content'>";
     /*
     // 110106 : FLASH XSS 공격으로 인하여 코드 자체를 막음
     else if (preg_match("/\.($config[cf_flash_extension])$/i", $file))
@@ -1002,10 +1002,10 @@ function cut_str($str, $len, $suffix="…")
     global $g4;
 
     if (strtoupper($g4['charset']) == 'UTF-8') {
-        $c = substr(str_pad(decbin(ord($str{$len})),8,'0',STR_PAD_LEFT),0,2); 
-        if ($c == '10') 
-            for (;$c != '11' && $c{0} == 1;$c = substr(str_pad(decbin(ord($str{--$len})),8,'0',STR_PAD_LEFT),0,2)); 
-        return substr($str,0,$len) . (strlen($str)-strlen($suffix) >= $len ? $suffix : ''); 
+        $c = substr(str_pad(decbin(ord($str{$len})),8,'0',STR_PAD_LEFT),0,2);
+        if ($c == '10')
+            for (;$c != '11' && $c{0} == 1;$c = substr(str_pad(decbin(ord($str{--$len})),8,'0',STR_PAD_LEFT),0,2));
+        return substr($str,0,$len) . (strlen($str)-strlen($suffix) >= $len ? $suffix : '');
     } else {
         $s = substr($str, 0, $len);
         $cnt = 0;
@@ -1101,7 +1101,7 @@ function sql_select_db($db, $connect)
 function sql_query($sql, $error=TRUE)
 {
     if ($error)
-        $result = @mysql_query($sql) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER[PHP_SELF]");
+        $result = @mysql_query($sql) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
     else
         $result = @mysql_query($sql);
     return $result;
@@ -1214,7 +1214,7 @@ function get_table_define($table, $crlf="\n")
         $schema_create     .= implode($columns, ', ') . ')';
     } // end while
 
-    if (strtolower($g4['charset']) == "utf-8")
+    if (strtolower($g4['charset']) == 'utf-8')
         $schema_create .= $crlf . ') DEFAULT CHARSET=utf8';
     else
         $schema_create .= $crlf . ')';
@@ -1224,7 +1224,7 @@ function get_table_define($table, $crlf="\n")
 
 
 // 리퍼러 체크
-function referer_check($url="")
+function referer_check($url='')
 {
     /*
     // 제대로 체크를 하지 못하여 주석 처리함
@@ -1242,25 +1242,25 @@ function referer_check($url="")
 // 한글 요일
 function get_yoil($date, $full=0)
 {
-    $arr_yoil = array ("일", "월", "화", "수", "목", "금", "토");
+    $arr_yoil = array ('일', '월', '화', '수', '목', '금', '토');
 
     $yoil = date("w", strtotime($date));
     $str = $arr_yoil[$yoil];
     if ($full) {
-        $str .= "요일";
+        $str .= '요일';
     }
     return $str;
 }
 
 
 // 날짜를 select 박스 형식으로 얻는다
-function date_select($date, $name="")
+function date_select($date, $name='')
 {
     global $g4;
 
-    $s = "";
+    $s = '';
     if (substr($date, 0, 4) == "0000") {
-        $date = $g4[time_ymdhis];
+        $date = $g4['time_ymdhis'];
     }
     preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})/", $date, $m);
 
@@ -1349,8 +1349,8 @@ function time_select($time, $name="")
 function check_demo()
 {
     global $g4;
-    if (file_exists("$g4[path]/DEMO"))
-        alert("데모 화면에서는 하실(보실) 수 없는 작업입니다.");
+    if (file_exists($g4['path'].'/DEMO'))
+        alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
 
@@ -1459,7 +1459,7 @@ function bad_tag_convert($code)
     global $view;
     global $member, $is_admin;
 
-    if ($is_admin && $member[mb_id] != $view[mb_id]) {
+    if ($is_admin && $member['mb_id'] != $view['mb_id']) {
         //$code = preg_replace_callback("#(\<(embed|object)[^\>]*)\>(\<\/(embed|object)\>)?#i",
         // embed 또는 object 태그를 막지 않는 경우 필터링이 되도록 수정
         $code = preg_replace_callback("#(\<(embed|object)[^\>]*)\>?(\<\/(embed|object)\>)?#i",
@@ -1477,7 +1477,7 @@ function bad_tag_convert($code)
 function get_token()
 {
     $token = md5(uniqid(rand(), true));
-    set_session("ss_token", $token);
+    set_session('ss_token', $token);
 
     return $token;
 }
@@ -1493,26 +1493,26 @@ function check_token()
 
 // 문자열에 utf8 문자가 들어 있는지 검사하는 함수
 // 코드 : http://in2.php.net/manual/en/function.mb-check-encoding.php#95289
-function is_utf8($str) 
-{ 
-    $len = strlen($str); 
+function is_utf8($str)
+{
+    $len = strlen($str);
     for($i = 0; $i < $len; $i++) {
-        $c = ord($str[$i]); 
-        if ($c > 128) { 
-            if (($c > 247)) return false; 
-            elseif ($c > 239) $bytes = 4; 
-            elseif ($c > 223) $bytes = 3; 
-            elseif ($c > 191) $bytes = 2; 
-            else return false; 
-            if (($i + $bytes) > $len) return false; 
-            while ($bytes > 1) { 
-                $i++; 
-                $b = ord($str[$i]); 
-                if ($b < 128 || $b > 191) return false; 
-                $bytes--; 
-            } 
-        } 
-    } 
-    return true; 
+        $c = ord($str[$i]);
+        if ($c > 128) {
+            if (($c > 247)) return false;
+            elseif ($c > 239) $bytes = 4;
+            elseif ($c > 223) $bytes = 3;
+            elseif ($c > 191) $bytes = 2;
+            else return false;
+            if (($i + $bytes) > $len) return false;
+            while ($bytes > 1) {
+                $i++;
+                $b = ord($str[$i]);
+                if ($b < 128 || $b > 191) return false;
+                $bytes--;
+            }
+        }
+    }
+    return true;
 }
 ?>
