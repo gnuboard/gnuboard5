@@ -73,10 +73,10 @@ function textarea_size(fld, size)
 <script src='<?=$g4['path']?>/js/sideview.js'></script>
 
 <header>
+<a href='#wrapper' id='skip_to_main'>본문 바로가기</a>
 <strong>사이트제목</strong> <?=$member['mb_id']?>님
 <aside>
 <ul>
-<li id='skip_to_main'><a href='#wrapper'>본문 바로가기</a></li>
 <li><a href='<?=$g4['admin_path']?>/'>관리자메인</a></li>
 <li><a href='<?=$g4['path']?>/'>홈페이지</a></li>
 <li><a href='<?=$g4['bbs_path']?>/logout.php'>로그아웃</a></li>
