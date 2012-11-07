@@ -69,21 +69,21 @@ function textarea_size(fld, size)
 }
 </script>
 
-<script src='<?=$g4['path']?>/js/common.js'></script>
-<script src='<?=$g4['path']?>/js/sideview.js'></script>
+<script src="<?=$g4['path']?>/js/common.js"></script>
+<script src="<?=$g4['path']?>/js/sideview.js"></script>
 
 <header>
-<a href='#wrapper' id='skip_to_main'>본문 바로가기</a>
+<a href="#wrapper" id="skip_to_main">본문 바로가기</a>
 <strong>사이트제목</strong> <?=$member['mb_id']?>님
 <aside>
 <ul>
-<li><a href='<?=$g4['admin_path']?>/'>관리자메인</a></li>
-<li><a href='<?=$g4['path']?>/'>홈페이지</a></li>
-<li><a href='<?=$g4['bbs_path']?>/logout.php'>로그아웃</a></li>
+<li><a href="<?=$g4['admin_path']?>/">관리자메인</a></li>
+<li><a href="<?=$g4['path']?>/">홈페이지</a></li>
+<li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
 </ul>
 </aside>
 <nav>
-<ul id='gnb_parents'>
+<ul id="gnb_parents">
 <?
 foreach($amenu as $key=>$value)
 {
@@ -103,7 +103,7 @@ foreach($amenu as $key=>$value)
 </ul>
 </nav>
 
-<div id='current_location'>
+<div id="current_location">
 <?
 $tmp_menu = '';
 if (isset($sub_menu))
@@ -124,5 +124,5 @@ if (isset($menu['menu'.$tmp_menu][0][1]))
 
 </header>
 
-<div id='wrapper'>
-    <h1><span></span>그누보드 관리자 <?=$g4['title']?></h1>
+<div id="wrapper">
+    <h1><span></span>그누보드 <?=$g4['title']?></h1>

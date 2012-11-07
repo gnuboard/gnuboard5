@@ -142,7 +142,7 @@ else
 ?>
 </form>
 
-<script type='text/javascript'> document.fsearch.stx.focus(); </script>
+<script> document.fsearch.stx.focus(); </script>
 
 <?$colspan=5?>
 
