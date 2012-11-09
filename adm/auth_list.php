@@ -14,7 +14,7 @@ if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         default :
-            $sql_search .= " ($sfl like '%$stx%') ";
+            $sql_search .= " ({$sfl} like '%{$stx}%') ";
             break;
     }
     $sql_search .= " ) ";

@@ -46,7 +46,7 @@ function member_delete($mb_id)
 
     // 회원자료는 정보만 없앤 후 아이디는 보관하여 다른 사람이 사용하지 못하도록 함 : 061025
     if ($mb['mb_level'] > 1) {
-        $sql = " update $g4[member_table]
+    " update $g4[member_table]
                     set mb_jumin = '',
                          mb_password = '',
                          mb_level = 1,
@@ -222,10 +222,14 @@ function rm_rf($file)
     }
 }
 
-// 삭제 대상 : 지운아빠 2012-11-01 : github issue #8 comment 추가내용의 1. 내용 참조
-// 프로그램 오류 때문에 임시로 살려둠
-function help($help='', $left=0, $top=0)
+// 입력 폼 안내문
+function help($help="")
 {
+    global $g4;
+
+    $str  = '<span class="adm_field_explain">'.$help.'</span>';
+
+    return $str;
 }
 
 // 출력순서
