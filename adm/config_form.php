@@ -403,9 +403,6 @@ include_once ('./admin.head.php');
 </form>
 
 <script>
-$(function() {
-    $( document ).tooltip();
-});
 function fconfigform_submit(f)
 {
     f.action = "./config_form_update.php";

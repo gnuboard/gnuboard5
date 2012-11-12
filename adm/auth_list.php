@@ -27,9 +27,9 @@ if (!$sst) {
 $sql_order = " order by $sst $sod ";
 
 $sql = " select count(*) as cnt
-         $sql_common
-         $sql_search
-         $sql_order ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
@@ -39,10 +39,10 @@ if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = " select *
-          $sql_common
-          $sql_search
-          $sql_order
-          limit $from_record, $rows ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order}
+            limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $listall = '';
@@ -61,7 +61,7 @@ var list_update_php = '';
 var list_delete_php = 'auth_list_delete.php';
 </script>
 
-<form id="fsearch" name="fsearch" method="get">
+<form id="f_search" name="fsearch" method="get">
 <fieldset>
     <legend>관리권한 검색</legend>
     <div><span><?=$listall?></span> 설정된 관리권한 <?=number_format($total_count)?>건</div>
@@ -128,8 +128,11 @@ if ($i==0)
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 ?>
 
-<div><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>
-<div><?=$pagelist?></div>
+<div class="btn_list"><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>
+
+<div class="paginate">
+    <?=$pagelist?>
+</div>
 
 <?
 if ($stx)
@@ -141,10 +144,6 @@ else
     $mb_id = '';
 ?>
 </form>
-
-<script> document.fsearch.stx.focus(); </script>
-
-<?$colspan=5?>
 
 <form id="fauthlist2" name="fauthlist2" method="post" onsubmit="return fauthlist2_submit(this);" autocomplete="off">
 <input type="hidden" name="sfl"   value="<?=$sfl?>">
