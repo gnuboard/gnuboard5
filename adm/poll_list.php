@@ -60,7 +60,7 @@ $colspan = 6;
         <select name=sfl>
             <option value='po_subject'>제목</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
+        <input type=text name=stx required itemname='검색어' value='<?=$stx?>'>
         <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>

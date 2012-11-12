@@ -80,7 +80,7 @@ var list_delete_php = 'popular_list.php';
             <option value='pp_word'>검색어</option>
             <option value='pp_date'>등록일</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
+        <input type=text name=stx required itemname='검색어' value='<?=$stx?>'>
         <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>

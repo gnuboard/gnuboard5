@@ -83,17 +83,17 @@ include_once('./admin.head.php');
 <tr class='ht'>
     <td>아이디</td>
     <td>
-        <input type=text class=ed name='mb_id' size=20 maxlength=20 minlength=2 <?=$required_mb_id?> itemname='아이디' value='<? echo $mb['mb_id'] ?>'>
+        <input type=text name='mb_id' size=20 maxlength=20 minlength=2 <?=$required_mb_id?> itemname='아이디' value='<? echo $mb['mb_id'] ?>'>
         <?if ($w=='u'){?><a href='./boardgroupmember_form.php?mb_id=<?=$mb['mb_id']?>'>접근가능그룹보기</a><?}?>
     </td>
     <td>패스워드</td>
-    <td><input type=password class=ed name='mb_password' size=20 maxlength=20 <?=$required_mb_password?> itemname='암호'></td>
+    <td><input type=password name='mb_password' size=20 maxlength=20 <?=$required_mb_password?> itemname='암호'></td>
 </tr>
 <tr class='ht'>
     <td>이름(실명)</td>
-    <td><input type=text class=ed name='mb_name' maxlength=20 minlength=2 required itemname='이름(실명)' value='<? echo $mb['mb_name'] ?>'></td>
+    <td><input type=text name='mb_name' maxlength=20 minlength=2 required itemname='이름(실명)' value='<? echo $mb['mb_name'] ?>'></td>
     <td>별명</td>
-    <td><input type=text class=ed name='mb_nick' maxlength=20 minlength=2 required itemname='별명' value='<? echo $mb['mb_nick'] ?>'></td>
+    <td><input type=text name='mb_nick' maxlength=20 minlength=2 required itemname='별명' value='<? echo $mb['mb_nick'] ?>'></td>
 </tr>
 <tr class='ht'>
     <td>회원 권한</td>
@@ -103,27 +103,27 @@ include_once('./admin.head.php');
 </tr>
 <tr class='ht'>
     <td>E-mail</td>
-    <td><input type=text class=ed name='mb_email' size=40 maxlength=100 required email itemname='e-mail' value='<? echo $mb['mb_email'] ?>'></td>
+    <td><input type=text name='mb_email' size=40 maxlength=100 required email itemname='e-mail' value='<? echo $mb['mb_email'] ?>'></td>
     <td>홈페이지</td>
-    <td><input type=text class=ed name='mb_homepage' size=40 maxlength=255 itemname='홈페이지' value='<? echo $mb['mb_homepage'] ?>'></td>
+    <td><input type=text name='mb_homepage' size=40 maxlength=255 itemname='홈페이지' value='<? echo $mb['mb_homepage'] ?>'></td>
 </tr>
 <tr class='ht'>
     <td>전화번호</td>
-    <td><input type=text class=ed name='mb_tel' maxlength=20 itemname='전화번호' value='<? echo $mb['mb_tel'] ?>'></td>
+    <td><input type=text name='mb_tel' maxlength=20 itemname='전화번호' value='<? echo $mb['mb_tel'] ?>'></td>
     <td>핸드폰번호</td>
-    <td><input type=text class=ed name='mb_hp' maxlength=20 itemname='핸드폰번호' value='<? echo $mb['mb_hp'] ?>'></td>
+    <td><input type=text name='mb_hp' maxlength=20 itemname='핸드폰번호' value='<? echo $mb['mb_hp'] ?>'></td>
 </tr>
 <tr class='ht'>
     <td>주소</td>
     <td>
-        <input type=text class=ed name='mb_zip1' size=4 maxlength=3 readonly itemname='우편번호 앞자리' value='<? echo $mb['mb_zip1'] ?>'> -
-        <input type=text class=ed name='mb_zip2' size=4 maxlength=3 readonly itemname='우편번호 뒷자리' value='<? echo $mb['mb_zip2'] ?>'>
+        <input type=text name='mb_zip1' size=4 maxlength=3 readonly itemname='우편번호 앞자리' value='<? echo $mb['mb_zip1'] ?>'> -
+        <input type=text name='mb_zip2' size=4 maxlength=3 readonly itemname='우편번호 뒷자리' value='<? echo $mb['mb_zip2'] ?>'>
         <a href="javascript:;" onclick="win_zip('fmember', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2');"><img src='<?=$g4['bbs_img_path']?>/btn_zip.gif' align=absmiddle border=0></a>
-        <br><input type=text class=ed name='mb_addr1' size=40 readonly value='<? echo $mb['mb_addr1'] ?>'>
-        <br><input type=text class=ed name='mb_addr2' size=25 itemname='상세주소' value='<? echo $mb['mb_addr2'] ?>'> 상세주소 입력</td>
+        <br><input type=text name='mb_addr1' size=40 readonly value='<? echo $mb['mb_addr1'] ?>'>
+        <br><input type=text name='mb_addr2' size=25 itemname='상세주소' value='<? echo $mb['mb_addr2'] ?>'> 상세주소 입력</td>
     <td>회원아이콘</td>
     <td colspan=3>
-        <input type=file name='mb_icon' class=ed><br>이미지 크기는 <?=$config['cf_member_icon_width']?>x<?=$config['cf_member_icon_height']?>으로 해주세요.
+        <input type=file name='mb_icon'><br>이미지 크기는 <?=$config['cf_member_icon_width']?>x<?=$config['cf_member_icon_height']?>으로 해주세요.
         <?
         $mb_dir = substr($mb['mb_id'],0,2);
         $icon_file = $g4['path'].'/data/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
@@ -136,7 +136,7 @@ include_once('./admin.head.php');
 </tr>
 <tr class='ht'>
     <td>생년월일</td>
-    <td><input type=text class=ed name=mb_birth size=9 maxlength=8 value='<? echo $mb['mb_birth'] ?>'></td>
+    <td><input type=text name=mb_birth size=9 maxlength=8 value='<? echo $mb['mb_birth'] ?>'></td>
     <td>남녀</td>
     <td>
         <select name=mb_sex><option value=''>----<option value='F'>여자<option value='M'>남자</select>
@@ -154,13 +154,13 @@ include_once('./admin.head.php');
 </tr>
 <tr class='ht'>
     <td>서명</td>
-    <td><textarea class=ed name=mb_signature rows=5 style='width:99%; word-break:break-all;'><? echo $mb['mb_signature'] ?></textarea></td>
+    <td><textarea name=mb_signature rows=5 style='width:99%; word-break:break-all;'><? echo $mb['mb_signature'] ?></textarea></td>
     <td>자기 소개</td>
-    <td><textarea class=ed name=mb_profile rows=5 style='width:99%; word-break:break-all;'><? echo $mb['mb_profile'] ?></textarea></td>
+    <td><textarea name=mb_profile rows=5 style='width:99%; word-break:break-all;'><? echo $mb['mb_profile'] ?></textarea></td>
 </tr>
 <tr class='ht'>
     <td>메모</td>
-    <td colspan=3><textarea class=ed name=mb_memo rows=5 style='width:99%; word-break:break-all;'><? echo $mb['mb_memo'] ?></textarea></td>
+    <td colspan=3><textarea name=mb_memo rows=5 style='width:99%; word-break:break-all;'><? echo $mb['mb_memo'] ?></textarea></td>
 </tr>
 
 <? if ($w == 'u') { ?>
@@ -195,17 +195,17 @@ include_once('./admin.head.php');
 
 <tr class='ht'>
     <td>탈퇴일자</td>
-    <td><input type=text class=ed name=mb_leave_date size=9 maxlength=8 value='<? echo $mb['mb_leave_date'] ?>'></td>
+    <td><input type=text name=mb_leave_date size=9 maxlength=8 value='<? echo $mb['mb_leave_date'] ?>'></td>
     <td>접근차단일자</td>
-    <td><input type=text class=ed name=mb_intercept_date size=9 maxlength=8 value='<? echo $mb['mb_intercept_date'] ?>'> <input type=checkbox value='<? echo date("Ymd"); ?>' onclick='if (this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else { this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; } '>오늘</td>
+    <td><input type=text name=mb_intercept_date size=9 maxlength=8 value='<? echo $mb['mb_intercept_date'] ?>'> <input type=checkbox value='<? echo date("Ymd"); ?>' onclick='if (this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else { this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; } '>오늘</td>
 </tr>
 
 <? for ($i=1; $i<=10; $i=$i+2) { $k=$i+1; ?>
 <tr class='ht'>
     <td>여분 필드 <?=$i?></td>
-    <td><input type=text class=ed style='width:99%;' name='mb_<?=$i?>' maxlength=255 value='<?=$mb["mb_$i"]?>'></td>
+    <td><input type=text style='width:99%;' name='mb_<?=$i?>' maxlength=255 value='<?=$mb["mb_$i"]?>'></td>
     <td>여분 필드 <?=$k?></td>
-    <td><input type=text class=ed style='width:99%;' name='mb_<?=$k?>' maxlength=255 value='<?=$mb["mb_$k"]?>'></td>
+    <td><input type=text style='width:99%;' name='mb_<?=$k?>' maxlength=255 value='<?=$mb["mb_$k"]?>'></td>
 </tr>
 <? } ?>
 

@@ -113,7 +113,7 @@ var list_delete_php = 'member_list_delete.php';
             <option value='mb_ip'>IP</option>
             <option value='mb_recommend'>추천인</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<? echo $stx ?>'>
+        <input type=text name=stx required itemname='검색어' value='<? echo $stx ?>'>
         <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>

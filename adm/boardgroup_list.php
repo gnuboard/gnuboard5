@@ -72,7 +72,7 @@ var list_update_php = "./boardgroup_list_update.php";
             <option value="gr_id">ID</option>
             <option value="gr_admin">그룹관리자</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
+        <input type=text name=stx required itemname='검색어' value='<?=$stx?>'>
         <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
@@ -129,11 +129,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     echo "<tr class='list$list' onmouseover=\"this.className='mouseover';\" onmouseout=\"this.className='list$list';\" height=27 align=center>";
     echo "<td><input type=checkbox name=chk[] value='$i'></td>";
     echo "<td><a href='{$g4['bbs_path']}/group.php?gr_id={$row['gr_id']}'><b>{$row['gr_id']}</b></a></td>";
-    echo "<td><input type=text class=ed name=gr_subject[$i] value='".get_text($row['gr_subject'])."' size=30></td>";
+    echo "<td><input type=text name=gr_subject[$i] value='".get_text($row['gr_subject'])."' size=30></td>";
 
     if ($is_admin == "super")
         //echo "<td>".get_member_id_select("gr_admin[$i]", 9, $row[gr_admin])."</td>";
-        echo "<td><input type=text class=ed name=gr_admin[$i] value='{$row['gr_admin']}' maxlength=20></td>";
+        echo "<td><input type=text name=gr_admin[$i] value='{$row['gr_admin']}' maxlength=20></td>";
     else
         echo "<input type=hidden name='gr_admin[$i]' value='{$row['gr_admin']}'><td>{$row['gr_admin']}</td>";
 

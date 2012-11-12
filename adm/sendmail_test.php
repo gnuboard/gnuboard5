@@ -42,7 +42,7 @@ $token = get_token();
 <p>만약 [메일검사] 라는 내용으로 메일이 도착하지 않는다면 보내는 메일서버와 받는 메일 서버중 문제가 발생했을 가능성이 있습니다.
 <p>메일을 보냈는데도 도착하지 않는다면 다른 여러곳으로도 메일을 발송하여 주십시오.
 <p>여러곳으로 메일을 발송하시려면 , 로 메일을 구분하십시오.
-<p>받는 메일주소 : <input type=text class=ed name=mail size=40 required itemname="E-mail" value="<?=$member['mb_email']?>">
+<p>받는 메일주소 : <input type=text name=mail size=40 required itemname="E-mail" value="<?=$member['mb_email']?>">
 <input type=submit value="  발  송  " class=btn1>
 </form>
 

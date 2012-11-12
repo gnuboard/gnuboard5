@@ -94,7 +94,7 @@ function point_clear()
             <option value='mb_id'>회원아이디</option>
             <option value='po_content'>내용</option>
         </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
+        <input type=text name=stx required itemname='검색어' value='<?=$stx?>'>
         <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
@@ -213,10 +213,10 @@ else
 </tr>
 <tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 <tr class='ht center'>
-    <td><input type=text class=ed name=mb_id required itemname='회원아이디' value='<?=$mb_id?>'></td>
-    <td><input type=text class=ed name=po_content required itemname='내용' style='width:99%;'></td>
-    <td><input type=text class=ed name=po_point required itemname='포인트' size=10></td>
-    <td><input type=password class=ed name=admin_password required itemname='관리자 패스워드'></td>
+    <td><input type=text name=mb_id required itemname='회원아이디' value='<?=$mb_id?>'></td>
+    <td><input type=text name=po_content required itemname='내용' style='width:99%;'></td>
+    <td><input type=text name=po_point required itemname='포인트' size=10></td>
+    <td><input type=password name=admin_password required itemname='관리자 패스워드'></td>
     <td><input type=submit class=btn1 value='  확  인  '></td>
 </tr>
 <tr><td colspan='<?=$colspan?>' class='line2'></td></tr>

@@ -110,9 +110,9 @@ jQuery(function($){
     <td width=50% align=left><?=$listall?> (건수 : <?=number_format($total_count)?>개)</td>
     <td width=50% align=right>
         기간 :
-        <input type='text' id='fr_date' name='fr_date' size=11 maxlength=10 value='<?=$fr_date?>' class=ed>
+        <input type='text' id='fr_date' name='fr_date' size=11 maxlength=10 value='<?=$fr_date?>'>
         -
-        <input type='text' id='to_date' name='to_date' size=11 maxlength=10 value='<?=$to_date?>' class=ed>
+        <input type='text' id='to_date' name='to_date' size=11 maxlength=10 value='<?=$to_date?>'>
         <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>

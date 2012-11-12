@@ -40,7 +40,7 @@ include_once('./admin.head.php');
 <tr><td colspan=4 class='line1'></td></tr>
 <tr class='ht'>
     <td>투표 제목</td>
-    <td colspan=3><input type='text' class=ed name='po_subject' style='width:99%;' required itemname='투표 제목' value='<?=$po['po_subject']?>' maxlength="125"></td>
+    <td colspan=3><input type='text' name='po_subject' style='width:99%;' required itemname='투표 제목' value='<?=$po['po_subject']?>' maxlength="125"></td>
 </tr>
 
 <?
@@ -57,9 +57,9 @@ for ($i=1; $i<=9; $i++) {
     echo <<<HEREDOC
     <tr class='ht'>
         <td>항목{$i}</td>
-        <td><input type="text" class=ed name="po_poll{$i}" {$required} {$itemname} value="{$po_poll}" style="width:99%;" maxlength="125"></td>
+        <td><input type="text" name="po_poll{$i}" {$required} {$itemname} value="{$po_poll}" style="width:99%;" maxlength="125"></td>
         <td>투표수</td>
-        <td><input type="text" class=ed name="po_cnt{$i}" size=5 value="{$po['po_cnt'.$i]}"></td>
+        <td><input type="text" name="po_cnt{$i}" size=5 value="{$po['po_cnt'.$i]}"></td>
 
     </tr>
 HEREDOC;
@@ -68,7 +68,7 @@ HEREDOC;
 
 <tr class='ht'>
     <td>기타의견</td>
-    <td colspan=3><input type='text' class=ed name='po_etc' style='width:99%;' value='<?=get_text($po['po_etc'])?>' maxlength="125"></td>
+    <td colspan=3><input type='text' name='po_etc' style='width:99%;' value='<?=get_text($po['po_etc'])?>' maxlength="125"></td>
 </tr>
 
 <tr class='ht'>
@@ -78,24 +78,24 @@ HEREDOC;
 
 <tr class='ht'>
     <td>포인트</td>
-    <td colspan=3><input type='text' class=ed name='po_point' size='10' value='<?=$po['po_point']?>'> 점 (투표한 회원에게 부여함)</td>
+    <td colspan=3><input type='text' name='po_point' size='10' value='<?=$po['po_point']?>'> 점 (투표한 회원에게 부여함)</td>
 </tr>
 
 
 <? if ($w == 'u') { ?>
 <tr class='ht'>
     <td>투표시작일</td>
-    <td colspan=3><input type="text" class=ed name="po_date" size=10 maxlength=10 value="<?=$po['po_date']?>"></td>
+    <td colspan=3><input type="text" name="po_date" size=10 maxlength=10 value="<?=$po['po_date']?>"></td>
 </tr>
 
 <tr class='ht'>
     <td>투표참가 IP</td>
-    <td colspan=3><textarea class=ed name="po_ips" rows=10 style='width:99%;' readonly><?=preg_replace("/\n/", " / ", $po['po_ips'])?></textarea></td>
+    <td colspan=3><textarea name="po_ips" rows=10 style='width:99%;' readonly><?=preg_replace("/\n/", " / ", $po['po_ips'])?></textarea></td>
 </tr>
 
 <tr class='ht'>
     <td>투표참가 회원</td>
-    <td colspan=3><textarea class=ed name="mb_ids" rows=10 style='width:99%;' readonly><?=preg_replace("/\n/", " / ", $po['mb_ids'])?></textarea></td>
+    <td colspan=3><textarea name="mb_ids" rows=10 style='width:99%;' readonly><?=preg_replace("/\n/", " / ", $po['mb_ids'])?></textarea></td>
 </tr>
 
 <? } ?>
