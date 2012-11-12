@@ -275,7 +275,7 @@ include_once ('./admin.head.php');
     <tr>
         <th scope="row" id="th307"><label for="bo_use_dhtml_editor">DHTML 에디터 사용</label></th>
         <td headers="th307">
-            <?=help('글작성시 내용을 DHTML 에디터 기능으로 사용할 것인지 설정합니다.\n\n스킨에 따라 적용되지 않을 수 있습니다.')?>
+            <?=help('글작성시 내용을 DHTML 에디터 기능으로 사용할 것인지 설정합니다. 스킨에 따라 적용되지 않을 수 있습니다.')?>
             <input type="checkbox" id="bo_use_dhtml_editor" name="bo_use_dhtml_editor" value="1" <?=$board['bo_use_dhtml_editor']?'checked':'';?>>사용
             <span class="adm_group_setting"><input type="checkbox" id="chk_use_dhtml_editor" name="chk_use_dhtml_editor" value="1"></span>
         </td>
@@ -565,7 +565,7 @@ include_once ('./admin.head.php');
     <tr>
         <th scope="row" id="th416"><label for="bo_sort_field">리스트 정렬 필드</label></th>
         <td headers="th416">
-            <?=help('리스트에서 기본으로 정렬에 사용할 필드를 선택합니다.\n\n"기본"으로 사용하지 않으시는 경우 속도가 느려질 수 있습니다.')?>
+            <?=help('리스트에서 기본으로 정렬에 사용할 필드를 선택합니다. "기본"으로 사용하지 않으시는 경우 속도가 느려질 수 있습니다.')?>
             <select id="bo_sort_field" name="bo_sort_field">
             <option value="">wr_num, wr_reply : 기본
             <option value="wr_datetime asc">wr_datetime asc : 날짜 이전것 부터
