@@ -91,7 +91,7 @@ var list_update_php = "./boardgroup_list_update.php";
 
 <table>
 <caption>
-<p>게시판그룹 목록입니다. 관리열의 수정이나 삭제를 눌러 그룹설정을 변경할 수 있습니다.</p>
+<p>게시판그룹 목록</p>
 <p>
     접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>
     접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
@@ -131,13 +131,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 <tr>
     <td headers="th_gr_id"><a href="<?=$g4['bbs_path']?>/group.php?gr_id="<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
-    <td headers="th_gr_subject"><input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>"></td>
+    <td headers="th_gr_subject">
+        <label for="gr_subject_<?=$i?>">그룹제목</label>
+        <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>">
+    </td>
     <td headers="th_chkall">
         <input type="hidden" id="gr_id" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
     </td>
     <td headers="th_gr_admin">
     <?if ($is_admin == 'super'){?>
+        <label for="gr_admin">그룹관리자</label>
         <input type="text" id="gr_admin" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" maxlength="20">
     <?}else{?>
         <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
