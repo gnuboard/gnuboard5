@@ -224,13 +224,13 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form id="fpost" name="fpost" method='post'>
-<input type="hidden" name="sst" value='<?=$sst?>'>
-<input type="hidden" name="sod" value='<?=$sod?>'>
-<input type="hidden" name="sfl" value='<?=$sfl?>'>
-<input type="hidden" name="stx" value='<?=$stx?>'>
-<input type="hidden" name="page" value='<?=$page?>'>
-<input type="hidden" name="token" value='<?=$token?>'>
+<form id="fpost" name="fpost" method="post">
+<input type="hidden" name="sst" value="<?=$sst?>">
+<input type="hidden" name="sod" value="<?=$sod?>">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx" value="<?=$stx?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="token" value="<?=$token?>">
 <input type="hidden" name="bo_table">
 </form>
 

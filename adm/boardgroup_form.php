@@ -29,80 +29,80 @@ include_once('./admin.head.php');
 ?>
 
 <form id="fboardgroup" name="fboardgroup" method="post" onsubmit="return fboardgroup_check(this);" autocomplete="off">
-<input type="hidden" name="w"     value='<?=$w?>'>
-<input type="hidden" name="sfl"   value='<?=$sfl?>'>
-<input type="hidden" name="stx"   value='<?=$stx?>'>
-<input type="hidden" name="sst"   value='<?=$sst?>'>
-<input type="hidden" name="sod"   value='<?=$sod?>'>
-<input type="hidden" name="page"  value='<?=$page?>'>
-<input type="hidden" name="token" value='<?=$token?>'>
+<input type="hidden" name="w" value="<?=$w?>">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx" value="<?=$stx?>">
+<input type="hidden" name="sst" value="<?=$sst?>">
+<input type="hidden" name="sod" value="<?=$sod?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="token" value="<?=$token?>">
 <table>
+<tbody>
 <tr>
-    <td colspan=4 class=title><img src='<?=$g4['admin_path']?>/img/icon_title.gif'> <?=$html_title?></td>
-</tr>
-
-<tr>
-    <td>그룹 ID</td>
-    <td colspan=3><input type='text' id="gr_id" name="gr_id" maxlength=10 <?=$gr_id_attr?> alphanumericunderline itemname='그룹 아이디' value='<?=$group['gr_id']?>'> 영문자, 숫자, _ 만 가능 (공백없이)</td>
+    <th scope="row" id="th_id"><label for="gr_id">그룹 ID</label></th>
+    <td headers="th_id"><input type="text" id="gr_id" name="gr_id" maxlength="10" <?=$gr_id_attr?> alphanumericunderline value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
 </tr>
 <tr>
-    <td>그룹 제목</td>
-    <td colspan=3>
-        <input type='text' id="gr_subject" name="gr_subject" size=40 required itemname='그룹 제목' value='<?=get_text($group['gr_subject'])?>'>
+    <th scope="row" id="th_subject"><label for="gr_subject">그룹 제목</label></th>
+    <td headers="th_subject">
+        <input type="text" id="gr_subject" name="gr_subject" required value="<?=get_text($group['gr_subject'])?>">
         <?
         if ($w == 'u')
-            echo "<input type=button class='btn1' value='게시판생성' onclick=\"location.href='./board_form.php?gr_id={$gr_id}';\">";
+            echo '<input type="button" value="게시판생성" onclick="location.href=\'./board_form.php?gr_id='.$gr_id.'\';">';
         ?>
     </td>
 </tr>
 <tr>
-    <td>그룹 관리자</td>
-    <td colspan=3>
+    <th scope="row" id="th_admin"><label for="gr_admin">그룹 관리자</label></th>
+    <td headers="th_admin">
         <?
         if ($is_admin == 'super')
-            //echo get_member_id_select("gr_admin", 9, $row[gr_admin]);
-            echo "<input type='text' id="gr_admin" name="gr_admin" value='{$gr['gr_admin']}' maxlength=20>";
+            echo '<input type="text" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'" maxlength="20">';
         else
-            echo "<input type="hidden" id="gr_admin" name="gr_admin" value='{$gr['gr_admin']}' size=40>{$gr['gr_admin']}";
-        ?></td>
-</tr>
-<tr>
-    <td>접근회원사용</td>
-    <td colspan=3>
-        <input type=checkbox id="gr_use_access" name="gr_use_access" value='1' <?=$gr['gr_use_access']?'checked':'';?>>사용
-        <?=help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.")?>
+            echo '<input type="hidden" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'">'.$gr['gr_admin'];
+        ?>
     </td>
 </tr>
 <tr>
-    <td>접근회원수</td>
-    <td colspan=3>
+    <th scope="row" id="th_access"><label for="gr_use_access">접근회원사용</label></th>
+    <td headers="th_access">
+        <?=help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.")?>
+        <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr['gr_use_access']?'checked':'';?>>사용
+    </td>
+</tr>
+<tr>
+    <th scope="row" id="th_access_cnt">접근회원수</th>
+    <td headers="th_access_cnt">
         <?
         // 접근회원수
         $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$gr_id}' ";
         $row1 = sql_fetch($sql1);
-        echo "<a href='./boardgroupmember_list.php?gr_id={$gr_id}'>{$row1['cnt']}</a>";
+        echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1['cnt'].'</a>';
         ?>
     </td>
 </tr>
-
-<? for ($i=1; $i<=10; $i=$i+2) { $k=$i+1; ?>
+<? for ($i=1;$i<=10;$i++) { ?>
 <tr>
-    <td><input type=text name='gr_<?=$i?>_subj' value='<?=get_text($group["gr_{$i}_subj"])?>' title='여분필드 <?=$i?> 제목' style='text-align:right;font-weight:bold;' size=15></td>
-    <td><input type='text' style='width:99%;' id="gr_" name="gr_"<?=$i?> value='<?=$gr["gr_{$i}"]?>' title='여분필드 <?=$i?> 설정값'></td>
-    <td><input type=text name='gr_<?=$k?>_subj' value='<?=get_text($group["gr_{$k}_subj"])?>' title='여분필드 <?=$k?> 제목' style='text-align:right;font-weight:bold;' size=15></td>
-    <td><input type='text' style='width:99%;' id="gr_" name="gr_"<?=$k?> value='<?=$gr["gr_{$k}"]?>' title='여분필드 <?=$k?> 설정값'></td>
+    <th scope="row" id="th_extra_<?=$i?>">회원여분필드<?=$i?></th>
+    <td headers="th_extra_<?=$i?>">
+        <label for="gr_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
+        <input type="text" id="gr_<?=$i?>_subj" name="gr_<?=$i?>_subj" value="<?=get_text($group['gr_'.$i.'_subj'])?>">
+        <label for="gr_<?=$i?>">여분필드 <?=$i?> 내용</label>
+        <input type="text" id="gr_<?=$i?>" name="gr_<?=$i?>" value="<?=$gr['gr_'.$i]?>">
+    </td>
 </tr>
 <? } ?>
-
-<tr><td colspan=4 class='line2'></td></tr>
+</tbody>
 </table>
 
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 value='  목  록  ' onclick="document.location.href='./boardgroup_list.php?<?=$qstr?>';">
+<div class="btn_confirm">
+    <input type="submit" accesskey="s" value="확인">
+    <input type="button" value='목록' onclick="document.location.href='./boardgroup_list.php?<?=$qstr?>';">
+</div>
+
 </form>
 
-<script type='text/javascript'>
+<script>
 if (document.fboardgroup.w.value == '')
     document.fboardgroup.gr_id.focus();
 else

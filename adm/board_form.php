@@ -87,7 +87,7 @@ include_once ('./admin.head.php');
     <table>
     <tbody>
     <tr>
-        <th scope="row" id="th101"><label for="bo_table">TABLE</label></th>
+        <th scope="row" id="th_bo_table"><label for="bo_table">TABLE</label></th>
         <td headers="th101">
             <input type="text" id="bo_table" name="bo_table" maxlength="20" <?=$bo_table_attr?> value="<?=$board['bo_table'] ?>">
             <?
@@ -99,20 +99,20 @@ include_once ('./admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row" id="th102"><label for="gr_id">그룹</label></th>
+        <th scope="row" id="th_gr_id"><label for="gr_id">그룹</label></th>
         <td headers="th102">
             <?=get_group_select('gr_id', $board['gr_id'], "required");?>
             <? if ($w=='u') { ?><a href="javascript:location.href='./board_list.php?sfl=a.gr_id&amp;stx='+document.fboardform.gr_id.value;">동일그룹게시판목록</a><?}?>
         </td>
     </tr>
     <tr>
-        <th scope="row" id="th103"><label for="bo_subject">게시판 제목</label></th>
+        <th scope="row" id="th_bo_subject"><label for="bo_subject">게시판 제목</label></th>
         <td headers="th103">
             <input type="text" id="bo_subject" name="bo_subject" maxlength="120" required value="<?=get_text($board['bo_subject'])?>">
         </td>
     </tr>
     <tr>
-        <th scope="row" id="th104"><label for="bo_category_list">분류</label></th>
+        <th scope="row" id="th_bo_use_category"><label for="bo_category_list">분류</label></th>
         <td headers="th104">
             <?=help('분류와 분류 사이는 | 로 구분하세요. (예: 질문|답변) 첫자로 #은 입력하지 마세요. (예: #질문|#답변 [X])')?>
             <input type="text" id="bo_category_list" name="bo_category_list" value="<?=get_text($board['bo_category_list'])?>">
@@ -122,7 +122,7 @@ include_once ('./admin.head.php');
     </tr>
     <? if ($w == 'u') { ?>
     <tr>
-        <th scope="row" id="th105"><label for="proc_count">카운트 조정</label></th>
+        <th scope="row" id="th_proc_count"><label for="proc_count">카운트 조정</label></th>
         <td headers="th105">
             <?=help('현재 원글수 : '.number_format($board['bo_count_write']).', 현재 코멘트수 : '.number_format($board['bo_count_comment']).PHP_EOL.'게시판 목록에서 글의 번호가 맞지 않을 경우에 체크하십시오.')?>
             <input type="checkbox" id="proc_count" name="proc_count" value="1">
@@ -138,8 +138,8 @@ include_once ('./admin.head.php');
     <table>
     <tbody>
     <tr>
-        <th scope="row" id="th201"><label for="bo_admin">게시판 관리자</label></th>
-        <td headers="th201">
+        <th scope="row" id="th_bo_admin"><label for="bo_admin">게시판 관리자</label></th>
+        <td headers="th_bo_admin">
             <input type="text" id="bo_admin" name="bo_admin" maxlength="20" value="<?=$board['bo_admin']?>">
             <span class="group_setting"><input type="checkbox" id="chk_admin" name="chk_admin" value="1"></span>
         </td>
@@ -653,11 +653,12 @@ include_once ('./admin.head.php');
     <? for ($i=1; $i<=10; $i++) { ?>
     <tr>
         <th scope="row" id="th6<?=$i?>">
-            <label for="bo_<?=$i?>_subj">여분필드<?=$i?> 제목</label>
-            <input type="text" id="bo_<?=$i?>_subj" name="bo_<?=$i?>_subj" value="<?=get_text($board['bo_'.$i.'_subj'])?>">
+            여분필드
         </th>
         <td headers="th6<?=$i?>">
-            <label for="bo_<?=$i?>">여분필드<?=$i?> 내용</label>
+            <label for="bo_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
+            <input type="text" id="bo_<?=$i?>_subj" name="bo_<?=$i?>_subj" value="<?=get_text($board['bo_'.$i.'_subj'])?>">
+            <label for="bo_<?=$i?>">여분필드 <?=$i?> 내용</label>
             <input type="text" id="bo_<?=$i?>" name="bo_<?=$i?>" value="<?=get_text($board['bo_'.$i])?>">
             <span class="group_setting"><input type="checkbox" id="chk_<?=$i?>" name="chk_<?=$i?>" value="1"></span>
         </td>
