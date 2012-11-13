@@ -90,7 +90,7 @@ var list_delete_php = 'board_list_delete.php';
 </fieldset>
 </form>
 
-<button id="bo_add">게시판 추가</button>
+<?if ($is_admin == 'super') {?><a href="./board_form.php" id="bo_add">게시판 추가</a><?}?>
 
 <form id="fboardlist" name="fboardlist" method="post">
 <input type="hidden" name="sst" value="<?=$sst?>">
@@ -103,8 +103,7 @@ var list_delete_php = 'board_list_delete.php';
 <caption>
 생성된 게시판 목록
 <p>
-    검색순서는 전체 검색 시 결과의 우선 순위를 설정합니다.<br>
-    여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 선택기능을 이용하세요.
+    여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 체크기능을 이용하세요.
 </p>
 </caption>
 <thead>
@@ -113,10 +112,10 @@ var list_delete_php = 'board_list_delete.php';
     <th scope="col" id="th_table"><?=subject_sort_link('bo_table')?>TABLE</a></th>
     <th scope="col" id="th_skin"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
     <th scope="col" id="th_subject"><?=subject_sort_link('bo_subject')?>제목</a></th>
-    <th scope="col" id="th_check"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
     <th scope="col" id="th_point">포인트</th>
     <th scope="col" id="th_search">검색</th>
-	<th scope="col" id="th_control">관리</th>
+    <th scope="col" id="th_check"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
+    <th scope="col" id="th_control">관리</th>
 </tr>
 </thead>
 <tbody>
@@ -146,41 +145,42 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <tr>
     <td headers="th_group">
         <?if ($is_admin == 'super'){?>
-            <label for="gr_id_<?=$i?>">그룹선택</label>
+            <label for="gr_id_<?=$i?>">그룹지정</label>
             <?=get_group_select('gr_id[$i]', $row['gr_id'])?>
         <?}else{?>
             <input type="hidden" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>"><?=$row['gr_subject']?>
         <?}?>
     </td>
-    <td headers="th_table"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a></td>
+    <td headers="th_table">
+        <input type="hidden" id="board_table" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
+        <a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
+    </td>
     <td headers="th_skin">
-        <label for="bo_skin_<?=$i?>">스킨선택</label>
+        <label for="bo_skin_<?=$i?>">스킨지정</label>
         <select id="bo_skin_<?=$i?>" name="bo_skin[<?=$i?>]">
             <?=$skin_options?>
         </select>
         <script>document.getElementById("bo_skin_<?=$i?>").value="<?=$row['bo_skin']?>";</script>
     </td>
     <td headers="th_subject"><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>"></td>
-    <td headers="th_check">
-        <input type="hidden" id="board_table" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
-        <label for="chk_<?=$i?>">게시판선택</label>
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
-    </td>
     <td headers="th_point">
-        <label for="bo_read_point_<?=$i?>">읽기포인트</label>
+        <label for="bo_read_point_<?=$i?>">읽기</label>
         <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>">
-        <label for="bo_write_point_<?=$i?>">쓰기포인트</label>
+        <label for="bo_write_point_<?=$i?>">쓰기</label>
         <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>">
-        <label for="bo_comment_point_<?=$i?>">댓글포인트</label>
+        <label for="bo_comment_point_<?=$i?>">댓글</label>
         <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>">
-        <label for="bo_download_point_<?=$i?>">다운포인트</label>
+        <label for="bo_download_point_<?=$i?>">다운</label>
         <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>">
     </td>
     <td headers="th_search">
-        <label for="bo_use_search_<?=$i?>">검색사용</label>
+        <label for="bo_use_search_<?=$i?>">사용</label>
         <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
-        <label for="bo_order_search_<?=$i?>">검색순서</label>
+        <label for="bo_order_search_<?=$i?>">순서</label>
         <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>">
+    </td>
+    <td headers="th_check">
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=get_text($row['bo_subject'])?> 선택">
     </td>
     <td headers="th_control"><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
 </tr>
@@ -194,7 +194,10 @@ if ($i == 0)
 
 <div class="btn_list">
     <input type="button" value="선택수정" onclick="btn_check(this.form, 'update')">
-    <?if ($is_admin == 'super') {?><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"><?}?>
+    <?if ($is_admin == 'super') {?>
+    <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
+    <a href="./board_form.php">게시판 추가</a>
+    <?}?>
 </div>
 
 <?
