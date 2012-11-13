@@ -133,7 +133,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 
 if ($i==0)
-    echo '<tr><td colspan="'.$colspan.'">자료가 없습니다.</td></tr>';
+    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
 ?>
 </tbody>
 </table>

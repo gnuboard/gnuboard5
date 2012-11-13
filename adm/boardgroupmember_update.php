@@ -19,21 +19,21 @@ if ($w == '')
     }
 
     $sql = " select count(*) as cnt
-               from {$g4['group_member_table']}
-              where gr_id = '$gr_id'
-                and mb_id = '$mb_id' ";
+                from {$g4['group_member_table']}
+                where gr_id = '{$gr_id}'
+                and mb_id = '{$mb_id}' ";
     $row = sql_fetch($sql);
     if ($row['cnt']) {
-        alert("이미 등록되어 있는 자료입니다.");
+        alert('이미 등록되어 있는 자료입니다.');
     }
     else
     {
         check_token();
 
         $sql = " insert into {$g4['group_member_table']}
-                    set gr_id       = '{$_POST['gr_id']}',
-                        mb_id       = '{$_POST['mb_id']}',
-                        gm_datetime = '{$g4['time_ymdhis']}' ";
+                    set gr_id = '{$_POST['gr_id']}',
+                         mb_id = '{$_POST['mb_id']}',
+                         gm_datetime = '{$g4['time_ymdhis']}' ";
         sql_query($sql);
     }
 }
@@ -43,7 +43,7 @@ else if ($w == 'd' || $w == 'listdelete')
     $sql = " select * from {$g4['group_member_table']} where gm_id = '{$_POST['gm_id']}' ";
     $gm = sql_fetch($sql);
     if (!$gm['gm_id']) {
-        alert("존재하지 않는 자료입니다.");
+        alert('존재하지 않는 자료입니다.');
     }
 
     check_token();
