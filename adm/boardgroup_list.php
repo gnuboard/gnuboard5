@@ -9,7 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['group_table']} ";
 
 $sql_search = " where (1) ";
-if ($is_admin != "super")
+if ($is_admin != 'super')
     $sql_search .= " and (gr_admin = '{$member['mb_id']}') ";
 
 if ($stx) {
@@ -17,24 +17,24 @@ if ($stx) {
     switch ($sfl) {
         case "gr_id" :
         case "gr_admin" :
-            $sql_search .= " ($sfl = '$stx') ";
+            $sql_search .= " ({$sfl} = '{$stx}') ";
             break;
         default :
-            $sql_search .= " ($sfl like '%$stx%') ";
+            $sql_search .= " ({$sfl} like '%{$stx}%') ";
             break;
     }
     $sql_search .= " ) ";
 }
 
 if ($sst)
-    $sql_order = " order by $sst $sod ";
+    $sql_order = " order by {$sst} {$sod} ";
 else
     $sql_order = " order by gr_id asc ";
 
 $sql = " select count(*) as cnt
-         $sql_common
-         $sql_search
-         $sql_order ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
@@ -44,10 +44,10 @@ if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = " select *
-          $sql_common
-          $sql_search
-          $sql_order
-          limit $from_record, $rows ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order}
+            limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>';
@@ -58,34 +58,34 @@ include_once('./admin.head.php');
 $colspan = 8;
 ?>
 
-<script type="text/javascript">
+<script>
 var list_update_php = "./boardgroup_list_update.php";
 </script>
 
-<table width=100% cellpadding=3 cellspacing=1>
-<form name=fsearch method=get>
+<table>
+<form id="fsearch" name="fsearch" method=get>
 <tr>
-    <td width=50% align=left><?=$listall?> (그룹수 : <?=number_format($total_count)?>개)</td>
-    <td width=50% align=right>
-        <select name=sfl>
+    <td><?=$listall?> (그룹수 : <?=number_format($total_count)?>개)</td>
+    <td>
+        <select id="sfl" name="sfl">
             <option value="gr_subject">제목</option>
             <option value="gr_id">ID</option>
             <option value="gr_admin">그룹관리자</option>
         </select>
-        <input type=text name=stx required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" required itemname='검색어' value='<?=$stx?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
 
-<form name=fboardgrouplist method=post>
-<input type=hidden name=sst   value='<?=$sst?>'>
-<input type=hidden name=sod   value='<?=$sod?>'>
-<input type=hidden name=sfl   value='<?=$sfl?>'>
-<input type=hidden name=stx   value='<?=$stx?>'>
-<input type=hidden name=page  value='<?=$page?>'>
-<input type=hidden name=token value='<?=$token?>'>
-<table width=100% cellpadding=0 cellspacing=1 border=0>
+<form id="fboardgrouplist" name="fboardgrouplist" method=post>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<table>
 <colgroup width=30>
 <colgroup width=120>
 <colgroup width=180>
@@ -96,7 +96,7 @@ var list_update_php = "./boardgroup_list_update.php";
 <colgroup width=60>
 <tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
 <tr class='bgcol1 bold col1 ht center'>
-    <td><input type=checkbox name=chkall value="1" onclick="check_all(this.form)"></td>
+    <td><input type=checkbox id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></td>
     <td><?=subject_sort_link('gr_id')?>그룹아이디</a></td>
     <td><?=subject_sort_link('gr_subject')?>제목</a></td>
     <td><?=subject_sort_link('gr_admin')?>그룹관리자</a></td>
@@ -125,20 +125,20 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
 
     $list = $i%2;
-    echo "<input type=hidden name=gr_id[$i] value='{$row['gr_id']}'>";
-    echo "<tr class='list$list' onmouseover=\"this.className='mouseover';\" onmouseout=\"this.className='list$list';\" height=27 align=center>";
-    echo "<td><input type=checkbox name=chk[] value='$i'></td>";
+    echo "<input type="hidden" id="gr_id" name="gr_id"[$i] value='{$row['gr_id']}'>";
+    echo "<tr class='list$list' onmouseover=\"this.classid="mouseover" name="mouseover";\" onmouseout=\"this.className='list$list';\" height=27 align=center>";
+    echo "<td><input type=checkbox id="chk" name="chk"[] value='$i'></td>";
     echo "<td><a href='{$g4['bbs_path']}/group.php?gr_id={$row['gr_id']}'><b>{$row['gr_id']}</b></a></td>";
-    echo "<td><input type=text name=gr_subject[$i] value='".get_text($row['gr_subject'])."' size=30></td>";
+    echo "<td><input type="text" id="gr_subject" name="gr_subject"[$i] value='".get_text($row['gr_subject'])."' size=30></td>";
 
     if ($is_admin == "super")
         //echo "<td>".get_member_id_select("gr_admin[$i]", 9, $row[gr_admin])."</td>";
-        echo "<td><input type=text name=gr_admin[$i] value='{$row['gr_admin']}' maxlength=20></td>";
+        echo "<td><input type="text" id="gr_admin" name="gr_admin"[$i] value='{$row['gr_admin']}' maxlength=20></td>";
     else
-        echo "<input type=hidden name='gr_admin[$i]' value='{$row['gr_admin']}'><td>{$row['gr_admin']}</td>";
+        echo "<input type="hidden" name='gr_admin[$i]' value='{$row['gr_admin']}'><td>{$row['gr_admin']}</td>";
 
     echo "<td><a href='./board_list.php?sfl=a.gr_id&amp;stx={$row['gr_id']}'>{$row2['cnt']}</a></td>";
-    echo "<td><input type=checkbox name=gr_use_access[$i] ".($row['gr_use_access']?'checked':'')." value='1'></td>";
+    echo "<td><input type=checkbox id="gr_use_access" name="gr_use_access"[$i] ".($row['gr_use_access']?'checked':'')." value='1'></td>";
     echo "<td><a href='./boardgroupmember_list.php?gr_id={$row['gr_id']}'>{$row1['cnt']}</a></td>";
     echo "<td>$s_upd $s_del</td>";
     echo "</tr>\n";
@@ -177,14 +177,14 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='gr_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<input type="hidden" id="gr_id" name="gr_id">
 </form>
 
 <?

@@ -93,13 +93,13 @@ include_once('./admin.head.php');
 <?//=subtitle_bar($html_title)?><p>
 
 <div align=right>선택된 회원수 : <?=number_format($cnt)?> 명</div>
-<form name=fmailselectlist method=post onsubmit="return fmailselectlist_submit(this);">
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fmailselectlist" name="fmailselectlist" method=post onsubmit="return fmailselectlist_submit(this);">
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
 <table cellpadding=4 cellspacing=1 width=100% class=tablebg>
-<input type="hidden" name="ma_id" value="<? echo $ma_id ?>">
+<input type="hidden" id="ma_id" name="ma_id" value="<? echo $ma_id ?>">
 <tr>
     <td align=center>
-        <select size=25 name='list' style='width:500px;'>
+        <select size=25 id="list" name="list" style='width:500px;'>
         <option>번호 . 회원아이디 / 이름 / 별명 / 생일 / E-mail
         <?
             $sql = " select mb_id, mb_name, mb_nick, mb_email, mb_birth, mb_datetime $sql_common $sql_where order by mb_id ";
@@ -116,7 +116,7 @@ include_once('./admin.head.php');
             }
         ?>
         </select>
-        <textarea name="ma_list" style="display:none"><?=$ma_list?></textarea>
+        <textarea id="ma_list" name="ma_list" style="display:none"><?=$ma_list?></textarea>
     </td>
 </tr>
 </table>

@@ -11,7 +11,7 @@ include_once('./visit.sub.php');
 $colspan = 4;
 ?>
 
-<table width=100% cellpadding=0 cellspacing=1 border=0>
+<table>
 <colgroup width=100>
 <colgroup width=100>
 <colgroup width=100>

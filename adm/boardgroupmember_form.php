@@ -67,16 +67,16 @@ if ($i == 0) {
 </table>
 
 <p>
-<form name=fboardgroupmember_form method=post action='./boardgroupmember_update.php' onsubmit="return boardgroupmember_form_check(this)">
-<input type=hidden name=mb_id value='<?=$mb['mb_id']?>'>
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fboardgroupmember_form" name="fboardgroupmember_form" method=post action='./boardgroupmember_update.php' onsubmit="return boardgroupmember_form_check(this)">
+<input type="hidden" id="mb_id" name="mb_id" value='<?=$mb['mb_id']?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
 <table width=100% align=center cellpadding=3 cellspacing=1 class=tablebg>
 <colgroup width=20% class='col1 pad1 bold right'>
 <colgroup width=80% class='col2 pad2'>
 <tr>
     <td>그룹</td>
     <td>
-        <select name=gr_id>
+        <select id="gr_id" name="gr_id">
         <option value=''>접근가능 그룹을 선택하세요.
         <option value=''>--------------------------
         <?
@@ -126,15 +126,15 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='w'     value='d'>
-<input type='hidden' name='gm_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<input type="hidden" id="w" name="w"     value='d'>
+<input type="hidden" id="gm_id" name="gm_id">
 </form>
 
 <?

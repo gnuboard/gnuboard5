@@ -105,26 +105,26 @@ jQuery(function($){
 ?>
 
 <table width=100% cellpadding=3 cellspacing=1>
-<form name=fsearch method=get>
+<form id="fsearch" name="fsearch" method=get>
 <tr>
-    <td width=50% align=left><?=$listall?> (건수 : <?=number_format($total_count)?>개)</td>
-    <td width=50% align=right>
+    <td><?=$listall?> (건수 : <?=number_format($total_count)?>개)</td>
+    <td>
         기간 :
-        <input type='text' id='fr_date' name='fr_date' size=11 maxlength=10 value='<?=$fr_date?>'>
+        <input type="text" id='fr_date' id="fr_date" name="fr_date" size=11 maxlength=10 value='<?=$fr_date?>'>
         -
-        <input type='text' id='to_date' name='to_date' size=11 maxlength=10 value='<?=$to_date?>'>
-        <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id='to_date' id="to_date" name="to_date" size=11 maxlength=10 value='<?=$to_date?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
 
-<form name=fpopularrank method=post>
-<input type=hidden name=sst   value="<?=$sst?>">
-<input type=hidden name=sod   value="<?=$sod?>">
-<input type=hidden name=sfl   value="<?=$sfl?>">
-<input type=hidden name=stx   value="<?=$stx?>">
-<input type=hidden name=page  value="<?=$page?>">
-<input type=hidden name=token value="<?=$token?>">
+<form id="fpopularrank" name="fpopularrank" method=post>
+<input type="hidden" id="sst" name="sst"   value="<?=$sst?>">
+<input type="hidden" id="sod" name="sod"   value="<?=$sod?>">
+<input type="hidden" id="sfl" name="sfl"   value="<?=$sfl?>">
+<input type="hidden" id="stx" name="stx"   value="<?=$stx?>">
+<input type="hidden" id="page" name="page"  value="<?=$page?>">
+<input type="hidden" id="token" name="token" value="<?=$token?>">
 <table width=100% cellpadding=0 cellspacing=1>
 <colgroup width=>
 <colgroup width=150>
@@ -166,7 +166,7 @@ if ($is_admin == 'super')
     echo "<input type=button class='btn1' value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
 
 echo "</td>";
-echo "<td width=50% align=right>$pagelist</td></tr></table>\n";
+echo "<td>$pagelist</td></tr></table>\n";
 
 if ($stx)
     echo "<script>document.fsearch.sfl.value = '$sfl';</script>";

@@ -49,8 +49,8 @@ include_once('./admin.head.php');
 <tr>
     <td>
         <table cellpadding=0 cellspacing=0 width=100%>
-        <form name=frmsendmailselectform method=post action="./mail_select_list.php" autocomplete="off">
-        <input type=hidden name=ma_id value='<? echo $ma_id ?>'>
+        <form id="frmsendmailselectform" name="frmsendmailselectform" method=post action="./mail_select_list.php" autocomplete="off">
+        <input type="hidden" id="ma_id" name="ma_id" value='<? echo $ma_id ?>'>
         <colgroup width=20% class='col1 pad1 bold right'>
         <colgroup width=80% class='col2 pad2'>
         <tr>
@@ -61,11 +61,11 @@ include_once('./admin.head.php');
         <tr class='ht'>
             <td>회원 ID</td>
             <td>
-                <input type=radio name='mb_id1' value='1' onclick="mb_id1_click(1);" <?=$mb_id1?"checked":"";?>> 전체
-                <input type=radio name='mb_id1' value='0' onclick="mb_id1_click(0);" <?=!$mb_id1?"checked":"";?>> 구간
+                <input type=radio id="mb_id1" name="mb_id1" value='1' onclick="mb_id1_click(1);" <?=$mb_id1?"checked":"";?>> 전체
+                <input type=radio id="mb_id1" name="mb_id1" value='0' onclick="mb_id1_click(0);" <?=!$mb_id1?"checked":"";?>> 구간
                 <br>
-                <input type=text id=mb_id1_from name=mb_id1_from value="<?=$mb_id1_from?>"> 에서
-                <input type=text id=mb_id1_to name=mb_id1_to value="<?=$mb_id1_to?>"> 까지
+                <input type="text" id=mb_id1_from id="mb_id1_from" name="mb_id1_from" value="<?=$mb_id1_from?>"> 에서
+                <input type="text" id=mb_id1_to id="mb_id1_to" name="mb_id1_to" value="<?=$mb_id1_to?>"> 까지
 
                 <script type="text/javascript">
                 function mb_id1_click(num)
@@ -89,17 +89,17 @@ include_once('./admin.head.php');
         <tr class='ht'>
             <td>생일</td>
             <td>
-                <input type=text name='mb_birth_from' size=4 maxlength=4 value="<?=$mb_birth_from?>"> 부터
-                <input type=text name='mb_birth_to' size=4 maxlength=4 value="<?=$mb_birth_to?>"> 까지 (예 : 5월5일 인 경우, 0505 와 같이 입력 , 둘다 입력해야함)</td>
+                <input type="text" id="mb_birth_from" name="mb_birth_from" size=4 maxlength=4 value="<?=$mb_birth_from?>"> 부터
+                <input type="text" id="mb_birth_to" name="mb_birth_to" size=4 maxlength=4 value="<?=$mb_birth_to?>"> 까지 (예 : 5월5일 인 경우, 0505 와 같이 입력 , 둘다 입력해야함)</td>
         </tr>
         <tr class='ht'>
             <td>E-mail에</td>
-            <td><input type=text name='mb_email' value="<?=$mb_email?>"> 단어 포함 (예 : @sir.co.kr)</td>
+            <td><input type="text" id="mb_email" name="mb_email" value="<?=$mb_email?>"> 단어 포함 (예 : @sir.co.kr)</td>
         </tr>
         <tr class='ht'>
             <td>성별</td>
             <td>
-                <select id=mb_sex name=mb_sex>
+                <select id=mb_sex id="mb_sex" name="mb_sex">
                     <option value=''>전체
                     <option value='F'>여자
                     <option value='M'>남자
@@ -110,7 +110,7 @@ include_once('./admin.head.php');
         <tr class='ht'>
             <td>지역</td>
             <td>
-                <select id=mb_area name=mb_area>
+                <select id=mb_area id="mb_area" name="mb_area">
                     <option value=''>전체
                     <option value='서울'>서울
                     <option value='부산'>부산
@@ -135,7 +135,7 @@ include_once('./admin.head.php');
         <tr class='ht'>
             <td>메일링</td>
             <td>
-                <select id=mb_mailling name=mb_mailling>
+                <select id=mb_mailling id="mb_mailling" name="mb_mailling">
                     <option value='1'>수신동의한 회원만
                     <option value=''>전체
                 </select>
@@ -145,12 +145,12 @@ include_once('./admin.head.php');
         <tr class='ht'>
             <td>권한</td>
             <td>
-                <select id=mb_level_from name=mb_level_from>
+                <select id=mb_level_from id="mb_level_from" name="mb_level_from">
                 <? for ($i=1; $i<=10; $i++) { ?>
                     <option value='<? echo $i ?>'><? echo $i ?>
                 <? } ?>
                 </select> 에서
-                <select id=mb_level_to name=mb_level_to>
+                <select id=mb_level_to id="mb_level_to" name="mb_level_to">
                 <? for ($i=1; $i<=10; $i++) { ?>
                     <option value='<? echo $i ?>'><? echo $i ?>
                 <? } ?>
@@ -162,7 +162,7 @@ include_once('./admin.head.php');
         <tr class='ht'>
             <td>게시판그룹회원</td>
             <td>
-                <select id=gr_id name=gr_id>
+                <select id=gr_id id="gr_id" name="gr_id">
                 <option value=''>전체
                 <?
                 $sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_subject ";

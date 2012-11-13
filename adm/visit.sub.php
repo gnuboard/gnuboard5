@@ -10,13 +10,13 @@ $qstr = 'fr_date='.$fr_date.'&amp;to_date='.$to_date;
 ?>
 
 <table width=100% cellpadding=3 cellspacing=1>
-<form name=fvisit method=get>
+<form id="fvisit" name="fvisit" method=get>
 <tr>
     <td>
         기간 :
-        <input type='text' name='fr_date' size=11 maxlength=10 value='<?=$fr_date?>'>
+        <input type="text" id="fr_date" name="fr_date" size=11 maxlength=10 value='<?=$fr_date?>'>
         -
-        <input type='text' name='to_date' size=11 maxlength=10 value='<?=$to_date?>'>
+        <input type="text" id="to_date" name="to_date" size=11 maxlength=10 value='<?=$to_date?>'>
         &nbsp;
         <input type=button class=btn1 value=' 접속자 '   onclick="fvisit_submit('visit_list.php');">
         <input type=button class=btn1 value=' 도메인 '   onclick="fvisit_submit('visit_domain.php');">

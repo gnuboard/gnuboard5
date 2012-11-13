@@ -22,7 +22,7 @@ echo '</b>';
 <table width=100% border="0" align="left" cellpadding="0" cellspacing="0">
 <tr>
     <td>
-        <textarea name="textarea" style='width:100%; line-height:150%; padding:10px;' rows="25" class=tx readonly><?=implode("", file($g4['path'].'/HISTORY'));?></textarea>
+        <textarea id="textarea" name="textarea" style='width:100%; line-height:150%; padding:10px;' rows="25" class=tx readonly><?=implode("", file($g4['path'].'/HISTORY'));?></textarea>
     </td>
 </tr>
 </table>

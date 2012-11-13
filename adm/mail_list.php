@@ -84,14 +84,14 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form id='fpost' name='fpost' method="post">
-<input type='hidden' id='sst' name='sst'  value="<?=$sst?>">
-<input type='hidden' id='sod' name='sod'  value="<?=$sod?>">
-<input type='hidden' id='sfl' name='sfl'  value="<?=$sfl?>">
-<input type='hidden' id='stx' name='stx'  value="<?=$stx?>">
-<input type='hidden' id='page' name='page' value="<?=$page?>">
-<input type='hidden' id='w' name='w'    value='d'>
-<input type='hidden' id='ma_id' name='ma_id'>
+<form id='fpost' id="fpost" name="fpost" method="post">
+<input type="hidden" id='sst' id="sst" name="sst"  value="<?=$sst?>">
+<input type="hidden" id='sod' id="sod" name="sod"  value="<?=$sod?>">
+<input type="hidden" id='sfl' id="sfl" name="sfl"  value="<?=$sfl?>">
+<input type="hidden" id='stx' id="stx" name="stx"  value="<?=$stx?>">
+<input type="hidden" id='page' id="page" name="page" value="<?=$page?>">
+<input type="hidden" id='w' id="w" name="w"    value='d'>
+<input type="hidden" id='ma_id' id="ma_id" name="ma_id">
 </form>
 
 <?

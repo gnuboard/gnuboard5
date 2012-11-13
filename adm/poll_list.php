@@ -53,15 +53,15 @@ $colspan = 6;
 ?>
 
 <table width=100%>
-<form name=fsearch method=get>
+<form id="fsearch" name="fsearch" method=get>
 <tr>
-    <td width=50% align=left><?=$listall?> (투표수 : <?=number_format($total_count)?>개)</td>
-    <td width=50% align=right>
-        <select name=sfl>
+    <td><?=$listall?> (투표수 : <?=number_format($total_count)?>개)</td>
+    <td>
+        <select id="sfl" name="sfl">
             <option value='po_subject'>제목</option>
         </select>
-        <input type=text name=stx required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" required itemname='검색어' value='<?=$stx?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
@@ -138,15 +138,15 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='w'    value='d'>
-<input type='hidden' name='po_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<input type="hidden" id="w" name="w"    value='d'>
+<input type="hidden" id="po_id" name="po_id">
 </form>
 
 <?

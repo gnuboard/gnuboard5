@@ -58,16 +58,16 @@ $colspan = 7;
 <script type="text/javascript" src="<?=$g4['path']?>/js/sideview.js"></script>
 
 <table width=100% cellpadding=3 cellspacing=1>
-<form name=fsearch method=get>
-<input type=hidden name=gr_id value='<?=$gr_id?>'>
+<form id="fsearch" name="fsearch" method=get>
+<input type="hidden" id="gr_id" name="gr_id" value='<?=$gr_id?>'>
 <tr>
-    <td width=50% align=left>* <? echo "'<b>[{$gr['gr_id']}] {$gr['gr_subject']}</b>' 그룹의 접근가능한 회원 목록"; ?></td>
-    <td width=50% align=right>
-        <select name=sfl class=cssfl>
+    <td>* <? echo "'<b>[{$gr['gr_id']}] {$gr['gr_subject']}</b>' 그룹의 접근가능한 회원 목록"; ?></td>
+    <td>
+        <select id="sfl" name="sfl" class=cssfl>
             <option value='a.mb_id'>회원아이디</option>
         </select>
-        <input type=text name=stx required itemname='검색어' value='<? echo $stx ?>'>
-        <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" required itemname='검색어' value='<? echo $stx ?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
@@ -150,15 +150,15 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='w'     value='listdelete'>
-<input type='hidden' name='gm_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<input type="hidden" id="w" name="w"     value='listdelete'>
+<input type="hidden" id="gm_id" name="gm_id">
 </form>
 
 <?

@@ -92,15 +92,15 @@ var list_delete_php = 'member_list_delete.php';
 </script>
 
 <table width=100%>
-<form name=fsearch method=get>
+<form id="fsearch" name="fsearch" method=get>
 <tr>
-    <td width=50% align=left><?=$listall?>
+    <td><?=$listall?>
         (총회원수 : <?=number_format($total_count)?>,
         <a href='?sst=mb_intercept_date&sod=desc&sfl=<?=$sfl?>&stx=<?=$stx?>' title='차단된 회원부터 출력'><font color=orange>차단 : <?=number_format($intercept_count)?></font></a>,
         <a href='?sst=mb_leave_date&sod=desc&sfl=<?=$sfl?>&stx=<?=$stx?>' title='탈퇴한 회원부터 출력'><font color=crimson>탈퇴 : <?=number_format($leave_count)?></font></a>)
     </td>
-    <td width=50% align=right>
-        <select name=sfl class=cssfl>
+    <td>
+        <select id="sfl" name="sfl" class=cssfl>
             <option value='mb_id'>회원아이디</option>
             <option value='mb_name'>이름</option>
             <option value='mb_nick'>별명</option>
@@ -113,19 +113,19 @@ var list_delete_php = 'member_list_delete.php';
             <option value='mb_ip'>IP</option>
             <option value='mb_recommend'>추천인</option>
         </select>
-        <input type=text name=stx required itemname='검색어' value='<? echo $stx ?>'>
-        <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
+        <input type="text" id="stx" name="stx" required itemname='검색어' value='<? echo $stx ?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
 </tr>
 </form>
 </table>
 
-<form name=fmemberlist method=post>
-<input type=hidden name=sst   value='<?=$sst?>'>
-<input type=hidden name=sod   value='<?=$sod?>'>
-<input type=hidden name=sfl   value='<?=$sfl?>'>
-<input type=hidden name=stx   value='<?=$stx?>'>
-<input type=hidden name=page  value='<?=$page?>'>
-<input type=hidden name=token value='<?=$token?>'>
+<form id="fmemberlist" name="fmemberlist" method=post>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
 
 <table width=100% cellpadding=0 cellspacing=0>
 <colgroup width=30>
@@ -143,7 +143,7 @@ var list_delete_php = 'member_list_delete.php';
 <colgroup width=80>
 <tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
 <tr class='bgcol1 bold col1 ht center'>
-    <td><input type=checkbox name=chkall value='1' onclick='check_all(this.form)'></td>
+    <td><input type=checkbox id="chkall" name="chkall" value='1' onclick='check_all(this.form)'></td>
     <td><?=subject_sort_link('mb_id')?>회원아이디</a></td>
     <td><?=subject_sort_link('mb_name')?>이름</a></td>
     <td><?=subject_sort_link('mb_nick')?>별명</a></td>
@@ -194,9 +194,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     $list = $i%2;
     echo "
-    <input type=hidden name=mb_id[$i] value='{$row['mb_id']}'>
+    <input type="hidden" id="mb_id" name="mb_id"[$i] value='{$row['mb_id']}'>
     <tr class='list$list col1 ht center'>
-        <td><input type=checkbox name=chk[] value='$i'></td>
+        <td><input type=checkbox id="chk" name="chk"[] value='$i'></td>
         <td title='{$row['mb_id']}'><nobr style='display:block; overflow:hidden; width:90;'>&nbsp;$mb_id</nobr></td>
         <td><nobr style='display:block; overflow:hidden; width:90px;'>{$row['mb_name']}</nobr></td>
         <td><nobr style='display:block; overflow:hidden; width:90px;'><u>$mb_nick</u></nobr></td>
@@ -207,7 +207,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <td>".($row['mb_open']?'&radic;':'&nbsp;')."</td>
         <!-- <td title='{$row['mb_leave_date']}'>".($row['mb_leave_date']?'&radic;':'&nbsp;')."</td> -->
         <td title='{$row['mb_email_certify']}'>".(preg_match('/[1-9]/', $row['mb_email_certify'])?'&radic;':'&nbsp;')."</td>
-        <td title='{$row['mb_intercept_date']}'><input type=checkbox name=mb_intercept_date[$i] ".($row['mb_intercept_date']?'checked':'')." value='$intercept_date'></td>
+        <td title='{$row['mb_intercept_date']}'><input type=checkbox id="mb_intercept_date" name="mb_intercept_date"[$i] ".($row['mb_intercept_date']?'checked':'')." value='$intercept_date'></td>
         <td>$group</td>
         <td>$s_mod $s_del $s_grp</td>
     </tr>";
@@ -225,7 +225,7 @@ echo "<tr><td width=50%>";
 echo "<input type=button class='btn1' value='선택수정' onclick=\"btn_check(this.form, 'update')\">&nbsp;";
 echo "<input type=button class='btn1' value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
 echo "</td>";
-echo "<td width=50% align=right>$pagelist</td></tr></table>\n";
+echo "<td>$pagelist</td></tr></table>\n";
 
 if ($stx)
     echo "<script type='text/javascript'>document.fsearch.sfl.value = '$sfl';</script>\n";
@@ -248,14 +248,14 @@ function post_delete(action_url, val)
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='mb_id'>
+<form id="fpost" name="fpost" method='post'>
+<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
+<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
+<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
+<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
+<input type="hidden" id="page" name="page"  value='<?=$page?>'>
+<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<input type="hidden" id="mb_id" name="mb_id">
 </form>
 
 <?
