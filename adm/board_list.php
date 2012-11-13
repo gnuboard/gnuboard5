@@ -86,7 +86,7 @@ var list_delete_php = 'board_list_delete.php';
     </form>
 </div>
 
-<button id="bo_add">게시판 생성</button>
+<button id="bo_add">게시판 추가</button>
 
 <form id="fboardlist" name="fboardlist" method="post">
 <input type="hidden" name="sst" value="<?=$sst?>">
@@ -135,50 +135,50 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         $s_del = '<a href="javascript:post_delete(\'board_delete.php\', \''.$row['bo_table'].'\');">삭제</a>';
     }
     $s_copy = '<a href="javascript:board_copy(\''.$row['bo_table'].'\');">복사</a>';
-    ?>
+?>
 
-    <tr>
-        <td headers="th_group" class="td_group">
-            <?if ($is_admin == 'super'){?>
-                <label for="gr_id_<?=$i?>">그룹선택</label>
-                <?=get_group_select('gr_id[$i]', $row['gr_id'])?>
-            <?}else{?>
-                <input type="hidden" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>"><?=$row['gr_subject']?>
-            <?}?>
-        </td>
-        <td headers="th_table" class="td_table"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a></td>
-        <td headers="th_skin" class="td_skin">
-            <label for="bo_skin_<?=$i?>">스킨선택</label>
-            <select id="bo_skin_<?=$i?>" name="bo_skin[<?=$i?>]">
-                <?=$skin_options?>
-            </select>
-            <script>document.getElementById("bo_skin_<?=$i?>").value="<?=$row['bo_skin']?>";</script>
-        </td>
-        <td headers="th_subject" class="td_subject"><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>"></td>
-        <td headers="th_check" class="td_check">
-            <input type="hidden" id="board_table" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
-            <label for="chk_<?=$i?>">게시판선택</label>
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
-        </td>
-        <td headers="th_point" class="td_point">
-            <label for="bo_read_point_<?=$i?>">읽기포인트</label>
-            <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>">
-            <label for="bo_write_point_<?=$i?>">쓰기포인트</label>
-            <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>">
-            <label for="bo_comment_point_<?=$i?>">댓글포인트</label>
-            <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>">
-            <label for="bo_download_point_<?=$i?>">다운포인트</label>
-            <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>">
-        </td>
-        <td headers="th_search" class="td_search">
-            <label for="bo_use_search_<?=$i?>">검색사용</label>
-            <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
-            <label for="bo_order_search_<?=$i?>">검색순서</label>
-            <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>">
-        </td>
-        <td headers="th_control" class="td_control"><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
-    </tr>
-    <?
+<tr>
+    <td headers="th_group">
+        <?if ($is_admin == 'super'){?>
+            <label for="gr_id_<?=$i?>">그룹선택</label>
+            <?=get_group_select('gr_id[$i]', $row['gr_id'])?>
+        <?}else{?>
+            <input type="hidden" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>"><?=$row['gr_subject']?>
+        <?}?>
+    </td>
+    <td headers="th_table"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a></td>
+    <td headers="th_skin">
+        <label for="bo_skin_<?=$i?>">스킨선택</label>
+        <select id="bo_skin_<?=$i?>" name="bo_skin[<?=$i?>]">
+            <?=$skin_options?>
+        </select>
+        <script>document.getElementById("bo_skin_<?=$i?>").value="<?=$row['bo_skin']?>";</script>
+    </td>
+    <td headers="th_subject"><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>"></td>
+    <td headers="th_check">
+        <input type="hidden" id="board_table" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
+        <label for="chk_<?=$i?>">게시판선택</label>
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
+    </td>
+    <td headers="th_point">
+        <label for="bo_read_point_<?=$i?>">읽기포인트</label>
+        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>">
+        <label for="bo_write_point_<?=$i?>">쓰기포인트</label>
+        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>">
+        <label for="bo_comment_point_<?=$i?>">댓글포인트</label>
+        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>">
+        <label for="bo_download_point_<?=$i?>">다운포인트</label>
+        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>">
+    </td>
+    <td headers="th_search">
+        <label for="bo_use_search_<?=$i?>">검색사용</label>
+        <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
+        <label for="bo_order_search_<?=$i?>">검색순서</label>
+        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>">
+    </td>
+    <td headers="th_control"><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
+</tr>
+<?
 }
 if ($i == 0)
     echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
