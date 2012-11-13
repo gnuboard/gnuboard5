@@ -73,9 +73,13 @@ var list_update_php = 'board_list_update.php';
 var list_delete_php = 'board_list_delete.php';
 </script>
 
-<div id="bo_search">
-    <span><?=$listall?> 게시판수 : <?=number_format($total_count)?>개</span>
-    <form id="fsearch" name="fsearch" method="get">
+<form id="fsearch" name="fsearch" method="get">
+<fieldset>
+    <legend>게시판 검색</legend>
+    <div>
+        <span><?=$listall?></span>
+        생성된 게시판수 : <?=number_format($total_count)?>건
+    </div>
     <select id="sfl" name="sfl">
         <option value="bo_table">TABLE</option>
         <option value="bo_subject">제목</option>
@@ -83,8 +87,8 @@ var list_delete_php = 'board_list_delete.php';
     </select>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
     <input type="submit" value="검색">
-    </form>
-</div>
+</fieldset>
+</form>
 
 <button id="bo_add">게시판 추가</button>
 
@@ -97,9 +101,11 @@ var list_delete_php = 'board_list_delete.php';
 <input type="hidden" name="token" value="<?=$token?>">
 <table>
 <caption>
-각 게시판의 검색사용을 체크하시면 전체 검색 시 결과에 반영됩니다.<br>
-검색순서는 전체 검색 시 결과의 우선 순위를 설정합니다.<br>
-여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 선택기능을 이용하세요.
+생성된 게시판 목록
+<p>
+    검색순서는 전체 검색 시 결과의 우선 순위를 설정합니다.<br>
+    여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 선택기능을 이용하세요.
+</p>
 </caption>
 <thead>
 <tr>

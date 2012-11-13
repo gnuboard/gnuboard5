@@ -62,10 +62,13 @@ $colspan = 8;
 var list_update_php = "./boardgroup_list_update.php";
 </script>
 
-
-<div id="bo_search">
-    <span><?=$listall?> 그룹수 : <?=number_format($total_count)?>개</span>
-    <form id="fsearch" name="fsearch" method="get">
+<form id="fsearch" name="fsearch" method="get">
+<fieldset>
+    <legend>그룹 검색</legend>
+    <div>
+        <span><?=$listall?></span>
+        생성된 그룹수 : <?=number_format($total_count)?>건
+    </div>
     <select id="sfl" name="sfl">
         <option value="gr_subject">제목</option>
         <option value="gr_id">ID</option>
@@ -73,8 +76,8 @@ var list_update_php = "./boardgroup_list_update.php";
     </select>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
     <input type="submit" value="검색"></td>
-    </form>
-</div>
+</fieldset>
+</form>
 
 <button id="bo_gr_add">게시판그룹 추가</button>
 
@@ -85,10 +88,6 @@ var list_update_php = "./boardgroup_list_update.php";
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-
-<p>
-</p>
-
 <table>
 <caption>
 <p>게시판그룹 목록</p>
