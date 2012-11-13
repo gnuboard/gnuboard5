@@ -39,12 +39,12 @@ include_once('./admin.head.php');
 <table>
 <tbody>
 <tr>
-    <th scope="row" id="th_id"><label for="gr_id">그룹 ID</label></th>
-    <td headers="th_id"><input type="text" id="gr_id" name="gr_id" maxlength="10" <?=$gr_id_attr?> alphanumericunderline value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
+    <th scope="row"><label for="gr_id">그룹 ID</label></th>
+    <td><input type="text" id="gr_id" name="gr_id" maxlength="10" <?=$gr_id_attr?> alphanumericunderline value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
 </tr>
 <tr>
-    <th scope="row" id="th_subject"><label for="gr_subject">그룹 제목</label></th>
-    <td headers="th_subject">
+    <th scope="row"><label for="gr_subject">그룹 제목</label></th>
+    <td>
         <input type="text" id="gr_subject" name="gr_subject" required value="<?=get_text($group['gr_subject'])?>">
         <?
         if ($w == 'u')
@@ -53,8 +53,8 @@ include_once('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row" id="th_admin"><label for="gr_admin">그룹 관리자</label></th>
-    <td headers="th_admin">
+    <th scope="row"><label for="gr_admin">그룹 관리자</label></th>
+    <td>
         <?
         if ($is_admin == 'super')
             echo '<input type="text" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'" maxlength="20">';
@@ -64,14 +64,14 @@ include_once('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row" id="th_access"><label for="gr_use_access">접근회원사용</label></th>
-    <td headers="th_access">
+    <th scope="row"><label for="gr_use_access">접근회원사용</label></th>
+    <td>
         <?=help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.")?>
         <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr['gr_use_access']?'checked':'';?>>사용
     </td>
 </tr>
 <tr>
-    <th scope="row" id="th_access_cnt">접근회원수</th>
+    <th scope="row">접근회원수</th>
     <td headers="th_access_cnt">
         <?
         // 접근회원수
