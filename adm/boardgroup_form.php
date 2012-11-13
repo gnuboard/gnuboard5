@@ -67,7 +67,7 @@ include_once('./admin.head.php');
     <th scope="row"><label for="gr_use_access">접근회원사용</label></th>
     <td>
         <?=help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.")?>
-        <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr['gr_use_access']?'checked':'';?>>사용
+        <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr[gr_use_access]?'checked':'';?>>사용
     </td>
 </tr>
 <tr>

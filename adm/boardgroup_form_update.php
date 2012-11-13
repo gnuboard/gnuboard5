@@ -18,7 +18,7 @@ check_token();
 
 $sql_common = " gr_subject    = '{$_POST['gr_subject']}',
                 gr_admin      = '{$_POST['gr_admin']}',
-                gr_use_access = '{$_POST['gr_use_access']}',
+                gr_use_access = '{$_POST[gr_use_access]}',
                 gr_1_subj     = '{$_POST['gr_1_subj']}',
                 gr_2_subj     = '{$_POST['gr_2_subj']}',
                 gr_3_subj     = '{$_POST['gr_3_subj']}',
@@ -49,18 +49,18 @@ if ($w == '')
 
     $sql = " insert into {$g4['group_table']}
                 set gr_id = '{$_POST['gr_id']}',
-                    $sql_common ";
+                     {$sql_common} ";
     sql_query($sql);
 }
 else if ($w == "u")
 {
     $sql = " update {$g4['group_table']}
-                set $sql_common
-              where gr_id = '{$_POST['gr_id']}' ";
+                set {$sql_common}
+                where gr_id = '{$_POST['gr_id']}' ";
     sql_query($sql);
 }
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
-goto_url('./boardgroup_form.php?w=u&gr_id='.$gr_id.'&amp;'.$qstr);
+goto_url('./boardgroup_form.php?w=u&amp;gr_id='.$gr_id.'&amp;'.$qstr);
 ?>
