@@ -21,38 +21,38 @@ if (!isset($sst)) {
     $sod = "desc";
 }
 
-$sql_order = " order by $sst $sod ";
+$sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt
-         $sql_common
-         $sql_search
-         $sql_order ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
 // 탈퇴회원수
 $sql = " select count(*) as cnt
-         $sql_common
-         $sql_search
+            {$sql_common}
+            {$sql_search}
             and mb_leave_date <> ''
-         $sql_order ";
+            {$sql_order} ";
 $row = sql_fetch($sql);
 $leave_count = $row['cnt'];
 
 // 차단회원수
 $sql = " select count(*) as cnt
-         $sql_common
-         $sql_search
+            {$sql_common}
+            {$sql_search}
             and mb_intercept_date <> ''
-         $sql_order ";
+            {$sql_order} ";
 $row = sql_fetch($sql);
 $intercept_count = $row['cnt'];
 
 $sql = " select *
-          $sql_common
-          $sql_search
-          $sql_order
-          limit $new_member_rows ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order}
+            limit {$new_member_rows} ";
 $result = sql_query($sql);
 
 $colspan = 12;
@@ -62,24 +62,24 @@ $colspan = 12;
 <h2><a href='<?=$g4['admin_path']?>/member_list.php'><span></span>신규가입회원 <?=$new_member_rows?>건</strong></a></h2>
 
 <p>
-<?//=$listall?> (총회원수 : <?=number_format($total_count)?>, 차단 : <?=number_format($intercept_count)?>, 탈퇴 : <?=number_format($leave_count)?>)
+총회원수 : <?=number_format($total_count)?>, 차단 : <?=number_format($intercept_count)?>, 탈퇴 : <?=number_format($leave_count)?>
 </p>
 
 <table>
 <caption>신규가입회원 목록</caption>
 <thead>
 <tr>
-    <th scope='col'>회원아이디</th>
-    <th scope='col'>이름</th>
-    <th scope='col'>별명</th>
-    <th scope='col'>권한</th>
-    <th scope='col'>포인트</th>
-    <th scope='col'>최종접속</th>
-    <th scope='col'>수신</th>
-    <th scope='col'>공개</th>
-    <th scope='col'>인증</th>
-    <th scope='col'>차단</th>
-    <th scope='col'>그룹</th>
+    <th scope="col">회원아이디</th>
+    <th scope="col">이름</th>
+    <th scope="col">별명</th>
+    <th scope="col">권한</th>
+    <th scope="col">포인트</th>
+    <th scope="col">최종접속</th>
+    <th scope="col">수신</th>
+    <th scope="col">공개</th>
+    <th scope="col">인증</th>
+    <th scope="col">차단</th>
+    <th scope="col">그룹</th>
 </tr>
 </thead>
 <tbody>
@@ -168,11 +168,11 @@ $colspan = 5;
 <caption>최근게시물 목록</caption>
 <thead>
 <tr>
-    <th scope='col'>그룹</th>
-    <th scope='col'>게시판</th>
-    <th scope='col'>제목</th>
-    <th scope='col'>이름</th>
-    <th scope='col'>일시</th>
+    <th scope="col">그룹</th>
+    <th scope="col">게시판</th>
+    <th scope="col">제목</th>
+    <th scope="col">이름</th>
+    <th scope="col">일시</th>
 </tr>
 </thead>
 <tbody>
@@ -231,7 +231,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <?
 }
 if ($i == 0)
-    echo "<tr><td colspan='$colspan'>자료가 없습니다.</td></tr>";
+    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
 ?>
 </tbody>
 </table>
@@ -244,17 +244,17 @@ $sql_search = " where (1) ";
 $sql_order = " order by po_id desc ";
 
 $sql = " select count(*) as cnt
-         $sql_common
-         $sql_search
-         $sql_order ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
 $sql = " select *
-          $sql_common
-          $sql_search
-          $sql_order
-          limit $new_point_rows ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order}
+            limit {$new_point_rows} ";
 $result = sql_query($sql);
 
 $colspan = 7;
@@ -275,13 +275,13 @@ $colspan = 7;
 <caption>최근 포인트 기록</caption>
 <thead>
 <tr>
-    <th scope='col'>회원아이디</th>
-    <th scope='col'>이름</th>
-    <th scope='col'>별명</th>
-    <th scope='col'>일시</th>
-    <th scope='col'>포인트 내용</th>
-    <th scope='col'>포인트</th>
-    <th scope='col'>포인트합</th>
+    <th scope="col">회원아이디</th>
+    <th scope="col">이름</th>
+    <th scope="col">별명</th>
+    <th scope="col">일시</th>
+    <th scope="col">포인트 내용</th>
+    <th scope="col">포인트</th>
+    <th scope="col">포인트합</th>
 </tr>
 </thead>
 <tbody>
