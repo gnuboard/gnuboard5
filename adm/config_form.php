@@ -463,7 +463,7 @@ include_once ('./admin.head.php');
 </table>
 </section>
 
-<fieldset>
+<fieldset id="admin_confirm">
 <legend><span></span>XSS 혹은 CSRF 방지</legend>
 <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
 <label for="admin_password">관리자 패스워드</label>
