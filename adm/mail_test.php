@@ -19,7 +19,7 @@ $mb_id = $member['mb_id'];
 $email = $member['mb_email'];
 $birth = $member['mb_birth'];
 
-$sql = "select ma_subject, ma_content from {$g4['mail_table']} where ma_id = '$ma_id' ";
+$sql = "select ma_subject, ma_content from {$g4['mail_table']} where ma_id = '{$ma_id}' ";
 $ma = sql_fetch($sql);
 
 $subject = $ma['ma_subject'];
@@ -33,9 +33,9 @@ $content = preg_replace("/{생일}/", (int)substr($birth,4,2).'월 '.(int)substr
 
 $mb_md5 = md5($member['mb_id'].$member['mb_email'].$member['mb_datetime']);
 
-$content = $content . "<hr size=0><p><span style='font-size:9pt; font-familye:굴림'>▶ 더 이상 정보 수신을 원치 않으시면 [<a href='{$g4['url']}/{$g4['bbs']}/email_stop.php?mb_id={$mb_id}&amp;mb_md5={$mb_md5}' target='_blank'>수신거부</a>] 해 주십시오.</span></p>";
+$content = $content . '<p>더 이상 정보 수신을 원치 않으시면 [<a href="'.$g4['url'].'/'.$g4['bbs'].'/email_stop.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5.'" target="_blank">수신거부</a>] 해 주십시오.</p>';
 
 mailer($config['cf_title'], $member['mb_email'], $member['mb_email'], $subject, $content, 1);
 
-alert("{$member['mb_nick']}({$member['mb_email']})님께 테스트 메일을 발송하였습니다.\\n\\n확인하여 주십시오.");
+alert($member['mb_nick'].'('.$member['mb_email'].')님께 테스트 메일을 발송하였습니다. 확인하여 주십시오.');
 ?>
