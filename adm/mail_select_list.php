@@ -87,7 +87,7 @@ include_once('./admin.head.php');
 ?>
 
 <form id="fmailselectlist" name="fmailselectlist" method="post" onsubmit="return fmailselectlist_submit(this);">
-<input type="hidden" name="token" value='<?=$token?>'>
+<input type="hidden" name="token" value="<?=$token?>">
 <input type="hidden" name="ma_id" value="<?=$ma_id ?>">
 <table>
 <caption>선택된 회원 목록</caption>
