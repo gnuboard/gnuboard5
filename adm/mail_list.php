@@ -36,7 +36,7 @@ $colspan = 6;
 </caption>
 <thead>
 <tr>
-    <th scope="col">ID</th>
+    <th scope="col">번호</th>
     <th scope="col">제목</th>
     <th scope="col">작성일시</th>
     <th scope="col">테스트</th>
