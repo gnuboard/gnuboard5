@@ -91,11 +91,11 @@ var list_delete_php = 'auth_list_delete.php';
 </caption>
 <thead>
 <tr>
-    <th scope="col" id="th_mb_id"><?=subject_sort_link('a.mb_id')?>회원아이디</a></th>
-    <th scope="col" id="th_mb_nick"><?=subject_sort_link('mb_nick')?>별명</a></th>
-    <th scope="col" id="th_au_menu">메뉴</th>
-    <th scope="col" id="th_au_auth">권한</th>
-    <th scope="col" id="th_chkall"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
+    <th scope="col"><?=subject_sort_link('a.mb_id')?>회원아이디</a></th>
+    <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
+    <th scope="col">메뉴</th>
+    <th scope="col">권한</th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
 </tr>
 </thead>
 <tbody>
@@ -114,18 +114,18 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list = $i%2;
     ?>
     <tr>
-        <td headers="th_mb_id"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-        <td headers="th_mb_nick">
+        <td><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
+        <td>
             <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
             <?=$mb_nick?>
         </td>
-        <td headers="th_au_menu">
+        <td>
             <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row['au_menu']?>">
             <?=$row['au_menu']?>
             <?=$auth_menu[$row['au_menu']]?>
         </td>
-        <td headers="th_au_auth"><?=$row['au_auth']?></td>
-        <td headers="th_chkall">
+        <td><?=$row['au_auth']?></td>
+        <td>
             <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>" title="권한체크">
         </td>
     </tr>

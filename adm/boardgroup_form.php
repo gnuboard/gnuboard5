@@ -72,7 +72,7 @@ include_once('./admin.head.php');
 </tr>
 <tr>
     <th scope="row">접근회원수</th>
-    <td headers="th_access_cnt">
+    <td>
         <?
         // 접근회원수
         $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$gr_id}' ";
@@ -83,8 +83,8 @@ include_once('./admin.head.php');
 </tr>
 <? for ($i=1;$i<=10;$i++) { ?>
 <tr>
-    <th scope="row" id="th_extra_<?=$i?>">회원여분필드<?=$i?></th>
-    <td headers="th_extra_<?=$i?>">
+    <th scope="row">회원여분필드<?=$i?></th>
+    <td>
         <label for="gr_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
         <input type="text" id="gr_<?=$i?>_subj" name="gr_<?=$i?>_subj" value="<?=get_text($group['gr_'.$i.'_subj'])?>">
         <label for="gr_<?=$i?>">여분필드 <?=$i?> 내용</label>

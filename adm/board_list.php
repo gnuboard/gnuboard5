@@ -108,14 +108,14 @@ var list_delete_php = 'board_list_delete.php';
 </caption>
 <thead>
 <tr>
-    <th scope="col" id="th_bo_group"><?=subject_sort_link('a.gr_id')?>그룹</a></th>
-    <th scope="col" id="th_bo_table"><?=subject_sort_link('bo_table')?>TABLE</a></th>
-    <th scope="col" id="th_bo_skin"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
-    <th scope="col" id="th_bo_subject"><?=subject_sort_link('bo_subject')?>제목</a></th>
-    <th scope="col" id="th_bo_point">포인트</th>
-    <th scope="col" id="th_bo_search">검색</th>
-    <th scope="col" id="th_bo_check"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
-    <th scope="col" id="th_bo_control">관리</th>
+    <th scope="col"><?=subject_sort_link('a.gr_id')?>그룹</a></th>
+    <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
+    <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
+    <th scope="col"><?=subject_sort_link('bo_subject')?>제목</a></th>
+    <th scope="col">포인트</th>
+    <th scope="col">검색</th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
+    <th scope="col">관리</th>
 </tr>
 </thead>
 <tbody>
@@ -143,7 +143,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <tr>
-    <td headers="th_bo_group">
+    <td>
         <?if ($is_admin == 'super'){?>
             <label for="gr_id_<?=$i?>">그룹지정</label>
             <?=get_group_select('gr_id[$i]', $row['gr_id'])?>
@@ -151,19 +151,19 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
             <input type="hidden" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>"><?=$row['gr_subject']?>
         <?}?>
     </td>
-    <td headers="th_bo_table">
+    <td>
         <input type="hidden" id="board_table" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
         <a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
     </td>
-    <td headers="th_bo_skin">
+    <td>
         <label for="bo_skin_<?=$i?>">스킨지정</label>
         <select id="bo_skin_<?=$i?>" name="bo_skin[<?=$i?>]">
             <?=$skin_options?>
         </select>
         <script>document.getElementById("bo_skin_<?=$i?>").value="<?=$row['bo_skin']?>";</script>
     </td>
-    <td headers="th_bo_subject"><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>"></td>
-    <td headers="th_bo_point">
+    <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>"></td>
+    <td>
         <label for="bo_read_point_<?=$i?>">읽기</label>
         <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>">
         <label for="bo_write_point_<?=$i?>">쓰기</label>
@@ -173,16 +173,16 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <label for="bo_download_point_<?=$i?>">다운</label>
         <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>">
     </td>
-    <td headers="th_bo_search">
+    <td>
         <label for="bo_use_search_<?=$i?>">사용</label>
         <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
         <label for="bo_order_search_<?=$i?>">순서</label>
         <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>">
     </td>
-    <td headers="th_bo_check">
+    <td>
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=get_text($row['bo_subject'])?> 선택">
     </td>
-    <td headers="th_bo_control"><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
+    <td><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
 </tr>
 <?
 }

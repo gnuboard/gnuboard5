@@ -98,14 +98,14 @@ var list_update_php = "./boardgroup_list_update.php";
 </caption>
 <thead>
 <tr>
-    <th scope="col" id="th_gr_id"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
-    <th scope="col" id="th_gr_subject"><?=subject_sort_link('gr_subject')?>제목</a></th>
-    <th scope="col" id="th_gr_admin"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th>
-    <th scope="col" id="th_bo_cnt">게시판</th>
-    <th scope="col" id="th_gr_use_access">접근사용</th>
-    <th scope="col" id="th_gr_use_access_cnt">접근회원수</th>
-    <th scope="col" id="th_chkall"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
-    <th scope="col" id="th_up_del">관리</th>
+    <th scope="col"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
+    <th scope="col"><?=subject_sort_link('gr_subject')?>제목</a></th>
+    <th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th>
+    <th scope="col">게시판</th>
+    <th scope="col">접근사용</th>
+    <th scope="col">접근회원수</th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
+    <th scope="col">관리</th>
 </tr>
 </thead>
 <tbody>
@@ -129,25 +129,25 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <tr>
-    <td headers="th_gr_id"><a href="<?=$g4['bbs_path']?>/group.php?gr_id="<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
-    <td headers="th_gr_subject">
+    <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id="<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+    <td>
         <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
     </td>
-    <td headers="th_gr_admin">
+    <td>
     <?if ($is_admin == 'super'){?>
         <input type="text" id="gr_admin" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" title="그룹관리자 수정" maxlength="20">
     <?}else{?>
         <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
     <?}?>
     </td>
-    <td headers="th_bo_cnt"><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
-    <td headers="th_gr_use_access"><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1"></td>
-    <td headers="th_gr_use_access_cnt"><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
-    <td headers="th_chkall">
+    <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
+    <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1"></td>
+    <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
+    <td>
         <input type="hidden" id="gr_id" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="그룹선택">
     </td>
-    <td headers="th_up_del"><?=$s_upd?> <?=$s_del?></td>
+    <td><?=$s_upd?> <?=$s_del?></td>
 </tr>
 
 <?
