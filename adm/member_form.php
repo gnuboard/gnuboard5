@@ -121,7 +121,7 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row"><label for="mb_icon">회원아이콘</label></th>
     <td colspan="3">
-        <?=help('이미지 크기는 넓이 '.$config['cf_member_icon_width'].'픽셀 높이 '.$config['cf_member_icon_height'].'픽셀로 해주세요.')?>
+        <?=help('이미지 크기는 넓이 '.$config[cf_member_icon_width].'픽셀 높이 '.$config[cf_member_icon_height].'픽셀로 해주세요.')?>
         <input type="file" id="mb_icon" name="mb_icon">
         <?
         $mb_dir = substr($mb['mb_id'],0,2);
