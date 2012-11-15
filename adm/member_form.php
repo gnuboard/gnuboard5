@@ -8,7 +8,7 @@ $token = get_token();
 
 if ($w == '')
 {
-    $required_mb_id = 'required minlength=3 alphanumericunderline';
+    $required_mb_id = 'required minlength="3" alphanumericunderline';
     $required_mb_password = 'required';
 
     $mb[mb_mailling] = 1;
@@ -73,7 +73,7 @@ include_once('./admin.head.php');
 <input type="hidden" name="token" value="<?=$token?>">
 
 <table>
-<caption></caption>
+<caption><?=$g4['title']?></caption>
 <tbody>
 <tr>
     <th scope="row"><label for="mb_id">아이디</label></th>
