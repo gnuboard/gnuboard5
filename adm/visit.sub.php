@@ -9,28 +9,21 @@ if (empty($to_date)) $to_date = $g4['time_ymd'];
 $qstr = 'fr_date='.$fr_date.'&amp;to_date='.$to_date;
 ?>
 
-<table width=100% cellpadding=3 cellspacing=1>
-<form id="fvisit" name="fvisit" method=get>
-<tr>
-    <td>
-        기간 :
-        <input type="text" id="fr_date" name="fr_date" size=11 maxlength=10 value='<?=$fr_date?>'>
-        -
-        <input type="text" id="to_date" name="to_date" size=11 maxlength=10 value='<?=$to_date?>'>
-        &nbsp;
-        <input type=button class=btn1 value=' 접속자 '   onclick="fvisit_submit('visit_list.php');">
-        <input type=button class=btn1 value=' 도메인 '   onclick="fvisit_submit('visit_domain.php');">
-        <input type=button class=btn1 value=' 브라우저 ' onclick="fvisit_submit('visit_browser.php');">
-        <input type=button class=btn1 value=' OS '       onclick="fvisit_submit('visit_os.php');">
-        <input type=button class=btn1 value=' 시간 '     onclick="fvisit_submit('visit_hour.php');">
-        <input type=button class=btn1 value=' 요일 '     onclick="fvisit_submit('visit_week.php');">
-        <input type=button class=btn1 value=' 일 '       onclick="fvisit_submit('visit_date.php');">
-        <input type=button class=btn1 value=' 월 '       onclick="fvisit_submit('visit_month.php');">
-        <input type=button class=btn1 value=' 년 '       onclick="fvisit_submit('visit_year.php');">
-    </td>
-</tr>
+<form id="fvisit" name="fvisit" method="get">
+<fieldset>
+    <legend>접속자현황 열람조건 지정</legend>
+    <span>기간지정 <input type="text" id="fr_date" name="fr_date" size=11 maxlength=10 value='<?=$fr_date?>'> 부터 <input type="text" id="to_date" name="to_date" size=11 maxlength=10 value='<?=$to_date?>'> 까지</span>
+    <input type="button" value="접속자" onclick="fvisit_submit('visit_list.php');">
+    <input type="button" value="도메인" onclick="fvisit_submit('visit_domain.php');">
+    <input type="button" value="브라우저" onclick="fvisit_submit('visit_browser.php');">
+    <input type="button" value="운영체제" onclick="fvisit_submit('visit_os.php');">
+    <input type="button" value="시간" onclick="fvisit_submit('visit_hour.php');">
+    <input type="button" value="요일" onclick="fvisit_submit('visit_week.php');">
+    <input type="button" value="일" onclick="fvisit_submit('visit_date.php');">
+    <input type="button" value="월" onclick="fvisit_submit('visit_month.php');">
+    <input type="button" value="년" onclick="fvisit_submit('visit_year.php');">
+</fieldset>
 </form>
-</table>
 
 <script type='text/javascript'>
 function fvisit_submit(act)

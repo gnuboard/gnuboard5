@@ -9,24 +9,7 @@ include_once('./admin.head.php');
 include_once('./visit.sub.php');
 
 $colspan = 5;
-?>
 
-<table>
-<colgroup width=100>
-<colgroup width=350>
-<colgroup width=100>
-<colgroup width=100>
-<colgroup width=''>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td>IP</td>
-    <td>접속 경로</td>
-    <td>브라우저</td>
-    <td>OS</td>
-    <td>일시</td>
-</tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
-<?
 //unset($br); // 브라우저
 //unset($os); // OS
 
@@ -53,7 +36,21 @@ $sql = " select *
           order by vi_id desc
           limit $from_record, $rows ";
 $result = sql_query($sql);
+?>
 
+<table>
+<caption></caption>
+<thead>
+<tr>
+    <th scope="col">IP</th>
+    <th scope="col">접속 경로</th>
+    <th scope="col">브라우저</th>
+    <th scope="col">OS</th>
+    <th scope="col">일시</th>
+</tr>
+</thead>
+<tbody>
+<?
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $brow = get_brow($row['vi_agent']);
     $os   = get_os($row['vi_agent']);
@@ -89,27 +86,30 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     if ($brow == '기타') { $brow = "<span title='{$row['vi_agent']}'>$brow</span>"; }
     if ($os == '기타') { $os = "<span title='{$row['vi_agent']}'>$os</span>"; }
 
-    $list = ($i%2);
-    echo "
-    <tr class='list$list col1 ht center'>
-        <td>$ip</td>
-        <td align=left><nobr style='display:block; overflow:hidden; width:350;'>$link$title</a></nobr></td>
-        <td>$brow</td>
-        <td>$os</td>
-        <td>{$row['vi_date']} {$row['vi_time']}</td>
-    </tr>";
-}
+?>
+<tr>
+    <td><?=$ip?></td>
+    <td><?=$link?><?=$title?></a></td>
+    <td><?=$brow?></td>
+    <td><?=$os?></td>
+    <td><?=$row['vi_date']?> <?=$row['vi_time']?></td>
+</tr>
 
+<?
+}
 if ($i == 0)
-    echo "<tr><td colspan='$colspan' height=100 align=center>자료가 없습니다.</td></tr>";
-
-echo "<tr><td colspan='$colspan' class='line2'></td></tr>";
-echo "</table>";
-
-$page = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&domain=$domain&page=");
+    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+?>
+</tbody>
+</table>
+<?
+$page = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;domain=$domain&amp;page=");
 if ($page) {
-    echo "<table width=100% cellpadding=3 cellspacing=1><tr><td align=right>$page</td></tr></table>";
+?>
+<div class="paginate">
+    <?=$page?>
+</div>
+<?
 }
-
 include_once('./admin.tail.php');
 ?>

@@ -12,17 +12,18 @@ $colspan = 4;
 ?>
 
 <table>
-<colgroup width=100>
-<colgroup width=100>
-<colgroup width=100>
-<colgroup width=''>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td>요일</td>
-    <td>방문자수</td>
-    <td>비율(%)</td>
-    <td>그래프</td>
+<caption></caption>
+<thead>
+<tr>
+    <th scope="row">요일</th>
+    <th scope="row">방문자수</th>
+    <th scope="row">비율(%)</th>
+    <th scope="row">그래프</th>
 </tr>
+</thead>
+<tfoot>
+</tfoot>
+<tbody>
 <tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
 <?
 $weekday = array ('월', '화', '수', '목', '금', '토', '일');
