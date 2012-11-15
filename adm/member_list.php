@@ -128,6 +128,12 @@ var list_delete_php = 'member_list_delete.php';
 <input type="hidden" name="token" value='<?=$token?>'>
 
 <table>
+<caption>
+    회원 목록
+    <p>
+        회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.
+    </p>
+</caption>
 <thead>
 <tr>
     <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
@@ -222,8 +228,6 @@ if ($stx)
     echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>';
 ?>
 </form>
-
-* 회원자료 삭제시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.
 
 <script>
 // POST 방식으로 삭제
