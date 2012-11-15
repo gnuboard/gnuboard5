@@ -12,11 +12,11 @@ $sql_search = " where (1) ";
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
-        case "mb_id" :
-            $sql_search .= " ($sfl = '$stx') ";
+        case 'mb_id' :
+            $sql_search .= " ({$sfl} = '{$stx}') ";
             break;
         default :
-            $sql_search .= " ($sfl like '%$stx%') ";
+            $sql_search .= " ({$sfl} like '%{$stx}%') ";
             break;
     }
     $sql_search .= " ) ";
@@ -26,25 +26,25 @@ if (!$sst) {
     $sst  = "po_id";
     $sod = "desc";
 }
-$sql_order = " order by $sst $sod ";
+$sql_order = " order by {$sst} {$sod} ";
 
 $sql = " select count(*) as cnt
-         $sql_common
-         $sql_search
-         $sql_order ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$rows = $config['cf_page_rows'];
+$rows = $config[cf_page_rows];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
-if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+if ($page == '') $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = " select *
-          $sql_common
-          $sql_search
-          $sql_order
-          limit $from_record, $rows ";
+            {$sql_common}
+            {$sql_search}
+            {$sql_order}
+            limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>';
@@ -58,27 +58,28 @@ include_once ('./admin.head.php');
 $colspan = 8;
 ?>
 
-<script type="text/javascript" src="<?=$g4['path']?>/js/sideview.js"></script>
-<script type="text/javascript">
+<script src="<?=$g4['path']?>/js/sideview.js"></script>
+<script>
 var list_update_php = '';
 var list_delete_php = 'point_list_delete.php';
 </script>
 
-<script type="text/javascript">
+<script>
 function point_clear()
 {
-    if (confirm('포인트 정리를 하시면 최근 50건 이전의 포인트 부여 내역을 삭제하므로\n\n포인트 부여 내역을 필요로 할때 찾지 못할 수도 있습니다.\n\n\n그래도 진행하시겠습니까?'))
+    if (confirm('포인트 정리를 하시면 최근 50건 이전의 포인트 부여 내역을 삭제하므로 포인트 부여 내역을 필요로 할때 찾지 못할 수도 있습니다. 그래도 진행하시겠습니까?'))
     {
         document.location.href = "./point_clear.php?ok=1";
     }
 }
 </script>
 
-<table width=100%>
-<form id="fsearch" name="fsearch" method=get>
-<tr>
-    <td>
-        <?=$listall?> (건수 : <?=number_format($total_count)?>)
+<form id="fsearch" name="fsearch" method="get">
+<fieldset>
+    <legend>포인트 내역 검색</legend>
+    <div>
+        <span><?=$listall?></span>
+        건수 : <?=number_format($total_count)?>
         <?
         if ($mb['mb_id'])
             echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
@@ -88,47 +89,41 @@ function point_clear()
         }
         ?>
         <? if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><? } ?>
-    </td>
-    <td>
-        <select id="sfl" name="sfl" class=cssfl>
-            <option value='mb_id'>회원아이디</option>
-            <option value='po_content'>내용</option>
-        </select>
-        <input type="text" id="stx" name="stx" required itemname='검색어' value='<?=$stx?>'>
-        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle></td>
-</tr>
+    </div>
+    <select id="sfl" name="sfl">
+        <option value="mb_id">회원아이디</option>
+        <option value="po_content">내용</option>
+    </select>
+    <input type="text" id="stx" name="stx" required value="<?=$stx?>">
+    <input type="submit" value="검색"></td>
+</fieldset>
 </form>
-</table>
 
-<form id="fpointlist" name="fpointlist" method=post>
-<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
-<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
-<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
-<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
-<input type="hidden" id="page" name="page"  value='<?=$page?>'>
-<input type="hidden" id="token" name="token" value='<?=$token?>'>
+<form id="fpointlist" name="fpointlist" method="post">
+<input type="hidden" name="sst" value="<?=$sst?>">
+<input type="hidden" name="sod" value="<?=$sod?>">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx" value="<?=$stx?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="token" value="<?=$token?>">
 
-<table width=100% cellpadding=0 cellspacing=1>
-<colgroup width=30>
-<colgroup width=100>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=140>
-<colgroup width=''>
-<colgroup width=50>
-<colgroup width=80>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td><input type=checkbox id="chkall" name="chkall" value='1' onclick='check_all(this.form)'></td>
-    <td><?=subject_sort_link('mb_id')?>회원아이디</a></td>
-    <td>이름</td>
-    <td>별명</td>
-    <td><?=subject_sort_link('po_datetime')?>일시</a></td>
-    <td><?=subject_sort_link('po_content')?>포인트 내용</a></td>
-    <td><?=subject_sort_link('po_point')?>포인트</a></td>
-    <td>포인트합</td>
+<table>
+<caption>
+    포인트 내역
+</caption>
+<thead>
+<tr>
+    <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
+    <th scope="col">이름</th>
+    <th scope="col">별명</th>
+    <th scope="col"><?=subject_sort_link('po_datetime')?>일시</a></th>
+    <th scope="col"><?=subject_sort_link('po_content')?>포인트 내용</a></th>
+    <th scope="col"><?=subject_sort_link('po_point')?>포인트</a></th>
+    <th scope="col">포인트합</th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
 </tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
+</thead>
+<tbody>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
@@ -140,44 +135,52 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
 
-    $link1 = $link2 = "";
+    $link1 = $link2 = '';
     if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table'])
     {
-        $link1 = "<a href='{$g4['bbs_path']}/board.php?bo_table={$row['po_rel_table']}&wr_id={$row['po_rel_id']}' target=_blank>";
-        $link2 = "</a>";
+        $link1 = '<a href="'.$g4['bbs_path'].'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
+        $link2 = '</a>';
     }
+?>
 
-    $list = $i%2;
-    echo "
-    <input type="hidden" id="po_id" name="po_id"[$i] value='{$row['po_id']}'>
-    <input type="hidden" id="mb_id" name="mb_id"[$i] value='{$row['mb_id']}'>
-    <tr class='list$list col1 ht center'>
-        <td><input type=checkbox id="chk" name="chk"[] value='$i'></td>
-        <td><a href='?sfl=mb_id&stx={$row['mb_id']}'>{$row['mb_id']}</a></td>
-        <td>{$row2['mb_name']}</td>
-        <td>$mb_nick</td>
-        <td>{$row['po_datetime']}</td>
-        <td align=left>&nbsp;{$link1}{$row['po_content']}{$link2}</td>
-        <td align=right>".number_format($row['po_point'])."&nbsp;</td>
-        <td align=right>".number_format($row2['mb_point'])."&nbsp;</td>
-    </tr> ";
+<tr>
+    <td><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
+    <td><?=$row2['mb_name']?></td>
+    <td><?=$mb_nick?></td>
+    <td><?=$row['po_datetime']?></td>
+    <td><?=$link1?><?=$row['po_content']?><?=$link2?></td>
+    <td><?=number_format($row[po_point])?></td>
+    <td><?=number_format($row2[mb_point])?></td>
+    <td>
+        <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
+        <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row[po_id]?>">
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
+    </td>
+</tr>
+
+<?
 }
 
 if ($i == 0)
-    echo "<tr><td colspan='$colspan' align=center height=100 bgcolor=#ffffff>자료가 없습니다.</td></tr>";
+    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+?>
+</tbody>
+</table>
 
-echo "<tr><td colspan='$colspan' class='line2'></td></tr>";
-echo "</table>";
+<div class="btn_list">
+    <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
+</div>
 
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
-echo "<table width=100% cellpadding=3 cellspacing=1>";
-echo "<tr><td width=50%>";
-echo "<input type=button class='btn1' value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
-echo "</td>";
-echo "<td>$pagelist</td></tr></table>\n";
+<?
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");
+?>
+<div class="paginate">
+    <?=$pagelist?>
+</div>
 
+<?
 if ($stx)
-    echo "<script type='text/javascript'>document.fsearch.sfl.value = '$sfl';</script>\n";
+    echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>'.PHP_EOL;
 
 if (strstr($sfl, 'mb_id'))
     $mb_id = $stx;
@@ -186,44 +189,45 @@ else
 ?>
 </form>
 
-<script type='text/javascript'> document.fsearch.stx.focus(); </script>
-
 <?$colspan=5?>
-<p>
-<form id="fpointlist2" name="fpointlist2" method=post onsubmit="return fpointlist2_submit(this);" autocomplete="off">
-<input type="hidden" id="sfl" name="sfl"   value='<?=$sfl?>'>
-<input type="hidden" id="stx" name="stx"   value='<?=$stx?>'>
-<input type="hidden" id="sst" name="sst"   value='<?=$sst?>'>
-<input type="hidden" id="sod" name="sod"   value='<?=$sod?>'>
-<input type="hidden" id="page" name="page"  value='<?=$page?>'>
-<input type="hidden" id="token" name="token" value='<?=$token?>'>
-<table width=100% cellpadding=0 cellspacing=1 class=tablebg>
-<colgroup width=150>
-<colgroup width=''>
-<colgroup width=100>
-<colgroup width=120>
-<colgroup width=100>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td>회원아이디</td>
-    <td>포인트 내용</td>
-    <td>포인트</td>
-    <td>관리자패스워드</td>
-    <td>입력</td>
+
+<form id="fpointlist2" name="fpointlist2" method="post" onsubmit="return fpointlist2_submit(this);" autocomplete="off">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx" value="<?=$stx?>">
+<input type="hidden" name="sst" value="<?=$sst?>">
+<input type="hidden" name="sod" value="<?=$sod?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="token" value="<?=$token?>">
+
+<table>
+<caption>특정 회원의 포인트 증감 설정</caption>
+<tbody>
+<tr>
+    <th scope="row">회원아이디</td>
+    <td><input type="text" id="mb_id" name="mb_id" required value="<?=$mb_id?>"></td>
 </tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
-<tr class='ht center'>
-    <td><input type="text" id="mb_id" name="mb_id" required itemname='회원아이디' value='<?=$mb_id?>'></td>
-    <td><input type="text" id="po_content" name="po_content" required itemname='내용' style='width:99%;'></td>
-    <td><input type="text" id="po_point" name="po_point" required itemname='포인트' size=10></td>
-    <td><input type=password id="admin_password" name="admin_password" required itemname='관리자 패스워드'></td>
-    <td><input type=submit class=btn1 value='  확  인  '></td>
+<tr>
+    <th scope="row">포인트 내용</td>
+    <td><input type="text" id="po_content" name="po_content" required></td>
 </tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
-</form>
+<tr>
+    <th scope="row">포인트</td>
+    <td><input type="text" id="po_point" name="po_point" required></td>
+</tr>
+<tr>
+    <th scope="row">관리자패스워드</td>
+    <td><input type="password" id="admin_password" name="admin_password" required></td>
+</tr>
+</tbody>
 </table>
 
-<script type="text/javascript">
+<div class="btn_confirm">
+    <input type="submit" value="확인">
+</div>
+</form>
+
+
+<script>
 function fpointlist2_submit(f)
 {
     f.action = "./point_update.php";
