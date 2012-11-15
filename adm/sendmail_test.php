@@ -32,8 +32,6 @@ if ($mail) {
 $token = get_token();
 ?>
 
-<p>
-
 <form id="fsendmailtest" name="fsendmailtest" method="post">
 <input type="hidden" id="token" name="token" value='<?=$token?>'>
 <p>
