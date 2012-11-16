@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g4['title'] = '도메인별 접속자현황';
+$g4['title'] = '도메인별 접속자집계';
 include_once('./admin.head.php');
 include_once('./visit.sub.php');
 
@@ -29,12 +29,12 @@ while ($row=sql_fetch_array($result)) {
 ?>
 
 <table>
-<caption></caption>
+<caption>도메인별 접속자 수</caption>
 <thead>
 <tr>
     <th scope="col">순위</th>
     <th scope="col">접속 도메인</th>
-    <th scope="col">방문자수</th>
+    <th scope="col">접속자수</th>
     <th scope="col">비율(%)</th>
     <th scope="col">그래프</th>
 </tr>

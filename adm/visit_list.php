@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g4['title'] = '접속자현황';
+$g4['title'] = '접속자집계';
 include_once('./admin.head.php');
 include_once('./visit.sub.php');
 
@@ -14,38 +14,38 @@ $colspan = 5;
 //unset($os); // OS
 
 $sql_common = " from {$g4['visit_table']} ";
-$sql_search = " where vi_date between '$fr_date' and '$to_date' ";
+$sql_search = " where vi_date between '{$fr_date}' and '{$to_date}' ";
 if ($domain) {
-    $sql_search .= " and vi_referer like '%$domain%' ";
+    $sql_search .= " and vi_referer like '%{$domain}%' ";
 }
 
 $sql = " select count(*) as cnt
-         $sql_common
-         $sql_search ";
+            {$sql_common}
+            {$sql_search} ";
 $row = sql_fetch($sql);
-$total_count = $row['cnt'];
+$total_count = $row[cnt];
 
-$rows = $config['cf_page_rows'];
+$rows = $config[cf_page_rows];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = " select *
-          $sql_common
-          $sql_search
-          order by vi_id desc
-          limit $from_record, $rows ";
+            {$sql_common}
+            {$sql_search}
+            order by vi_id desc
+            limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 ?>
 
 <table>
-<caption></caption>
+<caption>접속자 개요 (IP, 경로, 브라우저, 운영체제, 일시)</caption>
 <thead>
 <tr>
     <th scope="col">IP</th>
     <th scope="col">접속 경로</th>
     <th scope="col">브라우저</th>
-    <th scope="col">OS</th>
+    <th scope="col">운영체제</th>
     <th scope="col">일시</th>
 </tr>
 </thead>

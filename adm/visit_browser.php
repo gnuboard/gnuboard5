@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g4['title'] = '브라우저별 접속자현황';
+$g4['title'] = '브라우저별 접속자집계';
 include_once('./admin.head.php');
 include_once('./visit.sub.php');
 
@@ -26,14 +26,14 @@ while ($row=sql_fetch_array($result)) {
 }
 ?>
 <table>
-<caption></caption>
+<caption>브라우저별 접속자 수</caption>
 <thead>
 <tr>
-    <td>순위</td>
-    <td>브라우저</td>
-    <td>방문자수</td>
-    <td>비율(%)</td>
-    <td>그래프</td>
+    <th scope="col">순위</th>
+    <th scope="col">브라우저</th>
+    <th scope="col">접속자수</th>
+    <th scope="col">비율(%)</th>
+    <th scope="col">그래프</th>
 </tr>
 </thead>
 <tfoot>

@@ -11,7 +11,7 @@ $qstr = 'fr_date='.$fr_date.'&amp;to_date='.$to_date;
 
 <form id="fvisit" name="fvisit" method="get">
 <fieldset>
-    <legend>접속자현황 열람조건 지정</legend>
+    <legend>접속자집계 열람조건 지정</legend>
     <span>기간지정 <input type="text" id="fr_date" name="fr_date" size=11 maxlength=10 value='<?=$fr_date?>'> 부터 <input type="text" id="to_date" name="to_date" size=11 maxlength=10 value='<?=$to_date?>'> 까지</span>
     <input type="button" value="접속자" onclick="fvisit_submit('visit_list.php');">
     <input type="button" value="도메인" onclick="fvisit_submit('visit_domain.php');">
@@ -25,7 +25,7 @@ $qstr = 'fr_date='.$fr_date.'&amp;to_date='.$to_date;
 </fieldset>
 </form>
 
-<script type='text/javascript'>
+<script>
 function fvisit_submit(act)
 {
     var f = document.fvisit;

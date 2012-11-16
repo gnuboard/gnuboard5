@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g4['title'] = '시간별 접속자현황';
+$g4['title'] = '시간별 접속자집계';
 include_once('./admin.head.php');
 include_once('./visit.sub.php');
 
@@ -28,11 +28,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <table>
-<caption></caption>
+<caption>시간대별 접속자 수</caption>
 <thead>
 <tr>
     <th scope="col">시간</th>
-    <th scope="col">방문자수</th>
+    <th scope="col">접속자수</th>
     <th scope="col">비율(%)</th>
     <th scope="col">그래프</th>
 </tr>
