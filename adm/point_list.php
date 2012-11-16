@@ -113,6 +113,7 @@ function point_clear()
 </caption>
 <thead>
 <tr>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
     <th scope="col">이름</th>
     <th scope="col">별명</th>
@@ -120,7 +121,6 @@ function point_clear()
     <th scope="col"><?=subject_sort_link('po_content')?>포인트 내용</a></th>
     <th scope="col"><?=subject_sort_link('po_point')?>포인트</a></th>
     <th scope="col">포인트합</th>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
 </tr>
 </thead>
 <tbody>
@@ -144,6 +144,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <tr>
+    <td>
+        <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
+        <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row[po_id]?>">
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
+    </td>
     <td><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
     <td><?=$row2['mb_name']?></td>
     <td><?=$mb_nick?></td>
@@ -151,11 +156,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><?=$link1?><?=$row['po_content']?><?=$link2?></td>
     <td><?=number_format($row[po_point])?></td>
     <td><?=number_format($row2[mb_point])?></td>
-    <td>
-        <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-        <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row[po_id]?>">
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
-    </td>
 </tr>
 
 <?

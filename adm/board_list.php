@@ -108,13 +108,13 @@ var list_delete_php = 'board_list_delete.php';
 </caption>
 <thead>
 <tr>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('a.gr_id')?>그룹</a></th>
     <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
     <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
     <th scope="col"><?=subject_sort_link('bo_subject')?>제목</a></th>
     <th scope="col">포인트</th>
     <th scope="col">검색</th>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col">관리</th>
 </tr>
 </thead>
@@ -143,6 +143,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <tr>
+    <td>
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=get_text($row['bo_subject'])?> 선택">
+    </td>
     <td>
         <?if ($is_admin == 'super'){?>
             <label for="gr_id_<?=$i?>">그룹지정</label>
@@ -178,9 +181,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
         <label for="bo_order_search_<?=$i?>">순서</label>
         <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>">
-    </td>
-    <td>
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=get_text($row['bo_subject'])?> 선택">
     </td>
     <td><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
 </tr>

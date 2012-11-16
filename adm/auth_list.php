@@ -83,19 +83,14 @@ var list_delete_php = 'auth_list_delete.php';
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 <table>
-<caption>
-관리권한 현황
-<p>
-    여러개의 권한설정을 한번에 삭제하실 때는 권한 체크기능을 이용하세요.
-</p>
-</caption>
+<caption>설정된 관리권한 내역</caption>
 <thead>
 <tr>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('a.mb_id')?>회원아이디</a></th>
     <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
     <th scope="col">메뉴</th>
     <th scope="col">권한</th>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
 </tr>
 </thead>
 <tbody>
@@ -114,20 +109,18 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list = $i%2;
     ?>
     <tr>
-        <td><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-        <td>
-            <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-            <?=$mb_nick?>
-        </td>
         <td>
             <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row['au_menu']?>">
+            <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
+            <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>" title="권한체크">
+        </td>
+        <td><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
+        <td><?=$mb_nick?></td>
+        <td>
             <?=$row['au_menu']?>
             <?=$auth_menu[$row['au_menu']]?>
         </td>
         <td><?=$row['au_auth']?></td>
-        <td>
-            <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>" title="권한체크">
-        </td>
     </tr>
     <?
 }
