@@ -33,7 +33,7 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row['cnt'];
+$total_count = $row[cnt];
 
 $rows = $config[cf_page_rows];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산

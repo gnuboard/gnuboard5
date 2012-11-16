@@ -99,7 +99,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_page_rows">한페이지당 라인수</label></th>
     <td>
         <?=help('목록(리스트) 한페이지당 라인수')?>
-        <input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config['cf_page_rows']?>"> 라인
+        <input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config[cf_page_rows]?>"> 라인
     </td>
 </tr>
 <tr>

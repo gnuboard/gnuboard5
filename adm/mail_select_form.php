@@ -15,12 +15,12 @@ if (!$ma['ma_id'])
 // 전체회원수
 $sql = " select COUNT(*) as cnt from {$g4['member_table']} ";
 $row = sql_fetch($sql);
-$tot_cnt = $row['cnt'];
+$tot_cnt = $row[cnt];
 
 // 탈퇴대기회원수
 $sql = " select COUNT(*) as cnt from {$g4['member_table']} where mb_leave_date <> '' ";
 $row = sql_fetch($sql);
-$finish_cnt = $row['cnt'];
+$finish_cnt = $row[cnt];
 
 $last_option = explode('||', $ma['ma_last_option']);
 for ($i=0; $i<count($last_option); $i++) {

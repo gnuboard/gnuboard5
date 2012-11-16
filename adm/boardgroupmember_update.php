@@ -23,7 +23,7 @@ if ($w == '')
                 where gr_id = '{$gr_id}'
                 and mb_id = '{$mb_id}' ";
     $row = sql_fetch($sql);
-    if ($row['cnt']) {
+    if ($row[cnt]) {
         alert('이미 등록되어 있는 자료입니다.');
     }
     else

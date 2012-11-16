@@ -44,7 +44,7 @@ if ($w == '')
 {
     $sql = " select count(*) as cnt from {$g4['group_table']} where gr_id = '{$_POST['gr_id']}' ";
     $row = sql_fetch($sql);
-    if ($row['cnt'])
+    if ($row[cnt])
         alert('이미 존재하는 그룹 ID 입니다.');
 
     $sql = " insert into {$g4['group_table']}

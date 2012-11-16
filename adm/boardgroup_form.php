@@ -77,7 +77,7 @@ include_once('./admin.head.php');
         // 접근회원수
         $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$gr_id}' ";
         $row1 = sql_fetch($sql1);
-        echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1['cnt'].'</a>';
+        echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1[cnt].'</a>';
         ?>
     </td>
 </tr>

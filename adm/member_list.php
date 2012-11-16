@@ -44,9 +44,9 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row['cnt'];
+$total_count = $row[cnt];
 
-$rows = $config['cf_page_rows'];
+$rows = $config[cf_page_rows];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -58,7 +58,7 @@ $sql = " select count(*) as cnt
             and mb_leave_date <> ''
             {$sql_order} ";
 $row = sql_fetch($sql);
-$leave_count = $row['cnt'];
+$leave_count = $row[cnt];
 
 // 차단회원수
 $sql = " select count(*) as cnt
@@ -67,7 +67,7 @@ $sql = " select count(*) as cnt
             and mb_intercept_date <> ''
             {$sql_order} ";
 $row = sql_fetch($sql);
-$intercept_count = $row['cnt'];
+$intercept_count = $row[cnt];
 
 $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class=tt>처음</a>';
 
@@ -158,8 +158,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
     $row2 = sql_fetch($sql2);
     $group = '';
-    if ($row2['cnt'])
-        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2['cnt'].'</a>';
+    if ($row2[cnt])
+        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2[cnt].'</a>';
 
     if ($is_admin == 'group')
     {
@@ -214,6 +214,7 @@ if ($i == 0)
 <div class="btn_confirm">
     <input type="button" value="선택수정" onclick="btn_check(this.form, 'update')">
     <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
+    <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>
 </div>
 
 <?

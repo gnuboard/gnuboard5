@@ -13,7 +13,7 @@ if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table))
 }
 
 $row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where bo_table = $target_table ");
-if ($row['cnt'])
+if ($row[cnt])
     alert($target_table.'은(는) 이미 존재하는 게시판 TABLE 입니다.\\n\\n복사할 TABLE로 사용할 수 없습니다.');
 
 check_token();

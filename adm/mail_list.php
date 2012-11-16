@@ -9,7 +9,7 @@ $sql_common = " from {$g4['mail_table']} ";
 // 테이블의 전체 레코드수만 얻음
 $sql = " select COUNT(*) as cnt $sql_common ";
 $row = sql_fetch($sql);
-$total_count = $row['cnt'];
+$total_count = $row[cnt];
 
 $page = 1;
 
@@ -51,7 +51,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++) {
     $s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
     $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
 
-    $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
+    $num = number_format($total_count - ($page - 1) * $config[cf_page_rows] - $i);
 ?>
 
 <tr>

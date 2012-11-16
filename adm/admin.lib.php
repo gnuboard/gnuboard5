@@ -40,7 +40,7 @@ function member_delete($mb_id)
     $mb = sql_fetch($sql);
     if ($mb['mb_recommend']) {
         $row = sql_fetch(" select count(*) as cnt from {$g4['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
-        if ($row['cnt'])
+        if ($row[cnt])
             insert_point($mb['mb_recommend'], $config['cf_recommend_point'] * (-1), $mb_id.'님의 회원자료 삭제로 인한 추천인 포인트 반환', "@member", $mb['mb_recommend'], $mb_id.' 추천인 삭제');
     }
 

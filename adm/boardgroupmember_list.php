@@ -35,9 +35,9 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row['cnt'];
+$total_count = $row[cnt];
 
-$rows = $config['cf_page_rows'];
+$rows = $config[cf_page_rows];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -90,8 +90,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
     $row2 = sql_fetch($sql2);
     $group = "";
-    if ($row2['cnt'])
-        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2['cnt'].'</a>';
+    if ($row2[cnt])
+        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2[cnt].'</a>';
 
     $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
 

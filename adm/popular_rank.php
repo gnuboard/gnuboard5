@@ -81,7 +81,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 <tr>
     <td><?=$word?></td>
-    <td><?=$row['cnt']?></td>
+    <td><?=$row[cnt]?></td>
     <td><?=$rank?></td>
 </tr>
 

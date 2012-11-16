@@ -62,7 +62,7 @@ $sql_where .= " and mb_leave_date = '' and mb_intercept_date = '' ";
 
 $sql = " select COUNT(*) as cnt {$sql_common} {$sql_where} ";
 $row = sql_fetch($sql);
-$cnt = $row['cnt'];
+$cnt = $row[cnt];
 if ($cnt == 0)
     alert('선택하신 내용으로는 해당되는 회원자료가 없습니다.');
 

@@ -67,7 +67,7 @@ $colspan = 6;
 </fieldset>
 </form>
 
-<a href="./poll_form.php">투표 추가</a>
+<a href="./poll_form.php" id="poll_add">투표 추가</a>
 
 <table>
 <caption>투표목록</caption>
