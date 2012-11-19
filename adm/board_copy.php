@@ -15,6 +15,7 @@ include_once($g4['path'].'/head.sub.php');
 <input type="hidden" id="bo_table" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 <table>
+<caption>기존 게시판을 새 게시판으로 복사</caption>
 <tbody>
 <tr>
     <th scope="col">원본 테이블</th>
