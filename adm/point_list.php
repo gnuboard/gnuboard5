@@ -90,10 +90,12 @@ function point_clear()
         ?>
         <? if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><? } ?>
     </div>
+    <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="mb_id">회원아이디</option>
         <option value="po_content">내용</option>
     </select>
+    <label for="stx">검색어</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
     <input type="submit" value="검색">
 </fieldset>
