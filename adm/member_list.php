@@ -99,6 +99,7 @@ var list_delete_php = 'member_list_delete.php';
         <a href="?sst=mb_intercept_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">차단 : <?=number_format($intercept_count)?></a>,
         <a href="?sst=mb_leave_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">탈퇴 : <?=number_format($leave_count)?></a>
     </div>
+    <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="mb_id">회원아이디</option>
         <option value="mb_name">이름</option>
@@ -112,6 +113,7 @@ var list_delete_php = 'member_list_delete.php';
         <option value="mb_ip">IP</option>
         <option value="mb_recommend">추천인</option>
     </select>
+    <label for="stx">검색어</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx ?>">
     <input type="submit" value="검색">
 </fieldset>
@@ -179,10 +181,20 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
     $mb_id = $row['mb_id'];
-    if ($row['mb_leave_date'])
+    $leave_msg = '';
+    $intercept_msg = '';
+    $intercept_title = '';
+    if ($row['mb_leave_date']) {
         $mb_id = $mb_id;
-    else if ($row['mb_intercept_date'])
+        $leave_msg = '탈퇴함';
+    }
+    else if ($row['mb_intercept_date']) {
         $mb_id = $mb_id;
+        $intercept_msg = '차단됨';
+        $intercept_title = '차단해제';
+    }
+    if ($intercept_title == '')
+        $intercept_title = '차단하기';
 ?>
 
 <tr>
@@ -190,7 +202,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
     </td>
-    <td><?=$mb_id?></td>
+    <td>
+        <?=$mb_id?>
+        <span><?=$leave_msg?><?=$intercept_msg?></span>
+    </td>
     <td><?=$row['mb_name']?></td>
     <td><?=$mb_nick?></td>
     <td><?=get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level'])?></td>
@@ -199,7 +214,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td><?=$row['mb_mailling']?'예':'아니오';?></td>
     <td><?=$row['mb_open']?'예':'아니오';?></td>
     <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
-    <td><input type="checkbox" id="mb_intercept_date_<?=$i?>" name="mb_intercept_date[<?=$i?>]" <?=$row['mb_intercept_date']?'checked':'';?> value="<?=$intercept_date?>"></td>
+    <td>
+        <? if(empty($row['mb_leave_date'])){?>
+        <input type="checkbox" id="mb_intercept_date_<?=$i?>" name="mb_intercept_date[<?=$i?>]" <?=$row['mb_intercept_date']?'checked':'';?> value="<?=$intercept_date?>" title="<?=$intercept_title?>">
+        <?}?>
+    </td>
     <td><?=$group?></td>
     <td><?=$s_mod?> <?=$s_del?> <?=$s_grp?></td>
 </tr>
