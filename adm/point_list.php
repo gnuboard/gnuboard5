@@ -203,19 +203,19 @@ else
 <caption>특정 회원의 포인트 증감 설정</caption>
 <tbody>
 <tr>
-    <th scope="row">회원아이디</td>
+    <th scope="row"><label for="mb_id">회원아이디</label></th>
     <td><input type="text" id="mb_id" name="mb_id" required value="<?=$mb_id?>"></td>
 </tr>
 <tr>
-    <th scope="row">포인트 내용</td>
+    <th scope="row"><label for="po_content">포인트 내용</label></th>
     <td><input type="text" id="po_content" name="po_content" required></td>
 </tr>
 <tr>
-    <th scope="row">포인트</td>
+    <th scope="row"><label for="po_point">포인트</label></th>
     <td><input type="text" id="po_point" name="po_point" required></td>
 </tr>
 <tr>
-    <th scope="row">관리자패스워드</td>
+    <th scope="row"><label for="admin_password">관리자패스워드</label></th>
     <td><input type="password" id="admin_password" name="admin_password" required></td>
 </tr>
 </tbody>
