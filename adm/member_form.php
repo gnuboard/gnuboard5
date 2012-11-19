@@ -246,14 +246,13 @@ include_once('./admin.head.php');
 <div class="btn_confirm">
     <input type="submit" accesskey='s' value="확인">
     <input type="button" value="목록" onclick="document.location.href='./member_list.php?<?=$qstr?>';">
-
-    <? if ($w != '') { ?><!--  -->
+    <? if ($w != '') { ?>
     <input type="button" value="삭제" onclick="del('./member_delete.php?<?=$qstr?>&amp;w=d&amp;mb_id=<?=$mb['mb_id']?>&amp;url=<?=$_SERVER['PHP_SELF']?>');">
     <? } ?>
 </div>
 </form>
 
-<script type='text/javascript'>
+<script>
 if (document.fmember.w.value == "")
     document.fmember.mb_id.focus();
 else if (document.fmember.w.value == "u")

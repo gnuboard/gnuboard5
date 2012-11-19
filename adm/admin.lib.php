@@ -36,7 +36,7 @@ function member_delete($mb_id)
     global $config;
     global $g4;
 
-    $sql = " select mb_name, mb_nick, mb_ip, mb_recommend, mb_memo, mb_level from {$g4['member_table']} where mb_id= '{$mb_id}' ";
+    $sql = " select mb_name, mb_nick, mb_ip, mb_recommend, mb_memo, mb_level from {$g4['member_table']} where mb_id= '".$mb_id."' ";
     $mb = sql_fetch($sql);
     if ($mb['mb_recommend']) {
         $row = sql_fetch(" select count(*) as cnt from {$g4['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
@@ -63,7 +63,7 @@ function member_delete($mb_id)
                          mb_birth = '',
                          mb_sex = '',
                          mb_signature = '',
-                         mb_memo = '".date('Ymd',$g4['server_time'])." 삭제함\n\n{$mb['mb_memo']}',
+                         mb_memo = '".date('Ymd',$g4['server_time'])." 삭제함".PHP_EOL."{$mb['mb_memo']}',
                          mb_leave_date = '".date('Ymd',$g4['server_time'])."'
                     where mb_id = '{$mb_id}' ";
         //echo $sql; exit;
