@@ -55,9 +55,21 @@ else if ($w == 'u')
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
-if ($mb[mb_mailling]) $mailling_checked = 'checked'; // 메일 수신
-if ($mb[mb_sms]) $sms_checked = 'checked'; // SMS 수신
-if ($mb[mb_open]) $open_checked = 'checked'; // 정보 공개
+if ($mb[mb_mailling] == 1) $mailling_checked = 'checked="checked"'; //메일수신
+else {
+    $mailing_checked = '';
+    $mailling_no_checked = 'checked="checked"';
+}
+if ($mb[mb_sms]) $sms_checked = 'checked="checked"'; // SMS 수신
+else {
+    $sms_checked = '';
+    $sms_no_checked = 'checked="checked"';
+}
+if ($mb[mb_open]) $open_checked = 'checked="checked"'; // 정보 공개
+else {
+    $open_checked = '';
+    $open_no_checked = 'checked="checked"';
+}
 
 $g4['title'] = '회원정보 '.$html_title;
 include_once('./admin.head.php');
@@ -134,14 +146,29 @@ include_once('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="mb_mailling">메일 수신</label></th>
-    <td><input type="checkbox" id="mb_mailling" name="mb_mailling" value="1" <?=$mailling_checked?>> 정보 메일을 받음</td>
+    <th scope="row">메일 수신</th>
+    <td>
+        <input type="radio" id="mb_mailling_yes" name="mb_mailling" value="1" <?=$mailling_checked?>>
+        <label for="mb_mailling_yes">예</label>
+        <input type="radio" id="mb_mailling_no" name="mb_mailling" value="0" <?=$mailling_no_checked?>>
+        <label for="mb_mailling_no">아니오</label>
+    </td>
     <th scope="row"><label for="mb_sms">SMS 수신</label></th>
-    <td><input type="checkbox" id="mb_sms" name="mb_sms" value="1" <?=$sms_checked?>> 문자메세지를 받음</td>
+    <td>
+        <input type="radio" id="mb_sms_yes" name="mb_sms" value="1" <?=$sms_checked?>>
+        <label for="mb_sms_yes">예</label>
+        <input type="radio" id="mb_sms_no" name="mb_sms" value="0" <?=$sms_no_checked?>>
+        <label for="mb_sms_no">아니오</label>
+    </td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_open">정보 공개</label></th>
-    <td colspan="3"><input type="checkbox" id="mb_open" name="mb_open" value='1' <?=$open_checked?>> 타인에게 자신의 정보를 공개</td>
+    <td colspan="3">
+        <input type="radio" id="mb_open" name="mb_open" value="1" <?=$open_checked?>>
+        <label for="mb_open">예</label>
+        <input type="radio" id="mb_open_no" name="mb_open" value="0" <?=$open_no_checked?>>
+        <label for="mb_open_no">아니오</label>
+    </td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_signature">서명</label></th>
@@ -188,9 +215,15 @@ include_once('./admin.head.php');
 
 <tr>
     <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
-    <td><input type="text" id="mb_leave_date" name="mb_leave_date" maxlength="8" value="<?=$mb['mb_leave_date']?>"></td>
+    <td>
+        <input type="text" id="mb_leave_date" name="mb_leave_date" maxlength="8" value="<?=$mb['mb_leave_date']?>">
+        <input type="checkbox" value="<?=date("Ymd"); ?>" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) { this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }" title="탈퇴일을 오늘로 지정"> 오늘
+    </td>
     <th scope="row"><label for="mb_intercept_date">접근차단일자</label></th>
-    <td><input type="text" id="mb_intercept_date" name="mb_intercept_date" maxlength="8" value="<?=$mb['mb_intercept_date']?>"> <input type="checkbox" value="<?=date("Ymd"); ?>" onclick="if (this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else { this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">오늘</td>
+    <td>
+        <input type="text" id="mb_intercept_date" name="mb_intercept_date" maxlength="8" value="<?=$mb['mb_intercept_date']?>">
+        <input type="checkbox" value="<?=date("Ymd"); ?>" onclick="if (this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else { this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }" title="접근차단일을 오늘로 지정"> 오늘
+    </td>
 </tr>
 
 <? for ($i=1; $i<=10; $i++) { ?>
