@@ -61,9 +61,11 @@ $colspan = 7;
 <input type="hidden" id="gr_id" name="gr_id" value="<?=$gr_id?>">
 <fieldset>
     <legend><?=$gr['gr_subject']?> 그룹에서 검색 (그룹아이디:<?=$gr['gr_id']?>)</legend>
+    <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value='a.mb_id'>회원아이디</option>
     </select>
+    <label for="stx">검색어</label>
     <input type="text" id="stx" name="stx" required value="<? echo $stx ?>">
     <input type="submit" value="검색">
 </fieldset>
