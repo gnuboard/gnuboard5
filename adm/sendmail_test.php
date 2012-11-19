@@ -44,7 +44,8 @@ $token = get_token();
 </p>
 <fieldset>
     <legend>테스트메일 발송</legend>
-    받는 메일주소 <input type="text" id="mail" name="mail" required value="<?=$member['mb_email']?>">
+    <label for="mail">받는 메일주소</label>
+    <input type="text" id="mail" name="mail" required value="<?=$member['mb_email']?>">
     <input type="submit" value="발송">
 </fieldset>
 </form>

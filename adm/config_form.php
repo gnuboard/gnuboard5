@@ -145,20 +145,21 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_use_copy_log">복사, 이동시 로그</label></th>
-    <td colspan="3"><input type="checkbox" id="cf_use_copy_log" name="cf_use_copy_log" value="1" <?=$config['cf_use_copy_log']?'checked':'';?>> 남김
+    <td colspan="3">
         <?=help('게시물 아래에 누구로 부터 복사, 이동됨 표시')?>
+        <input type="checkbox" id="cf_use_copy_log" name="cf_use_copy_log" value="1" <?=$config['cf_use_copy_log']?'checked':'';?>> 남김
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_possible_ip">접근가능 IP</label></th>
     <td>
         <?=help('입력된 IP의 컴퓨터만 접근할 수 있습니다. 123.123.+ 도 입력 가능. (엔터로 구분)')?>
-        <textarea id="cf_possible_ip" name="cf_possible_ip" rows="5"><?=$config['cf_possible_ip']?> </textarea>
+        <textarea id="cf_possible_ip" name="cf_possible_ip"><?=$config['cf_possible_ip']?> </textarea>
     </td>
     <th scope="row"><label for="cf_intercept_ip">접근차단 IP</label></th>
     <td>
         <?=help('입력된 IP의 컴퓨터는 접근할 수 없음.<br>123.123.+ 도 입력 가능. (엔터로 구분)')?>
-        <textarea id="cf_intercept_ip" name="cf_intercept_ip" rows="5"><?=$config['cf_intercept_ip']?> </textarea>
+        <textarea id="cf_intercept_ip" name="cf_intercept_ip"><?=$config['cf_intercept_ip']?> </textarea>
     </td>
 </tr>
 </tbody>
@@ -184,8 +185,10 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_link_target">LINK TARGET</label></th>
-    <td><input type="text" id="cf_link_target" name="cf_link_target" value="<?=$config['cf_link_target']?>">
-        <?=help('게시판 내용중 자동으로 링크되는 창의 타켓을 지정합니다. _self, _top, _blank, _new 를 주로 지정합니다.')?></td>
+    <td>
+        <?=help('게시판 내용중 자동으로 링크되는 창의 타켓을 지정합니다. _self, _top, _blank, _new 를 주로 지정합니다.')?>
+        <input type="text" id="cf_link_target" name="cf_link_target" value="<?=$config['cf_link_target']?>">
+    </td>
     <th scope="row"><label for="cf_search_part">검색 단위</label></th>
     <td><input type="text" id="cf_search_part" name="cf_search_part" value="<?=$config['cf_search_part']?>"> 건 단위로 검색</td>
 </tr>
@@ -203,18 +206,24 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_image_extension">이미지 업로드 확장자</label></th>
-    <td colspan="3"><input type="text" id="cf_image_extension" name="cf_image_extension" value="<?=$config['cf_image_extension']?>">
-        <?=help('게시판 글작성시 이미지 파일 업로드 가능 확장자. | 로 구분')?></td>
+    <td colspan="3">
+        <?=help('게시판 글작성시 이미지 파일 업로드 가능 확장자. | 로 구분')?>
+        <input type="text" id="cf_image_extension" name="cf_image_extension" value="<?=$config['cf_image_extension']?>">
+    </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_flash_extension">플래쉬 업로드 확장자</label></th>
-    <td colspan="3"><input type="text" id="cf_flash_extension" name="cf_flash_extension" value="<?=$config['cf_flash_extension']?>">
-        <?=help('게시판 글작성시 플래쉬 파일 업로드 가능 확장자. | 로 구분')?></td>
+    <td colspan="3">
+        <?=help('게시판 글작성시 플래쉬 파일 업로드 가능 확장자. | 로 구분')?>
+        <input type="text" id="cf_flash_extension" name="cf_flash_extension" value="<?=$config['cf_flash_extension']?>">
+    </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_movie_extension">동영상 업로드 확장자</label></th>
-    <td colspan="3"><input type="text" id="cf_movie_extension" name="cf_movie_extension" value="<?=$config['cf_movie_extension']?>">
-        <?=help('게시판 글작성시 동영상 파일 업로드 가능 확장자. | 로 구분')?></td>
+    <td colspan="3">
+        <?=help('게시판 글작성시 동영상 파일 업로드 가능 확장자. | 로 구분')?>
+        <input type="text" id="cf_movie_extension" name="cf_movie_extension" value="<?=$config['cf_movie_extension']?>">
+    </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_filter">단어 필터링</label></th>
@@ -286,7 +295,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_register_level">회원가입시 권한</label></th>
     <td><?=get_member_level_select('cf_register_level', 1, 9, $config['cf_register_level']) ?></td>
     <th scope="row"><label for="cf_register_point">회원가입시 포인트</label></th>
-    <td><input type="text" id="cf_register_point" name="cf_register_point" value="<?=$config['cf_register_point']?>"> 점</td>
+    <td><input type="text" id="cf_register_point" name="cf_register_point" value="<?=$config[cf_register_point]?>"> 점</td>
 </tr>
 <tr>
     <th scope='row' id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
@@ -311,8 +320,8 @@ include_once ('./admin.head.php');
     <td><input type="text" id="cf_member_icon_size" name="cf_member_icon_size" value="<?=$config['cf_member_icon_size']?>"> 바이트 이하</td>
     <th scope="row"><label for="cf_member_icon_width">회원아이콘 사이즈</label></th>
     <td>
-        가로 <input type="text" id="cf_member_icon_width" name="cf_member_icon_width" value="<?=$config['cf_member_icon_width']?>" title="">
-        세로 <input type="text" id="cf_member_icon_height" name="cf_member_icon_height" value="<?=$config['cf_member_icon_height']?>" title="높이"> 픽셀 이하
+        가로 <input type="text" id="cf_member_icon_width" name="cf_member_icon_width" value="<?=$config['cf_member_icon_width']?>" title="가로">
+        세로 <input type="text" id="cf_member_icon_height" name="cf_member_icon_height" value="<?=$config['cf_member_icon_height']?>" title="세로"> 픽셀 이하
     </td>
 </tr>
 <tr>
@@ -347,6 +356,7 @@ include_once ('./admin.head.php');
 
 <section id="config_mail">
 <h2><span></span>메일 설정</h2>
+
 <table>
 <caption>기본 메일환경 설정</caption>
 <tbody>
@@ -372,6 +382,7 @@ include_once ('./admin.head.php');
     </td>
 </tr>
 </table>
+
 <table>
 <caption>게시판 글 작성 시 메일 설정</caption>
 <tbody>
@@ -405,7 +416,10 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_email_wr_comment_all">코멘트 메일발송</label></th>
-    <td><input type="checkbox" id="cf_email_wr_comment_all" name="cf_email_wr_comment_all" value="1" <?=$config['cf_email_wr_comment_all']?'checked':'';?>> 사용 (원글에 코멘트가 올라오는 경우 코멘트 쓴 모든 분들께 메일을 발송합니다.)</td>
+    <td>
+        <?=help('원글에 코멘트가 올라오는 경우 코멘트 쓴 모든 분들께 메일을 발송합니다.')?>
+        <input type="checkbox" id="cf_email_wr_comment_all" name="cf_email_wr_comment_all" value="1" <?=$config['cf_email_wr_comment_all']?'checked':'';?>> 사용
+    </td>
 </tr>
 </tbody>
 </table>
@@ -429,14 +443,15 @@ include_once ('./admin.head.php');
 </tr>
 </tbody>
 </table>
+
 <table>
 <caption>투표 기타의견 작성시 메일 설정</caption>
 <tbody>
 <tr>
     <th scope="row"><label for="cf_email_po_super_admin">최고관리자 메일발송</label></th>
     <td>
-        사용 <?=help('최고관리자에게 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_po_super_admin" name="cf_email_po_super_admin" value="1" <?=$config['cf_email_po_super_admin']?'checked':'';?>>
+        <?=help('최고관리자에게 메일을 발송합니다.')?>
+        <input type="checkbox" id="cf_email_po_super_admin" name="cf_email_po_super_admin" value="1" <?=$config['cf_email_po_super_admin']?'checked':'';?>> 사용
     </td>
 </tr>
 </tbody>
@@ -464,10 +479,10 @@ include_once ('./admin.head.php');
 </section>
 
 <fieldset id="admin_confirm">
-<legend><span></span>XSS 혹은 CSRF 방지</legend>
-<p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
-<label for="admin_password">관리자 패스워드</label>
-<input type="password" id="admin_password" name="admin_password" required title="관리자 패스워드">
+    <legend><span></span>XSS 혹은 CSRF 방지</legend>
+    <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
+    <label for="admin_password">관리자 패스워드</label>
+    <input type="password" id="admin_password" name="admin_password" required>
 </fieldset>
 
 <div class="btn_confirm">
