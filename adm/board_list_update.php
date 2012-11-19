@@ -28,12 +28,12 @@ for ($i=0; $i<count($chk); $i++)
                 set gr_id               = '{$_POST['gr_id'][$k]}',
                     bo_subject          = '{$_POST['bo_subject'][$k]}',
                     bo_skin             = '{$_POST['bo_skin'][$k]}',
-                    bo_read_point       = '{$_POST['bo_read_point'][$k]}',
-                    bo_write_point      = '{$_POST['bo_write_point'][$k]}',
-                    bo_comment_point    = '{$_POST['bo_comment_point'][$k]}',
-                    bo_download_point   = '{$_POST['bo_download_point'][$k]}',
-                    bo_use_search       = '{$_POST['bo_use_search'][$k]}',
-                    bo_order_search     = '{$_POST['bo_order_search'][$k]}'
+                    bo_read_point       = '{$_POST[bo_read_point][$k]}',
+                    bo_write_point      = '{$_POST[bo_write_point][$k]}',
+                    bo_comment_point    = '{$_POST[bo_comment_point][$k]}',
+                    bo_download_point   = '{$_POST[bo_download_point][$k]}',
+                    bo_use_search       = '{$_POST[bo_use_search][$k]}',
+                    bo_order_search     = '{$_POST[bo_order_search][$k]}'
               where bo_table            = '{$_POST['board_table'][$k]}' ";
     sql_query($sql);
 }

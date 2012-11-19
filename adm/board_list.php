@@ -170,19 +170,19 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>"></td>
     <td>
         <label for="bo_read_point_<?=$i?>">읽기</label>
-        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>">
+        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row[bo_read_point]?>">
         <label for="bo_write_point_<?=$i?>">쓰기</label>
-        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>">
+        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row[bo_write_point]?>">
         <label for="bo_comment_point_<?=$i?>">댓글</label>
-        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>">
+        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row[bo_comment_point]?>">
         <label for="bo_download_point_<?=$i?>">다운</label>
-        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>">
+        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row[bo_download_point]?>">
     </td>
     <td>
         <label for="bo_use_search_<?=$i?>">사용</label>
-        <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
+        <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row[bo_use_search]?"checked":""?> value="1">
         <label for="bo_order_search_<?=$i?>">순서</label>
-        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>">
+        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row[bo_order_search]?>">
     </td>
     <td><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
 </tr>
