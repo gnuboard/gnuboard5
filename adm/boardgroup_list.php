@@ -69,11 +69,13 @@ var list_update_php = "./boardgroup_list_update.php";
         <span><?=$listall?></span>
         생성된 그룹수 : <?=number_format($total_count)?>건
     </div>
+    <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="gr_subject">제목</option>
         <option value="gr_id">ID</option>
         <option value="gr_admin">그룹관리자</option>
     </select>
+    <label for="stx">검색어</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
     <input type="submit" value="검색"></td>
 </fieldset>
@@ -145,7 +147,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <?}?>
     </td>
     <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2[cnt]?></a></td>
-    <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1"></td>
+    <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
     <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1[cnt]?></a></td>
     <td><?=$s_upd?> <?=$s_del?></td>
 </tr>
