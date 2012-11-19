@@ -64,7 +64,7 @@ $colspan = 12;
 <caption>
     신규가입회원 목록
     <p>
-    총회원수 <?=number_format($total_count)?>명 중 차단 <?=number_format($intercept_count)?>명, 탈퇴 : <?=number_format($leave_count)?>명이며 가장 최근가입한 회원 5명의 목록
+    총회원수 <?=number_format($total_count)?>명 중 차단 <?=number_format($intercept_count)?>명, 탈퇴 : <?=number_format($leave_count)?>명 중 가장 최근가입한 회원 5명의 목록
     </p>
 </caption>
 <thead>
@@ -74,7 +74,6 @@ $colspan = 12;
     <th scope="col">별명</th>
     <th scope="col">권한</th>
     <th scope="col">포인트</th>
-    <th scope="col">최종접속</th>
     <th scope="col">수신</th>
     <th scope="col">공개</th>
     <th scope="col">인증</th>
@@ -123,7 +122,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><?=$mb_nick?></td>
     <td><?=$row['mb_level']?></td>
     <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></td>
-    <td><?=substr($row['mb_today_login'],2,8)?></td>
     <td><?=$row['mb_mailling']?'예':'아니오';?></td>
     <td><?=$row['mb_open']?'예':'아니오';?></td>
     <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
@@ -203,7 +201,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
     else // 코멘트
     {
-        $comment = '[코] ';
+        $comment = '댓글. ';
         $comment_link = '#c_'.$row['wr_id'];
         $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ");
         $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
