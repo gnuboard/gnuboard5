@@ -17,13 +17,13 @@ $colspan = 4;
 ?>
 
 <table>
-<caption><a href="./member_form.php?w=u&amp;mb_id=<?=$mb['mb_id']?>"><?=$mb['mb_id']?></a> 이름:<?=$mb['mb_name']?>, 별명:<?=$mb['mb_nick']?> 님이 접근가능한 그룹 목록</caption>
+<caption>아이디 <?=$mb['mb_id']?>, 이름 <?=$mb['mb_name']?>, 별명 <?=$mb['mb_nick']?>님이 접근가능한 그룹 목록</caption>
 <thead>
 <tr>
-    <th scope="col" id="th_gr_id">그룹아이디</th>
-    <th scope="col" id="th_gr">그룹</th>
-    <th scope="col" id="th_date">처리일시</th>
-    <th scope="col" id="th_del">삭제</th>
+    <th scope="col">그룹아이디</th>
+    <th scope="col">그룹</th>
+    <th scope="col">처리일시</th>
+    <th scope="col">삭제</th>
 </tr>
 </thead>
 <tbody>
@@ -39,10 +39,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
 ?>
 <tr>
-    <td headers="th_gr_id"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
-    <td headers="th_gr"><?=$row['gr_subject']?></td>
-    <td headers="th_date"><?=$row['gm_datetime']?></td>
-    <td headers="th_del"><?=$s_del?></td>
+    <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+    <td><?=$row['gr_subject']?></td>
+    <td><?=$row['gm_datetime']?></td>
+    <td><?=$s_del?></td>
 </tr>
 <?
 }
