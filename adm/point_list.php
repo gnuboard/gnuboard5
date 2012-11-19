@@ -95,7 +95,7 @@ function point_clear()
         <option value="po_content">내용</option>
     </select>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
-    <input type="submit" value="검색"></td>
+    <input type="submit" value="검색">
 </fieldset>
 </form>
 
