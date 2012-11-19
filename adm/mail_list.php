@@ -7,13 +7,13 @@ auth_check($auth[$sub_menu], 'r');
 $sql_common = " from {$g4['mail_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
-$sql = " select COUNT(*) as cnt $sql_common ";
+$sql = " select COUNT(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
 $total_count = $row[cnt];
 
 $page = 1;
 
-$sql = " select * $sql_common order by ma_id desc ";
+$sql = " select * {$sql_common} order by ma_id desc ";
 $result = sql_query($sql);
 
 $g4['title'] = '회원메일발송';
@@ -30,8 +30,7 @@ $colspan = 6;
 <caption>
     등록된 메일내용 목록
     <p>
-        <strong>테스트</strong>를 클릭하시면 등록된 최고관리자님에게 테스트메일 발송<br>
-        <strong>보내기</strong>를 클릭하시면 해당 메일을 발송할 회원님 선택페이지로 이동
+        <strong>테스트</strong>는 등록된 최고관리자의 이메일로 테스트 메일을 발송
     </p>
 </caption>
 <thead>
