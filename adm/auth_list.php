@@ -112,7 +112,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <td>
             <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row['au_menu']?>">
             <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-            <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?>님의 권한체크">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?>님의 권한체크">
         </td>
         <td><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
         <td><?=$mb_nick?></td>
