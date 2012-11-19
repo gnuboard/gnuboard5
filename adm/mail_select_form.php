@@ -80,17 +80,18 @@ include_once('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row">생일</th>
+    <th scope="row"><label for="mb_birth_from">생일</label></th>
     <td>
+        <?=help('5월5일 인 경우, 0505 와 같이 입력 , 둘다 입력해야함')?>
         <input type="text" id="mb_birth_from" name="mb_birth_from" maxlength="4" value="<?=$mb_birth_from?>" title="생일구간 시작일"> 부터
-        <input type="text" id="mb_birth_to" name="mb_birth_to" maxlength="4" value="<?=$mb_birth_to?>" title="생일구간 종료일"> 까지 (예 : 5월5일 인 경우, 0505 와 같이 입력 , 둘다 입력해야함)</td>
+        <input type="text" id="mb_birth_to" name="mb_birth_to" maxlength="4" value="<?=$mb_birth_to?>" title="생일구간 종료일"> 까지</td>
 </tr>
 <tr>
-    <th scope="row">E-mail</th>
+    <th scope="row"><label for="mb_email">E-mail</label></th>
     <td><input type="text" id="mb_email" name="mb_email" value="<?=$mb_email?>"> 단어 포함 (예 : @sir.co.kr)</td>
 </tr>
 <tr>
-    <th scope="row">성별</th>
+    <th scope="row"><label for="mb_sex">성별</label></th>
     <td>
         <select id="mb_sex" name="mb_sex">
             <option value="">전체
@@ -101,7 +102,7 @@ include_once('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row">지역</th>
+    <th scope="row"><label for="mb_area">지역</label></th>
     <td>
         <select id="mb_area" name="mb_area">
             <option value="">전체</option>
@@ -126,7 +127,7 @@ include_once('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row">메일링</th>
+    <th scope="row"><label for="mb_mailling">메일링</label></th>
     <td>
         <select id="mb_mailling" name="mb_mailling">
             <option value="1">수신동의한 회원만
@@ -136,14 +137,14 @@ include_once('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row">권한</th>
+    <th scope="row"><label for="mb_level_from">권한</label></th>
     <td>
-        <select id="mb_level_from" name="mb_level_from">
+        <select id="mb_level_from" name="mb_level_from" title="최소권한">
         <? for ($i=1; $i<=10; $i++) { ?>
             <option value='<? echo $i ?>'><? echo $i ?></option>
         <? } ?>
         </select> 에서
-        <select id="mb_level_to" name="mb_level_to">
+        <select id="mb_level_to" name="mb_level_to" title="최대권한">
         <? for ($i=1; $i<=10; $i++) { ?>
             <option value='<? echo $i ?>'><? echo $i ?></option>
         <? } ?>
@@ -153,7 +154,7 @@ include_once('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row">게시판그룹회원</th>
+    <th scope="row"><label for="gr_id">게시판그룹회원</label></th>
     <td>
         <select id="gr_id" name="gr_id">
             <option value=''>전체</option>
