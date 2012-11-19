@@ -98,7 +98,7 @@ var list_update_php = "./boardgroup_list_update.php";
 </caption>
 <thead>
 <tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 그룹 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
     <th scope="col"><?=subject_sort_link('gr_subject')?>제목</a></th>
     <th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th>
@@ -131,7 +131,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td>
         <input type="hidden" id="gr_id" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>">
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="그룹선택">
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
     </td>
     <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id="<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
     <td>

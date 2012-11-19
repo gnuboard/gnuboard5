@@ -138,7 +138,7 @@ var list_delete_php = 'member_list_delete.php';
 </caption>
 <thead>
 <tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 회원 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
     <th scope="col"><?=subject_sort_link('mb_name')?>이름</a></th>
     <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
@@ -200,7 +200,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <tr>
     <td>
         <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="회원선택">
     </td>
     <td>
         <?=$mb_id?>

@@ -115,7 +115,7 @@ function point_clear()
 </caption>
 <thead>
 <tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)"></th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 포인트 내역 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
     <th scope="col">이름</th>
     <th scope="col">별명</th>
@@ -149,7 +149,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td>
         <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
         <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row[po_id]?>">
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>">
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="내역선택">
     </td>
     <td><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
     <td><?=$row2['mb_name']?></td>

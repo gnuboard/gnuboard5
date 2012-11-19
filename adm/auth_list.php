@@ -86,7 +86,7 @@ var list_delete_php = 'auth_list_delete.php';
 <caption>설정된 관리권한 내역</caption>
 <thead>
 <tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 권한설정 내역 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('a.mb_id')?>회원아이디</a></th>
     <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
     <th scope="col">메뉴</th>
@@ -112,7 +112,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <td>
             <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row['au_menu']?>">
             <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-            <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>" title="권한체크">
+            <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?>님의 권한체크">
         </td>
         <td><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
         <td><?=$mb_nick?></td>

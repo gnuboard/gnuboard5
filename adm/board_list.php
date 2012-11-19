@@ -108,7 +108,7 @@ var list_delete_php = 'board_list_delete.php';
 </caption>
 <thead>
 <tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재목록 전체선택" onclick="check_all(this.form)"></th>
+    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 게시판 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('a.gr_id')?>그룹</a></th>
     <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
     <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
@@ -144,7 +144,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 <tr>
     <td>
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=get_text($row['bo_subject'])?> 선택">
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=get_text($row['bo_subject'])?> 게시판선택">
     </td>
     <td>
         <?if ($is_admin == 'super'){?>
