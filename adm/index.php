@@ -183,13 +183,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $tmp_write_table = $g4['write_prefix'] . $row['bo_table'];
 
-    if ($row['wr_id'] == $row['wr_parent']) // 원글
+    if ($row[wr_id] == $row[wr_parent]) // 원글
     {
         $comment = "";
         $comment_link = "";
-        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '{$row['wr_id']}' ");
+        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '{$row[wr_id]}' ");
 
-        $name = get_sideview($row2['mb_id'], cut_str($row2['wr_name'], $config['cf_cut_name']), $row2['wr_email'], $row2['wr_homepage']);
+        $name = get_sideview($row2['mb_id'], cut_str($row2['wr_name'], $config[cf_cut_name]), $row2['wr_email'], $row2['wr_homepage']);
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row2['wr_datetime'],0,10);
         $datetime2 = $row2['wr_datetime'];
@@ -202,11 +202,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     else // 코멘트
     {
         $comment = '댓글. ';
-        $comment_link = '#c_'.$row['wr_id'];
-        $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ");
-        $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
+        $comment_link = '#c_'.$row[wr_id];
+        $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row[wr_parent]}' ");
+        $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row[wr_id]}' ");
 
-        $name = get_sideview($row3['mb_id'], cut_str($row3['wr_name'], $config['cf_cut_name']), $row3['wr_email'], $row3['wr_homepage']);
+        $name = get_sideview($row3['mb_id'], cut_str($row3['wr_name'], $config[cf_cut_name]), $row3['wr_email'], $row3['wr_homepage']);
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row3['wr_datetime'],0,10);
         $datetime2 = $row3['wr_datetime'];
@@ -220,7 +220,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td><a href="<?=$g4['bbs_path']?>/new.php?gr_id=<?=$row['gr_id']?>"><?=cut_str($row['gr_subject'],10)?></a></td>
     <td><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=cut_str($row['bo_subject'],20)?></a></td>
-    <td><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2['wr_id']?><?=$comment_link?>"><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
+    <td><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2[wr_id]?><?=$comment_link?>"><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
     <td><?=$name?></td>
     <td><?=$datetime?></td>
 </tr>

@@ -861,10 +861,10 @@ function board_copy(bo_table) {
 
 function set_point(f) {
     if (f.chk_point.checked) {
-        f.bo_read_point.value = "<?=$config['cf_read_point']?>";
-        f.bo_write_point.value = "<?=$config['cf_write_point']?>";
-        f.bo_comment_point.value = "<?=$config['cf_comment_point']?>";
-        f.bo_download_point.value = "<?=$config['cf_download_point']?>";
+        f.bo_read_point.value = "<?=$config[cf_read_point]?>";
+        f.bo_write_point.value = "<?=$config[cf_write_point]?>";
+        f.bo_comment_point.value = "<?=$config[cf_comment_point]?>";
+        f.bo_download_point.value = "<?=$config[cf_download_point]?>";
     } else {
         f.bo_read_point.value     = f.bo_read_point.defaultValue;
         f.bo_write_point.value    = f.bo_write_point.defaultValue;

@@ -181,16 +181,16 @@ if (count($file_copy))
     {
         $sql = " insert into $g4[board_file_table]
                     set bo_table = '$target_table',
-                         wr_id = '{$file_copy[$i]['wr_id']}',
-                         bf_no = '{$file_copy[$i]['bf_no']}',
+                         wr_id = '{$file_copy[$i][wr_id]}',
+                         bf_no = '{$file_copy[$i][bf_no]}',
                          bf_source = '{$file_copy[$i]['bf_source']}',
                          bf_file = '{$file_copy[$i]['bf_file']}',
                          bf_download = '{$file_copy[$i]['bf_download']}',
                          bf_content = '{$file_copy[$i]['bf_content']}',
-                         bf_filesize = '{$file_copy[$i]['bf_filesize']}',
-                         bf_width = '{$file_copy[$i]['bf_width']}',
-                         bf_height = '{$file_copy[$i]['bf_height']}',
-                         bf_type = '{$file_copy[$i]['bf_type']}',
+                         bf_filesize = '{$file_copy[$i][bf_filesize]}',
+                         bf_width = '{$file_copy[$i][bf_width]}',
+                         bf_height = '{$file_copy[$i][bf_height]}',
+                         bf_type = '{$file_copy[$i][bf_type]}',
                          bf_datetime = '{$file_copy[$i]['bf_datetime']}' ";
         sql_query($sql, FALSE);
     }

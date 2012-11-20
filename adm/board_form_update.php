@@ -204,10 +204,10 @@ if ($w == '') {
         $result = sql_query($sql);
         for ($i=0; $row=sql_fetch_array($result); $i++) {
             // 코멘트수를 얻습니다.
-            $sql2 = " select count(*) as cnt from {$g4['write_prefix']}$bo_table where wr_parent = '{$row['wr_id']}' and wr_is_comment = 1 ";
+            $sql2 = " select count(*) as cnt from {$g4['write_prefix']}$bo_table where wr_parent = '{$row[wr_id]}' and wr_is_comment = 1 ";
             $row2 = sql_fetch($sql2);
 
-            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_comment = '{$row2[cnt]}' where wr_id = '{$row['wr_id']}' ");
+            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_comment = '{$row2[cnt]}' where wr_id = '{$row[wr_id]}' ");
         }
     }
 

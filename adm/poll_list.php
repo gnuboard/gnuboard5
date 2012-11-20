@@ -113,7 +113,7 @@ if ($i==0)
 </table>
 
 <?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
+$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
 if ($pagelist) {?>
 <div class="paginate">
     <?=$pagelist?>

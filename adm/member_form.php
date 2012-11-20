@@ -192,7 +192,7 @@ include_once('./admin.head.php');
     <th scope="row">IP</th>
     <td colspan="3"><?=$mb['mb_ip']?></td>
 </tr>
-<? if ($config['cf_use_email_certify']) { ?>
+<? if ($config[cf_use_email_certify]) { ?>
 <tr>
     <th scope="row">인증일시</th>
     <td colspan="3">
@@ -206,7 +206,7 @@ include_once('./admin.head.php');
 <? } ?>
 <? } ?>
 
-<? if ($config['cf_use_recommend']) { // 추천인 사용 ?>
+<? if ($config[cf_use_recommend]) { // 추천인 사용 ?>
 <tr>
     <th scope="row">추천인></th>
     <td colspan="3"><?=($mb['mb_recommend'] ? get_text($mb['mb_recommend']) : '없음'); // 081022 : CSRF 보안 결함으로 인한 코드 수정 ?></td>

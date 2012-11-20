@@ -166,7 +166,7 @@ if ($i == 0)
 </div>
 
 <?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
+$pagelist = get_paging($config[cf_write_pages], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 ?>
 <div class="paginate">
     <?=$pagelist?>
