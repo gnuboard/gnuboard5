@@ -82,7 +82,7 @@ function point_clear()
         건수 : <?=number_format($total_count)?>
         <?
         if ($mb['mb_id'])
-            echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
+            echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb[mb_point]) . '점)';
         else {
             $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g4['point_table']} ");
             echo '&nbsp;(전체 포인트 합계 : ' . number_format($row2['sum_point']) . '점)';

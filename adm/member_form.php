@@ -104,9 +104,9 @@ include_once('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="mb_level">회원 권한</label></th>
-    <td><?=get_member_level_select('mb_level', 1, $member['mb_level'], $mb['mb_level'])?></td>
+    <td><?=get_member_level_select('mb_level', 1, $member[mb_level], $mb[mb_level])?></td>
     <th scope="row">포인트</th>
-    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$mb['mb_id']?>" target="_blank"><?=number_format($mb['mb_point'])?></a> 점</td>
+    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$mb['mb_id']?>" target="_blank"><?=number_format($mb[mb_point])?></a> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_email">E-mail</label></th>
@@ -259,7 +259,7 @@ else if (document.fmember.w.value == "u")
     document.fmember.mb_password.focus();
 
 if (typeof(document.fmember.mb_level) != "undefined")
-    document.fmember.mb_level.value   = "<?=$mb['mb_level']?>";
+    document.fmember.mb_level.value   = "<?=$mb[mb_level]?>";
 
 function fmember_submit(f)
 {

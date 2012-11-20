@@ -46,9 +46,9 @@ $colspan = 6;
 <tbody>
 <?
 for ($i=0; $row=mysql_fetch_array($result); $i++) {
-    $s_mod = '<a href="./mail_form.php?w=u&ma_id='.$row['ma_id'].'">수정</a>';
-    $s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
-    $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
+    $s_mod = '<a href="./mail_form.php?w=u&ma_id='.$row[ma_id].'">수정</a>';
+    $s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row[ma_id].');">삭제</a>';
+    $s_vie = '<a href="./mail_preview.php?ma_id='.$row[ma_id].'" target="_blank">미리보기</a>';
 
     $num = number_format($total_count - ($page - 1) * $config[cf_page_rows] - $i);
 ?>

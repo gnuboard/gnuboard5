@@ -16,7 +16,7 @@ for ($i=0; $i<count($chk); $i++)
     $sql = " update {$g4['group_table']}
                 set gr_subject    = '{$_POST['gr_subject'][$k]}',
                     gr_admin      = '{$_POST['gr_admin'][$k]}',
-                    gr_use_access = '{$_POST['gr_use_access'][$k]}'
+                    gr_use_access = '{$_POST[gr_use_access][$k]}'
               where gr_id         = '{$_POST['gr_id'][$k]}' ";
     if ($is_admin != 'super')
         $sql .= " and gr_admin    = '{$_POST['gr_admin'][$k]}' ";

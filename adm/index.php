@@ -13,7 +13,7 @@ $sql_common = " from {$g4['member_table']} ";
 $sql_search = " where (1) ";
 
 if ($is_admin != 'super')
-    $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
+    $sql_search .= " and mb_level <= '{$member[mb_level]}' ";
 
 if (!isset($sst)) {
     $sst = "mb_datetime";
@@ -120,10 +120,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><?=$mb_id?></td>
     <td><?=$row['mb_name']?></td>
     <td><?=$mb_nick?></td>
-    <td><?=$row['mb_level']?></td>
-    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></td>
-    <td><?=$row['mb_mailling']?'예':'아니오';?></td>
-    <td><?=$row['mb_open']?'예':'아니오';?></td>
+    <td><?=$row[mb_level]?></td>
+    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></td>
+    <td><?=$row[mb_mailling]?'예':'아니오';?></td>
+    <td><?=$row[mb_open]?'예':'아니오';?></td>
     <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
     <td><?=$row['mb_intercept_date']?'예':'아니오';?></td>
     <td><?=$group?></td>
@@ -304,8 +304,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><?=$mb_nick?></td>
     <td><?=$row['po_datetime']?></td>
     <td><?=$link1.$row['po_content'].$link2?></td>
-    <td><?=number_format($row['po_point'])?></td>
-    <td><?=number_format($row2['mb_point'])?></td>
+    <td><?=number_format($row[po_point])?></td>
+    <td><?=number_format($row2[mb_point])?></td>
 </tr>
 
 <?

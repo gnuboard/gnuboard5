@@ -32,7 +32,7 @@ include_once('./admin.tail.php');
 flush();
 ob_flush();
 
-$ma_id = trim($_POST['ma_id']);
+$ma_id = trim($_POST[ma_id]);
 $select_member_list = addslashes(trim($_POST['ma_list']));
 
 //print_r2($_POST); EXIT;

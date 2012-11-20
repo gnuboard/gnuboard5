@@ -40,9 +40,9 @@ if ($w == '')
 else if ($w == 'd' || $w == 'listdelete')
 {
     auth_check($auth[$sub_menu], 'd');
-    $sql = " select * from {$g4['group_member_table']} where gm_id = '{$_POST['gm_id']}' ";
+    $sql = " select * from {$g4['group_member_table']} where gm_id = '{$_POST[gm_id]}' ";
     $gm = sql_fetch($sql);
-    if (!$gm['gm_id']) {
+    if (!$gm[gm_id]) {
         alert('존재하지 않는 자료입니다.');
     }
 
@@ -51,7 +51,7 @@ else if ($w == 'd' || $w == 'listdelete')
     $gr_id = $gm['gr_id'];
     $mb_id = $gm['mb_id'];
 
-    $sql = " delete from {$g4['group_member_table']} where gm_id = '{$_POST['gm_id']}' ";
+    $sql = " delete from {$g4['group_member_table']} where gm_id = '{$_POST[gm_id]}' ";
     sql_query($sql);
 }
 

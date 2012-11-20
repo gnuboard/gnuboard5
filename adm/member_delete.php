@@ -14,7 +14,7 @@ else if ($member['mb_id'] == $mb['mb_id'])
     alert('로그인 중인 관리자는 삭제 할 수 없습니다.');
 else if (is_admin($mb['mb_id']) == 'super')
     alert('최고 관리자는 삭제할 수 없습니다.');
-else if ($mb['mb_level'] >= $member['mb_level'])
+else if ($mb[mb_level] >= $member[mb_level])
     alert('자신보다 권한이 높거나 같은 회원은 삭제할 수 없습니다.');
 
 check_token();

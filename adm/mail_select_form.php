@@ -9,7 +9,7 @@ auth_check($auth[$sub_menu], 'r');
 
 $sql = " select * from {$g4['mail_table']} where ma_id = '$ma_id' ";
 $ma = sql_fetch($sql);
-if (!$ma['ma_id'])
+if (!$ma[ma_id])
     alert('보내실 내용을 선택하여 주십시오.');
 
 // 전체회원수

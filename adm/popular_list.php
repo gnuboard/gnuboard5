@@ -10,7 +10,7 @@ if (is_array($_POST['chk'])) {
         // 실제 번호를 넘김
         $k = $chk[$i];
 
-        sql_query(" delete from {$g4['popular_table']} where pp_id = '{$_POST['pp_id'][$k]}' ", true);
+        sql_query(" delete from {$g4['popular_table']} where pp_id = '{$_POST[pp_id][$k]}' ", true);
     }
 }
 

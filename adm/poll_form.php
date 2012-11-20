@@ -63,13 +63,13 @@ for ($i=1; $i<=9; $i++) {
 </tr>
 <tr>
     <th scope="row"><label for="po_level">투표권한</label></th>
-    <td><?=get_member_level_select('po_level', 1, 10, $po['po_level'])?>이상 투표할 수 있음</td>
+    <td><?=get_member_level_select('po_level', 1, 10, $po[po_level])?>이상 투표할 수 있음</td>
 </tr>
 <tr>
     <th scope="row"><label for="po_point">포인트</label></th>
     <td>
         <?=help('투표한 회원에게 부여함')?>
-        <input type="text" id="po_point" name="po_point" value="<?=$po['po_point']?>"> 점
+        <input type="text" id="po_point" name="po_point" value="<?=$po[po_point]?>"> 점
     </td>
 </tr>
 

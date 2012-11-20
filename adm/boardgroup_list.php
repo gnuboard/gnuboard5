@@ -147,7 +147,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <?}?>
     </td>
     <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2[cnt]?></a></td>
-    <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
+    <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row[gr_use_access]?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
     <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1[cnt]?></a></td>
     <td><?=$s_upd?> <?=$s_del?></td>
 </tr>

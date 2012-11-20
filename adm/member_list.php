@@ -30,7 +30,7 @@ if ($stx) {
 }
 
 if ($is_admin != 'super')
-    $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
+    $sql_search .= " and mb_level <= '{$member[mb_level]}' ";
 
 if (!$sst) {
     $sst = "mb_datetime";
@@ -208,11 +208,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </td>
     <td><?=$row['mb_name']?></td>
     <td><?=$mb_nick?></td>
-    <td><?=get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level'])?></td>
-    <td><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
+    <td><?=get_member_level_select("mb_level[$i]", 1, $member[mb_level], $row[mb_level])?></td>
+    <td><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></a></td>
     <td><?=substr($row['mb_today_login'],2,8)?></td>
-    <td><?=$row['mb_mailling']?'예':'아니오';?></td>
-    <td><?=$row['mb_open']?'예':'아니오';?></td>
+    <td><?=$row[mb_mailling]?'예':'아니오';?></td>
+    <td><?=$row[mb_open]?'예':'아니오';?></td>
     <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
     <td>
         <? if(empty($row['mb_leave_date'])){?>

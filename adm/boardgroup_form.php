@@ -12,7 +12,7 @@ $html_title = '게시판그룹';
 if ($w == '')
 {
     $gr_id_attr = 'required';
-    $gr['gr_use_access'] = 0;
+    $gr[gr_use_access] = 0;
     $html_title .= ' 생성';
 }
 else if ($w == 'u')
