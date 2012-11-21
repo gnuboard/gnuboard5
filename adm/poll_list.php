@@ -91,7 +91,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $po_etc = ($row['po_etc']) ? "사용" : "미사용";
 
     $s_mod = '<a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row[po_id].'">수정</a>';
-    $s_del = '<a href="javascript:post_delete(\"poll_form_update.php\", \"'.$row[po_id].'\");">삭제</a>';
+    $s_del = '<a href="javascript:post_delete(\'poll_form_update.php\', \''.$row[po_id].'\');">삭제</a>';
 ?>
 
 <tr>
