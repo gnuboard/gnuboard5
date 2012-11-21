@@ -37,7 +37,7 @@ function chkReset(f)
 }
 </script>
 
-
+2
 <!-- 로그인 전 외부로그인 시작 -->
 <form name="fhead" method="post" onsubmit="return fhead_submit(this);" autocomplete="off" style="margin:0px;">
 <input type="hidden" name="url" value="<?=$outlogin_url?>">

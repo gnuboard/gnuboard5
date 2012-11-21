@@ -38,7 +38,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             echo " " . $list[$i]['icon_link'];
             echo " " . $list[$i]['icon_hot'];
             echo " " . $list[$i]['icon_secret'];
-            ?></td></tr>
+            ?>2</td></tr>
         <tr><td bgcolor=#EBEBEB height=1></td></tr>
         </table></td>
 </tr>

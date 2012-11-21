@@ -1,7 +1,7 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
-
+2
 <form name=fsearch method=get onsubmit="return fsearch_submit(this);" style="margin:0px;">
 <table align=center width=95% cellpadding=2 cellspacing=0>
 <input type="hidden" name="srows" value="<?=$srows?>">

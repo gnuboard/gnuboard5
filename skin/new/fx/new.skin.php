@@ -36,7 +36,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </table>
 </form>
 <!-- 분류 끝 -->
-
+2
 <!-- 제목 시작 -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr> 

@@ -6,7 +6,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 .n_title1 { font-family:돋움; font-size:9pt; color:#FFFFFF; }
 .n_title2 { font-family:돋움; font-size:9pt; color:#5E5E5E; }
 </style>
-
+2
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td width="4" height="33" bgcolor="#7BB2D6"><img src="<?=$connect_skin_path?>/img/list_top_01.gif" width="4" height="33"></td>

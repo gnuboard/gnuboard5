@@ -13,7 +13,7 @@ if (!$po_id)
 
 $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
 ?>
-
+2
 <table width="220" border="0" cellspacing="0" cellpadding="0">
 <form name="fpoll" method="post" action="<?=$g4[bbs_path]?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="winPoll">
 <input type="hidden" name="po_id" value="<?=$po_id?>">

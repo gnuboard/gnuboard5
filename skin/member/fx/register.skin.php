@@ -37,7 +37,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <br>
     <table width="100%" cellpadding="4" cellspacing="0" bgcolor=#EEEEEE>
         <tr> 
-            <td height=40>&nbsp; <b>회원가입약관</b></td>
+            <td height=40>&nbsp; <b>회원가입약관2</b></td>
         </tr>
         <tr> 
             <td align="center" valign="top"><textarea style="width: 98%" rows=10 readonly class=ed><?=get_text($config[cf_stipulation])?></textarea></td>
