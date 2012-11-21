@@ -90,7 +90,7 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row"><label for="mb_id">아이디</label></th>
     <td>
-        <input type="text" id="mb_id" name="mb_id" maxlength="20" minlength="2" <?=$required_mb_id?> value="<?=$mb['mb_id']?>">
+        <input type="text" id="mb_id" name="mb_id" maxlength="20" <?=$required_mb_id?> value="<?=$mb['mb_id']?>">
         <?if ($w=='u'){?><a href="./boardgroupmember_form.php?mb_id=<?=$mb['mb_id']?>">접근가능그룹보기</a><?}?>
     </td>
     <th scope="row"><label for="mb_password">패스워드</label></th>
@@ -153,7 +153,7 @@ include_once('./admin.head.php');
         <input type="radio" id="mb_mailling_no" name="mb_mailling" value="0" <?=$mailling_no_checked?>>
         <label for="mb_mailling_no">아니오</label>
     </td>
-    <th scope="row"><label for="mb_sms">SMS 수신</label></th>
+    <th scope="row"><label for="mb_sms_yes">SMS 수신</label></th>
     <td>
         <input type="radio" id="mb_sms_yes" name="mb_sms" value="1" <?=$sms_checked?>>
         <label for="mb_sms_yes">예</label>
@@ -229,7 +229,7 @@ include_once('./admin.head.php');
 <? for ($i=1; $i<=10; $i++) { ?>
 <tr>
     <th scope="row"><label for="mb_<?=$i?>">여분 필드 <?=$i?></label></th>
-    <td><input type="text" id="mb_<?=$i?>" name="mb_<?=$i?>" maxlength="255" value="<?=$mb['mb_'.$i]?>"></td>
+    <td colspan="3"><input type="text" id="mb_<?=$i?>" name="mb_<?=$i?>" maxlength="255" value="<?=$mb['mb_'.$i]?>"></td>
 </tr>
 <? } ?>
 

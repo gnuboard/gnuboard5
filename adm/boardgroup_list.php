@@ -77,7 +77,7 @@ var list_update_php = "./boardgroup_list_update.php";
     </select>
     <label for="stx">검색어</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
-    <input type="submit" value="검색"></td>
+    <input type="submit" value="검색">
 </fieldset>
 </form>
 
@@ -122,7 +122,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $sql2 = " select count(*) as cnt from {$g4['board_table']} where gr_id = '{$row['gr_id']}' ";
     $row2 = sql_fetch($sql2);
 
-    $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&gr_id='.$row['gr_id'].'">수정</a>';
+    $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
     $s_del = '';
     if ($is_admin == 'super') {
         //$s_del = '<a href="javascript:del(\'./boardgroup_delete.php?$qstr&gr_id='.$row[gr_id].'\');">삭제</a>';
@@ -135,7 +135,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <input type="hidden" id="gr_id" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
     </td>
-    <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id="<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+    <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
     <td>
         <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
     </td>

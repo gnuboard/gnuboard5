@@ -796,7 +796,7 @@ include_once ('./admin.head.php');
             <input type="text" id="bo_comment_point" name="bo_comment_point" required value="<?=$board[bo_comment_point]?>">
             <span class="group_setting">
                 <input type="checkbox" id="chk_comment_point" name="chk_comment_point" value="1">
-                <label for="">동일그룹 게시판에 모두 적용</label>
+                <label for="chk_comment_point">동일그룹 게시판에 모두 적용</label>
             </span>
         </td>
     </tr>

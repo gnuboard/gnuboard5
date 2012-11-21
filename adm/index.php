@@ -58,7 +58,7 @@ $colspan = 12;
 ?>
 
 <section id="idx_newbies">
-<h2><a href="<?=$g4['admin_path']?>/member_list.php"><span></span>신규가입회원 <?=$new_member_rows?>건</strong></a></h2>
+<h2><a href="<?=$g4['admin_path']?>/member_list.php"><span></span>신규가입회원 <?=$new_member_rows?>건</a></h2>
 
 <table>
 <caption>
@@ -121,7 +121,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><?=$row['mb_name']?></td>
     <td><?=$mb_nick?></td>
     <td><?=$row[mb_level]?></td>
-    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></td>
+    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></a></td>
     <td><?=$row[mb_mailling]?'예':'아니오';?></td>
     <td><?=$row[mb_open]?'예':'아니오';?></td>
     <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
@@ -159,7 +159,7 @@ $colspan = 5;
 ?>
 
 <section id="idx_latest">
-<h2><span></span><a href="<?=$g4['bbs_path']?>/new.php">최근게시물 <strong><?=$new_write_rows?>건</strong></a></h2>
+<h2><span></span><a href="<?=$g4['bbs_path']?>/new.php">최근게시물 <?=$new_write_rows?>건</a></h2>
 
 <table>
 <caption>최근게시물 목록</caption>
@@ -257,7 +257,7 @@ $colspan = 7;
 ?>
 
 <section id="idx_point">
-<h2><a href="<?=$g4['admin_path']?>/adm/point_list.php"><span><span>최근포인트 <strong><?=$new_point_rows?>건</strong></a></h2>
+<h2><a href="<?=$g4['admin_path']?>/adm/point_list.php"><span></span>최근포인트 <?=$new_point_rows?>건</a></h2>
 
 <table>
 <caption>

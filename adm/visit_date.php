@@ -60,7 +60,7 @@ if (count($arr)) {
 ?>
 
 <tr>
-    <td><a href="./visit_list.php?fr_date=<?=$key?>&to_date=<?=$key?>"><?=$key?></a></td>
+    <td><a href="./visit_list.php?fr_date=<?=$key?>&amp;to_date=<?=$key?>"><?=$key?></a></td>
     <td><?=number_format($value)?></td>
     <td><?=$s_rate?></td>
     <td>

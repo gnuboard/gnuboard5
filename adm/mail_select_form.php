@@ -57,8 +57,8 @@ include_once('./admin.head.php');
     <td>
         <input type="radio" id="mb_id1_all" name="mb_id1" value="1" onclick="mb_id1_click(1);" <?=$mb_id1?"checked":"";?>> <label for="mb_id1_all">전체</label>
         <input type="radio" id="mb_id1_section" name="mb_id1" value="0" onclick="mb_id1_click(0);" <?=!$mb_id1?"checked":"";?>> <label for="mb_id1_section">구간</label>
-        <input type="text" id="mb_id1_from" id="mb_id1_from" name="mb_id1_from" value="<?=$mb_id1_from?>" title="시작구간"> 에서
-        <input type="text" id="mb_id1_to" id="mb_id1_to" name="mb_id1_to" value="<?=$mb_id1_to?>" title="종료구간"> 까지
+        <input type="text" id="mb_id1_from" name="mb_id1_from" value="<?=$mb_id1_from?>" title="시작구간"> 에서
+        <input type="text" id="mb_id1_to" name="mb_id1_to" value="<?=$mb_id1_to?>" title="종료구간"> 까지
 
         <script>
         function mb_id1_click(num)

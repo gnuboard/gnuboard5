@@ -114,8 +114,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 <tr>
     <td>
-        <input type="hidden" id="pp_id" name="pp_id[<?=$i?>]" value="<?=$row[pp_id]?>">
-        <input type="checkbox" id="chk" name="chk[]" value="<?=$i?>" title="<?=$word?> 선택">
+        <input type="hidden" name="pp_id[<?=$i?>]" value="<?=$row[pp_id]?>">
+        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$word?> 선택">
     </td>
     <td>&nbsp; <a href="<?=$_SERVER['PHP_SELF']?>?sfl=pp_word&amp;stx=<?=$word?>"><?=$word?></a></td>
     <td><?=$row['pp_date']?></td>

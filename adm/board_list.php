@@ -157,7 +157,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <?}?>
     </td>
     <td>
-        <input type="hidden" id="board_table" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
+        <input type="hidden" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
         <a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
     </td>
     <td>

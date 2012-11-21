@@ -58,7 +58,7 @@ $colspan = 7;
 <script src="<?=$g4['path']?>/js/sideview.js"></script>
 
 <form id="fsearch" name="fsearch" method="get">
-<input type="hidden" id="gr_id" name="gr_id" value="<?=$gr_id?>">
+<input type="hidden" name="gr_id" value="<?=$gr_id?>">
 <fieldset>
     <legend><?=$gr['gr_subject']?> 그룹에서 검색 (그룹아이디:<?=$gr['gr_id']?>)</legend>
     <label for="sfl">검색대상</label>
@@ -147,14 +147,14 @@ function post_delete(action_url, val)
 </script>
 
 <form id="fpost" name="fpost" method="post">
-<input type="hidden" id="sst" name="sst" value="<?=$sst?>">
-<input type="hidden" id="sod" name="sod" value="<?=$sod?>">
-<input type="hidden" id="sfl" name="sfl" value="<?=$sfl?>">
-<input type="hidden" id="stx" name="stx" value="<?=$stx?>">
-<input type="hidden" id="page" name="page" value="<?=$page?>">
-<input type="hidden" id="token" name="token" value="<?=$token?>">
-<input type="hidden" id="w" name="w" value="listdelete">
-<input type="hidden" id="gm_id" name="gm_id">
+<input type="hidden" name="sst" value="<?=$sst?>">
+<input type="hidden" name="sod" value="<?=$sod?>">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx" value="<?=$stx?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="token" value="<?=$token?>">
+<input type="hidden" name="w" value="listdelete">
+<input type="hidden" name="gm_id">
 </form>
 
 <?
