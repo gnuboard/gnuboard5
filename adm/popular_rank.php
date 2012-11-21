@@ -94,12 +94,6 @@ if ($i == 0)
 </tbody>
 </table>
 
-<?if ($is_admin == 'super'){?>
-<div class="btn_list">
-    <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
-</div>
-<?}?>
-
 <?
 $pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");
 ?>
