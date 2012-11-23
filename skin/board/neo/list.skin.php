@@ -79,42 +79,40 @@ for ($i=0; $i<count($list); $i++) {
 ?>
 <tr>
     <td>
-        <?
-        if ($list[$i]['is_notice']) // 공지사항
-            echo "<b>공지</b>";
-        else if ($wr_id == $list[$i]['wr_id']) // 현재위치
-            echo "<span class='current'>{$list[$i]['num']}</span>";
-        else
-            echo $list[$i]['num'];
-        ?>
+    <?
+    if ($list[$i]['is_notice']) // 공지사항
+        echo '공지';
+    else if ($wr_id == $list[$i]['wr_id']) // 현재위치
+        echo $list[$i]['num'];
+    else
+        echo $list[$i]['num'];
+    ?>
     </td>
-    <? if ($is_checkbox) { ?><td class="checkbox"><input type=checkbox name="chk_wr_id"[] value="<?=$list[$i]['wr_id']?>"></td><? } ?>
+    <? if ($is_checkbox) { ?><td><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
     <td>
         <?
-        echo $nobr_begin;
         echo $list[$i]['reply'];
         echo $list[$i]['icon_reply'];
         if ($is_category && $list[$i]['ca_name']) {
-            echo "<span class=small><font color=gray>[<a href='{$list[$i]['ca_name_href']}'>{$list[$i]['ca_name']}</a>]</font></span> ";
+            echo '<a href="'.$list[$i]['ca_name_href'].'">'.$list[$i]['ca_name'].'</a>';
         }
 
         if ($list[$i]['is_notice'])
-            echo "<a href='{$list[$i]['href']}'><span class='notice'>{$list[$i]['subject']}</span></a>";
+            echo '<a href="'.$list[$i]['href'].'">'.$list[$i]['subject'].'</a>';
         else
-            echo "<a href='{$list[$i]['href']}'>{$list[$i]['subject']}</a>";
+            echo '<a href="'.$list[$i]['href'].'">'.$list[$i]['subject'].'</a>';
 
         if ($list[$i]['comment_cnt'])
-            echo " <a href=\"{$list[$i]['comment_href']}\"><span class='comment'>{$list[$i]['comment_cnt']}</span></a>";
+            echo '<a href="'.$list[$i]['comment_href'].'">'.$list[$i]['comment_cnt'].'</a>';
 
-        // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
-        // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
+        // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
+        // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
 
-        echo " " . $list[$i]['icon_new'];
-        echo " " . $list[$i]['icon_file'];
-        echo " " . $list[$i]['icon_link'];
-        echo " " . $list[$i]['icon_hot'];
-        echo " " . $list[$i]['icon_secret'];
-        echo $nobr_end;
+        echo $list[$i]['icon_new'];
+        echo $list[$i]['icon_file'];
+        echo $list[$i]['icon_link'];
+        echo $list[$i]['icon_hot'];
+        echo $list[$i]['icon_secret'];
         ?>
     </td>
     <td><?=$list[$i]['name']?></td>
@@ -129,47 +127,41 @@ for ($i=0; $i<count($list); $i++) {
 </table>
 </form>
 
-    <div class="board_button">
-        <div style="float:left;">
-        <? if ($list_href) { ?>
-        <a href="<?=$list_href?>"><img src="<?=$board_skin_path?>/img/btn_list.gif" align="absmiddle" border='0'></a>
-        <? } ?>
-        <? if ($is_checkbox) { ?>
-        <a href="javascript:select_delete();"><img src="<?=$board_skin_path?>/img/btn_select_delete.gif" align="absmiddle" border='0'></a>
-        <a href="javascript:select_copy('copy');"><img src="<?=$board_skin_path?>/img/btn_select_copy.gif" align="absmiddle" border='0'></a>
-        <a href="javascript:select_copy('move');"><img src="<?=$board_skin_path?>/img/btn_select_move.gif" align="absmiddle" border='0'></a>
-        <? } ?>
-        </div>
-
-        <div style="float:right;">
-        <? if ($write_href) { ?><a href="<?=$write_href?>"><img src="<?=$board_skin_path?>/img/btn_write.gif" border='0'></a><? } ?>
-        </div>
+<div>
+    <div>
+    <? if ($list_href) { ?>
+    <a href="<?=$list_href?>">목록</a>
+    <? } ?>
+    <? if ($is_checkbox) { ?>
+    <a href="javascript:select_delete();">선택삭제</a>
+    <a href="javascript:select_copy('copy');">선택복사</a>
+    <a href="javascript:select_copy('move');">선택이동</a>
+    <? } ?>
     </div>
 
-    <!-- 페이지 -->
-    <div class="board_page">
-        <? if ($prev_part_href) { echo "<a href='$prev_part_href'><img src='$board_skin_path/img/page_search_prev.gif' border='0' align=absmiddle title='이전검색'></a>"; } ?>
-        <?
-        // 기본으로 넘어오는 페이지를 아래와 같이 변환하여 이미지로도 출력할 수 있습니다.
-        //echo $write_pages;
-        $write_pages = str_replace("처음", "<img src='$board_skin_path/img/page_begin.gif' border='0' align='absmiddle' title='처음'>", $write_pages);
-        $write_pages = str_replace("이전", "<img src='$board_skin_path/img/page_prev.gif' border='0' align='absmiddle' title='이전'>", $write_pages);
-        $write_pages = str_replace("다음", "<img src='$board_skin_path/img/page_next.gif' border='0' align='absmiddle' title='다음'>", $write_pages);
-        $write_pages = str_replace("맨끝", "<img src='$board_skin_path/img/page_end.gif' border='0' align='absmiddle' title='맨끝'>", $write_pages);
-        //$write_pages = preg_replace("/<span>([0-9]*)<\/span>/", "$1", $write_pages);
-        $write_pages = preg_replace("/<b>([0-9]*)<\/b>/", "<b><span style=\"color:#4D6185; font-size:12px; text-decoration:underline;\">$1</span></b>", $write_pages);
-        ?>
-        <?=$write_pages?>
-        <? if ($next_part_href) { echo "<a href='$next_part_href'><img src='$board_skin_path/img/page_search_next.gif' border='0' align=absmiddle title='다음검색'></a>"; } ?>
+    <div>
+    <? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?>
     </div>
+</div>
 
-    <!-- 검색 -->
-    <div class="board_search">
-        
-    </div>
+<!-- 페이지 -->
+<div>
+    <? if ($prev_part_href) { echo "<a href='$prev_part_href'><img src='$board_skin_path/img/page_search_prev.gif' border='0' align=absmiddle title='이전검색'></a>"; } ?>
+    <?
+    // 기본으로 넘어오는 페이지를 아래와 같이 변환하여 이미지로도 출력할 수 있습니다.
+    //echo $write_pages;
+    $write_pages = str_replace('처음', '<img src="'.$board_skin_path.'/img/page_begin.gif" alt="처음">', $write_pages);
+    $write_pages = str_replace('이전', '<img src="'.$board_skin_path.'/img/page_prev.gif" alt="이전">', $write_pages);
+    $write_pages = str_replace('다음', '<img src="'.$board_skin_path.'/img/page_next.gif" alt="다음">', $write_pages);
+    $write_pages = str_replace('맨끝', '<img src="'.$board_skin_path.'/img/page_end.gif" alt="맨끝">', $write_pages);
+    //$write_pages = preg_replace("/<span>([0-9]*)<\/span>/", "$1", $write_pages);
+    $write_pages = preg_replace('/<b>([0-9]*)<\/b>/', '<b><span>$1</span></b>', $write_pages);
+    ?>
+    <?=$write_pages?>
+    <? if ($next_part_href) { echo '<a href="'.$next_part_href.'">다음검색</a>'; } ?>
+</div>
 
-
-<script type="text/javascript">
+<script>
 if ('<?=$sca?>') document.fcategory.sca.value = '<?=$sca?>';
 if ('<?=$stx?>') {
     document.fsearch.sfl.value = '<?=$sfl?>';
@@ -185,7 +177,7 @@ if ('<?=$stx?>') {
 </script>
 
 <? if ($is_checkbox) { ?>
-<script type="text/javascript">
+<script>
 function all_checked(sw) {
     var f = document.fboardlist;
 
