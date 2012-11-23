@@ -1,21 +1,41 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-
-// 사용자 화면 우측과 하단을 담당하는 페이지입니다.
-// 우측, 하단 화면을 꾸미려면 이 파일을 수정합니다.
 ?>
 
-</td>
-<td width=40></td>
-</tr></table>
+</div>
 
-<!-- 카피라이트 시작 -->
-<table width="<?=$table_width?>" border="0" cellspacing="10" cellpadding="10">
-<tr>
-    <td valign="top" background="<?=$g4['path']?>/img/copyright.gif"><a href="#g4_head"><img src="<?=$g4['path']?>/img/icon.gif" width="15" height="12" border="0"></a><font color="#848484">Copyright ⓒ your-domain. All rights reserved.</font></td>
-</tr>
-</table>
-<!-- 카피라이트 끝 -->
+<footer>
+    <p>Copyright &copy; 소유하신 도메인. All rights reserved.</p>
+</footer>
+
+<script>
+function fsearchbox_submit(f)
+{
+    if (f.stx.value.length < 2) {
+        alert("검색어는 두글자 이상 입력하십시오.");
+        f.stx.select();
+        f.stx.focus();
+        return false;
+    }
+
+    // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
+    var cnt = 0;
+    for (var i=0; i<f.stx.value.length; i++) {
+        if (f.stx.value.charAt(i) == ' ')
+            cnt++;
+    }
+
+    if (cnt > 1) {
+        alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
+        f.stx.select();
+        f.stx.focus();
+        return false;
+    }
+
+    f.action = "<?=$g4['bbs_path']?>/search.php";
+    return true;
+}
+</script>
 
 <?
 include_once($g4['path'].'/tail.sub.php');

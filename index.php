@@ -6,10 +6,12 @@ $g4['title'] = '';
 include_once('./_head.php');
 ?>
 
-강좌홈페이지 작업 중입니다.<br>
-현재 HTML5 로 선언되어 있습니다.<br>
-chicpro 님도 참가합니다.<br>
-반갑습니다.
+<p>
+g4s 강좌 홈페이지에 오신 것을 환영합니다.
+</p>
+<p>
+<a href="<?=$g4['path']?>/bbs/board.php?bo_table=1">테스트용 게시판</a>
+</p>
 
 <?
 include_once('./_tail.php');
