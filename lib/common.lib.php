@@ -28,7 +28,7 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 
     if ($end_page >= $total_page) $end_page = $total_page;
 
-    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).'" '.$add.'>이전</a>';
+    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).'" '.$add.'>이전</a>'.PHP_EOL;
 
     if ($total_page > 1) {
         for ($k=$start_page;$k<=$end_page;$k++) {
@@ -39,7 +39,7 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
         }
     }
 
-    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).'" '.$add.'">다음</a>';
+    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).'" '.$add.'>다음</a>'.PHP_EOL;
 
     if ($cur_page < $total_page) {
         $str .= '<a href="'.$url.$total_page{$add}.'">맨끝</a>'.PHP_EOL;
