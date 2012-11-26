@@ -1,78 +1,55 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-if ($is_dhtml_editor) {
-    include_once($g4['path'].'/lib/cheditor4.lib.php');
-    echo "<script src='{$g4['cheditor4_path']}/cheditor.js'></script>";
-    echo cheditor1('wr_content', '100%', '250');
-}
 ?>
 
-<div style="height:14px; line-height:1px; font-size:1px;">&nbsp;</div>
-
-<style type="text/css">
-.write_head { height:30px; text-align:center; color:#8492A0; }
-.field { border:1px solid #ccc; }
-</style>
-
-<script type="text/javascript">
+<script>
 // 글자수 제한
 var char_min = parseInt(<?=$write_min?>); // 최소
 var char_max = parseInt(<?=$write_max?>); // 최대
 </script>
 
-<form name="fwrite" method="post" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data" style="margin:0px;">
-<input type=hidden name=null>
-<input type=hidden name=w        value="<?=$w?>">
-<input type=hidden name=bo_table value="<?=$bo_table?>">
-<input type=hidden name=wr_id    value="<?=$wr_id?>">
-<input type=hidden name=sca      value="<?=$sca?>">
-<input type=hidden name=sfl      value="<?=$sfl?>">
-<input type=hidden name=stx      value="<?=$stx?>">
-<input type=hidden name=spt      value="<?=$spt?>">
-<input type=hidden name=sst      value="<?=$sst?>">
-<input type=hidden name=sod      value="<?=$sod?>">
-<input type=hidden name=page     value="<?=$page?>">
+<form name="fwrite" enctype="multipart/form-data" onsubmit="return fwrite_submit(this);" method="post">
+<input type="hidden" name="null">
+<input type="hidden" name="w" value="<?=$w?>">
+<input type="hidden" name="bo_table" value="<?=$bo_table?>">
+<input type="hidden" name="wr_id" value="<?=$wr_id?>">
+<input type="hidden" name="sca" value="<?=$sca?>">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx" value="<?=$stx?>">
+<input type="hidden" name="spt" value="<?=$spt?>">
+<input type="hidden" name="sst" value="<?=$sst?>">
+<input type="hidden" name="sod" value="<?=$sod?>">
+<input type="hidden" name="page" value="<?=$page?>">
 
-<table width="<?=$width?>" align=center cellpadding=0 cellspacing=0><tr><td>
-
-
-<div style="border:1px solid #ddd; height:34px; background:url(<?=$board_skin_path?>/img/title_bg.gif) repeat-x;">
-<div style="font-weight:bold; font-size:14px; margin:7px 0 0 10px;">:: <?=$title_msg?> ::</div>
-</div>
-<div style="height:3px; background:url(<?=$board_skin_path?>/img/title_shadow.gif) repeat-x; line-height:1px; font-size:1px;"></div>
-
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<colgroup width=90>
-<colgroup width=''>
-<tr><td colspan="2" style="background:url(<?=$board_skin_path?>/img/title_bg.gif) repeat-x; height:3px;"></td></tr>
+<table>
+<caption><?=$board['bo_subject']?> 글쓰기</caption>
+<tbody>
 <? if ($is_name) { ?>
 <tr>
-    <td class=write_head>이 름</td>
-    <td><input class='ed' maxlength=20 size=15 name=wr_name itemname="이름" required value="<?=$name?>"></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+    <th>이 름</th>
+    <td><input maxlength=20 size=15 id="wr_name" name="wr_name" required value="<?=$name?>"></td>
+</tr>
 <? } ?>
 
 <? if ($is_password) { ?>
 <tr>
-    <td class=write_head>패스워드</td>
-    <td><input class='ed' type=password maxlength=20 size=15 name=wr_password itemname="패스워드" <?=$password_required?>></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+    <th>패스워드</th>
+    <td><input type=password maxlength=20 size=15 id="wr_password" name="wr_password" <?=$password_required?>></td>
+</tr>
 <? } ?>
 
 <? if ($is_email) { ?>
 <tr>
-    <td class=write_head>이메일</td>
-    <td><input class='ed' maxlength=100 size=50 name=wr_email email itemname="이메일" value="<?=$email?>"></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+    <th>이메일</th>
+    <td><input maxlength=100 size=50 id="wr_email" name="wr_email" email value="<?=$email?>"></td>
+</tr>
 <? } ?>
 
 <? if ($is_homepage) { ?>
 <tr>
-    <td class=write_head>홈페이지</td>
-    <td><input class='ed' size=50 name=wr_homepage itemname="홈페이지" value="<?=$homepage?>"></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+    <th>홈페이지</th>
+    <td><input size=50 id="wr_homepage" name="wr_homepage" value="<?=$homepage?>"></td>
+</tr>
 <? } ?>
 
 <?
@@ -81,27 +58,27 @@ $option_hidden = '';
 if ($is_notice || $is_html || $is_secret || $is_mail) {
     $option = '';
     if ($is_notice) {
-        $option .= '<input type=checkbox name=notice value="1" '.$notice_checked.'>공지&nbsp;';
+        $option .= '<input type=checkbox id="notice" name="notice" value="1" '.$notice_checked.'>공지&nbsp;';
     }
 
     if ($is_html) {
         if ($is_dhtml_editor) {
-            $option_hidden .= '<input type=hidden value="html1" name="html">';
+            $option_hidden .= '<input type="hidden" value="html1" id="html" name="html">';
         } else {
-            $option .= '<input onclick="html_auto_br(this);" type=checkbox value="'.$html_value.'" name="html" '.$html_checked.'><span class=w_title>html</span>&nbsp;';
+            $option .= '<input onclick="html_auto_br(this);" type=checkbox value="'.$html_value.'" id="html" name="html" '.$html_checked.'><span class=w_title>html</span>&nbsp;';
         }
     }
 
     if ($is_secret) {
         if ($is_admin || $is_secret==1) {
-            $option .= '<input type=checkbox value="secret" name="secret" '.$secret_checked.'><span class=w_title>비밀글</span>&nbsp;';
+            $option .= '<input type=checkbox value="secret" id="secret" name="secret" '.$secret_checked.'><span class=w_title>비밀글</span>&nbsp;';
         } else {
-            $option_hidden .= '<input type=hidden value="secret" name="secret">';
+            $option_hidden .= '<input type="hidden" value="secret" id="secret" name="secret">';
         }
     }
 
     if ($is_mail) {
-        $option .= '<input type=checkbox value="mail" name="mail" '.$recv_email_checked.'>답변메일받기&nbsp;';
+        $option .= '<input type=checkbox value="mail" id="mail" name="mail" '.$recv_email_checked.'>답변메일받기&nbsp;';
     }
 }
 
@@ -109,60 +86,49 @@ echo $option_hidden;
 if ($option) {
 ?>
 <tr>
-    <td class=write_head>옵 션</td>
-    <td><?=$option?></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+    <th>옵 션</th>
+    <td><?=$option?></td>
+</tr>
 <? } ?>
 
 <? if ($is_category) { ?>
 <tr>
-    <td class=write_head>분 류</td>
-    <td><select name=ca_name required itemname="분류"><option value="">선택하세요<?=$category_option?></select></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+    <th>분 류</th>
+    <td><select id="ca_name" name="ca_name" required><option value="">선택하세요<?=$category_option?></select></td>
+</tr>
 <? } ?>
 
 <tr>
-    <td class=write_head>제 목</td>
-    <td><input class='ed' style="width:100%;" name=wr_subject id="wr_subject" itemname="제목" required value="<?=$subject?>"></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+    <th>제 목</th>
+    <td><input id="wr_subject" name="wr_subject" required value="<?=$subject?>"></td>
+</tr>
+
 <tr>
-    <td class='write_head' style='padding:5 0 5 10;' colspan='2'>
-        <? if ($is_dhtml_editor) { ?>
-            <?=cheditor2('wr_content', $content);?>
-        <? } else { ?>
-        <table width=100% cellpadding=0 cellspacing=0>
-        <tr>
-            <td width=50% align=left valign=bottom>
-                <span style="cursor: pointer;" onclick="textarea_decrease('wr_content', 10);"><img src="<?=$board_skin_path?>/img/up.gif"></span>
-                <span style="cursor: pointer;" onclick="textarea_original('wr_content', 10);"><img src="<?=$board_skin_path?>/img/start.gif"></span>
-                <span style="cursor: pointer;" onclick="textarea_increase('wr_content', 10);"><img src="<?=$board_skin_path?>/img/down.gif"></span></td>
-            <td width=50% align=right><? if ($write_min || $write_max) { ?><span id=char_count></span>글자<?}?></td>
-        </tr>
-        </table>
-        <textarea id="wr_content" name="wr_content" class=tx style='width:100%; word-break:break-all;' rows=10 itemname="내용" required
+    <th>내용</th>
+    <td>
+        <? if ($write_min || $write_max) { ?><span id=char_count></span>글자<?}?>
+        <textarea id="wr_content" id="wr_content" name="wr_content" class=tx style='width:100%; word-break:break-all;' rows=10 itemid="내용" name="내용" required
         <? if ($write_min || $write_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>><?=$content?></textarea>
-        <? if ($write_min || $write_max) { ?><script type="text/javascript"> check_byte('wr_content', 'char_count'); </script><?}?>
-        <? } ?>
+        <? if ($write_min || $write_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
     </td>
 </tr>
-<tr><td colspan=2 height=1 bgcolor=#dddddd></td></tr>
 
 <? if ($is_link) { ?>
 <? for ($i=1; $i<=$g4['link_count']; $i++) { ?>
 <tr>
-    <td class=write_head>링크 #<?=$i?></td>
-    <td><input type='text' class='ed' size=50 name='wr_link<?=$i?>' itemname='링크 #<?=$i?>' value='<?=$write["wr_link{$i}"]?>'></td>
+    <td>링크 #<?=$i?></td>
+    <td><input type='text' size=50 name='wr_link<?=$i?>' value='<?=$write["wr_link{$i}"]?>'></td>
 </tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+
 <? } ?>
 <? } ?>
 
 <? if ($is_file) { ?>
 <tr>
-    <td class=write_head>
+    <td>
         <table cellpadding=0 cellspacing=0>
         <tr>
-            <td class=write_head style="padding-top:10px; line-height:20px;">
+            <td style="padding-top:10px; line-height:20px;">
                 파일첨부<br>
                 <span onclick="add_file();" style="cursor:pointer;"><img src="<?=$board_skin_path?>/img/btn_file_add.gif"></span>
                 <span onclick="del_file();" style="cursor:pointer;"><img src="<?=$board_skin_path?>/img/btn_file_minus.gif"></span>
@@ -171,7 +137,7 @@ if ($option) {
         </table>
     </td>
     <td style='padding:5 0 5 0;'><table id="variableFiles" cellpadding=0 cellspacing=0></table><?// print_r2($file); ?>
-        <script type="text/javascript">
+        <script>
         var flen = 0;
         function add_file(delete_code)
         {
@@ -193,13 +159,13 @@ if ($option) {
             objRow = objTbl.insertRow(objTbl.rows.length);
             objCell = objRow.insertCell(0);
 
-            objCell.innerHTML = "<input type='file' class='ed' name='bf_file[]' title='파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능'>";
+            objCell.innerHTML = "<input type='file' name='bf_file[]' title='파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능'>";
             if (delete_code)
                 objCell.innerHTML += delete_code;
             else
             {
                 <? if ($is_file_content) { ?>
-                objCell.innerHTML += "<br><input type='text' class='ed' size=50 name='bf_content[]' title='업로드 이미지 파일에 해당 되는 내용을 입력하세요.'>";
+                objCell.innerHTML += "<br><input type='text' size=50 name='bf_content[]' title='업로드 이미지 파일에 해당 되는 내용을 입력하세요.'>";
                 <? } ?>
                 ;
             }
@@ -222,26 +188,26 @@ if ($option) {
         }
         </script></td>
 </tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+
 <? } ?>
 
 <? if ($is_trackback) { ?>
 <tr>
-    <td class=write_head>트랙백주소</td>
-    <td><input class='ed' size=50 name=wr_trackback itemname="트랙백" value="<?=$trackback?>">
-        <? if ($w=='u') { ?><input type=checkbox name="re_trackback" value="1">핑 보냄<? } ?></td>
+    <td>트랙백주소</td>
+    <td><input size=50 id="wr_trackback" name="wr_trackback" itemid="트랙백" name="트랙백" value="<?=$trackback?>">
+        <? if ($w=='u') { ?><input type=checkbox id="re_trackback" name="re_trackback" value="1">핑 보냄<? } ?></td>
 </tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
+
 <? } ?>
 
 <? if ($is_guest) { ?>
 <tr>
-    <td class=write_head><img id='kcaptcha_image' /></td>
-    <td><input class='ed' type=input size=10 name=wr_key itemname="자동등록방지" required>&nbsp;&nbsp;왼쪽의 글자를 입력하세요.</td>
+    <td><img id='kcaptcha_image' /></td>
+    <td><input type=input size=10 id="wr_key" name="wr_key" itemid="자동등록방지" name="자동등록방지" required>&nbsp;&nbsp;왼쪽의 글자를 입력하세요.</td>
 </tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
-<? } ?>
 
+<? } ?>
+</tbody>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -252,11 +218,10 @@ if ($option) {
 </tr>
 </table>
 
-</td></tr></table>
 </form>
 
-<script type="text/javascript" src="<?=$g4['path']?>/js/jquery.kcaptcha.js"></script>
-<script type="text/javascript">
+<script src="<?=$g4['path']?>/js/jquery.kcaptcha.js"></script>
+<script>
 <?
 // 관리자라면 분류 선택에 '공지' 옵션을 추가함
 if ($is_admin)
@@ -390,5 +355,5 @@ function fwrite_submit(f)
 }
 </script>
 
-<script type="text/javascript" src="<?=$g4['path']?>/js/board.js"></script>
-<script type="text/javascript"> window.onload=function() { drawFont(); } </script>
+<script src="<?=$g4['path']?>/js/board.js"></script>
+<script> window.onload=function() { drawFont(); } </script>
