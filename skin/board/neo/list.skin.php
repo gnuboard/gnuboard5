@@ -13,7 +13,7 @@ if ($is_nogood) $colspan++;
 
 <div>
     <? if ($is_category) { ?>
-    <form name="fcategory" method="get" style="margin:0px;">
+    <form name="fcategory" method="get">
         <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
             <option value=''>전체</option>
             <?=$category_option?>
@@ -21,13 +21,12 @@ if ($is_nogood) $colspan++;
     </form>
     <? } ?>
 
-    <span>Total <?=number_format($total_count)?></span>
-
     <form name="fsearch" method="get">
     <input type="hidden" name="bo_table" value="<?=$bo_table?>">
     <input type="hidden" name="sca" value="<?=$sca?>">
     <fieldset>
         <legend>게시물 검색</legend>
+        <span>Total <?=number_format($total_count)?>건 중</span>
         <label for="sfl">검색대상</label>
         <select id="sfl" name="sfl">
             <option value="wr_subject">제목</option>
@@ -39,7 +38,7 @@ if ($is_nogood) $colspan++;
             <option value="wr_name,0">글쓴이(코)</option>
         </select>
         <label for="stx">검색어</label>
-        <input id="stx" id="stx" name="stx" maxlength="15" required value="<?=stripslashes($stx)?>">
+        <input id="stx" name="stx" maxlength="15" required value="<?=stripslashes($stx)?>">
         <input type="radio" id="sop_and" name="sop" value="and">
         <label for="sop_and">and</label>
         <input type="radio" id="sop_or" name="sop" value="or">
@@ -49,10 +48,13 @@ if ($is_nogood) $colspan++;
     </form>
 </div>
 
-<? if ($rss_href) { ?><a href='<?=$rss_href?>'>RSS</a><?}?>
+<div>
+    <? if ($rss_href) { ?><a href="<?=$rss_href?>">RSS</a><? } ?>
+    <? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?>
+</div>
 
 <!-- 게시판 목록 시작 -->
-<form name="fboardlist" method="post">
+<form id="fboardlist" name="fboardlist" method="post">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx" value="<?=$stx?>">
@@ -60,11 +62,11 @@ if ($is_nogood) $colspan++;
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="sw" value="">
 <table>
-<caption></caption>
+<caption><?=$board['bo_subject']?> 목록</caption>
 <thead>
 <tr>
     <th scope="col">번호</th>
-    <? if ($is_checkbox) { ?><th scope="col"><input onclick="if (this.checked) all_checked(true); else all_checked(false);" type="checkbox"></th><?}?>
+    <? if ($is_checkbox) { ?><th scope="col"><input type="checkbox" onclick="if (this.checked) all_checked(true); else all_checked(false);"></th><?}?>
     <th scope="col">제목</th>
     <th scope="col">글쓴이</th>
     <th scope="col"><?=subject_sort_link('wr_datetime', $qstr2, 1)?>날짜</a></th>
@@ -140,23 +142,13 @@ for ($i=0; $i<count($list); $i++) {
     </div>
 
     <div>
-    <? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?>
+        <? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?>
     </div>
 </div>
 
 <!-- 페이지 -->
 <div>
-    <? if ($prev_part_href) { echo "<a href='$prev_part_href'><img src='$board_skin_path/img/page_search_prev.gif' border='0' align=absmiddle title='이전검색'></a>"; } ?>
-    <?
-    // 기본으로 넘어오는 페이지를 아래와 같이 변환하여 이미지로도 출력할 수 있습니다.
-    //echo $write_pages;
-    $write_pages = str_replace('처음', '<img src="'.$board_skin_path.'/img/page_begin.gif" alt="처음">', $write_pages);
-    $write_pages = str_replace('이전', '<img src="'.$board_skin_path.'/img/page_prev.gif" alt="이전">', $write_pages);
-    $write_pages = str_replace('다음', '<img src="'.$board_skin_path.'/img/page_next.gif" alt="다음">', $write_pages);
-    $write_pages = str_replace('맨끝', '<img src="'.$board_skin_path.'/img/page_end.gif" alt="맨끝">', $write_pages);
-    //$write_pages = preg_replace("/<span>([0-9]*)<\/span>/", "$1", $write_pages);
-    $write_pages = preg_replace('/<b>([0-9]*)<\/b>/', '<b><span>$1</span></b>', $write_pages);
-    ?>
+    <? if ($prev_part_href) { echo '<a href="'.$prev_part_href.'">이전검색</a>'; } ?>
     <?=$write_pages?>
     <? if ($next_part_href) { echo '<a href="'.$next_part_href.'">다음검색</a>'; } ?>
 </div>
