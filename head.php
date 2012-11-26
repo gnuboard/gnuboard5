@@ -27,11 +27,12 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
 </aside>
 
 <form name="fsearchbox" method="get" action="" onsubmit="return fsearchbox_submit(this);">
-<input type="hidden" id="sfl" name="sfl" value="wr_subject||wr_content">
-<input type="hidden" id="sop" name="sop" value="and">
+<input type="hidden" name="sfl" value="wr_subject||wr_content">
+<input type="hidden" name="sop" value="and">
 <fieldset>
     <legend>사이트 내 전체검색</legend>
-    <input type="text" id="stx" name="stx" maxlength="20">
+    <label for="header_stx">검색어</label>
+    <input type="text" id="header_stx" name="stx" maxlength="20">
     <input type="submit" value="검색">
 </fieldset>
 </form>
