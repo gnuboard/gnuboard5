@@ -26,11 +26,10 @@ else {
     }
 }
 
-$sql = " select * 
-           from $g4[board_table] a, 
-                $g4[group_table] b
-          where a.gr_id = b.gr_id
-            and bo_table <> '$bo_table' ";
+$sql = " select * from $g4[board_table] a,
+            {$g4[group_table]} b
+            where a.gr_id = b.gr_id
+            and bo_table <> '{$bo_table}' ";
 if ($is_admin == 'group') 
     $sql .= " and b.gr_admin = '$member[mb_id]' ";
 else if ($is_admin == 'board') 
