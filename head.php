@@ -18,13 +18,13 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
 <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
 <div id="logo"><a href="<?=$g4['path']?>/">처음으로</a></div>
 
-<aside>
+<div>
     <ul>
         <li><a href="<?=$g4['path']?>/bbs/login.php">로그인</a></li>
         <li><a href="<?=$g4['path']?>/bbs/register.php">회원가입</a></li>
         <li><a href="<?=$g4['path']?>/bbs/new.php">최근게시물</a></li>
     </ul>
-</aside>
+</div>
 
 <form name="fsearchbox" method="get" action="" onsubmit="return fsearchbox_submit(this);">
 <input type="hidden" name="sfl" value="wr_subject||wr_content">
