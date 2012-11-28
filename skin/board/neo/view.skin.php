@@ -3,40 +3,40 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 링크 버튼 -->
-<div>
+<ul>
 <? if ($update_href) { ?>
-    <a href="<?=$update_href?>">수정</a>
+    <li><a href="<?=$update_href?>">수정</a></li>
 <? } ?>
 <? if ($delete_href) { ?>
-    <a href="<?=$delete_href?>">삭제</a>
+    <li><a href="<?=$delete_href?>">삭제</a></li>
 <? } ?>
-</div>
+</ul>
 
-<div>
+<ul>
 <?
 ob_start();
 ?>
 <? if ($copy_href) { ?>
-    <a href="<?=$copy_href?>">복사</a>
+    <li><a href="<?=$copy_href?>">복사</a></li>
 <? } ?>
 <? if ($move_href) { ?>
-    <a href="<?=$move_href?>">이동</a>
+    <li><a href="<?=$move_href?>">이동</a></li>
 <? } ?>
 <? if ($search_href) { ?>
-    <a href="<?=$search_href?>">검색</a>
+    <li><a href="<?=$search_href?>">검색</a></li>
 <? } ?>
-    <a href="<?=$list_href?>">목록</a>
+    <li><a href="<?=$list_href?>">목록</a></li>
 <? if ($reply_href) { ?>
-    <a href="<?=$reply_href?>">답변</a>
+    <li><a href="<?=$reply_href?>">답변</a></li>
 <? } ?>
 <? if ($write_href) { ?>
-    <a href="<?=$write_href?>">글쓰기</a>
+    <li><a href="<?=$write_href?>">글쓰기</a></li>
 <? } ?>
 <?
 $link_buttons = ob_get_contents();
 ob_end_flush();
 ?>
-</div>
+</ul>
 
 <article>
 
@@ -50,7 +50,7 @@ ob_end_flush();
             <dt>조회</dt>
             <dd><?=number_format($view['wr_hit'])?>회</dd>
             <dt>댓글</dt>
-            <dd></dd>
+            <dd><?=number_format($view['wr_comment'])?>건</dd>
             <? if ($is_good) { ?>
             <dt>추천</dt>
             <dd><?=number_format($view['wr_good'])?>회</dd>
@@ -64,6 +64,7 @@ ob_end_flush();
 
     <section>
         <h2>첨부파일</h2>
+        <ul>
         <?
         // 가변 파일
         $cnt = 0;
@@ -71,19 +72,23 @@ ob_end_flush();
             if ($view['file'][$i]['source'] && !$view['file'][$i]['view']) {
                 $cnt++;
         ?>
-        <a href="javascript:file_download('<?=$view['file'][$i]['href']?>', '<?=urlencode($view['file'][$i]['source'])?>');">
-            <span><?=$view['file'][$i]['source']?> (<?=$view['file'][$i]['size']?>)</span>
-            <span><?=$view['file'][$i]['download']?></span>
-            <span>DATE : <?=$view['file'][$i]['datetime']?></span>
-        </a>
+            <li>
+                <a href="javascript:file_download('<?=$view['file'][$i]['href']?>', '<?=urlencode($view['file'][$i]['source'])?>');">
+                    <span><?=$view['file'][$i]['source']?> (<?=$view['file'][$i]['size']?>)</span>
+                    <span><?=$view['file'][$i]['download']?></span>
+                    <span>DATE : <?=$view['file'][$i]['datetime']?></span>
+                </a>
+            </li>
         <?
             }
         }
         ?>
+        </ul>
     </section>
 
     <section>
         <h2>관련링크</h2>
+        <ul>
         <?
         // 링크
         $cnt = 0;
@@ -92,14 +97,17 @@ ob_end_flush();
                 $cnt++;
                 $link = cut_str($view['link'][$i], 70);
         ?>
-        <a href="<?=$view['link_href'][$i]?>" target="_blank">
-            <span><?=$link?></span>
-            <span><?=$view['link_hit'][$i]?></span>
-        </a>
+            <li>
+                <a href="<?=$view['link_href'][$i]?>" target="_blank">
+                    <span><?=$link?></span>
+                    <span><?=$view['link_hit'][$i]?></span>
+                </a>
+            </li>
         <?
             }
         }
         ?>
+        <ul>
     </section>
 
     <div>
@@ -117,22 +125,23 @@ ob_end_flush();
     <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
     <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
 
-    <? if ($is_signature) { echo "<tr><td align='center' style='border-bottom:1px solid #E7E7E7; padding:5px 0;'>$signature</td></tr>"; } // 서명 출력 ?>
+    <? if ($is_signature) { ?><p><?=$signature?></p><? } ?>
 
-    <? if ($scrap_href) { echo "<a href=\"javascript:;\" onclick=\"win_scrap('$scrap_href');\"><img src='$board_skin_path/img/btn_scrap.gif' border='0' align='absmiddle'></a> "; } ?>
-    <? if ($trackback_url) { ?><a href="javascript:trackback_send_server('<?=$trackback_url?>');" style="letter-spacing:0;" title='주소 복사'><img src="<?=$board_skin_path?>/img/btn_trackback.gif" border='0' align="absmiddle"></a><?}?>
+    <? if ($scrap_href) { ?><a href="javascript:;" onclick="win_scrap('$scrap_href');">스크랩</a><? } ?>
+
+    <? if ($trackback_url) { ?><a href="javascript:trackback_send_server('<?=$trackback_url?>');">트랙백주소</a><?}?>
 
     <? if ($good_href) {?>
-    <div style="width:72px; height:55px; background:url(<?=$board_skin_path?>/img/good_bg.gif) no-repeat; text-align:center; float:right;">
-        <div>추천 : <?=number_format($view['wr_good'])?></div>
-        <div><a href="<?=$good_href?>" target="hiddenframe"><img src="<?=$board_skin_path?>/img/icon_good.gif" border='0' align="absmiddle"></a></div>
+    <div>
+        <div>추천 <?=number_format($view['wr_good'])?></div>
+        <div><a href="<?=$good_href?>" target="hiddenframe">추천</a></div>
     </div>
     <? } ?>
 
     <? if ($nogood_href) {?>
     <div>
-        <div>비추천 : <?=number_format($view['wr_nogood'])?></div>
-        <div><a href="<?=$nogood_href?>" target="hiddenframe"><img src="<?=$board_skin_path?>/img/icon_nogood.gif" border='0' align="absmiddle"></a></div>
+        <div>비추천 <?=number_format($view['wr_nogood'])?></div>
+        <div><a href="<?=$nogood_href?>" target="hiddenframe">비추천</a></div>
     </div>
     <? } ?>
 
@@ -144,8 +153,8 @@ ob_end_flush();
 </article>
 
 <div>
-    <? if ($prev_href) { echo "<a href=\"$prev_href\" title=\"$prev_wr_subject\"><img src='$board_skin_path/img/btn_prev.gif' border='0' align='absmiddle'></a>&nbsp;"; } ?>
-    <? if ($next_href) { echo "<a href=\"$next_href\" title=\"$next_wr_subject\"><img src='$board_skin_path/img/btn_next.gif' border='0' align='absmiddle'></a>&nbsp;"; } ?>
+    <? if ($prev_href) { ?><a href="<?=$prev_href?>">이전</a><? } ?>
+    <? if ($next_href) { ?><a href="<?=$next_href?>">다음</a><? } ?>
 </div>
 
 <!-- 링크 버튼 -->

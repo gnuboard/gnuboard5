@@ -42,7 +42,7 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
     if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).'" '.$add.'>다음</a>'.PHP_EOL;
 
     if ($cur_page < $total_page) {
-        $str .= '<a href="'.$url.$total_page{$add}.'">맨끝</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.$total_page.$add.'">맨끝</a>'.PHP_EOL;
     }
     $str .= "";
 
