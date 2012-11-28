@@ -136,12 +136,12 @@ ob_end_flush();
     </div>
     <? } ?>
 
-</article>
+    <?
+    // 코멘트 입출력
+    include_once('./view_comment.php');
+    ?>
 
-<?
-// 코멘트 입출력
-include_once('./view_comment.php');
-?>
+</article>
 
 <div>
     <? if ($prev_href) { echo "<a href=\"$prev_href\" title=\"$prev_wr_subject\"><img src='$board_skin_path/img/btn_prev.gif' border='0' align='absmiddle'></a>&nbsp;"; } ?>
