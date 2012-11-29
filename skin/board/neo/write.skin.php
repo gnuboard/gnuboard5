@@ -341,8 +341,8 @@ function fwrite_submit(f)
         return false;
     }
 
-    document.getElementById('btn_submit').disabled = true;
-    document.getElementById('btn_list').disabled = true;
+    //document.getElementById('btn_submit').disabled = true;
+    //document.getElementById('btn_list').disabled = true;
 
     <?
     if ($g4['https_url'])

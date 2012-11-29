@@ -944,7 +944,7 @@ function view_file_link($file, $width, $height, $content='')
     if (preg_match("/\.({$config['cf_image_extension']})$/i", $file))
         // 이미지에 속성을 주지 않는 이유는 이미지 클릭시 원본 이미지를 보여주기 위한것임
         // 게시판설정 이미지보다 크다면 스킨의 자바스크립트에서 이미지를 줄여준다
-        return "<img src='{$g4['path']}/data/file/{$board['bo_table']}/".urlencode($file)."' name='target_resize_image[]' onclick='image_window(this);' style='cursor:pointer;' title='$content'>";
+        return "<img src='{$g4['path']}/data/file/{$board['bo_table']}/".urlencode($file)."' onclick='image_window(this);' alt='{$content}'>";
     /*
     // 110106 : FLASH XSS 공격으로 인하여 코드 자체를 막음
     else if (preg_match("/\.($config[cf_flash_extension])$/i", $file))

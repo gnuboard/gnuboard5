@@ -48,10 +48,12 @@ if ($is_nogood) $colspan++;
     </form>
 </div>
 
-<div>
-    <? if ($rss_href) { ?><a href="<?=$rss_href?>">RSS</a><? } ?>
-    <? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?>
-</div>
+<? if ($rss_href || $write_href) {?>
+<ul>
+    <? if ($rss_href) { ?><li><a href="<?=$rss_href?>">RSS</a></li><? } ?>
+    <? if ($write_href) { ?><li><a href="<?=$write_href?>">글쓰기</a></li><? } ?>
+</ul>
+<? } ?>
 
 <!-- 게시판 목록 시작 -->
 <form id="fboardlist" name="fboardlist" method="post">
@@ -130,24 +132,24 @@ for ($i=0; $i<count($list); $i++) {
 </form>
 
 <div>
-    <div>
-    <? if ($list_href) { ?>
-    <a href="<?=$list_href?>">목록</a>
-    <? } ?>
-    <? if ($is_checkbox) { ?>
-    <a href="javascript:select_delete();">선택삭제</a>
-    <a href="javascript:select_copy('copy');">선택복사</a>
-    <a href="javascript:select_copy('move');">선택이동</a>
-    <? } ?>
-    </div>
+    <ul>
+        <? if ($list_href) { ?>
+        <li><a href="<?=$list_href?>">목록</a></li>
+        <? } ?>
+        <? if ($is_checkbox) { ?>
+        <li><a href="javascript:select_delete();">선택삭제</a></li>
+        <li><a href="javascript:select_copy('copy');">선택복사</a></li>
+        <li><a href="javascript:select_copy('move');">선택이동</a></li>
+        <? } ?>
+    </ul>
 
-    <div>
-        <? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?>
-    </div>
+    <ul>
+        <li><? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?></li>
+    </ul>
 </div>
 
 <!-- 페이지 -->
-<div>
+<div id="pg">
     <? if ($prev_part_href) { echo '<a href="'.$prev_part_href.'">이전검색</a>'; } ?>
     <?=$write_pages?>
     <? if ($next_part_href) { echo '<a href="'.$next_part_href.'">다음검색</a>'; } ?>

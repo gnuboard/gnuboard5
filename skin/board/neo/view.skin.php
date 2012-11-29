@@ -3,6 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 링크 버튼 -->
+<? if ($update_href || $deleter_href) {?>
 <ul>
 <? if ($update_href) { ?>
     <li><a href="<?=$update_href?>">수정</a></li>
@@ -11,6 +12,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <li><a href="<?=$delete_href?>">삭제</a></li>
 <? } ?>
 </ul>
+<? } ?>
 
 <ul>
 <?
@@ -110,40 +112,34 @@ ob_end_flush();
         <ul>
     </section>
 
-    <div>
-        <?
-        // 파일 출력
-        for ($i=0; $i<=count($view['file']); $i++) {
-            if ($view['file'][$i]['view'])
-                echo $view['file'][$i]['view'];
-        }
-        ?>
-    </div>
+    <section>
+        <h2>본문</h2>
+        <div>
+            <?
+            // 파일 출력
+            for ($i=0; $i<=count($view['file']); $i++) {
+                if ($view['file'][$i]['view'])
+                    echo $view['file'][$i]['view'];
+            }
+            ?>
+        </div>
 
-    <p><?=$view['content'];?></p>
+        <p><?=$view['content'];?></p>
+        <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
+        <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
 
-    <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
-    <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
+        <? if ($is_signature) { ?><p><?=$signature?></p><? } ?>
 
-    <? if ($is_signature) { ?><p><?=$signature?></p><? } ?>
+        <? if ($scrap_href || $trackback_url || $good_href || $nogood_href) { ?>
+        <ul>
+            <? if ($scrap_href) { ?><li><a href="javascript:;" onclick="win_scrap('$scrap_href');">스크랩</a></li><? } ?>
+            <? if ($trackback_url) { ?><li><a href="javascript:trackback_send_server('<?=$trackback_url?>');">트랙백주소</a></li><?}?>
+            <? if ($good_href) {?><li>추천 <?=number_format($view['wr_good'])?> <a href="<?=$good_href?>" target="hiddenframe">추천</a></li><? } ?>
+            <? if ($nogood_href) {?><li>비추천 <?=number_format($view['wr_nogood'])?> <a href="<?=$nogood_href?>" target="hiddenframe">비추천</a></li><? } ?>
+        </ul>
+        <? } ?>
 
-    <? if ($scrap_href) { ?><a href="javascript:;" onclick="win_scrap('$scrap_href');">스크랩</a><? } ?>
-
-    <? if ($trackback_url) { ?><a href="javascript:trackback_send_server('<?=$trackback_url?>');">트랙백주소</a><?}?>
-
-    <? if ($good_href) {?>
-    <div>
-        <div>추천 <?=number_format($view['wr_good'])?></div>
-        <div><a href="<?=$good_href?>" target="hiddenframe">추천</a></div>
-    </div>
-    <? } ?>
-
-    <? if ($nogood_href) {?>
-    <div>
-        <div>비추천 <?=number_format($view['wr_nogood'])?></div>
-        <div><a href="<?=$nogood_href?>" target="hiddenframe">비추천</a></div>
-    </div>
-    <? } ?>
+    </section>
 
     <?
     // 코멘트 입출력
@@ -152,15 +148,15 @@ ob_end_flush();
 
 </article>
 
-<div>
-    <? if ($prev_href) { ?><a href="<?=$prev_href?>">이전</a><? } ?>
-    <? if ($next_href) { ?><a href="<?=$next_href?>">다음</a><? } ?>
-</div>
+<ul>
+    <? if ($prev_href) { ?><li><a href="<?=$prev_href?>">이전</a></li><? } ?>
+    <? if ($next_href) { ?><li><a href="<?=$next_href?>">다음</a></li><? } ?>
+</ul>
 
 <!-- 링크 버튼 -->
-<div>
+<ul>
     <?=$link_buttons?>
-</div>
+</ul>
 
 <script>
 function file_download(link, file) {
@@ -170,9 +166,8 @@ function file_download(link, file) {
 </script>
 
 <script src="<?=$g4['path']?>/js/board.js"></script>
-<script>
-window.onload=function() {
-    resizeBoardImage(<?=(int)$board['bo_image_width']?>);
-}
-</script>
 <!-- 게시글 보기 끝 -->
+
+<script>
+//이미지등비율리사이즈 스크립트 추가 요망ㅎ
+</script>

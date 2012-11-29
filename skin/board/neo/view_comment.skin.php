@@ -38,11 +38,13 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
                 <dt>작성일</dt>
                 <dd><time datetime="<?=date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime']))?>"><?=$list[$i]['datetime']?></time></dd>
             </dl>
-            <div>
-                <? if ($list[$i]['is_reply']) { ?><a href="javascript:comment_box('<?=$comment_id?>', 'c');">답변</a><? } ?>
-                <? if ($list[$i]['is_edit']) { ?><a href="javascript:comment_box('<?=$comment_id?>', 'cu');">수정</a><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><a href="javascript:comment_delete('<?=$list[$i]['del_link']?>');">삭제</a><? } ?>
-            </div>
+            <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) { ?>
+            <ul>
+                <? if ($list[$i]['is_reply']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'c');">답변</a></li><? } ?>
+                <? if ($list[$i]['is_edit']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'cu');">수정</a></li><? } ?>
+                <? if ($list[$i]['is_del'])  { ?><li><a href="javascript:comment_delete('<?=$list[$i]['del_link']?>');">삭제</a></li><? } ?>
+            </ul>
+            <? } ?>
         </header>
         <!-- 댓글 출력 -->
         <p><?=$str?></p>

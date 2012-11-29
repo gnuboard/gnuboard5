@@ -205,7 +205,7 @@ if ($member[mb_id] && ($is_admin == 'super' || $group[gr_admin] == $member[mb_id
 if (!($board[bo_use_comment] && $cwin))
     include_once("./board_head.php");
 
-echo "<script type=\"text/javascript\" src=\"$g4[path]/js/sideview.js\"></script>\n";
+echo "<script src=\"$g4[path]/js/sideview.js\"></script>";
 
 if (!($board[bo_use_comment] && $cwin)) {
     // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
