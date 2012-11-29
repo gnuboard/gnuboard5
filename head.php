@@ -13,6 +13,8 @@ include_once($g4['path'].'/lib/popular.lib.php');
 if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
 ?>
 
+<p style="text-align:center">작업 중입니다. 일부 기능은 정상적으로 동작하지 않을 수 있습니다.</p>
+
 <header>
 <h1><?=$g4['title']?> <?=$config['cf_title']?></h1>
 <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
