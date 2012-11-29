@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 이호경님 제안 코드
 session_unset(); // 모든 세션변수를 언레지스터 시켜줌 
@@ -18,9 +18,9 @@ if ($url) {
 
     $link = $url;
 } else if ($bo_table) {
-    $link = "$g4[bbs_path]/board.php?bo_table=$bo_table";
+    $link = "$g4['bbs_path']/board.php?bo_table=$bo_table";
 } else {
-    $link = $g4[path];
+    $link = $g4['path'];
 }
 
 goto_url($link);

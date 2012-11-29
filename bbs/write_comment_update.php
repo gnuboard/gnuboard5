@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 090710
 if (substr_count($wr_content, "&#") > 50) {
@@ -9,7 +9,7 @@ if (substr_count($wr_content, "&#") > 50) {
 
 @include_once("$board_skin_path/write_comment_update.head.skin.php");
 
-$g4[title] = $wr_subject . "코멘트입력";
+$g4['title'] = $wr_subject . "코멘트입력";
 
 $w = $_POST["w"];
 $wr_name  = strip_tags($_POST["wr_name"]);
@@ -51,7 +51,7 @@ if ($row[prev_md5] == $curr_md5 && $w != 'cu' && !$is_admin)
 
 $wr = get_write($write_table, $wr_id);
 if (!$wr[wr_id]) 
-    alert("글이 존재하지 않습니다.\\n\\n글이 삭제되었거나 이동하였을 수 있습니다."); 
+    alert("글이 존재하지 않습니다..PHP_EOL.PHP_EOL.글이 삭제되었거나 이동하였을 수 있습니다."); 
 
 // 자동등록방지 검사
 //include_once ("./norobot_check.inc.php");
@@ -90,12 +90,12 @@ if ($w == "c") // 코멘트 입력
 {
     /*
     if ($member[mb_point] + $board[bo_comment_point] < 0 && !$is_admin)
-        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 코멘트쓰기(".number_format($board[bo_comment_point]).")가 불가합니다.\\n\\n포인트를 적립하신 후 다시 코멘트를 써 주십시오.");
+        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 코멘트쓰기(".number_format($board[bo_comment_point]).")가 불가합니다..PHP_EOL.PHP_EOL.포인트를 적립하신 후 다시 코멘트를 써 주십시오.");
     */
     // 코멘트쓰기 포인트설정시 회원의 포인트가 음수인 경우 코멘트를 쓰지 못하던 버그를 수정 (곱슬최씨님)
     $tmp_point = ($member[mb_point] > 0) ? $member[mb_point] : 0;
     if ($tmp_point + $board[bo_comment_point] < 0 && !$is_admin)
-        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 코멘트쓰기(".number_format($board[bo_comment_point]).")가 불가합니다.\\n\\n포인트를 적립하신 후 다시 코멘트를 써 주십시오.");
+        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 코멘트쓰기(".number_format($board[bo_comment_point]).")가 불가합니다..PHP_EOL.PHP_EOL.포인트를 적립하신 후 다시 코멘트를 써 주십시오.");
 
     // 코멘트 답변
     if ($comment_id) 
@@ -104,12 +104,12 @@ if ($w == "c") // 코멘트 입력
                   where wr_id = '$comment_id' ";
         $reply_array = sql_fetch($sql);
         if (!$reply_array[wr_id])
-            alert("답변할 코멘트가 없습니다.\\n\\n답변하는 동안 코멘트가 삭제되었을 수 있습니다.");
+            alert("답변할 코멘트가 없습니다..PHP_EOL.PHP_EOL.답변하는 동안 코멘트가 삭제되었을 수 있습니다.");
 
         $tmp_comment = $reply_array[wr_comment];
 
         if (strlen($reply_array[wr_comment_reply]) == 5)
-            alert("더 이상 답변하실 수 없습니다.\\n\\n답변은 5단계 까지만 가능합니다.");
+            alert("더 이상 답변하실 수 없습니다..PHP_EOL.PHP_EOL.답변은 5단계 까지만 가능합니다.");
 
         $reply_len = strlen($reply_array[wr_comment_reply]) + 1;
         if ($board[bo_reply_order]) {
@@ -140,7 +140,7 @@ if ($w == "c") // 코멘트 입력
         if (!$row[reply])
             $reply_char = $begin_reply_char;
         else if ($row[reply] == $end_reply_char) // A~Z은 26 입니다.
-            alert("더 이상 답변하실 수 없습니다.\\n\\n답변은 26개 까지만 가능합니다.");
+            alert("더 이상 답변하실 수 없습니다..PHP_EOL.PHP_EOL.답변은 26개 까지만 가능합니다.");
         else
             $reply_char = chr(ord($row[reply]) + $reply_number);
 
@@ -219,9 +219,9 @@ if ($w == "c") // 코멘트 입력
 
         $subject = "'{$board[bo_subject]}' 게시판에 {$str}글이 올라왔습니다.";
         // 4.00.15 - 메일로 보내는 코멘트의 바로가기 링크 수정
-        $link_url = "$g4[url]/$g4[bbs]/board.php?bo_table=$bo_table&wr_id=$wr_id&$qstr#c_{$comment_id}";
+        $link_url = "$g4[url]/$g4[bbs]/board.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;$qstr#c_{$comment_id}";
 
-        include_once("$g4[path]/lib/mailer.lib.php");
+        include_once("$g4['path']/lib/mailer.lib.php");
 
         ob_start();
         include_once ("./write_update_mail.php");
@@ -339,5 +339,5 @@ else if ($w == "cu") // 코멘트 수정
 @include_once("$board_skin_path/write_comment_update.skin.php");
 @include_once("$board_skin_path/write_comment_update.tail.skin.php");
 
-goto_url("./board.php?bo_table=$bo_table&wr_id=$wr[wr_parent]&page=$page" . $qstr . "&cwin=$cwin#c_{$comment_id}");
+goto_url("./board.php?bo_table=$bo_table&amp;wr_id=$wr[wr_parent]&amp;page=$page" . $qstr . "&amp;cwin=$cwin#c_{$comment_id}");
 ?>

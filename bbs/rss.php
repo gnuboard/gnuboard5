@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 특수문자 변환
 function specialchars_replace($str, $len=0) {
@@ -62,7 +62,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     echo "<item>\n";
     echo "<title>".specialchars_replace($row[wr_subject])."</title>\n";
-    echo "<link>".specialchars_replace("$g4[url]/$g4[bbs]/board.php?bo_table=$bo_table&wr_id=$row[wr_id]")."</link>\n";
+    echo "<link>".specialchars_replace("$g4[url]/$g4[bbs]/board.php?bo_table=$bo_table&amp;wr_id=$row[wr_id]")."</link>\n";
     echo "<description><![CDATA[".$file . conv_content($row[wr_content], $html)."]]></description>\n";
     echo "<dc:creator>".specialchars_replace($row[wr_name])."</dc:creator>\n";
     $date = $row[wr_datetime];

@@ -13,11 +13,11 @@ $sql_search = "";
 if ($sca || $stx) {
     // where 문을 얻음
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
-    $search_href = "./board.php?bo_table=$bo_table&page=$page" . $qstr;
+    $search_href = "./board.php?bo_table=$bo_table&amp;page=$page" . $qstr;
     $list_href = "./board.php?bo_table=$bo_table";
 } else {
     $search_href = "";
-    $list_href = "./board.php?bo_table=$bo_table&page=$page";
+    $list_href = "./board.php?bo_table=$bo_table&amp;page=$page";
 }
 
 if (!$board[bo_use_list_view]) {
@@ -47,14 +47,14 @@ if (!$board[bo_use_list_view]) {
 $prev_href = "";
 if ($prev[wr_id]) {
     $prev_wr_subject = get_text(cut_str($prev[wr_subject], 255));
-    $prev_href = "./board.php?bo_table=$bo_table&wr_id=$prev[wr_id]&page=$page" . $qstr;
+    $prev_href = "./board.php?bo_table=$bo_table&amp;wr_id=$prev[wr_id]&amp;page=$page" . $qstr;
 }
 
 // 다음글 링크
 $next_href = "";
 if ($next[wr_id]) {
     $next_wr_subject = get_text(cut_str($next[wr_subject], 255));
-    $next_href = "./board.php?bo_table=$bo_table&wr_id=$next[wr_id]&page=$page" . $qstr;
+    $next_href = "./board.php?bo_table=$bo_table&amp;wr_id=$next[wr_id]&amp;page=$page" . $qstr;
 }
 
 // 쓰기 링크
@@ -65,30 +65,30 @@ if ($member[mb_level] >= $board[bo_write_level])
 // 답변 링크
 $reply_href = "";
 if ($member[mb_level] >= $board[bo_reply_level])
-    $reply_href = "./write.php?w=r&bo_table=$bo_table&wr_id=$wr_id" . $qstr;
+    $reply_href = "./write.php?w=r&bo_table=$bo_table&amp;wr_id=$wr_id" . $qstr;
 
 // 수정, 삭제 링크
 $update_href = $delete_href = "";
 // 로그인중이고 자신의 글이라면 또는 관리자라면 패스워드를 묻지 않고 바로 수정, 삭제 가능
 if (($member[mb_id] && ($member[mb_id] == $write[mb_id])) || $is_admin) {
-    $update_href = "./write.php?w=u&bo_table=$bo_table&wr_id=$wr_id&page=$page" . $qstr;
-    $delete_href = "javascript:del('./delete.php?bo_table=$bo_table&wr_id=$wr_id&page=$page".urldecode($qstr)."');";
+    $update_href = "./write.php?w=u&bo_table=$bo_table&amp;wr_id=$wr_id&amp;page=$page" . $qstr;
+    $delete_href = "javascript:del('./delete.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;page=$page".urldecode($qstr)."');";
     if ($is_admin) 
     {
         set_session("ss_delete_token", $token = uniqid(time()));
-        $delete_href = "javascript:del('./delete.php?bo_table=$bo_table&wr_id=$wr_id&token=$token&page=$page".urldecode($qstr)."');";
+        $delete_href = "javascript:del('./delete.php?bo_table=$bo_table&amp;wr_id=$wr_id&token=$token&amp;page=$page".urldecode($qstr)."');";
     }
 }
 else if (!$write[mb_id]) { // 회원이 쓴 글이 아니라면
-    $update_href = "./password.php?w=u&bo_table=$bo_table&wr_id=$wr_id&page=$page" . $qstr;
-    $delete_href = "./password.php?w=d&bo_table=$bo_table&wr_id=$wr_id&page=$page" . $qstr;
+    $update_href = "./password.php?w=u&bo_table=$bo_table&amp;wr_id=$wr_id&amp;page=$page" . $qstr;
+    $delete_href = "./password.php?w=d&bo_table=$bo_table&amp;wr_id=$wr_id&amp;page=$page" . $qstr;
 }
 
 // 최고, 그룹관리자라면 글 복사, 이동 가능
 $copy_href = $move_href = "";
 if ($write[wr_reply] == "" && ($is_admin == "super" || $is_admin == "group")) {
-    $copy_href = "javascript:win_open('./move.php?sw=copy&bo_table=$bo_table&wr_id=$wr_id&page=$page".$qstr."', 'boardcopy', 'left=50, top=50, width=500, height=550, scrollbars=1');";
-    $move_href = "javascript:win_open('./move.php?sw=move&bo_table=$bo_table&wr_id=$wr_id&page=$page".$qstr."', 'boardmove', 'left=50, top=50, width=500, height=550, scrollbars=1');";
+    $copy_href = "javascript:win_open('./move.php?sw=copy&bo_table=$bo_table&amp;wr_id=$wr_id&amp;page=$page".$qstr."', 'boardcopy', 'left=50, top=50, width=500, height=550, scrollbars=1');";
+    $move_href = "javascript:win_open('./move.php?sw=move&bo_table=$bo_table&amp;wr_id=$wr_id&amp;page=$page".$qstr."', 'boardmove', 'left=50, top=50, width=500, height=550, scrollbars=1');";
 }
 
 $scrap_href = "";
@@ -96,15 +96,15 @@ $good_href = "";
 $nogood_href = "";
 if ($member[mb_id]) {
     // 스크랩 링크
-    $scrap_href = "./scrap_popin.php?bo_table=$bo_table&wr_id=$wr_id";
+    $scrap_href = "./scrap_popin.php?bo_table=$bo_table&amp;wr_id=$wr_id";
 
     // 추천 링크
     if ($board[bo_use_good])
-        $good_href = "./good.php?bo_table=$bo_table&wr_id=$wr_id&good=good";
+        $good_href = "./good.php?bo_table=$bo_table&amp;wr_id=$wr_id&good=good";
 
     // 비추천 링크
     if ($board[bo_use_nogood])
-        $nogood_href = "./good.php?bo_table=$bo_table&wr_id=$wr_id&good=nogood";
+        $nogood_href = "./good.php?bo_table=$bo_table&amp;wr_id=$wr_id&good=nogood";
 }
 
 $view = get_view($write, $board, $board_skin_path, 255);
@@ -147,7 +147,7 @@ if ($board[bo_use_signature] && $view[mb_id])
     $signature = conv_content($signature, 1);
 }
 
-echo "<script type='text/javascript' src='{$g4['path']}/js/ajax.js'></script>";
+echo "<script src='{$g4['path']}/js/ajax.js'></script>";
 include_once("$board_skin_path/view.skin.php");
 
 @include_once("$board_skin_path/view.tail.skin.php");

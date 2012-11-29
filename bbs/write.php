@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 set_session('ss_bo_table', $_REQUEST['bo_table']);
 set_session('ss_wr_id', $_REQUEST['wr_id']);
@@ -8,15 +8,15 @@ set_session('ss_wr_id', $_REQUEST['wr_id']);
 if (!$board[bo_table])
 {
     if ($cwin) // 코멘트 보기
-       alert_close("존재하지 않는 게시판입니다.", $g4[path]);
+       alert_close("존재하지 않는 게시판입니다.", $g4['path']);
     else
-       alert("존재하지 않는 게시판입니다.", $g4[path]);
+       alert("존재하지 않는 게시판입니다.", $g4['path']);
 }
 
 if (!$bo_table)
-    alert("bo_table 값이 넘어오지 않았습니다.\\n\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", $g4[path]);
+    alert("bo_table 값이 넘어오지 않았습니다..PHP_EOL.PHP_EOL.write.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", $g4['path']);
 
-@include_once ("$g4[path]/skin/board/write.head.skin.php");
+@include_once ("$g4['path']/skin/board/write.head.skin.php");
 @include_once ("$board_skin_path/write.head.skin.php");
 
 $notice_array = explode("\n", trim($board[bo_notice]));
@@ -24,25 +24,25 @@ $notice_array = explode("\n", trim($board[bo_notice]));
 if ($w == "")
 {
     if (isset($wr_id))
-        alert("글쓰기에는 \$wr_id 값을 사용하지 않습니다.", "$g4[bbs_path]/board.php?bo_table=$bo_table");
+        alert("글쓰기에는 \$wr_id 값을 사용하지 않습니다.", "$g4['bbs_path']/board.php?bo_table=$bo_table");
 
     if ($member[mb_level] < $board[bo_write_level]) {
         if ($member[mb_id])
             alert("글을 쓸 권한이 없습니다.");
         else
-            alert("글을 쓸 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.", "./login.php?$qstr&url=".urlencode("$_SERVER[PHP_SELF]?bo_table=$bo_table"));
+            alert("글을 쓸 권한이 없습니다..PHP_EOL.PHP_EOL.회원이시라면 로그인 후 이용해 보십시오.", "./login.php?$qstr&amp;url=".urlencode("$_SERVER[PHP_SELF]?bo_table=$bo_table"));
     }
 
     /*
     if ($member[mb_point] + $board[bo_write_point] < 0 && !$is_admin)
-        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글쓰기(".number_format($board[bo_write_point]).")가 불가합니다.\\n\\n포인트를 적립하신 후 다시 글쓰기 해 주십시오.");
+        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글쓰기(".number_format($board[bo_write_point]).")가 불가합니다..PHP_EOL.PHP_EOL.포인트를 적립하신 후 다시 글쓰기 해 주십시오.");
     */
 
     // 음수도 true 인것을 왜 이제야 알았을까?
     //$tmp_point = $member[mb_point] ? $member[mb_point] : 0;
     $tmp_point = ($member[mb_point] > 0) ? $member[mb_point] : 0;
     if ($tmp_point + $board[bo_write_point] < 0 && !$is_admin)
-        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글쓰기(".number_format($board[bo_write_point]).")가 불가합니다.\\n\\n포인트를 적립하신 후 다시 글쓰기 해 주십시오.");
+        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글쓰기(".number_format($board[bo_write_point]).")가 불가합니다..PHP_EOL.PHP_EOL.포인트를 적립하신 후 다시 글쓰기 해 주십시오.");
 
     $title_msg = "글쓰기";
 }
@@ -56,7 +56,7 @@ else if ($w == "u")
         if ($member[mb_id])
             alert("글을 수정할 권한이 없습니다.");
         else
-            alert("글을 수정할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.", "./login.php?$qstr&url=".urlencode("$_SERVER[PHP_SELF]?bo_table=$bo_table"));
+            alert("글을 수정할 권한이 없습니다..PHP_EOL.PHP_EOL.회원이시라면 로그인 후 이용해 보십시오.", "./login.php?$qstr&amp;url=".urlencode("$_SERVER[PHP_SELF]?bo_table=$bo_table"));
     }
 
     $len = strlen($write[wr_reply]);
@@ -71,7 +71,7 @@ else if ($w == "u")
                 and wr_is_comment = 0 ";
     $row = sql_fetch($sql);
     if ($row[cnt] && !$is_admin)
-        alert("이 글과 관련된 답변글이 존재하므로 수정 할 수 없습니다.\\n\\n답변글이 있는 원글은 수정할 수 없습니다.");
+        alert("이 글과 관련된 답변글이 존재하므로 수정 할 수 없습니다..PHP_EOL.PHP_EOL.답변글이 있는 원글은 수정할 수 없습니다.");
 
     // 코멘트 달린 원글의 수정 여부
     $sql = " select count(*) as cnt from $write_table
@@ -80,7 +80,7 @@ else if ($w == "u")
                 and wr_is_comment = 1 ";
     $row = sql_fetch($sql);
     if ($row[cnt] >= $board[bo_count_modify] && !$is_admin)
-        alert("이 글과 관련된 코멘트가 존재하므로 수정 할 수 없습니다.\\n\\n코멘트가 {$board[bo_count_modify]}건 이상 달린 원글은 수정할 수 없습니다.");
+        alert("이 글과 관련된 코멘트가 존재하므로 수정 할 수 없습니다..PHP_EOL.PHP_EOL.코멘트가 {$board[bo_count_modify]}건 이상 달린 원글은 수정할 수 없습니다.");
 
     $title_msg = "글수정";
 }
@@ -90,17 +90,17 @@ else if ($w == "r")
         if ($member[mb_id])
             alert("글을 답변할 권한이 없습니다.");
         else
-            alert("글을 답변할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.", "./login.php?$qstr&url=".urlencode("$_SERVER[PHP_SELF]?bo_table=$bo_table"));
+            alert("글을 답변할 권한이 없습니다..PHP_EOL.PHP_EOL.회원이시라면 로그인 후 이용해 보십시오.", "./login.php?$qstr&amp;url=".urlencode("$_SERVER[PHP_SELF]?bo_table=$bo_table"));
     }
 
     /*
     if ($member[mb_point] + $board[bo_comment_point] < 0)
-        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글답변(".number_format($board[bo_comment_point]).")가 불가합니다.\\n\\n포인트를 적립하신 후 다시 글답변 해 주십시오.");
+        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글답변(".number_format($board[bo_comment_point]).")가 불가합니다..PHP_EOL.PHP_EOL.포인트를 적립하신 후 다시 글답변 해 주십시오.");
     */
 
     $tmp_point = $member[mb_point] ? $member[mb_point] : 0;
     if ($tmp_point + $board[bo_write_point] < 0 && !$is_admin)
-        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글답변(".number_format($board[bo_comment_point]).")가 불가합니다.\\n\\n포인트를 적립하신 후 다시 글답변 해 주십시오.");
+        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글답변(".number_format($board[bo_comment_point]).")가 불가합니다..PHP_EOL.PHP_EOL.포인트를 적립하신 후 다시 글답변 해 주십시오.");
 
     //if (preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board[bo_notice]))
     if (in_array((int)$wr_id, $notice_array))
@@ -131,7 +131,7 @@ else if ($w == "r")
 
     // 최대 답변은 테이블에 잡아놓은 wr_reply 사이즈만큼만 가능합니다.
     if (strlen($reply_array[wr_reply]) == 10)
-        alert("더 이상 답변하실 수 없습니다.\\n\\n답변은 10단계 까지만 가능합니다.");
+        alert("더 이상 답변하실 수 없습니다..PHP_EOL.PHP_EOL.답변은 10단계 까지만 가능합니다.");
 
     $reply_len = strlen($reply_array[wr_reply]) + 1;
     if ($board[bo_reply_order]) {
@@ -151,7 +151,7 @@ else if ($w == "r")
     if (!$row[reply])
         $reply_char = $begin_reply_char;
     else if ($row[reply] == $end_reply_char) // A~Z은 26 입니다.
-        alert("더 이상 답변하실 수 없습니다.\\n\\n답변은 26개 까지만 가능합니다.");
+        alert("더 이상 답변하실 수 없습니다..PHP_EOL.PHP_EOL.답변은 26개 까지만 가능합니다.");
     else
         $reply_char = chr(ord($row[reply]) + $reply_number);
 
@@ -166,7 +166,7 @@ else if ($w == "r")
 if ($group[gr_use_access])
 {
     if (!$member[mb_id])
-        alert("접근 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.", "login.php?$qstr&url=".urlencode("$_SERVER[PHP_SELF]?bo_table=$bo_table"));
+        alert("접근 권한이 없습니다..PHP_EOL.PHP_EOL.회원이시라면 로그인 후 이용해 보십시오.", "login.php?$qstr&amp;url=".urlencode("$_SERVER[PHP_SELF]?bo_table=$bo_table"));
 
     if ($is_admin == 'super' || $group[gr_admin] == $member[mb_id] || $board[bo_admin] == $member[mb_id])
         ; // 통과
@@ -175,14 +175,14 @@ if ($group[gr_use_access])
         $sql = " select gr_id from $g4[group_member_table] where gr_id = '$board[gr_id]' and mb_id = '$member[mb_id]' ";
         $row = sql_fetch($sql);
         if (!$row[gr_id])
-            alert("접근 권한이 없으므로 글쓰기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.");
+            alert("접근 권한이 없으므로 글쓰기가 불가합니다..PHP_EOL.PHP_EOL.궁금하신 사항은 관리자에게 문의 바랍니다.");
     }
 }
 
-$g4[title] = "$group[gr_subject] > $board[bo_subject] > " . $title_msg;
+$g4['title'] = "$group[gr_subject] > $board[bo_subject] > " . $title_msg;
 
 if (($w == "u" || $w == "r") && !$write[wr_id])
-    alert("글이 존재하지 않습니다.\\n\\n삭제되었거나 이동된 경우입니다.", $g4[path]);
+    alert("글이 존재하지 않습니다..PHP_EOL.PHP_EOL.삭제되었거나 이동된 경우입니다.", $g4['path']);
 
 $is_notice = false;
 if ($is_admin && $w != "r")
@@ -356,7 +356,7 @@ else
     $write_max = (int)$board[bo_write_max];
 }
 
-include_once("$g4[path]/head.sub.php");
+include_once($g4['path'].'/head.sub.php');
 include_once("./board_head.php");
 
 // 자동등록방지
@@ -397,14 +397,14 @@ if ($file_length < 0)
 include_once ("$board_skin_path/write.skin.php");
 
 if (!$member[mb_id])
-    echo "<script type='text/javascript' src='$g4[path]/js/md5.js'></script>\n";
+    echo "<script src='$g4['path']/js/md5.js'></script>\n";
 
 // 필터
-//echo "<script type='text/javascript'> var g4_cf_filter = '$config[cf_filter]'; </script>\n";
-//echo "<script type='text/javascript' src='$g4[path]/js/filter.js'></script>\n";
+//echo "<script> var g4_cf_filter = '$config[cf_filter]'; </script>\n";
+//echo "<script src='$g4['path']/js/filter.js'></script>\n";
 
 include_once("./board_tail.php");
-include_once("$g4[path]/tail.sub.php");
+include_once($g4['path'].'/tail.sub.php');
 
 @include_once ("$board_skin_path/write.tail.skin.php");
 ?>

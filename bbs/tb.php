@@ -4,9 +4,9 @@
 //
 define("_GNUBOARD_", TRUE);
 
-include_once("./_common.php");
+include_once('./_common.php');
 // 오류는 write_log() 함수로 남긴다.
-include_once("$g4[path]/lib/etc.lib.php");
+include_once("$g4['path']/lib/etc.lib.php");
 
 function tb_xml_msg($error, $msg="")
 {
@@ -40,7 +40,7 @@ $wr = sql_fetch($sql, FALSE);
 if (!$wr[wr_id] || !($_POST[title] && $_POST[excerpt] && $_POST[url] && $_POST[blog_name])) 
 {
     $tmp_dir = str_replace("/tb.php", "", $_SERVER[SCRIPT_NAME]);
-    header("location:$tmp_dir/board.php?bo_table=$bo_table&wr_id=$wr_id");
+    header("location:$tmp_dir/board.php?bo_table=$bo_table&amp;wr_id=$wr_id");
     exit;
 }
 
@@ -48,7 +48,7 @@ if (!$wr[wr_id] || !($_POST[title] && $_POST[excerpt] && $_POST[url] && $_POST[b
 if (!$to_token)
 {
     if (isset($_POST)) 
-        write_log("$g4[path]/data/log/tb.log", $_POST);
+        write_log("$g4['path']/data/log/tb.log", $_POST);
 
     echo tb_xml_msg(1, "토큰값이 넘어오지 않았습니다.");
     exit;
@@ -118,7 +118,7 @@ if ($_POST[title])
             $msg = "$write_table TABLE INSERT 오류";
     }
 
-    //write_log("$g4[path]/data/log/aaa", $msg);
+    //write_log("$g4['path']/data/log/aaa", $msg);
 
     if ($msg) // 비정상(오류)
     { 
@@ -130,7 +130,7 @@ if ($_POST[title])
         // 메일발송 사용
         if ($config[cf_email_use] && $board[bo_use_email])
         {
-            include_once("$g4[path]/lib/mailer.lib.php");
+            include_once("$g4['path']/lib/mailer.lib.php");
 
             // 관리자의 정보를 얻고
             $super_admin = get_admin("super");

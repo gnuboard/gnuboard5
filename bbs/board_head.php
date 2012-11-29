@@ -7,7 +7,7 @@ if ($board[bo_include_head])
 
 // 게시판 관리의 상단 이미지 경로
 if ($board[bo_image_head]) 
-    echo "<img src='$g4[path]/data/file/$bo_table/$board[bo_image_head]' border='0'>";
+    echo '<img src="'.$g4['path'].'/data/file/'.$bo_table.'/'.$board[bo_image_head].'">';
 
 // 게시판 관리의 상단 내용
 if ($board[bo_content_head]) 

@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$_POST[po_id]' ");
 if (!$po[po_id]) 

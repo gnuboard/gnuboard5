@@ -1,10 +1,10 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 //if (!$stx) alert("검색어가 없습니다."); 
 
-$g4[title] = "검색 : " . $stx;
-include_once("./_head.php");
+$g4['title'] = "검색 : " . $stx;
+include_once('./_head.php');
 
 if ($stx)
 {
@@ -172,7 +172,7 @@ if ($stx)
         {
             // 검색어까지 링크되면 게시판 부하가 일어남
             $list[$idx][$i] = $row;
-            $list[$idx][$i][href] = "./board.php?bo_table=$search_table[$idx]&wr_id=$row[wr_parent]";
+            $list[$idx][$i][href] = "./board.php?bo_table=$search_table[$idx]&amp;wr_id=$row[wr_parent]";
 
             if ($row[wr_is_comment]) 
             { 
@@ -216,9 +216,9 @@ if ($stx)
         $from_record = 0;
     }
 
-    $write_pages = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$search_query&gr_id=$gr_id&srows=$srows&onetable=$onetable&page=");
+    $write_pages = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$search_query&gr_id=$gr_id&srows=$srows&onetable=$onetable&amp;page=");
 
-    echo "<script type=\"text/javascript\" src=\"$g4[path]/js/sideview.js\"></script>";
+    echo "<script src=\"$g4['path']/js/sideview.js\"></script>";
 }
 
 $group_select = "<select id='gr_id' name='gr_id' class=select><option value=''>전체 분류";
@@ -231,8 +231,8 @@ $group_select .= "</select>";
 if (!$sfl) $sfl = "wr_subject";
 if (!$sop) $sop = "or";
 
-$search_skin_path = "$g4[path]/skin/search/$config[cf_search_skin]";
+$search_skin_path = "$g4['path']/skin/search/$config[cf_search_skin]";
 include_once("$search_skin_path/search.skin.php");
 
-include_once("./_tail.php");
+include_once('./_tail.php');
 ?>

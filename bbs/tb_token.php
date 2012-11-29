@@ -1,10 +1,10 @@
 <?
 // 토큰 생성
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 오류는 write_log() 로 잡는다.
-include_once("$g4[path]/lib/etc.lib.php");
-//write_log("$g4[path]/lib/log/aaa", 1);
+include_once("$g4['path']/lib/etc.lib.php");
+//write_log("$g4['path']/lib/log/aaa", 1);
 
 if (isset($g4['token_time']) == false)
     $g4['token_time'] = 3; 

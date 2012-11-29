@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 if (!$member[mb_id]) 
     alert("회원만 접근하실 수 있습니다.");
@@ -19,7 +19,7 @@ sql_query($sql);
 session_unregister("ss_mb_id");
 
 if (!$url) 
-    $url = $g4[path]; 
+    $url = $g4['path']; 
 
 alert("{$member[mb_nick]}님께서는 " . date("Y년 m월 d일") . "에 회원에서 탈퇴 하셨습니다.", $url);
 ?>

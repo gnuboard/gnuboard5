@@ -1,6 +1,6 @@
 <?
-$g4[title] = $wr_subject . "글입력";
-include_once("./_common.php");
+$g4['title'] = $wr_subject . "글입력";
+include_once('./_common.php');
 
 // 090710
 if (substr_count($wr_content, "&#") > 50) {
@@ -10,7 +10,7 @@ if (substr_count($wr_content, "&#") > 50) {
 
 @include_once("$board_skin_path/write_update.head.skin.php");
 
-include_once("$g4[path]/lib/trackback.lib.php");
+include_once("$g4['path']/lib/trackback.lib.php");
 
 /*
 $filters = explode(",", $config[cf_filter]);
@@ -30,7 +30,7 @@ for ($i=0; $i<count($filters); $i++) {
 $upload_max_filesize = ini_get('upload_max_filesize');
 
 if (empty($_POST))
-    alert("파일 또는 글내용의 크기가 서버에서 설정한 값을 넘어 오류가 발생하였습니다.\\n\\npost_max_size=".ini_get('post_max_size')." , upload_max_filesize=$upload_max_filesize\\n\\n게시판관리자 또는 서버관리자에게 문의 바랍니다.");
+    alert("파일 또는 글내용의 크기가 서버에서 설정한 값을 넘어 오류가 발생하였습니다..PHP_EOL.PHP_EOL.post_max_size=".ini_get('post_max_size')." , upload_max_filesize=$upload_max_filesize.PHP_EOL.PHP_EOL.게시판관리자 또는 서버관리자에게 문의 바랍니다.");
 
 // 리퍼러 체크
 //referer_check();
@@ -44,7 +44,7 @@ $notice_array = explode("\n", trim($board[bo_notice]));
 if ($w == "u" || $w == "r") {
     $wr = get_write($write_table, $wr_id);
     if (!$wr[wr_id])
-        alert("글이 존재하지 않습니다.\\n\\n글이 삭제되었거나 이동하였을 수 있습니다."); 
+        alert("글이 존재하지 않습니다..PHP_EOL.PHP_EOL.글이 삭제되었거나 이동하였을 수 있습니다."); 
 }
 
 // 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글은 사용일 경우에만 가능해야 함
@@ -80,7 +80,7 @@ else if ($w == "r")
 
     // 최대 답변은 테이블에 잡아놓은 wr_reply 사이즈만큼만 가능합니다.
     if (strlen($reply_array[wr_reply]) == 10)
-        alert("더 이상 답변하실 수 없습니다.\\n\\n답변은 10단계 까지만 가능합니다.");
+        alert("더 이상 답변하실 수 없습니다..PHP_EOL.PHP_EOL.답변은 10단계 까지만 가능합니다.");
 
     $reply_len = strlen($reply_array[wr_reply]) + 1;
     if ($board[bo_reply_order]) {
@@ -100,7 +100,7 @@ else if ($w == "r")
     if (!$row[reply])
         $reply_char = $begin_reply_char;
     else if ($row[reply] == $end_reply_char) // A~Z은 26 입니다.
-        alert("더 이상 답변하실 수 없습니다.\\n\\n답변은 26개 까지만 가능합니다.");
+        alert("더 이상 답변하실 수 없습니다..PHP_EOL.PHP_EOL.답변은 26개 까지만 가능합니다.");
     else
         $reply_char = chr(ord($row[reply]) + $reply_number);
 
@@ -140,8 +140,8 @@ if (!isset($_POST[wr_subject]) || !trim($_POST[wr_subject]))
     alert("제목을 입력하여 주십시오."); 
 
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
-@mkdir("$g4[path]/data/file/$bo_table", 0707);
-@chmod("$g4[path]/data/file/$bo_table", 0707);
+@mkdir("$g4['path']/data/file/$bo_table", 0707);
+@chmod("$g4['path']/data/file/$bo_table", 0707);
 
 // "인터넷옵션 > 보안 > 사용자정의수준 > 스크립팅 > Action 스크립팅 > 사용 안 함" 일 경우의 오류 처리
 // 이 옵션을 사용 안 함으로 설정할 경우 어떤 스크립트도 실행 되지 않습니다.
@@ -161,7 +161,7 @@ for ($i=0; $i<count($_FILES[bf_file][name]); $i++)
         $upload[$i][del_check] = true;
 
         $row = sql_fetch(" select bf_file from $g4[board_file_table] where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-        @unlink("$g4[path]/data/file/$bo_table/$row[bf_file]");
+        @unlink("$g4['path']/data/file/$bo_table/$row[bf_file]");
     }
     else
         $upload[$i][del_check] = false;
@@ -219,7 +219,7 @@ for ($i=0; $i<count($_FILES[bf_file][name]); $i++)
         {
             // 존재하는 파일이 있다면 삭제합니다.
             $row = sql_fetch(" select bf_file from $g4[board_file_table] where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-            @unlink("$g4[path]/data/file/$bo_table/$row[bf_file]");
+            @unlink("$g4['path']/data/file/$bo_table/$row[bf_file]");
         }
 
         // 프로그램 원래 파일명
@@ -240,7 +240,7 @@ for ($i=0; $i<count($_FILES[bf_file][name]); $i++)
         //$upload[$i][file] = abs(ip2long($_SERVER[REMOTE_ADDR])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode($filename)); 
         $upload[$i][file] = abs(ip2long($_SERVER[REMOTE_ADDR])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode(str_replace(' ', '_', $filename))); 
 
-        $dest_file = "$g4[path]/data/file/$bo_table/" . $upload[$i][file];
+        $dest_file = "$g4['path']/data/file/$bo_table/" . $upload[$i][file];
 
         // 업로드가 안된다면 에러메세지 출력하고 죽어버립니다.
         $error_code = move_uploaded_file($tmp_file, $dest_file) or die($_FILES[bf_file][error][$i]);
@@ -380,7 +380,7 @@ else if ($w == "u")
             alert("자신의 글이 아니므로 수정할 수 없습니다.");
     } else {
         if ($write[mb_id])
-            alert("로그인 후 수정하세요.", "./login.php?url=".urlencode("./board.php?bo_table=$bo_table&wr_id=$wr_id"));
+            alert("로그인 후 수정하세요.", "./login.php?url=".urlencode("./board.php?bo_table=$bo_table&amp;wr_id=$wr_id"));
     }
 
     if ($member[mb_id]) 
@@ -567,9 +567,9 @@ if (!($w == "u" || $w == "cu") && $config[cf_email_use] && $board[bo_use_email])
     $str = $warr[$w];
 
     $subject = "'{$board[bo_subject]}' 게시판에 {$str}글이 올라왔습니다.";
-    $link_url = "$g4[url]/$g4[bbs]/board.php?bo_table=$bo_table&wr_id=$wr_id&$qstr";
+    $link_url = "$g4[url]/$g4[bbs]/board.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;$qstr";
 
-    include_once("$g4[path]/lib/mailer.lib.php");
+    include_once("$g4['path']/lib/mailer.lib.php");
 
     ob_start();
     include_once ("./write_update_mail.php");
@@ -619,7 +619,7 @@ if (($w != "u" && $wr_trackback) || ($w=="u" && $wr_trackback && $re_trackback))
     $msg = send_trackback($wr_trackback, $trackback_url, $wr_subject, $board[bo_subject], $_POST[wr_content]);
     if ($msg) {
         echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>\n";
-        echo "<script type='text/javascript'>alert('$msg $wr_trackback');</script>";
+        echo "<script>alert('$msg $wr_trackback');</script>";
     }
 }
 
@@ -631,7 +631,7 @@ else
     $https_url = ".";
 
 if ($file_upload_msg)
-    alert($file_upload_msg, "{$https_url}/board.php?bo_table=$bo_table&wr_id=$wr_id&page=$page" . $qstr);
+    alert($file_upload_msg, "{$https_url}/board.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;page=$page" . $qstr);
 else
-    goto_url("{$https_url}/board.php?bo_table=$bo_table&wr_id=$wr_id&page=$page" . $qstr);
+    goto_url("{$https_url}/board.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;page=$page" . $qstr);
 ?>

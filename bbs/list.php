@@ -130,7 +130,7 @@ while ($row = sql_fetch_array($result))
     $k++;
 }
 
-$write_pages = get_paging($config[cf_write_pages], $page, $total_page, "./board.php?bo_table=$bo_table".$qstr."&page=");
+$write_pages = get_paging($config[cf_write_pages], $page, $total_page, "./board.php?bo_table=$bo_table".$qstr."&amp;page=");
 
 $list_href = '';
 $prev_part_href = '';
@@ -142,11 +142,11 @@ if ($sca || $stx)
     //if ($prev_spt >= $min_spt)
     $prev_spt = $spt - $config[cf_search_part];
     if (isset($min_spt) && $prev_spt >= $min_spt)
-        $prev_part_href = "./board.php?bo_table=$bo_table".$qstr."&spt=$prev_spt&page=1";
+        $prev_part_href = "./board.php?bo_table=$bo_table".$qstr."&spt=$prev_spt&amp;page=1";
 
     $next_spt = $spt + $config[cf_search_part];
     if ($next_spt < 0)
-        $next_part_href = "./board.php?bo_table=$bo_table".$qstr."&spt=$next_spt&page=1";
+        $next_part_href = "./board.php?bo_table=$bo_table".$qstr."&spt=$next_spt&amp;page=1";
 }
 
 $write_href = "";

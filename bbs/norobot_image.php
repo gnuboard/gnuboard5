@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 function echo_check_image($str, $width, $height, $background_color, $text_color, $grid_color)
 {

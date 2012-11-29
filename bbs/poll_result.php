@@ -1,11 +1,11 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
 if (!$po[po_id]) 
     alert_close('설문조사 정보가 없습니다.');
 
-$g4[title] = "설문조사 결과";
+$g4['title'] = "설문조사 결과";
 
 $po_subject = $po[po_subject];
 
@@ -83,14 +83,14 @@ for ($i=0; $row2=sql_fetch_array($result); $i++)
     $list3[$i][subject] = cut_str($row2[po_subject],60,"…");
 }
 
-include_once("$g4[path]/head.sub.php");
+include_once($g4['path'].'/head.sub.php');
 
-echo "<script type='text/javascript' src='$g4[path]/js/sideview.js'></script>";
+echo "<script src='$g4['path']/js/sideview.js'></script>";
 
 if (!$skin_dir) $skin_dir = "basic";
-$poll_skin_path = "$g4[path]/skin/poll/$skin_dir";
+$poll_skin_path = "$g4['path']/skin/poll/$skin_dir";
 if (!file_exists("$poll_skin_path/poll_result.skin.php")) die("skin error");
 include_once ("$poll_skin_path/poll_result.skin.php");
 
-include_once("$g4[path]/tail.sub.php");
+include_once($g4['path'].'/tail.sub.php');
 ?>

@@ -1,8 +1,8 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
-$g4[title] = "최근 게시물";
-include_once("./_head.php");
+$g4['title'] = "최근 게시물";
+include_once('./_head.php');
 
 $sql_common = " from $g4[board_new_table] a, $g4[board_table] b, $g4[group_table] c 
                where a.bo_table = b.bo_table and b.gr_id = c.gr_id and b.bo_use_search = '1' ";
@@ -88,7 +88,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i][bo_table] = $row[bo_table];
     $list[$i][name] = $name;
     $list[$i][comment] = $comment;
-    $list[$i][href] = "./board.php?bo_table=$row[bo_table]&wr_id=$row2[wr_id]{$comment_link}";
+    $list[$i][href] = "./board.php?bo_table=$row[bo_table]&amp;wr_id=$row2[wr_id]{$comment_link}";
     $list[$i][datetime] = $datetime;
     $list[$i][datetime2] = $datetime2;
 
@@ -97,13 +97,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i][wr_subject] = $row2[wr_subject];
 }
 
-$write_pages = get_paging($config[cf_write_pages], $page, $total_page, "?gr_id=$gr_id&view=$view&mb_id=$mb_id&page=");
+$write_pages = get_paging($config[cf_write_pages], $page, $total_page, "?gr_id=$gr_id&view=$view&mb_id=$mb_id&amp;page=");
 
-$new_skin_path = "$g4[path]/skin/new/$config[cf_new_skin]";
+$new_skin_path = "$g4['path']/skin/new/$config[cf_new_skin]";
 
-echo "<script type=\"text/javascript\" src=\"$g4[path]/js/sideview.js\"></script>\n";
+echo "<script src=\"$g4['path']/js/sideview.js\"></script>\n";
 
 include_once("$new_skin_path/new.skin.php");
 
-include_once("./_tail.php");
+include_once('./_tail.php');
 ?>

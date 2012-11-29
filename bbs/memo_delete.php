@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 if (!$member[mb_id]) 
     alert("회원만 이용하실 수 있습니다.");

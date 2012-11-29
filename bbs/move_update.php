@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 게시판 관리자 이상 복사, 이동 가능
 if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super') 
@@ -9,7 +9,7 @@ if ($sw != "move" && $sw != "copy")
     alert("sw 값이 제대로 넘어오지 않았습니다.");
 
 // 원본 파일 디렉토리
-$src_dir = "$g4[path]/data/file/$bo_table";
+$src_dir = "$g4['path']/data/file/$bo_table";
 
 $save = array();
 $save_count_write = 0;
@@ -28,8 +28,8 @@ while ($row = sql_fetch_array($result))
         $move_bo_table = $_POST['chk_bo_table'][$i];
         $move_write_table = $g4['write_prefix'] . $move_bo_table;
 
-        $src_dir = "$g4[path]/data/file/$bo_table"; // 원본 디렉토리
-        $dst_dir = "$g4[path]/data/file/$move_bo_table"; // 복사본 디렉토리
+        $src_dir = "$g4['path']/data/file/$bo_table"; // 원본 디렉토리
+        $dst_dir = "$g4['path']/data/file/$move_bo_table"; // 복사본 디렉토리
 
         $count_write = 0;
         $count_comment = 0;
@@ -174,11 +174,11 @@ if ($sw == "move")
 }
 
 $msg = "해당 게시물을 선택한 게시판으로 $act 하였습니다.";
-$opener_href = "./board.php?bo_table=$bo_table&page=$page&$qstr";
+$opener_href = "./board.php?bo_table=$bo_table&amp;page=$page&amp;$qstr";
 
 echo <<<HEREDOC
 <meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'> 
-<script type="text/javascript">
+<script>
 alert("{$msg}");
 opener.document.location.href = "{$opener_href}";
 window.close();

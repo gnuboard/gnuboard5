@@ -66,7 +66,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         {
             if ($row[mb_id] == $member[mb_id] || $is_admin) 
             {
-                $list[$i][del_link]  = "./delete_comment.php?bo_table=$bo_table&comment_id=$row[wr_id]&token=$token&cwin=$cwin&page=$page".$qstr;
+                $list[$i][del_link]  = "./delete_comment.php?bo_table=$bo_table&comment_id=$row[wr_id]&token=$token&amp;cwin=$cwin&amp;page=$page".$qstr;
                 $list[$i][is_edit]   = true;
                 $list[$i][is_del]    = true;
             }
@@ -74,7 +74,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         else 
         {
             if (!$row[mb_id]) {
-                $list[$i][del_link] = "./password.php?w=x&bo_table=$bo_table&comment_id=$row[wr_id]&cwin=$cwin&page=$page".$qstr;
+                $list[$i][del_link] = "./password.php?w=x&bo_table=$bo_table&comment_id=$row[wr_id]&amp;cwin=$cwin&amp;page=$page".$qstr;
                 $list[$i][is_del]   = true;
             }
         }
@@ -113,11 +113,11 @@ else
 include_once("$board_skin_path/view_comment.skin.php");
 
 // 필터
-//echo "<script type='text/javascript'> var g4_cf_filter = '$config[cf_filter]'; </script>\n";
-//echo "<script type='text/javascript' src='$g4[path]/js/filter.js'></script>\n";
+//echo "<script> var g4_cf_filter = '$config[cf_filter]'; </script>\n";
+//echo "<script src='$g4['path']/js/filter.js'></script>\n";
 
 if (!$member[mb_id]) // 비회원일 경우에만
-    echo "<script type='text/javascript' src='$g4[path]/js/md5.js'></script>\n";
+    echo "<script src='$g4['path']/js/md5.js'></script>\n";
 
 @include_once("$board_skin_path/view_comment.tail.skin.php");
 ?>

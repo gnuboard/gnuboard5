@@ -1,11 +1,11 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
     
 if (!$member[mb_id]) 
     alert_close("회원만 이용하실 수 있습니다.");
 
-$g4[title] = "내 쪽지함";
-include_once("$g4[path]/head.sub.php");
+$g4['title'] = "내 쪽지함";
+include_once($g4['path'].'/head.sub.php');
 
 // 설정일이 지난 메모 삭제
 $sql = " delete from $g4[memo_table]
@@ -74,10 +74,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i][del_href] = "./memo_delete.php?me_id=$row[me_id]&kind=$kind";
 }
 
-echo "<script type='text/javascript' src='$g4[path]/js/sideview.js'></script>";
+echo "<script src='$g4['path']/js/sideview.js'></script>";
 
-$member_skin_path = "$g4[path]/skin/member/$config[cf_member_skin]";
+$member_skin_path = "$g4['path']/skin/member/$config[cf_member_skin]";
 include_once("$member_skin_path/memo.skin.php");
 
-include_once("$g4[path]/tail.sub.php");
+include_once($g4['path'].'/tail.sub.php');
 ?>

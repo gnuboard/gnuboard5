@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 메모리를 많이 잡아먹어서 아래의 코드로 대체
 //ini_set('memory_limit', '20M');
@@ -62,11 +62,11 @@ if ($addr1)
 }
 */
 
-$g4[title] = "우편번호 검색";
-include_once("$g4[path]/head.sub.php");
+$g4['title'] = "우편번호 검색";
+include_once($g4['path'].'/head.sub.php');
 
-$member_skin_path = "$g4[path]/skin/member/$config[cf_member_skin]";
+$member_skin_path = "$g4['path']/skin/member/$config[cf_member_skin]";
 include_once("$member_skin_path/zip.skin.php");
 
-include_once("$g4[path]/tail.sub.php");
+include_once($g4['path'].'/tail.sub.php');
 ?>

@@ -58,4 +58,4 @@ if ($config[cf_use_norobot]) {
         set_session("ss_norobot_key", "");
 }
 ?>
-<script type='text/javascript'> var md5_norobot_key = '<?=md5($norobot_key)?>'; </script>
+<script> var md5_norobot_key = '<?=md5($norobot_key)?>'; </script>

@@ -1,11 +1,11 @@
 <?
 // 상대 경로
-$g4_path = "..";
-include_once("$g4_path/common.php");
-include_once("$g4[path]/lib/latest.lib.php");
+$g4_path = '..';
+include_once($g4_path'./common.php');
+include_once("$g4['path']/lib/latest.lib.php");
 
-$g4[title] = $group[gr_subject];
-include_once("./_head.php");
+$g4['title'] = $group[gr_subject];
+include_once('./_head.php');
 ?>
 
 <!-- 메인화면 최신글 시작 -->
@@ -35,5 +35,5 @@ include_once("./_head.php");
 <!-- 메인화면 최신글 끝 -->
 
 <?
-include_once("./_tail.php");
+include_once('./_tail.php');
 ?>

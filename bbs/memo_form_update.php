@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 if (!$member[mb_id])
     alert("회원만 이용하실 수 있습니다.");
@@ -30,7 +30,7 @@ for ($i=0; $i<count($recv_list); $i++) {
 $error_msg = implode(",", $error_list);
 
 if ($error_msg && !$is_admin)
-    alert("회원아이디 \'".$error_msg."\' 은(는) 존재(또는 정보공개)하지 않는 회원아이디 이거나 탈퇴, 접근차단된 회원아이디 입니다.\\n\\n쪽지를 발송하지 않았습니다.");
+    alert("회원아이디 \'".$error_msg."\' 은(는) 존재(또는 정보공개)하지 않는 회원아이디 이거나 탈퇴, 접근차단된 회원아이디 입니다..PHP_EOL.PHP_EOL.쪽지를 발송하지 않았습니다.");
 
 if (!$is_admin) {
     if (count($member_list['id'])) {

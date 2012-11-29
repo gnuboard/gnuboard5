@@ -1,11 +1,11 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 if (!$member[mb_id]) 
     alert_close("회원만 조회하실 수 있습니다.");
 
-$g4[title] = $member[mb_nick] . "님의 스크랩";
-include_once("$g4[path]/head.sub.php");
+$g4['title'] = $member[mb_nick] . "님의 스크랩";
+include_once($g4['path'].'/head.sub.php');
 
 $list = array();
 
@@ -50,14 +50,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $list[$i][num] = $num;
     $list[$i][opener_href] = "./board.php?bo_table=$row[bo_table]";
-    $list[$i][opener_href_wr_id] = "./board.php?bo_table=$row[bo_table]&wr_id=$row[wr_id]";
+    $list[$i][opener_href_wr_id] = "./board.php?bo_table=$row[bo_table]&amp;wr_id=$row[wr_id]";
     $list[$i][bo_subject] = $row2[bo_subject];
     $list[$i][subject] = $subject;
-    $list[$i][del_href] = "./scrap_delete.php?ms_id=$row[ms_id]&page=$page";
+    $list[$i][del_href] = "./scrap_delete.php?ms_id=$row[ms_id]&amp;page=$page";
 }
 
-$member_skin_path = "$g4[path]/skin/member/$config[cf_member_skin]";
+$member_skin_path = "$g4['path']/skin/member/$config[cf_member_skin]";
 include_once("$member_skin_path/scrap.skin.php");
 
-include_once("$g4[path]/tail.sub.php");
+include_once($g4['path'].'/tail.sub.php');
 ?>

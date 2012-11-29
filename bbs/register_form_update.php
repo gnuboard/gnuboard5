@@ -1,6 +1,6 @@
 <?
-include_once("./_common.php");
-include_once("$g4[path]/lib/mailer.lib.php");
+include_once('./_common.php');
+include_once("$g4['path']/lib/mailer.lib.php");
 
 /*
 // 081022 : CSRF 에서 토큰 비교는 의미 없음
@@ -28,7 +28,7 @@ if (!($w == "" || $w == "u"))
     alert("w 값이 제대로 넘어오지 않았습니다.");
 
 if ($w == "u" && $is_admin == "super") {
-    if (file_exists("$g4[path]/DEMO")) 
+    if (file_exists("$g4['path']/DEMO")) 
         alert("데모 화면에서는 하실(보실) 수 없는 작업입니다.");
 }
 
@@ -91,7 +91,7 @@ if ($w == '' || $w == 'u')
                 if ($row[mb_name] == $mb_name)
                     alert("이미 가입되어 있습니다.");
                 else
-                    alert("다른 이름으로 같은 주민등록번호가 이미 가입되어 있습니다.\\n\\n관리자에게 문의해 주십시오.");
+                    alert("다른 이름으로 같은 주민등록번호가 이미 가입되어 있습니다..PHP_EOL.PHP_EOL.관리자에게 문의해 주십시오.");
             }
         }
     }
@@ -116,7 +116,7 @@ if ($w == '' || $w == 'u')
     }
 }
 
-$mb_dir = "$g4[path]/data/member/".substr($mb_id,0,2);
+$mb_dir = "$g4['path']/data/member/".substr($mb_id,0,2);
 
 // 아이콘 삭제
 if ($del_mb_icon)
@@ -265,7 +265,7 @@ else if ($w == "u")
         alert("로그인 되어 있지 않습니다.");
 
     if ($_SESSION["ss_mb_id"] != $_POST[mb_id])
-        alert("로그인된 정보와 수정하려는 정보가 틀리므로 수정할 수 없습니다.\\n\\n만약 올바르지 않은 방법을 사용하신다면 바로 중지하여 주십시오.");
+        alert("로그인된 정보와 수정하려는 정보가 틀리므로 수정할 수 없습니다..PHP_EOL.PHP_EOL.만약 올바르지 않은 방법을 사용하신다면 바로 중지하여 주십시오.");
 
     $sql_password = "";
     if ($mb_password)
@@ -348,11 +348,11 @@ else if ($w == "u")
 
 
 // 사용자 코드 실행
-@include_once ("$g4[path]/skin/member/$config[cf_member_skin]/register_update.skin.php");
+@include_once ("$g4['path']/skin/member/$config[cf_member_skin]/register_update.skin.php");
 
 
 if ($msg) 
-    echo "<script type='text/javascript'>alert('{$msg}');</script>";
+    echo "<script>alert('{$msg}');</script>";
 
 /*
 // 결과페이지는 https 에서 http 로 변경이 되어야 함
@@ -372,7 +372,7 @@ if ($w == "") {
 
     if ($old_email != $mb_email && $config[cf_use_email_certify]) {
         set_session("ss_mb_id", "");
-        alert("회원 정보가 수정 되었습니다.\\n\\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.", $g4[path]);
+        alert("회원 정보가 수정 되었습니다..PHP_EOL.PHP_EOL.E-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.", $g4['path']);
     } else {
         echo "
         <html><title>회원정보수정</title><meta http-equiv='Content-Type' content='text/html; charset=$g4[charset]'></html><body> 
@@ -382,7 +382,7 @@ if ($w == "") {
         <input type='hidden' name='mb_password' value='{$tmp_password}'>
         <input type='hidden' name='is_update' value='1'>
         </form>
-        <script type='text/javascript'>
+        <script>
         alert('회원 정보가 수정 되었습니다.');
         document.fregisterupdate.submit();
         </script>

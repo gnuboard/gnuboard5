@@ -1,19 +1,19 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
-$g4[title] = "달력";
-include_once("$g4[path]/head.sub.php");
+$g4['title'] = '달력';
+include_once($g4['path'].'/head.sub.php');
 
 // 글자 색상
-$weekday_color = "#000000"; // 평일
-$saturday_color = "#000000"; // 토요일
-$sunday_color = "#FF3300"; // 일요일 (공휴일)
+$weekday_color = '#000000'; // 평일
+$saturday_color = '#000000'; // 토요일
+$sunday_color = '#FF3300'; // 일요일 (공휴일)
 // 배경 색상
-$today_bgcolor = "yellow"; // 오늘 
-$select_bgcolor = "#BAFFF6"; // 선택일
+$today_bgcolor = 'yellow'; // 오늘 
+$select_bgcolor = '#BAFFF6'; // 선택일
 
 // 요일
-$yoil = array ("일", "월", "화", "수", "목", "금", "토");
+$yoil = array ('일', '월', '화', '수', '목', '금', '토');
 
 // mktime() 함수는 1970 ~ 2038년까지만 계산되므로 사용하지 않음
 // 참고 : http://phpschool.com/bbs2/inc_view.html?id=3924&code=tnt2&start=0&mode=search&s_que=mktime&field=title&operator=and&period=all
@@ -28,8 +28,8 @@ function spacer($year, $month)
 
 // 오늘
 $today = getdate($g4[server_time]);
-$mon  = substr("0".$today[mon],-2);
-$mday = substr("0".$today[mday],-2);
+$mon  = substr('0'.$today[mon],-2);
+$mday = substr('0'.$today[mday],-2);
 
 // delimiter 를 없앤다
 $cur_date = preg_replace("/([^0-9]*)/", "", $cur_date);
@@ -41,13 +41,13 @@ if ($cur_date && !$yyyy)
 }
 else
 {
-    if (!$yyyy) $yyyy = $today['year'];
-    if (!$mm) $mm = $today['mon'];
+    if (!$yyyy) $yyyy = $today[year];
+    if (!$mm) $mm = $today[mon];
 }
 $yyyy = (int)$yyyy;
 $mm = (int)$mm;
 
-$f = @file("./calendar/$yyyy.txt");
+$f = @file('./calendar/'.$yyyy.'.txt');
 if ($f) {
     while ($line = each($f)) {
         $tmp = explode("|", $line[value]);
@@ -92,35 +92,35 @@ if ($mm_after > 12)
 $fr_yyyy = $yyyy - 80;
 $to_yyyy = $yyyy + 80;
 
-$yyyy_before_href = "$_SERVER[PHP_SELF]?yyyy=".($yyyy-1)."&mm={$mm}&cur_date={$cur_date}&fld={$fld}&delimiter={$delimiter}";
-$yyyy_after_href = "$_SERVER[PHP_SELF]?yyyy=".($yyyy+1)."&mm={$mm}&cur_date={$cur_date}&fld={$fld}&delimiter={$delimiter}";
+$yyyy_before_href = $_SERVER[PHP_SELF].'?yyyy='.($yyyy-1).'&amp;mm='.$mm.'&amp;cur_date='.$cur_date.'&amp;fld='.$fld.'&amp;delimiter='.$delimiter;
+$yyyy_after_href = $_SERVER[PHP_SELF].'?yyyy='.($yyyy+1).'&amp;mm='.$mm.'&amp;cur_date='.$cur_date.'&amp;fld='.$fld.'&amp;delimiter='.$delimiter;
 
-$mm_after_href = "$_SERVER[PHP_SELF]?yyyy={$yyyy_after}&mm={$mm_after}&cur_date={$cur_date}&fld={$fld}&delimiter={$delimiter}";
-$mm_before_href = "$_SERVER[PHP_SELF]?yyyy={$yyyy_before}&mm={$mm_before}&cur_date={$cur_date}&fld={$fld}&delimiter={$delimiter}";
+$mm_after_href = $_SERVER[PHP_SELF].'?yyyy='.$yyyy_after.'&amp;mm='.$mm_after.'&amp;cur_date='.$cur_date.'&amp;fld='.$fld.'&amp;delimiter='.$delimiter;
+$mm_before_href = $_SERVER[PHP_SELF].'?yyyy='.$yyyy_before.'&amp;mm='.$mm_before.'&amp;cur_date='.$cur_date.'&amp;fld='.$fld.'&amp;delimiter='.$delimiter;
 
-$yyyy_select = "<select name=yyyy onchange='document.fcalendar.submit();'>";
+$yyyy_select = '<select name="yyyy" onchange="document.fcalendar.submit();">';
 for ($i=$fr_yyyy; $i<=$to_yyyy; $i++)
 {
-    if ($i == $yyyy) $selected = " selected";
+    if ($i == $yyyy) $selected = ' selected';
     else $selected = "";
-    $yyyy_select .= "<option value='{$i}'{$selected}>$i 년</option>";
+    $yyyy_select .= '<option value='.$i.$selected.'>'.$i.' 년</option>';
 }
-$yyyy_select .= "</select>";
+$yyyy_select .= '</select>';
 
-$mm_select = "<select name=mm onchange='document.fcalendar.submit();'>";
+$mm_select = '<select name="mm" onchange="document.fcalendar.submit();">';
 for ($i=1; $i<=12; $i++)
 {
-    if ($i == $mm) $selected = " selected";
+    if ($i == $mm) $selected = ' selected';
     else $selected = "";
-    $mm_select .= "<option value='{$i}'{$selected}>$i 월</option>";
+    $mm_select .= '<option value="'.$i.$selected.'">'.$i.' 월</option>';
 }
-$mm_select .= "</select>";
+$mm_select .= '</select>';
 
-$member_skin_path = "$g4[path]/skin/member/$config[cf_member_skin]";
-include_once("$member_skin_path/calendar.skin.php");
+$member_skin_path = $g4['path'].'/skin/member/.'$config[cf_member_skin];
+include_once($member_skin_path.'/calendar.skin.php');
 ?>
 
-<script type="text/javascript">
+<script>
 //
 // year : 4자리
 // month : 1~2자리
@@ -137,5 +137,5 @@ function date_send(year, month, day, wday, handay)
 </script>
 
 <?
-include_once("$g4[path]/tail.sub.php");
+include_once($g4['path'].'/tail.sub.php');
 ?>

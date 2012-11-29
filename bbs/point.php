@@ -1,11 +1,11 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 if (!$member[mb_id]) 
     alert_close("회원만 조회하실 수 있습니다.");
 
-$g4[title] = $member[mb_nick] . "님의 포인트 내역";
-include_once("$g4[path]/head.sub.php");
+$g4['title'] = $member[mb_nick] . "님의 포인트 내역";
+include_once($g4['path'].'/head.sub.php');
 
 $list = array();
 
@@ -27,7 +27,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     <td align="center" valign="middle" bgcolor="#EBEBEB"><table width="590" height="40" border="0" cellspacing="0" cellpadding="0">
         <tr> 
             <td width="25" align="center" bgcolor="#FFFFFF" ><img src="<?=$g4[bbs_img_path]?>/icon_01.gif" width="5" height="5"></td>
-            <td width="" align="left" bgcolor="#FFFFFF" ><font color="#666666"><b><?=$g4[title]?></b></font></td>
+            <td width="" align="left" bgcolor="#FFFFFF" ><font color="#666666"><b><?=$g4['title']?></b></font></td>
         </tr>
         </table></td>
 </tr>
@@ -100,7 +100,7 @@ HEREDOC;
         </table></td>
 </tr>
 <tr> 
-    <td height="30" align="center"><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td height="30" align="center"><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");?></td>
 </tr>
 <tr>
     <td height="30" align="center" bgcolor="#F6F6F6">
@@ -167,7 +167,7 @@ if ($i == 0)
 </table>
 
 <table width='100%' cellpadding=3 cellspacing=0>
-<tr><td height=45 align=center><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td></tr>
+<tr><td height=45 align=center><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");?></td></tr>
 </table>
 
 <table width='99%' align=center cellpadding=1 cellspacing=0 bgcolor=#CCCCCC>
@@ -189,5 +189,5 @@ if ($i == 0)
 <?*/?>
 
 <?
-include_once("$g4[path]/tail.sub.php");
+include_once($g4['path'].'/tail.sub.php');
 ?>
