@@ -2,17 +2,17 @@
 include_once('./_common.php');
 
 if (!$member[mb_id]) 
-    alert_close("회원만 조회하실 수 있습니다.");
+    alert_close('회원만 조회하실 수 있습니다.');
 
-$g4['title'] = $member[mb_nick] . "님의 포인트 내역";
+$g4['title'] = $member[mb_nick].' 님의 포인트 내역';
 include_once($g4['path'].'/head.sub.php');
 
 $list = array();
 
-$sql_common = " from $g4[point_table] where mb_id = '".mysql_escape_string($member[mb_id])."' ";
+$sql_common = " from {$g4[point_table]} where mb_id = '".mysql_escape_string($member[mb_id])."' ";
 $sql_order = " order by po_id desc ";
 
-$sql = " select count(*) as cnt $sql_common ";
+$sql = " select count(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
 $total_count = $row[cnt];
 
@@ -56,14 +56,14 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
                 $sum_point1 = $sum_point2 = 0;
 
                 $sql = " select * 
-                          $sql_common
-                          $sql_order
-                          limit $from_record, $rows ";
+                            {$sql_common}
+                            {$sql_order}
+                            limit {$from_record}, {$rows} ";
                 $result = sql_query($sql);
                 for ($i=0; $row=sql_fetch_array($result); $i++) {
                     $point1 = $point2 = 0;
                     if ($row[po_point] > 0) {
-                        $point1 = "+" . number_format($row[po_point]);
+                        $point1 = '+' .number_format($row[po_point]);
                         $sum_point1 += $row[po_point];
                     } else {
                         $point2 = number_format($row[po_point]);
@@ -73,7 +73,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
                     echo <<<HEREDOC
                     <tr height=25 bgcolor="#F6F6F6" align="center"> 
                         <td height="24">$row[po_datetime]</td>
-                        <td align="left" title='$row[po_content]'><nobr style='display:block; overflow:hidden; width:250px;'>&nbsp;$row[po_content]</a></td>
+                        <td align="left" title="$row[po_content]"><nobr style="display:block; overflow:hidden; width:250px;">&nbsp;$row[po_content]</a></td>
                         <td align=right>{$point1}&nbsp;</td>
                         <td align=right>{$point2}&nbsp;</td>
                     </tr>
@@ -81,7 +81,7 @@ HEREDOC;
                 }
 
                 if ($i == 0)
-                    echo "<tr><td colspan=5 align=center height=100>자료가 없습니다.</td></tr>";
+                    echo '<tr><td colspan=5 align=center height=100>자료가 없습니다.</td></tr>';
                 else {
                     if ($sum_point1 > 0)
                         $sum_point1 = "+" . number_format($sum_point1);
@@ -100,7 +100,7 @@ HEREDOC;
         </table></td>
 </tr>
 <tr> 
-    <td height="30" align="center"><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");?></td>
+    <td height="30" align="center"><?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?></td>
 </tr>
 <tr>
     <td height="30" align="center" bgcolor="#F6F6F6">
@@ -121,7 +121,7 @@ HEREDOC;
 
 <?/*?>
 <table width='100%' cellpadding=0 cellspacing=0>
-	<tr><td bgcolor=#B8B7B7><img src='<?=$g4[bbs_img_path]?>/title_point.gif'></td></tr>
+    <tr><td bgcolor=#B8B7B7><img src='<?=$g4[bbs_img_path]?>/title_point.gif'></td></tr>
 </table>
 <br>
 
@@ -131,17 +131,17 @@ HEREDOC;
 <colgroup width=70></colgroup>
 <colgroup width=70></colgroup>
 <tr height=25 bgcolor=#F9F9F9 align=center>
-	<td>일시</td>
-	<td>내용</td>
-	<td>지급포인트</td>
-	<td>사용포인트</td>
+    <td>일시</td>
+    <td>내용</td>
+    <td>지급포인트</td>
+    <td>사용포인트</td>
 </tr>
 
 <?
 $sql = " select * 
-          $sql_common
-          $sql_order
-          limit $from_record, $rows ";
+            {$sql_common}
+            {$sql_order}
+            limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $point1 = $point2 = "";
@@ -151,14 +151,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         $point2 = number_format($row[po_point]);
     }
 
-    echo "
+    echo '
     <tr height=25>
         <td align=center>$row[po_datetime]</td>
-        <td title='$row[po_content]'><nobr style='display:block; overflow:hidden; width:200px;'>&nbsp;$row[po_content]</a></td>
-        <td align=right>$point1&nbsp;</td>
-        <td align=right>$point2&nbsp;</td>
+        <td title="'.$row[po_content].'"><nobr style="display:block; overflow:hidden; width:200px;">&nbsp;'.$row[po_content].'</a></td>
+        <td align=right>'.$point1.'&nbsp;</td>
+        <td align=right>'.$point2.'&nbsp;</td>
     </tr>
-    ";
+    ';
 }
 
 if ($i == 0)
@@ -167,24 +167,24 @@ if ($i == 0)
 </table>
 
 <table width='100%' cellpadding=3 cellspacing=0>
-<tr><td height=45 align=center><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");?></td></tr>
+<tr><td height=45 align=center><?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?></td></tr>
 </table>
 
 <table width='99%' align=center cellpadding=1 cellspacing=0 bgcolor=#CCCCCC>
-	<tr>
-		<td>
-			<table width='100%' cellpadding=0 cellspacing=0 bgcolor=#F9F9F9>
-				<tr>
-					<td height=50>&nbsp;&nbsp;&nbsp;<B>내 포인트 </B></td>
-					<td><img src='<?=$g4[bbs_img_path]?>/icon_02.gif'> 보유 포인트 : <B><?=number_format($member[mb_point])?></B></td>
-				</tr>
-			</table>
-		</td>
-	</tr>
+    <tr>
+        <td>
+            <table width='100%' cellpadding=0 cellspacing=0 bgcolor=#F9F9F9>
+                <tr>
+                    <td height=50>&nbsp;&nbsp;&nbsp;<B>내 포인트 </B></td>
+                    <td><img src='<?=$g4[bbs_img_path]?>/icon_02.gif'> 보유 포인트 : <B><?=number_format($member[mb_point])?></B></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
 </table>
 
 <table width='100%' cellpadding=3 cellspacing=0>
-	<tr><td colspan=2 height=45 align=center><a href='javascript:window.close();'><img src='<?=$g4[bbs_img_path]?>/btn_close.gif' border=0></a></td></tr>
+    <tr><td colspan=2 height=45 align=center><a href='javascript:window.close();'><img src='<?=$g4[bbs_img_path]?>/btn_close.gif' border=0></a></td></tr>
 </table>
 <?*/?>
 

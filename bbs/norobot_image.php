@@ -5,9 +5,9 @@ function echo_check_image($str, $width, $height, $background_color, $text_color,
 {
     $number = $str;
 
-    $background_color = str_replace("#", "", $background_color);
-    $text_color = str_replace("#", "", $text_color);
-    $grid_color = str_replace("#", "", $grid_color);
+    $background_color = str_replace('#', '', $background_color);
+    $text_color = str_replace('#', '', $text_color);
+    $grid_color = str_replace('#', '', $grid_color);
 
     // WebColor -> RGB
     $BR = hexdec(substr($background_color, 0, 2)); 
@@ -50,5 +50,5 @@ function image_random_grid($im, $w, $h, $s, $color)
 }
 
 //echo_check_image(rand(4,6), 65, 20, "#FF33CC", "#FFFFFF", "#FF79DE");
-echo_check_image($_SESSION['ss_norobot_key'], 80, 19, "#FF33CC", "#FFFFFF", "#FF79DE");
+echo_check_image($_SESSION['ss_norobot_key'], 80, 19, '#FF33CC', '#FFFFFF', '#FF79DE');
 ?>

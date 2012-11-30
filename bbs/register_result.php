@@ -6,10 +6,10 @@ $mb = get_member($_SESSION[ss_mb_reg]);
 if (!$mb[mb_id]) 
     goto_url($g4['path']);
 
-$member_skin_path = "$g4['path']/skin/member/$config[cf_member_skin]";
+$member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
 
-$g4['title'] = "회원가입결과";
+$g4['title'] = '회원가입결과';
 include_once('./_head.php');
-include_once("$member_skin_path/register_result.skin.php");
+include_once($member_skin_path.'/register_result.skin.php');
 include_once('./_tail.php');
 ?>

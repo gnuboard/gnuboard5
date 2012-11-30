@@ -16,21 +16,21 @@ if ($w == "") {
     referer_check();
 
     if (!$_POST[agree])
-        alert("회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.", "./register.php");
+        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', './register.php');
 
     if (!$_POST[agree2])
-        alert("개인정보취급방침의 내용에 동의하셔야 회원가입 하실 수 있습니다.", "./register.php");
+        alert('개인정보취급방침의 내용에 동의하셔야 회원가입 하실 수 있습니다.', './register.php');
 
     // 주민등록번호를 사용한다면 중복검사를 합니다.
     /*
     if ($config[cf_use_jumin]) {
         $jumin = sql_password($mb_jumin);
-        $row = sql_fetch(" select mb_name from $g4[member_table] where mb_jumin = '$jumin' ");
+        $row = sql_fetch(" select mb_name from {$g4[member_table]} where mb_jumin = '{$jumin}' ");
         if ($row[mb_name]) {
             if ($row[mb_name] == $mb_name)
-                alert("이미 가입되어 있습니다.");
+                alert('이미 가입되어 있습니다.');
             else
-                alert("다른 이름으로 같은 주민등록번호가 이미 가입되어 있습니다..PHP_EOL.PHP_EOL.관리자에게 문의해 주십시오.");
+                alert('다른 이름으로 같은 주민등록번호가 이미 가입되어 있습니다.'.PHP_EOL.PHP_EOL.'관리자에게 문의해 주십시오.');
         }
 
         // 주민등록번호의 7번째 한자리 숫자
@@ -38,20 +38,20 @@ if ($w == "") {
 
         // 성별은 F, M 으로 나눈다.
         // 주민등록번호의 7번째 자리가 홀수이면 남자(Male), 짝수이면 여자(Female)
-        $sex = $y % 2 == 0 ? "F" : "M";
+        $sex = $y % 2 == 0 ? 'F' : 'M';
 
         // 생일은 8자리로 만든다 (나중에 검색을 편하게 하기 위함)
         // 주민등록번호 앞자리를 그냥 생일로 사용함 ㅠㅠ
         // 주민등록번호 7번째 자리를 따져서...
         $birth = substr($mb_jumin, 0, 6);
         if ($y == 9 || $y == 0) // 1800년대생 (계시려나?)
-            $birth = "18" . $birth;
+            $birth = 18.$birth;
         else if ($y == 1 || $y == 2) // 1900년대생
-            $birth = "19" . $birth;
+            $birth = 19.$birth;
         else if ($y == 3 || $y == 4) // 2000년대생
-            $birth = "20" . $birth;
+            $birth = 20.$birth;
         else // 오류
-            $birth = "xx" . $birth;
+            $birth = 'xx'.$birth;
     }
     */
 
@@ -59,18 +59,18 @@ if ($w == "") {
     $member[mb_sex] = $sex;
     $member[mb_name] = $mb_name;
 
-    $g4['title'] = "회원 가입";
+    $g4['title'] = '회원 가입';
 } 
-else if ($w == "u") 
+else if ($w == 'u') 
 {
     if ($is_admin) 
-        alert("관리자의 회원정보는 관리자 화면에서 수정해 주십시오.", $g4['path']);
+        alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', $g4['path']);
 
     if (!$member[mb_id])
-        alert("로그인 후 이용하여 주십시오.", $g4['path']);
+        alert('로그인 후 이용하여 주십시오.', $g4['path']);
 
     if ($member[mb_id] != $mb_id)
-        alert("로그인된 회원과 넘어온 정보가 서로 다릅니다.");
+        alert('로그인된 회원과 넘어온 정보가 서로 다릅니다.');
 
     /*
     if (!($member[mb_password] == sql_password($_POST[mb_password]) && $_POST[mb_password]))
@@ -88,10 +88,10 @@ else if ($w == "u")
             $tmp_password = sql_password($_POST['mb_password']);
 
         if ($member['mb_password'] != $tmp_password)
-            alert("패스워드가 틀립니다.");
+            alert('패스워드가 틀립니다.');
     }
 
-    $g4['title'] = "회원 정보 수정";
+    $g4['title'] = '회원 정보 수정';
 
     $member[mb_email]       = get_text($member[mb_email]);
     $member[mb_homepage]    = get_text($member[mb_homepage]);
@@ -116,14 +116,14 @@ else if ($w == "u")
     $member[mb_9]           = get_text($member[mb_9]);
     $member[mb_10]          = get_text($member[mb_10]);
 } else
-    alert("w 값이 제대로 넘어오지 않았습니다.");
+    alert('w 값이 제대로 넘어오지 않았습니다.');
 
 // 회원아이콘 경로
-$mb_icon = "$g4['path']/data/member/".substr($member[mb_id],0,2)."/$member[mb_id].gif";
-$member_skin_path = "$g4['path']/skin/member/$config[cf_member_skin]";
+$mb_icon = $g4['path'].'/data/member/'.substr($member[mb_id],0,2).'/'.$member[mb_id].'.gif';
+$member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
 
 include_once('./_head.php');
-include_once("./norobot.inc.php"); // 자동등록방지
-include_once("$member_skin_path/register_form.skin.php");
+include_once('./norobot.inc.php'); // 자동등록방지
+include_once($member_skin_path.'/register_form.skin.php');
 include_once('./_tail.php');
 ?>

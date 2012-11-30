@@ -1,10 +1,10 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 
-@include_once("$board_skin_path/view_comment.head.skin.php");
+@include_once($board_skin_path.'/view_comment.head.skin.php');
 
 // 자동등록방지
-include_once ("./norobot.inc.php");
+include_once ('./norobot.inc.php');
 
 // 코멘트를 새창으로 여는 경우 세션값이 없으므로 생성한다.
 if ($is_admin && !$token) 
@@ -19,8 +19,8 @@ if ($member[mb_level] >= $board[bo_comment_level])
     $is_comment_write = true;
 
 // 코멘트 출력
-//$sql = " select * from $write_table where wr_parent = '$wr_id' and wr_is_comment = 1 order by wr_comment desc, wr_comment_reply ";
-$sql = " select * from $write_table where wr_parent = '$wr_id' and wr_is_comment = 1 order by wr_comment, wr_comment_reply ";
+//$sql = " select * from {$write_table} where wr_parent = '{$wr_id}' and wr_is_comment = 1 order by wr_comment desc, wr_comment_reply ";
+$sql = " select * from {$write_table} where wr_parent = '{$wr_id}' and wr_is_comment = 1 order by wr_comment, wr_comment_reply ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
@@ -32,15 +32,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     if ($board[bo_use_sideview])
         $list[$i][name] = get_sideview($row[mb_id], $tmp_name, $row[wr_email], $row[wr_homepage]);
     else
-        $list[$i][name] = "<span class='".($row[mb_id]?'member':'guest')."'>$tmp_name</span>";
+        $list[$i][name] = '<span class="'.($row[mb_id]?'member':'guest').'">'.$tmp_name.'</span>';
 
 
     
     // 공백없이 연속 입력한 문자 자르기 (way 보드 참고. way.co.kr)
     //$list[$i][content] = eregi_replace("[^ \n<>]{130}", "\\0\n", $row[wr_content]);
 
-    $list[$i][content] = $list[$i][content1]= "비밀글 입니다.";
-    if (!strstr($row[wr_option], "secret") ||
+    $list[$i][content] = $list[$i][content1]= '비밀글 입니다.';
+    if (!strstr($row[wr_option], 'secret') ||
         $is_admin || 
         ($write[mb_id]==$member[mb_id] && $member[mb_id]) || 
         ($row[mb_id]==$member[mb_id] && $member[mb_id])) {
@@ -66,7 +66,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         {
             if ($row[mb_id] == $member[mb_id] || $is_admin) 
             {
-                $list[$i][del_link]  = "./delete_comment.php?bo_table=$bo_table&comment_id=$row[wr_id]&token=$token&amp;cwin=$cwin&amp;page=$page".$qstr;
+                $list[$i][del_link]  = './delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row[wr_id].'&amp;token='.$token.'&amp;cwin='.$cwin.'&amp;page='.$page.$qstr;
                 $list[$i][is_edit]   = true;
                 $list[$i][is_del]    = true;
             }
@@ -74,7 +74,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         else 
         {
             if (!$row[mb_id]) {
-                $list[$i][del_link] = "./password.php?w=x&bo_table=$bo_table&comment_id=$row[wr_id]&amp;cwin=$cwin&amp;page=$page".$qstr;
+                $list[$i][del_link] = './password.php?w=x&amp;bo_table='.$bo_table.'&amp;comment_id='.$row[wr_id].'&amp;cwin='.$cwin.'&amp;page='.$page.$qstr;
                 $list[$i][is_del]   = true;
             }
         }
@@ -110,14 +110,14 @@ else
     $comment_max = (int)$board[bo_comment_max];
 }
 
-include_once("$board_skin_path/view_comment.skin.php");
+include_once($board_skin_path.'/view_comment.skin.php');
 
 // 필터
 //echo "<script> var g4_cf_filter = '$config[cf_filter]'; </script>\n";
 //echo "<script src='$g4['path']/js/filter.js'></script>\n";
 
 if (!$member[mb_id]) // 비회원일 경우에만
-    echo "<script src='$g4['path']/js/md5.js'></script>\n";
+    echo '<script src="'.$g4['path'].'/js/md5.js"></script>'.PHP_EOL;
 
-@include_once("$board_skin_path/view_comment.tail.skin.php");
+@include_once($board_skin_path.'/view_comment.tail.skin.php');
 ?>

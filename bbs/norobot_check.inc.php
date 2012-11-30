@@ -10,10 +10,10 @@ if ($config[cf_use_norobot]) {
     $parse = parse_url($_SERVER[HTTP_REFERER]);
     // 3.35
     // 포트번호가 존재할 경우의 처리 (mumu님께서 알려주셨습니다)
-    $parse2 = explode(":", $_SERVER[HTTP_HOST]);
+    $parse2 = explode(':', $_SERVER[HTTP_HOST]);
     if ($parse[host] != $parse2[0]) {
     //if ($parse[host] != $_SERVER[HTTP_HOST]) {
-        alert("올바른 접근이 아닌것 같습니다.", "./");
+        alert('올바른 접근이 아닌것 같습니다.', './');
     }
     */
 
@@ -21,10 +21,10 @@ if ($config[cf_use_norobot]) {
     if (($w=='' || $w=='c') && !$member[mb_id]) {
         if ($key) {
             if ($key != $_POST[wr_key]) {
-                alert("정상적인 등록이 아닌것 같습니다.");
+                alert('정상적인 등록이 아닌것 같습니다.');
             }
         } else {
-            alert("정상적인 접근이 아닌것 같습니다.");
+            alert('정상적인 접근이 아닌것 같습니다.');
         }
     }
 }

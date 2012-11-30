@@ -30,14 +30,14 @@ if ($config[cf_use_norobot]) {
     // 배열에 저장된 숫자를 차례대로 정렬
     sort($arr);
 
-    $norobot_key = "";
-    $norobot_str = "";
+    $norobot_key = '';
+    $norobot_str = '';
     $m = 0;
     for ($i=0; $i<count($arr); $i++) 
     {
         for ($k=$m; $k<$arr[$i]-1; $k++) 
             $norobot_str .= $tmp_str[$k];
-        $norobot_str .= "<font size=3 color=#FF0000><b>{$tmp_str[$k]}</b></font>";
+        $norobot_str .= '<font size=3 color=#FF0000><b>'.$tmp_str[$k].'</b></font>';
         $norobot_key .= $tmp_str[$k];
         $m = $k + 1;
     }
@@ -47,10 +47,10 @@ if ($config[cf_use_norobot]) {
             $norobot_str .= $tmp_str[$k];
     }
 
-    $norobot_str = "<font color=#999999>$norobot_str</font>";
+    $norobot_str = '<font color=#999999>'.$norobot_str.'</font>';
 
     // 입력, 답변이면서 회원이 아닐 경우만 자동등록방지 사용
-    if (($w == "" || $w == "r") && !$member[mb_id]) {
+    if (($w == '' || $w == 'r') && !$member[mb_id]) {
         set_session("ss_norobot_key", $norobot_key);
         $is_norobot = true;
     } 

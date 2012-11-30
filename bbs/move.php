@@ -1,39 +1,39 @@
 <?
 include_once('./_common.php');
 
-if ($sw == "move")
-    $act = "이동";
-else if ($sw == "copy")
-    $act = "복사";
+if ($sw == 'move')
+    $act = '이동';
+else if ($sw == 'copy')
+    $act = '복사';
 else 
-    alert("sw 값이 제대로 넘어오지 않았습니다.");
+    alert('sw 값이 제대로 넘어오지 않았습니다.');
 
 // 게시판 관리자 이상 복사, 이동 가능
-if ($is_admin != "board" && $is_admin != "group" && $is_admin != "super") 
+if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super') 
     alert_close("게시판 관리자 이상 접근이 가능합니다.");
 
-$g4['title'] = "게시물 " . $act;
+$g4['title'] = '게시물 ' . $act;
 include_once($g4['path'].'/head.sub.php');
 
-$wr_id_list = "";
+$wr_id_list = '';
 if ($wr_id)
     $wr_id_list = $wr_id;
 else {
-    $comma = "";
+    $comma = '';
     for ($i=0; $i<count($_POST[chk_wr_id]); $i++) {
         $wr_id_list .= $comma . $_POST[chk_wr_id][$i];
-        $comma = ",";
+        $comma = ',';
     }
 }
 
-$sql = " select * from $g4[board_table] a,
+$sql = " select * from {$g4[board_table]} a,
             {$g4[group_table]} b
             where a.gr_id = b.gr_id
             and bo_table <> '{$bo_table}' ";
 if ($is_admin == 'group') 
-    $sql .= " and b.gr_admin = '$member[mb_id]' ";
+    $sql .= " and b.gr_admin = '{$member[mb_id]}' ";
 else if ($is_admin == 'board') 
-    $sql .= " and a.bo_admin = '$member[mb_id]' ";
+    $sql .= " and a.bo_admin = '{$member[mb_id]}' ";
 $sql .= " order by a.gr_id, a.bo_order_search, a.bo_table ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) 
@@ -68,14 +68,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 </table>
 
 <form name="fboardmoveall" method="post" onsubmit="return fboardmoveall_submit(this);">
-<input type=hidden name=sw          value='<?=$sw?>'>
-<input type=hidden name=bo_table    value='<?=$bo_table?>'>
-<input type=hidden name=wr_id_list  value="<?=$wr_id_list?>">
-<input type=hidden name=sfl         value='<?=$sfl?>'>
-<input type=hidden name=stx         value='<?=$stx?>'>
-<input type=hidden name=spt         value='<?=$spt?>'>
-<input type=hidden name=page        value='<?=$page?>'>
-<input type=hidden name=act         value='<?=$act?>'>
+<input type="hidden" name="sw" value="<?=$sw?>">
+<input type="hidden" name="bo_table" value="<?=$bo_table?>">
+<input type="hidden" name="wr_id_list" value="<?=$wr_id_list?>">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx" value="<?=$stx?>">
+<input type="hidden" name="spt" value="<?=$spt?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="act" value="<?=$act?>">
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr> 
@@ -93,10 +93,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
                 <span style="cursor:pointer;" onclick="document.getElementById('chk<?=$i?>').checked=document.getElementById('chk<?=$i?>').checked?'':'checked';">
                     <?
                     if ($save_gr_subject==$list[$i][gr_subject])
-                        echo "<span style='color:#cccccc;'>";
+                        echo '<span style='color:#cccccc;'>';
                     else
-                        echo "<span>";
-                    echo $list[$i][gr_subject] . " > ";
+                        echo '<span>';
+                    echo $list[$i][gr_subject] . " &gt; ";
                     echo "</span>";
                     $save_gr_subject = $list[$i][gr_subject];
                     ?>
@@ -151,9 +151,9 @@ function fboardmoveall_submit(f)
         return false;
     }
 
-    document.getElementById("btn_submit").disabled = true;
+    document.getElementById('btn_submit').disabled = true;
 
-    f.action = "./move_update.php";
+    f.action = './move_update.php';
     return true;
 }
 </script>

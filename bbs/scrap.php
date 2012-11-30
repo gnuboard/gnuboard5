@@ -2,17 +2,17 @@
 include_once('./_common.php');
 
 if (!$member[mb_id]) 
-    alert_close("회원만 조회하실 수 있습니다.");
+    alert_close('회원만 조회하실 수 있습니다.');
 
-$g4['title'] = $member[mb_nick] . "님의 스크랩";
+$g4['title'] = $member[mb_nick].'님의 스크랩';
 include_once($g4['path'].'/head.sub.php');
 
 $list = array();
 
-$sql_common = " from $g4[scrap_table] where mb_id = '$member[mb_id]' ";
+$sql_common = " from {$g4[scrap_table]} where mb_id = '{$member[mb_id]}' ";
 $sql_order = " order by ms_id desc ";
 
-$sql = " select count(*) as cnt $sql_common ";
+$sql = " select count(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
 $total_count = $row[cnt];
 
@@ -24,9 +24,9 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 $list = array();
 
 $sql = " select * 
-          $sql_common
-          $sql_order
-          limit $from_record, $rows ";
+            {$sql_common}
+            {$sql_order}
+            limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
@@ -36,28 +36,28 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $num = $total_count - ($page - 1) * $rows - $i;
 
     // 게시판 제목
-    $sql2 = " select bo_subject from $g4[board_table] where bo_table = '$row[bo_table]' ";
+    $sql2 = " select bo_subject from {$g4[board_table]} where bo_table = '{$row[bo_table]}' ";
     $row2 = sql_fetch($sql2);
-    if (!$row2[bo_subject]) $row2[bo_subject] = "[게시판 없음]";
+    if (!$row2[bo_subject]) $row2[bo_subject] = '[게시판 없음]';
 
     // 게시물 제목
     $tmp_write_table = $g4[write_prefix] . $row[bo_table];
-    $sql3 = " select wr_subject from $tmp_write_table where wr_id = '$row[wr_id]' ";
+    $sql3 = " select wr_subject from {$tmp_write_table} where wr_id = '{$row[wr_id]}' ";
     $row3 = sql_fetch($sql3, FALSE);
     $subject = get_text(cut_str($row3[wr_subject], 100));
     if (!$row3[wr_subject]) 
-        $row3[wr_subject] = "[글 없음]";
+        $row3[wr_subject] = '[글 없음]';
 
     $list[$i][num] = $num;
-    $list[$i][opener_href] = "./board.php?bo_table=$row[bo_table]";
-    $list[$i][opener_href_wr_id] = "./board.php?bo_table=$row[bo_table]&amp;wr_id=$row[wr_id]";
+    $list[$i][opener_href] = './board.php?bo_table='.$row[bo_table];
+    $list[$i][opener_href_wr_id] = './board.php?bo_table='.$row[bo_table].'&amp;wr_id='.$row[wr_id];
     $list[$i][bo_subject] = $row2[bo_subject];
     $list[$i][subject] = $subject;
-    $list[$i][del_href] = "./scrap_delete.php?ms_id=$row[ms_id]&amp;page=$page";
+    $list[$i][del_href] = './scrap_delete.php?ms_id='.$row[ms_id].'&amp;page='.$page;
 }
 
-$member_skin_path = "$g4['path']/skin/member/$config[cf_member_skin]";
-include_once("$member_skin_path/scrap.skin.php");
+$member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
+include_once($member_skin_path.'/scrap.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');
 ?>

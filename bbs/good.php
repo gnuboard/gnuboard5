@@ -32,7 +32,7 @@ if ($good == 'good' || $good == 'nogood')
     if (!$board[bo_use_good] && $good == 'good')
         alert_close('이 게시판은 추천 기능을 사용하지 않습니다.');
 
-    if (!$board[bo_use_nogood] && $good == "nogood")
+    if (!$board[bo_use_nogood] && $good == 'nogood')
         alert_close('이 게시판은 비추천 기능을 사용하지 않습니다.');
 
     $sql = " select bg_flag from {$g4[board_good_table]}

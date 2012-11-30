@@ -1,11 +1,11 @@
 <?
 include_once('./_common.php');
 
-$g4['title'] = "최근 게시물";
+$g4['title'] = '최근 게시물';
 include_once('./_head.php');
 
-$sql_common = " from $g4[board_new_table] a, $g4[board_table] b, $g4[group_table] c 
-               where a.bo_table = b.bo_table and b.gr_id = c.gr_id and b.bo_use_search = '1' ";
+$sql_common = " from {$g4[board_new_table]} a, {$g4[board_table]} b, {$g4[group_table]} c 
+                         where a.bo_table = b.bo_table and b.gr_id = c.gr_id and b.bo_use_search = 1 ";
 if ($gr_id)
     $sql_common .= " and b.gr_id = '$gr_id' ";
 if ($view == "w")
@@ -13,10 +13,10 @@ if ($view == "w")
 else if ($view == "c")
     $sql_common .= " and a.wr_id <> a.wr_parent ";
 if ($mb_id)
-    $sql_common .= " and a.mb_id = '$mb_id' ";
+    $sql_common .= " and a.mb_id = '{$mb_id}' ";
 $sql_order = " order by a.bn_id desc ";
 
-$sql = " select count(*) as cnt $sql_common ";
+$sql = " select count(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
 $total_count = $row[cnt];
 
@@ -25,21 +25,21 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$group_select = "<select name=gr_id id=gr_id onchange='select_change();'><option value=''>전체그룹";
-$sql = " select gr_id, gr_subject from $g4[group_table] order by gr_id ";
+$group_select = '<select name="gr_id" id="gr_id" onchange="select_change();"><option value="">전체그룹';
+$sql = " select gr_id, gr_subject from {$g4[group_table]} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
-    $group_select .= "<option value='$row[gr_id]'>$row[gr_subject]";
+    $group_select .= '<option value="'.$row[gr_id].'">'.$row[gr_subject];
 }
-$group_select .= "</select>";
+$group_select .= '</select>';
 
 
 $list = array();
 $sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id
-          $sql_common
-          $sql_order
-          limit $from_record, $rows ";
+            {$sql_common}
+            {$sql_order}
+            limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
@@ -49,7 +49,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $comment = "";
         $comment_link = "";
-        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '$row[wr_id]' ");
+        $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '$row[wr_id]' ");
         $list[$i] = $row2;
 
         $name = get_sideview($row2[mb_id], cut_str($row2[wr_name], $config[cf_cut_name]), $row2[wr_email], $row2[wr_homepage]);
@@ -64,10 +64,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
     else // 코멘트
     {
-        $comment = "[코] ";
-        $comment_link = "#c_{$row[wr_id]}";
-        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '$row[wr_parent]' ");
-        $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from $tmp_write_table where wr_id = '$row[wr_id]' ");
+        $comment = '[코] ';
+        $comment_link = '#c_'.$row[wr_id];
+        $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row[wr_parent]}' ");
+        $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row[wr_id]}' ");
         $list[$i] = $row2;
         $list[$i][mb_id] = $row3[mb_id];
         $list[$i][wr_name] = $row3[wr_name];
@@ -88,7 +88,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i][bo_table] = $row[bo_table];
     $list[$i][name] = $name;
     $list[$i][comment] = $comment;
-    $list[$i][href] = "./board.php?bo_table=$row[bo_table]&amp;wr_id=$row2[wr_id]{$comment_link}";
+    $list[$i][href] = './board.php?bo_table='.$row[bo_table].'&amp;wr_id='.$row2[wr_id].$comment_link;
     $list[$i][datetime] = $datetime;
     $list[$i][datetime2] = $datetime2;
 
@@ -97,13 +97,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i][wr_subject] = $row2[wr_subject];
 }
 
-$write_pages = get_paging($config[cf_write_pages], $page, $total_page, "?gr_id=$gr_id&view=$view&mb_id=$mb_id&amp;page=");
+$write_pages = get_paging($config[cf_write_pages], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;page=");
 
-$new_skin_path = "$g4['path']/skin/new/$config[cf_new_skin]";
+$new_skin_path = $g4['path'].'/skin/new/'.$config[cf_new_skin];
 
-echo "<script src=\"$g4['path']/js/sideview.js\"></script>\n";
+echo '<script src="'.$g4['path'].'/js/sideview.js"></script>'.PHP_EOL;
 
-include_once("$new_skin_path/new.skin.php");
+include_once($new_skin_path.'/new.skin.php');
 
 include_once('./_tail.php');
 ?>

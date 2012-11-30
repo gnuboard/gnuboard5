@@ -4,11 +4,11 @@ include_once('./_common.php');
 include_once($g4['path'].'/head.sub.php');
 
 if (!$member[mb_id]) {
-    $href = "./login.php?$qstr&amp;url=".urlencode("./board.php?bo_table=$bo_table&amp;wr_id=$wr_id");
+    $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
     echo <<<HEREDOC
     <script>
-        alert("회원만 접근 가능합니다.");
-        opener.location.href = "$href";
+        alert('회원만 접근 가능합니다.');
+        opener.location.href = '$href';
         window.close();
     </script>
 HEREDOC;
@@ -17,25 +17,25 @@ HEREDOC;
 
 echo <<<HEREDOC
 <script>
-    if (window.name != "scrap") {
-        alert("올바른 방법으로 사용해 주십시오.");
+    if (window.name != 'scrap') {
+        alert('올바른 방법으로 사용해 주십시오.');
         window.close();
     }
 </script>
 HEREDOC;
 
 if ($write[wr_is_comment])
-    alert_close("코멘트는 스크랩 할 수 없습니다.");
+    alert_close('코멘트는 스크랩 할 수 없습니다.');
 
-$sql = " select count(*) as cnt from $g4[scrap_table]
-          where mb_id = '$member[mb_id]'
-            and bo_table = '$bo_table'
-            and wr_id = '$wr_id' ";
+$sql = " select count(*) as cnt from {$g4[scrap_table]}
+            where mb_id = '{$member[mb_id]}'
+            and bo_table = '{$bo_table}'
+            and wr_id = '{$wr_id}' ";
 $row = sql_fetch($sql);
 if ($row[cnt]) {
     echo <<<HEREDOC
     <script>
-    if (confirm('이미 스크랩하신 글 입니다..PHP_EOL.PHP_EOL.지금 스크랩을 확인하시겠습니까?'))
+    if (confirm('이미 스크랩하신 글 입니다.'.PHP_EOL.PHP_EOL.'지금 스크랩을 확인하시겠습니까?'))
         document.location.href = './scrap.php';
     else
         window.close();
@@ -44,8 +44,8 @@ HEREDOC;
     exit;
 }
 
-$member_skin_path = "$g4['path']/skin/member/$config[cf_member_skin]";
-include_once("$member_skin_path/scrap_popin.skin.php");
+$member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
+include_once($member_skin_path.'/scrap_popin.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');
 ?>
