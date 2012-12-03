@@ -6,7 +6,7 @@ include_once('./_common.php');
 //$zipfile = file("./zip.db");
 
 $zipfile = array();
-$fp = fopen("./zip.db", "r");
+$fp = fopen('./zip.db', 'r');
 while(!feof($fp)) {
     $zipfile[] = fgets($fp, 4096);
 }
@@ -37,7 +37,7 @@ if ($addr1)
         }    
     }
 
-    if (!$search_count) alert("찾으시는 주소가 없습니다.");
+    if (!$search_count) alert('찾으시는 주소가 없습니다.');
 }
 
 /* 기존의 DB에서 불러오는 방식
@@ -62,11 +62,11 @@ if ($addr1)
 }
 */
 
-$g4['title'] = "우편번호 검색";
+$g4['title'] = '우편번호 검색';
 include_once($g4['path'].'/head.sub.php');
 
-$member_skin_path = "$g4['path']/skin/member/$config[cf_member_skin]";
-include_once("$member_skin_path/zip.skin.php");
+$member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
+include_once($member_skin_path.'/zip.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');
 ?>
