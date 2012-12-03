@@ -83,7 +83,7 @@ include_once ('./install.inc.php');
             </td>
           </tr>
         </table>
-		</td>
+        </td>
       <td width="3"><img src="img/box_right.gif" width="3" height="340"></td>
     </tr>
     <tr>
@@ -91,7 +91,7 @@ include_once ('./install.inc.php');
     </tr>
   </table>
 
-<script language="JavaScript">
+<script>
 function frm_submit(f)
 {
     f.action = "./install_config.php";

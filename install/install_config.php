@@ -2,18 +2,18 @@
 include_once ('../config.php');
 include_once ('./install.inc.php');
 
-$gmnow = gmdate("D, d M Y H:i:s") . " GMT";
+$gmnow = gmdate("D, d M Y H:i:s").' GMT';
 header("Expires: 0"); // rfc2616 - Section 14.21
 header("Last-Modified: " . $gmnow);
 header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
 header("Cache-Control: pre-check=0, post-check=0, max-age=0"); // HTTP/1.1
 header("Pragma: no-cache"); // HTTP/1.0
 
-if ($_POST['agree'] != "동의함") {
-    echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
+if ($_POST['agree'] != '동의함') {
+    echo '<meta http-equiv="content-type" content="text/html; charset='.$g4['charset'].'">';
     echo <<<HEREDOC
-    <script language="JavaScript">
-    alert("라이센스(License) 내용에 동의하셔야 설치를 계속하실 수 있습니다.");
+    <script>
+    alert('라이센스(License) 내용에 동의하셔야 설치를 계속하실 수 있습니다.');
     history.back();
     </script>
 HEREDOC;
@@ -131,46 +131,46 @@ HEREDOC;
   </table>
 </div>
 
-<script language="JavaScript">
+<script>
 <!--
 function frm_submit(f)
 {
-    if (f.mysql_host.value == "")
+    if (f.mysql_host.value == '')
     {
-        alert("MySQL Host 를 입력하십시오."); f.mysql_host.focus(); return;
+        alert('MySQL Host 를 입력하십시오.'); f.mysql_host.focus(); return;
     }
-    else if (f.mysql_user.value == "")
+    else if (f.mysql_user.value == '')
     {
-        alert("MySQL User 를 입력하십시오."); f.mysql_user.focus(); return;
+        alert('MySQL User 를 입력하십시오.'); f.mysql_user.focus(); return;
     }
-    else if (f.mysql_db.value == "")
+    else if (f.mysql_db.value == '')
     {
-        alert("MySQL DB 를 입력하십시오."); f.mysql_db.focus(); return;
+        alert('MySQL DB 를 입력하십시오.'); f.mysql_db.focus(); return;
     }
-    else if (f.admin_id.value == "")
+    else if (f.admin_id.value == '')
     {
-        alert("최고관리자 ID 를 입력하십시오."); f.admin_id.focus(); return;
+        alert('최고관리자 ID 를 입력하십시오.'); f.admin_id.focus(); return;
     }
-    else if (f.admin_pass.value == "")
+    else if (f.admin_pass.value == '')
     {
-        alert("최고관리자 패스워드를 입력하십시오."); f.admin_pass.focus(); return;
+        alert('최고관리자 패스워드를 입력하십시오.'); f.admin_pass.focus(); return;
     }
-    else if (f.admin_name.value == "")
+    else if (f.admin_name.value == '')
     {
-        alert("최고관리자 이름을 입력하십시오."); f.admin_name.focus(); return;
+        alert('최고관리자 이름을 입력하십시오.'); f.admin_name.focus(); return;
     }
-    else if (f.admin_email.value == "")
+    else if (f.admin_email.value == '')
     {
-        alert("최고관리자 E-mail 을 입력하십시오."); f.admin_email.focus(); return;
+        alert('최고관리자 E-mail 을 입력하십시오.'); f.admin_email.focus(); return;
     }
 
 
     if(/[^a-zA-Z]/g.test(f.admin_id.value)) {
-        alert("최고관리자 ID 가 영문자가 아닙니다.");
+        alert('최고관리자 ID 가 영문자가 아닙니다.');
         f.admin_id.focus();
     }
 
-    f.action = "./install_db.php";
+    f.action = './install_db.php';
     f.submit();
 
     return true;
