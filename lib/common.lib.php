@@ -324,11 +324,11 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
 
     $list['icon_reply'] = '';
     if ($list['reply'])
-        $list['icon_reply'] = '<img src="'.$skin_path.'/img/icon_reply.gif" align="absmiddle">';
+        $list['icon_reply'] = '<img src="'.$skin_path.'/img/icon_reply.gif" alt="답변글">';
 
     $list['icon_link'] = '';
     if ($list['wr_link1'] || $list['wr_link2'])
-        $list['icon_link'] = '<img src="'.$skin_path.'/img/icon_link.gif" align="absmiddle">';
+        $list['icon_link'] = '<img src="'.$skin_path.'/img/icon_link.gif" alt="관련링크">';
 
     // 분류명 링크
     $list['ca_name_href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
@@ -342,15 +342,15 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
 
     $list['icon_new'] = '';
     if ($list['wr_datetime'] >= date("Y-m-d H:i:s", $g4['server_time'] - ($board['bo_new'] * 3600)))
-        $list['icon_new'] = '<img src="'.$skin_path.'/img/icon_new.gif" align="absmiddle">';
+        $list['icon_new'] = '<img src="'.$skin_path.'/img/icon_new.gif" alt="새글">';
 
     $list['icon_hot'] = '';
     if ($list['wr_hit'] >= $board['bo_hot'])
-        $list['icon_hot'] = '<img src="'.$skin_path.'/img/icon_hot.gif" align="absmiddle">';
+        $list['icon_hot'] = '<img src="'.$skin_path.'/img/icon_hot.gif" alt="인기글">';
 
     $list['icon_secret'] = '';
     if (strstr($list['wr_option'], 'secret'))
-        $list['icon_secret'] = '<img src="'.$skin_path.'/img/icon_secret.gif" align="absmiddle">';
+        $list['icon_secret'] = '<img src="'.$skin_path.'/img/icon_secret.gif" alt="비밀글">';
 
     // 링크
     for ($i=1; $i<=$g4['link_count']; $i++)
@@ -364,7 +364,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     $list['file'] = get_file($board['bo_table'], $list['wr_id']);
 
     if ($list['file']['count'])
-        $list['icon_file'] = '<img src="'.$skin_path.'/img/icon_file.gif" align="absmiddle">';
+        $list['icon_file'] = '<img src="'.$skin_path.'/img/icon_file.gif" alt="관련링크">';
 
     return $list;
 }
@@ -896,7 +896,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
                 //$height = $size[1];
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
-                $tmp_name = '<img src="'.$icon_file.'" width="'.$width.'" height="'.$height.'" align="absmiddle" border="0">';
+                $tmp_name = '<img src="'.$icon_file.'" width="'.$width.'" height="'.$height.'" border="0" alt="첨부파일">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
                     $tmp_name = $tmp_name . ' <span class="member">'.$name.'</span>';

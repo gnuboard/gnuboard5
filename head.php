@@ -26,7 +26,7 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
     <li><a href="<?=$g4['path']?>/bbs/new.php">최근게시물</a></li>
 </ul>
 
-<form name="fsearchbox" method="get" action="" onsubmit="return fsearchbox_submit(this);">
+<form name="fsearchbox" method="get" onsubmit="return fsearchbox_submit(this);">
 <input type="hidden" name="sfl" value="wr_subject||wr_content">
 <input type="hidden" name="sop" value="and">
 <fieldset>
