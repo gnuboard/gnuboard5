@@ -16,14 +16,19 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
 <p style="text-align:center">작업 중입니다. 일부 기능은 정상적으로 동작하지 않을 수 있습니다.</p>
 
 <header>
-<h1><?=$g4['title']?> <?=$config['cf_title']?></h1>
 <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
+<h1><?=$g4['title']?> <?=$config['cf_title']?></h1>
 <div id="logo"><a href="<?=$g4['path']?>/">처음으로</a></div>
 
 <ul>
-    <li><a href="<?=$g4['path']?>/bbs/login.php">로그인</a></li>
-    <li><a href="<?=$g4['path']?>/bbs/register.php">회원가입</a></li>
-    <li><a href="<?=$g4['path']?>/bbs/new.php">최근게시물</a></li>
+    <? if ($member['mb_id']) { ?>
+    <li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
+    <li><a href="<?=$g4['bbs_path']?>/member_confirm.php?url=register_form.php">정보수정</a></li>
+    <? } else { ?>
+    <li><a href="<?=$g4['bbs_path']?>/login.php">로그인</a></li>
+    <li><a href="<?=$g4['bbs_path']?>/register.php">회원가입</a></li>
+    <? } ?>
+    <li><a href="<?=$g4['bbs_path']?>/new.php">최근게시물</a></li>
 </ul>
 
 <form name="fsearchbox" method="get" onsubmit="return fsearchbox_submit(this);">

@@ -31,7 +31,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <article>
         <header>
             <h1><?=$list[$i]['name']?>님의 댓글</h1>
-            <a name="c_<?=$comment_id?>"></a>
+            <a id="c_<?=$comment_id?>"></a>
             <dl>
                 <dt>아이피</dt>
                 <dd><? if ($is_ip_view) { echo $list[$i]['ip'];} ?></dd>
@@ -78,8 +78,8 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <? if ($is_guest) { ?>
         <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" maxLength="20" size="10" required>
         <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" maxLength="20" size="10" required>
-        <img id="kcaptcha_image" />
-        <input type="input" name="wr_key" title="왼쪽의 글자를 입력하세요." size="10" required>
+        <img id="kcaptcha_image" alt="" />
+        <input type="text" name="wr_key" title="왼쪽의 글자를 입력하세요." size="10" required>
         <? } ?>
         <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">비밀글
         <? if ($comment_min || $comment_max) { ?><span id="char_count"></span>글자<?}?>

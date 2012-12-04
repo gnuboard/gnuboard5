@@ -27,7 +27,7 @@ if ($sca || $stx)
 
     if (!$spt) $spt = $min_spt;
 
-    $sql_search .= " and (wr_num between {$spt} and {($spt + $config[cf_search_part])}) ";
+    $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config[cf_search_part]})) ";
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     $sql = " select distinct wr_parent from {$write_table} where {$sql_search} ";

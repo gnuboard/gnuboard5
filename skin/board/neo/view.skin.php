@@ -109,7 +109,7 @@ ob_end_flush();
             }
         }
         ?>
-        <ul>
+        </ul>
     </section>
 
     <section>

@@ -166,7 +166,7 @@ else if ($w == 'r')
 if ($group[gr_use_access])
 {
     if (!$member[mb_id])
-        alert('접근 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER[PHP_SELF]?bo_table=$bo_table));
+        alert('접근 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER[PHP_SELF].'?bo_table='.$bo_table));
 
     if ($is_admin == 'super' || $group[gr_admin] == $member[mb_id] || $board[bo_admin] == $member[mb_id])
         ; // 통과

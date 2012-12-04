@@ -416,7 +416,7 @@ else if ($w == 'u')
 
     $sql = " update {$write_table}
                 set ca_name = '{$ca_name}',
-                     wr_option = '{$html,$secret,$mail}',
+                     wr_option = '{$html},{$secret},{$mail}',
                      wr_subject = '{$wr_subject}',
                      wr_content = '{$wr_content}',
                      wr_link1 = '{$wr_link1}',

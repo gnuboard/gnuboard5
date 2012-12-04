@@ -110,7 +110,7 @@ if ($option) {
 <tr>
     <th scope="row"><label for="wr_content">내용</label></th>
     <td>
-        <textarea id="wr_content" id="wr_content" name="wr_content" required <? if ($write_min || $write_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>><?=$content?></textarea>
+        <textarea id="wr_content" name="wr_content" required <? if ($write_min || $write_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>><?=$content?></textarea>
         <? if ($write_min || $write_max) { ?><span id="char_count"></span>글자<?}?>
         <? if ($write_min || $write_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
     </td>
@@ -129,7 +129,7 @@ if ($option) {
 <tr>
     <th scope="row"><label for="">파일첨부</label></th>
     <td>
-        <table id="variableFiles" cellpadding=0 cellspacing=0></table><?// print_r2($file); ?>
+        <table id="variableFiles"></table><?// print_r2($file); ?>
         <script>
         var flen = 0;
         function add_file(delete_code)
@@ -205,13 +205,13 @@ if ($option) {
 </table>
 
 <? if ($is_guest) { ?>
-<div id="captcha">
+<fieldset id="captcha">
     <legend>자동등록방지</legend>
-    <div><img id='kcaptcha_image' /></div>
+    <div><img id="kcaptcha_image" alt="" /></div>
     <label for="wr_key">자동등록방지</label>
-    <input type="input" id="wr_key" name="wr_key" required>
+    <input type="text" id="wr_key" name="wr_key" required>
     왼쪽의 글자를 입력하세요.
-</div>
+</fieldset>
 <? } ?>
 
 <div class="btn_confirm">
