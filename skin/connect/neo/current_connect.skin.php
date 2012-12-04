@@ -6,9 +6,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <caption>현재접속자 목록</caption>
 <thead>
 <tr>
-    <td>번호</td>
-    <td>이름</td>
-    <td>링크</td>
+    <th scope="col">번호</th>
+    <th scope="col">이름</th>
+    <th scope="col">링크</th>
 </tr>
 </thead>
 <tbody>

@@ -24,6 +24,7 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
     <? if ($member['mb_id']) { ?>
     <li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
     <li><a href="<?=$g4['bbs_path']?>/member_confirm.php?url=register_form.php">정보수정</a></li>
+    <? if ($is_admin) { ?><li><a href="<?=$g4['path']?>/adm">관리자</a></li><? } ?>
     <? } else { ?>
     <li><a href="<?=$g4['bbs_path']?>/login.php">로그인</a></li>
     <li><a href="<?=$g4['bbs_path']?>/register.php">회원가입</a></li>
