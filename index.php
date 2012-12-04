@@ -15,10 +15,6 @@ g4s 강좌 홈페이지에 오신 것을 환영합니다.
 
 <?=latest("neo",1,5)?>
 <?=latest("neo",1,5)?>
-<?=latest("neo",1,5)?>
-<?=latest("neo",1,5)?>
-<?=latest("neo",1,5)?>
-<?=latest("neo",1,5)?>
 
 <?
 include_once('./_tail.php');

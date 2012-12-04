@@ -44,7 +44,7 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
 </form>
 </header>
 
-<?//=outlogin('basic'); // 외부 로그인 ?>
+<?=outlogin('neo'); // 외부 로그인 ?>
 <?//=poll('basic'); // 설문조사 ?>
 <?//=visit('basic'); // 방문자수 ?>
 <?//=connect(); // 현재 접속자수 ?>
