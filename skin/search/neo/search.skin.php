@@ -50,7 +50,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         }
         </script>
         <input type="radio" id="sop_or" name="sop" value="or" <?=($sop == "or") ? "checked" : "";?>> <label for="sop_or">OR</label>
-        <input type="radio" name="sop_and" name="sop" value="and" <?=($sop == "and") ? "checked" : "";?>> <label for="sop_and">AND</label>
+        <input type="radio" id="sop_and" name="sop" value="and" <?=($sop == "and") ? "checked" : "";?>> <label for="sop_and">AND</label>
     </fieldset>
 </form>
 
