@@ -50,7 +50,7 @@ if ($stx)
         $g4_search[read_level][] = $row[bo_read_level];
     }
 
-    $search_query = 'sfl='.urlencode($sfl).'&stx='.urlencode($stx).'&amp;sop='.$sop;
+    $search_query = 'sfl='.urlencode($sfl).'&amp;stx='.urlencode($stx).'&amp;sop='.$sop;
 
 
     $text_stx = get_text(stripslashes($stx));
