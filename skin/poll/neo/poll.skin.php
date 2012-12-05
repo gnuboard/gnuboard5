@@ -65,3 +65,4 @@ function poll_result(po_id)
     win_poll("<?=$g4[bbs_path]?>/poll_result.php?po_id="+po_id+"&amp;skin_dir="+document.fpoll.skin_dir.value);
 }
 </script>
+</section>
