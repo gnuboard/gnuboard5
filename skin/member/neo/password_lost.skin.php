@@ -2,60 +2,26 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<table width="600" height="50" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <td height="50" align="center" valign="middle" bgcolor="#EBEBEB"><table width="590" height="40" border="0" cellspacing="0" cellpadding="0">
-            <tr> 
-                <td width="25" align="center" bgcolor="#FFFFFF" ><img src="<?=$member_skin_path?>/img/icon_01.gif" width="5" height="5"></td>
-                <td width="175" align="left" bgcolor="#FFFFFF" ><font color="#666666"><b><?=$g4[title]?></b></font></td>
-                <td width="390" align="right" bgcolor="#FFFFFF" ></td>
-            </tr>
-            </table></td>
-    </tr>
-</table>
+<h1>아이디/패스워드 찾기</h1>
 
 <form name="fpasswordlost" method="post" onsubmit="return fpasswordlost_submit(this);" autocomplete="off">
-<table width="540" border="0" cellspacing="0" cellpadding="0" align="center">
-<tr> 
-    <td height="30"></td>
-</tr>
-<tr> 
-    <td height="170" align="center" valign="middle" background="<?=$member_skin_path?>/img/gray_bg_img.gif" bgcolor="#FFFFFF">
-        <table width="400" border="0" cellspacing="0" cellpadding="0">
-        <tr> 
-            <td width="130" height="14"><b>이메일주소</b></td>
-            <td width="" height="14">
-                <input type="text" name="mb_email" class="ed" required email itemname="이메일주소" size="45" />
-                <br />회원가입시 등록하신 이메일주소 입력
-            </td>
-        </tr>
-        <tr> 
-            <td height="20" colspan="2"></td>
-        </tr>
-        <tr> 
-            <td><img id='kcaptcha_image' /></td>
-            <td>
-                <input type=text name='wr_key' class="ed" size=10 required itemname='자동등록방지'>
-                <br />왼쪽의 숫자를 입력하세요.
-            </td>
-        </tr>
-        </table>
-    </td>
-</tr>
-<tr> 
-    <td height="10"></td>
-</tr>
-<tr> 
-    <td height="40" align="center" valign="bottom"><input type="image" src="<?=$member_skin_path?>/img/btn_next_01.gif">&nbsp;&nbsp;<a href="javascript:window.close();"><img src="<?=$member_skin_path?>/img/btn_close.gif" width="48" height="20" border="0"></a></td>
-</tr>
-</table>
+<fieldset>
+    <legend>이메일 주소 입력</legend>
+    <p>회원가입 시 등록하신 이메일 주소를 입력해 주시면, 해당 이메일로 아이디와 패스워드 정보를 보내드립니다.</p>
+    <label for="mb_email">이메일 주소</label>
+    <input type="text" id="mb_email" name="mb_email" required size="45">
+    <img id="kcaptcha_image">
+    <input type="text" name="wr_key" size="10" required>
+</fieldset>
+<div class="btn_confirm">
+    <input type="submit" value="확인">
+    <a href="javascript:window.close();">창닫기</a>
+</div>
 </form>
 
-
-
-<script type="text/javascript" src="<?="$g4[path]/js/md5.js"?>"></script>
-<script type="text/javascript" src="<?="$g4[path]/js/jquery.kcaptcha.js"?>"></script>
-<script type="text/javascript">
+<script src="<?="$g4[path]/js/md5.js"?>"></script>
+<script src="<?="$g4[path]/js/jquery.kcaptcha.js"?>"></script>
+<script>
 function fpasswordlost_submit(f)
 {
     if (!check_kcaptcha(f.wr_key)) {
