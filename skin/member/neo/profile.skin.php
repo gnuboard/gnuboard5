@@ -5,7 +5,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <h1><?=$mb_nick?>님의 프로필</h1>
 
 <table>
-<caption></caption>
 <tbody>
 <tr>
     <th scope="row">회원권한</th>
