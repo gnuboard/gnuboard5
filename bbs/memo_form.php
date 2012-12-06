@@ -1,7 +1,7 @@
 <?
 include_once('./_common.php');
 
-if (!$member[mb_id]) 
+if (!$member[mb_id])
     alert_close('회원만 이용하실 수 있습니다.');
 
 if (!$member[mb_open] && $is_admin != 'super' && $member[mb_id] != $mb_id) 
@@ -22,11 +22,11 @@ if ($me_recv_mb_id)
     $row = sql_fetch(" select me_memo from {$g4[memo_table]} where me_id = '{$me_id}' and (me_recv_mb_id = '{$member[mb_id]}' or me_send_mb_id = '{$member[mb_id]}') ");
     if ($row[me_memo]) 
     {
-        $content = PHP_EOL.PHP_EOL.PHP_EOL.' &gt;'
-                 .PHP_EOL.' &gt;'
-                 .PHP_EOL.' &gt;'.preg_replace("/\n/", "\n> ", get_text($row[me_memo], 0)) 
-                 .PHP_EOL.' &gt;'
-                 .' &gt';
+        $content = PHP_EOL.PHP_EOL.PHP_EOL.' >'
+                         .PHP_EOL.' >'
+                         .PHP_EOL.' >'.preg_replace("/\n/", "\n> ", get_text($row[me_memo], 0)) 
+                         .PHP_EOL.' >'
+                         .' >';
 
     }
 }

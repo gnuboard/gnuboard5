@@ -321,7 +321,7 @@ else if ($w == 'u')
                      mb_9 = '{$mb_9}',
                      mb_10 = '{$mb_10}'
                      {$sql_password}
-                     {$sql_icon}}
+                     {$sql_icon}
                      {$sql_nick_date}
                      {$sql_open_date}
                      {$sql_sex}

@@ -2,24 +2,13 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<table width="600" height="50" border="0" cellpadding="0" cellspacing="0">
-<tr>
-    <td align="center" valign="middle" bgcolor="#EBEBEB">
-        <table width="590" height="40" border="0" cellspacing="0" cellpadding="0">
-        <tr> 
-            <td width="25" align="center" bgcolor="#FFFFFF" ><img src="<?=$member_skin_path?>/img/icon_01.gif" width="5" height="5"></td>
-            <td width="75" align="left" bgcolor="#FFFFFF" ><font color="#666666"><b><?=$g4[title]?></b></font></td>
-            <td width="490" bgcolor="#FFFFFF" ></td>
-        </tr>
-        </table></td>
-</tr>
-</table>
+<h1>쪽지보내기</h1>
 
 <table width="600" border="0" cellspacing="0" cellpadding="0">
-<tr> 
+<tr>
     <td width="600" height="20" colspan="14"></td>
 </tr>
-<tr> 
+<tr>
     <td width="30" height="24"></td>
     <td width="99" align="center" valign="middle"><a href="./memo.php?kind=recv"><img src="<?=$member_skin_path?>/img/btn_recv_paper_off.gif" width="99" height="24" border="0"></a></td>
     <td width="2"  align="center" valign="middle">&nbsp;</td>
@@ -39,16 +28,16 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <table width="600" border="0" cellspacing="0" cellpadding="0">
 <form name=fmemoform method=post onsubmit="return fmemoform_submit(this);" autocomplete="off">
-<tr> 
+<tr>
     <td height="300" align="center" valign="top">
         <table width="540" border="0" cellspacing="0" cellpadding="0">
-        <tr> 
+        <tr>
             <td height="20"></td>
         </tr>
-        <tr> 
+        <tr>
             <td height="2" bgcolor="#808080"></td>
         </tr>
-        <tr> 
+        <tr>
             <td width="540" height="2" align="center" valign="top" bgcolor="#FFFFFF">
                 <table width=100% cellpadding=1 cellspacing=1 border=0>
                 <tr bgcolor=#E1E1E1 align=center> 
@@ -65,7 +54,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <td height="180" align="center" valign="middle" bgcolor="#F6F6F6">
                 <textarea name=me_memo rows=10 style='width:95%;' required itemname='내용'><?=$content?></textarea></td>
         </tr>
-        <tr> 
+        <tr>
             <td>
                 <table width=100% cellpadding=1 cellspacing=1 border=0>
                 <tr align=center> 
@@ -79,7 +68,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </tr>
         </table></td>
 </tr>
-<tr> 
+<tr>
     <td height="2" align="center" valign="top" bgcolor="#D5D5D5"></td>
 </tr>
 <tr>
