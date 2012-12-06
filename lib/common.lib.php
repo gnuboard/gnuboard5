@@ -66,7 +66,7 @@ function print_r2($var)
 // header("location:URL") 을 대체
 function goto_url($url)
 {
-    echo "<script type='text/javascript'> location.replace('$url'); </script>";
+    echo "<script> location.replace('$url'); </script>";
     exit;
 }
 
@@ -107,13 +107,13 @@ function get_cookie($cookie_name)
 // 경고메세지를 경고창으로
 function alert($msg='', $url='')
 {
-	global $g4;
+    global $g4;
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
 
-	//header("Content-Type: text/html; charset=$g4[charset]");
-	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
-	echo "<script type='text/javascript'>alert('$msg');";
+    //header("Content-Type: text/html; charset=$g4[charset]");
+    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
+    echo "<script>alert('$msg');";
     if (!$url)
         echo "history.go(-1);";
     echo "</script>";
@@ -128,10 +128,10 @@ function alert($msg='', $url='')
 // 경고메세지 출력후 창을 닫음
 function alert_close($msg)
 {
-	global $g4;
+    global $g4;
 
-	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
-    echo "<script type='text/javascript'> alert('$msg'); window.close(); </script>";
+    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
+    echo "<script> alert('$msg'); window.close(); </script>";
     exit;
 }
 
