@@ -10,20 +10,20 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <li><a href="./memo_form.php">쪽지보내기</a></li>
 </ul>
 
-<form name="fmemoform" method=post onsubmit="return fmemoform_submit(this);" autocomplete="off">
+<form name="fmemoform" method="post" onsubmit="return fmemoform_submit(this);" autocomplete="off">
 <table>
 <caption>쪽지쓰기</caption>
 <tbody>
 <tr>
-    <th scope="row">받는 회원아이디</th>
+    <th scope="row"><label for="me_recv_mb_id">받는 회원아이디</label></th>
     <td>
-        <input type=text name="me_recv_mb_id" required value="<?=$me_recv_mb_id?>">
+        <input type="text" id="me_recv_mb_id" name="me_recv_mb_id" required value="<?=$me_recv_mb_id?>">
         여러 회원에게 보낼때는 컴마(,)로 구분하세요.
     </td>
 </tr>
 <tr>
-    <th scope="row">내용</th>
-    <td><textarea name=me_memo rows=10 style='width:95%;' required itemname='내용'><?=$content?></textarea></td>
+    <th scope="row"><label for="me_memo">내용</label></th>
+    <td><textarea id="me_memo" name="me_memo" required><?=$content?></textarea></td>
 </tr>
 </tbody>
 </table>
@@ -31,7 +31,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <fieldset>
     <legend>자동등록방지</legend>
     <img id='kcaptcha_image' />
-    <input type="input" name="wr_key" required>
+    <input type="text" name="wr_key" required>
     왼쪽의 글자를 입력하세요.
 </fieldset>
 
