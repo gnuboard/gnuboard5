@@ -30,7 +30,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <fieldset>
     <legend>자동등록방지</legend>
-    <img id='kcaptcha_image' />
+    <img id="kcaptcha_image" />
     <input type="text" name="wr_key" required>
     왼쪽의 글자를 입력하세요.
 </fieldset>
