@@ -29,11 +29,11 @@ function send_trackback($tb_url, $url, $title, $blog_name, $excerpt)
 	$title = strip_tags($title);
 	$excerpt = strip_tags($excerpt);
 
-	$tmp_data = "url=".rawurlencode($url)."&title=".rawurlencode($title)."&blog_name=".rawurlencode($blog_name)."&excerpt=".rawurlencode($excerpt);
+	$tmp_data = "url=".rawurlencode($url)."&amp;title=".rawurlencode($title)."&amp;blog_name=".rawurlencode($blog_name)."&amp;excerpt=".rawurlencode($excerpt);
 
 	//주소 처리
 	$uinfo = parse_url($tb_url);
-	if($uinfo['query']) $tmp_data .= "&".$uinfo['query'];
+	if($uinfo['query']) $tmp_data .= "&amp;".$uinfo['query'];
 	if(!$uinfo['port']) $uinfo['port'] = "80";
 
 	//최종 전송 자료

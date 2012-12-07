@@ -47,6 +47,7 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
 <?=outlogin('neo'); // 외부 로그인 ?>
 <?=poll('neo'); // 설문조사 ?>
 <?=visit('neo'); // 방문자수 ?>
+<?=popular('neo'); // 방문자수 ?>
 <?=connect(); // 현재 접속자수 ?>
 
 <div id="wrapper">

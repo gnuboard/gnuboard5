@@ -11,7 +11,7 @@ if ($g4['is_cheditor5'])
         global $g4;
 
         return "
-        <script type='text/javascript'>
+        <script>
         var ed_{$id} = new cheditor('ed_{$id}');
         ed_{$id}.config.editorHeight = '{$height}';
         ed_{$id}.config.editorWidth = '{$width}';
@@ -26,7 +26,7 @@ else
         global $g4;
 
         return "
-        <script type='text/javascript'>
+        <script>
         var ed_{$id} = new cheditor('ed_{$id}');
         ed_{$id}.config.editorHeight = '{$height}';
         ed_{$id}.config.editorWidth = '{$width}';
@@ -44,7 +44,7 @@ function cheditor2($id, $content='')
 
     return "
     <textarea name='{$id}' id='tx_{$id}' style='display:none;'>{$content}</textarea>
-    <script type='text/javascript'>
+    <script>
     ed_{$id}.run();
     </script>";
 }

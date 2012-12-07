@@ -1,6 +1,6 @@
 <?
 include_once('./_common.php');
-include_once("$g4['path']/lib/mailer.lib.php");
+include_once($g4['path'].'/lib/mailer.lib.php');
 
 if ($member[mb_id]) 
 {
@@ -22,24 +22,24 @@ if (!($key && $key == $_POST[wr_key])) {
 
 $email = trim($_POST['mb_email']);
 
-if (!$email) 
+if (!$email)
     alert_close('메일주소 오류입니다.');
 
 $sql = " select count(*) as cnt from {$g4[member_table]} where mb_email = '{$email}' ";
 $row = sql_fetch($sql);
 if ($row[cnt] > 1)
-    alert('동일한 메일주소가 2개 이상 존재합니다.'.PHP_EOL.PHP_EOL.'관리자에게 문의하여 주십시오.');
+    alert('동일한 메일주소가 2개 이상 존재합니다.\n\n관리자에게 문의하여 주십시오.');
 
 $sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime from {$g4[member_table]} where mb_email = '{$email}' ";
 $mb = sql_fetch($sql);
-if (!$mb[mb_id]) 
+if (!$mb[mb_id])
     alert('존재하지 않는 회원입니다.');
-else if (is_admin($mb[mb_id])) 
+else if (is_admin($mb[mb_id]))
     alert('관리자 아이디는 접근 불가합니다.');
 
 // 난수 발생
 srand(time());
-$randval = rand(4, 6); 
+$randval = rand(4, 6);
 
 $change_password = substr(md5(get_microtime()), 0, $randval);
 
@@ -86,5 +86,5 @@ $content .= '</div>';
 $admin = get_admin('super');
 mailer($admin[mb_nick], $admin[mb_email], $mb[mb_email], $subject, $content, 1);
 
-alert_close($email.' 메일로 회원아이디와 패스워드를 인증할 수 있는 메일이 발송 되었습니다.'.PHP_EOL.PHP_EOL.'메일을 확인하여 주십시오.');
+alert_close($email.' 메일로 회원아이디와 패스워드를 인증할 수 있는 메일이 발송 되었습니다.\n\n메일을 확인하여 주십시오.');
 ?>

@@ -207,7 +207,7 @@ function get_file($bo_table, $wr_id)
     while ($row = sql_fetch_array($result))
     {
         $no = $row['bf_no'];
-        $file[$no]['href'] = "./download.php?bo_table=$bo_table&wr_id=$wr_id&no=$no" . $qstr;
+        $file[$no]['href'] = "./download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
         $file[$no]['download'] = $row['bf_download'];
         // 4.00.11 - 파일 path 추가
         $file[$no]['path'] = $g4['path'].'/data/file/'.$bo_table;
@@ -334,7 +334,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     $list['ca_name_href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
 
     $list['href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
-    //$list['href'] = "$g4[bbs_path]/board.php?bo_table=$board[bo_table]&wr_id=$list[wr_id]";
+    //$list['href'] = "$g4[bbs_path]/board.php?bo_table=$board[bo_table]&amp;wr_id=$list[wr_id]";
     if ($board['bo_use_comment'])
         $list['comment_href'] = "javascript:win_comment('$g4[bbs_path]/board.php?bo_table=$board[bo_table]&amp;wr_id={$list['wr_id']}&amp;cwin=1');";
     else
