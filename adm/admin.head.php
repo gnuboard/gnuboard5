@@ -73,56 +73,60 @@ function textarea_size(fld, size)
 <script src="<?=$g4['path']?>/js/sideview.js"></script>
 
 <header>
-<a href="#wrapper" id="skip_to_main">본문 바로가기</a>
-<strong>사이트제목</strong> <?=$member['mb_id']?>님
-<aside>
-<ul>
-<li><a href="<?=$g4['admin_path']?>/">관리자메인</a></li>
-<li><a href="<?=$g4['path']?>/">홈페이지</a></li>
-<li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
-</ul>
-</aside>
-<nav>
-<ul id="gnb_parents">
-<?
-foreach($amenu as $key=>$value)
-{
-    $href1 = $href2 = '';
-    if ($menu['menu'.$key][0][2])
-    {
-        $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
-        $href2 = '</a>';
-    }
-    echo '<li id="gnb_'.$menu['menu'.$key][0][3].'">';
-    echo $href1 . $menu['menu'.$key][0][1] . $href2;
-    echo print_menu1('menu'.$key, 1);
-    echo '</li>';
-}
 
-?>
-</ul>
-</nav>
+    <div><a href="#wrapper" id="skip_to_main">본문 바로가기</a></div>
+    <p><strong>사이트제목</strong> <?=$member['mb_id']?>님</p>
+    <section>
+    <ul>
+        <li><a href="<?=$g4['admin_path']?>/">관리자메인</a></li>
+        <li><a href="<?=$g4['path']?>/">홈페이지</a></li>
+        <li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
+    </ul>
+    </section>
 
-<div id="current_location">
-<?
-$tmp_menu = '';
-if (isset($sub_menu))
-    $tmp_menu = substr($sub_menu, 0, 3);
-if (isset($menu['menu'.$tmp_menu][0][1]))
-{
-    if ($menu['menu'.$tmp_menu][0][2])
+    <div id="current_location">
+    현재위치
+    <?
+    $tmp_menu = '';
+    if (isset($sub_menu))
+        $tmp_menu = substr($sub_menu, 0, 3);
+    if (isset($menu['menu'.$tmp_menu][0][1]))
     {
-        echo '<a href="'.$menu['menu'.$tmp_menu][0][2];
-        echo $menu['menu'.$tmp_menu][0][1];
-        echo '</a> > ';
+        if ($menu['menu'.$tmp_menu][0][2])
+        {
+            echo '<a href="'.$menu['menu'.$tmp_menu][0][2];
+            echo $menu['menu'.$tmp_menu][0][1];
+            echo '</a> > ';
+        }
+        else
+            echo $menu['menu'.$tmp_menu][0][1];
     }
-    else
-        echo $menu['menu'.$tmp_menu][0][1];
-}
-?>
-</div>
+    ?>
+    </div>
+
+    <nav>
+    <ul id="gnb_parents">
+    <?
+    foreach($amenu as $key=>$value)
+    {
+        $href1 = $href2 = '';
+        if ($menu['menu'.$key][0][2])
+        {
+            $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
+            $href2 = '</a>';
+        }
+        echo '<li id="gnb_'.$menu['menu'.$key][0][3].'">';
+        echo $href1 . $menu['menu'.$key][0][1] . $href2;
+        echo print_menu1('menu'.$key, 1);
+        echo '</li>';
+    }
+
+    ?>
+    </ul>
+    </nav>
+
+    <h1><span></span><?=$g4['title']?></h1>
 
 </header>
 
 <div id="wrapper">
-    <h1><span></span>그누보드 <?=$g4['title']?></h1>
