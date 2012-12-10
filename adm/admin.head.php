@@ -18,14 +18,14 @@ function print_menu2($key, $no)
 {
     global $menu, $auth_menu, $is_admin, $auth, $g4;
 
-    $str = '<ul class="gnb_2depth">';
+    $str = '<ul>';
     for($i=1; $i<count($menu[$key]); $i++)
     {
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
             continue;
 
         // if ($no == 2) $str .= "&nbsp;&nbsp;<img src='{$g4['admin_path']}/img/icon.gif' align=absmiddle> ";
-        $str .= '<li id="gnb_'.$menu[$key][$i][3].'"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>';
+        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>';
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
@@ -60,12 +60,12 @@ function imageview(id, w, h)
 // TEXTAREA 사이즈 변경
 function textarea_size(fld, size)
 {
-	var rows = parseInt(fld.rows);
+    var rows = parseInt(fld.rows);
 
-	rows += parseInt(size);
-	if (rows > 0) {
-		fld.rows = rows;
-	}
+    rows += parseInt(size);
+    if (rows > 0) {
+        fld.rows = rows;
+    }
 }
 </script>
 
@@ -75,54 +75,36 @@ function textarea_size(fld, size)
 <header>
 
     <div><a href="#wrapper" id="skip_to_main">본문 바로가기</a></div>
-    <p><strong>사이트제목</strong> <?=$member['mb_id']?>님</p>
-    <section>
-    <ul>
-        <li><a href="<?=$g4['admin_path']?>/">관리자메인</a></li>
+    <div id="logo"><a href=""><img src="" alt="관리자 메인으로"></a></div>
+    <ul id="home_link">
+        <li><a href="<?=$g4['path']?>/">관리자정보수정</a></li>
         <li><a href="<?=$g4['path']?>/">홈페이지</a></li>
         <li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
     </ul>
-    </section>
 
     <div id="current_location">
-    현재위치
-    <?
-    $tmp_menu = '';
-    if (isset($sub_menu))
-        $tmp_menu = substr($sub_menu, 0, 3);
-    if (isset($menu['menu'.$tmp_menu][0][1]))
-    {
-        if ($menu['menu'.$tmp_menu][0][2])
-        {
-            echo '<a href="'.$menu['menu'.$tmp_menu][0][2];
-            echo $menu['menu'.$tmp_menu][0][1];
-            echo '</a> > ';
-        }
-        else
-            echo $menu['menu'.$tmp_menu][0][1];
-    }
-    ?>
+    <?=$member['mb_id']?>님 현재위치
     </div>
 
-    <nav>
-    <ul id="gnb_parents">
-    <?
-    foreach($amenu as $key=>$value)
-    {
-        $href1 = $href2 = '';
-        if ($menu['menu'.$key][0][2])
+    <nav id="gnb">
+        <ul>
+        <?
+        foreach($amenu as $key=>$value)
         {
-            $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
-            $href2 = '</a>';
+            $href1 = $href2 = '';
+            if ($menu['menu'.$key][0][2])
+            {
+                $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
+                $href2 = '</a>';
+            }
+            echo '<li class="gnb_1depth">';
+            echo $href1 . $menu['menu'.$key][0][1] . $href2;
+            echo print_menu1('menu'.$key, 1);
+            echo '</li>';
         }
-        echo '<li id="gnb_'.$menu['menu'.$key][0][3].'">';
-        echo $href1 . $menu['menu'.$key][0][1] . $href2;
-        echo print_menu1('menu'.$key, 1);
-        echo '</li>';
-    }
 
-    ?>
-    </ul>
+        ?>
+        </ul>
     </nav>
 
     <h1><span></span><?=$g4['title']?></h1>

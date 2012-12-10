@@ -49,9 +49,9 @@ header("Pragma: no-cache"); // HTTP/1.0
 <meta charset="<?=$g4['charset']?>">
 <title><?=$g4['title']?></title>
 <? if ($administrator) { ?>
-<link rel="stylesheet" href="<?=$g4['path']?>/css/admin.css?=<?=date("md")?>">
+<link rel="stylesheet" href="<?=$g4['path']?>/css/adm.css?=<?=date("md")?>">
 <? } else { ?>
-<link rel="stylesheet" href="<?=$g4['path']?>/css/default.css?=<?=date("md")?>">
+<link rel="stylesheet" href="<?=$g4['path']?>/css/def.css?=<?=date("md")?>">
 <?}?>
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언

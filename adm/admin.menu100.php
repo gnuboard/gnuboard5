@@ -1,6 +1,6 @@
 <?
 $menu['menu100'] = array (
-    array('100000', '환경설정', '', 'config'),
+    array('100000', '환경설정', ''.$g4['admin_path'].'/config_form.php', 'config'),
     array('', '기본환경설정', ''.$g4['admin_path'].'/config_form.php', 'cf_basic'),
     array('', '관리권한설정', ''.$g4['admin_path'].'/auth_list.php', 'cf_auth'),
     array('100300', '메일 테스트', ''.$g4['admin_path'].'/sendmail_test.php', 'cf_mailtest'),
