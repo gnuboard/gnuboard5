@@ -1,9 +1,10 @@
 /* SIR SOFT 지운아빠 Dec 2012 */
 
 /* 초기화 */
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dt, dd, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, header, article, aside, canvas, details, figcaption, figure, hgroup, menu, nav, section, summary, footer, time, mark, audio, video {margin:0;padding:0;font-size:1em}
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dt, dd, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, header, article, aside, canvas, details, figcaption, figure, hgroup, menu, nav, section, summary, footer, time, mark, audio, video {margin:0;padding:0;font-size:1em}
 article,aside,details,figcaption,figure, footer,header,hgroup,menu,nav,section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
+p {margin:8px 0}
 blockquote, q {quotes:none} blockquote:before, blockquote:after, q:before, q:after {content:'';content:none}
 ins {background-color:#fff;color:#000;text-decoration:none}
 mark {background-color:#fff;color:#000;font-style:italic;font-weight:bold}
@@ -55,11 +56,12 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 
 /* 테이블 */
 table {margin-bottom:20px;width:100%;border:1px solid #d5dcdf;background:#fff}
-caption {text-align:left}
+caption {padding-bottom:10px;text-align:left;font-size:1em}
 caption p {color:#6b8088;font-size:0.75em}
 th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
 th label {display:block}
 th a {color:#000}
 th {padding:10px;background:#f1f6f7}
+td {padding:10px;border-right:1px solid #f1f3f4}
 .frm_tbl th {width:130px;text-align:left;font-weight:normal}
-td {padding:10px}
+.frm_tbl td {border-right:0}
