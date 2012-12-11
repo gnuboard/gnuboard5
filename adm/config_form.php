@@ -47,7 +47,7 @@ include_once ('./admin.head.php');
     </td>
     <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트</label></th>
     <td>
-         <?=help('양수로 입력하십시오.<br>0으로 입력하시면 쪽지보낼시 포인트를 차감하지 않습니다.')?>
+         <?=help('양수로 입력하십시오. 0으로 입력하시면 쪽지보낼시 포인트를 차감하지 않습니다.')?>
         <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" required value="<?=$config[cf_memo_send_point]?>"> 점
     </td>
 </tr>
@@ -173,7 +173,7 @@ include_once ('./admin.head.php');
     <td><input type="text" id="cf_write_point" name="cf_write_point" required value="<?=$config[cf_write_point]?>"> 점</td>
 </tr>
 <tr>
-    <th scope="row"><label for="cf_comment_point">코멘트쓰기 포인트</label></th>
+    <th scope="row"><label for="cf_comment_point">댓글쓰기 포인트</label></th>
     <td><input type="text" id="cf_comment_point" name="cf_comment_point" required value="<?=$config[cf_comment_point]?>"> 점</td>
     <th scope="row"><label for="cf_download_point">다운로드 포인트</label></th>
     <td><input type="text" id="cf_download_point" name="cf_download_point" required value="<?=$config[cf_download_point]?>"> 점</td>
@@ -296,12 +296,12 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="cf_use_member_icon">회원아이콘 사용</label></th>
     <td>
+        <?=help('게시물에 게시자 별명 대신 아이콘 사용')?>
         <select id="cf_use_member_icon" name="cf_use_member_icon">
             <option value="0">미사용
             <option value="1">아이콘만 표시
             <option value="2">아이콘+이름 표시
         </select>
-        <?=help('게시물에 게시자 별명 대신 아이콘 사용')?>
         <script> document.getElementById('cf_use_member_icon').value="<?=$config[cf_use_member_icon]?>";</script>
     </td>
     <th scope="row"><label for="cf_icon_level">아이콘 업로드 권한</label></th>
@@ -325,12 +325,12 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="cf_prohibit_id">아이디,별명 금지단어</label></th>
     <td>
-        <?=help('입력된 단어가 포함된 내용은 회원아이디, 별명으로 사용할 수 없습니다. 단어와 단어 사이는 , 로 구분합니다..')?>
+        <?=help('회원아이디, 별명으로 사용할 수 없는 단어를 정합니다. 쉼표 (,) 로 구분')?>
         <textarea id="cf_prohibit_id" name="cf_prohibit_id" rows="5"><?=$config['cf_prohibit_id']?></textarea>
     </td>
     <th scope="row"><label for="cf_prohibit_email">입력 금지 메일</label></th>
     <td>
-        <?=help('hanmail.net과 같은 메일 주소는 입력을 못합니다. 엔터로 구분합니다.')?>
+        <?=help('hanmail.net과 같은 메일 주소는 입력을 못합니다. 엔터로 구분')?>
         <textarea id="cf_prohibit_email" name="cf_prohibit_email" rows="5"><?=$config['cf_prohibit_email']?></textarea>
     </td>
 </tr>
@@ -375,37 +375,37 @@ include_once ('./admin.head.php');
 <caption>게시판 글 작성 시 메일 설정</caption>
 <tbody>
 <tr>
-    <th scope="row"><label for="cf_email_wr_super_admin">최고관리자 메일발송</label></th>
+    <th scope="row"><label for="cf_email_wr_super_admin">최고관리자</label></th>
     <td>
         <?=help('최고관리자에게 메일을 발송합니다.')?>
         <input type="checkbox" id="cf_email_wr_super_admin" name="cf_email_wr_super_admin" value="1" <?=$config[cf_email_wr_super_admin]?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="cf_email_wr_group_admin">그룹관리자 메일발송</label></th>
+    <th scope="row"><label for="cf_email_wr_group_admin">그룹관리자</label></th>
     <td>
         <?=help('그룹관리자에게 메일을 발송합니다.')?>
         <input type="checkbox" id="cf_email_wr_group_admin" name="cf_email_wr_group_admin" value="1" <?=$config[cf_email_wr_group_admin]?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="cf_email_wr_board_admin">게시판관리자 메일발송</label></th>
+    <th scope="row"><label for="cf_email_wr_board_admin">게시판관리자</label></th>
     <td>
         <?=help('게시판관리자에게 메일을 발송합니다.')?>
         <input type="checkbox" id="cf_email_wr_board_admin" name="cf_email_wr_board_admin" value="1" <?=$config[cf_email_wr_board_admin]?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="cf_email_wr_write">원글 메일발송</label></th>
+    <th scope="row"><label for="cf_email_wr_write">원글작성자</label></th>
     <td>
         <?=help('게시자님께 메일을 발송합니다.')?>
         <input type="checkbox" id="cf_email_wr_write" name="cf_email_wr_write" value="1" <?=$config[cf_email_wr_write]?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="cf_email_wr_comment_all">코멘트 메일발송</label></th>
+    <th scope="row"><label for="cf_email_wr_comment_all">댓글작성자</label></th>
     <td>
-        <?=help('원글에 코멘트가 올라오는 경우 코멘트 쓴 모든 분들께 메일을 발송합니다.')?>
+        <?=help('원글에 댓글이 올라오는 경우 댓글 쓴 모든 분들께 메일을 발송합니다.')?>
         <input type="checkbox" id="cf_email_wr_comment_all" name="cf_email_wr_comment_all" value="1" <?=$config[cf_email_wr_comment_all]?'checked':'';?>> 사용
     </td>
 </tr>

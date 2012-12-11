@@ -11,8 +11,6 @@ mark {background-color:#fff;color:#000;font-style:italic;font-weight:bold}
 del {text-decoration: line-through}
 abbr[title], dfn[title] {border-bottom:1px dotted;cursor:help}
 table {border-collapse:collapse;border-spacing:0}
-input, select {vertical-align:middle}
-label {cursor:pointer}
 img {border:0}
 
 /* 내용 건너띄기 */
@@ -41,7 +39,7 @@ header {background:#2c2f34}
 .gnb_1depth ul {display:block;visibility:hidden;height:0}
 .gnb_1depth_on ul {visibility:visible;height:auto}
 .gnb_1depth {margin-bottom:5px;border:1px solid #c7cfd5;background:#eef2f3}
-.gnb_1depth a {display:block;padding-left:15px;height:38px;color:#899093;font-weight:bold;text-decoration:none;line-height:2.5em}
+.gnb_1depth a {display:block;padding-left:15px;height:38px;color:#899093;font-size:0.9em;font-weight:bold;text-decoration:none;line-height:2.8em}
 .gnb_1depth_on a {background:#515b5f;color:#fff}
 .gnb_2depth {border-bottom:1px solid #eef1f2}
 .gnb_2depth a {display:block;padding-left:15px;height:30px;background:#fff;color:#000;font:0.75em normal;text-decoration:none;line-height:2.8em}
@@ -52,18 +50,23 @@ h1 {display:block;visibility:hidden;height:0}
 article h1 {visibility:visible;height:auto}
 
 /* 폼요소 */
-textarea, input, select {border:1px solid #ced9de;background:#f6f9fa}
+label {vertical-align:middle}
+textarea, input, select {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea, input {padding:3px}
 textarea:focus, input:focus {padding:4px;border:0;background:#9aacb4;color:#fff}
+textarea {width:90%}
 select {padding:2px}
 fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
-legend {margin-left:0;padding:7px 10px;border:1px solid #ced9de;background:#f6f9fa}
+legend {margin-left:0;padding:7px 10px;border:1px solid #ced9de;background:#f6f9fa;font-size:0.875em}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
+.readonly {background:#ff3061}
+
+.adm_field_explain {display:block;padding:0 0 5px;color:#768f99}
 
 /* 테이블 */
-table {margin-bottom:20px;width:100%;border:1px solid #d5dcdf;background:#fff}
-caption {padding-bottom:10px;text-align:left;font-size:1em}
-caption p {padding:0 0 5px;color:#6b8088;font-size:0.75em}
+table {margin-bottom:30px;width:100%;border:1px solid #d5dcdf;background:#fff}
+caption {padding-bottom:15px;text-align:left;font-size:1em;font-weight:bold}
+caption p {padding:0 0 5px;color:#6b8088;font:0.75em normal}
 th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
 th label {display:block}
 th a {color:#000}
