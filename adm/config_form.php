@@ -28,7 +28,7 @@ include_once ('./admin.head.php');
 
 <section id="config_basic">
 <h2><span></span>기본환경설정</h2>
-<table>
+<table class="frm_tbl">
 <caption>홈페이지 기본환경 설정</caption>
 <tbody>
 <tr>
@@ -168,7 +168,7 @@ include_once ('./admin.head.php');
 
 <section id="config_board">
 <h2><span></span>게시판 설정</h2>
-<table>
+<table class="frm_tbl">
 <caption>게시판 공통 설정, 게시판 관리에서 개별 설정 가능</caption>
 <tbody>
 <tr>
@@ -238,7 +238,7 @@ include_once ('./admin.head.php');
 
 <section id="config_mb_join">
 <h2><span></span>회원가입 설정</h2>
-<table>
+<table class="frm_tbl">
 <caption>회원가입스킨 및 입력받을 정보 설정</caption>
 <tbody>
 <tr>
@@ -356,8 +356,7 @@ include_once ('./admin.head.php');
 
 <section id="config_mail">
 <h2><span></span>메일 설정</h2>
-
-<table>
+<table class="frm_tbl">
 <caption>기본 메일환경 설정</caption>
 <tbody>
 <tr>
@@ -383,7 +382,7 @@ include_once ('./admin.head.php');
 </tr>
 </table>
 
-<table>
+<table class="frm_tbl">
 <caption>게시판 글 작성 시 메일 설정</caption>
 <tbody>
 <tr>
@@ -424,7 +423,7 @@ include_once ('./admin.head.php');
 </tbody>
 </table>
 
-<table>
+<table class="frm_tbl">
 <caption>회원가입 시 메일 설정</caption>
 <tbody>
 <tr>
@@ -444,7 +443,7 @@ include_once ('./admin.head.php');
 </tbody>
 </table>
 
-<table>
+<table class="frm_tbl">
 <caption>투표 기타의견 작성시 메일 설정</caption>
 <tbody>
 <tr>
@@ -460,7 +459,7 @@ include_once ('./admin.head.php');
 
 <section id="config_extra">
 <h2><span></span>여분필드 설정</h2>
-<table>
+<table class="frm_tbl">
 <caption>여분필드의 기본 내용 설정, 게시판 관리에서 개별 설정 가능</caption>
 <tbody>
 <? for ($i=1; $i<=10; $i++) { ?>

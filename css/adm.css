@@ -11,10 +11,14 @@ del {text-decoration: line-through}
 abbr[title], dfn[title] {border-bottom:1px dotted;cursor:help}
 table {border-collapse:collapse;border-spacing:0}
 input, select {vertical-align:middle}
+label {cursor:pointer}
 
 /* 내용 건너띄기 */
 #skip_to_main {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
 #skip_to_main:focus, #skip_to_main:active {height:auto;padding:5px 10px;border:1px solid #000;background:#eee;color:#333;font-size:0.75em;overflow:auto}
+
+/* 내용 없는 테이블 */
+.empty_table {padding:200px 0;text-align:center}
 
 /* 레이아웃 */
 body {background:#dfe4e6;overflow-y:scroll}
@@ -28,7 +32,7 @@ header {background:#2c2f34}
 
 /* GNB */
 #gnb {position:absolute;top:110px;left:20px;width:180px}
-/*#gnb ul ul {display:block;visibility:hidden;height:0}*/
+/* #gnb ul ul {display:block;visibility:hidden;height:0} */
 .gnb_1depth {margin-bottom:5px;border:1px solid #c7cfd5;background:#eef2f3}
 .gnb_1depth a {display:block;padding-left:15px;height:38px;font-weight:bold;text-decoration:none;line-height:2.5em}
 .gnb_2depth {border-bottom:1px solid #eef1f2;background:#fff}
@@ -51,6 +55,7 @@ table {margin-bottom:20px;width:100%;border:1px solid #d5dcdf;background:#fff}
 caption {text-align:left}
 caption p {color:#6b8088;font-size:0.75em}
 th, td {border-bottom:1px solid #e9ecee;font:0.75em normal}
-th label {display:block;cursor:pointer}
-th {padding:10px;background:#f1f6f7;text-align:left}
+th label {display:block}
+th {padding:10px;background:#f1f6f7}
+.frm_tbl th {text-align:left}
 td {padding:10px}
