@@ -109,7 +109,7 @@ if ($i == 0)
 $page = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;domain=$domain&amp;page=");
 if ($page) {
 ?>
-<div class="paginate">
+<div class="pg">
     <?=$page?>
 </div>
 <?

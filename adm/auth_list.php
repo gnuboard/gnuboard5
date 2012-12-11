@@ -137,7 +137,7 @@ $pagelist = get_paging($config[cf_write_pages], $page, $total_page, $_SERVER['PH
 
 <div class="btn_list"><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>
 
-<div class="paginate">
+<div class="pg">
     <?=$pagelist?>
 </div>
 

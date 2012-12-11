@@ -241,7 +241,7 @@ if ($i == 0)
 <?
 $pagelist = get_paging($config[cf_write_pages], $page, $total_page, '?'.$qstr.'&amp;page=');
 ?>
-<div class="paginate">
+<div class="pg">
     <?=$pagelist?>
 </div>
 
