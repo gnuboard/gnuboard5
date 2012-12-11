@@ -84,7 +84,7 @@ include_once('./admin.head.php');
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 
-<table>
+<table class="frm_tbl">
 <caption><?=$g4['title']?></caption>
 <tbody>
 <tr>

@@ -28,7 +28,7 @@ include_once('./admin.head.php');
 <input type="hidden" id="w" name="w" value="<?=$w?>">
 <input type="hidden" id="ma_id" name="ma_id" value="<?=$ma[ma_id]?>">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
-<table>
+<table class="frm_tbl">
 <tr>
     <th scope="row"><label for="ma_subject">메일 제목</label></th>
     <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" required></td>

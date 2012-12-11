@@ -201,31 +201,18 @@ else
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 
-<table>
-<caption>특정 회원의 포인트 증감 설정</caption>
-<tbody>
-<tr>
-    <th scope="row"><label for="mb_id">회원아이디</label></th>
-    <td><input type="text" id="mb_id" name="mb_id" required value="<?=$mb_id?>"></td>
-</tr>
-<tr>
-    <th scope="row"><label for="po_content">포인트 내용</label></th>
-    <td><input type="text" id="po_content" name="po_content" required></td>
-</tr>
-<tr>
-    <th scope="row"><label for="po_point">포인트</label></th>
-    <td><input type="text" id="po_point" name="po_point" required></td>
-</tr>
-<tr>
-    <th scope="row"><label for="admin_password">관리자패스워드</label></th>
-    <td><input type="password" id="admin_password" name="admin_password" required></td>
-</tr>
-</tbody>
-</table>
-
-<div class="btn_confirm">
+<fieldset>
+    <legend>특정 회원의 포인트 증감 설정</legend>
+    <label for="mb_id">회원아이디</label>
+    <input type="text" id="mb_id" name="mb_id" required value="<?=$mb_id?>">
+    <label for="po_content">포인트 내용</label>
+    <input type="text" id="po_content" name="po_content" required>
+    <label for="po_point">포인트</label>
+    <input type="text" id="po_point" name="po_point" required>
+    <label for="admin_password">관리자패스워드</label>
+    <input type="password" id="admin_password" name="admin_password" required>
     <input type="submit" value="확인">
-</div>
+</fieldset>
 </form>
 
 

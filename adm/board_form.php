@@ -71,20 +71,20 @@ include_once ('./admin.head.php');
 <?=cheditor1('bo_content_head', '100%', '200');?>
 <?=cheditor1('bo_content_tail', '100%', '200');?>
 
-<h2><span></span><?=$html_title?></h2>
+<section>
+    <h2><span></span><?=$html_title?></h2>
 
-<form id="fboardform" name="fboardform" method="post" onsubmit="return fboardform_submit(this)" enctype="multipart/form-data">
-<input type="hidden" name="w" value="<?=$w?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
+    <form id="fboardform" name="fboardform" method="post" onsubmit="return fboardform_submit(this)" enctype="multipart/form-data">
+    <input type="hidden" name="w" value="<?=$w?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
 
-<section id="bo_basic">
-    <h3><span></span>기본설정</h3>
-    <table>
+    <table class="frm_tbl">
+    <caption>게시판 기본설정</caption>
     <tbody>
     <tr>
         <th scope="row"><label for="bo_table">TABLE</label></th>
@@ -134,11 +134,9 @@ include_once ('./admin.head.php');
     <? } ?>
     </tbody>
     </table>
-</section>
 
-<section id="bo_rights">
-    <h3><span></span>권한설정</h3>
-    <table>
+    <table class="frm_tbl">
+    <caption>게시판 권한설정</caption>
     <tbody>
     <tr>
         <th scope="row"><label for="bo_admin">게시판 관리자</label></th>
@@ -254,11 +252,9 @@ include_once ('./admin.head.php');
     </tr>
     </tbody>
     </table>
-</section>
 
-<section id="bo_function">
-    <h3><span></span>기능설정</h3>
-    <table>
+    <table class="frm_tbl">
+    <caption>게시판 기능설정</caption>
     <tbody>
     <tr>
         <th scope="row"><label for="bo_count_modify">원글 수정 불가</label></th>
@@ -532,11 +528,9 @@ include_once ('./admin.head.php');
     </tr>
     </tbody>
     </table>
-</section>
 
-<section id="bo_design">
-    <h3><span></span>디자인/양식</h3>
-    <table>
+    <table class="frm_tbl">
+    <caption>게시판 디자인/양식</caption>
     <tbody>
         <tr>
         <th scope="row"><label for="bo_skin">스킨 디렉토리</label></th>
@@ -748,20 +742,18 @@ include_once ('./admin.head.php');
         </td>
     </tbody>
     </table>
-</section>
 
-<?/* 이것은 무엇일까?????????????????????? ?>
-<tr>
+    <?/* 이것은 무엇일까?????????????????????? ?>
+    <tr>
     <td><input type="checkbox" id="chk_disable_tags" name="chk_disable_tags" value="1"></td>
     <td>사용금지 태그</td>
     <td><input type="text" id="bo_disable_tags" name="bo_disable_tags" value="<?=get_text($board['bo_disable_tags'])?>">
         <?=help('태그와 태그 사이는 | 로 구분하세요. (예: <b>script</b>|<b>iframe</b>).'PHP_EOL.'HTML 사용시 금지할 태그를 입력하는곳 입니다.')?></td>
-</tr>
-<?*/?>
+    </tr>
+    <?*/?>
 
-<section id="bo_point">
-    <h3><span></span>포인트 설정</h3>
-    <table>
+    <table class="frm_tbl">
+    <caption>게시판 포인트 설정</caption>
     <tbody>
     <tr>
         <th scope="row"><label for="chk_point">기본값으로 설정</label></th>
@@ -812,17 +804,13 @@ include_once ('./admin.head.php');
     </tr>
     </tbody>
     </table>
-</section>
 
-<section id="bo_extra">
-    <h3><span></span>여분필드 설정</h3>
-    <table>
+    <table class="frm_tbl">
+    <caption>게시판 여분필드 설정</caption>
     <tbody>
     <? for ($i=1; $i<=10; $i++) { ?>
     <tr>
-        <th scope="row">
-            여분필드
-        </th>
+        <th scope="row">여분필드<?=$i?></th>
         <td>
             <label for="bo_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
             <input type="text" id="bo_<?=$i?>_subj" name="bo_<?=$i?>_subj" value="<?=get_text($board['bo_'.$i.'_subj'])?>">

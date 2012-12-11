@@ -36,7 +36,7 @@ include_once('./admin.head.php');
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-<table>
+<table class="frm_tbl">
 <tbody>
 <tr>
     <th scope="row"><label for="gr_id">그룹 ID</label></th>

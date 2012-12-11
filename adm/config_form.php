@@ -26,8 +26,6 @@ include_once ('./admin.head.php');
 <form id="fconfigform" name="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 
-<section id="config_basic">
-<h2><span></span>기본환경설정</h2>
 <table class="frm_tbl">
 <caption>홈페이지 기본환경 설정</caption>
 <tbody>
@@ -164,10 +162,7 @@ include_once ('./admin.head.php');
 </tr>
 </tbody>
 </table>
-</section>
 
-<section id="config_board">
-<h2><span></span>게시판 설정</h2>
 <table class="frm_tbl">
 <caption>게시판 공통 설정, 게시판 관리에서 개별 설정 가능</caption>
 <tbody>
@@ -234,10 +229,7 @@ include_once ('./admin.head.php');
 </tr>
 </tbody>
 </table>
-</section>
 
-<section id="config_mb_join">
-<h2><span></span>회원가입 설정</h2>
 <table class="frm_tbl">
 <caption>회원가입스킨 및 입력받을 정보 설정</caption>
 <tbody>
@@ -352,10 +344,7 @@ include_once ('./admin.head.php');
 </tr>
 </tbody>
 </table>
-</section>
 
-<section id="config_mail">
-<h2><span></span>메일 설정</h2>
 <table class="frm_tbl">
 <caption>기본 메일환경 설정</caption>
 <tbody>
@@ -457,14 +446,12 @@ include_once ('./admin.head.php');
 </table>
 </section>
 
-<section id="config_extra">
-<h2><span></span>여분필드 설정</h2>
 <table class="frm_tbl">
 <caption>여분필드의 기본 내용 설정, 게시판 관리에서 개별 설정 가능</caption>
 <tbody>
 <? for ($i=1; $i<=10; $i++) { ?>
 <tr>
-    <th scope="row">여분필드</th>
+    <th scope="row">여분필드<?=$i?></th>
     <td>
         <label for="cf_<?=$i?>_subj">여분필드<?=$i?>제목</label>
         <input type="text" id="cf_<?=$i?>_subj" name="cf_<?=$i?>_subj" value="<?=get_text($config['cf_'.$i.'_subj'])?>">
@@ -475,7 +462,6 @@ include_once ('./admin.head.php');
 <? } ?>
 </tbody>
 </table>
-</section>
 
 <fieldset id="admin_confirm">
     <legend><span></span>XSS 혹은 CSRF 방지</legend>
