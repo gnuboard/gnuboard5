@@ -75,15 +75,17 @@ function textarea_size(fld, size)
 <header>
 
     <div><a href="#wrapper" id="skip_to_main">본문 바로가기</a></div>
-    <div id="logo"><a href=""><img src="" alt="관리자 메인으로"></a></div>
+    <div id="logo"><a href=""><img src="<?=$g4['path']?>/img/logo.png" alt="관리자 메인으로"></a></div>
     <ul id="home_link">
-        <li><a href="<?=$g4['path']?>/">관리자정보수정</a></li>
+        <li><a href="<?=$g4['path']?>/adm/member_form.php?&w=u&mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
         <li><a href="<?=$g4['path']?>/">홈페이지</a></li>
         <li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
     </ul>
 
     <div id="current_location">
-    <?=$member['mb_id']?>님 현재위치
+        <ul>
+            <li><?=$member['mb_id']?>님 현재위치</li>
+        </ul>
     </div>
 
     <nav id="gnb">

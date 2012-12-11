@@ -57,14 +57,11 @@ $result = sql_query($sql);
 $colspan = 12;
 ?>
 
-<section id="idx_newbies">
-<h2><a href="<?=$g4['admin_path']?>/member_list.php"><span></span>신규가입회원 <?=$new_member_rows?>건</a></h2>
-
 <table>
 <caption>
-    신규가입회원 목록
+    신규가입회원 <?=$new_member_rows?>건 목록
     <p>
-    총회원수 <?=number_format($total_count)?>명 중 차단 <?=number_format($intercept_count)?>명, 탈퇴 : <?=number_format($leave_count)?>명 중 가장 최근가입한 회원 5명의 목록
+    총회원수 <?=number_format($total_count)?>명 중 차단 <?=number_format($intercept_count)?>명, 탈퇴 : <?=number_format($leave_count)?>명 중 가장 최근가입한 회원 <?=$new_member_rows?>명의 목록
     </p>
 </caption>
 <thead>
@@ -135,8 +132,6 @@ if ($i == 0)
 ?>
 </tbody>
 </table>
-</section>
-
 
 <?
 $sql_common = " from {$g4['board_new_table']} a, {$g4['board_table']} b, {$g4['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id ";
@@ -158,11 +153,11 @@ $total_count = $row[cnt];
 $colspan = 5;
 ?>
 
-<section id="idx_latest">
-<h2><span></span><a href="<?=$g4['bbs_path']?>/new.php">최근게시물 <?=$new_write_rows?>건</a></h2>
-
 <table>
-<caption>최근게시물 목록</caption>
+<caption>
+    최근게시물 <?=$new_write_rows?>건 목록
+    <p>사이트 전체에서 가장 최근 작성된 게시물 <?=$new_write_rows?>건</p>
+</caption>
 <thead>
 <tr>
     <th scope="col">그룹</th>
@@ -232,7 +227,6 @@ if ($i == 0)
 ?>
 </tbody>
 </table>
-</section>
 
 <?
 $sql_common = " from {$g4['point_table']} ";
@@ -256,14 +250,11 @@ $result = sql_query($sql);
 $colspan = 7;
 ?>
 
-<section id="idx_point">
-<h2><a href="<?=$g4['admin_path']?>/adm/point_list.php"><span></span>최근포인트 <?=$new_point_rows?>건</a></h2>
-
 <table>
 <caption>
-    최근 포인트 기록
+    최근 포인트 기록 <?=$new_point_rows?>건
     <p>
-    전체 포인트 <?=number_format($total_count)?>건 중, 가장 최근 발생한 5건의 내역
+    전체 포인트 <?=number_format($total_count)?>건 중, 가장 최근 발생한 <?=$new_point_rows?>건의 내역
     </p>
 </caption>
 <thead>
@@ -316,7 +307,6 @@ if ($i == 0)
 ?>
 </tbody>
 </table>
-</section>
 
 <?
 include_once ('./admin.tail.php');
