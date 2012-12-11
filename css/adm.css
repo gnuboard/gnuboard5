@@ -35,9 +35,10 @@ header {background:#2c2f34}
 #gnb {position:absolute;top:110px;left:20px;width:180px}
 /* #gnb ul ul {display:block;visibility:hidden;height:0} */
 .gnb_1depth {margin-bottom:5px;border:1px solid #c7cfd5;background:#eef2f3}
-.gnb_1depth a {display:block;padding-left:15px;height:38px;font-weight:bold;text-decoration:none;line-height:2.5em}
+.gnb_1depth a {display:block;padding-left:15px;height:38px;color:#899093;font-weight:bold;text-decoration:none;line-height:2.5em}
 .gnb_2depth {border-bottom:1px solid #eef1f2;background:#fff}
-.gnb_2depth a {display:block;padding-left:15px;height:30px;font:0.75em normal;text-decoration:none;line-height:2.8em}
+.gnb_2depth a {display:block;padding-left:15px;height:30px;color:#000;font:0.75em normal;text-decoration:none;line-height:2.8em}
+.gnb_2depth a:focus, .gnb_2depth a:hover {background:#f6f9fa}
 
 /* heading */
 h1 {display:block;visibility:hidden;height:0}
@@ -56,8 +57,9 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 table {margin-bottom:20px;width:100%;border:1px solid #d5dcdf;background:#fff}
 caption {text-align:left}
 caption p {color:#6b8088;font-size:0.75em}
-th, td {border-bottom:1px solid #e9ecee;font:0.75em normal}
+th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
 th label {display:block}
+th a {color:#000}
 th {padding:10px;background:#f1f6f7}
-.frm_tbl th {width:130px;text-align:left}
+.frm_tbl th {width:130px;text-align:left;font-weight:normal}
 td {padding:10px}

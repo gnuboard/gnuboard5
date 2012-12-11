@@ -46,8 +46,8 @@ $sql = " select *
 $result = sql_query($sql);
 
 $listall = '';
-if ($sfl || $stx || $sod) // 검색 혹은 정렬일 때만 처음 버튼을 보여줌 : 지운아빠 2012-10-31
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음으로</a>';
+if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌 : 지운아빠 2012-10-31
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 $g4['title'] = "관리권한설정";
 include_once('./admin.head.php');
@@ -65,7 +65,7 @@ var list_delete_php = 'auth_list_delete.php';
 <fieldset>
     <legend>관리권한 검색</legend>
     <div>
-        <span><?=$listall?></span>
+        <?=$listall?>
         설정된 관리권한 <?=number_format($total_count)?>건
     </div>
     <input type="hidden" id="sfl" name="sfl" value="a.mb_id">

@@ -69,7 +69,9 @@ $sql = " select count(*) as cnt
 $row = sql_fetch($sql);
 $intercept_count = $row[cnt];
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class=tt>처음</a>';
+$listall = "";
+if ($sfl || $stx) // 검색일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 $g4['title'] = '회원관리';
 include_once('./admin.head.php');

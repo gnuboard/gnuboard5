@@ -47,7 +47,8 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>';
+if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 if ($sfl == 'mb_id' && $stx)
     $mb = get_member($stx);
@@ -78,7 +79,7 @@ function point_clear()
 <fieldset>
     <legend>포인트 내역 검색</legend>
     <div>
-        <span><?=$listall?></span>
+        <?=$listall?>
         건수 : <?=number_format($total_count)?>
         <?
         if ($mb['mb_id'])
@@ -202,7 +203,7 @@ else
 <input type="hidden" name="token" value="<?=$token?>">
 
 <fieldset>
-    <legend>특정 회원의 포인트 증감 설정</legend>
+    <legend>개별회원 포인트 증감 설정</legend>
     <label for="mb_id">회원아이디</label>
     <input type="text" id="mb_id" name="mb_id" required value="<?=$mb_id?>">
     <label for="po_content">포인트 내용</label>

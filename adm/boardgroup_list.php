@@ -50,7 +50,8 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>';
+if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>';
 
 $g4['title'] = '게시판그룹설정';
 include_once('./admin.head.php');
@@ -66,7 +67,7 @@ var list_update_php = "./boardgroup_list_update.php";
 <fieldset>
     <legend>그룹 검색</legend>
     <div>
-        <span><?=$listall?></span>
+        <?=$listall?>
         생성된 그룹수 : <?=number_format($total_count)?>건
     </div>
     <label for="sfl">검색대상</label>
@@ -92,7 +93,7 @@ var list_update_php = "./boardgroup_list_update.php";
 <input type="hidden" name="token" value="<?=$token?>">
 <table>
 <caption>
-<p>게시판그룹 목록</p>
+게시판그룹 목록
 <p>
     접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>
     접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
