@@ -110,7 +110,7 @@ function point_clear()
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 
-<table>
+<table class="tbl_pt_list">
 <caption>
     포인트 내역
 </caption>
@@ -147,16 +147,16 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <tr>
-    <td>
+    <td class="td_chk">
         <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
         <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row[po_id]?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="내역선택">
     </td>
-    <td><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-    <td><?=$row2['mb_name']?></td>
+    <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
+    <td class="td_mbname"><?=$row2['mb_name']?></td>
     <td><?=$mb_nick?></td>
     <td><?=$row['po_datetime']?></td>
-    <td><?=$link1?><?=$row['po_content']?><?=$link2?></td>
+    <td class="td_pt_log"><?=$link1?><?=$row['po_content']?><?=$link2?></td>
     <td><?=number_format($row[po_point])?></td>
     <td><?=number_format($row2[mb_point])?></td>
 </tr>

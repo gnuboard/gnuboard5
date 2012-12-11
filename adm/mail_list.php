@@ -54,12 +54,12 @@ for ($i=0; $row=mysql_fetch_array($result); $i++) {
 ?>
 
 <tr>
-    <td><?=$num?></td>
+    <td class="td_num"><?=$num?></td>
     <td><?=$row['ma_subject']?></td>
-    <td><?=$row['ma_time']?></td>
-    <td><a href="./mail_test.php?ma_id=<?=$row[ma_id]?>">테스트</a></td>
-    <td><a href="./mail_select_form.php?ma_id=<?=$row[ma_id]?>">보내기</a></td>
-    <td><?=$s_mod?> <?=$s_del?> <?=$s_vie?></td>
+    <td class="td_time"><?=$row['ma_time']?></td>
+    <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row[ma_id]?>">테스트</a></td>
+    <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row[ma_id]?>">보내기</a></td>
+    <td class="td_mng"><?=$s_mod?> <?=$s_del?> <?=$s_vie?></td>
 </tr>
 
 <?

@@ -96,7 +96,7 @@ var list_delete_php = 'popular_list.php';
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-<table>
+<table class="tbl_pop_list">
 <thead>
 <tr>
     <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)" title="현재 페이지 인기검색어 전체선택"></th>
@@ -113,7 +113,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <tr>
-    <td>
+    <td class="td_chk">
         <input type="hidden" name="pp_id[<?=$i?>]" value="<?=$row[pp_id]?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$word?> 선택">
     </td>

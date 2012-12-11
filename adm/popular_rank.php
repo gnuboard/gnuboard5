@@ -62,12 +62,12 @@ $colspan = 3;
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-<table>
+<table class="tbl_pop_list">
 <thead>
 <tr>
+    <th scope="col">순위</th>
     <th scope="col">검색어</th>
     <th scope="col">검색회수</th>
-    <th scope="col">순위</th>
 </tr>
 </thead>
 <tbody>
@@ -80,9 +80,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <tr>
+    <td class="td_num"><?=$rank?></td>
     <td><?=$word?></td>
-    <td><?=$row[cnt]?></td>
-    <td><?=$rank?></td>
+    <td class="td_bignum"><?=$row[cnt]?></td>
 </tr>
 
 <?

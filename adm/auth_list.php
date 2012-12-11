@@ -109,18 +109,18 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list = $i%2;
     ?>
     <tr>
-        <td>
+        <td class="td_chk">
             <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row['au_menu']?>">
             <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
             <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?>님의 권한체크">
         </td>
-        <td><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-        <td><?=$mb_nick?></td>
-        <td>
+        <td class="td_mbid"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
+        <td class="td_auth_mbnick"><?=$mb_nick?></td>
+        <td class="td_menu">
             <?=$row['au_menu']?>
             <?=$auth_menu[$row['au_menu']]?>
         </td>
-        <td><?=$row['au_auth']?></td>
+        <td class="td_auth"><?=$row['au_auth']?></td>
     </tr>
     <?
 }

@@ -96,12 +96,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <tr>
-    <td><?=$row[po_id]?></td>
+    <td class="td_num"><?=$row[po_id]?></td>
     <td><?=cut_str(get_text($row['po_subject']),70)?></td>
-    <td><?=$row[po_level]?></td>
-    <td><?=$row2[sum_po_cnt]?></td>
-    <td><?=$po_etc?></td>
-    <td><?=$s_mod?> <?=$s_del?></td>
+    <td class="td_num"><?=$row[po_level]?></td>
+    <td class="td_num"><?=$row2[sum_po_cnt]?></td>
+    <td class="td_etc"><?=$po_etc?></td>
+    <td class="td_mng"><?=$s_mod?> <?=$s_del?></td>
 </tr>
 
 <?

@@ -102,7 +102,7 @@ var list_delete_php = 'board_list_delete.php';
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-<table>
+<table class="tbl_bo_list">
 <caption>
 생성된 게시판 목록
 <p>
@@ -151,39 +151,37 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </td>
     <td>
         <?if ($is_admin == 'super'){?>
-            <label for="gr_id_<?=$i?>">그룹지정</label>
             <?=get_group_select('gr_id[$i]', $row['gr_id'])?>
         <?}else{?>
             <input type="hidden" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>"><?=$row['gr_subject']?>
         <?}?>
     </td>
-    <td>
+    <td class="td_boid">
         <input type="hidden" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
         <a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
     </td>
     <td>
-        <label for="bo_skin_<?=$i?>">스킨지정</label>
         <select id="bo_skin_<?=$i?>" name="bo_skin[<?=$i?>]">
             <?=$skin_options?>
         </select>
         <script>document.getElementById("bo_skin_<?=$i?>").value="<?=$row['bo_skin']?>";</script>
     </td>
-    <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>"></td>
+    <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20"></td>
     <td>
         <label for="bo_read_point_<?=$i?>">읽기</label>
-        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row[bo_read_point]?>">
+        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row[bo_read_point]?>" size="2">
         <label for="bo_write_point_<?=$i?>">쓰기</label>
-        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row[bo_write_point]?>">
+        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row[bo_write_point]?>" size="2">
         <label for="bo_comment_point_<?=$i?>">댓글</label>
-        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row[bo_comment_point]?>">
+        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row[bo_comment_point]?>" size="2">
         <label for="bo_download_point_<?=$i?>">다운</label>
-        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row[bo_download_point]?>">
+        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row[bo_download_point]?>" size="2">
     </td>
     <td>
         <label for="bo_use_search_<?=$i?>">사용</label>
         <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row[bo_use_search]?"checked":""?> value="1">
         <label for="bo_order_search_<?=$i?>">순서</label>
-        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row[bo_order_search]?>">
+        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row[bo_order_search]?>" size="1">
     </td>
     <td><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
 </tr>

@@ -91,7 +91,7 @@ var list_update_php = "./boardgroup_list_update.php";
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-<table>
+<table class="tbl_gr_list">
 <caption>
 게시판그룹 목록
 <p>
@@ -132,7 +132,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <tr>
-    <td>
+    <td class="td_chk">
         <input type="hidden" id="gr_id" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
     </td>
@@ -150,7 +150,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2[cnt]?></a></td>
     <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row[gr_use_access]?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
     <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1[cnt]?></a></td>
-    <td><?=$s_upd?> <?=$s_del?></td>
+    <td class="td_mng"><?=$s_upd?> <?=$s_del?></td>
 </tr>
 
 <?

@@ -1,7 +1,7 @@
 /* SIR SOFT 지운아빠 Dec 2012 */
 
 /* 초기화 */
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dt, dd, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, header, article, aside, canvas, details, figcaption, figure, hgroup, menu, nav, section, summary, footer, time, mark, audio, video {margin:0;padding:0;font-size:1em}
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dt, dd, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, header, article, aside, canvas, details, figcaption, figure, hgroup, menu, nav, section, summary, footer, time, mark, audio, video {margin:0;padding:0}
 article,aside,details,figcaption,figure, footer,header,hgroup,menu,nav,section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
 p {margin:10px 0}
@@ -22,7 +22,7 @@ img {border:0}
 
 /* 레이아웃 */
 html {overflow-y:scroll}
-body {background:#dfe4e6}
+body {background:#dfe4e6;font-size:1em}
 header {background:#2c2f34}
 #logo {padding-top:4px;height:46px;background:url('../img/logo_bg.png') repeat-x;text-align:center}
 #home_link {z-index:2;position:absolute;top:50px;right:20px;height:35px;zoom:1}
@@ -73,6 +73,35 @@ th a {color:#000}
 th {padding:10px;background:#f1f6f7}
 td {padding:10px}
 .frm_tbl th {width:130px;text-align:left;font-weight:normal}
+
+/* 컨텐츠별 테이블 설정 */
+/* 공통 */
+.td_chk {width:30px;text-align:center}
+.td_num {width:60px;text-align:center}
+.td_bignum {width:120px;text-align:center}
+.td_mbid {width:80px;text-align:center}
+.td_mbname {width:80px;text-align:center}
+.td_time {width:150px;text-align:center}
+/* 관리권한설정 목록 */
+.td_menu {}
+.td_auth {width:100px;text-align:center}
+.td_auth_mbnick {width:200px;text-align:center}
+/* 회원관리 목록 */
+.tbl_mb_list td {text-align:center}
+/* 포인트관리 목록 */
+.tbl_pt_list td {text-align:center}
+.tbl_pt_list .td_pt_log {text-align:left}
+/* 회원메일발송 목록 */
+.td_test, .td_send {width:50px;text-align:center}
+.td_mng {width:110px;text-align:center}
+/* 투표관리 목록 */
+.td_etc {width:80px;text-align:center}
+/*게시판관리 목록 */
+.tbl_bo_list td {text-align:center}
+/*게시판그룹관리 목록 */
+.tbl_gr_list td {text-align:center}
+/* 인기검색어 관련 목록 */
+.tbl_pop_list td {text-align:center}
 
 /* pagination */
 .pg {margin-bottom:30px;font-size:0.875em;text-align:center}
