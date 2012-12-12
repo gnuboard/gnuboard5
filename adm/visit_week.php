@@ -30,16 +30,16 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <thead>
 <tr>
     <th scope="col">요일</th>
+    <th scope="col">그래프</th>
     <th scope="col">접속자수</th>
     <th scope="col">비율(%)</th>
-    <th scope="col">그래프</th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-    <td>합계</td>
-    <td><?=$sum_count?></td>
-    <td colspan="2"></td>
+    <td colspan="2">합계</td>
+    <td><strong><?=$sum_count?></strong></td>
+    <td></td>
 </tr>
 </tfoot>
 <tbody>
@@ -54,10 +54,14 @@ if ($i) {
 ?>
 
 <tr>
-    <td><?=$weekday[$i]?></td>
-    <td><?=$count?></td>
-    <td><?=$s_rate?></td>
-    <td><?=$graph?></td>
+    <td class="td_category"><?=$weekday[$i]?></td>
+    <td>
+        <div class="visit_bar">
+            <span style="width:<?=$s_rate?>%"></span>
+        </div>
+    </td>
+    <td class="td_bignum"><?=$count?></td>
+    <td class="td_num"><?=$s_rate?></td>
 </tr>
 
 <?

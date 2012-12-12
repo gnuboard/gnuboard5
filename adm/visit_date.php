@@ -31,16 +31,16 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <thead>
 <tr>
     <th scope="col">년-월-일</th>
+    <th scope="col">그래프</th>
     <th scope="col">접속자수</th>
     <th scope="col">비율(%)</th>
-    <th scope="col">그래프</th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-    <td>합계</td>
-    <td><?=number_format($sum_count)?></td>
-    <td colspan="2"></td>
+    <td colspan="2">합계</td>
+    <td><strong><?=number_format($sum_count)?></strong></td>
+    <td></td>
 </tr>
 </tfoot>
 <tbody>
@@ -55,19 +55,17 @@ if (count($arr)) {
 
         $rate = ($count / $sum_count * 100);
         $s_rate = number_format($rate, 1);
-
-        $bar = (int)($count / $max * 100);
 ?>
 
 <tr>
-    <td><a href="./visit_list.php?fr_date=<?=$key?>&amp;to_date=<?=$key?>"><?=$key?></a></td>
-    <td><?=number_format($value)?></td>
-    <td><?=$s_rate?></td>
+    <td class="td_category"><a href="./visit_list.php?fr_date=<?=$key?>&amp;to_date=<?=$key?>"><?=$key?></a></td>
     <td>
-        <div class="visit_graph">
-            <span style="width:<?=$bar?>%"></span>
+        <div class="visit_bar">
+            <span style="width:<?=$s_rate?>%"></span>
         </div>
     </td>
+    <td class="td_bignum"><?=number_format($value)?></td>
+    <td class="td_num"><?=$s_rate?></td>
 </tr>
 
 <?

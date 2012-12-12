@@ -34,16 +34,16 @@ while ($row=sql_fetch_array($result)) {
 <tr>
     <th scope="col">순위</th>
     <th scope="col">접속 도메인</th>
+    <th scope="col">그래프</th>
     <th scope="col">접속자수</th>
     <th scope="col">비율(%)</th>
-    <th scope="col">그래프</th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-    <td colspan="2">합계</td>
-    <td><?=$sum_count?></td>
-    <td colspan="2"></td>
+    <td colspan="3">합계</td>
+    <td><strong><?=$sum_count?></strong></td>
+    <td></td>
 </tr>
 </tfoot>
 <tbody>
@@ -75,19 +75,17 @@ if (count($arr)) {
 
         $rate = ($count / $sum_count * 100);
         $s_rate = number_format($rate, 1);
-
-        $bar = (int)($count / $max * 100);
 ?>
 <tr>
-    <td><?=$no?></td>
-    <td><?=$link?><?=$key?><?=$link2?></td>
-    <td><?=$count?></td>
-    <td><?=$s_rate?></td>
+    <td class="td_num"><?=$no?></td>
+    <td class="td_category"><?=$link?><?=$key?><?=$link2?></td>
     <td>
-        <div class="visit_graph">
-            <span style="width:<?=$bar?>%"></span>
+        <div class="visit_bar">
+            <span style="width:<?=$s_rate?>%"></span>
         </div>
     </td>
+    <td class="td_bignum"><?=$count?></td>
+    <td class="td_num"><?=$s_rate?></td>
 </tr>
 <?
     }

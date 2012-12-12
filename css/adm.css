@@ -1,17 +1,12 @@
 /* SIR SOFT 지운아빠 Dec 2012 */
 
 /* 초기화 */
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dt, dd, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, header, article, aside, canvas, details, figcaption, figure, hgroup, menu, nav, section, summary, footer, time, mark, audio, video {margin:0;padding:0}
+html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
 article,aside,details,figcaption,figure, footer,header,hgroup,menu,nav,section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
+table {border-collapse:collapse;border-spacing:0} tfoot td {text-align:center}
+form, img {border:0}
 p {margin:10px 0}
-blockquote, q {quotes:none} blockquote:before, blockquote:after, q:before, q:after {content:'';content:none}
-ins {background-color:#fff;color:#000;text-decoration:none}
-mark {background-color:#fff;color:#000;font-style:italic;font-weight:bold}
-del {text-decoration: line-through}
-abbr[title], dfn[title] {border-bottom:1px dotted;cursor:help}
-table {border-collapse:collapse;border-spacing:0}
-img {border:0}
 
 /* 내용 건너띄기 */
 #skip_to_main {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
@@ -102,6 +97,11 @@ td {padding:10px}
 .tbl_gr_list td {text-align:center}
 /* 인기검색어 관련 목록 */
 .tbl_pop_list td {text-align:center}
+/* 접속자집계 목록 */
+.tbl_visit_list td {text-align:center}
+.td_category {width:120px;text-align:center}
+.visit_bar {position:relative}
+.visit_bar span {position:absolute;top:-8px;left:0;height:15px;background:#ddd}
 
 /* pagination */
 .pg {margin-bottom:30px;font-size:0.875em;text-align:center}

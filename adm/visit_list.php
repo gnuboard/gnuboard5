@@ -91,11 +91,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 ?>
 <tr>
-    <td><?=$ip?></td>
+    <td class="td_category"><?=$ip?></td>
     <td><?=$link?><?=$title?><?=$link2?></td>
-    <td><?=$brow?></td>
-    <td><?=$os?></td>
-    <td><?=$row['vi_date']?> <?=$row['vi_time']?></td>
+    <td class="td_category"><?=$brow?></td>
+    <td class="td_category"><?=$os?></td>
+    <td class="td_time"><?=$row['vi_date']?> <?=$row['vi_time']?></td>
 </tr>
 
 <?

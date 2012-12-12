@@ -32,16 +32,16 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <thead>
 <tr>
     <th scope="col">시간</th>
+    <th scope="col">그래프</th>
     <th scope="col">접속자수</th>
     <th scope="col">비율(%)</th>
-    <th scope="col">그래프</th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-    <td>합계</td>
-    <td><?=number_format($sum_count)?></td>
-    <td colspan="2"></td>
+    <td colspan="2">합계</td>
+    <td><strong><?=number_format($sum_count)?></strong></td>
+    <td></td>
 </tr>
 </tfoot>
 <tbody>
@@ -54,18 +54,16 @@ if ($i) {
 
         $rate = ($count / $sum_count * 100);
         $s_rate = number_format($rate, 1);
-
-        $bar = (int)($count / $max * 100);
 ?>
 <tr>
-    <td><?=$hour?></td>
-    <td><?=number_format($count)?></td>
-    <td><?=$s_rate?></td>
+    <td class="td_category"><?=$hour?></td>
     <td>
-        <div class="visit_graph">
-            <span style="width:<?=$bar?>%"></span>
+        <div class="visit_bar">
+            <span style="width:<?=$s_rate?>%"></span>
         </div>
     </td>
+    <td class="td_bignum"><?=number_format($count)?></td>
+    <td class="td_num"><?=$s_rate?></td>
 </tr>
 <?
     }
