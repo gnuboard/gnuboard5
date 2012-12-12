@@ -31,7 +31,7 @@ include_once ('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="cf_title">홈페이지 제목</label></th>
-    <td><input type="text" id="cf_title" name="cf_title" required value="<?=$config['cf_title']?>"></td>
+    <td><input type="text" id="cf_title" name="cf_title" required value="<?=$config['cf_title']?>" size="50"></td>
     <th scope="row"><label for="cf_admin">최고관리자</label></th>
     <td><?=get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required')?></td>
 </tr>
@@ -43,61 +43,61 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_login_point">로그인시 포인트</label></th>
     <td>
         <?=help('회원에게 하루에 한번만 부여')?>
-        <input type="text" id="cf_login_point" name="cf_login_point" required value="<?=$config[cf_login_point]?>"> 점
+        <input type="text" id="cf_login_point" name="cf_login_point" required value="<?=$config[cf_login_point]?>" size="2"> 점
     </td>
     <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트</label></th>
     <td>
          <?=help('양수로 입력하십시오. 0으로 입력하시면 쪽지보낼시 포인트를 차감하지 않습니다.')?>
-        <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" required value="<?=$config[cf_memo_send_point]?>"> 점
+        <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" required value="<?=$config[cf_memo_send_point]?>" size="2"> 점
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_cut_name">이름(별명) 표시</label></th>
     <td colspan="3">
         <?=help('영숫자 2글자 = 한글 1글자')?>
-        <input type="text" id="cf_cut_name" name="cf_cut_name" value="<?=$config[cf_cut_name]?>"> 자리만 표시
+        <input type="text" id="cf_cut_name" name="cf_cut_name" value="<?=$config[cf_cut_name]?>" size="2"> 자리만 표시
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_nick_modify">별명 수정</label></th>
-    <td>수정한 후 <input type="text" id="cf_nick_modify" name="cf_nick_modify" value="<?=$config[cf_nick_modify]?>"> 일 동안 바꿀 수 없음</td>
+    <td>수정한 후 <input type="text" id="cf_nick_modify" name="cf_nick_modify" value="<?=$config[cf_nick_modify]?>" size="1"> 일 동안 바꿀 수 없음</td>
     <th scope="row"><label for="cf_open_modify">정보공개 수정</label></th>
-    <td>수정한 후 <input type="text" id="cf_open_modify" name="cf_open_modify" value="<?=$config[cf_open_modify]?>"> 일 동안 바꿀 수 없음</td>
+    <td>수정한 후 <input type="text" id="cf_open_modify" name="cf_open_modify" value="<?=$config[cf_open_modify]?>" size="1"> 일 동안 바꿀 수 없음</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_new_del">최근게시물 삭제</label></th>
     <td>
         <?=help('설정일이 지난 최근게시물 자동 삭제')?>
-        <input type="text" id="cf_new_del" name="cf_new_del" value="<?=$config[cf_new_del]?>"> 일
+        <input type="text" id="cf_new_del" name="cf_new_del" value="<?=$config[cf_new_del]?>" size="2"> 일
     </td>
     <th scope="row"><label for="cf_memo_del">쪽지 삭제</label></th>
     <td>
         <?=help('설정일이 지난 쪽지 자동 삭제')?>
-        <input type="text" id="cf_memo_del" name="cf_memo_del" value="<?=$config[cf_memo_del]?>"> 일
+        <input type="text" id="cf_memo_del" name="cf_memo_del" value="<?=$config[cf_memo_del]?>" size="2"> 일
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_visit_del">접속자로그 삭제</label></th>
     <td>
         <?=help('설정일이 지난 접속자 로그 자동 삭제')?>
-        <input type="text" id="cf_visit_del" name="cf_visit_del" value="<?=$config[cf_visit_del]?>"> 일
+        <input type="text" id="cf_visit_del" name="cf_visit_del" value="<?=$config[cf_visit_del]?>" size="2"> 일
     </td>
     <th scope="row"><label for="cf_popular_del">인기검색어 삭제</label></th>
     <td>
         <?=help('설정일이 지난 인기검색어 자동 삭제')?>
-        <input type="text" id="cf_popular_del" name="cf_popular_del" value="<?=$config[cf_popular_del]?>"> 일
+        <input type="text" id="cf_popular_del" name="cf_popular_del" value="<?=$config[cf_popular_del]?>" size="2"> 일
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_login_minutes">현재 접속자</label></th>
     <td>
         <?=help('설정값 이내의 접속자를 현재 접속자로 인정')?>
-        <input type="text" id="cf_login_minutes" name="cf_login_minutes" value="<?=$config[cf_login_minutes]?>"> 분
+        <input type="text" id="cf_login_minutes" name="cf_login_minutes" value="<?=$config[cf_login_minutes]?>" size="2"> 분
     </td>
     <th scope="row"><label for="cf_page_rows">한페이지당 라인수</label></th>
     <td>
         <?=help('목록(리스트) 한페이지당 라인수')?>
-        <input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config[cf_page_rows]?>"> 라인
+        <input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config[cf_page_rows]?>" size="2"> 라인
     </td>
 </tr>
 <tr>
@@ -114,7 +114,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
     <td>
         <?=help('목록 한페이지당 라인수')?>
-        <input type="text" id="cf_new_rows" name="cf_new_rows" value="<?=$config[cf_new_rows]?>"> 라인
+        <input type="text" id="cf_new_rows" name="cf_new_rows" value="<?=$config[cf_new_rows]?>" size="2"> 라인
     </td>
 </tr>
 <tr>
@@ -168,56 +168,61 @@ include_once ('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="cf_read_point">글읽기 포인트</label></th>
-    <td><input type="text" id="cf_read_point" name="cf_read_point" required value="<?=$config[cf_read_point]?>"> 점</td>
+    <td><input type="text" id="cf_read_point" name="cf_read_point" required value="<?=$config[cf_read_point]?>" size="2"> 점</td>
     <th scope="row"><label for="cf_write_point">글쓰기 포인트</label></th>
-    <td><input type="text" id="cf_write_point" name="cf_write_point" required value="<?=$config[cf_write_point]?>"> 점</td>
+    <td><input type="text" id="cf_write_point" name="cf_write_point" required value="<?=$config[cf_write_point]?>" size="2"> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_comment_point">댓글쓰기 포인트</label></th>
-    <td><input type="text" id="cf_comment_point" name="cf_comment_point" required value="<?=$config[cf_comment_point]?>"> 점</td>
+    <td><input type="text" id="cf_comment_point" name="cf_comment_point" required value="<?=$config[cf_comment_point]?>" size="2"> 점</td>
     <th scope="row"><label for="cf_download_point">다운로드 포인트</label></th>
-    <td><input type="text" id="cf_download_point" name="cf_download_point" required value="<?=$config[cf_download_point]?>"> 점</td>
+    <td><input type="text" id="cf_download_point" name="cf_download_point" required value="<?=$config[cf_download_point]?>" size="2"> 점</td>
 </tr>
 <tr>
-    <th scope="row"><label for="cf_link_target">LINK TARGET</label></th>
+    <th scope="row"><label for="cf_link_target">새창 링크</label></th>
     <td>
-        <?=help('게시판 내용중 자동으로 링크되는 창의 타켓을 지정합니다. _self, _top, _blank, _new 를 주로 지정합니다.')?>
-        <input type="text" id="cf_link_target" name="cf_link_target" value="<?=$config['cf_link_target']?>">
+        <?=help('글내용중 자동 링크되는 타켓을 지정합니다.')?>
+        <select id="cf_link_target">
+            <option value="_blank"<? if ($config['cf_link_target'] == '_blank') echo "selected";?>>_blank</option>
+            <option value="_self"<? if ($config['cf_link_target'] == '_self') echo "selected";?>>_self</option>
+            <option value="_top"<? if ($config['cf_link_target'] == '_top') echo "selected";?>>_top</option>
+            <option value="_new"<? if ($config['cf_link_target'] == '_new') echo "selected";?>>_new</option>
+        </select>
     </td>
     <th scope="row"><label for="cf_search_part">검색 단위</label></th>
-    <td><input type="text" id="cf_search_part" name="cf_search_part" value="<?=$config[cf_search_part]?>"> 건 단위로 검색</td>
+    <td><input type="text" id="cf_search_part" name="cf_search_part" value="<?=$config[cf_search_part]?>" size="2"> 건 단위로 검색</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_search_bgcolor">검색 배경 색상</label></th>
-    <td><input type="text" id="cf_search_bgcolor" name="cf_search_bgcolor" required value="<?=$config['cf_search_bgcolor']?>"></td>
+    <td><input type="text" id="cf_search_bgcolor" name="cf_search_bgcolor" required value="<?=$config['cf_search_bgcolor']?>" size="7"></td>
     <th scope="row"><label for="cf_search_color">검색 글자 색상</label></th>
-    <td><input type="text" id="cf_search_color" name="cf_search_color" required value="<?=$config['cf_search_color']?>"></td>
+    <td><input type="text" id="cf_search_color" name="cf_search_color" required value="<?=$config['cf_search_color']?>" size="7"></td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_delay_sec">글쓰기 간격</label></th>
-    <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" required value="<?=$config[cf_delay_sec]?>"> 초 지난후 가능</td>
+    <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" required value="<?=$config[cf_delay_sec]?>" size="2"> 초 지난후 가능</td>
     <th scope="row"><label for="cf_write_pages">페이지 표시 수</label></th>
-    <td><input type="text" id="cf_write_pages" name="cf_write_pages" required value="<?=$config[cf_write_pages]?>"> 페이지씩 표시</td>
+    <td><input type="text" id="cf_write_pages" name="cf_write_pages" required value="<?=$config[cf_write_pages]?>" size="2"> 페이지씩 표시</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_image_extension">이미지 업로드 확장자</label></th>
     <td colspan="3">
         <?=help('게시판 글작성시 이미지 파일 업로드 가능 확장자. | 로 구분')?>
-        <input type="text" id="cf_image_extension" name="cf_image_extension" value="<?=$config['cf_image_extension']?>">
+        <input type="text" id="cf_image_extension" name="cf_image_extension" value="<?=$config['cf_image_extension']?>" size="70">
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_flash_extension">플래쉬 업로드 확장자</label></th>
     <td colspan="3">
         <?=help('게시판 글작성시 플래쉬 파일 업로드 가능 확장자. | 로 구분')?>
-        <input type="text" id="cf_flash_extension" name="cf_flash_extension" value="<?=$config['cf_flash_extension']?>">
+        <input type="text" id="cf_flash_extension" name="cf_flash_extension" value="<?=$config['cf_flash_extension']?>" size="70">
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_movie_extension">동영상 업로드 확장자</label></th>
     <td colspan="3">
         <?=help('게시판 글작성시 동영상 파일 업로드 가능 확장자. | 로 구분')?>
-        <input type="text" id="cf_movie_extension" name="cf_movie_extension" value="<?=$config['cf_movie_extension']?>">
+        <input type="text" id="cf_movie_extension" name="cf_movie_extension" value="<?=$config['cf_movie_extension']?>" size="70">
     </td>
 </tr>
 <tr>
@@ -287,11 +292,11 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_register_level">회원가입시 권한</label></th>
     <td><?=get_member_level_select('cf_register_level', 1, 9, $config[cf_register_level]) ?></td>
     <th scope="row"><label for="cf_register_point">회원가입시 포인트</label></th>
-    <td><input type="text" id="cf_register_point" name="cf_register_point" value="<?=$config[cf_register_point]?>"> 점</td>
+    <td><input type="text" id="cf_register_point" name="cf_register_point" value="<?=$config[cf_register_point]?>" size="5"> 점</td>
 </tr>
 <tr>
     <th scope='row' id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
-    <td colspan="3"><input type="text" id="cf_leave_day" name="cf_leave_day" value="<?=$config[cf_leave_day]?>"> 일 후 자동 삭제</td>
+    <td colspan="3"><input type="text" id="cf_leave_day" name="cf_leave_day" value="<?=$config[cf_leave_day]?>" size="2"> 일 후 자동 삭제</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_use_member_icon">회원아이콘 사용</label></th>
@@ -309,11 +314,14 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_member_icon_size">회원아이콘 용량</label></th>
-    <td><input type="text" id="cf_member_icon_size" name="cf_member_icon_size" value="<?=$config[cf_member_icon_size]?>"> 바이트 이하</td>
+    <td><input type="text" id="cf_member_icon_size" name="cf_member_icon_size" value="<?=$config[cf_member_icon_size]?>" size="10"> 바이트 이하</td>
     <th scope="row"><label for="cf_member_icon_width">회원아이콘 사이즈</label></th>
     <td>
-        가로 <input type="text" id="cf_member_icon_width" name="cf_member_icon_width" value="<?=$config[cf_member_icon_width]?>" title="가로">
-        세로 <input type="text" id="cf_member_icon_height" name="cf_member_icon_height" value="<?=$config[cf_member_icon_height]?>" title="세로"> 픽셀 이하
+        <label for="cf_member_icon_width">가로</label>
+        <input type="text" id="cf_member_icon_width" name="cf_member_icon_width" value="<?=$config[cf_member_icon_width]?>" size="2">
+        <label for="cf_member_icon_height">세로</label>
+        <input type="text" id="cf_member_icon_height" name="cf_member_icon_height" value="<?=$config[cf_member_icon_height]?>" size="2">
+        픽셀 이하
     </td>
 </tr>
 <tr>
@@ -453,10 +461,10 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row">여분필드<?=$i?></th>
     <td>
-        <label for="cf_<?=$i?>_subj">여분필드<?=$i?>제목</label>
-        <input type="text" id="cf_<?=$i?>_subj" name="cf_<?=$i?>_subj" value="<?=get_text($config['cf_'.$i.'_subj'])?>">
-        <label for="cf_<?=$i?>">여분필드<?=$i?>설명</label>
-        <input type="text" id="cf_<?=$i?>" name="cf_<?=$i?>" value="<?=$config['cf_'.$i]?>">
+        <label for="cf_<?=$i?>_subj">여분필드<?=$i?> 제목</label>
+        <input type="text" id="cf_<?=$i?>_subj" name="cf_<?=$i?>_subj" value="<?=get_text($config['cf_'.$i.'_subj'])?>" size="30">
+        <label for="cf_<?=$i?>">여분필드<?=$i?> 설명</label>
+        <input type="text" id="cf_<?=$i?>" name="cf_<?=$i?>" value="<?=$config['cf_'.$i]?>" size="30">
     </td>
 </tr>
 <? } ?>

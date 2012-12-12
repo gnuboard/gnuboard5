@@ -90,17 +90,17 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row"><label for="mb_id">아이디</label></th>
     <td>
-        <input type="text" id="mb_id" name="mb_id" maxlength="20" <?=$required_mb_id?> value="<?=$mb['mb_id']?>">
+        <input type="text" id="mb_id" name="mb_id" maxlength="20" <?=$required_mb_id?> value="<?=$mb['mb_id']?>" size="15">
         <?if ($w=='u'){?><a href="./boardgroupmember_form.php?mb_id=<?=$mb['mb_id']?>">접근가능그룹보기</a><?}?>
     </td>
     <th scope="row"><label for="mb_password">패스워드</label></th>
-    <td><input type="password" id="mb_password" name="mb_password" maxlength="20" <?=$required_mb_password?>></td>
+    <td><input type="password" id="mb_password" name="mb_password" maxlength="20" <?=$required_mb_password?> size="15"></td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_name">이름(실명)</label></th>
-    <td><input type="text" id="mb_name" name="mb_name" maxlength="20" minlength="2" required value="<?=$mb['mb_name']?>"></td>
+    <td><input type="text" id="mb_name" name="mb_name" maxlength="20" minlength="2" required value="<?=$mb['mb_name']?>" size="15"></td>
     <th scope="row"><label for="mb_nick">별명</label></th>
-    <td><input type="text" id="mb_nick" name="mb_nick" maxlength="20" minlength="2" required value="<?=$mb['mb_nick']?>"></td>
+    <td><input type="text" id="mb_nick" name="mb_nick" maxlength="20" minlength="2" required value="<?=$mb['mb_nick']?>" size="15"></td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_level">회원 권한</label></th>
@@ -110,30 +110,30 @@ include_once('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="mb_email">E-mail</label></th>
-    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" required email value="<?=$mb['mb_email']?>"></td>
+    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" required email value="<?=$mb['mb_email']?>" size="30"></td>
     <th scope="row"><label for="mb_homepage">홈페이지</label></th>
-    <td><input type="text" id="mb_homepage" name="mb_homepage" maxlength="255" value="<?=$mb['mb_homepage']?>"></td>
+    <td><input type="text" id="mb_homepage" name="mb_homepage" maxlength="255" value="<?=$mb['mb_homepage']?>" size="15"></td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_tel">전화번호</label></th>
-    <td><input type="text" id="mb_tel" name="mb_tel" maxlength="20" value="<?=$mb['mb_tel']?>"></td>
+    <td><input type="text" id="mb_tel" name="mb_tel" maxlength="20" value="<?=$mb['mb_tel']?>" size="15"></td>
     <th scope="row"><label for="mb_hp">핸드폰번호</label></th>
-    <td><input type="text" id="mb_hp" name="mb_hp" maxlength="20" value="<?=$mb['mb_hp']?>"></td>
+    <td><input type="text" id="mb_hp" name="mb_hp" maxlength="20" value="<?=$mb['mb_hp']?>" size="15"></td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_zip1">주소</label></th>
     <td colspan="3">
-        <input type="text" id="mb_zip1" name="mb_zip1" maxlength="3" readonly value="<?=$mb['mb_zip1']?>" title="우편번호 앞자리"> -
-        <input type="text" id="mb_zip2" name="mb_zip2" maxlength="3" readonly value="<?=$mb['mb_zip2']?>" title="우편번호 뒷자리">
-        <a href="javascript:;" onclick="win_zip('fmember', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2');">우편번호 검색</a>
-        <input type="text" id="mb_addr1" name="mb_addr1" readonly value='<?=$mb['mb_addr1']?>' title="행정기본주소">
-        <input type="text" id="mb_addr2" name="mb_addr2" value='<?=$mb['mb_addr2']?>' title="상세주소"> 상세주소 입력
+        <input type="text" id="mb_zip1" name="mb_zip1" maxlength="3" readonly value="<?=$mb['mb_zip1']?>" title="우편번호 앞자리" size="3"> -
+        <input type="text" id="mb_zip2" name="mb_zip2" maxlength="3" readonly value="<?=$mb['mb_zip2']?>" title="우편번호 뒷자리" size="3">
+        <a href="javascript:;" onclick="win_zip('fmember', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2');">우편번호 검색</a><br>
+        <input type="text" id="mb_addr1" name="mb_addr1" readonly value='<?=$mb['mb_addr1']?>' title="행정기본주소" size="50"><br>
+        <input type="text" id="mb_addr2" name="mb_addr2" value='<?=$mb['mb_addr2']?>' title="상세주소" size="50"> 상세주소 입력
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_icon">회원아이콘</label></th>
     <td colspan="3">
-        <?=help('이미지 크기는 넓이 '.$config[cf_member_icon_width].'픽셀 높이 '.$config[cf_member_icon_height].'픽셀로 해주세요.')?>
+        <?=help('이미지 크기는 <strong>넓이 '.$config[cf_member_icon_width].'픽셀 높이 '.$config[cf_member_icon_height].'픽셀</strong>로 해주세요.')?>
         <input type="file" id="mb_icon" name="mb_icon">
         <?
         $mb_dir = substr($mb['mb_id'],0,2);
@@ -196,10 +196,13 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row">인증일시</th>
     <td colspan="3">
-        <?=$mb['mb_email_certify']?>
         <? if ($mb['mb_email_certify'] == '0000-00-00 00:00:00') { ?>
+        <?=help('회원님이 메일을 수신할 수 없는 경우 등에 직접 인증처리를 하실 수 있습니다.')?>
+        <?=$mb['mb_email_certify']?>
         <input type="checkbox" id="passive_certify" name="passive_certify">
         <label>수동인증</label>
+        <? } else { ?>
+        <?=$mb['mb_email_certify']?>
         <? } ?>
     </td>
 </tr>
@@ -208,7 +211,7 @@ include_once('./admin.head.php');
 
 <? if ($config[cf_use_recommend]) { // 추천인 사용 ?>
 <tr>
-    <th scope="row">추천인></th>
+    <th scope="row">추천인</th>
     <td colspan="3"><?=($mb['mb_recommend'] ? get_text($mb['mb_recommend']) : '없음'); // 081022 : CSRF 보안 결함으로 인한 코드 수정 ?></td>
 </tr>
 <? } ?>
@@ -229,7 +232,7 @@ include_once('./admin.head.php');
 <? for ($i=1; $i<=10; $i++) { ?>
 <tr>
     <th scope="row"><label for="mb_<?=$i?>">여분 필드 <?=$i?></label></th>
-    <td colspan="3"><input type="text" id="mb_<?=$i?>" name="mb_<?=$i?>" maxlength="255" value="<?=$mb['mb_'.$i]?>"></td>
+    <td colspan="3"><input type="text" id="mb_<?=$i?>" name="mb_<?=$i?>" maxlength="255" value="<?=$mb['mb_'.$i]?>" size="30"></td>
 </tr>
 <? } ?>
 

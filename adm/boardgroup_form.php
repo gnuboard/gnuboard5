@@ -37,6 +37,7 @@ include_once('./admin.head.php');
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 <table class="frm_tbl">
+<caption>그룹 설정</caption>
 <tbody>
 <tr>
     <th scope="row"><label for="gr_id">그룹 ID</label></th>
@@ -45,7 +46,7 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row"><label for="gr_subject">그룹 제목</label></th>
     <td>
-        <input type="text" id="gr_subject" name="gr_subject" required value="<?=get_text($group['gr_subject'])?>">
+        <input type="text" id="gr_subject" name="gr_subject" required value="<?=get_text($group['gr_subject'])?>" size="80">
         <?
         if ($w == 'u')
             echo '<input type="button" value="게시판생성" onclick="location.href=\'./board_form.php?gr_id='.$gr_id.'\';">';
@@ -67,7 +68,8 @@ include_once('./admin.head.php');
     <th scope="row"><label for="gr_use_access">접근회원사용</label></th>
     <td>
         <?=help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.")?>
-        <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr[gr_use_access]?'checked':'';?>>사용
+        <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr[gr_use_access]?'checked':'';?>>
+        사용
     </td>
 </tr>
 <tr>

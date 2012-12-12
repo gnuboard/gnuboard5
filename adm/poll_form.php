@@ -30,10 +30,11 @@ include_once('./admin.head.php');
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 <table class="frm_tbl">
+<caption>투표내용 입력</caption>
 <tbody>
 <tr>
     <th scope="row"><label for="po_subject">투표 제목</label></th>
-    <td><input type="text" id="po_subject" name="po_subject" required value="<?=$po['po_subject']?>" maxlength="125"></td>
+    <td><input type="text" id="po_subject" name="po_subject" required value="<?=$po['po_subject']?>" size="80" maxlength="125"></td>
 </tr>
 
 <?
@@ -47,11 +48,11 @@ for ($i=1; $i<=9; $i++) {
 ?>
 
 <tr>
-    <th scope="row"><label for="po_poll<?=$i?>">항목<?=$i?></label></th>
+    <th scope="row"><label for="po_poll<?=$i?>">항목 <?=$i?></label></th>
     <td>
         <input type="text" id="po_poll<?=$i?>" name="po_poll<?=$i?>" <?=$required?> value="<?=$po_poll?>" maxlength="125">
-        <label for="po_cnt<?=$i?>">투표수</label>
-        <input type="text" id="po_cnt<?=$i?>" name="po_cnt<?=$i?>" value="<?=$po[po_cnt.$i]?>">
+        <label for="po_cnt<?=$i?>">항목 <?=$i?> 투표수</label>
+        <input type="text" id="po_cnt<?=$i?>" name="po_cnt<?=$i?>" value="<?=$po[po_cnt.$i]?>" size="2">
    </td>
 </tr>
 
@@ -59,16 +60,19 @@ for ($i=1; $i<=9; $i++) {
 
 <tr>
     <th scope="row"><label for="po_etc">기타의견</label></th>
-    <td><input type="text" id="po_etc" name="po_etc" value="<?=get_text($po['po_etc'])?>" maxlength="125"></td>
+    <td>
+        <?=help('기타 의견을 남길 수 있도록 하려면, 다음에 간단한 의견을 입력하세요.')?>
+        <input type="text" id="po_etc" name="po_etc" value="<?=get_text($po['po_etc'])?>" size="80" maxlength="125">
+    </td>
 </tr>
 <tr>
-    <th scope="row"><label for="po_level">투표권한</label></th>
-    <td><?=get_member_level_select('po_level', 1, 10, $po[po_level])?>이상 투표할 수 있음</td>
+    <th scope="row"><label for="po_level">투표가능 회원레벨</label></th>
+    <td><?=get_member_level_select('po_level', 1, 10, $po[po_level])?> 이상 투표할 수 있음</td>
 </tr>
 <tr>
     <th scope="row"><label for="po_point">포인트</label></th>
     <td>
-        <?=help('투표한 회원에게 부여함')?>
+        <?=help('투표에 참여한 회원에게 포인트를 부여합니다.')?>
         <input type="text" id="po_point" name="po_point" value="<?=$po[po_point]?>"> 점
     </td>
 </tr>

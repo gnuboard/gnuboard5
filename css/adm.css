@@ -6,6 +6,7 @@ article,aside,details,figcaption,figure, footer,header,hgroup,menu,nav,section {
 header ul, nav ul {margin:0;padding:0;list-style:none}
 table {border-collapse:collapse;border-spacing:0} tfoot td {text-align:center}
 form, img {border:0}
+img {vertical-align:middle}
 p {margin:10px 0}
 
 /* 내용 건너띄기 */
@@ -57,10 +58,12 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 .readonly {background:#ff3061}
 
 .adm_field_explain {display:block;padding:0 0 5px;color:#768f99}
+.group_setting {}
+.group_setting_ta {display:block;padding-top:5px}
 
 /* 테이블 */
 table {margin-bottom:10px;width:100%;border:1px solid #d5dcdf;background:#fff}
-caption {padding-bottom:15px;text-align:left;font-size:1em;font-weight:bold}
+caption {padding-bottom:15px;color:#5b7c89;text-align:left;font-size:1em;font-weight:bold}
 caption p {padding:0 0 5px;color:#6b8088;font:0.75em normal}
 th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
 th label {display:block}
@@ -68,6 +71,7 @@ th a {color:#000}
 th {padding:10px;background:#f1f6f7}
 td {padding:10px}
 .frm_tbl th {width:130px;text-align:left;font-weight:normal}
+.frm_tbl textarea {height:150px}
 
 /* 컨텐츠별 테이블 설정 */
 /* 공통 */

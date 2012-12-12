@@ -29,9 +29,11 @@ include_once('./admin.head.php');
 <input type="hidden" id="ma_id" name="ma_id" value="<?=$ma[ma_id]?>">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 <table class="frm_tbl">
+<caption>메일내용 입력</caption>
+<tbody>
 <tr>
     <th scope="row"><label for="ma_subject">메일 제목</label></th>
-    <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" required></td>
+    <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" size="100" required></td>
 </tr>
 <tr>
     <th scope="row"><label for="ma_content">메일 내용</label></th>
@@ -41,6 +43,7 @@ include_once('./admin.head.php');
         <textarea id="ma_content" name="ma_content" rows="20" required><?=$ma['ma_content']?></textarea>
     </td>
 </tr>
+</tbody>
 </table>
 
 <div class="btn_confirm">
