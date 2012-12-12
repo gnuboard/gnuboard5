@@ -44,7 +44,7 @@ include_once('./admin.head.php');
 <form id="frmsendmailselectform" name="frmsendmailselectform" method="post" action="./mail_select_list.php" autocomplete="off">
 <input type="hidden" name="ma_id" value='<?=$ma_id?>'>
 
-<table>
+<table class="frm_tbl">
 <caption>
     메일발송대상 선택
     <p>
@@ -55,26 +55,12 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row">회원 ID</th>
     <td>
-        <input type="radio" id="mb_id1_all" name="mb_id1" value="1" onclick="mb_id1_click(1);" <?=$mb_id1?"checked":"";?>> <label for="mb_id1_all">전체</label>
-        <input type="radio" id="mb_id1_section" name="mb_id1" value="0" onclick="mb_id1_click(0);" <?=!$mb_id1?"checked":"";?>> <label for="mb_id1_section">구간</label>
+        <input type="radio" id="mb_id1_all" name="mb_id1" value="1" <?=$mb_id1?"checked":"";?>> <label for="mb_id1_all">전체</label>
+        <input type="radio" id="mb_id1_section" name="mb_id1" value="0" <?=!$mb_id1?"checked":"";?>> <label for="mb_id1_section">구간</label>
         <input type="text" id="mb_id1_from" name="mb_id1_from" value="<?=$mb_id1_from?>" title="시작구간"> 에서
         <input type="text" id="mb_id1_to" name="mb_id1_to" value="<?=$mb_id1_to?>" title="종료구간"> 까지
 
         <script>
-        function mb_id1_click(num)
-        {
-            if (num == 1) {
-                document.getElementById('mb_id1_from').disabled = true;
-                document.getElementById('mb_id1_from').style.backgroundColor = '#EEEEEE';
-                document.getElementById('mb_id1_to').disabled = true;
-                document.getElementById('mb_id1_to').style.backgroundColor = '#EEEEEE';
-            } else {
-                document.getElementById('mb_id1_from').disabled = false;
-                document.getElementById('mb_id1_from').style.backgroundColor = '#FFFFFF';
-                document.getElementById('mb_id1_to').disabled = false;
-                document.getElementById('mb_id1_to').style.backgroundColor = '#FFFFFF';
-            }
-        }
         document.onLoad=mb_id1_click(<?=(int)$mb_id1?>);
         </script>
     </td>
@@ -83,20 +69,21 @@ include_once('./admin.head.php');
     <th scope="row"><label for="mb_birth_from">생일</label></th>
     <td>
         <?=help('5월5일 인 경우, 0505 와 같이 입력 , 둘다 입력해야함')?>
-        <input type="text" id="mb_birth_from" name="mb_birth_from" maxlength="4" value="<?=$mb_birth_from?>" title="생일구간 시작일"> 부터
-        <input type="text" id="mb_birth_to" name="mb_birth_to" maxlength="4" value="<?=$mb_birth_to?>" title="생일구간 종료일"> 까지</td>
+        <input type="text" id="mb_birth_from" name="mb_birth_from" maxlength="4" value="<?=$mb_birth_from?>" title="생일구간 시작일" size="6"> 부터
+        <input type="text" id="mb_birth_to" name="mb_birth_to" maxlength="4" value="<?=$mb_birth_to?>" title="생일구간 종료일" size="6"> 까지
+    </td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_email">E-mail</label></th>
-    <td><input type="text" id="mb_email" name="mb_email" value="<?=$mb_email?>"> 단어 포함 (예 : @sir.co.kr)</td>
+    <td><input type="text" id="mb_email" name="mb_email" value="<?=$mb_email?>" size="50"> 단어 포함 (예 : @sir.co.kr)</td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_sex">성별</label></th>
     <td>
         <select id="mb_sex" name="mb_sex">
-            <option value="">전체
-            <option value="F">여자
-            <option value="M">남자
+            <option value="">전체</option>
+            <option value="F">여자</option>
+            <option value="M">남자</option>
         </select>
         <script> document.getElementById('mb_sex').value = '<?=$mb_sex?>'; </script>
     </td>
