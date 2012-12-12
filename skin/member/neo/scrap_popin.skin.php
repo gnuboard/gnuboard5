@@ -16,8 +16,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <td><?=get_text(cut_str($write[wr_subject], 255))?></td>
 </tr>
 <tr>
-    <th scope="row">댓글</th>
-    <td><textarea name="wr_content"></textarea></td>
+    <th scope="row"><label for="wr_content">댓글</label></th>
+    <td><textarea id="wr_content" name="wr_content"></textarea></td>
 </tr>
 </tbody>
 </table>
