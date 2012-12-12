@@ -56,16 +56,15 @@ $colspan = 6;
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>투표검색</legend>
-    <div>
-        <span><?=$listall?></span>
+    <span>
+        <?=$listall?>
         투표수 : <?=number_format($total_count)?>개
-    </div>
+    </span>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value='po_subject'>제목</option>
     </select>
-    <label for="stx">검색어</label>
-    <input type="text" id="stx" name="stx" required value="<?=$stx?>">
+    <input type="text" name="stx" required value="<?=$stx?>" title="검색어">
     <input type="submit" value="검색">
 </fieldset>
 </form>

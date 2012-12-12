@@ -78,26 +78,25 @@ function point_clear()
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>포인트 내역 검색</legend>
-    <div>
+    <span>
         <?=$listall?>
-        건수 : <?=number_format($total_count)?>
+        전체 <?=number_format($total_count)?> 건
         <?
         if ($mb['mb_id'])
             echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb[mb_point]) . '점)';
         else {
             $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g4['point_table']} ");
-            echo '&nbsp;(전체 포인트 합계 : ' . number_format($row2['sum_point']) . '점)';
+            echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
         }
         ?>
         <? if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><? } ?>
-    </div>
+    </span>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="mb_id">회원아이디</option>
         <option value="po_content">내용</option>
     </select>
-    <label for="stx">검색어</label>
-    <input type="text" id="stx" name="stx" required value="<?=$stx?>">
+    <input type="text" id="stx" name="stx" required value="<?=$stx?>" title="검색어">
     <input type="submit" value="검색">
 </fieldset>
 </form>

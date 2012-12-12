@@ -62,13 +62,13 @@ var list_delete_php = 'auth_list_delete.php';
 </script>
 
 <form id="fsearch" name="fsearch" method="get">
+<input type="hidden" id="sfl" name="sfl" value="a.mb_id">
 <fieldset>
     <legend>관리권한 검색</legend>
-    <div>
+    <span>
         <?=$listall?>
         설정된 관리권한 <?=number_format($total_count)?>건
-    </div>
-    <input type="hidden" id="sfl" name="sfl" value="a.mb_id">
+    </span>
     <label for="stx">회원아이디</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
     <input type="submit" id="fsearch_submit" value="검색">
@@ -83,7 +83,10 @@ var list_delete_php = 'auth_list_delete.php';
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 <table>
-<caption>설정된 관리권한 내역</caption>
+<caption>
+    설정된 관리권한 내역
+    <p>권한 <strong>r</strong>은 읽기권한, <strong>w</strong>는 쓰기권한, <strong>d</strong>는 삭제권한입니다.</p>
+</caption>
 <thead>
 <tr>
     <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 권한설정 내역 전체선택" onclick="check_all(this.form)"></th>
@@ -162,38 +165,32 @@ else
 
 <fieldset>
     <legend>관리권한 추가</legend>
-    <p>아래 양식에서 회원에게 관리권한을 부여하실 수 있습니다. <strong>r</strong>은 <strong>읽기</strong>권한, <strong>w</strong>는 <strong>입력</strong> 혹은 <strong>수정</strong>권한, <strong>d</strong>는 <strong>삭제</strong>권한입니다.</p>
-    <div>
-        <label for="mb_id">회원아이디</label>
-        <input type="text" id="mb_id" name="mb_id" required value='<?=$mb_id?>'>
-    </div>
-    <div>
-        <label for="au_menu">접근가능메뉴</label>
-        <select id="au_menu" name="au_menu" required>
-            <option value=''>선택하세요
-            <?
-            foreach($auth_menu as $key=>$value)
-            {
-                if (!(substr($key, -3) == '000' || $key == '-' || !$key))
-                    echo '<option value="'.$key.'">'.$key.' '.$value;
-            }
-            ?>
-        </select>
-        <input type="checkbox" id="r" name="r" value="r" checked>
-        <label for="r">r</label>
-        <input type="checkbox" id="w" name="w" value="w">
-        <label for="w">w</label>
-        <input type="checkbox" id="d" name="d" value="d">
-        <label for="d">d</label>
-    </div>
-    <div>
-        <label for="admin_password">관리자 패스워드</label>
-        <input type="password" id="admin_password" name="admin_password" required>
-    </div>
+    <p>다음 양식에서 회원에게 관리권한을 부여하실 수 있습니다.</p>
+    <label for="mb_id">회원아이디</label>
+    <input type="text" id="mb_id" name="mb_id" required value='<?=$mb_id?>'>
+    <label for="au_menu">접근가능메뉴</label>
+    <select id="au_menu" name="au_menu" required>
+        <option value=''>선택하세요
+        <?
+        foreach($auth_menu as $key=>$value)
+        {
+            if (!(substr($key, -3) == '000' || $key == '-' || !$key))
+                echo '<option value="'.$key.'">'.$key.' '.$value;
+        }
+        ?>
+    </select>
+    <input type="checkbox" id="r" name="r" value="r" checked>
+    <label for="r">r (읽기)</label>
+    <input type="checkbox" id="w" name="w" value="w">
+    <label for="w">w (쓰기)</label>
+    <input type="checkbox" id="d" name="d" value="d">
+    <label for="d">d (삭제)</label>
+    <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
+    <label for="admin_password">관리자 패스워드</label>
+    <input type="password" id="admin_password" name="admin_password" required>
+    <input type="submit" class="fieldset_submit" value="완료">
 </fieldset>
-<div class="btn_confirm">
-    <input type="submit" value="추가">
-</div>
+
 </form>
 
 <script>

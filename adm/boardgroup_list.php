@@ -66,10 +66,10 @@ var list_update_php = "./boardgroup_list_update.php";
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>그룹 검색</legend>
-    <div>
+    <span>
         <?=$listall?>
-        생성된 그룹수 : <?=number_format($total_count)?>건
-    </div>
+        생성된 그룹수 <?=number_format($total_count)?>개
+    </span>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="gr_subject">제목</option>

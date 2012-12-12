@@ -39,10 +39,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row[gm_id].'\');">삭제</a>';
 ?>
 <tr>
-    <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
-    <td><?=$row['gr_subject']?></td>
-    <td><?=$row['gm_datetime']?></td>
-    <td><?=$s_del?></td>
+    <td class="td_grid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+    <td class="td_category"><?=$row['gr_subject']?></td>
+    <td class="td_time"><?=$row['gm_datetime']?></td>
+    <td class="td_mng"><?=$s_del?></td>
 </tr>
 <?
 }
@@ -54,16 +54,6 @@ if ($i == 0) {
 </tbody>
 </table>
 
-<?
-$sql = " select *
-            from {$g4['group_table']}
-            where gr_use_access = 1 ";
-if ($is_admin != 'super')
-    $sql .= " and gr_admin = '{$member['mb_id']}' ";
-$sql .= " order by gr_id ";
-$result = sql_query($sql);
-?>
-<? if ($result['gr_id']) { // 여기가 게시판 그룹이 한개 이상 존재할 때 조건?>
 <form id="fboardgroupmember_form" name="fboardgroupmember_form" method="post" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)">
 <input type="hidden" id="mb_id" name="mb_id" value="<?=$mb['mb_id']?>">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
@@ -73,17 +63,23 @@ $result = sql_query($sql);
     <select id="gr_id" name="gr_id">
     <option value="">접근가능 그룹을 선택하세요.</option>
     <?
+    $sql = " select * 
+                from {$g4['group_table']}
+                where gr_use_access = 1 ";
+    //if ($is_admin == 'group') {
+    if ($is_admin != 'super') 
+        $sql .= " and gr_admin = '$member[mb_id]' ";
+    $sql .= " order by gr_id ";
+    $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         echo '<option value="'.$row['gr_id'].'">'.$row['gr_subject'].'</option>';
     }
     ?>
     </select>
     <input type="submit" value="완료" accesskey="s">
+    <p>게시판 그룹이 존재하지 않는다면 <a href="./boardgroup_form.php">게시판그룹생성하기</a></p>
 </fieldset>
 </form>
-<?} else { // 여기가 게시판 그룹이 0개일 때 조건?>
-<p>게시판 그룹이 존재하지 않습니다. <a href="./boardgroup_form.php">게시판그룹생성 바로가기</a></p>
-<?}?>
 
 <script>
 function boardgroupmember_form_check(f)

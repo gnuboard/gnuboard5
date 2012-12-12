@@ -45,10 +45,10 @@ $colspan = 3;
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>인기검색어 검색</legend>
-    <div>
-        <span><?=$listall?></span>
-        건수 : <?=number_format($total_count)?>개
-    </div>
+    <span>
+        <?=$listall?>
+        건수 <?=number_format($total_count)?>개
+    </span>
     <label for="fr_date">기간설정</label>
     <input type="text" id="fr_date" name="fr_date" maxlength="10" value="<?=$fr_date?>" title="구간시작일"> 부터 <input type="text" id="to_date" name="to_date" maxlength="10" value="<?=$to_date?>" title="구간종료일"> 까지
     <input type="submit" value="검색">

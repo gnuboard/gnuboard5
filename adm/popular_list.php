@@ -58,7 +58,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 $g4['title'] = '인기검색어관리';
 include_once('./admin.head.php');
@@ -74,17 +74,16 @@ var list_delete_php = 'popular_list.php';
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>인기검색어 검색</legend>
-    <div>
-        <span><?=$listall?></span>
+    <span>
+        <?=$listall?>
         건수 : <?=number_format($total_count)?>개
-    </div>
+    </span>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="pp_word">검색어</option>
         <option value="pp_date">등록일</option>
     </select>
-    <label for="stx">검색어</label>
-    <input type="text" id="stx" name="stx" required value="<?=$stx?>">
+    <input type="text" name="stx" required value="<?=$stx?>" title="검색어">
     <input type="submit" value="검색">
 </fieldset>
 </form>

@@ -77,18 +77,17 @@ var list_delete_php = 'board_list_delete.php';
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>게시판 검색</legend>
-    <div>
+    <span>
         <?=$listall?>
-        생성된 게시판수 : <?=number_format($total_count)?>건
-    </div>
+        생성된 게시판수 <?=number_format($total_count)?>개
+    </span>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="bo_table">TABLE</option>
         <option value="bo_subject">제목</option>
         <option value="a.gr_id">그룹ID</option>
     </select>
-    <label for="stx">검색어</label>
-    <input type="text" id="stx" name="stx" required value="<?=$stx?>">
+    <input type="text" name="stx" required value="<?=$stx?>" title="검색어">
     <input type="submit" value="검색">
 </fieldset>
 </form>

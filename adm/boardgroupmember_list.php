@@ -60,13 +60,12 @@ $colspan = 7;
 <form id="fsearch" name="fsearch" method="get">
 <input type="hidden" name="gr_id" value="<?=$gr_id?>">
 <fieldset>
-    <legend><?=$gr['gr_subject']?> 그룹에서 검색 (그룹아이디:<?=$gr['gr_id']?>)</legend>
+    <legend><?=$gr['gr_subject']?>(아이디 <?=$gr['gr_id']?>)에서 검색</legend>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value='a.mb_id'>회원아이디</option>
     </select>
-    <label for="stx">검색어</label>
-    <input type="text" id="stx" name="stx" required value="<? echo $stx ?>">
+    <input type="text" id="stx" name="stx" required value="<? echo $stx ?>" title="검색어">
     <input type="submit" value="검색">
 </fieldset>
 </form>
@@ -75,13 +74,13 @@ $colspan = 7;
 <caption><?=$gr['gr_subject']?> 그룹에 접근가능한 회원 목록 (그룹아이디:<?=$gr['gr_id']?>)</caption>
 <thead>
 <tr>
-    <th scope="col" id="th_mb_id"><?=subject_sort_link('b.mb_id', 'gr_id='.$gr_id)?>회원아이디</a></th>
-    <th scope="col" id="th_mb_name"><?=subject_sort_link('b.mb_name', 'gr_id='.$gr_id)?>이름</a></th>
-    <th scope="col" id="th_mb_nick"><?=subject_sort_link('b.mb_nick', 'gr_id='.$gr_id)?>별명</a></th>
-    <th scope="col" id="th_mb_last"><?=subject_sort_link('b.mb_today_login', 'gr_id='.$gr_id)?>최종접속</a></th>
-    <th scope="col" id="th_datetime"><?=subject_sort_link('a.gm_datetime', 'gr_id='.$gr_id)?>처리일시</a></th>
-    <th scope="col" id="th_group">그룹</th>
-    <th scope="col" id="th_del">삭제</th>
+    <th scope="col">그룹</th>
+    <th scope="col"><?=subject_sort_link('b.mb_id', 'gr_id='.$gr_id)?>회원아이디</a></th>
+    <th scope="col"><?=subject_sort_link('b.mb_name', 'gr_id='.$gr_id)?>이름</a></th>
+    <th scope="col"><?=subject_sort_link('b.mb_nick', 'gr_id='.$gr_id)?>별명</a></th>
+    <th scope="col"><?=subject_sort_link('b.mb_today_login', 'gr_id='.$gr_id)?>최종접속</a></th>
+    <th scope="col"><?=subject_sort_link('a.gm_datetime', 'gr_id='.$gr_id)?>처리일시</a></th>
+    <th scope="col">삭제</th>
 </tr>
 </thead>
 <tbody>
@@ -100,13 +99,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 ?>
 <tr>
-    <td headers="th_mb_id"><?=$row['mb_id']?></td>
-    <td headers="th_mb_name"><?=$row['mb_name']?></td>
-    <td headers="th_mb_nick"><?=$mb_nick?></td>
-    <td headers="th_mb_last"><?=substr($row['mb_today_login'],2,8)?></td>
-    <td headers="th_datetime"><?=$row['gm_datetime']?></td>
-    <td headers="th_group"><?=$group?></td>
-    <td headers="th_del"><?=$s_del?></td>
+    <td class="td_grid"><?=$group?></td>
+    <td class="td_mbid"><?=$row['mb_id']?></td>
+    <td class="td_mbname"><?=$row['mb_name']?></td>
+    <td class="td_mbnick"><?=$mb_nick?></td>
+    <td class="td_time"><?=substr($row['mb_today_login'],2,8)?></td>
+    <td class="td_time"><?=$row['gm_datetime']?></td>
+    <td class="td_mng"><?=$s_del?></td>
 </tr>
 <?
 }

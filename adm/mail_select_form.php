@@ -60,9 +60,7 @@ include_once('./admin.head.php');
         <input type="text" id="mb_id1_from" name="mb_id1_from" value="<?=$mb_id1_from?>" title="시작구간"> 에서
         <input type="text" id="mb_id1_to" name="mb_id1_to" value="<?=$mb_id1_to?>" title="종료구간"> 까지
 
-        <script>
-        document.onLoad=mb_id1_click(<?=(int)$mb_id1?>);
-        </script>
+        <script>document.onLoad=mb_id1_click(<?=(int)$mb_id1?>);</script>
     </td>
 </tr>
 <tr>

@@ -95,12 +95,12 @@ var list_delete_php = 'member_list_delete.php';
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>회원검색</legend>
-    <div>
+    <span>
         <?=$listall?>
-        총회원수 : <?=number_format($total_count)?>,
-        <a href="?sst=mb_intercept_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">차단 : <?=number_format($intercept_count)?></a>,
-        <a href="?sst=mb_leave_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">탈퇴 : <?=number_format($leave_count)?></a>
-    </div>
+        총회원수 <?=number_format($total_count)?>명 중,
+        <a href="?sst=mb_intercept_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">차단 <?=number_format($intercept_count)?></a>명,
+        <a href="?sst=mb_leave_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">탈퇴 <?=number_format($leave_count)?></a>명
+    </span>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="mb_id">회원아이디</option>
