@@ -28,10 +28,10 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 <caption>포인트내역 목록</caption>
 <thead>
 <tr>
-    <td>일시</td>
-    <td>내용</td>
-    <td>지급포인트</td>
-    <td>사용포인트</td>
+    <th scope="col">일시</th>
+    <th scope="col">내용</th>
+    <th scope="col">지급포인트</th>
+    <th scope="col">사용포인트</th>
 </tr>
 </thead>
 <tfoot>
