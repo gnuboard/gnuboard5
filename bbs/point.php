@@ -21,19 +21,20 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-// 지급포인트소계
-$sql = " select SUM(po_point) as sum_point1
-            $sql_common
-              and po_point >= 0 ";
-$row = sql_fetch($sql);
-$sum_point1 = $row['sum_point1'];
-
-// 사용포인트소계
-$sql = " select SUM(po_point) as sum_point2
-            $sql_common
-              and po_point < 0 ";
-$row = sql_fetch($sql);
-$sum_point2 = $row['sum_point2'];
+// 포인트소계
+$sql = " select po_point
+            {$sql_common}
+            {$sql_order}
+            limit {$from_record}, {$rows} ";
+$result = sql_query($sql);
+$sum_point1 = $sum_point2 = 0;
+for($i=0; $row=sql_fetch_array($result); $i++) {
+    if($row['po_point'] >= 0) {
+        $sum_point1 += $row['po_point'];
+    } else {
+        $sum_point2 += $row['po_point'];
+    }
+}
 ?>
 
 <h1>포인트내역</h1>
