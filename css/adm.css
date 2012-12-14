@@ -33,8 +33,8 @@ header {background:#2c2f34}
 footer {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
 footer p {color:#576a71}
 
-/* 헤딩 (아 머리 아퍼) */
-h1 {margin-bottom:20px}
+/* 헤딩 */
+h1 {margin-bottom:20px;font-family:"verdana","dotum";letter-spacing:-0.1em}
 
 /* GNB */
 #gnb {position:absolute;top:110px;left:20px;width:180px}
@@ -71,7 +71,7 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.8em}
 fieldset p {color:#6b8088}
 fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
-fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
+fieldset button, .fieldset_submit {padding:0 15px;height:24px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
 fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
 .readonly {background:#ff3061}
 
