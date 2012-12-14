@@ -71,7 +71,7 @@ include_once ('./admin.head.php');
 <?=cheditor1('bo_content_head', '100%', '200');?>
 <?=cheditor1('bo_content_tail', '100%', '200');?>
 
-<ul>
+<ul class="frm_list">
     <li><a href="#frm_basic">기본 설정</a></li>
     <li><a href="#frm_auth">권한 설정</a></li>
     <li><a href="#frm_function">기능 설정</a></li>
