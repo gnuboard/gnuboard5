@@ -88,7 +88,7 @@ var list_delete_php = 'board_list_delete.php';
         <option value="a.gr_id">그룹ID</option>
     </select>
     <input type="text" name="stx" required value="<?=$stx?>" title="검색어">
-    <input type="submit" value="검색">
+    <input type="submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
 

@@ -854,9 +854,9 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 </fieldset>
 
 <div class="btn_confirm">
-    <input type="submit" accesskey="s" value="확인">
-    <input type="button" value="목록" onclick="document.location.href='./board_list.php?<?=$qstr?>';">
-    <? if ($w == 'u') { ?><input type="button" value="게시판 복사" onclick="board_copy('<?=$bo_table?>');"><?}?>
+    <input type="submit" class="btn_submit" accesskey="s" value="확인">
+    <button onclick="document.location.href='./board_list.php?<?=$qstr?>';">목록</button>
+    <? if ($w == 'u') { ?><button onclick="board_copy('<?=$bo_table?>');">게시판복사</button><?}?>
 </div>
 
 </form>

@@ -7,7 +7,7 @@ header ul, nav ul {margin:0;padding:0;list-style:none}
 table {border-collapse:collapse;border-spacing:0} tfoot td {text-align:center}
 form, img {border:0}
 img {vertical-align:middle}
-p {margin:10px 0}
+p {margin:10px 0;line-height:1.5em}
 
 /* 내용 건너띄기 */
 #skip_to_main {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
@@ -30,8 +30,11 @@ header {background:#2c2f34}
 #current_location li {float:left}
 #wrapper {margin:60px 10px 0 210px;min-height:630px;height:auto !important;height:630px}
 
-/* 헤딩 (아 머리 아퍼) */
-h1 {margin-bottom:20px}
+footer {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
+footer p {color:#576a71}
+
+/* 헤딩 */
+h1 {margin-bottom:20px;font-family:"verdana","dotum";letter-spacing:-0.1em}
 
 /* GNB */
 #gnb {position:absolute;top:110px;left:20px;width:180px}
@@ -44,18 +47,32 @@ h1 {margin-bottom:20px}
 .gnb_2depth a {display:block;padding-left:15px;height:30px;background:#fff;color:#000;font:0.75em normal;text-decoration:none;line-height:2.8em}
 .gnb_2depth a:focus, .gnb_2depth a:hover {background:#f6f9fa}
 
-/* 폼요소 */
+/* 버튼 */
+.btn_confirm {margin-bottom:20px;text-align:center}
+.btn_confirm button {padding:0 15px;height:30px;background:#74868b;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_confirm button:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_submit {padding:0 15px;height:30px;border:0;background:#ff6633;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+
+.btn_list input {padding:0 15px;height:30px;background:#74868b;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_list input:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.1em;vertical-align:middle}
+.btn_list a:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+
+/* 폼 */
 label {vertical-align:middle}
 textarea, input, select {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea, input {padding:3px}
 textarea:focus, input:focus {padding:4px;border:0;background:#9aacb4;color:#fff}
 textarea {width:90%}
 select {padding:2px}
-fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.8em}
-fieldset p {color:#6b8088}
-fieldset span {display:inline-block;margin-right:10px;vertical-align:middle}
 legend {margin-left:0;padding:7px 10px;border:1px solid #ced9de;background:#f6f9fa}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
+fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.8em}
+fieldset p {color:#6b8088}
+fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
+fieldset button, .fieldset_submit {padding:0 15px;height:24px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
+fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
 .readonly {background:#ff3061}
 
 .adm_field_explain {display:block;padding:0 0 5px;color:#768f99}
@@ -69,8 +86,8 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 .frm_list a:focus, .frm_list a:hover {background:#f6f9fa}
 
 /* 테이블 */
-table {margin-bottom:20px;width:100%;border:1px solid #d5dcdf;background:#fff}
-caption {padding-bottom:15px;color:#5b7c89;text-align:left;font-size:1em;font-weight:bold}
+table {margin-bottom:10px;width:100%;border:1px solid #d5dcdf;background:#fff}
+caption {padding:10px 0 15px;color:#5b7c89;text-align:left;font-size:1em;font-weight:bold}
 caption p {margin:7px 0 0;padding:0;color:#6b8088;font:0.75em normal}
 th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
 th label {display:block}

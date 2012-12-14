@@ -71,7 +71,7 @@ var list_delete_php = 'auth_list_delete.php';
     </span>
     <label for="stx">회원아이디</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
-    <input type="submit" id="fsearch_submit" value="검색">
+    <input type="submit" id="fsearch_submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
 
@@ -138,7 +138,9 @@ if ($i==0)
 $pagelist = get_paging($config[cf_write_pages], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 ?>
 
-<div class="btn_list"><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>
+<div class="btn_list">
+    <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
+</div>
 
 <div class="pg">
     <?=$pagelist?>

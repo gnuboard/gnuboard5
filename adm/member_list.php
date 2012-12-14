@@ -117,7 +117,7 @@ var list_delete_php = 'member_list_delete.php';
     </select>
     <label for="stx">검색어</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx ?>">
-    <input type="submit" value="검색">
+    <input type="submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
 
@@ -232,7 +232,7 @@ if ($i == 0)
 ?>
 </table>
 
-<div class="btn_confirm">
+<div class="btn_list">
     <input type="button" value="선택수정" onclick="btn_check(this.form, 'update')">
     <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
     <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>

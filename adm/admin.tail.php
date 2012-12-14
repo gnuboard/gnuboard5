@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit;
 </div>
 
 <footer>
-푸터
+    <p>Copyright &copy; 소유하신 도메인. All rights reserved.</p>
 </footer>
 
 <!-- <p>실행시간 : <?=get_microtime() - $begin_time;?> -->

@@ -84,7 +84,7 @@ var list_delete_php = 'popular_list.php';
         <option value="pp_date">등록일</option>
     </select>
     <input type="text" name="stx" required value="<?=$stx?>" title="검색어">
-    <input type="submit" value="검색">
+    <input type="submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
 
@@ -131,7 +131,7 @@ if ($i == 0)
 </table>
 
 <?if ($is_admin == 'super'){ ?>
-<div>
+<div class="btn_list">
     <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
 </div>
 <?}?>

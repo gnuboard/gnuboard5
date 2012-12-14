@@ -240,17 +240,17 @@ include_once('./admin.head.php');
 </table>
 
 <fieldset id="admin_confirm">
-<legend><span></span>XSS 혹은 CSRF 방지</legend>
-<p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
-<label for="admin_password">관리자 패스워드</label>
-<input type="password" id="admin_password" name="admin_password" required title="관리자 패스워드">
+    <legend><span></span>XSS 혹은 CSRF 방지</legend>
+    <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
+    <label for="admin_password">관리자 패스워드</label>
+    <input type="password" id="admin_password" name="admin_password" required title="관리자 패스워드">
 </fieldset>
 
 <div class="btn_confirm">
-    <input type="submit" accesskey='s' value="확인">
-    <input type="button" value="목록" onclick="document.location.href='./member_list.php?<?=$qstr?>';">
+    <input type="submit" class="btn_submit" accesskey='s' value="확인">
+    <button onclick="document.location.href='./member_list.php?<?=$qstr?>';">목록</button>
     <? if ($w != '') { ?>
-    <input type="button" value="삭제" onclick="del('./member_delete.php?<?=$qstr?>&amp;w=d&amp;mb_id=<?=$mb['mb_id']?>&amp;url=<?=$_SERVER['PHP_SELF']?>');">
+    <button onclick="del('./member_delete.php?<?=$qstr?>&amp;w=d&amp;mb_id=<?=$mb['mb_id']?>&amp;url=<?=$_SERVER['PHP_SELF']?>');">삭제</button>
     <? } ?>
 </div>
 </form>

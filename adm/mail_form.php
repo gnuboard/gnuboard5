@@ -47,7 +47,7 @@ include_once('./admin.head.php');
 </table>
 
 <div class="btn_confirm">
-    <input type="submit" accesskey="s" value="확인">
+    <input type="submit" class="btn_submit" accesskey="s" value="확인">
 </div>
 </form>
 

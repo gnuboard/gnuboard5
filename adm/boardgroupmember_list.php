@@ -66,7 +66,7 @@ $colspan = 7;
         <option value='a.mb_id'>회원아이디</option>
     </select>
     <input type="text" id="stx" name="stx" required value="<? echo $stx ?>" title="검색어">
-    <input type="submit" value="검색">
+    <input type="submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
 
