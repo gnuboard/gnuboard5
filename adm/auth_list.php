@@ -138,7 +138,9 @@ if ($i==0)
 $pagelist = get_paging($config[cf_write_pages], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 ?>
 
-<div class="btn_list"><input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')"></div>
+<div class="btn_list">
+    <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
+</div>
 
 <div class="pg">
     <?=$pagelist?>

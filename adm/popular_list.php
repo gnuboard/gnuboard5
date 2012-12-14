@@ -131,7 +131,7 @@ if ($i == 0)
 </table>
 
 <?if ($is_admin == 'super'){ ?>
-<div>
+<div class="btn_list">
     <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
 </div>
 <?}?>

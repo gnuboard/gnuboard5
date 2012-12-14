@@ -232,7 +232,7 @@ if ($i == 0)
 ?>
 </table>
 
-<div class="btn_confirm">
+<div class="btn_list">
     <input type="button" value="선택수정" onclick="btn_check(this.form, 'update')">
     <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
     <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>
