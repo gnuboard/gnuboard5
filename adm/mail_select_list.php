@@ -130,7 +130,7 @@ while ($row=sql_fetch_array($result))
 
 <div class="btn_confirm">
     <input type="submit" value="메일보내기">
-    <input type="button" value="뒤로" onclick="history.go(-1);">
+    <button onclick="history.go(-1);">뒤로</button>
 </div>
 
 </form>

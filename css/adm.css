@@ -54,8 +54,8 @@ h1 {margin-bottom:20px;font-family:"verdana","dotum";letter-spacing:-0.1em}
 .btn_submit {padding:0 15px;height:30px;border:0;background:#ff6633;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
 .btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
 
-.btn_list input {padding:0 15px;height:30px;background:#74868b;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
-.btn_list input:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_list input, .btn_list button {padding:0 15px;height:30px;background:#74868b;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_list input:focus, .btn_list button:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
 .btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.1em;vertical-align:middle}
 .btn_list a:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
 
@@ -71,7 +71,7 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.8em}
 fieldset p {color:#6b8088}
 fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
-fieldset button, .fieldset_submit {padding:0 15px;height:24px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
+fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
 fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
 .readonly {background:#ff3061}
 

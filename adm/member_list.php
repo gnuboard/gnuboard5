@@ -233,8 +233,8 @@ if ($i == 0)
 </table>
 
 <div class="btn_list">
-    <input type="button" value="선택수정" onclick="btn_check(this.form, 'update')">
-    <input type="button" value="선택삭제" onclick="btn_check(this.form, 'delete')">
+    <button onclick="btn_check(this.form, 'update')">선택수정</button>
+    <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
     <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>
 </div>
 
