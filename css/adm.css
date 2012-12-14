@@ -31,6 +31,7 @@ header {background:#2c2f34}
 #wrapper {margin:60px 10px 0 210px;min-height:630px;height:auto !important;height:630px}
 
 /* 헤딩 (아 머리 아퍼) */
+h1 {margin-bottom:20px}
 
 /* GNB */
 #gnb {position:absolute;top:110px;left:20px;width:180px}

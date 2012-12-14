@@ -41,6 +41,7 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
         <input type="submit" value="검색">
     </fieldset>
     </form>
+        <h1><?=$g4['title']?> <?=$config['cf_title']?></h1>
 </header>
 
 <?=outlogin('neo'); // 외부 로그인 ?>
@@ -50,4 +51,3 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
 <?=connect(); // 현재 접속자수 ?>
 
 <div id="wrapper">
-    <h1><?=$g4['title']?> <?=$config['cf_title']?></h1>

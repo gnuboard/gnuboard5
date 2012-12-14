@@ -112,8 +112,7 @@ function textarea_size(fld, size)
         </ul>
     </nav>
 
-    <h1><span></span><?=$g4['title']?></h1>
-
 </header>
 
 <div id="wrapper">
+    <h1><span></span><?=$g4['title']?></h1>
