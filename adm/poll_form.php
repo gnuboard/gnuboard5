@@ -95,8 +95,8 @@ for ($i=1; $i<=9; $i++) {
 </table>
 
 <div class="btn_confirm">
-    <input type="submit" accesskey="s" value="확인">
-    <input type="button" value="목록" onclick="document.location.href='./poll_list.php?<?=$qstr?>';">
+    <input type="submit" class="btn_submit" accesskey="s" value="확인">
+    <button onclick="document.location.href='./poll_list.php?<?=$qstr?>';">목록</button>
 </div>
 </form>
 

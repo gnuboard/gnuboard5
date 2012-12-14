@@ -71,7 +71,7 @@ var list_delete_php = 'auth_list_delete.php';
     </span>
     <label for="stx">회원아이디</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
-    <input type="submit" id="fsearch_submit" value="검색">
+    <input type="submit" id="fsearch_submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
 

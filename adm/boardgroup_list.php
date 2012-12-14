@@ -78,7 +78,7 @@ var list_update_php = "./boardgroup_list_update.php";
     </select>
     <label for="stx">검색어</label>
     <input type="text" id="stx" name="stx" required value="<?=$stx?>">
-    <input type="submit" value="검색">
+    <input type="submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
 
