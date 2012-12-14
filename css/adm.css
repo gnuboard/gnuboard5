@@ -30,6 +30,8 @@ header {background:#2c2f34}
 #current_location li {float:left}
 #wrapper {margin:60px 10px 0 210px;min-height:630px;height:auto !important;height:630px}
 
+/* 헤딩 (아 머리 아퍼) */
+
 /* GNB */
 #gnb {position:absolute;top:110px;left:20px;width:180px}
 .gnb_1depth ul {display:block;visibility:hidden;height:0}
@@ -40,10 +42,6 @@ header {background:#2c2f34}
 .gnb_2depth {border-bottom:1px solid #eef1f2}
 .gnb_2depth a {display:block;padding-left:15px;height:30px;background:#fff;color:#000;font:0.75em normal;text-decoration:none;line-height:2.8em}
 .gnb_2depth a:focus, .gnb_2depth a:hover {background:#f6f9fa}
-
-/* heading */
-h1 {display:block;visibility:hidden;height:0}
-article h1 {visibility:visible;height:auto}
 
 /* 폼요소 */
 label {vertical-align:middle}
