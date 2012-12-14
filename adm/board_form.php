@@ -71,6 +71,15 @@ include_once ('./admin.head.php');
 <?=cheditor1('bo_content_head', '100%', '200');?>
 <?=cheditor1('bo_content_tail', '100%', '200');?>
 
+<ul>
+    <li><a href="#frm_basic">기본 설정</a></li>
+    <li><a href="#frm_auth">권한 설정</a></li>
+    <li><a href="#frm_function">기능 설정</a></li>
+    <li><a href="#frm_design">디자인/양식</a></li>
+    <li><a href="#frm_point">포인트 설정</a></li>
+    <li><a href="#frm_extra">여분필드</a></li>
+</ul>
+
 <form id="fboardform" name="fboardform" method="post" onsubmit="return fboardform_submit(this)" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -80,8 +89,8 @@ include_once ('./admin.head.php');
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 
-<table class="frm_tbl">
-<caption>게시판 기본설정</caption>
+<table id="frm_basic" class="frm_tbl">
+<caption>게시판 기본 설정</caption>
 <tbody>
 <tr>
     <th scope="row"><label for="bo_table">TABLE</label></th>
@@ -133,8 +142,8 @@ include_once ('./admin.head.php');
 </tbody>
 </table>
 
-<table class="frm_tbl">
-<caption>게시판 권한설정</caption>
+<table id="frm_auth" class="frm_tbl">
+<caption>게시판 권한 설정</caption>
 <tbody>
 <tr>
     <th scope="row"><label for="bo_admin">게시판 관리자</label></th>
@@ -251,8 +260,8 @@ include_once ('./admin.head.php');
 </tbody>
 </table>
 
-<table class="frm_tbl">
-<caption>게시판 기능설정</caption>
+<table id="frm_function" class="frm_tbl">
+<caption>게시판 기능 설정</caption>
 <tbody>
 <tr>
     <th scope="row"><label for="bo_count_modify">원글 수정 불가</label></th>
@@ -540,7 +549,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 </tbody>
 </table>
 
-<table class="frm_tbl">
+<table id="frm_design" class="frm_tbl">
 <caption>게시판 디자인/양식</caption>
 <tbody>
     <tr>
@@ -763,7 +772,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 </tr>
 <?*/?>
 
-<table class="frm_tbl">
+<table id="frm_point" class="frm_tbl">
 <caption>게시판 포인트 설정</caption>
 <tbody>
 <tr>
@@ -816,7 +825,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 </tbody>
 </table>
 
-<table class="frm_tbl">
+<table id="frm_extra" class="frm_tbl">
 <caption>게시판 여분필드 설정</caption>
 <tbody>
 <? for ($i=1; $i<=10; $i++) { ?>

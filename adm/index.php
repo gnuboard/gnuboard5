@@ -115,15 +115,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 ?>
 <tr>
-    <td><?=$mb_id?></td>
-    <td><?=$row['mb_name']?></td>
-    <td><?=$mb_nick?></td>
-    <td><?=$row[mb_level]?></td>
+    <td class="td_mbid"><?=$mb_id?></td>
+    <td class="td_mbname"><?=$row['mb_name']?></td>
+    <td class="td_mbnick"><?=$mb_nick?></td>
+    <td class="td_num"><?=$row[mb_level]?></td>
     <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></a></td>
-    <td><?=$row[mb_mailling]?'예':'아니오';?></td>
-    <td><?=$row[mb_open]?'예':'아니오';?></td>
-    <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
-    <td><?=$row['mb_intercept_date']?'예':'아니오';?></td>
+    <td class="td_boolean"><?=$row[mb_mailling]?'예':'아니오';?></td>
+    <td class="td_boolean"><?=$row[mb_open]?'예':'아니오';?></td>
+    <td class="td_boolean"><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
+    <td class="td_boolean"><?=$row['mb_intercept_date']?'예':'아니오';?></td>
     <td><?=$group?></td>
 </tr>
 <?

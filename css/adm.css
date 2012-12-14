@@ -82,6 +82,8 @@ td {padding:10px}
 .td_bignum {width:120px;text-align:center}
 .td_mbid, .td_mbnick, .td_mbname {width:80px;text-align:center}
 .td_time {width:150px;text-align:center}
+.td_boolean {width:50px;text-align:center}
+/* 인덱스 */
 /* 관리권한설정 목록 */
 .td_menu {}
 .td_auth {width:100px;text-align:center}
