@@ -211,7 +211,7 @@ else
     <input type="text" id="po_point" name="po_point" required>
     <label for="admin_password">관리자패스워드</label>
     <input type="password" id="admin_password" name="admin_password" required>
-    <input type="submit" value="확인">
+    <input type="submit" class="fieldset_submit" value="확인">
 </fieldset>
 </form>
 
