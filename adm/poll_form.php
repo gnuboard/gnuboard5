@@ -34,14 +34,14 @@ include_once('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="po_subject">투표 제목</label></th>
-    <td><input type="text" id="po_subject" name="po_subject" required value="<?=$po['po_subject']?>" size="80" maxlength="125"></td>
+    <td><input type="text" id="po_subject" name="po_subject" class="required" value="<?=$po['po_subject']?>" size="80" maxlength="125"></td>
 </tr>
 
 <?
 for ($i=1; $i<=9; $i++) {
     $required = '';
     if ($i==1 || $i==2) {
-        $required = 'required';
+        $required = 'class="required"';
     }
 
     $po_poll = get_text($po['po_poll'.$i]);

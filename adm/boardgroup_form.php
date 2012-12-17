@@ -41,12 +41,12 @@ include_once('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="gr_id">그룹 ID</label></th>
-    <td><input type="text" id="gr_id" name="gr_id" maxlength="10" <?=$gr_id_attr?> alphanumericunderline value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
+    <td><input type="text" id="gr_id" name="gr_id" maxlength="10" class="<?=$gr_id_attr?> alnum_" value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
 </tr>
 <tr>
     <th scope="row"><label for="gr_subject">그룹 제목</label></th>
     <td>
-        <input type="text" id="gr_subject" name="gr_subject" required value="<?=get_text($group['gr_subject'])?>" size="80">
+        <input type="text" id="gr_subject" name="gr_subject" class="required" value="<?=get_text($group['gr_subject'])?>" size="80">
         <?
         if ($w == 'u')
             echo '<input type="button" value="게시판생성" onclick="location.href=\'./board_form.php?gr_id='.$gr_id.'\';">';

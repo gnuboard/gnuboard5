@@ -8,8 +8,8 @@ $token = get_token();
 
 if ($w == '')
 {
-    $required_mb_id = 'required minlength="3" alphanumericunderline';
-    $required_mb_password = 'required';
+    $required_mb_id = 'class="required minlength=3 alnum_"';
+    $required_mb_password = 'class="required"';
 
     $mb[mb_mailling] = 1;
     $mb[mb_open] = 1;
@@ -98,9 +98,9 @@ include_once('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="mb_name">이름(실명)</label></th>
-    <td><input type="text" id="mb_name" name="mb_name" maxlength="20" minlength="2" required value="<?=$mb['mb_name']?>" size="15"></td>
+    <td><input type="text" id="mb_name" name="mb_name" maxlength="20" class="required hangul minlength=2" value="<?=$mb['mb_name']?>" size="15"></td>
     <th scope="row"><label for="mb_nick">별명</label></th>
-    <td><input type="text" id="mb_nick" name="mb_nick" maxlength="20" minlength="2" required value="<?=$mb['mb_nick']?>" size="15"></td>
+    <td><input type="text" id="mb_nick" name="mb_nick" maxlength="20" class="required minlength=2" value="<?=$mb['mb_nick']?>" size="15"></td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_level">회원 권한</label></th>
@@ -110,7 +110,7 @@ include_once('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="mb_email">E-mail</label></th>
-    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" required email value="<?=$mb['mb_email']?>" size="30"></td>
+    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" class="required email" value="<?=$mb['mb_email']?>" size="30"></td>
     <th scope="row"><label for="mb_homepage">홈페이지</label></th>
     <td><input type="text" id="mb_homepage" name="mb_homepage" maxlength="255" value="<?=$mb['mb_homepage']?>" size="15"></td>
 </tr>
@@ -243,7 +243,7 @@ include_once('./admin.head.php');
     <legend><span></span>XSS 혹은 CSRF 방지</legend>
     <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
     <label for="admin_password">관리자 패스워드</label>
-    <input type="password" id="admin_password" name="admin_password" required title="관리자 패스워드">
+    <input type="password" id="admin_password" name="admin_password" class="required" title="관리자 패스워드">
 </fieldset>
 
 <div class="btn_confirm">

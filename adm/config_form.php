@@ -42,7 +42,7 @@ include_once ('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="cf_title">홈페이지 제목</label></th>
-    <td><input type="text" id="cf_title" name="cf_title" required value="<?=$config['cf_title']?>" size="50"></td>
+    <td><input type="text" id="cf_title" name="cf_title" class="required" value="<?=$config['cf_title']?>" size="50"></td>
     <th scope="row"><label for="cf_admin">최고관리자</label></th>
     <td><?=get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required')?></td>
 </tr>
@@ -54,12 +54,12 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_login_point">로그인시 포인트</label></th>
     <td>
         <?=help('회원에게 하루에 한번만 부여')?>
-        <input type="text" id="cf_login_point" name="cf_login_point" required value="<?=$config[cf_login_point]?>" size="2"> 점
+        <input type="text" id="cf_login_point" name="cf_login_point" class="required numeric" value="<?=$config[cf_login_point]?>" size="2"> 점
     </td>
     <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트</label></th>
     <td>
          <?=help('양수로 입력하십시오. 0점은 쪽지 보낼시 포인트를 차감하지 않습니다.')?>
-        <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" required value="<?=$config[cf_memo_send_point]?>" size="2"> 점
+        <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" class="required numeric" value="<?=$config[cf_memo_send_point]?>" size="2"> 점
     </td>
 </tr>
 <tr>
@@ -113,7 +113,7 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_new_skin">최근게시물 스킨</label></th>
-    <td><select id="cf_new_skin" name="cf_new_skin" required >
+    <td><select id="cf_new_skin" name="cf_new_skin" class="required">
         <?
         $arr = get_skin_dir('new');
         for ($i=0; $i<count($arr); $i++) {
@@ -130,7 +130,7 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_search_skin">검색 스킨</label></th>
-    <td colspan="3"><select id="cf_search_skin" name="cf_search_skin" required>
+    <td colspan="3"><select id="cf_search_skin" name="cf_search_skin" class="required">
         <?
         $arr = get_skin_dir("search");
         for ($i=0; $i<count($arr); $i++) {
@@ -142,7 +142,7 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_connect_skin">접속자 스킨</label></th>
-    <td colspan="3"><select id="cf_connect_skin" name="cf_connect_skin" required >
+    <td colspan="3"><select id="cf_connect_skin" name="cf_connect_skin" class="required" >
         <?
         $arr = get_skin_dir('connect');
         for ($i=0; $i<count($arr); $i++) {
@@ -182,15 +182,15 @@ include_once ('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="cf_read_point">글읽기 포인트</label></th>
-    <td><input type="text" id="cf_read_point" name="cf_read_point" required value="<?=$config[cf_read_point]?>" size="2"> 점</td>
+    <td><input type="text" id="cf_read_point" name="cf_read_point" class="required numeric" value="<?=$config[cf_read_point]?>" size="2"> 점</td>
     <th scope="row"><label for="cf_write_point">글쓰기 포인트</label></th>
-    <td><input type="text" id="cf_write_point" name="cf_write_point" required value="<?=$config[cf_write_point]?>" size="2"> 점</td>
+    <td><input type="text" id="cf_write_point" name="cf_write_point" class="required numeric" value="<?=$config[cf_write_point]?>" size="2"> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_comment_point">댓글쓰기 포인트</label></th>
-    <td><input type="text" id="cf_comment_point" name="cf_comment_point" required value="<?=$config[cf_comment_point]?>" size="2"> 점</td>
+    <td><input type="text" id="cf_comment_point" name="cf_comment_point" class="required numeric" value="<?=$config[cf_comment_point]?>" size="2"> 점</td>
     <th scope="row"><label for="cf_download_point">다운로드 포인트</label></th>
-    <td><input type="text" id="cf_download_point" name="cf_download_point" required value="<?=$config[cf_download_point]?>" size="2"> 점</td>
+    <td><input type="text" id="cf_download_point" name="cf_download_point" class="required numeric" value="<?=$config[cf_download_point]?>" size="2"> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_link_target">새창 링크</label></th>
@@ -208,15 +208,15 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_search_bgcolor">검색 배경 색상</label></th>
-    <td><input type="text" id="cf_search_bgcolor" name="cf_search_bgcolor" required value="<?=$config['cf_search_bgcolor']?>" size="7"></td>
+    <td><input type="text" id="cf_search_bgcolor" name="cf_search_bgcolor" class="required" value="<?=$config['cf_search_bgcolor']?>" size="7"></td>
     <th scope="row"><label for="cf_search_color">검색 글자 색상</label></th>
-    <td><input type="text" id="cf_search_color" name="cf_search_color" required value="<?=$config['cf_search_color']?>" size="7"></td>
+    <td><input type="text" id="cf_search_color" name="cf_search_color" class="required" value="<?=$config['cf_search_color']?>" size="7"></td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_delay_sec">글쓰기 간격</label></th>
-    <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" required value="<?=$config[cf_delay_sec]?>" size="2"> 초 지난후 가능</td>
+    <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" class="required numeric" value="<?=$config[cf_delay_sec]?>" size="2"> 초 지난후 가능</td>
     <th scope="row"><label for="cf_write_pages">페이지 표시 수</label></th>
-    <td><input type="text" id="cf_write_pages" name="cf_write_pages" required value="<?=$config[cf_write_pages]?>" size="2"> 페이지씩 표시</td>
+    <td><input type="text" id="cf_write_pages" name="cf_write_pages" class="required numeric" value="<?=$config[cf_write_pages]?>" size="2"> 페이지씩 표시</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_image_extension">이미지 업로드 확장자</label></th>
@@ -258,7 +258,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="cf_member_skin">회원 스킨</label></th>
     <td colspan="3">
-        <select id="cf_member_skin" name="cf_member_skin" required>
+        <select id="cf_member_skin" name="cf_member_skin" class="required">
         <?
         $arr = get_skin_dir('member');
         for ($i=0; $i<count($arr); $i++) {
@@ -495,7 +495,7 @@ include_once ('./admin.head.php');
     <legend><span></span>XSS 혹은 CSRF 방지</legend>
     <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
     <label for="admin_password">관리자 패스워드</label>
-    <input type="password" id="admin_password" name="admin_password" required>
+    <input type="password" id="admin_password" name="admin_password" class="required">
 </fieldset>
 
 <div class="btn_confirm">
