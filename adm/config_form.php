@@ -469,7 +469,6 @@ include_once ('./admin.head.php');
 </tr>
 </tbody>
 </table>
-</section>
 
 <table id="frm_extra_field" class="frm_tbl">
 <caption>
