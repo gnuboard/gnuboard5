@@ -59,7 +59,7 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"verdana","dotum";
 .btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.1em;vertical-align:middle}
 .btn_list a:focus {background:#555}
 
-#btn_add {text-align:center}
+#btn_add {margin-bottom:10px;text-align:center}
 #btn_add a {display:inline-block;padding:0 15px;height:30px;border:0;background:#ff6633;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.2em;vertical-align:middle}
 
 /* 폼 */
