@@ -34,7 +34,7 @@ footer {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
 footer p {color:#576a71}
 
 /* 헤딩 */
-h1 {margin-bottom:20px;font-family:"verdana","dotum";letter-spacing:-0.1em}
+h1 {margin-bottom:20px;color:#515b5f;font-family:"verdana","dotum";letter-spacing:-0.1em}
 
 /* GNB */
 #gnb {position:absolute;top:110px;left:20px;width:180px}
@@ -75,19 +75,21 @@ fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;backgroun
 fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
 .readonly {background:#ff3061}
 
-.adm_field_explain {display:block;padding:0 0 5px;color:#768f99}
+/* 폼 안내글 */
+.adm_field_explain {display:block;padding:0 0 5px;color:#5b747e}
 .group_setting {}
 .group_setting_ta {display:block;padding-top:5px}
 
+/* 폼 바로가기 */
 .frm_list {margin:0 0 20px;padding:0 0 0 1px;zoom:1}
 .frm_list:after {display:block;visibility:hidden;clear:both;content:""}
 .frm_list li {float:left;margin-left:-1px;list-style:none}
-.frm_list a {display:block;border:1px solid #c7cfd5;background:#fff;padding:0 7px;height:30px;color:#2e5d98;font-size:0.875em;text-decoration:none;line-height:2.3em}
-.frm_list a:focus, .frm_list a:hover {background:#f6f9fa}
+.frm_list a {display:block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.3em}
+.frm_list a:focus, .frm_list a:hover {background:#434f54}
 
 /* 테이블 */
 table {margin-bottom:10px;width:100%;border:1px solid #d5dcdf;background:#fff}
-caption {padding:10px 0 15px;color:#5b7c89;text-align:left;font-size:1em;font-weight:bold}
+caption {padding:10px 0 15px;color:#2f4d59;text-align:left;font-size:1em;font-weight:bold}
 caption p {margin:7px 0 0;padding:0;color:#6b8088;font:0.75em normal}
 th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
 th label {display:block}
