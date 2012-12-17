@@ -759,7 +759,7 @@ function get_group_select($name, $selected='', $event='')
     $sql .= " order by a.gr_id ";
 
     $result = sql_query($sql);
-    $str = "<select name='$name' $event>";
+    $str = "<select id='$name' name='$name' class='$event'>";
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $str .= "<option value='{$row['gr_id']}'";

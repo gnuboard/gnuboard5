@@ -484,7 +484,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_write_min">최소 글수 제한</label></th>
     <td>
         <?=help('글 입력시 최소 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-        <input type="text" id="bo_write_min" name="bo_write_min" numeric value="<?=$board[bo_write_min]?>" size="4">
+        <input type="text" id="bo_write_min" name="bo_write_min" class="numeric" value="<?=$board[bo_write_min]?>" size="4">
         <span class="group_setting">
             <input type="checkbox" id="chk_write_min" name="chk_write_min" value="1">
             <label for="chk_write_min">동일그룹 모두 적용</label>
@@ -495,7 +495,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_write_max">최대 글수 제한</label></th>
     <td>
         <?=help('글 입력시 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-        <input type="text" id="bo_write_max" name="bo_write_max" numeric value="<?=$board[bo_write_max]?>" size="4">
+        <input type="text" id="bo_write_max" name="bo_write_max" class="numeric" value="<?=$board[bo_write_max]?>" size="4">
         <span class="group_setting">
             <input type="checkbox" id="chk_write_max" name="chk_write_max" value="1">
             <label for="chk_write_max">동일그룹 모두 적용</label>
@@ -506,7 +506,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_comment_min">최소 댓글수 제한</label></th>
     <td>
         <?=help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-        <input type="text" id="bo_comment_min" name="bo_comment_min" numeric value="<?=$board[bo_comment_min]?>" size="3">
+        <input type="text" id="bo_comment_min" name="bo_comment_min" class="numeric" value="<?=$board[bo_comment_min]?>" size="3">
         <span class="group_setting">
             <input type="checkbox" id="chk_comment_min" name="chk_comment_min" value="1">
             <label for="chk_comment_min">동일그룹 모두 적용</label>
@@ -517,7 +517,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_comment_max">최대 댓글수 제한</label></th>
     <td>
         <?=help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-        <input type="text" id="bo_comment_max" name="bo_comment_max" numeric value="<?=$board[bo_comment_max]?>" size="3">
+        <input type="text" id="bo_comment_max" name="bo_comment_max" class="numeric" value="<?=$board[bo_comment_max]?>" size="3">
         <span class="group_setting">
             <input type="checkbox" id="chk_comment_max" name="chk_comment_max" value="1">
             <label for="chk_comment_max">동일그룹 모두 적용</label>
@@ -779,7 +779,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="chk_point">기본값으로 설정</label></th>
     <td>
         <?=help('환경설정에 입력된 포인트로 설정')?>
-        <input type="checkbox" id="chk_point" name="chk_point" title="기본값 사용" onclick="set_point(this.form)" size="5">
+        <input type="checkbox" id="chk_point" name="chk_point" title="기본값 사용" onclick="set_point(this.form)">
     </td>
 </tr>
 <tr>
