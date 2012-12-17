@@ -92,7 +92,11 @@ var list_delete_php = 'board_list_delete.php';
 </fieldset>
 </form>
 
-<?if ($is_admin == 'super') {?><a href="./board_form.php" id="bo_add">게시판 추가</a><?}?>
+<?if ($is_admin == 'super') {?>
+<div id="btn_add">
+    <a href="./board_form.php" id="bo_add">게시판 추가</a>
+</div>
+<?}?>
 
 <form id="fboardlist" name="fboardlist" method="post">
 <input type="hidden" name="sst" value="<?=$sst?>">

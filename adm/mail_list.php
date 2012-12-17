@@ -22,13 +22,13 @@ include_once('./admin.head.php');
 $colspan = 6;
 ?>
 
-<a href="./mail_form.php" id="mail_add">메일내용추가</a>
-
-건수 : <?=$total_count ?>
+<div id="btn_add">
+    <a href="./mail_form.php" id="mail_add">메일내용추가</a>
+</div>
 
 <table>
 <caption>
-    등록된 메일내용 목록
+    등록된 메일내용 목록 (전체 <?=$total_count ?>건)
     <p>
         <strong>테스트</strong>는 등록된 최고관리자의 이메일로 테스트 메일을 발송
     </p>

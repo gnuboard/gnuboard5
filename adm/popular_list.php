@@ -58,7 +58,8 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+if ($stx)
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 $g4['title'] = '인기검색어관리';
 include_once('./admin.head.php');

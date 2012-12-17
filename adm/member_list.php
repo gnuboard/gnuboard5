@@ -121,7 +121,11 @@ var list_delete_php = 'member_list_delete.php';
 </fieldset>
 </form>
 
-<? if ($is_admin == 'super') {?><a href="./member_form.php" id="member_add">회원추가</a><?}?>
+<? if ($is_admin == 'super') {?>
+<div id="btn_add">
+    <a href="./member_form.php" id="member_add">회원추가</a>
+</div>
+<?}?>
 
 <form id="fmemberlist" name="fmemberlist" method=post>
 <input type="hidden" name="sst"   value='<?=$sst?>'>

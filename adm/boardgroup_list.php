@@ -82,7 +82,11 @@ var list_update_php = "./boardgroup_list_update.php";
 </fieldset>
 </form>
 
-<?if ($is_admin == 'super') {?><a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a><?}?>
+<?if ($is_admin == 'super') {?>
+<div id="btn_add">
+    <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
+</div>
+<?}?>
 
 <form id="fboardgrouplist" name="fboardgrouplist" method="post">
 <input type="hidden" name="sst" value="<?=$sst?>">
