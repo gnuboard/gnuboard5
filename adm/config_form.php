@@ -58,7 +58,7 @@ include_once ('./admin.head.php');
     </td>
     <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트</label></th>
     <td>
-         <?=help('양수로 입력하십시오. 0으로 입력하시면 쪽지보낼시 포인트를 차감하지 않습니다.')?>
+         <?=help('양수로 입력하십시오. 0점은 쪽지 보낼시 포인트를 차감하지 않습니다.')?>
         <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" required value="<?=$config[cf_memo_send_point]?>" size="2"> 점
     </td>
 </tr>
@@ -162,7 +162,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="cf_possible_ip">접근가능 IP</label></th>
     <td>
-        <?=help('입력된 IP의 컴퓨터만 접근할 수 있습니다. 123.123.+ 도 입력 가능. (엔터로 구분)')?>
+        <?=help('입력된 IP의 컴퓨터만 접근할 수 있습니다.<br>123.123.+ 도 입력 가능. (엔터로 구분)')?>
         <textarea id="cf_possible_ip" name="cf_possible_ip"><?=$config['cf_possible_ip']?> </textarea>
     </td>
     <th scope="row"><label for="cf_intercept_ip">접근차단 IP</label></th>
