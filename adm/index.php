@@ -117,7 +117,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td><?=$mb_id?></td>
     <td class="td_mbname"><?=$row['mb_name']?></td>
-    <td class="td_mbnick"><?=$mb_nick?></td>
+    <td class="td_mbnick"><div><?=$mb_nick?></div></td>
     <td class="td_num"><?=$row[mb_level]?></td>
     <td class="td_bignum"><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></a></td>
     <td class="td_boolean"><?=$row[mb_mailling]?'예':'아니오';?></td>
@@ -217,7 +217,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td class="td_category"><a href="<?=$g4['bbs_path']?>/new.php?gr_id=<?=$row['gr_id']?>"><?=cut_str($row['gr_subject'],10)?></a></td>
     <td class="td_category"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=cut_str($row['bo_subject'],20)?></a></td>
     <td><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2[wr_id]?><?=$comment_link?>"><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
-    <td class="td_mbname"><?=$name?></td>
+    <td class="td_mbname"><div><?=$name?></div></td>
     <td class="td_time"><?=$datetime?></td>
 </tr>
 
@@ -293,7 +293,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
     <td class="td_mbname"><?=$row2['mb_name']?></td>
-    <td class="td_mbnick"><?=$mb_nick?></td>
+    <td class="td_mbnick"><div><?=$mb_nick?></div></td>
     <td class="td_time"><?=$row['po_datetime']?></td>
     <td><?=$link1.$row['po_content'].$link2?></td>
     <td class="td_bignum"><?=number_format($row[po_point])?></td>

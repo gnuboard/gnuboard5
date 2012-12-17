@@ -108,6 +108,8 @@ td {padding:10px}
 .td_num {width:60px;text-align:center}
 .td_bignum {width:120px;text-align:center}
 .td_mbid, .td_mbnick, .td_mbname {width:80px;text-align:center}
+.td_mbnick div, .td_mbname div {position:relative} /* 파이어폭스에서 사이드뷰 위치를 잡기 위함 */
+.td_mbnick #sideview, .td_mbname #sideview {position:absolute;top:20px;left:0}
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
 /* 인덱스 */

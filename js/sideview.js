@@ -41,7 +41,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         if (!this.isVisible)
             return "";
         
-        var str = "<tr height='19'><td id='sideViewRow_"+this.name+"'>&nbsp;<font color=gray>&middot;</font>&nbsp;<span style='color: #A0A0A0;  font-family: 돋움; font-size: 11px;'>"+this.onclickEvent+"</span></td></tr>";
+        var str = "<li><span id=\"sideViewRow_"+this.name+"\">"+this.onclickEvent+"</span></li>";
         return str;
     }
 
@@ -115,19 +115,19 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         var oBody = document.body;
             
         if (oSideViewLayer == null) {
-            oSideViewLayer = document.createElement("DIV");
+            oSideViewLayer = document.createElement("div");
             oSideViewLayer.id = this.targetObj;
-            oSideViewLayer.style.position = 'absolute';
+            oSideViewLayer.style.position = "absolute";
             oBody.appendChild(oSideViewLayer);
         }
         oSideViewLayer.innerHTML = this.makeNameContextMenus();
         
         if (getAbsoluteTop(this.curObj) + this.curObj.offsetHeight + oSideViewLayer.scrollHeight + 5 > oBody.scrollHeight)
-            oSideViewLayer.style.top = getAbsoluteTop(this.curObj) - oSideViewLayer.scrollHeight;
+            oSideViewLayer.style.top = getAbsoluteTop(this.curObj) - oSideViewLayer.scrollHeight + "px";
         else
-            oSideViewLayer.style.top = getAbsoluteTop(this.curObj) + this.curObj.offsetHeight;
+            oSideViewLayer.style.top = getAbsoluteTop(this.curObj) + this.curObj.offsetHeight + "px";
 
-        oSideViewLayer.style.left = getAbsoluteLeft(this.curObj) - this.curObj.offsetWidth + 14;
+        oSideViewLayer.style.left = getAbsoluteLeft(this.curObj) - this.curObj.offsetWidth + 14 + "px";
 
         divDisplay(this.targetObj, 'block');
 
@@ -138,7 +138,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
     {
         var oCurrentNode=oNode;
         var iTop=0;
-        while(oCurrentNode.tagName!="BODY") {
+        while(oCurrentNode.tagName!="body") {
             iTop+=oCurrentNode.offsetTop - oCurrentNode.scrollTop;
             oCurrentNode=oCurrentNode.offsetParent;
         }
@@ -150,7 +150,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         var oCurrentNode=oNode;
         var iLeft=0;
         iLeft+=oCurrentNode.offsetWidth;
-        while(oCurrentNode.tagName!="BODY") {
+        while(oCurrentNode.tagName!="body") {
             iLeft+=oCurrentNode.offsetLeft;
             oCurrentNode=oCurrentNode.offsetParent;
         }
@@ -160,8 +160,8 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
 
     function makeNameContextMenus() 
     {
-        var str = "<table border='0' cellpadding='0' cellspacing='0' width='90' style='border:1px solid #E0E0E0;' bgcolor='#F9FBFB'>";
-        
+        var str = "<ul>";
+
         var i=0;
         for (i=this.heads.length - 1; i >= 0; i--)
             str += this.heads[i].renderRow();
@@ -170,7 +170,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         for (j=0; j < this.tails.length; j++)
             str += this.tails[j].renderRow();
         
-        str += "</table>";
+        str += "</ul>";
         return str;
     }
 
