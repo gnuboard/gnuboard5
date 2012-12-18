@@ -9,7 +9,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
 
     // 아래의 소스코드는 daum.net 카페의 자바스크립트를 참고하였습니다.
     // 회원이름 클릭시 회원정보등을 보여주는 레이어
-    function insertHead(name, text, evt) 
+    function insertHead(name, text, evt)
     {
         var idx = this.heads.length;
         var row = new SideViewRow(-idx, name, text, evt);
@@ -17,7 +17,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         return row;
     }
 
-    function insertTail(name, evt) 
+    function insertTail(name, evt)
     {
         var idx = this.tails.length;
         var row = new SideViewRow(idx, name, evt);
@@ -25,33 +25,33 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         return row;
     }
 
-    function SideViewRow(idx, name, onclickEvent) 
+    function SideViewRow(idx, name, onclickEvent)
     {
         this.idx = idx;
         this.name = name;
         this.onclickEvent = onclickEvent;
         this.renderRow = renderRow;
-        
+
         this.isVisible = true;
         this.isDim = false;
     }
 
-    function renderRow() 
+    function renderRow()
     {
         if (!this.isVisible)
             return "";
-        
+
         var str = "<li><span id=\"sideViewRow_"+this.name+"\">"+this.onclickEvent+"</span></li>";
         return str;
     }
 
-    function showSideView(curObj, mb_id, name, email, homepage) 
+    function showSideView(curObj, mb_id, name, email, homepage)
     {
         var sideView = new SideView('nameContextMenu', curObj, mb_id, name, email, homepage);
         sideView.showLayer();
     }
 
-    function SideView(targetObj, curObj, mb_id, name, email, homepage) 
+    function SideView(targetObj, curObj, mb_id, name, email, homepage)
     {
         this.targetObj = targetObj;
         this.curObj = curObj;
@@ -67,23 +67,23 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         this.tails = new Array();
         this.insertTail = insertTail;
         this.getRow = getRow;
-        this.hideRow = hideRow;		
+        this.hideRow = hideRow;
         this.dimRow = dimRow;
-    
+
         // 회원이라면 // (비회원의 경우 검색 없음)
         //if (g4_is_member) {
             // 쪽지보내기
-            if (mb_id) 
+            if (mb_id)
                 // 불여우 자바스크립트창이 뜨는 오류를 수정
                 this.insertTail("memo", "<a href=\"javascript:win_memo('"+g4_path+"/" + g4_bbs + "/memo_form.php?me_recv_mb_id="+mb_id+"');\">쪽지보내기</a>");
             // 메일보내기
-            if (email) 
+            if (email)
                 this.insertTail("mail", "<a href=\"javascript:;\" onclick=\"win_formmail('"+mb_id+"','"+name+"','"+email+"');\">메일보내기</a>");
             // 홈페이지
-            if (homepage) 
+            if (homepage)
                 this.insertTail("homepage", "<a href=\"javascript:;\" onclick=\"window.open('"+homepage+"');\">홈페이지</a>");
             // 자기소개
-            if (mb_id) 
+            if (mb_id)
                 this.insertTail("info", "<a href=\"javascript:;\" onclick=\"win_profile('"+mb_id+"');\">자기소개</a>");
         //}
 
@@ -108,26 +108,30 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         }
     }
 
-    function showLayer() 
+    function showLayer()
     {
         clickAreaCheck = true;
         var oSideViewLayer = document.getElementById(this.targetObj);
         var oBody = document.body;
-            
+        var curObjParent = this.curObj.parentNode;
+
         if (oSideViewLayer == null) {
             oSideViewLayer = document.createElement("div");
             oSideViewLayer.id = this.targetObj;
             oSideViewLayer.style.position = "absolute";
-            oBody.appendChild(oSideViewLayer);
+            //oBody.appendChild(oSideViewLayer);
         }
-        oSideViewLayer.innerHTML = this.makeNameContextMenus();
-        
-        if (getAbsoluteTop(this.curObj) + this.curObj.offsetHeight + oSideViewLayer.scrollHeight + 5 > oBody.scrollHeight)
-            oSideViewLayer.style.top = getAbsoluteTop(this.curObj) - oSideViewLayer.scrollHeight + "px";
-        else
-            oSideViewLayer.style.top = getAbsoluteTop(this.curObj) + this.curObj.offsetHeight + "px";
 
-        oSideViewLayer.style.left = getAbsoluteLeft(this.curObj) - this.curObj.offsetWidth + 14 + "px";
+        curObjParent.appendChild(oSideViewLayer);
+
+        oSideViewLayer.innerHTML = this.makeNameContextMenus();
+
+        if (getAbsoluteTop(this.curObj) + this.curObj.offsetHeight + oSideViewLayer.scrollHeight + 5 > oBody.scrollHeight)
+            oSideViewLayer.style.top = getAbsoluteTop(this.curObj) - getAbsoluteTop(this.curObj.offsetParent) - oSideViewLayer.scrollHeight + "px";
+        else
+            oSideViewLayer.style.top = getAbsoluteTop(this.curObj) - getAbsoluteTop(this.curObj.offsetParent) + this.curObj.offsetHeight + "px";
+
+        oSideViewLayer.style.left = getAbsoluteLeft(this.curObj) - getAbsoluteLeft(this.curObj.offsetParent) - this.curObj.offsetWidth + 65 + "px";
 
         divDisplay(this.targetObj, 'block');
 
@@ -158,33 +162,33 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
     }
 
 
-    function makeNameContextMenus() 
+    function makeNameContextMenus()
     {
         var str = "<ul>";
 
         var i=0;
         for (i=this.heads.length - 1; i >= 0; i--)
             str += this.heads[i].renderRow();
-       
+
         var j=0;
         for (j=0; j < this.tails.length; j++)
             str += this.tails[j].renderRow();
-        
+
         str += "</ul>";
         return str;
     }
 
-    function getRow(name) 
+    function getRow(name)
     {
         var i = 0;
         var row = null;
-        for (i=0; i<this.heads.length; ++i) 
+        for (i=0; i<this.heads.length; ++i)
         {
             row = this.heads[i];
             if (row.name == name) return row;
         }
 
-        for (i=0; i<this.tails.length; ++i) 
+        for (i=0; i<this.tails.length; ++i)
         {
             row = this.tails[i];
             if (row.name == name) return row;
@@ -192,14 +196,14 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         return row;
     }
 
-    function hideRow(name) 
+    function hideRow(name)
     {
         var row = this.getRow(name);
         if (row != null)
             row.isVisible = false;
     }
 
-    function dimRow(name) 
+    function dimRow(name)
     {
         var row = this.getRow(name);
         if (row != null)
@@ -208,7 +212,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
     // Internet Explorer에서 셀렉트박스와 레이어가 겹칠시 레이어가 셀렉트 박스 뒤로 숨는 현상을 해결하는 함수
     // 레이어가 셀렉트 박스를 침범하면 셀렉트 박스를 hidden 시킴
     // <div id=LayerID style="display:none; position:absolute;" onpropertychange="selectBoxHidden('LayerID')">
-    function selectBoxHidden(layer_id) 
+    function selectBoxHidden(layer_id)
     {
         //var ly = eval(layer_id);
         var ly = document.getElementById(layer_id);
@@ -224,7 +228,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
 
         for (i=0; i<document.forms.length; i++) {
             for (k=0; k<document.forms[i].length; k++) {
-                el = document.forms[i].elements[k];    
+                el = document.forms[i].elements[k];
                 if (el.type == "select-one") {
                     var el_left = el_top = 0;
                     var obj = el;
@@ -241,7 +245,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
                     el_bottom = el_top + el.clientHeight;
 
                     // 좌표를 따져 레이어가 셀렉트 박스를 침범했으면 셀렉트 박스를 hidden 시킴
-                    if ( (el_left >= ly_left && el_top >= ly_top && el_left <= ly_right && el_top <= ly_bottom) || 
+                    if ( (el_left >= ly_left && el_top >= ly_top && el_left <= ly_right && el_top <= ly_bottom) ||
                          (el_right >= ly_left && el_right <= ly_right && el_top >= ly_top && el_top <= ly_bottom) ||
                          (el_left >= ly_left && el_bottom >= ly_top && el_right <= ly_right && el_bottom <= ly_bottom) ||
                          (el_left >= ly_left && el_left <= ly_right && el_bottom >= ly_top && el_bottom <= ly_bottom) ||
@@ -254,13 +258,13 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
     }
 
     // 감추어진 셀렉트 박스를 모두 보이게 함
-    function selectBoxVisible() 
+    function selectBoxVisible()
     {
-        for (i=0; i<document.forms.length; i++) 
+        for (i=0; i<document.forms.length; i++)
         {
-            for (k=0; k<document.forms[i].length; k++) 
+            for (k=0; k<document.forms[i].length; k++)
             {
-                el = document.forms[i].elements[k];    
+                el = document.forms[i].elements[k];
                 if (el.type == "select-one" && el.style.visibility == 'hidden')
                     el.style.visibility = 'visible';
             }
@@ -292,25 +296,25 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         return iLeft;
     }
 
-    function divDisplay(id, act) 
+    function divDisplay(id, act)
     {
         selectBoxVisible();
 
         document.getElementById(id).style.display = act;
     }
 
-    function hideSideView() 
+    function hideSideView()
     {
         if (document.getElementById("nameContextMenu"))
             divDisplay ("nameContextMenu", 'none');
     }
 
     var clickAreaCheck = false;
-    document.onclick = function() 
+    document.onclick = function()
     {
-        if (!clickAreaCheck) 
+        if (!clickAreaCheck)
             hideSideView();
-        else 
+        else
             clickAreaCheck = false;
     }
 }
