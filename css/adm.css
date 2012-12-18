@@ -49,7 +49,7 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"verdana","dotum";
 
 /* 버튼 */
 .btn_confirm {margin-bottom:20px;text-align:center}
-.btn_confirm button {padding:0 15px;height:30px;background:#74868b;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_confirm button {padding:0 15px;height:30px;border:0;background:#74868b;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
 .btn_confirm button:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
 .btn_submit {padding:0 15px;height:30px;border:0;background:#ff6633;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
 .btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
@@ -80,8 +80,6 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 
 /* 폼 안내글 */
 .adm_field_explain {display:block;padding:0 0 5px;color:#5b747e}
-.group_setting {}
-.group_setting_ta {display:block;padding-top:5px}
 
 /* 폼 바로가기 */
 .frm_list {margin:0 0 20px;padding:0 0 0 1px;zoom:1}
@@ -99,6 +97,8 @@ th label {display:block}
 th a {color:#000}
 th {padding:10px;background:#f1f6f7}
 td {padding:10px}
+
+/* 폼 테이블 */
 .frm_tbl th {width:130px;text-align:left;font-weight:normal}
 .frm_tbl textarea {height:150px}
 
@@ -127,9 +127,11 @@ td {padding:10px}
 .td_mng {width:110px;text-align:center}
 /* 투표관리 목록 */
 .td_etc {width:80px;text-align:center}
-/*게시판관리 목록 */
+/* 게시판관리 목록 */
 .tbl_bo_list td {text-align:center}
-/*게시판그룹관리 목록 */
+/* 게시판추가/수정 */
+.group_setting {width:130px;border-left:1px solid #e9ecee}
+/* 게시판그룹관리 목록 */
 .tbl_gr_list td {text-align:center}
 /* 접근가능그룹 목록 */
 .td_grid {text-align:center}
