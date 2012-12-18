@@ -31,7 +31,7 @@ include_once ('./admin.head.php');
     <li><a href="#frm_article_mail">글작성메일</a></li>
     <li><a href="#frm_join_mail">가입메일</a></li>
     <li><a href="#frm_vote_mail">투표메일</a></li>
-    <li><a href="#frm_extra_field">여분필드</a></li>
+    <li><a href="#frm_extra">여분필드</a></li>
 </ul>
 
 <form id="fconfigform" name="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
@@ -470,7 +470,7 @@ include_once ('./admin.head.php');
 </tbody>
 </table>
 
-<table id="frm_extra_field" class="frm_tbl">
+<table id="frm_extra" class="frm_tbl">
 <caption>
     여분필드 기본 설정
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
