@@ -36,7 +36,7 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR']) {
         $vi_today = $row[cnt];
 
         // 어제
-        $sql = " select vs_count as cnt from {$g4[visit_sum_table]} where vs_date = '{DATE_SUB('$g4[time_ymd]', INTERVAL 1 DAY)}' ";
+        $sql = " select vs_count as cnt from {$g4[visit_sum_table]} where vs_date = DATE_SUB('$g4[time_ymd]', INTERVAL 1 DAY) ";
         $row = sql_fetch($sql);
         $vi_yesterday = $row[cnt];
 
