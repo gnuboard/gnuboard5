@@ -101,6 +101,8 @@ td {padding:10px}
 /* 폼 테이블 */
 .frm_tbl th {width:130px;text-align:left;font-weight:normal}
 .frm_tbl textarea {height:150px}
+#frm_extra label {display:inline-block;width:100px}
+#frm_extra input {margin-right:10px}
 
 /* 컨텐츠별 테이블 설정 */
 /* 공통 */
@@ -131,6 +133,8 @@ td {padding:10px}
 .tbl_bo_list td {text-align:center}
 /* 게시판추가/수정 */
 .group_setting {width:130px;border-left:1px solid #e9ecee}
+#frm_extra .group_setting label {width:auto}
+#frm_extra .group_setting input {margin:0}
 /* 게시판그룹관리 목록 */
 .tbl_gr_list td {text-align:center}
 /* 접근가능그룹 목록 */
