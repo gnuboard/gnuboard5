@@ -1,7 +1,7 @@
 <?
 include_once('./_common.php');
 
-$html_title = '링크 &gt; '.conv_subject($write[wr_subject], 255).' &gt; '.$board[bo_subject].' &gt; '.$group[gr_subject];
+$html_title = '링크 &gt; '.conv_subject($write[wr_subject], 255);
 
 if (!($bo_table && $wr_id && $no)) 
     alert_close('값이 제대로 넘어오지 않았습니다.');

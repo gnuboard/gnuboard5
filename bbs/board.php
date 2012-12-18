@@ -162,7 +162,7 @@ else
 
     if (!$page) $page = 1;
 
-    $g4['title'] = $board[bo_subject].$page.' 페이지 &gt; '.$group[gr_subject];
+    $g4['title'] = $board[bo_subject].$page.' 페이지';
 }
 
 include_once($g4['path'].'/head.sub.php');

@@ -179,7 +179,7 @@ if ($group[gr_use_access])
     }
 }
 
-$g4['title'] = $title_msg.' &gt; '.$board[bo_subject].' &gt; '.$group[gr_subject];
+$g4['title'] = $title_msg.' &gt; '.$board[bo_subject];
 
 if (($w == 'u' || $w == 'r') && !$write[wr_id])
     alert('글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'삭제되었거나 이동된 경우입니다.', $g4['path']);

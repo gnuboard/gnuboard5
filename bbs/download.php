@@ -56,7 +56,7 @@ if (!get_session($ss_name))
     set_session($ss_name, TRUE);
 }
 
-$g4['title'] = '다운로드 &gt; '.conv_subject($write[wr_subject], 255).' &gt; '.$board[bo_subject].' &gt; '.$group[gr_subject];
+$g4['title'] = '다운로드 &gt; '.conv_subject($write[wr_subject], 255);
 
 if (preg_match("/^utf/i", $g4[charset]))
     $original = urlencode($file[bf_source]);
