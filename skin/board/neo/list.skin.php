@@ -119,7 +119,7 @@ for ($i=0; $i<count($list); $i++) {
         echo $list[$i]['icon_secret'];
         ?>
     </td>
-    <td><?=$list[$i]['name']?></td>
+    <td><div style="position:relative"><?=$list[$i]['name']?></div></td>
     <td><?=$list[$i]['datetime2']?></td>
     <td><?=$list[$i]['wr_hit']?></td>
     <? if ($is_good) { ?><td><?=$list[$i]['wr_good']?></td><? } ?>

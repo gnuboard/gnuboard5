@@ -71,9 +71,9 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_nick_modify">별명 수정</label></th>
-    <td>수정한 후 <input type="text" id="cf_nick_modify" name="cf_nick_modify" value="<?=$config[cf_nick_modify]?>" size="1"> 일 동안 바꿀 수 없음</td>
+    <td>수정하면 <input type="text" id="cf_nick_modify" name="cf_nick_modify" value="<?=$config[cf_nick_modify]?>" size="1"> 일 동안 바꿀 수 없음</td>
     <th scope="row"><label for="cf_open_modify">정보공개 수정</label></th>
-    <td>수정한 후 <input type="text" id="cf_open_modify" name="cf_open_modify" value="<?=$config[cf_open_modify]?>" size="1"> 일 동안 바꿀 수 없음</td>
+    <td>수정하면 <input type="text" id="cf_open_modify" name="cf_open_modify" value="<?=$config[cf_open_modify]?>" size="1"> 일 동안 바꿀 수 없음</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_new_del">최근게시물 삭제</label></th>
