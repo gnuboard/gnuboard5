@@ -58,27 +58,27 @@ $option_hidden = '';
 if ($is_notice || $is_html || $is_secret || $is_mail) {
     $option = '';
     if ($is_notice) {
-        $option .= '<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'><label for="notice">공지</label>'.PHP_EOL;
+        $option .= PHP_EOL.'<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'><label for="notice">공지</label>';
     }
 
     if ($is_html) {
         if ($is_dhtml_editor) {
             $option_hidden .= '<input type="hidden" value="html1" name="html">';
         } else {
-            $option .= '<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'><label for="html">html</label>'.PHP_EOL;
+            $option .= PHP_EOL.'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'><label for="html">html</label>';
         }
     }
 
     if ($is_secret) {
         if ($is_admin || $is_secret==1) {
-            $option .= '<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'><label for="secret">비밀글</label>'.PHP_EOL;
+            $option .= PHP_EOL.'<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'><label for="secret">비밀글</label>';
         } else {
             $option_hidden .= '<input type="hidden" name="secret" value="secret">';
         }
     }
 
     if ($is_mail) {
-        $option .= '<input type="checkbox" name="mail" value="mail" '.$recv_email_checked.'><label for="mail">답변메일받기</label>'.PHP_EOL;
+        $option .= PHP_EOL.'<input type="checkbox" name="mail" value="mail" '.$recv_email_checked.'><label for="mail">답변메일받기</label>';
     }
 }
 
