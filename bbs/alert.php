@@ -3,7 +3,7 @@ include_once('./_common.php');
 include_once($g4['path'].'/head.sub.php');
 // 필수 입력입니다.
 // 양쪽 공백 없애기
-// 필수 선택 혹은 입력입니다.
+// 필수 (선택 혹은 입력)입니다.
 // 전화번호 형식이 올바르지 않습니다. 하이픈(-)을 포함하여 입력하세요.
 // 이메일주소 형식이 아닙니다.
 // 한글이 아닙니다. (자음, 모음만 있는 한글은 처리하지 않습니다.)
@@ -23,11 +23,12 @@ include_once($g4['path'].'/head.sub.php');
 <article id="validation_check">
 <header>
     <hgroup>
-        <h1>회원가입 정보 입력 확인</h1>
+        <h1>회원가입 정보 입력 확인</h1> <!-- 수행 중이던 작업 내용 -->
         <h2>다음 항목을 입력하지 않으셨거나 입력에 오류가 있습니다.</h2>
     </hgroup>
 </header>
 <p>
+    <!-- <strong>항목</strong> 오류내역 -->
     <strong>이름</strong> 필수 입력입니다. 한글만 입력할 수 있습니다.<br>
     <strong>이메일</strong> 올바르게 입력하지 않았습니다.<br>
 </p>
