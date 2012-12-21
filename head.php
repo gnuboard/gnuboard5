@@ -9,13 +9,11 @@ include_once($g4['path'].'/lib/connect.lib.php');
 include_once($g4['path'].'/lib/popular.lib.php');
 
 //print_r2(get_defined_constants());
-
-if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
 ?>
 
-<p style="text-align:center">작업 중입니다. 일부 기능은 정상적으로 동작하지 않을 수 있습니다.</p>
+<p style="text-align:center">테스트 사이트입니다. 일부 기능은 정상적으로 동작하지 않을 수 있습니다.</p>
 
-<header>
+<div>
     <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
     <div id="logo"><a href="<?=$g4['path']?>/">초기화면</a></div>
 
@@ -41,13 +39,10 @@ if ($config['cf_title'] == $g4['title']) $g4['title'] = '';
         <input type="submit" value="검색">
     </fieldset>
     </form>
-        <h1><?=$g4['title']?> <?=$config['cf_title']?></h1>
-</header>
+    <?=outlogin('neo'); // 외부 로그인 ?>
 
-<?=outlogin('neo'); // 외부 로그인 ?>
-<?=poll('neo'); // 설문조사 ?>
-<?=visit('neo'); // 방문자수 ?>
-<?=popular('neo'); // 방문자수 ?>
-<?=connect(); // 현재 접속자수 ?>
+    <? if (!$bo_table) {?><h1><?=$g4['title']?></h1><? } ?>
+
+</div>
 
 <div id="wrapper">

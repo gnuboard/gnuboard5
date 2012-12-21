@@ -9,6 +9,8 @@ if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
 ?>
 
+<h1><?=$g4['title']?></h1>
+
 <? if ($admin_href) { ?><div id="bo_admin_btn"><a href="<?=$admin_href?>">관리자 바로가기</a></div><?}?>
 
 <div>

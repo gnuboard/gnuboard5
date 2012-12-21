@@ -2,10 +2,10 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<h1>설문조사 결과 보기</h1>
+<h1>설문조사 결과</h1>
 
 <section>
-<h2><?=$po_subject?></h2>
+<h2><?=$po_subject?> 결과</h2>
 <span>전체 <?=$nf_total_po_cnt?>표</span>
 
 <ol>

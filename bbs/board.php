@@ -148,7 +148,7 @@ if ($wr_id)
         set_session($ss_name, TRUE);
     }
 
-    $g4['title'] = strip_tags(conv_subject($write[wr_subject], 255).' &gt; '.$board[bo_subject].' &gt; '.$group[gr_subject]);
+    $g4['title'] = strip_tags(conv_subject($write[wr_subject], 255));
 }
 else
 {
