@@ -14,7 +14,8 @@ if (!$po_id)
 $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
 ?>
 
-<div>
+<section>
+<h2>사이트 설문조사</h2>
 <form name="fpoll" method="post" action="<?=$g4[bbs_path]?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="winPoll">
 <input type="hidden" name="po_id" value="<?=$po_id?>">
 <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
@@ -28,7 +29,7 @@ $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
 <input type="submit" value="투표하기">
 <a href="javascript:;" onclick="poll_result('<?=$po_id?>');">결과보기</a>
 </form>
-</div>
+
 <script>
 function fpoll_submit(f)
 {

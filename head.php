@@ -39,7 +39,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
         <input type="submit" value="검색">
     </fieldset>
     </form>
-    <? if (!$bo_table) {?><h1><?=$g4['title']?></h1><? } ?>
+    <h1><?=$config['cf_title']?></h1>
 </header>
 
 <div>
@@ -48,3 +48,9 @@ include_once($g4['path'].'/lib/popular.lib.php');
 </div>
 
 <div id="wrapper">
+    <p>
+        g4s 강좌 홈페이지에 오신 것을 환영합니다.
+    </p>
+    <p>
+        <a href="<?=$g4['path']?>/bbs/board.php?bo_table=1">테스트용 게시판</a>
+    </p>
