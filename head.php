@@ -13,7 +13,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
 
 <p style="text-align:center">테스트 사이트입니다. 일부 기능은 정상적으로 동작하지 않을 수 있습니다.</p>
 
-<div>
+<header>
     <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
     <div id="logo"><a href="<?=$g4['path']?>/">초기화면</a></div>
 
@@ -39,10 +39,12 @@ include_once($g4['path'].'/lib/popular.lib.php');
         <input type="submit" value="검색">
     </fieldset>
     </form>
-    <?=outlogin('neo'); // 외부 로그인 ?>
-
     <? if (!$bo_table) {?><h1><?=$g4['title']?></h1><? } ?>
+</header>
 
+<div>
+    <?=outlogin('neo'); // 외부 로그인 ?>
+    <?=poll('neo'); // 설문조사 ?>
 </div>
 
 <div id="wrapper">

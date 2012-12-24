@@ -14,8 +14,7 @@ if (!$po_id)
 $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
 ?>
 
-<section>
-<h2>사이트 설문조사</h2>
+<div>
 <form name="fpoll" method="post" action="<?=$g4[bbs_path]?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="winPoll">
 <input type="hidden" name="po_id" value="<?=$po_id?>">
 <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
@@ -29,7 +28,7 @@ $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
 <input type="submit" value="투표하기">
 <a href="javascript:;" onclick="poll_result('<?=$po_id?>');">결과보기</a>
 </form>
-
+</div>
 <script>
 function fpoll_submit(f)
 {
@@ -43,7 +42,7 @@ function fpoll_submit(f)
 
     <?
     if ($member[mb_level] < $po[po_level])
-        echo " alert('권한 $po[po_level] 이상의 회원만 투표에 참여하실 수 있습니다.'); return false; ";
+        echo " alert('권한 <?=$po[po_level]?> 이상의 회원만 투표에 참여하실 수 있습니다.'); return false; ";
     ?>
 
     if (!chk) {
@@ -59,7 +58,7 @@ function poll_result(po_id)
 {
     <?
     if ($member[mb_level] < $po[po_level])
-        echo " alert('권한 $po[po_level] 이상의 회원만 결과를 보실 수 있습니다.'); return false; ";
+        echo " alert('권한 <?=$po[po_level]?> 이상의 회원만 결과를 보실 수 있습니다.'); return false; ";
     ?>
 
     win_poll("<?=$g4[bbs_path]?>/poll_result.php?po_id="+po_id+"&amp;skin_dir="+document.fpoll.skin_dir.value);
