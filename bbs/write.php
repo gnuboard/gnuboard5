@@ -1,5 +1,8 @@
 <?
 include_once('./_common.php');
+if ($editor->lib) {
+    include_once($editor->lib);
+}
 
 set_session('ss_bo_table', $bo_table);
 set_session('ss_wr_id', $wr_id);
@@ -361,6 +364,11 @@ if ($is_admin) {
 } else {
     $write_min = (int)$board['bo_write_min'];
     $write_max = (int)$board['bo_write_max'];
+}
+
+if ($is_dhtml_editor && $editor->js) {
+    array_push($g4['js_file'], $editor->js);
+    array_push($g4['js_file'], $editor->config_js);
 }
 
 include_once($g4['path'].'/head.sub.php');

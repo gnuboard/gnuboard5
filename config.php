@@ -1,9 +1,11 @@
-<?
+<?php
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define("_GNUBOARD_", TRUE);
 
 if (function_exists("date_default_timezone_set"))
     date_default_timezone_set("Asia/Seoul");
+
+$g4['js_file']        = array();
 
 // 디렉토리
 $g4['bbs']            = 'bbs';

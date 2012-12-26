@@ -72,6 +72,21 @@ var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
 <script src="<?=$g4['path']?>/js/jquery-1.4.2.min.js"></script>
 <script src="<?=$g4['path']?>/js/common.js"></script>
 <script src="<?=$g4['path']?>/js/wrest.js"></script>
+<?
+if (!empty($g4['js_file'])) {
+    foreach ($g4['js_file'] as $key=>$value) {
+        echo "<script src=\"$value\"></script>\n";
+    }
+}
+
+if (!empty($g4['js_code'])) {
+    foreach ($g4['js_code'] as $key=>$value) {
+        echo "<script>\n";
+        echo $value."\n";
+        echo "</script>\n";
+    }
+}
+?>
 </head>
 <body>
 <a id="g4_head"></a>

@@ -109,7 +109,7 @@ if ($option) {
 <tr>
     <th scope="row"><label for="wr_content">내용</label></th>
     <td>
-        <textarea id="wr_content" name="wr_content" required <? if ($write_min || $write_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>><?=$content?></textarea>
+        <?=editor_textarea("wr_content", $content);?>
         <? if ($write_min || $write_max) { ?><span id="char_count"></span>글자<?}?>
         <? if ($write_min || $write_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
     </td>
