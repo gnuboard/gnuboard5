@@ -762,7 +762,7 @@ function get_group_select($name, $selected='', $event='')
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $str .= "<option value='{$row['gr_id']}'";
-        if ($row[gr_id] == $selected) $str .= " selected";
+        if ($row['gr_id'] == $selected) $str .= " selected";
         $str .= ">{$row['gr_subject']}</option>";
     }
     $str .= "</select>";
@@ -1142,7 +1142,7 @@ function sql_password($value)
     // mysql 4.0x 이하 버전에서는 password() 함수의 결과가 16bytes
     // mysql 4.1x 이상 버전에서는 password() 함수의 결과가 41bytes
     $row = sql_fetch(" select password('$value') as pass ");
-    return $row[pass];
+    return $row['pass'];
 }
 
 

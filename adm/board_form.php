@@ -122,7 +122,7 @@ include_once ('./admin.head.php');
     <td>
         <?=help('분류와 분류 사이는 | 로 구분하세요. (예: 질문|답변) 첫자로 #은 입력하지 마세요. (예: #질문|#답변 [X])')?>
         <input type="text" id="bo_category_list" name="bo_category_list" value="<?=get_text($board['bo_category_list'])?>" size="80">
-        <input type="checkbox" id="bo_use_category" name="bo_use_category" value="1" <?=$board[bo_use_category]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_category" name="bo_use_category" value="1" <?=$board['bo_use_category']?'checked':'';?>>
         <label for="bo_use_category">사용</label>
     </td>
     <td class="group_setting">
@@ -135,7 +135,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="proc_count">카운트 조정</label></th>
     <td>
-        <?=help('현재 원글수 : '.number_format($board[bo_count_write]).', 현재 댓글수 : '.number_format($board[bo_count_comment]).PHP_EOL.'게시판 목록에서 글의 번호가 맞지 않을 경우에 체크하십시오.')?>
+        <?=help('현재 원글수 : '.number_format($board['bo_count_write']).', 현재 댓글수 : '.number_format($board['bo_count_comment']).PHP_EOL.'게시판 목록에서 글의 번호가 맞지 않을 경우에 체크하십시오.')?>
         <input type="checkbox" id="proc_count" name="proc_count" value="1">
     </td>
 </tr>
@@ -160,7 +160,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="bo_list_level">목록보기 권한</label></th>
     <td>
         <?=help('권한 1은 비회원, 2 이상 회원입니다. 권한은 10 이 가장 높습니다.')?>
-        <?=get_member_level_select('bo_list_level', 1, 10, $board[bo_list_level]) ?>
+        <?=get_member_level_select('bo_list_level', 1, 10, $board['bo_list_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_list_level" name="chk_list_level" value="1">
@@ -170,7 +170,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_read_level">글읽기 권한</label></th>
     <td>
-        <?=get_member_level_select('bo_read_level', 1, 10, $board[bo_read_level]) ?>
+        <?=get_member_level_select('bo_read_level', 1, 10, $board['bo_read_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_read_level" name="chk_read_level" value="1">
@@ -180,7 +180,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_write_level">글쓰기 권한</label></th>
     <td>
-        <?=get_member_level_select('bo_write_level', 1, 10, $board[bo_write_level]) ?>
+        <?=get_member_level_select('bo_write_level', 1, 10, $board['bo_write_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_write_level" name="chk_write_level" value="1">
@@ -190,7 +190,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_reply_level">글답변 권한</label></th>
     <td>
-        <?=get_member_level_select('bo_reply_level', 1, 10, $board[bo_reply_level]) ?>
+        <?=get_member_level_select('bo_reply_level', 1, 10, $board['bo_reply_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_reply_level" name="chk_reply_level" value="1">
@@ -200,7 +200,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_comment_level">댓글쓰기 권한</label></th>
     <td>
-        <?=get_member_level_select('bo_comment_level', 1, 10, $board[bo_comment_level]) ?>
+        <?=get_member_level_select('bo_comment_level', 1, 10, $board['bo_comment_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_comment_level" name="chk_comment_level" value="1">
@@ -210,7 +210,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_link_level">링크 권한</label></th>
     <td>
-        <?=get_member_level_select('bo_link_level', 1, 10, $board[bo_link_level]) ?>
+        <?=get_member_level_select('bo_link_level', 1, 10, $board['bo_link_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_link_level" name="chk_link_level" value="1">
@@ -220,7 +220,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_upload_level">업로드 권한</label></th>
     <td>
-        <?=get_member_level_select('bo_upload_level', 1, 10, $board[bo_upload_level]) ?>
+        <?=get_member_level_select('bo_upload_level', 1, 10, $board['bo_upload_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_upload_level" name="chk_upload_level" value="1">
@@ -230,7 +230,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_download_level">다운로드 권한</label></th>
     <td>
-        <?=get_member_level_select('bo_download_level', 1, 10, $board[bo_download_level]) ?>
+        <?=get_member_level_select('bo_download_level', 1, 10, $board['bo_download_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_download_level" name="chk_download_level" value="1">
@@ -240,7 +240,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_html_level">HTML 쓰기 권한</label></th>
     <td>
-        <?=get_member_level_select('bo_html_level', 1, 10, $board[bo_html_level]) ?>
+        <?=get_member_level_select('bo_html_level', 1, 10, $board['bo_html_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_html_level" name="chk_html_level" value="1">
@@ -251,7 +251,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="bo_trackback_level">트랙백쓰기 권한</label></th>
     <td>
         <?=help('트랙백이란? 쉽게 설명하여 "내가 작성하는 글을 다른사람에게 알리는 기능" 입니다.'.PHP_EOL.'자세한 내용은 검색엔진에서 "트랙백"으로 검색을 해보시기 바랍니다.')?>
-        <?=get_member_level_select('bo_trackback_level', 1, 10, $board[bo_trackback_level]) ?>
+        <?=get_member_level_select('bo_trackback_level', 1, 10, $board['bo_trackback_level']) ?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_trackback_level" name="chk_trackback_level" value="1">
@@ -267,7 +267,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_count_modify">원글 수정 불가</label></th>
     <td>
-        댓글 <input type="text" id="bo_count_modify" name="bo_count_modify" class="required numeric" value="<?=$board[bo_count_modify]?>" size="3">개 이상 달리면 수정불가
+        댓글 <input type="text" id="bo_count_modify" name="bo_count_modify" class="required numeric" value="<?=$board['bo_count_modify']?>" size="3">개 이상 달리면 수정불가
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_count_modify" name="chk_count_modify" value="1">
@@ -277,7 +277,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_count_delete">원글 삭제 불가</label></th>
     <td>
-        댓글 <input type="text" id="bo_count_delete" name="bo_count_delete" class="required numeric" value="<?=$board[bo_count_delete]?>" size="3">개 이상 달리면 삭제불가
+        댓글 <input type="text" id="bo_count_delete" name="bo_count_delete" class="required numeric" value="<?=$board['bo_count_delete']?>" size="3">개 이상 달리면 삭제불가
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_count_delete" name="chk_count_delete" value="1">
@@ -287,7 +287,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_sideview">글쓴이 사이드뷰</label></th>
     <td>
-        <input type="checkbox" id="bo_use_sideview" name="bo_use_sideview" value="1" <?=$board[bo_use_sideview]?'checked':'';?>>사용 (글쓴이 클릭시 나오는 레이어 메뉴)
+        <input type="checkbox" id="bo_use_sideview" name="bo_use_sideview" value="1" <?=$board['bo_use_sideview']?'checked':'';?>>사용 (글쓴이 클릭시 나오는 레이어 메뉴)
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_use_sideview" name="chk_use_sideview" value="1">
@@ -297,7 +297,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_file_content">파일 설명 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_file_content" name="bo_use_file_content" value="1" <?=$board[bo_use_file_content]?'checked':'';?>>사용
+        <input type="checkbox" id="bo_use_file_content" name="bo_use_file_content" value="1" <?=$board['bo_use_file_content']?'checked':'';?>>사용
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_use_file_content" name="chk_use_file_content" value="1">
@@ -307,7 +307,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_comment">댓글 새창 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_comment" name="bo_use_comment" value="1" <?=$board[bo_use_comment]?'checked':'';?>>사용 (댓글수 클릭시 새창으로 보임)
+        <input type="checkbox" id="bo_use_comment" name="bo_use_comment" value="1" <?=$board['bo_use_comment']?'checked':'';?>>사용 (댓글수 클릭시 새창으로 보임)
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_use_comment" name="chk_use_comment" value="1">
@@ -334,7 +334,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="bo_use_dhtml_editor">DHTML 에디터 사용</label></th>
     <td>
         <?=help('글작성시 내용을 DHTML 에디터 기능으로 사용할 것인지 설정합니다. 스킨에 따라 적용되지 않을 수 있습니다.')?>
-        <input type="checkbox" id="bo_use_dhtml_editor" name="bo_use_dhtml_editor" value="1" <?=$board[bo_use_dhtml_editor]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_dhtml_editor" name="bo_use_dhtml_editor" value="1" <?=$board['bo_use_dhtml_editor']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -346,7 +346,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="bo_use_rss_view">RSS 보이기 사용</label></th>
     <td>
         <?=help('비회원 글읽기가 가능하고 RSS 보이기 사용에 체크가 되어야만 RSS 지원을 합니다.')?>
-        <input type="checkbox" id="bo_use_rss_view" name="bo_use_rss_view" value="1" <?=$board[bo_use_rss_view]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_rss_view" name="bo_use_rss_view" value="1" <?=$board['bo_use_rss_view']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -357,7 +357,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_good">추천 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_good" name="bo_use_good" value="1" <?=$board[bo_use_good]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_good" name="bo_use_good" value="1" <?=$board['bo_use_good']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -368,7 +368,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_nogood">비추천 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_nogood" name="bo_use_nogood" value="1" <?=$board[bo_use_nogood]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_nogood" name="bo_use_nogood" value="1" <?=$board['bo_use_nogood']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -379,7 +379,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_name">이름(실명) 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_name" name="bo_use_name" value="1" <?=$board[bo_use_name]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_name" name="bo_use_name" value="1" <?=$board['bo_use_name']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -390,7 +390,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_signature">서명보이기 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_signature" name="bo_use_signature" value="1" <?=$board[bo_use_signature]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_signature" name="bo_use_signature" value="1" <?=$board['bo_use_signature']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -401,7 +401,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_ip_view">IP 보이기 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_ip_view" name="bo_use_ip_view" value="1" <?=$board[bo_use_ip_view]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_ip_view" name="bo_use_ip_view" value="1" <?=$board['bo_use_ip_view']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -412,7 +412,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_trackback">트랙백 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_trackback" name="bo_use_trackback" value="1" <?=$board[bo_use_trackback]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_trackback" name="bo_use_trackback" value="1" <?=$board['bo_use_trackback']?'checked':'';?>>
         사용 (트랙백쓰기 권한 보다 우선함)
     </td>
     <td class="group_setting">
@@ -423,7 +423,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_list_content">목록에서 내용 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_list_content" name="bo_use_list_content" value="1" <?=$board[bo_use_list_content]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_list_content" name="bo_use_list_content" value="1" <?=$board['bo_use_list_content']?'checked':'';?>>
         사용 (사용시 속도 느려질 수 있습니다.)
     </td>
     <td class="group_setting">
@@ -434,7 +434,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_list_view">전체목록보이기 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_list_view" name="bo_use_list_view" value="1" <?=$board[bo_use_list_view]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_list_view" name="bo_use_list_view" value="1" <?=$board['bo_use_list_view']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -445,7 +445,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_use_email">메일발송 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_email" name="bo_use_email" value="1" <?=$board[bo_use_email]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_email" name="bo_use_email" value="1" <?=$board['bo_use_email']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -457,7 +457,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="bo_upload_count">파일 업로드 갯수</label></th>
     <td>
         <?=help('게시물 한건당 업로드 할 수 있는 파일의 최대 개수 (0 이면 제한 없음)')?>
-        <input type="text" id="bo_upload_count" name="bo_upload_count" class="required numeric" value="<?=$board[bo_upload_count]?>" size="3">
+        <input type="text" id="bo_upload_count" name="bo_upload_count" class="required numeric" value="<?=$board['bo_upload_count']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_upload_count" name="chk_upload_count" value="1">
@@ -474,7 +474,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_upload_size">파일 업로드 용량</label></th>
     <td>
         <?=help('최대 '.ini_get("upload_max_filesize").' 이하 업로드 가능, 1 MB = 1,024,768 bytes')?>
-        업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric" value="<?=$board[bo_upload_size]?>" size="10"> bytes 이하 
+        업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric" value="<?=$board['bo_upload_size']?>" size="10"> bytes 이하 
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_upload_size" name="chk_upload_size" value="1">
@@ -485,7 +485,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_write_min">최소 글수 제한</label></th>
     <td>
         <?=help('글 입력시 최소 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-        <input type="text" id="bo_write_min" name="bo_write_min" class="numeric" value="<?=$board[bo_write_min]?>" size="4">
+        <input type="text" id="bo_write_min" name="bo_write_min" class="numeric" value="<?=$board['bo_write_min']?>" size="4">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_write_min" name="chk_write_min" value="1">
@@ -496,7 +496,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_write_max">최대 글수 제한</label></th>
     <td>
         <?=help('글 입력시 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-        <input type="text" id="bo_write_max" name="bo_write_max" class="numeric" value="<?=$board[bo_write_max]?>" size="4">
+        <input type="text" id="bo_write_max" name="bo_write_max" class="numeric" value="<?=$board['bo_write_max']?>" size="4">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_write_max" name="chk_write_max" value="1">
@@ -507,7 +507,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_comment_min">최소 댓글수 제한</label></th>
     <td>
         <?=help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-        <input type="text" id="bo_comment_min" name="bo_comment_min" class="numeric" value="<?=$board[bo_comment_min]?>" size="3">
+        <input type="text" id="bo_comment_min" name="bo_comment_min" class="numeric" value="<?=$board['bo_comment_min']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_comment_min" name="chk_comment_min" value="1">
@@ -518,7 +518,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_comment_max">최대 댓글수 제한</label></th>
     <td>
         <?=help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-        <input type="text" id="bo_comment_max" name="bo_comment_max" class="numeric" value="<?=$board[bo_comment_max]?>" size="3">
+        <input type="text" id="bo_comment_max" name="bo_comment_max" class="numeric" value="<?=$board['bo_comment_max']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_comment_max" name="chk_comment_max" value="1">
@@ -528,7 +528,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_use_search">전체 검색 사용</label></th>
     <td>
-        <input type="checkbox" id="bo_use_search" name="bo_use_search" value="1" <?=$board[bo_use_search]?'checked':'';?>>
+        <input type="checkbox" id="bo_use_search" name="bo_use_search" value="1" <?=$board['bo_use_search']?'checked':'';?>>
         사용
     </td>
     <td class="group_setting">
@@ -540,7 +540,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_order_search">전체 검색 순서</label></th>
     <td>
         <?=help('숫자가 낮은 게시판 부터 검색')?>
-        <input type="text" id="bo_order_search" name="bo_order_search" value="<?=$board[bo_order_search]?>" size="3">
+        <input type="text" id="bo_order_search" name="bo_order_search" value="<?=$board['bo_order_search']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_order_search" name="chk_order_search" value="1">
@@ -644,7 +644,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_subject_len">제목 길이</label></th>
     <td>
         <?=help('목록에서의 제목 글자수. 잘리는 글은 … 로 표시')?>
-        <input type="text" id="bo_subject_len" name="bo_subject_len" class="required numeric" value="<?=$board[bo_subject_len]?>" size="3">
+        <input type="text" id="bo_subject_len" name="bo_subject_len" class="required numeric" value="<?=$board['bo_subject_len']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_subject_len" name="chk_subject_len" value="1">
@@ -654,7 +654,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <tr>
     <th scope="row"><label for="bo_page_rows">페이지당 목록 수</label></th>
     <td>
-        <input type="text" id="bo_page_rows" name="bo_page_rows" class="required numeric" value="<?=$board[bo_page_rows]?>" size="3">
+        <input type="text" id="bo_page_rows" name="bo_page_rows" class="required numeric" value="<?=$board['bo_page_rows']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_page_rows" name="chk_page_rows" value="1">
@@ -665,7 +665,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_gallery_cols">가로 이미지수</label></th>
     <td>
         <?=help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여줄것인지를 설정하는 값')?>
-        <input type="text" id="bo_gallery_cols" name="bo_gallery_cols" class="required numeric" value="<?=$board[bo_gallery_cols]?>" size="3">
+        <input type="text" id="bo_gallery_cols" name="bo_gallery_cols" class="required numeric" value="<?=$board['bo_gallery_cols']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_gallery_cols" name="chk_gallery_cols" value="1">
@@ -676,7 +676,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_table_width">게시판 테이블 폭</label></th>
     <td>
         <?=help('100 이하는 %')?>
-        <input type="text" id="bo_table_width" name="bo_table_width" class="required numeric" value="<?=$board[bo_table_width]?>" size="3">
+        <input type="text" id="bo_table_width" name="bo_table_width" class="required numeric" value="<?=$board['bo_table_width']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_table_width" name="chk_table_width" value="1">
@@ -687,7 +687,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_image_width">이미지 폭 크기</label></th>
     <td>
         <?=help('게시판에서 출력되는 이미지의 폭 크기')?>
-        <input type="text" id="bo_image_width" name="bo_image_width" class="required numeric" value="<?=$board[bo_image_width]?>" size="3"> 픽셀
+        <input type="text" id="bo_image_width" name="bo_image_width" class="required numeric" value="<?=$board['bo_image_width']?>" size="3"> 픽셀
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_image_width" name="chk_image_width" value="1">
@@ -698,7 +698,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_new">새글 아이콘</label></th>
     <td>
         <?=help('글 입력후 new 이미지를 출력하는 시간')?>
-        <input type="text" id="bo_new" name="bo_new" class="required numeric" value="<?=$board[bo_new]?>" size="3">
+        <input type="text" id="bo_new" name="bo_new" class="required numeric" value="<?=$board['bo_new']?>" size="3">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_new" name="chk_new" value="1">
@@ -709,7 +709,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <th scope="row"><label for="bo_hot">인기글 아이콘</label></th>
     <td>
         <?=help('조회수가 설정값 이상이면 hot 이미지 출력')?>
-        <input type="text" id="bo_hot" name="bo_hot" class="required numeric" value="<?=$board[bo_hot]?>" size="5">
+        <input type="text" id="bo_hot" name="bo_hot" class="required numeric" value="<?=$board['bo_hot']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_hot" name="chk_hot" value="1">
@@ -723,7 +723,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
         <option value="1">나중에 쓴 답변 아래로 달기 (기본)
         <option value='0'>나중에 쓴 답변 위로 달기
         </select>
-        <script> document.fboardform.bo_reply_order.value = "<?=$board[bo_reply_order]?>"; </script>
+        <script> document.fboardform.bo_reply_order.value = "<?=$board['bo_reply_order']?>"; </script>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_reply_order" name="chk_reply_order" value="1">
@@ -786,7 +786,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_read_point">글읽기 포인트</label></th>
     <td>
-        <input type="text" id="bo_read_point" name="bo_read_point" class="required numeric" value="<?=$board[bo_read_point]?>" size="5">
+        <input type="text" id="bo_read_point" name="bo_read_point" class="required numeric" value="<?=$board['bo_read_point']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_read_point" name="chk_read_point" value="1">
@@ -796,7 +796,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_write_point">글쓰기 포인트</label></th>
     <td>
-        <input type="text" id="bo_write_point" name="bo_write_point" class="required numeric" value="<?=$board[bo_write_point]?>" size="5">
+        <input type="text" id="bo_write_point" name="bo_write_point" class="required numeric" value="<?=$board['bo_write_point']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_write_point" name="chk_write_point" value="1">
@@ -806,7 +806,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_comment_point">댓글쓰기 포인트</label></th>
     <td>
-        <input type="text" id="bo_comment_point" name="bo_comment_point" class="required numeric" value="<?=$board[bo_comment_point]?>" size="5">
+        <input type="text" id="bo_comment_point" name="bo_comment_point" class="required numeric" value="<?=$board['bo_comment_point']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_comment_point" name="chk_comment_point" value="1">
@@ -816,7 +816,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_download_point">다운로드 포인트</label></th>
     <td>
-        <input type="text" id="bo_download_point" name="bo_download_point" class="required numeric" value="<?=$board[bo_download_point]?>" size="5">
+        <input type="text" id="bo_download_point" name="bo_download_point" class="required numeric" value="<?=$board['bo_download_point']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_download_point" name="chk_download_point" value="1">
