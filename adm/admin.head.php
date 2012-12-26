@@ -99,7 +99,8 @@ function textarea_size(fld, size)
                 $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
                 $href2 = '</a>';
             }
-            if (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2) || $index)
+            $current_class = "";
+            if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2) || $index))
                 $current_class = " gnb_1depth_on";
             echo "<li class=\"gnb_1depth".$current_class."\">";
             echo $href1 . $menu['menu'.$key][0][1] . $href2;

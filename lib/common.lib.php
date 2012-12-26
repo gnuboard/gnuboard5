@@ -100,7 +100,11 @@ function set_cookie($cookie_name, $value, $expire)
 // 쿠키변수값 얻음
 function get_cookie($cookie_name)
 {
-    return base64_decode($_COOKIE[md5($cookie_name)]);
+    $cookie = md5($cookie_name);
+    if (array_key_exists($cookie, $_COOKIE)) 
+        return base64_decode($_COOKIE[md5($cookie_name)]);
+    else 
+        return "";
 }
 
 
@@ -1000,10 +1004,15 @@ function cut_str($str, $len, $suffix="…")
     global $g4;
 
     if (strtoupper($g4['charset']) == 'UTF-8') {
-        $c = substr(str_pad(decbin(ord($str{$len})),8,'0',STR_PAD_LEFT),0,2);
-        if ($c == '10')
-            for (;$c != '11' && $c{0} == 1;$c = substr(str_pad(decbin(ord($str{--$len})),8,'0',STR_PAD_LEFT),0,2));
-        return substr($str,0,$len) . (strlen($str)-strlen($suffix) >= $len ? $suffix : '');
+        if (strlen($str) >= $len) {
+            //echo $str,', ',strlen($str),', ',$len;
+            $c = substr(str_pad(decbin(ord($str[$len-1])),8,'0',STR_PAD_LEFT),0,2);
+            if ($c == '10')
+                for (;$c != '11' && $c{0} == 1;$c = substr(str_pad(decbin(ord($str{--$len})),8,'0',STR_PAD_LEFT),0,2));
+            return substr($str,0,$len) . (strlen($str)-strlen($suffix) >= $len ? $suffix : '');
+        } else {
+            return $str;
+        }
     } else {
         $s = substr($str, 0, $len);
         $cnt = 0;

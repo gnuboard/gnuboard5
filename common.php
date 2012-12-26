@@ -92,11 +92,11 @@ if( !get_magic_quotes_gpc() )
 	}
 }
 
-if ($_GET['g4_path'] || $_POST['g4_path'] || $_COOKIE['g4_path']) {
+if (isset($_GET['g4_path']) || isset($_POST['g4_path']) || isset($_COOKIE['g4_path'])) {
     unset($_GET['g4_path']);
     unset($_POST['g4_path']);
     unset($_COOKIE['g4_path']);
-    unset($g4_path);
+    if (isset($g4_path)) unset($g4_path);
 }
 
 
@@ -311,7 +311,7 @@ if (strpos($_SERVER[PHP_SELF], $g4['admin']) === false)
 */
 
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
-if ($_REQUEST['PHPSESSID'] && $_REQUEST['PHPSESSID'] != session_id())
+if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
     goto_url($g4['bbs_path'].'/logout.php');
 
 // QUERY_STRING
@@ -361,11 +361,11 @@ if (isset($page)) { // 리스트 페이지
     $qstr .= '&amp;page=' . urlencode($page);
 }
 
-if ($wr_id) {
+if (isset($wr_id)) {
     $wr_id = (int)$wr_id;
 }
 
-if ($bo_table) {
+if (isset($bo_table)) {
     $bo_table = preg_match("/^[a-zA-Z0-9_]+$/", $bo_table) ? $bo_table : '';
 }
 
@@ -382,7 +382,7 @@ else {
 
 
 // 자동로그인 부분에서 첫로그인에 포인트 부여하던것을 로그인중일때로 변경하면서 코드도 대폭 수정하였습니다.
-if ($_SESSION['ss_mb_id']) // 로그인중이라면
+if (array_key_exists('ss_mb_id', $_SESSION)) // 로그인중이라면
 {
     $member = get_member($_SESSION['ss_mb_id']);
 
@@ -440,11 +440,18 @@ else
 if (!get_cookie('ck_first_call'))     set_cookie('ck_first_call', $g4['server_time'], 86400 * 365);
 if (!get_cookie('ck_first_referer'))  set_cookie('ck_first_referer', $_SERVER['HTTP_REFERER'], 86400 * 365);
 
-// 회원이 아니라면 권한을 방문객 권한으로 함
-if (!($member['mb_id']))
-    $member['mb_level'] = 1;
-else
+// 회원, 비회원 구분
+$is_member = $is_guest = false;
+$is_admin = "";
+if (array_key_exists('mb_id', $member)) {
+    $is_member = true;
+    $is_admin = is_admin($member['mb_id']);
     $member['mb_dir'] = substr($member['mb_id'],0,2);
+} else {
+    $is_guest = true;
+    $member['mb_id'] = "";
+    $member['mb_level'] = 1; // 비회원의 경우 회원레벨을 가장 낮게 설정
+}
 
 //$member['mb_level_title'] = $g4['member_level'][$member['mb_level']]; // 권한명
 
@@ -463,16 +470,6 @@ if (isset($bo_table)) {
 if (isset($gr_id))
     $group = sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
 
-
-// 회원, 비회원 구분
-$is_member = $is_guest = false;
-if ($member['mb_id'])
-    $is_member = true;
-else
-    $is_guest = true;
-
-
-$is_admin = is_admin($member['mb_id']);
 if ($is_admin != 'super') {
     // 접근가능 IP
     $cf_possible_ip = trim($config['cf_possible_ip']);
