@@ -28,7 +28,7 @@ if (!$result) {
     sql_query($sql);
 }
 
-//sql_query(" OPTIMIZE TABLE `$g4[auth_table]` ");
+//sql_query(" OPTIMIZE TABLE `$g4['auth_table']` ");
 
 goto_url('./auth_list.php?'.$qstr);
 ?>

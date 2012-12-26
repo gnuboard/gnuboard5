@@ -21,7 +21,7 @@ $sql = " select pp_word
 $result = sql_query($sql);
 $total_count = mysql_num_rows($result);
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -82,7 +82,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <tr>
     <td class="td_num"><?=$rank?></td>
     <td><?=$word?></td>
-    <td class="td_bignum"><?=$row[cnt]?></td>
+    <td class="td_bignum"><?=$row['cnt']?></td>
 </tr>
 
 <?
@@ -95,7 +95,7 @@ if ($i == 0)
 </table>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
 ?>
 <div class="pg">
     <?=$pagelist?>

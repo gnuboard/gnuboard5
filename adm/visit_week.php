@@ -19,9 +19,9 @@ $sql = " select WEEKDAY(vs_date) as weekday_date, SUM(vs_count) as cnt
             order by weekday_date ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $arr[$row['weekday_date']] = $row[cnt];
+    $arr[$row['weekday_date']] = $row['cnt'];
 
-    $sum_count += $row[cnt];
+    $sum_count += $row['cnt'];
 }
 ?>
 

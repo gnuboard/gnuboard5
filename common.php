@@ -251,7 +251,7 @@ $dirname = dirname(__FILE__).'/';
 $dbconfig_file = 'data/dbconfig.php';
 if (file_exists($g4['path'].'/'.$dbconfig_file))
 {
-    //if (is_dir("$g4[path]/install")) die("<meta http-equiv='content-type' content='text/html; charset=$g4[charset]'><script type='text/javascript'> alert('install 디렉토리를 삭제하여야 정상 실행됩니다.'); </script>");
+    //if (is_dir("$g4['path']/install")) die("<meta http-equiv='content-type' content='text/html; charset=$g4['charset']'><script type='text/javascript'> alert('install 디렉토리를 삭제하여야 정상 실행됩니다.'); </script>");
 
     include_once($g4['path'].'/'.$dbconfig_file);
     $connect_db = sql_connect($mysql_host, $mysql_user, $mysql_password);

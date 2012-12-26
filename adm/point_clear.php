@@ -39,14 +39,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
                   from {$g4['point_table']}
                   where mb_id = '{$row['mb_id']}'
                   order by po_id desc
-                  limit {$max_count}, {$row[cnt]} ";
+                  limit {$max_count}, {$row['cnt']} ";
     $result2 = sql_query($sql2);
     for ($k=0; $row2=sql_fetch_array($result2); $k++)
     {
         $count++;
-        $total += $row2[po_point];
+        $total += $row2['po_point'];
 
-        sql_query(" delete from {$g4['point_table']} where po_id = '{$row2[po_id]}' ");
+        sql_query(" delete from {$g4['point_table']} where po_id = '{$row2['po_id']}' ");
     }
 
     insert_point($row['mb_id'], $total, '포인트 {$count}건 정리', '@clear', $row['mb_id'], $g4['time_ymd']."-".uniqid(""));

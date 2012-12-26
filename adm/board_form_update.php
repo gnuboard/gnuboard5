@@ -60,86 +60,86 @@ $src_char = array('&', '=');
 $dst_char = array('＆', '〓');
 $bo_category_list = str_replace($src_char, $dst_char, $bo_category_list);
 
-$sql_common = " gr_id               = '{$_POST['gr_id']}',
-                        bo_subject          = '{$_POST['bo_subject']}',
-                        bo_admin            = '{$_POST['bo_admin']}',
-                        bo_list_level       = '{$_POST[bo_list_level]}',
-                        bo_read_level       = '{$_POST[bo_read_level]}',
-                        bo_write_level      = '{$_POST[bo_write_level]}',
-                        bo_reply_level      = '{$_POST[bo_reply_level]}',
-                        bo_comment_level    = '{$_POST[bo_comment_level]}',
-                        bo_html_level       = '{$_POST[bo_html_level]}',
-                        bo_link_level       = '{$_POST[bo_link_level]}',
-                        bo_trackback_level  = '{$_POST[bo_trackback_level]}',
-                        bo_count_modify     = '{$_POST[bo_count_modify]}',
-                        bo_count_delete     = '{$_POST[bo_count_delete]}',
-                        bo_upload_level     = '{$_POST[bo_upload_level]}',
-                        bo_download_level   = '{$_POST[bo_download_level]}',
-                        bo_read_point       = '{$_POST[bo_read_point]}',
-                        bo_write_point      = '{$_POST[bo_write_point]}',
-                        bo_comment_point    = '{$_POST[bo_comment_point]}',
-                        bo_download_point   = '{$_POST[bo_download_point]}',
-                        bo_use_category     = '{$_POST[bo_use_category]}',
-                        bo_category_list    = '{$_POST['bo_category_list']}',
-                        bo_disable_tags     = '{$_POST['bo_disable_tags']}',
-                        bo_use_sideview     = '{$_POST[bo_use_sideview]}',
-                        bo_use_file_content = '{$_POST[bo_use_file_content]}',
-                        bo_use_secret       = '{$_POST[bo_use_secret]}',
-                        bo_use_dhtml_editor = '{$_POST[bo_use_dhtml_editor]}',
-                        bo_use_rss_view     = '{$_POST[bo_use_rss_view]}',
-                        bo_use_comment      = '{$_POST[bo_use_comment]}',
-                        bo_use_good         = '{$_POST[bo_use_good]}',
-                        bo_use_nogood       = '{$_POST[bo_use_nogood]}',
-                        bo_use_name         = '{$_POST[bo_use_name]}',
-                        bo_use_signature    = '{$_POST[bo_use_signature]}',
-                        bo_use_ip_view      = '{$_POST[bo_use_ip_view]}',
-                        bo_use_trackback    = '{$_POST[bo_use_trackback]}',
-                        bo_use_list_view    = '{$_POST[bo_use_list_view]}',
-                        bo_use_list_content = '{$_POST[bo_use_list_content]}',
-                        bo_use_email        = '{$_POST[bo_use_email]}',
-                        bo_table_width      = '{$_POST[bo_table_width]}',
-                        bo_subject_len      = '{$_POST[bo_subject_len]}',
-                        bo_page_rows        = '{$_POST[bo_page_rows]}',
-                        bo_new              = '{$_POST[bo_new]}',
-                        bo_hot              = '{$_POST[bo_hot]}',
-                        bo_image_width      = '{$_POST[bo_image_width]}',
-                        bo_skin             = '{$_POST['bo_skin']}',
-                        bo_include_head     = '{$_POST['bo_include_head']}',
-                        bo_include_tail     = '{$_POST['bo_include_tail']}',
-                        bo_content_head     = '{$_POST['bo_content_head']}',
-                        bo_content_tail     = '{$_POST['bo_content_tail']}',
-                        bo_insert_content   = '{$_POST['bo_insert_content']}',
-                        bo_gallery_cols     = '{$_POST[bo_gallery_cols]}',
-                        bo_upload_count     = '{$_POST[bo_upload_count]}',
-                        bo_upload_size      = '{$_POST[bo_upload_size]}',
-                        bo_reply_order      = '{$_POST[bo_reply_order]}',
-                        bo_use_search       = '{$_POST[bo_use_search]}',
-                        bo_order_search     = '{$_POST[bo_order_search]}',
-                        bo_write_min        = '{$_POST[bo_write_min]}',
-                        bo_write_max        = '{$_POST[bo_write_max]}',
-                        bo_comment_min      = '{$_POST[bo_comment_min]}',
-                        bo_comment_max      = '{$_POST[bo_comment_max]}',
-                        bo_sort_field       = '{$_POST['bo_sort_field']}',
-                        bo_1_subj           = '{$_POST['bo_1_subj']}',
-                        bo_2_subj           = '{$_POST['bo_2_subj']}',
-                        bo_3_subj           = '{$_POST['bo_3_subj']}',
-                        bo_4_subj           = '{$_POST['bo_4_subj']}',
-                        bo_5_subj           = '{$_POST['bo_5_subj']}',
-                        bo_6_subj           = '{$_POST['bo_6_subj']}',
-                        bo_7_subj           = '{$_POST['bo_7_subj']}',
-                        bo_8_subj           = '{$_POST['bo_8_subj']}',
-                        bo_9_subj           = '{$_POST['bo_9_subj']}',
-                        bo_10_subj          = '{$_POST['bo_10_subj']}',
-                        bo_1                = '{$_POST['bo_1']}',
-                        bo_2                = '{$_POST['bo_2']}',
-                        bo_3                = '{$_POST['bo_3']}',
-                        bo_4                = '{$_POST['bo_4']}',
-                        bo_5                = '{$_POST['bo_5']}',
-                        bo_6                = '{$_POST['bo_6']}',
-                        bo_7                = '{$_POST['bo_7']}',
-                        bo_8                = '{$_POST['bo_8']}',
-                        bo_9                = '{$_POST['bo_9']}',
-                        bo_10               = '{$_POST['bo_10']}' ";
+$sql_common = " gr_id = '{$_POST['gr_id']}',
+                         bo_subject = '{$_POST['bo_subject']}',
+                         bo_admin = '{$_POST['bo_admin']}',
+                         bo_list_level = '{$_POST['bo_list_level']}',
+                         bo_read_level = '{$_POST['bo_read_level']}',
+                         bo_write_level = '{$_POST['bo_write_level']}',
+                         bo_reply_level = '{$_POST['bo_reply_level']}',
+                         bo_comment_level = '{$_POST['bo_comment_level']}',
+                         bo_html_level = '{$_POST['bo_html_level']}',
+                         bo_link_level = '{$_POST['bo_link_level']}',
+                         bo_trackback_level = '{$_POST['bo_trackback_level']}',
+                         bo_count_modify = '{$_POST['bo_count_modify']}',
+                         bo_count_delete = '{$_POST['bo_count_delete']}',
+                         bo_upload_level = '{$_POST['bo_upload_level']}',
+                         bo_download_level = '{$_POST['bo_download_level']}',
+                         bo_read_point = '{$_POST['bo_read_point']}',
+                         bo_write_point = '{$_POST['bo_write_point']}',
+                         bo_comment_point = '{$_POST['bo_comment_point']}',
+                         bo_download_point = '{$_POST['bo_download_point']}',
+                         bo_use_category = '{$_POST['bo_use_category']}',
+                         bo_category_list = '{$_POST['bo_category_list']}',
+                         bo_disable_tags = '{$_POST['bo_disable_tags']}',
+                         bo_use_sideview = '{$_POST['bo_use_sideview']}',
+                         bo_use_file_content = '{$_POST['bo_use_file_content']}',
+                         bo_use_secret = '{$_POST['bo_use_secret']}',
+                         bo_use_dhtml_editor = '{$_POST['bo_use_dhtml_editor']}',
+                         bo_use_rss_view = '{$_POST['bo_use_rss_view']}',
+                         bo_use_comment = '{$_POST['bo_use_comment']}',
+                         bo_use_good = '{$_POST['bo_use_good']}',
+                         bo_use_nogood = '{$_POST['bo_use_nogood']}',
+                         bo_use_name = '{$_POST['bo_use_name']}',
+                         bo_use_signature = '{$_POST['bo_use_signature']}',
+                         bo_use_ip_view = '{$_POST['bo_use_ip_view']}',
+                         bo_use_trackback = '{$_POST['bo_use_trackback']}',
+                         bo_use_list_view = '{$_POST['bo_use_list_view']}',
+                         bo_use_list_content = '{$_POST['bo_use_list_content']}',
+                         bo_use_email = '{$_POST['bo_use_email']}',
+                         bo_table_width = '{$_POST['bo_table_width']}',
+                         bo_subject_len = '{$_POST['bo_subject_len']}',
+                         bo_page_rows = '{$_POST['bo_page_rows']}',
+                         bo_new = '{$_POST['bo_new']}',
+                         bo_hot = '{$_POST['bo_hot']}',
+                         bo_image_width = '{$_POST['bo_image_width']}',
+                         bo_skin = '{$_POST['bo_skin']}',
+                         bo_include_head = '{$_POST['bo_include_head']}',
+                         bo_include_tail = '{$_POST['bo_include_tail']}',
+                         bo_content_head = '{$_POST['bo_content_head']}',
+                         bo_content_tail = '{$_POST['bo_content_tail']}',
+                         bo_insert_content = '{$_POST['bo_insert_content']}',
+                         bo_gallery_cols = '{$_POST['bo_gallery_cols']}',
+                         bo_upload_count = '{$_POST['bo_upload_count']}',
+                         bo_upload_size = '{$_POST['bo_upload_size']}',
+                         bo_reply_order = '{$_POST['bo_reply_order']}',
+                         bo_use_search = '{$_POST['bo_use_search']}',
+                         bo_order_search = '{$_POST['bo_order_search']}',
+                         bo_write_min = '{$_POST['bo_write_min']}',
+                         bo_write_max = '{$_POST['bo_write_max']}',
+                         bo_comment_min = '{$_POST['bo_comment_min']}',
+                         bo_comment_max = '{$_POST['bo_comment_max']}',
+                         bo_sort_field = '{$_POST['bo_sort_field']}',
+                         bo_1_subj = '{$_POST['bo_1_subj']}',
+                         bo_2_subj = '{$_POST['bo_2_subj']}',
+                         bo_3_subj = '{$_POST['bo_3_subj']}',
+                         bo_4_subj = '{$_POST['bo_4_subj']}',
+                         bo_5_subj = '{$_POST['bo_5_subj']}',
+                         bo_6_subj = '{$_POST['bo_6_subj']}',
+                         bo_7_subj = '{$_POST['bo_7_subj']}',
+                         bo_8_subj = '{$_POST['bo_8_subj']}',
+                         bo_9_subj = '{$_POST['bo_9_subj']}',
+                         bo_10_subj = '{$_POST['bo_10_subj']}',
+                         bo_1 = '{$_POST['bo_1']}',
+                         bo_2 = '{$_POST['bo_2']}',
+                         bo_3 = '{$_POST['bo_3']}',
+                         bo_4 = '{$_POST['bo_4']}',
+                         bo_5 = '{$_POST['bo_5']}',
+                         bo_6 = '{$_POST['bo_6']}',
+                         bo_7 = '{$_POST['bo_7']}',
+                         bo_8 = '{$_POST['bo_8']}',
+                         bo_9 = '{$_POST['bo_9']}',
+                         bo_10 = '{$_POST['bo_10']}' ";
 
 if ($bo_image_head_del) {
     @unlink($board_path.'/'.$bo_image_head_del);
@@ -152,20 +152,20 @@ if ($bo_image_tail_del) {
 }
 
 if ($_FILES['bo_image_head']['name']) {
-    //$bo_image_head_urlencode = urlencode($_FILES[bo_image_head][name]);
+    //$bo_image_head_urlencode = urlencode($_FILES['bo_image_head']['name']);
     $bo_image_head_urlencode = $bo_table.'_head_'.time();
     $sql_common .= " , bo_image_head = '{$bo_image_head_urlencode}' ";
 }
 
 if ($_FILES['bo_image_tail']['name']) {
-    //$bo_image_tail_urlencode = urlencode($_FILES[bo_image_tail][name]);
+    //$bo_image_tail_urlencode = urlencode($_FILES['bo_image_tail']['name']);
     $bo_image_tail_urlencode = $bo_table.'_tail_'.time();
     $sql_common .= " , bo_image_tail = '{$bo_image_tail_urlencode}' ";
 }
 
 if ($w == '') {
     $row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where bo_table = '{$bo_table}' ");
-    if ($row[cnt])
+    if ($row['cnt'])
         alert($bo_table.' 은(는) 이미 존재하는 TABLE 입니다.');
 
     $sql = " insert into {$g4['board_table']}
@@ -190,12 +190,12 @@ if ($w == '') {
     // 게시판의 글 수
     $sql = " select count(*) as cnt from {$g4['write_prefix']}{$bo_table} where wr_is_comment = 0 ";
     $row = sql_fetch($sql);
-    $bo_count_write = $row[cnt];
+    $bo_count_write = $row['cnt'];
 
     // 게시판의 코멘트 수
     $sql = " select count(*) as cnt from {$g4['write_prefix']}{$bo_table} where wr_is_comment = 1 ";
     $row = sql_fetch($sql);
-    $bo_count_comment = $row[cnt];
+    $bo_count_comment = $row['cnt'];
 
     // 글수 조정
     if ($proc_count) {
@@ -204,22 +204,22 @@ if ($w == '') {
         $result = sql_query($sql);
         for ($i=0; $row=sql_fetch_array($result); $i++) {
             // 코멘트수를 얻습니다.
-            $sql2 = " select count(*) as cnt from {$g4['write_prefix']}$bo_table where wr_parent = '{$row[wr_id]}' and wr_is_comment = 1 ";
+            $sql2 = " select count(*) as cnt from {$g4['write_prefix']}$bo_table where wr_parent = '{$row['wr_id']}' and wr_is_comment = 1 ";
             $row2 = sql_fetch($sql2);
 
-            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_comment = '{$row2[cnt]}' where wr_id = '{$row[wr_id]}' ");
+            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_comment = '{$row2['cnt']}' where wr_id = '{$row['wr_id']}' ");
         }
     }
 
     // 공지사항에는 등록되어 있지만 실제 존재하지 않는 글 아이디는 삭제합니다.
     $bo_notice = "";
     $lf = "";
-    if ($board[bo_notice]) {
-        $tmp_array = explode("\n", $board[bo_notice]);
+    if ($board['bo_notice']) {
+        $tmp_array = explode("\n", $board['bo_notice']);
         for ($i=0; $i<count($tmp_array); $i++) {
             $tmp_wr_id = trim($tmp_array[$i]);
             $row = sql_fetch(" select count(*) as cnt from {$g4['write_prefix']}{$bo_table} where wr_id = '{$tmp_wr_id}' ");
-            if ($row[cnt])
+            if ($row['cnt'])
             {
                 $bo_notice .= $lf . $tmp_wr_id;
                 $lf = "\n";
@@ -300,9 +300,9 @@ if ($chk_insert_content) $s .= " , bo_insert_content = '{$bo_insert_content}' ";
 if ($chk_use_search) $s .= " , bo_use_search = '{$bo_use_search}' ";
 if ($chk_order_search) $s .= " , bo_order_search = '{$bo_order_search}' ";
 for ($i=1; $i<=10; $i++) {
-    if ($_POST["chk_{$i}"]) {
-        $s .= " , bo_{$i}_subj = '".$_POST["bo_{$i}_subj"]."' ";
-        $s .= " , bo_{$i} = '".$_POST["bo_{$i}"]."' ";
+    if ($_POST['chk_'.$i]) {
+        $s .= " , bo_{$i}_subj = '".$_POST['bo_'.$i.'_subj']."' ";
+        $s .= " , bo_{$i} = '".$_POST['bo_'.$i]."' ";
     }
 }
 

@@ -106,7 +106,7 @@ function textarea_size(fld, size)
             echo $href1 . $menu['menu'.$key][0][1] . $href2;
             echo print_menu1('menu'.$key, 1);
             echo "</li>";
-            if ($current_class || !$index) $current_class = ""; // 클래스 반복부여 방지
+            if (isset($index) && ($current_class || !$index)) $current_class = ""; // 클래스 반복부여 방지
         }
 
         ?>

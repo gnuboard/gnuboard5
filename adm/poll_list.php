@@ -30,9 +30,9 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -88,19 +88,19 @@ $colspan = 6;
 <tbody>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $sql2 = " select sum(po_cnt1+po_cnt2+po_cnt3+po_cnt4+po_cnt5+po_cnt6+po_cnt7+po_cnt8+po_cnt9) as sum_po_cnt from {$g4['poll_table']} where po_id = '{$row[po_id]}' ";
+    $sql2 = " select sum(po_cnt1+po_cnt2+po_cnt3+po_cnt4+po_cnt5+po_cnt6+po_cnt7+po_cnt8+po_cnt9) as sum_po_cnt from {$g4['poll_table']} where po_id = '{$row['po_id']}' ";
     $row2 = sql_fetch($sql2);
     $po_etc = ($row['po_etc']) ? "사용" : "미사용";
 
-    $s_mod = '<a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row[po_id].'">수정</a>';
-    $s_del = '<a href="javascript:post_delete(\'poll_form_update.php\', \''.$row[po_id].'\');">삭제</a>';
+    $s_mod = '<a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row['po_id'].'">수정</a>';
+    $s_del = '<a href="javascript:post_delete(\'poll_form_update.php\', \''.$row['po_id'].'\');">삭제</a>';
 ?>
 
 <tr>
-    <td class="td_num"><?=$row[po_id]?></td>
+    <td class="td_num"><?=$row['po_id']?></td>
     <td><?=cut_str(get_text($row['po_subject']),70)?></td>
-    <td class="td_num"><?=$row[po_level]?></td>
-    <td class="td_num"><?=$row2[sum_po_cnt]?></td>
+    <td class="td_num"><?=$row['po_level']?></td>
+    <td class="td_num"><?=$row2['sum_po_cnt']?></td>
     <td class="td_etc"><?=$po_etc?></td>
     <td class="td_mng"><?=$s_mod?> <?=$s_del?></td>
 </tr>
@@ -115,7 +115,7 @@ if ($i==0)
 </table>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
 if ($pagelist) {?>
 <div class="pg">
     <?=$pagelist?>

@@ -33,9 +33,9 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -83,7 +83,7 @@ function point_clear()
         전체 <?=number_format($total_count)?> 건
         <?
         if ($mb['mb_id'])
-            echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb[mb_point]) . '점)';
+            echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
         else {
             $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g4['point_table']} ");
             echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
@@ -148,7 +148,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td class="td_chk">
         <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-        <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row[po_id]?>">
+        <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row['po_id']?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="내역선택">
     </td>
     <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
@@ -156,8 +156,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td class="td_mbnick"><div><?=$mb_nick?></div></td>
     <td><?=$row['po_datetime']?></td>
     <td class="td_pt_log"><?=$link1?><?=$row['po_content']?><?=$link2?></td>
-    <td class="td_bignum"><?=number_format($row[po_point])?></td>
-    <td class="td_bignum"><?=number_format($row2[mb_point])?></td>
+    <td class="td_bignum"><?=number_format($row['po_point'])?></td>
+    <td class="td_bignum"><?=number_format($row2['mb_point'])?></td>
 </tr>
 
 <?
@@ -174,7 +174,7 @@ if ($i == 0)
 </div>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
 ?>
 <div class="pg">
     <?=$pagelist?>

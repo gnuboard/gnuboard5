@@ -36,7 +36,7 @@ if ($is_admin != 'super')
 $sql .= " order by a.gr_id desc ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row[gm_id].'\');">삭제</a>';
+    $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
 ?>
 <tr>
     <td class="td_grid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
@@ -68,7 +68,7 @@ if ($i == 0) {
                 where gr_use_access = 1 ";
     //if ($is_admin == 'group') {
     if ($is_admin != 'super') 
-        $sql .= " and gr_admin = '$member[mb_id]' ";
+        $sql .= " and gr_admin = '$member['mb_id']' ";
     $sql .= " order by gr_id ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {

@@ -52,7 +52,7 @@ for ($i=1; $i<=9; $i++) {
     <td>
         <input type="text" id="po_poll<?=$i?>" name="po_poll<?=$i?>" <?=$required?> value="<?=$po_poll?>" maxlength="125">
         <label for="po_cnt<?=$i?>">항목 <?=$i?> 투표수</label>
-        <input type="text" id="po_cnt<?=$i?>" name="po_cnt<?=$i?>" value="<?=$po[po_cnt.$i]?>" size="2">
+        <input type="text" id="po_cnt<?=$i?>" name="po_cnt<?=$i?>" value="<?=$po['po_cnt'.$i]?>" size="2">
    </td>
 </tr>
 
@@ -67,13 +67,13 @@ for ($i=1; $i<=9; $i++) {
 </tr>
 <tr>
     <th scope="row"><label for="po_level">투표가능 회원레벨</label></th>
-    <td><?=get_member_level_select('po_level', 1, 10, $po[po_level])?> 이상 투표할 수 있음</td>
+    <td><?=get_member_level_select('po_level', 1, 10, $po['po_level'])?> 이상 투표할 수 있음</td>
 </tr>
 <tr>
     <th scope="row"><label for="po_point">포인트</label></th>
     <td>
         <?=help('투표에 참여한 회원에게 포인트를 부여합니다.')?>
-        <input type="text" id="po_point" name="po_point" value="<?=$po[po_point]?>"> 점
+        <input type="text" id="po_point" name="po_point" value="<?=$po['po_point']?>"> 점
     </td>
 </tr>
 

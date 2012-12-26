@@ -14,7 +14,7 @@ if ($w == 'u') {
 
     $sql = " select * from {$g4['mail_table']} where ma_id = '{$ma_id}' ";
     $ma = sql_fetch($sql);
-    if (!$ma[ma_id])
+    if (!$ma['ma_id'])
         alert('등록된 자료가 없습니다.');
 } else {
     $html_title .= '입력';
@@ -26,7 +26,7 @@ include_once('./admin.head.php');
 
 <form id="fmailform" name="fmailform" method="post" action="./mail_update.php" onsubmit="return fmailform_check(this);">
 <input type="hidden" id="w" name="w" value="<?=$w?>">
-<input type="hidden" id="ma_id" name="ma_id" value="<?=$ma[ma_id]?>">
+<input type="hidden" id="ma_id" name="ma_id" value="<?=$ma['ma_id']?>">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 <table class="frm_tbl">
 <caption>메일내용 입력</caption>

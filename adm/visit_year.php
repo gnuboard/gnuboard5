@@ -19,11 +19,11 @@ $sql = " select SUBSTRING(vs_date,1,4) as vs_year, SUM(vs_count) as cnt
             order by vs_year desc ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $arr[$row['vs_year']] = $row[cnt];
+    $arr[$row['vs_year']] = $row['cnt'];
 
-    if ($row[cnt] > $max) $max = $row[cnt];
+    if ($row['cnt'] > $max) $max = $row['cnt'];
 
-    $sum_count += $row[cnt];
+    $sum_count += $row['cnt'];
 }
 ?>
 

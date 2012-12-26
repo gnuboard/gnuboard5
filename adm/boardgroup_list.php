@@ -36,9 +36,9 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -130,7 +130,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
     $s_del = '';
     if ($is_admin == 'super') {
-        //$s_del = '<a href="javascript:del(\'./boardgroup_delete.php?$qstr&gr_id='.$row[gr_id].'\');">삭제</a>';
+        //$s_del = '<a href="javascript:del(\'./boardgroup_delete.php?$qstr&gr_id='.$row['gr_id'].'\');">삭제</a>';
         $s_del = '<a href="javascript:post_delete(\'boardgroup_delete.php\', \''.$row['gr_id'].'\');">삭제</a>';
     }
 ?>
@@ -151,9 +151,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
     <?}?>
     </td>
-    <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2[cnt]?></a></td>
-    <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row[gr_use_access]?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
-    <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1[cnt]?></a></td>
+    <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
+    <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
+    <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
     <td class="td_mng"><?=$s_upd?> <?=$s_del?></td>
 </tr>
 
@@ -171,7 +171,7 @@ if ($i == 0)
 </div>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 ?>
 <div class="pg">
     <?=$pagelist?>

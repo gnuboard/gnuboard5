@@ -19,11 +19,11 @@ $sql = " select SUBSTRING(vi_time,1,2) as vi_hour, count(vi_id) as cnt
             order by vi_hour ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $arr[$row['vi_hour']] = $row[cnt];
+    $arr[$row['vi_hour']] = $row['cnt'];
 
-    if ($row[cnt] > $max) $max = $row[cnt];
+    if ($row['cnt'] > $max) $max = $row['cnt'];
 
-    $sum_count += $row[cnt];
+    $sum_count += $row['cnt'];
 }
 ?>
 

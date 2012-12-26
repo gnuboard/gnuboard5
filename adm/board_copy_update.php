@@ -12,8 +12,8 @@ if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table))
     alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)');
 }
 
-$row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where bo_table = $target_table ");
-if ($row[cnt])
+$row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where bo_table = '$target_table' ");
+if ($row['cnt'])
     alert($target_table.'은(는) 이미 존재하는 게시판 TABLE 입니다.\\n\\n복사할 TABLE로 사용할 수 없습니다.');
 
 check_token();
@@ -31,56 +31,56 @@ $sql = " insert into {$g4['board_table']}
                  bo_subject = '$target_subject',
                  gr_id = '{$board['gr_id']}',
                  bo_admin = '{$board['bo_admin']}',
-                 bo_list_level = '{$board[bo_list_level]}',
-                 bo_read_level = '{$board[bo_read_level]}',
-                 bo_write_level = '{$board[bo_write_level]}',
-                 bo_reply_level = '{$board[bo_reply_level]}',
-                 bo_comment_level = '{$board[bo_comment_level]}',
-                 bo_upload_level = '{$board[bo_upload_level]}',
-                 bo_download_level = '{$board[bo_download_level]}',
-                 bo_html_level = '{$board[bo_html_level]}',
-                 bo_link_level = '{$board[bo_link_level]}',
-                 bo_trackback_level = '{$board[bo_trackback_level]}',
-                 bo_count_modify = '{$board[bo_count_modify]}',
-                 bo_count_delete = '{$board[bo_count_delete]}',
-                 bo_read_point = '{$board[bo_read_point]}',
-                 bo_write_point = '{$board[bo_write_point]}',
-                 bo_comment_point = '{$board[bo_comment_point]}',
-                 bo_download_point = '{$board[bo_download_point]}',
-                 bo_use_category = '{$board[bo_use_category]}',
+                 bo_list_level = '{$board['bo_list_level']}',
+                 bo_read_level = '{$board['bo_read_level']}',
+                 bo_write_level = '{$board['bo_write_level']}',
+                 bo_reply_level = '{$board['bo_reply_level']}',
+                 bo_comment_level = '{$board['bo_comment_level']}',
+                 bo_upload_level = '{$board['bo_upload_level']}',
+                 bo_download_level = '{$board['bo_download_level']}',
+                 bo_html_level = '{$board['bo_html_level']}',
+                 bo_link_level = '{$board['bo_link_level']}',
+                 bo_trackback_level = '{$board['bo_trackback_level']}',
+                 bo_count_modify = '{$board['bo_count_modify']}',
+                 bo_count_delete = '{$board['bo_count_delete']}',
+                 bo_read_point = '{$board['bo_read_point']}',
+                 bo_write_point = '{$board['bo_write_point']}',
+                 bo_comment_point = '{$board['bo_comment_point']}',
+                 bo_download_point = '{$board['bo_download_point']}',
+                 bo_use_category = '{$board['bo_use_category']}',
                  bo_category_list = '{$board['bo_category_list']}',
                  bo_disable_tags = '{$board['bo_disable_tags']}',
-                 bo_use_secret = '{$board[bo_use_secret]}',
-                 bo_use_dhtml_editor = '{$board[bo_use_dhtml_editor]}',
-                 bo_use_sideview = '{$board[bo_use_sideview]}',
-                 bo_use_comment = '{$board[bo_use_comment]}',
-                 bo_use_good = '{$board[bo_use_good]}',
-                 bo_use_nogood = '{$board[bo_use_nogood]}',
-                 bo_use_signature = '{$board[bo_use_signature]}',
-                 bo_use_ip_view = '{$board[bo_use_ip_view]}',
-                 bo_use_trackback = '{$board[bo_use_trackback]}',
+                 bo_use_secret = '{$board['bo_use_secret']}',
+                 bo_use_dhtml_editor = '{$board['bo_use_dhtml_editor']}',
+                 bo_use_sideview = '{$board['bo_use_sideview']}',
+                 bo_use_comment = '{$board['bo_use_comment']}',
+                 bo_use_good = '{$board['bo_use_good']}',
+                 bo_use_nogood = '{$board['bo_use_nogood']}',
+                 bo_use_signature = '{$board['bo_use_signature']}',
+                 bo_use_ip_view = '{$board['bo_use_ip_view']}',
+                 bo_use_trackback = '{$board['bo_use_trackback']}',
                  bo_use_list_view = '{$board['o_use_list_view']}',
-                 bo_use_list_content = '{$board[bo_use_list_content]}',
-                 bo_table_width = '{$board[bo_table_width]}',
-                 bo_subject_len = '{$board[bo_subject_len]}',
-                 bo_page_rows = '{$board[bo_page_rows]}',
-                 bo_new = '{$board[bo_new]}',
-                 bo_hot = '{$board[bo_hot]}',
-                 bo_image_width = '{$board[bo_image_width]}',
+                 bo_use_list_content = '{$board['bo_use_list_content']}',
+                 bo_table_width = '{$board['bo_table_width']}',
+                 bo_subject_len = '{$board['bo_subject_len']}',
+                 bo_page_rows = '{$board['bo_page_rows']}',
+                 bo_new = '{$board['bo_new']}',
+                 bo_hot = '{$board['bo_hot']}',
+                 bo_image_width = '{$board['bo_image_width']}',
                  bo_skin = '{$board['bo_skin']}',
                  bo_include_head = '{$board['bo_include_head']}',
                  bo_include_tail = '{$board['bo_include_tail']}',
                  bo_content_head = '".addslashes($board['bo_content_head'])."',
                  bo_content_tail = '".addslashes($board['bo_content_tail'])."',
                  bo_insert_content = '".addslashes($board['bo_insert_content'])."',
-                 bo_gallery_cols = '{$board[bo_gallery_cols]}',
-                 bo_upload_size = '{$board[bo_upload_size]}',
-                 bo_reply_order = '{$board[bo_reply_order]}',
-                 bo_use_search = '{$board[bo_use_search]}',
-                 bo_order_search = '{$board[bo_order_search]}',
+                 bo_gallery_cols = '{$board['bo_gallery_cols']}',
+                 bo_upload_size = '{$board['bo_upload_size']}',
+                 bo_reply_order = '{$board['bo_reply_order']}',
+                 bo_use_search = '{$board['bo_use_search']}',
+                 bo_order_search = '{$board['bo_order_search']}',
                  bo_notice = '{$board['bo_notice']}',
-                 bo_upload_count = '{$board[bo_upload_count]}',
-                 bo_use_email = '{$board[bo_use_email]}',
+                 bo_upload_count = '{$board['bo_upload_count']}',
+                 bo_use_email = '{$board['bo_use_email']}',
                  bo_sort_field = '{$board['bo_sort_field']}',
                  bo_1_subj = '{$board['bo_1_subj']}',
                  bo_2_subj = '{$board['bo_2_subj']}',
@@ -159,12 +159,12 @@ if ($copy_case == 'schema_data_both')
     // 게시글수 저장
     $sql = " select bo_count_write, bo_count_comment from {$g4['board_table']} where bo_table = '$bo_table' ";
     $row = sql_fetch($sql);
-    $sql = " update {$g4['board_table']} set bo_count_write = '{$row[bo_count_write]}', bo_count_comment = '{$row[bo_count_comment]}' where bo_table = '$target_table' ";
+    $sql = " update {$g4['board_table']} set bo_count_write = '{$row['bo_count_write']}', bo_count_comment = '{$row['bo_count_comment]}' where bo_table = '$target_table' ";
     sql_query($sql);
 
     // 05.05.24
     // 파일테이블 복사
-    //$sql = ' insert into $g4[board_file_table] select "$target_table", wr_id, bf_no, bf_source, bf_file, bf_download, bf_content from $g4[board_file_table] where bo_table = "$bo_table" ';
+    //$sql = ' insert into $g4['board_file_table'] select "$target_table", wr_id, bf_no, bf_source, bf_file, bf_download, bf_content from $g4['board_file_table'] where bo_table = "$bo_table" ';
     //sql_query($sql);
 
     // 4.00.01
@@ -179,18 +179,18 @@ if (count($file_copy))
 {
     for ($i=0; $i<count($file_copy); $i++)
     {
-        $sql = " insert into $g4[board_file_table]
+        $sql = " insert into $g4['board_file_table']
                     set bo_table = '$target_table',
-                         wr_id = '{$file_copy[$i][wr_id]}',
-                         bf_no = '{$file_copy[$i][bf_no]}',
+                         wr_id = '{$file_copy[$i]['wr_id']}',
+                         bf_no = '{$file_copy[$i]['bf_no']}',
                          bf_source = '{$file_copy[$i]['bf_source']}',
                          bf_file = '{$file_copy[$i]['bf_file']}',
                          bf_download = '{$file_copy[$i]['bf_download']}',
                          bf_content = '{$file_copy[$i]['bf_content']}',
-                         bf_filesize = '{$file_copy[$i][bf_filesize]}',
-                         bf_width = '{$file_copy[$i][bf_width]}',
-                         bf_height = '{$file_copy[$i][bf_height]}',
-                         bf_type = '{$file_copy[$i][bf_type]}',
+                         bf_filesize = '{$file_copy[$i]['bf_filesize']}',
+                         bf_width = '{$file_copy[$i]['bf_width']}',
+                         bf_height = '{$file_copy[$i]['bf_height']}',
+                         bf_type = '{$file_copy[$i]['bf_type']}',
                          bf_datetime = '{$file_copy[$i]['bf_datetime']}' ";
         sql_query($sql, FALSE);
     }

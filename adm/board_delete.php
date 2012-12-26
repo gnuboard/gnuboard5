@@ -24,5 +24,5 @@ if (!$row) {
 
 include_once ('./board_delete.inc.php');
 
-goto_url('./board_list.php?'.$qstr.'&page='.$page);
+goto_url('./board_list.php?'.$qstr.'&amp;page='.$page);
 ?>

@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], 'w');
 
 $token = get_token();
 
-$g4[title] = '게시판 복사';
+$g4['title'] = '게시판 복사';
 $administrator = 1;
 include_once($g4['path'].'/head.sub.php');
 ?>
@@ -23,11 +23,11 @@ include_once($g4['path'].'/head.sub.php');
 </tr>
 <tr>
     <th scope="col"><label for="target_table">복사할 TABLE</label></th>
-    <td><input type="text" id="target_table" name="target_table" maxlength="20" required alphanumericunderline> 영문자, 숫자, _ 만 가능 (공백없이)</td>
+    <td><input type="text" id="target_table" name="target_table" maxlength="20" required class="required alnum_"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
 </tr>
 <tr>
     <th scope="col"><label for="target_subject">게시판 제목</label></th>
-    <td><input type="text" id="target_subject" name="target_subject" maxlength="120" required value="[복사본] <?=$board["bo_subject"]?>"></td>
+    <td><input type="text" id="target_subject" name="target_subject" maxlength="120" required value="[복사본] <?=$board['bo_subject']?>"></td>
 </tr>
 <tr>
     <th scope="col">복사 유형</th>

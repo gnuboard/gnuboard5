@@ -8,7 +8,7 @@ auth_check($auth[$sub_menu], 'd');
 
 $gr_id = mysql_real_escape_string(trim($_POST['gr_id']));
 $row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where gr_id = '{$gr_id}' ");
-if ($row[cnt])
+if ($row['cnt'])
     alert('이 그룹에 속한 게시판이 존재하여 게시판 그룹을 삭제할 수 없습니다.'.PHP_EOL.PHP_EOL.'이 그룹에 속한 게시판을 먼저 삭제하여 주십시오.', './board_list.php?sfl=gr_id&amp;stx='.$gr_id);
 
 
@@ -16,10 +16,10 @@ if ($row[cnt])
 // _BOARD_DELETE_ 상수를 선언해야 board_delete.inc.php 가 정상 작동함
 define("_BOARD_DELETE_", TRUE);
 
-$sql = " select * from $g4[board_table] where gr_id = '$gr_id' ";
+$sql = " select * from $g4['board_table'] where gr_id = '$gr_id' ";
 $result = sql_query($sql);
 while ($row = sql_fetch_array($result)) {
-    $tmp_bo_table = $row[bo_table];
+    $tmp_bo_table = $row['bo_table'];
 
     include ('./board_delete.inc.php');
 }

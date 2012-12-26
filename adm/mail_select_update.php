@@ -32,7 +32,7 @@ include_once('./admin.tail.php');
 flush();
 ob_flush();
 
-$ma_id = trim($_POST[ma_id]);
+$ma_id = trim($_POST['ma_id']);
 $select_member_list = addslashes(trim($_POST['ma_list']));
 
 //print_r2($_POST); EXIT;
@@ -73,7 +73,7 @@ for ($i=0; $i<count($member_list); $i++)
         ob_end_clean();
         */
 
-        //mailer($default[de_subject], $default[de_admin_email], $email, $subject, $content, 1);
+        //mailer($default['de_subject'], $default['de_admin_email'], $email, $subject, $content, 1);
         mailer($config['cf_title'], $member['mb_email'], $email, $subject, $content, 1);
 
         echo "<script> document.all.cont.innerHTML += '$cnt. $email ($mb_id : $name)<br>'; </script>\n";

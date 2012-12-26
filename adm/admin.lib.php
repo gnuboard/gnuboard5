@@ -40,12 +40,12 @@ function member_delete($mb_id)
     $mb = sql_fetch($sql);
     if ($mb['mb_recommend']) {
         $row = sql_fetch(" select count(*) as cnt from {$g4['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
-        if ($row[cnt])
-            insert_point($mb['mb_recommend'], $config[cf_recommend_point] * (-1), $mb_id.'님의 회원자료 삭제로 인한 추천인 포인트 반환', "@member", $mb['mb_recommend'], $mb_id.' 추천인 삭제');
+        if ($row['cnt'])
+            insert_point($mb['mb_recommend'], $config['cf_recommend_point'] * (-1), $mb_id.'님의 회원자료 삭제로 인한 추천인 포인트 반환', "@member", $mb['mb_recommend'], $mb_id.' 추천인 삭제');
     }
 
     // 회원자료는 정보만 없앤 후 아이디는 보관하여 다른 사람이 사용하지 못하도록 함 : 061025
-    if ($mb[mb_level] > 1) {
+    if ($mb['mb_level'] > 1) {
     " update $g4[member_table]
                     set mb_jumin = '',
                          mb_password = '',
@@ -79,7 +79,7 @@ function member_delete($mb_id)
     {
         // 다른 사람이 이 회원아이디를 사용하지 못하도록 아이디만 생성해 놓습니다.
         // 게시판에서 회원아이디는 삭제하지 않기 때문입니다.
-        sql_query(" insert into {$g4['member_table']} set mb_id = '{$mb_id}', mb_name='{$mb[mb_name]'}, mb_nick='[삭제됨]', mb_ip='{$mb['mb_ip']}', mb_datetime = '{$g4['time_ymdhis']}' ");
+        sql_query(" insert into {$g4['member_table']} set mb_id = '{$mb_id}', mb_name='{$mb['mb_name']'}, mb_nick='[삭제됨]', mb_ip='{$mb['mb_ip']}', mb_datetime = '{$g4['time_ymdhis']}' ");
     }
 
     // 포인트 테이블에서 삭제
@@ -89,19 +89,19 @@ function member_delete($mb_id)
     sql_query(" delete from {$g4['group_member_table']} where mb_id = '{$mb_id}' ");
 
     // 쪽지 삭제
-    sql_query(" delete from {$g4[memo_table]} where me_recv_mb_id = '{$mb_id}' or me_send_mb_id = '{$mb_id}' ");
+    sql_query(" delete from {$g4['memo_table']} where me_recv_mb_id = '{$mb_id}' or me_send_mb_id = '{$mb_id}' ");
 
     // 스크랩 삭제
-    sql_query(" delete from {$g4[scrap_table]} where mb_id = '{$mb_id}' ");
+    sql_query(" delete from {$g4['scrap_table']} where mb_id = '{$mb_id}' ");
 
     // 관리권한 삭제
     sql_query(" delete from {$g4['auth_table']} where mb_id = '{$mb_id}' ");
 
     // 그룹관리자인 경우 그룹관리자를 공백으로
-    sql_query(" update $g4[group_table] set gr_admin = "" where gr_admin = '{$mb_id}' ");
+    sql_query(" update $g4['group_table'] set gr_admin = "" where gr_admin = '{$mb_id}' ");
 
     // 게시판관리자인 경우 게시판관리자를 공백으로
-    sql_query(" update $g4[board_table] set bo_admin = "" where bo_admin = '{$mb_id}' ");
+    sql_query(" update $g4['board_table'] set bo_admin = "" where bo_admin = '{$mb_id}' ");
 
     // 아이콘 삭제
     @unlink($g4['path'].'/data/member/'.substr($mb_id,0,2).'/$mb_id.gif');
@@ -134,7 +134,7 @@ function get_member_id_select($name, $level, $selected="", $event="")
 
     $sql = " select mb_id from {$g4['member_table']} where mb_level >= '{$level}' ";
     $result = sql_query($sql);
-    $str = '<select id="'.$name.'" name="'.$name.'" '.$event.'><option value="">선택안함';
+    $str = '<select id="'.$name.'" name="'.$name.'" '.$event.'><option value="">선택안함</option>';
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $str .= '<option value="'.$row['mb_id'].'"';
@@ -257,7 +257,7 @@ function order_select($fld, $sel='')
 // 접근 권한 검사
 if (!$member['mb_id'])
 {
-    //alert('로그인 하십시오.', '$g4[bbs_path]/login.php?url=' . urlencode('$_SERVER[PHP_SELF]?w=$w&mb_id=$mb_id'));
+    //alert('로그인 하십시오.', '$g4['bbs_path']/login.php?url=' . urlencode('$_SERVER['PHP_SELF']?w=$w&mb_id=$mb_id'));
     alert('로그인 하십시오.', $g4['bbs_path'].'/login.php?url=' . urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']));
 }
 else if ($is_admin != 'super')

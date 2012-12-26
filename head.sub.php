@@ -23,7 +23,7 @@ if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
 $lo_location = addslashes($g4['title']);
 if (!$lo_location)
     $lo_location = $_SERVER['REQUEST_URI'];
-//$lo_url = $g4[url] . $_SERVER['REQUEST_URI'];
+//$lo_url = $g4['url'] . $_SERVER['REQUEST_URI'];
 $lo_url = $_SERVER['REQUEST_URI'];
 if (strstr($lo_url, "/$g4[admin]/") || $is_admin == 'super') $lo_url = '';
 

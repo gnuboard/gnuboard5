@@ -22,7 +22,7 @@ for ($i=0; $i<count($chk); $i++)
         $msg .= $mb['mb_id'].' : 로그인 중인 관리자는 삭제 할 수 없습니다.'.PHP_EOL;
     } else if (is_admin($mb['mb_id']) == 'super') {
         $msg .= $mb['mb_id'].' : 최고 관리자는 삭제할 수 없습니다.'.PHP_EOL;
-    } else if ($is_admin != 'super' && $mb[mb_level] >= $member[mb_level]) {
+    } else if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level']) {
         $msg .= $mb['mb_id'].' : 자신보다 권한이 높거나 같은 회원은 삭제할 수 없습니다.'.PHP_EOL;
     } else {
         // 회원자료 삭제

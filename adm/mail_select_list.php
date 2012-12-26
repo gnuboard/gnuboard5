@@ -62,7 +62,7 @@ $sql_where .= " and mb_leave_date = '' and mb_intercept_date = '' ";
 
 $sql = " select COUNT(*) as cnt {$sql_common} {$sql_where} ";
 $row = sql_fetch($sql);
-$cnt = $row[cnt];
+$cnt = $row['cnt'];
 if ($cnt == 0)
     alert('선택하신 내용으로는 해당되는 회원자료가 없습니다.');
 
@@ -111,7 +111,7 @@ $cr = "";
 while ($row=sql_fetch_array($result))
 {
     $i++;
-    $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row[mb_birth] . "||" . $row[mb_datetime];
+    $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row['mb_birth'] . "||" . $row['mb_datetime'];
     $cr = PHP_EOL;
 ?>
 <tr>

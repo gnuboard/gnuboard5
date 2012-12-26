@@ -18,11 +18,11 @@ $sql = " select vs_date, vs_count as cnt
             order by vs_date desc ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $arr[$row['vs_date']] = $row[cnt];
+    $arr[$row['vs_date']] = $row['cnt'];
 
-    if ($row[cnt] > $max) $max = $row[cnt];
+    if ($row['cnt'] > $max) $max = $row['cnt'];
 
-    $sum_count += $row[cnt];
+    $sum_count += $row['cnt'];
 }
 ?>
 

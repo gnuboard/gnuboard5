@@ -31,11 +31,11 @@ $sql_common = " mb_name = '{$_POST['mb_name']}',
                          mb_leave_date = '{$_POST['mb_leave_date']}',
                          mb_intercept_date='{$_POST['mb_intercept_date']}',
                          mb_memo = '{$_POST['mb_memo']}',
-                         mb_mailling = '{$_POST[mb_mailling]}',
-                         mb_sms = '{$_POST[mb_sms]}',
-                         mb_open = '{$_POST[mb_open]}',
+                         mb_mailling = '{$_POST['mb_mailling']}',
+                         mb_sms = '{$_POST['mb_sms']}',
+                         mb_open = '{$_POST['mb_open']}',
                          mb_profile = '{$_POST['mb_profile']}',
-                         mb_level = '{$_POST[mb_level]}',
+                         mb_level = '{$_POST['mb_level']}',
                          mb_1 = '{$_POST['mb_1']}',
                          mb_2 = '{$_POST['mb_2']}',
                          mb_3 = '{$_POST['mb_3']}',
@@ -67,10 +67,10 @@ else if ($w == 'u')
     if (!$mb['mb_id'])
         alert('존재하지 않는 회원자료입니다.');
 
-    if ($is_admin != 'super' && $mb[mb_level] >= $member[mb_level])
+    if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'])
         alert('자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
 
-    if ($_POST['mb_id'] == $member['mb_id'] && $_POST[mb_level] != $mb[mb_level])
+    if ($_POST['mb_id'] == $member['mb_id'] && $_POST['mb_level'] != $mb['mb_level'])
         alert($mb['mb_id'].' : 로그인 중인 관리자 레벨은 수정 할 수 없습니다.');
 
     $mb_dir = substr($mb_id,0,2);

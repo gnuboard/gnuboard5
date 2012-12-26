@@ -10,7 +10,7 @@ if (is_array($_POST['chk'])) {
         // 실제 번호를 넘김
         $k = $chk[$i];
 
-        sql_query(" delete from {$g4['popular_table']} where pp_id = '{$_POST[pp_id][$k]}' ", true);
+        sql_query(" delete from {$g4['popular_table']} where pp_id = '{$_POST['pp_id'][$k]}' ", true);
     }
 }
 
@@ -44,9 +44,9 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -114,7 +114,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 <tr>
     <td class="td_chk">
-        <input type="hidden" name="pp_id[<?=$i?>]" value="<?=$row[pp_id]?>">
+        <input type="hidden" name="pp_id[<?=$i?>]" value="<?=$row['pp_id']?>">
         <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$word?> 선택">
     </td>
     <td>&nbsp; <a href="<?=$_SERVER['PHP_SELF']?>?sfl=pp_word&amp;stx=<?=$word?>"><?=$word?></a></td>
@@ -138,7 +138,7 @@ if ($i == 0)
 <?}?>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;page=");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
 ?>
 <div class="pg">
     <?=$pagelist?>

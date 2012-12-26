@@ -12,7 +12,7 @@ $html_title = '게시판그룹';
 if ($w == '')
 {
     $gr_id_attr = 'required';
-    $gr[gr_use_access] = 0;
+    $gr['gr_use_access'] = 0;
     $html_title .= ' 생성';
 }
 else if ($w == 'u')
@@ -68,7 +68,7 @@ include_once('./admin.head.php');
     <th scope="row"><label for="gr_use_access">접근회원사용</label></th>
     <td>
         <?=help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.")?>
-        <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr[gr_use_access]?'checked':'';?>>
+        <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr['gr_use_access']?'checked':'';?>>
         사용
     </td>
 </tr>
@@ -79,7 +79,7 @@ include_once('./admin.head.php');
         // 접근회원수
         $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$gr_id}' ";
         $row1 = sql_fetch($sql1);
-        echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1[cnt].'</a>';
+        echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1['cnt'].'</a>';
         ?>
     </td>
 </tr>

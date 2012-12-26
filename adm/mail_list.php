@@ -9,7 +9,7 @@ $sql_common = " from {$g4['mail_table']} ";
 // 테이블의 전체 레코드수만 얻음
 $sql = " select COUNT(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
 $page = 1;
 
@@ -46,19 +46,19 @@ $colspan = 6;
 <tbody>
 <?
 for ($i=0; $row=mysql_fetch_array($result); $i++) {
-    $s_mod = '<a href="./mail_form.php?w=u&amp;ma_id='.$row[ma_id].'">수정</a>';
-    $s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row[ma_id].');">삭제</a>';
-    $s_vie = '<a href="./mail_preview.php?ma_id='.$row[ma_id].'" target="_blank">미리보기</a>';
+    $s_mod = '<a href="./mail_form.php?w=u&amp;ma_id='.$row['ma_id'].'">수정</a>';
+    $s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
+    $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
 
-    $num = number_format($total_count - ($page - 1) * $config[cf_page_rows] - $i);
+    $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
 ?>
 
 <tr>
     <td class="td_num"><?=$num?></td>
     <td><?=$row['ma_subject']?></td>
     <td class="td_time"><?=$row['ma_time']?></td>
-    <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row[ma_id]?>">테스트</a></td>
-    <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row[ma_id]?>">보내기</a></td>
+    <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row['ma_id']?>">테스트</a></td>
+    <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row['ma_id']?>">보내기</a></td>
     <td class="td_mng"><?=$s_mod?> <?=$s_del?> <?=$s_vie?></td>
 </tr>
 
