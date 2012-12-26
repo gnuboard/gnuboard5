@@ -18,7 +18,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
     <div id="logo"><a href="<?=$g4['path']?>/">초기화면</a></div>
 
     <ul>
-        <? if ($member['mb_id']) { ?>
+        <? if ($is_member) { ?>
         <li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
         <li><a href="<?=$g4['bbs_path']?>/member_confirm.php?url=register_form.php">정보수정</a></li>
         <? if ($is_admin) { ?><li><a href="<?=$g4['path']?>/adm">관리자</a></li><? } ?>
@@ -39,7 +39,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
         <input type="submit" value="검색">
     </fieldset>
     </form>
-    <? if (!$bo_table) {?><h1><?=$g4['title']?></h1><? } ?>
+    <? if (!isset($bo_table)) {?><h1><?=$g4['title']?></h1><? } ?>
 </header>
 
 <div>

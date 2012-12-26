@@ -22,11 +22,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
             // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
 
-            echo " " . $list[$i]['icon_new'];
-            echo " " . $list[$i]['icon_file'];
-            echo " " . $list[$i]['icon_link'];
-            echo " " . $list[$i]['icon_hot'];
-            echo " " . $list[$i]['icon_secret'];
+            if (isset($list[$i]['icon_new']))    echo " " . $list[$i]['icon_new'];
+            if (isset($list[$i]['icon_file']))   echo " " . $list[$i]['icon_file'];
+            if (isset($list[$i]['icon_link']))   echo " " . $list[$i]['icon_link'];
+            if (isset($list[$i]['icon_hot']))    echo " " . $list[$i]['icon_hot'];
+            if (isset($list[$i]['icon_secret'])) echo " " . $list[$i]['icon_secret'];
             ?>
         </li>
     <? } ?>

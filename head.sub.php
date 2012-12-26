@@ -8,7 +8,7 @@ if (!$g4['title'])
     $g4['title'] = $config['cf_title'];
 
 // 쪽지를 받았나?
-if ($member['mb_memo_call']) {
+if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
     $mb = get_member($member['mb_memo_call'], "mb_nick");
     sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
 
@@ -48,7 +48,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 <head>
 <meta charset="<?=$g4['charset']?>">
 <title><?=$g4['title']?></title>
-<? if ($administrator) { ?>
+<? if (isset($administrator)) { ?>
 <link rel="stylesheet" href="<?=$g4['path']?>/css/adm.css?=<?=date("md")?>">
 <? } else { ?>
 <link rel="stylesheet" href="<?=$g4['path']?>/css/def.css?=<?=date("md")?>">
