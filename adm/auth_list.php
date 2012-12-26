@@ -10,7 +10,7 @@ $token = get_token();
 $sql_common = " from {$g4['auth_table']} a left join {$g4['member_table']} b on (a.mb_id=b.mb_id) ";
 
 $sql_search = " where (1) ";
-if (isset($stx)) {
+if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         default :

@@ -39,11 +39,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
         <input type="submit" value="검색">
     </fieldset>
     </form>
-<<<<<<< HEAD
     <h1><?=$config['cf_title']?></h1>
-=======
-    <? if (!isset($bo_table)) {?><h1><?=$g4['title']?></h1><? } ?>
->>>>>>> e7b5429b4b7a43150b180dc9efa62eaf13e8b6f7
 </header>
 
 <div>

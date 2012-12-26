@@ -16,7 +16,7 @@ $sql_search = " where (1) ";
 if ($is_admin != 'super')
     $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
 
-if (!isset($sst)) {
+if (!$sst) {
     $sst = "mb_datetime";
     $sod = "desc";
 }
