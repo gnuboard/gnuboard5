@@ -100,13 +100,13 @@ function textarea_size(fld, size)
                 $href2 = '</a>';
             }
             $current_class = "";
-            if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2) || isset($index)))
+            if ((isset($sub_menu) && substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)) || defined('_ADMIN_INDEX_'))
                 $current_class = " gnb_1depth_on";
             echo "<li class=\"gnb_1depth".$current_class."\">";
             echo $href1 . $menu['menu'.$key][0][1] . $href2;
             echo print_menu1('menu'.$key, 1);
             echo "</li>";
-            if (isset($index) && ($current_class || !$index)) $current_class = ""; // 클래스 반복부여 방지
+            if ($current_class || !defined('_ADMIN_INDEX_')) $current_class = ""; // 클래스 반복부여 방지
         }
 
         ?>
