@@ -2,7 +2,7 @@
 /*******************************************************************************
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 //error_reporting(E_ALL ^ E_NOTICE);
 
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
@@ -316,39 +316,48 @@ if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
 
 // QUERY_STRING
 $qstr = '';
-/*
-if (isset($bo_table))   $qstr .= 'bo_table=' . urlencode($bo_table);
-if (isset($wr_id))      $qstr .= '&wr_id=' . urlencode($wr_id);
-*/
+
 if (isset($sca))  {
     $sca = mysql_real_escape_string($sca);
     $qstr .= '&amp;sca=' . urlencode($sca);
+} else {
+    $sca = "";
 }
 
 if (isset($sfl))  {
     $sfl = mysql_real_escape_string($sfl);
-    //$sfl = preg_replace("/[^\w\,\|]+/", "", $sfl);
     $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
+} else {
+    $sfl = "";
 }
+
 
 if (isset($stx))  { // search text (검색어)
     $stx = mysql_real_escape_string($stx);
     $qstr .= '&amp;stx=' . urlencode($stx);
+} else {
+    $stx = "";
 }
 
 if (isset($sst))  {
     $sst = mysql_real_escape_string($sst);
     $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
+} else {
+    $sst = "";
 }
 
 if (isset($sod))  { // search order (검색 오름, 내림차순)
     $sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : '';
     $qstr .= '&amp;sod=' . urlencode($sod);
+} else {
+    $sod = "";
 }
 
 if (isset($sop))  { // search operator (검색 or, and 오퍼레이터)
     $sop = preg_match("/^(or|and)$/i", $sop) ? $sop : '';
     $qstr .= '&amp;sop=' . urlencode($sop);
+} else {
+    $sop = "";
 }
 
 if (isset($spt))  { // search part (검색 파트[구간])
@@ -455,14 +464,15 @@ if (array_key_exists('mb_id', $member)) {
 
 //$member['mb_level_title'] = $g4['member_level'][$member['mb_level']]; // 권한명
 
-$write_table = '';
+$write = array();
+$write_table = "";
 if (isset($bo_table)) {
     $board = sql_fetch(" select * from {$g4['board_table']} where bo_table = '$bo_table' ");
     if ($board['bo_table']) {
         $gr_id = $board['gr_id'];
         $write_table = $g4['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
         //$comment_table = $g4['write_prefix'] . $bo_table . $g4['comment_suffix']; // 코멘트 테이블 전체이름
-        if ($wr_id)
+        if (isset($wr_id) && $wr_id)
             $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
     }
 }

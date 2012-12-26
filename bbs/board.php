@@ -1,28 +1,26 @@
 <?
 include_once('./_common.php');
 
-if (!$board[bo_table])
-{
+$wr_id = $_GET['wr_id'];
+
+$cwin = "";
+if (array_key_exists('cwin', $_GET)) {
+    $cwin = $_GET['cwin'];
+}
+
+if (!$board['bo_table']) {
     if ($cwin) // 코멘트 보기
        alert_close('존재하지 않는 게시판입니다.', $g4['path']);
     else
        alert('존재하지 않는 게시판입니다.', $g4['path']);
 }
 
-if ($write[wr_is_comment])
-{
-    /*
-    if ($cwin) // 코멘트 보기
-        alert_close("코멘트는 상세보기 하실 수 없습니다.");
-    else
-        alert("코멘트는 상세보기 하실 수 없습니다.");
-    */
-    goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$write[wr_parent].'#c_'.$wr_id);
+if (array_key_exists('wr_is_comment', $write)) {
+    goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'#c_'.$wr_id);
 }
 
-if (!$bo_table)
-{
-    $msg = 'bo_table 값이 넘어오지 않았습니다.'.PHP_EOL.PHP_EOL.'board.php?bo_table=code 와 같은 방식으로 넘겨 주세요.';
+if (!$bo_table) {
+    $msg = "bo_table 값이 넘어오지 않았습니다.\\n\\nboard.php?bo_table=code 와 같은 방식으로 넘겨 주세요.";
     if ($cwin) // 코멘트 보기
         alert_close($msg);
     else
@@ -30,11 +28,9 @@ if (!$bo_table)
 }
 
 // wr_id 값이 있으면 글읽기
-if ($wr_id)
-{
+if (isset($wr_id) && $wr_id) {
     // 글이 없을 경우 해당 게시판 목록으로 이동
-    if (!$write[wr_id])
-    {
+    if (!$write['wr_id']) {
         $msg = '글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'글이 삭제되었거나 이동된 경우입니다.';
         if ($cwin)
             alert_close($msg);
@@ -148,73 +144,75 @@ if ($wr_id)
         set_session($ss_name, TRUE);
     }
 
-    $g4['title'] = strip_tags(conv_subject($write[wr_subject], 255));
-}
-else
-{
-    if ($member[mb_level] < $board[bo_list_level])
-    {
-        if ($member[mb_id])
+    $g4['title'] = strip_tags(conv_subject($write['wr_subject'], 255));
+} else {
+    if ($member['mb_level'] < $board['bo_list_level']) {
+        if ($member['mb_id'])
             alert('목록을 볼 권한이 없습니다.', $g4['path']);
         else
             alert('목록을 볼 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
 
-    if (!$page) $page = 1;
+    if (!isset($page)) $page = 1;
 
-    $g4['title'] = $board[bo_subject].$page.' 페이지';
+    $g4['title'] = $board['bo_subject'].$page.' 페이지';
 }
 
 include_once($g4['path'].'/head.sub.php');
 
-$width = $board[bo_table_width];
+$width = $board['bo_table_width'];
 if ($width <= 100) $width .= '%';
 
 // IP보이기 사용 여부
 $ip = "";
-$is_ip_view = $board[bo_use_ip_view];
+$is_ip_view = $board['bo_use_ip_view'];
 if ($is_admin) {
     $is_ip_view = true;
-    $ip = $write[wr_ip];
+    if (array_key_exists('wr_ip', $write)) {
+        $ip = $write['wr_ip'];
+    }
 } else // 관리자가 아니라면 IP 주소를 감춘후 보여줍니다.
     $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $write[wr_ip]);
 
 // 분류 사용
 $is_category = false;
 $category_name = '';
-if ($board[bo_use_category]) {
+if ($board['bo_use_category']) {
     $is_category = true;
-    $category_name = $write[ca_name]; // 분류명
+    if (array_key_exists('ca_name', $write)) {
+        $category_name = $write['ca_name']; // 분류명
+    }
 }
 
 // 추천 사용
 $is_good = false;
-if ($board[bo_use_good])
+if ($board['bo_use_good'])
     $is_good = true;
 
 // 비추천 사용
 $is_nogood = false;
-if ($board[bo_use_nogood])
+if ($board['bo_use_nogood'])
     $is_nogood = true;
 
 $admin_href = "";
 // 최고관리자 또는 그룹관리자라면
-if ($member[mb_id] && ($is_admin == 'super' || $group[gr_admin] == $member[mb_id]))
+if ($member['mb_id'] && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id']))
     $admin_href = $g4['admin_path'].'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
-if (!($board[bo_use_comment] && $cwin))
+if (!($board['bo_use_comment'] && $cwin))
     include_once('./board_head.php');
 
 echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
 
-if (!($board[bo_use_comment] && $cwin)) {
+if (!($board['bo_use_comment'] && $cwin)) {
     // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
-    if ($wr_id)
+    if (isset($wr_id) && $wr_id) {
         include_once('./view.php');
+    }
 
     // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임
     //if ($board[bo_use_list_view] || empty($wr_id))
-    if ($member[mb_level] >= $board[bo_list_level] && $board[bo_use_list_view] || empty($wr_id))
+    if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view'] || empty($wr_id))
         include_once ('./list.php');
 
     include_once('./board_tail.php');

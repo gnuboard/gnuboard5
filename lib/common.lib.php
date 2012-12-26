@@ -735,12 +735,7 @@ function get_category_option($bo_table='')
 {
     global $g4, $board;
 
-    /*
-    $sql = " select bo_category_list from $g4[board_table] where bo_table = '$bo_table' ";
-    $row = sql_fetch($sql);
-    $arr = explode("|", $row[bo_category_list]); // 구분자가 , 로 되어 있음
-    */
-    $arr = explode("|", $board[bo_category_list]); // 구분자가 , 로 되어 있음
+    $arr = explode("|", $board['bo_category_list']); // 구분자가 , 로 되어 있음
     $str = "";
     for ($i=0; $i<count($arr); $i++)
         if (trim($arr[$i]))
