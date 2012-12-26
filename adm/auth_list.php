@@ -10,7 +10,7 @@ $token = get_token();
 $sql_common = " from {$g4['auth_table']} a left join {$g4['member_table']} b on (a.mb_id=b.mb_id) ";
 
 $sql_search = " where (1) ";
-if ($stx) {
+if (isset($stx)) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         default :
@@ -147,7 +147,7 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['
 </div>
 
 <?
-if ($stx)
+if (isset($stx))
     echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'.PHP_EOL;
 
 if (strstr($sfl, 'mb_id'))

@@ -9,7 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['member_table']} ";
 
 $sql_search = " where (1) ";
-if ($stx) {
+if (isset($stx)) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case 'mb_point' :
@@ -32,7 +32,7 @@ if ($stx) {
 if ($is_admin != 'super')
     $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
 
-if (!$sst) {
+if (!isset($sst)) {
     $sst = "mb_datetime";
     $sod = "desc";
 }
@@ -48,7 +48,7 @@ $total_count = $row['cnt'];
 
 $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
-if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+if (!isset($page)) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 // 탈퇴회원수
@@ -70,7 +70,7 @@ $row = sql_fetch($sql);
 $intercept_count = $row['cnt'];
 
 $listall = "";
-if ($sfl || $stx) // 검색일 때만 처음 버튼을 보여줌
+if (isset($sfl) || isset(isset($stx))) // 검색일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 $g4['title'] = '회원관리';
@@ -116,7 +116,7 @@ var list_delete_php = 'member_list_delete.php';
         <option value="mb_recommend">추천인</option>
     </select>
     <label for="stx">검색어</label>
-    <input type="text" id="stx" name="stx" required value="<?=$stx ?>">
+    <input type="text" id="stx" name="stx" required value="<?=isset(isset($stx))?>">
     <input type="submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
@@ -127,7 +127,7 @@ var list_delete_php = 'member_list_delete.php';
 </div>
 <?}?>
 
-<form id="fmemberlist" name="fmemberlist" method=post>
+<form id="fmemberlist" name="fmemberlist" method="post">
 <input type="hidden" name="sst"   value='<?=$sst?>'>
 <input type="hidden" name="sod"   value='<?=$sod?>'>
 <input type="hidden" name="sfl"   value='<?=$sfl?>'>
@@ -217,8 +217,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td><?=get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level'])?></td>
     <td><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
     <td><?=substr($row['mb_today_login'],2,8)?></td>
-    <td><?=$row[mb_mailling]?'예':'아니오';?></td>
-    <td><?=$row[mb_open]?'예':'아니오';?></td>
+    <td><?=$row['mb_mailling']?'예':'아니오';?></td>
+    <td><?=$row['mb_open']?'예':'아니오';?></td>
     <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
     <td class="td_chk">
         <? if(empty($row['mb_leave_date'])){?>
@@ -250,7 +250,7 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, '?'.$qstr.
 </div>
 
 <?
-if ($stx)
+if (isset($stx))
     echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>';
 ?>
 </form>

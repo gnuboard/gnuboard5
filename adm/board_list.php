@@ -19,7 +19,7 @@ if ($is_admin != "super") {
     $sql_search .= " and (a.gr_id = b.gr_id and b.gr_admin = '{$member['mb_id']}') ";
 }
 
-if ($stx) {
+if (isset($stx)) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case "bo_table" :
@@ -212,7 +212,7 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['
 </div>
 
 <?
-if ($stx)
+if (isset($stx))
     echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>';
 ?>
 </form>

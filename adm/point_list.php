@@ -9,7 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['point_table']} ";
 
 $sql_search = " where (1) ";
-if ($stx) {
+if (isset($stx)) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case 'mb_id' :
@@ -51,7 +51,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 if ($sfl == 'mb_id' && $stx)
-    $mb = get_member($stx);
+    $mb = get_member(isset($stx));
 
 $g4['title'] = '포인트관리';
 include_once ('./admin.head.php');
@@ -181,7 +181,7 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[
 </div>
 
 <?
-if ($stx)
+if (isset($stx))
     echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>'.PHP_EOL;
 
 if (strstr($sfl, 'mb_id'))

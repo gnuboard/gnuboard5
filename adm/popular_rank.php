@@ -102,7 +102,7 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[
 </div>
 
 <?
-if ($stx)
+if (isset($stx))
     echo "<script>document.fsearch.sfl.value = '$sfl';</script>";
 ?>
 </form>

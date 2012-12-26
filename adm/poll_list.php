@@ -9,7 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['poll_table']} ";
 
 $sql_search = " where (1) ";
-if ($stx) {
+if (isset($stx)) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         default :
@@ -123,7 +123,7 @@ if ($pagelist) {?>
 <?}?>
 
 <?
-if ($stx)
+if (isset($stx))
     echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>'.PHP_EOL;
 ?>
 

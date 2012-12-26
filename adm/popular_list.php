@@ -17,7 +17,7 @@ if (is_array($_POST['chk'])) {
 $sql_common = " from {$g4['popular_table']} a ";
 $sql_search = " where (1) ";
 
-if ($stx) {
+if (isset($stx)) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case "pp_word" :
@@ -58,7 +58,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-if ($stx)
+if (isset($stx))
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 $g4['title'] = '인기검색어관리';
@@ -146,7 +146,7 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[
 </form>
 
 <?
-if ($stx)
+if (isset($stx))
     echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>';
 ?>
 
