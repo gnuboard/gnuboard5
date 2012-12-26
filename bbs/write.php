@@ -1,62 +1,67 @@
 <?
 include_once('./_common.php');
 
-set_session('ss_bo_table', $_REQUEST['bo_table']);
-set_session('ss_wr_id', $_REQUEST['wr_id']);
+set_session('ss_bo_table', $bo_table);
+set_session('ss_wr_id', $wr_id);
 
 // 090713
-if (!$board[bo_table])
-{
+if (!$board['bo_table']) {
     if ($cwin) // 코멘트 보기
        alert_close('존재하지 않는 게시판입니다.', $g4['path']);
     else
        alert('존재하지 않는 게시판입니다.', $g4['path']);
 }
 
-if (!$bo_table)
+if (!$bo_table) {
     alert('bo_table 값이 넘어오지 않았습니다.'.PHP_EOL.PHP_EOL.'write.php?bo_table=code 와 같은 방식으로 넘겨 주세요.', $g4['path']);
+}
 
 @include_once ($g4['path'].'/skin/board/write.head.skin.php');
 @include_once ($board_skin_path.'/write.head.skin.php');
 
-$notice_array = explode(',', trim($board[bo_notice]));
+$notice_array = explode(',', trim($board['bo_notice']));
 
-if ($w == "")
-{
-    if (isset($wr_id))
+if (!($w == '' || $w == 'u' || $w == 'r')) {
+    alert('w 값이 제대로 넘어오지 않았습니다.');
+}
+
+if (($w == 'u' || $w == 'r') && !$write['wr_id']) {
+    alert('글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'삭제되었거나 이동된 경우입니다.', $g4['path']);
+}
+
+if ($w == '') {
+    if ($wr_id) {
         alert('글쓰기에는 \$wr_id 값을 사용하지 않습니다.', $g4['bbs_path'].'/board.php?bo_table='.$bo_table);
-
-    if ($member[mb_level] < $board[bo_write_level]) {
-        if ($member[mb_id])
-            alert('글을 쓸 권한이 없습니다.');
-        else
-            alert('글을 쓸 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER[PHP_SELF].'?bo_table='.$bo_table));
     }
 
-    /*
-    if ($member[mb_point] + $board[bo_write_point] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 글쓰기('.number_format($board[bo_write_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글쓰기 해 주십시오.');
-    */
+    if ($member['mb_level'] < $board['bo_write_level']) {
+        if ($member['mb_id']) {
+            alert('글을 쓸 권한이 없습니다.');
+        } else {
+            alert('글을 쓸 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER[PHP_SELF].'?bo_table='.$bo_table));
+        }
+    }
 
     // 음수도 true 인것을 왜 이제야 알았을까?
-    //$tmp_point = $member[mb_point] ? $member[mb_point] : 0;
-    $tmp_point = ($member[mb_point] > 0) ? $member[mb_point] : 0;
-    if ($tmp_point + $board[bo_write_point] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 글쓰기('.number_format($board[bo_write_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글쓰기 해 주십시오.');
+    if ($is_member) {
+        $tmp_point = ($member['mb_point'] > 0) ? $member['mb_point'] : 0;
+        if ($tmp_point + $board['bo_write_point'] < 0 && !$is_admin) {
+            alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글쓰기('.number_format($board['bo_write_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글쓰기 해 주십시오.');
+        }
+    }
 
     $title_msg = '글쓰기';
-}
-else if ($w == 'u')
-{
+} else if ($w == 'u') {
     // 김선용 1.00 : 글쓰기 권한과 수정은 별도로 처리되어야 함
     //if ($member[mb_level] < $board[bo_write_level]) {
-    if($member['mb_id'] && $write['mb_id'] == $member['mb_id'])
+    if($member['mb_id'] && $write['mb_id'] == $member['mb_id']) {
         ;
-    else if ($member[mb_level] < $board[bo_write_level]) {
-        if ($member[mb_id])
+    } else if ($member['mb_level'] < $board['bo_write_level']) {
+        if ($member['mb_id']) {
             alert('글을 수정할 권한이 없습니다.');
-        else
+        } else {
             alert('글을 수정할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER[PHP_SELF].'?bo_table='.$bo_table));
+        }
     }
 
     $len = strlen($write[wr_reply]);
@@ -83,9 +88,7 @@ else if ($w == 'u')
         alert('이 글과 관련된 코멘트가 존재하므로 수정 할 수 없습니다.'.PHP_EOL.PHP_EOL.'코멘트가 '.$board[bo_count_modify].'건 이상 달린 원글은 수정할 수 없습니다.');
 
     $title_msg = '글수정';
-}
-else if ($w == 'r')
-{
+} else if ($w == 'r') {
     if ($member[mb_level] < $board[bo_reply_level]) {
         if ($member[mb_id])
             alert('글을 답변할 권한이 없습니다.');
@@ -158,84 +161,70 @@ else if ($w == 'r')
     $reply = $reply_array[wr_reply] . $reply_char;
 
     $title_msg = '글답변';
-} else
-    alert('w 값이 제대로 넘어오지 않았습니다.');
-
+}
 
 // 그룹접근 가능
-if ($group[gr_use_access])
-{
-    if (!$member[mb_id])
-        alert('접근 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER[PHP_SELF].'?bo_table='.$bo_table));
+if ($group['gr_use_access']) {
+    if ($is_guest) {
+        alert('접근 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
+    }
 
-    if ($is_admin == 'super' || $group[gr_admin] == $member[mb_id] || $board[bo_admin] == $member[mb_id])
+    if ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id'] || $board['bo_admin'] == $member['mb_id']) {
         ; // 통과
-    else {
+    } else {
         // 그룹접근
         $sql = " select gr_id from {$g4[group_member_table]} where gr_id = '{$board[gr_id]}' and mb_id = '{$member[mb_id]}' ";
         $row = sql_fetch($sql);
-        if (!$row[gr_id])
+        if (!$row['gr_id'])
             alert('접근 권한이 없으므로 글쓰기가 불가합니다.'.PHP_EOL.PHP_EOL.'궁금하신 사항은 관리자에게 문의 바랍니다.');
     }
 }
 
-$g4['title'] = $title_msg.' &gt; '.$board[bo_subject];
-
-if (($w == 'u' || $w == 'r') && !$write[wr_id])
-    alert('글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'삭제되었거나 이동된 경우입니다.', $g4['path']);
+$g4['title'] = $title_msg.' &gt; '.$board['bo_subject'];
 
 $is_notice = false;
-if ($is_admin && $w != 'r')
-{
+$notice_checked = '';
+if ($is_admin && $w != 'r') {
     $is_notice = true;
 
-    if ($w == 'u')
-    {
+    if ($w == 'u') {
         // 답변 수정시 공지 체크 없음
-        if ($write[wr_reply])
+        if ($write['wr_reply']) {
             $is_notice = false;
-        else
-        {
-            $notice_checked = '';
-            //if (preg_match("/^".$wr_id."/m", trim($board[bo_notice])))
-            //if (preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board[bo_notice]))
-            if (in_array((int)$wr_id, $notice_array))
+        } else {
+            if (in_array((int)$wr_id, $notice_array)) {
                 $notice_checked = 'checked';
+            }
         }
     }
 }
 
 $is_html = false;
-if ($member[mb_level] >= $board[bo_html_level])
+if ($member['mb_level'] >= $board['bo_html_level'])
     $is_html = true;
 
-/*
-// 에서 무조건 비밀글 사용으로 인한 코드 수정 : 061021
-$is_secret = false;
-if ($board[bo_use_secret])
-    $is_secret = true;
-*/
-$is_secret = $board[bo_use_secret];
+$is_secret = $board['bo_use_secret'];
 // DHTML 에디터 사용 선택 가능하게 수정 : 061021
 //$is_dhtml_editor = $board[bo_use_dhtml_editor];
 // 090713
-if ($board[bo_use_dhtml_editor] && $member[mb_level] >= $board[bo_html_level])
+if ($board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level'])
     $is_dhtml_editor = true;
 else
     $is_dhtml_editor = false;
 
 $is_mail = false;
-if ($config[cf_email_use] && $board[bo_use_email])
+if ($config['cf_email_use'] && $board['bo_use_email'])
     $is_mail = true;
 
 $recv_email_checked = '';
-if ($w == '' || strstr($write[wr_option], 'mail'))
+if ($w == '' || strstr($write['wr_option'], 'mail'))
     $recv_email_checked = 'checked';
 
-$is_name = false;
+$is_name     = false;
 $is_password = false;
-$is_email = false;
-if (!$member[mb_id] || ($is_admin && $w == 'u' && $member[mb_id] != $write[mb_id])) {
+$is_email    = false;
+$is_homepage = false;
+if ($is_guest || ($is_admin && $w == 'u' && $member['mb_id'] != $write['mb_id'])) {
     $is_name = true;
     $is_password = true;
     $is_email = true;
@@ -243,117 +232,135 @@ if (!$member[mb_id] || ($is_admin && $w == 'u' && $member[mb_id] != $write[mb_id
 }
 
 $is_category = false;
-if ($board[bo_use_category]) {
-    $ca_name = $write[ca_name];
+if ($board['bo_use_category']) {
+    $ca_name = "";
+    if (isset($write['ca_name']))
+        $ca_name = $write['ca_name'];
     $category_option = get_category_option($bo_table);
     $is_category = true;
 }
 
 $is_link = false;
-if ($member[mb_level] >= $board[bo_link_level])
+if ($member['mb_level'] >= $board['bo_link_level']) {
     $is_link = true;
+}
 
 $is_file = false;
-if ($member[mb_level] >= $board[bo_upload_level])
+if ($member['mb_level'] >= $board['bo_upload_level']) {
     $is_file = true;
+}
 
 $is_file_content = false;
-if ($board[bo_use_file_content])
+if ($board['bo_use_file_content']) {
     $is_file_content = true;
+}
 
 // 트랙백
 $is_trackback = false;
-if ($board[bo_use_trackback] && $member[mb_level] >= $board[bo_trackback_level])
+if ($board['bo_use_trackback'] && $member['mb_level'] >= $board['bo_trackback_level']) {
     $is_trackback = true;
+}
 
-if ($w == '' || $w == 'r') {
-    if ($member[mb_id]) {
-        $name = get_text(cut_str($write[wr_name],20));
-        $email = $member[mb_email];
-        $homepage = get_text($member[mb_homepage]);
+$name     = "";
+$email    = "";
+$homepage = "";
+if ($w == "" || $w == "r") {
+    if ($is_member) {
+        if (isset($write['wr_name'])) {
+            $name = get_text(cut_str($write['wr_name'],20));
+        }
+        $email = $member['mb_email'];
+        $homepage = get_text($member['mb_homepage']);
     }
 }
 
-if ($w == '')
+$html_checked   = "";
+$html_value     = "";
+$secret_checked = "";
+$trackback      = "";
+
+if ($w == '') {
     $password_required = 'required';
-else if ($w == 'u') {
+} else if ($w == 'u') {
     $password_required = '';
 
     if (!$is_admin) {
-        if (!($member[mb_id] && $member[mb_id] == $write[mb_id]))
-            if (sql_password($wr_password) != $write[wr_password])
+        if (!($is_member && $member['mb_id'] == $write['mb_id'])) {
+            if (sql_password($wr_password) != $write['wr_password']) {
                 alert('패스워드가 틀립니다.');
+            }
+        }
     }
 
-    $name = get_text(cut_str($write[wr_name],20));
-    $email = $write[wr_email];
-    $homepage = get_text($write[wr_homepage]);
+    $name = get_text(cut_str($write['wr_name'],20));
+    $email = $write['wr_email'];
+    $homepage = get_text($write['wr_homepage']);
 
-    for ($i=1; $i<=$g4[link_count]; $i++) {
+    for ($i=1; $i<=$g4['link_count']; $i++) {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
         $link[$i] = $write['wr_link'.$i];
     }
 
-    $trackback = $write[wr_trackback];
+    $trackback = $write['wr_trackback'];
 
-    if (strstr($write[wr_option], 'html1')) {
+    if (strstr($write['wr_option'], 'html1')) {
         $html_checked = 'checked';
         $html_value = 'html1';
-    } else if (strstr($write[wr_option], 'html2')) {
+    } else if (strstr($write['wr_option'], 'html2')) {
         $html_checked = 'checked';
         $html_value = 'html2';
-    } else
-        $html_value = '';
+    }
 
-    if (strstr($write[wr_option], 'secret'))
+    if (strstr($write['wr_option'], 'secret')) {
         $secret_checked = 'checked';
+    }
 
     $file = get_file($bo_table, $wr_id);
 } else if ($w == 'r') {
-    if (strstr($write[wr_option], 'secret')) {
+    if (strstr($write['wr_option'], 'secret')) {
         $is_secret = true;
         $secret_checked = 'checked';
     }
 
     $password_required = "required";
 
-    for ($i=1; $i<=$g4[link_count]; $i++) {
+    for ($i=1; $i<=$g4['link_count']; $i++) {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
     }
 }
 
-$subject = preg_replace("/\"/", "&#034;", get_text(cut_str($write[wr_subject], 255), 0));
-if ($w == '')
-    $content = $board[bo_insert_content];
-else if ($w == 'r') {
-    //if (!$write[wr_html]) {
-    if (!strstr($write[wr_option], 'html')) {
+$subject = "";
+if (isset($write['wr_subject'])) {
+    $subject = preg_replace("/\"/", "&#034;", get_text(cut_str($write['wr_subject'], 255), 0));
+}
+
+if ($w == '') {
+    $content = $board['bo_insert_content'];
+} else if ($w == 'r') {
+    if (!strstr($write['wr_option'], 'html')) {
         $content = PHP_EOL.PHP_EOL.PHP_EOL.' &gt; '
-                 //. "\n> $write[wr_datetime], \"$write[wr_name]\"님이 쓰신 글입니다. ↓"
                  .PHP_EOL.' &gt; '
-                 .PHP_EOL.' &gt; '.preg_replace("/\n/", "\n> ", get_text($write[wr_content], 0))
+                 .PHP_EOL.' &gt; '.preg_replace("/\n/", "\n> ", get_text($write['wr_content'], 0))
                  .PHP_EOL.' &gt; '
                  .PHP_EOL.' &gt; ';
 
     }
-} else
-    $content = get_text($write[wr_content], 0);
+} else {
+    $content = get_text($write['wr_content'], 0);
+}
 
-$upload_max_filesize = number_format($board[bo_upload_size]) . ' 바이트';
+$upload_max_filesize = number_format($board['bo_upload_size']) . ' 바이트';
 
-$width = $board[bo_table_width];
+$width = $board['bo_table_width'];
 if ($width <= 100)
     $width .= '%';
 
 // 글자수 제한 설정값
-if ($is_admin)
-{
+if ($is_admin) {
     $write_min = $write_max = 0;
-}
-else
-{
-    $write_min = (int)$board[bo_write_min];
-    $write_max = (int)$board[bo_write_max];
+} else {
+    $write_min = (int)$board['bo_write_min'];
+    $write_max = (int)$board['bo_write_max'];
 }
 
 include_once($g4['path'].'/head.sub.php');
@@ -396,8 +403,9 @@ if ($file_length < 0)
 
 include_once ($board_skin_path.'/write.skin.php');
 
-if (!$member[mb_id])
+if ($is_guest) {
     echo '<script src="'.$g4['path'].'/js/md5.js"></script>'.PHP_EOL;
+}
 
 // 필터
 //echo '<script> var g4_cf_filter = \''.$config[cf_filter].'\'; </script>'.PHP_EOL;

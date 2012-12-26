@@ -363,29 +363,43 @@ if (isset($sop))  { // search operator (검색 or, and 오퍼레이터)
 if (isset($spt))  { // search part (검색 파트[구간])
     $spt = (int)$spt;
     $qstr .= '&amp;spt=' . urlencode($spt);
+} else {
+    $spt = "";
 }
 
 if (isset($page)) { // 리스트 페이지
     $page = (int)$page;
     $qstr .= '&amp;page=' . urlencode($page);
+} else {
+    $page = "";
+}
+
+if (isset($w)) {
+    $w = substr($w, 0, 2);
+} else {
+    $w = "";
 }
 
 if (isset($wr_id)) {
     $wr_id = (int)$wr_id;
+} else {
+    $wr_id = 0;
 }
 
 if (isset($bo_table)) {
-    $bo_table = preg_match("/^[a-zA-Z0-9_]+$/", $bo_table) ? $bo_table : '';
+    $bo_table = substr($bo_table, 0, 20);
+    $bo_table = mysql_real_escape_string($bo_table);
+} else {
+    $bo_table = "";
 }
 
 // URL ENCODING
 if (isset($url)) {
+    $url = mysql_real_escape_string($url);
     $urlencode = urlencode($url);
-}
-else {
-    // 2008.01.25 Cross Site Scripting 때문에 수정
-    //$urlencode = $_SERVER['REQUEST_URI'];
-    $urlencode = urlencode($_SERVER['REQUEST_URI']);
+} else {
+    $url = "";
+    $urlencode = urlencode(mysql_real_escape_string($_SERVER['REQUEST_URI']));
 }
 //===================================
 

@@ -8,8 +8,7 @@ var char_min = parseInt(<?=$write_min?>); // 최소
 var char_max = parseInt(<?=$write_max?>); // 최대
 </script>
 
-<form name="fwrite" enctype="multipart/form-data" onsubmit="return fwrite_submit(this);" method="post">
-<input type="hidden" name="null">
+<form id="fwrite" action="./write_update.php" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="wr_id" value="<?=$wr_id?>">
@@ -27,7 +26,7 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름</label></th>
-    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" required value="<?=$name?>"></td>
+    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" required="required" value="<?=$name?>"></td>
 </tr>
 <? } ?>
 
@@ -120,7 +119,7 @@ if ($option) {
 <? for ($i=1; $i<=$g4['link_count']; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?=$i?>">링크 #<?=$i?></label></th>
-    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" value="<?=$write["wr_link{$i}"]?>"></td>
+    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" value="<?if($w=="u"){echo$write["wr_link{$i}"];}?>"></td>
 </tr>
 <? } ?>
 <? } ?>
@@ -246,8 +245,9 @@ with (document.fwrite)
         wr_content.focus();
 
     if (typeof(ca_name) != "undefined")
-        if (w.value == "u")
-            ca_name.value = "<?=$write['ca_name']?>";
+        if (w.value == "u") {
+            ca_name.value = "<?=isset($write['ca_name'])?$write['ca_name']:'';?>";
+    }
 }
 
 function html_auto_br(obj)

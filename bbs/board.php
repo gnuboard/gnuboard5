@@ -1,8 +1,6 @@
 <?
 include_once('./_common.php');
 
-$wr_id = $_GET['wr_id'];
-
 $cwin = "";
 if (array_key_exists('cwin', $_GET)) {
     $cwin = $_GET['cwin'];
@@ -171,8 +169,12 @@ if ($is_admin) {
     if (array_key_exists('wr_ip', $write)) {
         $ip = $write['wr_ip'];
     }
-} else // 관리자가 아니라면 IP 주소를 감춘후 보여줍니다.
-    $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $write[wr_ip]);
+} else {
+    // 관리자가 아니라면 IP 주소를 감춘후 보여줍니다.
+    if (isset($write['wr_ip'])) {
+        $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $write['wr_ip']);
+    }
+}
 
 // 분류 사용
 $is_category = false;
