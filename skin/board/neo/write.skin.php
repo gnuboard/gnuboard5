@@ -8,7 +8,7 @@ var char_min = parseInt(<?=$write_min?>); // 최소
 var char_max = parseInt(<?=$write_max?>); // 최대
 </script>
 
-<form id="fwrite" action="./write_update.php" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data">
+<form id="fwrite" name="fwrite" action="./write_update.php" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="wr_id" value="<?=$wr_id?>">
@@ -26,14 +26,14 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름</label></th>
-    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" required="required" value="<?=$name?>"></td>
+    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" class="required" value="<?=$name?>" title="이름"></td>
 </tr>
 <? } ?>
 
 <? if ($is_password) { ?>
 <tr>
     <th scope="row"><label for="wr_password">패스워드</label></th>
-    <td><input type="password" id="wr_password" name="wr_password" maxlength="20" <?=$password_required?>></td>
+    <td><input type="password" id="wr_password" name="wr_password" maxlength="20" <?=$password_required?> title="패스워드"></td>
 </tr>
 <? } ?>
 

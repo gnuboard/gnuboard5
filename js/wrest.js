@@ -216,8 +216,8 @@ function wrestExtension(fld, css)
 {
     if (!wrestTrim(fld)) return;
 
-    var str = css.split('='); // ext=?? <-- str[1]
-    var src = fld.value.split('.');
+    var str = css.split("="); // ext=?? <-- str[1]
+    var src = fld.value.split(".");
     var ext = src[src.length - 1];
 
     if (wrestFld == null) {
@@ -255,7 +255,11 @@ function wrestSubmit()
 
         // Input tag 의 type 이 text, file, password 일때만
         // 셀렉트 박스일때도 필수 선택 검사합니다. select-one
-        if (el.type=='text' || el.type=='hidden' || el.type=='file' || el.type=='password' || el.type=='select-one' || el.type=='textarea') {
+        if (el.type=="text" || el.type=="hidden" || el.type=="file" || el.type=="password" || el.type=="select-one" || el.type=="textarea") {
+            if (el.getAttribute("required") != null) {
+                wrestRequired(el); 
+            }
+
             var array_css = el.className.split(' '); // class 를 공백으로 나눔
 
             el.style.backgroundColor = wrestFldDefaultColor;
@@ -296,9 +300,9 @@ function wrestSubmit()
         // 경고메세지 출력
         alert(wrestMsg);
 
-        if (wrestFld.style.display != 'none') {
+        if (wrestFld.style.display != "none") {
             wrestFld.style.backgroundColor = wrestFldBackColor;
-            if (typeof(wrestFld.select) != 'undefined')
+            if (typeof(wrestFld.select) != "undefined")
                 wrestFld.select();
             wrestFld.focus();
         }
@@ -320,12 +324,15 @@ function wrestInitialized()
 
     for (var i = 0; i < document.forms.length; i++) {
         // onsubmit 이벤트가 있다면 저장해 놓는다.
-        if (document.forms[i].onsubmit) document.forms[i].oldsubmit = document.forms[i].onsubmit;
+        if (document.forms[i].onsubmit) {
+            document.forms[i].oldsubmit = document.forms[i].onsubmit;
+        }
         document.forms[i].onsubmit = wrestSubmit;
 
         for (var j = 0; j < document.forms[i].elements.length; j++) {
             // 필수 입력일 경우는 * 배경이미지를 준다.
-            if (document.forms[i].elements[j].getAttribute("required") != null) {
+            if (document.forms[i].elements[j].getAttribute("required") != null || 
+                regexp.test(document.forms[i].elements[j].className)) {
             //if (regexp.test(document.forms[i].elements[j].className)) {
                 //document.forms[i].elements[j].style.backgroundColor = wrestFldDefaultColor;
                 //document.forms[i].elements[j].className = "wrest_required";
