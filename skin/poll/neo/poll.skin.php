@@ -41,8 +41,8 @@ function fpoll_submit(f)
     }
 
     <?
-    if ($member[mb_level] < $po[po_level])
-        echo " alert('권한 <?=$po[po_level]?> 이상의 회원만 투표에 참여하실 수 있습니다.'); return false; ";
+    if ($member['mb_level'] < $po['po_level'])
+        echo " alert('권한 {$po['po_level']} 이상의 회원만 투표에 참여하실 수 있습니다.'); return false; ";
     ?>
 
     if (!chk) {
@@ -57,11 +57,11 @@ function fpoll_submit(f)
 function poll_result(po_id)
 {
     <?
-    if ($member[mb_level] < $po[po_level])
-        echo " alert('권한 <?=$po[po_level]?> 이상의 회원만 결과를 보실 수 있습니다.'); return false; ";
+    if ($member['mb_level'] < $po['po_level'])
+        echo " alert('권한 {$po['po_level']} 이상의 회원만 결과를 보실 수 있습니다.'); return false; ";
     ?>
 
-    win_poll("<?=$g4[bbs_path]?>/poll_result.php?po_id="+po_id+"&amp;skin_dir="+document.fpoll.skin_dir.value);
+    win_poll("<?=$g4['bbs_path']?>/poll_result.php?po_id="+po_id+"&amp;skin_dir="+document.fpoll.skin_dir.value);
 }
 </script>
 </section>

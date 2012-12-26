@@ -33,12 +33,12 @@ else {
     <label for="mb_id">아이디</label>
     <input type="text" id="mb_id" name="mb_id" maxlength="20" required>
     <label for="mb_password">패스워드</label>
-    <input type="password" id="mb_password" name="mb_password" maxlength="20" onKeyPress="check_capslock(event, 'outlogin_mb_password');">
+    <input type="password" id="mb_password" name="mb_password" maxlength="20">
     <input type="checkbox" id="auto_login" name="auto_login" value="1" onclick="if (this.checked) { if (confirm('자동로그인을 사용하시면 다음부터 회원아이디와 패스워드를 입력하실 필요가 없습니다.\n\n\공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?')) { this.checked = true; } else { this.checked = false; } }">
     <label for="auto_login">자동로그인</label>
     <input type="submit" value="로그인">
     <a href="javascript:win_password_lost();">아이디/패스워드 찾기</a>
-    <a href="<?=$g4[bbs_path]?>/register.php">회원가입</a>
+    <a href="<?=$g4['bbs_path']?>/register.php">회원가입</a>
 </fieldset>
 </form>
 
@@ -59,7 +59,7 @@ function fhead_submit(f)
     }
 
     <?
-    if ($g4[https_url])
+    if ($g4['https_url'])
         echo "f.action = '$g4[https_url]/$g4[bbs]/login_check.php';";
     else
         echo "f.action = '$g4[bbs_path]/login_check.php';";
