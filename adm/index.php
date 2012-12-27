@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $g4['title'] = '관리자메인';
-define('_ADMIN_INDEX_', true);
+$admin_index = true;
 include_once ('./admin.head.php');
 
 $new_member_rows = 5;

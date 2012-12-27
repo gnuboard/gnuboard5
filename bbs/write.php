@@ -1,8 +1,7 @@
 <?
 include_once('./_common.php');
-if ($editor->lib) {
+if ($editor->lib)
     include_once($editor->lib);
-}
 
 set_session('ss_bo_table', $bo_table);
 set_session('ss_wr_id', $wr_id);
@@ -207,9 +206,7 @@ if ($member['mb_level'] >= $board['bo_html_level'])
     $is_html = true;
 
 $is_secret = $board['bo_use_secret'];
-// DHTML 에디터 사용 선택 가능하게 수정 : 061021
-//$is_dhtml_editor = $board[bo_use_dhtml_editor];
-// 090713
+
 if ($board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level'])
     $is_dhtml_editor = true;
 else
@@ -341,11 +338,11 @@ if ($w == '') {
     $content = $board['bo_insert_content'];
 } else if ($w == 'r') {
     if (!strstr($write['wr_option'], 'html')) {
-        $content = PHP_EOL.PHP_EOL.PHP_EOL.' &gt; '
-                 .PHP_EOL.' &gt; '
-                 .PHP_EOL.' &gt; '.preg_replace("/\n/", "\n> ", get_text($write['wr_content'], 0))
-                 .PHP_EOL.' &gt; '
-                 .PHP_EOL.' &gt; ';
+        $content = "\\n\\n\\n &gt; "
+                 ."\\n &gt; "
+                 ."\\n &gt; ".preg_replace("/\n/", "\n> ", get_text($write['wr_content'], 0))
+                 ."\\n &gt; "
+                 ."\\n &gt; ";
 
     }
 } else {
@@ -382,13 +379,10 @@ include_once('./board_head.php');
 $file_script = '';
 $file_length = -1;
 // 수정의 경우 파일업로드 필드가 가변적으로 늘어나야 하고 삭제 표시도 해주어야 합니다.
-if ($w == 'u')
-{
-    for ($i=0; $i<$file[count]; $i++)
-    {
+if ($w == 'u') {
+    for ($i=0; $i<$file[count]; $i++) {
         $row = sql_fetch(" select bf_file, bf_content from {$g4[board_file_table]} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-        if ($row[bf_file])
-        {
+        if ($row[bf_file]) {
             $file_script .= 'add_file("<input type="checkbox" name="bf_file_del['.$i.']" value="1"><a href="'.$file[$i][href].'">'.$file[$i][source].'('.$file[$i][size].')</a> 파일 삭제';
             if ($is_file_content)
                 //$file_script .= '<br><input type="text" class="ed" size="50" name="bf_content['.$i.']" value="'.$row[bf_content].'" title="업로드 이미지 파일에 해당 되는 내용을 입력하세요.">';
@@ -402,22 +396,13 @@ if ($w == 'u')
     $file_length = $file[count] - 1;
 }
 
-if ($file_length < 0)
-{
+if ($file_length < 0) {
     $file_script .= 'add_file("");'.PHP_EOL;
     $file_length = 0;
 }
 //--------------------------------------------------------------------------
 
 include_once ($board_skin_path.'/write.skin.php');
-
-if ($is_guest) {
-    echo '<script src="'.$g4['path'].'/js/md5.js"></script>'.PHP_EOL;
-}
-
-// 필터
-//echo '<script> var g4_cf_filter = \''.$config[cf_filter].'\'; </script>'.PHP_EOL;
-//echo '<script src="'.$g4['path'].'/js/filter.js"></script>'.PHP_EOL;
 
 include_once('./board_tail.php');
 include_once($g4['path'].'/tail.sub.php');

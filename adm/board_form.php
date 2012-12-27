@@ -24,10 +24,17 @@ if ($w == '') {
 
     $board['bo_count_delete'] = 1;
     $board['bo_count_modify'] = 1;
+<<<<<<< HEAD
     $board['bo_read_point'] = $config[cf_read_point];
     $board['bo_write_point'] = $config[cf_write_point];
     $board['bo_comment_point'] = $config[cf_comment_point];
     $board['bo_download_point'] = $config[cf_download_point];
+=======
+    $board['bo_read_point'] = $config['cf_read_point'];
+    $board['bo_write_point'] = $config['cf_write_point'];
+    $board['bo_comment_point'] = $config['cf_comment_point'];
+    $board['bo_download_point'] = $config['cf_download_point'];
+>>>>>>> 2b5c471bdb62542fc9cb8b6740a934c34e5de04b
 
     $board['bo_gallery_cols'] = 4;
     $board['bo_table_width'] = 97;

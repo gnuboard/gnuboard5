@@ -55,6 +55,7 @@ else if ($w == 'u')
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
+<<<<<<< HEAD
 if ($mb['mb_mailling'] == 1) $mailling_checked = 'checked="checked"'; //메일수신
 else {
     $mailing_checked = '';
@@ -67,6 +68,28 @@ else {
 }
 if ($mb['mb_open']) $open_checked = 'checked="checked"'; // 정보 공개
 else {
+=======
+$mailling_no_checked = '';
+$sms_no_checked = '';
+$open_no_checked = '';
+if ($mb['mb_mailling'] == 1) {
+    $mailling_checked = 'checked="checked"'; //메일수신
+} else {
+    $mailing_checked = '';
+    $mailling_no_checked = 'checked="checked"';
+}
+
+if ($mb['mb_sms']) {
+    $sms_checked = 'checked="checked"'; // SMS 수신
+} else {
+    $sms_checked = '';
+    $sms_no_checked = 'checked="checked"';
+}
+
+if ($mb['mb_open']) {
+    $open_checked = 'checked="checked"'; // 정보 공개
+} else {
+>>>>>>> 2b5c471bdb62542fc9cb8b6740a934c34e5de04b
     $open_checked = '';
     $open_no_checked = 'checked="checked"';
 }
@@ -266,7 +289,7 @@ if (typeof(document.fmember.mb_level) != "undefined")
 
 function fmember_submit(f)
 {
-    if (!f.mb_icon.value.match(/\.(gif|jp[e]g|png)$/i) && f.mb_icon.value) {
+    if (!f.mb_icon.value.match(/\.(gif|jp['e']g|png)$/i) && f.mb_icon.value) {
         alert('아이콘이 이미지 파일이 아닙니다. (bmp 제외)');
         return false;
     }
