@@ -11,9 +11,9 @@ if ($w == '')
     $required_mb_id = 'class="required minlength=3 alnum_"';
     $required_mb_password = 'class="required"';
 
-    $mb[mb_mailling] = 1;
-    $mb[mb_open] = 1;
-    $mb[mb_level] = $config[cf_register_level];
+    $mb['mb_mailling'] = 1;
+    $mb['mb_open'] = 1;
+    $mb['mb_level'] = $config['cf_register_level'];
     $html_title = '등록';
 }
 else if ($w == 'u')
@@ -22,7 +22,7 @@ else if ($w == 'u')
     if (!$mb['mb_id'])
         alert('존재하지 않는 회원자료입니다.');
 
-    if ($is_admin != 'super' && $mb[mb_level] >= $member[mb_level])
+    if ($is_admin != 'super' && $mb['mb_level'] >= $member['mb_level'])
         alert('자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
 
     $required_mb_id = 'readonly';
@@ -55,18 +55,26 @@ else if ($w == 'u')
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
-if ($mb[mb_mailling] == 1) $mailling_checked = 'checked="checked"'; //메일수신
-else {
+$mailling_no_checked = '';
+$sms_no_checked = '';
+$open_no_checked = '';
+if ($mb['mb_mailling'] == 1) {
+    $mailling_checked = 'checked="checked"'; //메일수신
+} else {
     $mailing_checked = '';
     $mailling_no_checked = 'checked="checked"';
 }
-if ($mb[mb_sms]) $sms_checked = 'checked="checked"'; // SMS 수신
-else {
+
+if ($mb['mb_sms']) {
+    $sms_checked = 'checked="checked"'; // SMS 수신
+} else {
     $sms_checked = '';
     $sms_no_checked = 'checked="checked"';
 }
-if ($mb[mb_open]) $open_checked = 'checked="checked"'; // 정보 공개
-else {
+
+if ($mb['mb_open']) {
+    $open_checked = 'checked="checked"'; // 정보 공개
+} else {
     $open_checked = '';
     $open_no_checked = 'checked="checked"';
 }
@@ -104,9 +112,9 @@ include_once('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="mb_level">회원 권한</label></th>
-    <td><?=get_member_level_select('mb_level', 1, $member[mb_level], $mb[mb_level])?></td>
+    <td><?=get_member_level_select('mb_level', 1, $member['mb_level'], $mb['mb_level'])?></td>
     <th scope="row">포인트</th>
-    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$mb['mb_id']?>" target="_blank"><?=number_format($mb[mb_point])?></a> 점</td>
+    <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$mb['mb_id']?>" target="_blank"><?=number_format($mb['mb_point'])?></a> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_email">E-mail</label></th>
@@ -133,7 +141,7 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row"><label for="mb_icon">회원아이콘</label></th>
     <td colspan="3">
-        <?=help('이미지 크기는 <strong>넓이 '.$config[cf_member_icon_width].'픽셀 높이 '.$config[cf_member_icon_height].'픽셀</strong>로 해주세요.')?>
+        <?=help('이미지 크기는 <strong>넓이 '.$config['cf_member_icon_width'].'픽셀 높이 '.$config['cf_member_icon_height'].'픽셀</strong>로 해주세요.')?>
         <input type="file" id="mb_icon" name="mb_icon">
         <?
         $mb_dir = substr($mb['mb_id'],0,2);
@@ -192,7 +200,7 @@ include_once('./admin.head.php');
     <th scope="row">IP</th>
     <td colspan="3"><?=$mb['mb_ip']?></td>
 </tr>
-<? if ($config[cf_use_email_certify]) { ?>
+<? if ($config['cf_use_email_certify']) { ?>
 <tr>
     <th scope="row">인증일시</th>
     <td colspan="3">
@@ -209,7 +217,7 @@ include_once('./admin.head.php');
 <? } ?>
 <? } ?>
 
-<? if ($config[cf_use_recommend]) { // 추천인 사용 ?>
+<? if ($config['cf_use_recommend']) { // 추천인 사용 ?>
 <tr>
     <th scope="row">추천인</th>
     <td colspan="3"><?=($mb['mb_recommend'] ? get_text($mb['mb_recommend']) : '없음'); // 081022 : CSRF 보안 결함으로 인한 코드 수정 ?></td>
@@ -262,11 +270,11 @@ else if (document.fmember.w.value == "u")
     document.fmember.mb_password.focus();
 
 if (typeof(document.fmember.mb_level) != "undefined")
-    document.fmember.mb_level.value   = "<?=$mb[mb_level]?>";
+    document.fmember.mb_level.value   = "<?=$mb['mb_level']?>";
 
 function fmember_submit(f)
 {
-    if (!f.mb_icon.value.match(/\.(gif|jp[e]g|png)$/i) && f.mb_icon.value) {
+    if (!f.mb_icon.value.match(/\.(gif|jp['e']g|png)$/i) && f.mb_icon.value) {
         alert('아이콘이 이미지 파일이 아닙니다. (bmp 제외)');
         return false;
     }

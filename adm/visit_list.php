@@ -15,17 +15,16 @@ $colspan = 5;
 
 $sql_common = " from {$g4['visit_table']} ";
 $sql_search = " where vi_date between '{$fr_date}' and '{$to_date}' ";
-if ($domain) {
+if (isset($domain))
     $sql_search .= " and vi_referer like '%{$domain}%' ";
-}
 
 $sql = " select count(*) as cnt
             {$sql_common}
             {$sql_search} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -106,7 +105,10 @@ if ($i == 0)
 </tbody>
 </table>
 <?
-$page = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;domain=$domain&amp;page=");
+if (isset($domain)) 
+    $qstr .= "&amp;domain=$domain";
+$qstr .= "&amp;page=";
+$page = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr");
 if ($page) {
 ?>
 <div class="pg">

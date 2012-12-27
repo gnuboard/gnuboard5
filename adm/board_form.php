@@ -13,7 +13,7 @@ function b_draw($pos, $color='red') {
 
 $sql = " select count(*) as cnt from {$g4['group_table']} ";
 $row = sql_fetch($sql);
-if (!$row[cnt])
+if (!$row['cnt'])
     alert('게시판그룹이 한개 이상 생성되어야 합니다.', './boardgroup_form.php');
 
 $html_title = '게시판';
@@ -22,28 +22,28 @@ if ($w == '') {
 
     $bo_table_attr = 'class="required alnum_"';
 
-    $board[bo_count_delete] = 1;
-    $board[bo_count_modify] = 1;
-    $board[bo_read_point] = $config[cf_read_point];
-    $board[bo_write_point] = $config[cf_write_point];
-    $board[bo_comment_point] = $config[cf_comment_point];
-    $board[bo_download_point] = $config[cf_download_point];
+    $board['bo_count_delete'] = 1;
+    $board['bo_count_modify'] = 1;
+    $board['bo_read_point'] = $config['cf_read_point'];
+    $board['bo_write_point'] = $config['cf_write_point'];
+    $board['bo_comment_point'] = $config['cf_comment_point'];
+    $board['bo_download_point'] = $config['cf_download_point'];
 
-    $board[bo_gallery_cols] = 4;
-    $board[bo_table_width] = 97;
-    $board[bo_page_rows] = $config[cf_page_rows];
-    $board[bo_subject_len] = 60;
-    $board[bo_new] = 24;
-    $board[bo_hot] = 100;
-    $board[bo_image_width] = 600;
-    $board[bo_upload_count] = 2;
-    $board[bo_upload_size] = 1048576;
-    $board[bo_reply_order] = 1;
-    $board[bo_use_search] = 1;
+    $board['bo_gallery_cols'] = 4;
+    $board['bo_table_width'] = 97;
+    $board['bo_page_rows'] = $config['cf_page_rows'];
+    $board['bo_subject_len'] = 60;
+    $board['bo_new'] = 24;
+    $board['bo_hot'] = 100;
+    $board['bo_image_width'] = 600;
+    $board['bo_upload_count'] = 2;
+    $board['bo_upload_size'] = 1048576;
+    $board['bo_reply_order'] = 1;
+    $board['bo_use_search'] = 1;
     $board['bo_skin'] = 'basic';
     $board['gr_id'] = $gr_id;
     $board['bo_disable_tags'] = 'script|iframe';
-    $board[bo_use_secret] = 0;
+    $board['bo_use_secret'] = 0;
 } else if ($w == 'u') {
     $html_title .= ' 수정';
 
@@ -323,7 +323,7 @@ include_once ('./admin.head.php');
         <option value="1">체크박스
         <option value='2'>무조건
         </select>
-        <script>document.getElementById('bo_use_secret').value="<?=$board[bo_use_secret]?>";</script>
+        <script>document.getElementById('bo_use_secret').value="<?=$board['bo_use_secret']?>";</script>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_use_secret" name="chk_use_secret" value="1">
@@ -869,10 +869,10 @@ function board_copy(bo_table) {
 
 function set_point(f) {
     if (f.chk_point.checked) {
-        f.bo_read_point.value = "<?=$config[cf_read_point]?>";
-        f.bo_write_point.value = "<?=$config[cf_write_point]?>";
-        f.bo_comment_point.value = "<?=$config[cf_comment_point]?>";
-        f.bo_download_point.value = "<?=$config[cf_download_point]?>";
+        f.bo_read_point.value = "<?=$config['cf_read_point']?>";
+        f.bo_write_point.value = "<?=$config['cf_write_point']?>";
+        f.bo_comment_point.value = "<?=$config['cf_comment_point']?>";
+        f.bo_download_point.value = "<?=$config['cf_download_point']?>";
     } else {
         f.bo_read_point.value     = f.bo_read_point.defaultValue;
         f.bo_write_point.value    = f.bo_write_point.defaultValue;

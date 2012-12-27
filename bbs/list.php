@@ -21,11 +21,11 @@ if ($sca || $stx) {
     // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
     $sql = " select MIN(wr_num) as min_wr_num from {$write_table} ";
     $row = sql_fetch($sql);
-    $min_spt = $row[min_wr_num];
+    $min_spt = $row['min_wr_num'];
 
     if (!$spt) $spt = $min_spt;
 
-    $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config[cf_search_part]})) ";
+    $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
     $sql = " select distinct wr_parent from {$write_table} where {$sql_search} ";
@@ -109,7 +109,7 @@ while ($row = sql_fetch_array($result))
 {
     // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
     if ($sca || $stx)
-        $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row[wr_parent]}' ");
+        $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
 
     $list[$i] = get_list($row, $board, $board_skin_path, $board['bo_subject_len']);
     if (strstr($sfl, 'subject')) {
@@ -131,11 +131,11 @@ if ($sca || $stx) {
     $list_href = './board.php?bo_table='.$bo_table;
 
     //if ($prev_spt >= $min_spt)
-    $prev_spt = $spt - $config[cf_search_part];
+    $prev_spt = $spt - $config['cf_search_part'];
     if (isset($min_spt) && $prev_spt >= $min_spt)
         $prev_part_href = './board.php?bo_table='.$bo_table.$qstr.'&amp;spt='.$prev_spt.'&amp;page=1';
 
-    $next_spt = $spt + $config[cf_search_part];
+    $next_spt = $spt + $config['cf_search_part'];
     if ($next_spt < 0)
         $next_part_href = './board.php?bo_table='.$bo_table.$qstr.'&amp;spt='.$next_spt.'&amp;page=1';
 }

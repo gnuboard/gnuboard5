@@ -46,9 +46,9 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -60,6 +60,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
+$listall = '';
 if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
@@ -142,7 +143,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $s_upd = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
     $s_del = "";
     if ($is_admin == 'super') {
-        //$s_del = '<a href="javascript:del(\'./board_delete.php?bo_table='.$row[bo_table].'&amp;'.$qstr.'\');">삭제</a>';
+        //$s_del = '<a href="javascript:del(\'./board_delete.php?bo_table='.$row['bo_table'].'&amp;'.$qstr.'\');">삭제</a>';
         $s_del = '<a href="javascript:post_delete(\'board_delete.php\', \''.$row['bo_table'].'\');">삭제</a>';
     }
     $s_copy = '<a href="javascript:board_copy(\''.$row['bo_table'].'\');">복사</a>';
@@ -172,19 +173,19 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20"></td>
     <td>
         <label for="bo_read_point_<?=$i?>">읽기</label>
-        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row[bo_read_point]?>" size="2">
+        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="2">
         <label for="bo_write_point_<?=$i?>">쓰기</label>
-        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row[bo_write_point]?>" size="2">
+        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="2">
         <label for="bo_comment_point_<?=$i?>">댓글</label>
-        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row[bo_comment_point]?>" size="2">
+        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" size="2">
         <label for="bo_download_point_<?=$i?>">다운</label>
-        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row[bo_download_point]?>" size="2">
+        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="2">
     </td>
     <td>
         <label for="bo_use_search_<?=$i?>">사용</label>
-        <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row[bo_use_search]?"checked":""?> value="1">
+        <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
         <label for="bo_order_search_<?=$i?>">순서</label>
-        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row[bo_order_search]?>" size="1">
+        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1">
     </td>
     <td><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
 </tr>
@@ -205,7 +206,7 @@ if ($i == 0)
 </div>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 ?>
 <div class="pg">
     <?=$pagelist?>

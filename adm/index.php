@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $g4['title'] = '관리자메인';
-define('_ADMIN_INDEX_', true);
+$admin_index = true;
 include_once ('./admin.head.php');
 
 $new_member_rows = 5;
@@ -14,9 +14,9 @@ $sql_common = " from {$g4['member_table']} ";
 $sql_search = " where (1) ";
 
 if ($is_admin != 'super')
-    $sql_search .= " and mb_level <= '{$member[mb_level]}' ";
+    $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
 
-if (!isset($sst)) {
+if (!$sst) {
     $sst = "mb_datetime";
     $sod = "desc";
 }
@@ -28,7 +28,7 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
 // 탈퇴회원수
 $sql = " select count(*) as cnt
@@ -37,7 +37,7 @@ $sql = " select count(*) as cnt
             and mb_leave_date <> ''
             {$sql_order} ";
 $row = sql_fetch($sql);
-$leave_count = $row[cnt];
+$leave_count = $row['cnt'];
 
 // 차단회원수
 $sql = " select count(*) as cnt
@@ -46,7 +46,7 @@ $sql = " select count(*) as cnt
             and mb_intercept_date <> ''
             {$sql_order} ";
 $row = sql_fetch($sql);
-$intercept_count = $row[cnt];
+$intercept_count = $row['cnt'];
 
 $sql = " select *
             {$sql_common}
@@ -87,8 +87,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
     $row2 = sql_fetch($sql2);
     $group = "";
-    if ($row2[cnt])
-        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2[cnt].'</a>';
+    if ($row2['cnt'])
+        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2['cnt'].'</a>';
 
     if ($is_admin == 'group')
     {
@@ -118,10 +118,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><?=$mb_id?></td>
     <td class="td_mbname"><?=$row['mb_name']?></td>
     <td class="td_mbnick"><div><?=$mb_nick?></div></td>
-    <td class="td_num"><?=$row[mb_level]?></td>
-    <td class="td_bignum"><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></a></td>
-    <td class="td_boolean"><?=$row[mb_mailling]?'예':'아니오';?></td>
-    <td class="td_boolean"><?=$row[mb_open]?'예':'아니오';?></td>
+    <td class="td_num"><?=$row['mb_level']?></td>
+    <td class="td_bignum"><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
+    <td class="td_boolean"><?=$row['mb_mailling']?'예':'아니오';?></td>
+    <td class="td_boolean"><?=$row['mb_open']?'예':'아니오';?></td>
     <td class="td_boolean"><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
     <td class="td_boolean"><?=$row['mb_intercept_date']?'예':'아니오';?></td>
     <td class="td_category"><?=$group?></td>
@@ -149,7 +149,7 @@ $sql_order = " order by a.bn_id desc ";
 
 $sql = " select count(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
 $colspan = 5;
 ?>
@@ -179,13 +179,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $tmp_write_table = $g4['write_prefix'] . $row['bo_table'];
 
-    if ($row[wr_id] == $row[wr_parent]) // 원글
+    if ($row['wr_id'] == $row['wr_parent']) // 원글
     {
         $comment = "";
         $comment_link = "";
-        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '{$row[wr_id]}' ");
+        $row2 = sql_fetch(" select * from $tmp_write_table where wr_id = '{$row['wr_id']}' ");
 
-        $name = get_sideview($row2['mb_id'], cut_str($row2['wr_name'], $config[cf_cut_name]), $row2['wr_email'], $row2['wr_homepage']);
+        $name = get_sideview($row2['mb_id'], cut_str($row2['wr_name'], $config['cf_cut_name']), $row2['wr_email'], $row2['wr_homepage']);
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row2['wr_datetime'],0,10);
         $datetime2 = $row2['wr_datetime'];
@@ -198,11 +198,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     else // 코멘트
     {
         $comment = '댓글. ';
-        $comment_link = '#c_'.$row[wr_id];
-        $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row[wr_parent]}' ");
-        $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row[wr_id]}' ");
+        $comment_link = '#c_'.$row['wr_id'];
+        $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ");
+        $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
 
-        $name = get_sideview($row3['mb_id'], cut_str($row3['wr_name'], $config[cf_cut_name]), $row3['wr_email'], $row3['wr_homepage']);
+        $name = get_sideview($row3['mb_id'], cut_str($row3['wr_name'], $config['cf_cut_name']), $row3['wr_email'], $row3['wr_homepage']);
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row3['wr_datetime'],0,10);
         $datetime2 = $row3['wr_datetime'];
@@ -216,7 +216,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td class="td_category"><a href="<?=$g4['bbs_path']?>/new.php?gr_id=<?=$row['gr_id']?>"><?=cut_str($row['gr_subject'],10)?></a></td>
     <td class="td_category"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=cut_str($row['bo_subject'],20)?></a></td>
-    <td><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2[wr_id]?><?=$comment_link?>"><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
+    <td><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2['wr_id']?><?=$comment_link?>"><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
     <td class="td_mbname"><div><?=$name?></div></td>
     <td class="td_time"><?=$datetime?></td>
 </tr>
@@ -239,7 +239,7 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
 $sql = " select *
             {$sql_common}
@@ -296,8 +296,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td class="td_mbnick"><div><?=$mb_nick?></div></td>
     <td class="td_time"><?=$row['po_datetime']?></td>
     <td><?=$link1.$row['po_content'].$link2?></td>
-    <td class="td_bignum"><?=number_format($row[po_point])?></td>
-    <td class="td_bignum"><?=number_format($row2[mb_point])?></td>
+    <td class="td_bignum"><?=number_format($row['po_point'])?></td>
+    <td class="td_bignum"><?=number_format($row2['mb_point'])?></td>
 </tr>
 
 <?

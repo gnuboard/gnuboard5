@@ -48,67 +48,67 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_use_point">포인트 사용</label></th>
-    <td colspan="3"><input type="checkbox" id="cf_use_point" name="cf_use_point" value="1" <?=$config[cf_use_point]?'checked':'';?>> 사용</td>
+    <td colspan="3"><input type="checkbox" id="cf_use_point" name="cf_use_point" value="1" <?=$config['cf_use_point']?'checked':'';?>> 사용</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_login_point">로그인시 포인트</label></th>
     <td>
         <?=help('회원에게 하루에 한번만 부여')?>
-        <input type="text" id="cf_login_point" name="cf_login_point" class="required numeric" value="<?=$config[cf_login_point]?>" size="2"> 점
+        <input type="text" id="cf_login_point" name="cf_login_point" class="required numeric" value="<?=$config['cf_login_point']?>" size="2"> 점
     </td>
     <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트</label></th>
     <td>
          <?=help('양수로 입력하십시오. 0점은 쪽지 보낼시 포인트를 차감하지 않습니다.')?>
-        <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" class="required numeric" value="<?=$config[cf_memo_send_point]?>" size="2"> 점
+        <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" class="required numeric" value="<?=$config['cf_memo_send_point']?>" size="2"> 점
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_cut_name">이름(별명) 표시</label></th>
     <td colspan="3">
         <?=help('영숫자 2글자 = 한글 1글자')?>
-        <input type="text" id="cf_cut_name" name="cf_cut_name" value="<?=$config[cf_cut_name]?>" size="2"> 자리만 표시
+        <input type="text" id="cf_cut_name" name="cf_cut_name" value="<?=$config['cf_cut_name']?>" size="2"> 자리만 표시
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_nick_modify">별명 수정</label></th>
-    <td>수정하면 <input type="text" id="cf_nick_modify" name="cf_nick_modify" value="<?=$config[cf_nick_modify]?>" size="1"> 일 동안 바꿀 수 없음</td>
+    <td>수정하면 <input type="text" id="cf_nick_modify" name="cf_nick_modify" value="<?=$config['cf_nick_modify']?>" size="1"> 일 동안 바꿀 수 없음</td>
     <th scope="row"><label for="cf_open_modify">정보공개 수정</label></th>
-    <td>수정하면 <input type="text" id="cf_open_modify" name="cf_open_modify" value="<?=$config[cf_open_modify]?>" size="1"> 일 동안 바꿀 수 없음</td>
+    <td>수정하면 <input type="text" id="cf_open_modify" name="cf_open_modify" value="<?=$config['cf_open_modify']?>" size="1"> 일 동안 바꿀 수 없음</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_new_del">최근게시물 삭제</label></th>
     <td>
         <?=help('설정일이 지난 최근게시물 자동 삭제')?>
-        <input type="text" id="cf_new_del" name="cf_new_del" value="<?=$config[cf_new_del]?>" size="2"> 일
+        <input type="text" id="cf_new_del" name="cf_new_del" value="<?=$config['cf_new_del']?>" size="2"> 일
     </td>
     <th scope="row"><label for="cf_memo_del">쪽지 삭제</label></th>
     <td>
         <?=help('설정일이 지난 쪽지 자동 삭제')?>
-        <input type="text" id="cf_memo_del" name="cf_memo_del" value="<?=$config[cf_memo_del]?>" size="2"> 일
+        <input type="text" id="cf_memo_del" name="cf_memo_del" value="<?=$config['cf_memo_del']?>" size="2"> 일
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_visit_del">접속자로그 삭제</label></th>
     <td>
         <?=help('설정일이 지난 접속자 로그 자동 삭제')?>
-        <input type="text" id="cf_visit_del" name="cf_visit_del" value="<?=$config[cf_visit_del]?>" size="2"> 일
+        <input type="text" id="cf_visit_del" name="cf_visit_del" value="<?=$config['cf_visit_del']?>" size="2"> 일
     </td>
     <th scope="row"><label for="cf_popular_del">인기검색어 삭제</label></th>
     <td>
         <?=help('설정일이 지난 인기검색어 자동 삭제')?>
-        <input type="text" id="cf_popular_del" name="cf_popular_del" value="<?=$config[cf_popular_del]?>" size="2"> 일
+        <input type="text" id="cf_popular_del" name="cf_popular_del" value="<?=$config['cf_popular_del']?>" size="2"> 일
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_login_minutes">현재 접속자</label></th>
     <td>
         <?=help('설정값 이내의 접속자를 현재 접속자로 인정')?>
-        <input type="text" id="cf_login_minutes" name="cf_login_minutes" value="<?=$config[cf_login_minutes]?>" size="2"> 분
+        <input type="text" id="cf_login_minutes" name="cf_login_minutes" value="<?=$config['cf_login_minutes']?>" size="2"> 분
     </td>
     <th scope="row"><label for="cf_page_rows">한페이지당 라인수</label></th>
     <td>
         <?=help('목록(리스트) 한페이지당 라인수')?>
-        <input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config[cf_page_rows]?>" size="2"> 라인
+        <input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config['cf_page_rows']?>" size="2"> 라인
     </td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
     <td>
         <?=help('목록 한페이지당 라인수')?>
-        <input type="text" id="cf_new_rows" name="cf_new_rows" value="<?=$config[cf_new_rows]?>" size="2"> 라인
+        <input type="text" id="cf_new_rows" name="cf_new_rows" value="<?=$config['cf_new_rows']?>" size="2"> 라인
     </td>
 </tr>
 <tr>
@@ -156,7 +156,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_use_copy_log">복사, 이동시 로그</label></th>
     <td colspan="3">
         <?=help('게시물 아래에 누구로 부터 복사, 이동됨 표시')?>
-        <input type="checkbox" id="cf_use_copy_log" name="cf_use_copy_log" value="1" <?=$config[cf_use_copy_log]?'checked':'';?>> 남김
+        <input type="checkbox" id="cf_use_copy_log" name="cf_use_copy_log" value="1" <?=$config['cf_use_copy_log']?'checked':'';?>> 남김
     </td>
 </tr>
 <tr>
@@ -182,15 +182,15 @@ include_once ('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="cf_read_point">글읽기 포인트</label></th>
-    <td><input type="text" id="cf_read_point" name="cf_read_point" class="required numeric" value="<?=$config[cf_read_point]?>" size="2"> 점</td>
+    <td><input type="text" id="cf_read_point" name="cf_read_point" class="required numeric" value="<?=$config['cf_read_point']?>" size="2"> 점</td>
     <th scope="row"><label for="cf_write_point">글쓰기 포인트</label></th>
-    <td><input type="text" id="cf_write_point" name="cf_write_point" class="required numeric" value="<?=$config[cf_write_point]?>" size="2"> 점</td>
+    <td><input type="text" id="cf_write_point" name="cf_write_point" class="required numeric" value="<?=$config['cf_write_point']?>" size="2"> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_comment_point">댓글쓰기 포인트</label></th>
-    <td><input type="text" id="cf_comment_point" name="cf_comment_point" class="required numeric" value="<?=$config[cf_comment_point]?>" size="2"> 점</td>
+    <td><input type="text" id="cf_comment_point" name="cf_comment_point" class="required numeric" value="<?=$config['cf_comment_point']?>" size="2"> 점</td>
     <th scope="row"><label for="cf_download_point">다운로드 포인트</label></th>
-    <td><input type="text" id="cf_download_point" name="cf_download_point" class="required numeric" value="<?=$config[cf_download_point]?>" size="2"> 점</td>
+    <td><input type="text" id="cf_download_point" name="cf_download_point" class="required numeric" value="<?=$config['cf_download_point']?>" size="2"> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_link_target">새창 링크</label></th>
@@ -204,7 +204,7 @@ include_once ('./admin.head.php');
         </select>
     </td>
     <th scope="row"><label for="cf_search_part">검색 단위</label></th>
-    <td><input type="text" id="cf_search_part" name="cf_search_part" value="<?=$config[cf_search_part]?>" size="2"> 건 단위로 검색</td>
+    <td><input type="text" id="cf_search_part" name="cf_search_part" value="<?=$config['cf_search_part']?>" size="2"> 건 단위로 검색</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_search_bgcolor">검색 배경 색상</label></th>
@@ -214,9 +214,9 @@ include_once ('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="cf_delay_sec">글쓰기 간격</label></th>
-    <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" class="required numeric" value="<?=$config[cf_delay_sec]?>" size="2"> 초 지난후 가능</td>
+    <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" class="required numeric" value="<?=$config['cf_delay_sec']?>" size="2"> 초 지난후 가능</td>
     <th scope="row"><label for="cf_write_pages">페이지 표시 수</label></th>
-    <td><input type="text" id="cf_write_pages" name="cf_write_pages" class="required numeric" value="<?=$config[cf_write_pages]?>" size="2"> 페이지씩 표시</td>
+    <td><input type="text" id="cf_write_pages" name="cf_write_pages" class="required numeric" value="<?=$config['cf_write_pages']?>" size="2"> 페이지씩 표시</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_image_extension">이미지 업로드 확장자</label></th>
@@ -272,48 +272,48 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row">홈페이지 입력</th>
     <td>
-        <input type="checkbox" id="cf_use_homepage" name="cf_use_homepage" value="1" <?=$config[cf_use_homepage]?'checked':'';?>> <label for="cf_use_homepage">보이기</label>
-        <input type="checkbox" id="cf_req_homepage" name="cf_req_homepage" value="1" <?=$config[cf_req_homepage]?'checked':'';?>> <label for="cf_req_homepage">필수입력</label>
+        <input type="checkbox" id="cf_use_homepage" name="cf_use_homepage" value="1" <?=$config['cf_use_homepage']?'checked':'';?>> <label for="cf_use_homepage">보이기</label>
+        <input type="checkbox" id="cf_req_homepage" name="cf_req_homepage" value="1" <?=$config['cf_req_homepage']?'checked':'';?>> <label for="cf_req_homepage">필수입력</label>
     </td>
     <th scope="row">주소 입력</th>
     <td>
-        <input type="checkbox" id="cf_use_addr" name="cf_use_addr" value="1" <?=$config[cf_use_addr]?'checked':'';?>> <label for="cf_use_addr">보이기</label>
-        <input type="checkbox" id="cf_req_addr" name="cf_req_addr" value="1" <?=$config[cf_req_addr]?'checked':'';?>> <label for="cf_req_addr">필수입력</label>
+        <input type="checkbox" id="cf_use_addr" name="cf_use_addr" value="1" <?=$config['cf_use_addr']?'checked':'';?>> <label for="cf_use_addr">보이기</label>
+        <input type="checkbox" id="cf_req_addr" name="cf_req_addr" value="1" <?=$config['cf_req_addr']?'checked':'';?>> <label for="cf_req_addr">필수입력</label>
     </td>
 </tr>
 <tr>
     <th scope="row">전화번호 입력</th>
     <td>
-        <input type="checkbox" id="cf_use_tel" name="cf_use_tel" value="1" <?=$config[cf_use_tel]?'checked':'';?>> <label for="cf_use_tel">보이기</label>
-        <input type="checkbox" id="cf_req_tel" name="cf_req_tel" value="1" <?=$config[cf_req_tel]?'checked':'';?>> <label for="cf_req_tel">필수입력</label>
+        <input type="checkbox" id="cf_use_tel" name="cf_use_tel" value="1" <?=$config['cf_use_tel']?'checked':'';?>> <label for="cf_use_tel">보이기</label>
+        <input type="checkbox" id="cf_req_tel" name="cf_req_tel" value="1" <?=$config['cf_req_tel']?'checked':'';?>> <label for="cf_req_tel">필수입력</label>
     </td>
     <th scope="row">핸드폰 입력</th>
     <td>
-        <input type="checkbox" id="cf_use_hp" name="cf_use_hp" value="1" <?=$config[cf_use_hp]?'checked':'';?>> <label for="cf_use_hp">보이기</label>
-        <input type="checkbox" id="cf_req_hp" name="cf_req_hp" value="1" <?=$config[cf_req_hp]?'checked':'';?>> <label for="cf_req_hp">필수입력</label>
+        <input type="checkbox" id="cf_use_hp" name="cf_use_hp" value="1" <?=$config['cf_use_hp']?'checked':'';?>> <label for="cf_use_hp">보이기</label>
+        <input type="checkbox" id="cf_req_hp" name="cf_req_hp" value="1" <?=$config['cf_req_hp']?'checked':'';?>> <label for="cf_req_hp">필수입력</label>
     </td>
 </tr>
 <tr>
     <th scope="row">서명 입력</th>
     <td>
-        <input type="checkbox" id="cf_use_signature" name="cf_use_signature" value="1" <?=$config[cf_use_signature]?'checked':'';?>> <label for="cf_use_signature">보이기</label>
-        <input type="checkbox" id="cf_req_signature" name="cf_req_signature" value="1" <?=$config[cf_req_signature]?'checked':'';?>> <label for="cf_req_signature">필수입력</label>
+        <input type="checkbox" id="cf_use_signature" name="cf_use_signature" value="1" <?=$config['cf_use_signature']?'checked':'';?>> <label for="cf_use_signature">보이기</label>
+        <input type="checkbox" id="cf_req_signature" name="cf_req_signature" value="1" <?=$config['cf_req_signature']?'checked':'';?>> <label for="cf_req_signature">필수입력</label>
     </td>
     <th scope="row">자기소개 입력</th>
     <td>
-        <input type="checkbox" id="cf_use_profile" name="cf_use_profile" value="1" <?=$config[cf_use_profile]?'checked':'';?>> <label for="cf_use_profile">보이기</label>
-        <input type="checkbox" id="cf_req_profile" name="cf_req_profile" value="1" <?=$config[cf_req_profile]?'checked':'';?>> <label for="cf_req_profile">필수입력</label>
+        <input type="checkbox" id="cf_use_profile" name="cf_use_profile" value="1" <?=$config['cf_use_profile']?'checked':'';?>> <label for="cf_use_profile">보이기</label>
+        <input type="checkbox" id="cf_req_profile" name="cf_req_profile" value="1" <?=$config['cf_req_profile']?'checked':'';?>> <label for="cf_req_profile">필수입력</label>
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_register_level">회원가입시 권한</label></th>
-    <td><?=get_member_level_select('cf_register_level', 1, 9, $config[cf_register_level]) ?></td>
+    <td><?=get_member_level_select('cf_register_level', 1, 9, $config['cf_register_level']) ?></td>
     <th scope="row"><label for="cf_register_point">회원가입시 포인트</label></th>
-    <td><input type="text" id="cf_register_point" name="cf_register_point" value="<?=$config[cf_register_point]?>" size="5"> 점</td>
+    <td><input type="text" id="cf_register_point" name="cf_register_point" value="<?=$config['cf_register_point']?>" size="5"> 점</td>
 </tr>
 <tr>
     <th scope='row' id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
-    <td colspan="3"><input type="text" id="cf_leave_day" name="cf_leave_day" value="<?=$config[cf_leave_day]?>" size="2"> 일 후 자동 삭제</td>
+    <td colspan="3"><input type="text" id="cf_leave_day" name="cf_leave_day" value="<?=$config['cf_leave_day']?>" size="2"> 일 후 자동 삭제</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_use_member_icon">회원아이콘 사용</label></th>
@@ -324,28 +324,28 @@ include_once ('./admin.head.php');
             <option value="1">아이콘만 표시
             <option value="2">아이콘+이름 표시
         </select>
-        <script> document.getElementById('cf_use_member_icon').value="<?=$config[cf_use_member_icon]?>";</script>
+        <script> document.getElementById('cf_use_member_icon').value="<?=$config['cf_use_member_icon']?>";</script>
     </td>
     <th scope="row"><label for="cf_icon_level">아이콘 업로드 권한</label></th>
-    <td><?=get_member_level_select('cf_icon_level', 1, 9, $config[cf_icon_level]) ?> 이상</td>
+    <td><?=get_member_level_select('cf_icon_level', 1, 9, $config['cf_icon_level']) ?> 이상</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_member_icon_size">회원아이콘 용량</label></th>
-    <td><input type="text" id="cf_member_icon_size" name="cf_member_icon_size" value="<?=$config[cf_member_icon_size]?>" size="10"> 바이트 이하</td>
+    <td><input type="text" id="cf_member_icon_size" name="cf_member_icon_size" value="<?=$config['cf_member_icon_size']?>" size="10"> 바이트 이하</td>
     <th scope="row"><label for="cf_member_icon_width">회원아이콘 사이즈</label></th>
     <td>
         <label for="cf_member_icon_width">가로</label>
-        <input type="text" id="cf_member_icon_width" name="cf_member_icon_width" value="<?=$config[cf_member_icon_width]?>" size="2">
+        <input type="text" id="cf_member_icon_width" name="cf_member_icon_width" value="<?=$config['cf_member_icon_width']?>" size="2">
         <label for="cf_member_icon_height">세로</label>
-        <input type="text" id="cf_member_icon_height" name="cf_member_icon_height" value="<?=$config[cf_member_icon_height]?>" size="2">
+        <input type="text" id="cf_member_icon_height" name="cf_member_icon_height" value="<?=$config['cf_member_icon_height']?>" size="2">
         픽셀 이하
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_use_recommend">추천인제도 사용</label></th>
-    <td><input type="checkbox" id="cf_use_recommend" name="cf_use_recommend" value="1" <?=$config[cf_use_recommend]?'checked':'';?>> 사용</td>
+    <td><input type="checkbox" id="cf_use_recommend" name="cf_use_recommend" value="1" <?=$config['cf_use_recommend']?'checked':'';?>> 사용</td>
     <th scope="row"><label for="cf_recommend_point">추천인 포인트</label></th>
-    <td><input type="text" id="cf_recommend_point" name="cf_recommend_point" value="<?=$config[cf_recommend_point]?>"> 점</td>
+    <td><input type="text" id="cf_recommend_point" name="cf_recommend_point" value="<?=$config['cf_recommend_point']?>"> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_prohibit_id">아이디,별명 금지단어</label></th>
@@ -377,21 +377,21 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_email_use">메일발송 사용</label></th>
     <td>
         <?=help('체크하지 않으면 메일발송을 아예 사용하지 않습니다. 메일 테스트도 불가합니다.')?>
-        <input type="checkbox" id="cf_email_use" name="cf_email_use" value="1" <?=$config[cf_email_use]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_use" name="cf_email_use" value="1" <?=$config['cf_email_use']?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_use_email_certify">메일인증 사용</label></th>
     <td>
         <?=help('메일에 배달된 인증 주소를 클릭하여야 회원으로 인정합니다.');?>
-        <input type="checkbox" id="cf_use_email_certify" name="cf_use_email_certify" value="1" <?=$config[cf_use_email_certify]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_use_email_certify" name="cf_use_email_certify" value="1" <?=$config['cf_use_email_certify']?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_formmail_is_member">폼메일 사용 여부</label></th>
     <td>
         <?=help('체크하지 않으면 비회원도 사용 할 수 있습니다.')?>
-        <input type="checkbox" id="cf_formmail_is_member" name="cf_formmail_is_member" value="1" <?=$config[cf_formmail_is_member]?'checked':'';?>> 회원만 사용
+        <input type="checkbox" id="cf_formmail_is_member" name="cf_formmail_is_member" value="1" <?=$config['cf_formmail_is_member']?'checked':'';?>> 회원만 사용
     </td>
 </tr>
 </table>
@@ -403,35 +403,35 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_email_wr_super_admin">최고관리자</label></th>
     <td>
         <?=help('최고관리자에게 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_wr_super_admin" name="cf_email_wr_super_admin" value="1" <?=$config[cf_email_wr_super_admin]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_wr_super_admin" name="cf_email_wr_super_admin" value="1" <?=$config['cf_email_wr_super_admin']?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_email_wr_group_admin">그룹관리자</label></th>
     <td>
         <?=help('그룹관리자에게 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_wr_group_admin" name="cf_email_wr_group_admin" value="1" <?=$config[cf_email_wr_group_admin]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_wr_group_admin" name="cf_email_wr_group_admin" value="1" <?=$config['cf_email_wr_group_admin']?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_email_wr_board_admin">게시판관리자</label></th>
     <td>
         <?=help('게시판관리자에게 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_wr_board_admin" name="cf_email_wr_board_admin" value="1" <?=$config[cf_email_wr_board_admin]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_wr_board_admin" name="cf_email_wr_board_admin" value="1" <?=$config['cf_email_wr_board_admin']?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_email_wr_write">원글작성자</label></th>
     <td>
         <?=help('게시자님께 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_wr_write" name="cf_email_wr_write" value="1" <?=$config[cf_email_wr_write]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_wr_write" name="cf_email_wr_write" value="1" <?=$config['cf_email_wr_write']?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_email_wr_comment_all">댓글작성자</label></th>
     <td>
         <?=help('원글에 댓글이 올라오는 경우 댓글 쓴 모든 분들께 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_wr_comment_all" name="cf_email_wr_comment_all" value="1" <?=$config[cf_email_wr_comment_all]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_wr_comment_all" name="cf_email_wr_comment_all" value="1" <?=$config['cf_email_wr_comment_all']?'checked':'';?>> 사용
     </td>
 </tr>
 </tbody>
@@ -444,14 +444,14 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_email_mb_super_admin">최고관리자 메일발송</label></th>
     <td>
         <?=help('최고관리자에게 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_mb_super_admin" name="cf_email_mb_super_admin" value="1" <?=$config[cf_email_mb_super_admin]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_mb_super_admin" name="cf_email_mb_super_admin" value="1" <?=$config['cf_email_mb_super_admin']?'checked':'';?>> 사용
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_email_mb_member">회원님께 메일발송</label></th>
     <td>
         <?=help('회원가입한 회원님께 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_mb_member" name="cf_email_mb_member" value="1" <?=$config[cf_email_mb_member]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_mb_member" name="cf_email_mb_member" value="1" <?=$config['cf_email_mb_member']?'checked':'';?>> 사용
     </td>
 </tr>
 </tbody>
@@ -464,7 +464,7 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_email_po_super_admin">최고관리자 메일발송</label></th>
     <td>
         <?=help('최고관리자에게 메일을 발송합니다.')?>
-        <input type="checkbox" id="cf_email_po_super_admin" name="cf_email_po_super_admin" value="1" <?=$config[cf_email_po_super_admin]?'checked':'';?>> 사용
+        <input type="checkbox" id="cf_email_po_super_admin" name="cf_email_po_super_admin" value="1" <?=$config['cf_email_po_super_admin']?'checked':'';?>> 사용
     </td>
 </tr>
 </tbody>
