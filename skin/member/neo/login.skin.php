@@ -23,11 +23,16 @@ if ($g4['https_url']) {
 else {
     $login_url = $urlencode;
 }
+
+if ($g4['https_url'])
+    $action_url = "{$g4['https_url']}/$g4[bbs]/login_check.php";
+else
+    $action_url = "{$g4['bbs_path']}/login_check.php";
 ?>
 
 <script src="<?=$g4[path]?>/js/capslock.js"></script>
 
-<form name="flogin" method="post" onsubmit="return flogin_submit(this);" autocomplete="off">
+<form name="flogin" method="post" action="<?=$action_url?>" onsubmit="return flogin_submit(this);">
 <input type="hidden" name="url" value='<?=$login_url?>'>
 
 <fieldset>
@@ -58,13 +63,6 @@ document.flogin.mb_id.focus();
 
 function flogin_submit(f)
 {
-    <?
-    if ($g4[https_url])
-        echo "f.action = '$g4[https_url]/$g4[bbs]/login_check.php';";
-    else
-        echo "f.action = '$g4[bbs_path]/login_check.php';";
-    ?>
-
     return true;
 }
 </script>
