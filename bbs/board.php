@@ -128,7 +128,7 @@ if (isset($wr_id) && $wr_id) {
             alert('목록을 볼 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
 
-    if (!isset($page)) $page = 1;
+    if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
 
     $g4['title'] = $board['bo_subject'].$page.' 페이지';
 }
