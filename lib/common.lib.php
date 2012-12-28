@@ -66,6 +66,7 @@ function print_r2($var)
 // header("location:URL") 을 대체
 function goto_url($url)
 {
+    $url = str_replace("&amp;", "&", $url);
     echo "<script> location.replace('$url'); </script>";
     exit;
 }
@@ -84,7 +85,7 @@ function set_session($session_name, $value)
 // 세션변수값 얻음
 function get_session($session_name)
 {
-    return $_SESSION[$session_name];
+    return isset($_SESSION[$session_name]) ? $_SESSION[$session_name] : '';
 }
 
 
@@ -115,7 +116,7 @@ function alert($msg='', $url='')
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
 
-    //header("Content-Type: text/html; charset=$g4[charset]");
+    //header("Content-Type: text/html; charset=$g4['charset']");
     echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
     echo "<script>alert('$msg');";
     if (!$url)
@@ -153,7 +154,7 @@ function url_auto_link($str)
     $str = preg_replace("/&quot;/", "\"", $str);
     $str = preg_replace("/&nbsp;/", "\t_nbsp_\t", $str);
     $str = preg_replace("/([^(http:\/\/)]|\(|^)(www\.[^[:space:]]+)/i", "\\1<A HREF=\"http://\\2\" TARGET='{$config['cf_link_target']}'>\\2</A>", $str);
-    //$str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,]+)/i", "\\1<A HREF=\"\\2\" TARGET='$config[cf_link_target]'>\\2</A>", $str);
+    //$str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,]+)/i", "\\1<A HREF=\"\\2\" TARGET='$config['cf_link_target']'>\\2</A>", $str);
     // 100825 : () 추가
     // 120315 : CHARSET 에 따라 링크시 글자 잘림 현상이 있어 수정
     if (strtoupper($g4['charset']) == 'UTF-8') {
@@ -215,18 +216,18 @@ function get_file($bo_table, $wr_id)
         $file[$no]['download'] = $row['bf_download'];
         // 4.00.11 - 파일 path 추가
         $file[$no]['path'] = $g4['path'].'/data/file/'.$bo_table;
-        //$file[$no][size] = get_filesize("{$file[$no][path]}/$row[bf_file]");
+        //$file[$no]['size'] = get_filesize("{$file[$no]['path']}/$row['bf_file']");
         $file[$no]['size'] = get_filesize($row['bf_filesize']);
-        //$file[$no][datetime] = date("Y-m-d H:i:s", @filemtime("$g4[path]/data/file/$bo_table/$row[bf_file]"));
+        //$file[$no]['datetime'] = date("Y-m-d H:i:s", @filemtime("$g4['path']/data/file/$bo_table/$row['bf_file']"));
         $file[$no]['datetime'] = $row['bf_datetime'];
         $file[$no]['source'] = addslashes($row['bf_source']);
         $file[$no]['bf_content'] = $row['bf_content'];
         $file[$no]['content'] = get_text($row['bf_content']);
-        //$file[$no][view] = view_file_link($row[bf_file], $file[$no][content]);
+        //$file[$no]['view'] = view_file_link($row['bf_file'], $file[$no]['content']);
         $file[$no]['view'] = view_file_link($row['bf_file'], $row['bf_width'], $row['bf_height'], $file[$no]['content']);
         $file[$no]['file'] = $row['bf_file'];
         // prosper 님 제안
-        //$file[$no][imgsize] = @getimagesize("{$file[$no][path]}/$row[bf_file]");
+        //$file[$no]['imgsize'] = @getimagesize("{$file[$no]['path']}/$row['bf_file']");
         $file[$no]['image_width'] = $row['bf_width'] ? $row['bf_width'] : 640;
         $file[$no]['image_height'] = $row['bf_height'] ? $row['bf_height'] : 480;
         $file[$no]['image_type'] = $row['bf_type'];
@@ -339,7 +340,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
 
     $list['href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
     if ($board['bo_use_comment'])
-        $list['comment_href'] = "javascript:win_comment('$g4[bbs_path]/board.php?bo_table=$board[bo_table]&amp;wr_id={$list['wr_id']}&amp;cwin=1');";
+        $list['comment_href'] = "javascript:win_comment('{$g4['bbs_path']}/board.php?bo_table={$board['bo_table']}&amp;wr_id={$list['wr_id']}&amp;cwin=1');";
     else
         $list['comment_href'] = $list['href'];
 
@@ -424,14 +425,14 @@ function conv_subject($subject, $len, $suffix='')
 // OBJECT 태그의 XSS 막기
 function bad120422($matches)
 {
-    $tag  = $matches[1];
-    $code = $matches[2];
+    $tag  = $matches['1'];
+    $code = $matches['2'];
     if (preg_match("#\bscript\b#i", $code)) {
         return "$tag 태그에 스크립트는 사용 불가합니다.";
     } else if (preg_match("#\bbase64\b#i", $code)) {
         return "$tag 태그에 BASE64는 사용 불가합니다.";
     }
-    return $matches[0];
+    return $matches['0'];
 }
 
 // 내용을 변환
@@ -554,8 +555,8 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     // 검색필드를 구분자로 나눈다. 여기서는 +
     $tmp = array();
     $tmp = explode(",", trim($search_field));
-    $field = explode("||", $tmp[0]);
-    $not_comment = $tmp[1];
+    $field = explode("||", $tmp['0']);
+    $not_comment = $tmp['1'];
 
     $str .= "(";
     for ($i=0; $i<count($s); $i++) {
@@ -697,7 +698,7 @@ function get_admin($admin='super')
 
     $is = false;
     if ($admin == 'board') {
-        $mb = sql_fetch("select * from {$g4['member_table']} where mb_id in ('$board[bo_admin]') limit 1 ");
+        $mb = sql_fetch("select * from {$g4['member_table']} where mb_id in ('{$board['bo_admin']}') limit 1 ");
         $is = true;
     }
 
@@ -722,8 +723,8 @@ function is_admin($mb_id)
     if (!$mb_id) return;
 
     if ($config['cf_admin'] == $mb_id) return 'super';
-    if ($group['gr_admin'] == $mb_id) return 'group';
-    if ($board['bo_admin'] == $mb_id) return 'board';
+    if (isset($group['gr_admin']) && ($group['gr_admin'] == $mb_id)) return 'group';
+    if (isset($board['bo_admin']) && ($board['bo_admin'] == $mb_id)) return 'board';
     return '';
 }
 
@@ -801,7 +802,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     // 회원아이디가 없다면 업데이트 할 필요 없음
     if ($mb_id == '') { return 0; }
     $mb = sql_fetch(" select mb_id from {$g4['member_table']} where mb_id = '$mb_id' ");
-    if (!$mb[mb_id]) { return 0; }
+    if (!$mb['mb_id']) { return 0; }
 
     // 이미 등록된 내역이라면 건너뜀
     if ($rel_table || $rel_id || $rel_action)
@@ -812,7 +813,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
                     and po_rel_id = '$rel_id'
                     and po_rel_action = '$rel_action' ";
         $row = sql_fetch($sql);
-        if ($row[cnt])
+        if ($row['cnt'])
             return -1;
     }
 
@@ -890,8 +891,8 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
             //if (file_exists($icon_file) && is_file($icon_file)) {
             if (file_exists($icon_file)) {
                 //$size = getimagesize($icon_file);
-                //$width = $size[0];
-                //$height = $size[1];
+                //$width = $size['0'];
+                //$height = $size['1'];
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
                 $tmp_name = '<img src="'.$icon_file.'" width="'.$width.'" height="'.$height.'" border="0" alt="첨부파일">';
@@ -945,17 +946,17 @@ function view_file_link($file, $width, $height, $content='')
         return "<img src='{$g4['path']}/data/file/{$board['bo_table']}/".urlencode($file)."' onclick='image_window(this);' alt='{$content}'>";
     /*
     // 110106 : FLASH XSS 공격으로 인하여 코드 자체를 막음
-    else if (preg_match("/\.($config[cf_flash_extension])$/i", $file))
-        //return "<embed src='$g4[path]/data/file/$board[bo_table]/$file' $attr></embed>";
-        return "<script>doc_write(flash_movie('$g4[path]/data/file/$board[bo_table]/$file', '_g4_{$ids}', '$width', '$height', 'transparent'));</script>";
+    else if (preg_match("/\.($config['cf_flash_extension'])$/i", $file))
+        //return "<embed src='$g4['path']/data/file/$board['bo_table']/$file' $attr></embed>";
+        return "<script>doc_write(flash_movie('$g4['path']/data/file/$board['bo_table']/$file', '_g4_{$ids}', '$width', '$height', 'transparent'));</script>";
     */
     //=============================================================================================
     // 동영상 파일에 악성코드를 심는 경우를 방지하기 위해 경로를 노출하지 않음
     //---------------------------------------------------------------------------------------------
     /*
-    else if (preg_match("/\.($config[cf_movie_extension])$/i", $file))
-        //return "<embed src='$g4[path]/data/file/$board[bo_table]/$file' $attr></embed>";
-        return "<script>doc_write(obj_movie('$g4[path]/data/file/$board[bo_table]/$file', '_g4_{$ids}', '$width', '$height'));</script>";
+    else if (preg_match("/\.($config['cf_movie_extension'])$/i", $file))
+        //return "<embed src='$g4['path']/data/file/$board['bo_table']/$file' $attr></embed>";
+        return "<script>doc_write(obj_movie('$g4['path']/data/file/$board['bo_table']/$file', '_g4_{$ids}', '$width', '$height'));</script>";
     */
     //=============================================================================================
 }
@@ -979,11 +980,11 @@ function view_link($view, $number, $attribute)
 {
     global $config;
 
-    if ($view[link][$number][link])
+    if ($view['link'][$number]['link'])
     {
         if (!preg_match("/target/i", $attribute))
-            $attribute .= " target='$config[cf_link_target]'";
-        return "<a href='{$view[link][$number][href]}' $attribute>{$view[link][$number][link]}</a>";
+            $attribute .= " target='$config['cf_link_target']'";
+        return "<a href='{$view['link'][$number]['href']}' $attribute>{$view['link'][$number]['link']}</a>";
     }
     else
         return "{".$number."번 링크 없음}";
@@ -1113,7 +1114,7 @@ function sql_query($sql, $error=TRUE)
 function sql_fetch($sql, $error=TRUE)
 {
     $result = sql_query($sql, $error);
-    //$row = @sql_fetch_array($result) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER[PHP_SELF]");
+    //$row = @sql_fetch_array($result) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER['PHP_SELF']");
     $row = sql_fetch_array($result);
     return $row;
 }
@@ -1232,9 +1233,9 @@ function referer_check($url='')
     global $g4;
 
     if (!$url)
-        $url = $g4[url];
+        $url = $g4['url'];
 
-    if (!preg_match("/^http[s]?:\/\/".$_SERVER[HTTP_HOST]."/", $_SERVER[HTTP_REFERER]))
+    if (!preg_match("/^http['s']?:\/\/".$_SERVER['HTTP_HOST']."/", $_SERVER['HTTP_REFERER']))
         alert("제대로 된 접근이 아닌것 같습니다.", $url);
     */
 }
@@ -1267,9 +1268,9 @@ function date_select($date, $name='')
 
     // 년
     $s .= "<select name='{$name}_y'>";
-    for ($i=$m[0]-3; $i<=$m[0]+3; $i++) {
+    for ($i=$m['0']-3; $i<=$m['0']+3; $i++) {
         $s .= "<option value='$i'";
-        if ($i == $m[0]) {
+        if ($i == $m['0']) {
             $s .= " selected";
         }
         $s .= ">$i";
@@ -1280,7 +1281,7 @@ function date_select($date, $name='')
     $s .= "<select name='{$name}_m'>";
     for ($i=1; $i<=12; $i++) {
         $s .= "<option value='$i'";
-        if ($i == $m[2]) {
+        if ($i == $m['2']) {
             $s .= " selected";
         }
         $s .= ">$i";
@@ -1291,7 +1292,7 @@ function date_select($date, $name='')
     $s .= "<select name='{$name}_d'>";
     for ($i=1; $i<=31; $i++) {
         $s .= "<option value='$i'";
-        if ($i == $m[3]) {
+        if ($i == $m['3']) {
             $s .= " selected";
         }
         $s .= ">$i";
@@ -1313,7 +1314,7 @@ function time_select($time, $name="")
     $s .= "<select name='{$name}_h'>";
     for ($i=0; $i<=23; $i++) {
         $s .= "<option value='$i'";
-        if ($i == $m[0]) {
+        if ($i == $m['0']) {
             $s .= " selected";
         }
         $s .= ">$i";
@@ -1324,7 +1325,7 @@ function time_select($time, $name="")
     $s .= "<select name='{$name}_i'>";
     for ($i=0; $i<=59; $i++) {
         $s .= "<option value='$i'";
-        if ($i == $m[2]) {
+        if ($i == $m['2']) {
             $s .= " selected";
         }
         $s .= ">$i";
@@ -1335,7 +1336,7 @@ function time_select($time, $name="")
     $s .= "<select name='{$name}_s'>";
     for ($i=0; $i<=59; $i++) {
         $s .= "<option value='$i'";
-        if ($i == $m[3]) {
+        if ($i == $m['3']) {
             $s .= " selected";
         }
         $s .= ">$i";
@@ -1449,8 +1450,8 @@ function explain($sql)
         $q = "explain $sql";
         echo $q;
         $row = sql_fetch($q);
-        if (!$row[key]) $row[key] = "NULL";
-        echo " <font color=blue>(type=$row[type] , key=$row[key])</font>";
+        if (!$row['key']) $row['key'] = "NULL";
+        echo " <font color=blue>(type={$row['type']} , key={$row['key']})</font>";
     }
 }
 

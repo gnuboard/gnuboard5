@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $cwin = "";
-if (array_key_exists('cwin', $_GET)) {
+if (isset($_GET['cwin']) && $_GET['cwin']) {
     $cwin = $_GET['cwin'];
 }
 
@@ -13,7 +13,7 @@ if (!$board['bo_table']) {
        alert('존재하지 않는 게시판입니다.', $g4['path']);
 }
 
-if (array_key_exists('wr_is_comment', $write)) {
+if (isset($write['wr_is_comment']) && $write['wr_is_comment']) {
     goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'#c_'.$wr_id);
 }
 
@@ -37,10 +37,9 @@ if (isset($wr_id) && $wr_id) {
     }
 
     // 그룹접근 사용
-    if ($group[gr_use_access])
-    {
-        if (!$member[mb_id]) {
-            $msg = '비회원은 이 게시판에 접근할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.';
+    if (isset($group['gr_use_access']) && $group['gr_use_access']) {
+        if ($is_guest) {
+            $msg = "비회원은 이 게시판에 접근할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.";
             if ($cwin)
                 alert_close($msg);
             else
@@ -48,60 +47,55 @@ if (isset($wr_id) && $wr_id) {
         }
 
         // 그룹관리자 이상이라면 통과
-        if ($is_admin == "super" || $is_admin == "group")
+        if ($is_admin == "super" || $is_admin == "group") {
             ;
-        else
-        {
+        } else {
             // 그룹접근
-            $sql = " select count(*) as cnt
-                        from {$g4[group_member_table]}
-                        where gr_id = '{$board[gr_id]}' and mb_id = '{$member[mb_id]}' ";
+            $sql = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
             $row = sql_fetch($sql);
-            if (!$row[cnt])
-                alert('접근 권한이 없으므로 글읽기가 불가합니다.'.PHP_EOL.PHP_EOL.'궁금하신 사항은 관리자에게 문의 바랍니다.', $g4['path']);
+            if (!$row['cnt']) {
+                alert("접근 권한이 없으므로 글읽기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.", $g4['path']);
+            }
         }
     }
 
     // 로그인된 회원의 권한이 설정된 읽기 권한보다 작다면
-    if ($member[mb_level] < $board[bo_read_level])
-    {
-        if ($member[mb_id])
-            //alert("글을 읽을 권한이 없습니다.");
+    if ($member['mb_level'] < $board['bo_read_level']) {
+        if ($is_member)
             alert('글을 읽을 권한이 없습니다.', $g4['path']);
         else
             alert('글을 읽을 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
 
     // 자신의 글이거나 관리자라면 통과
-    if (($write[mb_id] && $write[mb_id] == $member[mb_id]) || $is_admin)
+    if (($write['mb_id'] && $write['mb_id'] == $member['mb_id']) || $is_admin) {
         ;
-    else
-    {
+    } else {
         // 비밀글이라면
-        if (strstr($write[wr_option], "secret"))
+        if (strstr($write['wr_option'], "secret"))
         {
             // 회원이 비밀글을 올리고 관리자가 답변글을 올렸을 경우
             // 회원이 관리자가 올린 답변글을 바로 볼 수 없던 오류를 수정
             $is_owner = false;
-            if ($write[wr_reply] && $member[mb_id])
+            if ($write['wr_reply'] && $member['mb_id'])
             {
                 $sql = " select mb_id from {$write_table}
-                            where wr_num = '{$write[wr_num]}'
+                            where wr_num = '{$write['wr_num']}'
                             and wr_reply = ''
                             and wr_is_comment = 0 ";
                 $row = sql_fetch($sql);
-                if ($row[mb_id] == $member[mb_id])
+                if ($row['mb_id'] == $member['mb_id'])
                     $is_owner = true;
             }
 
-            $ss_name = 'ss_secret_'.$bo_table.'_'.$write[wr_num];
+            $ss_name = 'ss_secret_'.$bo_table.'_'.$write['wr_num'];
 
             if (!$is_owner)
             {
                 //$ss_name = "ss_secret_{$bo_table}_{$wr_id}";
                 // 한번 읽은 게시물의 번호는 세션에 저장되어 있고 같은 게시물을 읽을 경우는 다시 패스워드를 묻지 않습니다.
                 // 이 게시물이 저장된 게시물이 아니면서 관리자가 아니라면
-                //if ("$bo_table|$write[wr_num]" != get_session("ss_secret"))
+                //if ("$bo_table|$write['wr_num']" != get_session("ss_secret"))
                 if (!get_session($ss_name))
                     goto_url('./password.php?w=s&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
             }
@@ -117,26 +111,26 @@ if (isset($wr_id) && $wr_id) {
         sql_query(" update {$write_table} set wr_hit = wr_hit + 1 where wr_id = '{$wr_id}' ");
 
         // 자신의 글이면 통과
-        if ($write[mb_id] && $write[mb_id] == $member[mb_id]) {
+        if ($write['mb_id'] && $write['mb_id'] == $member['mb_id']) {
             ;
-        } else if ($is_guest && $board[bo_read_level] == 1 && $write[wr_ip] == $_SERVER['REMOTE_ADDR']) {
+        } else if ($is_guest && $board['bo_read_level'] == 1 && $write['wr_ip'] == $_SERVER['REMOTE_ADDR']) {
             // 비회원이면서 읽기레벨이 1이고 등록된 아이피가 같다면 자신의 글이므로 통과
             ;
         } else {
             /*
             // 회원이상 글읽기가 가능하다면
-            if ($board[bo_read_level] > 1) {
-                if ($member[mb_point] + $board[bo_read_point] < 0)
-                    alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 글읽기('.number_format($board[bo_read_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 모으신 후 다시 글읽기 해 주십시오.');
+            if ($board['bo_read_level'] > 1) {
+                if ($member['mb_point'] + $board['bo_read_point'] < 0)
+                    alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 모으신 후 다시 글읽기 해 주십시오.');
 
-                insert_point($member[mb_id], $board[bo_read_point], '{$board[bo_subject]} {$wr_id} 글읽기', $bo_table, $wr_id, '읽기');
+                insert_point($member['mb_id'], $board['bo_read_point'], '{$board['bo_subject']} {$wr_id} 글읽기', $bo_table, $wr_id, '읽기');
             }
             */
             // 글읽기 포인트가 설정되어 있다면
-            if ($board[bo_read_point] && $member[mb_point] + $board[bo_read_point] < 0)
-                alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 글읽기('.number_format($board[bo_read_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 모으신 후 다시 글읽기 해 주십시오.');
+            if ($board['bo_read_point'] && $member['mb_point'] + $board['bo_read_point'] < 0)
+                alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 모으신 후 다시 글읽기 해 주십시오.');
 
-            insert_point($member[mb_id], $board[bo_read_point], '{$board[bo_subject]} {$wr_id} 글읽기', $bo_table, $wr_id, '읽기');
+            insert_point($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$wr_id} 글읽기", $bo_table, $wr_id, '읽기');
         }
 
         set_session($ss_name, TRUE);
@@ -213,7 +207,7 @@ if (!($board['bo_use_comment'] && $cwin)) {
     }
 
     // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임
-    //if ($board[bo_use_list_view] || empty($wr_id))
+    //if ($board['bo_use_list_view'] || empty($wr_id))
     if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view'] || empty($wr_id))
         include_once ('./list.php');
 
@@ -222,7 +216,7 @@ if (!($board['bo_use_comment'] && $cwin)) {
 else
     include_once('./view_comment.php');
 
-echo PHP_EOL.'<!-- 사용스킨 : $board[bo_skin] -->'.PHP_EOL;
+echo "\\n<!-- 사용스킨 : {$board['bo_skin']} -->\\n";
 
 include_once($g4['path'].'/tail.sub.php');
 ?>

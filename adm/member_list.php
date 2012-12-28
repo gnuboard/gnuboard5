@@ -30,7 +30,7 @@ if ($stx) {
 }
 
 if ($is_admin != 'super')
-    $sql_search .= " and mb_level <= '{$member[mb_level]}' ";
+    $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
 
 if (!$sst) {
     $sst = "mb_datetime";
@@ -44,9 +44,9 @@ $sql = " select count(*) as cnt
             {$sql_search}
             {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -58,7 +58,7 @@ $sql = " select count(*) as cnt
             and mb_leave_date <> ''
             {$sql_order} ";
 $row = sql_fetch($sql);
-$leave_count = $row[cnt];
+$leave_count = $row['cnt'];
 
 // 차단회원수
 $sql = " select count(*) as cnt
@@ -67,7 +67,7 @@ $sql = " select count(*) as cnt
             and mb_intercept_date <> ''
             {$sql_order} ";
 $row = sql_fetch($sql);
-$intercept_count = $row[cnt];
+$intercept_count = $row['cnt'];
 
 $listall = "";
 if ($sfl || $stx) // 검색일 때만 처음 버튼을 보여줌
@@ -166,8 +166,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
     $row2 = sql_fetch($sql2);
     $group = '';
-    if ($row2[cnt])
-        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2[cnt].'</a>';
+    if ($row2['cnt'])
+        $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2['cnt'].'</a>';
 
     if ($is_admin == 'group')
     {
@@ -214,11 +214,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </td>
     <td class="td_mbname"><?=$row['mb_name']?></td>
     <td class="td_mbnick"><div><?=$mb_nick?></div></td>
-    <td><?=get_member_level_select("mb_level[$i]", 1, $member[mb_level], $row[mb_level])?></td>
-    <td><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row[mb_point])?></a></td>
+    <td><?=get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level'])?></td>
+    <td><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
     <td><?=substr($row['mb_today_login'],2,8)?></td>
-    <td><?=$row[mb_mailling]?'예':'아니오';?></td>
-    <td><?=$row[mb_open]?'예':'아니오';?></td>
+    <td><?=$row['mb_mailling']?'예':'아니오';?></td>
+    <td><?=$row['mb_open']?'예':'아니오';?></td>
     <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
     <td class="td_chk">
         <? if(empty($row['mb_leave_date'])){?>
@@ -243,7 +243,7 @@ if ($i == 0)
 </div>
 
 <?
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, '?'.$qstr.'&amp;page=');
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page=');
 ?>
 <div class="pg">
     <?=$pagelist?>
