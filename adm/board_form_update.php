@@ -70,7 +70,6 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                         bo_comment_level    = '{$_POST[bo_comment_level]}',
                         bo_html_level       = '{$_POST[bo_html_level]}',
                         bo_link_level       = '{$_POST[bo_link_level]}',
-                        bo_trackback_level  = '{$_POST[bo_trackback_level]}',
                         bo_count_modify     = '{$_POST[bo_count_modify]}',
                         bo_count_delete     = '{$_POST[bo_count_delete]}',
                         bo_upload_level     = '{$_POST[bo_upload_level]}',
@@ -92,7 +91,6 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                         bo_use_name         = '{$_POST[bo_use_name]}',
                         bo_use_signature    = '{$_POST[bo_use_signature]}',
                         bo_use_ip_view      = '{$_POST[bo_use_ip_view]}',
-                        bo_use_trackback    = '{$_POST[bo_use_trackback]}',
                         bo_use_list_view    = '{$_POST[bo_use_list_view]}',
                         bo_use_list_content = '{$_POST[bo_use_list_content]}',
                         bo_use_email        = '{$_POST[bo_use_email]}',
@@ -248,7 +246,6 @@ if ($chk_link_level) $s .= " , bo_link_level = '{$bo_link_level}' ";
 if ($chk_upload_level) $s .= " , bo_upload_level = '{$bo_upload_level}' ";
 if ($chk_download_level) $s .= " , bo_download_level = '{$bo_download_level}' ";
 if ($chk_html_level) $s .= " , bo_html_level = '{$bo_html_level}' ";
-if ($chk_trackback_level) $s .= " , bo_trackback_level = '{$bo_trackback_level}' ";
 if ($chk_count_modify) $s .= " , bo_count_modify = '{$bo_count_modify}' ";
 if ($chk_count_delete) $s .= " , bo_count_delete = '{$bo_count_delete}' ";
 if ($chk_read_point) $s .= " , bo_read_point = '{$bo_read_point}' ";
@@ -269,7 +266,6 @@ if ($chk_use_nogood) $s .= " , bo_use_nogood = '{$bo_use_nogood}' ";
 if ($chk_use_name) $s .= " , bo_use_name = '{$bo_use_name}' ";
 if ($chk_use_signature) $s .= " , bo_use_signature = '{$bo_use_signature}' ";
 if ($chk_use_ip_view) $s .= " , bo_use_ip_view = '{$bo_use_ip_view}' ";
-if ($chk_use_trackback) $s .= " , bo_use_trackback = '{$bo_use_trackback}' ";
 if ($chk_use_list_view) $s .= " , bo_use_list_view = '{$bo_use_list_view}' ";
 if ($chk_use_list_content) $s .= " , bo_use_list_content = '{$bo_use_list_content}' ";
 if ($chk_use_email) $s .= " , bo_use_email = '{$bo_use_email}' ";

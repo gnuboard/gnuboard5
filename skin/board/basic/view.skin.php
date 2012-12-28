@@ -45,7 +45,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </td>
         <td align="right" style="padding:6px 6px 0 0;" width=120>
             <? if ($scrap_href) { echo "<a href=\"javascript:;\" onclick=\"win_scrap('$scrap_href');\"><img src='$board_skin_path/img/btn_scrap.gif' border='0' align='absmiddle'></a> "; } ?>
-            <? if ($trackback_url) { ?><a href="javascript:trackback_send_server('<?=$trackback_url?>');" style="letter-spacing:0;" title='주소 복사'><img src="<?=$board_skin_path?>/img/btn_trackback.gif" border='0' align="absmiddle"></a><?}?>
         </td>
     </tr>
     </table>

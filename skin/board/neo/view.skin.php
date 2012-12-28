@@ -133,10 +133,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <? if ($is_signature) { ?><p><?=$signature?></p><? } ?>
 
-    <? if ($scrap_href || $trackback_url || $good_href || $nogood_href) { ?>
+    <? if ($scrap_href || $good_href || $nogood_href) { ?>
     <ul>
         <? if ($scrap_href) { ?><li><a href="javascript:;" onclick="win_scrap('<?=$scrap_href?>');">스크랩</a></li><? } ?>
-        <? if ($trackback_url) { ?><li><a href="javascript:trackback_send_server('<?=$trackback_url?>');">트랙백주소</a></li><?}?>
         <? if ($good_href) {?><li>추천 <?=number_format($view['wr_good'])?> <a href="<?=$good_href?>" target="hiddenframe">추천</a></li><? } ?>
         <? if ($nogood_href) {?><li>비추천 <?=number_format($view['wr_nogood'])?> <a href="<?=$nogood_href?>" target="hiddenframe">비추천</a></li><? } ?>
     </ul>

@@ -253,12 +253,6 @@ if ($board['bo_use_file_content']) {
     $is_file_content = true;
 }
 
-// 트랙백
-$is_trackback = false;
-if ($board['bo_use_trackback'] && $member['mb_level'] >= $board['bo_trackback_level']) {
-    $is_trackback = true;
-}
-
 $name     = "";
 $email    = "";
 $homepage = "";
@@ -275,7 +269,6 @@ if ($w == "" || $w == "r") {
 $html_checked   = "";
 $html_value     = "";
 $secret_checked = "";
-$trackback      = "";
 
 if ($w == '') {
     $password_required = 'required';
@@ -298,8 +291,6 @@ if ($w == '') {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
         $link[$i] = $write['wr_link'.$i];
     }
-
-    $trackback = $write['wr_trackback'];
 
     if (strstr($write['wr_option'], 'html1')) {
         $html_checked = 'checked';

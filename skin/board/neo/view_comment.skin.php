@@ -45,9 +45,6 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <!-- 댓글 출력 -->
         <p><?=$str?></p>
 
-        <? if ($list[$i]['trackback']) { ?>
-            <p><?=$list[$i]['trackback']?></p>
-        <? } ?>
         <span id="edit_<?=$comment_id?>"></span><!-- 수정 -->
         <span id="reply_<?=$comment_id?>"></span><!-- 답변 -->
 

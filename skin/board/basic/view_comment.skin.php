@@ -58,7 +58,6 @@ for ($i=0; $i<count($list); $i++) {
                 echo $str;
                 ?>
                 </div>
-                <? if ($list[$i]['trackback']) { echo "<p>".$list[$i]['trackback']."</p>"; } ?>
                 <span id='edit_<?=$comment_id?>' style='display:none;'></span><!-- 수정 -->
                 <span id='reply_<?=$comment_id?>' style='display:none;'></span><!-- 답변 -->
                 </div>

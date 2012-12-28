@@ -225,15 +225,6 @@ if ($option) {
 <tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
 <? } ?>
 
-<? if ($is_trackback) { ?>
-<tr>
-    <td class=write_head>트랙백주소</td>
-    <td><input class='ed' size=50 name=wr_trackback itemname="트랙백" value="<?=$trackback?>">
-        <? if ($w=='u') { ?><input type=checkbox name="re_trackback" value="1">핑 보냄<? } ?></td>
-</tr>
-<tr><td colspan=2 height=1 bgcolor=#e7e7e7></td></tr>
-<? } ?>
-
 <? if ($is_guest) { ?>
 <tr>
     <td class=write_head><img id='kcaptcha_image' /></td>
