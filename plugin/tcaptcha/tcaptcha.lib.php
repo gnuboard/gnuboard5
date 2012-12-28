@@ -353,7 +353,7 @@ function run_captcha($encoding='kr')
     $str .= "<div><a href=\"javascript:;\" id=\"tcaptcha\">".$captcha->run()."</a></div>\n";
     $str .= "<span>답은 반드시 숫자로 입력하세요.</span>\n";
     $str .= "<input type=\"text\" id=\"user_answer\" name=\"user_answer\" title=\"자동등록방지 숫자\" size=\"10\" required=\"required\" />\n";
-    $str .= "<input type=\"hidden\" id=\"user_token\" name=\"user_token\" />";
+    $str .= "<input type=\"hidden\" id=\"user_token\" name=\"user_token\" value=\"{$captcha->token}\" />";
     $str .=  "</fieldset>\n";
     return $str;
 }

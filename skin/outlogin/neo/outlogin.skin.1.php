@@ -48,24 +48,9 @@ else
 </fieldset>
 </form>
 
-<script src="<?=$g4[path]?>/js/capslock.js"></script>
-<script>
+<script type="text/javascript">
 function fhead_submit(f)
 {
-    /*
-    if (!f.mb_id.value) {
-        alert("회원아이디를 입력하십시오.");
-        f.mb_id.focus();
-        return false;
-    }
-
-    if (!f.mb_password.value) {
-        alert("패스워드를 입력하십시오.");
-        f.mb_password.focus();
-        return false;
-    }
-    */
-
     return true;
 }
 </script>

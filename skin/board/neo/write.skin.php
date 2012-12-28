@@ -40,7 +40,7 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <? if ($is_email) { ?>
 <tr>
     <th scope="row"><label for="wr_email">이메일</label></th>
-    <td><input type="text" id="wr_email" name="wr_email" maxlength="100" value="<?=$email?>"></td>
+    <td><input type="text" id="wr_email" name="wr_email" class="email" value="<?=$email?>" title="이메일" maxlength="100"></td>
 </tr>
 <? } ?>
 
@@ -104,7 +104,7 @@ if ($option) {
 
 <tr>
     <th scope="row"><label for="wr_subject">제목</label></th>
-    <td><input id="wr_subject" name="wr_subject" required value="<?=$subject?>"></td>
+    <td><input id="wr_subject" name="wr_subject" required="required" value="<?=$subject?>" title="제목"></td>
 </tr>
 
 <tr>
@@ -173,8 +173,7 @@ if ($option) {
             // file_length 이하로는 필드가 삭제되지 않아야 합니다.
             var file_length = <?=(int)$file_length?>;
             var objTbl = document.getElementById("variableFiles");
-            if (objTbl.rows.length - 1 > file_length)
-            {
+            if (objTbl.rows.length - 1 > file_length) {
                 objTbl.deleteRow(objTbl.rows.length - 1);
                 flen--;
             }
@@ -189,18 +188,8 @@ if ($option) {
         <span onclick="del_file();" style="cursor:pointer;">파일감소</span>
     </td>
 </tr>
+<?}?>
 
-<? } ?>
-
-<? if ($is_trackback) { ?>
-<tr>
-    <th scope="row"><label for="wr_trackback">트랙백주소</label></th>
-    <td>
-        <input id="wr_trackback" name="wr_trackback" value="<?=$trackback?>">
-        <? if ($w=='u') { ?><input type="checkbox" id="re_trackback" name="re_trackback" value="1">핑 보냄<? } ?>
-    </td>
-</tr>
-<? } ?>
 </tbody>
 </table>
 
@@ -273,6 +262,7 @@ function fwrite_submit(f)
     }
     */
 
+    /*
     if (document.getElementById('char_count')) {
         if (char_min > 0 || char_max > 0) {
             var cnt = parseInt(document.getElementById('char_count').innerHTML);
@@ -286,6 +276,7 @@ function fwrite_submit(f)
             }
         }
     }
+    */
 
     if (document.getElementById('tx_wr_content')) {
         if (!ed_wr_content.outputBodyText()) {
@@ -294,10 +285,6 @@ function fwrite_submit(f)
             return false;
         }
     }
-
-    <?
-    if ($is_dhtml_editor) echo cheditor3('wr_content');
-    ?>
 
     var subject = "";
     var content = "";
