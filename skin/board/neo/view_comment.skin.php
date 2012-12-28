@@ -1,7 +1,5 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-// $cwin 은 댓글 새창일 때
 ?>
 
 <script>
@@ -9,8 +7,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 var char_min = parseInt(<?=$comment_min?>); // 최소
 var char_max = parseInt(<?=$comment_max?>); // 최대
 </script>
-
-<? if ($cwin==1) { ?><?}?>
 
 <!-- 댓글 리스트 -->
 <section id="commentContents">
@@ -71,7 +67,6 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <input type="hidden" name="stx" value="<?=$stx?>">
     <input type="hidden" name="spt" value="<?=$spt?>">
     <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="cwin" value="<?=$cwin?>">
     <input type="hidden" name="is_good" value="">
 
     <div id="comment_write">
@@ -278,5 +273,3 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     </script>
     <? } ?>
 </section>
-
-<? if($cwin==1) { ?><?}?>

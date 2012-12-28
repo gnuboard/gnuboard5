@@ -8,10 +8,7 @@ set_session('ss_wr_id', $wr_id);
 
 // 090713
 if (!$board['bo_table']) {
-    if ($cwin) // 코멘트 보기
-       alert_close('존재하지 않는 게시판입니다.', $g4['path']);
-    else
-       alert('존재하지 않는 게시판입니다.', $g4['path']);
+    alert('존재하지 않는 게시판입니다.', $g4['path']);
 }
 
 if (!$bo_table) {
@@ -40,7 +37,7 @@ if ($w == '') {
         if ($member['mb_id']) {
             alert('글을 쓸 권한이 없습니다.');
         } else {
-            alert('글을 쓸 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER[PHP_SELF].'?bo_table='.$bo_table));
+            alert('글을 쓸 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
         }
     }
 
@@ -55,73 +52,73 @@ if ($w == '') {
     $title_msg = '글쓰기';
 } else if ($w == 'u') {
     // 김선용 1.00 : 글쓰기 권한과 수정은 별도로 처리되어야 함
-    //if ($member[mb_level] < $board[bo_write_level]) {
+    //if ($member['mb_level'] < $board['bo_write_level']) {
     if($member['mb_id'] && $write['mb_id'] == $member['mb_id']) {
         ;
     } else if ($member['mb_level'] < $board['bo_write_level']) {
         if ($member['mb_id']) {
             alert('글을 수정할 권한이 없습니다.');
         } else {
-            alert('글을 수정할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER[PHP_SELF].'?bo_table='.$bo_table));
+            alert('글을 수정할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
         }
     }
 
-    $len = strlen($write[wr_reply]);
+    $len = strlen($write['wr_reply']);
     if ($len < 0) $len = 0;
-    $reply = substr($write[wr_reply], 0, $len);
+    $reply = substr($write['wr_reply'], 0, $len);
 
     // 원글만 구한다.
     $sql = " select count(*) as cnt from {$write_table}
                 where wr_reply like '{$reply}%'
-                and wr_id <> '{$write[wr_id]}'
-                and wr_num = '{$write[wr_num]}'
+                and wr_id <> '{$write['wr_id']}'
+                and wr_num = '{$write['wr_num']}'
                 and wr_is_comment = 0 ";
     $row = sql_fetch($sql);
-    if ($row[cnt] && !$is_admin)
+    if ($row['cnt'] && !$is_admin)
         alert('이 글과 관련된 답변글이 존재하므로 수정 할 수 없습니다.'.PHP_EOL.PHP_EOL.'답변글이 있는 원글은 수정할 수 없습니다.');
 
     // 코멘트 달린 원글의 수정 여부
     $sql = " select count(*) as cnt from {$write_table}
                 where wr_parent = '{$wr_id}'
-                and mb_id <> '{$member[mb_id]}'
+                and mb_id <> '{$member['mb_id']}'
                 and wr_is_comment = 1 ";
     $row = sql_fetch($sql);
-    if ($row[cnt] >= $board[bo_count_modify] && !$is_admin)
-        alert('이 글과 관련된 코멘트가 존재하므로 수정 할 수 없습니다.'.PHP_EOL.PHP_EOL.'코멘트가 '.$board[bo_count_modify].'건 이상 달린 원글은 수정할 수 없습니다.');
+    if ($row['cnt'] >= $board['bo_count_modify'] && !$is_admin)
+        alert('이 글과 관련된 코멘트가 존재하므로 수정 할 수 없습니다.'.PHP_EOL.PHP_EOL.'코멘트가 '.$board['bo_count_modify'].'건 이상 달린 원글은 수정할 수 없습니다.');
 
     $title_msg = '글수정';
 } else if ($w == 'r') {
-    if ($member[mb_level] < $board[bo_reply_level]) {
-        if ($member[mb_id])
+    if ($member['mb_level'] < $board['bo_reply_level']) {
+        if ($member['mb_id'])
             alert('글을 답변할 권한이 없습니다.');
         else
-            alert('글을 답변할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?$qstr&amp;url='.urlencode($_SERVER[PHP_SELF].'?bo_table='.$bo_table));
+            alert('글을 답변할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?$qstr&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
     }
 
     /*
-    if ($member[mb_point] + $board[bo_comment_point] < 0)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 글답변('.number_format($board[bo_comment_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글답변 해 주십시오.');
+    if ($member['mb_point'] + $board['bo_comment_point'] < 0)
+        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글답변('.number_format($board['bo_comment_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글답변 해 주십시오.');
     */
 
-    $tmp_point = $member[mb_point] ? $member[mb_point] : 0;
-    if ($tmp_point + $board[bo_write_point] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 글답변('.number_format($board[bo_comment_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글답변 해 주십시오.');
+    $tmp_point = $member['mb_point'] ? $member['mb_point'] : 0;
+    if ($tmp_point + $board['bo_write_point'] < 0 && !$is_admin)
+        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글답변('.number_format($board['bo_comment_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글답변 해 주십시오.');
 
-    //if (preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board[bo_notice]))
+    //if (preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board['bo_notice']))
     if (in_array((int)$wr_id, $notice_array))
         alert('공지에는 답변 할 수 없습니다.');
 
     //----------
     // 4.06.13 : 비밀글을 타인이 열람할 수 있는 오류 수정 (헐랭이, 플록님께서 알려주셨습니다.)
     // 코멘트에는 원글의 답변이 불가하므로
-    if ($write[wr_is_comment])
+    if ($write['wr_is_comment'])
         alert('정상적인 접근이 아닙니다.');
 
     // 비밀글인지를 검사
-    if (strstr($write[wr_option], 'secret')) {
-        if ($write[mb_id]) {
+    if (strstr($write['wr_option'], 'secret')) {
+        if ($write['mb_id']) {
             // 회원의 경우는 해당 글쓴 회원 및 관리자
-            if (!($write[mb_id] == $member[mb_id] || $is_admin))
+            if (!($write['mb_id'] == $member['mb_id'] || $is_admin))
                 alert('비밀글에는 자신 또는 관리자만 답변이 가능합니다.');
         } else {
             // 비회원의 경우는 비밀글에 답변이 불가함
@@ -135,32 +132,32 @@ if ($w == '') {
     $reply_array = &$write;
 
     // 최대 답변은 테이블에 잡아놓은 wr_reply 사이즈만큼만 가능합니다.
-    if (strlen($reply_array[wr_reply]) == 10)
+    if (strlen($reply_array['wr_reply']) == 10)
         alert('더 이상 답변하실 수 없습니다.'.PHP_EOL.PHP_EOL.'답변은 10단계 까지만 가능합니다.');
 
-    $reply_len = strlen($reply_array[wr_reply]) + 1;
-    if ($board[bo_reply_order]) {
+    $reply_len = strlen($reply_array['wr_reply']) + 1;
+    if ($board['bo_reply_order']) {
         $begin_reply_char = 'A';
         $end_reply_char = 'Z';
         $reply_number = +1;
-        $sql = " select MAX(SUBSTRING(wr_reply, {$reply_len}, 1)) as reply from {$write_table} where wr_num = '{$reply_array[wr_num]}' and SUBSTRING(wr_reply, {$reply_len}, 1) <> '' ";
+        $sql = " select MAX(SUBSTRING(wr_reply, {$reply_len}, 1)) as reply from {$write_table} where wr_num = '{$reply_array['wr_num']}' and SUBSTRING(wr_reply, {$reply_len}, 1) <> '' ";
     } else {
         $begin_reply_char = 'Z';
         $end_reply_char = 'A';
         $reply_number = -1;
-        $sql = " select MIN(SUBSTRING(wr_reply, {$reply_len}, 1)) as reply from {$write_table} where wr_num = '{$reply_array[wr_num]}' and SUBSTRING(wr_reply, {$reply_len}, 1) <> '' ";
+        $sql = " select MIN(SUBSTRING(wr_reply, {$reply_len}, 1)) as reply from {$write_table} where wr_num = '{$reply_array['wr_num']}' and SUBSTRING(wr_reply, {$reply_len}, 1) <> '' ";
     }
-    if ($reply_array[wr_reply]) $sql .= " and wr_reply like '{$reply_array[wr_reply]}%' ";
+    if ($reply_array['wr_reply']) $sql .= " and wr_reply like '{$reply_array['wr_reply']}%' ";
     $row = sql_fetch($sql);
 
-    if (!$row[reply])
+    if (!$row['reply'])
         $reply_char = $begin_reply_char;
-    else if ($row[reply] == $end_reply_char) // A~Z은 26 입니다.
+    else if ($row['reply'] == $end_reply_char) // A~Z은 26 입니다.
         alert('더 이상 답변하실 수 없습니다.'.PHP_EOL.PHP_EOL.'답변은 26개 까지만 가능합니다.');
     else
-        $reply_char = chr(ord($row[reply]) + $reply_number);
+        $reply_char = chr(ord($row['reply']) + $reply_number);
 
-    $reply = $reply_array[wr_reply] . $reply_char;
+    $reply = $reply_array['wr_reply'] . $reply_char;
 
     $title_msg = '글답변';
 }
@@ -175,7 +172,7 @@ if ($group['gr_use_access']) {
         ; // 통과
     } else {
         // 그룹접근
-        $sql = " select gr_id from {$g4[group_member_table]} where gr_id = '{$board[gr_id]}' and mb_id = '{$member[mb_id]}' ";
+        $sql = " select gr_id from {$g4['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
         if (!$row['gr_id'])
             alert('접근 권한이 없으므로 글쓰기가 불가합니다.'.PHP_EOL.PHP_EOL.'궁금하신 사항은 관리자에게 문의 바랍니다.');
@@ -371,29 +368,26 @@ if ($is_dhtml_editor && $editor->js) {
 include_once($g4['path'].'/head.sub.php');
 include_once('./board_head.php');
 
-// 자동등록방지
-//include_once ('./norobot.inc.php');
-
 //--------------------------------------------------------------------------
 // 가변 파일
 $file_script = '';
 $file_length = -1;
 // 수정의 경우 파일업로드 필드가 가변적으로 늘어나야 하고 삭제 표시도 해주어야 합니다.
 if ($w == 'u') {
-    for ($i=0; $i<$file[count]; $i++) {
-        $row = sql_fetch(" select bf_file, bf_content from {$g4[board_file_table]} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-        if ($row[bf_file]) {
-            $file_script .= 'add_file("<input type="checkbox" name="bf_file_del['.$i.']" value="1"><a href="'.$file[$i][href].'">'.$file[$i][source].'('.$file[$i][size].')</a> 파일 삭제';
+    for ($i=0; $i<$file['count']; $i++) {
+        $row = sql_fetch(" select bf_file, bf_content from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+        if ($row['bf_file']) {
+            $file_script .= 'add_file("<input type="checkbox" name="bf_file_del['.$i.']" value="1"><a href="'.$file[$i]['href'].'">'.$file[$i]['source'].'('.$file[$i]['size'].')</a> 파일 삭제';
             if ($is_file_content)
-                //$file_script .= '<br><input type="text" class="ed" size="50" name="bf_content['.$i.']" value="'.$row[bf_content].'" title="업로드 이미지 파일에 해당 되는 내용을 입력하세요.">';
+                //$file_script .= '<br><input type="text" class="ed" size="50" name="bf_content['.$i.']" value="'.$row['bf_content'].'" title="업로드 이미지 파일에 해당 되는 내용을 입력하세요.">';
                 // 첨부파일설명에서 ' 또는 " 입력되면 오류나는 부분 수정
-                $file_script .= '<br><input type="text" class="ed" size="50" name="bf_content['.$i.']" value="'.addslashes(get_text($row[bf_content])).'" title="업로드 이미지 파일에 해당 되는 내용을 입력하세요.">';
+                $file_script .= '<br><input type="text" class="ed" size="50" name="bf_content['.$i.']" value="'.addslashes(get_text($row['bf_content'])).'" title="업로드 이미지 파일에 해당 되는 내용을 입력하세요.">';
             $file_script .= '\");'.PHP_EOL;
         }
         else
             $file_script .= 'add_file("");'.PHP_EOL;
     }
-    $file_length = $file[count] - 1;
+    $file_length = $file['count'] - 1;
 }
 
 if ($file_length < 0) {

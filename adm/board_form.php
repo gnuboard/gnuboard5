@@ -312,16 +312,6 @@ include_once ('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_use_comment">댓글 새창 사용</label></th>
-    <td>
-        <input type="checkbox" id="bo_use_comment" name="bo_use_comment" value="1" <?=$board['bo_use_comment']?'checked':'';?>>사용 (댓글수 클릭시 새창으로 보임)
-    </td>
-    <td class="group_setting">
-        <input type="checkbox" id="chk_use_comment" name="chk_use_comment" value="1">
-        <label for="chk_use_comment">동일그룹 모두 적용</label>
-    </td>
-</tr>
-<tr>
     <th scope="row"><label for="bo_use_secret">비밀글 사용</label></th>
     <td>
         <?=help('"체크박스"는 글작성시 비밀글 체크가 가능합니다. "무조건"은 작성되는 모든글을 비밀글로 작성합니다. (관리자는 체크박스로 출력합니다.) 스킨에 따라 적용되지 않을 수 있습니다.')?>

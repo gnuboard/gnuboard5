@@ -47,9 +47,11 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
+$listall = '';
 if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
+$mb = array();
 if ($sfl == 'mb_id' && $stx)
     $mb = get_member(isset($stx));
 
@@ -82,9 +84,15 @@ function point_clear()
         <?=$listall?>
         전체 <?=number_format($total_count)?> 건
         <?
+<<<<<<< HEAD
         if ($mb['mb_id'])
             echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
         else {
+=======
+        if (isset($mb['mb_id']) && $mb['mb_id']) {
+            echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
+        } else {
+>>>>>>> 35e2a0e57216e9ff77b98266f30f5e8f87800654
             $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g4['point_table']} ");
             echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
         }
@@ -127,10 +135,8 @@ function point_clear()
 </thead>
 <tbody>
 <?
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    if ($row2['mb_id'] != $row['mb_id'])
-    {
+for ($i=0; $row=sql_fetch_array($result); $i++) {
+    if ($i==0 || ($row2['mb_id'] != $row['mb_id'])) {
         $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
         $row2 = sql_fetch($sql2);
     }
@@ -138,8 +144,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
 
     $link1 = $link2 = '';
-    if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table'])
-    {
+    if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table']) {
         $link1 = '<a href="'.$g4['bbs_path'].'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
         $link2 = '</a>';
     }
@@ -174,7 +179,11 @@ if ($i == 0)
 </div>
 
 <?
+<<<<<<< HEAD
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
+=======
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
+>>>>>>> 35e2a0e57216e9ff77b98266f30f5e8f87800654
 ?>
 <div class="pg">
     <?=$pagelist?>

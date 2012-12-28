@@ -50,6 +50,7 @@ $sql = " insert into {$g4['board_table']}
                  bo_use_category = '{$board['bo_use_category']}',
                  bo_category_list = '{$board['bo_category_list']}',
                  bo_disable_tags = '{$board['bo_disable_tags']}',
+<<<<<<< HEAD
                  bo_use_secret = '{$board['bo_use_secret']}',
                  bo_use_dhtml_editor = '{$board['bo_use_dhtml_editor']}',
                  bo_use_sideview = '{$board['bo_use_sideview']}',
@@ -59,6 +60,16 @@ $sql = " insert into {$g4['board_table']}
                  bo_use_signature = '{$board['bo_use_signature']}',
                  bo_use_ip_view = '{$board['bo_use_ip_view']}',
                  bo_use_trackback = '{$board['bo_use_trackback']}',
+=======
+                 bo_use_secret = '{$board[bo_use_secret]}',
+                 bo_use_dhtml_editor = '{$board[bo_use_dhtml_editor]}',
+                 bo_use_sideview = '{$board[bo_use_sideview]}',
+                 bo_use_good = '{$board[bo_use_good]}',
+                 bo_use_nogood = '{$board[bo_use_nogood]}',
+                 bo_use_signature = '{$board[bo_use_signature]}',
+                 bo_use_ip_view = '{$board[bo_use_ip_view]}',
+                 bo_use_trackback = '{$board[bo_use_trackback]}',
+>>>>>>> 35e2a0e57216e9ff77b98266f30f5e8f87800654
                  bo_use_list_view = '{$board['o_use_list_view']}',
                  bo_use_list_content = '{$board['bo_use_list_content']}',
                  bo_table_width = '{$board['bo_table_width']}',

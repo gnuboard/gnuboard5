@@ -8,8 +8,6 @@ var char_min = parseInt(<?=$comment_min?>); // 최소
 var char_max = parseInt(<?=$comment_max?>); // 최대
 </script>
 
-<? if ($cwin==1) { ?><table width=100% cellpadding=10 align=center><tr><td><?}?>
-
 <!-- 코멘트 리스트 -->
 <div id="commentContents">
 <?
@@ -93,7 +91,6 @@ for ($i=0; $i<count($list); $i++) {
 <input type=hidden name=stx         value='<?=$stx?>'>
 <input type=hidden name=spt         value='<?=$spt?>'>
 <input type=hidden name=page        value='<?=$page?>'>
-<input type=hidden name=cwin        value='<?=$cwin?>'>
 <input type=hidden name=is_good     value=''>
 
 <table width=100% cellpadding=3 height=156 cellspacing=0 bgcolor="#ffffff" style="border:1px solid #fff; background:url(<?=$board_skin_path?>/img/co_bg.gif) x-repeat;">
@@ -315,5 +312,3 @@ function comment_delete(url)
 comment_box('', 'c'); // 코멘트 입력폼이 보이도록 처리하기위해서 추가 (root님)
 </script>
 <? } ?>
-
-<? if($cwin==1) { ?></td><tr></table><p align=center><a href="javascript:window.close();"><img src="<?=$board_skin_path?>/img/btn_close.gif" border="0"></a><br><br><?}?>

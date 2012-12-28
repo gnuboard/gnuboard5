@@ -49,7 +49,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <h2>게시물 정보</h2>
     <dl>
         <dt>작성자</dt>
-        <dd><?=$view[name]?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></dd>
+        <dd><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></dd>
         <dt>작성일</dt>
         <dd><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></dd>
         <dt>조회</dt>
@@ -74,7 +74,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     // 가변 파일
     $cnt = 0;
     for ($i=0; $i<count($view['file']); $i++) {
-        if ($view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+        if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
             $cnt++;
     ?>
         <li>
@@ -121,7 +121,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <?
         // 파일 출력
         for ($i=0; $i<=count($view['file']); $i++) {
-            if ($view['file'][$i]['view'])
+            if (isset($view['file'][$i]['view']) && $view['file'][$i]['view'])
                 echo $view['file'][$i]['view'];
         }
         ?>
