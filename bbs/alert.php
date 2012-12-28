@@ -23,17 +23,21 @@ include_once($g4['path'].'/head.sub.php');
 <article id="validation_check">
 <header>
     <hgroup>
-        <h1>회원가입 정보 입력 확인</h1> <!-- 수행 중이던 작업 내용 -->
-        <h2>다음 항목을 입력하지 않으셨거나 입력에 오류가 있습니다.</h2>
+        <!-- <h1>회원가입 정보 입력 확인</h1> --> <!-- 수행 중이던 작업 내용 -->
+        <h1><?=$header?></h1> <!-- 수행 중이던 작업 내용 -->
+        <h2>다음 항목<!-- 을 입력하지 않으셨거나 입력 -->에 오류가 있습니다.</h2>
     </hgroup>
 </header>
 <p>
     <!-- <strong>항목</strong> 오류내역 -->
+    <!-- 
     <strong>이름</strong> 필수 입력입니다. 한글만 입력할 수 있습니다.<br>
     <strong>이메일</strong> 올바르게 입력하지 않았습니다.<br>
+    -->
+    <?=$msg?>
 </p>
 
-<a href="#">돌아가기</a>
+<a href="<?=$url?>">돌아가기</a>
 </article>
 
 <?
