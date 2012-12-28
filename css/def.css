@@ -57,10 +57,11 @@ p {margin:10px 0;line-height:1.5em}
 #visit {margin-bottom:10px;zoom:1}
 #visit:after {display:block;visibility:hidden;clear:both;content:""}
 #visit h2 {float:left}
-#visit dl {zoom:1}
+#visit dl {float:left;margin:0;zoom:1}
 #visit dl:after {display:block;visibility:hidden;clear:both;content:""}
 #visit dt {float:left}
 #visit dd {float:left;margin:0 15px 0 5px;color:#000;font-style:italic}
+#visit a {float:left;font-weight:bold}
 
 #current_connect {margin-bottom:10px;zoom:1}
 #current_connect:after {display:block;visibility:hidden;clear:both;content:""}
