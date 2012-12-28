@@ -9,13 +9,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <?
 $tmp_sql = " select count(*) as cnt from {$g4['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 $tmp_row = sql_fetch($tmp_sql);
-<<<<<<< HEAD
+
 //sql_query(" lock table $g4['login_table'] write ", false);
 if ($tmp_row['cnt'])
 {
-=======
-if ($tmp_row['cnt']) {
->>>>>>> 5ed9a4d24d0938dc75a47c8401aa9413da181c80
 	$tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '{$g4['time_ymdhis']}', lo_location = '$lo_location', lo_url = '$lo_url' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 	sql_query($tmp_sql, FALSE);
 } else {
@@ -24,12 +21,9 @@ if ($tmp_row['cnt']) {
 
 	// 시간이 지난 접속은 삭제한다
 	sql_query(" delete from {$g4['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", $g4['server_time'] - (60 * $config['cf_login_minutes']))."' ");
-<<<<<<< HEAD
 
 	// 부담(overhead)이 있다면 테이블 최적화
 	//$row = sql_fetch(" SHOW TABLE STATUS FROM `$mysql_db` LIKE '$g4['login_table']' ");
 	//if ($row['Data_free'] > 0) sql_query(" OPTIMIZE TABLE $g4['login_table'] ");
-=======
->>>>>>> 5ed9a4d24d0938dc75a47c8401aa9413da181c80
 }
 ?>
