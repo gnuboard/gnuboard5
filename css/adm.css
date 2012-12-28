@@ -42,7 +42,7 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"verdana","dotum";
 .gnb_1depth_on ul {visibility:visible;height:auto}
 .gnb_1depth {margin-bottom:5px;border:1px solid #c7cfd5;background:#eef2f3}
 .gnb_1depth a {display:block;padding-left:15px;height:38px;color:#333;font-size:0.9em;font-weight:bold;text-decoration:none;line-height:2.8em}
-.gnb_1depth_on a {border-bottom:1px solid #eef1f2;background:#fff}
+.gnb_1depth_on a {border-bottom:1px solid #eef1f2}
 .gnb_2depth {border-bottom:1px solid #eef1f2}
 .gnb_2depth a {display:block;padding-left:15px;height:30px;border:0;background:#fff;color:#000;font:0.75em normal;text-decoration:none;line-height:2.8em}
 .gnb_2depth a:focus, .gnb_2depth a:hover {background:#f6f9fa}
