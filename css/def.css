@@ -25,10 +25,10 @@ p {margin:10px 0;line-height:1.5em}
 
 #logo {position:absolute;top:40px;left:50px}
 
-#tnb {position:absolute;top:53px;left:140px;zoom:1}
+#tnb {position:absolute;top:43px;left:140px;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
-#tnb li {float:left;margin-right:25px}
-#tnb a {color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
+#tnb li {float:left;margin-right:15px}
+#tnb a {display:block;padding:10px;color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
 
 #hdsch {position:absolute;top:47px;right:45px;padding:0;border:0}
 #hdsch legend {height:0;overflow:hidden}
@@ -72,7 +72,7 @@ p {margin:10px 0;line-height:1.5em}
 #popular h2 {float:left}
 #popular ul {list-style:none;zoom:1}
 #popular ul:after {display:block;visibility:hidden;clear:both;content:""}
-#popular li {float:left}
+#popular li {float:left;margin-right:20px}
 
 #footer p {position:absolute;top:15px;right:50px}
 
