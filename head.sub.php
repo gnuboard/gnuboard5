@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $begin_time = get_microtime();
 
-if (!$g4['title'])
+if (!isset($g4['title']))
     $g4['title'] = $config['cf_title'];
 
 // 쪽지를 받았나?

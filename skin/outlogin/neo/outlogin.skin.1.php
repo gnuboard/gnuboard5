@@ -23,10 +23,16 @@ if ($g4['https_url']) {
 else {
     $outlogin_url = $urlencode;
 }
+
+
+if ($g4['https_url'])
+    $action_url = "{$g4['https_url']}/$g4[bbs]/login_check.php";
+else
+    $action_url = "{$g4['bbs_path']}/login_check.php";
 ?>
 
 <!-- 로그인 전 외부로그인 시작 -->
-<form name="fhead" method="post" onsubmit="return fhead_submit(this);" autocomplete="off">
+<form name="fhead" method="post" action="<?=$action_url?>" onsubmit="return fhead_submit(this);" autocomplete="off">
 <fieldset>
     <legend>로그인</legend>
     <input type="hidden" name="url" value="<?=$outlogin_url?>">
@@ -46,6 +52,7 @@ else {
 <script>
 function fhead_submit(f)
 {
+    /*
     if (!f.mb_id.value) {
         alert("회원아이디를 입력하십시오.");
         f.mb_id.focus();
@@ -57,13 +64,7 @@ function fhead_submit(f)
         f.mb_password.focus();
         return false;
     }
-
-    <?
-    if ($g4['https_url'])
-        echo "f.action = '$g4[https_url]/$g4[bbs]/login_check.php';";
-    else
-        echo "f.action = '$g4[bbs_path]/login_check.php';";
-    ?>
+    */
 
     return true;
 }

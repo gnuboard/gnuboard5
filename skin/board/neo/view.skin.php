@@ -7,7 +7,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <aside>
     <h2>상단 링크</h2>
     <!-- 링크 버튼 -->
-    <? if ($update_href || $deleter_href) {?>
+    <? if ($update_href || $delete_href) {?>
     <ul>
     <? if ($update_href) { ?>
         <li><a href="<?=$update_href?>">수정</a></li>

@@ -8,7 +8,7 @@ var char_min = parseInt(<?=$write_min?>); // 최소
 var char_max = parseInt(<?=$write_max?>); // 최대
 </script>
 
-<form id="fwrite" name="fwrite" action="./write_update.php" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data">
+<form id="fwrite" name="fwrite" method="post" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="wr_id" value="<?=$wr_id?>">
@@ -26,7 +26,7 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름</label></th>
-    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" class="required" value="<?=$name?>" title="이름"></td>
+    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" class="required" required="required" value="<?=$name?>" title="이름"></td>
 </tr>
 <? } ?>
 
@@ -204,15 +204,9 @@ if ($option) {
 </tbody>
 </table>
 
-<? if ($is_guest) { ?>
-<fieldset id="captcha">
-    <legend>자동등록방지</legend>
-    <div><img id="kcaptcha_image" alt="" /></div>
-    <label for="wr_key">자동등록방지</label>
-    <input type="text" id="wr_key" name="wr_key" required>
-    왼쪽의 글자를 입력하세요.
-</fieldset>
-<? } ?>
+<?
+echo run_captcha();
+?>
 
 <div class="btn_confirm">
     <input type="submit" id="btn_submit" value="글쓰기" accesskey="s">
@@ -338,18 +332,8 @@ function fwrite_submit(f)
         return false;
     }
 
-    if (!check_kcaptcha(f.wr_key)) {
-        return false;
-    }
-
-    //document.getElementById('btn_submit').disabled = true;
-    //document.getElementById('btn_list').disabled = true;
-
     <?
-    if ($g4['https_url'])
-        echo "f.action = '{$g4['https_url']}/{$g4['bbs']}/write_update.php';";
-    else
-        echo "f.action = './write_update.php';";
+    echo chk_js_captcha();
     ?>
 
     return true;

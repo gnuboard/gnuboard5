@@ -466,7 +466,7 @@ if (!get_cookie('ck_first_referer'))  set_cookie('ck_first_referer', $_SERVER['H
 // 회원, 비회원 구분
 $is_member = $is_guest = false;
 $is_admin = "";
-if (array_key_exists('mb_id', $member)) {
+if (isset($member['mb_id'])) {
     $is_member = true;
     $is_admin = is_admin($member['mb_id']);
     $member['mb_dir'] = substr($member['mb_id'],0,2);

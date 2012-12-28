@@ -1,6 +1,8 @@
 <?
 include_once('./_common.php');
 
+if (isset($captcha->lib)) include_once($captcha->lib);
+
 // 090710
 if (substr_count($wr_content, '&#') > 50) {
     alert('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');
@@ -124,17 +126,8 @@ if ($w == "" || $w == "r")
         alert('동일한 내용을 연속해서 등록할 수 없습니다.');
 } 
 
-// 자동등록방지 검사
-//include_once ("./norobot_check.inc.php");
-
-if (!$is_member) {
-    if ($w=='' || $w=='r') {
-        $key = get_session("captcha_keystring");
-        if (!($key && $key == $_POST['wr_key'])) {
-            session_unregister("captcha_keystring");
-            alert('정상적인 접근이 아닌것 같습니다.');
-        }
-    }
+if (!chk_captcha()) {
+    alert('자동등록방지의 답변으로 입력한 숫자가 틀렸습니다.');
 }
 
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject'])) 

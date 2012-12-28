@@ -1,7 +1,8 @@
 <?
 include_once('./_common.php');
-if ($editor->lib)
-    include_once($editor->lib);
+
+if (isset($editor->lib))  include_once($editor->lib);
+if (isset($captcha->lib)) include_once($captcha->lib);
 
 set_session('ss_bo_table', $bo_table);
 set_session('ss_wr_id', $wr_id);
@@ -360,9 +361,15 @@ if ($is_admin) {
     $write_max = (int)$board['bo_write_max'];
 }
 
-if ($is_dhtml_editor && $editor->js) {
-    array_push($g4['js_file'], $editor->js);
-    array_push($g4['js_file'], $editor->config_js);
+if ($is_dhtml_editor && isset($editor->js)) {
+    $g4['js_file'][] = $editor->js;
+    if (isset($editor->config_js)) {
+        $g4['js_file'][] = $editor->config_js;
+    }
+}
+
+if (isset($captcha->js)) {
+    $g4['js_file'][] = $captcha->js;
 }
 
 include_once($g4['path'].'/head.sub.php');
@@ -395,6 +402,11 @@ if ($file_length < 0) {
     $file_length = 0;
 }
 //--------------------------------------------------------------------------
+
+if ($g4['https_url'])
+    $action_url = "{$g4['https_url']}/{$g4['bbs']}/write_update.php";
+else
+    $action_url = "{$g4['bbs_path']}/write_update.php";
 
 include_once ($board_skin_path.'/write.skin.php');
 
