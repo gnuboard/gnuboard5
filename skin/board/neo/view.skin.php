@@ -171,5 +171,20 @@ function file_download(link, file) {
 <!-- 게시글 보기 끝 -->
 
 <script>
-//이미지등비율리사이즈 스크립트 추가 요망ㅎ
+// 이미지 등비율 리사이징
+$(document).ready(function(){
+    var img = $('article img');
+    var img_org_width = img.width();
+    $(window).resize(function(){
+        var wrapper_width = $('#wrapper').width();
+        img.each(function() {
+            var img_width = $(this).width();
+            if (img_width > wrapper_width) {
+                $(this).addClass('img_fix');
+            } else if (img_width <= wrapper_width && img_width >= img_org_width) {
+                $(this).removeClass('img_fix');
+            }
+        });
+    }).resize();
+});
 </script>
