@@ -45,7 +45,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $list[$i]['content'] = search_font($stx, $list[$i]['content']);
     }
 
-    $list[$i]['trackback'] = url_auto_link($row['wr_trackback']);
     $list[$i]['datetime'] = substr($row['wr_datetime'],2,14);
 
     // 관리자가 아니라면 중간 IP 주소를 감춘후 보여줍니다.

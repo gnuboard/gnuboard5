@@ -31,6 +31,7 @@ $sql = " insert into {$g4['board_table']}
                  bo_subject = '$target_subject',
                  gr_id = '{$board['gr_id']}',
                  bo_admin = '{$board['bo_admin']}',
+<<<<<<< HEAD
                  bo_list_level = '{$board['bo_list_level']}',
                  bo_read_level = '{$board['bo_read_level']}',
                  bo_write_level = '{$board['bo_write_level']}',
@@ -48,6 +49,24 @@ $sql = " insert into {$g4['board_table']}
                  bo_comment_point = '{$board['bo_comment_point']}',
                  bo_download_point = '{$board['bo_download_point']}',
                  bo_use_category = '{$board['bo_use_category']}',
+=======
+                 bo_list_level = '{$board[bo_list_level]}',
+                 bo_read_level = '{$board[bo_read_level]}',
+                 bo_write_level = '{$board[bo_write_level]}',
+                 bo_reply_level = '{$board[bo_reply_level]}',
+                 bo_comment_level = '{$board[bo_comment_level]}',
+                 bo_upload_level = '{$board[bo_upload_level]}',
+                 bo_download_level = '{$board[bo_download_level]}',
+                 bo_html_level = '{$board[bo_html_level]}',
+                 bo_link_level = '{$board[bo_link_level]}',
+                 bo_count_modify = '{$board[bo_count_modify]}',
+                 bo_count_delete = '{$board[bo_count_delete]}',
+                 bo_read_point = '{$board[bo_read_point]}',
+                 bo_write_point = '{$board[bo_write_point]}',
+                 bo_comment_point = '{$board[bo_comment_point]}',
+                 bo_download_point = '{$board[bo_download_point]}',
+                 bo_use_category = '{$board[bo_use_category]}',
+>>>>>>> 6040266aed7f782fddaf6f63366be5b06bdfa780
                  bo_category_list = '{$board['bo_category_list']}',
                  bo_disable_tags = '{$board['bo_disable_tags']}',
 <<<<<<< HEAD
@@ -68,8 +87,11 @@ $sql = " insert into {$g4['board_table']}
                  bo_use_nogood = '{$board[bo_use_nogood]}',
                  bo_use_signature = '{$board[bo_use_signature]}',
                  bo_use_ip_view = '{$board[bo_use_ip_view]}',
+<<<<<<< HEAD
                  bo_use_trackback = '{$board[bo_use_trackback]}',
 >>>>>>> 35e2a0e57216e9ff77b98266f30f5e8f87800654
+=======
+>>>>>>> 6040266aed7f782fddaf6f63366be5b06bdfa780
                  bo_use_list_view = '{$board['o_use_list_view']}',
                  bo_use_list_content = '{$board['bo_use_list_content']}',
                  bo_table_width = '{$board['bo_table_width']}',

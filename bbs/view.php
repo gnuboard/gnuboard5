@@ -126,14 +126,6 @@ if (strstr($sfl, 'content'))
 //$view['rich_content'] = preg_replace("/{img\:([0-9]+)[:]?([^}]*)}/ie", "view_image(\$view, '\\1', '\\2')", $view['content']);
 $view['rich_content'] = preg_replace("/{이미지\:([0-9]+)[:]?([^}]*)}/ie", "view_image(\$view, '\\1', '\\2')", $view['content']);
 
-// 트랙백
-$trackback_url = '';
-if ($member['mb_level'] >= $board['bo_trackback_level']) {
-    if (isset($g4['token_time']) == false)
-        $g4['token_time'] = 3;
-    $trackback_url = $g4['url'].'/'.$g4['bbs'].'/tb.php/'.$bo_table.'/'.$wr_id;
-}
-
 $is_signature = false;
 $signature = '';
 if ($board['bo_use_signature'] && $view['mb_id']) {

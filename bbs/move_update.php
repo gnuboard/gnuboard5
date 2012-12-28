@@ -59,7 +59,6 @@ while ($row = sql_fetch_array($result))
                              wr_link2 = '".addslashes($row2[wr_link2])."',
                              wr_link1_hit = '$row2[wr_link1_hit]',
                              wr_link2_hit = '$row2[wr_link2_hit]',
-                             wr_trackback = '".addslashes($row2[wr_trackback])."',
                              wr_hit = '$row2[wr_hit]',
                              wr_good = '$row2[wr_good]',
                              wr_nogood = '$row2[wr_nogood]',

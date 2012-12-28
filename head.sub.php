@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $begin_time = get_microtime();
 
-if (!$g4['title'])
+if (!isset($g4['title']))
     $g4['title'] = $config['cf_title'];
 
 // 쪽지를 받았나?
@@ -59,8 +59,8 @@ var g4_path      = "<?=$g4['path']?>";
 var g4_bbs       = "<?=$g4['bbs']?>";
 var g4_bbs_img   = "<?=$g4['bbs_img']?>";
 var g4_url       = "<?=$g4['url']?>";
-var g4_is_member = "<?=$is_member?>";
-var g4_is_admin  = "<?=$is_admin?>";
+var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";
+var g4_is_admin  = "<?=isset($is_admin)?$is_admin:'';?>";
 var g4_bo_table  = "<?=isset($bo_table)?$bo_table:'';?>";
 var g4_sca       = "<?=isset($sca)?$sca:'';?>";
 var g4_charset   = "<?=$g4['charset']?>";

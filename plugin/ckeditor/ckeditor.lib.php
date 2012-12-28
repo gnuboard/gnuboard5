@@ -1,4 +1,6 @@
 <?php
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
 function editor_textarea($id, $content="", $class="") 
 {
     global $g4;

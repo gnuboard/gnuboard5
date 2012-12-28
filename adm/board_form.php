@@ -254,17 +254,6 @@ include_once ('./admin.head.php');
         <label for="chk_html_level">동일그룹 모두 적용</label>
     </td>
 </tr>
-<tr>
-    <th scope="row"><label for="bo_trackback_level">트랙백쓰기 권한</label></th>
-    <td>
-        <?=help('트랙백이란? 쉽게 설명하여 "내가 작성하는 글을 다른사람에게 알리는 기능" 입니다.'.PHP_EOL.'자세한 내용은 검색엔진에서 "트랙백"으로 검색을 해보시기 바랍니다.')?>
-        <?=get_member_level_select('bo_trackback_level', 1, 10, $board['bo_trackback_level']) ?>
-    </td>
-    <td class="group_setting">
-        <input type="checkbox" id="chk_trackback_level" name="chk_trackback_level" value="1">
-        <label for="chk_trackback_level">동일그룹 모두 적용</label>
-    </td>
-</tr>
 </tbody>
 </table>
 
@@ -404,17 +393,6 @@ include_once ('./admin.head.php');
     <td class="group_setting">
         <input type="checkbox" id="chk_use_ip_view" name="chk_use_ip_view" value="1">
         <label for="chk_use_ip_view">동일그룹 모두 적용</label>
-    </td>
-</tr>
-<tr>
-    <th scope="row"><label for="bo_use_trackback">트랙백 사용</label></th>
-    <td>
-        <input type="checkbox" id="bo_use_trackback" name="bo_use_trackback" value="1" <?=$board['bo_use_trackback']?'checked':'';?>>
-        사용 (트랙백쓰기 권한 보다 우선함)
-    </td>
-    <td class="group_setting">
-        <input type="checkbox" id="chk_use_trackback" name="chk_use_trackback" value="1">
-        <label for="chk_use_trackback">동일그룹 모두 적용</label>
     </td>
 </tr>
 <tr>

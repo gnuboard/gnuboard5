@@ -112,10 +112,15 @@ function get_cookie($cookie_name)
 // 경고메세지를 경고창으로
 function alert($msg='', $url='')
 {
-    global $g4;
+    global $g4, $config, $member;
+    global $is_admin;
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
+    $msg = str_replace("\\n", "<br>", $msg);
 
+    if (!$url) $url = "javascript:history.go(-1);";
+
+    /*
     //header("Content-Type: text/html; charset=$g4['charset']");
     echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
     echo "<script>alert('$msg');";
@@ -126,6 +131,13 @@ function alert($msg='', $url='')
         // 4.06.00 : 불여우의 경우 아래의 코드를 제대로 인식하지 못함
         //echo "<meta http-equiv='refresh' content='0;url=$url'>";
         goto_url($url);
+    exit;
+    */
+    $header = '';
+    if (isset($g4['title'])) {
+        $header = $g4['title'];
+    }
+    include_once("{$g4['bbs_path']}/alert.php");
     exit;
 }
 
@@ -1476,6 +1488,13 @@ function bad_tag_convert($code)
     //return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>/i", "&lt;$1$2$3&gt;", $code);
     // script 나 iframe 태그를 막지 않는 경우 필터링이 되도록 수정
     return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
+}
+
+
+// 토큰 생성
+function _token()
+{
+    return md5(uniqid(rand(), true));
 }
 
 

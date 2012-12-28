@@ -1,7 +1,8 @@
 <?
 include_once('./_common.php');
-if ($editor->lib)
-    include_once($editor->lib);
+
+if (isset($editor->lib))  include_once($editor->lib);
+if (isset($captcha->lib)) include_once($captcha->lib);
 
 set_session('ss_bo_table', $bo_table);
 set_session('ss_wr_id', $wr_id);
@@ -252,12 +253,6 @@ if ($board['bo_use_file_content']) {
     $is_file_content = true;
 }
 
-// 트랙백
-$is_trackback = false;
-if ($board['bo_use_trackback'] && $member['mb_level'] >= $board['bo_trackback_level']) {
-    $is_trackback = true;
-}
-
 $name     = "";
 $email    = "";
 $homepage = "";
@@ -274,7 +269,6 @@ if ($w == "" || $w == "r") {
 $html_checked   = "";
 $html_value     = "";
 $secret_checked = "";
-$trackback      = "";
 
 if ($w == '') {
     $password_required = 'required';
@@ -297,8 +291,6 @@ if ($w == '') {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
         $link[$i] = $write['wr_link'.$i];
     }
-
-    $trackback = $write['wr_trackback'];
 
     if (strstr($write['wr_option'], 'html1')) {
         $html_checked = 'checked';
@@ -360,9 +352,15 @@ if ($is_admin) {
     $write_max = (int)$board['bo_write_max'];
 }
 
-if ($is_dhtml_editor && $editor->js) {
-    array_push($g4['js_file'], $editor->js);
-    array_push($g4['js_file'], $editor->config_js);
+if ($is_dhtml_editor && isset($editor->js)) {
+    $g4['js_file'][] = $editor->js;
+    if (isset($editor->config_js)) {
+        $g4['js_file'][] = $editor->config_js;
+    }
+}
+
+if (isset($captcha->js)) {
+    $g4['js_file'][] = $captcha->js;
 }
 
 include_once($g4['path'].'/head.sub.php');
@@ -395,6 +393,11 @@ if ($file_length < 0) {
     $file_length = 0;
 }
 //--------------------------------------------------------------------------
+
+if ($g4['https_url'])
+    $action_url = "{$g4['https_url']}/{$g4['bbs']}/write_update.php";
+else
+    $action_url = "{$g4['bbs_path']}/write_update.php";
 
 include_once ($board_skin_path.'/write.skin.php');
 

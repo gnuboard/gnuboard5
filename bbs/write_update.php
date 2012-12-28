@@ -1,6 +1,8 @@
 <?
 include_once('./_common.php');
 
+if (isset($captcha->lib)) include_once($captcha->lib);
+
 // 090710
 if (substr_count($wr_content, '&#') > 50) {
     alert('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');
@@ -8,8 +10,6 @@ if (substr_count($wr_content, '&#') > 50) {
 }
 
 @include_once($board_skin_path.'/write_update.head.skin.php');
-
-include_once($g4['path'].'/lib/trackback.lib.php');
 
 $upload_max_filesize = ini_get('upload_max_filesize');
 
@@ -124,17 +124,8 @@ if ($w == "" || $w == "r")
         alert('동일한 내용을 연속해서 등록할 수 없습니다.');
 } 
 
-// 자동등록방지 검사
-//include_once ("./norobot_check.inc.php");
-
-if (!$is_member) {
-    if ($w=='' || $w=='r') {
-        $key = get_session("captcha_keystring");
-        if (!($key && $key == $_POST['wr_key'])) {
-            session_unregister("captcha_keystring");
-            alert('정상적인 접근이 아닌것 같습니다.');
-        }
-    }
+if (!chk_captcha()) {
+    alert('자동등록방지의 답변으로 입력한 숫자가 틀렸습니다.');
 }
 
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject'])) 
@@ -298,7 +289,6 @@ if ($w == '' || $w == 'r')
                      wr_link2 = '{$wr_link2}',
                      wr_link1_hit = 0,
                      wr_link2_hit = 0,
-                     wr_trackback = '{$wr_trackback}',
                      wr_hit = 0,
                      wr_good = 0,
                      wr_nogood = 0,
@@ -601,18 +591,6 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
 // 사용자 코드 실행
 @include_once ($board_skin_path.'/write_update.skin.php');
-
-// 트랙백 주소가 있다면
-if (($w != 'u' && $wr_trackback) || ($w=='u' && $wr_trackback && $re_trackback)) 
-{
-    $trackback_url = $g4['url'].'/'.$g4['bbs'].'/tb.php/'.$bo_table.'/'.$wr_id;
-    $msg = "";
-    $msg = send_trackback($wr_trackback, $trackback_url, $wr_subject, $board['bo_subject'], $_POST['wr_content']);
-    if ($msg) {
-        echo '<meta http-equiv="content-type" content="text/html; charset='.$g4['charset'].'">'.PHP_EOL;
-        echo '<script>alert('.$msg.' '.$wr_trackback.');</script>';
-    }
-}
 
 @include_once($board_skin_path.'/write_update.tail.skin.php');
 if ($g4['https_url'])

@@ -8,7 +8,7 @@ var char_min = parseInt(<?=$write_min?>); // 최소
 var char_max = parseInt(<?=$write_max?>); // 최대
 </script>
 
-<form id="fwrite" name="fwrite" action="./write_update.php" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data">
+<form id="fwrite" name="fwrite" method="post" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="wr_id" value="<?=$wr_id?>">
@@ -26,7 +26,7 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름</label></th>
-    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" class="required" value="<?=$name?>" title="이름"></td>
+    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" class="required" required="required" value="<?=$name?>" title="이름"></td>
 </tr>
 <? } ?>
 
@@ -40,7 +40,7 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <? if ($is_email) { ?>
 <tr>
     <th scope="row"><label for="wr_email">이메일</label></th>
-    <td><input type="text" id="wr_email" name="wr_email" maxlength="100" value="<?=$email?>"></td>
+    <td><input type="text" id="wr_email" name="wr_email" class="email" value="<?=$email?>" title="이메일" maxlength="100"></td>
 </tr>
 <? } ?>
 
@@ -104,7 +104,7 @@ if ($option) {
 
 <tr>
     <th scope="row"><label for="wr_subject">제목</label></th>
-    <td><input id="wr_subject" name="wr_subject" required value="<?=$subject?>"></td>
+    <td><input id="wr_subject" name="wr_subject" required="required" value="<?=$subject?>" title="제목"></td>
 </tr>
 
 <tr>
@@ -173,8 +173,7 @@ if ($option) {
             // file_length 이하로는 필드가 삭제되지 않아야 합니다.
             var file_length = <?=(int)$file_length?>;
             var objTbl = document.getElementById("variableFiles");
-            if (objTbl.rows.length - 1 > file_length)
-            {
+            if (objTbl.rows.length - 1 > file_length) {
                 objTbl.deleteRow(objTbl.rows.length - 1);
                 flen--;
             }
@@ -189,30 +188,14 @@ if ($option) {
         <span onclick="del_file();" style="cursor:pointer;">파일감소</span>
     </td>
 </tr>
+<?}?>
 
-<? } ?>
-
-<? if ($is_trackback) { ?>
-<tr>
-    <th scope="row"><label for="wr_trackback">트랙백주소</label></th>
-    <td>
-        <input id="wr_trackback" name="wr_trackback" value="<?=$trackback?>">
-        <? if ($w=='u') { ?><input type="checkbox" id="re_trackback" name="re_trackback" value="1">핑 보냄<? } ?>
-    </td>
-</tr>
-<? } ?>
 </tbody>
 </table>
 
-<? if ($is_guest) { ?>
-<fieldset id="captcha">
-    <legend>자동등록방지</legend>
-    <div><img id="kcaptcha_image" alt="" /></div>
-    <label for="wr_key">자동등록방지</label>
-    <input type="text" id="wr_key" name="wr_key" required>
-    왼쪽의 글자를 입력하세요.
-</fieldset>
-<? } ?>
+<?
+echo run_captcha();
+?>
 
 <div class="btn_confirm">
     <input type="submit" id="btn_submit" value="글쓰기" accesskey="s">
@@ -279,6 +262,7 @@ function fwrite_submit(f)
     }
     */
 
+    /*
     if (document.getElementById('char_count')) {
         if (char_min > 0 || char_max > 0) {
             var cnt = parseInt(document.getElementById('char_count').innerHTML);
@@ -292,6 +276,7 @@ function fwrite_submit(f)
             }
         }
     }
+    */
 
     if (document.getElementById('tx_wr_content')) {
         if (!ed_wr_content.outputBodyText()) {
@@ -300,10 +285,6 @@ function fwrite_submit(f)
             return false;
         }
     }
-
-    <?
-    if ($is_dhtml_editor) echo cheditor3('wr_content');
-    ?>
 
     var subject = "";
     var content = "";
@@ -338,18 +319,8 @@ function fwrite_submit(f)
         return false;
     }
 
-    if (!check_kcaptcha(f.wr_key)) {
-        return false;
-    }
-
-    //document.getElementById('btn_submit').disabled = true;
-    //document.getElementById('btn_list').disabled = true;
-
     <?
-    if ($g4['https_url'])
-        echo "f.action = '{$g4['https_url']}/{$g4['bbs']}/write_update.php';";
-    else
-        echo "f.action = './write_update.php';";
+    echo chk_js_captcha();
     ?>
 
     return true;
