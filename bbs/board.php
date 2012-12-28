@@ -130,7 +130,7 @@ if (isset($wr_id) && $wr_id) {
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
 
-    $g4['title'] = $board['bo_subject'].$page.' 페이지';
+    $g4['title'] = $board['bo_subject']." ".$page."페이지";
 }
 
 include_once($g4['path'].'/head.sub.php');
