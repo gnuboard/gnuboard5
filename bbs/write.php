@@ -233,7 +233,7 @@ if ($board['bo_use_category']) {
     $ca_name = "";
     if (isset($write['ca_name']))
         $ca_name = $write['ca_name'];
-    $category_option = get_category_option($bo_table);
+    $category_option = get_category_option($bo_table, $ca_name);
     $is_category = true;
 }
 

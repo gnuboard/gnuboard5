@@ -94,8 +94,9 @@ if ($option) {
 <tr>
     <th scope="row"><label for="ca_name">분류</label></th>
     <td>
-        <select id="ca_name" name="ca_name" required>
-            <option value="">선택하세요<?=$category_option?>
+        <select id="ca_name" name="ca_name" required="required">
+            <option value="">선택하세요</option>
+            <?=$category_option?>
         </select>
     </td>
 </tr>
