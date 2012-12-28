@@ -1,6 +1,8 @@
 /* SIR SOFT 지운아빠 Dec 2012 */
 
 /* 초기화 */
+html {overflow-y:scroll}
+body {font-size:1em}
 html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
