@@ -4,14 +4,14 @@
 html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
 article,aside,details,figcaption,figure, footer,header,hgroup,menu,nav,section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
-table {border-collapse:collapse;border-spacing:0} tfoot td {text-align:center}
+table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
 form, img {border:0}
-img {vertical-align:middle}
+input,img {vertical-align:middle}
 p {margin:10px 0;line-height:1.5em}
 
-/* 내용 건너띄기 */
-#skip_to_main {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
-#skip_to_main:focus, #skip_to_main:active {height:auto;padding:5px 10px;border:1px solid #000;background:#eee;color:#333;font-size:0.75em;overflow:auto}
+/* 내용 건너뛰기 */
+#to_content a {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
+#to_content a:focus, #to_content a:active {height:auto;padding:5px 10px;border:1px solid #000;background:#eee;color:#333;font-size:0.75em;overflow:auto}
 
 /* 내용 없는 테이블 */
 .empty_table {padding:200px 0;text-align:center}

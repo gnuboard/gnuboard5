@@ -2,11 +2,74 @@
 
 /* 초기화 */
 html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
-article,aside,details,figcaption,figure, footer,header,hgroup,menu,nav,section {display:block}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
-table {border-collapse:collapse;border-spacing:0} tfoot td {text-align:center}
+table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
 form, img {border:0}
-img {vertical-align:middle}
+input, img {vertical-align:middle}
 p {margin:10px 0;line-height:1.5em}
 
-/* 레이아웃 */
+/* 내용 건너뛰기 */
+#to_content a {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
+#to_content a:focus,
+#to_content a:active {height:auto;padding:5px 10px;border:1px solid #000;background:#333;color:#fff;font-size:0.75em;overflow:auto}
+
+/* 레이아웃 - 상단 */
+#header {z-index:3;position:relative;margin-bottom:30px;height:100px;border-bottom:1px solid #ddd}
+#header h1 {height:0;overflow:hidden}
+
+#logo {position:absolute;top:40px;left:50px}
+
+#tnb {position:absolute;top:53px;left:140px;zoom:1}
+#tnb:after {display:block;visibility:hidden;clear:both;content:""}
+#tnb li {float:left;margin-right:25px}
+#tnb a {color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
+
+#hdsch {position:absolute;top:47px;right:45px;padding:0;border:0}
+#hdsch legend {height:0;overflow:hidden}
+#hdsch_stx {height:26px;width:168px;border:1px solid #d7d7d7;border-right:0;background:#f8f9fa}
+#hdsch_stx:focus {background:#e7ebee;outline:0}
+#hdsch_submit {position:relative;margin-left:-5px;border:1px solid #d7d7d7;border-left:0}
+
+.outlogin {position:absolute;top:130px;right:50px;font-size:0.75em}
+.outlogin h2 {height:0;overflow:hidden}
+#ol_before fieldset {padding:0;border:0}
+#ol_before legend {height:0;overflow:hidden}
+
+#poll {position:absolute;top:250px;right:50px;font-size:0.75em}
+#poll h2 {display:inline-block;font-size:1em}
+
+/* 레이아웃 중간 */
+#wrapper {z-index:2;position:relative;margin-right:270px;padding-left:50px;min-height:520px;height:auto !important;height:520px}
+
+/* 레이아웃 하단 */
+#footer {z-index:1;position:relative;margin-top:30px;padding:15px 0 20px;border-top:1px solid #ddd;color:#595959;font-size:0.75em}
+#footer h1 {height:0;overflow:hidden}
+#footer section {margin-left:50px}
+#footer h2 {width:100px;color:#000;font-size:1em}
+#footer a {color:#595959;text-decoration:none}
+
+#visit {margin-bottom:10px;zoom:1}
+#visit:after {display:block;visibility:hidden;clear:both;content:""}
+#visit h2 {float:left}
+#visit dl {zoom:1}
+#visit dl:after {display:block;visibility:hidden;clear:both;content:""}
+#visit dt {float:left}
+#visit dd {float:left;margin:0 15px 0 5px;color:#000;font-style:italic}
+
+#current_connect {margin-bottom:10px;zoom:1}
+#current_connect:after {display:block;visibility:hidden;clear:both;content:""}
+#current_connect h2 {float:left}
+
+#popular {margin-bottom:10px;zoom:1}
+#popular:after {display:block;visibility:hidden;clear:both;content:""}
+#popular h2 {float:left}
+#popular ul {list-style:none;zoom:1}
+#popular ul:after {display:block;visibility:hidden;clear:both;content:""}
+#popular li {float:left}
+
+#footer p {position:absolute;top:15px;right:50px}
+
+/* 테이블 */
+table {margin-bottom:10px;width:100%}
+caption {padding:10px 0 15px;text-align:left;font-size:1em;font-weight:bold}

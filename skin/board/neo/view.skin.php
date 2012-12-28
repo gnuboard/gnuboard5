@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <h1><? if ($is_category) { echo ($category_name ? "[{$view['ca_name']}] " : ""); } ?><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
 
 <aside>
-    <h2>상단 링크</h2>
+    <h2>게시물 상단 링크</h2>
     <!-- 링크 버튼 -->
     <? if ($update_href || $deleter_href) {?>
     <ul>
@@ -149,7 +149,7 @@ include_once('./view_comment.php');
 ?>
 
 <aside>
-    <h2>하단 링크</h2>
+    <h2>게시물 하단 링크</h2>
     <ul>
         <? if ($prev_href) { ?><li><a href="<?=$prev_href?>">이전</a></li><? } ?>
         <? if ($next_href) { ?><li><a href="<?=$next_href?>">다음</a></li><? } ?>

@@ -4,8 +4,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 global $is_admin;
 ?>
 
-<section>
-    <h2>방문자</h2>
+<section id="visit">
+    <h2>방문자집계</h2>
     <dl>
         <dt>오늘</dt>
         <dd><?=number_format($visit[1])?></dd>
