@@ -339,10 +339,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     $list['ca_name_href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
 
     $list['href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
-    if ($board['bo_use_comment'])
-        $list['comment_href'] = "javascript:win_comment('{$g4['bbs_path']}/board.php?bo_table={$board['bo_table']}&amp;wr_id={$list['wr_id']}&amp;cwin=1');";
-    else
-        $list['comment_href'] = $list['href'];
+    $list['comment_href'] = $list['href'];
 
     $list['icon_new'] = '';
     if ($list['wr_datetime'] >= date("Y-m-d H:i:s", $g4['server_time'] - ($board['bo_new'] * 3600)))

@@ -1,16 +1,8 @@
 <?
 include_once('./_common.php');
 
-$cwin = "";
-if (isset($_GET['cwin']) && $_GET['cwin']) {
-    $cwin = $_GET['cwin'];
-}
-
 if (!$board['bo_table']) {
-    if ($cwin) // 코멘트 보기
-       alert_close('존재하지 않는 게시판입니다.', $g4['path']);
-    else
-       alert('존재하지 않는 게시판입니다.', $g4['path']);
+   alert('존재하지 않는 게시판입니다.', $g4['path']);
 }
 
 if (isset($write['wr_is_comment']) && $write['wr_is_comment']) {
@@ -19,10 +11,7 @@ if (isset($write['wr_is_comment']) && $write['wr_is_comment']) {
 
 if (!$bo_table) {
     $msg = "bo_table 값이 넘어오지 않았습니다.\\n\\nboard.php?bo_table=code 와 같은 방식으로 넘겨 주세요.";
-    if ($cwin) // 코멘트 보기
-        alert_close($msg);
-    else
-        alert($msg);
+    alert($msg);
 }
 
 // wr_id 값이 있으면 글읽기
@@ -30,20 +19,14 @@ if (isset($wr_id) && $wr_id) {
     // 글이 없을 경우 해당 게시판 목록으로 이동
     if (!$write['wr_id']) {
         $msg = '글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'글이 삭제되었거나 이동된 경우입니다.';
-        if ($cwin)
-            alert_close($msg);
-        else
-            alert($msg, './board.php?bo_table='.$bo_table);
+        alert($msg, './board.php?bo_table='.$bo_table);
     }
 
     // 그룹접근 사용
     if (isset($group['gr_use_access']) && $group['gr_use_access']) {
         if ($is_guest) {
             $msg = "비회원은 이 게시판에 접근할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.";
-            if ($cwin)
-                alert_close($msg);
-            else
-                alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
         }
 
         // 그룹관리자 이상이라면 통과
@@ -195,26 +178,21 @@ $admin_href = "";
 if ($member['mb_id'] && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id']))
     $admin_href = $g4['admin_path'].'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
-if (!($board['bo_use_comment'] && $cwin))
-    include_once('./board_head.php');
+include_once('./board_head.php');
 
 echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
 
-if (!($board['bo_use_comment'] && $cwin)) {
-    // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
-    if (isset($wr_id) && $wr_id) {
-        include_once('./view.php');
-    }
-
-    // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임
-    //if ($board['bo_use_list_view'] || empty($wr_id))
-    if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view'] || empty($wr_id))
-        include_once ('./list.php');
-
-    include_once('./board_tail.php');
+// 게시물 아이디가 있다면 게시물 보기를 INCLUDE
+if (isset($wr_id) && $wr_id) {
+    include_once('./view.php');
 }
-else
-    include_once('./view_comment.php');
+
+// 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임
+//if ($board['bo_use_list_view'] || empty($wr_id))
+if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view'] || empty($wr_id))
+    include_once ('./list.php');
+
+include_once('./board_tail.php');
 
 echo "\\n<!-- 사용스킨 : {$board['bo_skin']} -->\\n";
 

@@ -339,5 +339,5 @@ else if ($w == 'cu') // 코멘트 수정
 @include_once($board_skin_path.'/write_comment_update.skin.php');
 @include_once($board_skin_path.'/write_comment_update.tail.skin.php');
 
-goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr[wr_parent].'&amp;page='.$page.$qstr.'&amp;cwin='.$cwin.'#c_'.$comment_id);
+goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr[wr_parent].'&amp;page='.$page.$qstr.'&amp;#c_'.$comment_id);
 ?>

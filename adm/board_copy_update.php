@@ -53,7 +53,6 @@ $sql = " insert into {$g4['board_table']}
                  bo_use_secret = '{$board[bo_use_secret]}',
                  bo_use_dhtml_editor = '{$board[bo_use_dhtml_editor]}',
                  bo_use_sideview = '{$board[bo_use_sideview]}',
-                 bo_use_comment = '{$board[bo_use_comment]}',
                  bo_use_good = '{$board[bo_use_good]}',
                  bo_use_nogood = '{$board[bo_use_nogood]}',
                  bo_use_signature = '{$board[bo_use_signature]}',

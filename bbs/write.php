@@ -8,10 +8,7 @@ set_session('ss_wr_id', $wr_id);
 
 // 090713
 if (!$board['bo_table']) {
-    if ($cwin) // 코멘트 보기
-       alert_close('존재하지 않는 게시판입니다.', $g4['path']);
-    else
-       alert('존재하지 않는 게시판입니다.', $g4['path']);
+    alert('존재하지 않는 게시판입니다.', $g4['path']);
 }
 
 if (!$bo_table) {

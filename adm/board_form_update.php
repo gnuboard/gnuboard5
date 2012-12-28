@@ -87,7 +87,6 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                         bo_use_secret       = '{$_POST[bo_use_secret]}',
                         bo_use_dhtml_editor = '{$_POST[bo_use_dhtml_editor]}',
                         bo_use_rss_view     = '{$_POST[bo_use_rss_view]}',
-                        bo_use_comment      = '{$_POST[bo_use_comment]}',
                         bo_use_good         = '{$_POST[bo_use_good]}',
                         bo_use_nogood       = '{$_POST[bo_use_nogood]}',
                         bo_use_name         = '{$_POST[bo_use_name]}',
@@ -262,7 +261,6 @@ if ($chk_category_list) {
 }
 if ($chk_use_sideview) $s .= " , bo_use_sideview = '{$bo_use_sideview}' ";
 if ($chk_use_file_content) $s .= " , bo_use_file_content = '{$bo_use_file_content}' ";
-if ($chk_use_comment) $s .= " , bo_use_comment = '{$bo_use_comment}' ";
 if ($chk_use_secret) $s .= " , bo_use_secret = '{$bo_use_secret}' ";
 if ($chk_use_dhtml_editor) $s .= " , bo_use_dhtml_editor = '{$bo_use_dhtml_editor}' ";
 if ($chk_use_rss_view) $s .= " , bo_use_rss_view = '{$bo_use_rss_view}' ";
