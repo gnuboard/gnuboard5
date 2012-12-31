@@ -8,7 +8,7 @@ var char_min = parseInt(<?=$write_min?>); // 최소
 var char_max = parseInt(<?=$write_max?>); // 최대
 </script>
 
-<form id="fwrite" name="fwrite" method="post" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data">
+<form id="fwrite" name="fwrite" method="post" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="wr_id" value="<?=$wr_id?>">
@@ -278,18 +278,14 @@ function fwrite_submit(f)
     }
     */
 
-    if (document.getElementById('tx_wr_content')) {
-        if (!ed_wr_content.outputBodyText()) {
-            alert('내용을 입력하십시오.');
-            ed_wr_content.returnFalse();
-            return false;
-        }
-    }
+    <?
+    echo chk_editor("wr_content");
+    ?>
 
     var subject = "";
     var content = "";
     $.ajax({
-        url: "<?=$board_skin_path?>/ajax.filter.php",
+        url: bbs_path+"/filter.ajax.php",
         type: "POST",
         data: {
             "subject": f.wr_subject.value,

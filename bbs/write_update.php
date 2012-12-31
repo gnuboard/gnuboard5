@@ -1,7 +1,32 @@
 <?
 include_once('./_common.php');
 
+$g4['title'] = '게시글 저장';
+
 if (isset($captcha->lib)) include_once($captcha->lib);
+
+$msg = array();
+
+$wr_subject = '';
+if (isset($_POST['wr_subject'])) {
+    $wr_subject = trim($_POST['wr_subject']);
+}
+if ($wr_subject == '') {
+    $msg[] = '<strong>제목</strong>을 입력하세요.';
+}
+
+$wr_content = '';
+if (isset($_POST['wr_content'])) {
+    $wr_content = trim($_POST['wr_content']);
+}
+if ($wr_content == '') {
+    $msg[] = '<strong>내용</strong>을 입력하세요.';
+}
+
+$msg = implode('<br>', $msg);
+if ($msg) {
+    alert($msg);
+}
 
 // 090710
 if (substr_count($wr_content, '&#') > 50) {
@@ -13,8 +38,9 @@ if (substr_count($wr_content, '&#') > 50) {
 
 $upload_max_filesize = ini_get('upload_max_filesize');
 
-if (empty($_POST))
-    alert('파일 또는 글내용의 크기가 서버에서 설정한 값을 넘어 오류가 발생하였습니다.'.PHP_EOL.PHP_EOL.'post_max_size='.ini_get('post_max_size').' , upload_max_filesize='.$upload_max_filesize.PHP_EOL.PHP_EOL.'게시판관리자 또는 서버관리자에게 문의 바랍니다.');
+if (empty($_POST)) {
+    alert("파일 또는 글내용의 크기가 서버에서 설정한 값을 넘어 오류가 발생하였습니다.\\npost_max_size=".ini_get('post_max_size')." , upload_max_filesize=".$upload_max_filesize."\\n게시판관리자 또는 서버관리자에게 문의 바랍니다.");
+}
 
 $w = $_POST['w'];
 $wr_link1 = mysql_real_escape_string($_POST['wr_link1']);
@@ -24,30 +50,36 @@ $notice_array = explode(',', trim($board['bo_notice']));
 
 if ($w == 'u' || $w == 'r') {
     $wr = get_write($write_table, $wr_id);
-    if (!$wr['wr_id'])
-        alert('글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'글이 삭제되었거나 이동하였을 수 있습니다.'); 
+    if (!$wr['wr_id']) {
+        alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다."); 
+    }
 }
 
 // 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글은 사용일 경우에만 가능해야 함
-if (!$is_admin && !$board['bo_use_secret'] && $secret)
+if (!$is_admin && !$board['bo_use_secret'] && $secret) {
 	alert('비밀글 미사용 게시판 이므로 비밀글로 등록할 수 없습니다.');
+}
 
 // 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글 무조건 사용일때는 관리자를 제외(공지)하고 무조건 비밀글로 등록
 $secret = '';
-if (!$is_admin && $board['bo_use_secret'] == 2)
+if (!$is_admin && $board['bo_use_secret'] == 2) {
     $secret = 'secret';
+}
 
 $html = '';
-if (isset($_POST['html']) && $_POST['html'])
+if (isset($_POST['html']) && $_POST['html']) {
     $html = $_POST['html'];
+}
 
 $mail = '';
-if (isset($_POST['mail']) && $_POST['mail'])
+if (isset($_POST['mail']) && $_POST['mail']) {
     $mail = $_POST['mail'];
+}
 
 $notice = '';
-if (isset($_POST['notice']) && $_POST['notice'])
+if (isset($_POST['notice']) && $_POST['notice']) {
     $notice = $_POST['notice'];
+}
 
 for ($i=1; $i<=10; $i++) {
     $var = "wr_$i";
@@ -58,30 +90,36 @@ for ($i=1; $i<=10; $i++) {
 }
 
 if ($w == '' || $w == 'u') {
+
     // 김선용 1.00 : 글쓰기 권한과 수정은 별도로 처리되어야 함
-    if($w =='u' && $member['mb_id'] && $wr['mb_id'] == $member['mb_id'])
+    if($w =='u' && $member['mb_id'] && $wr['mb_id'] == $member['mb_id']) {
         ;
-    else if ($member['mb_level'] < $board['bo_write_level']) 
+    } else if ($member['mb_level'] < $board['bo_write_level']) {
         alert('글을 쓸 권한이 없습니다.');
+    }
 
 	// 외부에서 글을 등록할 수 있는 버그가 존재하므로 공지는 관리자만 등록이 가능해야 함
-	if (!$is_admin && $notice)
+	if (!$is_admin && $notice) {
 		alert('관리자만 공지할 수 있습니다.');
-} 
-else if ($w == 'r')
-{
-    if (in_array((int)$wr_id, $notice_array))
-        alert('공지에는 답변 할 수 없습니다.');
+    }
 
-    if ($member['mb_level'] < $board['bo_reply_level']) 
+} else if ($w == 'r') {
+
+    if (in_array((int)$wr_id, $notice_array)) {
+        alert('공지에는 답변 할 수 없습니다.');
+    }
+
+    if ($member['mb_level'] < $board['bo_reply_level']) {
         alert('글을 답변할 권한이 없습니다.');
+    }
 
     // 게시글 배열 참조
     $reply_array = &$wr;
 
     // 최대 답변은 테이블에 잡아놓은 wr_reply 사이즈만큼만 가능합니다.
-    if (strlen($reply_array['wr_reply']) == 10)
-        alert('더 이상 답변하실 수 없습니다.'.PHP_EOL.PHP_EOL.'답변은 10단계 까지만 가능합니다.');
+    if (strlen($reply_array['wr_reply']) == 10) {
+        alert("더 이상 답변하실 수 없습니다.\\n답변은 10단계 까지만 가능합니다.");
+    }
 
     $reply_len = strlen($reply_array['wr_reply']) + 1;
     if ($board['bo_reply_order']) {
@@ -98,35 +136,32 @@ else if ($w == 'r')
     if ($reply_array['wr_reply']) $sql .= " and wr_reply like '{$reply_array['wr_reply']}%' ";
     $row = sql_fetch($sql);
 
-    if (!$row['reply'])
+    if (!$row['reply']) {
         $reply_char = $begin_reply_char;
-    else if ($row['reply'] == $end_reply_char) // A~Z은 26 입니다.
-        alert('더 이상 답변하실 수 없습니다.'.PHP_EOL.PHP_EOL.'답변은 26개 까지만 가능합니다.');
-    else
+    } else if ($row['reply'] == $end_reply_char) { // A~Z은 26 입니다.
+        alert("더 이상 답변하실 수 없습니다.\\n답변은 26개 까지만 가능합니다.");
+    } else {
         $reply_char = chr(ord($row['reply']) + $reply_number);
+    }
 
     $reply = $reply_array['wr_reply'] . $reply_char;
-} else 
+
+} else {
     alert('w 값이 제대로 넘어오지 않았습니다.'); 
-
-
-if ($w == "" || $w == "r") 
-{
-    if ($_SESSION["ss_datetime"] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin) 
-        alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
-
-    set_session("ss_datetime", $g4['server_time']);
-
-    // 동일내용 연속 등록 불가
-    $row = sql_fetch(" select MD5(CONCAT(wr_ip, wr_subject, wr_content)) as prev_md5 from $write_table order by wr_id desc limit 1 ");
-    $curr_md5 = md5($_SERVER['REMOTE_ADDR'].$wr_subject.$wr_content);
-    if ($row['prev_md5'] == $curr_md5 && !$is_admin)
-        alert('동일한 내용을 연속해서 등록할 수 없습니다.');
-} 
+}
 
 if (!chk_captcha()) {
     alert('자동등록방지의 답변으로 입력한 숫자가 틀렸습니다.');
 }
+
+if ($w == '' || $w == 'r') {
+    if (isset($_SESSION['ss_datetime'])) {
+        if ($_SESSION['ss_datetime'] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin) 
+            alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
+    }
+
+    set_session("ss_datetime", $g4['server_time']);
+} 
 
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject'])) 
     alert('제목을 입력하여 주십시오.'); 
@@ -135,12 +170,7 @@ if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
 @mkdir($g4['path'].'/data/file/'.$bo_table, 0707);
 @chmod($g4['path'].'/data/file/'.$bo_table, 0707);
 
-// "인터넷옵션 > 보안 > 사용자정의수준 > 스크립팅 > Action 스크립팅 > 사용 안 함" 일 경우의 오류 처리
-// 이 옵션을 사용 안 함으로 설정할 경우 어떤 스크립트도 실행 되지 않습니다.
-//if (!$_POST['wr_content']) die ("내용을 입력하여 주십시오.");
-
 $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
-//print_r2($chars_array); exit;
 
 // 가변 파일 업로드
 $file_upload_msg = '';
@@ -241,18 +271,15 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
     }
 }
 
-if ($w == '' || $w == 'r')
-{
-    if ($member['mb_id'])
-    {
+if ($w == '' || $w == 'r') {
+
+    if ($member['mb_id']) {
         $mb_id = $member['mb_id'];
         $wr_name = $board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick'];
         $wr_password = $member['mb_password'];
         $wr_email = $member['mb_email'];
         $wr_homepage = $member['mb_homepage'];
-    } 
-    else 
-    {
+    } else {
         $mb_id = '';
         // 비회원의 경우 이름이 누락되는 경우가 있음
         $wr_name = strip_tags(mysql_escape_string($_POST['wr_name']));
@@ -261,8 +288,7 @@ if ($w == '' || $w == 'r')
         $wr_password = sql_password($wr_password);
     }
 
-    if ($w == 'r')
-    {
+    if ($w == 'r') {
         // 답변의 원글이 비밀글이라면 패스워드는 원글과 동일하게 넣는다.
         if ($secret) 
             $wr_password = $wr['wr_password'];
@@ -270,9 +296,7 @@ if ($w == '' || $w == 'r')
         $wr_id = $wr_id . $reply;
         $wr_num = $write['wr_num'];
         $wr_reply = $reply;
-    } 
-    else 
-    {
+    } else {
         $wr_num = get_next_num($write_table);
         $wr_reply = '';
     }
@@ -364,26 +388,20 @@ if ($w == '' || $w == 'r')
             alert('로그인 후 수정하세요.', './login.php?url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
 
-    if ($member['mb_id']) 
-    {
+    if ($member['mb_id']) {
         // 자신의 글이라면
-        if ($member['mb_id'] == $wr['mb_id']) 
-        {
+        if ($member['mb_id'] == $wr['mb_id']) {
             $mb_id = $member['mb_id'];
             $wr_name = $board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick'];
             $wr_email = $member['mb_email'];
             $wr_homepage = $member['mb_homepage'];
-        } 
-        else
-        {
+        } else {
             $mb_id = $wr['mb_id'];
             $wr_name = $wr['wr_name'];
             $wr_email = $wr['wr_email'];
             $wr_homepage = $wr['wr_homepage'];
         }
-    } 
-    else 
-    {
+    } else {
         $mb_id = "";
         // 비회원의 경우 이름이 누락되는 경우가 있음
         //if (!trim($wr_name)) alert("이름은 필히 입력하셔야 합니다.");
@@ -426,17 +444,13 @@ if ($w == '' || $w == 'r')
     $sql = " update {$write_table} set ca_name = '{$ca_name}' where wr_parent = '{$wr['wr_id']}' ";
     sql_query($sql);
 
-    if ($notice) 
-    {
+    if ($notice) {
         //if (!preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board['bo_notice'])) 
-        if (!in_array((int)$wr_id, $notice_array))
-        {
+        if (!in_array((int)$wr_id, $notice_array)) {
             $bo_notice = $wr_id . '\n' . $board['bo_notice'];
             sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
         }
-    } 
-    else 
-    {
+    } else {
         $bo_notice = '';
         for ($i=0; $i<count($notice_array); $i++)
             if ((int)$wr_id != (int)$notice_array[$i])
@@ -527,8 +541,8 @@ if ($secret)
     set_session("ss_secret_{$bo_table}_{$wr_num}", TRUE);
 
 // 메일발송 사용 (수정글은 발송하지 않음)
-if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_email']) 
-{
+if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_email']) {
+
     // 관리자의 정보를 얻고
     $super_admin = get_admin('super');
     $group_admin = get_admin('group');

@@ -118,7 +118,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         var subject = "";
         var content = "";
         $.ajax({
-            url: "<?=$board_skin_path?>/ajax.filter.php",
+            url: bbs_path+"/filter.ajax.php",
             type: "POST",
             data: {
                 "subject": "",
