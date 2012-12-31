@@ -158,34 +158,34 @@ if ($w == 'c') // 코멘트 입력
     }
 
     $sql = " insert into {$write_table}
-                set ca_name = '{$wr[ca_name]',
-                      wr_option = '{$wr_secret}',
-                      wr_num = '{$wr[wr_num]}',
-                      wr_reply = '',
-                      wr_parent = '{$wr_id}',
-                      wr_is_comment = 1,
-                      wr_comment = '{$tmp_comment}',
-                      wr_comment_reply = '{$tmp_comment_reply}',
-                      wr_subject = '{$wr_subject}',
-                      wr_content = '{$wr_content}',
-                      mb_id = '{$mb_id}',
-                      wr_password = '{$wr_password}',
-                      wr_name = '{$wr_name}',
-                      wr_email = '{$wr_email}',
-                      wr_homepage = '{$wr_homepage}',
-                      wr_datetime = '{$g4[time_ymdhis]}',
-                      wr_last = '',
-                      wr_ip = '{$_SERVER[REMOTE_ADDR]}',
-                      wr_1 = '{$wr_1}',
-                      wr_2 = '{$wr_2}',
-                      wr_3 = '{$wr_3}',
-                      wr_4 = '{$wr_4}',
-                      wr_5 = '{$wr_5}',
-                      wr_6 = '{$wr_6}',
-                      wr_7 = '{$wr_7}',
-                      wr_8 = '{$wr_8}',
-                      wr_9 = '{$wr_9}',
-                      wr_10 = '{$wr_10}' ";
+                set ca_name = '{$wr[ca_name]}',
+                     wr_option = '{$wr_secret}',
+                     wr_num = '{$wr[wr_num]}',
+                     wr_reply = '',
+                     wr_parent = '{$wr_id}',
+                     wr_is_comment = 1,
+                     wr_comment = '{$tmp_comment}',
+                     wr_comment_reply = '{$tmp_comment_reply}',
+                     wr_subject = '{$wr_subject}',
+                     wr_content = '{$wr_content}',
+                     mb_id = '{$mb_id}',
+                     wr_password = '{$wr_password}',
+                     wr_name = '{$wr_name}',
+                     wr_email = '{$wr_email}',
+                     wr_homepage = '{$wr_homepage}',
+                     wr_datetime = '{$g4[time_ymdhis]}',
+                     wr_last = '',
+                     wr_ip = '{$_SERVER[REMOTE_ADDR]}',
+                     wr_1 = '{$wr_1}',
+                     wr_2 = '{$wr_2}',
+                     wr_3 = '{$wr_3}',
+                     wr_4 = '{$wr_4}',
+                     wr_5 = '{$wr_5}',
+                     wr_6 = '{$wr_6}',
+                     wr_7 = '{$wr_7}',
+                     wr_8 = '{$wr_8}',
+                     wr_9 = '{$wr_9}',
+                     wr_10 = '{$wr_10}' ";
     sql_query($sql);
 
     $comment_id = mysql_insert_id();
@@ -219,7 +219,7 @@ if ($w == 'c') // 코멘트 입력
 
         $subject = $board[bo_subject].' 게시판에 '.$str.'글이 올라왔습니다.';
         // 4.00.15 - 메일로 보내는 코멘트의 바로가기 링크 수정
-        $link_url = $g4[url]'./.'$g4[bbs]'./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr.'#c_'.$comment_id;
+        $link_url = $g4['url']"./."$g4['bbs']"./board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
 
         include_once($g4['path'].'/lib/mailer.lib.php');
 

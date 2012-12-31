@@ -1,6 +1,8 @@
 /* SIR SOFT 지운아빠 Dec 2012 */
 
 /* 초기화 */
+html {overflow-y:scroll}
+body {background:#dfe4e6;font-size:1em}
 html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
 article,aside,details,figcaption,figure, footer,header,hgroup,menu,nav,section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
@@ -17,8 +19,6 @@ p {margin:10px 0;line-height:1.5em}
 .empty_table {padding:200px 0;text-align:center}
 
 /* 레이아웃 */
-html {overflow-y:scroll}
-body {background:#dfe4e6;font-size:1em}
 header {background:#2c2f34}
 #logo {padding-top:4px;height:46px;background:url('../adm/img/logo_bg.png') repeat-x;text-align:center}
 #home_link {z-index:2;position:absolute;top:50px;right:20px;height:35px;zoom:1}

@@ -128,9 +128,9 @@ if (isset($wr_id) && $wr_id) {
             alert('목록을 볼 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
 
-    if (!isset($page)) $page = 1;
+    if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
 
-    $g4['title'] = $board['bo_subject'].$page.' 페이지';
+    $g4['title'] = $board['bo_subject']." ".$page."페이지";
 }
 
 include_once($g4['path'].'/head.sub.php');
@@ -194,7 +194,7 @@ if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view']
 
 include_once('./board_tail.php');
 
-echo "\\n<!-- 사용스킨 : {$board['bo_skin']} -->\\n";
+echo "\n<!-- 사용스킨 : {$board['bo_skin']} -->\n";
 
 include_once($g4['path'].'/tail.sub.php');
 ?>

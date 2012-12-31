@@ -1,6 +1,8 @@
 /* SIR SOFT 지운아빠 Dec 2012 */
 
 /* 초기화 */
+html {overflow-y:scroll}
+body {font-size:1em}
 html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
@@ -8,6 +10,9 @@ table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;tex
 form, img {border:0}
 input, img {vertical-align:middle}
 p {margin:10px 0;line-height:1.5em}
+
+/* 이미지 등비율 리사이징 */
+.img_fix {float:left;width:100%;height:auto}
 
 /* 내용 건너뛰기 */
 #to_content a {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
@@ -20,10 +25,10 @@ p {margin:10px 0;line-height:1.5em}
 
 #logo {position:absolute;top:40px;left:50px}
 
-#tnb {position:absolute;top:53px;left:140px;zoom:1}
+#tnb {position:absolute;top:43px;left:140px;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
-#tnb li {float:left;margin-right:25px}
-#tnb a {color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
+#tnb li {float:left;margin-right:15px}
+#tnb a {display:block;padding:10px;color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
 
 #hdsch {position:absolute;top:47px;right:45px;padding:0;border:0}
 #hdsch legend {height:0;overflow:hidden}
@@ -52,10 +57,11 @@ p {margin:10px 0;line-height:1.5em}
 #visit {margin-bottom:10px;zoom:1}
 #visit:after {display:block;visibility:hidden;clear:both;content:""}
 #visit h2 {float:left}
-#visit dl {zoom:1}
+#visit dl {float:left;margin:0;zoom:1}
 #visit dl:after {display:block;visibility:hidden;clear:both;content:""}
 #visit dt {float:left}
 #visit dd {float:left;margin:0 15px 0 5px;color:#000;font-style:italic}
+#visit a {float:left;font-weight:bold}
 
 #current_connect {margin-bottom:10px;zoom:1}
 #current_connect:after {display:block;visibility:hidden;clear:both;content:""}
@@ -66,7 +72,7 @@ p {margin:10px 0;line-height:1.5em}
 #popular h2 {float:left}
 #popular ul {list-style:none;zoom:1}
 #popular ul:after {display:block;visibility:hidden;clear:both;content:""}
-#popular li {float:left}
+#popular li {float:left;margin-right:20px}
 
 #footer p {position:absolute;top:15px;right:50px}
 
