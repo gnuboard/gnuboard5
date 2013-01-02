@@ -71,3 +71,4 @@ include_once($g4['path'].'/lib/popular.lib.php');
 <? */ ?>
 
 <div id="wrapper">
+    <? if (!$bo_table) {?><h1><?=$g4['title']?></h1><?}?>
