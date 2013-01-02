@@ -47,9 +47,10 @@ p {margin:10px 0;line-height:1.5em}
 #hdsch_submit {position:relative;margin-left:-5px}
 
 /* 아웃로그인 */
-.outlogin {position:absolute;top:130px;right:50px;width:200px;font-size:0.7em}
+.outlogin {position:absolute;top:130px;right:50px;width:200px}
 .outlogin h2 {height:0;overflow:hidden}
 /* 로그인 전 */
+#ol_before {font-size:0.7em}
 #ol_before fieldset {padding:0;border:0}
 #ol_before legend {height:0;overflow:hidden}
 #ol_mb_id_label {position:absolute;top:11px;left:7px;color:#a8a8a8}
