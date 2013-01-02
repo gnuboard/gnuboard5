@@ -1,44 +1,22 @@
 <?
 include_once('./_common.php');
 include_once($g4['path'].'/lib/mailer.lib.php');
-
-/*
-// 081022 : CSRF 에서 토큰 비교는 의미 없음
-// 세션에 저장된 토큰과 폼값으로 넘어온 토큰을 비교하여 틀리면 에러
-if ($_POST["token"] && get_session("ss_token") == $_POST["token"]) 
-{
-    // 이전 폼 전송 바로전에 만들어진 쿠키가 없다면 에러
-    //if (!get_cookie($_POST["token"])) alert_close("쿠키 에러");
-
-    // 맞으면 세션과 쿠키를 지워 다시 입력폼을 통해서 들어오도록 한다.
-    set_session("ss_token", "");
-    set_cookie($_POST["token"], 0, 0);
-} 
-else 
-{
-    alert_close("토큰 에러");
-    exit;
-}
-*/
+include_once($g4['path'].'/plugin/captcha/captcha.lib.php');
 
 // 리퍼러 체크
-//referer_check();
+referer_check();
 
-if (!($w == '' || $w == 'u')) 
+if (!($w == '' || $w == 'u')) {
     alert('w 값이 제대로 넘어오지 않았습니다.');
+}
 
 if ($w == 'u' && $is_admin == 'super') {
     if (file_exists($g4['path'].'/DEMO')) 
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
-// 자동등록방지 검사
-//include_once ("./norobot_check.inc.php");
-
-$key = get_session("captcha_keystring");
-if (!($key && $key == $_POST[wr_key])) {
-    session_unregister("captcha_keystring");
-    alert('정상적인 접근이 아닌것 같습니다.');
+if (!chk_tcaptcha("user_answer")) {
+    alert("정상적인 접근이 아닌것 같습니다.");
 }
 
 $mb_id = trim(strip_tags(mysql_escape_string($_POST[mb_id])));
