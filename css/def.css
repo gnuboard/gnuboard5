@@ -47,12 +47,22 @@ p {margin:10px 0;line-height:1.5em}
 #hdsch_submit {position:relative;margin-left:-5px}
 
 /* 아웃로그인 */
-.outlogin {position:absolute;top:130px;right:50px;width:200px;font-size:0.75em}
+.outlogin {position:absolute;top:130px;right:50px;width:200px;font-size:0.7em}
 .outlogin h2 {height:0;overflow:hidden}
 /* 로그인 전 */
 #ol_before fieldset {padding:0;border:0}
 #ol_before legend {height:0;overflow:hidden}
-#ol_submit {}
+#ol_mb_id_label {position:absolute;top:11px;left:7px;color:#a8a8a8}
+#ol_mb_id {padding-left:50px;width:87px;height:28px;border:1px solid #d7d7d7;border-right:0}
+#ol_mb_password_label {z-index:2;position:absolute;top:42px;left:7px;color:#a8a8a8}
+#ol_mb_password {position:relative;top:-1px;padding-left:50px;width:87px;height:28px;border:1px solid #d7d7d7;border-right:0}
+#ol_submit {position:absolute;top:0;right:0;width:60px;height:63px;border:1px solid #d7d7d7;font-size:1em;font-weight:bold}
+#auto_login {z-index:2;position:absolute;top:69px;right:42px}
+#auto_login_label {z-index:2;position:absolute;top:72px;right:7px}
+#ol_before ul {position:relative;top:-1px;width:196px;height:29px;border:1px solid #d7d7d7;border-top:0;background:#f8f9fa;zoom:1}
+#ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_before a {display:block;padding:0 5px;height:29px;color:#000;text-decoration:none;line-height:2.8em}
+#ol_before li {float:left}
 /* 로그인 후 */
 
 /* 설문조사 */

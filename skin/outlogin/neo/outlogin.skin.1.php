@@ -38,15 +38,15 @@ else
     <fieldset>
         <legend>로그인</legend>
         <input type="hidden" name="url" value="<?=$outlogin_url?>">
-        <label for="mb_id" id="ol_mb_id">아이디</label>
-        <input type="text" id="mb_id" name="mb_id" maxlength="20" required>
-        <label for="mb_password" id="ol_mb_password">패스워드</label>
-        <input type="password" id="mb_password" name="mb_password" maxlength="20">
-        <input type="submit" id="ol_submit" value="로그인">
+        <label for="ol_mb_id" id="ol_mb_id_label">아이디</label>
+        <input type="text" id="ol_mb_id" name="mb_id" maxlength="20" required>
+        <label for="ol_mb_password" id="ol_mb_password_label">패스워드</label>
+        <input type="password" id="ol_mb_password" name="mb_password" maxlength="20">
         <input type="checkbox" id="auto_login" name="auto_login" value="1" onclick="if (this.checked) { if (confirm('자동로그인을 사용하시면 다음부터 회원아이디와 패스워드를 입력하실 필요가 없습니다.\n\n\공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?')) { this.checked = true; } else { this.checked = false; } }">
-        <label for="auto_login">ID저장</label>
+        <label for="auto_login" id="auto_login_label">ID저장</label>
+        <input type="submit" id="ol_submit" value="로그인">
         <ul>
-            <li><a href="javascript:win_password_lost();">아이디/패스워드 찾기</a></li>
+            <li><a href="javascript:win_password_lost();">아이디찾기</a></li>
             <li><a href="<?=$g4['bbs_path']?>/register.php">회원가입</a></li>
         </ul>
     </fieldset>
