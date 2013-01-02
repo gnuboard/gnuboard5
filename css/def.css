@@ -19,6 +19,13 @@ p {margin:10px 0;line-height:1.5em}
 #to_content a:focus,
 #to_content a:active {height:auto;padding:5px 10px;border:1px solid #000;background:#333;color:#fff;font-size:0.75em;overflow:auto}
 
+/* 그누보드4s 설치 완료 메세지 */
+#install_done {position:absolute;margin-top:-30px;width:100%;height:580px;background:#e7ebee}
+#install_done h1,
+#install_done section {margin:0 auto;width:700px}
+#install_done div {position:relative;margin:0 auto;width:700px;background:#000}
+#install_done div span {position:absolute;top:-28px;left:0;width:700px;height:580px;background:url("../img/install_done.jpg")}
+
 /* 레이아웃 - 상단 */
 #header {z-index:3;position:relative;margin-bottom:30px;height:100px;border-bottom:1px solid #ddd}
 #header h1 {height:0;overflow:hidden}

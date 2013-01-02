@@ -43,4 +43,31 @@ include_once($g4['path'].'/lib/popular.lib.php');
     <?=poll('neo'); // 설문조사 ?>
 </header>
 
+<? /* ?>
+<!-- 설치 완료 메세지 -->
+<article id="install_done">
+    <h1>Welcome to Gnuboard 4s</h1>
+    <div><span><!--  --></span></div>
+    <section>
+        <h2>한글 안내</h2>
+        <p>
+        그누보드4표준 버전을 설치해주셔서 감사합니다.<br>
+        그누보드4표준 버전은 웹 접근성과 웹 표준을 준수합니다.<br>
+        새로운 게시판을 생성하시면 이 메세지는 사라집니다.<br>
+        감사합니다.
+        </p>
+    </section>
+    <section>
+        <h2>영문 안내</h2>
+        <p>
+        Thank you for installing Gnuboard4 Standard version.<br>
+        This version is for Web Accessibility and Web Standard version.<br>
+        This message will disappear after Create a new board.<br>
+        Thank you.
+        </p>
+    </section>
+</article>
+<!-- 설치 완료 메세지 끝 -->
+<? */ ?>
+
 <div id="wrapper">
