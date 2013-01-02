@@ -30,25 +30,33 @@ p {margin:10px 0;line-height:1.5em}
 #header {z-index:3;position:relative;margin-bottom:30px;height:100px;border-bottom:1px solid #ddd}
 #header h1 {height:0;overflow:hidden}
 
+/* 로고 */
 #logo {position:absolute;top:40px;left:50px}
 
+/* 상단메뉴 */
 #tnb {position:absolute;top:43px;left:140px;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin-right:15px}
 #tnb a {display:block;padding:10px;color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
 
+/* 전체검색 */
 #hdsch {position:absolute;top:47px;right:45px;padding:0;border:1px solid #d7d7d7;background:#f8f9fa}
 #hdsch legend {position:absolute;top:-1000px}
 #hdsch_stx {margin:5px 0 5px 5px;height:16px;width:163px;border:0;background:transparent}
 #hdsch_stx:focus {background:#e7ebee;outline:0}
 #hdsch_submit {position:relative;margin-left:-5px}
 
-.outlogin {position:absolute;top:130px;right:50px;font-size:0.75em}
+/* 아웃로그인 */
+.outlogin {position:absolute;top:130px;right:50px;width:200px;font-size:0.75em}
 .outlogin h2 {height:0;overflow:hidden}
+/* 로그인 전 */
 #ol_before fieldset {padding:0;border:0}
 #ol_before legend {height:0;overflow:hidden}
+#ol_submit {}
+/* 로그인 후 */
 
-#poll {position:absolute;top:250px;right:50px;font-size:0.75em}
+/* 설문조사 */
+#poll {position:absolute;top:250px;right:50px;width:200px;font-size:0.75em}
 #poll h2 {display:inline-block;font-size:1em}
 
 /* 레이아웃 중간 */
@@ -61,6 +69,7 @@ p {margin:10px 0;line-height:1.5em}
 #footer h2 {width:100px;color:#000;font-size:1em}
 #footer a {color:#595959;text-decoration:none}
 
+/* 방문자집계 */
 #visit {margin-bottom:10px;zoom:1}
 #visit:after {display:block;visibility:hidden;clear:both;content:""}
 #visit h2 {float:left}
@@ -70,10 +79,12 @@ p {margin:10px 0;line-height:1.5em}
 #visit dd {float:left;margin:0 15px 0 5px;color:#000;font-style:italic}
 #visit a {float:left;font-weight:bold}
 
+/* 현재접속자 */
 #current_connect {margin-bottom:10px;zoom:1}
 #current_connect:after {display:block;visibility:hidden;clear:both;content:""}
 #current_connect h2 {float:left}
 
+/*인기검색어 */
 #popular {margin-bottom:10px;zoom:1}
 #popular:after {display:block;visibility:hidden;clear:both;content:""}
 #popular h2 {float:left}
@@ -81,7 +92,8 @@ p {margin:10px 0;line-height:1.5em}
 #popular ul:after {display:block;visibility:hidden;clear:both;content:""}
 #popular li {float:left;margin-right:20px}
 
-#footer p {position:absolute;top:15px;right:50px}
+/* 카피라이트 */
+#footer p {position:absolute;top:25px;right:50px}
 
 /* 테이블 */
 table {margin-bottom:10px;width:100%}
