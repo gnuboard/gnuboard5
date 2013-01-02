@@ -96,12 +96,7 @@ if ($w == '') {
             alert('글을 답변할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?$qstr&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
     }
 
-    /*
-    if ($member['mb_point'] + $board['bo_comment_point'] < 0)
-        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글답변('.number_format($board['bo_comment_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글답변 해 주십시오.');
-    */
-
-    $tmp_point = $member['mb_point'] ? $member['mb_point'] : 0;
+    $tmp_point = isset($member['mb_point']) ? $member['mb_point'] : 0;
     if ($tmp_point + $board['bo_write_point'] < 0 && !$is_admin)
         alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글답변('.number_format($board['bo_comment_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글답변 해 주십시오.');
 
@@ -323,6 +318,7 @@ if (isset($write['wr_subject'])) {
     $subject = preg_replace("/\"/", "&#034;", get_text(cut_str($write['wr_subject'], 255), 0));
 }
 
+$content = '';
 if ($w == '') {
     $content = $board['bo_insert_content'];
 } else if ($w == 'r') {

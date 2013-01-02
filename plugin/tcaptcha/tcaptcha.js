@@ -22,7 +22,6 @@ function chk_tcaptcha(user_answer, user_token)
     });
 
     if (error) {
-        //alert('답이 틀렸거나 입력 횟수가 넘었습니다.\n\n문제를 클릭하신후 답을 다시 입력해 주십시오.');
         alert(error);
         user_answer.select();
         return false;

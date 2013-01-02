@@ -9,4 +9,12 @@ function editor_textarea($id, $content="", $class="")
     //$str .= "<script> CKEDITOR.replace('$id',{ filebrowserUploadUrl : '$upload_url'}); </script>\n";
     return $str;
 }
+
+function chk_editor($id, $textarea_name="내용")
+{
+    $str  = "var {$id}_data = CKEDITOR.instances.{$id}.getData();\n";
+    $str .= "    ";
+    $str .= "if (!{$id}_data) { alert(\"$textarea_name 입력해 주십시오.\"); return false; }\n";
+    return $str;
+}
 ?>
