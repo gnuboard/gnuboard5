@@ -30,11 +30,11 @@ p {margin:10px 0;line-height:1.5em}
 #tnb li {float:left;margin-right:15px}
 #tnb a {display:block;padding:10px;color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
 
-#hdsch {position:absolute;top:47px;right:45px;padding:0;border:0}
-#hdsch legend {height:0;overflow:hidden}
-#hdsch_stx {height:26px;width:168px;border:1px solid #d7d7d7;border-right:0;background:#f8f9fa}
+#hdsch {position:absolute;top:47px;right:45px;padding:0;border:1px solid #d7d7d7;background:#f8f9fa}
+#hdsch legend {position:absolute;top:-1000px}
+#hdsch_stx {margin:5px 0 5px 5px;height:16px;width:163px;border:0;background:transparent}
 #hdsch_stx:focus {background:#e7ebee;outline:0}
-#hdsch_submit {position:relative;margin-left:-5px;border:1px solid #d7d7d7;border-left:0}
+#hdsch_submit {position:relative;margin-left:-5px}
 
 .outlogin {position:absolute;top:130px;right:50px;font-size:0.75em}
 .outlogin h2 {height:0;overflow:hidden}
