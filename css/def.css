@@ -84,8 +84,8 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 #poll ul {margin:10px}
 #poll li {margin:7px 0}
 #poll footer {padding:10px 10px 15px;text-align:center}
-#poll footer input {padding:0 5px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:0.9em;letter-spacing:-0.1em}
-#poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#eee;color:#000;font-size:0.9em;vertical-align:middle;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
+#poll footer input {padding:0 5px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
+#poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#eee;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
 
 /* 레이아웃 중간 */
 #wrapper {z-index:2;position:relative;margin-right:270px;padding-left:50px;min-height:520px;height:auto !important;height:520px}
