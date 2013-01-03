@@ -6,7 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <section id="ol_after" class="outlogin">
     <header>
         <h2>나의 회원정보</h2>
-        <?=$nick?>님
+        <strong><?=$nick?></strong>님
         <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=$g4['admin_path']?>/">관리자</a><? } ?>
     </header>
     <ul>
