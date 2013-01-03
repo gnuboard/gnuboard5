@@ -4,6 +4,7 @@
 html {overflow-y:scroll}
 body {font-size:1em}
 html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
+h1, h2, h3, h4, h5, h6 {font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
 table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
@@ -125,6 +126,27 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 /* 카피라이트 */
 #footer p {position:absolute;top:25px;right:50px}
 
+/* ##################################################################### 스킨 및 컨텐츠 */
 /* 테이블 */
-table {margin-bottom:10px;width:100%}
-caption {padding:10px 0 15px;text-align:left;font-size:1em;font-weight:bold}
+table {margin-bottom:10px;width:100%;border:1px solid #d5dcdf;background:#fff}
+caption {padding:10px 0 15px;color:#2f4d59;text-align:left;font-size:1em;font-weight:bold}
+caption p {margin:7px 0 0;padding:0;color:#6b8088;font:0.75em normal}
+th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
+th {padding:10px;background:#f1f6f7}
+th label {display:block}
+th a {color:#000}
+td {padding:10px}
+
+/* 폼 테이블 */
+.frm_tbl th {width:130px;text-align:left;font-weight:normal}
+.frm_tbl textarea {height:150px}
+#frm_extra label {display:inline-block;width:100px}
+#frm_extra input {margin-right:10px}
+
+/* 현재접속자 */
+
+/* pagination */
+.pg {margin-bottom:30px;font-size:0.875em;text-align:center}
+.pg_page, .pg_current {display:inline-block;position:relative;margin-left:-6px;padding:0 10px;height:25px;border:1px solid #ddd;background:#fff;line-height:1.9em;vertical-align:middle}
+.pg_page {text-decoration:none}
+.pg_current {font-weight:normal}
