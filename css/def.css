@@ -83,7 +83,7 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 #ol_after footer a {display:inline-block;padding:0 5px}
 
 /* 설문조사 */
-#poll {width:198px;border:1px solid #d7d7d7;font-size:0.75em}
+#poll {width:198px;border:1px solid #d7d7d7;background:#fff;font-size:0.75em}
 #poll header {padding:10px 10px 1px;background:#f8f9fa}
 #poll h2 {display:inline-block;font-size:1em}
 #poll p {padding:0}

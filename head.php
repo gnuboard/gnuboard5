@@ -46,7 +46,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
     </div>
 </header>
 
-<? /* ?>
+<? /* if ($index || 게시판이 하나도 없을때) { ?>
 <!-- 설치 완료 메세지 -->
 <article id="install_done">
     <h1>Welcome to Gnuboard 4s</h1>
@@ -71,7 +71,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
     </section>
 </article>
 <!-- 설치 완료 메세지 끝 -->
-<? */ ?>
+<? }*/ ?>
 
 <div id="wrapper">
     <? if (!$bo_table) {?><h1><?=$g4['title']?></h1><?}?>
