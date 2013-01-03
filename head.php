@@ -36,7 +36,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
     <fieldset id="hdsch">
         <legend>사이트 내 전체검색</legend>
         <input type="text" id="hdsch_stx" name="stx" title="검색어" maxlength="20">
-        <input type="image" id="hdsch_submit" src="<?=$g4['path']?>/img/btn_search.jpg" value="검색">
+        <input type="image" id="hdsch_submit" src="<?=$g4['path']?>/img/btn_search.jpg" title="검색">
     </fieldset>
     </form>
     <?=outlogin('neo'); // 외부 로그인 ?>
