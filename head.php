@@ -40,9 +40,10 @@ include_once($g4['path'].'/lib/popular.lib.php');
     </fieldset>
     </form>
 
-    <?=outlogin('neo'); // 외부 로그인 ?>
-
-    <?=poll('neo'); // 설문조사 ?>
+    <div id="snb">
+        <?=outlogin('neo'); // 외부 로그인 ?>
+        <?=poll('neo'); // 설문조사 ?>
+    </div>
 </header>
 
 <? /* ?>
