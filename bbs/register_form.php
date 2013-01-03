@@ -1,5 +1,6 @@
 <?
 include_once('./_common.php');
+include_once($g4['path'].'/plugin/captcha/captcha.lib.php');
 
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));
@@ -17,11 +18,11 @@ if ($w == "") {
     // 리퍼러 체크
     referer_check();
 
-    if (!$_POST['agree']) {
+    if (!isset($_POST['agree']) || !$_POST['agree']) {
         alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', './register.php');
     }
 
-    if (!$_POST['agree2']) {
+    if (!isset($_POST['agree2']) || !$_POST['agree2']) {
         alert('개인정보취급방침의 내용에 동의하셔야 회원가입 하실 수 있습니다.', './register.php');
     }
 
@@ -100,8 +101,17 @@ if ($w == "") {
 // 회원아이콘 경로
 $mb_icon = $g4['path'].'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
 $member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
+$g4['js_file'][] = "{$g4['path']}/plugin/captcha/captcha.js";
 
 include_once('./_head.php');
+
+if ($g4['https_url'])
+    $register_action_url = "{$g4['https_url']}/{$g4['bbs']}/register_form_update.php";
+else
+    $register_action_url = "{$g4['url']}/{$g4['bbs']}/register_form_update.php";
+
+$req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400)));
+
 include_once($member_skin_path.'/register_form.skin.php');
 include_once('./_tail.php');
 ?>
