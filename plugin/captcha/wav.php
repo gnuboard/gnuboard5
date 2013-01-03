@@ -12,9 +12,11 @@ for($i=0;$i<strlen($number);$i++){
         $file = $en.$code{$i}.'.wav';
     }
     $wavs[] = $file;
+    /*
     for ($d=0;$d<rand(0,5);$d++) {
         $wavs[] = $lc.'delay'.rand(0,1).'.wav';
     }
+    */
 }
 
 //print_r($wavs); exit;
