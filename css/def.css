@@ -60,7 +60,7 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 #ol_before fieldset {padding:0;border:0}
 #ol_before legend {height:0;overflow:hidden}
 #ol_before input:focus {background:#434f54;color:#fff}
-#ol_before ul {position:relative;top:0;left:90px;margin:10px 0;zoom:1}
+#ol_before ul {position:relative;top:0;left:90px;margin:10px 0;width:90px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-right:5px}
 #ol_before a {color:#696969;text-decoration:none;letter-spacing:-0.1em}
