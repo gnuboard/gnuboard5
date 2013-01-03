@@ -44,7 +44,7 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 
 /* 전체검색 */
 #hdsch {position:absolute;top:90px;right:50px;margin:0;padding:0;border:1px solid #ddd;background:#f1f6f7}
-#hdsch legend {position:absolute;top:-1000px}
+#hdsch legend {position:absolute;top:-1000px;width:0;height:0;overflow:hidden}
 #hdsch_stx {margin:5px 0 5px 5px;height:16px;width:166px;border:0;background:transparent}
 #hdsch_stx:focus {background:#434f54;color:#fff}
 #hdsch_submit {position:relative;margin-left:-5px}
@@ -64,9 +64,9 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-right:5px}
 #ol_before a {color:#696969;text-decoration:none;letter-spacing:-0.1em}
-#ol_mb_id{display:block;margin-bottom:3px;padding:0 5px;width:163px;height:22px;border:1px solid #d7d7d7;background:#fff}
+#ol_mb_id{display:block;margin-bottom:3px;padding:0 5px;width:163px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
 #ol_mb_id_label {z-index:2;position:absolute;top:17px;left:20px;color:#696969}
-#ol_mb_pw {display:block;padding:0 5px;width:100px;height:22px;border:1px solid #d7d7d7;background:#fff}
+#ol_mb_pw {display:block;padding:0 5px;width:100px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
 #ol_mb_pw_label {z-index:2;position:absolute;top:45px;left:20px;color:#696969}
 #auto_login {position:absolute;top:71px;left:13px}
 #auto_login_label {position:absolute;top:72px;left:28px;color:#696969;letter-spacing:-0.1em}
