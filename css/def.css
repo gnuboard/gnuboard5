@@ -9,6 +9,7 @@ header ul, nav ul {margin:0;padding:0;list-style:none}
 table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
 form, img {border:0}
 input, img {vertical-align:middle}
+input {margin:0;padding:0;font-family:"dotum"}
 p {margin:10px 0;line-height:1.5em}
 
 /* 이미지 등비율 리사이징 */
@@ -40,30 +41,34 @@ p {margin:10px 0;line-height:1.5em}
 #tnb a {display:block;padding:10px;color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
 
 /* 전체검색 */
-#hdsch {position:absolute;top:47px;right:45px;padding:0;border:1px solid #d7d7d7;background:#f8f9fa}
+#hdsch {position:absolute;top:47px;right:50px;margin:0;padding:0;border:1px solid #d7d7d7;background:#f8f9fa}
 #hdsch legend {position:absolute;top:-1000px}
-#hdsch_stx {margin:5px 0 5px 5px;height:16px;width:163px;border:0;background:transparent}
+#hdsch_stx {margin:5px 0 5px 5px;height:16px;width:164px;border:0;background:transparent}
 #hdsch_stx:focus {background:#e7ebee;outline:0}
 #hdsch_submit {position:relative;margin-left:-5px}
 
 /* 아웃로그인 */
-.outlogin {position:absolute;top:130px;right:50px;width:200px}
+.outlogin {position:absolute;top:130px;right:50px;padding:10px 10px 0;width:178px;border:1px solid #d7d7d7;background:#f8f9fa;font-family:"dotum"}
 .outlogin h2 {height:0;overflow:hidden}
 /* 로그인 전 */
 #ol_before {font-size:0.7em}
 #ol_before fieldset {padding:0;border:0}
 #ol_before legend {height:0;overflow:hidden}
-#ol_mb_id_label {position:absolute;top:11px;left:7px;color:#a8a8a8}
-#ol_mb_id {padding-left:50px;width:87px;height:28px;border:1px solid #d7d7d7;border-right:0}
-#ol_mb_password_label {z-index:2;position:absolute;top:42px;left:7px;color:#a8a8a8}
-#ol_mb_password {position:relative;top:-1px;padding-left:50px;width:87px;height:28px;border:1px solid #d7d7d7;border-right:0}
-#ol_submit {position:absolute;top:0;right:0;width:60px;height:63px;border:1px solid #d7d7d7;font-size:1em;font-weight:bold}
-#auto_login {z-index:2;position:absolute;top:69px;right:42px}
-#auto_login_label {z-index:2;position:absolute;top:72px;right:7px}
-#ol_before ul {position:relative;top:-1px;width:196px;height:29px;border:1px solid #d7d7d7;border-top:0;background:#f8f9fa;zoom:1}
+#ol_mb_id_label,
+#ol_mb_pw_label {z-index:2;position:absolute;left:16px;color:#696969}
+#ol_mb_id_label {top:17px}
+#ol_mb_pw_label {top:44px}
+#ol_mb_id,
+#ol_mb_pw {padding-left:50px;height:22px;border:1px solid #c7c7c7;background:#fff}
+#ol_mb_id {display:block;width:123px;margin-bottom:3px}
+#ol_mb_pw {display:block;width:60px}
+#auto_login {position:absolute;top:70px;right:65px}
+#auto_login_label {position:absolute;top:71px;right:10px;color:#696969;letter-spacing:-0.1em}
+#ol_before ul {zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
-#ol_before a {display:block;padding:0 5px;height:29px;color:#000;text-decoration:none;line-height:2.8em}
 #ol_before li {float:left}
+#ol_before a {display:block;margin-right:7px;padding:10px 0;color:#696969;text-decoration:none;letter-spacing:-0.1em}
+#ol_submit {position:absolute;top:37px;right:11px;width:60px;height:24px;border:1px solid #c7c7c7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em}
 /* 로그인 후 */
 
 /* 설문조사 */
