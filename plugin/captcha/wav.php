@@ -2,24 +2,13 @@
 include_once("./_common.php");
 
 // prepare an array of wavfiles
-$lc ='/home/tmp/g4s/plugin/captcha/wavs/';
+$wavs_dir = $g4['path'].'/plugin/captcha/wavs/';
 $number = (string)$_SESSION['ss_captcha_key'];
 $wavs = array();
 for($i=0;$i<strlen($number);$i++){
-    $file = $lc.$number[$i].'.wav';
-    //echo $file;
-    if(!@file_exists($file)) {
-        $file = $en.$code{$i}.'.wav';
-    }
+    $file = $wavs_dir.$number[$i].'.wav';
     $wavs[] = $file;
-    /*
-    for ($d=0;$d<rand(0,5);$d++) {
-        $wavs[] = $lc.'delay'.rand(0,1).'.wav';
-    }
-    */
 }
-
-//print_r($wavs); exit;
 
 header('Content-type: audio/x-wav');
 header('Content-Disposition: attachment;filename=captcha.wav');
