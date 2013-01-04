@@ -7,12 +7,28 @@ html, body, h1, h2, h3, h4, h5, h6 {margin:0 0 0;padding:0}
 h1, h2, h3, h4, h5, h6 {font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
-table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
 form, img {border:0}
 label, input, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"verdana","dotum"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
 hr {display:none}
+
+/* 기본테이블 */
+table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
+tfoot td {font-weight:bold;text-align:center}
+caption {padding:0 0 10px;text-align:left}
+th {padding:8px 0;border-top:1px solid #a9a9a9;border-bottom:1px solid #a9a9a9;font-size:0.8em}
+td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;font-size:0.75em}
+
+/* 필드셋 */
+fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fff}
+legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#f0f0ed}
+fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
+fieldset button,
+.fieldset_submit {padding:0 15px;height:23px;border:0;background:#494946;color:#fff;font-size:0.8em;line-height:2.1em;vertical-align:middle;cursor:pointer}
+fieldset button:focus,
+.fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:2.1em;vertical-align:middle}
+.readonly {background:#ff3061}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -62,9 +78,10 @@ h6 {margin:0 0 20px}
 
 /* 사이드 네비게이션: 아웃로그인, 설문조사 등 */
 #snb {position:absolute;top:150px;right:50px;font-family:"verdana","dotum"}
+#snb ul {margin:0;padding:0;list-style:none}
 
 /* 아웃로그인 */
-.outlogin {margin-bottom:5px;padding:10px 10px 0;width:178px;border:1px solid #b3b2ad;background:#f0f0ed}
+.outlogin {margin-bottom:5px;padding:10px 10px 0;width:178px;border:1px solid #dedace;background:#f0f0ed}
 .outlogin h2 {margin:0;height:0;overflow:hidden}
 /* 로그인 전 */
 #ol_before {font-size:0.7em}
@@ -92,13 +109,13 @@ h6 {margin:0 0 20px}
 #ol_after footer a {display:inline-block;padding:0 5px}
 
 /* 설문조사 */
-#poll {width:198px;border:1px solid #b3b2ad;background:#fff;font-size:0.75em}
-#poll header {padding:10px 10px 1px;background:#f0f0ed}
+#poll {width:198px;border:1px solid #dedace;background:#fff;font-size:0.75em}
+#poll header {padding:10px 10px 1px;border-bottom:1px solid #efeada;background:#f0f0ed}
 #poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
 #poll ul {margin:10px}
 #poll li {margin:7px 0}
-#poll footer {padding:10px 10px 15px;text-align:center}
+#poll footer {padding:10px;border-top:1px solid #efeada;text-align:center}
 #poll footer input {padding:0 15px;height:24px;border:0;background:#494946;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
 
@@ -139,12 +156,6 @@ h6 {margin:0 0 20px}
 #footer p {position:absolute;top:25px;right:50px}
 
 /* ##################################################################### 스킨 및 컨텐츠 */
-/* 기본테이블 */
-table {margin-bottom:20px;width:100%}
-caption {padding:0 0 10px;text-align:left}
-th {padding:8px 0;border-top:1px solid #a9a9a9;border-bottom:1px solid #a9a9a9;font-size:0.8em}
-td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;font-size:0.75em}
-
 /* 폼 테이블 */
 .frm_tbl {}
 .frm_tbl textarea,
@@ -156,14 +167,6 @@ td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;
 .frm_tbl input:focus {padding:4px;border:0;background:#434f54;color:#fff}
 .frm_tbl textarea {width:90%}
 .frm_tbl select {padding:2px}
-
-/* 필드셋 */
-legend {margin-left:0;padding:7px 10px;border:1px solid #ced9de;background:#f6f9fa}
-fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
-fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
-fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
-fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
-.readonly {background:#ff3061}
 
 /* 테이블 항목별 정의 */
 .td_group {width:100px;text-align:center}

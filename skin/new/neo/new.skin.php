@@ -2,6 +2,33 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
+<!-- 검색 -->
+<form name="fnew" method="get">
+<fieldset>
+    <legend>사이트 상세검색</legend>
+    <label for="gr_id">검색대상</label>
+    <?=$group_select?>
+    <label for="view">검색종류</label>
+    <select id="view" name="view" onchange="select_change()">
+        <option value="">전체게시물
+        <option value="w">원글만
+        <option value="c">코멘트만
+    </select>
+    <label for="mb_id">회원아이디</label>
+    <input type="text" id="mb_id" name="mb_id" value="<?=$mb_id?>">
+    <input type="submit" class="fieldset_submit" value="검색">
+    <script>
+    function select_change()
+    {
+        document.fnew.submit();
+    }
+    document.getElementById("gr_id").value = "<?=$gr_id?>";
+    document.getElementById("view").value = "<?=$view?>";
+    </script>
+</fieldset>
+</form>
+<!-- 검색 끝 -->
+
 <!-- 제목 시작 -->
 <table>
 <caption>최근게시물 목록</caption>
@@ -40,30 +67,3 @@ for ($i=0; $i<count($list); $i++)
 <div class="pg">
     <?=$write_pages?>
 </div>
-
-<!-- 분류 시작 -->
-<form name="fnew" method="get">
-<fieldset>
-    <legend>사이트 상세검색</legend>
-    <label for="gr_id">검색대상</label>
-    <?=$group_select?>
-    <label for="view">검색종류</label>
-    <select id="view" name="view" onchange="select_change()">
-        <option value="">전체게시물
-        <option value="w">원글만
-        <option value="c">코멘트만
-    </select>
-    <label for="mb_id">회원아이디</label>
-    <input type="text" id="mb_id" name="mb_id" value="<?=$mb_id?>">
-    <input type="submit" value="검색">
-    <script>
-    function select_change()
-    {
-        document.fnew.submit();
-    }
-    document.getElementById("gr_id").value = "<?=$gr_id?>";
-    document.getElementById("view").value = "<?=$view?>";
-    </script>
-</fieldset>
-</form>
-<!-- 분류 끝 -->
