@@ -5,6 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <form name="fsearch" method="get" onsubmit="return fsearch_submit(this);">
 <input type="hidden" name="srows" value="<?=$srows?>">
     <fieldset>
+        <legend>상세검색</legend>
         <?=$group_select?>
         <script>document.getElementById("gr_id").value = "<?=$gr_id?>";</script>
 
@@ -16,9 +17,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <option value="wr_name">이름</option>
         </select>
 
-        <input type="text" name="stx" value="<?=$text_stx?>" maxlength="20" required>
+        <input type="text" name="stx" class="fieldset_input" value="<?=$text_stx?>" maxlength="20" required>
 
-        <input type="submit" value="검색">
+        <input type="submit" class="fieldset_submit" value="검색">
 
         <script>
         document.fsearch.sfl.value = "<?=$sfl?>";

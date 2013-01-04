@@ -15,7 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <option value="c">코멘트만
     </select>
     <label for="mb_id">회원아이디</label>
-    <input type="text" id="mb_id" name="mb_id" value="<?=$mb_id?>">
+    <input type="text" id="mb_id" name="mb_id" class="fieldset_input" value="<?=$mb_id?>">
     <input type="submit" class="fieldset_submit" value="검색">
     <script>
     function select_change()
