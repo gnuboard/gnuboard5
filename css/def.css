@@ -4,13 +4,13 @@
 html {overflow-y:scroll}
 body {background:#f5f4ed;font-size:1em}
 html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
-h1, h2, h3, h4, h5, h6 {font-family:"dotum"}
+h1, h2, h3, h4, h5, h6 {font-family:"dotum", "verdana"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
 table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
 form, img {border:0}
 input, img {vertical-align:middle}
-input {margin:0;padding:0;font-family:"dotum"}
+input {margin:0;padding:0;font-family:"dotum", "verdana"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
 
 /* 이미지 등비율 리사이징 */
@@ -52,7 +52,7 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 #hdsch_submit {position:relative;margin-left:-5px}
 
 /* 사이드 네비게이션: 아웃로그인, 설문조사 등 */
-#snb {position:absolute;top:150px;right:50px;font-family:"dotum"}
+#snb {position:absolute;top:150px;right:50px;font-family:"dotum", "verdana"}
 
 /* 아웃로그인 */
 .outlogin {margin-bottom:5px;padding:10px 10px 0;width:178px;border:1px solid #b3b2ad;background:#f0f0ed}
