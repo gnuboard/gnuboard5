@@ -120,7 +120,7 @@ if ($option) {
 <? for ($i=1; $i<=$g4['link_count']; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?=$i?>">링크 #<?=$i?></label></th>
-    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" value="<?if($w=="u"){echo$write["wr_link{$i}"];}?>"></td>
+    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>"></td>
 </tr>
 <? } ?>
 <? } ?>

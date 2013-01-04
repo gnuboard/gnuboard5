@@ -55,7 +55,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? if ($stx) { ?>
         <p>
             <? if ($board_count) { ?>
-            검색결과 <span><?=$board_count?></span>개의 게시판, <span><?=number_format($total_count)?></span>개의 게시글, <?=number_format($page)?>/<?=number_format($total_page)?> 페이지
+            검색결과 <span class="span_highlight"><?=$board_count?></span>개의 게시판, <span class="span_highlight"><?=number_format($total_count)?></span>개의 게시글, <?=number_format($page)?>/<?=number_format($total_page)?> 페이지
             <? } else { ?>
             <? } ?>
         </p>
