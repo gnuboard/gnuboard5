@@ -32,7 +32,7 @@ else
 ?>
 
 <section id="ol_before" class="outlogin">
-    <h2>사이트 멤버쉽</h2>
+    <h2>멤버쉽</h2>
 <!-- 로그인 전 외부로그인 시작 -->
     <form name="fhead" method="post" action="<?=$action_url?>" onsubmit="return fhead_submit(this);" autocomplete="off">
     <fieldset>
