@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <thead>
 <tr>
     <th scope="col">번호</th>
-    <th scope="col">이름</th>
+    <th scope="col">닉네임 혹은 아이피</th>
     <th scope="col">링크</th>
 </tr>
 </thead>

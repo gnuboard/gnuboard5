@@ -48,6 +48,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 <head>
 <meta charset="<?=$g4['charset']?>">
 <title><?=$g4['title']?></title>
+<meta http-equiv='X-UA-Compatible' content='IE=Edge' />
 <? if (isset($administrator)) { ?>
 <link rel="stylesheet" href="<?=$g4['path']?>/css/adm.css?=<?=date("md")?>">
 <? } else { ?>
@@ -72,6 +73,7 @@ var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
 <script src="<?=$g4['path']?>/js/jquery-1.4.2.min.js"></script>
 <script src="<?=$g4['path']?>/js/common.js"></script>
 <script src="<?=$g4['path']?>/js/wrest.js"></script>
+<script src="<?=$g4['path']?>/js/html5.js"></script>
 <?
 if (!empty($g4['js_file'])) {
     foreach ($g4['js_file'] as $key=>$value) {

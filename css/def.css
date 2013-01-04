@@ -2,22 +2,24 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {font-size:1em}
+body {background:#f5f4ed;font-size:1em}
 html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
+h1, h2, h3, h4, h5, h6 {font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
 table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
 form, img {border:0}
 input, img {vertical-align:middle}
-p {margin:10px 0;line-height:1.5em}
+input {margin:0;padding:0;font-family:"dotum"}
+p {margin:5px 0;padding:10px 0;line-height:1.5em}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
 
 /* 내용 건너뛰기 */
-#to_content a {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
+#to_content a {display:block;position:absolute;top:0;left:0;height:0;text-decoration:none;overflow:hidden}
 #to_content a:focus,
-#to_content a:active {height:auto;padding:5px 10px;border:1px solid #000;background:#333;color:#fff;font-size:0.75em;overflow:auto}
+#to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
 
 /* 그누보드4s 설치 완료 메세지 */
 #install_done {position:absolute;margin-top:-30px;width:100%;height:580px;background:#e7ebee}
@@ -27,32 +29,72 @@ p {margin:10px 0;line-height:1.5em}
 #install_done div span {position:absolute;top:-28px;left:0;width:700px;height:580px;background:url("../img/install_done.jpg")}
 
 /* 레이아웃 - 상단 */
-#header {z-index:3;position:relative;margin-bottom:30px;height:100px;border-bottom:1px solid #ddd}
+#header {z-index:3;position:relative;margin-bottom:30px}
 #header h1 {height:0;overflow:hidden}
 
-#logo {position:absolute;top:40px;left:50px}
+/* 로고 */
+#logo {background:#494946;text-align:center}
+#logo a {display:inline-block;padding:20px 30px}
 
-#tnb {position:absolute;top:43px;left:140px;zoom:1}
+/* 상단메뉴 */
+#tnb {padding-left:50px;border-top:1px solid #eee;border-bottom:1px solid #ddd;background:#fff;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
-#tnb li {float:left;margin-right:15px}
-#tnb a {display:block;padding:10px;color:#333;font-family:"dotum";font-size:0.9em;font-weight:bold;text-decoration:none}
+#tnb li {float:left;margin-left:-1px}
+#tnb a {display:block;padding:20px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
+#tnb a:hover,
+#tnb a:focus {background:#faf9f5}
 
-#hdsch {position:absolute;top:47px;right:45px;padding:0;border:1px solid #d7d7d7;background:#f8f9fa}
-#hdsch legend {position:absolute;top:-1000px}
-#hdsch_stx {margin:5px 0 5px 5px;height:16px;width:163px;border:0;background:transparent}
-#hdsch_stx:focus {background:#e7ebee;outline:0}
+/* 전체검색 */
+#hdsch {position:absolute;top:90px;right:50px;margin:0;padding:0;border:1px solid #ddd;background:#f1f6f7}
+#hdsch legend {position:absolute;top:-1000px;width:0;height:0;overflow:hidden}
+#hdsch_stx {margin:5px 0 5px 5px;height:16px;width:166px;border:0;background:transparent}
+#hdsch_stx:focus {background:#434f54;color:#fff}
 #hdsch_submit {position:relative;margin-left:-5px}
 
-.outlogin {position:absolute;top:130px;right:50px;font-size:0.75em}
+/* 사이드 네비게이션: 아웃로그인, 설문조사 등 */
+#snb {position:absolute;top:150px;right:50px;font-family:"dotum"}
+
+/* 아웃로그인 */
+.outlogin {margin-bottom:5px;padding:10px 10px 0;width:178px;border:1px solid #b3b2ad;background:#f0f0ed}
 .outlogin h2 {height:0;overflow:hidden}
+/* 로그인 전 */
+#ol_before {font-size:0.7em}
 #ol_before fieldset {padding:0;border:0}
 #ol_before legend {height:0;overflow:hidden}
+#ol_before input:focus {background:#434f54;color:#fff}
+#ol_before ul {position:relative;top:0;left:90px;margin:10px 0;width:90px;zoom:1}
+#ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_before li {float:left;margin-right:5px}
+#ol_before a {color:#696969;text-decoration:none;letter-spacing:-0.1em}
+#ol_mb_id{display:block;margin-bottom:3px;padding:0 5px;width:163px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
+#ol_mb_id_label {z-index:2;position:absolute;top:17px;left:20px;color:#696969}
+#ol_mb_pw {display:block;padding:0 5px;width:100px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
+#ol_mb_pw_label {z-index:2;position:absolute;top:45px;left:20px;color:#696969}
+#auto_login {position:absolute;top:71px;left:13px}
+#auto_login_label {position:absolute;top:72px;left:28px;color:#696969;letter-spacing:-0.1em}
+#ol_submit {position:absolute;top:38px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em}
+/* 로그인 후 */
+#ol_after {padding-bottom:10px;font-size:0.75em}
+#ol_after a {color:#000;text-decoration:none}
+#ol_after header {padding:5px 0 7px;border-bottom:1px solid #ddd;text-align:center}
+#ol_after li a {display:block;position:relative;padding:7px 0 5px}
+#ol_after li span {position:absolute;top:7px;right:0}
+#ol_after footer {padding-top:7px;border-top:1px solid #ddd;text-align:center}
+#ol_after footer a {display:inline-block;padding:0 5px}
 
-#poll {position:absolute;top:250px;right:50px;font-size:0.75em}
+/* 설문조사 */
+#poll {width:198px;border:1px solid #b3b2ad;background:#fff;font-size:0.75em}
+#poll header {padding:10px 10px 1px;background:#f0f0ed}
 #poll h2 {display:inline-block;font-size:1em}
+#poll p {padding:0}
+#poll ul {margin:10px}
+#poll li {margin:7px 0}
+#poll footer {padding:10px 10px 15px;text-align:center}
+#poll footer input {padding:0 15px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
+#poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
 
 /* 레이아웃 중간 */
-#wrapper {z-index:2;position:relative;margin-right:270px;padding-left:50px;min-height:520px;height:auto !important;height:520px}
+#wrapper {z-index:2;clear:both;position:relative;margin-right:270px;padding-left:50px;min-height:520px;height:auto !important;height:520px}
 
 /* 레이아웃 하단 */
 #footer {z-index:1;position:relative;margin-top:30px;padding:15px 0 20px;border-top:1px solid #ddd;color:#595959;font-size:0.75em}
@@ -61,6 +103,7 @@ p {margin:10px 0;line-height:1.5em}
 #footer h2 {width:100px;color:#000;font-size:1em}
 #footer a {color:#595959;text-decoration:none}
 
+/* 방문자집계 */
 #visit {margin-bottom:10px;zoom:1}
 #visit:after {display:block;visibility:hidden;clear:both;content:""}
 #visit h2 {float:left}
@@ -70,10 +113,12 @@ p {margin:10px 0;line-height:1.5em}
 #visit dd {float:left;margin:0 15px 0 5px;color:#000;font-style:italic}
 #visit a {float:left;font-weight:bold}
 
+/* 현재접속자 */
 #current_connect {margin-bottom:10px;zoom:1}
 #current_connect:after {display:block;visibility:hidden;clear:both;content:""}
 #current_connect h2 {float:left}
 
+/*인기검색어 */
 #popular {margin-bottom:10px;zoom:1}
 #popular:after {display:block;visibility:hidden;clear:both;content:""}
 #popular h2 {float:left}
@@ -81,8 +126,15 @@ p {margin:10px 0;line-height:1.5em}
 #popular ul:after {display:block;visibility:hidden;clear:both;content:""}
 #popular li {float:left;margin-right:20px}
 
-#footer p {position:absolute;top:15px;right:50px}
+/* 카피라이트 */
+#footer p {position:absolute;top:25px;right:50px}
 
-/* 테이블 */
-table {margin-bottom:10px;width:100%}
-caption {padding:10px 0 15px;text-align:left;font-size:1em;font-weight:bold}
+/* ##################################################################### 스킨 및 컨텐츠 */
+
+/* 현재접속자 */
+
+/* pagination */
+.pg {margin-bottom:30px;font-size:0.875em;text-align:center}
+.pg_page, .pg_current {display:inline-block;position:relative;margin-left:-6px;padding:0 10px;height:25px;border:1px solid #ddd;background:#fff;line-height:1.9em;vertical-align:middle}
+.pg_page {text-decoration:none}
+.pg_current {font-weight:normal}

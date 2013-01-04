@@ -180,7 +180,7 @@ if ($member['mb_id'] && ($is_admin == 'super' || $group['gr_admin'] == $member['
 
 include_once('./board_head.php');
 
-echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
+echo "<script src=\"".$g4['path']."/js/sideview.js\"></script>";
 
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
 if (isset($wr_id) && $wr_id) {
