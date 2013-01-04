@@ -2,10 +2,10 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<section id="memo" class="new_win">
-    <h1>쪽지함</h1>
+<section id="memo_list" class="new_win">
+    <h1><?= ($kind == 'recv') ? "받은" : "보낸";?> 쪽지함</h1>
 
-    <ul>
+    <ul class="new_win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
         <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지보내기</a></li>
@@ -21,16 +21,16 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <th scope="col"><?= ($kind == "recv") ? "보낸사람" : "받는사람"; ?></th>
         <th scope="col">보낸시간</th>
         <th scope="col">읽은시간</th>
-        <th scope="col">쪽지삭제</th>
+        <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
     <? for ($i=0; $i<count($list); $i++) { ?>
     <tr>
-        <td><?=$list[$i][name]?></td>
-        <td><a href="<?=$list[$i][view_href]?>"><?=$list[$i][send_datetime]?></font></td>
-        <td><a href="<?=$list[$i][view_href]?>"><?=$list[$i][read_datetime]?></font></td>
-        <td><a href="javascript:del('<?=$list[$i][del_href]?>');"><img src="<?=$member_skin_path?>/img/btn_comment_delete.gif" width="45" height="14" border="0"></a></td>
+        <td><div><?=$list[$i][name]?></div></td>
+        <td class="td_datetime"><a href="<?=$list[$i][view_href]?>"><?=$list[$i][send_datetime]?></font></td>
+        <td class="td_datetime"><a href="<?=$list[$i][view_href]?>"><?=$list[$i][read_datetime]?></font></td>
+        <td class="td_mng"><a href="javascript:del('<?=$list[$i][del_href]?>');">삭제</a></td>
     </tr>
     <? } ?>
     <? if ($i==0) { echo "<tr><td colspan=\"4\" class=\"empty_table\">자료가 없습니다.</td></tr>"; } ?>

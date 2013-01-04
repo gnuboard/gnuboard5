@@ -68,7 +68,7 @@ h6 {margin:0 0 20px}
 #logo a {display:inline-block;padding:20px 30px}
 
 /* 상단메뉴 */
-#tnb {padding-left:50px;border-top:1px solid #eee;border-bottom:1px solid #ddd;background:#fff;zoom:1}
+#tnb {padding-left:50px;border-bottom:1px solid #ddd;background:#fff;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin-left:-1px}
 #tnb a {display:block;padding:20px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
@@ -185,7 +185,8 @@ h6 {margin:0 0 20px}
 .td_name {width:120px;text-align:left}
 .td_name div {position:relative}
 .td_date {width:60px;text-align:center}
-.td_datetime {width:80px;text-align:center}
+.td_datetime {width:100px;text-align:center}
+.td_mng {width:80px;text-align:center}
 
 /* 현재접속자 */
 #current_connect_tbl .td_name {text-align:center}
@@ -202,11 +203,19 @@ h6 {margin:0 0 20px}
 .search_result p {margin:5px 0;padding:0;font-size:0.75em}
 
 /* 새창 공통 */
-.new_win h1 {padding:10px;background:#494946;color:#fff;font-size:1.2em}
+.new_win h1 {padding:10px 30px;background:#494946;color:#fff;font-size:1.2em}
 .new_win table {margin:0 auto 30px;width:90%}
+.new_win_ul {margin:-30px 0 20px 0;padding:0 0 0 30px;border-bottom:1px solid #ddd;background:#fff;font-size:0.8em;list-style:none;zoom:1}
+.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win_ul li {float:left;margin-left:-1px}
+.new_win_ul a {display:block;padding:10px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
+.new_win_ul a:hover,
+.new_win_ul a:focus {background:#faf9f5}
 
 /* 포인트 내역 */
 #point p {text-align:center}
+
+/* 쪽지 */
 
 /* pagination */
 .pg {margin-bottom:30px;font-size:0.875em;text-align:center}
