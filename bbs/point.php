@@ -78,10 +78,10 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     ?>
     <tr>
-        <td><?=$row[po_datetime]?></td>
+        <td class="td_datetime"><?=$row[po_datetime]?></td>
         <td><?=$row[po_content]?></td>
-        <td><?=$point1?></td>
-        <td><?=$point2?></td>
+        <td class="td_bignum"><?=$point1?></td>
+        <td class="td_bignum"><?=$point2?></td>
     </tr>
     <?
     }

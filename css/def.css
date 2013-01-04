@@ -15,7 +15,7 @@ hr {display:none}
 
 /* 기본테이블 */
 table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
-tfoot td {font-weight:bold;text-align:center}
+tfoot td {background:#f0f0ed;font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
 .caption_desc {font-size:0.75em}
 th {padding:12px 0 8px;border-top:3px solid #a9a9a9;border-bottom:1px solid #a9a9a9;font-size:0.8em}
@@ -214,8 +214,11 @@ h6 {margin:0 0 20px}
 
 /* 포인트 내역 */
 #point p {text-align:center}
+#point .td_datetime {width:150px}
 
 /* 쪽지 */
+
+/* 스크랩 */
 
 /* pagination */
 .pg {margin-bottom:30px;font-size:0.875em;text-align:center}
