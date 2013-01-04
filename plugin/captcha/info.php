@@ -2,8 +2,8 @@
 include_once("./_common.php");
 
 // prepare an array of wavfiles
-$lc ='/home/tmp/g4s/plugin/captcha/wavs/';
-$wav = $lc.'captcha.wav';
+$wavs_dir = $g4['path'].'/plugin/captcha/wavs/';
+$wav = $wavs_dir.'0.wav';
 
 $fields = join('/',array( 'H8ChunkID', 'VChunkSize', 'H8Format',
                           'H8Subchunk1ID', 'VSubchunk1Size',
