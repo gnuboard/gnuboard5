@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {background:#f5f4ed;font-size:1em}
+body {background:#f5f4ed;font-size:1em} 
 html, body, h1, h2, h3, h4, h5, h6 {margin:0 0 0;padding:0}
 h1, h2, h3, h4, h5, h6 {font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -17,11 +17,13 @@ hr {display:none}
 table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 tfoot td {font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
-th {padding:8px 0;border-top:1px solid #a9a9a9;border-bottom:1px solid #a9a9a9;font-size:0.8em}
+.caption_desc {font-size:0.75em}
+th {padding:12px 0 8px;border-top:3px solid #a9a9a9;border-bottom:1px solid #a9a9a9;font-size:0.8em}
 td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;font-size:0.75em}
+.empty_table {padding:50px 0;text-align:center}
 
 /* 필드셋 */
-fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fff}
+fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fefefe}
 legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#494946;color:#fff}
 fieldset .fieldset_input {padding:3px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
 fieldset .fieldset_input:focus {padding:4px;border:0;background:#494946;color:#fff}
@@ -85,10 +87,10 @@ h6 {margin:0 0 20px}
 #snb ul {margin:0;padding:0;list-style:none}
 
 /* 아웃로그인 */
-.outlogin {margin-bottom:5px;padding:10px 10px 0;width:178px;border:1px solid #dedace;background:#f0f0ed}
+.outlogin {margin-bottom:5px;border:1px solid #dedace}
 .outlogin h2 {margin:0;height:0;overflow:hidden}
 /* 로그인 전 */
-#ol_before {font-size:0.7em}
+#ol_before {padding:10px 10px 0;width:178px;background:#f0f0ed;font-size:0.7em}
 #ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
 #ol_before input:focus {background:#494946;color:#fff}
@@ -104,12 +106,13 @@ h6 {margin:0 0 20px}
 #auto_login_label {position:absolute;top:72px;left:28px;color:#696969;letter-spacing:-0.1em}
 #ol_submit {position:absolute;top:38px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 로그인 후 */
-#ol_after {padding-bottom:10px;font-size:0.75em}
+#ol_after {width:198px;background:#f0f0ed;color:#000;font-size:0.75em}
 #ol_after a {color:#000;text-decoration:none}
-#ol_after header {padding:5px 0 7px;border-bottom:1px solid #ddd;text-align:center}
-#ol_after li a {display:block;position:relative;padding:7px 0 5px}
-#ol_after li span {position:absolute;top:7px;right:0}
-#ol_after footer {padding-top:7px;border-top:1px solid #ddd;text-align:center}
+#ol_after header {padding:10px 0;text-align:center}
+#ol_after ul {padding:5px 0;background:#fff}
+#ol_after li a {display:block;position:relative;padding:7px 10px}
+#ol_after li span {position:absolute;top:7px;right:10px}
+#ol_after footer {padding:7px 0 10px;text-align:center}
 #ol_after footer a {display:inline-block;padding:0 5px}
 
 /* 설문조사 */
