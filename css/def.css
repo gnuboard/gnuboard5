@@ -3,7 +3,7 @@
 /* 초기화 */
 html {overflow-y:scroll}
 body {background:#f5f4ed;font-size:1em}
-html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
+html, body, h1, h2, h3, h4, h5, h6 {margin:0 0 0;padding:0}
 h1, h2, h3, h4, h5, h6 {font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
@@ -12,14 +12,10 @@ form, img {border:0}
 input, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"verdana","dotum"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
+hr {display:none}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
-
-/* 내용 건너뛰기 */
-#to_content a {display:block;position:absolute;top:0;left:0;height:0;text-decoration:none;overflow:hidden}
-#to_content a:focus,
-#to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
 
 /* 그누보드4s 설치 완료 메세지 */
 #install_done {position:absolute;margin-top:-30px;width:100%;height:580px;background:#e7ebee}
@@ -28,9 +24,18 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 #install_done div {position:relative;margin:0 auto;width:700px;background:#000}
 #install_done div span {position:absolute;top:-28px;left:0;width:700px;height:580px;background:url("../img/install_done.jpg")}
 
+/* 내용 건너뛰기 */
+#to_content a {display:block;position:absolute;top:0;left:0;height:0;text-decoration:none;overflow:hidden}
+#to_content a:focus,
+#to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
+
+/* 헤딩 */
+h1 {margin:0 0 30px;font-weight:normal}
+h2 {margin:0 0 20px}
+
 /* 레이아웃 - 상단 */
 #header {z-index:3;position:relative;margin-bottom:30px}
-#header h1 {height:0;overflow:hidden}
+#header h1 {margin:0;height:0;overflow:hidden}
 
 /* 로고 */
 #logo {background:#494946;text-align:center}
@@ -56,7 +61,7 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 
 /* 아웃로그인 */
 .outlogin {margin-bottom:5px;padding:10px 10px 0;width:178px;border:1px solid #b3b2ad;background:#f0f0ed}
-.outlogin h2 {height:0;overflow:hidden}
+.outlogin h2 {margin:0;height:0;overflow:hidden}
 /* 로그인 전 */
 #ol_before {font-size:0.7em}
 #ol_before fieldset {padding:0;border:0}
@@ -85,7 +90,7 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 /* 설문조사 */
 #poll {width:198px;border:1px solid #b3b2ad;background:#fff;font-size:0.75em}
 #poll header {padding:10px 10px 1px;background:#f0f0ed}
-#poll h2 {display:inline-block;font-size:1em}
+#poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
 #poll ul {margin:10px}
 #poll li {margin:7px 0}
@@ -98,9 +103,9 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 
 /* 레이아웃 하단 */
 #footer {z-index:1;position:relative;margin-top:30px;padding:15px 0 20px;border-top:1px solid #ddd;color:#595959;font-size:0.75em}
-#footer h1 {height:0;overflow:hidden}
+#footer h1 {margin:0;height:0;overflow:hidden}
 #footer section {margin-left:50px}
-#footer h2 {width:100px;color:#000;font-size:1em}
+#footer h2 {margin:0;width:100px;color:#000;font-size:1em}
 #footer a {color:#595959;text-decoration:none}
 
 /* 방문자집계 */
@@ -130,8 +135,29 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 #footer p {position:absolute;top:25px;right:50px}
 
 /* ##################################################################### 스킨 및 컨텐츠 */
+/* 기본테이블 */
+table {margin-bottom:20px;width:100%}
+caption {padding:0 0 10px;text-align:left}
+th {padding:8px 0;border-top:1px solid #a9a9a9;border-bottom:1px solid #a9a9a9;font-size:0.8em}
+td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;font-size:0.75em}
+
+/* 폼 테이블 */
+.frm_tbl {}
+
+/* 테이블 항목별 정의 */
+.td_group {width:100px;text-align:center}
+.td_board {width:120px;text-align:center}
+.td_num {width:50px;text-align:center}
+.td_bignum {width:100px;text-align:center}
+.td_mb_id {width:120px;text-align:center}
+.td_nick {width:120px;text-align:center}
+.td_name {width:120px;text-align:left}
+.td_name div {position:relative}
+.td_date {width:60px;text-align:center}
+.td_datetime {width:80px;text-align:center}
 
 /* 현재접속자 */
+#current_connect_tbl .td_name {text-align:center}
 
 /* pagination */
 .pg {margin-bottom:30px;font-size:0.875em;text-align:center}

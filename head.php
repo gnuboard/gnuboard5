@@ -73,5 +73,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
 <!-- 설치 완료 메세지 끝 -->
 <? }*/ ?>
 
+<hr>
+
 <div id="wrapper">
     <? if (!$bo_table) {?><h1><?=$g4['title']?></h1><?}?>
