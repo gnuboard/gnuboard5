@@ -22,7 +22,7 @@ td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;
 
 /* 필드셋 */
 fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fff}
-legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#f0f0ed}
+legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#494946;color:#fff}
 fieldset .fieldset_input {padding:3px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
 fieldset .fieldset_input:focus {padding:4px;border:0;background:#494946;color:#fff}
 fieldset select {padding:2px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
