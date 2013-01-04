@@ -55,7 +55,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? if ($stx) { ?>
         <p>
             <? if ($board_count) { ?>
-            검색된 게시판 리스트 <?=$board_count?>개의 게시판, <?=number_format($total_count)?>개의 게시글, <?=number_format($page)?>/<?=number_format($total_page)?> 페이지
+            검색결과 <span><?=$board_count?></span>개의 게시판, <span><?=number_format($total_count)?></span>개의 게시글, <?=number_format($page)?>/<?=number_format($total_page)?> 페이지
             <? } else { ?>
             <? } ?>
         </p>
@@ -67,26 +67,34 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 if ($stx) {
     if ($board_count) {
 ?>
-<ul>
-    <? if ($onetable) { ?>
-    <li><a href="?<?=$search_query?>&amp;gr_id=<?=$gr_id?>">전체게시판 검색</a>
-    <? } ?>
-    <?=$str_board_list;?>
-</ul>
+<dl class="search_result">
+    <dt>검색어가 들어간 게시물을 포함하고 있는 게시판 목록</dt>
+    <dd>
+        <ul>
+            <? if ($onetable) { ?>
+            <li><a href="?<?=$search_query?>&amp;gr_id=<?=$gr_id?>">전체게시판 검색</a>
+            <? } ?>
+            <?=$str_board_list;?>
+        </ul>
+    </dd>
+</dl>
 <?
     } else {
 ?>
 <p>검색된 자료가 하나도 없습니다.</p>
 <? } } ?>
 
+<hr>
+
+<? if ($stx && $board_count) { ?><dl class="search_result"><? } ?>
 <?
 $k=0;
 for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
-   $comment_href = "";
+    $comment_href = "";
 ?>
-<ul>
-    <li>
-        <a href="./board.php?bo_table=<?=$search_table[$idx]?>&amp;<?=$search_query?>"><?=$bo_subject[$idx]?></a>에서의 검색결과
+    <dt><a href="./board.php?bo_table=<?=$search_table[$idx]?>&amp;<?=$search_query?>"><?=$bo_subject[$idx]?></a>에서의 검색결과</dt>
+    <dd>
+        <ul>
         <?
         for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
             if ($list[$idx][$i][wr_is_comment]) 
@@ -95,19 +103,18 @@ for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
                 $comment_href = "#c_".$list[$idx][$i][wr_id];
             }
         ?>
-         <ul>
             <li>
                 <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><?=$list[$idx][$i][subject]?></a>
                 <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
                 <p><?=$list[$idx][$i][content]?></p>
-                <?=$list[$idx][$i][wr_datetime]?>
-                <?=$list[$idx][$i][name]?>
+                <span><?=$list[$idx][$i][name]?></span>
+                <span><?=$list[$idx][$i][wr_datetime]?></span>
             </li>
-        </ul>
         <? } ?>
-    </li>
-</ul>
+        </ul>
+    </dd>
 <? } ?>
+<? if ($stx && $board_count) { ?></dl><? } ?>
 
 <div class="pg">
     <?=$write_pages?>
