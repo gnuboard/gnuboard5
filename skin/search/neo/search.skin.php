@@ -52,6 +52,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </script>
         <input type="radio" id="sop_or" name="sop" value="or" <?=($sop == "or") ? "checked" : "";?>> <label for="sop_or">OR</label>
         <input type="radio" id="sop_and" name="sop" value="and" <?=($sop == "and") ? "checked" : "";?>> <label for="sop_and">AND</label>
+        <? if ($stx) { ?>
+        <p>
+            <? if ($board_count) { ?>
+            <? } else { ?>
+            <? } ?>
+        </p>
+        <? } ?>
     </fieldset>
 </form>
 
@@ -59,18 +66,18 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 if ($stx) {
     echo "검색된 게시판 리스트 (".$board_count."개의 게시판, ".number_format($total_count)."개의 게시글, ".number_format($page)."/".number_format($total_page)." 페이지)";
     if ($board_count) {
-        echo "<ul>";
-        if ($onetable)
-            echo "<li><a href=\"?".$search_query."&amp;gr_id=".$gr_id."\">전체게시판 검색</a>";
-            echo $str_board_list;
-        echo "</ul>";
-    }
-    else
-    {
-        echo "<p>검색된 자료가 하나도 없습니다.</p>";
-    }
-}
 ?>
+<ul>
+    <? if ($onetable) { ?>
+    <li><a href="?<?=$search_query?>&amp;gr_id=<?=$gr_id?>">전체게시판 검색</a>
+    <? } ?>
+    <?=$str_board_list;?>
+</ul>
+<?
+    } else {
+?>
+<p>검색된 자료가 하나도 없습니다.</p>
+<? } } ?>
 
 <?
 $k=0;
