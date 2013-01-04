@@ -26,6 +26,7 @@ legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#f0f0
 fieldset .fieldset_input {padding:3px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
 fieldset .fieldset_input:focus {padding:4px;border:0;background:#494946;color:#fff}
 fieldset select {padding:2px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
+fieldset p {margin:0}
 fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
 fieldset button,
 .fieldset_submit {padding:0 15px;height:23px;border:0;background:#494946;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
