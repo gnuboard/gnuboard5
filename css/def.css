@@ -198,6 +198,13 @@ h6 {margin:0 0 20px}
 .search_result a span {font-size:1em}
 .search_result p {margin:5px 0;padding:0;font-size:0.75em}
 
+/* 새창 공통 */
+.new_win h1 {padding:10px;background:#494946;color:#fff;font-size:1.2em}
+.new_win table {margin:0 auto 30px;width:90%}
+
+/* 포인트 내역 */
+#point p {text-align:center}
+
 /* pagination */
 .pg {margin-bottom:30px;font-size:0.875em;text-align:center}
 .pg_page, .pg_current {display:inline-block;position:relative;margin-left:-6px;padding:0 10px;height:25px;border:1px solid #ddd;background:#fff;line-height:1.9em;vertical-align:middle}

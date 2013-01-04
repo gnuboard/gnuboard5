@@ -37,6 +37,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 }
 ?>
 
+<section id="point" class="new_win">
 <h1>포인트내역</h1>
 
 <table>
@@ -96,14 +97,16 @@ else {
 </tbody>
 </table>
 
+<p>보유 포인트 <?=number_format($member[mb_point])?>점</p>
+
 <div class="pg">
     <?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?>
 </div>
 
-<p>보유 포인트 <?=number_format($member[mb_point])?>점</p>
 <div class="btn_window">
     <a href="javascript:window.close();">창닫기</a>
 </div>
+</section>
 
 <?
 include_once($g4['path'].'/tail.sub.php');
