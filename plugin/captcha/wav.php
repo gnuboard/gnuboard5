@@ -42,8 +42,8 @@ function joinwavs($wavs)
                               'H8Subchunk1ID', 'VSubchunk1Size',
                               'vAudioFormat', 'vNumChannels', 'VSampleRate',
                               'VByteRate', 'vBlockAlign', 'vBitsPerSample' ));
-
     $data = '';
+    $info = array();
     foreach($wavs as $wav){
         $fp     = fopen($wav,'rb');
         $header = fread($fp,36);
@@ -65,8 +65,20 @@ function joinwavs($wavs)
         $data .= fread($fp,$size);
     }
 
-    return $header.pack('V',strlen($data)).$data;
+    return ''
+        .pack('a4', 'RIFF')
+        .pack('V', strlen($data) + 36)
+        .pack('a4', 'WAVE')
+        .pack('a4', 'fmt ')
+        .pack('V', $info['Subchunk1Size'])  // 16
+        .pack('v', $info['AudioFormat'])    // 1
+        .pack('v', $info['NumChannels'])    // 1
+        .pack('V', $info['SampleRate'])     // 8000
+        .pack('V', $info['ByteRate'])       // 8000
+        .pack('v', $info['BlockAlign'])     // 1
+        .pack('v', $info['BitsPerSample'])  // 8
+        .pack('a4', 'data')
+        .pack('V', strlen($data))
+        .$data;
 }
-
-exit;
 ?>
