@@ -9,7 +9,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 header ul, nav ul {margin:0;padding:0;list-style:none}
 table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
 form, img {border:0}
-input, img {vertical-align:middle}
+label, input, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"verdana","dotum"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
 hr {display:none}
@@ -30,8 +30,12 @@ hr {display:none}
 #to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
 
 /* 헤딩 */
-h1 {margin:0 0 30px;font-size:1.5em}
+h1 {margin:0 0 30px;font-size:1.6em}
 h2 {margin:0 0 20px}
+h3 {margin:0 0 20px}
+h4 {margin:0 0 20px}
+h5 {margin:0 0 20px}
+h6 {margin:0 0 20px}
 
 /* 레이아웃 - 상단 */
 #header {z-index:3;position:relative;margin-bottom:30px}
@@ -51,7 +55,7 @@ h2 {margin:0 0 20px}
 
 /* 전체검색 */
 #hdsch {position:absolute;top:90px;right:50px;margin:0;padding:0;border:1px solid #ddd;background:#f1f6f7}
-#hdsch legend {position:absolute;top:-1000px;width:0;height:0;overflow:hidden}
+#hdsch legend {position:absolute;padding:0;width:0;height:0;border:0;overflow:hidden}
 #hdsch_stx {margin:5px 0 5px 5px;height:16px;width:166px;border:0;background:transparent}
 #hdsch_stx:focus {background:#434f54;color:#fff}
 #hdsch_submit {position:relative;margin-left:-5px}
@@ -64,14 +68,14 @@ h2 {margin:0 0 20px}
 .outlogin h2 {margin:0;height:0;overflow:hidden}
 /* 로그인 전 */
 #ol_before {font-size:0.7em}
-#ol_before fieldset {padding:0;border:0}
-#ol_before legend {height:0;overflow:hidden}
+#ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
+#ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
 #ol_before input:focus {background:#434f54;color:#fff}
 #ol_before ul {position:relative;top:0;left:90px;margin:10px 0;width:90px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-right:5px}
 #ol_before a {color:#696969;text-decoration:none;letter-spacing:-0.1em}
-#ol_mb_id{display:block;margin-bottom:3px;padding:0 5px;width:163px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
+#ol_mb_id{display:block;margin-bottom:3px;padding:0 5px;width:165px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
 #ol_mb_id_label {z-index:2;position:absolute;top:17px;left:20px;color:#696969}
 #ol_mb_pw {display:block;padding:0 5px;width:100px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
 #ol_mb_pw_label {z-index:2;position:absolute;top:45px;left:20px;color:#696969}
@@ -143,6 +147,23 @@ td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;
 
 /* 폼 테이블 */
 .frm_tbl {}
+.frm_tbl textarea,
+.frm_tbl input,
+.frm_tbl select {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
+.frm_tbl textarea,
+.frm_tbl input {padding:3px}
+.frm_tbl textarea:focus,
+.frm_tbl input:focus {padding:4px;border:0;background:#434f54;color:#fff}
+.frm_tbl textarea {width:90%}
+.frm_tbl select {padding:2px}
+
+/* 필드셋 */
+legend {margin-left:0;padding:7px 10px;border:1px solid #ced9de;background:#f6f9fa}
+fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
+fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
+fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
+fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
+.readonly {background:#ff3061}
 
 /* 테이블 항목별 정의 */
 .td_group {width:100px;text-align:center}
