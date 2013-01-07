@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- 검색 -->
 <form name="fnew" method="get">
 <fieldset>
-    <legend>최근게시물 상세검색</legend>
+    <legend>상세검색</legend>
     <?=$group_select?>
     <select id="view" name="view" onchange="select_change()" title="검색종류">
         <option value="">전체게시물
