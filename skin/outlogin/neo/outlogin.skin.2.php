@@ -7,7 +7,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <header>
         <h2>나의 회원정보</h2>
         <strong><?=$nick?></strong>님
-        <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=$g4['admin_path']?>/">관리자</a><? } ?>
+        <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=$g4['admin_path']?>/" id="ol_admin">관리자</a><? } ?>
     </header>
     <ul>
         <li><a href="javascript:win_memo();">안 읽은 쪽지 <span><?=$memo_not_read?>통</span></a></li>
