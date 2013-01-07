@@ -2,53 +2,62 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<h1>우편번호검색</h1>
+<section id="post_num" class="new_win">
+    <h1>우편번호검색</h1>
 
-<form name="fzip" method="get" autocomplete="off">
-<input type="hidden" name="frm_name"  value="<?=$frm_name?>">
-<input type="hidden" name="frm_zip1"  value="<?=$frm_zip1?>">
-<input type="hidden" name="frm_zip2"  value="<?=$frm_zip2?>">
-<input type="hidden" name="frm_addr1" value="<?=$frm_addr1?>">
-<input type="hidden" name="frm_addr2" value="<?=$frm_addr2?>">
+    <form name="fzip" method="get" autocomplete="off">
+    <input type="hidden" name="frm_name"  value="<?=$frm_name?>">
+    <input type="hidden" name="frm_zip1"  value="<?=$frm_zip1?>">
+    <input type="hidden" name="frm_zip2"  value="<?=$frm_zip2?>">
+    <input type="hidden" name="frm_addr1" value="<?=$frm_addr1?>">
+    <input type="hidden" name="frm_addr2" value="<?=$frm_addr2?>">
 
-<fieldset>
-    <legend>우편번호 검색</legend>
-    <label for="addr1">동/읍/면/리 검색</label>
-    <input type="text" id="addr1" name="addr1" value="<?=$addr1?>" required minlength=2>
-    <input type="submit" value="검색">
-</fieldset>
+    <fieldset>
+        <legend>우편번호 검색</legend>
+        <label for="addr1">동/읍/면/리 검색</label>
+        <input type="text" id="addr1" name="addr1" class="fieldset_input" value="<?=$addr1?>" required minlength=2>
+        <input type="submit" class="fieldset_submit" value="검색">
+    </fieldset>
 
-<!-- 검색결과 여기서부터 -->
+    <!-- 검색결과 여기서부터 -->
 
-<script>
-document.fzip.addr1.focus();
-</script>
+    <script>
+    document.fzip.addr1.focus();
+    </script>
 
 
-<? if ($search_count > 0) { ?>
-<p>총 <?=$search_count?>건 가나다순 정렬</p>
+    <? if ($search_count > 0) { ?>
+    <dl>
+        <dt>총 <?=$search_count?>건 가나다순 정렬</dt>
+        <dd>
+            <ul>
+                <? for ($i=0; $i<count($list); $i++) { ?>
+                <li><a href='javascript:;' onclick="find_zip('<?=$list[$i][zip1]?>', '<?=$list[$i][zip2]?>', '<?=$list[$i][addr]?>');"><?=$list[$i][zip1]?>-<?=$list[$i][zip2]?> <?=$list[$i][addr]?> <?=$list[$i][bunji]?></a></li>
+                <? } ?>
+            </ul>
+        </dd>
+    </dl>
 
-<ul>
-    <? for ($i=0; $i<count($list); $i++) { ?>
-    <li><a href='javascript:;' onclick="find_zip('<?=$list[$i][zip1]?>', '<?=$list[$i][zip2]?>', '<?=$list[$i][addr]?>');"><?=$list[$i][zip1]?>-<?=$list[$i][zip2]?> <?=$list[$i][addr]?> <?=$list[$i][bunji]?></a></li>
+    <p>검색결과가 끝났습니다.</p>
+
+    <div class="btn_window">
+        <a href="javascript:window.close();">창닫기</a>
+    </div>
+
+    <script>
+    function find_zip(zip1, zip2, addr1)
+    {
+        var of = opener.document.<?=$frm_name?>;
+
+        of.<?=$frm_zip1?>.value  = zip1;
+        of.<?=$frm_zip2?>.value  = zip2;
+
+        of.<?=$frm_addr1?>.value = addr1;
+
+        of.<?=$frm_addr2?>.focus();
+        window.close();
+        return false;
+    }
+    </script>
     <? } ?>
-</ul>
-
-<p>검색결과가 끝났습니다.</p>
-
-<script>
-function find_zip(zip1, zip2, addr1)
-{
-    var of = opener.document.<?=$frm_name?>;
-
-    of.<?=$frm_zip1?>.value  = zip1;
-    of.<?=$frm_zip2?>.value  = zip2;
-
-    of.<?=$frm_addr1?>.value = addr1;
-
-    of.<?=$frm_addr2?>.focus();
-    window.close();
-    return false;
-}
-</script>
-<? } ?>
+</section>

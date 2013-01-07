@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 //if (!$stx) alert("검색어가 없습니다."); 
 
-$g4['title'] = '검색 : '.$stx;
+$g4['title'] = "검색어 &quot;".$stx."&quot; 검색결과";
 include_once('./_head.php');
 
 if ($stx)
@@ -221,7 +221,7 @@ if ($stx)
     echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
 }
 
-$group_select = '<select id="gr_id" name="gr_id" class="select"><option value="">전체 분류';
+$group_select = '<select id="gr_id" name="gr_id" class="select" title="그룹선택"><option value="">전체 분류';
 $sql = " select gr_id, gr_subject from {$g4[group_table]} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
