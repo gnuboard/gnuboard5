@@ -24,14 +24,14 @@ td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;
 
 /* 필드셋 */
 fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fefefe}
-legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#494946;color:#fff}
+legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#333;color:#fff}
 fieldset .fieldset_input {padding:3px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
-fieldset .fieldset_input:focus {padding:4px;border:0;background:#494946;color:#fff}
+fieldset .fieldset_input:focus {padding:4px;border:0;background:#333;color:#fff}
 fieldset select {padding:2px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
 fieldset p {margin:0}
 fieldset .span_highlight {color:#ff3061}
 fieldset button,
-.fieldset_submit {padding:0 15px;height:23px;border:0;background:#494946;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
+.fieldset_submit {padding:0 15px;height:23px;border:0;background:#333;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
 fieldset button:focus,
 .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle}
 .readonly {background:#ff3061}
@@ -64,7 +64,7 @@ h6 {margin:0 0 20px}
 #header h1 {margin:0;height:0;overflow:hidden}
 
 /* 로고 */
-#logo {background:#494946;text-align:center}
+#logo {background:#333;text-align:center}
 #logo a {display:inline-block;padding:20px 30px}
 
 /* 상단메뉴 */
@@ -93,7 +93,7 @@ h6 {margin:0 0 20px}
 #ol_before {padding:10px 10px 0;width:178px;background:#f0f0ed;font-size:0.7em}
 #ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
-#ol_before input:focus {background:#494946;color:#fff}
+#ol_before input:focus {background:#333;color:#fff}
 #ol_before ul {position:relative;top:0;left:90px;margin:10px 0;width:90px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-right:5px}
@@ -123,7 +123,7 @@ h6 {margin:0 0 20px}
 #poll ul {margin:10px}
 #poll li {margin:7px 0}
 #poll footer {padding:10px;border-top:1px solid #efeada;text-align:center}
-#poll footer input {padding:0 15px;height:24px;border:0;background:#494946;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
+#poll footer input {padding:0 15px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
 
 /* 레이아웃 중간 */
@@ -203,7 +203,7 @@ h6 {margin:0 0 20px}
 .search_result p {margin:5px 0;padding:0;font-size:0.75em}
 
 /* 새창 공통 */
-.new_win h1 {padding:10px 30px;background:#494946;color:#fff;font-size:1.2em}
+.new_win h1 {padding:10px 30px;background:#333;color:#fff;font-size:1.2em}
 .new_win table {margin:0 auto 30px;width:90%}
 .new_win fieldset {margin:0 auto 30px;width:90%}
 .new_win_ul {margin:-30px 0 20px 0;padding:0 0 0 30px;border-bottom:1px solid #ddd;background:#fff;font-size:0.8em;list-style:none;zoom:1}
