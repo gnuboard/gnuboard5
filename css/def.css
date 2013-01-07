@@ -125,8 +125,8 @@ h6 {margin:0 0 20px}
 #poll footer input {padding:0 15px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */
-#poll_result section {margin:0 auto;padding:10px;width:90%}
-#poll_result h2 {font-size:1em}
+#poll_result section {margin:0 auto 20px;;padding:10px;width:90%}
+#poll_result h2 {margin-top:10px;font-size:1em}
 #poll_result_list {border:1px solid #ddd;background:#f7f7f7}
 #poll_result_list h2 {padding:10px 0 0;text-align:center}
 #poll_result_list dl,
@@ -137,6 +137,18 @@ h6 {margin:0 0 20px}
 #poll_result_list p span {position:absolute;top:5px;right:5%}
 .poll_result_graph {position:relative;margin-right:5%;height:10px;background:#ddd}
 .poll_result_graph span {position:absolute;top:0;left:0;height:100%;background:#ff7200}
+#poll_result_cmt {border:1px solid #ddd;background:#f7f7f7}
+#poll_result_cmt h2 {text-align:center}
+#poll_result_cmt article {margin-bottom:15px;border-bottom:1px solid #e7e7e7}
+#poll_result_cmt h1 {display:inline-block;margin:0 10px 0 0;padding:0;font-size:0.875em}
+#poll_result_cmt h1 a {color:#000;text-decoration:none}
+#poll_result_cmt .poll_datetime,
+#poll_result_cmt .poll_del {font-size:0.75em}
+#poll_result_cmt p {padding:3px 0;font-size:0.875em}
+#poll_result_cmt fieldset {border:0;text-align:center}
+#poll_result_cmt legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 10px;border-bottom:1px solid #dedede;text-align:left}
+#poll_result_another a {display:block;padding:5px 0}
 
 /* 레이아웃 중간 */
 #wrapper {z-index:2;clear:both;position:relative;margin-right:270px;padding-left:50px;min-height:520px;height:auto !important;height:520px}

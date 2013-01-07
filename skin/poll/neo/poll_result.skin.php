@@ -29,26 +29,41 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
 
     <? if ($is_etc) { ?>
-    <section id="poll_result_etc">
-        <h2>설문에 대한 기타의견</h2>
+    <section id="poll_result_cmt">
+        <h2>이 설문에 대한 기타의견</h2>
+
+        <? for ($i=0; $i<count($list2); $i++) { ?>
+        <article>
+            <header>
+                <h1><?=$list2[$i][name]?>님의 의견</h1>
+                <span class="poll_datetime"><?=$list2[$i][datetime]?></span>
+                <span class="poll_del"><? if ($list2[$i][del]) { echo $list2[$i][del]."삭제</a>"; } ?></span>
+            </header>
+            <p>
+                <?=$list2[$i][idea]?>
+            </p>
+        </article>
+        <? } ?>
 
         <? if ($member[mb_level] >= $po[po_level]) { ?>
         <form name="fpollresult" method="post" onsubmit="return fpollresult_submit(this);" autocomplete="off">
         <input type=hidden name="po_id" value="<?=$po_id?>">
         <input type=hidden name="w" value="">
         <input type=hidden name="skin_dir" value="<?=$skin_dir?>">
-            <fieldset>
-                <legend>의견남기기</legend>
-                <p><?=$po_etc?></p>
-                <? if ($member[mb_id]) { ?>
-                    <input type="hidden" name="pc_name" value="<?=cut_str($member[mb_nick],255)?>">
-                    <b><?=$member[mb_nick]?></b>
-                <? } else { ?>
-                    <label for="pc_name">이름</label> <input type='text' id="pc_name" name="pc_name" class="required" size="10" required>
-                <? } ?>
-                <label for="pc_idea">의견</label> <input type="text" id="pc_idea" name="pc_idea" class="required" size="55" required maxlength="100">
-                <input type="submit" value="의견남기기">
-            </fieldset>
+        <fieldset>
+            <legend>의견남기기</legend>
+            <p><?=$po_etc?></p>
+            <?
+            $comment_size = "";
+            if ($member[mb_id]) { $comment_size = 52; ?>
+                <input type="hidden" name="pc_name" value="<?=cut_str($member[mb_nick],255)?>">
+            <? } else { $comment_size = 32; ?>
+                <label for="pc_name">이름</label>
+                <input type='text' id="pc_name" name="pc_name" class="fieldset_input required" size="10" required>
+            <? } ?>
+            <input type="text" id="pc_idea" name="pc_idea" class="fieldset_input required" size="<?=$comment_size?>" required maxlength="100" title="의견">
+            <input type="submit" class="fieldset_submit" value="의견남기기">
+        </fieldset>
         </form>
 
         <script>
@@ -58,19 +73,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             return true;
         }
         </script>
-        <? } ?>
-
-        <? for ($i=0; $i<count($list2); $i++) { ?>
-        <article>
-            <header>
-                <h1><?=$list2[$i][name]?>님의 의견</h1>
-                <?=$list2[$i][datetime]?>
-            </header>
-            <p>
-                <?=$list2[$i][idea]?>
-            </p>
-            <? if ($list2[$i][del]) { echo $list2[$i][del]."삭제</a>"; } ?>
-        </article>
         <? } ?>
 
     </section>
