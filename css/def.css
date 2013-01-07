@@ -235,9 +235,10 @@ h6 {margin:0 0 20px}
 
 /* 회원가입 약관 */
 #fregister {padding:20px;background:#f5f5f2}
+#fregister h2 {padding-top:10px;text-align:center}
 #fregister_term {float:left;width:49%}
 #fregister_private {float:right;width:49%}
-#fregister textarea {display:block;margin-bottom:10px;width:95%;height:200px;border:1px solid #ddd}
+#fregister textarea {display:block;margin-bottom:10px;width:99%;height:200px;border:1px solid #ddd}
 #fregister label {display:inline-block;margin-right:10px}
 
 /* pagination */
