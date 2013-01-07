@@ -2,6 +2,78 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
+<? if ($stx) { ?>
+<? if ($board_count) { ?>
+<dl id="sch_result_hd">
+    <dt>검색어 <strong><?=$stx?></strong>에 대한 결과입니다.</dt>
+    <dd>
+        <ul>
+            <li><span class="span_highlight"><?=$board_count?></span>개의 게시판</li>
+            <li><span class="span_highlight"><?=number_format($total_count)?></span>개의 게시글</li>
+            <li>현재 <?=number_format($page)?>/<?=number_format($total_page)?> 페이지 열람 중</li>
+        </ul>
+    </dd>
+</dl>
+<? } ?>
+<? } ?>
+
+<? 
+if ($stx) {
+    if ($board_count) {
+?>
+<dl class="sch_result">
+    <dt>검색결과가 있는 게시판 목록</dt>
+    <dd>
+        <ul>
+            <? if ($onetable) { ?>
+            <li><a href="?<?=$search_query?>&amp;gr_id=<?=$gr_id?>">전체게시판 검색</a>
+            <? } ?>
+            <?=$str_board_list;?>
+        </ul>
+    </dd>
+</dl>
+<?
+    } else {
+?>
+<p>검색된 자료가 하나도 없습니다.</p>
+<? } } ?>
+
+<hr>
+
+<? if ($stx && $board_count) { ?><dl class="sch_result"><? } ?>
+<?
+$k=0;
+for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
+    $comment_href = "";
+?>
+    <dt><a href="./board.php?bo_table=<?=$search_table[$idx]?>&amp;<?=$search_query?>"><?=$bo_subject[$idx]?></a>에서의 검색결과</dt>
+    <dd>
+        <ul>
+        <?
+        for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
+            if ($list[$idx][$i][wr_is_comment]) 
+            {
+                echo "댓글 ";
+                $comment_href = "#c_".$list[$idx][$i][wr_id];
+            }
+        ?>
+            <li>
+                <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><?=$list[$idx][$i][subject]?></a>
+                <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
+                <p><?=$list[$idx][$i][content]?></p>
+                <div class="sch_sideview"><?=$list[$idx][$i][name]?></div>
+                <span class="sch_datetime"><?=$list[$idx][$i][wr_datetime]?></span>
+            </li>
+        <? } ?>
+        </ul>
+    </dd>
+<? } ?>
+<? if ($stx && $board_count) { ?></dl><? } ?>
+
+<div class="pg">
+    <?=$write_pages?>
+</div>
+
 <form name="fsearch" method="get" onsubmit="return fsearch_submit(this);">
 <input type="hidden" name="srows" value="<?=$srows?>">
     <fieldset>
@@ -52,70 +124,5 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </script>
         <input type="radio" id="sop_or" name="sop" value="or" <?=($sop == "or") ? "checked" : "";?>> <label for="sop_or">OR</label>
         <input type="radio" id="sop_and" name="sop" value="and" <?=($sop == "and") ? "checked" : "";?>> <label for="sop_and">AND</label>
-        <? if ($stx) { ?>
-        <p>
-            <? if ($board_count) { ?>
-            검색결과 <span class="span_highlight"><?=$board_count?></span>개의 게시판, <span class="span_highlight"><?=number_format($total_count)?></span>개의 게시글, <?=number_format($page)?>/<?=number_format($total_page)?> 페이지
-            <? } else { ?>
-            <? } ?>
-        </p>
-        <? } ?>
     </fieldset>
 </form>
-
-<? 
-if ($stx) {
-    if ($board_count) {
-?>
-<dl class="search_result">
-    <dt>검색어가 들어간 게시물을 포함하고 있는 게시판 목록</dt>
-    <dd>
-        <ul>
-            <? if ($onetable) { ?>
-            <li><a href="?<?=$search_query?>&amp;gr_id=<?=$gr_id?>">전체게시판 검색</a>
-            <? } ?>
-            <?=$str_board_list;?>
-        </ul>
-    </dd>
-</dl>
-<?
-    } else {
-?>
-<p>검색된 자료가 하나도 없습니다.</p>
-<? } } ?>
-
-<hr>
-
-<? if ($stx && $board_count) { ?><dl class="search_result"><? } ?>
-<?
-$k=0;
-for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
-    $comment_href = "";
-?>
-    <dt><a href="./board.php?bo_table=<?=$search_table[$idx]?>&amp;<?=$search_query?>"><?=$bo_subject[$idx]?></a>에서의 검색결과</dt>
-    <dd>
-        <ul>
-        <?
-        for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
-            if ($list[$idx][$i][wr_is_comment]) 
-            {
-                echo "댓글 ";
-                $comment_href = "#c_".$list[$idx][$i][wr_id];
-            }
-        ?>
-            <li>
-                <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><?=$list[$idx][$i][subject]?></a>
-                <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
-                <p><?=$list[$idx][$i][content]?></p>
-                <span><?=$list[$idx][$i][name]?></span>
-                <span><?=$list[$idx][$i][wr_datetime]?></span>
-            </li>
-        <? } ?>
-        </ul>
-    </dd>
-<? } ?>
-<? if ($stx && $board_count) { ?></dl><? } ?>
-
-<div class="pg">
-    <?=$write_pages?>
-</div>

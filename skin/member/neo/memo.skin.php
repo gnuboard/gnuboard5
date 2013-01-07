@@ -2,8 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<section id="memo_list" class="new_win">
-    <h1><?= ($kind == 'recv') ? "받은" : "보낸";?> 쪽지함</h1>
+<div id="memo_list" class="new_win">
+    <h1><?=$g4['title']?></h1>
 
     <ul class="new_win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
@@ -40,4 +40,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <div class="btn_window">
         <a href="javascript:window.close();">창닫기</a>
     </div>
-</section>
+</div>

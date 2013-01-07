@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 //if (!$stx) alert("검색어가 없습니다."); 
 
-$g4['title'] = "검색어 &quot;".$stx."&quot; 검색결과";
+$g4['title'] = "전체검색 결과";
 include_once('./_head.php');
 
 if ($stx)
