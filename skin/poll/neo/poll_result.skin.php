@@ -5,28 +5,32 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <div id="poll_result" class="new_win">
     <h1><?=$g4['title']?></h1>
 
-    <section>
+    <section id="poll_result_list">
         <h2><?=$po_subject?> 결과</h2>
-        <span>전체 <?=$nf_total_po_cnt?>표</span>
-
-        <ol>
-        <? for ($i=1; $i<=count($list); $i++) { ?>
-            <li>
-                <p>
-                    <?=$list[$i][content]?>
-                    <span><?=$list[$i][cnt]?>표 <?=number_format($list[$i][rate], 1)?>%</span>
-                </p>
-                <div>
-                    <span></span>
-                </div>
-            </li>
-        <? } ?>
-        </ol>
+        
+        <dl>
+            <dt><span>전체 <?=$nf_total_po_cnt?>표</span></dt>
+            <dd>
+                <ol>
+                <? for ($i=1; $i<=count($list); $i++) { ?>
+                    <li>
+                        <p>
+                            <?=$list[$i][content]?>
+                            <span><?=$list[$i][cnt]?>표 <?=number_format($list[$i][rate], 1)?>%</span>
+                        </p>
+                        <div class="poll_result_graph">
+                            <span style="width:<?=number_format($list[$i][rate], 1)?>%"></span>
+                        </div>
+                    </li>
+                <? } ?>
+                </ol>
+            </dd>
+        </dl>
     </section>
 
     <? if ($is_etc) { ?>
-    <section>
-        <h2>의견</h2>
+    <section id="poll_result_etc">
+        <h2>설문에 대한 기타의견</h2>
 
         <? if ($member[mb_level] >= $po[po_level]) { ?>
         <form name="fpollresult" method="post" onsubmit="return fpollresult_submit(this);" autocomplete="off">
@@ -40,9 +44,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                     <input type="hidden" name="pc_name" value="<?=cut_str($member[mb_nick],255)?>">
                     <b><?=$member[mb_nick]?></b>
                 <? } else { ?>
-                    <label for="pc_name">이름</label> <input type='text' id="pc_name" name="pc_name" size="10" required>
+                    <label for="pc_name">이름</label> <input type='text' id="pc_name" name="pc_name" class="required" size="10" required>
                 <? } ?>
-                <label for="pc_idea">의견</label> <input type="text" id="pc_idea" name="pc_idea" size="55" required maxlength="100">
+                <label for="pc_idea">의견</label> <input type="text" id="pc_idea" name="pc_idea" class="required" size="55" required maxlength="100">
                 <input type="submit" value="의견남기기">
             </fieldset>
         </form>
@@ -72,7 +76,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
     <? } ?>
 
-    <section>
+    <section id="poll_result_another">
         <h2>다른 투표 결과 보기</h2>
         <ul>
         <? for ($i=0; $i<count($list3); $i++) { ?><li><a href="./poll_result.php?po_id=<?=$list3[$i][po_id]?>&amp;skin_dir=<?=$skin_dir?>">[<?=$list3[$i][date]?>] <?=$list3[$i][subject]?></a></li><? } ?>

@@ -124,6 +124,19 @@ h6 {margin:0 0 20px}
 #poll footer {padding:10px;border-top:1px solid #efeada;text-align:center}
 #poll footer input {padding:0 15px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
+/* 설문조사 결과 (새창) */
+#poll_result section {margin:0 auto;padding:10px;width:90%}
+#poll_result h2 {font-size:1em}
+#poll_result_list {border:1px solid #ddd;background:#f7f7f7}
+#poll_result_list h2 {padding:10px 0 0;text-align:center}
+#poll_result_list dl,
+#poll_result_list dt,
+#poll_result_list dd {margin:0;padding:0}
+#poll_result_list dt {text-align:center}
+#poll_result_list p {position:relative;margin-bottom:0}
+#poll_result_list p span {position:absolute;top:5px;right:5%}
+.poll_result_graph {position:relative;margin-right:5%;height:10px;background:#ddd}
+.poll_result_graph span {position:absolute;top:0;left:0;height:100%;background:#ff7200}
 
 /* 레이아웃 중간 */
 #wrapper {z-index:2;clear:both;position:relative;margin-right:270px;padding-left:50px;min-height:520px;height:auto !important;height:520px}
@@ -208,6 +221,7 @@ h6 {margin:0 0 20px}
 
 /* 새창 공통 */
 .new_win h1 {padding:10px 30px;background:#333;color:#fff;font-size:1.2em}
+.new_win article h1 {background:transparent;color:#000}
 .new_win table {margin:0 auto 30px;width:90%}
 .new_win fieldset {margin:0 auto 30px;width:90%}
 .new_win_ul {margin:-30px 0 20px 0;padding:0 0 0 30px;border-bottom:1px solid #ddd;background:#fff;font-size:0.8em;list-style:none;zoom:1}
