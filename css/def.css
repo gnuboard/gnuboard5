@@ -230,6 +230,13 @@ h6 {margin:0 0 20px}
 #post_num li a {display:block;padding:5px 0;font-size:0.8em}
 #post_num p {margin:0 auto 30px;width:90%}
 
+/* 회원가입 약관 */
+#fregister {padding:20px;background:#f5f5f2}
+#fregister_term {float:left;width:49%}
+#fregister_private {float:right;width:49%}
+#fregister textarea {display:block;margin-bottom:10px;width:95%;height:200px;border:1px solid #ddd}
+#fregister label {display:inline-block;margin-right:10px}
+
 /* pagination */
 .pg {margin-bottom:30px;font-size:0.875em;text-align:center}
 .pg_page, .pg_current {display:inline-block;position:relative;margin-left:-6px;padding:0 10px;height:25px;border:1px solid #ddd;background:#fff;line-height:1.9em;vertical-align:middle}
