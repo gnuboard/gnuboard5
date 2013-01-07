@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {background:#f5f4ed;font-size:1em} 
+body {background:#fff;font-size:1em} 
 html, body, h1, h2, h3, h4, h5, h6 {margin:0 0 0;padding:0}
 h1, h2, h3, h4, h5, h6 {font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -68,10 +68,10 @@ h6 {margin:0 0 20px}
 #logo a {display:inline-block;padding:20px 30px}
 
 /* 상단메뉴 */
-#tnb {padding-left:50px;border-bottom:1px solid #ddd;background:#fff;zoom:1}
+#tnb {padding-left:50px;border-bottom:1px solid #ddd;background:#f5f4ed;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin-left:-1px}
-#tnb a {display:block;padding:20px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
+#tnb a {display:block;padding:20px;border-right:1px solid #e9e9e9;border-left:1px solid #e9e9e9;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
 #tnb a:hover,
 #tnb a:focus {background:#faf9f5}
 
