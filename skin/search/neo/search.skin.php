@@ -67,7 +67,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 if ($stx) {
     if ($board_count) {
 ?>
-<dl class="search_result">
+<dl class="sch_result">
     <dt>검색어가 들어간 게시물을 포함하고 있는 게시판 목록</dt>
     <dd>
         <ul>
@@ -86,7 +86,7 @@ if ($stx) {
 
 <hr>
 
-<? if ($stx && $board_count) { ?><dl class="search_result"><? } ?>
+<? if ($stx && $board_count) { ?><dl class="sch_result"><? } ?>
 <?
 $k=0;
 for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
@@ -107,8 +107,8 @@ for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
                 <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><?=$list[$idx][$i][subject]?></a>
                 <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
                 <p><?=$list[$idx][$i][content]?></p>
-                <span><?=$list[$idx][$i][name]?></span>
-                <span><?=$list[$idx][$i][wr_datetime]?></span>
+                <div class="sch_sideview"><?=$list[$idx][$i][name]?></div>
+                <span class="sch_datetime"><?=$list[$idx][$i][wr_datetime]?></span>
             </li>
         <? } ?>
         </ul>

@@ -192,15 +192,14 @@ h6 {margin:0 0 20px}
 #current_connect_tbl .td_name {text-align:center}
 
 /* 전체검색 */
-.search_result {}
-.search_result dt {font-weight:bold}
-.search_result dd {margin-bottom:30px}
-.search_result ul {padding:0}
-.search_result li {padding:10px 0;border-bottom:1px solid #ddd}
-.search_result li span {font-size:0.75em}
-.search_result li span span {font-size:1em}
-.search_result a span {font-size:1em}
-.search_result p {margin:5px 0;padding:0;font-size:0.75em}
+.sch_result {}
+.sch_result dt {font-weight:bold}
+.sch_result dd {margin-bottom:30px}
+.sch_result ul {padding:0}
+.sch_result li {padding:10px 0;border-bottom:1px solid #ddd}
+.sch_result p {margin:5px 0;padding:0;font-size:0.75em}
+.sch_sideview {display:inline-block;font-size:0.75em}
+.sch_datetime {font-size:0.75em}
 
 /* 새창 공통 */
 .new_win h1 {padding:10px 30px;background:#333;color:#fff;font-size:1.2em}
