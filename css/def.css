@@ -15,7 +15,7 @@ hr {display:none}
 
 /* 기본테이블 */
 table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
-tfoot td {background:#f0f0ed;font-weight:bold;text-align:center}
+tfoot td {background:#f9f9f5;font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
 .caption_desc {font-size:0.75em}
 th {padding:12px 0 8px;border-top:3px solid #666;border-bottom:1px solid #a9a9a9;font-size:0.8em}
@@ -25,9 +25,9 @@ td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;
 /* 필드셋 */
 fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fefefe}
 legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#333;color:#fff}
-fieldset .fieldset_input {padding:3px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
+fieldset .fieldset_input {padding:3px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 fieldset .fieldset_input:focus {padding:4px;border:0;background:#333;color:#fff}
-fieldset select {padding:2px;border:1px solid #ddd;background:#f0f0ed;vertical-align:middle}
+fieldset select {padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 fieldset p {margin:0}
 fieldset .span_highlight {color:#ff3061}
 fieldset button,
@@ -68,7 +68,7 @@ h6 {margin:0 0 20px}
 #logo a {display:inline-block;padding:20px 30px}
 
 /* 상단메뉴 */
-#tnb {padding-left:50px;border-bottom:1px solid #ddd;background:#f5f4ed;zoom:1}
+#tnb {padding-left:50px;border-bottom:1px solid #ddd;background:#f9f9f5;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin-left:-1px}
 #tnb a {display:block;padding:20px;border-right:1px solid #e9e9e9;border-left:1px solid #e9e9e9;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
@@ -90,7 +90,7 @@ h6 {margin:0 0 20px}
 .outlogin {margin-bottom:5px;border:1px solid #dedace}
 .outlogin h2 {margin:0;height:0;overflow:hidden}
 /* 로그인 전 */
-#ol_before {padding:10px 10px 0;width:178px;background:#f0f0ed;font-size:0.7em}
+#ol_before {padding:10px 10px 0;width:178px;background:#f9f9f5;font-size:0.7em}
 #ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
 #ol_before input:focus {background:#333;color:#fff}
@@ -106,7 +106,7 @@ h6 {margin:0 0 20px}
 #auto_login_label {position:absolute;top:72px;left:28px;color:#696969;letter-spacing:-0.1em}
 #ol_submit {position:absolute;top:38px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 로그인 후 */
-#ol_after {width:198px;background:#f0f0ed;color:#000;font-size:0.75em}
+#ol_after {width:198px;background:#f9f9f5;color:#000;font-size:0.75em}
 #ol_after header {padding:10px 0;text-align:center}
 #ol_after ul {padding:5px 0;background:#fff}
 #ol_after li a {display:block;position:relative;padding:7px 10px;color:#000;text-decoration:none}
@@ -116,7 +116,7 @@ h6 {margin:0 0 20px}
 
 /* 설문조사 */
 #poll {width:198px;border:1px solid #dedace;background:#fff;font-size:0.75em}
-#poll header {padding:10px 10px 1px;border-bottom:1px solid #efeada;background:#f0f0ed}
+#poll header {padding:10px 10px 1px;border-bottom:1px solid #efeada;background:#f9f9f5}
 #poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
 #poll ul {margin:10px}
