@@ -76,7 +76,7 @@ h6 {margin:0 0 20px}
 #tnb a:focus {background:#faf9f5}
 
 /* 전체검색 */
-#hdsch {position:absolute;top:90px;right:50px;margin:0;padding:0;border:1px solid #ccc;background:#f0f0ed}
+#hdsch {position:absolute;top:90px;right:50px;margin:0;padding:0;border:1px solid #ccc;background:#fff}
 #hdsch legend {position:absolute;padding:0;width:0;height:0;border:0;overflow:hidden}
 #hdsch_stx {margin:5px 0 5px 5px;height:16px;width:166px;border:0;background:transparent}
 #hdsch_stx:focus {background:#464649;color:#fff}
