@@ -2,8 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<section id="post_num" class="new_win">
-    <h1>우편번호검색</h1>
+<div id="post_num" class="new_win">
+    <h1><?=$g4['title']?></h1>
 
     <form name="fzip" method="get" autocomplete="off">
     <input type="hidden" name="frm_name"  value="<?=$frm_name?>">
@@ -60,4 +60,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     }
     </script>
     <? } ?>
-</section>
+</div>

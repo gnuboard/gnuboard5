@@ -2,8 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<section id="scrap" class="new_win">
-    <h1>스크랩</h1>
+<div id="scrap" class="new_win">
+    <h1><?=$g4['title']?></h1>
 
     <table>
     <caption>스크랩 목록</caption>
@@ -38,4 +38,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <div class="btn_window">
         <a href="javascript:window.close();">창닫기</a>
     </div>
-</section>
+</div>

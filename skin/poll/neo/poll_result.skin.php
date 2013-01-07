@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="poll_result" class="new_win">
-    <h1>설문조사 결과</h1>
+    <h1><?=$g4['title']?></h1>
 
     <section>
         <h2><?=$po_subject?> 결과</h2>

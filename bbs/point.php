@@ -37,8 +37,8 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 }
 ?>
 
-<section id="point" class="new_win">
-    <h1>포인트내역</h1>
+<div id="point" class="new_win">
+    <h1><?=$g4['title']?></h1>
 
     <table>
     <caption>포인트내역 목록</caption>
@@ -106,7 +106,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     <div class="btn_window">
         <a href="javascript:window.close();">창닫기</a>
     </div>
-</section>
+</div>
 
 <?
 include_once($g4['path'].'/tail.sub.php');
