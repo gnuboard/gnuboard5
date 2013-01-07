@@ -68,7 +68,7 @@ if ($stx) {
     if ($board_count) {
 ?>
 <dl class="sch_result">
-    <dt>검색어가 들어간 게시물을 포함하고 있는 게시판 목록</dt>
+    <dt>검색어를 포함하고 있는 게시판 목록</dt>
     <dd>
         <ul>
             <? if ($onetable) { ?>
