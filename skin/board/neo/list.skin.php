@@ -11,49 +11,49 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1><?=$g4['title']?></h1><?}?>
 
-<? if ($admin_href) { ?><div id="btn_board_adm"><a href="<?=$admin_href?>">관리자 바로가기</a></div><?}?>
-
-<form name="fsearch" method="get">
-<input type="hidden" name="bo_table" value="<?=$bo_table?>">
-<input type="hidden" name="sca" value="<?=$sca?>">
-<fieldset id="board_search">
-    <legend>게시물 검색</legend>
-    <span>Total <?=number_format($total_count)?>건</span>
-    <select name="sfl" title="검색대상">
-        <option value="wr_subject">제목</option>
-        <option value="wr_content">내용</option>
-        <option value="wr_subject||wr_content">제목+내용</option>
-        <option value="mb_id,1">회원아이디</option>
-        <option value="mb_id,0">회원아이디(코)</option>
-        <option value="wr_name,1">글쓴이</option>
-        <option value="wr_name,0">글쓴이(코)</option>
-    </select>
-    <input name="stx" class="fieldset_input required" maxlength="15" required value="<?=stripslashes($stx)?>" title="검색어">
-    <input type="radio" id="sop_and" name="sop" value="and">
-    <label for="sop_and">and</label>
-    <input type="radio" id="sop_or" name="sop" value="or">
-    <label for="sop_or">or</label>
-    <input type="submit" class="fieldset_submit" value="검색">
-</fieldset>
-</form>
+<? if ($admin_href) { ?><div id="btn_board_adm"><a href="<?=$admin_href?>">게시판 관리자 바로가기</a></div><?}?>
 
 <div class="btn_board">
-    <? if ($rss_href || $write_href) {?>
-    <ul class="btn_board_user">
-        <? if ($rss_href) { ?><li><a href="<?=$rss_href?>">RSS</a></li><? } ?>
-        <? if ($write_href) { ?><li><a href="<?=$write_href?>">글쓰기</a></li><? } ?>
-    </ul>
-    <? } ?>
+    <fieldset id="board_search">
+        <legend>게시물 분류 및 검색</legend>
 
-    <? if ($is_category) { ?>
-    <div class="cate_board">
-        <form name="fcategory" method="get">
+        <? if ($is_category) { ?>
+        <form id="fcategory" name="fcategory" method="get">
         <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
             <option value=''>전체</option>
             <?=$category_option?>
         </select>
         </form>
-    </div>
+        <? } ?>
+
+        <form name="fsearch" method="get">
+        <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+        <input type="hidden" name="sca" value="<?=$sca?>">
+        <span>Total <?=number_format($total_count)?>건</span>
+        <select name="sfl" title="검색대상">
+            <option value="wr_subject">제목</option>
+            <option value="wr_content">내용</option>
+            <option value="wr_subject||wr_content">제목+내용</option>
+            <option value="mb_id,1">회원아이디</option>
+            <option value="mb_id,0">회원아이디(코)</option>
+            <option value="wr_name,1">글쓴이</option>
+            <option value="wr_name,0">글쓴이(코)</option>
+        </select>
+        <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
+        <input type="radio" id="sop_and" name="sop" value="and">
+        <label for="sop_and">and</label>
+        <input type="radio" id="sop_or" name="sop" value="or">
+        <label for="sop_or">or</label>
+        <input type="submit" class="fieldset_submit" value="검색">
+        </form>
+
+    </fieldset>
+
+    <? if ($rss_href || $write_href) {?>
+    <ul class="btn_board_user">
+        <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn02">RSS</a></li><? } ?>
+        <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
+    </ul>
     <? } ?>
 </div>
 
@@ -139,14 +139,14 @@ for ($i=0; $i<count($list); $i++) {
         <li><a href="<?=$list_href?>">목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
-        <li><a href="javascript:select_delete();">선택삭제</a></li>
-        <li><a href="javascript:select_copy('copy');">선택복사</a></li>
-        <li><a href="javascript:select_copy('move');">선택이동</a></li>
+        <li><a href="javascript:select_delete();" class="btn03">선택삭제</a></li>
+        <li><a href="javascript:select_copy('copy');" class="btn03">선택복사</a></li>
+        <li><a href="javascript:select_copy('move');" class="btn03">선택이동</a></li>
         <? } ?>
     </ul>
 
     <ul class="btn_board_user">
-        <li><? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?></li>
+        <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn01">글쓰기</a><? } ?></li>
     </ul>
 </div>
 

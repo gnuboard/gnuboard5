@@ -94,7 +94,7 @@ h6 {margin:0 0 20px}
 #ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
 #ol_before input:focus {background:#333;color:#fff}
-#ol_before ul {position:relative;top:0;left:90px;margin:10px 0;width:90px;zoom:1}
+#ol_before ul {position:relative;top:0;left:93px;margin:10px 0;width:90px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-right:5px}
 #ol_before a {color:#696969;text-decoration:none;letter-spacing:-0.1em}
@@ -186,6 +186,17 @@ h6 {margin:0 0 20px}
 #footer p {position:absolute;top:25px;right:50px}
 
 /* ##################################################################### 스킨 및 컨텐츠 */
+/* 버튼 */
+.btn01 {display:inline-block;padding:0 10px;height:25px;border:1px solid #ff5e1c;background:#ff7200;color:#fff;font-size:0.8em;text-decoration:none;line-height:2.2em}
+.btn01:hover,
+.btn01:focus {}
+.btn02 {display:inline-block;padding:0 10px;height:25px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.8em;text-decoration:none;line-height:2.2em}
+.btn02:hover,
+.btn02:focus {}
+.btn03 {display:inline-block;padding:0 10px;height:25px;border:1px solid #555;background:#666;color:#fff;font-size:0.8em;text-decoration:none;line-height:2.2em}
+.btn02:hover,
+.btn02:focus {}
+
 /* 폼 테이블 */
 .frm_tbl {}
 .frm_tbl caption {padding-top:10px;border-bottom:1px solid #aaa;font-weight:bold}
@@ -242,16 +253,22 @@ h6 {margin:0 0 20px}
 .sch_datetime {font-size:0.75em}
 
 /* 게시판 목록 */
+#btn_board_adm {text-align:center}
+#btn_board_adm a {display:inline-block;margin-bottom:20px;padding:10px 20px;text-align:center}
 .btn_board {margin-bottom:10px;zoom:1}
 .btn_board:after {display:block;visibility:hidden;clear:both;content:""}
 .btn_board ul {margin:0;padding:0;list-style:none}
 .btn_board_user {float:right}
-.btn_board_user li {float:left}
-.btn_board_user a {display:block;margin-left:10px}
+.btn_board_user li {float:left;margin-left:5px}
+.btn_board_user a {display:block}
 .btn_board_adm {float:left}
-.btn_board_adm li {float:left}
-.btn_board_adm a {display:block;margin-right:5px}
-.cate_board select {padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
+.btn_board_adm li {float:left;margin-right:5px}
+.btn_board_adm a {display:block}
+#board_search {float:left;padding:0;margin:0;border:0}
+#board_search legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#board_search form {display:inline-block}
+#fcategory select {margin-right:10px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
+
 #board_list caption {padding:0;height:0;overflow:hidden}
 .board_cate_link {display:inline-block;margin-right:10px;font-weight:bold}
 .td_subject img {margin-left:5px}
