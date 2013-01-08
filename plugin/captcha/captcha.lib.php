@@ -153,7 +153,7 @@ function get_captcha($input_name, $captcha_no)
     $code .= '<a href="'.$g4['path'].'/plugin/captcha/wav.php" id="captcha_wav">wav</a>';
     $code .= '<label>자동등록방지 입력</label>';
     $code .= '<input type="text" id="captcha_key" name="'.$input_name.'" class="captcha_box frm_input" size="10" maxlength="5" required title="자동등록방지 입력">';
-    $code .= '<p>이미지의 숫자를 순서대로 입력하세요. 이미지를 클릭하시면 새로운 숫자가 나타납니다.</p>';
+    $code .= '<p>이미지의 숫자를 순서대로 입력하세요. 새로고침을 클릭하시면 새로운 숫자가 나타납니다.</p>';
     $code .= '</fieldset>';
     return $code;
 }
