@@ -68,12 +68,12 @@ h6 {margin:0 0 20px}
 #logo a {display:inline-block;padding:20px 30px}
 
 /* 상단메뉴 */
-#tnb {padding-left:10px;border-bottom:1px solid #ddd;background:#f9f9f5;zoom:1}
+#tnb {padding-left:10px;border-bottom:1px solid #ccc;background:#ebebe9;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin-left:-1px}
-#tnb a {display:block;padding:0 20px;height:35px;border-right:1px solid #e9e9e9;border-left:1px solid #e9e9e9;color:#595959;font-family:"dotum";font-size:0.8em;font-weight:bold;text-decoration:none;line-height:3em}
+#tnb a {display:block;padding:0 20px;height:35px;border-right:1px solid #ddd;border-left:1px solid #ddd;color:#595959;font-family:"dotum";font-size:0.8em;font-weight:bold;text-decoration:none;line-height:3em}
 #tnb a:hover,
-#tnb a:focus {background:#f0f0ed}
+#tnb a:focus {background:#f9f9f5}
 
 /* 전체검색 */
 #hdsch {position:absolute;top:77px;right:0;margin:0;padding:0;width:219px;border:1px solid #ccc;border-top:0;border-right:0;background:#fff}
