@@ -76,9 +76,9 @@ h6 {margin:0 0 20px}
 #tnb a:focus {background:#f0f0ed}
 
 /* 전체검색 */
-#hdsch {position:absolute;top:77px;right:0;margin:0;padding:0;border:1px solid #ccc;border-right:0;background:#fff}
+#hdsch {position:absolute;top:77px;right:0;margin:0;padding:0;width:219px;border:1px solid #ccc;border-top:0;border-right:0;background:#fff}
 #hdsch legend {position:absolute;padding:0;width:0;height:0;border:0;overflow:hidden}
-#hdsch_stx {margin:5px 0 5px 5px;padding:0 5px;height:24px;width:177px;border:0;background:transparent;font-size:1em;line-height:1.4em}
+#hdsch_stx {margin:5px 0 5px 5px;padding:0 5px;height:25px;width:176px;border:0;background:transparent;font-size:1em;line-height:1.4em}
 #hdsch_stx:focus {background:#464649;color:#fff}
 #hdsch_submit {position:relative;margin-left:-5px}
 
@@ -106,14 +106,14 @@ h6 {margin:0 0 20px}
 #auto_login_label {position:absolute;top:93px;left:28px;color:#696969;letter-spacing:-0.1em}
 #ol_submit {position:absolute;top:58px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 로그인 후 */
-#ol_after {width:199px;background:#f9f9f5;color:#000;font-size:0.75em}
+#ol_after {width:219px;background:#f9f9f5;color:#000;font-size:0.75em}
 #ol_after header {padding:10px 0;text-align:center}
 #ol_after h2 {margin:0;padding:0;height:0;overflow:hidden}
 #ol_after ul {padding:5px 0;background:#fff}
 #ol_after li a {display:block;position:relative;padding:7px 10px;color:#000;text-decoration:none}
 #ol_after li span {position:absolute;top:7px;right:10px}
 #ol_after footer {padding:7px 0 10px;text-align:center}
-#ol_after footer a {display:inline-block;padding:0 5px;color:#000;text-decoration:none}
+#ol_after footer a {display:inline-block;padding:0 10px;color:#000;text-decoration:none}
 
 /* 설문조사 */
 #poll {width:219px;border-bottom:1px solid #dedace;background:#fff;font-size:0.75em}
