@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<div>
+<div class="latest">
     <strong><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><?=$board['bo_subject']?></a></strong>
     <ul>
     <? for ($i=0; $i<count($list); $i++) { ?>
@@ -30,9 +30,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             ?>
         </li>
     <? } ?>
-    <? if (count($list) == 0) { //게시물이 없을 때 ?>
-        <li>게시물이 없습니다.</li>
-    <? } ?>
     </ul>
-    <a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>">더보기</a>
+    <? if (count($list) == 0) { //게시물이 없을 때 ?>
+    <p>게시물이 없습니다.</p>
+    <? } ?>
+    <div class="latest_more"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>">더보기</a></div>
 </div>
