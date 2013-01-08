@@ -12,7 +12,7 @@ include_once($g4['path'].'/lib/mailer.lib.php');
 $g4['title'] = '메일 테스트';
 include_once('./admin.head.php');
 
-if ($mail) {
+if (isset($_POST['mail'])) {
     check_token();
 
     $from_name  = '메일검사';
