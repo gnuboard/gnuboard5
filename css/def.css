@@ -88,9 +88,9 @@ h6 {margin:0 0 20px}
 
 /* 아웃로그인 */
 .outlogin {margin-bottom:5px;border:1px solid #dedace}
-.outlogin h2 {margin:0;height:0;overflow:hidden}
 /* 로그인 전 */
 #ol_before {padding:10px 10px 0;width:178px;background:#f9f9f5;font-size:0.7em}
+#ol_before h2 {margin-bottom:5px;font-size:1.1em}
 #ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
 #ol_before input:focus {background:#333;color:#fff}
@@ -99,15 +99,16 @@ h6 {margin:0 0 20px}
 #ol_before li {float:left;margin-right:5px}
 #ol_before a {color:#696969;text-decoration:none;letter-spacing:-0.1em}
 #ol_mb_id{display:block;margin-bottom:3px;padding:0 5px;width:165px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
-#ol_mb_id_label {z-index:2;position:absolute;top:17px;left:20px;color:#696969}
+#ol_mb_id_label {z-index:2;position:absolute;top:38px;left:20px;color:#696969}
 #ol_mb_pw {display:block;padding:0 5px;width:100px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
-#ol_mb_pw_label {z-index:2;position:absolute;top:45px;left:20px;color:#696969}
-#auto_login {position:absolute;top:71px;left:13px}
-#auto_login_label {position:absolute;top:72px;left:28px;color:#696969;letter-spacing:-0.1em}
-#ol_submit {position:absolute;top:38px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
+#ol_mb_pw_label {z-index:2;position:absolute;top:65px;left:20px;color:#696969}
+#auto_login {position:absolute;top:92px;left:13px}
+#auto_login_label {position:absolute;top:93px;left:28px;color:#696969;letter-spacing:-0.1em}
+#ol_submit {position:absolute;top:58px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 로그인 후 */
 #ol_after {width:198px;background:#f9f9f5;color:#000;font-size:0.75em}
 #ol_after header {padding:10px 0;text-align:center}
+#ol_after h2 {margin-bottom:5px;padding-left:10px;font-size:1em;text-align:left}
 #ol_after ul {padding:5px 0;background:#fff}
 #ol_after li a {display:block;position:relative;padding:7px 10px;color:#000;text-decoration:none}
 #ol_after li span {position:absolute;top:7px;right:10px}
