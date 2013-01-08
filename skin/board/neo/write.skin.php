@@ -22,7 +22,7 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="page" value="<?=$page?>">
 
-<table class="frm_tbl">
+<table id="board_write" class="frm_tbl">
 <caption><?=$board['bo_subject']?> <?=$title_msg?></caption>
 <tbody>
 <? if ($is_name) { ?>

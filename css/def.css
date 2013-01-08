@@ -275,6 +275,9 @@ h6 {margin:0 0 20px}
 .board_cate_link {display:inline-block;margin-right:10px;font-weight:bold}
 .td_subject img {margin-left:5px}
 
+/* 게시판 쓰기 */
+#board_write caption {padding:0;height:0;overflow:hidden}
+
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
 #post_num dt {margin-bottom:15px}

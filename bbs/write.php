@@ -175,7 +175,7 @@ if ($group['gr_use_access']) {
     }
 }
 
-$g4['title'] = $title_msg.' &gt; '.$board['bo_subject'];
+$g4['title'] = $board['bo_subject']." ".$title_msg;
 
 $is_notice = false;
 $notice_checked = '';
