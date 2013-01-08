@@ -151,7 +151,7 @@ h6 {margin:0 0 20px}
 #poll_result_another a {display:block;padding:5px 0}
 
 /* 레이아웃 중간 */
-#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:1px 230px 30px 10px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
+#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:1px 250px 30px 30px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
 
 /* 레이아웃 하단 */
 #footer {z-index:1;position:relative;padding:15px 0 20px;border-top:1px solid #ddd;color:#595959;font-size:0.75em}
