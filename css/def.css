@@ -34,7 +34,6 @@ fieldset button,
 .fieldset_submit {padding:0 15px;height:23px;border:0;background:#333;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
 fieldset button:focus,
 .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle}
-.readonly {background:#ff3061}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -73,7 +72,7 @@ h6 {margin:0 0 20px}
 #tnb li {float:left;margin-left:-1px}
 #tnb a {display:block;padding:20px;border-right:1px solid #e9e9e9;border-left:1px solid #e9e9e9;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
 #tnb a:hover,
-#tnb a:focus {background:#faf9f5}
+#tnb a:focus {background:#f0f0ed}
 
 /* 전체검색 */
 #hdsch {position:absolute;top:90px;right:50px;margin:0;padding:0;border:1px solid #ccc;background:#fff}
@@ -125,7 +124,7 @@ h6 {margin:0 0 20px}
 #poll footer input {padding:0 15px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */
-#poll_result section {margin:0 auto 20px;;padding:10px;width:90%}
+#poll_result section {margin:0 auto 20px;padding:10px;width:90%}
 #poll_result h2 {margin-top:10px;font-size:1em}
 #poll_result_list {border:1px solid #ddd;background:#f7f7f7}
 #poll_result_list h2 {padding:10px 0 0;text-align:center}
@@ -141,7 +140,6 @@ h6 {margin:0 0 20px}
 #poll_result_cmt h2 {text-align:center}
 #poll_result_cmt article {margin-bottom:15px;border-bottom:1px solid #e7e7e7}
 #poll_result_cmt h1 {display:inline-block;margin:0 10px 0 0;padding:0;font-size:0.875em}
-#poll_result_cmt h1 a {color:#000;text-decoration:none}
 #poll_result_cmt .poll_datetime,
 #poll_result_cmt .poll_del {font-size:0.75em}
 #poll_result_cmt p {padding:3px 0;font-size:0.875em}
@@ -202,6 +200,8 @@ h6 {margin:0 0 20px}
 .frm_tbl select {padding:2px}
 .frm_info {display:block;padding:10px 0 0;color:#595959;line-height:1.3em}
 
+.readonly {background:#ff3061}
+
 /* 테이블 항목별 정의 */
 .td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
@@ -233,7 +233,10 @@ h6 {margin:0 0 20px}
 
 /* 새창 공통 */
 .new_win h1 {padding:10px 30px;background:#333;color:#fff;font-size:1.2em}
+.new_win h1 a {color:#fff;text-decoration:none}
 .new_win article h1 {background:transparent;color:#000}
+.new_win article h1 a {color:#000;text-decoration:none}
+.new_win h2 {font-size:1em}
 .new_win table {margin:0 auto 30px;width:90%}
 .new_win fieldset {margin:0 auto 30px;width:90%}
 .new_win_ul {margin:-30px 0 20px 0;padding:0 0 0 30px;border-bottom:1px solid #ddd;background:#fff;font-size:0.8em;list-style:none;zoom:1}
@@ -266,6 +269,22 @@ h6 {margin:0 0 20px}
 #fregister_private {float:right;width:49%}
 #fregister textarea {display:block;margin-bottom:10px;width:99%;height:200px;border:1px solid #ddd}
 #fregister label {display:inline-block;margin-right:10px}
+
+/* 폼메일 */
+#formmail textarea {height:100px}
+
+/* 자기소개 */
+#profile table {margin-bottom:15px}
+#profile section {margin:0 auto 20px;width:90%;border-bottom:1px solid #d9d9d9}
+#profile h2 {margin:0;font-size:0.8em;font-family:"gulim"}
+#profile p {font-size:0.75em}
+
+/* 쪽지 읽기 */
+#memo_view section {margin:0 auto 20px;width:90%;border-bottom:1px solid #d9d9d9}
+#memo_view p {font-size:0.75em}
+
+/* 쪽지 쓰기 */
+#memo_write textarea {height:100px}
 
 /* pagination */
 .pg {margin-bottom:30px;font-size:0.875em;text-align:center}
