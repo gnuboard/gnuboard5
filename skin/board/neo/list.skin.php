@@ -11,7 +11,7 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1><?=$g4['title']?></h1><?}?>
 
-<? if ($admin_href) { ?><div id="btn_board_adm"><a href="<?=$admin_href?>">게시판 관리자 바로가기</a></div><?}?>
+<? if ($admin_href) { ?><div id="btn_bo_adm"><a href="<?=$admin_href?>">게시판 관리자 바로가기</a></div><?}?>
 
 <div class="btn_bo">
     <fieldset id="bo_sch">
@@ -83,7 +83,7 @@ if ($is_nogood) $colspan++;
 <?
 for ($i=0; $i<count($list); $i++) {
 ?>
-<tr<? if ($list[$i]['is_notice']) echo " class=\"board_notice\"";?>>
+<tr<? if ($list[$i]['is_notice']) echo " class=\"bo_notice\"";?>>
     <td class="td_bignum">
     <?
     if ($list[$i]['is_notice']) // 공지사항
@@ -101,7 +101,7 @@ for ($i=0; $i<count($list); $i++) {
         echo $list[$i]['icon_reply'];
         if ($is_category && $list[$i]['ca_name']) {
         ?>
-        <a href="<?=$list[$i]['ca_name_href']?>" class="board_cate_link"><?=$list[$i]['ca_name']?></a>
+        <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link"><?=$list[$i]['ca_name']?></a>
         <? } ?>
 
         <a href="<?=$list[$i]['href']?>"><?=$list[$i]['subject']?>
