@@ -377,7 +377,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     $list['file'] = get_file($board['bo_table'], $list['wr_id']);
 
     if ($list['file']['count'])
-        $list['icon_file'] = '<img src="'.$skin_path.'/img/icon_file.gif" alt="관련링크">';
+        $list['icon_file'] = '<img src="'.$skin_path.'/img/icon_file.gif" alt="첨부파일">';
 
     return $list;
 }
@@ -911,7 +911,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
                 //$height = $size['1'];
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
-                $tmp_name = '<img src="'.$icon_file.'" width="'.$width.'" height="'.$height.'" border="0" alt="첨부파일">';
+                $tmp_name = '<img src="'.$icon_file.'" width="'.$width.'" height="'.$height.'" border="0" alt="">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
                     $tmp_name = $tmp_name . ' <span class="member">'.$name.'</span>';
