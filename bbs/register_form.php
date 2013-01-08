@@ -1,6 +1,7 @@
 <?
 include_once('./_common.php');
-include_once($g4['path'].'/plugin/captcha/captcha.lib.php');
+include_once($g4['path'].'/lib/register.lib.php');
+if ($captcha->lib) include_once($captcha->lib);
 
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));
@@ -111,6 +112,11 @@ else
     $register_action_url = "{$g4['url']}/{$g4['bbs']}/register_form_update.php";
 
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400)));
+
+$required = "";
+$readonly = "";
+if ($w == '') $required = "required";
+else if ($w == 'u') $readonly = "readonly";
 
 include_once($member_skin_path.'/register_form.skin.php');
 include_once('./_tail.php');

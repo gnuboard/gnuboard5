@@ -11,26 +11,26 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1><?=$g4['title']?></h1><?}?>
 
-<? if ($admin_href) { ?><div id="bo_admin_btn"><a href="<?=$admin_href?>">관리자 바로가기</a></div><?}?>
+<? if ($admin_href) { ?><div id="btn_board_adm"><a href="<?=$admin_href?>">게시판 관리자 바로가기</a></div><?}?>
 
-<div>
-    <? if ($is_category) { ?>
-    <form name="fcategory" method="get">
+<div class="btn_bo">
+    <fieldset id="bo_sch">
+        <legend>게시물 분류 및 검색</legend>
+
+        <? if ($is_category) { ?>
+        <form id="fcategory" name="fcategory" method="get">
         <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
             <option value=''>전체</option>
             <?=$category_option?>
         </select>
-    </form>
-    <? } ?>
+        </form>
+        <? } ?>
 
-    <form name="fsearch" method="get">
-    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-    <input type="hidden" name="sca" value="<?=$sca?>">
-    <fieldset>
-        <legend>게시물 검색</legend>
-        <span>Total <?=number_format($total_count)?>건 중</span>
-        <label for="sfl">검색대상</label>
-        <select id="sfl" name="sfl">
+        <form name="fsearch" method="get">
+        <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+        <input type="hidden" name="sca" value="<?=$sca?>">
+        <span>Total <?=number_format($total_count)?>건</span>
+        <select name="sfl" title="검색대상">
             <option value="wr_subject">제목</option>
             <option value="wr_content">내용</option>
             <option value="wr_subject||wr_content">제목+내용</option>
@@ -39,23 +39,23 @@ if ($is_nogood) $colspan++;
             <option value="wr_name,1">글쓴이</option>
             <option value="wr_name,0">글쓴이(코)</option>
         </select>
-        <label for="stx">검색어</label>
-        <input id="stx" name="stx" maxlength="15" required value="<?=stripslashes($stx)?>">
+        <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
         <input type="radio" id="sop_and" name="sop" value="and">
         <label for="sop_and">and</label>
         <input type="radio" id="sop_or" name="sop" value="or">
         <label for="sop_or">or</label>
-        <input type="submit" value="검색">
-    </fieldset>
-    </form>
-</div>
+        <input type="submit" class="fieldset_submit" value="검색">
+        </form>
 
-<? if ($rss_href || $write_href) {?>
-<ul>
-    <? if ($rss_href) { ?><li><a href="<?=$rss_href?>">RSS</a></li><? } ?>
-    <? if ($write_href) { ?><li><a href="<?=$write_href?>">글쓰기</a></li><? } ?>
-</ul>
-<? } ?>
+    </fieldset>
+
+    <? if ($rss_href || $write_href) {?>
+    <ul class="btn_bo_user">
+        <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn02">RSS</a></li><? } ?>
+        <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
+    </ul>
+    <? } ?>
+</div>
 
 <!-- 게시판 목록 시작 -->
 <form id="fboardlist" name="fboardlist" method="post">
@@ -65,7 +65,7 @@ if ($is_nogood) $colspan++;
 <input type="hidden" name="spt" value="<?=$spt?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="sw" value="">
-<table>
+<table id="bo_list">
 <caption><?=$board['bo_subject']?> 목록</caption>
 <thead>
 <tr>
@@ -83,8 +83,8 @@ if ($is_nogood) $colspan++;
 <?
 for ($i=0; $i<count($list); $i++) {
 ?>
-<tr>
-    <td>
+<tr<? if ($list[$i]['is_notice']) echo " class=\"board_notice\"";?>>
+    <td class="td_bignum">
     <?
     if ($list[$i]['is_notice']) // 공지사항
         echo '공지';
@@ -95,22 +95,22 @@ for ($i=0; $i<count($list); $i++) {
     ?>
     </td>
     <? if ($is_checkbox) { ?><td><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
-    <td>
+    <td class="td_subject">
         <?
         echo $list[$i]['reply'];
         echo $list[$i]['icon_reply'];
         if ($is_category && $list[$i]['ca_name']) {
-            echo '<a href="'.$list[$i]['ca_name_href'].'">'.$list[$i]['ca_name'].'</a>';
-        }
+        ?>
+        <a href="<?=$list[$i]['ca_name_href']?>" class="board_cate_link"><?=$list[$i]['ca_name']?></a>
+        <? } ?>
 
-        if ($list[$i]['is_notice'])
-            echo '<a href="'.$list[$i]['href'].'">'.$list[$i]['subject'].'</a>';
-        else
-            echo '<a href="'.$list[$i]['href'].'">'.$list[$i]['subject'].'</a>';
+        <a href="<?=$list[$i]['href']?>"><?=$list[$i]['subject']?>
 
-        if ($list[$i]['comment_cnt'])
-            echo '<a href="'.$list[$i]['comment_href'].'">'.$list[$i]['comment_cnt'].'</a>';
+        <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
 
+        </a>
+
+        <?
         // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
         // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
 
@@ -121,11 +121,11 @@ for ($i=0; $i<count($list); $i++) {
         if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
         ?>
     </td>
-    <td><div style="position:relative"><?=$list[$i]['name']?></div></td>
-    <td><?=$list[$i]['datetime2']?></td>
-    <td><?=$list[$i]['wr_hit']?></td>
-    <? if ($is_good) { ?><td><?=$list[$i]['wr_good']?></td><? } ?>
-    <? if ($is_nogood) { ?><td><?=$list[$i]['wr_nogood']?></td><? } ?>
+    <td class="td_name"><div><?=$list[$i]['name']?></div></td>
+    <td class="td_date"><?=$list[$i]['datetime2']?></td>
+    <td class="td_num"><?=$list[$i]['wr_hit']?></td>
+    <? if ($is_good) { ?><td class="td_num"><?=$list[$i]['wr_good']?></td><? } ?>
+    <? if ($is_nogood) { ?><td class="td_num"><?=$list[$i]['wr_nogood']?></td><? } ?>
 </tr>
 <?}?>
 <? if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
@@ -133,25 +133,25 @@ for ($i=0; $i<count($list); $i++) {
 </table>
 </form>
 
-<div>
-    <ul>
+<div class="btn_bo">
+    <ul class="btn_bo_adm">
         <? if ($list_href) { ?>
         <li><a href="<?=$list_href?>">목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
-        <li><a href="javascript:select_delete();">선택삭제</a></li>
-        <li><a href="javascript:select_copy('copy');">선택복사</a></li>
-        <li><a href="javascript:select_copy('move');">선택이동</a></li>
+        <li><a href="javascript:select_delete();" class="btn03">선택삭제</a></li>
+        <li><a href="javascript:select_copy('copy');" class="btn03">선택복사</a></li>
+        <li><a href="javascript:select_copy('move');" class="btn03">선택이동</a></li>
         <? } ?>
     </ul>
 
-    <ul>
-        <li><? if ($write_href) { ?><a href="<?=$write_href?>">글쓰기</a><? } ?></li>
+    <ul class="btn_bo_user">
+        <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn01">글쓰기</a><? } ?></li>
     </ul>
 </div>
 
 <!-- 페이지 -->
-<div id="pg">
+<div class="pg">
     <? if ($prev_part_href) { echo '<a href="'.$prev_part_href.'">이전검색</a>'; } ?>
     <?=$write_pages?>
     <? if ($next_part_href) { echo '<a href="'.$next_part_href.'">다음검색</a>'; } ?>

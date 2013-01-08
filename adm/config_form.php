@@ -10,15 +10,19 @@ if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
 // 쪽지보낼시 차감 포인트 필드 추가 : 061218
-sql_query(" ALTER TABLE '{$g4['config_table']}' ADD 'cf_memo_send_point' INT NOT NULL AFTER 'cf_login_point' ", FALSE);
+sql_query(" ALTER TABLE {$g4['config_table']} ADD cf_memo_send_point INT NOT NULL AFTER cf_login_point ", FALSE);
 
 // 개인정보보호정책 필드 추가 : 061121
-$sql = " ALTER TABLE '{$g4['config_table']}' ADD 'cf_privacy' TEXT NOT NULL AFTER 'cf_stipulation' ";
+$sql = " ALTER TABLE {$g4['config_table']} ADD cf_privacy TEXT NOT NULL AFTER cf_stipulation ";
 sql_query($sql, FALSE);
 if (!trim($config['cf_privacy'])) {
     $config['cf_privacy'] = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.';
 }
 
+if (!isset($config['cf_email_admin'])) {
+    sql_query(" ALTER TABLE {$g4['config_table']} ADD cf_email_admin VARCHAR(255) NOT NULL DEFAULT '' AFTER cf_email_use ", FALSE);
+}
+    
 $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 ?>
@@ -392,6 +396,13 @@ include_once ('./admin.head.php');
     <td>
         <?=help('체크하지 않으면 비회원도 사용 할 수 있습니다.')?>
         <input type="checkbox" id="cf_formmail_is_member" name="cf_formmail_is_member" value="1" <?=$config['cf_formmail_is_member']?'checked':'';?>> 회원만 사용
+    </td>
+</tr>
+<tr>
+    <th scope="row"><label for="cf_email_admin">관리자 메일주소</label></th>
+    <td>
+        <?=help('일괄발송시 사용하는 이메일 주소입니다.')?>
+        <input type="text" id="cf_email_admin" name="cf_email_admin" class="email" value="<?=$config['cf_email_admin']?>" required size="40" title="관리자 메일주소">
     </td>
 </tr>
 </table>

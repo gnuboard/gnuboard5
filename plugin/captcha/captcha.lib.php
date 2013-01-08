@@ -80,10 +80,6 @@ class captcha
 
         // The text to draw
         $captcha_key = $this->get_captcha_key();
-        /*
-        $_SESSION['ss_captcha_key'] = $captcha_key;
-        $_SESSION['ss_captcha_cnt'] = 0;
-        */
         
         set_session('ss_captcha_key', $captcha_key);
         set_session('ss_captcha_cnt', 0);
@@ -149,16 +145,17 @@ function get_captcha($input_name, $captcha_no)
     set_session('ss_captcha_use', true);
     $captcha_class = str_pad($captcha_no,2,'0',STR_PAD_LEFT);// 캡챠 클래스를 선택할 수 있도록 지운아빠 2012-07-24
 
-    $s = "";
-    $s .= "<fieldset id=\"captcha".$captcha_class."\">\n";
-    $s .= "<legend>자동등록방지</legend>\n";
-    $s .= "<img src=\"{$g4['path']}/plugin/captcha/img/dot.gif\" id=\"captcha\" alt=\"자동등록방지 이미지\" title=\"이미지를 클릭하시면 숫자가 바뀝니다.\"/>\n";
-    $s .= "<a href=\"{$g4['path']}/plugin/captcha/wav.php\" id=\"captcha_wav\">wav</a>\n";
-    $s .= "<label>자동등록방지 입력</label>\n";
-    $s .= "<input type=\"text\" id=\"captcha_key\" name=\"$input_name\" class=\"captcha_box\" size=\"10\" maxlength=\"5\" required=\"required\" title=\"스팸방지\" title=\"이미지의 숫자를 순서대로 입력하세요.\" />\n";
-    $s .= "<p>이미지의 숫자를 순서대로 입력하세요. 이미지를 클릭하시면 새로운 숫자가 나타납니다.</p>\n";
-    $s .= "</fieldset>\n";
-    return $s;
+    $code  = '<fieldset id="captcha'.$captcha_class.'">';
+    $code .= '<legend>자동등록방지</legend>';
+    //$code .= '<img src="" id="captcha" alt="자동등록방지 이미지" title="이미지를 클릭하시면 숫자가 바뀝니다.">';
+    $code .= '<iframe id="captcha_iframe" name="captcha_iframe" src="'.$g4['path'].'/plugin/captcha/run.php" width="80" height="25" frameborder="0" scrolling="no"></iframe>';
+    $code .= '<a href="'.$g4['path'].'/plugin/captcha/run.php" target="captcha_iframe">새로고침</a>';
+    $code .= '<a href="'.$g4['path'].'/plugin/captcha/wav.php" id="captcha_wav">wav</a>';
+    $code .= '<label>자동등록방지 입력</label>';
+    $code .= '<input type="text" id="captcha_key" name="'.$input_name.'" class="captcha_box frm_input" size="10" maxlength="5" required title="자동등록방지 입력">';
+    $code .= '<p>이미지의 숫자를 순서대로 입력하세요. 새로고침을 클릭하시면 새로운 숫자가 나타납니다.</p>';
+    $code .= '</fieldset>';
+    return $code;
 }
 
 
