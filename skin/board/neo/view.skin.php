@@ -2,8 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<div id="board_view">
-    <h1><? if ($is_category) { echo ($category_name ? "{$view['ca_name']} " : ""); } ?><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
+<div id="bo_v">
+    <h1 id="bo_v_h1"><? if ($is_category) { echo ($category_name ? "{$view['ca_name']} " : ""); } ?><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
 
     <aside>
         <h2>게시물 상단 링크</h2>
@@ -46,7 +46,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </ul>
     </aside>
 
-    <section>
+    <section id="bo_v_info">
         <h2>게시물 정보</h2>
         <dl>
             <dt>작성자</dt>
@@ -121,7 +121,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <? } ?>
 
     <article>
-        <h1>본문</h1>
+        <header>
+            <h1>본문</h1>
+        </header>
         <div>
             <?
             // 파일 출력

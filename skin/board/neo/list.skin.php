@@ -13,8 +13,8 @@ if ($is_nogood) $colspan++;
 
 <? if ($admin_href) { ?><div id="btn_board_adm"><a href="<?=$admin_href?>">게시판 관리자 바로가기</a></div><?}?>
 
-<div class="btn_board">
-    <fieldset id="board_search">
+<div class="btn_bo">
+    <fieldset id="bo_sch">
         <legend>게시물 분류 및 검색</legend>
 
         <? if ($is_category) { ?>
@@ -50,7 +50,7 @@ if ($is_nogood) $colspan++;
     </fieldset>
 
     <? if ($rss_href || $write_href) {?>
-    <ul class="btn_board_user">
+    <ul class="btn_bo_user">
         <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn02">RSS</a></li><? } ?>
         <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
     </ul>
@@ -65,7 +65,7 @@ if ($is_nogood) $colspan++;
 <input type="hidden" name="spt" value="<?=$spt?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="sw" value="">
-<table id="board_list">
+<table id="bo_list">
 <caption><?=$board['bo_subject']?> 목록</caption>
 <thead>
 <tr>
@@ -133,8 +133,8 @@ for ($i=0; $i<count($list); $i++) {
 </table>
 </form>
 
-<div class="btn_board">
-    <ul class="btn_board_adm">
+<div class="btn_bo">
+    <ul class="btn_bo_adm">
         <? if ($list_href) { ?>
         <li><a href="<?=$list_href?>">목록</a></li>
         <? } ?>
@@ -145,7 +145,7 @@ for ($i=0; $i<count($list); $i++) {
         <? } ?>
     </ul>
 
-    <ul class="btn_board_user">
+    <ul class="btn_bo_user">
         <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn01">글쓰기</a><? } ?></li>
     </ul>
 </div>

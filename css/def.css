@@ -255,31 +255,33 @@ h6 {margin:0 0 20px}
 .sch_datetime {font-size:0.75em}
 
 /* 게시판 목록 */
-#btn_board_adm {text-align:center}
-#btn_board_adm a {display:inline-block;margin-bottom:20px;padding:10px 20px;text-align:center}
-.btn_board {margin-bottom:10px;zoom:1}
-.btn_board:after {display:block;visibility:hidden;clear:both;content:""}
-.btn_board ul {margin:0;padding:0;list-style:none}
-.btn_board_user {float:right}
-.btn_board_user li {float:left;margin-left:5px}
-.btn_board_user a {display:block}
-.btn_board_adm {float:left}
-.btn_board_adm li {float:left;margin-right:5px}
-.btn_board_adm a {display:block}
-#board_search {float:left;padding:0;margin:0;border:0}
-#board_search legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
-#board_search form {display:inline-block}
+#btn_bo_adm {text-align:center}
+#btn_bo_adm a {display:inline-block;margin-bottom:20px;padding:10px 20px;text-align:center}
+.btn_bo {margin-bottom:10px;zoom:1}
+.btn_bo:after {display:block;visibility:hidden;clear:both;content:""}
+.btn_bo ul {margin:0;padding:0;list-style:none}
+.btn_bo_user {float:right}
+.btn_bo_user li {float:left;margin-left:5px}
+.btn_bo_user a {display:block}
+.btn_bo_adm {float:left}
+.btn_bo_adm li {float:left;margin-right:5px}
+.btn_bo_adm a {display:block}
+#bo_sch {float:left;padding:0;margin:0;border:0}
+#bo_sch legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#bo_sch form {display:inline-block}
 #fcategory select {margin-right:10px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 
-#board_list caption {padding:0;height:0;overflow:hidden}
-.board_cate_link {display:inline-block;margin-right:10px;color:#ff7200;font-weight:bold;text-decoration:none}
+#bo_list caption {padding:0;height:0;overflow:hidden}
+.bo_cate_link {display:inline-block;margin-right:10px;color:#ff7200;font-weight:bold;text-decoration:none}
 .td_subject img {margin-left:5px}
 
 /* 게시판 쓰기 */
-#board_write caption {padding:0;height:0;overflow:hidden}
+#bo_w caption {padding:0;height:0;overflow:hidden}
 
 /* 게시판 읽기 */
-#board_view {margin-bottom:30px;padding:10px;border:1px solid #ddd}
+#bo_v {margin-bottom:30px;border:1px solid #ddd}
+#bo_v_h1 {padding:25px 15px 15px;border-bottom:1px solid #efeada;font-size:0.9em}
+#bo_v aside h2 {margin:0;padding:0;height:0;overflow:hidden}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
