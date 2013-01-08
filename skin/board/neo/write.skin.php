@@ -8,6 +8,8 @@ var char_min = parseInt(<?=$write_min?>); // 최소
 var char_max = parseInt(<?=$write_max?>); // 최대
 </script>
 
+<h1><?=$g4['title']?></h1>
+
 <form id="fwrite" name="fwrite" method="post" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
@@ -20,34 +22,34 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="page" value="<?=$page?>">
 
-<table>
+<table class="frm_tbl">
 <caption><?=$board['bo_subject']?> <?=$title_msg?></caption>
 <tbody>
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름</label></th>
-    <td><input type="text" id="wr_name" name="wr_name" maxlength="20" class="required" required="required" value="<?=$name?>" title="이름"></td>
+    <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>"></td>
 </tr>
 <? } ?>
 
 <? if ($is_password) { ?>
 <tr>
     <th scope="row"><label for="wr_password">패스워드</label></th>
-    <td><input type="password" id="wr_password" name="wr_password" maxlength="20" <?=$password_required?> title="패스워드"></td>
+    <td><input type="password" id="wr_password" name="wr_password" class="frm_input" maxlength="20" <?=$password_required?>></td>
 </tr>
 <? } ?>
 
 <? if ($is_email) { ?>
 <tr>
     <th scope="row"><label for="wr_email">이메일</label></th>
-    <td><input type="text" id="wr_email" name="wr_email" class="email" value="<?=$email?>" title="이메일" maxlength="100"></td>
+    <td><input type="text" id="wr_email" name="wr_email" class="frm_input email" size="60" value="<?=$email?>" maxlength="100"></td>
 </tr>
 <? } ?>
 
 <? if ($is_homepage) { ?>
 <tr>
     <th scope="row"><label for="wr_homepage">홈페이지</label></th>
-    <td><input type="text" id="wr_homepage" name="wr_homepage" value="<?=$homepage?>"></td>
+    <td><input type="text" id="wr_homepage" name="wr_homepage" class="frm_input" size="60" value="<?=$homepage?>"></td>
 </tr>
 <? } ?>
 
@@ -57,27 +59,27 @@ $option_hidden = '';
 if ($is_notice || $is_html || $is_secret || $is_mail) {
     $option = '';
     if ($is_notice) {
-        $option .= PHP_EOL.'<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'><label for="notice">공지</label>';
+        $option .= PHP_EOL.'<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'>'.PHP_EOL.'<label for="notice">공지</label>';
     }
 
     if ($is_html) {
         if ($is_dhtml_editor) {
             $option_hidden .= '<input type="hidden" value="html1" name="html">';
         } else {
-            $option .= PHP_EOL.'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'><label for="html">html</label>';
+            $option .= PHP_EOL.'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'.PHP_EOL.'<label for="html">html</label>';
         }
     }
 
     if ($is_secret) {
         if ($is_admin || $is_secret==1) {
-            $option .= PHP_EOL.'<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'><label for="secret">비밀글</label>';
+            $option .= PHP_EOL.'<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'>'.PHP_EOL.'<label for="secret">비밀글</label>';
         } else {
             $option_hidden .= '<input type="hidden" name="secret" value="secret">';
         }
     }
 
     if ($is_mail) {
-        $option .= PHP_EOL.'<input type="checkbox" name="mail" value="mail" '.$recv_email_checked.'><label for="mail">답변메일받기</label>';
+        $option .= PHP_EOL.'<input type="checkbox" name="mail" value="mail" '.$recv_email_checked.'>'.PHP_EOL.'<label for="mail">답변메일받기</label>';
     }
 }
 
@@ -94,7 +96,7 @@ if ($option) {
 <tr>
     <th scope="row"><label for="ca_name">분류</label></th>
     <td>
-        <select id="ca_name" name="ca_name" required="required">
+        <select id="ca_name" name="ca_name" class="required" required>
             <option value="">선택하세요</option>
             <?=$category_option?>
         </select>
@@ -104,7 +106,7 @@ if ($option) {
 
 <tr>
     <th scope="row"><label for="wr_subject">제목</label></th>
-    <td><input id="wr_subject" name="wr_subject" required="required" value="<?=$subject?>" title="제목"></td>
+    <td><input id="wr_subject" name="wr_subject" class="frm_input required" size="60" required value="<?=$subject?>" title="제목"></td>
 </tr>
 
 <tr>
@@ -120,72 +122,45 @@ if ($option) {
 <? for ($i=1; $i<=$g4['link_count']; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?=$i?>">링크 #<?=$i?></label></th>
-    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>"></td>
+    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" class="frm_input" size="60" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>"></td>
 </tr>
 <? } ?>
 <? } ?>
 
 <? if ($is_file) { ?>
 <tr>
-    <th scope="row"><label for="">파일첨부</label></th>
+    <th scope="row">파일 #1</th>
     <td>
-        <table id="variableFiles"></table><?// print_r2($file); ?>
-        <script>
-        var flen = 0;
-        function add_file(delete_code)
-        {
-            var upload_count = <?=(int)$board['bo_upload_count']?>;
-            if (upload_count && flen >= upload_count)
-            {
-                alert("이 게시판은 "+upload_count+"개 까지만 파일 업로드가 가능합니다.");
-                return;
-            }
-
-            var objTbl;
-            var objRow;
-            var objCell;
-            if (document.getElementById)
-                objTbl = document.getElementById("variableFiles");
-            else
-                objTbl = document.all["variableFiles"];
-
-            objRow = objTbl.insertRow(objTbl.rows.length);
-            objCell = objRow.insertCell(0);
-
-            objCell.innerHTML = "<input type='file' name='bf_file[]' title='파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능'>";
-            if (delete_code)
-                objCell.innerHTML += delete_code;
-            else
-            {
-                <? if ($is_file_content) { ?>
-                objCell.innerHTML += "<br><input type='text' size=50 name='bf_content[]' title='업로드 이미지 파일에 해당 되는 내용을 입력하세요.'>";
-                <? } ?>
-                ;
-            }
-
-            flen++;
-        }
-
-        <?=$file_script; //수정시에 필요한 스크립트?>
-
-        function del_file()
-        {
-            // file_length 이하로는 필드가 삭제되지 않아야 합니다.
-            var file_length = <?=(int)$file_length?>;
-            var objTbl = document.getElementById("variableFiles");
-            if (objTbl.rows.length - 1 > file_length) {
-                objTbl.deleteRow(objTbl.rows.length - 1);
-                flen--;
-            }
-        }
-        </script>
+        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
     </td>
 </tr>
-
 <tr>
-    <td colspan="2">
-        <span onclick="add_file();" style="cursor:pointer;">파일증가</span>
-        <span onclick="del_file();" style="cursor:pointer;">파일감소</span>
+    <th scope="row">파일 #2</th>
+    <td>
+        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
+    </td>
+</tr>
+<tr>
+    <th scope="row">파일 #3</th>
+    <td>
+        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
+    </td>
+</tr>
+<tr>
+    <th scope="row">파일 #4</th>
+    <td>
+        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
+    </td>
+</tr>
+<tr>
+    <th scope="row">파일 #5</th>
+    <td>
+        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
     </td>
 </tr>
 <?}?>

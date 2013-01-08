@@ -211,6 +211,7 @@ h6 {margin:0 0 20px}
 .frm_tbl .frm_input:focus {padding:4px;border:0;background:#333;color:#fff}
 .frm_tbl textarea {width:90%}
 .frm_tbl select {padding:2px}
+.frm_file {display:block;margin-bottom:5px}
 .frm_info {display:block;padding:10px 0 0;color:#595959;line-height:1.3em}
 
 .readonly {background:#ff3061}
