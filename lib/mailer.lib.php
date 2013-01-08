@@ -9,7 +9,7 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file='', $cc=
     global $g4;
 
     // 메일발송 사용을 하지 않는다면
-    if (!$config[cf_email_use]) return;
+    if (!$config['cf_email_use']) return;
 
     $fname   = "=?$g4[charset]?B?" . base64_encode($fname) . "?=";
     $subject = "=?$g4[charset]?B?" . base64_encode($subject) . "?=";
