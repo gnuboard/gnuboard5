@@ -18,17 +18,16 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <?
 for ($i=0; $i<count($list); $i++) 
 {
-    $gr_subject = cut_str($list[$i][gr_subject], 10);
-    $bo_subject = cut_str($list[$i][bo_subject], 10);
-    $wr_subject = get_text(cut_str($list[$i][wr_subject], 40));
+    $gr_subject = cut_str($list[$i][gr_subject], 20);
+    $bo_subject = cut_str($list[$i][bo_subject], 20);
+    $wr_subject = get_text(cut_str($list[$i][wr_subject], 80));
 ?>
 <tr>
-    <td><a href="./new.php?gr_id=<?=$list[$i][gr_id]?>"><?=$gr_subject?></a></td>
-    <td><a href="./board.php?bo_table=<?=$list[$i][bo_table]?>"><?=$bo_subject?></a></td>
+    <td class="td_group"><a href="./new.php?gr_id=<?=$list[$i][gr_id]?>"><?=$gr_subject?></a></td>
+    <td class="td_board"><a href="./board.php?bo_table=<?=$list[$i][bo_table]?>"><?=$bo_subject?></a></td>
     <td><a href="<?=$list[$i][href]?>"><?=$list[$i][comment]?><?=$wr_subject?></a></td>
-    <td><?=$list[$i][name]?></td>
-    <td><?=$list[$i][datetime2]?></td>
-    <!-- <a href="javascript:;" onclick="document.getElementById('mb_id').value={$list[$i][mb_id]}';">&middot;</a> -->
+    <td class="td_name"><div><?=$list[$i][name]?></div></td>
+    <td class="td_datetime"><?=$list[$i][datetime2]?></td>
 </tr>
 <? } ?>
 
@@ -38,25 +37,22 @@ for ($i=0; $i<count($list); $i++)
 </tbody>
 </table>
 
-<div id="pg">
+<div class="pg">
     <?=$write_pages?>
 </div>
 
-<!-- 분류 시작 -->
+<!-- 검색 -->
 <form name="fnew" method="get">
 <fieldset>
-    <legend>사이트 상세검색</legend>
-    <label for="gr_id">검색대상</label>
+    <legend>상세검색</legend>
     <?=$group_select?>
-    <label for="view">검색종류</label>
-    <select id="view" name="view" onchange="select_change()">
+    <select id="view" name="view" onchange="select_change()" title="검색종류">
         <option value="">전체게시물
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
-    <label for="mb_id">회원아이디</label>
-    <input type="text" id="mb_id" name="mb_id" value="<?=$mb_id?>">
-    <input type="submit" value="검색">
+    <input type="text" id="mb_id" name="mb_id" class="fieldset_input" value="<?=$mb_id?>" title="검색어">
+    <input type="submit" class="fieldset_submit" value="검색">
     <script>
     function select_change()
     {
@@ -67,4 +63,4 @@ for ($i=0; $i<count($list); $i++)
     </script>
 </fieldset>
 </form>
-<!-- 분류 끝 -->
+<!-- 검색 끝 -->

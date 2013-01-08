@@ -32,24 +32,49 @@ else
 ?>
 
 <section id="ol_before" class="outlogin">
-<h2>사이트 회원</h2>
+    <h2>멤버쉽</h2>
 <!-- 로그인 전 외부로그인 시작 -->
     <form name="fhead" method="post" action="<?=$action_url?>" onsubmit="return fhead_submit(this);" autocomplete="off">
     <fieldset>
         <legend>로그인</legend>
         <input type="hidden" name="url" value="<?=$outlogin_url?>">
-        <label for="mb_id">아이디</label>
-        <input type="text" id="mb_id" name="mb_id" maxlength="20" required>
-        <label for="mb_password">패스워드</label>
-        <input type="password" id="mb_password" name="mb_password" maxlength="20">
+        <label for="ol_mb_id" id="ol_mb_id_label">아이디</label>
+        <input type="text" id="ol_mb_id" name="mb_id" maxlength="20" required>
+        <label for="ol_mb_pw" id="ol_mb_pw_label">패스워드</label>
+        <input type="password" id="ol_mb_pw" name="mb_password" maxlength="20">
         <input type="checkbox" id="auto_login" name="auto_login" value="1" onclick="if (this.checked) { if (confirm('자동로그인을 사용하시면 다음부터 회원아이디와 패스워드를 입력하실 필요가 없습니다.\n\n\공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?')) { this.checked = true; } else { this.checked = false; } }">
-        <label for="auto_login">자동로그인</label>
-        <input type="submit" value="로그인">
-        <a href="javascript:win_password_lost();">아이디/패스워드 찾기</a>
-        <a href="<?=$g4['bbs_path']?>/register.php">회원가입</a>
+        <label for="auto_login" id="auto_login_label">자동로그인</label>
+        <input type="submit" id="ol_submit" value="로그인">
+        <ul>
+            <li><a href="<?=$g4['bbs_path']?>/register.php">회원가입</a></li>
+            <li><a href="javascript:win_password_lost();">정보찾기</a></li>
+        </ul>
     </fieldset>
     </form>
 </section>
+
+<script>
+$(document).ready(function(){
+    $omi = $('#ol_mb_id');
+    $omp = $('#ol_mb_pw');
+    $omi_label = $('#ol_mb_id_label');
+    $omp_label = $('#ol_mb_pw_label');
+    $omi.focus(function() {
+        $omi_label.css('visibility','hidden');
+    });
+    $omp.focus(function() {
+        $omp_label.css('visibility','hidden');
+    });
+    $omi.blur(function() {
+        $this = $(this);
+        if($this.attr('id') == "ol_mb_id" && $this.attr('value') == "") $omi_label.css('visibility','visible');
+    });
+    $omp.blur(function() {
+        $this = $(this);
+        if($this.attr('id') == "ol_mb_pw" && $this.attr('value') == "") $omp_label.css('visibility','visible');
+    });
+});
+</script>
 
 <script>
 function fhead_submit(f)

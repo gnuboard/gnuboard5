@@ -18,16 +18,20 @@ $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
 <input type="hidden" name="po_id" value="<?=$po_id?>">
 <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
 <section id="poll">
-<h2>설문조사</h2>
-<? if ($is_admin == "super") { ?><a href="<?=$g4[admin_path]?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문조사 관리</a><? } ?>
-<?=$po['po_subject']?>
-<ul>
-<? for ($i=1; $i<=9 && $po["po_poll{$i}"]; $i++) { ?>
-    <li><input type="radio" name="gb_poll" value="<?=$i?>" id='gb_poll_<?=$i?>'> <label for='gb_poll_<?=$i?>'><?=$po['po_poll'.$i]?></label></li>
-<? } ?>
-</ul>
-<input type="submit" value="투표하기">
-<a href="javascript:;" onclick="poll_result('<?=$po_id?>');">결과보기</a>
+    <header>
+        <h2>설문조사</h2>
+        <? if ($is_admin == "super") { ?><a href="<?=$g4[admin_path]?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문조사 관리</a><? } ?>
+        <p><?=$po['po_subject']?></p>
+    </header>
+    <ul>
+        <? for ($i=1; $i<=9 && $po["po_poll{$i}"]; $i++) { ?>
+        <li><input type="radio" name="gb_poll" value="<?=$i?>" id='gb_poll_<?=$i?>'> <label for='gb_poll_<?=$i?>'><?=$po['po_poll'.$i]?></label></li>
+        <? } ?>
+    </ul>
+    <footer>
+        <input type="submit" value="투표하기">
+        <a href="javascript:;" onclick="poll_result('<?=$po_id?>');">결과보기</a>
+    </footer>
 </section>
 </form>
 

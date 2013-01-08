@@ -37,72 +37,75 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 }
 ?>
 
-<h1>포인트내역</h1>
+<div id="point" class="new_win">
+    <h1><?=$g4['title']?></h1>
 
-<table>
-<caption>포인트내역 목록</caption>
-<thead>
-<tr>
-    <th scope="col">일시</th>
-    <th scope="col">내용</th>
-    <th scope="col">지급포인트</th>
-    <th scope="col">사용포인트</th>
-</tr>
-</thead>
-<tfoot>
-<tr>
-    <td colspan="2">소계</td>
-    <td><?=number_format($sum_point1)?></td>
-    <td><?=number_format($sum_point2)?></td>
-</tr>
-</tfoot>
-<tbody>
-<?
-$sum_point1 = $sum_point2 = 0;
+    <table>
+    <caption>포인트내역 목록</caption>
+    <thead>
+    <tr>
+        <th scope="col">일시</th>
+        <th scope="col">내용</th>
+        <th scope="col">지급포인트</th>
+        <th scope="col">사용포인트</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <td colspan="2">소계</td>
+        <td><?=number_format($sum_point1)?></td>
+        <td><?=number_format($sum_point2)?></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <?
+    $sum_point1 = $sum_point2 = 0;
 
-$sql = " select *
-            {$sql_common}
-            {$sql_order}
-            limit {$from_record}, {$rows} ";
-$result = sql_query($sql);
-for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $point1 = $point2 = 0;
-    if ($row[po_point] > 0) {
-        $point1 = '+' .number_format($row[po_point]);
-        $sum_point1 += $row[po_point];
-    } else {
-        $point2 = number_format($row[po_point]);
-        $sum_point2 += $row[po_point];
+    $sql = " select *
+                {$sql_common}
+                {$sql_order}
+                limit {$from_record}, {$rows} ";
+    $result = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $point1 = $point2 = 0;
+        if ($row[po_point] > 0) {
+            $point1 = '+' .number_format($row[po_point]);
+            $sum_point1 += $row[po_point];
+        } else {
+            $point2 = number_format($row[po_point]);
+            $sum_point2 += $row[po_point];
+        }
+
+    ?>
+    <tr>
+        <td class="td_datetime"><?=$row[po_datetime]?></td>
+        <td><?=$row[po_content]?></td>
+        <td class="td_bignum"><?=$point1?></td>
+        <td class="td_bignum"><?=$point2?></td>
+    </tr>
+    <?
     }
 
-?>
-<tr>
-    <td><?=$row[po_datetime]?></td>
-    <td><?=$row[po_content]?></td>
-    <td><?=$point1?></td>
-    <td><?=$point2?></td>
-</tr>
-<?
-}
+    if ($i == 0)
+        echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
+    else {
+        if ($sum_point1 > 0)
+            $sum_point1 = "+" . number_format($sum_point1);
+        $sum_point2 = number_format($sum_point2);
+    }
+    ?>
+    </tbody>
+    </table>
 
-if ($i == 0)
-    echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
-else {
-    if ($sum_point1 > 0)
-        $sum_point1 = "+" . number_format($sum_point1);
-    $sum_point2 = number_format($sum_point2);
-}
-?>
-</tbody>
-</table>
+    <p>보유 포인트 <?=number_format($member[mb_point])?>점</p>
 
-<div class="pg">
-    <?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?>
-</div>
+    <div class="pg">
+        <?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?>
+    </div>
 
-<p>보유 포인트 <?=number_format($member[mb_point])?>점</p>
-<div class="btn_window">
-    <a href="javascript:window.close();">창닫기</a>
+    <div class="btn_window">
+        <a href="javascript:window.close();">창닫기</a>
+    </div>
 </div>
 
 <?

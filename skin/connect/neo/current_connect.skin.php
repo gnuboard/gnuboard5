@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<table>
+<table id="current_connect_tbl">
 <caption>현재접속자 목록</caption>
 <thead>
 <tr>
@@ -21,8 +21,8 @@ for ($i=0; $i<count($list); $i++) {
     else $display_location = $location;
 ?>
     <tr>
-        <td><?=$list[$i]['num']?></td>
-        <td><?=$list[$i]['name']?></td>
+        <td class="td_num"><?=$list[$i]['num']?></td>
+        <td class="td_name"><?=$list[$i]['name']?></td>
         <td><?=$display_location?></td>
     </tr>
 <?
