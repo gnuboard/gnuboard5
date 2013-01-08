@@ -19,6 +19,7 @@ tfoot td {background:#f9f9f5;font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
 .caption_desc {font-size:0.75em}
 th {padding:12px 0 8px;border-top:3px solid #666;border-bottom:1px solid #a9a9a9;font-size:0.8em}
+th a {color:#000;text-decoration:none}
 td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;font-size:0.75em}
 .empty_table {padding:50px 0;text-align:center}
 
@@ -240,28 +241,17 @@ h6 {margin:0 0 20px}
 .sch_sideview {display:inline-block;font-size:0.75em}
 .sch_datetime {font-size:0.75em}
 
-/* 새창 공통 */
-.new_win h1 {padding:10px 30px;background:#393936;color:#fff;font-size:1.2em}
-.new_win h1 a {color:#fff;text-decoration:none}
-.new_win article h1 {background:transparent;color:#000}
-.new_win article h1 a {color:#000;text-decoration:none}
-.new_win h2 {font-size:1em}
-.new_win table {margin:0 auto 30px;width:90%}
-.new_win fieldset {margin:0 auto 30px;width:90%}
-.new_win_ul {margin:-30px 0 20px 0;padding:0 0 0 30px;border-bottom:1px solid #ddd;background:#fff;font-size:0.8em;list-style:none;zoom:1}
-.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.new_win_ul li {float:left;margin-left:-1px}
-.new_win_ul a {display:block;padding:10px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
-.new_win_ul a:hover,
-.new_win_ul a:focus {background:#faf9f5}
-
-/* 포인트 내역 */
-#point p {text-align:center}
-#point .td_datetime {width:150px}
-
-/* 쪽지 */
-
-/* 스크랩 */
+/* 게시판 목록 */
+#board_list caption {padding:0;height:0;overflow:hidden}
+.btn_board {margin-bottom:10px;zoom:1}
+.btn_board:after {display:block;visibility:hidden;clear:both;content:""}
+.btn_board ul {margin:0;padding:0;list-style:none}
+.btn_board_user {float:right}
+.btn_board_user li {float:left}
+.btn_board_user a {display:block;margin-left:10px}
+.btn_board_adm {float:left}
+.btn_board_adm li {float:left}
+.btn_board_adm a {display:block;margin-right:5px}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
@@ -289,6 +279,29 @@ h6 {margin:0 0 20px}
 #password_confirm {padding:150px 0;background:#fcfcfc;text-align:center}
 #password_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #password_confirm p {margin-bottom:20px;font-size:0.75em}
+
+/* 새창 공통 */
+.new_win h1 {padding:10px 30px;background:#393936;color:#fff;font-size:1.2em}
+.new_win h1 a {color:#fff;text-decoration:none}
+.new_win article h1 {background:transparent;color:#000}
+.new_win article h1 a {color:#000;text-decoration:none}
+.new_win h2 {font-size:1em}
+.new_win table {margin:0 auto 30px;width:90%}
+.new_win fieldset {margin:0 auto 30px;width:90%}
+.new_win_ul {margin:-30px 0 20px 0;padding:0 0 0 30px;border-bottom:1px solid #ddd;background:#fff;font-size:0.8em;list-style:none;zoom:1}
+.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win_ul li {float:left;margin-left:-1px}
+.new_win_ul a {display:block;padding:10px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
+.new_win_ul a:hover,
+.new_win_ul a:focus {background:#faf9f5}
+
+/* 포인트 내역 */
+#point p {text-align:center}
+#point .td_datetime {width:150px}
+
+/* 쪽지 */
+
+/* 스크랩 */
 
 /* 폼메일 */
 #formmail textarea {height:100px}
