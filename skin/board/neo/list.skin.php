@@ -13,33 +13,29 @@ if ($is_nogood) $colspan++;
 
 <? if ($admin_href) { ?><div id="btn_board_adm"><a href="<?=$admin_href?>">관리자 바로가기</a></div><?}?>
 
-<div>
-    <form name="fsearch" method="get">
-    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-    <input type="hidden" name="sca" value="<?=$sca?>">
-    <fieldset>
-        <legend>게시물 검색</legend>
-        <span>Total <?=number_format($total_count)?>건 중</span>
-        <label for="sfl">검색대상</label>
-        <select id="sfl" name="sfl">
-            <option value="wr_subject">제목</option>
-            <option value="wr_content">내용</option>
-            <option value="wr_subject||wr_content">제목+내용</option>
-            <option value="mb_id,1">회원아이디</option>
-            <option value="mb_id,0">회원아이디(코)</option>
-            <option value="wr_name,1">글쓴이</option>
-            <option value="wr_name,0">글쓴이(코)</option>
-        </select>
-        <label for="stx">검색어</label>
-        <input id="stx" name="stx" class="fieldset_input required" maxlength="15" required value="<?=stripslashes($stx)?>">
-        <input type="radio" id="sop_and" name="sop" value="and">
-        <label for="sop_and">and</label>
-        <input type="radio" id="sop_or" name="sop" value="or">
-        <label for="sop_or">or</label>
-        <input type="submit" class="fieldset_submit" value="검색">
-    </fieldset>
-    </form>
-</div>
+<form name="fsearch" method="get">
+<input type="hidden" name="bo_table" value="<?=$bo_table?>">
+<input type="hidden" name="sca" value="<?=$sca?>">
+<fieldset id="board_search">
+    <legend>게시물 검색</legend>
+    <span>Total <?=number_format($total_count)?>건</span>
+    <select name="sfl" title="검색대상">
+        <option value="wr_subject">제목</option>
+        <option value="wr_content">내용</option>
+        <option value="wr_subject||wr_content">제목+내용</option>
+        <option value="mb_id,1">회원아이디</option>
+        <option value="mb_id,0">회원아이디(코)</option>
+        <option value="wr_name,1">글쓴이</option>
+        <option value="wr_name,0">글쓴이(코)</option>
+    </select>
+    <input name="stx" class="fieldset_input required" maxlength="15" required value="<?=stripslashes($stx)?>" title="검색어">
+    <input type="radio" id="sop_and" name="sop" value="and">
+    <label for="sop_and">and</label>
+    <input type="radio" id="sop_or" name="sop" value="or">
+    <label for="sop_or">or</label>
+    <input type="submit" class="fieldset_submit" value="검색">
+</fieldset>
+</form>
 
 <div class="btn_board">
     <? if ($rss_href || $write_href) {?>
@@ -87,7 +83,7 @@ if ($is_nogood) $colspan++;
 <?
 for ($i=0; $i<count($list); $i++) {
 ?>
-<tr>
+<tr<? if ($list[$i]['is_notice']) echo " class=\"board_notice\"";?>>
     <td class="td_bignum">
     <?
     if ($list[$i]['is_notice']) // 공지사항
@@ -99,22 +95,22 @@ for ($i=0; $i<count($list); $i++) {
     ?>
     </td>
     <? if ($is_checkbox) { ?><td><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
-    <td>
+    <td class="td_subject">
         <?
         echo $list[$i]['reply'];
         echo $list[$i]['icon_reply'];
         if ($is_category && $list[$i]['ca_name']) {
-            echo '<a href="'.$list[$i]['ca_name_href'].'">'.$list[$i]['ca_name'].'</a>';
-        }
+        ?>
+        <a href="'.$list[$i]['ca_name_href'].'" class="board_cate_link"><?=$list[$i]['ca_name']?></a>
+        <? } ?>
 
-        if ($list[$i]['is_notice'])
-            echo '<a href="'.$list[$i]['href'].'">'.$list[$i]['subject'].'</a>';
-        else
-            echo '<a href="'.$list[$i]['href'].'">'.$list[$i]['subject'].'</a>';
+        <a href="<?=$list[$i]['href']?>"><?=$list[$i]['subject']?>
 
-        if ($list[$i]['comment_cnt'])
-            echo '<a href="'.$list[$i]['comment_href'].'">'.$list[$i]['comment_cnt'].'</a>';
+        <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
 
+        </a>
+
+        <?
         // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
         // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
 
