@@ -205,8 +205,8 @@ h6 {margin:0 0 20px}
 
 /* 최신글 */
 .latest {clear:both;margin-bottom:30px;padding:20px;border:1px solid #eee;font-size:0.8em}
-.latest strong {display:block;float:left;margin-top:5px;width:200px}
-.latest ul {float:left;margin:0;padding:0;list-style:none}
+.latest strong {display:inline-block;margin-bottom:15px}
+.latest ul {margin:0;padding:0;list-style:none}
 .latest li a {display:inline-block;padding:4px 0}
 .latest p {padding:0}
 .latest_more {clear:both;text-align:right}
