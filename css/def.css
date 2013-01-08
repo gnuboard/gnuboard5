@@ -31,9 +31,9 @@ fieldset select {padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-a
 fieldset p {margin:0}
 fieldset .span_highlight {color:#ff3061}
 fieldset button,
-.fieldset_submit {padding:0 15px;height:23px;border:0;background:#333;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
+.fieldset_submit {padding:0 15px;height:24px;border:0;background:#333;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
 fieldset button:focus,
-.fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle}
+.fieldset_submit:focus {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -278,6 +278,17 @@ h6 {margin:0 0 20px}
 #fregister_private {float:right;width:49%}
 #fregister textarea {display:block;margin-bottom:10px;width:99%;height:200px;border:1px solid #ddd}
 #fregister label {display:inline-block;margin-right:10px}
+
+/* 회원 패스워드 확인 */
+#member_confirm {padding:150px 0;background:#fcfcfc;text-align:center}
+#member_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#member_confirm p {margin-bottom:20px;font-size:0.75em}
+#member_confirm_id {display:inline-block;margin-right:20px}
+
+/* 비밀글 패스워드 확인 */
+#password_confirm {padding:150px 0;background:#fcfcfc;text-align:center}
+#password_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#password_confirm p {margin-bottom:20px;font-size:0.75em}
 
 /* 폼메일 */
 #formmail textarea {height:100px}
