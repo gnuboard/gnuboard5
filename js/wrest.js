@@ -13,9 +13,7 @@ function wrestItemname(fld)
 function wrestTrim(fld)
 {
     var pattern = /(^\s+)|(\s+$)/g; // \s 공백 문자
-    //(/^\s+|\s+$/g,"");
-    var str = fld.value.replace(pattern, "");
-    return str;
+    return fld.value.replace(pattern, "");
 }
 
 // 필수 입력 검사
@@ -60,7 +58,7 @@ function wrestEmail(fld)
     }
 }
 
-// 한글인지 검사 (자음, 모음만 있는 한글은 불가)
+// 한글인지 검사 (자음, 모음 조합된 한글만 가능)
 function wrestHangul(fld)
 {
     if (!wrestTrim(fld)) return;
@@ -69,7 +67,7 @@ function wrestHangul(fld)
 
     if (pattern.test(fld.value)) {
         if (wrestFld == null) {
-            wrestMsg = wrestItemname(fld) + ' : 한글이 아닙니다. (자음, 모음만 있는 한글은 처리하지 않습니다.)\n';
+            wrestMsg = wrestItemname(fld) + ' : 한글이 아닙니다. (자음, 모음 조합된 한글만 가능)\n';
             wrestFld = fld;
         }
     }
@@ -186,7 +184,7 @@ function wrestMinLength(fld, css)
 {
     if (!wrestTrim(fld)) return;
 
-    var str = css.split('='); // minlength=?? <-- str[1]
+    var str = css.split('_'); // minlength_?? <-- str[1]
 
     if (wrestFld == null) {
         if (fld.value.length < parseInt(str[1])) {
@@ -283,8 +281,8 @@ function wrestSubmit()
                     case "telnum"       : wrestTelNum(el); break; // 김선용 2006.3 - 전화번호 형식 검사
                     case "imgext"       : wrestImgExt(el); break;
                     default :
-                        // css 가 minlength= 로 시작한다면 = 뒤의 숫자는 최소길이값
-                        if (/^minlength\=/.test(css)) {
+                        // css 가 minlength_ 로 시작한다면 _ 뒤의 숫자는 최소길이값
+                        if (/^minlength\_/.test(css)) {
                             wrestMinLength(el, css); break;
                         } else if (/^extension\=/.test(css)) {
                             wrestExtension(el, css); break;

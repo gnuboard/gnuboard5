@@ -14,7 +14,6 @@ var member_skin_path = "<?=$member_skin_path?>";
 <input type="hidden" id="mb_id_enabled" name="mb_id_enabled" value="">
 <input type="hidden" id="mb_nick_enabled" name="mb_nick_enabled" value="">
 <input type="hidden" id="mb_email_enabled" name="mb_email_enabled" value="">
-<!-- <input type="hidden" name="token" value="<?=$token?>"> -->
 <? if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?=$member['mb_sex']?>"><? } ?>
 <? if (isset($member['mb_nick_date']) &&  $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
 <input type="hidden" name="mb_nick_default" value="<?=$member['mb_nick']?>">
@@ -26,18 +25,18 @@ var member_skin_path = "<?=$member_skin_path?>";
 <tr>
     <th scope="row"><label for="reg_mb_id">아이디</label></th>
     <td>
-        <input type="text" id="reg_mb_id" name="mb_id" value="<?=$member['mb_id']?>" maxlength="20" <? if ($w=='u') { echo "readonly style='background-color:#dddddd;'"; } ?> <? if ($w=='') { echo 'required="required"'; } ?> title="회원아이디">
+        <input type="text" id="reg_mb_id" name="mb_id" class="minlength_3" value="<?=$member['mb_id']?>" maxlength="20" <? if ($w=='u') { echo "readonly style='background-color:#dddddd;'"; } ?> <? if ($w=='') { echo 'required="required"'; } ?> title="회원아이디">
         <span id="msg_mb_id"></span>
         <span>영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_password">패스워드</label></th>
-    <td><input type="password" id="reg_mb_password" name="mb_password" maxlength="20" <?=($w=='')?'required="required"':'';?> title="패스워드"></td>
+    <td><input type="password" id="reg_mb_password" name="mb_password" class="minlength_3" <?=($w=='')?'required="required"':'';?> maxlength="20" title="패스워드"></td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password_re">패스워드 확인</label></th>
-    <td><input type="password" id="reg_mb_password_re" name="mb_password_re" maxlength="20" <?=($w=='')?'required="required"':'';?> title="패스워드 확인"></td>
+    <td><input type="password" id="reg_mb_password_re" name="mb_password_re" class="minlength_3" <?=($w=='')?'required="required"':'';?> maxlength="20" title="패스워드 확인"></td>
 </tr>
 </table>
 
@@ -46,7 +45,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <tr>
     <th scope="row"><label for="reg_mb_name">이름</label></th>
     <td>
-        <input id="reg_mb_name" name="mb_name" value="<?=$member['mb_name']?>" <?=$member['mb_name']?"readonly2":"";?><?echo($w==''?'required="required"':'');?> title="이름">
+        <input type="text" id="reg_mb_name" name="mb_name" class="hangul" value="<?=$member['mb_name']?>" <?=$member['mb_name']?"readonly2":"";?><?echo($w==''?'required="required"':'');?> title="이름">
         <? if ($w=='') { echo "(공백없이 한글만 입력 가능)"; } ?>
     </td>
 </tr>
@@ -55,7 +54,7 @@ var member_skin_path = "<?=$member_skin_path?>";
     <th scope="row"><label for="reg_mb_nick">별명</label></th>
     <td>
         <input type="hidden" name="mb_nick_default" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>">
-        <input type="text" id="reg_mb_nick" name="mb_nick" maxlength="20" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>"<?echo($w==''?'required="required"':'');?> title="별명">
+        <input type="text" id="reg_mb_nick" name="mb_nick" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" maxlength="20" <?echo($w==''?'required="required"':'');?> title="별명">
         <span id="msg_mb_nick"></span>
         <br>공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)
         <br>별명을 바꾸시면 앞으로 <?=(int)$config['cf_nick_modify']?>일 이내에는 변경 할 수 없습니다.
@@ -67,7 +66,7 @@ var member_skin_path = "<?=$member_skin_path?>";
     <th scope="row"><label for="reg_mb_email">E-mail</label></th>
     <td>
         <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
-        <input type="text" id="reg_mb_email" name="mb_email" maxlength="100" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>'>
+        <input type="text" id="reg_mb_email" name="mb_email" class="email" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' maxlength="100" required="required" title="E-mail">
         <span id="msg_mb_email"></span>
         <? if ($config['cf_use_email_certify']) { ?>
             <? if ($w=='') { echo "<br>e-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; } ?>
@@ -179,25 +178,23 @@ var member_skin_path = "<?=$member_skin_path?>";
 <? } ?>
 </table>
 
-<?=get_captcha('wr_key', 1);?>
+<?=get_captcha("wr_key", 1);?>
 
 <div class="btn_confirm">
     <input type="submit" value="회원가입" accesskey="s">
 </div>
 </form>
 
-<script src="<?="$g4[path]/js/jquery.kcaptcha.js"?>"></script>
 <script>
 $(function(){
+    /*
     $("#reg_mb_id").blur(function(){
         var msg = reg_mb_id_check();
-        //$("#msg_mb_id").html(msg).css('color', 'red');
         if (msg) alert(msg);
     });
 
     $("#reg_mb_nick").blur(function(){
         var msg = reg_mb_nick_check();
-        //$("#msg_mb_nick").html(msg).css('color', 'red');
         if (msg) alert(msg);
     });
 
@@ -205,6 +202,7 @@ $(function(){
         var msg = reg_mb_email_check();
         if (msg) alert(msg);
     });
+    */
 });
 
 

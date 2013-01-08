@@ -1,6 +1,6 @@
 <?
 include_once('./_common.php');
-include_once($g4['path'].'/plugin/captcha/captcha.lib.php');
+if ($captcha->lib) include_once($captcha->lib);
 
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));

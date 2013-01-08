@@ -1,4 +1,4 @@
-function chk_captcha(input_key)
+function check_captcha(input_key)
 {
     if (typeof(input_key) != "undefined") {
         var captcha_result = false;
@@ -21,58 +21,16 @@ function chk_captcha(input_key)
     return true;
 }
 
-function l_PlaySound(url, placeholderId) {
-  if (document.getElementById) {
-    var soundUrl = url;
-    var placeholder = document.getElementById(placeholderId);
-
-    placeholder.innerHTML = "";
-
-    document.body.style.cursor = 'wait';
-    var html5SoundPlayed = false;
-    var browserCompatibilityCheck = document.createElement('audio');
-    if (!!(browserCompatibilityCheck.canPlayType) &&
-        !!(browserCompatibilityCheck.canPlayType("audio/wav")) &&
-        !l_DetectFirefox3()) {
-      sound = new Audio(soundUrl);
-      sound.id = 'LBD_CaptchaSoundAudio';
-      sound.autoplay = true;
-      sound.controls = false;
-      sound.autobuffer = false;
-      sound.loop = false;
-
-      placeholder.appendChild(sound);
-      html5SoundPlayed = true;
-    }
-
-    if (!html5SoundPlayed) {
-      var objectSrc = "<object id='LBD_CaptchaSoundObject' classid='clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95' height='0' width='0' style='width:0; height:0;'><param name='AutoStart' value='1' /><param name='Volume' value='0' /><param name='PlayCount' value='1' /><param name='FileName' value='" + soundUrl + "' /><embed id='LBD_CaptchaSoundEmbed' src='" + soundUrl + "' autoplay='true' hidden='true' volume='100' type='audio/x-wav' style='display:inline;' /></object>";
-
-      placeholder.innerHTML = objectSrc;
-    }
-
-    document.body.style.cursor = 'default';
-  }
-}
-
-function l_DetectFirefox3() {
-  var detected = false;
-  if (navigator && navigator.userAgent) {
-    var matches = navigator.userAgent.match(/(Firefox)\/(3\.6\.[^;\+,\/\s]+)/);
-    if (matches) {
-      detected = true;
-    }
-  }
-  return detected;
-}
-
 $(function() {
-    $("#captcha").click(function() {
+    $("#captcha").click(function(e) {
         this.setAttribute("src", g4_path+"/plugin/captcha/run.php?t="+(new Date).getTime());
-        //$("#captcha_key").focus();//이미지 새로고침 후 입력박스에 포커스 : 지운아빠 2012-07-13
-        //캡챠 클릭 시에 포커스 줘야 하는데 페이지 새로 고침되면 포커스를 줘서 주석처리 : 지운아빠 2012-08-03
+        var keycode = (e.keyCode ? e.keyCode : e.which);
+        // 첫 실행에서는 포커스를 주지 않음
+        if (typeof(keycode) != "undefined") {
+            $("#captcha_key").focus();//이미지 새로고침 후 입력박스에 포커스 : 지운아빠 2012-07-13
+        }
     })
-    .css("cursor", "pointer")
+    .css("cursor", "pointer");
     .trigger("click");
 
     $("#captcha_wav").click(function(){

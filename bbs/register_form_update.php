@@ -15,8 +15,8 @@ if ($w == 'u' && $is_admin == 'super') {
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
-if (!chk_tcaptcha("user_answer")) {
-    alert("정상적인 접근이 아닌것 같습니다.");
+if (!chk_captcha("wr_key")) {
+    alert("자동등록방지 코드에 오류가 있습니다.");
 }
 
 $mb_id = trim(strip_tags(mysql_escape_string($_POST[mb_id])));

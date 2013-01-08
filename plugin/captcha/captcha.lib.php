@@ -80,10 +80,6 @@ class captcha
 
         // The text to draw
         $captcha_key = $this->get_captcha_key();
-        /*
-        $_SESSION['ss_captcha_key'] = $captcha_key;
-        $_SESSION['ss_captcha_cnt'] = 0;
-        */
         
         set_session('ss_captcha_key', $captcha_key);
         set_session('ss_captcha_cnt', 0);

@@ -1597,9 +1597,9 @@ function check_mb_nick($reg_mb_nick)
 
     // 별명은 한글, 영문, 숫자만 가능
     if (!check_string($reg_mb_nick, _G4_HANGUL_ + _G4_ALPHABETIC_ + _G4_NUMERIC_)) {
-        return "공백없이 한글, 영문, 숫자만 입력 가능합니다.";
+        return "별명은 공백없이 한글, 영문, 숫자만 입력 가능합니다.";
     } else if (strlen($reg_mb_nick) < 4) {
-        return "한글 2글자, 영문 4글자 이상 입력 가능합니다.";
+        return "별명은 한글 2글자, 영문 4글자 이상 입력 가능합니다.";
     } else {
         $row = sql_fetch(" select count(*) as cnt from {$g4['member_table']} where mb_nick = '$reg_mb_nick' ");
         if ($row['cnt']) {
