@@ -101,7 +101,7 @@ for ($i=0; $i<count($list); $i++) {
         echo $list[$i]['icon_reply'];
         if ($is_category && $list[$i]['ca_name']) {
         ?>
-        <a href="'.$list[$i]['ca_name_href'].'" class="board_cate_link"><?=$list[$i]['ca_name']?></a>
+        <a href="<?=$list[$i]['ca_name_href']?>" class="board_cate_link"><?=$list[$i]['ca_name']?></a>
         <? } ?>
 
         <a href="<?=$list[$i]['href']?>"><?=$list[$i]['subject']?>

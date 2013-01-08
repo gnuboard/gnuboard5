@@ -272,11 +272,14 @@ h6 {margin:0 0 20px}
 #fcategory select {margin-right:10px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 
 #board_list caption {padding:0;height:0;overflow:hidden}
-.board_cate_link {display:inline-block;margin-right:10px;font-weight:bold}
+.board_cate_link {display:inline-block;margin-right:10px;color:#ff7200;font-weight:bold;text-decoration:none}
 .td_subject img {margin-left:5px}
 
 /* 게시판 쓰기 */
 #board_write caption {padding:0;height:0;overflow:hidden}
+
+/* 게시판 읽기 */
+#board_view {margin-bottom:30px;padding:10px;border:1px solid #ddd}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
