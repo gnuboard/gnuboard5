@@ -345,7 +345,7 @@ h6 {margin:0 0 20px}
 .bo_vc_act:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act li {float:left;margin-left:5px}
 .bo_vc_act a {color:#000;text-decoration:none}
-#bo_vc_w {position:relative;zoom:1}
+#bo_vc_w {position:relative;margin-top:10px;zoom:1}
 #bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc_w fieldset {margin:0;padding:0;border:0;background:transparent}
 #bo_vc_w textarea {margin:10px 0;width:98%;height:50px}
