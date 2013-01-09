@@ -9,7 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['point_table']} ";
 
 $sql_search = " where (1) ";
-if (isset($stx)) {
+if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case 'mb_id' :
@@ -84,15 +84,9 @@ function point_clear()
         <?=$listall?>
         전체 <?=number_format($total_count)?> 건
         <?
-<<<<<<< HEAD
-        if ($mb['mb_id'])
-            echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
-        else {
-=======
         if (isset($mb['mb_id']) && $mb['mb_id']) {
             echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
         } else {
->>>>>>> 35e2a0e57216e9ff77b98266f30f5e8f87800654
             $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g4['point_table']} ");
             echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
         }
@@ -179,11 +173,7 @@ if ($i == 0)
 </div>
 
 <?
-<<<<<<< HEAD
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
-=======
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
->>>>>>> 35e2a0e57216e9ff77b98266f30f5e8f87800654
 ?>
 <div class="pg">
     <?=$pagelist?>

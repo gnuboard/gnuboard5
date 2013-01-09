@@ -6,15 +6,12 @@ check_demo();
 
 auth_check($auth[$sub_menu], 'w');
 
-check_token();
+for ($i=0; $i<count($_POST['chk']); $i++) {
 
-for ($i=0; $i<count($chk); $i++)
-{
     // 실제 번호를 넘김
-    $k = $chk[$i];
+    $k = $_POST['chk'][$i];
 
-    if ($is_admin != 'super')
-    {
+    if ($is_admin != 'super') {
         $sql = " select count(*) as cnt from {$g4['board_table']} a, {$g4['group_table']} b
                   where a.gr_id = '{$_POST['gr_id'][$k]}'
                     and a.gr_id = b.gr_id

@@ -1567,4 +1567,11 @@ function escape_trim($field)
 {
     return mysql_real_escape_string(htmlentities(trim($field)));
 }
+
+
+// $_POST 형식에서 checkbox 엘리먼트의 checked 속성에서 checked 가 되어 넘어 왔는지를 검사
+function is_checked($field)
+{
+    return !empty($_POST[$field]);
+}
 ?>

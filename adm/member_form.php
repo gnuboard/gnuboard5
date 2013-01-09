@@ -55,20 +55,6 @@ else if ($w == 'u')
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
-<<<<<<< HEAD
-if ($mb['mb_mailling'] == 1) $mailling_checked = 'checked="checked"'; //메일수신
-else {
-    $mailing_checked = '';
-    $mailling_no_checked = 'checked="checked"';
-}
-if ($mb['mb_sms']) $sms_checked = 'checked="checked"'; // SMS 수신
-else {
-    $sms_checked = '';
-    $sms_no_checked = 'checked="checked"';
-}
-if ($mb['mb_open']) $open_checked = 'checked="checked"'; // 정보 공개
-else {
-=======
 $mailling_no_checked = '';
 $sms_no_checked = '';
 $open_no_checked = '';
@@ -89,7 +75,6 @@ if ($mb['mb_sms']) {
 if ($mb['mb_open']) {
     $open_checked = 'checked="checked"'; // 정보 공개
 } else {
->>>>>>> 2b5c471bdb62542fc9cb8b6740a934c34e5de04b
     $open_checked = '';
     $open_no_checked = 'checked="checked"';
 }
@@ -264,7 +249,7 @@ include_once('./admin.head.php');
 
 <fieldset id="admin_confirm">
     <legend>XSS 혹은 CSRF 방지</legend>
-    <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
+    <p>관리자 권한을 탈취 당하는 경우를 대비하여 관리자의 패스워드를 다시 한번 확인합니다.</p>
     <label for="admin_password">관리자 패스워드</label>
     <input type="password" id="admin_password" name="admin_password" class="required" title="관리자 패스워드">
 </fieldset>
