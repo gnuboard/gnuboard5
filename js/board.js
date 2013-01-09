@@ -29,7 +29,7 @@ function drawFont(fontSize) {
 
     var subject=document.getElementById("writeSubject"); 
     var content=document.getElementById("writeContents"); 
-    var comment=document.getElementById("commentContents");
+    var comment=document.getElementById("bo_vc");
     var wr_subject=document.getElementById("wr_subject");
     var wr_content=document.getElementById("wr_content");
 
