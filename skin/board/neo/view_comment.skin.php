@@ -71,18 +71,20 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
-        <? if ($is_guest) { ?>
-        <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" maxLength="20" size="10" required>
-        <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" maxLength="20" size="10" required>
-        <img id="kcaptcha_image" alt="" />
-        <input type="text" name="wr_key" title="왼쪽의 글자를 입력하세요." size="10" required>
-        <? } ?>
-        <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">비밀글
-        <? if ($comment_min || $comment_max) { ?><span id="char_count"></span>글자<?}?>
-        <textarea id="wr_content" name="wr_content" required
-        <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
-        <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
-        <input type="submit" value="댓글입력">
+        <fieldset>
+            <? if ($is_guest) { ?>
+            <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input" maxLength="20" size="10" required>
+            <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input" maxLength="20" size="10" required>
+            <img id="kcaptcha_image" alt="" />
+            <input type="text" name="wr_key" title="왼쪽의 글자를 입력하세요." size="10" required>
+            <? } ?>
+            <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">비밀글
+            <? if ($comment_min || $comment_max) { ?><span id="char_count"></span>글자<?}?>
+            <textarea id="wr_content" name="wr_content" required
+            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
+            <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+            <input type="submit" class="fieldset_submit" value="댓글입력">
+        </fieldset>
     </aside>
 
     </form>

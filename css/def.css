@@ -28,12 +28,12 @@ td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;
 fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fefefe}
 legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#333;color:#fff}
 fieldset .fieldset_input {padding:3px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
-fieldset .fieldset_input:focus {padding:4px;border:0;background:#333;color:#fff}
+fieldset .fieldset_input:focus {padding:4px;border:0;background:#555;color:#fff}
 fieldset select {padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 fieldset p {margin:0}
 fieldset .span_highlight {color:#ff3061}
 fieldset button,
-.fieldset_submit {padding:0 15px;height:24px;border:0;background:#333;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
+.fieldset_submit {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
 fieldset button:focus,
 .fieldset_submit:focus {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle}
 
@@ -123,7 +123,7 @@ h6 {margin:0 0 20px}
 #poll ul {margin:10px}
 #poll li {margin:7px 0}
 #poll footer {padding:10px;border-top:1px solid #efeada;text-align:center}
-#poll footer input {padding:0 15px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
+#poll footer input {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */
 #poll_result section {margin:0 auto 20px;padding:10px;width:90%}
@@ -195,7 +195,7 @@ h6 {margin:0 0 20px}
 .btn02 {display:inline-block;padding:0 10px;height:25px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.8em;text-decoration:none;line-height:2.2em}
 .btn02:hover,
 .btn02:focus {}
-.btn03 {display:inline-block;padding:0 10px;height:25px;border:1px solid #555;background:#666;color:#fff;font-size:0.8em;text-decoration:none;line-height:2.2em}
+.btn03 {display:inline-block;padding:0 10px;height:25px;border:1px solid #555;background:#555;color:#fff;font-size:0.8em;text-decoration:none;line-height:2.2em}
 .btn02:hover,
 .btn02:focus {}
 
@@ -209,7 +209,7 @@ h6 {margin:0 0 20px}
 .frm_tbl textarea,
 .frm_tbl .frm_input {padding:3px;background:#f5f5f2}
 .frm_tbl textarea:focus,
-.frm_tbl .frm_input:focus {padding:4px;border:0;background:#333;color:#fff}
+.frm_tbl .frm_input:focus {padding:4px;border:0;background:#555;color:#fff}
 .frm_tbl textarea {width:90%}
 .frm_tbl select {padding:2px}
 .frm_file {display:block;margin-bottom:5px}
@@ -332,6 +332,7 @@ h6 {margin:0 0 20px}
 .bo_vc_act:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act li {float:left;margin-left:5px}
 .bo_vc_act a {color:#000;text-decoration:none}
+#bo_vc_w fieldset {margin:0;padding:0;border:0;background:transparent}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
