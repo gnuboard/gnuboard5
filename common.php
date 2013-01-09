@@ -491,8 +491,9 @@ if (isset($bo_table)) {
     }
 }
 
-if (isset($gr_id))
+if (!empty($_GET['gr_id'])) {
     $group = sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
+}
 
 if ($is_admin != 'super') {
     // 접근가능 IP

@@ -1,4 +1,7 @@
 <?
+global $lo_location;
+global $lo_url;
+
 include_once('./_common.php');
 include_once($g4['path'].'/head.sub.php');
 // 필수 입력입니다.

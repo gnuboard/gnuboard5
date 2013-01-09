@@ -1,11 +1,10 @@
 <?
 $sub_menu = "300100";
 include_once('./_common.php');
-include_once ($g4['path'].'/lib/cheditor4.lib.php');
+
+if (isset($editor->lib))  include_once($editor->lib);
 
 auth_check($auth[$sub_menu], 'w');
-
-$token = get_token();
 
 function b_draw($pos, $color='red') {
     return "border-{$pos}-width:1px; border-{$pos}-color:{$color}; border-{$pos}-style:solid; ";
@@ -17,24 +16,19 @@ if (!$row['cnt'])
     alert('게시판그룹이 한개 이상 생성되어야 합니다.', './boardgroup_form.php');
 
 $html_title = '게시판';
+
 if ($w == '') {
+
     $html_title .= ' 생성';
 
     $bo_table_attr = 'class="required alnum_"';
 
     $board['bo_count_delete'] = 1;
     $board['bo_count_modify'] = 1;
-<<<<<<< HEAD
-    $board['bo_read_point'] = $config[cf_read_point];
-    $board['bo_write_point'] = $config[cf_write_point];
-    $board['bo_comment_point'] = $config[cf_comment_point];
-    $board['bo_download_point'] = $config[cf_download_point];
-=======
     $board['bo_read_point'] = $config['cf_read_point'];
     $board['bo_write_point'] = $config['cf_write_point'];
     $board['bo_comment_point'] = $config['cf_comment_point'];
     $board['bo_download_point'] = $config['cf_download_point'];
->>>>>>> 2b5c471bdb62542fc9cb8b6740a934c34e5de04b
 
     $board['bo_gallery_cols'] = 4;
     $board['bo_table_width'] = 97;
@@ -49,9 +43,10 @@ if ($w == '') {
     $board['bo_use_search'] = 1;
     $board['bo_skin'] = 'basic';
     $board['gr_id'] = $gr_id;
-    $board['bo_disable_tags'] = 'script|iframe';
     $board['bo_use_secret'] = 0;
+
 } else if ($w == 'u') {
+
     $html_title .= ' 수정';
 
     if (!$board['bo_table'])
@@ -63,6 +58,7 @@ if ($w == '') {
     }
 
     $bo_table_attr = 'readonly';
+
 }
 
 if ($is_admin != 'super') {
@@ -73,10 +69,6 @@ if ($is_admin != 'super') {
 $g4['title'] = $html_title;
 include_once ('./admin.head.php');
 ?>
-
-<script src="<?=$g4['cheditor4_path']?>/cheditor.js"></script>
-<?=cheditor1('bo_content_head', '100%', '200');?>
-<?=cheditor1('bo_content_tail', '100%', '200');?>
 
 <ul class="frm_list">
     <li><a href="#frm_basic">기본 설정</a></li>
@@ -94,7 +86,6 @@ include_once ('./admin.head.php');
 <input type="hidden" name="sst" value="<?=$sst?>">
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
 
 <table id="frm_basic" class="frm_tbl">
 <caption>게시판 기본 설정</caption>
@@ -546,26 +537,6 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_image_head">상단 이미지</label></th>
-    <td colspan="2">
-        <input type="file" id="bo_image_head" name="bo_image_head">
-        <?
-        if ($board['bo_image_head'])
-            echo '<div><a href="'.$g4['path'].'/data/file/'.$board['bo_table'].'/'.$board['bo_image_head'].'" target="_blank">'.$board['bo_image_head'].'</a> <input type="checkbox" id="bo_image_head_del" name="bo_image_head_del" value="'.$board['bo_image_head'].'"> <label for="bo_image_head_del">삭제</label></div>';
-        ?>
-    </td>
-</tr>
-<tr>
-    <th scope="row"><label for="bo_image_tail">하단 이미지</label></th>
-    <td colspan="2">
-        <input type="file" id="bo_image_tail" name="bo_image_tail">
-        <?
-        if ($board['bo_image_tail'])
-            echo '<div><a href="'.$g4['path'].'/data/file/'.$board['bo_table'].'/'.$board['bo_image_tail'].'" target="_blank">'.$board['bo_image_tail'].'</a> <input type="checkbox" id="bo_image_tail_del" name="bo_image_tail_del" value="'.$board['bo_image_tail'].'"> 삭제</div>';
-        ?>
-    </td>
-</tr>
-<tr>
     <th scope="row"><label for="bo_include_head">상단 파일 경로</label></th>
     <td>
         <input type="text" id="bo_include_head" name="bo_include_head" value="<?=$board['bo_include_head']?>" size="50">
@@ -588,7 +559,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="tx_bo_content_head">상단 내용</label></th>
     <td>
-        <?=cheditor2('bo_content_head', $board['bo_content_head']);?>
+        <?=editor_textarea("bo_content_head", $board['bo_content_head']);?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_content_head" name="chk_content_head" value="1">
@@ -598,7 +569,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="tx_bo_content_tail">하단 내용</label></th>
     <td>
-        <?=cheditor2('bo_content_tail', $board['bo_content_tail']);?>
+        <?=editor_textarea("bo_content_tail", $board['bo_content_tail']);?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_content_tail" name="chk_content_tail" value="1">
@@ -739,15 +710,6 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 </tbody>
 </table>
 
-<?/* 이것은 무엇일까?????????????????????? ?>
-<tr>
-<td><input type="checkbox" id="chk_disable_tags" name="chk_disable_tags" value="1"></td>
-<td>사용금지 태그</td>
-<td><input type="text" id="bo_disable_tags" name="bo_disable_tags" value="<?=get_text($board['bo_disable_tags'])?>">
-    <?=help('태그와 태그 사이는 | 로 구분하세요. (예: <b>script</b>|<b>iframe</b>) HTML 사용시 금지할 태그를 입력하는곳 입니다.')?></td>
-</tr>
-<?*/?>
-
 <table id="frm_point" class="frm_tbl">
 <caption>게시판 포인트 설정</caption>
 <tbody>
@@ -856,26 +818,29 @@ function set_point(f) {
     }
 }
 
-function fboardform_submit(f) {
-    var tmp_title;
-    var tmp_image;
-
-    tmp_title = "상단";
-    tmp_image = f.bo_image_head;
-    if (tmp_image.value) {
-        if (!tmp_image.value.toLowerCase().match(/.(gif|jpg|png)$/i)) {
-            alert(tmp_title + "이미지가 gif, jpg, png 파일이 아닙니다.");
-            return false;
+function chk_bo_image(fld)
+{
+    if (fld.value) {
+        if (!fld.value.toLowerCase().match(/.(gif|jpg|png)$/i)) {
+            return "이미지가 gif, jpg, png 파일이 아닙니다.";
         }
     }
+    return "";
+}
 
-    tmp_title = "하단";
-    tmp_image = f.bo_image_tail;
-    if (tmp_image.value) {
-        if (!tmp_image.value.toLowerCase().match(/.(gif|jpg|png)$/i)) {
-            alert(tmp_title + "이미지가 gif, jpg, png 파일이 아닙니다.");
-            return false;
-        }
+function fboardform_submit(f) 
+{
+    <?=editor_getdata("bo_content_head");?>
+    <?=editor_getdata("bo_content_tail");?>
+
+    if (msg = chk_bo_image(f.bo_image_head)) {
+        alert("상단 "+msg);
+        return false;
+    }
+
+    if (msg = chk_bo_image(f.bo_image_tail)) {
+        alert("하단 "+msg);
+        return false;
     }
 
     if (parseInt(f.bo_count_modify.value) < 1) {
@@ -889,9 +854,6 @@ function fboardform_submit(f) {
         f.bo_count_delete.focus();
         return false;
     }
-
-    <?=cheditor3('bo_content_head')."\n";?>
-    <?=cheditor3('bo_content_tail')."\n";?>
 
     f.action = './board_form_update.php';
     return true;
