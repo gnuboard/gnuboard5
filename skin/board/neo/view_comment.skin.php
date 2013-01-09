@@ -27,20 +27,14 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <article id="c_<?=$comment_id?>">
         <header>
             <h1><?=$list[$i]['name']?>님의 댓글</h1>
-            <dl>
+            <dl class="bo_vc_info">
                 <dt>아이피</dt>
                 <dd><? if ($is_ip_view) { echo $list[$i]['ip'];} ?></dd>
                 <dt>작성일</dt>
                 <dd><time datetime="<?=date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime']))?>"><?=$list[$i]['datetime']?></time></dd>
             </dl>
-            <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) { ?>
-            <ul>
-                <? if ($list[$i]['is_reply']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'c');">답변</a></li><? } ?>
-                <? if ($list[$i]['is_edit']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'cu');">수정</a></li><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><li><a href="javascript:comment_delete('<?=$list[$i]['del_link']?>');">삭제</a></li><? } ?>
-            </ul>
-            <? } ?>
         </header>
+
         <!-- 댓글 출력 -->
         <p><?=$str?></p>
 
@@ -49,6 +43,16 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
         <input type="hidden" id="secret_comment_<?=$comment_id?>" value="<?=strstr($list[$i]['wr_option'],"secret")?>">
         <textarea id="save_comment_<?=$comment_id?>"><?=get_text($list[$i]['content1'], 0)?></textarea>
+
+        <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) { ?>
+        <footer>
+            <ul class="bo_vc_act">
+                <? if ($list[$i]['is_reply']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'c');">답변</a></li><? } ?>
+                <? if ($list[$i]['is_edit']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'cu');">수정</a></li><? } ?>
+                <? if ($list[$i]['is_del'])  { ?><li><a href="javascript:comment_delete('<?=$list[$i]['del_link']?>');">삭제</a></li><? } ?>
+            </ul>
+        </footer>
+        <? } ?>
     </article>
     <?}?>
 
