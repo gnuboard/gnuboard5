@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="bo_v">
-    <h1 id="bo_v_h1"><? if ($is_category) { echo ($category_name ? "{$view['ca_name']} " : ""); } ?><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
+    <h1 id="bo_v_h1"><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
 
     <aside>
         <h2>게시물 상단 링크</h2>
@@ -49,6 +49,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
         <dl>
+            <? if ($is_category) { ?>
+            <dt>분류</dt>
+            <dd><?=($category_name ? "{$view['ca_name']} " : "");?></dd>
+            <? } ?>
             <dt>작성자</dt>
             <dd><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></dd>
             <dt>작성일</dt>
@@ -63,7 +67,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <? } ?>
             <? if ($is_nogood) { ?>
             <dt>비추천</dt>
-            <dd><?=number_format($view['wr_nogood'])?></dd>
+            <dd><?=number_format($view['wr_nogood'])?>회</dd>
             <? } ?>
         </dl>
     </section>

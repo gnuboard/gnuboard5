@@ -8,7 +8,7 @@ h1, h2, h3, h4, h5, h6 {font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
 form, img {border:0}
-label, input, img {vertical-align:middle}
+label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"verdana","dotum"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
 hr {display:none}
@@ -68,7 +68,7 @@ h6 {margin:0 0 20px}
 #logo a {display:inline-block;padding:20px 30px}
 
 /* 상단메뉴 */
-#tnb {padding-left:10px;border-bottom:1px solid #ccc;background:#ebebe9;zoom:1}
+#tnb {padding-left:30px;border-bottom:1px solid #ccc;background:#ebebe9;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin-left:-1px}
 #tnb a {display:block;padding:0 20px;height:35px;border-right:1px solid #ddd;border-left:1px solid #ddd;color:#595959;font-family:"dotum";font-size:0.8em;font-weight:bold;text-decoration:none;line-height:3em}
@@ -150,7 +150,7 @@ h6 {margin:0 0 20px}
 #poll_result_another a {display:block;padding:5px 0}
 
 /* 레이아웃 중간 */
-#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:1px 250px 30px 30px;min-height:520px;height:auto !important;height:520px;min-width:1000px;width:auto !important;width:1000px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
+#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:1px 250px 30px 30px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
 #wrapper h1 {margin-top:30px}
 
 /* 레이아웃 하단 */
@@ -271,7 +271,10 @@ h6 {margin:0 0 20px}
 #bo_sch {float:left;padding:0;margin:0;border:0}
 #bo_sch legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #bo_sch form {display:inline-block}
-#fcategory select {margin-right:10px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
+#bo_sch .fieldset_submit {border:1px solid #ccc;background:#fafafa;color:#000}
+#bo_cate {margin-bottom:10px}
+#fcategory {display:inline-block}
+#fcategory select {margin-right:5px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 
 #bo_list caption {padding:0;height:0;overflow:hidden}
 .bo_cate_link {display:inline-block;margin-right:10px;color:#ff7200;font-weight:bold;text-decoration:none}
@@ -352,7 +355,7 @@ h6 {margin:0 0 20px}
 #memo_write textarea {height:100px}
 
 /* pagination */
-.pg {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.875em;text-align:center}
-.pg_page, .pg_current {display:inline-block;position:relative;margin-left:-6px;padding:0 10px;height:25px;border:1px solid #ddd;background:#fff;line-height:1.9em;vertical-align:middle}
+.pg {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.75em;text-align:center}
+.pg_page, .pg_current {display:inline-block;position:relative;margin-left:-6px;padding:0 12px;height:30px;border:1px solid #ddd;background:#fff;color:#000;line-height:2.6em;vertical-align:middle}
 .pg_page {text-decoration:none}
-.pg_current {font-weight:normal}
+.pg_current {background:#595959;color:#fff}
