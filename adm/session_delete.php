@@ -5,7 +5,7 @@ include_once("./_common.php");
 if ($is_admin != "super")
     alert("최고관리자만 접근 가능합니다.", $g4[path]);
 
-$g4[title] = "세션파일 일괄삭제";
+$g4['title'] = "세션파일 일괄삭제";
 include_once("./admin.head.php");
 echo "'완료' 메세지가 나오기 전에 프로그램의 실행을 중지하지 마십시오.<br><br>";
 echo "<span id='ct'></span>";
