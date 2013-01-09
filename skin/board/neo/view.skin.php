@@ -25,33 +25,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </dl>
     </section>
 
-    <aside id="bo_v_top">
-        <h2>게시물 상단 링크</h2>
-        <!-- 링크 버튼 -->
-        <? if ($update_href || $delete_href) {?>
-        <ul id="bo_v_my">
-            <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn02">수정</a></li><? } ?>
-            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" class="btn02">삭제</a></li><? } ?>
-        </ul>
-        <? } ?>
-
-        <?
-        ob_start();
-        ?>
-        <ul class="bo_v_com">
-            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" class="btn03">복사</a></li><? } ?>
-            <? if ($move_href) { ?><li><a href="<?=$move_href?>" class="btn03">이동</a></li><? } ?>
-            <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn02">검색</a></li><? } ?>
-            <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
-            <? if ($reply_href) { ?><li><a href="<?=$reply_href?>" class="btn02">답변</a></li><? } ?>
-            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
-        </ul>
-        <?
-        $link_buttons = ob_get_contents();
-        ob_end_flush();
-        ?>
-    </aside>
-
     <? if ($view['file'][$i]) {?>
     <section id="bo_v_file">
         <h2>첨부파일</h2>
@@ -66,7 +39,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <li>
                 <a href="javascript:file_download('<?=$view['file'][$i]['href']?>', '<?=urlencode($view['file'][$i]['source'])?>');">
                     <span><?=$view['file'][$i]['source']?> (<?=$view['file'][$i]['size']?>)</span>
-                    <span><?=$view['file'][$i]['download']?></span>
+                    <span class="bo_v_file_cnt"><?=$view['file'][$i]['download']?></span>
                     <span>DATE : <?=$view['file'][$i]['datetime']?></span>
                 </a>
             </li>
@@ -93,7 +66,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <li>
                 <a href="<?=$view['link_href'][$i]?>" target="_blank">
                     <span><?=$link?></span>
-                    <span><?=$view['link_hit'][$i]?></span>
+                    <span class="bo_v_link_cnt"><?=$view['link_hit'][$i]?>회 연결</span>
                 </a>
             </li>
         <?
@@ -103,6 +76,33 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </ul>
     </section>
     <? } ?>
+
+    <aside id="bo_v_top">
+        <h2>게시물 상단 링크</h2>
+        <!-- 링크 버튼 -->
+        <? if ($update_href || $delete_href) {?>
+        <ul id="bo_v_my">
+            <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn02">수정</a></li><? } ?>
+            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" class="btn02">삭제</a></li><? } ?>
+        </ul>
+        <? } ?>
+
+        <?
+        ob_start();
+        ?>
+        <ul class="bo_v_com">
+            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" class="btn03">복사</a></li><? } ?>
+            <? if ($move_href) { ?><li><a href="<?=$move_href?>" class="btn03">이동</a></li><? } ?>
+            <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn02">검색</a></li><? } ?>
+            <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
+            <? if ($reply_href) { ?><li><a href="<?=$reply_href?>" class="btn02">답변</a></li><? } ?>
+            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
+        </ul>
+        <?
+        $link_buttons = ob_get_contents();
+        ob_end_flush();
+        ?>
+    </aside>
 
     <article id="bo_v_article">
         <header>
