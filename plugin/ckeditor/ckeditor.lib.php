@@ -10,11 +10,13 @@ function editor_textarea($id, $content="", $class="")
     return $str;
 }
 
-function chk_editor($id, $textarea_name="내용")
+function editor_getdata($id)
 {
-    $str  = "var {$id}_data = CKEDITOR.instances.{$id}.getData();\n";
-    $str .= "    ";
-    $str .= "if (!{$id}_data) { alert(\"$textarea_name 입력해 주십시오.\"); return false; }\n";
-    return $str;
+    return "var {$id}_data = CKEDITOR.instances.{$id}.getData();\n";
+}
+
+function editor_empty($id, $textarea_name="내용을")
+{
+    return "if (!{$id}_data) { alert(\"$textarea_name 입력해 주십시오.\"); return false; }\n";
 }
 ?>
