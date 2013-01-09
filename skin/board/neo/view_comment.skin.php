@@ -76,10 +76,11 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input" maxLength="20" size="10" required>
             <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input" maxLength="20" size="10" required>
             <img id="kcaptcha_image" alt="" />
-            <input type="text" name="wr_key" title="왼쪽의 글자를 입력하세요." size="10" required>
+            <input type="text" name="wr_key" class="fieldset_input" title="왼쪽의 글자를 입력하세요." size="10" required>
             <? } ?>
-            <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">비밀글
-            <? if ($comment_min || $comment_max) { ?><span id="char_count"></span>글자<?}?>
+            <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">
+            <label for="wr_secret">비밀글</label>
+            <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
             <textarea id="wr_content" name="wr_content" required
             <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
             <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>

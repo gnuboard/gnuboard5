@@ -27,8 +27,10 @@ td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;
 /* 필드셋 */
 fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fefefe}
 legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#333;color:#fff}
-fieldset .fieldset_input {padding:3px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
-fieldset .fieldset_input:focus {padding:4px;border:0;background:#555;color:#fff}
+fieldset .fieldset_input,
+fieldset textarea {padding:3px;border:1px solid #ddd;background:#fff;vertical-align:middle}
+fieldset .fieldset_input:focus,
+fieldset textarea:focus {padding:4px;border:0;background:#555;color:#fff}
 fieldset select {padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 fieldset p {margin:0}
 fieldset .span_highlight {color:#ff3061}
@@ -332,7 +334,12 @@ h6 {margin:0 0 20px}
 .bo_vc_act:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act li {float:left;margin-left:5px}
 .bo_vc_act a {color:#000;text-decoration:none}
+#bo_vc_w {position:relative;zoom:1}
+#bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc_w fieldset {margin:0;padding:0;border:0;background:transparent}
+#bo_vc_w textarea {margin:10px 0;width:98%;height:50px}
+#bo_vc_w .fieldset_submit {float:right;margin:0 2% 0 0}
+#bo_vc_w #char_cnt {position:absolute;top:0;right:0}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
