@@ -108,11 +108,11 @@ h6 {margin:0 0 20px}
 #ol_submit {position:absolute;top:42px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 로그인 후 */
 #ol_after {padding-top:15px;width:219px;background:#f9f9f5;color:#000;font-size:0.75em}
-#ol_after header {padding:10px 0;text-align:center}
+#ol_after header {padding:0 0 13px;border-bottom:1px solid #dedace;text-align:center}
 #ol_after ul {padding:5px 0;background:#fff}
-#ol_after li a {display:block;position:relative;padding:7px 10px;color:#000;text-decoration:none}
-#ol_after li span {position:absolute;top:7px;right:10px}
-#ol_after footer {padding:7px 0 10px;text-align:center}
+#ol_after li a {display:block;position:relative;padding:7px 20px;color:#000;text-decoration:none}
+#ol_after li span {position:absolute;top:7px;right:19px;color:#ff7200}
+#ol_after footer {padding:7px 0 10px;border-top:1px solid #dedace;text-align:center}
 #ol_after footer a {display:inline-block;padding:0 10px;color:#000;text-decoration:none}
 
 /* 설문조사 */
