@@ -228,10 +228,11 @@ h6 {margin:0 0 20px}
 .latest_more a {display:inline-block;padding:5px 0}
 
 /* 테이블 항목별 정의 */
+.td_chk {width:40px;text-align:center}
 .td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
 .td_num {width:50px;text-align:center}
-.td_bignum {width:100px;text-align:center}
+.td_bignum {width:80px;text-align:center}
 .td_mb_id {width:120px;text-align:center}
 .td_nick {width:120px;text-align:center}
 .td_name {width:120px;text-align:left}
@@ -275,7 +276,6 @@ h6 {margin:0 0 20px}
 #bo_cate {margin-bottom:10px}
 #fcategory {display:inline-block}
 #fcategory select {margin-right:5px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
-
 #bo_list caption {padding:0;height:0;overflow:hidden}
 .bo_cate_link {display:inline-block;margin-right:10px;color:#ff7200;font-weight:bold;text-decoration:none}
 .td_subject img {margin-left:5px}
@@ -284,9 +284,29 @@ h6 {margin:0 0 20px}
 #bo_w caption {padding:0;height:0;overflow:hidden}
 
 /* 게시판 읽기 */
-#bo_v {margin-bottom:30px;border:1px solid #ddd}
-#bo_v_h1 {padding:25px 15px 15px;border-bottom:1px solid #efeada;font-size:0.9em}
-#bo_v aside h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_title {text-align:center}
+#bo_v {position:relative;margin-bottom:30px;border-top:3px solid #666;border-bottom:1px solid #ccc}
+#bo_v_h1 {margin:0 !important;padding:15px 0 0;font-size:1em}
+#bo_v_info {padding:0 0 10px;border-bottom:1px solid #efeada;zoom:1}
+#bo_v_info:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_info dl {font-size:0.75em}
+#bo_v_info dt {float:left}
+#bo_v_info dd {float:left;margin:0 20px 0 10px}
+#bo_v_top {zoom:1}
+#bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_top ul {padding:0;list-style:none}
+#bo_v_topmy {float:left}
+#bo_v_topmy li {float:left;margin-right:5px}
+#bo_v_topcom {float:right}
+#bo_v_topcom li {float:left;margin-left:5px}
+#bo_view h1 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_bottom {zoom:1}
+#bo_v_bottom:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_bottom h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_bottom ul {float:right;padding:0;list-style:none}
+#bo_v_bottom li {float:left;margin-left:5px}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
