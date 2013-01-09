@@ -19,7 +19,6 @@ function get_microtime()
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {
     $str = '';
-    $str .= "<div class=\"pg\">";
     if ($cur_page > 1) {
         $str .= '<a href="'.$url.'1'.$add.'" class="pg_page">처음</a>'.PHP_EOL;
     }
@@ -45,7 +44,7 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
     if ($cur_page < $total_page) {
         $str .= '<a href="'.$url.$total_page.$add.'" class="pg_page">맨끝</a>'.PHP_EOL;
     }
-    $str .= "</div>";
+    $str .= "";
 
     return $str;
 }
