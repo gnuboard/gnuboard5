@@ -13,27 +13,27 @@ $g4['title'] = '메일 테스트';
 include_once('./admin.head.php');
 
 if (isset($_POST['mail'])) {
-    check_token();
-
     $from_name  = '메일검사';
-    $from_email = 'mail@mail';
+    $from_email = $config['cf_email_admin'];
 
     $email = explode(',', $mail);
     for ($i=0; $i<count($email); $i++)
         mailer($from_name, $from_email, trim($email[$i]), '[메일검사] 제목', '<span style="font-size:9pt;">[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>'.date("Y-m-d H:i:s").'<p>이 메일 주소로는 회신되지 않습니다.</span>', 1);
-?>
-    <script>
-        alert('<?=$mail?>(으)로 메일을 발송 하였습니다.\\n\\n해당 주소로 메일이 왔는지 확인하여 주십시오.\\n\\n메일이 오지 않는다면 프로그램의 오류가 아닌 메일 서버(sendmail)의 오류일 가능성이 있습니다.\\n\\n이런 경우에는 웹 서버관리자에게 문의하여 주십시오.');
-    </script>
 
-<?
+    echo "<p>";
+    echo "결과메세지<br>";
+    echo "----------------------------------------------------------------------------------------<br>";
+    echo "다음의 메일 주소로 메일을 발송 하였습니다. ($mail)<br>";
+    echo "해당 주소로 메일이 왔는지 확인하여 주십시오.<br>";
+    echo "만약, 메일이 오지 않는다면 여러곳의 메일 주소로 메일을 보내 보십시오.<br>";
+    echo "그래도 메일이 하나도 도착하지 않는다면 메일 서버(sendmail server)의 오류일 가능성이 높습니다.<br>";
+    echo "이런 경우에는 웹 서버관리자에게 문의하여 주십시오.<br>";
+    echo "----------------------------------------------------------------------------------------";
+    echo "</p>";
 }
-
-$token = get_token();
 ?>
 
 <form id="fsendmailtest" name="fsendmailtest" method="post">
-<input type="hidden" id="token" name="token" value='<?=$token?>'>
 <p>
     <span></span>
     고객님들께서 메일이 오지 않는다고 하면 사용하는 메뉴입니다.<br>
