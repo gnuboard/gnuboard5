@@ -13,23 +13,26 @@ if ($is_nogood) $colspan++;
 
 <? if ($admin_href) { ?><div id="btn_bo_adm"><a href="<?=$admin_href?>">게시판 관리자 바로가기</a></div><?}?>
 
+<div id="bo_cate">
+    <? if ($is_category) { ?>
+    <form id="fcategory" name="fcategory" method="get">
+    <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
+        <option value=''>전체</option>
+        <?=$category_option?>
+    </select>
+    </form>
+    <? } ?>
+    <span>Total <?=number_format($total_count)?>건</span>
+    <?=$page?> 페이지
+</div>
+
 <div class="btn_bo">
     <fieldset id="bo_sch">
-        <legend>게시물 분류 및 검색</legend>
-
-        <? if ($is_category) { ?>
-        <form id="fcategory" name="fcategory" method="get">
-        <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
-            <option value=''>전체</option>
-            <?=$category_option?>
-        </select>
-        </form>
-        <? } ?>
+        <legend>게시물 검색</legend>
 
         <form name="fsearch" method="get">
         <input type="hidden" name="bo_table" value="<?=$bo_table?>">
         <input type="hidden" name="sca" value="<?=$sca?>">
-        <span>Total <?=number_format($total_count)?>건</span>
         <select name="sfl" title="검색대상">
             <option value="wr_subject">제목</option>
             <option value="wr_content">내용</option>
