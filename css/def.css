@@ -289,11 +289,11 @@ h6 {margin:0 0 20px}
 /* 게시판 읽기 */
 #bo_v_title {text-align:center}
 #bo_v {position:relative;margin-bottom:30px;border-top:3px solid #666;border-bottom:1px solid #ccc}
-#bo_v_h1 {margin:0 !important;padding:15px 0 0;font-size:1em}
+#bo_v_h1 {margin:0 !important;padding:15px 0 0 10px;font-size:1em}
 #bo_v_info {padding:0 0 10px;border-bottom:1px solid #efeada;zoom:1}
 #bo_v_info:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_info dl {font-size:0.75em}
+#bo_v_info dl {padding:0 0 0 10px;font-size:0.75em}
 #bo_v_info dt {float:left}
 #bo_v_info dd {float:left;margin:0 20px 0 10px}
 #bo_v_top {zoom:1}
@@ -307,6 +307,17 @@ h6 {margin:0 0 20px}
 #bo_v_article {zoom:1}
 #bo_v_article:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_article h1 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_article p {padding:0}
+#bo_v_file {border-bottom:1px solid #666;background:#555;font-size:0.75em}
+#bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_file ul {margin:0;padding:0;list-style:none}
+#bo_v_file a {display:inline-block;margin-top:5px;padding:5px 10px;color:#fff}
+.bo_v_file_cnt {display:inline-block;margin-left:10px;color:#ddd}
+#bo_v_link {border-bottom:1px solid #666;background:#555;font-size:0.75em}
+#bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_link ul {margin:0;padding:0;list-style:none}
+#bo_v_link a {display:inline-block;margin-top:5px;padding:5px 10px;color:#fff}
+.bo_v_link_cnt {display:inline-block;margin-left:10px;color:#ddd}
 #bo_v_act {margin:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
 #bo_v_act strong {color:#ff7200}
@@ -334,7 +345,7 @@ h6 {margin:0 0 20px}
 .bo_vc_act:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act li {float:left;margin-left:5px}
 .bo_vc_act a {color:#000;text-decoration:none}
-#bo_vc_w {position:relative;zoom:1}
+#bo_vc_w {position:relative;margin-top:10px;zoom:1}
 #bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc_w fieldset {margin:0;padding:0;border:0;background:transparent}
 #bo_vc_w textarea {margin:10px 0;width:98%;height:50px}
