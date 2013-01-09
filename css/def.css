@@ -307,7 +307,7 @@ h6 {margin:0 0 20px}
 #bo_v_article {zoom:1}
 #bo_v_article:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_article h1 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_article p {padding:0 10px}
+#bo_v_article p {padding:0}
 #bo_v_file {border-bottom:1px solid #666;background:#555;font-size:0.75em}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
