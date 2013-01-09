@@ -1,8 +1,7 @@
 <?
 $sub_menu = "300100";
+//define('_EDITOR_', true);
 include_once('./_common.php');
-
-if (isset($editor->lib))  include_once($editor->lib);
 
 auth_check($auth[$sub_menu], 'w');
 
@@ -818,30 +817,10 @@ function set_point(f) {
     }
 }
 
-function chk_bo_image(fld)
-{
-    if (fld.value) {
-        if (!fld.value.toLowerCase().match(/.(gif|jpg|png)$/i)) {
-            return "이미지가 gif, jpg, png 파일이 아닙니다.";
-        }
-    }
-    return "";
-}
-
 function fboardform_submit(f) 
 {
     <?=editor_getdata("bo_content_head");?>
     <?=editor_getdata("bo_content_tail");?>
-
-    if (msg = chk_bo_image(f.bo_image_head)) {
-        alert("상단 "+msg);
-        return false;
-    }
-
-    if (msg = chk_bo_image(f.bo_image_tail)) {
-        alert("하단 "+msg);
-        return false;
-    }
 
     if (parseInt(f.bo_count_modify.value) < 1) {
         alert("원글 수정 불가 댓글수는 1 이상 입력하셔야 합니다.");
