@@ -97,7 +97,7 @@ for ($i=0; $i<count($list); $i++) {
         echo $list[$i]['num'];
     ?>
     </td>
-    <? if ($is_checkbox) { ?><td><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
+    <? if ($is_checkbox) { ?><td class="td_chk"><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
     <td class="td_subject">
         <?
         echo $list[$i]['reply'];

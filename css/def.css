@@ -20,6 +20,7 @@ caption {padding:0 0 10px;text-align:left}
 .caption_desc {font-size:0.75em}
 th {padding:12px 0 8px;border-top:3px solid #666;border-bottom:1px solid #a9a9a9;font-size:0.8em}
 th a {color:#000;text-decoration:none}
+th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;font-size:0.75em}
 .empty_table {padding:50px 0;text-align:center}
 
@@ -107,11 +108,11 @@ h6 {margin:0 0 20px}
 #ol_submit {position:absolute;top:42px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 로그인 후 */
 #ol_after {padding-top:15px;width:219px;background:#f9f9f5;color:#000;font-size:0.75em}
-#ol_after header {padding:10px 0;text-align:center}
+#ol_after header {padding:0 0 13px;border-bottom:1px solid #dedace;text-align:center}
 #ol_after ul {padding:5px 0;background:#fff}
-#ol_after li a {display:block;position:relative;padding:7px 10px;color:#000;text-decoration:none}
-#ol_after li span {position:absolute;top:7px;right:10px}
-#ol_after footer {padding:7px 0 10px;text-align:center}
+#ol_after li a {display:block;position:relative;padding:7px 20px;color:#000;text-decoration:none}
+#ol_after li span {position:absolute;top:7px;right:19px;color:#ff3061}
+#ol_after footer {padding:7px 0 10px;border-top:1px solid #dedace;text-align:center}
 #ol_after footer a {display:inline-block;padding:0 10px;color:#000;text-decoration:none}
 
 /* 설문조사 */
@@ -228,10 +229,11 @@ h6 {margin:0 0 20px}
 .latest_more a {display:inline-block;padding:5px 0}
 
 /* 테이블 항목별 정의 */
+.td_chk {width:40px;text-align:center}
 .td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
 .td_num {width:50px;text-align:center}
-.td_bignum {width:100px;text-align:center}
+.td_bignum {width:80px;text-align:center}
 .td_mb_id {width:120px;text-align:center}
 .td_nick {width:120px;text-align:center}
 .td_name {width:120px;text-align:left}
@@ -275,7 +277,6 @@ h6 {margin:0 0 20px}
 #bo_cate {margin-bottom:10px}
 #fcategory {display:inline-block}
 #fcategory select {margin-right:5px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
-
 #bo_list caption {padding:0;height:0;overflow:hidden}
 .bo_cate_link {display:inline-block;margin-right:10px;color:#ff7200;font-weight:bold;text-decoration:none}
 .td_subject img {margin-left:5px}
@@ -284,9 +285,34 @@ h6 {margin:0 0 20px}
 #bo_w caption {padding:0;height:0;overflow:hidden}
 
 /* 게시판 읽기 */
-#bo_v {margin-bottom:30px;border:1px solid #ddd}
-#bo_v_h1 {padding:25px 15px 15px;border-bottom:1px solid #efeada;font-size:0.9em}
-#bo_v aside h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_title {text-align:center}
+#bo_v {position:relative;margin-bottom:30px;border-top:3px solid #666;border-bottom:1px solid #ccc}
+#bo_v_h1 {margin:0 !important;padding:15px 0 0;font-size:1em}
+#bo_v_info {padding:0 0 10px;border-bottom:1px solid #efeada;zoom:1}
+#bo_v_info:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_info dl {font-size:0.75em}
+#bo_v_info dt {float:left}
+#bo_v_info dd {float:left;margin:0 20px 0 10px}
+#bo_v_top {zoom:1}
+#bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_top ul {padding:0;list-style:none}
+#bo_v_my {float:left}
+#bo_v_my li {float:left;margin-right:5px}
+.bo_v_com {float:right}
+.bo_v_com li {float:left;margin-left:5px}
+#bo_v_article {zoom:1}
+#bo_v_article:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_article h1 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_act {margin:20px 0;text-align:center}
+#bo_v_act a {margin-right:5px;vertical-align:top}
+#bo_v_act strong {color:#ff7200}
+#bo_v_bot {zoom:1}
+#bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_bot ul {float:right;padding:0;list-style:none}
+#bo_v_bot li {float:left;margin-left:5px}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
@@ -337,6 +363,9 @@ h6 {margin:0 0 20px}
 /* 쪽지 */
 
 /* 스크랩 */
+#scrap_do table {margin-bottom:10px}
+#scrap_do textarea {height:100px}
+#scrap_do p {margin:0 auto 20px;width:90%;font-size:0.875em}
 
 /* 폼메일 */
 #formmail textarea {height:100px}

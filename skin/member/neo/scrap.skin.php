@@ -19,11 +19,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <tbody>
     <? for ($i=0; $i<count($list); $i++) { ?>
     <tr>
-        <td><?=$list[$i][num]?></td>
-        <td><a href="javascript:;" onclick="opener.document.location.href='<?=$list[$i][opener_href]?>';"><?=$list[$i][bo_subject]?></a></td>
+        <td class="td_num"><?=$list[$i][num]?></td>
+        <td class="td_board"><a href="javascript:;" onclick="opener.document.location.href='<?=$list[$i][opener_href]?>';"><?=$list[$i][bo_subject]?></a></td>
         <td><a href="javascript:;" onclick="opener.document.location.href='<?=$list[$i][opener_href_wr_id]?>';"><?=$list[$i][subject]?></a></td>
-        <td><?=$list[$i][ms_datetime]?></td>
-        <td><a href="javascript:del('<?=$list[$i][del_href]?>');">삭제</a></td>
+        <td class="td_datetime"><?=$list[$i][ms_datetime]?></td>
+        <td class="td_mng"><a href="javascript:del('<?=$list[$i][del_href]?>');">삭제</a></td>
     </tr>
     <? } ?>
 

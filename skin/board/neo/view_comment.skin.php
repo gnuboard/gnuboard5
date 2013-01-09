@@ -9,7 +9,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 </script>
 
 <!-- 댓글 리스트 -->
-<section id="commentContents">
+<section id="bo_vc">
     <h2>댓글</h2>
     <?
     for ($i=0; $i<count($list); $i++) {
@@ -24,10 +24,9 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             //$str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(swf)\".*\<\/a\>\]/i", "<script>doc_write(flash_movie('$1://$2.$3'));</script>", $str);
             $str = preg_replace("/\[\<a\s*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(gif|png|jpg|jpeg|bmp)\"\s*[^\>]*\>[^\s]*\<\/a\>\]/i", "<img src='$1://$2.$3' id='target_resize_image[]' onclick='image_window(this);'>", $str);
     ?>
-    <article>
+    <article id="c_<?=$comment_id?>">
         <header>
             <h1><?=$list[$i]['name']?>님의 댓글</h1>
-            <a id="c_<?=$comment_id?>"></a>
             <dl>
                 <dt>아이피</dt>
                 <dd><? if ($is_ip_view) { echo $list[$i]['ip'];} ?></dd>
@@ -66,7 +65,8 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <input type="hidden" name="page" value="<?=$page?>">
     <input type="hidden" name="is_good" value="">
 
-    <div id="comment_write">
+    <aside id="bo_vc_w">
+        <h2>댓글쓰기</h2>
         <? if ($is_guest) { ?>
         <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" maxLength="20" size="10" required>
         <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" maxLength="20" size="10" required>
@@ -79,14 +79,14 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
         <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
         <input type="submit" value="댓글입력">
-    </div>
+    </aside>
 
     </form>
 
     <script src="<?=$g4['path']?>/js/jquery.kcaptcha.js"></script>
     <script>
     var save_before = '';
-    var save_html = document.getElementById('comment_write').innerHTML;
+    var save_html = document.getElementById('bo_vc_w').innerHTML;
 
     function good_and_write()
     {
@@ -223,7 +223,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
                 el_id = 'edit_' + comment_id;
         }
         else
-            el_id = 'comment_write';
+            el_id = 'bo_vc_w';
 
         if (save_before != el_id)
         {
