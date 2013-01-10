@@ -10,9 +10,6 @@ include_once('./visit.sub.php');
 
 $colspan = 5;
 
-//unset($br); // 브라우저
-//unset($os); // OS
-
 $sql_common = " from {$g4['visit_table']} ";
 $sql_search = " where vi_date between '{$fr_date}' and '{$to_date}' ";
 if (isset($domain))
@@ -105,14 +102,10 @@ if ($i == 0)
 </tbody>
 </table>
 <?
-<<<<<<< HEAD
-$page = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&amp;domain=$domain&amp;page=");
-=======
 if (isset($domain)) 
     $qstr .= "&amp;domain=$domain";
 $qstr .= "&amp;page=";
 $page = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr");
->>>>>>> 2b5c471bdb62542fc9cb8b6740a934c34e5de04b
 if ($page) {
 ?>
 <div class="pg">

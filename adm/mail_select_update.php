@@ -66,15 +66,7 @@ for ($i=0; $i<count($member_list); $i++)
 
         $content = $content . "<hr size=0><p><span style='font-size:9pt; font-familye:굴림'>▶ 더 이상 정보 수신을 원치 않으시면 [<a href='{$g4['url']}/{$g4['bbs']}/email_stop.php?mb_id={$mb_id}&amp;mb_md5={$mb_md5}' target='_blank'>수신거부</a>] 해 주십시오.</span></p>";
 
-        /*
-        ob_start();
-        include "$mail_skin/mail.skin.php";
-        $content = ob_get_contents();
-        ob_end_clean();
-        */
-
-        //mailer($default['de_subject'], $default['de_admin_email'], $email, $subject, $content, 1);
-        mailer($config['cf_title'], $member['mb_email'], $email, $subject, $content, 1);
+        mailer($config['cf_title'], $config['cf_email_admin'], $email, $subject, $content, 1);
 
         echo "<script> document.all.cont.innerHTML += '$cnt. $email ($mb_id : $name)<br>'; </script>\n";
         //echo "+";

@@ -73,6 +73,15 @@ var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
 <script src="<?=$g4['path']?>/js/jquery-1.4.2.min.js"></script>
 <script src="<?=$g4['path']?>/js/common.js"></script>
 <script src="<?=$g4['path']?>/js/wrest.js"></script>
+<?
+if (defined('_EDITOR_')) {
+    $g4['js_file'][] = $editor->js;
+    $g4['js_file'][] = $editor->config_js;
+}
+if (defined('_CAPTCHA_')) {
+    $g4['js_file'][] = $captcha->js;
+}
+?>
 <!--[if lte IE 8]>
 <script src="<?=$g4['path']?>/js/html5.js"></script>
 <![endif]-->

@@ -7,4 +7,6 @@ $editor = (object)array(
     'config_js' => $g4['path']."/plugin/ckeditor/config.js",
     'data'      => "data/editor"
 );
+
+include_once($editor->lib);
 ?>

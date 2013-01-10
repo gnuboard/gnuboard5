@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<? if ($is_admin == 'super') { ?><!-- <div style='float:left; width:<?=$table_width?>px; text-align:center;'>RUN TIME : <?=get_microtime()-$begin_time;?><br></div> --><? } ?>
+<? if ($is_admin == 'super') { ?><!-- <div style='float:left; text-align:center;'>RUN TIME : <?=get_microtime()-$begin_time;?><br></div> --><? } ?>
 
 </body>
 </html>
@@ -11,8 +11,7 @@ $tmp_sql = " select count(*) as cnt from {$g4['login_table']} where lo_ip = '{$_
 $tmp_row = sql_fetch($tmp_sql);
 
 //sql_query(" lock table $g4['login_table'] write ", false);
-if ($tmp_row['cnt'])
-{
+if ($tmp_row['cnt']) {
 	$tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '{$g4['time_ymdhis']}', lo_location = '$lo_location', lo_url = '$lo_url' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 	sql_query($tmp_sql, FALSE);
 } else {

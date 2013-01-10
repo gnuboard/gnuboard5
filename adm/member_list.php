@@ -9,7 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['member_table']} ";
 
 $sql_search = " where (1) ";
-if (isset($stx)) {
+if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case 'mb_point' :
@@ -32,7 +32,7 @@ if (isset($stx)) {
 if ($is_admin != 'super')
     $sql_search .= " and mb_level <= '{$member['mb_level']}' ";
 
-if (!isset($sst)) {
+if (!$sst) {
     $sst = "mb_datetime";
     $sod = "desc";
 }
@@ -48,7 +48,7 @@ $total_count = $row['cnt'];
 
 $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
-if (!isset($page)) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 // 탈퇴회원수

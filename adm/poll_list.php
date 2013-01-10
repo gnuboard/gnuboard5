@@ -9,7 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['poll_table']} ";
 
 $sql_search = " where (1) ";
-if (isset($stx)) {
+if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         default :
@@ -44,6 +44,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
+$listall = '';
 if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
@@ -115,8 +116,9 @@ if ($i==0)
 </table>
 
 <?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
-if ($pagelist) {?>
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
+if ($pagelist) {
+?>
 <div class="pg">
     <?=$pagelist?>
 </div>

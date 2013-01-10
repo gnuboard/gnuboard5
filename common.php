@@ -2,7 +2,6 @@
 /*******************************************************************************
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
-//error_reporting(E_ALL);
 //error_reporting(E_ALL ^ E_NOTICE);
 
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
@@ -491,8 +490,9 @@ if (isset($bo_table)) {
     }
 }
 
-if (isset($gr_id))
+if (!empty($_GET['gr_id'])) {
     $group = sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
+}
 
 if ($is_admin != 'super') {
     // 접근가능 IP

@@ -401,7 +401,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="cf_email_admin">관리자 메일주소</label></th>
     <td>
-        <?=help('일괄발송시 사용하는 이메일 주소입니다.')?>
+        <?=help('일괄 발송 또는 테스트 등에 사용하는 이메일 주소입니다.')?>
         <input type="text" id="cf_email_admin" name="cf_email_admin" class="email" value="<?=$config['cf_email_admin']?>" required size="40" title="관리자 메일주소">
     </td>
 </tr>

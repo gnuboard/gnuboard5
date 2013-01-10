@@ -34,7 +34,9 @@ $sql = " select pp_word, count(*) as cnt
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-if ($_GET['fr_date'] || $_GET['to_date']) $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '';
+if (!empty($_GET['fr_date']) || !empty($_GET['to_date'])) 
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 $g4['title'] = '인기검색어순위';
 include_once('./admin.head.php');
@@ -95,7 +97,7 @@ if ($i == 0)
 </table>
 
 <?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 <div class="pg">
     <?=$pagelist?>

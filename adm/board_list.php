@@ -4,8 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
 // DHTML 에디터 사용 필드 추가 : 061021
 sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_use_dhtml_editor` TINYINT NOT NULL AFTER `bo_use_secret` ", false);
 // RSS 보이기 사용 필드 추가 : 061106
@@ -19,7 +17,7 @@ if ($is_admin != "super") {
     $sql_search .= " and (a.gr_id = b.gr_id and b.gr_admin = '{$member['mb_id']}') ";
 }
 
-if (isset($stx)) {
+if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case "bo_table" :
@@ -155,7 +153,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </td>
     <td>
         <?if ($is_admin == 'super'){?>
-            <?=get_group_select('gr_id[$i]', $row['gr_id'])?>
+            <?=get_group_select("gr_id[$i]", $row['gr_id'])?>
         <?}else{?>
             <input type="hidden" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>"><?=$row['gr_subject']?>
         <?}?>

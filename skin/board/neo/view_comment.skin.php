@@ -9,7 +9,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 </script>
 
 <!-- 댓글 리스트 -->
-<section id="commentContents">
+<section id="bo_vc">
     <h2>댓글</h2>
     <?
     for ($i=0; $i<count($list); $i++) {
@@ -24,24 +24,17 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             //$str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(swf)\".*\<\/a\>\]/i", "<script>doc_write(flash_movie('$1://$2.$3'));</script>", $str);
             $str = preg_replace("/\[\<a\s*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(gif|png|jpg|jpeg|bmp)\"\s*[^\>]*\>[^\s]*\<\/a\>\]/i", "<img src='$1://$2.$3' id='target_resize_image[]' onclick='image_window(this);'>", $str);
     ?>
-    <article>
+    <article id="c_<?=$comment_id?>">
         <header>
             <h1><?=$list[$i]['name']?>님의 댓글</h1>
-            <a id="c_<?=$comment_id?>"></a>
-            <dl>
+            <dl class="bo_vc_info">
                 <dt>아이피</dt>
                 <dd><? if ($is_ip_view) { echo $list[$i]['ip'];} ?></dd>
                 <dt>작성일</dt>
                 <dd><time datetime="<?=date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime']))?>"><?=$list[$i]['datetime']?></time></dd>
             </dl>
-            <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) { ?>
-            <ul>
-                <? if ($list[$i]['is_reply']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'c');">답변</a></li><? } ?>
-                <? if ($list[$i]['is_edit']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'cu');">수정</a></li><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><li><a href="javascript:comment_delete('<?=$list[$i]['del_link']?>');">삭제</a></li><? } ?>
-            </ul>
-            <? } ?>
         </header>
+
         <!-- 댓글 출력 -->
         <p><?=$str?></p>
 
@@ -50,6 +43,16 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
         <input type="hidden" id="secret_comment_<?=$comment_id?>" value="<?=strstr($list[$i]['wr_option'],"secret")?>">
         <textarea id="save_comment_<?=$comment_id?>"><?=get_text($list[$i]['content1'], 0)?></textarea>
+
+        <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) { ?>
+        <footer>
+            <ul class="bo_vc_act">
+                <? if ($list[$i]['is_reply']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'c');">답변</a></li><? } ?>
+                <? if ($list[$i]['is_edit']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'cu');">수정</a></li><? } ?>
+                <? if ($list[$i]['is_del'])  { ?><li><a href="javascript:comment_delete('<?=$list[$i]['del_link']?>');">삭제</a></li><? } ?>
+            </ul>
+        </footer>
+        <? } ?>
     </article>
     <?}?>
 
@@ -66,27 +69,31 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <input type="hidden" name="page" value="<?=$page?>">
     <input type="hidden" name="is_good" value="">
 
-    <div id="comment_write">
-        <? if ($is_guest) { ?>
-        <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" maxLength="20" size="10" required>
-        <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" maxLength="20" size="10" required>
-        <img id="kcaptcha_image" alt="" />
-        <input type="text" name="wr_key" title="왼쪽의 글자를 입력하세요." size="10" required>
-        <? } ?>
-        <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">비밀글
-        <? if ($comment_min || $comment_max) { ?><span id="char_count"></span>글자<?}?>
-        <textarea id="wr_content" name="wr_content" required
-        <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
-        <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
-        <input type="submit" value="댓글입력">
-    </div>
+    <aside id="bo_vc_w">
+        <h2>댓글쓰기</h2>
+        <fieldset>
+            <? if ($is_guest) { ?>
+            <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input" maxLength="20" size="10" required>
+            <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input" maxLength="20" size="10" required>
+            <img id="kcaptcha_image" alt="" />
+            <input type="text" name="wr_key" class="fieldset_input" title="왼쪽의 글자를 입력하세요." size="10" required>
+            <? } ?>
+            <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">
+            <label for="wr_secret">비밀글</label>
+            <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
+            <textarea id="wr_content" name="wr_content" required
+            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
+            <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+            <input type="submit" class="fieldset_submit" value="댓글입력">
+        </fieldset>
+    </aside>
 
     </form>
 
     <script src="<?=$g4['path']?>/js/jquery.kcaptcha.js"></script>
     <script>
     var save_before = '';
-    var save_html = document.getElementById('comment_write').innerHTML;
+    var save_html = document.getElementById('bo_vc_w').innerHTML;
 
     function good_and_write()
     {
@@ -223,7 +230,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
                 el_id = 'edit_' + comment_id;
         }
         else
-            el_id = 'comment_write';
+            el_id = 'bo_vc_w';
 
         if (save_before != el_id)
         {
