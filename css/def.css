@@ -79,7 +79,7 @@ h6 {margin:0 0 20px}
 #tnb a:focus {background:#f9f9f5}
 
 /* 전체검색 */
-#hdsch {position:absolute;top:77px;right:0;margin:0;padding:0;width:219px;border:1px solid #ccc;border-top:0;border-right:0;background:#fff}
+#hdsch {z-index:3;position:absolute;top:77px;right:0;margin:0;padding:0;width:219px;border:1px solid #ccc;border-top:0;border-right:0;background:#fff}
 #hdsch legend {position:absolute;padding:0;width:0;height:0;border:0;overflow:hidden}
 #hdsch_stx {margin:5px 0 5px 5px;padding:0 5px;height:25px;width:176px;border:0;background:transparent;font-size:1em;line-height:1.4em}
 #hdsch_stx:focus {background:#464649;color:#fff}
@@ -153,7 +153,7 @@ h6 {margin:0 0 20px}
 #poll_result_another a {display:block;padding:5px 0}
 
 /* 레이아웃 중간 */
-#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:1px 250px 30px 30px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
+#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:15px 250px 30px 30px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
 #wrapper h1 {margin-top:30px}
 
 /* 레이아웃 하단 */
@@ -307,7 +307,7 @@ h6 {margin:0 0 20px}
 #bo_v_article {zoom:1}
 #bo_v_article:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_article h1 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_article p {padding:0}
+#bo_v_article p {padding:0 0 10px}
 #bo_v_file {border-bottom:1px solid #666;background:#555;font-size:0.75em}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
@@ -348,7 +348,7 @@ h6 {margin:0 0 20px}
 #bo_vc_w {position:relative;margin-top:10px;zoom:1}
 #bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc_w fieldset {margin:0;padding:0;border:0;background:transparent}
-#bo_vc_w textarea {margin:10px 0;width:98%;height:50px}
+#bo_vc_w textarea {display:block;margin:10px 70px 10px 0;width:100%;height:50px}
 #bo_vc_w .fieldset_submit {float:right;margin:0 2% 0 0}
 #bo_vc_w #char_cnt {position:absolute;top:0;right:0}
 
