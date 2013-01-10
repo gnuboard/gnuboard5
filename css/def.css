@@ -14,12 +14,12 @@ p {margin:5px 0;padding:10px 0;line-height:1.5em}
 hr {display:none}
 
 /* 웹접근성 스킬 */
-.sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;overflow:hidden}
+.sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 
 /* 자동등록방지 */
 .captcha {display:inline-block;vertical-align:middle}
 .captcha label {display:inline-block;margin:0;padding:0;width:0;height:0;overflow:hidden}
-.captcha iframe {margin:0;padding:0;width:80px;height:25px;border:0;overflow:hidden}
+#captcha_iframe {display:inline-block;margin:0;padding:0;width:80px;height:25px;border:0;vertical-align:middle;overflow:hidden}
 
 /* 기본테이블 */
 table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -345,8 +345,10 @@ a {color:#000;text-decoration:none}
 .bo_vc_info dt {float:left}
 .bo_vc_info dd {float:left;margin:0 15px 0 10px}
 #bo_vc p {padding:0;font-size:0.75em}
-#bo_vc fieldset {margin:0;padding:0;border:0;border-top:1px solid #ddd;background:transparent;font-size:0.75em}
-#bo_vc #captcha_comment {border:0;font-size:1em !important}
+#bo_vc fieldset {margin:0;padding:5px 0 0;border:0;border-top:1px solid #ddd;background:transparent;font-size:0.75em}
+#bo_vc .captcha {padding:0;border:0;font-size:1em !important}
+#bo_vc .captcha a {display:inline-block;margin-right:5px;text-decoration:underline}
+#bo_vc .fieldset_input {margin-right:5px;vertical-align:top}
 #bo_vc footer {zoom:1}
 #bo_vc footer:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act {float:right;margin:0;font-size:0.75em;list-style:none;zoom:1}
