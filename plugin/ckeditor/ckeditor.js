@@ -845,3 +845,46 @@ this.typesCount=0},fireChange:function(){this.hasUndo=!!this.getNextImage(!0);th
 this.editor,b;a.bookmarks&&(c.focus(),b=c.getSelection());this.locked=1;this.editor.loadSnapshot(a.contents);a.bookmarks?b.selectBookmarks(a.bookmarks):CKEDITOR.env.ie&&(c=this.editor.document.getBody().$.createTextRange(),c.collapse(!0),c.select());this.locked=0;this.index=a.index;this.update();this.fireChange()},getNextImage:function(a){var c=this.snapshots,b=this.currentImage,d;if(b)if(a)for(d=this.index-1;0<=d;d--){if(a=c[d],!b.equals(a,!0))return a.index=d,a}else for(d=this.index+1;d<c.length;d++)if(a=
 c[d],!b.equals(a,!0))return a.index=d,a;return null},redoable:function(){return this.enabled&&this.hasRedo},undoable:function(){return this.enabled&&this.hasUndo},undo:function(){if(this.undoable()){this.save(!0);var a=this.getNextImage(!0);if(a)return this.restoreImage(a),!0}return!1},redo:function(){if(this.redoable()&&(this.save(!0),this.redoable())){var a=this.getNextImage(!1);if(a)return this.restoreImage(a),!0}return!1},update:function(){this.locked||this.snapshots.splice(this.index,1,this.currentImage=
 new i(this.editor))},lock:function(){if(!this.locked){var a=this.editor.getSnapshot();this.locked={update:this.currentImage&&a==this.currentImage.contents?a:null}}},unlock:function(){if(this.locked){var a=this.locked.update,c=this.editor.getSnapshot();this.locked=null;"string"==typeof a&&c!=a&&this.update()}}}})();CKEDITOR.config.plugins='dialogui,dialog,about,a11yhelp,dialogadvtab,basicstyles,bidi,blockquote,clipboard,button,panelbutton,panel,floatpanel,colorbutton,colordialog,templates,menu,contextmenu,div,resize,toolbar,elementspath,list,indent,enterkey,entities,popup,filebrowser,find,fakeobjects,flash,floatingspace,listblock,richcombo,font,forms,format,htmlwriter,horizontalrule,iframe,wysiwygarea,image,smiley,justify,link,liststyle,magicline,maximize,newpage,pagebreak,pastetext,pastefromword,preview,print,removeformat,save,selectall,showblocks,showborders,sourcearea,specialchar,stylescombo,tab,table,tabletools,undo';CKEDITOR.config.skin='moono';(function() {var icons = ( 'about,0,bold,32,italic,64,strike,96,subscript,128,superscript,160,underline,192,bidiltr,224,bidirtl,256,blockquote,288,copy-rtl,320,copy,352,cut-rtl,384,cut,416,paste-rtl,448,paste,480,bgcolor,512,textcolor,544,templates-rtl,576,templates,608,creatediv,640,bulletedlist-rtl,672,bulletedlist,704,numberedlist-rtl,736,numberedlist,768,indent-rtl,800,indent,832,outdent-rtl,864,outdent,896,find-rtl,928,find,960,replace,992,flash,1024,button,1056,checkbox,1088,form,1120,hiddenfield,1152,imagebutton,1184,radio,1216,select-rtl,1248,select,1280,textarea-rtl,1312,textarea,1344,textfield-rtl,1376,textfield,1408,horizontalrule,1440,iframe,1472,image,1504,smiley,1536,justifyblock,1568,justifycenter,1600,justifyleft,1632,justifyright,1664,anchor-rtl,1696,anchor,1728,link,1760,unlink,1792,maximize,1824,newpage-rtl,1856,newpage,1888,pagebreak-rtl,1920,pagebreak,1952,pastetext-rtl,1984,pastetext,2016,pastefromword-rtl,2048,pastefromword,2080,preview-rtl,2112,preview,2144,print,2176,removeformat,2208,save,2240,selectall,2272,showblocks-rtl,2304,showblocks,2336,source-rtl,2368,source,2400,specialchar,2432,table,2464,redo-rtl,2496,redo,2528,undo-rtl,2560,undo,2592' ),path = CKEDITOR.getUrl( 'plugins/icons.png' ),icons = icons.split( ',' );for ( var i = 0; i < icons.length; i++ )CKEDITOR.skin.icons[ icons[ i ] ] = { path: path, offset: -icons[ ++i ] };})();CKEDITOR.lang.languages={"af":1,"ar":1,"eu":1,"bn":1,"bs":1,"bg":1,"ca":1,"zh-cn":1,"zh":1,"hr":1,"cs":1,"da":1,"nl":1,"en":1,"en-au":1,"en-ca":1,"en-gb":1,"eo":1,"et":1,"fo":1,"fi":1,"fr":1,"fr-ca":1,"gl":1,"ka":1,"de":1,"el":1,"gu":1,"he":1,"hi":1,"hu":1,"is":1,"it":1,"ja":1,"km":1,"ko":1,"ku":1,"lv":1,"lt":1,"mk":1,"ms":1,"mn":1,"no":1,"nb":1,"fa":1,"pl":1,"pt-br":1,"pt":1,"ro":1,"ru":1,"sr":1,"sr-latn":1,"sk":1,"sl":1,"es":1,"sv":1,"th":1,"tr":1,"ug":1,"uk":1,"vi":1,"cy":1};}());
+
+CKEDITOR.on('instanceReady', function (ev) {
+// Ends self closing tags the HTML4 way, like <br>.
+ev.editor.dataProcessor.htmlFilter.addRules(
+    {
+        elements:
+        {
+            $: function (element) {
+                // Output dimensions of images as width and height
+                if (element.name == 'img') {
+                    var style = element.attributes.style;
+
+                    if (style) {
+                        // Get the width from the style.
+                        var match = /(?:^|\s)width\s*:\s*(\d+)px/i.exec(style),
+                            width = match && match[1];
+
+                        // Get the height from the style.
+                        match = /(?:^|\s)height\s*:\s*(\d+)px/i.exec(style);
+                        var height = match && match[1];
+
+                        if (width) {
+                            element.attributes.style = element.attributes.style.replace(/(?:^|\s)width\s*:\s*(\d+)px;?/i, '');
+                            element.attributes.width = width;
+                        }
+
+                        if (height) {
+                            element.attributes.style = element.attributes.style.replace(/(?:^|\s)height\s*:\s*(\d+)px;?/i, '');
+                            element.attributes.height = height;
+                        }
+                    }
+                }
+
+
+
+                if (!element.attributes.style)
+                    delete element.attributes.style;
+
+                return element;
+            }
+        }
+    });
+});

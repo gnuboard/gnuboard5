@@ -39,7 +39,7 @@ fieldset button:focus,
 .fieldset_submit:focus {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.75em;line-height:1.9em;vertical-align:middle}
 
 /* 이미지 등비율 리사이징 */
-.img_fix {float:left;width:100%;height:auto}
+.img_fix {float:left;margin-bottom:20px;width:100%;height:auto}
 
 /* 그누보드4s 설치 완료 메세지 */
 #install_done {position:absolute;margin-top:-30px;width:100%;height:580px;background:#e7ebee}
@@ -302,10 +302,10 @@ a {color:#000;text-decoration:none}
 #bo_v_top ul {padding:0;list-style:none}
 .bo_v_com {float:right}
 .bo_v_com li {float:left;margin-left:5px}
-#bo_v_article {padding:0 10px;zoom:1}
-#bo_v_article:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_v_article h1 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_article p {padding:0 0 10px;font-size:0.875em}
+#bo_v_atc {padding:0 10px;zoom:1}
+#bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_atc p {padding:0 0 10px;font-size:0.875em}
 #bo_v_file {background:#555;font-size:0.75em}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}

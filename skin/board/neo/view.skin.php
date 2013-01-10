@@ -98,7 +98,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         ?>
     </aside>
 
-    <article id="bo_v_article">
+    <article id="bo_v_atc">
         <header>
             <h1>본문</h1>
         </header>
@@ -160,10 +160,10 @@ function file_download(link, file) {
 <script>
 // 이미지 등비율 리사이징
 $(document).ready(function(){
-    var img = $('#bo_v_article img');
+    var img = $('#bo_v_atc img');
     var img_org_width = img.width();
     $(window).resize(function(){
-        var wrapper_width = $('#bo_v_article').width();
+        var wrapper_width = $('#bo_v_atc').width();
         img.each(function() {
             var img_width = $(this).width();
             if (img_width > wrapper_width) {
