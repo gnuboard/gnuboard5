@@ -1,9 +1,6 @@
 <?
 include_once('./_common.php');
 
-if (isset($editor->lib))  include_once($editor->lib);
-if (isset($captcha->lib)) include_once($captcha->lib);
-
 set_session('ss_bo_table', $bo_table);
 set_session('ss_wr_id', $wr_id);
 
@@ -26,7 +23,7 @@ if (!($w == '' || $w == 'u' || $w == 'r')) {
 }
 
 if (($w == 'u' || $w == 'r') && !$write['wr_id']) {
-    alert('글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'삭제되었거나 이동된 경우입니다.', $g4['path']);
+    alert("글이 존재하지 않습니다.\\n삭제되었거나 이동된 경우입니다.", $g4['path']);
 }
 
 if ($w == '') {
@@ -38,7 +35,7 @@ if ($w == '') {
         if ($member['mb_id']) {
             alert('글을 쓸 권한이 없습니다.');
         } else {
-            alert('글을 쓸 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
+            alert("글을 쓸 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.", './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
         }
     }
 
@@ -159,9 +156,9 @@ if ($w == '') {
 }
 
 // 그룹접근 가능
-if ($group['gr_use_access']) {
+if (!empty($group['gr_use_access'])) {
     if ($is_guest) {
-        alert('접근 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
+        alert("접근 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.", 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
     }
 
     if ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id'] || $board['bo_admin'] == $member['mb_id']) {
@@ -200,10 +197,12 @@ if ($member['mb_level'] >= $board['bo_html_level'])
 
 $is_secret = $board['bo_use_secret'];
 
-if ($board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level'])
+if ($board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
+    define('_EDITOR_', true);
     $is_dhtml_editor = true;
-else
+} else {
     $is_dhtml_editor = false;
+}
 
 $is_mail = false;
 if ($config['cf_email_use'] && $board['bo_use_email'])
@@ -346,17 +345,6 @@ if ($is_admin) {
 } else {
     $write_min = (int)$board['bo_write_min'];
     $write_max = (int)$board['bo_write_max'];
-}
-
-if ($is_dhtml_editor && isset($editor->js)) {
-    $g4['js_file'][] = $editor->js;
-    if (isset($editor->config_js)) {
-        $g4['js_file'][] = $editor->config_js;
-    }
-}
-
-if (isset($captcha->js)) {
-    $g4['js_file'][] = $captcha->js;
 }
 
 include_once($g4['path'].'/head.sub.php');

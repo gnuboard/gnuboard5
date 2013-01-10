@@ -5,7 +5,7 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], 'r');
 
 // 체크된 자료 삭제
-if (is_array($_POST['chk'])) {
+if (isset($_POST['chk']) && is_array($_POST['chk'])) {
     for ($i=0; $i<count($chk); $i++) {
         // 실제 번호를 넘김
         $k = $chk[$i];
@@ -17,7 +17,7 @@ if (is_array($_POST['chk'])) {
 $sql_common = " from {$g4['popular_table']} a ";
 $sql_search = " where (1) ";
 
-if (isset($stx)) {
+if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case "pp_word" :
@@ -138,7 +138,7 @@ if ($i == 0)
 <?}?>
 
 <?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 <div class="pg">
     <?=$pagelist?>

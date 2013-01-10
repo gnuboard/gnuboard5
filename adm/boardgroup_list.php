@@ -4,15 +4,13 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
 $sql_common = " from {$g4['group_table']} ";
 
 $sql_search = " where (1) ";
 if ($is_admin != 'super')
     $sql_search .= " and (gr_admin = '{$member['mb_id']}') ";
 
-if (isset($stx)) {
+if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case "gr_id" :
@@ -95,7 +93,6 @@ var list_update_php = "./boardgroup_list_update.php";
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
 <table class="tbl_gr_list">
 <caption>
 게시판그룹 목록
@@ -131,7 +128,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
     $s_del = '';
     if ($is_admin == 'super') {
-        //$s_del = '<a href="javascript:del(\'./boardgroup_delete.php?$qstr&gr_id='.$row['gr_id'].'\');">삭제</a>';
         $s_del = '<a href="javascript:post_delete(\'boardgroup_delete.php\', \''.$row['gr_id'].'\');">삭제</a>';
     }
 ?>

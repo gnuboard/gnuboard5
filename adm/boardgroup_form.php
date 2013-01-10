@@ -4,8 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
-$token = get_token();
-
 if ($is_admin != 'super' && $w == '') alert('최고관리자만 접근 가능합니다.');
 
 $html_title = '게시판그룹';
@@ -35,7 +33,6 @@ include_once('./admin.head.php');
 <input type="hidden" name="sst" value="<?=$sst?>">
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
 <table class="frm_tbl">
 <caption>그룹 설정</caption>
 <tbody>

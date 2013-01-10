@@ -14,11 +14,8 @@ if (!preg_match("/^([A-Za-z0-9_]{1,10})$/", $gr_id))
 
 if (!$gr_subject) alert('그룹 제목을 입력하세요.');
 
-check_token();
-
 $sql_common = " gr_subject = '{$_POST['gr_subject']}',
-                gr_admin = '{$_POST['gr_admin']}',
-                gr_use_access = '{$_POST['gr_use_access']}',
+                gr_admin  = '{$_POST['gr_admin']}',
                 gr_1_subj = '{$_POST['gr_1_subj']}',
                 gr_2_subj = '{$_POST['gr_2_subj']}',
                 gr_3_subj = '{$_POST['gr_3_subj']}',
@@ -39,9 +36,13 @@ $sql_common = " gr_subject = '{$_POST['gr_subject']}',
                 gr_8 = '{$_POST['gr_8']}',
                 gr_9 = '{$_POST['gr_9']}',
                 gr_10 = '{$_POST['gr_10']}' ";
+if (isset($_POST['gr_use_access'])) 
+    $sql_common .= ", gr_use_access = '{$_POST['gr_use_access']}' ";
+else
+    $sql_common .= ", gr_use_access = '' ";
 
-if ($w == '')
-{
+if ($w == '') {
+
     $sql = " select count(*) as cnt from {$g4['group_table']} where gr_id = '{$_POST['gr_id']}' ";
     $row = sql_fetch($sql);
     if ($row['cnt'])
@@ -51,16 +52,17 @@ if ($w == '')
                 set gr_id = '{$_POST['gr_id']}',
                      {$sql_common} ";
     sql_query($sql);
-}
-else if ($w == "u")
-{
+
+} else if ($w == "u") {
+
     $sql = " update {$g4['group_table']}
                 set {$sql_common}
                 where gr_id = '{$_POST['gr_id']}' ";
     sql_query($sql);
-}
-else
+
+} else {
     alert('제대로 된 값이 넘어오지 않았습니다.');
+}
 
 goto_url('./boardgroup_form.php?w=u&amp;gr_id='.$gr_id.'&amp;'.$qstr);
 ?>
