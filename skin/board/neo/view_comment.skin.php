@@ -84,8 +84,8 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
                 <textarea id="wr_content" name="wr_content" required
                 <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
                 <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+                <input type="submit" class="bo_vc_submit" value="댓글입력">
             </div>
-            <input type="submit" class="bo_vc_submit" value="댓글입력">
         </fieldset>
     </aside>
 
