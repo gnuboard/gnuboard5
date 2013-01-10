@@ -136,7 +136,6 @@ for ($i=0; $i<count($list); $i++) {
     <? if ($next_part_href) { echo '<a href="'.$next_part_href.'">다음검색</a>'; } ?>
 </div>
 
-<?/*
 <fieldset id="bo_sch">
     <legend>게시물 검색</legend>
 
@@ -160,7 +159,7 @@ for ($i=0; $i<count($list); $i++) {
     <input type="submit" class="fieldset_submit" value="검색">
     </form>
 </fieldset>
-*/?>
+
 
 <script>
 if ('<?=$sca?>') document.fcategory.sca.value = '<?=$sca?>';

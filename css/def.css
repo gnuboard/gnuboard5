@@ -18,7 +18,7 @@ table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 tfoot td {background:#f9f9f5;font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
 .caption_desc {font-size:0.75em}
-th {padding:12px 0 8px;border-top:3px solid #666;border-bottom:1px solid #a9a9a9;font-size:0.8em}
+th {padding:12px 0 8px;border-top:3px solid #666;border-bottom:1px solid #a9a9a9;font-size:0.75em}
 th a {color:#000;text-decoration:none}
 th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 td {padding:10px 0;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;font-size:0.75em}
@@ -35,9 +35,9 @@ fieldset select {padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-a
 fieldset p {margin:0}
 fieldset .span_highlight {color:#ff3061}
 fieldset button,
-.fieldset_submit {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle;cursor:pointer}
+.fieldset_submit {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.75em;line-height:1.9em;vertical-align:middle;cursor:pointer}
 fieldset button:focus,
-.fieldset_submit:focus {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.8em;line-height:1.9em;vertical-align:middle}
+.fieldset_submit:focus {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.75em;line-height:1.9em;vertical-align:middle}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -70,7 +70,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 #tnb {padding-left:30px;border-bottom:1px solid #ccc;background:#ebebe9;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin-left:-1px}
-#tnb a {display:block;padding:0 20px;height:35px;border-right:1px solid #ddd;border-left:1px solid #ddd;color:#595959;font-family:"dotum";font-size:0.8em;font-weight:bold;text-decoration:none;line-height:3em}
+#tnb a {display:block;padding:0 20px;height:35px;border-right:1px solid #ddd;border-left:1px solid #ddd;color:#595959;font-family:"dotum";font-size:0.75em;font-weight:bold;text-decoration:none;line-height:3em}
 #tnb a:hover,
 #tnb a:focus {background:#f9f9f5}
 
@@ -216,7 +216,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 .readonly {background:#ff3061}
 
 /* 최신글 */
-.latest {clear:both;position:relative;margin-bottom:30px;padding:0 0 20px;border-bottom:1px solid #ccc;font-size:0.8em}
+.latest {clear:both;position:relative;margin-bottom:30px;padding:0 0 20px;border-bottom:1px solid #ccc;font-size:0.75em}
 .latest strong {display:block;margin-bottom:15px;padding:0 10px 10px;border-bottom:1px solid #eee;font-size:1.1em}
 .latest strong a {color:#000;text-decoration:none}
 .latest ul {margin:0;padding:0;list-style:none}
@@ -306,13 +306,13 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 #bo_v_article {zoom:1}
 #bo_v_article:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_article h1 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_article p {padding:0 0 10px}
-#bo_v_file {border-bottom:1px solid #666;background:#555;font-size:0.75em}
+#bo_v_article p {padding:0 0 10px;font-size:0.875em}
+#bo_v_file {background:#555;font-size:0.75em}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
 #bo_v_file a {display:inline-block;margin-top:5px;padding:5px 10px;color:#fff}
 .bo_v_file_cnt {display:inline-block;margin-left:10px;color:#ddd}
-#bo_v_link {border-bottom:1px solid #666;background:#555;font-size:0.75em}
+#bo_v_link {background:#555;font-size:0.75em}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
 #bo_v_link a {display:inline-block;margin-top:5px;padding:5px 10px;color:#fff}
@@ -356,7 +356,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 #post_num dt {margin-bottom:15px}
 #post_num dd {margin:0;padding:0}
 #post_num ul {margin:0;padding:0;list-style:none}
-#post_num li a {display:block;padding:5px 0;font-size:0.8em}
+#post_num li a {display:block;padding:5px 0;font-size:0.75em}
 #post_num p {margin:0 auto 30px;width:90%}
 
 /* 회원가입 약관 */
@@ -386,7 +386,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 .new_win h2 {font-size:1em}
 .new_win table {margin:0 auto 30px;width:90%}
 .new_win fieldset {margin:0 auto 30px;width:90%}
-.new_win_ul {margin:-30px 0 20px 0;padding:0 0 0 30px;border-bottom:1px solid #ddd;background:#fff;font-size:0.8em;list-style:none;zoom:1}
+.new_win_ul {margin:-30px 0 20px 0;padding:0 0 0 30px;border-bottom:1px solid #ddd;background:#fff;font-size:0.75em;list-style:none;zoom:1}
 .new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win_ul li {float:left;margin-left:-1px}
 .new_win_ul a {display:block;padding:10px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:0.875em;font-weight:bold;text-decoration:none}
@@ -410,7 +410,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 /* 자기소개 */
 #profile table {margin-bottom:15px}
 #profile section {margin:0 auto 20px;width:90%;border-bottom:1px solid #d9d9d9}
-#profile h2 {margin:0;font-size:0.8em;font-family:"gulim"}
+#profile h2 {margin:0;font-size:0.75em;font-family:"gulim"}
 #profile p {font-size:0.75em}
 
 /* 쪽지 읽기 */

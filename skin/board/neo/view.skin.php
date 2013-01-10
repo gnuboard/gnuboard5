@@ -15,7 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <dd><?=($category_name ? "{$view['ca_name']} " : "");?></dd>
             <? } ?>
             <dt>작성자</dt>
-            <dd><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></dd>
+            <dd><div><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></div></dd>
             <dt>작성일</dt>
             <dd><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></dd>
             <dt>조회</dt>
