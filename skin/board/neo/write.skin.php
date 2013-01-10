@@ -112,55 +112,27 @@ if ($option) {
 <tr>
     <th scope="row"><label for="wr_content">내용</label></th>
     <td>
-        <?=editor_textarea("wr_content", $content);?>
+        <textarea id="wr_content" name="wr_content" class="ckeditor" rows="10" style="width:100%;"><?=$content?></textarea>
         <? if ($write_min || $write_max) { ?><span id="char_count"></span>글자<?}?>
         <? if ($write_min || $write_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
     </td>
 </tr>
 
-<? if ($is_link) { ?>
-<? for ($i=1; $i<=$g4['link_count']; $i++) { ?>
+<? for ($i=1; $is_link && $i<=$g4['link_count']; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?=$i?>">링크 #<?=$i?></label></th>
     <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" class="frm_input" size="60" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>"></td>
 </tr>
 <? } ?>
-<? } ?>
 
-<? if ($is_file) { ?>
+<? for ($i=1; $is_file && $i<=$file_count; $i++) { ?>
 <tr>
-    <th scope="row">파일 #1</th>
+    <th scope="row">파일 #<?=$i?></th>
     <td>
         <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <? if ($is_file_content) { ?>
         <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
-    </td>
-</tr>
-<tr>
-    <th scope="row">파일 #2</th>
-    <td>
-        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
-        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
-    </td>
-</tr>
-<tr>
-    <th scope="row">파일 #3</th>
-    <td>
-        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
-        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
-    </td>
-</tr>
-<tr>
-    <th scope="row">파일 #4</th>
-    <td>
-        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
-        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
-    </td>
-</tr>
-<tr>
-    <th scope="row">파일 #5</th>
-    <td>
-        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
-        <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
+        <?}?>
     </td>
 </tr>
 <?}?>
@@ -168,9 +140,7 @@ if ($option) {
 </tbody>
 </table>
 
-<?
-echo run_captcha();
-?>
+<?=$captcha_html?>
 
 <div class="btn_confirm">
     <input type="submit" id="btn_submit" value="글쓰기" accesskey="s">
@@ -253,14 +223,13 @@ function fwrite_submit(f)
     }
     */
 
-    <?
-    echo chk_editor("wr_content");
-    ?>
+    <? echo editor_getdata("wr_content"); ?>
+    <? echo editor_empty("wr_content"); ?>
 
     var subject = "";
     var content = "";
     $.ajax({
-        url: bbs_path+"/filter.ajax.php",
+        url: g4_bbs_path+"/filter.ajax.php",
         type: "POST",
         data: {
             "subject": f.wr_subject.value,
@@ -290,9 +259,7 @@ function fwrite_submit(f)
         return false;
     }
 
-    <?
-    echo chk_js_captcha();
-    ?>
+    <? if (defined('_CAPTCHA_')) echo captcha_js('f.wr_key'); ?>
 
     return true;
 }

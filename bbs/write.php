@@ -1,4 +1,5 @@
 <?
+define('_CAPTCHA_', true);
 include_once('./_common.php');
 
 set_session('ss_bo_table', $bo_table);
@@ -204,6 +205,11 @@ if ($board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_leve
     $is_dhtml_editor = false;
 }
 
+$captcha_html = "";
+if ($is_guest) {
+    $captcha_html = get_captcha('wr_key');
+}
+
 $is_mail = false;
 if ($config['cf_email_use'] && $board['bo_use_email'])
     $is_mail = true;
@@ -246,6 +252,8 @@ $is_file_content = false;
 if ($board['bo_use_file_content']) {
     $is_file_content = true;
 }
+
+$file_count = (int)$board['bo_upload_count'];
 
 $name     = "";
 $email    = "";
@@ -349,34 +357,6 @@ if ($is_admin) {
 
 include_once($g4['path'].'/head.sub.php');
 include_once('./board_head.php');
-
-//--------------------------------------------------------------------------
-// 가변 파일
-$file_script = '';
-$file_length = -1;
-// 수정의 경우 파일업로드 필드가 가변적으로 늘어나야 하고 삭제 표시도 해주어야 합니다.
-if ($w == 'u') {
-    for ($i=0; $i<$file['count']; $i++) {
-        $row = sql_fetch(" select bf_file, bf_content from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-        if ($row['bf_file']) {
-            $file_script .= 'add_file("<input type="checkbox" name="bf_file_del['.$i.']" value="1"><a href="'.$file[$i]['href'].'">'.$file[$i]['source'].'('.$file[$i]['size'].')</a> 파일 삭제';
-            if ($is_file_content)
-                //$file_script .= '<br><input type="text" class="ed" size="50" name="bf_content['.$i.']" value="'.$row['bf_content'].'" title="업로드 이미지 파일에 해당 되는 내용을 입력하세요.">';
-                // 첨부파일설명에서 ' 또는 " 입력되면 오류나는 부분 수정
-                $file_script .= '<br><input type="text" class="ed" size="50" name="bf_content['.$i.']" value="'.addslashes(get_text($row['bf_content'])).'" title="업로드 이미지 파일에 해당 되는 내용을 입력하세요.">';
-            $file_script .= '\");'.PHP_EOL;
-        }
-        else
-            $file_script .= 'add_file("");'.PHP_EOL;
-    }
-    $file_length = $file['count'] - 1;
-}
-
-if ($file_length < 0) {
-    $file_script .= 'add_file("");'.PHP_EOL;
-    $file_length = 0;
-}
-//--------------------------------------------------------------------------
 
 if ($g4['https_url'])
     $action_url = "{$g4['https_url']}/{$g4['bbs']}/write_update.php";

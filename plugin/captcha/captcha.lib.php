@@ -137,7 +137,7 @@ $captcha->run();
 */
 
 // 캡챠이미지는 한개만 사용 가능함.
-function get_captcha($input_name, $captcha_no)
+function get_captcha($input_name, $captcha_no=1)
 {
     global $g4;
 
@@ -169,5 +169,11 @@ function chk_captcha($input_name)
         }
     }
     return true;
+}
+
+// captcha javascript code
+function captcha_js($element)
+{
+    return "if (!check_captcha({$element})) { return false; }";
 }
 ?>
