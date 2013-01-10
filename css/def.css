@@ -199,15 +199,16 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 
 /* 폼 테이블 */
 .frm_tbl {}
-.frm_tbl caption {padding-top:10px;border-bottom:1px solid #aaa;font-weight:bold}
-.frm_tbl th {width:170px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;text-align:left}
+.frm_tbl caption {padding-top:10px;border-bottom:1px solid #aaa;font-size:0.75em;font-weight:bold}
+.frm_tbl th {padding-left:10px;width:160px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;background:#f9f9f9;text-align:left}
+.frm_tbl td {padding:7px 10px}
 .frm_tbl textarea,
 .frm_tbl .frm_input,
 .frm_tbl select {border:1px solid #d7d7d7;background:#f6f9fa;vertical-align:middle}
 .frm_tbl textarea,
-.frm_tbl .frm_input {padding:3px;background:#f5f5f2}
+.frm_tbl .frm_input {padding:2px;background:#f5f5f2}
 .frm_tbl textarea:focus,
-.frm_tbl .frm_input:focus {padding:4px;border:0;background:#555;color:#fff}
+.frm_tbl .frm_input:focus {padding:3px;border:0;background:#555;color:#fff}
 .frm_tbl textarea {width:90%}
 .frm_tbl select {padding:2px}
 .frm_file {display:block;margin-bottom:5px}

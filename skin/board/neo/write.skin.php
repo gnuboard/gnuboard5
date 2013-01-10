@@ -106,7 +106,7 @@ if ($option) {
 
 <tr>
     <th scope="row"><label for="wr_subject">제목</label></th>
-    <td><input id="wr_subject" name="wr_subject" class="frm_input required" size="60" required value="<?=$subject?>" title="제목"></td>
+    <td><input id="wr_subject" name="wr_subject" class="frm_input required" size="50" required value="<?=$subject?>" title="제목"></td>
 </tr>
 
 <tr>
@@ -121,7 +121,7 @@ if ($option) {
 <? for ($i=1; $is_link && $i<=$g4['link_count']; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?=$i?>">링크 #<?=$i?></label></th>
-    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" class="frm_input" size="60" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>"></td>
+    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" class="frm_input" size="50" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>"></td>
 </tr>
 <? } ?>
 
