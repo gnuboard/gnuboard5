@@ -55,12 +55,8 @@ fieldset button:focus,
 #to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
 
 /* 헤딩 */
-h1 {margin:0 0 30px;font-size:1.6em}
-h2 {margin:0 0 20px}
-h3 {margin:0 0 20px}
-h4 {margin:0 0 20px}
-h5 {margin:0 0 20px}
-h6 {margin:0 0 20px}
+h1 {margin:0 0 20px;font-size:1.6em}
+h2, h3, h4, h5, h6 {margin:0 0 20px}
 
 /* 레이아웃 - 상단 */
 #header {z-index:3;position:relative}
@@ -191,13 +187,13 @@ h6 {margin:0 0 20px}
 
 /* ##################################################################### 스킨 및 컨텐츠 */
 /* 버튼 */
-.btn01 {display:inline-block;padding:0 10px;height:25px;border:1px solid #ff5e1c;background:#ff7200;color:#fff;font-size:0.8em;text-decoration:none;line-height:2.2em}
+.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ff5e1c;background:#ff7200;color:#fff;font-size:0.75em;text-decoration:none;line-height:2.2em}
 .btn01:hover,
 .btn01:focus {}
-.btn02 {display:inline-block;padding:0 10px;height:25px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.8em;text-decoration:none;line-height:2.2em}
+.btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.75em;text-decoration:none;line-height:2.2em}
 .btn02:hover,
 .btn02:focus {}
-.btn03 {display:inline-block;padding:0 10px;height:25px;border:1px solid #555;background:#555;color:#fff;font-size:0.8em;text-decoration:none;line-height:2.2em}
+.btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #555;background:#555;color:#fff;font-size:0.75em;text-decoration:none;line-height:2.2em}
 .btn02:hover,
 .btn02:focus {}
 
@@ -263,24 +259,27 @@ h6 {margin:0 0 20px}
 /* 게시판 목록 */
 #btn_bo_adm {text-align:center}
 #btn_bo_adm a {display:inline-block;margin-bottom:20px;padding:10px 20px;text-align:center}
-.btn_bo {margin-bottom:10px;zoom:1}
-.btn_bo:after {display:block;visibility:hidden;clear:both;content:""}
-.btn_bo ul {margin:0;padding:0;list-style:none}
-.btn_bo_user {float:right}
+.bo_link {margin-bottom:5px;zoom:1}
+.bo_link:after {display:block;visibility:hidden;clear:both;content:""}
+.bo_link ul {margin:0;padding:0;list-style:none}
+#bo_cate {float:left;margin-bottom:10px;font-size:0.75em}
+#bo_cate form {display:inline-block}
+#bo_cate select {margin-right:5px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:top}
+.btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_user a {display:block}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .btn_bo_adm a {display:block}
-#bo_sch {float:left;padding:0;margin:0;border:0}
+#bo_sch {text-align:center}
 #bo_sch legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #bo_sch form {display:inline-block}
 #bo_sch .fieldset_submit {border:1px solid #ccc;background:#fafafa;color:#000}
-#bo_cate {margin-bottom:10px}
-#fcategory {display:inline-block}
-#fcategory select {margin-right:5px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 #bo_list caption {padding:0;height:0;overflow:hidden}
-.bo_cate_link {display:inline-block;margin-right:10px;color:#ff7200;font-weight:bold;text-decoration:none}
+#bo_list td {line-height:1em}
+#bo_list a {color:#000;text-decoration:none}
+#bo_list img {vertical-align:top}
+.bo_cate_link {display:inline-block;margin:0 10px 0 5px;font-weight:bold;text-decoration:none}
 .td_subject img {margin-left:5px}
 
 /* 게시판 쓰기 */
@@ -423,6 +422,9 @@ h6 {margin:0 0 20px}
 
 /* pagination */
 .pg {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.75em;text-align:center}
-.pg_page, .pg_current {display:inline-block;position:relative;margin-left:-6px;padding:0 12px;height:30px;border:1px solid #ddd;background:#fff;color:#000;line-height:2.6em;vertical-align:middle}
-.pg_page {text-decoration:none}
+.pg_wrap {display:inline-block;border:1px solid #ddd;letter-spacing:-4px}
+.pg_page, .pg_current {display:inline-block;padding:0 12px;height:30px;background:#fff;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
+.pg_page {background:#f9f9f9;text-decoration:none}
+.pg_start, .pg_prev {border-right:1px solid #ddd}
+.pg_end, .pg_next {border-left:1px solid #ddd}
 .pg_current {background:#595959;color:#fff}

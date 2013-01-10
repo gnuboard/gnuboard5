@@ -19,8 +19,9 @@ function get_microtime()
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {
     $str = '';
+    $str .= "<span class=\"pg_wrap\">";
     if ($cur_page > 1) {
-        $str .= '<a href="'.$url.'1'.$add.'" class="pg_page">처음</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.'1'.$add.'" class="pg_page pg_start">처음</a>'.PHP_EOL;
     }
 
     $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
@@ -28,7 +29,7 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 
     if ($end_page >= $total_page) $end_page = $total_page;
 
-    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="pg_page">이전</a>'.PHP_EOL;
+    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="pg_page pg_prev">이전</a>'.PHP_EOL;
 
     if ($total_page > 1) {
         for ($k=$start_page;$k<=$end_page;$k++) {
@@ -39,12 +40,12 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
         }
     }
 
-    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="pg_page">다음</a>'.PHP_EOL;
+    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="pg_page pg_next">다음</a>'.PHP_EOL;
 
     if ($cur_page < $total_page) {
-        $str .= '<a href="'.$url.$total_page.$add.'" class="pg_page">맨끝</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.$total_page.$add.'" class="pg_page pg_end">맨끝</a>'.PHP_EOL;
     }
-    $str .= "";
+    $str .= "</span>";
 
     return $str;
 }

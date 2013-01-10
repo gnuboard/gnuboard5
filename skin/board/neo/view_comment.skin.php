@@ -81,10 +81,12 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">
             <label for="wr_secret">비밀글</label>
             <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
-            <textarea id="wr_content" name="wr_content" required
-            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
-            <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
-            <input type="submit" class="fieldset_submit" value="댓글입력">
+            <div id="bo_vc_warea">
+                <textarea id="wr_content" name="wr_content" required
+                <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
+                <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+            </div>
+            <input type="submit" class="bo_vc_submit" value="댓글입력">
         </fieldset>
     </aside>
 
