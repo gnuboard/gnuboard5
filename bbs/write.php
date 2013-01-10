@@ -207,7 +207,7 @@ if ($board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_leve
 
 $captcha_html = "";
 if ($is_guest) {
-    $captcha_html = get_captcha('wr_key');
+    $captcha_html = captcha_html('wr_key');
 }
 
 $is_mail = false;
