@@ -41,7 +41,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <tr>
     <th scope="row"><label for="reg_mb_name">이름</label></th>
     <td>
-        <input id="reg_mb_name" name="mb_name" class="frm_input hangul <?=$required?> <?=$readonly?>" value="<?=$member['mb_name']?>" <?=$required?> <?=$readonly?> title="이름">
+        <input id="reg_mb_name" name="mb_name" class="frm_input hangul <?=$required?> <?=$readonly?>" value="<?=$member['mb_name']?>" size="10" <?=$required?> <?=$readonly?> title="이름">
         <? if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } ?>
     </td>
 </tr>
@@ -50,7 +50,7 @@ var member_skin_path = "<?=$member_skin_path?>";
     <th scope="row"><label for="reg_mb_nick">별명</label></th>
     <td>
         <input type="hidden" name="mb_nick_default" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>">
-        <input type="text" id="reg_mb_nick" name="mb_nick" class="frm_input required" maxlength="20" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" required title="별명">
+        <input type="text" id="reg_mb_nick" name="mb_nick" class="frm_input required" maxlength="20" size="10" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" required title="별명">
         <span id="msg_mb_nick"></span>
         <span class="frm_info">
             공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br>
@@ -64,7 +64,7 @@ var member_skin_path = "<?=$member_skin_path?>";
     <th scope="row"><label for="reg_mb_email">E-mail</label></th>
     <td>
         <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
-        <input type="text" id="reg_mb_email" name="mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" maxlength="100" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?> title="E-mail">
+        <input type="text" id="reg_mb_email" name="mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" maxlength="100" size="50" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?> title="E-mail">
         <span id="msg_mb_email"></span>
         <? if ($config['cf_use_email_certify']) { ?>
         <span class="frm_info">
@@ -195,7 +195,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <? } ?>
 </table>
 
-<?=get_captcha("wr_key", 1);?>
+<?=$captcha_html?>
 
 <div class="btn_confirm">
     <input type="submit" value="회원가입" accesskey="s">
