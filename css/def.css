@@ -266,7 +266,7 @@ a {color:#000;text-decoration:none}
 .bo_link ul {margin:0;padding:0;list-style:none}
 #bo_cate {float:left;margin-bottom:10px;font-size:0.75em}
 #bo_cate form {display:inline-block}
-#bo_cate select {margin-right:5px;padding:4px;border:1px solid #ddd;background:#f9f9f5;font-size:1em;vertical-align:top}
+#bo_cate select {margin-right:5px;padding:4px;border:1px solid #ddd;background:#f9f9f5;font-size:1em;vertical-align:middle}
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_user a {display:block}
@@ -277,7 +277,7 @@ a {color:#000;text-decoration:none}
 #bo_sch legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #bo_sch form {display:inline-block}
 #bo_sch .fieldset_submit {border:1px solid #ccc;background:#fafafa;color:#000}
-#bo_list caption {padding:0;height:0;overflow:hidden}
+#bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
 #bo_list td {line-height:1em}
 #bo_list img {vertical-align:top}
 .bo_cate_link {display:inline-block;margin:0 10px 0 0;font-weight:bold;text-decoration:none}

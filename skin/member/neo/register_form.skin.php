@@ -162,7 +162,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 </tr>
 <? } ?>
 
-<? if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_open_modify'] * 86400))) { // 정보공개 수정일이 지났다면 수정가능 ?>
+<? if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_open_modify'] * 86400)) || !$member['mb_open_date']) { // 정보공개 수정일이 지났다면 수정가능 ?>
 <tr>
     <th scope="row"><label for="reg_mb_open">정보공개</label></th>
     <td>
