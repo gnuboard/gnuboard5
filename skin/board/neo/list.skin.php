@@ -115,7 +115,7 @@ for ($i=0; $i<count($list); $i++) {
 <div class="bo_link">
     <ul class="btn_bo_adm">
         <? if ($list_href) { ?>
-        <li><a href="<?=$list_href?>">목록</a></li>
+        <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
         <li><a href="javascript:select_delete();" class="btn02">선택삭제</a></li>

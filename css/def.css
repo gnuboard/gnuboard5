@@ -121,7 +121,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 #poll ul {margin:10px}
 #poll li {margin:7px 0}
 #poll footer {padding:10px;border-top:1px solid #efeada;text-align:center}
-#poll footer input {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
+#poll footer input {padding:0 15px;height:24px;border:0;background:#ff3061;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;color:#000;font-size:0.9em;vertical-align:top;text-decoration:none;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */
 #poll_result section {margin:0 auto 20px;padding:10px;width:90%}
@@ -135,7 +135,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 #poll_result_list p {position:relative;margin-bottom:0}
 #poll_result_list p span {position:absolute;top:5px;right:5%}
 .poll_result_graph {position:relative;margin-right:5%;height:10px;background:#ddd}
-.poll_result_graph span {position:absolute;top:0;left:0;height:100%;background:#ff7200}
+.poll_result_graph span {position:absolute;top:0;left:0;height:100%;background:#ff3061}
 #poll_result_cmt {border:1px solid #ddd;background:#f7f7f7}
 #poll_result_cmt h2 {text-align:center}
 #poll_result_cmt article {margin-bottom:15px;border-bottom:1px solid #e7e7e7}
@@ -187,7 +187,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 
 /* ##################################################################### 스킨 및 컨텐츠 */
 /* 버튼 */
-.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ff5e1c;background:#ff7200;color:#fff;font-size:0.75em;text-decoration:none;line-height:2.2em}
+.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ff5e1c;background:#ff3061;color:#fff;font-size:0.75em;text-decoration:none;line-height:2.2em}
 .btn01:hover,
 .btn01:focus {}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.75em;text-decoration:none;line-height:2.2em}
@@ -264,7 +264,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 .bo_link ul {margin:0;padding:0;list-style:none}
 #bo_cate {float:left;margin-bottom:10px;font-size:0.75em}
 #bo_cate form {display:inline-block}
-#bo_cate select {margin-right:5px;padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:top}
+#bo_cate select {margin-right:5px;padding:4px;border:1px solid #ddd;background:#f9f9f5;font-size:1em;vertical-align:top}
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_user a {display:block}
@@ -319,7 +319,7 @@ h2, h3, h4, h5, h6 {margin:0 0 20px}
 .bo_v_link_cnt {display:inline-block;margin-left:10px;color:#ddd}
 #bo_v_act {margin:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
-#bo_v_act strong {color:#ff7200}
+#bo_v_act strong {color:#ff3061}
 #bo_v_bot {zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
