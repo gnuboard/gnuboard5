@@ -144,15 +144,15 @@ function captcha_html($input_name, $captcha_id_suffix='')
     // 세션생성을 한후 다음페이지에서 해당 세션이 있을때만 올바른 캡챠코드인지 비교합니다.
     set_session('ss_captcha_use', true);
 
-    $html  = '<fieldset id="captcha'.$captcha_id_suffix.'">';
-    $html .= '<legend>자동등록방지</legend>';
+    $html  = '<fieldset id="captcha'.$captcha_id_suffix.'" class="captcha">';
+    $html .= '<legend class="sound_only">자동등록방지</legend>';
     //$html .= '<img src="" id="captcha" alt="자동등록방지 이미지" title="이미지를 클릭하시면 숫자가 바뀝니다.">';
-    $html .= '<iframe id="captcha_iframe" name="captcha_iframe" src="'.$g4['path'].'/plugin/captcha/run.php" width="80" height="25" frameborder="0" scrolling="no"></iframe>';
+    $html .= '<iframe id="captcha_iframe" name="captcha_iframe" src="'.$g4['path'].'/plugin/captcha/run.php" title="자동등록방지숫자"></iframe>';
     $html .= '<a href="'.$g4['path'].'/plugin/captcha/run.php" target="captcha_iframe">새로고침</a>';
-    $html .= '<a href="'.$g4['path'].'/plugin/captcha/wav.php" id="captcha_wav">wav</a>';
-    $html .= '<label>자동등록방지 입력</label>';
-    $html .= '<input type="text" id="captcha_key" name="'.$input_name.'" class="captcha_box frm_input" size="10" maxlength="5" required title="자동등록방지 입력">';
-    $html .= '<p>이미지의 숫자를 순서대로 입력하세요. 새로고침을 클릭하시면 새로운 숫자가 나타납니다.</p>';
+    $html .= '<a href="'.$g4['path'].'/plugin/captcha/wav.php" id="captcha_wav">음성듣기</a>';
+    $html .= '<label for="captcha_key">자동등록방지 입력</label>';
+    $html .= '<input type="text" id="captcha_key" name="'.$input_name.'" class="captcha_box fieldset_input" size="10" maxlength="5" required title="자동등록방지 입력">';
+    $html .= '<p class="sound_only">이미지의 숫자를 순서대로 입력하세요. 새로고침을 클릭하시면 새로운 숫자가 나타납니다.</p>';
     $html .= '</fieldset>';
     return $html;
 }
