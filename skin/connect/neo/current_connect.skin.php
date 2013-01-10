@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="col">번호</th>
     <th scope="col">이름</th>
-    <th scope="col">링크</th>
+    <th scope="col">위치</th>
 </tr>
 </thead>
 <tbody>
