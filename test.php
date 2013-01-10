@@ -29,7 +29,9 @@ outline:0;
 </head>
 <body>
 
-<input type="text">
+
+<label for="text">테스트 필수</label>
+<input type="text" id="text" title="테스트">
 
 <input type="checkbox">
 
