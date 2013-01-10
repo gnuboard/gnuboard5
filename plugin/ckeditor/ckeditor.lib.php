@@ -23,7 +23,7 @@ function editor_getdata($id)
 function editor_empty($id, $textarea_name="내용을")
 {
     if (defined('_EDITOR_'))
-        return "if (!{$id}_data) { alert(\"$textarea_name 입력해 주십시오.\"); return false; }\n";
+        return "if (!{$id}_data) { alert(\"$textarea_name 입력해 주십시오.\"); CKEDITOR.instances.{$id}.focus(); return false; }\n";
     else 
         return "";
 }

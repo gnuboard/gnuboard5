@@ -8,5 +8,7 @@ if (defined('_CAPTCHA_')) {
     );
 
     include_once($captcha->lib);
+} else {
+    unset($_SESSION['ss_captcha_use']);
 }
 ?>

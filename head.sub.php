@@ -58,6 +58,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 // 자바스크립트에서 사용하는 전역변수 선언
 var g4_path      = "<?=$g4['path']?>";
 var g4_bbs       = "<?=$g4['bbs']?>";
+var g4_bbs_path  = "<?=$g4['bbs_path']?>";
 var g4_bbs_img   = "<?=$g4['bbs_img']?>";
 var g4_url       = "<?=$g4['url']?>";
 var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";

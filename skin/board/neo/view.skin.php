@@ -25,7 +25,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </dl>
     </section>
 
-    <? if ($view['file'][$i]) {?>
+    <? if (!empty($view['file'])) {?>
     <section id="bo_v_file">
         <h2>첨부파일</h2>
         <ul>
@@ -51,7 +51,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
     <? } ?>
 
-    <? if ($view['link'][$i]) {?>
+    <? if (!empty($view['link'])) {?>
     <section id="bo_v_link">
         <h2>관련링크</h2>
         <ul>

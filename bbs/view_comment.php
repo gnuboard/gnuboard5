@@ -1,6 +1,11 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 
+$captcha_html = "";
+if ($is_guest) {
+    $captcha_html = captcha_html('wr_key', '_comment');
+}
+
 @include_once($board_skin_path.'/view_comment.head.skin.php');
 
 // 코멘트를 새창으로 여는 경우 세션값이 없으므로 생성한다.
