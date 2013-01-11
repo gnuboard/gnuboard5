@@ -34,7 +34,6 @@ else
 <input type="hidden" name="url" value='<?=$login_url?>'>
 
 <fieldset>
-    <legend>회원로그인</legend>
     <label for="login_mb_id">아이디</label>
     <input type="text" id="login_mb_id" name="mb_id" maxLength="20" size="15" required>
     <label for="login_mb_password">패스워드</label>
