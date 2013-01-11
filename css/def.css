@@ -116,8 +116,8 @@ a {color:#000;text-decoration:none}
 #ol_before a {color:#696969;letter-spacing:-0.1em}
 #ol_submit {position:absolute;top:42px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 아웃로그인 후 */
-#ol_after {padding-top:15px;width:219px;color:#000;font-size:0.75em}
-#ol_after header {padding:0 0 13px;border-bottom:1px solid #efeada;background:#f8f8f8;text-align:center}
+#ol_after {width:219px;color:#000;font-size:0.75em}
+#ol_after header {padding:15px 0 13px;border-bottom:1px solid #efeada;background:#f8f8f8;text-align:center}
 #ol_after ul {padding:5px 0;background:#fff}
 #ol_after li a {display:block;position:relative;padding:7px 15px 7px 14px}
 #ol_after li span {position:absolute;top:7px;right:14px;color:#ff3061}
