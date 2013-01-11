@@ -11,50 +11,26 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1><?=$g4['title']?></h1><?}?>
 
-<? if ($admin_href) { ?><div id="btn_bo_adm"><a href="<?=$admin_href?>">게시판 관리자 바로가기</a></div><?}?>
+<? if ($admin_href) { ?><div id="btn_bo_adm"></div><?}?>
 
-<div id="bo_cate">
-    <? if ($is_category) { ?>
-    <form id="fcategory" name="fcategory" method="get">
-    <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
-        <option value=''>전체</option>
-        <?=$category_option?>
-    </select>
-    </form>
-    <? } ?>
-    <span>Total <?=number_format($total_count)?>건</span>
-    <?=$page?> 페이지
-</div>
-
-<div class="btn_bo">
-    <fieldset id="bo_sch">
-        <legend>게시물 검색</legend>
-
-        <form name="fsearch" method="get">
-        <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-        <input type="hidden" name="sca" value="<?=$sca?>">
-        <select name="sfl" title="검색대상">
-            <option value="wr_subject">제목</option>
-            <option value="wr_content">내용</option>
-            <option value="wr_subject||wr_content">제목+내용</option>
-            <option value="mb_id,1">회원아이디</option>
-            <option value="mb_id,0">회원아이디(코)</option>
-            <option value="wr_name,1">글쓴이</option>
-            <option value="wr_name,0">글쓴이(코)</option>
+<div class="bo_link">
+    <div id="bo_cate">
+        <? if ($is_category) { ?>
+        <form id="fcategory" name="fcategory" method="get">
+        <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
+            <option value=''>전체</option>
+            <?=$category_option?>
         </select>
-        <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
-        <input type="radio" id="sop_and" name="sop" value="and">
-        <label for="sop_and">and</label>
-        <input type="radio" id="sop_or" name="sop" value="or">
-        <label for="sop_or">or</label>
-        <input type="submit" class="fieldset_submit" value="검색">
         </form>
-
-    </fieldset>
+        <? } ?>
+        <span>Total <?=number_format($total_count)?>건</span>
+        <?=$page?> 페이지
+    </div>
 
     <? if ($rss_href || $write_href) {?>
     <ul class="btn_bo_user">
         <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn02">RSS</a></li><? } ?>
+        <? if ($admin_href) { ?><li><a href="<?=$admin_href?>" class="btn03">관리자</a></li><? } ?>
         <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
     </ul>
     <? } ?>
@@ -136,15 +112,15 @@ for ($i=0; $i<count($list); $i++) {
 </table>
 </form>
 
-<div class="btn_bo">
+<div class="bo_link">
     <ul class="btn_bo_adm">
         <? if ($list_href) { ?>
-        <li><a href="<?=$list_href?>">목록</a></li>
+        <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
-        <li><a href="javascript:select_delete();" class="btn03">선택삭제</a></li>
-        <li><a href="javascript:select_copy('copy');" class="btn03">선택복사</a></li>
-        <li><a href="javascript:select_copy('move');" class="btn03">선택이동</a></li>
+        <li><a href="javascript:select_delete();" class="btn02">선택삭제</a></li>
+        <li><a href="javascript:select_copy('copy');" class="btn02">선택복사</a></li>
+        <li><a href="javascript:select_copy('move');" class="btn02">선택이동</a></li>
         <? } ?>
     </ul>
 
@@ -159,6 +135,31 @@ for ($i=0; $i<count($list); $i++) {
     <?=$write_pages?>
     <? if ($next_part_href) { echo '<a href="'.$next_part_href.'">다음검색</a>'; } ?>
 </div>
+
+<fieldset id="bo_sch">
+    <legend>게시물 검색</legend>
+
+    <form name="fsearch" method="get">
+    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+    <input type="hidden" name="sca" value="<?=$sca?>">
+    <select name="sfl" title="검색대상">
+        <option value="wr_subject">제목</option>
+        <option value="wr_content">내용</option>
+        <option value="wr_subject||wr_content">제목+내용</option>
+        <option value="mb_id,1">회원아이디</option>
+        <option value="mb_id,0">회원아이디(코)</option>
+        <option value="wr_name,1">글쓴이</option>
+        <option value="wr_name,0">글쓴이(코)</option>
+    </select>
+    <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
+    <input type="radio" id="sop_and" name="sop" value="and">
+    <label for="sop_and">and</label>
+    <input type="radio" id="sop_or" name="sop" value="or">
+    <label for="sop_or">or</label>
+    <input type="submit" class="fieldset_submit" value="검색">
+    </form>
+</fieldset>
+
 
 <script>
 if ('<?=$sca?>') document.fcategory.sca.value = '<?=$sca?>';

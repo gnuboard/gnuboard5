@@ -1,4 +1,5 @@
 <?
+define('_CAPTCHA_', true);
 include_once('./_common.php');
 
 if (!$board['bo_table']) {

@@ -15,7 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <dd><?=($category_name ? "{$view['ca_name']} " : "");?></dd>
             <? } ?>
             <dt>작성자</dt>
-            <dd><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></dd>
+            <dd><div><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></div></dd>
             <dt>작성일</dt>
             <dd><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></dd>
             <dt>조회</dt>
@@ -25,7 +25,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </dl>
     </section>
 
-    <? if ($view['file'][$i]) {?>
+    <? if (!empty($view['file'])) {?>
     <section id="bo_v_file">
         <h2>첨부파일</h2>
         <ul>
@@ -51,7 +51,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
     <? } ?>
 
-    <? if ($view['link'][$i]) {?>
+    <? if (!empty($view['link'])) {?>
     <section id="bo_v_link">
         <h2>관련링크</h2>
         <ul>
@@ -79,18 +79,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <aside id="bo_v_top">
         <h2>게시물 상단 링크</h2>
-        <!-- 링크 버튼 -->
-        <? if ($update_href || $delete_href) {?>
-        <ul id="bo_v_my">
-            <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn02">수정</a></li><? } ?>
-            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" class="btn02">삭제</a></li><? } ?>
-        </ul>
-        <? } ?>
-
         <?
         ob_start();
         ?>
         <ul class="bo_v_com">
+            <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn02">수정</a></li><? } ?>
+            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" class="btn02">삭제</a></li><? } ?>
             <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" class="btn03">복사</a></li><? } ?>
             <? if ($move_href) { ?><li><a href="<?=$move_href?>" class="btn03">이동</a></li><? } ?>
             <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn02">검색</a></li><? } ?>
@@ -104,7 +98,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         ?>
     </aside>
 
-    <article id="bo_v_article">
+    <article id="bo_v_atc">
         <header>
             <h1>본문</h1>
         </header>
@@ -166,10 +160,10 @@ function file_download(link, file) {
 <script>
 // 이미지 등비율 리사이징
 $(document).ready(function(){
-    var img = $('article img');
+    var img = $('#bo_v_atc img');
     var img_org_width = img.width();
     $(window).resize(function(){
-        var wrapper_width = $('#wrapper').width();
+        var wrapper_width = $('#bo_v_atc').width();
         img.each(function() {
             var img_width = $(this).width();
             if (img_width > wrapper_width) {
