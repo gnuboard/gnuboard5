@@ -17,16 +17,16 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <?
 for ($i=0; $i<count($list); $i++) 
 {
-    $gr_subject = cut_str($list[$i][gr_subject], 20);
-    $bo_subject = cut_str($list[$i][bo_subject], 20);
-    $wr_subject = get_text(cut_str($list[$i][wr_subject], 80));
+    $gr_subject = cut_str($list[$i]['gr_subject'], 20);
+    $bo_subject = cut_str($list[$i]['bo_subject'], 20);
+    $wr_subject = get_text(cut_str($list[$i]['wr_subject'], 80));
 ?>
 <tr>
-    <td class="td_group"><a href="./new.php?gr_id=<?=$list[$i][gr_id]?>"><?=$gr_subject?></a></td>
-    <td class="td_board"><a href="./board.php?bo_table=<?=$list[$i][bo_table]?>"><?=$bo_subject?></a></td>
-    <td><a href="<?=$list[$i][href]?>"><?=$list[$i][comment]?><?=$wr_subject?></a></td>
-    <td class="td_name"><div><?=$list[$i][name]?></div></td>
-    <td class="td_datetime"><?=$list[$i][datetime2]?></td>
+    <td class="td_group"><a href="./new.php?gr_id=<?=$list[$i]['gr_id']?>"><?=$gr_subject?></a></td>
+    <td class="td_board"><a href="./board.php?bo_table=<?=$list[$i]['bo_table']?>"><?=$bo_subject?></a></td>
+    <td><a href="<?=$list[$i]['href']?>"><?=$list[$i]['comment']?><?=$wr_subject?></a></td>
+    <td class="td_name"><div><?=$list[$i]['name']?></div></td>
+    <td class="td_datetime"><?=$list[$i]['datetime2']?></td>
 </tr>
 <? } ?>
 
