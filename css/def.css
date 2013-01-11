@@ -440,4 +440,4 @@ a {color:#000;text-decoration:none}
 .pg_page {background:#f9f9f9;text-decoration:none}
 .pg_start, .pg_prev {border-right:1px solid #ddd}
 .pg_end, .pg_next {border-left:1px solid #ddd}
-.pg_current {background:#595959;color:#fff}
+.pg_current {background:#ff3061;color:#fff}
