@@ -23,7 +23,6 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <input type="hidden" name="page" value="<?=$page?>">
 
 <table id="bo_w" class="frm_tbl">
-<caption><?=$board['bo_subject']?> <?=$title_msg?></caption>
 <tbody>
 <? if ($is_name) { ?>
 <tr>
@@ -42,14 +41,14 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <? if ($is_email) { ?>
 <tr>
     <th scope="row"><label for="wr_email">이메일</label></th>
-    <td><input type="text" id="wr_email" name="wr_email" class="frm_input email" size="60" value="<?=$email?>" maxlength="100"></td>
+    <td><input type="text" id="wr_email" name="wr_email" class="frm_input email" size="50" value="<?=$email?>" maxlength="100"></td>
 </tr>
 <? } ?>
 
 <? if ($is_homepage) { ?>
 <tr>
     <th scope="row"><label for="wr_homepage">홈페이지</label></th>
-    <td><input type="text" id="wr_homepage" name="wr_homepage" class="frm_input" size="60" value="<?=$homepage?>"></td>
+    <td><input type="text" id="wr_homepage" name="wr_homepage" class="frm_input" size="50" value="<?=$homepage?>"></td>
 </tr>
 <? } ?>
 
@@ -106,7 +105,7 @@ if ($option) {
 
 <tr>
     <th scope="row"><label for="wr_subject">제목</label></th>
-    <td><input id="wr_subject" name="wr_subject" class="frm_input required" size="50" required value="<?=$subject?>" title="제목"></td>
+    <td><input type="text" id="wr_subject" name="wr_subject" class="frm_input required" size="50" required value="<?=$subject?>" title="제목"></td>
 </tr>
 
 <tr>
