@@ -1,4 +1,5 @@
 <?
+define('_CAPTCHA_', true);
 include_once('./_common.php');
 
 // 090710
@@ -9,22 +10,20 @@ if (substr_count($wr_content, "&#") > 50) {
 
 @include_once($board_skin_path.'/write_comment_update.head.skin.php');
 
-$g4['title'] = $wr_subject.'코멘트입력';
-
 $w = $_POST["w"];
-$wr_name  = strip_tags($_POST["wr_name"]);
-$wr_email = strip_tags($_POST["wr_email"]);
+$wr_name  = escape_trim($_POST['wr_name']);
+$wr_email = '';
+if (!empty($_POST['wr_email'])) 
+    $wr_email = escape_trim($_POST['wr_email']);
 
 // 비회원의 경우 이름이 누락되는 경우가 있음
-if (!$is_member)
-{
-    if (!trim($wr_name))
+if ($is_guest) {
+    if ($wr_name == '')
         alert('이름은 필히 입력하셔야 합니다.');
 }
 
-if ($w == "c" || $w == "cu") 
-{
-    if ($member[mb_level] < $board[bo_comment_level]) 
+if ($w == "c" || $w == "cu") {
+    if ($member['mb_level'] < $board['bo_comment_level']) 
         alert('코멘트를 쓸 권한이 없습니다.');
 } 
 else
@@ -32,29 +31,14 @@ else
 
 // 세션의 시간 검사
 // 4.00.15 - 코멘트 수정시 연속 게시물 등록 메시지로 인한 오류 수정
-if ($w == 'c' && $_SESSION["ss_datetime"] >= ($g4[server_time] - $config[cf_delay_sec]) && !$is_admin) 
+if ($w == 'c' && $_SESSION['ss_datetime'] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin) 
     alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
 
-set_session("ss_datetime", $g4[server_time]);
-
-// 동일내용 연속 등록 불가
-$sql = " select MD5(CONCAT(wr_ip, wr_subject, wr_content)) as prev_md5 from {$write_table} ";
-if ($w == 'cu')
-    $sql .= " where wr_id <> '{$comment_id}' ";
-$sql .= " order by wr_id desc limit 1 ";
-$row = sql_fetch($sql);
-$curr_md5 = md5($_SERVER[REMOTE_ADDR].$wr_subject.$wr_content);
-// 코멘트 수정의 경우에는 동일한 내용을 등록할 수 없는 오류 수정
-//if ($row[prev_md5] == $curr_md5 && !$is_admin)
-if ($row[prev_md5] == $curr_md5 && $w != 'cu' && !$is_admin)
-    alert('동일한 내용을 연속해서 등록할 수 없습니다.');
+set_session('ss_datetime', $g4['server_time']);
 
 $wr = get_write($write_table, $wr_id);
-if (!$wr[wr_id]) 
-    alert('글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'글이 삭제되었거나 이동하였을 수 있습니다.'); 
-
-// 자동등록방지 검사
-//include_once ("./norobot_check.inc.php");
+if (empty($wr['wr_id'])) 
+    alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다."); 
 
 if (!$is_member) {
     if ($w=='' || $w=='c') {
