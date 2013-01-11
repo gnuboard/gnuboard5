@@ -393,6 +393,10 @@ a {color:#000;text-decoration:none}
 #password_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #password_confirm p {margin-bottom:20px;font-size:0.75em}
 
+/* 최근게시물 */
+#new_search {margin:0 0 10px;padding:0;border:0;text-align:right}
+#new_search legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+
 /* 새창 공통 */
 .new_win h1 {padding:10px 30px;background:#393936;color:#fff;font-size:1.2em}
 .new_win h1 a {color:#fff}
