@@ -21,37 +21,6 @@ var char_max = parseInt(<?=$write_max?>); // 최대
 <input type="hidden" name="sst" value="<?=$sst?>">
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="page" value="<?=$page?>">
-
-<table id="bo_w" class="frm_tbl">
-<tbody>
-<? if ($is_name) { ?>
-<tr>
-    <th scope="row"><label for="wr_name">이름</label></th>
-    <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>"></td>
-</tr>
-<? } ?>
-
-<? if ($is_password) { ?>
-<tr>
-    <th scope="row"><label for="wr_password">패스워드</label></th>
-    <td><input type="password" id="wr_password" name="wr_password" class="frm_input" maxlength="20" <?=$password_required?>></td>
-</tr>
-<? } ?>
-
-<? if ($is_email) { ?>
-<tr>
-    <th scope="row"><label for="wr_email">이메일</label></th>
-    <td><input type="text" id="wr_email" name="wr_email" class="frm_input email" size="50" value="<?=$email?>" maxlength="100"></td>
-</tr>
-<? } ?>
-
-<? if ($is_homepage) { ?>
-<tr>
-    <th scope="row"><label for="wr_homepage">홈페이지</label></th>
-    <td><input type="text" id="wr_homepage" name="wr_homepage" class="frm_input" size="50" value="<?=$homepage?>"></td>
-</tr>
-<? } ?>
-
 <?
 $option = '';
 $option_hidden = '';
@@ -83,8 +52,39 @@ if ($is_notice || $is_html || $is_secret || $is_mail) {
 }
 
 echo $option_hidden;
-if ($option) {
 ?>
+
+<table id="bo_w" class="frm_tbl">
+<tbody>
+<? if ($is_name) { ?>
+<tr>
+    <th scope="row"><label for="wr_name">이름</label></th>
+    <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>"></td>
+</tr>
+<? } ?>
+
+<? if ($is_password) { ?>
+<tr>
+    <th scope="row"><label for="wr_password">패스워드</label></th>
+    <td><input type="password" id="wr_password" name="wr_password" class="frm_input" maxlength="20" <?=$password_required?>></td>
+</tr>
+<? } ?>
+
+<? if ($is_email) { ?>
+<tr>
+    <th scope="row"><label for="wr_email">이메일</label></th>
+    <td><input type="text" id="wr_email" name="wr_email" class="frm_input email" size="50" value="<?=$email?>" maxlength="100"></td>
+</tr>
+<? } ?>
+
+<? if ($is_homepage) { ?>
+<tr>
+    <th scope="row"><label for="wr_homepage">홈페이지</label></th>
+    <td><input type="text" id="wr_homepage" name="wr_homepage" class="frm_input" size="50" value="<?=$homepage?>"></td>
+</tr>
+<? } ?>
+
+<? if ($option) { ?>
 <tr>
     <th scope="row">옵션</th>
     <td><?=$option?></td>
@@ -128,7 +128,7 @@ if ($option) {
 <tr>
     <th scope="row">파일 #<?=$i?></th>
     <td>
-        <input type="file" name="bf_file[]" class="frm_input frm_file" size="50" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="file" name="bf_file[]" class="frm_input frm_file" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
         <? if ($is_file_content) { ?>
         <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
         <?}?>
