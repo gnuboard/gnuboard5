@@ -163,7 +163,7 @@ a {color:#000;text-decoration:none}
 #wrapper h1 {margin-top:30px}
 
 /* 레이아웃 하단 */
-#footer {z-index:1;position:relative;padding:15px 0 20px;border-top:1px solid #ddd;color:#595959;font-size:0.75em}
+#footer {z-index:1;position:relative;padding:15px 0 20px;border-top:1px solid #999;color:#595959;font-size:0.75em}
 #footer h1 {margin:0;height:0;overflow:hidden}
 #footer section {margin-left:30px}
 #footer h2 {margin:0;width:100px;color:#000;font-size:1em}
