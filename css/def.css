@@ -282,7 +282,7 @@ a {color:#000;text-decoration:none}
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
-#bo_sch {border:0;text-align:center}
+#bo_sch {padding:0;border:0;text-align:center}
 #bo_sch legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #bo_sch form {display:inline-block}
 #bo_sch .fieldset_submit {border:1px solid #ccc;background:#fafafa;color:#000}
