@@ -97,9 +97,9 @@ a {color:#000;text-decoration:none}
 #snb ul {margin:0;padding:0;list-style:none}
 
 /* 아웃로그인 */
-.outlogin {position:relative;border-bottom:1px solid #d9d9d9;border-left:1px solid #bbb;background:#f0f3f6;line-height:1em}
+.outlogin {position:relative;border-bottom:1px solid #bbb;border-left:1px solid #bbb;background:#f0f3f6;line-height:1em}
 .outlogin h2 {margin:0;padding:0;height:0;overflow:hidden}
-/* 로그인 전 */
+/* 아웃로그인 전 */
 #ol_before {padding:15px 10px 0;width:199px;font-size:0.7em}
 #ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
@@ -115,18 +115,18 @@ a {color:#000;text-decoration:none}
 #ol_before li {float:left;margin-right:5px}
 #ol_before a {color:#696969;letter-spacing:-0.1em}
 #ol_submit {position:absolute;top:42px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
-/* 로그인 후 */
+/* 아웃로그인 후 */
 #ol_after {padding-top:15px;width:219px;color:#000;font-size:0.75em}
-#ol_after header {padding:0 0 13px;border-bottom:1px solid #dedace;text-align:center}
+#ol_after header {padding:0 0 13px;border-bottom:1px solid #efeada;background:#f8f8f8;text-align:center}
 #ol_after ul {padding:5px 0;background:#fff}
-#ol_after li a {display:block;position:relative;padding:7px 20px 7px 19px}
-#ol_after li span {position:absolute;top:7px;right:19px;color:#ff3061}
-#ol_after footer {padding:7px 0 10px;border-top:1px solid #dedace;text-align:center}
+#ol_after li a {display:block;position:relative;padding:7px 15px 7px 14px}
+#ol_after li span {position:absolute;top:7px;right:14px;color:#ff3061}
+#ol_after footer {padding:7px 0 10px;border-top:1px solid #efeada;background:#f8f8f8;text-align:center}
 #ol_after footer a {display:inline-block;padding:0 10px}
 
 /* 설문조사 */
-#poll {width:219px;border-bottom:1px solid #d9d9d9;border-left:1px solid #bbb;background:#fff;font-size:0.75em}
-#poll header {padding:10px 10px 1px;border-bottom:1px solid #efeada;background:#f0f3f6}
+#poll {width:219px;border-bottom:1px solid #bbb;border-left:1px solid #bbb;background:#fff;font-size:0.75em}
+#poll header {padding:10px 10px 1px;border-bottom:1px solid #efeada;background:#f8f8f8}
 #poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
 #poll ul {margin:10px}
@@ -451,4 +451,4 @@ a {color:#000;text-decoration:none}
 .pg_page {background:#f9f9f9;text-decoration:none}
 .pg_start, .pg_prev {border-right:1px solid #ddd}
 .pg_end, .pg_next {border-left:1px solid #ddd}
-.pg_current {background:#ff3061;color:#fff}
+.pg_current {background:#333;color:#fff}
