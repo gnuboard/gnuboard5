@@ -73,17 +73,19 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <h2>댓글쓰기</h2>
         <fieldset>
             <? if ($is_guest) { ?>
-            <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input" maxLength="20" size="10" required>
-            <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input" maxLength="20" size="10" required>
+            <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input required" maxLength="20" size="5" required>
+            <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input required" maxLength="20" size="10" required>
             <? echo $captcha_html; ?>
             <? } ?>
             <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">
             <label for="wr_secret">비밀글</label>
             <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
-            <textarea id="wr_content" name="wr_content" required
-            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
-            <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
-            <input type="submit" class="fieldset_submit" value="댓글입력">
+            <div id="bo_vc_warea">
+                <textarea id="wr_content" name="wr_content" required
+                <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
+                <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+                <input type="submit" class="bo_vc_submit" value="댓글입력">
+            </div>
         </fieldset>
     </aside>
 
