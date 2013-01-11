@@ -4,19 +4,21 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <!-- 로그인 후 외부로그인 시작 -->
 <section id="ol_after" class="outlogin">
-    <header>
-        <h2>나의 회원정보</h2>
+    <header id="ol_after_hd">
+        <h2>나의 이용정보</h2>
         <strong><?=$nick?></strong>님
         <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=$g4['admin_path']?>/" id="ol_admin">관리자</a><? } ?>
     </header>
-    <ul>
-        <li><a href="javascript:win_memo();">안 읽은 쪽지 <span><?=$memo_not_read?>통</span></a></li>
-        <li><a href="javascript:win_point();">포인트 <span><?=$point?>점</span></a></li>
+    <ul id="ol_after_rec">
+        <li><a href="javascript:win_memo();" id="ol_after_memo"><span></span>안 읽은 쪽지 <strong><?=$memo_not_read?></strong></a></li>
+        <li><a href="javascript:win_point();" id="ol_after_pt"><span></span>포인트 <strong><?=$point?></strong></a></li>
+        <li><a href="javascript:win_scrap();" id="ol_after_scrap"><span></span>스크랩</a></li>
     </ul>
-    <footer>
-        <a href="javascript:win_scrap();">스크랩</a>
-        <a href="<?=$g4['bbs_path']?>/member_confirm.php?url=register_form.php">정보수정</a>
-        <a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a>
+    <footer id="ol_after_ft">
+        <ul>
+            <li><a href="<?=$g4['bbs_path']?>/member_confirm.php?url=register_form.php" id="ol_after_info">정보수정</a></li>
+            <li><a href="<?=$g4['bbs_path']?>/logout.php" id="ol_after_logout">로그아웃</a></li>
+        </ul>
     </footer>
 </section>
 
