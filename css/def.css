@@ -282,7 +282,7 @@ a {color:#000;text-decoration:none}
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
-#bo_sch {text-align:center}
+#bo_sch {border:0;text-align:center}
 #bo_sch legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #bo_sch form {display:inline-block}
 #bo_sch .fieldset_submit {border:1px solid #ccc;background:#fafafa;color:#000}
@@ -364,9 +364,6 @@ a {color:#000;text-decoration:none}
 #bo_vc_warea {position:relative;margin:10px 100px 10px 0}
 #bo_vc_warea textarea {width:100%;height:50px}
 #bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:10px;width:75px;height:57px;border:1px solid #666;background:#555;color:#fff;letter-spacing:-0.1em}
-
-
-#bo_sch {display:hidden;visibility:hidden;height:0;overflow:hidden}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
