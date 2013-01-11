@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#fff;font-size:1em} 
+body {margin:0;padding:0;background:#fff;font-size:1em}
 html, body, h1, h2, h3, h4, h5, h6 {margin:0 0 0;padding:0}
 h1, h2, h3, h4, h5, h6 {font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -159,7 +159,7 @@ a {color:#000;text-decoration:none}
 #poll_result_another a {display:block;padding:5px 0}
 
 /* 레이아웃 중간 */
-#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:1px 230px 30px 10px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
+#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:1px 240px 30px 20px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
 #wrapper h1 {margin-top:20px}
 
 /* 레이아웃 하단 */
@@ -209,11 +209,14 @@ a {color:#000;text-decoration:none}
 .btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #555;background:#555;color:#fff;font-size:0.75em;text-decoration:none;line-height:2.2em}
 .btn02:hover,
 .btn02:focus {}
+.btn_confirm {text-align:center}
+.btn_submit {padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
+.btn_cancel {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.75em;text-decoration:none;line-height:2.5em}
 
 /* 폼 테이블 */
 .frm_tbl {}
-.frm_tbl caption {padding-top:10px;font-size:0.75em;font-weight:bold}
-.frm_tbl th {padding-left:10px;width:160px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;background:#f9f9f9;text-align:left}
+.frm_tbl caption {padding-top:10px;color:#ff3061;font-size:0.75em;font-weight:bold}
+.frm_tbl th {padding-left:10px;width:160px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;text-align:left}
 .frm_tbl td {padding:7px 10px}
 .frm_tbl textarea,
 .frm_tbl .frm_input,

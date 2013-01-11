@@ -198,7 +198,8 @@ var member_skin_path = "<?=$member_skin_path?>";
 <?=$captcha_html?>
 
 <div class="btn_confirm">
-    <input type="submit" value="회원가입" accesskey="s">
+    <input type="submit" class="btn_submit" value="회원가입" accesskey="s">
+    <a href="<?=$g4['path']?>/" class="btn_cancel">취소</a>
 </div>
 </form>
 
