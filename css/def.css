@@ -73,30 +73,29 @@ a {color:#000;text-decoration:none}
 #header h1 {margin:0;height:0;overflow:hidden}
 
 /* 로고 */
-#logo {background:#333;text-align:center}
-#logo a {display:inline-block;padding:20px 30px}
+#logo {background:#444;text-align:center}
+#logo a {display:inline-block;padding:15px 30px}
 
 /* 상단메뉴 */
-#tnb {padding-left:30px;border-bottom:1px solid #ccc;background:#ebebe9;zoom:1}
+#tnb {padding-left:10px;border-bottom:1px solid #ccc;background:#333;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin-left:-1px}
-#tnb a {display:inline-block;padding:0 20px;height:35px;border-right:1px solid #ddd;border-left:1px solid #ddd;color:#595959;font-family:"dotum";font-size:0.75em;font-weight:bold;text-decoration:none;line-height:3em}
+#tnb a {display:inline-block;padding:0 20px;height:35px;border-right:1px solid #414141;border-left:1px solid #414141;color:#fff;font-family:"dotum";font-size:0.75em;font-weight:bold;text-decoration:none;line-height:3em}
 #tnb a:hover,
-#tnb a:focus {background:#f9f9f5}
+#tnb a:focus {background:#494949}
 
 /* 전체검색 */
-#hdsch {z-index:3;position:absolute;top:77px;right:0;margin:0;padding:0;width:219px;border:1px solid #ccc;border-top:0;border-right:0;background:#fff}
+#hdsch {z-index:3;position:absolute;top:67px;right:0;margin:0;padding:0;width:219px;border:0;border-left:1px solid #414141;background:#333}
 #hdsch legend {position:absolute;padding:0;width:0;height:0;border:0;overflow:hidden}
-#hdsch_stx {margin:5px 0 5px 5px;padding:0 5px;height:25px;width:176px;border:0;background:transparent;font-size:1em;line-height:1.4em}
-#hdsch_stx:focus {background:#464649;color:#fff}
+#hdsch_stx {margin:5px 0 5px 5px;padding:0 5px;height:25px;width:176px;border:0;background:transparent;color:#fff;font-size:1em;line-height:1.4em}
 #hdsch_submit {position:relative;margin-left:-5px}
 
 /* 사이드 네비게이션: 아웃로그인, 설문조사 등 */
-#snb {z-index:3;position:absolute;top:113px;right:0;font-family:"verdana","dotum"}
+#snb {z-index:3;position:absolute;top:102px;right:0;font-family:"verdana","dotum"}
 #snb ul {margin:0;padding:0;list-style:none}
 
 /* 아웃로그인 */
-.outlogin {position:relative;border-bottom:1px solid #dedace;border-left:1px solid #ddd;background:#f9faf5;line-height:1em}
+.outlogin {position:relative;border-bottom:1px solid #bbb;border-left:1px solid #999;background:#f9faf5;line-height:1em}
 .outlogin h2 {margin:0;padding:0;height:0;overflow:hidden}
 /* 로그인 전 */
 #ol_before {padding:15px 10px 0;width:199px;background:#f9f9f5;font-size:0.7em}
@@ -124,7 +123,7 @@ a {color:#000;text-decoration:none}
 #ol_after footer a {display:inline-block;padding:0 10px}
 
 /* 설문조사 */
-#poll {width:219px;border-bottom:1px solid #dedace;border-left:1px solid #ddd;background:#fff;font-size:0.75em}
+#poll {width:219px;border-bottom:1px solid #bbb;border-left:1px solid #999;background:#fff;font-size:0.75em}
 #poll header {padding:10px 10px 1px;border-bottom:1px solid #efeada;background:#f9f9f5}
 #poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
@@ -159,11 +158,11 @@ a {color:#000;text-decoration:none}
 #poll_result_another a {display:block;padding:5px 0}
 
 /* 레이아웃 중간 */
-#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:15px 250px 30px 30px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
+#wrapper {z-index:2;clear:both;position:relative;margin:-2px 0 0 0;padding:1px 230px 30px 10px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
 #wrapper h1 {margin-top:30px}
 
 /* 레이아웃 하단 */
-#footer {z-index:1;position:relative;padding:15px 0 20px;border-top:1px solid #ddd;color:#595959;font-size:0.75em}
+#footer {z-index:1;position:relative;padding:15px 0 20px;border-top:1px solid #999;color:#595959;font-size:0.75em}
 #footer h1 {margin:0;height:0;overflow:hidden}
 #footer section {margin-left:30px}
 #footer h2 {margin:0;width:100px;color:#000;font-size:1em}
