@@ -89,7 +89,6 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
     </form>
 
-    <script src="<?=$g4['path']?>/js/jquery.kcaptcha.js"></script>
     <script>
     var save_before = '';
     var save_html = document.getElementById('bo_vc_w').innerHTML;
@@ -190,32 +189,10 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             }
         }
 
-        if (!check_kcaptcha(f.wr_key)) {
-            return false;
-        }
+        <? if (defined('_CAPTCHA_')) echo captcha_js('f.wr_key'); ?>
 
         return true;
     }
-
-    /*
-    jQuery.fn.extend({
-        kcaptcha_load: function() {
-            $.ajax({
-                type: 'POST',
-                url: g4_path+'/'+g4_bbs+'/kcaptcha_session.php',
-                cache: false,
-                async: false,
-                success: function(text) {
-                    $('#kcaptcha_image')
-                        .attr('src', g4_path+'/'+g4_bbs+'/kcaptcha_image.php?t=' + (new Date).getTime())
-                        .css('cursor', '')
-                        .attr('title', '');
-                    md5_norobot_key = text;
-                }
-            });
-        }
-    });
-    */
 
     function comment_box(comment_id, work)
     {
@@ -261,10 +238,6 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
         if (typeof(wrestInitialized) != 'undefined')
             wrestInitialized();
-
-        //jQuery(this).kcaptcha_load();
-        if (comment_id && work == 'c')
-            $.kcaptcha_run();
     }
 
     function comment_delete(url)
