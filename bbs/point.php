@@ -41,7 +41,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     <h1><?=$g4['title']?></h1>
 
     <table>
-    <caption>포인트내역 목록</caption>
+    <caption>포인트 사용내역 목록</caption>
     <thead>
     <tr>
         <th scope="col">일시</th>
@@ -52,9 +52,13 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     </thead>
     <tfoot>
     <tr>
-        <td colspan="2">소계</td>
+        <th scope="row" colspan="2">소계</td>
         <td><?=number_format($sum_point1)?></td>
         <td><?=number_format($sum_point2)?></td>
+    </tr>
+    <tr>
+        <th scope="row" colspan="2">보유포인트</th>
+        <td colspan="2"><?=number_format($member[mb_point])?></td>
     </tr>
     </tfoot>
     <tbody>
@@ -97,14 +101,12 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     </tbody>
     </table>
 
-    <p>보유 포인트 <?=number_format($member[mb_point])?>점</p>
-
     <div class="pg">
         <?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?>
     </div>
 
     <div class="btn_window">
-        <a href="javascript:window.close();">창닫기</a>
+        <a href="javascript:window.close();" class="btn_cancel">창닫기</a>
     </div>
 </div>
 
