@@ -209,7 +209,7 @@ a {color:#000;text-decoration:none}
 
 /* 폼 테이블 */
 .frm_tbl {}
-.frm_tbl caption {padding-top:10px;border-bottom:1px solid #aaa;font-size:0.75em;font-weight:bold}
+.frm_tbl caption {padding-top:10px;font-size:0.75em;font-weight:bold}
 .frm_tbl th {padding-left:10px;width:160px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;background:#f9f9f9;text-align:left}
 .frm_tbl td {padding:7px 10px}
 .frm_tbl textarea,
