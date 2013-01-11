@@ -132,7 +132,7 @@ a {color:#000;text-decoration:none}
 #poll ul {margin:10px}
 #poll li {margin:7px 0}
 #poll footer {padding:10px 10px 15px;text-align:center}
-#poll footer input {padding:0 15px;height:24px;border:0;background:#ff3061;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
+#poll footer input {padding:0 15px;height:24px;border:0;background:#494936;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;font-size:0.9em;vertical-align:top;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */
 #poll_result section {margin:0 auto 20px;padding:10px;width:90%}
