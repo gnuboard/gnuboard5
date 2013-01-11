@@ -89,8 +89,8 @@ for ($i=0; $i<count($list); $i++) {
     <?
     if ($list[$i]['is_notice']) // 공지사항
         echo '공지';
-    else if ($wr_id == $list[$i]['wr_id']) // 현재위치
-        echo $list[$i]['num'];
+    else if ($wr_id == $list[$i]['wr_id'])
+        echo "<span class=\"bo_current\">열람중</span>";
     else
         echo $list[$i]['num'];
     ?>
@@ -102,10 +102,10 @@ for ($i=0; $i<count($list); $i++) {
         echo $list[$i]['icon_reply'];
         if ($is_category && $list[$i]['ca_name']) {
         ?>
-        <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link"><?=$list[$i]['ca_name']?></a>
+        <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link<? if ($wr_id == $list[$i]['wr_id']) echo " bo_current";?>"><?=$list[$i]['ca_name']?></a>
         <? } ?>
 
-        <a href="<?=$list[$i]['href']?>"><?=$list[$i]['subject']?>
+        <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>><?=$list[$i]['subject']?>
 
         <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
 

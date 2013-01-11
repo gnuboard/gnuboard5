@@ -290,6 +290,7 @@ a {color:#000;text-decoration:none}
 #bo_list td {line-height:1em}
 #bo_list img {vertical-align:top}
 .bo_cate_link {display:inline-block;margin:0 10px 0 0;font-weight:bold;text-decoration:none}
+.bo_current {color:#ff3061}
 .td_subject img {margin-left:5px}
 
 /* 게시판 쓰기 */
