@@ -4,7 +4,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <!-- 제목 시작 -->
 <table>
-<caption>최근게시물 목록</caption>
 <thead>
 <tr>
     <th scope="col">그룹</th>
