@@ -24,7 +24,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <?=conv_content($memo[me_memo], 0)?>
         </p>
     </section>
-    <div>
+    <div class="btn_window">
         <a href="<?=$prev_link?>">이전쪽지</a>
         <a href="<?=$next_link?>">다음쪽지</a>
         <? if ($kind == 'recv') { ?><a href="./memo_form.php?me_recv_mb_id=<?=$mb[mb_id]?>&amp;me_id=<?=$memo[me_id]?>">답장</a><? } ?>
