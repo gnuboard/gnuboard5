@@ -96,10 +96,10 @@ a {color:#000;text-decoration:none}
 #snb ul {margin:0;padding:0;list-style:none}
 
 /* 아웃로그인 */
-.outlogin {position:relative;border-bottom:1px solid #ccc;border-left:1px solid #999;background:#f9faf5;line-height:1em}
+.outlogin {position:relative;border-bottom:1px solid #ccc;border-left:1px solid #999;background:#f0f3f6;line-height:1em}
 .outlogin h2 {margin:0;padding:0;height:0;overflow:hidden}
 /* 로그인 전 */
-#ol_before {padding:15px 10px 0;width:199px;background:#f9f9f5;font-size:0.7em}
+#ol_before {padding:15px 10px 0;width:199px;font-size:0.7em}
 #ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
 #ol_before input:focus {background:#333;color:#fff}
@@ -115,7 +115,7 @@ a {color:#000;text-decoration:none}
 #ol_before a {color:#696969;letter-spacing:-0.1em}
 #ol_submit {position:absolute;top:42px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 로그인 후 */
-#ol_after {padding-top:15px;width:219px;background:#f9f9f5;color:#000;font-size:0.75em}
+#ol_after {padding-top:15px;width:219px;color:#000;font-size:0.75em}
 #ol_after header {padding:0 0 13px;border-bottom:1px solid #dedace;text-align:center}
 #ol_after ul {padding:5px 0;background:#fff}
 #ol_after li a {display:block;position:relative;padding:7px 20px 7px 19px}
@@ -125,12 +125,12 @@ a {color:#000;text-decoration:none}
 
 /* 설문조사 */
 #poll {width:219px;border-bottom:1px solid #ccc;border-left:1px solid #999;background:#fff;font-size:0.75em}
-#poll header {padding:10px 10px 1px;border-bottom:1px solid #efeada;background:#f9f9f5}
+#poll header {padding:10px 10px 1px;border-bottom:1px solid #efeada;background:#f0f3f6}
 #poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
 #poll ul {margin:10px}
 #poll li {margin:7px 0}
-#poll footer {padding:10px;border-top:1px solid #efeada;text-align:center}
+#poll footer {padding:10px 10px 15px;text-align:center}
 #poll footer input {padding:0 15px;height:24px;border:0;background:#ff3061;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;font-size:0.9em;vertical-align:top;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */
