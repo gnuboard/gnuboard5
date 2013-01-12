@@ -1575,4 +1575,34 @@ function is_checked($field)
 {
     return !empty($_POST[$field]);
 }
+
+
+function mk_subdir($subdir)
+{
+    global $g4;
+    $data_path = $g4['path'].'/'.$g4['data_dir'];
+    $data_subpath = $data_path.'/'.$subdir;
+    if (!is_dir($data_subpath)) {
+        @mkdir($data_subpath, 0707);
+        @chmod($data_subpath, 0707);
+    }
+    return $data_subpath;
+}
+
+
+// 캡챠 파일의 상대 경로를 반환
+function captcha_file_path($extension='.png')
+{
+    global $g4;
+    mk_subdir($g4['cache_dir']);
+    $captcha_path = mk_subdir($g4['cache_dir'].'/'.$g4['captcha_dir']);
+    return $captcha_path.'/'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'].$extension;
+}
+
+
+function abs_ip2long($ip='')
+{
+    $ip = $ip ? $ip : $_SERVER['REMOTE_ADDR'];
+    return abs(ip2long($ip));
+}
 ?>

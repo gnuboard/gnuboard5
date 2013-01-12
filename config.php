@@ -13,6 +13,10 @@ $g4['bbs_path']       = $g4['path'] . '/' . $g4['bbs'];
 $g4['bbs_img']        = 'img';
 $g4['bbs_img_path']   = $g4['path'] . '/' . $g4['bbs'] . '/' . $g4['bbs_img'];
 
+$g4['data_dir']       = 'data';
+$g4['cache_dir']      = 'cache';
+$g4['captcha_dir']    = 'captcha';
+
 $g4['admin']          = 'adm';
 $g4['admin_path']     = $g4['path'] . '/' . $g4['admin'];
 

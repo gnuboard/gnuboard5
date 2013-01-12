@@ -76,7 +76,9 @@ class captcha
         return mt_rand($from, $to);
     }
 
-    function run() {
+    function run() 
+    {
+        global $captcha;
 
         // The text to draw
         $captcha_key = $this->get_captcha_key();
@@ -85,7 +87,7 @@ class captcha
         set_session('ss_captcha_cnt', 0);
 
         // Set the content-type
-        header('Content-Type: image/gif');
+        //header('Content-Type: image/png');
         // Create the image
         $im = imagecreatetruecolor($this->width, $this->height);
 
@@ -97,7 +99,7 @@ class captcha
 
         // Replace path by your own font path
         $fonts = Array();
-        foreach (glob('fonts/*.ttf') as $filename) {
+        foreach (glob($captcha->fonts.'/*.ttf') as $filename) {
             $fonts[] = $filename;
         }
         $font = $fonts[mt_rand(0, count($fonts)-1)];
@@ -117,9 +119,10 @@ class captcha
             imagettftext($im, $size, $angle, $x-2, $y-2, $grey, $font, $captcha_key);
         }
 
-        // Using imagepng() results in clearer text compared with imagejpeg()
-        imagegif($im);
+        imagepng($im, captcha_file_path('.png'), 0, NULL);
         imagedestroy($im);
+
+        make_wav();
     }
 }
 
@@ -147,9 +150,9 @@ function captcha_html($input_name, $captcha_id_suffix='')
     $html  = '<fieldset id="captcha'.$captcha_id_suffix.'" class="captcha">';
     $html .= '<legend class="sound_only">자동등록방지</legend>';
     //$html .= '<img src="" id="captcha" alt="자동등록방지 이미지" title="이미지를 클릭하시면 숫자가 바뀝니다.">';
-    $html .= '<iframe id="captcha_iframe" name="captcha_iframe" src="'.$g4['path'].'/plugin/captcha/run.php" scrolling="no" marginwidth="0" marginheight="0" title="자동등록방지숫자"></iframe>';
-    $html .= '<a href="'.$g4['path'].'/plugin/captcha/run.php" target="captcha_iframe">새로고침</a>';
-    $html .= '<a href="'.$g4['path'].'/plugin/captcha/wav.php" id="captcha_wav">음성듣기</a>';
+    $html .= '<iframe id="captcha_iframe" name="captcha_iframe" src="'.captcha_file_path('.png').'" scrolling="no" marginwidth="0" marginheight="0" title="자동등록방지숫자"></iframe>';
+    //$html .= '<a href="'.$g4['path'].'/plugin/captcha/run.php" target="captcha_iframe">새로고침</a>';
+    $html .= '<a href="'.captcha_file_path('.wav').'" id="captcha_wav">음성듣기</a>';
     $html .= '<label for="captcha_key">자동등록방지 입력</label>';
     $html .= '<input type="text" id="captcha_key" name="'.$input_name.'" class="captcha_box fieldset_input" size="5" maxlength="5" required title="자동등록방지 입력">';
     $html .= '<p class="sound_only">이미지의 숫자를 순서대로 입력하세요. 새로고침을 클릭하시면 새로운 숫자가 나타납니다.</p>';
@@ -174,5 +177,69 @@ function chk_captcha($input_name)
 function captcha_js($element)
 {
     return "if (!check_captcha({$element})) { return false; }";
+}
+
+
+function make_wav()
+{
+    global $g4;
+    $wavs_dir = $g4['path'].'/plugin/captcha/wavs/';
+    $number = (string)$_SESSION['ss_captcha_key'];
+    $wavs = array();
+    for($i=0;$i<strlen($number);$i++){
+        $file = $wavs_dir.$number[$i].'.wav';
+        $wavs[] = $file;
+    }
+
+    $wav_filepath = captcha_file_path('.wav');
+    $fp = fopen($wav_filepath, 'w+');
+    fwrite($fp, joinwavs($wavs));
+    fclose($fp);
+}
+
+function joinwavs($wavs)
+{
+    $fields = join('/',array( 'H8ChunkID', 'VChunkSize', 'H8Format',
+                              'H8Subchunk1ID', 'VSubchunk1Size',
+                              'vAudioFormat', 'vNumChannels', 'VSampleRate',
+                              'VByteRate', 'vBlockAlign', 'vBitsPerSample' ));
+    $data = '';
+    $info = array();
+    foreach($wavs as $wav){
+        $fp     = fopen($wav,'rb');
+        $header = fread($fp,36);
+        $info   = unpack($fields,$header);
+
+        // read optional extra stuff
+        if($info['Subchunk1Size'] > 16){
+            $header .= fread($fp,($info['Subchunk1Size']-16));
+        }
+
+        // read SubChunk2ID
+        $header .= fread($fp,4);
+
+        // read Subchunk2Size
+        $size  = unpack('vsize',fread($fp, 4));
+        $size  = $size['size'];
+
+        // read data
+        $data .= fread($fp,$size);
+    }
+
+    return ''
+        .pack('a4', 'RIFF')
+        .pack('V', strlen($data) + 36)
+        .pack('a4', 'WAVE')
+        .pack('a4', 'fmt ')
+        .pack('V', $info['Subchunk1Size'])  // 16
+        .pack('v', $info['AudioFormat'])    // 1
+        .pack('v', $info['NumChannels'])    // 1
+        .pack('V', $info['SampleRate'])     // 8000
+        .pack('V', $info['ByteRate'])       // 8000
+        .pack('v', $info['BlockAlign'])     // 1
+        .pack('v', $info['BitsPerSample'])  // 8
+        .pack('a4', 'data')
+        .pack('V', strlen($data))
+        .$data;
 }
 ?>
