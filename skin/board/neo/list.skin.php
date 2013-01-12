@@ -27,10 +27,11 @@ if ($is_nogood) $colspan++;
         <option value="wr_name,0">글쓴이(코)</option>
     </select>
     <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
-    <input type="radio" id="sop_and" name="sop" value="and">
+    <input type="hidden" name="sop" value="and">
+    <!-- <input type="radio" id="sop_and" name="sop" value="and">
     <label for="sop_and">and</label>
     <input type="radio" id="sop_or" name="sop" value="or">
-    <label for="sop_or">or</label>
+    <label for="sop_or">or</label> -->
     <input type="submit" class="fieldset_submit" value="검색">
     </form>
 </fieldset>
