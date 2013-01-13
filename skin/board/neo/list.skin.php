@@ -160,18 +160,8 @@ for ($i=0; $i<count($list); $i++) {
 </div>
 
 <script>
-if ('<?=$sca?>') document.fcategory.sca.value = '<?=$sca?>';
-if ('<?=$stx?>') {
-    document.fsearch.sfl.value = '<?=$sfl?>';
-
-    if ('<?=$sop?>' == 'and')
-        document.fsearch.sop[0].checked = true;
-
-    if ('<?=$sop?>' == 'or')
-        document.fsearch.sop[1].checked = true;
-} else {
-    document.fsearch.sop[0].checked = true;
-}
+<? if ($sca) { echo "document.fcategory.sca.value = \"$sca\";"; } ?>
+<? if ($stx) { echo "document.fsearch.sfl.value = \"$sfl\";"; } ?>
 </script>
 
 <? if ($is_checkbox) { ?>

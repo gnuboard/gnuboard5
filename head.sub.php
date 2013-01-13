@@ -50,10 +50,13 @@ header("Pragma: no-cache"); // HTTP/1.0
 <title><?=$g4['title']?></title>
 <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
 <? if (isset($administrator)) { ?>
-<link rel="stylesheet" href="<?=$g4['path']?>/css/adm.css?=<?=date("md")?>">
+<link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">
 <? } else { ?>
-<link rel="stylesheet" href="<?=$g4['path']?>/css/def.css?=<?=date("md")?>">
+<link rel="stylesheet" href="<?=$g4['url']?>/css/def.css?=<?=date("md")?>">
 <?}?>
+<!--[if lte IE 8]>
+<script src="<?=$g4['url']?>/js/html5.js"></script>
+<![endif]-->
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
 var g4_path      = "<?=$g4['path']?>";
@@ -70,31 +73,21 @@ var g4_cookie_domain = "<?=$g4['cookie_domain']?>";
 var g4_is_gecko  = navigator.userAgent.toLowerCase().indexOf("gecko") != -1;
 var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
 <? if ($is_admin) { echo "var g4_admin = '{$g4['admin']}';"; } ?>
-</script>
-<script src="<?=$g4['path']?>/js/jquery-1.4.2.min.js"></script>
-<script src="<?=$g4['path']?>/js/common.js"></script>
-<script src="<?=$g4['path']?>/js/wrest.js"></script>
 <?
-if (defined('_EDITOR_')) {
-    $g4['js_file'][] = $editor->js;
-    $g4['js_file'][] = $editor->config_js;
+if (!empty($g4['js_code'])) {
+    foreach ($g4['js_code'] as $key=>$value) {
+        echo $value."\n";
+    }
 }
 ?>
-<!--[if lte IE 8]>
-<script src="<?=$g4['path']?>/js/html5.js"></script>
-<![endif]-->
+</script>
+<script src="<?=$g4['url']?>/js/jquery-1.4.2.min.js"></script>
+<script src="<?=$g4['url']?>/js/common.js"></script>
+<script src="<?=$g4['url']?>/js/wrest.js"></script>
 <?
 if (!empty($g4['js_file'])) {
     foreach ($g4['js_file'] as $key=>$value) {
         echo "<script src=\"$value\"></script>\n";
-    }
-}
-
-if (!empty($g4['js_code'])) {
-    foreach ($g4['js_code'] as $key=>$value) {
-        echo "<script>\n";
-        echo $value."\n";
-        echo "</script>\n";
     }
 }
 ?>

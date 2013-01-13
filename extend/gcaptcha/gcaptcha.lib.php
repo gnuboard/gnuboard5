@@ -1,20 +1,20 @@
 <?php
 include_once("./_common.php");
 
-class captcha 
+class gcaptcha 
 {
     // 이미지크기 폭
-    var $width = 80;
+    var $width = 70;
     // 이미지크기 높이
-    var $height = 25;
+    var $height = 20;
     // 폰트 사이즈
-    var $size = 16;
+    var $size = 13;
     // 폰트 기울기
     var $angle = 0;
     // 폰트 왼쪽 위치
     var $x = 5;
     // 폰트 위쪽 위치
-    var $y = 21;
+    var $y = 18;
     // 캡챠이미지 배경색상 rgb
     var $back = array('r'=>255, 'g'=>255, 'b'=>255);
     // 글자색상 rgb
@@ -22,7 +22,7 @@ class captcha
     // 그림자 글자색상 rgb
     var $shadow = array('r'=>128, 'g'=>128, 'b'=>128);
 
-    var $captcha_length = 5;
+    var $captcha_length = 6;
 
     // 이미지 크기
     function set_box_size($width, $height) {
@@ -78,13 +78,13 @@ class captcha
 
     function run() 
     {
-        global $captcha;
+        global $gcaptcha;
 
         // The text to draw
         $captcha_key = $this->get_captcha_key();
         
-        set_session('ss_captcha_key', $captcha_key);
         set_session('ss_captcha_cnt', 0);
+        set_session('ss_captcha_key', $captcha_key);
 
         // Set the content-type
         //header('Content-Type: image/png');
@@ -99,7 +99,7 @@ class captcha
 
         // Replace path by your own font path
         $fonts = Array();
-        foreach (glob($captcha->fonts.'/*.ttf') as $filename) {
+        foreach (glob($gcaptcha->fonts.'/*.ttf') as $filename) {
             $fonts[] = $filename;
         }
         $font = $fonts[mt_rand(0, count($fonts)-1)];
@@ -119,7 +119,7 @@ class captcha
             imagettftext($im, $size, $angle, $x-2, $y-2, $grey, $font, $captcha_key);
         }
 
-        imagepng($im, captcha_file_path('.png'), 0, NULL);
+        imagepng($im, captcha_file('.png'), 0, NULL);
         imagedestroy($im);
 
         make_wav();
@@ -128,76 +128,69 @@ class captcha
 
 /*
 사용법 : 
-$captcha = new captcha();
-$captcha->set_captcha_length(mt_rand(4, 6));
-$captcha->set_position(mt_rand(0, 10), mt_rand(15, 20));
-$captcha->set_angle(mt_rand(-3, 3));
-$captcha->set_size(mt_rand(15, 16));
-$captcha->set_back_color(mt_rand(200,255), mt_rand(200,255), mt_rand(200,255));
-$captcha->set_text_color(mt_rand(0,100), mt_rand(0,100), mt_rand(0,100));
-$captcha->set_shadow_color(mt_rand(100,200), mt_rand(100,200), mt_rand(100,200));
-$captcha->run();
+$gcaptcha = new gcaptcha();
+$gcaptcha->set_captcha_length(mt_rand(4, 6));
+$gcaptcha->set_position(mt_rand(0, 10), mt_rand(15, 20));
+$gcaptcha->set_angle(mt_rand(-3, 3));
+$gcaptcha->set_size(mt_rand(15, 16));
+$gcaptcha->set_back_color(mt_rand(200,255), mt_rand(200,255), mt_rand(200,255));
+$gcaptcha->set_text_color(mt_rand(0,100), mt_rand(0,100), mt_rand(0,100));
+$gcaptcha->set_shadow_color(mt_rand(100,200), mt_rand(100,200), mt_rand(100,200));
+$gcaptcha->run();
 */
 
 // 캡챠이미지는 한개만 사용 가능함.
-function captcha_html($input_name, $captcha_id_suffix='')
+function captcha_html($class="captcha")
 {
-    global $g4;
+    global $g4, $gcaptcha;
 
-    // 세션생성을 한후 다음페이지에서 해당 세션이 있을때만 올바른 캡챠코드인지 비교합니다.
-    set_session('ss_captcha_use', true);
+    $gcaptcha->obj = new gcaptcha();
+    $gcaptcha->obj->run();
 
-    $html  = '<fieldset id="captcha'.$captcha_id_suffix.'" class="captcha">';
-    $html .= '<legend class="sound_only">자동등록방지</legend>';
-    //$html .= '<img src="" id="captcha" alt="자동등록방지 이미지" title="이미지를 클릭하시면 숫자가 바뀝니다.">';
-    $html .= '<iframe id="captcha_iframe" name="captcha_iframe" src="'.captcha_file_path('.png').'" scrolling="no" marginwidth="0" marginheight="0" title="자동등록방지숫자"></iframe>';
-    //$html .= '<a href="'.$g4['path'].'/plugin/captcha/run.php" target="captcha_iframe">새로고침</a>';
-    $html .= '<a href="'.captcha_file_path('.wav').'" id="captcha_wav">음성듣기</a>';
-    $html .= '<label for="captcha_key">자동등록방지 입력</label>';
-    $html .= '<input type="text" id="captcha_key" name="'.$input_name.'" class="captcha_box fieldset_input" size="5" maxlength="5" required title="자동등록방지 입력">';
-    $html .= '<p class="sound_only">이미지의 숫자를 순서대로 입력하세요. 새로고침을 클릭하시면 새로운 숫자가 나타납니다.</p>';
+    $html  = '<fieldset id="captcha" class="'.$class.'">';
+    $html .= '<legend class="sound_only">스팸방지</legend>';
+    $html .= '<img src="'.captcha_file('.png').'" title="스팸방지 숫자">';
+    $html .= '<a href="'.captcha_file('.wav').'" id="captcha_wav">음성듣기</a>';
+    $html .= '<label for="captcha_key">스팸방지 숫자 입력</label>';
+    $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box fieldset_input" size="6" maxlength="6" required title="스팸방지 숫자 입력">';
+    $html .= '<p class="sound_only">스팸방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';
     return $html;
 }
 
 
-function chk_captcha($input_name)
+function chk_captcha()
 {
-    if (get_session('ss_captcha_use')) {
-        $key = get_session('ss_captcha_key');
-        if (!($key && $key == $_POST[$input_name])) {
-            set_session('ss_captcha_key', '');
-            return false;
-        }
+    $captcha_cnt = (int)$_SESSION['ss_captcha_cnt'];
+    if ($captcha_cnt > 5) return false;
+
+    if (!isset($_POST['captcha_key'])) return false;
+    if ($_POST['captcha_key'] != $_SESSION['ss_captcha_key']) {
+        $_SESSION['ss_captcha_cnt'] = $captcha_cnt + 1;
+        return false;
     }
     return true;
-}
-
-// captcha javascript code
-function captcha_js($element)
-{
-    return "if (!check_captcha({$element})) { return false; }";
 }
 
 
 function make_wav()
 {
-    global $g4;
-    $wavs_dir = $g4['path'].'/plugin/captcha/wavs/';
+    global $g4, $gcaptcha;
+
     $number = (string)$_SESSION['ss_captcha_key'];
     $wavs = array();
     for($i=0;$i<strlen($number);$i++){
-        $file = $wavs_dir.$number[$i].'.wav';
+        $file = $gcaptcha->wavs.'/'.$number[$i].'.wav';
         $wavs[] = $file;
     }
 
-    $wav_filepath = captcha_file_path('.wav');
+    $wav_filepath = captcha_file('.wav');
     $fp = fopen($wav_filepath, 'w+');
-    fwrite($fp, joinwavs($wavs));
+    fwrite($fp, join_wavs($wavs));
     fclose($fp);
 }
 
-function joinwavs($wavs)
+function join_wavs($wavs)
 {
     $fields = join('/',array( 'H8ChunkID', 'VChunkSize', 'H8Format',
                               'H8Subchunk1ID', 'VSubchunk1Size',
@@ -241,5 +234,15 @@ function joinwavs($wavs)
         .pack('a4', 'data')
         .pack('V', strlen($data))
         .$data;
+}
+
+
+// 캡챠 파일의 상대 경로를 반환
+function captcha_file($extension='.png')
+{
+    global $g4;
+    mk_subdir($g4['cache_dir']);
+    $captcha_path = mk_subdir($g4['cache_dir'].'/'.$g4['captcha_dir']);
+    return $captcha_path.'/'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'].$extension;
 }
 ?>

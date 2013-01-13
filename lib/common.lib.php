@@ -565,8 +565,10 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     // 검색필드를 구분자로 나눈다. 여기서는 +
     $tmp = array();
     $tmp = explode(",", trim($search_field));
-    $field = explode("||", $tmp['0']);
-    $not_comment = $tmp['1'];
+    $field = explode("||", $tmp[0]);
+    $not_comment = "";
+    if (!empty($tmp[1]))
+        $not_comment = $tmp[1];
 
     $str .= "(";
     for ($i=0; $i<count($s); $i++) {
@@ -1587,16 +1589,6 @@ function mk_subdir($subdir)
         @chmod($data_subpath, 0707);
     }
     return $data_subpath;
-}
-
-
-// 캡챠 파일의 상대 경로를 반환
-function captcha_file_path($extension='.png')
-{
-    global $g4;
-    mk_subdir($g4['cache_dir']);
-    $captcha_path = mk_subdir($g4['cache_dir'].'/'.$g4['captcha_dir']);
-    return $captcha_path.'/'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'].$extension;
 }
 
 

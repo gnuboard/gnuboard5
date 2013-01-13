@@ -1,5 +1,5 @@
 <?
-define('_CAPTCHA_', 1);
+define('_CAPTCHA_', true);
 include_once('./_common.php');
 include_once($g4['path'].'/lib/register.lib.php');
 

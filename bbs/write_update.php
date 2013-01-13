@@ -1,10 +1,7 @@
 <?
-define('_CAPTCHA_', true);
 include_once('./_common.php');
 
 $g4['title'] = '게시글 저장';
-
-if (isset($captcha->lib)) include_once($captcha->lib);
 
 $msg = array();
 
@@ -151,8 +148,10 @@ if ($w == '' || $w == 'u') {
     alert('w 값이 제대로 넘어오지 않았습니다.'); 
 }
 
-if (!chk_captcha('wr_key')) {
-    alert('자동등록방지의 답변으로 입력한 숫자가 틀렸습니다.');
+if (defined('_CAPTCHA_')) {
+    if ($is_guest && !chk_captcha()) {
+        alert('스팸방지의 답변으로 입력한 숫자가 틀렸습니다.');
+    }
 }
 
 if ($w == '' || $w == 'r') {
@@ -283,8 +282,8 @@ if ($w == '' || $w == 'r') {
     } else {
         $mb_id = '';
         // 비회원의 경우 이름이 누락되는 경우가 있음
-        $wr_name = strip_tags(mysql_escape_string($_POST['wr_name']));
-        if (!trim($wr_name))
+        $wr_name = escape_trim($_POST['wr_name']);
+        if (!$wr_name)
             alert('이름은 필히 입력하셔야 합니다.');
         $wr_password = sql_password($wr_password);
     }
