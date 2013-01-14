@@ -7,8 +7,7 @@ function poll($skin_dir='basic', $po_id=false)
     global $config, $member, $g4;
 
     // 투표번호가 넘어오지 않았다면 가장 큰(최근에 등록한) 투표번호를 얻는다
-    if (empty($po_id))
-    {
+    if (empty($po_id)) {
         $po_id = $config['cf_max_po_id'];
         if (empty($po_id))
             return "<!-- po_id를 찾을 수 없습니다. -->";

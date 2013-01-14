@@ -4,23 +4,26 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 global $is_admin;
 
 // 투표번호가 넘어오지 않았다면 가장 큰(최근에 등록한) 투표번호를 얻는다
-if (!$po_id) 
-{
-    $po_id = $config[cf_max_po_id];
+if (!$po_id) {
+    $po_id = $config['cf_max_po_id'];
 
     if (!$po_id) return;
 }
 
-$po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
+$po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
 ?>
 
-<form name="fpoll" method="post" action="<?=$g4[bbs_path]?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="winPoll">
+<form name="fpoll" method="post" action="<?=$g4['bbs_url']?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="win_poll">
 <input type="hidden" name="po_id" value="<?=$po_id?>">
 <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
 <section id="poll">
     <header>
         <h2>설문조사</h2>
+<<<<<<< HEAD
+        <? if ($is_admin == "super") { ?><a href="<?=$g4['admin_url']?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문조사 관리</a><? } ?>
+=======
         <? if ($is_admin == "super") { ?><a href="<?=$g4[admin_path]?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문관리</a><? } ?>
+>>>>>>> f287dd35436bbb47931ae5b0fcf128755eb404d8
         <p><?=$po['po_subject']?></p>
     </header>
     <ul>
@@ -30,7 +33,7 @@ $po = sql_fetch(" select * from $g4[poll_table] where po_id = '$po_id' ");
     </ul>
     <footer>
         <input type="submit" value="투표하기">
-        <a href="javascript:;" onclick="poll_result('<?=$po_id?>');">결과보기</a>
+        <a href="<?="{$g4['bbs_url']}/poll_result.php?po_id={$po_id}&amp;skin_dir={$skin_dir}";?>" target="win_poll">결과보기</a>
     </footer>
 </section>
 </form>
