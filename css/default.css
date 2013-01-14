@@ -116,7 +116,7 @@ a {color:#000;text-decoration:none}
 /* 아웃로그인 후 */
 #ol_after {width:219px;color:#000;font-size:0.75em}
 #ol_after_hd {position:relative;padding:15px 10px 11px}
-#ol_after_hd a {position:absolute;top:16px;right:10px;color:#ff3061}
+#ol_after_hd a {position:absolute;top:16px;right:10px;color:#815e68}
 #ol_after ul {margin:0;border-top:1px solid #ddd;zoom:1}
 #ol_after ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after li {float:left}
@@ -134,7 +134,7 @@ a {color:#000;text-decoration:none}
 /* 설문조사 */
 #poll {width:219px;border-bottom:1px solid #bbb;background:#fff;font-size:0.75em}
 #poll header {position:relative;padding:15px 10px 1px;border-bottom:1px solid #ddd;background:#e3e6ea}
-#poll header a {position:absolute;top:15px;right:10px;color:#ff3061}
+#poll header a {position:absolute;top:15px;right:10px;color:#815e68}
 #poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
 #poll ul {padding:5px 10px}
