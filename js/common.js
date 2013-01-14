@@ -348,14 +348,6 @@ if (typeof(COMMON_JS) == 'undefined') { // 한번만 실행
 	        win_open(g4_path+"/" + g4_bbs + "/formmail.php?mb_id="+mb_id+"&name="+encodeURIComponent(name)+"&email="+email, "winFormmail", "left=50, top=50, width=600, height=480, scrollbars=0");
     }
 
-    // 달력 창
-    function win_calendar(fld, cur_date, delimiter, opt)
-    {
-        if (!opt)
-            opt = "left=50, top=50, width=240, height=230, scrollbars=0,status=0,resizable=0";
-        win_open(g4_path+"/" + g4_bbs + "/calendar.php?fld="+fld+"&cur_date="+cur_date+"&delimiter="+delimiter, "winCalendar", opt);
-    }
-
     // 설문조사 창
     function win_poll(url)
     {
