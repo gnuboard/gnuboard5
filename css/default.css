@@ -95,7 +95,7 @@ a {color:#000;text-decoration:none}
 #snb ul {margin:0;padding:0;list-style:none}
 
 /* 아웃로그인 */
-.outlogin {position:relative;padding:0 10px;border-bottom:1px solid #bbb;background:#e3e6ea;line-height:1em}
+.outlogin {position:relative;border-bottom:1px solid #bbb;background:#e3e6ea;line-height:1em}
 .outlogin h2 {margin:0;padding:0;height:0;overflow:hidden}
 /* 아웃로그인 전 */
 #ol_before {padding:15px 10px 0;width:199px;font-size:0.7em}
@@ -114,20 +114,22 @@ a {color:#000;text-decoration:none}
 #ol_before a {color:#696969;letter-spacing:-0.1em}
 #ol_submit {position:absolute;top:42px;right:12px;width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-size:1em;font-weight:bold;letter-spacing:-0.1em;line-height:2em}
 /* 아웃로그인 후 */
-#ol_after {width:199px;color:#000;font-size:0.75em}
+#ol_after {width:219px;color:#000;font-size:0.75em}
 #ol_after_hd {position:relative;padding:15px 10px 11px}
 #ol_after_hd a {position:absolute;top:16px;right:10px;color:#ff3061}
-#ol_after ul {margin:0;padding:0;border-top:1px solid #ddd;zoom:1}
+#ol_after ul {margin:0;border-top:1px solid #ddd;zoom:1}
 #ol_after ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after li {float:left}
 #ol_after_rec {background:#fff}
-#ol_after_rec a {display:inline-block;position:relative;width:50px;height:50px;vertical-align:top}
-#ol_after_rec span {position:absolute;top:0;left:0;width:100%;height:100%;background:#fff}
-#ol_after_rec strong {position:absolute;top:30px;left:0;width:100%;text-align:center}
+#ol_after_rec a {display:inline-block;position:relative;width:60px;height:50px;font-size:0.9em;vertical-align:top}
+#ol_after_rec span {position:absolute;top:0;left:0;width:100%;height:100%}
+#ol_after_rec strong {position:absolute;top:32px;left:0;width:100%;font-weight:normal;text-align:center}
 #ol_after_rec #ol_after_pt {width:97px;border-right:1px solid #ddd;border-left:1px solid #ddd}
+#ol_after_memo_img {background:url('../img/ol_after_bg.jpg')}
+#ol_after_pt_img {background:url('../img/ol_after_bg.jpg') -61px 0}
+#ol_after_scrap_img {background:url('../img/ol_after_bg.jpg') -159px 0}
 #ol_after_ft {text-align:center}
-#ol_after_ft a {display:inline-block;padding:9px 0 8px !important;width:99px;text-align:center}
-#ol_after_info {width:100px}
+#ol_after_ft a {display:inline-block;padding:9px 0 8px !important;width:109px;text-align:center}
 
 /* 설문조사 */
 #poll {margin-top:5px;width:219px;border-bottom:1px solid #bbb;font-size:0.75em}
@@ -135,9 +137,9 @@ a {color:#000;text-decoration:none}
 #poll header a {color:#ff3061}
 #poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
-#poll ul {margin:10px}
+#poll ul {padding:5px 10px;background:#fff}
 #poll li {margin:7px 0}
-#poll footer {padding:10px 10px 15px;text-align:center}
+#poll footer {padding:10px 10px 15px;background:#fff;text-align:center}
 #poll footer input {padding:0 15px;height:24px;border:0;background:#494936;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;font-size:0.9em;vertical-align:top;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */

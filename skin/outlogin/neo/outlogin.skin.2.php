@@ -10,9 +10,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=$g4['admin_path']?>/" id="ol_admin">관리자</a><? } ?>
     </header>
     <ul id="ol_after_rec">
-        <li><a href="javascript:win_memo();" id="ol_after_memo"><span></span>안 읽은 쪽지 <strong><?=$memo_not_read?></strong></a></li>
-        <li><a href="javascript:win_point();" id="ol_after_pt"><span></span>포인트 <strong><?=$point?></strong></a></li>
-        <li><a href="javascript:win_scrap();" id="ol_after_scrap"><span></span><strong>스크랩</strong></a></li>
+        <li><a href="javascript:win_memo();" id="ol_after_memo"><span id="ol_after_memo_img"></span>안 읽은 쪽지 <strong><?=$memo_not_read?></strong></a></li>
+        <li><a href="javascript:win_point();" id="ol_after_pt"><span id="ol_after_pt_img"></span>포인트 <strong><?=$point?></strong></a></li>
+        <li><a href="javascript:win_scrap();" id="ol_after_scrap"><span id="ol_after_scrap_img"></span><strong>스크랩</strong></a></li>
     </ul>
     <footer id="ol_after_ft">
         <ul>
