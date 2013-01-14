@@ -1,5 +1,4 @@
 <?
-define('_CAPTCHA_', true);
 include_once('./_common.php');
 
 set_session('ss_bo_table', $bo_table);
@@ -11,7 +10,7 @@ if (!$board['bo_table']) {
 }
 
 if (!$bo_table) {
-    alert('bo_table 값이 넘어오지 않았습니다.'.PHP_EOL.PHP_EOL.'write.php?bo_table=code 와 같은 방식으로 넘겨 주세요.', $g4['path']);
+    alert("bo_table 값이 넘어오지 않았습니다.\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", $g4['path']);
 }
 
 @include_once ($g4['path'].'/skin/board/write.head.skin.php');
@@ -198,16 +197,9 @@ if ($member['mb_level'] >= $board['bo_html_level'])
 
 $is_secret = $board['bo_use_secret'];
 
+$is_dhtml_editor = false;
 if ($board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
-    define('_EDITOR_', true);
     $is_dhtml_editor = true;
-} else {
-    $is_dhtml_editor = false;
-}
-
-$captcha_html = "";
-if ($is_guest) {
-    $captcha_html = captcha_html('wr_key');
 }
 
 $is_mail = false;

@@ -558,7 +558,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="tx_bo_content_head">상단 내용</label></th>
     <td>
-        <?=editor_textarea("bo_content_head", $board['bo_content_head']);?>
+        <?=editor("bo_content_head", $board['bo_content_head']);?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_content_head" name="chk_content_head" value="1">
@@ -568,7 +568,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="tx_bo_content_tail">하단 내용</label></th>
     <td>
-        <?=editor_textarea("bo_content_tail", $board['bo_content_tail']);?>
+        <?=editor("bo_content_tail", $board['bo_content_tail']);?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_content_tail" name="chk_content_tail" value="1">

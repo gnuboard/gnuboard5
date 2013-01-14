@@ -2,14 +2,14 @@
 $g4_path = "../.."; // common.php 의 상대 경로
 include_once("$g4_path/common.php");
 
-$up_dir = $g4['path'].'/'.$editor->data;; // 기본 업로드 폴더
+$up_dir = $g4['path'].'/'.$ckeditor->data;; // 기본 업로드 폴더
 @mkdir($up_dir, 0707);
 @chmod($up_dir, 0707);
 
 $ym = date('ym', $g4['server_time']);
 
-$data_dir = $g4['path'].'/'.$editor->data.'/'.$ym;
-$data_url = $g4['url'] .'/'.$editor->data.'/'.$ym;
+$data_dir = $g4['path'].'/'.$ckeditor->data.'/'.$ym;
+$data_url = $g4['url'] .'/'.$ckeditor->data.'/'.$ym;
 @mkdir($data_dir, 0707);
 @chmod($data_dir, 0707);
  

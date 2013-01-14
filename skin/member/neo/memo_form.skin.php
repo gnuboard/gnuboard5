@@ -37,8 +37,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         왼쪽의 글자를 입력하세요.
     </fieldset>
 
-    <div class="btn_confirm">
-        <input type="submit" id="btn_submit" value="보내기">
+    <div class="btn_window btn_confirm">
+        <input type="submit" id="btn_submit" class="btn_submit" value="보내기">
         <a href="javascript:window.close();">창닫기</a>
     </div>
     </form>

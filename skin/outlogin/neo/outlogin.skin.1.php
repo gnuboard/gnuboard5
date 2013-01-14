@@ -36,7 +36,6 @@ else
 <!-- 로그인 전 외부로그인 시작 -->
     <form name="fhead" method="post" action="<?=$action_url?>" onsubmit="return fhead_submit(this);" autocomplete="off">
     <fieldset>
-        <legend>로그인</legend>
         <input type="hidden" name="url" value="<?=$outlogin_url?>">
         <label for="ol_mb_id" id="ol_mb_id_label">아이디</label>
         <input type="text" id="ol_mb_id" name="mb_id" maxlength="20" required>

@@ -1,22 +1,25 @@
-function check_captcha(input_key)
+function chk_captcha()
 {
-    if (typeof(input_key) != "undefined") {
-        var captcha_result = false;
-        $.ajax({
-            type: "POST",
-            url: g4_path+"/plugin/captcha/get.php",
-            data: { "captcha_key": input_key.value },
-            cache: false,
-            async: false,
-            success: function(result) {
-                captcha_result = result;
-            }
-        });
-        if (!captcha_result) {
-            alert("숫자가 틀렸거나 입력 횟수가 넘었습니다.\n\n이미지를 클릭하여 다시 입력해 주십시오.");
-            input_key.select();
-            return false;
+    var captcha_key = document.getElementById("captcha_key");
+    if (typeof(captcha_key) == "undefined") return true;
+
+    var captcha_result = false;
+    $.ajax({
+        type: "POST",
+        url: g4_gcaptcha_path+"/get.php",
+        data: { 
+            "captcha_key": captcha_key.value 
+        },
+        cache: false,
+        async: false,
+        success: function(result) {
+            captcha_result = result;
         }
+    });
+    if (!captcha_result) {
+        alert("스팸방지 숫자가 틀렸습니다.");
+        captcha_key.select();
+        return false;
     }
     return true;
 }

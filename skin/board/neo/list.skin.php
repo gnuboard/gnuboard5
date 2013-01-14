@@ -11,7 +11,30 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1><?=$g4['title']?></h1><?}?>
 
-<? if ($admin_href) { ?><div id="btn_bo_adm"></div><?}?>
+<fieldset id="bo_sch">
+    <legend>게시물 검색</legend>
+
+    <form name="fsearch" method="get">
+    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+    <input type="hidden" name="sca" value="<?=$sca?>">
+    <select name="sfl" title="검색대상">
+        <option value="wr_subject">제목</option>
+        <option value="wr_content">내용</option>
+        <option value="wr_subject||wr_content">제목+내용</option>
+        <option value="mb_id,1">회원아이디</option>
+        <option value="mb_id,0">회원아이디(코)</option>
+        <option value="wr_name,1">글쓴이</option>
+        <option value="wr_name,0">글쓴이(코)</option>
+    </select>
+    <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
+    <input type="hidden" name="sop" value="and">
+    <!-- <input type="radio" id="sop_and" name="sop" value="and">
+    <label for="sop_and">and</label>
+    <input type="radio" id="sop_or" name="sop" value="or">
+    <label for="sop_or">or</label> -->
+    <input type="submit" class="fieldset_submit" value="검색">
+    </form>
+</fieldset>
 
 <div class="bo_link">
     <div id="bo_cate">
@@ -67,8 +90,8 @@ for ($i=0; $i<count($list); $i++) {
     <?
     if ($list[$i]['is_notice']) // 공지사항
         echo '공지';
-    else if ($wr_id == $list[$i]['wr_id']) // 현재위치
-        echo $list[$i]['num'];
+    else if ($wr_id == $list[$i]['wr_id'])
+        echo "<span class=\"bo_current\">열람중</span>";
     else
         echo $list[$i]['num'];
     ?>
@@ -80,10 +103,10 @@ for ($i=0; $i<count($list); $i++) {
         echo $list[$i]['icon_reply'];
         if ($is_category && $list[$i]['ca_name']) {
         ?>
-        <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link"><?=$list[$i]['ca_name']?></a>
+        <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link<? if ($wr_id == $list[$i]['wr_id']) echo " bo_current";?>"><?=$list[$i]['ca_name']?></a>
         <? } ?>
 
-        <a href="<?=$list[$i]['href']?>"><?=$list[$i]['subject']?>
+        <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>><?=$list[$i]['subject']?>
 
         <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
 
@@ -136,44 +159,9 @@ for ($i=0; $i<count($list); $i++) {
     <? if ($next_part_href) { echo '<a href="'.$next_part_href.'">다음검색</a>'; } ?>
 </div>
 
-<fieldset id="bo_sch">
-    <legend>게시물 검색</legend>
-
-    <form name="fsearch" method="get">
-    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-    <input type="hidden" name="sca" value="<?=$sca?>">
-    <select name="sfl" title="검색대상">
-        <option value="wr_subject">제목</option>
-        <option value="wr_content">내용</option>
-        <option value="wr_subject||wr_content">제목+내용</option>
-        <option value="mb_id,1">회원아이디</option>
-        <option value="mb_id,0">회원아이디(코)</option>
-        <option value="wr_name,1">글쓴이</option>
-        <option value="wr_name,0">글쓴이(코)</option>
-    </select>
-    <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
-    <input type="radio" id="sop_and" name="sop" value="and">
-    <label for="sop_and">and</label>
-    <input type="radio" id="sop_or" name="sop" value="or">
-    <label for="sop_or">or</label>
-    <input type="submit" class="fieldset_submit" value="검색">
-    </form>
-</fieldset>
-
-
 <script>
-if ('<?=$sca?>') document.fcategory.sca.value = '<?=$sca?>';
-if ('<?=$stx?>') {
-    document.fsearch.sfl.value = '<?=$sfl?>';
-
-    if ('<?=$sop?>' == 'and')
-        document.fsearch.sop[0].checked = true;
-
-    if ('<?=$sop?>' == 'or')
-        document.fsearch.sop[1].checked = true;
-} else {
-    document.fsearch.sop[0].checked = true;
-}
+<? if ($sca) { echo "document.fcategory.sca.value = \"$sca\";"; } ?>
+<? if ($stx) { echo "document.fsearch.sfl.value = \"$sfl\";"; } ?>
 </script>
 
 <? if ($is_checkbox) { ?>

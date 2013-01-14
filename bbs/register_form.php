@@ -1,7 +1,7 @@
 <?
+define('_CAPTCHA_', true);
 include_once('./_common.php');
 include_once($g4['path'].'/lib/register.lib.php');
-if ($captcha->lib) include_once($captcha->lib);
 
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));
@@ -102,7 +102,6 @@ if ($w == "") {
 // 회원아이콘 경로
 $mb_icon = $g4['path'].'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
 $member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
-$g4['js_file'][] = "{$g4['path']}/plugin/captcha/captcha.js";
 
 include_once('./_head.php');
 
