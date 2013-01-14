@@ -74,8 +74,8 @@ a {color:#000;text-decoration:none}
 #header h1 {margin:0;height:0;overflow:hidden}
 
 /* 로고 */
-#logo {border-bottom:3px solid #666;background:url('../img/logo_bg.jpg') #333 top center repeat-x;text-align:center}
-#logo a {display:inline-block;padding:55px 30px 20px}
+#logo {padding-top:35px;border-bottom:3px solid #666;background:url('../img/logo_bg.jpg') #333 top center repeat-x;text-align:center}
+#logo a {display:inline-block;padding:20px 30px 20px}
 
 /* 상단메뉴 */
 #tnb {position:absolute;top:0;left:0;width:100%;border-bottom:1px solid #000;background:url('../img/tnb_bg.jpg') #fff bottom left repeat-x;zoom:1}
