@@ -30,15 +30,15 @@ include_once($g4['path'].'/lib/popular.lib.php');
         <? } ?>
     </ul>
 
-    <form name="fsearchbox" method="get" onsubmit="return fsearchbox_submit(this);">
-    <input type="hidden" name="sfl" value="wr_subject||wr_content">
-    <input type="hidden" name="sop" value="and">
     <fieldset id="hdsch">
+        <form name="fsearchbox" method="get" action="<?=$g4['https_bbs_url'].'/search.php'?>" onsubmit="return fsearchbox_submit(this);">
+        <input type="hidden" name="sfl" value="wr_subject||wr_content">
+        <input type="hidden" name="sop" value="and">
         <legend>사이트 내 전체검색</legend>
         <input type="text" id="hdsch_stx" name="stx" title="검색어" maxlength="20">
         <input type="image" id="hdsch_submit" src="<?=$g4['path']?>/img/btn_search.jpg" alt="검색">
+        </form>
     </fieldset>
-    </form>
 
 </header>
 

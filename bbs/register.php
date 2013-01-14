@@ -11,6 +11,12 @@ set_session("ss_mb_reg", "");
 
 $member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
 
+if ($g4['https_url']) {
+    $register_action_url = $g4['https_url'].'/'.$g4['bbs'].'/register_form.php';
+} else {
+    $register_action_url = $g4['bbs_url'].'/register_form.php';
+}
+
 $g4['title'] = '회원가입약관';
 include_once('./_head.php');
 include_once($member_skin_path.'/register.skin.php');

@@ -1,4 +1,6 @@
 <?
+define('_EDITOR_', 1);
+define('_CAPTCHA_', 1);
 include_once('./_common.php');
 
 set_session('ss_bo_table', $bo_table);
@@ -339,12 +341,9 @@ $width = $board['bo_table_width'];
 if ($width <= 100)
     $width .= '%';
 
-// 글자수 제한 설정값
-if ($is_admin) {
-    $write_min = $write_max = 0;
-} else {
-    $write_min = (int)$board['bo_write_min'];
-    $write_max = (int)$board['bo_write_max'];
+$captcha_html = "";
+if ($is_guest) {
+    $captcha_html = captcha_html(); 
 }
 
 include_once($g4['path'].'/head.sub.php');

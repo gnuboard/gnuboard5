@@ -191,7 +191,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             }
         }
 
-        <? if (defined('_CAPTCHA_')) echo captcha_js('f.wr_key'); ?>
+        <? echo chk_captcha_js(); ?>
 
         return true;
     }

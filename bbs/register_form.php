@@ -1,5 +1,5 @@
 <?
-define('_CAPTCHA_', true);
+define('_CAPTCHA_', 1);
 include_once('./_common.php');
 include_once($g4['path'].'/lib/register.lib.php');
 
@@ -24,7 +24,7 @@ if ($w == "") {
     }
 
     if (!isset($_POST['agree2']) || !$_POST['agree2']) {
-        alert('개인정보취급방침의 내용에 동의하셔야 회원가입 하실 수 있습니다.', './register.php');
+        alert('개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', './register.php');
     }
 
     $member['mb_birth'] = '';
@@ -74,30 +74,33 @@ if ($w == "") {
 
     $g4['title'] = '회원 정보 수정';
 
-    $member[mb_email]       = get_text($member[mb_email]);
-    $member[mb_homepage]    = get_text($member[mb_homepage]);
-    $member[mb_password_q]  = get_text($member[mb_password_q]);
-    $member[mb_password_a]  = get_text($member[mb_password_a]);
-    $member[mb_birth]       = get_text($member[mb_birth]);
-    $member[mb_tel]         = get_text($member[mb_tel]);
-    $member[mb_hp]          = get_text($member[mb_hp]);
-    $member[mb_addr1]       = get_text($member[mb_addr1]);
-    $member[mb_addr2]       = get_text($member[mb_addr2]);
-    $member[mb_signature]   = get_text($member[mb_signature]);
-    $member[mb_recommend]   = get_text($member[mb_recommend]);
-    $member[mb_profile]     = get_text($member[mb_profile]);
-    $member[mb_1]           = get_text($member[mb_1]);
-    $member[mb_2]           = get_text($member[mb_2]);
-    $member[mb_3]           = get_text($member[mb_3]);
-    $member[mb_4]           = get_text($member[mb_4]);
-    $member[mb_5]           = get_text($member[mb_5]);
-    $member[mb_6]           = get_text($member[mb_6]);
-    $member[mb_7]           = get_text($member[mb_7]);
-    $member[mb_8]           = get_text($member[mb_8]);
-    $member[mb_9]           = get_text($member[mb_9]);
-    $member[mb_10]          = get_text($member[mb_10]);
-} else
+    $member['mb_email']       = get_text($member['mb_email']);
+    $member['mb_homepage']    = get_text($member['mb_homepage']);
+    $member['mb_password_q']  = get_text($member['mb_password_q']);
+    $member['mb_password_a']  = get_text($member['mb_password_a']);
+    $member['mb_birth']       = get_text($member['mb_birth']);
+    $member['mb_tel']         = get_text($member['mb_tel']);
+    $member['mb_hp']          = get_text($member['mb_hp']);
+    $member['mb_addr1']       = get_text($member['mb_addr1']);
+    $member['mb_addr2']       = get_text($member['mb_addr2']);
+    $member['mb_signature']   = get_text($member['mb_signature']);
+    $member['mb_recommend']   = get_text($member['mb_recommend']);
+    $member['mb_profile']     = get_text($member['mb_profile']);
+    $member['mb_1']           = get_text($member['mb_1']);
+    $member['mb_2']           = get_text($member['mb_2']);
+    $member['mb_3']           = get_text($member['mb_3']);
+    $member['mb_4']           = get_text($member['mb_4']);
+    $member['mb_5']           = get_text($member['mb_5']);
+    $member['mb_6']           = get_text($member['mb_6']);
+    $member['mb_7']           = get_text($member['mb_7']);
+    $member['mb_8']           = get_text($member['mb_8']);
+    $member['mb_9']           = get_text($member['mb_9']);
+    $member['mb_10']          = get_text($member['mb_10']);
+} else {
     alert('w 값이 제대로 넘어오지 않았습니다.');
+}
+
+$captcha_html = captcha_html(); 
 
 // 회원아이콘 경로
 $mb_icon = $g4['path'].'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';

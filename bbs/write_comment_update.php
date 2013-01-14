@@ -40,16 +40,6 @@ $wr = get_write($write_table, $wr_id);
 if (empty($wr['wr_id'])) 
     alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다."); 
 
-if (!$is_member) {
-    if ($w=='' || $w=='c') {
-        $key = get_session("captcha_keystring");
-        session_unregister("captcha_keystring");
-        if (!($key && $key == $_POST[wr_key])) {
-            alert('정상적인 접근이 아닌것 같습니다.');
-        }
-    }
-}
-
 
 // "인터넷옵션 > 보안 > 사용자정의수준 > 스크립팅 > Action 스크립팅 > 사용 안 함" 일 경우의 오류 처리
 // 이 옵션을 사용 안 함으로 설정할 경우 어떤 스크립트도 실행 되지 않습니다.
