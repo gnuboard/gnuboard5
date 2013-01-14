@@ -128,7 +128,7 @@ a {color:#000;text-decoration:none}
 #ol_after_memo_img {background:url('../img/ol_after_bg.jpg')}
 #ol_after_pt_img {background:url('../img/ol_after_bg.jpg') -61px 0}
 #ol_after_scrap_img {background:url('../img/ol_after_bg.jpg') -159px 0}
-#ol_after_ft {text-align:center}
+#ol_after_ft {background:#f0f0f0;text-align:center}
 #ol_after_ft a {display:inline-block;padding:9px 0 8px !important;width:109px;text-align:center}
 
 /* 설문조사 */
