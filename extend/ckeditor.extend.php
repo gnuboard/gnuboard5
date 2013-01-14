@@ -1,6 +1,6 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
+/*
 // _EDITOR_ 의 값에 상관없이 선언 되었는지의 여부만 따짐
 // if (defined('_EDITOR_')) true;
 define('_EDITOR_', 1);
@@ -17,4 +17,5 @@ if (defined('_EDITOR_')) {
     $g4['js_file'][] = $ckeditor->url."/ckeditor.js";
     $g4['js_file'][] = $ckeditor->url."/config.js";
 }
+*/
 ?>

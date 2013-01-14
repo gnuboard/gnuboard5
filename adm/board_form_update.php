@@ -276,18 +276,5 @@ if ($fields) {
         sql_query($sql);
 }
 
-
-if ($_FILES['bo_image_head']['name']) {
-    $bo_image_head_path = $board_path.'/'.$bo_image_head_urlencode;
-    move_uploaded_file($_FILES['bo_image_head']['tmp_name'], $bo_image_head_path);
-    chmod($bo_image_head_path, 0606);
-}
-
-if ($_FILES['bo_image_tail']['name']) {
-    $bo_image_tail_path = $board_path.'/'.$bo_image_tail_urlencode;
-    move_uploaded_file($_FILES['bo_image_tail']['tmp_name'], $bo_image_tail_path);
-    chmod($bo_image_tail_path, 0606);
-}
-
 goto_url("./board_form.php?w=u&bo_table={$bo_table}&amp;{$qstr}");
 ?>

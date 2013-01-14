@@ -195,7 +195,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <? } ?>
 </table>
 
-<?=captcha_html('wr_key');?>
+<?=$captcha_html?>
 
 <div class="btn_confirm">
     <input type="submit" class="btn_submit" value="회원가입" accesskey="s">

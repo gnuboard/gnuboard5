@@ -1,24 +1,16 @@
 <?php
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
-define("_GNUBOARD_", TRUE);
+define('_GNUBOARD_', 1);
 
 if (function_exists("date_default_timezone_set"))
     date_default_timezone_set("Asia/Seoul");
 
-$g4['js_file']        = array();
-
 // 디렉토리
 $g4['bbs']            = 'bbs';
-$g4['bbs_path']       = $g4['path'] . '/' . $g4['bbs'];
-$g4['bbs_img']        = 'img';
-$g4['bbs_img_path']   = $g4['path'] . '/' . $g4['bbs'] . '/' . $g4['bbs_img'];
-
-$g4['data_dir']       = 'data';
-$g4['cache_dir']      = 'cache';
-$g4['captcha_dir']    = 'captcha';
+$g4['bbs_path']       = $g4['path'].'/'.$g4['bbs'];
 
 $g4['admin']          = 'adm';
-$g4['admin_path']     = $g4['path'] . '/' . $g4['admin'];
+$g4['admin_path']     = $g4['path'].'/'.$g4['admin'];
 
 // 자주 사용하는 값
 // 서버의 시간과 실제 사용하는 시간이 틀린 경우 수정하세요.
@@ -72,8 +64,6 @@ $g4['link_count'] = 2;
 
 $g4['charset'] = 'utf-8';
 
-$g4['phpmyadmin_dir'] = $g4['admin'] . '/phpMyAdmin/';
-
 $g4['token_time'] = 3; // 토큰 유효시간
 
 // config.php 가 있는곳의 웹경로. 뒤에 / 를 붙이지 마세요.
@@ -85,4 +75,6 @@ $g4['https_url'] = '';
 //$g4['https_url'] = "https://www.sir.co.kr";
 
 $g4['dbconfig'] = 'data/dbconfig.php';
+
+$g4['js_file']        = array();
 ?>

@@ -78,7 +78,7 @@ class gcaptcha
 
     function run() 
     {
-        global $gcaptcha;
+        global $g4;
 
         // The text to draw
         $captcha_key = $this->get_captcha_key();
@@ -99,7 +99,7 @@ class gcaptcha
 
         // Replace path by your own font path
         $fonts = Array();
-        foreach (glob($gcaptcha->fonts.'/*.ttf') as $filename) {
+        foreach (glob($g4['gcaptcha_fonts'].'/*.ttf') as $filename) {
             $fonts[] = $filename;
         }
         $font = $fonts[mt_rand(0, count($fonts)-1)];
@@ -144,8 +144,8 @@ function captcha_html($class="captcha")
 {
     global $g4, $gcaptcha;
 
-    $gcaptcha->obj = new gcaptcha();
-    $gcaptcha->obj->run();
+    $obj = new gcaptcha();
+    $obj->run();
 
     $html  = '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">스팸방지</legend>';
@@ -173,14 +173,20 @@ function chk_captcha()
 }
 
 
+function chk_captcha_js()
+{
+    return "if (!chk_captcha()) return false;";
+}
+
+
 function make_wav()
 {
-    global $g4, $gcaptcha;
+    global $g4;
 
     $number = (string)$_SESSION['ss_captcha_key'];
     $wavs = array();
     for($i=0;$i<strlen($number);$i++){
-        $file = $gcaptcha->wavs.'/'.$number[$i].'.wav';
+        $file = $g4['gcaptcha_wavs'].'/'.$number[$i].'.wav';
         $wavs[] = $file;
     }
 

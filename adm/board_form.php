@@ -1,6 +1,6 @@
 <?
 $sub_menu = "300100";
-//define('_EDITOR_', true);
+define('_EDITOR_', 1);
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
@@ -558,7 +558,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="tx_bo_content_head">상단 내용</label></th>
     <td>
-        <?=editor("bo_content_head", $board['bo_content_head']);?>
+        <?=editor_html("bo_content_head", $board['bo_content_head']);?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_content_head" name="chk_content_head" value="1">
@@ -568,7 +568,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="tx_bo_content_tail">하단 내용</label></th>
     <td>
-        <?=editor("bo_content_tail", $board['bo_content_tail']);?>
+        <?=editor_html("bo_content_tail", $board['bo_content_tail']);?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_content_tail" name="chk_content_tail" value="1">
@@ -819,8 +819,8 @@ function set_point(f) {
 
 function fboardform_submit(f) 
 {
-    <?=editor_getdata("bo_content_head");?>
-    <?=editor_getdata("bo_content_tail");?>
+    <?=get_editor_js("bo_content_head");?>
+    <?=get_editor_js("bo_content_tail");?>
 
     if (parseInt(f.bo_count_modify.value) < 1) {
         alert("원글 수정 불가 댓글수는 1 이상 입력하셔야 합니다.");

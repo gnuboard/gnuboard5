@@ -104,15 +104,7 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_content">내용</label></th>
-    <td>
-        <?
-        if (defined('_EDITOR_') && $is_dhtml_editor) {
-            echo editor("wr_content", $content);
-        } else {
-            echo '<textarea id="wr_content" name="wr_content" class="required" required rows="10" style="width:100%;" title="내용">'.$content."</textarea>";
-        }
-        ?>
-    </td>
+    <td><?=editor_html("wr_content", $content);?></td>
 </tr>
 
 <? for ($i=1; $is_link && $i<=$g4['link_count']; $i++) { ?>
@@ -137,7 +129,7 @@ echo $option_hidden;
 </tbody>
 </table>
 
-<? if ($is_guest && defined('_CAPTCHA_')) { echo captcha_html(); } ?>
+<?=$captcha_html?>
 
 <div class="btn_confirm">
     <input type="submit" id="btn_submit" value="글쓰기" accesskey="s">
@@ -190,8 +182,8 @@ function html_auto_br(obj)
 
 function fwrite_submit(f)
 {
-    <? if (defined('_EDITOR_')) { echo editor_getdata("wr_content"); } ?>
-    <? if (defined('_EDITOR_')) { echo editor_empty("wr_content"); } ?>
+    <? echo get_editor_js('wr_content'); ?>
+    <? echo chk_editor_js('wr_content'); ?>
 
     var subject = "";
     var content = "";
@@ -226,7 +218,7 @@ function fwrite_submit(f)
         return false;
     }
 
-    <? if (defined('_CAPTCHA_')) { echo "if (!chk_captcha()) return false;"; } ?>
+    <? if ($is_guest) { echo chk_captcha(); } ?>
 
     return true;
 }

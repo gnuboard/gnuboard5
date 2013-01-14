@@ -1,5 +1,5 @@
 <?
-define('_CAPTCHA_', true);
+define('_CAPTCHA_', 1);
 include_once('./_common.php');
 include_once($g4['path'].'/lib/register.lib.php');
 
@@ -96,8 +96,11 @@ if ($w == "") {
     $member[mb_8]           = get_text($member[mb_8]);
     $member[mb_9]           = get_text($member[mb_9]);
     $member[mb_10]          = get_text($member[mb_10]);
-} else
+} else {
     alert('w 값이 제대로 넘어오지 않았습니다.');
+}
+
+$captcha_html = captcha_html(); 
 
 // 회원아이콘 경로
 $mb_icon = $g4['path'].'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';

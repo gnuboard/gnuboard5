@@ -2,7 +2,6 @@
 include_once('./_common.php');
 include_once($g4['path'].'/lib/register.lib.php');
 include_once($g4['path'].'/lib/mailer.lib.php');
-include_once($g4['path'].'/plugin/captcha/captcha.lib.php');
 
 // 리퍼러 체크
 referer_check();
@@ -16,8 +15,8 @@ if ($w == 'u' && $is_admin == 'super') {
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
-if (!chk_captcha("wr_key")) {
-    alert("자동등록방지 입력에 오류가 있습니다.");
+if (!chk_captcha()) {
+    alert('스팸방지에 입력한 숫자가 틀렸습니다.');
 }
 
 $mb_id          = escape_trim($_POST['mb_id']);

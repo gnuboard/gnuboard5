@@ -1,4 +1,5 @@
 <?
+define('_CAPTCHA_', 1);
 include_once('./_common.php');
 
 $g4['title'] = '게시글 저장';
@@ -148,10 +149,8 @@ if ($w == '' || $w == 'u') {
     alert('w 값이 제대로 넘어오지 않았습니다.'); 
 }
 
-if (defined('_CAPTCHA_')) {
-    if ($is_guest && !chk_captcha()) {
-        alert('스팸방지의 답변으로 입력한 숫자가 틀렸습니다.');
-    }
+if ($is_guest && !chk_captcha()) {
+    alert('스팸방지에 입력한 숫자가 틀렸습니다.');
 }
 
 if ($w == '' || $w == 'r') {

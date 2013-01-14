@@ -1,10 +1,7 @@
 <?php
 // 이 파일은 새로운 파일 생성시 반드시 포함되어야 함
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-<<<<<<< HEAD
-=======
 
->>>>>>> 43c0282f463b6fd895a835ca3e71da6b0844328c
 $begin_time = get_microtime();
 
 if (!isset($g4['title']))
@@ -53,26 +50,19 @@ header("Pragma: no-cache"); // HTTP/1.0
 <title><?=$g4['title']?></title>
 <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
 <? if (isset($administrator)) { ?>
-<<<<<<< HEAD
 <link rel="stylesheet" href="<?=$g4['path']?>/adm.css?=<?=date("md")?>">
 <? } else { ?>
 <link rel="stylesheet" href="<?=$g4['path']?>/def.css?=<?=date("md")?>">
-=======
-<link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">
-<? } else { ?>
-<link rel="stylesheet" href="<?=$g4['url']?>/css/def.css?=<?=date("md")?>">
->>>>>>> 43c0282f463b6fd895a835ca3e71da6b0844328c
 <?}?>
 <!--[if lte IE 8]>
 <script src="<?=$g4['url']?>/js/html5.js"></script>
 <![endif]-->
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
-var g4_path      = "<?=$g4['path']?>";
-var g4_bbs       = "<?=$g4['bbs']?>";
-var g4_bbs_path  = "<?=$g4['bbs_path']?>";
-var g4_bbs_img   = "<?=$g4['bbs_img']?>";
 var g4_url       = "<?=$g4['url']?>";
+var g4_path      = "<?=$g4['path']?>";
+var g4_bbs_url   = "<?=$g4['bbs_url']?>";
+var g4_bbs_path  = "<?=$g4['bbs_path']?>";
 var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";
 var g4_is_admin  = "<?=isset($is_admin)?$is_admin:'';?>";
 var g4_bo_table  = "<?=isset($bo_table)?$bo_table:'';?>";
