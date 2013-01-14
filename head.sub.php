@@ -52,7 +52,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 <? if (isset($administrator)) { ?>
 <link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">
 <? } else { ?>
-<link rel="stylesheet" href="<?=$g4['url']?>/css/def.css?=<?=date("md")?>">
+<link rel="stylesheet" href="<?=$g4['url']?>/css/default.css?=<?=date("md")?>">
 <?}?>
 <!--[if lte IE 8]>
 <script src="<?=$g4['url']?>/js/html5.js"></script>
