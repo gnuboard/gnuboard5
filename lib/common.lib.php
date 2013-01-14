@@ -565,8 +565,10 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     // 검색필드를 구분자로 나눈다. 여기서는 +
     $tmp = array();
     $tmp = explode(",", trim($search_field));
-    $field = explode("||", $tmp['0']);
-    $not_comment = $tmp['1'];
+    $field = explode("||", $tmp[0]);
+    $not_comment = "";
+    if (!empty($tmp[1]))
+        $not_comment = $tmp[1];
 
     $str .= "(";
     for ($i=0; $i<count($s); $i++) {
@@ -1574,5 +1576,25 @@ function escape_trim($field)
 function is_checked($field)
 {
     return !empty($_POST[$field]);
+}
+
+
+function mk_subdir($subdir)
+{
+    global $g4;
+    $data_path = $g4['path'].'/'.$g4['data_dir'];
+    $data_subpath = $data_path.'/'.$subdir;
+    if (!is_dir($data_subpath)) {
+        @mkdir($data_subpath, 0707);
+        @chmod($data_subpath, 0707);
+    }
+    return $data_subpath;
+}
+
+
+function abs_ip2long($ip='')
+{
+    $ip = $ip ? $ip : $_SERVER['REMOTE_ADDR'];
+    return abs(ip2long($ip));
 }
 ?>

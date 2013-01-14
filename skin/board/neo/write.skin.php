@@ -2,12 +2,6 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<script>
-// 글자수 제한
-var char_min = parseInt(<?=$write_min?>); // 최소
-var char_max = parseInt(<?=$write_max?>); // 최대
-</script>
-
 <h1><?=$g4['title']?></h1>
 
 <form id="fwrite" name="fwrite" method="post" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data" autocomplete="off">
@@ -59,7 +53,7 @@ echo $option_hidden;
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름</label></th>
-    <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>"></td>
+    <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>" title="이름"></td>
 </tr>
 <? } ?>
 
@@ -111,9 +105,13 @@ echo $option_hidden;
 <tr>
     <th scope="row"><label for="wr_content">내용</label></th>
     <td>
-        <textarea id="wr_content" name="wr_content" class="ckeditor" rows="10" style="width:100%;"><?=$content?></textarea>
-        <? if ($write_min || $write_max) { ?><span id="char_count"></span>글자<?}?>
-        <? if ($write_min || $write_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+        <?
+        if (defined('_EDITOR_') && $is_dhtml_editor) {
+            echo editor("wr_content", $content);
+        } else {
+            echo '<textarea id="wr_content" name="wr_content" class="required" required rows="10" style="width:100%;" title="내용">'.$content."</textarea>";
+        }
+        ?>
     </td>
 </tr>
 
@@ -139,7 +137,7 @@ echo $option_hidden;
 </tbody>
 </table>
 
-<?=$captcha_html?>
+<? if ($is_guest && defined('_CAPTCHA_')) { echo captcha_html(); } ?>
 
 <div class="btn_confirm">
     <input type="submit" id="btn_submit" value="글쓰기" accesskey="s">
@@ -147,7 +145,6 @@ echo $option_hidden;
 </div>
 </form>
 
-<script src="<?=$g4['path']?>/js/jquery.kcaptcha.js"></script>
 <script>
 <?
 // 관리자라면 분류 선택에 '공지' 옵션을 추가함
@@ -193,37 +190,8 @@ function html_auto_br(obj)
 
 function fwrite_submit(f)
 {
-    /*
-    var s = "";
-    if (s = word_filter_check(f.wr_subject.value)) {
-        alert("제목에 금지단어('"+s+"')가 포함되어있습니다");
-        return false;
-    }
-
-    if (s = word_filter_check(f.wr_content.value)) {
-        alert("내용에 금지단어('"+s+"')가 포함되어있습니다");
-        return false;
-    }
-    */
-
-    /*
-    if (document.getElementById('char_count')) {
-        if (char_min > 0 || char_max > 0) {
-            var cnt = parseInt(document.getElementById('char_count').innerHTML);
-            if (char_min > 0 && char_min > cnt) {
-                alert("내용은 "+char_min+"글자 이상 쓰셔야 합니다.");
-                return false;
-            }
-            else if (char_max > 0 && char_max < cnt) {
-                alert("내용은 "+char_max+"글자 이하로 쓰셔야 합니다.");
-                return false;
-            }
-        }
-    }
-    */
-
-    <? echo editor_getdata("wr_content"); ?>
-    <? echo editor_empty("wr_content"); ?>
+    <? if (defined('_EDITOR_')) { echo editor_getdata("wr_content"); } ?>
+    <? if (defined('_EDITOR_')) { echo editor_empty("wr_content"); } ?>
 
     var subject = "";
     var content = "";
@@ -258,11 +226,8 @@ function fwrite_submit(f)
         return false;
     }
 
-    <? if (defined('_CAPTCHA_')) echo captcha_js('f.wr_key'); ?>
+    <? if (defined('_CAPTCHA_')) { echo "if (!chk_captcha()) return false;"; } ?>
 
     return true;
 }
 </script>
-
-<script src="<?=$g4['path']?>/js/board.js"></script>
-<script> window.onload=function() { drawFont(); } </script>

@@ -15,6 +15,7 @@ header('Content-Disposition: attachment;filename=captcha.wav');
 
 echo joinwavs($wavs);
 
+
 /**
  * Join multiple wav files
  *

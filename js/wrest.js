@@ -63,7 +63,8 @@ function wrestHangul(fld)
 {
     if (!wrestTrim(fld)) return;
 
-    var pattern = /([^가-힣\x20])/i;
+    //var pattern = /([^가-힣\x20])/i;
+    var pattern = /([^가-힣\x20])/;
 
     if (pattern.test(fld.value)) {
         if (wrestFld == null) {
@@ -79,6 +80,7 @@ function wrestHangul2(fld)
     if (!wrestTrim(fld)) return;
 
     var pattern = /([^가-힣ㄱ-ㅎㅏ-ㅣ\x20])/i;
+    //var pattern = /([^가-힣ㄱ-ㅎㅏ-ㅣ\x20])/;
 
     if (pattern.test(fld.value)) {
         if (wrestFld == null) {
