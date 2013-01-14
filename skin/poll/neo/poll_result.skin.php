@@ -15,11 +15,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 <? for ($i=1; $i<=count($list); $i++) { ?>
                     <li>
                         <p>
-                            <?=$list[$i][content]?>
-                            <span><?=$list[$i][cnt]?>표 <?=number_format($list[$i][rate], 1)?>%</span>
+                            <?=$list[$i]['content']?>
+                            <span><?=$list[$i]['cnt']?>표 <?=number_format($list[$i]['rate'], 1)?>%</span>
                         </p>
                         <div class="poll_result_graph">
-                            <span style="width:<?=number_format($list[$i][rate], 1)?>%"></span>
+                            <span style="width:<?=number_format($list[$i]['rate'], 1)?>%"></span>
                         </div>
                     </li>
                 <? } ?>
@@ -35,17 +35,17 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? for ($i=0; $i<count($list2); $i++) { ?>
         <article>
             <header>
-                <h1><?=$list2[$i][name]?>님의 의견</h1>
-                <span class="poll_datetime"><?=$list2[$i][datetime]?></span>
-                <span class="poll_del"><? if ($list2[$i][del]) { echo $list2[$i][del]."삭제</a>"; } ?></span>
+                <h1><?=$list2[$i]['name']?>님의 의견</h1>
+                <span class="poll_datetime"><?=$list2[$i]['datetime']?></span>
+                <span class="poll_del"><? if ($list2[$i]['del']) { echo $list2[$i]['del']."삭제</a>"; } ?></span>
             </header>
             <p>
-                <?=$list2[$i][idea]?>
+                <?=$list2[$i]['idea']?>
             </p>
         </article>
         <? } ?>
 
-        <? if ($member[mb_level] >= $po[po_level]) { ?>
+        <? if ($member['mb_level'] >= $po['po_level']) { ?>
         <form name="fpollresult" method="post" onsubmit="return fpollresult_submit(this);" autocomplete="off">
         <input type=hidden name="po_id" value="<?=$po_id?>">
         <input type=hidden name="w" value="">
@@ -55,8 +55,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <p><?=$po_etc?></p>
             <?
             $comment_size = "";
-            if ($member[mb_id]) { $comment_size = 52; ?>
-                <input type="hidden" name="pc_name" value="<?=cut_str($member[mb_nick],255)?>">
+            if ($is_member) { $comment_size = 52; ?>
+                <input type="hidden" name="pc_name" value="<?=cut_str($member['mb_nick'],255)?>">
             <? } else { $comment_size = 32; ?>
                 <label for="pc_name">이름</label>
                 <input type='text' id="pc_name" name="pc_name" class="fieldset_input required" size="10" required>
@@ -81,7 +81,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <section id="poll_result_another">
         <h2>다른 투표 결과 보기</h2>
         <ul>
-        <? for ($i=0; $i<count($list3); $i++) { ?><li><a href="./poll_result.php?po_id=<?=$list3[$i][po_id]?>&amp;skin_dir=<?=$skin_dir?>">[<?=$list3[$i][date]?>] <?=$list3[$i][subject]?></a></li><? } ?>
+        <? for ($i=0; $i<count($list3); $i++) { ?><li><a href="./poll_result.php?po_id=<?=$list3[$i]['po_id']?>&amp;skin_dir=<?=$skin_dir?>">[<?=$list3[$i]['date']?>] <?=$list3[$i]['subject']?></a></li><? } ?>
         </ul>
     </section>
 

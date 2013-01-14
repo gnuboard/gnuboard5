@@ -218,7 +218,7 @@ function fwrite_submit(f)
         return false;
     }
 
-    <? if ($is_guest) { echo chk_captcha(); } ?>
+    <? if ($is_guest) { echo chk_captcha_js(); } ?>
 
     return true;
 }

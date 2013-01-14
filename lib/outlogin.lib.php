@@ -28,6 +28,34 @@ function outlogin($skin_dir='basic')
             $is_auth = true;
     }
 
+    if ($g4['https_url']) {
+        $outlogin_url = $_GET['url'];
+        if ($outlogin_url) {
+            if (preg_match("/^\.\.\//", $outlogin_url)) {
+                $outlogin_url = urlencode($g4[url]."/".preg_replace("/^\.\.\//", "", $outlogin_url));
+            }
+            else {
+                $purl = parse_url($g4[url]);
+                if ($purl['path']) {
+                    $path = urlencode($purl['path']);
+                    $urlencode = preg_replace("/".$path."/", "", $urlencode);
+                }
+                $outlogin_url = $g4['url'].$urlencode;
+            }
+        }
+        else {
+            $outlogin_url = $g4['url'];
+        }
+    }
+    else {
+        $outlogin_url = $urlencode;
+    }
+
+    if ($g4['https_url'])
+        $outlogin_action_url = "{$g4['https_url']}/$g4[bbs]/login_check.php";
+    else
+        $outlogin_action_url = "{$g4['bbs_url']}/login_check.php";
+
     ob_start();
     if ($is_member)
         include_once ($outlogin_skin_path.'/outlogin.skin.2.php');
