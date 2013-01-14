@@ -479,6 +479,7 @@ if (isset($member['mb_id'])) {
 
 $write = array();
 $write_table = "";
+$gr_id = "";
 if (isset($bo_table)) {
     $board = sql_fetch(" select * from {$g4['board_table']} where bo_table = '$bo_table' ");
     if ($board['bo_table']) {

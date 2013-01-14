@@ -32,7 +32,3 @@ if ($i == 0)
 ?>
 </tbody>
 </table>
-
-<div id="pg">
-    <?=$write_pages?>
-</div>
