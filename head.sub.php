@@ -48,11 +48,17 @@ header("Pragma: no-cache"); // HTTP/1.0
 <head>
 <meta charset="<?=$g4['charset']?>">
 <title><?=$g4['title']?></title>
-<meta http-equiv='X-UA-Compatible' content='IE=Edge' />
+<!-- <meta http-equiv='X-UA-Compatible' content='IE=Edge' /> -->
 <? if (isset($administrator)) { ?>
+<<<<<<< HEAD
 <link rel="stylesheet" href="<?=$g4['path']?>/adm.css?=<?=date("md")?>">
 <? } else { ?>
 <link rel="stylesheet" href="<?=$g4['path']?>/def.css?=<?=date("md")?>">
+=======
+<link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">
+<? } else { ?>
+<link rel="stylesheet" href="<?=$g4['url']?>/css/default.css?=<?=date("md")?>">
+>>>>>>> 0ce3006c134433544fcc652714d529d7c49c7f4b
 <?}?>
 <!--[if lte IE 8]>
 <script src="<?=$g4['url']?>/js/html5.js"></script>
