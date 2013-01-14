@@ -15,7 +15,7 @@ check_token();
 define('_BOARD_DELETE_', TRUE);
 
 // include 전에 $bo_table 값을 반드시 넘겨야 함
-$tmp_bo_table = mysql_real_escape_string(trim($_POST['bo_table']));
+$tmp_bo_table = escape_trim($_GET['bo_table']);
 $sql = " select * from {$g4['board_table']} where bo_table = '{$tmp_bo_table}' ";
 $row = sql_fetch($sql);
 if (!$row) {

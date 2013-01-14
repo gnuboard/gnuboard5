@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<form id="fregister" name="fregister" method="POST" onsubmit="return fregister_submit(this);" autocomplete="off">
+<form id="fregister" name="fregister" method="POST" action="<?=$register_action_url?>" onsubmit="return fregister_submit(this);" autocomplete="off">
 
 <section id="fregister_term">
     <h2>회원가입약관</h2>
@@ -16,7 +16,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </section>
 
 <section id="fregister_private">
-    <h2>개인정보취급방침</h2>
+    <h2>개인정보수집이용안내</h2>
     <textarea readonly><?=get_text($config['cf_privacy'])?></textarea>
     <div class="fregister_agree">
         <input type="radio" id="agree21" name="agree2" value="1">
@@ -44,15 +44,11 @@ function fregister_submit(f)
 
     var agree2 = document.getElementsByName("agree2");
     if (!agree2[0].checked) {
-        alert("개인정보취급방침의 내용에 동의하셔야 회원가입 하실 수 있습니다.");
+        alert("개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.");
         agree2[0].focus();
         return false;
     }
 
-    f.action = "./register_form.php";
     return true;
 }
-
-if (typeof(document.fregister.mb_name) != "undefined")
-    document.fregister.mb_name.focus();
 </script>

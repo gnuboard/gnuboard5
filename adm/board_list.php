@@ -4,11 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-// DHTML 에디터 사용 필드 추가 : 061021
-sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_use_dhtml_editor` TINYINT NOT NULL AFTER `bo_use_secret` ", false);
-// RSS 보이기 사용 필드 추가 : 061106
-sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_use_rss_view` TINYINT NOT NULL AFTER `bo_use_dhtml_editor` ", false);
-
 $sql_common = " from {$g4['board_table']} a ";
 $sql_search = " where (1) ";
 
@@ -39,10 +34,7 @@ if (!$sst) {
 }
 $sql_order = " order by $sst $sod ";
 
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            {$sql_order} ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
@@ -51,11 +43,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = " select *
-            {$sql_common}
-            {$sql_search}
-            {$sql_order}
-            limit {$from_record}, {$rows} ";
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $listall = '';
@@ -128,8 +116,7 @@ var list_delete_php = 'board_list_delete.php';
 // 스킨디렉토리
 $skin_options = '';
 $arr = get_skin_dir('board');
-for ($k=0; $k<count($arr); $k++)
-{
+for ($k=0; $k<count($arr); $k++) {
     $option = $arr[$k];
     if (strlen($option) > 10)
         $option = substr($arr[$k], 0, 18) . '…';
@@ -141,8 +128,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $s_upd = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
     $s_del = "";
     if ($is_admin == 'super') {
-        //$s_del = '<a href="javascript:del(\'./board_delete.php?bo_table='.$row['bo_table'].'&amp;'.$qstr.'\');">삭제</a>';
-        $s_del = '<a href="javascript:post_delete(\'board_delete.php\', \''.$row['bo_table'].'\');">삭제</a>';
+        //$s_del = '<a href="javascript:post_delete(\'board_delete.php\', \''.$row['bo_table'].'\');">삭제</a>';
+        $s_del = "<a href=\"./board_delete.php?bo_table={$row['bo_table']}\" class=\"board_delete\">삭제</a>";
     }
     $s_copy = '<a href="javascript:board_copy(\''.$row['bo_table'].'\');">복사</a>';
 ?>
@@ -234,6 +221,16 @@ function post_delete(action_url, val)
 		f.submit();
 	}
 }
+
+$(function(){
+    $(".board_delete").click(function(){
+    	if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+            $("#fpost").attr("action", this.href);
+            $("#fpost").submit();
+        }
+        return false;
+    });
+});
 </script>
 
 <form id="fpost" name="fpost" method="post">
@@ -243,7 +240,7 @@ function post_delete(action_url, val)
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="bo_table">
+<!-- <input type="hidden" name="bo_table"> -->
 </form>
 
 <?

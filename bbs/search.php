@@ -4,12 +4,18 @@ include_once('./_common.php');
 $g4['title'] = "전체검색 결과";
 include_once('./_head.php');
 
+$search_table = Array();
+$table_index = 0;
+$write_pages = "";
+$text_stx = "";
+$srows = 0;
+
 if ($stx) {
 
     $stx = preg_replace("/\//", "\/", trim($stx));
     $sop = strtolower($sop);
     if (!$sop || !($sop == 'and' || $sop == 'or')) $sop = 'and'; // 연산자 and , or
-    $srows = isset($_GET['srows']) ? $_GET['srows'] : "";
+    $srows = isset($_GET['srows']) ? $_GET['srows'] : 10;
     if (!$srows) $srows = 10; // 한페이지에 출력하는 검색 행수
 
     $g4_search['tables'] = Array();
@@ -105,8 +111,6 @@ if ($stx) {
     $board_count = 0;
 
     $time1 = get_microtime();
-    $search_table = Array();
-    $table_index = 0;
 
     $total_count = 0;
     for ($i=0; $i<count($g4_search['tables']); $i++) {
@@ -130,7 +134,7 @@ if ($stx) {
     }
 
     $rows = $srows;
-    $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
+    $total_page = ceil($total_count / $rows);  // 전체 페이지 계산
     if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
     $from_record = ($page - 1) * $rows; // 시작 열을 구함
 

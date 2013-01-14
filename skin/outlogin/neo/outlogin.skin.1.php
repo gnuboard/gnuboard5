@@ -24,7 +24,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </section>
 
 <script>
-$(document).ready(function(){
+$(function(){
     $omi = $('#ol_mb_id');
     $omp = $('#ol_mb_pw');
     $omi_label = $('#ol_mb_id_label');
@@ -50,9 +50,7 @@ $(document).ready(function(){
         }
     });
 });
-</script>
 
-<script>
 function fhead_submit(f)
 {
     return true;
