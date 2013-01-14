@@ -1,10 +1,6 @@
 <?php
 // 이 파일은 새로운 파일 생성시 반드시 포함되어야 함
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-if (!$member['mb_id']) {
-    echo "under construction";
-    exit;
-}
 $begin_time = get_microtime();
 
 if (!isset($g4['title']))
@@ -53,9 +49,9 @@ header("Pragma: no-cache"); // HTTP/1.0
 <title><?=$g4['title']?></title>
 <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
 <? if (isset($administrator)) { ?>
-<link rel="stylesheet" href="<?=$g4['path']?>/css/adm.css?=<?=date("md")?>">
+<link rel="stylesheet" href="<?=$g4['path']?>/adm.css?=<?=date("md")?>">
 <? } else { ?>
-<link rel="stylesheet" href="<?=$g4['path']?>/css/def.css?=<?=date("md")?>">
+<link rel="stylesheet" href="<?=$g4['path']?>/def.css?=<?=date("md")?>">
 <?}?>
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
