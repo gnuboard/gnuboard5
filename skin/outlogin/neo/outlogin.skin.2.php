@@ -10,9 +10,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=$g4['admin_path']?>/" id="ol_admin">관리자</a><? } ?>
     </header>
     <ul id="ol_after_rec">
-        <li><a href="<?=$g4['path']?>/bbs/memo.php" id="ol_after_memo" target="_blank"><span id="ol_after_memo_img"></span>안 읽은 쪽지 <strong><?=$memo_not_read?></strong></a></li>
-        <li><a href="<?=$g4['path']?>/bbs/point.php" id="ol_after_pt" target="_blank"><span id="ol_after_pt_img"></span>포인트 <strong><?=$point?></strong></a></li>
-        <li><a href="<?=$g4['path']?>/bbs/scrap.php" id="ol_after_scrap" target="_blank"><span id="ol_after_scrap_img"></span><strong>스크랩</strong></a></li>
+        <li><a href="<?=$g4['path']?>/bbs/memo.php" id="ol_after_memo" target="_blank">안 읽은 쪽지 <span id="ol_after_memo_img"><?=$memo_not_read?></span></a></li>
+        <li><a href="<?=$g4['path']?>/bbs/point.php" id="ol_after_pt" target="_blank">포인트 <span id="ol_after_pt_img"><?=$point?></span></a></li>
+        <li><a href="<?=$g4['path']?>/bbs/scrap.php" id="ol_after_scrap" target="_blank"><span id="ol_after_scrap_img">스크랩</span></a></li>
     </ul>
     <footer id="ol_after_ft">
         <ul>
