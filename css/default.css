@@ -169,6 +169,7 @@ a {color:#000;text-decoration:none}
 
 /* 레이아웃 중간 */
 #wrapper {z-index:2;clear:both;position:relative;padding:20px 240px 30px 20px;min-height:520px;height:auto !important;height:520px;background:url("../img/wrapper_bg.jpg") top right repeat-y}
+#wrapper h1 {font-size:1em}
 
 /* 레이아웃 하단 */
 #footer {z-index:1;position:relative;padding:15px 0 20px;border-top:1px solid #bbb;color:#595959;font-size:0.75em}
@@ -412,7 +413,7 @@ a {color:#000;text-decoration:none}
 #new_search legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 
 /* 새창 공통 */
-.new_win h1 {padding:20px 30px 10px;background:#494949;color:#fff;font-size:1em}
+.new_win h1 {padding:20px 30px 10px;background:#494949;color:#fff;font-size:0.875em}
 .new_win h1 a {color:#fff}
 .new_win article h1 {background:transparent;color:#000}
 .new_win h2 {font-size:1em}
