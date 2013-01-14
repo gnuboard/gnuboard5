@@ -15,6 +15,10 @@ hr {display:none}
 
 /* 웹접근성 스킬 */
 .sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+/* 본문 바로가기 */
+#to_content a {z-index:100000000;display:block;position:absolute;top:0;left:0;height:0;overflow:hidden}
+#to_content a:focus,
+#to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
 
 /* 자동등록방지 */
 .captcha {display:inline-block;vertical-align:middle}
@@ -56,11 +60,6 @@ fieldset button:focus,
 #install_done section {margin:0 auto;width:700px}
 #install_done div {position:relative;margin:0 auto;width:700px;background:#000}
 #install_done div span {position:absolute;top:-28px;left:0;width:700px;height:580px;background:url("../img/install_done.jpg")}
-
-/* 내용 건너뛰기 */
-#to_content a {display:block;position:absolute;top:0;left:0;height:0;overflow:hidden}
-#to_content a:focus,
-#to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
 
 /* 헤딩 */
 h1 {margin:0 0 20px;font-size:1.6em}
@@ -122,12 +121,17 @@ a {color:#000;text-decoration:none}
 #ol_after li {float:left}
 #ol_after_rec {background:#fff}
 #ol_after_rec a {display:inline-block;position:relative;width:60px;height:50px;font-size:0.9em;vertical-align:top}
-#ol_after_rec span {position:absolute;top:0;left:0;width:100%;height:100%}
-#ol_after_rec strong {position:absolute;top:32px;left:0;width:100%;font-weight:normal;text-align:center}
+#ol_after_rec span {position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;line-height:7em}
 #ol_after_rec #ol_after_pt {width:97px;border-right:1px solid #ddd;border-left:1px solid #ddd}
-#ol_after_memo_img {background:url('../img/ol_after_bg.jpg')}
-#ol_after_pt_img {background:url('../img/ol_after_bg.jpg') -61px 0}
-#ol_after_scrap_img {background:url('../img/ol_after_bg.jpg') -159px 0}
+#ol_after_memo span {background:url('../img/ol_after_bg.jpg')}
+#ol_after_memo:focus span,
+#ol_after_memo:hover span {background-position:0 -50px}
+#ol_after_pt span {background:url('../img/ol_after_bg.jpg') -61px 0}
+#ol_after_pt:focus span,
+#ol_after_pt:hover span {background-position:-61px -50px}
+#ol_after_scrap span {background:url('../img/ol_after_bg.jpg') -159px 0}
+#ol_after_scrap:focus span,
+#ol_after_scrap:hover span {background-position:-159px -50px}
 #ol_after_ft {background:#f0f0f0;text-align:center}
 #ol_after_ft a {display:inline-block;padding:9px 0 8px !important;width:109px;text-align:center}
 
