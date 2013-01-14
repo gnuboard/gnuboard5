@@ -38,14 +38,14 @@ legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#333;
 fieldset .fieldset_input,
 fieldset textarea {padding:3px;border:1px solid #ddd;background:#fff;vertical-align:middle}
 fieldset .fieldset_input:focus,
-fieldset textarea:focus {padding:4px;border:0;background:#555;color:#fff}
+fieldset textarea:focus {padding:4px;border:0;background:#494949;color:#fff}
 fieldset select {padding:2px 2px 3px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 fieldset p {margin:0}
 fieldset .span_highlight {color:#ff3061}
 fieldset button,
-.fieldset_submit {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.75em;line-height:1.9em;vertical-align:middle;cursor:pointer}
+.fieldset_submit {padding:0 15px;height:24px;border:0;background:#494949;color:#fff;font-size:0.75em;line-height:1.9em;vertical-align:middle;cursor:pointer}
 fieldset button:focus,
-.fieldset_submit:focus {padding:0 15px;height:24px;border:0;background:#555;color:#fff;font-size:0.75em;line-height:1.9em;vertical-align:middle}
+.fieldset_submit:focus {padding:0 15px;height:24px;border:0;background:#494949;color:#fff;font-size:0.75em;line-height:1.9em;vertical-align:middle}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;margin-bottom:20px;width:100%;height:auto}
@@ -215,7 +215,7 @@ a {color:#000;text-decoration:none}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.75em;text-decoration:none;line-height:2.2em}
 .btn02:hover,
 .btn02:focus {}
-.btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #555;background:#555;color:#fff;font-size:0.75em;text-decoration:none;line-height:2.2em}
+.btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949;background:#494949;color:#fff;font-size:0.75em;text-decoration:none;line-height:2.2em}
 .btn02:hover,
 .btn02:focus {}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
@@ -236,7 +236,7 @@ a {color:#000;text-decoration:none}
 .frm_tbl textarea,
 .frm_tbl .frm_input {padding:2px;background:#f5f5f2}
 .frm_tbl textarea:focus,
-.frm_tbl .frm_input:focus {padding:3px;border:0;background:#555;color:#fff}
+.frm_tbl .frm_input:focus {padding:3px;border:0;background:#494949;color:#fff}
 .frm_tbl textarea {width:90%}
 .frm_tbl select {padding:2px}
 .frm_file {display:block;margin-bottom:5px}
@@ -330,12 +330,12 @@ a {color:#000;text-decoration:none}
 #bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_atc p {padding:0 0 10px;min-height:300px;height:auto !important;height:300px;font-size:0.875em}
-#bo_v_file {background:#555;font-size:0.75em}
+#bo_v_file {background:#494949;font-size:0.75em}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
 #bo_v_file a {display:inline-block;margin-top:5px;padding:5px 10px;color:#fff}
 .bo_v_file_cnt {display:inline-block;margin-left:10px;color:#ddd}
-#bo_v_link {background:#555;font-size:0.75em}
+#bo_v_link {background:#494949;font-size:0.75em}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
 #bo_v_link a {display:inline-block;margin-top:5px;padding:5px 10px;color:#fff}
@@ -378,7 +378,7 @@ a {color:#000;text-decoration:none}
 #bo_vc_w #captcha_comment {font-size:1em !important}
 #bo_vc_warea {position:relative;margin:10px 100px 10px 0}
 #bo_vc_warea textarea {width:100%;height:50px}
-#bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:10px;width:75px;height:57px;border:1px solid #666;background:#555;color:#fff;letter-spacing:-0.1em}
+#bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:10px;width:75px;height:57px;border:1px solid #666;background:#494949;color:#fff;letter-spacing:-0.1em}
 
 /* 우편번호 검색 */
 #post_num dl {margin:0 auto 10px;padding:0;width:90%}
