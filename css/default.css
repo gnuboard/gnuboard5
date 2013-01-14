@@ -132,14 +132,14 @@ a {color:#000;text-decoration:none}
 #ol_after_ft a {display:inline-block;padding:9px 0 8px !important;width:109px;text-align:center}
 
 /* 설문조사 */
-#poll {margin-top:5px;width:219px;border-bottom:1px solid #bbb;font-size:0.75em}
-#poll header {padding:10px 10px 1px;border-bottom:1px solid #ddd}
+#poll {width:219px;border-bottom:1px solid #bbb;background:#fff;font-size:0.75em}
+#poll header {padding:15px 10px 1px;border-bottom:1px solid #ddd;background:#e3e6ea}
 #poll header a {color:#ff3061}
 #poll h2 {display:inline-block;margin:0;font-size:1em}
 #poll p {padding:0}
-#poll ul {padding:5px 10px;background:#fff}
+#poll ul {padding:5px 10px}
 #poll li {margin:7px 0}
-#poll footer {padding:10px 10px 15px;background:#fff;text-align:center}
+#poll footer {padding:10px 10px 15px;text-align:center}
 #poll footer input {padding:0 15px;height:24px;border:0;background:#494936;color:#fff;font-size:0.9em;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;font-size:0.9em;vertical-align:top;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */
