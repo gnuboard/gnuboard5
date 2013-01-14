@@ -39,7 +39,7 @@ fieldset .fieldset_input,
 fieldset textarea {padding:3px;border:1px solid #ddd;background:#fff;vertical-align:middle}
 fieldset .fieldset_input:focus,
 fieldset textarea:focus {padding:4px;border:0;background:#555;color:#fff}
-fieldset select {padding:2px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
+fieldset select {padding:2px 2px 3px;border:1px solid #ddd;background:#f9f9f5;vertical-align:middle}
 fieldset p {margin:0}
 fieldset .span_highlight {color:#ff3061}
 fieldset button,
@@ -299,7 +299,6 @@ a {color:#000;text-decoration:none}
 #bo_sch {padding:0;border:0;text-align:center}
 #bo_sch legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #bo_sch form {display:inline-block}
-#bo_sch .fieldset_submit {border:1px solid #ccc;background:#fafafa;color:#000}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
 #bo_list td {line-height:1em}
 #bo_list img {vertical-align:top}
