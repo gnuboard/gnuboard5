@@ -2,11 +2,14 @@
 include_once('./_common.php');
 
 // 게시판 관리자 이상 복사, 이동 가능
-if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super') 
+if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
     alert_close('게시판 관리자 이상 접근이 가능합니다.');
 
 if ($sw != 'move' && $sw != 'copy')
     alert('sw 값이 제대로 넘어오지 않았습니다.');
+
+if(!count($_POST['chk_bo_table']))
+    alert("게시물을 ".$act."할 게시판을 한개 이상 선택해 주십시오.");
 
 // 원본 파일 디렉토리
 $src_dir = $g4['path'].'/data/file/'.$bo_table;
@@ -20,10 +23,10 @@ $cnt = 0;
 //$sql = " select distinct wr_num from {$write_table} where wr_id in (" . stripslashes($wr_id_list) . ") order by wr_id ";
 $sql = " select distinct wr_num from {$write_table} where wr_id in ({$wr_id_list}) order by wr_id ";
 $result = sql_query($sql);
-while ($row = sql_fetch_array($result)) 
+while ($row = sql_fetch_array($result))
 {
     $wr_num = $row[wr_num];
-    for ($i=0; $i<count($_POST['chk_bo_table']); $i++) 
+    for ($i=0; $i<count($_POST['chk_bo_table']); $i++)
     {
         $move_bo_table = $_POST['chk_bo_table'][$i];
         $move_write_table = $g4['write_prefix'] . $move_bo_table;
@@ -39,10 +42,10 @@ while ($row = sql_fetch_array($result))
         //$sql2 = " select * from {$write_table} where wr_num = '{$wr_num}' order by wr_parent, wr_comment desc, wr_id ";
         $sql2 = " select * from {$write_table} where wr_num = '{$wr_num}' order by wr_parent, wr_is_comment, wr_comment desc, wr_id ";
         $result2 = sql_query($sql2);
-        while ($row2 = sql_fetch_array($result2)) 
+        while ($row2 = sql_fetch_array($result2))
         {
             $nick = cut_str($member[mb_nick], $config[cf_cut_name]);
-            if (!$row2[wr_is_comment] && $config[cf_use_copy_log]) 
+            if (!$row2[wr_is_comment] && $config[cf_use_copy_log])
                 $row2[wr_content] .= PHP_EOL.'[이 게시물은 '.$nick.'님에 의해 '.$g4[time_ymdhis].' '.$board[bo_subject].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]';
 
             $sql = " insert into $move_write_table
@@ -85,28 +88,28 @@ while ($row = sql_fetch_array($result))
             $insert_id = mysql_insert_id();
 
             // 코멘트가 아니라면
-            if (!$row2[wr_is_comment]) 
+            if (!$row2[wr_is_comment])
             {
                 $save_parent = $insert_id;
 
                 $sql3 = " select * from {$g4[board_file_table]} where bo_table = '{$bo_table}' and wr_id = '{$row2[wr_id]}' order by bf_no ";
                 $result3 = sql_query($sql3);
-                for ($k=0; $row3 = sql_fetch_array($result3); $k++) 
+                for ($k=0; $row3 = sql_fetch_array($result3); $k++)
                 {
-                    if ($row3[bf_file]) 
+                    if ($row3[bf_file])
                     {
                         // 원본파일을 복사하고 퍼미션을 변경
                         @copy($src_dir.'/'.$row3[bf_file], $dst_dir.'/'.$row3[bf_file]);
                         @chmod($dst_dir/$row3[bf_file], 0606);
                     }
 
-                    $sql = " insert into $g4[board_file_table] 
-                                set bo_table = '$move_bo_table', 
-                                     wr_id = '$insert_id', 
-                                     bf_no = '$row3[bf_no]', 
-                                     bf_source = '$row3[bf_source]', 
-                                     bf_file = '$row3[bf_file]', 
-                                     bf_download = '$row3[bf_download]', 
+                    $sql = " insert into $g4[board_file_table]
+                                set bo_table = '$move_bo_table',
+                                     wr_id = '$insert_id',
+                                     bf_no = '$row3[bf_no]',
+                                     bf_source = '$row3[bf_source]',
+                                     bf_file = '$row3[bf_file]',
+                                     bf_download = '$row3[bf_download]',
                                      bf_content = '".addslashes($row3[bf_content])."',
                                      bf_filesize = '$row3[bf_filesize]',
                                      bf_width = '$row3[bf_width]',
@@ -121,7 +124,7 @@ while ($row = sql_fetch_array($result))
 
                 $count_write++;
 
-                if ($sw == 'move' && $i == 0) 
+                if ($sw == 'move' && $i == 0)
                 {
                     // 스크랩 이동
                     sql_query(" update {$g4[scrap_table]} set bo_table = '{$move_bo_table}', wr_id = '{$save_parent}' where bo_table = '{$bo_table}' and wr_id = '{$row2[wr_id]}' ");
@@ -129,8 +132,8 @@ while ($row = sql_fetch_array($result))
                     // 최신글 이동
                     sql_query(" update {$g4[board_new_table]} set bo_table = '{$move_bo_table}', wr_id = '{$save_parent}', wr_parent = '{$save_parent}' where bo_table = '{$bo_table}' and wr_id = '{$row2[wr_id]}' ");
                 }
-            } 
-            else 
+            }
+            else
             {
                 $count_comment++;
 
@@ -158,12 +161,12 @@ while ($row = sql_fetch_array($result))
     $save_count_comment += $count_comment;
 }
 
-if ($sw == "move") 
+if ($sw == "move")
 {
-    for ($i=0; $i<count($save); $i++) 
+    for ($i=0; $i<count($save); $i++)
     {
         for ($k=0; $k<count($save[$i][bf_file]); $k++)
-            @unlink($save[$i][bf_file][$k]);    
+            @unlink($save[$i][bf_file][$k]);
 
         sql_query(" delete from {$write_table} where wr_parent = '{$save[$i][wr_id]}' ");
         sql_query(" delete from {$g4[board_new_table]} where bo_table = '{$bo_table}' and wr_id = '{$save[$i][wr_id]}' ");
@@ -176,7 +179,7 @@ $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.'
 $opener_href = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;$qstr';
 
 echo <<<HEREDOC
-<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'> 
+<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>
 <script>
 alert("{$msg}");
 opener.document.location.href = "{$opener_href}";
