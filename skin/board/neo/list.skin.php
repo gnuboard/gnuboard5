@@ -102,10 +102,9 @@ for ($i=0; $i<count($list); $i++) {
         <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link<? if ($wr_id == $list[$i]['wr_id']) echo " bo_current";?>"><?=$list[$i]['ca_name']?></a>
         <? } ?>
 
-        <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>><?=$list[$i]['subject']?>
-
-        <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
-
+        <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>>
+            <?=$list[$i]['subject']?>
+            <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
         </a>
 
         <?
