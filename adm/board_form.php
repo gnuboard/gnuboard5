@@ -78,7 +78,7 @@ include_once ('./admin.head.php');
     <li><a href="#frm_extra">여분필드</a></li>
 </ul>
 
-<form id="fboardform" name="fboardform" method="post" onsubmit="return fboardform_submit(this)" enctype="multipart/form-data">
+<form id="fboardform" name="fboardform" action="./board_form_update.php" method="post" onsubmit="return fboardform_submit(this)" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx" value="<?=$stx?>">
@@ -92,7 +92,7 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="bo_table">TABLE</label></th>
     <td colspan="2">
-        <input type="text" id="bo_table" name="bo_table" maxlength="20" <?=$bo_table_attr?> value="<?=$board['bo_table'] ?>">
+        <input type="text" id="bo_table" name="bo_table" maxlength="20" <?=$bo_table_attr?> value="<?=$board['bo_table'] ?>" required="required">
         <?
         if ($w == '')
             echo '영문자, 숫자, _ 만 가능 (공백없이 20자 이내)';
@@ -104,14 +104,13 @@ include_once ('./admin.head.php');
 <tr>
     <th scope="row"><label for="gr_id">그룹</label></th>
     <td colspan="2">
-        <?=get_group_select('gr_id', $board['gr_id'], "required");?>
-        <? if ($w=='u') { ?><a href="javascript:location.href='./board_list.php?sfl=a.gr_id&amp;stx='+document.fboardform.gr_id.value;">동일그룹게시판목록</a><?}?>
+        <?=get_group_select('gr_id', $board['gr_id'], 'required="required"');?>
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="bo_subject">게시판 제목</label></th>
     <td colspan="2">
-        <input type="text" id="bo_subject" name="bo_subject" maxlength="120" class="required" value="<?=get_text($board['bo_subject'])?>" size="80">
+        <input type="text" id="bo_subject" name="bo_subject" maxlength="120" class="required" value="<?=get_text($board['bo_subject'])?>" size="80" required="required">
     </td>
 </tr>
 <tr>
@@ -295,11 +294,10 @@ include_once ('./admin.head.php');
     <td>
         <?=help('"체크박스"는 글작성시 비밀글 체크가 가능합니다. "무조건"은 작성되는 모든글을 비밀글로 작성합니다. (관리자는 체크박스로 출력합니다.) 스킨에 따라 적용되지 않을 수 있습니다.')?>
         <select id="bo_use_secret" name="bo_use_secret">
-        <option value='0'>사용하지 않음
-        <option value="1">체크박스
-        <option value='2'>무조건
+        <?=option_selected(0, $board['bo_use_secret'], "사용하지 않음");?>
+        <?=option_selected(1, $board['bo_use_secret'], "체크박스");?>
+        <?=option_selected(2, $board['bo_use_secret'], "무조건");?>
         </select>
-        <script>document.getElementById('bo_use_secret').value="<?=$board['bo_use_secret']?>";</script>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_use_secret" name="chk_use_secret" value="1">
@@ -521,14 +519,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <tr>
     <th scope="row"><label for="bo_skin">스킨 디렉토리</label></th>
     <td>
-        <select id="bo_skin" name="bo_skin" class="required">
-        <?
-        $arr = get_skin_dir('board');
-        for ($i=0; $i<count($arr); $i++) {
-            echo '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
-        }
-        ?></select>
-        <script>document.fboardform.bo_skin.value="<?=$board['bo_skin']?>";</script>
+        <?=get_skin_select("board", "bo_skin", "bo_skin", $board['bo_skin'], 'required="required"');?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_skin" name="chk_skin" value="1">
@@ -787,18 +778,25 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     <legend>XSS 혹은 CSRF 방지</legend>
     <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
     <label for="admin_password">관리자 패스워드</label>
-    <input type="password" id="admin_password" name="admin_password" class="required" title="관리자 패스워드">
+    <input type="password" id="admin_password" name="admin_password" class="required" title="관리자 패스워드" required="required">
 </fieldset>
 
 <div class="btn_confirm">
     <input type="submit" class="btn_submit" accesskey="s" value="확인">
-    <button onclick="document.location.href='./board_list.php?<?=$qstr?>';">목록</button>
-    <? if ($w == 'u') { ?><button onclick="board_copy('<?=$bo_table?>');">게시판복사</button><?}?>
+    <a href="./board_list.php?<?=$qstr?>">목록</a>
+    <? if ($w == 'u') { ?><a href="./board_copy.php?bo_table=<?=$bo_table?>" id="board_copy" target="win_board_copy">게시판복사</a><?}?>
 </div>
 
 </form>
 
 <script>
+$(function(){
+    $("#board_copy").click(function(){
+        window.open(this.href, "win_board_copy", "left=10,top=10,width=500,height=400");
+        return false;
+    });
+});
+
 function board_copy(bo_table) {
     window.open("./board_copy.php?bo_table="+bo_table, "BoardCopy", "left=10,top=10,width=500,height=200");
 }
@@ -834,7 +832,6 @@ function fboardform_submit(f)
         return false;
     }
 
-    f.action = './board_form_update.php';
     return true;
 }
 </script>
