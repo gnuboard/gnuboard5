@@ -193,9 +193,12 @@ var member_skin_path = "<?=$member_skin_path?>";
     <td><input type="text" id="reg_mb_recommend" name="mb_recommend" class="frm_input" title="추천인아이디"></td>
 </tr>
 <? } ?>
-</table>
 
-<?=$captcha_html?>
+<tr>
+    <th scope="row">자동등록방지</th>
+    <td><?=$captcha_html?></td>
+</tr>
+</table>
 
 <div class="btn_confirm">
     <input type="submit" class="btn_submit" value="회원가입" accesskey="s">

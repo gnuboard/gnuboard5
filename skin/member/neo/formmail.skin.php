@@ -50,18 +50,15 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <th scope="row"><label for="file2">첨부 2</label></th>
         <td><input type="file" id="file2" name="file2" class="frm_input"></td>
     </tr>
+    <tr>
+        <th scope="row">자동등록방지</th>
+        <td><?=captcha_html();?></td>
+    </tr>
     </tbody>
     </table>
 
-    <fieldset>
-        <legend>자동등록방지</legend>
-        <img id="kcaptcha_image" />
-        <input type="text" name="wr_key" class="fieldset_input required" title="자동등록방지" size="10" required>
-        왼쪽의 글자를 입력하세요.
-    </fieldset>
-
-    <div class="btn_confirm">
-        <input type="submit" id="btn_submit" value="메일발송">
+    <div class="btn_win">
+        <input type="submit" id="btn_submit" class="btn_submit" value="메일발송">
         <a href="javascript:window.close();">창닫기</a>
     </div>
 

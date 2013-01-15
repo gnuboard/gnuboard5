@@ -33,7 +33,6 @@ $(function() {
             $("#captcha_key").focus();//이미지 새로고침 후 입력박스에 포커스 : 지운아빠 2012-07-13
         }
     })
-    .css("cursor", "pointer")
     .trigger("click");
 
     $("#captcha_wav").click(function(){

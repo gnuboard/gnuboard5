@@ -29,7 +29,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         스크랩을 하시면서 감사 혹은 격려의 댓글을 남기실 수 있습니다.
     </p>
 
-    <div class="btn_window">
+    <div class="btn_win">
         <input type="submit" value="스크랩">
     </div>
 </div>

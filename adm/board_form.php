@@ -713,7 +713,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_read_point">글읽기 포인트</label></th>
     <td>
-        <input type="text" id="bo_read_point" name="bo_read_point" class="required numeric" value="<?=$board['bo_read_point']?>" size="5">
+        <input type="text" id="bo_read_point" name="bo_read_point" class="required" value="<?=$board['bo_read_point']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_read_point" name="chk_read_point" value="1">
@@ -723,7 +723,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_write_point">글쓰기 포인트</label></th>
     <td>
-        <input type="text" id="bo_write_point" name="bo_write_point" class="required numeric" value="<?=$board['bo_write_point']?>" size="5">
+        <input type="text" id="bo_write_point" name="bo_write_point" class="required" value="<?=$board['bo_write_point']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_write_point" name="chk_write_point" value="1">
@@ -733,7 +733,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_comment_point">댓글쓰기 포인트</label></th>
     <td>
-        <input type="text" id="bo_comment_point" name="bo_comment_point" class="required numeric" value="<?=$board['bo_comment_point']?>" size="5">
+        <input type="text" id="bo_comment_point" name="bo_comment_point" class="required" value="<?=$board['bo_comment_point']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_comment_point" name="chk_comment_point" value="1">
@@ -743,7 +743,7 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <tr>
     <th scope="row"><label for="bo_download_point">다운로드 포인트</label></th>
     <td>
-        <input type="text" id="bo_download_point" name="bo_download_point" class="required numeric" value="<?=$board['bo_download_point']?>" size="5">
+        <input type="text" id="bo_download_point" name="bo_download_point" class="required" value="<?=$board['bo_download_point']?>" size="5">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_download_point" name="chk_download_point" value="1">
