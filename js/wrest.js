@@ -260,7 +260,7 @@ function wrestSubmit()
                 wrestRequired(el); 
             }
 
-            var array_css = el.className.split(' '); // class 를 공백으로 나눔
+            var array_css = el.className.split(" "); // class 를 공백으로 나눔
 
             el.style.backgroundColor = wrestFldDefaultColor;
 
