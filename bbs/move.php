@@ -85,7 +85,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     <div class="btn_window btn_confirm">
         <input type="submit" id="btn_submit" class="btn_submit" value="<?=$act?>">
-        <a href="javascript:window.close();">창닫기</a>
+        <a href="javascript:window.close();" class="btn_cancel">창닫기</a>
     </div>
 
 </div>
