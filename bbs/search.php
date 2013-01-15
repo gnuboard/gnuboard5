@@ -129,7 +129,11 @@ if ($stx) {
 
             $sql2 = " select bo_subject from {$g4['board_table']} where bo_table = '{$g4_search['tables'][$i]}' ";
             $row2 = sql_fetch($sql2);
-            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g4_search['tables'][$i].'" id="'.$row2['bo_table'].'">'.$row2['bo_subject'].PHP_EOL.'<span class="sound_only">갯수</span><span class="cnt_cmt">'.$row['cnt'].'</span></a>';
+            $sch_class = "";
+            $sch_all = "";
+            if ($onetable == $g4_search['tables'][$i]) $sch_class = "class=sch_on";
+            else $sch_all = "class=sch_on";
+            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g4_search['tables'][$i].'" '.$sch_class.'>'.$row2['bo_subject'].PHP_EOL.'<span class="sound_only">갯수</span><span class="cnt_cmt">'.$row['cnt'].'</span></a>';
         }
     }
 

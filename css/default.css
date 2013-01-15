@@ -175,7 +175,7 @@ a {color:#000;text-decoration:none}
 #wrapper h1 {font-size:1em}
 
 /* 레이아웃 하단 */
-#footer {z-index:1;position:relative;padding:15px 0 20px;border-top:1px solid #666;color:#595959;font-size:0.75em}
+#footer {z-index:1;position:relative;padding:15px 0 20px;border-top:1px solid #bbb;color:#595959;font-size:0.75em}
 #footer h1 {margin:0;height:0;overflow:hidden}
 #footer section {margin-left:20px}
 #footer h2 {margin:0;width:100px;color:#000;font-size:1em}
@@ -274,10 +274,10 @@ a {color:#000;text-decoration:none}
 #current_connect_tbl .td_name {text-align:center}
 
 /* 전체검색 */
-#sch_result_detail {margin:0;padding:15px 0;border:0;border-top:1px solid #ddd;text-align:center}
+#sch_result_detail {margin:0;padding:15px 0;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#eee;text-align:center}
 #sch_result_detail label {font-size:0.75em}
 #sch_result_hd {margin:0;border:0;background:#fff;font-size:0.75em}
-#sch_result_hd dt {padding:10px;background:#eee}
+#sch_result_hd dt {padding:10px;border-bottom:1px solid #eee;background:#fbfbfb}
 #sch_result_hd dd {margin:0;padding:0}
 #sch_result_hd ul {padding:0;list-style:none;zoom:1}
 #sch_result_hd ul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -292,6 +292,7 @@ a {color:#000;text-decoration:none}
 #sch_result_bo dd {margin:0}
 #sch_result_bo li {position:relative;margin-top:-1px}
 #sch_result_bo a {display:inline-block;padding:10px 0 10px 10px;width:160px;border:1px solid #ddd;background:#eee}
+#sch_result_bo .sch_on {width:161px;border-right:0;background:#fff}
 #sch_result_bo .cnt_cmt {color:#000}
 #sch_result_atc li {padding:10px 0}
 #sch_result_atc dt a {display:inline-block;margin-bottom:15px;font-size:0.75em}
