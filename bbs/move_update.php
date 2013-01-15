@@ -9,7 +9,7 @@ if ($sw != 'move' && $sw != 'copy')
     alert('sw 값이 제대로 넘어오지 않았습니다.');
 
 if(!count($_POST['chk_bo_table']))
-    alert("게시물을 ".$act."할 게시판을 한개 이상 선택해 주십시오.");
+    alert("게시물을 ".$act."할 게시판을 한개 이상 선택해 주십시오.", $url);
 
 // 원본 파일 디렉토리
 $src_dir = $g4['path'].'/data/file/'.$bo_table;
