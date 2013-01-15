@@ -45,7 +45,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <div id="copymove" class="new_win">
     <h1><?=$g4['title']?></h1>
 
-    <form name="fboardmoveall" method="post" onsubmit="return fboardmoveall_submit(this);">
+    <form name="fboardmoveall" method="post" action="./move_update.php" onsubmit="return fboardmoveall_submit(this);">
     <input type="hidden" name="sw" value="<?=$sw?>">
     <input type="hidden" name="bo_table" value="<?=$bo_table?>">
     <input type="hidden" name="wr_id_list" value="<?=$wr_id_list?>">
@@ -81,12 +81,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <? } ?>
     </tbody>
     </table>
-    </form>
 
     <div class="btn_win btn_confirm">
         <input type="submit" id="btn_submit" class="btn_submit" value="<?=$act?>">
         <a href="javascript:window.close();" class="btn_cancel">창닫기</a>
     </div>
+    </form>
 
 </div>
 
