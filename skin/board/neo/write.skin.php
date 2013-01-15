@@ -139,8 +139,8 @@ echo $option_hidden;
 </table>
 
 <div class="btn_confirm">
-    <input type="submit" id="btn_submit" value="글쓰기" accesskey="s">
-    <a href="./board.php?bo_table=<?=$bo_table?>" title="글쓰기를 취소하고 목록으로 돌아가기">목록</a>
+    <input type="submit" id="btn_submit" class="btn_submit" value="글쓰기" accesskey="s">
+    <a href="./board.php?bo_table=<?=$bo_table?>" class="btn_cancel" title="글쓰기를 취소하고 목록으로 돌아가기">목록</a>
 </div>
 </form>
 
