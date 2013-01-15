@@ -31,7 +31,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
     </ul>
 
     <fieldset id="hdsch">
-        <form name="fsearchbox" method="get" onsubmit="return fsearchbox_submit(this);">
+        <form name="fsearchbox" method="get" action="<?=$g4['https_bbs_url'].'/search.php'?>" onsubmit="return fsearchbox_submit(this);">
         <input type="hidden" name="sfl" value="wr_subject||wr_content">
         <input type="hidden" name="sop" value="and">
         <legend>사이트 내 전체검색</legend>

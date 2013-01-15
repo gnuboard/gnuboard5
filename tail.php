@@ -38,7 +38,6 @@ function fsearchbox_submit(f)
         return false;
     }
 
-    f.action = "<?=$g4['bbs_path']?>/search.php";
     return true;
 }
 </script>

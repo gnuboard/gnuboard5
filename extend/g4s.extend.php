@@ -7,6 +7,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $g4['bbs_url']        = $g4['url'].'/'.$g4['bbs'];
 $g4['admin_url']      = $g4['url'].'/'.$g4['admin'];
 
+$g4['https_bbs_url']  = $g4['bbs_url'];
+if ($g4['https_url']) {
+    $g4['https_bbs_url'] = $g4['https_url'].'/'.$g4['bbs'];
+}
+
 $g4['data_dir']       = 'data';
 $g4['data_url']       = $g4['url'].'/'.$g4['data_dir'];
 $g4['data_path']      = $g4['path'].'/'.$g4['data_dir'];

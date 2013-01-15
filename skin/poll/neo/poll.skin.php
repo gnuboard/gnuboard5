@@ -19,7 +19,11 @@ $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
 <section id="poll">
     <header>
         <h2>설문조사</h2>
+<<<<<<< HEAD
+        <? if ($is_admin == "super") { ?><a href="<?=$g4['admin_url']?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문조사 관리</a><? } ?>
+=======
         <? if ($is_admin == "super") { ?><a href="<?=$g4[admin_path]?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문관리</a><? } ?>
+>>>>>>> 8acf7f8c214b606db9e4d7b3533a916ca4171b83
         <p><?=$po['po_subject']?></p>
     </header>
     <ul>
@@ -57,15 +61,5 @@ function fpoll_submit(f)
 
     win_poll();
     return true;
-}
-
-function poll_result(po_id)
-{
-    <?
-    if ($member['mb_level'] < $po['po_level'])
-        echo " alert('권한 {$po['po_level']} 이상의 회원만 결과를 보실 수 있습니다.'); return false; ";
-    ?>
-
-    win_poll("<?=$g4['bbs_path']?>/poll_result.php?po_id="+po_id+"&amp;skin_dir="+document.fpoll.skin_dir.value);
 }
 </script>

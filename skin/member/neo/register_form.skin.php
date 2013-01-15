@@ -204,26 +204,6 @@ var member_skin_path = "<?=$member_skin_path?>";
 </form>
 
 <script>
-$(function(){
-    /*
-    $("#reg_mb_id").blur(function(){
-        var msg = reg_mb_id_check();
-        if (msg) alert(msg);
-    });
-
-    $("#reg_mb_nick").blur(function(){
-        var msg = reg_mb_nick_check();
-        if (msg) alert(msg);
-    });
-
-    $("#reg_mb_email").blur(function(){
-        var msg = reg_mb_email_check();
-        if (msg) alert(msg);
-    });
-    */
-});
-
-
 // submit 최종 폼체크
 function fregisterform_submit(f) 
 {
@@ -313,12 +293,7 @@ function fregisterform_submit(f)
         }
     }
 
-    if (!check_captcha(f.wr_key)) {
-        return false;
-    }
-
-    // 보안인증관련 코드로 반드시 포함되어야 합니다.
-    set_cookie("<?=md5($token)?>", "<?=base64_encode($token)?>", 1, "<?=$g4['cookie_domain']?>");
+    <? echo chk_captcha_js(); ?>
 
     return true;
 }
