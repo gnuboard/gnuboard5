@@ -2,7 +2,6 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-
 <div id="memo_write" class="new_win">
     <h1>쪽지보내기</h1>
 
@@ -27,15 +26,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <th scope="row"><label for="me_memo">내용</label></th>
         <td><textarea id="me_memo" name="me_memo" required><?=$content?></textarea></td>
     </tr>
+    <tr>
+        <th scope="row">자동등록방지</th>
+        <td>
+            <?=captcha_html();?>
+        </td>
+    </tr>
     </tbody>
     </table>
-
-    <fieldset>
-        <legend>자동등록방지</legend>
-        <img id="kcaptcha_image" />
-        <input type="text" name="wr_key" required>
-        왼쪽의 글자를 입력하세요.
-    </fieldset>
 
     <div class="btn_window btn_confirm">
         <input type="submit" id="btn_submit" class="btn_submit" value="보내기">

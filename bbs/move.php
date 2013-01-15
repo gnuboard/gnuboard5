@@ -42,88 +42,53 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 ?>
 
-<table width="100%" border="0" cellpadding="2" cellspacing="0"><tr><td>
+<div id="copymove" class="new_win">
+    <h1><?=$g4['title']?></h1>
 
-<table width="100%" height="50" border="0" cellpadding="0" cellspacing="0">
-<tr>
-    <td align="center" valign="middle" bgcolor="#EBEBEB" style="padding:5px;">
-        <table width="100%" height="40" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td width="25" align="center" bgcolor="#FFFFFF" ><img src="<? echo $g4['bbs_img_path']; ?>/icon_01.gif" width="5" height="5"></td>
-            <td width="" align="left" bgcolor="#FFFFFF" ><font color="#666666"><b>게시물<? echo $act; ?></b></font></td>
-        </tr>
-        </table></td>
-</tr>
-</table>
+    <form name="fboardmoveall" method="post" onsubmit="return fboardmoveall_submit(this);">
+    <input type="hidden" name="sw" value="<?=$sw?>">
+    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+    <input type="hidden" name="wr_id_list" value="<?=$wr_id_list?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="spt" value="<?=$spt?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="act" value="<?=$act?>">
+    <table>
+    <caption><?=$act?>할 게시판을 한개 이상 선택하여 주십시오.</caption>
+    <thead>
+    <tr>
+        <th scope="col">선택</th>
+        <th scope="col">게시판</th>
+    </tr>
+    </thead>
+    <tbody>
+    <? for ($i=0; $i<count($list); $i++) { ?>
+    <tr>
+        <td class="td_chk">
+            <input type="checkbox" id="chk<?=$i?>" name="chk_bo_table[]" value="<?=$list[$i]['bo_table']?>">
+        </td>
+        <td>
+            <label for="chk<?=$i?>">
+            <?
+            echo $list[$i]['gr_subject'] . " &gt; ";
+            $save_gr_subject = $list[$i]['gr_subject'];
+            ?>
+            <?=$list[$i]['bo_subject']?> (<?=$list[$i]['bo_table']?>)
+            </label>
+        </td>
+    </tr>
+    <? } ?>
+    </tbody>
+    </table>
+    </form>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-    <td height="20" colspan="3"></td>
-</tr>
-<tr>
-    <td width="30" height="24"></td>
-    <td width="" align="left" valign="middle">※ <? echo $act; ?>할 게시판을 한개 이상 선택하여 주십시오.</td>
-    <td width="30" height="24"></td>
-</tr>
-</table>
+    <div class="btn_window btn_confirm">
+        <input type="submit" id="btn_submit" class="btn_submit" value="<?=$act?>">
+        <a href="javascript:window.close();">창닫기</a>
+    </div>
 
-<form name="fboardmoveall" method="post" onsubmit="return fboardmoveall_submit(this);">
-<input type="hidden" name="sw" value="<? echo $sw; ?>">
-<input type="hidden" name="bo_table" value="<? echo $bo_table; ?>">
-<input type="hidden" name="wr_id_list" value="<? echo $wr_id_list; ?>">
-<input type="hidden" name="sfl" value="<? echo $sfl; ?>">
-<input type="hidden" name="stx" value="<? echo $stx; ?>">
-<input type="hidden" name="spt" value="<? echo $spt; ?>">
-<input type="hidden" name="page" value="<? echo $page; ?>">
-<input type="hidden" name="act" value="<? echo $act; ?>">
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-    <td height="20" align="center" valign="top">&nbsp;</td>
-</tr>
-<tr>
-    <td align="center" valign="top">
-        <table width="98%" border="0" cellspacing="0" cellpadding="0">
-
-        <? for ($i=0; $i<count($list); $i++) { ?>
-        <tr>
-            <td width="39" height="25" align="center"><input type="checkbox" id="chk<? echo $i; ?>" name="chk_bo_table[]" value="<? echo $list[$i]['bo_table']; ?>"></td>
-            <td width="10" valign="bottom"><img src="<? echo $g4['bbs_img_path']; ?>/l.gif" width="1" height="8"></td>
-            <td width="490">
-                <span style="cursor:pointer;" onclick="document.getElementById('chk<? echo $i; ?>').checked=document.getElementById('chk<? echo $i; ?>').checked?'':'checked';">
-                    <?
-                    if ($save_gr_subject==$list[$i]['gr_subject'])
-                        echo '<span style="color:#cccccc;">';
-                    else
-                        echo '<span>';
-                    echo $list[$i]['gr_subject'] . " &gt; ";
-                    echo '</span>';
-                    $save_gr_subject = $list[$i]['gr_subject'];
-                    ?>
-                    <?=$list[$i]['bo_subject']?> (<?=$list[$i]['bo_table']?>)</span>
-            </td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="#E9E9E9"></td>
-        </tr>
-        <? } ?>
-        </table></td>
-</tr>
-<tr>
-    <td height="40">&nbsp;</td>
-</tr>
-<tr>
-    <td height="2" bgcolor="#D5D5D5"></td>
-</tr>
-<tr>
-    <td height="2" bgcolor="#E6E6E6"></td>
-</tr>
-<tr>
-    <td height="40" align="center" valign="bottom"><input id="btn_submit" type="image" src='<? echo $g4['bbs_img_path']; ?>/ok_btn.gif' border="0">&nbsp;&nbsp;<a href="javascript:window.close();"><img src="<? echo $g4['bbs_img_path']; ?>/btn_close.gif" width="48" height="20" border="0"></a></td>
-</tr>
-</table>
-
-</form>
+</div>
 
 <script>
 function fboardmoveall_submit(f)
