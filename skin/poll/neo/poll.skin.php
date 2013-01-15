@@ -19,11 +19,7 @@ $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
 <section id="poll">
     <header>
         <h2>설문조사</h2>
-<<<<<<< HEAD
-        <? if ($is_admin == "super") { ?><a href="<?=$g4['admin_url']?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문조사 관리</a><? } ?>
-=======
         <? if ($is_admin == "super") { ?><a href="<?=$g4[admin_path]?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문관리</a><? } ?>
->>>>>>> 8acf7f8c214b606db9e4d7b3533a916ca4171b83
         <p><?=$po['po_subject']?></p>
     </header>
     <ul>
