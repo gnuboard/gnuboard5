@@ -425,7 +425,7 @@ a {color:#000;text-decoration:none}
 .new_win_ul a {display:block;padding:10px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:1em;font-weight:bold}
 .new_win_ul a:hover,
 .new_win_ul a:focus {background:#faf9f5}
-.btn_win {padding:10px 5% 20px;background:#494949;text-align:right} /* 새창용 */
+.btn_win {text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.75em;text-decoration:none;line-height:2.5em}
 
 /* 포인트 내역 */
