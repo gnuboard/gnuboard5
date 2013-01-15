@@ -10,7 +10,7 @@ if (!get_session('ss_admin')) {
 */
 
 // 스킨경로를 얻는다
-function get_skin_dir($skin, $len="")
+function get_skin_dir($skin)
 {
     global $g4;
 
@@ -18,8 +18,7 @@ function get_skin_dir($skin, $len="")
 
     $dirname = $g4['path'].'/skin/'.$skin.'/';
     $handle = opendir($dirname);
-    while ($file = readdir($handle))
-    {
+    while ($file = readdir($handle)) {
         if($file == '.'||$file == '..') continue;
 
         if (is_dir($dirname.$file)) $result_array[] = $file;
@@ -114,15 +113,16 @@ function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $
 {
     global $g4;
 
-    $str = '<select id="'.$name.'" name="'.$name.'" '.$event.'>';
-    for ($i=$start_id; $i<=$end_id; $i++)
-    {
+    $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
+    if ($event) $str .= " $event";
+    $str .= ">\n";
+    for ($i=$start_id; $i<=$end_id; $i++) {
         $str .= '<option value="'.$i.'"';
         if ($i == $selected)
-            $str .= ' selected';
-        $str .= '>'.$i.'</option>';
+            $str .= ' selected="selected"';
+        $str .= ">{$i}</option>\n";
     }
-    $str .= '</select>';
+    $str .= "</select>\n";
     return $str;
 }
 

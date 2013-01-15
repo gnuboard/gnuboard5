@@ -1,5 +1,6 @@
 <?
 $sub_menu = "300100";
+define('_CAPTCHA_', 1);
 include_once("./_common.php");
 
 auth_check($auth[$sub_menu], 'w');
@@ -11,9 +12,8 @@ $administrator = 1;
 include_once($g4['path'].'/head.sub.php');
 ?>
 
-<form id="fboardcopy" name="fboardcopy" method="post" onsubmit="return fboardcopy_check(this);" autocomplete="off">
+<form id="fboardcopy" name="fboardcopy" method="post" action="./board_copy_update.php" onsubmit="return fboardcopy_check(this);">
 <input type="hidden" id="bo_table" name="bo_table" value="<?=$bo_table?>">
-<input type="hidden" id="token" name="token" value="<?=$token?>">
 <table>
 <caption>기존 게시판을 새 게시판으로 복사</caption>
 <tbody>
@@ -23,11 +23,11 @@ include_once($g4['path'].'/head.sub.php');
 </tr>
 <tr>
     <th scope="col"><label for="target_table">복사할 TABLE</label></th>
-    <td><input type="text" id="target_table" name="target_table" maxlength="20" required class="required alnum_"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
+    <td><input type="text" id="target_table" name="target_table" maxlength="20" class="required alnum_" required="required" title="복사할 TABLE"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
 </tr>
 <tr>
     <th scope="col"><label for="target_subject">게시판 제목</label></th>
-    <td><input type="text" id="target_subject" name="target_subject" maxlength="120" required value="[복사본] <?=$board['bo_subject']?>"></td>
+    <td><input type="text" id="target_subject" name="target_subject" maxlength="120" value="[복사본] <?=$board['bo_subject']?>" required="required" title="게시판 제목"></td>
 </tr>
 <tr>
     <th scope="col">복사 유형</th>
@@ -41,6 +41,8 @@ include_once($g4['path'].'/head.sub.php');
 </tbody>
 </table>
 
+<? echo captcha_html(); ?>
+
 <div class="btn_confirm">
     <input type="submit" value="복사">
     <input type="button" value="창닫기" onclick="window.close();">
@@ -51,7 +53,8 @@ include_once($g4['path'].'/head.sub.php');
 <script>
 function fboardcopy_check(f)
 {
-    f.action = "./board_copy_update.php";
+    <? echo chk_captcha_js(); ?>
+
     return true;
 }
 </script>

@@ -70,9 +70,9 @@ var list_delete_php = 'board_list_delete.php';
     </span>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
-        <option value="bo_table">TABLE</option>
-        <option value="bo_subject">제목</option>
-        <option value="a.gr_id">그룹ID</option>
+        <option value="bo_table" <?=get_selected($_GET['sfl'], "bo_subject", true);?>>TABLE</option>
+        <option value="bo_subject" <?=get_selected($_GET['sfl'], "bo_subject");?>>제목</option>
+        <option value="a.gr_id" <?=get_selected($_GET['sfl'], "a.gr_id");?>>그룹ID</option>
     </select>
     <input type="text" name="stx" required value="<?=$stx?>" title="검색어">
     <input type="submit" class="fieldset_submit" value="검색">
@@ -113,17 +113,6 @@ var list_delete_php = 'board_list_delete.php';
 </thead>
 <tbody>
 <?
-// 스킨디렉토리
-$skin_options = '';
-$arr = get_skin_dir('board');
-for ($k=0; $k<count($arr); $k++) {
-    $option = $arr[$k];
-    if (strlen($option) > 10)
-        $option = substr($arr[$k], 0, 18) . '…';
-
-    $skin_options .= '<option value="'.$arr[$k].'">'.$option.'</option>';
-}
-
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $s_upd = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
     $s_del = "";
@@ -150,12 +139,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
     </td>
     <td>
-        <select id="bo_skin_<?=$i?>" name="bo_skin[<?=$i?>]">
-            <?=$skin_options?>
-        </select>
-        <script>document.getElementById("bo_skin_<?=$i?>").value="<?=$row['bo_skin']?>";</script>
+        <?=get_skin_select("board", "bo_skin_$i", "bo_skin[$i]", $row['bo_skin']);?>
     </td>
-    <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20"></td>
+    <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20" required="required"></td>
     <td>
         <label for="bo_read_point_<?=$i?>">읽기</label>
         <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="2">
@@ -190,10 +176,6 @@ if ($i == 0)
     <?}?>
 </div>
 
-<noscript>
-<p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택수정 및 선택삭제 처리하므로 주의하시기 바랍니다.</p>
-</noscript>
-
 <?
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 ?>
@@ -201,10 +183,6 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['
     <?=$pagelist?>
 </div>
 
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>';
-?>
 </form>
 
 <script>

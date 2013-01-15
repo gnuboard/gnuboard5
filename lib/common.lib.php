@@ -778,28 +778,48 @@ function get_group_select($name, $selected='', $event='')
     $sql .= " order by a.gr_id ";
 
     $result = sql_query($sql);
-    $str = "<select id='$name' name='$name' class='$event'>";
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
-        $str .= "<option value='{$row['gr_id']}'";
-        if ($row['gr_id'] == $selected) $str .= " selected";
-        $str .= ">{$row['gr_subject']}</option>";
+    $str = "<select id=\"$name\" name=\"$name\" $event>\n";
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
     }
     $str .= "</select>";
     return $str;
 }
 
 
+// 스킨디렉토리를 SELECT 형식으로 얻음
+function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
+{
+    $skins = get_skin_dir($skin_gubun);
+    $str = "<select id=\"$id\" name=\"$name\" $event>\n";
+    for ($i=0; $i<count($skins); $i++) {
+        $str .= option_selected($skins[$i], $selected);
+    }
+    $str .= "</select>";
+    return $str;
+}
+
+
+function option_selected($value, $selected, $text='')
+{
+    if (!$text) $text = $value;
+    if ($value == $selected) 
+        return "<option value=\"$value\" selected=\"selected\">$text</option>\n";
+    else
+        return "<option value=\"$value\">$text</option>\n";
+}
+
+
 // '예', '아니오'를 SELECT 형식으로 얻음
 function get_yn_select($name, $selected='1', $event='')
 {
-    $str = "<select name='$name' $event>";
+    $str = "<select name=\"$name\" $event>\n";
     if ($selected) {
-        $str .= "<option value='1' selected>예</option>";
-        $str .= "<option value='0'>아니오</option>";
+        $str .= "<option value=\"1\" selected>예</option>\n";
+        $str .= "<option value=\"0\">아니오</option>\n";
     } else {
-        $str .= "<option value='1'>예</option>";
-        $str .= "<option value='0' selected>아니오</option>";
+        $str .= "<option value=\"1\">예</option>\n";
+        $str .= "<option value=\"0\" selected>아니오</option>\n";
     }
     $str .= "</select>";
     return $str;
@@ -1597,5 +1617,14 @@ function abs_ip2long($ip='')
 {
     $ip = $ip ? $ip : $_SERVER['REMOTE_ADDR'];
     return abs(ip2long($ip));
+}
+
+
+function get_selected($field, $value, $first=false) 
+{
+    $selected = ($field==$value) ? ' selected="selected"' : '';
+    if ($first && !$selected)
+        $selected = ($field=="") ? ' selected="selected"' : '';
+    return $selected;
 }
 ?>

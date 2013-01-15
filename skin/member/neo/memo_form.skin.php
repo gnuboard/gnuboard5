@@ -35,7 +35,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </tbody>
     </table>
 
+<<<<<<< HEAD
+    <?=captcha_html();?>
+
+    <div class="btn_window btn_confirm">
+=======
     <div class="btn_win">
+>>>>>>> 41f59fa9ae589fc22660fde7d19293f195aede31
         <input type="submit" id="btn_submit" class="btn_submit" value="보내기">
         <a href="javascript:window.close();">창닫기</a>
     </div>

@@ -5,7 +5,7 @@ include_once('./_common.php');
 check_demo();
 
 if (!count($_POST['chk'])) {
-    alert($_POST['btn_submit']." 하실 항목을 하나 이상 선택하세요.");
+    alert($_POST['btn_submit']." 하실 항목을 하나 이상 체크하세요.");
 }
 
 if ($_POST['btn_submit'] == "선택수정") {
