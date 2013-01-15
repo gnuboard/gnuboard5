@@ -120,7 +120,7 @@ function alert($msg='', $url='')
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
     $msg = str_replace("\\n", "<br>", $msg);
 
-    if (!$url) $url = "javascript:history.go(-1);";
+    if (!$url) $url = $_SERVER['HTTP_REFERER'];
 
     /*
     //header("Content-Type: text/html; charset=$g4['charset']");
