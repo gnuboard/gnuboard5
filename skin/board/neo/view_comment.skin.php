@@ -26,10 +26,12 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     ?>
     <article id="c_<?=$comment_id?>">
         <header>
-            <h1><?=$list[$i]['name']?>님의 댓글</h1>
+            <h1><?=$list[$i]['name']?><span class="sound_only">님의 댓글</span></h1>
             <dl class="bo_vc_info">
+                <? if ($is_ip_view) { ?>
                 <dt>아이피</dt>
-                <dd><? if ($is_ip_view) { echo $list[$i]['ip'];} ?></dd>
+                <dd><?=$list[$i]['ip'];?></dd>
+                <? } ?>
                 <dt>작성일</dt>
                 <dd><time datetime="<?=date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime']))?>"><?=$list[$i]['datetime']?></time></dd>
             </dl>
@@ -42,7 +44,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <span id="reply_<?=$comment_id?>"></span><!-- 답변 -->
 
         <input type="hidden" id="secret_comment_<?=$comment_id?>" value="<?=strstr($list[$i]['wr_option'],"secret")?>">
-        <textarea id="save_comment_<?=$comment_id?>"><?=get_text($list[$i]['content1'], 0)?></textarea>
+        <textarea id="save_comment_<?=$comment_id?>" style="display:none"><?=get_text($list[$i]['content1'], 0)?></textarea>
 
         <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) { ?>
         <footer>
@@ -71,22 +73,23 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
-        <fieldset>
+        <fieldset id="bo_vc_winfo">
+            <legend class="sound_only">작성자</legend>
             <? if ($is_guest) { ?>
             <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input required" maxLength="20" size="5" required>
             <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input required" maxLength="20" size="10" required>
-            <? echo $captcha_html; ?>
             <? } ?>
             <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">
             <label for="wr_secret">비밀글</label>
-            <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
-            <div id="bo_vc_warea">
-                <textarea id="wr_content" name="wr_content" required
-                <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
-                <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
-                <input type="submit" class="bo_vc_submit" value="댓글입력">
-            </div>
-        </fieldset>
+       </fieldset>
+       <? echo $captcha_html; ?>
+        <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
+        <div id="bo_vc_warea">
+            <textarea id="wr_content" name="wr_content" required
+            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
+            <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+            <input type="submit" class="bo_vc_submit" value="댓글입력">
+        </div>
     </aside>
 
     </form>

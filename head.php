@@ -18,8 +18,6 @@ include_once($g4['path'].'/lib/popular.lib.php');
     <h1><?=$config['cf_title']?></h1>
 
     <ul id="tnb">
-        <li><a href="<?=$g4['bbs_path']?>/current_connect.php">현재접속자</a></li>
-        <li><a href="<?=$g4['bbs_path']?>/new.php">최근게시물</a></li>
         <? if ($is_member) { ?>
         <? if ($is_admin) { ?><li><a href="<?=$g4['path']?>/adm">관리자</a></li><? } ?>
         <li><a href="<?=$g4['bbs_path']?>/member_confirm.php?url=register_form.php">정보수정</a></li>
@@ -28,6 +26,8 @@ include_once($g4['path'].'/lib/popular.lib.php');
         <li><a href="<?=$g4['bbs_path']?>/register.php">회원가입</a></li>
         <li><a href="<?=$g4['bbs_path']?>/login.php">로그인</a></li>
         <? } ?>
+        <li><a href="<?=$g4['bbs_path']?>/current_connect.php">현재접속자</a></li>
+        <li><a href="<?=$g4['bbs_path']?>/new.php">최근게시물</a></li>
     </ul>
 
     <fieldset id="hdsch">
