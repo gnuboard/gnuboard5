@@ -1,11 +1,16 @@
 <?
 $sub_menu = '300100';
+define('_CAPTCHA_', 1);
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
-$target_table   = mysql_real_escape_string(trim($_POST['target_table']));
-$target_subject = mysql_real_escape_string(trim($_POST['target_subject']));
+if (!chk_captcha()) {
+    alert('스팸방지에 입력한 숫자가 틀렸습니다.');
+}
+
+$target_table   = escape_trim($_POST['target_table']);
+$target_subject = escape_trim($_POST['target_subject']);
 
 if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table))
 {
@@ -156,7 +161,7 @@ if ($copy_case == 'schema_data_both')
     // 게시글수 저장
     $sql = " select bo_count_write, bo_count_comment from {$g4['board_table']} where bo_table = '$bo_table' ";
     $row = sql_fetch($sql);
-    $sql = " update {$g4['board_table']} set bo_count_write = '{$row['bo_count_write']}', bo_count_comment = '{$row['bo_count_comment]}' where bo_table = '$target_table' ";
+    $sql = " update {$g4['board_table']} set bo_count_write = '{$row['bo_count_write']}', bo_count_comment = '{$row['bo_count_comment']}' where bo_table = '$target_table' ";
     sql_query($sql);
 
     // 05.05.24
@@ -176,7 +181,7 @@ if (count($file_copy))
 {
     for ($i=0; $i<count($file_copy); $i++)
     {
-        $sql = " insert into $g4['board_file_table']
+        $sql = " insert into {$g4['board_file_table']}
                     set bo_table = '$target_table',
                          wr_id = '{$file_copy[$i]['wr_id']}',
                          bf_no = '{$file_copy[$i]['bf_no']}',
