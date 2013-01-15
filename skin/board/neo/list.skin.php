@@ -56,7 +56,7 @@ if ($is_nogood) $colspan++;
 </div>
 
 <!-- 게시판 목록 시작 -->
-<form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
+<form id="fboardlist" name="fboardlist" method="post">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx" value="<?=$stx?>">
@@ -128,6 +128,7 @@ for ($i=0; $i<count($list); $i++) {
 <? if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
 </tbody>
 </table>
+</form>
 
 <div class="bo_fx">
     <ul class="btn_bo_adm">
@@ -135,9 +136,9 @@ for ($i=0; $i<count($list); $i++) {
         <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택삭제"></li>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택복사"></li>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택이동"></li>
+        <li><a href="javascript:select_delete();" class="btn02">선택삭제</a></li>
+        <li><a href="javascript:select_copy('copy');" class="btn02">선택복사</a></li>
+        <li><a href="javascript:select_copy('move');" class="btn02">선택이동</a></li>
         <? } ?>
     </ul>
 
@@ -145,11 +146,6 @@ for ($i=0; $i<count($list); $i++) {
         <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn01">글쓰기</a><? } ?></li>
     </ul>
 </div>
-</form>
-
-<noscript>
-<p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택수정 및 선택삭제 처리하므로 주의하시기 바랍니다.</p>
-</noscript>
 
 <!-- 페이지 -->
 <div class="pg">
@@ -174,7 +170,8 @@ function all_checked(sw) {
     }
 }
 
-function fboardlist_submit(f) {
+function check_confirm(str) {
+    var f = document.fboardlist;
     var chk_count = 0;
 
     for (var i=0; i<f.length; i++) {
@@ -183,25 +180,9 @@ function fboardlist_submit(f) {
     }
 
     if (!chk_count) {
-        alert(document.pressed + "할 게시물을 하나 이상 선택하세요.");
+        alert(str + "할 게시물을 하나 이상 선택하세요.");
         return false;
     }
-
-    if(document.pressed == "선택복사") {
-        select_copy("copy");
-        return;
-    }
-
-    if(document.pressed == "선택이동") {
-        select_copy("move");
-        return;
-    }
-
-    if(document.pressed == "선택삭제") {
-        if (!confirm("선택한 게시물을 정말 삭제하시겠습니까?\n\n한번 삭제한 자료는 복구할 수 없습니다"))
-            return false;
-    }
-
     return true;
 }
 
@@ -213,6 +194,9 @@ function select_copy(sw) {
         str = "복사";
     else
         str = "이동";
+
+    if (!check_confirm(str))
+        return;
 
     var sub_win = window.open("", "move", "left=50, top=50, width=500, height=550, scrollbars=1");
 

@@ -85,7 +85,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </ul>
     </section>
 
-    <div class="btn_window">
-        <a href="javascript:window.close();">창닫기</a>
+    <div class="btn_win">
+        <a href="javascript:window.close();" class="btn_cancel">창닫기</a>
     </div>
 </div>

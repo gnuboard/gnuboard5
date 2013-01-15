@@ -416,6 +416,7 @@ a {color:#000;text-decoration:none}
 .new_win h1 {padding:20px 30px 10px;background:#494949;color:#fff;font-size:0.875em}
 .new_win h1 a {color:#fff}
 .new_win article h1 {background:transparent;color:#000}
+.new_win article h1 a {color:#000}
 .new_win h2 {font-size:1em}
 .new_win table {margin:0 auto 30px;width:90%}
 .new_win fieldset {margin:0 auto 30px;width:90%}
@@ -425,7 +426,7 @@ a {color:#000;text-decoration:none}
 .new_win_ul a {display:block;padding:10px;border-right:1px solid #eee;border-left:1px solid #eee;color:#595959;font-family:"dotum";font-size:1em;font-weight:bold}
 .new_win_ul a:hover,
 .new_win_ul a:focus {background:#faf9f5}
-.btn_win {text-align:center} /* 새창용 */
+.btn_win {margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.75em;text-decoration:none;line-height:2.5em}
 
 /* 포인트 내역 */
