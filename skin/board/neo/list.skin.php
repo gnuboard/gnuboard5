@@ -11,7 +11,32 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1><?=$g4['title']?></h1><?}?>
 
-<div class="bo_fx">
+<fieldset id="bo_sch">
+    <legend>게시물 검색</legend>
+
+    <form name="fsearch" method="get">
+    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+    <input type="hidden" name="sca" value="<?=$sca?>">
+    <select name="sfl" title="검색대상">
+        <option value="wr_subject">제목</option>
+        <option value="wr_content">내용</option>
+        <option value="wr_subject||wr_content">제목+내용</option>
+        <option value="mb_id,1">회원아이디</option>
+        <option value="mb_id,0">회원아이디(코)</option>
+        <option value="wr_name,1">글쓴이</option>
+        <option value="wr_name,0">글쓴이(코)</option>
+    </select>
+    <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
+    <input type="hidden" name="sop" value="and">
+    <!-- <input type="radio" id="sop_and" name="sop" value="and">
+    <label for="sop_and">and</label>
+    <input type="radio" id="sop_or" name="sop" value="or">
+    <label for="sop_or">or</label> -->
+    <input type="submit" class="fieldset_submit" value="검색">
+    </form>
+</fieldset>
+
+<div class="bo_link">
     <div id="bo_cate">
         <? if ($is_category) { ?>
         <form id="fcategory" name="fcategory" method="get">
@@ -25,27 +50,6 @@ if ($is_nogood) $colspan++;
         <?=$page?> 페이지
     </div>
 
-    <fieldset id="bo_sch">
-        <legend>게시물 검색</legend>
-
-        <form name="fsearch" method="get">
-        <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-        <input type="hidden" name="sca" value="<?=$sca?>">
-        <select name="sfl" title="검색대상">
-            <option value="wr_subject">제목</option>
-            <option value="wr_content">내용</option>
-            <option value="wr_subject||wr_content">제목+내용</option>
-            <option value="mb_id,1">회원아이디</option>
-            <option value="mb_id,0">회원아이디(코)</option>
-            <option value="wr_name,1">글쓴이</option>
-            <option value="wr_name,0">글쓴이(코)</option>
-        </select>
-        <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
-        <input type="hidden" name="sop" value="and">
-        <input type="submit" class="fieldset_submit" value="검색">
-        </form>
-    </fieldset>
-
     <? if ($rss_href || $write_href) {?>
     <ul class="btn_bo_user">
         <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn02">RSS</a></li><? } ?>
@@ -56,7 +60,7 @@ if ($is_nogood) $colspan++;
 </div>
 
 <!-- 게시판 목록 시작 -->
-<form id="fboardlist" name="fboardlist" method="post">
+<form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx" value="<?=$stx?>">
@@ -102,9 +106,10 @@ for ($i=0; $i<count($list); $i++) {
         <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link<? if ($wr_id == $list[$i]['wr_id']) echo " bo_current";?>"><?=$list[$i]['ca_name']?></a>
         <? } ?>
 
-        <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>>
-            <?=$list[$i]['subject']?>
-            <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
+        <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>><?=$list[$i]['subject']?>
+
+        <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
+
         </a>
 
         <?
@@ -128,7 +133,6 @@ for ($i=0; $i<count($list); $i++) {
 <? if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
 </tbody>
 </table>
-</form>
 
 <div class="bo_fx">
     <ul class="btn_bo_adm">
@@ -136,9 +140,9 @@ for ($i=0; $i<count($list); $i++) {
         <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
-        <li><a href="javascript:select_delete();" class="btn02">선택삭제</a></li>
-        <li><a href="javascript:select_copy('copy');" class="btn02">선택복사</a></li>
-        <li><a href="javascript:select_copy('move');" class="btn02">선택이동</a></li>
+        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택삭제"></li>
+        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택복사"></li>
+        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택이동"></li>
         <? } ?>
     </ul>
 
@@ -146,6 +150,11 @@ for ($i=0; $i<count($list); $i++) {
         <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn01">글쓰기</a><? } ?></li>
     </ul>
 </div>
+</form>
+
+<noscript>
+<p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택수정 및 선택삭제 처리하므로 주의하시기 바랍니다.</p>
+</noscript>
 
 <!-- 페이지 -->
 <div class="pg">
@@ -170,8 +179,7 @@ function all_checked(sw) {
     }
 }
 
-function check_confirm(str) {
-    var f = document.fboardlist;
+function fboardlist_submit(f) {
     var chk_count = 0;
 
     for (var i=0; i<f.length; i++) {
@@ -180,9 +188,25 @@ function check_confirm(str) {
     }
 
     if (!chk_count) {
-        alert(str + "할 게시물을 하나 이상 선택하세요.");
+        alert(document.pressed + "할 게시물을 하나 이상 선택하세요.");
         return false;
     }
+
+    if(document.pressed == "선택복사") {
+        select_copy("copy");
+        return;
+    }
+
+    if(document.pressed == "선택이동") {
+        select_copy("move");
+        return;
+    }
+
+    if(document.pressed == "선택삭제") {
+        if (!confirm("선택한 게시물을 정말 삭제하시겠습니까?\n\n한번 삭제한 자료는 복구할 수 없습니다"))
+            return false;
+    }
+
     return true;
 }
 
@@ -209,9 +233,6 @@ function select_copy(sw) {
         str = "복사";
     else
         str = "이동";
-
-    if (!check_confirm(str))
-        return;
 
     var sub_win = window.open("", "move", "left=50, top=50, width=500, height=550, scrollbars=1");
 
