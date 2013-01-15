@@ -19,28 +19,28 @@ if (!$dir=@opendir($session_path)) {
 
 $cnt=0;
 while($file=readdir($dir)) { 
-	
+
     if (!strstr($file,'sess_')) { 
-	    continue; 
-	} 
+        continue; 
+    } 
 
     if (strpos($file,'sess_')!=0) { 
-	    continue; 
-	} 
+        continue; 
+    } 
 
-	if (!$atime=@fileatime("$session_path/$file")) { 
-	    continue; 
-	} 
-	if (time() > $atime + (3600 * 6)) {  // 지난시간을 초로 계산해서 적어주시면 됩니다. default : 6시간전
+    if (!$atime=@fileatime("$session_path/$file")) { 
+        continue; 
+    } 
+    if (time() > $atime + (3600 * 6)) {  // 지난시간을 초로 계산해서 적어주시면 됩니다. default : 6시간전
         $cnt++;
-	    $return = unlink("$session_path/$file"); 
-	    echo "<script>document.getElementById('ct').innerHTML += '$session_path/$file<br/>';</script>\n";
+        $return = unlink("$session_path/$file"); 
+        echo "<script>document.getElementById('ct').innerHTML += '$session_path/$file<br/>';</script>\n";
 
         flush();
 
         if ($cnt%10==0)
             echo "<script>document.getElementById('ct').innerHTML = '';</script>\n";
-	} 
+    } 
 } 
 echo "<script>document.getElementById('ct').innerHTML += '<br><br>세션데이터 {$cnt}건 삭제 완료.<br><br>프로그램의 실행을 끝마치셔도 좋습니다.';</script>\n";
 ?>
