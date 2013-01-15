@@ -274,7 +274,7 @@ a {color:#000;text-decoration:none}
 #current_connect_tbl .td_name {text-align:center}
 
 /* 전체검색 */
-#sch_result_detail {margin:0;padding:15px 0;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#eee;text-align:center}
+#sch_result_detail {margin:0;padding:15px 0;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ddd;background:#eee;text-align:center}
 #sch_result_detail label {font-size:0.75em}
 #sch_result_hd {margin:0;border:0;background:#fff;font-size:0.75em}
 #sch_result_hd dt {padding:10px;border-bottom:1px solid #eee;background:#fbfbfb}
