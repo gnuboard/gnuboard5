@@ -58,12 +58,12 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="cf_login_point">로그인시 포인트</label></th>
     <td>
         <?=help('회원에게 하루에 한번만 부여')?>
-        <input type="text" id="cf_login_point" name="cf_login_point" class="required numeric" value="<?=$config['cf_login_point']?>" size="2"> 점
+        <input type="text" id="cf_login_point" name="cf_login_point" class="required" value="<?=$config['cf_login_point']?>" size="2"> 점
     </td>
     <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트</label></th>
     <td>
          <?=help('양수로 입력하십시오. 0점은 쪽지 보낼시 포인트를 차감하지 않습니다.')?>
-        <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" class="required numeric" value="<?=$config['cf_memo_send_point']?>" size="2"> 점
+        <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" class="required" value="<?=$config['cf_memo_send_point']?>" size="2"> 점
     </td>
 </tr>
 <tr>
@@ -186,15 +186,15 @@ include_once ('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="cf_read_point">글읽기 포인트</label></th>
-    <td><input type="text" id="cf_read_point" name="cf_read_point" class="required numeric" value="<?=$config['cf_read_point']?>" size="2"> 점</td>
+    <td><input type="text" id="cf_read_point" name="cf_read_point" class="required" value="<?=$config['cf_read_point']?>" size="2"> 점</td>
     <th scope="row"><label for="cf_write_point">글쓰기 포인트</label></th>
-    <td><input type="text" id="cf_write_point" name="cf_write_point" class="required numeric" value="<?=$config['cf_write_point']?>" size="2"> 점</td>
+    <td><input type="text" id="cf_write_point" name="cf_write_point" class="required" value="<?=$config['cf_write_point']?>" size="2"> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_comment_point">댓글쓰기 포인트</label></th>
-    <td><input type="text" id="cf_comment_point" name="cf_comment_point" class="required numeric" value="<?=$config['cf_comment_point']?>" size="2"> 점</td>
+    <td><input type="text" id="cf_comment_point" name="cf_comment_point" class="required" value="<?=$config['cf_comment_point']?>" size="2"> 점</td>
     <th scope="row"><label for="cf_download_point">다운로드 포인트</label></th>
-    <td><input type="text" id="cf_download_point" name="cf_download_point" class="required numeric" value="<?=$config['cf_download_point']?>" size="2"> 점</td>
+    <td><input type="text" id="cf_download_point" name="cf_download_point" class="required" value="<?=$config['cf_download_point']?>" size="2"> 점</td>
 </tr>
 <tr>
     <th scope="row"><label for="cf_link_target">새창 링크</label></th>
