@@ -1620,10 +1620,11 @@ function abs_ip2long($ip='')
 }
 
 
-/*
-function option_selected($field, $value) 
+function get_selected($field, $value, $first=false) 
 {
-    return ($field==$value) ? ' selected="selected"' : '';
+    $selected = ($field==$value) ? ' selected="selected"' : '';
+    if ($first && !$selected)
+        $selected = ($field=="") ? ' selected="selected"' : '';
+    return $selected;
 }
-*/
 ?>

@@ -70,9 +70,9 @@ var list_delete_php = 'board_list_delete.php';
     </span>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
-        <option value="bo_table" <?=option_selected($_GET['sfl'], "bo_table");?>>TABLE</option>
-        <option value="bo_subject" <?=option_selected($_GET['sfl'], "bo_subject");?>>제목</option>
-        <option value="a.gr_id" <?=option_selected($_GET['sfl'], "a.gr_id");?>>그룹ID</option>
+        <option value="bo_table" <?=get_selected($_GET['sfl'], "bo_subject", true);?>>TABLE</option>
+        <option value="bo_subject" <?=get_selected($_GET['sfl'], "bo_subject");?>>제목</option>
+        <option value="a.gr_id" <?=get_selected($_GET['sfl'], "a.gr_id");?>>그룹ID</option>
     </select>
     <input type="text" name="stx" required value="<?=$stx?>" title="검색어">
     <input type="submit" class="fieldset_submit" value="검색">
@@ -183,10 +183,6 @@ $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['
     <?=$pagelist?>
 </div>
 
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>';
-?>
 </form>
 
 <script>
