@@ -37,7 +37,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <p><?=$mb_profile?></p>
     </section>
 
-    <div class="btn_window">
+    <div class="btn_win">
         <a href="javascript:window.close();">창닫기</a>
     </div>
 </div>
