@@ -30,12 +30,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </tbody>
     </table>
 
-    <fieldset>
-        <legend>자동등록방지</legend>
-        <img id="kcaptcha_image" />
-        <input type="text" name="wr_key" required>
-        왼쪽의 글자를 입력하세요.
-    </fieldset>
+    <?=captcha_html();?>
 
     <div class="btn_window btn_confirm">
         <input type="submit" id="btn_submit" class="btn_submit" value="보내기">
