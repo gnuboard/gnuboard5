@@ -118,7 +118,7 @@ echo $option_hidden;
 <tr>
     <th scope="row">파일 #<?=$i?></th>
     <td>
-        <input type="file" name="bf_file[]" class="frm_input frm_file" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="file" name="bf_file[]" class="frm_input" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
         <? if ($is_file_content) { ?>
         <input type="text" name="bf_content[]" class="frm_input" size="50" title="파일 설명을 입력해주세요.">
         <?}?>
@@ -126,14 +126,21 @@ echo $option_hidden;
 </tr>
 <?}?>
 
+<? if ($is_guest) { //자동등록방지 ?>
+<tr>
+    <th scope="row">자동등록방지</th>
+    <td>
+        <?=$captcha_html?>
+    </td>
+</tr>
+<? } ?>
+
 </tbody>
 </table>
 
-<?=$captcha_html?>
-
 <div class="btn_confirm">
-    <input type="submit" id="btn_submit" value="글쓰기" accesskey="s">
-    <a href="./board.php?bo_table=<?=$bo_table?>" title="글쓰기를 취소하고 목록으로 돌아가기">목록</a>
+    <input type="submit" id="btn_submit" class="btn_submit" value="글쓰기" accesskey="s">
+    <a href="./board.php?bo_table=<?=$bo_table?>" class="btn_cancel" title="글쓰기를 취소하고 목록으로 돌아가기">목록</a>
 </div>
 </form>
 

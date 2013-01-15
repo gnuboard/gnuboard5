@@ -44,3 +44,15 @@ function btn_check(f, act)
 
     f.submit();
 }
+
+function is_checked(elements_name) 
+{
+    var checked = false;
+    var chk = document.getElementsByName(elements_name);
+    for (var i=0; i<chk.length; i++) {
+        if (chk[i].checked) {
+            checked = true;
+        }
+    }
+    return checked;
+}

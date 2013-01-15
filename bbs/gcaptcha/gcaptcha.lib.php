@@ -6,7 +6,7 @@ class gcaptcha
     // 이미지크기 폭
     var $width = 70;
     // 이미지크기 높이
-    var $height = 20;
+    var $height = 22;
     // 폰트 사이즈
     var $size = 13;
     // 폰트 기울기
@@ -149,9 +149,8 @@ function captcha_html($class="captcha")
 
     $html  = '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">스팸방지</legend>';
-    $html .= '<img src="'.captcha_file('.png').'" title="스팸방지 숫자">';
-    $html .= '<a href="'.captcha_file('.wav').'" id="captcha_wav">음성듣기</a>';
-    $html .= '<label for="captcha_key">스팸방지 숫자 입력</label>';
+    $html .= '<img src="'.captcha_file('.png').'" alt="스팸방지 숫자">';
+    $html .= '<a href="'.captcha_file('.wav').'" id="captcha_wav"><img src="'.$g4['bbs_path'].'/gcaptcha/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
     $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box fieldset_input" size="6" maxlength="6" required title="스팸방지 숫자 입력">';
     $html .= '<p class="sound_only">스팸방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';

@@ -85,7 +85,7 @@ var list_delete_php = 'board_list_delete.php';
 </div>
 <?}?>
 
-<form id="fboardlist" name="fboardlist" method="post">
+<form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
 <input type="hidden" name="sst" value="<?=$sst?>">
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -183,12 +183,16 @@ if ($i == 0)
 </table>
 
 <div class="btn_list">
-    <button onclick="btn_check(this.form, 'update')">선택수정</button>
+    <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택수정">
     <?if ($is_admin == 'super') {?>
-    <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+    <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제">
     <a href="./board_form.php">게시판추가</a>
     <?}?>
 </div>
+
+<noscript>
+<p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택수정 및 선택삭제 처리하므로 주의하시기 바랍니다.</p>
+</noscript>
 
 <?
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
@@ -204,6 +208,16 @@ if (isset($stx))
 </form>
 
 <script>
+function fboardlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    return true;
+}
+
 function board_copy(bo_table) {
     window.open("./board_copy.php?bo_table="+bo_table, "BoardCopy", "left=10,top=10,width=500,height=200");
 }

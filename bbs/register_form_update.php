@@ -1,4 +1,5 @@
 <?
+define('_CAPTCHA_', 1);
 include_once('./_common.php');
 include_once($g4['path'].'/lib/register.lib.php');
 include_once($g4['path'].'/lib/mailer.lib.php');
@@ -301,16 +302,14 @@ if ($w == '') {
 
 
 // 사용자 코드 실행
-@include_once ($g4['path'].'/skin/member/'.$config[cf_member_skin].'/register_update.skin.php');
+@include_once ($g4['path'].'/skin/member/'.$config['cf_member_skin'].'/register_update.skin.php');
 
 
 if ($msg) 
     echo '<script>alert(\''.$msg.'\');</script>';
 
-$https_url = $g4['url'].'/'.$g4['bbs'];
-
 if ($w == "") {
-    goto_url($https_url.'/register_result.php');
+    goto_url($g4['bbs_url'].'/register_result.php');
 } else if ($w == 'u') {
     $row  = sql_fetch(" select mb_password from {$g4['member_table']} where mb_id = '{$member[mb_id]}' ");
     $tmp_password = $row['mb_password'];
@@ -319,9 +318,11 @@ if ($w == "") {
         set_session("ss_mb_id", "");
         alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', $g4['path']);
     } else {
+        alert('회원 정보가 수정 되었습니다.', $g4['url']);
+        /*
         echo '
         <html><title>회원정보수정</title><meta http-equiv="Content-Type" content="text/html; charset=$g4[charset]"></html><body>
-        <form name="fregisterupdate" method="post" action="'.$https_url.'/register_form.php">
+        <form name="fregisterupdate" method="post" action="'.$g4['bbs_url'].'/register_form.php">
         <input type="hidden" name="w" value="u">
         <input type="hidden" name="mb_id" value="'.$mb_id.'">
         <input type="hidden" name="mb_password" value="'.$tmp_password.'">
@@ -333,6 +334,7 @@ if ($w == "") {
         </script>
         </body>
         </html>';
+        */
     }
 }
 ?>
