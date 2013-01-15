@@ -151,7 +151,6 @@ function captcha_html($class="captcha")
     $html .= '<legend class="sound_only">스팸방지</legend>';
     $html .= '<img src="'.captcha_file('.png').'" alt="스팸방지 숫자">';
     $html .= '<a href="'.captcha_file('.wav').'" id="captcha_wav"><img src="'.$g4['bbs_path'].'/gcaptcha/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
-    $html .= '<a href="'.$g4['gcaptcha_path'].'/down.php?file='.abs_ip2long().'_'.$_COOKIE['PHPSESSID'].'.wav'.'" id="captcha_wav">다운로드</a>';
     $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box fieldset_input" size="6" maxlength="6" required title="스팸방지 숫자 입력">';
     $html .= '<p class="sound_only">스팸방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';
