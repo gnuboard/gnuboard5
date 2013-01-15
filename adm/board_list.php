@@ -114,13 +114,8 @@ var list_delete_php = 'board_list_delete.php';
 <tbody>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $s_upd = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
-    $s_del = "";
-    if ($is_admin == 'super') {
-        //$s_del = '<a href="javascript:post_delete(\'board_delete.php\', \''.$row['bo_table'].'\');">삭제</a>';
-        $s_del = "<a href=\"./board_delete.php?bo_table={$row['bo_table']}\" class=\"board_delete\">삭제</a>";
-    }
-    $s_copy = '<a href="javascript:board_copy(\''.$row['bo_table'].'\');">복사</a>';
+    $one_update = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
+    $one_copy = '<a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy" target="win_board_copy">복사</a>';
 ?>
 
 <tr>
@@ -158,7 +153,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <label for="bo_order_search_<?=$i?>">순서</label>
         <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1">
     </td>
-    <td><?=$s_upd?> <?=$s_del?> <?=$s_copy?></td>
+    <td><?=$one_update?> <?=$one_copy?></td>
 </tr>
 <?
 }
@@ -215,11 +210,8 @@ function post_delete(action_url, val)
 }
 
 $(function(){
-    $(".board_delete").click(function(){
-    	if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-            $("#fpost").attr("action", this.href);
-            $("#fpost").submit();
-        }
+    $(".board_copy").click(function(){
+        window.open(this.href, "win_board_copy", "left=100,top=100,width=550,height=450");
         return false;
     });
 });
