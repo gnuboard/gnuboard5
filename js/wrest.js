@@ -1,7 +1,8 @@
 var wrestMsg = "";
 var wrestFld = null;
 var wrestFldDefaultColor = "";
-var wrestFldBackColor = "#FFE4E1";
+var wrestFldColor = "#fff";
+var wrestFldBackColor = "#ff3061";
 
 // subject 속성값을 얻어 return, 없으면 tag의 name을 넘김
 function wrestItemname(fld)
@@ -302,6 +303,7 @@ function wrestSubmit()
 
         if (wrestFld.style.display != "none") {
             wrestFld.style.backgroundColor = wrestFldBackColor;
+            wrestFld.style.color = wrestFldColor;
             if (typeof(wrestFld.select) != "undefined")
                 wrestFld.select();
             wrestFld.focus();
