@@ -147,8 +147,9 @@ td {padding:10px}
 .visit_bar {position:relative}
 .visit_bar span {position:absolute;top:-8px;left:0;height:15px;background:#ddd}
 
-/* 메일 테스트 */
-#fsendmailtest p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
+/* 메일 테스트, 세션파일일괄삭제 */
+#fsendmailtest p,
+#session_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
 
 /* pagination */
 .pg {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.75em;text-align:center}

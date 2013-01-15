@@ -7,8 +7,17 @@ if ($is_admin != "super")
 
 $g4['title'] = "세션파일 일괄삭제";
 include_once("./admin.head.php");
-echo "'완료' 메세지가 나오기 전에 프로그램의 실행을 중지하지 마십시오.<br><br>";
-echo "<span id='ct'></span>";
+?>
+
+<div id="session_del">
+    <p>
+        완료 메세지가 나오기 전에 프로그램의 실행을 중지하지 마십시오.
+    <p>
+    <span id="ct">
+    </span>
+</div>
+
+<?
 include_once("./admin.tail.php");
 flush();
 
@@ -42,5 +51,5 @@ while($file=readdir($dir)) {
             echo "<script>document.getElementById('ct').innerHTML = '';</script>\n";
     } 
 } 
-echo "<script>document.getElementById('ct').innerHTML += '<br><br>세션데이터 {$cnt}건 삭제 완료.<br><br>프로그램의 실행을 끝마치셔도 좋습니다.';</script>\n";
+echo "<script>document.getElementById('ct').innerHTML += '세션데이터 {$cnt}건 삭제 완료.<br><br>프로그램의 실행을 끝마치셔도 좋습니다.';</script>\n";
 ?>
