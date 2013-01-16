@@ -186,7 +186,7 @@ if ($w == 'c') // 코멘트 입력
         $board_admin = get_admin('board');
 
         $wr_subject = get_text(stripslashes($wr['wr_subject']));
-        $wr_content = nl2br(get_text(stripslashes('----- 원글 -----\n\n'.$wr[wr_subject].'\n\n\n----- 코멘트 -----\n\n'.$wr_content)));
+        $wr_content = nl2br(get_text(stripslashes("----- 원글 -----\n\n{$wr['wr_subject']}\n\n\n----- 코멘트 -----\n\n$wr_content")));
 
         $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'코멘트', 'cu'=>'코멘트 수정' );
         $str = $warr[$w];
