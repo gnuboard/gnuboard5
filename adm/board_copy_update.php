@@ -12,14 +12,13 @@ if (!chk_captcha()) {
 $target_table   = escape_trim($_POST['target_table']);
 $target_subject = escape_trim($_POST['target_subject']);
 
-if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table))
-{
+if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table)) {
     alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)');
 }
 
 $row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where bo_table = '$target_table' ");
 if ($row['cnt'])
-    alert($target_table.'은(는) 이미 존재하는 게시판 TABLE 입니다.\\n\\n복사할 TABLE로 사용할 수 없습니다.');
+    alert($target_table.'은(는) 이미 존재하는 게시판 테이블명 입니다.\\n복사할 테이블명으로 사용할 수 없습니다.');
 
 check_token();
 
@@ -119,19 +118,10 @@ $f = @fopen($file, 'w');
 @chmod($file, 0606);
 
 $copy_file = 0;
-if ($copy_case == 'schema_data_both')
-{
+if ($copy_case == 'schema_data_both') {
     $d = dir($g4['path'].'/data/file/'.$bo_table);
-    while ($entry = $d->read())
-    {
+    while ($entry = $d->read()) {
         if ($entry == '.' || $entry == '..') continue;
-
-        /*
-        @copy('$g4['path']/data/file/$bo_table/$entry', '$g4['path']/data/file/$target_table/$entry');
-        @chmod('$g4['path']/data/file/$target_table/$entry', 0707);
-
-        $copy_file++;
-        */
 
         // 김선용 201007 :
         if(is_dir($g4['path'].'/data/file/'.$bo_table.'/'.$entry)){
@@ -164,11 +154,6 @@ if ($copy_case == 'schema_data_both')
     $sql = " update {$g4['board_table']} set bo_count_write = '{$row['bo_count_write']}', bo_count_comment = '{$row['bo_count_comment']}' where bo_table = '$target_table' ";
     sql_query($sql);
 
-    // 05.05.24
-    // 파일테이블 복사
-    //$sql = ' insert into $g4['board_file_table'] select "$target_table", wr_id, bf_no, bf_source, bf_file, bf_download, bf_content from $g4['board_file_table'] where bo_table = "$bo_table" ';
-    //sql_query($sql);
-
     // 4.00.01
     // 위의 코드는 같은 테이블명을 사용하였다는 오류가 발생함. (희한하네 ㅡㅡ;)
     $sql = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' ";
@@ -177,10 +162,8 @@ if ($copy_case == 'schema_data_both')
         $file_copy[$i] = $row;
 }
 
-if (count($file_copy))
-{
-    for ($i=0; $i<count($file_copy); $i++)
-    {
+if (count($file_copy)) {
+    for ($i=0; $i<count($file_copy); $i++) {
         $sql = " insert into {$g4['board_file_table']}
                     set bo_table = '$target_table',
                          wr_id = '{$file_copy[$i]['wr_id']}',
@@ -197,14 +180,8 @@ if (count($file_copy))
         sql_query($sql, FALSE);
     }
 }
-?>
 
-<meta http-equiv="content-type" content="text/html; charset=<?=$g4['charset']?>">
-<script>
-alert('게시판 복사 : <?=$bo_table?> > <?=$target_table?> 성공 <? if ($copy_file) echo PHP_EOL.' 복사한 파일 : 총 <?=$copy_file?>개';?>');
-opener.document.location.reload();
-</script>
+echo "<script>opener.document.location.reload();</script>";
 
-<?
-goto_url('./board_copy.php?bo_table='.$bo_table.'&amp;'.$qstr);
+alert("복사에 성공 했습니다.", './board_copy.php?bo_table='.$bo_table.'&amp;'.$qstr);
 ?>
