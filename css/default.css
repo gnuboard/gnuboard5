@@ -414,6 +414,13 @@ a {color:#000;text-decoration:none}
 .fregister_agree {text-align:right}
 .fregister_agree label {display:inline-block;margin-right:10px;font-size:0.75em;vertical-align:middle}
 
+/* 회원가입 완료 */
+#reg_result {padding:50px;border:1px solid #eee;background:#f9f9f9}
+#reg_result p {font-size:0.75em}
+#reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
+#reg_result_email span {display:inline-block;width:150px}
+.reg_result_deco {text-align:center}
+
 /* 회원 패스워드 확인 */
 #member_confirm {padding:150px 0;background:#fcfcfc;text-align:center}
 #member_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
