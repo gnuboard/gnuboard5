@@ -445,7 +445,7 @@ a {color:#000;text-decoration:none}
 .new_win_ul a:hover,
 .new_win_ul a:focus {background:#faf9f5}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.75em;text-decoration:none;line-height:2.5em}
+.btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.75em;text-decoration:none;line-height:2.5em;cursor:pointer}
 
 /* 포인트 내역 */
 #point table {margin-bottom:0}
@@ -454,6 +454,7 @@ a {color:#000;text-decoration:none}
 /* 쪽지 */
 
 /* 스크랩 */
+#scrap .td_datetime {width:150px}
 #scrap_do table {margin-bottom:10px}
 #scrap_do textarea {height:100px}
 #scrap_do p {margin:0 auto 20px;width:90%;font-size:0.875em}
