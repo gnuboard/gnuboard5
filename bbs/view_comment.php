@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $captcha_html = "";
 if ($is_guest) {
@@ -16,14 +16,14 @@ if ($is_admin && !$token) {
 $list = array();
 
 $is_comment_write = false;
-if ($member['mb_level'] >= $board['bo_comment_level']) 
+if ($member['mb_level'] >= $board['bo_comment_level'])
     $is_comment_write = true;
 
 // 코멘트 출력
 //$sql = " select * from {$write_table} where wr_parent = '{$wr_id}' and wr_is_comment = 1 order by wr_comment desc, wr_comment_reply ";
-$sql = " select * from {$write_table} where wr_parent = '{$wr_id}' and wr_is_comment = 1 order by wr_comment, wr_comment_reply ";
+$sql = " select * from $write_table where wr_parent = '$wr_id' and wr_is_comment = 1 order by wr_comment, wr_comment_reply ";
 $result = sql_query($sql);
-for ($i=0; $row=sql_fetch_array($result); $i++) 
+for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $list[$i] = $row;
 
@@ -36,14 +36,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $list[$i]['name'] = '<span class="'.($row['mb_id']?'member':'guest').'">'.$tmp_name.'</span>';
 
 
-    
+
     // 공백없이 연속 입력한 문자 자르기 (way 보드 참고. way.co.kr)
     //$list[$i]['content'] = eregi_replace("[^ \n<>]{130}", "\\0\n", $row['wr_content']);
 
     $list[$i]['content'] = $list[$i]['content1']= '비밀글 입니다.';
     if (!strstr($row['wr_option'], 'secret') ||
-        $is_admin || 
-        ($write['mb_id']==$member['mb_id'] && $member['mb_id']) || 
+        $is_admin ||
+        ($write['mb_id']==$member['mb_id'] && $member['mb_id']) ||
         ($row['mb_id']==$member['mb_id'] && $member['mb_id'])) {
         $list[$i]['content1'] = $row['wr_content'];
         $list[$i]['content'] = conv_content($row['wr_content'], 0, 'wr_content');
@@ -60,18 +60,18 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['is_reply'] = false;
     $list[$i]['is_edit'] = false;
     $list[$i]['is_del']  = false;
-    if ($is_comment_write || $is_admin) 
+    if ($is_comment_write || $is_admin)
     {
-        if ($member['mb_id']) 
+        if ($member['mb_id'])
         {
-            if ($row['mb_id'] == $member['mb_id'] || $is_admin) 
+            if ($row['mb_id'] == $member['mb_id'] || $is_admin)
             {
                 $list[$i]['del_link']  = './delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
                 $list[$i]['is_edit']   = true;
                 $list[$i]['is_del']    = true;
             }
-        } 
-        else 
+        }
+        else
         {
             if (!$row['mb_id']) {
                 $list[$i]['del_link'] = './password.php?w=x&amp;bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;page='.$page.$qstr;
@@ -87,7 +87,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 답변있는 코멘트는 수정, 삭제 불가
     if ($i > 0 && !$is_admin)
     {
-        if ($row['wr_comment_reply']) 
+        if ($row['wr_comment_reply'])
         {
             $tmp_comment_reply = substr($row['wr_comment_reply'], 0, strlen($row['wr_comment_reply']) - 1);
             if ($tmp_comment_reply == $list[$i-1]['wr_comment_reply'])

@@ -13,7 +13,7 @@ if (substr_count($wr_content, "&#") > 50) {
 $w = $_POST["w"];
 $wr_name  = escape_trim($_POST['wr_name']);
 $wr_email = '';
-if (!empty($_POST['wr_email'])) 
+if (!empty($_POST['wr_email']))
     $wr_email = escape_trim($_POST['wr_email']);
 
 // 비회원의 경우 이름이 누락되는 경우가 있음
@@ -23,38 +23,38 @@ if ($is_guest) {
 }
 
 if ($w == "c" || $w == "cu") {
-    if ($member['mb_level'] < $board['bo_comment_level']) 
+    if ($member['mb_level'] < $board['bo_comment_level'])
         alert('코멘트를 쓸 권한이 없습니다.');
-} 
+}
 else
     alert('w 값이 제대로 넘어오지 않았습니다.');
 
 // 세션의 시간 검사
 // 4.00.15 - 코멘트 수정시 연속 게시물 등록 메시지로 인한 오류 수정
-if ($w == 'c' && $_SESSION['ss_datetime'] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin) 
+if ($w == 'c' && $_SESSION['ss_datetime'] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin)
     alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
 
 set_session('ss_datetime', $g4['server_time']);
 
 $wr = get_write($write_table, $wr_id);
-if (empty($wr['wr_id'])) 
-    alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다."); 
+if (empty($wr['wr_id']))
+    alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다.");
 
 
 // "인터넷옵션 > 보안 > 사용자정의수준 > 스크립팅 > Action 스크립팅 > 사용 안 함" 일 경우의 오류 처리
 // 이 옵션을 사용 안 함으로 설정할 경우 어떤 스크립트도 실행 되지 않습니다.
 //if (!trim($_POST["wr_content"])) die ("내용을 입력하여 주십시오.");
 
-if ($member[mb_id]) 
+if ($is_admin)
 {
-    $mb_id = $member[mb_id];
+    $mb_id = $member['mb_id'];
     // 4.00.13 - 실명 사용일때 코멘트에 별명으로 입력되던 오류를 수정
-    $wr_name = $board[bo_use_name] ? $member[mb_name] : $member[mb_nick];
-    $wr_password = $member[mb_password];
-    $wr_email = $member[mb_email];
-    $wr_homepage = $member[mb_homepage];
-} 
-else 
+    $wr_name = $board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick'];
+    $wr_password = $member['mb_password'];
+    $wr_email = $member['mb_email'];
+    $wr_homepage = $member['mb_homepage'];
+}
+else
 {
     $mb_id = '';
     $wr_password = sql_password($wr_password);
@@ -67,131 +67,131 @@ if ($w == 'c') // 코멘트 입력
         alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 코멘트쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 코멘트를 써 주십시오.');
     */
     // 코멘트쓰기 포인트설정시 회원의 포인트가 음수인 경우 코멘트를 쓰지 못하던 버그를 수정 (곱슬최씨님)
-    $tmp_point = ($member[mb_point] > 0) ? $member[mb_point] : 0;
-    if ($tmp_point + $board[bo_comment_point] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 코멘트쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 코멘트를 써 주십시오.');
+    $tmp_point = ($member['mb_point'] > 0) ? $member['mb_point'] : 0;
+    if ($tmp_point + $board['bo_comment_point'] < 0 && !$is_admin)
+        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 코멘트쓰기('.number_format($board['bo_comment_point']).')가 불가합니다.'."\n\n".'포인트를 적립하신 후 다시 코멘트를 써 주십시오.');
 
     // 코멘트 답변
-    if ($comment_id) 
+    if ($comment_id)
     {
-        $sql = " select wr_id, wr_comment, wr_comment_reply from {$write_table}
-                    where wr_id = '{$comment_id}' ";
+        $sql = " select wr_id, wr_comment, wr_comment_reply from $write_table
+                    where wr_id = '$comment_id' ";
         $reply_array = sql_fetch($sql);
-        if (!$reply_array[wr_id])
-            alert('답변할 코멘트가 없습니다.'.PHP_EOL.PHP_EOL.'답변하는 동안 코멘트가 삭제되었을 수 있습니다.');
+        if (!$reply_array['wr_id'])
+            alert('답변할 코멘트가 없습니다.'."\n\n".'답변하는 동안 코멘트가 삭제되었을 수 있습니다.');
 
-        $tmp_comment = $reply_array[wr_comment];
+        $tmp_comment = $reply_array['wr_comment'];
 
-        if (strlen($reply_array[wr_comment_reply]) == 5)
-            alert('더 이상 답변하실 수 없습니다.'.PHP_EOL.PHP_EOL.'답변은 5단계 까지만 가능합니다.');
+        if (strlen($reply_array['wr_comment_reply']) == 5)
+            alert('더 이상 답변하실 수 없습니다.'."\n\n".'답변은 5단계 까지만 가능합니다.');
 
-        $reply_len = strlen($reply_array[wr_comment_reply]) + 1;
-        if ($board[bo_reply_order]) {
+        $reply_len = strlen($reply_array['wr_comment_reply']) + 1;
+        if ($board['bo_reply_order']) {
             $begin_reply_char = 'A';
             $end_reply_char = 'Z';
             $reply_number = +1;
-            $sql = " select MAX(SUBSTRING(wr_comment_reply, {$reply_len}, 1)) as reply 
-                        from {$write_table}
-                        where wr_parent = '{$wr_id}'
-                        and wr_comment = '{$tmp_comment}'
-                        and SUBSTRING(wr_comment_reply, {$reply_len}, 1) <> '' ";
-        } 
-        else 
+            $sql = " select MAX(SUBSTRING(wr_comment_reply, $reply_len, 1)) as reply
+                        from $write_table
+                        where wr_parent = '$wr_id'
+                        and wr_comment = '$tmp_comment'
+                        and SUBSTRING(wr_comment_reply, $reply_len, 1) <> '' ";
+        }
+        else
         {
             $begin_reply_char = 'Z';
             $end_reply_char = 'A';
             $reply_number = -1;
-            $sql = " select MIN(SUBSTRING(wr_comment_reply, {$reply_len}, 1)) as reply 
-                        from {$write_table}
-                        where wr_parent = '{$wr_id}'
-                        and wr_comment = '{$tmp_comment}'
-                        and SUBSTRING(wr_comment_reply, {$reply_len}, 1) <> '' ";
+            $sql = " select MIN(SUBSTRING(wr_comment_reply, $reply_len, 1)) as reply
+                        from $write_table
+                        where wr_parent = '$wr_id'
+                        and wr_comment = '$tmp_comment'
+                        and SUBSTRING(wr_comment_reply, $reply_len, 1) <> '' ";
         }
-        if ($reply_array[wr_comment_reply]) 
-            $sql .= " and wr_comment_reply like '{$reply_array[wr_comment_reply]}%' ";
+        if ($reply_array['wr_comment_reply'])
+            $sql .= " and wr_comment_reply like '{$reply_array['wr_comment_reply']}%' ";
         $row = sql_fetch($sql);
 
-        if (!$row[reply])
+        if (!$row['reply'])
             $reply_char = $begin_reply_char;
-        else if ($row[reply] == $end_reply_char) // A~Z은 26 입니다.
-            alert('더 이상 답변하실 수 없습니다.'.PHP_EOL.PHP_EOL.'답변은 26개 까지만 가능합니다.');
+        else if ($row['reply'] == $end_reply_char) // A~Z은 26 입니다.
+            alert('더 이상 답변하실 수 없습니다.'."\n\n".'답변은 26개 까지만 가능합니다.');
         else
-            $reply_char = chr(ord($row[reply]) + $reply_number);
+            $reply_char = chr(ord($row['reply']) + $reply_number);
 
-        $tmp_comment_reply = $reply_array[wr_comment_reply] . $reply_char;
+        $tmp_comment_reply = $reply_array['wr_comment_reply'] . $reply_char;
     }
-    else 
+    else
     {
-        $sql = " select max(wr_comment) as max_comment from {$write_table}
-                    where wr_parent = '{$wr_id}' and wr_is_comment = 1 ";
+        $sql = " select max(wr_comment) as max_comment from $write_table
+                    where wr_parent = '$wr_id' and wr_is_comment = 1 ";
         $row = sql_fetch($sql);
         //$row[max_comment] -= 1;
-        $row[max_comment] += 1;
-        $tmp_comment = $row[max_comment];
+        $row['max_comment'] += 1;
+        $tmp_comment = $row['max_comment'];
         $tmp_comment_reply = '';
     }
 
-    $sql = " insert into {$write_table}
-                set ca_name = '{$wr[ca_name]}',
-                     wr_option = '{$wr_secret}',
-                     wr_num = '{$wr[wr_num]}',
+    $sql = " insert into $write_table
+                set ca_name = '{$wr['ca_name']}',
+                     wr_option = '$wr_secret',
+                     wr_num = '{$wr['wr_num']}',
                      wr_reply = '',
-                     wr_parent = '{$wr_id}',
+                     wr_parent = '$wr_id',
                      wr_is_comment = 1,
-                     wr_comment = '{$tmp_comment}',
-                     wr_comment_reply = '{$tmp_comment_reply}',
-                     wr_subject = '{$wr_subject}',
-                     wr_content = '{$wr_content}',
-                     mb_id = '{$mb_id}',
-                     wr_password = '{$wr_password}',
-                     wr_name = '{$wr_name}',
-                     wr_email = '{$wr_email}',
-                     wr_homepage = '{$wr_homepage}',
-                     wr_datetime = '{$g4[time_ymdhis]}',
+                     wr_comment = '$tmp_comment',
+                     wr_comment_reply = '$tmp_comment_reply',
+                     wr_subject = '$wr_subject',
+                     wr_content = '$wr_content',
+                     mb_id = '$mb_id',
+                     wr_password = '$wr_password',
+                     wr_name = '$wr_name',
+                     wr_email = '$wr_email',
+                     wr_homepage = '$wr_homepage',
+                     wr_datetime = '$g4[time_ymdhis]',
                      wr_last = '',
-                     wr_ip = '{$_SERVER[REMOTE_ADDR]}',
-                     wr_1 = '{$wr_1}',
-                     wr_2 = '{$wr_2}',
-                     wr_3 = '{$wr_3}',
-                     wr_4 = '{$wr_4}',
-                     wr_5 = '{$wr_5}',
-                     wr_6 = '{$wr_6}',
-                     wr_7 = '{$wr_7}',
-                     wr_8 = '{$wr_8}',
-                     wr_9 = '{$wr_9}',
-                     wr_10 = '{$wr_10}' ";
+                     wr_ip = '{$_SERVER['REMOTE_ADDR']}',
+                     wr_1 = '$wr_1',
+                     wr_2 = '$wr_2',
+                     wr_3 = '$wr_3',
+                     wr_4 = '$wr_4',
+                     wr_5 = '$wr_5',
+                     wr_6 = '$wr_6',
+                     wr_7 = '$wr_7',
+                     wr_8 = '$wr_8',
+                     wr_9 = '$wr_9',
+                     wr_10 = '$wr_10' ";
     sql_query($sql);
 
     $comment_id = mysql_insert_id();
 
     // 원글에 코멘트수 증가 & 마지막 시간 반영
-    sql_query(" update {$write_table} set wr_comment = wr_comment + 1, wr_last = '{$g4[time_ymdhis]}' where wr_id = '{$wr_id}' ");
+    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_last = '{$g4['time_ymdhis']}' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
     //sql_query(" insert into {$g4[board_new_table]} ( bo_table, wr_id, wr_parent, bn_datetime ) values ( '{$bo_table}', '{$comment_id}', '{$wr_id}', '{$g4[time_ymdhis]}' ) ");
-    sql_query(" insert into {$g4[board_new_table]} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '{$bo_table}', '{$comment_id}', '{$wr_id}', '{$g4[time_ymdhis]}', '{$member[mb_id]}' ) ");
+    sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '{$g4['time_ymdhis']}', '{$member['mb_id']}' ) ");
 
     // 코멘트 1 증가
-    sql_query(" update {$g4[board_table]} set bo_count_comment = bo_count_comment + 1 where bo_table = '{$bo_table}' ");
+    sql_query(" update {$g4['board_table']} set bo_count_comment = bo_count_comment + 1 where bo_table = '$bo_table' ");
 
     // 포인트 부여
-    insert_point($member[mb_id], $board[bo_comment_point], "{$board[bo_subject]} {$wr_id}-{$comment_id} 코멘트쓰기", $bo_table, $comment_id, '코멘트');
+    insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 코멘트쓰기", $bo_table, $comment_id, '코멘트');
 
     // 메일발송 사용
-    if ($config[cf_email_use] && $board[bo_use_email])
+    if ($config['cf_email_use'] && $board['bo_use_email'])
     {
         // 관리자의 정보를 얻고
         $super_admin = get_admin('super');
         $group_admin = get_admin('group');
         $board_admin = get_admin('board');
 
-        $wr_subject = get_text(stripslashes($wr[wr_subject]));
-        $wr_content = nl2br(get_text(stripslashes('----- 원글 -----'.PHP_EOL.PHP_EOL.$wr[wr_subject].PHP_EOL.PHP_EOL.PHP_EOL.'----- 코멘트 -----'.PHP_EOL.PHP_EOL.$wr_content)));
+        $wr_subject = get_text(stripslashes($wr['wr_subject']));
+        $wr_content = nl2br(get_text(stripslashes("----- 원글 -----\n\n{$wr['wr_subject']}\n\n\n----- 코멘트 -----\n\n$wr_content")));
 
         $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'코멘트', 'cu'=>'코멘트 수정' );
         $str = $warr[$w];
 
-        $subject = $board[bo_subject].' 게시판에 '.$str.'글이 올라왔습니다.';
+        $subject = $board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
         // 4.00.15 - 메일로 보내는 코멘트의 바로가기 링크 수정
         $link_url = $g4['url']."/".$g4['bbs']."/board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
 
@@ -204,25 +204,25 @@ if ($w == 'c') // 코멘트 입력
 
         $array_email = array();
         // 게시판관리자에게 보내는 메일
-        if ($config[cf_email_wr_board_admin]) $array_email[] = $board_admin[mb_email];
+        if ($config['cf_email_wr_board_admin']) $array_email[] = $board_admin['mb_email'];
         // 게시판그룹관리자에게 보내는 메일
-        if ($config[cf_email_wr_group_admin]) $array_email[] = $group_admin[mb_email];
+        if ($config['cf_email_wr_group_admin']) $array_email[] = $group_admin['mb_email'];
         // 최고관리자에게 보내는 메일
-        if ($config[cf_email_wr_super_admin]) $array_email[] = $super_admin[mb_email];
+        if ($config['cf_email_wr_super_admin']) $array_email[] = $super_admin['mb_email'];
 
         // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
-        if (strstr($wr[wr_option], 'mail') && $wr[wr_email]) {
+        if (strstr($wr['wr_option'], 'mail') && $wr['wr_email']) {
             // 원글 메일발송에 체크가 되어 있다면
-            if ($config[cf_email_wr_write]) $array_email[] = $wr[wr_email];
+            if ($config['cf_email_wr_write']) $array_email[] = $wr['wr_email'];
 
             // 코멘트 쓴 모든이에게 메일 발송이 되어 있다면 (자신에게는 발송하지 않는다)
-            if ($config[cf_email_wr_comment_all]) {
+            if ($config['cf_email_wr_comment_all']) {
                 $sql = " select distinct wr_email from {$write_table}
-                            where wr_email not in ( '{$wr[wr_email]}', '{$member[mb_email]}', '' )
-                            and wr_parent = '{$wr_id}' ";
+                            where wr_email not in ( '{$wr['wr_email']}', '{$member['mb_email']}', '' )
+                            and wr_parent = '$wr_id' ";
                 $result = sql_query($sql);
                 while ($row=sql_fetch_array($result))
-                    $array_email[] = $row[wr_email];
+                    $array_email[] = $row['wr_email'];
             }
         }
 
@@ -233,79 +233,79 @@ if ($w == 'c') // 코멘트 입력
             mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
         }
     }
-} 
+}
 else if ($w == 'cu') // 코멘트 수정
-{ 
-    $sql = " select mb_id, wr_comment, wr_comment_reply from {$write_table}
-                where wr_id = '{$comment_id}' ";
+{
+    $sql = " select mb_id, wr_comment, wr_comment_reply from $write_table
+                where wr_id = '$comment_id' ";
     $comment = $reply_array = sql_fetch($sql);
-    $tmp_comment = $reply_array[wr_comment];
+    $tmp_comment = $reply_array['wr_comment'];
 
-    $len = strlen($reply_array[wr_comment_reply]);
-    if ($len < 0) $len = 0; 
-    $comment_reply = substr($reply_array[wr_comment_reply], 0, $len);
+    $len = strlen($reply_array['wr_comment_reply']);
+    if ($len < 0) $len = 0;
+    $comment_reply = substr($reply_array['wr_comment_reply'], 0, $len);
     //print_r2($GLOBALS); exit;
 
-    if ($is_admin == 'super') // 최고관리자 통과 
-        ; 
-    else if ($is_admin == 'group') { // 그룹관리자 
-        $mb = get_member($comment[mb_id]); 
-        if ($member[mb_id] == $group[gr_admin]) { // 자신이 관리하는 그룹인가? 
-            if ($member[mb_level] >= $mb[mb_level]) // 자신의 레벨이 크거나 같다면 통과 
-                ; 
-            else 
-                alert('그룹관리자의 권한보다 높은 회원의 코멘트이므로 수정할 수 없습니다.'); 
-        } else 
-            alert('자신이 관리하는 그룹의 게시판이 아니므로 코멘트를 수정할 수 없습니다.'); 
-    } else if ($is_admin == 'board') { // 게시판관리자이면 
-        $mb = get_member($comment[mb_id]); 
-        if ($member[mb_id] == $board[bo_admin]) { // 자신이 관리하는 게시판인가? 
-            if ($member[mb_level] >= $mb[mb_level]) // 자신의 레벨이 크거나 같다면 통과 
-                ; 
-            else 
-                alert('게시판관리자의 권한보다 높은 회원의 코멘트이므로 수정할 수 없습니다.'); 
-        } else 
-            alert('자신이 관리하는 게시판이 아니므로 코멘트를 수정할 수 없습니다.'); 
-    } else if ($member[mb_id]) { 
-        if ($member[mb_id] != $comment[mb_id]) 
-            alert('자신의 글이 아니므로 수정할 수 없습니다.'); 
-    } 
+    if ($is_admin == 'super') // 최고관리자 통과
+        ;
+    else if ($is_admin == 'group') { // 그룹관리자
+        $mb = get_member($comment['mb_id']);
+        if ($member['mb_id'] == $group['gr_admin']) { // 자신이 관리하는 그룹인가?
+            if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
+                ;
+            else
+                alert('그룹관리자의 권한보다 높은 회원의 코멘트이므로 수정할 수 없습니다.');
+        } else
+            alert('자신이 관리하는 그룹의 게시판이 아니므로 코멘트를 수정할 수 없습니다.');
+    } else if ($is_admin == 'board') { // 게시판관리자이면
+        $mb = get_member($comment['mb_id']);
+        if ($member['mb_id'] == $board['bo_admin']) { // 자신이 관리하는 게시판인가?
+            if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
+                ;
+            else
+                alert('게시판관리자의 권한보다 높은 회원의 코멘트이므로 수정할 수 없습니다.');
+        } else
+            alert('자신이 관리하는 게시판이 아니므로 코멘트를 수정할 수 없습니다.');
+    } else if ($member['mb_id']) {
+        if ($member['mb_id'] != $comment['mb_id'])
+            alert('자신의 글이 아니므로 수정할 수 없습니다.');
+    }
 
-    $sql = " select count(*) as cnt from {$write_table}
-                where wr_comment_reply like '{$comment_reply}%'
-                and wr_id <> '{$comment_id}'
-                and wr_parent = '{$wr_id}'
-                and wr_comment = '{$tmp_comment}'
+    $sql = " select count(*) as cnt from $write_table
+                where wr_comment_reply like '$comment_reply%'
+                and wr_id <> '$comment_id'
+                and wr_parent = '$wr_id'
+                and wr_comment = '$tmp_comment'
                 and wr_is_comment = 1 ";
     $row = sql_fetch($sql);
-    if ($row[cnt] && !$is_admin)
+    if ($row['cnt'] && !$is_admin)
         alert('이 코멘트와 관련된 답변코멘트가 존재하므로 수정 할 수 없습니다.');
 
     $sql_ip = "";
     if (!$is_admin)
-        $sql_ip = " , wr_ip = '{$_SERVER[REMOTE_ADDR]}' ";
+        $sql_ip = " , wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 
     $sql_secret = "";
     if ($wr_secret)
-        $sql_secret = " , wr_option = '{$wr_secret}' ";
+        $sql_secret = " , wr_option = '$wr_secret' ";
 
-    $sql = " update {$write_table}
-                set wr_subject = '{$wr_subject}',
-                     wr_content = '{$wr_content}',
-                     wr_1 = '{$wr_1}',
-                     wr_2 = '{$wr_2}',
-                     wr_3 = '{$wr_3}',
-                     wr_4 = '{$wr_4}',
-                     wr_5 = '{$wr_5}',
-                     wr_6 = '{$wr_6}',
-                     wr_7 = '{$wr_7}',
-                     wr_8 = '{$wr_8}',
-                     wr_9 = '{$wr_9}',
-                     wr_10 = '{$wr_10}',
-                     wr_option = '{$wr_option}'
-                     {$sql_ip}
-                     {$sql_secret}
-              where wr_id = '{$comment_id}' ";
+    $sql = " update $write_table
+                set wr_subject = '$wr_subject',
+                     wr_content = '$wr_content',
+                     wr_1 = '$wr_1',
+                     wr_2 = '$wr_2',
+                     wr_3 = '$wr_3',
+                     wr_4 = '$wr_4',
+                     wr_5 = '$wr_5',
+                     wr_6 = '$wr_6',
+                     wr_7 = '$wr_7',
+                     wr_8 = '$wr_8',
+                     wr_9 = '$wr_9',
+                     wr_10 = '$wr_10',
+                     wr_option = '$wr_option'
+                     $sql_ip
+                     $sql_secret
+              where wr_id = '$comment_id' ";
     sql_query($sql);
 }
 
@@ -313,5 +313,5 @@ else if ($w == 'cu') // 코멘트 수정
 @include_once($board_skin_path.'/write_comment_update.skin.php');
 @include_once($board_skin_path.'/write_comment_update.tail.skin.php');
 
-goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr[wr_parent].'&amp;page='.$page.$qstr.'&amp;#c_'.$comment_id);
+goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr['wr_parent'].'&amp;page='.$page.$qstr.'&amp;#c_'.$comment_id);
 ?>
