@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="scrap_do" class="new_win">
@@ -14,7 +14,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <tbody>
     <tr>
         <th scope="row">제목</th>
-        <td><?=get_text(cut_str($write[wr_subject], 255))?></td>
+        <td><?=get_text(cut_str($write['wr_subject'], 255))?></td>
     </tr>
     <tr>
         <th scope="row"><label for="wr_content">댓글</label></th>
@@ -23,8 +23,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </tbody>
     </table>
 
-    </form>
-
     <p>
         스크랩을 하시면서 감사 혹은 격려의 댓글을 남기실 수 있습니다.
     </p>
@@ -32,4 +30,5 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <div class="btn_win">
         <input type="submit" value="스크랩">
     </div>
+    </form>
 </div>
