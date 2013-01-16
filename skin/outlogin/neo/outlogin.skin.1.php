@@ -8,14 +8,16 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <form name="foutlogin" method="post" action="<?=$outlogin_action_url?>" onsubmit="return fhead_submit(this);" autocomplete="off">
     <fieldset>
         <input type="hidden" name="url" value="<?=$outlogin_url?>">
-        <label for="ol_mb_id" id="ol_mb_id_label">회원아이디</label>
-        <input type="text" id="ol_mb_id" name="mb_id" maxlength="20" required title="회원아이디">
-        <label for="ol_mb_pw" id="ol_mb_pw_label">패스워드</label>
-        <input type="password" id="ol_mb_pw" name="mb_password" maxlength="20" required title="패스워드">
-        <input type="checkbox" id="auto_login" name="auto_login" value="1">
-        <label for="auto_login" id="auto_login_label">자동로그인</label>
+        <label for="ol_id" id="ol_idlabel">회원아이디</label>
+        <input type="text" id="ol_id" name="mb_id" maxlength="20" required title="회원아이디">
+        <label for="ol_pw" id="ol_pwlabel">패스워드</label>
+        <input type="password" id="ol_pw" name="mb_password" maxlength="20" required title="패스워드">
         <input type="submit" id="ol_submit" value="로그인">
         <ul>
+            <li id="ol_auto">
+                <input type="checkbox" id="auto_login" name="auto_login" value="1">
+                <label for="auto_login" id="auto_login_label">자동로그인</label>
+            </li>
             <li><a href="<?=$g4['bbs_url']?>/register.php">회원가입</a></li>
             <li><a href="<?=$g4['bbs_url']?>/password_lost.php" id="ol_password_lost">정보찾기</a></li>
         </ul>
@@ -25,10 +27,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <script>
 $(function(){
-    $omi = $('#ol_mb_id');
-    $omp = $('#ol_mb_pw');
-    $omi_label = $('#ol_mb_id_label');
-    $omp_label = $('#ol_mb_pw_label');
+    $omi = $('#ol_id');
+    $omp = $('#ol_pw');
+    $omp.css('display','inline-block');
+    $omp.css('width',121);
+    $omi_label = $('#ol_idlabel');
+    $omp_label = $('#ol_pwlabel');
+    $omi_label.addClass('ol_idlabel');
+    $omp_label.addClass('ol_pwlabel');
     $omi.focus(function() {
         $omi_label.css('visibility','hidden');
     });
@@ -37,11 +43,11 @@ $(function(){
     });
     $omi.blur(function() {
         $this = $(this);
-        if($this.attr('id') == "ol_mb_id" && $this.attr('value') == "") $omi_label.css('visibility','visible');
+        if($this.attr('id') == "ol_id" && $this.attr('value') == "") $omi_label.css('visibility','visible');
     });
     $omp.blur(function() {
         $this = $(this);
-        if($this.attr('id') == "ol_mb_pw" && $this.attr('value') == "") $omp_label.css('visibility','visible');
+        if($this.attr('id') == "ol_pw" && $this.attr('value') == "") $omp_label.css('visibility','visible');
     });
 
     $("#auto_login").click(function(){
