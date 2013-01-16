@@ -84,7 +84,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         ?>
         <ul class="bo_v_com">
             <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn02">수정</a></li><? } ?>
-            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" class="btn02">삭제</a></li><? } ?>
+            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" onclick="del(this.href); return false;" class="btn02">삭제</a></li><? } ?>
             <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" onclick="board_move(this.href); return false;" class="btn03">복사</a></li><? } ?>
             <? if ($move_href) { ?><li><a href="<?=$move_href?>" onclick="board_move(this.href); return false;" class="btn03">이동</a></li><? } ?>
             <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn02">검색</a></li><? } ?>
