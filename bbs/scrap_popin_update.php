@@ -91,7 +91,7 @@ sql_query($sql);
 
 echo <<<HEREDOC
 <script>
-    if (confirm('이 글을 스크랩 하였습니다.'."\n\n".'지금 스크랩을 확인하시겠습니까?'))
+    if (confirm('이 글을 스크랩 하였습니다.\\n\\n지금 스크랩을 확인하시겠습니까?'))
         document.location.href = './scrap.php';
     else
         window.close();
