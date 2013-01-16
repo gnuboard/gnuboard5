@@ -176,14 +176,20 @@ if ($sw == "move")
 }
 
 $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.';
-$opener_href = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;$qstr';
+$opener_href = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;'.$qstr;
 
 echo <<<HEREDOC
-<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>
+<meta http-equiv="content-type" content="text/html; charset={$g4['charset']}">
 <script>
-alert("{$msg}");
-opener.document.location.href = "{$opener_href}";
+alert("$msg");
+opener.document.location.href = "$opener_href";
 window.close();
 </script>
+<noscript>
+<p>
+    "$msg"
+</p>
+<a href="$opener_href">돌아가기</a>
+</noscript>
 HEREDOC;
 ?>
