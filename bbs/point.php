@@ -105,7 +105,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         <?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?>
     </div>
 
-    <div class="btn_window">
+    <div class="btn_win">
         <a href="javascript:window.close();">창닫기</a>
     </div>
 </div>
