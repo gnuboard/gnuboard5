@@ -35,9 +35,15 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
                 $cnt++;
+
+                if($board['bo_download_point'] < 0) {
+                    $view['file'][$i]['confirm_href'] = str_replace("download.php", "downloadconfirm.php", $view['file'][$i]['href']);
+                } else {
+                    $view['file'][$i]['confirm_href'] = $view['file'][$i]['href'];
+                }
         ?>
             <li>
-                <a href="javascript:file_download('<?=$view['file'][$i]['href']?>', '<?=$view['file'][$i]['source']?>');">
+                <a href="<? echo $view['file'][$i]['confirm_href']; ?>" onclick="javascript:file_download('<?=$view['file'][$i]['href']?>', '<?=$view['file'][$i]['source']?>'); return false;">
                     <span><?=$view['file'][$i]['source']?> (<?=$view['file'][$i]['size']?>)</span>
                     <span class="bo_v_file_cnt"><?=$view['file'][$i]['download']?></span>
                     <span>DATE : <?=$view['file'][$i]['datetime']?></span>
