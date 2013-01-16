@@ -19,7 +19,7 @@ if (!$bo_table) {
 if (isset($wr_id) && $wr_id) {
     // 글이 없을 경우 해당 게시판 목록으로 이동
     if (!$write['wr_id']) {
-        $msg = '글이 존재하지 않습니다.'.PHP_EOL.PHP_EOL.'글이 삭제되었거나 이동된 경우입니다.';
+        $msg = '글이 존재하지 않습니다.\\n\\n글이 삭제되었거나 이동된 경우입니다.';
         alert($msg, './board.php?bo_table='.$bo_table);
     }
 
@@ -48,7 +48,7 @@ if (isset($wr_id) && $wr_id) {
         if ($is_member)
             alert('글을 읽을 권한이 없습니다.', $g4['path']);
         else
-            alert('글을 읽을 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
 
     // 자신의 글이거나 관리자라면 통과
@@ -105,14 +105,14 @@ if (isset($wr_id) && $wr_id) {
             // 회원이상 글읽기가 가능하다면
             if ($board['bo_read_level'] > 1) {
                 if ($member['mb_point'] + $board['bo_read_point'] < 0)
-                    alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 모으신 후 다시 글읽기 해 주십시오.');
+                    alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.\\n\\n포인트를 모으신 후 다시 글읽기 해 주십시오.');
 
                 insert_point($member['mb_id'], $board['bo_read_point'], '{$board['bo_subject']} {$wr_id} 글읽기', $bo_table, $wr_id, '읽기');
             }
             */
             // 글읽기 포인트가 설정되어 있다면
             if ($board['bo_read_point'] && $member['mb_point'] + $board['bo_read_point'] < 0)
-                alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 모으신 후 다시 글읽기 해 주십시오.');
+                alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.\\n\\n포인트를 모으신 후 다시 글읽기 해 주십시오.');
 
             insert_point($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$wr_id} 글읽기", $bo_table, $wr_id, '읽기');
         }
@@ -126,7 +126,7 @@ if (isset($wr_id) && $wr_id) {
         if ($member['mb_id'])
             alert('목록을 볼 권한이 없습니다.', $g4['path']);
         else
-            alert('목록을 볼 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
