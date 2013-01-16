@@ -34,13 +34,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <div class="pg">
         <?=get_paging($config['cf_write_pages'], $page, $total_page, "?$qstr&amp;page=");?>
     </div>
-
-    <div class="btn_win"></div>
 </div>
 
 <script>
 $(function() {
-    $("div.btn_win").html("<a>창닫기</a>");
+    $("div#scrap").append("<div class=\"btn_win\"><a>창닫기</a></div>");
 
     $("div.btn_win a").click(function() {
         window.close();
