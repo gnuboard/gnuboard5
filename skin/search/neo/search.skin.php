@@ -57,23 +57,22 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </fieldset>
 </form>
 
-
-<? if ($stx) { ?>
-<? if ($board_count) { ?>
-<dl id="sch_result_hd">
-    <dt>검색어 <strong><?=$stx?></strong>에 대한 결과입니다.</dt>
-    <dd>
-        <ul>
-            <li><span class="highlight"><?=$board_count?></span>개의 게시판</li>
-            <li><span class="highlight"><?=number_format($total_count)?></span>개의 게시글</li>
-            <li>현재 <?=number_format($page)?>/<?=number_format($total_page)?> 페이지 열람 중</li>
-        </ul>
-    </dd>
-</dl>
-<? } ?>
-<? } ?>
-
 <div id="sch_result">
+
+    <? if ($stx) { ?>
+    <? if ($board_count) { ?>
+    <dl id="sch_result_hd">
+        <dt>검색어 <strong><?=$stx?></strong>에 대한 결과입니다.</dt>
+        <dd>
+            <ul>
+                <li><span style="color:<?=$config['cf_search_color']?>"><?=$board_count?></span>개의 게시판</li>
+                <li><span style="color:<?=$config['cf_search_color']?>"><?=number_format($total_count)?></span>개의 게시물</li>
+                <li>현재 <?=number_format($page)?>/<?=number_format($total_page)?> 페이지 열람 중</li>
+            </ul>
+        </dd>
+    </dl>
+    <? } ?>
+    <? } ?>
 
     <?
     if ($stx) {
@@ -115,10 +114,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             ?>
                 <li>
                     <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><b><?=$list[$idx][$i][subject]?></b></a>
+                    <span class="sch_datetime"><?=$list[$idx][$i][wr_datetime]?></span>
                     <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
                     <p><?=$list[$idx][$i][content]?></p>
                     <div class="sch_sideview"><?=$list[$idx][$i][name]?></div>
-                    <span class="sch_datetime"><?=$list[$idx][$i][wr_datetime]?></span>
                 </li>
             <? } ?>
             </ul>
