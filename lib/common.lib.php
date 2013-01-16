@@ -104,9 +104,9 @@ function set_cookie($cookie_name, $value, $expire)
 function get_cookie($cookie_name)
 {
     $cookie = md5($cookie_name);
-    if (array_key_exists($cookie, $_COOKIE)) 
+    if (array_key_exists($cookie, $_COOKIE))
         return base64_decode($_COOKIE[md5($cookie_name)]);
-    else 
+    else
         return "";
 }
 
@@ -803,7 +803,7 @@ function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
 function option_selected($value, $selected, $text='')
 {
     if (!$text) $text = $value;
-    if ($value == $selected) 
+    if ($value == $selected)
         return "<option value=\"$value\" selected=\"selected\">$text</option>\n";
     else
         return "<option value=\"$value\">$text</option>\n";
@@ -1589,7 +1589,7 @@ function convert_charset($from_charset, $to_charset, $str)
 // mysql_real_escape_string 의 alias 기능을 한다.
 function escape_trim($field)
 {
-    return mysql_real_escape_string(htmlentities(trim($field)));
+    return mysql_real_escape_string(trim($field));
 }
 
 
@@ -1620,7 +1620,7 @@ function abs_ip2long($ip='')
 }
 
 
-function get_selected($field, $value, $first=false) 
+function get_selected($field, $value, $first=false)
 {
     $selected = ($field==$value) ? ' selected="selected"' : '';
     if ($first && !$selected)

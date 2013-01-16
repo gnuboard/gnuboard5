@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="scrap" class="new_win">
@@ -19,11 +19,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <tbody>
     <? for ($i=0; $i<count($list); $i++) { ?>
     <tr>
-        <td class="td_num"><?=$list[$i][num]?></td>
-        <td class="td_board"><a href="javascript:;" onclick="opener.document.location.href='<?=$list[$i][opener_href]?>';"><?=$list[$i][bo_subject]?></a></td>
-        <td><a href="javascript:;" onclick="opener.document.location.href='<?=$list[$i][opener_href_wr_id]?>';"><?=$list[$i][subject]?></a></td>
-        <td class="td_datetime"><?=$list[$i][ms_datetime]?></td>
-        <td class="td_mng"><a href="javascript:del('<?=$list[$i][del_href]?>');">삭제</a></td>
+        <td class="td_num"><?=$list[$i]['num']?></td>
+        <td class="td_board"><a href="<?=$list[$i]['opener_href']?>" target="_blank" onclick="opener.document.location.href='<?=$list[$i]['opener_href']?>'; return false;"><?=$list[$i]['bo_subject']?></a></td>
+        <td><a href="<?=$list[$i]['opener_href_wr_id']?>" target="_blank" onclick="opener.document.location.href='<?=$list[$i]['opener_href_wr_id']?>'; return false;"><?=$list[$i]['subject']?></a></td>
+        <td class="td_datetime"><?=$list[$i]['ms_datetime']?></td>
+        <td class="td_mng"><a href="<? echo $list[$i]['del_href']; ?>" onclick="del(this.href); return false;">삭제</a></td>
     </tr>
     <? } ?>
 
@@ -32,10 +32,16 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </table>
 
     <div class="pg">
-        <?=get_paging($config[cf_write_pages], $page, $total_page, "?$qstr&amp;page=");?>
-    </div>
-
-    <div class="btn_win">
-        <a href="javascript:window.close();">창닫기</a>
+        <?=get_paging($config['cf_write_pages'], $page, $total_page, "?$qstr&amp;page=");?>
     </div>
 </div>
+
+<script>
+$(function() {
+    $("div#scrap").append("<div class=\"btn_win\"><a>창닫기</a></div>");
+
+    $("div.btn_win a").click(function() {
+        window.close();
+    });
+});
+</script>

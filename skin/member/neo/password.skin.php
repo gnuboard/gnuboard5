@@ -1,8 +1,8 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<form name="fboardpassword" method="post" onsubmit="return fboardpassword_submit(this);">
+<form name="fboardpassword" method="post" action="<? echo $action; ?>">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="wr_id" value="<?=$wr_id?>">
@@ -23,10 +23,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <script>
 document.fboardpassword.wr_password.focus();
-
-function fboardpassword_submit(f)
-{
-    f.action = "<?=$action?>";
-    return true;
-}
 </script>

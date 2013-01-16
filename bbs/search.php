@@ -129,7 +129,11 @@ if ($stx) {
 
             $sql2 = " select bo_subject from {$g4['board_table']} where bo_table = '{$g4_search['tables'][$i]}' ";
             $row2 = sql_fetch($sql2);
-            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g4_search[tables][$i].'">'.$row2[bo_subject].'</a> ('.$row[cnt].')';
+            $sch_class = "";
+            $sch_all = "";
+            if ($onetable == $g4_search['tables'][$i]) $sch_class = "class=sch_on";
+            else $sch_all = "class=sch_on";
+            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g4_search['tables'][$i].'" '.$sch_class.'>'.$row2['bo_subject'].PHP_EOL.'<span class="sound_only">갯수</span><span class="cnt_cmt">'.$row['cnt'].'</span></a>';
         }
     }
 
@@ -162,37 +166,37 @@ if ($stx) {
         for ($i=0; $row=sql_fetch_array($result); $i++) {
             // 검색어까지 링크되면 게시판 부하가 일어남
             $list[$idx][$i] = $row;
-            $list[$idx][$i][href] = './board.php?bo_table='.$search_table[$idx].'&amp;wr_id='.$row[wr_parent];
+            $list[$idx][$i][href] = './board.php?bo_table='.$search_table[$idx].'&amp;wr_id='.$row['wr_parent'];
 
-            if ($row[wr_is_comment]) 
+            if ($row['wr_is_comment']) 
             { 
-                $link .= '#c'.$row[wr_id];
-                $sql2 = " select wr_subject, wr_option from {$tmp_write_table} where wr_id = '{$row[wr_parent]}' ";
+                $link .= '#c'.$row['wr_id'];
+                $sql2 = " select wr_subject, wr_option from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ";
                 $row2 = sql_fetch($sql2);
-                //$row[wr_subject] = $row2[wr_subject];
-                $row[wr_subject] = get_text($row2[wr_subject]);
+                //$row['wr_subject'] = $row2['wr_subject'];
+                $row['wr_subject'] = get_text($row2['wr_subject']);
             }
 
             // 비밀글은 검색 불가
-            if (strstr($row[wr_option].$row2[wr_option], 'secret')) 
-                $row[wr_content] = '[비밀글 입니다.]';
+            if (strstr($row['wr_option'].$row2['wr_option'], 'secret')) 
+                $row['wr_content'] = '[비밀글 입니다.]';
 
-            $subject = get_text($row[wr_subject]);
+            $subject = get_text($row['wr_subject']);
             if (strstr($sfl, 'wr_subject')) 
                 $subject = search_font($stx, $subject);
 
-            if ($read_level[$idx] <= $member[mb_level])
+            if ($read_level[$idx] <= $member['mb_level'])
             {
-                $content = cut_str(get_text($row[wr_content]),300,"…");
+                $content = cut_str(get_text($row['wr_content']),300,"…");
                 if (strstr($sfl, 'wr_content')) 
                     $content = search_font($stx, $content);
             }
             else
                 $content = '';
 
-            $list[$idx][$i][subject] = $subject;
-            $list[$idx][$i][content] = $content;
-            $list[$idx][$i][name] = get_sideview($row[mb_id], cut_str($row[wr_name], $config[cf_cut_name]), $row[wr_email], $row[wr_homepage]);
+            $list[$idx][$i]['subject'] = $subject;
+            $list[$idx][$i]['content'] = $content;
+            $list[$idx][$i]['name'] = get_sideview($row['mb_id'], cut_str($row['wr_name'], $config['cf_cut_name']), $row['wr_email'], $row['wr_homepage']);
             
             $k++;
             if ($k >= $rows) 

@@ -84,9 +84,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         ?>
         <ul class="bo_v_com">
             <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn02">수정</a></li><? } ?>
-            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" class="btn02">삭제</a></li><? } ?>
-            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" class="btn03">복사</a></li><? } ?>
-            <? if ($move_href) { ?><li><a href="<?=$move_href?>" class="btn03">이동</a></li><? } ?>
+            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" onclick="del(this.href); return false;" class="btn02">삭제</a></li><? } ?>
+            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" onclick="board_move(this.href); return false;" class="btn03">복사</a></li><? } ?>
+            <? if ($move_href) { ?><li><a href="<?=$move_href?>" onclick="board_move(this.href); return false;" class="btn03">이동</a></li><? } ?>
             <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn02">검색</a></li><? } ?>
             <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
             <? if ($reply_href) { ?><li><a href="<?=$reply_href?>" class="btn02">답변</a></li><? } ?>
@@ -120,7 +120,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
         <? if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
-            <? if ($scrap_href) { ?><a href="javascript:;" class="btn02" onclick="win_scrap('<?=$scrap_href?>');">스크랩</a><? } ?>
+            <? if ($scrap_href) { ?><a href="<? echo $scrap_href; ?>" onclick="win_scrap(this.href); return false;" target="_blank" class="btn02">스크랩</a><? } ?>
             <? if ($good_href) {?><a href="<?=$good_href?>" class="btn02" target="hiddenframe">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
             <? if ($nogood_href) {?><a href="<?=$nogood_href?>" class="btn02" target="hiddenframe">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
         </div>
@@ -151,6 +151,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 function file_download(link, file) {
     <? if ($board['bo_download_point'] < 0) { ?>if (confirm("'"+decodeURIComponent(file)+"' 파일을 다운로드 하시면 포인트가 차감(<?=number_format($board['bo_download_point'])?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?"))<?}?>
     document.location.href=link;
+}
+
+function board_move(href)
+{
+    window.open(href, "boardmove", "left=50, top=50, width=500, height=550, scrollbars=1");
 }
 </script>
 
