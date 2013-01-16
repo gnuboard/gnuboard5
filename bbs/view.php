@@ -73,7 +73,7 @@ $update_href = $delete_href = '';
 if (($member['mb_id'] && ($member['mb_id'] == $write['mb_id'])) || $is_admin) {
     $update_href = './write.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
     $delete_href = 'javascript:del(\'./delete.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.urldecode($qstr).'\');';
-    if ($is_admin) 
+    if ($is_admin)
     {
         set_session("ss_delete_token", $token = uniqid(time()));
         $delete_href = 'javascript:del(\'./delete.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;token='.$token.'&amp;page='.$page.urldecode($qstr).'\');';
@@ -87,8 +87,8 @@ else if (!$write['mb_id']) { // 회원이 쓴 글이 아니라면
 // 최고, 그룹관리자라면 글 복사, 이동 가능
 $copy_href = $move_href = '';
 if ($write['wr_reply'] == '' && ($is_admin == 'super' || $is_admin == 'group')) {
-    $copy_href = 'javascript:win_open(\'./move.php?sw=copy&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr.'\', \'boardcopy\', \'left=50, top=50, width=500, height=550, scrollbars=1\');';
-    $move_href = 'javascript:win_open(\'./move.php?sw=move&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr.'\', \'boardmove\', \'left=50, top=50, width=500, height=550, scrollbars=1\');';
+    $copy_href = './move.php?sw=copy&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
+    $move_href = './move.php?sw=move&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
 }
 
 $scrap_href = '';
