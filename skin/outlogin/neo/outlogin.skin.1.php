@@ -29,6 +29,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 $(function(){
     $omi = $('#ol_id');
     $omp = $('#ol_pw');
+    $omp.css('display','inline-block');
+    $omp.css('width',121);
     $omi_label = $('#ol_idlabel');
     $omp_label = $('#ol_pwlabel');
     $omi_label.addClass('ol_idlabel');

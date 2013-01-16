@@ -102,7 +102,7 @@ a {color:#000;text-decoration:none}
 #ol_before input:focus {background:#333;color:#fff}
 #ol_id {display:block;margin-bottom:3px;padding:0 5px;width:185px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
 .ol_idlabel {position:absolute;top:23px;left:20px;color:#696969}
-#ol_pw {padding:0 5px;width:121px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
+#ol_pw {display:block;padding:0 5px;width:185px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
 .ol_pwlabel {position:absolute;top:50px;left:20px;color:#696969}
 #auto_login {}
 #auto_login_label {color:#696969;letter-spacing:-0.1em}
