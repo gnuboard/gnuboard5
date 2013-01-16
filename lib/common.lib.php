@@ -1627,4 +1627,13 @@ function get_selected($field, $value, $first=false)
         $selected = ($field=="") ? ' selected="selected"' : '';
     return $selected;
 }
+
+
+//모바일 검사
+function is_mobile() {
+    if ( preg_match('/('._MOBILE_AGENT_.')/i', $_SERVER['HTTP_USER_AGENT']) )
+        return true;
+    else
+        return false;
+}
 ?>

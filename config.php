@@ -5,6 +5,8 @@ define('_GNUBOARD_', 1);
 if (function_exists("date_default_timezone_set"))
     date_default_timezone_set("Asia/Seoul");
 
+define('_MOBILE_AGENT_', 'phone|samsung|lgtel|mobile|skt|nokia|blackberry|android|sony');
+
 // 디렉토리
 $g4['bbs']            = 'bbs';
 $g4['bbs_path']       = $g4['path'].'/'.$g4['bbs'];
