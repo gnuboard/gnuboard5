@@ -18,11 +18,11 @@ include_once($g4['path'].'/head.sub.php');
 <caption>기존 게시판을 새 게시판으로 복사</caption>
 <tbody>
 <tr>
-    <th scope="col">원본 테이블</th>
+    <th scope="col">원본 테이블명</th>
     <td><?=$bo_table?></td>
 </tr>
 <tr>
-    <th scope="col"><label for="target_table">복사할 TABLE</label></th>
+    <th scope="col"><label for="target_table">복사 테이블명</label></th>
     <td><input type="text" id="target_table" name="target_table" maxlength="20" class="required alnum_" required="required" title="복사할 TABLE"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
 </tr>
 <tr>
@@ -53,6 +53,11 @@ include_once($g4['path'].'/head.sub.php');
 <script>
 function fboardcopy_check(f)
 {
+    if (f.bo_table.value == f.target_table.value) {
+        alert("원본 테이블명과 복사할 테이블명이 달라야 합니다.");
+        return false;
+    }
+
     <? echo chk_captcha_js(); ?>
 
     return true;
