@@ -41,7 +41,7 @@ if ($is_notice || $is_html || $is_secret || $is_mail) {
     }
 
     if ($is_mail) {
-        $option .= PHP_EOL.'<input type="checkbox" name="mail" value="mail" '.$recv_email_checked.'>'.PHP_EOL.'<label for="mail">답변메일받기</label>';
+        $option .= PHP_EOL.'<input type="checkbox" id="mail" name="mail" value="mail" '.$recv_email_checked.'>'.PHP_EOL.'<label for="mail">답변메일받기</label>';
     }
 }
 
