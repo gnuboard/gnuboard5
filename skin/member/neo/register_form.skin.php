@@ -102,12 +102,12 @@ var member_skin_path = "<?=$member_skin_path?>";
 <tr>
     <th scope="row">주소</th>
     <td>
-        <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
+        <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
          -
-        <input type="text" id="reg_mb_zip2" name="mb_zip2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip2']?>" title="우편번호 뒷자리">
-        <a href="<? echo $zip_href; ?>" id="reg_zip_find" target="_blank" onclick="win_zip('fregisterform', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2'); return false;" style="display: none;">주소찾기</a>
-        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
-        <input type="text" id="reg_mb_addr2" name="mb_addr2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr2']?>" title="상세주소">
+        <input type="text" id="reg_mb_zip2" name="mb_zip2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip2']?>" title="우편번호 뒷자리">
+        <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline" target="_blank" onclick="win_zip('fregisterform', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2'); return false;" style="display: none;">주소찾기</a>
+        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
+        <input type="text" id="reg_mb_addr2" name="mb_addr2" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr2']?>" title="상세주소">
     </td>
 </tr>
 <? } ?>
@@ -210,7 +210,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 
 <script>
 $(function() {
-    $("#reg_zip_find").css("display", "inline");
+    $("#reg_zip_find").css("display", "inline-block");
     $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
 });
 
