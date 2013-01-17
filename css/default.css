@@ -142,8 +142,8 @@ a {color:#000;text-decoration:none}
 #poll ul {padding:5px 10px;background:#fff}
 #poll li {margin:7px 0}
 #poll footer {padding:10px 10px 15px;background:#fff;text-align:center}
-#poll .btn_submit {height:24px;background:#494949;line-height:1.9em}
-#poll .btn_cancel {height:22px;line-height:1.95em}
+#poll .btn_submit {padding:0 10px;height:24px;background:#494949;font-weight:bold;line-height:1.9em}
+#poll .btn_cancel {padding:0 7px;height:22px;line-height:1.95em}
 /* 설문조사 결과 (새창) */
 #poll_result section {margin:0 auto 20px;padding:10px;width:90%}
 #poll_result h2 {margin:0;padding:20px 0}
@@ -217,14 +217,8 @@ a {color:#000;text-decoration:none}
 
 /* 버튼 */
 .btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ff5e1c;background:#ff4679;color:#fff;text-decoration:none;line-height:2.2em}
-.btn01:hover,
-.btn01:focus {}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.2em}
-.btn02:hover,
-.btn02:focus {}
 .btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949;background:#494949;color:#fff;text-decoration:none;line-height:2.2em}
-.btn02:hover,
-.btn02:focus {}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 15px;height:30px;border:0;background:#ff4679;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.5em}
@@ -310,8 +304,7 @@ a {color:#000;text-decoration:none}
 .sch_datetime {color:#818385}
 
 /* 게시판 목록 */
-#btn_bo_adm {text-align:center}
-#btn_bo_adm a {display:inline-block;margin-bottom:20px;padding:10px 20px;text-align:center}
+.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #494949;background:#494949;color:#fff;text-decoration:none;line-height:1.85em}
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
@@ -414,7 +407,6 @@ a {color:#000;text-decoration:none}
 #post_num p {margin:0 auto 30px;width:90%}
 
 /* 회원가입 약관 */
-#fregister {}
 #fregister section {margin-bottom:20px}
 #fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #ddd;background:#f7f7f7}
 #fregister textarea:focus {background:#333;color:#fff}
@@ -429,14 +421,12 @@ a {color:#000;text-decoration:none}
 .reg_result_deco {text-align:center}
 
 /* 회원 패스워드 확인 */
-#member_confirm {padding:150px 0;background:#fcfcfc;text-align:center}
-#member_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
-#member_confirm p {margin-bottom:20px}
-#member_confirm_id {display:inline-block;margin-right:20px}
+#member_confirm {padding:150px 0;text-align:center}
+#member_confirm fieldset {margin:0 auto;width:400px;border:1px solid #ddd}
+#member_confirm_id {display:inline-block;margin:0 30px 0 20px}
 
 /* 비밀글 패스워드 확인 */
-#password_confirm {padding:150px 0;background:#fcfcfc;text-align:center}
-#password_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#password_confirm {padding:150px 0;text-align:center}
 #password_confirm p {margin-bottom:20px}
 
 /* 최근게시물 */

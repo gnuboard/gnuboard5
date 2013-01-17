@@ -135,9 +135,9 @@ for ($i=0; $i<count($list); $i++) {
         <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택삭제"></li>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택복사"></li>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택이동"></li>
+        <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제"></li>
+        <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택복사"></li>
+        <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택이동"></li>
         <? } ?>
     </ul>
 
