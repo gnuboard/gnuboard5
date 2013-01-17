@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<div id="member_login">
+<div id="mb_login">
     <h1>로그인</h1>
 
     <form name="flogin" method="post" action="<?=$login_action_url?>" onsubmit="return flogin_submit(this);">
