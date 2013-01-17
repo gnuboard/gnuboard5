@@ -104,7 +104,7 @@ for ($i=0; $i<count($list); $i++) {
 
         <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>>
             <?=$list[$i]['subject']?>
-            <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
+            <? if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?=$list[$i]['comment_cnt'];?><span class="sound_only">개</span><? } ?>
         </a>
 
         <?
