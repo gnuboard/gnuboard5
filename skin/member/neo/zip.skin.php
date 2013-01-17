@@ -13,7 +13,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="frm_addr2" value="<?=$frm_addr2?>">
 
     <fieldset>
-        <legend>우편번호 검색</legend>
         <label for="addr1">동/읍/면/리 검색</label>
         <input type="text" id="addr1" name="addr1" class="fieldset_input" value="<?=$addr1?>" required minlength=2>
         <input type="submit" class="fieldset_submit" value="검색">

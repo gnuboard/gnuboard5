@@ -407,6 +407,8 @@ a {color:#000;text-decoration:none}
 #post_num li a {display:block;padding:5px 0}
 #post_num p {margin:0 auto 30px;width:90%}
 
+/* 로그인 */
+
 /* 회원가입 약관 */
 #fregister section {margin-bottom:20px}
 #fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #ddd;background:#f7f7f7}
