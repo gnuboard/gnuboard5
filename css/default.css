@@ -8,7 +8,7 @@ h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
 form, img {border:0}
-label, input, select, img {vertical-align:middle} textarea {font-size:12px}
+label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"verdana","dotum"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
 hr {display:none}
@@ -212,7 +212,7 @@ a {color:#000;text-decoration:none}
 
 /* ##################################################################### 스킨 및 컨텐츠 */
 /* 공통 */
-.cnt_cmt {display:inline-block;margin-left:10px;color:#ff4679}
+.cnt_cmt {display:inline-block;margin-left:5px;color:#ff4679}
 .readonly {background:#ff4679}
 .highlight {font-weight:bold;color:#ff4679}
 
@@ -247,7 +247,7 @@ a {color:#000;text-decoration:none}
 
 /* 최신글 */
 .latest {clear:both;position:relative;margin-bottom:30px;padding:0 0 20px;border-bottom:1px solid #ccc}
-.latest strong {display:block;margin-bottom:15px;padding:0 10px 10px;border-bottom:1px solid #eee}
+.latest_title {display:block;margin-bottom:15px;padding:0 10px 10px;border-bottom:1px solid #eee}
 .latest ul {margin:0;padding:0;list-style:none}
 .latest li {padding:0 10px}
 .latest li a {display:inline-block;padding:4px 0}
@@ -318,7 +318,9 @@ a {color:#000;text-decoration:none}
 #bo_sch form {display:inline-block}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
 #bo_list td {line-height:1em}
+#bo_list strong {color:#ff4679}
 #bo_list img {vertical-align:top}
+.bo_notice {background:#f5f5f5}
 .bo_cate_link {display:inline-block;margin:0 10px 0 0;font-weight:bold;text-decoration:none}
 .bo_current {color:#ff4679}
 .td_subject img {margin-left:5px}

@@ -85,7 +85,7 @@ for ($i=0; $i<count($list); $i++) {
     <td class="td_bignum">
     <?
     if ($list[$i]['is_notice']) // 공지사항
-        echo '공지';
+        echo '<strong>공지</strong>';
     else if ($wr_id == $list[$i]['wr_id'])
         echo "<span class=\"bo_current\">열람중</span>";
     else
