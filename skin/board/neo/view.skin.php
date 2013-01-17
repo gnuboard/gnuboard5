@@ -44,8 +44,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         ?>
             <li>
                 <a href="<? echo $view['file'][$i]['confirm_href']; ?>" onclick="javascript:file_download('<?=$view['file'][$i]['href']?>', '<?=$view['file'][$i]['source']?>'); return false;">
-                    <span><?=$view['file'][$i]['source']?> (<?=$view['file'][$i]['size']?>)</span>
-                    <span class="bo_v_file_cnt"><?=$view['file'][$i]['download']?></span>
+                    <strong><?=$view['file'][$i]['source']?></strong>
+                    <span> (<?=$view['file'][$i]['size']?>)</span>
+                    <span class="bo_v_file_cnt"><?=$view['file'][$i]['download']?>회 다운로드</span>
                     <span>DATE : <?=$view['file'][$i]['datetime']?></span>
                 </a>
             </li>
@@ -71,7 +72,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         ?>
             <li>
                 <a href="<?=$view['link_href'][$i]?>" target="_blank">
-                    <span><?=$link?></span>
+                    <strong><?=$link?></strong>
                     <span class="bo_v_link_cnt"><?=$view['link_hit'][$i]?>회 연결</span>
                 </a>
             </li>
