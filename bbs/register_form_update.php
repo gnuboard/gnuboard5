@@ -12,7 +12,7 @@ if (!($w == '' || $w == 'u')) {
 }
 
 if ($w == 'u' && $is_admin == 'super') {
-    if (file_exists($g4['path'].'/DEMO')) 
+    if (file_exists($g4['path'].'/DEMO'))
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
@@ -22,6 +22,7 @@ if (!chk_captcha()) {
 
 $mb_id          = escape_trim($_POST['mb_id']);
 $mb_password    = escape_trim($_POST['mb_password']);
+$mb_password_re = escape_trim($_POST['mb_password_re']);
 $mb_name        = escape_trim($_POST['mb_name']);
 $mb_nick        = escape_trim($_POST['mb_nick']);
 $mb_email       = escape_trim($_POST['mb_email']);
@@ -54,8 +55,10 @@ if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg);
 
-    if ($w == '' && !$mb_password) 
+    if ($w == '' && !$mb_password)
         alert('패스워드가 넘어오지 않았습니다.');
+    if($w == '' && $mb_password != $mb_password_re)
+        alert('패스워드가 일치하지 않습니다.');
 
     if ($msg = empty_mb_name($mb_id))       alert($msg);
     if ($msg = empty_mb_nick($mb_nick))     alert($msg);
@@ -189,19 +192,19 @@ if ($w == '') {
 
         $mb_md5 = md5($mb_id.$mb_email.$g4['time_ymdhis']);
         $certify_href = $g4['url'].'/'.$g4['bbs'].'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
-        
+
         ob_start();
         include_once ('./register_form_update_mail1.php');
         $content = ob_get_contents();
         ob_end_clean();
-        
+
         mailer($admin['mb_nick'], $admin['mb_email'], $mb_email, $subject, $content, 1);
     }
 
     // 최고관리자님께 메일 발송
     if ($config['cf_email_mb_super_admin']) {
         $subject = $mb_nick .' 님께서 회원으로 가입하셨습니다.';
-        
+
         ob_start();
         include_once ('./register_form_update_mail2.php');
         $content = ob_get_contents();
@@ -211,7 +214,7 @@ if ($w == '') {
     }
 
     // 메일인증 사용하지 않는 경우에만 로그인
-    if (!$config['cf_use_email_certify']) 
+    if (!$config['cf_use_email_certify'])
         set_session('ss_mb_id', $mb_id);
 
     set_session('ss_mb_reg', $mb_id);
@@ -290,12 +293,12 @@ if ($w == '') {
 
         $mb_md5 = md5($mb_id.$mb_email.$member['mb_datetime']);
         $certify_href = $g4['url'].'/'.$g4['bbs'].'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
-        
+
         ob_start();
         include_once ('./register_form_update_mail3.php');
         $content = ob_get_contents();
         ob_end_clean();
-        
+
         mailer($admin['mb_nick'], $admin['mb_email'], $mb_email, $subject, $content, 1);
     }
 }
@@ -305,7 +308,7 @@ if ($w == '') {
 @include_once ($g4['path'].'/skin/member/'.$config['cf_member_skin'].'/register_update.skin.php');
 
 
-if ($msg) 
+if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
 
 if ($w == "") {
