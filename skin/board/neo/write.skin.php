@@ -119,12 +119,12 @@ echo $option_hidden;
     <th scope="row">파일 #<?=$i+1?></th>
     <td>
         <input type="file" name="bf_file[]" class="frm_file frm_input" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <? if ($is_file_content) { ?>
+        <input type="text" name="bf_content[]" class="frm_file frm_input" value="<? echo $file[$i]['bf_content']; ?>" size="50" title="파일 설명을 입력해주세요.">
+        <?}?>
         <? if($w == 'u' && $file[$i]['file']) { ?>
         <input type="checkbox" id="bf_file_del<?=$i?>" name="bf_file_del[<? echo $i; ?>]" value="1"> <label for="bf_file_del<?=$i?>"><? echo $file[$i]['source'].'('.$file[$i]['size'].')'; ?> 파일 삭제</label>
         <? } ?>
-        <? if ($is_file_content) { ?>
-        <input type="text" name="bf_content[]" class="frm_input" value="<? echo $file[$i]['bf_content']; ?>" size="50" title="파일 설명을 입력해주세요.">
-        <?}?>
     </td>
 </tr>
 <?}?>
