@@ -50,7 +50,7 @@ $notice_array = explode(',', trim($board['bo_notice']));
 if ($w == 'u' || $w == 'r') {
     $wr = get_write($write_table, $wr_id);
     if (!$wr['wr_id']) {
-        alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다."); 
+        alert("글이 존재하지 않습니다.\\n글이 삭제되었거나 이동하였을 수 있습니다.");
     }
 }
 
@@ -60,7 +60,6 @@ if (!$is_admin && !$board['bo_use_secret'] && $secret) {
 }
 
 // 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글 무조건 사용일때는 관리자를 제외(공지)하고 무조건 비밀글로 등록
-$secret = '';
 if (!$is_admin && $board['bo_use_secret'] == 2) {
     $secret = 'secret';
 }
@@ -146,7 +145,7 @@ if ($w == '' || $w == 'u') {
     $reply = $reply_array['wr_reply'] . $reply_char;
 
 } else {
-    alert('w 값이 제대로 넘어오지 않았습니다.'); 
+    alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
 if ($is_guest && !chk_captcha()) {
@@ -155,15 +154,15 @@ if ($is_guest && !chk_captcha()) {
 
 if ($w == '' || $w == 'r') {
     if (isset($_SESSION['ss_datetime'])) {
-        if ($_SESSION['ss_datetime'] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin) 
+        if ($_SESSION['ss_datetime'] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin)
             alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
     }
 
     set_session("ss_datetime", $g4['server_time']);
-} 
+}
 
-if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject'])) 
-    alert('제목을 입력하여 주십시오.'); 
+if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
+    alert('제목을 입력하여 주십시오.');
 
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
 @mkdir($g4['path'].'/data/file/'.$bo_table, 0707);
@@ -248,14 +247,14 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
 
         // 접미사를 붙인 파일명
         //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr(md5(uniqid($g4['server_time'])),0,8).'_'.urlencode($filename);
-        // 달빛온도님 수정 : 한글파일은 urlencode($filename) 처리를 할경우 '%'를 붙여주게 되는데 '%'표시는 미디어플레이어가 인식을 못하기 때문에 재생이 안됩니다. 그래서 변경한 파일명에서 '%'부분을 빼주면 해결됩니다. 
-        //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr(md5(uniqid($g4['server_time'])),0,8).'_'.str_replace('%', '', urlencode($filename)); 
+        // 달빛온도님 수정 : 한글파일은 urlencode($filename) 처리를 할경우 '%'를 붙여주게 되는데 '%'표시는 미디어플레이어가 인식을 못하기 때문에 재생이 안됩니다. 그래서 변경한 파일명에서 '%'부분을 빼주면 해결됩니다.
+        //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr(md5(uniqid($g4['server_time'])),0,8).'_'.str_replace('%', '', urlencode($filename));
         shuffle($chars_array);
         $shuffle = implode('', $chars_array);
 
         // 첨부파일 첨부시 첨부파일명에 공백이 포함되어 있으면 일부 PC에서 보이지 않거나 다운로드 되지 않는 현상이 있습니다. (길상여의 님 090925)
-        //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode($filename)); 
-        $upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode(str_replace(' ', '_', $filename))); 
+        //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode($filename));
+        $upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode(str_replace(' ', '_', $filename)));
 
         $dest_file = $g4['path'].'/data/file/'.$bo_table.'/'.$upload[$i]['file'];
 
@@ -289,7 +288,7 @@ if ($w == '' || $w == 'r') {
 
     if ($w == 'r') {
         // 답변의 원글이 비밀글이라면 패스워드는 원글과 동일하게 넣는다.
-        if ($secret) 
+        if ($secret)
             $wr_password = $wr['wr_password'];
 
         $wr_id = $wr_id . $reply;
@@ -300,45 +299,45 @@ if ($w == '' || $w == 'r') {
         $wr_reply = '';
     }
 
-    $sql = " insert into {$write_table}
-                set wr_num = '{$wr_num}',
-                     wr_reply = '{$wr_reply}',
+    $sql = " insert into $write_table
+                set wr_num = '$wr_num',
+                     wr_reply = '$wr_reply',
                      wr_comment = 0,
-                     ca_name = '{$ca_name}',
-                     wr_option = '{$html},{$secret},{$mail}',
-                     wr_subject = '{$wr_subject}',
-                     wr_content = '{$wr_content}',
-                     wr_link1 = '{$wr_link1}',
-                     wr_link2 = '{$wr_link2}',
+                     ca_name = '$ca_name',
+                     wr_option = '$html,$secret,$mail',
+                     wr_subject = '$wr_subject',
+                     wr_content = '$wr_content',
+                     wr_link1 = '$wr_link1',
+                     wr_link2 = '$wr_link2',
                      wr_link1_hit = 0,
                      wr_link2_hit = 0,
                      wr_hit = 0,
                      wr_good = 0,
                      wr_nogood = 0,
                      mb_id = '{$member['mb_id']}',
-                     wr_password = '{$wr_password}',
-                     wr_name = '{$wr_name}',
-                     wr_email = '{$wr_email}',
-                     wr_homepage = '{$wr_homepage}',
+                     wr_password = '$wr_password',
+                     wr_name = '$wr_name',
+                     wr_email = '$wr_email',
+                     wr_homepage = '$wr_homepage',
                      wr_datetime = '{$g4['time_ymdhis']}',
                      wr_last = '{$g4['time_ymdhis']}',
                      wr_ip = '{$_SERVER['REMOTE_ADDR']}',
-                     wr_1 = '{$wr_1}',
-                     wr_2 = '{$wr_2}',
-                     wr_3 = '{$wr_3}',
-                     wr_4 = '{$wr_4}',
-                     wr_5 = '{$wr_5}',
-                     wr_6 = '{$wr_6}',
-                     wr_7 = '{$wr_7}',
-                     wr_8 = '{$wr_8}',
-                     wr_9 = '{$wr_9}',
-                     wr_10 = '{$wr_10}' ";
+                     wr_1 = '$wr_1',
+                     wr_2 = '$wr_2',
+                     wr_3 = '$wr_3',
+                     wr_4 = '$wr_4',
+                     wr_5 = '$wr_5',
+                     wr_6 = '$wr_6',
+                     wr_7 = '$wr_7',
+                     wr_8 = '$wr_8',
+                     wr_9 = '$wr_9',
+                     wr_10 = '$wr_10' ";
     sql_query($sql);
 
     $wr_id = mysql_insert_id();
 
     // 부모 아이디에 UPDATE
-    sql_query(" update {$write_table} set wr_parent = '{$wr_id}' where wr_id = '{$wr_id}' ");
+    sql_query(" update $write_table set wr_parent = '$wr_id' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
     //sql_query(" insert into $g4['board_new_table'] ( bo_table, wr_id, wr_parent, bn_datetime ) values ( '$bo_table', '$wr_id', '$wr_id', '$g4['time_ymdhis']' ) ");
@@ -444,7 +443,7 @@ if ($w == '' || $w == 'r') {
     sql_query($sql);
 
     if ($notice) {
-        //if (!preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board['bo_notice'])) 
+        //if (!preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board['bo_notice']))
         if (!in_array((int)$wr_id, $notice_array)) {
             $bo_notice = $wr_id . '\n' . $board['bo_notice'];
             sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
@@ -464,18 +463,18 @@ if ($w == '' || $w == 'r') {
 //------------------------------------------------------------------------------
 // 가변 파일 업로드
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
-for ($i=0; $i<count($upload); $i++) 
+for ($i=0; $i<count($upload); $i++)
 {
     if (!get_magic_quotes_gpc()) {
         $upload[$i]['source'] = addslashes($upload[$i]['source']);
     }
 
     $row = sql_fetch(" select count(*) as cnt from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-    if ($row['cnt']) 
+    if ($row['cnt'])
     {
         // 삭제에 체크가 있거나 파일이 있다면 업데이트를 합니다.
         // 그렇지 않다면 내용만 업데이트 합니다.
-        if ($upload[$i]['del_check'] || $upload[$i]['file']) 
+        if ($upload[$i]['del_check'] || $upload[$i]['file'])
         {
             $sql = " update {$g4['board_file_table']}
                         set bf_source = '{$upload[$i]['source']}',
@@ -490,18 +489,18 @@ for ($i=0; $i<count($upload); $i++)
                                 and wr_id = '{$wr_id}'
                                 and bf_no = '{$i}' ";
             sql_query($sql);
-        } 
-        else 
+        }
+        else
         {
             $sql = " update {$g4['board_file_table']}
-                        set bf_content = '{$bf_content[$i]}' 
+                        set bf_content = '{$bf_content[$i]}'
                         where bo_table = '{$bo_table}'
                                   and wr_id = '{$wr_id}'
                                   and bf_no = '{$i}' ";
             sql_query($sql);
         }
-    } 
-    else 
+    }
+    else
     {
         $sql = " insert into {$g4['board_file_table']}
                     set bo_table = '{$bo_table}',
@@ -523,7 +522,7 @@ for ($i=0; $i<count($upload); $i++)
 // 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
 // 파일 정보가 없다면 테이블의 내용을 삭제합니다.
 $row = sql_fetch(" select max(bf_no) as max_bf_no from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
-for ($i=(int)$row['max_bf_no']; $i>=0; $i--) 
+for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
 {
     $row2 = sql_fetch(" select bf_file from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 
@@ -536,7 +535,7 @@ for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
 //------------------------------------------------------------------------------
 
 // 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 패스워드를 묻지 않기 위함
-if ($secret) 
+if ($secret)
     set_session("ss_secret_{$bo_table}_{$wr_num}", TRUE);
 
 // 메일발송 사용 (수정글은 발송하지 않음)
