@@ -400,22 +400,37 @@ a {color:#000;text-decoration:none}
 #bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:10px;width:75px;height:57px;border:1px solid #666;background:#494949;color:#fff;letter-spacing:-0.1em}
 
 /* 우편번호 검색 */
-#post_num dl {margin:0 auto 10px;padding:0;width:90%}
-#post_num dt {margin-bottom:15px}
-#post_num dd {margin:0;padding:0}
-#post_num ul {margin:0;padding:0;list-style:none}
-#post_num li a {display:block;padding:5px 0}
-#post_num p {margin:0 auto 30px;width:90%}
+#post_code fieldset {border-bottom:3px solid #666}
+#post_code dl {margin:0 auto 10px;padding:0;width:90%}
+#post_code dt {margin-bottom:15px}
+#post_code dd {margin:0;padding:0}
+#post_code ul {margin:0;padding:0;list-style:none}
+#post_code li a {display:block;padding:8px 0 6px;border-bottom:1px solid #eee}
+#post_code p {margin:0 auto 30px;width:90%}
+.post_code {display:inline-block;width:50px;color:#999}
 
 /* 로그인 */
-#mb_login
+#mb_login {margin:0 auto;padding:100px 0;width:500px}
+#mb_login h1 {font-size:1.3em}
+#mb_login h2 {margin:0}
+#mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #ddd;border-top:5px solid #333;border-bottom:0}
+#mb_login label {letter-spacing:-0.1em}
+#mb_login .login_id {position:absolute;top:26px;left:105px}
+#mb_login .login_pw {position:absolute;top:55px;left:105px}
+#mb_login .fieldset_input {display:block;margin-bottom:5px;padding-left:70px}
+#mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
+#mb_login section {margin-bottom:30px;padding:20px;border:1px solid #ddd;background:#f5f5f5}
+#mb_login section div {text-align:right}
 
 /* 회원가입 약관 */
 #fregister section {margin-bottom:20px}
-#fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #ddd;background:#f7f7f7}
+#fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:300px;border:1px solid #ddd;background:#f7f7f7}
 #fregister textarea:focus {background:#333;color:#fff}
 .fregister_agree {margin:0;padding:0;text-align:right}
 .fregister_agree label {display:inline-block;margin-right:10px;vertical-align:middle}
+
+/* 회원가입 입력 */
+#fregisterform textarea {height:50px}
 
 /* 회원가입 완료 */
 #reg_result {padding:50px;border:1px solid #eee;background:#f9f9f9}
