@@ -99,7 +99,7 @@ a {color:#000;text-decoration:none}
 #ol_before input:focus {background:#333;color:#fff}
 #ol_id {display:block;margin-bottom:3px;padding:0 5px;width:185px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
 .ol_idlabel {position:absolute;top:21px;left:15px;color:#696969;font-size:0.9em}
-#ol_pw {display:block;margin-bottom:3px;padding:0 5px;width:185px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
+#ol_pw {display:block;margin-bottom:3px;padding:0 5px;width:185px;height:22px;border:1px solid #d7d7d7;background:#fff;vertical-align:top;line-height:1.6em}
 .ol_pwlabel {position:absolute;top:48px;left:15px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {color:#696969;letter-spacing:-0.1em}
@@ -116,7 +116,7 @@ a {color:#000;text-decoration:none}
 #ol_after ul {margin:0;border-top:1px solid #ddd;zoom:1}
 #ol_after ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after li {float:left}
-#ol_after_rec {background:#fff}
+#ol_after_rec {margin:0;padding:0;background:#fff}
 #ol_after_rec a {display:inline-block;position:relative;width:60px;height:50px;vertical-align:top}
 #ol_after_rec span {position:absolute;top:0;left:0;padding-top:30px;width:100%;height:20px;text-align:center}
 #ol_after_rec #ol_after_pt {width:97px;border-right:1px solid #ddd;border-left:1px solid #ddd}
@@ -247,7 +247,7 @@ a {color:#000;text-decoration:none}
 .frm_tbl #captcha input {margin-left:5px}
 
 /* 최신글 */
-.latest {clear:both;position:relative;margin-bottom:30px;padding:0 0 20px;border-bottom:1px solid #ccc}
+.latest {clear:both;position:relative;margin-bottom:30px;padding:0 0 20px;width:100%;border-bottom:1px solid #ccc}
 .latest_title {display:block;margin-bottom:15px;padding:0 10px 10px;border-bottom:1px solid #eee}
 .latest ul {margin:0;padding:0;list-style:none}
 .latest li {padding:0 10px}
