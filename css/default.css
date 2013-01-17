@@ -142,7 +142,7 @@ a {color:#000;text-decoration:none}
 #poll ul {padding:5px 10px;background:#fff}
 #poll li {margin:7px 0}
 #poll footer {padding:10px 10px 15px;background:#fff;text-align:center}
-#poll .btn_submit {height:24px;line-height:1.9em}
+#poll .btn_submit {height:24px;background:#494949;line-height:1.9em}
 #poll .btn_cancel {height:22px;line-height:1.95em}
 /* 설문조사 결과 (새창) */
 #poll_result section {margin:0 auto 20px;padding:10px;width:90%}
