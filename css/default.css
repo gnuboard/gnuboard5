@@ -228,6 +228,7 @@ a {color:#000;text-decoration:none}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 15px;height:30px;border:0;background:#ff4679;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.5em}
+.btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#ff4679;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.5em;cursor:pointer}
 
@@ -245,6 +246,7 @@ a {color:#000;text-decoration:none}
 .frm_input:focus {padding:3px;border:0;background:#494949;color:#fff}
 .frm_tbl textarea {width:90%}
 .frm_tbl select {padding:2px}
+.frm_address {display:block;margin-top:5px}
 .frm_file {display:block;margin-bottom:5px}
 .frm_info {display:block;padding:5px 0 0;color:#595959;line-height:1.3em}
 .frm_tbl #captcha {margin:0;padding:0;border:0;background:transparent}
