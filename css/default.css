@@ -293,13 +293,13 @@ a {color:#000;text-decoration:none}
 #sch_result_bo dt {margin:0;padding:0;height:0;border:0;overflow:hidden}
 #sch_result_bo dd {margin:0}
 #sch_result_bo li {position:relative;margin-top:-1px}
-#sch_result_bo a {display:inline-block;padding:10px 0 10px 10px;width:160px;border:1px solid #ddd;background:#eee}
+#sch_result_bo a {display:inline-block;padding:10px 0 10px 10px;width:160px;border:1px solid #ddd;background:#eee;font-size:1.2em}
 #sch_result_bo .sch_on {width:161px;border-right:0;background:#fff;font-weight:bold}
 #sch_result_bo .cnt_cmt {color:#000}
 #sch_result_atc dt a {display:inline-block;margin-bottom:15px;font-size:1.2em;font-weight:bold}
 #sch_result_atc dd {margin:0 0 30px;border-bottom:1px solid #ddd}
 #sch_result_atc li {padding:10px 0}
-#sch_result_atc p {margin-top:15px}
+#sch_result_atc p {margin-top:10px}
 #sch_result_atc b {display:inline-block;margin:0 10px 0 0}
 #sch_result_atc b span {display:inline-block;margin:0 10px 0 0}
 .sch_more {padding:10px 0 15px;text-align:right}
