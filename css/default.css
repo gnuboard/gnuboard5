@@ -75,13 +75,13 @@ a {color:#000;text-decoration:none}
 #logo a {display:inline-block;padding:20px 30px 20px}
 
 /* 상단메뉴 */
-#tnb {position:absolute;top:-31px;left:0;width:100%;border-bottom:1px solid #bbb;background:url('../img/tnb_bg.jpg') #fff bottom left repeat-x;zoom:1}
+#tnb {position:absolute;top:-31px;left:0;width:100%;border-bottom:1px solid #bbb;background:#fff;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left}
 #tnb a {display:inline-block;padding:0 10px;height:30px;border-right:1px solid #dadada;font-family:"dotum";text-decoration:none;line-height:2.7em}
 
 /* 상단 전체검색 */
-#hdsch {z-index:3;position:absolute;top:-31px !important;top:-33px;right:0;margin:0;padding:0;width:219px;border:0;border-left:1px solid #bbb;background:url('../img/search_bg.jpg') #fff bottom left repeat-x}
+#hdsch {z-index:3;position:absolute;top:-31px !important;top:-33px;right:0;margin:0;padding:0;width:219px;border:0;border-left:1px solid #bbb;background:#fff}
 #hdsch legend {position:absolute;padding:0;width:0;height:0;border:0;overflow:hidden}
 #hdsch_stx {margin:5px 0 5px 5px;padding:0 5px;height:20px;width:170px;border:0;background:transparent;line-height:1.4em}
 #hdsch_stx:focus {background:#464649;color:#fff}
