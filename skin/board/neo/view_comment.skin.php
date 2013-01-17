@@ -27,7 +27,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <article id="c_<?=$comment_id?>" <?if ($comment_depth) {?>style="margin-left:<?=$comment_depth?>px"<?}?>>
         <header>
             <h1><?=$list[$i]['name']?><span class="sound_only">님의 댓글</span></h1>
-            <img src="" alt="댓글의 댓글">
+            <? if ($comment_depth) {?><img src="" alt="댓글의 댓글"><? } ?>
             <dl class="bo_vc_info">
                 <? if ($is_ip_view) { ?>
                 <dt>아이피</dt>
