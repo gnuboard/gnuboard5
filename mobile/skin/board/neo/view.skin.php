@@ -1,188 +1,156 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
+function get_datetime($datetime) 
+{
+    global $g4;
+
+    $time = strtotime($datetime);
+    if (date("Y-m-d", $time) == $g4[time_ymd]) {
+        $date = date("H:i", $time);
+    }
+    else {
+        $date = date("m.d", $time);
+    }
+    return $date;
+}
 ?>
 
-<p id="bo_v_title"><strong><?=$board['bo_subject']?></strong></p>
-
-<div id="bo_v">
-    <h1 id="bo_v_h1"><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
-
-    <section id="bo_v_info">
-        <h2>게시물 정보</h2>
-        <dl>
-            <? if ($is_category) { ?>
-            <dt>분류</dt>
-            <dd><?=($category_name ? "{$view['ca_name']} " : "");?></dd>
-            <? } ?>
-            <dt>작성자</dt>
-            <dd><div><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></div></dd>
-            <dt>작성일</dt>
-            <dd><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></dd>
-            <dt>조회</dt>
-            <dd><?=number_format($view['wr_hit'])?>회</dd>
-            <dt>댓글</dt>
-            <dd><?=number_format($view['wr_comment'])?>건</dd>
-        </dl>
-    </section>
-
-    <? if (!empty($view['file'])) {?>
-    <section id="bo_v_file">
-        <h2>첨부파일</h2>
-        <ul>
-        <?
-        // 가변 파일
-        $cnt = 0;
-        for ($i=0; $i<count($view['file']); $i++) {
-            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-                $cnt++;
-
-                if($board['bo_download_point'] < 0) {
-                    $view['file'][$i]['confirm_href'] = str_replace("download.php", "downloadconfirm.php", $view['file'][$i]['href']);
-                } else {
-                    $view['file'][$i]['confirm_href'] = $view['file'][$i]['href'];
-                }
-        ?>
-            <li>
-                <a href="<? echo $view['file'][$i]['confirm_href']; ?>" onclick="javascript:file_download('<?=$view['file'][$i]['href']?>', '<?=$view['file'][$i]['source']?>'); return false;">
-                    <span><?=$view['file'][$i]['source']?> (<?=$view['file'][$i]['size']?>)</span>
-                    <span class="bo_v_file_cnt"><?=$view['file'][$i]['download']?></span>
-                    <span>DATE : <?=$view['file'][$i]['datetime']?></span>
-                </a>
-            </li>
-        <?
-            }
+<div data-role="navbar">
+<ul>
+    <li><? 
+        if ($prev_href) 
+            echo "<a href='$prev_href'>";
+        else {
+            echo "<a href='javascript:;' onclick=\"alert('이전 글 없음');\">";
         }
-        ?>
-        </ul>
-    </section>
-    <? } ?>
-
-    <? if (!empty($view['link'])) {?>
-    <section id="bo_v_link">
-        <h2>관련링크</h2>
-        <ul>
-        <?
-        // 링크
-        $cnt = 0;
-        for ($i=1; $i<=$g4['link_count']; $i++) {
-            if ($view['link'][$i]) {
-                $cnt++;
-                $link = cut_str($view['link'][$i], 70);
-        ?>
-            <li>
-                <a href="<?=$view['link_href'][$i]?>" target="_blank">
-                    <span><?=$link?></span>
-                    <span class="bo_v_link_cnt"><?=$view['link_hit'][$i]?>회 연결</span>
-                </a>
-            </li>
-        <?
-            }
+        ?><&nbsp; 이전</a></li>
+    <li><? 
+        if ($next_href) 
+            echo "<a href='$next_href'>";
+        else {
+            echo "<a href='javascript:;' onclick=\"alert('다음 글 없음');\">";
         }
-        ?>
-        </ul>
-    </section>
-    <? } ?>
+        ?>다음 &nbsp;></a></li>
+    <li><a href="<?=$list_href?>">목록보기</a></li>
+    <li><a href="javascript:;" onclick="document.getElementById('comment_top').scrollIntoView();">댓글 (<?=$view[wr_comment]?>)</a></li>
+</ul>
+</div><!-- /navbar -->
 
-    <aside id="bo_v_top">
-        <h2>게시물 상단 링크</h2>
-        <?
-        ob_start();
-        ?>
-        <ul class="bo_v_com">
-            <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn02">수정</a></li><? } ?>
-            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" onclick="del(this.href); return false;" class="btn02">삭제</a></li><? } ?>
-            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" onclick="board_move(this.href); return false;" class="btn03">복사</a></li><? } ?>
-            <? if ($move_href) { ?><li><a href="<?=$move_href?>" onclick="board_move(this.href); return false;" class="btn03">이동</a></li><? } ?>
-            <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn02">검색</a></li><? } ?>
-            <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
-            <? if ($reply_href) { ?><li><a href="<?=$reply_href?>" class="btn02">답변</a></li><? } ?>
-            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
-        </ul>
-        <?
-        $link_buttons = ob_get_contents();
-        ob_end_flush();
-        ?>
-    </aside>
+<h3><?=cut_hangul_last(get_text($view[wr_subject]))?> </h3>
+<div>
+    <p style="clear:both;" class="view_name"><?=$view[wr_name]?></p>
+    <p class="view_time"><?=get_datetime($view[wr_datetime])?></p>
+</div>
 
-    <article id="bo_v_atc">
-        <header>
-            <h1>본문</h1>
-        </header>
-        <div>
-            <?
-            // 파일 출력
-            for ($i=0; $i<=count($view['file']); $i++) {
-                if (isset($view['file'][$i]['view']) && $view['file'][$i]['view'])
-                    echo $view['file'][$i]['view'];
-            }
-            ?>
-        </div>
+<!-- <div class="view_cmnt"><button>댓글보기 : <?=(int)$view[wr_comment]?></button></div> -->
 
-        <p><?=$view['content'];?></p>
-        <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
-        <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
+<div style="clear:both; line-height:150%;">
 
-        <? if ($is_signature) { ?><p><?=$signature?></p><? } ?>
 
-        <? if ($scrap_href || $good_href || $nogood_href) { ?>
-        <div id="bo_v_act">
-            <? if ($scrap_href) { ?><a href="<? echo $scrap_href; ?>" onclick="win_scrap(this.href); return false;" target="_blank" class="btn02">스크랩</a><? } ?>
-            <? if ($good_href) {?><a href="<?=$good_href?>" class="btn02" target="hiddenframe">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
-            <? if ($nogood_href) {?><a href="<?=$nogood_href?>" class="btn02" target="hiddenframe">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
-        </div>
-        <? } ?>
-    </article>
-
+<? if ($view[wr_singo]) { ?>
+    <p>신고된 게시물 입니다.</p>
+<? } else { ?>
+    
+    <p>
     <?
-    // 코멘트 입출력
-    include_once('./view_comment.php');
+    // 파일 출력
+    for ($i=0; $i<=count($view[file]); $i++) {
+        if ($view_file = $view[file][$i][view]) {
+            $str = $view_file;
+            echo preg_replace_callback("#<img[^>]+>#iS", "mobile_thumb", $str);
+        }
+    }
     ?>
+    </p>
 
-    <aside id="bo_v_bot">
-        <h2>게시물 하단 링크</h2>
-        <? if ($prev_href || $next_href) { ?>
-        <ul id="bo_v_nb">
-            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn02">이전</a></li><? } ?>
-            <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn02">다음</a></li><? } ?>
-        </ul>
-        <? } ?>
+    <p>
+    <?
+    $str = $view[content];
+    $str = preg_replace_callback("#(<a\s+[^>]+>\s*)?<img[^>]+>(?(1)\s*</a>)#iS", "mobile_thumb", $str);
+    // 개인정보노출방지
+    if (!($is_admin || ($write[mb_id] && $write[mb_id] == $member[mb_id]))) {
+        if ($board[gr_id] == 'request')
+            $str = get_privacy_hidden($str);
+    }
 
-        <!-- 링크 버튼 -->
-        <?=$link_buttons?>
-    </aside>
+    $s = $str;
+    //if ($is_admin) 
+    {
+        //$s = $view[content];
+
+        preg_match("/(?<=\<embed).*width=[\'\"]?(\d+)[\'\"]?/i",  $s, $match_w);
+        preg_match("/(?<=\<embed).*height=[\'\"]?(\d+)[\'\"]?/i", $s, $match_h);
+        
+        $width  = $match_w[1];
+        $height = $match_h[1];
+
+        if ($width > 300) {
+            $rate = (int)($width / 300);
+            $height = (int)($height / $rate);
+            $width = 300;
+        }
+
+        $s = preg_replace("/(?<=\<object)(.*width=)[\'\"]?(\d+)[\'\"]?/i",  "$1'$width'", $s);
+        $s = preg_replace("/(?<=\<object)(.*height=)[\'\"]?(\d+)[\'\"]?/i", "$1'$height'", $s);
+        $s = preg_replace("/(?<=\<embed)(.*width=)[\'\"]?(\d+)[\'\"]?/i",  "$1'$width'", $s);
+        $s = preg_replace("/(?<=\<embed)(.*height=)[\'\"]?(\d+)[\'\"]?/i", "$1'$height'", $s);
+
+        //echo htmlspecialchars($s);
+        echo $s;
+    }
+    ?>
+    </p>
+
+    <? 
+    // 설문
+    if ($view['wr_6'] == 1) {
+        $minus_wr_id = $wr_id * (-1);
+        $sql = " select wr_content from `$write_table` where wr_parent = '$minus_wr_id' and wr_subject = 'pollOption' and wr_is_comment = 2 order by wr_id asc ";
+        $result = sql_query($sql);
+        echo "<ul>";
+        for ($i=0; $row=sql_fetch_array($result); $i++) {
+            $row[wr_content] = strip_tags($row[wr_content]);
+            echo "<li>$row[wr_content]</li>\n";
+        }
+        echo "</ul>";
+        echo "<div>설문결과는 PC버전에서만 보실수 있습니다.</div>";
+    } 
+    ?>
+<? } ?>
+
 
 </div>
 
-<script>
-function file_download(link, file) {
-    <? if ($board['bo_download_point'] < 0) { ?>if (confirm("'"+file+"' 파일을 다운로드 하시면 포인트가 차감(<?=number_format($board['bo_download_point'])?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?"))<?}?>
-    document.location.href=link;
-}
+<p id="comment_top">&nbsp;</p>
 
-function board_move(href)
-{
-    window.open(href, "boardmove", "left=50, top=50, width=500, height=550, scrollbars=1");
-}
-</script>
+<?
+// 코멘트 입출력
+include_once("./view_comment.php");
+?>
 
-<script src="<?=$g4['path']?>/js/board.js"></script>
-<!-- 게시글 보기 끝 -->
+<? if ($delete_href) {  ?><a href="<?=$delete_href?>" data-role="button" data-icon="delete" data-inline="true">삭제</a><? } ?>
 
-<script>
-// 이미지 등비율 리사이징
-$(document).ready(function(){
-    var img = $('#bo_v_atc img');
-    var img_org_width = img.width();
-    $(window).resize(function(){
-        var wrapper_width = $('#bo_v_atc').width();
-        img.each(function() {
-            var img_width = $(this).width();
-            if (img_width > wrapper_width) {
-                $(this).addClass('img_fix');
-            } else if (img_width <= wrapper_width && img_width >= img_org_width) {
-                $(this).removeClass('img_fix');
-            }
-        });
-    }).resize();
-});
-</script>
+<br>
+<div data-role="navbar">
+<ul>
+    <li><? 
+        if ($prev_href) 
+            echo "<a href='$prev_href'>";
+        else {
+            echo "<a href='javascript:;' onclick=\"alert('이전 글 없음');\">";
+        }
+        ?><&nbsp; 이전</a></li>
+    <li><? 
+        if ($next_href) 
+            echo "<a href='$next_href'>";
+        else {
+            define("_NEXT_POPUP_", true);
+            echo "<a href='#next_popup' data-rel='dialog' data-transition='pop'>";
+        }
+        ?>다음 &nbsp;></a></li>
+    <li><a href="<?=$list_href?>">목록보기</a></li>
+    <li><a href="javascript:;" onclick="window.scrollTo(0,0);">위로</a></li>
+    <!-- <li><a href="<?=$list_href?>">목록</a></li> -->
+</ul>
+</div><!-- /navbar -->

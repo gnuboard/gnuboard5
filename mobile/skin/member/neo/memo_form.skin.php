@@ -11,7 +11,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <li><a href="./memo_form.php">쪽지보내기</a></li>
     </ul>
 
-    <form name="fmemoform" method="post" onsubmit="return fmemoform_submit(this);" autocomplete="off">
+    <form name="fmemoform" method="post" action="<?=$memo_action_url?>" onsubmit="return fmemoform_submit(this);">
     <table class="frm_tbl">
     <caption>쪽지쓰기</caption>
     <tbody>
@@ -42,25 +42,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </form>
 </div>
 
-<script src="<?=$g4[path]?>/js/md5.js"></script>
-<script src="<?="$g4[path]/js/jquery.kcaptcha.js"?>"></script>
 <script>
-with (document.fmemoform) {
-    if (me_recv_mb_id.value == "")
-        me_recv_mb_id.focus();
-    else
-        me_memo.focus();
-}
-
 function fmemoform_submit(f)
 {
-    if (!check_kcaptcha(f.wr_key)) {
-        return false;
-    }
+    <? echo chk_captcha_js(); ?>
 
-    document.getElementById("btn_submit").disabled = true;
-
-    f.action = "./memo_form_update.php";
     return true;
 }
 </script>

@@ -1,13 +1,12 @@
 <?
+define('_CAPTCHA_', 1);
 include_once('./_common.php');
 
-if (!$member[mb_id])
+if ($is_guest)
     alert('회원만 이용하실 수 있습니다.');
 
-$key = get_session("captcha_keystring");
-if (!($key && $key == $_POST[wr_key])) {
-    session_unregister("captcha_keystring");
-    alert('정상적인 접근이 아닌것 같습니다.');
+if (!chk_captcha()) {
+    alert('스팸방지에 입력한 숫자가 틀렸습니다.');
 }
 
 $recv_list = explode(',', trim($_POST['me_recv_mb_id']));

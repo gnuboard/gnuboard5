@@ -5,10 +5,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
-function b_draw($pos, $color='red') {
-    return "border-{$pos}-width:1px; border-{$pos}-color:{$color}; border-{$pos}-style:solid; ";
-}
-
 $sql = " select count(*) as cnt from {$g4['group_table']} ";
 $row = sql_fetch($sql);
 if (!$row['cnt'])
@@ -111,6 +107,22 @@ include_once ('./admin.head.php');
     <th scope="row"><label for="bo_subject">게시판 제목</label></th>
     <td colspan="2">
         <input type="text" id="bo_subject" name="bo_subject" maxlength="120" class="required" value="<?=get_text($board['bo_subject'])?>" size="80" required="required">
+    </td>
+</tr>
+<tr>
+    <th scope="row"><label for="bo_use">사용여부</label></th>
+    <td>
+        <?=help("게시판그룹의 사용여부 설정이 게시판의 사용여부 설정보다 우선합니다.")?>
+        <select id="bo_use_" name="bo_use">
+        <option value="both" <?=get_selected($board['bo_use'], 'both', true);?>>PC와 모바일에서 모두 사용</option>
+        <option value="pc" <?=get_selected($board['bo_use'], 'pc');?>>PC 전용</option>
+        <option value="mobile" <?=get_selected($board['bo_use'], 'mobile');?>>모바일 전용</option>
+        <option value="none" <?=get_selected($board['bo_use'], 'none');?>>사용하지 않음</option>
+        </select>
+    </td>
+    <td class="group_setting">
+        <input type="checkbox" id="chk_use" name="chk_use" value="1">
+        <label for="chk_use">동일그룹 모두 적용</label>
     </td>
 </tr>
 <tr>

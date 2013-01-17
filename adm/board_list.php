@@ -4,6 +4,15 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
+if (!isset($board['bo_use'])) {
+    // 게시판 사용 필드 추가
+    // both : pc, mobile 둘다 사용
+    // pc : pc 전용 사용
+    // mobile : mobile 전용 사용
+    // none : 사용 안함
+    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_use` ENUM(  'both',  'pc',  'mobile',  'none' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
+}
+
 $sql_common = " from {$g4['board_table']} a ";
 $sql_search = " where (1) ";
 
@@ -108,6 +117,7 @@ var list_delete_php = 'board_list_delete.php';
     <th scope="col"><?=subject_sort_link('bo_subject')?>제목</a></th>
     <th scope="col">포인트</th>
     <th scope="col">검색</th>
+    <th scope="col"><?=subject_sort_link('bo_use')?>사용여부</a></th>
     <th scope="col">관리</th>
 </tr>
 </thead>
@@ -136,7 +146,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td>
         <?=get_skin_select("board", "bo_skin_$i", "bo_skin[$i]", $row['bo_skin']);?>
     </td>
-    <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20" required="required"></td>
+    <td><input type="text" id="bo_subject_<?=$i?>" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20" required="required"></td>
     <td>
         <label for="bo_read_point_<?=$i?>">읽기</label>
         <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="2">
@@ -152,6 +162,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
         <label for="bo_order_search_<?=$i?>">순서</label>
         <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1">
+    </td>
+    <td>
+        <select id="bo_use_<?=$i?>" name="bo_use[<?=$i?>]">
+        <option value="both" <?=get_selected($row['bo_use'], 'both', true);?>>양쪽</option>
+        <option value="pc" <?=get_selected($row['bo_use'], 'pc');?>>PC</option>
+        <option value="mobile" <?=get_selected($row['bo_use'], 'mobile');?>>모바일</option>
+        <option value="none" <?=get_selected($row['bo_use'], 'none');?>>미사용</option>
+        </select>
     </td>
     <td><?=$one_update?> <?=$one_copy?></td>
 </tr>

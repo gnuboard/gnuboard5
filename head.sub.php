@@ -46,14 +46,21 @@ header("Pragma: no-cache"); // HTTP/1.0
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="<?=$g4['charset']?>">
+<meta charset="utf-8">
+<!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
+<? 
+if (G4_IS_MOBILE) {
+    echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"; 
+    echo "<link rel=\"stylesheet\" href=\"{$g4['url']}/css/jquery.mobile-1.3.0-beta.1.min.css\">\n";
+} else {
+    if (isset($administrator)) {
+        echo "<link rel=\"stylesheet\" href=\"{$g4['url']}/css/adm.css\">\n";
+    } else {
+        echo "<link rel=\"stylesheet\" href=\"{$g4['url']}/css/default.css\">\n";
+    }
+}
+?>
 <title><?=$g4['title']?></title>
-<!-- <meta http-equiv='X-UA-Compatible' content='IE=Edge' /> -->
-<? if (isset($administrator)) { ?>
-<link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">
-<? } else { ?>
-<link rel="stylesheet" href="<?=$g4['url']?>/css/default.css?=<?=date("md")?>">
-<?}?>
 <!--[if lte IE 8]>
 <script src="<?=$g4['url']?>/js/html5.js"></script>
 <![endif]-->
@@ -80,9 +87,10 @@ if (!empty($g4['js_code'])) {
 }
 ?>
 </script>
-<script src="<?=$g4['url']?>/js/jquery-1.4.2.min.js"></script>
+<script src="<?=$g4['url']?>/js/jquery-1.8.3.min.js"></script>
+<? if (G4_IS_MOBILE) echo "<script src=\"{$g4['url']}/js/jquery.mobile-1.3.0-beta.1.min.js\"></script>\n"; ?>
 <script src="<?=$g4['url']?>/js/common.js"></script>
-<script src="<?=$g4['url']?>/js/wrest.js"></script>
+<? if (!G4_IS_MOBILE) echo "<script src=\"{$g4['url']}/js/wrest.js\"></script>\n"; ?>
 <?
 if (!empty($g4['js_file'])) {
     foreach ($g4['js_file'] as $key=>$value) {
@@ -93,3 +101,9 @@ if (!empty($g4['js_file'])) {
 </head>
 <body>
 <a id="g4_head"></a>
+
+<?
+if (G4_IS_MOBILE) {
+    include_once($g4['path'].'/mobile.head.php');
+}
+?>
