@@ -408,7 +408,17 @@ a {color:#000;text-decoration:none}
 #post_num p {margin:0 auto 30px;width:90%}
 
 /* 로그인 */
-#mb_login
+#mb_login {margin:0 auto;padding:100px 0;width:500px}
+#mb_login h1 {font-size:1.3em}
+#mb_login h2 {margin:0}
+#mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #ddd;border-top:5px solid #333;border-bottom:0}
+#mb_login label {letter-spacing:-0.1em}
+#mb_login .login_id {position:absolute;top:26px;left:105px}
+#mb_login .login_pw {position:absolute;top:55px;left:105px}
+#mb_login .fieldset_input {display:block;margin-bottom:5px;padding-left:70px}
+#mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
+#mb_login section {margin-bottom:30px;padding:20px;border:1px solid #ddd;background:#f5f5f5}
+#mb_login section div {text-align:right}
 
 /* 회원가입 약관 */
 #fregister section {margin-bottom:20px}
