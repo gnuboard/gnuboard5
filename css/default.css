@@ -414,7 +414,6 @@ a {color:#000;text-decoration:none}
 #post_num p {margin:0 auto 30px;width:90%}
 
 /* 회원가입 약관 */
-#fregister {}
 #fregister section {margin-bottom:20px}
 #fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #ddd;background:#f7f7f7}
 #fregister textarea:focus {background:#333;color:#fff}
@@ -429,14 +428,12 @@ a {color:#000;text-decoration:none}
 .reg_result_deco {text-align:center}
 
 /* 회원 패스워드 확인 */
-#member_confirm {padding:150px 0;background:#fcfcfc;text-align:center}
-#member_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
-#member_confirm p {margin-bottom:20px}
-#member_confirm_id {display:inline-block;margin-right:20px}
+#member_confirm {padding:150px 0;text-align:center}
+#member_confirm fieldset {margin:0 auto;width:400px;border:1px solid #ddd}
+#member_confirm_id {display:inline-block;margin:0 30px 0 20px}
 
 /* 비밀글 패스워드 확인 */
-#password_confirm {padding:150px 0;background:#fcfcfc;text-align:center}
-#password_confirm legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#password_confirm {padding:150px 0;text-align:center}
 #password_confirm p {margin-bottom:20px}
 
 /* 최근게시물 */
