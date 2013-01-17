@@ -247,7 +247,7 @@ a {color:#000;text-decoration:none}
 
 /* 최신글 */
 .latest {clear:both;position:relative;margin-bottom:30px;padding:0 0 20px;border-bottom:1px solid #ccc}
-.latest strong {display:block;margin-bottom:15px;padding:0 10px 10px;border-bottom:1px solid #eee}
+.latest_title {display:block;margin-bottom:15px;padding:0 10px 10px;border-bottom:1px solid #eee}
 .latest ul {margin:0;padding:0;list-style:none}
 .latest li {padding:0 10px}
 .latest li a {display:inline-block;padding:4px 0}
