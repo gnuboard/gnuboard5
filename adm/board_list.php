@@ -106,8 +106,12 @@ var list_delete_php = 'board_list_delete.php';
     <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
     <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
     <th scope="col"><?=subject_sort_link('bo_subject')?>제목</a></th>
-    <th scope="col">포인트</th>
-    <th scope="col">검색</th>
+    <th scope="col">읽기P<span class="sound_only">포인트</span></th>
+    <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
+    <th scope="col">댓글P<span class="sound_only">포인트</span></th>
+    <th scope="col">다운P<span class="sound_only">포인트</span></th>
+    <th scope="col">검색<br>사용</th>
+    <th scope="col">검색<br>순서</th>
     <th scope="col">관리</th>
 </tr>
 </thead>
@@ -136,22 +140,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td>
         <?=get_skin_select("board", "bo_skin_$i", "bo_skin[$i]", $row['bo_skin']);?>
     </td>
-    <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20" required="required"></td>
-    <td>
-        <label for="bo_read_point_<?=$i?>">읽기</label>
-        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="2">
-        <label for="bo_write_point_<?=$i?>">쓰기</label>
-        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="2">
-        <label for="bo_comment_point_<?=$i?>">댓글</label>
-        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" size="2">
-        <label for="bo_download_point_<?=$i?>">다운</label>
-        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="2">
-    </td>
-    <td>
-        <label for="bo_use_search_<?=$i?>">사용</label>
-        <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
-        <label for="bo_order_search_<?=$i?>">순서</label>
-        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1">
+    <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="10" required="required"></td>
+    <td><input type="text" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="1" title="읽기"></td>
+    <td><input type="text" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="1" title="쓰기"></td>
+    <td><input type="text" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" size="1" title="댓글"></td>
+    <td><input type="text" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="1" title="다운"></td>
+    <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1" title="검색사용"></td>
+    <td><input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1" title="검색순서"></td>
     </td>
     <td><?=$one_update?> <?=$one_copy?></td>
 </tr>
