@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="memo_write" class="new_win">
@@ -11,7 +11,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <li><a href="./memo_form.php">쪽지보내기</a></li>
     </ul>
 
-    <form name="fmemoform" method="post" onsubmit="return fmemoform_submit(this);" autocomplete="off">
+    <form name="fmemoform" method="post" action="./memo_form_update.php" onsubmit="return fmemoform_submit(this);" autocomplete="off">
     <table class="frm_tbl">
     <caption>쪽지쓰기</caption>
     <tbody>
@@ -37,7 +37,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <div class="btn_win">
         <input type="submit" id="btn_submit" class="btn_submit" value="보내기">
-        <a href="javascript:window.close();">창닫기</a>
     </div>
     </form>
 </div>
@@ -45,6 +44,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <script src="<?=$g4[path]?>/js/md5.js"></script>
 <script src="<?="$g4[path]/js/jquery.kcaptcha.js"?>"></script>
 <script>
+$(function() {
+    $(".btn_win").append("<a>창닫기</a>");
+
+    $(".btn_win a").click(function() {
+        window.close();
+    });
+});
+
 with (document.fmemoform) {
     if (me_recv_mb_id.value == "")
         me_recv_mb_id.focus();
@@ -60,7 +67,6 @@ function fmemoform_submit(f)
 
     document.getElementById("btn_submit").disabled = true;
 
-    f.action = "./memo_form_update.php";
     return true;
 }
 </script>
