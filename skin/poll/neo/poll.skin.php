@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 global $is_admin;
 
@@ -29,7 +29,7 @@ $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
     </ul>
     <footer>
         <input type="submit" class="btn_submit" value="투표하기">
-        <a href="<?="{$g4['bbs_url']}/poll_result.php?po_id={$po_id}&amp;skin_dir={$skin_dir}";?>" class="btn_cancel" target="win_poll">결과보기</a>
+        <a href="<?="{$g4['bbs_path']}/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir"?>" class="btn_cancel" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
     </footer>
 </section>
 </form>
@@ -57,5 +57,15 @@ function fpoll_submit(f)
 
     win_poll();
     return true;
+}
+
+function poll_result(url)
+{
+    <?
+    if ($member['mb_level'] < $po['po_level'])
+        echo " alert('권한 {$po['po_level']} 이상의 회원만 결과를 보실 수 있습니다.'); return false; ";
+    ?>
+
+    win_poll(url);
 }
 </script>
