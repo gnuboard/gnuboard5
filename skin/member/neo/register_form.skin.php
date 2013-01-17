@@ -26,6 +26,7 @@ var member_skin_path = "<?=$member_skin_path?>";
         <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
     </td>
 </tr>
+<tr>
     <th scope="row"><label for="reg_mb_password">패스워드</label></th>
     <td><input type="password" id="reg_mb_password" name="mb_password" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?> title="패스워드"></td>
 </tr>
