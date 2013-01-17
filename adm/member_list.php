@@ -116,7 +116,7 @@ var list_delete_php = 'member_list_delete.php';
         <option value="mb_recommend">추천인</option>
     </select>
     <label for="stx">검색어</label>
-    <input type="text" id="stx" name="stx" required value="<?=isset($stx)?>">
+    <input type="text" id="stx" name="stx" required value="<?=$stx?>">
     <input type="submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
