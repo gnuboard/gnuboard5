@@ -154,6 +154,33 @@ function alert_close($msg)
     exit;
 }
 
+// confirm 창
+function confirm($msg, $url1='', $url2='', $url3='')
+{
+    global $g4;
+
+    if (!$msg) {
+        $msg = '올바른 방법으로 이용해 주십시오.';
+        alert($msg);
+    }
+
+    if(!trim($url1) || !trim($url2)) {
+        $msg = '$url1 과 $url2 를 지정해 주세요.';
+        alert($msg);
+    }
+
+    if (!$url3) $url3 = $_SERVER['HTTP_REFERER'];
+
+    $msg = str_replace("\\n", "<br>", $msg);
+
+    $header = '';
+    if (isset($g4['title'])) {
+        $header = $g4['title'];
+    }
+    include_once("{$g4['bbs_path']}/confirm.php");
+    exit;
+}
+
 
 // way.co.kr 의 wayboard 참고
 function url_auto_link($str)
