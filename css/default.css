@@ -212,7 +212,7 @@ a {color:#000;text-decoration:none}
 
 /* ##################################################################### 스킨 및 컨텐츠 */
 /* 공통 */
-.cnt_cmt {display:inline-block;margin-left:10px;color:#ff4679}
+.cnt_cmt {display:inline-block;margin-left:5px;color:#ff4679}
 .readonly {background:#ff4679}
 .highlight {font-weight:bold;color:#ff4679}
 
