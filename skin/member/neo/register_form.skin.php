@@ -97,7 +97,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <? } ?>
 
 <? if ($config['cf_use_addr']) {
-    $zip_href = 'zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
+    $zip_href = './zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
 ?>
 <tr>
     <th scope="row">주소</th>
