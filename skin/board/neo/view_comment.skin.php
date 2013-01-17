@@ -48,9 +48,12 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
         <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
             $query_string = str_replace("&", "&amp;", $_SERVER['QUERY_STRING']);
-            $sql = " select wr_id, wr_content from $write_table where wr_id = '$c_id' and wr_is_comment = '1' ";
-            $cmt = sql_fetch($sql);
-            $c_wr_content = $cmt['wr_content'];
+
+            if($w == 'cu') {
+                $sql = " select wr_id, wr_content from $write_table where wr_id = '$c_id' and wr_is_comment = '1' ";
+                $cmt = sql_fetch($sql);
+                $c_wr_content = $cmt['wr_content'];
+            }
 
             $c_reply_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
             $c_edit_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
