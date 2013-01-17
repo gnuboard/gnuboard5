@@ -144,8 +144,9 @@ a {color:#000;text-decoration:none}
 #poll .btn_submit {padding:0 10px;height:24px;background:#494949;font-weight:bold;line-height:1.9em}
 #poll .btn_cancel {padding:0 7px;height:22px;line-height:1.95em}
 /* 설문조사 결과 (새창) */
-#poll_result section {margin:0 auto 20px;padding:10px;width:90%}
+#poll_result section {padding:15px;width:90%}
 #poll_result h2 {margin:0;padding:20px 0}
+#poll_result_list {margin:0 auto;border:1px solid #ddd;border-bottom:0}
 #poll_result_list h2 {text-align:center}
 #poll_result_list dl,
 #poll_result_list dt,
@@ -157,16 +158,17 @@ a {color:#000;text-decoration:none}
 #poll_result_list p span {position:absolute;top:5px;right:5%;width:80px;text-align:right}
 .poll_result_graph {position:relative;margin-right:5%;height:5px;background:#ddd}
 .poll_result_graph span {position:absolute;top:0;left:0;height:100%;background:#ff4679}
-#poll_result_cmt {border:1px solid #ddd;background:#f7f7f7}
+#poll_result_cmt {margin:0 auto 20px;border:1px solid #ddd;background:#f7f7f7}
 #poll_result_cmt h2 {text-align:center}
-#poll_result_cmt article {margin:0 38px 15px;border-bottom:1px solid #e7e7e7}
+#poll_result_cmt article {margin:0 18px 15px;border-bottom:1px solid #e7e7e7}
 #poll_result_cmt h1 {display:inline-block;margin:0 10px 0 0;padding:0}
 #poll_result_cmt p {padding:3px 0}
-#poll_result_cmt fieldset {margin:0 38px;width:auto;text-align:center}
+#poll_result_cmt fieldset {margin-bottom:0;text-align:left}
 #poll_result_cmt legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
-#poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 10px;border-bottom:1px solid #dedede;text-align:left}
+#poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 0px;text-align:left}
 #poll_result_cmt footer {text-align:right}
-.poll_cmt_del {display:inline-block;padding-bottom:10px}
+.poll_cmt_del a {display:inline-block;padding-bottom:10px}
+#poll_result_oth {margin:0 auto 20px}
 #poll_result_oth h2 {padding:0 0 10px}
 #poll_result_oth ul {margin:0;padding:0;list-style:none}
 #poll_result_oth a {display:block;padding:10px 0;border-bottom:1px solid #eee}
