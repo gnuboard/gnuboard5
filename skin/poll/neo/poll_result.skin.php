@@ -58,7 +58,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <p><?=$po_etc?></p>
             <?
             $comment_size = "";
-            if ($is_member) { $comment_size = 52; ?>
+            if ($is_member) { $comment_size = 50; ?>
                 <input type="hidden" name="pc_name" value="<?=cut_str($member['mb_nick'],255)?>">
             <? } else { $comment_size = 32; ?>
                 <label for="pc_name">이름</label>
