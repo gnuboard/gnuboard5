@@ -91,7 +91,7 @@ a {color:#000;text-decoration:none}
 #snb ul {margin:0;padding:0;list-style:none}
 
 /* 아웃로그인 */
-.outlogin {position:relative;border-bottom:1px solid #bbb;background:#e3e6ea;line-height:1em}
+.outlogin {position:relative;border-bottom:1px solid #bbb;line-height:1em}
 .outlogin h2 {margin:0;padding:0;height:0;overflow:hidden}
 /* 아웃로그인 전 */
 #ol_before {padding:15px 10px 0;width:199px}
@@ -99,13 +99,13 @@ a {color:#000;text-decoration:none}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
 #ol_before input:focus {background:#333;color:#fff}
 #ol_id {display:block;margin-bottom:3px;padding:0 5px;width:185px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
-.ol_idlabel {position:absolute;top:23px;left:20px;color:#696969}
+.ol_idlabel {position:absolute;top:21px;left:20px;color:#696969;font-size:0.9em}
 #ol_pw {display:block;margin-bottom:3px;padding:0 5px;width:185px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
-.ol_pwlabel {position:absolute;top:50px;left:20px;color:#696969}
+.ol_pwlabel {position:absolute;top:48px;left:20px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {color:#696969;letter-spacing:-0.1em}
-#ol_submit {width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-weight:bold;letter-spacing:-0.1em;line-height:2.2em;vertical-align:top}
-#ol_before ul {float:right;margin:10px 0;width:199px;zoom:1}
+#ol_submit {width:60px;height:24px;border:1px solid #b7b7b7;background:#fff;font-weight:bold;letter-spacing:-0.1em;line-height:1.7em;vertical-align:top}
+#ol_before ul {margin:7px 0 13px;width:199px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:right;margin-right:5px;padding-top:2px}
 #ol_before #ol_auto {float:left;margin:0;padding:0}
@@ -134,35 +134,34 @@ a {color:#000;text-decoration:none}
 #ol_after_ft a {display:inline-block;padding:9px 0 8px !important;width:109px;text-align:center}
 
 /* 설문조사 */
-#poll {width:219px;border-bottom:1px solid #bbb;background:#fff}
-#poll header {position:relative;padding:15px 10px 1px;border-bottom:1px solid #ddd;background:#e3e6ea}
+#poll {width:219px;border-bottom:1px solid #bbb}
+#poll header {position:relative;padding:15px 10px 1px;border-bottom:1px solid #ddd}
 #poll header a {position:absolute;top:15px;right:10px;color:#815e68}
 #poll h2 {display:inline-block;margin:0}
 #poll p {padding:0}
-#poll ul {padding:5px 10px}
+#poll ul {padding:5px 10px;background:#fff}
 #poll li {margin:7px 0}
-#poll footer {padding:10px 10px 15px;text-align:center}
+#poll footer {padding:10px 10px 15px;background:#fff;text-align:center}
 #poll footer input {padding:0 15px;height:24px;border:0;background:#494936;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 #poll footer a {display:inline-block;padding:0 5px;height:22px;border:1px solid #b7b7b7;background:#fff;vertical-align:top;letter-spacing:-0.1em;line-height:2.1em}
 /* 설문조사 결과 (새창) */
 #poll_result section {margin:0 auto 20px;padding:10px;width:90%}
 #poll_result h2 {margin-top:10px}
-#poll_result_list {border:1px solid #ddd;background:#f7f7f7}
 #poll_result_list h2 {padding:10px 0 0;text-align:center}
 #poll_result_list dl,
 #poll_result_list dt,
 #poll_result_list dd {margin:0;padding:0}
 #poll_result_list dt {text-align:center}
-#poll_result_list p {position:relative;margin-bottom:0}
-#poll_result_list p span {position:absolute;top:5px;right:5%}
-.poll_result_graph {position:relative;margin-right:5%;height:10px;background:#ddd}
+#poll_result_list li {margin-top:10px}
+#poll_result_list p {margin:0;padding:5px 0}
+.poll_result_graph {position:relative;margin-right:5%;height:5px;background:#ddd}
 .poll_result_graph span {position:absolute;top:0;left:0;height:100%;background:#ff3061}
 #poll_result_cmt {border:1px solid #ddd;background:#f7f7f7}
 #poll_result_cmt h2 {text-align:center}
-#poll_result_cmt article {margin-bottom:15px;border-bottom:1px solid #e7e7e7}
+#poll_result_cmt article {margin:0 38px 15px;border-bottom:1px solid #e7e7e7}
 #poll_result_cmt h1 {display:inline-block;margin:0 10px 0 0;padding:0}
 #poll_result_cmt p {padding:3px 0}
-#poll_result_cmt fieldset {border:0;text-align:center}
+#poll_result_cmt fieldset {margin:0 38px;width:auto;border:0;text-align:center}
 #poll_result_cmt legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 10px;border-bottom:1px solid #dedede;text-align:left}
 #poll_result_another a {display:block;padding:5px 0}
