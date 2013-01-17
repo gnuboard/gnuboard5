@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <script src="<?=$g4[path]?>/js/capslock.js"></script>
 
-<div id="member_confirm">
+<div id="mb_confirm">
 
     <p>
         <strong>패스워드를 한번 더 입력해주세요.</strong>
