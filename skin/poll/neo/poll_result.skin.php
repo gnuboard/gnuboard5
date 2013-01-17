@@ -38,11 +38,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <header>
                 <h1><?=$list2[$i]['name']?>님의 의견</h1>
                 <span class="poll_datetime"><?=$list2[$i]['datetime']?></span>
-                <span class="poll_del"><? if ($list2[$i]['del']) { echo $list2[$i]['del']."삭제</a>"; } ?></span>
             </header>
             <p>
                 <?=$list2[$i]['idea']?>
             </p>
+            <footer>
+                <span class="poll_cmt_del"><? if ($list2[$i]['del']) { echo $list2[$i]['del']."삭제</a>"; } ?></span>
+            </footer>
         </article>
         <? } ?>
 

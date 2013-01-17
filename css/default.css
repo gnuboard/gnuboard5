@@ -166,6 +166,8 @@ a {color:#000;text-decoration:none}
 #poll_result_cmt fieldset {margin:0 38px;width:auto;border:0;text-align:center}
 #poll_result_cmt legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 10px;border-bottom:1px solid #dedede;text-align:left}
+#poll_result_cmt footer {text-align:right}
+.poll_cmt_del {display:inline-block;padding-bottom:10px}
 #poll_result_oth h2 {padding:0 0 10px}
 #poll_result_oth ul {margin:0;padding:0;list-style:none}
 #poll_result_oth a {display:block;padding:10px 0;border-bottom:1px solid #eee}
