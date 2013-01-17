@@ -99,6 +99,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <?
     $k=0;
     for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
+        $comment_def = "";
         $comment_href = "";
     ?>
         <dt><a href="./board.php?bo_table=<?=$search_table[$idx]?>&amp;<?=$search_query?>"><?=$bo_subject[$idx]?>에서</a></dt>
@@ -108,12 +109,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
                 if ($list[$idx][$i][wr_is_comment]) 
                 {
-                    echo "댓글 ";
+                    $comment_def = "<span>댓글</span>";
                     $comment_href = "#c_".$list[$idx][$i][wr_id];
                 }
             ?>
                 <li>
-                    <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><b><?=$list[$idx][$i][subject]?></b></a>
+                    <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><b><?=$comment_def?><?=$list[$idx][$i][subject]?></b></a>
                     <span class="sch_datetime"><?=$list[$idx][$i][wr_datetime]?></span>
                     <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
                     <p><?=$list[$idx][$i][content]?></p>
