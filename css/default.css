@@ -8,7 +8,7 @@ h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
 form, img {border:0}
-label, input, select, img {vertical-align:middle} textarea {font-size:1em}
+label, input, select, img {vertical-align:middle} textarea {font-size:12px}
 input {margin:0;padding:0;font-family:"verdana","dotum"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
 hr {display:none}
@@ -35,7 +35,7 @@ td {padding:10px 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
 #captcha_wav img {border:1px solid #ddd;border-left:0;background:#494949}
 
 /* 필드셋 */
-fieldset {margin-bottom:20px;padding:13px;border:1px solid #dedace;background:#fefefe}
+fieldset {margin-bottom:20px;padding:13px;border:0}
 legend {margin-left:0;padding:7px 10px;border:1px solid #dedace;background:#333;color:#fff}
 .fieldset_input,
 fieldset textarea {padding:3px;border:1px solid #ddd;background:#fff;vertical-align:middle}
@@ -95,7 +95,7 @@ a {color:#000;text-decoration:none}
 .outlogin h2 {margin:0;padding:0;height:0;overflow:hidden}
 /* 아웃로그인 전 */
 #ol_before {padding:15px 10px 0;width:199px}
-#ol_before fieldset {margin:0;padding:0;border:0;background:transparent}
+#ol_before fieldset {margin:0;padding:0}
 #ol_before legend {position:absolute;padding:0;width:0;height:0;border:0;background:transparent;overflow:hidden}
 #ol_before input:focus {background:#333;color:#fff}
 #ol_id {display:block;margin-bottom:3px;padding:0 5px;width:185px;height:22px;border:1px solid #d7d7d7;background:#fff;line-height:1.6em}
@@ -163,7 +163,7 @@ a {color:#000;text-decoration:none}
 #poll_result_cmt article {margin:0 38px 15px;border-bottom:1px solid #e7e7e7}
 #poll_result_cmt h1 {display:inline-block;margin:0 10px 0 0;padding:0}
 #poll_result_cmt p {padding:3px 0}
-#poll_result_cmt fieldset {margin:0 38px;width:auto;border:0;text-align:center}
+#poll_result_cmt fieldset {margin:0 38px;width:auto;text-align:center}
 #poll_result_cmt legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 10px;border-bottom:1px solid #dedede;text-align:left}
 #poll_result_cmt footer {text-align:right}
@@ -384,7 +384,7 @@ a {color:#000;text-decoration:none}
 .bo_vc_info dt {float:left}
 .bo_vc_info dd {float:left;margin:0 15px 0 10px}
 #bo_vc p {padding:0}
-#bo_vc fieldset {margin:0 0 10px;padding:0;border:0;background:transparent}
+#bo_vc fieldset {margin:0 0 10px;padding:0}
 #bo_vc #bo_vc_winfo {float:left}
 #bo_vc #captcha {float:left;margin-left:10px;padding:0 5px 0 0;border:0}
 #bo_vc #captcha a {display:inline-block;margin-right:5px;text-decoration:underline;vertical-align:middle}
@@ -414,7 +414,7 @@ a {color:#000;text-decoration:none}
 #fregister section {margin-bottom:20px}
 #fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #ddd;background:#f7f7f7}
 #fregister textarea:focus {background:#333;color:#fff}
-.fregister_agree {text-align:right}
+.fregister_agree {margin:0;padding:0;text-align:right}
 .fregister_agree label {display:inline-block;margin-right:10px;vertical-align:middle}
 
 /* 회원가입 완료 */
@@ -479,7 +479,7 @@ a {color:#000;text-decoration:none}
 #memo_write textarea {height:100px}
 
 /* 아이디/패스워드 찾기 */
-#find_info fieldset {padding:0;border:0}
+#find_info fieldset {padding:0}
 #find_info legend {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #find_info #captcha {padding-top:20px;border-top:1px solid #ddd}
 #find_info #captcha input {margin-left:5px}
