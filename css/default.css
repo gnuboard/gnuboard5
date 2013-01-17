@@ -257,7 +257,7 @@ a {color:#000;text-decoration:none}
 .latest li {padding:0 10px}
 .latest li a {display:inline-block;padding:4px 0}
 .latest p {text-align:center}
-.latest_more {position:absolute;top:-2px;right:10px}
+.latest_more {position:absolute;top:-5px;right:10px}
 .latest_more a {display:inline-block;padding:5px 0}
 
 /* 테이블 항목별 정의 */
