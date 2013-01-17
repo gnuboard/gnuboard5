@@ -21,6 +21,8 @@ if($confirm != 'yes' && $board['bo_download_point'] < 0) {
     $url1 = './download.php?'.$_SERVER['QUERY_STRING'].'&amp;confirm=yes';
     $url2 = $_SERVER['HTTP_REFERER'];
 
+    //$url1 = 확인link, $url2=취소link
+    // 특정주소로 이동시키려면 $url3 이용
     confirm($msg, $url1, $url2);
 }
 
