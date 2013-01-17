@@ -10,7 +10,6 @@ var member_skin_path = "<?=$member_skin_path?>";
 <form id="fregisterform" name="fregisterform" method="post" action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="url" value="<?=$urlencode?>">
-<input type="hidden" name="mb_jumin" value="<?=$jumin?>">
 <? if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?=$member['mb_sex']?>"><? } ?>
 <? if (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
 <input type="hidden" name="mb_nick_default" value="<?=$member['mb_nick']?>">
@@ -208,7 +207,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 
 <script>
 // submit 최종 폼체크
-function fregisterform_submit(f) 
+function fregisterform_submit(f)
 {
     // 회원아이디 검사
     if (f.w.value == "") {
@@ -250,7 +249,7 @@ function fregisterform_submit(f)
             return false;
         }
 
-        var pattern = /([^가-힣\x20])/i; 
+        var pattern = /([^가-힣\x20])/i;
         if (pattern.test(f.mb_name.value)) {
             alert('이름은 한글로 입력하십시오.');
             f.mb_name.select();
