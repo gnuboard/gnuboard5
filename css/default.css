@@ -150,6 +150,7 @@ a {color:#000;text-decoration:none}
 #poll_result_list dd {margin:0;padding:0}
 #poll_result_list dl {padding-bottom:30px}
 #poll_result_list dt {margin-right:5%;color:#ff4679;text-align:right}
+#poll_result_list ol {padding-left:30px}
 #poll_result_list li {margin-top:10px}
 #poll_result_list p {position:relative;margin:0;padding:5px 0}
 #poll_result_list p strong {position:absolute;top:5px;right:5%;padding-right:80px;width:100px;text-align:right}
