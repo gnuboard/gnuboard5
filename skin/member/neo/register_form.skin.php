@@ -97,7 +97,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <? } ?>
 
 <? if ($config['cf_use_addr']) {
-    $zip_href = 'zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
+    $zip_href = './zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
 ?>
 <tr>
     <th scope="row">주소</th>
@@ -105,8 +105,8 @@ var member_skin_path = "<?=$member_skin_path?>";
         <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
          -
         <input type="text" id="reg_mb_zip2" name="mb_zip2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip2']?>" title="우편번호 뒷자리">
-        <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline" target="_blank" onclick="win_zip('fregisterform', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2'); return false;">주소찾기</a>
-        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" readonly <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
+        <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline" target="_blank" onclick="win_zip('fregisterform', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2'); return false;" style="display: none;">주소찾기</a>
+        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
         <input type="text" id="reg_mb_addr2" name="mb_addr2" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr2']?>" title="상세주소">
     </td>
 </tr>
