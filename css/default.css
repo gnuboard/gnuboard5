@@ -8,7 +8,7 @@ h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"verdana","dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul {margin:0;padding:0;list-style:none}
 form, img {border:0}
-label, input, select, img {vertical-align:middle} textarea {font-size:12px}
+label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"verdana","dotum"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
 hr {display:none}
