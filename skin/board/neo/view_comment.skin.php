@@ -51,7 +51,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <ul class="bo_vc_act">
                 <? if ($list[$i]['is_reply']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'c');">답변</a></li><? } ?>
                 <? if ($list[$i]['is_edit']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'cu');">수정</a></li><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><li><a href="javascript:comment_delete('<?=$list[$i]['del_link']?>');">삭제</a></li><? } ?>
+                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="javascript:comment_delete('<?=$list[$i]['del_link']?>'); return false;">삭제</a></li><? } ?>
             </ul>
         </footer>
         <? } ?>
@@ -59,20 +59,20 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <?}?>
 
     <? if ($is_comment_write) { ?>
-    <form name="fviewcomment" method="post" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" autocomplete="off">
-    <input type="hidden" id="w" name="w" value="c">
-    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-    <input type="hidden" name="wr_id" value="<?=$wr_id?>">
-    <input type="hidden" id="comment_id" name="comment_id" value="">
-    <input type="hidden" name="sca" value="<?=$sca?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="spt" value="<?=$spt?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="is_good" value="">
-
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
+        <form name="fviewcomment" method="post" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" autocomplete="off">
+        <input type="hidden" id="w" name="w" value="c">
+        <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+        <input type="hidden" name="wr_id" value="<?=$wr_id?>">
+        <input type="hidden" id="comment_id" name="comment_id" value="">
+        <input type="hidden" name="sca" value="<?=$sca?>">
+        <input type="hidden" name="sfl" value="<?=$sfl?>">
+        <input type="hidden" name="stx" value="<?=$stx?>">
+        <input type="hidden" name="spt" value="<?=$spt?>">
+        <input type="hidden" name="page" value="<?=$page?>">
+        <input type="hidden" name="is_good" value="">
+
         <fieldset id="bo_vc_winfo">
             <legend class="sound_only">작성자</legend>
             <? if ($is_guest) { ?>
@@ -90,9 +90,8 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
             <input type="submit" class="bo_vc_submit" value="댓글입력">
         </div>
+        </form>
     </aside>
-
-    </form>
 
     <script>
     var save_before = '';
