@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="poll_result" class="new_win">
@@ -7,7 +7,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <section id="poll_result_list">
         <h2><?=$po_subject?> 결과</h2>
-        
+
         <dl>
             <dt><span>전체 <?=$nf_total_po_cnt?>표</span></dt>
             <dd>
@@ -89,8 +89,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <? } ?>
         </ul>
     </section>
-
-    <div class="btn_win">
-        <a href="javascript:window.close();" class="btn_cancel">창닫기</a>
-    </div>
 </div>
+
+<script>
+$(function() {
+    $("#poll_result").append("<div class=\"btn_win\"><a class=\"btn_cancel\">창닫기</a></div>");
+
+    $(".btn_win a").click(function() {
+        window.close();
+    });
+});
+</script>
