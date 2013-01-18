@@ -112,15 +112,12 @@ function get_cookie($cookie_name)
 
 
 // 경고메세지를 경고창으로
-function alert($msg='', $url='')
+function alert($msg='', $url='', $error=true)
 {
     global $g4, $config, $member;
     global $is_admin;
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
-    $msg = str_replace("\\n", "<br>", $msg);
-
-    if (!$url) $url = $_SERVER['HTTP_REFERER'];
 
     /*
     //header("Content-Type: text/html; charset=$g4['charset']");
