@@ -9,9 +9,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="url" value='<?=$login_url?>'>
 
     <fieldset>
-        <label for="login_id" class="login_id">회원아이디</label>
+        <label for="login_id" class="login_id">회원아이디<strong class="sound_only">필수</strong></label>
         <input type="text" id="login_id" name="mb_id" class="fieldset_input" maxLength="20" size="20" required title="회원아이디">
-        <label for="login_pw" class="login_pw">패스워드</label>
+        <label for="login_pw" class="login_pw">패스워드<strong class="sound_only">필수</strong></label>
         <input type="password" id="login_pw" class="fieldset_input" name="mb_password" maxLength="20" size="20" required title="패스워드">
         <input type="submit" class="btn_submit" value="로그인">
         <input type="checkbox" id="login_auto_login" name="auto_login">
