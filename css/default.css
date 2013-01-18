@@ -375,7 +375,7 @@ a {color:#000;text-decoration:none}
 #bo_vc article {padding:0 0 10px;border-bottom:1px solid #ddd}
 #bo_vc header {position:relative;zoom:1}
 #bo_vc header:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_vc header img {position:absolute;top:15px;left:-20px}
+#bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
 #bo_vc h1 {float:left;margin:15px 0 5px}
 .bo_vc_info {float:left;margin:15px 0 5px 15px;zoom:1}
 .bo_vc_info:after {display:block;visibility:hidden;clear:both;content:""}

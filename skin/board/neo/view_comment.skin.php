@@ -28,7 +28,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <article id="c_<?=$comment_id?>" <?if ($cmt_depth) {?>style="margin-left:<?=$cmt_depth?>px"<?}?>>
         <header>
             <h1><?=$list[$i]['name']?><span class="sound_only">님의 댓글</span></h1>
-            <? if ($cmt_depth) {?><img src="<?=$board_skin_path?>/img/icon_reply.gif" alt="댓글의 댓글"><? } ?>
+            <? if ($cmt_depth) {?><img src="<?=$board_skin_path?>/img/icon_reply.gif" class="icon_reply" alt="댓글의 댓글"><? } ?>
             <dl class="bo_vc_info">
                 <? if ($is_ip_view) { ?>
                 <dt>아이피</dt>

@@ -10,6 +10,7 @@ if ($w == '')
 {
     $required_mb_id = 'class="required minlength=3 alnum_"';
     $required_mb_password = 'class="required"';
+    $sound_only = '<strong class="sound_only">필수</strong>';
 
     $mb['mb_mailling'] = 1;
     $mb['mb_open'] = 1;
@@ -96,19 +97,19 @@ include_once('./admin.head.php');
 <caption><?=$g4['title']?></caption>
 <tbody>
 <tr>
-    <th scope="row"><label for="mb_id">아이디</label></th>
+    <th scope="row"><label for="mb_id">아이디<?=$sound_only?></label></th>
     <td>
-        <input type="text" id="mb_id" name="mb_id" maxlength="20" <?=$required_mb_id?> value="<?=$mb['mb_id']?>" size="15">
+        <input type="text" id="mb_id" name="mb_id" maxlength="20" <?=$required_mb_id?> value="<?=$mb['mb_id']?>" size="15" title="아이디">
         <?if ($w=='u'){?><a href="./boardgroupmember_form.php?mb_id=<?=$mb['mb_id']?>">접근가능그룹보기</a><?}?>
     </td>
-    <th scope="row"><label for="mb_password">패스워드</label></th>
-    <td><input type="password" id="mb_password" name="mb_password" maxlength="20" <?=$required_mb_password?> size="15"></td>
+    <th scope="row"><label for="mb_password">패스워드<?=$sound_only?></label></th>
+    <td><input type="password" id="mb_password" name="mb_password" maxlength="20" <?=$required_mb_password?> size="15" title="패스워드"></td>
 </tr>
 <tr>
-    <th scope="row"><label for="mb_name">이름(실명)</label></th>
-    <td><input type="text" id="mb_name" name="mb_name" maxlength="20" class="required hangul minlength=2" value="<?=$mb['mb_name']?>" size="15"></td>
-    <th scope="row"><label for="mb_nick">별명</label></th>
-    <td><input type="text" id="mb_nick" name="mb_nick" maxlength="20" class="required minlength=2" value="<?=$mb['mb_nick']?>" size="15"></td>
+    <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
+    <td><input type="text" id="mb_name" name="mb_name" maxlength="20" class="required hangul minlength=2" required value="<?=$mb['mb_name']?>" size="15" title="이름"></td>
+    <th scope="row"><label for="mb_nick">별명<strong class="sound_only">필수</strong></label></th>
+    <td><input type="text" id="mb_nick" name="mb_nick" maxlength="20" class="required minlength=2" required value="<?=$mb['mb_nick']?>" size="15" title="별명"></td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_level">회원 권한</label></th>
@@ -117,8 +118,8 @@ include_once('./admin.head.php');
     <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$mb['mb_id']?>" target="_blank"><?=number_format($mb['mb_point'])?></a> 점</td>
 </tr>
 <tr>
-    <th scope="row"><label for="mb_email">E-mail</label></th>
-    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" class="required email" value="<?=$mb['mb_email']?>" size="30" title="E-mail"></td>
+    <th scope="row"><label for="mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
+    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" class="required email" required value="<?=$mb['mb_email']?>" size="30" title="E-mail"></td>
     <th scope="row"><label for="mb_homepage">홈페이지</label></th>
     <td><input type="text" id="mb_homepage" name="mb_homepage" maxlength="255" value="<?=$mb['mb_homepage']?>" size="15"></td>
 </tr>
@@ -250,8 +251,8 @@ include_once('./admin.head.php');
 <fieldset id="admin_confirm">
     <legend>XSS 혹은 CSRF 방지</legend>
     <p>관리자 권한을 탈취 당하는 경우를 대비하여 관리자의 패스워드를 다시 한번 확인합니다.</p>
-    <label for="admin_password">관리자 패스워드</label>
-    <input type="password" id="admin_password" name="admin_password" class="required" title="관리자 패스워드">
+    <label for="admin_password">관리자 패스워드<strong class="sound_only">필수</strong></label>
+    <input type="password" id="admin_password" name="admin_password" class="required" required title="관리자 패스워드">
 </fieldset>
 
 <div class="btn_confirm">
