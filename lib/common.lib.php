@@ -1064,44 +1064,17 @@ function view_link($view, $number, $attribute)
 */
 
 
-// 한글 한글자(2byte, 유니코드 3byte)는 길이 2, 공란.영숫자.특수문자는 길이 1
-// 유니코드는 http://g4uni.winnwe.net/bbs/board.php?bo_table=g4uni_faq&wr_id=7 의 Mr.Learn님의 글을 참고하였습니다.
 function cut_str($str, $len, $suffix="…")
 {
-    global $g4;
+    if (strlen($str) >= $len) {
+        $length = floor($len / 3);
 
-    if (strtoupper($g4['charset']) == 'UTF-8') {
-        /*
-        if (strlen($str) >= $len) {
-            //echo $str,', ',strlen($str),', ',$len;
-            $c = substr(str_pad(decbin(ord($str[$len-1])),8,'0',STR_PAD_LEFT),0,2);
-            if ($c == '10')
-                for (;$c != '11' && $c{0} == 1;$c = substr(str_pad(decbin(ord($str{--$len})),8,'0',STR_PAD_LEFT),0,2));
-            return substr($str,0,$len) . (strlen($str)-strlen($suffix) >= $len ? $suffix : '');
-        } else {
-            return $str;
-        }
-        */
-        if (strlen($str) >= $len) {
-            $length = floor($len / 3);
+        $arr_str = array_slice(preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY), 0, $length);
+        $string = join("", $arr_str);
 
-            $arr_str = array_slice(preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY), 0, $length);
-            $string = join("", $arr_str);
-
-            return $string . (strlen($str)-strlen($suffix) >= $len ? $suffix : '');
-        } else {
-            return $str;
-        }
+        return $string . (strlen($str)-strlen($suffix) >= $len ? $suffix : '');
     } else {
-        $s = substr($str, 0, $len);
-        $cnt = 0;
-        for ($i=0; $i<strlen($s); $i++)
-            if (ord($s[$i]) > 127)
-                $cnt++;
-        $s = substr($s, 0, $len - ($cnt % 2));
-        if (strlen($s) >= strlen($str))
-            $suffix = "";
-        return $s . $suffix;
+        return $str;
     }
 }
 
