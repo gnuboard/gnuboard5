@@ -71,7 +71,10 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     </article>
     <?}?>
 
-    <? if ($is_comment_write) { ?>
+    <? if ($is_comment_write) {
+        if($w == '')
+            $w = 'c';
+    ?>
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
         <form name="fviewcomment" method="post" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" autocomplete="off">

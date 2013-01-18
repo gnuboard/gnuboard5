@@ -3,21 +3,11 @@ include_once('./_common.php');
 
 $g4['title'] = "로그인 검사";
 
-$mb_id = $_POST['mb_id'];
-$mb_password = $_POST['mb_password'];
+$mb_id       = escape_trim($_POST['mb_id']);
+$mb_password = escape_trim($_POST['mb_password']);
 
 if (!trim($mb_id) || !trim($mb_password))
     alert('회원아이디나 패스워드가 공백이면 안됩니다.');
-
-/*
-// 자동 스크립트를 이용한 공격에 대비하여 로그인 실패시에는 일정시간이 지난후에 다시 로그인 하도록 함
-if ($check_time = get_session("ss_login_check_time")) {
-    if ($check_time > $g4['server_time'] - 15) {
-        alert('로그인 실패시에는 15초 이후에 다시 로그인 하시기 바랍니다.');
-    }
-}
-set_session("ss_login_check_time", $g4['server_time']);
-*/
 
 $mb = get_member($mb_id);
 
@@ -65,9 +55,7 @@ if ($auto_login) {
     set_cookie('ck_auto', '', 0);
 }
 
-
-if ($url) 
-{
+if ($url) {
     $link = urldecode($url);
     // 2003-06-14 추가 (다른 변수들을 넘겨주기 위함)
     if (preg_match("/\?/", $link))
@@ -76,17 +64,15 @@ if ($url)
         $split= "?"; 
 
     // $_POST 배열변수에서 아래의 이름을 가지지 않은 것만 넘김
-    foreach($_POST as $key=>$value) 
-    {
-        if ($key != 'mb_id' && $key != 'mb_password' && $key != 'x' && $key != 'y' && $key != 'url')
-        {
+    foreach($_POST as $key=>$value) {
+        if ($key != 'mb_id' && $key != 'mb_password' && $key != 'x' && $key != 'y' && $key != 'url') {
             $link .= "$split$key=$value";
             $split = "&amp;";
         }
     }
-} 
-else
+} else  {
     $link = $g4['path'];
+}
 
 goto_url($link);
 ?>
