@@ -1661,4 +1661,10 @@ function skin_path()
     if (G4_IS_MOBILE) $skin_path = $g4['mobile_path'].'/'.$skin_dir;
     return $skin_path;
 }
+
+
+function is_mobile() 
+{
+    return preg_match('/'.G4_MOBILE_AGENT.'/i', $_SERVER['HTTP_USER_AGENT']);
+}
 ?>

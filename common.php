@@ -234,27 +234,6 @@ else
 
 
 //==============================================================================
-// Mobile 모바일 설정
-// 쿠키에 저장된 값이 모바일이라면 브라우저 상관없이 모바일로 실행
-// 그렇지 않다면 브라우저의 HTTP_USER_AGENT 에 따라 모바일 결정
-// G4_MOBILE_AGENT : config.php 에서 선언
-//------------------------------------------------------------------------------
-$is_mobile = false;
-if (get_cookie('is_mobile')) {
-    $is_mobile = true;
-} else if (preg_match('/'.G4_MOBILE_AGENT.'/i', $_SERVER['HTTP_USER_AGENT'])) {
-    $is_mobile = true;
-}
-
-define('G4_IS_MOBILE', $is_mobile);
-if (G4_IS_MOBILE) {
-    include_once($g4['path'].'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
-    $g4['mobile_path'] = $g4['path'].'/'.$g4['mobile_dir'];
-}
-//==============================================================================
-
-
-//==============================================================================
 // 공용 변수
 //------------------------------------------------------------------------------
 // 기본환경설정
@@ -271,11 +250,48 @@ ini_set("session.cookie_domain", $g4['cookie_domain']);
 
 @session_start();
 
+
+//==============================================================================
+// Mobile 모바일 설정
+// 쿠키에 저장된 값이 모바일이라면 브라우저 상관없이 모바일로 실행
+// 그렇지 않다면 브라우저의 HTTP_USER_AGENT 에 따라 모바일 결정
+// G4_MOBILE_AGENT : config.php 에서 선언
+//------------------------------------------------------------------------------
+$is_mobile = false;
+if (isset($_REQUEST['pc']))
+    $is_mobile = false;
+else if (isset($_REQUEST['mobile']))
+    $is_mobile = true;
+else if (isset($_SESSION['ss_is_mobile'])) 
+    $is_mobile = $_SESSION['ss_is_mobile'];
+else if (is_mobile())
+    $is_mobile = true;
+
+$_SESSION['ss_is_mobile'] = $is_mobile;
+define('G4_IS_MOBILE', $is_mobile);
+if (G4_IS_MOBILE) {
+    include_once($g4['path'].'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
+    $g4['mobile_path'] = $g4['path'].'/'.$g4['mobile_dir'];
+}
+
 /*
-// 081022 : CSRF 방지를 위해 코드를 작성했으나 효과가 없어 주석처리 함
-if (strpos($_SERVER[PHP_SELF], $g4['admin']) === false)
-    set_session("ss_admin", false);
+$_SESSION['ss_is_mobile'] = false;
+if (get_cookie('ck_is_mobile')) 
+    $_SESSION['ss_is_mobile'] = false;
+else if (isset($_REQUEST['pc']))
+    $_SESSION['ss_is_mobile'] = false;
+else if (isset($_REQUEST['mobile']))
+    $_SESSION['ss_is_mobile'] = true;
+else if (is_mobile())
+    $_SESSION['ss_is_mobile'] = true;
+
+define('G4_IS_MOBILE', $_SESSION['ss_is_mobile']);
+if (G4_IS_MOBILE) {
+    include_once($g4['path'].'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
+    $g4['mobile_path'] = $g4['path'].'/'.$g4['mobile_dir'];
+}
 */
+//==============================================================================
 
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
 if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
@@ -529,4 +545,14 @@ while ($entry = $tmp->read()) {
     if (preg_match("/(\.php)$/i", $entry))
         include_once($g4['path'].'/extend/'.$entry);
 }
+
+// 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면
+// 캐쉬의 내용을 가져옴. 완전한지는 검증되지 않음
+header("Content-Type: text/html; charset=utf-8");
+$gmnow = gmdate("D, d M Y H:i:s") . " GMT";
+header("Expires: 0"); // rfc2616 - Section 14.21
+header("Last-Modified: " . $gmnow);
+header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
+header("Cache-Control: pre-check=0, post-check=0, max-age=0"); // HTTP/1.1
+header("Pragma: no-cache"); // HTTP/1.0
 ?>

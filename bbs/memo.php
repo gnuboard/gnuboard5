@@ -1,12 +1,7 @@
 <?
 include_once('./_common.php');
-<<<<<<< HEAD
     
 if ($is_guest) 
-=======
-
-if (!$member[mb_id])
->>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
     alert_close('회원만 이용하실 수 있습니다.');
 
 $g4['title'] = '내 쪽지함';
@@ -81,10 +76,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
 
-<<<<<<< HEAD
-=======
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
->>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
 include_once($member_skin_path.'/memo.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');
