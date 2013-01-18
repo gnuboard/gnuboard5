@@ -453,7 +453,7 @@ function search_font($stx, $str)
     }
 
     // 지정된 검색 폰트의 색상, 배경색상으로 대체
-    $replace = "<span style='background-color:{$config['cf_search_bgcolor']}; color:{$config['cf_search_color']};'>\\1</span>";
+    $replace = "<b style='background-color:{$config['cf_search_bgcolor']}; color:{$config['cf_search_color']};'>\\1</b>";
 
     return preg_replace("/($pattern)/i", $replace, $str);
 }
