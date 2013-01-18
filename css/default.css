@@ -263,7 +263,7 @@ a {color:#000;text-decoration:none}
 .td_nick {width:120px;text-align:center}
 .td_name {width:120px;text-align:left}
 .td_name div {position:relative}
-#sideview {z-index:1000;position:absolute;top:15px;left:0;border:1px solid #999;background:#f9f9f9}
+#sideview {z-index:1000;position:absolute;top:15px;left:20px;border:1px solid #999;background:#f9f9f9}
 #sideview ul {list-style:none}
 #sideview a {display:inline-block;padding:5px 10px 4px;width:100px;border-bottom:1px solid #ddd}
 .td_date {width:60px;text-align:center}
