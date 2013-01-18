@@ -142,12 +142,20 @@ function alert($msg='', $url='', $error=true)
 
 
 // 경고메세지 출력후 창을 닫음
-function alert_close($msg)
+function alert_close($msg, $error=true)
 {
     global $g4;
 
+    /*
     echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
     echo "<script> alert('$msg'); window.close(); </script>";
+    exit;
+    */
+    $header = '';
+    if (isset($g4['title'])) {
+        $header = $g4['title'];
+    }
+    include_once("{$g4['bbs_path']}/alert_close.php");
     exit;
 }
 
