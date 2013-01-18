@@ -7,5 +7,6 @@ $mb_id    = escape_trim($_POST['reg_mb_id']);
 
 if ($msg = empty_mb_email($mb_email)) die($msg);
 if ($msg = valid_mb_email($mb_email)) die($msg);
+if ($msg = prohibit_mb_email($mb_email)) die($msg);
 if ($msg = exist_mb_email($mb_email, $mb_id)) die($msg);
 ?>

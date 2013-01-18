@@ -67,6 +67,8 @@ if ($w == '' || $w == 'u') {
     if ($msg = reserve_mb_nick($mb_nick))   alert($msg);
     if ($msg = valid_mb_name($mb_name))     alert($msg);
     if ($msg = valid_mb_nick($mb_nick))     alert($msg);
+    if ($msg = valid_mb_email($mb_email))   alert($msg);
+    if ($msg = prohibit_mb_email($mb_email))alert($msg);
 
     if ($w=='') {
         if ($msg = exist_mb_id($mb_id))     alert($msg);
