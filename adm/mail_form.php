@@ -32,15 +32,15 @@ include_once('./admin.head.php');
 <caption>메일내용 입력</caption>
 <tbody>
 <tr>
-    <th scope="row"><label for="ma_subject">메일 제목</label></th>
-    <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" size="100" class="required"></td>
+    <th scope="row"><label for="ma_subject">메일 제목<strong class="sound_only">필수</strong></label></th>
+    <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" size="100" class="required" required title="메일제목"></td>
 </tr>
 <tr>
-    <th scope="row"><label for="ma_content">메일 내용</label></th>
+    <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('{이름} , {별명} , {회원아이디} , {이메일} , {생일} 처럼 HTML 코드에 삽입하면 해당 내용에 맞게 변환하여 메일 발송합니다.')?>
         <?=textarea_size('ma_content')?>
-        <textarea id="ma_content" name="ma_content" rows="20" class="required"><?=$ma['ma_content']?></textarea>
+        <textarea id="ma_content" name="ma_content" rows="20" class="required" required title="메일내용"><?=$ma['ma_content']?></textarea>
     </td>
 </tr>
 </tbody>
