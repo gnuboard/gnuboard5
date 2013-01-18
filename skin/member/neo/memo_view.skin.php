@@ -31,7 +31,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? if($next_link) { ?>
         <a href="<?=$next_link?>">다음쪽지</a>
         <? } ?>
-        <? if ($kind == 'recv') { ?><a href="./memo_form.php?me_recv_mb_id=<?=$mb['mb_id']?>&amp;me_id=<?=$memo['me_id']?>">답장</a><? } ?>
+        <? if ($kind == 'recv') { ?><a href="./memo_form.php?me_recv_mb_id=<?=$mb['mb_id']?>&amp;me_id=<?=$memo['me_id']?>" class="btn01">답장</a><? } ?>
         <a href="./memo.php?kind=<?=$kind?>">목록보기</a>
     </div>
 </div>
