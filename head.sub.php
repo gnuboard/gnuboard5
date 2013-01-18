@@ -7,14 +7,6 @@ $begin_time = get_microtime();
 if (!isset($g4['title']))
     $g4['title'] = $config['cf_title'];
 
-// 쪽지를 받았나?
-if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
-    $mb = get_member($member['mb_memo_call'], "mb_nick");
-    sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
-
-    alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI'], false);
-}
-
 
 // 현재 접속자
 //$lo_location = get_text($g4[title]);
@@ -39,9 +31,9 @@ header("Pragma: no-cache"); // HTTP/1.0
 <head>
 <meta charset="utf-8">
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
-<? 
+<?
 if (G4_IS_MOBILE) {
-    echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"; 
+    echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
     echo "<link rel=\"stylesheet\" href=\"{$g4['url']}/css/jquery.mobile-1.3.0-beta.1.min.css\">\n";
 } else {
     if (isset($administrator)) {
@@ -101,6 +93,18 @@ if (!empty($g4['js_file'])) {
 </head>
 <body>
 <a id="g4_head"></a>
+
+<?
+// 쪽지를 받았나?
+if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
+    $mb = get_member($member['mb_memo_call'], "mb_nick");
+    sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
+
+    //alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI'], false);
+    $memo_msg = $mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.\\n\\n바로 확인하시겠습니까?';
+    include_once($g4['bbs_path'].'/memocall.php');
+}
+?>
 
 <?
 if (G4_IS_MOBILE) {
