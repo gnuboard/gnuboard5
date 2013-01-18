@@ -52,14 +52,14 @@ echo $option_hidden;
 <tbody>
 <? if ($is_name) { ?>
 <tr>
-    <th scope="row"><label for="wr_name">이름</label></th>
+    <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
     <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>" title="이름"></td>
 </tr>
 <? } ?>
 
 <? if ($is_password) { ?>
 <tr>
-    <th scope="row"><label for="wr_password">패스워드</label></th>
+    <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
     <td><input type="password" id="wr_password" name="wr_password" class="frm_input" maxlength="20" <?=$password_required?>></td>
 </tr>
 <? } ?>
@@ -87,7 +87,7 @@ echo $option_hidden;
 
 <? if ($is_category) { ?>
 <tr>
-    <th scope="row"><label for="ca_name">분류</label></th>
+    <th scope="row"><label for="ca_name">분류<strong class="sound_only">필수</strong></label></th>
     <td>
         <select id="ca_name" name="ca_name" class="required" required>
             <option value="">선택하세요</option>
@@ -98,12 +98,12 @@ echo $option_hidden;
 <? } ?>
 
 <tr>
-    <th scope="row"><label for="wr_subject">제목</label></th>
+    <th scope="row"><label for="wr_subject">제목<strong class="sound_only">필수</strong></label></th>
     <td><input type="text" id="wr_subject" name="wr_subject" class="frm_input required" size="50" required value="<?=$subject?>" title="제목"></td>
 </tr>
 
 <tr>
-    <th scope="row"><label for="wr_content">내용</label></th>
+    <th scope="row"><label for="wr_content">내용<strong class="sound_only">필수</strong></label></th>
     <td><?=editor_html("wr_content", $content);?></td>
 </tr>
 

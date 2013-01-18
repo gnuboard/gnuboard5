@@ -89,8 +89,8 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <fieldset id="bo_vc_winfo">
             <legend class="sound_only">작성자</legend>
             <? if ($is_guest) { ?>
-            <label for="wr_name">이름</label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input required" maxLength="20" size="5" required>
-            <label for="wr_password">패스워드</label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input required" maxLength="20" size="10" required>
+            <label for="wr_name">이름<strong class="sound_only">필수</strong></label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input required" maxLength="20" size="5" required>
+            <label for="wr_password">패스워드<strong class="sound_only">필수</strong></label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input required" maxLength="20" size="10" required>
             <? } ?>
             <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">
             <label for="wr_secret">비밀글</label>
@@ -99,7 +99,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
         <div id="bo_vc_warea">
             <textarea id="wr_content" name="wr_content" required
-            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>><? echo $c_wr_content; ?></textarea>
+            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?> title="댓글내용입력(필수)"><? echo $c_wr_content; ?></textarea>
             <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
             <input type="submit" class="bo_vc_submit" value="댓글입력">
         </div>
