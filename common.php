@@ -24,96 +24,42 @@ if (isset($HTTP_POST_VARS) && !isset($_POST)) {
 		$_SESSION = &$HTTP_SESSION_VARS;
 }
 
-//
-// phpBB2 참고
+
+//==============================================================================
 // php.ini 의 magic_quotes_gpc 값이 FALSE 인 경우 addslashes() 적용
 // SQL Injection 등으로 부터 보호
-//
-if( !get_magic_quotes_gpc() )
-{
-	if( is_array($_GET) )
-	{
-		while( list($k, $v) = each($_GET) )
-		{
-			if( is_array($_GET[$k]) )
-			{
-				while( list($k2, $v2) = each($_GET[$k]) )
-				{
-					$_GET[$k][$k2] = addslashes($v2);
-				}
-				@reset($_GET[$k]);
-			}
-			else
-			{
-				$_GET[$k] = addslashes($v);
-			}
-		}
-		@reset($_GET);
-	}
-
-	if( is_array($_POST) )
-	{
-		while( list($k, $v) = each($_POST) )
-		{
-			if( is_array($_POST[$k]) )
-			{
-				while( list($k2, $v2) = each($_POST[$k]) )
-				{
-					$_POST[$k][$k2] = addslashes($v2);
-				}
-				@reset($_POST[$k]);
-			}
-			else
-			{
-				$_POST[$k] = addslashes($v);
-			}
-		}
-		@reset($_POST);
-	}
-
-	if( is_array($_COOKIE) )
-	{
-		while( list($k, $v) = each($_COOKIE) )
-		{
-			if( is_array($_COOKIE[$k]) )
-			{
-				while( list($k2, $v2) = each($_COOKIE[$k]) )
-				{
-					$_COOKIE[$k][$k2] = addslashes($v2);
-				}
-				@reset($_COOKIE[$k]);
-			}
-			else
-			{
-				$_COOKIE[$k] = addslashes($v);
-			}
-		}
-		@reset($_COOKIE);
-	}
+// http://kr.php.net/manual/en/function.get-magic-quotes-gpc.php#97783
+//------------------------------------------------------------------------------
+if (!get_magic_quotes_gpc()) {
+    $escape_function = 'addslashes($value)';
+    $addslashes_deep = create_function('&$value, $fn', '
+        if (is_string($value)) {
+            $value = ' . $escape_function . ';
+        } else if (is_array($value)) {
+            foreach ($value as &$v) $fn($v, $fn);
+        }
+    ');
+    
+    // Escape data
+    $addslashes_deep($_POST, $addslashes_deep);
+    $addslashes_deep($_GET, $addslashes_deep);
+    $addslashes_deep($_COOKIE, $addslashes_deep);
+    $addslashes_deep($_REQUEST, $addslashes_deep);
 }
-
-if (isset($_GET['g4_path']) || isset($_POST['g4_path']) || isset($_COOKIE['g4_path'])) {
-    unset($_GET['g4_path']);
-    unset($_POST['g4_path']);
-    unset($_COOKIE['g4_path']);
-    if (isset($g4_path)) unset($g4_path);
-}
+//==============================================================================
 
 
-//==========================================================================================================================
+//==============================================================================
 // XSS(Cross Site Scripting) 공격에 의한 데이터 검증 및 차단
-//--------------------------------------------------------------------------------------------------------------------------
-function xss_clean($data)
-{
+//------------------------------------------------------------------------------
+function xss_clean($data) {
     // If its empty there is no point cleaning it :\
     if(empty($data))
         return $data;
 
     // Recursive loop for arrays
-    if(is_array($data))
-    {
-        foreach($data as $key => $value)
-        {
+    if(is_array($data)) {
+        foreach($data as $key => $value) {
             $data[$key] = xss_clean($value);
         }
 
@@ -169,18 +115,17 @@ function xss_clean($data)
     // Remove namespaced elements (we do not need them)
     $data = preg_replace('#</*\w+:\w[^>]*+>#i', '', $data);
 
-    do
-    {
+    do {
         // Remove really unwanted tags
         $old_data = $data;
         $data = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $data);
-    }
-    while ($old_data !== $data);
+    } while ($old_data !== $data);
 
     return $data;
 }
 
-$_GET = xss_clean($_GET);
+$_GET  = xss_clean($_GET);
+$_POST = xss_clean($_POST);
 //==========================================================================================================================
 
 
@@ -215,21 +160,34 @@ $g4     = array();
 // index.php 가 있는곳의 상대경로
 // php 인젝션 ( 임의로 변수조작으로 인한 리모트공격) 취약점에 대비한 코드
 // prosper 님께서 알려주셨습니다.
-if (!$g4_path || preg_match("/:\/\//", $g4_path))
-    die("<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'><script type='text/javascript'> alert('잘못된 방법으로 변수가 정의되었습니다.'); </script>");
-//if (!$g4_path) $g4_path = ".";
+if (!$g4_path || preg_match("/:\/\//", $g4_path)) {
+    echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
+    echo "<h3>잘못된 방법으로 변수가 정의되었습니다. (g4_path)</h3>";
+    echo "<a href=\"{$g4['path']}/install/\">설치하기</a>";
+    exit;
+}
+
+
 $g4['path'] = $g4_path;
 
-// 경로의 오류를 없애기 위해 $g4_path 변수는 해제
-unset($g4_path);
 
-include_once($g4['path'].'/lib/constant.php');  // 상수 정의
+//==============================================================================
+// g4_path unset
+//------------------------------------------------------------------------------
+if (isset($_GET['g4_path']) || isset($_POST['g4_path']) || isset($_COOKIE['g4_path'])) {
+    unset($_GET['g4_path']);
+    unset($_POST['g4_path']);
+    unset($_COOKIE['g4_path']);
+}
+unset($g4_path);
+//==============================================================================
+
+
 include_once($g4['path'].'/config.php');  // 설정 파일
 include_once($g4['path'].'/lib/common.lib.php'); // 공통 라이브러리
 
 // config.php 가 있는곳의 웹경로
-if (!$g4['url'])
-{
+if (!$g4['url']) {
     $g4['url'] = 'http://' . $_SERVER['HTTP_HOST'];
     $dir = dirname($_SERVER['PHP_SELF']);
     if (!file_exists('config.php'))
@@ -246,37 +204,23 @@ $g4['url'] = preg_replace("/\/$/", "", $g4['url']);
 
 //==============================================================================
 // 공통
-//==============================================================================
+//------------------------------------------------------------------------------
 $dirname = dirname(__FILE__).'/';
 $dbconfig_file = 'data/dbconfig.php';
-if (file_exists($g4['path'].'/'.$dbconfig_file))
-{
-    //if (is_dir("$g4['path']/install")) die("<meta http-equiv='content-type' content='text/html; charset=$g4['charset']'><script type='text/javascript'> alert('install 디렉토리를 삭제하여야 정상 실행됩니다.'); </script>");
-
+if (file_exists($g4['path'].'/'.$dbconfig_file)) {
     include_once($g4['path'].'/'.$dbconfig_file);
-    $connect_db = sql_connect($mysql_host, $mysql_user, $mysql_password);
-    $select_db = sql_select_db($mysql_db, $connect_db);
-    if (!$select_db)
-        die("<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'><script type='text/javascript'> alert('DB 접속 오류'); </script>");
-}
-else
-{
+    $connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
+    $select_db = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
+} else {
     echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
-    echo <<<HEREDOC
-    <script type="text/javascript">
-    alert("DB 설정 파일이 존재하지 않습니다.\\n\\n프로그램 설치 후 실행하시기 바랍니다.");
-    location.href = "./install/";
-    </script>
-HEREDOC;
+    echo "<h3>DB 설정 파일이 존재하지 않습니다.<br>프로그램 설치 후 실행하시기 바랍니다.</h3>";
+    echo "<a href=\"{$g4['path']}/install/\">설치하기</a>";
     exit;
 }
-unset($my); // DB 설정값을 클리어 해줍니다.
 
-//print_r2($GLOBALS);
-
-//-------------------------------------------
+//==============================================================================
 // SESSION 설정
-//-------------------------------------------
+//------------------------------------------------------------------------------
 ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
 ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
@@ -286,10 +230,12 @@ if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
 else
     @session_cache_limiter("no-cache, must-revalidate");
+//==============================================================================
+
 
 //==============================================================================
 // 공용 변수
-//==============================================================================
+//------------------------------------------------------------------------------
 // 기본환경설정
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
 $config = sql_fetch(" select * from {$g4['config_table']} ");
@@ -304,11 +250,48 @@ ini_set("session.cookie_domain", $g4['cookie_domain']);
 
 @session_start();
 
+
+//==============================================================================
+// Mobile 모바일 설정
+// 쿠키에 저장된 값이 모바일이라면 브라우저 상관없이 모바일로 실행
+// 그렇지 않다면 브라우저의 HTTP_USER_AGENT 에 따라 모바일 결정
+// G4_MOBILE_AGENT : config.php 에서 선언
+//------------------------------------------------------------------------------
+$is_mobile = false;
+if (isset($_REQUEST['pc']))
+    $is_mobile = false;
+else if (isset($_REQUEST['mobile']))
+    $is_mobile = true;
+else if (isset($_SESSION['ss_is_mobile'])) 
+    $is_mobile = $_SESSION['ss_is_mobile'];
+else if (is_mobile())
+    $is_mobile = true;
+
+$_SESSION['ss_is_mobile'] = $is_mobile;
+define('G4_IS_MOBILE', $is_mobile);
+if (G4_IS_MOBILE) {
+    include_once($g4['path'].'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
+    $g4['mobile_path'] = $g4['path'].'/'.$g4['mobile_dir'];
+}
+
 /*
-// 081022 : CSRF 방지를 위해 코드를 작성했으나 효과가 없어 주석처리 함
-if (strpos($_SERVER[PHP_SELF], $g4['admin']) === false)
-    set_session("ss_admin", false);
+$_SESSION['ss_is_mobile'] = false;
+if (get_cookie('ck_is_mobile')) 
+    $_SESSION['ss_is_mobile'] = false;
+else if (isset($_REQUEST['pc']))
+    $_SESSION['ss_is_mobile'] = false;
+else if (isset($_REQUEST['mobile']))
+    $_SESSION['ss_is_mobile'] = true;
+else if (is_mobile())
+    $_SESSION['ss_is_mobile'] = true;
+
+define('G4_IS_MOBILE', $_SESSION['ss_is_mobile']);
+if (G4_IS_MOBILE) {
+    include_once($g4['path'].'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
+    $g4['mobile_path'] = $g4['path'].'/'.$g4['mobile_dir'];
+}
 */
+//==============================================================================
 
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
 if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
@@ -317,101 +300,106 @@ if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
 // QUERY_STRING
 $qstr = '';
 
-if (isset($sca))  {
-    $sca = mysql_real_escape_string($sca);
+if (isset($_REQUEST['sca']))  {
+    $sca = escape_trim($_REQUEST['sca']);
     $qstr .= '&amp;sca=' . urlencode($sca);
 } else {
     $sca = "";
 }
 
-if (isset($sfl))  {
-    $sfl = mysql_real_escape_string($sfl);
+if (isset($_REQUEST['sfl']))  {
+    $sfl = escape_trim($_REQUEST['sfl']);
     $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
 } else {
     $sfl = "";
 }
 
 
-if (isset($stx))  { // search text (검색어)
-    $stx = mysql_real_escape_string($stx);
+if (isset($_REQUEST['stx']))  { // search text (검색어)
+    $stx = escape_trim($_REQUEST['stx']);
     $qstr .= '&amp;stx=' . urlencode($stx);
 } else {
     $stx = "";
 }
 
-if (isset($sst))  {
-    $sst = mysql_real_escape_string($sst);
+if (isset($_REQUEST['sst']))  {
+    $sst = escape_trim($_REQUEST['sst']);
     $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 } else {
     $sst = "";
 }
 
-if (isset($sod))  { // search order (검색 오름, 내림차순)
+if (isset($_REQUEST['sod']))  { // search order (검색 오름, 내림차순)
     $sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : '';
     $qstr .= '&amp;sod=' . urlencode($sod);
 } else {
     $sod = "";
 }
 
-if (isset($sop))  { // search operator (검색 or, and 오퍼레이터)
+if (isset($_REQUEST['sop']))  { // search operator (검색 or, and 오퍼레이터)
     $sop = preg_match("/^(or|and)$/i", $sop) ? $sop : '';
     $qstr .= '&amp;sop=' . urlencode($sop);
 } else {
     $sop = "";
 }
 
-if (isset($spt))  { // search part (검색 파트[구간])
+if (isset($_REQUEST['spt']))  { // search part (검색 파트[구간])
     $spt = (int)$spt;
     $qstr .= '&amp;spt=' . urlencode($spt);
 } else {
     $spt = "";
 }
 
-if (isset($page)) { // 리스트 페이지
-    $page = (int)$page;
+if (isset($_REQUEST['page'])) { // 리스트 페이지
+    $page = (int)$_REQUEST['page'];
     $qstr .= '&amp;page=' . urlencode($page);
 } else {
     $page = "";
 }
 
-if (isset($w)) {
+if (isset($_REQUEST['w'])) {
     $w = substr($w, 0, 2);
 } else {
     $w = "";
 }
 
-if (isset($wr_id)) {
-    $wr_id = (int)$wr_id;
+if (isset($_REQUEST['wr_id'])) {
+    $wr_id = (int)$_REQUEST['wr_id'];
 } else {
     $wr_id = 0;
 }
 
-if (isset($bo_table)) {
+if (isset($_REQUEST['bo_table'])) {
+    $bo_table = escape_trim($_REQUEST['bo_table']);
     $bo_table = substr($bo_table, 0, 20);
-    $bo_table = mysql_real_escape_string($bo_table);
 } else {
     $bo_table = "";
 }
 
 // URL ENCODING
-if (isset($url)) {
-    $url = mysql_real_escape_string($url);
+if (isset($_REQUEST['url'])) {
+    $url = escape_trim($_REQUEST['url']);
     $urlencode = urlencode($url);
 } else {
     $url = "";
-    $urlencode = urlencode(mysql_real_escape_string($_SERVER['REQUEST_URI']));
+    $urlencode = urlencode(escape_trim($_SERVER['REQUEST_URI']));
+}
+
+if (isset($_REQUEST['gr_id'])) {
+    $gr_id = escape_trim($_REQUEST['gr_id']);
+} else {
+    $gr_id = "";
 }
 //===================================
 
 
 // 자동로그인 부분에서 첫로그인에 포인트 부여하던것을 로그인중일때로 변경하면서 코드도 대폭 수정하였습니다.
-if (array_key_exists('ss_mb_id', $_SESSION)) // 로그인중이라면
-{
+if (array_key_exists('ss_mb_id', $_SESSION)) { // 로그인중이라면
+    
     $member = get_member($_SESSION['ss_mb_id']);
 
     // 오늘 처음 로그인 이라면
-    if (substr($member['mb_today_login'], 0, 10) != $g4['time_ymd'])
-    {
+    if (substr($member['mb_today_login'], 0, 10) != $g4['time_ymd']) {
         // 첫 로그인 포인트 지급
         insert_point($member['mb_id'], $config['cf_login_point'], "{$g4['time_ymd']} 첫로그인", "@login", $member['mb_id'], $g4['time_ymd']);
 
@@ -420,29 +408,25 @@ if (array_key_exists('ss_mb_id', $_SESSION)) // 로그인중이라면
         $sql = " update {$g4['member_table']} set mb_today_login = '{$g4['time_ymdhis']}', mb_login_ip = '{$_SERVER['REMOTE_ADDR']}' where mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
     }
-}
-else
-{
+
+} else {
     // 자동로그인 ---------------------------------------
     // 회원아이디가 쿠키에 저장되어 있다면 (3.27)
-    if ($tmp_mb_id = get_cookie('ck_mb_id'))
-    {
+    if ($tmp_mb_id = get_cookie('ck_mb_id')) {
+
         $tmp_mb_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $tmp_mb_id), 0, 20);
         // 최고관리자는 자동로그인 금지
-        if ($tmp_mb_id != $config['cf_admin'])
-        {
+        if ($tmp_mb_id != $config['cf_admin']) {
             $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g4['member_table']} where mb_id = '{$tmp_mb_id}' ";
             $row = sql_fetch($sql);
             $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
             // 쿠키에 저장된 키와 같다면
             $tmp_key = get_cookie('ck_auto');
-            if ($tmp_key == $key && $tmp_key)
-            {
+            if ($tmp_key == $key && $tmp_key) {
                 // 차단, 탈퇴가 아니고 메일인증이 사용이면서 인증을 받았다면
                 if ($row['mb_intercept_date'] == '' &&
                     $row['mb_leave_date'] == '' &&
-                    (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) )
-                {
+                    (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) ) {
                     // 세션에 회원아이디를 저장하여 로그인으로 간주
                     set_session('ss_mb_id', $tmp_mb_id);
 
@@ -480,10 +464,10 @@ if (isset($member['mb_id'])) {
 
 $write = array();
 $write_table = "";
-$gr_id = "";
-if (isset($bo_table)) {
+if ($bo_table) {
     $board = sql_fetch(" select * from {$g4['board_table']} where bo_table = '$bo_table' ");
     if ($board['bo_table']) {
+        set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
         $write_table = $g4['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
         //$comment_table = $g4['write_prefix'] . $bo_table . $g4['comment_suffix']; // 코멘트 테이블 전체이름
@@ -492,7 +476,7 @@ if (isset($bo_table)) {
     }
 }
 
-if (!empty($_GET['gr_id'])) {
+if ($gr_id) {
     $group = sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
 }
 
@@ -534,10 +518,21 @@ if ($is_admin != 'super') {
     }
 }
 
+
+//==============================================================================
 // 스킨경로
-$board_skin_path = '';
-if (isset($board['bo_skin']))
-    $board_skin_path = $g4['path'].'/skin/board/'.$board['bo_skin']; // 게시판 스킨 경로
+//------------------------------------------------------------------------------
+$skin_path          = skin_path();
+$board_skin_path    = $skin_path.'/board/'.$board['bo_skin'];
+$member_skin_path   = $skin_path.'/member/'.$config['cf_member_skin'];
+$new_skin_path      = $skin_path.'/new/'.$config['cf_new_skin'];
+$search_skin_path   = $skin_path.'/search/'.$config['cf_search_skin'];
+$connect_skin_path  = $skin_path.'/connect/'.$config['cf_connect_skin'];
+$poll_skin_path     = $skin_path.'/poll/basic';
+if (isset($_GET['skin_dir']))
+    $poll_skin_path = $skin_path.'/poll/'.$_GET['skin_dir'];
+//==============================================================================
+
 
 // 방문자수의 접속을 남김
 include_once($g4['bbs_path'].'/visit_insert.inc.php');
@@ -550,4 +545,14 @@ while ($entry = $tmp->read()) {
     if (preg_match("/(\.php)$/i", $entry))
         include_once($g4['path'].'/extend/'.$entry);
 }
+
+// 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면
+// 캐쉬의 내용을 가져옴. 완전한지는 검증되지 않음
+header("Content-Type: text/html; charset=utf-8");
+$gmnow = gmdate("D, d M Y H:i:s") . " GMT";
+header("Expires: 0"); // rfc2616 - Section 14.21
+header("Last-Modified: " . $gmnow);
+header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
+header("Cache-Control: pre-check=0, post-check=0, max-age=0"); // HTTP/1.1
+header("Pragma: no-cache"); // HTTP/1.0
 ?>

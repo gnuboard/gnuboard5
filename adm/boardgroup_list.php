@@ -4,6 +4,15 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
+if (!isset($group['gr_use'])) {
+    // 게시판 그룹 사용 필드 추가
+    // both : pc, mobile 둘다 사용
+    // pc : pc 전용 사용
+    // mobile : mobile 전용 사용
+    // none : 사용 안함
+    sql_query(" ALTER TABLE  `{$g4['board_group_table']}` ADD  `gr_use` ENUM(  'both',  'pc',  'mobile',  'none' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
+}
+
 $sql_common = " from {$g4['group_table']} ";
 
 $sql_search = " where (1) ";
@@ -29,10 +38,7 @@ if ($sst)
 else
     $sql_order = " order by gr_id asc ";
 
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            {$sql_order} ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
@@ -41,11 +47,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = " select *
-            {$sql_common}
-            {$sql_search}
-            {$sql_order}
-            limit {$from_record}, {$rows} ";
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $listall = '';
@@ -110,6 +112,7 @@ var list_update_php = "./boardgroup_list_update.php";
     <th scope="col">게시판</th>
     <th scope="col">접근사용</th>
     <th scope="col">접근회원수</th>
+    <th scope="col"><?=subject_sort_link('gr_use')?>사용여부</a></th>
     <th scope="col">관리</th>
 </tr>
 </thead>
@@ -151,6 +154,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
     <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
     <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
+    <td>
+        <select id="gr_use_<?=$i?>" name="gr_use[<?=$i?>]">
+        <option value="both" <?=get_selected($row['gr_use'], 'both', true);?>>양쪽</option>
+        <option value="pc" <?=get_selected($row['gr_use'], 'pc');?>>PC</option>
+        <option value="mobile" <?=get_selected($row['gr_use'], 'mobile');?>>모바일</option>
+        <option value="none" <?=get_selected($row['gr_use'], 'none');?>>미사용</option>
+        </select>
+    </td>
     <td class="td_mng"><?=$s_upd?> <?=$s_del?></td>
 </tr>
 

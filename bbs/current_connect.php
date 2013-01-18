@@ -28,7 +28,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
 
-$connect_skin_path = $g4['path'].'/skin/connect/'.$config['cf_connect_skin'];
 include_once($connect_skin_path.'/current_connect.skin.php');
 
 include_once('./_tail.php');

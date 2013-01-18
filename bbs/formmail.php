@@ -1,5 +1,5 @@
 <?
-define('_CAPTCHA_', 1);
+define('G4_CAPTCHA', 1);
 include_once('./_common.php');
 
 if (!$config[cf_email_use])
@@ -37,7 +37,6 @@ if (!isset($type))
 $type_checked[0] = $type_checked[1] = $type_checked[2] = "";
 $type_checked[$type] = 'checked';
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
 include_once($member_skin_path.'/formmail.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');

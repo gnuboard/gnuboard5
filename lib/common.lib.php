@@ -1441,44 +1441,44 @@ function check_string($str, $options)
         // 한글
         if ($oc >= 0xA0 && $oc <= 0xFF) {
             if (strtoupper($g4['charset']) == 'UTF-8') {
-                if ($options & _G4_HANGUL_) {
+                if ($options & G4_HANGUL) {
                     $s .= $c . $str[$i+1] . $str[$i+2];
                 }
                 $i+=2;
             } else {
                 // 한글은 2바이트 이므로 문자하나를 건너뜀
                 $i++;
-                if ($options & _G4_HANGUL_) {
+                if ($options & G4_HANGUL) {
                     $s .= $c . $str[$i];
                 }
             }
         }
         // 숫자
         else if ($oc >= 0x30 && $oc <= 0x39) {
-            if ($options & _G4_NUMERIC_) {
+            if ($options & G4_NUMERIC) {
                 $s .= $c;
             }
         }
         // 영대문자
         else if ($oc >= 0x41 && $oc <= 0x5A) {
-            if (($options & _G4_ALPHABETIC_) || ($options & _G4_ALPHAUPPER_)) {
+            if (($options & G4_ALPHABETIC) || ($options & G4_ALPHAUPPER)) {
                 $s .= $c;
             }
         }
         // 영소문자
         else if ($oc >= 0x61 && $oc <= 0x7A) {
-            if (($options & _G4_ALPHABETIC_) || ($options & _G4_ALPHALOWER_)) {
+            if (($options & G4_ALPHABETIC) || ($options & G4_ALPHALOWER)) {
                 $s .= $c;
             }
         }
         // 공백
         else if ($oc == 0x20) {
-            if ($options & _G4_SPACE_) {
+            if ($options & G4_SPACE) {
                 $s .= $c;
             }
         }
         else {
-            if ($options & _G4_SPECIAL_) {
+            if ($options & G4_SPECIAL) {
                 $s .= $c;
             }
         }
@@ -1658,5 +1658,21 @@ function get_selected($field, $value, $first=false)
     if ($first && !$selected)
         $selected = ($field=="") ? ' selected="selected"' : '';
     return $selected;
+}
+
+
+function skin_path()
+{
+    global $g4;
+    $skin_dir = 'skin';
+    $skin_path = $g4['path'].'/'.$skin_dir;
+    if (G4_IS_MOBILE) $skin_path = $g4['mobile_path'].'/'.$skin_dir;
+    return $skin_path;
+}
+
+
+function is_mobile() 
+{
+    return preg_match('/'.G4_MOBILE_AGENT.'/i', $_SERVER['HTTP_USER_AGENT']);
 }
 ?>

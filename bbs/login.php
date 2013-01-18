@@ -48,8 +48,6 @@ if ($g4['https_url'])
 else
     $login_action_url = "{$g4['bbs_url']}/login_check.php";
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
-
 include_once($member_skin_path.'/login.skin.php');
 
 include_once('./_tail.sub.php');

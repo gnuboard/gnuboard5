@@ -4,6 +4,15 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
+if (!isset($board['bo_use'])) {
+    // 게시판 사용 필드 추가
+    // both : pc, mobile 둘다 사용
+    // pc : pc 전용 사용
+    // mobile : mobile 전용 사용
+    // none : 사용 안함
+    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_use` ENUM(  'both',  'pc',  'mobile',  'none' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
+}
+
 $sql_common = " from {$g4['board_table']} a ";
 $sql_search = " where (1) ";
 
@@ -106,12 +115,18 @@ var list_delete_php = 'board_list_delete.php';
     <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
     <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
     <th scope="col"><?=subject_sort_link('bo_subject')?>제목</a></th>
+<<<<<<< HEAD
+    <th scope="col">포인트</th>
+    <th scope="col">검색</th>
+    <th scope="col"><?=subject_sort_link('bo_use')?>사용여부</a></th>
+=======
     <th scope="col">읽기P<span class="sound_only">포인트</span></th>
     <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
     <th scope="col">댓글P<span class="sound_only">포인트</span></th>
     <th scope="col">다운P<span class="sound_only">포인트</span></th>
     <th scope="col">검색<br>사용</th>
     <th scope="col">검색<br>순서</th>
+>>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
     <th scope="col">관리</th>
 </tr>
 </thead>
@@ -140,6 +155,24 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td>
         <?=get_skin_select("board", "bo_skin_$i", "bo_skin[$i]", $row['bo_skin']);?>
     </td>
+<<<<<<< HEAD
+    <td><input type="text" id="bo_subject_<?=$i?>" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20" required="required"></td>
+    <td>
+        <label for="bo_read_point_<?=$i?>">읽기</label>
+        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="2">
+        <label for="bo_write_point_<?=$i?>">쓰기</label>
+        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="2">
+        <label for="bo_comment_point_<?=$i?>">댓글</label>
+        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" size="2">
+        <label for="bo_download_point_<?=$i?>">다운</label>
+        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="2">
+    </td>
+    <td>
+        <label for="bo_use_search_<?=$i?>">사용</label>
+        <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
+        <label for="bo_order_search_<?=$i?>">순서</label>
+        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1">
+=======
     <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="10" required="required"></td>
     <td><input type="text" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="1" title="읽기"></td>
     <td><input type="text" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="1" title="쓰기"></td>
@@ -147,6 +180,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td><input type="text" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="1" title="다운"></td>
     <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1" title="검색사용"></td>
     <td><input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1" title="검색순서"></td>
+>>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
+    </td>
+    <td>
+        <select id="bo_use_<?=$i?>" name="bo_use[<?=$i?>]">
+        <option value="both" <?=get_selected($row['bo_use'], 'both', true);?>>양쪽</option>
+        <option value="pc" <?=get_selected($row['bo_use'], 'pc');?>>PC</option>
+        <option value="mobile" <?=get_selected($row['bo_use'], 'mobile');?>>모바일</option>
+        <option value="none" <?=get_selected($row['bo_use'], 'none');?>>미사용</option>
+        </select>
     </td>
     <td><?=$one_update?> <?=$one_copy?></td>
 </tr>

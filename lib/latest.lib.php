@@ -6,10 +6,9 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $options='')
 {
     global $g4;
 
-    if ($skin_dir)
-        $latest_skin_path = $g4['path'].'/skin/latest/'.$skin_dir;
-    else
-        $latest_skin_path = $g4['path'].'/skin/latest/basic';
+    if (!$skin_dir)
+        $skin_dir = 'basic';
+    $latest_skin_path = skin_path().'/latest/'.$skin_dir;
 
     $list = array();
 

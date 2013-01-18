@@ -1,6 +1,22 @@
 <?php
+//==============================================================================
+// 상수 선언
+//------------------------------------------------------------------------------
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', 1);
+
+// 입력값 검사 상수 (숫자를 변경하시면 안됩니다.)
+define('G4_ALPHAUPPER',   1); // 영대문자
+define('G4_ALPHALOWER',   2); // 영소문자
+define('G4_ALPHABETIC',   4); // 영대,소문자
+define('G4_NUMERIC',      8); // 숫자
+define('G4_HANGUL',      16); // 한글
+define('G4_SPACE',       32); // 공백
+define('G4_SPECIAL',     64); // 특수문자
+
+// 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
+define('G4_MOBILE_AGENT', 'phone|samsung|lgtel|mobile|skt|nokia|blackberry|android|sony');
+//==============================================================================
 
 if (function_exists("date_default_timezone_set"))
     date_default_timezone_set("Asia/Seoul");
@@ -11,6 +27,8 @@ $g4['bbs_path']       = $g4['path'].'/'.$g4['bbs'];
 
 $g4['admin']          = 'adm';
 $g4['admin_path']     = $g4['path'].'/'.$g4['admin'];
+
+$g4['mobile_dir']     = 'mobile';
 
 // 자주 사용하는 값
 // 서버의 시간과 실제 사용하는 시간이 틀린 경우 수정하세요.

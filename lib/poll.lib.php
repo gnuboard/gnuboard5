@@ -14,7 +14,7 @@ function poll($skin_dir='basic', $po_id=false)
     }
 
     ob_start();
-    $poll_skin_path = $g4['path'].'/skin/poll/'.$skin_dir;
+    $poll_skin_path = skin_path().'/poll/'.$skin_dir;
     include_once ($poll_skin_path.'/poll.skin.php');
     $content = ob_get_contents();
     ob_end_clean();

@@ -29,7 +29,6 @@ $mb_profile = $mb[mb_profile] ? conv_content($mb[mb_profile],0) : '소개 내용
 
 echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
 include_once($member_skin_path.'/profile.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');

@@ -28,8 +28,8 @@ $sql = " select *
             $sql_order
             limit $from_record, $rows ";
 $result = sql_query($sql);
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
+for ($i=0; $row=sql_fetch_array($result); $i++) {
+
     $list[$i] = $row;
 
     // 순차적인 번호 (순번)
@@ -56,7 +56,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['del_href'] = './scrap_delete.php?ms_id='.$row['ms_id'].'&amp;page='.$page;
 }
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
 include_once($member_skin_path.'/scrap.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');

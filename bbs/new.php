@@ -105,8 +105,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 $write_pages = get_paging($config['cf_write_pages'], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;page=");
 
-$new_skin_path = $g4['path'].'/skin/new/'.$config['cf_new_skin'];
-
 echo '<script src="'.$g4['path'].'/js/sideview.js"></script>'.PHP_EOL;
 
 include_once($new_skin_path.'/new.skin.php');

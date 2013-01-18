@@ -1,6 +1,6 @@
 <?
-define('_EDITOR_', 1);
-define('_CAPTCHA_', 1);
+define('G4_EDITOR', 1);
+define('G4_CAPTCHA', 1);
 include_once('./_common.php');
 
 set_session('ss_bo_table', $bo_table);
@@ -352,7 +352,7 @@ include_once('./board_head.php');
 if ($g4['https_url'])
     $action_url = "{$g4['https_url']}/{$g4['bbs']}/write_update.php";
 else
-    $action_url = "{$g4['bbs_path']}/write_update.php";
+    $action_url = "{$g4['url']}/{$g4['bbs']}/write_update.php";
 
 include_once ($board_skin_path.'/write.skin.php');
 
