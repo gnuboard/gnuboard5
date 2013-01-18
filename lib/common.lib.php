@@ -1066,14 +1066,16 @@ function view_link($view, $number, $attribute)
 
 function cut_str($str, $len, $suffix="…")
 {
-    if (strlen($str) >= $len) {
-        $length = floor($len / 3);
+    $arr_str = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+    $str_len = count($arr_str);
 
-        $arr_str = array_slice(preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY), 0, $length);
-        $string = join("", $arr_str);
+    if ($str_len >= $len) {
+        $slice_str = array_slice($arr_str, 0, $len);
+        $str = join("", $slice_str);
 
-        return $string . (strlen($str)-strlen($suffix) >= $len ? $suffix : '');
+        return $str . ($str_len > $len ? $suffix : '');
     } else {
+        $str = join("", $arr_str);
         return $str;
     }
 }
