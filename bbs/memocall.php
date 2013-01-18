@@ -18,7 +18,7 @@ if(confirm("<? echo $memo_msg; ?>")) {
     </hgroup>
 </header>
 <p>
-    <? echo $memo_msg; ?>
+    <? echo str_replace("\\n", "<br>", $memo_msg); ?>
 </p>
 
 <a href="<? echo $g4['bbs_path']; ?>/memo.php" target="_blank">확인</a>
