@@ -1,5 +1,5 @@
 <?
-define('_CAPTCHA_', 1);
+define('G4_CAPTCHA', 1);
 include_once('./_common.php');
 
 if ($is_member) {

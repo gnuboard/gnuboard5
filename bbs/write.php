@@ -1,6 +1,6 @@
 <?
-define('_EDITOR_', 1);
-define('_CAPTCHA_', 1);
+define('G4_EDITOR', 1);
+define('G4_CAPTCHA', 1);
 include_once('./_common.php');
 
 set_session('ss_bo_table', $bo_table);

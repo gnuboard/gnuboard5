@@ -1,5 +1,5 @@
 <?
-define('_CAPTCHA_', true);
+define('G4_CAPTCHA', true);
 include_once('./_common.php');
 
 // 090710

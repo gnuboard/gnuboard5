@@ -1,6 +1,6 @@
 <?
 $sub_menu = "300100";
-define('_CAPTCHA_', 1);
+define('G4_CAPTCHA', 1);
 include_once("./_common.php");
 
 auth_check($auth[$sub_menu], 'w');

@@ -22,8 +22,8 @@ $g4['cache_path']     = $g4['data_path'].'/'.$g4['cache_dir'];
 $g4['captcha_dir']    = 'captcha';
 
 // g4s 기본 DHTML EDITOR
-if (!defined('_EDITOR_')) define('_EDITOR_', 0);
-if (_EDITOR_) {
+if (!defined('G4_EDITOR')) define('G4_EDITOR', 0);
+if (G4_EDITOR) {
     $g4['ckeditor_dir']  = 'ckeditor';
     $g4['ckeditor_url']  = $g4['bbs_url'].'/'.$g4['ckeditor_dir'];
     $g4['ckeditor_path'] = $g4['bbs_path'].'/'.$g4['ckeditor_dir'];
@@ -37,8 +37,8 @@ if (_EDITOR_) {
 }
 
 // g4s 기본 CAPTCHA
-if (!defined('_CAPTCHA_')) define('_CAPTCHA_', 0);
-if (_CAPTCHA_) {
+if (!defined('G4_CAPTCHA')) define('G4_CAPTCHA', 0);
+if (G4_CAPTCHA) {
     $g4['gcaptcha_dir']   = 'gcaptcha';
     $g4['gcaptcha_url']   = $g4['bbs_url'].'/'.$g4['gcaptcha_dir'];
     $g4['gcaptcha_path']  = $g4['bbs_path'].'/'.$g4['gcaptcha_dir'];

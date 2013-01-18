@@ -5,7 +5,7 @@ function editor_html($id, $content, $class="")
 {
     if ( (isset($GLOBALS['is_dhtml_editor']) && $GLOBALS['is_dhtml_editor']) || !isset($GLOBALS['is_dhtml_editor']) ) {
         $str  = "<textarea id=\"$id\" name=\"$id\" class=\"ckeditor $class\" rows=\"10\" style=\"width:100%;\">$content</textarea>\n";
-        //if (_EDITOR_) $str .= "<script>CKEDITOR.replace('$id',{height:'500px'});</script>\n";
+        //if (G4_EDITOR) $str .= "<script>CKEDITOR.replace('$id',{height:'500px'});</script>\n";
     } else {
         $str  = "<textarea id=\"$id\" name=\"$id\" class=\"$class\" rows=\"10\" style=\"width:100%;\">$content</textarea>\n";
     }
