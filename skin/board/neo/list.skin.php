@@ -31,6 +31,7 @@ if ($is_nogood) $colspan++;
         <form name="fsearch" method="get">
         <input type="hidden" name="bo_table" value="<?=$bo_table?>">
         <input type="hidden" name="sca" value="<?=$sca?>">
+        <input type="hidden" name="sop" value="and">
         <select name="sfl" title="검색대상">
             <option value="wr_subject">제목</option>
             <option value="wr_content">내용</option>
@@ -41,7 +42,6 @@ if ($is_nogood) $colspan++;
             <option value="wr_name,0">글쓴이(코)</option>
         </select>
         <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
-        <input type="hidden" name="sop" value="and">
         <input type="submit" class="fieldset_submit" value="검색">
         </form>
     </fieldset>
