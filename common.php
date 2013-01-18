@@ -204,7 +204,7 @@ $g4['url'] = preg_replace("/\/$/", "", $g4['url']);
 
 //==============================================================================
 // 공통
-//==============================================================================
+//------------------------------------------------------------------------------
 $dirname = dirname(__FILE__).'/';
 $dbconfig_file = 'data/dbconfig.php';
 if (file_exists($g4['path'].'/'.$dbconfig_file)) {
@@ -218,9 +218,9 @@ if (file_exists($g4['path'].'/'.$dbconfig_file)) {
     exit;
 }
 
-//-------------------------------------------
+//==============================================================================
 // SESSION 설정
-//-------------------------------------------
+//------------------------------------------------------------------------------
 ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
 ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
@@ -230,6 +230,7 @@ if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
 else
     @session_cache_limiter("no-cache, must-revalidate");
+//==============================================================================
 
 
 //==============================================================================
@@ -501,14 +502,21 @@ if ($is_admin != 'super') {
     }
 }
 
+
+//==============================================================================
 // 스킨경로
-$board_skin_path = "";
-if (isset($board['bo_skin'])) {
-    if (G4_IS_MOBILE) 
-        $board_skin_path = $g4['mobile_path'].'/skin/board/'.$board['bo_skin']; // 게시판 스킨 경로
-    else 
-        $board_skin_path = $g4['path'].'/skin/board/'.$board['bo_skin']; // 게시판 스킨 경로
-}
+//------------------------------------------------------------------------------
+$skin_path          = skin_path();
+$board_skin_path    = $skin_path.'/board/'.$board['bo_skin'];
+$member_skin_path   = $skin_path.'/member/'.$config['cf_member_skin'];
+$new_skin_path      = $skin_path.'/new/'.$config['cf_new_skin'];
+$search_skin_path   = $skin_path.'/search/'.$config['cf_search_skin'];
+$connect_skin_path  = $skin_path.'/connect/'.$config['cf_connect_skin'];
+$poll_skin_path     = $skin_path.'/poll/basic';
+if (isset($_GET['skin_dir']))
+    $poll_skin_path = $skin_path.'/poll/'.$_GET['skin_dir'];
+//==============================================================================
+
 
 // 방문자수의 접속을 남김
 include_once($g4['bbs_path'].'/visit_insert.inc.php');

@@ -84,8 +84,6 @@ include_once($g4['path'].'/head.sub.php');
 
 echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
 
-$skin_dir = isset($_GET['skin_dir']) ? $_GET['skin_dir'] : 'basic';
-$poll_skin_path = $g4['path'].'/skin/poll/'.$skin_dir;
 if (!file_exists($poll_skin_path.'/poll_result.skin.php')) die('skin error');
 include_once ($poll_skin_path.'/poll_result.skin.php');
 

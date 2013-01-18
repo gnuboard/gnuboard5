@@ -225,7 +225,6 @@ $group_select .= '</select>';
 if (!$sfl) $sfl = 'wr_subject';
 if (!$sop) $sop = 'or';
 
-$search_skin_path = $g4['path'].'/skin/search/'.$config['cf_search_skin'];
 include_once($search_skin_path.'/search.skin.php');
 
 include_once('./_tail.php');

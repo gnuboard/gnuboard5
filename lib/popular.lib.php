@@ -26,7 +26,7 @@ function popular($skin_dir='basic', $pop_cnt=7, $date_cnt=3)
     }
 
     ob_start();
-    $popular_skin_path = $g4['path'].'/skin/popular/'.$skin_dir;
+    $popular_skin_path = skin_path().'/popular/'.$skin_dir;
     include_once ($popular_skin_path.'/popular.skin.php');
     $content = ob_get_contents();
     ob_end_clean();

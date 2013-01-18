@@ -40,10 +40,6 @@ if ($g4['https_url'])
 else
     $memo_action_url = "{$g4['url']}/{$g4['bbs']}/memo_form_update.php";
 
-if (G4_IS_MOBILE) 
-    $member_skin_path = $g4['mobile_path'].'/skin/member/'.$config[cf_member_skin];
-else
-    $member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
 include_once($member_skin_path.'/memo_form.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');

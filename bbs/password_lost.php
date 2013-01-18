@@ -14,7 +14,6 @@ if ($g4['https_url'])
 else
     $action_url = "{$g4['bbs_url']}/password_lost2.php";
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
 include_once($member_skin_path.'/password_lost.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');

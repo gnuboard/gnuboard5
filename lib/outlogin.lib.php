@@ -13,7 +13,7 @@ function outlogin($skin_dir='basic')
         $point = number_format($member['mb_point']);
     }
 
-    $outlogin_skin_path = $g4['path'].'/skin/outlogin/'.$skin_dir;
+    $outlogin_skin_path = skin_path().'/outlogin/'.$skin_dir;
 
     // 읽지 않은 쪽지가 있다면
     if ($is_member) {

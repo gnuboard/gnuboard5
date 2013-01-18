@@ -8,8 +8,6 @@ if (isset($_SESSION['ss_mb_reg']))
 if (!$mb['mb_id']) 
     goto_url($g4['path']);
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
-
 $g4['title'] = '회원가입이 완료되었습니다.';
 include_once('./_head.php');
 include_once($member_skin_path.'/register_result.skin.php');
