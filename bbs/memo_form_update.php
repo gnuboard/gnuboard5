@@ -2,17 +2,10 @@
 define('G4_CAPTCHA', 1);
 include_once('./_common.php');
 
-<<<<<<< HEAD
 if ($is_guest)
     alert('회원만 이용하실 수 있습니다.');
 
 if (!chk_captcha()) {
-=======
-if (!$is_member)
-    alert('회원만 이용하실 수 있습니다.');
-
-if ($is_guest && !chk_captcha()) {
->>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
     alert('스팸방지에 입력한 숫자가 틀렸습니다.');
 }
 
