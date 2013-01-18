@@ -85,13 +85,20 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     <div class="btn_win btn_confirm">
         <input type="submit" id="btn_submit" class="btn_submit" value="<?=$act?>">
-        <a href="javascript:window.close();" class="btn_cancel">창닫기</a>
     </div>
     </form>
 
 </div>
 
 <script>
+$(function() {
+    $(".btn_win").append("<a class=\"btn_cancel\">창닫기</a>");
+
+    $(".btn_win a").click(function() {
+        window.close();
+    });
+});
+
 function fboardmoveall_submit(f)
 {
     var check = false;
