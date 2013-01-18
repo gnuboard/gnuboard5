@@ -15,6 +15,17 @@ $file = sql_fetch($sql);
 if (!$file['bf_file'])
     alert_close('파일 정보가 존재하지 않습니다.');
 
+// JavaScript 불가일 때
+if($confirm != 'yes' && $board['bo_download_point'] < 0) {
+    $msg = $file['bf_source'].' 파일을 다운로드 하시면 포인트가 차감('.number_format($board['bo_download_point']).'점)됩니다.\\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\\n그래도 다운로드 하시겠습니까?';
+    $url1 = './download.php?'.$_SERVER['QUERY_STRING'].'&amp;confirm=yes';
+    $url2 = $_SERVER['HTTP_REFERER'];
+
+    //$url1 = 확인link, $url2=취소link
+    // 특정주소로 이동시키려면 $url3 이용
+    confirm($msg, $url1, $url2);
+}
+
 if ($member['mb_level'] < $board['bo_download_level']) {
     $alert_msg = '다운로드 권한이 없습니다.';
     if ($member['mb_id'])

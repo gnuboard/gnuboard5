@@ -14,7 +14,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <?
     for ($i=0; $i<count($list); $i++) {
         $comment_id = $list[$i]['wr_id'];
-        $comment_depth = strlen($list[$i]['wr_comment_reply']);
+        $comment_depth = strlen($list[$i]['wr_comment_reply']) * 30;
         if (strstr($list[$i]['wr_option'], "secret")) echo '비밀글';
             $str = $list[$i]['content'];
             if (strstr($list[$i]['wr_option'], "secret"))
@@ -24,9 +24,10 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             //$str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(swf)\".*\<\/a\>\]/i", "<script>doc_write(flash_movie('$1://$2.$3'));</script>", $str);
             $str = preg_replace("/\[\<a\s*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(gif|png|jpg|jpeg|bmp)\"\s*[^\>]*\>[^\s]*\<\/a\>\]/i", "<img src='$1://$2.$3' id='target_resize_image[]' onclick='image_window(this);'>", $str);
     ?>
-    <article id="c_<?=$comment_id?>">
+    <article id="c_<?=$comment_id?>" <?if ($comment_depth) {?>style="margin-left:<?=$comment_depth?>px"<?}?>>
         <header>
             <h1><?=$list[$i]['name']?><span class="sound_only">님의 댓글</span></h1>
+            <? if ($comment_depth) {?><img src="<?=$g4['path']?>/img/icon/icon_re.gif" alt="댓글의 댓글"><? } ?>
             <dl class="bo_vc_info">
                 <? if ($is_ip_view) { ?>
                 <dt>아이피</dt>
@@ -46,12 +47,23 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <input type="hidden" id="secret_comment_<?=$comment_id?>" value="<?=strstr($list[$i]['wr_option'],"secret")?>">
         <textarea id="save_comment_<?=$comment_id?>" style="display:none"><?=get_text($list[$i]['content1'], 0)?></textarea>
 
-        <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) { ?>
+        <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
+            $query_string = str_replace("&", "&amp;", $_SERVER['QUERY_STRING']);
+
+            if($w == 'cu') {
+                $sql = " select wr_id, wr_content from $write_table where wr_id = '$c_id' and wr_is_comment = '1' ";
+                $cmt = sql_fetch($sql);
+                $c_wr_content = $cmt['wr_content'];
+            }
+
+            $c_reply_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
+            $c_edit_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
+        ?>
         <footer>
             <ul class="bo_vc_act">
-                <? if ($list[$i]['is_reply']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'c');">답변</a></li><? } ?>
-                <? if ($list[$i]['is_edit']) { ?><li><a href="javascript:comment_box('<?=$comment_id?>', 'cu');">수정</a></li><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><li><a href="javascript:comment_delete('<?=$list[$i]['del_link']?>');">삭제</a></li><? } ?>
+                <? if ($list[$i]['is_reply']) { ?><li><a href="<? echo $c_reply_href; ?>" onclick="comment_box('<?=$comment_id?>', 'c'); return false;">답변</a></li><? } ?>
+                <? if ($list[$i]['is_edit']) { ?><li><a href="<? echo $c_edit_href; ?>" onclick="comment_box('<?=$comment_id?>', 'cu'); return false;">수정</a></li><? } ?>
+                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="comment_delete('<?=$list[$i]['del_link']?>'); return false;">삭제</a></li><? } ?>
             </ul>
         </footer>
         <? } ?>
@@ -59,20 +71,20 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <?}?>
 
     <? if ($is_comment_write) { ?>
-    <form name="fviewcomment" method="post" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" autocomplete="off">
-    <input type="hidden" id="w" name="w" value="c">
-    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-    <input type="hidden" name="wr_id" value="<?=$wr_id?>">
-    <input type="hidden" id="comment_id" name="comment_id" value="">
-    <input type="hidden" name="sca" value="<?=$sca?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="spt" value="<?=$spt?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="is_good" value="">
-
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
+        <form name="fviewcomment" method="post" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" autocomplete="off">
+        <input type="hidden" id="w" name="w" value="<?=$w?>">
+        <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+        <input type="hidden" name="wr_id" value="<?=$wr_id?>">
+        <input type="hidden" id="comment_id" name="comment_id" value="<?=$c_id?>">
+        <input type="hidden" name="sca" value="<?=$sca?>">
+        <input type="hidden" name="sfl" value="<?=$sfl?>">
+        <input type="hidden" name="stx" value="<?=$stx?>">
+        <input type="hidden" name="spt" value="<?=$spt?>">
+        <input type="hidden" name="page" value="<?=$page?>">
+        <input type="hidden" name="is_good" value="">
+
         <fieldset id="bo_vc_winfo">
             <legend class="sound_only">작성자</legend>
             <? if ($is_guest) { ?>
@@ -86,13 +98,12 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
         <div id="bo_vc_warea">
             <textarea id="wr_content" name="wr_content" required
-            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>></textarea>
+            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>><? echo $c_wr_content; ?></textarea>
             <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
             <input type="submit" class="bo_vc_submit" value="댓글입력">
         </div>
+        </form>
     </aside>
-
-    </form>
 
     <script>
     var save_before = '';

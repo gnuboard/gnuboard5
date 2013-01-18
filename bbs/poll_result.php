@@ -2,8 +2,11 @@
 include_once('./_common.php');
 
 $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '{$po_id}' ");
-if (!$po['po_id']) 
+if (!$po['po_id'])
     alert('설문조사 정보가 없습니다.');
+
+if ($member['mb_level'] < $po['po_level'])
+    alert('권한 '.$po['po_level'].' 이상의 회원만 결과를 보실 수 있습니다.');
 
 $g4['title'] = '설문조사 결과';
 
@@ -31,11 +34,11 @@ for ($i=1; $i<=9; $i++) {
 
     $list[$i]['content'] = $poll;
     $list[$i]['cnt'] = $po['po_cnt'.$i];
-    if ($total_po_cnt > 0) 
+    if ($total_po_cnt > 0)
         $list[$i]['rate'] = ($list[$i]['cnt'] / $total_po_cnt) * 100;
 
     $bar = (int)($list[$i]['cnt'] / $max * 100);
-    
+
     $list[$i]['bar'] = $bar;
     $list[$i]['num'] = $i;
 }
@@ -54,8 +57,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $list2[$i]['datetime'] = $row['pc_datetime'];
 
     $list2[$i]['del'] = '';
-    if ($is_admin == 'super' || ($row['mb_id'] == $member['mb_id'] && $row['mb_id'])) 
-        $list2[$i]['del'] = '<a href="'.$g4['bbs_url'].'/poll_etc_update.php?w=d&amp;pc_id='.$row['pc_id'].'&amp;po_id='.$po_id.'\');">';
+    if ($is_admin == 'super' || ($row['mb_id'] == $member['mb_id'] && $row['mb_id']))
+        $list2[$i]['del'] = '<a href="'.$g4['bbs_url'].'/poll_etc_update.php?w=d&amp;pc_id='.$row['pc_id'].'&amp;po_id='.$po_id.'&amp;skin_dir='.$skin_dir.'">';
 }
 
 // 기타의견 입력
@@ -63,9 +66,9 @@ $is_etc = false;
 if ($po['po_etc']) {
     $is_etc = true;
     $po_etc = $po['po_etc'];
-    if ($member['mb_id']) 
+    if ($member['mb_id'])
         $name = '<b>'.$member['mb_nick'].'</b> <input type="hidden" name="pc_name" value="'.$member['mb_nick'].'">';
-    else 
+    else
         $name = '<input type="text" name="pc_name" size="10" class="input" required>';
 }
 

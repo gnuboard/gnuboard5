@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<div id="post_num" class="new_win">
+<div id="post_code" class="new_win">
     <h1><?=$g4['title']?></h1>
 
     <form name="fzip" method="get" autocomplete="off">
@@ -13,7 +13,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="frm_addr2" value="<?=$frm_addr2?>">
 
     <fieldset>
-        <legend>우편번호 검색</legend>
         <label for="addr1">동/읍/면/리 검색</label>
         <input type="text" id="addr1" name="addr1" class="fieldset_input" value="<?=$addr1?>" required minlength=2>
         <input type="submit" class="fieldset_submit" value="검색">
@@ -32,7 +31,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <dd>
             <ul>
                 <? for ($i=0; $i<count($list); $i++) { ?>
-                <li><a href='javascript:;' onclick="find_zip('<?=$list[$i][zip1]?>', '<?=$list[$i][zip2]?>', '<?=$list[$i][addr]?>');"><?=$list[$i][zip1]?>-<?=$list[$i][zip2]?> <?=$list[$i][addr]?> <?=$list[$i][bunji]?></a></li>
+                <li><a href='javascript:;' onclick="find_zip('<?=$list[$i][zip1]?>', '<?=$list[$i][zip2]?>', '<?=$list[$i][addr]?>');"><span class="post_code"><?=$list[$i][zip1]?>-<?=$list[$i][zip2]?></span> <?=$list[$i][addr]?> <?=$list[$i][bunji]?></a></li>
                 <? } ?>
             </ul>
         </dd>

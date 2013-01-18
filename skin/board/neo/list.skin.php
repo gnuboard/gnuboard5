@@ -31,6 +31,7 @@ if ($is_nogood) $colspan++;
         <form name="fsearch" method="get">
         <input type="hidden" name="bo_table" value="<?=$bo_table?>">
         <input type="hidden" name="sca" value="<?=$sca?>">
+        <input type="hidden" name="sop" value="and">
         <select name="sfl" title="검색대상">
             <option value="wr_subject">제목</option>
             <option value="wr_content">내용</option>
@@ -41,7 +42,6 @@ if ($is_nogood) $colspan++;
             <option value="wr_name,0">글쓴이(코)</option>
         </select>
         <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
-        <input type="hidden" name="sop" value="and">
         <input type="submit" class="fieldset_submit" value="검색">
         </form>
     </fieldset>
@@ -85,7 +85,7 @@ for ($i=0; $i<count($list); $i++) {
     <td class="td_bignum">
     <?
     if ($list[$i]['is_notice']) // 공지사항
-        echo '공지';
+        echo '<strong>공지</strong>';
     else if ($wr_id == $list[$i]['wr_id'])
         echo "<span class=\"bo_current\">열람중</span>";
     else
@@ -104,7 +104,7 @@ for ($i=0; $i<count($list); $i++) {
 
         <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>>
             <?=$list[$i]['subject']?>
-            <? if ($list[$i]['comment_cnt']) { ?><?=$list[$i]['comment_cnt'];?><? } ?>
+            <? if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?=$list[$i]['comment_cnt'];?><span class="sound_only">개</span><? } ?>
         </a>
 
         <?
@@ -135,9 +135,9 @@ for ($i=0; $i<count($list); $i++) {
         <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택삭제"></li>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택복사"></li>
-        <li><input type="submit" name="btn_submit" class="btn02" onclick="document.pressed=this.value" value="선택이동"></li>
+        <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제"></li>
+        <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택복사"></li>
+        <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택이동"></li>
         <? } ?>
     </ul>
 

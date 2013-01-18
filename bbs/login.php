@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $g4['title'] = '로그인';
-include_once('./_head.php');
+include_once('./_head.sub.php');
 
 $p = parse_url($url);
 if ((isset($p['scheme']) && $p['scheme']) || 
@@ -50,5 +50,5 @@ else
 
 include_once($member_skin_path.'/login.skin.php');
 
-include_once('./_tail.php');
+include_once('./_tail.sub.php');
 ?>

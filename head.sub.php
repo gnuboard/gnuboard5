@@ -12,7 +12,7 @@ if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
     $mb = get_member($member['mb_memo_call'], "mb_nick");
     sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
 
-    alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI']);
+    alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI'], false);
 }
 
 
@@ -61,11 +61,23 @@ if (G4_IS_MOBILE) {
 }
 ?>
 <title><?=$g4['title']?></title>
+<<<<<<< HEAD
+=======
+<!-- <meta http-equiv='X-UA-Compatible' content='IE=Edge'> -->
+<? if (isset($administrator)) { ?>
+<link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">
+<? } else { ?>
+<link rel="stylesheet" href="<?=$g4['url']?>/css/default.css?=<?=date("md")?>">
+<?}?>
+>>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
 <!--[if lte IE 8]>
 <script src="<?=$g4['url']?>/js/html5.js"></script>
 <![endif]-->
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
+var g4_path      = "<?=$g4['path']?>";
+var g4_bbs       = "<?=$g4['bbs']?>";
+var g4_bbs_img   = "<?=$g4['bbs_img']?>";
 var g4_url       = "<?=$g4['url']?>";
 var g4_path      = "<?=$g4['path']?>";
 var g4_bbs_url   = "<?=$g4['bbs_url']?>";

@@ -11,10 +11,21 @@ form, img {border:0}
 input,img {vertical-align:middle}
 p {margin:10px 0;line-height:1.5em}
 
-/* 내용 건너뛰기 */
+/* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
+.sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+/* 본문 바로가기 */
 #to_content a {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
 #to_content a:focus, #to_content a:active {height:auto;padding:5px 10px;border:1px solid #000;background:#eee;color:#333;font-size:0.75em;overflow:auto}
 
+/* 테이블 */
+table {margin-bottom:10px;width:100%;border:1px solid #d5dcdf;background:#fff}
+caption {padding:10px 0 15px;color:#2f4d59;text-align:left;font-size:1em;font-weight:bold}
+caption p {margin:7px 0 0;padding:0;color:#6b8088;font:0.75em normal}
+th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
+th {padding:10px;background:#f1f6f7}
+th label {display:block}
+th a {color:#000}
+td {padding:10px}
 /* 내용 없는 테이블 */
 .empty_table {padding:200px 0;text-align:center}
 
@@ -87,16 +98,6 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 .frm_list li {float:left;margin-left:-1px;list-style:none}
 .frm_list a {display:block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.3em}
 .frm_list a:focus, .frm_list a:hover {background:#434f54}
-
-/* 테이블 */
-table {margin-bottom:10px;width:100%;border:1px solid #d5dcdf;background:#fff}
-caption {padding:10px 0 15px;color:#2f4d59;text-align:left;font-size:1em;font-weight:bold}
-caption p {margin:7px 0 0;padding:0;color:#6b8088;font:0.75em normal}
-th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
-th {padding:10px;background:#f1f6f7}
-th label {display:block}
-th a {color:#000}
-td {padding:10px}
 
 /* 폼 테이블 */
 .frm_tbl th {width:130px;text-align:left;font-weight:normal}

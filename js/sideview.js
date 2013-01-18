@@ -47,7 +47,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
 
     function showSideView(curObj, mb_id, name, email, homepage)
     {
-        var sideView = new SideView('nameContextMenu', curObj, mb_id, name, email, homepage);
+        var sideView = new SideView('sideview', curObj, mb_id, name, email, homepage);
         sideView.showLayer();
     }
 
@@ -118,13 +118,15 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         if (oSideViewLayer == null) {
             oSideViewLayer = document.createElement("div");
             oSideViewLayer.id = this.targetObj;
-            oSideViewLayer.style.position = "absolute";
+            //oSideViewLayer.style.position = "absolute";
             //oBody.appendChild(oSideViewLayer);
         }
 
         curObjParent.appendChild(oSideViewLayer);
 
         oSideViewLayer.innerHTML = this.makeNameContextMenus();
+
+        /*
 
         if (getAbsoluteTop(this.curObj) + this.curObj.offsetHeight + oSideViewLayer.scrollHeight + 5 > oBody.scrollHeight)
             oSideViewLayer.style.top = getAbsoluteTop(this.curObj) - getAbsoluteTop(this.curObj.offsetParent) - oSideViewLayer.scrollHeight + "px";
@@ -133,10 +135,14 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
 
         oSideViewLayer.style.left = getAbsoluteLeft(this.curObj) - getAbsoluteLeft(this.curObj.offsetParent) - this.curObj.offsetWidth + 65 + "px";
 
+        */
+
         divDisplay(this.targetObj, 'block');
 
         selectBoxHidden(this.targetObj);
     }
+
+    /*
 
     function getAbsoluteTop(oNode)
     {
@@ -160,6 +166,8 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
         }
         return iLeft;
     }
+
+    */
 
 
     function makeNameContextMenus()
@@ -305,8 +313,8 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
 
     function hideSideView()
     {
-        if (document.getElementById("nameContextMenu"))
-            divDisplay ("nameContextMenu", 'none');
+        if (document.getElementById("sizeview"))
+            divDisplay ("sideview", 'none');
     }
 
     var clickAreaCheck = false;

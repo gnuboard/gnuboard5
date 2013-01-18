@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 로그인 후 외부로그인 시작 -->
@@ -10,9 +10,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=$g4['admin_path']?>/" id="ol_admin">관리자</a><? } ?>
     </header>
     <ul id="ol_after_rec">
-        <li><a href="<?=$g4['path']?>/bbs/memo.php" id="ol_after_memo" target="_blank">안 읽은 쪽지 <span id="ol_after_memo_img"><?=$memo_not_read?></span></a></li>
-        <li><a href="<?=$g4['path']?>/bbs/point.php" id="ol_after_pt" target="_blank">포인트 <span id="ol_after_pt_img"><?=$point?></span></a></li>
-        <li><a href="<?=$g4['path']?>/bbs/scrap.php" id="ol_after_scrap" target="_blank"><span id="ol_after_scrap_img">스크랩</span></a></li>
+        <li><a href="<?=$g4['path']?>/bbs/memo.php" id="ol_after_memo" target="_blank" onclick="win_memo(); return false;">안 읽은 쪽지 <span id="ol_after_memo_img"><?=$memo_not_read?></span></a></li>
+        <li><a href="<?=$g4['path']?>/bbs/point.php" id="ol_after_pt" target="_blank" onclick="win_point(); return false;">포인트 <span id="ol_after_pt_img"><?=$point?></span></a></li>
+        <li><a href="<?=$g4['path']?>/bbs/scrap.php" id="ol_after_scrap" target="_blank" onclick="win_scrap(); return false;"><span id="ol_after_scrap_img">스크랩</span></a></li>
     </ul>
     <footer id="ol_after_ft">
         <ul>
@@ -24,9 +24,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <script>
 // 탈퇴의 경우 아래 코드를 연동하시면 됩니다.
-function member_leave() 
+function member_leave()
 {
-    if (confirm("정말 회원에서 탈퇴 하시겠습니까?")) 
+    if (confirm("정말 회원에서 탈퇴 하시겠습니까?"))
         location.href = "<?=$g4['bbs_path']?>/member_confirm.php?url=member_leave.php";
 }
 </script>

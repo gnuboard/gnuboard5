@@ -10,7 +10,6 @@ var member_skin_path = "<?=$member_skin_path?>";
 <form id="fregisterform" name="fregisterform" method="post" action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="url" value="<?=$urlencode?>">
-<input type="hidden" name="mb_jumin" value="<?=$jumin?>">
 <? if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?=$member['mb_sex']?>"><? } ?>
 <? if (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
 <input type="hidden" name="mb_nick_default" value="<?=$member['mb_nick']?>">
@@ -27,6 +26,7 @@ var member_skin_path = "<?=$member_skin_path?>";
         <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
     </td>
 </tr>
+<tr>
     <th scope="row"><label for="reg_mb_password">패스워드</label></th>
     <td><input type="password" id="reg_mb_password" name="mb_password" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?> title="패스워드"></td>
 </tr>
@@ -96,16 +96,18 @@ var member_skin_path = "<?=$member_skin_path?>";
 </tr>
 <? } ?>
 
-<? if ($config['cf_use_addr']) { ?>
+<? if ($config['cf_use_addr']) {
+    $zip_href = './zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
+?>
 <tr>
     <th scope="row">주소</th>
     <td>
-        <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" maxlength="3" readonly <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
+        <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
          -
-        <input type="text" id="reg_mb_zip2" name="mb_zip2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" maxlength="3" readonly <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip2']?>" title="우편번호 뒷자리">
-        <a href="javascript:;" onclick="win_zip('fregisterform', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2');">주소찾기</a>
-        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" readonly <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
-        <input type="text" id="reg_mb_addr2" name="mb_addr2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr2']?>" title="상세주소">
+        <input type="text" id="reg_mb_zip2" name="mb_zip2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip2']?>" title="우편번호 뒷자리">
+        <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline" target="_blank" onclick="win_zip('fregisterform', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2'); return false;" style="display: none;">주소찾기</a>
+        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
+        <input type="text" id="reg_mb_addr2" name="mb_addr2" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr2']?>" title="상세주소">
     </td>
 </tr>
 <? } ?>
@@ -207,8 +209,13 @@ var member_skin_path = "<?=$member_skin_path?>";
 </form>
 
 <script>
+$(function() {
+    $("#reg_zip_find").css("display", "inline-block");
+    $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
+});
+
 // submit 최종 폼체크
-function fregisterform_submit(f) 
+function fregisterform_submit(f)
 {
     // 회원아이디 검사
     if (f.w.value == "") {
@@ -250,7 +257,7 @@ function fregisterform_submit(f)
             return false;
         }
 
-        var pattern = /([^가-힣\x20])/i; 
+        var pattern = /([^가-힣\x20])/i;
         if (pattern.test(f.mb_name.value)) {
             alert('이름은 한글로 입력하십시오.');
             f.mb_name.select();

@@ -77,4 +77,4 @@ include_once($g4['path'].'/lib/popular.lib.php');
 <hr>
 
 <div id="wrapper">
-    <? if (!$bo_table || $w == 's') {?><h1><?=$g4['title']?></h1><?}?>
+    <? if (!$bo_table || $w == 's') {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
