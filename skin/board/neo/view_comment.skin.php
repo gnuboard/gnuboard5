@@ -15,7 +15,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     for ($i=0; $i<count($list); $i++) {
         $comment_id = $list[$i]['wr_id'];
         $cmt_depth = ""; // 댓글단계
-        $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 30;
+        $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 20;
         if (strstr($list[$i]['wr_option'], "secret")) echo '비밀글';
             $str = $list[$i]['content'];
             if (strstr($list[$i]['wr_option'], "secret"))
