@@ -61,15 +61,12 @@ if (G4_IS_MOBILE) {
 }
 ?>
 <title><?=$g4['title']?></title>
-<<<<<<< HEAD
-=======
 <!-- <meta http-equiv='X-UA-Compatible' content='IE=Edge'> -->
 <? if (isset($administrator)) { ?>
 <link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">
 <? } else { ?>
 <link rel="stylesheet" href="<?=$g4['url']?>/css/default.css?=<?=date("md")?>">
 <?}?>
->>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
 <!--[if lte IE 8]>
 <script src="<?=$g4['url']?>/js/html5.js"></script>
 <![endif]-->
