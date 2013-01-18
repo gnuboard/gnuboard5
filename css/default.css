@@ -488,7 +488,8 @@ a {color:#000;text-decoration:none}
 /* 자기소개 */
 #profile table {margin-bottom:15px}
 #profile section {margin:0 auto 20px;width:90%;border-bottom:1px solid #d9d9d9}
-#profile h2 {margin:0;font-family:"gulim"}
+#profile h2 {margin:0;padding-left:10px;font-family:"gulim"}
+#profile p {padding-left:10px}
 
 /* 쪽지 읽기 */
 #memo_view section {margin:0 auto 20px;width:90%;border-bottom:1px solid #d9d9d9}
