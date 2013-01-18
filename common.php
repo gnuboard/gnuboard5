@@ -239,7 +239,7 @@ else
 // 그렇지 않다면 브라우저의 HTTP_USER_AGENT 에 따라 모바일 결정
 // G4_MOBILE_AGENT : config.php 에서 선언
 //------------------------------------------------------------------------------
-$is_mobile = true;
+$is_mobile = false;
 if (get_cookie('is_mobile')) {
     $is_mobile = true;
 } else if (preg_match('/'.G4_MOBILE_AGENT.'/i', $_SERVER['HTTP_USER_AGENT'])) {
