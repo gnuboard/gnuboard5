@@ -44,67 +44,8 @@ function member_delete($mb_id)
     }
 
     // 회원자료는 정보만 없앤 후 아이디는 보관하여 다른 사람이 사용하지 못하도록 함 : 061025
-    if ($mb['mb_level'] > 1) {
-    " update $g4[member_table]
-                    set mb_jumin = '',
-                         mb_password = '',
-                         mb_level = 1,
-                         mb_email = '',
-                         mb_homepage = '',
-                         mb_password_q = '',
-                         mb_password_a = '',
-                         mb_tel = '',
-                         mb_hp = '',
-                         mb_zip1 = ,
-                         mb_zip2 = ,
-                         mb_addr1 = '',
-                         mb_addr2 = '',
-                         mb_birth = '',
-                         mb_sex = '',
-                         mb_signature = '',
-                         mb_memo = '".date('Ymd',$g4['server_time'])." 삭제함".PHP_EOL."{$mb['mb_memo']}',
-                         mb_leave_date = '".date('Ymd',$g4['server_time'])."'
-                    where mb_id = '{$mb_id}' ";
-        //echo $sql; exit;
-        sql_query($sql);
-    }
-
-    /*
-    // 회원 자료 삭제
-    sql_query(" delete from {$g4['member_table']} where mb_id = '{$mb_id}' ");
-
-    // 삭제된 자료를 또 삭제하면 완전 삭제함
-    if ($mb['mb_nick'] != "[삭제됨]")
-    {
-        // 다른 사람이 이 회원아이디를 사용하지 못하도록 아이디만 생성해 놓습니다.
-        // 게시판에서 회원아이디는 삭제하지 않기 때문입니다.
-        sql_query(" insert into {$g4['member_table']} set mb_id = '{$mb_id}', mb_name='{$mb['mb_name']'}, mb_nick='[삭제됨]', mb_ip='{$mb['mb_ip']}', mb_datetime = '{$g4['time_ymdhis']}' ");
-    }
-
-    // 포인트 테이블에서 삭제
-    sql_query(" delete from {$g4['point_table']} where mb_id = '{$mb_id}' ");
-
-    // 그룹접근가능 삭제
-    sql_query(" delete from {$g4['group_member_table']} where mb_id = '{$mb_id}' ");
-
-    // 쪽지 삭제
-    sql_query(" delete from {$g4['memo_table']} where me_recv_mb_id = '{$mb_id}' or me_send_mb_id = '{$mb_id}' ");
-
-    // 스크랩 삭제
-    sql_query(" delete from {$g4['scrap_table']} where mb_id = '{$mb_id}' ");
-
-    // 관리권한 삭제
-    sql_query(" delete from {$g4['auth_table']} where mb_id = '{$mb_id}' ");
-
-    // 그룹관리자인 경우 그룹관리자를 공백으로
-    sql_query(" update $g4['group_table'] set gr_admin = "" where gr_admin = '{$mb_id}' ");
-
-    // 게시판관리자인 경우 게시판관리자를 공백으로
-    sql_query(" update $g4['board_table'] set bo_admin = "" where bo_admin = '{$mb_id}' ");
-
-    // 아이콘 삭제
-    @unlink($g4['path'].'/data/member/'.substr($mb_id,0,2).'/$mb_id.gif');
-    */
+    $sql = " update {$g4['member_table']} set mb_jumin = '', mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_password_q = '', mb_password_a = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd',$g4['server_time'])." 삭제함".PHP_EOL."{$mb['mb_memo']}', mb_leave_date = '".date('Ymd',$g4['server_time'])."' where mb_id = '{$mb_id}' ";
+    sql_query($sql);
 }
 
 

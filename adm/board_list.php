@@ -115,18 +115,12 @@ var list_delete_php = 'board_list_delete.php';
     <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
     <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
     <th scope="col"><?=subject_sort_link('bo_subject')?>제목</a></th>
-<<<<<<< HEAD
-    <th scope="col">포인트</th>
-    <th scope="col">검색</th>
-    <th scope="col"><?=subject_sort_link('bo_use')?>사용여부</a></th>
-=======
     <th scope="col">읽기P<span class="sound_only">포인트</span></th>
     <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
     <th scope="col">댓글P<span class="sound_only">포인트</span></th>
     <th scope="col">다운P<span class="sound_only">포인트</span></th>
     <th scope="col">검색<br>사용</th>
     <th scope="col">검색<br>순서</th>
->>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
     <th scope="col">관리</th>
 </tr>
 </thead>
@@ -155,24 +149,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td>
         <?=get_skin_select("board", "bo_skin_$i", "bo_skin[$i]", $row['bo_skin']);?>
     </td>
-<<<<<<< HEAD
-    <td><input type="text" id="bo_subject_<?=$i?>" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="20" required="required"></td>
-    <td>
-        <label for="bo_read_point_<?=$i?>">읽기</label>
-        <input type="text" id="bo_read_point_<?=$i?>" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="2">
-        <label for="bo_write_point_<?=$i?>">쓰기</label>
-        <input type="text" id="bo_write_point_<?=$i?>" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="2">
-        <label for="bo_comment_point_<?=$i?>">댓글</label>
-        <input type="text" id="bo_comment_point_<?=$i?>" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" size="2">
-        <label for="bo_download_point_<?=$i?>">다운</label>
-        <input type="text" id="bo_download_point_<?=$i?>" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="2">
-    </td>
-    <td>
-        <label for="bo_use_search_<?=$i?>">사용</label>
-        <input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1">
-        <label for="bo_order_search_<?=$i?>">순서</label>
-        <input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1">
-=======
     <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="10" required="required"></td>
     <td><input type="text" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="1" title="읽기"></td>
     <td><input type="text" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="1" title="쓰기"></td>
@@ -180,7 +156,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <td><input type="text" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="1" title="다운"></td>
     <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1" title="검색사용"></td>
     <td><input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1" title="검색순서"></td>
->>>>>>> fca2c7be504cccbd5466136a893f3d3ed875554c
     </td>
     <td>
         <select id="bo_use_<?=$i?>" name="bo_use[<?=$i?>]">
@@ -228,24 +203,6 @@ function fboardlist_submit(f)
     return true;
 }
 
-function board_copy(bo_table) {
-    window.open("./board_copy.php?bo_table="+bo_table, "BoardCopy", "left=10,top=10,width=500,height=200");
-}
-</script>
-
-<script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
-{
-	var f = document.fpost;
-
-	if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.bo_table.value = val;
-		f.action = action_url;
-		f.submit();
-	}
-}
-
 $(function(){
     $(".board_copy").click(function(){
         window.open(this.href, "win_board_copy", "left=100,top=100,width=550,height=450");
@@ -253,16 +210,6 @@ $(function(){
     });
 });
 </script>
-
-<form id="fpost" name="fpost" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<!-- <input type="hidden" name="bo_table"> -->
-</form>
 
 <?
 include_once('./admin.tail.php');
