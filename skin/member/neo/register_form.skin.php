@@ -19,7 +19,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <table class="frm_tbl">
 <caption>사이트 이용정보 입력</caption>
 <tr>
-    <th scope="row"><label for="reg_mb_id">아이디</label></th>
+    <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
     <td>
         <input type="text" id="reg_mb_id" name="mb_id" class="frm_input minlength_3 <?=$required?> <?=$readonly?>" value="<?=$member['mb_id']?>" maxlength="20" <?=$required?> <?=$readonly?> title="회원아이디">
         <span id="msg_mb_id"></span>
@@ -27,11 +27,11 @@ var member_skin_path = "<?=$member_skin_path?>";
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="reg_mb_password">패스워드</label></th>
+    <th scope="row"><label for="reg_mb_password">패스워드<strong class="sound_only">필수</strong></label></th>
     <td><input type="password" id="reg_mb_password" name="mb_password" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?> title="패스워드"></td>
 </tr>
 <tr>
-    <th scope="row"><label for="reg_mb_password_re">패스워드 확인</label></th>
+    <th scope="row"><label for="reg_mb_password_re">패스워드 확인<strong class="sound_only">필수</strong></label></th>
     <td><input type="password" id="reg_mb_password_re" name="mb_password_re" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?> title="패스워드 확인"></td>
 </tr>
 </table>
@@ -39,7 +39,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <table class="frm_tbl">
 <caption>개인정보 입력</caption>
 <tr>
-    <th scope="row"><label for="reg_mb_name">이름</label></th>
+    <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
         <input id="reg_mb_name" name="mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" value="<?=$member['mb_name']?>" size="10" <?=$required?> <?=$readonly?> title="이름">
         <? if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } ?>
@@ -47,7 +47,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 </tr>
 <? if ($req_nick) { ?>
 <tr>
-    <th scope="row"><label for="reg_mb_nick">별명</label></th>
+    <th scope="row"><label for="reg_mb_nick">별명<strong class="sound_only">필수</strong></label></th>
     <td>
         <input type="hidden" name="mb_nick_default" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>">
         <input type="text" id="reg_mb_nick" name="mb_nick" class="frm_input required nospace" maxlength="20" size="10" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" required title="별명">
@@ -61,7 +61,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <? } ?>
 
 <tr>
-    <th scope="row"><label for="reg_mb_email">E-mail</label></th>
+    <th scope="row"><label for="reg_mb_email">E-mail<? if ($config['cf_use_email_certify']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td>
         <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
         <input type="text" id="reg_mb_email" name="mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" maxlength="100" size="50" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?> title="E-mail">
@@ -77,21 +77,21 @@ var member_skin_path = "<?=$member_skin_path?>";
 
 <? if ($config['cf_use_homepage']) { ?>
 <tr>
-    <th scope="row"><label for="reg_mb_homepage">홈페이지</label></th>
+    <th scope="row"><label for="reg_mb_homepage">홈페이지<? if ($config['cf_req_homepage']){?><strong class="sound_only">필수</strong><?}?></label></th>
     <td><input type="text" id="reg_mb_homepage" name="mb_homepage" class="frm_input <?=$config['cf_req_homepage']?"required":"";?>" maxlength="255" <?=$config['cf_req_homepage']?"required":"";?> value="<?=$member['mb_homepage']?>"></td>
 </tr>
 <? } ?>
 
 <? if ($config['cf_use_tel']) { ?>
 <tr>
-    <th scope="row"><label for="reg_mb_tel">전화번호</label></th>
+    <th scope="row"><label for="reg_mb_tel">전화번호<? if ($config['cf_req_tel']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td><input type="text" id="reg_mb_tel" name="mb_tel" class="frm_input <?=$config['cf_req_tel']?"required":"";?>" maxlength="20" <?=$config['cf_req_tel']?"required":"";?> value="<?=$member['mb_tel']?>"></td>
 </tr>
 <? } ?>
 
 <? if ($config['cf_use_hp']) { ?>
 <tr>
-    <th scope="row"><label for="reg_mb_hp">핸드폰번호</label></th>
+    <th scope="row"><label for="reg_mb_hp">핸드폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td><input type="text" id="reg_mb_hp" name="mb_hp" class="frm_input <?=$config['cf_req_hp']?"required":"";?>" maxlength="20" <?=$config['cf_req_hp']?"required":"";?> value="<?=$member[mb_hp]?>"></td>
 </tr>
 <? } ?>
@@ -100,7 +100,10 @@ var member_skin_path = "<?=$member_skin_path?>";
     $zip_href = './zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
 ?>
 <tr>
-    <th scope="row">주소</th>
+    <th scope="row">
+        주소
+        <? if ($config['cf_req_addr']) {?><strong class="sound_only">필수</strong><? } ?>
+    </th>
     <td>
         <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
          -
@@ -117,7 +120,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <caption>기타 개인설정</caption>
 <? if ($config['cf_use_signature']) { ?>
 <tr>
-    <th scope="row"><label for="reg_mb_signature">서명</label></th>
+    <th scope="row"><label for="reg_mb_signature">서명<? if ($config['cf_req_signature']){?><strong class="sound_only">필수</strong><?}?></label></th>
     <td><textarea id="reg_mb_signature" name="mb_signature" class="<?=$config['cf_req_signature']?"required":"";?>" <?=$config['cf_req_signature']?"required":"";?>><?=$member['mb_signature']?></textarea></td>
 </tr>
 <? } ?>
