@@ -38,9 +38,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <script>
 $(function() {
-    $(".btn_win").append("<a id=\win_close\">창닫기</a>");
+    $(".btn_win").append("<a id=\"win_close\">창닫기</a>");
 
-    $(".btn_win a.win_close").click(function() {
+    $("#win_close").click(function() {
         window.close();
     });
 });
