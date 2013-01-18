@@ -109,12 +109,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
                 if ($list[$idx][$i][wr_is_comment]) 
                 {
-                    $comment_def = "<span>댓글</span>";
+                    $comment_def = "<span class=\"cmt_def\">댓글</span>";
                     $comment_href = "#c_".$list[$idx][$i][wr_id];
                 }
             ?>
                 <li>
-                    <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><b><?=$comment_def?><?=$list[$idx][$i][subject]?></b></a>
+                    <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><?=$comment_def?><?=$list[$idx][$i][subject]?></a>
                     <span class="sch_datetime"><?=$list[$idx][$i][wr_datetime]?></span>
                     <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
                     <p><?=$list[$idx][$i][content]?></p>
