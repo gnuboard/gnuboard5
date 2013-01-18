@@ -14,7 +14,8 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <?
     for ($i=0; $i<count($list); $i++) {
         $comment_id = $list[$i]['wr_id'];
-        $comment_depth = strlen($list[$i]['wr_comment_reply']) * 30;
+        $cmt_depth = ""; // 댓글단계
+        $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 30;
         if (strstr($list[$i]['wr_option'], "secret")) echo '비밀글';
             $str = $list[$i]['content'];
             if (strstr($list[$i]['wr_option'], "secret"))
@@ -24,10 +25,10 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             //$str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(swf)\".*\<\/a\>\]/i", "<script>doc_write(flash_movie('$1://$2.$3'));</script>", $str);
             $str = preg_replace("/\[\<a\s*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(gif|png|jpg|jpeg|bmp)\"\s*[^\>]*\>[^\s]*\<\/a\>\]/i", "<img src='$1://$2.$3' id='target_resize_image[]' onclick='image_window(this);'>", $str);
     ?>
-    <article id="c_<?=$comment_id?>" <?if ($comment_depth) {?>style="margin-left:<?=$comment_depth?>px"<?}?>>
+    <article id="c_<?=$comment_id?>" <?if ($cmt_depth) {?>style="margin-left:<?=$cmt_depth?>px"<?}?>>
         <header>
             <h1><?=$list[$i]['name']?><span class="sound_only">님의 댓글</span></h1>
-            <? if ($comment_depth) {?><img src="<?=$g4['path']?>/img/icon/icon_re.gif" alt="댓글의 댓글"><? } ?>
+            <? if ($cmt_depth) {?><img src="<?=$g4['path']?>/img/icon/icon_re.gif" alt="댓글의 댓글"><? } ?>
             <dl class="bo_vc_info">
                 <? if ($is_ip_view) { ?>
                 <dt>아이피</dt>

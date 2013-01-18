@@ -371,12 +371,12 @@ a {color:#000;text-decoration:none}
 .bo_v_com li {float:left;margin-left:5px}
 
 /* 게시판 댓글 */
-#bo_vc {padding:10px;border:1px solid #eee;background:#f9f9f9}
+#bo_vc {padding:10px 20px;border:1px solid #eee;background:#f9f9f9}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_vc article {margin:0 10px;padding:0 0 20px;border-bottom:1px solid #ddd}
+#bo_vc article {padding:0 0 20px;border-bottom:1px solid #ddd}
 #bo_vc header {position:relative;zoom:1}
 #bo_vc header:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_vc header img {position:absolute;top:0;left:-20px}
+#bo_vc header img {position:absolute;top:15px;left:-30px}
 #bo_vc h1 {float:left;margin:15px 0 10px}
 .bo_vc_info {float:left;margin:15px 0 10px 15px;zoom:1}
 .bo_vc_info:after {display:block;visibility:hidden;clear:both;content:""}
@@ -393,7 +393,7 @@ a {color:#000;text-decoration:none}
 .bo_vc_act {float:right;margin:0;list-style:none;zoom:1}
 .bo_vc_act:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act li {float:left;margin-left:5px}
-#bo_vc_w {position:relative;margin-top:10px;padding:10px}
+#bo_vc_w {position:relative;padding-top:20px}
 #bo_vc_w #char_cnt {position:absolute;top:5px;right:10px}
 #bo_vc_warea {clear:both;position:relative;margin:0 90px 10px 0}
 #bo_vc_warea textarea {padding:3px;width:100%;height:50px;border:1px solid #ddd;background:#fff;vertical-align:middle}
