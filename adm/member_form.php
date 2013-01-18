@@ -83,7 +83,7 @@ $g4['title'] = '회원정보 '.$html_title;
 include_once('./admin.head.php');
 ?>
 
-<form id="fmember" name="fmember" method="post" onsubmit="return fmember_submit(this);" enctype="multipart/form-data" autocomplete="off">
+<form id="fmember" name="fmember" method="post" action="./member_form_update.php" onsubmit="return fmember_submit(this);" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx" value="<?=$stx?>">
@@ -118,7 +118,7 @@ include_once('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="mb_email">E-mail</label></th>
-    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" class="required email" value="<?=$mb['mb_email']?>" size="30"></td>
+    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" class="required email" value="<?=$mb['mb_email']?>" size="30" title="E-mail"></td>
     <th scope="row"><label for="mb_homepage">홈페이지</label></th>
     <td><input type="text" id="mb_homepage" name="mb_homepage" maxlength="255" value="<?=$mb['mb_homepage']?>" size="15"></td>
 </tr>
@@ -256,22 +256,11 @@ include_once('./admin.head.php');
 
 <div class="btn_confirm">
     <input type="submit" class="btn_submit" accesskey='s' value="확인">
-    <button onclick="document.location.href='./member_list.php?<?=$qstr?>';">목록</button>
-    <? if ($w != '') { ?>
-    <button onclick="del('./member_delete.php?<?=$qstr?>&amp;w=d&amp;mb_id=<?=$mb['mb_id']?>&amp;url=<?=$_SERVER['PHP_SELF']?>');">삭제</button>
-    <? } ?>
+    <a href="./member_list.php?<?=$qstr?>">목록</a>
 </div>
 </form>
 
 <script>
-if (document.fmember.w.value == "")
-    document.fmember.mb_id.focus();
-else if (document.fmember.w.value == "u")
-    document.fmember.mb_password.focus();
-
-if (typeof(document.fmember.mb_level) != "undefined")
-    document.fmember.mb_level.value   = "<?=$mb['mb_level']?>";
-
 function fmember_submit(f)
 {
     if (!f.mb_icon.value.match(/\.(gif|jp['e']g|png)$/i) && f.mb_icon.value) {
@@ -279,7 +268,6 @@ function fmember_submit(f)
         return false;
     }
 
-    f.action = './member_form_update.php';
     return true;
 }
 </script>

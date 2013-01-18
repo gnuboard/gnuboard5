@@ -4,8 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
 $sql_common = " from {$g4['member_table']} ";
 
 $sql_search = " where (1) ";
@@ -127,13 +125,12 @@ var list_delete_php = 'member_list_delete.php';
 </div>
 <?}?>
 
-<form id="fmemberlist" name="fmemberlist" method="post">
+<form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);">
 <input type="hidden" name="sst"   value='<?=$sst?>'>
 <input type="hidden" name="sod"   value='<?=$sod?>'>
 <input type="hidden" name="sfl"   value='<?=$sfl?>'>
 <input type="hidden" name="stx"   value='<?=$stx?>'>
 <input type="hidden" name="page"  value='<?=$page?>'>
-<input type="hidden" name="token" value='<?=$token?>'>
 
 <table class="tbl_mb_list">
 <caption>
@@ -144,7 +141,7 @@ var list_delete_php = 'member_list_delete.php';
 </caption>
 <thead>
 <tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 회원 전체선택" onclick="check_all(this.form)"></th>
+    <th scope="col"><label for="chkall">전체</label><br><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 회원 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
     <th scope="col"><?=subject_sort_link('mb_name')?>이름</a></th>
     <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
@@ -237,8 +234,8 @@ if ($i == 0)
 </table>
 
 <div class="btn_list">
-    <button onclick="btn_check(this.form, 'update')">선택수정</button>
-    <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+    <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택수정">
+    <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제">
     <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>
 </div>
 
@@ -255,29 +252,18 @@ if (isset($stx))
 ?>
 </form>
 
-<script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
-{
-	var f = document.fpost;
 
-	if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.mb_id.value = val;
-		f.action      = action_url;
-		f.submit();
-	}
+<script>
+function fmemberlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    return true;
 }
 </script>
-
-<form id="fpost" name="fpost" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="mb_id">
-</form>
 
 <?
 include_once ('./admin.tail.php');
