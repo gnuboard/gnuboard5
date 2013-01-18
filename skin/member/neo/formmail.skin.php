@@ -18,16 +18,16 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <tbody>
     <? if (!$is_member) { ?>
     <tr>
-        <th scope="row"><label for="fnick">이름</label></th>
+        <th scope="row"><label for="fnick">이름<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" id="fnick" name="fnick" class="frm_input required" required></td>
     </tr>
     <tr>
-        <th scope="row"><label for="fmail">E-mail</label></th>
+        <th scope="row"><label for="fmail">E-mail<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" id="fmail" name="fmail" class="frm_input required" required></td>
     </tr>
     <? } ?>
     <tr>
-        <th scope="row"><label for="subject">제목</label></th>
+        <th scope="row"><label for="subject">제목<strong class="sound_only">필수</strong></label></th>
         <td><input type=text id="subject" name="subject" class="frm_input required" required></td>
     </tr>
     <tr>
@@ -39,7 +39,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="content">내용</label></th>
+        <th scope="row"><label for="content">내용<strong class="sound_only">필수</strong></label></th>
         <td><textarea id="content" name="content" class="required" required></textarea></td>
     </tr>
     <tr>
