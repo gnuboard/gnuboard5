@@ -362,7 +362,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     if (strlen($reply) > 0)
     {
         for ($k=0; $k<strlen($reply); $k++)
-            $list['reply'] .= ' &nbsp;&nbsp; ';
+            $list['reply'] .= ' ';
     }
 
     $list['icon_reply'] = '';
