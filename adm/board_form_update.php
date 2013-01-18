@@ -84,6 +84,7 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_use_ip_view      = '{$_POST['bo_use_ip_view']}',
                 bo_use_list_view    = '{$_POST['bo_use_list_view']}',
                 bo_use_list_content = '{$_POST['bo_use_list_content']}',
+                bo_use_email        = '{$_POST['bo_use_email']}',
                 bo_table_width      = '{$_POST['bo_table_width']}',
                 bo_subject_len      = '{$_POST['bo_subject_len']}',
                 bo_page_rows        = '{$_POST['bo_page_rows']}',
@@ -127,9 +128,6 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_8                = '{$_POST['bo_8']}',
                 bo_9                = '{$_POST['bo_9']}',
                 bo_10               = '{$_POST['bo_10']}' ";
-
-if (isset($_POST['bo_use_email'])) 
-    $sql_common .= ", bo_use_email = '{$_POST['bo_use_email']}'";
 
 if ($w == '') {
 

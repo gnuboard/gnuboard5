@@ -73,5 +73,5 @@ for ($i=0; $i<count($member_list['id']); $i++) {
 
 $str_nick_list = implode(',', $member_list['nick']);
 
-alert($str_nick_list.' 님께 쪽지를 전달하였습니다.', './memo.php?kind=send');
+alert($str_nick_list.' 님께 쪽지를 전달하였습니다.', './memo.php?kind=send', false);
 ?>

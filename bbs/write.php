@@ -45,7 +45,7 @@ if ($w == '') {
     if ($is_member) {
         $tmp_point = ($member['mb_point'] > 0) ? $member['mb_point'] : 0;
         if ($tmp_point + $board['bo_write_point'] < 0 && !$is_admin) {
-            alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글쓰기('.number_format($board['bo_write_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글쓰기 해 주십시오.');
+            alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글쓰기('.number_format($board['bo_write_point']).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 글쓰기 해 주십시오.');
         }
     }
 
@@ -59,7 +59,7 @@ if ($w == '') {
         if ($member['mb_id']) {
             alert('글을 수정할 권한이 없습니다.');
         } else {
-            alert('글을 수정할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
+            alert('글을 수정할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
         }
     }
 
@@ -75,7 +75,7 @@ if ($w == '') {
                 and wr_is_comment = 0 ";
     $row = sql_fetch($sql);
     if ($row['cnt'] && !$is_admin)
-        alert('이 글과 관련된 답변글이 존재하므로 수정 할 수 없습니다.'.PHP_EOL.PHP_EOL.'답변글이 있는 원글은 수정할 수 없습니다.');
+        alert('이 글과 관련된 답변글이 존재하므로 수정 할 수 없습니다.\\n\\n답변글이 있는 원글은 수정할 수 없습니다.');
 
     // 코멘트 달린 원글의 수정 여부
     $sql = " select count(*) as cnt from {$write_table}
@@ -84,7 +84,7 @@ if ($w == '') {
                 and wr_is_comment = 1 ";
     $row = sql_fetch($sql);
     if ($row['cnt'] >= $board['bo_count_modify'] && !$is_admin)
-        alert('이 글과 관련된 코멘트가 존재하므로 수정 할 수 없습니다.'.PHP_EOL.PHP_EOL.'코멘트가 '.$board['bo_count_modify'].'건 이상 달린 원글은 수정할 수 없습니다.');
+        alert('이 글과 관련된 코멘트가 존재하므로 수정 할 수 없습니다.\\n\\n코멘트가 '.$board['bo_count_modify'].'건 이상 달린 원글은 수정할 수 없습니다.');
 
     $title_msg = '글수정';
 } else if ($w == 'r') {
@@ -92,12 +92,12 @@ if ($w == '') {
         if ($member['mb_id'])
             alert('글을 답변할 권한이 없습니다.');
         else
-            alert('글을 답변할 권한이 없습니다.'.PHP_EOL.PHP_EOL.'회원이시라면 로그인 후 이용해 보십시오.', './login.php?$qstr&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
+            alert('글을 답변할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?$qstr&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
     }
 
     $tmp_point = isset($member['mb_point']) ? $member['mb_point'] : 0;
     if ($tmp_point + $board['bo_write_point'] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글답변('.number_format($board['bo_comment_point']).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 글답변 해 주십시오.');
+        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글답변('.number_format($board['bo_comment_point']).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 글답변 해 주십시오.');
 
     //if (preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board['bo_notice']))
     if (in_array((int)$wr_id, $notice_array))
@@ -128,7 +128,7 @@ if ($w == '') {
 
     // 최대 답변은 테이블에 잡아놓은 wr_reply 사이즈만큼만 가능합니다.
     if (strlen($reply_array['wr_reply']) == 10)
-        alert('더 이상 답변하실 수 없습니다.'.PHP_EOL.PHP_EOL.'답변은 10단계 까지만 가능합니다.');
+        alert('더 이상 답변하실 수 없습니다.\\n\\n답변은 10단계 까지만 가능합니다.');
 
     $reply_len = strlen($reply_array['wr_reply']) + 1;
     if ($board['bo_reply_order']) {
@@ -148,7 +148,7 @@ if ($w == '') {
     if (!$row['reply'])
         $reply_char = $begin_reply_char;
     else if ($row['reply'] == $end_reply_char) // A~Z은 26 입니다.
-        alert('더 이상 답변하실 수 없습니다.'.PHP_EOL.PHP_EOL.'답변은 26개 까지만 가능합니다.');
+        alert('더 이상 답변하실 수 없습니다.\\n\\n답변은 26개 까지만 가능합니다.');
     else
         $reply_char = chr(ord($row['reply']) + $reply_number);
 
@@ -170,7 +170,7 @@ if (!empty($group['gr_use_access'])) {
         $sql = " select gr_id from {$g4['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
         if (!$row['gr_id'])
-            alert('접근 권한이 없으므로 글쓰기가 불가합니다.'.PHP_EOL.PHP_EOL.'궁금하신 사항은 관리자에게 문의 바랍니다.');
+            alert('접근 권한이 없으므로 글쓰기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.');
     }
 }
 
@@ -324,11 +324,11 @@ if ($w == '') {
     $content = $board['bo_insert_content'];
 } else if ($w == 'r') {
     if (!strstr($write['wr_option'], 'html')) {
-        $content = "\\n\\n\\n &gt; "
-                 ."\\n &gt; "
-                 ."\\n &gt; ".preg_replace("/\n/", "\n> ", get_text($write['wr_content'], 0))
-                 ."\\n &gt; "
-                 ."\\n &gt; ";
+        $content = "\n\n\n &gt; "
+                 ."\n &gt; "
+                 ."\n &gt; ".preg_replace("/\n/", "\n> ", get_text($write['wr_content'], 0))
+                 ."\n &gt; "
+                 ."\n &gt; ";
 
     }
 } else {
@@ -343,7 +343,7 @@ if ($width <= 100)
 
 $captcha_html = "";
 if ($is_guest) {
-    $captcha_html = captcha_html(); 
+    $captcha_html = captcha_html();
 }
 
 include_once($g4['path'].'/head.sub.php');
