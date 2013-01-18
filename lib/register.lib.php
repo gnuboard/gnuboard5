@@ -104,6 +104,19 @@ function valid_mb_email($reg_mb_email)
         return "";
 }
 
+// 금지 메일 도메인 검사
+function prohibit_mb_email($reg_mb_email)
+{
+    global $config;
+    list($id, $domain) = explode("@", $reg_mb_email);
+    $email_domains = explode("\n", trim($config['cf_prohibit_email']));
+    for ($i=0; $i<count($email_domains); $i++) {
+        if (strtolower($domain) == strtolower($email_domains[$i]))
+            return "$domain 메일은 사용할 수 없습니다.";
+    }
+    return "";
+}
+
 function exist_mb_email($reg_mb_email, $reg_mb_id)
 {
     global $g4;
