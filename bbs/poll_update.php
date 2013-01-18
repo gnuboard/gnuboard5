@@ -2,11 +2,14 @@
 include_once('./_common.php');
 
 $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '{$_POST['po_id']}' ");
-if (!$po['po_id']) 
+if (!$po['po_id'])
     alert('po_id 값이 제대로 넘어오지 않았습니다.');
 
-if ($member['mb_level'] < $po['po_level']) 
+if ($member['mb_level'] < $po['po_level'])
     alert_close('권한 '.$po['po_level'].' 이상 회원만 투표에 참여하실 수 있습니다.');
+
+if(!$gb_poll)
+    alert_close('항목을 선택하세요.');
 
 // 쿠키에 저장된 투표번호가 없다면
 if (get_cookie('ck_po_id') != $po['po_id']) {
