@@ -159,8 +159,8 @@ include_once('./admin.head.php');
 </table>
 
 <div class="btn_confirm">
-    <input type="submit" value="확인">
-    <input type="button" value="목록" onclick="document.location.href='./mail_list.php';">
+    <input type="submit" class="btn_submit" value="확인">
+    <a href="./mail_list.php">목록 </a>
 </div>
 </form>
 
