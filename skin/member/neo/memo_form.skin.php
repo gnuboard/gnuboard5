@@ -41,8 +41,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </form>
 </div>
 
-<script src="<?=$g4[path]?>/js/md5.js"></script>
-<script src="<?="$g4[path]/js/jquery.kcaptcha.js"?>"></script>
 <script>
 $(function() {
     $(".btn_win").append("<a>창닫기</a>");
@@ -52,20 +50,9 @@ $(function() {
     });
 });
 
-with (document.fmemoform) {
-    if (me_recv_mb_id.value == "")
-        me_recv_mb_id.focus();
-    else
-        me_memo.focus();
-}
-
 function fmemoform_submit(f)
 {
-    if (!check_kcaptcha(f.wr_key)) {
-        return false;
-    }
-
-    document.getElementById("btn_submit").disabled = true;
+    <? if ($is_guest) { echo chk_captcha_js(); } ?>
 
     return true;
 }

@@ -16,6 +16,15 @@ $error_list  = array();
 $member_list = array();
 for ($i=0; $i<count($recv_list); $i++) {
     $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g4['member_table']} where mb_id = '{$recv_list[$i]}' ");
+    if ($row) {
+        if ($is_admin || ($row['mb_open'] && (!$row['mb_leave_date'] || !$row['mb_intercept_date']))) {
+            $member_list['id'][]   = $row['mb_id'];
+            $member_list['nick'][] = $row['mb_nick'];
+        } else {
+            $error_list[]   = $recv_list[$i];
+        }
+    }
+    /*
     // 관리자가 아니면서
     // 가입된 회원이 아니거나 정보공개를 하지 않았거나 탈퇴한 회원이거나 차단된 회원에게 쪽지를 보내는것은 에러
     if ((!$row['mb_id'] || !$row['mb_open'] || $row['mb_leave_date'] || $row['mb_intercept_date']) && !$is_admin) {
@@ -24,12 +33,13 @@ for ($i=0; $i<count($recv_list); $i++) {
         $member_list['id'][]   = $row['mb_id'];
         $member_list['nick'][] = $row['mb_nick'];
     }
+    */
 }
 
 $error_msg = implode(",", $error_list);
 
 if ($error_msg && !$is_admin)
-    alert('회원아이디 \''.$error_msg.'\' 은(는) 존재(또는 정보공개)하지 않는 회원아이디 이거나 탈퇴, 접근차단된 회원아이디 입니다.\\n\\n쪽지를 발송하지 않았습니다.');
+    alert("회원아이디 '{$error_msg}' 은(는) 존재(또는 정보공개)하지 않는 회원아이디 이거나 탈퇴, 접근차단된 회원아이디 입니다.\\n쪽지를 발송하지 않았습니다.");
 
 if (!$is_admin) {
     if (count($member_list['id'])) {
@@ -50,9 +60,7 @@ for ($i=0; $i<count($member_list['id']); $i++) {
     $recv_mb_nick = get_text($member_list['nick'][$i]);
 
     // 쪽지 INSERT
-    $sql = " insert into {$g4['memo_table']}
-                ( me_id, me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo )
-                values ( '$me_id', '$recv_mb_id', '{$member['mb_id']}', '{$g4['time_ymdhis']}', '{$_POST['me_memo']}' ) ";
+    $sql = " insert into {$g4['memo_table']} ( me_id, me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo ) values ( '$me_id', '$recv_mb_id', '{$member['mb_id']}', '{$g4['time_ymdhis']}', '{$_POST['me_memo']}' ) ";
     sql_query($sql);
 
     // 실시간 쪽지 알림 기능
@@ -64,7 +72,10 @@ for ($i=0; $i<count($member_list['id']); $i++) {
     }
 }
 
-$str_nick_list = implode(',', $member_list['nick']);
-
-alert($str_nick_list.' 님께 쪽지를 전달하였습니다.', './memo.php?kind=send', false);
+if ($member_list) {
+    $str_nick_list = implode(',', $member_list['nick']);
+    alert($str_nick_list." 님께 쪽지를 전달하였습니다.", "./memo.php?kind=send", false);
+} else {
+    alert("회원아이디 오류 같습니다.", "./memo_form.php", false);
+}
 ?>
