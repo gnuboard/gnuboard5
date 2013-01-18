@@ -12,7 +12,7 @@ if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
     $mb = get_member($member['mb_memo_call'], "mb_nick");
     sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
 
-    alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI']);
+    alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI'], false);
 }
 
 
