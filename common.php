@@ -250,7 +250,6 @@ ini_set("session.cookie_domain", $g4['cookie_domain']);
 
 @session_start();
 
-
 //==============================================================================
 // Mobile 모바일 설정
 // 쿠키에 저장된 값이 모바일이라면 브라우저 상관없이 모바일로 실행
@@ -273,24 +272,6 @@ if (G4_IS_MOBILE) {
     include_once($g4['path'].'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
     $g4['mobile_path'] = $g4['path'].'/'.$g4['mobile_dir'];
 }
-
-/*
-$_SESSION['ss_is_mobile'] = false;
-if (get_cookie('ck_is_mobile')) 
-    $_SESSION['ss_is_mobile'] = false;
-else if (isset($_REQUEST['pc']))
-    $_SESSION['ss_is_mobile'] = false;
-else if (isset($_REQUEST['mobile']))
-    $_SESSION['ss_is_mobile'] = true;
-else if (is_mobile())
-    $_SESSION['ss_is_mobile'] = true;
-
-define('G4_IS_MOBILE', $_SESSION['ss_is_mobile']);
-if (G4_IS_MOBILE) {
-    include_once($g4['path'].'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
-    $g4['mobile_path'] = $g4['path'].'/'.$g4['mobile_dir'];
-}
-*/
 //==============================================================================
 
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
@@ -394,8 +375,7 @@ if (isset($_REQUEST['gr_id'])) {
 
 
 // 자동로그인 부분에서 첫로그인에 포인트 부여하던것을 로그인중일때로 변경하면서 코드도 대폭 수정하였습니다.
-if (array_key_exists('ss_mb_id', $_SESSION)) { // 로그인중이라면
-    
+if ($_SESSION['ss_mb_id']) { // 로그인중이라면
     $member = get_member($_SESSION['ss_mb_id']);
 
     // 오늘 처음 로그인 이라면
@@ -450,7 +430,7 @@ if (!get_cookie('ck_first_referer'))  set_cookie('ck_first_referer', $_SERVER['H
 // 회원, 비회원 구분
 $is_member = $is_guest = false;
 $is_admin = "";
-if (isset($member['mb_id'])) {
+if ($member['mb_id']) {
     $is_member = true;
     $is_admin = is_admin($member['mb_id']);
     $member['mb_dir'] = substr($member['mb_id'],0,2);
