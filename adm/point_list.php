@@ -98,7 +98,7 @@ function point_clear()
         <option value="mb_id">회원아이디</option>
         <option value="po_content">내용</option>
     </select>
-    <input type="text" id="stx" name="stx" required value="<?=$stx?>" title="검색어">
+    <input type="text" id="stx" name="stx" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="fieldset_submit" value="검색">
 </fieldset>
 </form>
@@ -202,13 +202,13 @@ else
 
 <fieldset>
     <legend>개별회원 포인트 증감 설정</legend>
-    <label for="mb_id">회원아이디</label>
+    <label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label>
     <input type="text" id="mb_id" name="mb_id" required value="<?=$mb_id?>">
-    <label for="po_content">포인트 내용</label>
+    <label for="po_content">포인트 내용<strong class="sound_only">필수</strong></label>
     <input type="text" id="po_content" name="po_content" required>
-    <label for="po_point">포인트</label>
+    <label for="po_point">포인트<strong class="sound_only">필수</strong></label>
     <input type="text" id="po_point" name="po_point" required>
-    <label for="admin_password">관리자패스워드</label>
+    <label for="admin_password">관리자패스워드<strong class="sound_only">필수</strong></label>
     <input type="password" id="admin_password" name="admin_password" required>
     <input type="submit" class="fieldset_submit" value="확인">
 </fieldset>

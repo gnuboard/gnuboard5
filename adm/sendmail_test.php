@@ -44,8 +44,8 @@ if (isset($_POST['mail'])) {
 </p>
 <fieldset>
     <legend>테스트메일 발송</legend>
-    <label for="mail">받는 메일주소</label>
-    <input type="text" id="mail" name="mail" required value="<?=$member['mb_email']?>" size="80">
+    <label for="mail">받는 메일주소<strong class="sound_only">필수</strong></label>
+    <input type="text" id="mail" name="mail" required value="<?=$member['mb_email']?>" size="80" title="받는메일주소">
     <input type="submit" class="fieldset_submit" value="발송">
 </fieldset>
 </form>

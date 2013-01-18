@@ -33,7 +33,7 @@ include_once('./admin.head.php');
 <caption>투표내용 입력</caption>
 <tbody>
 <tr>
-    <th scope="row"><label for="po_subject">투표 제목</label></th>
+    <th scope="row"><label for="po_subject">투표 제목<strong class="sound_only">필수</strong></label></th>
     <td><input type="text" id="po_subject" name="po_subject" class="required" value="<?=$po['po_subject']?>" size="80" maxlength="125"></td>
 </tr>
 
@@ -42,13 +42,14 @@ for ($i=1; $i<=9; $i++) {
     $required = '';
     if ($i==1 || $i==2) {
         $required = 'class="required"';
+        $sound_only = '<strong class="sound_only">필수</strong>';
     }
 
     $po_poll = get_text($po['po_poll'.$i]);
 ?>
 
 <tr>
-    <th scope="row"><label for="po_poll<?=$i?>">항목 <?=$i?></label></th>
+    <th scope="row"><label for="po_poll<?=$i?>">항목 <?=$i?><?=$sound_only?></label></th>
     <td>
         <input type="text" id="po_poll<?=$i?>" name="po_poll<?=$i?>" <?=$required?> value="<?=$po_poll?>" maxlength="125">
         <label for="po_cnt<?=$i?>">항목 <?=$i?> 투표수</label>
