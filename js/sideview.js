@@ -313,7 +313,7 @@ if (typeof(SIDEVIEW_JS) == 'undefined') // 한번만 실행
 
     function hideSideView()
     {
-        if (document.getElementById("sizeview"))
+        if (document.getElementById("sideview"))
             divDisplay ("sideview", 'none');
     }
 
