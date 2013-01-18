@@ -210,7 +210,7 @@ a {color:#000;text-decoration:none}
 
 /* ##################################################################### 스킨 및 컨텐츠 */
 /* 공통 */
-.cnt_cmt {display:inline-block;margin-left:5px;color:#ff4679}
+.cnt_cmt {color:#ff4679}
 .readonly {background:#ff4679}
 .highlight {font-weight:bold;color:#ff4679}
 
@@ -321,7 +321,7 @@ a {color:#000;text-decoration:none}
 #bo_list strong {color:#ff4679}
 #bo_list img {vertical-align:top}
 .bo_notice {background:#f5f5f5}
-.bo_cate_link {display:inline-block;margin:0 10px 0 0;font-weight:bold;text-decoration:none}
+.bo_cate_link {display:inline-block;margin:0 5px 0 0;padding:0 8px 0 0;border-right:1px solid #ddd;font-weight:bold;text-decoration:none}
 .bo_current {color:#ff4679}
 .td_subject img {margin-left:5px}
 
@@ -345,7 +345,7 @@ a {color:#000;text-decoration:none}
 #bo_v_atc {padding:0 10px;zoom:1}
 #bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_atc p {padding:0 0 10px;min-height:300px;height:auto !important;height:300px}
+#bo_v_atc p {padding:0 0 10px;min-height:200px;height:auto !important;height:200px}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
 #bo_v_file li {border-bottom:1px solid #ddd;background:#f7f7f7}
@@ -373,12 +373,12 @@ a {color:#000;text-decoration:none}
 /* 게시판 댓글 */
 #bo_vc {padding:10px 20px;border:1px solid #eee;background:#f9f9f9}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_vc article {padding:0 0 20px;border-bottom:1px solid #ddd}
+#bo_vc article {padding:0 0 10px;border-bottom:1px solid #ddd}
 #bo_vc header {position:relative;zoom:1}
 #bo_vc header:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc header img {position:absolute;top:15px;left:-20px}
-#bo_vc h1 {float:left;margin:15px 0 10px}
-.bo_vc_info {float:left;margin:15px 0 10px 15px;zoom:1}
+#bo_vc h1 {float:left;margin:15px 0 5px}
+.bo_vc_info {float:left;margin:15px 0 5px 15px;zoom:1}
 .bo_vc_info:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_info dt {float:left}
 .bo_vc_info dd {float:left;margin:0 15px 0 10px}

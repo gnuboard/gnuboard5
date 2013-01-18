@@ -99,10 +99,10 @@ for ($i=0; $i<count($list); $i++) {
         echo $list[$i]['icon_reply'];
         if ($is_category && $list[$i]['ca_name']) {
         ?>
-        <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link<? if ($wr_id == $list[$i]['wr_id']) echo " bo_current";?>"><?=$list[$i]['ca_name']?></a>
+        <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link"><?=$list[$i]['ca_name']?></a>
         <? } ?>
 
-        <a href="<?=$list[$i]['href']?>"<? if ($wr_id == $list[$i]['wr_id']) echo " class=\"bo_current\"";?>>
+        <a href="<?=$list[$i]['href']?>">
             <?=$list[$i]['subject']?>
             <? if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?=$list[$i]['comment_cnt'];?><span class="sound_only">개</span><? } ?>
         </a>
@@ -112,9 +112,9 @@ for ($i=0; $i<count($list); $i++) {
         // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
 
         if (isset($list[$i]['icon_new']))    echo $list[$i]['icon_new'];
+        if (isset($list[$i]['icon_hot']))    echo $list[$i]['icon_hot'];
         if (isset($list[$i]['icon_file']))   echo $list[$i]['icon_file'];
         if (isset($list[$i]['icon_link']))   echo $list[$i]['icon_link'];
-        if (isset($list[$i]['icon_hot']))    echo $list[$i]['icon_hot'];
         if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
         ?>
     </td>
