@@ -53,6 +53,7 @@ $bo_category_list = str_replace($src_char, $dst_char, $bo_category_list);
 
 $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_subject          = '{$_POST['bo_subject']}',
+                bo_use              = '{$_POST['bo_use']}',
                 bo_admin            = '{$_POST['bo_admin']}',
                 bo_list_level       = '{$_POST['bo_list_level']}',
                 bo_read_level       = '{$_POST['bo_read_level']}',
@@ -210,6 +211,7 @@ if ($w == '') {
 
 // 같은 그룹내 게시판 동일 옵션 적용
 $fields = "";
+if (is_checked('chk_use'))              $fields .= " , bo_use = '{$bo_use}' ";
 if (is_checked('chk_admin'))            $fields .= " , bo_admin = '{$bo_admin}' ";
 if (is_checked('chk_list_level'))       $fields .= " , bo_list_level = '{$bo_list_level}' ";
 if (is_checked('chk_read_level'))       $fields .= " , bo_read_level = '{$bo_read_level}' ";
@@ -274,10 +276,7 @@ for ($i=1; $i<=10; $i++) {
 }
 
 if ($fields) {
-        $sql = " update {$g4['board_table']}
-                    set bo_table = bo_table
-                        {$fields}
-                  where gr_id = '$gr_id' ";
+        $sql = " update {$g4['board_table']} set bo_table = bo_table {$fields} where gr_id = '$gr_id' ";
         sql_query($sql);
 }
 

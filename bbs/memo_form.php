@@ -2,7 +2,7 @@
 define('_CAPTCHA_', 1);
 include_once('./_common.php');
 
-if (!$member[mb_id])
+if ($is_guest)
     alert_close('회원만 이용하실 수 있습니다.');
 
 if (!$member[mb_open] && $is_admin != 'super' && $member[mb_id] != $mb_id) 
@@ -35,7 +35,11 @@ if ($me_recv_mb_id)
 $g4['title'] = '쪽지 보내기';
 include_once($g4['path'].'/head.sub.php');
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config[cf_member_skin];
+if ($g4['https_url'])
+    $memo_action_url = "{$g4['https_url']}/{$g4['bbs']}/memo_form_update.php";
+else
+    $memo_action_url = "{$g4['url']}/{$g4['bbs']}/memo_form_update.php";
+
 include_once($member_skin_path.'/memo_form.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');

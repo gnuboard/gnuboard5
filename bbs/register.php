@@ -9,8 +9,6 @@ if ($is_member) {
 // 세션을 지웁니다.
 set_session("ss_mb_reg", "");
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
-
 if ($g4['https_url']) {
     $register_action_url = $g4['https_url'].'/'.$g4['bbs'].'/register_form.php';
 } else {

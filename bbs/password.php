@@ -29,8 +29,6 @@ include_once($g4['path'].'/head.sub.php');
 if ($board['bo_include_head']) { @include ($board['bo_include_head']); }
 if ($board['bo_content_head']) { echo stripslashes($board['bo_content_head']); }
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
-
 include_once($member_skin_path.'/password.skin.php');
 
 if ($board['bo_content_tail']) { echo stripslashes($board['bo_content_tail']); }

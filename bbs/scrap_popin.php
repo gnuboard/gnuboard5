@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 include_once($g4['path'].'/head.sub.php');
 
-if (!$is_member) {
+if ($is_guest) {
     $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
     echo <<<HEREDOC
     <script>
@@ -53,7 +53,6 @@ HEREDOC;
     exit;
 }
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
 include_once($member_skin_path.'/scrap_popin.skin.php');
 
 include_once($g4['path'].'/tail.sub.php');

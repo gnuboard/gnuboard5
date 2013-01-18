@@ -43,7 +43,6 @@ if ($mb['mb_leave_date'] && $mb['mb_leave_date'] <= date("Ymd", $g4['server_time
 if ($config['cf_use_email_certify'] && !preg_match("/[1-9]/", $mb['mb_email_certify']))
     alert('메일인증을 받으셔야 로그인 하실 수 있습니다.\n회원님의 메일주소는 '.$mb['mb_email'].' 입니다.');
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
 @include_once($member_skin_path.'/login_check.skin.php');
 
 // 회원아이디 세션 생성

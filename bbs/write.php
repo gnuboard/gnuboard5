@@ -352,7 +352,7 @@ include_once('./board_head.php');
 if ($g4['https_url'])
     $action_url = "{$g4['https_url']}/{$g4['bbs']}/write_update.php";
 else
-    $action_url = "{$g4['bbs_path']}/write_update.php";
+    $action_url = "{$g4['url']}/{$g4['bbs']}/write_update.php";
 
 include_once ($board_skin_path.'/write.skin.php');
 
