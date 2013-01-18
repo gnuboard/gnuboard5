@@ -18,8 +18,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="page" value="<?=$page?>">
 
     <fieldset>
-        <label for="password_wr_password">패스워드</label>
-        <input type="password" id="password_wr_password" name="wr_password" class="fieldset_input required" maxLength="20" size="15" required>
+        <label for="password_wr_password">패스워드<strong class="sound_only">필수</strong></label>
+        <input type="password" id="password_wr_password" name="wr_password" class="fieldset_input required" maxLength="20" size="15" required title="패스워드">
         <input type="submit" class="fieldset_submit" value="확인">
     </fieldset>
 
