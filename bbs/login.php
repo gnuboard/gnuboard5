@@ -48,6 +48,12 @@ if ($g4['https_url'])
 else
     $login_action_url = "{$g4['bbs_url']}/login_check.php";
 
+// 로그인 스킨이 없는 경우 관리자 페이지 접속이 안되는 것을 막기 위하여 기본 스킨으로 대체
+$login_file = $member_skin_path.'/login.skin.php';
+if (!file_exists($login_file)) {
+    $member_skin_path   = $g4['path'].'/'.$g4['skin_dir'].'/member/basic';
+}
+
 include_once($member_skin_path.'/login.skin.php');
 
 include_once('./_tail.sub.php');

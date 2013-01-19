@@ -1651,8 +1651,7 @@ function get_selected($field, $value, $first=false)
 function skin_path()
 {
     global $g4;
-    $skin_dir = 'skin';
-    $skin_path = $g4['path'].'/'.$skin_dir;
+    $skin_path = $g4['path'].'/'.$g4['skin_dir'];
     if (G4_IS_MOBILE) $skin_path = $g4['mobile_path'].'/'.$skin_dir;
     return $skin_path;
 }

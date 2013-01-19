@@ -28,6 +28,7 @@ $g4['bbs_path']       = $g4['path'].'/'.$g4['bbs'];
 $g4['admin']          = 'adm';
 $g4['admin_path']     = $g4['path'].'/'.$g4['admin'];
 
+$g4['skin_dir']       = 'skin';
 $g4['mobile_dir']     = 'mobile';
 
 // 자주 사용하는 값
