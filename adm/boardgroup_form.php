@@ -9,6 +9,7 @@ if ($is_admin != 'super' && $w == '') alert('최고관리자만 접근 가능합
 $html_title = '게시판그룹';
 if ($w == '') {
     $gr_id_attr = 'required';
+    $sound_only = '<strong class="sound_only">필수</strong>';
     $gr['gr_use_access'] = 0;
     $html_title .= ' 생성';
 } else if ($w == 'u') {
@@ -34,13 +35,13 @@ include_once('./admin.head.php');
 <caption>그룹 설정</caption>
 <tbody>
 <tr>
-    <th scope="row"><label for="gr_id">그룹 ID</label></th>
+    <th scope="row"><label for="gr_id">그룹 ID<?=$sound_only?></label></th>
     <td><input type="text" id="gr_id" name="gr_id" maxlength="10" class="<?=$gr_id_attr?> alnum_" value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
 </tr>
 <tr>
-    <th scope="row"><label for="gr_subject">그룹 제목</label></th>
+    <th scope="row"><label for="gr_subject">그룹 제목<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="gr_subject" name="gr_subject" class="required" value="<?=get_text($group['gr_subject'])?>" size="80">
+        <input type="text" id="gr_subject" name="gr_subject" class="required" required value="<?=get_text($group['gr_subject'])?>" size="80" title="그룹 제목">
         <?
         if ($w == 'u')
             echo '<input type="button" value="게시판생성" onclick="location.href=\'./board_form.php?gr_id='.$gr_id.'\';">';

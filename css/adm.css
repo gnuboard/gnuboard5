@@ -114,7 +114,6 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 .td_bignum {width:120px;text-align:center}
 .td_mbid, .td_mbnick, .td_mbname {width:80px;text-align:center}
 .td_mbnick div, .td_mbname div {position:relative} /* 파이어폭스에서 사이드뷰 위치를 잡기 위함 */
-.td_mbnick #sideview, .td_mbname #sideview {position:absolute;top:20px;left:0}
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
 /* 인덱스 */
@@ -149,6 +148,10 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 .td_category {width:120px;text-align:center}
 .visit_bar {position:relative}
 .visit_bar span {position:absolute;top:-8px;left:0;height:15px;background:#ddd}
+/* 사이드뷰 */
+#sideview {z-index:1000;position:absolute;top:15px;left:20px;border:1px solid #999;background:#f9f9f9}
+#sideview ul {list-style:none}
+#sideview a {display:inline-block;padding:5px 10px 4px;width:100px;border-bottom:1px solid #ddd}
 
 /* 메일 테스트, 세션파일일괄삭제 */
 #fsendmailtest p,

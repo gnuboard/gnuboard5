@@ -17,6 +17,7 @@ if ($w == '') {
     $html_title .= ' 생성';
 
     $bo_table_attr = 'class="required alnum_"';
+    $sound_only = '<strong class="sound_only">필수</strong>';
 
     $board['bo_count_delete'] = 1;
     $board['bo_count_modify'] = 1;
@@ -86,9 +87,9 @@ include_once ('./admin.head.php');
 <caption>게시판 기본 설정</caption>
 <tbody>
 <tr>
-    <th scope="row"><label for="bo_table">TABLE</label></th>
+    <th scope="row"><label for="bo_table">TABLE<?=$sound_only?></label></th>
     <td colspan="2">
-        <input type="text" id="bo_table" name="bo_table" maxlength="20" <?=$bo_table_attr?> value="<?=$board['bo_table'] ?>" required="required">
+        <input type="text" id="bo_table" name="bo_table" maxlength="20" <?=$bo_table_attr?> value="<?=$board['bo_table'] ?>" required>
         <?
         if ($w == '')
             echo '영문자, 숫자, _ 만 가능 (공백없이 20자 이내)';
@@ -98,15 +99,15 @@ include_once ('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="gr_id">그룹</label></th>
+    <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
     <td colspan="2">
-        <?=get_group_select('gr_id', $board['gr_id'], 'required="required"');?>
+        <?=get_group_select('gr_id', $board['gr_id'], 'required');?>
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_subject">게시판 제목</label></th>
+    <th scope="row"><label for="bo_subject">게시판 제목<strong class="sound_only">필수</strong></label></th>
     <td colspan="2">
-        <input type="text" id="bo_subject" name="bo_subject" maxlength="120" class="required" value="<?=get_text($board['bo_subject'])?>" size="80" required="required">
+        <input type="text" id="bo_subject" name="bo_subject" maxlength="120" class="required" required value="<?=get_text($board['bo_subject'])?>" size="80" title="게시판 제목">
     </td>
 </tr>
 <tr>
@@ -262,9 +263,9 @@ include_once ('./admin.head.php');
 <caption>게시판 기능 설정</caption>
 <tbody>
 <tr>
-    <th scope="row"><label for="bo_count_modify">원글 수정 불가</label></th>
+    <th scope="row"><label for="bo_count_modify">원글 수정 불가<strong class="sound_only">필수</strong></label></th>
     <td>
-        댓글 <input type="text" id="bo_count_modify" name="bo_count_modify" class="required numeric" value="<?=$board['bo_count_modify']?>" size="3">개 이상 달리면 수정불가
+        댓글 <input type="text" id="bo_count_modify" name="bo_count_modify" class="required numeric" required value="<?=$board['bo_count_modify']?>" size="3" title="원글 수정 불가">개 이상 달리면 수정불가
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_count_modify" name="chk_count_modify" value="1">
@@ -272,9 +273,9 @@ include_once ('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_count_delete">원글 삭제 불가</label></th>
+    <th scope="row"><label for="bo_count_delete">원글 삭제 불가<strong class="sound_only">필수</strong></label></th>
     <td>
-        댓글 <input type="text" id="bo_count_delete" name="bo_count_delete" class="required numeric" value="<?=$board['bo_count_delete']?>" size="3">개 이상 달리면 삭제불가
+        댓글 <input type="text" id="bo_count_delete" name="bo_count_delete" class="required numeric" required value="<?=$board['bo_count_delete']?>" size="3" title="원글 삭제 불가">개 이상 달리면 삭제불가
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_count_delete" name="chk_count_delete" value="1">
@@ -429,10 +430,10 @@ include_once ('./admin.head.php');
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_upload_count">파일 업로드 갯수</label></th>
+    <th scope="row"><label for="bo_upload_count">파일 업로드 갯수<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('게시물 한건당 업로드 할 수 있는 파일의 최대 개수 (0 이면 제한 없음)')?>
-        <input type="text" id="bo_upload_count" name="bo_upload_count" class="required numeric" value="<?=$board['bo_upload_count']?>" size="3">
+        <input type="text" id="bo_upload_count" name="bo_upload_count" class="required numeric" required value="<?=$board['bo_upload_count']?>" size="3" title="파일 업로드 갯수">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_upload_count" name="chk_upload_count" value="1">
@@ -446,10 +447,10 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 }
 ?>
 <tr>
-    <th scope="row"><label for="bo_upload_size">파일 업로드 용량</label></th>
+    <th scope="row"><label for="bo_upload_size">파일 업로드 용량<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('최대 '.ini_get("upload_max_filesize").' 이하 업로드 가능, 1 MB = 1,024,768 bytes')?>
-        업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric" value="<?=$board['bo_upload_size']?>" size="10"> bytes 이하 
+        업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric" required value="<?=$board['bo_upload_size']?>" size="10" title="파일 업로드 용량"> bytes 이하 
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_upload_size" name="chk_upload_size" value="1">
@@ -529,9 +530,9 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <caption>게시판 디자인/양식</caption>
 <tbody>
     <tr>
-    <th scope="row"><label for="bo_skin">스킨 디렉토리</label></th>
+    <th scope="row"><label for="bo_skin">스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
     <td>
-        <?=get_skin_select("board", "bo_skin", "bo_skin", $board['bo_skin'], 'required="required"');?>
+        <?=get_skin_select("board", "bo_skin", "bo_skin", $board['bo_skin'], 'required');?>
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_skin" name="chk_skin" value="1">
@@ -589,10 +590,10 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_subject_len">제목 길이</label></th>
+    <th scope="row"><label for="bo_subject_len">제목 길이<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('목록에서의 제목 글자수. 잘리는 글은 … 로 표시')?>
-        <input type="text" id="bo_subject_len" name="bo_subject_len" class="required numeric" value="<?=$board['bo_subject_len']?>" size="3">
+        <input type="text" id="bo_subject_len" name="bo_subject_len" class="required numeric" required value="<?=$board['bo_subject_len']?>" size="3" title="제목 길이">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_subject_len" name="chk_subject_len" value="1">
@@ -600,9 +601,9 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
     <tr>
-    <th scope="row"><label for="bo_page_rows">페이지당 목록 수</label></th>
+    <th scope="row"><label for="bo_page_rows">페이지당 목록 수<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="bo_page_rows" name="bo_page_rows" class="required numeric" value="<?=$board['bo_page_rows']?>" size="3">
+        <input type="text" id="bo_page_rows" name="bo_page_rows" class="required numeric" required value="<?=$board['bo_page_rows']?>" size="3" title="페이지당 목록 수">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_page_rows" name="chk_page_rows" value="1">
@@ -610,10 +611,10 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_gallery_cols">가로 이미지수</label></th>
+    <th scope="row"><label for="bo_gallery_cols">가로 이미지수<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여줄것인지를 설정하는 값')?>
-        <input type="text" id="bo_gallery_cols" name="bo_gallery_cols" class="required numeric" value="<?=$board['bo_gallery_cols']?>" size="3">
+        <input type="text" id="bo_gallery_cols" name="bo_gallery_cols" class="required numeric" required value="<?=$board['bo_gallery_cols']?>" size="3" title="가로 이미지수">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_gallery_cols" name="chk_gallery_cols" value="1">
@@ -621,10 +622,10 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_table_width">게시판 테이블 폭</label></th>
+    <th scope="row"><label for="bo_table_width">게시판 테이블 폭<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('100 이하는 %')?>
-        <input type="text" id="bo_table_width" name="bo_table_width" class="required numeric" value="<?=$board['bo_table_width']?>" size="3">
+        <input type="text" id="bo_table_width" name="bo_table_width" class="required numeric" required value="<?=$board['bo_table_width']?>" size="3" title="게시판 테이블 폭">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_table_width" name="chk_table_width" value="1">
@@ -632,10 +633,10 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_image_width">이미지 폭 크기</label></th>
+    <th scope="row"><label for="bo_image_width">이미지 폭 크기<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('게시판에서 출력되는 이미지의 폭 크기')?>
-        <input type="text" id="bo_image_width" name="bo_image_width" class="required numeric" value="<?=$board['bo_image_width']?>" size="3"> 픽셀
+        <input type="text" id="bo_image_width" name="bo_image_width" class="required numeric" required value="<?=$board['bo_image_width']?>" size="3" title="이미지 폭 크기"> 픽셀
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_image_width" name="chk_image_width" value="1">
@@ -643,10 +644,10 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_new">새글 아이콘</label></th>
+    <th scope="row"><label for="bo_new">새글 아이콘<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('글 입력후 new 이미지를 출력하는 시간')?>
-        <input type="text" id="bo_new" name="bo_new" class="required numeric" value="<?=$board['bo_new']?>" size="3">
+        <input type="text" id="bo_new" name="bo_new" class="required numeric" required value="<?=$board['bo_new']?>" size="3" title="새글 아이콘">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_new" name="chk_new" value="1">
@@ -654,10 +655,10 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_hot">인기글 아이콘</label></th>
+    <th scope="row"><label for="bo_hot">인기글 아이콘<strong class="sound_only">필수</strong></label></th>
     <td>
         <?=help('조회수가 설정값 이상이면 hot 이미지 출력')?>
-        <input type="text" id="bo_hot" name="bo_hot" class="required numeric" value="<?=$board['bo_hot']?>" size="5">
+        <input type="text" id="bo_hot" name="bo_hot" class="required numeric" required value="<?=$board['bo_hot']?>" size="5" title="인기글 아이콘">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_hot" name="chk_hot" value="1">
@@ -721,9 +722,9 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_read_point">글읽기 포인트</label></th>
+    <th scope="row"><label for="bo_read_point">글읽기 포인트<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="bo_read_point" name="bo_read_point" class="required" value="<?=$board['bo_read_point']?>" size="5">
+        <input type="text" id="bo_read_point" name="bo_read_point" class="required" required value="<?=$board['bo_read_point']?>" size="5" title="글읽기 포인트">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_read_point" name="chk_read_point" value="1">
@@ -731,9 +732,9 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_write_point">글쓰기 포인트</label></th>
+    <th scope="row"><label for="bo_write_point">글쓰기 포인트<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="bo_write_point" name="bo_write_point" class="required" value="<?=$board['bo_write_point']?>" size="5">
+        <input type="text" id="bo_write_point" name="bo_write_point" class="required" required value="<?=$board['bo_write_point']?>" size="5" title="글쓰기 포인트">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_write_point" name="chk_write_point" value="1">
@@ -741,9 +742,9 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_comment_point">댓글쓰기 포인트</label></th>
+    <th scope="row"><label for="bo_comment_point">댓글쓰기 포인트<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="bo_comment_point" name="bo_comment_point" class="required" value="<?=$board['bo_comment_point']?>" size="5">
+        <input type="text" id="bo_comment_point" name="bo_comment_point" class="required" required value="<?=$board['bo_comment_point']?>" size="5" title="댓글쓰기 포인트">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_comment_point" name="chk_comment_point" value="1">
@@ -751,9 +752,9 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
     </td>
 </tr>
 <tr>
-    <th scope="row"><label for="bo_download_point">다운로드 포인트</label></th>
+    <th scope="row"><label for="bo_download_point">다운로드 포인트<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="bo_download_point" name="bo_download_point" class="required" value="<?=$board['bo_download_point']?>" size="5">
+        <input type="text" id="bo_download_point" name="bo_download_point" class="required" required value="<?=$board['bo_download_point']?>" size="5" title="다운로드 포인트">
     </td>
     <td class="group_setting">
         <input type="checkbox" id="chk_download_point" name="chk_download_point" value="1">
@@ -787,8 +788,8 @@ if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
 <fieldset id="admin_confirm">
     <legend>XSS 혹은 CSRF 방지</legend>
     <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
-    <label for="admin_password">관리자 패스워드</label>
-    <input type="password" id="admin_password" name="admin_password" class="required" title="관리자 패스워드" required="required">
+    <label for="admin_password">관리자 패스워드<strong class="sound_only">필수</strong></label>
+    <input type="password" id="admin_password" name="admin_password" class="required" required title="관리자 패스워드">
 </fieldset>
 
 <div class="btn_confirm">
