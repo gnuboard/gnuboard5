@@ -23,36 +23,21 @@ if (!$sst) {
 
 $sql_order = " order by {$sst} {$sod} ";
 
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            {$sql_order} ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
 // 탈퇴회원수
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            and mb_leave_date <> ''
-            {$sql_order} ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_leave_date <> '' {$sql_order} ";
 $row = sql_fetch($sql);
 $leave_count = $row['cnt'];
 
-// 차단회원수
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            and mb_intercept_date <> ''
-            {$sql_order} ";
+// 차단회원수 
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_intercept_date <> '' {$sql_order} ";
 $row = sql_fetch($sql);
 $intercept_count = $row['cnt'];
 
-$sql = " select *
-            {$sql_common}
-            {$sql_search}
-            {$sql_order}
-            limit {$new_member_rows} ";
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$new_member_rows} ";
 $result = sql_query($sql);
 
 $colspan = 12;
@@ -137,9 +122,9 @@ if ($i == 0)
 <?
 $sql_common = " from {$g4['board_new_table']} a, {$g4['board_table']} b, {$g4['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id ";
 
-if (isset($gr_id))
+if ($gr_id)
     $sql_common .= " and b.gr_id = '$gr_id' ";
-if (isset($view)) {
+if ($view) {
     if ($view == 'w')
         $sql_common .= " and a.wr_id = a.wr_parent ";
     else if ($view == 'c')
@@ -170,10 +155,7 @@ $colspan = 5;
 </thead>
 <tbody>
 <?
-$sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id
-            {$sql_common}
-            {$sql_order}
-            limit {$new_write_rows} ";
+$sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id {$sql_common} {$sql_order} limit {$new_write_rows} ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
