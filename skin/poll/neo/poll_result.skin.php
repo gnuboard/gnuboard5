@@ -49,7 +49,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? } ?>
 
         <? if ($member['mb_level'] >= $po['po_level']) { ?>
-        <form name="fpollresult" method="post" action="./poll_etc_update.php" autocomplete="off">
+        <form name="fpollresult" method="post" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" autocomplete="off">
         <input type=hidden name="po_id" value="<?=$po_id?>">
         <input type=hidden name="w" value="">
         <input type=hidden name="skin_dir" value="<?=$skin_dir?>">
@@ -66,6 +66,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <? } ?>
             <input type="text" id="pc_idea" name="pc_idea" class="fieldset_input required" size="<?=$comment_size?>" required maxlength="100" title="의견">
             <input type="submit" class="fieldset_submit" value="의견남기기">
+            <? if ($is_guest) { echo captcha_html(); } ?>
         </fieldset>
         </form>
         <? } ?>
@@ -90,5 +91,13 @@ $(function() {
     $(".btn_win a").click(function() {
         window.close();
     });
+
 });
+
+function fpollresult_submit(f)
+{
+    <? if ($is_guest) { echo chk_captcha_js(); } ?>
+
+    return true;
+}
 </script>
