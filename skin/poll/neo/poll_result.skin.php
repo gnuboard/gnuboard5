@@ -53,21 +53,33 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <input type=hidden name="po_id" value="<?=$po_id?>">
         <input type=hidden name="w" value="">
         <input type=hidden name="skin_dir" value="<?=$skin_dir?>">
-        <fieldset>
-            <legend>의견남기기</legend>
-            <p><?=$po_etc?></p>
-            <?
-            $comment_size = "";
-            if ($is_member) { $comment_size = 50; ?>
-                <input type="hidden" name="pc_name" value="<?=cut_str($member['mb_nick'],255)?>">
-            <? } else { $comment_size = 32; ?>
-                <label for="pc_name">이름</label>
-                <input type='text' id="pc_name" name="pc_name" class="fieldset_input required" size="10" required>
-            <? } ?>
-            <input type="text" id="pc_idea" name="pc_idea" class="fieldset_input required" size="<?=$comment_size?>" required maxlength="100" title="의견">
-            <input type="submit" class="fieldset_submit" value="의견남기기">
-            <? if ($is_guest) { echo captcha_html(); } ?>
-        </fieldset>
+        <? if ($is_member) { ?><input type="hidden" name="pc_name" value="<?=cut_str($member['mb_nick'],255)?>"><? } ?>
+        <p><?=$po_etc?></p>
+        <table id="poll_result_wcmt" class="frm_tbl">
+        <caption>의견남기기</caption>
+        <tbody>
+        <? if ($is_guest) { ?>
+        <tr>
+            <th scope="row"><label for="pc_name">이름<strong class="sound_only">필수</strong></label></th>
+            <td><input type="text" id="pc_name" name="pc_name" class="fieldset_input required" size="10" required></td>
+        </tr>
+        <? } ?>
+        <tr>
+            <th scope="row">의견</th>
+            <td><input type="text" id="pc_idea" name="pc_idea" class="fieldset_input required" size="47" required maxlength="100" title="의견"></td>
+        </tr>
+        <? if ($is_guest) { ?>
+        <tr>
+            <th scope="row">자동등록방지</th>
+            <td><?=captcha_html();?></td>
+        </tr>
+        <? } ?>
+        </tbody>
+        </table>
+
+        <div class="btn_confirm">
+            <input type="submit" class="btn_submit" value="의견남기기">
+        </div>
         </form>
         <? } ?>
 
