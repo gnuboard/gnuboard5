@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="profile" class="new_win">
@@ -9,11 +9,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <tbody>
     <tr>
         <th scope="row">회원권한</th>
-        <td><?=$mb[mb_level]?></td>
+        <td><?=$mb['mb_level']?></td>
     </tr>
     <tr>
         <th scope="row">포인트</th>
-        <td><?=number_format($mb[mb_point])?></td>
+        <td><?=number_format($mb['mb_point'])?></td>
     </tr>
     <? if ($mb_homepage) { ?>
     <tr>
@@ -23,11 +23,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <? } ?>
     <tr>
         <th scope="row">회원가입일</th>
-        <td><?=($member[mb_level] >= $mb[mb_level]) ?  substr($mb[mb_datetime],0,10) ." (".$mb_reg_after." 일)" : "알 수 없음"; ?></td>
+        <td><?=($member['mb_level'] >= $mb['mb_level']) ?  substr($mb['mb_datetime'],0,10) ." (".number_format($mb_reg_after)." 일)" : "알 수 없음"; ?></td>
     </tr>
     <tr>
         <th scope="row">최종접속일</th>
-        <td><?=($member[mb_level] >= $mb[mb_level]) ? $mb[mb_today_login] : "알 수 없음";?></td>
+        <td><?=($member['mb_level'] >= $mb['mb_level']) ? $mb['mb_today_login'] : "알 수 없음";?></td>
     </tr>
     </tbody>
     </table>
