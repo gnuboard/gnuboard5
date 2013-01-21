@@ -34,8 +34,6 @@ if (!isset($mb_id1)) $mb_id1 = 1;
 if (!isset($mb_level_from)) $mb_level_from = 1;
 if (!isset($mb_level_to)) $mb_level_to = 10;
 if (!isset($mb_mailling)) $mb_mailling = 1;
-if (!isset($mb_sex)) $mb_sex = 1;
-if (!isset($mb_area)) $mb_area = 1;
 
 $g4['title'] = '회원메일발송';
 include_once('./admin.head.php');
@@ -59,57 +57,11 @@ include_once('./admin.head.php');
         <input type="radio" id="mb_id1_section" name="mb_id1" value="0" <?=!$mb_id1?"checked":"";?>> <label for="mb_id1_section">구간</label>
         <input type="text" id="mb_id1_from" name="mb_id1_from" value="<?=$mb_id1_from?>" title="시작구간"> 에서
         <input type="text" id="mb_id1_to" name="mb_id1_to" value="<?=$mb_id1_to?>" title="종료구간"> 까지
-
-        <script>document.onLoad=mb_id1_click(<?=(int)$mb_id1?>);</script>
-    </td>
-</tr>
-<tr>
-    <th scope="row"><label for="mb_birth_from">생일</label></th>
-    <td>
-        <?=help('5월5일 인 경우, 0505 와 같이 입력 , 둘다 입력해야함')?>
-        <input type="text" id="mb_birth_from" name="mb_birth_from" maxlength="4" value="<?=$mb_birth_from?>" title="생일구간 시작일" size="6"> 부터
-        <input type="text" id="mb_birth_to" name="mb_birth_to" maxlength="4" value="<?=$mb_birth_to?>" title="생일구간 종료일" size="6"> 까지
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_email">E-mail</label></th>
     <td><input type="text" id="mb_email" name="mb_email" value="<?=$mb_email?>" size="50"> 단어 포함 (예 : @sir.co.kr)</td>
-</tr>
-<tr>
-    <th scope="row"><label for="mb_sex">성별</label></th>
-    <td>
-        <select id="mb_sex" name="mb_sex">
-            <option value="">전체</option>
-            <option value="F">여자</option>
-            <option value="M">남자</option>
-        </select>
-        <script> document.getElementById('mb_sex').value = '<?=$mb_sex?>'; </script>
-    </td>
-</tr>
-<tr>
-    <th scope="row"><label for="mb_area">지역</label></th>
-    <td>
-        <select id="mb_area" name="mb_area">
-            <option value="">전체</option>
-            <option value="서울">서울</option>
-            <option value="부산">부산</option>
-            <option value="대구">대구</option>
-            <option value="인천">인천</option>
-            <option value="광주">광주</option>
-            <option value="대전">대전</option>
-            <option value="울산">울산</option>
-            <option value="강원">강원</option>
-            <option value="경기">경기</option>
-            <option value="경남">경남</option>
-            <option value="경북">경북</option>
-            <option value="전남">전남</option>
-            <option value="전북">전북</option>
-            <option value="제주">제주</option>
-            <option value="충남">충남</option>
-            <option value="충북">충북</option>
-        </select>
-        <script> document.getElementById('mb_area').value = '<?=$mb_area?>'; </script>
-    </td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_mailling">메일링</label></th>
