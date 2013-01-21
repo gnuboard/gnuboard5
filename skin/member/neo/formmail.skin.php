@@ -1,17 +1,17 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="formmail" class="new_win">
     <h1><?=$name?>님께 메일보내기</h1>
 
-    <form name="fformmail" method="post" onsubmit="return fformmail_submit(this);" enctype="multipart/form-data" style="margin:0px;">
+    <form name="fformmail" method="post" action="./formmail_send.php" onsubmit="return fformmail_submit(this);" enctype="multipart/form-data" style="margin:0px;">
     <input type="hidden" name="to" value="<?=$email?>">
     <input type="hidden" name="attach" value="2">
     <input type="hidden" name="token" value="<?=$token?>">
     <? if ($is_member) { // 회원이면 ?>
-    <input type="hidden" name="fnick" value="<?=$member[mb_nick]?>">
-    <input type="hidden" name="fmail" value="<?=$member[mb_email]?>">
+    <input type="hidden" name="fnick" value="<?=$member['mb_nick']?>">
+    <input type="hidden" name="fmail" value="<?=$member['mb_email']?>">
     <? } ?>
     <table class="frm_tbl">
     <caption>메일쓰기</caption>
@@ -77,9 +77,7 @@ with (document.fformmail) {
 
 function fformmail_submit(f)
 {
-    if (!check_kcaptcha(f.wr_key)) {
-        return false;
-    }
+    <? echo chk_captcha_js(); ?>
 
     if (f.file1.value || f.file2.value) {
         // 4.00.11
@@ -89,7 +87,6 @@ function fformmail_submit(f)
 
     document.getElementById('btn_submit').disabled = true;
 
-    f.action = "./formmail_send.php";
     return true;
 }
 </script>
