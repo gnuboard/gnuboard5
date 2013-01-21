@@ -6,7 +6,29 @@ var wrestFldBackColor = "#ff3061";
 // subject 속성값을 얻어 return, 없으면 tag의 name을 넘김
 function wrestItemname(fld)
 {
-    return fld.getAttribute("title") ? fld.getAttribute("title") : ( fld.getAttribute("alt") ? fld.getAttribute("alt") : fld.name );
+    //return fld.getAttribute("title") ? fld.getAttribute("title") : ( fld.getAttribute("alt") ? fld.getAttribute("alt") : fld.name );
+    var id = fld.getAttribute("id");
+    var labels = document.getElementsByTagName("label");
+    var el = null;
+
+    for(i=0; i<labels.length; i++) {
+        if(id == labels[i].htmlFor) {
+            el = labels[i];
+            break;
+        }
+    }
+
+    if(el != null) {
+        var text =  el.innerHTML.replace(/[<].*[>].*[<]\/+.*[>]/gi, "");
+
+        if(text == '') {
+            return fld.getAttribute("title") ? fld.getAttribute("title") : ( fld.getAttribute("alt") ? fld.getAttribute("alt") : fld.name );
+        } else {
+            return text;
+        }
+    } else {
+        return fld.getAttribute("title") ? fld.getAttribute("title") : ( fld.getAttribute("alt") ? fld.getAttribute("alt") : fld.name );
+    }
 }
 
 // 양쪽 공백 없애기
@@ -257,7 +279,7 @@ function wrestSubmit()
         // 셀렉트 박스일때도 필수 선택 검사합니다. select-one
         if (el.type=="text" || el.type=="hidden" || el.type=="file" || el.type=="password" || el.type=="select-one" || el.type=="textarea") {
             if (el.getAttribute("required") != null) {
-                wrestRequired(el); 
+                wrestRequired(el);
             }
 
             var array_css = el.className.split(" "); // class 를 공백으로 나눔
@@ -331,7 +353,7 @@ function wrestInitialized()
 
         for (var j = 0; j < document.forms[i].elements.length; j++) {
             // 필수 입력일 경우는 * 배경이미지를 준다.
-            if (document.forms[i].elements[j].getAttribute("required") != null || 
+            if (document.forms[i].elements[j].getAttribute("required") != null ||
                 regexp.test(document.forms[i].elements[j].className)) {
             //if (regexp.test(document.forms[i].elements[j].className)) {
                 //document.forms[i].elements[j].style.backgroundColor = wrestFldDefaultColor;
