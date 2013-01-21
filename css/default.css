@@ -165,6 +165,7 @@ a {color:#000;text-decoration:none}
 #poll_result_cmt fieldset {margin-bottom:0;text-align:left}
 #poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 0px;text-align:left}
 #poll_result_cmt footer {text-align:right}
+#poll_result_wcmt {margin-bottom:10px;width:93%}
 .poll_cmt_del a {display:inline-block;padding-bottom:10px}
 #poll_result_oth {margin:0 auto 20px}
 #poll_result_oth h2 {padding:0 0 10px}
