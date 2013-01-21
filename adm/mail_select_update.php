@@ -47,7 +47,7 @@ $subject = $ma['ma_subject'];
 $cnt = 0;
 for ($i=0; $i<count($member_list); $i++)
 {
-    list($email, $mb_id, $name, $nick, $birth, $datetime) = explode("||", trim($member_list[$i]));
+    list($email, $mb_id, $name, $nick, $datetime) = explode("||", trim($member_list[$i]));
 
     $sw = preg_match("/[0-9a-zA-Z_]+(\.[0-9a-zA-Z_]+)*@[0-9a-zA-Z_]+(\.[0-9a-zA-Z_]+)*/", $email);
     // 올바른 메일 주소만
@@ -62,7 +62,6 @@ for ($i=0; $i<count($member_list); $i++)
         $content = preg_replace("/{별명}/", $nick, $content);
         $content = preg_replace("/{회원아이디}/", $mb_id, $content);
         $content = preg_replace("/{이메일}/", $email, $content);
-        $content = preg_replace("/{생일}/", (int)substr($birth,4,2).'월 '.(int)substr($birth,6,2).'일', $content);
 
         $content = $content . "<hr size=0><p><span style='font-size:9pt; font-familye:굴림'>▶ 더 이상 정보 수신을 원치 않으시면 [<a href='{$g4['url']}/{$g4['bbs']}/email_stop.php?mb_id={$mb_id}&amp;mb_md5={$mb_md5}' target='_blank'>수신거부</a>] 해 주십시오.</span></p>";
 
