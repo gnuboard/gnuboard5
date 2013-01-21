@@ -1,10 +1,10 @@
 <?
 // E-mail 수정시 인증 메일 (회원님께 발송)
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=<?=$g4[charset]?>">
+<meta http-equiv="content-type" content="text/html; charset=<?=$g4['charset']?>">
 <title>인증 메일</title>
 </head>
 
@@ -29,7 +29,7 @@ body, th, td, form, input, select, text, textarea, caption { font-size: 12px; fo
         <tr>
             <td>
                 <table width="500" border="0" cellspacing="0" cellpadding="4">
-                <tr> 
+                <tr>
                     <td width="100%" height="25" bgcolor=#F7F1D8>인증 메일입니다.</td>
                 </tr>
                 </table>
@@ -52,8 +52,8 @@ body, th, td, form, input, select, text, textarea, caption { font-size: 12px; fo
                 <tr>
                     <td height="2" bgcolor="#E0E0E0" align="center"></td>
                 </tr>
-                <tr> 
-                    <td height="25" bgcolor="#EDEDED" align="center">로그인 후 모든 정보를 이용하실 수 있습니다.[<a href="<?=$g4[url]?>/<?=$g4[bbs]?>/login.php">바로가기</a>]</td>
+                <tr>
+                    <td height="25" bgcolor="#EDEDED" align="center">로그인 후 모든 정보를 이용하실 수 있습니다.[<a href="<?=$g4['url']?>/<?=$g4['bbs']?>/login.php">바로가기</a>]</td>
                 </tr>
                 </table>
             </td>

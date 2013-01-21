@@ -33,15 +33,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? } ?>
         <? if ($kind == 'recv') { ?><a href="./memo_form.php?me_recv_mb_id=<?=$mb['mb_id']?>&amp;me_id=<?=$memo['me_id']?>" class="btn01">답장</a><? } ?>
         <a href="./memo.php?kind=<?=$kind?>">목록보기</a>
+        <a href="javascript:;" onclick="window.close();">창닫기</a>
     </div>
 </div>
-
-<script>
-$(function() {
-    $(".btn_win").append("<a id=\"win_close\">창닫기</a>");
-
-    $("#win_close").click(function() {
-        window.close();
-    });
-});
-</script>

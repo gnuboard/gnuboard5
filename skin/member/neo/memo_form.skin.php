@@ -37,19 +37,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <div class="btn_win">
         <input type="submit" id="btn_submit" class="btn_submit" value="보내기">
+        <a href="javascript:;" onclick="window.close();">창닫기</a>
     </div>
     </form>
 </div>
 
 <script>
-$(function() {
-    $(".btn_win").append("<a>창닫기</a>");
-
-    $(".btn_win a").click(function() {
-        window.close();
-    });
-});
-
 function fmemoform_submit(f)
 {
     <? if ($is_guest) { echo chk_captcha_js(); } ?>
