@@ -36,14 +36,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <? if ($i==0) { echo "<tr><td colspan=\"4\" class=\"empty_table\">자료가 없습니다.</td></tr>"; } ?>
     </tbody>
     </table>
+
+    <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>
-
-<script>
-$(function() {
-    $("#memo_list").append("<div class=\"btn_win\"><a>창닫기</a></div>");
-
-    $(".btn_win a").click(function() {
-        window.close();
-    });
-});
-</script>

@@ -82,18 +82,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <? } ?>
         </ul>
     </section>
+
+    <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>
 
 <script>
-$(function() {
-    $("#poll_result").append("<div class=\"btn_win\"><a class=\"btn_cancel\">창닫기</a></div>");
-
-    $(".btn_win a").click(function() {
-        window.close();
-    });
-
-});
-
 function fpollresult_submit(f)
 {
     <? if ($is_guest) { echo chk_captcha_js(); } ?>
