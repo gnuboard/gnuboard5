@@ -17,7 +17,6 @@ $name = $member['mb_name'];
 $nick = $member['mb_nick'];
 $mb_id = $member['mb_id'];
 $email = $member['mb_email'];
-$birth = $member['mb_birth'];
 
 $sql = "select ma_subject, ma_content from {$g4['mail_table']} where ma_id = '{$ma_id}' ";
 $ma = sql_fetch($sql);
@@ -29,7 +28,6 @@ $content = preg_replace("/{이름}/", $name, $content);
 $content = preg_replace("/{별명}/", $nick, $content);
 $content = preg_replace("/{회원아이디}/", $mb_id, $content);
 $content = preg_replace("/{이메일}/", $email, $content);
-$content = preg_replace("/{생일}/", (int)substr($birth,4,2).'월 '.(int)substr($birth,6,2).'일', $content);
 
 $mb_md5 = md5($member['mb_id'].$member['mb_email'].$member['mb_datetime']);
 
