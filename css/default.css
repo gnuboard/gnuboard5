@@ -273,7 +273,7 @@ a {color:#000;text-decoration:none}
 /* 현재접속자 */
 #current_connect_tbl .td_name {text-align:center}
 
-/* 전체검색 */
+/* 전체검색결과 */
 #sch_result_detail {margin:0;padding:15px 0;border:0;text-align:right}
 #sch_result {position:relative;padding:10px 0 0 200px;border-top:1px solid #ddd;border-bottom:1px solid #ddd;background:url('../img/sch_result_bg.jpg') repeat-y}
 #sch_result dl {padding:0}
@@ -302,6 +302,7 @@ a {color:#000;text-decoration:none}
 .sch_more a {color:#818385}
 .sch_sideview {display:inline-block}
 .sch_datetime {color:#818385}
+.sch_word {font-weight:bold} /* 검색어 강조 */
 
 /* 게시판 목록 */
 .btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #494949;background:#494949;color:#fff;text-decoration:none}
