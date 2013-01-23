@@ -53,6 +53,7 @@ hr {display:none}
 /* 하단 레이아웃 */
 #ft {background:#484848}
 #ft h1 {width:0;height:0;overflow:hidden}
+
 #popular {background:#515151}
 #popular div {margin:0 auto;width:980px;zoom:1}
 #popular div:after {display:block;visibility:hidden;clear:both;content:""}
@@ -60,6 +61,7 @@ hr {display:none}
 #popular ul {float:left;list-style:none}
 #popular li {float:left;padding:5px 0}
 #popular a {display:inline-block;padding:10px;color:#fff;text-decoration:none}
+
 #ft_catch {padding:30px 0;text-align:center}
 #ft_copy {background:#414141}
 #ft_copy p {margin:0 auto;width:980px;color:#4a9ab8}
