@@ -36,7 +36,12 @@ hr {display:none}
 #schall_stx {width:150px;height:21px;border:3px solid #484848;border-right:0;background:#fff}
 #schall_submit {position:absolute;top:0;right:0}
 
-#lnb {position:absolute;top:130px;right:0;width:220px}
+/* 중간 레이아웃 */
+#wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
+#wrapper:after {display:block;visibility:hidden;clear:both;content:""}
+#lnb {float:right;width:220px}
+#container {float:left;width:730px;zoom:1}
+#container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
 #ft {background:#484848}
@@ -44,14 +49,28 @@ hr {display:none}
 #popular {background:#515151}
 #popular div {margin:0 auto;width:980px;zoom:1}
 #popular div:after {display:block;visibility:hidden;clear:both;content:""}
-#popular h2 {float:left;color:#fff}
+#popular h2 {float:left;padding:15px 45px 15px 0;color:#fff}
 #popular ul {float:left;list-style:none}
-#popular li {float:left}
-#popular a {color:#fff;text-decoration:none}
+#popular li {float:left;padding:5px 0}
+#popular a {display:inline-block;padding:10px;color:#fff;text-decoration:none}
 #ft_catch {padding:30px 0;text-align:center}
 #ft_copy {background:#414141}
 #ft_copy p {margin:0 auto;width:980px;color:#4a9ab8}
 #ft_copy b {color:#079cd3}
 
-/* Contents 레이아웃 */
-#wrapper {margin:0 auto;padding-right:250px;width:730px}
+/* ///// 콘텐츠별 스타일 ///// */
+/* PC 초기화면 */
+#idx_catch {margin-bottom:10px;padding: 29px 0 30px}
+
+/* ///// 스킨별 스타일 ///// */
+/* 최근게시물 스킨 */
+.lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
+.lt ul {margin:0;padding:0;list-style:none}
+.lt li {padding:3px 0}
+.lt a {color:#000;text-decoration:none}
+.lt_title {display:block;margin-bottom:20px;text-align:center}
+.lt_more {text-align:center}
+.lt_more a {display:block}
+
+/* paginate */
+.pg {}

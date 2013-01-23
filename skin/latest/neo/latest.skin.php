@@ -1,9 +1,11 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+if ($lt_margin == 0) $lt_style = "style=\margin-left:20px\"";
 ?>
 
-<div class="latest">
-    <strong class="latest_title"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><?=$board['bo_subject']?></a></strong>
+<div class="lt" <?=$lt_style?>>
+    <?=$lt_margin?>
+    <strong class="lt_title"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><?=$board['bo_subject']?></a></strong>
     <ul>
     <? for ($i=0; $i<count($list); $i++) { ?>
         <li>
@@ -14,10 +16,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 echo "<strong>".$list[$i]['subject']."</strong>";
             else
                 echo $list[$i]['subject'];
-            echo "</a>";
 
             if ($list[$i]['comment_cnt'])
-                echo " <a href=\"{$list[$i]['comment_href']}\">".$list[$i]['comment_cnt']."</a>";
+                echo " <span class=\"cnt_cmt\">".$list[$i]['comment_cnt']."</span>";
+            
+            echo "</a>";
 
             // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
             // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
@@ -34,5 +37,5 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <? if (count($list) == 0) { //게시물이 없을 때 ?>
     <p>게시물이 없습니다.</p>
     <? } ?>
-    <div class="latest_more"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>">더보기</a></div>
+    <div class="lt_more"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><img src="<?=$latest_skin_path?>/img/icon_more.gif" alt=""></a></div>
 </div>
