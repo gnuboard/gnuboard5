@@ -60,15 +60,17 @@ hr {display:none}
 
 /* ///// 콘텐츠별 스타일 ///// */
 /* PC 초기화면 */
-#idx_catch {}
+#idx_catch {margin-bottom:10px;padding: 29px 0 30px}
 
 /* ///// 스킨별 스타일 ///// */
 /* 최근게시물 스킨 */
 .lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
 .lt ul {margin:0;padding:0;list-style:none}
-.lt a {text-decoration:none}
-.lt_title {display:block;text-align:center}
-.lt_more {text-align:right}
+.lt li {padding:3px 0}
+.lt a {color:#000;text-decoration:none}
+.lt_title {display:block;margin-bottom:20px;text-align:center}
+.lt_more {text-align:center}
+.lt_more a {display:block}
 
 /* paginate */
 .pg {}
