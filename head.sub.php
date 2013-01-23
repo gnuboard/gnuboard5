@@ -95,18 +95,6 @@ if (!empty($g4['js_file'])) {
 <a id="g4_head"></a>
 
 <?
-// 쪽지를 받았나?
-if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
-    $mb = get_member($member['mb_memo_call'], "mb_nick");
-    sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
-
-    //alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI'], false);
-    $memo_msg = $mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.\\n\\n바로 확인하시겠습니까?';
-    include_once($g4['bbs_path'].'/memocall.php');
-}
-?>
-
-<?
 if (G4_IS_MOBILE) {
     include_once($g4['path'].'/mobile.head.php');
 }
