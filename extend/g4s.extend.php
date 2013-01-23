@@ -12,16 +12,23 @@ if ($g4['https_url']) {
     $g4['https_bbs_url'] = $g4['https_url'].'/'.$g4['bbs'];
 }
 
-$g4['data_dir']         = 'data';
-$g4['data_url']         = $g4['url'].'/'.$g4['data_dir'];
-$g4['data_path']        = $g4['path'].'/'.$g4['data_dir'];
+$g4['extend_dir']   = 'extend';
+$g4['extend_path']  = $g4['path'].'/'.$g4['extend_dir'];
 
-$g4['cache_dir']        = 'cache';
-$g4['cache_path']       = $g4['data_path'].'/'.$g4['cache_dir'];
+$g4['data_dir']     = 'data';
+$g4['data_url']     = $g4['url'].'/'.$g4['data_dir'];
+$g4['data_path']    = $g4['path'].'/'.$g4['data_dir'];
 
-$g4['cache_latest_dir'] = $g4['cache_dir'].'/latest';
-$g4['cache_member_dir'] = $g4['cache_dir'].'/member';
-$g4['cache_captcha_dir']= $g4['cache_dir'].'/captcha';
+$g4['cache_dir']    = 'cache';
+$g4['cache_path']   = $g4['data_path'].'/'.$g4['cache_dir'];
+
+$g4['cache_latest_dir']     = $g4['cache_dir'].'/latest';
+$g4['cache_member_dir']     = $g4['cache_dir'].'/member';
+$g4['cache_captcha_dir']    = $g4['cache_dir'].'/captcha';
+
+$g4['cache_latest_path']    = $g4['data_path'].'/'.$g4['cache_latest_dir'];
+$g4['cache_member_path']    = $g4['data_path'].'/'.$g4['cache_member_dir'];
+$g4['cache_captcha_path']   = $g4['data_path'].'/'.$g4['cache_captcha_dir'];
 
 // g4s 기본 DHTML EDITOR
 if (!defined('G4_EDITOR')) define('G4_EDITOR', 0);

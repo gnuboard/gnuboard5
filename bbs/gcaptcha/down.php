@@ -2,8 +2,7 @@
 include_once('./_common.php');
 
 $file = addslashes($_GET['file']);
-$captcha_path = mk_subdir($g4['cache_captcha_dir']);
-$filepath = $captcha_path.'/'.$file;
+$filepath = $g4['cache_captcha_path'].'/'.$file;
 $original = "number.wav";
 
 if(preg_match("/msie/i", $_SERVER['HTTP_USER_AGENT']) && preg_match("/5\.5/", $_SERVER['HTTP_USER_AGENT'])) {
