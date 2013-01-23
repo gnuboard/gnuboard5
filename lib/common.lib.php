@@ -1620,18 +1620,6 @@ function is_checked($field)
 }
 
 
-function mk_subdir($subdir)
-{
-    global $g4;
-    $data_subpath = $g4['path_path'].'/'.$subdir;
-    if (!is_dir($data_subpath)) {
-        @mkdir($data_subpath, 0707);
-        @chmod($data_subpath, 0707);
-    }
-    return $data_subpath;
-}
-
-
 function abs_ip2long($ip='')
 {
     $ip = $ip ? $ip : $_SERVER['REMOTE_ADDR'];

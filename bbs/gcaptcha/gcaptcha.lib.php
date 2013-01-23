@@ -246,8 +246,6 @@ function join_wavs($wavs)
 function captcha_file($extension='.png')
 {
     global $g4;
-    mk_subdir($g4['cache_dir']);
-    $captcha_path = mk_subdir($g4['cache_captcha_dir']);
-    return $captcha_path.'/'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'].$extension;
+    return $g4['cache_captcha_path'].'/'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'].$extension;
 }
 ?>
