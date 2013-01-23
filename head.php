@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 include_once($g4['path'].'/head.sub.php');
@@ -9,6 +9,18 @@ include_once($g4['path'].'/lib/connect.lib.php');
 include_once($g4['path'].'/lib/popular.lib.php');
 
 //print_r2(get_defined_constants());
+?>
+
+<?
+// 쪽지를 받았나?
+if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
+    $mb = get_member($member['mb_memo_call'], "mb_nick");
+    sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
+
+    //alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI'], false);
+    $memo_msg = $mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.\\n\\n바로 확인하시겠습니까?';
+    include_once($g4['bbs_path'].'/memocall.php');
+}
 ?>
 
 <header id="header">
