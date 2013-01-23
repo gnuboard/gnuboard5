@@ -3,11 +3,10 @@
 /* 초기화 */
 html {overflow-y:scroll}
 body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
-html, body, h1, h2, h3, h4, h5, h6, form, dl, ul, ol {margin:0;padding:0}
+html, body, h1, h2, h3, h4, h5, h6, form, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
-header ul, nav ul {margin:0;padding:0;list-style:none}
-form, img {border:0}
+header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"dotum"}
 p {margin:5px 0;padding:10px 0;line-height:1.5em}
@@ -16,9 +15,43 @@ hr {display:none}
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
 .sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 /* 본문 바로가기 */
-#to_content a {z-index:100000000;display:block;position:absolute;top:0;left:0;height:0;overflow:hidden}
+#to_content a {z-index:100000;display:block;position:absolute;top:0;left:0;height:0;overflow:hidden}
 #to_content a:focus,
-#to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
+#to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;font-size:2em;text-align:center;text-decoration:none;overflow:auto}
 
-/* 레이아웃 */
-#header {}
+/* 상단 레이아웃 */
+#hd {margin-bottom:30px;height:100px;background:#fff}
+#hd h1 {width:0;height:0;overflow:hidden}
+#hd_wrapper {position:relative;margin:0 auto;width:980px}
+
+#logo {padding-top:30px}
+
+#snb {position:absolute;top:10px;right:190px;zoom:1}
+#snb:after {display:block;visibility:hidden;clear:both;content:""}
+#snb li {float:left}
+#snb a {display:inline-block;padding:7px 10px 6px;color:#000;text-decoration:none}
+
+#schall {position:absolute;top:10px;right:0;margin:0;padding:0;width:180px;border:0}
+#schall legend {width:0;height:0;overflow:hidden}
+#schall_stx {width:150px;height:21px;border:3px solid #484848;border-right:0;background:#fff}
+#schall_submit {position:absolute;top:0;right:0}
+
+#lnb {position:absolute;top:130px;right:0;width:220px}
+
+/* 하단 레이아웃 */
+#ft {background:#484848}
+#ft h1 {width:0;height:0;overflow:hidden}
+#popular {background:#515151}
+#popular div {margin:0 auto;width:980px;zoom:1}
+#popular div:after {display:block;visibility:hidden;clear:both;content:""}
+#popular h2 {float:left;color:#fff}
+#popular ul {float:left;list-style:none}
+#popular li {float:left}
+#popular a {color:#fff;text-decoration:none}
+#ft_catch {padding:30px 0;text-align:center}
+#ft_copy {background:#414141}
+#ft_copy p {margin:0 auto;width:980px;color:#4a9ab8}
+#ft_copy b {color:#079cd3}
+
+/* Contents 레이아웃 */
+#wrapper {margin:0 auto;padding-right:250px;width:730px}
