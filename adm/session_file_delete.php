@@ -21,29 +21,25 @@ include_once("./admin.head.php");
 include_once("./admin.tail.php");
 flush();
 
-$session_path = "$g4[path]/data/session";  // 세션이저장된 디렉토리 
-if (!$dir=@opendir($session_path)) { 
+if (!$dir=@opendir($g4['session_path'])) { 
   echo "세션 디렉토리를 열지못했습니다."; 
 } 
 
 $cnt=0;
 while($file=readdir($dir)) { 
 
-    if (!strstr($file,'sess_')) { 
-        continue; 
-    } 
+    if (!strstr($file,'sess_')) continue; 
+    if (strpos($file,'sess_')!=0) continue; 
 
-    if (strpos($file,'sess_')!=0) { 
-        continue; 
-    } 
+    $session_file = $g4['session_path'].'/'.$file;
 
-    if (!$atime=@fileatime("$session_path/$file")) { 
+    if (!$atime=@fileatime($session_file)) { 
         continue; 
     } 
     if (time() > $atime + (3600 * 6)) {  // 지난시간을 초로 계산해서 적어주시면 됩니다. default : 6시간전
         $cnt++;
-        $return = unlink("$session_path/$file"); 
-        echo "<script>document.getElementById('ct').innerHTML += '$session_path/$file<br/>';</script>\n";
+        $return = unlink($session_file); 
+        echo "<script>document.getElementById('ct').innerHTML += '{$session_file}<br/>';</script>\n";
 
         flush();
 

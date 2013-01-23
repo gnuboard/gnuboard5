@@ -156,6 +156,7 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 /* 메일 테스트, 세션파일일괄삭제 */
 #fsendmailtest p,
 #session_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
+#cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
 
 /* pagination */
 .pg {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.75em;text-align:center}

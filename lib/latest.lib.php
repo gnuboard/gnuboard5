@@ -10,7 +10,8 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $options='')
     $latest_skin_path = skin_path().'/latest/'.$skin_dir;
 
     $cache_file = $g4['cache_latest_path']."/{$bo_table}_{$skin_dir}_{$rows}_{$subject_len}.php";
-    if (!file_exists($cache_file)) {
+    //if (!file_exists($cache_file)) {
+    if (0) {
         $list = array();
 
         $sql = " select * from $g4[board_table] where bo_table = '$bo_table'";

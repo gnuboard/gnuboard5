@@ -22,6 +22,9 @@ $g4['data_path']    = $g4['path'].'/'.$g4['data_dir'];
 $g4['cache_dir']    = 'cache';
 $g4['cache_path']   = $g4['data_path'].'/'.$g4['cache_dir'];
 
+$g4['session_dir']    = 'session';
+$g4['session_path']   = $g4['data_path'].'/'.$g4['session_dir'];
+
 $g4['cache_latest_dir']     = $g4['cache_dir'].'/latest';
 $g4['cache_member_dir']     = $g4['cache_dir'].'/member';
 $g4['cache_captcha_dir']    = $g4['cache_dir'].'/captcha';
