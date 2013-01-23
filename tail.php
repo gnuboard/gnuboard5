@@ -8,8 +8,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <footer id="footer">
     <h1><?=$config['cf_title']?> 정보</h1>
-    <?=visit('neo'); // 방문자수 ?>
-    <?=connect(); // 현재 접속자수 ?>
     <?=popular('neo'); // 인기검색어 ?>
     <p>Copyright &copy; 소유하신 도메인. All rights reserved.</p>
 </footer>

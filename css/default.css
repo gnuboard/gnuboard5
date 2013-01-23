@@ -19,3 +19,6 @@ hr {display:none}
 #to_content a {z-index:100000000;display:block;position:absolute;top:0;left:0;height:0;overflow:hidden}
 #to_content a:focus,
 #to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;text-align:center;overflow:auto}
+
+/* 레이아웃 */
+#header {}

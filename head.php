@@ -1,4 +1,4 @@
-<?php
+<?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 include_once($g4['path'].'/head.sub.php');
@@ -9,18 +9,6 @@ include_once($g4['path'].'/lib/connect.lib.php');
 include_once($g4['path'].'/lib/popular.lib.php');
 
 //print_r2(get_defined_constants());
-?>
-
-<?
-// 쪽지를 받았나?
-if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
-    $mb = get_member($member['mb_memo_call'], "mb_nick");
-    sql_query(" update {$g4['member_table']} set mb_memo_call = '' where mb_id = '{$member['mb_id']}' ");
-
-    //alert($mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.', $_SERVER['REQUEST_URI'], false);
-    $memo_msg = $mb['mb_nick'].'님으로부터 쪽지가 전달되었습니다.\\n\\n바로 확인하시겠습니까?';
-    include_once($g4['bbs_path'].'/memocall.php');
-}
 ?>
 
 <header id="header">
@@ -57,34 +45,9 @@ if (isset($member['mb_memo_call']) && $member['mb_memo_call']) {
 <div id="snb">
     <?=outlogin('neo'); // 외부 로그인 ?>
     <?=poll('neo'); // 설문조사 ?>
+    <?=visit("neo"); // 방문자수 ?>
+    <?=connect(); // 현재 접속자수 ?>
 </div>
-
-<? /* if ($index || 게시판이 하나도 없을때) {?>
-<!-- 설치 완료 메세지 -->
-<article id="install_done">
-    <h1>Welcome to Gnuboard 4s</h1>
-    <div><span><!--  --></span></div>
-    <section>
-        <h2>한글 안내</h2>
-        <p>
-        그누보드4표준 버전을 설치해주셔서 감사합니다.<br>
-        그누보드4표준 버전은 웹 접근성과 웹 표준을 준수합니다.<br>
-        새로운 게시판을 생성하시면 이 메세지는 사라집니다.<br>
-        감사합니다.
-        </p>
-    </section>
-    <section>
-        <h2>영문 안내</h2>
-        <p>
-        Thank you for installing Gnuboard4 Standard version.<br>
-        This version is for Web Accessibility and Web Standard version.<br>
-        This message will disappear after Create a new board.<br>
-        Thank you.
-        </p>
-    </section>
-</article>
-<!-- 설치 완료 메세지 끝 -->
-<? }*/ ?>
 
 <hr>
 
