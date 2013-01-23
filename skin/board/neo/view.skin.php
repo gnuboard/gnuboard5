@@ -25,16 +25,24 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </dl>
     </section>
 
-    <? if (!empty($view['file'])) {?>
+    <?
+    if ($view['file']['count']) {
+        $cnt = 0;
+        for ($i=0; $i<count($view['file']); $i++) {
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+                $cnt++;
+        }
+    }
+    ?>
+
+    <? if($cnt) { ?>
     <section id="bo_v_file">
         <h2>첨부파일</h2>
         <ul>
         <?
         // 가변 파일
-        $cnt = 0;
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-                $cnt++;
         ?>
             <li>
                 <a href="<? echo $view['file'][$i]['href']; ?>" onclick="javascript:file_download('<? echo $view['file'][$i]['href'].'&amp;confirm=yes'; ?>', '<?=$view['file'][$i]['source']?>'); return false;">
@@ -52,7 +60,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
     <? } ?>
 
-    <? if (!empty($view['link'])) {?>
+    <?
+    $temp_view_link = array_filter($view['link']);
+    if (!empty($temp_view_link)) {
+    ?>
     <section id="bo_v_link">
         <h2>관련링크</h2>
         <ul>
