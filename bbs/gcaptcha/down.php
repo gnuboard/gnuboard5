@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $file = addslashes($_GET['file']);
-$captcha_path = mk_subdir($g4['cache_dir'].'/'.$g4['captcha_dir']);
+$captcha_path = mk_subdir($g4['cache_captcha_dir']);
 $filepath = $captcha_path.'/'.$file;
 $original = "number.wav";
 
