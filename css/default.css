@@ -19,6 +19,13 @@ hr {display:none}
 #to_content a:focus,
 #to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;font-size:2em;text-align:center;text-decoration:none;overflow:auto}
 
+/* 이미지 등비율 리사이징 */
+.img_fix {float:left;margin-bottom:20px;width:100%;height:auto}
+
+/* 캡챠 자동등록(입력)방지 기본 */
+#captcha img {border:1px solid #ddd;border-right:0}
+#captcha_wav img {border:1px solid #ddd;border-left:0;background:#494949}
+
 /* 상단 레이아웃 */
 #hd {margin-bottom:30px;height:100px;background:#fff}
 #hd h1 {width:0;height:0;overflow:hidden}
@@ -46,6 +53,7 @@ hr {display:none}
 /* 하단 레이아웃 */
 #ft {background:#484848}
 #ft h1 {width:0;height:0;overflow:hidden}
+
 #popular {background:#515151}
 #popular div {margin:0 auto;width:980px;zoom:1}
 #popular div:after {display:block;visibility:hidden;clear:both;content:""}
@@ -53,6 +61,7 @@ hr {display:none}
 #popular ul {float:left;list-style:none}
 #popular li {float:left;padding:5px 0}
 #popular a {display:inline-block;padding:10px;color:#fff;text-decoration:none}
+
 #ft_catch {padding:30px 0;text-align:center}
 #ft_copy {background:#414141}
 #ft_copy p {margin:0 auto;width:980px;color:#4a9ab8}
@@ -60,18 +69,36 @@ hr {display:none}
 
 /* ///// 콘텐츠별 스타일 ///// */
 /* PC 초기화면 */
-#idx_catch {margin-bottom:10px;padding: 29px 0 30px}
+#idx_catch {margin-bottom:10px;padding: 25px 0 25px}
 
 /* ///// 스킨별 스타일 ///// */
 /* 아웃로그인 스킨 */
-.ol {margin-bottom:10px;padding:14px;border:1px solid #ececec;background:#fff}
+.ol {position:relative;margin-bottom:10px;padding:14px;border:1px solid #ececec;background:#fff}
 .ol h2 {width:0;height:0;overflow:hidden}
+.ol ul {margin:0;padding:0;list-style:none}
+.ol a {text-decoration:none}
+
+#ol_before fieldset {margin:0;padding:0}
+#ol_id {display:block;margin-bottom:5px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;line-height:1.6em}
+.ol_idlabel {position:absolute;top:21px;left:18px;color:#696969;font-size:0.9em}
+#ol_pw {display:block;margin-bottom:5px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;vertical-align:top;line-height:1.6em}
+.ol_pwlabel {position:absolute;top:50px;left:18px;color:#696969;font-size:0.9em}
+#auto_login {}
+#auto_login_label {letter-spacing:-0.1em}
+#ol_submit {width:60px;height:24px;border:1px solid #d1d1d1;background:#f7f7f2;font-size:0.9em;font-weight:bold;letter-spacing:-0.1em;vertical-align:top}
+#ol_before ul {float:right;margin:7px 0 13px;zoom:1}
+#ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_before li {float:left;margin-left:5px;padding-top:2px}
+#ol_before #ol_auto {float:left;margin:4px 0 0;padding:0}
+#ol_before a {color:#000;letter-spacing:-0.1em}
+#ol_svc {padding-top:8px;text-align:right}
 
 /* 설문조사 스킨 */
-#poll {padding:14px;border:1px solid #ececec;background:#fff}
-#poll ul {margin:0 0 10px;padding:0;list-style:none}
+#poll {border:1px solid #ececec;background:#fff}
+#poll header {padding:14px 14px 0}
+#poll ul {margin:0 0 10px;padding:5px 14px;background:#f7f7f2;list-style:none}
 #poll li {padding:3px 0}
-#poll footer {text-align:right}
+#poll footer {padding:0 14px 14px;text-align:right}
 
 /* 최근게시물 스킨 */
 .lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
