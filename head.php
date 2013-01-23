@@ -19,7 +19,7 @@ include_once($g4['path'].'/lib/popular.lib.php');
         <h1><?=$config['cf_title']?></h1>
 
         <ul id="snb">
-            <li><a href="<?=$g4['bbs_path']?>/current_connect.php">현재접속자</a></li>
+            <li><a href="<?=$g4['bbs_path']?>/current_connect.php">현재접속자 <?=connect(); // 현재 접속자수 ?></a></li>
             <li><a href="<?=$g4['bbs_path']?>/new.php">최근게시물</a></li>
             <? if ($is_member) { ?>
             <? if ($is_admin) { ?><li><a href="<?=$g4['path']?>/adm">관리자</a></li><? } ?>
@@ -49,8 +49,6 @@ include_once($g4['path'].'/lib/popular.lib.php');
     <div id="lnb">
         <?=outlogin('neo'); // 외부 로그인 ?>
         <?=poll('neo'); // 설문조사 ?>
-        <?=visit("neo"); // 방문자수 ?>
-        <?=connect(); // 현재 접속자수 ?>
     </div>
     <div id="container">
         <? if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>

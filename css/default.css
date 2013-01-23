@@ -3,7 +3,7 @@
 /* 초기화 */
 html {overflow-y:scroll}
 body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
-html, body, h1, h2, h3, h4, h5, h6, form, img {margin:0;padding:0;border:0}
+html, body, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
@@ -63,6 +63,14 @@ hr {display:none}
 #idx_catch {margin-bottom:10px;padding: 29px 0 30px}
 
 /* ///// 스킨별 스타일 ///// */
+/* 아웃로그인 스킨 */
+.ol {margin-bottom:10px;padding:14px;border:1px solid #ececec;background:#fff}
+.ol h2 {width:0;height:0;overflow:hidden}
+
+/* 설문조사 스킨 */
+#poll {padding:14px;border:1px solid #ececec;background:#fff}
+#poll ul {margin:0 0 10px;padding:0;list-style:none}
+
 /* 최근게시물 스킨 */
 .lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
 .lt ul {margin:0;padding:0;list-style:none}

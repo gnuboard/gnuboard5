@@ -9,6 +9,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <footer id="ft">
     <h1><?=$config['cf_title']?> 정보</h1>
     <?=popular('neo'); // 인기검색어 ?>
+    <?=visit("neo"); // 방문자수 ?>
     <div id="ft_catch"><img src="<?=$g4['path']?>/img/ft_catch.jpg" alt="Sharing All Possibilities"></div>
     <div id="ft_copy">
         <p>Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</p>
