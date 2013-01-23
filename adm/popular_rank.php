@@ -14,10 +14,7 @@ $sql_search = " where trim(pp_word) <> '' and pp_date between '{$fr_date}' and '
 $sql_group = " group by pp_word ";
 $sql_order = " order by cnt desc ";
 
-$sql = " select pp_word
-            {$sql_common}
-            {$sql_search}
-            {$sql_group} ";
+$sql = " select pp_word {$sql_common} {$sql_search} {$sql_group} ";
 $result = sql_query($sql);
 $total_count = mysql_num_rows($result);
 
@@ -26,12 +23,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = " select pp_word, count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            {$sql_group}
-            {$sql_order}
-            limit {$from_record}, {$rows} ";
+$sql = " select pp_word, count(*) as cnt {$sql_common} {$sql_search} {$sql_group} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $listall = '';
@@ -97,15 +89,7 @@ if ($i == 0)
 </table>
 
 <?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
-?>
-<div class="pg">
-    <?=$pagelist?>
-</div>
-
-<?
-if (isset($stx))
-    echo "<script>document.fsearch.sfl.value = '$sfl';</script>";
+echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 </form>
 
