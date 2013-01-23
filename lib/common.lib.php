@@ -1623,8 +1623,7 @@ function is_checked($field)
 function mk_subdir($subdir)
 {
     global $g4;
-    $data_path = $g4['path'].'/'.$g4['data_dir'];
-    $data_subpath = $data_path.'/'.$subdir;
+    $data_subpath = $g4['path_path'].'/'.$subdir;
     if (!is_dir($data_subpath)) {
         @mkdir($data_subpath, 0707);
         @chmod($data_subpath, 0707);
