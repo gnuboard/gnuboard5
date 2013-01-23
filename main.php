@@ -4,6 +4,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once('./_head.php');
 ?>
 
+<div id="idx_catch"><img src="<?=$g4['path']?>/img/idx_catch.jpg" alt="Sharing All Possibilities"></div>
+
 <!-- 메인화면 최신글 시작 -->
 <?
 //  최신글
@@ -15,10 +17,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     // 사용방법
     // latest(스킨, 게시판아이디, 출력라인, 글자수);
-    echo latest("neo", $row['bo_table'], 10, 70);
+    echo latest("neo", $row['bo_table'], 5, 70);
     if ($i==9) break;
 }
 ?>
+
+<script>
+$(function(){
+    var $lts = $('.lt:nth-child(odd)');
+    $lts.css("margin-left","20px");
+});
+</script>
 <!-- 메인화면 최신글 끝 -->
 
 <?

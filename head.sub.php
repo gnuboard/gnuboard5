@@ -44,7 +44,6 @@ if (G4_IS_MOBILE) {
 }
 ?>
 <title><?=$g4['title']?></title>
-<!-- <meta http-equiv='X-UA-Compatible' content='IE=Edge'> -->
 <? if (isset($administrator)) { ?>
 <link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">
 <? } else { ?>

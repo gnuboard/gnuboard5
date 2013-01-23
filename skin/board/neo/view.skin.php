@@ -9,20 +9,20 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
-        <dl>
+        <div>
             <? if ($is_category) { ?>
-            <dt>분류</dt>
-            <dd><?=($category_name ? "{$view['ca_name']} " : "");?></dd>
+            분류
+            <strong><?=($category_name ? "{$view['ca_name']} " : "");?></strong>
             <? } ?>
-            <dt>작성자</dt>
-            <dd><div><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></div></dd>
-            <dt>작성일</dt>
-            <dd><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></dd>
-            <dt>조회</dt>
-            <dd><?=number_format($view['wr_hit'])?>회</dd>
-            <dt>댓글</dt>
-            <dd><?=number_format($view['wr_comment'])?>건</dd>
-        </dl>
+            작성자
+            <strong><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
+            작성일
+            <strong><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></strong>
+            조회
+            <strong><?=number_format($view['wr_hit'])?>회</strong>
+            댓글
+            <strong><?=number_format($view['wr_comment'])?>건</strong>
+        </div>
     </section>
 
     <? if (!empty($view['file'])) {?>
@@ -79,7 +79,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <? } ?>
 
     <aside id="bo_v_top">
-        <h2>게시물 상단 링크</h2>
+        <h2>게시물 상단 버튼</h2>
         <?
         ob_start();
         ?>
@@ -134,7 +134,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     ?>
 
     <aside id="bo_v_bot">
-        <h2>게시물 하단 링크</h2>
+        <h2>게시물 하단 버튼</h2>
         <? if ($prev_href || $next_href) { ?>
         <ul id="bo_v_nb">
             <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn02">이전</a></li><? } ?>
