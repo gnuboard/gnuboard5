@@ -18,7 +18,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     // 사용방법
     // latest(스킨, 게시판아이디, 출력라인, 글자수);
     echo latest("neo", $row['bo_table'], 5, 25);
-    //if ($i==9) break;
 }
 ?>
 
