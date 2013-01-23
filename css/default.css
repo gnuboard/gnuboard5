@@ -9,7 +9,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"dotum"}
-p {margin:5px 0;padding:10px 0;line-height:1.5em}
+p {margin:0;padding:10px 0;line-height:1.5em}
 hr {display:none}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
@@ -70,6 +70,8 @@ hr {display:none}
 /* 설문조사 스킨 */
 #poll {padding:14px;border:1px solid #ececec;background:#fff}
 #poll ul {margin:0 0 10px;padding:0;list-style:none}
+#poll li {padding:3px 0}
+#poll footer {text-align:right}
 
 /* 최근게시물 스킨 */
 .lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
