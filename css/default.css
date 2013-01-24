@@ -167,12 +167,17 @@ hr {display:none}
 .sch_datetime {display:inline-block;margin-right:15px;color:#999}
 .sch_word {font-weight:bold} /* 검색어 강조 */
 
+/* 사이드뷰 */
+#sideview {z-index:1000;position:absolute;top:15px;left:20px;border:1px solid #999;background:#f9f9f9}
+#sideview ul {margin:0;padding:0;list-style:none}
+#sideview a {display:inline-block;padding:5px 10px 4px;width:100px;border-bottom:1px solid #ddd;color:#000;text-decoration:none}
+
 /* pagination */
 .pg {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
 .pg_wrap {display:inline-block;border:1px solid #ddd;letter-spacing:-4px}
 .pg_page,
 .pg_current {display:inline-block;padding:0 12px;height:30px;background:#fff;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
-.pg_page {text-decoration:none}
+.pg_page {background:#f9f9f9;text-decoration:none}
 .pg_start,
 .pg_prev {border-right:1px solid #ddd}
 .pg_end,
