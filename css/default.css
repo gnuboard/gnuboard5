@@ -254,6 +254,7 @@ table a {color:#000;text-decoration:none}
 #bo_v_info {padding:0 0 10px;border-bottom:1px solid #efeada}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info div {padding:0 10px}
+#bo_v_info strong {display:inline-block;margin:0 10px 0 5px;font-weight:normal}
 #bo_v_top {zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
@@ -266,7 +267,6 @@ table a {color:#000;text-decoration:none}
 #bo_v_file li {border-bottom:1px solid #ddd;background:#f7f7f7}
 #bo_v_file a {display:inline-block;padding:8px 10px 7px}
 #bo_v_file strong {text-decoration:underline}
-#bo_v_con {padding:20px;min-height:200px;height:auto !important;height:200px;border:1px solid #eee;background:#fff;line-height:1.8em}
 .bo_v_file_cnt {display:inline-block;margin:0 10px;color:#0075b8}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
@@ -274,6 +274,8 @@ table a {color:#000;text-decoration:none}
 #bo_v_link a {display:inline-block;padding:8px 10px 7px}
 #bo_v_link strong {text-decoration:underline}
 .bo_v_link_cnt {display:inline-block;margin:0 10px;color:#0075b8}
+#bo_v_con {padding:20px;min-height:200px;height:auto !important;height:200px;border:1px solid #eee;background:#fff;line-height:1.8em}
+#bo_v form {padding-top:20px}
 #bo_v_act {margin:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
 #bo_v_act strong {color:#0075b8}
@@ -309,7 +311,7 @@ table a {color:#000;text-decoration:none}
 .bo_vc_act {float:right;margin:0;list-style:none;zoom:1}
 .bo_vc_act:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act li {float:left;margin-left:5px}
-#bo_vc_w {position:relative;padding-top:20px}
+#bo_vc_w {position:relative}
 #bo_vc_w #char_cnt {position:absolute;top:5px;right:10px}
 #bo_vc_warea {clear:both;position:relative;margin:0 90px 10px 0}
 #bo_vc_warea textarea {padding:3px;width:100%;height:50px;border:1px solid #ddd;background:#fff;vertical-align:middle}
@@ -317,8 +319,8 @@ table a {color:#000;text-decoration:none}
 #bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:20px;width:75px;height:57px;border:1px solid #666;background:#494949;color:#fff;letter-spacing:-0.1em}
 
 /* 사이드뷰 */
-#sideview {z-index:1000;position:absolute;top:15px;left:20px;border:1px solid #999;background:#f9f9f9}
-#sideview ul {margin:0;padding:0;list-style:none}
+#sideview {z-index:1000;position:absolute;top:15px;left:20px;margin:0 !important;padding:0 !important;border:1px solid #999;background:#f9f9f9}
+#sideview ul {margin:0 !important;padding:0 !important;list-style:none !important}
 #sideview a {display:inline-block;padding:5px 10px 4px;width:100px;border-bottom:1px solid #ddd;color:#000;font-weight:normal;text-decoration:none}
 
 /* pagination */
