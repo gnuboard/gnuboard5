@@ -225,6 +225,27 @@ table a {color:#000;text-decoration:none}
 /* 게시판 쓰기 */
 #bo_w caption {padding:0;height:0;overflow:hidden}
 
+/* 게시판 목록 */
+.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #494949;background:#494949;color:#fff;text-decoration:none}
+.bo_fx {margin-bottom:5px;zoom:1}
+.bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
+.bo_fx ul {margin:0;padding:0;list-style:none}
+#bo_cate {float:left;margin:0 10px 10px 0}
+#bo_cate form {display:inline-block}
+.btn_bo_user {float:right;margin:0;padding:0;list-style:none}
+.btn_bo_user li {float:left;margin-left:5px}
+.btn_bo_adm {float:left}
+.btn_bo_adm li {float:left;margin-right:5px}
+#bo_sch {display:inline-block;float:left;margin:0;padding:0;border:0;vertical-align:middle}
+#bo_sch form {display:inline-block}
+#bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
+#bo_list td {line-height:1em}
+#bo_list strong {color:#ff4679}
+.bo_notice {background:#f5f5f5}
+.bo_cate_link {display:inline-block;margin:0 5px 0 0;padding:0 8px 0 0;border-right:1px solid #ddd;font-weight:bold;text-decoration:none}
+.bo_current {color:#ff4679}
+.td_subject img {margin-left:5px}
+
 /* 게시판 읽기 */
 #bo_v_title {}
 #bo_v {position:relative;margin-bottom:30px;border-top:3px solid #666;border-bottom:1px solid #ccc;zoom:1}
@@ -247,7 +268,7 @@ table a {color:#000;text-decoration:none}
 #bo_v_file li {border-bottom:1px solid #ddd;background:#f7f7f7}
 #bo_v_file a {display:inline-block;padding:8px 10px 7px}
 #bo_v_file strong {text-decoration:underline}
-#bo_v_con {padding:15px 20px;min-height:200px;height:auto !important;height:200px;border:1px solid #eee;background:#fff;line-height:1.8em}
+#bo_v_con {padding:20px;min-height:200px;height:auto !important;height:200px;border:1px solid #eee;background:#fff;line-height:1.8em}
 .bo_v_file_cnt {display:inline-block;margin:0 10px;color:#0075b8}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
