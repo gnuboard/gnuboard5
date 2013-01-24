@@ -76,7 +76,7 @@ hr {display:none}
 .ol {position:relative;margin-bottom:10px;padding:14px;border:1px solid #ececec;background:#fff}
 .ol h2 {width:0;height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
-.ol a {text-decoration:none}
+.ol a {color:#000;text-decoration:none}
 
 #ol_before fieldset {position:relative}
 #ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;line-height:1.6em}
@@ -92,6 +92,18 @@ hr {display:none}
 #ol_before #ol_auto {float:left;margin:4px 0 0;padding:0}
 #ol_before a {color:#000;letter-spacing:-0.1em}
 #ol_svc {padding-top:8px;text-align:right}
+
+#ol_after_hd {text-align:center}
+#ol_after_private {margin:7px 0;zoom:1}
+#ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_after_private li {float:left}
+#ol_after_private a {display:block;height:37px;background:#f7f7f2;text-align:center;line-height:1.6em}
+#ol_after_private a strong {display:block;color:#09aeeb}
+#ol_after_memo {width:50px;margin-right:1px}
+#ol_after_pt {width:90px;margin-right:1px}
+#ol_after_scrap {width:48px;line-height:3.1em !important}
+#ol_after_ft {text-align:right}
+#ol_after_ft a {display:inline-block;margin-left:5px}
 
 /* 설문조사 스킨 */
 #poll {border:1px solid #ececec;background:#fff}
