@@ -46,6 +46,7 @@ hr {display:none}
 /* 중간 레이아웃 */
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
+#wrapper_title {font-size:1.2em}
 #lnb {float:right;width:220px}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
@@ -132,5 +133,38 @@ hr {display:none}
 .lt_more {text-align:center}
 .lt_more a {display:block}
 
+/* 전체검색결과 스킨 */
+#sch_result_detail {margin:0;padding:15px 0;border:0;text-align:right}
+#sch_result {position:relative;padding:10px 0 0 0;border-top:1px solid #ddd;background:url('../img/sch_result_bg.jpg') repeat-y}
+#sch_result ul {margin:0;padding:0;list-style:none}
+#sch_result p {margin:5px 0;padding:0}
+#sch_result_hd {margin:0;padding:0;zoom:1}
+#sch_result_hd:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_result_hd dt {float:left;padding:10px 0 15px}
+#sch_result_hd dd {float:right;margin:0;padding:10px 0 15px}
+#sch_result_hd ul {float:left;padding:0;list-style:none}
+#sch_result_hd li {float:left;padding:0 10px;border-right:1px solid #ddd}
+#sch_result_bo {clear:both;float:left;margin:0;width:170px}
+#sch_result_bo dt {margin:0;padding:0;height:0;border:0;overflow:hidden}
+#sch_result_bo dd {margin:0}
+#sch_result_bo ul {margin-top:1px}
+#sch_result_bo li {position:relative;margin-top:-1px;height:40px}
+#sch_result_bo a {position:absolute;top:0;left:0;padding:0 10px;width:149px;height:40px;border:1px solid #ddd;border-right:0;background:#f0f0f0;color:#000;text-decoration:none;line-height:3.4em}
+#sch_result_bo .sch_on {width:150px;border-right:0;background:#fff;font-weight:bold}
+#sch_result_bo .cnt_cmt {color:#000}
+#sch_result_atc {float:left;margin:0;padding:15px;width:528px;border:1px solid #ddd;background:#fff}
+#sch_result_atc dt a {display:inline-block;margin-bottom:15px;color:#000;font-size:1.2em;font-weight:bold;text-decoration:none}
+#sch_result_atc dd {margin:0 0 30px;border-top:1px solid #ddd}
+#sch_result_atc dd a {color:#000;text-decoration:none}
+#sch_result_atc li {padding:13px 0;border-bottom:1px solid #f0f0f0}
+#sch_result_atc p {padding:5px 0}
+#sch_result_atc a {display:inline-block;margin:0 10px 0 0}
+#sch_result_atc .cmt_def {display:inline-block;margin:0 10px 0 0}
+.sch_more {padding:10px 0 15px;text-align:right}
+.sch_more a {color:#000;text-decoration:none}
+.sch_sideview {position:relative;padding-top:5px}
+.sch_datetime {color:#818385}
+.sch_word {font-weight:bold} /* 검색어 강조 */
+
 /* paginate */
-.pg {}
+.pg {clear:both}
