@@ -97,7 +97,7 @@ table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 tfoot th {border-top:1px solid #c9c9c9;border-bottom:1px solid #c9c9c9}
 tfoot td {border-color:#c9c9c9;background:#f9f9f5;font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
-th {padding:12px 0 8px;border-top:3px solid #484848;border-bottom:1px solid #a9a9a9}
+th {padding:12px 0 8px;border-top:3px solid #666;border-bottom:1px solid #a9a9a9}
 th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 td {padding:8px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;word-break:break-all}
 table a {color:#000;text-decoration:none}
