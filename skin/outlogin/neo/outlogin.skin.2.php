@@ -19,7 +19,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <li>
             <a href="<?=$g4['path']?>/bbs/point.php" id="ol_after_pt" target="_blank" onclick="win_point(); return false;">
                 포인트
-                <strong>123,456,789</strong>
+                <strong><?=$point?></strong>
             </a>
         </li>
         <li>
