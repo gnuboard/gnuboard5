@@ -64,7 +64,7 @@ if ($is_nogood) $colspan++;
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="sw" value="">
 <table id="bo_list">
-<caption><?=$board['bo_subject']?> 목록</caption>
+<caption><?=$board['bo_subject']?> 글목록</caption>
 <thead>
 <tr>
     <th scope="col">번호</th>
@@ -132,7 +132,7 @@ for ($i=0; $i<count($list); $i++) {
 <div class="bo_fx">
     <ul class="btn_bo_adm">
         <? if ($list_href) { ?>
-        <li><a href="<?=$list_href?>" class="btn02">목록</a></li>
+        <li><a href="<?=$list_href?>" class="btn02"> 목록</a></li>
         <? } ?>
         <? if ($is_checkbox) { ?>
         <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제"></li>
