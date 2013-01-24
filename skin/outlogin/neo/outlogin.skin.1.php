@@ -24,35 +24,33 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </section>
 
 <script>
-$(function(){
-    $omi = $('#ol_id');
-    $omp = $('#ol_pw');
-    $omp.css('display','inline-block');
-    $omp.css('width',124);
-    $omi_label = $('#ol_idlabel');
-    $omp_label = $('#ol_pwlabel');
-    $omi_label.addClass('ol_idlabel');
-    $omp_label.addClass('ol_pwlabel');
-    $omi.focus(function() {
-        $omi_label.css('visibility','hidden');
-    });
-    $omp.focus(function() {
-        $omp_label.css('visibility','hidden');
-    });
-    $omi.blur(function() {
-        $this = $(this);
-        if($this.attr('id') == "ol_id" && $this.attr('value') == "") $omi_label.css('visibility','visible');
-    });
-    $omp.blur(function() {
-        $this = $(this);
-        if($this.attr('id') == "ol_pw" && $this.attr('value') == "") $omp_label.css('visibility','visible');
-    });
+$omi = $('#ol_id');
+$omp = $('#ol_pw');
+$omp.css('display','inline-block');
+$omp.css('width',124);
+$omi_label = $('#ol_idlabel');
+$omp_label = $('#ol_pwlabel');
+$omi_label.addClass('ol_idlabel');
+$omp_label.addClass('ol_pwlabel');
+$omi.focus(function() {
+    $omi_label.css('visibility','hidden');
+});
+$omp.focus(function() {
+    $omp_label.css('visibility','hidden');
+});
+$omi.blur(function() {
+    $this = $(this);
+    if($this.attr('id') == "ol_id" && $this.attr('value') == "") $omi_label.css('visibility','visible');
+});
+$omp.blur(function() {
+    $this = $(this);
+    if($this.attr('id') == "ol_pw" && $this.attr('value') == "") $omp_label.css('visibility','visible');
+});
 
-    $("#auto_login").click(function(){
-        if (this.checked) {
-            this.checked = confirm("자동로그인을 사용하시면 다음부터 회원아이디와 패스워드를 입력하실 필요가 없습니다.\n\n공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?");
-        }
-    });
+$("#auto_login").click(function(){
+    if (this.checked) {
+        this.checked = confirm("자동로그인을 사용하시면 다음부터 회원아이디와 패스워드를 입력하실 필요가 없습니다.\n\n공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?");
+    }
 });
 
 function fhead_submit(f)
