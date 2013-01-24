@@ -172,7 +172,7 @@ hr {display:none}
 .pg_wrap {display:inline-block;border:1px solid #ddd;letter-spacing:-4px}
 .pg_page,
 .pg_current {display:inline-block;padding:0 12px;height:30px;background:#fff;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
-.pg_page {background:#f9f9f9;text-decoration:none}
+.pg_page {text-decoration:none}
 .pg_start,
 .pg_prev {border-right:1px solid #ddd}
 .pg_end,

@@ -33,9 +33,9 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
     if ($total_page > 1) {
         for ($k=$start_page;$k<=$end_page;$k++) {
             if ($cur_page != $k)
-                $str .= '<a href="'.$url.$k.$add.'" class="pg_page">'.$k.'<span class="sound_only">페이지</span></a>'.PHP_EOL;
+                $str .= '<a href="'.$url.$k.$add.'" class="pg_page">'.$k.'</a><span class="sound_only">페이지</span>'.PHP_EOL;
             else
-                $str .= '<strong class="pg_current"><span class="sound_only">선택된</span>'.$k.'<span class="sound_only">페이지</span></strong>'.PHP_EOL;
+                $str .= '<span class="sound_only">선택된</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span>'.PHP_EOL;
         }
     }
 
