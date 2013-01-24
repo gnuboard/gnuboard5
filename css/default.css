@@ -82,6 +82,17 @@ hr {display:none}
 /* PC 초기화면 */
 #idx_catch {margin-bottom:10px;padding: 25px 0 25px}
 
+/* 버튼 */
+.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ff5e1c !important;background:#ff4679 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
+.btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none;line-height:2.2em}
+.btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949 !important;background:#494949 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
+.btn_confirm {text-align:center} /* 서식단계 진행 */
+.btn_submit {padding:0 10px;height:28px;border:0;background:#079cd3;color:#fff;letter-spacing:-0.1em;vertical-align:top}
+.btn_cancel {display:inline-block;padding:0 10px;height:26px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.5em}
+.btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#ff4679;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
+.btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
+.btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.5em;cursor:pointer}
+
 /* ///// 기본테이블 ///// */
 table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 tfoot th {border-top:1px solid #c9c9c9;border-bottom:1px solid #c9c9c9}
@@ -136,7 +147,7 @@ td {padding:8px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
-#ol_submit {width:60px;height:24px;border:1px solid #d1d1d1;background:#f7f7f2;font-size:0.9em;font-weight:bold;letter-spacing:-0.1em;vertical-align:top}
+#ol_submit {width:60px;height:24px;border:1px solid #d1d1d1;background:#f7f7f2;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before ul {float:right;margin:7px 0 13px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-left:5px;padding-top:2px}
