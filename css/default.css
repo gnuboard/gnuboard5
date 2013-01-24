@@ -108,11 +108,11 @@ hr {display:none}
 #ol_after_private {margin:7px 0;zoom:1}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
-#ol_after_private a {display:block;height:37px;background:#f0f0f0;text-align:center;line-height:1.6em}
-#ol_after_private a strong {display:block;color:#09aeeb}
+#ol_after_private a {display:block;padding-top:8px;height:37px;background:#f0f0f0;text-align:center}
+#ol_after_private a strong {display:block;padding-top:5px;color:#09aeeb}
 #ol_after_memo {width:50px;margin-right:1px}
 #ol_after_pt {width:90px;margin-right:1px}
-#ol_after_scrap {width:48px;line-height:3.1em !important}
+#ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:right}
 #ol_after_ft a {display:inline-block;margin-left:5px}
 
