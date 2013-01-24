@@ -39,7 +39,8 @@ if (G4_EDITOR) {
     $g4['ckeditor_dir']  = 'ckeditor';
     $g4['ckeditor_url']  = $g4['bbs_url'].'/'.$g4['ckeditor_dir'];
     $g4['ckeditor_path'] = $g4['bbs_path'].'/'.$g4['ckeditor_dir'];
-    $g4['ckeditor_data'] = $g4['bbs_path'].'/'.$g4['data_dir'].'/editor';
+    $g4['ckeditor_data_path'] = $g4['data_path'].'/editor';
+    $g4['ckeditor_data_url']  = $g4['data_url'].'/editor';
 
     include_once($g4['ckeditor_path']."/ckeditor.lib.php");
 
