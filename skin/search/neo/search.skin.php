@@ -82,7 +82,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <dt>검색결과가 있는 게시판 목록</dt>
         <dd>
             <ul>
-                <li><a href="?<?=$search_query?>&amp;gr_id=<?=$gr_id?>" <?=$sch_all?>>전체게시판</a>
+                <li><a href="?<?=$search_query?>&amp;gr_id=<?=$gr_id?>" <?=$sch_all?>>전체게시판</a></li>
                 <?=$str_board_list;?>
             </ul>
         </dd>

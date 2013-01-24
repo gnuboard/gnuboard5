@@ -9,7 +9,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"dotum"}
-p {margin:0;padding:10px 0;line-height:1.5em}
+p {margin:0;padding:10px 0;line-height:1.5em;word-break:break-all}
 hr {display:none}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
@@ -135,23 +135,24 @@ hr {display:none}
 
 /* 전체검색결과 스킨 */
 #sch_result_detail {margin:0;padding:15px 0;border:0;text-align:right}
-#sch_result {position:relative;padding:10px 0 0 0;border-top:1px solid #ddd;background:url('../img/sch_result_bg.jpg') repeat-y}
+#sch_result {padding:10px 0 0 0;border-top:1px solid #ddd;background:url('../img/sch_result_bg.jpg') repeat-y}
 #sch_result ul {margin:0;padding:0;list-style:none}
 #sch_result p {margin:5px 0;padding:0}
 #sch_result_hd {margin:0;padding:0;zoom:1}
 #sch_result_hd:after {display:block;visibility:hidden;clear:both;content:""}
 #sch_result_hd dt {float:left;padding:10px 0 15px}
 #sch_result_hd dd {float:right;margin:0;padding:10px 0 15px}
-#sch_result_hd ul {float:left;padding:0;list-style:none}
+#sch_result_hd ul {float:left}
 #sch_result_hd li {float:left;padding:0 10px;border-right:1px solid #ddd}
-#sch_result_bo {clear:both;float:left;margin:0;width:170px}
-#sch_result_bo dt {margin:0;padding:0;height:0;border:0;overflow:hidden}
-#sch_result_bo dd {margin:0}
+#sch_result_bo {float:left;margin:0;padding:0;width:170px}
+#sch_result_bo dt {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#sch_result_bo dd {margin:0;padding:0}
 #sch_result_bo ul {margin-top:1px}
 #sch_result_bo li {position:relative;margin-top:-1px;height:40px}
-#sch_result_bo a {position:absolute;top:0;left:0;padding:0 10px;width:149px;height:40px;border:1px solid #616161;border-right:0;background:#484848;color:#fff;text-decoration:none;line-height:3.4em}
+#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #616161;border-right:0;background:#484848;color:#fff;text-decoration:none;line-height:3.4em}
 #sch_result_bo .sch_on {width:150px;border-color:#ddd;border-right:0;background:#fff;color:#000;font-weight:bold}
-#sch_result_bo .cnt_cmt {color:#000}
+#sch_result_bo .cnt_cmt {display:inline-block;margin-left:10px;color:#fff}
+#sch_result_bo .sch_on .cnt_cmt {color:#000}
 #sch_result_atc {float:left;margin:0;padding:15px 25px;width:508px;border:1px solid #ddd;background:#fff}
 #sch_result_atc dt a {display:inline-block;margin-bottom:15px;color:#000;font-size:1.2em;font-weight:bold;text-decoration:none}
 #sch_result_atc dd {margin:0 0 15px}

@@ -133,7 +133,7 @@ if ($stx) {
             $sch_all = "";
             if ($onetable == $g4_search['tables'][$i]) $sch_class = "class=sch_on";
             else $sch_all = "class=sch_on";
-            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g4_search['tables'][$i].'" '.$sch_class.'>'.$row2['bo_subject'].PHP_EOL.'<span class="sound_only">갯수</span><span class="cnt_cmt">'.$row['cnt'].'</span></a>';
+            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g4_search['tables'][$i].'" '.$sch_class.'>'.$row2['bo_subject'].'<span class="sound_only">갯수</span><span class="cnt_cmt">'.$row['cnt'].'</span></a></li>';
         }
     }
 
