@@ -160,7 +160,7 @@ table a {color:#000;text-decoration:none}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
 #ol_after_private a {display:block;padding-top:8px;height:37px;background:#f0f0f0;text-align:center}
-#ol_after_private a strong {display:block;padding-top:5px;color:#09aeeb}
+#ol_after_private a strong {display:block;padding-top:5px;color:#ff4679}
 #ol_after_memo {width:50px;margin-right:1px}
 #ol_after_pt {width:90px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
