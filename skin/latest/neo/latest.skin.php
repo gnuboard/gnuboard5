@@ -35,5 +35,5 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <? if (count($list) == 0) { //게시물이 없을 때 ?>
     <p>게시물이 없습니다.</p>
     <? } ?>
-    <div class="lt_more"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><img src="<?=$latest_skin_path?>/img/icon_more.gif" alt=""></a></div>
+    <div class="lt_more"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><img src="<?=$latest_skin_path?>/img/icon_more.gif" alt="더보기"></a></div>
 </div>
