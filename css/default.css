@@ -240,22 +240,20 @@ table a {color:#000;text-decoration:none}
 #bo_sch form {display:inline-block}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
 #bo_list td {line-height:1em}
-#bo_list strong {color:#ff4679}
+#bo_list strong {color:#0075b8}
 .bo_notice {background:#f5f5f5}
 .bo_cate_link {display:inline-block;margin:0 5px 0 0;padding:0 8px 0 0;border-right:1px solid #ddd;font-weight:bold;text-decoration:none}
-.bo_current {color:#ff4679}
+.bo_current {color:#0075b8}
 .td_subject img {margin-left:5px}
+.cnt_cmt {display:inline-block;margin:0 4px;color:#0075b8}
 
 /* 게시판 읽기 */
 #bo_v_title {}
 #bo_v {position:relative;margin-bottom:30px;border-top:3px solid #666;border-bottom:1px solid #ccc;zoom:1}
-#bo_v_h1 {margin:0 0 10px !important;padding:15px 0 0 10px}
-#bo_v_info {padding:0 0 10px;border-bottom:1px solid #efeada;zoom:1}
-#bo_v_info:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_h1 {margin:0 0 10px !important;padding:15px 10px 0 10px}
+#bo_v_info {padding:0 0 10px;border-bottom:1px solid #efeada}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_info dl {margin:0;padding:0 0 0 10px}
-#bo_v_info dt {float:left}
-#bo_v_info dd {float:left;margin:0 20px 0 10px}
+#bo_v_info div {padding:0 10px}
 #bo_v_top {zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
