@@ -82,6 +82,30 @@ hr {display:none}
 /* PC 초기화면 */
 #idx_catch {margin-bottom:10px;padding: 25px 0 25px}
 
+/* ///// 기본테이블 ///// */
+table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
+tfoot th {border-top:1px solid #c9c9c9;border-bottom:1px solid #c9c9c9}
+tfoot td {border-color:#c9c9c9;background:#f9f9f5;font-weight:bold;text-align:center}
+caption {padding:0 0 10px;text-align:left}
+th {padding:12px 0 8px;border-top:3px solid #484848;border-bottom:1px solid #a9a9a9}
+th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+td {padding:8px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
+.empty_table {padding:85px 0;text-align:center}
+
+/* ///// 테이블 항목별 정의 ///// */
+.td_chk {width:40px;text-align:center}
+.td_group {width:100px;text-align:center}
+.td_board {width:120px;text-align:center}
+.td_num {width:50px;text-align:center}
+.td_bignum {width:80px;text-align:center}
+.td_mb_id {width:120px;text-align:center}
+.td_nick {width:100px;text-align:center}
+.td_name {width:100px;text-align:left}
+.td_name div {position:relative}
+.td_date {width:60px;text-align:center}
+.td_datetime {width:100px;text-align:center}
+.td_mng {width:80px;text-align:center}
+
 /* ///// 스킨별 스타일 ///// */
 /* 아웃로그인 스킨 */
 .ol {position:relative;margin-bottom:10px;padding:14px;border:1px solid #ddd;background:#fff}
@@ -108,11 +132,11 @@ hr {display:none}
 #ol_after_private {margin:7px 0;zoom:1}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
-#ol_after_private a {display:block;height:37px;background:#f0f0f0;text-align:center;line-height:1.6em}
-#ol_after_private a strong {display:block;color:#09aeeb}
+#ol_after_private a {display:block;padding-top:8px;height:37px;background:#f0f0f0;text-align:center}
+#ol_after_private a strong {display:block;padding-top:5px;color:#09aeeb}
 #ol_after_memo {width:50px;margin-right:1px}
 #ol_after_pt {width:90px;margin-right:1px}
-#ol_after_scrap {width:48px;line-height:3.1em !important}
+#ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:right}
 #ol_after_ft a {display:inline-block;margin-left:5px}
 
