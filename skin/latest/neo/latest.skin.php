@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<strong class="lt_title"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><?=$board['bo_subject']?></a></strong>
+<strong class="lt_title"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><?=$bo_subject?></a></strong>
 <ul>
 <? for ($i=0; $i<count($list); $i++) { ?>
     <li>

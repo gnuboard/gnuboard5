@@ -11,7 +11,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $options='')
 
     $cache_file = $g4['cache_latest_path']."/{$bo_table}_{$skin_dir}_{$rows}_{$subject_len}.php";
     //if (!file_exists($cache_file)) {
-    if (0) {
+    if (1) {
         $list = array();
 
         $sql = " select * from $g4[board_table] where bo_table = '$bo_table'";
@@ -29,7 +29,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $options='')
         }
 
         $handle = fopen($cache_file, "w");
-        $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n//".get_text($board['bo_subject'])." 최신글\n\$list = ".var_export($list, true)."?>";
+        $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject=\"".get_text($board['bo_subject'])."\";\n\$list=".var_export($list, true)."?>";
         //$cache_content = all_trim($cache_content);
         fwrite($handle, $cache_content);
         fclose($handle);
