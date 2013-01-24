@@ -78,11 +78,11 @@ hr {display:none}
 .ol ul {margin:0;padding:0;list-style:none}
 .ol a {text-decoration:none}
 
-#ol_before fieldset {margin:0;padding:0}
-#ol_id {display:block;margin-bottom:5px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;line-height:1.6em}
-.ol_idlabel {position:absolute;top:21px;left:18px;color:#696969;font-size:0.9em}
-#ol_pw {display:block;margin-bottom:5px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;vertical-align:top;line-height:1.6em}
-.ol_pwlabel {position:absolute;top:50px;left:18px;color:#696969;font-size:0.9em}
+#ol_before fieldset {position:relative}
+#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;line-height:1.6em}
+.ol_idlabel {position:absolute;top:6px;left:5px;color:#696969;font-size:0.9em}
+#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;vertical-align:top;line-height:1.6em}
+.ol_pwlabel {position:absolute;top:35px;left:5px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
 #ol_submit {width:60px;height:24px;border:1px solid #d1d1d1;background:#f7f7f2;font-size:0.9em;font-weight:bold;letter-spacing:-0.1em;vertical-align:top}
