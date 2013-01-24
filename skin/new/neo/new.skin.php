@@ -3,17 +3,18 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 검색 -->
-<form name="fnew" method="get">
-<fieldset id="new_search">
+<fieldset id="new_sch">
     <legend>상세검색</legend>
+    <form name="fnew" method="get">
     <?=$group_select?>
     <select id="view" name="view" onchange="select_change()" title="검색종류">
         <option value="">전체게시물
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
-    <input type="text" id="mb_id" name="mb_id" class="fieldset_input" value="<?=$mb_id?>" title="검색어">
-    <input type="submit" class="fieldset_submit" value="검색">
+    <input type="text" id="mb_id" name="mb_id" class="fs_input" value="<?=$mb_id?>" title="검색어">
+    <input type="submit" class="fs_submit" value="검색">
+    </form>
     <script>
     function select_change()
     {
@@ -23,7 +24,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     document.getElementById("view").value = "<?=$view?>";
     </script>
 </fieldset>
-</form>
 <!-- 검색 끝 -->
 
 <!-- 제목 시작 -->
@@ -50,7 +50,7 @@ for ($i=0; $i<count($list); $i++)
     <td class="td_board"><a href="./board.php?bo_table=<?=$list[$i]['bo_table']?>"><?=$bo_subject?></a></td>
     <td><a href="<?=$list[$i]['href']?>"><?=$list[$i]['comment']?><?=$wr_subject?></a></td>
     <td class="td_name"><div><?=$list[$i]['name']?></div></td>
-    <td class="td_datetime"><?=$list[$i]['datetime2']?></td>
+    <td class="td_date"><?=$list[$i]['datetime2']?></td>
 </tr>
 <? } ?>
 
@@ -60,6 +60,4 @@ for ($i=0; $i<count($list); $i++)
 </tbody>
 </table>
 
-<div class="pg">
-    <?=$write_pages?>
-</div>
+<?=$write_pages?>
