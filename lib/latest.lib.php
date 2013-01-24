@@ -2,13 +2,9 @@
 if (!defined('_GNUBOARD_')) exit;
 
 // 최신글 추출
-function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $position='left')
+function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
 {
     global $g4;
-    static $lt_count=0;
-
-    if ($position == 'right') 
-        $lt_count++;
 
     if (!$skin_dir) $skin_dir = 'basic';
     $latest_skin_path = skin_path().'/latest/'.$skin_dir;
