@@ -230,14 +230,11 @@ table a {color:#000;text-decoration:none}
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
-#bo_cate {float:left;margin:0 10px 10px 0}
-#bo_cate form {display:inline-block}
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
-#bo_sch {display:inline-block;float:left;margin:0;padding:0;border:0;vertical-align:middle}
-#bo_sch form {display:inline-block}
+#bo_sch legend {width:0;height:0;overflow:hidden}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
 #bo_list td {line-height:1em}
 #bo_list strong {color:#0075b8}
