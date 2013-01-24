@@ -38,10 +38,9 @@ hr {display:none}
 #snb li {float:left}
 #snb a {display:inline-block;padding:7px 10px 6px;color:#000;text-decoration:none}
 
-#schall {position:absolute;top:10px;right:0;margin:0;padding:0;width:180px;border:0}
+#schall {position:absolute;top:10px;right:0;margin:0;padding:0;width:180px;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
-#schall_stx {width:150px;height:21px;border:3px solid #484848;border-right:0;background:#fff}
-#schall_submit {position:absolute;top:0;right:0}
+#schall_stx {width:150px;height:21px;border:3px solid #484848;border-right:0;background:#fff;line-height:1.5em}
 
 /* 중간 레이아웃 */
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
