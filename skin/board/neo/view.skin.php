@@ -124,7 +124,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             ?>
         </div>
 
-        <p><?=$view['content'];?></p>
+        <div id="bo_v_con"><?=$view['content'];?></div>
         <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
         <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
 
