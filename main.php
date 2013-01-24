@@ -22,12 +22,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 <!-- 메인화면 최신글 끝 -->
 
-<script>
-$(function() {
-    $(".lt:odd").css("margin-left", "20px");
-});
-</script>
-
 <?
 include_once('./_tail.php');
 ?>
