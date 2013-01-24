@@ -149,15 +149,16 @@ hr {display:none}
 #sch_result_bo dd {margin:0}
 #sch_result_bo ul {margin-top:1px}
 #sch_result_bo li {position:relative;margin-top:-1px;height:40px}
-#sch_result_bo a {position:absolute;top:0;left:0;padding:0 10px;width:149px;height:40px;border:1px solid #ddd;border-right:0;background:#f0f0f0;color:#000;text-decoration:none;line-height:3.4em}
-#sch_result_bo .sch_on {width:150px;border-right:0;background:#fff;font-weight:bold}
+#sch_result_bo a {position:absolute;top:0;left:0;padding:0 10px;width:149px;height:40px;border:1px solid #616161;border-right:0;background:#484848;color:#fff;text-decoration:none;line-height:3.4em}
+#sch_result_bo .sch_on {width:150px;border-color:#ddd;border-right:0;background:#fff;color:#000;font-weight:bold}
 #sch_result_bo .cnt_cmt {color:#000}
-#sch_result_atc {float:left;margin:0;padding:15px;width:528px;border:1px solid #ddd;background:#fff}
+#sch_result_atc {float:left;margin:0;padding:15px 25px;width:508px;border:1px solid #ddd;background:#fff}
 #sch_result_atc dt a {display:inline-block;margin-bottom:15px;color:#000;font-size:1.2em;font-weight:bold;text-decoration:none}
-#sch_result_atc dd {margin:0 0 30px;border-top:1px solid #ddd}
+#sch_result_atc dd {margin:0 0 30px}
 #sch_result_atc dd a {color:#000;text-decoration:none}
+#sch_result_atc .sch_result_title {font-size:1.2em;text-decoration:underline}
 #sch_result_atc li {padding:13px 0;border-bottom:1px solid #f0f0f0}
-#sch_result_atc p {padding:5px 0}
+#sch_result_atc p {padding:10px 0 5px}
 #sch_result_atc a {display:inline-block;margin:0 10px 0 0}
 #sch_result_atc .cmt_def {display:inline-block;margin:0 10px 0 0}
 .sch_more {padding:10px 0 15px;text-align:right}

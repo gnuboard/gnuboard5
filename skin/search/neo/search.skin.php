@@ -114,11 +114,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 }
             ?>
                 <li>
-                    <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>"><?=$comment_def?><?=$list[$idx][$i][subject]?></a>
+                    <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" class="sch_result_title"><?=$comment_def?><?=$list[$idx][$i][subject]?></a>
                     <span class="sch_datetime"><?=$list[$idx][$i][wr_datetime]?></span>
                     <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
-                    <div class="sch_sideview"><?=$list[$idx][$i][name]?></div>
                     <p><?=$list[$idx][$i][content]?></p>
+                    <div class="sch_sideview"><?=$list[$idx][$i][name]?></div>
                 </li>
             <? } ?>
             </ul>
