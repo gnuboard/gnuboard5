@@ -34,7 +34,7 @@ define(_MISU_QUERY_, "
 // 쇼핑몰 변수 모음 시작
 //------------------------------------------------------------------------------
 // 쇼핑몰 디렉토리
-$g4['shop']           = "fs";
+$g4['shop']           = "shop";
 $g4['shop_path']      = "$g4[path]/$g4[shop]";
 $g4['shop_url']       = "$g4[url]/$g4[shop]";
 
@@ -73,6 +73,7 @@ $g4['yc4_supplement_table']    = "yc4_supplement";            // 추가옵션 �
 $g4['yc4_coupon_table']        = "yc4_coupon";                // 쿠폰정보 테이블
 $g4['yc4_coupon_history_table']= "yc4_coupon_history";        // 쿠폰사용내역 테이블
 $g4['yc4_sendcost_table']      = "yc4_sendcost";              // 추가배송비 테이블
+$g4['yc4_uniqid_table']        = "yc4_uniqid";
 
 
 // 신용카드결제대행사 URL
