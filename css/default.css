@@ -11,7 +11,7 @@ label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"dotum"}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
-pre {overflow-x:scroll}
+pre {overflow-x:scroll;font-size:1.1em}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
 .sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
@@ -258,24 +258,23 @@ table a {color:#000;text-decoration:none}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_top ul {padding:0 20px;list-style:none}
-#bo_v_file {border-left:5px solid #ccc}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {padding:0 20px 0 15px;border-bottom:1px solid #eee;background:#f7f7f2}
+#bo_v_file li {padding:0 20px;border-bottom:1px solid #eee}
 #bo_v_file a {display:inline-block;padding:8px 0 7px}
 .bo_v_file_cnt {display:inline-block;margin:0 10px}
-#bo_v_link {border-left:5px solid #ccc}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
-#bo_v_link li {padding:0 20px 0 15px;border-bottom:1px solid #eee;background:#f7f7f2}
+#bo_v_link li {padding:0 20px;border-bottom:1px solid #eee}
 #bo_v_link a {display:inline-block;padding:8px 0 7px}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
 #bo_v_atc {min-height:200px;height:auto !important;height:200px;zoom:1}
 #bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_img {margin:0 20px}
+#bo_v_img {margin:0 20px;width:700px}
 /*#bo_v_img img {max-width:100%;height:auto}*/
 #bo_v_con {padding:20px;line-height:1.8em}
+#bo_v_con a {color:#0075b8;text-decoration:underline}
 #bo_v_act {padding:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
 #bo_v_act strong {color:#0075b8}

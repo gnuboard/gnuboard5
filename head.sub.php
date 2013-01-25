@@ -67,9 +67,8 @@ if (!empty($g4['js_code'])) {
 ?>
 </script>
 <script src="<?=$g4['url']?>/js/jquery-1.8.3.min.js"></script>
-<? if (G4_IS_MOBILE) echo "<script src=\"{$g4['url']}/js/jquery.mobile-1.3.0-beta.1.min.js\"></script>\n"; ?>
 <script src="<?=$g4['url']?>/js/common.js"></script>
-<? if (!G4_IS_MOBILE) echo "<script src=\"{$g4['url']}/js/wrest.js\"></script>\n"; ?>
+<script src="<?=$g4['url']?>/js/wrest.js"></script>
 <?
 if (!empty($g4['js_file'])) {
     foreach ($g4['js_file'] as $key=>$value) {
