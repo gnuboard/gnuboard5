@@ -950,6 +950,19 @@ function alert_opener($msg='', $url='')
     echo "</script>";
     exit;
 }
+
+
+function subtitle($title, $more="")
+{
+    global $g4;
+
+    $s = "<table width=100% cellpadding=0 cellspacing=0><tr><td width=80% align=left><table border='0' cellpadding='0' cellspacing='1'><tr><td height='24'><img src='$g4[admin_path]/img/icon_title.gif' width=20 height=9> <font color='#525252'><b>$title</b></font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table><table width=100% cellpadding=0 cellspacing=0><tr><td height=1></td></tr></table></td><td width=20% align=right>";
+    if ($more)
+        $s .= "<a href='$more'><img src='$g4[admin_path]/img/icon_more.gif' width='43' height='11' border=0 align=absmiddle></a>";
+    $s .= "</td></tr></table>\n";
+
+    return $s;
+}
 //==============================================================================
 // 쇼핑몰 함수 모음 끝
 //==============================================================================
