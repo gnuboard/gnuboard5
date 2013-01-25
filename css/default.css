@@ -138,6 +138,10 @@ table a {color:#000;text-decoration:none}
 .new_win {}
 .new_win h1 {margin-bottom:20px;padding:20px 20px 10px;background:#fff;font-size:1.2em}
 .new_win table {margin:0 auto 20px;width:93%}
+.new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #515151;background:#484848;list-style:none;zoom:1}
+.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win_ul li {float:left;margin-left:-1px}
+.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
 
 /* ///// 스킨별 스타일 ///// */
 /* 아웃로그인 스킨 */
