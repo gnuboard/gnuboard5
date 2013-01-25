@@ -114,7 +114,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <header>
             <h1>본문</h1>
         </header>
-        <div>
+        <div id="bo_v_img">
             <?
             // 파일 출력
             for ($i=0; $i<=count($view['file']); $i++) {
@@ -144,20 +144,20 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     include_once('./view_comment.php');
     ?>
 
-    <aside id="bo_v_bot">
-        <h2>게시물 하단 버튼</h2>
-        <? if ($prev_href || $next_href) { ?>
-        <ul id="bo_v_nb">
-            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn02">이전</a></li><? } ?>
-            <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn02">다음</a></li><? } ?>
-        </ul>
-        <? } ?>
-
-        <!-- 링크 버튼 -->
-        <?=$link_buttons?>
-    </aside>
-
 </div>
+
+<aside id="bo_v_bot">
+    <h2>게시물 하단 버튼</h2>
+    <? if ($prev_href || $next_href) { ?>
+    <ul id="bo_v_nb">
+        <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn02">이전</a></li><? } ?>
+        <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn02">다음</a></li><? } ?>
+    </ul>
+    <? } ?>
+
+    <!-- 링크 버튼 -->
+    <?=$link_buttons?>
+</aside>
 
 <script>
 function file_download(link, file) {
@@ -176,19 +176,27 @@ function board_move(href)
 
 <script>
 // 이미지 등비율 리사이징
-$(document).ready(function(){
-    var img = $('#bo_v_atc img');
-    var img_org_width = img.width();
-    $(window).resize(function(){
-        var wrapper_width = $('#bo_v_atc').width();
-        img.each(function() {
-            var img_width = $(this).width();
-            if (img_width > wrapper_width) {
-                $(this).addClass('img_fix');
-            } else if (img_width <= wrapper_width && img_width >= img_org_width) {
-                $(this).removeClass('img_fix');
-            }
-        });
-    }).resize();
+$(window).load(function() {
+    view_image_resize();
 });
+
+$(window).resize(function(){
+    view_image_resize();
+});
+
+function view_image_resize()
+{
+    var $img = $('#bo_v_img img');
+    var img_wrap = $('#bo_v_img').width();
+
+    $img.each(function() {
+        var img_width = $(this).width();
+        $(this).data("width", img_width); // 원래 이미지 사이즈
+        if (img_width > img_wrap) {
+            $(this).addClass('img_fix');
+        } else if (img_width <= img_wrap && img_width >= $(this).data("width")) {
+            $(this).removeClass('img_fix');
+        }
+    });
+}
 </script>

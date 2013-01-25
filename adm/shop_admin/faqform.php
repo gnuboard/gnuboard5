@@ -1,7 +1,7 @@
 <?
 $sub_menu = "400710";
+define('G4_EDITOR', 1);
 include_once("./_common.php");
-include_once ("$g4[path]/lib/cheditor4.lib.php");
 
 auth_check($auth[$sub_menu], "w");
 
@@ -10,7 +10,7 @@ $html_title = "FAQ 상세";
 $sql = " select * from $g4[yc4_faq_master_table] where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
-if ($w == "u") 
+if ($w == "u")
 {
     $html_title .= " 수정";
     $readonly = " readonly";
@@ -21,7 +21,7 @@ if ($w == "u")
 
     $fa[fa_subject] = htmlspecialchars2($fa[fa_subject]);
     $fa[fa_content] = htmlspecialchars2($fa[fa_content]);
-} 
+}
 else
     $html_title .= " 입력";
 
@@ -32,10 +32,6 @@ include_once ("$g4[admin_path]/admin.head.php");
 ?>
 
 <?=subtitle($html_title)?><p>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('fa_subject', '100%', '150');?>
-<?=cheditor1('fa_content', '100%', '300');?>
 
 <form name=frmfaqform method=post action='./faqformupdate.php' onsubmit="return frmfaqform_check(this);" style="margin:0px;">
 <input type=hidden name=w     value='<? echo $w ?>'>
@@ -53,20 +49,20 @@ include_once ("$g4[admin_path]/admin.head.php");
     </td>
 </tr>
 <tr>
-    <td> 질문        
+    <td> 질문
 		<? if ($w == 'u') {
             echo icon("보기", "$g4[shop_path]/faq.php?fm_id=$fm_id");
             }
         ?>
     </td>
     <td style='padding-top:5px; padding-bottom:5px;'>
-        <?=cheditor2('fa_subject', $fa[fa_subject]);?>
+        <?=editor_html('fa_subject', $fa[fa_subject]);?>
     </td>
 </tr>
 <tr>
     <td> 답변</td>
     <td style='padding-top:5px; padding-bottom:5px;'>
-        <?=cheditor2('fa_content', $fa[fa_content]);?>
+        <?=editor_html('fa_content', $fa[fa_content]);?>
     </td>
 </tr>
 <tr><td colspan=2 height=1 bgcolor=CCCCCC><td></tr>
@@ -78,7 +74,7 @@ include_once ("$g4[admin_path]/admin.head.php");
 </form>
 
 <script language="javascript">
-function frmfaqform_check(f) 
+function frmfaqform_check(f)
 {
     errmsg = "";
     errfld = "";
@@ -86,15 +82,15 @@ function frmfaqform_check(f)
     //check_field(f.fa_subject, "제목을 입력하세요.");
     //check_field(f.fa_content, "내용을 입력하세요.");
 
-    if (errmsg != "") 
+    if (errmsg != "")
     {
         alert(errmsg);
         errfld.focus();
         return false;
     }
 
-    <?=cheditor3('fa_subject');?>
-    <?=cheditor3('fa_content');?>
+    <?=get_editor_js('fa_subject');?>
+    <?=get_editor_js('fa_content');?>
 
     return true;
 }

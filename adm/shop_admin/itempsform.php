@@ -1,17 +1,17 @@
 <?
 $sub_menu = "400650";
+define('G4_EDITOR', 1);
 include_once("./_common.php");
-include_once ("$g4[path]/lib/cheditor4.lib.php");
 
 auth_check($auth[$sub_menu], "w");
 
-$sql = " select * 
+$sql = " select *
            from $g4[yc4_item_ps_table] a
-           left join $g4[member_table] b on (a.mb_id = b.mb_id) 
+           left join $g4[member_table] b on (a.mb_id = b.mb_id)
            left join $g4[yc4_item_table] c on (a.it_id = c.it_id)
           where is_id = '$is_id' ";
 $is = sql_fetch($sql);
-if (!$is[is_id]) 
+if (!$is[is_id])
     alert("등록된 자료가 없습니다.");
 
 $name = get_sideview($is[mb_id], get_text($is[is_name]), $is[mb_email], $is[mb_homepage]);
@@ -21,8 +21,6 @@ include_once ("$g4[admin_path]/admin.head.php");
 
 $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 ?>
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('is_content', '100%', '350');?>
 
 <?=subtitle($g4[title])?>
 
@@ -58,7 +56,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
     <td>
         <!-- <?=textarea_size("is_content")?>
         <textarea id='is_content' name="is_content" rows="10" style='width:99%;' class=ed required itemname='내용'><? echo get_text($is[is_content]) ?></textarea> -->
-        <?=cheditor2('is_content', $is['is_content']);?>
+        <?=editor_html('is_content', $is['is_content']);?>
     </td>
 </tr>
 <tr height=25>
@@ -76,7 +74,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 <script>
 function fitemps_submit(f)
 {
-    <? echo cheditor3('is_content'); ?>
+    <? echo get_editor_js('is_content'); ?>
 
     f.action="./itempsformupdate.php";
     return true;

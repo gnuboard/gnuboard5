@@ -1,19 +1,19 @@
 <?
 $sub_menu = "400720";
+define('G4_EDITOR', 1);
 include_once("./_common.php");
-include_once ("$g4[path]/lib/cheditor4.lib.php");
 
 auth_check($auth[$sub_menu], "w");
 
 $html_title = "새창";
-if ($w == "u") 
+if ($w == "u")
 {
     $html_title .= " 수정";
     $sql = " select * from $g4[yc4_new_win_table] where nw_id = '$nw_id' ";
     $nw = sql_fetch($sql);
     if (!$nw[nw_id]) alert("등록된 자료가 없습니다.");
-} 
-else 
+}
+else
 {
     $html_title .= " 입력";
     $nw[nw_disable_hours] = 24;
@@ -29,9 +29,6 @@ include_once ("$g4[admin_path]/admin.head.php");
 ?>
 
 <?=subtitle($html_title)?>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('nw_content', '100%', '350');?>
 
 <form name=frmnewwin method=post action="./newwinformupdate.php" onsubmit="return frmnewwin_check(this);" style="margin:0px;">
 <input type=hidden name=w     value='<? echo $w ?>'>
@@ -75,7 +72,7 @@ include_once ("$g4[admin_path]/admin.head.php");
 <input type=hidden name=nw_content_html value=1>
 <tr>
     <td>내용</td>
-    <td colspan=3 style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('nw_content', $nw[nw_content]);?></td>
+    <td colspan=3 style='padding-top:5px; padding-bottom:5px;'><?=editor_html('nw_content', $nw[nw_content]);?></td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=CCCCCC></td></tr>
 </table>
@@ -86,12 +83,12 @@ include_once ("$g4[admin_path]/admin.head.php");
 </form>
 
 <script language="javascript">
-function frmnewwin_check(f) 
+function frmnewwin_check(f)
 {
     errmsg = "";
     errfld = "";
-    
-    <?=cheditor3('nw_content');?>
+
+    <?=get_editor_js('nw_content');?>
 
     check_field(f.nw_subject, "제목을 입력하세요.");
 
@@ -99,7 +96,7 @@ function frmnewwin_check(f)
         alert(errmsg);
         errfld.focus();
         return false;
-    }              
+    }
     return true;
 }
 

@@ -1,7 +1,7 @@
 <?
 $sub_menu = "400700";
+define('G4_EDITOR', 1);
 include_once("./_common.php");
-include_once ("$g4[path]/lib/cheditor4.lib.php");
 
 auth_check($auth[$sub_menu], "w");
 
@@ -12,17 +12,17 @@ sql_query($sql, false);
 
 $html_title = "내용";
 
-if ($w == "u") 
+if ($w == "u")
 {
     $html_title .= " 수정";
     $readonly = " readonly";
 
     $sql = " select * from $g4[yc4_content_table] where co_id = '$co_id' ";
     $co = sql_fetch($sql);
-    if (!$co[co_id])  
+    if (!$co[co_id])
         alert("등록된 자료가 없습니다.");
-} 
-else 
+}
+else
 {
     $html_title .= " 입력";
     $co[co_html] = 2;
@@ -33,9 +33,6 @@ include_once ("$g4[admin_path]/admin.head.php");
 ?>
 
 <?=subtitle($html_title)?><p>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('co_content', '100%', '350');?>
 
 <table cellpadding=0 cellspacing=0 width=100%>
 <form name=frmcontentform method=post action="./contentformupdate.php" enctype="MULTIPART/FORM-DATA" onsubmit="return frmcontentform_check(this);">
@@ -59,7 +56,7 @@ include_once ("$g4[admin_path]/admin.head.php");
 <input type=hidden name=co_html value=1>
 <tr>
     <td>내용</td>
-    <td style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('co_content', $co[co_content]);?></td>
+    <td style='padding-top:5px; padding-bottom:5px;'><?=editor_html('co_content', $co[co_content]);?></td>
 </tr>
 <tr class=ht>
     <td>상단 파일 경로</td>
@@ -110,12 +107,12 @@ include_once ("$g4[admin_path]/admin.head.php");
 
 
 <script language="javascript">
-function frmcontentform_check(f) 
+function frmcontentform_check(f)
 {
     errmsg = "";
     errfld = "";
 
-    <?=cheditor3('co_content');?>
+    <?=get_editor_js('co_content');?>
 
     check_field(f.co_id, "ID를 입력하세요.");
     check_field(f.co_subject, "제목을 입력하세요.");

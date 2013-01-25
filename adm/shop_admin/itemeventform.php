@@ -1,13 +1,13 @@
 <?
 $sub_menu = "400630";
+define('G4_EDITOR', 1);
 include_once("./_common.php");
-include_once ("$g4[path]/lib/cheditor4.lib.php");
 
 auth_check($auth[$sub_menu], "w");
 
 $html_title = "이벤트 ";
 
-if ($w == "u") 
+if ($w == "u")
 {
     $html_title .= " 수정";
     $readonly = " readonly";
@@ -16,8 +16,8 @@ if ($w == "u")
     $ev = sql_fetch($sql);
     if (!$ev[ev_id])
         alert("등록된 자료가 없습니다.");
-} 
-else 
+}
+else
 {
     $html_title .= " 입력";
     $ev[ev_skin] = 0;
@@ -37,10 +37,6 @@ include_once ("$g4[admin_path]/admin.head.php");
 
 <?=subtitle($html_title);?><p>
 
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('ev_head_html', '100%', '150');?>
-<?=cheditor1('ev_tail_html', '100%', '150');?>
-
 <form name=feventform method=post action="./itemeventformupdate.php" enctype="MULTIPART/FORM-DATA" style="margin:0px;" onsubmit="return feventform_check(this);">
 <input type=hidden name=w     value='<? echo $w ?>'>
 <input type=hidden name=ev_id value='<? echo $ev_id ?>'>
@@ -54,10 +50,10 @@ include_once ("$g4[admin_path]/admin.head.php");
 <tr class=ht>
     <td>이벤트번호</td>
     <td>
-        <? 
+        <?
         echo $ev_id;
         echo "&nbsp;&nbsp;&nbsp;";
-        echo icon("보기", "$g4[shop_path]/event.php?ev_id=$ev[ev_id]"); 
+        echo icon("보기", "$g4[shop_path]/event.php?ev_id=$ev[ev_id]");
         ?>
 </tr>
 <? } ?>
@@ -100,7 +96,7 @@ include_once ("$g4[admin_path]/admin.head.php");
     <td>사용</td>
     <td>
         <select name=ev_use>
-        <option value='1'>예        
+        <option value='1'>예
         <option value='0'>아니오
         </select>
         <script>document.all.ev_use.value='<?=$ev[ev_use]?>';</script>
@@ -164,11 +160,11 @@ include_once ("$g4[admin_path]/admin.head.php");
 
 <tr>
     <td>상단 내용</td>
-    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('ev_head_html', $ev[ev_head_html]);?></td>
+    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=editor_html('ev_head_html', $ev[ev_head_html]);?></td>
 </tr>
 <tr>
     <td>하단 내용</td>
-    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('ev_tail_html', $ev[ev_tail_html]);?></td>
+    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=editor_html('ev_tail_html', $ev[ev_tail_html]);?></td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
@@ -180,10 +176,10 @@ include_once ("$g4[admin_path]/admin.head.php");
 
 
 <script language="javascript">
-function feventform_check(f) 
+function feventform_check(f)
 {
-    <?=cheditor3('ev_head_html');?>
-    <?=cheditor3('ev_tail_html');?>
+    <?=get_editor_js('ev_head_html');?>
+    <?=get_editor_js('ev_tail_html');?>
 
     return true;
 }
