@@ -197,6 +197,8 @@ function view_image_resize()
         } else if (img_width <= img_wrap && img_width >= $(this).data("width")) {
             $(this).removeClass('img_fix');
         }
+
+        alert($(this).data("width"));
     });
 }
 </script>
