@@ -848,7 +848,21 @@ function codedupcheck(id)
         f.it_id.focus();
         return;
     }
-    window.open("./codedupcheck.php?it_id="+id+"&frmname=fitemform", "hiddenframe");
+
+    $.post(
+        "./codedupcheck.php",
+        { id: id },
+        function(data)
+        {
+            if(data) {
+                alert("코드 "+id+" 는 '"+data+"' (으)로 이미 등록되어 있으므로\n\n사용하실 수 없습니다.");
+                return false;
+            } else {
+                alert("'"+id+"' 은(는) 등록된 코드가 없으므로 사용하실 수 있습니다.");
+                f.codedup.value = "";
+            }
+        }
+    );
 }
 
 // 선택옵션창
