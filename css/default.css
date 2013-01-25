@@ -277,7 +277,7 @@ table a {color:#000;text-decoration:none}
 
 #bo_v_img {margin:0 20px;width:688px;overflow:hidden}
 /*#bo_v_img img {max-width:100%;height:auto}*/
-#bo_v_con {padding:20px;width:688px;overflow:hidden;line-height:1.8em}
+#bo_v_con {padding:20px;width:688px;overflow:hidden;line-height:1.8em;word-break:break-all}
 #bo_v_con a {color:#0075b8;text-decoration:underline}
 #bo_v_act {padding:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
