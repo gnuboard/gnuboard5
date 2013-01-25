@@ -37,10 +37,7 @@ if (!$sst) {
 
 $sql_order = " order by {$sst} {$sod} ";
 
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            {$sql_order} ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
@@ -50,20 +47,12 @@ if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 // 탈퇴회원수
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            and mb_leave_date <> ''
-            {$sql_order} ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_leave_date <> '' {$sql_order} ";
 $row = sql_fetch($sql);
 $leave_count = $row['cnt'];
 
 // 차단회원수
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            and mb_intercept_date <> ''
-            {$sql_order} ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_intercept_date <> '' {$sql_order} ";
 $row = sql_fetch($sql);
 $intercept_count = $row['cnt'];
 
@@ -74,21 +63,13 @@ if (isset($sfl) || isset($stx)) // 검색일 때만 처음 버튼을 보여줌
 $g4['title'] = '회원관리';
 include_once('./admin.head.php');
 
-$sql = " select *
-            {$sql_common}
-            {$sql_search}
-            {$sql_order}
-            limit {$from_record}, {$rows} ";
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} "; 
 $result = sql_query($sql);
 
 $colspan = 15;
 ?>
 
 <script src="<?=$g4['path']?>/js/sideview.js"></script>
-<script>
-var list_update_php = 'member_list_update.php';
-var list_delete_php = 'member_list_delete.php';
-</script>
 
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
@@ -239,20 +220,15 @@ if ($i == 0)
 </div>
 
 <?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page=');
+echo get_paging($config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page=');
 ?>
-<div class="pg">
-    <?=$pagelist?>
-</div>
 
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>';
-?>
 </form>
 
-
 <script>
+<?
+if (isset($_GET['sfl'])) echo '$("#sfl").val("'.$sfl.'");'.PHP_EOL;
+?>
 function fmemberlist_submit(f)
 {
     if (!is_checked("chk[]")) {

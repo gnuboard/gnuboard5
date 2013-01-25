@@ -259,11 +259,12 @@ flush(); usleep(50000);
 $file = '../data/dbconfig.php';
 $f = @fopen($file, "w");
 
-fwrite($f, "<?\n");
-fwrite($f, "\$mysql_host = '$mysql_host';\n");
-fwrite($f, "\$mysql_user = '$mysql_user';\n");
-fwrite($f, "\$mysql_password = '$mysql_pass';\n");
-fwrite($f, "\$mysql_db = '$mysql_db';\n");
+fwrite($f, "<?php\n");
+fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
+fwrite($f, "define('G4_MYSQL_HOST', '$mysql_host');\n");
+fwrite($f, "define('G4_MYSQL_USER', '$mysql_user');\n");
+fwrite($f, "define('G4_MYSQL_PASSWORD', '$mysql_pass');\n");
+fwrite($f, "define('G4_MYSQL_DB', '$mysql_db');\n");
 fwrite($f, "?>");
 
 fclose($f);
@@ -273,15 +274,18 @@ echo "<script>document.frminstall2.job3.value='DB설정 파일 생성 완료';</
 flush(); usleep(50000);
 
 
-// 1.00.09 - data/log 삽입
 // 디렉토리 생성
-$dir_arr = array ("../data",
-                  "../data/file",
-                  "../data/log",
-                  "../data/member",
-                  "../data/session",
-                  "../data/$g4[cheditor4]",
-                  "../data/$g4[editor]");
+$dir_arr = array (
+    "../data",
+    "../data/cache",
+    "../data/cache/captcha",
+    "../data/cache/latest",
+    "../data/editor",
+    "../data/file",
+    "../data/log",
+    "../data/member",
+    "../data/session"
+);
 for ($i=0; $i<count($dir_arr); $i++)
 {
     @mkdir($dir_arr[$i], 0707);
@@ -298,8 +302,6 @@ Deny from all
 EOD;
 fwrite($f, $str);
 fclose($f);
-
-//@rename("../install", "../install.bak");
 //-------------------------------------------------------------------------------------------------
 
 echo "<script language='JavaScript'>document.frminstall2.status_bar.value += '■';</script>\n";

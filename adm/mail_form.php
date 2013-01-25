@@ -1,5 +1,6 @@
 <?
 $sub_menu = "200300";
+define('G4_EDITOR', 1);
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -38,9 +39,8 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
     <td>
-        <?=help('{이름} , {별명} , {회원아이디} , {이메일} 처럼 HTML 코드에 삽입하면 해당 내용에 맞게 변환하여 메일 발송합니다.')?>
-        <?=textarea_size('ma_content')?>
-        <textarea id="ma_content" name="ma_content" rows="20" class="required" required title="메일내용"><?=$ma['ma_content']?></textarea>
+        <?=help('{이름} , {별명} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일 발송합니다.')?>
+        <?=editor_html("ma_content", $ma['ma_content'], '400');?>
     </td>
 </tr>
 </tbody>
