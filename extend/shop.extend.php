@@ -2,9 +2,6 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once("$g4[path]/shop.config.php");
 include_once("$g4[path]/lib/shop.lib.php");
-include_once("$g4[path]/lib/fs.lib.php");
-
-$g4['yc4_uniqid_table'] = "yc4_uniqid";
 
 //==============================================================================
 // 쇼핑몰 필수 실행코드 모음 시작

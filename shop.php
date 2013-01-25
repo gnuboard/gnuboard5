@@ -70,32 +70,9 @@ include_once("$g4[path]/head.php");
                 ?>
             </td>
         </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td valign=top width=50% align=center>
-                <table width=95% cellpadding=0 cellspacing=0>
-                <tr><td><?=latest('basic', 'qa', 5, 30);?></td></tr>
-                </table></td>
-            <td valign=top width=50% align=center>
-                <table width=95% cellpadding=0 cellspacing=0>
-                <tr><td><?=latest('basic', 'free', 5, 30);?></td></tr>
-                </table></td>
-            </tr>
         </table>
     </td>
     <td valign=top>
-
-		<!-- 공지사항 -->
-        <table width=177 bgcolor=#DEDEDE cellpadding=1 cellspacing=0>
-        <tr><td align=center>
-            <table cellpadding=0 cellspacing=0 bgcolor=#FFFFFF height=97>
-            <tr><td height=28><a href='<?=$g4[bbs_path]?>/board.php?bo_table=notice'><img src='<?=$g4[shop_img_path]?>/bar_notice.gif' border=0></a></td></tr>
-            <tr>
-                <td><?=latest('shop_notice', 'notice', 3, 25);?></td>
-            </tr>
-            </table>
-        </td></tr>
-        </table><BR>
 
         <?
         // 최신상품
@@ -108,10 +85,10 @@ include_once("$g4[path]/head.php");
         ?><br><br>
 
 		<!-- 온라인 투표 -->
-        <?=poll('shop_poll');?><br>
+        <?=poll();?><br>
 
 		<!-- 방문자 수 -->
-        <?=visit('shop_visit');?><br>
+        <?=visit();?><br>
 
 		<!-- 메인 배너 -->
         <?=display_banner('메인');?><br>
