@@ -9,7 +9,7 @@ if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
 ?>
 
-<? if (!$wr_id) {?><h1><?=$g4['title']?></h1><?}?>
+<? if (!$wr_id) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
 
 <div class="bo_fx">
     <div id="bo_cate">
