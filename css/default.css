@@ -11,7 +11,7 @@ label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"dotum"}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
-pre {overflow-x:scroll}
+pre {overflow-x:scroll;font-size:1.1em}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
 .sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
@@ -48,7 +48,7 @@ pre {overflow-x:scroll}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 #lnb {float:right;width:220px}
-#container {float:left;width:729px;zoom:1}
+#container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
@@ -58,7 +58,7 @@ pre {overflow-x:scroll}
 #popular {background:#515151}
 #popular div {margin:0 auto;width:980px;zoom:1}
 #popular div:after {display:block;visibility:hidden;clear:both;content:""}
-#popular h2 {float:left;padding:15px 45px 15px 0;color:#fff}
+#popular h2 {float:left;padding:15px 45px 15px 0;color:#4a9ab8}
 #popular ul {float:left;list-style:none}
 #popular li {float:left;padding:5px 0}
 #popular a {display:inline-block;padding:10px;color:#fff;text-decoration:none}
@@ -66,7 +66,7 @@ pre {overflow-x:scroll}
 #visit {background:#444}
 #visit div {margin:0 auto;width:980px;zoom:1}
 #visit div:after {display:block;visibility:hidden;clear:both;content:""}
-#visit h2 {float:left;padding:15px 45px 15px 0;color:#fff}
+#visit h2 {float:left;padding:15px 45px 15px 0;color:#4a9ab8}
 #visit dl {float:left;margin:0 0 0 10px;padding:5px 0}
 #visit dt {float:left;margin:0;padding:10px 0 10px;color:#fff}
 #visit dd {float:left;margin:0 30px 0 0;padding:10px;color:#fff}
@@ -176,7 +176,7 @@ table a {color:#000;text-decoration:none}
 #poll footer {padding:0 14px 14px;text-align:right}
 
 /* 최근게시물 스킨 (latest) */
-.lt {float:left;margin-bottom:20px;padding:20px;width:313px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
+.lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
 .lt ul {margin:0;padding:0;list-style:none}
 .lt li {padding:3px 0}
 .lt a {color:#000;text-decoration:none}
@@ -254,28 +254,28 @@ table a {color:#000;text-decoration:none}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info div {padding:0 20px}
 #bo_v_info strong {display:inline-block;margin:0 10px 0 5px;font-weight:normal}
-#bo_v_top {zoom:1}
+#bo_v_top {margin-bottom:10px;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_top ul {padding:0 20px;list-style:none}
-#bo_v_file {border-left:5px solid #ccc}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {padding:0 20px 0 15px;border-bottom:1px solid #eee;background:#f7f7f2}
+#bo_v_file li {padding:0 20px;border-bottom:1px solid #eee}
 #bo_v_file a {display:inline-block;padding:8px 0 7px}
 .bo_v_file_cnt {display:inline-block;margin:0 10px}
-#bo_v_link {border-left:5px solid #ccc}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
-#bo_v_link li {padding:0 20px 0 15px;border-bottom:1px solid #eee;background:#f7f7f2}
+#bo_v_link li {padding:0 20px;border-bottom:1px solid #eee}
 #bo_v_link a {display:inline-block;padding:8px 0 7px}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
 #bo_v_atc {min-height:200px;height:auto !important;height:200px;zoom:1}
 #bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
+
 #bo_v_img {margin:0 20px;width:688px;overflow:hidden}
 /*#bo_v_img img {max-width:100%;height:auto}*/
-#bo_v_con {padding:20px;line-height:1.8em}
+#bo_v_con {padding:20px;width:688px;overflow:hidden;line-height:1.8em}
+#bo_v_con a {color:#0075b8;text-decoration:underline}
 #bo_v_act {padding:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
 #bo_v_act strong {color:#0075b8}

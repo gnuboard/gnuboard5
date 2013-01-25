@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<h1><?=$g4['title']?></h1>
+<h1 id="wrapper_title"><?=$g4['title']?></h1>
 
 <form id="fwrite" name="fwrite" method="post" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
