@@ -48,7 +48,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 #lnb {float:right;width:220px}
-#container {float:left;width:729px;zoom:1}
+#container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
@@ -176,7 +176,7 @@ table a {color:#000;text-decoration:none}
 #poll footer {padding:0 14px 14px;text-align:right}
 
 /* 최근게시물 스킨 (latest) */
-.lt {float:left;margin-bottom:20px;padding:20px;width:313px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
+.lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px;border-right:1px solid #ececec;border-bottom:1px solid #ececec;background:#fff}
 .lt ul {margin:0;padding:0;list-style:none}
 .lt li {padding:3px 0}
 .lt a {color:#000;text-decoration:none}
