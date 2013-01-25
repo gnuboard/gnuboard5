@@ -132,13 +132,18 @@ if ($sca || $stx) {
 
     //if ($prev_spt >= $min_spt)
     $prev_spt = $spt - $config['cf_search_part'];
-    if (isset($min_spt) && $prev_spt >= $min_spt)
+    if (isset($min_spt) && $prev_spt >= $min_spt) {
         $prev_part_href = './board.php?bo_table='.$bo_table.$qstr.'&amp;spt='.$prev_spt.'&amp;page=1';
+        $write_pages = page_insertbefore($write_pages, '<a href="'.$prev_part_href.'">이전검색</a>'); 
+    }
 
     $next_spt = $spt + $config['cf_search_part'];
-    if ($next_spt < 0)
+    if ($next_spt < 0) {
         $next_part_href = './board.php?bo_table='.$bo_table.$qstr.'&amp;spt='.$next_spt.'&amp;page=1';
+        $write_pages = page_insertafter($write_pages, '<a href="'.$next_part_href.'">다음검색</a>'); 
+    }
 }
+
 
 $write_href = '';
 if ($member['mb_level'] >= $board['bo_write_level']) {
