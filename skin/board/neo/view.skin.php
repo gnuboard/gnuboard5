@@ -26,8 +26,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
 
     <?
+    $cnt = 0;
     if ($view['file']['count']) {
-        $cnt = 0;
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
                 $cnt++;
