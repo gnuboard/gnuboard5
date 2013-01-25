@@ -62,7 +62,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <ul class="bo_vc_act">
                 <? if ($list[$i]['is_reply']) { ?><li><a href="<? echo $c_reply_href; ?>" onclick="comment_box('<?=$comment_id?>', 'c'); return false;">답변</a></li><? } ?>
                 <? if ($list[$i]['is_edit']) { ?><li><a href="<? echo $c_edit_href; ?>" onclick="comment_box('<?=$comment_id?>', 'cu'); return false;">수정</a></li><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="comment_delete('<?=$list[$i]['del_link']?>'); return false;">삭제</a></li><? } ?>
+                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="commen_delete('<?=$list[$i]['del_link']?>'); return false;">삭제</a></li><? } ?>
             </ul>
         </footer>
         <? } ?>
@@ -90,8 +90,8 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <fieldset id="bo_vc_winfo">
             <legend class="sound_only">작성자</legend>
             <? if ($is_guest) { ?>
-            <label for="wr_name">이름<strong class="sound_only">필수</strong></label> <input type="text" id="wr_name" name="wr_name" class="fieldset_input required" maxLength="20" size="5" required>
-            <label for="wr_password">패스워드<strong class="sound_only">필수</strong></label> <input type="password" id="wr_password" name="wr_password" class="fieldset_input required" maxLength="20" size="10" required>
+            <label for="wr_name">이름<strong class="sound_only">필수</strong></label> <input type="text" id="wr_name" name="wr_name" class="fs_input required" maxLength="20" size="5" required>
+            <label for="wr_password">패스워드<strong class="sound_only">필수</strong></label> <input type="password" id="wr_password" name="wr_password" class="fs_input required" maxLength="20" size="10" required>
             <? } ?>
             <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">
             <label for="wr_secret">비밀글</label>
