@@ -180,14 +180,10 @@ $(window).load(function() {
     view_image_resize();
 });
 
-$(window).resize(function(){
-    view_image_resize();
-});
-
 function view_image_resize()
 {
-    var $img = $('#bo_v_img img');
-    var img_wrap = $('#bo_v_img').width();
+    var $img = $('#bo_v_atc img');
+    var img_wrap = $('#bo_v_atc').width();
 
     $img.each(function() {
         var img_width = $(this).width();
@@ -197,8 +193,6 @@ function view_image_resize()
         } else if (img_width <= img_wrap && img_width >= $(this).data("width")) {
             $(this).removeClass('img_fix');
         }
-
-        alert($(this).data("width"));
     });
 }
 </script>
