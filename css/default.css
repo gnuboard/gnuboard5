@@ -268,13 +268,13 @@ table a {color:#000;text-decoration:none}
 #bo_v_link li {padding:0 20px;border-bottom:1px solid #eee}
 #bo_v_link a {display:inline-block;padding:8px 0 7px}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
-#bo_v_atc {width:688px;min-height:200px;height:auto !important;height:200px;overflow:hidden;zoom:1}
+#bo_v_atc {min-height:200px;height:auto !important;height:200px;zoom:1}
 #bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
 
-#bo_v_img {margin:0 20px}
+#bo_v_img {margin:0 20px;width:688px;overflow:hidden}
 /*#bo_v_img img {max-width:100%;height:auto}*/
-#bo_v_con {padding:20px;line-height:1.8em}
+#bo_v_con {padding:20px;width:688px;overflow:hidden;line-height:1.8em}
 #bo_v_con a {color:#0075b8;text-decoration:underline}
 #bo_v_act {padding:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
