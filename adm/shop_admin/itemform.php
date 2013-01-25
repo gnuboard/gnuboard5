@@ -1,7 +1,7 @@
 <?
 $sub_menu = "400300";
+define('G4_EDITOR', 1);
 include_once("./_common.php");
-include_once ($g4['path'].'/lib/cheditor4.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -75,11 +75,6 @@ $qstr  = "$qstr&sca=$sca&page=$page";
 $g4[title] = $html_title;
 include_once ("$g4[admin_path]/admin.head.php");
 ?>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('it_explan', '100%', '350');?>
-<?=cheditor1('it_head_html', '100%', '150');?>
-<?=cheditor1('it_tail_html', '100%', '150');?>
 
 <style type="text/css">
 <!--
@@ -312,7 +307,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 <input type=hidden name=it_explan_html value=1>
 <tr>
     <td>상품설명</td>
-    <td colspan=3 style='padding-top:7px; padding-bottom:7px;'><?=cheditor2('it_explan', $it[it_explan]);?></td>
+    <td colspan=3 style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_explan', $it[it_explan]);?></td>
 </tr>
 <? if($default['de_send_cost_case'] == "개별배송") { ?>
 <tr class="ht">
@@ -792,11 +787,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 <tr>
     <td>상품상단내용 <?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?></td>
-    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=cheditor2('it_head_html', $it[it_head_html]);?></td>
+    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_head_html', $it[it_head_html]);?></td>
 </tr>
 <tr>
     <td>상품하단내용 <?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?></td>
-    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=cheditor2('it_tail_html', $it[it_tail_html]);?></td>
+    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_tail_html', $it[it_tail_html]);?></td>
 </tr>
 
 <? if ($w == "u") { ?>
@@ -853,7 +848,21 @@ function codedupcheck(id)
         f.it_id.focus();
         return;
     }
-    window.open("./codedupcheck.php?it_id="+id+"&frmname=fitemform", "hiddenframe");
+
+    $.post(
+        "./codedupcheck.php",
+        { id: id },
+        function(data)
+        {
+            if(data) {
+                alert("코드 "+id+" 는 '"+data+"' (으)로 이미 등록되어 있으므로\n\n사용하실 수 없습니다.");
+                return false;
+            } else {
+                alert("'"+id+"' 은(는) 등록된 코드가 없으므로 사용하실 수 있습니다.");
+                f.codedup.value = "";
+            }
+        }
+    );
 }
 
 // 선택옵션창
@@ -918,9 +927,9 @@ function fitemformcheck(f)
         }
     }
 
-    <?=cheditor3('it_explan')."\n";?>
-    <?=cheditor3('it_head_html')."\n";?>
-    <?=cheditor3('it_tail_html')."\n";?>
+    <?=get_editor_js('it_explan');?>
+    <?=get_editor_js('it_head_html');?>
+    <?=get_editor_js('it_tail_html');?>
     return true;
 }
 
