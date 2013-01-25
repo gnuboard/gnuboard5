@@ -1,12 +1,12 @@
 <?
 $sub_menu = "400710";
+define('G4_EDITOR', 1);
 include_once("./_common.php");
-include_once ("$g4[path]/lib/cheditor4.lib.php");
 
 auth_check($auth[$sub_menu], "w");
 
 $html_title = "FAQ";
-if ($w == "u") 
+if ($w == "u")
 {
     $html_title .= " 수정";
     $readonly = " readonly";
@@ -14,8 +14,8 @@ if ($w == "u")
     $sql = " select * from $g4[yc4_faq_master_table] where fm_id = '$fm_id' ";
     $fm = sql_fetch($sql);
     if (!$fm[fm_id]) alert("등록된 자료가 없습니다.");
-} 
-else 
+}
+else
 {
     $html_title .= " 입력";
 }
@@ -25,10 +25,6 @@ include_once ("$g4[admin_path]/admin.head.php");
 ?>
 
 <?=subtitle($html_title)?>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('fm_head_html', '100%', '150');?>
-<?=cheditor1('fm_tail_html', '100%', '150');?>
 
 <form name=frmfaqmasterform method=post action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);"enctype="MULTIPART/FORM-DATA" style="margin:0px;">
 <input type=hidden name=w     value='<? echo $w ?>'>
@@ -41,12 +37,12 @@ include_once ("$g4[admin_path]/admin.head.php");
     <td>제목</td>
     <td>
         <input type=text class=ed name=fm_subject size=60 value='<?=get_text($fm[fm_subject]) ?>' required itemname="제목">
-        <? 
-        if ($w == 'u') 
-        { 
-            echo icon("보기", "$g4[shop_path]/faq.php?fm_id=$fm_id"); 
+        <?
+        if ($w == 'u')
+        {
+            echo icon("보기", "$g4[shop_path]/faq.php?fm_id=$fm_id");
             echo " <a href='./faqlist.php?fm_id=$fm_id'>상세보기</a>";
-        } 
+        }
         ?>
     </td>
 </tr>
@@ -82,11 +78,11 @@ include_once ("$g4[admin_path]/admin.head.php");
 
 <tr>
     <td>상단 내용</td>
-    <td style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('fm_head_html', $fm[fm_head_html]);?></td>
+    <td style='padding-top:5px; padding-bottom:5px;'><?=editor_html('fm_head_html', $fm[fm_head_html]);?></td>
 </tr>
 <tr>
     <td>하단 내용</td>
-    <td style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('fm_tail_html', $fm[fm_tail_html]);?></td>
+    <td style='padding-top:5px; padding-bottom:5px;'><?=editor_html('fm_tail_html', $fm[fm_tail_html]);?></td>
 </tr>
 <tr><td colspan=2 height=1 bgcolor=CCCCCC></td></tr>
 </table>
@@ -97,10 +93,10 @@ include_once ("$g4[admin_path]/admin.head.php");
 </form>
 
 <script language="javascript">
-function frmfaqmasterform_check(f) 
+function frmfaqmasterform_check(f)
 {
-    <?=cheditor3('fm_head_html');?>
-    <?=cheditor3('fm_tail_html');?>
+    <?=get_editor_js('fm_head_html');?>
+    <?=get_editor_js('fm_tail_html');?>
 }
 
 document.frmfaqmasterform.fm_subject.focus();
