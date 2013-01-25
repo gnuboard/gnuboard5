@@ -31,18 +31,6 @@ header("Pragma: no-cache"); // HTTP/1.0
 <head>
 <meta charset="utf-8">
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
-<?
-if (G4_IS_MOBILE) {
-    echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
-    echo "<link rel=\"stylesheet\" href=\"{$g4['url']}/css/jquery.mobile-1.3.0-beta.1.min.css\">\n";
-} else {
-    if (isset($administrator)) {
-        echo "<link rel=\"stylesheet\" href=\"{$g4['url']}/css/adm.css\">\n";
-    } else {
-        echo "<link rel=\"stylesheet\" href=\"{$g4['url']}/css/default.css\">\n";
-    }
-}
-?>
 <title><?=$g4['title']?></title>
 <? if (isset($administrator)) { ?>
 <link rel="stylesheet" href="<?=$g4['url']?>/css/adm.css?=<?=date("md")?>">

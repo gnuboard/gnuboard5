@@ -93,7 +93,7 @@ hr {display:none}
 .btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.5em;cursor:pointer}
 
 /* ///// 기본테이블 ///// */
-table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
+table {width:100%;border-collapse:collapse;border-spacing:0}
 tfoot th {border-top:1px solid #c9c9c9;border-bottom:1px solid #c9c9c9}
 tfoot td {border-color:#c9c9c9;background:#f9f9f5;font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
@@ -259,19 +259,21 @@ table a {color:#000;text-decoration:none}
 #bo_v_atc {zoom:1}
 #bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_file {border-right:1px solid #eee;border-bottom:1px solid #eee}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {border-bottom:1px solid #ddd;background:#f7f7f7}
-#bo_v_file a {display:inline-block;padding:8px 10px 7px}
+#bo_v_file li {background:#fff}
+#bo_v_file a {display:inline-block;padding:8px 20px 7px}
 #bo_v_file strong {text-decoration:underline}
 .bo_v_file_cnt {display:inline-block;margin:0 10px;color:#0075b8}
+#bo_v_link {border-right:1px solid #eee}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
 #bo_v_link li {border-bottom:1px solid #ddd;background:#f7f7f7}
-#bo_v_link a {display:inline-block;padding:8px 10px 7px}
+#bo_v_link a {display:inline-block;padding:8px 20px 7px}
 #bo_v_link strong {text-decoration:underline}
 .bo_v_link_cnt {display:inline-block;margin:0 10px;color:#0075b8}
-#bo_v_con {padding:20px;min-height:200px;height:auto !important;height:200px;border:1px solid #eee;background:#fff;line-height:1.8em}
+#bo_v_con {padding:20px;min-height:200px;height:auto !important;height:200px;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:1.8em}
 #bo_v form {padding-top:20px}
 #bo_v_act {margin:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
@@ -286,9 +288,9 @@ table a {color:#000;text-decoration:none}
 .bo_v_com li {float:left;margin-left:5px}
 
 /* 게시판 댓글 */
-#bo_vc {padding:10px 20px;border:1px solid #eee;background:#fefefe}
+#bo_vc {padding:10px 20px 20px;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_vc article {padding:0 0 10px;border-bottom:1px solid #ddd}
+#bo_vc article {padding:0 0 10px;border-bottom:1px solid #f0f0f0}
 #bo_vc header {position:relative;zoom:1}
 #bo_vc header:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
