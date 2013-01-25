@@ -26,8 +26,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
 
     <?
-    $cnt = 0;
     if ($view['file']['count']) {
+        $cnt = 0;
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
                 $cnt++;
@@ -114,7 +114,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <header>
             <h1>본문</h1>
         </header>
-        <div>
+        <div id="bo_v_img">
             <?
             // 파일 출력
             for ($i=0; $i<=count($view['file']); $i++) {
@@ -176,16 +176,16 @@ function board_move(href)
 
 <script>
 // 이미지 등비율 리사이징
-$(document).ready(function(){
-    var img = $('#bo_v_atc img');
+$(function(){
+    var img = $('#bo_v_img img');
     var img_org_width = img.width();
     $(window).resize(function(){
-        var wrapper_width = $('#bo_v_atc').width();
+        var img_wrap = $('#bo_v_img').width();
         img.each(function() {
             var img_width = $(this).width();
-            if (img_width > wrapper_width) {
+            if (img_width > img_wrap) {
                 $(this).addClass('img_fix');
-            } else if (img_width <= wrapper_width && img_width >= img_org_width) {
+            } else if (img_width <= img_wrap && img_width >= img_org_width) {
                 $(this).removeClass('img_fix');
             }
         });
