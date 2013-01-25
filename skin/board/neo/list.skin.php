@@ -156,9 +156,7 @@ if ($is_nogood) $colspan++;
 <? } ?>
 
 <!-- 페이지 -->
-<? if ($prev_part_href) { echo '<a href="'.$prev_part_href.'">이전검색</a>'; } ?>
-<?=$write_pages?>
-<? if ($next_part_href) { echo '<a href="'.$next_part_href.'">다음검색</a>'; } ?>
+<? echo $write_pages; ?>
 
 <script>
 <? if ($sca) { echo "document.fcategory.sca.value = \"$sca\";"; } ?>
