@@ -231,50 +231,53 @@ table a {color:#000;text-decoration:none}
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
+#bo_sch {float:left}
+#bo_sch legend {width:0;height:0;overflow:hidden}
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
-.btn_bo_adm {float:left}
-.btn_bo_adm li {float:left;margin-right:5px}
-#bo_sch legend {width:0;height:0;overflow:hidden}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
 #bo_list td {line-height:1em}
 #bo_list strong {color:#0075b8}
+.btn_bo_adm {float:left}
+.btn_bo_adm li {float:left;margin-right:5px}
 .bo_notice {background:#f5f5f5}
-.bo_cate_link {display:inline-block;margin:0 5px 0 0;padding:0 8px 0 0;border-right:1px solid #ddd;font-weight:bold;text-decoration:none}
+.bo_cate_link {display:inline-block;margin:0 5px 0 0;padding:0 8px 0 0;border-right:1px solid #ddd;font-weight:bold;text-decoration:none} /* 글제목 줄 분류스타일 */
 .bo_current {color:#0075b8}
 .td_subject img {margin-left:5px}
 .cnt_cmt {display:inline-block;margin:0 4px;color:#0075b8}
 
 /* 게시판 읽기 */
 #bo_v_title {}
-#bo_v {position:relative;margin-bottom:10px;border-top:5px solid #666;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
+#bo_v {position:relative;margin-bottom:20px}
 #bo_v a {color:#000;text-decoration:none}
-#bo_v_h1 {padding:20px 20px 10px;font-size:1.2em}
-#bo_v_info {padding:0 0 15px;border-bottom:1px solid #eee}
+#bo_v_h1 {padding:20px 20px 10px;border-right:1px solid #eee;background:#fff;font-size:1.2em}
+#bo_v_info {padding:0 0 15px;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info div {padding:0 20px}
 #bo_v_info strong {display:inline-block;margin:0 10px 0 5px;font-weight:normal}
-#bo_v_top {margin-bottom:10px;zoom:1}
+#bo_v_top {border-right:1px solid #eee;background:#fff;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_top ul {padding:0 20px;list-style:none}
+#bo_v_top ul {margin-bottom:10px;padding:0 20px;list-style:none}
+#bo_v_file {border-right:1px solid #eee;background:#fff}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
 #bo_v_file li {padding:0 20px;border-bottom:1px solid #eee}
 #bo_v_file a {display:inline-block;padding:8px 0 7px}
 .bo_v_file_cnt {display:inline-block;margin:0 10px}
+#bo_v_link {border-right:1px solid #eee;background:#fff}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
 #bo_v_link li {padding:0 20px;border-bottom:1px solid #eee}
 #bo_v_link a {display:inline-block;padding:8px 0 7px}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
-#bo_v_atc {min-height:200px;height:auto !important;height:200px;zoom:1}
+#bo_v_atc {min-height:200px;height:auto !important;height:200px;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff;zoom:1}
 #bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
 
 #bo_v_img {margin:0 20px;width:688px;overflow:hidden}
 /*#bo_v_img img {max-width:100%;height:auto}*/
-#bo_v_con {padding:20px;width:688px;overflow:hidden;line-height:1.8em}
+#bo_v_con {padding:20px;width:688px;overflow:hidden;line-height:1.8em;word-break:break-all}
 #bo_v_con a {color:#0075b8;text-decoration:underline}
 #bo_v_act {padding:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
@@ -290,7 +293,7 @@ table a {color:#000;text-decoration:none}
 .bo_v_com li {float:left;margin-left:5px}
 
 /* 게시판 댓글 */
-#bo_vc {padding:10px 20px 20px 20px;border-bottom:1px solid #eee;border-left:10px solid #eee;background:#f9f9f9}
+#bo_vc {margin-bottom:10px;padding:10px 20px 20px 20px;border-right:1px solid #eee;border-bottom:1px solid #eee;border-left:5px solid #eee;background:#f9f9f9}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #eee}
 #bo_vc header {position:relative;zoom:1}
