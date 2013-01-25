@@ -248,7 +248,7 @@ table a {color:#000;text-decoration:none}
 
 /* 게시판 읽기 */
 #bo_v_title {}
-#bo_v {position:relative;margin-bottom:20px;border-top:5px solid #666}
+#bo_v {position:relative;margin-bottom:20px}
 #bo_v a {color:#000;text-decoration:none}
 #bo_v_h1 {padding:20px 20px 10px;border-right:1px solid #eee;background:#fff;font-size:1.2em}
 #bo_v_info {padding:0 0 15px;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
@@ -293,7 +293,7 @@ table a {color:#000;text-decoration:none}
 .bo_v_com li {float:left;margin-left:5px}
 
 /* 게시판 댓글 */
-#bo_vc {margin-bottom:10px;padding:10px 20px 20px 20px;border-right:1px solid #eee;border-bottom:1px solid #eee;border-left:10px solid #eee;background:#f9f9f9}
+#bo_vc {margin-bottom:10px;padding:10px 20px 20px 20px;border-right:1px solid #eee;border-bottom:1px solid #eee;border-left:5px solid #eee;background:#f9f9f9}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #eee}
 #bo_vc header {position:relative;zoom:1}
