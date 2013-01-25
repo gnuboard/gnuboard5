@@ -86,11 +86,11 @@ hr {display:none}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none;line-height:2.2em}
 .btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949 !important;background:#494949 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 10px;height:28px;border:0;background:#0075b8;color:#fff;letter-spacing:-0.1em;vertical-align:top}
-.btn_cancel {display:inline-block;padding:0 10px;height:26px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.5em}
+.btn_submit {padding:0 10px;height:24px;border:0;background:#484848;color:#fff;letter-spacing:-0.1em;vertical-align:top}
+.btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em}
 .btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#0075b8;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.5em;cursor:pointer}
+.btn_win a {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em;cursor:pointer}
 
 /* ///// 기본테이블 ///// */
 table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -147,7 +147,7 @@ table a {color:#000;text-decoration:none}
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
-#ol_submit {width:60px;height:24px;border:1px solid #d1d1d1;background:#f7f7f2;font-size:0.9em;font-weight:bold;vertical-align:top}
+#ol_submit {width:60px;height:24px;border:1px solid #383838;background:#484848;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before ul {float:right;margin:7px 0 13px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-left:5px;padding-top:2px}
@@ -273,8 +273,9 @@ table a {color:#000;text-decoration:none}
 #bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_img {margin:0 20px}
+/*#bo_v_img img {max-width:100%;height:auto}*/
 #bo_v_con {padding:20px;line-height:1.8em}
-#bo_v_act {padding:20px 0;border-bottom:1px solid #eee;text-align:center}
+#bo_v_act {padding:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
 #bo_v_act strong {color:#0075b8}
 #bo_v form {padding-top:20px}
