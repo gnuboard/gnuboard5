@@ -144,20 +144,20 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     include_once('./view_comment.php');
     ?>
 
-    <aside id="bo_v_bot">
-        <h2>게시물 하단 버튼</h2>
-        <? if ($prev_href || $next_href) { ?>
-        <ul id="bo_v_nb">
-            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn02">이전</a></li><? } ?>
-            <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn02">다음</a></li><? } ?>
-        </ul>
-        <? } ?>
-
-        <!-- 링크 버튼 -->
-        <?=$link_buttons?>
-    </aside>
-
 </div>
+
+<aside id="bo_v_bot">
+    <h2>게시물 하단 버튼</h2>
+    <? if ($prev_href || $next_href) { ?>
+    <ul id="bo_v_nb">
+        <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn02">이전</a></li><? } ?>
+        <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn02">다음</a></li><? } ?>
+    </ul>
+    <? } ?>
+
+    <!-- 링크 버튼 -->
+    <?=$link_buttons?>
+</aside>
 
 <script>
 function file_download(link, file) {
