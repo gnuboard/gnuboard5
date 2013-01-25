@@ -484,8 +484,18 @@ if($is_member) {
             continue;
         }
 
-        // 정액할인쿠폰에서 할인금액이 주문금액합(과세)보다 크다면
-        if(!$row['cp_method'] && $row['cp_amount'] > $tot_tax_amount) {
+        // 결제할인쿠폰에서 할인금액이 주문금액합(과세)보다 크다면
+        if(!$row['cp_method']) {
+            $dc_amount = $row['cp_amount'];
+        } else {
+            $dc_amount = floor(($tot_tax_amount * ($row['cp_amount'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
+
+            if($dc_amount > $row['cp_maximum']) { // 최대할인금액보다 크면
+                $dc_amount = $row['cp_maximum'];
+            }
+        }
+
+        if(!$tot_tax_amount || $dc_amount > $tot_tax_amount) {
             continue;
         }
 
