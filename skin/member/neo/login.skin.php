@@ -31,7 +31,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
 
     <div class="btn_confirm">
-        <a href="<?=$g4['path']?>/">메인으로 돌아가기</a>
+        <a href="<?=$g4['url']?>/">메인으로 돌아가기</a>
     </div>
 
     </form>

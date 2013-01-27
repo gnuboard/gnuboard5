@@ -1,5 +1,6 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 $captcha_html = "";
 if ($is_guest) {
@@ -114,10 +115,10 @@ include_once($board_skin_path.'/view_comment.skin.php');
 
 // 필터
 //echo "<script> var g4_cf_filter = '$config['cf_filter']'; </script>\n";
-//echo "<script src='$g4['path']/js/filter.js'></script>\n";
+//echo "<script src='G4_PATH/js/filter.js'></script>\n";
 
 if (!$member['mb_id']) // 비회원일 경우에만
-    echo '<script src="'.$g4['path'].'/js/md5.js"></script>'.PHP_EOL;
+    echo '<script src="'.G4_PATH.'/js/md5.js"></script>'.PHP_EOL;
 
 @include_once($board_skin_path.'/view_comment.tail.skin.php');
 ?>

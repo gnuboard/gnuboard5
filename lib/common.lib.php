@@ -274,10 +274,10 @@ function get_file($bo_table, $wr_id)
     while ($row = sql_fetch_array($result))
     {
         $no = $row['bf_no'];
-        $file[$no]['href'] = "./download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
+        $file[$no]['href'] = G4_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
         $file[$no]['download'] = $row['bf_download'];
         // 4.00.11 - 파일 path 추가
-        $file[$no]['path'] = $g4['path'].'/data/file/'.$bo_table;
+        $file[$no]['path'] = G4_DATA_URL.'/file/'.$bo_table;
         //$file[$no]['size'] = get_filesize("{$file[$no]['path']}/$row['bf_file']");
         $file[$no]['size'] = get_filesize($row['bf_filesize']);
         //$file[$no]['datetime'] = date("Y-m-d H:i:s", @filemtime("$g4['path']/data/file/$bo_table/$row['bf_file']"));
@@ -398,9 +398,9 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
         $list['icon_link'] = '<img src="'.$skin_path.'/img/icon_link.gif" alt="관련링크">';
 
     // 분류명 링크
-    $list['ca_name_href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
+    $list['ca_name_href'] = G4_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
 
-    $list['href'] = $g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
+    $list['href'] = G4_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
     $list['comment_href'] = $list['href'];
 
     $list['icon_new'] = '';
@@ -416,10 +416,9 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
         $list['icon_secret'] = '<img src="'.$skin_path.'/img/icon_secret.gif" alt="비밀글">';
 
     // 링크
-    for ($i=1; $i<=$g4['link_count']; $i++)
-    {
+    for ($i=1; $i<=G4_LINK_COUNT; $i++) {
         $list['link'][$i] = set_http(get_text($list["wr_link{$i}"]));
-        $list['link_href'][$i] = $g4['bbs_path'].'/link.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].'&amp;no='.$i.$qstr;
+        $list['link_href'][$i] = G4_BBS_URL.'/link.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].'&amp;no='.$i.$qstr;
         $list['link_hit'][$i] = (int)$list["wr_link{$i}_hit"];
     }
 
@@ -835,19 +834,6 @@ function get_group_select($name, $selected='', $event='')
 }
 
 
-// 스킨디렉토리를 SELECT 형식으로 얻음
-function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
-{
-    $skins = get_skin_dir($skin_gubun);
-    $str = "<select id=\"$id\" name=\"$name\" $event>\n";
-    for ($i=0; $i<count($skins); $i++) {
-        $str .= option_selected($skins[$i], $selected);
-    }
-    $str .= "</select>";
-    return $str;
-}
-
-
 function option_selected($value, $selected, $text='')
 {
     if (!$text) $text = $value;
@@ -1031,7 +1017,7 @@ function view_file_link($file, $width, $height, $content='')
     if (preg_match("/\.({$config['cf_image_extension']})$/i", $file))
         // 이미지에 속성을 주지 않는 이유는 이미지 클릭시 원본 이미지를 보여주기 위한것임
         // 게시판설정 이미지보다 크다면 스킨의 자바스크립트에서 이미지를 줄여준다
-        return "<img src='{$g4['path']}/data/file/{$board['bo_table']}/".urlencode($file)."' onclick='image_window(this);' alt='{$content}'>";
+        return "<img src='".G4_DATA_URL."/file/{$board['bo_table']}/".urlencode($file)."' onclick='image_window(this);' alt='{$content}'>";
     /*
     // 110106 : FLASH XSS 공격으로 인하여 코드 자체를 막음
     else if (preg_match("/\.($config['cf_flash_extension'])$/i", $file))

@@ -15,7 +15,7 @@ if (!$mb['mb_open'] && $is_admin != 'super' && $member['mb_id'] != $mb_id)
     alert_close('정보공개를 하지 않았습니다.');
 
 $g4['title'] = $mb['mb_nick'].'님의 자기소개';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $mb_nick = get_sideview($mb['mb_id'], $mb['mb_nick'], $mb['mb_email'], $mb['mb_homepage'], $mb['mb_open']);
 
@@ -27,9 +27,9 @@ $mb_reg_after = $row['days'];
 $mb_homepage = set_http($mb['mb_homepage']);
 $mb_profile = $mb['mb_profile'] ? conv_content($mb['mb_profile'],0) : '소개 내용이 없습니다.';
 
-echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
+echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
 
 include_once($member_skin_path.'/profile.skin.php');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

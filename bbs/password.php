@@ -24,7 +24,7 @@ switch ($w) {
         alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 if ($board['bo_include_head']) { @include ($board['bo_include_head']); }
 if ($board['bo_content_head']) { echo stripslashes($board['bo_content_head']); }
@@ -34,5 +34,5 @@ include_once($member_skin_path.'/password.skin.php');
 if ($board['bo_content_tail']) { echo stripslashes($board['bo_content_tail']); }
 if ($board['bo_include_tail']) { @include ($board['bo_include_tail']); }
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $g4['title'] = 'E-mail 중복확인';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $mb_email = trim($mb_email);
 
@@ -41,5 +41,5 @@ HEREDOC;
     }
 }
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

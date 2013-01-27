@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <script>
@@ -22,10 +22,10 @@ if(confirm("<? echo $memo_msg; ?>")) {
 </p>
 
 <a href="<? echo $g4['bbs_path']; ?>/memo.php" target="_blank">확인</a>
-<a href="<? echo $$g4['path']; ?>">취소</a><br><br>
+<a href="<? echo $G4_PATH; ?>">취소</a><br><br>
 </article>
 </noscript>
 
 <?php
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

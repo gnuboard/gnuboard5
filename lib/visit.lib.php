@@ -19,7 +19,7 @@ function visit($skin_dir='basic')
     settype($visit[3], "integer");
 
     ob_start();
-    $visit_skin_path = skin_path().'/visit/'.$skin_dir;
+    $visit_skin_path = G4_SKIN_PATH.'/visit/'.$skin_dir;
     include_once ($visit_skin_path.'/visit.skin.php');
     $content = ob_get_contents();
     ob_end_clean();

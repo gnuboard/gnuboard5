@@ -1,7 +1,7 @@
 <?
 include_once('./_common.php');
 
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 if (!$is_member)
 {

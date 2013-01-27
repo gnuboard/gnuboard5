@@ -1,9 +1,8 @@
 <?
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
 
 if (!$board['bo_table']) {
-   alert('존재하지 않는 게시판입니다.', $g4['path']);
+   alert('존재하지 않는 게시판입니다.', G4_PATH);
 }
 
 if (isset($write['wr_is_comment']) && $write['wr_is_comment']) {
@@ -38,7 +37,7 @@ if (isset($wr_id) && $wr_id) {
             $sql = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
             $row = sql_fetch($sql);
             if (!$row['cnt']) {
-                alert("접근 권한이 없으므로 글읽기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.", $g4['path']);
+                alert("접근 권한이 없으므로 글읽기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.", $g4['url']);
             }
         }
     }
@@ -46,7 +45,7 @@ if (isset($wr_id) && $wr_id) {
     // 로그인된 회원의 권한이 설정된 읽기 권한보다 작다면
     if ($member['mb_level'] < $board['bo_read_level']) {
         if ($is_member)
-            alert('글을 읽을 권한이 없습니다.', $g4['path']);
+            alert('글을 읽을 권한이 없습니다.', $g4['url']);
         else
             alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
@@ -124,7 +123,7 @@ if (isset($wr_id) && $wr_id) {
 } else {
     if ($member['mb_level'] < $board['bo_list_level']) {
         if ($member['mb_id'])
-            alert('목록을 볼 권한이 없습니다.', $g4['path']);
+            alert('목록을 볼 권한이 없습니다.', $g4['url']);
         else
             alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
@@ -134,7 +133,7 @@ if (isset($wr_id) && $wr_id) {
     $g4['title'] = $board['bo_subject'];
 }
 
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $width = $board['bo_table_width'];
 if ($width <= 100) $width .= '%';
@@ -177,11 +176,11 @@ if ($board['bo_use_nogood'])
 $admin_href = "";
 // 최고관리자 또는 그룹관리자라면
 if ($member['mb_id'] && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id']))
-    $admin_href = $g4['admin_path'].'/board_form.php?w=u&amp;bo_table='.$bo_table;
+    $admin_href = G4_ADM_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
 include_once('./board_head.php');
 
-echo "<script src=\"".$g4['path']."/js/sideview.js\"></script>";
+echo "<script src=\"".$g4['url']."/js/sideview.js\"></script>";
 
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
 if (isset($wr_id) && $wr_id) {
@@ -197,5 +196,5 @@ include_once('./board_tail.php');
 
 echo "\n<!-- 사용스킨 : {$board['bo_skin']} -->\n";
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>
