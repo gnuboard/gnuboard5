@@ -22,8 +22,8 @@ if (!$exists) {
                 and length(ca_id) = $len4 ";
     $row = sql_fetch($sql);
     $cnt = $row['cnt'];
-    if (!$cnt) 
-        $str .= "<tr><td width=11 background='$g4[shop_img_path]/ca_bg02.gif'></td><td>";
+    if (!$cnt)
+        $str .= "<tr><td width=11 background='".G4_SHOP_IMG_URL."/ca_bg02.gif'></td><td>";
 
     $sql = " select ca_id, ca_name from $g4[yc4_category_table]
               where ca_id like '$tmp_ca_id%'
@@ -36,7 +36,7 @@ if (!$exists) {
             $style = " class='accent' ";
 
         if ($cnt) {
-            $str .= "<tr><td width=11 background='$g4[shop_img_path]/ca_bg02.gif'></td>";
+            $str .= "<tr><td width=11 background='".G4_SHOP_IMG_URL."/ca_bg02.gif'></td>";
             $str .= "<td><table width=100% border=0><tr><td width=120><b>· <a href='./list.php?ca_id=$row[ca_id]'><span $style>$row[ca_name]</span></a></b></td>";
             $sql2 = " select ca_id, ca_name from $g4[yc4_category_table]
                        where ca_id like '$row[ca_id]%'
@@ -51,15 +51,15 @@ if (!$exists) {
                 $k++;
             }
             //if (!$k) $str .= "<td></td><td>";
-            $str .= "</td></tr></table></td><td width=11 background='$g4[shop_img_path]/ca_bg03.gif'></td>";
+            $str .= "</td></tr></table></td><td width=11 background='".G4_SHOP_IMG_URL."/ca_bg03.gif'></td>";
         } else {
             $str .= "<a href='./list.php?ca_id=$row[ca_id]'><span $style>$row[ca_name]</span></a> &nbsp; ";
         }
         $exists = true;
     }
 
-    if (!$cnt) 
-        $str .= "</td><td width=11 background='$g4[shop_img_path]/ca_bg03.gif'></td></tr>";
+    if (!$cnt)
+        $str .= "</td><td width=11 background='".G4_SHOP_IMG_URL."/ca_bg03.gif'></td></tr>";
 }
 
 
@@ -71,15 +71,15 @@ if ($exists) {
     <colgroup width=''>
     <colgroup width=11>
     <tr>
-        <td width=11><img src='$g4[shop_img_path]/ca_box01.gif'></td>
-        <td background='$g4[shop_img_path]/ca_bg01.gif'></td>
-        <td width=11><img src='$g4[shop_img_path]/ca_box02.gif'></td>
+        <td width=11><img src='".G4_SHOP_IMG_URL."/ca_box01.gif'></td>
+        <td background='".G4_SHOP_IMG_URL."/ca_bg01.gif'></td>
+        <td width=11><img src='".G4_SHOP_IMG_URL."/ca_box02.gif'></td>
     </tr>
     $str
     <tr>
-        <td width=11><img src='$g4[shop_img_path]/ca_box03.gif'></td>
-        <td background='$g4[shop_img_path]/ca_bg04.gif'></td>
-        <td width=11><img src='$g4[shop_img_path]/ca_box04.gif'></td>
+        <td width=11><img src='".G4_SHOP_IMG_URL."/ca_box03.gif'></td>
+        <td background='".G4_SHOP_IMG_URL."/ca_bg04.gif'></td>
+        <td width=11><img src='".G4_SHOP_IMG_URL."/ca_box04.gif'></td>
     </tr>
     </table><br>";
 }
