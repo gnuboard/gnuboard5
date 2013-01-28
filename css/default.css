@@ -181,6 +181,19 @@ table a {color:#000;text-decoration:none}
 #ol_after_ft {text-align:right}
 #ol_after_ft a {display:inline-block;margin-left:5px}
 
+/* 로그인 */
+#mb_login {margin:100px auto;width:500px}
+#mb_login h1 {margin:0 0 20px;font-size:1.3em}
+#mb_login h2 {margin:0}
+#mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border-bottom-color:#f7f7f2;background:#fff}
+#mb_login label {letter-spacing:-0.1em}
+#mb_login .login_id {position:absolute;top:26px;left:105px}
+#mb_login .login_pw {position:absolute;top:55px;left:105px}
+#mb_login .fs_input {display:block;margin-bottom:5px;padding-left:70px}
+#mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
+#mb_login section {margin-bottom:30px;padding:20px}
+#mb_login section div {text-align:right}
+
 /* 설문조사 스킨 */
 #poll {}
 #poll header {padding:14px 14px 0}
