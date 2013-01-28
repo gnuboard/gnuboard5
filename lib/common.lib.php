@@ -45,14 +45,14 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
         $str .= '<a href="'.$url.$total_page.$add.'" class="pg_page pg_end">맨끝</a>'.PHP_EOL;
     }
 
-    if ($str) 
+    if ($str)
         return "<div class=\"pg\"><span class=\"pg_wrap\">{$str}</span></div>";
-    else 
+    else
         return "";
 }
 
 // 페이징 코드의 <div><span> 태그 다음에 코드를 삽입
-function page_insertbefore($paging_html, $insert_html) 
+function page_insertbefore($paging_html, $insert_html)
 {
     if ($paging_html) {
         return preg_replace("/^(<div[^>]+><span[^>]+>)/", '$1'.$insert_html, $paging_html);
@@ -60,7 +60,7 @@ function page_insertbefore($paging_html, $insert_html)
 }
 
 // 페이징 코드의 </span></div> 태그 이전에 코드를 삽입
-function page_insertafter($paging_html, $insert_html) 
+function page_insertafter($paging_html, $insert_html)
 {
     if ($paging_html) {
         return preg_replace("/(<\/span><\/div>)$/", $insert_html.'$1', $paging_html);
@@ -152,7 +152,7 @@ function alert($msg='', $url='', $error=true)
     if (isset($g4['title'])) {
         $header = $g4['title'];
     }
-    include_once("{$g4['bbs_path']}/alert.php");
+    include_once(G4_BBS_PATH.'/alert.php');
     exit;
 }
 
@@ -171,7 +171,7 @@ function alert_close($msg, $error=true)
     if (isset($g4['title'])) {
         $header = $g4['title'];
     }
-    include_once("{$g4['bbs_path']}/alert_close.php");
+    include_once(G4_BBS_PATH.'/alert_close.php');
     exit;
 }
 
@@ -198,7 +198,7 @@ function confirm($msg, $url1='', $url2='', $url3='')
     if (isset($g4['title'])) {
         $header = $g4['title'];
     }
-    include_once("{$g4['bbs_path']}/confirm.php");
+    include_once(G4_BBS_PATH.'/confirm.php');
     exit;
 }
 
