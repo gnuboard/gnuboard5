@@ -5,7 +5,7 @@ $g4['title'] = '로그인';
 include_once('./_head.sub.php');
 
 $p = parse_url($url);
-if ((isset($p['scheme']) && $p['scheme']) || 
+if ((isset($p['scheme']) && $p['scheme']) ||
     (isset($p['host']) && $p['host'])) {
     alert('url에 도메인을 지정할 수 없습니다.');
 }
@@ -43,10 +43,10 @@ if ($g4['https_url']) {
     $login_url = $urlencode;
 }
 
-if ($g4['https_url'])
-    $login_action_url = "{$g4['https_url']}/$g4[bbs]/login_check.php";
+if (G4_HTTPS_URL)
+    $login_action_url = G4_HTTPS_URL."/$g4[bbs]/login_check.php";
 else
-    $login_action_url = "{$g4['bbs_url']}/login_check.php";
+    $login_action_url = G4_BBS_URL."/login_check.php";
 
 // 로그인 스킨이 없는 경우 관리자 페이지 접속이 안되는 것을 막기 위하여 기본 스킨으로 대체
 $login_file = $member_skin_path.'/login.skin.php';

@@ -51,6 +51,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
+.cbg {border-right:1px solid #ddd;border-bottom:1px solid #ddd;background:#fff}
+
 /* 하단 레이아웃 */
 #ft {background:#484848}
 #ft h1 {width:0;height:0;overflow:hidden}
@@ -146,7 +148,7 @@ table a {color:#000;text-decoration:none}
 
 /* ///// 스킨별 스타일 ///// */
 /* 아웃로그인 스킨 */
-.ol {position:relative;margin-bottom:10px;padding:14px;border-right:1px solid #ddd;border-bottom:1px solid #ddd;background:#fff}
+.ol {position:relative;margin-bottom:10px;padding:14px}
 .ol h2 {width:0;height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 .ol a {color:#000;text-decoration:none}
@@ -179,19 +181,19 @@ table a {color:#000;text-decoration:none}
 #ol_after_ft a {display:inline-block;margin-left:5px}
 
 /* 설문조사 스킨 */
-#poll {border-right:1px solid #ddd;border-bottom:1px solid #ddd;background:#fff}
+#poll {}
 #poll header {padding:14px 14px 0}
 #poll ul {margin:0 0 10px;padding:5px 14px;background:#f7f7f2;list-style:none}
 #poll li {padding:3px 0}
 #poll footer {padding:0 14px 14px;text-align:right}
 
 /* 최근게시물 스킨 (latest) */
-.lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px;border-right:1px solid #ddd;border-bottom:1px solid #ddd;background:#fff}
+.lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px}
 .lt ul {margin:0;padding:0;list-style:none}
 .lt li {padding:3px 0}
 .lt a {color:#000;text-decoration:none}
 .lt_title {display:block;margin-bottom:20px;text-align:center}
-.lt_more {text-align:center}
+.lt_more {text-align:right}
 .lt_more a {display:block}
 
 /* 최근게시물 스킨 (new) */
@@ -258,9 +260,9 @@ table a {color:#000;text-decoration:none}
 
 /* 게시판 읽기 */
 #bo_v_title {}
-#bo_v {position:relative;margin-bottom:30px;border-right:1px solid #ddd;border-bottom:1px solid #ddd;background:#fff}
+#bo_v {position:relative;margin-bottom:30px}
 #bo_v a {color:#000;text-decoration:none}
-#bo_v_h1 {padding:20px 20px 10px;font-size:1.2em}
+#bo_v_h1 {padding:30px 20px 10px;font-size:1.2em;line-height:1.4em}
 #bo_v_info {padding:0 20px 15px}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info strong {display:inline-block;margin:0 10px 0 5px;font-weight:normal}
