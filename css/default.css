@@ -74,8 +74,10 @@ pre {overflow-x:scroll;font-size:1.1em}
 #visit dd {float:left;margin:0 30px 0 0;padding:10px;color:#fff}
 #visit a {display:inline-block;margin:5px 0;padding:10px;color:#fff;text-decoration:none}
 
-#ft_catch {padding:30px 0;text-align:center}
-#ft_html5badge {margin-left:50px}
+#ft_catch {position:relative;margin:0 auto;padding:30px 0;width:980px}
+#ft_catch_img {margin-left:302px}
+#ft_html5badge {position:absolute;top:30px;left:190px}
+#ft_css3badge {margin-left:50px}
 
 #ft_copy {background:#414141}
 #ft_copy p {margin:0 auto;width:980px;color:#4a9ab8}
