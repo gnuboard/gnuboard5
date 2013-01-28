@@ -9,6 +9,19 @@ if (!get_session('ss_admin')) {
 }
 */
 
+// 스킨디렉토리를 SELECT 형식으로 얻음
+function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
+{
+    $skins = get_skin_dir($skin_gubun);
+    $str = "<select id=\"$id\" name=\"$name\" $event>\n";
+    for ($i=0; $i<count($skins); $i++) {
+        $str .= option_selected($skins[$i], $selected);
+    }
+    $str .= "</select>";
+    return $str;
+}
+
+
 // 스킨경로를 얻는다
 function get_skin_dir($skin)
 {
@@ -16,7 +29,7 @@ function get_skin_dir($skin)
 
     $result_array = array();
 
-    $dirname = $g4['path'].'/skin/'.$skin.'/';
+    $dirname = G4_SKIN_PATH.'/'.$skin.'/';
     $handle = opendir($dirname);
     while ($file = readdir($handle)) {
         if($file == '.'||$file == '..') continue;
@@ -28,6 +41,7 @@ function get_skin_dir($skin)
 
     return $result_array;
 }
+
 
 // 회원 삭제
 function member_delete($mb_id)
@@ -236,16 +250,13 @@ if (get_session('ss_mb_key') !== $admin_key) {
 unset($auth_menu);
 unset($menu);
 unset($amenu);
-$tmp = dir($g4['admin_path']);
-while ($entry = $tmp->read())
-{
-    //if (!preg_match('/^admin.menu([0-9]{3}).php/', $entry, $m))
-    //if (!preg_match('/^admin.menu([0-9]{3}).*\.php/', $entry, $m))
+$tmp = dir(G4_ADM_PATH);
+while ($entry = $tmp->read()) {
     if (!preg_match('/^admin.menu([0-9]{3}).*\.php$/', $entry, $m))
         continue;  // 파일명이 menu 으로 시작하지 않으면 무시한다.
 
     $amenu[$m[1]] = $entry;
-    include_once($g4['admin_path'].'/'.$entry);
+    include_once(G4_ADM_PATH.'/'.$entry);
 }
 @ksort($amenu);
 

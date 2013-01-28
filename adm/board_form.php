@@ -1,7 +1,7 @@
 <?
 $sub_menu = "300100";
-define('G4_EDITOR', 1);
 include_once('./_common.php');
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], 'w');
 
@@ -94,7 +94,7 @@ include_once ('./admin.head.php');
         if ($w == '')
             echo '영문자, 숫자, _ 만 가능 (공백없이 20자 이내)';
         else
-            echo '<a href="'.$g4['bbs_path'].'/board.php?bo_table='.$board['bo_table'].'">게시판 바로가기</a>';
+            echo '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'">게시판 바로가기</a>';
         ?>
     </td>
 </tr>

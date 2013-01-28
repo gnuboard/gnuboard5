@@ -13,7 +13,7 @@ if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
     alert_close("게시판 관리자 이상 접근이 가능합니다.");
 
 $g4['title'] = '게시물 ' . $act;
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $wr_id_list = '';
 if ($wr_id)
@@ -134,5 +134,5 @@ function fboardmoveall_submit(f)
 </td></tr></table>
 
 <?
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

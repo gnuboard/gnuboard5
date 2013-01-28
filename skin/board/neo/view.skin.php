@@ -61,8 +61,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <? } ?>
 
     <?
-    $temp_view_link = array_filter($view['link']);
-    if (!empty($temp_view_link)) {
+    if (!empty($view['link'])) {
     ?>
     <section id="bo_v_link">
         <h2>관련링크</h2>
@@ -70,7 +69,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <?
         // 링크
         $cnt = 0;
-        for ($i=1; $i<=$g4['link_count']; $i++) {
+        for ($i=1; $i<=count($view['link']); $i++) {
             if ($view['link'][$i]) {
                 $cnt++;
                 $link = cut_str($view['link'][$i], 70);
@@ -118,7 +117,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <?
             // 파일 출력
             for ($i=0; $i<=count($view['file']); $i++) {
-                if (isset($view['file'][$i]['view']) && $view['file'][$i]['view'])
+                if ($view['file'][$i]['view'])
                     echo $view['file'][$i]['view'];
             }
             ?>

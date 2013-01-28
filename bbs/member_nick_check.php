@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $g4['title'] = '별명 중복확인';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $mb_nick = trim($mb_nick);
 
@@ -47,5 +47,5 @@ if ($mb[mb_nick]) {
     }
 }
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

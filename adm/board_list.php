@@ -144,7 +144,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </td>
     <td class="td_boid">
         <input type="hidden" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
-        <a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
+        <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
     </td>
     <td>
         <?=get_skin_select("board", "bo_skin_$i", "bo_skin[$i]", $row['bo_skin']);?>

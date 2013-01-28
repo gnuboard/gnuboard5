@@ -49,86 +49,6 @@ if (!get_magic_quotes_gpc()) {
 //==============================================================================
 
 
-//==============================================================================
-// XSS(Cross Site Scripting) 공격에 의한 데이터 검증 및 차단
-//------------------------------------------------------------------------------
-function xss_clean($data) {
-    // If its empty there is no point cleaning it :\
-    if(empty($data))
-        return $data;
-
-    // Recursive loop for arrays
-    if(is_array($data)) {
-        foreach($data as $key => $value) {
-            $data[$key] = xss_clean($value);
-        }
-
-        return $data;
-    }
-
-    // http://svn.bitflux.ch/repos/public/popoon/trunk/classes/externalinput.php
-    // +----------------------------------------------------------------------+
-    // | Copyright (c) 2001-2006 Bitflux GmbH                                 |
-    // +----------------------------------------------------------------------+
-    // | Licensed under the Apache License, Version 2.0 (the "License");      |
-    // | you may not use this file except in compliance with the License.     |
-    // | You may obtain a copy of the License at                              |
-    // | http://www.apache.org/licenses/LICENSE-2.0                           |
-    // | Unless required by applicable law or agreed to in writing, software  |
-    // | distributed under the License is distributed on an "AS IS" BASIS,    |
-    // | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or      |
-    // | implied. See the License for the specific language governing         |
-    // | permissions and limitations under the License.                       |
-    // +----------------------------------------------------------------------+
-    // | Author: Christian Stocker <chregu@bitflux.ch>                        |
-    // +----------------------------------------------------------------------+
-
-    // Fix &entity\n;
-    $data = str_replace(array('&amp;','&lt;','&gt;'), array('&amp;amp;','&amp;lt;','&amp;gt;'), $data);
-    $data = preg_replace('/(&#*\w+)[\x00-\x20]+;/', '$1;', $data);
-    $data = preg_replace('/(&#x*[0-9A-F]+);*/i', '$1;', $data);
-
-    if (function_exists("html_entity_decode"))
-    {
-        $data = html_entity_decode($data);
-    }
-    else
-    {
-        $trans_tbl = get_html_translation_table(HTML_ENTITIES);
-        $trans_tbl = array_flip($trans_tbl);
-        $data = strtr($data, $trans_tbl);
-    }
-
-    // Remove any attribute starting with "on" or xmlns
-    $data = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#i', '$1>', $data);
-
-    // Remove javascript: and vbscript: protocols
-    $data = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#i', '$1=$2nojavascript...', $data);
-    $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#i', '$1=$2novbscript...', $data);
-    $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#', '$1=$2nomozbinding...', $data);
-
-    // Only works in IE: <span style="width: expression(alert('Ping!'));"></span>
-    $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?expression[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
-    $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
-    $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#i', '$1>', $data);
-
-    // Remove namespaced elements (we do not need them)
-    $data = preg_replace('#</*\w+:\w[^>]*+>#i', '', $data);
-
-    do {
-        // Remove really unwanted tags
-        $old_data = $data;
-        $data = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $data);
-    } while ($old_data !== $data);
-
-    return $data;
-}
-
-$_GET  = xss_clean($_GET);
-$_POST = xss_clean($_POST);
-//==========================================================================================================================
-
-
 //==========================================================================================================================
 // extract($_GET); 명령으로 인해 page.php?_POST[var1]=data1&_POST[var2]=data2 와 같은 코드가 _POST 변수로 사용되는 것을 막음
 // 081029 : letsgolee 님께서 도움 주셨습니다.
@@ -157,66 +77,26 @@ $board  = array();
 $group  = array();
 $g4     = array();
 
-// index.php 가 있는곳의 상대경로
-// php 인젝션 ( 임의로 변수조작으로 인한 리모트공격) 취약점에 대비한 코드
-// prosper 님께서 알려주셨습니다.
-if (!$g4_path || preg_match("/:\/\//", $g4_path)) {
-    echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
-    echo "<h3>잘못된 방법으로 변수가 정의되었습니다. (g4_path)</h3>";
-    echo "<a href=\"{$g4['path']}/install/\">설치하기</a>";
-    exit;
-}
-
-
-$g4['path'] = $g4_path;
-
-
-//==============================================================================
-// g4_path unset
-//------------------------------------------------------------------------------
-if (isset($_GET['g4_path']) || isset($_POST['g4_path']) || isset($_COOKIE['g4_path'])) {
-    unset($_GET['g4_path']);
-    unset($_POST['g4_path']);
-    unset($_COOKIE['g4_path']);
-}
-unset($g4_path);
-//==============================================================================
-
-
-include_once($g4['path'].'/config.php');  // 설정 파일
-include_once($g4['path'].'/lib/common.lib.php'); // 공통 라이브러리
-
-// config.php 가 있는곳의 웹경로
-if (!$g4['url']) {
-    $g4['url'] = 'http://' . $_SERVER['HTTP_HOST'];
-    $dir = dirname($_SERVER['PHP_SELF']);
-    if (!file_exists('config.php'))
-        $dir = dirname($dir);
-    $cnt = substr_count($g4['path'], '..');
-    for ($i=2; $i<=$cnt; $i++)
-        $dir = dirname($dir);
-    $g4['url'] .= $dir;
-}
-// \ 를 / 롤 변경
-$g4['url'] = strtr($g4['url'], "\\", "/");
-// url 의 끝에 있는 / 를 삭제한다.
-$g4['url'] = preg_replace("/\/$/", "", $g4['url']);
 
 //==============================================================================
 // 공통
 //------------------------------------------------------------------------------
-$dirname = dirname(__FILE__).'/';
-$dbconfig_file = 'data/dbconfig.php';
-if (file_exists($g4['path'].'/'.$dbconfig_file)) {
-    include_once($g4['path'].'/'.$dbconfig_file);
+$config_user_file = dirname(__FILE__).'/config.user.php';
+if (file_exists($config_user_file)) {
+    include_once($config_user_file);
+    include_once(dirname(__FILE__).'/config.php');   // 설정 파일
+    include_once(G4_LIB_PATH.'/common.lib.php');    // 공통 라이브러리
+
     $connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
-    $select_db = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
+    $select_db  = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
 } else {
-    echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
-    echo "<h3>DB 설정 파일이 존재하지 않습니다.<br>프로그램 설치 후 실행하시기 바랍니다.</h3>";
-    echo "<a href=\"{$g4['path']}/install/\">설치하기</a>";
+    echo "<meta http-equiv='content-type' content='text/html; charset=utf-8'>";
+    echo "<h3>$config_user_file 파일을 찾을 수 없습니다.<br>프로그램 설치 후 실행하시기 바랍니다.</h3>";
+    echo '<a href="'.G4_PATH.'/install/">설치하기</a>';
     exit;
 }
+//==============================================================================
+
 
 //==============================================================================
 // SESSION 설정
@@ -224,7 +104,7 @@ if (file_exists($g4['path'].'/'.$dbconfig_file)) {
 ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
 ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
-session_save_path($g4['path'].'/data/session');
+session_save_path(G4_DATA_PATH.'/session');
 
 if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
@@ -269,8 +149,8 @@ else if (is_mobile())
 $_SESSION['ss_is_mobile'] = $is_mobile;
 define('G4_IS_MOBILE', $is_mobile);
 if (G4_IS_MOBILE) {
-    include_once($g4['path'].'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
-    $g4['mobile_path'] = $g4['path'].'/'.$g4['mobile_dir'];
+    include_once(G4_PATH.'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
+    $g4['mobile_path'] = G4_PATH.'/'.$g4['mobile_dir'];
 }
 //==============================================================================
 
@@ -502,28 +382,28 @@ if ($is_admin != 'super') {
 //==============================================================================
 // 스킨경로
 //------------------------------------------------------------------------------
-$skin_path          = skin_path();
-$board_skin_path    = $skin_path.'/board/'.$board['bo_skin'];
-$member_skin_path   = $skin_path.'/member/'.$config['cf_member_skin'];
-$new_skin_path      = $skin_path.'/new/'.$config['cf_new_skin'];
-$search_skin_path   = $skin_path.'/search/'.$config['cf_search_skin'];
-$connect_skin_path  = $skin_path.'/connect/'.$config['cf_connect_skin'];
-$poll_skin_path     = $skin_path.'/poll/basic';
+$board_skin_path    = G4_SKIN_PATH.'/board/'.$board['bo_skin'];
+$board_skin_url     = G4_SKIN_URL.'/board/'.$board['bo_skin'];
+$member_skin_path   = G4_SKIN_PATH.'/member/'.$config['cf_member_skin'];
+$new_skin_path      = G4_SKIN_PATH.'/new/'.$config['cf_new_skin'];
+$search_skin_path   = G4_SKIN_PATH.'/search/'.$config['cf_search_skin'];
+$connect_skin_path  = G4_SKIN_PATH.'/connect/'.$config['cf_connect_skin'];
+$poll_skin_path     = G4_SKIN_PATH.'/poll/basic';
 if (isset($_GET['skin_dir']))
-    $poll_skin_path = $skin_path.'/poll/'.$_GET['skin_dir'];
+    $poll_skin_path = G4_SKIN_PATH.'/poll/'.$_GET['skin_dir'];
 //==============================================================================
 
 
 // 방문자수의 접속을 남김
-include_once($g4['bbs_path'].'/visit_insert.inc.php');
+include_once(G4_BBS_PATH.'/visit_insert.inc.php');
 
 
 // common.php 파일을 수정할 필요가 없도록 확장합니다.
-$tmp = dir($g4['path'].'/extend');
+$tmp = dir(G4_EXTEND_PATH);
 while ($entry = $tmp->read()) {
     // php 파일만 include 함
     if (preg_match("/(\.php)$/i", $entry))
-        include_once($g4['path'].'/extend/'.$entry);
+        include_once(G4_EXTEND_PATH.'/'.$entry);
 }
 
 // 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면

@@ -80,7 +80,7 @@ while ($row = sql_fetch_array($result))
         $sql2 = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ";
         $result2 = sql_query($sql2);
         while ($row2 = sql_fetch_array($result2))
-            @unlink($g4['path'].'/data/file/'.$bo_table.'/'.$row2['bf_file']);
+            @unlink(G4_PATH.'/data/file/'.$bo_table.'/'.$row2['bf_file']);
 
         // 파일테이블 행 삭제
         sql_query(" delete from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ");

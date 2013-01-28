@@ -7,20 +7,20 @@ $tv_div[img_height] = 70;
 $tv_div[img_length] = 4; // 보여지는 최대 이미지수
 ?>
 
-<div id='divTodayHidden' style="position:relative; top:<?=$tv_div[top]?>;display:none;"><a href='javascript:todayview_visible();'><img src='<?=$g4[shop_img_path]?>/todayview.gif' border=0></a></div>
+<div id='divTodayHidden' style="position:relative; top:<?=$tv_div[top]?>;display:none;"><a href='javascript:todayview_visible();'><img src='<?=G4_SHOP_IMG_URL?>/todayview.gif' border=0></a></div>
 <div id='divToday' style="position:relative; top:0;">
 <table cellpadding=0 cellspacing=0 border="0" bgcolor="#FFFFFF">
-<tr><td background='<?=$g4[shop_img_path]?>/todayview01.gif' height=31 align=right><span id='todayviewcount'></span>&nbsp;&nbsp;</td></tr>
+<tr><td background='<?=G4_SHOP_IMG_URL?>/todayview01.gif' height=31 align=right><span id='todayviewcount'></span>&nbsp;&nbsp;</td></tr>
 <?
 // 오늘 본 상품이 있다면
 if ($tv_idx)
 {
     // 오늘 본 상품갯수가 보여지는 최대 이미지 수 보다 크다면 위로 화살표를 보임
     if ($tv_idx > $tv_div[img_length])
-        echo "<tr><td><img src='$g4[shop_img_path]/todayview02.gif' border='0' onclick='javascript:todayview_up();' style='cursor:pointer;'></td></tr>";
+        echo "<tr><td><img src='".G4_SHOP_IMG_URL."/todayview02.gif' border='0' onclick='javascript:todayview_up();' style='cursor:pointer;'></td></tr>";
 
     // 오늘 본 상품 이미지 출력
-    echo "<tr><td background='$g4[shop_img_path]/todayview03.gif'><table width=100% cellpadding=2>";
+    echo "<tr><td background='".G4_SHOP_IMG_URL."/todayview03.gif'><table width=100% cellpadding=2>";
     for ($i=1; $i<=$tv_div[img_length]; $i++)
     {
         echo "<tr><td align=center>";
@@ -31,14 +31,14 @@ if ($tv_idx)
 
     // 오늘 본 상품갯수가 보여지는 최대 이미지 수 보다 크다면 아래로 화살표를 보임
     if ($tv_idx > $tv_div[img_length])
-        echo "<tr><td><img src='$g4[shop_img_path]/todayview05.gif' border='0' onclick='javascript:todayview_dn();' style='cursor:pointer;'></td></tr>";
+        echo "<tr><td><img src='".G4_SHOP_IMG_URL."/todayview05.gif' border='0' onclick='javascript:todayview_dn();' style='cursor:pointer;'></td></tr>";
 }
 else
 {
-    echo "<tr><td><img src='$g4[shop_img_path]/todayview04.gif'></td></tr>";
+    echo "<tr><td><img src='".G4_SHOP_IMG_URL."/todayview04.gif'></td></tr>";
 }
 ?>
-<tr><td><a href='javascript:todayview_hidden();'><img src='<?=$g4[shop_img_path]?>/todayview06.gif' border=0></a></td></tr>
+<tr><td><a href='javascript:todayview_hidden();'><img src='<?=G4_SHOP_IMG_URL?>/todayview06.gif' border=0></a></td></tr>
 </table>
 </div>
 
@@ -83,7 +83,7 @@ function todayview_hidden()
 function todayview_move(current)
 {
     k = 0;
-    for (i=goods_current; i>0 ; i--) 
+    for (i=goods_current; i>0 ; i--)
     {
         k++;
         if (k > goods_length)
@@ -110,7 +110,7 @@ function todayview_dn()
 
 <?
 $k=0;
-for ($i=$tv_idx; $i>0; $i--) 
+for ($i=$tv_idx; $i>0; $i--)
 {
     $k++;
     if ($k > $tv_div[img_length])
@@ -128,14 +128,14 @@ if ($tv_idx)
 </script>
 
 <script language=javascript>
-function CheckUIElements() 
+function CheckUIElements()
 {
     var yMenuFrom, yMenuTo, yButtonFrom, yButtonTo, yOffset, timeoutNextCheck;
 
     yMenuFrom   = parseInt (document.getElementById('divToday').style.top, 10);
-    if ( g4_is_gecko ) 
+    if ( g4_is_gecko )
         yMenuTo = top.pageYOffset + <?=$tv_div[top]?>;
-    else if ( g4_is_ie ) 
+    else if ( g4_is_ie )
         yMenuTo = document.body.scrollTop + parseInt('<?=$tv_div[top]?>');
 
     timeoutNextCheck = 500;
@@ -163,7 +163,7 @@ function CheckUIElements()
 function OnLoad() {
     var y;
 
-    if ( top.frames.length ) 
+    if ( top.frames.length )
         document.getElementById('divToday').style.display = '';
 
     CheckUIElements();

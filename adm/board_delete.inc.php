@@ -1,7 +1,7 @@
 <?
 // board_delete.php , boardgroup_delete.php 에서 include 하는 파일
 
-if (!defined("_GNUBOARD_")) exit;
+if (!defined('_GNUBOARD_')) exit;
 if (!defined("_BOARD_DELETE_")) exit; // 개별 페이지 접근 불가
 
 // $tmp_bo_table 에는 $bo_table 값을 넘겨주어야 함

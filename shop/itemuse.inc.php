@@ -1,28 +1,28 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
-include_once("$g4[path]/lib/thumb.lib.php");
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+include_once(G4_LIB_PATH.'/thumb.lib.php');
 ?>
 
 <!-- 사용후기 -->
 <a name="use"></a>
 <div id='item_use' style='display:block;'>
 <table width=100% cellpadding=0 cellspacing=0>
-<tr><td rowspan=2 width=31 valign=top bgcolor=#BDD3E5><img src='<?=$g4[shop_img_path]?>/item_t02.gif'></td><td height=2 bgcolor=#BDD3E5></td></tr> 
+<tr><td rowspan=2 width=31 valign=top bgcolor=#BDD3E5><img src='<?=G4_SHOP_IMG_URL?>/item_t02.gif'></td><td height=2 bgcolor=#BDD3E5></td></tr>
 <tr><td style='padding:15px;'>
         <table width=100% cellpadding=0 cellspacing=0 border=0>
         <tr>
-            <td width=11><img src='<?=$g4[shop_img_path]?>/corner01.gif'></td>
+            <td width=11><img src='<?=G4_SHOP_IMG_URL?>/corner01.gif'></td>
             <td valign=top>
                 <table width=100% height=31 cellpadding=0 cellspacing=0 border=0>
                 <tr align=center>
-                    <td width=40 background='<?=$g4[shop_img_path]?>/box_bg01.gif'>번호</td>
-                    <td background='<?=$g4[shop_img_path]?>/box_bg01.gif'>제목</td>
-                    <td width=80 background='<?=$g4[shop_img_path]?>/box_bg01.gif'>작성자</td>
-                    <td width=100 background='<?=$g4[shop_img_path]?>/box_bg01.gif'>작성일</td>
-                    <td width=80 background='<?=$g4[shop_img_path]?>/box_bg01.gif'>평가점수</td>
+                    <td width=40 background='<?=G4_SHOP_IMG_URL?>/box_bg01.gif'>번호</td>
+                    <td background='<?=G4_SHOP_IMG_URL?>/box_bg01.gif'>제목</td>
+                    <td width=80 background='<?=G4_SHOP_IMG_URL?>/box_bg01.gif'>작성자</td>
+                    <td width=100 background='<?=G4_SHOP_IMG_URL?>/box_bg01.gif'>작성일</td>
+                    <td width=80 background='<?=G4_SHOP_IMG_URL?>/box_bg01.gif'>평가점수</td>
                 </tr>
-                </table></td>            
-            <td width=11><img src='<?=$g4[shop_img_path]?>/corner02.gif'></td>
+                </table></td>
+            <td width=11><img src='<?=G4_SHOP_IMG_URL?>/corner02.gif'></td>
         </tr>
         <?
         $sql_common = " from $g4[yc4_item_ps_table] where it_id = '$it[it_id]' and is_confirm = '1' ";
@@ -39,10 +39,10 @@ include_once("$g4[path]/lib/thumb.lib.php");
         $sql = "select * $sql_common order by is_id desc limit $use_from_record, $use_page_rows ";
         $result = sql_query($sql);
 
-        for ($i=0; $row=sql_fetch_array($result); $i++) 
+        for ($i=0; $row=sql_fetch_array($result); $i++)
         {
             if ($i > 0)
-                echo "<tr><td colspan=3 background='$g4[shop_img_path]/dot_line.gif' height='1'></td></tr>";
+                echo "<tr><td colspan=3 background='".G4_SHOP_IMG_URL."/dot_line.gif' height='1'></td></tr>";
 
             $num = $use_total_count - ($use_page - 1) * $use_page_rows - $i;
 
@@ -54,14 +54,14 @@ include_once("$g4[path]/lib/thumb.lib.php");
             $is_content = $row[is_content];
             //$is_content = preg_replace_callback("#<img[^>]+>#iS", "g4_thumb", $is_content);
 
-            $thumb = new g4_thumb("$g4[path]/data/itemuse", 500);
+            $thumb = new g4_thumb(G4_DATA_PATH."/itemuse", 500);
             $is_content = $thumb->run($is_content);
 
             $is_time = substr($row[is_time], 2, 14);
 
             echo "
             <tr>
-                <td width=11 background='$g4[shop_img_path]/box_bg02.gif'></td>
+                <td width=11 background='".G4_SHOP_IMG_URL."/box_bg02.gif'></td>
                 <td valign=top>
                     <table width=100% cellpadding=0 cellspacing=0 border=0>
                     <tr align=center>
@@ -70,11 +70,11 @@ include_once("$g4[path]/lib/thumb.lib.php");
                             <b><a href='javascript:;' onclick=\"use_menu('is$i')\"><b>$is_subject</b></a></b>
                         <td width=80>$is_name</td>
                         <td width=100>$is_time</td>
-                        <td width=80><img src='$g4[shop_img_path]/star{$star}.gif' border=0></td>
+                        <td width=80><img src='".G4_SHOP_IMG_URL."/star{$star}.gif' border=0></td>
                     </tr>
                     </table>
-                
-                    <div id='is$i' style='display:none;'> 
+
+                    <div id='is$i' style='display:none;'>
                     <table width=100% cellpadding=0 cellspacing=0 border=0>
                     <tr>
                         <td style='padding:10px;' class=lh>{$is_content}</td>
@@ -103,14 +103,14 @@ include_once("$g4[path]/lib/thumb.lib.php");
                             <input type=hidden name=w value=''>
                             <input type=hidden name=is_id value=''>
                             <input type=hidden name=it_id value='{$it[it_id]}'>
-                            패스워드 : <input type=password class=ed name=is_password required itemname='패스워드'> 
-                            <input type=image src='{$g4[shop_img_path]}/btn_confirm.gif' border=0 align=absmiddle></a>
+                            패스워드 : <input type=password class=ed name=is_password required itemname='패스워드'>
+                            <input type=image src='".G4_SHOP_IMG_URL."/btn_confirm.gif' border=0 align=absmiddle></a>
                             </form>
                         </td>
                     </tr>
                     </table>
                     </div></td>
-                <td width=11 background='$g4[shop_img_path]/box_bg03.gif'>&nbsp;</td></tr>
+                <td width=11 background='".G4_SHOP_IMG_URL."/box_bg03.gif'>&nbsp;</td></tr>
             </tr>
             ";
         }
@@ -119,38 +119,38 @@ include_once("$g4[path]/lib/thumb.lib.php");
         {
             echo "
             <tr>
-                <td width=11 background='$g4[shop_img_path]/box_bg02.gif'></td>
+                <td width=11 background='".G4_SHOP_IMG_URL."/box_bg02.gif'></td>
                 <td height=100 align=center class=lh>
                     이 상품에 대한 사용후기가 아직 없습니다.<br>
                     사용후기를 작성해 주시면 다른 분들께 많은 도움이 됩니다.</td>
-                <td width=11 background='$g4[shop_img_path]/box_bg03.gif'>&nbsp;</td></tr>
+                <td width=11 background='".G4_SHOP_IMG_URL."/box_bg03.gif'>&nbsp;</td></tr>
             </tr>";
         }
 
         $use_pages = get_paging(10, $use_page, $use_total_page, "./item.php?it_id=$it_id&$qstr&use_page=", "#use");
         if ($use_pages)
         {
-            echo "<tr><td colspan=3 background='$g4[shop_img_path]/dot_line.gif'></td></tr>";
+            echo "<tr><td colspan=3 background='".G4_SHOP_IMG_URL."/dot_line.gif'></td></tr>";
             echo "<tr>";
-            echo "<td width=11 background='$g4[shop_img_path]/box_bg02.gif'></td>";
+            echo "<td width=11 background='".G4_SHOP_IMG_URL."/box_bg02.gif'></td>";
             echo "<td height=22 align=center>$use_pages</td>";
-            echo "<td width=11 background='$g4[shop_img_path]/box_bg03.gif'>&nbsp;</td></tr>";
+            echo "<td width=11 background='".G4_SHOP_IMG_URL."/box_bg03.gif'>&nbsp;</td></tr>";
             echo "</tr>";
         }
         ?>
         <tr>
-            <td width=11><img src='<?=$g4[shop_img_path]?>/corner03.gif'></td>
-            <td width=100% background='<?=$g4[shop_img_path]?>/box_bg04.gif'></td>
-            <td width=11><img src='<?=$g4[shop_img_path]?>/corner04.gif'></td>
+            <td width=11><img src='<?=G4_SHOP_IMG_URL?>/corner03.gif'></td>
+            <td width=100% background='<?=G4_SHOP_IMG_URL?>/box_bg04.gif'></td>
+            <td width=11><img src='<?=G4_SHOP_IMG_URL?>/corner04.gif'></td>
         </tr>
         </table>
-        
-        
-        
+
+
+
         <table width=100% cellpadding=0 cellspacing=0>
-        <tr><td colspan=2 height=35>* 이 상품을 사용해 보셨다면 사용후기를 써 주십시오. 
+        <tr><td colspan=2 height=35>* 이 상품을 사용해 보셨다면 사용후기를 써 주십시오.
             <!-- <input type=image src='<?="$g4[shop_img_path]/btn_story.gif"?>' onclick="itemuse_insert();" align=absmiddle></td></tr> -->
-            <input type=image src='<?="$g4[shop_img_path]/btn_story.gif"?>' onclick="itemusewin('it_id=<?=$it_id?>');" align=absmiddle></td></tr>
+            <input type=image src='<?=G4_SHOP_IMG_URL."/btn_story.gif"?>' onclick="itemusewin('it_id=<?=$it_id?>');" align=absmiddle></td></tr>
         </table>
 
 <script>
@@ -176,7 +176,7 @@ function itemusewin(query_string)
             <td>&nbsp;<input type="text" name="is_name" class=ed maxlength=20 minlength=2 required itemname="이름"></td></tr>
         <tr bgcolor=#fafafa>
             <td height=30 align=right>패스워드&nbsp;</td>
-            <td>&nbsp;<input type="password" name="is_password" class=ed maxlength=20 minlength=3 required itemname="패스워드"> 
+            <td>&nbsp;<input type="password" name="is_password" class=ed maxlength=20 minlength=3 required itemname="패스워드">
                 <span class=small>패스워드는 최소 3글자 이상 입력하십시오.</span></td></tr>
         <? } ?>
 
@@ -189,18 +189,18 @@ function itemusewin(query_string)
         <tr bgcolor=#fafafa>
             <td height=30 align=right>평가&nbsp;</td>
             <td>
-                <input type=radio name=is_score value='10' checked><img src='<?=$g4[shop_img_path]?>/star5.gif' align=absmiddle>
-                <input type=radio name=is_score value='8'><img src='<?=$g4[shop_img_path]?>/star4.gif' align=absmiddle>
-                <input type=radio name=is_score value='6'><img src='<?=$g4[shop_img_path]?>/star3.gif' align=absmiddle>
-                <input type=radio name=is_score value='4'><img src='<?=$g4[shop_img_path]?>/star2.gif' align=absmiddle>
-                <input type=radio name=is_score value='2'><img src='<?=$g4[shop_img_path]?>/star1.gif' align=absmiddle></td></tr>
+                <input type=radio name=is_score value='10' checked><img src='<?=G4_SHOP_IMG_URL?>/star5.gif' align=absmiddle>
+                <input type=radio name=is_score value='8'><img src='<?=G4_SHOP_IMG_URL?>/star4.gif' align=absmiddle>
+                <input type=radio name=is_score value='6'><img src='<?=G4_SHOP_IMG_URL?>/star3.gif' align=absmiddle>
+                <input type=radio name=is_score value='4'><img src='<?=G4_SHOP_IMG_URL?>/star2.gif' align=absmiddle>
+                <input type=radio name=is_score value='2'><img src='<?=G4_SHOP_IMG_URL?>/star1.gif' align=absmiddle></td></tr>
         <tr bgcolor=#fafafa>
             <td width=100 align=right><img id='kcaptcha_image_use' /></td>
             <td>
                 &nbsp;<input type='text' name='is_key' class='ed' required itemname='자동등록방지용 코드'>
                 &nbsp;* 왼쪽의 자동등록방지 코드를 입력하세요.</td></tr>
         <tr><td height=2 bgcolor=#6ea7d3 colspan=2></td></tr>
-        <tr><td colspan=2 align=right height=30><input type=image src='<?=$g4[shop_img_path]?>/btn_confirm.gif' border=0></a></td></tr>
+        <tr><td colspan=2 align=right height=30><input type=image src='<?=G4_SHOP_IMG_URL?>/btn_confirm.gif' border=0></a></td></tr>
         </table>
         </form>
         <br><br>
@@ -213,11 +213,11 @@ function itemusewin(query_string)
 
 
 <script type="text/javascript">
-function fitemuse_submit(f) 
+function fitemuse_submit(f)
 {
-    if (!check_kcaptcha(f.is_key)) { 
-        return false; 
-    } 
+    if (!check_kcaptcha(f.is_key)) {
+        return false;
+    }
 
     f.action = "itemuseupdate.php"
     return true;
@@ -279,7 +279,7 @@ function itemuse_delete(f, idx)
         if (confirm("삭제하시겠습니까?"))
             f.submit();
     }
-    else 
+    else
     {
         id.style.display = 'none';
         document.getElementById('itemuse_password'+idx).style.display = 'block';

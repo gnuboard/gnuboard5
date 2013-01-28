@@ -104,10 +104,10 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_content">내용<strong class="sound_only">필수</strong></label></th>
-    <td><?=editor_html("wr_content", $content);?></td>
+    <td><?=editor_html("wr_content", $content, $is_dhtml_editor);?></td>
 </tr>
 
-<? for ($i=1; $is_link && $i<=$g4['link_count']; $i++) { ?>
+<? for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?=$i?>">링크 #<?=$i?></label></th>
     <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" class="frm_input" size="50" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>"></td>

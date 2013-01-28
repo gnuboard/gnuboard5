@@ -1,21 +1,21 @@
 <?
-define('G4_EDITOR', 1);
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 set_session('ss_bo_table', $bo_table);
 set_session('ss_wr_id', $wr_id);
 
 // 090713
 if (!$board['bo_table']) {
-    alert('존재하지 않는 게시판입니다.', $g4['path']);
+    alert('존재하지 않는 게시판입니다.', G4_URL);
 }
 
 if (!$bo_table) {
-    alert("bo_table 값이 넘어오지 않았습니다.\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", $g4['path']);
+    alert("bo_table 값이 넘어오지 않았습니다.\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", G4_URL);
 }
 
-@include_once ($g4['path'].'/skin/board/write.head.skin.php');
+@include_once (G4_PATH.'/skin/board/write.head.skin.php');
 @include_once ($board_skin_path.'/write.head.skin.php');
 
 $notice_array = explode(',', trim($board['bo_notice']));
@@ -25,7 +25,7 @@ if (!($w == '' || $w == 'u' || $w == 'r')) {
 }
 
 if (($w == 'u' || $w == 'r') && !$write['wr_id']) {
-    alert("글이 존재하지 않습니다.\\n삭제되었거나 이동된 경우입니다.", $g4['path']);
+    alert("글이 존재하지 않습니다.\\n삭제되었거나 이동된 경우입니다.", G4_URL);
 }
 
 if ($w == '') {
@@ -283,7 +283,7 @@ if ($w == '') {
     $email = $write['wr_email'];
     $homepage = get_text($write['wr_homepage']);
 
-    for ($i=1; $i<=$g4['link_count']; $i++) {
+    for ($i=1; $i<=G4_LINK_COUNT; $i++) {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
         $link[$i] = $write['wr_link'.$i];
     }
@@ -309,7 +309,7 @@ if ($w == '') {
 
     $password_required = "required";
 
-    for ($i=1; $i<=$g4['link_count']; $i++) {
+    for ($i=1; $i<=G4_LINK_COUNT; $i++) {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
     }
 }
@@ -346,18 +346,18 @@ if ($is_guest) {
     $captcha_html = captcha_html();
 }
 
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 include_once('./board_head.php');
 
 if ($g4['https_url'])
     $action_url = "{$g4['https_url']}/{$g4['bbs']}/write_update.php";
 else
-    $action_url = "{$g4['url']}/{$g4['bbs']}/write_update.php";
+    $action_url = G4_BBS_URL."/write_update.php";
 
 include_once ($board_skin_path.'/write.skin.php');
 
 include_once('./board_tail.php');
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 
 @include_once ($board_skin_path.'/write.tail.skin.php');
 ?>

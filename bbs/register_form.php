@@ -1,7 +1,7 @@
 <?
 define('G4_CAPTCHA', 1);
 include_once('./_common.php');
-include_once($g4['path'].'/lib/register.lib.php');
+include_once(G4_PATH.'/lib/register.lib.php');
 
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));
@@ -13,7 +13,7 @@ if ($w == "") {
     // 경고창이 뜨는것을 막기위해 아래의 코드로 대체
     // alert("이미 로그인중이므로 회원 가입 하실 수 없습니다.", "./");
     if ($is_member) {
-        goto_url($g4['path']);
+        goto_url(G4_PATH);
     }
 
     // 리퍼러 체크
@@ -45,10 +45,10 @@ if ($w == "") {
 } else if ($w == 'u') {
 
     if ($is_admin) 
-        alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', $g4['path']);
+        alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', $g4['url']);
 
     if (!$member[mb_id])
-        alert('로그인 후 이용하여 주십시오.', $g4['path']);
+        alert('로그인 후 이용하여 주십시오.', $g4['url']);
 
     if ($member[mb_id] != $mb_id)
         alert('로그인된 회원과 넘어온 정보가 서로 다릅니다.');
@@ -103,7 +103,7 @@ if ($w == "") {
 $captcha_html = captcha_html(); 
 
 // 회원아이콘 경로
-$mb_icon = $g4['path'].'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
+$mb_icon = G4_PATH.'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
 
 include_once('./_head.php');
 

@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<script src="<?=$g4[path]?>/js/capslock.js"></script>
+<script src="<?=$g4['url']?>/js/capslock.js"></script>
 
 <div id="mb_confirm">
 

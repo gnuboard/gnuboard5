@@ -27,7 +27,7 @@ else
 }
 
 $g4['title'] = $t.' 쪽지 보기';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $sql = " select * from {$g4['memo_table']}
             where me_id = '$me_id'
@@ -63,11 +63,11 @@ else
 
 $mb = get_member($memo['me_'.$unkind.'_mb_id']);
 
-echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
+echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
 
-$member_skin_path = $g4['path'].'/skin/member/'.$config['cf_member_skin'];
+$member_skin_path = G4_PATH.'/skin/member/'.$config['cf_member_skin'];
 
 include_once($member_skin_path.'/memo_view.skin.php');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

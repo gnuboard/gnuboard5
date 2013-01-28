@@ -6,7 +6,7 @@ if (isset($_SESSION['ss_mb_reg']))
 
 // 회원정보가 없다면 초기 페이지로 이동
 if (!$mb['mb_id']) 
-    goto_url($g4['path']);
+    goto_url(G4_PATH);
 
 $g4['title'] = '회원가입이 완료되었습니다.';
 include_once('./_head.php');

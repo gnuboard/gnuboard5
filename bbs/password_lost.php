@@ -7,7 +7,7 @@ if ($is_member) {
 }
 
 $g4['title'] = '회원아이디/패스워드 찾기';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 if ($g4['https_url'])
     $action_url = "{$g4['https_url']}/{$g4['bbs']}/password_lost2.php";
@@ -16,5 +16,5 @@ else
 
 include_once($member_skin_path.'/password_lost.skin.php');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

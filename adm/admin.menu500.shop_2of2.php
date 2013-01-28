@@ -1,4 +1,7 @@
-<?
+<?php
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+if (!defined('G4_IS_SHOP') || !G4_IS_SHOP) return;
+
 $menu["menu500"] = array (
     array("500000", "쇼핑몰현황/기타", "$g4[shop_admin_path]/itemsellrank.php"),
     array("500100", "상품판매순위", "$g4[shop_admin_path]/itemsellrank.php"),

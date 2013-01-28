@@ -1,6 +1,6 @@
 <?
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 $g4['title'] = '게시글 저장';
 
@@ -165,8 +165,8 @@ if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
     alert('제목을 입력하여 주십시오.');
 
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
-@mkdir($g4['path'].'/data/file/'.$bo_table, 0707);
-@chmod($g4['path'].'/data/file/'.$bo_table, 0707);
+@mkdir(G4_DATA_PATH.'/file/'.$bo_table, 0707);
+@chmod(G4_DATA_PATH.'/file/'.$bo_table, 0707);
 
 $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
 
@@ -187,7 +187,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         $upload[$i]['del_check'] = true;
 
         $row = sql_fetch(" select bf_file from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-        @unlink($g4['path'].'/data/file/'.$bo_table.'/'.$row['bf_file']);
+        @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
     }
     else
         $upload[$i]['del_check'] = false;
@@ -235,7 +235,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         if ($w == 'u') {
             // 존재하는 파일이 있다면 삭제합니다.
             $row = sql_fetch(" select bf_file from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-            @unlink($g4['path'].'/data/file/'.$bo_table.'/'.$row['bf_file']);
+            @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
         }
 
         // 프로그램 원래 파일명
@@ -256,7 +256,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode($filename));
         $upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode(str_replace(' ', '_', $filename)));
 
-        $dest_file = $g4['path'].'/data/file/'.$bo_table.'/'.$upload[$i]['file'];
+        $dest_file = G4_DATA_PATH.'/file/'.$bo_table.'/'.$upload[$i]['file'];
 
         // 업로드가 안된다면 에러메세지 출력하고 죽어버립니다.
         $error_code = move_uploaded_file($tmp_file, $dest_file) or die($_FILES['bf_file']['error'][$i]);
@@ -562,7 +562,7 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     $subject = '"'.$board['bo_subject'].'" 게시판에 '.$str.'글이 올라왔습니다.';
     $link_url = $g4['url'].'/'.$g4['bbs'].'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr;
 
-    include_once($g4['path'].'/lib/mailer.lib.php');
+    include_once(G4_PATH.'/lib/mailer.lib.php');
 
     ob_start();
     include_once ('./write_update_mail.php');

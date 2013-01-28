@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit;
+if (!defined('_GNUBOARD_')) exit;
 
 include_once($g4['path'].'/lib/visit.lib.php');
 

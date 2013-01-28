@@ -1,12 +1,10 @@
 <?php
-define('G4_EDITOR', 1);
-$g4_path = "../.."; // common.php 의 상대 경로
-include_once("$g4_path/common.php");
+include_once("../../common.php");
 
-$ym = date('ym', $g4['server_time']);
+$ym = date('ym', G4_SERVER_TIME);
 
-$data_dir = $g4['ckeditor_data_path'].'/'.$ym;
-$data_url = $g4['ckeditor_data_url'].'/'.$ym;
+$data_dir = G4_EDITOR_PATH.'/'.$ym;
+$data_url = G4_EDITOR_URL.'/'.$ym;
 @mkdir($data_dir, 0707);
 @chmod($data_dir, 0707);
  
@@ -14,8 +12,6 @@ $data_url = $g4['ckeditor_data_url'].'/'.$ym;
 $funcNum = $_GET['CKEditorFuncNum'] ;
 $CKEditor = $_GET['CKEditor'] ;
 $langCode = $_GET['langCode'] ;
-
-header("Content-Type: text/html; charset=$g4[charset]");
  
 if(isset($_FILES['upload']['tmp_name'])) {
     $file_name = $_FILES['upload']['name'];

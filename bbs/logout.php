@@ -18,9 +18,9 @@ if ($url) {
 
     $link = $url;
 } else if ($bo_table) {
-    $link = $g4['bbs_path'].'/board.php?bo_table='.$bo_table;
+    $link = G4_BBS_URL.'/board.php?bo_table='.$bo_table;
 } else {
-    $link = $g4['path'];
+    $link = G4_URL;
 }
 
 goto_url($link);

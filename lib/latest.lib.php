@@ -7,9 +7,10 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
     global $g4;
 
     if (!$skin_dir) $skin_dir = 'basic';
-    $latest_skin_path = skin_path().'/latest/'.$skin_dir;
+    $latest_skin_path = G4_SKIN_PATH.'/latest/'.$skin_dir;
+    $latest_skin_url  = G4_SKIN_URL.'/latest/'.$skin_dir;
 
-    $cache_file = $g4['cache_latest_path']."/{$bo_table}_{$skin_dir}_{$rows}_{$subject_len}.php";
+    $cache_file = G4_CACHE_PATH."/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
     //if (!file_exists($cache_file)) {
     if (1) {
         $list = array();
