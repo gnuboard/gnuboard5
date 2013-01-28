@@ -295,10 +295,10 @@ table a {color:#000;text-decoration:none}
 #bo_v_act a {margin-right:5px;vertical-align:top}
 #bo_v_act strong {color:#109ff1}
 #bo_v form {padding-top:20px}
-#bo_v_bot {zoom:1}
+#bo_v_bot {border-top:1px solid #f7f7f2;padding:20px 20px;zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_bot ul {margin:0;padding:0 20px 15px;list-style:none}
+#bo_v_bot ul {margin:0;padding:0;list-style:none}
 #bo_v_nb {float:left}
 #bo_v_nb li {float:left;margin-right:5px}
 .bo_v_com {float:right}
