@@ -28,7 +28,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #captcha_wav img {border:1px solid #ddd;border-left:0;background:#494949}
 
 /* 상단 레이아웃 */
-#hd {margin-bottom:30px;height:100px;background:#fff}
+#hd {margin-bottom:30px;height:100px;border-bottom:1px solid #eee;background:#fff}
 #hd h1 {width:0;height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
