@@ -23,7 +23,7 @@ $g4['title'] = "주문상세내역 : 주문번호 - $od_id";
 include_once('./_head.php');
 ?>
 
-<img src="<?=$g4['shop_img_path']?>/top_orderinquiryview.gif" border=0><p>
+<img src="<?=G4_SHOP_IMG_URL?>/top_orderinquiryview.gif" border=0><p>
 
 <?
 $s_uq_id = $od['od_id'];
@@ -40,13 +40,13 @@ if(openwin != null) {
 </script>
 
 <br>
-<div align=right><img src='<?=$g4[shop_img_path]?>/status01.gif' align=absmiddle> : 주문대기, <img src='<?=$g4[shop_img_path]?>/status02.gif' align=absmiddle> : 상품준비중, <img src='<?=$g4[shop_img_path]?>/status03.gif' align=absmiddle> : 배송중, <img src='<?=$g4[shop_img_path]?>/status04.gif' align=absmiddle> : 배송완료</div>
+<div align=right><img src='<?=G4_SHOP_IMG_URL?>/status01.gif' align=absmiddle> : 주문대기, <img src='<?=G4_SHOP_IMG_URL?>/status02.gif' align=absmiddle> : 상품준비중, <img src='<?=G4_SHOP_IMG_URL?>/status03.gif' align=absmiddle> : 배송중, <img src='<?=G4_SHOP_IMG_URL?>/status04.gif' align=absmiddle> : 배송완료</div>
 
 <table width=98% cellpadding=0 cellspacing=7 align=center>
 <tr><td colspan=2>
-    <img src='<?=$g4[shop_img_path]?>/my_icon.gif' align=absmiddle> <B>주문번호 : <FONT COLOR="#D60B69"><?=$od[od_id]?></FONT></B></td></tr>
+    <img src='<?=G4_SHOP_IMG_URL?>/my_icon.gif' align=absmiddle> <B>주문번호 : <FONT COLOR="#D60B69"><?=$od[od_id]?></FONT></B></td></tr>
 <tr><td colspan=2 height=2 bgcolor=#94A9E7></td></tr>
-<tr><td align=center bgcolor=#F3F2FF><img src='<?=$g4[shop_img_path]?>/t_data02.gif'></td>
+<tr><td align=center bgcolor=#F3F2FF><img src='<?=G4_SHOP_IMG_URL?>/t_data02.gif'></td>
     <td style='padding:20px'>
         <table cellpadding=4 cellspacing=0>
         <colgroup width=120>
@@ -59,7 +59,7 @@ if(openwin != null) {
         <tr><td>· E-mail</td><td>: <? echo $od[od_email] ?></td></tr>
     </table></td></tr>
 <tr><td colspan=2 height=1 bgcolor=#738AC6></td></tr>
-<tr><td align=center bgcolor=#F3F2FF><img src='<?=$g4[shop_img_path]?>/t_data03.gif'></td>
+<tr><td align=center bgcolor=#F3F2FF><img src='<?=G4_SHOP_IMG_URL?>/t_data03.gif'></td>
     <td style='padding:20px'>
         <table cellpadding=4 cellspacing=0>
         <colgroup width=120>
@@ -94,7 +94,7 @@ $dl = sql_fetch(" select * from $g4[yc4_delivery_table] where dl_id = '$od[dl_id
 
 if ($od[od_invoice] || !$od[misu])
 {
-    echo "<tr><td align=center bgcolor='#F3F2FF'><img src='$g4[shop_img_path]/t_data05.gif'></td>";
+    echo "<tr><td align=center bgcolor='#F3F2FF'><img src='".G4_SHOP_IMG_URL."/t_data05.gif'></td>";
     echo "<td style='padding:20px'>";
     if (is_array($dl))
     {
@@ -127,7 +127,7 @@ if ($od['od_amount'] == $od['od_receipt_amount']) {
 $misu_amount = $od['od_amount'] - $od['od_receipt_amount'];
 
 echo "<tr>";
-echo "<td align=center bgcolor=#FFEFFD height=60><img src='$g4[shop_img_path]/t_data04.gif'></td>";
+echo "<td align=center bgcolor=#FFEFFD height=60><img src='".G4_SHOP_IMG_URL."/t_data04.gif'></td>";
 echo "<td style='padding:20px'>";
 
 if ($od['od_settle_case'] == '신용카드')
