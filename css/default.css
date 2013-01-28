@@ -239,7 +239,7 @@ table a {color:#000;text-decoration:none}
 #bo_w caption {padding:0;height:0;overflow:hidden}
 
 /* 게시판 목록 */
-.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ddd;background:#eee;color:#000;text-decoration:none}
+.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none}
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
@@ -263,9 +263,9 @@ table a {color:#000;text-decoration:none}
 #bo_v {position:relative;margin-bottom:30px}
 #bo_v a {color:#000;text-decoration:none}
 #bo_v_h1 {padding:30px 20px 10px;font-size:1.2em;line-height:1.4em}
-#bo_v_info {padding:0 20px 15px}
+#bo_v_info {padding:0 20px 15px;border-bottom:1px solid #f0f0f0}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_info strong {display:inline-block;margin:0 10px 0 5px;font-weight:normal}
+#bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
 #bo_v_top {zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
@@ -304,7 +304,7 @@ table a {color:#000;text-decoration:none}
 .bo_v_com li {float:left;margin-left:5px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 20px 10px;padding:10px 20px 20px 20px;background:#f9f9f9}
+#bo_vc {margin:0 20px 10px;padding:10px 20px 20px 20px;background:#f7f7f2}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #eee}
 #bo_vc header {position:relative;zoom:1}
@@ -314,6 +314,7 @@ table a {color:#000;text-decoration:none}
 #bo_vc h1 {display:inline-block;margin:15px 10px 5px 0}
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
+#bo_vc p a {text-decoration:underline}
 #bo_vc fieldset {margin:0 0 10px;padding:0}
 #bo_vc_w {zoom:1}
 #bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}

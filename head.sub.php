@@ -7,7 +7,6 @@ $begin_time = get_microtime();
 if (!isset($g4['title']))
     $g4['title'] = $config['cf_title'];
 
-
 // 현재 접속자
 //$lo_location = get_text($g4[title]);
 //$lo_location = $g4[title];
@@ -25,17 +24,22 @@ header("Cache-Control: no-cache"); // HTTP/1.1
 header("Expires: 0"); // rfc2616 - Section 14.21
 header("Pragma: no-cache"); // HTTP/1.0
 */
+
+$g4_css = "";
+if (G4_IS_MOBILE) $g4_css = "mobile";
+else $g4_css = "default";
 ?>
 <!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<? if (G4_IS_MOBILE) {?><meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" /><? } ?>
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
 <title><?=$g4['title']?></title>
 <? if (isset($administrator)) { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/adm.css?=<?=date("md")?>">
 <? } else { ?>
-<link rel="stylesheet" href="<?=G4_CSS_URL?>/default.css?=<?=date("md")?>">
+<link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=$g4_css?>.css?=<?=date("md")?>">
 <?}?>
 <!--[if lte IE 8]>
 <script src="<?=$g4['url']?>/js/html5.js"></script>
