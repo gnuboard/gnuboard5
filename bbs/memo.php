@@ -5,7 +5,7 @@ if ($is_guest)
     alert_close('회원만 이용하실 수 있습니다.');
 
 $g4['title'] = '내 쪽지함';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 // 설정일이 지난 메모 삭제
 $sql = " delete from {$g4['memo_table']}
@@ -74,9 +74,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['del_href'] = './memo_delete.php?me_id='.$row['me_id'].'&amp;kind='.$kind;
 }
 
-echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
+echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
 
 include_once($member_skin_path.'/memo.skin.php');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

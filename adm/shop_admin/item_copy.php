@@ -33,10 +33,7 @@ include_once("$g4[path]/head.sub.php");
 function _copy(link)
 {
     var new_it_id = document.getElementById('new_it_id').value;
-    if (g4_charset.toUpperCase() == 'EUC-KR') 
-        opener.parent.location.href = link+'&new_it_id='+new_it_id;
-    else
-        opener.parent.location.href = encodeURI(link+'&new_it_id='+new_it_id);
+    opener.parent.location.href = encodeURI(link+'&new_it_id='+new_it_id);
     self.close();
 }
 </script>

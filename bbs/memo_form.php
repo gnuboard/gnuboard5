@@ -33,7 +33,7 @@ if ($me_recv_mb_id)
 }
 
 $g4['title'] = '쪽지 보내기';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 if ($g4['https_url'])
     $memo_action_url = "{$g4['https_url']}/{$g4['bbs']}/memo_form_update.php";
@@ -42,5 +42,5 @@ else
 
 include_once($member_skin_path.'/memo_form.skin.php');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

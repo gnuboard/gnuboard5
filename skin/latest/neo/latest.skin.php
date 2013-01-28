@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <div class="lt">
-    <strong class="lt_title"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><?=$bo_subject?></a></strong>
+    <strong class="lt_title"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>"><?=$bo_subject?></a></strong>
     <ul>
     <? for ($i=0; $i<count($list); $i++) { ?>
         <li>
@@ -23,11 +23,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
             // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
 
+            /* 아이콘 작업 전까지 주석처리
             if (isset($list[$i]['icon_new']))    echo " " . $list[$i]['icon_new'];
             if (isset($list[$i]['icon_hot']))    echo " " . $list[$i]['icon_hot'];
             if (isset($list[$i]['icon_file']))   echo " " . $list[$i]['icon_file'];
             if (isset($list[$i]['icon_link']))   echo " " . $list[$i]['icon_link'];
             if (isset($list[$i]['icon_secret'])) echo " " . $list[$i]['icon_secret'];
+            */
             ?>
         </li>
     <? } ?>
@@ -35,5 +37,5 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <? if (count($list) == 0) { //게시물이 없을 때 ?>
     <p>게시물이 없습니다.</p>
     <? } ?>
-    <div class="lt_more"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>"><img src="<?=$latest_skin_path?>/img/icon_more.gif" alt="더보기"></a></div>
+    <div class="lt_more"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>"><img src="<?=$latest_skin_url?>/img/icon_more.gif" alt="더보기"></a></div>
 </div>

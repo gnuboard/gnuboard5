@@ -5,7 +5,7 @@ if (!$member[mb_id])
     alert_close('회원만 조회하실 수 있습니다.');
 
 $g4['title'] = $member[mb_nick].' 님의 포인트 내역';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $list = array();
 
@@ -117,5 +117,5 @@ $(function() {
 </script>
 
 <?
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

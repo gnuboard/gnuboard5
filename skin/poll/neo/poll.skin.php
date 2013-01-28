@@ -13,13 +13,13 @@ if (!$po_id) {
 $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
 ?>
 
-<form name="fpoll" method="post" action="<?=$g4['bbs_url']?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="winPoll">
+<form name="fpoll" method="post" action="<?=G4_BBS_URL?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="win_poll">
 <input type="hidden" name="po_id" value="<?=$po_id?>">
 <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
 <section id="poll">
     <header>
         <h2>설문조사</h2>
-        <? if ($is_admin == "super") { ?><a href="<?=$g4['admin_url']?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문조사 관리</a><? } ?>
+        <? if ($is_admin == "super") { ?><a href="<?=G4_ADM_URL?>/poll_form.php?w=u&amp;po_id=<?=$po_id?>">설문조사 관리</a><? } ?>
         <p><?=$po['po_subject']?></p>
     </header>
     <ul>
@@ -29,7 +29,7 @@ $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
     </ul>
     <footer>
         <input type="submit" class="btn_submit" value="투표하기">
-        <a href="<?="{$g4['bbs_path']}/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir"?>" class="btn_cancel" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
+        <a href="<?=G4_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir"?>" class="btn_cancel" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
     </footer>
 </section>
 </form>
@@ -37,6 +37,11 @@ $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
 <script>
 function fpoll_submit(f)
 {
+    <?
+    if ($member['mb_level'] < $po['po_level'])
+        echo " alert('권한 {$po['po_level']} 이상의 회원만 투표에 참여하실 수 있습니다.'); return false; ";
+    ?>
+
     var chk = false;
     for (i=0; i<f.gb_poll.length;i ++) {
         if (f.gb_poll[i].checked == true) {
@@ -45,13 +50,8 @@ function fpoll_submit(f)
         }
     }
 
-    <?
-    if ($member['mb_level'] < $po['po_level'])
-        echo " alert('권한 {$po['po_level']} 이상의 회원만 투표에 참여하실 수 있습니다.'); return false; ";
-    ?>
-
     if (!chk) {
-        alert("항목을 선택하세요");
+        alert("투표하실 설문항목을 선택하세요");
         return false;
     }
 

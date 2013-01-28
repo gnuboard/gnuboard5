@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // 분류 사용 여부
 $is_category = false;
@@ -111,7 +111,7 @@ while ($row = sql_fetch_array($result))
     if ($sca || $stx)
         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
 
-    $list[$i] = get_list($row, $board, $board_skin_path, $board['bo_subject_len']);
+    $list[$i] = get_list($row, $board, $board_skin_url, $board['bo_subject_len']);
     if (strstr($sfl, 'subject')) {
         $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
     }

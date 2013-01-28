@@ -1,7 +1,7 @@
 <?
 define('G4_CAPTCHA', 1);
 include_once('./_common.php');
-include_once("{$g4['path']}/lib/mailer.lib.php");
+include_once("{G4_PATH}/lib/mailer.lib.php");
 
 if (!$config['cf_email_use'])
     alert('환경설정에서 "메일발송 사용"에 체크하셔야 메일을 발송할 수 있습니다.\\n\\n관리자에게 문의하시기 바랍니다.');
@@ -46,9 +46,9 @@ mailer($fnick, $fmail, $to, $subject, $mail_content, $type, $file);
 
 //$html_title = $tmp_to . "님께 메일발송";
 $html_title = '메일 발송중';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 alert_close('메일을 정상적으로 발송하였습니다.');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

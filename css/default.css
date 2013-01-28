@@ -264,7 +264,7 @@ table a {color:#000;text-decoration:none}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info div {padding:0 20px}
 #bo_v_info strong {display:inline-block;margin:0 10px 0 5px;font-weight:normal}
-#bo_v_top {border-right:1px solid #eee;background:#fff;zoom:1}
+#bo_v_top {padding-top:10px;border-right:1px solid #eee;background:#fff;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_top ul {margin-bottom:10px;padding:0 20px;list-style:none}
@@ -313,10 +313,12 @@ table a {color:#000;text-decoration:none}
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc fieldset {margin:0 0 10px;padding:0}
-#bo_vc #bo_vc_winfo {float:left}
-#bo_vc #captcha {float:left;margin-left:10px;padding:0 5px 0 0;border:0}
-#bo_vc #captcha a {display:inline-block;margin-right:5px;text-decoration:underline;vertical-align:middle}
-#bo_vc .fieldset_input {margin-right:5px}
+#bo_vc_w {zoom:1}
+#bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_vc_w #bo_vc_winfo {float:left}
+#bo_vc_w #captcha {float:left;margin-left:10px;padding:0 5px 0 0;border:0}
+#bo_vc_w #captcha a {display:inline-block;margin-right:5px;text-decoration:underline;vertical-align:middle}
+#bo_vc .fs_input {margin-right:5px}
 #bo_vc footer {zoom:1}
 #bo_vc footer:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act {float:right;margin:0;list-style:none;zoom:1}

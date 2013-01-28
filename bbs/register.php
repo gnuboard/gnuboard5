@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 // 로그인중인 경우 회원가입 할 수 없습니다.
 if ($is_member) {
-    goto_url($g4['path']);
+    goto_url(G4_PATH);
 }
 
 // 세션을 지웁니다.

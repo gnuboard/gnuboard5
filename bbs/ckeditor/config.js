@@ -26,5 +26,5 @@ CKEDITOR.editorConfig = function( config ) {
     config.fontSize_sizes = "7pt/9px;8pt/11px;9pt/12px;10pt/13px;11pt/15px;14pt/19px;18pt/24px;24pt/32px;36/48px;";
     config.enterMode = CKEDITOR.ENTER_BR;
     config.shiftEnterMode = CKEDITOR.ENTER_P;
-    config.filebrowserUploadUrl = g4_ckeditor_path+"/upload.php?type=Images";
+    config.filebrowserUploadUrl = g4_ckeditor_url+"/upload.php?type=Images";
 };

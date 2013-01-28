@@ -5,7 +5,7 @@ if (!$is_member)
     alert_close('회원만 조회하실 수 있습니다.');
 
 $g4['title'] = $member['mb_nick'].'님의 스크랩';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $list = array();
 
@@ -58,5 +58,5 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 include_once($member_skin_path.'/scrap.skin.php');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

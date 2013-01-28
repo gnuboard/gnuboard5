@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit;
+if (!defined('_GNUBOARD_')) exit;
 ?>
 
     <noscript>
@@ -16,8 +16,8 @@ if (!defined("_GNUBOARD_")) exit;
 
 <!-- <p>실행시간 : <?=get_microtime() - $begin_time;?> -->
 
-<script src="<?=$g4['admin_path']?>/admin.js"></script>
+<script src="<?=G4_ADM_PATH?>/admin.js"></script>
 
 <?
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

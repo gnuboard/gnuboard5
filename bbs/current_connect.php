@@ -26,7 +26,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $list[$i]['num'] = sprintf('%03d',$i+1);
 }
 
-echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
+echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
 
 include_once($connect_skin_path.'/current_connect.skin.php');
 

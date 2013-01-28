@@ -23,6 +23,7 @@ class gcaptcha
     var $shadow = array('r'=>128, 'g'=>128, 'b'=>128);
 
     var $captcha_length = 6;
+    var $captcha_filename = '';
 
     // 이미지 크기
     function set_box_size($width, $height) {
@@ -99,7 +100,7 @@ class gcaptcha
 
         // Replace path by your own font path
         $fonts = Array();
-        foreach (glob($g4['gcaptcha_fonts'].'/*.ttf') as $filename) {
+        foreach (glob(G4_GCAPTCHA_PATH.'/fonts/*.ttf') as $filename) {
             $fonts[] = $filename;
         }
         $font = $fonts[mt_rand(0, count($fonts)-1)];
@@ -119,10 +120,34 @@ class gcaptcha
             imagettftext($im, $size, $angle, $x-2, $y-2, $grey, $font, $captcha_key);
         }
 
-        imagepng($im, captcha_file('.png'), 0, NULL);
+        $this->captcha_filename = $this->get_captcha_filename();
+
+        imagepng($im, G4_CACHE_PATH.'/'.$this->captcha_filename.'.png', 0, NULL);
         imagedestroy($im);
 
-        make_wav();
+        $this->make_wav($this->captcha_filename.'.wav');        
+    }
+
+    function get_captcha_filename()
+    {
+        return 'gcaptcha-'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'];
+    }
+
+    function make_wav($captcha_filename)
+    {
+        global $g4;
+
+        $number = (string)$_SESSION['ss_captcha_key'];
+        $wavs = array();
+        for($i=0;$i<strlen($number);$i++){
+            $file = G4_GCAPTCHA_PATH.'/wavs/'.$number[$i].'.wav';
+            $wavs[] = $file;
+        }
+
+        $wav_filepath = G4_CACHE_PATH.'/'.$captcha_filename;
+        $fp = fopen($wav_filepath, 'w+');
+        fwrite($fp, join_wavs($wavs));
+        fclose($fp);
     }
 }
 
@@ -147,10 +172,14 @@ function captcha_html($class="captcha")
     $obj = new gcaptcha();
     $obj->run();
 
-    $html  = '<fieldset id="captcha" class="'.$class.'">';
+    $png_file_url = G4_CACHE_URL.'/'.$obj->captcha_filename.'.png';
+    $wav_file_url = G4_CACHE_URL.'/'.$obj->captcha_filename.'.wav';
+
+    $html .= PHP_EOL.'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>'; 
+    $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">스팸방지</legend>';
-    $html .= '<img src="'.captcha_file('.png').'" alt="스팸방지 숫자">';
-    $html .= '<a href="'.captcha_file('.wav').'" id="captcha_wav"><img src="'.$g4['bbs_path'].'/gcaptcha/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
+    $html .= '<img src="'.$png_file_url.'" alt="스팸방지 숫자">';
+    $html .= '<a href="'.$wav_file_url.'" id="captcha_wav" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
     $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box fieldset_input" size="6" maxlength="6" required title="스팸방지 숫자 입력">';
     $html .= '<p class="sound_only">스팸방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';
@@ -175,24 +204,6 @@ function chk_captcha()
 function chk_captcha_js()
 {
     return "if (!chk_captcha()) return false;";
-}
-
-
-function make_wav()
-{
-    global $g4;
-
-    $number = (string)$_SESSION['ss_captcha_key'];
-    $wavs = array();
-    for($i=0;$i<strlen($number);$i++){
-        $file = $g4['gcaptcha_wavs'].'/'.$number[$i].'.wav';
-        $wavs[] = $file;
-    }
-
-    $wav_filepath = captcha_file('.wav');
-    $fp = fopen($wav_filepath, 'w+');
-    fwrite($fp, join_wavs($wavs));
-    fclose($fp);
 }
 
 function join_wavs($wavs)
@@ -239,13 +250,5 @@ function join_wavs($wavs)
         .pack('a4', 'data')
         .pack('V', strlen($data))
         .$data;
-}
-
-
-// 캡챠 파일의 상대 경로를 반환
-function captcha_file($extension='.png')
-{
-    global $g4;
-    return $g4['cache_captcha_path'].'/'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'].$extension;
 }
 ?>

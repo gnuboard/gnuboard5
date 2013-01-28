@@ -84,12 +84,12 @@ for ($i=0; $row2=sql_fetch_array($result); $i++) {
     $list3[$i]['subject'] = cut_str($row2['po_subject'],60,"…");
 }
 
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
-echo '<script src="'.$g4['path'].'/js/sideview.js"></script>';
+echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
 
 if (!file_exists($poll_skin_path.'/poll_result.skin.php')) die('skin error');
 include_once ($poll_skin_path.'/poll_result.skin.php');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

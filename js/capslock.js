@@ -1,8 +1,5 @@
 if (typeof(CAPSLOCK_JS) == 'undefined') // 한번만 실행
 {
-    if (typeof g4_path == 'undefined')
-        alert('g4_path 변수가 선언되지 않았습니다. js/capslock.js');
-
     var CAPSLOCK_JS = true;
 
     var capslock_delay = 3000; // "CapsLock 이 켜져 있습니다." 이미지를 몇초간 출력할 것인지?
@@ -66,5 +63,5 @@ if (typeof(CAPSLOCK_JS) == 'undefined') // 한번만 실행
         return obj.offsetTop + obj.clientTop + get_real_top(obj.offsetParent);
     }
 
-    document.write("<div id='capslock_info' style='display:none; position:absolute;'><img src='"+g4_path+"/img/capslock.gif'></div>");
+    document.write("<div id='capslock_info' style='display:none; position:absolute;'><img src='"+g4_url+"/img/capslock.gif'></div>");
 }

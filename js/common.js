@@ -1,6 +1,6 @@
 // 전역 변수
 var errmsg = "";
-var errfld;
+var errfld = null;
 
 // 필드 검사
 function check_field(fld, msg) 
@@ -296,28 +296,6 @@ function win_zip(frm_name, frm_zip1, frm_zip2, frm_addr1, frm_addr2)
     win_open(url, "winZip", "left=50,top=50,width=616,height=460,scrollbars=1");
 }
 
-// 쪽지 창
-function win_memo(url)
-{
-    if (!url)
-        url = g4_path + "/" + g4_bbs + "/memo.php";
-    win_open(url, "winMemo", "left=50,top=50,width=620,height=460,scrollbars=1");
-}
-
-// 포인트 창
-function win_point(url)
-{
-    win_open(g4_path + "/" + g4_bbs + "/point.php", "winPoint", "left=20, top=20, width=616, height=635, scrollbars=1");
-}
-
-// 스크랩 창
-function win_scrap(url)
-{
-    if (!url)
-        url = g4_path + "/" + g4_bbs + "/scrap.php";
-    win_open(url, "scrap", "left=20, top=20, width=616, height=500, scrollbars=1");
-}
-
 // 새로운 패스워드 분실 창 : 100902
 function win_password_lost()
 {
@@ -343,14 +321,6 @@ function win_formmail(mb_id, name, email)
         win_open(g4_path+"/" + g4_bbs + "/formmail.php?mb_id="+mb_id+"&name="+name+"&email="+email, "winFormmail", "left=50, top=50, width=600, height=500, scrollbars=0");
     else
         win_open(g4_path+"/" + g4_bbs + "/formmail.php?mb_id="+mb_id+"&name="+encodeURIComponent(name)+"&email="+email, "winFormmail", "left=50, top=50, width=600, height=480, scrollbars=0");
-}
-
-// 설문조사 창
-function win_poll(url)
-{
-    if (!url)
-        url = "";
-    win_open(url, "winPoll", "left=50, top=50, width=616, height=500, scrollbars=1");
 }
 
 // 자기소개 창
@@ -477,6 +447,126 @@ var win_password_lost = function(href) {
 $(document).ready(function(){
     $("#login_password_lost, #ol_password_lost").click(function(){
         win_password_lost(this.href);
+        return false;
+    });
+});
+
+/**
+ * 포인트 창
+ **/
+var win_point = function(href) {
+    var new_win = window.open(href, 'win_point', 'left=100,top=100,width=600, height=600, scrollbars=1');
+    new_win.focus();
+}
+
+/**
+ * 쪽지 창
+ **/
+var win_memo = function(href) {
+    var new_win = window.open(href, 'win_memo', 'left=100,top=100,width=620,height=500,scrollbars=1');
+    new_win.focus();
+}
+
+/**
+ * 메일 창
+ **/
+var win_email = function(href) {
+    var new_win = window.open(href, 'win_email', 'left=100,top=100,width=600,height=580,scrollbars=0');
+    new_win.focus();
+}
+
+/**
+ * 자기소개 창
+ **/
+var win_profile = function(href) {
+    var new_win = window.open(href, 'win_profile', 'left=100,top=100,width=620,height=510,scrollbars=1');
+    new_win.focus();
+}
+
+/**
+ * 스크랩 창
+ **/
+var win_scrap = function(href) {
+    var new_win = window.open(href, 'win_scrap', 'left=100,top=100,width=600,height=600,scrollbars=1');
+    new_win.focus();
+}
+
+/**
+ * 홈페이지 창
+ **/
+var win_homepage = function(href) {
+    var new_win = window.open(href, 'win_homepage', '');
+    new_win.focus();
+}
+
+/**
+ * 우편번호 창
+ **/
+var win_zip = function(href) {
+    var new_win = window.open(href, 'win_zip', 'width=616, height=460, scrollbars=1');
+    new_win.focus();
+}
+
+/**
+ * 새로운 패스워드 분실 창 : 101123
+ **/
+win_password_lost = function(href)
+{
+    var new_win = window.open(href, 'win_password_lost', 'width=617, height=330, scrollbars=1');
+    new_win.focus();
+}
+
+/**
+ * 설문조사 결과
+ **/
+var win_poll = function(href) {
+    var new_win = window.open(href, 'win_poll', 'width=616, height=500, scrollbars=1');
+    new_win.focus();
+}
+
+$(function(){
+    $('.win_point').click(function() {
+        win_point(this.href);
+        return false;
+    });
+
+    $('.win_memo').click(function() {
+        win_memo(this.href);
+        return false;
+    });
+
+    $('.win_email').click(function() {
+        win_email(this.ref);
+        return false;
+    });
+
+    $('.win_scrap').click(function() {
+        win_scrap(this.href);
+        return false;
+    });
+
+    $('.win_profile').click(function() {
+        win_profile(this.ref);
+        return false;
+    });
+
+    $('.win_homepage').click(function() {
+        win_homepage(this.ref);
+        return false;
+    });
+
+    $('.win_zip_find').click(function() {
+        win_zip(this.href);
+        return false;
+    });
+
+    $('.win_password_lost').click(function() {
+        win_password_lost(this.href);
+        return false;
+    });
+
+    $('.win_poll').click(function() {
+        win_poll(this.href);
         return false;
     });
 });

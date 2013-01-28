@@ -3,7 +3,7 @@ global $lo_location;
 global $lo_url;
 
 include_once('./_common.php');
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 // 필수 입력입니다.
 // 양쪽 공백 없애기
 // 필수 (선택 혹은 입력)입니다.
@@ -61,5 +61,5 @@ document.location.href = "<? echo $url; ?>";
 </noscript>
 
 <?
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

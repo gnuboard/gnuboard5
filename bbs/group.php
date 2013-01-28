@@ -2,7 +2,7 @@
 // 상대 경로
 $g4_path = '..';
 include_once($g4_path.'/common.php');
-include_once($g4['path'].'/lib/latest.lib.php');
+include_once(G4_PATH.'/lib/latest.lib.php');
 
 $g4['title'] = $group[gr_subject];
 include_once('./_head.php');

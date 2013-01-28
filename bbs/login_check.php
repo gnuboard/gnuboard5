@@ -71,7 +71,7 @@ if ($url) {
         }
     }
 } else  {
-    $link = $g4['path'];
+    $link = G4_PATH;
 }
 
 goto_url($link);

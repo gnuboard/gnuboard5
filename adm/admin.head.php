@@ -1,9 +1,9 @@
 <?
-if (!defined("_GNUBOARD_")) exit;
+if (!defined('_GNUBOARD_')) exit;
 
 $begin_time = get_microtime();
 $administrator = 1;
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 function print_menu1($key, $no)
 {
@@ -69,17 +69,17 @@ function textarea_size(fld, size)
 }
 </script>
 
-<script src="<?=$g4['path']?>/js/common.js"></script>
-<script src="<?=$g4['path']?>/js/sideview.js"></script>
+<script src="<?=G4_URL?>/js/common.js"></script>
+<script src="<?=G4_URL?>/js/sideview.js"></script>
 
 <header>
 
     <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
-    <div id="logo"><a href=""><img src="<?=$g4['admin_path']?>/img/logo.png" alt="관리자 메인으로"></a></div>
+    <div id="logo"><a href="<?=G4_ADM_URL?>"><img src="<?=G4_ADM_URL?>/img/logo.png" alt="관리자 메인으로"></a></div>
     <ul id="home_link">
-        <li><a href="<?=$g4['path']?>/adm/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
-        <li><a href="<?=$g4['path']?>/">홈페이지</a></li>
-        <li><a href="<?=$g4['bbs_path']?>/logout.php">로그아웃</a></li>
+        <li><a href="<?=G4_ADM_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
+        <li><a href="<?=G4_URL?>/">홈페이지</a></li>
+        <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
     </ul>
 
     <div id="current_location">
@@ -91,13 +91,13 @@ function textarea_size(fld, size)
     <nav id="gnb">
         <ul>
         <?
-        foreach($amenu as $key=>$value)
-        {
+        foreach($amenu as $key=>$value) {
             $href1 = $href2 = '';
-            if ($menu['menu'.$key][0][2])
-            {
+            if ($menu['menu'.$key][0][2]) {
                 $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
                 $href2 = '</a>';
+            } else {
+                continue;
             }
             $current_class = "";
             if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)) || $admin_index)

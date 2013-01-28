@@ -63,9 +63,9 @@ if ($addr1)
 */
 
 $g4['title'] = '우편번호 검색';
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 
 include_once($member_skin_path.'/zip.skin.php');
 
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

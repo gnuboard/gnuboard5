@@ -1,8 +1,8 @@
 <?
 define('G4_CAPTCHA', 1);
 include_once('./_common.php');
-include_once($g4['path'].'/lib/register.lib.php');
-include_once($g4['path'].'/lib/mailer.lib.php');
+include_once(G4_PATH.'/lib/register.lib.php');
+include_once(G4_PATH.'/lib/mailer.lib.php');
 
 // 리퍼러 체크
 referer_check();
@@ -12,7 +12,7 @@ if (!($w == '' || $w == 'u')) {
 }
 
 if ($w == 'u' && $is_admin == 'super') {
-    if (file_exists($g4['path'].'/DEMO'))
+    if (file_exists(G4_PATH.'/DEMO'))
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
@@ -89,7 +89,7 @@ if ($w == '' || $w == 'u') {
     if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg);
 }
 
-$mb_dir = $g4['path'].'/data/member/'.substr($mb_id,0,2);
+$mb_dir = G4_PATH.'/data/member/'.substr($mb_id,0,2);
 
 // 아이콘 삭제
 if (isset($_POST['del_mb_icon'])) {
@@ -307,7 +307,7 @@ if ($w == '') {
 
 
 // 사용자 코드 실행
-@include_once ($g4['path'].'/skin/member/'.$config['cf_member_skin'].'/register_update.skin.php');
+@include_once (G4_PATH.'/skin/member/'.$config['cf_member_skin'].'/register_update.skin.php');
 
 
 if ($msg)
@@ -321,7 +321,7 @@ if ($w == "") {
 
     if ($old_email != $mb_email && $config['cf_use_email_certify']) {
         set_session("ss_mb_id", "");
-        alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', $g4['path']);
+        alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', G4_PATH);
     } else {
         alert('회원 정보가 수정 되었습니다.', $g4['url']);
         /*
