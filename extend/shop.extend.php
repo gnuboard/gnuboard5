@@ -30,14 +30,19 @@ define(_MISU_QUERY_, "
 $g4['shop']           = "shop";
 $g4['shop_path']      = "$g4[path]/$g4[shop]";
 $g4['shop_url']       = "$g4[url]/$g4[shop]";
+define('G4_SHOP_PATH',  G4_PATH.'/shop');
+define('G4_SHOP_URL',   G4_URL.'/shop');
 
 $g4['shop_admin']     = "shop_admin";
 $g4['shop_admin_path']= "$g4[path]/$g4[admin]/$g4[shop_admin]";
 $g4['shop_admin_url'] = "$g4[url]/$g4[admin]/$g4[shop_admin]";
+define('G4_SHOP_ADMIN_PATH',  G4_ADMIN_PATH.'/shop_admin');
+define('G4_SHOP_ADMIN_URL',   G4_ADMIN_URL.'/shop_admin');
 
 $g4['shop_img']       = "img";
 $g4['shop_img_path']  = "$g4[path]/$g4[shop]/$g4[shop_img]";
 $g4['shop_img_url']   = "$g4[url]/$g4[shop]/$g4[shop_img]";
+define('G4_SHOP_IMG_URL',   G4_SHOP_URL.'/img');
 
 // 쇼핑몰 테이블명
 $g4['yc4_default_table']       = "yc4_default";               // 쇼핑몰설정 테이블
