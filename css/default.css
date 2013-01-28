@@ -83,13 +83,13 @@ pre {overflow-x:scroll;font-size:1.1em}
 #idx_catch {margin-bottom:10px;padding: 25px 0 25px}
 
 /* 버튼 */
-.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #0c6fa7 !important;background:#0075b8 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
+.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #239ce2 !important;background:#109ff1 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none;line-height:2.2em}
 .btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949 !important;background:#494949 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#484848;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em}
-.btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#0075b8;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
+.btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em;cursor:pointer}
 
@@ -171,7 +171,7 @@ table a {color:#000;text-decoration:none}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
 #ol_after_private a {display:block;padding-top:8px;height:37px;background:#f7f7f2;text-align:center}
-#ol_after_private a strong {display:block;padding-top:5px;color:#0075b8}
+#ol_after_private a strong {display:block;padding-top:5px;color:#109ff1}
 #ol_after_memo {width:50px;margin-right:1px}
 #ol_after_pt {width:90px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
@@ -237,7 +237,7 @@ table a {color:#000;text-decoration:none}
 #bo_w caption {padding:0;height:0;overflow:hidden}
 
 /* 게시판 목록 */
-.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #494949;background:#494949;color:#fff;text-decoration:none}
+.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ddd;background:#eee;color:#000;text-decoration:none}
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
@@ -247,14 +247,14 @@ table a {color:#000;text-decoration:none}
 .btn_bo_user li {float:left;margin-left:5px}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
 #bo_list td {line-height:1em}
-#bo_list strong {color:#0075b8}
+#bo_list strong {color:#109ff1}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .bo_notice {}
 .bo_cate_link {display:inline-block;padding:0 8px 0 0;border-right:1px solid #ddd;font-weight:bold;text-decoration:none} /* 글제목 줄 분류스타일 */
-.bo_current {color:#0075b8}
+.bo_current {color:#109ff1}
 .td_subject img {margin-left:5px}
-.cnt_cmt {display:inline-block;margin:0 4px;color:#0075b8}
+.cnt_cmt {display:inline-block;margin:0 4px;color:#109ff1}
 
 /* 게시판 읽기 */
 #bo_v_title {}
@@ -287,10 +287,10 @@ table a {color:#000;text-decoration:none}
 #bo_v_img {margin:0 20px;width:688px;overflow:hidden}
 /*#bo_v_img img {max-width:100%;height:auto}*/
 #bo_v_con {padding:20px 0;width:688px;overflow:hidden;line-height:1.8em;word-break:break-all}
-#bo_v_con a {color:#0075b8;text-decoration:underline}
+#bo_v_con a {color:#109ff1;text-decoration:underline}
 #bo_v_act {padding:20px 0;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
-#bo_v_act strong {color:#0075b8}
+#bo_v_act strong {color:#109ff1}
 #bo_v form {padding-top:20px}
 #bo_v_bot {zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
