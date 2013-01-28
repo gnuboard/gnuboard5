@@ -764,7 +764,7 @@ if($default['de_guest_cart_use']) {
 set_session('ss_inquiry_uniqid', $od_id);
 set_session('ss_inquiry_direct', $sw_direct);
 
-goto_url("{$g4['url']}/{$g4['shop']}/orderinquiryview.php?od_id=$od_id");
+goto_url(G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id");
 ?>
 
 <html>
