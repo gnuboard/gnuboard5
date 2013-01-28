@@ -683,51 +683,51 @@ $(function() {
                         splcontent += "<li>";
                         splcontent += "<input type=\"hidden\" name=\"is_option[]\" value=\"2\" />";
                         splcontent += "<input type=\"hidden\" name=\"opt_id[]\" value=\""+ sp_id + "\" />";
-                        splcontent += '<input type="hidden" name="ct_option[]" value="'+ct_option+'" />';
-                        splcontent += '<input type="hidden" name="ct_amount[]" value="' + data.amount + '" />';
-                        splcontent += '<span class="option-stock">' + data.qty + '</span>';
-                        splcontent += '<span class="selected-supplement">' + ct_option + '</span>';
-                        splcontent += '<span class="supplement-price"> (+' + number_format(String(data.amount)) + '원)</span>';
-                        splcontent += '<span class="item-count"> <input type="text" name="ct_qty[]" value="1" maxlength="4" /></span>';
-                        splcontent += '<span class="add-item"> + </span><span class="subtract-item"> - </span>';
-                        splcontent += '<span class="supplement-delete"> 삭제</span>';
-                        splcontent += '</li>';
+                        splcontent += "<input type=\"hidden\" name=\"ct_option[]\" value=\""+ct_option+"\" />";
+                        splcontent += "<input type=\"hidden\" name=\"ct_amount[]\" value=\"" + data.amount + "\" />";
+                        splcontent += "<span class=\"option-stock\">" + data.qty + "</span>";
+                        splcontent += "<span class=\"selected-supplement\">" + ct_option + "</span>";
+                        splcontent += "<span class=\"supplement-price\"> (+" + number_format(String(data.amount)) + "원)</span>";
+                        splcontent += "<span class=\"item-count\"> <input type=\"text\" name=\"ct_qty[]\" value=\"1\" maxlength=\"4\" /></span>";
+                        splcontent += "<span class=\"add-item\"> + </span><span class=\"subtract-item\"> - </span>";
+                        splcontent += "<span class=\"supplement-delete\"> 삭제</span>";
+                        splcontent += "</li>";
 
-                        if($('ul#supplement-result').is(':hidden')) {
-                            $('ul#supplement-result').css('display', 'block');
-                            $('#total-price').css('display', 'block');
+                        if($("ul#supplement-result").is(":hidden")) {
+                            $("ul#supplement-result").css("display", "block");
+                            $("#total-price").css("display", "block");
                         }
 
-                        var resultcount = $('ul#supplement-result li').size();
+                        var resultcount = $("ul#supplement-result li").size();
                         if(resultcount > 0) {
-                            $('ul#supplement-result li:last').after(splcontent);
+                            $("ul#supplement-result li:last").after(splcontent);
                         } else {
-                            $('ul#supplement-result').html(splcontent);
+                            $("ul#supplement-result").html(splcontent);
                         }
 
                         calculatePrice();
                     }
-                }, 'json'
+                }, "json"
             );
         }
     });
 
     // 상품개수증가
-    $('span.add-item').live('click', function() {
-        var $cntinput = $(this).closest('li').find('input[name^=ct_qty]');
+    $("span.add-item").live("click", function() {
+        var $cntinput = $(this).closest("li").find("input[name^=ct_qty]");
         var count = parseInt($cntinput.val());
         count++;
 
         // 재고체크
-        var option_stock = $(this).closest('li').find('span.option-stock').text().replace(/[^0-9]/g, '');
-        if(option_stock == '') {
+        var option_stock = $(this).closest("li").find("span.option-stock").text().replace(/[^0-9]/g, "");
+        if(option_stock == "") {
             option_stock = 0;
         } else {
             option_stock = parseInt(option_stock);
         }
 
         if(option_stock < count) {
-            alert('해당 상품은 ' + count + '개 이상 주문할 수 없습니다.');
+            alert("해당 상품은 " + count + "개 이상 주문할 수 없습니다.");
             $(this).val(option_stock);
             return false;
         }
@@ -738,13 +738,13 @@ $(function() {
     });
 
     // 상품개수감소
-    $('span.subtract-item').live('click', function() {
-        var $cntinput = $(this).closest('li').find('input[name^=ct_qty]');
+    $("span.subtract-item").live("click", function() {
+        var $cntinput = $(this).closest("li").find("input[name^=ct_qty]");
         var count = parseInt($cntinput.val());
         count--;
 
         if(count < 1) {
-            alert('상품개수는 1이상 입력해 주십시오.');
+            alert("상품개수는 1이상 입력해 주십시오.");
             count = 1;
         }
 
@@ -754,69 +754,69 @@ $(function() {
     });
 
     // 선택옵션삭제
-    $('span.option-delete').live('click', function() {
+    $("span.option-delete").live("click", function() {
         $(this).closest('li').remove();
 
-        var resultcount1 = $('ul#option-result li').size();
-        var resultcount2 = $('ul#supplement-result li').size();
+        var resultcount1 = $("ul#option-result li").size();
+        var resultcount2 = $("ul#supplement-result li").size();
         if(resultcount1 < 1) {
-            $('ul#option-result').css('display', 'none');
+            $("ul#option-result").css("display", "none");
         }
         if(resultcount1 < 1 && resultcount2 < 1) {
-            $('#total-price').css('display', 'none');
+            $("#total-price").css("display", "none");
         }
 
         calculatePrice();
     });
 
     // 추가옵션삭제
-    $('span.supplement-delete').live('click', function() {
-        $(this).closest('li').remove();
+    $("span.supplement-delete").live("click", function() {
+        $(this).closest("li").remove();
 
-        var resultcount1 = $('ul#option-result li').size();
-        var resultcount2 = $('ul#supplement-result li').size();
+        var resultcount1 = $("ul#option-result li").size();
+        var resultcount2 = $("ul#supplement-result li").size();
         if(resultcount2 < 1) {
-            $('ul#supplement-result').css('display', 'none');
+            $("ul#supplement-result").css("display", 'none');
         }
         if(resultcount1 < 1 && resultcount2 < 1) {
-            $('#total-price').css('display', 'none');
+            $("#total-price").css("display", "none");
         }
 
         calculatePrice();
     });
 
-    $('form#fitem input:submit').click(function(e) {
+    $("form#fitem input:submit").click(function(e) {
         e.preventDefault();
 
-        var parent_form = $(this).closest('form');
-        var name = $(this).attr('name');
-        parent_form.data('submit_button', name);
-        $('input[name=submit_button]').val(name);
+        var parent_form = $(this).closest("form");
+        var name = $(this).attr("name");
+        parent_form.data("submit_button", name);
+        $("input[name=submit_button]").val(name);
 
-        $('form#fitem').submit();
+        $("form#fitem").submit();
     });
 
     // 바로구매, 장바구니, 보관하기
-    $('form#fitem').submit(function() {
+    $("form#fitem").submit(function() {
         var form_ok = true;
 
-        if($(this).data('submit_button') != 'wish_update') {
+        if($(this).data("submit_button") != "wish_update") {
             // 가격체크
-            if(parseInt($('input[name=it_amount]').val()) < 0) {
-                alert('전화로 문의해 주시면 감사하겠습니다.');
+            if(parseInt($("input[name=it_amount]").val()) < 0) {
+                alert("전화로 문의해 주시면 감사하겠습니다.");
                 return false;
             }
 
-            var option_count = $('select[name^=item-option-]').size();
+            var option_count = $("select[name^=item-option-]").size();
 
             // 선택옵션체크
-            if(option_count > 0 && $('ul#option-result li').size() == 0) {
+            if(option_count > 0 && $("ul#option-result li").size() == 0) {
                 // 옵션항목별 체크
                 $option_select.each(function(index) {
                     var sval = $(this).val();
-                    if(sval == '') {
-                        var subj = $('span.opt_subject:eq(' + index + ')').text();
-                        alert(subj+'을(를) 선택해 주세요.');
+                    if(sval == "") {
+                        var subj = $("span.opt_subject:eq(" + index + ")").text();
+                        alert(subj+"을(를) 선택해 주세요.");
                         form_ok = false;
                         return false;
                     }
@@ -824,23 +824,23 @@ $(function() {
             }
 
             // 수량체크
-            $('input[name^=ct_qty]').each(function() {
-                var qty = $(this).val().replace(/[^0-9]/g, '');
-                if(qty == '') {
-                    alert('주문 수량을 입력해 주세요.');
+            $("input[name^=ct_qty]").each(function() {
+                var qty = $(this).val().replace(/[^0-9]/g, "");
+                if(qty == "") {
+                    alert("주문 수량을 입력해 주세요.");
                     form_ok = false;
                     return false;
                 } else {
                     qty = parseInt(qty);
                     if(qty < 1) {
-                        alert('수량은 1 이상만 가능합니다.');
+                        alert("수량은 1 이상만 가능합니다.");
                         $(this).val(1);
                         form_ok = false;
                         return false;
                     }
 
                     if(qty > 0 && qty > 9999) {
-                        alert('수량은 9999 이하만 가능합니다.');
+                        alert("수량은 9999 이하만 가능합니다.");
                         $(this).val(9999);
                         form_ok = false;
                         return false;
@@ -855,9 +855,9 @@ $(function() {
     });
 
     // 수량변경
-    $('input[name^=ct_qty]').live('keyup', function() {
-        var val = $(this).val().replace(/[^0-9]/g, '');
-        if(val == '') {
+    $("input[name^=ct_qty]").live("keyup", function() {
+        var val = $(this).val().replace(/[^0-9]/g, "");
+        if(val == "") {
             //alert('구매수량을 입력해 주세요.');
             return false;
         }
@@ -865,25 +865,25 @@ $(function() {
         qty = parseInt(val);
 
         if(qty < 1) {
-            alert('수량은 1이상만 가능합니다.');
+            alert("수량은 1이상만 가능합니다.");
             return false;
         }
 
         if(qty > 9999) {
-            alert('수량은 9999이하만 가능합니다.');
+            alert("수량은 9999이하만 가능합니다.");
             return false;
         }
 
         // 옵션재고체크
-        var option_stock = $(this).closest('li').find('span.option-stock').text().replace(/[^0-9]/g, '');
-        if(option_stock == '') {
+        var option_stock = $(this).closest("li").find("span.option-stock").text().replace(/[^0-9]/g, "");
+        if(option_stock == "") {
             option_stock = 0;
         } else {
             option_stock = parseInt(option_stock);
         }
 
         if(option_stock < qty) {
-            alert('해당 상품은 ' + qty + '개 이상 주문할 수 없습니다.');
+            alert("해당 상품은 " + qty + "개 이상 주문할 수 없습니다.");
             $(this).val(option_stock);
         }
 
@@ -893,29 +893,29 @@ $(function() {
 
 function optionDisplay()
 {
-    var option = '';
-    var opt_id = '';
-    var sep = '';
-    var deli = '';
+    var option = "";
+    var opt_id = "";
+    var sep = "";
+    var deli = "";
     var optionadd = true;
 
-    $('select[name^=item-option-]').each(function(index) {
+    $("select[name^=item-option-]").each(function(index) {
         var opt = $(this).val();
-        var subj = $('span.opt_subject:eq('+index+')').text();
+        var subj = $("span.opt_subject:eq("+index+")").text();
 
-        option += sep + subj + ' : ' + opt;
+        option += sep + subj + " : " + opt;
         opt_id += deli + opt;
 
-        sep = ' / ';
+        sep = " / ";
         deli = chr(30);
     });
 
     // 선택된 옵션체크
-    $('ul#option-result li span.selected-option').each(function() {
+    $("ul#option-result li span.selected-option").each(function() {
         var oldoption = $(this).html();
 
         if(oldoption == option) {
-            alert('이미 선택된 옵션입니다.');
+            alert("이미 선택된 옵션입니다.");
             optionadd = false;
             return false;
         }
@@ -924,67 +924,67 @@ function optionDisplay()
     if(optionadd) {
         // 옵션정보
         $.post(
-            './itemoptioninfo.php',
-            { it_id: '<?php echo $it_id; ?>', opt_id: opt_id },
+            "./itemoptioninfo.php",
+            { it_id: "<? echo $it_id; ?>", opt_id: opt_id },
             function(data) {
                 if(parseInt(data.qty) < 1) {
-                    alert('해당 상품은 재고가 부족하여 구매할 수 없습니다.');
+                    alert("해당 상품은 재고가 부족하여 구매할 수 없습니다.");
                     return false;
                 }
 
-                if($('ul#option-result').is(':hidden')) {
-                    $('ul#option-result').css('display', 'block');
-                    $('#total-price').css('display', 'block');
+                if($("ul#option-result").is(":hidden")) {
+                    $("ul#option-result").css("display", "block");
+                    $("#total-price").css("display", "block");
                 }
 
-                var resultcount = $('ul#option-result li').size();
-                var optioncontent = '<li>';
-                optioncontent += '<input type="hidden" name="is_option[]" value="1" />';
-                optioncontent += '<input type="hidden" name="opt_id[]" value="'+ opt_id + '" />';
-                optioncontent += '<input type="hidden" name="ct_option[]" value="'+ option + '" />';
-                optioncontent += '<input type="hidden" name="ct_amount[]" value="' + data.amount + '" />';
-                optioncontent += '<span class="option-stock">' + data.qty + '</span>';
-                optioncontent += '<span class="selected-option">' + option + '</span>';
-                optioncontent += '<span class="option-price"> (+' + number_format(String(data.amount)) + '원)</span>';
-                optioncontent += '<span class="item-count"> <input type="text" name="ct_qty[]" value="1" maxlength="4" /></span>';
-                optioncontent += '<span class="add-item"> + </span><span class="subtract-item"> - </span>';
-                optioncontent += '<span class="option-delete"> 삭제</span>';
-                optioncontent += '</li>';
+                var resultcount = $("ul#option-result li").size();
+                var optioncontent = "<li>";
+                optioncontent += "<input type=\"hidden\" name=\"is_option[]\" value=\"1\" />";
+                optioncontent += "<input type=\"hidden\" name=\"opt_id[]\" value=\""+ opt_id + "\" />";
+                optioncontent += "<input type=\"hidden\" name=\"ct_option[]\" value=\""+ option + "\" />";
+                optioncontent += "<input type=\"hidden\" name=\"ct_amount[]\" value=\"" + data.amount + "\" />";
+                optioncontent += "<span class=\"option-stock>" + data.qty + "</span>";
+                optioncontent += "<span class=\"selected-option\">" + option + "</span>";
+                optioncontent += "<span class=\"option-price\"> (+" + number_format(String(data.amount)) + "원)</span>";
+                optioncontent += "<span class=\"item-count\"> <input type=\"text\" name=\"ct_qty[]\" value=\"1\" maxlength=\"4\" /></span>";
+                optioncontent += "<span class=\"add-item\"> + </span><span class=\"subtract-item\"> - </span>";
+                optioncontent += "<span class=\"option-delete\"> 삭제</span>";
+                optioncontent += "</li>";
 
                 if(resultcount > 0) {
-                    $('ul#option-result li:last').after(optioncontent);
+                    $("ul#option-result li:last").after(optioncontent);
                 } else {
-                    $('ul#option-result').html(optioncontent);
+                    $("ul#option-result").html(optioncontent);
                 }
 
                 calculatePrice();
-            }, 'json'
+            }, "json"
         );
     }
 }
 
 function calculatePrice()
 {
-    var itemprice = parseInt($('input[name=it_amount]').val());
+    var itemprice = parseInt($("input[name=it_amount]").val());
     var optiontotalprice = 0;
     var spltotalprice = 0;
 
-    $('ul#option-result li').each(function() {
-        var optprc = parseInt($(this).find('input[name^=ct_amount]').val());
-        var itcnt = parseInt($(this).find('input[name^=ct_qty]').val());
+    $("ul#option-result li").each(function() {
+        var optprc = parseInt($(this).find("input[name^=ct_amount]").val());
+        var itcnt = parseInt($(this).find("input[name^=ct_qty]").val());
 
         optiontotalprice += (itemprice + optprc) * itcnt;
     });
 
-    $('ul#supplement-result li').each(function() {
-        var optprc = parseInt($(this).find('input[name^=ct_amount]').val());
-        var itcnt = parseInt($(this).find('input[name^=ct_qty]').val());
+    $("ul#supplement-result li").each(function() {
+        var optprc = parseInt($(this).find("input[name^=ct_amount]").val());
+        var itcnt = parseInt($(this).find("input[name^=ct_qty]").val());
 
         spltotalprice += optprc * itcnt;
     });
 
-    $('#total-price span').text(number_format(String(optiontotalprice + spltotalprice)) + '원');
-    $('input[name=total_amount]').val((optiontotalprice + spltotalprice));
+    $("#total-price span").text(number_format(String(optiontotalprice + spltotalprice)) + "원");
+    $("input[name=total_amount]").val((optiontotalprice + spltotalprice));
 }
 
 // 추천메일
@@ -1111,14 +1111,14 @@ $(function() {
 
 <?
 // 하단 HTML
-echo stripslashes($it[it_tail_html]);
+echo stripslashes($it['it_tail_html']);
 
-$timg = "$g4[path]/data/item/{$it_id}_t";
+$timg = G4_DATA_PATH."/item/{$it_id}_t";
 if (file_exists($timg))
     echo "<img src='$timg' border=0><br>";
 
-if ($ca[ca_include_tail])
-    @include_once($ca[ca_include_tail]);
+if ($ca['ca_include_tail'])
+    @include_once($ca['ca_include_tail']);
 else
     include_once("./_tail.php");
 ?>
