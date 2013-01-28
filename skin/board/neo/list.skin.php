@@ -62,6 +62,7 @@ if ($is_nogood) $colspan++;
     <input type="hidden" name="spt" value="<?=$spt?>">
     <input type="hidden" name="page" value="<?=$page?>">
     <input type="hidden" name="sw" value="">
+
     <table>
     <caption><?=$board['bo_subject']?> 글목록</caption>
     <thead>
@@ -80,8 +81,8 @@ if ($is_nogood) $colspan++;
     <?
     for ($i=0; $i<count($list); $i++) {
     ?>
-    <tr<? if ($list[$i]['is_notice']) echo " class=\"bo_notice\"";?>>
-        <td class="td_bignum">
+    <tr class="<? if ($list[$i]['is_notice']) echo "bo_notice";?><? if ($board[1]) echo "bo_sideview";?>">
+        <td class="td_num">
         <?
         if ($list[$i]['is_notice']) // 공지사항
             echo '<strong>공지</strong>';
@@ -128,6 +129,7 @@ if ($is_nogood) $colspan++;
     </tbody>
     </table>
 
+    <? if ($list_href || $is_checkbox || $write_href) {?>
     <div class="bo_fx">
         <ul class="btn_bo_adm">
             <? if ($list_href) { ?>
@@ -144,6 +146,7 @@ if ($is_nogood) $colspan++;
             <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn01">글쓰기</a><? } ?></li>
         </ul>
     </div>
+    <? } ?>
     </form>
 </div>
 
