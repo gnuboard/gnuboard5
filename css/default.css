@@ -147,6 +147,12 @@ table a {color:#000;text-decoration:none}
 .new_win_ul li {float:left;margin-left:-1px}
 .new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
 
+/* ///// 폼 컨트롤 ///// */
+.fs_input,
+fieldset textarea {padding:3px 3px 4px;border:1px solid #ddd;background:#fff;vertical-align:middle}
+.fs_input:focus,
+fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#fff}
+
 /* ///// 스킨별 스타일 ///// */
 /* 아웃로그인 스킨 */
 .ol {position:relative;margin-bottom:10px;padding:14px}
@@ -180,6 +186,19 @@ table a {color:#000;text-decoration:none}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:right}
 #ol_after_ft a {display:inline-block;margin-left:5px}
+
+/* 로그인 */
+#mb_login {margin:100px auto;width:500px}
+#mb_login h1 {margin:0 0 20px;font-size:1.3em}
+#mb_login h2 {margin:0}
+#mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border-bottom-color:#f7f7f2;background:#fff}
+#mb_login label {letter-spacing:-0.1em}
+#mb_login .login_id {position:absolute;top:26px;left:95px}
+#mb_login .login_pw {position:absolute;top:55px;left:95px}
+#mb_login .fs_input {display:block;margin:0 0 5px 80px}
+#mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
+#mb_login section {margin-bottom:30px;padding:20px}
+#mb_login section div {text-align:right}
 
 /* 설문조사 스킨 */
 #poll {}
@@ -264,6 +283,7 @@ table a {color:#000;text-decoration:none}
 #bo_v {position:relative;margin-bottom:30px}
 #bo_v a {color:#000;text-decoration:none}
 #bo_v_h1 {padding:30px 20px 10px;font-size:1.2em;line-height:1.4em}
+#bo_v_h1 span {display:inline-block;margin-right:5px;color:#109ff1}
 #bo_v_info {padding:0 20px 15px;border-bottom:1px solid #f0f0f0}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
@@ -295,10 +315,10 @@ table a {color:#000;text-decoration:none}
 #bo_v_act a {margin-right:5px;vertical-align:top}
 #bo_v_act strong {color:#109ff1}
 #bo_v form {padding-top:20px}
-#bo_v_bot {zoom:1}
+#bo_v_bot {border-top:1px solid #f7f7f2;padding:20px 20px;zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_bot ul {margin:0;padding:0 20px 15px;list-style:none}
+#bo_v_bot ul {margin:0;padding:0;list-style:none}
 #bo_v_nb {float:left}
 #bo_v_nb li {float:left;margin-right:5px}
 .bo_v_com {float:right}
@@ -307,7 +327,7 @@ table a {color:#000;text-decoration:none}
 /* 게시판 댓글 */
 #bo_vc {margin:0 20px 10px;padding:10px 20px 20px 20px;background:#f7f7f2}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #eee}
+#bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #e7e7e7}
 #bo_vc header {position:relative;zoom:1}
 #bo_vc header:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
@@ -316,6 +336,7 @@ table a {color:#000;text-decoration:none}
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc p a {text-decoration:underline}
+#bo_vc_empty {margin:0;padding:20px !important;text-align:center}
 #bo_vc fieldset {margin:0 0 10px;padding:0}
 #bo_vc_w {zoom:1}
 #bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
@@ -351,3 +372,5 @@ table a {color:#000;text-decoration:none}
 .pg_end,
 .pg_next {border-left:1px solid #ddd}
 .pg_current {background:#494949;color:#fff}
+
+.pg_total {text-align:center}

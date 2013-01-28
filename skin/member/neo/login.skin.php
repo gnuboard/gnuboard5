@@ -3,22 +3,22 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="mb_login">
-    <h1>로그인</h1>
+    <h1><?=$g4['title']?></h1>
 
     <form name="flogin" method="post" action="<?=$login_action_url?>" onsubmit="return flogin_submit(this);">
     <input type="hidden" name="url" value='<?=$login_url?>'>
 
-    <fieldset>
+    <fieldset class="cbg">
         <label for="login_id" class="login_id">회원아이디<strong class="sound_only">필수</strong></label>
-        <input type="text" id="login_id" name="mb_id" class="fieldset_input" maxLength="20" size="20" required title="회원아이디">
+        <input type="text" id="login_id" name="mb_id" class="fs_input" maxLength="20" size="20" required title="회원아이디">
         <label for="login_pw" class="login_pw">패스워드<strong class="sound_only">필수</strong></label>
-        <input type="password" id="login_pw" class="fieldset_input" name="mb_password" maxLength="20" size="20" required title="패스워드">
+        <input type="password" id="login_pw" class="fs_input" name="mb_password" maxLength="20" size="20" required title="패스워드">
         <input type="submit" class="btn_submit" value="로그인">
         <input type="checkbox" id="login_auto_login" name="auto_login">
         <label for="login_auto_login">자동로그인</label>
     </fieldset>
 
-    <section>
+    <section class="cbg">
         <h2>회원로그인 안내</h2>
         <p>
             회원아이디 및 패스워드가 기억 안나실 때는 아이디/패스워드 찾기를 이용하십시오.<br>

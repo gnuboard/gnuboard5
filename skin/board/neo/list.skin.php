@@ -159,7 +159,7 @@ if ($is_nogood) $colspan++;
 <!-- 페이지 -->
 <? echo $write_pages; ?>
 
-<p>
+<p class="pg_total">
     <span>Total <?=number_format($total_count)?>건</span>
     <?=$page?> 페이지
 </p>

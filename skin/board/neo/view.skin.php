@@ -5,7 +5,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <p id="bo_v_title"><strong><?=$board['bo_subject']?></strong></p>
 
 <div id="bo_v" class="cbg">
-    <h1 id="bo_v_h1"><? if ($is_category) { ?>        <?=($category_name ? "{$view['ca_name']} " : "");?><? } ?><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
+    <h1 id="bo_v_h1">
+        <? if ($is_category) { // 분류가 있다면?>
+            <span><?=($category_name ? "{$view['ca_name']} " : "");?></span>
+        <? } // 분류 출력 끝 ?>
+        <?=cut_hangul_last(get_text($view['wr_subject'])) // 글제목 출력?>
+    </h1>
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
