@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4['title'] = "쿠폰관리";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 $sql_common = " from {$g4['yc4_coupon_table']} a left join {$g4['yc4_item_table']} b on ( a.it_id = b.it_id ) ";
 
@@ -183,5 +183,5 @@ $(function() {
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

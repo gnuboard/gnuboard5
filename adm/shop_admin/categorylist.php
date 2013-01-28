@@ -33,7 +33,7 @@ if ($ca_id && ($move == 'up' || $move == 'down')) {
 }
 
 $g4[title] = "분류관리";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 
 $where = " where ";
@@ -273,5 +273,5 @@ $(function() {
 
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

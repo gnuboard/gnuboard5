@@ -17,7 +17,7 @@ if (!$is[is_id])
 $name = get_sideview($is[mb_id], get_text($is[is_name]), $is[mb_email], $is[mb_homepage]);
 
 $g4[title] = "사용후기 수정";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 ?>
@@ -82,5 +82,5 @@ function fitemps_submit(f)
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

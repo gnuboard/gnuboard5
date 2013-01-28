@@ -32,7 +32,7 @@ else
 }
 
 $g4[title] = $html_title;
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 ?>
 
 <?=subtitle($html_title);?><p>
@@ -189,5 +189,5 @@ document.feventform.ev_subject.focus();
 
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>
