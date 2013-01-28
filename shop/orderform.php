@@ -21,7 +21,7 @@ $g4['title'] = '주문서 작성';
 include_once('./_head.php');
 ?>
 
-<img src="<?=$g4['shop_img_path']?>/top_orderform.gif" border="0"><p>
+<img src="<?=G4_SHOP_IMG_URL?>/top_orderform.gif" border="0"><p>
 
 <?
 $s_page = 'orderform.php';
@@ -38,8 +38,8 @@ if (file_exists("./settle_{$default['de_card_pg']}.inc.php")) {
     include "./settle_{$default['de_card_pg']}.inc.php";
 }
 
-if ($g4['https_url'])
-    $action_url = $g4['https_url'].'/'.$g4['shop'].'/orderformupdate.php';
+if (G4_HTTPS_URL)
+    $action_url = G4_HTTPS_URL.'/'.$g4['shop'].'/orderformupdate.php';
 else
     $action_url = './orderformupdate.php';
 ?>
@@ -563,7 +563,7 @@ if($is_member) {
 <colgroup width="140">
 <colgroup width="">
 <tr>
-    <td bgcolor="#F3F2FF" align="center"><img src="<? echo $g4['shop_img_path']; ?>/t_data01.gif"></td>
+    <td bgcolor="#F3F2FF" align="center"><img src="<? echo G4_SHOP_IMG_URL; ?>/t_data01.gif"></td>
     <td bgcolor="#FAFAFA" style="padding-left:10px">
         <table cellpadding="3">
         <colgroup width="100">
@@ -589,14 +589,17 @@ if($is_member) {
             <td>핸드폰</td>
             <td><input type="text" name="od_hp" value="<? echo $member['mb_hp']; ?>" maxlength="20" class="ed"></td>
         </tr>
+        <?
+        $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2';
+        ?>
         <tr>
             <td rowspan=2>주 소</td>
             <td>
                 <input type="text" name="od_zip1" size="3" maxlength="3" value="<? echo $member['mb_zip1']; ?>" class="ed" readonly>
                 -
                 <input type="text" name="od_zip2" size="3" maxlength="3" value="<? echo $member['mb_zip2']; ?>" class="ed" readonly>
-                <a href="javascript:;" onclick="win_zip('forderform', 'od_zip1', 'od_zip2', 'od_addr1', 'od_addr2');"><img
-                    src="<? echo $g4['shop_img_path']?>/btn_zip_find.gif" border="0" align="absmiddle"></a>
+                <a href="<?=$zip_href?>" onclick="win_zip(this.href); return false;"><img
+                    src="<? echo G4_SHOP_IMG_URL; ?>/btn_zip_find.gif" border="0" align="absmiddle"></a>
             </td>
         </tr>
         <tr>
@@ -634,7 +637,7 @@ if($is_member) {
 <colgroup width="140">
 <colgroup width="">
 <tr>
-    <td bgcolor="#F3F2FF" align="center"><img src="<? echo $g4['shop_img_path']?>/t_data03.gif"></td>
+    <td bgcolor="#F3F2FF" align="center"><img src="<? echo G4_SHOP_IMG_URL; ?>/t_data03.gif"></td>
     <td bgcolor="#FAFAFA" style="padding-left:10px">
         <table cellpadding="3">
         <colgroup width="100">
@@ -656,14 +659,17 @@ if($is_member) {
             <td>핸드폰</td>
             <td><input type="text" name="od_b_hp" class="ed" maxlength="20"></td>
         </tr>
+         <?
+        $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2';
+        ?>
         <tr>
             <td rowspan="2">주 소</td>
             <td>
                 <input type="text" name="od_b_zip1" size="3" maxlength="3" class="ed" readonly>
                 -
                 <input type="text" name="od_b_zip2" size="3" maxlength="3" class="ed" readonly>
-                <a href="javascript:;" onclick="win_zip('forderform', 'od_b_zip1', 'od_b_zip2', 'od_b_addr1', 'od_b_addr2');"><img
-                    src="<? echo $g4['shop_img_path']?>/btn_zip_find.gif" border="0" align="absmiddle"></a>
+                <a href="<?=$zip_href?>" onclick="win_zip(this.href); return false;"><img
+                    src="<? echo G4_SHOP_IMG_URL; ?>/btn_zip_find.gif" border="0" align="absmiddle"></a>
                 </a>
             </td>
         </tr>
@@ -687,7 +693,7 @@ if($is_member) {
 <colgroup width="140">
 <colgroup width="">
 <tr>
-    <td bgcolor="#FFEFFD" align="center"><img src="<? echo $g4['shop_img_path']?>/t_data04.gif"></td>
+    <td bgcolor="#FFEFFD" align="center"><img src="<? echo G4_SHOP_IMG_URL; ?>/t_data04.gif"></td>
     <td bgcolor="#FAFAFA" style="padding-left:10px">
         <table cellpadding="3">
         <tr>
@@ -808,7 +814,7 @@ if($is_member) {
 <!-- 결제하기 -->
 <table width="100%" align="center" cellpadding="0" cellspacing="10" border="0">
 <tr id="display_pay_button" style="display:none">
-    <td align="center"><input type="image" id="order_submit" src="<? echo $g4['shop_img_path']; ?>/btn_next2.gif" border="0" alt="결제하기" />&nbsp;<a href='javascript:history.go(-1);'><img src="<? echo $g4['shop_img_path']; ?>/btn_back1.gif" alt="뒤로" border="0"></a></td>
+    <td align="center"><input type="image" id="order_submit" src="<? echo G4_SHOP_IMG_URL; ?>/btn_next2.gif" border="0" alt="결제하기" />&nbsp;<a href='javascript:history.go(-1);'><img src="<? echo G4_SHOP_IMG_URL; ?>/btn_back1.gif" alt="뒤로" border="0"></a></td>
 </tr>
 <!-- Payplus Plug-in 설치 안내 -->
 <tr id="display_setup_message" style="display:none">
@@ -842,7 +848,7 @@ function escrow_foot_check()
 <input type="hidden" name="site_cd" value="<? echo $default['de_kcp_mid']; ?>">
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-    <td align="center"><img src="<? echo $g4['shop_path']; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
+    <td align="center"><img src="<? echo G4_SHOP_IMG_URL; ?>/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
 </tr>
 <tr>
     <td style='line-height:150%;'>
