@@ -5,20 +5,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <p id="bo_v_title"><strong><?=$board['bo_subject']?></strong></p>
 
 <div id="bo_v">
-    <h1 id="bo_v_h1"><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
+    <h1 id="bo_v_h1"><? if ($is_category) { ?>        <?=($category_name ? "{$view['ca_name']} " : "");?><? } ?><?=cut_hangul_last(get_text($view['wr_subject']))?></h1>
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
-        <? if ($is_category) { ?>
-        <span class="sound_only">분류</span>
-        <?=($category_name ? "{$view['ca_name']} " : "");?>
-        <? } ?>
-        <span class="sound_only">작성자</span>
+        작성자
         <?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?>
         <span class="sound_only">작성일</span>
         <?=date("y-m-d H:i", strtotime($view['wr_datetime']))?>
-        <span class="sound_only">아이피</span>
-        <?=$view['wr_ip']?>
         조회
         <?=number_format($view['wr_hit'])?>회
         댓글
