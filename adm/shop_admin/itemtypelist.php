@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "상품유형관리";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 /*
 $sql_search = " where 1 ";
@@ -183,5 +183,5 @@ if (!$i)
 * 상품의 유형을 일괄 처리합니다.
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

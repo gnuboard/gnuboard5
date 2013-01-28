@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "상품재고관리";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 $sql_search = " where 1 ";
 if ($search != "") {
@@ -169,5 +169,5 @@ if (!$i)
 * 재고수정의 수량은 창고재고를 수정하는것입니다.
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

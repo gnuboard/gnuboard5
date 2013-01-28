@@ -1,7 +1,8 @@
 <?
 $sub_menu = "400300";
-define('G4_EDITOR', 1);
+//define('G4_EDITOR', 1);
 include_once("./_common.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -73,7 +74,7 @@ if (!$it[it_explan_html])
 $qstr  = "$qstr&sca=$sca&page=$page";
 
 $g4[title] = $html_title;
-include_once ("$g4[admin_path]/admin.head.php");
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <style type="text/css">
@@ -958,5 +959,5 @@ document.fitemform.it_name.focus();
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

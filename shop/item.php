@@ -755,7 +755,7 @@ $(function() {
 
     // 선택옵션삭제
     $("span.option-delete").live("click", function() {
-        $(this).closest('li').remove();
+        $(this).closest("li").remove();
 
         var resultcount1 = $("ul#option-result li").size();
         var resultcount2 = $("ul#supplement-result li").size();

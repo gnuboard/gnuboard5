@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "SMS 문자전송";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 // 발신자번호
 $send_number = preg_replace("/[^0-9]/", "", $default[de_admin_company_tel]);
@@ -359,5 +359,5 @@ function smsform_check(f)
 
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

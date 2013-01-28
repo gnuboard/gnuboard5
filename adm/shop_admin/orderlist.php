@@ -241,5 +241,5 @@ f.sel_field.value  = '<? echo $sel_field ?>';
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

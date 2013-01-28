@@ -20,7 +20,7 @@ if($w == 'u') {
 }
 
 $g4['title'] = $html_title;
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 ?>
 
 <style type="text/css">

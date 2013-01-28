@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "상품판매순위";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 if (!$to_date) $to_date = date("Ymd", time());
 
@@ -145,5 +145,5 @@ if ($i == 0) {
 * 수량을 합산하여 순위를 출력합니다.
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

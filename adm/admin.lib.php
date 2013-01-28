@@ -148,7 +148,7 @@ function icon($act, $link='', $target='_parent')
     global $g4;
 
     $img = array('입력'=>'insert', '추가'=>'insert', '생성'=>'insert', '수정'=>'modify', '삭제'=>'delete', '이동'=>'move', '그룹'=>'move', '보기'=>'view', '미리보기'=>'view', '복사'=>'copy');
-    $icon = '<img src="'.$g4['admin_path'].'/img/icon_'.$img[$act].'.gif" title="'.$act.'">';
+    $icon = '<img src="'.G4_ADMIN_PATH.'/img/icon_'.$img[$act].'.gif" title="'.$act.'">';
     if ($link)
         //$s = '<a href="'.$link.'" target="'.$target.'">'.$icon.'</a>';
         $s = '<a href="'.$link.'">'.$icon.'</a>';
@@ -250,13 +250,13 @@ if (get_session('ss_mb_key') !== $admin_key) {
 unset($auth_menu);
 unset($menu);
 unset($amenu);
-$tmp = dir(G4_ADM_PATH);
+$tmp = dir(G4_ADMIN_PATH);
 while ($entry = $tmp->read()) {
     if (!preg_match('/^admin.menu([0-9]{3}).*\.php$/', $entry, $m))
         continue;  // 파일명이 menu 으로 시작하지 않으면 무시한다.
 
     $amenu[$m[1]] = $entry;
-    include_once(G4_ADM_PATH.'/'.$entry);
+    include_once(G4_ADMIN_PATH.'/'.$entry);
 }
 @ksort($amenu);
 
