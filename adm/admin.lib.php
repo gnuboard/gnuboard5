@@ -250,13 +250,13 @@ if (get_session('ss_mb_key') !== $admin_key) {
 unset($auth_menu);
 unset($menu);
 unset($amenu);
-$tmp = dir(G4_ADM_PATH);
+$tmp = dir(G4_ADMIN_PATH);
 while ($entry = $tmp->read()) {
     if (!preg_match('/^admin.menu([0-9]{3}).*\.php$/', $entry, $m))
         continue;  // 파일명이 menu 으로 시작하지 않으면 무시한다.
 
     $amenu[$m[1]] = $entry;
-    include_once(G4_ADM_PATH.'/'.$entry);
+    include_once(G4_ADMIN_PATH.'/'.$entry);
 }
 @ksort($amenu);
 
