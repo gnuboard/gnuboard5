@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "상품관리";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 // 분류
 $ca_list  = "";
@@ -112,7 +112,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 
         <input type=hidden name=save_stx value='<?=$stx?>'>
         <input type=text name=stx value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -130,7 +130,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
     <td width=30><?=subject_sort_link("it_order", "sca=$sca")?>순서</a></td>
     <td width=30><?=subject_sort_link("it_use", "sca=$sca", 1)?>판매</a></td>
     <td width=30><?=subject_sort_link("it_hit", "sca=$sca", 1)?>조회</a></td>
-    <td width=100><a href='./itemform.php'><img src='<?=$g4[admin_path]?>/img/icon_insert.gif' border=0 title='상품등록'></a></td>
+    <td width=100><a href='./itemform.php'><img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif' border=0 title='상품등록'></a></td>
 </tr>
 <tr><td colspan=13 height=1 bgcolor=#CCCCCC></td></tr>
 </form>
@@ -145,7 +145,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 <?
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $href = "{$g4[shop_path]}/item.php?it_id=$row[it_id]";
+    $href = G4_SHOP_URL."/item.php?it_id=$row[it_id]";
 
     $s_mod = icon("수정", "./itemform.php?w=u&it_id=$row[it_id]&ca_id=$row[ca_id]&$qstr");
     $s_del = icon("삭제", "javascript:del('./itemformupdate.php?w=d&it_id=$row[it_id]&ca_id=$row[ca_id]&$qstr');");
@@ -227,7 +227,7 @@ function _copy(it_name, link)
         return;
     }
 
-    if (g4_charset.toUpperCase() == 'EUC-KR') 
+    if (g4_charset.toUpperCase() == 'EUC-KR')
         location.href = link+'&new_it_id='+new_it_id;
     else
         location.href = encodeURI(link+'&new_it_id='+new_it_id);
@@ -241,5 +241,5 @@ function _copy(it_id, ca_id)
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
