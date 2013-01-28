@@ -260,7 +260,7 @@ table a {color:#000;text-decoration:none}
 #bo_v_title {}
 #bo_v {position:relative;margin-bottom:30px;border-right:1px solid #ddd;border-bottom:1px solid #ddd;background:#fff}
 #bo_v a {color:#000;text-decoration:none}
-#bo_v_h1 {padding:20px 20px 10px;font-size:1.2em}
+#bo_v_h1 {padding:30px 20px 10px;font-size:1.2em;line-height:1.4em}
 #bo_v_info {padding:0 20px 15px}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info strong {display:inline-block;margin:0 10px 0 5px;font-weight:normal}
