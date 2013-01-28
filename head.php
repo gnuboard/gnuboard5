@@ -14,7 +14,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <header id="hd">
     <div id="hd_wrapper">
-        <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
+        <div id="to_content"><a href="#container">본문 바로가기</a></div>
         <div id="logo"><a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로"></a></div>
 
         <h1><?=$config['cf_title']?></h1>

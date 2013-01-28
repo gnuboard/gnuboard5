@@ -239,7 +239,7 @@ table a {color:#000;text-decoration:none}
 #bo_w caption {padding:0;height:0;overflow:hidden}
 
 /* 게시판 목록 */
-.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ddd;background:#eee;color:#000;text-decoration:none}
+.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none}
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
