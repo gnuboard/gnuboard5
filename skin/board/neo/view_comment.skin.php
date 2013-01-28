@@ -68,6 +68,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <? } ?>
     </article>
     <?}?>
+    <? if ($i == 0) { //댓글이 없다면 ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><? } ?>
 
     <? if ($is_comment_write) {
         if($w == '')
