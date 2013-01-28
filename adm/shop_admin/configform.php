@@ -1,7 +1,7 @@
 <?
 $sub_menu = "400100";
-define('G4_EDITOR', 1);
 include_once("./_common.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -61,7 +61,7 @@ if ($default[de_icode_id] && $default[de_icode_pw]) {
 
 
 $g4[title] = "쇼핑몰설정";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once (G4_ADMIN_PATH."/admin.head.php");
 ?>
 
 <form name=fconfig method=post action='./configformupdate.php' onsubmit="return fconfig_check(this)" enctype="MULTIPART/FORM-DATA" style="margin:0px;">
@@ -914,5 +914,5 @@ $(function() {
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH."/admin.tail.php");
 ?>
