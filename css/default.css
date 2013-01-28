@@ -307,7 +307,7 @@ table a {color:#000;text-decoration:none}
 /* 게시판 댓글 */
 #bo_vc {margin:0 20px 10px;padding:10px 20px 20px 20px;background:#f7f7f2}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #e0e0e0}
+#bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #e7e7e7}
 #bo_vc header {position:relative;zoom:1}
 #bo_vc header:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
