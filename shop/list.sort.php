@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <br>
@@ -21,7 +21,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </select>
     </td>
 </tr>
-<tr><td colspan="2" background='<? echo "$g4[shop_img_path]/line_h.gif" ?>' height=1></td></tr>
+<tr><td colspan="2" background='<? echo G4_SHOP_IMG_URL."/line_h.gif" ?>' height=1></td></tr>
 </table>
 
 <script language='JavaScript'>

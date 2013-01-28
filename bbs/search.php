@@ -187,7 +187,7 @@ if ($stx) {
 
             if ($read_level[$idx] <= $member['mb_level'])
             {
-                $content = cut_str(get_text($row['wr_content']),300,"…");
+                $content = cut_str(get_text(strip_tags($row['wr_content'])),300,"…");
                 if (strstr($sfl, 'wr_content')) 
                     $content = search_font($stx, $content);
             }
