@@ -14,10 +14,12 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     global $g4;
 
     $thumb_filename = preg_replace("/\.[^\.]+$/i", "", $filename); // 확장자제거
+
     if (!is_dir($target_path)) {
         @mkdir($target_path, 0707);
         @chmod($target_path, 0707);
     }
+
     $thumb_file = "$target_path/{$thumb_filename}_{$thumb_width}x{$thumb_height}.png";
     $thumb_time = @filemtime($thumb_file);
     $source_file = "$source_path/$filename";
