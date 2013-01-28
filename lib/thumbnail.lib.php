@@ -3,7 +3,13 @@ if (!defined('_GNUBOARD_')) exit;
 
 @ini_set('memory_limit', '512M');
 
-function thumbnail($bo_table, $file, $width, $height, $is_create=false)
+function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_create=false)
+{
+    return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create);
+}
+
+//function thumbnail($bo_table, $file, $width, $height, $is_create=false)
+function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create);
 {
     global $g4;
 
