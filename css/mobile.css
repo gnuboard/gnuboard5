@@ -1,0 +1,14 @@
+/* SIR SOFT 지운아빠 Jan 2013 */
+
+/* 초기화 */
+html {overflow-y:scroll}
+body {margin:0;padding:0;background:#f7f7f2;font-size:1em;font-family:"dotum"}
+html, body, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
+label, input, select, img {vertical-align:middle}
+input {margin:0;padding:0;font-family:"dotum"}
+p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
+hr {display:none}
+pre {overflow-x:scroll;font-size:1.1em}
