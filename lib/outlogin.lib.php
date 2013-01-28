@@ -51,10 +51,11 @@ function outlogin($skin_dir='basic')
         $outlogin_url = $urlencode;
     }
 
+    // 보안서버주소를 적용할 마땅한 방법이 나올때까지 이 코드로 사용한다.
     if ($g4['https_url'])
-        $outlogin_action_url = "{$g4['https_url']}/$g4[bbs]/login_check.php";
+        $outlogin_action_url = G4_BBS_URL.'/login_check.php';
     else
-        $outlogin_action_url = "{$g4['bbs_url']}/login_check.php";
+        $outlogin_action_url = G4_BBS_URL.'/login_check.php';
 
     ob_start();
     if ($is_member)
