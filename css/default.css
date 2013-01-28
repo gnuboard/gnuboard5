@@ -147,6 +147,12 @@ table a {color:#000;text-decoration:none}
 .new_win_ul li {float:left;margin-left:-1px}
 .new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
 
+/* ///// 폼 컨트롤 ///// */
+.fs_input,
+fieldset textarea {padding:3px 3px 4px;border:1px solid #ddd;background:#fff;vertical-align:middle}
+.fs_input:focus,
+fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#fff}
+
 /* ///// 스킨별 스타일 ///// */
 /* 아웃로그인 스킨 */
 .ol {position:relative;margin-bottom:10px;padding:14px}
@@ -187,9 +193,9 @@ table a {color:#000;text-decoration:none}
 #mb_login h2 {margin:0}
 #mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border-bottom-color:#f7f7f2;background:#fff}
 #mb_login label {letter-spacing:-0.1em}
-#mb_login .login_id {position:absolute;top:26px;left:105px}
-#mb_login .login_pw {position:absolute;top:55px;left:105px}
-#mb_login .fs_input {display:block;margin-bottom:5px;padding-left:70px}
+#mb_login .login_id {position:absolute;top:26px;left:95px}
+#mb_login .login_pw {position:absolute;top:55px;left:95px}
+#mb_login .fs_input {display:block;margin:0 0 5px 80px}
 #mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
 #mb_login section {margin-bottom:30px;padding:20px}
 #mb_login section div {text-align:right}
