@@ -38,13 +38,13 @@ if($default['de_guest_cart_use']) {
     }
 }
 
-if ($w == 'alldelete') // 모두 삭제이면
+if ($act == 'alldelete') // 모두 삭제이면
 {
     $sql = " delete from {$g4['yc4_cart_table']}
               where uq_id = '$uq_id' ";
     sql_query($sql);
 }
-else if ($w == 'seldelete') // 선택 삭제이면
+else if ($act == 'seldelete') // 선택 삭제이면
 {
     $sel_count = count($_POST['ct_chk']);
     if(!$sel_count) {
@@ -57,7 +57,7 @@ else if ($w == 'seldelete') // 선택 삭제이면
         sql_query($sql);
     }
 }
-else if($w == 'selectedbuy') // 선택주문이면
+else if($act == 'selectedbuy') // 선택주문이면
 {
     $chk_count = count($_POST['ct_chk']);
     if(!$chk_count)
@@ -84,14 +84,14 @@ else if($w == 'selectedbuy') // 선택주문이면
 
     if ($is_member)
     {
-        goto_url("{$g4['shop_url']}/orderform.php?w=selectedbuy");
+        goto_url(G4_SHOP_URL."/orderform.php?act=$act");
     }
     else
     {
-        goto_url("{$g4['url']}/{$g4['bbs']}/login.php?url=".urlencode("{$g4['shop_path']}/orderform.php?w=selectedbuy"));
+        goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/orderform.php?act=$act"));
     }
 }
-else if ($w == 'allupdate') // 수량 변경이면 : 모두 수정이면
+else if ($act == 'allupdate') // 수량 변경이면 : 모두 수정이면
 {
     $fldcnt = count($_POST['ct_id']);
 
@@ -316,15 +316,15 @@ if ($sw_direct)
 {
     if ($is_member)
     {
-    	goto_url("{$g4['shop_url']}/orderform.php?sw_direct=$sw_direct");
+    	goto_url(G4_SHOP_URL."/orderform.php?sw_direct=$sw_direct");
     }
     else
     {
-    	goto_url("{$g4['url']}/{$g4['bbs']}/login.php?url=".urlencode("{$g4['shop_path']}/orderform.php?sw_direct=$sw_direct"));
+    	goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/orderform.php?sw_direct=$sw_direct"));
     }
 }
 else
 {
-    goto_url("{$g4['shop_url']}/cart.php");
+    goto_url(G4_SHOP_URL."/cart.php");
 }
 ?>
