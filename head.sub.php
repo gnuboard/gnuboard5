@@ -27,7 +27,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 
 $g4_css = "";
 if (G4_IS_MOBILE) $g4_css = "mobile";
-else $g4_css = "pc";
+else $g4_css = "default";
 ?>
 <!doctype html>
 <html lang="ko">
