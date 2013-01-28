@@ -33,7 +33,7 @@ else $g4_css = "default";
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<? if (G4_IS_MOBILE) {?><meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" /><? } ?>
+<? if (G4_IS_MOBILE) {?><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"><? } ?>
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
 <title><?=$g4['title']?></title>
 <? if (isset($administrator)) { ?>
