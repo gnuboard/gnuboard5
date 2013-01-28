@@ -9,14 +9,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
-        작성자
-        <?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?>
-        <span class="sound_only">작성일</span>
-        <?=date("y-m-d H:i", strtotime($view['wr_datetime']))?>
-        조회
-        <?=number_format($view['wr_hit'])?>회
-        댓글
-        <?=number_format($view['wr_comment'])?>건
+        작성자 <strong><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong><span class="sound_only">작성일</span><strong><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></strong>조회<strong><?=number_format($view['wr_hit'])?>회</strong>댓글<strong><?=number_format($view['wr_comment'])?>건</strong>
     </section>
 
     <?
