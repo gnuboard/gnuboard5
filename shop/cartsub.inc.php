@@ -274,10 +274,10 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         switch($row['ct_status'])
         {
-            case '주문' : $icon = "<img src=\"{$g4['shop_img_path']}/status01.gif\">"; break;
-            case '준비' : $icon = "<img src=\"{$g4['shop_img_path']}/status02.gif\">"; break;
-            case '배송' : $icon = "<img src=\"{$g4['shop_img_path']}/status03.gif\">"; break;
-            case '완료' : $icon = "<img src=\"{$g4['shop_img_path']}/status04.gif\">"; break;
+            case '주문' : $icon = "<img src=\"".G4_SHOP_IMG_URL."/status01.gif\">"; break;
+            case '준비' : $icon = "<img src=\"".G4_SHOP_IMG_URL."/status02.gif\">"; break;
+            case '배송' : $icon = "<img src=\"".G4_SHOP_IMG_URL."/status03.gif\">"; break;
+            case '완료' : $icon = "<img src=\"".G4_SHOP_IMG_URL."/status04.gif\">"; break;
             default     : $icon = $row['ct_status']; break;
         }
         echo "<td align=\"center\">$icon</td>\n";
