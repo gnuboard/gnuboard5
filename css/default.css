@@ -264,6 +264,7 @@ table a {color:#000;text-decoration:none}
 #bo_v {position:relative;margin-bottom:30px}
 #bo_v a {color:#000;text-decoration:none}
 #bo_v_h1 {padding:30px 20px 10px;font-size:1.2em;line-height:1.4em}
+#bo_v_h1 span {display:inline-block;margin-right:5px;color:#109ff1}
 #bo_v_info {padding:0 20px 15px;border-bottom:1px solid #f0f0f0}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
@@ -351,3 +352,5 @@ table a {color:#000;text-decoration:none}
 .pg_end,
 .pg_next {border-left:1px solid #ddd}
 .pg_current {background:#494949;color:#fff}
+
+.pg_total {text-align:center}
