@@ -184,7 +184,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 	<? } else { ?>
 		<input type=hidden name=it_id value="<?=$it[it_id]?>">
 		<?=$it[it_id]?>
-		<?=icon("보기", "{$g4[shop_path]}/item.php?it_id=$it_id");?>
+		<?=icon("보기", G4_SHOP_URL."/item.php?it_id=$it_id");?>
         <a href='./itempslist.php?sel_field=a.it_id&search=<?=$it_id?>'>사용후기</a>
         <a href='./itemqalist.php?sel_field=a.it_id&search=<?=$it_id?>'>상품문의</a>
 	<? } ?>
@@ -212,11 +212,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 <tr class=ht>
     <td>상품유형</td>
     <td colspan=3>
-        <input type=checkbox name=it_type1 value='1' <?=($it[it_type1] ? "checked" : "");?>><img src='<?="$g4[url]/$g4[shop]/img/icon_type1.gif"?>' align=absmiddle>
-        <input type=checkbox name=it_type2 value='1' <?=($it[it_type2] ? "checked" : "");?>><img src='<?="$g4[url]/$g4[shop]/img/icon_type2.gif"?>' align=absmiddle>
-        <input type=checkbox name=it_type3 value='1' <?=($it[it_type3] ? "checked" : "");?>><img src='<?="$g4[url]/$g4[shop]/img/icon_type3.gif"?>' align=absmiddle>
-        <input type=checkbox name=it_type4 value='1' <?=($it[it_type4] ? "checked" : "");?>><img src='<?="$g4[url]/$g4[shop]/img/icon_type4.gif"?>' align=absmiddle>
-        <input type=checkbox name=it_type5 value='1' <?=($it[it_type5] ? "checked" : "");?>><img src='<?="$g4[url]/$g4[shop]/img/icon_type5.gif"?>' align=absmiddle>
+        <input type=checkbox name=it_type1 value='1' <?=($it[it_type1] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type1.gif" align=absmiddle>
+        <input type=checkbox name=it_type2 value='1' <?=($it[it_type2] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type2.gif" align=absmiddle>
+        <input type=checkbox name=it_type3 value='1' <?=($it[it_type3] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type3.gif" align=absmiddle>
+        <input type=checkbox name=it_type4 value='1' <?=($it[it_type4] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type4.gif" align=absmiddle>
+        <input type=checkbox name=it_type5 value='1' <?=($it[it_type5] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type5.gif" align=absmiddle>
         <?=help("메인화면에 유형별로 출력할때 사용합니다.\n\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다.");?>
     </td>
 </tr>
@@ -388,20 +388,22 @@ ul { margin: 0; padding: 0; list-style: none; }
     <td colspan=3>
         <input type=file class=ed name=it_limg1 size=40>
         <?
-        $limg1 = "$g4[path]/data/item/{$it[it_id]}_l1";
+        $limg1 = G4_DATA_PATH."/item/{$it[it_id]}_l1";
         if (file_exists($limg1)) {
             $size = getimagesize($limg1);
-            echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('limg1', $size[0], $size[1]);\"><input type=checkbox name=it_limg1_del value='1'>삭제";
+            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('limg1', $size[0], $size[1]);\"><input type=checkbox name=it_limg1_del value='1'>삭제";
             echo "<div id='limg1' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$limg1' border=1></div>";
         }
         ?>
 
         <?
+        /*
         if (function_exists("imagecreatefromjpeg")) {
             //echo "<input type=checkbox name=createimage value='1'> <FONT COLOR=FF6600>이미지(중), 이미지(소)를 자동생성 하시려면 체크하세요. JPG 파일만 가능합니다.</FONT> ";
             echo "<br><input type=checkbox name=createimage value='1'> 중, 소 이미지를 자동으로 생성하시는 경우에 체크하세요. (JPG 파일만 가능)";
             echo help("이미지(중) 이미지(소) 의 사이즈를 환경설정에서 정한 폭과 높이로 자동생성합니다.\n\nJPG 파일만 가능합니다.");
         }
+        */
         ?>
     </td>
 </tr>
@@ -436,7 +438,7 @@ ul { margin: 0; padding: 0; list-style: none; }
     </td>
 </tr>
 
-<? for ($i=2; $i<=5; $i++) { // 이미지(대)는 5개 ?>
+<? for ($i=2; $i<=10; $i++) { // 이미지(대)는 10개 ?>
 <tr class=ht>
     <td>이미지(대) <?=$i?></td>
     <td colspan=3>
@@ -445,7 +447,7 @@ ul { margin: 0; padding: 0; list-style: none; }
         $limg = "$g4[path]/data/item/{$it[it_id]}_l{$i}";
         if (file_exists($limg)) {
             $size = getimagesize($limg);
-            echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('limg$i', $size[0], $size[1]);\"><input type=checkbox name=it_limg{$i}_del value='1'>삭제";
+            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('limg$i', $size[0], $size[1]);\"><input type=checkbox name=it_limg{$i}_del value='1'>삭제";
             echo "<span id=limg{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$limg' border=1></div>";
         }
         ?>
@@ -501,7 +503,7 @@ ul { margin: 0; padding: 0; list-style: none; }
             $row2 = sql_fetch($sql2);
 
 			// 김선용 2006.10
-			if(file_exists("{$g4['path']}/data/item/{$row['it_id']}_s"))
+			if(file_exists(G4_DATA_PATH."/item/{$row['it_id']}_s"))
 				$it_image = "{$row['it_id']}_s";
 			else
 				$it_image = "";
@@ -758,7 +760,7 @@ ul { margin: 0; padding: 0; list-style: none; }
         <input type=file class=ed name=it_himg size=40>
         <?
         $himg_str = "";
-        $himg = "$g4[path]/data/item/{$it[it_id]}_h";
+        $himg = G4_DATA_PATH."/item/{$it[it_id]}_h";
         if (file_exists($himg)) {
             echo "<input type=checkbox name=it_himg_del value='1'>삭제";
             $himg_str = "<img src='$himg' border=0>";
@@ -775,7 +777,7 @@ ul { margin: 0; padding: 0; list-style: none; }
         <input type=file class=ed name=it_timg size=40>
         <?
         $timg_str = "";
-        $timg = "$g4[path]/data/item/{$it[it_id]}_t";
+        $timg = G4_DATA_PATH."/item/{$it[it_id]}_t";
         if (file_exists($timg)) {
             echo "<input type=checkbox name=it_timg_del value='1'>삭제";
             $timg_str = "<img src='$timg' border=0>";
