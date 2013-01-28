@@ -33,7 +33,7 @@ define('_GNUBOARD_', true);
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 define('G4_URL',            $g4_path['url']);
-define('G4_ADM_URL',        G4_URL.'/adm');
+define('G4_ADMIN_URL',      G4_URL.'/adm');
 define('G4_BBS_URL',        G4_URL.'/bbs');
 define('G4_CSS_URL',        G4_URL.'/css');
 define('G4_DATA_URL',       G4_URL.'/data');
@@ -47,7 +47,7 @@ define('G4_CACHE_URL',      G4_DATA_URL.'/cache');
 
 // PATH 는 서버상에서의 절대경로
 define('G4_PATH',           $g4_path['path']);
-define('G4_ADM_PATH',       G4_PATH.'/adm');
+define('G4_ADMIN_PATH',     G4_PATH.'/adm');
 define('G4_BBS_PATH',       G4_PATH.'/bbs');
 define('G4_DATA_PATH',      G4_PATH.'/data');
 define('G4_EXTEND_PATH',    G4_PATH.'/extend');
