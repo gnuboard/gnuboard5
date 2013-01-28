@@ -304,7 +304,7 @@ table a {color:#000;text-decoration:none}
 .bo_v_com li {float:left;margin-left:5px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 20px 10px;padding:10px 20px 20px 20px;background:#f9f9f9}
+#bo_vc {margin:0 20px 10px;padding:10px 20px 20px 20px;background:#f7f7f2}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #eee}
 #bo_vc header {position:relative;zoom:1}
