@@ -14,16 +14,16 @@ $admin = get_admin("super");
 <!-- 하단 -->
 <table align=center width='<?=$table_width?>' cellpadding=0 cellspacing=0>
 <tr>
-    <td width=180 bgcolor=#EBEBEB><a href='<?=$g4[path]?>/'><img src='<?=$g4[path]?>/data/common/logo_img' border=0 style="filter:gray();"></a></td>
-    <td><img src='<?=$g4[shop_img_path]?>/tail_img01.gif'></td>
+    <td width=180 bgcolor=#EBEBEB><a href='<?=$g4[path]?>/'><img src='<?=G4_DATA_URL?>/common/logo_img' border=0 style="filter:gray();"></a></td>
+    <td><img src='<?=G4_SHOP_IMG_URL?>/tail_img01.gif'></td>
     <td width=10></td>
-    <td><img src='<?=$g4[shop_img_path]?>/tail_img02.gif'></td>
+    <td><img src='<?=G4_SHOP_IMG_URL?>/tail_img02.gif'></td>
     <td width=770 bgcolor=#EBEBEB style='padding-left:10px;'>
         <table width=98% cellpadding=0 cellspacing=0 border=0>
         <tr><td height=30>
-            <a href="<?=$g4[shop_path]?>/content.php?co_id=company">회사소개</a> |
-            <a href="<?=$g4[shop_path]?>/content.php?co_id=provision">서비스이용약관</a> |
-            <a href="<?=$g4[shop_path]?>/content.php?co_id=privacy">개인정보 취급방침</a>
+            <a href="<?=G4_SHOP_URL?>/content.php?co_id=company">회사소개</a> |
+            <a href="<?=G4_SHOP_URL?>/content.php?co_id=provision">서비스이용약관</a> |
+            <a href="<?=G4_SHOP_URL?>/content.php?co_id=privacy">개인정보 취급방침</a>
             </td></tr>
         <tr><td height=1 bgcolor=#CBCBCB></td></tr>
         <tr><td height=60 style='line-height:150%'>
@@ -58,5 +58,5 @@ $file = $_SERVER[PHP_SELF];
 
 
 <?
-include_once("$g4[path]/tail.sub.php");
+include_once(G4_PATH.'/tail.sub.php');
 ?>

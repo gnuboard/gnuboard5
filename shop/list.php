@@ -6,12 +6,12 @@ $sql = " select *
           where ca_id = '$ca_id'
             and ca_use = '1'  ";
 $ca = sql_fetch($sql);
-if (!$ca[ca_id]) 
+if (!$ca[ca_id])
     alert("등록된 분류가 없습니다.");
 
 $g4[title] = $ca[ca_name] . " 상품리스트";
 
-if ($ca[ca_include_head]) 
+if ($ca[ca_include_head])
     @include_once($ca[ca_include_head]);
 else
     include_once("./_head.php");
@@ -20,9 +20,9 @@ else
 //if ($skin) $ca[ca_skin] = $skin;
 
 $nav_ca_id = $ca_id;
-include "$g4[shop_path]/navigation1.inc.php";
+include G4_SHOP_PATH.'/navigation1.inc.php';
 
-$himg = "$g4[path]/data/category/{$ca_id}_h";
+$himg = G4_DATA_PATH."/category/{$ca_id}_h";
 if (file_exists($himg)) {
     echo "<img src='$himg' border=0><br>";
 }
@@ -31,9 +31,9 @@ if (file_exists($himg)) {
 echo stripslashes($ca[ca_head_html]);
 
 if ($is_admin)
-    echo "<p align=center><a href='$g4[shop_admin_path]/categoryform.php?w=u&ca_id=$ca_id'><img src='$g4[shop_img_path]/btn_admin_modify.gif' border=0></a></p>";
+    echo "<p align=center><a href='".G4_SHOP_ADMIN_URL."/categoryform.php?w=u&ca_id=$ca_id'><img src='".G4_SHOP_IMG_URL."/btn_admin_modify.gif' border=0></a></p>";
 
-include "$g4[shop_path]/listcategory2.inc.php";
+include G4_SHOP_PATH.'/listcategory2.inc.php';
 ?>
 
 <table width=100% cellpadding=0 cellspacing=0>
@@ -51,17 +51,17 @@ $sql_list1 = " select * ";
 $sql_list2 = " order by $order_by it_order, it_id desc ";
 
 // 하위분류 포함
-// 판매가능한 상품만 
+// 판매가능한 상품만
 $sql_common = " from $g4[yc4_item_table]
-               where (ca_id like '{$ca_id}%' 
+               where (ca_id like '{$ca_id}%'
                    or ca_id2 like '{$ca_id}%'
                    or ca_id3 like '{$ca_id}%')
                  and it_use = '1' ";
 
-$error = "<img src='$g4[shop_img_path]/no_item.gif' border=0>";
+$error = "<img src=\"".G4_SHOP_IMG_URL."/no_item.gif\" border=\"0\">";
 
 // 리스트 유형별로 출력
-$list_file = "$g4[shop_path]/$ca[ca_skin]";
+$list_file = G4_SHOP_PATH.'/'.$ca[ca_skin];
 if (file_exists($list_file)) {
 
     //display_type(2, "maintype10.inc.php", 4, 2, 100, 100, $ca[ca_id]);
@@ -71,16 +71,16 @@ if (file_exists($list_file)) {
     $img_width  = $ca[ca_img_width];
     $img_height = $ca[ca_img_height];
 
-    include "$g4[shop_path]/list.sub.php";
-    include "$g4[shop_path]/list.sort.php";
+    include G4_SHOP_PATH.'/list.sub.php';
+    include G4_SHOP_PATH.'/list.sort.php';
 
     $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";
     $result = sql_query($sql);
 
     include $list_file;
 
-} 
-else 
+}
+else
 {
 
     $i = 0;
@@ -111,11 +111,11 @@ echo get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]
 // 하단 HTML
 echo stripslashes($ca[ca_tail_html]);
 
-$timg = "$g4[path]/data/category/{$ca_id}_t";
+$timg = G4_DATA_PATH."/category/{$ca_id}_t";
 if (file_exists($timg))
     echo "<br><img src='$timg' border=0>";
 
-if ($ca[ca_include_tail]) 
+if ($ca[ca_include_tail])
     @include_once($ca[ca_include_tail]);
 else
     include_once("./_tail.php");

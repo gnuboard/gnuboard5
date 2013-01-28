@@ -116,7 +116,7 @@ function get_image($img, $width=0, $height=0)
 {
     global $g4, $default;
 
-    $full_img = "$g4[path]/data/item/$img";
+    $full_img = G4_DATA_PATH."/item/$img";
 
     if (file_exists($full_img) && $img)
     {
@@ -126,11 +126,11 @@ function get_image($img, $width=0, $height=0)
             $width = $size[0];
             $height = $size[1];
         }
-        $str = "<img id='$img' src='$g4[url]/data/item/$img' width='$width' height='$height' border='0'>";
+        $str = "<img id='$img' src='".G4_DATA_URL."/item/$img' width='$width' height='$height' border='0'>";
     }
     else
     {
-        $str = "<img id='$img' src='$g4[shop_img_url]/no_image.gif' border='0' ";
+        $str = "<img id='$img' src='".G4_SHOP_IMG_URL."/no_image.gif' border='0' ";
         if ($width)
             $str .= "width='$width' height='$height'";
         else
@@ -149,7 +149,7 @@ function get_it_image($img, $width=0, $height=0, $id="")
 
     $str = get_image($img, $width, $height);
     if ($id) {
-        $str = "<a href='$g4[shop_url]/item.php?it_id=$id'>$str</a>";
+        $str = "<a href='".G4_SHOP_URL."/item.php?it_id=$id'>$str</a>";
     }
     return $str;
 }
@@ -819,7 +819,7 @@ function display_banner($position, $num="")
 
     if (!$position) $position = "왼쪽";
 
-    include "$g4[shop_path]/boxbanner{$num}.inc.php";
+    include G4_SHOP_PATH."/boxbanner{$num}.inc.php";
 }
 
 // 1.00.02
