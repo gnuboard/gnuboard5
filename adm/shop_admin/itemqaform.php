@@ -14,7 +14,7 @@ if (!$iq[iq_id]) alert("등록된 자료가 없습니다.");
 $name = get_sideview($is[mb_id], $iq[iq_name], $is[mb_email], $is[mb_homepage]);
 
 $g4[title] = "상품문의 수정";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 ?>
@@ -62,5 +62,5 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 </form>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

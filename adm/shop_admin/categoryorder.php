@@ -2,7 +2,7 @@
 $sub_menu = "400210";
 include_once("./_common.php");
 $g4[title] = $html_title;
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 ?>
 
 <style>
@@ -115,5 +115,5 @@ $(function(){
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

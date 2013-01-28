@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $date);
 
 $g4[title] = "$date 매출현황";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 ?>
 
 <?=subtitle($g4[title])?>
@@ -107,5 +107,5 @@ if ($i == 0) {
 </table>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

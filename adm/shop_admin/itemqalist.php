@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "상품문의";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 $where = " where ";
 $sql_search = "";
@@ -149,5 +149,5 @@ if ($i == 0) {
 
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

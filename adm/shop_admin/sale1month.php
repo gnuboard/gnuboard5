@@ -8,7 +8,7 @@ $fr_date = preg_replace("/([0-9]{4})([0-9]{2})/", "\\1-\\2", $fr_date);
 $to_date = preg_replace("/([0-9]{4})([0-9]{2})/", "\\1-\\2", $to_date);
 
 $g4[title] = "$fr_date ~ $to_date 매출현황";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 function print_line($save)
 {
@@ -132,5 +132,5 @@ if ($i == 0) {
 </table>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

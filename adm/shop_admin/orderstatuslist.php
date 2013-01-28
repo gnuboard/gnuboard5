@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "주문개별관리";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 $where = " where ";
 $sql_search = "";
@@ -211,5 +211,5 @@ f.sel_field.value  = '<? echo $sel_field ?>';
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

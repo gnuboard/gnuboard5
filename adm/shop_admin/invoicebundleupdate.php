@@ -55,7 +55,7 @@ while (($item = fgetcsv($handle, 1000, ",")) !== FALSE)
 }
 
 $g4[title] = "배송일괄등록 처리결과";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 echo subtitle($g4[title]);
 echo "<p>";
@@ -69,5 +69,5 @@ else
     echo "처리 내역이 없습니다.";
 echo "<p>[끝]";
 
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

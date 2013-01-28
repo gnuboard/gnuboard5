@@ -77,7 +77,7 @@ else if ($w == "u")
 $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 
 $g4[title] = $html_title;
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 ?>
 
 <?=smarteditor_load();?>
@@ -348,5 +348,5 @@ document.fcategoryform.ca_name.focus();
 <iframe name='hiddenFrame' width=0 height=0></iframe>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

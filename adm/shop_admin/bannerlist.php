@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "배너관리";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 $sql_common = " from $g4[yc4_banner_table] ";
 
@@ -101,5 +101,5 @@ if ($i == 0) {
 </table>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>

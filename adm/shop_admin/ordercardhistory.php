@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4[title] = "전자결제내역";
-include_once ("$g4[admin_path]/admin.head.php");
+include_once(G4_ADMIN_PATH."/admin.head.php");
 
 sql_query(" ALTER TABLE `$g4[yc4_card_history_table]` ADD INDEX `od_id` ( `od_id` ) ", false);
 
@@ -121,5 +121,5 @@ if ($i == 0)
 
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH."/admin.tail.php");
 ?>
