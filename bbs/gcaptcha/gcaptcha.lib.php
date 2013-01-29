@@ -180,7 +180,7 @@ function captcha_html($class="captcha")
     $html .= '<legend class="sound_only">스팸방지</legend>';
     $html .= '<img src="'.$png_file_url.'" alt="스팸방지 숫자">';
     $html .= '<a href="'.$wav_file_url.'" id="captcha_wav" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
-    $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box fieldset_input" size="6" maxlength="6" required title="스팸방지 숫자 입력">';
+    $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box fs_input" size="6" maxlength="6" required title="스팸방지 숫자 입력">';
     $html .= '<p class="sound_only">스팸방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';
     return $html;
