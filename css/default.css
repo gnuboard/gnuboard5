@@ -92,7 +92,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none;line-height:2.2em}
 .btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949 !important;background:#494949 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 10px;height:24px;border:0;background:#484848;color:#fff;letter-spacing:-0.1em;vertical-align:top}
+.btn_submit {padding:0 10px;height:24px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em}
 .btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
@@ -159,6 +159,15 @@ fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#
 fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#fff;line-height:1.9em;vertical-align:middle;cursor:pointer}
 
 /* ///// 스킨별 스타일 ///// */
+/* 회원가입 약관 */
+#fregister section {margin:0 0 20px;padding:20px}
+#fregister h2 {margin:0 0 20px;text-align:center}
+#fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #ddd;background:#f7f7f7}
+#fregister textarea:focus {background:#333;color:#fff}
+.fregister_agree {padding:10px 0 0;text-align:right}
+.fregister_agree label {display:inline-block;margin-right:5px}
+#fregister p {text-align:center}
+
 /* 아웃로그인 스킨 */
 .ol {position:relative;margin-bottom:10px;padding:14px}
 .ol h2 {width:0;height:0;overflow:hidden}
@@ -172,7 +181,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
-#ol_submit {width:60px;height:24px;border:1px solid #383838;background:#484848;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
+#ol_submit {width:60px;height:24px;border:1px solid #239ce2;background:#109ff1;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before ul {float:right;margin:7px 0 13px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-left:5px;padding-top:2px}
@@ -213,6 +222,15 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #mb_confirm fieldset {margin:0 0 30px;padding:30px 0;text-align:center}
 #mb_confirm label {letter-spacing:-0.1em}
 #mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
+
+/* 비밀글 패스워드 확인 */
+#pw_confirm {margin:100px auto;width:500px}
+#pw_confirm h1 {margin:0 0 20px;font-size:1.3em}
+#pw_confirm p {padding:20px;border-bottom-color:#f7f7f2}
+#pw_confirm p strong {display:block}
+#pw_confirm fieldset {margin:0 0 30px;padding:30px 0;text-align:center}
+#pw_confirm label {letter-spacing:-0.1em}
+#pw_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
 /* 설문조사 스킨 */
 #poll {}
