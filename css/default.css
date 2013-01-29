@@ -14,7 +14,7 @@ hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
-.sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+.sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;border:0 !important;overflow:hidden !important}
 /* 본문 바로가기 */
 #to_content a {z-index:100000;display:block;position:absolute;top:0;left:0;height:0;overflow:hidden}
 #to_content a:focus,
@@ -155,6 +155,9 @@ fieldset textarea {padding:3px 3px 4px;border:1px solid #ddd;background:#fff;ver
 .fs_input:focus,
 fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#fff}
 
+.fs_submit,
+fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#fff;line-height:1.9em;vertical-align:middle;cursor:pointer}
+
 /* ///// 스킨별 스타일 ///// */
 /* 아웃로그인 스킨 */
 .ol {position:relative;margin-bottom:10px;padding:14px}
@@ -199,8 +202,17 @@ fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#
 #mb_login .login_pw {position:absolute;top:55px;left:95px}
 #mb_login .fs_input {display:block;margin:0 0 5px 80px}
 #mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
-#mb_login section {margin-bottom:30px;padding:20px}
+#mb_login section {margin:0 0 30px;padding:20px}
 #mb_login section div {text-align:right}
+
+/* 회원 패스워드 확인 */
+#mb_confirm {margin:100px auto;width:500px}
+#mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
+#mb_confirm p {padding:20px;border-bottom-color:#f7f7f2}
+#mb_confirm p strong {display:block}
+#mb_confirm fieldset {margin:0 0 30px;padding:30px 0;text-align:center}
+#mb_confirm label {letter-spacing:-0.1em}
+#mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
 /* 설문조사 스킨 */
 #poll {}
