@@ -23,11 +23,11 @@ include_once($g4['path'].'/head.sub.php');
 </tr>
 <tr>
     <th scope="col"><label for="target_table">복사 테이블명<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="target_table" name="target_table" maxlength="20" class="required alnum_" required title="복사할 TABLE"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
+    <td><input type="text" id="target_table" name="target_table" maxlength="20" class="required alnum_" required>영문자, 숫자, _ 만 가능 (공백없이)</td>
 </tr>
 <tr>
     <th scope="col"><label for="target_subject">게시판 제목<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="target_subject" name="target_subject" maxlength="120" class="required" value="[복사본] <?=$board['bo_subject']?>" required title="게시판 제목"></td>
+    <td><input type="text" id="target_subject" name="target_subject" maxlength="120" class="required" value="[복사본] <?=$board['bo_subject']?>" required></td>
 </tr>
 <tr>
     <th scope="col">복사 유형</th>

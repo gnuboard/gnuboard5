@@ -99,17 +99,17 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row"><label for="mb_id">아이디<?=$sound_only?></label></th>
     <td>
-        <input type="text" id="mb_id" name="mb_id" maxlength="20" <?=$required_mb_id?> value="<?=$mb['mb_id']?>" size="15" title="아이디">
+        <input type="text" id="mb_id" name="mb_id" maxlength="20" <?=$required_mb_id?> value="<?=$mb['mb_id']?>" size="15">
         <?if ($w=='u'){?><a href="./boardgroupmember_form.php?mb_id=<?=$mb['mb_id']?>">접근가능그룹보기</a><?}?>
     </td>
     <th scope="row"><label for="mb_password">패스워드<?=$sound_only?></label></th>
-    <td><input type="password" id="mb_password" name="mb_password" maxlength="20" <?=$required_mb_password?> size="15" title="패스워드"></td>
+    <td><input type="password" id="mb_password" name="mb_password" maxlength="20" <?=$required_mb_password?> size="15"></td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="mb_name" name="mb_name" maxlength="20" class="required hangul minlength=2" required value="<?=$mb['mb_name']?>" size="15" title="이름"></td>
+    <td><input type="text" id="mb_name" name="mb_name" maxlength="20" class="required hangul minlength=2" required value="<?=$mb['mb_name']?>" size="15"></td>
     <th scope="row"><label for="mb_nick">별명<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="mb_nick" name="mb_nick" maxlength="20" class="required minlength=2" required value="<?=$mb['mb_nick']?>" size="15" title="별명"></td>
+    <td><input type="text" id="mb_nick" name="mb_nick" maxlength="20" class="required minlength=2" required value="<?=$mb['mb_nick']?>" size="15"></td>
 </tr>
 <tr>
     <th scope="row"><label for="mb_level">회원 권한</label></th>
@@ -119,7 +119,7 @@ include_once('./admin.head.php');
 </tr>
 <tr>
     <th scope="row"><label for="mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" class="required email" required value="<?=$mb['mb_email']?>" size="30" title="E-mail"></td>
+    <td><input type="text" id="mb_email" name="mb_email" maxlength="100" class="required email" required value="<?=$mb['mb_email']?>" size="30"></td>
     <th scope="row"><label for="mb_homepage">홈페이지</label></th>
     <td><input type="text" id="mb_homepage" name="mb_homepage" maxlength="255" value="<?=$mb['mb_homepage']?>" size="15"></td>
 </tr>
@@ -226,14 +226,14 @@ include_once('./admin.head.php');
 <? } ?>
 
 <tr>
-    <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
+    <th scope="row">탈퇴일자</th>
     <td>
-        <input type="text" id="mb_leave_date" name="mb_leave_date" maxlength="8" value="<?=$mb['mb_leave_date']?>">
+        <input type="text" name="mb_leave_date" maxlength="8" value="<?=$mb['mb_leave_date']?>">
         <input type="checkbox" value="<?=date("Ymd"); ?>" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) { this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }" title="탈퇴일을 오늘로 지정"> 오늘
     </td>
-    <th scope="row"><label for="mb_intercept_date">접근차단일자</label></th>
+    <th scope="row">접근차단일자</th>
     <td>
-        <input type="text" id="mb_intercept_date" name="mb_intercept_date" maxlength="8" value="<?=$mb['mb_intercept_date']?>">
+        <input type="text" name="mb_intercept_date" maxlength="8" value="<?=$mb['mb_intercept_date']?>">
         <input type="checkbox" value="<?=date("Ymd"); ?>" onclick="if (this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else { this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }" title="접근차단일을 오늘로 지정"> 오늘
     </td>
 </tr>
@@ -252,7 +252,7 @@ include_once('./admin.head.php');
     <legend>XSS 혹은 CSRF 방지</legend>
     <p>관리자 권한을 탈취 당하는 경우를 대비하여 관리자의 패스워드를 다시 한번 확인합니다.</p>
     <label for="admin_password">관리자 패스워드<strong class="sound_only">필수</strong></label>
-    <input type="password" id="admin_password" name="admin_password" class="required" required title="관리자 패스워드">
+    <input type="password" id="admin_password" name="admin_password" class="required" required>
 </fieldset>
 
 <div class="btn_confirm">
