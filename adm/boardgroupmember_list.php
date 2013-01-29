@@ -55,8 +55,6 @@ include_once('./admin.head.php');
 $colspan = 7;
 ?>
 
-<script src="<?=$g4['path']?>/js/sideview.js"></script>
-
 <form id="fsearch" name="fsearch" method="get">
 <input type="hidden" name="gr_id" value="<?=$gr_id?>">
 <fieldset>

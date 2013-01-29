@@ -1,7 +1,7 @@
 <?
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
-include_once("{G4_PATH}/lib/mailer.lib.php");
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G4_LIB_PATH.'/mailer.lib.php');
 
 if (!$config['cf_email_use'])
     alert('환경설정에서 "메일발송 사용"에 체크하셔야 메일을 발송할 수 있습니다.\\n\\n관리자에게 문의하시기 바랍니다.');
@@ -15,7 +15,7 @@ if (substr_count($to, "@") > 1)
     alert_close('한번에 한사람에게만 메일을 발송할 수 있습니다.');
 
 
-if ($is_guest && !chk_captcha()) {
+if (!chk_captcha()) {
     alert('스팸방지에 입력한 숫자가 틀렸습니다.');
 }
 

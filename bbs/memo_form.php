@@ -1,6 +1,6 @@
 <?
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 if ($is_guest)
     alert_close('회원만 이용하실 수 있습니다.');

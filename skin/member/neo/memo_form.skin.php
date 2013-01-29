@@ -45,7 +45,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <script>
 function fmemoform_submit(f)
 {
-    <? if ($is_guest) { echo chk_captcha_js(); } ?>
+    <? echo chk_captcha_js(); ?>
 
     return true;
 }

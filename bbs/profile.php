@@ -27,8 +27,6 @@ $mb_reg_after = $row['days'];
 $mb_homepage = set_http($mb['mb_homepage']);
 $mb_profile = $mb['mb_profile'] ? conv_content($mb['mb_profile'],0) : '소개 내용이 없습니다.';
 
-echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
-
 include_once($member_skin_path.'/profile.skin.php');
 
 include_once(G4_PATH.'/tail.sub.php');
