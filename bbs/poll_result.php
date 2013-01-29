@@ -86,8 +86,6 @@ for ($i=0; $row2=sql_fetch_array($result); $i++) {
 
 include_once(G4_PATH.'/head.sub.php');
 
-echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
-
 if (!file_exists($poll_skin_path.'/poll_result.skin.php')) die('skin error');
 include_once ($poll_skin_path.'/poll_result.skin.php');
 

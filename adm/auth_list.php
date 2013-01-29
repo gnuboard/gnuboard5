@@ -55,7 +55,6 @@ include_once('./admin.head.php');
 $colspan = 5;
 ?>
 
-<script src="<?=$g4['path']?>/js/sideview.js"></script>
 <script>
 var list_update_php = '';
 var list_delete_php = 'auth_list_delete.php';

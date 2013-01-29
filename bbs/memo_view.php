@@ -63,8 +63,6 @@ else
 
 $mb = get_member($memo['me_'.$unkind.'_mb_id']);
 
-echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
-
 $member_skin_path = G4_PATH.'/skin/member/'.$config['cf_member_skin'];
 
 include_once($member_skin_path.'/memo_view.skin.php');

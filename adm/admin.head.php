@@ -69,9 +69,6 @@ function textarea_size(fld, size)
 }
 </script>
 
-<script src="<?=G4_URL?>/js/common.js"></script>
-<script src="<?=G4_URL?>/js/sideview.js"></script>
-
 <header>
 
     <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>

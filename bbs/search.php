@@ -211,8 +211,6 @@ if ($stx) {
     }
 
     $write_pages = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;srows='.$srows.'&amp;onetable='.$onetable.'&amp;page=');
-
-    echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
 }
 
 $group_select = '<select id="gr_id" name="gr_id" class="select" title="그룹선택"><option value="">전체 분류';
