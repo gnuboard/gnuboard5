@@ -1,5 +1,6 @@
 <?
 include_once('./_common.php');
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
 $token = md5(uniqid(rand(), true));
@@ -69,10 +70,6 @@ else
 // HOME > 1단계 > 2단계 ... > 6단계 분류
 $ca_id = $it['ca_id'];
 include G4_SHOP_PATH.'/navigation1.inc.php';
-
-$himg = G4_DATA_PATH.'/item/'.$it_id.'_h';
-if (file_exists($himg))
-    echo '<img src="'.$himg.'" border="0"><br>';
 
 // 상단 HTML
 echo stripslashes($it['it_head_html']);
@@ -179,26 +176,33 @@ else
 
     <!-- 상품중간이미지 -->
     <?
-    $middle_image = $it['it_id']."_m";
+    $filepath = G4_DATA_PATH.'/item/'.$it['it_id'];
+    for($i=1; $i<=10; $i++) {
+        if(file_exists($filepath.'/'.$it['it_img'.$i]) && $it['it_img'.$i] != "") {
+            $filename = $it['it_img'.$i];
+            break;
+        }
+    }
+
+    $middle_image = $it['it_id'].'/'.it_img_thumb($filename, $filepath, $default['de_mimg_width'], $default['de_mimg_height']);
     ?>
     <td align=center valign=top>
         <table cellpadding=0 cellspacing=0>
             <tr><td height=22></td></tr>
             <tr><td colspan=3 align=center>
-                <table cellpadding=1 cellspacing=0 bgcolor=#E4E4E4><tr><td><?=get_large_image($it['it_id']."_l1", $it['it_id'], false)?><?=get_it_image($middle_image);?></a></td></tr></table></td></tr>
+                <table cellpadding=1 cellspacing=0 bgcolor=#E4E4E4><tr><td><?=get_large_image($it['it_id'].'/'.$filename, $it['it_id'], false)?><?=get_it_image($middle_image);?></a></td></tr></table></td></tr>
             <tr><td colspan=3 height=10></td></tr>
             <tr>
                 <td colspan=3 align=center>
                 <?
-                for ($i=1; $i<=5; $i++)
+                for ($i=1; $i<=10; $i++)
                 {
-                    if (file_exists(G4_DATA_PATH."/item/{$it_id}_l{$i}"))
+                    $filename = $it['it_img'.$i];
+
+                    if (file_exists($filepath.'/'.$filename) && $filename != "")
                     {
-                        echo get_large_image("{$it_id}_l{$i}", $it['it_id'], false);
-                        if ($i==1 && file_exists(G4_DATA_PATH."/item/{$it_id}_m"))
-                            echo "<img id='middle{$i}' src='".G4_DATA_URL."/item/{$it_id}_m' border=0 width=40 height=40 style='border:1px solid #E4E4E4;' ";
-                        else
-                            echo "<img id='middle{$i}' src='".G4_DATA_URL."/item/{$it_id}_l{$i}' border=0 width=40 height=40 style='border:1px solid #E4E4E4;' ";
+                        echo get_large_image($it['it_id'].'/'.$filename, $it['it_id'], false);
+                        echo "<img id='middle{$i}' src='".G4_DATA_URL."/item/{$it_id}/{$filename}' border=0 width=40 height=40 style='border:1px solid #E4E4E4;' ";
                         echo " onmouseover=\"document.getElementById('$middle_image').src=document.getElementById('middle{$i}').src;\">";
                         echo "</a> &nbsp;";
                     }
@@ -1112,10 +1116,6 @@ $(function() {
 <?
 // 하단 HTML
 echo stripslashes($it['it_tail_html']);
-
-$timg = G4_DATA_PATH."/item/{$it_id}_t";
-if (file_exists($timg))
-    echo "<img src='$timg' border=0><br>";
 
 if ($ca['ca_include_tail'])
     @include_once($ca['ca_include_tail']);

@@ -23,7 +23,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             <li><a href="<?=G4_BBS_URL?>/current_connect.php">현재접속자 <?=connect(); // 현재 접속자수 ?></a></li>
             <li><a href="<?=G4_BBS_URL?>/new.php">최근게시물</a></li>
             <? if ($is_member) { ?>
-            <? if ($is_admin) { ?><li><a href="<?=G4_ADM_URL?>">관리자</a></li><? } ?>
+            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>">관리자</a></li><? } ?>
             <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php">정보수정</a></li>
             <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
             <? } else { ?>

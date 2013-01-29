@@ -1,4 +1,6 @@
 <?
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
+
 $tv_idx = get_session("ss_tv_idx");
 
 $tv_div[top] = 0;
@@ -54,9 +56,18 @@ echo "\n";
 for ($i=1; $i<=$tv_idx; $i++)
 {
     $tv_it_id = get_session("ss_tv[$i]");
-    $rowx = sql_fetch(" select it_name from $g4[yc4_item_table] where it_id = '$tv_it_id' ");
+    $sqlx = " select it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+                from $g4[yc4_item_table] where it_id = '$tv_it_id' ";
+    $rowx = sql_fetch($sqlx);
     $it_name = get_text(addslashes($rowx['it_name']));
-    $img = get_it_image($tv_it_id."_s", $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
+    $tv_filepath = G4_DATA_PATH.'/item/'.$tv_it_id;
+    for($k=1;$k<=10;$k++) {
+        $tv_filename = $rowx['it_img'.$k];
+        if(file_exists($tv_filepath.'/'.$tv_filename) && $tv_filename != "")
+            break;
+    }
+    $tv_it_img = $tv_it_id.'/'.it_img_thumb($tv_filename, $tv_filepath, $tv_div['img_width'], $tv_div['img_height']);
+    $img = get_it_image($tv_it_img, $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
     $img = preg_replace("/\<a /", "<a title='$it_name' ", $img);
     echo "goods_link[$i] = \"{$img}<br/><span class=small>".cut_str($it_name,10,"")."</span>\";\n";
 }
