@@ -101,9 +101,9 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     </tbody>
     </table>
 
-    <div class="pg">
-        <?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?>
-    </div>
+
+    <?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?>
+
 </div>
 
 <script>
