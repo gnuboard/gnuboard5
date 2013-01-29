@@ -175,9 +175,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .ol a {color:#000;text-decoration:none}
 
 #ol_before fieldset {position:relative}
-#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;line-height:1.6em}
+#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:178px;height:22px;border:1px solid #d1d1d1;background:#fff;line-height:1.6em}
 .ol_idlabel {position:absolute;top:6px;left:5px;color:#696969;font-size:0.9em}
-#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;width:188px;height:22px;border:1px solid #d1d1d1;background:#fff;vertical-align:top;line-height:1.6em}
+#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:178px;height:22px;border:1px solid #d1d1d1;background:#fff;vertical-align:top;line-height:1.6em}
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
