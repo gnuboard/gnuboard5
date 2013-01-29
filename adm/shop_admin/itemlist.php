@@ -1,6 +1,7 @@
 <?
 $sub_menu = "400300";
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -160,11 +161,12 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $tmp_ca_list .= "<script language='javascript'>document.getElementById('ca_id_$i').value='$row[ca_id]';</script>";
 
     $list = $i%2;
+    $it_img = it_img_thumb($row['it_img1'], G4_DATA_PATH.'/item/'.$row['it_id'], 50, 50);
     echo "
     <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list'>
         <td>$row[it_id]</td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row['it_id']}/{$it_img}", 50, 50)."</a></td>
         <td align=left>$tmp_ca_list<br><input type='text' name='it_name[$i]' value='".htmlspecialchars2(cut_str($row[it_name],250, ""))."' required size=40 class=ed></td>
         <td colspan=3>
             <table width=210 cellpadding=0 cellspacing=0>
