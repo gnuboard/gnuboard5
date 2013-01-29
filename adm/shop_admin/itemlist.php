@@ -161,7 +161,18 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $tmp_ca_list .= "<script language='javascript'>document.getElementById('ca_id_$i').value='$row[ca_id]';</script>";
 
     $list = $i%2;
-    $it_img = it_img_thumb($row['it_img1'], G4_DATA_PATH.'/item/'.$row['it_id'], 50, 50);
+
+    // 리스트 썸네일 이미지
+    $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
+    for($k=1; $k<=10; $k++) {
+        $idx = 'it_img'.$k;
+        if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
+            $filename = $row[$idx];
+            break;
+        }
+    }
+    $it_img = it_img_thumb($filename, G4_DATA_PATH.'/item/'.$row['it_id'], 50, 50);
+
     echo "
     <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list'>
