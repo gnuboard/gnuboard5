@@ -800,7 +800,7 @@ function codedupcheck(id)
 
     $.post(
         "./codedupcheck.php",
-        { id: id },
+        { it_id: id },
         function(data)
         {
             if(data) {
