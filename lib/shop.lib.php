@@ -371,7 +371,7 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
         return false;
     }
 
-    $file = "$g4[shop_path]/$skin_file";
+    $file = G4_SHOP_PATH."/$skin_file";
     if (!file_exists($file)) {
         echo "<span class=point>{$file} 파일을 찾을 수 없습니다.</span>";
     } else {
