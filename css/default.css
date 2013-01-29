@@ -137,7 +137,7 @@ table a {color:#000;text-decoration:none}
 .td_name {width:100px;text-align:left}
 .td_name div {position:relative}
 .td_date {width:60px;text-align:center}
-.td_datetime {width:100px;text-align:center}
+.td_datetime {width:110px;text-align:center}
 .td_mng {width:80px;text-align:center}
 
 /* ///// 새창 기본 스타일 ///// */
