@@ -187,7 +187,7 @@ else
     <label for="d">d (삭제)</label>
     <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
     <label for="admin_password">관리자 패스워드</label>
-    <input type="password" id="admin_password" name="admin_password" class="required" required title="관리자 패스워드">
+    <input type="password" id="admin_password" name="admin_password" class="required" required>
     <input type="submit" class="fieldset_submit" value="완료">
 </fieldset>
 

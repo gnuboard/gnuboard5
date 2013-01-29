@@ -34,7 +34,7 @@ include_once('./admin.head.php');
 <tbody>
 <tr>
     <th scope="row"><label for="ma_subject">메일 제목<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" size="100" class="required" required title="메일제목"></td>
+    <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" size="100" class="required" required></td>
 </tr>
 <tr>
     <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>

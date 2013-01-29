@@ -159,7 +159,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
 	<td>히트상품출력</td>
 	<td>
 		출력 : <input type=checkbox name=de_type1_list_use value='1' <?=$default[de_type1_list_use]?"checked":"";?>>
-		, 스킨 : <select id=de_type1_list_skin name=de_type1_list_skin><?=get_list_skin_options("^maintype(.*)\.php", $g4[shop_path]);?></select><script>document.getElementById('de_type1_list_skin').value='<?=$default[de_type1_list_skin]?>';</script>
+		, 스킨 : <select id=de_type1_list_skin name=de_type1_list_skin><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type1_list_skin').value='<?=$default[de_type1_list_skin]?>';</script>
 		, 1라인이미지수 : <input type=text name=de_type1_list_mod value='<?=$default[de_type1_list_mod]?>' size=3 class=ed>
 		, 라인 : <input type=text name=de_type1_list_row value='<?=$default[de_type1_list_row]?>' size=3 class=ed>
 		, 폭 : <input type=text name=de_type1_img_width value='<?=$default[de_type1_img_width]?>' size=3 class=ed>
@@ -171,7 +171,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
 	<td>추천상품출력</td>
 	<td>
 		출력 : <input type=checkbox name=de_type2_list_use value='1' <?=$default[de_type2_list_use]?"checked":"";?>>
-		, 스킨 : <select id=de_type2_list_skin name=de_type2_list_skin><?=get_list_skin_options("^maintype(.*)\.php", $g4[shop_path]);?></select><script>document.getElementById('de_type2_list_skin').value='<?=$default[de_type2_list_skin]?>';</script>
+		, 스킨 : <select id=de_type2_list_skin name=de_type2_list_skin><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type2_list_skin').value='<?=$default[de_type2_list_skin]?>';</script>
 		, 1라인이미지수 : <input type=text name=de_type2_list_mod value='<?=$default[de_type2_list_mod]?>' size=3 class=ed>
 		, 라인 : <input type=text name=de_type2_list_row value='<?=$default[de_type2_list_row]?>' size=3 class=ed>
 		, 폭 : <input type=text name=de_type2_img_width value='<?=$default[de_type2_img_width]?>' size=3 class=ed>
@@ -182,7 +182,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
 	<td>최신상품출력</td>
 	<td>
 		출력 : <input type=checkbox name=de_type3_list_use value='1' <?=$default[de_type3_list_use]?"checked":"";?>>
-		, 스킨 : <select id=de_type3_list_skin name=de_type3_list_skin><?=get_list_skin_options("^maintype(.*)\.php", $g4[shop_path]);?></select><script>document.getElementById('de_type3_list_skin').value='<?=$default[de_type3_list_skin]?>';</script>
+		, 스킨 : <select id=de_type3_list_skin name=de_type3_list_skin><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type3_list_skin').value='<?=$default[de_type3_list_skin]?>';</script>
 		, 1라인이미지수 : <input type=text name=de_type3_list_mod value='<?=$default[de_type3_list_mod]?>' size=3 class=ed>
 		, 라인 : <input type=text name=de_type3_list_row value='<?=$default[de_type3_list_row]?>' size=3 class=ed>
 		, 폭 : <input type=text name=de_type3_img_width value='<?=$default[de_type3_img_width]?>' size=3 class=ed>
@@ -193,7 +193,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
 	<td>인기상품출력</td>
 	<td>
 		출력 : <input type=checkbox name=de_type4_list_use value='1' <?=$default[de_type4_list_use]?"checked":"";?>>
-		, 스킨 : <select id=de_type4_list_skin name=de_type4_list_skin><?=get_list_skin_options("^maintype(.*)\.php", $g4[shop_path]);?></select><script>document.getElementById('de_type4_list_skin').value='<?=$default[de_type4_list_skin]?>';</script>
+		, 스킨 : <select id=de_type4_list_skin name=de_type4_list_skin><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type4_list_skin').value='<?=$default[de_type4_list_skin]?>';</script>
 		, 1라인이미지수 : <input type=text name=de_type4_list_mod value='<?=$default[de_type4_list_mod]?>' size=3 class=ed>
 		, 라인 : <input type=text name=de_type4_list_row value='<?=$default[de_type4_list_row]?>' size=3 class=ed>
 		, 폭 : <input type=text name=de_type4_img_width value='<?=$default[de_type4_img_width]?>' size=3 class=ed>
@@ -204,7 +204,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
 	<td>할인상품출력</td>
 	<td>
 		출력 : <input type=checkbox name=de_type5_list_use value='1' <?=$default[de_type5_list_use]?"checked":"";?>>
-		, 스킨 : <select id=de_type5_list_skin name=de_type5_list_skin><?=get_list_skin_options("^maintype(.*)\.php", $g4[shop_path]);?></select><script>document.getElementById('de_type5_list_skin').value='<?=$default[de_type5_list_skin]?>';</script>
+		, 스킨 : <select id=de_type5_list_skin name=de_type5_list_skin><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type5_list_skin').value='<?=$default[de_type5_list_skin]?>';</script>
 		, 1라인이미지수 : <input type=text name=de_type5_list_mod value='<?=$default[de_type5_list_mod]?>' size=3 class=ed>
 		, 라인 : <input type=text name=de_type5_list_row value='<?=$default[de_type5_list_row]?>' size=3 class=ed>
 		, 폭 : <input type=text name=de_type5_img_width value='<?=$default[de_type5_img_width]?>' size=3 class=ed>
