@@ -737,16 +737,16 @@ function it_name_icon($it, $it_name="", $url=1)
     if ($url)
         $str = "<a href='$g4[shop_path]/item.php?it_id=$it[it_id]'>$str</a>";
 
-    if ($it[it_type1]) $str .= " <img src='$g4[shop_img_path]/icon_type1.gif' border='0' align='absmiddle' />";
-    if ($it[it_type2]) $str .= " <img src='$g4[shop_img_path]/icon_type2.gif' border='0' align='absmiddle' />";
-    if ($it[it_type3]) $str .= " <img src='$g4[shop_img_path]/icon_type3.gif' border='0' align='absmiddle' />";
-    if ($it[it_type4]) $str .= " <img src='$g4[shop_img_path]/icon_type4.gif' border='0' align='absmiddle' />";
-    if ($it[it_type5]) $str .= " <img src='$g4[shop_img_path]/icon_type5.gif' border='0' align='absmiddle' />";
+    if ($it[it_type1]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type1.gif' border='0' align='absmiddle' />";
+    if ($it[it_type2]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type2.gif' border='0' align='absmiddle' />";
+    if ($it[it_type3]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type3.gif' border='0' align='absmiddle' />";
+    if ($it[it_type4]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type4.gif' border='0' align='absmiddle' />";
+    if ($it[it_type5]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type5.gif' border='0' align='absmiddle' />";
 
     // 품절
     $stock = get_it_stock_qty($it[it_id]);
     if ($stock <= 0)
-        $str .= " <img src='$g4[shop_img_path]/icon_pumjul.gif' border='0' align='absmiddle' /> ";
+        $str .= " <img src='".G4_SHOP_IMG_URL."/icon_pumjul.gif' border='0' align='absmiddle' /> ";
 
     return $str;
 }
