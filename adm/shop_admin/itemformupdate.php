@@ -120,61 +120,69 @@ function itemdelete($it_id)
 	sql_query($sql);
 }
 
-
-@mkdir("$g4[path]/data/item", 0707);
-@chmod("$g4[path]/data/item", 0707);
-
-if ($it_himg_del)  @unlink("$g4[path]/data/item/{$it_id}_h");
-if ($it_timg_del)  @unlink("$g4[path]/data/item/{$it_id}_t");
-
-if ($it_simg_del)  @unlink("$g4[path]/data/item/{$it_id}_s");
-if ($it_mimg_del)  @unlink("$g4[path]/data/item/{$it_id}_m");
-if ($it_limg1_del) @unlink("$g4[path]/data/item/{$it_id}_l1");
-if ($it_limg2_del) @unlink("$g4[path]/data/item/{$it_id}_l2");
-if ($it_limg3_del) @unlink("$g4[path]/data/item/{$it_id}_l3");
-if ($it_limg4_del) @unlink("$g4[path]/data/item/{$it_id}_l4");
-if ($it_limg5_del) @unlink("$g4[path]/data/item/{$it_id}_l5");
-
-// 이미지(대)만 업로드하고 자동생성 체크일 경우 이미지(중,소) 자동생성
-if ($createimage && $_FILES[it_limg1][name])
-{
-    upload_file($_FILES[it_limg1][tmp_name], $it_id."_l1", "$g4[path]/data/item");
-
-    $image = "$g4[path]/data/item/$it_id"."_l1";
-    $size = getimagesize($image);
-    $src = @imagecreatefromjpeg($image);
-
-    if (!$src)
-    {
-        echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=$g4[charset]\">";
-        echo "<script>alert('이미지(대)가 JPG 파일이 아닙니다.');</script>";
-    }
-    else
-    {
-        // gd 버전에 따라
-        if (function_exists("imagecopyresampled")) {
-            // 이미지(소) 생성
-            $dst = imagecreatetruecolor($default[de_simg_width], $default[de_simg_height]);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $default[de_simg_width], $default[de_simg_height], $size[0], $size[1]);
-        } else {
-            // 이미지(소) 생성
-            $dst = imagecreate($default[de_simg_width], $default[de_simg_height]);
-            imagecopyresized($dst, $src, 0, 0, 0, 0, $default[de_simg_width], $default[de_simg_height], $size[0], $size[1]);
-        }
-        imagejpeg($dst, "$g4[path]/data/item/$it_id"."_s", 90);
-
-        if (function_exists("imagecopyresampled")) {
-            // 이미지(중) 생성
-            $dst = imagecreatetruecolor($default[de_mimg_width], $default[de_mimg_height]);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $default[de_mimg_width], $default[de_mimg_height], $size[0], $size[1]);
-        } else {
-            // 이미지(중) 생성
-            $dst = imagecreate($default[de_mimg_width], $default[de_mimg_height]);
-            imagecopyresized($dst, $src, 0, 0, 0, 0, $default[de_mimg_width], $default[de_mimg_height], $size[0], $size[1]);
-        }
-        @imagejpeg($dst, "$g4[path]/data/item/$it_id"."_m", 90);
-    }
+if($w == "" && !trim($it_id)) {
+    alert("상품 코드가 없으므로 상품을 추가하실 수 없습니다.");
 }
+
+@mkdir(G4_DATA_PATH.'/item', 0707);
+@chmod(G4_DATA_PATH.'/item', 0707);
+
+// 파일정보
+if($w == "u") {
+    $sql = " select it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+                from {$g4['yc4_item_table']}
+                where it_id = '$it_id' ";
+    $file = sql_fetch($sql);
+
+    $it_img1    = $file['it_img1'];
+    $it_img2    = $file['it_img2'];
+    $it_img3    = $file['it_img3'];
+    $it_img4    = $file['it_img4'];
+    $it_img5    = $file['it_img5'];
+    $it_img6    = $file['it_img6'];
+    $it_img7    = $file['it_img7'];
+    $it_img8    = $file['it_img8'];
+    $it_img9    = $file['it_img9'];
+    $it_img10   = $file['it_img10'];
+}
+
+$it_img_dir = G4_DATA_PATH.'/item/'.$it_id;
+
+if ($it_himg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_h");
+if ($it_timg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_t");
+
+if ($it_img1_del) @unlink("$it_img_dir/$it_img1");
+if ($it_img2_del) @unlink("$it_img_dir/$it_img2");
+if ($it_img3_del) @unlink("$it_img_dir/$it_img3");
+if ($it_img4_del) @unlink("$it_img_dir/$it_img4");
+if ($it_img5_del) @unlink("$it_img_dir/$it_img5");
+if ($it_img6_del) @unlink("$it_img_dir/$it_img6");
+if ($it_img7_del) @unlink("$it_img_dir/$it_img7");
+if ($it_img8_del) @unlink("$it_img_dir/$it_img8");
+if ($it_img9_del) @unlink("$it_img_dir/$it_img9");
+if ($it_img10_del) @unlink("$it_img_dir/$it_img10");
+
+// 이미지업로드
+if ($_FILES['it_img1']['name'])
+    $it_img1 = it_img_upload($_FILES['it_img1']['tmp_name'], $_FILES['it_img1']['name'], $it_img_dir);
+if ($_FILES['it_img2']['name'])
+    $it_img2 = it_img_upload($_FILES['it_img2']['tmp_name'], $_FILES['it_img2']['name'], $it_img_dir);
+if ($_FILES['it_img3']['name'])
+    $it_img3 = it_img_upload($_FILES['it_img3']['tmp_name'], $_FILES['it_img3']['name'], $it_img_dir);
+if ($_FILES['it_img4']['name'])
+    $it_img4 = it_img_upload($_FILES['it_img4']['tmp_name'], $_FILES['it_img4']['name'], $it_img_dir);
+if ($_FILES['it_img5']['name'])
+    $it_img5 = it_img_upload($_FILES['it_img5']['tmp_name'], $_FILES['it_img5']['name'], $it_img_dir);
+if ($_FILES['it_img6']['name'])
+    $it_img6 = it_img_upload($_FILES['it_img6']['tmp_name'], $_FILES['it_img6']['name'], $it_img_dir);
+if ($_FILES['it_img7']['name'])
+    $it_img7 = it_img_upload($_FILES['it_img7']['tmp_name'], $_FILES['it_img7']['name'], $it_img_dir);
+if ($_FILES['it_img8']['name'])
+    $it_img8 = it_img_upload($_FILES['it_img8']['tmp_name'], $_FILES['it_img8']['name'], $it_img_dir);
+if ($_FILES['it_img9']['name'])
+    $it_img9 = it_img_upload($_FILES['it_img9']['tmp_name'], $_FILES['it_img9']['name'], $it_img_dir);
+if ($_FILES['it_img10']['name'])
+    $it_img10 = it_img_upload($_FILES['it_img10']['tmp_name'], $_FILES['it_img10']['name'], $it_img_dir);
 
 if ($w == "" || $w == "u")
 {
@@ -225,7 +233,6 @@ if($default['de_send_cost_case'] == "개별배송") {
     }
 }
 
-
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
                 ca_id3              = '$ca_id3',
@@ -273,18 +280,24 @@ $sql_common = " ca_id               = '$ca_id',
                 it_sc_condition     = '$condition',
                 it_head_html        = '$it_head_html',
                 it_tail_html        = '$it_tail_html',
-                it_time             = '$g4[time_ymdhis]',
-                it_ip               = '$_SERVER[REMOTE_ADDR]',
+                it_time             = '{$g4['time_ymdhis']}',
+                it_ip               = '{$_SERVER['REMOTE_ADDR']}',
                 it_order            = '$it_order',
-                it_tel_inq          = '$it_tel_inq'
+                it_tel_inq          = '$it_tel_inq',
+                it_img1             = '$it_img1',
+                it_img2             = '$it_img2',
+                it_img3             = '$it_img3',
+                it_img4             = '$it_img4',
+                it_img5             = '$it_img5',
+                it_img6             = '$it_img6',
+                it_img7             = '$it_img7',
+                it_img8             = '$it_img8',
+                it_img9             = '$it_img9',
+                it_img10            = '$it_img10'
                 ";
 
 if ($w == "")
 {
-    if (!trim($it_id)) {
-        alert("상품 코드가 없으므로 상품을 추가하실 수 없습니다.");
-    }
-
     $sql = " insert $g4[yc4_item_table]
                 set it_id = '$it_id',
 					$sql_common	";
@@ -381,17 +394,6 @@ if ($w == "" || $w == "u")
             sql_query($sql, false);
         }
     }
-
-    if ($_FILES[it_simg][name])  upload_file($_FILES[it_simg][tmp_name],  $it_id . "_s",  "$g4[path]/data/item");
-    if ($_FILES[it_mimg][name])  upload_file($_FILES[it_mimg][tmp_name],  $it_id . "_m",  "$g4[path]/data/item");
-    if ($_FILES[it_limg1][name]) upload_file($_FILES[it_limg1][tmp_name], $it_id . "_l1", "$g4[path]/data/item");
-    if ($_FILES[it_limg2][name]) upload_file($_FILES[it_limg2][tmp_name], $it_id . "_l2", "$g4[path]/data/item");
-    if ($_FILES[it_limg3][name]) upload_file($_FILES[it_limg3][tmp_name], $it_id . "_l3", "$g4[path]/data/item");
-    if ($_FILES[it_limg4][name]) upload_file($_FILES[it_limg4][tmp_name], $it_id . "_l4", "$g4[path]/data/item");
-    if ($_FILES[it_limg5][name]) upload_file($_FILES[it_limg5][tmp_name], $it_id . "_l5", "$g4[path]/data/item");
-
-    if ($_FILES[it_himg][name])  upload_file($_FILES[it_himg][tmp_name], $it_id . "_h", "$g4[path]/data/item");
-    if ($_FILES[it_timg][name])  upload_file($_FILES[it_timg][tmp_name], $it_id . "_t", "$g4[path]/data/item");
 }
 
 // 선택, 추가 옵션 테이블을 체크해 상품정보가 없는 것은 삭제
