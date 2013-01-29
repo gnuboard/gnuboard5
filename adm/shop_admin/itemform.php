@@ -386,24 +386,14 @@ ul { margin: 0; padding: 0; list-style: none; }
 <tr>
     <td>이미지(대)</td>
     <td colspan=3>
-        <input type=file class=ed name=it_limg1 size=40>
+        <input type=file class=ed name=it_img1 size=40>
         <?
-        $limg1 = G4_DATA_PATH."/item/{$it[it_id]}_l1";
-        if (file_exists($limg1)) {
-            $size = getimagesize($limg1);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('limg1', $size[0], $size[1]);\"><input type=checkbox name=it_limg1_del value='1'>삭제";
-            echo "<div id='limg1' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$limg1' border=1></div>";
+        $img1 = G4_DATA_PATH."/item/{$it['it_img1']}";
+        if (file_exists($img1) && is_file($img1)) {
+            $size = getimagesize($img1);
+            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('img1', $size[0], $size[1]);\"><input type=checkbox name=it_img1_del value='1'>삭제";
+            echo "<div id='img1' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$img1' border=1></div>";
         }
-        ?>
-
-        <?
-        /*
-        if (function_exists("imagecreatefromjpeg")) {
-            //echo "<input type=checkbox name=createimage value='1'> <FONT COLOR=FF6600>이미지(중), 이미지(소)를 자동생성 하시려면 체크하세요. JPG 파일만 가능합니다.</FONT> ";
-            echo "<br><input type=checkbox name=createimage value='1'> 중, 소 이미지를 자동으로 생성하시는 경우에 체크하세요. (JPG 파일만 가능)";
-            echo help("이미지(중) 이미지(소) 의 사이즈를 환경설정에서 정한 폭과 높이로 자동생성합니다.\n\nJPG 파일만 가능합니다.");
-        }
-        */
         ?>
     </td>
 </tr>
@@ -442,13 +432,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 <tr class=ht>
     <td>이미지(대) <?=$i?></td>
     <td colspan=3>
-        <input type=file class=ed name=it_limg<?=$i?> size=40>
+        <input type=file class=ed name=it_img<?=$i?> size=40>
         <?
-        $limg = "$g4[path]/data/item/{$it[it_id]}_l{$i}";
-        if (file_exists($limg)) {
-            $size = getimagesize($limg);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('limg$i', $size[0], $size[1]);\"><input type=checkbox name=it_limg{$i}_del value='1'>삭제";
-            echo "<span id=limg{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$limg' border=1></div>";
+        $img = G4_DATA_PATH."/item/{$it['it_img$i']}";
+        if (file_exists($img) && is_file($img)) {
+            $size = getimagesize($img);
+            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('img$i', $size[0], $size[1]);\"><input type=checkbox name=it_img{$i}_del value='1'>삭제";
+            echo "<span id=img{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$img' border=1></div>";
         }
         ?>
     </td>

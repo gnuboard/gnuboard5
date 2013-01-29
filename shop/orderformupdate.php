@@ -57,7 +57,7 @@ $sql = " select a.it_id,
             and a.ct_direct = '$sw_direct'
             and a.it_id = b.it_id ";
 
-if($w == "selectedbuy")
+if($act == "selectedbuy")
     $sql .= " and a.ct_selected = '1' ";
 
 $result = sql_query($sql);
@@ -158,7 +158,7 @@ else if($default['de_send_cost_case'] == "상한") {
                 and a.ct_direct = '$sw_direct'
                 and a.ct_parent = '0' ";
 
-    if($w == "selectedbuy")
+    if($act == "selectedbuy")
         $sql .= " and a.ct_selected = '1' ";
 
     $sql .= " order by a.ct_id ";
@@ -748,7 +748,7 @@ if ($default['de_sms_use2'] && $receive_number)
 
 
 // 세션값 제거
-if($w != "selectedbuy")
+if($act != "selectedbuy")
     set_session('ss_uniqid', '');
 set_session('ss_order_uniqid', '');
 set_session('ss_direct', '');

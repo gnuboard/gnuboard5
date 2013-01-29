@@ -122,7 +122,7 @@ else
 </script>
 
 <form name="forderform" method="post" action="<? echo $action_url; ?>" autocomplete="off">
-<input type="hidden" name="w" value="<? echo $w; ?>" />
+<input type="hidden" name="act" value="<? echo $act; ?>" />
 <input type="hidden" name="od_uq_id" value="<? echo $od_uq_id; ?>" />
 <input type="hidden" name="od_amount"    value="<? echo $tot_sell_amount; ?>" />
 <input type="hidden" name="od_send_cost" value="<? echo $send_cost; ?>" />

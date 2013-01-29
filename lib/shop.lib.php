@@ -277,6 +277,30 @@ function htmlspecialchars2($str)
     return $str;
 }
 
+// 상품이미지 업로드
+function it_img_upload($srcfile, $filename, $dir)
+{
+    if($filename == "")
+        return "";
+
+    if(!is_dir($dir)) {
+        @mkdir($dir, 0707);
+        @chmod($dir, 0707);
+    }
+
+    $filename = preg_replace("/\s+/", "", $filename);
+    $filename = preg_replace("/[#\&\+\-%@=\/\\:;,'\"\^`~\|\!\?\*\$#<>\(\)\[\]\{\}]/", "", $filename);
+
+    $filename = preg_replace_callback(
+                          "/[가-힣]+/",
+                          create_function('$matches', 'return base64_encode($matches[0]);'),
+                          $filename);
+
+    upload_file($srcfile, $filename, $dir);
+
+    return $filename;
+}
+
 // 파일을 업로드 함
 function upload_file($srcfile, $destfile, $dir)
 {

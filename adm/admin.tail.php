@@ -16,7 +16,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 <!-- <p>실행시간 : <?=get_microtime() - $begin_time;?> -->
 
-<script src="<?=G4_ADM_PATH?>/admin.js"></script>
+<script src="<?=G4_ADMIN_PATH?>/admin.js"></script>
 
 <?
 include_once(G4_PATH.'/tail.sub.php');
