@@ -1,6 +1,7 @@
 <?
 $sub_menu = "400200";
 include_once("./_common.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -80,8 +81,6 @@ $g4[title] = $html_title;
 include_once(G4_ADMIN_PATH."/admin.head.php");
 ?>
 
-<?=smarteditor_load();?>
-
 <?=subtitle("기본 입력")?>
 
 <form name=fcategoryform method=post action="./categoryformupdate.php" enctype="multipart/form-data" onsubmit='return fcategoryformcheck(this);' style="margin:0px;">
@@ -107,8 +106,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         <?=help("자동으로 보여지는 분류코드를 사용하시길 권해드리지만 직접 입력한 값으로도 사용할 수 있습니다.\n분류코드는 나중에 수정이 되지 않으므로 신중하게 결정하여 사용하십시오.\n\n분류코드는 2자리씩 10자리를 사용하여 5단계를 표현할 수 있습니다.\n0~z까지 입력이 가능하며 한 분류당 최대 1296가지를 표현할 수 있습니다.\n그러므로 총 3656158440062976가지의 분류를 사용할 수 있습니다.");?>
     <? } else { ?>
         <input type=hidden name=ca_id value='<?=$ca[ca_id]?>'><?=$ca[ca_id]?>
-        <? echo icon("미리보기", "{$g4[shop_path]}/list.php?ca_id=$ca_id"); ?>
-        <? echo "<a href='./categoryform.php?ca_id=$ca_id&$qstr' title='하위분류 추가'><img src='$g4[admin_path]/img/icon_insert.gif' border=0 align=absmiddle></a>"; ?>
+        <? echo icon("미리보기", G4_SHOP_URL."/list.php?ca_id=$ca_id"); ?>
+        <? echo "<a href='./categoryform.php?ca_id=$ca_id&$qstr' title='하위분류 추가'><img src='".G4_ADMIN_URL."/img/icon_insert.gif' border=0 align=absmiddle></a>"; ?>
         <a href='./itemlist.php?sca=<?=$ca[ca_id]?>'>상품리스트</a>
     <? } ?>
 
@@ -133,7 +132,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
     <td>출력스킨</td>
     <td colspan=3>
         <select id=ca_skin name=ca_skin>
-        <?  echo get_list_skin_options("^list.skin.(.*)\.php", $g4[shop_path]); ?>
+        <?  echo get_list_skin_options("^list.skin.(.*)\.php", G4_SHOP_PATH); ?>
         </select>
         <script>document.getElementById('ca_skin').value='<?=$ca[ca_skin]?>';</script>
         <?=help("기본으로 제공하는 스킨은 $g4[shop]/list.skin.*.php 입니다.");?>
@@ -278,11 +277,11 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <tr class=ht>
     <td>상단 내용 <?=help("상품리스트 페이지 상단에 출력하는 HTML 내용입니다.", -150);?> </td>
-    <td colspan=3 align=right><br /><?=smarteditor_run("ca_head_html", $ca['ca_head_html']);?></td>
+    <td colspan=3 align=right><br /><?=editor_html("ca_head_html", $ca['ca_head_html']);?></td>
 </tr>
 <tr class=ht>
     <td>하단 내용 <?=help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다.", -150);?></td>
-    <td colspan=3 align=right><br /><?=smarteditor_run("ca_tail_html", $ca['ca_tail_html']);?></td>
+    <td colspan=3 align=right><br /><?=editor_html("ca_tail_html", $ca['ca_tail_html']);?></td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
@@ -315,11 +314,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <script type="text/javascript">
 function fcategoryformcheck(f)
 {
-    <?//=cheditor3('ca_head_html');?>
-    <?//=cheditor3('ca_tail_html');?>
-
-    <?=smarteditor_update("ca_head_html");?>
-    <?=smarteditor_update("ca_tail_html");?>
+    <?=get_editor_js("ca_head_html");?>
+    <?=get_editor_js("ca_tail_html");?>
 
     if (f.w.value == "") {
         if (f.codedup.value == '1') {
@@ -335,17 +331,28 @@ function codedupcheck(id)
 {
     if (!id) {
         alert('분류코드를 입력하십시오.');
-        f.ca_id.focus();
+        document.fcategoryform.ca_id.focus();
         return;
     }
 
-    window.open("./codedupcheck.php?ca_id="+id+'&frmname=fcategoryform', "hiddenframe");
+    $.post(
+        "./codedupcheck.php",
+        { ca_id: id },
+        function(data)
+        {
+            if(data) {
+                alert("코드 "+id+" 는 '"+data+"' (으)로 이미 등록되어 있으므로\n\n사용하실 수 없습니다.");
+                return false;
+            } else {
+                alert("'"+id+"' 은(는) 등록된 코드가 없으므로 사용하실 수 있습니다.");
+                document.fcategoryform.codedup.value = "";
+            }
+        }
+    );
 }
 
 document.fcategoryform.ca_name.focus();
 </script>
-
-<iframe name='hiddenFrame' width=0 height=0></iframe>
 
 <?
 include_once(G4_ADMIN_PATH."/admin.tail.php");
