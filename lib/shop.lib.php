@@ -211,12 +211,12 @@ function get_large_image($img, $it_id, $btn_image=true)
 {
     global $g4;
 
-    if (file_exists("$g4[path]/data/item/$img") && $img != "")
+    if (file_exists(G4_DATA_PATH."/item/$img") && $img != "")
     {
-        $size   = getimagesize("$g4[path]/data/item/$img");
+        $size   = getimagesize(G4_DATA_PATH."/item/$img");
         $width  = $size[0];
         $height = $size[1];
-        $str = "<a href=\"javascript:popup_large_image('$it_id', '$img', $width, $height, '$g4[shop_path]')\">";
+        $str = "<a href=\"".G4_SHOP_URL."/largeimage.php?it_id=".$it['it_id']."&amp;img=".$img."\" target=\"_blank\" onclick=\"popup_large_image(this.href, $width, $height); return false;\">";
         if ($btn_image)
             $str .= "<img src='$g4[shop_img_path]/btn_zoom.gif' border='0'></a>";
     }
