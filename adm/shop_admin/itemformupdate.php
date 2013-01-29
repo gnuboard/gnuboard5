@@ -44,17 +44,11 @@ function itemdelete($it_id)
 
 
 	// 상품 이미지 삭제
-    @unlink("$g4[path]/data/item/$it_id"."_s");
-    @unlink("$g4[path]/data/item/$it_id"."_m");
-    @unlink("$g4[path]/data/item/$it_id"."_l1");
-    @unlink("$g4[path]/data/item/$it_id"."_l2");
-    @unlink("$g4[path]/data/item/$it_id"."_l3");
-    @unlink("$g4[path]/data/item/$it_id"."_l4");
-    @unlink("$g4[path]/data/item/$it_id"."_l5");
-
-    // 상, 하단 이미지 삭제
-    @unlink("$g4[path]/data/item/$it_id"."_h");
-    @unlink("$g4[path]/data/item/$it_id"."_t");
+    $files = scan_dir(G4_DATA_PATH.'/item/'.$it_id);
+    for($i=0; $i<count($files); $i++) {
+        @unlink(G4_DATA_PATH.'/item/'.$it_id.'/'.$files[$i]);
+    }
+    @rmdir(G4_DATA_PATH.'/item/'.$it_id);
 
     // 장바구니 삭제
 	$sql = " delete from $g4[yc4_cart_table] where it_id = '$it_id' ";
@@ -120,6 +114,20 @@ function itemdelete($it_id)
 	sql_query($sql);
 }
 
+// 디렉토리내 파일 리스트 배열로 얻기
+function scan_dir($path)
+{
+    $dir = opendir($path);
+    while (false !== ($filename = readdir($dir))) {
+        if($filename == "." || $filename == "..")
+            continue;
+
+        $files[] = $filename;
+    }
+
+    return $files;
+}
+
 if($w == "" && !trim($it_id)) {
     alert("상품 코드가 없으므로 상품을 추가하실 수 없습니다.");
 }
@@ -148,19 +156,47 @@ if($w == "u") {
 
 $it_img_dir = G4_DATA_PATH.'/item/'.$it_id;
 
-if ($it_himg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_h");
-if ($it_timg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_t");
-
-if ($it_img1_del) @unlink("$it_img_dir/$it_img1");
-if ($it_img2_del) @unlink("$it_img_dir/$it_img2");
-if ($it_img3_del) @unlink("$it_img_dir/$it_img3");
-if ($it_img4_del) @unlink("$it_img_dir/$it_img4");
-if ($it_img5_del) @unlink("$it_img_dir/$it_img5");
-if ($it_img6_del) @unlink("$it_img_dir/$it_img6");
-if ($it_img7_del) @unlink("$it_img_dir/$it_img7");
-if ($it_img8_del) @unlink("$it_img_dir/$it_img8");
-if ($it_img9_del) @unlink("$it_img_dir/$it_img9");
-if ($it_img10_del) @unlink("$it_img_dir/$it_img10");
+// 파일삭제
+if ($it_img1_del) {
+    @unlink("$it_img_dir/$it_img1");
+    $it_img1 = "";
+}
+if ($it_img2_del) {
+    @unlink("$it_img_dir/$it_img2");
+    $it_img2 = "";
+}
+if ($it_img3_del) {
+    @unlink("$it_img_dir/$it_img3");
+    $it_img3 = "";
+}
+if ($it_img4_del) {
+    @unlink("$it_img_dir/$it_img4");
+    $it_img4 = "";
+}
+if ($it_img5_del) {
+    @unlink("$it_img_dir/$it_img5");
+    $it_img5 = "";
+}
+if ($it_img6_del) {
+    @unlink("$it_img_dir/$it_img6");
+    $it_img6 = "";
+}
+if ($it_img7_del) {
+    @unlink("$it_img_dir/$it_img7");
+    $it_img7 = "";
+}
+if ($it_img8_del) {
+    @unlink("$it_img_dir/$it_img8");
+    $it_img8 = "";
+}
+if ($it_img9_del) {
+    @unlink("$it_img_dir/$it_img9");
+    $it_img9 = "";
+}
+if ($it_img10_del) {
+    @unlink("$it_img_dir/$it_img10");
+    $it_img10 = "";
+}
 
 // 이미지업로드
 if ($_FILES['it_img1']['name'])

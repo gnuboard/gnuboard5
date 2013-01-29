@@ -311,79 +311,6 @@ function upload_file($srcfile, $destfile, $dir)
     return true;
 }
 
-// 유일키를 생성
-function get_unique_id($len=32)
-{
-    global $g4;
-
-    $result = @mysql_query(" LOCK TABLES $g4[yc4_on_uid_table] WRITE, $g4[yc4_cart_table] READ, $g4[yc4_order_table] READ ");
-    if (!$result) {
-        $sql = " CREATE TABLE `$g4[yc4_on_uid_table]` (
-                    `on_id` int(11) NOT NULL auto_increment,
-                    `on_uid` varchar(32) NOT NULL default '',
-                    `on_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
-                    `session_id` varchar(32) NOT NULL default '',
-                    PRIMARY KEY  (`on_id`),
-                    UNIQUE KEY `on_uid` (`on_uid`) ) ";
-        sql_query($sql, false);
-    }
-
-    // 이틀전 자료는 모두 삭제함
-    $ytime = date("Y-m-d", $g4['server_time'] - 86400 * 1);
-    $sql = " delete from $g4[yc4_on_uid_table] where on_datetime < '$ytime' ";
-    sql_query($sql);
-
-    $unique = false;
-
-    do {
-        sql_query(" INSERT INTO $g4[yc4_on_uid_table] set on_uid = NOW(), on_datetime = NOW(), session_id = '".session_id()."' ", false);
-        $id = @mysql_insert_id();
-        $uid = md5($id);
-        sql_query(" UPDATE $g4[yc4_on_uid_table] set on_uid = '$uid' where on_id = '$id' ");
-
-        // 장바구니에도 겹치는게 있을 수 있으므로 ...
-        $sql = "select COUNT(*) as cnt from $g4[yc4_cart_table] where on_uid = '$uid' ";
-        $row = sql_fetch($sql);
-        if (!$row[cnt]) {
-            // 주문서에도 겹치는게 있을 수 있으므로 ...
-            $sql = "select COUNT(*) as cnt from $g4[yc4_order_table] where on_uid = '$uid' ";
-            $row = sql_fetch($sql);
-            if (!$row[cnt])
-                $unique = true;
-        }
-    } while (!$unique); // $unique 가 거짓인동안 실행
-
-    @mysql_query(" UNLOCK TABLES ");
-
-    return $uid;
-}
-
-// 주문서 번호를 얻는다.
-function get_new_od_id()
-{
-    global $g4;
-
-    // 주문서 테이블 Lock 걸고
-    sql_query(" LOCK TABLES $g4[yc4_order_table] READ, $g4[yc4_order_table] WRITE ", FALSE);
-    // 주문서 번호를 만든다.
-    $date = date("ymd", time());    // 2002년 3월 7일 일경우 020307
-    $sql = " select max(od_id) as max_od_id from $g4[yc4_order_table] where SUBSTRING(od_id, 1, 6) = '$date' ";
-    $row = sql_fetch($sql);
-    $od_id = $row[max_od_id];
-    if ($od_id == 0)
-        $od_id = 1;
-    else
-    {
-        $od_id = (int)substr($od_id, -4);
-        $od_id++;
-    }
-    $od_id = $date . substr("0000" . $od_id, -4);
-    // 주문서 테이블 Lock 풀고
-    sql_query(" UNLOCK TABLES ", FALSE);
-
-    return $od_id;
-}
-
 function message($subject, $content, $align="left", $width="450")
 {
     $str = "
@@ -810,16 +737,16 @@ function it_name_icon($it, $it_name="", $url=1)
     if ($url)
         $str = "<a href='$g4[shop_path]/item.php?it_id=$it[it_id]'>$str</a>";
 
-    if ($it[it_type1]) $str .= " <img src='$g4[shop_img_path]/icon_type1.gif' border='0' align='absmiddle' />";
-    if ($it[it_type2]) $str .= " <img src='$g4[shop_img_path]/icon_type2.gif' border='0' align='absmiddle' />";
-    if ($it[it_type3]) $str .= " <img src='$g4[shop_img_path]/icon_type3.gif' border='0' align='absmiddle' />";
-    if ($it[it_type4]) $str .= " <img src='$g4[shop_img_path]/icon_type4.gif' border='0' align='absmiddle' />";
-    if ($it[it_type5]) $str .= " <img src='$g4[shop_img_path]/icon_type5.gif' border='0' align='absmiddle' />";
+    if ($it[it_type1]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type1.gif' border='0' align='absmiddle' />";
+    if ($it[it_type2]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type2.gif' border='0' align='absmiddle' />";
+    if ($it[it_type3]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type3.gif' border='0' align='absmiddle' />";
+    if ($it[it_type4]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type4.gif' border='0' align='absmiddle' />";
+    if ($it[it_type5]) $str .= " <img src='".G4_SHOP_IMG_URL."/icon_type5.gif' border='0' align='absmiddle' />";
 
     // 품절
     $stock = get_it_stock_qty($it[it_id]);
     if ($stock <= 0)
-        $str .= " <img src='$g4[shop_img_path]/icon_pumjul.gif' border='0' align='absmiddle' /> ";
+        $str .= " <img src='".G4_SHOP_IMG_URL."/icon_pumjul.gif' border='0' align='absmiddle' /> ";
 
     return $str;
 }

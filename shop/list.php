@@ -1,5 +1,6 @@
 <?
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 $sql = " select *
            from $g4[yc4_category_table]

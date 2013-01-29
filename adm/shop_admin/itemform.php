@@ -1,6 +1,5 @@
 <?
 $sub_menu = "400300";
-//define('G4_EDITOR', 1);
 include_once("./_common.php");
 include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
@@ -383,62 +382,19 @@ ul { margin: 0; padding: 0; list-style: none; }
 <colgroup width=15%></colgroup>
 <colgroup width=85% bgcolor=#FFFFFF></colgroup>
 <tr><td colspan=4 height=2 bgcolor=0E87F9></td></tr>
-<tr>
-    <td>이미지(대)</td>
-    <td colspan=3>
-        <input type=file class=ed name=it_img1 size=40>
-        <?
-        $img1 = G4_DATA_PATH."/item/{$it['it_img1']}";
-        if (file_exists($img1) && is_file($img1)) {
-            $size = getimagesize($img1);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('img1', $size[0], $size[1]);\"><input type=checkbox name=it_img1_del value='1'>삭제";
-            echo "<div id='img1' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$img1' border=1></div>";
-        }
-        ?>
-    </td>
-</tr>
-<tr class=ht>
-    <td>이미지(중)</td>
-    <td colspan=3>
-        <input type=file class=ed name=it_mimg size=40>
-        <?
-        $mimg = "$g4[path]/data/item/{$it[it_id]}_m";
-        if (file_exists($mimg)) {
-            $size = getimagesize($mimg);
-            echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('mimg', $size[0], $size[1]);\"><input type=checkbox name=it_mimg_del value='1'>삭제";
-            echo "<div id='mimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$mimg' border=1></div>";
-        }
-        ?>
-        &nbsp;<?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
-    </td>
-</tr>
-<tr class=ht>
-    <td>이미지(소)</td>
-    <td colspan=3>
-        <input type=file class=ed name=it_simg size=40>
-        <?
-        $simg = "$g4[path]/data/item/{$it[it_id]}_s";
-        if (file_exists($simg)) {
-            $size = getimagesize($simg);
-            echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('simg', $size[0], $size[1]);\"><input type=checkbox name=it_simg_del value='1'>삭제";
-            echo "<div id='simg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$simg' border=1></div>";
-        }
-        ?>
-        &nbsp;<?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
-    </td>
-</tr>
-
-<? for ($i=2; $i<=10; $i++) { // 이미지(대)는 10개 ?>
+<? for ($i=1; $i<=10; $i++) { // 이미지(대)는 10개 ?>
 <tr class=ht>
     <td>이미지(대) <?=$i?></td>
     <td colspan=3>
         <input type=file class=ed name=it_img<?=$i?> size=40>
         <?
-        $img = G4_DATA_PATH."/item/{$it['it_img$i']}";
+        $idx = 'it_img'.$i;
+        $img = G4_DATA_PATH."/item/$it_id/{$it[$idx]}";
+        $img_url = G4_DATA_URL."/item/$it_id/{$it[$idx]}";
         if (file_exists($img) && is_file($img)) {
             $size = getimagesize($img);
             echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('img$i', $size[0], $size[1]);\"><input type=checkbox name=it_img{$i}_del value='1'>삭제";
-            echo "<span id=img{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$img' border=1></div>";
+            echo "<span id=img{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$img_url' border=1></div>";
         }
         ?>
     </td>
@@ -844,7 +800,7 @@ function codedupcheck(id)
 
     $.post(
         "./codedupcheck.php",
-        { id: id },
+        { it_id: id },
         function(data)
         {
             if(data) {
