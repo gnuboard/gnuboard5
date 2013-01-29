@@ -88,11 +88,11 @@ pre {overflow-x:scroll;font-size:1.1em}
 #idx_catch {margin-bottom:10px;padding: 25px 0 25px}
 
 /* 버튼 */
-.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #239ce2 !important;background:#109ff1 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
+.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #2292d3 !important;background:#109ff1 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none;line-height:2.2em}
 .btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949 !important;background:#494949 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 10px;height:24px;border:0;background:#484848;color:#fff;letter-spacing:-0.1em;vertical-align:top}
+.btn_submit {padding:0 10px;height:24px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em}
 .btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
@@ -159,6 +159,15 @@ fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#
 fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#fff;line-height:1.9em;vertical-align:middle;cursor:pointer}
 
 /* ///// 스킨별 스타일 ///// */
+/* 회원가입 약관 */
+#fregister section {margin:0 0 20px;padding:20px}
+#fregister h2 {margin:0 0 20px;text-align:center}
+#fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #ddd;background:#f7f7f7}
+#fregister textarea:focus {background:#333;color:#fff}
+.fregister_agree {padding:10px 0 0;text-align:right}
+.fregister_agree label {display:inline-block;margin-right:5px}
+#fregister p {text-align:center}
+
 /* 아웃로그인 스킨 */
 .ol {position:relative;margin-bottom:10px;padding:14px}
 .ol h2 {width:0;height:0;overflow:hidden}
@@ -172,7 +181,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
-#ol_submit {width:60px;height:24px;border:1px solid #383838;background:#484848;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
+#ol_submit {width:60px;height:24px;border:1px solid #2292d3;background:#109ff1;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before ul {float:right;margin:7px 0 13px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-left:5px;padding-top:2px}
@@ -214,6 +223,15 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #mb_confirm label {letter-spacing:-0.1em}
 #mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
+/* 비밀글 패스워드 확인 */
+#pw_confirm {margin:100px auto;width:500px}
+#pw_confirm h1 {margin:0 0 20px;font-size:1.3em}
+#pw_confirm p {padding:20px;border-bottom-color:#f7f7f2}
+#pw_confirm p strong {display:block}
+#pw_confirm fieldset {margin:0 0 30px;padding:30px 0;text-align:center}
+#pw_confirm label {letter-spacing:-0.1em}
+#pw_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
+
 /* 설문조사 스킨 */
 #poll {}
 #poll header {padding:14px 14px 0}
@@ -250,7 +268,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #sch_result_bo dd {margin:0;padding:0}
 #sch_result_bo ul {margin-top:1px}
 #sch_result_bo li {position:relative;margin-top:-1px;height:40px}
-#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #616161;border-right:0;background:#484848;color:#fff;text-decoration:none;line-height:3.4em}
+#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #2292d3;border-right:0;background:#109ff1;color:#fff;text-decoration:none;line-height:3.4em}
 #sch_result_bo .sch_on {width:150px;border-color:#ddd;border-right:0;background:#fff;color:#000;font-weight:bold}
 #sch_result_bo .cnt_cmt {display:inline-block;margin-left:10px;color:#fff}
 #sch_result_bo .sch_on .cnt_cmt {color:#000}
@@ -258,7 +276,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #sch_result_atc dt a {display:inline-block;margin-bottom:15px;color:#000;font-size:1.2em;font-weight:bold;text-decoration:none}
 #sch_result_atc dd {margin:0 0 15px}
 #sch_result_atc dd a {color:#000;text-decoration:none}
-#sch_result_atc .sch_result_title {display:inline-block;margin-bottom:5px;font-size:1.2em;text-decoration:underline}
+#sch_result_atc .sch_result_title {display:inline-block;margin-bottom:5px;font-size:1.1em;font-weight:bold;text-decoration:underline}
 #sch_result_atc li {padding:13px 0;border-bottom:1px solid #f0f0f0}
 #sch_result_atc p {padding:0 0 5px}
 #sch_result_atc a {display:inline-block;margin:0 10px 0 0}
@@ -385,6 +403,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .pg_prev {border-right:1px solid #ddd}
 .pg_end,
 .pg_next {border-left:1px solid #ddd}
-.pg_current {background:#494949;color:#fff}
+.pg_current {background:#2292d3;color:#fff}
 
 .pg_total {text-align:center}

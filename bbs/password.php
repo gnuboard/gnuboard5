@@ -26,13 +26,22 @@ switch ($w) {
 
 include_once(G4_PATH.'/head.sub.php');
 
-if ($board['bo_include_head']) { @include ($board['bo_include_head']); }
-if ($board['bo_content_head']) { echo stripslashes($board['bo_content_head']); }
+//if ($board['bo_include_head']) { @include ($board['bo_include_head']); }
+//if ($board['bo_content_head']) { echo stripslashes($board['bo_content_head']); }
+
+/* 비밀글의 제목을 가져옴 지운아빠 2013-01-29 */
+$sql = " select wr_subject from {$write_table}
+                      where wr_num = '{$write['wr_num']}'
+                      and wr_reply = ''
+                      and wr_is_comment = 0 ";
+$row = sql_fetch($sql);
+
+$g4['title'] = $row['wr_subject'];
 
 include_once($member_skin_path.'/password.skin.php');
 
-if ($board['bo_content_tail']) { echo stripslashes($board['bo_content_tail']); }
-if ($board['bo_include_tail']) { @include ($board['bo_include_tail']); }
+//if ($board['bo_content_tail']) { echo stripslashes($board['bo_content_tail']); }
+//if ($board['bo_include_tail']) { @include ($board['bo_include_tail']); }
 
 include_once(G4_PATH.'/tail.sub.php');
 ?>
