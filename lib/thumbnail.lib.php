@@ -26,7 +26,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     $source_time = @filemtime($source_file);
     if (file_exists($thumb_file)) {
         if ($is_create == false && $source_time < $thumb_time) {
-            return str_replace($target_path.'/', '', $thumb_file);
+            return basename($thumb_file);
         }
     }
 
@@ -42,7 +42,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             imagepng($target, $thumb_file, 0);
             @chmod($thumb_file, 0606); // 추후 삭제를 위하여 파일모드 변경
         }
-        return str_replace($target_path.'/', '', $thumb_file);
+        return basename($thumb_file);
     }
 
     $is_imagecopyresampled = false;
@@ -65,7 +65,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
                 $dst = imagecreatetruecolor($thumb_width, $thumb_height);
                 $bgcolor = imagecolorallocate($dst, 250, 250, 250); // 배경색 여기야!!!
                 imagefill($dst, 0, 0, $bgcolor);
-                imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $tmp_height, $size[0], $size[1]);
+                imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $thumb_height, $size[0], $size[1]);
             } else {
                 $dst = imagecreatetruecolor($thumb_width, $thumb_height);
                 imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $thumb_height, $size[0], $size[1]);
