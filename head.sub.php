@@ -42,7 +42,7 @@ else $g4_css = "default";
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=$g4_css?>.css?=<?=date("md")?>">
 <?}?>
 <!--[if lte IE 8]>
-<script src="<?=$g4['url']?>/js/html5.js"></script>
+<script src="<?=G4_JS_URL?>/html5.js"></script>
 <![endif]-->
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
@@ -56,11 +56,7 @@ var g4_charset   = "<?=$g4['charset']?>";
 var g4_cookie_domain = "<?=$g4['cookie_domain']?>";
 var g4_is_gecko  = navigator.userAgent.toLowerCase().indexOf("gecko") != -1;
 var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
-<? 
-if ($is_admin) { 
-    echo PHP_EOL.'var g4_admin_url = "'.G4_ADMIN_URL.'";';
-} 
-?>
+<? if ($is_admin) { echo "var g4_admin = '{$g4['admin']}';"; } ?>
 </script>
 <script src="<?=G4_JS_URL?>/jquery-1.8.3.min.js"></script>
 <script src="<?=G4_JS_URL?>/common.js"></script>
