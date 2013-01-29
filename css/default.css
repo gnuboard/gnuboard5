@@ -88,7 +88,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #idx_catch {margin-bottom:10px;padding: 25px 0 25px}
 
 /* 버튼 */
-.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #239ce2 !important;background:#109ff1 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
+.btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #2292d3 !important;background:#109ff1 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none;line-height:2.2em}
 .btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949 !important;background:#494949 !important;color:#fff !important;text-decoration:none;line-height:2.2em}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
@@ -181,7 +181,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
-#ol_submit {width:60px;height:24px;border:1px solid #239ce2;background:#109ff1;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
+#ol_submit {width:60px;height:24px;border:1px solid #2292d3;background:#109ff1;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before ul {float:right;margin:7px 0 13px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-left:5px;padding-top:2px}
@@ -268,7 +268,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #sch_result_bo dd {margin:0;padding:0}
 #sch_result_bo ul {margin-top:1px}
 #sch_result_bo li {position:relative;margin-top:-1px;height:40px}
-#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #616161;border-right:0;background:#484848;color:#fff;text-decoration:none;line-height:3.4em}
+#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #2292d3;border-right:0;background:#109ff1;color:#fff;text-decoration:none;line-height:3.4em}
 #sch_result_bo .sch_on {width:150px;border-color:#ddd;border-right:0;background:#fff;color:#000;font-weight:bold}
 #sch_result_bo .cnt_cmt {display:inline-block;margin-left:10px;color:#fff}
 #sch_result_bo .sch_on .cnt_cmt {color:#000}
@@ -403,6 +403,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .pg_prev {border-right:1px solid #ddd}
 .pg_end,
 .pg_next {border-left:1px solid #ddd}
-.pg_current {background:#494949;color:#fff}
+.pg_current {background:#2292d3;color:#fff}
 
 .pg_total {text-align:center}
