@@ -41,7 +41,7 @@ include_once('./admin.head.php');
 <tr>
     <th scope="row"><label for="gr_subject">그룹 제목<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="gr_subject" name="gr_subject" class="required" required value="<?=get_text($group['gr_subject'])?>" size="80" title="그룹 제목">
+        <input type="text" id="gr_subject" name="gr_subject" class="required" required value="<?=get_text($group['gr_subject'])?>" size="80">
         <?
         if ($w == 'u')
             echo '<input type="button" value="게시판생성" onclick="location.href=\'./board_form.php?gr_id='.$gr_id.'\';">';

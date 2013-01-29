@@ -150,10 +150,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <?=get_skin_select("board", "bo_skin_$i", "bo_skin[$i]", $row['bo_skin']);?>
     </td>
     <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="10" required="required"></td>
-    <td><input type="text" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="1" title="읽기"></td>
-    <td><input type="text" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="1" title="쓰기"></td>
-    <td><input type="text" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" size="1" title="댓글"></td>
-    <td><input type="text" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="1" title="다운"></td>
+    <td><input type="text" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>" size="1" title="읽기포인트"></td>
+    <td><input type="text" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" size="1" title="쓰기포인트"></td>
+    <td><input type="text" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" size="1" title="댓글포인트"></td>
+    <td><input type="text" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" size="1" title="다운포인트"></td>
     <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1" title="검색사용"></td>
     <td><input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" value="<?=$row['bo_order_search']?>" size="1" title="검색순서"></td>
     </td>
