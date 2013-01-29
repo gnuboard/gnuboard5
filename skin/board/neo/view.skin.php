@@ -6,9 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <div id="bo_v" class="cbg">
     <h1 id="bo_v_h1">
-        <? if ($is_category) { // 분류가 있다면?>
-            <span><?=($category_name ? "{$view['ca_name']} " : "");?></span>
-        <? } // 분류 출력 끝 ?>
+        <? if ($category_name) { // 분류가 지정되었다면 ?><span><?=($category_name ? "{$view['ca_name']} " : "");?></span><? } // 분류 출력 끝 ?>
         <?=cut_hangul_last(get_text($view['wr_subject'])) // 글제목 출력?>
     </h1>
 
