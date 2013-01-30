@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // marquee 태그를 사용하지 않고 자바스크립트로 이미지가 여러개씩 왼쪽으로 롤링되도록 함
 // 출력되는 총이미지수는 환경설정의 1라인이미지수 x 총라인수 입니다.
@@ -29,7 +29,7 @@ var n_panel_<?=$uni?> = 0;
 var i_<?=$uni?> = 0;
 
 function start_roll_<?=$uni?>()
-{ 
+{
     i_<?=$uni?> = 0;
     for (i_<?=$uni?> in roll_text_<?=$uni?>)
         n_panel_<?=$uni?>++;
@@ -39,14 +39,14 @@ function start_roll_<?=$uni?>()
     if(startPanel_<?=$uni?> == 0)
     {
         i_<?=$uni?> = 0;
-        for (i_<?=$uni?> in roll_text_<?=$uni?>) 
+        for (i_<?=$uni?> in roll_text_<?=$uni?>)
             insert_area_<?=$uni?>(total_area_<?=$uni?>, total_area_<?=$uni?>++); // area 삽입
     }
     else if(startPanel_<?=$uni?> == n_panel_<?=$uni?>)
     {
         insert_area_<?=$uni?>(startPanel_<?=$uni?>, total_area_<?=$uni?>);
         total_area_<?=$uni?>++;
-        for (i_<?=$uni?>=0; i_<?=$uni?><startPanel_<?=$uni?>; i_<?=$uni?>++) 
+        for (i_<?=$uni?>=0; i_<?=$uni?><startPanel_<?=$uni?>; i_<?=$uni?>++)
         {
             insert_area_<?=$uni?>(i_<?=$uni?>, total_area_<?=$uni?>); // area 삽입
             total_area_<?=$uni?>++;
@@ -56,12 +56,12 @@ function start_roll_<?=$uni?>()
     {
         insert_area_<?=$uni?>(startPanel_<?=$uni?>, total_area_<?=$uni?>);
         total_area_<?=$uni?>++;
-        for (i_<?=$uni?>=startPanel_<?=$uni?>+1; i_<?=$uni?><=n_panel_<?=$uni?>; i_<?=$uni?>++) 
+        for (i_<?=$uni?>=startPanel_<?=$uni?>+1; i_<?=$uni?><=n_panel_<?=$uni?>; i_<?=$uni?>++)
         {
             insert_area_<?=$uni?>(i_<?=$uni?>, total_area_<?=$uni?>); // area 삽입
             total_area_<?=$uni?>++;
         }
-        for (i_<?=$uni?>=0; i_<?=$uni?><startPanel_<?=$uni?>; i_<?=$uni?>++) 
+        for (i_<?=$uni?>=0; i_<?=$uni?><startPanel_<?=$uni?>; i_<?=$uni?>++)
         {
             insert_area_<?=$uni?>(i_<?=$uni?>, total_area_<?=$uni?>); // area 삽입
             total_area_<?=$uni?>++;
@@ -76,7 +76,7 @@ function start_roll_<?=$uni?>()
 }
 
 function rolling_<?=$uni?>()
-{ 
+{
     if (bMouseOver_<?=$uni?> && wait_flag_<?=$uni?>)
     {
         for (i_<?=$uni?>=0;i_<?=$uni?><total_area_<?=$uni?>;i_<?=$uni?>++){
@@ -95,36 +95,47 @@ function rolling_<?=$uni?>()
 }
 
 function insert_area_<?=$uni?>(idx_<?=$uni?>, n_<?=$uni?>)
-{ 
+{
     document.write('<div style="left: 0px; width: 100%; position: absolute; left: '+(roll_width_<?=$uni?>*n_<?=$uni?>)+'px" id="scroll_area_<?=$uni?>'+n_<?=$uni?>+'">\n'+roll_text_<?=$uni?>[idx_<?=$uni?>]+'\n</div>\n');
 }
 
 <?
 $i = 0;
-while (1) 
+while (1)
 {
     $str = $str2 = "";
-    for ($k=0; $k<$list_mod; $k++) 
+    for ($k=0; $k<$list_mod; $k++)
     {
         $row = sql_fetch_array($result);
         if (!$row[it_id]) break;
 
         $href = "<a href='$g4[shop_path]/item.php?it_id=$row[it_id]' class=item>";
 
+        // 리스트 썸네일 이미지
+        $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
+        for($k=1; $k<=10; $k++) {
+            $idx = 'it_img'.$k;
+            if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
+                $filename = $row[$idx];
+                break;
+            }
+        }
+        $it_img = it_img_thumb($filename, G4_DATA_PATH.'/item/'.$row['it_id'], $img_width, $img_height);
+
         $str .= "<td width='$scroll[td]' valign=top align=center><table width='98%' cellpadding=0 cellspacing=0 border=0>";
-        $str .= "<tr><td align=center>$href".get_it_image($row[it_id]."_s", $img_width, $img_height)."</a></td></tr>";
-        $str .= "<tr><td align=center>$href".addslashes($row[it_name])."</a></td></tr>";
-        $str .= "<tr><td align=center><span class=amount>".display_amount(get_amount($row), $row[it_tel_inq])."</span></td></tr>";
+        $str .= "<tr><td align=center>$href".get_it_image($row['it_id'].'/'.$it_img, $img_width, $img_height)."</a></td></tr>";
+        $str .= "<tr><td align=center>$href".addslashes($row['it_name'])."</a></td></tr>";
+        $str .= "<tr><td align=center><span class=amount>".display_amount(get_amount($row), $row['it_tel_inq'])."</span></td></tr>";
         $str .= "</table></td>";
     }
 
-    if ($str) 
+    if ($str)
     {
         $str2 = "<table width='100%' cellpadding=0 cellspacing=0 border=0><tr>$str</tr></table>";
         echo "roll_text_{$uni}[$i] = \"{$str2}\";\n";
     }
 
-    if (!$row[it_id]) break;
+    if (!$row['it_id']) break;
 
     $i++;
 }
@@ -145,4 +156,4 @@ while (1)
     if ( no_script_flag_<?=$uni?> == false )
         start_roll_<?=$uni?>();
     </script>
-</div>							   
+</div>

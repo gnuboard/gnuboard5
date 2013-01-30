@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // marquee 태그를 사용하지 않고 자바스크립트로 이미지가 여러개씩 롤링되도록 함
 
@@ -25,7 +25,7 @@ var befTmp_<?=$uniqinc?>;
 
 <?
 $width = (int)(100 / $list_mod);
-for ($i=0; $i<10000; $i++) 
+for ($i=0; $i<10000; $i++)
 {
 
     $roll_text[$i]  = "";
@@ -33,17 +33,28 @@ for ($i=0; $i<10000; $i++)
     $roll_text[$i] .= "<tr>";
 
     $k=0;
-    while ($row=sql_fetch_array($result)) 
+    while ($row=sql_fetch_array($result))
     {
         if (!$row) break;
 
         $href = "<a href='$g4[shop_path]/item.php?it_id=$row[it_id]' class=item>";
 
+        // 리스트 썸네일 이미지
+        $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
+        for($k=1; $k<=10; $k++) {
+            $idx = 'it_img'.$k;
+            if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
+                $filename = $row[$idx];
+                break;
+            }
+        }
+        $it_img = it_img_thumb($filename, G4_DATA_PATH.'/item/'.$row['it_id'], $img_width, $img_height);
+
         $roll_text[$i] .= "<td width='$width%' valign=top align=center>";
         $roll_text[$i] .= "<table width='100%' cellpadding=1 cellspacing=0 border=0>";
-        $roll_text[$i] .= "<tr><td align=center>$href".get_it_image($row[it_id]."_s", $img_width, $img_height)."</a></td></tr>";
-        $roll_text[$i] .= "<tr><td align=center>$href".addslashes($row[it_name])."</a></td></tr>";
-        $roll_text[$i] .= "<tr><td align=center><span class=amount>".display_amount(get_amount($row), $row[it_tel_inq])."</span></td></tr>";
+        $roll_text[$i] .= "<tr><td align=center>$href".get_it_image($row['it_id'].'/'.$it_img, $img_width, $img_height)."</a></td></tr>";
+        $roll_text[$i] .= "<tr><td align=center>$href".addslashes($row['it_name'])."</a></td></tr>";
+        $roll_text[$i] .= "<tr><td align=center><span class=amount>".display_amount(get_amount($row), $row['it_tel_inq'])."</span></td></tr>";
         $roll_text[$i] .= "</table>";
         $roll_text[$i] .= "</td>";
         $k++;
@@ -60,7 +71,7 @@ for ($i=0; $i<10000; $i++)
 }
 ?>
 
-function ImgBannerStart_<?=$uniqinc?>() 
+function ImgBannerStart_<?=$uniqinc?>()
 {
     for (k_<?=$uniqinc?> = 0; k_<?=$uniqinc?> < ctnt_i_<?=$uniqinc?>.length; k_<?=$uniqinc?>++) {
         insertImg_<?=$uniqinc?>(k_<?=$uniqinc?>);
@@ -73,7 +84,7 @@ function ImgBannerStart_<?=$uniqinc?>()
     window.setTimeout("scrollimg_<?=$uniqinc?>()", wait_<?=$uniqinc?>);
 }
 
-function scrollimg_<?=$uniqinc?>() 
+function scrollimg_<?=$uniqinc?>()
 {
     if (mouse_<?=$uniqinc?>) {
         befTmp_<?=$uniqinc?>.display = 'none';
@@ -89,7 +100,7 @@ function scrollimg_<?=$uniqinc?>()
     window.setTimeout("scrollimg_<?=$uniqinc?>()",wait_<?=$uniqinc?>);
 }
 
-function insertImg_<?=$uniqinc?>(n) 
+function insertImg_<?=$uniqinc?>(n)
 {
     htmlstr_<?=$uniqinc?> = '<div style="left: 0px; width: 100%; display=none;" onMouseover="mouse_<?=$uniqinc?> = 0" onMouseout="mouse_<?=$uniqinc?> = 1" id="img_area_<?=$uniqinc?>'+n+'">\n';
     htmlstr_<?=$uniqinc?> += ctnt_i_<?=$uniqinc?>[n] + '\n' + '</div>\n';
