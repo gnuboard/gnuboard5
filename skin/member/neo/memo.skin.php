@@ -14,7 +14,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <table>
     <caption>
         전체 <?=$kind_title?>쪽지 <?=$total_count?>통<br>
-        <span class="caption_desc">쪽지 보관일수는 최장 <?=$config['cf_memo_del']?>일 입니다.</span>
     </caption>
     <thead>
     <tr>
@@ -36,6 +35,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <? if ($i==0) { echo "<tr><td colspan=\"4\" class=\"empty_table\">자료가 없습니다.</td></tr>"; } ?>
     </tbody>
     </table>
+
+    <p class="new_win_desc">
+        쪽지 보관일수는 최장 <strong><?=$config['cf_memo_del']?></strong>일 입니다.
+    </p>
 
     <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>

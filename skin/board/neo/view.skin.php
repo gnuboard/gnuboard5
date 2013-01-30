@@ -78,7 +78,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
     <? } ?>
 
-    <aside id="bo_v_top">
+    <nav id="bo_v_top">
         <h2>게시물 상단 버튼</h2>
         <?
         ob_start();
@@ -97,7 +97,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         $link_buttons = ob_get_contents();
         ob_end_flush();
         ?>
-    </aside>
+    </nav>
 
     <article id="bo_v_atc">
         <header>
@@ -133,7 +133,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     include_once('./view_comment.php');
     ?>
 
-    <aside id="bo_v_bot">
+    <nav id="bo_v_bot">
         <h2>게시물 하단 버튼</h2>
         <? if ($prev_href || $next_href) { ?>
         <ul id="bo_v_nb">
@@ -144,7 +144,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
         <!-- 링크 버튼 -->
         <?=$link_buttons?>
-    </aside>
+    </nav>
 
 </div>
 

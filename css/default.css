@@ -96,7 +96,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em}
 .btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win a {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em;cursor:pointer}
+.btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em;cursor:pointer}
 
 /* ///// 기본테이블 ///// */
 table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -105,7 +105,7 @@ tfoot td {border-color:#c9c9c9;background:#f9f9f5;font-weight:bold;text-align:ce
 caption {padding:0 0 10px;text-align:left}
 th {padding:12px 0 8px;border-top:1px solid #ddd;border-bottom:1px solid #ddd}
 th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-td {padding:10px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;word-break:break-all}
+td {padding:10px 5px 7px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
 table a {color:#000;text-decoration:none}
 .bo_sideview td {padding:7px 5px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 .empty_table {padding:85px 0;text-align:center}
@@ -142,12 +142,13 @@ table a {color:#000;text-decoration:none}
 
 /* ///// 새창 기본 스타일 ///// */
 .new_win {}
-.new_win h1 {margin-bottom:20px;padding:20px 20px 10px;background:#fff;font-size:1.2em}
+.new_win h1 {margin-bottom:20px;padding:20px 20px 10px;border-bottom:1px solid #eee;background:#fff;font-size:1.2em}
 .new_win table {margin:0 auto 20px;width:93%}
 .new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #515151;background:#484848;list-style:none;zoom:1}
 .new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win_ul li {float:left;margin-left:-1px}
 .new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
+.new_win_desc {margin:0 auto;width:93%}
 
 /* ///// 폼 컨트롤 ///// */
 .fs_input,
@@ -186,10 +187,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-left:5px;padding-top:2px}
 #ol_before #ol_auto {float:left;margin:4px 0 0;padding:0}
-#ol_before a {color:#000;letter-spacing:-0.1em}
+#ol_before a {letter-spacing:-0.1em}
 #ol_svc {padding-top:8px;text-align:right}
 
 #ol_after_hd {text-align:center}
+#ol_after_hd a {color:#109ff1}
 #ol_after_private {margin:7px 0;zoom:1}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
@@ -214,6 +216,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #mb_login section {margin:0 0 30px;padding:20px}
 #mb_login section div {text-align:right}
 
+/* 쪽지 */
+#memo_view section {margin:0 auto 20px;padding:20px;width:87%}
+
+#memo_write textarea {height:100px}
+
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:100px auto;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
@@ -235,9 +242,18 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 /* 설문조사 스킨 */
 #poll {}
 #poll header {padding:14px 14px 0}
+#poll header a {color:#109ff1;text-decoration:none}
 #poll ul {margin:0 0 10px;padding:5px 14px;background:#f7f7f2;list-style:none}
 #poll li {padding:3px 0}
 #poll footer {padding:0 14px 14px;text-align:right}
+
+/* 폼메일 */
+#formmail textarea {height:100px}
+
+/* 자기소개 */
+#profile table {margin-bottom:0}
+#profile section {margin:0 auto 20px;padding:20px;width:86%}
+#profile h2 {margin:0}
 
 /* 최근게시물 스킨 (latest) */
 .lt {float:left;margin-bottom:20px;padding:20px;width:314px;height:149px}
@@ -300,14 +316,13 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
-#bo_list td {line-height:1em}
 #bo_list strong {color:#109ff1}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .bo_notice {}
-.bo_cate_link {display:inline-block;padding:0 5px 0 0;font-weight:bold;text-decoration:none} /* 글제목 줄 분류스타일 */
+.bo_cate_link {display:inline-block;margin:0 3px 0 0;font-weight:bold;text-decoration:none} /* 글제목 줄 분류스타일 */
 .bo_current {color:#109ff1}
-.td_subject img {margin-left:5px}
+.td_subject img {margin-left:3px}
 .cnt_cmt {display:inline-block;margin:0 4px;color:#109ff1}
 
 /* 게시판 읽기 */
@@ -319,10 +334,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #bo_v_info {padding:0 20px 15px;border-bottom:1px solid #f0f0f0}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
-#bo_v_top {zoom:1}
+#bo_v_top {margin:15px 0 10px;padding:0 20px;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_top ul {margin-bottom:10px;padding:0 20px;list-style:none}
+#bo_v_top ul {list-style:none}
 #bo_v_file {background:#fff}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}

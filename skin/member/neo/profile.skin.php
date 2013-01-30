@@ -32,8 +32,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </tbody>
     </table>
 
-    <section>
-        <h2><?=$mb_nick?>님의 자기소개</h2>
+    <section class="cbg">
+        <h2>인사말</h2>
         <p><?=$mb_profile?></p>
     </section>
 
