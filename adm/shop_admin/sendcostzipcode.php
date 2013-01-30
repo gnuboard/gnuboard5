@@ -64,7 +64,7 @@ form { display: inline; }
     </tr>
     <tr>
         <td>
-            <input type="text" name="addr" class="ed" value="<? echo stripslashes($addr); ?>" size="20" />
+            <input type="text" id="addr" name="addr" class="ed" value="<? echo stripslashes($addr); ?>" size="20" />
             <input type="submit" class="btn1" value=" 검색 " />
         </td>
     </tr>
@@ -73,7 +73,7 @@ form { display: inline; }
     </tr>
     <tr>
         <td>
-            <select name="zipcode">
+            <select id="zipcode" name="zipcode">
                 <? echo $option; ?>
             </select>
         </td>
@@ -86,8 +86,8 @@ form { display: inline; }
     </tr>
     <tr>
         <td>
-            <input type="text" name="zip1" class="ed" size="10" /> 부터
-            <input type="text" name="zip2" class="ed" size="10" /> 까지
+            <input type="text" id="zip1" name="zip1" class="ed" size="10" /> 부터
+            <input type="text" id="zip2" name="zip2" class="ed" size="10" /> 까지
         </td>
     </tr>
     <tr>
@@ -100,7 +100,7 @@ form { display: inline; }
 <script>
 $(function() {
     $("#fzipcode").submit(function() {
-        var addr = $.trim($("input[name=addr]").val());
+        var addr = $.trim($("input[id="addr" name="addr"]").val());
         if(addr == "") {
             alert("주소를 입력해 주세요.");
             return false;
@@ -110,7 +110,7 @@ $(function() {
     });
 
     $(".addbutton").click(function() {
-        var code = $("select[name=zipcode]").val();
+        var code = $("select[id="zipcode" name="zipcode"]").val();
         var idx = $(".addbutton").index($(this));
 
         if(code == "") {
@@ -122,8 +122,8 @@ $(function() {
     });
 
     $("#addzipcode").click(function() {
-        var zip1 = $.trim($("input[name=zip1]").val());
-        var zip2 = $.trim($("input[name=zip2]").val());
+        var zip1 = $.trim($("input[id="zip1" name="zip1"]").val());
+        var zip2 = $.trim($("input[id="zip2" name="zip2"]").val());
 
         if(zip1 == "" || zip2 == "") {
             alert("우편번호 범위를 입력해 주세요.");
@@ -132,8 +132,8 @@ $(function() {
 
         var $opener = window.opener;
 
-        $opener.$("input[name=sc_zip1]").val(zip1);
-        $opener.$("input[name=sc_zip2]").val(zip2);
+        $opener.$("input[id="sc_zip1" name="sc_zip1"]").val(zip1);
+        $opener.$("input[id="sc_zip2" name="sc_zip2"]").val(zip2);
 
         self.close();
     });

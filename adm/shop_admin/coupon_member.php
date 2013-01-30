@@ -32,12 +32,12 @@ form { display: inline; }
 <div id="container">
     <div class="searcharea">
     <form id="fmember" method="get" action="./coupon_member.php?w=<? echo $w; ?>">
-        <select name="sfl">
+        <select id="sfl" name="sfl">
             <option value="mb_name">이름</option>
             <option value="mb_nick">별명</option>
             <option value="mb_id">아이디</option>
         </select>
-        <input type="text" name="stx" class="ed" size="20" value="<? echo stripslashes($stx); ?>" />
+        <input type="text" id="stx" name="stx" class="ed" size="20" value="<? echo stripslashes($stx); ?>" />
         <input type="submit" class="btn1" value="검색" />
     </form>
     </div>
@@ -51,7 +51,7 @@ form { display: inline; }
             <colgroup width="90" />
             <colgroup width="90" />
             <tr>
-                <th><input type="checkbox" name="check_all" /></th>
+                <th><input type="checkbox" id="check_all" name="check_all" /></th>
                 <th>아이디</th>
                 <th>이름</th>
                 <th>별명</th>
@@ -60,7 +60,7 @@ form { display: inline; }
             for($i=0; $row=sql_fetch_array($result); $i++) {
             ?>
             <tr>
-                <td align="center"><input type="checkbox" name="s_mb_id[]" value="<? echo $row['mb_id']; ?>" /></td>
+                <td align="center"><input type="checkbox" id="s_mb_id[]" name="s_mb_id[]" value="<? echo $row['mb_id']; ?>" /></td>
                 <td align="center"><? echo $row['mb_id']; ?></td>
                 <td align="center"><? echo $row['mb_name']; ?></td>
                 <td align="center"><? echo $row['mb_nick']; ?></td>
@@ -83,7 +83,7 @@ form { display: inline; }
 <script>
 $(function() {
     $("#fmember").submit(function() {
-        var stx = $.trim($("input[name=stx]").val());
+        var stx = $.trim($("input[id="stx" name="stx"]").val());
         if(stx == "") {
             alert("검색어를 입력해 주세요.");
             return false;
@@ -92,7 +92,7 @@ $(function() {
         return true;
     });
 
-    $("input[name=check_all]").click(function() {
+    $("input[id="check_all" name="check_all"]").click(function() {
         if($(this).is(":checked")) {
             $("input[name^=s_mb_id]").attr("checked", true);
         } else {
@@ -129,13 +129,13 @@ $(function() {
             }
         });
 
-        $opener.$("input[name=mb_id]").val(mbid);
+        $opener.$("input[id="mb_id" name="mb_id"]").val(mbid);
         self.close();
 
         return false;
     });
     <? if($sfl) { ?>
-    $("select[name=sfl]").val("<? echo $sfl; ?>");
+    $("select[id="sfl" name="sfl"]").val("<? echo $sfl; ?>");
     <? } ?>
 });
 </script>

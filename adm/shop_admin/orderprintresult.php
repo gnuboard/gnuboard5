@@ -59,7 +59,7 @@ if ($csv == 'csv')
     header("Content-charset=$g4[charset]");
     header('Content-Type: doesn/matter');
     header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-    header('Content-Disposition: attachment; filename="' . date("ymd", time()) . '.csv"');
+    header('Content-Disposition: attachment; fileid="' . date(" name="' . date("ymd", time()) . '.csv"');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
     //echo "우편번호,주소,이름,전화1,전화2,상품명,수량,비고,전하실말씀\n";
@@ -114,7 +114,7 @@ if ($csv == 'xls')
     header("Content-charset=$g4[charset]");
     header('Content-Type: application/vnd.ms-excel');
     header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-    header('Content-Disposition: attachment; filename="' . date("ymd", time()) . '.xls"');
+    header('Content-Disposition: attachment; fileid="' . date(" name="' . date("ymd", time()) . '.xls"');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
     echo "<html>";

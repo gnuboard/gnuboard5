@@ -25,9 +25,9 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($html_title)?>
 
-<form name=fbanner method=post action='./bannerformupdate.php' enctype='multipart/form-data' style="margin:0px;">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=bn_id value='<? echo $bn_id ?>'>
+<form id="fbanner" name="fbanner" method=post action='./bannerformupdate.php' enctype='multipart/form-data' style="margin:0px;">
+<input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
+<input type="hidden" id="bn_id" name="bn_id" value='<? echo $bn_id ?>'>
 <table cellpadding=0 cellspacing=0 width=100%>
 <colgroup width=15%></colgroup>
 <colgroup width=85% bgcolor=#ffffff></colgroup>
@@ -35,16 +35,16 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>&nbsp;이미지</td>
     <td>
-        <input type=file name=bn_bimg size=40 class=ed>
+        <input type="file" id="bn_bimg" name="bn_bimg" size=40 class=ed>
         <?
         $bimg_str = "";
         $bimg = "$g4[path]/data/banner/{$bn[bn_id]}";
         if (file_exists($bimg) && $bn[bn_id]) {
-            echo "<input type=checkbox name=bn_bimg_del value='1'>삭제";
+            echo "<input type="checkbox" id="bn_bimg_del" name="bn_bimg_del" value='1'>삭제";
             $bimg_str = "<img src='$bimg' border=0>";
             //$size = getimagesize($bimg);
-            //echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('bimg', $size[0], $size[1]);\"><input type=checkbox name=bn_bimg_del value='1'>삭제";
-            //echo "<div id='bimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$bimg' border=1></div>";
+            //echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('bimg', $size[0], $size[1]);\"><input type="checkbox" id="bn_bimg_del" name="bn_bimg_del" value='1'>삭제";
+            //echo "<div id="bimg" style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$bimg' border=1></div>";
         }
         ?>
     </td>
@@ -54,21 +54,21 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>&nbsp;이미지 설명</td>
     <td>
-        <input type=text name=bn_alt size=80 value='<? echo $bn[bn_alt] ?>' class=ed>
+        <input type="text" id="bn_alt" name="bn_alt" size=80 value='<? echo $bn[bn_alt] ?>' class=ed>
         <?=help("img 태그의 alt, title 에 해당되는 내용입니다.\n배너에 마우스를 오버하면 이미지의 설명이 나옵니다.");?>
     </td>
 </tr>
 <tr class=ht>
     <td>&nbsp;링크</td>
     <td>
-        <input type=text name=bn_url size=80 value='<? echo $bn[bn_url] ?>' class=ed>
+        <input type="text" id="bn_url" name="bn_url" size=80 value='<? echo $bn[bn_url] ?>' class=ed>
         <?=help("배너클릭시 이동하는 주소입니다.");?>
     </td>
 </tr>
 <tr class=ht>
     <td>&nbsp;출력위치</td>
     <td>
-        <select name=bn_position>
+        <select id="bn_position" name="bn_position">
         <option value="왼쪽">왼쪽
         <option value="메인">메인
         </select>
@@ -78,7 +78,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>&nbsp;테두리</td>
     <td>
-        <select name=bn_border>
+        <select id="bn_border" name="bn_border">
         <option value="0">아니오
         <option value="1">예
         </select>
@@ -88,7 +88,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>&nbsp;새창</td>
     <td>
-        <select name=bn_new_win>
+        <select id="bn_new_win" name="bn_new_win">
         <option value="0">아니오
         <option value="1">예
         </select>
@@ -98,16 +98,16 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>&nbsp;시작일시</td>
     <td>
-        <input type=text name=bn_begin_time size=21 maxlength=19 value='<? echo $bn[bn_begin_time] ?>' class=ed>
-        <input type=checkbox name=bn_begin_chk value="<? echo date("Y-m-d 00:00:00", time()); ?>" onclick="if (this.checked == true) this.form.bn_begin_time.value=this.form.bn_begin_chk.value; else this.form.bn_begin_time.value = this.form.bn_begin_time.defaultValue;">오늘
+        <input type="text" id="bn_begin_time" name="bn_begin_time" size=21 maxlength=19 value='<? echo $bn[bn_begin_time] ?>' class=ed>
+        <input type="checkbox" id="bn_begin_chk" name="bn_begin_chk" value="<? echo date("Y-m-d 00:00:00", time()); ?>" onclick="if (this.checked == true) this.form.bn_begin_time.value=this.form.bn_begin_chk.value; else this.form.bn_begin_time.value = this.form.bn_begin_time.defaultValue;">오늘
         <?=help("현재시간이 시작일시와 종료일시 기간안에 있어야 배너가 출력됩니다.");?>
     </td>
 </tr>
 <tr class=ht>
     <td>&nbsp;종료일시</td>
     <td>
-        <input type=text name=bn_end_time size=21 maxlength=19 value='<? echo $bn[bn_end_time] ?>' class=ed>
-        <input type=checkbox name=bn_end_chk value="<? echo date("Y-m-d 23:59:59", time()+60*60*24*31); ?>" onclick="if (this.checked == true) this.form.bn_end_time.value=this.form.bn_end_chk.value; else this.form.bn_end_time.value = this.form.bn_end_time.defaultValue;">오늘+31일
+        <input type="text" id="bn_end_time" name="bn_end_time" size=21 maxlength=19 value='<? echo $bn[bn_end_time] ?>' class=ed>
+        <input type="checkbox" id="bn_end_chk" name="bn_end_chk" value="<? echo date("Y-m-d 23:59:59", time()+60*60*24*31); ?>" onclick="if (this.checked == true) this.form.bn_end_time.value=this.form.bn_end_chk.value; else this.form.bn_end_time.value = this.form.bn_end_time.defaultValue;">오늘+31일
     </td>
 </tr>
 <tr class=ht>
@@ -121,8 +121,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </table>
 
 <p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./bannerlist.php';">&nbsp;
+    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./bannerlist.php';">&nbsp;
 </form>
 
 

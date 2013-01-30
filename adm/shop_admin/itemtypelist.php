@@ -75,16 +75,16 @@ $result = sql_query($sql);
 $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 ?>
 
-<form name=flist style="margin:0px;">
-<table width=100% cellpadding=4 cellspacing=0>
-<input type=hidden name=doc   value="<? echo $doc ?>">
-<input type=hidden name=sort1 value="<? echo $sort1 ?>">
-<input type=hidden name=sort2 value="<? echo $sort2 ?>">
-<input type=hidden name=page  value="<? echo $page ?>">
+<form id="flist" name="flist" style="margin:0px;">
+<table>
+<input type="hidden" id="doc" name="doc"   value="<? echo $doc ?>">
+<input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" id="sort2" name="sort2" value="<? echo $sort2 ?>">
+<input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=80% align=center>
-        <select name="sca">
+        <select id="sca" name="sca">
             <option value=''>전체분류
             <?
             $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
@@ -99,14 +99,14 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         </select>
         <script> document.flist.sca.value = '<?=$sca?>';</script>
 
-        <select name=sfl>
+        <select id="sfl" name="sfl">
             <option value='it_name'>상품명
             <option value='it_id'>상품코드
         </select>
         <? if ($slf) echo "<script> document.flist.slf.value = '$sfl';</script>"; ?>
 
-        <input type=text name=stx value='<? echo $stx ?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type="text" id="stx" name="stx" value='<? echo $stx ?>'>
+        <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -114,13 +114,13 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 </form>
 
 
-<form name=fitemtypelist method=post action="./itemtypelistupdate.php" style="margin:0px;">
-<input type=hidden name=sca  value="<?=$sca?>">
-<input type=hidden name=sst  value="<?=$sst?>">
-<input type=hidden name=sod  value="<?=$sod?>">
-<input type=hidden name=sfl  value="<?=$sfl?>">
-<input type=hidden name=stx  value="<?=$stx?>">
-<input type=hidden name=page value="<?=$page?>">
+<form id="fitemtypelist" name="fitemtypelist" method=post action="./itemtypelistupdate.php" style="margin:0px;">
+<input type="hidden" id="sca" name="sca"  value="<?=$sca?>">
+<input type="hidden" id="sst" name="sst"  value="<?=$sst?>">
+<input type="hidden" id="sod" name="sod"  value="<?=$sod?>">
+<input type="hidden" id="sfl" name="sfl"  value="<?=$sfl?>">
+<input type="hidden" id="stx" name="stx"  value="<?=$stx?>">
+<input type="hidden" id="page" name="page" value="<?=$page?>">
 <table cellpadding=0 cellspacing=0 width=100%>
 <colgroup width=80>
 <colgroup width=80>
@@ -152,16 +152,16 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $list = $i%2;
     echo "
-    <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
+    <input type="hidden" name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list center'>
         <td>$row[it_id]</td> 
         <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
         <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td> 
-        <td><input type=checkbox name='it_type1[$i]' value='1' ".($row[it_type1] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type2[$i]' value='1' ".($row[it_type2] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type3[$i]' value='1' ".($row[it_type3] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type4[$i]' value='1' ".($row[it_type4] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type5[$i]' value='1' ".($row[it_type5] ? 'checked' : '')."></td>
+        <td><input type="checkbox" name='it_type1[$i]' value='1' ".($row[it_type1] ? 'checked' : '')."></td>
+        <td><input type="checkbox" name='it_type2[$i]' value='1' ".($row[it_type2] ? 'checked' : '')."></td>
+        <td><input type="checkbox" name='it_type3[$i]' value='1' ".($row[it_type3] ? 'checked' : '')."></td>
+        <td><input type="checkbox" name='it_type4[$i]' value='1' ".($row[it_type4] ? 'checked' : '')."></td>
+        <td><input type="checkbox" name='it_type5[$i]' value='1' ".($row[it_type5] ? 'checked' : '')."></td>
         <td>$s_mod</td>
     </tr>";
 }
@@ -174,7 +174,7 @@ if (!$i)
 
 <table width=100%>
 <tr>
-    <td colspan=50%><input type=submit class=btn1 value='일괄수정' accesskey='s'></td>
+    <td colspan=50%><input type="submit" class=btn1 value='일괄수정' accesskey='s'></td>
     <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </form>

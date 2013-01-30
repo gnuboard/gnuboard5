@@ -206,23 +206,23 @@ function receive_alldel()
 </script>
 
 <? if ($default[de_sms_use] == "icode") { // 아이코드 사용 ?>
-<form action="./smssendicode.php" name="smsform" method=post autocomplete=off>
-<input type="hidden" name="receive_number" value="">
+<form action="./smssendicode.php" id="smsform" name="smsform" method=post autocomplete=off>
+<input type="hidden" id="receive_number" name="receive_number" value="">
 <? } else { ?>
-<form action="javascript:alert('SMS 사용을 하고 있지 않아 문자를 전송할 수 없습니다.');" name="smsform" method=post autocomplete=off>
-<input type="hidden" name="receive_number" value="">
+<form action="javascript:alert('SMS 사용을 하고 있지 않아 문자를 전송할 수 없습니다.');" id="smsform" name="smsform" method=post autocomplete=off>
+<input type="hidden" id="receive_number" name="receive_number" value="">
 <? } ?>
 
 <table border="0" cellpadding="0" cellspacing="0">
 <tr>
     <td>
-    <table align=center><tr><td><div id=bytes align=center>0 / 80 바이트</div></table>
+    <table align=center><tr><td><div id="bytes" align=center>0 / 80 바이트</div></table>
     <table border="0" cellpadding="0" cellspacing="0">
     <tr>
         <td align="center" valign="middle"><table width="182" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td height="184" colspan="3" background="./img/skinL1_top.gif" align=center><bR><br><br>
-			  <textarea  style='OVERFLOW: hidden; border:solid 0; width:100px; height:80px; background-color:#FFE07E; FONT-SIZE: 9pt; font-family:굴림체;' name=sms_contents cols="16"  wrap=virtual ONKEYUP="byte_check(document.smsform.sms_contents, bytes);"></textarea></td>
+			  <textarea  style='OVERFLOW: hidden; border:solid 0; width:100px; height:80px; background-color:#FFE07E; FONT-SIZE: 9pt; font-family:굴림체;' id="sms_contents" name="sms_contents" cols="16"  wrap=virtual ONKEYUP="byte_check(document.smsform.sms_contents, bytes);"></textarea></td>
             </tr>
             <tr>
               <td width="39"><img src="./img/skinL1_img1.gif" width="39" height="20"></td>
@@ -250,7 +250,7 @@ function receive_alldel()
                         <tr>
                           <td width="10" align="right"><img src="./img/skinL1_icon.gif" width="8" height="8"></td>
                           <td width="52" align="center" valign="middle">발신번호</td>
-                          <td width="102" height="22"> <input name="send_number" type="text" class=ed size="10" value="<?=$send_number?>"></td>
+                          <td width="102" height="22"> <input id="send_number" name="send_number" type="text" class=ed size="10" value="<?=$send_number?>"></td>
                         </tr>
                       </table></td>
                   </tr>
@@ -260,8 +260,8 @@ function receive_alldel()
                         <tr>
                           <td width="10" align="right"><img src="./img/skinL1_icon.gif" width="8" height="8"></td>
                           <td width="52" align="center" valign="middle">수신번호</td>
-                          <input type=hidden id='keycode'>
-                          <td width="70"> <input name="receive_input" type="text" class=ed size="10" onkeydown="document.getElementById('keycode').value=event.keyCode; tel_enter();"></td>
+                          <input type="hidden" id="keycode">
+                          <td width="70"> <input id="receive_input" name="receive_input" type="text" class=ed size="10" onkeydown="document.getElementById('keycode').value=event.keyCode; tel_enter();"></td>
                           <td width="32" height="20" align="center"><a href="javascript:receive_add();"><img src="./img/skinL1_btnpls.gif" width="27" height="18" border=0></a></td>
                         </tr>
                       </table></td>
@@ -271,8 +271,8 @@ function receive_alldel()
                     <td><table width="164" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td height="22" align="right">&nbsp;</td>
-                          <td width="52" align="center" valign="middle"><input type="text" name="count" size="3" class=ed readonly>명</td>
-                          <td width="102" rowspan="2"><select name="receive_buffer"  size=4 style="font-size: 9pt; border: 0; width:100px;" >
+                          <td width="52" align="center" valign="middle"><input type="text" id="count" name="count" size="3" class=ed readonly>명</td>
+                          <td width="102" rowspan="2"><select id="receive_buffer" name="receive_buffer"  size=4 style="font-size: 9pt; border: 0; width:100px;" >
                           </td>
                         </tr>
                         <tr>
@@ -294,19 +294,19 @@ function receive_alldel()
                   </tr>
                   <tr>
                     <td width="12">&nbsp;</td>
-                    <td width="164" height="25" class=small><input type="checkbox" name="reserved_flag" value="true">예약&nbsp; <select name="reserved_month" style="font-size:8pt">
+                    <td width="164" height="25" class=small><input type="checkbox" id="reserved_flag" name="reserved_flag" value="true">예약&nbsp; <select id="reserved_month" name="reserved_month" style="font-size:8pt">
                     <? for ($i=1; $i<=12; $i++) { echo "<option value='$i'>$i</option>"; } ?>
-                      </select>월<select name="reserved_day" style="font-size:8pt">
+                      </select>월<select id="reserved_day" name="reserved_day" style="font-size:8pt">
                     <? for ($i=1; $i<=31; $i++) { echo "<option value='$i'>$i</option>"; } ?>
                       </select>일</td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
-                    <td height="23" class=small><select name="reserved_year" style="font-size:8pt">
+                    <td height="23" class=small><select id="reserved_year" name="reserved_year" style="font-size:8pt">
                     <? for ($i=date("Y"); $i<=date("Y")+1; $i++) { echo "<option value='$i'>".substr($i,-2)."</option>"; } ?>
-                      </select>년<select name="reserved_hour" style="font-size:8pt">
+                      </select>년<select id="reserved_hour" name="reserved_hour" style="font-size:8pt">
                     <? for ($i=1; $i<=24; $i++) { echo "<option value='$i'>$i</option>"; } ?>
-                      </select>시<select name="reserved_minute" style="font-size:8pt">
+                      </select>시<select id="reserved_minute" name="reserved_minute" style="font-size:8pt">
                     <? for ($i=1; $i<=60; $i++) { echo "<option value='$i'>$i</option>"; } ?>
                       </select>분</td>
                   </tr>

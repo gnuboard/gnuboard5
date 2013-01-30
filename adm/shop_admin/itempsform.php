@@ -24,12 +24,12 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 
 <?=subtitle($g4[title])?>
 
-<form name=fitemps method=post onsubmit="return fitemps_submit(this);" style="margin:0px;">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=is_id value='<? echo $is_id ?>'>
-<input type=hidden name=page  value='<? echo $page ?>'>
-<input type=hidden name=sort1 value='<? echo $sort1 ?>'>
-<input type=hidden name=sort2 value='<? echo $sort2 ?>'>
+<form id="fitemps" name="fitemps" method=post onsubmit="return fitemps_submit(this);" style="margin:0px;">
+<input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
+<input type="hidden" id="is_id" name="is_id" value='<? echo $is_id ?>'>
+<input type="hidden" id="page" name="page"  value='<? echo $page ?>'>
+<input type="hidden" id="sort1" name="sort1" value='<? echo $sort1 ?>'>
+<input type="hidden" id="sort2" name="sort2" value='<? echo $sort2 ?>'>
 <table cellpadding=0 cellspacing=1 width=100%>
 <colgroup width=120 class=tdsl></colgroup>
 <colgroup width='' bgcolor=#ffffff></colgroup>
@@ -48,27 +48,27 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 </tr>
 <tr height=25>
     <td>&nbsp;제 목</td>
-    <td><input type=text class=ed name=is_subject required itenmae='제목' style='width:99%;'
+    <td><input type="text" class=ed id="is_subject" name="is_subject" required itenmae='제목' style='width:99%;'
         value='<?=conv_subject($is[is_subject], 120)?>'></td>
 </tr>
 <tr>
     <td>&nbsp;내 용</td>
     <td>
         <!-- <?=textarea_size("is_content")?>
-        <textarea id='is_content' name="is_content" rows="10" style='width:99%;' class=ed required itemname='내용'><? echo get_text($is[is_content]) ?></textarea> -->
+        <textarea id="is_content" id="is_content" name="is_content" rows="10" style='width:99%;' class=ed required itemname='내용'><? echo get_text($is[is_content]) ?></textarea> -->
         <?=editor_html('is_content', $is['is_content']);?>
     </td>
 </tr>
 <tr height=25>
     <td>&nbsp;확 인</td>
-    <td><input type=checkbox name=is_confirm value='1' <?=($is[is_confirm]?"checked":"")?> id=is_confirm> <label for='is_confirm'>확인하였습니다.</a></td>
+    <td><input type="checkbox" id="is_confirm" name="is_confirm" value='1' <?=($is[is_confirm]?"checked":"")?> id="is_confirm"> <label for='is_confirm'>확인하였습니다.</a></td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
 
 <p align=center>
-    <input type=submit class=btn1 value='  확  인  ' accesskey='s'>&nbsp;
-    <input type=button class=btn1 value='  목  록  ' onclick="document.location.href='./itempslist.php?<?=$qstr?>';">
+    <input type="submit" class=btn1 value='  확  인  ' accesskey='s'>&nbsp;
+    <input type="button" class=btn1 value='  목  록  ' onclick="document.location.href='./itempslist.php?<?=$qstr?>';">
 </form>
 
 <script>

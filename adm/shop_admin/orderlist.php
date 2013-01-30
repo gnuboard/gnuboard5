@@ -26,7 +26,7 @@ if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
 $sql_common = " from {$g4['yc4_cart_table']} a
-                left join {$g4['yc4_order_table']} b on (a.uq_id=b.od_id)
+                left join {$g4['yc4_order_table']} b on (a.uq_id="b".od_id)
                 $sql_search ";
 
 // 김선용 200805 : 조인 사용으로 전체카운트가 일정레코드 이상일 때 지연시간 문제가 심각하므로 변경
@@ -63,16 +63,16 @@ $qstr1 = "sel_field=$sel_field&search=$search&save_search=$search";
 $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<table width=100% cellpadding=4 cellspacing=0>
-<form name=frmorderlist>
-<input type=hidden name=doc   value="<? echo $doc   ?>">
-<input type=hidden name=sort1 value="<? echo $sort1 ?>">
-<input type=hidden name=sort2 value="<? echo $sort2 ?>">
-<input type=hidden name=page  value="<? echo $page ?>">
+<table>
+<form id="frmorderlist" name="frmorderlist">
+<input type="hidden" id="doc" name="doc"   value="<? echo $doc   ?>">
+<input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" id="sort2" name="sort2" value="<? echo $sort2 ?>">
+<input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <tr>
     <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=60% align=center>
-        <select name=sel_field>
+        <select id="sel_field" name="sel_field">
             <option value='od_id'>주문번호
             <option value='mb_id'>회원 ID
             <option value='od_name'>주문자
@@ -84,9 +84,9 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
             <option value='od_deposit_name'>입금자
             <option value='od_invoice'>운송장번호
         </select>
-        <input type=hidden name=save_search value='<?=$search?>'>
-        <input type=text name=search value='<? echo $search ?>' autocomplete="off">
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type="hidden" id="save_search" name="save_search" value='<?=$search?>'>
+        <input type="text" id="search" name="search" value='<? echo $search ?>' autocomplete="off">
+        <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
