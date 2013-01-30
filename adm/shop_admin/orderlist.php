@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "r");
 
 $g4['title'] = '주문서관리';
-include_once ($g4['admin_path'].'/admin.head.php');
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 $where = " where ";
 $sql_search = "";
@@ -26,7 +26,7 @@ if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
 $sql_common = " from {$g4['yc4_cart_table']} a
-                left join {$g4['yc4_order_table']} b on (a.uq_id="b".od_id)
+                left join {$g4['yc4_order_table']} b on (a.uq_id = b.od_id)
                 $sql_search ";
 
 // 김선용 200805 : 조인 사용으로 전체카운트가 일정레코드 이상일 때 지연시간 문제가 심각하므로 변경
