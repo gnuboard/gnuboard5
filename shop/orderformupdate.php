@@ -504,8 +504,8 @@ else if($od_settle_case == "가상계좌")
     $od_receipt_point   = $i_temp_point;
     $bankname           = iconv("cp949", "utf8", $bankname);
     $depositor          = iconv("cp949", "utf8", $depositor);
-    $od_bank_account    = $bankname.' '.$account;
-    $od_deposit_name    = $depositor;
+    $od_bank_account    = $bankname.' '.$account.' '.$depositor;
+    $od_deposit_name    = $od_name;
 }
 else if ($od_settle_case == "휴대폰")
 {
