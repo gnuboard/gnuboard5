@@ -13,7 +13,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             해당 이메일로 아이디와 패스워드 정보를 보내드립니다.
         </p>
         <label for="mb_email">E-mail 주소<strong class="sound_only">필수</strong></label>
-        <input type="text" id="mb_email" name="mb_email" class="fs_input email" required size="30" title="E-mail 주소">
+        <input type="text" id="mb_email" name="mb_email" class="fs_input email" required size="30">
     </fieldset>
     <?=captcha_html(); ?>
     <div class="btn_win">

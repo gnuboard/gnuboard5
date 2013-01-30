@@ -39,7 +39,7 @@ if ($is_nogood) $colspan++;
             <option value="wr_name,1">글쓴이</option>
             <option value="wr_name,0">글쓴이(코)</option>
         </select>
-        <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어">
+        <input name="stx" class="fieldset_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어(필수)">
         <input type="submit" class="fieldset_submit" value="검색">
         </form>
     </fieldset>
@@ -68,7 +68,7 @@ if ($is_nogood) $colspan++;
     <thead>
     <tr>
         <th scope="col">번호</th>
-        <? if ($is_checkbox) { ?><th scope="col"><input type="checkbox" onclick="if (this.checked) all_checked(true); else all_checked(false);"></th><?}?>
+        <? if ($is_checkbox) { ?><th scope="col"><input type="checkbox" onclick="if (this.checked) all_checked(true); else all_checked(false);" title="현재 페이지 게시물 전체선택"></th><?}?>
         <th scope="col">제목</th>
         <th scope="col">글쓴이</th>
         <th scope="col"><?=subject_sort_link('wr_datetime', $qstr2, 1)?>날짜</a></th>
