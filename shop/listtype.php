@@ -3,11 +3,11 @@ include_once("./_common.php");
 include_once("./_head.php");
 
 $type = $_REQUEST['type'];
-if ($type == 1)      $g4[title] = "히트상품";
-else if ($type == 2) $g4[title] = "추천상품";
-else if ($type == 3) $g4[title] = "신규상품";
-else if ($type == 4) $g4[title] = "포인트상품";
-else if ($type == 5) $g4[title] = "사은품상품";
+if ($type == 1)      $g4['title'] = "히트상품";
+else if ($type == 2) $g4['title'] = "추천상품";
+else if ($type == 3) $g4['title'] = "신규상품";
+else if ($type == 4) $g4['title'] = "포인트상품";
+else if ($type == 5) $g4['title'] = "사은품상품";
 else
     alert("상품유형이 아닙니다.");
 
