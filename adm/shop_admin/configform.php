@@ -816,8 +816,9 @@ $sms_daesang = array (1=>"고객님께 발송", "관리자께 발송", "고객�
 
 
 
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>
+<div class="btn_confirm">
+    <input type="submit" class="btn_submit" accesskey="s" value="확인">
+</div>
 </form>
 
 <script>

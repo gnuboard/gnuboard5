@@ -92,7 +92,7 @@ if ($i == 0) {
 </table>
 
 <p align=center>
-    <input type=button class=btn1 accesskey='l' value='  FAQ 관리  ' onclick="location='./faqmasterlist.php'">
+    <input type="button" class=btn1 accesskey='l' value='  FAQ 관리  ' onclick="location='./faqmasterlist.php'">
 
 
 <?

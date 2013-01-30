@@ -77,8 +77,8 @@ include_once ($g4['path'].'/head.sub.php');
     if(!$spl_count) {
     ?>
     <tr>
-        <td><input type="text" name="sp_subject[]" class="sp_subject" value="<? echo $spl_subject[$i]; ?>" size="15" /></td>
-        <td><input type="text" name="sp_option[]" class="sp_option" value="<? echo $spl_item[$i]; ?>" size="50" /></td>
+        <td><input type="text" id="sp_subject[]" name="sp_subject[]" class="sp_subject" value="<? echo $spl_subject[$i]; ?>" size="15" /></td>
+        <td><input type="text" id="sp_option[]" name="sp_option[]" class="sp_option" value="<? echo $spl_item[$i]; ?>" size="50" /></td>
     </tr>
     <?
     }
@@ -92,8 +92,8 @@ include_once ($g4['path'].'/head.sub.php');
             }
     ?>
     <tr>
-        <td><input type="text" name="sp_subject[]" class="sp_subject" value="<? echo $spl_subject[$i]; ?>" size="15" /></td>
-        <td><input type="text" name="sp_option[]" class="sp_option" value="<? echo $spl_item[$i]; ?>" size="50" /><? echo $rm_btn; ?></td>
+        <td><input type="text" id="sp_subject[]" name="sp_subject[]" class="sp_subject" value="<? echo $spl_subject[$i]; ?>" size="15" /></td>
+        <td><input type="text" id="sp_option[]" name="sp_option[]" class="sp_option" value="<? echo $spl_item[$i]; ?>" size="50" /><? echo $rm_btn; ?></td>
     </tr>
     <?
         }
@@ -120,8 +120,8 @@ $(document).ready(function() {
     // 입력행추가
     $('#AddRow').click(function() {
         var tr_content = '<tr>';
-        tr_content += '<td><input type="text" name="sp_subject[]" class="sp_subject" value="" size="15" /></td>';
-        tr_content += '<td><input type="text" name="sp_option[]" class="sp_option" value="" size="50" /> <span class="RowRemove">삭제</span></td>';
+        tr_content += '<td><input type="text" id="sp_subject[]" name="sp_subject[]" class="sp_subject" value="" size="15" /></td>';
+        tr_content += '<td><input type="text" id="sp_option[]" name="sp_option[]" class="sp_option" value="" size="50" /> <span class="RowRemove">삭제</span></td>';
         tr_content += '</tr>';
 
         $('#AddRow').closest('tr').before(tr_content);

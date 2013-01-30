@@ -75,31 +75,31 @@ $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search&save_search=$
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form name=frmorderlist style="margin:0px;">
-<input type=hidden name=doc   value="<? echo $doc ?>">
-<input type=hidden name=sort1 value="<? echo $sort1 ?>">
-<input type=hidden name=page  value="<? echo $page ?>">
-<table width=100% cellpadding=4 cellspacing=0>
+<form id="frmorderlist" name="frmorderlist" style="margin:0px;">
+<input type="hidden" id="doc" name="doc"   value="<? echo $doc ?>">
+<input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" id="page" name="page"  value="<? echo $page ?>">
+<table>
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=80% align=center>
-        <!-- <input type=button value='주문' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=주문"?>'">
-        <input type=button value='준비' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=준비"?>'">
-        <input type=button value='배송' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=배송"?>'">
-        <input type=button value='완료' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=완료"?>'">
-        <input type=button value='취소' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=취소"?>'">
-        <input type=button value='반품' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=반품"?>'">
-        <input type=button value='품절' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=품절"?>'"> -->
+        <!-- <input type="button" value='주문' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=주문"?>'">
+        <input type="button" value='준비' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=준비"?>'">
+        <input type="button" value='배송' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=배송"?>'">
+        <input type="button" value='완료' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=완료"?>'">
+        <input type="button" value='취소' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=취소"?>'">
+        <input type="button" value='반품' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=반품"?>'">
+        <input type="button" value='품절' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=품절"?>'"> -->
         <!-- utf-8 에서 처리되도록 변경 -->
-        <input type=button value='주문' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('주문')?>'">
-        <input type=button value='준비' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('준비')?>'">
-        <input type=button value='배송' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('배송')?>'">
-        <input type=button value='완료' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('완료')?>'">
-        <input type=button value='취소' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('취소')?>'">
-        <input type=button value='반품' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('반품')?>'">
-        <input type=button value='품절' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('품절')?>'">
+        <input type="button" value='주문' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('주문')?>'">
+        <input type="button" value='준비' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('준비')?>'">
+        <input type="button" value='배송' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('배송')?>'">
+        <input type="button" value='완료' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('완료')?>'">
+        <input type="button" value='취소' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('취소')?>'">
+        <input type="button" value='반품' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('반품')?>'">
+        <input type="button" value='품절' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('품절')?>'">
         &nbsp;
-        <select name=sel_field>
+        <select id="sel_field" name="sel_field">
             <option value='od_id'>주문번호
             <option value='od_name'>주문자
             <option value='mb_id'>회원 ID
@@ -108,9 +108,9 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
             <option value='c.ca_id'>분류코드
             <option value='ct_status'>상태
         </select>
-        <input type=hidden name=save_search value='<?=$search?>'>
-        <input type=text name=search value='<? echo $search ?>' autocomplete="off">
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type="hidden" id="save_search" name="save_search" value='<?=$search?>'>
+        <input type="text" id="search" name="search" value='<? echo $search ?>' autocomplete="off">
+        <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>

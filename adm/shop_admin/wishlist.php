@@ -46,16 +46,16 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 $qstr1 = "fr_date=$fr_date&to_date=$to_date&sel_ca_id=$sel_ca_id";
 ?>
 
-<table width=100% cellpadding=4 cellspacing=0>
-<form name=flist>
-<input type=hidden name=doc   value="<? echo $doc ?>">
-<input type=hidden name=sort1 value="<? echo $sort1 ?>">
-<input type=hidden name=sort2 value="<? echo $sort2 ?>">
-<input type=hidden name=page  value="<? echo $page ?>">
+<table>
+<form id="flist" name="flist">
+<input type="hidden" id="doc" name="doc"   value="<? echo $doc ?>">
+<input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" id="sort2" name="sort2" value="<? echo $sort2 ?>">
+<input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=80% align=center>
-        <select name="sel_ca_id">
+        <select id="sel_ca_id" name="sel_ca_id">
             <option value=''>전체분류
             <?
             $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
@@ -70,8 +70,8 @@ $qstr1 = "fr_date=$fr_date&to_date=$to_date&sel_ca_id=$sel_ca_id";
         </select>
         <script> document.flist.sel_ca_id.value = '<?=$sel_ca_id?>';</script>
 
-        기간 : <input type=text name=fr_date size=8 maxlength=8 itemname='기간' value='<?=$fr_date?>'> ~ <input type=text name=to_date size=8 maxlength=8 itemname='기간' value='<?=$to_date?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        기간 : <input type="text" id="fr_date" name="fr_date" size=8 maxlength=8 itemname='기간' value='<?=$fr_date?>'> ~ <input type="text" id="to_date" name="to_date" size=8 maxlength=8 itemname='기간' value='<?=$to_date?>'>
+        <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>

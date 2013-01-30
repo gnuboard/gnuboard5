@@ -28,7 +28,7 @@ include_once("$g4[path]/head.sub.php");
 
 <?
 $sql = " select b.it_id, b.it_name, b.it_use from $g4[yc4_event_item_table] a
-           left join $g4[yc4_item_table] b on (a.it_id=b.it_id)
+           left join $g4[yc4_item_table] b on (a.it_id="b".it_id)
           where a.ev_id = '$ev_id' 
           order by b.it_id desc ";
 $result = sql_query($sql);

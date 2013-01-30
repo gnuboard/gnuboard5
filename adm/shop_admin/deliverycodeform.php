@@ -26,23 +26,23 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <?=subtitle($html_title);?>
 
 <table cellpadding=0 cellspacing=0 width=100%>
-<form name=fdeliverycodeform method=post action='./deliverycodeformupdate.php'>
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=dl_id value='<? echo $dl_id ?>'>
+<form id="fdeliverycodeform" name="fdeliverycodeform" method=post action='./deliverycodeformupdate.php'>
+<input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
+<input type="hidden" id="dl_id" name="dl_id" value='<? echo $dl_id ?>'>
 <colgroup width=15%></colgroup>
 <colgroup width=85% bgcolor=#ffffff></colgroup>
 <tr><td colspan=2 height=2 bgcolor=#0E87F9></td></tr>
 <tr class=ht>
     <td>배송회사명</td>
-    <td><input type=text class=ed name=dl_company value='<? echo stripslashes($dl[dl_company]) ?>' required itemname="배송회사명"></td>
+    <td><input type="text" class=ed id="dl_company" name="dl_company" value='<? echo stripslashes($dl[dl_company]) ?>' required itemid="배송회사명" name="배송회사명"></td>
 </tr>
 <tr class=ht>
     <td>화물추적 URL</td>
-    <td><input type=text class=ed name=dl_url value='<? echo stripslashes($dl[dl_url]) ?>' style='width:98%;'></td>
+    <td><input type="text" class=ed id="dl_url" name="dl_url" value='<? echo stripslashes($dl[dl_url]) ?>' style='width:98%;'></td>
 </tr>
 <tr class=ht>
     <td>고객센터 전화</td>
-    <td><input type=text class=ed name=dl_tel value='<? echo stripslashes($dl[dl_tel]) ?>'></td>
+    <td><input type="text" class=ed id="dl_tel" name="dl_tel" value='<? echo stripslashes($dl[dl_tel]) ?>'></td>
 </tr>
 <tr class=ht>
     <td>출력 순서</td>
@@ -55,8 +55,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </table>
 
 <p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./deliverycodelist.php';">
+    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./deliverycodelist.php';">
 </form>
 
 <?

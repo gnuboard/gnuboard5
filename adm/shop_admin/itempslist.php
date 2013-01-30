@@ -53,13 +53,13 @@ $result = sql_query($sql);
 $qstr  = "$qstr&sca=$sca&save_stx=$stx";
 ?>
 
-<form name=flist style="margin:0px;">
-<table width=100% cellpadding=4 cellspacing=0>
-<input type=hidden name=page value="<?=$page?>">
+<form id="flist" name="flist" style="margin:0px;">
+<table>
+<input type="hidden" id="page" name="page" value="<?=$page?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=80% align=center>
-        <select name="sca">
+        <select id="sca" name="sca">
             <option value=''>전체분류
             <?
             $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
@@ -74,16 +74,16 @@ $qstr  = "$qstr&sca=$sca&save_stx=$stx";
         </select>
         <script> document.flist.sca.value = '<?=$sca?>';</script>
 
-        <select name=sfl>
+        <select id="sfl" name="sfl">
             <option value='it_name'>상품명
             <option value='a.it_id'>상품코드
             <option value='is_name'>이름
         </select>
         <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
 
-        <input type=hidden name=save_stx value='<?=$stx?>'>
-        <input type=text name=stx value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type="hidden" id="save_stx" name="save_stx" value='<?=$stx?>'>
+        <input type="text" id="stx" name="stx" value='<?=$stx?>'>
+        <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>

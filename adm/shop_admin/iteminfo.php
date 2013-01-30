@@ -20,7 +20,7 @@ $null_text = "상품페이지 참고";
 </style>
 
 <form id="fiteminfo" method="post" action="#" onsubmit="return fiteminfo_submit(this)">
-<input type="hidden" name="it_id" value="<?=$it_id?>">
+<input type="hidden" id="it_id" name="it_id" value="<?=$it_id?>">
 <div style="width:95%;padding:10px">
 <div style="float:left;"><?=subtitle("요약상품정보")?></div>
 <div style="float:right;">(모든필드 필수입력)</div>
@@ -34,7 +34,7 @@ $null_text = "상품페이지 참고";
     <td style='padding:3px;' valign='top' width='25%'><b>상품군</b></td>
     <td style='padding:3px;' valign='top'>
         <div style="float:left;">
-        <select id="gubun" name="gubun" onchange="location.href='?it_id=<?=$it_id?>&amp;gubun='+this.value;">
+        <select id="gubun" id="gubun" name="gubun" onchange="location.href='?it_id=<?=$it_id?>&amp;gubun='+this.value;">
         <option value="">상품군을 선택하세요.</option>
         <?
         foreach($item_info as $key=>$value) {
@@ -64,8 +64,8 @@ if ($article) {
         echo "<tr class='ht'>\n";
         echo "<td style='padding:3px;' valign='top'><b>$el_title</b></td>\n";
         echo "<td style='padding:3px;' valign='top'>";
-        echo "<input type='hidden' name='{$el_name}[]' value='$el_title' />";
-        echo "<input type='text' name='{$el_name}[]' value='$el_value' class='ed' style='width:99%;' required itemname='$el_title' />";
+        echo "<input type="hidden" name='{$el_name}[]' value='$el_title' />";
+        echo "<input type="text" name='{$el_name}[]' value='$el_value' class='ed' style='width:99%;' required itemname='$el_title' />";
         if ($el_example != "") {
             echo "<p style=\"margin:2px 0;padding:0\">$el_example</p>";
         }
@@ -87,7 +87,7 @@ if ($article) {
 <script>
 $(function(){
     $("#null").click(function(){
-        var $f = $("#fiteminfo input[type=text], #fiteminfo textarea");
+        var $f = $("#fiteminfo input[type="text"], #fiteminfo textarea");
         if (this.checked) {
             $.each($f, function(){
                 if ($(this).val() == "") {

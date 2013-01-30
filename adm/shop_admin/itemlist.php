@@ -79,13 +79,13 @@ $result = sql_query($sql);
 $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 ?>
 
-<table width=100% cellpadding=4 cellspacing=0>
-<form name=flist>
-<input type=hidden name=page value="<?=$page?>">
+<table>
+<form id="flist" name="flist">
+<input type="hidden" id="page" name="page" value="<?=$page?>">
 <tr>
     <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=60% align=center>
-        <select name="sca">
+        <select id="sca" name="sca">
             <option value=''>전체분류
             <?
             $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
@@ -101,7 +101,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         </select>
         <script> document.flist.sca.value = '<?=$sca?>';</script>
 
-        <select name=sfl>
+        <select id="sfl" name="sfl">
             <option value='it_name'>상품명
             <option value='it_id'>상품코드
             <option value='it_maker'>제조사
@@ -111,9 +111,9 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         <?// if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
         <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
 
-        <input type=hidden name=save_stx value='<?=$stx?>'>
-        <input type=text name=stx value='<?=$stx?>'>
-        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
+        <input type="hidden" id="save_stx" name="save_stx" value='<?=$stx?>'>
+        <input type="text" id="stx" name="stx" value='<?=$stx?>'>
+        <input type="image" src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -136,13 +136,13 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 <tr><td colspan=13 height=1 bgcolor=#CCCCCC></td></tr>
 </form>
 
-<form name=fitemlistupdate method=post action="./itemlistupdate.php" autocomplete='off'>
-<input type=hidden name=sca  value="<?=$sca?>">
-<input type=hidden name=sst  value="<?=$sst?>">
-<input type=hidden name=sod  value="<?=$sod?>">
-<input type=hidden name=sfl  value="<?=$sfl?>">
-<input type=hidden name=stx  value="<?=$stx?>">
-<input type=hidden name=page value="<?=$page?>">
+<form id="fitemlistupdate" name="fitemlistupdate" method=post action="./itemlistupdate.php" autocomplete='off'>
+<input type="hidden" id="sca" name="sca"  value="<?=$sca?>">
+<input type="hidden" id="sst" name="sst"  value="<?=$sst?>">
+<input type="hidden" id="sod" name="sod"  value="<?=$sod?>">
+<input type="hidden" id="sfl" name="sfl"  value="<?=$sfl?>">
+<input type="hidden" id="stx" name="stx"  value="<?=$stx?>">
+<input type="hidden" id="page" name="page" value="<?=$page?>">
 <?
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
@@ -173,20 +173,20 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     echo "
-    <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
+    <input type="hidden" name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list'>
         <td>$row[it_id]</td>
         <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], $filename, 50, 50)."</a></td>
-        <td align=left>$tmp_ca_list<br><input type='text' name='it_name[$i]' value='".htmlspecialchars2(cut_str($row[it_name],250, ""))."' required size=40 class=ed></td>
+        <td align=left>$tmp_ca_list<br><input type="text" name='it_name[$i]' value='".htmlspecialchars2(cut_str($row[it_name],250, ""))."' required size=40 class=ed></td>
         <td colspan=3>
             <table width=210 cellpadding=0 cellspacing=0>
             <tr>
                 <td>
                     <table cellpadding=0 cellspacing=0>
                     <tr>
-                        <td width=70 align=center><input type='text' name='it_amount[$i]' value='$row[it_amount]' class=ed size=7 style='text-align:right; background-color:#DDE6FE;'></td>
-                        <td width=70 align=center><input type='text' name='it_amount2[$i]' value='$row[it_amount2]' class=ed size=7 style='text-align:right; background-color:#DDFEDE;'></td>
-                        <td width=70 align=center><input type='text' name='it_amount3[$i]' value='$row[it_amount3]' class=ed size=7 style='text-align:right; background-color:#FEDDDD;'></td>
+                        <td width=70 align=center><input type="text" name='it_amount[$i]' value='$row[it_amount]' class=ed size=7 style='text-align:right; background-color:#DDE6FE;'></td>
+                        <td width=70 align=center><input type="text" name='it_amount2[$i]' value='$row[it_amount2]' class=ed size=7 style='text-align:right; background-color:#DDFEDE;'></td>
+                        <td width=70 align=center><input type="text" name='it_amount3[$i]' value='$row[it_amount3]' class=ed size=7 style='text-align:right; background-color:#FEDDDD;'></td>
                     </tr>
                     </table></td>
             </tr>
@@ -194,15 +194,15 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
                 <td>
                     <table cellpadding=0 cellspacing=0>
                     <tr>
-                        <td width=70 align=center><input type='text' name='it_cust_amount[$i]' value='$row[it_cust_amount]' class=ed size=7 style='text-align:right;'></td>
-                        <td width=70 align=center><input type='text' name='it_point[$i]' value='$row[it_point]' class=ed size=7 style='text-align:right;'></td>
-                        <td width=70 align=center><input type='text' name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=7 style='text-align:right;'></td>
+                        <td width=70 align=center><input type="text" name='it_cust_amount[$i]' value='$row[it_cust_amount]' class=ed size=7 style='text-align:right;'></td>
+                        <td width=70 align=center><input type="text" name='it_point[$i]' value='$row[it_point]' class=ed size=7 style='text-align:right;'></td>
+                        <td width=70 align=center><input type="text" name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=7 style='text-align:right;'></td>
                     </tr>
                     </table></td>
             </tr>
             </table></td>
-        <td><input type='text' name='it_order[$i]' value='$row[it_order]' class=ed size=3 style='text-align:right;'></td>
-        <td><input type=checkbox name='it_use[$i]' ".($row[it_use] ? "checked" : "")." value='1'></td>
+        <td><input type="text" name='it_order[$i]' value='$row[it_order]' class=ed size=3 style='text-align:right;'></td>
+        <td><input type="checkbox" name='it_use[$i]' ".($row[it_use] ? "checked" : "")." value='1'></td>
         <td>$row[it_hit]</td>
         <td>$s_mod $s_del $s_vie $s_copy</td>
     </tr>";
@@ -215,7 +215,7 @@ if ($i == 0)
 
 <table width=100%>
 <tr>
-    <td width=50%><input type=submit class=btn1 value='일괄수정' accesskey='s'></td>
+    <td width=50%><input type="submit" class=btn1 value='일괄수정' accesskey='s'></td>
     <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>

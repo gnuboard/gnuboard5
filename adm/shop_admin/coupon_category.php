@@ -32,7 +32,7 @@ form { display: inline; }
 <div id="container">
     <div class="searcharea">
     <form id="fcategory" method="get" action="./coupon_category.php?w=<? echo $w; ?>">
-        <input type="text" name="stx" class="ed" size="30" value="<? echo stripslashes($stx); ?>" />
+        <input type="text" id="stx" name="stx" class="ed" size="30" value="<? echo stripslashes($stx); ?>" />
         <input type="submit" class="btn1" value="검색" />
     </form>
     </div>
@@ -45,7 +45,7 @@ form { display: inline; }
             <colgroup width="120" />
             <colgroup width="" />
             <tr>
-                <th><input type="checkbox" name="check_all" /></th>
+                <th><input type="checkbox" id="check_all" name="check_all" /></th>
                 <th>카테고리코드</th>
                 <th>카테고리명</th>
             </tr>
@@ -53,7 +53,7 @@ form { display: inline; }
             for($i=0; $row=sql_fetch_array($result); $i++) {
             ?>
             <tr>
-                <td align="center"><input type="checkbox" name="s_ca_id[]" value="<? echo $row['ca_id']; ?>" /></td>
+                <td align="center"><input type="checkbox" id="s_ca_id[]" name="s_ca_id[]" value="<? echo $row['ca_id']; ?>" /></td>
                 <td align="center"><? echo $row['ca_id']; ?></td>
                 <td align="center"><? echo $row['ca_name']; ?></td>
             </tr>
@@ -75,7 +75,7 @@ form { display: inline; }
 <script>
 $(function() {
     $("#fcategory").submit(function() {
-        var stx = $.trim($("input[name=stx]").val());
+        var stx = $.trim($("input[id="stx" name="stx"]").val());
         if(stx == "") {
             alert("검색어를 입력해 주세요.");
             return false;
@@ -84,7 +84,7 @@ $(function() {
         return true;
     });
 
-    $("input[name=check_all]").click(function() {
+    $("input[id="check_all" name="check_all"]").click(function() {
         if($(this).is(":checked")) {
             $("input[name^=s_ca_id]").attr("checked", true);
         } else {
@@ -121,7 +121,7 @@ $(function() {
             }
         });
 
-        $opener.$("input[name=ca_id]").val(caid);
+        $opener.$("input[id="ca_id" name="ca_id"]").val(caid);
         self.close();
 
         return false;

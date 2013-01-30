@@ -26,9 +26,9 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($html_title)?>
 
-<form name=frmfaqmasterform method=post action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);"enctype="MULTIPART/FORM-DATA" style="margin:0px;">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=fm_id value='<? echo $fm_id ?>'>
+<form id="frmfaqmasterform" name="frmfaqmasterform" method=post action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);"enctype="MULTIPART/FORM-DATA" style="margin:0px;">
+<input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
+<input type="hidden" id="fm_id" name="fm_id" value='<? echo $fm_id ?>'>
 <table cellpadding=0 cellspacing=0 width=100%>
 <colgroup width=15% class=tdsl></colgroup>
 <colgroup width=85% bgcolor=#ffffff></colgroup>
@@ -36,7 +36,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>제목</td>
     <td>
-        <input type=text class=ed name=fm_subject size=60 value='<?=get_text($fm[fm_subject]) ?>' required itemname="제목">
+        <input type="text" class=ed id="fm_subject" name="fm_subject" size=60 value='<?=get_text($fm[fm_subject]) ?>' required itemid="제목" name="제목">
         <?
         if ($w == 'u')
         {
@@ -49,11 +49,11 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>상단이미지</td>
     <td colspan=3>
-        <input type=file class=ed name=fm_himg size=40>
+        <input type="file" class=ed id="fm_himg" name="fm_himg" size=40>
         <?
         $himg = "$g4[path]/data/faq/{$fm[fm_id]}_h";
         if (file_exists($himg)) {
-            echo "<input type=checkbox name=fm_himg_del value='1'>삭제";
+            echo "<input type="checkbox" id="fm_himg_del" name="fm_himg_del" value='1'>삭제";
             $himg_str = "<img src='$himg' border=0>";
         }
         ?>
@@ -64,11 +64,11 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>하단이미지</td>
     <td colspan=3>
-        <input type=file class=ed name=fm_timg size=40>
+        <input type="file" class=ed id="fm_timg" name="fm_timg" size=40>
         <?
         $timg = "$g4[path]/data/faq/{$fm[fm_id]}_t";
         if (file_exists($timg)) {
-            echo "<input type=checkbox name=fm_timg_del value='1'>삭제";
+            echo "<input type="checkbox" id="fm_timg_del" name="fm_timg_del" value='1'>삭제";
             $timg_str = "<img src='$timg' border=0>";
         }
         ?>
@@ -88,8 +88,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </table>
 
 <p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./faqmasterlist.php';">
+    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./faqmasterlist.php';">
 </form>
 
 <script language="javascript">

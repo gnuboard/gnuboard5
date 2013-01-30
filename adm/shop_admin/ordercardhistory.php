@@ -49,22 +49,22 @@ $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form name=flist style="margin:0px;">
-<input type=hidden name=sort1 value="<? echo $sort1 ?>">
-<input type=hidden name=page  value="<? echo $page ?>">
-<table width=100% cellpadding=4 cellspacing=0>
+<form id="flist" name="flist" style="margin:0px;">
+<input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" id="page" name="page"  value="<? echo $page ?>">
+<table>
 <tr>
     <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=70% align=center>
-        <select name=sel_field>
+        <select id="sel_field" name="sel_field">
             <option value='a.od_id'>주문번호
             <option value='cd_app_no'>승인번호
             <option value='cd_opt01'>결제자
         </select>
         <? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
 
-        <input type=text name=search value='<? echo $search ?>' autocomplete="off">
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type="text" id="search" name="search" value='<? echo $search ?>' autocomplete="off">
+        <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
