@@ -41,16 +41,16 @@ include_once ($g4['path'].'/head.sub.php');
         <th width="450">옵션항목(,로 구분)</th>
     </tr>
     <tr>
-        <td><input type="text" name="it_opt1_subject" class="it_opt_subject" value="" size="15" /></td>
-        <td><input type="text" name="it_opt1" class="it_opt" value="" size="50" /></td>
+        <td><input type="text" id="it_opt1_subject" name="it_opt1_subject" class="it_opt_subject" value="" size="15" /></td>
+        <td><input type="text" id="it_opt1" name="it_opt1" class="it_opt" value="" size="50" /></td>
     </tr>
     <tr>
-        <td><input type="text" name="it_opt2_subject" class="it_opt_subject" value="" size="15" /></td>
-        <td><input type="text" name="it_opt2" class="it_opt" value="" size="50" /></td>
+        <td><input type="text" id="it_opt2_subject" name="it_opt2_subject" class="it_opt_subject" value="" size="15" /></td>
+        <td><input type="text" id="it_opt2" name="it_opt2" class="it_opt" value="" size="50" /></td>
     </tr>
     <tr>
-        <td><input type="text" name="it_opt3_subject" class="it_opt_subject" value="" size="15" /></td>
-        <td><input type="text" name="it_opt3" class="it_opt" value="" size="50" /></td>
+        <td><input type="text" id="it_opt3_subject" name="it_opt3_subject" class="it_opt_subject" value="" size="15" /></td>
+        <td><input type="text" id="it_opt3" name="it_opt3" class="it_opt" value="" size="50" /></td>
     </tr>
     <tr>
         <td colspan="2" height="50" align="center" /><input type="submit" value=" 목록생성 " /></td>
@@ -68,12 +68,12 @@ var it_id = '<?php echo $it_id; ?>';
 $(document).ready(function() {
     var $opener = window.opener;
 
-    $('input[name=it_opt1_subject]').val($opener.$('input[name=it_opt1_subject]').val());
-    $('input[name=it_opt2_subject]').val($opener.$('input[name=it_opt2_subject]').val());
-    $('input[name=it_opt3_subject]').val($opener.$('input[name=it_opt3_subject]').val());
-    $('input[name=it_opt1]').val($opener.$('input[name=it_opt1]').val());
-    $('input[name=it_opt2]').val($opener.$('input[name=it_opt2]').val());
-    $('input[name=it_opt3]').val($opener.$('input[name=it_opt3]').val());
+    $('input[id="it_opt1_subject" name="it_opt1_subject"]').val($opener.$('input[id="it_opt1_subject" name="it_opt1_subject"]').val());
+    $('input[id="it_opt2_subject" name="it_opt2_subject"]').val($opener.$('input[id="it_opt2_subject" name="it_opt2_subject"]').val());
+    $('input[id="it_opt3_subject" name="it_opt3_subject"]').val($opener.$('input[id="it_opt3_subject" name="it_opt3_subject"]').val());
+    $('input[id="it_opt1" name="it_opt1"]').val($opener.$('input[id="it_opt1" name="it_opt1"]').val());
+    $('input[id="it_opt2" name="it_opt2"]').val($opener.$('input[id="it_opt2" name="it_opt2"]').val());
+    $('input[id="it_opt3" name="it_opt3"]').val($opener.$('input[id="it_opt3" name="it_opt3"]').val());
 
     optionTableMake('');
 
@@ -181,21 +181,21 @@ $(document).ready(function() {
         }
 
         if(opt1) {
-            opt1_subject = $('input[name=it_opt1_subject]').val();
+            opt1_subject = $('input[id="it_opt1_subject" name="it_opt1_subject"]').val();
         }
         if(opt2) {
-            opt2_subject = $('input[name=it_opt2_subject]').val();
+            opt2_subject = $('input[id="it_opt2_subject" name="it_opt2_subject"]').val();
         }
         if(opt3) {
-            opt3_subject = $('input[name=it_opt3_subject]').val();
+            opt3_subject = $('input[id="it_opt3_subject" name="it_opt3_subject"]').val();
         }
 
-        $opener.$('input[name=it_opt1_subject]').val(opt1_subject);
-        $opener.$('input[name=it_opt2_subject]').val(opt2_subject);
-        $opener.$('input[name=it_opt3_subject]').val(opt3_subject);
-        $opener.$('input[name=it_opt1]').val(opt1);
-        $opener.$('input[name=it_opt2]').val(opt2);
-        $opener.$('input[name=it_opt3]').val(opt3);
+        $opener.$('input[id="it_opt1_subject" name="it_opt1_subject"]').val(opt1_subject);
+        $opener.$('input[id="it_opt2_subject" name="it_opt2_subject"]').val(opt2_subject);
+        $opener.$('input[id="it_opt3_subject" name="it_opt3_subject"]').val(opt3_subject);
+        $opener.$('input[id="it_opt1" name="it_opt1"]').val(opt1);
+        $opener.$('input[id="it_opt2" name="it_opt2"]').val(opt2);
+        $opener.$('input[id="it_opt3" name="it_opt3"]').val(opt3);
 
         return true;
     });

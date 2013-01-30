@@ -45,13 +45,13 @@ $result = sql_query($sql);
 $qstr  = "$qstr&page=$page&save_stx=$stx";
 ?>
 
-<table width=100% cellpadding=4 cellspacing=0>
-<form name=flist>
-<input type=hidden name=page value="<?=$page?>">
+<table>
+<form id="flist" name="flist">
+<input type="hidden" id="page" name="page" value="<?=$page?>">
 <tr>
     <td width=20%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
     <td width=60% align=center>
-       <select name=sfl>
+       <select id="sfl" name="sfl">
             <option value='cp_id'>쿠폰번호
             <option value='cp_subject'>쿠폰명
             <option value='it_name'>상품명
@@ -60,9 +60,9 @@ $qstr  = "$qstr&page=$page&save_stx=$stx";
         <?// if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
         <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
 
-        <input type=hidden name=save_stx value='<?=$stx?>'>
-        <input type=text name=stx value='<?=$stx?>'>
-        <input type=image src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle>
+        <input type="hidden" id="save_stx" name="save_stx" value='<?=$stx?>'>
+        <input type="text" id="stx" name="stx" value='<?=$stx?>'>
+        <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -71,15 +71,15 @@ $qstr  = "$qstr&page=$page&save_stx=$stx";
 
 
 <form id="fcouponlist" method="post" action="./coupondelete.php" style="margin: 0;">
-<input type="hidden" name="sst"  value="<? echo $sst ?>" />
-<input type="hidden" name="sod"  value="<? echo $sod; ?>" />
-<input type="hidden" name="sfl"  value="<? echo $sfl; ?>" />
-<input type="hidden" name="stx"  value="<? echo $stx; ?>" />
-<input type="hidden" name="page" value="<? echo $page; ?>" />
+<input type="hidden" id="sst" name="sst"  value="<? echo $sst ?>" />
+<input type="hidden" id="sod" name="sod"  value="<? echo $sod; ?>" />
+<input type="hidden" id="sfl" name="sfl"  value="<? echo $sfl; ?>" />
+<input type="hidden" id="stx" name="stx"  value="<? echo $stx; ?>" />
+<input type="hidden" id="page" name="page" value="<? echo $page; ?>" />
 <table cellpadding=0 cellspacing=0 width=100% border=0>
 <tr><td colspan=9 height=2 bgcolor=0E87F9></td></tr>
 <tr align=center class=ht>
-    <td width="50"><input type="checkbox" name="list_all" value="1" /></td>
+    <td width="50"><input type="checkbox" id="list_all" name="list_all" value="1" /></td>
     <td width="70">쿠폰번호</td>
     <td width="">쿠폰명</td>
     <td width="100"><?=subject_sort_link("mb_id", "")?>회원아이디</a></td>
@@ -129,7 +129,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     $list = $i%2;
     echo "
     <tr class='list$list ht'>
-        <td align=\"center\"><input type=\"checkbox\" name=\"list_chk[]\" value=\"{$row['cp_no']}\" /></td>
+        <td align=\"center\"><input type="\""checkbox\" id="\" name="\""list_chk[]\" value=\"{$row['cp_no']}\" /></td>
         <td align=\"center\">".$row['cp_id']."</td>
         <td>".$cp_subject."</td>
         <td align=\"center\">".$mb_id."</td>
@@ -159,7 +159,7 @@ if ($i == 0) {
 <script>
 $(function() {
     // 전체선택
-    $('input[name=list_all]').click(function() {
+    $('input[id="list_all" name="list_all"]').click(function() {
         if($(this).is(':checked')) {
             $('input[name^=list_chk]').attr('checked', true);
         } else {

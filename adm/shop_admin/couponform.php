@@ -33,13 +33,13 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </style>
 
 <form id="fcoupon" method="post" action="./couponformupdate.php" style="margin:0px;">
-<input type="hidden" name="cp_no" value="<? echo $cp_no; ?>" />
-<input type="hidden" name="w"    value="<? echo $w; ?>" />
-<input type="hidden" name="sst"  value="<? echo $sst ?>" />
-<input type="hidden" name="sod"  value="<? echo $sod; ?>" />
-<input type="hidden" name="sfl"  value="<? echo $sfl; ?>" />
-<input type="hidden" name="stx"  value="<? echo $stx; ?>" />
-<input type="hidden" name="page" value="<? echo $page; ?>" />
+<input type="hidden" id="cp_no" name="cp_no" value="<? echo $cp_no; ?>" />
+<input type="hidden" id="w" name="w"    value="<? echo $w; ?>" />
+<input type="hidden" id="sst" name="sst"  value="<? echo $sst ?>" />
+<input type="hidden" id="sod" name="sod"  value="<? echo $sod; ?>" />
+<input type="hidden" id="sfl" name="sfl"  value="<? echo $sfl; ?>" />
+<input type="hidden" id="stx" name="stx"  value="<? echo $stx; ?>" />
+<input type="hidden" id="page" name="page" value="<? echo $page; ?>" />
 <table cellpadding="0" cellspacing="0" width="100%">
 <colgroup width="15%"></colgroup>
 <colgroup width="85%" bgcolor="#ffffff"></colgroup>
@@ -52,28 +52,28 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <? } ?>
 <tr class="ht">
     <td>쿠폰명</td>
-    <td><input type="text" name="cp_subject" size="60" class="ed" value="<? echo $write['cp_subject']; ?>" /></td>
+    <td><input type="text" id="cp_subject" name="cp_subject" size="60" class="ed" value="<? echo $write['cp_subject']; ?>" /></td>
 </tr>
 <tr class="ht">
     <td>쿠폰종류</td>
-    <td><input type="radio" name="cp_type" value="0" <? if(!$write['cp_type'] || $w == '') echo "checked=\"checked\""; ?> /> 상품할인&nbsp;&nbsp;&nbsp;<input type="radio" name="cp_type" value="1" <? if($write['cp_type'] == 1) echo "checked=\"checked\""; ?> /> 결제금액할인&nbsp;&nbsp;&nbsp;<input type="radio" name="cp_type" value="2" <? if($write['cp_type'] == 2) echo "checked=\"checked\""; ?> /> 배송비할인</td>
+    <td><input type="radio" id="cp_type" name="cp_type" value="0" <? if(!$write['cp_type'] || $w == '') echo "checked=\"checked\""; ?> /> 상품할인&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_type" name="cp_type" value="1" <? if($write['cp_type'] == 1) echo "checked=\"checked\""; ?> /> 결제금액할인&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_type" name="cp_type" value="2" <? if($write['cp_type'] == 2) echo "checked=\"checked\""; ?> /> 배송비할인</td>
 </tr>
 <tr class="ht">
     <td>사용대상</td>
-    <td><input type="radio" name="cp_target" value="0" <? if(!$write['cp_target'] || $w == '') echo "checked=\"checked\""; ?> /> 상품&nbsp;&nbsp;&nbsp;<input type="radio" name="cp_target" value="1" <? if($write['cp_target'] == 1) echo "checked=\"checked\""; ?> /> 카테고리&nbsp;&nbsp;&nbsp;<input type="radio" name="cp_target" value="2" <? if($write['cp_target'] == 2) echo "checked=\"checked\""; ?> /> 전체상품&nbsp;&nbsp;&nbsp;<input type="radio" name="cp_target" value="3" <? if($write['cp_target'] == 3) echo "checked=\"checked\""; ?> disabled="disabled" /> 주문서</td>
+    <td><input type="radio" id="cp_target" name="cp_target" value="0" <? if(!$write['cp_target'] || $w == '') echo "checked=\"checked\""; ?> /> 상품&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_target" name="cp_target" value="1" <? if($write['cp_target'] == 1) echo "checked=\"checked\""; ?> /> 카테고리&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_target" name="cp_target" value="2" <? if($write['cp_target'] == 2) echo "checked=\"checked\""; ?> /> 전체상품&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_target" name="cp_target" value="3" <? if($write['cp_target'] == 3) echo "checked=\"checked\""; ?> disabled="disabled" /> 주문서</td>
 </tr>
 <tr class="ht">
     <td>할인방식</td>
-    <td><input type="radio" name="cp_method" value="0" <? if(!$write['cp_method'] || $w == '') echo "checked=\"checked\""; ?> /> 정액할인&nbsp;&nbsp;&nbsp;<input type="radio" name="cp_method" value="1" <? if($write['cp_method']) echo "checked=\"checked\""; ?> /> 정율(%)할인</td>
+    <td><input type="radio" id="cp_method" name="cp_method" value="0" <? if(!$write['cp_method'] || $w == '') echo "checked=\"checked\""; ?> /> 정액할인&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_method" name="cp_method" value="1" <? if($write['cp_method']) echo "checked=\"checked\""; ?> /> 정율(%)할인</td>
 </tr>
 <tr class="ht">
     <td><span id="cp_amount_label">할인금액</span></td>
-    <td><input type="text" name="cp_amount" size="10" class="ed" value="<? echo $write['cp_amount']; ?>" /><span id="cp_amount_unit">원</span></td>
+    <td><input type="text" id="cp_amount" name="cp_amount" size="10" class="ed" value="<? echo $write['cp_amount']; ?>" /><span id="cp_amount_unit">원</span></td>
 </tr>
 <tr id="cp_trunc_dsp" class="ht">
     <td>절사금액</td>
     <td>
-        <select name="cp_trunc">
+        <select id="cp_trunc" name="cp_trunc">
             <option value="1">1원단위</option>
             <option value="10">10원단위</option>
             <option value="100">100원단위</option>
@@ -82,31 +82,31 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </tr>
 <tr id="cp_maximum_dsp" class="ht">
     <td>최대할인금액</td>
-    <td><input type="text" name="cp_maximum" size="10" class="ed" value="<? echo $write['cp_maximum']; ?>" />원&nbsp;&nbsp;* 0이면 제한없음</td>
+    <td><input type="text" id="cp_maximum" name="cp_maximum" size="10" class="ed" value="<? echo $write['cp_maximum']; ?>" />원&nbsp;&nbsp;* 0이면 제한없음</td>
 </tr>
 <tr id="cp_minimum_dsp" class="ht">
     <td>최소주문금액</td>
-    <td><input type="text" name="cp_minimum" size="10" class="ed" value="<? echo $write['cp_minimum']; ?>" />원&nbsp;&nbsp;* 0이면 제한없음</td>
+    <td><input type="text" id="cp_minimum" name="cp_minimum" size="10" class="ed" value="<? echo $write['cp_minimum']; ?>" />원&nbsp;&nbsp;* 0이면 제한없음</td>
 </tr>
 <tr class="ht">
     <td>사용기한</td>
-    <td><input type="text" name="cp_start" size="20" class="ed" value="<? echo $write['cp_start']; ?>" />&nbsp;~&nbsp;<input type="text" name="cp_end" size="20" class="ed" value="<? echo $write['cp_end']; ?>" />&nbsp;&nbsp;* 입력예: <? echo date("Y-m-d", (time() + 86400 * 7)); ?></td>
+    <td><input type="text" id="cp_start" name="cp_start" size="20" class="ed" value="<? echo $write['cp_start']; ?>" />&nbsp;~&nbsp;<input type="text" id="cp_end" name="cp_end" size="20" class="ed" value="<? echo $write['cp_end']; ?>" />&nbsp;&nbsp;* 입력예: <? echo date("Y-m-d", (time() + 86400 * 7)); ?></td>
 </tr>
 <tr id="it_id_dsp" class="ht">
     <td>적용상품</td>
-    <td><input type="text" name="it_id" size="50" class="ed" value="<? echo $write['it_id']; ?>" />&nbsp;<button type="button" id="item_search">상품찾기</button></td>
+    <td><input type="text" id="it_id" name="it_id" size="50" class="ed" value="<? echo $write['it_id']; ?>" />&nbsp;<button type="button" id="item_search">상품찾기</button></td>
 </tr>
 <tr id="ca_id_dsp" class="ht">
     <td>적용카테고리</td>
-    <td><input type="text" name="ca_id" size="50" class="ed" value="<? echo $write['ca_id']; ?>" />&nbsp;&nbsp;<input type="checkbox" name="allcategory" value="1" />전체카테고리&nbsp;<button type="button" id="category_search">카테고리찾기</button></td>
+    <td><input type="text" id="ca_id" name="ca_id" size="50" class="ed" value="<? echo $write['ca_id']; ?>" />&nbsp;&nbsp;<input type="checkbox" id="allcategory" name="allcategory" value="1" />전체카테고리&nbsp;<button type="button" id="category_search">카테고리찾기</button></td>
 </tr>
 <tr class="ht">
     <td>적용회원</td>
-    <td><input type="text" name="mb_id" size="50" class="ed" value="<? echo $write['mb_id']; ?>" />&nbsp;&nbsp;<input type="checkbox" name="allmember" value="1" />전체회원&nbsp;<button type="button" id="member_search">회원찾기</button></td>
+    <td><input type="text" id="mb_id" name="mb_id" size="50" class="ed" value="<? echo $write['mb_id']; ?>" />&nbsp;&nbsp;<input type="checkbox" id="allmember" name="allmember" value="1" />전체회원&nbsp;<button type="button" id="member_search">회원찾기</button></td>
 </tr>
 <tr class="ht">
     <td>쿠폰사용</td>
-    <td><input type="radio" name="cp_use" value="1" <? if($write['cp_use'] || $w == '') echo "checked=\"checked\""; ?> /> 사용함&nbsp;&nbsp;&nbsp;<input type="radio" name="cp_use" value="0" <? if(!$write['cp_use'] && $w == 'u') echo "checked=\"checked\""; ?> /> 사용안함</td>
+    <td><input type="radio" id="cp_use" name="cp_use" value="1" <? if($write['cp_use'] || $w == '') echo "checked=\"checked\""; ?> /> 사용함&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_use" name="cp_use" value="0" <? if(!$write['cp_use'] && $w == 'u') echo "checked=\"checked\""; ?> /> 사용안함</td>
 </tr>
 <tr><td colspan="2" height="1" bgcolor="#CCCCCC"><td></tr>
 </table>
@@ -120,7 +120,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <script>
 $(function() {
     <?php if($w == 'u') { ?>
-    $("select[name=cp_trunc]").val("<? echo $write['cp_trunc']; ?>");
+    $("select[id="cp_trunc" name="cp_trunc"]").val("<? echo $write['cp_trunc']; ?>");
     if("<?php echo $write['cp_method']; ?>" == "1") {
         $("#cp_amount_label").text("할인비율");
         $("#cp_amount_unit").text("%");
@@ -130,16 +130,16 @@ $(function() {
     var u_cp_type = "<?php echo $write['cp_type']; ?>";
     if(u_cp_type == "0") { // 상품할인
         $("#cp_minimum_dsp").hide();
-        $("input[name=cp_target]").not("[value=3]").attr("disabled", false);
-        $("input[name=cp_target]").filter("[value=3]").attr("disabled", true);
-        $("input[name=cp_method]").not("[value=0]").attr("disabled", false);
+        $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", false);
+        $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("disabled", true);
+        $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", false);
         $("#it_id_dsp").show();
         $("#ca_id_dsp").hide();
     } else if(u_cp_type == "2") { // 배송비할인
         $("#cp_minimum_dsp").show();
-        $("input[name=cp_target]").not("[value=3]").attr("disabled", true);
-        $("input[name=cp_target]").filter("[value=3]").attr("disabled", false);
-        $("input[name=cp_method]").not("[value=0]").attr("disabled", true);
+        $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", true);
+        $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("disabled", false);
+        $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", true);
         $("#cp_amount_label").text("할인금액");
         $("#cp_amount_unit").text("원");
         $("#cp_trunc_dsp").hide();
@@ -148,9 +148,9 @@ $(function() {
         $("#ca_id_dsp").hide();
     } else {
         $("#cp_minimum_dsp").show();
-        $("input[name=cp_target]").not("[value=3]").attr("disabled", true);
-        $("input[name=cp_target]").filter("[value=3]").attr("disabled", false);
-        $("input[name=cp_method]").not("[value=0]").attr("disabled", false);
+        $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", true);
+        $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("disabled", false);
+        $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", false);
         $("#it_id_dsp").hide();
         $("#ca_id_dsp").hide();
     }
@@ -166,22 +166,22 @@ $(function() {
         $("#ca_id_dsp").hide();
     }
     <?php } ?>
-    $("input[name=cp_type]").click(function() {
+    $("input[id="cp_type" name="cp_type"]").click(function() {
         var val = $(this).val();
         if(val == "0") { // 상품할인
             $("#cp_minimum_dsp").hide();
-            $("input[name=cp_target]").not("[value=3]").attr("disabled", false);
-            $("input[name=cp_target]").filter("[value=0]").attr("checked", true);
-            $("input[name=cp_target]").filter("[value=3]").attr("disabled", true);
-            $("input[name=cp_method]").not("[value=0]").attr("disabled", false);
+            $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", false);
+            $("input[id="cp_target" name="cp_target"]").filter("[value=0]").attr("checked", true);
+            $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("disabled", true);
+            $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", false);
             $("#it_id_dsp").show();
             $("#ca_id_dsp").hide();
         } else if(val == "2") { // 배송비할인
             $("#cp_minimum_dsp").show();
-            $("input[name=cp_target]").not("[value=3]").attr("disabled", true);
-            $("input[name=cp_target]").filter("[value=3]").attr("checked", true).attr("disabled", false);
-            $("input[name=cp_method]").filter("[value=0]").attr("checked", true);
-            $("input[name=cp_method]").not("[value=0]").attr("disabled", true);
+            $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", true);
+            $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("checked", true).attr("disabled", false);
+            $("input[id="cp_method" name="cp_method"]").filter("[value=0]").attr("checked", true);
+            $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", true);
             $("#cp_amount_label").text("할인금액");
             $("#cp_amount_unit").text("원");
             $("#cp_trunc_dsp").hide();
@@ -190,15 +190,15 @@ $(function() {
             $("#ca_id_dsp").hide();
         } else {
             $("#cp_minimum_dsp").show();
-            $("input[name=cp_target]").not("[value=3]").attr("disabled", true);
-            $("input[name=cp_target]").filter("[value=3]").attr("checked", true).attr("disabled", false);
-            $("input[name=cp_method]").not("[value=0]").attr("disabled", false);
+            $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", true);
+            $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("checked", true).attr("disabled", false);
+            $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", false);
             $("#it_id_dsp").hide();
             $("#ca_id_dsp").hide();
         }
     });
 
-    $("input[name=cp_method]").click(function() {
+    $("input[id="cp_method" name="cp_method"]").click(function() {
         var val = $(this).val();
         if(val == "1") { // 정율할인
             $("#cp_amount_label").text("할인비율");
@@ -213,7 +213,7 @@ $(function() {
         }
     });
 
-    $("input[name=cp_target]").click(function() {
+    $("input[id="cp_target" name="cp_target"]").click(function() {
         var val = $(this).val();
         if(val == "2") { // 전체상품
             $("#it_id_dsp").hide();
@@ -227,33 +227,33 @@ $(function() {
         }
     });
 
-    $("input[name=allcategory]").click(function() {
+    $("input[id="allcategory" name="allcategory"]").click(function() {
         if($(this).is(":checked")) {
-            $("input[name=ca_id]").val("전체카테고리");
+            $("input[id="ca_id" name="ca_id"]").val("전체카테고리");
         } else {
-            $("input[name=ca_id]").val("");
+            $("input[id="ca_id" name="ca_id"]").val("");
         }
     });
 
-    $("input[name=allmember]").click(function() {
+    $("input[id="allmember" name="allmember"]").click(function() {
         if($(this).is(":checked")) {
-            $("input[name=mb_id]").val("전체회원");
+            $("input[id="mb_id" name="mb_id"]").val("전체회원");
         } else {
-            $("input[name=mb_id]").val("");
+            $("input[id="mb_id" name="mb_id"]").val("");
         }
     });
 
     $("form#fcoupon").submit(function() {
-        var cp_subject = $.trim($("input[name=cp_subject]").val());
-        var cp_type = $("input[name=cp_type]:checked").val();
-        var cp_target = $("input[name=cp_target]:checked").val();
-        var cp_method = $("input[name=cp_method]:checked").val();
-        var cp_amount = $.trim($("input[name=cp_amount]").val()).replace(/[^0-9]/, "");
-        var cp_start = $.trim($("input[name=cp_start]").val());
-        var cp_end = $.trim($("input[name=cp_end]").val());
-        var it_id = $.trim($("input[name=it_id]").val());
-        var ca_id = $.trim($("input[name=ca_id]").val());
-        var mb_id = $.trim($("input[name=mb_id]").val());
+        var cp_subject = $.trim($("input[id="cp_subject" name="cp_subject"]").val());
+        var cp_type = $("input[id="cp_type" name="cp_type"]:checked").val();
+        var cp_target = $("input[id="cp_target" name="cp_target"]:checked").val();
+        var cp_method = $("input[id="cp_method" name="cp_method"]:checked").val();
+        var cp_amount = $.trim($("input[id="cp_amount" name="cp_amount"]").val()).replace(/[^0-9]/, "");
+        var cp_start = $.trim($("input[id="cp_start" name="cp_start"]").val());
+        var cp_end = $.trim($("input[id="cp_end" name="cp_end"]").val());
+        var it_id = $.trim($("input[id="it_id" name="it_id"]").val());
+        var ca_id = $.trim($("input[id="ca_id" name="ca_id"]").val());
+        var mb_id = $.trim($("input[id="mb_id" name="mb_id"]").val());
 
         if(cp_subject == "") {
             alert("쿠폰명을 입력해 주세요.");

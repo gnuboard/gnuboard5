@@ -37,9 +37,9 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($html_title);?><p>
 
-<form name=feventform method=post action="./itemeventformupdate.php" enctype="MULTIPART/FORM-DATA" style="margin:0px;" onsubmit="return feventform_check(this);">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=ev_id value='<? echo $ev_id ?>'>
+<form id="feventform" name="feventform" method=post action="./itemeventformupdate.php" enctype="MULTIPART/FORM-DATA" style="margin:0px;" onsubmit="return feventform_check(this);">
+<input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
+<input type="hidden" id="ev_id" name="ev_id" value='<? echo $ev_id ?>'>
 <table cellpadding=0 cellspacing=0 width=100%>
 <colgroup width=15%></colgroup>
 <colgroup width=35% bgcolor=#FFFFFF></colgroup>
@@ -61,7 +61,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>출력스킨</td>
     <td>
-        <select name=ev_skin>
+        <select id="ev_skin" name="ev_skin">
         <?  echo get_list_skin_options("^list\.skin\.(.*)\.php", $g4[shop_path]); ?>
         </select>
 
@@ -74,28 +74,28 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>출력이미지 폭</td>
     <td>
-        <input type=text name=ev_img_width size=5 value='<? echo $ev[ev_img_width] ?>' class=ed> 픽셀
+        <input type="text" id="ev_img_width" name="ev_img_width" size=5 value='<? echo $ev[ev_img_width] ?>' class=ed> 픽셀
         <?=help("환경설정 > 이미지(소) 폭, 높이가 기본값으로 설정됩니다.\n\n$cart_dir/event.php에서 출력되는 이미지의 폭과 높이입니다.", 50);?>
     </td>
     <td>출력이미지 높이</td>
-    <td><input type=text name=ev_img_height size=5 value='<? echo $ev[ev_img_height] ?>' class=ed> 픽셀</td>
+    <td><input type="text" id="ev_img_height" name="ev_img_height" size=5 value='<? echo $ev[ev_img_height] ?>' class=ed> 픽셀</td>
 </tr>
 <tr class=ht>
     <td>1라인 이미지수</td>
     <td>
-        <input type=text name=ev_list_mod size=3 value='<? echo $ev[ev_list_mod] ?>' class=ed> 개
+        <input type="text" id="ev_list_mod" name="ev_list_mod" size=3 value='<? echo $ev[ev_list_mod] ?>' class=ed> 개
         <?=help("1라인에 설정한 값만큼의 상품을 출력하지만 스킨에 따라 1라인에 하나의 상품만 출력할 수도 있습니다.", 50);?>
     </td>
     <td>총라인수</td>
     <td>
-        <input type=text name=ev_list_row size=3 value='<? echo $ev[ev_list_row] ?>' class=ed> 라인
+        <input type="text" id="ev_list_row" name="ev_list_row" size=3 value='<? echo $ev[ev_list_row] ?>' class=ed> 라인
         <?=help("한페이지에 몇라인을 출력할것인지를 설정합니다.\n\n한페이지에서 표시하는 상품수는 (1라인 이미지수 x 총라인수) 입니다.");?>
     </td>
 </tr>
 <tr class=ht>
     <td>사용</td>
     <td>
-        <select name=ev_use>
+        <select id="ev_use" name="ev_use">
         <option value='1'>예
         <option value='0'>아니오
         </select>
@@ -105,17 +105,17 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </tr>
 <tr class=ht>
     <td>이벤트제목</td>
-    <td colspan=3><input type=text class=ed name=ev_subject size=60 value='<? echo htmlspecialchars2($ev[ev_subject]) ?>' required itemname='이벤트 제목'></td>
+    <td colspan=3><input type="text" class=ed id="ev_subject" name="ev_subject" size=60 value='<? echo htmlspecialchars2($ev[ev_subject]) ?>' required itemname='이벤트 제목'></td>
 </tr>
 <tr class=ht>
     <td>메뉴이미지</td>
     <td colspan=3>
-        <input type=file class=ed name=ev_mimg size=40>
+        <input type="file" class=ed id="ev_mimg" name="ev_mimg" size=40>
         <?
         $mimg_str = "";
         $mimg = "$g4[path]/data/event/{$ev[ev_id]}_m";
         if (file_exists($mimg)) {
-            echo "<input type=checkbox name=ev_mimg_del value='1'>삭제";
+            echo "<input type="checkbox" id="ev_mimg_del" name="ev_mimg_del" value='1'>삭제";
             $mimg_str = "<img src='$mimg' border=0>";
         }
         ?>
@@ -127,12 +127,12 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>상단이미지</td>
     <td colspan=3>
-        <input type=file class=ed name=ev_himg size=40>
+        <input type="file" class=ed id="ev_himg" name="ev_himg" size=40>
         <?
         $himg_str = "";
         $himg = "$g4[path]/data/event/{$ev[ev_id]}_h";
         if (file_exists($himg)) {
-            echo "<input type=checkbox name=ev_himg_del value='1'>삭제";
+            echo "<input type="checkbox" id="ev_himg_del" name="ev_himg_del" value='1'>삭제";
             $himg_str = "<img src='$himg' border=0>";
         }
         ?>
@@ -144,12 +144,12 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>하단이미지</td>
     <td colspan=3>
-        <input type=file class=ed name=ev_timg size=40>
+        <input type="file" class=ed id="ev_timg" name="ev_timg" size=40>
         <?
         $timg_str = "";
         $timg = "$g4[path]/data/event/{$ev[ev_id]}_t";
         if (file_exists($timg)) {
-            echo "<input type=checkbox name=ev_timg_del value='1'>삭제";
+            echo "<input type="checkbox" id="ev_timg_del" name="ev_timg_del" value='1'>삭제";
             $timg_str = "<img src='$timg' border=0>";
         }
         ?>
@@ -170,8 +170,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </table>
 
 <p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemevent.php';">
+    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemevent.php';">
 </form>
 
 

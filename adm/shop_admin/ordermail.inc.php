@@ -25,7 +25,7 @@ if ($od_send_mail)
                     b.it_opt4_subject,
                     b.it_opt5_subject,
                     b.it_opt6_subject
-               from $g4[yc4_cart_table] a inner join $g4[yc4_item_table] b on (b.it_id=a.it_id)
+               from $g4[yc4_cart_table] a inner join $g4[yc4_item_table] b on (b.it_id="a".it_id)
               where a.on_uid = '$od[on_uid]'
               order by a.ct_id ";
     $result = sql_query($sql);

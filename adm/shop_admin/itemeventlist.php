@@ -25,7 +25,7 @@ if ($sel_field == "")  {
 }
 
 $sql_common = " from $g4[yc4_item_table] a
-                left join $g4[yc4_event_item_table] b on (a.it_id=b.it_id and b.ev_id='$ev_id') ";
+                left join $g4[yc4_event_item_table] b on (a.it_id="b".it_id and b.ev_id='$ev_id') ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
@@ -57,9 +57,9 @@ $qstr1 = "ev_id=$ev_id&sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search"
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form name=flist autocomplete='off' style="margin:0px;">
-<table width=100% cellpadding=4 cellspacing=0>
-<input type=hidden name=page value="<? echo $page ?>">
+<form id="flist" name="flist" autocomplete='off' style="margin:0px;">
+<table>
+<input type="hidden" id="page" name="page" value="<? echo $page ?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=20% align=center>
@@ -71,13 +71,13 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         while ($row1=mysql_fetch_array($result1)) 
             $event_option .= "<option value='$row1[ev_id]'>".conv_subject($row1[ev_subject], 20,"…");
         
-        echo "<select name='ev_id' onchange='this.form.submit();'>$event_option</select>";
+        echo "<select id="ev_id" name="ev_id" onchange='this.form.submit();'>$event_option</select>";
         if ($ev_id)
             echo "<script> document.flist.ev_id.value = '$ev_id'; </script>";
         ?>
 	</td>
     <td width=60% align=center>
-        <select name="sel_ca_id">
+        <select id="sel_ca_id" name="sel_ca_id">
         <option value=''>전체분류
         <?
         $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
@@ -93,14 +93,14 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         </select>
         <script> document.flist.sel_ca_id.value = '<?=$sel_ca_id?>';</script>
 
-        <select name=sel_field>
+        <select id="sel_field" name="sel_field">
         <option value='it_name'>상품명
         <option value='a.it_id'>상품코드
         </select>
         <? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
 
-        <input type=text name=search value='<? echo $search ?>' size=10>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type="text" id="search" name="search" value='<? echo $search ?>' size=10>
+        <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -108,14 +108,14 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 </form>
 
 
-<form name=fitemeventlistupdate method=post action="./itemeventlistupdate.php" onsubmit="return fitemeventlistupdatecheck(this)" style="margin:0px;">
-<input type=hidden name=ev_id      value="<? echo $ev_id ?>">
-<input type=hidden name=sel_ca_id  value="<? echo $sel_ca_id ?>">
-<input type=hidden name=sel_field  value="<? echo $sel_field ?>">
-<input type=hidden name=search     value="<? echo $search ?>">
-<input type=hidden name=page       value="<? echo $page ?>">
-<input type=hidden name=sort1      value="<? echo $sort1 ?>">
-<input type=hidden name=sort2      value="<? echo $sort2 ?>">
+<form id="fitemeventlistupdate" name="fitemeventlistupdate" method=post action="./itemeventlistupdate.php" onsubmit="return fitemeventlistupdatecheck(this)" style="margin:0px;">
+<input type="hidden" id="ev_id" name="ev_id"      value="<? echo $ev_id ?>">
+<input type="hidden" id="sel_ca_id" name="sel_ca_id"  value="<? echo $sel_ca_id ?>">
+<input type="hidden" id="sel_field" name="sel_field"  value="<? echo $sel_field ?>">
+<input type="hidden" id="search" name="search"     value="<? echo $search ?>">
+<input type="hidden" id="page" name="page"       value="<? echo $page ?>">
+<input type="hidden" id="sort1" name="sort1"      value="<? echo $sort1 ?>">
+<input type="hidden" id="sort2" name="sort2"      value="<? echo $sort2 ?>">
 <table cellpadding=0 cellspacing=0 width=100% border=0>
 <colgroup width=100>
 <colgroup width=100>
@@ -140,9 +140,9 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     $list = $i%2;
     echo "
-    <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
+    <input type="hidden" name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list center'>
-        <td><input type=checkbox name='ev_chk[$i]' ".($row[ev_id] ? "checked" : "")." value='1'></td>
+        <td><input type="checkbox" name='ev_chk[$i]' ".($row[ev_id] ? "checked" : "")." value='1'></td>
         <td><a href='$href'>$row[it_id]</a></td>
         <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
         <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td> 
@@ -157,7 +157,7 @@ if ($i == 0)
 
 <table width=100%>
 <tr>
-    <td colspan=50%><input type=submit class=btn1 value='일괄수정' accesskey='s'></td>
+    <td colspan=50%><input type="submit" class=btn1 value='일괄수정' accesskey='s'></td>
     <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </form>

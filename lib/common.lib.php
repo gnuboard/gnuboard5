@@ -1429,18 +1429,10 @@ function check_string($str, $options)
 
         // 한글
         if ($oc >= 0xA0 && $oc <= 0xFF) {
-            if (strtoupper($g4['charset']) == 'UTF-8') {
-                if ($options & G4_HANGUL) {
-                    $s .= $c . $str[$i+1] . $str[$i+2];
-                }
-                $i+=2;
-            } else {
-                // 한글은 2바이트 이므로 문자하나를 건너뜀
-                $i++;
-                if ($options & G4_HANGUL) {
-                    $s .= $c . $str[$i];
-                }
+            if ($options & G4_HANGUL) {
+                $s .= $c . $str[$i+1] . $str[$i+2];
             }
+            $i+=2;
         }
         // 숫자
         else if ($oc >= 0x30 && $oc <= 0x39) {

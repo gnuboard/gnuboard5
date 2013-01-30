@@ -32,15 +32,15 @@ form { display: inline; }
 <table cellpadding="0" cellspacing="0" width="100%">
 <tr class="ht">
     <td width="150">지역명</td>
-    <td><input type="text" name="sc_name" class="ed" size="20" /></td>
+    <td><input type="text" id="sc_name" name="sc_name" class="ed" size="20" /></td>
 </tr>
 <tr class="ht">
     <td>우편번호범위</td>
-    <td><input type="text" name="sc_zip1" class="ed" size="10" maxlength="7" /> ~ <input type="text" name="sc_zip2" class="ed" size="10" maxlength="7" /> <button type="button" id="findzip">우편번호찾기</button></td>
+    <td><input type="text" id="sc_zip1" name="sc_zip1" class="ed" size="10" maxlength="7" /> ~ <input type="text" id="sc_zip2" name="sc_zip2" class="ed" size="10" maxlength="7" /> <button type="button" id="findzip">우편번호찾기</button></td>
 </tr>
 <tr class="ht">
     <td>추가배송료</td>
-    <td><input type="text" name="sc_amount" class="ed" size="10" />원</td>
+    <td><input type="text" id="sc_amount" name="sc_amount" class="ed" size="10" />원</td>
 </tr>
 <tr class="ht">
     <td colspan="2"><input type="submit" class="btn1" value=" 확 인 " /></td>
@@ -101,10 +101,10 @@ $(function() {
 
     $("#fsendcost").submit(function() {
         var patt = /[^0-9]/g;
-        var name = $.trim($("input[name=sc_name]").val());
-        var zip1 = $.trim($("input[name=sc_zip1]").val()).replace(patt, "");
-        var zip2 = $.trim($("input[name=sc_zip2]").val()).replace(patt, "");
-        var amount = $.trim($("input[name=sc_amount]").val());
+        var name = $.trim($("input[id="sc_name" name="sc_name"]").val());
+        var zip1 = $.trim($("input[id="sc_zip1" name="sc_zip1"]").val()).replace(patt, "");
+        var zip2 = $.trim($("input[id="sc_zip2" name="sc_zip2"]").val()).replace(patt, "");
+        var amount = $.trim($("input[id="sc_amount" name="sc_amount"]").val());
 
         if(!name) {
             alert("지역명을 입력해 주세요.");

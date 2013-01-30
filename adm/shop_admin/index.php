@@ -5,7 +5,7 @@ include_once("./_common.php");
 $max_limit = 7; // 몇행 출력할 것인지?
 
 $g4['title'] = " 쇼핑몰관리";
-include_once ($g4['admin_path'].'/admin.head.php');
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <table width=100%>
@@ -33,7 +33,7 @@ include_once ($g4['admin_path'].'/admin.head.php');
         $sql = " select b.od_id,
                         b.*, "._MISU_QUERY_."
                    from {$g4['yc4_cart_table']} a
-                   left join {$g4['yc4_order_table']} b on (a.uq_id=b.od_id)
+                   left join {$g4['yc4_order_table']} b on (a.uq_id="b".od_id)
                   group by b.od_id
                   /*having misu <= 0 and b.od_invoice = '' and ordercancel = 0*/
                   /*having orderamount - receiptamount = 0 and b.od_invoice = ''*/
@@ -97,7 +97,7 @@ include_once ($g4['admin_path'].'/admin.head.php');
         $sql = " select b.od_id,
                         b.*, "._MISU_QUERY_."
                    from {$g4['yc4_cart_table']} a
-                   left join {$g4['yc4_order_table']} b on (a.uq_id=b.od_id)
+                   left join {$g4['yc4_order_table']} b on (a.uq_id="b".od_id)
                   group by b.od_id
                   /* having receiptamount <= 0 */
                   having misu > 0
@@ -235,5 +235,5 @@ include_once ($g4['admin_path'].'/admin.head.php');
 </table><br>
 
 <?
-include_once ($g4['admin_path'].'/admin.tail.php');
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

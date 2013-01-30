@@ -12,8 +12,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($g4[title])?>
 
-<form name="finvoicebundle" method="post" action="invoicebundleupdate.php" onsubmit="return finvoicebundle_submit(this);" enctype="multipart/form-data" style="margin:0px;">
-<input type=hidden name=case value="1">
+<form id="finvoicebundle" name="finvoicebundle" method="post" action="invoicebundleupdate.php" onsubmit="return finvoicebundle_submit(this);" enctype="multipart/form-data" style="margin:0px;">
+<input type="hidden" id="case" name="case" value="1">
 
 <table cellpadding=0 cellspacing=0 border=0 width=100%>
 <tr><td colspan=20 height=2 bgcolor=#0E87F9></td></tr>
@@ -22,7 +22,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>CSV 파일</td>
     <td class=lh style='padding:3px 0 3px 0;'>
-        <input type=file name='csv_file' size=40 class='ed'>
+        <input type="file" id="csv_file" name="csv_file" size=40 class='ed'>
         <br><font color=crimson>주문내역출력에서 다운로드 받은 CSV 파일에 운송장번호만 입력하신 후 저장하여, 
             반드시 이 CSV 파일로만 업로드 하시기 바랍니다.</font>
     </td>
@@ -30,7 +30,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>배송회사</td>
     <td>
-        <select name=dl_id>
+        <select id="dl_id" name="dl_id">
         <option value=''>배송회사를 선택하세요.
         <?
         $sql = "select * from $g4[yc4_delivery_table] order by dl_order desc, dl_id desc ";
@@ -45,8 +45,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>배송일시</td>
     <td>
-        <input type=text name='od_invoice_time' maxlength=19 class='ed'>
-        <input type=checkbox name=od_invoice_chk
+        <input type="text" id="od_invoice_time" name="od_invoice_time" maxlength=19 class='ed'>
+        <input type="checkbox" id="od_invoice_chk" name="od_invoice_chk"
             value="<? echo date("Y-m-d H:i:s", $g4['server_time']); ?>"
             onclick="if (this.checked == true) this.form.od_invoice_time.value=this.form.od_invoice_chk.value; else this.form.od_invoice_time.value = this.form.od_invoice_time.defaultValue;">현재 시간
     </td>
@@ -54,7 +54,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>주문상품 상태</td>
     <td>
-        <select name=ct_status>
+        <select id="ct_status" name="ct_status">
         <option value=''>변경안함
         <option value='배송'>배송중
         <option value='완료'>완료
@@ -65,14 +65,14 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
     <td>업데이트</td>
     <td>
-        <input type=checkbox name='re' value='1'> 이미 입력된 배송정보를 모두 새로 업데이트 합니다.
+        <input type="checkbox" id="re" name="re" value='1'> 이미 입력된 배송정보를 모두 새로 업데이트 합니다.
     </td>
 </tr>
 <tr><td colspan=20 height=2 bgcolor=#0E87F9></td></tr>
 </table>
 
 <p align=center>
-    <input type=submit class=btn1 value='  확  인  '>
+    <input type="submit" class=btn1 value='  확  인  '>
 
 </form>
 

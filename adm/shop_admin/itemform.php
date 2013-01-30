@@ -84,22 +84,22 @@ ul { margin: 0; padding: 0; list-style: none; }
 -->
 </style>
 
-<form name=fitemform method=post action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" enctype="MULTIPART/FORM-DATA" autocomplete="off" style="margin:0px;">
+<form id="fitemform" name="fitemform" method=post action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" enctype="MULTIPART/FORM-DATA" autocomplete="off" style="margin:0px;">
 <?=subtitle("기본정보")?>
 <table width=100% cellpadding=0 cellspacing=0 border=0>
-<input type=hidden name=codedup     value="<?=$default[de_code_dup_use]?>">
-<input type=hidden name=w           value="<?=$w?>">
-<!-- <input type=hidden name=sel_ca_id   value="<?=$sel_ca_id?>">
-<input type=hidden name=sel_field   value="<?=$sel_field?>">
-<input type=hidden name=search      value="<?=$search?>">
-<input type=hidden name=sort1       value="<?=$sort1?>">
-<input type=hidden name=sort2       value="<?=$sort2?>"> -->
-<input type=hidden name=sca  value="<?=$sca?>">
-<input type=hidden name=sst  value="<?=$sst?>">
-<input type=hidden name=sod  value="<?=$sod?>">
-<input type=hidden name=sfl  value="<?=$sfl?>">
-<input type=hidden name=stx  value="<?=$stx?>">
-<input type=hidden name=page value="<?=$page?>">
+<input type="hidden" id="codedup" name="codedup"     value="<?=$default[de_code_dup_use]?>">
+<input type="hidden" id="w" name="w"           value="<?=$w?>">
+<!-- <input type="hidden" id="sel_ca_id" name="sel_ca_id"   value="<?=$sel_ca_id?>">
+<input type="hidden" id="sel_field" name="sel_field"   value="<?=$sel_field?>">
+<input type="hidden" id="search" name="search"      value="<?=$search?>">
+<input type="hidden" id="sort1" name="sort1"       value="<?=$sort1?>">
+<input type="hidden" id="sort2" name="sort2"       value="<?=$sort2?>"> -->
+<input type="hidden" id="sca" name="sca"  value="<?=$sca?>">
+<input type="hidden" id="sst" name="sst"  value="<?=$sst?>">
+<input type="hidden" id="sod" name="sod"  value="<?=$sod?>">
+<input type="hidden" id="sfl" name="sfl"  value="<?=$sfl?>">
+<input type="hidden" id="stx" name="stx"  value="<?=$stx?>">
+<input type="hidden" id="page" name="page" value="<?=$page?>">
 <colgroup width=15%></colgroup>
 <colgroup width=35% bgcolor=#FFFFFF></colgroup>
 <colgroup width=15%></colgroup>
@@ -108,7 +108,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 <tr class=ht>
     <td>분류명</td>
     <td colspan=3>
-        <select name="ca_id" onchange="categorychange(this.form)">
+        <select id="ca_id" name="ca_id" onchange="categorychange(this.form)">
             <option value="">= 기본분류 =
             <?
             $script = "";
@@ -177,12 +177,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 	<? if ($w == "") { // 추가 ?>
 		<!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
-		<!-- <input type=text class=ed name=it_id value="<?=10000000000-time()?>" size=12 maxlength=10 required nospace alphanumeric itemname="상품코드"> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
-		<input type=text class=ed name=it_id value="<?=time()?>" size=12 maxlength=10 required nospace alphanumeric itemname="상품코드">
+		<!-- <input type="text" class=ed id="it_id" name="it_id" value="<?=10000000000-time()?>" size=12 maxlength=10 required nospace alphanumeric itemid="상품코드" name="상품코드"> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
+		<input type="text" class=ed id="it_id" name="it_id" value="<?=time()?>" size=12 maxlength=10 required nospace alphanumeric itemid="상품코드" name="상품코드">
         <? if ($default[de_code_dup_use]) { ?><a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a><? } ?>
         <?=help("상품의 코드는 10자리 숫자로 자동생성합니다.\n운영자 임의로 상품코드를 입력하실 수 있습니다.\n상품코드는 영문자와 숫자만 입력 가능합니다.");?>
 	<? } else { ?>
-		<input type=hidden name=it_id value="<?=$it[it_id]?>">
+		<input type="hidden" id="it_id" name="it_id" value="<?=$it[it_id]?>">
 		<?=$it[it_id]?>
 		<?=icon("보기", G4_SHOP_URL."/item.php?it_id=$it_id");?>
         <a href='./itempslist.php?sel_field=a.it_id&search=<?=$it_id?>'>사용후기</a>
@@ -194,76 +194,76 @@ ul { margin: 0; padding: 0; list-style: none; }
 <tr class=ht>
     <td>상품명</td>
     <td colspan=3>
-        <input type=text name=it_name value='<?=get_text(cut_str($it[it_name], 250, ""))?>' style='width:97%;' required itemname='상품명' class=ed>
+        <input type="text" id="it_name" name="it_name" value='<?=get_text(cut_str($it[it_name], 250, ""))?>' style='width:97%;' required itemname='상품명' class=ed>
     </td>
 </tr>
 <tr class=ht>
     <td>출력유형</td>
     <td>
-        <input type=checkbox name=it_gallery value='1' <?=($it[it_gallery] ? "checked" : "")?>> 갤러리로 사용
+        <input type="checkbox" id="it_gallery" name="it_gallery" value='1' <?=($it[it_gallery] ? "checked" : "")?>> 갤러리로 사용
         <?=help("금액표시는 하지 않고 상품을 구매할 수 없으며 상품설명만 나타낼때 사용합니다.");?>
     </td>
     <td>출력순서</td>
     <td>
-        <input type=text class=ed name=it_order size=10 value='<? echo $it[it_order] ?>'>
+        <input type="text" class=ed id="it_order" name="it_order" size=10 value='<? echo $it[it_order] ?>'>
         <?=help("상품의 출력순서를 인위적으로 변경할때 사용합니다.\n숫자를 입력하며 기본은 0 입니다.\n숫자가 작을 수록 상위에 출력됩니다.\n음수 입력도 가능합니다.\n구간 :  -2147483648 ~ 2147483647");?>
     </td>
 </tr>
 <tr class=ht>
     <td>상품유형</td>
     <td colspan=3>
-        <input type=checkbox name=it_type1 value='1' <?=($it[it_type1] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type1.gif" align=absmiddle>
-        <input type=checkbox name=it_type2 value='1' <?=($it[it_type2] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type2.gif" align=absmiddle>
-        <input type=checkbox name=it_type3 value='1' <?=($it[it_type3] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type3.gif" align=absmiddle>
-        <input type=checkbox name=it_type4 value='1' <?=($it[it_type4] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type4.gif" align=absmiddle>
-        <input type=checkbox name=it_type5 value='1' <?=($it[it_type5] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type5.gif" align=absmiddle>
+        <input type="checkbox" id="it_type1" name="it_type1" value='1' <?=($it[it_type1] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type1.gif" align=absmiddle>
+        <input type="checkbox" id="it_type2" name="it_type2" value='1' <?=($it[it_type2] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type2.gif" align=absmiddle>
+        <input type="checkbox" id="it_type3" name="it_type3" value='1' <?=($it[it_type3] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type3.gif" align=absmiddle>
+        <input type="checkbox" id="it_type4" name="it_type4" value='1' <?=($it[it_type4] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type4.gif" align=absmiddle>
+        <input type="checkbox" id="it_type5" name="it_type5" value='1' <?=($it[it_type5] ? "checked" : "");?>><img src="<?=G4_SHOP_IMG_URL?>/icon_type5.gif" align=absmiddle>
         <?=help("메인화면에 유형별로 출력할때 사용합니다.\n\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다.");?>
     </td>
 </tr>
 <tr class=ht>
     <td>제조사</td>
     <td>
-        <input type=text class=ed name=it_maker value='<?=get_text($it[it_maker])?>' size=41>
+        <input type="text" class=ed id="it_maker" name="it_maker" value='<?=get_text($it[it_maker])?>' size=41>
         <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
     </td>
     <td>원산지</td>
     <td>
-        <input type=text class=ed name=it_origin value='<?=get_text($it[it_origin])?>' size=41>
+        <input type="text" class=ed id="it_origin" name="it_origin" value='<?=get_text($it[it_origin])?>' size=41>
         <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
     </td>
 </tr>
 <tr class=ht>
     <td>브랜드</td>
     <td>
-        <input type=text class=ed name=it_brand value='<?=get_text($it[it_brand])?>' size=41>
+        <input type="text" class=ed id="it_brand" name="it_brand" value='<?=get_text($it[it_brand])?>' size=41>
         <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
     </td>
     <td>모델명</td>
     <td>
-        <input type=text class=ed name=it_model value='<?=get_text($it[it_model])?>' size=41>
+        <input type="text" class=ed id="it_model" name="it_model" value='<?=get_text($it[it_model])?>' size=41>
         <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
     </td>
 </tr>
 <tr class="ht">
     <td>선택옵션</td>
-    <td colspan="3"><input type="radio" name="it_option_use" value="0" <?php if($w == '' || !$it['it_option_use']) echo 'checked="checked"'; ?> />등록안함&nbsp;&nbsp;&nbsp;<input type="radio" name="it_option_use" value="1" <?php if($it['it_option_use']) echo 'checked="checked"'; ?> />등록함&nbsp;&nbsp;&nbsp;
+    <td colspan="3"><input type="radio" id="it_option_use" name="it_option_use" value="0" <?php if($w == '' || !$it['it_option_use']) echo 'checked="checked"'; ?> />등록안함&nbsp;&nbsp;&nbsp;<input type="radio" id="it_option_use" name="it_option_use" value="1" <?php if($it['it_option_use']) echo 'checked="checked"'; ?> />등록함&nbsp;&nbsp;&nbsp;
     <a href="./optionform.php?w=<?php echo $w; ?>&amp;it_id=<?php echo $it_id; ?>" target="_blank" onclick="javascript: optionformwindow('<?php echo $w; ?>'); return false;">선택옵션설정</a></td>
 </tr>
 <tr class="ht">
-    <td><input type="text" name="it_opt1_subject" value="<?php echo $it['it_opt1_subject']; ?>" /></td>
-    <td colspan="3"><input type="text" name="it_opt1" value="<?php echo $it['it_opt1']; ?>" style="width: 90%;" /></td>
+    <td><input type="text" id="it_opt1_subject" name="it_opt1_subject" value="<?php echo $it['it_opt1_subject']; ?>" /></td>
+    <td colspan="3"><input type="text" id="it_opt1" name="it_opt1" value="<?php echo $it['it_opt1']; ?>" style="width: 90%;" /></td>
 </tr>
 <tr class="ht">
-    <td><input type="text" name="it_opt2_subject" value="<?php echo $it['it_opt2_subject']; ?>" /></td>
-    <td colspan="3"><input type="text" name="it_opt2" value="<?php echo $it['it_opt2']; ?>" style="width: 90%;" /></td>
+    <td><input type="text" id="it_opt2_subject" name="it_opt2_subject" value="<?php echo $it['it_opt2_subject']; ?>" /></td>
+    <td colspan="3"><input type="text" id="it_opt2" name="it_opt2" value="<?php echo $it['it_opt2']; ?>" style="width: 90%;" /></td>
 </tr>
 <tr class="ht">
-    <td><input type="text" name="it_opt3_subject" value="<?php echo $it['it_opt3_subject']; ?>" /></td>
-    <td colspan="3"><input type="text" name="it_opt3" value="<?php echo $it['it_opt3']; ?>" style="width: 90%;" /></td>
+    <td><input type="text" id="it_opt3_subject" name="it_opt3_subject" value="<?php echo $it['it_opt3_subject']; ?>" /></td>
+    <td colspan="3"><input type="text" id="it_opt3" name="it_opt3" value="<?php echo $it['it_opt3']; ?>" style="width: 90%;" /></td>
 </tr>
 <tr class="ht">
     <td>추가옵션</td>
-    <td colspan="3"><input type="radio" name="it_supplement_use" value="0" <?php if($w == '' || !$it['it_supplement_use']) echo 'checked="checked"'; ?> />등록안함&nbsp;&nbsp;&nbsp;<input type="radio" name="it_supplement_use" value="1" <?php if($it['it_supplement_use']) echo 'checked="checked"'; ?> />등록함&nbsp;&nbsp;&nbsp;
+    <td colspan="3"><input type="radio" id="it_supplement_use" name="it_supplement_use" value="0" <?php if($w == '' || !$it['it_supplement_use']) echo 'checked="checked"'; ?> />등록안함&nbsp;&nbsp;&nbsp;<input type="radio" id="it_supplement_use" name="it_supplement_use" value="1" <?php if($it['it_supplement_use']) echo 'checked="checked"'; ?> />등록함&nbsp;&nbsp;&nbsp;
     <a href="./supplementform.php?w=<?php echo $w; ?>&amp;it_id=<?php echo $it_id; ?>" target="_blank" onclick="javascript: supplementformwindow('<?php echo $w; ?>'); return false;">추가옵션설정</a></td>
 </tr>
 <tr>
@@ -280,28 +280,28 @@ ul { margin: 0; padding: 0; list-style: none; }
         </tr>
         <tr>
             <!-- 비회원가 대비 회원가격은 90%, 특별회원가격은 75%로 자동 설정할 경우의 코드
-            <td><input type=text class=ed name=it_amount size=8 value='<?=$it[it_amount]?>' style='text-align:right; background-color:#DDE6FE;' onblur="document.fitemform.it_amount2.value=document.fitemform.it_amount.value*.9;document.fitemform.it_amount3.value=document.fitemform.it_amount.value*.75;"></td>
+            <td><input type="text" class=ed id="it_amount" name="it_amount" size=8 value='<?=$it[it_amount]?>' style='text-align:right; background-color:#DDE6FE;' onblur="document.fitemform.it_amount2.value=document.fitemform.it_amount.value*.9;document.fitemform.it_amount3.value=document.fitemform.it_amount.value*.75;"></td>
             -->
-            <td><input type=text class=ed name=it_amount size=8 value='<?=$it[it_amount]?>' style='text-align:right; background-color:#DDE6FE;'></td>
-            <td><input type=text class=ed name=it_amount2 size=8 value='<?=$it[it_amount2]?>' style='text-align:right; background-color:#DDFEDE;'></td>
-            <td><input type=text class=ed name=it_amount3 size=8 value='<?=$it[it_amount3]?>' style='text-align:right; background-color:#FEDDDD;'></td>
-            <td><input type=text class=ed name=it_cust_amount size=8 value='<?=$it[it_cust_amount]?>' style='text-align:right;'></td>
-            <td><input type=text class=ed name=it_point size=8 value='<? echo $it[it_point] ?>' style='text-align:right;'> 점</td>
-            <td><input type=text class=ed name=it_stock_qty size=8 value='<? echo $it[it_stock_qty] ?>' style='text-align:right;'> 개</td>
+            <td><input type="text" class=ed id="it_amount" name="it_amount" size=8 value='<?=$it[it_amount]?>' style='text-align:right; background-color:#DDE6FE;'></td>
+            <td><input type="text" class=ed id="it_amount2" name="it_amount2" size=8 value='<?=$it[it_amount2]?>' style='text-align:right; background-color:#DDFEDE;'></td>
+            <td><input type="text" class=ed id="it_amount3" name="it_amount3" size=8 value='<?=$it[it_amount3]?>' style='text-align:right; background-color:#FEDDDD;'></td>
+            <td><input type="text" class=ed id="it_cust_amount" name="it_cust_amount" size=8 value='<?=$it[it_cust_amount]?>' style='text-align:right;'></td>
+            <td><input type="text" class=ed id="it_point" name="it_point" size=8 value='<? echo $it[it_point] ?>' style='text-align:right;'> 점</td>
+            <td><input type="text" class=ed id="it_stock_qty" name="it_stock_qty" size=8 value='<? echo $it[it_stock_qty] ?>' style='text-align:right;'> 개</td>
         </table>
     </td>
 </tr>
 <tr class=ht>
     <td>상품구분</td>
-    <td><input type="radio" name="it_notax" value="0" <? if(!$it['it_notax']) echo "checked=\"checked\""; ?> /> 과세상품
-        <input type="radio" name="it_notax" value="1" <? if($it['it_notax']) echo "checked=\"checked\""; ?> /> 면세상품</td>
+    <td><input type="radio" id="it_notax" name="it_notax" value="0" <? if(!$it['it_notax']) echo "checked=\"checked\""; ?> /> 과세상품
+        <input type="radio" id="it_notax" name="it_notax" value="1" <? if($it['it_notax']) echo "checked=\"checked\""; ?> /> 면세상품</td>
     <td>쿠폰제외상품</td>
-    <td><input type="checkbox" name="it_nocoupon" value="1" <? if($it['it_nocoupon']) echo "checked=\"checked\""; ?> /> 예</td>
+    <td><input type="checkbox" id="it_nocoupon" name="it_nocoupon" value="1" <? if($it['it_nocoupon']) echo "checked=\"checked\""; ?> /> 예</td>
 </tr>
 <tr class=ht>
     <td>기본설명</td>
     <td colspan=3>
-        <input type=text class=ed name=it_basic style='width:97%;' value='<?=get_text($it[it_basic])?>'>
+        <input type="text" class=ed id="it_basic" name="it_basic" style='width:97%;' value='<?=get_text($it[it_basic])?>'>
         <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
     </td>
 </tr>
@@ -326,7 +326,7 @@ if ($ii) {
     </td>
 </tr>
 <?}//if?>
-<input type=hidden name=it_explan_html value=1>
+<input type="hidden" id="it_explan_html" name="it_explan_html" value=1>
 <tr>
     <td>상품설명</td>
     <td colspan=3 style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_explan', $it[it_explan]);?></td>
@@ -347,17 +347,17 @@ if ($ii) {
             <td align="center">결제방법</td>
         </tr>
         <tr class="ht">
-            <td><input type="radio" name="it_sc_type" value="0" <? if(!$it['it_sc_type'] || $w == '') echo 'checked="checked"'; ?> />무료배송</td>
+            <td><input type="radio" id="it_sc_type" name="it_sc_type" value="0" <? if(!$it['it_sc_type'] || $w == '') echo 'checked="checked"'; ?> />무료배송</td>
             <td>무조건 무료배송</td>
             <td align="center">0원</td>
             <td></td>
         </tr>
         <tr class="ht">
-            <td><input type="radio" name="it_sc_type" value="1" <? if($it['it_sc_type'] == 1) echo 'checked="checked"'; ?> />조건부 무료</td>
-            <td>상품구매액 함계 <input type="text" class="ed" name="it_minimum" size="5" value="<? if($it['it_sc_type'] == 1) echo $it['it_sc_condition']; ?>" />원 이상 무료배송</td>
-            <td rowspan="3" align="center"><input type="text" class="ed" name="it_sc_basic" size="5" value="<? echo $it['it_sc_basic']; ?>" /> 원</td>
+            <td><input type="radio" id="it_sc_type" name="it_sc_type" value="1" <? if($it['it_sc_type'] == 1) echo 'checked="checked"'; ?> />조건부 무료</td>
+            <td>상품구매액 함계 <input type="text" class="ed" id="it_minimum" name="it_minimum" size="5" value="<? if($it['it_sc_type'] == 1) echo $it['it_sc_condition']; ?>" />원 이상 무료배송</td>
+            <td rowspan="3" align="center"><input type="text" class="ed" id="it_sc_basic" name="it_sc_basic" size="5" value="<? echo $it['it_sc_basic']; ?>" /> 원</td>
             <td rowspan="3" align="center">
-                <select name="it_sc_method">
+                <select id="it_sc_method" name="it_sc_method">
                     <option value="0" <? if(!$it['it_sc_method']) echo 'selected="selected"'; ?>>선불</option>
                     <option value="1" <? if($it['it_sc_method'] == 1) echo 'selected="selected"'; ?>>착불</option>
                     <option value="2" <? if($it['it_sc_method'] == 2) echo 'selected="selected"'; ?>>선불 또는 착불</option>
@@ -365,12 +365,12 @@ if ($ii) {
             </td>
         </tr>
         <tr class="ht">
-            <td><input type="radio" name="it_sc_type" value="2" <? if($it['it_sc_type'] == 2) echo 'checked="checked"'; ?> />유료배송</td>
+            <td><input type="radio" id="it_sc_type" name="it_sc_type" value="2" <? if($it['it_sc_type'] == 2) echo 'checked="checked"'; ?> />유료배송</td>
             <td>고정배송비 부과</td>
         </tr>
         <tr class="ht">
-            <td><input type="radio" name="it_sc_type" value="3" <? if($it['it_sc_type'] == 3) echo 'checked="checked"'; ?> />수량별 부과</td>
-            <td>수량 <input type="text" class="ed" name="it_count" size="5" value="<? if($it['it_sc_type'] == 3) echo $it['it_sc_condition']; ?>" />개마다 반복부과</td>
+            <td><input type="radio" id="it_sc_type" name="it_sc_type" value="3" <? if($it['it_sc_type'] == 3) echo 'checked="checked"'; ?> />수량별 부과</td>
+            <td>수량 <input type="text" class="ed" id="it_count" name="it_count" size="5" value="<? if($it['it_sc_type'] == 3) echo $it['it_sc_condition']; ?>" />개마다 반복부과</td>
         </tr>
         </table>
     </td>
@@ -379,19 +379,19 @@ if ($ii) {
 <tr class=ht>
     <td>판매자 e-mail</td>
     <td colspan=3>
-        <input type=text class=ed name=it_sell_email size=40 value='<? echo $it[it_sell_email] ?>'>
+        <input type="text" class=ed id="it_sell_email" name="it_sell_email" size=40 value='<? echo $it[it_sell_email] ?>'>
         <?=help("운영자와 판매자가 다른 경우 이곳에 판매자의 e-mail을 입력해 놓으면 이 상품이 주문되는 시점에서 판매자에게 별도의 주문서 메일을 발송합니다.");?>
     </td>
 </tr>
 <tr class=ht>
     <td>전화문의</td>
     <td>
-        <input type=checkbox name='it_tel_inq' <? echo ($it[it_tel_inq]) ? "checked" : ""; ?> value='1'> 예
+        <input type="checkbox" id="it_tel_inq" name="it_tel_inq" <? echo ($it[it_tel_inq]) ? "checked" : ""; ?> value='1'> 예
         <?=help("상품 금액 대신 전화문의로 표시됩니다.");?>
     </td>
     <td>판매가능</td>
     <td>
-        <input type=checkbox name='it_use' <? echo ($it[it_use]) ? "checked" : ""; ?> value='1'> 예
+        <input type="checkbox" id="it_use" name="it_use" <? echo ($it[it_use]) ? "checked" : ""; ?> value='1'> 예
         <?=help("잠시 판매를 중단하거나 재고가 없을 경우에 체크하면 이 상품은 출력하지 않으며 주문도 할 수 없습니다.");?>
     </td>
 </tr>
@@ -408,15 +408,15 @@ if ($ii) {
 <tr class=ht>
     <td>이미지(대) <?=$i?></td>
     <td colspan=3>
-        <input type=file class=ed name=it_img<?=$i?> size=40>
+        <input type="file" class=ed id="it_img" name="it_img"<?=$i?> size=40>
         <?
         $idx = 'it_img'.$i;
         $img = G4_DATA_PATH."/item/$it_id/{$it[$idx]}";
         $img_url = G4_DATA_URL."/item/$it_id/{$it[$idx]}";
         if (file_exists($img) && is_file($img)) {
             $size = getimagesize($img);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('img$i', $size[0], $size[1]);\"><input type=checkbox name=it_img{$i}_del value='1'>삭제";
-            echo "<span id=img{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$img_url' border=1></div>";
+            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('img$i', $size[0], $size[1]);\"><input type="checkbox" id="it_img" name="it_img"{$i}_del value='1'>삭제";
+            echo "<span id="img"{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$img_url' border=1></div>";
         }
         ?>
     </td>
@@ -426,8 +426,8 @@ if ($ii) {
 </table>
 
 <p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemlist.php?<?=$qstr?>';">
+    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemlist.php?<?=$qstr?>';">
 
 <p>
 <?=subtitle("선택정보")?>
@@ -456,7 +456,7 @@ if ($ii) {
     <td>
         ※ 상품 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>※ 한 번 클릭시 상품이미지/상품금액 출력<br>
         <br>
-        <select name='relationselect' size=8 style='width:250px;' onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);">
+        <select id="relationselect" name="relationselect" size=8 style='width:250px;' onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);">
         <?
         $str = array();
         $sql = " select b.ca_id, b.it_id, b.it_name, b.it_amount
@@ -482,7 +482,7 @@ if ($ii) {
 		$str = implode(",", $str);
         ?>
         </select>
-        <input type='hidden' name='it_list' value='<?=$str?>'>
+        <input type="hidden" id="it_list" name="it_list" value='<?=$str?>'>
     </td>
 	<td rowspan=2 width=20 bgcolor=#FFFFFF>◀</td>
     <td align="center">상품목록<br><span id="add_span" style="line-height:200%"></span></td>
@@ -506,7 +506,7 @@ if ($ii) {
             }
         ?>
         </select><br>
-        <select  id='relation' size=8 style='width:250px; background-color:#F6F6F6;' onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);">
+        <select  id="relation" size=8 style='width:250px; background-color:#F6F6F6;' onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);">
         <?
         /*
         $sql = " select ca_id, it_id, it_name, it_amount
@@ -622,13 +622,13 @@ if ($ii) {
     </td>
     <td>
         이벤트 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>
-        <select name=eventselect size=6 style='width:250px;' ondblclick="event_del(this);">
+        <select id="eventselect" name="eventselect" size=6 style='width:250px;' ondblclick="event_del(this);">
         <?
         $str = "";
         $comma = "";
         $sql = " select b.ev_id, b.ev_subject
                    from $g4[yc4_event_item_table] a
-                   left join $g4[yc4_event_table] b on (a.ev_id=b.ev_id)
+                   left join $g4[yc4_event_table] b on (a.ev_id="b".ev_id)
                   where a.it_id = '$it_id'
                   order by b.ev_id desc ";
         $result = sql_query($sql);
@@ -639,7 +639,7 @@ if ($ii) {
         }
         ?>
         </select>
-        <input type='hidden' name='ev_list' value='<?=$str?>'>
+        <input type="hidden" id="ev_list" name="ev_list" value='<?=$str?>'>
     </td>
     <td>이벤트목록</td>
     <td>
@@ -725,12 +725,12 @@ if ($ii) {
 <tr class=ht>
     <td>상단이미지</td>
     <td colspan=3>
-        <input type=file class=ed name=it_himg size=40>
+        <input type="file" class=ed id="it_himg" name="it_himg" size=40>
         <?
         $himg_str = "";
         $himg = G4_DATA_PATH."/item/{$it[it_id]}_h";
         if (file_exists($himg)) {
-            echo "<input type=checkbox name=it_himg_del value='1'>삭제";
+            echo "<input type="checkbox" id="it_himg_del" name="it_himg_del" value='1'>삭제";
             $himg_str = "<img src='$himg' border=0>";
         }
         ?>
@@ -742,12 +742,12 @@ if ($ii) {
 <tr class=ht>
     <td>하단이미지</td>
     <td colspan=3>
-        <input type=file class=ed name=it_timg size=40>
+        <input type="file" class=ed id="it_timg" name="it_timg" size=40>
         <?
         $timg_str = "";
         $timg = G4_DATA_PATH."/item/{$it[it_id]}_t";
         if (file_exists($timg)) {
-            echo "<input type=checkbox name=it_timg_del value='1'>삭제";
+            echo "<input type="checkbox" id="it_timg_del" name="it_timg_del" value='1'>삭제";
             $timg_str = "<img src='$timg' border=0>";
         }
         ?>
@@ -779,8 +779,8 @@ if ($ii) {
 
 
 <p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemlist.php?<?=$qstr?>';">
+    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemlist.php?<?=$qstr?>';">
 </form>
 
 <script language='javascript'>
@@ -789,11 +789,11 @@ var f = document.fitemform;
 <?php if($w == 'u') { ?>
 $(document).ready(function() {
     // 선택옵션등록 변경
-    $("input[name=it_option_use]").click(function() {
+    $("input[id="it_option_use" name="it_option_use"]").click(function() {
         var val = $(this).val();
         if(val == "0") {
             if(!confirm("기존의 선택옵션정보가 삭제됩니다. 계속 하시겠습니까?")) {
-                $("input[name=it_option_use]").filter("input[value=1]").attr("checked", true);
+                $("input[id="it_option_use" name="it_option_use"]").filter("input[value=1]").attr("checked", true);
             } else {
                 $("input[name^=it_opt]:text").val('');
             }
@@ -801,11 +801,11 @@ $(document).ready(function() {
     });
 
     // 추가옵션등록 변경
-    $("input[name=it_supplement_use]").click(function() {
+    $("input[id="it_supplement_use" name="it_supplement_use"]").click(function() {
         var val = $(this).val();
         if(val == "0") {
             if(!confirm("기존의 추가옵션정보가 삭제됩니다. 계속 하시겠습니까?")) {
-                $("input[name=it_supplement_use]").filter("input[value=1]").attr("checked", true);
+                $("input[id="it_supplement_use" name="it_supplement_use"]").filter("input[value=1]").attr("checked", true);
             }
         }
     });
@@ -839,28 +839,28 @@ function codedupcheck(id)
 // 선택옵션창
 function optionformwindow()
 {
-    var it_id = $.trim($('input[name=it_id]').val());
+    var it_id = $.trim($('input[id="it_id" name="it_id"]').val());
     if (!it_id) {
         alert('상품코드를 입력하십시오.');
         f.it_id.focus();
         return;
     }
 
-    $('input[name=it_option_use]').filter('input[value=1]').attr('checked', true);
+    $('input[id="it_option_use" name="it_option_use"]').filter('input[value=1]').attr('checked', true);
     window.open("./optionform.php?w=<? echo $w; ?>&it_id="+it_id, "optionform", "width=700, height=700, left=100, top=50, scrollbars=yes");
 }
 
 // 추가옵션창
 function supplementformwindow()
 {
-    var it_id = $.trim($('input[name=it_id]').val());
+    var it_id = $.trim($('input[id="it_id" name="it_id"]').val());
     if (!it_id) {
         alert('상품코드를 입력하십시오.');
         f.it_id.focus();
         return;
     }
 
-    $('input[name=it_supplement_use]').filter('input[value=1]').attr('checked', true);
+    $('input[id="it_supplement_use" name="it_supplement_use"]').filter('input[value=1]').attr('checked', true);
     window.open("./supplementform.php?w=<? echo $w; ?>&it_id="+it_id, "supplementform", "width=700, height=700, left=100, top=50, scrollbars=yes");
 }
 
@@ -880,18 +880,18 @@ function fitemformcheck(f)
     }
 
     // 개별배송비체크
-    var sc_type = $("input[name=it_sc_type]:checked").val();
-    var sc_basic = $("input[name=it_sc_basic]").val();
+    var sc_type = $("input[id="it_sc_type" name="it_sc_type"]:checked").val();
+    var sc_basic = $("input[id="it_sc_basic" name="it_sc_basic"]").val();
     var patt = /[^0-9]/g;
 
     if(sc_type == "1") { // 조건부무료
-        var minimum = $("input[name=it_minimum]").val().replace(patt, "");
+        var minimum = $("input[id="it_minimum" name="it_minimum"]").val().replace(patt, "");
         if(minimum == "") {
             alert("구매금액 합계를 입력해 주세요.");
             return false;
         }
     } else if(sc_type == "3") { // 수량별
-        var count = $("input[name=it_count]").val().replace(patt, "");
+        var count = $("input[id="it_count" name="it_count"]").val().replace(patt, "");
         if(count == "") {
             alert("반복수량을 입력해 주세요.");
             return false;

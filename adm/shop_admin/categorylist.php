@@ -76,32 +76,32 @@ $result = sql_query($sql);
 $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 ?>
 
-<table width=100% cellpadding=4 cellspacing=0>
-<form name=flist>
-<input type=hidden name=page value="<?=$page?>">
+<table>
+<form id="flist" name="flist">
+<input type="hidden" id="page" name="page" value="<?=$page?>">
 <tr>
     <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td width=60% align=center>
-        <select name=sfl>
+        <select id="sfl" name="sfl">
             <option value='ca_name'>분류명
             <option value='ca_id'>분류코드
             <option value='ca_mb_id'>회원아이디
         </select>
         <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
 
-        <input type=hidden name=save_stx value='<?=$stx?>'>
-        <input type=text name=stx value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
-        <input type=hidden name=ca_id value='<? echo $ca_id ?>'>
-        <input type=hidden name=move  value='<? echo $move ?>'>
+        <input type="hidden" id="save_stx" name="save_stx" value='<?=$stx?>'>
+        <input type="text" id="stx" name="stx" value='<?=$stx?>'>
+        <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type="hidden" id="ca_id" name="ca_id" value='<? echo $ca_id ?>'>
+        <input type="hidden" id="move" name="move"  value='<? echo $move ?>'>
     </td>
     <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </form>
 </table>
 
-<form name=fcategorylist method='post' action='./categorylistupdate.php' autocomplete='off' style="margin:0px;">
-<input type=hidden name=page  value='<? echo $page ?>'>
+<form id="fcategorylist" name="fcategorylist" method="post" action='./categorylistupdate.php' autocomplete='off' style="margin:0px;">
+<input type="hidden" id="page" name="page"  value='<? echo $page ?>'>
 <table cellpadding=0 cellspacing=0 width=100%>
 <tr><td colspan=11 height=2 bgcolor=#0E87F9></td></tr>
 <tr align=center class=ht>
@@ -154,10 +154,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list = $i%2;
     echo "
     <tr class='list$list center ht' id='tr{$i}'>
-        <td align=left><input type=hidden name='ca_id[]' value='$row[ca_id]'>$row[ca_id]</td>
-        <td align=left>$s_level <input type=text name='ca_name[$i]' value='".get_text($row[ca_name])."' title='$row[ca_id]' required itemname='분류명' class=ed size=35 $style></td>
-        <td><input type=checkbox name='ca_menu[$i]' ".($row[ca_menu] ? "checked" : "")." value='1'></td>
-        <td><input type=checkbox name='ca_use[$i]' ".($row[ca_use] ? "checked" : "")." value='1'></td>
+        <td align=left><input type="hidden" name='ca_id[]' value='$row[ca_id]'>$row[ca_id]</td>
+        <td align=left>$s_level <input type="text" name='ca_name[$i]' value='".get_text($row[ca_name])."' title='$row[ca_id]' required itemname='분류명' class=ed size=35 $style></td>
+        <td><input type="checkbox" name='ca_menu[$i]' ".($row[ca_menu] ? "checked" : "")." value='1'></td>
+        <td><input type="checkbox" name='ca_use[$i]' ".($row[ca_use] ? "checked" : "")." value='1'></td>
         <td><a href='javascript:;' onclick=\"category_move('$row[ca_id]', 'up')\" title='위로 이동'>△</a> <a href='javascript:;' onclick=\"category_move('$row[ca_id]', 'down')\" title='아래로 이동'>▽</a></td>
         <td><a href='./itemlist.php?sca=$row[ca_id]'><U>$row1[cnt]</U></a></td>
         <td>$s_upd $s_del $s_vie $s_add</td>
@@ -175,7 +175,7 @@ if ($i == 0) {
 
 <table width=100%>
 <tr>
-    <td width=50%><input type=submit class=btn1 value='일괄수정'></td>
+    <td width=50%><input type="submit" class=btn1 value='일괄수정'></td>
     <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </form>
