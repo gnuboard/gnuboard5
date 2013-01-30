@@ -3,14 +3,12 @@ include_once("./_common.php");
 include_once(G4_LIB_PATH.'/etc.lib.php');
 include_once(G4_LIB_PATH.'/mailer.lib.php');
 
-/*
 $fp = fopen(G4_DATA_PATH.'/log/kcp_common.log', 'w');
 foreach($_POST as $key=>$value) {
     fwrite($fp, $key." = ".$value." / ");
 }
 fclose($fp);
 exit;
-*/
 
 /*------------------------------------------------------------------------------
     ※ KCP 에서 가맹점의 결과처리 페이지로 데이터를 전송할 때에, 아래와 같은
@@ -19,6 +17,7 @@ exit;
        REMOTE ADDRESS 체크를 하여, 아래의 IP 이외의 다른 경로를 통해서 전송된
        데이터에 대해서는 결과처리를 하지 마시기 바랍니다.
 ------------------------------------------------------------------------------*/
+/*
 switch ($_SERVER['REMOTE_ADDR']) {
     case '203.238.36.58' :
     case '203.238.36.160' :
@@ -36,6 +35,7 @@ switch ($_SERVER['REMOTE_ADDR']) {
         mailer('경고', 'waring', $super_admin['mb_email'], '올바르지 않은 접속 보고', $_SERVER['PHP_SELF'].' 에 '.$_SERVER['REMOTE_ADDR'].' 이 '.$g4['time_ymdhis'].' 에 접속을 시도하였습니다.'."\n\n" . $egpcs_str, 2);
         exit;
 }
+*/
 
     /* ============================================================================== */
     /* =   PAGE : 공통 통보 PAGE                                                    = */
