@@ -66,16 +66,16 @@ function SideView(targetObj, curObj, mb_id, name, email, homepage)
         // 쪽지보내기
         if (mb_id)
             // 불여우 자바스크립트창이 뜨는 오류를 수정
-            this.insertTail("memo", "<a href=\"javascript:win_memo('"+g4_bbs_url+"/memo_form.php?me_recv_mb_id="+mb_id+"');\">쪽지보내기</a>");
+            this.insertTail("memo", '<a href="'+g4_bbs_url+'/memo_form.php?me_recv_mb_id='+mb_id+'" onclick="win_memo(this.href); return false;">쪽지보내기</a>');
         // 메일보내기
         if (email)
-            this.insertTail("mail", "<a href=\"javascript:;\" onclick=\"win_formmail('"+mb_id+"','"+name+"','"+email+"');\">메일보내기</a>");
+            this.insertTail("mail", '<a href="'+g4_bbs_url+'/formmail.php?mb_id='+mb_id+'&name='+encodeURIComponent(name)+'&email='+email+'" onclick="win_email(this.href); return false;">메일보내기</a>');
         // 홈페이지
         if (homepage)
-            this.insertTail("homepage", "<a href=\"javascript:;\" onclick=\"window.open('"+homepage+"');\">홈페이지</a>");
+            this.insertTail("homepage", '<a href="'+homepage+'" onclick="win_homepage(this.href); return false;">홈페이지</a>');
         // 자기소개
         if (mb_id)
-            this.insertTail("info", "<a href=\"javascript:;\" onclick=\"win_profile('"+mb_id+"');\">자기소개</a>");
+            this.insertTail("info", '<a href="'+g4_bbs_url+'/profile.php?mb_id='+mb_id+'" onclick="win_profile(this.href); return false;">자기소개</a>');
     //}
 
     // 게시판테이블 아이디가 넘어왔을 경우
