@@ -85,10 +85,10 @@ include_once(G4_PATH.'/shop.head.php');
         ?><br><br>
 
 		<!-- 온라인 투표 -->
-        <?=poll();?><br>
+        <?=poll('neo');?><br>
 
 		<!-- 방문자 수 -->
-        <?=visit();?><br>
+        <?=visit('neo');?><br>
 
 		<!-- 메인 배너 -->
         <?=display_banner('메인');?><br>
