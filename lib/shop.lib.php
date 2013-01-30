@@ -143,14 +143,30 @@ function get_image($img, $width=0, $height=0)
 }
 
 // 상품 이미지를 얻는다
-function get_it_image($img, $width=0, $height=0, $id="")
+function get_it_image($dir, $img, $width, $height, $it_id="", $class="", $thumbnail=true)
 {
-    global $g4;
+    if($thumbnail && !$width)
+        return "";
 
-    $str = get_image($img, $width, $height);
-    if ($id) {
-        $str = "<a href='".G4_SHOP_URL."/item.php?it_id=$id'>$str</a>";
+    $src = G4_DATA_URL.'/item/'.$dir.'/'.$img;
+
+    if($thumbnail) {
+        $filepath = G4_DATA_PATH.'/item/'.$dir;
+
+        if(file_exists($filepath.'/'.$img) && is_file($filepath.'/'.$img)) {
+            $src = G4_DATA_URL.'/item/'.$dir.'/'.it_img_thumb($img, $filepath, $width, $height);
+        }
     }
+
+    $str = "<img id=\"$img\" src=\"$src\" width=\"$width\" height=\"$height\"";
+    if($class)
+        $str .= " class=\"$class\"";
+    $str .= " />";
+
+    if ($it_id) {
+        $str = "<a href='".G4_SHOP_URL."/item.php?it_id=$it_id'>$str</a>";
+    }
+
     return $str;
 }
 
@@ -209,16 +225,14 @@ function get_option_stock_qty($it_id, $opt_id, $is_option)
 // 큰 이미지
 function get_large_image($img, $it_id, $btn_image=true)
 {
-    global $g4;
-
-    if (file_exists(G4_DATA_PATH."/item/$img") && $img != "")
+    if (file_exists(G4_DATA_PATH."/item/$it_id/$img") && $img != "")
     {
-        $size   = getimagesize(G4_DATA_PATH."/item/$img");
+        $size   = getimagesize(G4_DATA_PATH."/item/$it_id/$img");
         $width  = $size[0];
         $height = $size[1];
-        $str = "<a href=\"".G4_SHOP_URL."/largeimage.php?it_id=".$it['it_id']."&amp;img=".$img."\" target=\"_blank\" onclick=\"popup_large_image(this.href, $width, $height); return false;\">";
+        $str = "<a href=\"".G4_SHOP_URL."/largeimage.php?it_id=".$it_id."&amp;img=".$img."\" target=\"_blank\" onclick=\"popup_large_image(this.href, $width, $height); return false;\">";
         if ($btn_image)
-            $str .= "<img src='$g4[shop_img_path]/btn_zoom.gif' border='0'></a>";
+            $str .= "<img src='".G4_SHOP_IMG_URL."/btn_zoom.gif' border='0'></a>";
     }
     else
         $str = "";
