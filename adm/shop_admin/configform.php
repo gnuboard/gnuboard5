@@ -407,7 +407,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
 <tr class=ht>
 	<td>공통 URL</td>
 	<td colspan=3>
-		<?=$g4[shop_url]?>/settle_kcp_common.php
+		<?=G4_SHOP_URL?>/settle_kcp_common.php
 		<?=help("가상계좌 사용시 이 주소를 \"KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후\"에 넣으셔야 상점에 자동으로 입금 통보됩니다.")?>
 	</td>
 </tr>
