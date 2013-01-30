@@ -4,12 +4,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 $test = "";
 if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
-        // 일반결제 테스트
+        // 에스크로결제 테스트
         $default['de_kcp_mid'] = "T0007";
         $default['de_kcp_site_key'] = '2.mDT7R4lUIfHlHq4byhYjf__';
     }
     else {
-        // 에스크로결제 테스트
+        // 일반결제 테스트
         $default['de_kcp_mid'] = "T0000";
         $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
     }
