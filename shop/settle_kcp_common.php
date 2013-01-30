@@ -1,7 +1,15 @@
 <?
 include_once("./_common.php");
-include_once($g4['path'].'/lib/etc.lib.php');
-include_once($g4['path'].'/lib/mailer.lib.php');
+include_once(G4_LIB_PATH.'/etc.lib.php');
+include_once(G4_LIB_PATH.'/mailer.lib.php');
+
+/*
+$fp = fopen(G4_DATA_PATH.'/log/kcp_common.log', 'w');
+foreach($_POST as $key=>$value) {
+    fwrite($fp, $key." = ".$value." / ");
+}
+fclose($fp);
+*/
 
 /*------------------------------------------------------------------------------
     ※ KCP 에서 가맹점의 결과처리 페이지로 데이터를 전송할 때에, 아래와 같은
@@ -46,7 +54,7 @@ switch ($_SERVER['REMOTE_ADDR']) {
     /* =   주시기 바랍니다. 등록 방법은 연동 매뉴얼을 참고하시기 바랍니다.          = */
     /* ============================================================================== */
 
-    //write_log("$g4[path]/data/log/kcp_common.log", print_r($_POST));
+    //write_log(G4_DATA_PATH."/log/kcp_common.log", print_r($_POST));
 
     /* ============================================================================== */
     /* =   02. 공통 통보 데이터 받기                                                = */
@@ -138,15 +146,19 @@ switch ($_SERVER['REMOTE_ADDR']) {
     /* = -------------------------------------------------------------------------- = */
     /* =   03-1. 가상계좌 입금 통보 데이터 DB 처리 작업 부분                        = */
     /* = -------------------------------------------------------------------------- = */
+
     if ( $tx_cd == "TX00" )
     {
         // 주문서 UPDATE
+        $od_receipt_time = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $tx_tm);
+
         $sql = " update {$g4['yc4_order_table']}
                     set od_receipt_amount = '$ipgm_mnyx',
-                        od_receipt_time = '$tx_tm',
-                        od_cash_authno = '$cash_a_no
+                        od_receipt_time = '$od_receipt_time',
+                        od_cash_authno = '$cash_a_no'
                   where od_id = '$order_no'
                     and tno = '$tno' ";
+
         sql_query($sql, FALSE);
     }
 
