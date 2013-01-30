@@ -65,8 +65,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </tr>
         <? } ?>
         <tr>
-            <th scope="row">의견</th>
-            <td><input type="text" id="pc_idea" name="pc_idea" class="fieldset_input required" size="47" required maxlength="100" title="의견"></td>
+            <th scope="row"><label for="pc_idea">의견<strong class="sound_only">필수</strong></label></th>
+            <td><input type="text" id="pc_idea" name="pc_idea" class="fieldset_input required" size="47" required maxlength="100"></td>
         </tr>
         <? if ($is_guest) { ?>
         <tr>

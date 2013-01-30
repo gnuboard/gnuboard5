@@ -21,7 +21,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <span id="mb_confirm_id"><?=$member[mb_id]?></span>
 
             <label for="confirm_mb_password">패스워드<strong class="sound_only">필수</strong></label>
-            <input type="password" id="confirm_mb_password" name="mb_password" class="fs_input" maxLength="20" size="15" required onkeypress="check_capslock('confirm_mb_password');" title="패스워드">
+            <input type="password" id="confirm_mb_password" name="mb_password" class="fs_input" maxLength="20" size="15" required onkeypress="check_capslock('confirm_mb_password');">
             <input type="submit" id="btn_submit" class="fs_submit" value="확인">
         </fieldset>
 
