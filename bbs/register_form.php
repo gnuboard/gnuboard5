@@ -1,6 +1,6 @@
 <?
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 include_once(G4_PATH.'/lib/register.lib.php');
 
 // 불법접근을 막도록 토큰생성
@@ -108,9 +108,10 @@ $mb_icon = G4_PATH.'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_
 include_once('./_head.php');
 
 if ($g4['https_url'])
-    $register_action_url = "{$g4['https_url']}/{$g4['bbs']}/register_form_update.php";
+    //$register_action_url = "{$g4['https_url']}/{$g4['bbs']}/register_form_update.php";
+    $register_action_url = G4_BBS_URL.'/register_form_update.php';
 else
-    $register_action_url = "{$g4['url']}/{$g4['bbs']}/register_form_update.php";
+    $register_action_url = G4_BBS_URL.'/register_form_update.php';
 
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400)));
 

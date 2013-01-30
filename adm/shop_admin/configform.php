@@ -405,7 +405,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
     <th scope="row">공통 URL</th>
     <td colspan="4">
         <?=help("가상계좌 사용시 이 주소를 \"KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후\"에 넣으셔야 상점에 자동으로 입금 통보됩니다.")?>
-        <?=$g4[shop_url]?>/settle_kcp_common.php
+        <?=G4_SHOP_URL?>/settle_kcp_common.php
     </td>
 </tr>
 <tr>
@@ -441,8 +441,6 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
     <td colspan="3"><input type="text" id="de_checkout_button_key" name="de_checkout_button_key" value="<?=$default['de_checkout_button_key']; ?>" size="50" /></td>
 </tr>
 </table>
-
-
 
 <table>
 <caption>배송정보</caption>

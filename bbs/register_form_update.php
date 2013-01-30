@@ -1,6 +1,6 @@
 <?
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 include_once(G4_PATH.'/lib/register.lib.php');
 include_once(G4_PATH.'/lib/mailer.lib.php');
 
@@ -307,23 +307,23 @@ if ($w == '') {
 
 
 // 사용자 코드 실행
-@include_once (G4_PATH.'/skin/member/'.$config['cf_member_skin'].'/register_update.skin.php');
+@include_once ($member_skin_path.'/register_update.skin.php');
 
 
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
 
 if ($w == "") {
-    goto_url($g4['bbs_url'].'/register_result.php');
+    goto_url(G4_BBS_URL.'/register_result.php');
 } else if ($w == 'u') {
     $row  = sql_fetch(" select mb_password from {$g4['member_table']} where mb_id = '{$member[mb_id]}' ");
     $tmp_password = $row['mb_password'];
 
     if ($old_email != $mb_email && $config['cf_use_email_certify']) {
         set_session("ss_mb_id", "");
-        alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', G4_PATH);
+        alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', G4_URL);
     } else {
-        alert('회원 정보가 수정 되었습니다.', $g4['url']);
+        alert('회원 정보가 수정 되었습니다.', G4_URL);
         /*
         echo '
         <html><title>회원정보수정</title><meta http-equiv="Content-Type" content="text/html; charset=$g4[charset]"></html><body>
