@@ -16,7 +16,7 @@ $cart_title4 = "배송완료";
 auth_check($auth[$sub_menu], "w");
 
 $g4['title'] = $html_title;
-include_once($g4['admin_path'].'/admin.head.php');
+include_once(G4_ADMIN_PATH.'/admin.head.php');
 
 //------------------------------------------------------------------------------
 // 설정 시간이 지난 주문서 없는 장바구니 자료 삭제
@@ -189,7 +189,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list = $i%2;
     echo "
     <tr class='list$list'>
-        <td align=center title='{$row['ct_id']}'><input type="hidden" id="ct_id" name="ct_id"[$i] value='{$row['ct_id']}'><input type="checkbox" id='ct_chk_{$i}' name='ct_chk[{$i}]' value='1'></td>
+        <td align=center title='{$row['ct_id']}'><input type=\"hidden\" id=\"ct_id\" name=\"ct_id\"[$i] value='{$row['ct_id']}'><input type=\"checkbox\" id='ct_chk_{$i}' name='ct_chk[{$i}]' value='1'></td>
         <td style='padding-top:5px; padding-bottom:5px;'><table width='100%'><tr><td width=40 align=center>$image</td><td>$it_name</td></tr></table></td>
         <td align=center>{$row['ct_status']}</td>
         <td align=center>$row[ct_qty]</td>
@@ -478,7 +478,7 @@ if ($od['od_receipt_point'] > 0)
             {
                 // 은행계좌를 배열로 만든후
                 $str = explode("\n", $default['de_bank_account']);
-                $bank_account = "\n<select id="od_bank_account" name="od_bank_account">\n";
+                $bank_account = "\n<select id=\"od_bank_account\" name=\"od_bank_account\">\n";
                 $bank_account .= "<option value=''>------------ 선택하십시오 ------------\n";
                 for ($i=0; $i<count($str); $i++) {
                     $str[$i] = str_replace("\r", "", $str[$i]);
@@ -487,7 +487,7 @@ if ($od['od_receipt_point'] > 0)
                 $bank_account .= "</select> ";
             }
             else if ($od['od_settle_case'] == '가상계좌')
-                $bank_account = $od['od_bank_account'] . "<input type="hidden" id="od_bank_account" name="od_bank_account" value='{$od['od_bank_account']}'>";
+                $bank_account = $od['od_bank_account'] . "<input type=\"hidden\" id=\"od_bank_account\" name=\"od_bank_account\" value='{$od['od_bank_account']}'>";
             else if ($od['od_settle_case'] == '계좌이체')
                 $bank_account = $od['od_settle_case'];
             ?>
@@ -855,5 +855,5 @@ function form_submit(status)
 </script>
 
 <?
-include_once("$g4[admin_path]/admin.tail.php");
+include_once(G4_ADMIN_PATH.'/admin.tail.php');
 ?>
