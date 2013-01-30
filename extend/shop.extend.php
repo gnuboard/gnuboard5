@@ -71,6 +71,7 @@ $g4['yc4_coupon_table']        = "yc4_coupon";                // 쿠폰정보 �
 $g4['yc4_coupon_history_table']= "yc4_coupon_history";        // 쿠폰사용내역 테이블
 $g4['yc4_sendcost_table']      = "yc4_sendcost";              // 추가배송비 테이블
 $g4['yc4_uniqid_table']        = "yc4_uniqid";
+$g4['yc4_item_info_table']     = "yc4_item_info";             // 상품요약정보 테이블 (상품정보고시)
 
 // 신용카드결제대행사 URL
 $g4['yc4_cardpg']['kcp']        = "http://admin.kcp.co.kr";
