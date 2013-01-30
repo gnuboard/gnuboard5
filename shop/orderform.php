@@ -383,7 +383,7 @@ $good_mny = (int)$tot_sell_amount + (int)$send_cost;
          ※ N : 현금영수증 등록 창 출력 안함
 		 ※ 주의 : 현금영수증 사용 시 KCP 상점관리자 페이지에서 현금영수증 사용 동의를 하셔야 합니다 */
 ?>
-    <input type="hidden" name="disp_tax_yn"     value="Y"/>
+    <input type="hidden" name="disp_tax_yn"     value="N"/>
 <?
     /* 결제창에 가맹점 사이트의 로고를 플러그인 좌측 상단에 출력하는 파라미터 입니다
        업체의 로고가 있는 URL을 정확히 입력하셔야 하며, 최대 150 X 50  미만 크기 지원
