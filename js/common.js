@@ -282,6 +282,7 @@ function image_window(img)
     if(parseInt(navigator.appVersion) >= 4){win.window.focus();}
 }
 
+/*
 // a 태그에서 onclick 이벤트를 사용하지 않기 위해
 function win_open(url, name, option)
 {
@@ -310,17 +311,15 @@ function win_comment(url)
 // 폼메일 창
 function win_formmail(mb_id, name, email)
 {
-    if (g4_charset.toLowerCase() == 'euc-kr')
-        win_open(g4_bbs_url+"/formmail.php?mb_id="+mb_id+"&name="+name+"&email="+email, "winFormmail", "left=50, top=50, width=600, height=500, scrollbars=0");
-    else
-        win_open(g4_bbs_url+"/formmail.php?mb_id="+mb_id+"&name="+encodeURIComponent(name)+"&email="+email, "winFormmail", "left=50, top=50, width=600, height=480, scrollbars=0");
+    win_open(g4_bbs_url+"/formmail.php?mb_id="+mb_id+"&name="+encodeURIComponent(name)+"&email="+email, "winFormmail", "left=50, top=50, width=600, height=480, scrollbars=0");
 }
 
 // 자기소개 창
 function win_profile(mb_id)
 {
-    win_open(g4_path+"/" + g4_bbs + "/profile.php?mb_id="+mb_id, 'winProfile', 'left=50,top=50,width=620,height=510,scrollbars=1');
+    win_open(g4_bbs_url+"/profile.php?mb_id="+mb_id, 'winProfile', 'left=50,top=50,width=620,height=510,scrollbars=1');
 }
+*/
 
 var last_id = null;
 function menu(id)

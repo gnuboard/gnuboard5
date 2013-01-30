@@ -175,6 +175,7 @@ function captcha_html($class="captcha")
     $png_file_url = G4_CACHE_URL.'/'.$obj->captcha_filename.'.png';
     $wav_file_url = G4_CACHE_URL.'/'.$obj->captcha_filename.'.wav';
 
+    $html .= PHP_EOL.'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>'; 
     $html .= PHP_EOL.'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>'; 
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">스팸방지</legend>';

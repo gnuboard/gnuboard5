@@ -77,8 +77,6 @@ jQuery(function($){
 var member_skin_path = "<?=$member_skin_path?>";
 </script>
 <script type="text/javascript" src="<?=$member_skin_path?>/ajax_register_form.jquery.js"></script>
-<script type="text/javascript" src="<?=$g4[path]?>/js/md5.js"></script>
-<script type="text/javascript" src="<?=$g4[path]?>/js/sideview.js"></script>
 
 <form id="fregisterform" name=fregisterform method=post onsubmit="return fregisterform_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type=hidden name=w                value="<?=$w?>">
@@ -551,7 +549,7 @@ function fregisterform_submit(f)
     ?>
 
     // 보안인증관련 코드로 반드시 포함되어야 합니다.
-    set_cookie("<?=md5($token)?>", "<?=base64_encode($token)?>", 1, "<?=$g4['cookie_domain']?>");
+    //set_cookie("<?=md5($token)?>", "<?=base64_encode($token)?>", 1, "<?=$g4['cookie_domain']?>");
 
     return true;
 }

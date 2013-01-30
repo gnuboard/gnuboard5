@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 global $is_admin;
 ?>
@@ -17,6 +17,6 @@ global $is_admin;
             <dt>전체</dt>
             <dd><?=number_format($visit[4])?></dd>
         </dl>
-        <? if ($is_admin == "super") { ?><a href="<?=$g4['admin_path']?>/visit_list.php">상세보기</a><?}?>
+        <? if ($is_admin == "super") { ?><a href="<?=G4_ADMIN_URL?>/visit_list.php">상세보기</a><?}?>
     </div>
 </section>

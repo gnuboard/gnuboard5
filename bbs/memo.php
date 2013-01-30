@@ -74,8 +74,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['del_href'] = './memo_delete.php?me_id='.$row['me_id'].'&amp;kind='.$kind;
 }
 
-echo '<script src="'.G4_PATH.'/js/sideview.js"></script>';
-
 include_once($member_skin_path.'/memo.skin.php');
 
 include_once(G4_PATH.'/tail.sub.php');

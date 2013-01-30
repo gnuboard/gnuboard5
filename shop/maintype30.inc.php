@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // marquee 태그를 사용하지 않고 자바스크립트로 이미지가 여러개씩 롤링되도록 함
 
@@ -26,7 +26,7 @@ $uni = uniqid("");
     var i_<?=$uni?> = 0;
 
     function start_roll_<?=$uni?>()
-    { 
+    {
         i_<?=$uni?> = 0;
         for (i_<?=$uni?> in roll_text_<?=$uni?>)
             n_panel_<?=$uni?>++;
@@ -36,14 +36,14 @@ $uni = uniqid("");
         if(startPanel_<?=$uni?> == 0)
         {
             i_<?=$uni?> = 0;
-            for (i_<?=$uni?> in roll_text_<?=$uni?>) 
+            for (i_<?=$uni?> in roll_text_<?=$uni?>)
                 insert_area_<?=$uni?>(total_area_<?=$uni?>, total_area_<?=$uni?>++); // area 삽입
         }
         else if(startPanel_<?=$uni?> == n_panel_<?=$uni?>)
         {
             insert_area_<?=$uni?>(startPanel_<?=$uni?>, total_area_<?=$uni?>);
             total_area_<?=$uni?>++;
-            for (i_<?=$uni?>=0; i_<?=$uni?><startPanel_<?=$uni?>; i_<?=$uni?>++) 
+            for (i_<?=$uni?>=0; i_<?=$uni?><startPanel_<?=$uni?>; i_<?=$uni?>++)
             {
                 insert_area_<?=$uni?>(i_<?=$uni?>, total_area_<?=$uni?>); // area 삽입
                 total_area_<?=$uni?>++;
@@ -53,12 +53,12 @@ $uni = uniqid("");
         {
             insert_area_<?=$uni?>(startPanel_<?=$uni?>, total_area_<?=$uni?>);
             total_area_<?=$uni?>++;
-            for (i_<?=$uni?>=startPanel_<?=$uni?>+1; i_<?=$uni?><=n_panel_<?=$uni?>; i_<?=$uni?>++) 
+            for (i_<?=$uni?>=startPanel_<?=$uni?>+1; i_<?=$uni?><=n_panel_<?=$uni?>; i_<?=$uni?>++)
             {
                 insert_area_<?=$uni?>(i_<?=$uni?>, total_area_<?=$uni?>); // area 삽입
                 total_area_<?=$uni?>++;
             }
-            for (i_<?=$uni?>=0; i_<?=$uni?><startPanel_<?=$uni?>; i_<?=$uni?>++) 
+            for (i_<?=$uni?>=0; i_<?=$uni?><startPanel_<?=$uni?>; i_<?=$uni?>++)
             {
                 insert_area_<?=$uni?>(i_<?=$uni?>, total_area_<?=$uni?>); // area 삽입
                 total_area_<?=$uni?>++;
@@ -73,7 +73,7 @@ $uni = uniqid("");
     }
 
     function rolling_<?=$uni?>()
-    { 
+    {
         if (bMouseOver_<?=$uni?> && wait_flag_<?=$uni?>)
         {
             for (i_<?=$uni?>=0;i_<?=$uni?><total_area_<?=$uni?>;i_<?=$uni?>++){
@@ -92,13 +92,13 @@ $uni = uniqid("");
     }
 
     function insert_area_<?=$uni?>(idx_<?=$uni?>, n_<?=$uni?>)
-    { 
+    {
         document.write('<div style="left: 0px; width: 100%; position: absolute; top: '+(roll_height_<?=$uni?>*n_<?=$uni?>)+'px" id="scroll_area_<?=$uni?>'+n_<?=$uni?>+'">\n'+roll_text_<?=$uni?>[idx_<?=$uni?>]+'\n</div>\n');
     }
 
     <?
     $width = (int)(100 / $list_mod);
-    for ($i=0; $i<10000; $i++) 
+    for ($i=0; $i<10000; $i++)
     {
 
         $roll_text[$i]  = "";
@@ -106,17 +106,28 @@ $uni = uniqid("");
         $roll_text[$i] .= "<tr>";
 
         $k=0;
-        while ($row=sql_fetch_array($result)) 
+        while ($row=sql_fetch_array($result))
         {
             if (!$row) break;
 
-            $href = "<a href='$g4[shop_path]/item.php?it_id=$row[it_id]' class=item>";
+            $href = "<a href='".G4_SHOP_URL."/item.php?it_id={$row['it_id']}' class=item>";
+
+            // 리스트 썸네일 이미지
+            $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
+            for($k=1; $k<=10; $k++) {
+                $idx = 'it_img'.$k;
+                if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
+                    $filename = $row[$idx];
+                    break;
+                }
+            }
+            $it_img = it_img_thumb($filename, G4_DATA_PATH.'/item/'.$row['it_id'], $img_width, $img_height);
 
             $roll_text[$i] .= "<td width='$width%' valign=top>";
             $roll_text[$i] .= "<table width='100%' cellpadding=1 cellspacing=0 border=0>";
-            $roll_text[$i] .= "<tr><td align=center>$href".get_it_image($row[it_id]."_s", $img_width, $img_height)."</a></td></tr>";
-            $roll_text[$i] .= "<tr><td align=center>$href".addslashes($row[it_name])."</a></td></tr>";
-            $roll_text[$i] .= "<tr><td align=center><span class=amount>".display_amount(get_amount($row), $row[it_tel_inq])."</span></td></tr>";
+            $roll_text[$i] .= "<tr><td align=center>$href".get_it_image($row['it_id'].'/'.$it_img, $img_width, $img_height)."</a></td></tr>";
+            $roll_text[$i] .= "<tr><td align=center>$href".addslashes($row['it_name'])."</a></td></tr>";
+            $roll_text[$i] .= "<tr><td align=center><span class=amount>".display_amount(get_amount($row), $row['it_tel_inq'])."</span></td></tr>";
             $roll_text[$i] .= "</table>";
             $roll_text[$i] .= "</td>";
             $k++;
@@ -152,4 +163,4 @@ $uni = uniqid("");
         if ( no_script_flag_<?=$uni?> == false )
             start_roll_<?=$uni?>();
     </script>
-</div>							   
+</div>

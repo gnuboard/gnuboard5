@@ -56,11 +56,13 @@ var g4_charset   = "<?=$g4['charset']?>";
 var g4_cookie_domain = "<?=$g4['cookie_domain']?>";
 var g4_is_gecko  = navigator.userAgent.toLowerCase().indexOf("gecko") != -1;
 var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
-<? if ($is_admin) { echo "var g4_admin = '{$g4['admin']}';"; } ?>
+<? if ($is_admin) { echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'; } 
+?>
 </script>
 <script src="<?=G4_JS_URL?>/jquery-1.8.3.min.js"></script>
 <script src="<?=G4_JS_URL?>/common.js"></script>
 <script src="<?=G4_JS_URL?>/wrest.js"></script>
+<script src="<?=G4_JS_URL?>/sideview.js"></script>
 </head>
 <body>
 <a id="g4_head"></a>

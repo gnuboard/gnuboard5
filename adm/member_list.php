@@ -69,8 +69,6 @@ $result = sql_query($sql);
 $colspan = 15;
 ?>
 
-<script src="<?=$g4['path']?>/js/sideview.js"></script>
-
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>회원검색</legend>
