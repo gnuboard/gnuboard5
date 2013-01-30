@@ -23,13 +23,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
             break;
         }
     }
-    $it_img = it_img_thumb($filename, G4_DATA_PATH.'/item/'.$row['it_id'], $img_width, $img_height);
 
     echo "
     <td width='{$td_width}%' align=center valign=top>
         <br>
         <table width=98% cellpadding=2 cellspacing=0>
-        <tr><td align=center>".get_it_image($row['it_id'].'/'.$it_img, $img_width , $img_height, $row[it_id])."</td></tr>
+        <tr><td align=center>".get_it_image($row['it_id'], $filename, $img_width , $img_height, $row['it_id'])."</td></tr>
         <tr><td align=center>".it_name_icon($row)."</td></tr>";
 
     if ($row[it_cust_amount] && !$row[it_gallery])

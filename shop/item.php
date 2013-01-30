@@ -183,14 +183,12 @@ else
             break;
         }
     }
-
-    $middle_image = $it['it_id'].'/'.it_img_thumb($filename, $filepath, $default['de_mimg_width'], $default['de_mimg_height']);
     ?>
     <td align=center valign=top>
         <table cellpadding=0 cellspacing=0>
             <tr><td height=22></td></tr>
             <tr><td colspan=3 align=center>
-                <table cellpadding=1 cellspacing=0 bgcolor=#E4E4E4><tr><td><?=get_large_image($it['it_id'].'/'.$filename, $it['it_id'], false)?><?=get_it_image($middle_image);?></a></td></tr></table></td></tr>
+                <table cellpadding=1 cellspacing=0 bgcolor=#E4E4E4><tr><td id="middle_image"><?=get_large_image($filename, $it['it_id'], false)?><?=get_it_image($it['it_id'], $filename, $default['de_mimg_width'], $default['de_mimg_height']);?></a></td></tr></table></td></tr>
             <tr><td colspan=3 height=10></td></tr>
             <tr>
                 <td colspan=3 align=center>
@@ -201,9 +199,8 @@ else
 
                     if (file_exists($filepath.'/'.$filename) && $filename != "")
                     {
-                        echo get_large_image($it['it_id'].'/'.$filename, $it['it_id'], false);
-                        echo "<img id='middle{$i}' src='".G4_DATA_URL."/item/{$it_id}/{$filename}' border=0 width=40 height=40 style='border:1px solid #E4E4E4;' ";
-                        echo " onmouseover=\"document.getElementById('$middle_image').src=document.getElementById('middle{$i}').src;\">";
+                        echo get_large_image($filename, $it['it_id'], false);
+                        echo get_it_image($it['it_id'], $filename, 40, 40, "", "item_view_thumbnail");
                         echo "</a> &nbsp;";
                     }
                 }
@@ -1110,6 +1107,12 @@ function explan_resize_image()
 <script type="text/javascript">
 $(function() {
     explan_resize_image();
+
+    // middle_image 변경
+    $(".item_view_thumbnail").mouseover(function() {
+        var src = "<?=G4_DATA_URL?>/item/<?=$it_id?>/"+$(this).attr("id");
+        $("#middle_image img").attr("src", src);
+    });
 });
 </script>
 

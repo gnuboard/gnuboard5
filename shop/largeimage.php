@@ -1,13 +1,14 @@
 <?
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 $sql = " select it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
             from $g4[yc4_item_table]
             where it_id='$it_id' ";
 $row = sql_fetch_array(sql_query($sql));
 
-$imagefile = G4_DATA_PATH."/item/$img";
-$imagefile_url = G4_DATA_URL."/item/$img";
+$imagefile = G4_DATA_PATH."/item/$it_id/$img";
+$imagefile_url = G4_DATA_URL."/item/$it_id/$img";
 $size = getimagesize($imagefile);
 
 $g4['title'] = "{$row['it_name']} ($it_id)";
@@ -27,13 +28,22 @@ include_once(G4_PATH.'/head.sub.php');
         {
             $filename = $row['it_img'.$i];
             if (file_exists(G4_DATA_PATH."/item/{$it_id}/{$filename}") && $filename != "")
-                echo "<img id='large{$i}' src='".G4_DATA_URL."/item/{$it_id}/{$filename}' border=0 width=50 height=50 style='border:1 solid #E4E4E4;'
-                    onmouseover=\"document.getElementById('largeimage').src=document.getElementById('large{$i}').src;\"> &nbsp;";
+                echo get_it_image($it_id, $filename, 50, 50, "", "image_thumbnail")."&nbsp;";
         }
         ?>
         &nbsp;</td>
 </tr>
 </table>
+
+<script>
+$(function() {
+    $(".image_thumbnail").mouseover(function() {
+        var src = "<?=G4_DATA_URL?>/item/<?=$it_id?>/"+$(this).attr("id");
+        $("#largeimage").attr("src", src);
+    });
+});
+</script>
+
 <?
 include_once(G4_PATH.'/tail.sub.php');
 ?>
