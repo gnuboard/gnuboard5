@@ -3,10 +3,10 @@ include_once("./_common.php");
 include_once(G4_LIB_PATH.'/latest.lib.php');
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
-define("_INDEX_", TRUE);
+define("G4_SHOP_INDEX", TRUE);
 
-$g4['title'] = "";
-include_once(G4_PATH.'/shop.head.php');
+$g4['title'] = $default['de_admin_company_name'];
+include_once('./_head.php');
 ?>
 
 <script src="<?=G4_JS_URL?>/shop.js"></script>
@@ -99,7 +99,7 @@ include_once(G4_PATH.'/shop.head.php');
 <BR><BR>
 
 <?
-include G4_SHOP_PATH.'/newwin.inc.php'; // 새창띄우기
+include_once(G4_SHOP_PATH.'/newwin.inc.php'); // 새창띄우기
 
-include_once(G4_PATH.'/shop.tail.php');
+include_once('./_tail.php');
 ?>
