@@ -5,7 +5,7 @@ include_once("./_common.php");
 $max_limit = 7; // 몇행 출력할 것인지?
 
 $g4['title'] = " 쇼핑몰관리";
-include_once ($g4['admin_path'].'/admin.head.php');
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <table width=100%>
@@ -235,5 +235,5 @@ include_once ($g4['admin_path'].'/admin.head.php');
 </table><br>
 
 <?
-include_once ($g4['admin_path'].'/admin.tail.php');
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
