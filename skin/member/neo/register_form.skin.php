@@ -206,7 +206,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 </table>
 
 <div class="btn_confirm">
-    <input type="submit" class="btn_submit" value="회원가입" accesskey="s">
+    <input type="submit" class="btn_submit" value="<?=$w==''?'회원가입':'정보수정';?>" accesskey="s">
     <a href="<?=$g4['path']?>/" class="btn_cancel">취소</a>
 </div>
 </form>
