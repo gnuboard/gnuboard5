@@ -53,7 +53,7 @@ echo $option_hidden;
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>" title="이름"></td>
+    <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>"></td>
 </tr>
 <? } ?>
 
@@ -99,7 +99,7 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_subject">제목<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="wr_subject" name="wr_subject" class="frm_input required" size="50" required value="<?=$subject?>" title="제목"></td>
+    <td><input type="text" id="wr_subject" name="wr_subject" class="frm_input required" size="50" required value="<?=$subject?>"></td>
 </tr>
 
 <tr>
@@ -118,7 +118,7 @@ echo $option_hidden;
 <tr>
     <th scope="row">파일 #<?=$i+1?></th>
     <td>
-        <input type="file" name="bf_file[]" class="frm_file frm_input" title="파일 용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="file" name="bf_file[]" class="frm_file frm_input" title="파일첨부 <?=$i+1?> :  용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
         <? if ($is_file_content) { ?>
         <input type="text" name="bf_content[]" class="frm_file frm_input" value="<? echo $file[$i]['bf_content']; ?>" size="50" title="파일 설명을 입력해주세요.">
         <?}?>
@@ -143,7 +143,7 @@ echo $option_hidden;
 
 <div class="btn_confirm">
     <input type="submit" id="btn_submit" class="btn_submit" value="글쓰기" accesskey="s">
-    <a href="./board.php?bo_table=<?=$bo_table?>" class="btn_cancel" title="글쓰기를 취소하고 목록으로 돌아가기">목록</a>
+    <a href="./board.php?bo_table=<?=$bo_table?>" class="btn_cancel">취소</a>
 </div>
 </form>
 

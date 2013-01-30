@@ -66,8 +66,8 @@ for ($i=1; $i<=$tv_idx; $i++)
         if(file_exists($tv_filepath.'/'.$tv_filename) && $tv_filename != "")
             break;
     }
-    $tv_it_img = $tv_it_id.'/'.it_img_thumb($tv_filename, $tv_filepath, $tv_div['img_width'], $tv_div['img_height']);
-    $img = get_it_image($tv_it_img, $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
+    $img = get_it_image($tv_it_id, $tv_filename, $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
+    $img = str_replace("\"", "\\\"", $img);
     $img = preg_replace("/\<a /", "<a title='$it_name' ", $img);
     echo "goods_link[$i] = \"{$img}<br/><span class=small>".cut_str($it_name,10,"")."</span>\";\n";
 }

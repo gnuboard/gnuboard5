@@ -21,18 +21,18 @@ var member_skin_path = "<?=$member_skin_path?>";
 <tr>
     <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="reg_mb_id" name="mb_id" class="frm_input minlength_3 <?=$required?> <?=$readonly?>" value="<?=$member['mb_id']?>" maxlength="20" <?=$required?> <?=$readonly?> title="회원아이디">
+        <input type="text" id="reg_mb_id" name="mb_id" class="frm_input minlength_3 <?=$required?> <?=$readonly?>" value="<?=$member['mb_id']?>" maxlength="20" <?=$required?> <?=$readonly?>>
         <span id="msg_mb_id"></span>
         <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password">패스워드<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" id="reg_mb_password" name="mb_password" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?> title="패스워드"></td>
+    <td><input type="password" id="reg_mb_password" name="mb_password" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?>></td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password_re">패스워드 확인<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" id="reg_mb_password_re" name="mb_password_re" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?> title="패스워드 확인"></td>
+    <td><input type="password" id="reg_mb_password_re" name="mb_password_re" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?>></td>
 </tr>
 </table>
 
@@ -41,7 +41,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <tr>
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input id="reg_mb_name" name="mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" value="<?=$member['mb_name']?>" size="10" <?=$required?> <?=$readonly?> title="이름">
+        <input id="reg_mb_name" name="mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" value="<?=$member['mb_name']?>" size="10" <?=$required?> <?=$readonly?>>
         <? if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } ?>
     </td>
 </tr>
@@ -50,7 +50,7 @@ var member_skin_path = "<?=$member_skin_path?>";
     <th scope="row"><label for="reg_mb_nick">별명<strong class="sound_only">필수</strong></label></th>
     <td>
         <input type="hidden" name="mb_nick_default" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>">
-        <input type="text" id="reg_mb_nick" name="mb_nick" class="frm_input required nospace" maxlength="20" size="10" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" required title="별명">
+        <input type="text" id="reg_mb_nick" name="mb_nick" class="frm_input required nospace" maxlength="20" size="10" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" required>
         <span id="msg_mb_nick"></span>
         <span class="frm_info">
             공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br>
@@ -64,7 +64,7 @@ var member_skin_path = "<?=$member_skin_path?>";
     <th scope="row"><label for="reg_mb_email">E-mail<? if ($config['cf_use_email_certify']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td>
         <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
-        <input type="text" id="reg_mb_email" name="mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" maxlength="100" size="50" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?> title="E-mail">
+        <input type="text" id="reg_mb_email" name="mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" maxlength="100" size="50" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?>>
         <span id="msg_mb_email"></span>
         <? if ($config['cf_use_email_certify']) { ?>
         <span class="frm_info">
@@ -195,7 +195,7 @@ var member_skin_path = "<?=$member_skin_path?>";
 <? if ($w == "" && $config['cf_use_recommend']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_recommend">추천인아이디</label></th>
-    <td><input type="text" id="reg_mb_recommend" name="mb_recommend" class="frm_input" title="추천인아이디"></td>
+    <td><input type="text" id="reg_mb_recommend" name="mb_recommend" class="frm_input"></td>
 </tr>
 <? } ?>
 
