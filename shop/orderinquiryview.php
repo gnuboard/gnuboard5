@@ -268,6 +268,27 @@ if ($default['de_taxsave_use']) {
 </table>
 <br><br>
 
+<? if ($od['od_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
+    preg_match("/(\s.*\s)/", $od['od_bank_account'], $matchs);
+    $deposit_no = trim($matchs[1]);
+?>
+<center>
+<div style="width:500px">
+<fieldset>
+<legend>모의입금처리</legend>
+<p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
+<form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
+<input type="text" name="e_trade_no" value="<?=$od['tno']?>" size="80"><br />
+<input type="text" name="deposit_no" value="<?=$deposit_no?>" size="80"><br />
+<input type="text" name="req_name" value="<?=$od['od_name']?>" size="80"><br />
+<input type="text" name="noti_url" value="<?=G4_SHOP_URL?>/settle_kcp_common.php" size="80"><br /><br />
+<input type="submit" value="입금통보 테스트">
+</form>
+</fieldset>
+</div>
+</center>
+<? } ?>
+
 <?
 include_once("./_tail.php");
 ?>
