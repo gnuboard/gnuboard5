@@ -171,13 +171,12 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
             break;
         }
     }
-    $it_img = it_img_thumb($filename, G4_DATA_PATH.'/item/'.$row['it_id'], 50, 50);
 
     echo "
     <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list'>
         <td>$row[it_id]</td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row['it_id']}/{$it_img}", 50, 50)."</a></td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], $filename, 50, 50)."</a></td>
         <td align=left>$tmp_ca_list<br><input type='text' name='it_name[$i]' value='".htmlspecialchars2(cut_str($row[it_name],250, ""))."' required size=40 class=ed></td>
         <td colspan=3>
             <table width=210 cellpadding=0 cellspacing=0>
