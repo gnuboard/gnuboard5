@@ -233,10 +233,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     if ($res_cd != '0000')
     {
-        if (strtolower($g4[charset]) == "utf-8")
-        {
-            $res_msg = iconv("euc-kr", "utf-8", $res_msg);
-        }
+        $res_msg = iconv("euc-kr", "utf-8", $res_msg);
 
         echo "<script>
         var openwin = window.open( './kcp/proc_win.php', 'proc_win', '' );

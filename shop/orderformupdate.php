@@ -491,9 +491,7 @@ else if ($od_settle_case == "계좌이체")
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $tno                = $tno;
     $od_receipt_point   = $i_temp_point;
-    if (strtolower($g4['charset']) == "utf-8") {
-        $bank_name = iconv("cp949", "utf8", $bank_name);
-    }
+    $bank_name          = iconv("cp949", "utf8", $bank_name);
     $od_bank_account    = $bank_name;
     $od_deposit_name    = $od_name;
     $same_amount_check  = true;
@@ -504,12 +502,10 @@ else if($od_settle_case == "가상계좌")
 
     $od_receipt_amount  = 0;
     $od_receipt_point   = $i_temp_point;
-    if (strtolower($g4['charset']) == "utf-8") {
-        $bankname = iconv("cp949", "utf8", $bankname);
-        $depositor = iconv("cp949", "utf8", $depositor);
-    }
-    $od_bank_account    = $bankname.' '.$account;
-    $od_deposit_name    = $depositor;
+    $bankname           = iconv("cp949", "utf8", $bankname);
+    $depositor          = iconv("cp949", "utf8", $depositor);
+    $od_bank_account    = $bankname.' '.$account.' '.$depositor;
+    $od_deposit_name    = $od_name;
 }
 else if ($od_settle_case == "휴대폰")
 {
@@ -530,9 +526,7 @@ else if ($od_settle_case == "신용카드")
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $tno                = $tno;
     $od_receipt_point   = $i_temp_point;
-    if (strtolower($g4['charset']) == "utf-8") {
-        $card_name = iconv("cp949", "utf8", $card_name);
-    }
+    $card_name          = iconv("cp949", "utf8", $card_name);
     $od_bank_account    = $card_name;
     $same_amount_check  = true;
 }

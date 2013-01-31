@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 if (!defined("_ORDERMAIL_")) exit;
 
 // 주문자님께 메일발송 체크를 했다면
-if ($od_send_mail) 
+if ($od_send_mail)
 {
     $od = sql_fetch(" select * from $g4[yc4_order_table] where od_id = '$od_id' ");
 
@@ -25,7 +25,7 @@ if ($od_send_mail)
                     b.it_opt4_subject,
                     b.it_opt5_subject,
                     b.it_opt6_subject
-               from $g4[yc4_cart_table] a inner join $g4[yc4_item_table] b on (b.it_id="a".it_id)
+               from $g4[yc4_cart_table] a inner join $g4[yc4_item_table] b on (b.it_id = a.it_id)
               where a.on_uid = '$od[on_uid]'
               order by a.ct_id ";
     $result = sql_query($sql);
@@ -113,7 +113,7 @@ if ($od_send_mail)
     }
 
     // 입금 또는 배송내역이 있다면 메일 발송
-    if ($is_receipt || $is_delivery) 
+    if ($is_receipt || $is_delivery)
     {
         ob_start();
         include "$g4[shop_path]/mail/ordermail.mail.php";
@@ -125,7 +125,7 @@ if ($od_send_mail)
 
         // 메일 보낸 내역 상점메모에 update
         $od_shop_memo = "$g4[time_ymdhis] - 결제/배송내역 메일발송\n" . $od[od_shop_memo];;
-        /* 1.00.06 
+        /* 1.00.06
         ** 주석처리 - 처리하지 않음
         if ($receipt_check)
             $od_shop_memo .= ", 입금확인";
