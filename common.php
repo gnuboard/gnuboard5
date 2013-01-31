@@ -385,6 +385,7 @@ if ($is_admin != 'super') {
 $board_skin_path    = G4_SKIN_PATH.'/board/'.$board['bo_skin'];
 $board_skin_url     = G4_SKIN_URL.'/board/'.$board['bo_skin'];
 $member_skin_path   = G4_SKIN_PATH.'/member/'.$config['cf_member_skin'];
+$member_skin_url    = G4_SKIN_URL.'/member/'.$config['cf_member_skin'];
 $new_skin_path      = G4_SKIN_PATH.'/new/'.$config['cf_new_skin'];
 $search_skin_path   = G4_SKIN_PATH.'/search/'.$config['cf_search_skin'];
 $connect_skin_path  = G4_SKIN_PATH.'/connect/'.$config['cf_connect_skin'];
