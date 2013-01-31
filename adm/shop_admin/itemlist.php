@@ -173,20 +173,20 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     echo "
-    <input type="hidden" name='it_id[$i]' value='$row[it_id]'>
+    <input type=\"hidden\" name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list'>
         <td>$row[it_id]</td>
         <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], $filename, 50, 50)."</a></td>
-        <td align=left>$tmp_ca_list<br><input type="text" name='it_name[$i]' value='".htmlspecialchars2(cut_str($row[it_name],250, ""))."' required size=40 class=ed></td>
+        <td align=left>$tmp_ca_list<br><input type=\"text\" name='it_name[$i]' value='".htmlspecialchars2(cut_str($row[it_name],250, ""))."' required size=40 class=ed></td>
         <td colspan=3>
             <table width=210 cellpadding=0 cellspacing=0>
             <tr>
                 <td>
                     <table cellpadding=0 cellspacing=0>
                     <tr>
-                        <td width=70 align=center><input type="text" name='it_amount[$i]' value='$row[it_amount]' class=ed size=7 style='text-align:right; background-color:#DDE6FE;'></td>
-                        <td width=70 align=center><input type="text" name='it_amount2[$i]' value='$row[it_amount2]' class=ed size=7 style='text-align:right; background-color:#DDFEDE;'></td>
-                        <td width=70 align=center><input type="text" name='it_amount3[$i]' value='$row[it_amount3]' class=ed size=7 style='text-align:right; background-color:#FEDDDD;'></td>
+                        <td width=70 align=center><input type=\"text\" name='it_amount[$i]' value='$row[it_amount]' class=ed size=7 style='text-align:right; background-color:#DDE6FE;'></td>
+                        <td width=70 align=center><input type=\"text\" name='it_amount2[$i]' value='$row[it_amount2]' class=ed size=7 style='text-align:right; background-color:#DDFEDE;'></td>
+                        <td width=70 align=center><input type=\"text\" name='it_amount3[$i]' value='$row[it_amount3]' class=ed size=7 style='text-align:right; background-color:#FEDDDD;'></td>
                     </tr>
                     </table></td>
             </tr>
@@ -194,15 +194,15 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
                 <td>
                     <table cellpadding=0 cellspacing=0>
                     <tr>
-                        <td width=70 align=center><input type="text" name='it_cust_amount[$i]' value='$row[it_cust_amount]' class=ed size=7 style='text-align:right;'></td>
-                        <td width=70 align=center><input type="text" name='it_point[$i]' value='$row[it_point]' class=ed size=7 style='text-align:right;'></td>
-                        <td width=70 align=center><input type="text" name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=7 style='text-align:right;'></td>
+                        <td width=70 align=center><input type=\"text\" name='it_cust_amount[$i]' value='$row[it_cust_amount]' class=ed size=7 style='text-align:right;'></td>
+                        <td width=70 align=center><input type=\"text\" name='it_point[$i]' value='$row[it_point]' class=ed size=7 style='text-align:right;'></td>
+                        <td width=70 align=center><input type=\"text\" name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=7 style='text-align:right;'></td>
                     </tr>
                     </table></td>
             </tr>
             </table></td>
-        <td><input type="text" name='it_order[$i]' value='$row[it_order]' class=ed size=3 style='text-align:right;'></td>
-        <td><input type="checkbox" name='it_use[$i]' ".($row[it_use] ? "checked" : "")." value='1'></td>
+        <td><input type=\"text\" name='it_order[$i]' value='$row[it_order]' class=ed size=3 style='text-align:right;'></td>
+        <td><input type=\"checkbox\" name='it_use[$i]' ".($row[it_use] ? "checked" : "")." value='1'></td>
         <td>$row[it_hit]</td>
         <td>$s_mod $s_del $s_vie $s_copy</td>
     </tr>";

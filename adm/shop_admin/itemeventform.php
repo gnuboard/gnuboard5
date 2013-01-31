@@ -1,7 +1,7 @@
 <?
 $sub_menu = "400630";
-define('G4_EDITOR', 1);
 include_once("./_common.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -115,7 +115,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         $mimg_str = "";
         $mimg = "$g4[path]/data/event/{$ev[ev_id]}_m";
         if (file_exists($mimg)) {
-            echo "<input type="checkbox" id="ev_mimg_del" name="ev_mimg_del" value='1'>삭제";
+            echo "<input type=\"checkbox\" id=\"ev_mimg_del\" name=\"ev_mimg_del\" value='1'>삭제";
             $mimg_str = "<img src='$mimg' border=0>";
         }
         ?>
@@ -132,7 +132,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         $himg_str = "";
         $himg = "$g4[path]/data/event/{$ev[ev_id]}_h";
         if (file_exists($himg)) {
-            echo "<input type="checkbox" id="ev_himg_del" name="ev_himg_del" value='1'>삭제";
+            echo "<input type=\"checkbox\" id=\"ev_himg_del\" name=\"ev_himg_del\" value='1'>삭제";
             $himg_str = "<img src='$himg' border=0>";
         }
         ?>
@@ -149,7 +149,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         $timg_str = "";
         $timg = "$g4[path]/data/event/{$ev[ev_id]}_t";
         if (file_exists($timg)) {
-            echo "<input type="checkbox" id="ev_timg_del" name="ev_timg_del" value='1'>삭제";
+            echo "<input type=\"checkbox\" id=\"ev_timg_del\" name=\"ev_timg_del\" value='1'>삭제";
             $timg_str = "<img src='$timg' border=0>";
         }
         ?>

@@ -129,7 +129,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     $list = $i%2;
     echo "
     <tr class='list$list ht'>
-        <td align=\"center\"><input type="\""checkbox\" id="\" name="\""list_chk[]\" value=\"{$row['cp_no']}\" /></td>
+        <td align=\"center\"><input type=\"checkbox\" id=\" name=\"list_chk[]\" value=\"{$row['cp_no']}\" /></td>
         <td align=\"center\">".$row['cp_id']."</td>
         <td>".$cp_subject."</td>
         <td align=\"center\">".$mb_id."</td>

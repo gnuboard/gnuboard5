@@ -22,11 +22,11 @@ if ($ca_id && ($move == 'up' || $move == 'down')) {
         $dst = sql_fetch($sql);
     }
 
-    // 옮겨갈 분류가 있다면    
+    // 옮겨갈 분류가 있다면
     if ($dst) {
         $sql = " update $g4[yc4_category_table] set ca_sort = concat('$org[ca_sort]', mid(ca_sort,$level*4+1, 20)) where ca_id like '$dst[ca_id]%' ";
         sql_query($sql);
-        
+
         $sql = " update $g4[yc4_category_table] set ca_sort = concat('$dst[ca_sort]', mid(ca_sort,$level*4+1, 20)) where ca_id like '$org[ca_id]%' ";
         sql_query($sql);
     }
@@ -112,7 +112,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
     <td width=60>출력순서</td>
     <td width=50>상품수</td>
     <td width=120>
-        <? 
+        <?
         if ($is_admin == 'super')
             echo "<a href='./categoryform.php'><img src='$g4[admin_path]/img/icon_insert.gif' border=0 title='1단계분류 추가'></a>";
         else
@@ -123,7 +123,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 <tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
 
 <?
-for ($i=0; $row=sql_fetch_array($result); $i++) 
+for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $s_level = "";
     $level = strlen($row[ca_id]) / 2 - 1;
@@ -133,7 +133,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         for ($k=1; $k<$level; $k++)
             $s_level = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $s_level;
         $style = " ";
-    } 
+    }
     else // 1단계
     {
         $style = " style='border:1 solid; border-color:#0071BD;' ";
@@ -145,7 +145,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     if ($is_admin == 'super')
         $s_del = icon("삭제", "javascript:del('./categoryformupdate.php?w=d&ca_id=$row[ca_id]&$qstr');");
-    
+
 
     // 해당 분류에 속한 상품의 갯수
     $sql1 = " select COUNT(*) as cnt from $g4[yc4_item_table] where ca_id = '$row[ca_id]' or ca_id2 = '$row[ca_id]' or ca_id3 = '$row[ca_id]' ";
@@ -154,10 +154,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list = $i%2;
     echo "
     <tr class='list$list center ht' id='tr{$i}'>
-        <td align=left><input type="hidden" name='ca_id[]' value='$row[ca_id]'>$row[ca_id]</td>
-        <td align=left>$s_level <input type="text" name='ca_name[$i]' value='".get_text($row[ca_name])."' title='$row[ca_id]' required itemname='분류명' class=ed size=35 $style></td>
-        <td><input type="checkbox" name='ca_menu[$i]' ".($row[ca_menu] ? "checked" : "")." value='1'></td>
-        <td><input type="checkbox" name='ca_use[$i]' ".($row[ca_use] ? "checked" : "")." value='1'></td>
+        <td align=left><input type=\"hidden\" name=\"ca_id[]\" value=\"{$row['ca_id']}\">{$row['ca_id']}</td>
+        <td align=left>$s_level <input type=\"text\" name='ca_name[$i]' value='".get_text($row[ca_name])."' title='$row[ca_id]' required itemname='분류명' class=ed size=35 $style></td>
+        <td><input type=\"checkbox\" name='ca_menu[$i]' ".($row[ca_menu] ? "checked" : "")." value='1'></td>
+        <td><input type=\"checkbox\" name='ca_use[$i]' ".($row[ca_use] ? "checked" : "")." value='1'></td>
         <td><a href='javascript:;' onclick=\"category_move('$row[ca_id]', 'up')\" title='위로 이동'>△</a> <a href='javascript:;' onclick=\"category_move('$row[ca_id]', 'down')\" title='아래로 이동'>▽</a></td>
         <td><a href='./itemlist.php?sca=$row[ca_id]'><U>$row1[cnt]</U></a></td>
         <td>$s_upd $s_del $s_vie $s_add</td>
@@ -182,7 +182,7 @@ if ($i == 0) {
 </table>
 
 <script>
-function category_move(ca_id, move) 
+function category_move(ca_id, move)
 {
     var f = document.flist;
     f.ca_id.value = ca_id;

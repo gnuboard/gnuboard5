@@ -120,7 +120,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <script>
 $(function() {
     <?php if($w == 'u') { ?>
-    $("select[id="cp_trunc" name="cp_trunc"]").val("<? echo $write['cp_trunc']; ?>");
+    $("select[name=cp_trunc]").val("<? echo $write['cp_trunc']; ?>");
     if("<?php echo $write['cp_method']; ?>" == "1") {
         $("#cp_amount_label").text("할인비율");
         $("#cp_amount_unit").text("%");
@@ -130,16 +130,16 @@ $(function() {
     var u_cp_type = "<?php echo $write['cp_type']; ?>";
     if(u_cp_type == "0") { // 상품할인
         $("#cp_minimum_dsp").hide();
-        $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", false);
-        $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("disabled", true);
-        $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", false);
+        $("input[name=cp_target]").not("[value=3]").attr("disabled", false);
+        $("input[name=cp_target]").filter("[value=3]").attr("disabled", true);
+        $("input[name=cp_method]").not("[value=0]").attr("disabled", false);
         $("#it_id_dsp").show();
         $("#ca_id_dsp").hide();
     } else if(u_cp_type == "2") { // 배송비할인
         $("#cp_minimum_dsp").show();
-        $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", true);
-        $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("disabled", false);
-        $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", true);
+        $("input[name=cp_target]").not("[value=3]").attr("disabled", true);
+        $("input[name=cp_target]").filter("[value=3]").attr("disabled", false);
+        $("input[name=cp_method]").not("[value=0]").attr("disabled", true);
         $("#cp_amount_label").text("할인금액");
         $("#cp_amount_unit").text("원");
         $("#cp_trunc_dsp").hide();
@@ -148,9 +148,9 @@ $(function() {
         $("#ca_id_dsp").hide();
     } else {
         $("#cp_minimum_dsp").show();
-        $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", true);
-        $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("disabled", false);
-        $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", false);
+        $("input[name=cp_target]").not("[value=3]").attr("disabled", true);
+        $("input[name=cp_target]").filter("[value=3]").attr("disabled", false);
+        $("input[name=cp_method]").not("[value=0]").attr("disabled", false);
         $("#it_id_dsp").hide();
         $("#ca_id_dsp").hide();
     }
@@ -166,22 +166,22 @@ $(function() {
         $("#ca_id_dsp").hide();
     }
     <?php } ?>
-    $("input[id="cp_type" name="cp_type"]").click(function() {
+    $("input[name=cp_type]").click(function() {
         var val = $(this).val();
         if(val == "0") { // 상품할인
             $("#cp_minimum_dsp").hide();
-            $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", false);
-            $("input[id="cp_target" name="cp_target"]").filter("[value=0]").attr("checked", true);
-            $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("disabled", true);
-            $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", false);
+            $("input[name=cp_target]").not("[value=3]").attr("disabled", false);
+            $("input[name=cp_target]").filter("[value=0]").attr("checked", true);
+            $("input[name=cp_target]").filter("[value=3]").attr("disabled", true);
+            $("input[name=cp_method]").not("[value=0]").attr("disabled", false);
             $("#it_id_dsp").show();
             $("#ca_id_dsp").hide();
         } else if(val == "2") { // 배송비할인
             $("#cp_minimum_dsp").show();
-            $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", true);
-            $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("checked", true).attr("disabled", false);
-            $("input[id="cp_method" name="cp_method"]").filter("[value=0]").attr("checked", true);
-            $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", true);
+            $("input[name=cp_target]").not("[value=3]").attr("disabled", true);
+            $("input[name=cp_target]").filter("[value=3]").attr("checked", true).attr("disabled", false);
+            $("input[name=cp_method]").filter("[value=0]").attr("checked", true);
+            $("input[name=cp_method]").not("[value=0]").attr("disabled", true);
             $("#cp_amount_label").text("할인금액");
             $("#cp_amount_unit").text("원");
             $("#cp_trunc_dsp").hide();
@@ -190,15 +190,15 @@ $(function() {
             $("#ca_id_dsp").hide();
         } else {
             $("#cp_minimum_dsp").show();
-            $("input[id="cp_target" name="cp_target"]").not("[value=3]").attr("disabled", true);
-            $("input[id="cp_target" name="cp_target"]").filter("[value=3]").attr("checked", true).attr("disabled", false);
-            $("input[id="cp_method" name="cp_method"]").not("[value=0]").attr("disabled", false);
+            $("input[name=cp_target]").not("[value=3]").attr("disabled", true);
+            $("input[name=cp_target]").filter("[value=3]").attr("checked", true).attr("disabled", false);
+            $("input[name=cp_method]").not("[value=0]").attr("disabled", false);
             $("#it_id_dsp").hide();
             $("#ca_id_dsp").hide();
         }
     });
 
-    $("input[id="cp_method" name="cp_method"]").click(function() {
+    $("input[name=cp_method]").click(function() {
         var val = $(this).val();
         if(val == "1") { // 정율할인
             $("#cp_amount_label").text("할인비율");
@@ -213,7 +213,7 @@ $(function() {
         }
     });
 
-    $("input[id="cp_target" name="cp_target"]").click(function() {
+    $("input[name=cp_target]").click(function() {
         var val = $(this).val();
         if(val == "2") { // 전체상품
             $("#it_id_dsp").hide();
@@ -227,33 +227,33 @@ $(function() {
         }
     });
 
-    $("input[id="allcategory" name="allcategory"]").click(function() {
+    $("input[name=allcategory]").click(function() {
         if($(this).is(":checked")) {
-            $("input[id="ca_id" name="ca_id"]").val("전체카테고리");
+            $("input[name=ca_id]").val("전체카테고리");
         } else {
-            $("input[id="ca_id" name="ca_id"]").val("");
+            $("input[name=ca_id]").val("");
         }
     });
 
-    $("input[id="allmember" name="allmember"]").click(function() {
+    $("input[name=allmember]").click(function() {
         if($(this).is(":checked")) {
-            $("input[id="mb_id" name="mb_id"]").val("전체회원");
+            $("input[name=mb_id]").val("전체회원");
         } else {
-            $("input[id="mb_id" name="mb_id"]").val("");
+            $("input[name=mb_id]").val("");
         }
     });
 
     $("form#fcoupon").submit(function() {
-        var cp_subject = $.trim($("input[id="cp_subject" name="cp_subject"]").val());
-        var cp_type = $("input[id="cp_type" name="cp_type"]:checked").val();
-        var cp_target = $("input[id="cp_target" name="cp_target"]:checked").val();
-        var cp_method = $("input[id="cp_method" name="cp_method"]:checked").val();
-        var cp_amount = $.trim($("input[id="cp_amount" name="cp_amount"]").val()).replace(/[^0-9]/, "");
-        var cp_start = $.trim($("input[id="cp_start" name="cp_start"]").val());
-        var cp_end = $.trim($("input[id="cp_end" name="cp_end"]").val());
-        var it_id = $.trim($("input[id="it_id" name="it_id"]").val());
-        var ca_id = $.trim($("input[id="ca_id" name="ca_id"]").val());
-        var mb_id = $.trim($("input[id="mb_id" name="mb_id"]").val());
+        var cp_subject = $.trim($("input[name=cp_subject]").val());
+        var cp_type = $("input[name=cp_type]:checked").val();
+        var cp_target = $("input[name=cp_target]:checked").val();
+        var cp_method = $("input[name=cp_method]:checked").val();
+        var cp_amount = $.trim($("input[name=cp_amount]").val()).replace(/[^0-9]/, "");
+        var cp_start = $.trim($("input[name=cp_start]").val());
+        var cp_end = $.trim($("input[name=cp_end]").val());
+        var it_id = $.trim($("input[name=it_id]").val());
+        var ca_id = $.trim($("input[name=ca_id]").val());
+        var mb_id = $.trim($("input[name=mb_id]").val());
 
         if(cp_subject == "") {
             alert("쿠폰명을 입력해 주세요.");
@@ -349,5 +349,5 @@ function leadzeros(n, digits) {
 </script>
 
 <?
-include_once ($g4['admin_path'].'/admin.tail.php');
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

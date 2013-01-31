@@ -1,6 +1,7 @@
 <?
 $sub_menu = "400640";
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -25,7 +26,7 @@ if ($sel_field == "")  {
 }
 
 $sql_common = " from $g4[yc4_item_table] a
-                left join $g4[yc4_event_item_table] b on (a.it_id="b".it_id and b.ev_id='$ev_id') ";
+                left join $g4[yc4_event_item_table] b on (a.it_id=b.it_id and b.ev_id='$ev_id') ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
@@ -68,10 +69,10 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         $event_option = "<option value=''>이벤트를 선택하세요";
         $sql1 = " select ev_id, ev_subject from $g4[yc4_event_table] order by ev_id desc ";
         $result1 = sql_query($sql1);
-        while ($row1=mysql_fetch_array($result1)) 
+        while ($row1=mysql_fetch_array($result1))
             $event_option .= "<option value='$row1[ev_id]'>".conv_subject($row1[ev_subject], 20,"…");
-        
-        echo "<select id="ev_id" name="ev_id" onchange='this.form.submit();'>$event_option</select>";
+
+        echo "<select id=\"ev_id\" name=\"ev_id\" onchange='this.form.submit();'>$event_option</select>";
         if ($ev_id)
             echo "<script> document.flist.ev_id.value = '$ev_id'; </script>";
         ?>
@@ -82,7 +83,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <?
         $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
         $result1 = sql_query($sql1);
-        for ($i=0; $row1=mysql_fetch_array($result1); $i++) 
+        for ($i=0; $row1=mysql_fetch_array($result1); $i++)
         {
             $len = strlen($row1[ca_id]) / 2 - 1;
             $nbsp = "";
@@ -129,7 +130,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 <?
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     $href = "{$g4[shop_path]}/item.php?it_id=$row[it_id]";
 
@@ -139,13 +140,24 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $ev = sql_fetch($sql);
 
     $list = $i%2;
+
+    // 리스트 썸네일 이미지
+    $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
+    for($k=1; $k<=10; $k++) {
+        $idx = 'it_img'.$k;
+        if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
+            $filename = $row[$idx];
+            break;
+        }
+    }
+
     echo "
-    <input type="hidden" name='it_id[$i]' value='$row[it_id]'>
+    <input type=\"hidden\" name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list center'>
-        <td><input type="checkbox" name='ev_chk[$i]' ".($row[ev_id] ? "checked" : "")." value='1'></td>
+        <td><input type=\"checkbox\" name='ev_chk[$i]' ".($row[ev_id] ? "checked" : "")." value='1'></td>
         <td><a href='$href'>$row[it_id]</a></td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
-        <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td> 
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], $filename, 50, 50)."</a></td>
+        <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td>
     </tr>";
 }
 
@@ -168,7 +180,7 @@ if ($i == 0)
 <script language="JavaScript">
 function fitemeventlistupdatecheck(f)
 {
-    if (!f.ev_id.value) 
+    if (!f.ev_id.value)
     {
         alert('이벤트를 선택하세요');
         document.flist.ev_id.focus();

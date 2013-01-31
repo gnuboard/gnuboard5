@@ -15,7 +15,7 @@ if($stx) {
 }
 
 $g4['title'] = "상품찾기";
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <style type="text/css">
@@ -78,7 +78,7 @@ form { display: inline; }
 <script>
 $(function() {
     $("#fitem").submit(function() {
-        var stx = $.trim($("input[id="stx" name="stx"]").val());
+        var stx = $.trim($("input[name=stx]").val());
         if(stx == "") {
             alert("검색어를 입력해 주세요.");
             return false;
@@ -87,7 +87,7 @@ $(function() {
         return true;
     });
 
-    $("input[id="check_all" name="check_all"]").click(function() {
+    $("input[name=check_all]").click(function() {
         if($(this).is(":checked")) {
             $("input[name^=s_it_id]").attr("checked", true);
         } else {
@@ -124,7 +124,7 @@ $(function() {
             }
         });
 
-        $opener.$("input[id="it_id" name="it_id"]").val(itid);
+        $opener.$("input[name=it_id]").val(itid);
         self.close();
 
         return false;
@@ -133,5 +133,5 @@ $(function() {
 </script>
 
 <?php
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>
