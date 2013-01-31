@@ -19,7 +19,7 @@ $sql = " select *
 $result = sql_query($sql);
 
 $g4['title'] = "추가배송비관리";
-include_once ($g4['admin_path']."/admin.head.php");
+include_once (G4_ADMIN_PATH."/admin.head.php");
 ?>
 
 <style type="text/css">
@@ -129,5 +129,5 @@ $(function() {
 </script>
 
 <?php
-include_once ($g4['admin_path']."/admin.tail.php");
+include_once (G4_ADMIN_PATH."/admin.tail.php");
 ?>
