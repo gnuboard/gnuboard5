@@ -41,7 +41,7 @@ if(!$ct_count) {
 }
 
 $g4['title'] = '선택사항/수량 변경';
-include_once ($g4['path'].'/head.sub.php');
+include_once (G4_PATH.'/head.sub.php');
 ?>
 
 <style type="text/css">
@@ -193,10 +193,10 @@ $(function() {
 
         if((idx + 1) < option_count) {
             if(val == '') {
-                var $gt_select = $("select[name^=item-option-]:gt(" + idx + ")");
-                $gt_select.val("");
-                $gt_select.attr("disabled", true);
+                $("select[name^=item-option-]:gt(" + idx + ")").val("").attr("disabled", true);
             } else {
+                $("select[name^=item-option-]:gt(" + idx + ")").val("").attr("disabled", true);
+
                 var $next_select = $option_select.eq(idx + 1);
 
                 // 옵션정보갱신
@@ -510,5 +510,5 @@ function calculatePrice()
 </script>
 
 <?php
-include_once($g4['path'] . '/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>
