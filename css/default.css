@@ -233,6 +233,12 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 
 #memo_write textarea {height:100px}
 
+/* 스크랩 */
+#scrap_do .cbg {margin:0 auto 20px;padding:20px;width:87%}
+#scrap_do table {margin:0 0 10px;width:100%}
+#scrap_do textarea {height:100px}
+
+
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:100px auto;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
