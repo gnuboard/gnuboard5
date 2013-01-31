@@ -1,5 +1,6 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 /*
     $s_page 는 cart.php 일때 수량의 수정, 물품의 삭제를 위한 변수이다.
@@ -88,17 +89,7 @@ $sql = " select a.ct_id,
                 b.it_option_use,
                 b.it_supplement_use,
                 b.it_nocoupon,
-                b.it_notax,
-                b.it_img1,
-                b.it_img2,
-                b.it_img3,
-                b.it_img4,
-                b.it_img5,
-                b.it_img6,
-                b.it_img7,
-                b.it_img8,
-                b.it_img9,
-                b.it_img10
+                b.it_notax
           from {$g4['yc4_cart_table']} as a left join {$g4['yc4_item_table']} as b on ( a.it_id = b.it_id )
             where $sql_where
               and a.ct_parent = '0'
@@ -156,24 +147,14 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $continue_ca_id = $row['ca_id'];
     }
 
-    // 리스트 썸네일 이미지
-    $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
-    for($k=1; $k<=10; $k++) {
-        $idx = 'it_img'.$k;
-        if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
-            $filename = $row[$idx];
-            break;
-        }
-    }
-
     if ($s_page == "cart.php" || $s_page == "orderinquiryview.php") { // 링크를 붙이고
         $a1 = "<a href='./item.php?it_id={$row['it_id']}'>";
         $a2 = "</a>";
-        $image = get_it_image($row['it_id'], $filename, 50, 50, $row['it_id']);
+        $image = get_it_image($row['it_id'], 50, 50, $row['it_id']);
     } else { // 붙이지 않고
         $a1 = "";
         $a2 = "";
-        $image = get_it_image($row['it_id'], $filename, 50, 50);
+        $image = get_it_image($row['it_id'], 50, 50);
     }
 
     $it_name = $a1 . stripslashes($row['it_name']) . $a2 . '<br />';
