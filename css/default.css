@@ -240,6 +240,12 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 
 /* 쪽지 */
 #memo_view section {margin:0 auto 20px;padding:20px;width:87%}
+#memo_view section h2 {width:0;height:0;overflow:hidden}
+#memo_view_ul {margin:0;padding:0 0 10px;border-bottom:1px solid #f7f7f2;list-style:none}
+.memo_view_li {position:relative;padding:5px 0}
+.memo_view_subj {display:inline-block;width:65px}
+#memo_view_ul a {color:#000;text-decoration:none}
+#memo_view section p {min-height:150px;height:auto !important;height:150px}
 
 #memo_write textarea {height:100px}
 
