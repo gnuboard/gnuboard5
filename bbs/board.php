@@ -176,7 +176,7 @@ if ($board['bo_use_nogood'])
 $admin_href = "";
 // 최고관리자 또는 그룹관리자라면
 if ($member['mb_id'] && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id']))
-    $admin_href = G4_ADM_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
+    $admin_href = G4_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
 include_once('./board_head.php');
 
