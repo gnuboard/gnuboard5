@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <div id="reg_result" class="cbg">
 
-    <div id="reg_result_logo"><img src="<?=$member_skin_url?>img/reg_result_logo.jpg" alt=""></div>
+    <div id="reg_result_logo"><a href="<?=$g4['url']?>/"><img src="<?=$member_skin_url?>/img/reg_result_logo.jpg" alt="메인으로"></a></div>
 
     <p>
         <strong><?=$mb['mb_name']?></strong>님의 회원가입을 진심으로 축하합니다.<br>
