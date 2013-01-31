@@ -4,8 +4,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 $begin_time = get_microtime();
 
-if (!isset($g4['title']))
+if (!isset($g4['title'])) // 페이지 제목이 없으면 환경설정의 홈페이지 제목 출력
     $g4['title'] = $config['cf_title'];
+else // 페이지 제목이 있으면 페이지 제목에 환경설정의 홈페이지 제목을 더해서 출력
+    $g4['title'] .= " : ".$config['cf_title'];
 
 // 현재 접속자
 //$lo_location = get_text($g4[title]);
