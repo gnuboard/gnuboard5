@@ -19,6 +19,18 @@ window.close();
 </script>
 
 <noscript>
+<div id="validation_check">
+    <h1><?=$header2?></h1>
+    <p class="cbg">
+        <?=$msg2?>
+    </p>
+    <p class="cbg">
+        <?=$msg3?>
+    </p>
+
+</div>
+
+<? /*
 <article id="validation_check">
 <header>
     <hgroup>
@@ -40,6 +52,8 @@ window.close();
 </p>
 
 </article>
+*/?>
+
 </noscript>
 
 <?

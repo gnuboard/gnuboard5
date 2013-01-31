@@ -1,7 +1,7 @@
 <?
 global $lo_location;
 global $lo_url;
-
+$g4['title'] = "오류가 있습니다.";
 include_once('./_common.php');
 include_once(G4_PATH.'/head.sub.php');
 // 필수 입력입니다.
@@ -32,6 +32,9 @@ if($error) {
     $header2 = "다음 내용을 확인해 주세요.";
 }
 ?>
+<div id="validation_check">
+
+    <h1><?=$header2?></h1>
 
 <script>
 alert("<? echo $msg; ?>");
@@ -39,6 +42,14 @@ document.location.href = "<? echo $url; ?>";
 </script>
 
 <noscript>
+    <p class="cbg">
+        <?=$msg2?>
+    </p>
+    <div class="btn_confirm">
+        <a href="<?=$url?>">돌아가기</a>
+    </div>
+
+<? /*
 <article id="validation_check">
 <header>
     <hgroup>
@@ -58,7 +69,11 @@ document.location.href = "<? echo $url; ?>";
 
 <a href="<?=$url?>">돌아가기</a>
 </article>
+*/ ?>
+
 </noscript>
+
+</div>
 
 <?
 include_once(G4_PATH.'/tail.sub.php');
