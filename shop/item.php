@@ -188,7 +188,7 @@ else
         <table cellpadding=0 cellspacing=0>
             <tr><td height=22></td></tr>
             <tr><td colspan=3 align=center>
-                <table cellpadding=1 cellspacing=0 bgcolor=#E4E4E4><tr><td id="middle_image"><?=get_large_image($filename, $it['it_id'], false)?><?=get_it_image($it['it_id'], $filename, $default['de_mimg_width'], $default['de_mimg_height']);?></a></td></tr></table></td></tr>
+                <table cellpadding=1 cellspacing=0 bgcolor=#E4E4E4><tr><td id="middle_image"><?=get_large_image($filename, $it['it_id'], false)?><?=get_it_image($it['it_id'], $default['de_mimg_width'], $default['de_mimg_height']);?></a></td></tr></table></td></tr>
             <tr><td colspan=3 height=10></td></tr>
             <tr>
                 <td colspan=3 align=center>
@@ -200,8 +200,8 @@ else
                     if (file_exists($filepath.'/'.$filename) && $filename != "")
                     {
                         echo get_large_image($filename, $it['it_id'], false);
-                        echo get_it_image($it['it_id'], $filename, 40, 40, "", "item_view_thumbnail");
-                        echo "</a> &nbsp;";
+                        echo "<img id=\"".$filename."\" src=\"".G4_DATA_URL."/item/".$it['it_id']."/".it_img_thumb($filename, $filepath, 40, 40)."\" class=\"item_view_thumbnail\" />";
+                        echo "&nbsp;";
                     }
                 }
                 ?>
@@ -944,7 +944,7 @@ function optionDisplay()
                 optioncontent += "<input type=\"hidden\" name=\"opt_id[]\" value=\""+ opt_id + "\" />";
                 optioncontent += "<input type=\"hidden\" name=\"ct_option[]\" value=\""+ option + "\" />";
                 optioncontent += "<input type=\"hidden\" name=\"ct_amount[]\" value=\"" + data.amount + "\" />";
-                optioncontent += "<span class=\"option-stock>" + data.qty + "</span>";
+                optioncontent += "<span class=\"option-stock\">" + data.qty + "</span>";
                 optioncontent += "<span class=\"selected-option\">" + option + "</span>";
                 optioncontent += "<span class=\"option-price\"> (+" + number_format(String(data.amount)) + "원)</span>";
                 optioncontent += "<span class=\"item-count\"> <input type=\"text\" name=\"ct_qty[]\" value=\"1\" maxlength=\"4\" /></span>";

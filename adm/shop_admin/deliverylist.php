@@ -33,13 +33,13 @@ if ($sel_ca_id != "") {
 
 if ($sel_field == "")  $sel_field = "od_id";
 
-$sql_common = " from $g4[yc4_order_table] a
-                left join $g4[yc4_cart_table] b on (a.on_uid="b".on_uid)
+$sql_common = " from $g4[yc4_cart_table] a
+                left join $g4[yc4_order_table] b on ( a.uq_id = b.od_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
 if ($chk_misu) {
-    $sql  = " select od_id, a.*, "._MISU_QUERY_." $sql_common group by od_id having  misu <= 0 ";
+    $sql  = " select b.od_id, b.*, "._MISU_QUERY_." $sql_common group by b.od_id having  misu <= 0 ";
     $result = sql_query($sql);
     $total_count = mysql_num_rows($result);
 }
@@ -136,10 +136,10 @@ if ($chk_misu)
 $sql .= "  order by $sort1 $sort2/* 김선용 심각한 트래픽으로 미사용, a.od_invoice asc*/
           limit $from_record, $config[cf_page_rows] ";
 $result = sql_query($sql);
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     $invoice_time = $g4[time_ymdhis];
-    if (!is_null_time($row[od_invoice_time])) 
+    if (!is_null_time($row[od_invoice_time]))
         $invoice_time = $row[od_invoice_time];
 
     $sql1 = " select * from $g4[member_table] where mb_id = '$row[mb_id]' ";
@@ -153,8 +153,8 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     $list = $i%2;
     echo "
-    <input type="hidden" name='od_id[$i]' value='$row[od_id]'>
-    <input type="hidden" name='on_uid[$i]' value='$row[on_uid]'>
+    <input type=\"hidden\" name='od_id[$i]' value='$row[od_id]'>
+    <input type=\"hidden\" name='on_uid[$i]' value='$row[on_uid]'>
     <tr class='list$list center ht'>
         <td><a href='./orderform.php?od_id=$row[od_id]'>$row[od_id]</a></td>
         <td>$row[od_name]</td>
@@ -162,17 +162,17 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         <td align=right>".display_amount($row[receiptamount])."&nbsp;</td>
         <td align=right>".display_amount($row[misu])."&nbsp;</td>
         <td>$hope_date</td>
-        <td><input type="text" name='od_invoice_time[$i]' class=ed size=20 maxlength=19 value='$invoice_time'></td>
+        <td><input type=\"text\" name='od_invoice_time[$i]' class=ed size=20 maxlength=19 value='$invoice_time'></td>
         <td>
-            <select id="dl_id" name="dl_id"[$i]>
+            <select id=\"dl_id\" name=\"dl_id[$i]\">
             <option value=''>--------
             $delivery_options
             </select>
         </td>
         <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
-        <input type="hidden" name='save_dl_id[$i]' value='$row[dl_id]'>
-        <input type="hidden" name='save_od_invoice[$i]' value='$row[od_invoice]'>
-        <td><input type="text" name='od_invoice[$i]' class=ed size=10 value='$row[od_invoice]'></td>
+        <input type=\"hidden\" name='save_dl_id[$i]' value='$row[dl_id]'>
+        <input type=\"hidden\" name='save_od_invoice[$i]' value='$row[od_invoice]'>
+        <td><input type=\"text\" name='od_invoice[$i]' class=ed size=10 value='$row[od_invoice]'></td>
         <td>$row[it_hit]</td>
     </tr>";
 

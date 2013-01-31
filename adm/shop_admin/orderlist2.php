@@ -1,6 +1,7 @@
 <?
 $sub_menu = "400420";
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -25,8 +26,8 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from $g4[yc4_order_table] a
-                left join $g4[yc4_cart_table] b on (a.on_uid="b".on_uid)
+$sql_common = " from $g4[yc4_cart_table] a
+                left join $g4[yc4_order_table] b on ( a.uq_id = b.od_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -38,10 +39,10 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select a.od_id,
-                 a.*, "._MISU_QUERY_."
+$sql  = " select b.od_id,
+                 b.*, "._MISU_QUERY_."
            $sql_common
-           group by a.od_id
+           group by b.od_id
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql);
@@ -169,6 +170,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         echo "<tr><td colspan=12 height=1 bgcolor='#CCCCCC'></td></tr>";
 
     $list = $i%2;
+
     echo "
     <tr class='list$list ht'>
         <td align=center title='주문일시 : $row[od_time]'><a href='$g4[shop_path]/orderinquiryview.php?od_id=$row[od_id]&on_uid=$row[on_uid]'>$row[od_id]</a></td>
@@ -197,7 +199,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $sql2 = " select c.it_name,
                      b.*
                 from $g4[yc4_order_table] a
-                left join $g4[yc4_cart_table] b on (a.on_uid = b.on_uid)
+                left join $g4[yc4_cart_table] b on (a.od_id = b.uq_id)
                 left join $g4[yc4_item_table] c on (b.it_id = c.it_id)
                where od_id = '$row[od_id]' ";
     $result2 = sql_query($sql2);
@@ -216,7 +218,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
             <td colspan=3>
                 <table width=100% cellpadding=0 cellspacing=0>
                 <tr>
-                	<td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row2[it_id]}_s", 50, 50)."</a></td>
+                	<td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row2[it_id], 50, 50)."</a></td>
                 	<td>$it_name</td>
                 </tr>
                 </table></td>

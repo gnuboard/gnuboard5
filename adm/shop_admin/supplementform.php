@@ -49,7 +49,7 @@ if($spl_count) {
 }
 
 $g4['title'] = $html_title;
-include_once ($g4['path'].'/head.sub.php');
+include_once (G4_PATH.'/head.sub.php');
 ?>
 
 <style type="text/css">
@@ -212,5 +212,5 @@ function supplementTableMake(makemode)
 </script>
 
 <?php
-include_once($g4['path'] . '/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

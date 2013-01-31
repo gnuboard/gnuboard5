@@ -36,13 +36,13 @@ if($makemode) {
 ?>
 
 <table width="650" cellpadding="0" cellspacing="0" border="0">
-<input type="hidden" id="it_id" name="it_id" value="<? echo $it_id; ?>" />
-<input type="hidden" id="w" name="w" value="<? echo $w; ?>" />
-<input type="hidden" id="makemode" name="makemode" value="" />
+<input type="hidden" name="it_id" value="<? echo $it_id; ?>" />
+<input type="hidden" name="w" value="<? echo $w; ?>" />
+<input type="hidden" name="makemode" value="" />
 <tr>
     <td colspan="<?php echo ($option_count + 5); ?>" height="50">
-    <b>추가금액</b> <input type="text" id="common_amount" name="common_amount" value="" size="5" />&nbsp;&nbsp;&nbsp;<b>재고수량</b> <input type="text" id="common_qty" name="common_qty" value="" size="5" />&nbsp;&nbsp;&nbsp;<b>통보수량</b> <input type="text" id="common_notice" name="common_notice" value="" size="5" />
-    &nbsp;&nbsp;&nbsp;<b>사용여부</b> <select id="common_use" name="common_use">
+    <b>추가금액</b> <input type="text" name="common_amount" value="" size="5" />&nbsp;&nbsp;&nbsp;<b>재고수량</b> <input type="text" name="common_qty" value="" size="5" />&nbsp;&nbsp;&nbsp;<b>통보수량</b> <input type="text" name="common_notice" value="" size="5" />
+    &nbsp;&nbsp;&nbsp;<b>사용여부</b> <select name="common_use">
         <option value=''>선택</option>
         <option value="1">Y</option>
         <option value="0">N</option>
@@ -50,7 +50,7 @@ if($makemode) {
     </td>
 </tr>
 <tr>
-    <td rowspan="2" width="50"><input type="checkbox" id="all_check" name="all_check" value="1" /></td>
+    <td rowspan="2" width="50"><input type="checkbox" name="all_check" value="1" /></td>
     <th colspan="<?php echo $option_count; ?>" align="center">옵션항목</th>
     <th rowspan="2" width="75">추가금액</th>
     <th rowspan="2" width="75">재고수량</th>
@@ -74,7 +74,7 @@ if($rec_count) {
         $str .= '<tr>';
         $opt_id = $list[$i]['opt_id'];
 
-        $str .= '<td><input type="checkbox" id="list_check[]" name="list_check[]" value="1" /><input type="hidden" id="opt_id[]" name="opt_id[]" value="'. $opt_id . '" /></td>';
+        $str .= '<td><input type="checkbox" name="list_check[]" value="1" /><input type="hidden" name="opt_id[]" value="'. $opt_id . '" /></td>';
 
         if(trim($opt[0])) {
             $str .= '<td class="cell-opt1">' . $opt[0] . '</td>';
@@ -96,10 +96,10 @@ if($rec_count) {
             $opt_use0 = ' selected="selected"';
         }
 
-        $str .= '<td><input type="text" id="opt_amount[]" name="opt_amount[]" value="' . $list[$i]['opt_amount'] . '" size="5" /></td>';
-        $str .= '<td><input type="text" id="opt_qty[]" name="opt_qty[]" value="' . $list[$i]['opt_qty'] . '" size="5" /></td>';
-        $str .= '<td><input type="text" id="opt_notice[]" name="opt_notice[]" value="' . $list[$i]['opt_notice'] . '" size="5" /></td>';
-        $str .= '<td><select id="opt_use[]" name="opt_use[]"><option value="1"'.$opt_use1.'>Y</option><option value="0"'.$opt_use0.'>N</option></select>';
+        $str .= '<td><input type="text" name="opt_amount[]" value="' . $list[$i]['opt_amount'] . '" size="5" /></td>';
+        $str .= '<td><input type="text" name="opt_qty[]" value="' . $list[$i]['opt_qty'] . '" size="5" /></td>';
+        $str .= '<td><input type="text" name="opt_notice[]" value="' . $list[$i]['opt_notice'] . '" size="5" /></td>';
+        $str .= '<td><select name="opt_use[]"><option value="1"'.$opt_use1.'>Y</option><option value="0"'.$opt_use0.'>N</option></select>';
         $str .= '</tr>';
     }
 } else {
@@ -133,12 +133,12 @@ if($rec_count) {
                     $opt_id .= chr(30) . $opt3_item[$k];
                 }
 
-                $str .= '<td><input type="checkbox" id="list_check[]" name="list_check[]" value="1" /><input type="hidden" id="opt_id[]" name="opt_id[]" value="'. $opt_id . '" /></td>';
+                $str .= '<td><input type="checkbox" name="list_check[]" value="1" /><input type="hidden" name="opt_id[]" value="'. $opt_id . '" /></td>';
                 $str .= $str1 . $str2 . $str3;
-                $str .= '<td><input type="text" id="opt_amount[]" name="opt_amount[]" value="0" size="5" /></td>';
-                $str .= '<td><input type="text" id="opt_qty[]" name="opt_qty[]" value="0" size="5" /></td>';
-                $str .= '<td><input type="text" id="opt_notice[]" name="opt_notice[]" value="0" size="5" /></td>';
-                $str .= '<td><select id="opt_use[]" name="opt_use[]"><option value="1">Y</option><optoin value="0">N</option></select>';
+                $str .= '<td><input type="text" name="opt_amount[]" value="0" size="5" /></td>';
+                $str .= '<td><input type="text" name="opt_qty[]" value="0" size="5" /></td>';
+                $str .= '<td><input type="text" name="opt_notice[]" value="0" size="5" /></td>';
+                $str .= '<td><select name="opt_use[]"><option value="1">Y</option><optoin value="0">N</option></select>';
                 $str .= '</tr>';
             }
         }
@@ -158,7 +158,7 @@ echo $str;
 <script>
 $(document).ready(function() {
     // 모두선택
-    $('input[id="all_check" name="all_check"]').click(function() {
+    $('input[name=all_check]').click(function() {
         if($(this).is(':checked')) {
             $('input[name^=list_check]').attr('checked', true);
         } else {
@@ -168,10 +168,10 @@ $(document).ready(function() {
 
     // 일괄수정
     $('button#common_modify').click(function() {
-        var common_amount = $.trim($('input[id="common_amount" name="common_amount"]').val());
-        var common_qty = $.trim($('input[id="common_qty" name="common_qty"]').val());
-        var common_notice = $.trim($('input[id="common_notice" name="common_notice"]').val());
-        var common_use = $('select[id="common_use" name="common_use"]').val();
+        var common_amount = $.trim($('input[name=common_amount]').val());
+        var common_qty = $.trim($('input[name=common_qty]').val());
+        var common_notice = $.trim($('input[name=common_notice]').val());
+        var common_use = $('select[name=common_use]').val();
 
         if(common_amount == '' && common_qty == '' && common_notice == '' && common_use == '') {
             alert('추가금액, 재고수량, 통보수량, 사용여부 중 1개 이상의 값을 입력해 주세요.');

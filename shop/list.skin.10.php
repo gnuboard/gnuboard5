@@ -14,21 +14,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         echo "<tr>\n";
     }
 
-    // 리스트 썸네일 이미지
-    $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
-    for($k=1; $k<=10; $k++) {
-        $idx = 'it_img'.$k;
-        if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
-            $filename = $row[$idx];
-            break;
-        }
-    }
-
     echo "
     <td width='{$td_width}%' align=center valign=top>
         <br>
         <table width=98% cellpadding=2 cellspacing=0>
-        <tr><td align=center>".get_it_image($row['it_id'], $filename, $img_width , $img_height, $row['it_id'])."</td></tr>
+        <tr><td align=center>".get_it_image($row['it_id'], $img_width , $img_height, $row['it_id'])."</td></tr>
         <tr><td align=center>".it_name_icon($row)."</td></tr>";
 
     if ($row[it_cust_amount] && !$row[it_gallery])

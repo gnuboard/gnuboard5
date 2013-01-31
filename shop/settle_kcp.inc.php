@@ -3,11 +3,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $test = "";
 
-<<<<<<< HEAD
-$default['de_card_test'] = 1;
-$default['de_escrow_use'] = 1;
-=======
->>>>>>> a811b2f9cff6268823ba4ef76b9e57769cf04bc6
 if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
         // 에스크로결제 테스트
