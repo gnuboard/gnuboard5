@@ -38,7 +38,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
         <!-- 댓글 출력 -->
         <p>
-            <? if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"\" alt=\"비밀글\">";?><br>
+            <? if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"\" alt=\"비밀글\"><br>";?>
             <?=$str?>
         </p>
 
