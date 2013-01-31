@@ -944,7 +944,7 @@ function optionDisplay()
                 optioncontent += "<input type=\"hidden\" name=\"opt_id[]\" value=\""+ opt_id + "\" />";
                 optioncontent += "<input type=\"hidden\" name=\"ct_option[]\" value=\""+ option + "\" />";
                 optioncontent += "<input type=\"hidden\" name=\"ct_amount[]\" value=\"" + data.amount + "\" />";
-                optioncontent += "<span class=\"option-stock>" + data.qty + "</span>";
+                optioncontent += "<span class=\"option-stock\">" + data.qty + "</span>";
                 optioncontent += "<span class=\"selected-option\">" + option + "</span>";
                 optioncontent += "<span class=\"option-price\"> (+" + number_format(String(data.amount)) + "원)</span>";
                 optioncontent += "<span class=\"item-count\"> <input type=\"text\" name=\"ct_qty[]\" value=\"1\" maxlength=\"4\" /></span>";
