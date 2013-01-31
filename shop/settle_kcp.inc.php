@@ -2,14 +2,17 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $test = "";
+
+$default['de_card_test'] = 1;
+$default['de_escrow_use'] = 1;
 if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
-        // 일반결제 테스트
+        // 에스크로결제 테스트
         $default['de_kcp_mid'] = "T0007";
         $default['de_kcp_site_key'] = '2.mDT7R4lUIfHlHq4byhYjf__';
     }
     else {
-        // 에스크로결제 테스트
+        // 일반결제 테스트
         $default['de_kcp_mid'] = "T0000";
         $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
     }
@@ -19,6 +22,7 @@ if ($default['de_card_test']) {
 else {
     $default['de_kcp_mid'] = "SR".$default['de_kcp_mid'];
 }
+
 
 if (strtolower($g4['charset']) == 'utf-8')
     $g_conf_js_url = "https://pay.kcp.co.kr/plugin/payplus{$test}_un.js";

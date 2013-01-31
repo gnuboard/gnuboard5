@@ -415,8 +415,8 @@ if ($ii) {
         $img_url = G4_DATA_URL."/item/$it_id/{$it[$idx]}";
         if (file_exists($img) && is_file($img)) {
             $size = getimagesize($img);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('img$i', $size[0], $size[1]);\"><input type="checkbox" id="it_img" name="it_img"{$i}_del value='1'>삭제";
-            echo "<span id="img"{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$img_url' border=1></div>";
+            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('img$i', $size[0], $size[1]);\"><input type=\"checkbox\" id=\"it_img\" name=\"it_img{$i}_del\" value=\"1\">삭제";
+            echo "<span id=\"img{$i}\" style=\"left:0; top:0; z-index:+1; display:none; position:absolute;\"><img src=\"$img_url\" border=1></div>";
         }
         ?>
     </td>
@@ -628,7 +628,7 @@ if ($ii) {
         $comma = "";
         $sql = " select b.ev_id, b.ev_subject
                    from $g4[yc4_event_item_table] a
-                   left join $g4[yc4_event_table] b on (a.ev_id="b".ev_id)
+                   left join $g4[yc4_event_table] b on (a.ev_id=b.ev_id)
                   where a.it_id = '$it_id'
                   order by b.ev_id desc ";
         $result = sql_query($sql);
@@ -730,7 +730,7 @@ if ($ii) {
         $himg_str = "";
         $himg = G4_DATA_PATH."/item/{$it[it_id]}_h";
         if (file_exists($himg)) {
-            echo "<input type="checkbox" id="it_himg_del" name="it_himg_del" value='1'>삭제";
+            echo "<input type=\"checkbox\" id=\"it_himg_del\" name=\"it_himg_del\" value=\"1\">삭제";
             $himg_str = "<img src='$himg' border=0>";
         }
         ?>
@@ -747,7 +747,7 @@ if ($ii) {
         $timg_str = "";
         $timg = G4_DATA_PATH."/item/{$it[it_id]}_t";
         if (file_exists($timg)) {
-            echo "<input type="checkbox" id="it_timg_del" name="it_timg_del" value='1'>삭제";
+            echo "<input type=\"checkbox\" id=\"it_timg_del\" name=\"it_timg_del\" value=\"1\">삭제";
             $timg_str = "<img src='$timg' border=0>";
         }
         ?>
