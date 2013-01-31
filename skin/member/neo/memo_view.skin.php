@@ -1,26 +1,32 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 $nick = get_sideview($mb['mb_id'], $mb['mb_nick'], $mb['mb_email'], $mb['mb_homepage']);
-if($kind == "recv") $kind_str = "수신";
-else $kind_str = "발신";
+if($kind == "recv") {
+    $kind_str = "보낸";
+    $kind_date = "받은";
+}
+else {
+    $kind_str = "받는";
+    $kind_date = "보낸";
+}
 ?>
 
 <div id="memo_view" class="new_win">
     <h1><?=$g4['title']?></h1>
     <ul class="new_win_ul">
-        <li><a href="./memo.php?kind=recv">수신함</a></li>
-        <li><a href="./memo.php?kind=send">발신함</a></li>
+        <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
+        <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
     </ul>
     <section class="cbg">
         <h2>쪽지 내용</h2>
         <ul id="memo_view_ul">
             <li class="memo_view_li">
-                <span class="memo_view_subj"><?=$kind_str?>자</span>
+                <span class="memo_view_subj"><?=$kind_str?>사람</span>
                 <strong><?=$nick?></strong>
             </li>
             <li class="memo_view_li">
-                <span class="memo_view_subj"><?=$kind_str?>일시</span>
+                <span class="memo_view_subj"><?=$kind_date?>시간</span>
                 <strong><?=$memo['me_send_datetime']?></strong>
             </li>
         </ul>
