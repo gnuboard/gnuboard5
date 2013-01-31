@@ -134,7 +134,7 @@ include_once('./admin.head.php');
     <td colspan="3">
         <input type="text" id="mb_zip1" name="mb_zip1" maxlength="3" readonly value="<?=$mb['mb_zip1']?>" title="우편번호 앞자리" size="3"> -
         <input type="text" id="mb_zip2" name="mb_zip2" maxlength="3" readonly value="<?=$mb['mb_zip2']?>" title="우편번호 뒷자리" size="3">
-        <a href="javascript:;" onclick="win_zip('fmember', 'mb_zip1', 'mb_zip2', 'mb_addr1', 'mb_addr2');">우편번호 검색</a><br>
+        <a href="<?=G4_BBS_URL.'/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2'?>" class="win_zip_find">우편번호 검색</a><br>
         <input type="text" id="mb_addr1" name="mb_addr1" readonly value='<?=$mb['mb_addr1']?>' title="행정기본주소" size="50"><br>
         <input type="text" id="mb_addr2" name="mb_addr2" value='<?=$mb['mb_addr2']?>' title="상세주소" size="50"> 상세주소 입력
     </td>

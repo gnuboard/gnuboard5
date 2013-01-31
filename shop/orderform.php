@@ -3,6 +3,7 @@ include_once('./_common.php');
 
 set_session('ss_direct', $sw_direct);
 
+
 $uq_id = get_session('ss_uniqid');
 
 if($sw_direct != 1)
