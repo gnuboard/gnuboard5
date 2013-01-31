@@ -143,27 +143,42 @@ function get_image($img, $width=0, $height=0)
 }
 
 // 상품 이미지를 얻는다
-function get_it_image($dir, $img, $width, $height, $it_id="", $class="", $thumbnail=true)
+function get_it_image($it_id, $width, $height, $id="", $thumbnail=true)
 {
+    global $g4;
+
     if($thumbnail && !$width)
         return "";
 
-    $src = G4_DATA_URL.'/item/'.$dir.'/'.$img;
+    $sql = " select it_id, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+                from {$g4['yc4_item_table']}
+                where it_id = '$it_id' ";
+    $row = sql_fetch($sql);
 
-    if($thumbnail) {
-        $filepath = G4_DATA_PATH.'/item/'.$dir;
+    if(!$row['it_id'])
+        return "";
 
-        if(file_exists($filepath.'/'.$img) && is_file($filepath.'/'.$img)) {
-            $src = G4_DATA_URL.'/item/'.$dir.'/'.it_img_thumb($img, $filepath, $width, $height);
+    $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
+    $filename = "";
+    for($k=1; $k<=10; $k++) {
+        $idx = 'it_img'.$k;
+        if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
+            $filename = $row[$idx];
+            break;
         }
     }
 
-    $str = "<img id=\"$img\" src=\"$src\" width=\"$width\" height=\"$height\"";
-    if($class)
-        $str .= " class=\"$class\"";
-    $str .= " />";
+    $src = G4_DATA_URL.'/item/'.$row['it_id'].'/'.$filename;
 
-    if ($it_id) {
+    if($thumbnail) {
+        if(file_exists($filepath.'/'.$filename) && is_file($filepath.'/'.$filename)) {
+            $src = G4_DATA_URL.'/item/'.$row['it_id'].'/'.it_img_thumb($filename, $filepath, $width, $height);
+        }
+    }
+
+    $str = "<img id=\"$img\" src=\"$src\" width=\"$width\" height=\"$height\" />";
+
+    if ($id) {
         $str = "<a href='".G4_SHOP_URL."/item.php?it_id=$it_id'>$str</a>";
     }
 

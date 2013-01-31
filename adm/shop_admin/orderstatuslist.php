@@ -1,6 +1,7 @@
 <?
 $sub_menu = "400410";
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -26,9 +27,9 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from $g4[yc4_order_table] a
-                left join $g4[yc4_cart_table] b on (a.on_uid = b.on_uid)
-                left join $g4[yc4_item_table] c on (b.it_id = c.it_id)
+$sql_common = " from {$g4['yc4_order_table']} a
+                left join {$g4['yc4_cart_table']} b on (a.od_id = b.uq_id)
+                left join {$g4['yc4_item_table']} c on (b.it_id = c.it_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -46,26 +47,16 @@ $sql  = " select a.od_id,
                  a.od_name,
                  a.od_deposit_name,
                  a.od_time,
-                 b.it_opt1,
-                 b.it_opt2,
-                 b.it_opt3,
-                 b.it_opt4,
-                 b.it_opt5,
-                 b.it_opt6,
+                 b.ct_option,
                  b.ct_status,
                  b.ct_qty,
+                 b.it_amount,
                  b.ct_amount,
                  b.ct_point,
-                 (b.ct_qty * b.ct_amount) as ct_sub_amount,
+                 (b.ct_qty * (b.ct_amount+b.it_amount)) as ct_sub_amount,
                  (b.ct_qty * b.ct_point)  as ct_sub_point,
                  c.it_id,
-                 c.it_name,
-                 c.it_opt1_subject,
-                 c.it_opt2_subject,
-                 c.it_opt3_subject,
-                 c.it_opt4_subject,
-                 c.it_opt5_subject,
-                 c.it_opt6_subject
+                 c.it_name
            $sql_common
            order by $sort1 $sort2
            limit $from_record, $rows ";
@@ -160,14 +151,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $s_mod = icon("수정", "./orderform.php?od_id=$row[od_id]");
 
     $list = $i%2;
+
     echo "
     <tr class='list$list center'>
         <td align=center title='주문일시 : $row[od_time]'><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=od_id&search=$row[od_id]'>$row[od_id]</a></td>
         <td align=center $od_deposit_name><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=od_name&search=$row[od_name]'>".cut_str($row[od_name],10,"")."</a></td>
         <td align=center><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search=$row[mb_id]'>$row[mb_id]</a></td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], 50, 50)."</a></td>
         <td align=left>$it_name</td>
-        <td align=right>".number_format($row[ct_amount])."&nbsp;</td>
+        <td align=right>".number_format($row[it_amount] + $row[ct_amount])."&nbsp;</td>
         <td align=center>$row[ct_qty]</td>
         <td align=right>".number_format($row[ct_sub_amount])."&nbsp;</td>
         <td align=right>".number_format($row[ct_sub_point])."&nbsp;</td>

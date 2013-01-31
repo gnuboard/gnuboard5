@@ -26,9 +26,12 @@ include_once(G4_PATH.'/head.sub.php');
         <?
         for ($i=1; $i<=10; $i++)
         {
+            $filepath = G4_DATA_PATH.'/item/'.$it_id;
             $filename = $row['it_img'.$i];
-            if (file_exists(G4_DATA_PATH."/item/{$it_id}/{$filename}") && $filename != "")
-                echo get_it_image($it_id, $filename, 50, 50, "", "image_thumbnail")."&nbsp;";
+            if (file_exists($filepath.'/'.$filename) && $filename != "") {
+                echo "<img id=\"".$filename."\" src=\"".G4_DATA_URL."/item/".$it_id."/".it_img_thumb($filename, $filepath, 50, 50)."\" class=\"image_thumbnail\" />";
+                echo "&nbsp;";
+            }
         }
         ?>
         &nbsp;</td>
