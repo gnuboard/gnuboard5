@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <div id="poll_result" class="new_win">
     <h1><?=$g4['title']?></h1>
 
-    <section id="poll_result_list">
+    <section id="poll_result_list" class="cbg">
         <h2><?=$po_subject?> 결과</h2>
 
         <dl>
@@ -30,13 +30,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
 
     <? if ($is_etc) { ?>
-    <section id="poll_result_cmt">
+    <section id="poll_result_cmt" class="cbg">
         <h2>이 설문에 대한 기타의견</h2>
 
         <? for ($i=0; $i<count($list2); $i++) { ?>
         <article>
             <header>
-                <h1><?=$list2[$i]['name']?>님의 의견</h1>
+                <h1><?=$list2[$i]['name']?>님<span class="sound_only">의 의견</span></h1>
                 <span class="poll_datetime"><?=$list2[$i]['datetime']?></span>
             </header>
             <p>
@@ -54,19 +54,18 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <input type=hidden name="w" value="">
         <input type=hidden name="skin_dir" value="<?=$skin_dir?>">
         <? if ($is_member) { ?><input type="hidden" name="pc_name" value="<?=cut_str($member['mb_nick'],255)?>"><? } ?>
-        <p><?=$po_etc?></p>
+        <h3><?=$po_etc?></h3>
         <table id="poll_result_wcmt" class="frm_tbl">
-        <caption>의견남기기</caption>
         <tbody>
         <? if ($is_guest) { ?>
         <tr>
             <th scope="row"><label for="pc_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="pc_name" name="pc_name" class="fieldset_input required" size="10" required></td>
+            <td><input type="text" id="pc_name" name="pc_name" class="fs_input required" size="10" required></td>
         </tr>
         <? } ?>
         <tr>
             <th scope="row"><label for="pc_idea">의견<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="pc_idea" name="pc_idea" class="fieldset_input required" size="47" required maxlength="100"></td>
+            <td><input type="text" id="pc_idea" name="pc_idea" class="fs_input required" size="47" required maxlength="100"></td>
         </tr>
         <? if ($is_guest) { ?>
         <tr>
