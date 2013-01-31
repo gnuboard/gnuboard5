@@ -21,7 +21,7 @@ HEREDOC;
 
 echo <<<HEREDOC
 <script>
-    if (window.name != 'scrap') {
+    if (window.name != 'win_scrap') {
         alert('올바른 방법으로 사용해 주십시오.');
         window.close();
     }
