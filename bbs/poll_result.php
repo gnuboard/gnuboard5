@@ -1,6 +1,6 @@
 <?
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '{$po_id}' ");
 if (!$po['po_id'])
