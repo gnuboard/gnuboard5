@@ -15,7 +15,7 @@ if($stx) {
 }
 
 $g4['title'] = "회원찾기";
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <style type="text/css">
@@ -83,7 +83,7 @@ form { display: inline; }
 <script>
 $(function() {
     $("#fmember").submit(function() {
-        var stx = $.trim($("input[id="stx" name="stx"]").val());
+        var stx = $.trim($("input[name=stx]").val());
         if(stx == "") {
             alert("검색어를 입력해 주세요.");
             return false;
@@ -92,7 +92,7 @@ $(function() {
         return true;
     });
 
-    $("input[id="check_all" name="check_all"]").click(function() {
+    $("input[name=check_all]").click(function() {
         if($(this).is(":checked")) {
             $("input[name^=s_mb_id]").attr("checked", true);
         } else {
@@ -129,17 +129,17 @@ $(function() {
             }
         });
 
-        $opener.$("input[id="mb_id" name="mb_id"]").val(mbid);
+        $opener.$("input[name=mb_id]").val(mbid);
         self.close();
 
         return false;
     });
     <? if($sfl) { ?>
-    $("select[id="sfl" name="sfl"]").val("<? echo $sfl; ?>");
+    $("select[name=sfl]").val("<? echo $sfl; ?>");
     <? } ?>
 });
 </script>
 
 <?php
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>

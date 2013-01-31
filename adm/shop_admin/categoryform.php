@@ -122,9 +122,9 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
     <td colspan=3>
         <?
         if ($is_admin == 'super')
-            echo "<input type="text" id="ca_mb_id" name="ca_mb_id" value='{$ca[ca_mb_id]}' maxlength=20 class=ed>";
+            echo "<input type=\"text\" id=\"ca_mb_id\" name=\"ca_mb_id\" value='{$ca[ca_mb_id]}' maxlength=20 class=ed>";
         else
-            echo "<input type="hidden" id="ca_mb_id" name="ca_mb_id" value='{$ca[ca_mb_id]}'>{$ca[ca_mb_id]}";
+            echo "<input type=\"hidden\" id=\"ca_mb_id\" name=\"ca_mb_id\" value='{$ca[ca_mb_id]}'>{$ca[ca_mb_id]}";
         ?>
     </td>
 </tr>
@@ -243,7 +243,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         $himg = "{$category_path}/{$ca[ca_id]}_h";
         if (file_exists($himg))
         {
-            echo "<input type="checkbox" id="ca_himg_del" name="ca_himg_del" value='1'>삭제";
+            echo "<input type=\"checkbox\" id=\"ca_himg_del\" name=\"ca_himg_del\" value='1'>삭제";
             $himg_str = "<img src='$himg' border=0>";
             //$size = getimagesize($himg);
             //echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('himg', $size[0], $size[1]);\">";
@@ -263,7 +263,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         $timg_str = "";
         $timg = "{$category_path}/{$ca[ca_id]}_t";
         if (file_exists($timg)) {
-            echo "<input type="checkbox" id="ca_timg_del" name="ca_timg_del" value='1'>삭제";
+            echo "<input type=\"checkbox\" id=\"ca_timg_del\" name=\"ca_timg_del\" value='1'>삭제";
             $timg_str = "<img src='$timg' border=0>";
             //$size = getimagesize($timg);
             //echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('timg', $size[0], $size[1]);\"><input type="checkbox" id="ca_timg_del" name="ca_timg_del" value='1'>삭제";

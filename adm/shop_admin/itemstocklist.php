@@ -1,6 +1,7 @@
 <?
 $sub_menu = "400620";
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -35,10 +36,20 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select it_id, 
-                 it_name, 
-                 it_use, 
-                 it_stock_qty
+$sql  = " select it_id,
+                 it_name,
+                 it_use,
+                 it_stock_qty,
+                 it_img1,
+                 it_img2,
+                 it_img3,
+                 it_img4,
+                 it_img5,
+                 it_img6,
+                 it_img7,
+                 it_img8,
+                 it_img9,
+                 it_img10
            $sql_common
           order by $sort1 $sort2
           limit $from_record, $rows ";
@@ -117,7 +128,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 </tr>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 <?
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     $href = "{$g4[shop_path]}/item.php?it_id=$row[it_id]";
 
@@ -135,17 +146,28 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $s_mod = icon("수정", "./itemform.php?w=u&it_id=$row[it_id]&ca_id=$row[ca_id]&$qstr");
 
     $list = $i%2;
+
+    // 리스트 썸네일 이미지
+    $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
+    for($k=1; $k<=10; $k++) {
+        $idx = 'it_img'.$k;
+        if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
+            $filename = $row[$idx];
+            break;
+        }
+    }
+
     echo "
-    <input type="hidden" name='it_id[$i]' value='$row[it_id]'>
+    <input type=\"hidden\" name='it_id[$i]' value='$row[it_id]'>
     <tr class='list$list center'>
-        <td>$row[it_id]</td> 
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
-        <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td> 
+        <td>$row[it_id]</td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], $filename, 50, 50)."</a></td>
+        <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td>
         <td align=right>".number_format($row[it_stock_qty])."</td>
         <td align=right>".number_format($wait_qty)."</td>
         <td align=right>".number_format($temporary_qty)."</td>
-        <td align=right><input type="text" name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=10 style='text-align:right;' autocomplete='off'></td>
-        <td><input type="checkbox" name='it_use[$i]' value='1' ".($row[it_use] ? "checked" : "")."></td>
+        <td align=right><input type=\"text\" name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=10 style='text-align:right;' autocomplete='off'></td>
+        <td><input type=\"checkbox\" name='it_use[$i]' value='1' ".($row[it_use] ? "checked" : "")."></td>
         <td>$s_mod</td>
     </tr><tr>";
 }

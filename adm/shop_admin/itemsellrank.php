@@ -1,6 +1,7 @@
 <?
 $sub_menu = "500100";
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -25,7 +26,7 @@ $sql  = " select a.it_id,
                  SUM(ct_qty) as ct_status_sum
             from $g4[yc4_cart_table] a, $g4[yc4_item_table] b ";
 $sql .= " where a.it_id = b.it_id ";
-if ($fr_date && $to_date) 
+if ($fr_date && $to_date)
 {
     $fr = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $fr_date);
     $to = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $to_date);
@@ -103,17 +104,28 @@ $qstr1 = "$qstr&sort1=$sort1&sort2=$sort2&fr_date=$fr_date&to_date=$to_date&sel_
 </tr>
 <tr><td colspan=20 height=1 bgcolor=#CCCCCC></td></tr>
 <?
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     $href = "$g4[shop_path]/item.php?it_id=$row[it_id]";
 
     $num = $rank + $i + 1;
 
     $list = $i%2;
+
+    // 리스트 썸네일 이미지
+    $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
+    for($k=1; $k<=10; $k++) {
+        $idx = 'it_img'.$k;
+        if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
+            $filename = $row[$idx];
+            break;
+        }
+    }
+
     echo "
     <tr class='list$list center'>
         <td>$num</td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], $filename, 50, 50)."</a></td>
         <td align=left><a href='$href'>".cut_str($row[it_name],30)."</a></td>
         <td>$row[ct_status_1]</td>
         <td>$row[ct_status_2]</td>
@@ -125,7 +137,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         <td>$row[ct_status_8]</td>
         <td>$row[ct_status_sum]</td>
     </tr><tr><td colspan=20 height=1 bgcolor=F5F5F5></td></tr>";
-}                         
+}
 
 if ($i == 0) {
     echo "<tr><td colspan=20 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";

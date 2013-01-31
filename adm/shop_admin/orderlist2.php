@@ -11,7 +11,7 @@ $where = " where ";
 $sql_search = "";
 if ($search != "")
 {
-	if ($sel_field != "") 
+	if ($sel_field != "")
     {
     	$sql_search .= " $where $sel_field like '%$search%' ";
         $where = " and ";
@@ -38,10 +38,10 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select a.od_id, 
+$sql  = " select a.od_id,
                  a.*, "._MISU_QUERY_."
            $sql_common
-           group by a.od_id 
+           group by a.od_id
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql);
@@ -126,7 +126,7 @@ $tot_dc_amount     = 0;
 $tot_receiptamount = 0;
 $tot_receiptcancel = 0;
 $tot_misuamount    = 0;
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     // 결제 수단
     $s_receipt_way = $s_br = "";
@@ -137,19 +137,19 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
     else
     {
-        if ($row[od_temp_bank] > 0 || $row[od_receipt_bank] > 0) 
+        if ($row[od_temp_bank] > 0 || $row[od_receipt_bank] > 0)
         {
             //$s_receipt_way = "무통장입금";
             $s_receipt_way = cut_str($row[od_bank_account],8,"");
             $s_br = "<br>";
         }
 
-        if ($row[od_temp_card] > 0 || $row[od_receipt_card] > 0) 
+        if ($row[od_temp_card] > 0 || $row[od_receipt_card] > 0)
         {
             // 미수금이 없고 카드결제를 하지 않았다면 카드결제를 선택후 무통장 입금한 경우임
             if ($row[misuamount] <= 0 && $row[od_receipt_card] == 0)
                 ; // 화면 출력하지 않음
-            else 
+            else
             {
                 $s_receipt_way .= $s_br."카드";
                 if ($row[od_receipt_card] == 0)
@@ -160,7 +160,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     if ($row[od_receipt_point] > 0)
-        $s_receipt_way .= $s_br."포인트";             
+        $s_receipt_way .= $s_br."포인트";
 
     $s_mod = icon("수정", "./orderform.php?od_id=$row[od_id]&$qstr");
     $s_del = icon("삭제", "javascript:del('./orderdelete.php?od_id=$row[od_id]&on_uid=$row[on_uid]&mb_id=$row[mb_id]&$qstr&list=2');");
@@ -194,14 +194,14 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $tot_misu          += $row[misu];
 
     // 상품개별출력
-    $sql2 = " select c.it_name, 
-                     b.* 
+    $sql2 = " select c.it_name,
+                     b.*
                 from $g4[yc4_order_table] a
                 left join $g4[yc4_cart_table] b on (a.on_uid = b.on_uid)
-                left join $g4[yc4_item_table] c on (b.it_id = c.it_id) 
+                left join $g4[yc4_item_table] c on (b.it_id = c.it_id)
                where od_id = '$row[od_id]' ";
     $result2 = sql_query($sql2);
-    for ($k=0; $row2=sql_fetch_array($result2); $k++) 
+    for ($k=0; $row2=sql_fetch_array($result2); $k++)
     {
         $href = "$g4[shop_path]/item.php?it_id=$row2[it_id]";
         $it_name = "<a href='$href'>".cut_str($row2[it_name],35)."</a><br>";
