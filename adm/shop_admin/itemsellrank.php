@@ -112,20 +112,10 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     $list = $i%2;
 
-    // 리스트 썸네일 이미지
-    $filepath = G4_DATA_PATH.'/item/'.$row['it_id'];
-    for($k=1; $k<=10; $k++) {
-        $idx = 'it_img'.$k;
-        if(file_exists($filepath.'/'.$row[$idx]) && is_file($filepath.'/'.$row[$idx])) {
-            $filename = $row[$idx];
-            break;
-        }
-    }
-
     echo "
     <tr class='list$list center'>
         <td>$num</td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], $filename, 50, 50)."</a></td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], 50, 50)."</a></td>
         <td align=left><a href='$href'>".cut_str($row[it_name],30)."</a></td>
         <td>$row[ct_status_1]</td>
         <td>$row[ct_status_2]</td>
