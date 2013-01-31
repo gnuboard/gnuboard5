@@ -226,6 +226,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
 
 <table>
 <caption>결제정보</caption>
+<tbody>
 <tr>
     <th scope="row"><label for="de_bank_account">은행계좌번호</label></th>
     <td colspan="3">
@@ -440,10 +441,12 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
     <th scope="row"><label for="">체크아웃 버튼키</label></th>
     <td colspan="3"><input type="text" id="de_checkout_button_key" name="de_checkout_button_key" value="<?=$default['de_checkout_button_key']; ?>" size="50" /></td>
 </tr>
+</tbody>
 </table>
 
 <table>
 <caption>배송정보</caption>
+<tbody>
 <tr>
     <th scope="row"><label for="de_send_cost_case">배송비유형</label></th>
     <td colspan="4">
@@ -507,12 +510,12 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
     <th scope="row"><label for="de_change_content">교환/반품</label></th>
     <td colspan="4"><?=editor_html('de_change_content', $default[de_change_content]);?></td>
 </tr>
-
+</tbody>
 </table>
-
 
 <table>
 <caption>기타정보</caption>
+<tbody>
 <tr>
     <th scope="row">관련상품출력</th>
     <td colspan="4">
@@ -653,7 +656,7 @@ include_once (G4_ADMIN_PATH."/admin.head.php");
         <input type="text" id="de_register" name="de_register" value="<?=$default[de_register]?>" size="30" required itemid="프로그램 등록번호" name="프로그램 등록번호">
     </td>
 </tr>
-
+</tbody>
 </table>
 
 
@@ -711,6 +714,7 @@ function byte_check(el_cont, el_byte)
 
 <table>
 <caption>SMS 내용설정</caption>
+<tbody>
 <tr>
 <?
 $sms_title   = array (1=>"회원가입시", "주문서작성시", "입금확인시", "상품배송시");
@@ -721,7 +725,7 @@ $sms_daesang = array (1=>"고객님께 발송", "관리자께 발송", "고객�
         <table>
         <tr><td align=center><b><?=$sms_title[$i]?></b></td></tr>
         <tr><td align=center><font color=#777777>(<?=$sms_daesang[$i]?>)</font></td></tr>
-        </table><br>
+        </table>
         <table width=165 height=191 cellpadding=0 cellspacing=0 background='./img/sms_back.gif'>
         <tr>
             <td align=center><textarea cols='16' rows='6' id='de_sms_cont<?=$i?>' name='de_sms_cont<?=$i?>' wrap=virtual ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');" style='OVERFLOW: hidden; border:solid 0; width: 100px; background-color:#C4FFFF; FONT-SIZE: 9pt; font-family:굴림체;'><?=$default["de_sms_cont".$i]?></textarea></td>
@@ -735,11 +739,12 @@ $sms_daesang = array (1=>"고객님께 발송", "관리자께 발송", "고객�
     </script>
 <? } ?>
 </tr>
-</table><br>
-
+</tbody>
+</table>
 
 <table>
 <caption>SMS 환경설정</caption>
+<tbody>
 <tr>
     <th scope="row"><label for="de_sms_use">SMS 사용</label></th>
     <td colspan="4">
