@@ -625,7 +625,7 @@ function get_supplement_subject($it_id)
     // 추가옵션명
     $subject = array();
     for($i = 0; $row = sql_fetch_array($result); $i++) {
-        $str = explode('|*|', $row['sp_id']);
+        $str = explode(chr(30), $row['sp_id']);
 
         if(!in_array($str[0], $subject)) {
             array_push($subject, $str[0]);
@@ -652,7 +652,7 @@ function get_supplement_option($it_id, $sp_id, $index)
     $str = '<select name="item-supplement-'.$index.'">'."\n";
     $str .= '<option value="">선택</option>'."\n";
     for($i = 0; $row = sql_fetch_array($result); $i++) {
-        $opt = str_replace($sp_id.'|*|', '', $row['sp_id']);
+        $opt = str_replace($sp_id.chr(30), '', $row['sp_id']);
         if($opt) {
             if($row['sp_amount']) {
                 $info = ' (+'.number_format($row['sp_amount']).'원)';
