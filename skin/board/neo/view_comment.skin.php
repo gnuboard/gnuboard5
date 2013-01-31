@@ -16,7 +16,6 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         $comment_id = $list[$i]['wr_id'];
         $cmt_depth = ""; // 댓글단계
         $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 20;
-        if (strstr($list[$i]['wr_option'], "secret")) echo '비밀글';
             $str = $list[$i]['content'];
             if (strstr($list[$i]['wr_option'], "secret"))
                 $str = $str;
@@ -38,7 +37,10 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         </header>
 
         <!-- 댓글 출력 -->
-        <p><?=$str?></p>
+        <p>
+            <? if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"\" alt=\"비밀글\"><br>";?>
+            <?=$str?>
+        </p>
 
         <span id="edit_<?=$comment_id?>"></span><!-- 수정 -->
         <span id="reply_<?=$comment_id?>"></span><!-- 답변 -->

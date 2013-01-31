@@ -4,8 +4,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 $begin_time = get_microtime();
 
-if (!isset($g4['title']))
+$g4_head_title = $g4['title']; // 상태바에 표시될 제목
+if (!isset($g4['title'])) {
     $g4['title'] = $config['cf_title'];
+    $g4_head_title = $g4['title'];
+}
+else
+    $g4_head_title .= " : ".$config['cf_title'];
 
 // 현재 접속자
 //$lo_location = get_text($g4[title]);
@@ -35,7 +40,7 @@ else $g4_css = "default";
 <meta charset="utf-8">
 <? if (G4_IS_MOBILE) {?><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"><? } ?>
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
-<title><?=$g4['title']?></title>
+<title><?=$g4_head_title?></title>
 <? if (isset($administrator)) { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/adm.css?=<?=date("md")?>">
 <? } else { ?>
