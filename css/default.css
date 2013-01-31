@@ -83,7 +83,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #ft_copy p {margin:0 auto;width:980px;color:#4a9ab8}
 #ft_copy b {color:#fff}
 
-/* ///// 콘텐츠별 스타일 ///// */
+/* 콘텐츠별 스타일 */
 /* PC 초기화면 */
 #idx_catch {margin-bottom:10px;padding: 25px 0 25px}
 
@@ -94,11 +94,11 @@ pre {overflow-x:scroll;font-size:1.1em}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em}
-.btn_frmline {padding:0 7px 0 5px;height:22px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em}
+.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#109ff1;color:#fff;letter-spacing:-0.1em;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em;cursor:pointer}
 
-/* ///// 기본테이블 ///// */
+/* 기본테이블 */
 table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
 tfoot th {border-top:1px solid #c9c9c9;border-bottom:1px solid #c9c9c9}
 tfoot td {border-color:#c9c9c9;background:#f9f9f5;font-weight:bold;text-align:center}
@@ -127,7 +127,7 @@ table a {color:#000;text-decoration:none}
 
 .frm_info {display:block;padding:5px 0 0;color:#777;line-height:1.3em}
 
-/* ///// 테이블 항목별 정의 ///// */
+/* 테이블 항목별 정의 */
 .td_chk {width:40px;text-align:center}
 .td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
@@ -141,7 +141,7 @@ table a {color:#000;text-decoration:none}
 .td_datetime {width:110px;text-align:center}
 .td_mng {width:80px;text-align:center}
 
-/* ///// 새창 기본 스타일 ///// */
+/* 새창 기본 스타일 */
 .new_win {}
 .new_win h1 {margin-bottom:20px;padding:20px 20px 10px;border-bottom:1px solid #eee;background:#fff;font-size:1.2em}
 .new_win table {margin:0 auto 20px;width:93%}
@@ -151,7 +151,7 @@ table a {color:#000;text-decoration:none}
 .new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
 .new_win_desc {margin:0 auto;width:93%}
 
-/* ///// 폼 컨트롤 ///// */
+/* 폼 컨트롤 */
 .fs_input,
 fieldset textarea {padding:3px 3px 4px;border:1px solid #ddd;background:#fff;vertical-align:middle}
 .fs_input:focus,
@@ -160,7 +160,12 @@ fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#
 .fs_submit,
 fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#fff;line-height:1.9em;vertical-align:middle;cursor:pointer}
 
-/* ///// 스킨별 스타일 ///// */
+/* 자바스크립트 alert 대안 */
+#validation_check {margin:100px auto;width:500px}
+#validation_check h1 {margin-bottom:20px;font-size:1.3em}
+#validation_check p {margin-bottom:20px;padding:30px 20px}
+
+/* 스킨별 스타일 */
 /* 회원가입 약관 */
 #fregister section {margin:0 0 20px;padding:20px}
 #fregister h2 {margin:0 0 20px;text-align:center}
@@ -180,6 +185,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
 #reg_result_email span {display:inline-block;width:150px}
 #reg_result_email strong {color:#109ff1;font-size:1.2em}
+
+/* 아이디/패스워드 찾기 */
+#find_info .cbg {margin:0 auto 20px;padding:20px;width:87%}
+#find_info #captcha {padding-top:20px}
+#find_info #captcha input {margin-left:5px}
 
 /* 아웃로그인 스킨 */
 .ol {position:relative;margin-bottom:10px;padding:14px}
