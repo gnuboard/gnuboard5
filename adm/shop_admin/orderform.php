@@ -1,6 +1,7 @@
 <?
 $sub_menu = "400400";
 include_once("./_common.php");
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 // 메세지
 $html_title = "주문 내역 수정";
@@ -184,7 +185,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $t_ct_amount['정상'] += ($row['orderamount'] - $row['ordercancel']);
     $t_ct_amount['취소'] += $row['ordercancel'];
 
-    $image = get_it_image("{$row['it_id']}_s", (int)($default['de_simg_width'] / $image_rate), (int)($default['de_simg_height'] / $image_rate), $row['it_id']);
+    $image = get_it_image($row['it_id'], (int)($default['de_simg_width'] / $image_rate), (int)($default['de_simg_height'] / $image_rate), $row['it_id']);
 
     $list = $i%2;
     echo "
