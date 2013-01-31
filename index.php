@@ -5,7 +5,7 @@ include_once('./_common.php');
 include_once('./_head.php');
 ?>
 
-<div id="idx_catch"><img src="<?=G4_URL?>/img/idx_catch.jpg" alt="Sharing All Possibilities"></div>
+<div id="idx_catch"><img src="<?=G4_URL?>/img/idx_catch.jpg" alt="Sharing All Possibilities" width="471" height="61"></div>
 
 <!-- 메인화면 최신글 시작 -->
 <?
