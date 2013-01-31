@@ -169,8 +169,8 @@ else
 <form name=fitem id="fitem" method="post" action="<?php echo $action_url?>">
 <input type="hidden" name="it_id" value='<?=$it['it_id']?>'>
 <input type="hidden" name="it_name" value='<?=$it['it_name']?>'>
-<input type="hidden" name="submit_button" value="" />
 <input type="hidden" name="total_amount" value="0" />
+<input type="hidden" name="sw_direct" value="0" />
 <table width=100% cellpadding=0 cellspacing=0>
 <tr>
 
@@ -434,13 +434,13 @@ else
         <tr>
             <td>
             <? if (!$it['it_tel_inq'] && !$it['it_gallery']) { ?>
-            <input type="submit" id="direct_buy" name="direct_buy" value="direct_buy" />
-            <input type="submit" id="cart_update" name="cart_update" value="cart_update" />
+            <input type="image" src="<?=G4_SHOP_IMG_URL?>/btn2_now_buy.gif" id="direct_buy" />
+            <input type="image" src="<?=G4_SHOP_IMG_URL?>/btn2_cart.gif" id="cart_update" />
             <? } ?>
 
             <? if (!$it['it_gallery']) { ?>
-            <input type="submit" name="wish_update" value="wish_update" />
-            <a href="javascript:popup_item_recommend('<?=$it['it_id']?>');"><img src='<?=G4_SHOP_IMG_URL?>/btn_item_recommend.gif' border=0></a>
+            <input type="image" src="<?=G4_SHOP_IMG_URL?>/btn2_wish.gif" id="item_wish" />
+            <a href="<?=G4_SHOP_URL?>/shop/itemrecommend.php?it_id=<?=$it['it_id']?>" target="_blank" onclick="popup_item_recommend(this.href); return false;"><img src='<?=G4_SHOP_IMG_URL?>/btn_item_recommend.gif' border=0></a>
             <? } ?>
             </td></tr>
         </table></td>
@@ -786,22 +786,26 @@ $(function() {
         calculatePrice();
     });
 
-    $("form#fitem input:submit").click(function(e) {
+    // 바로구매, 장바구니, 보관하기 click
+    $("form#fitem input:image").click(function(e) {
         e.preventDefault();
 
-        var parent_form = $(this).closest("form");
-        var name = $(this).attr("name");
-        parent_form.data("submit_button", name);
-        $("input[name=submit_button]").val(name);
+        var id = $(this).attr("id");
 
-        $("form#fitem").submit();
+        if(id == "item_wish") {
+            $("#fitem").attr("action", "./wishupdate.php");
+        } else if(id == "direct_buy") {
+            $("input[name=sw_direct]").val(1);
+        }
+
+        $("form#fitem").data("act", id).submit();
     });
 
-    // 바로구매, 장바구니, 보관하기
+    // 바로구매, 장바구니, 보관하기 submit
     $("form#fitem").submit(function() {
         var form_ok = true;
 
-        if($(this).data("submit_button") != "wish_update") {
+        if($(this).data("act") != "item_wish") {
             // 가격체크
             if(parseInt($("input[name=it_amount]").val()) < 0) {
                 alert("전화로 문의해 주시면 감사하겠습니다.");
@@ -989,16 +993,15 @@ function calculatePrice()
 }
 
 // 추천메일
-function popup_item_recommend(it_id)
+function popup_item_recommend(url)
 {
     if (!g4_is_member)
     {
         if (confirm("회원만 추천하실 수 있습니다."))
-            document.location.href = "<?=$g4[bbs_path]?>/login.php?url=<?=urlencode("$g4[shop_path]/item.php?it_id=$it_id")?>";
+            document.location.href = "<?=G4_BBS_URL?>/login.php?url=<?=urlencode("$g4[shop_path]/item.php?it_id=$it_id")?>";
     }
     else
     {
-        url = "./itemrecommend.php?it_id=" + it_id;
         opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
         popup_window(url, "itemrecommend", opt);
     }

@@ -1,18 +1,6 @@
 <?
 include_once('./_common.php');
 
-// wish item 처리
-if(trim($wish_update) || $submit_button == 'wish_update') {
-    include($g4['shop_path'].'/wishupdate.php');
-}
-
-if (trim($direct_buy) || $submit_button == 'direct_buy') { // 바로구매
-    $sw_direct = 1;
-}
-else {
-    $sw_direct = 0;
-}
-
 $uq_id = get_session('ss_uniqid');
 
 // 브라우저에서 쿠키를 허용하지 않은 경우라고 볼 수 있음.
