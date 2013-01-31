@@ -432,6 +432,12 @@ function doc_write(cont)
     document.write(cont);
 }
 
+// php chr() 대응
+function chr(code)
+{
+    return String.fromCharCode(code);
+}
+
 var win_password_lost = function(href) {
     window.open(href, "win_password_lost", "left=50, top=50, width=617, height=330, scrollbars=1");
 }
