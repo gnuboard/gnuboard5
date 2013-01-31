@@ -789,11 +789,11 @@ var f = document.fitemform;
 <?php if($w == 'u') { ?>
 $(document).ready(function() {
     // 선택옵션등록 변경
-    $("input[id="it_option_use" name="it_option_use"]").click(function() {
+    $("input[name=it_option_use]").click(function() {
         var val = $(this).val();
         if(val == "0") {
             if(!confirm("기존의 선택옵션정보가 삭제됩니다. 계속 하시겠습니까?")) {
-                $("input[id="it_option_use" name="it_option_use"]").filter("input[value=1]").attr("checked", true);
+                $("input[name=it_option_use]").filter("input[value=1]").attr("checked", true);
             } else {
                 $("input[name^=it_opt]:text").val('');
             }
@@ -801,11 +801,11 @@ $(document).ready(function() {
     });
 
     // 추가옵션등록 변경
-    $("input[id="it_supplement_use" name="it_supplement_use"]").click(function() {
+    $("input[name=it_supplement_use]").click(function() {
         var val = $(this).val();
         if(val == "0") {
             if(!confirm("기존의 추가옵션정보가 삭제됩니다. 계속 하시겠습니까?")) {
-                $("input[id="it_supplement_use" name="it_supplement_use"]").filter("input[value=1]").attr("checked", true);
+                $("input[name=it_supplement_use]").filter("input[value=1]").attr("checked", true);
             }
         }
     });
@@ -839,28 +839,28 @@ function codedupcheck(id)
 // 선택옵션창
 function optionformwindow()
 {
-    var it_id = $.trim($('input[id="it_id" name="it_id"]').val());
+    var it_id = $.trim($('input[name=it_id]').val());
     if (!it_id) {
         alert('상품코드를 입력하십시오.');
         f.it_id.focus();
         return;
     }
 
-    $('input[id="it_option_use" name="it_option_use"]').filter('input[value=1]').attr('checked', true);
+    $('input[name=it_option_use]').filter('input[value=1]').attr('checked', true);
     window.open("./optionform.php?w=<? echo $w; ?>&it_id="+it_id, "optionform", "width=700, height=700, left=100, top=50, scrollbars=yes");
 }
 
 // 추가옵션창
 function supplementformwindow()
 {
-    var it_id = $.trim($('input[id="it_id" name="it_id"]').val());
+    var it_id = $.trim($('input[name=it_id]').val());
     if (!it_id) {
         alert('상품코드를 입력하십시오.');
         f.it_id.focus();
         return;
     }
 
-    $('input[id="it_supplement_use" name="it_supplement_use"]').filter('input[value=1]').attr('checked', true);
+    $('input[name=it_supplement_use]').filter('input[value=1]').attr('checked', true);
     window.open("./supplementform.php?w=<? echo $w; ?>&it_id="+it_id, "supplementform", "width=700, height=700, left=100, top=50, scrollbars=yes");
 }
 
@@ -880,18 +880,18 @@ function fitemformcheck(f)
     }
 
     // 개별배송비체크
-    var sc_type = $("input[id="it_sc_type" name="it_sc_type"]:checked").val();
-    var sc_basic = $("input[id="it_sc_basic" name="it_sc_basic"]").val();
+    var sc_type = $("input[name=it_sc_type]:checked").val();
+    var sc_basic = $("input[name=it_sc_basic]").val();
     var patt = /[^0-9]/g;
 
     if(sc_type == "1") { // 조건부무료
-        var minimum = $("input[id="it_minimum" name="it_minimum"]").val().replace(patt, "");
+        var minimum = $("input[name=it_minimum]").val().replace(patt, "");
         if(minimum == "") {
             alert("구매금액 합계를 입력해 주세요.");
             return false;
         }
     } else if(sc_type == "3") { // 수량별
-        var count = $("input[id="it_count" name="it_count"]").val().replace(patt, "");
+        var count = $("input[name=it_count]").val().replace(patt, "");
         if(count == "") {
             alert("반복수량을 입력해 주세요.");
             return false;

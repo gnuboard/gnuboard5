@@ -64,8 +64,8 @@ if ($article) {
         echo "<tr class='ht'>\n";
         echo "<td style='padding:3px;' valign='top'><b>$el_title</b></td>\n";
         echo "<td style='padding:3px;' valign='top'>";
-        echo "<input type="hidden" name='{$el_name}[]' value='$el_title' />";
-        echo "<input type="text" name='{$el_name}[]' value='$el_value' class='ed' style='width:99%;' required itemname='$el_title' />";
+        echo "<input type=\"hidden\" name='{$el_name}[]' value='$el_title' />";
+        echo "<input type=\"text\" name='{$el_name}[]' value='$el_value' class='ed' style='width:99%;' required itemname='$el_title' />";
         if ($el_example != "") {
             echo "<p style=\"margin:2px 0;padding:0\">$el_example</p>";
         }
@@ -87,7 +87,7 @@ if ($article) {
 <script>
 $(function(){
     $("#null").click(function(){
-        var $f = $("#fiteminfo input[type="text"], #fiteminfo textarea");
+        var $f = $("#fiteminfo input[type=text], #fiteminfo textarea");
         if (this.checked) {
             $.each($f, function(){
                 if ($(this).val() == "") {

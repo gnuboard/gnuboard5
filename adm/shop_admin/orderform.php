@@ -730,7 +730,7 @@ if ($od['od_receipt_point'] > 0)
             <td>
                 <input type="text" class=ed id="od_zip1" name="od_zip1" size=4 readonly required itemname='우편번호 앞자리' value='<?=$od['od_zip1']?>'> -
                 <input type="text" class=ed id="od_zip2" name="od_zip2" size=4 readonly required itemname='우편번호 뒷자리' value='<?=$od['od_zip2']?>'>
-                &nbsp;<a href="javascript:;" onclick="win_zip('frmorderform2', 'od_zip1', 'od_zip2', 'od_addr1', 'od_addr2');"><img src="<?=$g4['shop_admin_path']?>/img/btn_zip_find.gif" border=0 align=absmiddle></a><br>
+                &nbsp;<a href="<?=G4_BBS_URL?>/zip.php?frm_name=frmorderform2&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2" class="win_zip_find"><img src="<?=$g4['shop_admin_path']?>/img/btn_zip_find.gif" border=0 align=absmiddle></a><br>
                 <input type="text" class=ed id="od_addr1" name="od_addr1" size=50 readonly required itemname='주소' value='<?=$od['od_addr1']?>'><br>
                 <input type="text" class=ed id="od_addr2" name="od_addr2" size=50 required itemname='상세주소' value='<?=$od['od_addr2']?>'></td>
         </tr>
@@ -771,7 +771,7 @@ if ($od['od_receipt_point'] > 0)
             <td>
                 <input type="text" class=ed id="od_b_zip1" name="od_b_zip1" size=4 readonly required itemname='우편번호 앞자리' value='<?=$od['od_b_zip1']?>'> -
                 <input type="text" class=ed id="od_b_zip2" name="od_b_zip2" size=4 readonly required itemname='우편번호 뒷자리' value='<?=$od['od_b_zip2']?>'>
-                &nbsp;<a href="javascript:;" onclick="win_zip('frmorderform2', 'od_b_zip1', 'od_b_zip2', 'od_b_addr1', 'od_b_addr2');"><img src="<?=$g4[shop_admin_path]?>/img/btn_zip_find.gif" border=0 align=absmiddle></a><br>
+                &nbsp;<a href="<?=G4_BBS_URL?>/zip.php?frm_name=frmorderform2&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2" class="win_zip_find"><img src="<?=$g4[shop_admin_path]?>/img/btn_zip_find.gif" border=0 align=absmiddle></a><br>
                 <input type="text" class=ed id="od_b_addr1" name="od_b_addr1" size=50 readonly required itemname='주소' value='<?=$od['od_b_addr1']?>'><br>
                 <input type="text" class=ed id="od_b_addr2" name="od_b_addr2" size=50 required itemname='상세주소' value='<?=$od['od_b_addr2']?>'></td>
         </tr>
