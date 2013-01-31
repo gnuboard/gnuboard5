@@ -569,13 +569,13 @@ $(function(){
     });
 
     // 사이드뷰
-    $('a.sv').click(function() {
+    $('.sv').click(function() {
         $('.sv_wrap').hide();
-        $(this).find('.sv_wrap').show();
+        $(this).find('.sv_wrap').css("display", "block");
 
     });
 
     $(document).click(function() {
-        $('.sv_wrap').hide();
+    //    $('.sv_wrap').hide();
     });
 });
