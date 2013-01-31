@@ -32,6 +32,9 @@ if($error) {
     $header2 = "다음 내용을 확인해 주세요.";
 }
 ?>
+<div id="validation_check">
+
+    <h1><?=$header2?></h1>
 
 <script>
 alert("<? echo $msg; ?>");
@@ -39,17 +42,12 @@ document.location.href = "<? echo $url; ?>";
 </script>
 
 <noscript>
-<div id="validation_check">
-
-    <h1><?=$header2?></h1>
     <p class="cbg">
         <?=$msg2?>
     </p>
     <div class="btn_confirm">
         <a href="<?=$url?>">돌아가기</a>
     </div>
-
-</div>
 
 <? /*
 <article id="validation_check">
@@ -74,6 +72,8 @@ document.location.href = "<? echo $url; ?>";
 */ ?>
 
 </noscript>
+
+</div>
 
 <?
 include_once(G4_PATH.'/tail.sub.php');

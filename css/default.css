@@ -21,7 +21,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;font-size:2em;text-align:center;text-decoration:none;overflow:auto}
 
 /* 이미지 등비율 리사이징 */
-.img_fix {float:left;margin-bottom:20px;width:100%;height:auto}
+.img_fix {float:left;width:100%;height:auto}
 
 /* 캡챠 자동등록(입력)방지 기본 */
 #captcha img {border:1px solid #ddd;border-right:0}
@@ -204,7 +204,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#696969;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
-#ol_submit {width:60px;height:24px;border:1px solid #2292d3;background:#109ff1;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
+#ol_submit {display:inline-block;width:60px;height:24px;border:1px solid #2292d3;background:#109ff1;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before ul {float:right;margin:7px 0 13px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-left:5px;padding-top:2px}
