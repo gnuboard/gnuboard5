@@ -2,9 +2,9 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<div id="reg_result">
+<div id="reg_result" class="cbg">
 
-    <div class="reg_result_deco"><img src="<?=$g4['path']?>/img/reg_result_deco.jpg" alt=""></div>
+    <div id="reg_result_logo"><img src="<?=$member_skin_url?>img/reg_result_logo.jpg" alt=""></div>
 
     <p>
         <strong><?=$mb['mb_name']?></strong>님의 회원가입을 진심으로 축하합니다.<br>
@@ -32,12 +32,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </p>
 
     <p>
-        회원 탈퇴는 언제든지 가능하며 일정기간이 지난 후, 회원님의 소중한 정보는 삭제하고 있습니다.<br>
+        회원 탈퇴는 언제든지 가능하며 일정기간이 지난 후, 회원님의 정보는 삭제하고 있습니다.<br>
         감사합니다.
     </p>
 
-    <div class="btn_confirm">
-        <a href="<?=$g4['url']?>/" class="btn_cancel">메인으로</a>
-    </div>
+</div>
 
+<div class="btn_confirm">
+    <a href="<?=$g4['url']?>/" class="btn01">메인으로</a>
 </div>
