@@ -567,4 +567,15 @@ $(function(){
         win_poll(this.href);
         return false;
     });
+
+    // 사이드뷰
+    $('a.sv').click(function() {
+        $('.sv_wrap').hide();
+        $(this).find('.sv_wrap').show();
+
+    });
+
+    $(document).click(function() {
+        $('.sv_wrap').hide();
+    });
 });

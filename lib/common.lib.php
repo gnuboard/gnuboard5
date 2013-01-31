@@ -946,6 +946,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 {
     global $config;
     global $g4;
+    global $bo_table, $sca, $is_admin;
 
     $email = base64_encode($email);
     $homepage = set_http($homepage);
@@ -955,29 +956,28 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $name = preg_replace("/\"/", "&#034;", $name);
     $title_name = $name;
 
+    $tmp_name = "";
     if ($mb_id) {
-        $tmp_name = "<span class='member'>$name</span>";
+        $tmp_name = "<span class=\"sv_member\">$name</span>";
 
         if ($config['cf_use_member_icon']) {
             $mb_dir = substr($mb_id,0,2);
-            $icon_file = $g4['path'].'/data/member/'.$mb_dir.'/'.$mb_id.'.gif';
+            $icon_file = G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
 
-            //if (file_exists($icon_file) && is_file($icon_file)) {
             if (file_exists($icon_file)) {
-                //$size = getimagesize($icon_file);
-                //$width = $size['0'];
-                //$height = $size['1'];
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
-                $tmp_name = '<img src="'.$icon_file.'" width="'.$width.'" height="'.$height.'" border="0" alt="">';
+                $icon_file_url = G4_DATA_URL.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
+                $tmp_name = '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" border="0" alt="">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-                    $tmp_name = $tmp_name . ' <span class="member">'.$name.'</span>';
+                    $tmp_name = $tmp_name . ' <span class="sv_member">'.$name.'</span>';
             }
         }
+
         $title_mb_id = '['.$mb_id.']';
     } else {
-        $tmp_name = '<span class="guest">'.$name.'</span>';
+        $tmp_name = '<span class="sv_guest">'.$name.'</span>';
         $title_mb_id = '[비회원]';
     }
 
@@ -985,7 +985,33 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $email    = get_text($email);
     $homepage = get_text($homepage);
 
-    return "<a href=\"javascript:;\" onClick=\"showSideView(this, '$mb_id', '$name', '$email', '$homepage');\" title=\"{$title_mb_id}{$title_name}\">$tmp_name</a>";
+    $str = "<a href=\"\" class=\"sv\">\n";
+    $str .= $tmp_name."\n";
+    $str .= "<span class=\"sv_wrap\">\n";
+    if($mb_id)
+        $str .= "<a href=\"".G4_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
+    if($email)
+        $str .= "<a href=\"".G4_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
+    if($homepage)
+        $str .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
+    if($mb_id)
+        $str .= "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
+    if($bo_table) {
+        if($mb_id)
+            $str .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
+        else
+            $str .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\">이름으로 검색</a>\n";
+    }
+    if($mb_id)
+        $str .= "<a href=\"".G4_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
+    if($is_admin == "super" && $mb_id) {
+        $str .= "<a href=\"".G4_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
+        $str .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
+    }
+    $str .= "</span>\n";
+    $str .= "</a>";
+
+    return $str;
 }
 
 
