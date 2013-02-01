@@ -11,7 +11,7 @@ if ($board['bo_use_category']) {
     $categories = explode('|', $board['bo_category_list']); // 구분자가 , 로 되어 있음
     for ($i=0; $i<count($categories); $i++) {
         if (trim($categories[$i]))
-            $category_option .= '<li>'.$categories[$i].'</li>';
+            $category_option .= '<li><a href="#">'.$categories[$i].'</a></li>';
     }
 }
 

@@ -11,18 +11,19 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
 
-<div class="bo_fx">
-    <div id="bo_cate">
-        <? if ($is_category) { ?>
-        <form id="fcategory" name="fcategory" method="get">
-        <ul>
-            <li>전체</li>
-            <?=$category_option?>
-        </ul>
-        </form>
-        <? } ?>
-    </div>
+<? if ($is_category) { ?>
+<form id="fcategory" name="fcategory" method="get">
+<nav id="bo_cate">
+    <h2><?=$board['bo_subject']?> 카테고리</h2>
+    <ul>
+        <li><a href="<?=$g4['url']?>/bbs/board.php?bo_table=<?=$bo_table?>">전체</a></li>
+        <?=$category_option?>
+    </ul>
+</nav>
+</form>
+<? } ?>
 
+<div class="bo_fx">
     <fieldset id="bo_sch">
         <legend>게시물 검색</legend>
 
