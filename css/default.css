@@ -100,8 +100,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 /* 기본테이블 */
 table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
-tfoot th {border-top:1px solid #c9c9c9;border-bottom:1px solid #c9c9c9}
-tfoot td {border-color:#c9c9c9;background:#f9f9f5;font-weight:bold;text-align:center}
+tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
+tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
 th {padding:12px 0 8px;border-top:1px solid #ddd;border-bottom:1px solid #ddd}
 th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
