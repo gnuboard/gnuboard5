@@ -41,7 +41,8 @@ if($error) {
 
 <script>
 alert("<? echo $msg; ?>");
-document.location.href = "<? echo $url; ?>";
+//document.location.href = "<? echo $url; ?>";
+document.location.replace("<? echo $url; ?>");
 </script>
 
 <noscript>

@@ -23,19 +23,23 @@ function g4_path()
     return $result;
 }
 
-$g4_path = g4_path();
-
 //==============================================================================
 // 상수 선언
 //------------------------------------------------------------------------------
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
 
+$g4_path = g4_path();
+
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 define('G4_ADMIN_DIR',      'adm');
 define('G4_BBS_DIR',        'bbs');
 
-define('G4_URL',            $g4_path['url']);
+if (G4_DOMAIN) {
+    define('G4_URL',        G4_DOMAIN);
+} else {
+    define('G4_URL',        $g4_path['url']);
+}
 define('G4_ADMIN_URL',      G4_URL.'/'.G4_ADMIN_DIR);
 define('G4_BBS_URL',        G4_URL.'/'.G4_BBS_DIR);
 define('G4_CSS_URL',        G4_URL.'/css');
@@ -60,6 +64,9 @@ define('G4_GCAPTCHA_PATH',  G4_BBS_PATH.'/gcaptcha');
 define('G4_CKEDITOR_PATH',  G4_BBS_PATH.'/ckeditor');
 define('G4_CACHE_PATH',     G4_DATA_PATH.'/cache');
 define('G4_EDITOR_PATH',    G4_DATA_PATH.'/editor');
+
+unset($g4_path);
+
 
 // 입력값 검사 상수 (숫자를 변경하시면 안됩니다.)
 define('G4_ALPHAUPPER',   1); // 영대문자
@@ -121,31 +128,8 @@ $g4['token_table']         = $g4['table_prefix'] . 'token';         // 토큰 �
 // 기타
 //
 
-// www.sir.co.kr 과 sir.co.kr 도메인은 서로 다른 도메인으로 인식합니다. 쿠키를 공유하려면 .sir.co.kr 과 같이 입력하세요.
-// 이곳에 입력이 없다면 www 붙은 도메인과 그렇지 않은 도메인은 쿠키를 공유하지 않으므로 로그인이 풀릴 수 있습니다.
-$g4['cookie_domain'] = '';
-define('G4_COOKIE_DOMAIN', '');
-
 // 게시판에서 링크의 기본갯수를 말합니다.
 // 필드를 추가하면 이 숫자를 필드수에 맞게 늘려주십시오.
 //$g4['link_count'] = 2;
 define('G4_LINK_COUNT', 2);
-
-//$g4['charset'] = 'utf-8';
-
-//$g4['token_time'] = 3; // 토큰 유효시간
-
-// config.php 가 있는곳의 웹경로. 뒤에 / 를 붙이지 마세요.
-// 예) http://g4.sir.co.kr
-//$g4['url'] = '';
-$g4['https_url'] = '';
-// 입력예
-//$g4['url'] = "http://www.sir.co.kr";
-//$g4['https_url'] = "https://www.sir.co.kr";
-
-//$g4['dbconfig'] = 'data/dbconfig.php';
-
-//$g4['js_file']        = array();
-
-unset($g4_path);
 ?>

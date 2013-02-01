@@ -349,10 +349,7 @@ if ($is_guest) {
 include_once(G4_PATH.'/head.sub.php');
 include_once('./board_head.php');
 
-if ($g4['https_url'])
-    $action_url = "{$g4['https_url']}/{$g4['bbs']}/write_update.php";
-else
-    $action_url = G4_BBS_URL."/write_update.php";
+$action_url = G4_HTTPS_BBS_URL."/write_update.php";
 
 include_once ($board_skin_path.'/write.skin.php');
 

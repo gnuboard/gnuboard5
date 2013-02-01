@@ -24,7 +24,7 @@ if ($url)
 else
     $urlencode = urlencode($_SERVER['REQUEST_URI']);
 
-if ($config['cf_https_url']) {
+if (G4_HTTPS_DOMAIN) {
     $login_url = $_GET['url'];
     if ($login_url) {
         if (preg_match("/^\.\.\//", $url)) {
@@ -35,10 +35,10 @@ if ($config['cf_https_url']) {
                 $path = urlencode($purl['path']);
                 $urlencode = preg_replace("/".$path."/", "", $urlencode);
             }
-            $login_url = $g4[url].$urlencode;
+            $login_url = $urlencode;
         }
     } else {
-        $login_url = $g4[url];
+        $login_url = G4_URL;
     }
 } else {
     $login_url = $urlencode;
