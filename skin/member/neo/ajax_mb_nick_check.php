@@ -1,6 +1,6 @@
 <?
 include_once("_common.php");
-include_once($g4['path'].'/lib/register.lib.php');
+include_once(G4_LIB_PATH.'/register.lib.php');
 
 $mb_nick = escape_trim($_POST['reg_mb_nick']);
 $mb_id   = escape_trim($_POST['reg_mb_id']);
