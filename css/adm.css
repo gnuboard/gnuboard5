@@ -148,15 +148,20 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 .td_category {width:120px;text-align:center}
 .visit_bar {position:relative}
 .visit_bar span {position:absolute;top:-8px;left:0;height:15px;background:#ddd}
-/* 사이드뷰 */
-#sideview {z-index:1000;position:absolute;top:15px;left:20px;border:1px solid #999;background:#f9f9f9}
-#sideview ul {list-style:none}
-#sideview a {display:inline-block;padding:5px 10px 4px;width:100px;border-bottom:1px solid #ddd}
 
 /* 메일 테스트, 세션파일일괄삭제 */
 #fsendmailtest p,
 #session_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
 #cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
+
+/* 사이드뷰 */
+.sv {display:inline-block;position:relative;font-weight:normal}
+.sv .sv_wrap {display:none;margin-top:5px;border:1px solid #eee;background:#f7f7f2}
+.sv_nojs .sv_wrap {display:block;width:100px !important}
+.sv .sv_wrap a {display:block;padding:3px;border-bottom:1px solid #eee}
+.sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:100px !important;height:auto !important;background:#ddd;overflow:auto}
+.sv_member,
+.sv_guest {font-weight:bold}
 
 /* pagination */
 .pg {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.75em;text-align:center}
