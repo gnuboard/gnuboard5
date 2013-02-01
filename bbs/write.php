@@ -224,6 +224,7 @@ if ($is_guest || ($is_admin && $w == 'u' && $member['mb_id'] != $write['mb_id'])
 }
 
 $is_category = false;
+$category_option = '';
 if ($board['bo_use_category']) {
     $ca_name = "";
     if (isset($write['ca_name']))
