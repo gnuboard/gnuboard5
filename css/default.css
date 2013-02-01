@@ -392,6 +392,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
+#bo_list .sv_member,
+#bo_list .sv_guest {font-weight:normal} /* 사이드뷰 글자 스타일 */
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .bo_notice {}
@@ -450,11 +452,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #bo_vc {margin:0 20px 10px;padding:10px 20px 20px 20px;background:#f9f9f9}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #eee}
-#bo_vc header {position:relative;zoom:1}
-#bo_vc header:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_vc header {position:relative;padding:8px 0}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
-#bo_vc header span {}
-#bo_vc h1 {display:inline-block;margin:15px 10px 5px 0}
+#bo_vc h1 {width:0;height:0;overflow:hidden}
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc p a {text-decoration:underline}
@@ -485,6 +485,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .sv_on {z-index:1000;position:absolute;top:10px;left:20px;width:100px !important;height:auto !important;background:#ddd;overflow:auto}
 .sv_off {display:block;position:absolute;margin:0 !important;width:0;height:0;border:0 !important;overflow:hidden}
 .sv_off a {margin:0;padding:0;width:0;height:0;overflow:hidden}
+.sv_member,
+.sv_guest {font-weight:bold}
 
 /* pagination */
 .pg {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
