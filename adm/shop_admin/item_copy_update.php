@@ -86,6 +86,9 @@ function copy_directory($src_dir, $dest_dir)
     if($src_dir == $dest_dir)
         return false;
 
+    if(!is_dir($src_dir))
+        return false;
+
     if(!is_dir($dest_dir)) {
         @mkdir($dest_dir, 0707);
         @chmod($dest_dir, 0707);
