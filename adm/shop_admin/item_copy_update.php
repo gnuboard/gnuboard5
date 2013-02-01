@@ -20,7 +20,7 @@ $cp = sql_fetch($sql);
 
 // 상품테이블의 필드가 추가되어도 수정하지 않도록 필드명을 추출하여 insert 퀴리를 생성한다. (상품코드만 새로운것으로 대체)
 $sql_common = "";
-$fields = mysql_list_fields($mysql_db, $g4[yc4_item_table]);
+$fields = mysql_list_fields(G4_MYSQL_DB, $g4[yc4_item_table]);
 $columns = mysql_num_fields($fields);
 for ($i = 0; $i < $columns; $i++) {
   $fld = mysql_field_name($fields, $i);
@@ -35,6 +35,13 @@ $sql = " insert $g4[yc4_item_table]
 sql_query($sql);
 
 // 선택옵션정보 copy
+$opt_sql = " insert ignore into {$g4['yc4_option_table']} ( opt_id, it_id, opt_amount, opt_qty, opt_notice, opt_use )
+                select opt_id, '$new_it_id', opt_amount, opt_qty, opt_notice, opt_use
+                    from {$g4['yc4_option_table']}
+                    where it_id = '$it_id'
+                    order by opt_no asc ";
+sql_query($opt_sql);
+/*
 $opt_sql = " select * from `{$g4['yc4_option_table']}` where it_id = '$it_id' order by opt_no asc ";
 $opt_result = sql_query($opt_sql);
 for($j = 0; $opt_row = sql_fetch_array($opt_result); $j++) {
@@ -48,8 +55,16 @@ for($j = 0; $opt_row = sql_fetch_array($opt_result); $j++) {
                         opt_use     = '{$opt_row['opt_use']}' ";
     sql_query($ins_sql);
 }
+*/
 
 // 추가옵션정보 copy
+$sp_sql = " insert ignore into {$g4['yc4_supplement_table']} ( sp_id, it_id, sp_amount, sp_qty, sp_notice, sp_use )
+                select sp_id, '$new_it_id', sp_amount, sp_qty, sp_notice, sp_use
+                from {$g4['yc4_supplement_table']}
+                where it_id = '$it_id'
+                order by sp_no asc ";
+sql_query($sp_sql);
+/*
 $sp_sql = " select * from `{$g4['yc4_supplement_table']}` where it_id = '$it_id' order by sp_no asc ";
 $sp_result = sql_query($sp_sql);
 for($j = 0; $sp_row = sql_fetch_array($sp_result); $j++) {
@@ -63,23 +78,43 @@ for($j = 0; $sp_row = sql_fetch_array($sp_result); $j++) {
                         sp_use      = '{$sp_row['sp_use']}' ";
     sql_query($ins_sql);
 }
+*/
 
-$img_path = "$g4[path]/data/item/";
+// 상품이미지 복사
+function copy_directory($src_dir, $dest_dir)
+{
+    if($src_dir == $dest_dir)
+        return false;
 
-for($i=1; $i<6; $i++) {
-	$limg = $it_id."_l".$i;
-		if(is_file($img_path.$limg))
-			copy($img_path.$limg,$img_path.$new_it_id."_l".$i);
+    if(!is_dir($src_dir))
+        return false;
 
+    if(!is_dir($dest_dir)) {
+        @mkdir($dest_dir, 0707);
+        @chmod($dest_dir, 0707);
+    }
+
+    $dir = opendir($src_dir);
+    while (false !== ($filename = readdir($dir))) {
+        if($filename == "." || $filename == "..")
+            continue;
+
+        $files[] = $filename;
+    }
+
+    for($i=0; $i<count($files); $i++) {
+        $src_file = $src_dir.'/'.$files[$i];
+        $dest_file = $dest_dir.'/'.$files[$i];
+        if(is_file($src_file)) {
+            copy($src_file, $dest_file);
+            @chmod($dest_file, 0606);
+        }
+    }
 }
 
-$simg = $it_id."_s";
-if(is_file($img_path.$simg))
-    copy($img_path.$simg,$img_path.$new_it_id."_s");
-
-$mimg = $it_id."_m";
-if(is_file($img_path.$mimg))
-    copy($img_path.$mimg,$img_path.$new_it_id."_m");
+// 파일복사
+$data_path = G4_DATA_PATH.'/item';
+copy_directory($data_path.'/'.$it_id, $data_path.'/'.$new_it_id);
 
 //$qstr = "$ca_id=$ca_id&$qstr";
 $qstr = "$ca_id=$ca_id&sfl=$sfl&sca=$sca&page=$page&stx=".urlencode($stx)."&save_stx=".urlencode($save_stx);

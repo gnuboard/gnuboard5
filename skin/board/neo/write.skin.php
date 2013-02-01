@@ -152,13 +152,12 @@ echo $option_hidden;
 // 관리자라면 분류 선택에 '공지' 옵션을 추가함
 if ($is_admin)
 {
-    echo "
-    if (typeof(document.fwrite.ca_name) != 'undefined')
-    {
-        document.fwrite.ca_name.options.length += 1;
-        document.fwrite.ca_name.options[document.fwrite.ca_name.options.length-1].value = '공지';
-        document.fwrite.ca_name.options[document.fwrite.ca_name.options.length-1].text = '공지';
-    }";
+    echo '
+    if (ca_name_select = document.getElementById("ca_name")) {
+        ca_name_select.options.length += 1;
+        ca_name_select.options[ca_name_select.options.length-1].value = "공지";
+        ca_name_select.options[ca_name_select.options.length-1].text = "공지";
+    }';
 }
 ?>
 

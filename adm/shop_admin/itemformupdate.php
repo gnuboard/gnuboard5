@@ -117,6 +117,9 @@ function itemdelete($it_id)
 // 디렉토리내 파일 리스트 배열로 얻기
 function scan_dir($path)
 {
+    if(!is_dir($path))
+        return;
+
     $dir = opendir($path);
     while (false !== ($filename = readdir($dir))) {
         if($filename == "." || $filename == "..")
