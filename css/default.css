@@ -459,7 +459,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px solid #eee}
 #bo_vc header {position:relative;padding:8px 0}
-#bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
+#bo_vc header .icon_reply {position:absolute;top:8px;left:-20px}
 #bo_vc h1 {width:0;height:0;overflow:hidden}
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
