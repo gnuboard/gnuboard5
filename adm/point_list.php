@@ -151,7 +151,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </td>
     <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
     <td class="td_mbname"><?=$row2['mb_name']?></td>
-    <td class="td_mbnick"><div><?=$mb_nick?></div></td>
+    <td class="td_name"><div><?=$mb_nick?></div></td>
     <td><?=$row['po_datetime']?></td>
     <td class="td_pt_log"><?=$link1?><?=$row['po_content']?><?=$link2?></td>
     <td class="td_bignum"><?=number_format($row['po_point'])?></td>

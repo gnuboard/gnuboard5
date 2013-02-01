@@ -100,7 +100,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td class="td_grid"><?=$group?></td>
     <td class="td_mbid"><?=$row['mb_id']?></td>
     <td class="td_mbname"><?=$row['mb_name']?></td>
-    <td class="td_mbnick"><?=$mb_nick?></td>
+    <td class="td_name"><?=$mb_nick?></td>
     <td class="td_time"><?=substr($row['mb_today_login'],2,8)?></td>
     <td class="td_time"><?=$row['gm_datetime']?></td>
     <td class="td_mng"><?=$s_del?></td>

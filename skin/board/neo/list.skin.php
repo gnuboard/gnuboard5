@@ -230,19 +230,3 @@ function select_copy(sw) {
 </script>
 <? } ?>
 <!-- 게시판 목록 끝 -->
-
-<!-- ie6,7에서 사이드뷰가 아래 사이드뷰에서 가려지는 현상 수정 -->
-<!--[if lte IE 8]>
-<script>
-$(function() {
-    var $td_name = $(".td_name");
-    var count = $td_name.length;
-
-    $td_name.each(function() {
-        $(this).css("z-index", count);
-        $(this).css("position", "relative");
-        count--;
-    });
-});
-</script>
-<![endif]-->

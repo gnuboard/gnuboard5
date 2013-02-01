@@ -188,7 +188,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <span><?=$leave_msg?><?=$intercept_msg?></span>
     </td>
     <td class="td_mbname"><?=$row['mb_name']?></td>
-    <td class="td_mbnick"><div><?=$mb_nick?></div></td>
+    <td class="td_name"><div><?=$mb_nick?></div></td>
     <td><?=get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level'])?></td>
     <td><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
     <td><?=substr($row['mb_today_login'],2,8)?></td>
