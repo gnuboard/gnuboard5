@@ -21,9 +21,7 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file='', $cc=
     if ($cc)  $header .= "Cc: $cc\n";
     if ($bcc) $header .= "Bcc: $bcc\n";
     $header .= "MIME-Version: 1.0\n";
-    //$header .= "X-Mailer: SIR Mailer 0.91 (sir.co.kr) : $_SERVER[SERVER_ADDR] : $_SERVER[REMOTE_ADDR] : $g4[url] : $_SERVER[PHP_SELF] : $_SERVER[HTTP_REFERER] \n";
-    // UTF-8 관련 수정
-    $header .= "X-Mailer: SIR Mailer 0.92 (sir.co.kr) : {$_SERVER['SERVER_ADDR']} : {$_SERVER['REMOTE_ADDR']} : {$g4['url']} : {$_SERVER['PHP_SELF']} : {$_SERVER['HTTP_REFERER']} \n";
+    $header .= "X-Mailer: {$_SERVER['SERVER_ADDR']} : {$_SERVER['REMOTE_ADDR']} : ".G4_URL." : {$_SERVER['PHP_SELF']} : {$_SERVER['HTTP_REFERER']} \n";
 
     if ($file != '') {
         $boundary = uniqid('http://sir.co.kr/');

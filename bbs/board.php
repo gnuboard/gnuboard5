@@ -26,7 +26,7 @@ if (isset($wr_id) && $wr_id) {
     if (isset($group['gr_use_access']) && $group['gr_use_access']) {
         if ($is_guest) {
             $msg = "비회원은 이 게시판에 접근할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.";
-            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
         }
 
         // 그룹관리자 이상이라면 통과
@@ -37,7 +37,7 @@ if (isset($wr_id) && $wr_id) {
             $sql = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
             $row = sql_fetch($sql);
             if (!$row['cnt']) {
-                alert("접근 권한이 없으므로 글읽기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.", $g4['url']);
+                alert("접근 권한이 없으므로 글읽기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.", G4_URL);
             }
         }
     }
@@ -45,7 +45,7 @@ if (isset($wr_id) && $wr_id) {
     // 로그인된 회원의 권한이 설정된 읽기 권한보다 작다면
     if ($member['mb_level'] < $board['bo_read_level']) {
         if ($is_member)
-            alert('글을 읽을 권한이 없습니다.', $g4['url']);
+            alert('글을 읽을 권한이 없습니다.', G4_URL);
         else
             alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
@@ -100,15 +100,6 @@ if (isset($wr_id) && $wr_id) {
             // 비회원이면서 읽기레벨이 1이고 등록된 아이피가 같다면 자신의 글이므로 통과
             ;
         } else {
-            /*
-            // 회원이상 글읽기가 가능하다면
-            if ($board['bo_read_level'] > 1) {
-                if ($member['mb_point'] + $board['bo_read_point'] < 0)
-                    alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.\\n\\n포인트를 모으신 후 다시 글읽기 해 주십시오.');
-
-                insert_point($member['mb_id'], $board['bo_read_point'], '{$board['bo_subject']} {$wr_id} 글읽기', $bo_table, $wr_id, '읽기');
-            }
-            */
             // 글읽기 포인트가 설정되어 있다면
             if ($board['bo_read_point'] && $member['mb_point'] + $board['bo_read_point'] < 0)
                 alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.\\n\\n포인트를 모으신 후 다시 글읽기 해 주십시오.');
@@ -123,9 +114,9 @@ if (isset($wr_id) && $wr_id) {
 } else {
     if ($member['mb_level'] < $board['bo_list_level']) {
         if ($member['mb_id'])
-            alert('목록을 볼 권한이 없습니다.', $g4['url']);
+            alert('목록을 볼 권한이 없습니다.', G4_URL);
         else
-            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode('board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
     }
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;

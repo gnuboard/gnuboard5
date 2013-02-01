@@ -1321,7 +1321,7 @@ function referer_check($url='')
     global $g4;
 
     if (!$url)
-        $url = $g4['url'];
+        $url = G4_URL;
 
     if (!preg_match("/^http['s']?:\/\/".$_SERVER['HTTP_HOST']."/", $_SERVER['HTTP_REFERER']))
         alert("제대로 된 접근이 아닌것 같습니다.", $url);

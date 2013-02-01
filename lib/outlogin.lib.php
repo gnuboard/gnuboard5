@@ -32,15 +32,15 @@ function outlogin($skin_dir='basic')
         $outlogin_url = $_GET['url'];
         if ($outlogin_url) {
             if (preg_match("/^\.\.\//", $outlogin_url)) {
-                $outlogin_url = urlencode($g4[url]."/".preg_replace("/^\.\.\//", "", $outlogin_url));
+                $outlogin_url = urlencode(G4_URL."/".preg_replace("/^\.\.\//", "", $outlogin_url));
             }
             else {
-                $purl = parse_url($g4[url]);
+                $purl = parse_url(G4_URL);
                 if ($purl['path']) {
                     $path = urlencode($purl['path']);
                     $urlencode = preg_replace("/".$path."/", "", $urlencode);
                 }
-                $outlogin_url = G4_URL.$urlencode;
+                $outlogin_url = $urlencode;
             }
         }
         else {

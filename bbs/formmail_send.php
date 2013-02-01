@@ -20,23 +20,20 @@ if (!chk_captcha()) {
 }
 
 
-for ($i=1; $i<=$attach; $i++)
-{
+for ($i=1; $i<=$attach; $i++) {
     if ($_FILES['file'.$i]['name'])
         $file[] = attach_file($_FILES['file'.$i]['name'], $_FILES['file'.$i]['tmp_name']);
 }
 
 $content = stripslashes($content);
-if ($type == 2)
-{
+if ($type == 2) {
     $type = 1;
     $content = preg_replace("/\n/", "<br>", $content);
 }
 
 // html 이면
-if ($type)
-{
-    $current_url = $g4['url'];
+if ($type) {
+    $current_url = G4_URL;
     $mail_content = '<!doctype html><html lang="ko"><head><meta charset="'.$g4['charset'].'"><title>메일보내기</title><link rel="stylesheet" href="'.$current_url.'/style.css"></head><body>'.$content.'</body></html>';
 }
 else

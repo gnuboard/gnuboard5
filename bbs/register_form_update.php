@@ -193,7 +193,7 @@ if ($w == '') {
         $subject = '회원가입을 축하드립니다.';
 
         $mb_md5 = md5($mb_id.$mb_email.$g4['time_ymdhis']);
-        $certify_href = $g4['url'].'/'.$g4['bbs'].'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
         ob_start();
         include_once ('./register_form_update_mail1.php');
@@ -294,7 +294,7 @@ if ($w == '') {
         $subject = '인증확인 메일입니다.';
 
         $mb_md5 = md5($mb_id.$mb_email.$member['mb_datetime']);
-        $certify_href = $g4['url'].'/'.$g4['bbs'].'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
         ob_start();
         include_once ('./register_form_update_mail3.php');

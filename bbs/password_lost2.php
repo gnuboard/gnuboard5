@@ -45,7 +45,7 @@ $sql = " update {$g4['member_table']}
             where mb_id = '{$mb['mb_id']}' ";
 sql_query($sql);
 
-$href = $g4['url'].'/'.$g4['bbs'].'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_datetime='.$mb_datetime.'&amp;mb_lost_certify='.$mb_lost_certify;
+$href = G4_BBS_URL.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_datetime='.$mb_datetime.'&amp;mb_lost_certify='.$mb_lost_certify;
 
 $subject = '요청하신 회원아이디/패스워드 정보입니다.';
 
@@ -60,7 +60,7 @@ $content .= '<li>이름 : '.addslashes($mb['mb_name']).'</li>';
 $content .= '<li>별명 : '.addslashes($mb['mb_nick']).'</li>';
 $content .= '<li>이메일주소 : '.addslashes($mb['mb_email']).'</li>';
 $content .= '<li>요청일시 : '.$g4['time_ymdhis'].'</li>';
-$content .= '<li>홈페이지 : '.$g4['url'].'</li>';
+$content .= '<li>홈페이지 : '.G4_URL.'</li>';
 $content .= '</ul>';
 $content .= '<hr>';
 $content .= '<p><a href="'.$href.'" target="_blank">'.$href.'</a></p>';
