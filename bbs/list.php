@@ -3,10 +3,16 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // 분류 사용 여부
 $is_category = false;
+$category_option = '';
 if ($board['bo_use_category']) {
     $is_category = true;
     $category_location = './board.php?bo_table='.$bo_table.'&amp;sca=';
-    $category_option = get_category_option($bo_table); // SELECT OPTION 태그로 넘겨받음
+
+    $categorys = explode('|', $board['bo_category_list']); // 구분자가 , 로 되어 있음
+    for ($i=0; $i<count($categorys); $i++) {
+        if (trim($categorys[$i]))
+            $category_option .= '<li>'.$categorys[$i].'</li>';
+    }
 }
 
 $sop = strtolower($sop);
