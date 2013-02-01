@@ -44,7 +44,7 @@ if ($w == "") {
 
 } else if ($w == 'u') {
 
-    if ($is_admin) 
+    if ($is_admin)
         alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', $g4['url']);
 
     if (!$member[mb_id])
@@ -108,9 +108,9 @@ $mb_icon = G4_PATH.'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_
 $register_action_url = G4_HTTPS_BBS_URL.'/register_form_update.php';
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400)));
 $required = ($w=='') ? 'required' : '';
-$readonly = ($w=='') ? 'readonly' : '';
+$readonly = ($w=='u') ? 'readonly' : '';
 
-$captcha_html = captcha_html(); 
+$captcha_html = captcha_html();
 
 include_once($member_skin_path.'/register_form.skin.php');
 include_once('./_tail.php');
