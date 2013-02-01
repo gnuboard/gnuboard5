@@ -128,7 +128,7 @@ function get_cookie($cookie_name)
 
 
 // 경고메세지를 경고창으로
-function alert($msg='', $url='', $error=true)
+function alert($msg='', $url='', $error=true, $post=false)
 {
     global $g4, $config, $member;
     global $is_admin;
