@@ -987,7 +987,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $str = "<strong class=\"sv\">\n";
     $str .= $tmp_name."\n";
-    $str2 .= "<span class=\"sv_wrap\">\n";
+    $str2 = "<span class=\"sv_wrap\">\n";
     if($mb_id)
         $str2 .= "<a href=\"".G4_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
     if($email)
