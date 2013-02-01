@@ -26,8 +26,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     ?>
     <article id="c_<?=$comment_id?>" <?if ($cmt_depth) {?>style="margin-left:<?=$cmt_depth?>px"<?}?>>
         <header>
-            <h1><?=$list[$i]['wr_name']?><span class="sound_only">님의 댓글</span></h1>
-            <?=$list[$i]['name']?>
+            <h1><?=$list[$i]['name']?><span class="sound_only">님의 댓글</span></h1>
             <? if ($cmt_depth) {?><img src="<?=$board_skin_url?>/img/icon_reply.gif" class="icon_reply" alt="댓글의 댓글"><? } ?>
             <? if ($is_ip_view) { ?>
             아이피
@@ -211,7 +210,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             }
         }
 
-        <? echo chk_captcha_js(); ?>
+        <? if($is_guest) echo chk_captcha_js(); ?>
 
         return true;
     }
