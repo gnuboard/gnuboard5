@@ -570,6 +570,7 @@ $(function(){
 
     // 사이드뷰
     var sv_hide = true;
+    $('.sv_wrap').addClass();
     $('.sv').click(function() {
         $('.sv_wrap').hide();
         $(this).find('.sv_wrap').show();
