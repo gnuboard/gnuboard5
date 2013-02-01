@@ -113,7 +113,6 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 .td_num {width:60px;text-align:center}
 .td_bignum {width:120px;text-align:center}
 .td_mbid, .td_mbnick, .td_mbname {width:100px;text-align:left}
-.td_mbnick div, .td_mbname div {position:relative} /* 파이어폭스에서 사이드뷰 위치를 잡기 위함 */
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
 /* 인덱스 */
@@ -156,10 +155,10 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 
 /* 사이드뷰 */
 .sv {display:inline-block;position:relative;font-weight:normal}
-.sv .sv_wrap {display:none;margin-top:5px;border:1px solid #eee;background:#f7f7f2}
-.sv_nojs .sv_wrap {display:block;width:100px !important}
-.sv .sv_wrap a {display:block;padding:3px;border-bottom:1px solid #eee}
-.sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:100px !important;height:auto !important;background:#ddd;overflow:auto}
+.sv .sv_wrap {display:none;margin-top:5px;border:1px solid #666;background:#484848}
+.sv_nojs .sv_wrap {display:block}
+.sv .sv_wrap a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff}
+.sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important;background:#ddd}
 .sv_member,
 .sv_guest {font-weight:bold}
 

@@ -960,7 +960,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $tmp_name = "";
     if ($mb_id) {
-        $tmp_name = "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"win_profile(this.href); return false;\">$name</a>";
+        $tmp_name = "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
 
         if ($config['cf_use_member_icon']) {
             $mb_dir = substr($mb_id,0,2);
@@ -973,13 +973,13 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
                 $tmp_name = '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" border="0" alt="">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-                    $tmp_name = $tmp_name . " <a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"win_profile(this.href); return false;\">$name</a>";
+                    $tmp_name = $tmp_name . " <a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
             }
         }
 
         $title_mb_id = '['.$mb_id.']';
     } else {
-        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\" title=\"$name 이름으로 검색\"class=\"sv_guest\">$name</a>";
+        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\" title=\"$name 이름으로 검색\"class=\"sv_guest\" onclick=\"return false;\">$name</a>";
         $title_mb_id = '[비회원]';
     }
 
