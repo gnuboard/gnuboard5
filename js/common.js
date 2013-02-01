@@ -571,9 +571,10 @@ $(function(){
     // 사이드뷰
     var sv_hide = false;
     $('.sv_wrap').addClass('sv_off');
-    $('.sv').click(function() {
+
+    $('.sv_member, .sv_guest').click(function() {
         $('.sv_wrap').removeClass('sv_on').addClass('sv_off');
-        $(this).find('.sv_wrap').removeClass('sv_off').addClass('sv_on');
+        $(this).closest('.sv').find('.sv_wrap').removeClass('sv_off').addClass('sv_on');
     });
 
     $('.sv, .sv_wrap').hover(
@@ -585,7 +586,27 @@ $(function(){
         }
     );
 
-    $('html').click(function() {
+    $('.sv_member, .sv_guest').focusin(function() {
+        sv_hide = false;
+        $('.sv_wrap').removeClass('sv_on').addClass('sv_off');
+        $(this).closest('.sv').find('.sv_wrap').removeClass('sv_off').addClass('sv_on');
+    });
+
+    $('.sv_wrap a').focusin(function() {
+        sv_hide = false;
+    });
+
+    $('.sv_wrap a').focusout(function() {
+        sv_hide = true;
+    });
+
+    $(document).click(function() {
+        if(sv_hide) {
+            $('.sv_wrap').removeClass('sv_on').addClass('sv_off');
+        }
+    });
+
+    $(document).focusin(function() {
         if(sv_hide) {
             $('.sv_wrap').removeClass('sv_on').addClass('sv_off');
         }

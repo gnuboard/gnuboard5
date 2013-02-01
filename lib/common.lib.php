@@ -958,7 +958,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $tmp_name = "";
     if ($mb_id) {
-        $tmp_name = "<span class=\"sv_member\">$name</span>";
+        $tmp_name = "<a href=\"#\" class=\"sv_member\">$name</a>";
 
         if ($config['cf_use_member_icon']) {
             $mb_dir = substr($mb_id,0,2);
@@ -971,13 +971,13 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
                 $tmp_name = '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" border="0" alt="">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-                    $tmp_name = $tmp_name . ' <span class="sv_member">'.$name.'</span>';
+                    $tmp_name = $tmp_name . ' <a href="#" class="sv_member">'.$name.'</a>';
             }
         }
 
         $title_mb_id = '['.$mb_id.']';
     } else {
-        $tmp_name = '<span class="sv_guest">'.$name.'</span>';
+        $tmp_name = '<a href="#" class="sv_guest">'.$name.'</a>';
         $title_mb_id = '[비회원]';
     }
 
