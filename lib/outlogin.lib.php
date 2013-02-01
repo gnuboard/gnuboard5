@@ -28,7 +28,7 @@ function outlogin($skin_dir='basic')
             $is_auth = true;
     }
 
-    if ($config['cf_https_url']) {
+    if (G4_HTTPS_DOMAIN) {
         $outlogin_url = $_GET['url'];
         if ($outlogin_url) {
             if (preg_match("/^\.\.\//", $outlogin_url)) {
@@ -40,11 +40,11 @@ function outlogin($skin_dir='basic')
                     $path = urlencode($purl['path']);
                     $urlencode = preg_replace("/".$path."/", "", $urlencode);
                 }
-                $outlogin_url = $g4['url'].$urlencode;
+                $outlogin_url = G4_URL.$urlencode;
             }
         }
         else {
-            $outlogin_url = $g4['url'];
+            $outlogin_url = G4_URL;
         }
     }
     else {
