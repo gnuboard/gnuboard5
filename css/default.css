@@ -119,7 +119,7 @@ table a {color:#000;text-decoration:none}
 .frm_input {padding:2px 2px 3px;border:1px solid #d7d7d7;background:#fff;vertical-align:middle}
 .frm_tbl textarea:focus,
 .frm_input:focus {padding:3px 3px 4px;border:0;background:#494949;color:#fff}
-.frm_tbl textarea {width:90%}
+.frm_tbl textarea {width:90%;height:150px}
 .frm_address {display:block;margin-top:5px}
 .frm_file {display:block;margin-bottom:5px}
 .frm_tbl #captcha {margin:0;padding:0;border:0;background:transparent}
@@ -480,9 +480,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 
 /* 사이드뷰 */
 .sv {display:inline-block;position:relative;font-weight:normal}
-.sv .sv_wrap {display:none;margin-top:5px;border:1px solid #eee;background:#f7f7f2}
+.sv .sv_wrap {display:none;margin-top:5px;border:1px solid #666;background:#484848}
 .sv_nojs .sv_wrap {display:block;width:100px !important}
-.sv .sv_wrap a {display:block;padding:3px;border-bottom:1px solid #eee}
+.sv .sv_wrap a {display:block;padding:3px;border-bottom:1px solid #555;color:#fff}
 .sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:100px !important;height:auto !important;background:#ddd;overflow:auto}
 .sv_member,
 .sv_guest {font-weight:bold}
