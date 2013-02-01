@@ -166,13 +166,6 @@ include_once ('./admin.head.php');
         <textarea id="cf_intercept_ip" name="cf_intercept_ip"><?=$config['cf_intercept_ip']?> </textarea>
     </td>
 </tr>
-<tr>
-    <th scope="row"><label for="cf_https_url">보안서버주소</label></th>
-    <td colspan="3">
-        <?=help('회원가입, 글쓰기에 사용되는 https 로 시작되는 주소를 말합니다. 포트가 있다면 도메인 뒤에 :443 과 같이 입력하세요.<br>보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.<br>입력 예)https://www.sir.co.kr:443')?>
-        <input type="text" id="cf_https_url" name="cf_https_url" value="<?=$config['cf_https_url']?>" size="70">
-    </td>
-</tr>
 </tbody>
 </table>
 
