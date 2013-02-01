@@ -15,10 +15,10 @@ if ($is_nogood) $colspan++;
     <div id="bo_cate">
         <? if ($is_category) { ?>
         <form id="fcategory" name="fcategory" method="get">
-        <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
-            <option value=''>전체</option>
+        <ul>
+            <li>전체</li>
             <?=$category_option?>
-        </select>
+        </ul>
         </form>
         <? } ?>
     </div>
