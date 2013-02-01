@@ -605,13 +605,9 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 @include_once ($board_skin_path.'/write_update.skin.php');
 
 @include_once($board_skin_path.'/write_update.tail.skin.php');
-if ($g4['https_url'])
-    $https_url = $g4['url'].'/'.$g4['bbs'];
-else
-    $https_url = '.';
 
 if ($file_upload_msg)
-    alert($file_upload_msg, $https_url.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
+    alert($file_upload_msg, G4_HTTPS_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
 else
-    goto_url($https_url.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
+    goto_url(G4_HTTPS_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
 ?>

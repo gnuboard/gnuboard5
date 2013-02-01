@@ -35,7 +35,7 @@ if (G4_HTTPS_DOMAIN) {
                 $path = urlencode($purl['path']);
                 $urlencode = preg_replace("/".$path."/", "", $urlencode);
             }
-            $login_url = G4_URL.$urlencode;
+            $login_url = $urlencode;
         }
     } else {
         $login_url = G4_URL;
