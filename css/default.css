@@ -482,7 +482,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .sv {display:inline-block;position:relative;font-weight:normal}
 .sv .sv_wrap {display:none;margin-top:5px;border:1px solid #666;background:#484848}
 .sv_nojs .sv_wrap {display:block}
-.sv .sv_wrap a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff}
+.sv .sv_wrap a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff !important}
 .sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important;background:#ddd}
 .sv_member,
 .sv_guest {font-weight:bold}
