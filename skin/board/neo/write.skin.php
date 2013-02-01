@@ -198,7 +198,7 @@ function fwrite_submit(f)
     var subject = "";
     var content = "";
     $.ajax({
-        url: g4_bbs_path+"/filter.ajax.php",
+        url: g4_bbs_url+"/filter.ajax.php",
         type: "POST",
         data: {
             "subject": f.wr_subject.value,
