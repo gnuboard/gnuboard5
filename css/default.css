@@ -476,14 +476,14 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #bo_vc_warea {clear:both;position:relative;margin:0 90px 10px 0}
 #bo_vc_warea textarea {padding:3px;width:100%;height:50px;border:1px solid #ddd;background:#fff;vertical-align:middle}
 #bo_vc_warea textarea:focus {padding:4px;border:0;background:#494949;color:#fff}
-#bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:20px;width:75px;height:57px;border:1px solid #666;background:#494949;color:#fff;letter-spacing:-0.1em}
+#bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:0;width:75px;height:57px;border:1px solid #666;background:#494949;color:#fff;letter-spacing:-0.1em}
 
 /* 사이드뷰 */
 .sv {display:inline-block;position:relative;font-weight:normal}
-.sv .sv_wrap {display:none;margin-top:5px;border:1px solid #666;background:#484848}
-.sv_nojs .sv_wrap {display:block;width:100px !important}
-.sv .sv_wrap a {display:block;padding:3px;border-bottom:1px solid #555;color:#fff}
-.sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:100px !important;height:auto !important;background:#ddd;overflow:auto}
+.sv .sv_wrap {z-index:1000;display:none;margin-top:5px;border:1px solid #666;background:#484848}
+.sv_nojs .sv_wrap {display:block}
+.sv .sv_wrap a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff !important}
+.sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important;background:#ddd}
 .sv_member,
 .sv_guest {font-weight:bold}
 

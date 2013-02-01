@@ -15,10 +15,10 @@ if ($is_nogood) $colspan++;
     <div id="bo_cate">
         <? if ($is_category) { ?>
         <form id="fcategory" name="fcategory" method="get">
-        <select name="sca" onchange="location='<?=$category_location?>'+<?=strtolower($g4['charset'])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;">
-            <option value=''>전체</option>
+        <ul>
+            <li>전체</li>
             <?=$category_option?>
-        </select>
+        </ul>
         </form>
         <? } ?>
     </div>
@@ -230,3 +230,19 @@ function select_copy(sw) {
 </script>
 <? } ?>
 <!-- 게시판 목록 끝 -->
+
+<!-- ie6,7에서 사이드뷰가 아래 사이드뷰에서 가려지는 현상 수정 -->
+<!--[if lte IE 8]>
+<script>
+$(function() {
+    var $td_name = $(".td_name");
+    var count = $td_name.length;
+
+    $td_name.each(function() {
+        $(this).css("z-index", count);
+        $(this).css("position", "relative");
+        count--;
+    });
+});
+</script>
+<![endif]-->
