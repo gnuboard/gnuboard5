@@ -18,6 +18,8 @@ function get_microtime()
 // 현재페이지, 총페이지수, 한페이지에 보여줄 행, URL
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {
+    $url = preg_replace('#(&amp;|&)?page\=[0-9]+#', '', $url);
+
     $str = '';
     if ($cur_page > 1) {
         $str .= '<a href="'.$url.'1'.$add.'" class="pg_page pg_start">처음</a>'.PHP_EOL;
@@ -801,7 +803,7 @@ function get_category_option($bo_table='', $ca_name='')
         $category = trim($arr[$i]);
         if (!$category) continue;
 
-        $str .= "<option value=\"$arr[$i]\"";
+        $str .= "<lioption value=\"$arr[$i]\"";
         if ($category == $ca_name) {
             $str .= ' selected="selected"';
         }

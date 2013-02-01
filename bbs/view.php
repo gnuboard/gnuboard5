@@ -47,14 +47,14 @@ if (!$board['bo_use_list_view']) {
 $prev_href = '';
 if (isset($prev['wr_id']) && $prev['wr_id']) {
     $prev_wr_subject = get_text(cut_str($prev['wr_subject'], 255));
-    $prev_href = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$prev['wr_id'].'&amp;page='.$page.$qstr;
+    $prev_href = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$prev['wr_id'].$qstr;
 }
 
 // 다음글 링크
 $next_href = '';
 if (isset($next['wr_id']) && $next['wr_id']) {
     $next_wr_subject = get_text(cut_str($next['wr_subject'], 255));
-    $next_href = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$next['wr_id'].'&amp;page='.$page.$qstr;
+    $next_href = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$next['wr_id'].$qstr;
 }
 
 // 쓰기 링크
