@@ -136,7 +136,6 @@ table a {color:#000;text-decoration:none}
 .td_mb_id {width:100px;text-align:center}
 .td_nick {width:100px;text-align:center}
 .td_name {width:100px;text-align:left}
-.td_name div {position:relative}
 .td_date {width:60px;text-align:center}
 .td_datetime {width:110px;text-align:center}
 .td_mng {width:80px;text-align:center}
@@ -393,7 +392,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
-#bo_list strong {color:#109ff1}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .bo_notice {}
@@ -481,9 +479,12 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:20px;width:75px;height:57px;border:1px solid #666;background:#494949;color:#fff;letter-spacing:-0.1em}
 
 /* 사이드뷰 */
-#sideview {z-index:1000;position:absolute;top:15px;left:20px;margin:0 !important;padding:0 !important;border:1px solid #999;background:#f9f9f9}
-#sideview ul {margin:0 !important;padding:0 !important;list-style:none !important}
-#sideview a {display:inline-block;padding:5px 10px 4px;width:100px;border-bottom:1px solid #ddd;color:#000;font-weight:normal;text-decoration:none}
+.sv {display:inline-block;position:relative;font-weight:normal}
+.sv .sv_wrap {display:block;margin-top:5px;border:1px solid #eee;background:#f7f7f2}
+.sv .sv_wrap a {display:block;padding:3px;border-bottom:1px solid #eee}
+.sv_on {z-index:1000;position:absolute;top:10px;left:20px;width:100px !important;height:auto !important;background:#ddd;overflow:auto}
+.sv_off {display:block;position:absolute;margin:0 !important;width:0;height:0;border:0 !important;overflow:hidden}
+.sv_off a {margin:0;padding:0;width:0;height:0;overflow:hidden}
 
 /* pagination */
 .pg {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
