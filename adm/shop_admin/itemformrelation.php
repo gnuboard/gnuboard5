@@ -3,10 +3,10 @@ $sub_menu = "400300";
 include_once("./_common.php");
 
 $g4[title] = "관련 상품";
-include_once ("$g4[path]/head.sub.php");
+include_once (G4_PATH.'/head.sub.php');
 
 $sql = " select ca_id, it_id, it_name, it_amount
-           from $g4[yc4_item_table] 
+           from $g4[yc4_item_table]
           where ca_id like '$ca_id%'
             and it_id <> '$it_id'
           order by ca_id, it_name ";
@@ -42,5 +42,5 @@ for($i=0;$row=sql_fetch_array($result);$i++) {
 parent.document.getElementById('relation').length = <?=$cnt?>;
 </script>
 <?
-include_once ("$g4[path]/tail.sub.php");
+include_once (G4_PATH.'/tail.sub.php');
 ?>
