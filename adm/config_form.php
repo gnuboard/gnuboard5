@@ -9,18 +9,9 @@ $token = get_token();
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
-// 쪽지보낼시 차감 포인트 필드 추가 : 061218
-sql_query(" ALTER TABLE {$g4['config_table']} ADD cf_memo_send_point INT NOT NULL AFTER cf_login_point ", FALSE);
-
-// 개인정보보호정책 필드 추가 : 061121
-$sql = " ALTER TABLE {$g4['config_table']} ADD cf_privacy TEXT NOT NULL AFTER cf_stipulation ";
-sql_query($sql, FALSE);
-if (!trim($config['cf_privacy'])) {
-    $config['cf_privacy'] = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.';
-}
-
+// 메일발송전용 이메일주소
 if (!isset($config['cf_email_admin'])) {
-    sql_query(" ALTER TABLE {$g4['config_table']} ADD cf_email_admin VARCHAR(255) NOT NULL DEFAULT '' AFTER cf_email_use ", FALSE);
+    sql_query(" ALTER TABLE {$g4['config_table']} ADD cf_email_admin VARCHAR(255) NOT NULL DEFAULT '' AFTER cf_email_use ", TRUE);
 }
     
 $g4['title'] = '환경설정';
@@ -173,6 +164,13 @@ include_once ('./admin.head.php');
     <td>
         <?=help('입력된 IP의 컴퓨터는 접근할 수 없음.<br>123.123.+ 도 입력 가능. (엔터로 구분)')?>
         <textarea id="cf_intercept_ip" name="cf_intercept_ip"><?=$config['cf_intercept_ip']?> </textarea>
+    </td>
+</tr>
+<tr>
+    <th scope="row"><label for="cf_https_url">보안서버주소</label></th>
+    <td colspan="3">
+        <?=help('회원가입, 글쓰기에 사용되는 https 로 시작되는 주소를 말합니다. 포트가 있다면 도메인 뒤에 :443 과 같이 입력하세요.<br>보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.<br>입력 예)https://www.sir.co.kr:443')?>
+        <input type="text" id="cf_https_url" name="cf_https_url" value="<?=$config['cf_https_url']?>" size="70">
     </td>
 </tr>
 </tbody>

@@ -130,6 +130,15 @@ ini_set("session.cookie_domain", $g4['cookie_domain']);
 
 @session_start();
 
+// 보안서버주소 설정
+if (G4_HTTPS_DOMAIN) {
+    define('G4_HTTPS_URL', G4_HTTPS_DOMAIN);
+    define('G4_HTTPS_BBS_URL', G4_HTTPS_DOMAIN.'/'.G4_BBS_DIR);
+} else {
+    define('G4_HTTPS_URL', G4_URL);
+    define('G4_HTTPS_BBS_URL', G4_BBS_URL);
+}
+
 //==============================================================================
 // Mobile 모바일 설정
 // 쿠키에 저장된 값이 모바일이라면 브라우저 상관없이 모바일로 실행
