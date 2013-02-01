@@ -104,7 +104,7 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_content">내용<strong class="sound_only">필수</strong></label></th>
-    <td><?=editor_html("wr_content", $content, $is_dhtml_editor);?></td>
+    <td class="wr_content"><?=editor_html("wr_content", $content, $is_dhtml_editor);?></td>
 </tr>
 
 <? for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
