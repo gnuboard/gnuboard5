@@ -112,7 +112,7 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 .td_chk {width:30px;text-align:center}
 .td_num {width:60px;text-align:center}
 .td_bignum {width:120px;text-align:center}
-.td_mbid, .td_mbnick, .td_mbname {width:80px;text-align:center}
+.td_mbid, .td_mbnick, .td_mbname {width:100px;text-align:left}
 .td_mbnick div, .td_mbname div {position:relative} /* 파이어폭스에서 사이드뷰 위치를 잡기 위함 */
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
