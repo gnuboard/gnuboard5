@@ -569,15 +569,14 @@ $(function(){
     });
 
     // 사이드뷰
-    var sv_hide = true;
-    $('.sv_wrap').addClass();
+    var sv_hide = false;
+    $('.sv_wrap').addClass('sv_off');
     $('.sv').click(function() {
-        $('.sv_wrap').hide();
-        $(this).find('.sv_wrap').show();
-
+        $('.sv_wrap').removeClass('sv_on').addClass('sv_off');
+        $(this).find('.sv_wrap').removeClass('sv_off').addClass('sv_on');
     });
 
-    $('.sv_wrap').hover(
+    $('.sv, .sv_wrap').hover(
         function() {
             sv_hide = false;
         },
@@ -586,9 +585,9 @@ $(function(){
         }
     );
 
-    $(document).click(function() {
+    $('html').click(function() {
         if(sv_hide) {
-            $('.sv_wrap').hide();
+            $('.sv_wrap').removeClass('sv_on').addClass('sv_off');
         }
     });
 });
