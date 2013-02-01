@@ -135,7 +135,7 @@ table a {color:#000;text-decoration:none}
 .td_bignum {width:80px;text-align:center}
 .td_mb_id {width:100px;text-align:center}
 .td_nick {width:100px;text-align:center}
-.td_name {position:relative;width:100px;text-align:left}
+.td_name {width:100px;text-align:left}
 .td_date {width:60px;text-align:center}
 .td_datetime {width:110px;text-align:center}
 .td_mng {width:80px;text-align:center}
