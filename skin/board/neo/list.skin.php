@@ -118,7 +118,7 @@ if ($is_nogood) $colspan++;
             if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
             ?>
         </td>
-        <td class="td_name"><div><?=$list[$i]['name']?></div></td>
+        <td class="td_name"><?=$list[$i]['name']?></td>
         <td class="td_date"><?=$list[$i]['datetime2']?></td>
         <td class="td_num"><?=$list[$i]['wr_hit']?></td>
         <? if ($is_good) { ?><td class="td_num"><?=$list[$i]['wr_good']?></td><? } ?>

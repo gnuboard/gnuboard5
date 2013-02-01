@@ -378,7 +378,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     if ($board['bo_use_sideview'])
         $list['name'] = get_sideview($list['mb_id'], $tmp_name, $list['wr_email'], $list['wr_homepage']);
     else
-        $list['name'] = '<span class="'.($list['mb_id']?'member':'guest').'">'.$tmp_name.'</span>';
+        $list['name'] = '<span class="'.($list['mb_id']?'sv_member':'sv_guest').'">'.$tmp_name.'</span>';
 
     $reply = $list['wr_reply'];
 
@@ -958,7 +958,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $tmp_name = "";
     if ($mb_id) {
-        $tmp_name = "<span class=\"sv_member\">$name</span>";
+        $tmp_name = "<a href=\"#\" class=\"sv_member\">$name</a>";
 
         if ($config['cf_use_member_icon']) {
             $mb_dir = substr($mb_id,0,2);
@@ -971,13 +971,13 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
                 $tmp_name = '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" border="0" alt="">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-                    $tmp_name = $tmp_name . ' <span class="sv_member">'.$name.'</span>';
+                    $tmp_name = $tmp_name . ' <a href="#" class="sv_member">'.$name.'</a>';
             }
         }
 
         $title_mb_id = '['.$mb_id.']';
     } else {
-        $tmp_name = '<span class="sv_guest">'.$name.'</span>';
+        $tmp_name = '<a href="#" class="sv_guest">'.$name.'</a>';
         $title_mb_id = '[비회원]';
     }
 
@@ -985,7 +985,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $email    = get_text($email);
     $homepage = get_text($homepage);
 
-    $str = "<a href=\"\" class=\"sv\">\n";
+    $str = "<strong class=\"sv\">\n";
     $str .= $tmp_name."\n";
     $str .= "<span class=\"sv_wrap\">\n";
     if($mb_id)
@@ -1009,7 +1009,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         $str .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
     }
     $str .= "</span>\n";
-    $str .= "</a>";
+    $str .= "</strong>";
 
     return $str;
 }

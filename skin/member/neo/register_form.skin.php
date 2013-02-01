@@ -3,9 +3,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <script>
-var member_skin_path = "<?=$member_skin_path?>";
+var member_skin_url = "<?=$member_skin_url?>";
 </script>
-<script src="<?=$member_skin_path?>/ajax_register_form.jquery.js"></script>
+<script src="<?=$member_skin_url?>/ajax_register_form.jquery.js"></script>
 
 <form id="fregisterform" name="fregisterform" method="post" action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
