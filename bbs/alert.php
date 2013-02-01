@@ -1,8 +1,14 @@
 <?
 global $lo_location;
 global $lo_url;
-$g4['title'] = "오류가 있습니다.";
+
 include_once('./_common.php');
+
+if($error) {
+    $g4['title'] = "오류가 있습니다.";
+} else {
+    $g4['title'] = "내용을 확인해 주세요.";
+}
 include_once(G4_PATH.'/head.sub.php');
 // 필수 입력입니다.
 // 양쪽 공백 없애기
@@ -32,22 +38,40 @@ if($error) {
     $header2 = "다음 내용을 확인해 주세요.";
 }
 ?>
-<div id="validation_check">
-
-    <h1><?=$header2?></h1>
 
 <script>
 alert("<? echo $msg; ?>");
-document.location.href = "<? echo $url; ?>";
+//document.location.href = "<? echo $url; ?>";
+document.location.replace("<? echo $url; ?>");
 </script>
 
 <noscript>
+<div id="validation_check">
+    <h1><?=$header2?></h1>
     <p class="cbg">
         <?=$msg2?>
     </p>
+    <? if($post) { ?>
+    <form method="post" action="<?=$url?>">
+    <?
+    foreach($_POST as $key => $value) {
+        if(strlen($value) < 1)
+            continue;
+
+        if(preg_match("/pass|pwd|capt|url/", $key))
+            continue;
+    ?>
+    <input type="hidden" name="<?=$key?>" value="<?=$value?>">
+    <?
+    }
+    ?>
+    <input type="submit" value="돌아가기">
+    </form>
+    <? } else { ?>
     <div class="btn_confirm">
         <a href="<?=$url?>">돌아가기</a>
     </div>
+    <? } ?>
 
 <? /*
 <article id="validation_check">
@@ -70,10 +94,8 @@ document.location.href = "<? echo $url; ?>";
 <a href="<?=$url?>">돌아가기</a>
 </article>
 */ ?>
-
-</noscript>
-
 </div>
+</noscript>
 
 <?
 include_once(G4_PATH.'/tail.sub.php');

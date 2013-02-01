@@ -112,7 +112,7 @@ function set_cookie($cookie_name, $value, $expire)
 {
     global $g4;
 
-    setcookie(md5($cookie_name), base64_encode($value), $g4['server_time'] + $expire, '/', $g4['cookie_domain']);
+    setcookie(md5($cookie_name), base64_encode($value), $g4['server_time'] + $expire, '/', G4_COOKIE_DOMAIN);
 }
 
 
@@ -128,7 +128,7 @@ function get_cookie($cookie_name)
 
 
 // 경고메세지를 경고창으로
-function alert($msg='', $url='', $error=true)
+function alert($msg='', $url='', $error=true, $post=false)
 {
     global $g4, $config, $member;
     global $is_admin;
@@ -1321,7 +1321,7 @@ function referer_check($url='')
     global $g4;
 
     if (!$url)
-        $url = $g4['url'];
+        $url = G4_URL;
 
     if (!preg_match("/^http['s']?:\/\/".$_SERVER['HTTP_HOST']."/", $_SERVER['HTTP_REFERER']))
         alert("제대로 된 접근이 아닌것 같습니다.", $url);

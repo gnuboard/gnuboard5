@@ -55,7 +55,7 @@ body, th, td, form, input, select, text, textarea, caption { font-size: 12px; fo
                     <td height="2" bgcolor="#E0E0E0" align="center"></td>
                 </tr>
                 <tr>
-                    <td height="25" bgcolor="#EDEDED" align="center">로그인 후 모든 정보를 이용하실 수 있습니다.[<a href="<?=$g4['url']?>/<?=$g4['bbs']?>/login.php">바로가기</a>]</td>
+                    <td height="25" bgcolor="#EDEDED" align="center">로그인 후 모든 정보를 이용하실 수 있습니다.[<a href="<?=G4_BBS_URL?>/login.php">바로가기</a>]</td>
                 </tr>
                 </table>
             </td>

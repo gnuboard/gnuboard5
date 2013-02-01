@@ -53,22 +53,22 @@ $mb_10          = isset($_POST['mb_10'])        ? escape_trim($_POST['mb_10'])  
 
 if ($w == '' || $w == 'u') {
 
-    if ($msg = empty_mb_id($mb_id))         alert($msg);
+    if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
 
     if ($w == '' && !$mb_password)
         alert('패스워드가 넘어오지 않았습니다.');
     if($w == '' && $mb_password != $mb_password_re)
         alert('패스워드가 일치하지 않습니다.');
 
-    if ($msg = empty_mb_name($mb_id))       alert($msg);
-    if ($msg = empty_mb_nick($mb_nick))     alert($msg);
-    if ($msg = empty_mb_email($mb_email))   alert($msg);
-    if ($msg = reserve_mb_id($mb_id))       alert($msg);
-    if ($msg = reserve_mb_nick($mb_nick))   alert($msg);
-    if ($msg = valid_mb_name($mb_name))     alert($msg);
-    if ($msg = valid_mb_nick($mb_nick))     alert($msg);
-    if ($msg = valid_mb_email($mb_email))   alert($msg);
-    if ($msg = prohibit_mb_email($mb_email))alert($msg);
+    if ($msg = empty_mb_name($mb_id))       alert($msg, "", true, true);
+    if ($msg = empty_mb_nick($mb_nick))     alert($msg, "", true, true);
+    if ($msg = empty_mb_email($mb_email))   alert($msg, "", true, true);
+    if ($msg = reserve_mb_id($mb_id))       alert($msg, "", true, true);
+    if ($msg = reserve_mb_nick($mb_nick))   alert($msg, "", true, true);
+    if ($msg = valid_mb_name($mb_name))     alert($msg, "", true, true);
+    if ($msg = valid_mb_nick($mb_nick))     alert($msg, "", true, true);
+    if ($msg = valid_mb_email($mb_email))   alert($msg, "", true, true);
+    if ($msg = prohibit_mb_email($mb_email))alert($msg, "", true, true);
 
     if ($w=='') {
         if ($msg = exist_mb_id($mb_id))     alert($msg);
@@ -193,7 +193,7 @@ if ($w == '') {
         $subject = '회원가입을 축하드립니다.';
 
         $mb_md5 = md5($mb_id.$mb_email.$g4['time_ymdhis']);
-        $certify_href = $g4['url'].'/'.$g4['bbs'].'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
         ob_start();
         include_once ('./register_form_update_mail1.php');
@@ -294,7 +294,7 @@ if ($w == '') {
         $subject = '인증확인 메일입니다.';
 
         $mb_md5 = md5($mb_id.$mb_email.$member['mb_datetime']);
-        $certify_href = $g4['url'].'/'.$g4['bbs'].'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
         ob_start();
         include_once ('./register_form_update_mail3.php');
