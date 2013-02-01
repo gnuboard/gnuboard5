@@ -480,11 +480,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 
 /* 사이드뷰 */
 .sv {display:inline-block;position:relative;font-weight:normal}
-.sv .sv_wrap {display:block;margin-top:5px;border:1px solid #eee;background:#f7f7f2}
+.sv .sv_wrap {display:none;margin-top:5px;border:1px solid #eee;background:#f7f7f2}
+.sv_nojs .sv_wrap {display:block}
 .sv .sv_wrap a {display:block;padding:3px;border-bottom:1px solid #eee}
-.sv_on {z-index:1000;position:absolute;top:10px;left:20px;width:100px !important;height:auto !important;background:#ddd;overflow:auto}
-.sv_off {display:block;position:absolute;margin:0 !important;width:0;height:0;border:0 !important;overflow:hidden}
-.sv_off a {margin:0;padding:0;width:0;height:0;overflow:hidden}
+.sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:100px !important;height:auto !important;background:#ddd;overflow:auto}
 .sv_member,
 .sv_guest {font-weight:bold}
 
