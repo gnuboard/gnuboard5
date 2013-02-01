@@ -378,7 +378,7 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     if ($board['bo_use_sideview'])
         $list['name'] = get_sideview($list['mb_id'], $tmp_name, $list['wr_email'], $list['wr_homepage']);
     else
-        $list['name'] = '<span class="'.($list['mb_id']?'member':'guest').'">'.$tmp_name.'</span>';
+        $list['name'] = '<span class="'.($list['mb_id']?'sv_member':'sv_guest').'">'.$tmp_name.'</span>';
 
     $reply = $list['wr_reply'];
 
@@ -985,7 +985,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $email    = get_text($email);
     $homepage = get_text($homepage);
 
-    $str = "<a href=\"\" class=\"sv\">\n";
+    $str = "<strong class=\"sv\">\n";
     $str .= $tmp_name."\n";
     $str .= "<span class=\"sv_wrap\">\n";
     if($mb_id)
@@ -1009,7 +1009,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         $str .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
     }
     $str .= "</span>\n";
-    $str .= "</a>";
+    $str .= "</strong>";
 
     return $str;
 }
