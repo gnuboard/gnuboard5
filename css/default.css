@@ -128,7 +128,7 @@ table a {color:#000;text-decoration:none}
 .frm_info {display:block;padding:5px 0 0;color:#777;line-height:1.3em}
 
 /* 테이블 항목별 정의 */
-.td_chk {width:40px;text-align:center}
+.td_chk {width:30px;text-align:center}
 .td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
 .td_num {width:50px;text-align:center}
