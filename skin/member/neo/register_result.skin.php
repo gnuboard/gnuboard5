@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="reg_result" class="cbg">
@@ -39,5 +39,5 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </div>
 
 <div class="btn_confirm">
-    <a href="<?=$g4['url']?>/" class="btn01">메인으로</a>
+    <a href="<?=G4_URL?>/" class="btn01">메인으로</a>
 </div>
