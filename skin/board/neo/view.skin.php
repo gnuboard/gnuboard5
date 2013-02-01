@@ -162,7 +162,7 @@ function board_move(href)
 }
 </script>
 
-<script src="<?=$g4['path']?>/js/board.js"></script>
+<script src="<?=G4_JS_URL?>/board.js"></script>
 <!-- 게시글 보기 끝 -->
 
 <script>
