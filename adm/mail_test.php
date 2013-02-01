@@ -31,7 +31,7 @@ $content = preg_replace("/{이메일}/", $email, $content);
 
 $mb_md5 = md5($member['mb_id'].$member['mb_email'].$member['mb_datetime']);
 
-$content = $content . '<p>더 이상 정보 수신을 원치 않으시면 [<a href="'.$g4['url'].'/'.$g4['bbs'].'/email_stop.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5.'" target="_blank">수신거부</a>] 해 주십시오.</p>';
+$content = $content . '<p>더 이상 정보 수신을 원치 않으시면 [<a href="'.G4_BBS_URL.'/email_stop.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5.'" target="_blank">수신거부</a>] 해 주십시오.</p>';
 
 mailer($config['cf_title'], $member['mb_email'], $member['mb_email'], $subject, $content, 1);
 

@@ -560,7 +560,7 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     $str = $warr[$w];
 
     $subject = '"'.$board['bo_subject'].'" 게시판에 '.$str.'글이 올라왔습니다.';
-    $link_url = $g4['url'].'/'.$g4['bbs'].'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr;
+    $link_url = G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr;
 
     include_once(G4_PATH.'/lib/mailer.lib.php');
 

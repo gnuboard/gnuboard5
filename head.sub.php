@@ -13,15 +13,12 @@ else
     $g4_head_title .= " : ".$config['cf_title'];
 
 // 현재 접속자
-//$lo_location = get_text($g4[title]);
-//$lo_location = $g4[title];
 // 게시판 제목에 ' 포함되면 오류 발생
 $lo_location = addslashes($g4['title']);
 if (!$lo_location)
     $lo_location = $_SERVER['REQUEST_URI'];
-//$lo_url = $g4['url'] . $_SERVER['REQUEST_URI'];
 $lo_url = $_SERVER['REQUEST_URI'];
-if (strstr($lo_url, "/$g4[admin]/") || $is_admin == 'super') $lo_url = '';
+if (strstr($lo_url, '/'.G4_ADMIN_DIR.'/') || $is_admin == 'super') $lo_url = '';
 
 /*
 // 만료된 페이지로 사용하시는 경우

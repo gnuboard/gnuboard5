@@ -193,7 +193,7 @@ if ($w == 'c') // 코멘트 입력
 
         $subject = $board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
         // 4.00.15 - 메일로 보내는 코멘트의 바로가기 링크 수정
-        $link_url = $g4['url']."/".$g4['bbs']."/board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
+        $link_url = G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
 
         include_once(G4_PATH.'/lib/mailer.lib.php');
 
