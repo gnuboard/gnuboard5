@@ -144,7 +144,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         var subject = "";
         var content = "";
         $.ajax({
-            url: g4_bbs_path+"/filter.ajax.php",
+            url: g4_bbs_url+"/filter.ajax.php",
             type: "POST",
             data: {
                 "subject": "",

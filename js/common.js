@@ -569,13 +569,25 @@ $(function(){
     });
 
     // 사이드뷰
+    var sv_hide = true;
     $('.sv').click(function() {
         $('.sv_wrap').hide();
-        $(this).find('.sv_wrap').css("display", "block");
+        $(this).find('.sv_wrap').show();
 
     });
 
+    $('.sv_wrap').hover(
+        function() {
+            sv_hide = false;
+        },
+        function() {
+            sv_hide = true;
+        }
+    );
+
     $(document).click(function() {
-    //    $('.sv_wrap').hide();
+        if(sv_hide) {
+            $('.sv_wrap').hide();
+        }
     });
 });
