@@ -13,18 +13,18 @@ if ($w == "") {
     // 경고창이 뜨는것을 막기위해 아래의 코드로 대체
     // alert("이미 로그인중이므로 회원 가입 하실 수 없습니다.", "./");
     if ($is_member) {
-        goto_url(G4_PATH);
+        goto_url(G4_URL);
     }
 
     // 리퍼러 체크
     referer_check();
 
     if (!isset($_POST['agree']) || !$_POST['agree']) {
-        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', './register.php');
+        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G4_BBS_URL.'/register.php');
     }
 
     if (!isset($_POST['agree2']) || !$_POST['agree2']) {
-        alert('개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', './register.php');
+        alert('개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G4_BBS_URL.'/register.php');
     }
 
     $member['mb_birth'] = '';
@@ -100,25 +100,17 @@ if ($w == "") {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-$captcha_html = captcha_html(); 
+include_once('./_head.php');
 
 // 회원아이콘 경로
 $mb_icon = G4_PATH.'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
 
-include_once('./_head.php');
-
-if ($g4['https_url'])
-    //$register_action_url = "{$g4['https_url']}/{$g4['bbs']}/register_form_update.php";
-    $register_action_url = G4_BBS_URL.'/register_form_update.php';
-else
-    $register_action_url = G4_BBS_URL.'/register_form_update.php';
-
+$register_action_url = G4_HTTPS_BBS_URL.'/register_form_update.php';
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400)));
+$required = ($w=='') ? 'required' : '';
+$readonly = ($w=='') ? 'readonly' : '';
 
-$required = "";
-$readonly = "";
-if ($w == '') $required = "required";
-else if ($w == 'u') $readonly = "readonly";
+$captcha_html = captcha_html(); 
 
 include_once($member_skin_path.'/register_form.skin.php');
 include_once('./_tail.php');

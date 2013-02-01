@@ -24,7 +24,7 @@ if ($url)
 else
     $urlencode = urlencode($_SERVER['REQUEST_URI']);
 
-if ($g4['https_url']) {
+if ($config['cf_https_url']) {
     $login_url = $_GET['url'];
     if ($login_url) {
         if (preg_match("/^\.\.\//", $url)) {
@@ -44,16 +44,12 @@ if ($g4['https_url']) {
     $login_url = $urlencode;
 }
 
-if (G4_HTTPS_URL)
-    $login_action_url = G4_HTTPS_URL."/$g4[bbs]/login_check.php";
-else
-    $login_action_url = G4_BBS_URL."/login_check.php";
+$login_action_url = G4_HTTPS_BBS_URL."/login_check.php";
 
 // 로그인 스킨이 없는 경우 관리자 페이지 접속이 안되는 것을 막기 위하여 기본 스킨으로 대체
 $login_file = $member_skin_path.'/login.skin.php';
-if (!file_exists($login_file)) {
-    $member_skin_path   = G4_PATH.'/'.$g4['skin_dir'].'/member/basic';
-}
+if (!file_exists($login_file))
+    $member_skin_path   = G4_SKIN_PATH.'/member/basic';
 
 include_once($member_skin_path.'/login.skin.php');
 

@@ -32,9 +32,12 @@ $g4_path = g4_path();
 define('_GNUBOARD_', true);
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
+define('G4_ADMIN_DIR',      'adm');
+define('G4_BBS_DIR',        'bbs');
+
 define('G4_URL',            $g4_path['url']);
-define('G4_ADMIN_URL',      G4_URL.'/adm');
-define('G4_BBS_URL',        G4_URL.'/bbs');
+define('G4_ADMIN_URL',      G4_URL.'/'.G4_ADMIN_DIR);
+define('G4_BBS_URL',        G4_URL.'/'.G4_BBS_DIR);
 define('G4_CSS_URL',        G4_URL.'/css');
 define('G4_DATA_URL',       G4_URL.'/data');
 define('G4_IMG_URL',        G4_URL.'/img');
@@ -47,8 +50,8 @@ define('G4_CACHE_URL',      G4_DATA_URL.'/cache');
 
 // PATH 는 서버상에서의 절대경로
 define('G4_PATH',           $g4_path['path']);
-define('G4_ADMIN_PATH',     G4_PATH.'/adm');
-define('G4_BBS_PATH',       G4_PATH.'/bbs');
+define('G4_ADMIN_PATH',     G4_PATH.'/'.G4_ADMIN_DIR);
+define('G4_BBS_PATH',       G4_PATH.'/'.G4_BBS_DIR);
 define('G4_DATA_PATH',      G4_PATH.'/data');
 define('G4_EXTEND_PATH',    G4_PATH.'/extend');
 define('G4_LIB_PATH',       G4_PATH.'/lib');
@@ -136,7 +139,6 @@ define('G4_LINK_COUNT', 2);
 // 예) http://g4.sir.co.kr
 //$g4['url'] = '';
 $g4['https_url'] = '';
-define('G4_HTTPS_URL', '');
 // 입력예
 //$g4['url'] = "http://www.sir.co.kr";
 //$g4['https_url'] = "https://www.sir.co.kr";
