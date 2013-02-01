@@ -64,6 +64,7 @@ if ($is_nogood) $colspan++;
     <input type="hidden" name="sw" value="">
 
     <table>
+    <caption><?=$board['bo_subject']?> 글목록</caption>
     <thead>
     <tr>
         <th scope="col">번호</th>
@@ -117,7 +118,7 @@ if ($is_nogood) $colspan++;
             if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
             ?>
         </td>
-        <td class="td_name" style="z-index:2"><?=$list[$i]['name']?></td>
+        <td class="td_name"><?=$list[$i]['name']?></td>
         <td class="td_date"><?=$list[$i]['datetime2']?></td>
         <td class="td_num"><?=$list[$i]['wr_hit']?></td>
         <? if ($is_good) { ?><td class="td_num"><?=$list[$i]['wr_good']?></td><? } ?>
@@ -229,3 +230,18 @@ function select_copy(sw) {
 </script>
 <? } ?>
 <!-- 게시판 목록 끝 -->
+
+<!-- ie6,7에서 사이드뷰가 아래 사이드뷰에서 가려지는 현상 수정 -->
+<!--[if lte IE 8]>
+<script>
+$(function() {
+    var $td_name = $(".td_name");
+    var count = $td_name.length;
+
+    $td_name.each(function() {
+        $(this).css("z-index", count);
+        count--;
+    });
+});
+</script>
+<![endif]-->
