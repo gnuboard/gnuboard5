@@ -11,7 +11,7 @@ form, img {border:0}
 input,img {vertical-align:middle}
 p {margin:10px 0;line-height:1.5em}
 
-/* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
+/* 화면낭독기 사용자용 */
 .sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 /* 본문 바로가기 */
 #to_content a {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
@@ -154,18 +154,18 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 #cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
 
 /* 사이드뷰 */
-.sv {display:inline-block;position:relative;font-weight:normal}
-.sv a {text-decoration:none !important}
-.sv .sv_wrap {display:none;margin-top:5px;border:1px solid #666;background:#484848}
-.sv_nojs .sv_wrap {display:block}
-.sv .sv_wrap a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff}
-.sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important;background:#ddd}
+.sv_wrap {display:inline-block;position:relative;font-weight:normal}
+.sv_wrap a {text-decoration:none !important}
+.sv {display:none;margin-top:5px;border:1px solid #666;background:#484848}
+.sv_nojs .sv {display:block}
+.sv a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff}
+.sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important}
 .sv_member,
 .sv_guest {font-weight:bold}
 
 /* pagination */
-.pg {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.75em;text-align:center}
-.pg_wrap {display:inline-block;border:1px solid #c7cfd5;letter-spacing:-4px}
+.pg_wrap {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.75em;text-align:center}
+.pg {display:inline-block;border:1px solid #c7cfd5;letter-spacing:-4px}
 .pg_page, .pg_current {display:inline-block;padding:0 12px;height:30px;background:#fff;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
 .pg_page {background:#f9f9f9;text-decoration:none}
 .pg_start, .pg_prev {border-right:1px solid #c7cfd5}
