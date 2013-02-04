@@ -88,6 +88,33 @@ $ii_sql = " insert ignore into {$g4['yc4_item_info_table']} ( it_id, ii_gubun, i
                 order by ii_id asc ";
 sql_query($ii_sql);
 
+// html 에디터로 첨부된 이미지 파일 복사
+$sql = " select it_explan from {$g4['yc4_item_table']} where it_id = '$it_id' ";
+$it = sql_fetch($sql);
+
+if($it['it_explan']) {
+    // img 태그의 src 중 data/editor 가 포함된 것만 추출
+    preg_match_all("/<img[^>]*src=[\'\"]?([^>\'\"]+data\/editor[^>\'\"]+)[\'\"]?[^>]*>/", $it['it_explan'], $matchs);
+
+    // 파일의 경로를 얻어 복사
+    for($i=0; $i<count($matchs[1]); $i++) {
+        $imgurl = parse_url($matchs[1][$i]);
+
+        $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
+        $dstfile = preg_replace("/\.([^\.]+)$/", "_copy.\\1", $srcfile);
+
+        if(file_exists($srcfile)) {
+            copy($srcfile, $dstfile);
+
+            $newfile = preg_replace("/\.([^\.]+)$/", "_copy.\\1", $matchs[1][$i]);
+            $it['it_explan'] = str_replace($matchs[1][$i], $newfile, $it['it_explan']);
+        }
+    }
+
+    $sql = " update {$g4['yc4_item_table']} set it_explan = '{$it['it_explan']}' where it_id = '$new_it_id' ";
+    sql_query($sql);
+}
+
 // 상품이미지 복사
 function copy_directory($src_dir, $dest_dir)
 {
