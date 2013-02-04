@@ -410,8 +410,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
 #bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
-#bo_list .sv_member,
-#bo_list .sv_guest {font-weight:normal} /* 사이드뷰 글자 스타일 */
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .bo_notice {}
@@ -429,8 +427,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 #bo_v_info {padding:0 20px 15px;border-bottom:1px solid #f0f0f0}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
-#bo_v_info .sv_member,
-#bo_v_info .sv_guest {font-weight:normal}
 #bo_v_top {padding:10px 20px;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
@@ -506,8 +502,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 .sv_nojs .sv {display:block}
 .sv_wrap .sv a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff !important}
 .sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important;background:#ddd}
-.sv_member,
-.sv_guest {font-weight:bold}
 
 /* pagination */
 .pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
