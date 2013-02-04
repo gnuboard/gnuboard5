@@ -2,9 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<p id="bo_v_title"><strong><?=$board['bo_subject']?></strong></p>
-
 <div id="bo_v" class="cbg">
+    <p id="bo_v_title"><strong><?=$board['bo_subject']?></strong></p>
     <h1 id="bo_v_h1">
         <? if ($category_name) { // 분류가 지정되었다면 ?><span><?=($category_name ? "{$view['ca_name']} " : "");?></span><? } // 분류 출력 끝 ?>
         <?=cut_str(get_text($view['wr_subject']), 70) // 글제목 출력?>
