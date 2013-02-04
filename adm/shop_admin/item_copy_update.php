@@ -80,6 +80,14 @@ for($j = 0; $sp_row = sql_fetch_array($sp_result); $j++) {
 }
 */
 
+// 상품요약정보 copy
+$ii_sql = " insert ignore into {$g4['yc4_item_info_table']} ( it_id, ii_gubun, ii_article, ii_title, ii_value )
+                select '$new_it_id', ii_gubun, ii_article, ii_title, ii_value
+                from {$g4['yc4_item_info_table']}
+                where it_id = '$it_id'
+                order by ii_id asc ";
+sql_query($ii_sql);
+
 // 상품이미지 복사
 function copy_directory($src_dir, $dest_dir)
 {
