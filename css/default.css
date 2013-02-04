@@ -477,7 +477,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc p a {text-decoration:underline}
-#bo_vc_empty {margin:0;padding:20px !important;text-align:center}
+#bo_vc_empty {margin:0;padding:20px !important;border-bottom:1px dotted #ccc;text-align:center}
 #bo_vc fieldset {margin:0 0 10px;padding:0}
 #bo_vc_w {zoom:1}
 #bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
