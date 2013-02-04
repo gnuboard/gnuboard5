@@ -13,7 +13,7 @@ p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 
-/* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
+/* 화면낭독기 사용자용 */
 .sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;border:0 !important;overflow:hidden !important}
 /* 본문 바로가기 */
 #to_content a {z-index:100000;display:block;position:absolute;top:0;left:0;height:0;overflow:hidden}
@@ -32,9 +32,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #hd h1 {width:0;height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
-#logo {padding-top:30px}
-
-#snb {position:absolute;top:10px;right:190px;zoom:1}
+#snb {float:right;margin:10px 185px 0 0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
 #snb a {display:inline-block;padding:7px 10px 6px;color:#000;text-decoration:none}
@@ -42,6 +40,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 #schall {position:absolute;top:10px;right:0;margin:0;padding:0;width:180px;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
 #schall_stx {width:150px;height:21px;border:3px solid #484848;border-right:0;background:#fff;line-height:1.5em}
+
+#logo {padding-top:30px}
 
 /* 중간 레이아웃 */
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
@@ -105,9 +105,9 @@ thead th {padding:12px 0 8px;border-top:1px solid #e9e9e9}
 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
 tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
-td {padding:10px 5px 7px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
+td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
 table a {color:#000;text-decoration:none}
-.bo_sideview td {padding:7px 5px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
+.bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 .empty_table {padding:85px 0;text-align:center}
 
 /* 폼 테이블 */
@@ -445,7 +445,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #bo_v_act a {margin-right:5px;vertical-align:top}
 #bo_v_act strong {color:#109ff1}
 #bo_v form {padding-top:20px}
-#bo_v_bot {border-top:1px solid #eee;padding:10px 20px;zoom:1}
+#bo_v_bot {padding:0 20px 20px;zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_bot ul {margin:0;padding:0;list-style:none}
@@ -455,7 +455,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .bo_v_com li {float:left;margin-left:5px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 20px 10px;padding:10px 20px 20px 20px;border:1px solid #ddd;background:#fcfcfc}
+#bo_vc {margin:0 20px 20px;padding:10px 20px 20px 20px;border:1px solid #ddd;background:#fcfcfc}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px dotted #ccc}
 #bo_vc header {position:relative;padding:8px 0}
