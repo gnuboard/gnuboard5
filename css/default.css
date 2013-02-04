@@ -461,7 +461,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .bo_v_com li {float:left;margin-left:5px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 20px 20px;padding:10px 20px 20px 20px;border:1px solid #ddd;background:#fcfcfc}
+#bo_vc {margin:0 0 20px;padding:15px 20px 20px 20px;border-top:1px solid #e9e9e9;background:#fcfcfc}
 #bo_vc h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px dotted #ccc}
 #bo_vc header {position:relative;padding:8px 0}
