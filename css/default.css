@@ -99,7 +99,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2em;cursor:pointer}
 
 /* 기본테이블 */
-table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
+table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0;border:1px solid #ddd}
 tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
 tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
 caption {padding:0 0 10px;text-align:left}
