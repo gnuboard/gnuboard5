@@ -78,6 +78,10 @@ function itemdelete($it_id)
     $sql = " delete from `{$g4['yc4_supplement_table']}` where it_id = '$it_id' ";
     sql_query($sql);
 
+    // 상품요약정보삭제
+    $sql = " delete from `{$g4['yc4_item_info_table']}` where it_id = '$it_id' ";
+    sql_query($sql);
+
 
     //------------------------------------------------------------------------
     // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
