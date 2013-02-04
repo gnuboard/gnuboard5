@@ -53,7 +53,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
-.cbg {border:1px solid #e0e0e0;background:#fff}
+.cbg {border:1px solid #e0e0e0;background:   #fff}
 
 /* 하단 레이아웃 */
 #ft {background:#484848}
@@ -239,13 +239,13 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 #mb_login {margin:100px auto;width:500px}
 #mb_login h1 {margin:0 0 20px;font-size:1.3em}
 #mb_login h2 {margin:0}
-#mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border-bottom-color:#eee;background:#fff}
+#mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border-bottom:0;background:#fff}
 #mb_login label {letter-spacing:-0.1em}
 #mb_login .login_id {position:absolute;top:26px;left:95px}
 #mb_login .login_pw {position:absolute;top:55px;left:95px}
 #mb_login .fs_input {display:block;margin:0 0 5px 80px}
 #mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
-#mb_login section {margin:0 0 30px;padding:20px}
+#mb_login section {margin:0 0 30px;padding:20px;background:#f7f7f7}
 #mb_login section div {text-align:right}
 
 /* 쪽지 */
@@ -268,18 +268,18 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:100px auto;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
-#mb_confirm p {padding:20px;border-bottom-color:#eee}
+#mb_confirm p {padding:20px;border-bottom:0}
 #mb_confirm p strong {display:block}
-#mb_confirm fieldset {margin:0 0 30px;padding:30px 0;text-align:center}
+#mb_confirm fieldset {margin:0 0 30px;padding:30px 0;background:#f7f7f7;text-align:center}
 #mb_confirm label {letter-spacing:-0.1em}
 #mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
 /* 비밀글 패스워드 확인 */
 #pw_confirm {margin:100px auto;width:500px}
 #pw_confirm h1 {margin:0 0 20px;font-size:1.3em}
-#pw_confirm p {padding:20px;border-bottom-color:#eee}
+#pw_confirm p {padding:20px;border-bottom:0}
 #pw_confirm p strong {display:block}
-#pw_confirm fieldset {margin:0 0 30px;padding:30px 0;text-align:center}
+#pw_confirm fieldset {margin:0 0 30px;padding:30px 0;background:#f7f7f7;text-align:center}
 #pw_confirm label {letter-spacing:-0.1em}
 #pw_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
