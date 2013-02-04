@@ -13,22 +13,22 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 ?>
 
 <header id="hd">
+    <div id="to_content"><a href="#container">본문 바로가기</a></div>
+
+    <h1><?=$config['cf_title']?></h1>
+
     <div id="hd_wrapper">
-        <div id="to_content"><a href="#container">본문 바로가기</a></div>
-
-        <h1><?=$config['cf_title']?></h1>
-
         <ul id="snb">
-            <li><a href="<?=G4_BBS_URL?>/current_connect.php">현재접속자 <?=connect(); // 현재 접속자수 ?></a></li>
-            <li><a href="<?=G4_BBS_URL?>/new.php">최근게시물</a></li>
             <? if ($is_member) { ?>
+            <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
             <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>">관리자</a></li><? } ?>
             <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php">정보수정</a></li>
-            <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
             <? } else { ?>
-            <li><a href="<?=G4_BBS_URL?>/register.php">회원가입</a></li>
             <li><a href="<?=G4_BBS_URL?>/login.php">로그인</a></li>
+            <li><a href="<?=G4_BBS_URL?>/register.php">회원가입</a></li>
             <? } ?>
+            <li><a href="<?=G4_BBS_URL?>/current_connect.php">현재접속자 <?=connect(); // 현재 접속자수 ?></a></li>
+            <li><a href="<?=G4_BBS_URL?>/new.php">최근게시물</a></li>
         </ul>
 
         <fieldset id="schall">
@@ -68,7 +68,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             </script>
         </fieldset>
 
-        <div id="logo"><a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="224" height="39"></a></div>
+        <div id="logo"><a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="224" height="38"></a></div>
 
     </div>
 </header>
