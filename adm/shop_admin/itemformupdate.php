@@ -90,6 +90,18 @@ function itemdelete($it_id)
     $it = sql_fetch($sql);
     $s = $it['it_explan'];
 
+    // img 태그의 src 중 data/editor 가 포함된 것만 추출
+    preg_match_all("/<img[^>]*src=[\'\"]?([^>\'\"]+data\/editor[^>\'\"]+)[\'\"]?[^>]*>/", $s, $matchs);
+
+    // 파일의 경로를 얻어 삭제
+    for($i=0; $i<count($matchs[1]); $i++) {
+        $imgurl = parse_url($matchs[1][$i]);
+        $imgfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
+        if(file_exists($imgfile))
+            @unlink($imgfile);
+    }
+
+    /*
     $img_file = Array();
     while($s) {
         $pos = strpos($s, "/data/cheditor");
@@ -110,6 +122,7 @@ function itemdelete($it_id)
         if (file_exists($f))
             @unlink($f);
     }
+    */
     //------------------------------------------------------------------------
 
 
