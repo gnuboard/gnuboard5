@@ -18,7 +18,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 /* 본문 바로가기 */
 #to_content a {z-index:100000;display:block;position:absolute;top:0;left:0;height:0;overflow:hidden}
 #to_content a:focus,
-#to_content a:active {padding:10px 0;width:100%;height:auto;background:#333;color:#fff;font-size:2em;text-align:center;text-decoration:none;overflow:auto}
+#to_content a:active {padding:10px 0;width:100%;height:auto;background:#484848;color:#fff;font-size:2em;text-align:center;text-decoration:none;overflow:auto}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -36,6 +36,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
 #snb a {display:inline-block;margin-right:1px;padding:7px 10px 6px;background:#585858;color:#fff;text-decoration:none}
+#snb a:focus,
+#snb a:hover {background:#f7f7f2;color:#000}
 
 #schall {position:absolute;top:10px;right:0;margin:0;padding:0;width:180px;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
@@ -218,6 +220,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 #ol_after_private li {float:left}
 #ol_after_private a {display:block;padding-top:8px;height:37px;background:#f7f7f2;text-align:center}
 #ol_after_private a strong {display:block;padding-top:5px;color:#109ff1}
+#ol_after_private a:focus,
+#ol_after_private a:hover {background:#109ff1;color:#fff}
+#ol_after_private a:focus strong,
+#ol_after_private a:hover strong {color:#fff}
 #ol_after_memo {width:50px;margin-right:1px}
 #ol_after_pt {width:90px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
