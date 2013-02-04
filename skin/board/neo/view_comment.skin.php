@@ -31,10 +31,10 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <? if ($cmt_depth) {?><img src="<?=$board_skin_url?>/img/icon_reply.gif" class="icon_reply" alt="댓글의 댓글"><? } ?>
             <? if ($is_ip_view) { ?>
             아이피
-            <span><?=$list[$i]['ip'];?></span>
+            <span class="bo_vc_hdinfo"><?=$list[$i]['ip'];?></span>
             <? } ?>
             작성일
-            <span><time datetime="<?=date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime']))?>"><?=$list[$i]['datetime']?></time></span>
+            <span class="bo_vc_hdinfo"><time datetime="<?=date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime']))?>"><?=$list[$i]['datetime']?></time></span>
         </header>
 
         <!-- 댓글 출력 -->
