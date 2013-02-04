@@ -105,13 +105,9 @@ if ($i == 0)
 if (isset($domain)) 
     $qstr .= "&amp;domain=$domain";
 $qstr .= "&amp;page=";
-$page = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr");
-if ($page) {
-?>
-<div class="pg">
-    <?=$page?>
-</div>
-<?
-}
+
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr");
+echo $pagelist;
+
 include_once('./admin.tail.php');
 ?>

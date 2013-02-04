@@ -15,7 +15,7 @@ if ($is_nogood) $colspan++;
 <form id="fcategory" name="fcategory" method="get">
 <nav id="bo_cate">
     <h2><?=$board['bo_subject']?> 카테고리</h2>
-    <ul>
+    <ul id="bo_cate_ul">
         <li><a href="<?=$g4['url']?>/bbs/board.php?bo_table=<?=$bo_table?>">전체</a></li>
         <?=$category_option?>
     </ul>
