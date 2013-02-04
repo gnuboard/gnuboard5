@@ -487,13 +487,6 @@ if ($ii) {
 	<td rowspan=2 width=20 bgcolor=#FFFFFF>◀</td>
     <td align="center">상품목록<br><span id="add_span" style="line-height:200%"></span></td>
     <td>
-        <script>
-        function search_relation(fld) {
-            if (fld.value) {
-                window.open('itemformrelation.php?it_id=<?=$it_id?>&ca_id='+fld.value, 'hiddenframe', '');
-            }
-        }
-        </script>
         ※ 상품 선택후 <FONT COLOR="#0E87F9">더블클릭하면 왼쪽에 추가됨</FONT><br>※ 한 번 클릭시 상품이미지/상품금액 출력<br>
         <select onchange="search_relation(this)">
         <option value=''>분류별 관련상품
@@ -507,30 +500,23 @@ if ($ii) {
         ?>
         </select><br>
         <select  id="relation" size=8 style='width:250px; background-color:#F6F6F6;' onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);">
-        <?
-        /*
-        $sql = " select ca_id, it_id, it_name, it_amount
-                   from $g4[yc4_item_table]
-                  where it_id <> '$it_id'
-                  order by ca_id, it_name ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
-            $sql2 = " select ca_name from $g4[yc4_category_table] where ca_id = '$row[ca_id]' ";
-            $row2 = sql_fetch($sql2);
-
-			// 김선용 2006.10
-			if(file_exists("{$g4['path']}/data/item/{$row['it_id']}_s"))
-				$it_image = "{$row['it_id']}_s";
-			else
-				$it_image = "";
-
-            echo "<option value='$row[it_id]/$it_image/{$row['it_amount']}'>$row2[ca_name] : ".cut_str(get_text(strip_tags($row[it_name])),30);
-        }
-        */
-        ?>
         </select>
-        <SCRIPT LANGUAGE="JavaScript">
+        <script>
+            function search_relation(fld)
+            {
+                var ca_id = fld.value;
+                if(ca_id) {
+                    $.post(
+                        './itemformrelation.php',
+                        { it_id: '<?=$it_id?>', ca_id: ca_id },
+                        function(data) {
+                            if(data) {
+                                $("#relation").html(data);
+                            }
+                        }
+                    );
+                }
+            }
 
 			// 김선용 2006.10
 			function relation_img(name, id)
