@@ -117,12 +117,8 @@ if ($i==0)
 
 <?
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
-if ($pagelist) {
+echo $pagelist;
 ?>
-<div class="pg">
-    <?=$pagelist?>
-</div>
-<?}?>
 
 <?
 if (isset($stx))
