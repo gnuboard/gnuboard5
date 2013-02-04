@@ -421,10 +421,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 .cnt_cmt {display:inline-block;margin:0 4px;color:#109ff1}
 
 /* 게시판 읽기 */
-#bo_v_title {padding:20px 20px 0;text-align:right}
+#bo_v_title {padding:0 0 10px;font-weight:bold}
 #bo_v {position:relative;margin-bottom:30px}
 #bo_v a {color:#000;text-decoration:none}
-#bo_v_h1 {padding:0 20px 5px;font-size:1.2em;line-height:1.4em}
+#bo_v_h1 {padding:15px 20px 5px;font-size:1.2em;line-height:1.4em}
 #bo_v_h1 span {display:inline-block;margin-right:5px;color:#109ff1}
 #bo_v_info {padding:0 20px 15px;border-bottom:1px solid #f0f0f0}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
@@ -472,6 +472,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 #bo_vc article {margin-bottom:5px;padding:0 0 10px;border-bottom:1px dotted #ccc}
 #bo_vc header {position:relative;padding:8px 0}
 #bo_vc .sv_wrap {margin-right:15px}
+.bo_vc_hdinfo {display:inline-block;margin:0 15px 0 5px}
 #bo_vc header .icon_reply {position:absolute;top:8px;left:-20px}
 #bo_vc h1 {width:0;height:0;overflow:hidden}
 #bo_vc a {color:#000;text-decoration:none}
