@@ -511,7 +511,7 @@ if ($ii) {
                         { it_id: '<?=$it_id?>', ca_id: ca_id },
                         function(data) {
                             if(data) {
-                                $("#relation").append(data);
+                                $("#relation").html(data);
                             }
                         }
                     );

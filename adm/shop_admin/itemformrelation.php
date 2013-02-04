@@ -10,7 +10,7 @@ $sql = " select ca_id, it_id, it_name, it_amount
 $result = sql_query($sql);
 $num = @mysql_num_rows($result);
 
-$cnt = 0;
+$options = "";
 for($i=0;$row=sql_fetch_array($result);$i++) {
     // 관련상품으로 등록된 상품은 제외
     $sql2 = " select count(*) as cnt from {$g4['yc4_item_relation_table']} where it_id = '$it_id' and it_id2 = '{$row['it_id']}' ";
@@ -24,6 +24,8 @@ for($i=0;$row=sql_fetch_array($result);$i++) {
 
     $it_name = addslashes($row['it_name']);
 
-    echo "<option value=\"".$row['it_id']."/".$row['it_amount']."\">$ca_name : $it_name</option>\n";
+    $options .= "<option value=\"".$row['it_id']."/".$row['it_amount']."\">$ca_name : $it_name</option>\n";
 }
+
+echo $options;
 ?>
