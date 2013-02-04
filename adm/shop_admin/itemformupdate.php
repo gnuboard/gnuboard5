@@ -51,23 +51,23 @@ function itemdelete($it_id)
     @rmdir(G4_DATA_PATH.'/item/'.$it_id);
 
     // 장바구니 삭제
-	$sql = " delete from $g4[yc4_cart_table] where it_id = '$it_id' ";
+	$sql = " delete from `{$g4['yc4_cart_table']}` where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 이벤트삭제
-    $sql = " delete from $g4[yc4_event_item_table] where it_id = '$it_id' ";
+    $sql = " delete from `{$g4['yc4_event_item_table']}` where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 사용후기삭제
-    $sql = " delete from $g4[yc4_item_ps_table] where it_id = '$it_id' ";
+    $sql = " delete from `{$g4['yc4_item_ps_table']}` where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 상품문의삭제
-    $sql = " delete from $g4[yc4_item_qa_table] where it_id = '$it_id' ";
+    $sql = " delete from `{$g4['yc4_item_qa_table']}` where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 관련상품삭제
-    $sql = " delete from $g4[yc4_item_relation_table] where it_id = '$it_id' or it_id2 = '$it_id' ";
+    $sql = " delete from `{$g4['yc4_item_relation_table']}` where it_id = '$it_id' or it_id2 = '$it_id' ";
 	sql_query($sql);
 
     // 선택옵션정보삭제
@@ -86,9 +86,9 @@ function itemdelete($it_id)
     //------------------------------------------------------------------------
     // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
     //------------------------------------------------------------------------
-    $sql = " select * from $g4[yc4_item_table] where it_id = '$it_id' ";
+    $sql = " select * from {$g4['yc4_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
-    $s = $it[it_explan];
+    $s = $it['it_explan'];
 
     $img_file = Array();
     while($s) {
@@ -114,7 +114,7 @@ function itemdelete($it_id)
 
 
     // 상품 삭제
-	$sql = " delete from $g4[yc4_item_table] where it_id = '$it_id' ";
+	$sql = " delete from {$g4['yc4_item_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 }
 
@@ -242,13 +242,13 @@ if ($w == "" || $w == "u")
 
 
 // 관련상품을 우선 삭제함
-sql_query(" delete from $g4[yc4_item_relation_table] where it_id = '$it_id' ");
+sql_query(" delete from {$g4['yc4_item_relation_table']} where it_id = '$it_id' ");
 
 // 관련상품의 반대도 삭제
-sql_query(" delete from $g4[yc4_item_relation_table] where it_id2 = '$it_id' ");
+sql_query(" delete from {$g4['yc4_item_relation_table']} where it_id2 = '$it_id' ");
 
 // 이벤트상품을 우선 삭제함
-sql_query(" delete from $g4[yc4_event_item_table] where it_id = '$it_id' ");
+sql_query(" delete from {$g4['yc4_event_item_table']} where it_id = '$it_id' ");
 
 // 개별배송비처리
 if($default['de_send_cost_case'] == "개별배송") {
@@ -398,7 +398,7 @@ else if ($w == "d")
                     and b.ca_mb_id = '$member[mb_id]' ";
         $row = sql_fetch($sql);
         if (!$row[it_id])
-            alert("\'{$member[mb_id]}\' 님께서 삭제 할 권한이 없는 상품입니다.");
+            alert("\'{$member['mb_id']}\' 님께서 삭제 할 권한이 없는 상품입니다.");
     }
 
     itemdelete($it_id);
@@ -412,13 +412,13 @@ if ($w == "" || $w == "u")
     {
         if (trim($it_id2[$i]))
         {
-            $sql = " insert into $g4[yc4_item_relation_table]
+            $sql = " insert into {$g4['yc4_item_relation_table']}
                         set it_id  = '$it_id',
                             it_id2 = '$it_id2[$i]' ";
             sql_query($sql, false);
 
             // 관련상품의 반대로도 등록
-            $sql = " insert into $g4[yc4_item_relation_table]
+            $sql = " insert into {$g4['yc4_item_relation_table']}
                         set it_id  = '$it_id2[$i]',
                             it_id2 = '$it_id' ";
             sql_query($sql, false);
@@ -431,7 +431,7 @@ if ($w == "" || $w == "u")
     {
         if (trim($ev_id[$i]))
         {
-            $sql = " insert into $g4[yc4_event_item_table]
+            $sql = " insert into {$g4['yc4_event_item_table']}
                         set ev_id = '$ev_id[$i]',
                             it_id = '$it_id' ";
             sql_query($sql, false);
@@ -452,7 +452,7 @@ if ($w == "u") {
     goto_url("./itemlist.php?$qstr");
 }
 
-echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=$g4[charset]\">";
+echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
 ?>
 <script>
     if (confirm("계속 입력하시겠습니까?"))

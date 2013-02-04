@@ -80,6 +80,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 
     imagepng($dst, $thumb_file, 0); // 0 (no compression) ~ 9
     chmod($thumb_file, 0606); // 추후 삭제를 위하여 파일모드 변경
-    return str_replace($target_path.'/', '', $thumb_file);
+
+    return basename($thumb_file);
 }
 ?>
