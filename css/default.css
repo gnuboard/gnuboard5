@@ -494,8 +494,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#494949;color:#f
 .sv_guest {font-weight:bold}
 
 /* pagination */
-.pg {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
-.pg_wrap {display:inline-block;border:1px solid #ddd;letter-spacing:-4px}
+.pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
+.pg {display:inline-block;border:1px solid #ddd;letter-spacing:-4px}
 .pg_page,
 .pg_current {display:inline-block;padding:0 12px;height:30px;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
 .pg_page {background:#f9f9f9;text-decoration:none}
