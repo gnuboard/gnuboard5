@@ -32,14 +32,14 @@ pre {overflow-x:scroll;font-size:1.1em}
 #hd h1 {width:0;height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
-#snb {margin:-37px 0 0;padding:10px 0 0;zoom:1}
+#snb {position:absolute;top:-27px;left:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
 #snb a {display:inline-block;margin-right:1px;padding:7px 10px 6px;background:#585858;color:#fff;text-decoration:none}
 #snb a:focus,
 #snb a:hover {background:#109ff1;color:#fff}
 
-#schall {position:absolute;top:10px;right:0;margin:0;padding:0;width:180px;border:0;letter-spacing:-5px}
+#schall {position:absolute;top:-27px !important;top:-29px;right:0;margin:0;padding:0;width:180px;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
 #schall_stx {width:150px;height:21px;border:3px solid #484848;border-right:0;background:#fff;line-height:1.5em}
 
