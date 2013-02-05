@@ -379,8 +379,19 @@ if ($w == "")
         }
     }
 
+    // 상품등록시 등록된 상품요약정보의 it_id가 변경됐을 경우 처리
+    if(get_session('ss_ii_item_code')) {
+        $ii_item_code = get_session('ss_ii_item_code');
+
+        if($it_id != $ii_item_code) {
+            $sql = " update {$g4['yc4_item_info_table']} set it_id = '$it_id' where it_id = '$ii_item_code' ";
+            sql_query($sql);
+        }
+    }
+
     unset($_SESSION['ss_op_item_code']);
     unset($_SESSION['ss_sp_item_code']);
+    unset($_SESSION['ss_ii_item_code']);
 }
 else if ($w == "u")
 {
@@ -454,6 +465,9 @@ if ($w == "" || $w == "u")
 
 // 선택, 추가 옵션 테이블을 체크해 상품정보가 없는 것은 삭제
 include_once('./item_option_check.php');
+
+// 상품요약정보 테이블을 체크해 상품정보가 없는 것은 삭제
+include_once('./item_info_check.php');
 
 $qstr = "$qstr&sca=$sca&page=$page";
 
