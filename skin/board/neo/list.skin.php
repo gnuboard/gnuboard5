@@ -16,7 +16,6 @@ if ($is_nogood) $colspan++;
 <nav id="bo_cate">
     <h2><?=$board['bo_subject']?> 카테고리</h2>
     <ul id="bo_cate_ul">
-        <li><a href="<?=$g4['url']?>/bbs/board.php?bo_table=<?=$bo_table?>">전체</a></li>
         <?=$category_option?>
     </ul>
 </nav>
@@ -32,13 +31,13 @@ if ($is_nogood) $colspan++;
         <input type="hidden" name="sca" value="<?=$sca?>">
         <input type="hidden" name="sop" value="and">
         <select name="sfl" title="검색대상">
-            <option value="wr_subject">제목</option>
-            <option value="wr_content">내용</option>
-            <option value="wr_subject||wr_content">제목+내용</option>
-            <option value="mb_id,1">회원아이디</option>
-            <option value="mb_id,0">회원아이디(코)</option>
-            <option value="wr_name,1">글쓴이</option>
-            <option value="wr_name,0">글쓴이(코)</option>
+            <option value="wr_subject"  <?=get_selected($sfl, 'wr_subject', true);?>>제목</option>
+            <option value="wr_content"  <?=get_selected($sfl, 'wr_content');?>>내용</option>
+            <option value="wr_subject||wr_content"  <?=get_selected($sfl, 'wr_subject||wr_content');?>>제목+내용</option>
+            <option value="mb_id,1"     <?=get_selected($sfl, 'mb_id,1');?>>회원아이디</option>
+            <option value="mb_id,0"     <?=get_selected($sfl, 'mb_id,0');?>>회원아이디(코)</option>
+            <option value="wr_name,1"   <?=get_selected($sfl, 'wr_name,1');?>>글쓴이</option>
+            <option value="wr_name,0"   <?=get_selected($sfl, 'wr_name,0');?>>글쓴이(코)</option>
         </select>
         <input name="stx" class="fs_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어(필수)">
         <input type="submit" class="fs_submit" value="검색">
@@ -164,11 +163,6 @@ if ($is_nogood) $colspan++;
     <span>Total <?=number_format($total_count)?>건</span>
     <?=$page?> 페이지
 </p>
-
-<script>
-<? if ($sca) { echo "document.fcategory.sca.value = \"$sca\";"; } ?>
-<? if ($stx) { echo "document.fsearch.sfl.value = \"$sfl\";"; } ?>
-</script>
 
 <? if ($is_checkbox) { ?>
 <script>
