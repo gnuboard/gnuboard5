@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <div id="scrap" class="new_win">
     <h1><?=$g4['title']?></h1>
 
-    <table>
+    <table class="basic_tbl">
     <caption>스크랩 목록</caption>
     <thead>
     <tr>

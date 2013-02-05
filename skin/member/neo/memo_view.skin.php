@@ -18,7 +18,7 @@ else {
         <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
     </ul>
-    <section class="cbg">
+    <section>
         <h2>쪽지 내용</h2>
         <ul id="memo_view_ul">
             <li class="memo_view_li">

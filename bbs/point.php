@@ -40,7 +40,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 <div id="point" class="new_win">
     <h1><?=$g4['title']?></h1>
 
-    <table>
+    <table class="basic_tbl">
     <caption>포인트 사용내역 목록</caption>
     <thead>
     <tr>

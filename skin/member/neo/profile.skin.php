@@ -32,7 +32,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </tbody>
     </table>
 
-    <section class="cbg">
+    <section>
         <h2>인사말</h2>
         <p><?=$mb_profile?></p>
     </section>

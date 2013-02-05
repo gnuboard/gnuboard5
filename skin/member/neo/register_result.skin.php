@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<div id="reg_result" class="cbg">
+<div id="reg_result">
 
     <div id="reg_result_logo"><a href="<?=G4_URL?>"><img src="<?=$member_skin_url?>/img/reg_result_logo.jpg" alt="메인으로"></a></div>
 

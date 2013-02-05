@@ -18,7 +18,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <label for="login_auto_login">자동로그인</label>
     </fieldset>
 
-    <section class="cbg">
+    <section>
         <h2>회원로그인 안내</h2>
         <p>
             회원아이디 및 패스워드가 기억 안나실 때는 아이디/패스워드 찾기를 이용하십시오.<br>

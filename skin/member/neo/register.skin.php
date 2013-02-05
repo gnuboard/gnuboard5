@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <form id="fregister" name="fregister" method="POST" action="<?=$register_action_url?>" onsubmit="return fregister_submit(this);" autocomplete="off">
 
-<section id="fregister_term" class="cbg">
+<section id="fregister_term">
     <h2>회원가입약관</h2>
     <textarea readonly><?=get_text($config['cf_stipulation'])?></textarea>
     <fieldset class="fregister_agree">
@@ -13,7 +13,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </fieldset>
 </section>
 
-<section id="fregister_private" class="cbg">
+<section id="fregister_private">
     <h2>개인정보수집이용안내</h2>
     <textarea readonly><?=get_text($config['cf_privacy'])?></textarea>
     <fieldset class="fregister_agree">
