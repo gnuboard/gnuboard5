@@ -408,7 +408,7 @@ if ($it['it_id']) {
 <tr class=ht>
     <td>이미지(대) <?=$i?></td>
     <td colspan=3>
-        <input type="file" class=ed id="it_img" name="it_img"<?=$i?> size=40>
+        <input type="file" class=ed id="it_img" name="it_img<?=$i?>" size=40>
         <?
         $idx = 'it_img'.$i;
         $img = G4_DATA_PATH."/item/$it_id/{$it[$idx]}";
