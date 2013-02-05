@@ -88,8 +88,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         ?>
         <? if ($prev_href || $next_href) { ?>
         <ul class="bo_v_nb">
-            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn02">이전</a></li><? } ?>
-            <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn02">다음</a></li><? } ?>
+            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn02">이전글</a></li><? } ?>
+            <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn02">다음글</a></li><? } ?>
         </ul>
         <? } ?>
 
