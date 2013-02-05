@@ -6,7 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <h1>아이디/패스워드 찾기</h1>
 
     <form name="fpasswordlost" method="post" action="<?=$action_url?>" onsubmit="return fpasswordlost_submit(this);" autocomplete="off">
-    <fieldset>
+    <fieldset id="find_info_fs">
         <p>
             회원가입 시 등록하신 이메일 주소를 입력해 주세요.<br>
             해당 이메일로 아이디와 패스워드 정보를 보내드립니다.

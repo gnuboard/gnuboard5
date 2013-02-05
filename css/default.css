@@ -192,8 +192,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 #reg_result_email strong {color:#109ff1;font-size:1.2em}
 
 /* 아이디/패스워드 찾기 */
-#find_info .cbg {margin:0 auto 20px;padding:20px;width:87%}
-#find_info #captcha {padding-top:20px}
+#find_info_fs {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#f7f7f7}
+#find_info #captcha {margin:0 auto 20px;width:87%}
 #find_info #captcha input {margin-left:5px}
 
 /* 아웃로그인 스킨 */
@@ -222,7 +222,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 #ol_after_private {margin:7px 0;zoom:1}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
-#ol_after_private a {display:block;padding-top:8px;height:37px;background:#eee;text-align:center}
+#ol_after_private a {display:block;padding-top:8px;height:37px;background:#fff;text-align:center}
 #ol_after_private a strong {display:block;padding-top:5px;color:#109ff1}
 #ol_after_private a:focus,
 #ol_after_private a:hover {background:#109ff1;color:#fff}
@@ -474,9 +474,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 #bo_v form {padding-top:20px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 10px;padding:15px 20px 20px 20px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f9f9f5}
+#bo_vc {margin:0 0 10px;padding:20px 20px 20px 20px;background:#f7f7f7}
 #bo_vc h2 {margin-bottom:10px}
-#bo_vc article {padding:0 0 10px;border-top:1px solid #d9d9d9}
+#bo_vc article {padding:0 0 10px;border-top:1px solid #e3e3e3}
 #bo_vc header {position:relative;padding:15px 0 5px}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
 #bo_vc .sv_wrap {margin-right:15px}
