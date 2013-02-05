@@ -41,10 +41,10 @@ for($i = 0; $i < $count; $i++) {
     }
 
     sql_query($sql);
+}
 
-    if($w == '') {
-        set_session('ss_op_item_code', $it_id);
-    }
+if($w == '') {
+    set_session('ss_op_item_code', $it_id);
 }
 
 echo '<script>self.close();</script>';

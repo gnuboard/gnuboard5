@@ -6,12 +6,21 @@ $is_category = false;
 $category_option = '';
 if ($board['bo_use_category']) {
     $is_category = true;
-    $category_location = './board.php?bo_table='.$bo_table.'&amp;sca=';
+    $category_href = G4_BBS_URL.'/board.php?bo_table='.$bo_table;
+
+    $category_option .= '<li><a href="'.$category_href.'"';
+    if ($sca=='')
+        $category_option .= ' id="bo_cate_on"';
+    $category_option .= '>전체</a></li>';
 
     $categories = explode('|', $board['bo_category_list']); // 구분자가 , 로 되어 있음
     for ($i=0; $i<count($categories); $i++) {
-        if (trim($categories[$i]))
-            $category_option .= '<li><a href="#">'.$categories[$i].'</a></li>';
+        $category = trim($categories[$i]);
+        if ($category=='') continue;
+        $category_option .= '<li><a href="'.($category_href."&amp;sca=".urlencode($category)).'"';
+        if ($category==$sca) 
+            $category_option .= ' id="bo_cate_on"';
+        $category_option .= '>'.$category.'</a></li>';
     }
 }
 

@@ -25,6 +25,9 @@ foreach ($_POST as $key=>$value) {
 $item_info_gubun = item_info_gubun($gubun);
 $item_info_gubun .= $item_info_gubun ? " 등록됨" : "";
 
+// it_id 변경을 체크하기 위해 세션에 it_id 저장
+set_session('ss_ii_item_code', $_POST['it_id']);
+
 include_once(G4_PATH.'/head.sub.php');
 ?>
 <script type="text/javascript">

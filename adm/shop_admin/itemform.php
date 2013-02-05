@@ -305,27 +305,27 @@ ul { margin: 0; padding: 0; list-style: none; }
         <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
     </td>
 </tr>
-<? if ($it['it_id']) { ?>
 <?
-$sql = " select distinct ii_gubun from {$g4['yc4_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
-$ii = sql_fetch($sql, false);
-if ($ii) {
-    $item_info_gubun = item_info_gubun($ii['ii_gubun']);
-    $item_info_gubun .= $item_info_gubun ? " 등록됨" : "";
-} else {
-    // 상품상세정보 테이블이 없다고 가정하여 생성
-    create_table_item_info();
+if ($it['it_id']) {
+    $sql = " select distinct ii_gubun from {$g4['yc4_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
+    $ii = sql_fetch($sql, false);
+    if ($ii) {
+        $item_info_gubun = item_info_gubun($ii['ii_gubun']);
+        $item_info_gubun .= $item_info_gubun ? " 등록됨" : "";
+    } else {
+        // 상품상세정보 테이블이 없다고 가정하여 생성
+        create_table_item_info();
+    }
 }
 ?>
 <tr class=ht>
     <td>요약상품정보</td>
     <td colspan=3>
-        <input type="button" onclick="window.open('./iteminfo.php?it_id=<?=$it['it_id']?>', '_blank', 'width=670 height=800');" value="상품요약정보 설정" />
+        <input type="button" id="item_info_set" value="상품요약정보 설정" />
         <span id="item_info_gubun"><?=$item_info_gubun?></span>
         <?=help("전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.");?>
     </td>
 </tr>
-<?}//if?>
 <input type="hidden" id="it_explan_html" name="it_explan_html" value=1>
 <tr>
     <td>상품설명</td>
@@ -408,7 +408,7 @@ if ($ii) {
 <tr class=ht>
     <td>이미지(대) <?=$i?></td>
     <td colspan=3>
-        <input type="file" class=ed id="it_img" name="it_img"<?=$i?> size=40>
+        <input type="file" class=ed id="it_img" name="it_img<?=$i?>" size=40>
         <?
         $idx = 'it_img'.$i;
         $img = G4_DATA_PATH."/item/$it_id/{$it[$idx]}";
@@ -782,8 +782,8 @@ if ($ii) {
 <script language='javascript'>
 var f = document.fitemform;
 
-<?php if($w == 'u') { ?>
-$(document).ready(function() {
+$(function() {
+    <?php if($w == 'u') { ?>
     // 선택옵션등록 변경
     $("input[name=it_option_use]").click(function() {
         var val = $(this).val();
@@ -805,8 +805,14 @@ $(document).ready(function() {
             }
         }
     });
+    <?php } ?>
+
+    // 상품요약정보설정
+    $("#item_info_set").click(function() {
+        var it_id = $.trim($('input[name=it_id]').val());
+        window.open('./iteminfo.php?it_id='+it_id, '_blank', 'width=670 height=800');
+    });
 });
-<?php } ?>
 
 function codedupcheck(id)
 {
