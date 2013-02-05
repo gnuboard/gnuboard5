@@ -185,7 +185,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#109ff1;color:#f
 #fregisterform textarea {height:50px}
 
 /* 회원가입 완료 */
-#reg_result {margin-bottom:20px;padding:70px 50px 40px}
+#reg_result {margin-bottom:20px;padding:70px 50px 40px;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fcfcfc}
 #reg_result_logo {margin-bottom:40px;text-align:center}
 #reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
 #reg_result_email span {display:inline-block;width:150px}
