@@ -64,7 +64,7 @@ if ($is_nogood) $colspan++;
     <input type="hidden" name="page" value="<?=$page?>">
     <input type="hidden" name="sw" value="">
 
-    <table>
+    <table class="basic_tbl">
     <caption><?=$board['bo_subject']?> 글목록</caption>
     <thead>
     <tr>

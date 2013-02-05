@@ -27,7 +27,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- 검색 끝 -->
 
 <!-- 제목 시작 -->
-<table>
+<table class="basic_tbl">
 <thead>
 <tr>
     <th scope="col">그룹</th>
