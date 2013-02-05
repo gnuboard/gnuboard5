@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <div id="poll_result" class="new_win">
     <h1><?=$g4['title']?></h1>
 
-    <section id="poll_result_list" class="cbg">
+    <section id="poll_result_list">
         <h2><?=$po_subject?> 결과</h2>
 
         <dl>
@@ -30,13 +30,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
 
     <? if ($is_etc) { ?>
-    <section id="poll_result_cmt" class="cbg">
+    <section id="poll_result_cmt">
         <h2>이 설문에 대한 기타의견</h2>
 
         <? for ($i=0; $i<count($list2); $i++) { ?>
         <article>
             <header>
-                <h1><?=$list2[$i]['name']?>님<span class="sound_only">의 의견</span></h1>
+                <h1><?=$list2[$i]['pc_name']?><span class="sound_only">님의 의견</span></h1>
+                <?=$list2[$i]['name']?>
                 <span class="poll_datetime"><?=$list2[$i]['datetime']?></span>
             </header>
             <p>
