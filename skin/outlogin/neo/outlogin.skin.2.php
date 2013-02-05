@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 로그인 후 외부로그인 시작 -->
-<section id="ol_after" class="ol cbg">
+<section id="ol_after" class="ol">
     <header id="ol_after_hd">
         <h2>나의 이용정보</h2>
         <strong><?=$nick?></strong>님
