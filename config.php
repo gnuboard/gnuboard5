@@ -31,10 +31,22 @@ define('_GNUBOARD_', true);
 
 $g4_path = g4_path();
 
-// URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 define('G4_ADMIN_DIR',      'adm');
 define('G4_BBS_DIR',        'bbs');
+define('G4_CSS_DIR',        'css');
+define('G4_DATA_DIR',       'data');
+define('G4_EXTEND_DIR',     'extend');
+define('G4_IMG_DIR',        'img');
+define('G4_JS_DIR',         'js');
+define('G4_LIB_DIR',        'lib');
+define('G4_SKIN_DIR',       'skin');
+define('G4_GCAPTCHA_DIR',   'gcaptcha');
+define('G4_CKEDITOR_DIR',   'ckeditor');
+define('G4_EDITOR_DIR',     'editor');
+define('G4_CACHE_DIR',      'cache');
+define('G4_FILE_DIR',       'file');
 
+// URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G4_DOMAIN) {
     define('G4_URL',        G4_DOMAIN);
 } else {
@@ -42,28 +54,30 @@ if (G4_DOMAIN) {
 }
 define('G4_ADMIN_URL',      G4_URL.'/'.G4_ADMIN_DIR);
 define('G4_BBS_URL',        G4_URL.'/'.G4_BBS_DIR);
-define('G4_CSS_URL',        G4_URL.'/css');
-define('G4_DATA_URL',       G4_URL.'/data');
-define('G4_IMG_URL',        G4_URL.'/img');
-define('G4_JS_URL',         G4_URL.'/js');
-define('G4_SKIN_URL',       G4_URL.'/skin');
-define('G4_GCAPTCHA_URL',   G4_BBS_URL.'/gcaptcha');
-define('G4_CKEDITOR_URL',   G4_BBS_URL.'/ckeditor'); // CKEDITOR 의 라이브러리 경로
-define('G4_EDITOR_URL',     G4_DATA_URL.'/editor');  // CKEDITOR 에서 업로드한 파일이 저장되는 경로
-define('G4_CACHE_URL',      G4_DATA_URL.'/cache');
+define('G4_CSS_URL',        G4_URL.'/'.G4_CSS_DIR);
+define('G4_DATA_URL',       G4_URL.'/'.G4_DATA_DIR);
+define('G4_IMG_URL',        G4_URL.'/'.G4_IMG_DIR);
+define('G4_JS_URL',         G4_URL.'/'.G4_JS_DIR);
+define('G4_SKIN_URL',       G4_URL.'/'.G4_SKIN_DIR);
+define('G4_GCAPTCHA_URL',   G4_BBS_URL.'/'.G4_GCAPTCHA_DIR);
+define('G4_CKEDITOR_URL',   G4_BBS_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
+define('G4_EDITOR_URL',     G4_DATA_URL.'/'.G4_EDITOR_DIR); // CKEDITOR 에서 업로드한 파일이 저장되는 경로
+define('G4_CACHE_URL',      G4_DATA_URL.'/'.G4_CACHE_DIR);
+define('G4_FILE_URL',       G4_DATA_URL.'/'.G4_FILE_DIR);
 
 // PATH 는 서버상에서의 절대경로
 define('G4_PATH',           $g4_path['path']);
 define('G4_ADMIN_PATH',     G4_PATH.'/'.G4_ADMIN_DIR);
 define('G4_BBS_PATH',       G4_PATH.'/'.G4_BBS_DIR);
-define('G4_DATA_PATH',      G4_PATH.'/data');
-define('G4_EXTEND_PATH',    G4_PATH.'/extend');
-define('G4_LIB_PATH',       G4_PATH.'/lib');
-define('G4_SKIN_PATH',      G4_PATH.'/skin');
-define('G4_GCAPTCHA_PATH',  G4_BBS_PATH.'/gcaptcha');
-define('G4_CKEDITOR_PATH',  G4_BBS_PATH.'/ckeditor');
-define('G4_CACHE_PATH',     G4_DATA_PATH.'/cache');
-define('G4_EDITOR_PATH',    G4_DATA_PATH.'/editor');
+define('G4_DATA_PATH',      G4_PATH.'/'.G4_DATA_DIR);
+define('G4_EXTEND_PATH',    G4_PATH.'/'.G4_EXTEND_DIR);
+define('G4_LIB_PATH',       G4_PATH.'/'.G4_LIB_DIR);
+define('G4_SKIN_PATH',      G4_PATH.'/'.G4_SKIN_DIR);
+define('G4_GCAPTCHA_PATH',  G4_BBS_PATH.'/'.G4_GCAPTCHA_DIR);
+define('G4_CKEDITOR_PATH',  G4_BBS_PATH.'/'.G4_CKEDITOR_DIR);
+define('G4_CACHE_PATH',     G4_DATA_PATH.'/'.G4_CACHE_DIR);
+define('G4_EDITOR_PATH',    G4_DATA_PATH.'/'.G4_EDITOR_DIR);
+define('G4_FILE_PATH',      G4_DATA_PATH.'/'.G4_FILE_DIR);
 
 unset($g4_path);
 
