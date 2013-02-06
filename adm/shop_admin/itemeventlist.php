@@ -58,12 +58,12 @@ $qstr1 = "ev_id=$ev_id&sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search"
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form id="flist" name="flist" autocomplete='off' style="margin:0px;">
+<form id="flist" name="flist" autocomplete='off'>
 <table>
 <input type="hidden" id="page" name="page" value="<? echo $page ?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=20% align=center>
+    <td>
 	    <?
         // 이벤트 옵션처리
         $event_option = "<option value=''>이벤트를 선택하세요";
@@ -77,7 +77,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
             echo "<script> document.flist.ev_id.value = '$ev_id'; </script>";
         ?>
 	</td>
-    <td width=60% align=center>
+    <td>
         <select id="sel_ca_id" name="sel_ca_id">
         <option value=''>전체분류
         <?
@@ -103,13 +103,13 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <input type="text" id="search" name="search" value='<? echo $search ?>' size=10>
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td width=10%>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 </form>
 
 
-<form id="fitemeventlistupdate" name="fitemeventlistupdate" method=post action="./itemeventlistupdate.php" onsubmit="return fitemeventlistupdatecheck(this)" style="margin:0px;">
+<form id="fitemeventlistupdate" name="fitemeventlistupdate" method=post action="./itemeventlistupdate.php" onsubmit="return fitemeventlistupdatecheck(this)">
 <input type="hidden" id="ev_id" name="ev_id"      value="<? echo $ev_id ?>">
 <input type="hidden" id="sel_ca_id" name="sel_ca_id"  value="<? echo $sel_ca_id ?>">
 <input type="hidden" id="sel_field" name="sel_field"  value="<? echo $sel_field ?>">
@@ -117,18 +117,18 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <input type="hidden" id="page" name="page"       value="<? echo $page ?>">
 <input type="hidden" id="sort1" name="sort1"      value="<? echo $sort1 ?>">
 <input type="hidden" id="sort2" name="sort2"      value="<? echo $sort2 ?>">
-<table cellpadding=0 cellspacing=0 width=100% border=0>
+<table border=0>
 <colgroup width=100>
 <colgroup width=100>
-<colgroup width=80>
-<colgroup width=''>
-<tr><td colspan=4 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<colgroup>
+<colgroup>
+
+<tr>
     <td>이벤트사용</td>
     <td><a href='<? echo title_sort("a.it_id") . "&$qstr1&ev_id=$ev_id"; ?>'>상품코드</a></td>
-    <td width='' colspan=2><a href='<? echo title_sort("it_name") . "&$qstr1&ev_id=$ev_id"; ?>'>상품명</a></td>
+    <td colspan=2><a href='<? echo title_sort("it_name") . "&$qstr1&ev_id=$ev_id"; ?>'>상품명</a></td>
 </tr>
-<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
+
 <?
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
@@ -162,22 +162,22 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 
 if ($i == 0)
-    echo "<tr><td colspan=4 align=center height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
+    echo "<tr><td colspan=4 height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
 ?>
-<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
+
 </table>
 
-<table width=100%>
+<table>
 <tr>
-    <td colspan=50%><input type="submit" class=btn1 value='일괄수정' accesskey='s'></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td colspan=50%><input type="submit" value='일괄수정' accesskey='s'></td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </form>
 </table><br>
 
 * 상품을 이벤트별로 일괄 처리합니다.
 
-<script language="JavaScript">
+<script>
 function fitemeventlistupdatecheck(f)
 {
     if (!f.ev_id.value)

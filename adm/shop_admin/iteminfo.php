@@ -24,13 +24,13 @@ $null_text = "상품페이지 참고";
 <div style="width:95%;padding:10px">
 <div style="float:left;"><?=subtitle("요약상품정보")?></div>
 <div style="float:right;">(모든필드 필수입력)</div>
-<table width=100% cellpadding=0 cellspacing=0 border=0>
+<table cellpadding=0 cellspacing=0 border=0>
 <colgroup width=15%></colgroup>
 <colgroup width=85% bgcolor=#FFFFFF></colgroup>
 <tbody>
-<tr><td colspan=2 height=2 bgcolor=0E87F9></td></tr>
+
 <tr><td colspan=2 height=5></td></tr>
-<tr class=ht>
+<tr>
     <td style='padding:3px;' valign='top' width='25%'><b>상품군</b></td>
     <td style='padding:3px;' valign='top'>
         <div style="float:left;">
@@ -65,7 +65,7 @@ if ($article) {
         echo "<td style='padding:3px;' valign='top'><b>$el_title</b></td>\n";
         echo "<td style='padding:3px;' valign='top'>";
         echo "<input type=\"hidden\" name='{$el_name}[]' value='$el_title' />";
-        echo "<input type=\"text\" name='{$el_name}[]' value='$el_value' class='ed' style='width:99%;' required itemname='$el_title' />";
+        echo "<input type=\"text\" name='{$el_name}[]' value='$el_value' class='ed' required itemname='$el_title' />";
         if ($el_example != "") {
             echo "<p style=\"margin:2px 0;padding:0\">$el_example</p>";
         }

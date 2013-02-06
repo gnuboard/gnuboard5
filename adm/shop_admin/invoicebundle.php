@@ -12,14 +12,14 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($g4[title])?>
 
-<form id="finvoicebundle" name="finvoicebundle" method="post" action="invoicebundleupdate.php" onsubmit="return finvoicebundle_submit(this);" enctype="multipart/form-data" style="margin:0px;">
+<form id="finvoicebundle" name="finvoicebundle" method="post" action="invoicebundleupdate.php" onsubmit="return finvoicebundle_submit(this);" enctype="multipart/form-data">
 <input type="hidden" id="case" name="case" value="1">
 
-<table cellpadding=0 cellspacing=0 border=0 width=100%>
+<table cellpadding=0 cellspacing=0 border=0>
 <tr><td colspan=20 height=2 bgcolor=#0E87F9></td></tr>
 <colgroup width=100></colgroup>
-<colgroup width='' bgcolor=#ffffff></colgroup>
-<tr class=ht>
+<colgroup bgcolor=#ffffff></colgroup>
+<tr>
     <td>CSV 파일</td>
     <td class=lh style='padding:3px 0 3px 0;'>
         <input type="file" id="csv_file" name="csv_file" size=40 class='ed'>
@@ -27,7 +27,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
             반드시 이 CSV 파일로만 업로드 하시기 바랍니다.</font>
     </td>
 </tr>
-<tr class=ht>
+<tr>
     <td>배송회사</td>
     <td>
         <select id="dl_id" name="dl_id">
@@ -42,7 +42,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         </select>
     </td>
 </tr>
-<tr class=ht>
+<tr>
     <td>배송일시</td>
     <td>
         <input type="text" id="od_invoice_time" name="od_invoice_time" maxlength=19 class='ed'>
@@ -51,7 +51,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
             onclick="if (this.checked == true) this.form.od_invoice_time.value=this.form.od_invoice_chk.value; else this.form.od_invoice_time.value = this.form.od_invoice_time.defaultValue;">현재 시간
     </td>
 </tr>
-<tr class=ht>
+<tr>
     <td>주문상품 상태</td>
     <td>
         <select id="ct_status" name="ct_status">
@@ -62,7 +62,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         주문상품의 상태를 일괄 변경합니다.
     </td>
 </tr>
-<tr class=ht>
+<tr>
     <td>업데이트</td>
     <td>
         <input type="checkbox" id="re" name="re" value='1'> 이미 입력된 배송정보를 모두 새로 업데이트 합니다.
@@ -71,8 +71,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr><td colspan=20 height=2 bgcolor=#0E87F9></td></tr>
 </table>
 
-<p align=center>
-    <input type="submit" class=btn1 value='  확  인  '>
+<p>
+    <input type="submit" value='  확  인  '>
 
 </form>
 

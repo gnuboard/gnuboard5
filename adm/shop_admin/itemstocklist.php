@@ -59,7 +59,7 @@ $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form id="flist" name="flist" style="margin:0px;">
+<form id="flist" name="flist">
 <table>
 <input type="hidden" id="doc" name="doc"   value="<? echo $doc ?>">
 <input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
@@ -67,7 +67,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=80% align=center>
+    <td%>
         <select id="sel_ca_id" name="sel_ca_id">
             <option value=''>전체분류
             <?
@@ -92,31 +92,31 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <input type="text" id="search" name="search" value='<? echo $search ?>'>
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td width=10%>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 </form>
 
 
-<form id="fitemstocklist" name="fitemstocklist" method=post action="./itemstocklistupdate.php" style="margin:0px;">
+<form id="fitemstocklist" name="fitemstocklist" method=post action="./itemstocklistupdate.php">
 <input type="hidden" id="sort1" name="sort1"      value="<? echo $sort1 ?>">
 <input type="hidden" id="sort2" name="sort2"      value="<? echo $sort2 ?>">
 <input type="hidden" id="sel_ca_id" name="sel_ca_id"  value="<? echo $sel_ca_id ?>">
 <input type="hidden" id="sel_field" name="sel_field"  value="<? echo $sel_field ?>">
 <input type="hidden" id="search" name="search"     value="<? echo $search ?>">
 <input type="hidden" id="page" name="page"       value="<? echo $page ?>">
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
+<table>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
 <colgroup width=40>
 <tr><td colspan=9 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td><a href='<? echo title_sort("it_id") . "&$qstr1"; ?>'>상품코드</a></td>
     <td colspan=2><a href='<? echo title_sort("it_name") . "&$qstr1"; ?>'>상품명</a></td>
     <td><a href='<? echo title_sort("it_stock_qty") . "&$qstr1"; ?>'>창고재고</a></td>
@@ -163,25 +163,25 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         <td>$row[it_id]</td>
         <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], $filename, 50, 50)."</a></td>
         <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td>
-        <td align=right>".number_format($row[it_stock_qty])."</td>
-        <td align=right>".number_format($wait_qty)."</td>
-        <td align=right>".number_format($temporary_qty)."</td>
-        <td align=right><input type=\"text\" name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=10 style='text-align:right;' autocomplete='off'></td>
+        <td>".number_format($row[it_stock_qty])."</td>
+        <td>".number_format($wait_qty)."</td>
+        <td>".number_format($temporary_qty)."</td>
+        <td><input type=\"text\" name='it_stock_qty[$i]' value='$row[it_stock_qty]' size=10 style='text-align:right;' autocomplete='off'></td>
         <td><input type=\"checkbox\" name='it_use[$i]' value='1' ".($row[it_use] ? "checked" : "")."></td>
         <td>$s_mod</td>
     </tr><tr>";
 }
 
 if (!$i)
-    echo "<tr><td colspan=9 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>";
+    echo "<tr><td colspan=9 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>";
 ?>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
 
-<table width=100%>
+<table>
 <tr>
-    <td colspan=50%><input type="submit" class=btn1 value='일괄수정' accesskey='s'></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td colspan=50%><input type="submit" value='일괄수정' accesskey='s'></td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </form>
 </table><br>

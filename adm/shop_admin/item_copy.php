@@ -10,12 +10,12 @@ include_once(G4_PATH.'/head.sub.php');
 
 <link rel='stylesheet' href='./admin.style.css' type='text/css'>
 
-<table width=100% cellpadding=8><tr><td>
+<table cellpadding=8><tr><td>
 
 <?=subtitle($g4['title']);?>
-<table cellpadding=4 cellspacing=1 width=100%>
+<table cellpadding=4 cellspacing=1>
 <tr><td colspan=2 height=3 bgcolor=0E87F9></td></tr>
-<tr align=center>
+<tr>
     <td>상품코드</td>
     <td><input type="text" id="new_it_id" value='<?=time()?>'></td>
 </tr>

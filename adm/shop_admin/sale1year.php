@@ -16,34 +16,34 @@ function print_line($save)
         echo "<tr><td colspan=9 height=1 bgcolor=#EEEEEE></td></tr>\n";
 
     echo "
-    <tr class=ht>
-        <td align=center><a href='./sale1month.php?fr_date=$save[od_date]01&to_date=$save[od_date]12'>$save[od_date]</a></td>
-        <td align=center>".number_format($save[ordercount])."</td>
-        <td align=right >".number_format($save[orderamount])."</td>
-        <td align=right >".number_format($save[ordercancel] + $save[dc])."</td>
-        <td align=right >".number_format($save[receiptbank])."</td>
-        <td align=right >".number_format($save[receiptcard])."</td>
-        <td align=right >".number_format($save[receiptpoint])."</td>
-        <td align=right >".number_format($save[receiptcancel])."</td>
-        <td align=right >".number_format($save[misu])."</td>
+    <tr>
+        <td><a href='./sale1month.php?fr_date=$save[od_date]01&to_date=$save[od_date]12'>$save[od_date]</a></td>
+        <td>".number_format($save[ordercount])."</td>
+        <td >".number_format($save[orderamount])."</td>
+        <td >".number_format($save[ordercancel] + $save[dc])."</td>
+        <td >".number_format($save[receiptbank])."</td>
+        <td >".number_format($save[receiptcard])."</td>
+        <td >".number_format($save[receiptpoint])."</td>
+        <td >".number_format($save[receiptcancel])."</td>
+        <td >".number_format($save[misu])."</td>
     </tr>\n";
 }
 ?>
 
 <?=subtitle($g4[title])?>
 
-<table cellpadding=0 cellspacing=0 width=100%>
+<table>
 <tr><td colspan=9 height=2 bgcolor=#0E87F9></td></tr>
-<tr class=ht>
-    <td width=100 align=center>주문년도</td>
-    <td align=center>주문수</td>
-    <td width=90 align=right>주문합계</td>
-    <td width=90 align=right>취소+DC</td>
-    <td width=90 align=right>무통장입금</td>
-    <td width=90 align=right>카드입금</td>
-    <td width=90 align=right>포인트입금</td>
-    <td width=90 align=right>입금취소</td>
-    <td width=90 align=right>미수금</td>
+<tr>
+    <td width=100>주문년도</td>
+    <td>주문수</td>
+    <td width=90>주문합계</td>
+    <td width=90>취소+DC</td>
+    <td width=90>무통장입금</td>
+    <td width=90>카드입금</td>
+    <td width=90>포인트입금</td>
+    <td width=90>입금취소</td>
+    <td width=90>미수금</td>
 </tr>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 <?
@@ -106,22 +106,22 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=9 align=center height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
+    echo "<tr><td colspan=9 height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
 } else {
     print_line($save);
 }
 ?>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
-<tr class=ht>
-    <td align=center>합 계</td>
-    <td align=center><?=number_format($tot[ordercount])?></td>
-    <td align=right ><?=number_format($tot[orderamount])?></td>
-    <td align=right ><?=number_format($tot[ordercancel] + $tot[dc])?></td>
-    <td align=right ><?=number_format($tot[receiptbank])?></td>
-    <td align=right ><?=number_format($tot[receiptcard])?></td>
-    <td align=right ><?=number_format($tot[receiptpoint])?></td>
-    <td align=right ><?=number_format($tot[receiptcancel])?></td>
-    <td align=right ><?=number_format($tot[misu])?></td>
+<tr>
+    <td>합 계</td>
+    <td><?=number_format($tot[ordercount])?></td>
+    <td ><?=number_format($tot[orderamount])?></td>
+    <td ><?=number_format($tot[ordercancel] + $tot[dc])?></td>
+    <td ><?=number_format($tot[receiptbank])?></td>
+    <td ><?=number_format($tot[receiptcard])?></td>
+    <td ><?=number_format($tot[receiptpoint])?></td>
+    <td ><?=number_format($tot[receiptcancel])?></td>
+    <td ><?=number_format($tot[misu])?></td>
 </tr>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 </table>

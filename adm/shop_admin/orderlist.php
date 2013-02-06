@@ -70,8 +70,8 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <input type="hidden" id="sort2" name="sort2" value="<? echo $sort2 ?>">
 <input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <tr>
-    <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=60% align=center>
+    <td><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td>
         <select id="sel_field" name="sel_field">
             <option value='od_id'>주문번호
             <option value='mb_id'>회원 ID
@@ -88,26 +88,26 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <input type="text" id="search" name="search" value='<? echo $search ?>' autocomplete="off">
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
 
-<table width=100% cellpadding=0 cellspacing=0>
-<colgroup width=60>
-<colgroup width=''>
+<table cellpadding=0 cellspacing=0>
+<colgroup>
+<colgroup>
 <colgroup width=70>
 <colgroup width=70>
 <colgroup width=70>
-<colgroup width=60>
-<colgroup width=60>
+<colgroup>
+<colgroup>
 <colgroup width=70>
-<colgroup width=60>
+<colgroup>
 <colgroup width=70>
-<colgroup width=60>
+<colgroup>
 <colgroup width=55>
 <tr><td colspan=12 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td><a href='<?=title_sort("od_id", 1)."&$qstr1";?>'>주문번호</a></td>
     <td><a href='<?=title_sort("od_name")."&$qstr1";?>'>주문자</a></td>
     <td><a href='<? echo title_sort("mb_id")."&$qstr1"; ?>'>회원ID</a></td>
@@ -183,19 +183,19 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $list = $i%2;
     echo "
     <tr class='list$list ht'>
-        <td align=center title='주문일시 : $row[od_time]'><a href='$g4[shop_path]/orderinquiryview.php?od_id=$row[od_id]&on_uid=$row[on_uid]'>$row[od_id]</a></td>
-        <!-- <td align=center><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=od_name&search=$row[od_name]'><span title='$od_deposit_name'>".cut_str($row[od_name],8,"")."</span></a></td> -->
-        <td align=center>$mb_nick</td>
-        <td align=center><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search=$row[mb_id]'>$row[mb_id]</a></td>
-        <td align=center>{$row[itemcount]}건 $tot_cnt</td>
-        <td align=right><FONT COLOR='#1275D3'>".number_format($row[orderamount])."</font></td>
-        <td align=right>".number_format($row[ordercancel])."</td>
-        <td align=right>".number_format($row[od_dc_amount])."</td>
-        <td align=right><FONT COLOR='#1275D3'>".number_format($row[receiptamount])."</font></td>
-        <td align=right>".number_format($row[receiptcancel])."</td>
-        <td align=right><FONT COLOR='#FF6600'>".number_format($row[misu])."</FONT></td>
-        <td align=center>$s_receipt_way</td>
-        <td align=center>$s_mod $s_del</a></td>
+        <td title='주문일시 : $row[od_time]'><a href='$g4[shop_path]/orderinquiryview.php?od_id=$row[od_id]&on_uid=$row[on_uid]'>$row[od_id]</a></td>
+        <!-- <td><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=od_name&search=$row[od_name]'><span title='$od_deposit_name'>".cut_str($row[od_name],8,"")."</span></a></td> -->
+        <td>$mb_nick</td>
+        <td><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search=$row[mb_id]'>$row[mb_id]</a></td>
+        <td>{$row[itemcount]}건 $tot_cnt</td>
+        <td><FONT COLOR='#1275D3'>".number_format($row[orderamount])."</font></td>
+        <td>".number_format($row[ordercancel])."</td>
+        <td>".number_format($row[od_dc_amount])."</td>
+        <td><FONT COLOR='#1275D3'>".number_format($row[receiptamount])."</font></td>
+        <td>".number_format($row[receiptcancel])."</td>
+        <td><FONT COLOR='#FF6600'>".number_format($row[misu])."</FONT></td>
+        <td>$s_receipt_way</td>
+        <td>$s_mod $s_del</a></td>
     </tr>";
 
     $tot_itemcount     += $row[itemcount];
@@ -208,34 +208,34 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 mysql_free_result($result);
 if ($i == 0)
-    echo "<tr><td colspan=12 align=center height=100 bgcolor='#FFFFFF'><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=12 height=100 bgcolor='#FFFFFF'><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 ?>
 </form>
 <tr><td colspan=12 bgcolor='#CCCCCC'></td></tr>
-<tr class=ht>
-    <td colspan=3 align=center>합 계</td>
-    <td align=center><?=(int)$tot_itemcount?>건</td>
-    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_orderamount)?></FONT></td>
-    <td align=right><?=number_format($tot_ordercancel)?></td>
-    <td align=right><?=number_format($tot_dc_amount)?></td>
-    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_receiptamount)?></FONT></td>
-    <td align=right><?=number_format($tot_receiptcancel)?></td>
-    <td align=right><FONT COLOR='#FF6600'><?=number_format($tot_misu)?></FONT></td>
+<tr>
+    <td colspan=3>합 계</td>
+    <td><?=(int)$tot_itemcount?>건</td>
+    <td><FONT COLOR='#1275D3'><?=number_format($tot_orderamount)?></FONT></td>
+    <td><?=number_format($tot_ordercancel)?></td>
+    <td><?=number_format($tot_dc_amount)?></td>
+    <td><FONT COLOR='#1275D3'><?=number_format($tot_receiptamount)?></FONT></td>
+    <td><?=number_format($tot_receiptcancel)?></td>
+    <td><FONT COLOR='#FF6600'><?=number_format($tot_misu)?></FONT></td>
     <td colspan=2></td>
 </tr>
 <tr><td colspan=12 bgcolor='#CCCCCC'></td></tr>
 </table>
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%>&nbsp;</td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td>&nbsp;</td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>
 
 <font color=crimson>주의)</font> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
 
-<script language="JavaScript">
+<script>
 var f = document.frmorderlist;
 f.sel_field.value  = '<? echo $sel_field ?>';
 </script>

@@ -49,8 +49,8 @@ $qstr  = "$qstr&page=$page&save_stx=$stx";
 <form id="flist" name="flist">
 <input type="hidden" id="page" name="page" value="<?=$page?>">
 <tr>
-    <td width=20%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
-    <td width=60% align=center>
+    <td><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
+    <td>
        <select id="sfl" name="sfl">
             <option value='cp_id'>쿠폰번호
             <option value='cp_subject'>쿠폰명
@@ -64,7 +64,7 @@ $qstr  = "$qstr&page=$page&save_stx=$stx";
         <input type="text" id="stx" name="stx" value='<?=$stx?>'>
         <input type="image" src='<?=$g4['admin_path']?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </form>
 </table>
@@ -76,9 +76,9 @@ $qstr  = "$qstr&page=$page&save_stx=$stx";
 <input type="hidden" id="sfl" name="sfl"  value="<? echo $sfl; ?>" />
 <input type="hidden" id="stx" name="stx"  value="<? echo $stx; ?>" />
 <input type="hidden" id="page" name="page" value="<? echo $page; ?>" />
-<table cellpadding=0 cellspacing=0 width=100% border=0>
+<table border=0>
 <tr><td colspan=9 height=2 bgcolor=0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td width="50"><input type="checkbox" id="list_all" name="list_all" value="1" /></td>
     <td width="70">쿠폰번호</td>
     <td width="">쿠폰명</td>
@@ -150,7 +150,7 @@ if ($i == 0) {
 
 <table width="100%">
 <tr>
-    <td width="50%"><input type="submit" class="btn1" value="선택삭제" /></td>
+    <td width="50%"><input type="submit" value="선택삭제" /></td>
     <td width="50%" align="right"><?=get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>

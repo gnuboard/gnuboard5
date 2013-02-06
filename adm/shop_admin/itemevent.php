@@ -18,23 +18,23 @@ $sql = "select * $sql_common order by ev_id desc ";
 $result = sql_query($sql);
 ?>
 
-<table width=100%>
+<table>
 <tr>
-    <td width=20%>&nbsp;</td>
-    <td width=60% align=center>&nbsp;</td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
 
-<table cellpadding=0 cellspacing=0 width=100% border=0>
+<table border=0>
 <colgroup width=100>
-<colgroup width=''>
-<colgroup width=80>
+<colgroup>
+<colgroup>
 <colgroup width=40>
-<colgroup width=80>
+<colgroup>
 <tr><td colspan=5 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td>이벤트번호</td>
     <td>제목</td>
     <td>연결상품</td>
@@ -68,14 +68,14 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=5 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=5 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 }
 ?>
 
 <tr><td colspan=5 height=1 bgcolor=CCCCCC></td></tr>
 </table>
 
-<SCRIPT LANGUAGE="JavaScript">
+<SCRIPT>
 function itemeventwin(ev_id)
 {
     window.open("./itemeventwin.php?ev_id="+ev_id, "itemeventwin", "left=10,top=10,width=500,height=600,scrollbars=1");

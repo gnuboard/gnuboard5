@@ -30,20 +30,20 @@ form { display: inline; }
 
 <form id="fsendcost" method="post" action="./sendcostupdate.php">
 <table cellpadding="0" cellspacing="0" width="100%">
-<tr class="ht">
+<tr>
     <td width="150">지역명</td>
-    <td><input type="text" id="sc_name" name="sc_name" class="ed" size="20" /></td>
+    <td><input type="text" id="sc_name" name="sc_name" size="20" /></td>
 </tr>
-<tr class="ht">
+<tr>
     <td>우편번호범위</td>
-    <td><input type="text" id="sc_zip1" name="sc_zip1" class="ed" size="10" maxlength="7" /> ~ <input type="text" id="sc_zip2" name="sc_zip2" class="ed" size="10" maxlength="7" /> <button type="button" id="findzip">우편번호찾기</button></td>
+    <td><input type="text" id="sc_zip1" name="sc_zip1" size="10" maxlength="7" /> ~ <input type="text" id="sc_zip2" name="sc_zip2" size="10" maxlength="7" /> <button type="button" id="findzip">우편번호찾기</button></td>
 </tr>
-<tr class="ht">
+<tr>
     <td>추가배송료</td>
-    <td><input type="text" id="sc_amount" name="sc_amount" class="ed" size="10" />원</td>
+    <td><input type="text" id="sc_amount" name="sc_amount" size="10" />원</td>
 </tr>
-<tr class="ht">
-    <td colspan="2"><input type="submit" class="btn1" value=" 확 인 " /></td>
+<tr>
+    <td colspan="2"><input type="submit" value=" 확 인 " /></td>
 </tr>
 </table>
 </form>
@@ -56,7 +56,7 @@ form { display: inline; }
 <colgroup width="100">
 <colgroup width="80">
 <tr><td colspan="5" height="2" bgcolor="#0E87F9"></td></tr>
-<tr align="center" class="ht">
+<tr align="center">
     <td>번호</td>
     <td>지역명</td>
     <td>우편번호범위</td>

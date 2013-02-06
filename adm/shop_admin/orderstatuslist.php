@@ -66,29 +66,29 @@ $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search&save_search=$
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form id="frmorderlist" name="frmorderlist" style="margin:0px;">
+<form id="frmorderlist" name="frmorderlist">
 <input type="hidden" id="doc" name="doc"   value="<? echo $doc ?>">
 <input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
 <input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <table>
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=80% align=center>
-        <!-- <input type="button" value='주문' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=주문"?>'">
-        <input type="button" value='준비' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=준비"?>'">
-        <input type="button" value='배송' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=배송"?>'">
-        <input type="button" value='완료' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=완료"?>'">
-        <input type="button" value='취소' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=취소"?>'">
-        <input type="button" value='반품' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=반품"?>'">
-        <input type="button" value='품절' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=품절"?>'"> -->
+    <td%>
+        <!-- <input type="button" value='주문' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=주문"?>'">
+        <input type="button" value='준비' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=준비"?>'">
+        <input type="button" value='배송' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=배송"?>'">
+        <input type="button" value='완료' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=완료"?>'">
+        <input type="button" value='취소' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=취소"?>'">
+        <input type="button" value='반품' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=반품"?>'">
+        <input type="button" value='품절' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=품절"?>'"> -->
         <!-- utf-8 에서 처리되도록 변경 -->
-        <input type="button" value='주문' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('주문')?>'">
-        <input type="button" value='준비' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('준비')?>'">
-        <input type="button" value='배송' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('배송')?>'">
-        <input type="button" value='완료' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('완료')?>'">
-        <input type="button" value='취소' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('취소')?>'">
-        <input type="button" value='반품' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('반품')?>'">
-        <input type="button" value='품절' class=btn1 onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('품절')?>'">
+        <input type="button" value='주문' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('주문')?>'">
+        <input type="button" value='준비' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('준비')?>'">
+        <input type="button" value='배송' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('배송')?>'">
+        <input type="button" value='완료' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('완료')?>'">
+        <input type="button" value='취소' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('취소')?>'">
+        <input type="button" value='반품' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('반품')?>'">
+        <input type="button" value='품절' onclick="location.href='<?="$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=".urlencode('품절')?>'">
         &nbsp;
         <select id="sel_field" name="sel_field">
             <option value='od_id'>주문번호
@@ -103,25 +103,25 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <input type="text" id="search" name="search" value='<? echo $search ?>' autocomplete="off">
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td width=10%>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
 
-<table width=100% cellpadding=0 cellspacing=0>
-<colgroup width=80>
+<table cellpadding=0 cellspacing=0>
+<colgroup>
 <colgroup width=70>
 <colgroup width=70>
-<colgroup width=60>
-<colgroup width=''>
-<colgroup width=60>
+<colgroup>
+<colgroup>
+<colgroup>
 <colgroup width=30>
 <colgroup width=70>
-<colgroup width=50>
+<colgroup>
 <colgroup width=30>
 <colgroup width=30>
 <tr><td colspan=11 height=3 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td><a href="<?=title_sort("od_id")."&$qstr1";?>">주문번호</a></td>
     <td><a href="<?=title_sort("od_name")."&$qstr1";?>">주문자</a></td>
     <td><a href="<?=title_sort("mb_id")."&$qstr1";?>">회원ID</a></td>
@@ -134,7 +134,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
     <td><a href="<?=title_sort("ct_status")."&$qstr1";?>">상태</a></td>
     <td>수정</td>
 </tr>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+
 <tr><td colspan=11 height=3 bgcolor=#F8F8F8></td></tr>
 
 <?
@@ -154,17 +154,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     echo "
     <tr class='list$list center'>
-        <td align=center title='주문일시 : $row[od_time]'><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=od_id&search=$row[od_id]'>$row[od_id]</a></td>
-        <td align=center $od_deposit_name><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=od_name&search=$row[od_name]'>".cut_str($row[od_name],10,"")."</a></td>
-        <td align=center><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search=$row[mb_id]'>$row[mb_id]</a></td>
+        <td title='주문일시 : $row[od_time]'><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=od_id&search=$row[od_id]'>$row[od_id]</a></td>
+        <td $od_deposit_name><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=od_name&search=$row[od_name]'>".cut_str($row[od_name],10,"")."</a></td>
+        <td><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search=$row[mb_id]'>$row[mb_id]</a></td>
         <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], 50, 50)."</a></td>
         <td align=left>$it_name</td>
-        <td align=right>".number_format($row[it_amount] + $row[ct_amount])."&nbsp;</td>
-        <td align=center>$row[ct_qty]</td>
-        <td align=right>".number_format($row[ct_sub_amount])."&nbsp;</td>
-        <td align=right>".number_format($row[ct_sub_point])."&nbsp;</td>
-        <td align=center><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=$row[ct_status]'>$row[ct_status]</a></td>
-        <td align=center>$s_mod</td>
+        <td>".number_format($row[it_amount] + $row[ct_amount])."&nbsp;</td>
+        <td>$row[ct_qty]</td>
+        <td>".number_format($row[ct_sub_amount])."&nbsp;</td>
+        <td>".number_format($row[ct_sub_point])."&nbsp;</td>
+        <td><a href='$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search=$row[ct_status]'>$row[ct_status]</a></td>
+        <td>$s_mod</td>
     </tr>";
 
     $tot_amount += $row[ct_amount];
@@ -174,30 +174,30 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 }
 
 if ($i == 0)
-    echo "<tr><td colspan=11 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=11 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 ?>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
-<tr class=ht>
-    <td colspan=5 align=right>합 계&nbsp;</td>
-    <td align=right><?=number_format($tot_amount)?>&nbsp;</td>
-    <td align=right><?=number_format($tot_qty)?>&nbsp;</td>
-    <td align=right><?=number_format($tot_sub_amount)?>&nbsp;</td>
-    <td align=right><?=number_format($tot_sub_point)?>&nbsp;</td>
+
+<tr>
+    <td colspan=5>합 계&nbsp;</td>
+    <td><?=number_format($tot_amount)?>&nbsp;</td>
+    <td><?=number_format($tot_qty)?>&nbsp;</td>
+    <td><?=number_format($tot_sub_amount)?>&nbsp;</td>
+    <td><?=number_format($tot_sub_point)?>&nbsp;</td>
     <td colspan=2></td>
 </tr>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+
 </table>
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%>&nbsp;</td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td>&nbsp;</td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>
 </form>
 
 
-<script language="JavaScript">
+<script>
 var f = document.frmorderlist;
 f.sel_field.value  = '<? echo $sel_field ?>';
 </script>

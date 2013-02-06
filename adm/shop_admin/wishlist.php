@@ -54,7 +54,7 @@ $qstr1 = "fr_date=$fr_date&to_date=$to_date&sel_ca_id=$sel_ca_id";
 <input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=80% align=center>
+    <td%>
         <select id="sel_ca_id" name="sel_ca_id">
             <option value=''>전체분류
             <?
@@ -73,17 +73,17 @@ $qstr1 = "fr_date=$fr_date&to_date=$to_date&sel_ca_id=$sel_ca_id";
         기간 : <input type="text" id="fr_date" name="fr_date" size=8 maxlength=8 itemname='기간' value='<?=$fr_date?>'> ~ <input type="text" id="to_date" name="to_date" size=8 maxlength=8 itemname='기간' value='<?=$to_date?>'>
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td width=10%>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
-<table cellpadding=0 cellspacing=0 width=100%>
+<table>
 <tr><td colspan=20 height=3 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td width=50>순위</td>
-    <td width=80></td>
-    <td width=''>상품명</td>
-    <td width=50>건수</td>
+<tr>
+    <td>순위</td>
+    <td></td>
+    <td>상품명</td>
+    <td>건수</td>
 </tr>
 <tr><td colspan=20 height=1 bgcolor=#CCCCCC></td></tr>
 <?
@@ -107,17 +107,17 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }                         
 
 if ($i == 0) {
-    echo "<tr><td colspan=20 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=20 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 }
 ?>
 <tr><td colspan=20 height=1 bgcolor=CCCCCC></td></tr>
 </table>
 
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%>&nbsp;</td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td>&nbsp;</td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>
 

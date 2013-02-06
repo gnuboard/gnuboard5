@@ -37,15 +37,15 @@ form { display: inline; }
             <option value="mb_nick">별명</option>
             <option value="mb_id">아이디</option>
         </select>
-        <input type="text" id="stx" name="stx" class="ed" size="20" value="<? echo stripslashes($stx); ?>" />
-        <input type="submit" class="btn1" value="검색" />
+        <input type="text" id="stx" name="stx" size="20" value="<? echo stripslashes($stx); ?>" />
+        <input type="submit" value="검색" />
     </form>
     </div>
     <? if($stx) { ?>
     <div class="resultarea">
     <form id="fresult" method="get">
         <div class="list">
-            <table width="330" cellpadding="0" cellspacing="0" border="0">
+            <table width="330">
             <colgroup width="50" />
             <colgroup width="" />
             <colgroup width="90" />
@@ -74,7 +74,7 @@ form { display: inline; }
             ?>
             </table>
         </div>
-        <div class="btn"><input type="submit" class="btn1" value="적용" /></div>
+        <div class="btn"><input type="submit" value="적용" /></div>
     </form>
     </div>
     <? } ?>

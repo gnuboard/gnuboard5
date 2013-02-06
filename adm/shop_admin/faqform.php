@@ -33,18 +33,18 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($html_title)?><p>
 
-<form id="frmfaqform" name="frmfaqform" method=post action='./faqformupdate.php' onsubmit="return frmfaqform_check(this);" style="margin:0px;">
+<form id="frmfaqform" name="frmfaqform" method=post action='./faqformupdate.php' onsubmit="return frmfaqform_check(this);">
 <input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
 <input type="hidden" id="fm_id" name="fm_id" value='<? echo $fm_id ?>'>
 <input type="hidden" id="fa_id" name="fa_id" value='<? echo $fa_id ?>'>
-<table cellpadding=0 cellspacing=0 width=100%>
+<table>
 <colgroup width=15%></colgroup>
 <colgroup width=85% bgcolor=#ffffff></colgroup>
-<tr><td colspan=2 height=2 bgcolor=#0E87F9></td></tr>
-<tr class=ht>
+
+<tr>
     <td> 출력 순서</td>
     <td>
-        <input type="text" id="fa_order" id="fa_order" name="fa_order" size=10 maxlength=10 value='<?=$fa[fa_order]?>' class=ed>
+        <input type="text" id="fa_order" id="fa_order" name="fa_order" size=10 maxlength=10 value='<?=$fa[fa_order]?>'>
         <?=help('숫자가 작을수록 FAQ 페이지의 상단에 출력합니다.', 60, -50)?>
     </td>
 </tr>
@@ -68,12 +68,12 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr><td colspan=2 height=1 bgcolor=CCCCCC><td></tr>
 </table>
 
-<p align=center>
-    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./faqlist.php?fm_id=<?=$fm_id?>';">
+<p>
+    <input type="submit" accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" accesskey='l' value='  목  록  ' onclick="document.location.href='./faqlist.php?fm_id=<?=$fm_id?>';">
 </form>
 
-<script language="javascript">
+<script>
 function frmfaqform_check(f)
 {
     errmsg = "";

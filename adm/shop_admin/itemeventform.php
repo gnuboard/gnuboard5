@@ -37,17 +37,17 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($html_title);?><p>
 
-<form id="feventform" name="feventform" method=post action="./itemeventformupdate.php" enctype="MULTIPART/FORM-DATA" style="margin:0px;" onsubmit="return feventform_check(this);">
+<form id="feventform" name="feventform" method=post action="./itemeventformupdate.php" enctype="MULTIPART/FORM-DATA" onsubmit="return feventform_check(this);">
 <input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
 <input type="hidden" id="ev_id" name="ev_id" value='<? echo $ev_id ?>'>
-<table cellpadding=0 cellspacing=0 width=100%>
+<table>
 <colgroup width=15%></colgroup>
 <colgroup width=35% bgcolor=#FFFFFF></colgroup>
 <colgroup width=15%></colgroup>
 <colgroup width=35% bgcolor=#FFFFFF></colgroup>
-<tr><td colspan=4 height=2 bgcolor=#0E87F9></td></tr>
+
 <? if ($w == "u") { ?>
-<tr class=ht>
+<tr>
     <td>이벤트번호</td>
     <td>
         <?
@@ -58,7 +58,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </tr>
 <? } ?>
 </tr>
-<tr class=ht>
+<tr>
     <td>출력스킨</td>
     <td>
         <select id="ev_skin" name="ev_skin">
@@ -71,28 +71,28 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         <?=help("기본으로 제공하는 스킨은 $cart_dir/list.skin.*.php 입니다.\n\n$cart_dir/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.");?>
     </td>
 </tr>
-<tr class=ht>
+<tr>
     <td>출력이미지 폭</td>
     <td>
-        <input type="text" id="ev_img_width" name="ev_img_width" size=5 value='<? echo $ev[ev_img_width] ?>' class=ed> 픽셀
+        <input type="text" id="ev_img_width" name="ev_img_width" size=5 value='<? echo $ev[ev_img_width] ?>'> 픽셀
         <?=help("환경설정 > 이미지(소) 폭, 높이가 기본값으로 설정됩니다.\n\n$cart_dir/event.php에서 출력되는 이미지의 폭과 높이입니다.", 50);?>
     </td>
     <td>출력이미지 높이</td>
-    <td><input type="text" id="ev_img_height" name="ev_img_height" size=5 value='<? echo $ev[ev_img_height] ?>' class=ed> 픽셀</td>
+    <td><input type="text" id="ev_img_height" name="ev_img_height" size=5 value='<? echo $ev[ev_img_height] ?>'> 픽셀</td>
 </tr>
-<tr class=ht>
+<tr>
     <td>1라인 이미지수</td>
     <td>
-        <input type="text" id="ev_list_mod" name="ev_list_mod" size=3 value='<? echo $ev[ev_list_mod] ?>' class=ed> 개
+        <input type="text" id="ev_list_mod" name="ev_list_mod" size=3 value='<? echo $ev[ev_list_mod] ?>'> 개
         <?=help("1라인에 설정한 값만큼의 상품을 출력하지만 스킨에 따라 1라인에 하나의 상품만 출력할 수도 있습니다.", 50);?>
     </td>
     <td>총라인수</td>
     <td>
-        <input type="text" id="ev_list_row" name="ev_list_row" size=3 value='<? echo $ev[ev_list_row] ?>' class=ed> 라인
+        <input type="text" id="ev_list_row" name="ev_list_row" size=3 value='<? echo $ev[ev_list_row] ?>'> 라인
         <?=help("한페이지에 몇라인을 출력할것인지를 설정합니다.\n\n한페이지에서 표시하는 상품수는 (1라인 이미지수 x 총라인수) 입니다.");?>
     </td>
 </tr>
-<tr class=ht>
+<tr>
     <td>사용</td>
     <td>
         <select id="ev_use" name="ev_use">
@@ -103,14 +103,14 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         <?=help("사용하지 않으면 왼쪽의 이벤트 메뉴와 이벤트리스트 페이지에 접근할 수 없습니다.");?>
     </td>
 </tr>
-<tr class=ht>
+<tr>
     <td>이벤트제목</td>
-    <td colspan=3><input type="text" class=ed id="ev_subject" name="ev_subject" size=60 value='<? echo htmlspecialchars2($ev[ev_subject]) ?>' required itemname='이벤트 제목'></td>
+    <td colspan=3><input type="text" id="ev_subject" name="ev_subject" size=60 value='<? echo htmlspecialchars2($ev[ev_subject]) ?>' required itemname='이벤트 제목'></td>
 </tr>
-<tr class=ht>
+<tr>
     <td>메뉴이미지</td>
     <td colspan=3>
-        <input type="file" class=ed id="ev_mimg" name="ev_mimg" size=40>
+        <input type="file" id="ev_mimg" name="ev_mimg" size=40>
         <?
         $mimg_str = "";
         $mimg = "$g4[path]/data/event/{$ev[ev_id]}_m";
@@ -124,10 +124,10 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </tr>
 <? if ($mimg_str) { echo "<tr><td></td><td colspan=3>$mimg_str</td></tr>"; } ?>
 
-<tr class=ht>
+<tr>
     <td>상단이미지</td>
     <td colspan=3>
-        <input type="file" class=ed id="ev_himg" name="ev_himg" size=40>
+        <input type="file" id="ev_himg" name="ev_himg" size=40>
         <?
         $himg_str = "";
         $himg = "$g4[path]/data/event/{$ev[ev_id]}_h";
@@ -141,10 +141,10 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </tr>
 <? if ($himg_str) { echo "<tr><td colspan=4>$himg_str</td></tr>"; } ?>
 
-<tr class=ht>
+<tr>
     <td>하단이미지</td>
     <td colspan=3>
-        <input type="file" class=ed id="ev_timg" name="ev_timg" size=40>
+        <input type="file" id="ev_timg" name="ev_timg" size=40>
         <?
         $timg_str = "";
         $timg = "$g4[path]/data/event/{$ev[ev_id]}_t";
@@ -160,22 +160,22 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <tr>
     <td>상단 내용</td>
-    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=editor_html('ev_head_html', $ev[ev_head_html]);?></td>
+    <td colspan=3 style='padding-top:5px; padding-bottom:5px;'><?=editor_html('ev_head_html', $ev[ev_head_html]);?></td>
 </tr>
 <tr>
     <td>하단 내용</td>
-    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=editor_html('ev_tail_html', $ev[ev_tail_html]);?></td>
+    <td colspan=3 style='padding-top:5px; padding-bottom:5px;'><?=editor_html('ev_tail_html', $ev[ev_tail_html]);?></td>
 </tr>
-<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
+
 </table>
 
-<p align=center>
-    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemevent.php';">
+<p>
+    <input type="submit" accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" accesskey='l' value='  목  록  ' onclick="document.location.href='./itemevent.php';">
 </form>
 
 
-<script language="javascript">
+<script>
 function feventform_check(f)
 {
     <?=get_editor_js('ev_head_html');?>

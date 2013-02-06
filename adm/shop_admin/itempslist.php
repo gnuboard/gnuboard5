@@ -53,12 +53,12 @@ $result = sql_query($sql);
 $qstr  = "$qstr&sca=$sca&save_stx=$stx";
 ?>
 
-<form id="flist" name="flist" style="margin:0px;">
+<form id="flist" name="flist">
 <table>
 <input type="hidden" id="page" name="page" value="<?=$page?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=80% align=center>
+    <td%>
         <select id="sca" name="sca">
             <option value=''>전체분류
             <?
@@ -85,21 +85,21 @@ $qstr  = "$qstr&sca=$sca&save_stx=$stx";
         <input type="text" id="stx" name="stx" value='<?=$stx?>'>
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td width=10%>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 </form>
 
-<table cellpadding=0 cellspacing=0 width=100% border=0>
-<colgroup width=80>
-<colgroup width=''>
-<colgroup width=80>
+<table border=0>
+<colgroup>
+<colgroup>
+<colgroup>
 <colgroup width=200>
 <colgroup width=40>
 <colgroup width=40>
-<colgroup width=80>
+<colgroup>
 <tr><td colspan=7 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td></td>
     <td><?=subject_sort_link("it_name"); ?>상품명</a></td>
     <td><?=subject_sort_link("mb_name"); ?>이름</a></td>
@@ -128,26 +128,26 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <tr class='list$list'>
         <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
         <td><a href='$href'>".cut_str($row[it_name],30)."</a></td>
-        <td align=center>$name</td>
+        <td>$name</td>
         <td>$row[is_subject]</td>
-        <td align=center>$row[is_score]</td>
-        <td align=center>$confirm</td>
-        <td align=center>$s_mod $s_del</td>
+        <td>$row[is_score]</td>
+        <td>$confirm</td>
+        <td>$s_mod $s_del</td>
     </tr>";
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=7 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=7 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 }
 ?>
 <tr><td colspan=7 height=1 bgcolor=CCCCCC></td></tr>
 </table>
 
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%>&nbsp;</td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td>&nbsp;</td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>
 

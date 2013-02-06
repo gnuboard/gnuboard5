@@ -71,13 +71,13 @@ $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search&chk_misu=$chk
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form id="flist" name="flist" autocomplete='off' style="margin:0px;">
+<form id="flist" name="flist" autocomplete='off'>
 <input type="hidden" id="doc" name="doc"  value="<?=$doc?>">
 <input type="hidden" id="page" name="page" value="<?=$page?>">
 <table>
 <tr>
-    <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=60% align=center>
+    <td><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td>
         <label><input type="checkbox" id="chk_misu" name="chk_misu" value="1" <?=$chk_misu?"checked='checked'":"";?> /> 미수금없음</label>
         &nbsp;&nbsp;
         <select id="sel_field" name="sel_field">
@@ -90,31 +90,31 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <input type="text" id="search" name="search" value='<? echo $search ?>'>
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 </form>
 
 
-<form id="fdeliverylistupate" name="fdeliverylistupate" method=post action="./deliverylistupdate.php" autocomplete='off' style="margin:0px;">
+<form id="fdeliverylistupate" name="fdeliverylistupate" method=post action="./deliverylistupdate.php" autocomplete='off'>
 <input type="hidden" id="sel_ca_id" name="sel_ca_id"  value="<? echo $sel_ca_id ?>">
 <input type="hidden" id="sel_field" name="sel_field"  value="<? echo $sel_field ?>">
 <input type="hidden" id="search" name="search"     value="<? echo $search ?>">
 <input type="hidden" id="page" name="page"       value="<? echo $page ?>">
 <input type="hidden" id="sort1" name="sort1"      value="<? echo $sort1 ?>">
 <input type="hidden" id="sort2" name="sort2"      value="<? echo $sort2 ?>">
-<table cellpadding=0 cellspacing=0 width=100% border=0>
+<table border=0>
 <colgroup width=70>
 <colgroup width=100>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
+<colgroup>
+<colgroup>
+<colgroup>
 <colgroup width=100>
-<colgroup width=120>
-<colgroup width=''>
+<colgroup>
+<colgroup>
 <colgroup width=100>
 <tr><td colspan=9 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td><a href='<? echo title_sort("od_id",1) . "&$qstr1"; ?>'>주문번호</a></td>
     <td><a href='<? echo title_sort("od_name") . "&$qstr1"; ?>'>주문자</a></td>
     <td><a href='<? echo title_sort("orderamount",1) . "&$qstr1"; ?>'>주문액</a></td>
@@ -158,11 +158,11 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     <tr class='list$list center ht'>
         <td><a href='./orderform.php?od_id=$row[od_id]'>$row[od_id]</a></td>
         <td>$row[od_name]</td>
-        <td align=right>".display_amount($row[orderamount])."&nbsp;</td>
-        <td align=right>".display_amount($row[receiptamount])."&nbsp;</td>
-        <td align=right>".display_amount($row[misu])."&nbsp;</td>
+        <td>".display_amount($row[orderamount])."&nbsp;</td>
+        <td>".display_amount($row[receiptamount])."&nbsp;</td>
+        <td>".display_amount($row[misu])."&nbsp;</td>
         <td>$hope_date</td>
-        <td><input type=\"text\" name='od_invoice_time[$i]' class=ed size=20 maxlength=19 value='$invoice_time'></td>
+        <td><input type=\"text\" name='od_invoice_time[$i]' size=20 maxlength=19 value='$invoice_time'></td>
         <td>
             <select id=\"dl_id\" name=\"dl_id[$i]\">
             <option value=''>--------
@@ -172,7 +172,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
         <input type=\"hidden\" name='save_dl_id[$i]' value='$row[dl_id]'>
         <input type=\"hidden\" name='save_od_invoice[$i]' value='$row[od_invoice]'>
-        <td><input type=\"text\" name='od_invoice[$i]' class=ed size=10 value='$row[od_invoice]'></td>
+        <td><input type=\"text\" name='od_invoice[$i]' size=10 value='$row[od_invoice]'></td>
         <td>$row[it_hit]</td>
     </tr>";
 
@@ -183,23 +183,23 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 }
 if ($i == 0)
-    echo "<tr><td colspan=20 align=center height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
+    echo "<tr><td colspan=20 height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
 ?>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
 
-<table width=100%>
+<table>
 <tr bgcolor=#ffffff>
-    <td width=50%>
+    <td>
         <table>
         <tr>
             <td><input type="checkbox" id="od_send_mail" name="od_send_mail" value='1' checked> 메일발송&nbsp;</td>
             <td><input type="checkbox" id="send_sms" name="send_sms" value='1' checked> SMS&nbsp;</td>
-            <td><input type="submit" class=btn1 accesskey='s' value='일괄수정'></td>
+            <td><input type="submit" accesskey='s' value='일괄수정'></td>
         </tr>
         </table>
     </td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>
 </form>

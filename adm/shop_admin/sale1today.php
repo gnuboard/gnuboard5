@@ -12,18 +12,18 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($g4[title])?>
 
-<table cellpadding=0 cellspacing=0 width=100%>
+<table>
 <tr><td colspan=9 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td width=100 align=center>주문번호</td>
-    <td align=center>주문자</td>
-    <td width=90 align=right>주문합계</td>
-    <td width=90 align=right>취소+DC</td>
-    <td width=90 align=right>무통장입금</td>
-    <td width=90 align=right>카드입금</td>
-    <td width=90 align=right>포인트입금</td>
-    <td width=90 align=right>입금취소</td>
-    <td width=90 align=right>미수금</td>
+<tr>
+    <td width=100>주문번호</td>
+    <td>주문자</td>
+    <td width=90>주문합계</td>
+    <td width=90>취소+DC</td>
+    <td width=90>무통장입금</td>
+    <td width=90>카드입금</td>
+    <td width=90>포인트입금</td>
+    <td width=90>입금취소</td>
+    <td width=90>미수금</td>
 </tr>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 <?
@@ -65,16 +65,16 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $misu = $row1[orderamount] - $row1[ordercancel] - $row[od_dc_amount] - $row[receiptamount] + $row[receiptcancel];
 
     echo "
-    <tr class=ht>
-        <td align=center><a href='./orderform.php?od_id=$row[od_id]'>$row[od_id]</a></td>
-        <td align=center>$href$row[od_name]</a></td>
-        <td align=right>".number_format($row1[orderamount])."</td>
-        <td align=right>".number_format($row1[ordercancel] + $row[od_dc_amount])."</td>
-        <td align=right>".number_format($row[od_receipt_bank])."</td>
-        <td align=right>".number_format($row[od_receipt_card])."</td>
-        <td align=right>".number_format($row[od_receipt_point])."</td>
-        <td align=right>".number_format($row[receiptcancel])."</td>
-        <td align=right>".number_format($misu)."</td>
+    <tr>
+        <td><a href='./orderform.php?od_id=$row[od_id]'>$row[od_id]</a></td>
+        <td>$href$row[od_name]</a></td>
+        <td>".number_format($row1[orderamount])."</td>
+        <td>".number_format($row1[ordercancel] + $row[od_dc_amount])."</td>
+        <td>".number_format($row[od_receipt_bank])."</td>
+        <td>".number_format($row[od_receipt_card])."</td>
+        <td>".number_format($row[od_receipt_point])."</td>
+        <td>".number_format($row[receiptcancel])."</td>
+        <td>".number_format($misu)."</td>
     </tr>\n";
 
     $tot[orderamount]   += $row1[orderamount];
@@ -89,19 +89,19 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=9 align=center height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
+    echo "<tr><td colspan=9 height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
 }
 ?>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
-<tr class=ht>
-    <td align=center colspan=2>합 계</td>
-    <td align=right><?=number_format($tot[orderamount])?></td>
-    <td align=right><?=number_format($tot[ordercancel]+ $tot[dc])?></td>
-    <td align=right><?=number_format($tot[receipt_bank])?></td>
-    <td align=right><?=number_format($tot[receipt_card])?></td>
-    <td align=right><?=number_format($tot[receipt_point])?></td>
-    <td align=right><?=number_format($tot[receiptcancel])?></td>
-    <td align=right><?=number_format($tot[misu])?></td>
+<tr>
+    <td colspan=2>합 계</td>
+    <td><?=number_format($tot[orderamount])?></td>
+    <td><?=number_format($tot[ordercancel]+ $tot[dc])?></td>
+    <td><?=number_format($tot[receipt_bank])?></td>
+    <td><?=number_format($tot[receipt_card])?></td>
+    <td><?=number_format($tot[receipt_point])?></td>
+    <td><?=number_format($tot[receiptcancel])?></td>
+    <td><?=number_format($tot[misu])?></td>
 </tr>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 </table>

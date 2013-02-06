@@ -20,25 +20,17 @@ if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페�
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
-<table width=100% height=30>
+<table>
 <tr>
-    <td width=60%><?=subtitle($g4[title])?></td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td><?=subtitle($g4[title])?></td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
 
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=25>
-<colgroup width=''>
-<colgroup width=50>
-<colgroup width=90>
-<colgroup width=90>
-<colgroup width=50>
-<colgroup width=40>
-<colgroup width=80>
-<tr><td colspan=8 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<table>
+
+<tr>
     <td>ID</td>
     <td>이미지</td>
     <td>위치</td>
@@ -48,7 +40,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     <td>조회</td>
     <td><?=icon("입력", "./bannerform.php");?></td>
 </tr>
-<tr><td colspan=8 height=1 bgcolor=#CCCCCC></td></tr>
+
 <?
 $sql = " select * from $g4[yc4_banner_table] 
           order by bn_order, bn_id desc 
@@ -87,16 +79,16 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=8 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=8 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 }
 ?>
-<tr><td colspan=8 height=1 bgcolor=#CCCCCC></td></tr>
+
 </table>
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td></td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>
 

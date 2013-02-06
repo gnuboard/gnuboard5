@@ -26,17 +26,17 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($html_title)?>
 
-<form id="frmfaqmasterform" name="frmfaqmasterform" method=post action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);"enctype="MULTIPART/FORM-DATA" style="margin:0px;">
+<form id="frmfaqmasterform" name="frmfaqmasterform" method=post action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);"enctype="MULTIPART/FORM-DATA">
 <input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
 <input type="hidden" id="fm_id" name="fm_id" value='<? echo $fm_id ?>'>
-<table cellpadding=0 cellspacing=0 width=100%>
+<table>
 <colgroup width=15% class=tdsl></colgroup>
 <colgroup width=85% bgcolor=#ffffff></colgroup>
-<tr><td colspan=2 height=2 bgcolor=0E87F9></td></tr>
-<tr class=ht>
+
+<tr>
     <td>제목</td>
     <td>
-        <input type="text" class=ed id="fm_subject" name="fm_subject" size=60 value='<?=get_text($fm[fm_subject]) ?>' required itemid="제목" name="제목">
+        <input type="text" id="fm_subject" name="fm_subject" size=60 value='<?=get_text($fm[fm_subject]) ?>' required itemid="제목" name="제목">
         <?
         if ($w == 'u')
         {
@@ -46,10 +46,10 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         ?>
     </td>
 </tr>
-<tr class=ht>
+<tr>
     <td>상단이미지</td>
     <td colspan=3>
-        <input type="file" class=ed id="fm_himg" name="fm_himg" size=40>
+        <input type="file" id="fm_himg" name="fm_himg" size=40>
         <?
         $himg = "$g4[path]/data/faq/{$fm[fm_id]}_h";
         if (file_exists($himg)) {
@@ -61,10 +61,10 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </tr>
 <? if ($himg_str) { echo "<tr><td colspan=4>$himg_str</td></tr>"; } ?>
 
-<tr class=ht>
+<tr>
     <td>하단이미지</td>
     <td colspan=3>
-        <input type="file" class=ed id="fm_timg" name="fm_timg" size=40>
+        <input type="file" id="fm_timg" name="fm_timg" size=40>
         <?
         $timg = "$g4[path]/data/faq/{$fm[fm_id]}_t";
         if (file_exists($timg)) {
@@ -87,12 +87,12 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <tr><td colspan=2 height=1 bgcolor=CCCCCC></td></tr>
 </table>
 
-<p align=center>
-    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./faqmasterlist.php';">
+<p>
+    <input type="submit" accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" accesskey='l' value='  목  록  ' onclick="document.location.href='./faqmasterlist.php';">
 </form>
 
-<script language="javascript">
+<script>
 function frmfaqmasterform_check(f)
 {
     <?=get_editor_js('fm_head_html');?>

@@ -32,19 +32,15 @@ form { display: inline; }
 <div id="container">
     <div class="searcharea">
     <form id="fitem" method="get" action="./coupon_item.php?w=<? echo $w; ?>">
-        <input type="text" id="stx" name="stx" class="ed" size="30" value="<? echo stripslashes($stx); ?>" />
-        <input type="submit" class="btn1" value="검색" />
+        <input type="text" id="stx" name="stx" size="30" value="<? echo stripslashes($stx); ?>" />
+        <input type="submit" value="검색" />
     </form>
     </div>
     <? if($stx) { ?>
     <div class="resultarea">
     <form id="fresult" method="get">
         <div class="list">
-            <table width="330" cellpadding="0" cellspacing="0" border="0">
-            <colgroup width="50" />
-            <colgroup width="" />
-            <colgroup width="90" />
-            <colgroup width="90" />
+            <table width="330">
             <tr>
                 <th><input type="checkbox" id="check_all" name="check_all" /></th>
                 <th>상품코드</th>
@@ -69,7 +65,7 @@ form { display: inline; }
             ?>
             </table>
         </div>
-        <div class="btn"><input type="submit" class="btn1" value="적용" /></div>
+        <div class="btn"><input type="submit" value="적용" /></div>
     </form>
     </div>
     <? } ?>

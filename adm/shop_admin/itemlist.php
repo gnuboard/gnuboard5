@@ -83,8 +83,8 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 <form id="flist" name="flist">
 <input type="hidden" id="page" name="page" value="<?=$page?>">
 <tr>
-    <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=60% align=center>
+    <td><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td>
         <select id="sca" name="sca">
             <option value=''>전체분류
             <?
@@ -115,16 +115,16 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         <input type="text" id="stx" name="stx" value='<?=$stx?>'>
         <input type="image" src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
 
-<table cellpadding=0 cellspacing=0 width=100% border=0>
+<table border=0>
 <tr><td colspan=13 height=2 bgcolor=0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td width=70><?=subject_sort_link("it_id", "sca=$sca")?>상품코드</a></td>
-    <td width='' colspan=2><?=subject_sort_link("it_name", "sca=$sca")?>상품명</a></td>
+    <td colspan=2><?=subject_sort_link("it_name", "sca=$sca")?>상품명</a></td>
     <td width=70><?=subject_sort_link("it_amount", "sca=$sca")?>비회원가격</a><br><?=subject_sort_link("it_cust_amount", "sca=$sca")?>시중가격</a></td>
     <td width=70><?=subject_sort_link("it_amount2", "sca=$sca")?>회원가격</a><br><?=subject_sort_link("it_point", "sca=$sca")?>포인트</a></td>
     <td width=70><?=subject_sort_link("it_amount3", "sca=$sca")?>특별가격</a><br><?=subject_sort_link("it_stock_qty", "sca=$sca")?>재고</a></td>
@@ -167,16 +167,16 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     <tr class='list$list'>
         <td>$row[it_id]</td>
         <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'], 50, 50)."</a></td>
-        <td align=left>$tmp_ca_list<br><input type=\"text\" name='it_name[$i]' value='".htmlspecialchars2(cut_str($row[it_name],250, ""))."' required size=40 class=ed></td>
+        <td align=left>$tmp_ca_list<br><input type=\"text\" name='it_name[$i]' value='".htmlspecialchars2(cut_str($row[it_name],250, ""))."' required size=40></td>
         <td colspan=3>
             <table width=210 cellpadding=0 cellspacing=0>
             <tr>
                 <td>
                     <table cellpadding=0 cellspacing=0>
                     <tr>
-                        <td width=70 align=center><input type=\"text\" name='it_amount[$i]' value='$row[it_amount]' class=ed size=7 style='text-align:right; background-color:#DDE6FE;'></td>
-                        <td width=70 align=center><input type=\"text\" name='it_amount2[$i]' value='$row[it_amount2]' class=ed size=7 style='text-align:right; background-color:#DDFEDE;'></td>
-                        <td width=70 align=center><input type=\"text\" name='it_amount3[$i]' value='$row[it_amount3]' class=ed size=7 style='text-align:right; background-color:#FEDDDD;'></td>
+                        <td width=70><input type=\"text\" name='it_amount[$i]' value='$row[it_amount]' size=7 style='text-align:right; background-color:#DDE6FE;'></td>
+                        <td width=70><input type=\"text\" name='it_amount2[$i]' value='$row[it_amount2]' size=7 style='text-align:right; background-color:#DDFEDE;'></td>
+                        <td width=70><input type=\"text\" name='it_amount3[$i]' value='$row[it_amount3]' size=7 style='text-align:right; background-color:#FEDDDD;'></td>
                     </tr>
                     </table></td>
             </tr>
@@ -184,29 +184,29 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
                 <td>
                     <table cellpadding=0 cellspacing=0>
                     <tr>
-                        <td width=70 align=center><input type=\"text\" name='it_cust_amount[$i]' value='$row[it_cust_amount]' class=ed size=7 style='text-align:right;'></td>
-                        <td width=70 align=center><input type=\"text\" name='it_point[$i]' value='$row[it_point]' class=ed size=7 style='text-align:right;'></td>
-                        <td width=70 align=center><input type=\"text\" name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=7 style='text-align:right;'></td>
+                        <td width=70><input type=\"text\" name='it_cust_amount[$i]' value='$row[it_cust_amount]' size=7 style='text-align:right;'></td>
+                        <td width=70><input type=\"text\" name='it_point[$i]' value='$row[it_point]' size=7 style='text-align:right;'></td>
+                        <td width=70><input type=\"text\" name='it_stock_qty[$i]' value='$row[it_stock_qty]' size=7 style='text-align:right;'></td>
                     </tr>
                     </table></td>
             </tr>
             </table></td>
-        <td><input type=\"text\" name='it_order[$i]' value='$row[it_order]' class=ed size=3 style='text-align:right;'></td>
+        <td><input type=\"text\" name='it_order[$i]' value='$row[it_order]' size=3 style='text-align:right;'></td>
         <td><input type=\"checkbox\" name='it_use[$i]' ".($row[it_use] ? "checked" : "")." value='1'></td>
         <td>$row[it_hit]</td>
         <td>$s_mod $s_del $s_vie $s_copy</td>
     </tr>";
 }
 if ($i == 0)
-    echo "<tr><td colspan=20 align=center height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
+    echo "<tr><td colspan=20 height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
 ?>
 <tr><td colspan=13 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%><input type="submit" class=btn1 value='일괄수정' accesskey='s'></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td><input type="submit" value='일괄수정' accesskey='s'></td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>
 </form>

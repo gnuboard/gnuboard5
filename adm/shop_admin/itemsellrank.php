@@ -63,7 +63,7 @@ $qstr1 = "$qstr&sort1=$sort1&sort2=$sort2&fr_date=$fr_date&to_date=$to_date&sel_
 <input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=80% align=center>
+    <td%>
         <select id="sel_ca_id" name="sel_ca_id">
             <option value=''>전체분류
             <?
@@ -82,25 +82,25 @@ $qstr1 = "$qstr&sort1=$sort1&sort2=$sort2&fr_date=$fr_date&to_date=$to_date&sel_
         기간 : <input type="text" id="fr_date" name="fr_date" size=8 maxlength=8 itemname='기간' value='<?=$fr_date?>'> ~ <input type="text" id="to_date" name="to_date" size=8 maxlength=8 itemname='기간' value='<?=$to_date?>'>
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td width=10%>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
-<table cellpadding=0 cellspacing=0 width=100%>
+<table>
 <tr><td colspan=20 height=3 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td width=50>순위</td>
-    <td width=80></td>
-    <td width=''>상품명</td>
-    <td width=50><a href='<?=title_sort("ct_status_1",1)."&$qstr1"?>'>쇼핑</a></td>
-    <td width=50><a href='<?=title_sort("ct_status_2",1)."&$qstr1"?>'>주문</a></td>
-    <td width=50><a href='<?=title_sort("ct_status_3",1)."&$qstr1"?>'>준비</a></td>
-    <td width=50><a href='<?=title_sort("ct_status_4",1)."&$qstr1"?>'>배송</a></td>
-    <td width=50><a href='<?=title_sort("ct_status_5",1)."&$qstr1"?>'>완료</a></td>
-    <td width=50><a href='<?=title_sort("ct_status_6",1)."&$qstr1"?>'>취소</a></td>
-    <td width=50><a href='<?=title_sort("ct_status_7",1)."&$qstr1"?>'>반품</a></td>
-    <td width=50><a href='<?=title_sort("ct_status_8",1)."&$qstr1"?>'>품절</a></td>
-    <td width=50><a href='<?=title_sort("ct_status_sum",1)."&$qstr1"?>'>합계</a></td>
+<tr>
+    <td>순위</td>
+    <td></td>
+    <td>상품명</td>
+    <td><a href='<?=title_sort("ct_status_1",1)."&$qstr1"?>'>쇼핑</a></td>
+    <td><a href='<?=title_sort("ct_status_2",1)."&$qstr1"?>'>주문</a></td>
+    <td><a href='<?=title_sort("ct_status_3",1)."&$qstr1"?>'>준비</a></td>
+    <td><a href='<?=title_sort("ct_status_4",1)."&$qstr1"?>'>배송</a></td>
+    <td><a href='<?=title_sort("ct_status_5",1)."&$qstr1"?>'>완료</a></td>
+    <td><a href='<?=title_sort("ct_status_6",1)."&$qstr1"?>'>취소</a></td>
+    <td><a href='<?=title_sort("ct_status_7",1)."&$qstr1"?>'>반품</a></td>
+    <td><a href='<?=title_sort("ct_status_8",1)."&$qstr1"?>'>품절</a></td>
+    <td><a href='<?=title_sort("ct_status_sum",1)."&$qstr1"?>'>합계</a></td>
 </tr>
 <tr><td colspan=20 height=1 bgcolor=#CCCCCC></td></tr>
 <?
@@ -130,17 +130,17 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=20 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=20 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 }
 ?>
 <tr><td colspan=20 height=1 bgcolor=CCCCCC></td></tr>
 </table>
 
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%>&nbsp;</td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr1&page=");?></td>
+    <td>&nbsp;</td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr1&page=");?></td>
 </tr>
 </table>
 

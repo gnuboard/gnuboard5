@@ -49,13 +49,13 @@ $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form id="flist" name="flist" style="margin:0px;">
+<form id="flist" name="flist">
 <input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
 <input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <table>
 <tr>
-    <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=70% align=center>
+    <td><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td width=70%>
         <select id="sel_field" name="sel_field">
             <option value='a.od_id'>주문번호
             <option value='cd_app_no'>승인번호
@@ -66,20 +66,20 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <input type="text" id="search" name="search" value='<? echo $search ?>' autocomplete="off">
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
 
-<table width=100% cellpadding=0 cellspacing=0>
+<table cellpadding=0 cellspacing=0>
 <colgroup width=110>
-<colgroup width=''>
+<colgroup>
 <colgroup width=110>
 <colgroup width=110>
-<colgroup width=120>
+<colgroup>
 <colgroup width=110>
 <tr><td colspan=6 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td><a href="<? echo title_sort("od_id") . "&$qstr1"; ?>">주문번호</a></td>
     <td><a href="<? echo title_sort("cd_amount") . "&$qstr1"; ?>">승인금액</a></td>
     <td><a href="<? echo title_sort("cd_app_no") . "&$qstr1"; ?>">승인번호</a></td>
@@ -104,15 +104,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 
 if ($i == 0)
-    echo "<tr><td colspan=6 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=6 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 ?>
 <tr><td colspan=6 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td></td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </table>
 </form>

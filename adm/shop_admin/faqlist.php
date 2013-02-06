@@ -21,22 +21,22 @@ $sql = "select * $sql_common order by fa_order , fa_id ";
 $result = sql_query($sql);
 ?>
 
-<table width=100%>
+<table>
 <tr>
-    <td width=20%> </td>
-    <td width=60% align=center>&nbsp;</td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td> </td>
+    <td>&nbsp;</td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 
 
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=80>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=80>
-<tr><td colspan=4 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<table>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+
+<tr>
     <td>번호</td>
     <td>제목</td>
     <td>순서</td>
@@ -45,7 +45,7 @@ $result = sql_query($sql);
         <a href='<?="$g4[shop_path]/faq.php?fm_id=$fm[fm_id]"?>'><img src='<?=$g4[admin_path]?>/img/icon_view.gif' border=0></a>
     </td>
 </tr>
-<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
+
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
@@ -60,24 +60,24 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list = $i%2;
     echo "
     <tr class='list$list ht'>
-        <td align=center>$num</td>
+        <td>$num</td>
         <td>" . stripslashes($row[fa_subject]) . "</td>
-        <td align=center>$row[fa_order]</td>
-        <td align=center>$s_mod $s_del</td>
+        <td>$row[fa_order]</td>
+        <td>$s_mod $s_del</td>
     </tr>";
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=20 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=20 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 }
 ?>
 <tr><td colspan=4 height=1 bgcolor=CCCCCC></td></tr>
 </table><br><br>
 
-<table width=100% cellpadding=5 cellspacing=0 border=0 bgcolor=#F6F6F6>
+<table cellpadding=5 cellspacing=0 border=0 bgcolor=#F6F6F6>
     <tr>
         <td>
-            <table width=100% cellpadding=10 cellspacing=0 bgcolor=#FFFFFF>
+            <table cellpadding=10 cellspacing=0 bgcolor=#FFFFFF>
                 <tr>
                     <td style="line-height:220%;">
                         <B><FONT COLOR="#18ABFF">&middot; FAQ 질문, 답변 등록하기</FONT></B><BR>
@@ -91,8 +91,8 @@ if ($i == 0) {
     </tr>
 </table>
 
-<p align=center>
-    <input type="button" class=btn1 accesskey='l' value='  FAQ 관리  ' onclick="location='./faqmasterlist.php'">
+<p>
+    <input type="button" accesskey='l' value='  FAQ 관리  ' onclick="location='./faqmasterlist.php'">
 
 
 <?

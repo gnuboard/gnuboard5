@@ -8,20 +8,20 @@ $g4['title'] = " 쇼핑몰관리";
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<table width=100%>
+<table>
 <tr>
-	<td width=50% valign=top>
-        <table width=100% cellpadding=0 cellspacing=0>
+	<td valign=top>
+        <table cellpadding=0 cellspacing=0>
         <tr>
             <td width=70%><?=subtitle("입금완료 미배송내역")?></td>
-            <td width=30% align=right><a href="./deliverylist.php?sort1=od_invoice&sort2=asc&chk_misu=1"><img src="<?=$g4['admin_path']?>/img/icon_more.gif" border="0"></a>&nbsp;</td>
+            <td width=30%><a href="./deliverylist.php?sort1=od_invoice&sort2=asc&chk_misu=1"><img src="<?=$g4['admin_path']?>/img/icon_more.gif" border="0"></a>&nbsp;</td>
         </tr>
         </table>
 
-        <table width=100% cellpadding=0 cellspacing=0>
+        <table cellpadding=0 cellspacing=0>
         <tr><td colspan=5 height=2 bgcolor=#0E87F9></td></tr>
-        <tr align=center class=ht>
-            <td width=80>주문번호</td>
+        <tr>
+            <td>주문번호</td>
             <td>주문자</td>
             <td width=90>입금액</td>
             <td width=90>결제방법</td>
@@ -59,7 +59,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <tr align=\"center\" class=\"list$list ht\">
                 <td>{$row['od_id']}</td>
                 <td>$name</td>
-                <td align=right>".display_amount($row['receiptamount'])."&nbsp;</td>
+                <td>".display_amount($row['receiptamount'])."&nbsp;</td>
                 <td>$settle_method</td>
                 <td>".icon("수정", "./orderform.php?od_id={$row['od_id']}")."</td>
             </tr>
@@ -67,7 +67,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         }
 
         if ($i == 0) {
-            echo "<tr><td colspan=5 align=center class=ht>자료가 없습니다.</td></tr>";
+            echo "<tr><td colspan=5>자료가 없습니다.</td></tr>";
         }
         ?>
             <tr><td colspan=5 height=1 bgcolor=#CCCCCC></td></tr>
@@ -75,17 +75,17 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </td>
 	<td width=1%></td>
 	<td width=49% valign=top>
-        <table width=100% cellpadding=0 cellspacing=0>
+        <table cellpadding=0 cellspacing=0>
         <tr>
             <td width=70%><?=subtitle("미입금 주문내역")?></td>
-            <td width=30% align=right><a href="./orderlist.php?sort1=receiptamount&sort2=asc"><img src="<?=$g4['admin_path']?>/img/icon_more.gif" border="0"></a>&nbsp;</td>
+            <td width=30%><a href="./orderlist.php?sort1=receiptamount&sort2=asc"><img src="<?=$g4['admin_path']?>/img/icon_more.gif" border="0"></a>&nbsp;</td>
         </tr>
         </table>
 
-        <table width=100%  cellpadding=0 cellspacing=0>
+        <table  cellpadding=0 cellspacing=0>
         <tr><td colspan=5 height=2 bgcolor=#0E87F9></td></tr>
-        <tr align=center class=ht>
-            <td width=80>주문번호</td>
+        <tr>
+            <td>주문번호</td>
             <td>주문자</td>
             <td width=90>주문액</td>
             <td width=90>결제방법</td>
@@ -119,17 +119,17 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
             $list = $i%2;
             echo "
-            <tr align=center class=\"list$list ht\">
+            <tr class=\"list$list ht\">
                 <td><a href=\"./orderstatuslist.php?sort1=od_id&sel_field=od_id&search={$row['od_id']}\">{$row['od_id']}</a></td>
                 <td>$name</td>
-                <td align=right>".display_amount($row['orderamount'])."&nbsp;</td>
+                <td>".display_amount($row['orderamount'])."&nbsp;</td>
                 <td>$settle_method</td>
                 <td>".icon("수정", "./orderform.php?od_id={$row['od_id']}")."</td>
             </tr>";
         }
 
         if ($i == 0)
-            echo "<tr><td colspan=5 align=center class=ht>자료가 없습니다.</td></tr>";
+            echo "<tr><td colspan=5>자료가 없습니다.</td></tr>";
         ?>
         <tr><td colspan=5 height=1 bgcolor=#CCCCCC></td></tr>
         </table>
@@ -140,24 +140,24 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 </table><br>
 
 
-<table width=100%>
+<table>
 <tr>
-	<td width=50% valign=top>
-        <table width=100% cellpadding=0 cellspacing=0>
+	<td valign=top>
+        <table cellpadding=0 cellspacing=0>
         <tr>
             <td width=70%><?=subtitle("사용후기")?></td>
-            <td width=30% align=right><a href='./itempslist.php?sort1=is_confirm&sort2=asc'><img src='<?=$g4[admin_path]?>/img/icon_more.gif' border=0></a>&nbsp;</td>
+            <td width=30%><a href='./itempslist.php?sort1=is_confirm&sort2=asc'><img src='<?=$g4[admin_path]?>/img/icon_more.gif' border=0></a>&nbsp;</td>
         </tr>
         </table>
 
-        <table width=100% cellpadding=0 cellspacing=0>
-        <tr><td colspan=3 height=2 bgcolor=#0E87F9></td></tr>
-        <tr align=center class=ht>
+        <table cellpadding=0 cellspacing=0>
+        
+        <tr>
         	<td width=100>회원명</td>
         	<td>제목</td>
         	<td width=40>수정</td>
         </tr>
-        <tr><td colspan=3 height=1 bgcolor=#CCCCCC></td></tr>
+        
         <?
         $sql = " select * from {$g4['yc4_item_ps_table']}
                   where is_confirm = 0
@@ -173,36 +173,36 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
             $list = $i%2;
             echo "
-            <tr align=center class=\"list$list ht\">
-                <td align=center>$name</td>
+            <tr class=\"list$list ht\">
+                <td>$name</td>
                 <td>".cut_str($row['is_subject'],40)."</td>
-                <td align=center>".icon("수정", "./itempsform.php?w=u&is_id={$row['is_id']}")."</td>
+                <td>".icon("수정", "./itempsform.php?w=u&is_id={$row['is_id']}")."</td>
             </tr>";
         }
 
         if ($i == 0)
-            echo "<tr><td colspan=3 align=center class=ht>자료가 없습니다.</td></tr>";
+            echo "<tr><td colspan=3>자료가 없습니다.</td></tr>";
         ?>
-        <tr><td colspan=3 height=1 bgcolor=#CCCCCC></td></tr>
+        
         </table>
     <td>
     <td width=1%></td>
-	<td width=50% valign=top>
-        <table width=100% cellpadding=0 cellspacing=0>
+	<td valign=top>
+        <table cellpadding=0 cellspacing=0>
         <tr>
             <td width=70%><?=subtitle("상품문의")?></td>
-            <td width=30% align=right><a href='./itemqalist.php?sort1=iq_answer&sort2=asc'><img src='<?=$g4['admin_path']?>/img/icon_more.gif' border=0></a>&nbsp;</td>
+            <td width=30%><a href='./itemqalist.php?sort1=iq_answer&sort2=asc'><img src='<?=$g4['admin_path']?>/img/icon_more.gif' border=0></a>&nbsp;</td>
         </tr>
         </table>
 
-        <table width=100% cellpadding=0 cellspacing=0>
-        <tr><td colspan=3 height=2 bgcolor=#0E87F9></td></tr>
-        <tr align=center class=ht>
+        <table cellpadding=0 cellspacing=0>
+        
+        <tr>
         	<td width=100>회원명</td>
         	<td>제목</td>
         	<td width=40>수정</td>
         </tr>
-        <tr><td colspan=3 height=1 bgcolor=#CCCCCC></td></tr>
+        
         <?
         $sql = " select * from {$g4['yc4_item_qa_table']}
                   where iq_answer = ''
@@ -218,17 +218,17 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
             $list = $i%2;
             echo "
-            <tr align=center class=\"list$list ht\">
-                <td align=center>$name</td>
+            <tr class=\"list$list ht\">
+                <td>$name</td>
                 <td>".cut_str($row['iq_subject'],40)."</td>
-                <td align=center>".icon("수정", "./itemqaform.php?w=u&iq_id={$row['iq_id']}")."</td>
+                <td>".icon("수정", "./itemqaform.php?w=u&iq_id={$row['iq_id']}")."</td>
             </tr>";
         }
 
         if ($i == 0)
-            echo "<tr><td colspan=3 align=center class=ht>자료가 없습니다.</td></tr>";
+            echo "<tr><td colspan=3>자료가 없습니다.</td></tr>";
         ?>
-        <tr><td colspan=3 height=1 bgcolor=#CCCCCC></td></tr>
+        
         </table>
     </td>
 </tr>

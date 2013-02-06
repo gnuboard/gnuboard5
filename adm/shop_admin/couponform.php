@@ -32,7 +32,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 -->
 </style>
 
-<form id="fcoupon" method="post" action="./couponformupdate.php" style="margin:0px;">
+<form id="fcoupon" method="post" action="./couponformupdate.php">
 <input type="hidden" id="cp_no" name="cp_no" value="<? echo $cp_no; ?>" />
 <input type="hidden" id="w" name="w"    value="<? echo $w; ?>" />
 <input type="hidden" id="sst" name="sst"  value="<? echo $sst ?>" />
@@ -45,32 +45,32 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 <colgroup width="85%" bgcolor="#ffffff"></colgroup>
 <tr><td colspan="2" height="2" bgcolor="#0E87F9"></td></tr>
 <? if($w == 'u') { ?>
-<tr class="ht">
+<tr>
     <td>쿠폰번호</td>
     <td><? echo $write['cp_id']; ?></td>
 </tr>
 <? } ?>
-<tr class="ht">
+<tr>
     <td>쿠폰명</td>
-    <td><input type="text" id="cp_subject" name="cp_subject" size="60" class="ed" value="<? echo $write['cp_subject']; ?>" /></td>
+    <td><input type="text" id="cp_subject" name="cp_subject" size="60" value="<? echo $write['cp_subject']; ?>" /></td>
 </tr>
-<tr class="ht">
+<tr>
     <td>쿠폰종류</td>
     <td><input type="radio" id="cp_type" name="cp_type" value="0" <? if(!$write['cp_type'] || $w == '') echo "checked=\"checked\""; ?> /> 상품할인&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_type" name="cp_type" value="1" <? if($write['cp_type'] == 1) echo "checked=\"checked\""; ?> /> 결제금액할인&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_type" name="cp_type" value="2" <? if($write['cp_type'] == 2) echo "checked=\"checked\""; ?> /> 배송비할인</td>
 </tr>
-<tr class="ht">
+<tr>
     <td>사용대상</td>
     <td><input type="radio" id="cp_target" name="cp_target" value="0" <? if(!$write['cp_target'] || $w == '') echo "checked=\"checked\""; ?> /> 상품&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_target" name="cp_target" value="1" <? if($write['cp_target'] == 1) echo "checked=\"checked\""; ?> /> 카테고리&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_target" name="cp_target" value="2" <? if($write['cp_target'] == 2) echo "checked=\"checked\""; ?> /> 전체상품&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_target" name="cp_target" value="3" <? if($write['cp_target'] == 3) echo "checked=\"checked\""; ?> disabled="disabled" /> 주문서</td>
 </tr>
-<tr class="ht">
+<tr>
     <td>할인방식</td>
     <td><input type="radio" id="cp_method" name="cp_method" value="0" <? if(!$write['cp_method'] || $w == '') echo "checked=\"checked\""; ?> /> 정액할인&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_method" name="cp_method" value="1" <? if($write['cp_method']) echo "checked=\"checked\""; ?> /> 정율(%)할인</td>
 </tr>
-<tr class="ht">
+<tr>
     <td><span id="cp_amount_label">할인금액</span></td>
-    <td><input type="text" id="cp_amount" name="cp_amount" size="10" class="ed" value="<? echo $write['cp_amount']; ?>" /><span id="cp_amount_unit">원</span></td>
+    <td><input type="text" id="cp_amount" name="cp_amount" size="10" value="<? echo $write['cp_amount']; ?>" /><span id="cp_amount_unit">원</span></td>
 </tr>
-<tr id="cp_trunc_dsp" class="ht">
+<tr id="cp_trunc_dsp">
     <td>절사금액</td>
     <td>
         <select id="cp_trunc" name="cp_trunc">
@@ -80,31 +80,31 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         </select>
     </td>
 </tr>
-<tr id="cp_maximum_dsp" class="ht">
+<tr id="cp_maximum_dsp">
     <td>최대할인금액</td>
-    <td><input type="text" id="cp_maximum" name="cp_maximum" size="10" class="ed" value="<? echo $write['cp_maximum']; ?>" />원&nbsp;&nbsp;* 0이면 제한없음</td>
+    <td><input type="text" id="cp_maximum" name="cp_maximum" size="10" value="<? echo $write['cp_maximum']; ?>" />원&nbsp;&nbsp;* 0이면 제한없음</td>
 </tr>
-<tr id="cp_minimum_dsp" class="ht">
+<tr id="cp_minimum_dsp">
     <td>최소주문금액</td>
-    <td><input type="text" id="cp_minimum" name="cp_minimum" size="10" class="ed" value="<? echo $write['cp_minimum']; ?>" />원&nbsp;&nbsp;* 0이면 제한없음</td>
+    <td><input type="text" id="cp_minimum" name="cp_minimum" size="10" value="<? echo $write['cp_minimum']; ?>" />원&nbsp;&nbsp;* 0이면 제한없음</td>
 </tr>
-<tr class="ht">
+<tr>
     <td>사용기한</td>
-    <td><input type="text" id="cp_start" name="cp_start" size="20" class="ed" value="<? echo $write['cp_start']; ?>" />&nbsp;~&nbsp;<input type="text" id="cp_end" name="cp_end" size="20" class="ed" value="<? echo $write['cp_end']; ?>" />&nbsp;&nbsp;* 입력예: <? echo date("Y-m-d", (time() + 86400 * 7)); ?></td>
+    <td><input type="text" id="cp_start" name="cp_start" size="20" value="<? echo $write['cp_start']; ?>" />&nbsp;~&nbsp;<input type="text" id="cp_end" name="cp_end" size="20" value="<? echo $write['cp_end']; ?>" />&nbsp;&nbsp;* 입력예: <? echo date("Y-m-d", (time() + 86400 * 7)); ?></td>
 </tr>
-<tr id="it_id_dsp" class="ht">
+<tr id="it_id_dsp">
     <td>적용상품</td>
-    <td><input type="text" id="it_id" name="it_id" size="50" class="ed" value="<? echo $write['it_id']; ?>" />&nbsp;<button type="button" id="item_search">상품찾기</button></td>
+    <td><input type="text" id="it_id" name="it_id" size="50" value="<? echo $write['it_id']; ?>" />&nbsp;<button type="button" id="item_search">상품찾기</button></td>
 </tr>
-<tr id="ca_id_dsp" class="ht">
+<tr id="ca_id_dsp">
     <td>적용카테고리</td>
-    <td><input type="text" id="ca_id" name="ca_id" size="50" class="ed" value="<? echo $write['ca_id']; ?>" />&nbsp;&nbsp;<input type="checkbox" id="allcategory" name="allcategory" value="1" />전체카테고리&nbsp;<button type="button" id="category_search">카테고리찾기</button></td>
+    <td><input type="text" id="ca_id" name="ca_id" size="50" value="<? echo $write['ca_id']; ?>" />&nbsp;&nbsp;<input type="checkbox" id="allcategory" name="allcategory" value="1" />전체카테고리&nbsp;<button type="button" id="category_search">카테고리찾기</button></td>
 </tr>
-<tr class="ht">
+<tr>
     <td>적용회원</td>
-    <td><input type="text" id="mb_id" name="mb_id" size="50" class="ed" value="<? echo $write['mb_id']; ?>" />&nbsp;&nbsp;<input type="checkbox" id="allmember" name="allmember" value="1" />전체회원&nbsp;<button type="button" id="member_search">회원찾기</button></td>
+    <td><input type="text" id="mb_id" name="mb_id" size="50" value="<? echo $write['mb_id']; ?>" />&nbsp;&nbsp;<input type="checkbox" id="allmember" name="allmember" value="1" />전체회원&nbsp;<button type="button" id="member_search">회원찾기</button></td>
 </tr>
-<tr class="ht">
+<tr>
     <td>쿠폰사용</td>
     <td><input type="radio" id="cp_use" name="cp_use" value="1" <? if($write['cp_use'] || $w == '') echo "checked=\"checked\""; ?> /> 사용함&nbsp;&nbsp;&nbsp;<input type="radio" id="cp_use" name="cp_use" value="0" <? if(!$write['cp_use'] && $w == 'u') echo "checked=\"checked\""; ?> /> 사용안함</td>
 </tr>
@@ -112,8 +112,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </table>
 
 <p align="center">
-    <input type="submit" class="btn1" accesskey="s" value="  확  인  ">&nbsp;
-    <input type="button" class="btn1" accesskey="l" value="  목  록  " onclick="document.location.href='./couponlist.php?page=<?=$page?>';">
+    <input type="submit" accesskey="s" value="  확  인  ">&nbsp;
+    <input type="button" accesskey="l" value="  목  록  " onclick="document.location.href='./couponlist.php?page=<?=$page?>';">
 </p>
 </form>
 

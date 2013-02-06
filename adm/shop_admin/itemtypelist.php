@@ -75,7 +75,7 @@ $result = sql_query($sql);
 $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 ?>
 
-<form id="flist" name="flist" style="margin:0px;">
+<form id="flist" name="flist">
 <table>
 <input type="hidden" id="doc" name="doc"   value="<? echo $doc ?>">
 <input type="hidden" id="sort1" name="sort1" value="<? echo $sort1 ?>">
@@ -83,7 +83,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 <input type="hidden" id="page" name="page"  value="<? echo $page ?>">
 <tr>
     <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=80% align=center>
+    <td%>
         <select id="sca" name="sca">
             <option value=''>전체분류
             <?
@@ -108,31 +108,31 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         <input type="text" id="stx" name="stx" value='<? echo $stx ?>'>
         <input type="image" src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
     </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td width=10%>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </table>
 </form>
 
 
-<form id="fitemtypelist" name="fitemtypelist" method=post action="./itemtypelistupdate.php" style="margin:0px;">
+<form id="fitemtypelist" name="fitemtypelist" method=post action="./itemtypelistupdate.php">
 <input type="hidden" id="sca" name="sca"  value="<?=$sca?>">
 <input type="hidden" id="sst" name="sst"  value="<?=$sst?>">
 <input type="hidden" id="sod" name="sod"  value="<?=$sod?>">
 <input type="hidden" id="sfl" name="sfl"  value="<?=$sfl?>">
 <input type="hidden" id="stx" name="stx"  value="<?=$stx?>">
 <input type="hidden" id="page" name="page" value="<?=$page?>">
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
+<table>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
+<colgroup>
 <colgroup width=40>
 <tr><td colspan=9 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
+<tr>
     <td><?=subject_sort_link("it_id", $qstr, 1)?>상품코드</a></td>
     <td colspan=2><?=subject_sort_link("it_name")?>상품명</a></td>
     <td><?=subject_sort_link("it_type1", $qstr, 1)?>히트상품</a></td>
@@ -167,15 +167,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 
 if (!$i)
-    echo "<tr><td colspan=9 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>";
+    echo "<tr><td colspan=9 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>";
 ?>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
 
-<table width=100%>
+<table>
 <tr>
-    <td colspan=50%><input type="submit" class=btn1 value='일괄수정' accesskey='s'></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td colspan=50%><input type="submit" value='일괄수정' accesskey='s'></td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </form>
 </table><br>

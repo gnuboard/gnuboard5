@@ -30,7 +30,7 @@ if(!$makemode) {
 }
 ?>
 
-<table width="650" cellpadding="0" cellspacing="0" border="0">
+<table width="650">
 <input type="hidden" name="it_id" value="<? echo $it_id; ?>" />
 <input type="hidden" name="w" value="<? echo $w; ?>" />
 <input type="hidden" name="makemode" value="<? echo $makemode; ?>" />

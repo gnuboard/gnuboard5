@@ -25,17 +25,14 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 
 <?=subtitle($html_title)?>
 
-<form id="fbanner" name="fbanner" method=post action='./bannerformupdate.php' enctype='multipart/form-data' style="margin:0px;">
+<form id="fbanner" name="fbanner" method=post action='./bannerformupdate.php' enctype='multipart/form-data'>
 <input type="hidden" id="w" name="w"     value='<? echo $w ?>'>
 <input type="hidden" id="bn_id" name="bn_id" value='<? echo $bn_id ?>'>
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=15%></colgroup>
-<colgroup width=85% bgcolor=#ffffff></colgroup>
-<tr><td colspan=2 height=2 bgcolor=0E87F9></td></tr>
-<tr class=ht>
-    <td>&nbsp;이미지</td>
+<table>
+<tr>
+    <td>이미지</td>
     <td>
-        <input type="file" id="bn_bimg" name="bn_bimg" size=40 class=ed>
+        <input type="file" id="bn_bimg" name="bn_bimg" size=40>
         <?
         $bimg_str = "";
         $bimg = "$g4[path]/data/banner/{$bn[bn_id]}";
@@ -51,22 +48,22 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
 </tr>
 <? if ($bimg_str) { echo "<tr><td></td><td>$bimg_str</td></tr>"; } ?>
 
-<tr class=ht>
-    <td>&nbsp;이미지 설명</td>
+<tr>
+    <td>이미지 설명</td>
     <td>
-        <input type="text" id="bn_alt" name="bn_alt" size=80 value='<? echo $bn[bn_alt] ?>' class=ed>
+        <input type="text" id="bn_alt" name="bn_alt" size=80 value='<? echo $bn[bn_alt] ?>'>
         <?=help("img 태그의 alt, title 에 해당되는 내용입니다.\n배너에 마우스를 오버하면 이미지의 설명이 나옵니다.");?>
     </td>
 </tr>
-<tr class=ht>
-    <td>&nbsp;링크</td>
+<tr>
+    <td>링크</td>
     <td>
-        <input type="text" id="bn_url" name="bn_url" size=80 value='<? echo $bn[bn_url] ?>' class=ed>
+        <input type="text" id="bn_url" name="bn_url" size=80 value='<? echo $bn[bn_url] ?>'>
         <?=help("배너클릭시 이동하는 주소입니다.");?>
     </td>
 </tr>
-<tr class=ht>
-    <td>&nbsp;출력위치</td>
+<tr>
+    <td>출력위치</td>
     <td>
         <select id="bn_position" name="bn_position">
         <option value="왼쪽">왼쪽
@@ -75,8 +72,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         <?=help("왼쪽 : 쇼핑몰화면 왼쪽에 출력합니다.\n메인 : 쇼핑몰 메인화면(index.php)에만 출력합니다.", 50);?>
     </td>
 </tr>
-<tr class=ht>
-    <td>&nbsp;테두리</td>
+<tr>
+    <td>테두리</td>
     <td>
         <select id="bn_border" name="bn_border">
         <option value="0">아니오
@@ -85,8 +82,8 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         <?=help("배너이미지에 테두리를 넣을지를 설정합니다.", 50);?>
     </td>
 </tr>
-<tr class=ht>
-    <td>&nbsp;새창</td>
+<tr>
+    <td>새창</td>
     <td>
         <select id="bn_new_win" name="bn_new_win">
         <option value="0">아니오
@@ -95,39 +92,39 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         <?=help("배너클릭시 새창을 띄울지를 설정합니다.", 50);?>
     </td>
 </tr>
-<tr class=ht>
-    <td>&nbsp;시작일시</td>
+<tr>
+    <td>시작일시</td>
     <td>
-        <input type="text" id="bn_begin_time" name="bn_begin_time" size=21 maxlength=19 value='<? echo $bn[bn_begin_time] ?>' class=ed>
+        <input type="text" id="bn_begin_time" name="bn_begin_time" size=21 maxlength=19 value='<? echo $bn[bn_begin_time] ?>'>
         <input type="checkbox" id="bn_begin_chk" name="bn_begin_chk" value="<? echo date("Y-m-d 00:00:00", time()); ?>" onclick="if (this.checked == true) this.form.bn_begin_time.value=this.form.bn_begin_chk.value; else this.form.bn_begin_time.value = this.form.bn_begin_time.defaultValue;">오늘
         <?=help("현재시간이 시작일시와 종료일시 기간안에 있어야 배너가 출력됩니다.");?>
     </td>
 </tr>
-<tr class=ht>
-    <td>&nbsp;종료일시</td>
+<tr>
+    <td>종료일시</td>
     <td>
-        <input type="text" id="bn_end_time" name="bn_end_time" size=21 maxlength=19 value='<? echo $bn[bn_end_time] ?>' class=ed>
+        <input type="text" id="bn_end_time" name="bn_end_time" size=21 maxlength=19 value='<? echo $bn[bn_end_time] ?>'>
         <input type="checkbox" id="bn_end_chk" name="bn_end_chk" value="<? echo date("Y-m-d 23:59:59", time()+60*60*24*31); ?>" onclick="if (this.checked == true) this.form.bn_end_time.value=this.form.bn_end_chk.value; else this.form.bn_end_time.value = this.form.bn_end_time.defaultValue;">오늘+31일
     </td>
 </tr>
-<tr class=ht>
-    <td>&nbsp;출력 순서</td>
+<tr>
+    <td>출력 순서</td>
     <td>
         <?=order_select("bn_order", $bn[bn_order])?>
         <?=help("배너를 출력할 때 순서를 정합니다.\n\n숫자가 작을수록 상단에 출력합니다.");?>
     </td>
 </tr>
-<tr><td colspan=2 height=1 bgcolor=#CCCCCC></td></tr>
+
 </table>
 
-<p align=center>
-    <input type="submit" class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type="button" class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./bannerlist.php';">&nbsp;
+<p>
+    <input type="submit" accesskey='s' value='  확  인  '>&nbsp;
+    <input type="button" accesskey='l' value='  목  록  ' onclick="document.location.href='./bannerlist.php';">&nbsp;
 </form>
 
 
 
-<script language="JavaScript">
+<script>
 if (document.fbanner.w.value == 'u')
 {
     document.fbanner.bn_position.value = '<?=$bn[bn_position]?>';

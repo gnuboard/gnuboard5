@@ -64,8 +64,8 @@ form { display: inline; }
     </tr>
     <tr>
         <td>
-            <input type="text" id="addr" name="addr" class="ed" value="<? echo stripslashes($addr); ?>" size="20" />
-            <input type="submit" class="btn1" value=" 검색 " />
+            <input type="text" id="addr" name="addr" value="<? echo stripslashes($addr); ?>" size="20" />
+            <input type="submit" value=" 검색 " />
         </td>
     </tr>
     <tr>
@@ -86,8 +86,8 @@ form { display: inline; }
     </tr>
     <tr>
         <td>
-            <input type="text" id="zip1" name="zip1" class="ed" size="10" /> 부터
-            <input type="text" id="zip2" name="zip2" class="ed" size="10" /> 까지
+            <input type="text" id="zip1" name="zip1" size="10" /> 부터
+            <input type="text" id="zip2" name="zip2" size="10" /> 까지
         </td>
     </tr>
     <tr>

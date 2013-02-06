@@ -35,7 +35,7 @@ include_once (G4_PATH.'/head.sub.php');
 
 <div id="container">
     <form id="optionform">
-    <table cellpadding="0" cellspacing="0" border="0">
+    <table>
     <tr>
         <th width="150">옵션명</th>
         <th width="450">옵션항목(,로 구분)</th>

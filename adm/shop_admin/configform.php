@@ -721,17 +721,17 @@ $sms_title   = array (1=>"회원가입시", "주문서작성시", "입금확인�
 $sms_daesang = array (1=>"고객님께 발송", "관리자께 발송", "고객님께 발송", "고객님께 발송");
 ?>
 <? for ($i=1; $i<=4; $i++) { ?>
-    <td width=25% align=center>
+    <td width=25%>
         <table>
-        <tr><td align=center><b><?=$sms_title[$i]?></b></td></tr>
-        <tr><td align=center><font color=#777777>(<?=$sms_daesang[$i]?>)</font></td></tr>
+        <tr><td><b><?=$sms_title[$i]?></b></td></tr>
+        <tr><td><font color=#777777>(<?=$sms_daesang[$i]?>)</font></td></tr>
         </table>
         <table width=165 height=191 cellpadding=0 cellspacing=0 background='./img/sms_back.gif'>
         <tr>
-            <td align=center><textarea cols='16' rows='6' id='de_sms_cont<?=$i?>' name='de_sms_cont<?=$i?>' wrap=virtual ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');" style='OVERFLOW: hidden; border:solid 0; width: 100px; background-color:#C4FFFF; FONT-SIZE: 9pt; font-family:굴림체;'><?=$default["de_sms_cont".$i]?></textarea></td>
+            <td><textarea cols='16' rows='6' id='de_sms_cont<?=$i?>' name='de_sms_cont<?=$i?>' wrap=virtual ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');" style='OVERFLOW: hidden; border:solid 0; width: 100px; background-color:#C4FFFF; FONT-SIZE: 9pt; font-family:굴림체;'><?=$default["de_sms_cont".$i]?></textarea></td>
         </tr>
         </table>
-        <table><tr><td><div id='byte<?=$i?>' align=center>0 / 80 바이트</div><br><input type="checkbox" name='de_sms_use<?=$i?>' value="1" <?=($default["de_sms_use".$i] ? "checked" : "")?>>사용</table>
+        <table><tr><td><div id='byte<?=$i?>'>0 / 80 바이트</div><br><input type="checkbox" name='de_sms_use<?=$i?>' value="1" <?=($default["de_sms_use".$i] ? "checked" : "")?>>사용</table>
     </td>
 
     <script>
@@ -808,7 +808,7 @@ $sms_daesang = array (1=>"고객님께 발송", "관리자께 발송", "고객�
     <th scope="row">충전 잔액</th>
     <td colspan="4">
         <?=number_format($userinfo[coin])?> 원.
-        <input type="button" class="btn1" value="충전하기" onclick="window.open('http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$sms4[cf_id]?>&icode_passwd=<?=$sms4[cf_pw]?>','icode_payment', 'scrollbars=1,resizable=1')">
+        <input type="button" value="충전하기" onclick="window.open('http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$sms4[cf_id]?>&icode_passwd=<?=$sms4[cf_pw]?>','icode_payment', 'scrollbars=1,resizable=1')">
     </td>
 </tr>
 <tr>

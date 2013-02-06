@@ -80,8 +80,8 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 <form id="flist" name="flist">
 <input type="hidden" id="page" name="page" value="<?=$page?>">
 <tr>
-    <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
-    <td width=60% align=center>
+    <td><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td>
         <select id="sfl" name="sfl">
             <option value='ca_name'>분류명
             <option value='ca_id'>분류코드
@@ -95,23 +95,23 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         <input type="hidden" id="ca_id" name="ca_id" value='<? echo $ca_id ?>'>
         <input type="hidden" id="move" name="move"  value='<? echo $move ?>'>
     </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+    <td>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
 </form>
 </table>
 
-<form id="fcategorylist" name="fcategorylist" method="post" action='./categorylistupdate.php' autocomplete='off' style="margin:0px;">
+<form id="fcategorylist" name="fcategorylist" method="post" action='./categorylistupdate.php' autocomplete='off'>
 <input type="hidden" id="page" name="page"  value='<? echo $page ?>'>
-<table cellpadding=0 cellspacing=0 width=100%>
-<tr><td colspan=11 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td width=80>분류코드</td>
-    <td width='' >분류명</td>
-    <td width=60>메뉴표시</td>
-    <td width=60>판매가능</td>
-    <td width=60>출력순서</td>
-    <td width=50>상품수</td>
-    <td width=120>
+<table>
+
+<tr>
+    <td>분류코드</td>
+    <td>분류명</td>
+    <td>메뉴표시</td>
+    <td>판매가능</td>
+    <td>출력순서</td>
+    <td>상품수</td>
+    <td>
         <?
         if ($is_admin == 'super')
             echo "<a href='./categoryform.php'><img src='$g4[admin_path]/img/icon_insert.gif' border=0 title='1단계분류 추가'></a>";
@@ -120,7 +120,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         ?>
     </td>
 </tr>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+
 
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -155,7 +155,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     echo "
     <tr class='list$list center ht' id='tr{$i}'>
         <td align=left><input type=\"hidden\" name=\"ca_id[]\" value=\"{$row['ca_id']}\">{$row['ca_id']}</td>
-        <td align=left>$s_level <input type=\"text\" name='ca_name[$i]' value='".get_text($row[ca_name])."' title='$row[ca_id]' required itemname='분류명' class=ed size=35 $style></td>
+        <td align=left>$s_level <input type=\"text\" name='ca_name[$i]' value='".get_text($row[ca_name])."' title='$row[ca_id]' required itemname='분류명' size=35 $style></td>
         <td><input type=\"checkbox\" name='ca_menu[$i]' ".($row[ca_menu] ? "checked" : "")." value='1'></td>
         <td><input type=\"checkbox\" name='ca_use[$i]' ".($row[ca_use] ? "checked" : "")." value='1'></td>
         <td><a href='javascript:;' onclick=\"category_move('$row[ca_id]', 'up')\" title='위로 이동'>△</a> <a href='javascript:;' onclick=\"category_move('$row[ca_id]', 'down')\" title='아래로 이동'>▽</a></td>
@@ -165,18 +165,18 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=20 height=100 bgcolor='#ffffff' align=center><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=20 height=100 bgcolor='#ffffff'><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 }
 ?>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+
 
 </table>
 
 
-<table width=100%>
+<table>
 <tr>
-    <td width=50%><input type="submit" class=btn1 value='일괄수정'></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td><input type="submit" value='일괄수정'></td>
+    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
 </tr>
 </form>
 </table>

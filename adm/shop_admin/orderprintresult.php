@@ -219,8 +219,8 @@ else
 <table width=650 cellpadding=2 cellspacing=0 border=0 bordercolordark="white" bordercolorlight="gray">
 <tr><td colspan=5><hr></td></tr>
 <tr>
-    <td rowspan=2 width=70 valign=top align=center>주문번호</td>
-    <td width=60>보낸분</td>
+    <td rowspan=2 width=70 valign=top>주문번호</td>
+    <td>보낸분</td>
     <td>주소</td>
     <td width=100>전화번호</td>
     <td width=100>핸드폰</td>
@@ -260,7 +260,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     echo "
         <tr>
-            <td rowspan=3 align=center valign=top>$row1[od_id]</td>
+            <td rowspan=3 valign=top>$row1[od_id]</td>
             <td>$row1[od_name]</td>
             <td>$row1[od_addr]</td>
             <td>$row1[od_tel]</td>
@@ -274,7 +274,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         </tr>
         <tr>    
             <td colspan=4>
-                <table width=100% cellpadding=2 cellspacing=0 border=1 bordercolordark='white' bordercolorlight='gray'>
+                <table cellpadding=2 cellspacing=0 border=1 bordercolordark='white' bordercolorlight='gray'>
     ";
 
     $sql2 = " select    a.*,                                 
@@ -335,9 +335,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         echo "
             <tr>
                 <td>$it_name</td>
-                <td width=80 align=right>".number_format($row2[ct_amount])."&nbsp;</td>
-                <td width=50 align=center>$fontqty1".number_format($row2[ct_qty])."$fontqty2</td>
-                <td width=80 align=right>".number_format($row2_tot_amount)."&nbsp;</td>
+                <td>".number_format($row2[ct_amount])."&nbsp;</td>
+                <td>$fontqty1".number_format($row2[ct_qty])."$fontqty2</td>
+                <td>".number_format($row2_tot_amount)."&nbsp;</td>
             </tr>
         ";
         $cnt++;
@@ -347,9 +347,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         echo "
         <tr>
-            <td colspan=2 align=right><b>합 계</b> &nbsp;</td>
-            <td align=center>".number_format($sub_tot_qty)."</td>
-            <td align=right>".number_format($sub_tot_amount)."&nbsp;</td>
+            <td colspan=2><b>합 계</b> &nbsp;</td>
+            <td>".number_format($sub_tot_qty)."</td>
+            <td>".number_format($sub_tot_amount)."&nbsp;</td>
         </tr>";
     }
 
@@ -371,13 +371,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td></td>
     <td colspan=4>
-        <table width=100% cellpadding=2 cellspacing=0 border=1 bordercolordark='white' bordercolorlight='gray'>
+        <table cellpadding=2 cellspacing=0 border=1 bordercolordark='white' bordercolorlight='gray'>
         <tr>
         <?
         echo "
-            <td colspan=2 align=right><b>전 체 합 계</b> &nbsp;</td>
-            <td align=center width=50>".number_format($tot_tot_qty)."</td>
-            <td align=right width=80>".number_format($tot_tot_amount)."&nbsp;</td>
+            <td colspan=2><b>전 체 합 계</b> &nbsp;</td>
+            <td>".number_format($tot_tot_qty)."</td>
+            <td>".number_format($tot_tot_amount)."&nbsp;</td>
         ";
         ?>
         </tr>
