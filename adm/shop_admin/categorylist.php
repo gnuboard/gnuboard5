@@ -83,9 +83,9 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
     <td><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
     <td>
         <select id="sfl" name="sfl">
-            <option value='ca_name'>분류명
-            <option value='ca_id'>분류코드
-            <option value='ca_mb_id'>회원아이디
+            <option value='ca_name' <?=get_selected($_GET['sfl'], "ca_name");?>>분류명</option>
+            <option value='ca_id' <?=get_selected($_GET['sfl'], "ca_id");?>>분류코드</option>
+            <option value='ca_mb_id' <?=get_selected($_GET['sfl'], "ca_mb_id");?>>회원아이디</option>
         </select>
         <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
 
