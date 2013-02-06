@@ -69,6 +69,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         </fieldset>
 
         <div id="logo"><a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="224" height="38"></a></div>
+        <?if (defined('_INDEX_')) {?><div id="idx_catch"><img src="<?=G4_URL?>/img/idx_catch.jpg" alt="Sharing All Possibilities" width="471" height="61"></div><?}?>
 
     </div>
 </header>

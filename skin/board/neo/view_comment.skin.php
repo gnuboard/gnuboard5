@@ -24,7 +24,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             //$str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(swf)\".*\<\/a\>\]/i", "<script>doc_write(flash_movie('$1://$2.$3'));</script>", $str);
             $str = preg_replace("/\[\<a\s*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(gif|png|jpg|jpeg|bmp)\"\s*[^\>]*\>[^\s]*\<\/a\>\]/i", "<img src='$1://$2.$3' id='target_resize_image[]' onclick='image_window(this);'>", $str);
     ?>
-    <article id="c_<?=$comment_id?>" <?if ($cmt_depth) {?>style="margin-left:<?=$cmt_depth?>px;border-top-color:#eee"<?}?>>
+    <article id="c_<?=$comment_id?>" <?if ($cmt_depth) {?>style="margin-left:<?=$cmt_depth?>px;border-top-color:#e0e0e0"<?}?>>
         <header>
             <h1><?=$list[$i]['wr_name']?>님의 댓글</h1>
             <?=$list[$i]['name']?>
