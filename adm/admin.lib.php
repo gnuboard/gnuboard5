@@ -260,11 +260,11 @@ while ($entry = $tmp->read()) {
 }
 @ksort($amenu);
 
-$qstr = '';
-if (isset($sst)) $qstr .= '&amp;sst='.$sst;
-if (isset($sod)) $qstr .= '&amp;sod='.$sod;
-if (isset($sfl)) $qstr .= '&amp;sfl='.$sfl;
-if (isset($stx)) $qstr .= '&amp;stx='.$stx;
-if (isset($page)) $qstr .= '&amp;page='.$page;
-//$qstr = 'sst=$sst&amp;sod=$sod&amp;sfl=$sfl&amp;stx=$stx&amp;page=$page';
+$arr_query = array();
+if (isset($sst))  $arr_query[] = 'sst='.$sst;
+if (isset($sod))  $arr_query[] = 'sod='.$sod;
+if (isset($sfl))  $arr_query[] = 'sfl='.$sfl;
+if (isset($stx))  $arr_query[] = 'stx='.$stx;
+if (isset($page)) $arr_query[] = 'page='.$page;
+$qstr = implode("&amp;", $arr_query);
 ?>
