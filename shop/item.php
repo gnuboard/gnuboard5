@@ -467,6 +467,27 @@ else
 <table width=100% cellpadding=0 cellspacing=0>
 <tr><td rowspan=2 width=31 valign=top bgcolor=#CACDE2><img src='<?=G4_SHOP_IMG_URL?>/item_t01.gif'></td><td height=2 bgcolor=#CACDE2></td></tr>
 <tr><td style='padding:15px'>
+    <?
+    $sql = " select * from {$g4['yc4_item_info_table']} where it_id = '$it_id' order by ii_id ";
+    $result = sql_query($sql, false);
+    if (@mysql_num_rows($result)) {
+    ?>
+    <!-- 상품정보고시 -->
+    <table class='item_info_open' width=100% cellpadding=0 cellspacing=0 style="border:1px solid #f6dbab;border-bottom:0">
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+    ?>
+    <tr valign="top">
+        <th scope="row" style="padding:8px 15px;width:30%;border-bottom:1px solid #f6dbab;background:#f8f4ee;font-size:12px;text-align:left"><?=$row['ii_title']?></th>
+        <td style="padding:8px 15px;border-bottom:1px solid #f6dbab"><?=$row['ii_value']?></th>
+    </tr>
+    <?}//for?>
+    </tbody>
+    </table>
+    <!-- 상품정보고시 end -->
+    <?}//if?>
+
     <table width=100% cellspacing=0 border=0>
     <? if ($it['it_basic']) { ?>
     <tr><td height=30><font color='#3179BD'><?=$it['it_basic']?></font></td></tr>
