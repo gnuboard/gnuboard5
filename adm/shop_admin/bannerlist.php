@@ -7,90 +7,82 @@ auth_check($auth[$sub_menu], "r");
 $g4[title] = "배너관리";
 include_once(G4_ADMIN_PATH."/admin.head.php");
 
-$sql_common = " from $g4[yc4_banner_table] ";
+$sql_common = " from $g4['yc4_banner_table'] ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
-<table>
-<tr>
-    <td><?=subtitle($g4[title])?></td>
-    <td>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
-
+<p>건수 : <? echo $total_count ?></p>
 
 <table>
-
+<thead>
 <tr>
-    <td>ID</td>
-    <td>이미지</td>
-    <td>위치</td>
-    <td>시작일시</td>
-    <td>종료일시</td>
-    <td>출력순서</td>
-    <td>조회</td>
-    <td><?=icon("입력", "./bannerform.php");?></td>
+    <th scope="col">ID</th>
+    <th scope="col">이미지</th>
+    <th scope="col">위치</th>
+    <th scope="col">시작일시</th>
+    <th scope="col">종료일시</th>
+    <th scope="col">출력순서</th>
+    <th scope="col">조회</th>
+    <th scope="col">관리</th>
 </tr>
+</thead>
 
 <?
-$sql = " select * from $g4[yc4_banner_table] 
-          order by bn_order, bn_id desc 
-          limit $from_record, $rows  ";
+$sql = " select * from $g4['yc4_banner_table'] 
+            order by bn_order, bn_id desc 
+            limit $from_record, $rows ";
 $result = sql_query($sql);
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     // 테두리 있는지
     $bn_border  = $row[bn_border];
     // 새창 띄우기인지
-    $bn_new_win = ($row[bn_new_win]) ? "target='_new'" : "";
+    $bn_new_win = ($row[bn_new_win]) ? "target=\"_blank\"" : "";
 
     $bn_img = "";
-    if ($row[bn_url] && $row[bn_url] != "http://")
-        $bn_img .= "<a href='$row[bn_url]' $bn_new_win>";
-    $bn_img .= "<img src='$g4[path]/data/banner/$row[bn_id]' border='$bn_border' alt='$row[bn_alt]'></a>";
+    if ($row['bn_url'] && $row['bn_url'] != "http://")
+        $bn_img .= "<a href=\"$row['bn_url']\" $bn_new_win>";
+    $bn_img .= "<img src=\"$g4['path']/data/banner/$row['bn_id']\" style=\"border-width:$bn_border\" alt=\"$row['bn_alt']\"></a>";
 
-    $bn_begin_time = substr($row[bn_begin_time], 2, 14);
-    $bn_end_time   = substr($row[bn_end_time], 2, 14);
+    $bn_begin_time = substr($row['bn_begin_time'], 2, 14);
+    $bn_end_time   = substr($row['bn_end_time'], 2, 14);
 
-    $s_mod = icon("수정", "./bannerform.php?w=u&bn_id=$row[bn_id]");
-    $s_del = icon("삭제", "javascript:del('./bannerformupdate.php?w=d&bn_id=$row[bn_id]');");
-
-    $list = $i%2;
-    echo "
-    <tr class='list$list center'>
-        <td>$row[bn_id]</td>
-        <td align=left style='padding-top:5px; padding-bottom:5px;'>$bn_img</td>
-        <td>$row[bn_position]</td>
-        <td>$bn_begin_time</td>
-        <td>$bn_end_time</td>
-        <td>$row[bn_order]</td>
-        <td>$row[bn_hit]</td>
-        <td>$s_mod  $s_del</td>
-    </tr><tr><td colspan=8 height=1 bgcolor=F5F5F5></td></tr>";
+    $s_mod = icon("수정", "./bannerform.php?w=u&amp;bn_id=$row['bn_id']");
+    $s_del = icon("삭제", "javascript:del('./bannerformupdate.php?w=d&amp;bn_id=$row['bn_id']');");
+?>
+    <tr>
+        <td><?=$row['bn_id']?></td>
+        <td><?=$bn_img?></td>
+        <td><?=$row['bn_position']?></td>
+        <td><?=$bn_begin_time?></td>
+        <td><?=$bn_end_time?></td>
+        <td><?=$row['bn_order']?></td>
+        <td><?=$row['bn_hit']?></td>
+        <td>
+            추가
+            <?=$s_mod?>
+            <?=$s_del?>
+        </td>
+    </tr>
+<?
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=8 height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo "<tr><td colspan=\"8\" class=\"empty_table\">자료가 한건도 없습니다.</td></tr>\n";
 }
 ?>
-
 </table>
 
-<table>
-<tr>
-    <td></td>
-    <td><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
-</tr>
-</table>
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "$_SERVER['PHP_SELF']?$qstr&amp;page=");?>
 
 <?
 include_once(G4_ADMIN_PATH."/admin.tail.php");
