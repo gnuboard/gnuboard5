@@ -13,7 +13,7 @@ p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link, a:visited {color:#000;text-decoration:none}
-a:hover, a:focus, a:active {color:#428ab4;text-decoration:underline}
+a:hover, a:focus, a:active {color:#0e99ea;text-decoration:underline}
 
 /* 화면낭독기 사용자용 */
 .sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;border:0 !important;overflow:hidden !important}
