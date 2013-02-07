@@ -5,6 +5,12 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 define("G4_SHOP_INDEX", TRUE);
 
+$sum = 0;
+for ($i=1; $i<=30; $i++) {
+    $sum += constant('G4_TYPE'.$i);
+}
+echo $sum;
+
 $g4['title'] = $default['de_admin_company_name'];
 include_once('./_head.php');
 ?>
