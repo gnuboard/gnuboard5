@@ -40,12 +40,12 @@ a:active {color:#0e99ea;text-decoration:underline}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
 #snb a {display:block;position:relative;padding:15px;text-decoration:none}
-#snb strong {position:absolute;top:33px;right:10px;padding:0 5px;background:#109ff1;color:#fff;font-size:0.9em;font-family:"verdana";line-height:1.5em;border-radius:5px}
+#snb strong {position:absolute;top:33px;right:10px;padding:0 5px;background:#109ff1;color:#fff;font-size:0.9em;font-family:"verdana";line-height:1.5em;border-radius:10px}
 
 #schall {position:absolute;top:25px;right:0;margin:0;padding:0;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
-#schall_stx {padding-left:5px;width:194px;height:27px;border:1px solid #ddd;border-right:0;border-top-left-radius:5px;border-bottom-left-radius:5px;background:#fff;line-height:2em !important;line-height:2em}
-#schall_submit {border:1px solid #ddd;border-left:0;border-top-right-radius:5px;border-bottom-right-radius:5px;}
+#schall_stx {padding-left:5px;width:186px;height:27px;border:1px solid #ddd;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
+#schall_submit {padding-right:8px;border:1px solid #ddd;border-left:0;border-top-right-radius:10px;border-bottom-right-radius:10px;background:#fff}
 
 #logo {padding:21px 10px}
 #logo strong {display:inline-block;margin-left:10px;color:#428ab4;font-family:"verdana";vertical-align:middle}
@@ -54,7 +54,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
-#lnb {float:right;width:228px;border:1px solid #ececec;border-radius:5px;background:#f7f7f2}
+#lnb {float:right;width:228px;border:1px solid #ececec;border-radius:10px;background:#f7f7f2}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
