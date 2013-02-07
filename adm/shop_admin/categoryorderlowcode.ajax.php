@@ -8,7 +8,7 @@ $len = strlen($ca_id) + 2;
 if ($len > 10)
     die('{"error":"마지막 레벨은 하위레벨이 없습니다."}');
 
-$sql = " select ca_id, ca_name  from {$g4['yc4_category_table']} where ca_id like '$ca_id%' and length(ca_id) = $len ";
+$sql = " select ca_id, ca_name  from {$g4['shop_category_table']} where ca_id like '$ca_id%' and length(ca_id) = $len ";
 $result = sql_query($sql);
 while ($row = sql_fetch_array($result)) {
     $id   = $row['ca_id'];

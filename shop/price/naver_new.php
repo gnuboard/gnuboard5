@@ -56,7 +56,7 @@ else {
 
 // 하루전의 상품
 $time = date("Y-m-d 00:00:00", $g4[server_time] - 86400);
-$sql =" select * from $g4[yc4_item_table] where it_use = '1' and it_time >= '$time' order by ca_id";
+$sql =" select * from $g4[shop_item_table] where it_use = '1' and it_time >= '$time' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -65,24 +65,24 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $caid1 = $caid2 = $caid3 = $caid4 = "";
 
     $caid1 = substr($row[ca_id],0,2);
-    $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '$caid1' ");
+    $row2 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '$caid1' ");
     $cate1 = $row2[ca_name];
 
     if (strlen($row[ca_id]) >= 8) {
         $caid4 = substr($row[ca_id],0,8);
-        $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '$caid4' ");
+        $row2 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '$caid4' ");
         $cate4 = $row2[ca_name];
     }
 
     if (strlen($row[ca_id]) >= 6) {
         $caid3 = substr($row[ca_id],0,6);
-        $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '$caid3' ");
+        $row2 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '$caid3' ");
         $cate3 = $row2[ca_name];
     }
 
     if (strlen($row[ca_id]) >= 4) {
         $caid2 = substr($row[ca_id],0,4);
-        $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '$caid2' ");
+        $row2 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '$caid2' ");
         $cate2 = $row2[ca_name];
     }
 

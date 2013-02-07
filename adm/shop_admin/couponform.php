@@ -9,7 +9,7 @@ $html_title = "쿠폰";
 if($w == 'u') {
     $html_title .= "수정";
 
-    $sql = " select * from {$g4['yc4_coupon_table']} where cp_no = '$cp_no' ";
+    $sql = " select * from {$g4['shop_coupon_table']} where cp_no = '$cp_no' ";
     $write = sql_fetch($sql);
 
     if(!$write['cp_id']) {

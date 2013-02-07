@@ -4,7 +4,7 @@ include_once("./_common.php");
 $g4[title] = "현금영수증 발행";
 include_once("$g4[path]/head.sub.php");
 
-$od = sql_fetch(" select * from $g4[yc4_order_table] where od_id = '$od_id' and on_uid = '$on_uid' ");
+$od = sql_fetch(" select * from $g4[shop_order_table] where od_id = '$od_id' and on_uid = '$on_uid' ");
 if (!$od) 
     die("주문서가 존재하지 않습니다.");
 

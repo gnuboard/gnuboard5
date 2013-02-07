@@ -48,7 +48,7 @@ include_once("./_common.php");
 // 페이지당 행수
 $page_rows = 1000;
 
-$sql = " select count(*) as cnt from $g4[yc4_item_table] where it_use = '1' and ca_id LIKE '$ca_id%'";
+$sql = " select count(*) as cnt from $g4[shop_item_table] where it_use = '1' and ca_id LIKE '$ca_id%'";
 $row = sql_fetch($sql);
 $total_count = $row[cnt];
 ?>
@@ -89,7 +89,7 @@ if ($page == "") $page = 1;
 $from_record = ($page - 1) * $page_rows;
 
 $caid = addslashes($ca_id);
-$sql = " select * from $g4[yc4_item_table]
+$sql = " select * from $g4[shop_item_table]
           where it_use = '1' 
           and ca_id LIKE '$caid%'
           order by ca_id    

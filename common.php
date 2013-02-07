@@ -102,6 +102,7 @@ if (file_exists($dbconfig_file)) {
 
     $connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
     $select_db  = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
+    @mysql_query(" set names utf8 ");
 } else {
     echo "<meta http-equiv='content-type' content='text/html; charset=utf-8'>";
     echo "<h3>$dbconfig_file 파일을 찾을 수 없습니다.<br>프로그램 설치 후 실행하시기 바랍니다.</h3>";
@@ -178,7 +179,14 @@ if (G4_IS_MOBILE) {
 
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
 if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
-    goto_url($g4['bbs_path'].'/logout.php');
+    goto_url(G4_BBS_URL.'/logout.php');
+
+
+// 프로그램 전반에 걸쳐 사용하는 유일한 키
+if (!get_session('ss_uniqid')) {
+    set_session('ss_uniqid', get_uniqid());
+}
+
 
 // QUERY_STRING
 $qstr = '';

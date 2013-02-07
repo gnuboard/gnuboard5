@@ -7,7 +7,7 @@ include_once("{$g4['path']}/head.sub.php");
 for ($i=1; $i<=5; $i++) {
     echo '<select id="category-'.$i.'" class="category" size="20" style="width:180px;">';
     if ($i == 1) {
-        $sql = " select ca_id, ca_name from $g4[yc4_category_table] where length(ca_id) = 2 order by ca_order, ca_id ";
+        $sql = " select ca_id, ca_name from $g4[shop_category_table] where length(ca_id) = 2 order by ca_order, ca_id ";
         $result = sql_query($sql);
         while ($row=sql_fetch_array($result)) {
             echo '<option value="'.$row['ca_id'].'" title="'.$row['ca_id'].'">'.$row['ca_name'].'</option>'.PHP_EOL;

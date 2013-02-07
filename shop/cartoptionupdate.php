@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 // 상품정보
-$sql = " select it_id, it_name from {$g4['yc4_item_table']} where it_id = '$it_id' ";
+$sql = " select it_id, it_name from {$g4['shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 
 if(!$it['it_id']) {
@@ -46,11 +46,11 @@ for($i=0; $i<$count; $i++) {
         $is_delete = $_POST['is_delete'][$i];
 
         if($is_delete) { // 옵션삭제
-            $sql = " delete from {$g4['yc4_cart_table']} where uq_id = '$s_uq_id' and ct_id = '$ct_id' ";
+            $sql = " delete from {$g4['shop_cart_table']} where uq_id = '$s_uq_id' and ct_id = '$ct_id' ";
             sql_query($sql);
         } else { // 옵션수정
             $ct_qty = $_POST['ct_qty'][$i];
-            $sql = " update {$g4['yc4_cart_table']} set ct_qty = '$ct_qty' where uq_id = '$s_uq_id' and ct_id = '$ct_id' ";
+            $sql = " update {$g4['shop_cart_table']} set ct_qty = '$ct_qty' where uq_id = '$s_uq_id' and ct_id = '$ct_id' ";
             sql_query($sql);
         }
     } else { // 옵션추가
@@ -69,7 +69,7 @@ for($i=0; $i<$count; $i++) {
             $amount = 0;
         }
 
-        $sql = " insert into {$g4['yc4_cart_table']}
+        $sql = " insert into {$g4['shop_cart_table']}
                     set uq_id               = '$s_uq_id',
                         ct_parent           = '$ct_parent',
                         mb_id               = '{$member['mb_id']}',
@@ -96,11 +96,11 @@ for($i=0; $i<$count; $i++) {
         if($ct_parent_check) {
             $temp_ct_id = mysql_insert_id();
 
-            $sql1 = " select count(*) as cnt from {$g4['yc4_cart_table']} where uq_id = '$s_uq_id' and it_id = '$it_id' and ct_direct = '$sw_direct' ";
+            $sql1 = " select count(*) as cnt from {$g4['shop_cart_table']} where uq_id = '$s_uq_id' and it_id = '$it_id' and ct_direct = '$sw_direct' ";
             $row1 = sql_fetch($sql1);
 
             if($row1['cnt'] == 1) {
-                sql_query(" update {$g4['yc4_cart_table']} set ct_parent = '0' where ct_id = '$temp_ct_id' ");
+                sql_query(" update {$g4['shop_cart_table']} set ct_parent = '0' where ct_id = '$temp_ct_id' ");
                 $ct_parent = $temp_ct_id;
             }
 

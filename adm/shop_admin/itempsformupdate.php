@@ -9,7 +9,7 @@ if ($w == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
-$iv = sql_fetch(" select * from $g4[yc4_item_ps_table] where is_id = '$is_id' ");
+$iv = sql_fetch(" select * from $g4[shop_item_ps_table] where is_id = '$is_id' ");
 if (!$iv[is_id])
     alert("등록된 자료가 없습니다.");
 
@@ -17,7 +17,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 
 if ($w == "u") 
 {
-    $sql = "update $g4[yc4_item_ps_table]
+    $sql = "update $g4[shop_item_ps_table]
                set is_subject = '$is_subject',
                    is_content = '$is_content',
                    is_confirm = '$is_confirm'
@@ -28,7 +28,7 @@ if ($w == "u")
 } 
 else if ($w == "d") 
 {
-    $sql = "delete from $g4[yc4_item_ps_table] where is_id = '$is_id' ";
+    $sql = "delete from $g4[shop_item_ps_table] where is_id = '$is_id' ";
     sql_query($sql);
 
     goto_url("./itempslist.php?$qstr");

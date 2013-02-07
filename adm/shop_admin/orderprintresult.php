@@ -40,7 +40,7 @@ if ($csv == 'csv')
 
 
     $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice
-               FROM $g4[yc4_order_table] a, $g4[yc4_cart_table] b, $g4[yc4_item_table] c
+               FROM $g4[shop_order_table] a, $g4[shop_cart_table] b, $g4[shop_item_table] c
               where a.on_uid = b.on_uid
                 and b.it_id = c.it_id ";
     if ($case == 1) // 출력기간
@@ -96,7 +96,7 @@ if ($csv == 'xls')
 
 
     $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.it_opt1, b.it_opt2, b.it_opt3, b.it_opt4, b.it_opt5, b.it_opt6
-               FROM $g4[yc4_order_table] a, $g4[yc4_cart_table] b, $g4[yc4_item_table] c
+               FROM $g4[shop_order_table] a, $g4[shop_cart_table] b, $g4[shop_item_table] c
               where a.on_uid = b.on_uid
                 and b.it_id = c.it_id ";
     if ($case == 1) // 출력기간
@@ -169,7 +169,7 @@ function get_order($on_uid)
 {
 	global $g4;
 
-	$sql = " select * from $g4[yc4_order_table] where on_uid = '$on_uid' ";
+	$sql = " select * from $g4[shop_order_table] where on_uid = '$on_uid' ";
     return sql_fetch($sql);
 }
 
@@ -180,13 +180,13 @@ if ($case == 1)
 {
     $fr_date = date_conv($fr_date);
     $to_date = date_conv($to_date);
-    $sql = " SELECT DISTINCT a.on_uid FROM $g4[yc4_order_table] a, $g4[yc4_cart_table] b
+    $sql = " SELECT DISTINCT a.on_uid FROM $g4[shop_order_table] a, $g4[shop_cart_table] b
               where a.on_uid = b.on_uid
                 and a.od_time between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
 }
 else
 {
-    $sql = " SELECT DISTINCT a.on_uid FROM $g4[yc4_order_table] a, $g4[yc4_cart_table] b
+    $sql = " SELECT DISTINCT a.on_uid FROM $g4[shop_order_table] a, $g4[shop_cart_table] b
               where a.on_uid = b.on_uid
                 and a.od_id between '$fr_od_id' and '$to_od_id' ";
 }
@@ -237,7 +237,7 @@ $mod = 10;
 $tot_total_amount = 0;
 for ($i=0; $row=sql_fetch_array($result); $i++) 
 {
-    $sql1 = " select * from $g4[yc4_order_table] where on_uid = '$row[on_uid]' ";
+    $sql1 = " select * from $g4[shop_order_table] where on_uid = '$row[on_uid]' ";
     $row1 = sql_fetch($sql1);
 
     // 1.03.02
@@ -285,7 +285,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
                         b.it_opt5_subject,
                         b.it_opt6_subject,
                         b.it_name
-                from $g4[yc4_cart_table] a, $g4[yc4_item_table] b
+                from $g4[shop_cart_table] a, $g4[shop_item_table] b
                where a.it_id = b.it_id
                  and a.on_uid = '$row[on_uid]' ";
     if ($ct_status)

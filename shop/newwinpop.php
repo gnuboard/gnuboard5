@@ -1,7 +1,7 @@
 <?
 include_once("./_common.php");
 
-$sql = " select * from $g4[yc4_new_win_table] where nw_id = '$nw_id' ";
+$sql = " select * from $g4[shop_new_win_table] where nw_id = '$nw_id' ";
 $nw = sql_fetch($sql);
 
 $g4[title] = $nw[nw_subject];

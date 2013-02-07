@@ -5,7 +5,7 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "w");
 
 $sql = " select * 
-           from $g4[yc4_item_qa_table] a
+           from $g4[shop_item_qa_table] a
            left join $g4[member_table] b on (a.mb_id = b.mb_id) 
           where iq_id = '$iq_id' ";
 $iq = sql_fetch($sql);

@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 // 상품정보
 $sql = " select it_id, it_option_use, it_opt1_subject, it_opt2_subject, it_opt3_subject, it_opt1, it_opt2, it_opt3, it_supplement_use
-            from {$g4['yc4_item_table']}
+            from {$g4['shop_item_table']}
             where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 
@@ -17,7 +17,7 @@ if($sw_direct != 1)
 $s_uq_id = get_session('ss_uniqid');
 
 $sql = " select ct_id, ct_send_cost_pay
-            from {$g4['yc4_cart_table']}
+            from {$g4['shop_cart_table']}
             where uq_id = '$s_uq_id' and it_id = '$it_id' and ct_direct = '$sw_direct' and ct_status = '쇼핑'
             order by ct_id asc
             limit 0, 1 ";
@@ -29,7 +29,7 @@ $ct_parent = $temp['ct_id'];
 $sql_where = " where uq_id = '$s_uq_id' and it_id = '$it_id' and ct_direct = '$sw_direct' ";
 
 $sql = " select ct_id, ct_parent, is_option, it_id, it_name, opt_id, ct_option, it_amount, ct_amount, ct_qty
-            from {$g4['yc4_cart_table']}
+            from {$g4['shop_cart_table']}
             $sql_where
             order by ct_id asc ";
 $result = sql_query($sql);

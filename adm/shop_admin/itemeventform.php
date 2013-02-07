@@ -12,7 +12,7 @@ if ($w == "u")
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from $g4[yc4_event_table] where ev_id = '$ev_id' ";
+    $sql = " select * from $g4[shop_event_table] where ev_id = '$ev_id' ";
     $ev = sql_fetch($sql);
     if (!$ev[ev_id])
         alert("등록된 자료가 없습니다.");

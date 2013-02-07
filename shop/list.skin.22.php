@@ -50,7 +50,7 @@ if (count($arr) > 0)
 
         if ($save_ca_id != $row[ca_id]) 
         {
-            $sql = " select ca_name from $g4[yc4_category_table] where ca_id = '$row[ca_id]' ";
+            $sql = " select ca_name from $g4[shop_category_table] where ca_id = '$row[ca_id]' ";
             $tmp_ca = sql_fetch($sql);
 
             echo "

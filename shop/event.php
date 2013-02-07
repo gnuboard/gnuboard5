@@ -1,7 +1,7 @@
 <?
 include_once("./_common.php");
 
-$sql = " select * from $g4[yc4_event_table] 
+$sql = " select * from $g4[shop_event_table] 
           where ev_id = '$ev_id' 
             and ev_use = 1 ";
 $ev = sql_fetch($sql);
@@ -62,8 +62,8 @@ $sql_list1 = " select a.ca_id,
 $sql_list1 = " select * ";
 $sql_list2 = " order by $order_by a.it_order, a.it_id desc ";
 
-$sql_common = " from $g4[yc4_item_table] a
-                left join $g4[yc4_event_item_table] b on (a.it_id=b.it_id)
+$sql_common = " from $g4[shop_item_table] a
+                left join $g4[shop_event_item_table] b on (a.it_id=b.it_id)
                where b.ev_id = '$ev_id'
                  and a.it_use = '1' ";
 

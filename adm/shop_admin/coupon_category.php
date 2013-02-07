@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 $stx = trim($stx);
 if($stx) {
-    $sql_common = " from {$g4['yc4_category_table']} ";
+    $sql_common = " from {$g4['shop_category_table']} ";
     $sql_search = " where ca_use = '1' and ca_nocoupon = '0' and ca_name like '%$stx%' ";
     $sql_order = " order by ca_id asc ";
 

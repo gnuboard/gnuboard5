@@ -6,7 +6,7 @@ $ca_number = (int)$_POST['ca_number'];
 $start = 2 * $ca_number - 1;
 $end = 2 * $ca_number;
 
-$sql = " SELECT MAX(SUBSTRING(ca_id,$start,$end)) AS ca_id FROM {$g4['yc4_category_table']} ";
+$sql = " SELECT MAX(SUBSTRING(ca_id,$start,$end)) AS ca_id FROM {$g4['shop_category_table']} ";
 $row = sql_fetch($sql);
 if ($row['ca_id']) {
     $ca_id = base_convert($row['ca_id'], 36, 10);
@@ -16,7 +16,7 @@ if ($row['ca_id']) {
     $ca_id = "10";
 }
 
-$sql = " INSERT INTO {$g4['yc4_category_table']} SET ca_id = '$ca_id', ca_name = '$ca_name' ";
+$sql = " INSERT INTO {$g4['shop_category_table']} SET ca_id = '$ca_id', ca_name = '$ca_name' ";
 sql_query($sql);
 
 die("{\"ca_id\":\"$ca_id\", \"ca_name\":\"$ca_name\"}");

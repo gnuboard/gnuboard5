@@ -1191,7 +1191,6 @@ function sql_select_db($db, $connect)
 {
     global $g4;
 
-    @mysql_query(" set names utf8 ");
     return @mysql_select_db($db, $connect);
 }
 
@@ -1674,5 +1673,56 @@ function skin_path()
 function is_mobile()
 {
     return preg_match('/'.G4_MOBILE_AGENT.'/i', $_SERVER['HTTP_USER_AGENT']);
+}
+
+
+/*******************************************************************************
+    유일한 키를 얻는다.
+
+    결과 :
+
+        년월일시분초00 ~ 년월일시분초99
+        년(4) 월(2) 일(2) 시(2) 분(2) 초(2) 100분의1초(2)
+        총 16자리이며 년도는 2자리로 끊어서 사용해도 됩니다.
+        예) 2008062611570199 또는 08062611570199 (2100년까지만 유일키)
+
+    사용하는 곳 :
+    1. 게시판 글쓰기시 미리 유일키를 얻어 파일 업로드 필드에 넣는다.
+    2. 주문번호 생성시에 사용한다.
+    3. 기타 유일키가 필요한 곳에서 사용한다.
+*******************************************************************************/
+// 기존의 get_unique_id() 함수를 사용하지 않고 get_uniqid() 를 사용한다.
+function get_uniqid()
+{
+    global $g4;
+
+    sql_query(" LOCK TABLE {$g4['uniqid_table']} WRITE ");
+    while (1) {
+        // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
+        $key = date('ymdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
+
+        $result = sql_query(" insert into {$g4['uniqid_table']} values ('$key') ", false);
+        if ($result) break; // 쿼리가 정상이면 빠진다.
+
+        // insert 하지 못했으면 일정시간 쉰다음 다시 유일키를 만든다.
+        usleep(10000); // 100분의 1초를 쉰다
+    }
+    sql_query(" UNLOCK TABLES ");
+
+    return $key;
+}
+
+
+// CHARSET 변경 : euc-kr -> utf-8
+function iconv_utf8($str)
+{
+    return iconv('euc-kr', 'utf-8', $str);
+}
+
+
+// CHARSET 변경 : utf-8 -> euc-kr
+function iconv_euckr($str)
+{
+    return iconv('utf-8', 'euc-kr', $str);
 }
 ?>

@@ -10,24 +10,24 @@ if ($ca_id && ($move == 'up' || $move == 'down')) {
     $level = $length / 2;
 
     // 클릭한 분류의 분류아이디와 출력순서
-    $sql = " select ca_id, ca_sort from $g4[yc4_category_table] where ca_id = '$ca_id' ";
+    $sql = " select ca_id, ca_sort from $g4[shop_category_table] where ca_id = '$ca_id' ";
     $org = sql_fetch($sql);
 
     // 옮겨갈 분류의 분류아이디와 출력순서
     if ($move == 'up') {
-        $sql = " select ca_id, ca_sort from $g4[yc4_category_table] where ca_id like '$parent_ca_id%' and length(ca_id) = $length and ca_sort < '$org[ca_sort]' order by ca_sort desc limit 1 ";
+        $sql = " select ca_id, ca_sort from $g4[shop_category_table] where ca_id like '$parent_ca_id%' and length(ca_id) = $length and ca_sort < '$org[ca_sort]' order by ca_sort desc limit 1 ";
         $dst = sql_fetch($sql);
     } else {
-        $sql = " select ca_id, ca_sort from $g4[yc4_category_table] where ca_id like '$parent_ca_id%' and length(ca_id) = $length and ca_sort > '$org[ca_sort]' order by ca_sort asc limit 1 ";
+        $sql = " select ca_id, ca_sort from $g4[shop_category_table] where ca_id like '$parent_ca_id%' and length(ca_id) = $length and ca_sort > '$org[ca_sort]' order by ca_sort asc limit 1 ";
         $dst = sql_fetch($sql);
     }
 
     // 옮겨갈 분류가 있다면
     if ($dst) {
-        $sql = " update $g4[yc4_category_table] set ca_sort = concat('$org[ca_sort]', mid(ca_sort,$level*4+1, 20)) where ca_id like '$dst[ca_id]%' ";
+        $sql = " update $g4[shop_category_table] set ca_sort = concat('$org[ca_sort]', mid(ca_sort,$level*4+1, 20)) where ca_id like '$dst[ca_id]%' ";
         sql_query($sql);
 
-        $sql = " update $g4[yc4_category_table] set ca_sort = concat('$dst[ca_sort]', mid(ca_sort,$level*4+1, 20)) where ca_id like '$org[ca_id]%' ";
+        $sql = " update $g4[shop_category_table] set ca_sort = concat('$dst[ca_sort]', mid(ca_sort,$level*4+1, 20)) where ca_id like '$org[ca_id]%' ";
         sql_query($sql);
     }
 }
@@ -47,7 +47,7 @@ if ($stx != "") {
         $page = 1;
 }
 
-$sql_common = " from $g4[yc4_category_table] ";
+$sql_common = " from $g4[shop_category_table] ";
 if ($is_admin != 'super')
     $sql_common .= " $where ca_mb_id = '$member[mb_id]' ";
 $sql_common .= $sql_search;
@@ -148,7 +148,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 
     // 해당 분류에 속한 상품의 갯수
-    $sql1 = " select COUNT(*) as cnt from $g4[yc4_item_table] where ca_id = '$row[ca_id]' or ca_id2 = '$row[ca_id]' or ca_id3 = '$row[ca_id]' ";
+    $sql1 = " select COUNT(*) as cnt from $g4[shop_item_table] where ca_id = '$row[ca_id]' or ca_id2 = '$row[ca_id]' or ca_id3 = '$row[ca_id]' ";
     $row1 = sql_fetch($sql1);
 
     $list = $i%2;

@@ -33,7 +33,7 @@ include_once(G4_ADMIN_PATH."/admin.head.php");
         <select id="dl_id" name="dl_id">
         <option value=''>배송회사를 선택하세요.
         <?
-        $sql = "select * from $g4[yc4_delivery_table] order by dl_order desc, dl_id desc ";
+        $sql = "select * from $g4[shop_delivery_table] order by dl_order desc, dl_id desc ";
         $result = sql_query($sql);
         for ($i=0; $row=sql_fetch_array($result); $i++)
             echo "<option value='$row[dl_id]'>$row[dl_company]\n";

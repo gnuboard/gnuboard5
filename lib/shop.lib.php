@@ -1,54 +1,6 @@
 <?
 if (!defined('_GNUBOARD_')) exit;
 
-/*******************************************************************************
-    유일한 키를 얻는다.
-
-    결과 :
-
-        년월일시분초00 ~ 년월일시분초99
-        년(4) 월(2) 일(2) 시(2) 분(2) 초(2) 100분의1초(2)
-        총 16자리이며 년도는 2자리로 끊어서 사용해도 됩니다.
-        예) 2008062611570199 또는 08062611570199 (2100년까지만 유일키)
-
-    사용하는 곳 :
-    1. 게시판 글쓰기시 미리 유일키를 얻어 파일 업로드 필드에 넣는다.
-    2. 주문번호 생성시에 사용한다.
-    3. 기타 유일키가 필요한 곳에서 사용한다.
-*******************************************************************************/
-// 기존의 get_unique_id() 함수를 사용하지 않고 get_uniqid() 를 사용한다.
-function get_uniqid()
-{
-    global $g4;
-
-    sql_query(" LOCK TABLE {$g4['yc4_uniqid_table']} WRITE ");
-    while (1) {
-        // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
-        $key = date('ymdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
-
-        $result = sql_query(" insert into {$g4['yc4_uniqid_table']} values ('$key') ", false);
-        if ($result) break; // 쿼리가 정상이면 빠진다.
-
-        // insert 하지 못했으면 일정시간 쉰다음 다시 유일키를 만든다.
-        usleep(10000); // 100분의 1초를 쉰다
-    }
-    sql_query(" UNLOCK TABLES ");
-
-    return $key;
-}
-
-// CHARSET 변경 : euc-kr -> utf-8
-function iconv_utf8($str)
-{
-    return iconv('euc-kr', 'utf-8', $str);
-}
-
-// CHARSET 변경 : utf-8 -> euc-kr
-function iconv_euckr($str)
-{
-    return iconv('utf-8', 'euc-kr', $str);
-}
-
 // 상위 분류코드 반환
 function parent_ca_id($ca_id)
 {
@@ -61,7 +13,7 @@ function parent_ca_order($ca_id)
     global $g4;
     $upper_ca_id = parent_ca_id($ca_id);
     if ($upper_ca_id) {
-        $row = sql_fetch(" select ca_order from {$g4['yc4_category_table']} where ca_id = '$upper_ca_id' ");
+        $row = sql_fetch(" select ca_order from {$g4['shop_category_table']} where ca_id = '$upper_ca_id' ");
         $ca_order = $row['ca_order'];
     } else {
         $ca_order = "";
@@ -105,7 +57,7 @@ function get_cart_count($uq_id, $sw=0, $mb_id='')
     else
         $sql_where = " uq_id = '$uq_id' ";
 
-    $sql = " select count(distinct it_id) as cnt from {$g4['yc4_cart_table']} where $sql_where  and ct_direct = '$sw' and ct_status = '쇼핑' ";
+    $sql = " select count(distinct it_id) as cnt from {$g4['shop_cart_table']} where $sql_where  and ct_direct = '$sw' and ct_status = '쇼핑' ";
     $row = sql_fetch($sql);
     $cnt = (int)$row['cnt'];
     return $cnt;
@@ -151,7 +103,7 @@ function get_it_image($it_id, $width, $height, $id="", $thumbnail=true)
         return "";
 
     $sql = " select it_id, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
-                from {$g4['yc4_item_table']}
+                from {$g4['shop_item_table']}
                 where it_id = '$it_id' ";
     $row = sql_fetch($sql);
 
@@ -190,13 +142,13 @@ function get_it_stock_qty($it_id)
 {
     global $g4;
 
-    $sql = " select it_stock_qty from $g4[yc4_item_table] where it_id = '$it_id' ";
+    $sql = " select it_stock_qty from $g4[shop_item_table] where it_id = '$it_id' ";
     $row = sql_fetch($sql);
     $jaego = (int)$row['it_stock_qty'];
 
     // 재고에서 빼지 않았고 주문인것만
     $sql = " select SUM(ct_qty) as sum_qty
-               from {$g4['yc4_cart_table']}
+               from {$g4['shop_cart_table']}
               where it_id = '$it_id'
                 and is_option = '0'
                 and ct_stock_use = 0
@@ -214,18 +166,18 @@ function get_option_stock_qty($it_id, $opt_id, $is_option)
     global $g4;
 
     if($is_option == 1) {
-        $sql = " select opt_qty from {$g4['yc4_option_table']} where it_id = '$it_id' and opt_id = '$opt_id' and opt_use = '1' ";
+        $sql = " select opt_qty from {$g4['shop_option_table']} where it_id = '$it_id' and opt_id = '$opt_id' and opt_use = '1' ";
         $row = sql_fetch($sql);
         $jaego = (int)$row['opt_qty'];
     } else {
-        $sql = " select sp_qty from {$g4['yc4_supplement_table']} where it_id = '$it_id' and sp_id = '$opt_id' and sp_use = '1' ";
+        $sql = " select sp_qty from {$g4['shop_supplement_table']} where it_id = '$it_id' and sp_id = '$opt_id' and sp_use = '1' ";
         $row = sql_fetch($sql);
         $jaego = (int)$row['sp_qty'];
     }
 
     // 재고에서 빼지 않았고 주문인것만
     $sql = " select SUM(ct_qty) as sum_qty
-                from {$g4['yc4_cart_table']}
+                from {$g4['shop_cart_table']}
                 where it_id = '$it_id'
                   and opt_id = '$opt_id'
                   and ct_stock_use = '0'
@@ -389,7 +341,7 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
     // 1.02.00
     // it_order 추가
     $sql = " select *
-               from $g4[yc4_item_table]
+               from $g4[shop_item_table]
               where it_use = '1'
                 and it_type{$type} = '1' ";
     if ($ca_id) $sql .= " and ca_id like '$ca_id%' ";
@@ -418,7 +370,7 @@ function display_category($no, $list_mod, $list_row, $img_width, $img_height, $c
     // 상품의 갯수
     $items = $list_mod * $list_row;
 
-    $sql = " select * from $g4[yc4_item_table] where it_use = '1'";
+    $sql = " select * from $g4[shop_item_table] where it_use = '1'";
     if ($ca_id)
         $sql .= " and ca_id LIKE '{$ca_id}%' ";
     $sql .= " order by it_order, it_id desc limit $items ";
@@ -454,7 +406,7 @@ function get_star_image($it_id)
 {
     global $g4;
 
-    $sql = "select (SUM(is_score) / COUNT(*)) as score from $g4[yc4_item_ps_table] where it_id = '$it_id' ";
+    $sql = "select (SUM(is_score) / COUNT(*)) as score from $g4[shop_item_ps_table] where it_id = '$it_id' ";
     $row = sql_fetch($sql);
 
     return (int)get_star($row[score]);
@@ -614,7 +566,7 @@ function get_supplement_subject($it_id)
     global $g4;
 
     // 추가옵션정보
-    $sql = " select sp_id from {$g4['yc4_supplement_table']} where it_id = '$it_id' and sp_use = '1' order by sp_no asc ";
+    $sql = " select sp_id from {$g4['shop_supplement_table']} where it_id = '$it_id' and sp_use = '1' order by sp_no asc ";
     $result = sql_query($sql);
 
     $count = mysql_num_rows($result);
@@ -641,7 +593,7 @@ function get_supplement_option($it_id, $sp_id, $index)
     global $g4;
 
     // 추가옵션정보
-    $sql = " select sp_id, sp_amount, sp_qty from {$g4['yc4_supplement_table']} where it_id = '$it_id' and sp_use = '1' and sp_id like '$sp_id%' order by sp_no asc ";
+    $sql = " select sp_id, sp_amount, sp_qty from {$g4['shop_supplement_table']} where it_id = '$it_id' and sp_use = '1' and sp_id like '$sp_id%' order by sp_no asc ";
     $result = sql_query($sql);
 
     $count = mysql_num_rows($result);
@@ -678,7 +630,7 @@ function print_cart_options($uq_id, $it_id, $sw='')
     $br = '';
 
     $sql = " select ct_option, ct_qty, it_amount, ct_amount
-                from {$g4['yc4_cart_table']}
+                from {$g4['shop_cart_table']}
                 where uq_id = '$uq_id'
                   and it_id = '$it_id' ";
 
@@ -723,7 +675,7 @@ function print_item_options()
                     it_opt4_subject,
                     it_opt5_subject,
                     it_opt6_subject
-               from $g4[yc4_item_table]
+               from $g4[shop_item_table]
               where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
@@ -815,8 +767,8 @@ function display_event($no, $event, $list_mod, $list_row, $img_width, $img_heigh
     // 1.02.00
     // b.it_order 추가
     $sql = " select b.*
-               from $g4[yc4_event_item_table] a,
-                    $g4[yc4_item_table] b
+               from $g4[shop_event_item_table] a,
+                    $g4[shop_item_table] b
               where a.it_id = b.it_id
                 and b.it_use = '1'
                 and a.ev_id = '$event' ";
@@ -852,7 +804,7 @@ function get_goods($on_uid)
     global $g4;
 
     // 상품명만들기
-    $row = sql_fetch(" select a.it_id, b.it_name from $g4[yc4_cart_table] a, $g4[yc4_item_table] b where a.it_id = b.it_id and a.on_uid = '$on_uid' order by ct_id limit 1 ");
+    $row = sql_fetch(" select a.it_id, b.it_name from $g4[shop_cart_table] a, $g4[shop_item_table] b where a.it_id = b.it_id and a.on_uid = '$on_uid' order by ct_id limit 1 ");
     // 상품명에 "(쌍따옴표)가 들어가면 오류 발생함
     $goods[it_id] = $row[it_id];
     $goods[full_name]= $goods[name] = addslashes($row[it_name]);
@@ -860,7 +812,7 @@ function get_goods($on_uid)
     $goods[full_name] = preg_replace ("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i", "",  $goods[full_name]);
 
     // 상품건수
-    $row = sql_fetch(" select count(*) as cnt from $g4[yc4_cart_table] where on_uid = '$on_uid' ");
+    $row = sql_fetch(" select count(*) as cnt from $g4[shop_cart_table] where on_uid = '$on_uid' ");
     $cnt = $row[cnt] - 1;
     if ($cnt)
         $goods[full_name] .= " 외 {$cnt}건";

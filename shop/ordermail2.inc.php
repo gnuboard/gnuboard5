@@ -44,7 +44,7 @@ $sql = " select b.it_sell_email,
                 a.it_opt5,
                 a.it_opt6,
                 a.ct_qty
-           from $g4[yc4_cart_table] a, $g4[yc4_item_table] b
+           from $g4[shop_cart_table] a, $g4[shop_item_table] b
           where a.on_uid = '$tmp_on_uid' 
             and a.it_id = b.it_id
             and b.it_sell_email <> '' ";

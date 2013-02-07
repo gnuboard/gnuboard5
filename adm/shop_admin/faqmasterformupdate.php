@@ -22,17 +22,17 @@ $sql_common = " set fm_subject = '$fm_subject',
 
 if ($w == "") 
 {
-    $sql = " alter table $g4[yc4_faq_master_table] auto_increment=1 ";
+    $sql = " alter table $g4[shop_faq_master_table] auto_increment=1 ";
     sql_query($sql);
 
-    $sql = " insert $g4[yc4_faq_master_table] $sql_common ";
+    $sql = " insert $g4[shop_faq_master_table] $sql_common ";
     sql_query($sql);
 
     $fm_id = mysql_insert_id();
 } 
 else if ($w == "u") 
 {
-    $sql = " update $g4[yc4_faq_master_table] $sql_common where fm_id = '$fm_id' ";
+    $sql = " update $g4[shop_faq_master_table] $sql_common where fm_id = '$fm_id' ";
     sql_query($sql);
 } 
 else if ($w == "d") 
@@ -41,11 +41,11 @@ else if ($w == "d")
     @unlink("$g4[path]/data/faq/{$fm_id}_t");
 
     // FAQ삭제
-	$sql = " delete from $g4[yc4_faq_master_table] where fm_id = '$fm_id' ";
+	$sql = " delete from $g4[shop_faq_master_table] where fm_id = '$fm_id' ";
     sql_query($sql);
 
     // FAQ상세삭제
-	$sql = " delete from $g4[yc4_faq_table] where fm_id = '$fm_id' ";
+	$sql = " delete from $g4[shop_faq_table] where fm_id = '$fm_id' ";
     sql_query($sql);
 }
 

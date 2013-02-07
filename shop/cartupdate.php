@@ -28,7 +28,7 @@ if($default['de_guest_cart_use']) {
 
 if ($act == 'alldelete') // 모두 삭제이면
 {
-    $sql = " delete from {$g4['yc4_cart_table']}
+    $sql = " delete from {$g4['shop_cart_table']}
               where uq_id = '$uq_id' ";
     sql_query($sql);
 }
@@ -41,7 +41,7 @@ else if ($act == 'seldelete') // 선택 삭제이면
 
     for($k=0; $k<$sel_count; $k++) {
         $ct_id = $_POST['ct_chk'][$k];
-        $sql = " delete from {$g4['yc4_cart_table']} where uq_id = '$uq_id' and ( ct_id = '$ct_id' or ct_parent = '$ct_id' ) ";
+        $sql = " delete from {$g4['shop_cart_table']} where uq_id = '$uq_id' and ( ct_id = '$ct_id' or ct_parent = '$ct_id' ) ";
         sql_query($sql);
     }
 }
@@ -52,7 +52,7 @@ else if($act == 'selectedbuy') // 선택주문이면
         alert("주문하실 상품을 1개 이상 선택해 주세요.");
 
     // 이전 선택주문 상품 초기화
-    $sql = " update {$g4['yc4_cart_table']}
+    $sql = " update {$g4['shop_cart_table']}
                 set ct_selected = '0'
                 where uq_id = '$uq_id' ";
     sql_query($sql);
@@ -63,7 +63,7 @@ else if($act == 'selectedbuy') // 선택주문이면
         if(!$chk_id)
             continue;
 
-        $sql = " update {$g4['yc4_cart_table']}
+        $sql = " update {$g4['shop_cart_table']}
                     set ct_selected = '1'
                     where ct_id = '$chk_id'
                       or ct_parent = '$chk_id' ";
@@ -90,7 +90,7 @@ else if ($act == 'allupdate') // 수량 변경이면 : 모두 수정이면
         $ct_id = $_POST['ct_id'][$i];
         if($ct_id) {
             // 상품1개일 때만 수량변경
-            $sql = " select count(ct_id) as cnt from {$g4['yc4_cart_table']} where uq_id = '$uq_id' and it_id = '{$_POST['it_id'][$i]}' ";
+            $sql = " select count(ct_id) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '{$_POST['it_id'][$i]}' ";
             $row = sql_fetch($sql);
             if($row['cnt'] > 1) {
                 continue;
@@ -106,7 +106,7 @@ else if ($act == 'allupdate') // 수량 변경이면 : 모두 수정이면
             }
 
             // 수량수정
-            $sql = " update {$g4['yc4_cart_table']}
+            $sql = " update {$g4['shop_cart_table']}
                         set ct_qty = '{$_POST['ct_qty'][$i]}'
                       where ct_id  = '$ct_id'
                         and uq_id = '$uq_id' ";
@@ -126,7 +126,7 @@ else // 장바구니에 담기
 
     // 상품정보
     $sql = " select it_id, it_use, it_gallery, it_tel_inq, it_option_use, it_supplement_use
-                from {$g4['yc4_item_table']} where it_id = '{$_POST['it_id']}' ";
+                from {$g4['shop_item_table']} where it_id = '{$_POST['it_id']}' ";
     $it = sql_fetch($sql);
 
     // 주문가능한 상품인지
@@ -137,7 +137,7 @@ else // 장바구니에 담기
     // 비회원가격과 회원가격이 다르다면
     if (!$is_member && $default['de_different_msg'])
     {
-        $sql = " select it_amount, it_amount2 from {$g4['yc4_item_table']} where it_id = '{$_POST['it_id']}' ";
+        $sql = " select it_amount, it_amount2 from {$g4['shop_item_table']} where it_id = '{$_POST['it_id']}' ";
         $row = sql_fetch($sql);
         if ($row['it_amount2'] && $row['it_amount'] != $row['it_amount2']) {
             echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=".$g4['charset']."\">";
@@ -185,10 +185,10 @@ else // 장바구니에 담기
         if($is_option) {
             // 주문가능한 옵션인지
             if($is_option == 1) {
-                $sql1 = " select opt_use as option_use from {$g4['yc4_option_table']}
+                $sql1 = " select opt_use as option_use from {$g4['shop_option_table']}
                             where it_id = '{$_POST['it_id']}' and opt_id = '$opt_id' ";
             } else {
-                $sql1 = " select sp_use as option_use from {$g4['yc4_supplement_table']}
+                $sql1 = " select sp_use as option_use from {$g4['shop_supplement_table']}
                             where it_id = '{$_POST['it_id']}' and sp_id = '$opt_id' ";
             }
             $row1 = sql_fetch($sql1);
@@ -201,14 +201,14 @@ else // 장바구니에 담기
             }
 
             // 이미 장바구니에 있는 같은 옵션의 수량합계를 구한다.
-            $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']}
+            $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
                         where it_id = '{$_POST['it_id']}' and opt_id = '$opt_id' and uq_id <> '$uq_id' and is_option = '$is_option' and ct_status = '쇼핑' ";
             $row = sql_fetch($sql);
             $cart_qty = $row['cnt'];
             $stock_qty = get_option_stock_qty($_POST['it_id'], $opt_id, $is_option);
         } else {
             // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-            $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']}
+            $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
                         where it_id = '{$_POST['it_id']}' and uq_id <> '$uq_id' and is_option = '$is_option' and ct_status = '쇼핑' ";
             $row = sql_fetch($sql);
             $cart_qty = $row['cnt'];
@@ -229,10 +229,10 @@ else // 장바구니에 담기
     //--------------------------------------------------------
 
     // 바로구매에 있던 장바구니 자료를 지운다.
-    $result = sql_query(" delete from {$g4['yc4_cart_table']} where uq_id = '$uq_id' and ct_direct = 1 ", false);
+    $result = sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$uq_id' and ct_direct = 1 ", false);
     if (!$result) {
         // 삭제중 에러가 발생했다면 필드가 없다는 것이므로 바로구매 필드를 생성한다.
-        sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD `ct_direct` TINYINT NOT NULL ");
+        sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD `ct_direct` TINYINT NOT NULL ");
     }
 
     // 포인트 사용하지 않는다면
@@ -260,17 +260,17 @@ else // 장바구니에 담기
         // No옵션 상품이 장바구니에 있는치 체크, 있으면 수량변경
         $nopt_count = 0;
         if($is_option == 0 && !$sw_direct) {
-            $sql2 = " select count(*) as cnt from {$g4['yc4_cart_table']}
+            $sql2 = " select count(*) as cnt from {$g4['shop_cart_table']}
                         where uq_id = '$uq_id' and it_id = '{$_POST['it_id']}' and is_option = '0' and ct_direct = '0' ";
             $row2 = sql_fetch($sql2);
             $nopt_count = (int)$row2['cnt'];
         }
 
         if($nopt_count) {
-            $sql = " update {$g4['yc4_cart_table']} set ct_qty = ct_qty + $ct_qty
+            $sql = " update {$g4['shop_cart_table']} set ct_qty = ct_qty + $ct_qty
                         where uq_id = '$uq_id' and it_id = '{$_POST['it_id']}' and is_option = '0' and ct_direct = '0' ";
         } else {
-            $sql = " insert into {$g4['yc4_cart_table']}
+            $sql = " insert into {$g4['shop_cart_table']}
                         set uq_id               = '$uq_id',
                             ct_parent           = '$ct_parent',
                             mb_id               = '{$member['mb_id']}',

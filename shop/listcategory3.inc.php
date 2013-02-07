@@ -4,7 +4,7 @@ $exists = false;
 
 $depth2_ca_id = substr($ca_id, 0, 2);
 
-$sql = " select ca_id, ca_name from $g4[yc4_category_table]
+$sql = " select ca_id, ca_name from $g4[shop_category_table]
           where ca_id like '${depth2_ca_id}%'
             and length(ca_id) = 4
             and ca_use = '1'

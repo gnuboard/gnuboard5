@@ -28,7 +28,7 @@ if ($_POST["token"] && get_session("ss_token") == $_POST["token"]) {
 }
 
 // 상품
-$sql = " select * from {$g4['yc4_item_table']} where it_id = '$it_id' ";
+$sql = " select * from {$g4['shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 if (!$it['it_id'])
     alert("등록된 상품이 아닙니다.");

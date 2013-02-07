@@ -32,7 +32,7 @@ if (!$saved) {
 
 // 조회수 증가
 if ($_COOKIE['ck_it_id'] != $it_id) {
-    sql_query(" update {$g4['yc4_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
+    sql_query(" update {$g4['shop_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
     setcookie("ck_it_id", $it_id, time() + 3600, $config['cf_cookie_dir'], $config['cf_cookie_domain']); // 1시간동안 저장
 }
 
@@ -40,8 +40,8 @@ if ($_COOKIE['ck_it_id'] != $it_id) {
 $sql = " select a.*,
                 b.ca_name,
                 b.ca_use
-           from {$g4['yc4_item_table']} a,
-                {$g4['yc4_category_table']} b
+           from {$g4['shop_item_table']} a,
+                {$g4['shop_category_table']} b
           where a.it_id = '$it_id'
             and a.ca_id = b.ca_id ";
 $it = sql_fetch($sql);
@@ -54,7 +54,7 @@ if (!($it['ca_use'] && $it['it_use'])) {
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
 $sql = " select ca_include_head, ca_include_tail
-           from {$g4['yc4_category_table']}
+           from {$g4['shop_category_table']}
           where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
 
@@ -81,7 +81,7 @@ if ($is_admin)
 include G4_SHOP_PATH.'/listcategory.inc.php';
 
 // 이전 상품보기
-$sql = " select it_id, it_name from {$g4['yc4_item_table']}
+$sql = " select it_id, it_name from {$g4['shop_item_table']}
           where it_id > '$it_id'
             and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
             and it_use = '1'
@@ -97,7 +97,7 @@ if ($row['it_id']) {
 }
 
 // 다음 상품보기
-$sql = " select it_id, it_name from {$g4['yc4_item_table']}
+$sql = " select it_id, it_name from {$g4['shop_item_table']}
           where it_id < '$it_id'
             and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
             and it_use = '1'
@@ -114,8 +114,8 @@ if ($row[it_id]) {
 
 // 관련상품의 갯수를 얻음
 $sql = " select count(*) as cnt
-           from {$g4['yc4_item_relation_table']} a
-           left join {$g4['yc4_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
+           from {$g4['shop_item_relation_table']} a
+           left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
           where a.it_id = '{$it['it_id']}' ";
 $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
@@ -123,7 +123,7 @@ $item_relation_count = $row['cnt'];
 // 선택옵션 존재하는지 체크
 $it_option_count = 0;
 if($it['it_option_use']) {
-    $sql = " select COUNT(*) as cnt from {$g4['yc4_option_table']} where it_id = '{$it['it_id']}' ";
+    $sql = " select COUNT(*) as cnt from {$g4['shop_option_table']} where it_id = '{$it['it_id']}' ";
     $row = sql_fetch($sql);
     $it_option_count = (int)$row['cnt'];
 }
@@ -131,7 +131,7 @@ if($it['it_option_use']) {
 // 추가옵션 존재하는지 체크
 $it_supplement_count = 0;
 if($it['it_supplement_use']) {
-    $sql = " select COUNT(*) as cnt from {$g4['yc4_supplement_table']} where it_id = '{$it['it_id']}' ";
+    $sql = " select COUNT(*) as cnt from {$g4['shop_supplement_table']} where it_id = '{$it['it_id']}' ";
     $row = sql_fetch($sql);
     $it_supplement_count = (int)$row['cnt'];
 }
@@ -468,7 +468,7 @@ else
 <tr><td rowspan=2 width=31 valign=top bgcolor=#CACDE2><img src='<?=G4_SHOP_IMG_URL?>/item_t01.gif'></td><td height=2 bgcolor=#CACDE2></td></tr>
 <tr><td style='padding:15px'>
     <?
-    $sql = " select * from {$g4['yc4_item_info_table']} where it_id = '$it_id' order by ii_id ";
+    $sql = " select * from {$g4['shop_item_info_table']} where it_id = '$it_id' order by ii_id ";
     $result = sql_query($sql, false);
     if (@mysql_num_rows($result)) {
     ?>
@@ -557,8 +557,8 @@ include_once('./itemqa.inc.php');
         $td_width = (int)(100 / $list_mod);
 
         $sql = " select b.*
-                   from {$g4['yc4_item_relation_table']} a
-                   left join {$g4['yc4_item_table']} b on (a.it_id2=b.it_id)
+                   from {$g4['shop_item_relation_table']} a
+                   left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
                   where a.it_id = '{$it['it_id']}'
                     and b.it_use='1' ";
         $result = sql_query($sql);

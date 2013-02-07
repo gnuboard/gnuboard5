@@ -32,8 +32,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         // 미수금이 없고 운송장번호가 없는 자료를 구함
         $sql = " select b.od_id,
                         b.*, "._MISU_QUERY_."
-                   from {$g4['yc4_cart_table']} a
-                   left join {$g4['yc4_order_table']} b on (a.uq_id=b.od_id)
+                   from {$g4['shop_cart_table']} a
+                   left join {$g4['shop_order_table']} b on (a.uq_id=b.od_id)
                   group by b.od_id
                   /*having misu <= 0 and b.od_invoice = '' and ordercancel = 0*/
                   /*having orderamount - receiptamount = 0 and b.od_invoice = ''*/
@@ -96,8 +96,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         // 미수금이 있고 송장번호가 없는 자료를 구함
         $sql = " select b.od_id,
                         b.*, "._MISU_QUERY_."
-                   from {$g4['yc4_cart_table']} a
-                   left join {$g4['yc4_order_table']} b on (a.uq_id=b.od_id)
+                   from {$g4['shop_cart_table']} a
+                   left join {$g4['shop_order_table']} b on (a.uq_id=b.od_id)
                   group by b.od_id
                   /* having receiptamount <= 0 */
                   having misu > 0
@@ -159,7 +159,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </tr>
         
         <?
-        $sql = " select * from {$g4['yc4_item_ps_table']}
+        $sql = " select * from {$g4['shop_item_ps_table']}
                   where is_confirm = 0
                   order by is_id desc
                   limit $max_limit ";
@@ -204,7 +204,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </tr>
         
         <?
-        $sql = " select * from {$g4['yc4_item_qa_table']}
+        $sql = " select * from {$g4['shop_item_qa_table']}
                   where iq_answer = ''
                   order by iq_id desc
                   limit $max_limit ";

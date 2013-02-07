@@ -22,7 +22,7 @@ if(!$sc_amount) {
     alert("추가배송료를 입력해 주세요.");
 }
 
-$sql = " insert into {$g4['yc4_sendcost_table']}
+$sql = " insert into {$g4['shop_sendcost_table']}
             set sc_name     = '$sc_name',
                 sc_zip1     = '$sc_zip1',
                 sc_zip2     = '$sc_zip2',

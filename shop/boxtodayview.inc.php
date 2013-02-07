@@ -57,7 +57,7 @@ for ($i=1; $i<=$tv_idx; $i++)
 {
     $tv_it_id = get_session("ss_tv[$i]");
     $sqlx = " select it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
-                from $g4[yc4_item_table] where it_id = '$tv_it_id' ";
+                from $g4[shop_item_table] where it_id = '$tv_it_id' ";
     $rowx = sql_fetch($sqlx);
     $it_name = get_text(addslashes($rowx['it_name']));
     $tv_filepath = G4_DATA_PATH.'/item/'.$tv_it_id;

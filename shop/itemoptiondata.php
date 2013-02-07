@@ -3,14 +3,14 @@ include_once('./_common.php');
 
 // 옵션명
 $index = $idx + 2;
-$sql = " select it_opt{$index}_subject as opt_subj from `{$g4['yc4_item_table']}` where it_id = '$it_id' ";
+$sql = " select it_opt{$index}_subject as opt_subj from `{$g4['shop_item_table']}` where it_id = '$it_id' ";
 $row = sql_fetch($sql);
 $opt_subj = $row['opt_subj'];
 
 $str = '<option value="">' . $opt_subj . '선택</option>'.PHP_EOL;
 
 // 옵션항목
-$sql = " select opt_id from `{$g4['yc4_option_table']}` where it_id = '$it_id' and opt_use = '1' and opt_id like '$opt_id%' order by opt_no asc ";
+$sql = " select opt_id from `{$g4['shop_option_table']}` where it_id = '$it_id' and opt_use = '1' and opt_id like '$opt_id%' order by opt_no asc ";
 $result = sql_query($sql);
 $arr_item = array();
 
@@ -32,7 +32,7 @@ foreach($arr as $value) {
                 $deli = chr(30);
             }
             $new_opt_id = $opt_id . $deli . $value;
-            $sql = " select opt_amount, opt_qty from {$g4['yc4_option_table']} where it_id = '$it_id' and opt_id = '$new_opt_id' and opt_use = '1' ";
+            $sql = " select opt_amount, opt_qty from {$g4['shop_option_table']} where it_id = '$it_id' and opt_id = '$new_opt_id' and opt_use = '1' ";
             $row = sql_fetch($sql);
             $opt_info = '';
             if($row['opt_qty']) {

@@ -8,11 +8,11 @@ $od_pwd = sql_password($od_pwd);
 // 회원인 경우
 if ($is_member)
 {
-    $sql_common = " from $g4[yc4_order_table] where mb_id = '$member[mb_id]' ";
+    $sql_common = " from $g4[shop_order_table] where mb_id = '$member[mb_id]' ";
 }
 else if ($od_id && $od_pwd) // 비회원인 경우 주문서번호와 비밀번호가 넘어왔다면
 {
-    $sql_common = " from $g4[yc4_order_table] where od_id = '$od_id' and od_pwd = '$od_pwd' ";
+    $sql_common = " from $g4[shop_order_table] where od_id = '$od_id' and od_pwd = '$od_pwd' ";
 }
 else // 그렇지 않다면 로그인으로 가기
 {
@@ -43,7 +43,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 // 비회원 주문확인의 경우 바로 주문서 상세조회로 이동
 if (!$is_member)
 {
-    $sql = " select od_id, on_uid from $g4[yc4_order_table] where od_id = '$od_id' and od_pwd = '$od_pwd' ";
+    $sql = " select od_id, on_uid from $g4[shop_order_table] where od_id = '$od_id' and od_pwd = '$od_pwd' ";
     $row = sql_fetch($sql);
     if ($row[od_id]) {
         set_session("ss_on_uid_inquiry", $row[on_uid]);

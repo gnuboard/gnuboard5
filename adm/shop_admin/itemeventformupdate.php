@@ -32,14 +32,14 @@ if ($w == "")
 {
     $ev_id = $g4[server_time];
 
-    $sql = " insert $g4[yc4_event_table]
+    $sql = " insert $g4[shop_event_table]
                     $sql_common 
                   , ev_id = '$ev_id' ";
     sql_query($sql);
 } 
 else if ($w == "u") 
 {
-    $sql = " update $g4[yc4_event_table]
+    $sql = " update $g4[shop_event_table]
                 $sql_common
               where ev_id = '$ev_id' ";
     sql_query($sql);
@@ -50,7 +50,7 @@ else if ($w == "d")
     @unlink("$g4[path]/data/event/{$ev_id}_h");
     @unlink("$g4[path]/data/event/{$ev_id}_t");
 
-    $sql = " delete from $g4[yc4_event_table] where ev_id = '$ev_id' ";
+    $sql = " delete from $g4[shop_event_table] where ev_id = '$ev_id' ";
     sql_query($sql);
 }
 

@@ -25,8 +25,8 @@ if ($sel_field == "")  {
     $sel_field = "it_name";
 }
 
-$sql_common = " from $g4[yc4_item_table] a
-                left join $g4[yc4_event_item_table] b on (a.it_id=b.it_id and b.ev_id='$ev_id') ";
+$sql_common = " from $g4[shop_item_table] a
+                left join $g4[shop_event_item_table] b on (a.it_id=b.it_id and b.ev_id='$ev_id') ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
@@ -67,7 +67,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 	    <?
         // 이벤트 옵션처리
         $event_option = "<option value=''>이벤트를 선택하세요";
-        $sql1 = " select ev_id, ev_subject from $g4[yc4_event_table] order by ev_id desc ";
+        $sql1 = " select ev_id, ev_subject from $g4[shop_event_table] order by ev_id desc ";
         $result1 = sql_query($sql1);
         while ($row1=mysql_fetch_array($result1))
             $event_option .= "<option value='$row1[ev_id]'>".conv_subject($row1[ev_subject], 20,"…");
@@ -81,7 +81,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <select id="sel_ca_id" name="sel_ca_id">
         <option value=''>전체분류
         <?
-        $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
+        $sql1 = " select ca_id, ca_name from $g4[shop_category_table] order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++)
         {
@@ -134,7 +134,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     $href = "{$g4[shop_path]}/item.php?it_id=$row[it_id]";
 
-    $sql = " select ev_id from $g4[yc4_event_item_table]
+    $sql = " select ev_id from $g4[shop_event_item_table]
               where it_id = '$row[it_id]'
                 and ev_id = '$ev_id' ";
     $ev = sql_fetch($sql);

@@ -51,8 +51,8 @@ $sql = " select a.it_id,
                 b.it_use,
                 b.it_gallery,
                 b.it_tel_inq
-           from {$g4['yc4_cart_table']} a,
-                {$g4['yc4_item_table']} b
+           from {$g4['shop_cart_table']} a,
+                {$g4['shop_item_table']} b
           where a.uq_id = '$uq_id'
             and a.ct_direct = '$sw_direct'
             and a.it_id = b.it_id ";
@@ -74,10 +74,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     if($row['is_option']) {
         // 주문가능한 옵션인지
         if($row['is_option'] == 1) {
-            $sql1 = " select opt_use as option_use from {$g4['yc4_option_table']}
+            $sql1 = " select opt_use as option_use from {$g4['shop_option_table']}
                         where it_id = '{$row['it_id']}' and opt_id = '{$row['opt_id']}' ";
         } else {
-            $sql1 = " select sp_use as option_use from {$g4['yc4_supplement_table']}
+            $sql1 = " select sp_use as option_use from {$g4['shop_supplement_table']}
                         where it_id = '{$row['it_id']}' and sp_id = '{$row['opt_id']}' ";
         }
         $row1 = sql_fetch($sql1);
@@ -90,14 +90,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         }
 
         // 이미 장바구니에 있는 같은 옵션의 수량합계를 구한다.
-        $sql2 = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']}
+        $sql2 = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
                     where it_id = '{$row['it_id']}' and opt_id = '{$row['opt_id']}' and uq_id <> '$uq_id' and is_option = '{$row['is_option']}' and ct_status = '쇼핑' ";
         $row2 = sql_fetch($sql2);
         $cart_qty = $row2['cnt'];
         $stock_qty = get_option_stock_qty($row['it_id'], $row['opt_id'], $row['is_option']);
     } else {
         // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-        $sql2 = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']}
+        $sql2 = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
                     where it_id = '{$row['it_id']}' and uq_id <> '$uq_id' and is_option = '{$row['is_option']}' and ct_status = '쇼핑' ";
         $row2 = sql_fetch($sql2);
         $cart_qty = $row2['cnt'];
@@ -122,7 +122,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 // 주문총금액
 /*
 $sql1 = " select SUM((it_amount + ct_amount) * ct_qty) as od_amount
-            from {$g4['yc4_cart_table']}
+            from {$g4['shop_cart_table']}
             where uq_id = '$uq_id'
               and ct_direct = '$sw_direct' ";
 $row1 = sql_fetch($sql1);
@@ -153,7 +153,7 @@ else if($default['de_send_cost_case'] == "상한") {
                     b.it_sc_type,
                     b.it_sc_basic,
                     b.it_sc_condition
-               from {$g4['yc4_cart_table']} as a left join {$g4['yc4_item_table']} as b on ( a.it_id = b.it_id )
+               from {$g4['shop_cart_table']} as a left join {$g4['shop_item_table']} as b on ( a.it_id = b.it_id )
                where a.uq_id = '$uq_id'
                 and a.ct_direct = '$sw_direct'
                 and a.ct_parent = '0' ";
@@ -172,7 +172,7 @@ else if($default['de_send_cost_case'] == "상한") {
             // 금액, 수량 계산
             $sql = " select SUM((ct_amount + it_amount) * ct_qty) as sum_amount,
                             SUM(ct_qty) as sum_qty
-                        from {$g4['yc4_cart_table']}
+                        from {$g4['shop_cart_table']}
                         where ct_id = '{$row['ct_id']}'
                           or ct_parent = '{$row['ct_id']}' ";
             $sum = sql_fetch($sql);
@@ -216,7 +216,7 @@ if($is_member) {
 
         // 쿠폰정보
         $sql = " select *
-                    from {$g4['yc4_coupon_table']}
+                    from {$g4['shop_coupon_table']}
                     where cp_id = '$cp_id'
                       and cp_use = '1'
                       and cp_start <= '{$g4['time_ymd']}'
@@ -229,7 +229,7 @@ if($is_member) {
 
         // 상품정보
         $sql = " select it_id, ca_id, ca_id2, ca_id3, it_nocoupon
-                    from {$g4['yc4_item_table']}
+                    from {$g4['shop_item_table']}
                     where it_id = '$it_id' ";
         $it = sql_fetch($sql);
         if($it['it_nocoupon']) { // 쿠폰제외상품
@@ -246,7 +246,7 @@ if($is_member) {
 
             $ca_id = $it["ca_id{$no}"];
 
-            $sql = " select ca_nocoupon from {$g4['yc4_category_table']} where ca_id = '$ca_id' ";
+            $sql = " select ca_nocoupon from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
             $temp = sql_fetch($sql);
 
             if($temp['ca_nocoupon']) {
@@ -289,7 +289,7 @@ if($is_member) {
 
         // 이미 사용한 쿠폰인지
         $sql = " select ch_no
-                    from {$g4['yc4_coupon_history_table']}
+                    from {$g4['shop_coupon_history_table']}
                     where cp_id = '$cp_id'
                       and it_id = '$it_id'
                       and mb_id = '{$member['mb_id']}'
@@ -305,7 +305,7 @@ if($is_member) {
         if($cp['cp_method']) {
             // 해당상품총금액
             $sql3 = " select SUM((ct_amount + it_amount) * ct_qty) as item_amount
-                        from {$g4['yc4_cart_table']}
+                        from {$g4['shop_cart_table']}
                         where it_id = '$it_id'
                           and uq_id = '$uq_id'
                           and ct_direct = '$sw_direct' ";
@@ -335,7 +335,7 @@ if($is_member) {
     $s_cp_id = $_POST['od_send_coupon'];
     if($s_cp_id) {
         $sql4 = " select cp_id, cp_amount, cp_minimum, cp_subject, mb_id
-                    from {$g4['yc4_coupon_table']}
+                    from {$g4['shop_coupon_table']}
                     where cp_id = '$s_cp_id'
                       and cp_type = '2'
                       and cp_use = '1'
@@ -349,7 +349,7 @@ if($is_member) {
                 if($row4['cp_id']) {
                     // 사용쿠폰인지체크
                     $sql5 = " select ch_no
-                                from {$g4['yc4_coupon_history_table']}
+                                from {$g4['shop_coupon_history_table']}
                                 where cp_id = '$s_cp_id'
                                   and mb_id = '{$member['mb_id']}'
                                   and uq_id <> '$uq_id' ";
@@ -376,7 +376,7 @@ if($is_member) {
     $o_cp_id = $_POST['od_coupon'];
     if($o_cp_id) {
         $sql4 = " select cp_id, cp_method, cp_amount, cp_trunc, cp_minimum, cp_maximum, cp_subject, mb_id
-                    from {$g4['yc4_coupon_table']}
+                    from {$g4['shop_coupon_table']}
                     where cp_id = '$o_cp_id'
                       and cp_use = '1'
                       and cp_type = '1'
@@ -390,7 +390,7 @@ if($is_member) {
                 if($row4['cp_id']) {
                     // 사용쿠폰인지체크
                     $sql5 = " select ch_no
-                                from {$g4['yc4_coupon_history_table']}
+                                from {$g4['shop_coupon_history_table']}
                                 where cp_id = '$o_cp_id'
                                   and mb_id = '{$member['mb_id']}'
                                   and uq_id <> '$uq_id' ";
@@ -438,7 +438,7 @@ if (((int)$tot_sell_amount - (int)$item_dc_amount - (int)$order_dc_amount) !== (
 // 배송비가 상이함
 // 추가배송비
 $zipcode = $od_b_zip1.$od_b_zip2;
-$sql = " select sc_amount from {$g4['yc4_sendcost_table']} where sc_zip1 <= '$zipcode' and sc_zip2 >= '$zipcode' ";
+$sql = " select sc_amount from {$g4['shop_sendcost_table']} where sc_zip1 <= '$zipcode' and sc_zip2 >= '$zipcode' ";
 $row = sql_fetch($sql);
 $area_send_cost = (int)$row['sc_amount'];
 
@@ -550,7 +550,7 @@ else
     $od_pwd = sql_password($_POST['od_pwd']);
 
 // 주문서에 입력
-$sql = " insert {$g4['yc4_order_table']}
+$sql = " insert {$g4['shop_order_table']}
             set od_id             = '$od_id',
                 mb_id             = '{$member['mb_id']}',
                 od_pwd            = '$od_pwd',
@@ -613,7 +613,7 @@ $ct_id_count = count($_POST['od_ct_id']);
 for($j=0; $j<$ct_id_count; $j++) {
     $temp_ct_id = $_POST['od_ct_id'][$j];
 
-    $sql = "update {$g4['yc4_cart_table']}
+    $sql = "update {$g4['shop_cart_table']}
                set uq_id        = '$od_id',
                    ct_status    = '주문'
                    $sql_card_point
@@ -625,26 +625,26 @@ for($j=0; $j<$ct_id_count; $j++) {
 
 // 재고조정
 $sql = " select it_id, is_option, opt_id, ct_qty
-           from {$g4['yc4_cart_table']}
+           from {$g4['shop_cart_table']}
           where uq_id = '$od_id'
             and ct_direct = '$sw_direct' ";
 $result = sql_query($sql);
 
 for($i=0; $it=sql_fetch_array($result); $i++) {
     if($it['is_option'] == 1) { // 선택옵션
-        $sql = " update {$g4['yc4_option_table']}
+        $sql = " update {$g4['shop_option_table']}
                       set opt_qty = IF( (opt_qty - {$it['ct_qty']}) > 0, (opt_qty - {$it['ct_qty']}), 0 )
                     where it_id = '{$it['it_id']}'
                       and opt_id = '{$it['opt_id']}' ";
         sql_query($sql);
     } else if($it['is_option'] == 2) { // 추가옵션
-        $sql = " update {$g4['yc4_supplement_table']}
+        $sql = " update {$g4['shop_supplement_table']}
                       set sp_qty = IF( (sp_qty - {$it['ct_qty']}) > 0, (sp_qty - {$it['ct_qty']}), 0 )
                     where it_id = '{$it['it_id']}'
                       and sp_id = '{$it['opt_id']}' ";
         sql_query($sql);
     } else { // No옵션상품
-        $sql = " update {$g4['yc4_item_table']}
+        $sql = " update {$g4['shop_item_table']}
                       set it_stock_qty = IF( (it_stock_qty - {$it['ct_qty']}) > 0, (it_stock_qty - {$it['ct_qty']}), 0 )
                     where it_id = '{$it['it_id']}' ";
         sql_query($sql);
@@ -656,7 +656,7 @@ if($is_member) {
     $cp_count = count($arr_item_coupon);
     for($i=0; $i<$cp_count; $i++) {
         // 쿠폰내역기록
-        $sql = " insert into {$g4['yc4_coupon_history_table']}
+        $sql = " insert into {$g4['shop_coupon_history_table']}
                     set cp_id       = '{$arr_item_coupon[$i]['cp_id']}',
                         cp_subject  = '{$arr_item_coupon[$i]['cp_subject']}',
                         mb_id       = '{$member['mb_id']}',
@@ -668,7 +668,7 @@ if($is_member) {
         sql_query($sql);
 
         // cart 테이블에 쿠폰금액기록
-        $sql = " update {$g4['yc4_cart_table']}
+        $sql = " update {$g4['shop_cart_table']}
                     set cp_amount   = '{$arr_item_coupon[$i]['ch_amount']}'
                     where ct_id = '{$arr_item_coupon[$i]['ct_id']}' ";
         sql_query($sql);
@@ -676,7 +676,7 @@ if($is_member) {
 
     // 배송비쿠폰내역
     if($arr_send_coupon['cp_id']) {
-        $sql = " insert into {$g4['yc4_coupon_history_table']}
+        $sql = " insert into {$g4['shop_coupon_history_table']}
                     set cp_id       = '{$arr_send_coupon['cp_id']}',
                         cp_subject  = '{$arr_send_coupon['cp_subject']}',
                         mb_id       = '{$member['mb_id']}',
@@ -690,7 +690,7 @@ if($is_member) {
 
     // 결제할인쿠폰내역
     if($arr_order_coupon['cp_id']) {
-        $sql = " insert into {$g4['yc4_coupon_history_table']}
+        $sql = " insert into {$g4['shop_coupon_history_table']}
                     set cp_id       = '{$arr_order_coupon['cp_id']}',
                         cp_subject  = '{$arr_order_coupon['cp_subject']}',
                         mb_id       = '{$member['mb_id']}',

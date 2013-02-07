@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 $stx = trim($stx);
 if($stx) {
-    $sql_common = " from {$g4['yc4_item_table']} ";
+    $sql_common = " from {$g4['shop_item_table']} ";
     $sql_search = " where it_use = '1' and it_nocoupon = '0' and it_name like '%$stx%' ";
     $sql_order = " order by it_id asc ";
 

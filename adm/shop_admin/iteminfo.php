@@ -7,7 +7,7 @@ $it_id = trim($_GET['it_id']);
 if ($_GET['gubun']) {
     $gubun = $_GET['gubun'];
 } else {
-    $sql = " select ii_gubun from {$g4['yc4_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
+    $sql = " select ii_gubun from {$g4['shop_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
     $row = sql_fetch($sql);
     $gubun = $row['ii_gubun'] ? $row['ii_gubun'] : "wear";
 }
@@ -57,7 +57,7 @@ if ($article) {
         $el_title   = $value[0];
         $el_example = $value[1];
 
-        $sql = " select ii_value from {$g4['yc4_item_info_table']} where it_id = '$it_id' and ii_gubun = '$gubun' and ii_article = '$key' ";
+        $sql = " select ii_value from {$g4['shop_item_info_table']} where it_id = '$it_id' and ii_gubun = '$gubun' and ii_article = '$key' ";
         $row = sql_fetch($sql);
         if ($row['ii_value']) $el_value = $row['ii_value'];
 

@@ -11,8 +11,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
     $latest_skin_url  = G4_SKIN_URL.'/latest/'.$skin_dir;
 
     $cache_file = G4_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
-    //if (!file_exists($cache_file)) {
-    if (1) {
+    if (!file_exists($cache_file)) {
         $list = array();
 
         $sql = " select * from $g4[board_table] where bo_table = '$bo_table'";

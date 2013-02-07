@@ -25,8 +25,8 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 <?
 $sql = " select a.od_id, 
                 a.*, "._MISU_QUERY_."
-           from $g4[yc4_order_table] a
-           left join $g4[yc4_cart_table] b on (b.on_uid=a.on_uid)
+           from $g4[shop_order_table] a
+           left join $g4[shop_cart_table] b on (b.on_uid=a.on_uid)
           where mb_id = '$member[mb_id]'
           group by a.od_id 
           order by a.od_id desc 

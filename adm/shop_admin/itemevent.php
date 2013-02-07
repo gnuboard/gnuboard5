@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g4[title] = "이벤트관리";
 include_once(G4_ADMIN_PATH."/admin.head.php");
 
-$sql_common = " from $g4[yc4_event_table] ";
+$sql_common = " from $g4[shop_event_table] ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -50,7 +50,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $s_vie = icon("보기", "$g4[shop_path]/event.php?ev_id=$row[ev_id]");
 
     $href = "";
-    $sql = " select count(ev_id) as cnt from $g4[yc4_event_item_table] where ev_id = '$row[ev_id]' ";
+    $sql = " select count(ev_id) as cnt from $g4[shop_event_item_table] where ev_id = '$row[ev_id]' ";
     $ev = sql_fetch($sql);
     if ($ev[cnt]) {
         $href = "<a href='javascript:;' onclick='itemeventwin($row[ev_id]);'>";

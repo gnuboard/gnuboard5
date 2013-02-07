@@ -3,7 +3,7 @@ include_once("./_common.php");
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 $sql = " select it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
-            from $g4[yc4_item_table]
+            from $g4[shop_item_table]
             where it_id='$it_id' ";
 $row = sql_fetch_array(sql_query($sql));
 

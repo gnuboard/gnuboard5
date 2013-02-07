@@ -25,7 +25,7 @@ include_once(G4_LIB_PATH.'/thumb.lib.php');
             <td width=11><img src='<?=G4_SHOP_IMG_URL?>/corner02.gif'></td>
         </tr>
         <?
-        $sql_common = " from $g4[yc4_item_ps_table] where it_id = '$it[it_id]' and is_confirm = '1' ";
+        $sql_common = " from $g4[shop_item_ps_table] where it_id = '$it[it_id]' and is_confirm = '1' ";
 
         // 테이블의 전체 레코드수만 얻음
         $sql = " select COUNT(*) as cnt " . $sql_common;

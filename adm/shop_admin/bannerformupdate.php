@@ -21,9 +21,9 @@ if ($w=="")
 {
     if (!$bn_bimg_name) alert("배너 이미지를 업로드 하세요.");
 
-    sql_query(" alter table $g4[yc4_banner_table] auto_increment=1 ");
+    sql_query(" alter table $g4[shop_banner_table] auto_increment=1 ");
 
-    $sql = " insert into $g4[yc4_banner_table]
+    $sql = " insert into $g4[shop_banner_table]
                 set bn_alt        = '$bn_alt',
                     bn_url        = '$bn_url',
                     bn_position   = '$bn_position',
@@ -40,7 +40,7 @@ if ($w=="")
 } 
 else if ($w=="u")
 {
-    $sql = " update $g4[yc4_banner_table]
+    $sql = " update $g4[shop_banner_table]
                 set bn_alt        = '$bn_alt',
                     bn_url        = '$bn_url',
                     bn_position   = '$bn_position',
@@ -56,7 +56,7 @@ else if ($w=="d")
 {
     @unlink("$g4[path]/data/banner/$bn_id");
 
-    $sql = " delete from $g4[yc4_banner_table] where bn_id = $bn_id ";
+    $sql = " delete from $g4[shop_banner_table] where bn_id = $bn_id ";
     $result = sql_query($sql);
 }
 

@@ -63,7 +63,7 @@ $sql = " select on_uid,
                 od_dc_amount,
                 (od_receipt_bank + od_receipt_card + od_receipt_point) as receiptamount,
                 (od_refund_amount + od_cancel_card) as receiptcancel
-           from $g4[yc4_order_table]
+           from $g4[shop_order_table]
           where SUBSTRING(od_time,1,10) between '$fr_date' and '$to_date' 
           order by od_time desc ";
 $result = sql_query($sql);
@@ -81,7 +81,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     // 장바구니 상태별 금액
     $sql1 = " select (SUM(ct_amount * ct_qty)) as orderamount, /* 주문합계 */
                      (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_amount * ct_qty, 0))) as ordercancel /* 주문취소 */
-                from $g4[yc4_cart_table]
+                from $g4[shop_cart_table]
                where on_uid = '$row[on_uid]' ";
     $row1 = sql_fetch($sql1);
 

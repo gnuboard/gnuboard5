@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$sql = " select opt_amount, opt_qty from `{$g4['yc4_option_table']}` where it_id = '$it_id' and opt_id = '$opt_id' and opt_use = '1' ";
+$sql = " select opt_amount, opt_qty from `{$g4['shop_option_table']}` where it_id = '$it_id' and opt_id = '$opt_id' and opt_use = '1' ";
 $row = sql_fetch($sql);
 
 if(!$row['opt_amount']) {

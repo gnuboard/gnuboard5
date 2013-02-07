@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g4[title] = "전자결제내역";
 include_once(G4_ADMIN_PATH."/admin.head.php");
 
-sql_query(" ALTER TABLE `$g4[yc4_card_history_table]` ADD INDEX `od_id` ( `od_id` ) ", false);
+sql_query(" ALTER TABLE `$g4[shop_card_history_table]` ADD INDEX `od_id` ( `od_id` ) ", false);
 
 $where = " where ";
 $sql_search = "";
@@ -24,8 +24,8 @@ if ($sel_field == "")  $sel_field = "a.od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from $g4[yc4_card_history_table] a
-                left join $g4[yc4_order_table] b on (a.od_id = b.od_id)
+$sql_common = " from $g4[shop_card_history_table] a
+                left join $g4[shop_order_table] b on (a.od_id = b.od_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음

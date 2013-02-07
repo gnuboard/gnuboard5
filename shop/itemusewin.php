@@ -12,7 +12,7 @@ if (!$is_member) {
 if ($w == "") {
     $is_score = 10;
 } else if ($w == "u") {
-    $ps = sql_fetch(" select * from $g4[yc4_item_ps_table] where is_id = '$is_id' ");
+    $ps = sql_fetch(" select * from $g4[shop_item_ps_table] where is_id = '$is_id' ");
     if (!$ps) {
         alert_close("사용후기 정보가 없습니다.");
     }

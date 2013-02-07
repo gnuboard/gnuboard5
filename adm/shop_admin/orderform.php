@@ -25,7 +25,7 @@ include_once(G4_ADMIN_PATH.'/admin.head.php');
 if (!isset($cart_not_delete)) {
     if (!$hours) $hours = 6;
     $beforehours = date("Y-m-d H:i:s", ( $g4['server_time'] - (60 * 60 * $hours) ) );
-    $sql = " delete from {$g4['yc4_cart_table']} where ct_status = '$cart_title1' and ct_time <= '$beforehours' ";
+    $sql = " delete from {$g4['shop_cart_table']} where ct_status = '$cart_title1' and ct_time <= '$beforehours' ";
     sql_query($sql);
 }
 //------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ if (!isset($cart_not_delete)) {
 //------------------------------------------------------------------------------
 if (!isset($order_not_point)) {
     $beforedays = date("Y-m-d H:i:s", ( time() - (60 * 60 * 24 * (int)$default['de_point_days']) ) );
-    $sql = " select * from {$g4['yc4_cart_table']}
+    $sql = " select * from {$g4['shop_cart_table']}
                where ct_status = '$cart_title2'
                  and ct_point_use = '0'
                  and ct_time <= '$beforedays' ";
@@ -46,7 +46,7 @@ if (!isset($order_not_point)) {
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 회원 ID 를 얻는다.
-        $tmp_row = sql_fetch("select od_id, mb_id from {$g4['yc4_order_table']} where od_id = '$row[uq_id]' ");
+        $tmp_row = sql_fetch("select od_id, mb_id from {$g4['shop_order_table']} where od_id = '$row[uq_id]' ");
 
         // 회원이면서 포인트가 0보다 크다면
         if ($tmp_row['mb_id'] && $row['ct_point'] > 0)
@@ -56,7 +56,7 @@ if (!isset($order_not_point)) {
             insert_point($tmp_row['mb_id'], $po_point, $po_content, "@delivery", $tmp_row['mb_id'], "{$tmp_row['od_id']},{$row['ct_id']}");
         }
 
-        sql_query("update {$g4['yc4_cart_table']} set ct_point_use = '1' where ct_id = '{$row['ct_id']}' ");
+        sql_query("update {$g4['shop_cart_table']} set ct_point_use = '1' where ct_id = '{$row['ct_id']}' ");
     }
 }
 //------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ if (!isset($order_not_point)) {
 //------------------------------------------------------------------------------
 // 주문서 정보
 //------------------------------------------------------------------------------
-$sql = " select * from {$g4['yc4_order_table']} where od_id = '$od_id' ";
+$sql = " select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 if (!$od['od_id']) {
     alert($alt_msg1);
@@ -87,10 +87,10 @@ if ($default['de_card_test']) {
     $g4['yc4_cardpg']['kcp'] = "http://testadmin8.kcp.co.kr";
 }
 
-$sql_common = " from ( select * from {$g4['yc4_cart_table']}
+$sql_common = " from ( select * from {$g4['shop_cart_table']}
                           where uq_id = '{$od['od_id']}'
                           order by ct_id asc ) as a
-                        left join {$g4['yc4_item_table']} as b on ( a.it_id = b.it_id )";
+                        left join {$g4['shop_item_table']} as b on ( a.it_id = b.it_id )";
 
 $sql = " select a.ct_id,
                 a.uq_id,
@@ -404,7 +404,7 @@ if ($od['od_receipt_point'] > 0)
         <tr><td colspan=2 height=1 bgcolor=#84C718></td></tr>
 
         <?
-        $sql = " select dl_company, dl_url, dl_tel from {$g4['yc4_delivery_table']} where dl_id = '{$od['dl_id']}' ";
+        $sql = " select dl_company, dl_url, dl_tel from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ";
         $dl = sql_fetch($sql);
         ?>
         <tr>
@@ -471,7 +471,7 @@ if ($od['od_receipt_point'] > 0)
         <? if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체') { ?>
             <?
             // 주문서
-            $sql = " select * from {$g4['yc4_order_table']} where od_id = '$od_id' ";
+            $sql = " select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
             $result = sql_query($sql);
             $od = sql_fetch_array($result);
 
@@ -632,7 +632,7 @@ if ($od['od_receipt_point'] > 0)
                 <select id="dl_id" name="dl_id">
                     <option value=''>배송시 선택하세요.
                 <?
-                $sql = "select * from {$g4['yc4_delivery_table']} order by dl_order desc, dl_id desc ";
+                $sql = "select * from {$g4['shop_delivery_table']} order by dl_order desc, dl_id desc ";
                 $result = sql_query($sql);
                 for ($i=0; $row=sql_fetch_array($result); $i++)
                     echo "<option value='{$row['dl_id']}'>{$row['dl_company']}\n";

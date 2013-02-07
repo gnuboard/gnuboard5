@@ -4,7 +4,7 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], "r");
 
-$sql_common = " from {$g4['yc4_sendcost_table']} ";
+$sql_common = " from {$g4['shop_sendcost_table']} ";
 $sql_order = " order by sc_no ";
 
 // 테이블의 전체 레코드수만 얻음
