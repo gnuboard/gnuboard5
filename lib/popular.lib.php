@@ -11,8 +11,8 @@ function popular($skin_dir='basic', $pop_cnt=7, $date_cnt=3)
 
     if (!$skin_dir) $skin_dir = 'basic';
 
-    $date_gap = date("Y-m-d", $g4['server_time'] - ($date_cnt * 86400));
-    $sql = " select pp_word, count(*) as cnt from {$g4['popular_table']} where pp_date between '$date_gap' and '{$g4['time_ymd']}' group by pp_word order by cnt desc, pp_word limit 0, $pop_cnt ";
+    $date_gap = date("Y-m-d", G4_SERVER_TIME - ($date_cnt * 86400));
+    $sql = " select pp_word, count(*) as cnt from {$g4['popular_table']} where pp_date between '$date_gap' and '".G4_TIME_YMD."' group by pp_word order by cnt desc, pp_word limit 0, $pop_cnt ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         $list[$i] = $row;
