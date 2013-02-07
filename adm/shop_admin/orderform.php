@@ -79,12 +79,14 @@ if ($od['mb_id'] == "") {
 
 $qstr = "sort1=$sort1&sort2=$sort2&sel_field=$sel_field&search=$search&page=$page";
 
+$pg_url = "http://admin.kcp.co.kr";
+
 // PG사를 KCP 사용하면서 테스트 상점아이디라면
 if ($default['de_card_test']) {
     // 로그인 아이디 / 비번
     // 일반 : test1234 / test12345
     // 에스크로 : escrow / escrow913
-    $g4['yc4_cardpg']['kcp'] = "http://testadmin8.kcp.co.kr";
+    $pg_url = "http://testadmin8.kcp.co.kr";
 }
 
 $sql_common = " from ( select * from {$g4['shop_cart_table']}
@@ -511,9 +513,7 @@ if ($od['od_receipt_point'] > 0)
                     <input type="text" id="od_receipt_bank" name="od_receipt_bank" size=10
                         value='<? echo $od['od_receipt_amount'] ?>'>원
                     <?
-                    if ($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')
-                    {
-                        $pg_url = $g4['yc4_cardpg'][$default['de_card_pg']];
+                    if ($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌') {
                         echo "&nbsp;<a href='$pg_url' target=_new>결제대행사</a>";
                     }
                     ?>
@@ -550,10 +550,7 @@ if ($od['od_receipt_point'] > 0)
                 <td><?=$od['od_settle_case']?> 결제액</td>
                 <td>
                     <input type="text" id="od_receipt_amount" name="od_receipt_amount" size=10 value='<? echo $od['od_receipt_amount'] ?>'>원
-                    <?
-                    $pg_url = $g4['yc4_cardpg'][$default['de_card_pg']];
-                    echo "&nbsp;<a href='$pg_url' target=_new>결제대행사</a>";
-                    ?>
+                    <? echo "&nbsp;<a href='$pg_url' target=_new>결제대행사</a>"; ?>
                 </td>
             </tr>
             <tr>
@@ -576,7 +573,7 @@ if ($od['od_receipt_point'] > 0)
                     value='<? echo $od['od_receipt_amount'] ?>'>원
                 &nbsp;
                 <?
-                $card_url = $g4['yc4_cardpg'][$default['de_card_pg']];
+                $card_url = "http://admin.kcp.co.kr";
                 ?>
                 <a href='<? echo $card_url ?>' target=_new>결제대행사</a>
             </td>

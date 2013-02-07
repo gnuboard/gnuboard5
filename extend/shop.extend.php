@@ -70,18 +70,6 @@ $g4['shop_coupon_history_table']= G4_TABLE_PREFIX.'shop_coupon_history';        
 $g4['shop_sendcost_table']      = G4_TABLE_PREFIX.'shop_sendcost';              // 추가배송비 테이블
 $g4['shop_item_info_table']     = G4_TABLE_PREFIX.'shop_item_info';             // 상품요약정보 테이블 (상품정보고시)
 
-// 신용카드결제대행사 URL
-$g4['yc4_cardpg']['kcp']        = "http://admin.kcp.co.kr";
-$g4['yc4_cardpg']['banktown']   = "http://ebiz.banktown.com/index.cs";
-$g4['yc4_cardpg']['telec']      = "http://www.ebizpro.co.kr";
-$g4['yc4_cardpg']['inicis']     = "https://iniweb.inicis.com/DefaultWebApp/index.html";
-$g4['yc4_cardpg']['allthegate'] = "http://www.allthegate.com/login/r_login.jsp";
-$g4['yc4_cardpg']['allat']      = "http://www.allatbiz.net/servlet/AllatBizSrvX/bizcon/jspx/login/login.jsp?next=/servlet/AllatBizSrvX/bizable/jspx/login/login.jsp";
-$g4['yc4_cardpg']['tgcorp']     = "https://npg.tgcorp.com/mdbop/login.jsp";
-$g4['yc4_cardpg']['kspay']      = "http://nims.ksnet.co.kr:7001/pg_infoc/src/login.jsp"; // ksnet
-$g4['yc4_cardpg']['dacom']      = "https://pgweb.dacom.net";
-$g4['yc4_cardpg']['dacom_xpay'] = "https://pgweb.dacom.net";
-
 //==============================================================================
 
 
