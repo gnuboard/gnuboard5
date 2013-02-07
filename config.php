@@ -26,7 +26,7 @@ if (PHP_VERSION >= '5.3.0') {
 입력예) https://www.domain.com:443/gnuboard4s
 */
 define('G4_DOMAIN', 'http://tmp.sir.co.kr/g4s');
-define('G4_HTTPS_DOMAIN', 'http://https-gnuboard4s-tmp.sir.co.kr/g4s'); // http://https-gnuboard4s-tmp.sir.co.kr
+define('G4_HTTPS_DOMAIN', 'http://https-gnuboard4s-tmp.sir.co.kr/g4s');
 
 /*
 www.sir.co.kr 과 sir.co.kr 도메인은 서로 다른 도메인으로 인식합니다. 쿠키를 공유하려면 .sir.co.kr 과 같이 입력하세요.
@@ -45,9 +45,6 @@ define('G4_LIB_DIR',        'lib');
 define('G4_SKIN_DIR',       'skin');
 define('G4_GCAPTCHA_DIR',   'gcaptcha');
 define('G4_CKEDITOR_DIR',   'ckeditor');
-define('G4_EDITOR_DIR',     'editor');
-define('G4_CACHE_DIR',      'cache');
-define('G4_FILE_DIR',       'file');
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G4_DOMAIN) {
@@ -64,9 +61,6 @@ define('G4_JS_URL',         G4_URL.'/'.G4_JS_DIR);
 define('G4_SKIN_URL',       G4_URL.'/'.G4_SKIN_DIR);
 define('G4_GCAPTCHA_URL',   G4_BBS_URL.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_URL',   G4_BBS_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
-define('G4_EDITOR_URL',     G4_DATA_URL.'/'.G4_EDITOR_DIR); // CKEDITOR 에서 업로드한 파일이 저장되는 경로
-define('G4_CACHE_URL',      G4_DATA_URL.'/'.G4_CACHE_DIR);
-define('G4_FILE_URL',       G4_DATA_URL.'/'.G4_FILE_DIR);
 
 // PATH 는 서버상에서의 절대경로
 define('G4_PATH',           $g4_path['path']);
@@ -78,9 +72,6 @@ define('G4_LIB_PATH',       G4_PATH.'/'.G4_LIB_DIR);
 define('G4_SKIN_PATH',      G4_PATH.'/'.G4_SKIN_DIR);
 define('G4_GCAPTCHA_PATH',  G4_BBS_PATH.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_PATH',  G4_BBS_PATH.'/'.G4_CKEDITOR_DIR);
-define('G4_CACHE_PATH',     G4_DATA_PATH.'/'.G4_CACHE_DIR);
-define('G4_EDITOR_PATH',    G4_DATA_PATH.'/'.G4_EDITOR_DIR);
-define('G4_FILE_PATH',      G4_DATA_PATH.'/'.G4_FILE_DIR);
 //==============================================================================
 
 
@@ -104,25 +95,7 @@ define('G4_SPECIAL',     64); // 특수문자
 // 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
 define('G4_MOBILE_AGENT', 'phone|samsung|lgtel|mobile|skt|nokia|blackberry|android|sony');
 
-
-// 자주 사용하는 값
-// 서버의 시간과 실제 사용하는 시간이 틀린 경우 수정하세요.
-// 하루는 86400 초입니다. 1시간은 3600초
-// 6시간이 빠른 경우 time() + (3600 * 6);
-// 6시간이 느린 경우 time() - (3600 * 6);
-/*
-$g4['server_time'] = time();
-$g4['time_ymd']    = date("Y-m-d", $g4['server_time']);
-$g4['time_his']    = date("H:i:s", $g4['server_time']);
-$g4['time_ymdhis'] = date("Y-m-d H:i:s", $g4['server_time']);
-*/
-
-//
-// 기타
-//
-
 // 게시판에서 링크의 기본갯수를 말합니다.
 // 필드를 추가하면 이 숫자를 필드수에 맞게 늘려주십시오.
-//$g4['link_count'] = 2;
 define('G4_LINK_COUNT', 2);
 ?>
