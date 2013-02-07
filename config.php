@@ -1,7 +1,5 @@
 <?php
 
-// 절실함
-
 //==============================================================================
 // 상수 선언
 //------------------------------------------------------------------------------
@@ -9,10 +7,9 @@
 define('_GNUBOARD_', true);
 
 if (PHP_VERSION >= '5.3.0') {
-    //if (function_exists("date_default_timezone_set")) date_default_timezone_set("Asia/Seoul");
-    date_default_timezone_set("Asia/Seoul");
+//if (function_exists("date_default_timezone_set")) date_default_timezone_set("Asia/Seoul");
+date_default_timezone_set("Asia/Seoul");
 }
-
 
 //==============================================================================
 // 경로 상수
@@ -25,97 +22,76 @@ if (PHP_VERSION >= '5.3.0') {
 보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.
 입력예) https://www.domain.com:443/gnuboard4s
 */
-define('G4_DOMAIN', 'http://tmp.sir.co.kr/g4s');
-define('G4_HTTPS_DOMAIN', 'http://https-gnuboard4s-tmp.sir.co.kr/g4s'); // http://https-gnuboard4s-tmp.sir.co.kr
+define('G4_DOMAIN', '');
+define('G4_HTTPS_DOMAIN', '');
 
 /*
 www.sir.co.kr 과 sir.co.kr 도메인은 서로 다른 도메인으로 인식합니다. 쿠키를 공유하려면 .sir.co.kr 과 같이 입력하세요.
 이곳에 입력이 없다면 www 붙은 도메인과 그렇지 않은 도메인은 쿠키를 공유하지 않으므로 로그인이 풀릴 수 있습니다.
 */
-define('G4_COOKIE_DOMAIN', '.sir.co.kr');
+define('G4_COOKIE_DOMAIN', '');
 
-define('G4_ADMIN_DIR',      'adm');
-define('G4_BBS_DIR',        'bbs');
-define('G4_CSS_DIR',        'css');
-define('G4_DATA_DIR',       'data');
-define('G4_EXTEND_DIR',     'extend');
-define('G4_IMG_DIR',        'img');
-define('G4_JS_DIR',         'js');
-define('G4_LIB_DIR',        'lib');
-define('G4_SKIN_DIR',       'skin');
-define('G4_GCAPTCHA_DIR',   'gcaptcha');
-define('G4_CKEDITOR_DIR',   'ckeditor');
-define('G4_EDITOR_DIR',     'editor');
-define('G4_CACHE_DIR',      'cache');
-define('G4_FILE_DIR',       'file');
+define('G4_ADMIN_DIR', 'adm');
+define('G4_BBS_DIR', 'bbs');
+define('G4_CSS_DIR', 'css');
+define('G4_DATA_DIR', 'data');
+define('G4_EXTEND_DIR', 'extend');
+define('G4_IMG_DIR', 'img');
+define('G4_JS_DIR', 'js');
+define('G4_LIB_DIR', 'lib');
+define('G4_SKIN_DIR', 'skin');
+define('G4_GCAPTCHA_DIR', 'gcaptcha');
+define('G4_CKEDITOR_DIR', 'ckeditor');
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G4_DOMAIN) {
-    define('G4_URL',        G4_DOMAIN);
+    define('G4_URL', G4_DOMAIN);
 } else {
-    define('G4_URL',        $g4_path['url']);
+    define('G4_URL', $g4_path['url']);
 }
-define('G4_ADMIN_URL',      G4_URL.'/'.G4_ADMIN_DIR);
-define('G4_BBS_URL',        G4_URL.'/'.G4_BBS_DIR);
-define('G4_CSS_URL',        G4_URL.'/'.G4_CSS_DIR);
-define('G4_DATA_URL',       G4_URL.'/'.G4_DATA_DIR);
-define('G4_IMG_URL',        G4_URL.'/'.G4_IMG_DIR);
-define('G4_JS_URL',         G4_URL.'/'.G4_JS_DIR);
-define('G4_SKIN_URL',       G4_URL.'/'.G4_SKIN_DIR);
-define('G4_GCAPTCHA_URL',   G4_BBS_URL.'/'.G4_GCAPTCHA_DIR);
-define('G4_CKEDITOR_URL',   G4_BBS_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
-define('G4_EDITOR_URL',     G4_DATA_URL.'/'.G4_EDITOR_DIR); // CKEDITOR 에서 업로드한 파일이 저장되는 경로
-define('G4_CACHE_URL',      G4_DATA_URL.'/'.G4_CACHE_DIR);
-define('G4_FILE_URL',       G4_DATA_URL.'/'.G4_FILE_DIR);
+define('G4_ADMIN_URL', G4_URL.'/'.G4_ADMIN_DIR);
+define('G4_BBS_URL', G4_URL.'/'.G4_BBS_DIR);
+define('G4_CSS_URL', G4_URL.'/'.G4_CSS_DIR);
+define('G4_DATA_URL', G4_URL.'/'.G4_DATA_DIR);
+define('G4_IMG_URL', G4_URL.'/'.G4_IMG_DIR);
+define('G4_JS_URL', G4_URL.'/'.G4_JS_DIR);
+define('G4_SKIN_URL', G4_URL.'/'.G4_SKIN_DIR);
+define('G4_GCAPTCHA_URL', G4_BBS_URL.'/'.G4_GCAPTCHA_DIR);
+define('G4_CKEDITOR_URL', G4_BBS_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
 
 // PATH 는 서버상에서의 절대경로
-define('G4_PATH',           $g4_path['path']);
-define('G4_ADMIN_PATH',     G4_PATH.'/'.G4_ADMIN_DIR);
-define('G4_BBS_PATH',       G4_PATH.'/'.G4_BBS_DIR);
-define('G4_DATA_PATH',      G4_PATH.'/'.G4_DATA_DIR);
-define('G4_EXTEND_PATH',    G4_PATH.'/'.G4_EXTEND_DIR);
-define('G4_LIB_PATH',       G4_PATH.'/'.G4_LIB_DIR);
-define('G4_SKIN_PATH',      G4_PATH.'/'.G4_SKIN_DIR);
-define('G4_GCAPTCHA_PATH',  G4_BBS_PATH.'/'.G4_GCAPTCHA_DIR);
-define('G4_CKEDITOR_PATH',  G4_BBS_PATH.'/'.G4_CKEDITOR_DIR);
-define('G4_CACHE_PATH',     G4_DATA_PATH.'/'.G4_CACHE_DIR);
-define('G4_EDITOR_PATH',    G4_DATA_PATH.'/'.G4_EDITOR_DIR);
-define('G4_FILE_PATH',      G4_DATA_PATH.'/'.G4_FILE_DIR);
+define('G4_PATH', $g4_path['path']);
+define('G4_ADMIN_PATH', G4_PATH.'/'.G4_ADMIN_DIR);
+define('G4_BBS_PATH', G4_PATH.'/'.G4_BBS_DIR);
+define('G4_DATA_PATH', G4_PATH.'/'.G4_DATA_DIR);
+define('G4_EXTEND_PATH', G4_PATH.'/'.G4_EXTEND_DIR);
+define('G4_LIB_PATH', G4_PATH.'/'.G4_LIB_DIR);
+define('G4_SKIN_PATH', G4_PATH.'/'.G4_SKIN_DIR);
+define('G4_GCAPTCHA_PATH', G4_BBS_PATH.'/'.G4_GCAPTCHA_DIR);
+define('G4_CKEDITOR_PATH', G4_BBS_PATH.'/'.G4_CKEDITOR_DIR);
 //==============================================================================
 
-
 // 시간 상수
-define('G4_SERVER_TIME',    time());
-define('G4_TIME_YMDHIS',    date("Y-m-d H:i:s", G4_SERVER_TIME));
-define('G4_TIME_YMD',       substr(G4_TIME_YMDHIS,  0, 10));
-define('G4_TIME_HIS',       substr(G4_TIME_YMDHIS, 11,  8));
-
-
-// 입력값 검사 상수 (숫자를 변경하시면 안됩니다.)
-define('G4_ALPHAUPPER',   1); // 영대문자
-define('G4_ALPHALOWER',   2); // 영소문자
-define('G4_ALPHABETIC',   4); // 영대,소문자
-define('G4_NUMERIC',      8); // 숫자
-define('G4_HANGUL',      16); // 한글
-define('G4_SPACE',       32); // 공백
-define('G4_SPECIAL',     64); // 특수문자
-
-
-// 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
-define('G4_MOBILE_AGENT', 'phone|samsung|lgtel|mobile|skt|nokia|blackberry|android|sony');
-
-
-// 자주 사용하는 값
 // 서버의 시간과 실제 사용하는 시간이 틀린 경우 수정하세요.
 // 하루는 86400 초입니다. 1시간은 3600초
 // 6시간이 빠른 경우 time() + (3600 * 6);
 // 6시간이 느린 경우 time() - (3600 * 6);
-/*
-$g4['server_time'] = time();
-$g4['time_ymd']    = date("Y-m-d", $g4['server_time']);
-$g4['time_his']    = date("H:i:s", $g4['server_time']);
-$g4['time_ymdhis'] = date("Y-m-d H:i:s", $g4['server_time']);
-*/
+define('G4_SERVER_TIME', time());
+define('G4_TIME_YMDHIS', date("Y-m-d H:i:s", G4_SERVER_TIME));
+define('G4_TIME_YMD', substr(G4_TIME_YMDHIS, 0, 10));
+define('G4_TIME_HIS', substr(G4_TIME_YMDHIS, 11, 8));
+
+// 입력값 검사 상수 (숫자를 변경하시면 안됩니다.)
+define('G4_ALPHAUPPER', 1); // 영대문자
+define('G4_ALPHALOWER', 2); // 영소문자
+define('G4_ALPHABETIC', 4); // 영대,소문자
+define('G4_NUMERIC', 8); // 숫자
+define('G4_HANGUL', 16); // 한글
+define('G4_SPACE', 32); // 공백
+define('G4_SPECIAL', 64); // 특수문자
+
+// 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
+define('G4_MOBILE_AGENT', 'phone|samsung|lgtel|mobile|skt|nokia|blackberry|android|sony');
 
 //
 // 기타

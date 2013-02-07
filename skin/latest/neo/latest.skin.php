@@ -9,7 +9,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <li>
             <?
             echo $list[$i]['icon_reply']." ";
-            echo "<a href=\"".$list[$i]['href']."\">";
+            echo "<a href=\"".$list[$i]['href']."\" title=\"".$list[$i]['wr_subject']."\">";
             if ($list[$i]['is_notice'])
                 echo "<strong>".$list[$i]['subject']."</strong>";
             else
@@ -37,5 +37,5 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <? if (count($list) == 0) { //게시물이 없을 때 ?>
     <p>게시물이 없습니다.</p>
     <? } ?>
-    <div class="lt_more"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>"><img src="<?=$latest_skin_url?>/img/icon_more.gif" alt="더보기" width="14" height="12"></a></div>
+    <div class="lt_more"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>"><img src="<?=$latest_skin_url?>/img/icon_more.gif" alt="더보기" width="10" height="9"></a></div>
 </div>

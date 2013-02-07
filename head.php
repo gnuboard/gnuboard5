@@ -18,17 +18,20 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <h1><?=$config['cf_title']?></h1>
 
     <div id="hd_wrapper">
+
+        <div id="logo"><a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="53" height="36"></a></div>
+
         <ul id="snb">
             <? if ($is_member) { ?>
-            <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
-            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>">관리자</a></li><? } ?>
-            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php">정보수정</a></li>
+            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>"><img src="<?=$g4['url']?>/img/snb_adm.jpg" alt="관리자" width="26" height="26"></a></li><? } ?>
+            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php"><img src="<?=$g4['url']?>/img/snb_modify.jpg" alt="정보수정" width="26" height="26"></a></li>
+            <li><a href="<?=G4_BBS_URL?>/logout.php"><img src="<?=$g4['url']?>/img/snb_logout.jpg" alt="로그아웃" width="26" height="26"></a></li>
             <? } else { ?>
-            <li><a href="<?=G4_BBS_URL?>/login.php">로그인</a></li>
-            <li><a href="<?=G4_BBS_URL?>/register.php">회원가입</a></li>
+            <li><a href="<?=G4_BBS_URL?>/register.php"><img src="<?=$g4['url']?>/img/snb_join.jpg" alt="회원가입" width="26" height="26"></a></li>
+            <li><a href="<?=G4_BBS_URL?>/login.php"><img src="<?=$g4['url']?>/img/snb_login.jpg" alt="로그인" width="26" height="26"></a></li>
             <? } ?>
-            <li><a href="<?=G4_BBS_URL?>/current_connect.php">현재접속자 <?=connect(); // 현재 접속자수 ?></a></li>
-            <li><a href="<?=G4_BBS_URL?>/new.php">최근게시물</a></li>
+            <li><a href="<?=G4_BBS_URL?>/current_connect.php"><img src="<?=$g4['url']?>/img/snb_cnt.jpg" alt="현재접속자" width="26" height="26"><?=connect(); // 현재 접속자수 ?></a></li>
+            <li><a href="<?=G4_BBS_URL?>/new.php"><img src="<?=$g4['url']?>/img/snb_new.jpg" alt="최근게시물" width="26" height="26"></a></li>
         </ul>
 
         <fieldset id="schall">
@@ -36,7 +39,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             <form name="fsearchbox" method="get" action="<?=G4_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
             <input type="hidden" name="sop" value="and">
-            <input type="text" id="schall_stx" name="stx" title="검색어" maxlength="20"><input type="image" id="schall_submit" src="<?=G4_IMG_URL?>/btn_search.jpg" alt="검색">
+            <input type="text" id="schall_stx" name="stx" title="검색어" maxlength="20"><input type="image" id="schall_submit" src="<?=G4_IMG_URL?>/btn_search.gif" width="29" height="27" alt="검색">
             </form>
 
             <script>
@@ -67,11 +70,6 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             }
             </script>
         </fieldset>
-
-        <div id="logo"><a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="57" height="38"></a></div>
-        <?if (defined('_INDEX_')) {?>
-        <div id="idx_catch"><img src="<?=G4_URL?>/img/idx_catch.jpg" alt="Sharing All Possibilities" width="471" height="61"></div>
-        <?}?>
 
     </div>
 </header>
