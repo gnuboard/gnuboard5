@@ -54,7 +54,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
-#lnb {float:right;width:228px;border:1px solid #ececec;background:#f7f7f2}
+#lnb {float:right;width:228px;border:1px solid #ececec;border-radius:5px;background:#f7f7f2}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
