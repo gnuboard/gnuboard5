@@ -48,6 +48,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 #schall_submit {border:1px solid #ddd;border-left:0;border-top-right-radius:5px;border-bottom-right-radius:5px;}
 
 #logo {padding:21px 10px}
+#logo strong {display:inline-block;margin-left:10px;color:#428ab4;font-family:"verdana";vertical-align:middle}
 
 /* 중간 레이아웃 */
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
@@ -83,19 +84,12 @@ a:active {color:#0e99ea;text-decoration:underline}
 #visit a:hover {background:#428ab4;color:#fff}
 
 #ft_catch {position:relative;margin:0 auto;padding:20px 0;width:980px;text-align:center}
-/*
-#ft_html5badge {position:absolute;top:30px;left:190px}
-#ft_css3badge {margin-left:50px}
-*/
 
 #ft_copy {background:#414141}
 #ft_copy p {margin:0 auto;width:980px;color:#4a9ab8}
 #ft_copy b {color:#fff}
 
 /* 콘텐츠별 스타일 */
-/* PC 초기화면 */
-#idx_catch {margin-bottom:50px;text-align:center}
-
 /* 버튼 */
 .btn01 {display:inline-block;padding:0 10px;height:24px;border:1px solid #2292d3 !important;background:#428ab4 !important;color:#fff !important;text-decoration:none !important;line-height:2.2em}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.2em}

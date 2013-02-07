@@ -19,7 +19,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <div id="hd_wrapper">
 
-        <div id="logo"><a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="53" height="36"></a></div>
+        <div id="logo">
+            <a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="53" height="36"></a>
+            <strong>Sharing All Possibilities</strong>
+        </div>
 
         <ul id="snb">
             <? if ($is_member) { ?>
