@@ -1,24 +1,8 @@
-<!doctype html>
-<html lang="ko">
-<head>
-<title>title</title>
-<meta charset="utf-8">
-<script src="js/jquery-1.8.3.min.js"></script>
-</head>
-<body>
+<?
+$qstr1 = "&amp;stx=ddd&amp;page=123";
+$qstr2 = "&amp;stx=ddd&amp;page=123&amp;";
+$qstr3 = "&amp;stx=ddd&amp;page=&amp;";
+$qstr3 = "&amp;stx=ddd&amp;page=x&amp;";
 
-<p>이 문자열에서 부분을 치환합니다.</p>
-
-<a href="#" title="치환">치환하기</a>
-
-<script>
-$(function(){
-    $('a').click(function(){
-        $('p').text("치환");
-    });
-});
-</script>
-
-
-</body>
-</html>
+echo preg_replace('#(&amp;|&)?page\=[^&]*#', '', $qstr3);
+?>

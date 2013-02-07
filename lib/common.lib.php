@@ -18,7 +18,7 @@ function get_microtime()
 // 현재페이지, 총페이지수, 한페이지에 보여줄 행, URL
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {
-    $url = preg_replace('#(&amp;|&)?page\=[0-9]+#', '', $url);
+    $url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
 
     $str = '';
     if ($cur_page > 1) {
@@ -748,7 +748,15 @@ function subject_sort_link($col, $query_string='', $flag='asc')
         }
     }
 
-    return '<a href="'.$_SERVER['PHP_SELF'].'?'.$query_string.'&amp;'.$q1.'&amp;'.$q2.'&amp;sfl='.$sfl.'&amp;stx='.$stx.'&amp;page='.$page.'">';
+    $arr_query = array();
+    $arr_query[] = $q1;
+    $arr_query[] = $q2;
+    $arr_query[] = 'sfl='.$sfl;
+    $arr_query[] = 'stx='.$stx;
+    $arr_query[] = 'page='.$page;
+    $qstr = implode("&amp;", $arr_query);
+
+    return "<a href=\"{$_SERVER['PHP_SELF']}?{$qstr}\">";
 }
 
 
@@ -1649,12 +1657,9 @@ function abs_ip2long($ip='')
 }
 
 
-function get_selected($field, $value, $first=false)
+function get_selected($field, $value)
 {
-    $selected = ($field==$value) ? ' selected="selected"' : '';
-    if ($first && !$selected)
-        $selected = ($field=="") ? ' selected="selected"' : '';
-    return $selected;
+    return ($field==$value) ? ' selected="selected"' : '';
 }
 
 

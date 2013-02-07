@@ -86,9 +86,15 @@ $qstr  = "$qstr&amp;sca=$sca&amp;page=$page&amp;save_stx=$stx";
     <td><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
     <td>
         <select id="sfl" name="sfl">
+<<<<<<< HEAD
             <option value="ca_name" <?if($sfl == '분류명') echo "selected";?>>분류명</option>
             <option value="ca_id" <?if($sfl == '분류코드') echo "selected";?>>분류코드</option>
             <option value="ca_mb_id" <?if($sfl == '회원아이디') echo "selected";?>>회원아이디</option>
+=======
+            <option value='ca_name' <?=get_selected($_GET['sfl'], "ca_name");?>>분류명</option>
+            <option value='ca_id' <?=get_selected($_GET['sfl'], "ca_id");?>>분류코드</option>
+            <option value='ca_mb_id' <?=get_selected($_GET['sfl'], "ca_mb_id");?>>회원아이디</option>
+>>>>>>> fb8fc827f73dee204fd9c69e55e4d820b47f2234
         </select>
 
         <input type="text" id="stx" name="stx" value="<?=$stx?>">
