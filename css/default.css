@@ -22,7 +22,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 /* 본문 바로가기 */
 #to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
 #to_content a:focus,
-#to_content a:active {width:100%;height:80px;background:#222;color:#fff;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
+#to_content a:active {width:100%;height:80px;background:#428ab4;color:#fff;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -39,8 +39,15 @@ a:active {color:#0e99ea;text-decoration:underline}
 #snb {position:absolute;top:10px;right:250px;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
-#snb a {display:block;position:relative;padding:15px;text-decoration:none}
-#snb strong {position:absolute;top:33px;right:10px;padding:0 5px;background:#109ff1;color:#fff;font-size:0.9em;font-family:"verdana";line-height:1.5em;border-radius:10px}
+#snb a {display:block;position:relative;margin-left:1px;width:60px;height:60px;background:url('../img/snb_icon.jpg');text-decoration:none}
+#snb #snb_login {background-position:0 0}
+#snb #snb_join {background-position:-60px 0}
+#snb #snb_adm {background-position:-120px 0}
+#snb #snb_logout {background-position:-180px 0}
+#snb #snb_join {background-position:-240px 0}
+#snb #snb_cnt {background-position:-300px 0}
+#snb #snb_new {background-position:-360px 0}
+#snb strong {position:absolute;top:33px;right:0;padding:0 5px;border-radius:10px;background:#109ff1;color:#fff;font-size:0.9em;font-family:"verdana";letter-spacing:-0.1em;line-height:1.5em}
 
 #schall {position:absolute;top:25px;right:0;margin:0;padding:0;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
