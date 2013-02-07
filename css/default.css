@@ -47,7 +47,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 #snb #snb_join {background-position:-240px 0}
 #snb #snb_cnt {background-position:-300px 0}
 #snb #snb_new {background-position:-360px 0}
-#snb strong {position:absolute;top:33px;right:0;padding:0 5px;border-radius:10px;background:#109ff1;color:#fff;font-size:0.9em;font-family:"verdana";letter-spacing:-0.1em;line-height:1.5em}
+#snb strong {position:absolute;top:33px;right:0;padding:0 5px;border-radius:10px;background:#109ff1;color:#fff;font-size:0.9em;font-family:"dotum";font-weight:normal;letter-spacing:-0.1em;line-height:1.5em}
 
 #schall {position:absolute;top:25px;right:0;margin:0;padding:0;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
@@ -237,7 +237,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#428ab4;color:#f
 #ol_after_pt {width:90px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:justify}
-#ol_after_ft a {display:inline-block;width:93px;height:20px;background:#484848;color:#fff;text-align:center;line-height:1.8em}
+#ol_after_ft a {display:inline-block;width:93px;height:20px;background:#428ab4;color:#fff;text-align:center;line-height:1.8em}
 
 /* 로그인 */
 #mb_login {margin:100px auto;width:500px}
