@@ -26,15 +26,15 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
         <ul id="snb">
             <? if ($is_member) { ?>
-            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>"><img src="<?=$g4['url']?>/img/snb_adm.jpg" alt="관리자" width="26" height="26"></a></li><? } ?>
-            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php"><img src="<?=$g4['url']?>/img/snb_modify.jpg" alt="정보수정" width="26" height="26"></a></li>
-            <li><a href="<?=G4_BBS_URL?>/logout.php"><img src="<?=$g4['url']?>/img/snb_logout.jpg" alt="로그아웃" width="26" height="26"></a></li>
+            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_IMG_URL?>/snb_adm.jpg" alt="관리자" width="26" height="26"></a></li><? } ?>
+            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php"><img src="<?=G4_IMG_URL?>/snb_modify.jpg" alt="정보수정" width="26" height="26"></a></li>
+            <li><a href="<?=G4_BBS_URL?>/logout.php"><img src="<?=G4_IMG_URL?>/snb_logout.jpg" alt="로그아웃" width="26" height="26"></a></li>
             <? } else { ?>
-            <li><a href="<?=G4_BBS_URL?>/register.php"><img src="<?=$g4['url']?>/img/snb_join.jpg" alt="회원가입" width="26" height="26"></a></li>
-            <li><a href="<?=G4_BBS_URL?>/login.php"><img src="<?=$g4['url']?>/img/snb_login.jpg" alt="로그인" width="26" height="26"></a></li>
+            <li><a href="<?=G4_BBS_URL?>/register.php"><img src="<?=G4_IMG_URL?>/snb_join.jpg" alt="회원가입" width="26" height="26"></a></li>
+            <li><a href="<?=G4_BBS_URL?>/login.php"><img src="<?=G4_IMG_URL?>/snb_login.jpg" alt="로그인" width="26" height="26"></a></li>
             <? } ?>
-            <li><a href="<?=G4_BBS_URL?>/current_connect.php"><img src="<?=$g4['url']?>/img/snb_cnt.jpg" alt="현재접속자" width="26" height="26"><?=connect(); // 현재 접속자수 ?></a></li>
-            <li><a href="<?=G4_BBS_URL?>/new.php"><img src="<?=$g4['url']?>/img/snb_new.jpg" alt="최근게시물" width="26" height="26"></a></li>
+            <li><a href="<?=G4_BBS_URL?>/current_connect.php"><img src="<?=G4_IMG_URL?>/snb_cnt.jpg" alt="현재접속자" width="26" height="26"><?=connect(); // 현재 접속자수 ?></a></li>
+            <li><a href="<?=G4_BBS_URL?>/new.php"><img src="<?=G4_IMG_URL?>/snb_new.jpg" alt="최근게시물" width="26" height="26"></a></li>
         </ul>
 
         <fieldset id="schall">
