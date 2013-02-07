@@ -1,5 +1,8 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+define('G4_USE_SHOP', false);
+
 if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
 
 include_once(G4_LIB_PATH.'/shop.lib.php');
@@ -10,21 +13,22 @@ include_once(G4_LIB_PATH.'/shop.lib.php');
 // 미수금에 대한 QUERY 문
 // 테이블 a 는 장바구니 ($g4[yc4_cart_table])
 // 테이블 b 는 주문서 ($g4[yc4_order_table])
+/*
 define(_MISU_QUERY_, "
-    count(distinct b.od_id) as ordercount, /* 주문서건수 */
-    count(a.ct_id) as itemcount, /* 상품건수 */
-    (SUM((a.ct_amount + a.it_amount - a.cp_amount) * a.ct_qty) + b.od_send_cost + b.od_send_cost_area - b.od_coupon_amount - b.od_send_coupon) as orderamount , /* 주문합계 */
-    (SUM(IF(a.ct_status = '취소' OR a.ct_status = '반품' OR a.ct_status = '품절', (a.ct_amount + a.it_amount) * a.ct_qty, 0))) as ordercancel, /* 주문취소 */
-    (b.od_receipt_amount + b.od_receipt_point) as receiptamount, /* 입금합계 */
-    (b.od_refund_amount) as receiptcancel, /* 입금취소 */
+    count(distinct b.od_id) as ordercount, -- 주문서건수
+    count(a.ct_id) as itemcount, -- 상품건수
+    (SUM((a.ct_amount + a.it_amount - a.cp_amount) * a.ct_qty) + b.od_send_cost + b.od_send_cost_area - b.od_coupon_amount - b.od_send_coupon) as orderamount , -- 주문합계
+    (SUM(IF(a.ct_status = '취소' OR a.ct_status = '반품' OR a.ct_status = '품절', (a.ct_amount + a.it_amount) * a.ct_qty, 0))) as ordercancel, -- 주문취소
+    (b.od_receipt_amount + b.od_receipt_point) as receiptamount, -- 입금합계
+    (b.od_refund_amount) as receiptcancel, -- 입금취소
     (
         (SUM((a.ct_amount + a.it_amount - a.cp_amount) * a.ct_qty) + b.od_send_cost + b.od_send_cost_area - b.od_coupon_amount - b.od_send_coupon) -
         (SUM(IF(a.ct_status = '취소' OR a.ct_status = '반품' OR a.ct_status = '품절', (a.ct_amount + a.it_amount) * a.ct_qty, 0))) -
         b.od_dc_amount -
         (b.od_receipt_amount + b.od_receipt_point) +
         (b.od_refund_amount)
-    ) as misu /* 미수금 = 주문합계 - 주문취소 - DC - 입금합계 + 입금취소 */");
-
+    ) as misu -- 미수금 = 주문합계 - 주문취소 - DC - 입금합계 + 입금취소");
+*/
 
 // 쇼핑몰 디렉토리
 define('G4_SHOP_DIR',   'shop');
