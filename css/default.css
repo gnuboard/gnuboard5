@@ -333,13 +333,13 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#428ab4;color:#f
 #profile h2 {margin:0}
 
 /* 최근게시물 스킨 (latest) */
-.lt {float:left;margin-bottom:5px;padding:10px 0;width:355px;height:149px;border-bottom:1px solid #ddd}
-.lt ul {margin:0 0 10px;padding:0;list-style:none}
+.lt {float:left;margin-bottom:30px;padding-bottom:10px;width:355px;height:149px}
+.lt ul {margin:0 5px 10px;padding:0;list-style:none}
 .lt li {padding:3px 0}
 .lt a {}
-.lt_title {display:block;margin-bottom:10px}
+.lt_title {display:block;margin-bottom:10px;padding:10px 5px 8px;border:1px solid #eee;border-radius:10px;background:#f7f7f2}
 .lt_more {text-align:right}
-.lt_more a {display:block;padding:5px 0}
+.lt_more a {display:block;padding:5px 10px}
 
 /* 최근게시물 스킨 (new) */
 #new_sch {margin-bottom:10px;text-align:right}
