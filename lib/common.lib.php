@@ -1191,8 +1191,7 @@ function sql_select_db($db, $connect)
 {
     global $g4;
 
-    if (strtolower($g4['charset']) == 'utf-8') @mysql_query(" set names utf8 ");
-    else if (strtolower($g4['charset']) == 'euc-kr') @mysql_query(" set names euckr ");
+    @mysql_query(" set names utf8 ");
     return @mysql_select_db($db, $connect);
 }
 

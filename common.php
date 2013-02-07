@@ -3,30 +3,19 @@
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
 //error_reporting(E_ALL ^ E_NOTICE);
+//error_reporting(E_ALL & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR );
 
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
 header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC OTC"');
 
-if (!isset($set_time_limit)) $set_time_limit = 0;
-@set_time_limit($set_time_limit);
-
-// 짧은 환경변수를 지원하지 않는다면
-if (isset($HTTP_POST_VARS) && !isset($_POST)) {
-	$_POST   = &$HTTP_POST_VARS;
-	$_GET    = &$HTTP_GET_VARS;
-	$_SERVER = &$HTTP_SERVER_VARS;
-	$_COOKIE = &$HTTP_COOKIE_VARS;
-	$_ENV    = &$HTTP_ENV_VARS;
-	$_FILES  = &$HTTP_POST_FILES;
-
-    if (!isset($_SESSION))
-		$_SESSION = &$HTTP_SESSION_VARS;
-}
+if (!defined('G4_SET_TIME_LIMIT')) define('G4_SET_TIME_LIMIT', 0);
+@set_time_limit(G4_SET_TIME_LIMIT);
 
 
 //==============================================================================
-// php.ini 의 magic_quotes_gpc 값이 FALSE 인 경우 addslashes() 적용
+// php.ini 의 magic_quotes_gpc 값이 Off 인 경우 addslashes() 적용
 // SQL Injection 등으로 부터 보호
 // http://kr.php.net/manual/en/function.get-magic-quotes-gpc.php#97783
 //------------------------------------------------------------------------------
@@ -78,21 +67,45 @@ $group  = array();
 $g4     = array();
 
 
+function g4_path()
+{
+    $path           = dirname(__FILE__);                                        // 예) /home/sir/www/g4s
+    $linux_dir      = str_replace("\\", "/", $path);                            // 예) /home/sir/www/g4s
+    $document_root  = str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']);        // 예) /home/sir/www
+    $base_dir       = preg_replace('#^'.$document_root.'#i', '', $linux_dir);   // 예) /g4s
+    $port           = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
+    $http           = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
+
+    $result = array();
+    $result['path']     = $path;
+    $result['url']      = $http.$_SERVER['SERVER_NAME'].$port.$base_dir;
+    $result['curr_url'] = $http.$_SERVER['SERVER_NAME'].$port.$_SERVER['PHP_SELF'];
+    $result['curr_uri'] = $result['curr_url'] . ($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : '');
+
+    return $result;
+}
+
+$g4_path = g4_path();
+
+include_once($g4_path['path'].'/config.php');   // 설정 파일
+
+unset($g4_path);
+
+
 //==============================================================================
 // 공통
 //------------------------------------------------------------------------------
-$config_user_file = dirname(__FILE__).'/config.user.php';
-if (file_exists($config_user_file)) {
-    include_once($config_user_file);
-    include_once(dirname(__FILE__).'/config.php');   // 설정 파일
+$dbconfig_file = G4_DATA_PATH.'/dbconfig.php';
+if (file_exists($dbconfig_file)) {
+    include_once($dbconfig_file);
     include_once(G4_LIB_PATH.'/common.lib.php');    // 공통 라이브러리
 
     $connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
     $select_db  = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
 } else {
     echo "<meta http-equiv='content-type' content='text/html; charset=utf-8'>";
-    echo "<h3>$config_user_file 파일을 찾을 수 없습니다.<br>프로그램 설치 후 실행하시기 바랍니다.</h3>";
-    echo '<a href="'.G4_PATH.'/install/">설치하기</a>';
+    echo "<h3>$dbconfig_file 파일을 찾을 수 없습니다.<br>프로그램 설치 후 실행하시기 바랍니다.</h3>";
+    echo '<a href="'.G4_URL.'/install/">설치하기</a>';
     exit;
 }
 //==============================================================================

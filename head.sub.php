@@ -4,13 +4,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 $begin_time = get_microtime();
 
-$g4_head_title = $g4['title']; // 상태바에 표시될 제목
 if (!isset($g4['title'])) {
     $g4['title'] = $config['cf_title'];
     $g4_head_title = $g4['title'];
 }
-else
+else {
+    $g4_head_title = $g4['title']; // 상태바에 표시될 제목
     $g4_head_title .= " : ".$config['cf_title'];
+}
 
 // 현재 접속자
 // 게시판 제목에 ' 포함되면 오류 발생
