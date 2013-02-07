@@ -8,7 +8,7 @@ if (!$is_member)
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
 
-$sql = " select it_name from {$g4['yc4_item_table']} where it_id='$it_id' ";
+$sql = " select it_name from {$g4['shop_item_table']} where it_id='$it_id' ";
 $it = sql_fetch($sql);
 if (!$it['it_name'])
     alert_close("등록된 상품이 아닙니다.");

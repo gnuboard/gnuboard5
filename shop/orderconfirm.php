@@ -9,7 +9,7 @@ if (get_cart_count($uq_id, $sw_direct) == 0)// 장바구니에 담기
 
 set_session("ss_uq_id_inquiry", $uq_id);
 
-$sql = " select * from {$g4['yc4_order_table']} where uq_id = '$uq_id' ";
+$sql = " select * from {$g4['shop_order_table']} where uq_id = '$uq_id' ";
 $od = sql_fetch($sql);
 
 //print_r2($od);
@@ -21,7 +21,7 @@ include_once('./_head.php');
 // 상품명만들기
 /*
 $sql = " select a.it_id, b.it_name
-           from $g4[yc4_cart_table] a, $g4[yc4_item_table] b
+           from $g4[shop_cart_table] a, $g4[shop_item_table] b
           where a.it_id = b.it_id
             and a.on_uid = '$tmp_on_uid'
           order by ct_id

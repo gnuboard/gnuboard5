@@ -8,7 +8,7 @@ $html_title = "배너";
 if ($w=="u")
 {
     $html_title .= " 수정";
-    $sql = " select * from $g4['yc4_banner_table'] where bn_id = '$bn_id' ";
+    $sql = " select * from $g4['shop_banner_table'] where bn_id = '$bn_id' ";
     $bn = sql_fetch($sql);
 }
 else

@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "w");
 
 $category_path = "{$g4['path']}/data/category";
 
-$sql_common = " from {$g4['yc4_category_table']} ";
+$sql_common = " from {$g4['shop_category_table']} ";
 if ($is_admin != 'super')
     $sql_common .= " where ca_mb_id = '{$member['mb_id']}' ";
 
@@ -22,7 +22,7 @@ if ($w == "")
 
     $len2 = $len + 1;
 
-    $sql = " select MAX(SUBSTRING(ca_id,$len2,2)) as max_subid from {$g4['yc4_category_table']} where SUBSTRING(ca_id,1,$len) = '$ca_id' ";
+    $sql = " select MAX(SUBSTRING(ca_id,$len2,2)) as max_subid from {$g4['shop_category_table']} where SUBSTRING(ca_id,1,$len) = '$ca_id' ";
     $row = sql_fetch($sql);
 
     if ($row['max_subid']) {
@@ -45,7 +45,11 @@ if ($w == "")
 
     if ($ca_id) // 2단계이상 분류
     {
-        $sql = " select * from {$g4['yc4_category_table']} where ca_id = '$ca_id' ";
+<<<<<<< HEAD
+        $sql = " select * from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
+=======
+        $sql = " select * from $g4[shop_category_table] where ca_id = '$ca_id' ";
+>>>>>>> ddb1dec36c49f24441636f5e3dcb1e1db20a0d2b
         $ca = sql_fetch($sql);
         $html_title = $ca['ca_name'] . " 하위분류추가";
         $ca['ca_name'] = "";
@@ -66,7 +70,11 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    $sql = " select * from {$g4['yc4_category_table']} where ca_id = '$ca_id' ";
+<<<<<<< HEAD
+    $sql = " select * from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
+=======
+    $sql = " select * from $g4[shop_category_table] where ca_id = '$ca_id' ";
+>>>>>>> ddb1dec36c49f24441636f5e3dcb1e1db20a0d2b
     $ca = sql_fetch($sql);
     if (!$ca[ca_id])
         alert("자료가 없습니다.");

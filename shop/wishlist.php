@@ -26,8 +26,8 @@ include_once("./_head.php");
 <tr><td colspan=6 height=1 class=c1></td></tr>
 <?
 $sql = " select *
-           from {$g4['yc4_wish_table']} a,
-                {$g4['yc4_item_table']} b
+           from {$g4['shop_wish_table']} a,
+                {$g4['shop_item_table']} b
           where a.mb_id = '{$member['mb_id']}'
             and a.it_id  = b.it_id
           order by a.wi_id desc ";

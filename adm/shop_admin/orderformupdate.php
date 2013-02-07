@@ -2,7 +2,7 @@
 $sub_menu = "400400";
 include_once("./_common.php");
 
-$sql = " update $g4[yc4_order_table]
+$sql = " update $g4[shop_order_table]
             set od_shop_memo = '$od_shop_memo',
                 od_name = '$od_name',
                 od_tel = '$od_tel',

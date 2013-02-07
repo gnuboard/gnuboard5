@@ -10,7 +10,7 @@ if (!$is_member) {
         alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.");
 }
 
-$sql = "select * from {$g4['yc4_order_table']} where od_id = '$od_id' ";
+$sql = "select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 if (!$od['od_id']) {
     alert('조회하실 주문서가 없습니다.', $g4['path']);
@@ -90,7 +90,7 @@ if(openwin != null) {
 
 <?
 // 배송회사 정보
-$dl = sql_fetch(" select * from $g4[yc4_delivery_table] where dl_id = '$od[dl_id]' ");
+$dl = sql_fetch(" select * from $g4[shop_delivery_table] where dl_id = '$od[dl_id]' ");
 
 if ($od[od_invoice] || !$od[misu])
 {

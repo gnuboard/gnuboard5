@@ -15,7 +15,7 @@ if($sw_direct != 1)
 else
     $hsw_direct = 1;
 
-$hsql = " select a.it_id, b.it_name, a.ct_qty from {$g4['yc4_cart_table']} a left join {$g4['yc4_item_table']} b on ( a.it_id = b.it_id )
+$hsql = " select a.it_id, b.it_name, a.ct_qty from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
           where $hsql_where
             and a.it_id  = b.it_id
             and a.ct_direct = '$hsw_direct'

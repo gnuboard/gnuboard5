@@ -90,7 +90,7 @@ $sql = " select a.ct_id,
                 b.it_supplement_use,
                 b.it_nocoupon,
                 b.it_notax
-          from {$g4['yc4_cart_table']} as a left join {$g4['yc4_item_table']} as b on ( a.it_id = b.it_id )
+          from {$g4['shop_cart_table']} as a left join {$g4['shop_item_table']} as b on ( a.it_id = b.it_id )
             where $sql_where
               and a.ct_parent = '0'
               and a.ct_direct = '$sw_direct' ";
@@ -114,7 +114,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
                     SUM(cp_amount) as dc_amount,
                     SUM(ct_point * ct_qty) as sum_point,
                     SUM(ct_qty) as sum_qty
-                from {$g4['yc4_cart_table']}
+                from {$g4['shop_cart_table']}
                   where ct_id = '{$row['ct_id']}'
                     or ct_parent = '{$row['ct_id']}' ";
     $sum = sql_fetch($sql);
@@ -132,13 +132,13 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     // 선택, 추가 옵션개수
     $opt_count = $spl_count = 0;
     if($row['it_option_use']) {
-        $sql2 = " select COUNT(*) as cnt from {$g4['yc4_option_table']} where it_id = '{$row['it_id']}' ";
+        $sql2 = " select COUNT(*) as cnt from {$g4['shop_option_table']} where it_id = '{$row['it_id']}' ";
         $row2 = sql_fetch($sql2);
         $opt_count = (int)$row2['cnt'];
     }
     $spl_count = 0;
     if($row['it_supplement_use']) {
-        $sql2 = " select COUNT(*) as cnt from {$g4['yc4_supplement_table']} where it_id = '{$row['it_id']}' ";
+        $sql2 = " select COUNT(*) as cnt from {$g4['shop_supplement_table']} where it_id = '{$row['it_id']}' ";
         $row2 = sql_fetch($sql2);
         $spl_count = (int)$row2['cnt'];
     }
@@ -207,7 +207,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
             if($is_member) {
                 // 상품에 쿠폰 있는지 체크
                 $sql3 = " select cp_id, ca_id
-                            from {$g4['yc4_coupon_table']}
+                            from {$g4['shop_coupon_table']}
                             where cp_use = '1'
                               and cp_type = '0'
                               and cp_start <= '{$g4['time_ymd']}'
@@ -221,7 +221,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
                 for($k=0; $row3=sql_fetch_array($result3); $k++) {
                     // 쿠폰제외카테고리체크
                     $sql4 = " select ca_nocoupon
-                                from {$g4['yc4_category_table']}
+                                from {$g4['shop_category_table']}
                                 where ca_id = '{$row3['ca_id']}' ";
                     $row4 = sql_fetch($sql4);
                     if($row4['ca_nocoupon']) {
@@ -230,7 +230,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
                     // 쿠폰사용여부체크
                     $sql4 = " select uq_id
-                                from {$g4['yc4_coupon_history_table']}
+                                from {$g4['shop_coupon_history_table']}
                                 where cp_id = '{$row3['cp_id']}'
                                   and it_id = '{$row['it_id']}'
                                   and mb_id = '{$member['mb_id']}' ";
@@ -332,7 +332,7 @@ if ($i == 0) {
                     $send_cost += 0;
                 } else {
                     $sql = " select it_sc_type, it_sc_basic, it_sc_method, it_sc_condition
-                                from {$g4['yc4_item_table']}
+                                from {$g4['shop_item_table']}
                                 where it_id = '{$itemlist[$i]['it_id']}' ";
                     $row = sql_fetch($sql);
 
@@ -355,7 +355,7 @@ if ($i == 0) {
         }
 
         // 이미 주문된 내역을 보여주는것이므로 주문서에서 얻는다.
-        $sql = "select od_send_cost, od_send_coupon, od_send_cost_area, od_coupon_amount from {$g4['yc4_order_table']} where od_id = '$od_id' ";
+        $sql = "select od_send_cost, od_send_coupon, od_send_cost_area, od_coupon_amount from {$g4['shop_order_table']} where od_id = '$od_id' ";
         $row = sql_fetch($sql);
         if ($row['od_send_cost'] > 0)
             $send_cost = $row['od_send_cost'] - $row['od_send_coupon'];

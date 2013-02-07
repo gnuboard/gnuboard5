@@ -24,7 +24,7 @@ if ($od_hp_time)
         alert("휴대폰 결제일시 오류입니다.");
 }
 
-$sql = " update {$g4['yc4_order_table']}
+$sql = " update {$g4['shop_order_table']}
             set od_deposit_name     = '$od_deposit_name',
                 od_bank_account     = '$od_bank_account',
                 od_receipt_time     = '$od_receipt_time',

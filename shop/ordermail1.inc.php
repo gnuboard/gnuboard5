@@ -23,7 +23,7 @@ $sql = " select b.it_sell_email,
                 a.ct_qty,
                 a.ct_amount,
                 a.ct_point
-           from $g4[yc4_cart_table] a, $g4[yc4_item_table] b
+           from $g4[shop_cart_table] a, $g4[shop_item_table] b
           where a.on_uid = '$tmp_on_uid' 
             and a.it_id = b.it_id ";
 $result = sql_query($sql);

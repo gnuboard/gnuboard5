@@ -4,7 +4,7 @@ include_once('./_common.php');
 if(!$makemode) {
     $list = array();
     $sql = " select sp_id, sp_amount, sp_qty, sp_notice, sp_use
-                from `{$g4['yc4_supplement_table']}`
+                from `{$g4['shop_supplement_table']}`
                 where it_id = '$it_id'
                 order by sp_no asc ";
     $result = sql_query($sql);

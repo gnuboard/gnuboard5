@@ -7,7 +7,7 @@ check_demo();
 auth_check($auth[$sub_menu], "w");
 
 for ($i=0; $i<count($_POST['ca_id']); $i++) {
-    $sql = " update $g4[yc4_category_table]
+    $sql = " update $g4[shop_category_table]
                 set ca_name       = '{$_POST[ca_name][$i]}',
                     ca_menu       = '{$_POST[ca_menu][$i]}',
                     ca_use        = '{$_POST[ca_use][$i]}',

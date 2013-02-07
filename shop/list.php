@@ -3,7 +3,7 @@ include_once("./_common.php");
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 $sql = " select *
-           from $g4[yc4_category_table]
+           from $g4[shop_category_table]
           where ca_id = '$ca_id'
             and ca_use = '1'  ";
 $ca = sql_fetch($sql);
@@ -53,7 +53,7 @@ $sql_list2 = " order by $order_by it_order, it_id desc ";
 
 // 하위분류 포함
 // 판매가능한 상품만
-$sql_common = " from $g4[yc4_item_table]
+$sql_common = " from $g4[shop_item_table]
                where (ca_id like '{$ca_id}%'
                    or ca_id2 like '{$ca_id}%'
                    or ca_id3 like '{$ca_id}%')

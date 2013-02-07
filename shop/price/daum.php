@@ -79,31 +79,31 @@ else {
     $deliv2  = (int)$send_cost_list[0]."원";
 }
 
-$sql =" select * from $g4[yc4_item_table] where it_use = '1' order by ca_id";
+$sql =" select * from $g4[shop_item_table] where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $cate1 = $cate2 = $cate3 = $cate4 = "";
 
-    $row2 = sql_fetch(" select ca_id, ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,2)."' ");
+    $row2 = sql_fetch(" select ca_id, ca_name from $g4[shop_category_table] where ca_id = '".substr($row[ca_id],0,2)."' ");
     $cate1     = $row2[ca_id];
     $catename1 = $row2[ca_name];
 
     if (strlen($row[ca_id]) >= 8) {
-        $row2 = sql_fetch(" select ca_id, ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,8)."' ");
+        $row2 = sql_fetch(" select ca_id, ca_name from $g4[shop_category_table] where ca_id = '".substr($row[ca_id],0,8)."' ");
         $cate4     = $row2[ca_id];
         $catename4 = $row2[ca_name];
     }
 
     if (strlen($row[ca_id]) >= 6) {
-        $row2 = sql_fetch(" select ca_id, ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,6)."' ");
+        $row2 = sql_fetch(" select ca_id, ca_name from $g4[shop_category_table] where ca_id = '".substr($row[ca_id],0,6)."' ");
         $cate3     = $row2[ca_id];
         $catename3 = $row2[ca_name];
     }
 
     if (strlen($row[ca_id]) >= 4) {
-        $row2 = sql_fetch(" select ca_id, ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,4)."' ");
+        $row2 = sql_fetch(" select ca_id, ca_name from $g4[shop_category_table] where ca_id = '".substr($row[ca_id],0,4)."' ");
         $cate2     = $row2[ca_id];
         $catename2 = $row2[ca_name];
     }

@@ -19,7 +19,7 @@ if ($w == "")
     $it['ca_id3'] = get_cookie("ck_ca_id3");
     if (!$it['ca_id'])
     {
-        $sql = " select ca_id from {$g4['yc4_category_table']} order by ca_id limit 1 ";
+        $sql = " select ca_id from {$g4['shop_category_table']} order by ca_id limit 1 ";
         $row = sql_fetch($sql);
         if (!$row['ca_id'])
             alert("등록된 분류가 없습니다. 우선 분류를 등록하여 주십시오.");
@@ -41,7 +41,7 @@ else if ($w == "u")
 
     if ($is_admin != 'super')
     {
-        $sql = " select it_id from $g4[yc4_item_table] a, $g4[yc4_category_table] b
+        $sql = " select it_id from $g4[shop_item_table] a, $g4[shop_category_table] b
                   where a.it_id = '$it_id'
                     and a.ca_id = b.ca_id
                     and b.ca_mb_id = '$member[mb_id]' ";
@@ -50,13 +50,13 @@ else if ($w == "u")
             alert("\'{$member[mb_id]}\' 님께서 수정 할 권한이 없는 상품입니다.");
     }
 
-    $sql = " select * from $g4[yc4_item_table] where it_id = '$it_id' ";
+    $sql = " select * from $g4[shop_item_table] where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
     if (!$ca_id)
         $ca_id = $it[ca_id];
 
-    $sql = " select * from $g4[yc4_category_table] where ca_id = '$ca_id' ";
+    $sql = " select * from $g4[shop_category_table] where ca_id = '$ca_id' ";
     $ca = sql_fetch($sql);
 }
 else
@@ -112,7 +112,7 @@ ul { margin: 0; padding: 0; list-style: none; }
             <option value="">= 기본분류 =
             <?
             $script = "";
-            $sql = " select * from $g4[yc4_category_table] ";
+            $sql = " select * from $g4[shop_category_table] ";
             if ($is_admin != 'super')
                 $sql .= " where ca_mb_id = '$member[mb_id]' ";
             $sql .= " order by ca_id ";
@@ -307,7 +307,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 </tr>
 <?
 if ($it['it_id']) {
-    $sql = " select distinct ii_gubun from {$g4['yc4_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
+    $sql = " select distinct ii_gubun from {$g4['shop_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
     $ii = sql_fetch($sql, false);
     if ($ii) {
         $item_info_gubun = item_info_gubun($ii['ii_gubun']);
@@ -460,14 +460,14 @@ if ($it['it_id']) {
         <?
         $str = array();
         $sql = " select b.ca_id, b.it_id, b.it_name, b.it_amount, b.it_img1, b.it_img2, b.it_img3, b.it_img4, b.it_img5, b.it_img6, b.it_img7, b.it_img8, b.it_img9, b.it_img10
-                   from {$g4['yc4_item_relation_table']} a
-                   left join {$g4['yc4_item_table']} b on (a.it_id2 = b.it_id)
+                   from {$g4['shop_item_relation_table']} a
+                   left join {$g4['shop_item_table']} b on (a.it_id2 = b.it_id)
                   where a.it_id = '$it_id'
                   order by b.ca_id, b.it_name ";
         $result = sql_query($sql);
         while($row=sql_fetch_array($result))
         {
-            $sql2 = " select ca_name from {$g4['yc4_category_table']} where ca_id = '{$row['ca_id']}' ";
+            $sql2 = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['ca_id']}' ";
             $row2 = sql_fetch($sql2);
 
 			// 상품이미지썸네일
@@ -499,7 +499,7 @@ if ($it['it_id']) {
         <option value=''>분류별 관련상품
         <option value=''>----------------------
         <?
-            $sql = " select ca_id, ca_name from {$g4['yc4_category_table']} where length(ca_id) = 2 order by ca_id ";
+            $sql = " select ca_id, ca_name from {$g4['shop_category_table']} where length(ca_id) = 2 order by ca_id ";
             $result = sql_query($sql);
             for ($i=0; $row=sql_fetch_array($result); $i++)  {
                 echo "<option value='$row[ca_id]'>$row[ca_name]\n";
@@ -623,8 +623,8 @@ if ($it['it_id']) {
         $str = "";
         $comma = "";
         $sql = " select b.ev_id, b.ev_subject
-                   from $g4[yc4_event_item_table] a
-                   left join $g4[yc4_event_table] b on (a.ev_id=b.ev_id)
+                   from $g4[shop_event_item_table] a
+                   left join $g4[shop_event_table] b on (a.ev_id=b.ev_id)
                   where a.it_id = '$it_id'
                   order by b.ev_id desc ";
         $result = sql_query($sql);
@@ -642,7 +642,7 @@ if ($it['it_id']) {
         이벤트 선택후 <FONT COLOR="#0E87F9">더블클릭하면 왼쪽에 추가됨</FONT><br>
         <select size=6 style='width:250px; background-color:#F6F6F6;' ondblclick="event_add(this);">
         <?
-        $sql = " select ev_id, ev_subject from $g4[yc4_event_table] order by ev_id desc ";
+        $sql = " select ev_id, ev_subject from $g4[shop_event_table] order by ev_id desc ";
         $result = sql_query($sql);
         while ($row=sql_fetch_array($result)) {
             echo "<option value='$row[ev_id]'>".get_text($row[ev_subject]);

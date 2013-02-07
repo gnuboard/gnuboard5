@@ -12,7 +12,7 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
 <tr><td align=center valign=top height=50><img src='<?=G4_SHOP_IMG_URL?>/bar_category.gif'></td></tr>
 <?
 // 1단계 분류 판매가능한것만
-$hsql = " select ca_id, ca_name from $g4[yc4_category_table]
+$hsql = " select ca_id, ca_name from $g4[shop_category_table]
           where length(ca_id) = '2'
             and ca_use = '1'
           order by ca_id ";
@@ -24,7 +24,7 @@ for ($i=0; $row=sql_fetch_array($hresult); $i++)
     $menubody = "";
     $onmouseover = "";
     $onmouseout  = "";
-    $sql2 = " select ca_id, ca_name from $g4[yc4_category_table]
+    $sql2 = " select ca_id, ca_name from $g4[shop_category_table]
                where LENGTH(ca_id) = '4'
                  and SUBSTRING(ca_id,1,2) = '$row[ca_id]'
                  and ca_use = '1'

@@ -17,7 +17,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     if ($score = get_star_image($row[it_id]))
         $star = "<img src='$g4[shop_img_path]/star{$score}.gif' border=0>";
 
-    $sql2 = " select * from $g4[yc4_item_table] where it_id = '$row[it_id]' ";
+    $sql2 = " select * from $g4[shop_item_table] where it_id = '$row[it_id]' ";
     $row2 = sql_fetch($sql2);
 
     // 특정상품아이콘

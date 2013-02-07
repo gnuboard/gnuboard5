@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$sql = " select sp_amount, sp_qty from `{$g4['yc4_supplement_table']}` where it_id = '$it_id' and sp_id = '$sp_id' and sp_use = '1' ";
+$sql = " select sp_amount, sp_qty from `{$g4['shop_supplement_table']}` where it_id = '$it_id' and sp_id = '$sp_id' and sp_use = '1' ";
 $row = sql_fetch($sql);
 
 if(!$row['sp_amount']) {

@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = "쿠폰관리";
 include_once(G4_ADMIN_PATH."/admin.head.php");
 
-$sql_common = " from {$g4['yc4_coupon_table']} a left join {$g4['yc4_item_table']} b on ( a.it_id = b.it_id ) ";
+$sql_common = " from {$g4['shop_coupon_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id ) ";
 
 $sql_search = " where (1) ";
 
@@ -106,7 +106,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         }
     } else if($row['cp_target'] == 1) { // 카테고리
         if($row['ca_id'] != '전체카테고리') {
-            $sql = " select ca_name from {$g4['yc4_category_table']} where ca_id = '{$row['ca_id']}' ";
+            $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['ca_id']}' ";
             $temp = sql_fetch($sql);
             $target = $temp['ca_name'];
         } else {
@@ -119,7 +119,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     $limit = explode('-', $row['cp_end']);
     $cp_end = substr($limit[0], 2, 2).'년 '.(int)$limit[1].'월 '.(int)$limit[2].'일';
     // 쿠폰사용수
-    $sql1 = " select count(*) as cnt from {$g4['yc4_coupon_history_table']} where cp_id = '{$row['cp_id']}' ";
+    $sql1 = " select count(*) as cnt from {$g4['shop_coupon_history_table']} where cp_id = '{$row['cp_id']}' ";
     $row1 = sql_fetch($sql1);
     $use_count = number_format($row1['cnt']);
 

@@ -8,7 +8,7 @@ $html_title = '선택옵션설정';
 
 if ($is_admin != 'super')
 {
-    $sql = " select it_id from `{$g4['yc4_item_table']}` a, `{$g4['yc4_category_table']}` b
+    $sql = " select it_id from `{$g4['shop_item_table']}` a, `{$g4['shop_category_table']}` b
               where a.it_id = '$it_id'
                 and a.ca_id = b.ca_id
                 and b.ca_mb_id = '{$member['mb_id']}' ";

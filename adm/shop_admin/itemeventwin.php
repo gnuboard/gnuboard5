@@ -4,7 +4,7 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], "r");
 
-$sql = " select ev_subject from $g4[yc4_event_table] where ev_id = '$ev_id' ";
+$sql = " select ev_subject from $g4[shop_event_table] where ev_id = '$ev_id' ";
 $ev = sql_fetch($sql);
 
 $g4[title] = "[$ev[ev_subject]] 이벤트상품";
@@ -27,8 +27,8 @@ include_once("$g4[path]/head.sub.php");
 <tr><td colspan=20 height=3 bgcolor=#F8F8F8></td></tr>
 
 <?
-$sql = " select b.it_id, b.it_name, b.it_use from $g4[yc4_event_item_table] a
-           left join $g4[yc4_item_table] b on (a.it_id="b".it_id)
+$sql = " select b.it_id, b.it_name, b.it_use from $g4[shop_event_item_table] a
+           left join $g4[shop_item_table] b on (a.it_id="b".it_id)
           where a.ev_id = '$ev_id' 
           order by b.it_id desc ";
 $result = sql_query($sql);

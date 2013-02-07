@@ -152,7 +152,7 @@ if(!$default['de_card_test']) {
         // 주문서 UPDATE
         $od_receipt_time = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $tx_tm);
 
-        $sql = " update {$g4['yc4_order_table']}
+        $sql = " update {$g4['shop_order_table']}
                     set od_receipt_amount = '$ipgm_mnyx',
                         od_receipt_time = '$od_receipt_time',
                         od_cash_authno = '$cash_a_no'

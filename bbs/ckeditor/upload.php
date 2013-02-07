@@ -3,8 +3,8 @@ include_once("../../common.php");
 
 $ym = date('ym', G4_SERVER_TIME);
 
-$data_dir = G4_EDITOR_PATH.'/'.$ym;
-$data_url = G4_EDITOR_URL.'/'.$ym;
+$data_dir = G4_DATA_PATH.'/editor/'.$ym;
+$data_url = G4_DATA_URL.'/editor/'.$ym;
 @mkdir($data_dir, 0707);
 @chmod($data_dir, 0707);
  

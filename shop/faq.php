@@ -4,7 +4,7 @@ include_once("./_common.php");
 if (!$fm_id) $fm_id = 1;
 
 // FAQ MASTER
-$sql = " select * from $g4[yc4_faq_master_table] where fm_id = '$fm_id' ";
+$sql = " select * from $g4[shop_faq_master_table] where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 if (!$fm[fm_id]) 
     alert("등록된 내용이 없습니다.");
@@ -30,7 +30,7 @@ echo "<br>";
 echo "<table width=95% align=center cellpadding=1 cellspacing=0>\n";
 echo "<tr><td class=bg_faq><table width=100% cellpadding=2 cellspacing=1 border=0 bgcolor=#FFFFFF>\n";
 
-$sql = " select * from $g4[yc4_faq_table]
+$sql = " select * from $g4[shop_faq_table]
           where fm_id = '$fm_id'
           order by fa_order , fa_id ";
 $result = sql_query($sql);

@@ -8,7 +8,7 @@ auth_check($auth[$sub_menu], "w");
 
 for ($i=0; $i<count($_POST[it_id]); $i++) 
 {
-    $sql = "update $g4[yc4_item_table] 
+    $sql = "update $g4[shop_item_table] 
                set it_type1 = '{$_POST[it_type1][$i]}',
                    it_type2 = '{$_POST[it_type2][$i]}',
                    it_type3 = '{$_POST[it_type3][$i]}',

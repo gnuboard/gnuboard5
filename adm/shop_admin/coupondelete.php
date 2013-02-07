@@ -14,7 +14,7 @@ if(!$count) {
 
 for($i=0; $i<$count; $i++) {
     $cp_no = $_POST['list_chk'][$i];
-    $sql = " delete from {$g4['yc4_coupon_table']} where cp_no = '$cp_no' ";
+    $sql = " delete from {$g4['shop_coupon_table']} where cp_no = '$cp_no' ";
     @sql_query($sql);
 }
 

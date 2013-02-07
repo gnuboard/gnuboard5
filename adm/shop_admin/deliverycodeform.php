@@ -9,7 +9,7 @@ if ($w == "u") {
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from $g4[yc4_delivery_table] where dl_id = '$dl_id' ";
+    $sql = " select * from $g4[shop_delivery_table] where dl_id = '$dl_id' ";
     $dl = sql_fetch($sql);
     if (!$dl[dl_id]) alert("등록된 자료가 없습니다.");
 }

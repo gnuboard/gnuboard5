@@ -19,8 +19,8 @@ include_once("./_head.php");
         <?
         // QUERY 문에 공통적으로 들어가는 내용
         // 상품명에 검색어가 포한된것과 상품판매가능인것만
-        $sql_common = " from $g4[yc4_item_table] a, 
-                             $g4[yc4_category_table] b
+        $sql_common = " from $g4[shop_item_table] a, 
+                             $g4[shop_category_table] b
                        where a.ca_id = b.ca_id
                          and ( a.it_name like   '%$search_str%' or
                                a.it_basic like  '%$search_str%' or
@@ -79,7 +79,7 @@ function write_search_save($save)
 {
 	global $g4, $search_str , $default , $image_rate , $cart_dir;
 
-    $sql = " select ca_name from $g4[yc4_category_table] where ca_id = '$save[ca_id]' ";
+    $sql = " select ca_name from $g4[shop_category_table] where ca_id = '$save[ca_id]' ";
     $row = sql_fetch($sql);
 
     echo "
@@ -111,7 +111,7 @@ function write_search_save($save)
                         it_type3,
                         it_type4,
                         it_type5
-                   from $g4[yc4_item_table] where it_id = '{$save[it_id][$i]}' ";
+                   from $g4[shop_item_table] where it_id = '{$save[it_id][$i]}' ";
         $row = sql_fetch($sql);
 
         $image = get_it_image("$row[it_id]_s", (int)($default[de_simg_width] / $image_rate), (int)($default[de_simg_height] / $image_rate), $row[it_id]);

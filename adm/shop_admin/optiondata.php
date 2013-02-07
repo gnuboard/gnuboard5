@@ -15,7 +15,7 @@ if($makemode) {
 } else {
     $list = array();
     $sql = " select opt_id, opt_amount, opt_qty, opt_notice, opt_use
-                from `{$g4['yc4_option_table']}`
+                from `{$g4['shop_option_table']}`
                 where it_id = '$it_id'
                 order by opt_no asc ";
     $result = sql_query($sql);

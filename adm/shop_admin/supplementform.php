@@ -8,7 +8,7 @@ $html_title = '추가옵션설정';
 
 if ($is_admin != 'super')
 {
-    $sql = " select it_id from `{$g4['yc4_item_table']}` a, `{$g4['yc4_category_table']}` b
+    $sql = " select it_id from `{$g4['shop_item_table']}` a, `{$g4['shop_category_table']}` b
               where a.it_id = '$it_id'
                 and a.ca_id = b.ca_id
                 and b.ca_mb_id = '{$member['mb_id']}' ";
@@ -17,7 +17,7 @@ if ($is_admin != 'super')
         alert("\'{$member[mb_id]}\' 님께서 수정 할 권한이 없는 상품입니다.");
 }
 
-$sql = " select sp_id from {$g4['yc4_supplement_table']} where it_id = '$it_id' order by sp_id asc ";
+$sql = " select sp_id from {$g4['shop_supplement_table']} where it_id = '$it_id' order by sp_id asc ";
 $result = sql_query($sql);
 $spl_count = mysql_num_rows($result);
 

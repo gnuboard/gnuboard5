@@ -33,7 +33,7 @@ include_once("./_common.php");
 // 페이지당 행수
 $page_rows = 500;
 
-$sql = " select count(*) as cnt from $g4[yc4_item_table] where it_use = '1' ";
+$sql = " select count(*) as cnt from $g4[shop_item_table] where it_use = '1' ";
 $row = sql_fetch($sql);
 $total_count = $row[cnt];
 ?>
@@ -76,24 +76,24 @@ if ($page == "") $page = 1;
 // 시작 레코드 구함
 $from_record = ($page - 1) * $page_rows;
 
-$sql = " select * from $g4[yc4_item_table] where it_use = '1' order by ca_id limit $from_record, $page_rows ";
+$sql = " select * from $g4[shop_item_table] where it_use = '1' order by ca_id limit $from_record, $page_rows ";
 $result = sql_query($sql);
 for ($i=0; $row=mysql_fetch_array($result); $i++) 
 {
-    $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,2)."' ");
+    $row2 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '".substr($row[ca_id],0,2)."' ");
 
     if (strlen($row[ca_id]) >= 4) 
-        $row3 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,4)."' ");
+        $row3 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '".substr($row[ca_id],0,4)."' ");
     else
         $row3[ca_name] = "&nbsp;";
 
     if (strlen($row[ca_id]) >= 6) 
-        $row4 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,6)."' ");
+        $row4 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '".substr($row[ca_id],0,6)."' ");
     else
         $row4[ca_name] = "&nbsp;";
 
     if (strlen($row[ca_id]) >= 8) 
-        $row5 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,8)."' ");
+        $row5 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '".substr($row[ca_id],0,8)."' ");
     else
         $row5[ca_name] = "&nbsp;";
 

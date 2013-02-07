@@ -7,7 +7,7 @@ if(!$is_member) {
 
 // 상품정보
 $sql = " select it_id, it_nocoupon, ca_id, ca_id2, ca_id3, it_notax
-            from {$g4['yc4_item_table']}
+            from {$g4['shop_item_table']}
             where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 
@@ -27,7 +27,7 @@ for($i=0; $i<3; $i++) {
     }
 
     $ca_id = $it["ca_id$no"];
-    $sql = " select ca_nocoupon from {$g4['yc4_category_table']} where ca_id = '$ca_id' ";
+    $sql = " select ca_nocoupon from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
     $row = sql_fetch($sql);
 
     if($row['ca_nocoupon']) {
@@ -41,7 +41,7 @@ $uq_id = get_session('ss_uniqid');
 if($sw_direct != 1)
     $sw_direct = 0;
 
-$sql_common = " from ( select * from {$g4['yc4_cart_table']}
+$sql_common = " from ( select * from {$g4['shop_cart_table']}
                           where uq_id = '$uq_id'
                             and it_id = '$it_id'
                             and ct_direct = '$sw_direct'
@@ -63,7 +63,7 @@ if($ct['item_amount']) {
 
 // 총주문금액
 $sql = " select SUM((ct_amount + it_amount) * ct_qty) as total_amount
-            from {$g4['yc4_cart_table']}
+            from {$g4['shop_cart_table']}
             where uq_id = '$uq_id'
               and ct_direct = '$sw_direct' ";
 $row = sql_fetch($sql);
@@ -100,8 +100,8 @@ else if($default['de_send_cost_case'] == "상한") {
                     b.it_sc_type,
                     b.it_sc_basic,
                     b.it_sc_condition
-               from ( select * from {$g4['yc4_cart_table']} where uq_id = '$uq_id' and ct_direct = '$sw_direct' order by ct_id asc ) as a,
-                    {$g4['yc4_item_table']} b
+               from ( select * from {$g4['shop_cart_table']} where uq_id = '$uq_id' and ct_direct = '$sw_direct' order by ct_id asc ) as a,
+                    {$g4['shop_item_table']} b
               where a.it_id  = b.it_id
                 group by a.it_id
                 order by a.ct_id ";
@@ -131,7 +131,7 @@ else if($default['de_send_cost_case'] == "상한") {
 
 // 쿠폰정보
 $sql = " select *
-            from {$g4['yc4_coupon_table']}
+            from {$g4['shop_coupon_table']}
             where cp_use = '1'
               and cp_type = '0'
               and cp_start <= '{$g4['time_ymd']}'
@@ -157,7 +157,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     // 쿠폰사용내역체크
     $sql = " select ch_no
-                from {$g4['yc4_coupon_history_table']}
+                from {$g4['shop_coupon_history_table']}
                 where cp_id = '{$row['cp_id']}'
                   and it_id = '$it_id'
                   and mb_id = '{$member['mb_id']}'

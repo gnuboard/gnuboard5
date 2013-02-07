@@ -6,9 +6,9 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], "w");
 
 $sql = " select *
-           from $g4[yc4_item_ps_table] a
+           from $g4[shop_item_ps_table] a
            left join $g4[member_table] b on (a.mb_id = b.mb_id)
-           left join $g4[yc4_item_table] c on (a.it_id = c.it_id)
+           left join $g4[shop_item_table] c on (a.it_id = c.it_id)
           where is_id = '$is_id' ";
 $is = sql_fetch($sql);
 if (!$is[is_id])

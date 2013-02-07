@@ -160,7 +160,7 @@ if($w == '') {
             do {
                 $cp_id = coupon_generator();
 
-                $sql = " insert into {$g4['yc4_coupon_table']}
+                $sql = " insert into {$g4['shop_coupon_table']}
                             set cp_id       = '$cp_id',
                                 cp_subject  = '$cp_subject',
                                 cp_type     = '$cp_type',
@@ -208,7 +208,7 @@ if($w == '') {
                 do {
                     $cp_id = coupon_generator();
 
-                    $sql = " insert into {$g4['yc4_coupon_table']}
+                    $sql = " insert into {$g4['shop_coupon_table']}
                                 set cp_id       = '$cp_id',
                                     cp_subject  = '$cp_subject',
                                     cp_type     = '$cp_type',
@@ -245,7 +245,7 @@ if($w == '') {
             for($i=0; $i<$ca_id_count; $i++) {
                 // 카테고리체크
                 if($ca_id != '전체카테고리') {
-                    $sql = " select ca_id from {$g4['yc4_category_table']}
+                    $sql = " select ca_id from {$g4['shop_category_table']}
                                 where ca_id = '{$arr_ca_id[$i]}' and ca_use = '1' and ca_nocoupon = '0' ";
                     $ca = sql_fetch($sql);
                     if(!$ca['ca_id']) {
@@ -268,7 +268,7 @@ if($w == '') {
                     do {
                         $cp_id = coupon_generator();
 
-                        $sql = " insert into {$g4['yc4_coupon_table']}
+                        $sql = " insert into {$g4['shop_coupon_table']}
                                     set cp_id       = '$cp_id',
                                         cp_subject  = '$cp_subject',
                                         cp_type     = '$cp_type',
@@ -306,7 +306,7 @@ if($w == '') {
             for($i=0; $i<$it_id_count; $i++) {
                 // 상품체크
                 if($it_id != '') {
-                    $sql = " select it_id from {$g4['yc4_item_table']}
+                    $sql = " select it_id from {$g4['shop_item_table']}
                                 where it_id = '{$arr_it_id[$i]}' and it_use = '1' and it_nocoupon = '0' ";
                     $it = sql_fetch($sql);
                     if(!$it['it_id']) {
@@ -329,7 +329,7 @@ if($w == '') {
                     do {
                         $cp_id = coupon_generator();
 
-                        $sql = " insert into {$g4['yc4_coupon_table']}
+                        $sql = " insert into {$g4['shop_coupon_table']}
                                     set cp_id       = '$cp_id',
                                         cp_subject  = '$cp_subject',
                                         cp_type     = '$cp_type',
@@ -361,7 +361,7 @@ if($w == '') {
         }
     }
 } else if($w == 'u') {
-    $sql = " select cp_id from {$g4['yc4_coupon_table']} where cp_no = '$cp_no' ";
+    $sql = " select cp_id from {$g4['shop_coupon_table']} where cp_no = '$cp_no' ";
     $row = sql_fetch($sql);
 
     if(!$row['cp_id']) {
@@ -387,7 +387,7 @@ if($w == '') {
     // 상품체크
     if($cp_type == 0 && $cp_target == 0) {
         if($it_id != '전체상품') {
-            $sql = " select it_id from {$g4['yc4_item_table']} where it_id = '$it_id' and it_nocoupon = '0' ";
+            $sql = " select it_id from {$g4['shop_item_table']} where it_id = '$it_id' and it_nocoupon = '0' ";
             $row = sql_fetch($sql);
             if(!$row['it_id']) {
                 alert('존재하지 않거나 쿠폰제외 상품입니다.');
@@ -398,7 +398,7 @@ if($w == '') {
     // 카테고리체크
     if($cp_type == 0 && $cp_target == 1) {
         if($ca_id != '전체카테고리') {
-            $sql = " select ca_id from {$g4['yc4_category_table']} where ca_id = '$ca_id' and ca_nocoupon = '0' ";
+            $sql = " select ca_id from {$g4['shop_category_table']} where ca_id = '$ca_id' and ca_nocoupon = '0' ";
             $row = sql_fetch($sql);
             if(!$row['ca_id']) {
                 alert('존재하지 않거나 쿠폰제외 카테고리입니다.');
@@ -416,7 +416,7 @@ if($w == '') {
         }
     }
 
-    $sql = " update {$g4['yc4_coupon_table']}
+    $sql = " update {$g4['shop_coupon_table']}
                 set cp_subject  = '$cp_subject',
                     cp_type     = '$cp_type',
                     cp_target   = '$cp_target',
@@ -435,14 +435,14 @@ if($w == '') {
                 where cp_no = '$cp_no' ";
     sql_query($sql);
 } else if($w == 'd') {
-    $sql = " select cp_id from {$g4['yc4_coupon_table']} where cp_no = '$cp_no' ";
+    $sql = " select cp_id from {$g4['shop_coupon_table']} where cp_no = '$cp_no' ";
     $row = sql_fetch($sql);
 
     if(!$row['cp_id']) {
         alert('쿠폰 정보가 존재하지 않습니다.');
     }
 
-    $sql = " delete from {$g4['yc4_coupon_table']} where cp_no = '$cp_no' ";
+    $sql = " delete from {$g4['shop_coupon_table']} where cp_no = '$cp_no' ";
     sql_query($sql);
 }
 

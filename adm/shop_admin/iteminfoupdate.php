@@ -3,7 +3,7 @@ include_once("./_common.php");
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
 // 기존의 상품요약정보를 삭제하고 다시 만든다.
-sql_query(" delete from {$g4['yc4_item_info_table']} where it_id = '{$_POST['it_id']}' ");
+sql_query(" delete from {$g4['shop_item_info_table']} where it_id = '{$_POST['it_id']}' ");
 
 $gubun = "";
 foreach ($_POST as $key=>$value) {
@@ -13,7 +13,7 @@ foreach ($_POST as $key=>$value) {
         continue;
     }
 
-    $sql = " insert {$g4['yc4_item_info_table']}
+    $sql = " insert {$g4['shop_item_info_table']}
                 set it_id = '{$_POST['it_id']}',
                     ii_gubun = '$gubun',
                     ii_article = '$key',

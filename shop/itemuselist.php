@@ -5,7 +5,7 @@ include_once("$g4[path]/lib/thumb.lib.php");
 $g4[title] = "사용후기";
 include_once("./_head.php");
 
-$sql_common = " from $g4[yc4_item_ps_table] where is_confirm = '1' ";
+$sql_common = " from $g4[shop_item_ps_table] where is_confirm = '1' ";
 $sql_order = " order by is_time desc ";
 
 $sql = " select count(*) as cnt
@@ -68,7 +68,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $is_time = substr($row[is_time], 2, 14);
     $small_image = $row[it_id]."_s";
 
-    $row2 = sql_fetch(" select it_name from $g4[yc4_item_table] where it_id = '$row[it_id]' ");
+    $row2 = sql_fetch(" select it_name from $g4[shop_item_table] where it_id = '$row[it_id]' ");
     $it_href = "$g4[shop_path]/item.php?it_id=$row[it_id]";
 
     echo "

@@ -15,7 +15,7 @@ if ($cart_count == 0)
     alert("장바구니가 비어 있습니다.", "./cart.php");
 
 // 포인트 결제 대기 필드 추가
-//sql_query(" ALTER TABLE `$g4[yc4_order_table]` ADD `od_temp_point` INT NOT NULL AFTER `od_temp_card` ", false);
+//sql_query(" ALTER TABLE `$g4[shop_order_table]` ADD `od_temp_point` INT NOT NULL AFTER `od_temp_card` ", false);
 
 $g4['title'] = '주문서 작성';
 
@@ -440,7 +440,7 @@ if($is_member) {
     // 배송비할인쿠폰
     if($send_cost) { // 배송비가 있을 경우만
         $sql = " select cp_id, cp_subject, cp_amount, cp_minimum
-                    from {$g4['yc4_coupon_table']}
+                    from {$g4['shop_coupon_table']}
                     where cp_type = '2'
                       and cp_use = '1'
                       and mb_id in ( '{$member['mb_id']}', '전체회원' )
@@ -455,7 +455,7 @@ if($is_member) {
 
             // 이미 사용한 쿠폰인지
             $sql = " select ch_no
-                        from {$g4['yc4_coupon_history_table']}
+                        from {$g4['shop_coupon_history_table']}
                         where cp_id = '{$row['cp_id']}'
                           and mb_id = '{$member['mb_id']}'
                           and uq_id <> '$uq_id' ";
@@ -471,7 +471,7 @@ if($is_member) {
 
     // 결제할인쿠폰
     $sql = " select cp_id, cp_subject, cp_method, cp_amount, cp_minimum, cp_maximum, cp_trunc
-                from {$g4['yc4_coupon_table']}
+                from {$g4['shop_coupon_table']}
                 where cp_type = '1'
                   and cp_use = '1'
                   and mb_id in ( '{$member['mb_id']}', '전체회원' )
@@ -502,7 +502,7 @@ if($is_member) {
 
         // 이미 사용한 쿠폰인지
         $sql = " select ch_no
-                    from {$g4['yc4_coupon_history_table']}
+                    from {$g4['shop_coupon_history_table']}
                     where cp_id = '{$row['cp_id']}'
                       and mb_id = '{$member['mb_id']}'
                       and uq_id <> '$uq_id' ";

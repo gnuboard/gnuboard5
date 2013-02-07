@@ -16,7 +16,7 @@ if (!$exists) {
     $len4 = $tmp_ca_id_len + 4;
 
     // 차차기 분류의 건수를 얻음
-    $sql = " select count(*) as cnt from $g4[yc4_category_table]
+    $sql = " select count(*) as cnt from $g4[shop_category_table]
               where ca_id like '$tmp_ca_id%'
                 and ca_use = '1'
                 and length(ca_id) = $len4 ";
@@ -25,7 +25,7 @@ if (!$exists) {
     if (!$cnt)
         $str .= "<tr><td width=11 background='".G4_SHOP_IMG_URL."/ca_bg02.gif'></td><td>";
 
-    $sql = " select ca_id, ca_name from $g4[yc4_category_table]
+    $sql = " select ca_id, ca_name from $g4[shop_category_table]
               where ca_id like '$tmp_ca_id%'
                 and ca_use = '1'
                 and length(ca_id) = $len2 order by ca_id ";
@@ -38,7 +38,7 @@ if (!$exists) {
         if ($cnt) {
             $str .= "<tr><td width=11 background='".G4_SHOP_IMG_URL."/ca_bg02.gif'></td>";
             $str .= "<td><table width=100% border=0><tr><td width=120><b>· <a href='./list.php?ca_id=$row[ca_id]'><span $style>$row[ca_name]</span></a></b></td>";
-            $sql2 = " select ca_id, ca_name from $g4[yc4_category_table]
+            $sql2 = " select ca_id, ca_name from $g4[shop_category_table]
                        where ca_id like '$row[ca_id]%'
                          and ca_use = '1'
                          and length(ca_id) = $len4 order by ca_id ";

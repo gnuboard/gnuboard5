@@ -9,7 +9,7 @@ auth_check($auth[$sub_menu], "w");
 // 재고 일괄수정
 for ($i=0; $i<count($_POST[it_id]); $i++) 
 {
-    $sql = "update $g4[yc4_item_table] 
+    $sql = "update $g4[shop_item_table] 
                set it_stock_qty    = '{$_POST[it_stock_qty][$i]}',
                    it_use = '{$_POST[it_use][$i]}'
              where it_id = '{$_POST[it_id][$i]}' ";

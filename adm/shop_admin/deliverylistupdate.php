@@ -23,7 +23,7 @@ for ($m=0; $m<count($_POST[od_id]); $m++)
     // 배송회사와 운송장번호가 있는것만 수정
     if ($_POST[dl_id][$m] && trim($_POST[od_invoice][$m])) 
     {
-        $sql = "update $g4[yc4_order_table] 
+        $sql = "update $g4[shop_order_table] 
                    set od_invoice_time = '{$_POST[od_invoice_time][$m]}',
                        dl_id           = '{$_POST[dl_id][$m]}',
                        od_invoice      = '{$_POST[od_invoice][$m]}'
@@ -37,7 +37,7 @@ for ($m=0; $m<count($_POST[od_id]); $m++)
 
             // 장바구니 상태가 '주문', '준비' 일 경우 '배송' 으로 상태를 변경
             $on_uid = $_POST[on_uid][$m];
-            $sql = " update $g4[yc4_cart_table]
+            $sql = " update $g4[shop_cart_table]
                         set ct_status = '배송'
                       where ct_status in ('주문', '준비')
                         and on_uid = '$on_uid' ";
@@ -46,16 +46,16 @@ for ($m=0; $m<count($_POST[od_id]); $m++)
             include "./ordermail.inc.php";
 
             // 재고 반영
-            $sql2 = " select it_id, ct_id, ct_stock_use, ct_qty from $g4[yc4_cart_table] 
+            $sql2 = " select it_id, ct_id, ct_stock_use, ct_qty from $g4[shop_cart_table] 
                        where on_uid = '$on_uid' 
                          and ct_stock_use = '0' ";
             $result2 = sql_query($sql2);
             for ($k=0; $row2=mysql_fetch_array($result2); $k++) 
             {
-                $sql3 =" update $g4[yc4_item_table] set it_stock_qty = it_stock_qty - '$row2[ct_qty]' where it_id = '$row2[it_id]' ";
+                $sql3 =" update $g4[shop_item_table] set it_stock_qty = it_stock_qty - '$row2[ct_qty]' where it_id = '$row2[it_id]' ";
                 sql_query($sql3);
 
-                $sql4 = " update $g4[yc4_cart_table]
+                $sql4 = " update $g4[shop_cart_table]
                             set ct_stock_use  = '1',
                                 ct_history    = CONCAT(ct_history,'\n배송일괄|$now|$REMOTE_ADDR')
                           where on_uid = '$on_uid'
@@ -67,10 +67,10 @@ for ($m=0; $m<count($_POST[od_id]); $m++)
             // 일괄배송처리시 SMS 문자 일괄전송
             if ($default[de_sms_use4] && $_POST['send_sms']) 
             {
-                $sql = " select od_id, od_name, od_invoice, od_hp, dl_id from $g4[yc4_order_table] where od_id = '$od_id' ";
+                $sql = " select od_id, od_name, od_invoice, od_hp, dl_id from $g4[shop_order_table] where od_id = '$od_id' ";
                 $od = sql_fetch($sql);
 
-                $sql = " select dl_company from $g4[yc4_delivery_table] where dl_id = '$od[dl_id]' ";
+                $sql = " select dl_company from $g4[shop_delivery_table] where dl_id = '$od[dl_id]' ";
                 $dl = sql_fetch($sql);
 
                 $sms_contents = $default[de_sms_cont4];
@@ -93,7 +93,7 @@ for ($m=0; $m<count($_POST[od_id]); $m++)
     } 
     else 
     {
-        $sql = "update $g4[yc4_order_table] 
+        $sql = "update $g4[shop_order_table] 
                    set od_invoice_time = '',
                        dl_id           = '',
                        od_invoice      = ''

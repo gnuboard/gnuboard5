@@ -11,11 +11,15 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
     $latest_skin_url  = G4_SKIN_URL.'/latest/'.$skin_dir;
 
     $cache_file = G4_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
+<<<<<<< HEAD
     //if (!file_exists($cache_file)) {
     if (1) {
+=======
+    if (!G4_USE_CACHE || !file_exists($cache_file)) {
+>>>>>>> ddb1dec36c49f24441636f5e3dcb1e1db20a0d2b
         $list = array();
 
-        $sql = " select * from $g4[board_table] where bo_table = '$bo_table'";
+        $sql = " select * from {$g4['board_table']} where bo_table = '$bo_table'";
         $board = sql_fetch($sql);
 
         $tmp_write_table = $g4['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
