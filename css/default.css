@@ -13,7 +13,9 @@ p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link, a:visited {color:#000;text-decoration:none}
-a:hover, a:focus, a:active {color:#0e99ea;text-decoration:underline}
+a:hover,
+a:focus,
+a:active {color:#0e99ea;text-decoration:underline}
 
 /* 화면낭독기 사용자용 */
 .sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;border:0 !important;overflow:hidden !important}
@@ -101,7 +103,7 @@ a:hover, a:focus, a:active {color:#0e99ea;text-decoration:underline}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#428ab4;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
-.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#428ab4;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
+.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#428ab4;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
 
@@ -287,7 +289,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#428ab4;color:#f
 /* 설문조사 스킨 */
 #poll {}
 #poll header {padding:10px 14px 0}
-#poll header a {color:#428ab4;text-decoration:none}
+#poll header a {color:#428ab4}
 #poll header p {padding:5px 0 10px}
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
 #poll li {padding:3px 0}

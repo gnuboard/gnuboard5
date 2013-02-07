@@ -71,6 +71,10 @@ define('G4_GCAPTCHA_PATH', G4_BBS_PATH.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_PATH', G4_BBS_PATH.'/'.G4_CKEDITOR_DIR);
 //==============================================================================
 
+
+define('G4_USE_CACHE', true); // 최신글등에 cache 기능 사용 여부
+
+
 // 시간 상수
 // 서버의 시간과 실제 사용하는 시간이 틀린 경우 수정하세요.
 // 하루는 86400 초입니다. 1시간은 3600초
