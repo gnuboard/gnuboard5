@@ -470,10 +470,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 .bo_v_com {float:right}
 .bo_v_com li {float:left;margin-left:5px}
 
+#bo_v_atc {min-height:200px;height:auto !important;height:200px}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_img {margin:10px auto;width:730px;border-right:1px solid #ddd;overflow:hidden}
 #bo_v_img img {max-width:100%;height:auto}
-#bo_v_con {margin-bottom:30px;width:730px;min-height:200px;height:auto !important;height:200px;line-height:1.7em;word-break:break-all;overflow:hidden}
+#bo_v_con {margin-bottom:30px;width:730px;line-height:1.7em;word-break:break-all;overflow:hidden}
 #bo_v_con a {color:#3380ad;text-decoration:underline}
 #bo_v_con img {max-width:100%;height:auto}
 
