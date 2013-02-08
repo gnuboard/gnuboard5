@@ -37,7 +37,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <article>
             <header>
                 <h1><?=$list2[$i]['pc_name']?><span class="sound_only">님의 의견</span></h1>
-                <?=$list2[$i]['pc_name']?>
+                <?=$list2[$i]['name']?>
                 <span class="poll_datetime"><?=$list2[$i]['datetime']?></span>
             </header>
             <p>
