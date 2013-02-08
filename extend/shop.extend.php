@@ -73,17 +73,21 @@ $g4['shop_item_info_table']     = G4_TABLE_PREFIX.'shop_item_info';             
 
 
 //==============================================================================
-// 주문상태를 & 연산을 위해 상수로 선언
-// 중간에 주석처리된 숫자는 중간에 추가될수 있으므로 여분으로 남긴다.
+// 주문상태를 선언
+// 실제 주문테이블에는 set 방식으로 들어감
 //------------------------------------------------------------------------------
 // 절대 수정하시면 안됩니다.
 //------------------------------------------------------------------------------
-define('G4_STATUS_CART', '장바구니');
-define('G4_STATUS_ORDER', '입금대기');
-define('G4_STATUS_SETTLE', '결제완료');
-define('G4_STATUS_STANDBY', '배송준비');
-define('G4_STATUS_DELIVERY', '배송완료');
-define('G4_STATUS_PURCHASE', '구매확정');
+define('G4_STATUS_CART',        '장바구니');
+define('G4_STATUS_STANDBY',     '입금대기');
+define('G4_STATUS_PAYMENT',     '결제완료');
+define('G4_STATUS_READY',       '배송준비중');
+define('G4_STATUS_DELIVERY',    '배송중');
+define('G4_STATUS_COMPLETE',    '배송완료');
+define('G4_STATUS_END',         '구매확정');
+define('G4_STATUS_CANCEL',      '취소');
+define('G4_STATUS_RETURN',      '반품');
+define('G4_STATUS_EXCHANGE',    '교환');
 
 
 //==============================================================================
