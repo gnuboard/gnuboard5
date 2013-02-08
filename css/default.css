@@ -306,7 +306,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 #poll footer a:focus,
 #poll footer a:hover {text-decoration:none !important}
 /* 설문조사 결과 (새창) */
-#poll_result section {padding:15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fcfcfc}
+#poll_result section {padding:15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#f7f7f2}
 #poll_result h2 {margin:0;padding:20px 0}
 #poll_result a {}
 #poll_result .sv_member,
@@ -323,7 +323,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 #poll_result_list p {position:relative;margin:0;padding:5px 0}
 #poll_result_list p strong {position:absolute;top:5px;right:5%;padding-right:80px;width:100px;text-align:right}
 #poll_result_list p span {position:absolute;top:5px;right:5%;width:80px;text-align:right}
-.poll_result_graph {position:relative;margin-right:5%;height:5px;background:#f7f7f2}
+.poll_result_graph {position:relative;margin-right:5%;height:5px;background:#eee}
 .poll_result_graph span {position:absolute;top:0;left:0;height:100%;background:#3380ad}
 #poll_result_cmt {margin:0 auto 20px}
 #poll_result_cmt h2 {text-align:center}
