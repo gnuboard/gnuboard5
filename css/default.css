@@ -183,7 +183,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 
 /* 스킨별 스타일 */
 /* 회원가입 약관 */
-#fregister section {margin:0 0 20px;padding:20px}
+#fregister section {margin:0 0 20px;padding:20px 0;border-bottom:3px solid #484848}
 #fregister h2 {margin:0 0 20px;text-align:center}
 #fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #ddd;background:#f7f7f7}
 #fregister textarea:focus {background:#333;color:#fff}
