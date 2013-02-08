@@ -447,13 +447,13 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 #bo_v_file {}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {padding:0 20px;border-bottom:1px dotted #ddd}
+#bo_v_file li {padding:0 20px;border-bottom:1px dotted #ddd;background:#f9f9f9}
 #bo_v_file a {display:inline-block;padding:8px 0 7px}
 .bo_v_file_cnt {display:inline-block;margin:0 10px}
 #bo_v_link {}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
-#bo_v_link li {padding:0 20px;border-bottom:1px dotted #ddd}
+#bo_v_link li {padding:0 20px;border-bottom:1px dotted #ddd;background:#f9f9f9}
 #bo_v_link a {display:inline-block;padding:8px 0 7px}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
 
