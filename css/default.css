@@ -438,7 +438,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 .cnt_cmt {display:inline-block;margin:0 4px;color:#3380ad}
 
 /* 게시판 읽기 */
-#bo_v_title {margin-bottom:10px;padding:5px 0;border:1px solid #d0d0d0;border-radius:10px;background:#e7e7e7;text-align:center}
+#bo_v_title {margin-bottom:10px;padding:5px 0;border:1px solid #ddd;border-radius:10px;background:#f7f7f2;text-align:center}
 
 #bo_v_h1 {padding:10px 0 5px;font-size:1.2em}
 #bo_v_info {padding:5px 0 8px}
