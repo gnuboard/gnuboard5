@@ -54,14 +54,14 @@ a:active {color:#0e99ea;text-decoration:underline}
 
 #schall {position:absolute;top:15px;right:0;margin:0;padding:0;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
-#schall_stx {padding-left:5px;width:186px;height:27px;border:1px solid #ddd;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
-#schall_submit {padding-right:8px;border:1px solid #ddd;border-left:0;border-top-right-radius:10px;border-bottom-right-radius:10px;background:#fff}
+#schall_stx {padding-left:5px;width:186px;height:27px;border:1px solid #bbb;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
+#schall_submit {padding-right:8px;border:1px solid #bbb;border-left:0;border-top-right-radius:10px;border-bottom-right-radius:10px;background:#fff}
 
 /* 중간 레이아웃 */
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:30px;font-size:1.2em}
-#lnb {float:right;width:228px;border:1px solid #ececec;border-radius:10px;background:#f7f7f2}
+#lnb {float:right;width:228px;border:1px solid #eee;border-radius:10px;background:#f7f7f2}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
