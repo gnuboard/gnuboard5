@@ -60,7 +60,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 /* 중간 레이아웃 */
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
-#wrapper_title {margin-bottom:20px;font-size:1.2em}
+#wrapper_title {margin-bottom:30px;font-size:1.2em}
 #lnb {float:right;width:228px;border:1px solid #ececec;border-radius:10px;background:#f7f7f2}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
@@ -104,7 +104,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.2em}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
-.btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #494949 !important;background:#494949 !important;color:#fff !important;text-decoration:none !important;line-height:2.2em}
+.btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #eb2b59 !important;background:#ff3061 !important;color:#fff !important;text-decoration:none !important;line-height:2.2em}
 .btn03:focus,
 .btn03:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
@@ -317,7 +317,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 #poll_result_list dt,
 #poll_result_list dd {margin:0;padding:0}
 #poll_result_list dl {padding-bottom:30px}
-#poll_result_list dt {margin-right:5%;color:#3380ad;text-align:right}
+#poll_result_list dt {margin-right:5%;color:#ff3061;text-align:right}
 #poll_result_list ol {padding-left:30px}
 #poll_result_list li {margin-top:10px}
 #poll_result_list p {position:relative;margin:0;padding:5px 0}
@@ -427,7 +427,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 #bo_sch legend {width:0;height:0;overflow:hidden}
 .btn_bo_user {float:right;margin:0;padding:0;list-style:none}
 .btn_bo_user li {float:left;margin-left:5px}
-#bo_list caption {padding:0;height:0;color:transparent;overflow:hidden} /* ff에서 감추기 위해 color:transparent 사용 */
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .bo_notice {}
@@ -437,33 +436,32 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 .cnt_cmt {display:inline-block;margin:0 4px;color:#3380ad}
 
 /* 게시판 읽기 */
-#bo_v_title {margin-bottom:10px;border:1px solid #ececec;border-top-right-radius:10px;border-top-left-radius:10px;background:#f7f7f2;text-align:center}
+#bo_v_title {margin-bottom:10px;border:1px solid #ddd;border-top-right-radius:10px;border-top-left-radius:10px;background:#f7f7f2;text-align:center}
 
 #bo_v_h1 {padding:10px 0 5px;font-size:1.2em}
-#bo_v_info {padding:10px 0}
+#bo_v_info {padding:5px 0 8px}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info {border-bottom:1px dotted #ccc}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
 
-#bo_v_con a {text-decoration:underline}
+#bo_v_file {}
+#bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_file ul {margin:0;padding:0;list-style:none}
+#bo_v_file li {padding:0 20px;border-bottom:1px dotted #ddd;background:#f9f9f9}
+#bo_v_file a {display:inline-block;padding:8px 0 7px}
+.bo_v_file_cnt {display:inline-block;margin:0 10px}
+#bo_v_link {}
+#bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_link ul {margin:0;padding:0;list-style:none}
+#bo_v_link li {padding:0 20px;border-bottom:1px dotted #ddd;background:#f9f9f9}
+#bo_v_link a {display:inline-block;padding:8px 0 7px}
+.bo_v_link_cnt {display:inline-block;margin:0 10px}
 
-/*
-#bo_v_title {padding:0 20px 10px;font-weight:bold}
-
-#bo_v {position:relative;margin-bottom:30px}
-#bo_v a {color:#000;text-decoration:none}
-#bo_v_h1 {padding:15px 20px 5px;border-right:1px solid #ddd;background:#f9f9f9;font-size:1.2em;line-height:1.4em}
-#bo_v_h1 span {display:inline-block;color:#3380ad}
-#bo_v_info {padding:0 20px 10px;border-right:1px solid #ddd;background:#f9f9f9}
-#bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
-
-#bo_v_top {padding:0 20px;border-right:1px solid #ddd;border-bottom:1px solid #ddd;background:#f9f9f9;zoom:1}
+#bo_v_top {margin:10px 0 20px;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_top ul {margin-bottom:5px;list-style:none}
-#bo_v_top a {margin:0;padding:0;border:0 !important;background:transparent !important;color:#000 !important}
-#bo_v_bot {padding:0 0 10px;zoom:1}
+#bo_v_bot {margin-bottom:40px;zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_bot ul {margin:0;padding:0;list-style:none}
@@ -472,40 +470,21 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 .bo_v_com {float:right}
 .bo_v_com li {float:left;margin-left:5px}
 
-#bo_v_file {}
-#bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {padding:0 20px;border-bottom:1px dotted #ddd}
-#bo_v_file a {display:inline-block;padding:8px 0 7px}
-.bo_v_file_cnt {display:inline-block;margin:0 10px}
-#bo_v_link {}
-#bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_link ul {margin:0;padding:0;list-style:none}
-#bo_v_link li {padding:0 20px;border-bottom:1px dotted #ddd}
-#bo_v_link a {display:inline-block;padding:8px 0 7px}
-.bo_v_link_cnt {display:inline-block;margin:0 10px}
-
-#bo_v_atc {min-height:200px;height:auto !important;height:200px;zoom:1}
-#bo_v_atc:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
-
-
-#bo_v_img {margin:10px auto;width:689px;border-right:1px solid #ddd;overflow:hidden}
+#bo_v_img {margin:10px auto;width:730px;border-right:1px solid #ddd;overflow:hidden}
 #bo_v_img img {max-width:100%;height:auto}
-#bo_v_con {padding:20px 20px 30px;width:689px;min-height:200px;height:auto !important;height:200px;border-right:1px solid #ddd;line-height:1.8em;word-break:break-all;overflow:hidden}
+#bo_v_con {margin-bottom:30px;width:730px;min-height:200px;height:auto !important;height:200px;line-height:1.7em;word-break:break-all;overflow:hidden}
 #bo_v_con a {color:#3380ad;text-decoration:underline}
 #bo_v_con img {max-width:100%;height:auto}
 
-#bo_v_act {padding:0 0 20px;text-align:center}
+#bo_v_act {margin-bottom:30px;text-align:center}
 #bo_v_act a {margin-right:5px;vertical-align:top}
-#bo_v_act strong {color:#3380ad}
+#bo_v_act strong {color:#ff3061}
 
 #bo_v form {padding-top:20px}
-*/
 
 /* 게시판 댓글 */
-/*
-#bo_vc {margin:0 0 10px;padding:20px 20px 20px 20px;border-right:1px solid #ddd;border-bottom:1px solid #ddd;background:#f9f9f9}
+#bo_vc {margin:0 0 10px;padding:20px 20px 20px 20px;border:1px solid #ddd;border-radius:10px;background:#f7f7f2}
 #bo_vc h2 {margin-bottom:10px}
 #bo_vc article {padding:0 0 10px;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:15px 0 5px}
@@ -539,7 +518,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 .bo_vc_act li {float:left;margin-left:5px}
 
 #bo_vc form {padding:0}
-*/
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
