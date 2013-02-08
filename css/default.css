@@ -36,7 +36,10 @@ a:active {color:#0e99ea;text-decoration:underline}
 #hd h1 {width:0;height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
-#snb {position:absolute;top:10px;right:250px;zoom:1}
+#logo {padding:12px 10px}
+#logo b {display:inline-block;margin-left:10px;color:#3380ad;font-family:"verdana";vertical-align:middle}
+
+#snb {position:absolute;top:0;right:250px;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
 #snb a {display:block;position:relative;margin-left:1px;width:60px;height:60px;background:url('../img/snb_icon.jpg');text-decoration:none}
@@ -49,13 +52,10 @@ a:active {color:#0e99ea;text-decoration:underline}
 #snb #snb_new {background-position:-360px 0}
 #snb strong {position:absolute;top:33px;right:0;padding:0 5px;border-radius:10px;background:#3c99cf;color:#fff;font-size:0.9em;font-family:"dotum";font-weight:normal;letter-spacing:-0.1em;line-height:1.5em}
 
-#schall {position:absolute;top:25px;right:0;margin:0;padding:0;border:0;letter-spacing:-5px}
+#schall {position:absolute;top:15px;right:0;margin:0;padding:0;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
 #schall_stx {padding-left:5px;width:186px;height:27px;border:1px solid #ddd;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
 #schall_submit {padding-right:8px;border:1px solid #ddd;border-left:0;border-top-right-radius:10px;border-bottom-right-radius:10px;background:#fff}
-
-#logo {padding:21px 10px}
-#logo b {display:inline-block;margin-left:10px;color:#3380ad;font-family:"verdana";vertical-align:middle}
 
 /* 중간 레이아웃 */
 #wrapper {margin:0 auto;padding-bottom:30px;width:980px;zoom:1}
