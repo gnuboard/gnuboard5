@@ -317,7 +317,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 #poll_result_list dt,
 #poll_result_list dd {margin:0;padding:0}
 #poll_result_list dl {padding-bottom:30px}
-#poll_result_list dt {margin-right:5%;color:#3380ad;text-align:right}
+#poll_result_list dt {margin-right:5%;color:#ff3061;text-align:right}
 #poll_result_list ol {padding-left:30px}
 #poll_result_list li {margin-top:10px}
 #poll_result_list p {position:relative;margin:0;padding:5px 0}
