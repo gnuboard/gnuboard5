@@ -50,7 +50,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 #snb #snb_modify {background-position:-240px 0}
 #snb #snb_cnt {background-position:-300px 0}
 #snb #snb_new {background-position:-360px 0}
-#snb strong {position:absolute;top:33px;right:0;padding:0 5px;border-radius:10px;background:#2ba5eb;color:#fff;font-size:0.9em;font-family:"dotum";font-weight:normal;letter-spacing:-0.1em;line-height:1.5em}
+#snb strong {position:absolute;top:35px;right:0;padding:0 5px;border-radius:10px;background:#2ba5eb;color:#fff;font-size:0.9em;font-family:"dotum";font-weight:normal;letter-spacing:-0.1em;line-height:1.5em}
 
 #schall {position:absolute;top:15px;right:0;margin:0;padding:0;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
