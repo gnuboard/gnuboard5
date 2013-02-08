@@ -104,7 +104,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 .btn02 {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.2em}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
-.btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #eb2b59 !important;background:#ff3061 !important;color:#fff !important;text-decoration:none !important;line-height:2.2em}
+.btn03 {display:inline-block;padding:0 10px;height:24px;border:1px solid #3f3f3f !important;background:#484848 !important;color:#fff !important;text-decoration:none !important;line-height:2.2em}
 .btn03:focus,
 .btn03:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
