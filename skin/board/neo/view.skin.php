@@ -84,7 +84,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <? } ?>
 
     <?
-    if (!empty($view['link'])) {
+    if (implode('', $view['link'])) {
     ?>
     <section id="bo_v_link">
         <h2>관련링크</h2>
