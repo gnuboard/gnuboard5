@@ -112,7 +112,9 @@ a:active {color:#0e99ea;text-decoration:underline}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#3380ad;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
+.btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
+.btn_win a:focus,
+.btn_win a:hover {text-decoration:none}
 
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -527,9 +529,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
-.sv_wrap .sv {z-index:1000;display:none;margin-top:5px;border:1px solid #515151;background:#484848}
+.sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #515151;background:#484848}
 .sv_nojs .sv {display:block}
-.sv_wrap .sv a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff !important}
+.sv_wrap .sv a {display:inline-block !important;margin:0 !important;padding:3px !important;width:94px;border-bottom:1px solid #555;color:#fff !important}
 .sv_wrap a:focus,
 .sv_wrap a:hover,
 .sv_wrap a:active {text-decoration:none !important}
