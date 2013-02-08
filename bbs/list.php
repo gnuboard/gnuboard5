@@ -111,7 +111,7 @@ if (!$sca && !$stx) {
 
         if (!$row['wr_id']) continue;
 
-        $list[$i] = get_list($row, $board, $board_skin_path, $board['bo_subject_len']);
+        $list[$i] = get_list($row, $board, $board_skin_url, $board['bo_subject_len']);
         $list[$i]['is_notice'] = true;
 
         $i++;

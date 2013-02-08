@@ -325,7 +325,7 @@ function get_dirsize($dir)
 
 
 // 게시물 정보($write_row)를 출력하기 위하여 $list로 가공된 정보를 복사 및 가공
-function get_list($write_row, $board, $skin_path, $subject_len=40)
+function get_list($write_row, $board, $skin_url, $subject_len=40)
 {
     global $g4, $config;
     global $qstr, $page;
@@ -393,11 +393,11 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
 
     $list['icon_reply'] = '';
     if ($list['reply'])
-        $list['icon_reply'] = '<img src="'.$skin_path.'/img/icon_reply.gif" alt="답변글">';
+        $list['icon_reply'] = '<img src="'.$skin_url.'/img/icon_reply.gif" alt="답변글">';
 
     $list['icon_link'] = '';
     if ($list['wr_link1'] || $list['wr_link2'])
-        $list['icon_link'] = '<img src="'.$skin_path.'/img/icon_link.gif" alt="관련링크">';
+        $list['icon_link'] = '<img src="'.$skin_url.'/img/icon_link.gif" alt="관련링크">';
 
     // 분류명 링크
     $list['ca_name_href'] = G4_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
@@ -407,15 +407,15 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
 
     $list['icon_new'] = '';
     if ($list['wr_datetime'] >= date("Y-m-d H:i:s", $g4['server_time'] - ($board['bo_new'] * 3600)))
-        $list['icon_new'] = '<img src="'.$skin_path.'/img/icon_new.gif" alt="새글">';
+        $list['icon_new'] = '<img src="'.$skin_url.'/img/icon_new.gif" alt="새글">';
 
     $list['icon_hot'] = '';
     if ($list['wr_hit'] >= $board['bo_hot'])
-        $list['icon_hot'] = '<img src="'.$skin_path.'/img/icon_hot.gif" alt="인기글">';
+        $list['icon_hot'] = '<img src="'.$skin_url.'/img/icon_hot.gif" alt="인기글">';
 
     $list['icon_secret'] = '';
     if (strstr($list['wr_option'], 'secret'))
-        $list['icon_secret'] = '<img src="'.$skin_path.'/img/icon_secret.gif" alt="비밀글">';
+        $list['icon_secret'] = '<img src="'.$skin_url.'/img/icon_secret.gif" alt="비밀글">';
 
     // 링크
     for ($i=1; $i<=G4_LINK_COUNT; $i++) {
@@ -428,15 +428,15 @@ function get_list($write_row, $board, $skin_path, $subject_len=40)
     $list['file'] = get_file($board['bo_table'], $list['wr_id']);
 
     if ($list['file']['count'])
-        $list['icon_file'] = '<img src="'.$skin_path.'/img/icon_file.gif" alt="첨부파일">';
+        $list['icon_file'] = '<img src="'.$skin_url.'/img/icon_file.gif" alt="첨부파일">';
 
     return $list;
 }
 
 // get_list 의 alias
-function get_view($write_row, $board, $skin_path, $subject_len=125)
+function get_view($write_row, $board, $skin_url, $subject_len=125)
 {
-    return get_list($write_row, $board, $skin_path, $subject_len);
+    return get_list($write_row, $board, $skin_url, $subject_len);
 }
 
 
