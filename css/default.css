@@ -37,7 +37,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
 #logo {padding:12px 10px}
-#logo b {display:inline-block;margin-left:10px;color:#3380ad;font-family:"verdana";vertical-align:middle}
+#logo b {display:inline-block;margin-left:10px;color:#109ff1;font-family:"verdana";vertical-align:middle}
 
 #snb {position:absolute;top:0;right:250px;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
@@ -50,7 +50,7 @@ a:active {color:#0e99ea;text-decoration:underline}
 #snb #snb_modify {background-position:-240px 0}
 #snb #snb_cnt {background-position:-300px 0}
 #snb #snb_new {background-position:-360px 0}
-#snb strong {position:absolute;top:35px;right:0;padding:0 5px;border-radius:10px;background:#2ba5eb;color:#fff;font-size:0.9em;font-family:"dotum";font-weight:normal;letter-spacing:-0.1em;line-height:1.5em}
+#snb strong {position:absolute;top:35px;right:0;padding:0 5px;border-radius:10px;background:#484848;color:#fff;font-size:0.9em;font-family:"dotum";font-weight:normal;letter-spacing:-0.1em;line-height:1.5em}
 
 #schall {position:absolute;top:15px;right:0;margin:0;padding:0;border:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
