@@ -440,6 +440,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 /* 게시판 읽기 */
 #bo_v_title {margin-bottom:5px;padding:5px 0;border-bottom:3px solid #484848;font-weight:bold;text-align:center}
 
+#bo_v {margin-bottom:20px;border-bottom:3px solid #484848}
+
 #bo_v_h1 {padding:10px 0 5px;font-size:1.2em}
 #bo_v_info {padding:5px 0 8px}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
@@ -463,7 +465,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_top ul {margin-bottom:5px;list-style:none}
-#bo_v_bot {margin-bottom:40px;zoom:1}
+#bo_v_bot {margin-bottom:20px;zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_bot ul {margin:0;padding:0;list-style:none}
