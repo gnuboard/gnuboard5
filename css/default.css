@@ -429,7 +429,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#595959;color:#f
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
-.bo_notice {}
+.bo_notice td {background:#f7f7f7}
+.bo_notice td a {font-weight:bold}
+.td_num strong {color:#ff3061}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#777 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#3380ad}
 .td_subject img {margin-left:3px}
