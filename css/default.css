@@ -32,7 +32,7 @@ a:active {color:#2a6bc4;text-decoration:underline}
 #captcha_wav img {border:1px solid #ddd;border-left:0;background:#494949}
 
 /* 상단 레이아웃 */
-#hd {margin-bottom:30px;border-top:2px solid #484848;border-bottom:1px solid #e9e9e9;background:#f7f7f2}
+#hd {margin-bottom:50px;border-top:2px solid #484848;border-bottom:1px solid #e9e9e9;background:#f7f7f2}
 #hd h1 {width:0;height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
