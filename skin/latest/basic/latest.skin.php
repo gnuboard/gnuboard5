@@ -2,48 +2,40 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<table width=100% cellpadding=0 cellspacing=0>
-<tr>
-    <td width=14><img src='<?=$latest_skin_path?>/img/latest_t01.gif'></td>
-    <td width='100%' background='<?=$latest_skin_path?>/img/bg_latest.gif'>&nbsp;&nbsp;<strong><a href='<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>'><?=$board['bo_subject']?></a></strong></td>
-    <td width=37 background='<?=$latest_skin_path?>/img/bg_latest.gif'><a href='<?=$g4['bbs_path']?>/board.php?bo_table=<?=$bo_table?>'><img src='<?=$latest_skin_path?>/img/more.gif' border=0></a></td>
-    <td width=14><img src='<?=$latest_skin_path?>/img/latest_t02.gif'></td>
-</tr>
-</table>
-
-<table width=100% cellpadding=0 cellspacing=0>
-<? for ($i=0; $i<count($list); $i++) { ?>
-<tr>
-    <td colspan=4 align=center>
-        <table width=95%>
-        <tr>
-            <td height=25><img src='<?=$latest_skin_path?>/img/latest_icon.gif' align=absmiddle>&nbsp;&nbsp;
+<div class="lt">
+    <strong class="lt_title"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>"><?=$bo_subject?></a></strong>
+    <ul>
+    <? for ($i=0; $i<count($list); $i++) { ?>
+        <li>
             <?
-            echo $list[$i]['icon_reply'] . " ";
-            echo "<a href='{$list[$i]['href']}'>";
+            echo $list[$i]['icon_reply']." ";
+            echo "<a href=\"".$list[$i]['href']."\" title=\"".$list[$i]['wr_subject']."\">";
             if ($list[$i]['is_notice'])
-                echo "<font style='font-family:돋움; font-size:9pt; color:#2C88B9;'><strong>{$list[$i]['subject']}</strong></font>";
+                echo "<strong>".$list[$i]['subject']."</strong>";
             else
-                echo "<font style='font-family:돋움; font-size:9pt; color:#6A6A6A;'>{$list[$i]['subject']}</font>";
-            echo "</a>";
+                echo $list[$i]['subject'];
 
             if ($list[$i]['comment_cnt'])
-                echo " <a href=\"{$list[$i]['comment_href']}\"><span style='font-family:돋움; font-size:8pt; color:#9A9A9A;'>{$list[$i]['comment_cnt']}</span></a>";
+                echo " <span class=\"cnt_cmt\">".$list[$i]['comment_cnt']."</span>";
+
+            echo "</a>";
 
             // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
             // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
 
-            echo " " . $list[$i]['icon_new'];
-            echo " " . $list[$i]['icon_file'];
-            echo " " . $list[$i]['icon_link'];
-            echo " " . $list[$i]['icon_hot'];
-            echo " " . $list[$i]['icon_secret'];
-            ?></td></tr>
-        <tr><td bgcolor=#EBEBEB height=1></td></tr>
-        </table></td>
-</tr>
-<? } ?>
-
-<? if (count($list) == 0) { ?><tr><td colspan=4 align=center height=50><font color=#6A6A6A>게시물이 없습니다.</a></td></tr><? } ?>
-
-</table>
+            /* 아이콘 작업 전까지 주석처리
+            if (isset($list[$i]['icon_new']))    echo " " . $list[$i]['icon_new'];
+            if (isset($list[$i]['icon_hot']))    echo " " . $list[$i]['icon_hot'];
+            if (isset($list[$i]['icon_file']))   echo " " . $list[$i]['icon_file'];
+            if (isset($list[$i]['icon_link']))   echo " " . $list[$i]['icon_link'];
+            if (isset($list[$i]['icon_secret'])) echo " " . $list[$i]['icon_secret'];
+            */
+            ?>
+        </li>
+    <? } ?>
+    </ul>
+    <? if (count($list) == 0) { //게시물이 없을 때 ?>
+    <p>게시물이 없습니다.</p>
+    <? } ?>
+    <div class="lt_more"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>">더보기</a></div>
+</div>
