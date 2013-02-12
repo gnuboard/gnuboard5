@@ -33,7 +33,7 @@ if ($w == '')
         $sql = " insert into {$g4['group_member_table']}
                     set gr_id = '{$_POST['gr_id']}',
                          mb_id = '{$_POST['mb_id']}',
-                         gm_datetime = '{$g4['time_ymdhis']}' ";
+                         gm_datetime = '".G4_TIME_YMDHIS."' ";
         sql_query($sql);
     }
 }

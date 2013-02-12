@@ -289,13 +289,13 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
     $member = get_member($_SESSION['ss_mb_id']);
 
     // 오늘 처음 로그인 이라면
-    if (substr($member['mb_today_login'], 0, 10) != $g4['time_ymd']) {
+    if (substr($member['mb_today_login'], 0, 10) != G4_TIME_YMD) {
         // 첫 로그인 포인트 지급
-        insert_point($member['mb_id'], $config['cf_login_point'], "{$g4['time_ymd']} 첫로그인", "@login", $member['mb_id'], $g4['time_ymd']);
+        insert_point($member['mb_id'], $config['cf_login_point'], G4_TIME_YMD.' 첫로그인', '@login', $member['mb_id'], G4_TIME_YMD);
 
         // 오늘의 로그인이 될 수도 있으며 마지막 로그인일 수도 있음
         // 해당 회원의 접근일시와 IP 를 저장
-        $sql = " update {$g4['member_table']} set mb_today_login = '{$g4['time_ymdhis']}', mb_login_ip = '{$_SERVER['REMOTE_ADDR']}' where mb_id = '{$member['mb_id']}' ";
+        $sql = " update {$g4['member_table']} set mb_today_login = '".G4_TIME_YMDHIS."', mb_login_ip = '{$_SERVER['REMOTE_ADDR']}' where mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
     }
 

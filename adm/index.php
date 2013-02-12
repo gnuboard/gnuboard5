@@ -171,7 +171,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row2['wr_datetime'],0,10);
         $datetime2 = $row2['wr_datetime'];
-        if ($datetime == $g4['time_ymd'])
+        if ($datetime == G4_TIME_YMD)
             $datetime2 = substr($datetime2,11,5);
         else
             $datetime2 = substr($datetime2,5,5);
@@ -188,7 +188,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row3['wr_datetime'],0,10);
         $datetime2 = $row3['wr_datetime'];
-        if ($datetime == $g4['time_ymd'])
+        if ($datetime == G4_TIME_YMD)
             $datetime2 = substr($datetime2,11,5);
         else
             $datetime2 = substr($datetime2,5,5);

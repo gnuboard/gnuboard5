@@ -3,8 +3,8 @@ if (!defined('_GNUBOARD_')) exit;
 
 include_once(G4_LIB_PATH.'/visit.lib.php');
 
-if (empty($fr_date)) $fr_date = $g4['time_ymd'];
-if (empty($to_date)) $to_date = $g4['time_ymd'];
+if (empty($fr_date)) $fr_date = G4_TIME_YMD;
+if (empty($to_date)) $to_date = G4_TIME_YMD;
 
 $qstr = 'fr_date='.$fr_date.'&amp;to_date='.$to_date;
 ?>

@@ -13,7 +13,7 @@ if ($w == "")
 
     $sql = " insert into {$g4[poll_etc_table]}
                 ( pc_id, po_id, mb_id, pc_name, pc_idea, pc_datetime )
-                values ( '{$pc_id}', '{$po_id}', '{$member[mb_id]}', '{$pc_name}', '{$pc_idea}', '{$g4[time_ymdhis]}' ) ";
+                values ( '{$pc_id}', '{$po_id}', '{$member[mb_id]}', '{$pc_name}', '{$pc_idea}', '".G4_TIME_YMDHIS."' ) ";
     sql_query($sql);
 
     $pc_idea = stripslashes($pc_idea);

@@ -147,7 +147,7 @@ if ($w == 'c') // 코멘트 입력
                      wr_name = '$wr_name',
                      wr_email = '$wr_email',
                      wr_homepage = '$wr_homepage',
-                     wr_datetime = '$g4[time_ymdhis]',
+                     wr_datetime = '".G4_TIME_YMDHIS."',
                      wr_last = '',
                      wr_ip = '{$_SERVER['REMOTE_ADDR']}',
                      wr_1 = '$wr_1',
@@ -165,11 +165,10 @@ if ($w == 'c') // 코멘트 입력
     $comment_id = mysql_insert_id();
 
     // 원글에 코멘트수 증가 & 마지막 시간 반영
-    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_last = '{$g4['time_ymdhis']}' where wr_id = '$wr_id' ");
+    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_last = '".G4_TIME_YMDHIS."' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
-    //sql_query(" insert into {$g4[board_new_table]} ( bo_table, wr_id, wr_parent, bn_datetime ) values ( '{$bo_table}', '{$comment_id}', '{$wr_id}', '{$g4[time_ymdhis]}' ) ");
-    sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '{$g4['time_ymdhis']}', '{$member['mb_id']}' ) ");
+    sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '".G4_TIME_YMDHIS."', '{$member['mb_id']}' ) ");
 
     // 코멘트 1 증가
     sql_query(" update {$g4['board_table']} set bo_count_comment = bo_count_comment + 1 where bo_table = '$bo_table' ");

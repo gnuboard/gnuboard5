@@ -59,7 +59,7 @@ if ($w == '')
     if ($mb['mb_email'] == $mb_email)
         alert('이미 존재하는 E-mail 입니다.'.PHP_EOL.'ＩＤ : '.$mb['mb_id'].PHP_EOL.'이름 : '.$mb['mb_name'].PHP_EOL.'별명 : '.$mb['mb_nick'].PHP_EOL.'메일 : '.$mb['mb_email']);
 
-    sql_query(" insert into {$g4['member_table']} set mb_id = '{$mb_id}', mb_password = '".sql_password($mb_password)."', mb_datetime = '{$g4['time_ymdhis']}', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '{$g4['time_ymdhis']}', {$sql_common} ");
+    sql_query(" insert into {$g4['member_table']} set mb_id = '{$mb_id}', mb_password = '".sql_password($mb_password)."', mb_datetime = '".G4_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G4_TIME_YMDHIS."', {$sql_common} ");
 }
 else if ($w == 'u')
 {
@@ -110,7 +110,7 @@ else if ($w == 'u')
         $sql_password = "";
 
     if ($passive_certify)
-        $sql_certify = " , mb_email_certify = '{$g4['time_ymdhis']}' ";
+        $sql_certify = " , mb_email_certify = '".G4_TIME_YMDHIS."' ";
     else
         $sql_certify = "";
 
