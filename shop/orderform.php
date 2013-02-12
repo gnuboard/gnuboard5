@@ -444,8 +444,8 @@ if($is_member) {
                     where cp_type = '2'
                       and cp_use = '1'
                       and mb_id in ( '{$member['mb_id']}', '전체회원' )
-                      and cp_start <= '{$g4['time_ymd']}'
-                      and cp_end >= '{$g4['time_ymd']}' ";
+                      and cp_start <= '".G4_TIME_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."' ";
         $result = sql_query($sql);
         for($k=0; $row=sql_fetch_array($result); $k++) {
             // 최소결제금액이 있다면 체크
@@ -475,8 +475,8 @@ if($is_member) {
                 where cp_type = '1'
                   and cp_use = '1'
                   and mb_id in ( '{$member['mb_id']}', '전체회원' )
-                  and cp_start <= '{$g4['time_ymd']}'
-                  and cp_end >= '{$g4['time_ymd']}' ";
+                  and cp_start <= '".G4_TIME_YMD."'
+                  and cp_end >= '".G4_TIME_YMD."' ";
     $result = sql_query($sql);
 
     for($k=0; $row=sql_fetch_array($result); $k++) {

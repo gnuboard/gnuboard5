@@ -210,8 +210,8 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
                             from {$g4['shop_coupon_table']}
                             where cp_use = '1'
                               and cp_type = '0'
-                              and cp_start <= '{$g4['time_ymd']}'
-                              and cp_end >= '{$g4['time_ymd']}'
+                              and cp_start <= '".G4_TIME_YMD."'
+                              and cp_end >= '".G4_TIME_YMD."'
                               and ( it_id  = '{$row['it_id']}' or cp_target = '2' )
                               and mb_id in ( '{$member['mb_id']}', '전체회원' )
                               and ca_id in ( '{$row['ca_id']}', '{$row['ca_id2']}', '{$row['ca_id3']}', '전체카테고리' ) ";

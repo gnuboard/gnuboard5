@@ -134,8 +134,8 @@ $sql = " select *
             from {$g4['shop_coupon_table']}
             where cp_use = '1'
               and cp_type = '0'
-              and cp_start <= '{$g4['time_ymd']}'
-              and cp_end >= '{$g4['time_ymd']}'
+              and cp_start <= '".G4_TIME_YMD."'
+              and cp_end >= '".G4_TIME_YMD."'
               and ( it_id  = '{$it['it_id']}' or cp_target = '2' )
               and mb_id in ( '{$member['mb_id']}', '전체회원' )
               and ca_id in ( '{$it['ca_id']}', '{$it['ca_id2']}', '{$it['ca_id3']}', '전체카테고리' )
@@ -189,7 +189,7 @@ if(!$cnt) {
 }
 
 $g4['title'] = '쿠폰적용';
-include_once ($g4['path'].'/head.sub.php');
+include_once (G4_PATH.'/head.sub.php');
 ?>
 
 <style type="text/css">
@@ -380,5 +380,5 @@ $(function() {
 </script>
 
 <?php
-include_once($g4['path'] . '/tail.sub.php');
+include_once(G4_PATH . '/tail.sub.php');
 ?>
