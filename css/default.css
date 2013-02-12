@@ -22,7 +22,7 @@ a:active {color:#2a6bc4;text-decoration:underline}
 /* 본문 바로가기 */
 #to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
 #to_content a:focus,
-#to_content a:active {width:100%;height:72px;background:#2a6bc4;color:#fff;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
+#to_content a:active {width:100%;height:75px;background:#000;color:#ddd;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -97,10 +97,10 @@ a:active {color:#2a6bc4;text-decoration:underline}
 
 /* 콘텐츠별 스타일 */
 /* 버튼 */
-.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
+.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn01:focus,
 .btn01:hover {text-decoration:none !important}
-.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #3f3f3f !important;background:#444 !important;color:#fff !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
+.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #3f3f3f !important;background:#444 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
@@ -316,18 +316,19 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #poll_result_list dd {margin:0;padding:0}
 #poll_result_list dl {padding-bottom:30px}
 #poll_result_list dt {margin-right:5%;color:#ff3061;text-align:right}
-#poll_result_list ol {padding-left:30px}
+#poll_result_list ol {margin:0;padding-left:30px}
 #poll_result_list li {margin-top:10px}
 #poll_result_list p {position:relative;margin:0;padding:5px 0}
 #poll_result_list p strong {position:absolute;top:5px;right:5%;padding-right:80px;width:100px;text-align:right}
 #poll_result_list p span {position:absolute;top:5px;right:5%;width:80px;text-align:right}
 .poll_result_graph {position:relative;margin-right:5%;height:5px;background:#eee}
-.poll_result_graph span {position:absolute;top:0;left:0;height:100%;background:#2a6bc4}
+.poll_result_graph span {position:absolute;top:0;left:0;height:5px;background:#2a6bc4;font-size:0.1em}
 #poll_result_cmt {margin:0 auto 20px}
 #poll_result_cmt h2 {text-align:center}
 #poll_result_cmt h3 {margin:0 auto 10px;padding-top:15px;width:93%}
 #poll_result_cmt article {margin:0 18px 15px;border-bottom:1px solid #eee}
 #poll_result_cmt h1 {margin:0;padding:0;width:0;height:0;overflow:hidden}
+.poll_datetime {display:inline-block;margin-left:10px}
 #poll_result_cmt p {padding:3px 0}
 #poll_result_cmt fieldset {margin-bottom:0;text-align:left}
 #poll_result_cmt fieldset p {margin:0 0 15px;padding:3px 0 0px;text-align:left}
@@ -440,7 +441,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 /* 게시판 읽기 */
 #bo_v_title {margin-bottom:5px;padding:5px 0;border-bottom:1px solid #484848;font-weight:bold;text-align:center}
 
-#bo_v {margin-bottom:20px;border-bottom:1px solid #ccc}
+#bo_v {margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #ccc}
 
 #bo_v_h1 {padding:10px 0 5px;font-size:1.2em}
 #bo_v_info {padding:5px 0 8px}
@@ -465,7 +466,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_top ul {margin-bottom:5px;list-style:none}
-#bo_v_bot {margin-bottom:20px;zoom:1}
+#bo_v_bot {zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_bot ul {margin:0;padding:0;list-style:none}
