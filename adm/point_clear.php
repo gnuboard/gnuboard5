@@ -49,7 +49,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         sql_query(" delete from {$g4['point_table']} where po_id = '{$row2['po_id']}' ");
     }
 
-    insert_point($row['mb_id'], $total, '포인트 {$count}건 정리', '@clear', $row['mb_id'], $g4['time_ymd']."-".uniqid(""));
+    insert_point($row['mb_id'], $total, '포인트 {$count}건 정리', '@clear', $row['mb_id'], G4_TIME_YMD."-".uniqid(""));
 
     $str = $row['mb_id']."님 포인트 내역 ".number_format($count)."건 ".number_format($total)."점 정리<br>";
     echo '<script>document.getElementById(\'ct\').innerHTML += \''.$str.'\';</script>'.PHP_EOL;

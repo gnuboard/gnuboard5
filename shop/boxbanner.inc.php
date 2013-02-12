@@ -1,7 +1,7 @@
 <?
 // 배너 출력
 $sql = " select * from $g4[shop_banner_table]
-          where '$g4[time_ymdhis]' between bn_begin_time and bn_end_time
+          where '".G4_TIME_YMDHIS."' between bn_begin_time and bn_end_time
             and bn_position = '$position'
           order by bn_order, bn_id desc ";
 $result = sql_query($sql);

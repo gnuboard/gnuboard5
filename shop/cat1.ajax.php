@@ -57,7 +57,7 @@ if ($target['mb_jisu_rank'] <= $member['mb_jisu_rank']) {
 
 /*
 // 회원가입후 몇일째인지? + 1 은 당일을 포함한다는 뜻
-$sql = " select (TO_DAYS('$g4[time_ymdhis]') - TO_DAYS('$target[mb_datetime]') + 1) as days ";
+$sql = " select (TO_DAYS('".G4_TIME_YMDHIS."') - TO_DAYS('$target[mb_datetime]') + 1) as days ";
 $row = sql_fetch($sql);
 $mb_reg_after = $row[days];
 if ($mb_reg_after >= 365) {
@@ -66,11 +66,11 @@ if ($mb_reg_after >= 365) {
 */
 
 // '싫어요'도 하나 더 드세요.
-$sql = " insert into $g4[board_good_table] ( bo_table, wr_id, mb_id, bg_flag, bg_datetime, bg_ip, tar_mb_id ) values ( '$bo_table', '$wr_id', '$member[mb_id]', 'nogood', '$g4[time_ymdhis]', '$_SERVER[REMOTE_ADDR]', '$write[mb_id]' ) ";
+$sql = " insert into $g4[board_good_table] ( bo_table, wr_id, mb_id, bg_flag, bg_datetime, bg_ip, tar_mb_id ) values ( '$bo_table', '$wr_id', '$member[mb_id]', 'nogood', '".G4_TIME_YMDHIS."', '$_SERVER[REMOTE_ADDR]', '$write[mb_id]' ) ";
 sql_query($sql);
 
 // 신고 테이블에 레코드를 추가한다.
-$sql = " insert into `$g4[singo_table]` set bo_table = '$bo_table', wr_id = '$wr_id', wr_parent = '{$write['wr_parent']}', mb_id = '{$target['mb_id']}', sg_mb_id = '{$member['mb_id']}', sg_reason = '$reason', sg_datetime = '{$g4['time_ymdhis']}', sg_ip = '$_SERVER[REMOTE_ADDR]' ";
+$sql = " insert into `$g4[singo_table]` set bo_table = '$bo_table', wr_id = '$wr_id', wr_parent = '{$write['wr_parent']}', mb_id = '{$target['mb_id']}', sg_mb_id = '{$member['mb_id']}', sg_reason = '$reason', sg_datetime = '".G4_TIME_YMDHIS."', sg_ip = '$_SERVER[REMOTE_ADDR]' ";
 sql_query($sql);
 
 // 신고가 되면 일정 시간이 지난후 부터 글쓰기가 가능함

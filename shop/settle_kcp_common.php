@@ -31,7 +31,7 @@ if(!$default['de_card_test']) {
                        . "POST[" . serialize($_POST) . "]"
                        . "COOKIE[" . serialize($_COOKIE) . "]"
                        . "SESSION[" . serialize($_SESSION) . "]";
-            mailer('경고', 'waring', $super_admin['mb_email'], '올바르지 않은 접속 보고', $_SERVER['PHP_SELF'].' 에 '.$_SERVER['REMOTE_ADDR'].' 이 '.$g4['time_ymdhis'].' 에 접속을 시도하였습니다.'."\n\n" . $egpcs_str, 2);
+            mailer('경고', 'waring', $super_admin['mb_email'], '올바르지 않은 접속 보고', $_SERVER['PHP_SELF'].' 에 '.$_SERVER['REMOTE_ADDR'].' 이 '.G4_TIME_YMDHIS.' 에 접속을 시도하였습니다.'."\n\n" . $egpcs_str, 2);
             exit;
     }
 }

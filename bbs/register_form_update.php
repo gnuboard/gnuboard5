@@ -145,7 +145,7 @@ if ($w == '') {
                      mb_sex = '{$mb_sex}',
                      mb_birth = '{$mb_birth}',
                      mb_nick = '{$mb_nick}',
-                     mb_nick_date = '{$g4['time_ymd']}',
+                     mb_nick_date = '".G4_TIME_YMD."',
                      mb_email = '{$mb_email}',
                      mb_homepage = '{$mb_homepage}',
                      mb_tel = '{$mb_tel}',
@@ -156,8 +156,8 @@ if ($w == '') {
                      mb_addr2 = '{$mb_addr2}',
                      mb_signature = '{$mb_signature}',
                      mb_profile = '{$mb_profile}',
-                     mb_today_login = '{$g4['time_ymdhis']}',
-                     mb_datetime = '{$g4['time_ymdhis']}',
+                     mb_today_login = '".G4_TIME_YMDHIS."',
+                     mb_datetime = '".G4_TIME_YMDHIS."',
                      mb_ip = '{$_SERVER['REMOTE_ADDR']}',
                      mb_level = '{$config['cf_register_level']}',
                      mb_recommend = '{$mb_recommend}',
@@ -165,7 +165,7 @@ if ($w == '') {
                      mb_mailling = '{$mb_mailling}',
                      mb_sms = '{$mb_sms}',
                      mb_open = '{$mb_open}',
-                     mb_open_date = '{$g4['time_ymd']}',
+                     mb_open_date = '".G4_TIME_YMD."',
                      mb_1 = '{$mb_1}',
                      mb_2 = '{$mb_2}',
                      mb_3 = '{$mb_3}',
@@ -178,7 +178,7 @@ if ($w == '') {
                      mb_10 = '{$mb_10}' ";
     // 이메일 인증을 사용하지 않는다면 이메일 인증시간을 바로 넣는다
     if (!$config['cf_use_email_certify'])
-        $sql .= " , mb_email_certify = '{$g4[time_ymdhis]}' ";
+        $sql .= " , mb_email_certify = '".G4_TIME_YMDHIS."' ";
     sql_query($sql);
 
     // 회원가입 포인트 부여
@@ -192,7 +192,7 @@ if ($w == '') {
     if ($config['cf_email_mb_member']) {
         $subject = '회원가입을 축하드립니다.';
 
-        $mb_md5 = md5($mb_id.$mb_email.$g4['time_ymdhis']);
+        $mb_md5 = md5($mb_id.$mb_email.G4_TIME_YMDHIS);
         $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
         ob_start();
@@ -239,11 +239,11 @@ if ($w == '') {
 
     $sql_nick_date = "";
     if ($mb_nick_default != $mb_nick)
-        $sql_nick_date =  " , mb_nick_date = '{$g4[time_ymd]}' ";
+        $sql_nick_date =  " , mb_nick_date = '".G4_TIME_YMD."' ";
 
     $sql_open_date = "";
     if ($mb_open_default != $mb_open)
-        $sql_open_date =  " , mb_open_date = '{$g4[time_ymd]}' ";
+        $sql_open_date =  " , mb_open_date = '".G4_TIME_YMD."' ";
 
     $sql_sex = "";
     if (isset($mb_sex))

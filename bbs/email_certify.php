@@ -11,7 +11,7 @@ if ($mb_md5)
     $tmp_md5 = md5($row[mb_id].$row[mb_email].$row[mb_datetime]);
     if ($mb_md5 == $tmp_md5) 
     {
-        sql_query(" update {$g4[member_table]} set mb_email_certify = '{$g4[time_ymdhis]}' where mb_id = '{$mb_id}' ");
+        sql_query(" update {$g4[member_table]} set mb_email_certify = '".G4_TIME_YMDHIS."' where mb_id = '{$mb_id}' ");
 
         alert('E-mail 인증 처리를 완료 하였습니다.', G4_PATH);
     }

@@ -245,8 +245,8 @@ $sql = " insert into {$g4['member_table']}
                 mb_level = '10',
                 mb_mailling = '1',
                 mb_open = '1',
-                mb_email_certify = '{$g4['time_ymdhis']}',
-                mb_datetime = '{$g4['time_ymdhis']}',
+                mb_email_certify = '".G4_TIME_YMDHIS."',
+                mb_datetime = '".G4_TIME_YMDHIS."',
                 mb_ip = '$_SERVER[REMOTE_ADDR]'
                 ";
 @mysql_query($sql);
