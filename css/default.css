@@ -420,7 +420,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #bo_cate_ul {margin:1px 0 0 1px;zoom:1}
 #bo_cate_ul:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_cate_ul li {position:relative;float:left}
-#bo_cate_ul a {display:block;margin-top:-1px;margin-left:-1px;padding:7px 15px 5px;border:1px solid #eee;background:#f7f7f7;color:#595959;text-decoration:none}
+#bo_cate_ul a {display:block;margin-top:-1px;margin-left:-1px;padding:7px 15px 5px;border:1px solid #eee;background:#f7f7f7;text-decoration:none}
 #bo_cate_ul #bo_cate_on {background:#fff;color:#ff3061}
 
 .bo_fx {margin-bottom:5px;zoom:1}
