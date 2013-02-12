@@ -438,7 +438,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#ff3061 !important;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#2a6bc4}
 .td_subject img {margin-left:3px}
-.cnt_cmt {display:inline-block;margin:0 4px;color:#2a6bc4}
+.cnt_cmt {display:inline-block;margin:0 4px;color:#ff3061}
 
 /* 게시판 읽기 */
 #bo_v_title {margin-bottom:5px;padding:5px 0;border-bottom:1px solid #484848;font-weight:bold;text-align:center}
@@ -500,7 +500,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
 #bo_vc .sv_wrap {margin-right:15px}
 #bo_vc .sv_member,
-#bo_vc .sv_member {font-weight:bold}
+#bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo {display:inline-block;margin:0 15px 0 5px}
 #bo_vc h1 {width:0;height:0;overflow:hidden}
 #bo_vc a {color:#000;text-decoration:none}
@@ -548,4 +548,4 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 .pg_prev {border-right:1px solid #ddd}
 .pg_end,
 .pg_next {border-left:1px solid #ddd}
-.pg_current {background:#2a6bc4;color:#fff;font-weight:bold}
+.pg_current {background:#444;color:#fff;font-weight:bold}
