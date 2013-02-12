@@ -60,7 +60,7 @@ a:active {color:#2a6bc4;text-decoration:underline}
 #wrapper {margin:50px auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
-#lnb {float:right;width:228px;border:1px solid #ddd;border-radius:10px;background:#f7f7f2}
+#lnb {float:right;width:228px;border:1px solid #ddd;background:#f7f7f2}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
@@ -438,7 +438,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#ff3061 !important;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#2a6bc4}
 .td_subject img {margin-left:3px}
-.cnt_cmt {display:inline-block;margin:0 4px;color:#ff3061}
+.cnt_cmt {display:inline-block;margin:0 4px;color:#777;font-family:"verdana"}
 
 /* 게시판 읽기 */
 #bo_v_title {margin-bottom:5px;padding:5px 0;border-bottom:1px solid #484848;font-weight:bold;text-align:center}
