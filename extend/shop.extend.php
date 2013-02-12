@@ -78,13 +78,14 @@ $g4['shop_item_info_table']     = G4_TABLE_PREFIX.'shop_item_info';             
 //------------------------------------------------------------------------------
 // 절대 수정하시면 안됩니다.
 //------------------------------------------------------------------------------
-define('G4_STATUS_CART',        '장바구니');
+define('G4_STATUS_SHOPPING',    '쇼핑중');
 define('G4_STATUS_STANDBY',     '입금대기');
 define('G4_STATUS_PAYMENT',     '결제완료');
 define('G4_STATUS_READY',       '배송준비중');
 define('G4_STATUS_DELIVERY',    '배송중');
-define('G4_STATUS_COMPLETE',    '배송완료');
-define('G4_STATUS_END',         '구매확정');
+// 대형쇼핑몰 들과는 달리 배송사와의 정보 연동이 되지 않으므로 "구매확정" 으로만 사용한다.
+//define('G4_STATUS_COMPLETE',    '배송완료'); 
+define('G4_STATUS_PURCHASE',    '구매확정');
 define('G4_STATUS_CANCEL',      '취소');
 define('G4_STATUS_RETURN',      '반품');
 define('G4_STATUS_EXCHANGE',    '교환');
