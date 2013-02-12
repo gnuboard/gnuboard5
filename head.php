@@ -21,29 +21,14 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
         <div id="logo">
             <a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="53" height="36"></a>
-            <span class="sound_only">캐치프레이즈</span>
-            <b>Sharing All Possibilities</b>
         </div>
-
-        <ul id="snb">
-            <? if ($is_member) { ?>
-            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>" id="snb_adm"><strong>관리자</strong></a></li><? } ?>
-            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php" id="snb_modify"><strong>내정보</strong></a></li>
-            <li><a href="<?=G4_BBS_URL?>/logout.php" id="snb_logout"><strong>로그아웃</strong></a></li>
-            <? } else { ?>
-            <li><a href="<?=G4_BBS_URL?>/register.php" id="snb_join"><strong>가입</strong></a></li>
-            <li><a href="<?=G4_BBS_URL?>/login.php" id="snb_login"><strong>로그인</strong></a></li>
-            <? } ?>
-            <li><a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt"><?=connect(); // 현재 접속자수 ?></a></li>
-            <li><a href="<?=G4_BBS_URL?>/new.php" id="snb_new"><strong>새글</strong></a></li>
-        </ul>
 
         <fieldset id="schall">
             <legend>사이트 내 전체검색</legend>
             <form name="fsearchbox" method="get" action="<?=G4_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
             <input type="hidden" name="sop" value="and">
-            <input type="text" id="schall_stx" name="stx" title="검색어" maxlength="20"><input type="image" id="schall_submit" src="<?=G4_IMG_URL?>/btn_search.gif" width="29" height="27" alt="검색">
+            <input type="text" id="schall_stx" name="stx" title="검색어" maxlength="20"><input type="image" id="schall_submit" src="<?=G4_IMG_URL?>/btn_search.jpg" width="29" height="29" alt="검색">
             </form>
 
             <script>
@@ -74,6 +59,19 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             }
             </script>
         </fieldset>
+
+        <ul id="snb">
+            <? if ($is_member) { ?>
+            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>" id="snb_adm"><strong>관리자</strong></a></li><? } ?>
+            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php" id="snb_modify"><strong>내정보</strong></a></li>
+            <li><a href="<?=G4_BBS_URL?>/logout.php" id="snb_logout"><strong>로그아웃</strong></a></li>
+            <? } else { ?>
+            <li><a href="<?=G4_BBS_URL?>/register.php" id="snb_join"><strong>가입</strong></a></li>
+            <li><a href="<?=G4_BBS_URL?>/login.php" id="snb_login"><strong>로그인</strong></a></li>
+            <? } ?>
+            <li><a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt"><?=connect(); // 현재 접속자수 ?></a></li>
+            <li><a href="<?=G4_BBS_URL?>/new.php" id="snb_new"><strong>새글</strong></a></li>
+        </ul>
 
     </div>
 </header>
