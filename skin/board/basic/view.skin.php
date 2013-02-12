@@ -1,175 +1,198 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
-<div style="height:12px; line-height:1px; font-size:1px;">&nbsp;</div>
 
-<!-- 게시글 보기 시작 -->
-<table width="<?=$width?>" align="center" cellpadding="0" cellspacing="0"><tr><td>
+<p id="bo_v_title"><?=$board['bo_subject']?></p>
 
+<div id="bo_v">
 
-<div style="clear:both; height:30px;">
-    <div style="float:left; margin-top:6px;">
-    <img src="<?=$board_skin_path?>/img/icon_date.gif" align=absmiddle border='0'>
-    <span style="color:#888888;">작성일 : <?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></span>
-    </div>
+    <h1 id="bo_v_h1">
+        <? if ($category_name) { // 분류가 지정되었다면 ?><span><?=($category_name ? "{$view['ca_name']} " : "");?></span><? } // 분류 출력 끝 ?>
+        <?=cut_str(get_text($view['wr_subject']), 70) // 글제목 출력?>
+    </h1>
 
-    <!-- 링크 버튼 -->
-    <div style="float:right;">
+    <section id="bo_v_info">
+        <h2>게시물 정보</h2>
+        작성자 <strong><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
+        <span class="sound_only">작성일</span><strong><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></strong>
+        조회<strong><?=number_format($view['wr_hit'])?>회</strong>
+        댓글<strong><?=number_format($view['wr_comment'])?>건</strong>
+    </section>
+
     <?
-    ob_start();
+    if ($view['file']['count']) {
+        $cnt = 0;
+        for ($i=0; $i<count($view['file']); $i++) {
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
+                $cnt++;
+        }
+    }
     ?>
-    <? if ($copy_href) { echo "<a href=\"$copy_href\"><img src='$board_skin_path/img/btn_copy.gif' border='0' align='absmiddle'></a> "; } ?>
-    <? if ($move_href) { echo "<a href=\"$move_href\"><img src='$board_skin_path/img/btn_move.gif' border='0' align='absmiddle'></a> "; } ?>
 
-    <? if ($search_href) { echo "<a href=\"$search_href\"><img src='$board_skin_path/img/btn_list_search.gif' border='0' align='absmiddle'></a> "; } ?>
-    <? echo "<a href=\"$list_href\"><img src='$board_skin_path/img/btn_list.gif' border='0' align='absmiddle'></a> "; ?>
-    <? if ($update_href) { echo "<a href=\"$update_href\"><img src='$board_skin_path/img/btn_modify.gif' border='0' align='absmiddle'></a> "; } ?>
-    <? if ($delete_href) { echo "<a href=\"$delete_href\"><img src='$board_skin_path/img/btn_delete.gif' border='0' align='absmiddle'></a> "; } ?>
-    <? if ($reply_href) { echo "<a href=\"$reply_href\"><img src='$board_skin_path/img/btn_reply.gif' border='0' align='absmiddle'></a> "; } ?>
-    <? if ($write_href) { echo "<a href=\"$write_href\"><img src='$board_skin_path/img/btn_write.gif' border='0' align='absmiddle'></a> "; } ?>
+    <? if($cnt) { ?>
+    <section id="bo_v_file">
+        <h2>첨부파일</h2>
+        <ul>
+        <?
+        // 가변 파일
+        for ($i=0; $i<count($view['file']); $i++) {
+            if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
+        ?>
+            <li>
+                <a href="<? echo $view['file'][$i]['href']; ?>" onclick="javascript:file_download('<? echo $view['file'][$i]['href'].'&amp;confirm=yes'; ?>', '<?=$view['file'][$i]['source']?>'); return false;">
+                    <img src="<?=$board_skin_url?>/img/icon_file.gif" alt="첨부파일">
+                    <strong><?=$view['file'][$i]['source']?></strong>
+                    <span> (<?=$view['file'][$i]['size']?>)</span>
+                </a>
+                <span class="bo_v_file_cnt"><?=$view['file'][$i]['download']?>회 다운로드</span>
+                <span>DATE : <?=$view['file'][$i]['datetime']?></span>
+            </li>
+        <?
+            }
+        }
+        ?>
+        </ul>
+    </section>
+    <? } ?>
+
     <?
-    $link_buttons = ob_get_contents();
-    ob_end_flush();
+    if (implode('', $view['link'])) {
     ?>
-    </div>
-</div>
+    <section id="bo_v_link">
+        <h2>관련링크</h2>
+        <ul>
+        <?
+        // 링크
+        $cnt = 0;
+        for ($i=1; $i<=count($view['link']); $i++) {
+            if ($view['link'][$i]) {
+                $cnt++;
+                $link = cut_str($view['link'][$i], 70);
+        ?>
+            <li>
+                <a href="<?=$view['link_href'][$i]?>" target="_blank">
+                    <img src="<?=$board_skin_url?>/img/icon_link.gif" alt="관련링크">
+                    <strong><?=$link?></strong>
+                </a>
+                <span class="bo_v_link_cnt"><?=$view['link_hit'][$i]?>회 연결</span>
+            </li>
+        <?
+            }
+        }
+        ?>
+        </ul>
+    </section>
+    <? } ?>
 
-<div style="border:1px solid #ddd; clear:both; height:34px; background:url(<?=$board_skin_path?>/img/title_bg.gif) repeat-x;">
-    <table border=0 cellpadding=0 cellspacing=0 width=100%>
-    <tr>
-        <td style="padding:8px 0 0 10px;">
-            <div style="color:#505050; font-size:13px; font-weight:bold; word-break:break-all;">
-            <? if ($is_category) { echo ($category_name ? "[{$view['ca_name']}] " : ""); } ?>
-            <?=cut_hangul_last(get_text($view['wr_subject']))?>
-            </div>
-        </td>
-        <td align="right" style="padding:6px 6px 0 0;" width=120>
-            <? if ($scrap_href) { echo "<a href=\"javascript:;\" onclick=\"win_scrap('$scrap_href');\"><img src='$board_skin_path/img/btn_scrap.gif' border='0' align='absmiddle'></a> "; } ?>
-        </td>
-    </tr>
-    </table>
-</div>
-<div style="height:3px; background:url(<?=$board_skin_path?>/img/title_shadow.gif) repeat-x; line-height:1px; font-size:1px;"></div>
+    <nav id="bo_v_top">
+        <h2>게시물 상단 버튼</h2>
+        <?
+        ob_start();
+        ?>
+        <? if ($prev_href || $next_href) { ?>
+        <ul class="bo_v_nb">
+            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn01">이전글</a></li><? } ?>
+            <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn01">다음글</a></li><? } ?>
+        </ul>
+        <? } ?>
 
+        <ul class="bo_v_com">
+            <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn01">수정</a></li><? } ?>
+            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" onclick="del(this.href); return false;" class="btn01">삭제</a></li><? } ?>
+            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" onclick="board_move(this.href); return false;" class="btn02">복사</a></li><? } ?>
+            <? if ($move_href) { ?><li><a href="<?=$move_href?>" onclick="board_move(this.href); return false;" class="btn02">이동</a></li><? } ?>
+            <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn01">검색</a></li><? } ?>
+            <li><a href="<?=$list_href?>" class="btn01">목록</a></li>
+            <? if ($reply_href) { ?><li><a href="<?=$reply_href?>" class="btn01">답변</a></li><? } ?>
+            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
+        </ul>
+        <?
+        $link_buttons = ob_get_contents();
+        ob_end_flush();
+        ?>
+    </nav>
 
-<table border=0 cellpadding=0 cellspacing=0 width=<?=$width?>>
-<tr>
-    <td height=30 background="<?=$board_skin_path?>/img/view_dot.gif" style="color:#888;">
-        <div style="float:left;">
-        &nbsp;글쓴이 :
-        <?=$view[name]?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?>
-        </div>
-        <div style="float:right;">
-        <img src="<?=$board_skin_path?>/img/icon_view.gif" border='0' align=absmiddle> 조회 : <?=number_format($view['wr_hit'])?>
-        <? if ($is_good) { ?>&nbsp;<img src="<?=$board_skin_path?>/img/icon_good.gif" border='0' align=absmiddle> 추천 : <?=number_format($view['wr_good'])?><? } ?>
-        <? if ($is_nogood) { ?>&nbsp;<img src="<?=$board_skin_path?>/img/icon_nogood.gif" border='0' align=absmiddle> 비추천 : <?=number_format($view['wr_nogood'])?><? } ?>
-        &nbsp;
-        </div>
-    </td>
-</tr>
+    <article id="bo_v_atc">
+        <header>
+            <h1>본문</h1>
+        </header>
 
-<?
-// 가변 파일
-$cnt = 0;
-for ($i=0; $i<count($view['file']); $i++) {
-    if ($view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-        $cnt++;
-        echo "<tr><td height=30 background=\"$board_skin_path/img/view_dot.gif\">";
-        echo "&nbsp;&nbsp;<img src='{$board_skin_path}/img/icon_file.gif' align=absmiddle border='0'>";
-        echo "<a href=\"javascript:file_download('{$view['file'][$i]['href']}', '".urlencode($view['file'][$i]['source'])."');\" title='{$view['file'][$i]['content']}'>";
-        echo "&nbsp;<span style=\"color:#888;\">{$view['file'][$i]['source']} ({$view['file'][$i]['size']})</span>";
-        echo "&nbsp;<span style=\"color:#ff6600; font-size:11px;\">[{$view['file'][$i]['download']}]</span>";
-        echo "&nbsp;<span style=\"color:#d3d3d3; font-size:11px;\">DATE : {$view['file'][$i]['datetime']}</span>";
-        echo "</a></td></tr>";
-    }
-}
-
-// 링크
-$cnt = 0;
-for ($i=1; $i<=$g4['link_count']; $i++) {
-    if ($view['link'][$i]) {
-        $cnt++;
-        $link = cut_str($view['link'][$i], 70);
-        echo "<tr><td height=30 background=\"$board_skin_path/img/view_dot.gif\">";
-        echo "&nbsp;&nbsp;<img src='{$board_skin_path}/img/icon_link.gif' align=absmiddle border='0'>";
-        echo "<a href='{$view['link_href'][$i]}' target=_blank>";
-        echo "&nbsp;<span style=\"color:#888;\">{$link}</span>";
-        echo "&nbsp;<span style=\"color:#ff6600; font-size:11px;\">[{$view['link_hit'][$i]}]</span>";
-        echo "</a></td></tr>";
-    }
-}
-?>
-<tr>
-    <td height="150" style="word-break:break-all; padding:10px;">
         <?
         // 파일 출력
         for ($i=0; $i<=count($view['file']); $i++) {
-            if ($view['file'][$i]['view'])
-                echo $view['file'][$i]['view'] . "<p>";
+            if ($view['file'][$i]['view']) {
+                if ($i == 0) echo "<div id=\"bo_v_img\">";
+                echo $view['file'][$i]['view'];
+                if ($i == 0) echo "</div>";
+            }
         }
         ?>
 
-        <!-- 내용 출력 -->
-        <span id="writeContents"><?=$view['content'];?></span>
-
+        <div id="bo_v_con"><?=$view['content'];?></div>
         <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
         <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
 
-        <? if ($nogood_href) {?>
-        <div style="width:72px; height:55px; background:url(<?=$board_skin_path?>/img/good_bg.gif) no-repeat; text-align:center; float:right;">
-        <div style="color:#888; margin:7px 0 5px 0;">비추천 : <?=number_format($view['wr_nogood'])?></div>
-        <div><a href="<?=$nogood_href?>" target="hiddenframe"><img src="<?=$board_skin_path?>/img/icon_nogood.gif" border='0' align="absmiddle"></a></div>
+        <? if ($is_signature) { ?><p><?=$signature?></p><? } ?>
+
+        <? if ($scrap_href || $good_href || $nogood_href) { ?>
+        <div id="bo_v_act">
+            <? if ($scrap_href) { ?><a href="<? echo $scrap_href; ?>" target="_blank" onclick="win_scrap(this.href); return false;" class="btn01">스크랩</a><? } ?>
+            <? if ($good_href) {?><a href="<?=$good_href?>" class="btn01" target="hiddenframe">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
+            <? if ($nogood_href) {?><a href="<?=$nogood_href?>" class="btn01" target="hiddenframe">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
         </div>
         <? } ?>
+    </article>
 
-        <? if ($good_href) {?>
-        <div style="width:72px; height:55px; background:url(<?=$board_skin_path?>/img/good_bg.gif) no-repeat; text-align:center; float:right;">
-        <div style="color:#888; margin:7px 0 5px 0;"><span style='color:crimson;'>추천 : <?=number_format($view['wr_good'])?></span></div>
-        <div><a href="<?=$good_href?>" target="hiddenframe"><img src="<?=$board_skin_path?>/img/icon_good.gif" border='0' align="absmiddle"></a></div>
-        </div>
-        <? } ?>
+    <?
+    // 코멘트 입출력
+    include_once('./view_comment.php');
+    ?>
 
-</td>
-</tr>
-<? if ($is_signature) { echo "<tr><td align='center' style='border-bottom:1px solid #E7E7E7; padding:5px 0;'>$signature</td></tr>"; } // 서명 출력 ?>
-</table>
-<br>
+    <nav id="bo_v_bot">
+        <h2>게시물 하단 버튼</h2>
 
-<?
-// 코멘트 입출력
-include_once('./view_comment.php');
-?>
+        <!-- 링크 버튼 -->
+        <?=$link_buttons?>
+    </nav>
 
-<div style="height:1px; line-height:1px; font-size:1px; background-color:#ddd; clear:both;">&nbsp;</div>
-
-<div style="clear:both; height:43px;">
-    <div style="float:left; margin-top:10px;">
-    <? if ($prev_href) { echo "<a href=\"$prev_href\" title=\"$prev_wr_subject\"><img src='$board_skin_path/img/btn_prev.gif' border='0' align='absmiddle'></a>&nbsp;"; } ?>
-    <? if ($next_href) { echo "<a href=\"$next_href\" title=\"$next_wr_subject\"><img src='$board_skin_path/img/btn_next.gif' border='0' align='absmiddle'></a>&nbsp;"; } ?>
-    </div>
-
-    <!-- 링크 버튼 -->
-    <div style="float:right; margin-top:10px;">
-    <?=$link_buttons?>
-    </div>
 </div>
 
-<div style="height:2px; line-height:1px; font-size:1px; background-color:#dedede; clear:both;">&nbsp;</div>
 
-</td></tr></table><br>
 
-<script type="text/javascript">
+<script>
 function file_download(link, file) {
-    <? if ($board['bo_download_point'] < 0) { ?>if (confirm("'"+decodeURIComponent(file)+"' 파일을 다운로드 하시면 포인트가 차감(<?=number_format($board['bo_download_point'])?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?"))<?}?>
+    <? if ($board['bo_download_point'] < 0) { ?>if (confirm("'"+file+"' 파일을 다운로드 하시면 포인트가 차감(<?=number_format($board['bo_download_point'])?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?"))<?}?>
     document.location.href=link;
 }
-</script>
 
-<script type="text/javascript" src="<?=$g4['path']?>/js/board.js"></script>
-<script type="text/javascript">
-window.onload=function() {
-    resizeBoardImage(<?=(int)$board['bo_image_width']?>);
-    drawFont();
+function board_move(href)
+{
+    window.open(href, "boardmove", "left=50, top=50, width=500, height=550, scrollbars=1");
 }
 </script>
+
+<script src="<?=G4_JS_URL?>/board.js"></script>
 <!-- 게시글 보기 끝 -->
+
+<script>
+// 이미지 등비율 리사이징
+$(window).load(function() {
+    view_image_resize();
+});
+
+function view_image_resize()
+{
+    var $img = $('#bo_v_atc img');
+    var img_wrap = $('#bo_v_atc').width();
+
+    $img.each(function() {
+        var img_width = $(this).width();
+        $(this).data("width", img_width); // 원래 이미지 사이즈
+        if (img_width > img_wrap) {
+            $(this).addClass('img_fix');
+        } else if (img_width <= img_wrap && img_width >= $(this).data("width")) {
+            $(this).removeClass('img_fix');
+        }
+    });
+}
+</script>
