@@ -560,10 +560,12 @@ $(function(){
         return false;
     });
 
+    /*
     $('.win_poll').click(function() {
         win_poll(this.href);
         return false;
     });
+    */
 
     // 사이드뷰
     var sv_hide = false;

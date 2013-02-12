@@ -55,7 +55,7 @@ function fpoll_submit(f)
         return false;
     }
 
-    win_poll();
+    win_poll("about:blank");
     return true;
 }
 
