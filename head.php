@@ -62,15 +62,15 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
         <ul id="snb">
             <? if ($is_member) { ?>
-            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>" id="snb_adm"><strong>관리자</strong></a></li><? } ?>
-            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php" id="snb_modify"><strong>내정보</strong></a></li>
-            <li><a href="<?=G4_BBS_URL?>/logout.php" id="snb_logout"><strong>로그아웃</strong></a></li>
+            <? if ($is_admin) { ?><li><a href="<?=G4_ADMIN_URL?>" id="snb_adm"><span>관리자</span></a></li><? } ?>
+            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php" id="snb_modify"><span>내정보</span></a></li>
+            <li><a href="<?=G4_BBS_URL?>/logout.php" id="snb_logout"><span>로그아웃</span></a></li>
             <? } else { ?>
-            <li><a href="<?=G4_BBS_URL?>/register.php" id="snb_join"><strong>가입</strong></a></li>
-            <li><a href="<?=G4_BBS_URL?>/login.php" id="snb_login"><strong>로그인</strong></a></li>
+            <li><a href="<?=G4_BBS_URL?>/register.php" id="snb_join"><span>회원가입</span></a></li>
+            <li><a href="<?=G4_BBS_URL?>/login.php" id="snb_login"><span>로그인</span></a></li>
             <? } ?>
-            <li><a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt"><?=connect(); // 현재 접속자수 ?></a></li>
-            <li><a href="<?=G4_BBS_URL?>/new.php" id="snb_new"><strong>새글</strong></a></li>
+            <li><a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt"><span><?=connect(); // 현재 접속자수 ?></span></a></li>
+            <li><a href="<?=G4_BBS_URL?>/new.php" id="snb_new"><span>새글</span></a></li>
         </ul>
 
     </div>
