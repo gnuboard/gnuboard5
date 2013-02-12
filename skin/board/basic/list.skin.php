@@ -51,8 +51,8 @@ if ($is_nogood) $colspan++;
 
     <? if ($rss_href || $write_href) {?>
     <ul class="btn_bo_user">
-        <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn02">RSS</a></li><? } ?>
-        <? if ($admin_href) { ?><li><a href="<?=$admin_href?>" class="btn03">관리자</a></li><? } ?>
+        <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn01">RSS</a></li><? } ?>
+        <? if ($admin_href) { ?><li><a href="<?=$admin_href?>" class="btn02">관리자</a></li><? } ?>
         <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
     </ul>
     <? } ?>
@@ -137,7 +137,7 @@ if ($is_nogood) $colspan++;
     <div class="bo_fx">
         <ul class="btn_bo_adm">
             <? if ($list_href) { ?>
-            <li><a href="<?=$list_href?>" class="btn02"> 목록</a></li>
+            <li><a href="<?=$list_href?>" class="btn01"> 목록</a></li>
             <? } ?>
             <? if ($is_checkbox) { ?>
             <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제"></li>

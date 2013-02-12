@@ -100,16 +100,13 @@ a:active {color:#2a6bc4;text-decoration:underline}
 .btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
 .btn01:focus,
 .btn01:hover {text-decoration:none !important}
-.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
+.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #3f3f3f !important;background:#444 !important;color:#fff !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
-.btn03 {display:inline-block;padding:0 10px;height:23px;border:1px solid #3f3f3f !important;background:#444 !important;color:#fff !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
-.btn03:focus,
-.btn03:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#444;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
-.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#2a6bc4;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
+.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#444;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
 .btn_win a:focus,
@@ -117,7 +114,7 @@ a:active {color:#2a6bc4;text-decoration:underline}
 
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
-.basic_tbl caption {padding:0 0 10px;color:#2a6bc4;text-align:left}
+.basic_tbl caption {padding:0 0 10px;color:#777;text-align:left}
 .basic_tbl thead th {padding:12px 0 8px;border-top:1px solid #e9e9e9}
 .basic_tbl thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .basic_tbl tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
@@ -129,7 +126,7 @@ td.empty_table {padding:85px 0;text-align:center}
 
 /* 폼 테이블 */
 .frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
-.frm_tbl caption {padding:10px 0;color:#2a6bc4;font-weight:bold;text-align:left}
+.frm_tbl caption {padding:10px 0;color:#777;font-weight:bold;text-align:left}
 .frm_tbl th {padding-left:10px;width:100px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
 .frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
@@ -209,7 +206,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #find_info #captcha input {margin-left:5px}
 
 /* 아웃로그인 스킨 */
-.ol {position:relative;margin-bottom:10px;padding:14px;border-bottom:1px solid #ddd}
+.ol {position:relative;padding:14px;border-bottom:1px solid #ddd}
 .ol h2 {width:0;height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 .ol a {}
@@ -298,7 +295,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 
 /* 설문조사 스킨 */
 #poll {}
-#poll header {padding:10px 14px 0}
+#poll header {padding:20px 14px 0}
 #poll header a {color:#2a6bc4}
 #poll header p {padding:5px 0 10px}
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
