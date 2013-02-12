@@ -234,7 +234,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #ol_after_private a {display:block;padding-top:8px;height:37px;background:#fff;text-align:center}
 #ol_after_private a strong {display:block;padding-top:5px;color:#2a6bc4}
 #ol_after_private a:focus,
-#ol_after_private a:hover {background:#3c99cf;color:#fff;text-decoration:none}
+#ol_after_private a:hover {background:#2a6bc4;color:#fff;text-decoration:none}
 #ol_after_private a:focus strong,
 #ol_after_private a:hover strong {color:#fff;text-decoration:none}
 #ol_after_memo {width:50px;margin-right:1px}
