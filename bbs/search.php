@@ -1,7 +1,7 @@
 <?
 include_once('./_common.php');
 
-$g4['title'] = "전체검색 결과";
+$g4['title'] = '전체검색 결과';
 include_once('./_head.php');
 
 $search_table = Array();
@@ -10,9 +10,10 @@ $write_pages = "";
 $text_stx = "";
 $srows = 0;
 
+$stx = strip_tags($stx);
+$stx = preg_replace('/[[:punct:]]/', '', $stx); // 특수문자 제거
 if ($stx) {
-
-    $stx = preg_replace("/\//", "\/", trim($stx));
+    $stx = preg_replace('/\//', '\/', trim($stx));
     $sop = strtolower($sop);
     if (!$sop || !($sop == 'and' || $sop == 'or')) $sop = 'and'; // 연산자 and , or
     $srows = isset($_GET['srows']) ? $_GET['srows'] : 10;
@@ -100,7 +101,7 @@ if ($stx) {
         $op1 = " {$sop} ";
 
         // 인기검색어
-        $sql = " insert into {$g4['popular_table']} set pp_word = '{$search_str}', pp_date = '{$g4['time_ymd']}', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $sql = " insert into {$g4['popular_table']} set pp_word = '{$search_str}', pp_date = '".G4_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql, FALSE);
     }
     $str .= ")";
