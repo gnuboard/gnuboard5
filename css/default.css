@@ -60,7 +60,7 @@ a:active {color:#2a6bc4;text-decoration:underline}
 #wrapper {margin:50px auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
-#lnb {float:right;width:228px;border:1px solid #ccc;border-radius:10px;background:#f7f7f2}
+#lnb {float:right;width:228px;border:1px solid #ddd;border-radius:10px;background:#f7f7f2}
 #container {float:left;width:730px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
@@ -209,7 +209,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #find_info #captcha input {margin-left:5px}
 
 /* 아웃로그인 스킨 */
-.ol {position:relative;margin-bottom:10px;padding:14px;border-bottom:1px solid #ccc}
+.ol {position:relative;margin-bottom:10px;padding:14px;border-bottom:1px solid #ddd}
 .ol h2 {width:0;height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 .ol a {}
