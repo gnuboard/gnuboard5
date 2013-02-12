@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-if (empty($fr_date)) $fr_date = $g4['time_ymd'];
-if (empty($to_date)) $to_date = $g4['time_ymd'];
+if (empty($fr_date)) $fr_date = G4_TIME_YMD;
+if (empty($to_date)) $to_date = G4_TIME_YMD;
 
 $qstr = "fr_date={$fr_date}{&to_date}={$to_date}";
 

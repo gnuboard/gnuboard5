@@ -55,7 +55,7 @@ if ($good == 'good' || $good == 'nogood')
         // 추천(찬성), 비추천(반대) 카운트 증가
         sql_query(" update {$g4[write_prefix]}{$bo_table} set wr_{$good} = wr_{$good} + 1 where wr_id = '{$wr_id}' ");
         // 내역 생성
-        sql_query(" insert {$g4[board_good_table]} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member[mb_id]}', bg_flag = '{$good}', bg_datetime = '{$g4[time_ymdhis]}' ");
+        sql_query(" insert {$g4[board_good_table]} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member[mb_id]}', bg_flag = '{$good}', bg_datetime = '".G4_TIME_YMDHIS."' ");
 
         if ($good == 'good') 
             $status = '추천';

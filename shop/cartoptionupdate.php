@@ -86,7 +86,7 @@ for($i=0; $i<$count; $i++) {
                         ct_stock_use        = '0',
                         ct_point_use        = '0',
                         ct_send_cost_pay    = '$ct_send_cost_pay',
-                        ct_time             = '{$g4['time_ymdhis']}',
+                        ct_time             = '".G4_TIME_YMDHIS."',
                         ct_ip               = '$REMOTE_ADDR',
                         ct_direct           = '$sw_direct' ";
 

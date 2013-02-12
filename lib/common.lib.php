@@ -362,14 +362,14 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     // 당일인 경우 시간으로 표시함
     $list['datetime'] = substr($list['wr_datetime'],0,10);
     $list['datetime2'] = $list['wr_datetime'];
-    if ($list['datetime'] == $g4['time_ymd'])
+    if ($list['datetime'] == G4_TIME_YMD)
         $list['datetime2'] = substr($list['datetime2'],11,5);
     else
         $list['datetime2'] = substr($list['datetime2'],5,5);
     // 4.1
     $list['last'] = substr($list['wr_last'],0,10);
     $list['last2'] = $list['wr_last'];
-    if ($list['last'] == $g4['time_ymd'])
+    if ($list['last'] == G4_TIME_YMD)
         $list['last2'] = substr($list['last2'],11,5);
     else
         $list['last2'] = substr($list['last2'],5,5);
@@ -627,7 +627,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         if ($search_str == "") continue;
 
         // 인기검색어
-        $sql = " insert into {$g4['popular_table']} set pp_word = '$search_str', pp_date = '{$g4['time_ymd']}', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $sql = " insert into {$g4['popular_table']} set pp_word = '$search_str', pp_date = '".G4_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql, FALSE);
 
         $str .= $op1;
@@ -904,7 +904,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     // 포인트 건별 생성
     $sql = " insert into {$g4['point_table']}
                 set mb_id = '$mb_id',
-                    po_datetime = '{$g4['time_ymdhis']}',
+                    po_datetime = '".G4_TIME_YMDHIS."',
                     po_content = '".addslashes($content)."',
                     po_point = '$point',
                     po_rel_table = '$rel_table',
@@ -1358,7 +1358,7 @@ function date_select($date, $name='')
 
     $s = '';
     if (substr($date, 0, 4) == "0000") {
-        $date = $g4['time_ymdhis'];
+        $date = G4_TIME_YMDHIS;
     }
     preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})/", $date, $m);
 

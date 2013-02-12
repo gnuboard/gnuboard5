@@ -105,8 +105,8 @@ if($w != 'd') {
         alert('사용시작일은 종료일 이후 일 수 없습니다.');
     }
 
-    if($cp_end < $g4['time_ymd']) {
-        alert('사용종료일은 오늘('.$g4['time_ymd'].') 이전일 수 없습니다.');
+    if($cp_end < G4_TIME_YMD) {
+        alert('사용종료일은 오늘('.G4_TIME_YMD.') 이전일 수 없습니다.');
     }
 
     if($cp_type == 0) { // 상품할인 일때
@@ -176,7 +176,7 @@ if($w == '') {
                                 cp_minimum  = '$cp_minimum',
                                 cp_maximum  = '$cp_maximum',
                                 cp_use      = '$cp_use',
-                                cp_datetime = '{$g4['time_ymdhis']}' ";
+                                cp_datetime = '".G4_TIME_YMDHIS."' ";
                 $result = sql_query($sql, false);
 
                 if($result) {
@@ -224,7 +224,7 @@ if($w == '') {
                                     cp_minimum  = '$cp_minimum',
                                     cp_maximum  = '$cp_maximum',
                                     cp_use      = '$cp_use',
-                                    cp_datetime = '{$g4['time_ymdhis']}' ";
+                                    cp_datetime = '".G4_TIME_YMDHIS."' ";
                     $result = sql_query($sql, false);
 
                     if($result) {
@@ -284,7 +284,7 @@ if($w == '') {
                                         cp_minimum  = '$cp_minimum',
                                         cp_maximum  = '$cp_maximum',
                                         cp_use      = '$cp_use',
-                                        cp_datetime = '{$g4['time_ymdhis']}' ";
+                                        cp_datetime = '".G4_TIME_YMDHIS."' ";
                         $result = sql_query($sql, false);
 
                         if($result) {
@@ -345,7 +345,7 @@ if($w == '') {
                                         cp_minimum  = '$cp_minimum',
                                         cp_maximum  = '$cp_maximum',
                                         cp_use      = '$cp_use',
-                                        cp_datetime = '{$g4['time_ymdhis']}' ";
+                                        cp_datetime = '".G4_TIME_YMDHIS."' ";
                         $result = sql_query($sql, false);
 
                         if($result) {
@@ -431,7 +431,7 @@ if($w == '') {
                     cp_minimum  = '$cp_minimum',
                     cp_maximum  = '$cp_maximum',
                     cp_use      = '$cp_use',
-                    cp_datetime = '{$g4['time_ymdhis']}'
+                    cp_datetime = '".G4_TIME_YMDHIS."'
                 where cp_no = '$cp_no' ";
     sql_query($sql);
 } else if($w == 'd') {

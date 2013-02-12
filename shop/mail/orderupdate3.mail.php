@@ -13,7 +13,7 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
             <td height="59" background="<?=$g4['shop_url']?>/mail/img/mail_bg2.gif" style='padding-left:20px'>
-                <strong><font color="#02253A">본 메일은 <?=$g4[time_ymdhis]?> (<?=get_yoil($g4[time_ymdhis])?>)을 기준으로 작성되었습니다.</font></strong>
+                <strong><font color="#02253A">본 메일은 <?=G4_TIME_YMDHIS?> (<?=get_yoil(G4_TIME_YMDHIS)?>)을 기준으로 작성되었습니다.</font></strong>
             </td>
         </tr>
         </table>

@@ -10,7 +10,7 @@ if ($kind == 'recv')
     $unkind = 'send';
 
     $sql = " update {$g4['memo_table']}
-                set me_read_datetime = '{$g4['time_ymdhis']}'
+                set me_read_datetime = '".G4_TIME_YMDHIS."'
                 where me_id = '$me_id'
                 and me_recv_mb_id = '{$member['mb_id']}'
                 and me_read_datetime = '0000-00-00 00:00:00' ";

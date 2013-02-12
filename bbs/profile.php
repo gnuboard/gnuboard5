@@ -20,7 +20,7 @@ include_once(G4_PATH.'/head.sub.php');
 $mb_nick = get_sideview($mb['mb_id'], $mb['mb_nick'], $mb['mb_email'], $mb['mb_homepage'], $mb['mb_open']);
 
 // 회원가입후 몇일째인지? + 1 은 당일을 포함한다는 뜻
-$sql = " select (TO_DAYS('{$g4['time_ymdhis']}') - TO_DAYS('{$mb['mb_datetime']}') + 1) as days ";
+$sql = " select (TO_DAYS('".G4_TIME_YMDHIS."') - TO_DAYS('{$mb['mb_datetime']}') + 1) as days ";
 $row = sql_fetch($sql);
 $mb_reg_after = $row['days'];
 

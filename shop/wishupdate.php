@@ -22,7 +22,7 @@ else
 {
     $sql_common = " set mb_id = '$member[mb_id]',
                         it_id = '$it_id',
-                        wi_time = '$g4[time_ymdhis]',
+                        wi_time = '".G4_TIME_YMDHIS."',
                         wi_ip = '$REMOTE_ADDR' ";
 
     $sql = " select wi_id from $g4[shop_wish_table] 
@@ -36,7 +36,7 @@ else
     $sql = " insert $g4[shop_wish_table]
                 set mb_id = '$member[mb_id]',
                     it_id = '$it_id',
-                    wi_time = '$g4[time_ymdhis]',
+                    wi_time = '".G4_TIME_YMDHIS."',
                     wi_ip = '$REMOTE_ADDR' ";
     sql_query($sql);
 }

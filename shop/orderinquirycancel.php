@@ -27,8 +27,7 @@ sql_query(" update $g4[shop_cart_table] set ct_status = '취소' where on_uid = 
 
 // 주문 취소
 $cancel_memo = addslashes($cancel_memo);
-//sql_query(" update $g4[shop_order_table] set od_temp_point = '0', od_receipt_point = '0', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - {$g4['time_ymdhis']} (취소이유 : {$cancel_memo})\") where on_uid = '$on_uid' ");
-sql_query(" update $g4[shop_order_table] set od_send_cost = '0', od_temp_point = '0', od_receipt_point = '0', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - {$g4['time_ymdhis']} (취소이유 : {$cancel_memo})\") where on_uid = '$on_uid' ");
+sql_query(" update $g4[shop_order_table] set od_send_cost = '0', od_temp_point = '0', od_receipt_point = '0', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - ".G4_TIME_YMDHIS." (취소이유 : {$cancel_memo})\") where on_uid = '$on_uid' ");
 
 // 주문취소 회원의 포인트를 되돌려 줌
 if ($od[od_receipt_point] > 0) {

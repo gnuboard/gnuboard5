@@ -124,7 +124,7 @@ if ($od_send_mail)
         $email = $od[od_email];
 
         // 메일 보낸 내역 상점메모에 update
-        $od_shop_memo = "$g4[time_ymdhis] - 결제/배송내역 메일발송\n" . $od[od_shop_memo];;
+        $od_shop_memo = G4_TIME_YMDHIS.' - 결제/배송내역 메일발송'.PHP_EOL.$od[od_shop_memo];
         /* 1.00.06
         ** 주석처리 - 처리하지 않음
         if ($receipt_check)

@@ -219,8 +219,8 @@ if($is_member) {
                     from {$g4['shop_coupon_table']}
                     where cp_id = '$cp_id'
                       and cp_use = '1'
-                      and cp_start <= '{$g4['time_ymd']}'
-                      and cp_end >= '{$g4['time_ymd']}'
+                      and cp_start <= '".G4_TIME_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."'
                       and cp_type = '0' ";
         $cp = sql_fetch($sql);
         if(!$cp['cp_id']) { // 쿠폰정보없음
@@ -339,8 +339,8 @@ if($is_member) {
                     where cp_id = '$s_cp_id'
                       and cp_type = '2'
                       and cp_use = '1'
-                      and cp_start <= '{$g4['time_ymd']}'
-                      and cp_end >= '{$g4['time_ymd']}' ";
+                      and cp_start <= '".G4_TIME_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."' ";
         $row4 = sql_fetch($sql4);
 
         if($row4['mb_id'] == '전체회원' || $row4['mb_id'] == $member['mb_id']) {
@@ -380,8 +380,8 @@ if($is_member) {
                     where cp_id = '$o_cp_id'
                       and cp_use = '1'
                       and cp_type = '1'
-                      and cp_start <= '{$g4['time_ymd']}'
-                      and cp_end >= '{$g4['time_ymd']}' ";
+                      and cp_start <= '".G4_TIME_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."' ";
         $row4 = sql_fetch($sql4);
 
         if($row4['mb_id'] == '전체회원' || $row4['mb_id'] == $member['mb_id']) {
@@ -584,7 +584,7 @@ $sql = " insert {$g4['shop_order_table']}
                 escw_yn           = '$escw_yn',
                 od_coupon_amount  = '$od_coupon_amount',
                 od_hope_date      = '$od_hope_date',
-                od_time           = '{$g4['time_ymdhis']}',
+                od_time           = '".G4_TIME_YMDHIS."',
                 od_ip             = '$REMOTE_ADDR',
                 od_settle_case    = '$od_settle_case',
                 od_cash_yn        = '$cash_yn',
@@ -664,7 +664,7 @@ if($is_member) {
                         ct_id       = '{$arr_item_coupon[$i]['ct_id']}',
                         uq_id       = '$od_id',
                         ch_amount   = '{$arr_item_coupon[$i]['ch_amount']}',
-                        ch_datetime = '{$g4['time_ymdhis']}' ";
+                        ch_datetime = '".G4_TIME_YMDHIS."' ";
         sql_query($sql);
 
         // cart 테이블에 쿠폰금액기록
@@ -684,7 +684,7 @@ if($is_member) {
                         ct_id       = '',
                         uq_id       = '$od_id',
                         ch_amount   = '{$arr_send_coupon['ch_amount']}',
-                        ch_datetime = '{$g4['time_ymdhis']}' ";
+                        ch_datetime = '".G4_TIME_YMDHIS."' ";
          sql_query($sql);
     }
 
@@ -698,7 +698,7 @@ if($is_member) {
                         ct_id       = '',
                         uq_id       = '$od_id',
                         ch_amount   = '{$arr_order_coupon['ch_amount']}',
-                        ch_datetime = '{$g4['time_ymdhis']}' ";
+                        ch_datetime = '".G4_TIME_YMDHIS."' ";
          sql_query($sql);
     }
 }

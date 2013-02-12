@@ -44,7 +44,7 @@ if ($w == '')
                    is_password = '$is_password',
                    is_subject = '$is_subject',
                    is_content = '$is_content',
-                   is_time = '$g4[time_ymdhis]',
+                   is_time = '".G4_TIME_YMDHIS."',
                    is_ip = '$_SERVER[REMOTE_ADDR]' ";
     if (!$default[de_item_ps_use])
         $sql .= ", is_confirm = '1' ";

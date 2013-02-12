@@ -14,17 +14,17 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR']) {
     if (isset($_SERVER['HTTP_REFERER']))
         $referer     = mysql_real_escape_string($_SERVER['HTTP_REFERER']);
     $user_agent  = mysql_real_escape_string($_SERVER['HTTP_USER_AGENT']);
-    $sql = " insert {$g4['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent ) values ( '{$vi_id}', '{$remote_addr}', '{$g4['time_ymd']}', '{$g4['time_his']}', '{$referer}', '{$user_agent}' ) ";
+    $sql = " insert {$g4['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent ) values ( '{$vi_id}', '{$remote_addr}', '".G4_TIME_YMD."', '{$g4['time_his']}', '{$referer}', '{$user_agent}' ) ";
 
     $result = sql_query($sql, FALSE);
     // 정상으로 INSERT 되었다면 방문자 합계에 반영
     if ($result) {
-        $sql = " insert {$g4['visit_sum_table']} ( vs_count, vs_date) values ( 1, '{$g4['time_ymd']}' ) ";
+        $sql = " insert {$g4['visit_sum_table']} ( vs_count, vs_date) values ( 1, '".G4_TIME_YMD."' ) ";
         $result = sql_query($sql, FALSE);
         
         // DUPLICATE 오류가 발생한다면 이미 날짜별 행이 생성되었으므로 UPDATE 실행
         if (!$result) {
-            $sql = " update {$g4['visit_sum_table']} set vs_count = vs_count + 1 where vs_date = '{$g4['time_ymd']}' ";
+            $sql = " update {$g4['visit_sum_table']} set vs_count = vs_count + 1 where vs_date = '".G4_TIME_YMD."' ";
             $result = sql_query($sql);
         }
 
@@ -32,12 +32,12 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR']) {
         // 방문객 접속시마다 따로 쿼리를 하지 않기 위함 (엄청난 쿼리를 줄임 ^^)
 
         // 오늘
-        $sql = " select vs_count as cnt from {$g4['visit_sum_table']} where vs_date = '{$g4['time_ymd']}' ";
+        $sql = " select vs_count as cnt from {$g4['visit_sum_table']} where vs_date = '".G4_TIME_YMD."' ";
         $row = sql_fetch($sql);
         $vi_today = $row['cnt'];
 
         // 어제
-        $sql = " select vs_count as cnt from {$g4['visit_sum_table']} where vs_date = DATE_SUB('{$g4['time_ymd']}', INTERVAL 1 DAY) ";
+        $sql = " select vs_count as cnt from {$g4['visit_sum_table']} where vs_date = DATE_SUB('".G4_TIME_YMD."', INTERVAL 1 DAY) ";
         $row = sql_fetch($sql);
         $vi_yesterday = $row['cnt'];
 

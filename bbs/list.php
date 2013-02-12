@@ -97,7 +97,7 @@ if ($sca || $stx) {
 $result = sql_query($sql);
 
 // 년도 2자리
-$today2 = $g4['time_ymd'];
+$today2 = G4_TIME_YMD;
 
 $list = array();
 $i = 0;

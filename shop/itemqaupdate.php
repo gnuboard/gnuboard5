@@ -65,7 +65,7 @@ if ($w == '')
                    iq_password  = '$iq_password',
                    iq_subject  = '$iq_subject',
                    iq_question = '$iq_question',
-                   iq_time = '$g4[time_ymdhis]',
+                   iq_time = '".G4_TIME_YMDHIS."',
                    iq_ip = '$REMOTE_ADDR' ";
     sql_query($sql);
 

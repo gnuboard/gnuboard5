@@ -62,7 +62,7 @@ include_once("./_head.php");
                 // 인기검색어
                 $sql = " insert into $g4[popular_table]
                             set pp_word = '$search_str',
-                                pp_date = '$g4[time_ymd]',
+                                pp_date = '".G4_TIME_YMD."',
                                 pp_ip = '$_SERVER[REMOTE_ADDR]' ";
                 sql_query($sql, FALSE);
             }

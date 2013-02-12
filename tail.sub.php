@@ -28,10 +28,10 @@ $tmp_row = sql_fetch($tmp_sql);
 
 //sql_query(" lock table $g4['login_table'] write ", false);
 if ($tmp_row['cnt']) {
-    $tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '{$g4['time_ymdhis']}', lo_location = '$lo_location', lo_url = '$lo_url' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+    $tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G4_TIME_YMDHIS."', lo_location = '$lo_location', lo_url = '$lo_url' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
     sql_query($tmp_sql, FALSE);
 } else {
-    $tmp_sql = " insert into {$g4['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '{$g4['time_ymdhis']}', '$lo_location',  '$lo_url' ) ";
+    $tmp_sql = " insert into {$g4['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G4_TIME_YMDHIS."', '$lo_location',  '$lo_url' ) ";
     sql_query($tmp_sql, FALSE);
 
     // 시간이 지난 접속은 삭제한다

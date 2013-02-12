@@ -59,7 +59,7 @@ $content .= '<li>변경 패스워드 : <span style="color:#ff3300; font:13px Ver
 $content .= '<li>이름 : '.addslashes($mb['mb_name']).'</li>';
 $content .= '<li>별명 : '.addslashes($mb['mb_nick']).'</li>';
 $content .= '<li>이메일주소 : '.addslashes($mb['mb_email']).'</li>';
-$content .= '<li>요청일시 : '.$g4['time_ymdhis'].'</li>';
+$content .= '<li>요청일시 : '.G4_TIME_YMDHIS.'</li>';
 $content .= '<li>홈페이지 : '.G4_URL.'</li>';
 $content .= '</ul>';
 $content .= '<hr>';

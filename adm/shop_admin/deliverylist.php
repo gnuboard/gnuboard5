@@ -138,7 +138,7 @@ $sql .= "  order by $sort1 $sort2/* 김선용 심각한 트래픽으로 미사�
 $result = sql_query($sql);
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $invoice_time = $g4[time_ymdhis];
+    $invoice_time = G4_TIME_YMDHIS;
     if (!is_null_time($row[od_invoice_time]))
         $invoice_time = $row[od_invoice_time];
 
