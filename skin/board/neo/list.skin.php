@@ -9,7 +9,12 @@ if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
 ?>
 
-<? if (!$wr_id) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
+<? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
+
+<p id="bo_list_total">
+    <span>Total <?=number_format($total_count)?>건</span>
+    <?=$page?> 페이지
+</p>
 
 <? if ($is_category) { ?>
 <form id="fcategory" name="fcategory" method="get">
@@ -157,11 +162,6 @@ if ($is_nogood) $colspan++;
 
 <!-- 페이지 -->
 <? echo $write_pages; ?>
-
-<p class="pg_total">
-    <span>Total <?=number_format($total_count)?>건</span>
-    <?=$page?> 페이지
-</p>
 
 <? if ($is_checkbox) { ?>
 <script>
