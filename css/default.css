@@ -97,13 +97,13 @@ a:active {color:#2a6bc4;text-decoration:underline}
 
 /* 콘텐츠별 스타일 */
 /* 버튼 */
-.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.2em;vertical-align:middle}
+.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
 .btn01:focus,
 .btn01:hover {text-decoration:none !important}
-.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.2em;vertical-align:middle}
+.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
-.btn03 {display:inline-block;padding:0 10px;height:23px;border:1px solid #3f3f3f !important;background:#444 !important;color:#fff !important;text-decoration:none !important;line-height:2.2em;vertical-align:middle}
+.btn03 {display:inline-block;padding:0 10px;height:23px;border:1px solid #3f3f3f !important;background:#444 !important;color:#fff !important;text-decoration:none !important;line-height:2.1em;vertical-align:middle}
 .btn03:focus,
 .btn03:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
