@@ -1,4 +1,4 @@
-test<?php
+<?php
 define('_INDEX_', true);
 include_once('./_common.php');
 
