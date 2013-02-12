@@ -39,6 +39,10 @@ a:active {color:#2a6bc4;text-decoration:underline}
 #logo {padding:17px}
 #logo span {display:inline-block;margin-left:10px;color:#109ff1;font-family:"verdana";vertical-align:middle}
 
+#schall {position:absolute;top:20px;left:90px;margin:0;padding:0;letter-spacing:-5px}
+#schall legend {width:0;height:0;overflow:hidden}
+#schall_stx {padding-left:5px;width:156px;height:27px;border:1px solid #ccc;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
+
 #snb {position:absolute;top:10px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left;margin-left:10px}
@@ -51,10 +55,6 @@ a:active {color:#2a6bc4;text-decoration:underline}
 #snb #snb_cnt {background-position:-250px 0}
 #snb #snb_new {background-position:-300px 0}
 #snb span {position:absolute;top:35px;left:0;padding:0 5px;width:40px;font-size:0.95em;letter-spacing:-0.1em;text-align:center}
-
-#schall {position:absolute;top:20px;left:90px;margin:0;padding:0;letter-spacing:-5px}
-#schall legend {width:0;height:0;overflow:hidden}
-#schall_stx {padding-left:5px;width:156px;height:27px;border:1px solid #ccc;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
 
 /* 중간 레이아웃 */
 #wrapper {margin:50px auto;width:980px;zoom:1}
