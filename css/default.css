@@ -539,6 +539,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 /* pagination */
 .pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
 .pg {display:inline-block;border:1px solid #ddd;letter-spacing:-4px}
+.pg a:focus,
+.pg a:hover,
+.pg a:active {text-decoration:none}
 .pg_page,
 .pg_current {display:inline-block;padding:0 12px;height:30px;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
 .pg_page {background:#f9f9f9;text-decoration:none}

@@ -18,18 +18,25 @@ function print_menu2($key, $no)
 {
     global $menu, $auth_menu, $is_admin, $auth, $g4;
 
-    $str = '<ul>';
+    $str = "<ul>";
+    $str2 = "";
     for($i=1; $i<count($menu[$key]); $i++)
     {
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
             continue;
 
         // if ($no == 2) $str .= "&nbsp;&nbsp;<img src='{$g4['admin_path']}/img/icon.gif' align=absmiddle> ";
-        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>';
+        $str2 .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>';
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
-    $str .= '</ul>';
+    $str .= $str2;
+    $str .= "</ul>";
+    $str .= "<noscript class=\"gnb_nojs\">";
+    $str .= "<ul>";
+    $str .= $str2;
+    $str .= "</ul>";
+    $str .= "</noscript>";
 
     return $str;
 }
@@ -98,7 +105,7 @@ function textarea_size(fld, size)
                     continue;
                 }
                 $current_class = "";
-                if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)) || $admin_index)
+                if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)))
                     $current_class = " gnb_1depth_on";
                 echo "<li class=\"gnb_1depth".$current_class."\">";
                 echo $href1 . $menu['menu'.$key][0][1] . $href2;

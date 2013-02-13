@@ -27,19 +27,28 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 #to_content a:active {width:100%;height:75px;background:#000;color:#ddd;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
 
 /* 레이아웃 */
-#hd {height:105px;background:url('../adm/img/hd_bg.jpg') #2c2f34 repeat-x}
-#hd h1 {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#hd {height:105px;background:url('../adm/img/hd_bg.jpg') #2c2f34 top left repeat-x}
+#hd h1,
+#hd h2 {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #hd_wrap {position:relative;margin:0 auto;width:1000px}
 #logo {padding-top:16px;height:54px;text-align:center}
 
-#home_link {z-index:2;position:absolute;top:70px;right:0;width:100%;height:35px;zoom:1}
+#home_link {z-index:2;position:absolute;top:70px;right:0;height:35px;zoom:1}
 #home_link:after {display:block;visibility:hidden;clear:both;content:""}
 #home_link ul {float:right;margin-right:20px;zoom:1}
 #home_link ul:after {display:block;visibility:hidden;clear:both;content:""}
 #home_link li {float:left;margin-left:10px}
-#home_link a {color:#eee;text-decoration:none;line-height:2.95em}
+#home_link a {color:#e0e0e0;text-decoration:none;line-height:2.95em}
 
-#gnb {position:absolute;top:-5000px;left:0}
+#gnb {}
+#gnb ul {zoom:1}
+#gnb ul:after {display:block;visibility:hidden;clear:both;content:""}
+.gnb_1depth {position:relative;float:left;margin-left:-1px;border:1px solid #222;border-top:0;border-bottom:0}
+.gnb_1depth a {display:block;width:90px;height:35px;color:#e0e0e0;font-weight:bold;text-align:center;line-height:2.95em}
+.gnb_1depth a:focus,
+.gnb_1depth a:hover,
+.gnb_1depth a:active {text-decoration:none}
+.gnb_2depth {width:1px;height:1px;overflow:hidden}
 
 #current_loc {position:absolute;top:-5000px;left:0}
 
@@ -48,11 +57,11 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #qnb {float:right;margin:0;padding:0;list-style:none}
 #qnb li {margin-bottom:1px}
-#qnb a {display:block;width:45px;height:45px;border:1px solid #ddd;background:#fff}
+#qnb a {display:block;width:45px;height:45px}
 #container {float:left;width:942px}
 
 /* 하단 레이아웃 */
-#ft {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
+#ft {margin:20px 0;padding:5px 0;border-top:1px solid #d0d6d8}
 #ft p {margin:0 auto;width:1000px}
 
 /* 공통박스 */
@@ -79,8 +88,10 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .btn_submit {padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
 
-.btn_list input, .btn_list button {padding:0 15px;height:30px;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
-.btn_list input:focus, .btn_list button:focus {padding:0 15px;height:30px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_list input,
+.btn_list button {padding:0 15px;height:30px;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_list input:focus,
+.btn_list button:focus {padding:0 15px;height:30px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.1em;vertical-align:middle}
 .btn_list a:focus {background:#555}
 
@@ -91,10 +102,10 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 label {vertical-align:middle}
 textarea, .frm_input {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea, .frm_input {padding:3px}
-textarea:focus, .frm_input:focus {padding:4px;border:0;background:#434f54;color:#fff}
+textarea:focus,
+.frm_input:focus {padding:4px;border:0;background:#434f54;color:#fff}
 textarea {width:90%}
 select {padding:2px}
-legend {margin-left:0;padding:7px 10px;border:1px solid #ced9de;background:#f6f9fa}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 .readonly {background:#ff3061}
 
@@ -106,7 +117,8 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 .frm_list:after {display:block;visibility:hidden;clear:both;content:""}
 .frm_list li {float:left;margin-left:-1px;list-style:none}
 .frm_list a {display:block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;text-decoration:none;line-height:2.3em}
-.frm_list a:focus, .frm_list a:hover {background:#434f54}
+.frm_list a:focus,
+.frm_list a:hover {background:#434f54}
 
 /* 폼 테이블 */
 .frm_tbl th {width:130px;text-align:left;font-weight:normal}
@@ -119,7 +131,9 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 .td_chk {width:30px;text-align:center}
 .td_num {width:60px;text-align:center}
 .td_bignum {width:120px;text-align:center}
-.td_mbid, .td_mbnick, .td_mbname {width:100px;text-align:left}
+.td_mbid,
+.td_mbnick,
+.td_mbname {width:100px;text-align:left}
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
 /* 인덱스 */
@@ -171,10 +185,16 @@ button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 .sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important;background:#ddd}
 
 /* pagination */
-.pg_wrap {clear:both;margin:0 0 10px;padding-top:20px;text-align:center}
-.pg {display:inline-block;border:1px solid #c7cfd5;letter-spacing:-4px}
-.pg_page, .pg_current {display:inline-block;padding:0 12px;height:30px;background:#fff;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
+.pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
+.pg {display:inline-block;border:1px solid #ddd;letter-spacing:-4px}
+.pg a:focus,
+.pg a:hover,
+.pg a:active {text-decoration:none}
+.pg_page,
+.pg_current {display:inline-block;padding:0 12px;height:30px;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
 .pg_page {background:#f9f9f9;text-decoration:none}
-.pg_start, .pg_prev {border-right:1px solid #c7cfd5}
-.pg_end, .pg_next {border-left:1px solid #c7cfd5}
-.pg_current {background:#595959;color:#fff}
+.pg_start,
+.pg_prev {border-right:1px solid #ddd}
+.pg_end,
+.pg_next {border-left:1px solid #ddd}
+.pg_current {background:#444;color:#fff;font-weight:bold}
