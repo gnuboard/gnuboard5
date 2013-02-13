@@ -1,14 +1,25 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<title>ie6 테스트</title>
 <meta charset="utf-8">
-<style>
-a {display:block;position:relative;margin:100px;width:50px;height:50px;background:#ddd}
-a span {position:absolute;top:0;left:0;width:50px;height:50px;background:#000}
-</style>
+<title>1</title>
 </head>
-<body>
-<a href="#"><span></span>i can see your halo</a>
-</body>
-</html>
+
+<?php
+$str = "내용물";
+
+
+if (isset($_GET['width'])) {
+    echo $str;
+    echo "<noscript>".$str."</noscript>";
+} else {
+    echo "<script>\n";
+    echo "location.href=\"${_SERVER['SCRIPT_NAME']}?${_SERVER['QUERY_STRING']}"
+        . "width=\" + screen.width;\n";
+    echo "</script>\n";
+    echo "<noscript>";
+    echo $str;
+    echo "</noscript>";
+    exit();
+}
+?>
