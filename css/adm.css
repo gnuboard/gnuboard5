@@ -16,51 +16,55 @@ a {color:#000;text-decoration:none}
 a:focus,
 a:hover,
 a:active {text-decoration:underline}
+/* 헤딩 */
+h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spacing:-0.1em}
 
 /* 화면낭독기 사용자용 */
-.sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+.sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;border:0 !important;overflow:hidden !important}
 /* 본문 바로가기 */
-#to_content a {display:block;position:absolute;top:0;left:0;margin:5px;height:0;text-decoration:none;overflow:hidden}
-#to_content a:focus, #to_content a:active {height:auto;padding:5px 10px;border:1px solid #000;background:#eee;color:#333;font-size:0.75em;overflow:auto}
+#to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
+#to_content a:focus,
+#to_content a:active {width:100%;height:75px;background:#000;color:#ddd;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
 
 /* 테이블 */
+.tbl_wrap {margin-bottom:20px;padding:20px;border:1px solid #dfdfdf;background:#fff}
+table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
+caption {padding:10px 0 15px;font-weight:bold;text-align:left}
+thead th {padding:12px 0 8px;border-top:1px solid #e9e9e9}
+thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
+tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
+td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
+.bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 /* 내용 없는 테이블 */
 .empty_table {padding:200px 0;text-align:center}
 
 /* 레이아웃 */
-#hd {background:#2c2f34}
-#logo {padding-top:16px;height:54px;background:url('../adm/img/hd_bg.jpg') repeat-x;text-align:center}
+#hd {height:105px;background:url('../adm/img/hd_bg.jpg') #2c2f34 repeat-x}
+#hd h1 {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#hd_wrap {position:relative;margin:0 auto;width:1000px}
+#logo {padding-top:16px;height:54px;text-align:center}
 
-#home_link {z-index:2;position:absolute;top:70px;right:0;width:100%;height:35px;background:#36393c;zoom:1}
+#home_link {z-index:2;position:absolute;top:70px;right:0;width:100%;height:35px;zoom:1}
 #home_link:after {display:block;visibility:hidden;clear:both;content:""}
 #home_link ul {float:right;margin-right:20px;zoom:1}
 #home_link ul:after {display:block;visibility:hidden;clear:both;content:""}
 #home_link li {float:left;margin-left:10px}
 #home_link a {color:#eee;text-decoration:none;line-height:2.95em}
 
-#current_location {color:#eee;line-height:2.95em}
-#current_location ul {margin-left:20px}
-#current_location li {float:left}
+#gnb {position:absolute;top:-5000px;left:0}
+
+#current_loc {position:absolute;top:-5000px;left:0}
 
 /* 중간 레이아웃 */
-#wrapper {margin:60px 120px 0 20px;min-height:630px;height:auto !important;height:630px}
+#wrapper {margin:50px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
+#wrapper:after {display:block;visibility:hidden;clear:both;content:""}
+#qnb {float:right;width:40px}
+#container {float:left;width:942px}
 
 /* 하단 레이아웃 */
-footer {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
-
-/* 헤딩 */
-h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spacing:-0.1em}
-
-/* GNB */
-#gnb {display:none;position:absolute;top:110px;right:20px;width:180px}
-.gnb_1depth ul {display:block;visibility:hidden;height:0}
-.gnb_1depth_on ul {visibility:visible;height:auto}
-.gnb_1depth {margin-bottom:5px;border:1px solid #c7cfd5;background:#eef2f3}
-.gnb_1depth a {display:block;padding-left:15px;height:38px;color:#333;font-weight:bold;text-decoration:none;line-height:2.8em}
-.gnb_1depth_on a {border-bottom:1px solid #eef1f2}
-.gnb_2depth {border-bottom:1px solid #eef1f2}
-.gnb_2depth a {display:block;padding-left:15px;height:30px;border:0;background:#fff;color:#000;font:0.75em normal;text-decoration:none;line-height:2.8em}
-.gnb_2depth a:focus, .gnb_2depth a:hover {background:#f6f9fa}
+#ft {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
+#ft p {margin:0 auto;width:1000px}
 
 /* 버튼 */
 .btn_confirm {margin-bottom:20px;text-align:center}
@@ -81,18 +85,13 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 
 /* 폼 */
 label {vertical-align:middle}
-textarea, input, select {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
-textarea, input {padding:3px}
-textarea:focus, input:focus {padding:4px;border:0;background:#434f54;color:#fff}
+textarea, .frm_input {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
+textarea, .frm_input {padding:3px}
+textarea:focus, .frm_input:focus {padding:4px;border:0;background:#434f54;color:#fff}
 textarea {width:90%}
 select {padding:2px}
 legend {margin-left:0;padding:7px 10px;border:1px solid #ced9de;background:#f6f9fa}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
-fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
-fieldset p {color:#6b8088}
-fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
-fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;line-height:2.1em;vertical-align:middle;cursor:pointer}
-fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;line-height:2.1em;vertical-align:middle}
 .readonly {background:#ff3061}
 
 /* 폼 안내글 */

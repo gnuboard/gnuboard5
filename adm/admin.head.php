@@ -72,47 +72,52 @@ function textarea_size(fld, size)
 <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
 
 <header id="hd">
+    <div id="hd_wrap">
+        <h1><?=$config['cf_title']?></h1>
 
-    <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.jpg" alt="관리자 메인으로"></a></div>
+        <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.jpg" alt="관리자 메인으로"></a></div>
 
-    <div id="home_link">
-        <ul>
-            <li><a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
-            <li><a href="<?=G4_URL?>/">홈페이지</a></li>
-            <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
-        </ul>
-    </div>
+        <div id="home_link">
+            <ul>
+                <li><a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
+                <li><a href="<?=G4_URL?>/">홈페이지</a></li>
+                <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
+            </ul>
+        </div>
 
-    <nav id="gnb">
-        <ul>
-        <?
-        foreach($amenu as $key=>$value) {
-            $href1 = $href2 = '';
-            if ($menu['menu'.$key][0][2]) {
-                $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
-                $href2 = '</a>';
-            } else {
-                continue;
+        <nav id="gnb">
+            <ul>
+            <?
+            foreach($amenu as $key=>$value) {
+                $href1 = $href2 = '';
+                if ($menu['menu'.$key][0][2]) {
+                    $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
+                    $href2 = '</a>';
+                } else {
+                    continue;
+                }
+                $current_class = "";
+                if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)) || $admin_index)
+                    $current_class = " gnb_1depth_on";
+                echo "<li class=\"gnb_1depth".$current_class."\">";
+                echo $href1 . $menu['menu'.$key][0][1] . $href2;
+                echo print_menu1('menu'.$key, 1);
+                echo "</li>";
+                if ($current_class || !$admin_index) $current_class = ""; // 클래스 반복부여 방지
             }
-            $current_class = "";
-            if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)) || $admin_index)
-                $current_class = " gnb_1depth_on";
-            echo "<li class=\"gnb_1depth".$current_class."\">";
-            echo $href1 . $menu['menu'.$key][0][1] . $href2;
-            echo print_menu1('menu'.$key, 1);
-            echo "</li>";
-            if ($current_class || !$admin_index) $current_class = ""; // 클래스 반복부여 방지
-        }
 
-        ?>
-        </ul>
-    </nav>
+            ?>
+            </ul>
+        </nav>
 
-    <ul id="current_location">
-        <li><?=$member['mb_id']?>님 현재위치</li>
-    </ul>
+        <div id="current_loc">
+            <li><?=$member['mb_id']?>님 현재위치</li>
+        </div>
+    </div>
 
 </header>
 
 <div id="wrapper">
-    <h1><span></span><?=$g4['title']?></h1>
+    <div id="qnb">1</div>
+    <div id="container">
+        <h1><?=$g4['title']?></h1>
