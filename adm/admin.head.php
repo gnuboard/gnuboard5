@@ -69,19 +69,17 @@ function textarea_size(fld, size)
 }
 </script>
 
-<header>
+<div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
 
-    <div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
-    <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.png" alt="관리자 메인으로"></a></div>
-    <ul id="home_link">
-        <li><a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
-        <li><a href="<?=G4_URL?>/">홈페이지</a></li>
-        <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
-    </ul>
+<header id="hd">
 
-    <div id="current_location">
+    <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.jpg" alt="관리자 메인으로"></a></div>
+
+    <div id="home_link">
         <ul>
-            <li><?=$member['mb_id']?>님 현재위치</li>
+            <li><a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
+            <li><a href="<?=G4_URL?>/">홈페이지</a></li>
+            <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
         </ul>
     </div>
 
@@ -109,6 +107,10 @@ function textarea_size(fld, size)
         ?>
         </ul>
     </nav>
+
+    <ul id="current_location">
+        <li><?=$member['mb_id']?>님 현재위치</li>
+    </ul>
 
 </header>
 

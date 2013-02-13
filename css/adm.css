@@ -1,15 +1,21 @@
-/* SIR SOFT 지운아빠 Dec 2012 */
+/* SIR SOFT 지운아빠 Feb. 2013 */
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {background:#dfe4e6;font-size:1em}
-html, body, h1, h2, h3, h4, h5, h6 {margin:0;padding:0}
-article,aside,details,figcaption,figure, footer,header,hgroup,menu,nav,section {display:block}
-header ul, nav ul {margin:0;padding:0;list-style:none}
-table {border-collapse:collapse;border-spacing:0} tfoot td {font-weight:bold;text-align:center}
-form, img {border:0}
-input,img {vertical-align:middle}
-p {margin:10px 0;line-height:1.5em}
+body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
+label, input, select, img {vertical-align:middle}
+input {margin:0;padding:0;font-family:"dotum"}
+p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
+hr {display:none}
+pre {overflow-x:scroll;font-size:1.1em}
+a {color:#000;text-decoration:none}
+a:focus,
+a:hover,
+a:active {text-decoration:underline}
 
 /* 화면낭독기 사용자용 */
 .sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
@@ -19,27 +25,28 @@ p {margin:10px 0;line-height:1.5em}
 
 /* 테이블 */
 table {margin-bottom:10px;width:100%;border:1px solid #d5dcdf;background:#fff}
-caption {padding:10px 0 15px;color:#2f4d59;text-align:left;font-size:1em;font-weight:bold}
-caption p {margin:7px 0 0;padding:0;color:#6b8088;font:0.75em normal}
-th, td {border-bottom:1px solid #e9ecee;font-size:0.75em}
+caption {padding:10px 0 15px;color:#2f4d59;text-align:left;font-weight:bold}
+caption p {margin:7px 0 0;padding:0;color:#6b8088;font-weight:normal}
+th, td {border-bottom:1px solid #e9ecee}
 th {padding:10px;background:#f1f6f7}
 th label {display:block}
-th a {color:#000}
 td {padding:10px}
 /* 내용 없는 테이블 */
 .empty_table {padding:200px 0;text-align:center}
 
 /* 레이아웃 */
-header {background:#2c2f34}
-#logo {padding-top:4px;height:46px;background:url('../adm/img/logo_bg.png') repeat-x;text-align:center}
-#home_link {z-index:2;position:absolute;top:50px;right:20px;height:35px;zoom:1}
+#hd {background:#2c2f34}
+#logo {padding-top:16px;height:54px;background:url('../adm/img/hd_bg.jpg') repeat-x;text-align:center}
+#home_link {z-index:2;position:absolute;top:70px;right:0;width:100%;height:35px;background:#363636;zoom:1}
 #home_link:after {display:block;visibility:hidden;clear:both;content:""}
+#home_link ul {float:right;margin-right:20px;zoom:1}
+#home_link ul:after {display:block;visibility:hidden;clear:both;content:""}
 #home_link li {float:left;margin-left:10px}
-#home_link a {color:#eee;font-size:0.75em;text-decoration:none;line-height:2.95em}
-#current_location {position:absolute;top:50px;left:0;width:100%;height:35px;background:url('../adm/img/top_bg.png') #2c2f34 repeat-x;color:#eee;font-size:0.75em;line-height:2.95em}
+#home_link a {color:#eee;text-decoration:none;line-height:2.95em}
+#current_location {color:#eee;line-height:2.95em}
 #current_location ul {margin-left:20px}
 #current_location li {float:left}
-#wrapper {margin:60px 210px 0 20px;min-height:630px;height:auto !important;height:630px}
+#wrapper {margin:60px 120px 0 20px;min-height:630px;height:auto !important;height:630px}
 
 footer {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
 footer p {color:#576a71}
@@ -48,11 +55,11 @@ footer p {color:#576a71}
 h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"verdana","dotum";letter-spacing:-0.1em}
 
 /* GNB */
-#gnb {position:absolute;top:110px;right:20px;width:180px}
+#gnb {display:none;position:absolute;top:110px;right:20px;width:180px}
 .gnb_1depth ul {display:block;visibility:hidden;height:0}
 .gnb_1depth_on ul {visibility:visible;height:auto}
 .gnb_1depth {margin-bottom:5px;border:1px solid #c7cfd5;background:#eef2f3}
-.gnb_1depth a {display:block;padding-left:15px;height:38px;color:#333;font-size:0.9em;font-weight:bold;text-decoration:none;line-height:2.8em}
+.gnb_1depth a {display:block;padding-left:15px;height:38px;color:#333;font-weight:bold;text-decoration:none;line-height:2.8em}
 .gnb_1depth_on a {border-bottom:1px solid #eef1f2}
 .gnb_2depth {border-bottom:1px solid #eef1f2}
 .gnb_2depth a {display:block;padding-left:15px;height:30px;border:0;background:#fff;color:#000;font:0.75em normal;text-decoration:none;line-height:2.8em}
@@ -60,20 +67,20 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"verdana","dotum";
 
 /* 버튼 */
 .btn_confirm {margin-bottom:20px;text-align:center}
-.btn_confirm button {padding:0 15px;height:30px;border:0;background:#74868b;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
-.btn_confirm button:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
-.btn_confirm a {display:inline-block;padding:0 15px;height:30px;background:#74868b;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.1em;vertical-align:middle}
+.btn_confirm button {padding:0 15px;height:30px;border:0;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_confirm button:focus {padding:0 15px;height:30px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_confirm a {display:inline-block;padding:0 15px;height:30px;background:#74868b;color:#fff;text-decoration:none;line-height:2.1em;vertical-align:middle}
 .btn_confirm a:focus {background:#555}
-.btn_submit {padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
-.btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
+.btn_submit {padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
 
-.btn_list input, .btn_list button {padding:0 15px;height:30px;background:#74868b;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
-.btn_list input:focus, .btn_list button:focus {padding:0 15px;height:30px;background:#555;color:#fff;font-size:0.875em;line-height:2.2em;vertical-align:middle}
-.btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.1em;vertical-align:middle}
+.btn_list input, .btn_list button {padding:0 15px;height:30px;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_list input:focus, .btn_list button:focus {padding:0 15px;height:30px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.1em;vertical-align:middle}
 .btn_list a:focus {background:#555}
 
 #btn_add {margin-bottom:10px;text-align:center}
-#btn_add a {display:inline-block;padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.2em;vertical-align:middle}
+#btn_add a {display:inline-block;padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;text-decoration:none;line-height:2.2em;vertical-align:middle}
 
 /* 폼 */
 label {vertical-align:middle}
@@ -84,11 +91,11 @@ textarea {width:90%}
 select {padding:2px}
 legend {margin-left:0;padding:7px 10px;border:1px solid #ced9de;background:#f6f9fa}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
-fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.8em}
+fieldset {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
 fieldset p {color:#6b8088}
 fieldset span {display:inline-block;margin-right:10px;padding-right:10px;border-right:1px solid #ddd;vertical-align:middle}
-fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
-fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
+fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;line-height:2.1em;vertical-align:middle;cursor:pointer}
+fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;line-height:2.1em;vertical-align:middle}
 .readonly {background:#ff3061}
 
 /* 폼 안내글 */
@@ -98,7 +105,7 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 .frm_list {margin:0 0 20px;padding:0 0 0 1px;zoom:1}
 .frm_list:after {display:block;visibility:hidden;clear:both;content:""}
 .frm_list li {float:left;margin-left:-1px;list-style:none}
-.frm_list a {display:block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;font-size:0.875em;text-decoration:none;line-height:2.3em}
+.frm_list a {display:block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;text-decoration:none;line-height:2.3em}
 .frm_list a:focus, .frm_list a:hover {background:#434f54}
 
 /* 폼 테이블 */
@@ -150,21 +157,21 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 
 /* 메일 테스트, 세션파일일괄삭제 */
 #fsendmailtest p,
-#session_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
-#cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff;font-size:0.75em}
+#session_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
+#cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
-.sv_wrap a {text-decoration:none !important}
-.sv {display:none;margin-top:5px;border:1px solid #666;background:#484848}
+.sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #515151;background:#484848}
 .sv_nojs .sv {display:block}
-.sv a {display:inline-block;padding:3px;width:94px;border-bottom:1px solid #555;color:#fff}
-.sv_on {z-index:1000;display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important}
-.sv_member,
-.sv_guest {font-weight:bold}
+.sv_wrap .sv a {display:inline-block !important;margin:0 !important;padding:3px !important;width:94px;border-bottom:1px solid #555;color:#fff !important}
+.sv_wrap a:focus,
+.sv_wrap a:hover,
+.sv_wrap a:active {text-decoration:none !important}
+.sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important;background:#ddd}
 
 /* pagination */
-.pg_wrap {clear:both;margin:0 0 10px;padding-top:20px;font-size:0.75em;text-align:center}
+.pg_wrap {clear:both;margin:0 0 10px;padding-top:20px;text-align:center}
 .pg {display:inline-block;border:1px solid #c7cfd5;letter-spacing:-4px}
 .pg_page, .pg_current {display:inline-block;padding:0 12px;height:30px;background:#fff;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
 .pg_page {background:#f9f9f9;text-decoration:none}
