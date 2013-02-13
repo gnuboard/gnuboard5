@@ -24,35 +24,32 @@ a:active {text-decoration:underline}
 #to_content a:focus, #to_content a:active {height:auto;padding:5px 10px;border:1px solid #000;background:#eee;color:#333;font-size:0.75em;overflow:auto}
 
 /* 테이블 */
-table {margin-bottom:10px;width:100%;border:1px solid #d5dcdf;background:#fff}
-caption {padding:10px 0 15px;color:#2f4d59;text-align:left;font-weight:bold}
-caption p {margin:7px 0 0;padding:0;color:#6b8088;font-weight:normal}
-th, td {border-bottom:1px solid #e9ecee}
-th {padding:10px;background:#f1f6f7}
-th label {display:block}
-td {padding:10px}
 /* 내용 없는 테이블 */
 .empty_table {padding:200px 0;text-align:center}
 
 /* 레이아웃 */
 #hd {background:#2c2f34}
 #logo {padding-top:16px;height:54px;background:url('../adm/img/hd_bg.jpg') repeat-x;text-align:center}
-#home_link {z-index:2;position:absolute;top:70px;right:0;width:100%;height:35px;background:#363636;zoom:1}
+
+#home_link {z-index:2;position:absolute;top:70px;right:0;width:100%;height:35px;background:#36393c;zoom:1}
 #home_link:after {display:block;visibility:hidden;clear:both;content:""}
 #home_link ul {float:right;margin-right:20px;zoom:1}
 #home_link ul:after {display:block;visibility:hidden;clear:both;content:""}
 #home_link li {float:left;margin-left:10px}
 #home_link a {color:#eee;text-decoration:none;line-height:2.95em}
+
 #current_location {color:#eee;line-height:2.95em}
 #current_location ul {margin-left:20px}
 #current_location li {float:left}
+
+/* 중간 레이아웃 */
 #wrapper {margin:60px 120px 0 20px;min-height:630px;height:auto !important;height:630px}
 
+/* 하단 레이아웃 */
 footer {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
-footer p {color:#576a71}
 
 /* 헤딩 */
-h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"verdana","dotum";letter-spacing:-0.1em}
+h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spacing:-0.1em}
 
 /* GNB */
 #gnb {display:none;position:absolute;top:110px;right:20px;width:180px}
