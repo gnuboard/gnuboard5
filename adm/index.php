@@ -43,7 +43,7 @@ $result = sql_query($sql);
 $colspan = 12;
 ?>
 
-<section class="tbl_wrap">
+<section class="cbox">
     <h2>신규가입회원 <?=$new_member_rows?>건 목록</h2>
     <p>총회원수 <?=number_format($total_count)?>명 중 차단 <?=number_format($intercept_count)?>명, 탈퇴 : <?=number_format($leave_count)?>명</p>
 
@@ -139,7 +139,7 @@ $total_count = $row['cnt'];
 $colspan = 5;
 ?>
 
-<section class="tbl_wrap">
+<section class="cbox">
     <h2>최근게시물</h2>
     <p>사이트 전체게시물 중 최근게시물 <?=$new_write_rows?>건 목록</p>
 
@@ -234,7 +234,7 @@ $result = sql_query($sql);
 $colspan = 7;
 ?>
 
-<section class="tbl_wrap">
+<section class="cbox">
     <h2>최근 포인트 발생내역</h2>
     <p>전체 <?=number_format($total_count)?> 건 중 <?=$new_point_rows?>건 목록</p>
 

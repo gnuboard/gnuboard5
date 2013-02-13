@@ -6,7 +6,7 @@ body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
-header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
+header ul, nav ul, aside ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"dotum"}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
@@ -26,19 +26,6 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 #to_content a:focus,
 #to_content a:active {width:100%;height:75px;background:#000;color:#ddd;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
 
-/* 테이블 */
-.tbl_wrap {margin-bottom:20px;padding:20px;border:1px solid #dfdfdf;background:#fff}
-table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
-caption {padding:10px 0 15px;font-weight:bold;text-align:left}
-thead th {padding:12px 0 8px;border-top:1px solid #e9e9e9}
-thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
-tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
-td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
-.bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
-/* 내용 없는 테이블 */
-.empty_table {padding:200px 0;text-align:center}
-
 /* 레이아웃 */
 #hd {height:105px;background:url('../adm/img/hd_bg.jpg') #2c2f34 repeat-x}
 #hd h1 {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
@@ -57,14 +44,31 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #current_loc {position:absolute;top:-5000px;left:0}
 
 /* 중간 레이아웃 */
-#wrapper {margin:50px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
+#wrapper {margin:30px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
-#qnb {float:right;width:40px}
+#qnb {float:right;margin:0;padding:0;list-style:none}
+#qnb li {margin-bottom:1px}
+#qnb a {display:block;width:45px;height:45px;border:1px solid #ddd;background:#fff}
 #container {float:left;width:942px}
 
 /* 하단 레이아웃 */
 #ft {margin:20px 0;padding:5px 20px;border-top:1px solid #d0d6d8}
 #ft p {margin:0 auto;width:1000px}
+
+/* 공통박스 */
+.cbox {margin-bottom:30px;padding:20px;border:1px solid #dfdfdf;background:#fff}
+
+/* 테이블 */
+table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
+caption {padding:10px 0 15px;font-weight:bold;text-align:left}
+thead th {padding:12px 0 8px;border-top:1px solid #e9e9e9;background:#f3f6f7}
+thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
+tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
+td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
+.bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
+/* 내용 없는 테이블 */
+.empty_table {padding:200px 0;text-align:center}
 
 /* 버튼 */
 .btn_confirm {margin-bottom:20px;text-align:center}

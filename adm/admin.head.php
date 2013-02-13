@@ -86,6 +86,7 @@ function textarea_size(fld, size)
         </div>
 
         <nav id="gnb">
+            <h2>관리자 주메뉴</h2>
             <ul>
             <?
             foreach($amenu as $key=>$value) {
@@ -111,13 +112,19 @@ function textarea_size(fld, size)
         </nav>
 
         <div id="current_loc">
-            <li><?=$member['mb_id']?>님 현재위치</li>
+            <p><?=$member['mb_id']?>님 현재위치</p>
         </div>
     </div>
 
 </header>
 
 <div id="wrapper">
-    <div id="qnb">1</div>
+
+    <ul id="qnb">
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+    </ul>
+
     <div id="container">
         <h1><?=$g4['title']?></h1>
