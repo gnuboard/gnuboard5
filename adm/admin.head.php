@@ -87,6 +87,7 @@ function textarea_size(fld, size)
 
         <nav id="gnb">
             <h2>관리자 주메뉴</h2>
+            <script>$('#gnb').addClass('gnb_js');</script>
             <?
             $gnb_str = "<ul>";
             foreach($amenu as $key=>$value) {
@@ -104,15 +105,11 @@ function textarea_size(fld, size)
                 $gnb_str .=  $href1 . $menu['menu'.$key][0][1] . $href2;
                 $gnb_str .=  print_menu1('menu'.$key, 1);
                 $gnb_str .=  "</li>";
-                if ($current_class || !$admin_index) $current_class = ""; // 클래스 반복부여 방지
+                if ($current_class) $current_class = ""; // 클래스 반복부여 방지
             }
-            $gnb_str .= "</ul>"
+            $gnb_str .= "</ul>";
+            echo $gnb_str;
             ?>
-            <?=$gnb_str?>
-
-            <noscript class="gnb_nojs">
-                <?=$gnb_str?>
-            </noscript>
         </nav>
 
         <div id="current_loc">

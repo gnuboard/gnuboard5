@@ -19,7 +19,6 @@ if (!defined('_GNUBOARD_')) exit;
 <!-- <p>실행시간 : <?=get_microtime() - $begin_time;?> -->
 
 <script src="<?=G4_ADMIN_URL?>/admin.js"></script>
-
 <script>
 $(function(){
     var hide_menu = false;
