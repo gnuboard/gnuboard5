@@ -27,11 +27,13 @@ $(function(){
     // 주메뉴
     var $gnb = $('.gnb_1depth > a');
     $gnb.mouseover(function() {
-        $('.gnb_1depth').removeClass('gnb_1depth_over');
-        $('.gnb_1depth').removeClass('gnb_1depth_on');
-        $(this).parent().addClass('gnb_1depth_over');
-        $(this).parent().addClass('gnb_1depth_on');
+        $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+        $(this).parent().addClass('gnb_1depth_over gnb_1depth_on');
         hide_menu = false;
+    });
+
+    $gnb.mouseout(function() {
+        hide_menu = true;
     });
 
     $('.gnb_1depth li').mouseover(function() {
@@ -43,10 +45,8 @@ $(function(){
     });
 
     $gnb.focusin(function() {
-        $('.gnb_1depth').removeClass('gnb_1depth_over');
-        $(this).parent().addClass('gnb_1depth_over');
-        $('.gnb_1depth').removeClass('gnb_1depth_on');
-        $(this).parent().addClass('gnb_1depth_on');
+        $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+        $(this).parent().addClass('gnb_1depth_over gnb_1depth_on');
         hide_menu = false;
     });
 
@@ -55,6 +55,8 @@ $(function(){
     });
 
     $('.gnb_1depth ul a').focusin(function() {
+        $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+        var $gnb_li = $(this).closest('.gnb_1depth').addClass('gnb_1depth_over gnb_1depth_on');
         hide_menu = false;
     });
 
@@ -64,26 +66,16 @@ $(function(){
 
     $(document).click(function() {
         if(hide_menu) {
-            $('.gnb_1depth').removeClass('gnb_1depth_over');
-            $('.gnb_1depth').removeClass('gnb_1depth_on');
+            $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
         }
     });
 
     $(document).focusin(function() {
         if(hide_menu) {
-            $('.gnb_1depth').removeClass('gnb_1depth_over');
-            $('.gnb_1depth').removeClass('gnb_1depth_on');
+            $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
         }
     });
 });
-
-function hide_menu_layer()
-{
-    if(hide_menu) {
-        $('.gnb_1depth').removeClass('gnb_1depth_over');
-        $('.gnb_1depth').removeClass('gnb_1depth_on');
-    }
-}
 </script>
 
 <?
