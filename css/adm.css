@@ -46,7 +46,7 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 #gnb ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth {position:relative;float:left;margin-left:-1px;border:1px solid #222;border-top:0;border-bottom:0}
 .gnb_1depth a {display:block;width:90px;height:35px;color:#e0e0e0;font-weight:bold;text-align:center;line-height:2.95em}
-.gnb_1depth_air a {height:34px;border-bottom:1px solid #ddd;background:#fff;color:#000}
+.gnb_1depth_air a {height:33px;border-bottom:1px solid #ddd;background:#fff;color:#000}
 .gnb_1depth_on a {height:35px;background:#fff;color:#000}
 .gnb_1depth a:focus,
 .gnb_1depth a:hover,
