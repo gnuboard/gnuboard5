@@ -24,10 +24,10 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 /* 본문 바로가기 */
 #to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
 #to_content a:focus,
-#to_content a:active {width:100%;height:75px;background:#000;color:#ddd;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
+#to_content a:active {width:100%;height:70px;background:#000;color:#ddd;font-size:2em;text-align:center;text-decoration:none;line-height:3.3em}
 
 /* 레이아웃 */
-#hd {height:105px;background:url('../adm/img/hd_bg.jpg') #2c2f34 top left repeat-x}
+#hd {z-index:10;height:105px;background:url('../adm/img/hd_bg.jpg') #2c2f34 top left repeat-x}
 #hd h1,
 #hd h2 {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #hd_wrap {position:relative;margin:0 auto;width:1000px}
@@ -40,16 +40,20 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 #snb li {float:left;margin-left:10px}
 #snb a {color:#e0e0e0;text-decoration:none;line-height:2.95em}
 
-/* js 있을 때 */
+/* gnb js on */
 #gnb {}
 #gnb ul {zoom:1}
 #gnb ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth {position:relative;float:left;margin-left:-1px;border:1px solid #222;border-top:0;border-bottom:0}
 .gnb_1depth a {display:block;width:90px;height:35px;color:#e0e0e0;font-weight:bold;text-align:center;line-height:2.95em}
+.gnb_1depth_on a {/* gnb 활성스타일 */}
 .gnb_1depth a:focus,
 .gnb_1depth a:hover,
 .gnb_1depth a:active {text-decoration:none}
-.gnb_2depth {width:1px;height:1px;overflow:hidden}
+.gnb_1depth ul {width:0px;height:0px;overflow:hidden}
+.gnb_1depth_over ul {position:absolute;top:35px;left:0;width:auto;height:auto}
+.gnb_2depth a {display:block;padding:10px;background:#000;color:#fff}
+/* gnb js off */
 
 #current_loc {position:absolute;top:-5000px;left:0}
 

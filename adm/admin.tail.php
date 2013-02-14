@@ -20,6 +20,31 @@ if (!defined('_GNUBOARD_')) exit;
 
 <script src="<?=G4_ADMIN_URL?>/admin.js"></script>
 
+<script>
+$(function(){
+    // 주메뉴
+    var $gnb = $('.gnb_1depth a');
+    $gnb.hover(
+        function() {
+            $(this).parent().toggleClass('gnb_1depth_over');
+        },
+        function() {
+            $(this).parent().toggleClass('gnb_1depth_over');
+        }
+    );
+    $gnb.focus(
+        function() {
+            $(this).parent().toggleClass('gnb_1depth_over');
+        }
+    );
+    $gnb.focusout(
+        function() {
+            $(this).parent().toggleClass('gnb_1depth_over');
+        }
+    );
+});
+</script>
+
 <?
 include_once(G4_PATH.'/tail.sub.php');
 ?>
