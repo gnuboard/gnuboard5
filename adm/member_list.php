@@ -81,8 +81,8 @@ $colspan = 15;
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
         <option value="mb_id">회원아이디</option>
-        <option value="mb_name">이름</option>
         <option value="mb_nick">별명</option>
+        <option value="mb_name">이름</option>
         <option value="mb_level">권한</option>
         <option value="mb_email">E-MAIL</option>
         <option value="mb_tel">전화번호</option>
@@ -121,8 +121,8 @@ $colspan = 15;
 <tr>
     <th scope="col"><label for="chkall">전체</label><br><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 회원 전체선택" onclick="check_all(this.form)"></th>
     <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
-    <th scope="col"><?=subject_sort_link('mb_name')?>이름</a></th>
     <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
+    <th scope="col"><?=subject_sort_link('mb_name')?>이름</a></th>
     <th scope="col"><?=subject_sort_link('mb_level', '', 'desc')?>권한</a></th>
     <th scope="col"><?=subject_sort_link('mb_point', '', 'desc')?> 포인트</a></th>
     <th scope="col"><?=subject_sort_link('mb_today_login', '', 'desc')?>최종접속</a></th>
@@ -187,8 +187,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <?=$mb_id?>
         <span><?=$leave_msg?><?=$intercept_msg?></span>
     </td>
-    <td class="td_mbname"><?=$row['mb_name']?></td>
     <td class="td_name"><div><?=$mb_nick?></div></td>
+    <td class="td_mbname"><?=$row['mb_name']?></td>
     <td><?=get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level'])?></td>
     <td><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
     <td><?=substr($row['mb_today_login'],2,8)?></td>
