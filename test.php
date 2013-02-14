@@ -2,24 +2,30 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>1</title>
+<script src="./js/jquery-1.8.3.min.js"></script>
+<style>
+.nos {position:relative;padding:100px}
+.test {position:relative}
+.test li {float:left}
+</style>
+<script>
+$("head").append("<link>");
+css = $("head").children(":last");
+css.attr({
+    rel:  "stylesheet",
+    type: "text/css",
+    href: "./css/test.css"
+});
+</script>
 </head>
+<body>
 
-<?php
-$str = "내용물";
+<div class="nos">
+    <ul class="test">
+        <li>테스트</li>
+        <li>테스트2</li>
+    </ul>
+</div>
 
-
-if (isset($_GET['width'])) {
-    echo $str;
-    echo "<noscript>".$str."</noscript>";
-} else {
-    echo "<script>\n";
-    echo "location.href=\"${_SERVER['SCRIPT_NAME']}?${_SERVER['QUERY_STRING']}"
-        . "width=\" + screen.width;\n";
-    echo "</script>\n";
-    echo "<noscript>";
-    echo $str;
-    echo "</noscript>";
-    exit();
-}
-?>
+</body>
+</html>

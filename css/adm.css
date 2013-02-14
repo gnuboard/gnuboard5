@@ -31,15 +31,16 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 #hd h1,
 #hd h2 {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #hd_wrap {position:relative;margin:0 auto;width:1000px}
-#logo {padding-top:16px;height:54px;text-align:center}
+#logo {padding-top:15px;height:55px}
 
-#home_link {z-index:2;position:absolute;top:70px;right:0;height:35px;zoom:1}
-#home_link:after {display:block;visibility:hidden;clear:both;content:""}
-#home_link ul {float:right;margin-right:20px;zoom:1}
-#home_link ul:after {display:block;visibility:hidden;clear:both;content:""}
-#home_link li {float:left;margin-left:10px}
-#home_link a {color:#e0e0e0;text-decoration:none;line-height:2.95em}
+#snb {z-index:2;position:absolute;top:17px;right:0;height:35px;zoom:1}
+#snb:after {display:block;visibility:hidden;clear:both;content:""}
+#snb ul {float:right;margin-right:20px;zoom:1}
+#snb ul:after {display:block;visibility:hidden;clear:both;content:""}
+#snb li {float:left;margin-left:10px}
+#snb a {color:#e0e0e0;text-decoration:none;line-height:2.95em}
 
+/* js 있을 때 */
 #gnb {}
 #gnb ul {zoom:1}
 #gnb ul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -83,20 +84,24 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .btn_confirm {margin-bottom:20px;text-align:center}
 .btn_confirm button {padding:0 15px;height:30px;border:0;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_confirm button:focus {padding:0 15px;height:30px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
-.btn_confirm a {display:inline-block;padding:0 15px;height:30px;background:#74868b;color:#fff;text-decoration:none;line-height:2.1em;vertical-align:middle}
+.btn_confirm a {display:inline-block;padding:0 15px;height:30px;background:#74868b;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 .btn_confirm a:focus {background:#555}
-.btn_submit {padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;line-height:2.2em;vertical-align:middle}
-.btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_submit {padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;line-height:2.5em;vertical-align:middle}
+.btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;line-height:2.5em;vertical-align:middle}
 
 .btn_list input,
 .btn_list button {padding:0 15px;height:30px;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_list input:focus,
 .btn_list button:focus {padding:0 15px;height:30px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
-.btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.1em;vertical-align:middle}
+.btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
 .btn_list a:focus {background:#555}
 
+.btn_ft {text-align:right}
+.btn_ft a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
+.btn_ft a:focus {background:#555}
+
 #btn_add {margin-bottom:10px;text-align:center}
-#btn_add a {display:inline-block;padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;text-decoration:none;line-height:2.2em;vertical-align:middle}
+#btn_add a {display:inline-block;padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 
 /* 폼 */
 label {vertical-align:middle}

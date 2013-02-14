@@ -18,7 +18,6 @@ function print_menu2($key, $no)
 {
     global $menu, $auth_menu, $is_admin, $auth, $g4;
 
-    $str = "<noscript>";
     $str .= "<ul>";
     for($i=1; $i<count($menu[$key]); $i++)
     {
@@ -31,7 +30,6 @@ function print_menu2($key, $no)
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
     $str .= "</ul>";
-    $str .= "</noscript>";
 
     return $str;
 }
@@ -79,7 +77,7 @@ function textarea_size(fld, size)
 
         <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.jpg" alt="관리자 메인으로"></a></div>
 
-        <div id="home_link">
+        <div id="snb">
             <ul>
                 <li><a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
                 <li><a href="<?=G4_URL?>/">홈페이지</a></li>
@@ -89,8 +87,8 @@ function textarea_size(fld, size)
 
         <nav id="gnb">
             <h2>관리자 주메뉴</h2>
-            <ul>
             <?
+            $gnb_str = "<ul>";
             foreach($amenu as $key=>$value) {
                 $href1 = $href2 = '';
                 if ($menu['menu'.$key][0][2]) {
@@ -99,18 +97,22 @@ function textarea_size(fld, size)
                 } else {
                     continue;
                 }
-                $current_class = "";
-                if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)))
-                    $current_class = " gnb_1depth_on";
-                echo "<li class=\"gnb_1depth".$current_class."\">";
-                echo $href1 . $menu['menu'.$key][0][1] . $href2;
-                echo print_menu1('menu'.$key, 1);
-                echo "</li>";
-                if ($current_class || !$admin_index) $current_class = ""; // 클래스 반복부여 방지
+                //$current_class = "";
+                //if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)))
+                //    $current_class = " gnb_1depth_on";
+                $gnb_str .= "<li class=\"gnb_1depth".$current_class."\">";
+                $gnb_str .=  $href1 . $menu['menu'.$key][0][1] . $href2;
+                $gnb_str .=  print_menu1('menu'.$key, 1);
+                $gnb_str .=  "</li>";
+                //if ($current_class || !$admin_index) $current_class = ""; // 클래스 반복부여 방지
             }
-
+            $gnb_str .= "</ul>"
             ?>
-            </ul>
+            <?=$gnb_str?>
+
+            <noscript class="gnb_nojs">
+                <?=$gnb_str?>
+            </noscript>
         </nav>
 
         <div id="current_loc">

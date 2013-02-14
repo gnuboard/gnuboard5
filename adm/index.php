@@ -117,6 +117,10 @@ $colspan = 12;
     </tbody>
     </table>
 
+    <div class="btn_ft">
+        <a href="./member_list.php">회원 전체보기</a>
+    </div>
+
 </section>
 
 <?
@@ -210,6 +214,10 @@ $colspan = 5;
     ?>
     </tbody>
     </table>
+
+    <div class="btn_ft">
+        <a href="../bbs/new.php">최근게시물 더보기</a>
+    </div>
 </section>
 
 <?
@@ -290,6 +298,9 @@ $colspan = 7;
     </tbody>
     </table>
 
+    <div class="btn_ft">
+        <a href="./point_list.php">포인트내역 전체보기</a>
+    </div>
 </section>
 
 <?
