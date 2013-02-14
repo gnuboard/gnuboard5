@@ -99,7 +99,7 @@ function textarea_size(fld, size)
                 }
                 $current_class = "";
                 if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)))
-                    $current_class = " gnb_1depth_on";
+                    $current_class = " gnb_1depth_air";
                 $gnb_str .= "<li class=\"gnb_1depth".$current_class."\">";
                 $gnb_str .=  $href1 . $menu['menu'.$key][0][1] . $href2;
                 $gnb_str .=  print_menu1('menu'.$key, 1);
