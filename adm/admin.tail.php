@@ -22,27 +22,61 @@ if (!defined('_GNUBOARD_')) exit;
 
 <script>
 $(function(){
+    var hide_menu = false;
+
     // 주메뉴
-    var $gnb = $('.gnb_1depth a');
-    $gnb.hover(
-        function() {
-            $(this).parent().toggleClass('gnb_1depth_over');
-        },
-        function() {
-            $(this).parent().toggleClass('gnb_1depth_over');
+    var $gnb = $('.gnb_1depth > a');
+    $gnb.mouseover(function() {
+        $('.gnb_1depth').removeClass('gnb_1depth_over');
+        $(this).parent().addClass('gnb_1depth_over');
+        hide_menu = false;
+    });
+
+    $('.gnb_1depth li').mouseover(function() {
+        hide_menu = false;
+    });
+
+    $('.gnb_1depth li').mouseout(function() {
+        hide_menu = true;
+    });
+
+    $gnb.focusin(function() {
+        $('.gnb_1depth').removeClass('gnb_1depth_over');
+        $(this).parent().addClass('gnb_1depth_over');
+        hide_menu = false;
+    });
+
+    $gnb.focusout(function() {
+        hide_menu = true;
+    });
+
+    $('.gnb_1depth ul a').focusin(function() {
+        hide_menu = false;
+    });
+
+    $('.gnb_1depth ul a').focusout(function() {
+        hide_menu = true;
+    });
+
+    $(document).click(function() {
+        if(hide_menu) {
+            $('.gnb_1depth').removeClass('gnb_1depth_over');
         }
-    );
-    $gnb.focus(
-        function() {
-            $(this).parent().toggleClass('gnb_1depth_over');
+    });
+
+    $(document).focusin(function() {
+        if(hide_menu) {
+            $('.gnb_1depth').removeClass('gnb_1depth_over');
         }
-    );
-    $gnb.focusout(
-        function() {
-            $(this).parent().toggleClass('gnb_1depth_over');
-        }
-    );
+    });
 });
+
+function hide_menu_layer()
+{
+    if(hide_menu) {
+        $('.gnb_1depth').removeClass('gnb_1depth_over');
+    }
+}
 </script>
 
 <?
