@@ -38,10 +38,16 @@ $pg_anchor = "
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_3">
+        <col class="grid_2">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="cf_title">홈페이지 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="cf_title" name="cf_title" class="required" required value="<?=$config['cf_title']?>" size="50"></td>
+        <td><input type="text" id="cf_title" name="cf_title" class="required" required value="<?=$config['cf_title']?>" size="40"></td>
         <th scope="row"><label for="cf_admin">최고관리자<strong class="sound_only">필수</strong></label></th>
         <td><?=get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required')?></td>
     </tr>
@@ -180,6 +186,12 @@ $pg_anchor = "
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_3">
+        <col class="grid_2">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="cf_read_point">글읽기 포인트<strong class="sound_only">필수</strong></label></th>
@@ -251,6 +263,12 @@ $pg_anchor = "
     <p>회원가입 시 사용할 스킨과 입력 받을 정보 등을 설정할 수 있습니다.</p>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_3">
+        <col class="grid_2">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="cf_member_skin">회원 스킨<strong class="sound_only">필수</strong></label></th>
@@ -373,6 +391,10 @@ $pg_anchor = "
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_8">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="cf_email_use">메일발송 사용</label></th>
@@ -410,6 +432,10 @@ $pg_anchor = "
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_8">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="cf_email_wr_super_admin">최고관리자</label></th>
@@ -455,6 +481,10 @@ $pg_anchor = "
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_8">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="cf_email_mb_super_admin">최고관리자 메일발송</label></th>
@@ -480,6 +510,10 @@ $pg_anchor = "
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_8">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="cf_email_po_super_admin">최고관리자 메일발송</label></th>
@@ -498,6 +532,10 @@ $pg_anchor = "
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_8">
+    </colgroup>
     <tbody>
     <? for ($i=1; $i<=10; $i++) { ?>
     <tr>
