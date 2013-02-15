@@ -122,7 +122,7 @@ class gcaptcha
 
         $this->captcha_filename = $this->get_captcha_filename();
 
-        imagepng($im, G4_DATA_PATH.'/cache/'.$this->captcha_filename.'.png', 0, NULL);
+        imagepng($im, G4_DATA_PATH.'/cache/gcaptcha-'.$this->captcha_filename.'.png', 0, NULL);
         imagedestroy($im);
 
         $this->make_wav($this->captcha_filename.'.wav');        
@@ -144,7 +144,7 @@ class gcaptcha
             $wavs[] = $file;
         }
 
-        $wav_filepath = G4_DATA_PATH.'/cache/'.$captcha_filename;
+        $wav_filepath = G4_DATA_PATH.'/cache/gcaptcha-'.$captcha_filename;
         $fp = fopen($wav_filepath, 'w+');
         fwrite($fp, join_wavs($wavs));
         fclose($fp);
@@ -172,8 +172,8 @@ function captcha_html($class="captcha")
     $obj = new gcaptcha();
     $obj->run();
 
-    $png_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.png';
-    $wav_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.wav';
+    $png_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.png';
+    $wav_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.wav';
 
     $html .= PHP_EOL.'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>'; 
     $html .= PHP_EOL.'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>'; 
