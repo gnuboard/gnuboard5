@@ -4,13 +4,13 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-if (!isset($board['bo_use'])) {
+if (!isset($board['bo_pc_mobile'])) {
     // 게시판 사용 필드 추가
     // both : pc, mobile 둘다 사용
     // pc : pc 전용 사용
     // mobile : mobile 전용 사용
     // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_use` ENUM(  'both',  'pc',  'mobile',  'none' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
+    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_pc_mobile` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
 }
 
 $sql_common = " from {$g4['board_table']} a ";
@@ -116,9 +116,9 @@ var list_delete_php = 'board_list_delete.php';
         <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
         <th scope="col">댓글P<span class="sound_only">포인트</span></th>
         <th scope="col">다운P<span class="sound_only">포인트</span></th>
-        <th scope="col">검색<br>사용</th>
-        <th scope="col">검색<br>순서</th>
-        <th scope="col">선택</th>
+        <th scope="col"><?=subject_sort_link('bo_use_search')?>검색<br>사용</a></th>
+        <th scope="col"><?=subject_sort_link('bo_order_search')?>검색<br>순서</a></th>
+        <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -156,11 +156,10 @@ var list_delete_php = 'board_list_delete.php';
         <td><input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" class="frm_input" value="<?=$row['bo_order_search']?>" size="2" title="검색순서"></td>
         </td>
         <td>
-            <select id="bo_use_<?=$i?>" name="bo_use[<?=$i?>]">
-            <option value="both" <?=get_selected($row['bo_use'], 'both', true);?>>양쪽</option>
-            <option value="pc" <?=get_selected($row['bo_use'], 'pc');?>>PC</option>
-            <option value="mobile" <?=get_selected($row['bo_use'], 'mobile');?>>모바일</option>
-            <option value="none" <?=get_selected($row['bo_use'], 'none');?>>미사용</option>
+            <select id="bo_pc_mobile_<?=$i?>" name="bo_pc_mobile[<?=$i?>]">
+            <option value="both" <?=get_selected($row['bo_pc_mobile'], 'both', true);?>>양쪽</option>
+            <option value="pc" <?=get_selected($row['bo_pc_mobile'], 'pc');?>>PC</option>
+            <option value="mobile" <?=get_selected($row['bo_pc_mobile'], 'mobile');?>>모바일</option>
             </select>
         </td>
         <td><?=$one_update?> <?=$one_copy?></td>

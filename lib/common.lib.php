@@ -1716,4 +1716,19 @@ function iconv_euckr($str)
 {
     return iconv('utf-8', 'euc-kr', $str);
 }
+
+
+// PC 또는 모바일 사용인지를 검사
+function check_pc_mobile($pc_mobile)
+{
+    global $is_admin;
+
+    if ($is_admin) return;
+
+    if ($pc_mobile=='pc' && G4_IS_MOBILE) {
+        alert('PC 전용 게시판입니다.', G4_URL);
+    } else if ($pc_mobile=='mobile' && !G4_IS_MOBILE) {
+        alert('모바일 전용 게시판입니다.', G4_URL);
+    }
+}
 ?>

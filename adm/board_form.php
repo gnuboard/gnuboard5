@@ -119,14 +119,13 @@ $pg_anchor = "<ul class=\"frm_list\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="bo_use">사용여부</label></th>
+        <th scope="row"><label for="bo_pc_mobile">접속기기</label></th>
         <td>
-            <?=help("게시판그룹의 사용여부 설정이 게시판의 사용여부 설정보다 우선합니다.")?>
-            <select id="bo_use_" name="bo_use">
-            <option value="both" <?=get_selected($board['bo_use'], 'both', true);?>>PC와 모바일에서 모두 사용</option>
-            <option value="pc" <?=get_selected($board['bo_use'], 'pc');?>>PC 전용</option>
-            <option value="mobile" <?=get_selected($board['bo_use'], 'mobile');?>>모바일 전용</option>
-            <option value="none" <?=get_selected($board['bo_use'], 'none');?>>사용하지 않음</option>
+            <?=help("PC 와 모바일 사용을 구분합니다.")?>
+            <select id="bo_pc_mobile" name="bo_pc_mobile">
+            <option value="both" <?=get_selected($board['bo_pc_mobile'], 'both');?>>PC와 모바일에서 모두 사용</option>
+            <option value="pc" <?=get_selected($board['bo_pc_mobile'], 'pc');?>>PC 전용</option>
+            <option value="mobile" <?=get_selected($board['bo_pc_mobile'], 'mobile');?>>모바일 전용</option>
             </select>
         </td>
         <td class="group_setting">
