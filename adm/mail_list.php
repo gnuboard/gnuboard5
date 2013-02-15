@@ -33,6 +33,7 @@ $colspan = 6;
         현재 등록된 메일은 총 <?=$total_count ?>건입니다.
     </p>
 
+    <form id="fmaillist" name="fmaillist" method="post" action="./mail_delete.php">
     <table>
     <thead>
     <tr>
@@ -57,8 +58,7 @@ $colspan = 6;
 
     <tr>
         <td class="td_chk">
-            <input type="hidden" name="" value="">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="메일선택">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['ma_id']?>" title="메일선택">
         </td>
         <td class="td_num"><?=$num?></td>
         <td><?=$row['ma_subject']?></td>
@@ -78,33 +78,27 @@ $colspan = 6;
 
     <div class="btn_list">
         <button>선택삭제</button>
-        <input type="submit" name="btn_submit" value="선택삭제">
     </div>
+    </form>
 </section>
 
 <script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
-{
-    var f = document.fpost;
+$(function() {
+    $('#fmaillist').submit(function() {
+        if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+            var cnt = $('input[name^=chk]:checked').length;
+            if(cnt < 1) {
+                alert('삭제할 메일목록을 1개이상 선택해 주세요.');
+                return false;
+            }
 
-    if(confirm('한번 삭제한 자료는 복구할 방법이 없습니다. 정말 삭제하시겠습니까?')) {
-        f.ma_id.value = val;
-        f.action = action_url;
-        f.submit();
-    }
-}
+            return true;
+        } else {
+            return false;
+        }
+    });
+});
 </script>
-
-<form id="fpost" name="fpost" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="w" value='d'>
-<input type="hidden" name="ma_id">
-</form>
 
 <?
 include_once ('./admin.tail.php');
