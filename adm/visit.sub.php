@@ -12,7 +12,7 @@ $qstr = 'fr_date='.$fr_date.'&amp;to_date='.$to_date;
 <form id="fvisit" name="fvisit" method="get">
 <fieldset>
     <legend>접속자집계 열람조건 지정</legend>
-    <span>기간지정 <input type="text" id="fr_date" name="fr_date" size=11 maxlength=10 value='<?=$fr_date?>'> 부터 <input type="text" id="to_date" name="to_date" size=11 maxlength=10 value='<?=$to_date?>'> 까지</span>
+    기간지정 <input type="text" id="fr_date" name="fr_date" class="frm_input" size="11" maxlength="10" value="<?=$fr_date?>"> 부터 <input type="text" id="to_date" name="to_date" class="frm_input" size="11" maxlength="10" value="<?=$to_date?>"> 까지
     <button onclick="fvisit_submit('visit_list.php');">접속자</button>
     <button onclick="fvisit_submit('visit_domain.php');">도메인</button>
     <button onclick="fvisit_submit('visit_browser.php');">브라우저</button>

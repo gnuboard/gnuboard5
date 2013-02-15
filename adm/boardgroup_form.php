@@ -45,12 +45,12 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="gr_id">그룹 ID<?=$sound_only?></label></th>
-        <td><input type="text" id="gr_id" name="gr_id" maxlength="10" class="<?=$gr_id_attr?> alnum_" value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
+        <td><input type="text" id="gr_id" name="gr_id" maxlength="10" class="<?=$gr_id_attr?> alnum_ frm_input" value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
     </tr>
     <tr>
         <th scope="row"><label for="gr_subject">그룹 제목<strong class="sound_only">필수</strong></label></th>
         <td>
-            <input type="text" id="gr_subject" name="gr_subject" class="required" required value="<?=get_text($group['gr_subject'])?>" size="80">
+            <input type="text" id="gr_subject" name="gr_subject" class="required frm_input" required value="<?=get_text($group['gr_subject'])?>" size="80">
             <?
             if ($w == 'u')
                 echo '<input type="button" value="게시판생성" onclick="location.href=\'./board_form.php?gr_id='.$gr_id.'\';">';
@@ -74,7 +74,7 @@ include_once('./admin.head.php');
         <td>
             <?
             if ($is_admin == 'super')
-                echo '<input type="text" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'" maxlength="20">';
+                echo '<input type="text" id="gr_admin" name="gr_admin" class="frm_input" value="'.$gr['gr_admin'].'" maxlength="20">';
             else
                 echo '<input type="hidden" id="gr_admin" name="gr_admin" value="'.$gr['gr_admin'].'">'.$gr['gr_admin'];
             ?>
@@ -104,9 +104,9 @@ include_once('./admin.head.php');
         <th scope="row">회원여분필드<?=$i?></th>
         <td class="td_gr_extra">
             <label for="gr_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
-            <input type="text" id="gr_<?=$i?>_subj" name="gr_<?=$i?>_subj" value="<?=get_text($group['gr_'.$i.'_subj'])?>">
+            <input type="text" id="gr_<?=$i?>_subj" name="gr_<?=$i?>_subj" class="frm_input" value="<?=get_text($group['gr_'.$i.'_subj'])?>">
             <label for="gr_<?=$i?>">여분필드 <?=$i?> 내용</label>
-            <input type="text" id="gr_<?=$i?>" name="gr_<?=$i?>" value="<?=$gr['gr_'.$i]?>">
+            <input type="text" id="gr_<?=$i?>" name="gr_<?=$i?>" class="frm_input" value="<?=$gr['gr_'.$i]?>">
         </td>
     </tr>
     <? } ?>
