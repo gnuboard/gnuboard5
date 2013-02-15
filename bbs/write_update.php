@@ -193,8 +193,9 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         $upload[$i]['del_check'] = false;
 
     $tmp_file  = $_FILES['bf_file']['tmp_name'][$i];
-    $filename  = $_FILES['bf_file']['name'][$i];
     $filesize  = $_FILES['bf_file']['size'][$i];
+    $filename  = $_FILES['bf_file']['name'][$i];
+    $filename  = preg_replace('/(<|>|=)/', '', $filename);
 
     // 서버에 설정된 값보다 큰파일을 업로드 한다면
     if ($filename) {
