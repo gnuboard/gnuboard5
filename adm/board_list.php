@@ -87,15 +87,15 @@ var list_delete_php = 'board_list_delete.php';
 </fieldset>
 </form>
 
-<?if ($is_admin == 'super') {?>
-<div id="btn_add">
-    <a href="./board_form.php" id="bo_add">게시판 추가</a>
-</div>
-<?}?>
-
 <section class="cbox">
     <h2>생성된 게시판 목록</h2>
     <p>여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 체크기능을 이용하세요.</p>
+
+    <?if ($is_admin == 'super') {?>
+    <div id="btn_add">
+        <a href="./board_form.php" id="bo_add">게시판 추가</a>
+    </div>
+    <?}?>
 
     <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
     <input type="hidden" name="sst" value="<?=$sst?>">

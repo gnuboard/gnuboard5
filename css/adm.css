@@ -18,6 +18,7 @@ a:hover,
 a:active {text-decoration:underline}
 /* 헤딩 */
 h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spacing:-0.1em}
+h2 {font-size:1.2em}
 
 /* 화면낭독기 사용자용 */
 .sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;border:0 !important;overflow:hidden !important}
@@ -112,7 +113,7 @@ fieldset .btn_submit {height:21px;background:#383a3f;line-height:1.7em}
 .btn_ft a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
 .btn_ft a:focus {background:#555}
 
-#btn_add {margin-bottom:10px;text-align:center}
+#btn_add {margin-bottom:10px;text-align:right}
 #btn_add a {display:inline-block;padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 
 /* 폼 */
@@ -224,6 +225,10 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_mbname {width:100px;text-align:left !important}
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
+.td_pt {text-align:right !important}
+
+.txt_true {color:#2a6bc4}
+.txt_false {color:#ccc}
 
 /* 메일 테스트, 세션파일일괄삭제 */
 #fsendmailtest p,

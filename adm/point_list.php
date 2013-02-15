@@ -151,10 +151,10 @@ function point_clear()
         <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
         <td class="td_mbname"><?=$row2['mb_name']?></td>
         <td class="td_name"><div><?=$mb_nick?></div></td>
-        <td><?=$row['po_datetime']?></td>
+        <td class="td_time"><?=$row['po_datetime']?></td>
         <td class="td_pt_log"><?=$link1?><?=$row['po_content']?><?=$link2?></td>
-        <td class="td_num"><?=number_format($row['po_point'])?></td>
-        <td class="td_bignum"><?=number_format($row2['mb_point'])?></td>
+        <td class="td_num td_pt"><?=number_format($row['po_point'])?></td>
+        <td class="td_bignum td_pt"><?=number_format($row2['mb_point'])?></td>
     </tr>
 
     <?

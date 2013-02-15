@@ -96,15 +96,15 @@ $colspan = 15;
 </fieldset>
 </form>
 
-<? if ($is_admin == 'super') {?>
-<div id="btn_add">
-    <a href="./member_form.php" id="member_add">회원추가</a>
-</div>
-<?}?>
-
 <section class="cbox">
     <h2>회원 목록</h2>
     <p>회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.</p>
+
+    <? if ($is_admin == 'super') {?>
+    <div id="btn_add">
+        <a href="./member_form.php" id="member_add">회원추가</a>
+    </div>
+    <?}?>
 
     <form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);">
     <input type="hidden" name="sst" value="<?=$sst?>">
@@ -187,11 +187,11 @@ $colspan = 15;
         <td class="td_name"><div><?=$mb_nick?></div></td>
         <td class="td_mbname"><?=$row['mb_name']?></td>
         <td><?=get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level'])?></td>
-        <td><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
+        <td class="td_bignum"><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
         <td><?=substr($row['mb_today_login'],2,8)?></td>
-        <td><?=$row['mb_mailling']?'예':'아니오';?></td>
-        <td><?=$row['mb_open']?'예':'아니오';?></td>
-        <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
+        <td><?=$row['mb_mailling']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>';?></td>
+        <td><?=$row['mb_open']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>';?></td>
+        <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>';?></td>
         <td class="td_chk">
             <? if(empty($row['mb_leave_date'])){?>
             <input type="checkbox" id="mb_intercept_date_<?=$i?>" name="mb_intercept_date[<?=$i?>]" <?=$row['mb_intercept_date']?'checked':'';?> value="<?=$intercept_date?>" title="<?=$intercept_title?>">
