@@ -164,11 +164,11 @@ $colspan = 15;
         $intercept_title = '';
         if ($row['mb_leave_date']) {
             $mb_id = $mb_id;
-            $leave_msg = '탈퇴함';
+            $leave_msg = '<br>탈퇴함';
         }
         else if ($row['mb_intercept_date']) {
             $mb_id = $mb_id;
-            $intercept_msg = '차단됨';
+            $intercept_msg = '<br>차단됨';
             $intercept_title = '차단해제';
         }
         if ($intercept_title == '')
