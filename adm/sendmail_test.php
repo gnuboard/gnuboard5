@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], 'r');
 if (!$config['cf_email_use'])
     alert('환경설정에서 \'메일발송 사용\'에 체크하셔야 메일을 발송할 수 있습니다.');
 
-include_once($g4['path'].'/lib/mailer.lib.php');
+include_once(G4_LIB_PATH.'/mailer.lib.php');
 
 $g4['title'] = '메일 테스트';
 include_once('./admin.head.php');
