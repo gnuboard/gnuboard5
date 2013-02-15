@@ -25,31 +25,32 @@ $g4['title'] = $html_title;
 include_once('./admin.head.php');
 ?>
 
-<form id="fmailform" name="fmailform" method="post" action="./mail_update.php" onsubmit="return fmailform_check(this);">
-<input type="hidden" id="w" name="w" value="<?=$w?>">
-<input type="hidden" id="ma_id" name="ma_id" value="<?=$ma['ma_id']?>">
-<input type="hidden" id="token" name="token" value="<?=$token?>">
-<table class="frm_tbl">
-<caption>메일내용 입력</caption>
-<tbody>
-<tr>
-    <th scope="row"><label for="ma_subject">메일 제목<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" size="100" class="required" required></td>
-</tr>
-<tr>
-    <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
-    <td>
-        <?=help('{이름} , {별명} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일 발송합니다.')?>
-        <?=editor_html("ma_content", $ma['ma_content'], '400');?>
-    </td>
-</tr>
-</tbody>
-</table>
+<div class="cbox">
+    <form id="fmailform" name="fmailform" method="post" action="./mail_update.php" onsubmit="return fmailform_check(this);">
+    <input type="hidden" id="w" name="w" value="<?=$w?>">
+    <input type="hidden" id="ma_id" name="ma_id" value="<?=$ma['ma_id']?>">
+    <input type="hidden" id="token" name="token" value="<?=$token?>">
+    <table class="frm_tbl">
+    <tbody>
+    <tr>
+        <th scope="row"><label for="ma_subject">메일 제목<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" id="ma_subject" name="ma_subject" value="<?=$ma['ma_subject']?>" size="100" class="required" required></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=help('{이름} , {별명} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일 발송합니다.')?>
+            <?=editor_html("ma_content", $ma['ma_content'], '400');?>
+        </td>
+    </tr>
+    </tbody>
+    </table>
 
-<div class="btn_confirm">
-    <input type="submit" class="btn_submit" accesskey="s" value="확인">
+    <div class="btn_confirm">
+        <input type="submit" class="btn_submit" accesskey="s" value="확인">
+    </div>
+    </form>
 </div>
-</form>
 
 <script>
 function fmailform_check(f)

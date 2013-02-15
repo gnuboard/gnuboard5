@@ -16,43 +16,45 @@ include_once('./admin.head.php');
 $colspan = 4;
 ?>
 
-<table>
-<caption>아이디 <?=$mb['mb_id']?>, 이름 <?=$mb['mb_name']?>, 별명 <?=$mb['mb_nick']?>님이 접근가능한 그룹 목록</caption>
-<thead>
-<tr>
-    <th scope="col">그룹아이디</th>
-    <th scope="col">그룹</th>
-    <th scope="col">처리일시</th>
-    <th scope="col">삭제</th>
-</tr>
-</thead>
-<tbody>
-<?
-$sql = " select * from {$g4['group_member_table']} a, {$g4['group_table']} b
-            where a.mb_id = '{$mb['mb_id']}'
-            and a.gr_id = b.gr_id ";
-if ($is_admin != 'super')
-    $sql .= " and b.gr_admin = '{$member['mb_id']}' ";
-$sql .= " order by a.gr_id desc ";
-$result = sql_query($sql);
-for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
-?>
-<tr>
-    <td class="td_grid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
-    <td class="td_category"><?=$row['gr_subject']?></td>
-    <td class="td_time"><?=$row['gm_datetime']?></td>
-    <td class="td_mng"><?=$s_del?></td>
-</tr>
-<?
-}
+<div class="cbox">
+    <p>아이디 <?=$mb['mb_id']?>, 이름 <?=$mb['mb_name']?>, 별명 <?=$mb['mb_nick']?>님이 접근가능한 그룹 목록</p>
+    <table>
+    <thead>
+    <tr>
+        <th scope="col">그룹아이디</th>
+        <th scope="col">그룹</th>
+        <th scope="col">처리일시</th>
+        <th scope="col">삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    $sql = " select * from {$g4['group_member_table']} a, {$g4['group_table']} b
+                where a.mb_id = '{$mb['mb_id']}'
+                and a.gr_id = b.gr_id ";
+    if ($is_admin != 'super')
+        $sql .= " and b.gr_admin = '{$member['mb_id']}' ";
+    $sql .= " order by a.gr_id desc ";
+    $result = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
+    ?>
+    <tr>
+        <td class="td_grid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+        <td class="td_category"><?=$row['gr_subject']?></td>
+        <td class="td_time"><?=$row['gm_datetime']?></td>
+        <td class="td_mng"><?=$s_del?></td>
+    </tr>
+    <?
+    }
 
-if ($i == 0) {
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">접근가능한 그룹이 없습니다.</td></tr>';
-}
-?>
-</tbody>
-</table>
+    if ($i == 0) {
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">접근가능한 그룹이 없습니다.</td></tr>';
+    }
+    ?>
+    </tbody>
+    </table>
+</div>
 
 <form id="fboardgroupmember_form" name="fboardgroupmember_form" method="post" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)">
 <input type="hidden" id="mb_id" name="mb_id" value="<?=$mb['mb_id']?>">
@@ -68,7 +70,7 @@ if ($i == 0) {
                 where gr_use_access = 1 ";
     //if ($is_admin == 'group') {
     if ($is_admin != 'super') 
-        $sql .= " and gr_admin = '$member['mb_id']' ";
+        $sql .= " and gr_admin = '{$member['mb_id']}' ";
     $sql .= " order by gr_id ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {

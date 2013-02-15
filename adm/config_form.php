@@ -13,7 +13,7 @@ if ($is_admin != 'super')
 if (!isset($config['cf_email_admin'])) {
     sql_query(" ALTER TABLE {$g4['config_table']} ADD cf_email_admin VARCHAR(255) NOT NULL DEFAULT '' AFTER cf_email_use ", TRUE);
 }
-    
+
 $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 
@@ -34,10 +34,10 @@ $pg_anchor = "
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 
 <?=$pg_anchor?>
-<section class="cbox">
+<section id="frm_basic" class="cbox">
     <h2>홈페이지 기본환경 설정</h2>
 
-    <table id="frm_basic" class="frm_tbl">
+    <table class="frm_tbl">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_title">홈페이지 제목<strong class="sound_only">필수</strong></label></th>
@@ -175,10 +175,11 @@ $pg_anchor = "
 </section>
 
 <?=$pg_anchor?>
-<section class="cbox">
+<section id="frm_board" class="cbox">
     <h2>게시판 기본 설정</h2>
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
-    <table id="frm_board" class="frm_tbl">
+
+    <table class="frm_tbl">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_read_point">글읽기 포인트<strong class="sound_only">필수</strong></label></th>
@@ -245,11 +246,11 @@ $pg_anchor = "
 </section>
 
 <?=$pg_anchor?>
-<section class="cbox">
+<section id="frm_join" class="cbox">
     <h2>회원가입 설정</h2>
     <p>회원가입 시 사용할 스킨과 입력 받을 정보 등을 설정할 수 있습니다.</p>
 
-    <table id="frm_join" class="frm_tbl">
+    <table class="frm_tbl">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_member_skin">회원 스킨<strong class="sound_only">필수</strong></label></th>
@@ -368,10 +369,10 @@ $pg_anchor = "
 </section>
 
 <?=$pg_anchor?>
-<section class="cbox">
+<section id="frm_mail" class="cbox">
     <h2>기본 메일환경 설정</h2>
 
-    <table id="frm_mail" class="frm_tbl">
+    <table class="frm_tbl">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_email_use">메일발송 사용</label></th>
@@ -405,10 +406,10 @@ $pg_anchor = "
 </section>
 
 <?=$pg_anchor?>
-<section class="cbox">
+<section id="frm_article_mail" class="cbox">
     <h2>게시판 글 작성 시 메일 설정</h2>
 
-    <table id="frm_article_mail" class="frm_tbl">
+    <table class="frm_tbl">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_email_wr_super_admin">최고관리자</label></th>
@@ -450,10 +451,10 @@ $pg_anchor = "
 </section>
 
 <?=$pg_anchor?>
-<section class="cbox">
+<section id="frm_join_mail" class="cbox">
     <h2>회원가입 시 메일 설정</h2>
 
-    <table id="frm_join_mail" class="frm_tbl">
+    <table class="frm_tbl">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_email_mb_super_admin">최고관리자 메일발송</label></th>
@@ -474,10 +475,10 @@ $pg_anchor = "
 </section>
 
 <?=$pg_anchor?>
-<section class="cbox">
+<section id="frm_vote_mail" class="cbox">
     <h2>투표 기타의견 작성시 메일 설정</h2>
 
-    <table id="frm_vote_mail" class="frm_tbl">
+    <table class="frm_tbl">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_email_po_super_admin">최고관리자 메일발송</label></th>
@@ -491,11 +492,11 @@ $pg_anchor = "
 </section>
 
 <?=$pg_anchor?>
-<section class="cbox">
+<section id="frm_extra" class="cbox">
     <h2>여분필드 기본 설정</h2>
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
 
-    <table id="frm_extra" class="frm_tbl">
+    <table class="frm_tbl">
     <tbody>
     <? for ($i=1; $i<=10; $i++) { ?>
     <tr>
