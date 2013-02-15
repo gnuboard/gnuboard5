@@ -181,13 +181,6 @@ if (G4_IS_MOBILE) {
 if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
     goto_url(G4_BBS_URL.'/logout.php');
 
-
-// 프로그램 전반에 걸쳐 사용하는 유일한 키
-if (!get_session('ss_uniqid')) {
-    set_session('ss_uniqid', get_uniqid());
-}
-
-
 // QUERY_STRING
 $qstr = '';
 
