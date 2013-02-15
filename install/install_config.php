@@ -102,13 +102,6 @@ if ($_POST['agree'] != '동의함') {
 <script>
 function frm_install_submit(f)
 {
-    f.mysql_host.value = "kagla.chin.so";
-    f.mysql_user.value = "test";
-    f.mysql_pass.value = "test";
-    f.mysql_db.value = "test";
-    f.admin_pass.value = "1";
-    f.table_prefix.value = Math.floor((Math.random()*1000)+1)+"_";
-
     if (f.mysql_host.value == '')
     {
         alert('MySQL Host 를 입력하십시오.'); f.mysql_host.focus(); return false;
