@@ -39,10 +39,10 @@ $pg_anchor = "
 
     <table class="frm_tbl">
     <colgroup>
-        <col class="grid_2">
         <col class="grid_3">
-        <col class="grid_2">
+        <col class="grid_6">
         <col class="grid_3">
+        <col class="grid_6">
     </colgroup>
     <tbody>
     <tr>
@@ -187,10 +187,10 @@ $pg_anchor = "
 
     <table class="frm_tbl">
     <colgroup>
-        <col class="grid_2">
         <col class="grid_3">
-        <col class="grid_2">
+        <col class="grid_6">
         <col class="grid_3">
+        <col class="grid_6">
     </colgroup>
     <tbody>
     <tr>
@@ -264,10 +264,10 @@ $pg_anchor = "
 
     <table class="frm_tbl">
     <colgroup>
-        <col class="grid_2">
         <col class="grid_3">
-        <col class="grid_2">
+        <col class="grid_6">
         <col class="grid_3">
+        <col class="grid_6">
     </colgroup>
     <tbody>
     <tr>
@@ -392,8 +392,8 @@ $pg_anchor = "
 
     <table class="frm_tbl">
     <colgroup>
-        <col class="grid_2">
-        <col class="grid_8">
+        <col class="grid_3">
+        <col class="grid_15">
     </colgroup>
     <tbody>
     <tr>
@@ -433,8 +433,8 @@ $pg_anchor = "
 
     <table class="frm_tbl">
     <colgroup>
-        <col class="grid_2">
-        <col class="grid_8">
+        <col class="grid_3">
+        <col class="grid_15">
     </colgroup>
     <tbody>
     <tr>
@@ -482,8 +482,8 @@ $pg_anchor = "
 
     <table class="frm_tbl">
     <colgroup>
-        <col class="grid_2">
-        <col class="grid_8">
+        <col class="grid_3">
+        <col class="grid_15">
     </colgroup>
     <tbody>
     <tr>
@@ -511,8 +511,8 @@ $pg_anchor = "
 
     <table class="frm_tbl">
     <colgroup>
-        <col class="grid_2">
-        <col class="grid_8">
+        <col class="grid_3">
+        <col class="grid_15">
     </colgroup>
     <tbody>
     <tr>
@@ -533,8 +533,8 @@ $pg_anchor = "
 
     <table class="frm_tbl">
     <colgroup>
-        <col class="grid_2">
-        <col class="grid_8">
+        <col class="grid_3">
+        <col class="grid_15">
     </colgroup>
     <tbody>
     <? for ($i=1; $i<=10; $i++) { ?>

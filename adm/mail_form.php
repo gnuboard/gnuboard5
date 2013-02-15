@@ -26,11 +26,17 @@ include_once('./admin.head.php');
 ?>
 
 <div class="cbox">
+    <p>메일 내용에 {이름} , {별명} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일을 발송합니다.</p>
+
     <form id="fmailform" name="fmailform" method="post" action="./mail_update.php" onsubmit="return fmailform_check(this);">
     <input type="hidden" id="w" name="w" value="<?=$w?>">
     <input type="hidden" id="ma_id" name="ma_id" value="<?=$ma['ma_id']?>">
     <input type="hidden" id="token" name="token" value="<?=$token?>">
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_15">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="ma_subject">메일 제목<strong class="sound_only">필수</strong></label></th>
@@ -39,7 +45,7 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
         <td>
-            <?=help('{이름} , {별명} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일 발송합니다.')?>
+            ')?>
             <?=editor_html("ma_content", $ma['ma_content'], '400');?>
         </td>
     </tr>

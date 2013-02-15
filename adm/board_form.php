@@ -88,6 +88,11 @@ $pg_anchor = "<ul class=\"frm_list\">
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_12">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="bo_table">TABLE<?=$sound_only?></label></th>
@@ -133,7 +138,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_category_list">분류</label></th>
         <td>
             <?=help('분류와 분류 사이는 | 로 구분하세요. (예: 질문|답변) 첫자로 #은 입력하지 마세요. (예: #질문|#답변 [X])')?>
-            <input type="text" id="bo_category_list" name="bo_category_list" value="<?=get_text($board['bo_category_list'])?>" size="80">
+            <input type="text" id="bo_category_list" name="bo_category_list" value="<?=get_text($board['bo_category_list'])?>" size="70">
             <input type="checkbox" id="bo_use_category" name="bo_use_category" value="1" <?=$board['bo_use_category']?'checked':'';?>>
             <label for="bo_use_category">사용</label>
         </td>
@@ -161,6 +166,11 @@ $pg_anchor = "<ul class=\"frm_list\">
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_12">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="bo_admin">게시판 관리자</label></th>
@@ -272,6 +282,11 @@ $pg_anchor = "<ul class=\"frm_list\">
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_12">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="bo_count_modify">원글 수정 불가<strong class="sound_only">필수</strong></label></th>
@@ -543,6 +558,11 @@ $pg_anchor = "<ul class=\"frm_list\">
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_12">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
         <tr>
         <th scope="row"><label for="bo_skin">스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
@@ -732,6 +752,11 @@ $pg_anchor = "<ul class=\"frm_list\">
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_12">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="chk_point">기본값으로 설정</label></th>
@@ -789,6 +814,11 @@ $pg_anchor = "<ul class=\"frm_list\">
     <?=$pg_anchor?>
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_12">
+        <col class="grid_3">
+    </colgroup>
     <tbody>
     <? for ($i=1; $i<=10; $i++) { ?>
     <tr>
