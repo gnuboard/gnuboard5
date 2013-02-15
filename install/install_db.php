@@ -150,8 +150,6 @@ echo '<div>DB설정 완료</div>';
 // 디렉토리 생성
 $dir_arr = array (
     $data_path.'/cache',
-    $data_path.'/cache/captcha',
-    $data_path.'/cache/latest',
     $data_path.'/editor',
     $data_path.'/file',
     $data_path.'/log',
