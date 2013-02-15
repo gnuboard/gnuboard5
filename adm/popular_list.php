@@ -136,6 +136,7 @@ var list_delete_php = 'popular_list.php';
 
     <?if ($is_admin == 'super'){ ?>
     <div class="btn_list">
+        <button>선택삭제</button>
         <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
     </div>
     <?}?>

@@ -128,10 +128,10 @@ var list_update_php = "./boardgroup_list_update.php";
         $row2 = sql_fetch($sql2);
 
         $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
-        $s_del = '';
+        /*$s_del = '';
         if ($is_admin == 'super') {
             $s_del = '<a href="javascript:post_delete(\'boardgroup_delete.php\', \''.$row['gr_id'].'\');">삭제</a>';
-        }
+        }*/
     ?>
 
     <tr>
@@ -161,7 +161,7 @@ var list_update_php = "./boardgroup_list_update.php";
             <option value="none" <?=get_selected($row['gr_use'], 'none');?>>미사용</option>
             </select>
         </td>
-        <td class="td_mng"><?=$s_upd?> <?=$s_del?></td>
+        <td class="td_mng"><?=$s_upd?></td>
     </tr>
 
     <?
@@ -172,6 +172,8 @@ var list_update_php = "./boardgroup_list_update.php";
     </table>
 
     <div class="btn_list">
+        <button>선택수정</button>
+        <button>선택삭제</button>
         <button onclick="btn_check(this.form, 'update')">선택수정</button>
         <!-- <button onclick="btn_check(this.form, 'delete')">선택삭제</button> -->
         <a href="./boardgroup_form.php">게시판그룹 추가</a>
