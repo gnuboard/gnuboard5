@@ -83,9 +83,9 @@ $pg_anchor = "<ul class=\"frm_list\">
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="page" value="<?=$page?>">
 
-<?=$pg_anchor?>
 <section id="frm_basic" class="cbox">
     <h2>게시판 기본 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -156,9 +156,9 @@ $pg_anchor = "<ul class=\"frm_list\">
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_auth" class="cbox">
     <h2>게시판 권한 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -267,9 +267,9 @@ $pg_anchor = "<ul class=\"frm_list\">
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_function" class="cbox">
     <h2>게시판 기능 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -538,9 +538,9 @@ $pg_anchor = "<ul class=\"frm_list\">
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_design" class="cbox">
     <h2>게시판 디자인/양식</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -727,9 +727,9 @@ $pg_anchor = "<ul class=\"frm_list\">
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_point" class="cbox">
     <h2>게시판 포인트 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -784,9 +784,9 @@ $pg_anchor = "<ul class=\"frm_list\">
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_extra" class="cbox">
     <h2>게시판 여분필드 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>

@@ -33,9 +33,9 @@ $pg_anchor = "
 <form id="fconfigform" name="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 
-<?=$pg_anchor?>
 <section id="frm_basic" class="cbox">
     <h2>홈페이지 기본환경 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -174,9 +174,9 @@ $pg_anchor = "
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_board" class="cbox">
     <h2>게시판 기본 설정</h2>
+    <?=$pg_anchor?>
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
 
     <table class="frm_tbl">
@@ -245,9 +245,9 @@ $pg_anchor = "
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_join" class="cbox">
     <h2>회원가입 설정</h2>
+    <?=$pg_anchor?>
     <p>회원가입 시 사용할 스킨과 입력 받을 정보 등을 설정할 수 있습니다.</p>
 
     <table class="frm_tbl">
@@ -368,9 +368,9 @@ $pg_anchor = "
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_mail" class="cbox">
     <h2>기본 메일환경 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -405,9 +405,9 @@ $pg_anchor = "
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_article_mail" class="cbox">
     <h2>게시판 글 작성 시 메일 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -450,9 +450,9 @@ $pg_anchor = "
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_join_mail" class="cbox">
     <h2>회원가입 시 메일 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -474,9 +474,10 @@ $pg_anchor = "
     </table>
 </section>
 
-<?=$pg_anchor?>
+
 <section id="frm_vote_mail" class="cbox">
     <h2>투표 기타의견 작성시 메일 설정</h2>
+    <?=$pg_anchor?>
 
     <table class="frm_tbl">
     <tbody>
@@ -491,9 +492,9 @@ $pg_anchor = "
     </table>
 </section>
 
-<?=$pg_anchor?>
 <section id="frm_extra" class="cbox">
     <h2>여분필드 기본 설정</h2>
+    <?=$pg_anchor?>
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
 
     <table class="frm_tbl">
