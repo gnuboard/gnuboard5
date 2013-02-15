@@ -86,16 +86,16 @@ $g4['title'] .= '회원 '.$html_title;
 include_once('./admin.head.php');
 ?>
 
-<div class="cbox">
-    <form id="fmember" name="fmember" method="post" action="./member_form_update.php" onsubmit="return fmember_submit(this);" enctype="multipart/form-data">
-    <input type="hidden" name="w" value="<?=$w?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="sst" value="<?=$sst?>">
-    <input type="hidden" name="sod" value="<?=$sod?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="token" value="<?=$token?>">
+<form id="fmember" name="fmember" method="post" action="./member_form_update.php" onsubmit="return fmember_submit(this);" enctype="multipart/form-data">
+<input type="hidden" name="w" value="<?=$w?>">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx" value="<?=$stx?>">
+<input type="hidden" name="sst" value="<?=$sst?>">
+<input type="hidden" name="sod" value="<?=$sod?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="token" value="<?=$token?>">
 
+<div class="cbox">
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -256,20 +256,20 @@ include_once('./admin.head.php');
     </tbody>
     </table>
 
-    <fieldset id="admin_confirm">
-        <legend>XSS 혹은 CSRF 방지</legend>
-        <p>관리자 권한을 탈취 당하는 경우를 대비하여 관리자의 패스워드를 다시 한번 확인합니다.</p>
-        <label for="admin_password">관리자 패스워드<strong class="sound_only">필수</strong></label>
-        <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
-    </fieldset>
-
-    <div class="btn_confirm">
-        <input type="submit" class="btn_submit" accesskey='s' value="확인">
-        <a href="./member_list.php?<?=$qstr?>">목록</a>
-    </div>
-    </form>
-
 </div>
+
+<fieldset id="admin_confirm">
+    <legend>XSS 혹은 CSRF 방지</legend>
+    <p>관리자 권한을 탈취 당하는 경우를 대비하여 관리자의 패스워드를 다시 한번 확인합니다.</p>
+    <label for="admin_password">관리자 패스워드<strong class="sound_only">필수</strong></label>
+    <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
+</fieldset>
+
+<div class="btn_confirm">
+    <input type="submit" class="btn_submit" accesskey='s' value="확인">
+    <a href="./member_list.php?<?=$qstr?>">목록</a>
+</div>
+</form>
 
 <script>
 function fmember_submit(f)
