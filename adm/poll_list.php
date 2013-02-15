@@ -72,10 +72,20 @@ $colspan = 6;
 <section class="cbox">
     <h2>투표목록</h2>
 
+<<<<<<< HEAD
     <div id="btn_add">
         <a href="./poll_form.php" id="poll_add">투표 추가</a>
     </div>
 
+=======
+    <form id="fpolllist" name="fpolllist" method="post" action="./poll_delete.php">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
+>>>>>>> 75f31cd998e7ebb2d18eed50b548a4ac81fa39b3
     <table>
     <thead>
     <tr>
@@ -101,8 +111,7 @@ $colspan = 6;
 
     <tr>
         <td class="td_chk">
-            <input type="hidden" name="" value="">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="투표선택">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['po_id']?>" title="투표선택">
         </td>
         <td class="td_num"><?=$row['po_id']?></td>
         <td><?=cut_str(get_text($row['po_subject']),70)?></td>
@@ -123,8 +132,8 @@ $colspan = 6;
 
     <div class="btn_list">
         <button>선택삭제</button>
-        <input type="submit" name="btn_submit" value="선택삭제">
     </div>
+    </form>
 </section>
 
 <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
@@ -135,29 +144,22 @@ if (isset($stx))
 ?>
 
 <script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
-{
-    var f = document.fpost;
+$(function() {
+    $('#fpolllist').submit(function() {
+        if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+            var cnt = $('input[name^=chk]:checked').length;
+            if(cnt < 1) {
+                alert('삭제할 투표목록을 1개이상 선택해 주세요.');
+                return false;
+            }
 
-    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.po_id.value = val;
-        f.action      = action_url;
-        f.submit();
-    }
-}
+            return true;
+        } else {
+            return false;
+        }
+    });
+});
 </script>
-
-<form id="fpost" name="fpost" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="w" value='d'>
-<input type="hidden" name="po_id">
-</form>
 
 <?
 include_once ('./admin.tail.php');

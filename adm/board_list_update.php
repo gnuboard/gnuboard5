@@ -30,7 +30,7 @@ if ($_POST['btn_submit'] == "선택수정") {
         $sql = " update {$g4['board_table']}
                     set gr_id               = '{$_POST['gr_id'][$k]}',
                         bo_subject          = '{$_POST['bo_subject'][$k]}',
-                        bo_use              = '{$_POST['bo_use'][$k]}',
+                        bo_pc_mobile        = '{$_POST['bo_pc_mobile'][$k]}',
                         bo_skin             = '{$_POST['bo_skin'][$k]}',
                         bo_read_point       = '{$_POST['bo_read_point'][$k]}',
                         bo_write_point      = '{$_POST['bo_write_point'][$k]}',

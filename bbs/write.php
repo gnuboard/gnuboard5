@@ -6,7 +6,6 @@ include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 set_session('ss_bo_table', $bo_table);
 set_session('ss_wr_id', $wr_id);
 
-// 090713
 if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.', G4_URL);
 }
@@ -14,6 +13,8 @@ if (!$board['bo_table']) {
 if (!$bo_table) {
     alert("bo_table 값이 넘어오지 않았습니다.\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", G4_URL);
 }
+
+check_pc_mobile($board['bo_pc_mobile']);
 
 @include_once (G4_PATH.'/skin/board/write.head.skin.php');
 @include_once ($board_skin_path.'/write.head.skin.php');

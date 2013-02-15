@@ -88,6 +88,7 @@ var list_update_php = "./boardgroup_list_update.php";
         접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
     </p>
 
+<<<<<<< HEAD
     <?if ($is_admin == 'super') {?>
     <div id="btn_add">
         <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
@@ -95,11 +96,15 @@ var list_update_php = "./boardgroup_list_update.php";
     <?}?>
 
     <form id="fboardgrouplist" name="fboardgrouplist" method="post">
+=======
+    <form id="fboardgrouplist" name="fboardgrouplist" method="post" action="./boardgroup_list_update.php">
+>>>>>>> 75f31cd998e7ebb2d18eed50b548a4ac81fa39b3
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
     <input type="hidden" name="stx" value="<?=$stx?>">
     <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
 
     <table class="tbl_gr_list">
     <thead>
@@ -136,8 +141,7 @@ var list_update_php = "./boardgroup_list_update.php";
 
     <tr>
         <td class="td_chk">
-            <input type="hidden" id="gr_id" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['gr_id']?>" title="<?=$row['gr_subject']?> 그룹선택">
         </td>
         <td class="td_mbid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td>
@@ -172,10 +176,8 @@ var list_update_php = "./boardgroup_list_update.php";
     </table>
 
     <div class="btn_list">
-        <button>선택수정</button>
-        <button>선택삭제</button>
-        <button onclick="btn_check(this.form, 'update')">선택수정</button>
-        <!-- <button onclick="btn_check(this.form, 'delete')">선택삭제</button> -->
+        <input type="submit" name="act_button" value="선택수정">
+        <input type="submit" name="act_button" value="선택삭제">
         <a href="./boardgroup_form.php">게시판그룹 추가</a>
     </div>
     </form>
