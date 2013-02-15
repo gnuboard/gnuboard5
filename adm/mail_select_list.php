@@ -68,7 +68,7 @@ $g4['title'] = "선택된 메일발송 대상 회원";
 include_once('./admin.head.php');
 ?>
 
-<form id="fmailselectlist" name="fmailselectlist" method="post" onsubmit="return fmailselectlist_submit(this);">
+<form id="fmailselectlist" name="fmailselectlist" method="post" action="./mail_select_update.php">
 <input type="hidden" name="token" value="<?=$token?>">
 <input type="hidden" name="ma_id" value="<?=$ma_id ?>">
 <table>
@@ -94,7 +94,7 @@ while ($row=sql_fetch_array($result))
 {
     $i++;
     $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row['mb_datetime'];
-    $cr = PHP_EOL;
+    $cr = "\n";
 ?>
 <tr>
     <td class="td_num"><?=$i?></td>
@@ -112,18 +112,10 @@ while ($row=sql_fetch_array($result))
 
 <div class="btn_confirm">
     <input type="submit" value="메일보내기">
-    <button type="button" onclick="history.go(-1);">뒤로</button>
+    <a href="./mail_select_form.php?ma_id=<?=$ma_id?>">뒤로</a>
 </div>
 
 </form>
-
-<script>
-function fmailselectlist_submit(f)
-{
-    f.action = "./mail_select_update.php";
-    return true;
-}
-</script>
 
 <?
 include_once('./admin.tail.php');
