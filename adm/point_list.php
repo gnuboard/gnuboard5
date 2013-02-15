@@ -184,7 +184,7 @@ function point_clear()
 
 <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
-<form id="fpointlist2" name="fpointlist2" method="post" onsubmit="return fpointlist2_submit(this);" autocomplete="off">
+<form id="fpointlist2" name="fpointlist2" method="post" action="./point_update.php" autocomplete="off">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="sst" value="<?=$sst?>">
@@ -205,14 +205,6 @@ function point_clear()
     <input type="submit" class="btn_submit" value="확인">
 </fieldset>
 </form>
-
-<script>
-function fpointlist2_submit(f)
-{
-    f.action = "./point_update.php";
-    return true;
-}
-</script>
 
 <?
 include_once ('./admin.tail.php');

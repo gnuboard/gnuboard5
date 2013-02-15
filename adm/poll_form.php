@@ -21,7 +21,7 @@ include_once('./admin.head.php');
 ?>
 
 <div class="cbox">
-    <form id="fpoll" name="fpoll" method="post" onsubmit="return fpoll_check(this);" enctype="multipart/form-data">
+    <form id="fpoll" name="fpoll" method="post" action="./poll_form_update.php" enctype="multipart/form-data">
     <input type="hidden" name="po_id" value="<?=$po_id?>">
     <input type="hidden" name="w" value="<?=$w?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -97,18 +97,10 @@ include_once('./admin.head.php');
 
     <div class="btn_confirm">
         <input type="submit" class="btn_submit" accesskey="s" value="확인">
-        <button onclick="document.location.href='./poll_list.php?<?=$qstr?>';">목록</button>
+        <a href="./poll_list.php?<?=$qstr?>">목록</a>
     </div>
     </form>
 </div>
-
-<script>
-function fpoll_check(f)
-{
-    f.action = './poll_form_update.php';
-    return true;
-}
-</script>
 
 <?
 include_once('./admin.tail.php');
