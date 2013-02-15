@@ -22,13 +22,16 @@ if (!defined('_GNUBOARD_')) exit;
 <script>
 $(function(){
     var hide_menu = false;
+    var mouse_move = false;
 
     // 주메뉴
     var $gnb = $('.gnb_1depth > a');
     $gnb.mouseover(function() {
-        $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
-        $(this).parent().addClass('gnb_1depth_over gnb_1depth_on');
-        hide_menu = false;
+        if(mouse_move) {
+            $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+            $(this).parent().addClass('gnb_1depth_over gnb_1depth_on');
+            hide_menu = false;
+        }
     });
 
     $gnb.mouseout(function() {
@@ -41,6 +44,10 @@ $(function(){
 
     $('.gnb_1depth li').mouseout(function() {
         hide_menu = true;
+    });
+
+    $(document).mousemove(function(e) {
+        mouse_move = true;
     });
 
     $gnb.focusin(function() {
