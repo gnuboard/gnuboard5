@@ -1,7 +1,7 @@
 <?
 $sub_menu = "200300";
-define('G4_EDITOR', 1);
 include_once('./_common.php');
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], 'r');
 
@@ -44,10 +44,7 @@ include_once('./admin.head.php');
     </tr>
     <tr>
         <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
-        <td>
-            ')?>
-            <?=editor_html("ma_content", $ma['ma_content'], '400');?>
-        </td>
+        <td><?=editor_html("ma_content", $ma['ma_content'], '400');?></td>
     </tr>
     </tbody>
     </table>
