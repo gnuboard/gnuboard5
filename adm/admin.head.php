@@ -79,9 +79,9 @@ function textarea_size(fld, size)
 
         <div id="snb">
             <ul>
-                <li><a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">관리자정보수정</a></li>
-                <li><a href="<?=G4_URL?>/">홈페이지</a></li>
-                <li><a href="<?=G4_BBS_URL?>/logout.php">로그아웃</a></li>
+                <li><a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>"><img src="<?=G4_ADMIN_URL?>/img/snb_modify.jpg" alt="관리자 정보수정" width="28" height="28"></a></li>
+                <li><a href="<?=G4_URL?>/"><img src="<?=G4_ADMIN_URL?>/img/snb_home.jpg" alt="홈페이지로 돌아가기" width="28" height="28"></a></li>
+                <li><a href="<?=G4_BBS_URL?>/logout.php"><img src="<?=G4_ADMIN_URL?>/img/snb_logout.jpg" alt="로그아웃" width="28" height="28"></a></li>
             </ul>
         </div>
 

@@ -1,43 +1,25 @@
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_auth`
+--
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-DROP TABLE IF EXISTS `$g4[auth_table]`;
-
-
-CREATE TABLE `$g4[auth_table]` (
+DROP TABLE IF EXISTS `g4s_auth`;
+CREATE TABLE IF NOT EXISTS `g4s_auth` (
   `mb_id` varchar(255) NOT NULL default '',
   `au_menu` varchar(20) NOT NULL default '',
   `au_auth` set('r','w','d') NOT NULL default '',
   PRIMARY KEY  (`mb_id`,`au_menu`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_board`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[board_table]`;
-
-
-CREATE TABLE `$g4[board_table]` (
+DROP TABLE IF EXISTS `g4s_board`;
+CREATE TABLE IF NOT EXISTS `g4s_board` (
   `bo_table` varchar(20) NOT NULL default '',
   `gr_id` varchar(255) NOT NULL default '',
   `bo_subject` varchar(255) NOT NULL default '',
@@ -125,23 +107,22 @@ CREATE TABLE `$g4[board_table]` (
   `bo_9` varchar(255) NOT NULL default '',
   `bo_10` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`bo_table`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_board_file`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[board_table]_file`;
-
-
-CREATE TABLE `$g4[board_table]_file` (
+DROP TABLE IF EXISTS `g4s_board_file`;
+CREATE TABLE IF NOT EXISTS `g4s_board_file` (
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` int(11) NOT NULL default '0',
   `bf_no` int(11) NOT NULL default '0',
   `bf_source` varchar(255) NOT NULL default '',
   `bf_file` varchar(255) NOT NULL default '',
-  `bf_download` varchar(255) NOT NULL default '',
+  `bf_download` int(11) NOT NULL,
   `bf_content` text NOT NULL,
   `bf_filesize` int(11) NOT NULL default '0',
   `bf_width` int(11) NOT NULL default '0',
@@ -149,17 +130,16 @@ CREATE TABLE `$g4[board_table]_file` (
   `bf_type` tinyint(4) NOT NULL default '0',
   `bf_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`bo_table`,`wr_id`,`bf_no`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_board_good`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[board_table]_good`;
-
-
-CREATE TABLE `$g4[board_table]_good` (
+DROP TABLE IF EXISTS `g4s_board_good`;
+CREATE TABLE IF NOT EXISTS `g4s_board_good` (
   `bg_id` int(11) NOT NULL auto_increment,
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` int(11) NOT NULL default '0',
@@ -168,17 +148,16 @@ CREATE TABLE `$g4[board_table]_good` (
   `bg_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`bg_id`),
   UNIQUE KEY `fkey1` (`bo_table`,`wr_id`,`mb_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_board_new`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[board_table]_new`;
-
-
-CREATE TABLE `$g4[board_table]_new` (
+DROP TABLE IF EXISTS `g4s_board_new`;
+CREATE TABLE IF NOT EXISTS `g4s_board_new` (
   `bn_id` int(11) NOT NULL auto_increment,
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` int(11) NOT NULL default '0',
@@ -187,17 +166,16 @@ CREATE TABLE `$g4[board_table]_new` (
   `mb_id` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`bn_id`),
   KEY `mb_id` (`mb_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_config`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[config_table]`;
-
-
-CREATE TABLE `$g4[config_table]` (
+DROP TABLE IF EXISTS `g4s_config`;
+CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_title` varchar(255) NOT NULL default '',
   `cf_admin` varchar(255) NOT NULL default '',
   `cf_use_point` tinyint(4) NOT NULL default '0',
@@ -297,17 +275,16 @@ CREATE TABLE `$g4[config_table]` (
   `cf_8` varchar(255) NOT NULL default '',
   `cf_9` varchar(255) NOT NULL default '',
   `cf_10` varchar(255) NOT NULL default ''
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_group`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[group_table]`;
-
-
-CREATE TABLE `$g4[group_table]` (
+DROP TABLE IF EXISTS `g4s_group`;
+CREATE TABLE IF NOT EXISTS `g4s_group` (
   `gr_id` varchar(10) NOT NULL default '',
   `gr_subject` varchar(255) NOT NULL default '',
   `gr_admin` varchar(255) NOT NULL default '',
@@ -333,17 +310,16 @@ CREATE TABLE `$g4[group_table]` (
   `gr_9` varchar(255) NOT NULL default '',
   `gr_10` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`gr_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_group_member`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[group_member_table]`;
-
-
-CREATE TABLE `$g4[group_member_table]` (
+DROP TABLE IF EXISTS `g4s_group_member`;
+CREATE TABLE IF NOT EXISTS `g4s_group_member` (
   `gm_id` int(11) NOT NULL auto_increment,
   `gr_id` varchar(255) NOT NULL default '',
   `mb_id` varchar(255) NOT NULL default '',
@@ -351,34 +327,32 @@ CREATE TABLE `$g4[group_member_table]` (
   PRIMARY KEY  (`gm_id`),
   KEY `gr_id` (`gr_id`),
   KEY `mb_id` (`mb_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_login`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[login_table]`;
-
-
-CREATE TABLE `$g4[login_table]` (
+DROP TABLE IF EXISTS `g4s_login`;
+CREATE TABLE IF NOT EXISTS `g4s_login` (
   `lo_ip` varchar(255) NOT NULL default '',
   `mb_id` varchar(255) NOT NULL default '',
   `lo_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `lo_location` text NOT NULL,
   `lo_url` text NOT NULL,
   PRIMARY KEY  (`lo_ip`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_mail`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[mail_table]`;
-
-
-CREATE TABLE `$g4[mail_table]` (
+DROP TABLE IF EXISTS `g4s_mail`;
+CREATE TABLE IF NOT EXISTS `g4s_mail` (
   `ma_id` int(11) NOT NULL auto_increment,
   `ma_subject` varchar(255) NOT NULL default '',
   `ma_content` mediumtext NOT NULL,
@@ -386,17 +360,16 @@ CREATE TABLE `$g4[mail_table]` (
   `ma_ip` varchar(255) NOT NULL default '',
   `ma_last_option` text NOT NULL,
   PRIMARY KEY  (`ma_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_member`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[member_table]`;
-
-
-CREATE TABLE `$g4[member_table]` (
+DROP TABLE IF EXISTS `g4s_member`;
+CREATE TABLE IF NOT EXISTS `g4s_member` (
   `mb_no` int(11) NOT NULL auto_increment,
   `mb_id` varchar(255) NOT NULL default '',
   `mb_password` varchar(255) NOT NULL default '',
@@ -449,17 +422,16 @@ CREATE TABLE `$g4[member_table]` (
   UNIQUE KEY `mb_id` (`mb_id`),
   KEY `mb_today_login` (`mb_today_login`),
   KEY `mb_datetime` (`mb_datetime`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_memo`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[memo_table]`;
-
-
-CREATE TABLE `$g4[memo_table]` (
+DROP TABLE IF EXISTS `g4s_memo`;
+CREATE TABLE IF NOT EXISTS `g4s_memo` (
   `me_id` int(11) NOT NULL default '0',
   `me_recv_mb_id` varchar(255) NOT NULL default '',
   `me_send_mb_id` varchar(255) NOT NULL default '',
@@ -467,17 +439,99 @@ CREATE TABLE `$g4[memo_table]` (
   `me_read_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `me_memo` text NOT NULL,
   PRIMARY KEY  (`me_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_oneboard`
+--
 
+DROP TABLE IF EXISTS `g4s_oneboard`;
+CREATE TABLE IF NOT EXISTS `g4s_oneboard` (
+  `ob_table` varchar(20) NOT NULL,
+  `ob_subject` varchar(255) NOT NULL,
+  `ob_admin` varchar(255) NOT NULL,
+  `ob_skin` varchar(255) NOT NULL,
+  `ob_write_level` tinyint(4) NOT NULL,
+  `ob_upload_level` tinyint(4) NOT NULL,
+  `ob_use_dhtml_editor` tinyint(4) NOT NULL,
+  `ob_use_email` tinyint(4) NOT NULL,
+  `ob_table_width` smallint(6) NOT NULL,
+  `ob_subject_len` smallint(6) NOT NULL,
+  `ob_page_rows` smallint(6) NOT NULL,
+  `ob_image_width` smallint(6) NOT NULL,
+  `ob_image_head` varchar(255) NOT NULL,
+  `ob_image_tail` varchar(255) NOT NULL,
+  `ob_include_head` varchar(255) NOT NULL,
+  `ob_include_tail` varchar(255) NOT NULL,
+  `ob_content_head` text NOT NULL,
+  `ob_content_tail` text NOT NULL,
+  `ob_insert_content` text NOT NULL,
+  `ob_1_subj` varchar(255) NOT NULL,
+  `ob_2_subj` varchar(255) NOT NULL,
+  `ob_3_subj` varchar(255) NOT NULL,
+  `ob_4_subj` varchar(255) NOT NULL,
+  `ob_5_subj` varchar(255) NOT NULL,
+  `ob_6_subj` varchar(255) NOT NULL,
+  `ob_7_subj` varchar(255) NOT NULL,
+  `ob_8_subj` varchar(255) NOT NULL,
+  `ob_9_subj` varchar(255) NOT NULL,
+  `ob_10_subj` varchar(255) NOT NULL,
+  `ob_1` varchar(255) NOT NULL,
+  `ob_2` varchar(255) NOT NULL,
+  `ob_3` varchar(255) NOT NULL,
+  `ob_4` varchar(255) NOT NULL,
+  `ob_5` varchar(255) NOT NULL,
+  `ob_6` varchar(255) NOT NULL,
+  `ob_7` varchar(255) NOT NULL,
+  `ob_8` varchar(255) NOT NULL,
+  `ob_9` varchar(255) NOT NULL,
+  `ob_10` varchar(255) NOT NULL,
+  PRIMARY KEY  (`ob_table`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_one_basic`
+--
 
-DROP TABLE IF EXISTS `$g4[point_table]`;
+DROP TABLE IF EXISTS `g4s_one_basic`;
+CREATE TABLE IF NOT EXISTS `g4s_one_basic` (
+  `on_id` int(11) NOT NULL auto_increment,
+  `mb_no` int(11) NOT NULL,
+  `on_subject` varchar(255) NOT NULL default '',
+  `on_question` mediumtext NOT NULL,
+  `on_answer` mediumtext NOT NULL,
+  `on_qfile` varchar(255) NOT NULL,
+  `on_qsource` varchar(255) NOT NULL,
+  `on_afile` varchar(255) NOT NULL,
+  `on_asource` varchar(255) NOT NULL,
+  `on_qdatetime` datetime NOT NULL,
+  `on_adatetime` datetime NOT NULL,
+  `on_1` text NOT NULL,
+  `on_2` text NOT NULL,
+  `on_3` text NOT NULL,
+  `on_4` text NOT NULL,
+  `on_5` text NOT NULL,
+  `on_6` text NOT NULL,
+  `on_7` text NOT NULL,
+  `on_8` text NOT NULL,
+  `on_9` text NOT NULL,
+  `on_10` text NOT NULL,
+  PRIMARY KEY  (`on_id`),
+  KEY `mb_no` (`mb_no`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
-CREATE TABLE `$g4[point_table]` (
+--
+-- Table structure for table `g4s_point`
+--
+
+DROP TABLE IF EXISTS `g4s_point`;
+CREATE TABLE IF NOT EXISTS `g4s_point` (
   `po_id` int(11) NOT NULL auto_increment,
   `mb_id` varchar(20) NOT NULL default '',
   `po_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -488,17 +542,16 @@ CREATE TABLE `$g4[point_table]` (
   `po_rel_action` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`po_id`),
   KEY `index1` (`mb_id`,`po_rel_table`,`po_rel_id`,`po_rel_action`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_poll`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[poll_table]`;
-
-
-CREATE TABLE `$g4[poll_table]` (
+DROP TABLE IF EXISTS `g4s_poll`;
+CREATE TABLE IF NOT EXISTS `g4s_poll` (
   `po_id` int(11) NOT NULL auto_increment,
   `po_subject` varchar(255) NOT NULL default '',
   `po_poll1` varchar(255) NOT NULL default '',
@@ -526,17 +579,16 @@ CREATE TABLE `$g4[poll_table]` (
   `po_ips` mediumtext NOT NULL,
   `mb_ids` text NOT NULL,
   PRIMARY KEY  (`po_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_poll_etc`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[poll_etc_table]`;
-
-
-CREATE TABLE `$g4[poll_etc_table]` (
+DROP TABLE IF EXISTS `g4s_poll_etc`;
+CREATE TABLE IF NOT EXISTS `g4s_poll_etc` (
   `pc_id` int(11) NOT NULL default '0',
   `po_id` int(11) NOT NULL default '0',
   `mb_id` varchar(255) NOT NULL default '',
@@ -544,34 +596,32 @@ CREATE TABLE `$g4[poll_etc_table]` (
   `pc_idea` varchar(255) NOT NULL default '',
   `pc_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`pc_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_popular`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[popular_table]`;
-
-
-CREATE TABLE `$g4[popular_table]` (
+DROP TABLE IF EXISTS `g4s_popular`;
+CREATE TABLE IF NOT EXISTS `g4s_popular` (
   `pp_id` int(11) NOT NULL auto_increment,
   `pp_word` varchar(50) NOT NULL default '',
   `pp_date` date NOT NULL default '0000-00-00',
   `pp_ip` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`pp_id`),
   UNIQUE KEY `index1` (`pp_date`,`pp_word`,`pp_ip`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_scrap`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[scrap_table]`;
-
-
-CREATE TABLE `$g4[scrap_table]` (
+DROP TABLE IF EXISTS `g4s_scrap`;
+CREATE TABLE IF NOT EXISTS `g4s_scrap` (
   `ms_id` int(11) NOT NULL auto_increment,
   `mb_id` varchar(255) NOT NULL default '',
   `bo_table` varchar(20) NOT NULL default '',
@@ -579,34 +629,16 @@ CREATE TABLE `$g4[scrap_table]` (
   `ms_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`ms_id`),
   KEY `mb_id` (`mb_id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_visit`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[token_table]`;
-
-
-CREATE TABLE `$g4[token_table]` (
-  `to_token` varchar(32) NOT NULL default '',
-  `to_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
-  `to_ip` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`to_token`),
-  KEY `to_datetime` (`to_datetime`),
-  KEY `to_ip` (`to_ip`)
-) DEFAULT CHARSET=utf8;
-
-
-
-
-
-
-DROP TABLE IF EXISTS `$g4[visit_table]`;
-
-
-CREATE TABLE `$g4[visit_table]` (
+DROP TABLE IF EXISTS `g4s_visit`;
+CREATE TABLE IF NOT EXISTS `g4s_visit` (
   `vi_id` int(11) NOT NULL default '0',
   `vi_ip` varchar(255) NOT NULL default '',
   `vi_date` date NOT NULL default '0000-00-00',
@@ -616,31 +648,82 @@ CREATE TABLE `$g4[visit_table]` (
   PRIMARY KEY  (`vi_id`),
   UNIQUE KEY `index1` (`vi_ip`,`vi_date`),
   KEY `index2` (`vi_date`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_visit_sum`
+--
 
-
-
-
-DROP TABLE IF EXISTS `$g4[visit_sum_table]`;
-
-
-CREATE TABLE `$g4[visit_sum_table]` (
+DROP TABLE IF EXISTS `g4s_visit_sum`;
+CREATE TABLE IF NOT EXISTS `g4s_visit_sum` (
   `vs_date` date NOT NULL default '0000-00-00',
   `vs_count` int(11) NOT NULL default '0',
   PRIMARY KEY  (`vs_date`),
   KEY `index1` (`vs_count`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_write`
+--
 
+DROP TABLE IF EXISTS `g4s_write`;
+CREATE TABLE IF NOT EXISTS `g4s_write` (
+  `wr_id` int(11) NOT NULL auto_increment,
+  `wr_num` int(11) NOT NULL default '0',
+  `wr_reply` varchar(10) NOT NULL default '',
+  `wr_parent` int(11) NOT NULL default '0',
+  `wr_is_comment` tinyint(4) NOT NULL default '0',
+  `wr_comment` int(11) NOT NULL default '0',
+  `wr_comment_reply` varchar(5) NOT NULL default '',
+  `ca_name` varchar(255) NOT NULL default '',
+  `wr_option` set('html1','html2','secret','mail') NOT NULL default '',
+  `wr_subject` varchar(255) NOT NULL default '',
+  `wr_content` text NOT NULL,
+  `wr_link1` text NOT NULL,
+  `wr_link2` text NOT NULL,
+  `wr_link1_hit` int(11) NOT NULL default '0',
+  `wr_link2_hit` int(11) NOT NULL default '0',
+  `wr_trackback` varchar(255) NOT NULL default '',
+  `wr_hit` int(11) NOT NULL default '0',
+  `wr_good` int(11) NOT NULL default '0',
+  `wr_nogood` int(11) NOT NULL default '0',
+  `mb_id` varchar(255) NOT NULL default '',
+  `wr_password` varchar(255) NOT NULL default '',
+  `wr_name` varchar(255) NOT NULL default '',
+  `wr_email` varchar(255) NOT NULL default '',
+  `wr_homepage` varchar(255) NOT NULL default '',
+  `wr_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `wr_last` varchar(19) NOT NULL default '',
+  `wr_ip` varchar(255) NOT NULL default '',
+  `wr_1` varchar(255) NOT NULL default '',
+  `wr_2` varchar(255) NOT NULL default '',
+  `wr_3` varchar(255) NOT NULL default '',
+  `wr_4` varchar(255) NOT NULL default '',
+  `wr_5` varchar(255) NOT NULL default '',
+  `wr_6` varchar(255) NOT NULL default '',
+  `wr_7` varchar(255) NOT NULL default '',
+  `wr_8` varchar(255) NOT NULL default '',
+  `wr_9` varchar(255) NOT NULL default '',
+  `wr_10` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`wr_id`),
+  KEY `wr_num_reply_parent` (`wr_num`,`wr_reply`,`wr_parent`),
+  KEY `wr_is_comment` (`wr_is_comment`,`wr_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `g4s_write`
+--
 
+DROP TABLE IF EXISTS `g4s_unique`;
+CREATE TABLE IF NOT EXISTS `g4s_uniqid` (
+  `uq_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`uq_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
-
-
-
-
+-- --------------------------------------------------------

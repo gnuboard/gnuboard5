@@ -106,7 +106,7 @@ if (file_exists($dbconfig_file)) {
 } else {
     echo "<meta http-equiv='content-type' content='text/html; charset=utf-8'>";
     echo "<h3>$dbconfig_file 파일을 찾을 수 없습니다.<br>프로그램 설치 후 실행하시기 바랍니다.</h3>";
-    echo '<a href="'.G4_URL.'/install/">설치하기</a>';
+    echo '<a href="'.G4_URL.'/install/">그누보드4S 설치하기</a>';
     exit;
 }
 //==============================================================================
@@ -180,13 +180,6 @@ if (G4_IS_MOBILE) {
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
 if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
     goto_url(G4_BBS_URL.'/logout.php');
-
-
-// 프로그램 전반에 걸쳐 사용하는 유일한 키
-if (!get_session('ss_uniqid')) {
-    set_session('ss_uniqid', get_uniqid());
-}
-
 
 // QUERY_STRING
 $qstr = '';
