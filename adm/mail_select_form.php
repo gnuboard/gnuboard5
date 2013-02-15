@@ -55,13 +55,16 @@ include_once('./admin.head.php');
         <td>
             <input type="radio" id="mb_id1_all" name="mb_id1" value="1" <?=$mb_id1?"checked":"";?>> <label for="mb_id1_all">전체</label>
             <input type="radio" id="mb_id1_section" name="mb_id1" value="0" <?=!$mb_id1?"checked":"";?>> <label for="mb_id1_section">구간</label>
-            <input type="text" id="mb_id1_from" name="mb_id1_from" value="<?=$mb_id1_from?>" title="시작구간"> 에서
-            <input type="text" id="mb_id1_to" name="mb_id1_to" value="<?=$mb_id1_to?>" title="종료구간"> 까지
+            <input type="text" id="mb_id1_from" name="mb_id1_from" class="frm_input" value="<?=$mb_id1_from?>" title="시작구간"> 에서
+            <input type="text" id="mb_id1_to" name="mb_id1_to" class="frm_input" value="<?=$mb_id1_to?>" title="종료구간"> 까지
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_email">E-mail</label></th>
-        <td><input type="text" id="mb_email" name="mb_email" value="<?=$mb_email?>" size="50"> 단어 포함 (예 : @sir.co.kr)</td>
+        <td>
+            <?=help("메일 주소에 단어 포함 (예 : @sir.co.kr)")?>
+            <input type="text" id="mb_email" name="mb_email" class="frm_input" value="<?=$mb_email?>" size="50">
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_mailling">메일링</label></th>

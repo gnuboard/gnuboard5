@@ -97,11 +97,11 @@ while ($row=sql_fetch_array($result))
     $cr = "\n";
 ?>
 <tr>
-    <td><?=$i?></td>
-    <td><?=$row['mb_id']?></td>
-    <td><?=$row['mb_name']?></td>
-    <td><?=$row['mb_nick']?></td>
-    <td><?=$row['mb_birth']?></td>
+    <td class="td_num"><?=$i?></td>
+    <td class="td_mbid"><?=$row['mb_id']?></td>
+    <td class="td_mbname"><?=$row['mb_name']?></td>
+    <td class="td_mbnick"><?=$row['mb_nick']?></td>
+    <td class="td_time"><?=$row['mb_birth']?></td>
     <td><?=$row['mb_email']?></td>
 </tr>
 <?}?>

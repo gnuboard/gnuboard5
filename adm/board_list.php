@@ -84,7 +84,7 @@ var list_delete_php = 'board_list_delete.php';
         <option value="a.gr_id" <?=get_selected($_GET['sfl'], "a.gr_id");?>>그룹ID</option>
     </select>
     <input type="text" name="stx" class="required" required value="<?=$stx?>" title="검색어(필수)">
-    <input type="submit" class="fieldset_submit" value="검색">
+    <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 

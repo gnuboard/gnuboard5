@@ -78,7 +78,7 @@ $colspan = 4;
     }
     ?>
     </select>
-    <input type="submit" class="fieldset_submit" value="완료" accesskey="s">
+    <input type="submit" class="btn_submit" value="완료" accesskey="s">
     <p>게시판 그룹이 존재하지 않는다면 <a href="./boardgroup_form.php">게시판그룹생성하기</a></p>
 </fieldset>
 </form>

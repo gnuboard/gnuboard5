@@ -78,7 +78,7 @@ var list_update_php = "./boardgroup_list_update.php";
         <option value="gr_admin">그룹관리자</option>
     </select>
     <input type="text" id="stx" name="stx" class="required" required value="<?=$stx?>" title="검색어(필수)">
-    <input type="submit" class="fieldset_submit" value="검색">
+    <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 

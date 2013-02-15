@@ -78,8 +78,7 @@ $colspan = 15;
         <a href="?sst=mb_intercept_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">차단 <?=number_format($intercept_count)?></a>명,
         <a href="?sst=mb_leave_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">탈퇴 <?=number_format($leave_count)?></a>명
     </span>
-    <label for="sfl">검색대상</label>
-    <select id="sfl" name="sfl">
+    <select name="sfl" title="검색대상">
         <option value="mb_id">회원아이디</option>
         <option value="mb_nick">별명</option>
         <option value="mb_name">이름</option>
@@ -92,8 +91,8 @@ $colspan = 15;
         <option value="mb_ip">IP</option>
         <option value="mb_recommend">추천인</option>
     </select>
-    <input type="text" id="stx" name="stx" required value="<?=$stx?>" title="검색어(필수)">
-    <input type="submit" class="fieldset_submit" value="검색">
+    <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
+    <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 

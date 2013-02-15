@@ -15,7 +15,7 @@ if ($w == '')
     $mb['mb_mailling'] = 1;
     $mb['mb_open'] = 1;
     $mb['mb_level'] = $config['cf_register_level'];
-    $html_title = '등록';
+    $html_title = '추가';
 }
 else if ($w == 'u')
 {
@@ -80,7 +80,9 @@ if ($mb['mb_open']) {
     $open_no_checked = 'checked="checked"';
 }
 
-$g4['title'] = '회원정보 '.$html_title;
+if ($mb['mb_intercept_date']) $g4['title'] = "차단된 ";
+else $g4['title'] .= "";
+$g4['title'] .= '회원 '.$html_title;
 include_once('./admin.head.php');
 ?>
 
@@ -95,6 +97,12 @@ include_once('./admin.head.php');
     <input type="hidden" name="token" value="<?=$token?>">
 
     <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_6">
+        <col class="grid_3">
+        <col class="grid_6">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="mb_id">아이디<?=$sound_only?></label></th>

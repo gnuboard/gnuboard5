@@ -66,7 +66,7 @@ $colspan = 6;
         <option value='po_subject'>제목</option>
     </select>
     <input type="text" name="stx" required value="<?=$stx?>" title="검색어(필수)">
-    <input type="submit" class="fieldset_submit" value="검색">
+    <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 

@@ -92,13 +92,12 @@ function point_clear()
         ?>
         <? if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><? } ?>
     </span>
-    <label for="sfl">검색대상</label>
-    <select id="sfl" name="sfl">
+    <select name="sfl" title="검색대상">
         <option value="mb_id">회원아이디</option>
         <option value="po_content">내용</option>
     </select>
-    <input type="text" id="stx" name="stx" required value="<?=$stx?>" title="검색어(필수)">
-    <input type="submit" class="fieldset_submit" value="검색">
+    <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
+    <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 
@@ -203,7 +202,7 @@ function point_clear()
     <input type="text" id="po_point" name="po_point" required>
     <label for="admin_password">관리자패스워드<strong class="sound_only">필수</strong></label>
     <input type="password" id="admin_password" name="admin_password" required>
-    <input type="submit" class="fieldset_submit" value="확인">
+    <input type="submit" class="btn_submit" value="확인">
 </fieldset>
 </form>
 

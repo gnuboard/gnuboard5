@@ -25,6 +25,10 @@ include_once('./admin.head.php');
 ?>
 
 <div class="cbox">
+    <p>
+        게시판을 생성하시려면 1개 이상의 게시판그룹이 필요합니다.<br>
+        게시판그룹을 이용하시면 더 효과적으로 게시판을 관리할 수 있습니다.
+    </p>
     <form id="fboardgroup" name="fboardgroup" method="post" onsubmit="return fboardgroup_check(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?=$w?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -32,7 +36,12 @@ include_once('./admin.head.php');
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="page" value="<?=$page?>">
-    <table class="frm_tbl">
+
+    <table id="frm_gr" class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_15">
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="gr_id">그룹 ID<?=$sound_only?></label></th>
@@ -93,7 +102,7 @@ include_once('./admin.head.php');
     <? for ($i=1;$i<=10;$i++) { ?>
     <tr>
         <th scope="row">회원여분필드<?=$i?></th>
-        <td>
+        <td class="td_gr_extra">
             <label for="gr_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
             <input type="text" id="gr_<?=$i?>_subj" name="gr_<?=$i?>_subj" value="<?=get_text($group['gr_'.$i.'_subj'])?>">
             <label for="gr_<?=$i?>">여분필드 <?=$i?> 내용</label>

@@ -68,8 +68,8 @@ var list_delete_php = 'auth_list_delete.php';
         <?=$listall?>
         설정된 관리권한 <?=number_format($total_count)?>건
     </span>
-    <input type="text" id="stx" name="stx" class="required" required value="<?=$stx?>" title="회원아이디(필수)">
-    <input type="submit" id="fsearch_submit" class="fieldset_submit" value="검색">
+    <input type="text" id="stx" name="stx" class="required frm_input" required value="<?=$stx?>" title="회원아이디(필수)">
+    <input type="submit" id="fsearch_submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 
@@ -165,7 +165,7 @@ var list_delete_php = 'auth_list_delete.php';
     <legend>관리권한 추가</legend>
     <p>다음 양식에서 회원에게 관리권한을 부여하실 수 있습니다.</p>
     <label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label>
-    <input type="text" id="mb_id" name="mb_id" required value="<?=$mb_id?>" title="회원아이디">
+    <input type="text" id="mb_id" name="mb_id" class="required frm_input" required value="<?=$mb_id?>" title="회원아이디">
     <label for="au_menu">접근가능메뉴<strong class="sound_only">필수</strong></label>
     <select id="au_menu" name="au_menu" required title="접근가능메뉴">
         <option value=''>선택하세요
@@ -185,8 +185,8 @@ var list_delete_php = 'auth_list_delete.php';
     <label for="d">d (삭제)</label>
     <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
     <label for="admin_password">관리자 패스워드</label>
-    <input type="password" id="admin_password" name="admin_password" class="required" required>
-    <input type="submit" class="fieldset_submit" value="완료">
+    <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
+    <input type="submit" class="btn_submit" value="완료">
 </fieldset>
 
 </form>
