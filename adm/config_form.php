@@ -32,8 +32,10 @@ include_once ('./admin.head.php');
 <form id="fconfigform" name="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
 <input type="hidden" id="token" name="token" value="<?=$token?>">
 
+<section class="cbox">
+<h2>홈페이지 기본환경 설정</h2>
+
 <table id="frm_basic" class="frm_tbl">
-<caption>홈페이지 기본환경 설정</caption>
 <tbody>
 <tr>
     <th scope="row"><label for="cf_title">홈페이지 제목<strong class="sound_only">필수</strong></label></th>
