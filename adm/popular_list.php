@@ -6,11 +6,10 @@ auth_check($auth[$sub_menu], 'r');
 
 // 체크된 자료 삭제
 if (isset($_POST['chk']) && is_array($_POST['chk'])) {
-    for ($i=0; $i<count($chk); $i++) {
-        // 실제 번호를 넘김
-        $k = $chk[$i];
+    for ($i=0; $i<count($_POST['chk']); $i++) {
+        $pp_id = $_POST['chk'][$i];
 
-        sql_query(" delete from {$g4['popular_table']} where pp_id = '{$_POST['pp_id'][$k]}' ", true);
+        sql_query(" delete from {$g4['popular_table']} where pp_id = '$pp_id' ", true);
     }
 }
 
@@ -117,8 +116,7 @@ var list_delete_php = 'popular_list.php';
 
     <tr>
         <td class="td_chk">
-            <input type="hidden" name="pp_id[<?=$i?>]" value="<?=$row['pp_id']?>">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$word?> 선택">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['pp_id']?>" title="<?=$word?> 선택">
         </td>
         <td>&nbsp; <a href="<?=$_SERVER['PHP_SELF']?>?sfl=pp_word&amp;stx=<?=$word?>"><?=$word?></a></td>
         <td><?=$row['pp_date']?></td>
@@ -137,7 +135,6 @@ var list_delete_php = 'popular_list.php';
     <?if ($is_admin == 'super'){ ?>
     <div class="btn_list">
         <button>선택삭제</button>
-        <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
     </div>
     <?}?>
 
@@ -150,6 +147,24 @@ var list_delete_php = 'popular_list.php';
 if (isset($stx))
     echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>';
 ?>
+
+<script>
+$(function() {
+    $('#fpopularlist').submit(function() {
+        if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+            var cnt = $('input[name^=chk]:checked').length;
+            if(cnt < 1) {
+                alert('삭제할 검색어를 1개이상 선택해 주세요.');
+                return false;
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    });
+});
+</script>
 
 <?
 include_once('./admin.tail.php');
