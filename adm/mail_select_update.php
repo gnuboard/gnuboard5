@@ -11,7 +11,7 @@ check_demo();
 check_token();
 
 include_once('./admin.head.php');
-include_once($g4['path'].'/lib/mailer.lib.php');
+include_once(G4_LIB_PATH.'/mailer.lib.php');
 
 $countgap = 10; // 몇건씩 보낼지 설정
 $maxscreen = 500; // 몇건씩 화면에 보여줄건지?
