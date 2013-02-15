@@ -73,84 +73,85 @@ var list_delete_php = 'auth_list_delete.php';
 </fieldset>
 </form>
 
-<form id="fauthlist" name="fauthlist" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<table>
-<caption>
-    설정된 관리권한 내역
+<section class="cbox">
+    <h2>설정된 관리권한 내역</h2>
     <p>권한 <strong>r</strong>은 읽기권한, <strong>w</strong>는 쓰기권한, <strong>d</strong>는 삭제권한입니다.</p>
-</caption>
-<thead>
-<tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 권한설정 내역 전체선택" onclick="check_all(this.form)"></th>
-    <th scope="col"><?=subject_sort_link('a.mb_id')?>회원아이디</a></th>
-    <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
-    <th scope="col">메뉴</th>
-    <th scope="col">권한</th>
-</tr>
-</thead>
-<tbody>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
-    // 메뉴번호가 바뀌는 경우에 현재 없는 저장된 메뉴는 삭제함
-    if (!isset($auth_menu[$row['au_menu']]))
+    <form id="fauthlist" name="fauthlist" method="post">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
+    <table>
+    <thead>
+    <tr>
+        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 권한설정 내역 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><?=subject_sort_link('a.mb_id')?>회원아이디</a></th>
+        <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
+        <th scope="col">메뉴</th>
+        <th scope="col">권한</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        sql_query(" delete from {$g4['auth_table']} where au_menu = '{$row['au_menu']}' ");
-        continue;
+        $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
+
+        // 메뉴번호가 바뀌는 경우에 현재 없는 저장된 메뉴는 삭제함
+        if (!isset($auth_menu[$row['au_menu']]))
+        {
+            sql_query(" delete from {$g4['auth_table']} where au_menu = '{$row['au_menu']}' ");
+            continue;
+        }
+
+        $list = $i%2;
+        ?>
+        <tr>
+            <td class="td_chk">
+                <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row['au_menu']?>">
+                <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
+                <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?>님의 권한체크">
+            </td>
+            <td class="td_mbid"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
+            <td class="td_auth_mbnick"><?=$mb_nick?></td>
+            <td class="td_menu">
+                <?=$row['au_menu']?>
+                <?=$auth_menu[$row['au_menu']]?>
+            </td>
+            <td class="td_auth"><?=$row['au_auth']?></td>
+        </tr>
+        <?
     }
 
-    $list = $i%2;
+    if ($i==0)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
     ?>
-    <tr>
-        <td class="td_chk">
-            <input type="hidden" name="au_menu[<?=$i?>]" value="<?=$row['au_menu']?>">
-            <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?>님의 권한체크">
-        </td>
-        <td class="td_mbid"><a href="?sfl=a.mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-        <td class="td_auth_mbnick"><?=$mb_nick?></td>
-        <td class="td_menu">
-            <?=$row['au_menu']?>
-            <?=$auth_menu[$row['au_menu']]?>
-        </td>
-        <td class="td_auth"><?=$row['au_auth']?></td>
-    </tr>
+    </tbody>
+    </table>
+
+    <div class="btn_list">
+        <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+    </div>
+
     <?
-}
+    $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
+    echo $pagelist;
+    ?>
 
-if ($i==0)
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-?>
-</tbody>
-</table>
+    <?
+    if (isset($stx))
+        echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'.PHP_EOL;
 
-<div class="btn_list">
-    <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
-</div>
-
-<?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
-echo $pagelist;
-?>
-
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'.PHP_EOL;
-
-if (strstr($sfl, 'mb_id'))
-    $mb_id = $stx;
-else
-    $mb_id = '';
-?>
-</form>
+    if (strstr($sfl, 'mb_id'))
+        $mb_id = $stx;
+    else
+        $mb_id = '';
+    ?>
+    </form>
+</section>
 
 <form id="fauthlist2" name="fauthlist2" method="post" onsubmit="return fauthlist2_submit(this);" autocomplete="off">
 <input type="hidden" name="sfl" value="<?=$sfl?>">

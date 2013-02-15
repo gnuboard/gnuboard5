@@ -34,12 +34,12 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 #logo {position:relative;height:70px}
 #logo img {position:absolute;top:15px;left:0}
 
-#snb {z-index:2;position:absolute;top:17px;right:0;zoom:1}
+#snb {z-index:2;position:absolute;top:25px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
-#snb ul {float:right;margin:0;padding:0;height:35px;background:#222;zoom:1}
+#snb ul {float:right;margin:0;padding:0;background:#222;zoom:1}
 #snb ul:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left;margin-left:10px}
-#snb a {color:#e0e0e0;text-decoration:none;line-height:2.95em}
+#snb a {display:inline-block;padding:5px 0;color:#e0e0e0;text-decoration:none}
 
 /* gnb js off */
 
