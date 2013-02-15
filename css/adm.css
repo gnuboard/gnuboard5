@@ -122,7 +122,7 @@ textarea:focus,
 textarea {width:90%}
 select {border:1px solid #ced9de}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
-.readonly {background:#ff3061}
+.readonly {background:#a7bac2}
 
 /* 폼 안내글 */
 .adm_field_explain {display:block;padding:0 0 5px;color:#5b747e}

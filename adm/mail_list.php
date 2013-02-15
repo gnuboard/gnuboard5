@@ -36,6 +36,7 @@ $colspan = 6;
     <table>
     <thead>
     <tr>
+        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 목록 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col">번호</th>
         <th scope="col">제목</th>
         <th scope="col">작성일시</th>
@@ -48,19 +49,23 @@ $colspan = 6;
     <?
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
         $s_mod = '<a href="./mail_form.php?w=u&amp;ma_id='.$row['ma_id'].'">수정</a>';
-        $s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
+        //$s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
         $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
 
         $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
     ?>
 
     <tr>
+        <td class="td_chk">
+            <input type="hidden" name="" value="">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="메일선택">
+        </td>
         <td class="td_num"><?=$num?></td>
         <td><?=$row['ma_subject']?></td>
         <td class="td_time"><?=$row['ma_time']?></td>
         <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row['ma_id']?>">테스트</a></td>
         <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row['ma_id']?>">보내기</a></td>
-        <td class="td_mng"><?=$s_mod?> <?=$s_del?> <?=$s_vie?></td>
+        <td class="td_mng"><?=$s_mod?> <?=$s_vie?></td>
     </tr>
 
     <?
@@ -70,6 +75,11 @@ $colspan = 6;
     ?>
     </tbody>
     </table>
+
+    <div class="btn_list">
+        <button>선택삭제</button>
+        <input type="submit" name="btn_submit" value="선택삭제">
+    </div>
 </section>
 
 <script>

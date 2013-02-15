@@ -71,13 +71,12 @@ var list_update_php = "./boardgroup_list_update.php";
         <?=$listall?>
         생성된 그룹수 <?=number_format($total_count)?>개
     </span>
-    <label for="sfl">검색대상</label>
-    <select id="sfl" name="sfl">
+    <select name="sfl" title="검색대상">
         <option value="gr_subject">제목</option>
         <option value="gr_id">ID</option>
         <option value="gr_admin">그룹관리자</option>
     </select>
-    <input type="text" id="stx" name="stx" class="required" required value="<?=$stx?>" title="검색어(필수)">
+    <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
@@ -101,13 +100,14 @@ var list_update_php = "./boardgroup_list_update.php";
     <input type="hidden" name="sfl" value="<?=$sfl?>">
     <input type="hidden" name="stx" value="<?=$stx?>">
     <input type="hidden" name="page" value="<?=$page?>">
+
     <table class="tbl_gr_list">
     <thead>
     <tr>
         <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 그룹 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
         <th scope="col"><?=subject_sort_link('gr_subject')?>제목</a></th>
-        <th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th>
+        <?if ($is_admin == 'super'){?><th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th><?}?>
         <th scope="col">게시판</th>
         <th scope="col">접근사용</th>
         <th scope="col">접근회원수</th>
@@ -128,10 +128,10 @@ var list_update_php = "./boardgroup_list_update.php";
         $row2 = sql_fetch($sql2);
 
         $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
-        $s_del = '';
+        /*$s_del = '';
         if ($is_admin == 'super') {
             $s_del = '<a href="javascript:post_delete(\'boardgroup_delete.php\', \''.$row['gr_id'].'\');">삭제</a>';
-        }
+        }*/
     ?>
 
     <tr>
@@ -141,11 +141,11 @@ var list_update_php = "./boardgroup_list_update.php";
         </td>
         <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td>
-            <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
+            <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" class="frm_input" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
         </td>
         <td>
         <?if ($is_admin == 'super'){?>
-            <input type="text" id="gr_admin" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" title="그룹관리자 수정" maxlength="20">
+            <input type="text" id="gr_admin" name="gr_admin[<?=$i?>]" class="frm_input" value="<?=$row['gr_admin']?>" title="그룹관리자 수정" maxlength="20">
         <?}else{?>
             <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
         <?}?>
@@ -161,7 +161,7 @@ var list_update_php = "./boardgroup_list_update.php";
             <option value="none" <?=get_selected($row['gr_use'], 'none');?>>미사용</option>
             </select>
         </td>
-        <td class="td_mng"><?=$s_upd?> <?=$s_del?></td>
+        <td class="td_mng"><?=$s_upd?></td>
     </tr>
 
     <?
@@ -172,6 +172,8 @@ var list_update_php = "./boardgroup_list_update.php";
     </table>
 
     <div class="btn_list">
+        <button>선택수정</button>
+        <button>선택삭제</button>
         <button onclick="btn_check(this.form, 'update')">선택수정</button>
         <!-- <button onclick="btn_check(this.form, 'delete')">선택삭제</button> -->
         <a href="./boardgroup_form.php">게시판그룹 추가</a>

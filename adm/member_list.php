@@ -149,7 +149,7 @@ $colspan = 15;
         else
         {
             $s_mod = '<a href="./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$row['mb_id'].'">수정</a>';
-            $s_del = '<a href="javascript:post_delete(\'member_delete.php\', \''.$row['mb_id'].'\');">삭제</a>';
+            //$s_del = '<a href="javascript:post_delete(\'member_delete.php\', \''.$row['mb_id'].'\');">삭제</a>';
         }
         $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">그룹</a>';
 
@@ -198,17 +198,19 @@ $colspan = 15;
             <?}?>
         </td>
         <td class="td_chk"><?=$group?></td>
-        <td><?=$s_mod?> <?=$s_del?> <?=$s_grp?></td>
+        <td><?=$s_mod?> <?=$s_grp?></td>
     </tr>
 
     <?
     }
     if ($i == 0)
-        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+        echo "<tr><td colspan=\"".$colspan."\" class=\"empty_table\">자료가 없습니다.</td></tr>";
     ?>
     </table>
 
     <div class="btn_list">
+        <button>선택수정</button>
+        <button>선택삭제</button>
         <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택수정">
         <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제">
         <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>

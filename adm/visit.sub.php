@@ -6,22 +6,27 @@ include_once(G4_LIB_PATH.'/visit.lib.php');
 if (empty($fr_date)) $fr_date = G4_TIME_YMD;
 if (empty($to_date)) $to_date = G4_TIME_YMD;
 
-$qstr = 'fr_date='.$fr_date.'&amp;to_date='.$to_date;
+$qstr = "fr_date=".$fr_date."&amp;to_date=".$to_date;
 ?>
+
+<ul class="frm_list">
+    <li><a href="./visit_list.php">접속자</a></li>
+    <li><a href="./visit_domain.php">도메인</a></li>
+    <li><a href="./visit_browser.php">브라우저</a></li>
+    <li><a href="./visit_os.php">운영체제</a></li>
+    <li><a href="./visit_hour.php">시간</a></li>
+    <li><a href="./visit_week.php">요일</a></li>
+    <li><a href="./visit_date.php">일</a></li>
+    <li><a href="./visit_month.php">월</a></li>
+    <li><a href="./visit_year.php">년</a></li>
+</ul>
 
 <form id="fvisit" name="fvisit" method="get">
 <fieldset>
-    <legend>접속자집계 열람조건 지정</legend>
-    <span>기간지정 <input type="text" id="fr_date" name="fr_date" size=11 maxlength=10 value='<?=$fr_date?>'> 부터 <input type="text" id="to_date" name="to_date" size=11 maxlength=10 value='<?=$to_date?>'> 까지</span>
-    <button onclick="fvisit_submit('visit_list.php');">접속자</button>
-    <button onclick="fvisit_submit('visit_domain.php');">도메인</button>
-    <button onclick="fvisit_submit('visit_browser.php');">브라우저</button>
-    <button onclick="fvisit_submit('visit_os.php');">운영체제</button>
-    <button onclick="fvisit_submit('visit_hour.php');">시간</button>
-    <button onclick="fvisit_submit('visit_week.php');">요일</button>
-    <button onclick="fvisit_submit('visit_date.php');">일</button>
-    <button onclick="fvisit_submit('visit_month.php');">월</button>
-    <button onclick="fvisit_submit('visit_year.php');">년</button>
+    <legend>접속자집계 기간지정</legend>
+    <input type="text" id="fr_date" name="fr_date" class="frm_input" size="11" maxlength="10" value="<?=$fr_date?>"> 부터
+    <input type="text" id="to_date" name="to_date" class="frm_input" size="11" maxlength="10" value="<?=$to_date?>"> 까지
+    <input type="submit" class="btn_submit" value="지정">
 </fieldset>
 </form>
 

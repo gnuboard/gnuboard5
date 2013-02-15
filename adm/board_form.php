@@ -97,7 +97,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_table">TABLE<?=$sound_only?></label></th>
         <td colspan="2">
-            <input type="text" id="bo_table" name="bo_table" maxlength="20" <?=$bo_table_attr?> value="<?=$board['bo_table'] ?>" required>
+            <input type="text" id="bo_table" name="bo_table" class="frm_input" maxlength="20" <?=$bo_table_attr?> value="<?=$board['bo_table'] ?>" required>
             <?
             if ($w == '')
                 echo '영문자, 숫자, _ 만 가능 (공백없이 20자 이내)';
@@ -115,7 +115,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_subject">게시판 제목<strong class="sound_only">필수</strong></label></th>
         <td colspan="2">
-            <input type="text" id="bo_subject" name="bo_subject" maxlength="120" class="required" required value="<?=get_text($board['bo_subject'])?>" size="80">
+            <input type="text" id="bo_subject" name="bo_subject" maxlength="120" class="required frm_input" required value="<?=get_text($board['bo_subject'])?>" size="80">
         </td>
     </tr>
     <tr>
@@ -138,7 +138,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_category_list">분류</label></th>
         <td>
             <?=help('분류와 분류 사이는 | 로 구분하세요. (예: 질문|답변) 첫자로 #은 입력하지 마세요. (예: #질문|#답변 [X])')?>
-            <input type="text" id="bo_category_list" name="bo_category_list" value="<?=get_text($board['bo_category_list'])?>" size="70">
+            <input type="text" id="bo_category_list" name="bo_category_list" class="frm_input" value="<?=get_text($board['bo_category_list'])?>" size="70">
             <input type="checkbox" id="bo_use_category" name="bo_use_category" value="1" <?=$board['bo_use_category']?'checked':'';?>>
             <label for="bo_use_category">사용</label>
         </td>
@@ -151,7 +151,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <? if ($w == 'u') { ?>
     <tr>
         <th scope="row"><label for="proc_count">카운트 조정</label></th>
-        <td>
+        <td colspan="2">
             <?=help('현재 원글수 : '.number_format($board['bo_count_write']).', 현재 댓글수 : '.number_format($board['bo_count_comment']).PHP_EOL.'게시판 목록에서 글의 번호가 맞지 않을 경우에 체크하십시오.')?>
             <input type="checkbox" id="proc_count" name="proc_count" value="1">
         </td>
@@ -175,7 +175,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_admin">게시판 관리자</label></th>
         <td>
-            <input type="text" id="bo_admin" name="bo_admin" maxlength="20" value="<?=$board['bo_admin']?>">
+            <input type="text" id="bo_admin" name="bo_admin" class="frm_input" maxlength="20" value="<?=$board['bo_admin']?>">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_admin" name="chk_admin" value="1">
@@ -291,7 +291,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_count_modify">원글 수정 불가<strong class="sound_only">필수</strong></label></th>
         <td>
-            댓글 <input type="text" id="bo_count_modify" name="bo_count_modify" class="required numeric" required value="<?=$board['bo_count_modify']?>" size="3">개 이상 달리면 수정불가
+            댓글 <input type="text" id="bo_count_modify" name="bo_count_modify" class="required numeric frm_input" required value="<?=$board['bo_count_modify']?>" size="3">개 이상 달리면 수정불가
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_count_modify" name="chk_count_modify" value="1">
@@ -301,7 +301,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_count_delete">원글 삭제 불가<strong class="sound_only">필수</strong></label></th>
         <td>
-            댓글 <input type="text" id="bo_count_delete" name="bo_count_delete" class="required numeric" required value="<?=$board['bo_count_delete']?>" size="3">개 이상 달리면 삭제불가
+            댓글 <input type="text" id="bo_count_delete" name="bo_count_delete" class="required numeric frm_input" required value="<?=$board['bo_count_delete']?>" size="3">개 이상 달리면 삭제불가
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_count_delete" name="chk_count_delete" value="1">
@@ -459,7 +459,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_upload_count">파일 업로드 갯수<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('게시물 한건당 업로드 할 수 있는 파일의 최대 개수 (0 이면 제한 없음)')?>
-            <input type="text" id="bo_upload_count" name="bo_upload_count" class="required numeric" required value="<?=$board['bo_upload_count']?>" size="3">
+            <input type="text" id="bo_upload_count" name="bo_upload_count" class="required numeric frm_input" required value="<?=$board['bo_upload_count']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_upload_count" name="chk_upload_count" value="1">
@@ -476,7 +476,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_upload_size">파일 업로드 용량<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('최대 '.ini_get("upload_max_filesize").' 이하 업로드 가능, 1 MB = 1,024,768 bytes')?>
-            업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric" required value="<?=$board['bo_upload_size']?>" size="10"> bytes 이하 
+            업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric frm_input" required value="<?=$board['bo_upload_size']?>" size="10"> bytes 이하 
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_upload_size" name="chk_upload_size" value="1">
@@ -487,7 +487,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_write_min">최소 글수 제한</label></th>
         <td>
             <?=help('글 입력시 최소 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-            <input type="text" id="bo_write_min" name="bo_write_min" class="numeric" value="<?=$board['bo_write_min']?>" size="4">
+            <input type="text" id="bo_write_min" name="bo_write_min" class="numeric frm_input" value="<?=$board['bo_write_min']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_write_min" name="chk_write_min" value="1">
@@ -498,7 +498,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_write_max">최대 글수 제한</label></th>
         <td>
             <?=help('글 입력시 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-            <input type="text" id="bo_write_max" name="bo_write_max" class="numeric" value="<?=$board['bo_write_max']?>" size="4">
+            <input type="text" id="bo_write_max" name="bo_write_max" class="numeric frm_input" value="<?=$board['bo_write_max']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_write_max" name="chk_write_max" value="1">
@@ -509,7 +509,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_comment_min">최소 댓글수 제한</label></th>
         <td>
             <?=help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-            <input type="text" id="bo_comment_min" name="bo_comment_min" class="numeric" value="<?=$board['bo_comment_min']?>" size="3">
+            <input type="text" id="bo_comment_min" name="bo_comment_min" class="numeric frm_input" value="<?=$board['bo_comment_min']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_comment_min" name="chk_comment_min" value="1">
@@ -520,7 +520,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_comment_max">최대 댓글수 제한</label></th>
         <td>
             <?=help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음')?>
-            <input type="text" id="bo_comment_max" name="bo_comment_max" class="numeric" value="<?=$board['bo_comment_max']?>" size="3">
+            <input type="text" id="bo_comment_max" name="bo_comment_max" class="numeric frm_input" value="<?=$board['bo_comment_max']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_comment_max" name="chk_comment_max" value="1">
@@ -542,7 +542,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_order_search">전체 검색 순서</label></th>
         <td>
             <?=help('숫자가 낮은 게시판 부터 검색')?>
-            <input type="text" id="bo_order_search" name="bo_order_search" value="<?=$board['bo_order_search']?>" size="3">
+            <input type="text" id="bo_order_search" name="bo_order_search" class="frm_input" value="<?=$board['bo_order_search']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_order_search" name="chk_order_search" value="1">
@@ -577,7 +577,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_include_head">상단 파일 경로</label></th>
         <td>
-            <input type="text" id="bo_include_head" name="bo_include_head" value="<?=$board['bo_include_head']?>" size="50">
+            <input type="text" id="bo_include_head" name="bo_include_head" class="frm_input" value="<?=$board['bo_include_head']?>" size="50">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_include_head" name="chk_include_head" value="1">
@@ -587,7 +587,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_include_tail">하단 파일 경로</label></th>
         <td>
-            <input type="text" id="bo_include_tail" name="bo_include_tail" value="<?=$board['bo_include_tail']?>" size="50">
+            <input type="text" id="bo_include_tail" name="bo_include_tail" class="frm_input" value="<?=$board['bo_include_tail']?>" size="50">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_include_tail" name="chk_include_tail" value="1">
@@ -628,7 +628,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_subject_len">제목 길이<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('목록에서의 제목 글자수. 잘리는 글은 … 로 표시')?>
-            <input type="text" id="bo_subject_len" name="bo_subject_len" class="required numeric" required value="<?=$board['bo_subject_len']?>" size="3">
+            <input type="text" id="bo_subject_len" name="bo_subject_len" class="required numeric frm_input" required value="<?=$board['bo_subject_len']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_subject_len" name="chk_subject_len" value="1">
@@ -638,7 +638,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <tr>
         <th scope="row"><label for="bo_page_rows">페이지당 목록 수<strong class="sound_only">필수</strong></label></th>
         <td>
-            <input type="text" id="bo_page_rows" name="bo_page_rows" class="required numeric" required value="<?=$board['bo_page_rows']?>" size="3">
+            <input type="text" id="bo_page_rows" name="bo_page_rows" class="required numeric frm_input" required value="<?=$board['bo_page_rows']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_page_rows" name="chk_page_rows" value="1">
@@ -649,7 +649,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_gallery_cols">가로 이미지수<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여줄것인지를 설정하는 값')?>
-            <input type="text" id="bo_gallery_cols" name="bo_gallery_cols" class="required numeric" required value="<?=$board['bo_gallery_cols']?>" size="3">
+            <input type="text" id="bo_gallery_cols" name="bo_gallery_cols" class="required numeric frm_input" required value="<?=$board['bo_gallery_cols']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_gallery_cols" name="chk_gallery_cols" value="1">
@@ -660,7 +660,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_table_width">게시판 테이블 폭<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('100 이하는 %')?>
-            <input type="text" id="bo_table_width" name="bo_table_width" class="required numeric" required value="<?=$board['bo_table_width']?>" size="3">
+            <input type="text" id="bo_table_width" name="bo_table_width" class="required numeric frm_input" required value="<?=$board['bo_table_width']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_table_width" name="chk_table_width" value="1">
@@ -671,7 +671,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_image_width">이미지 폭 크기<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('게시판에서 출력되는 이미지의 폭 크기')?>
-            <input type="text" id="bo_image_width" name="bo_image_width" class="required numeric" required value="<?=$board['bo_image_width']?>" size="3"> 픽셀
+            <input type="text" id="bo_image_width" name="bo_image_width" class="required numeric frm_input" required value="<?=$board['bo_image_width']?>" size="4"> 픽셀
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_image_width" name="chk_image_width" value="1">
@@ -682,7 +682,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_new">새글 아이콘<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('글 입력후 new 이미지를 출력하는 시간')?>
-            <input type="text" id="bo_new" name="bo_new" class="required numeric" required value="<?=$board['bo_new']?>" size="3">
+            <input type="text" id="bo_new" name="bo_new" class="required numeric frm_input" required value="<?=$board['bo_new']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_new" name="chk_new" value="1">
@@ -693,7 +693,7 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_hot">인기글 아이콘<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('조회수가 설정값 이상이면 hot 이미지 출력')?>
-            <input type="text" id="bo_hot" name="bo_hot" class="required numeric" required value="<?=$board['bo_hot']?>" size="5">
+            <input type="text" id="bo_hot" name="bo_hot" class="required numeric frm_input" required value="<?=$board['bo_hot']?>" size="4">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_hot" name="chk_hot" value="1">
@@ -768,7 +768,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_read_point">글읽기 포인트<strong class="sound_only">필수</strong></label></th>
         <td>
-            <input type="text" id="bo_read_point" name="bo_read_point" class="required" required value="<?=$board['bo_read_point']?>" size="5">
+            <input type="text" id="bo_read_point" name="bo_read_point" class="required frm_input" required value="<?=$board['bo_read_point']?>" size="5">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_read_point" name="chk_read_point" value="1">
@@ -778,7 +778,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_write_point">글쓰기 포인트<strong class="sound_only">필수</strong></label></th>
         <td>
-            <input type="text" id="bo_write_point" name="bo_write_point" class="required" required value="<?=$board['bo_write_point']?>" size="5">
+            <input type="text" id="bo_write_point" name="bo_write_point" class="required frm_input" required value="<?=$board['bo_write_point']?>" size="5">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_write_point" name="chk_write_point" value="1">
@@ -788,7 +788,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_comment_point">댓글쓰기 포인트<strong class="sound_only">필수</strong></label></th>
         <td>
-            <input type="text" id="bo_comment_point" name="bo_comment_point" class="required" required value="<?=$board['bo_comment_point']?>" size="5">
+            <input type="text" id="bo_comment_point" name="bo_comment_point" class="required frm_input" required value="<?=$board['bo_comment_point']?>" size="5">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_comment_point" name="chk_comment_point" value="1">
@@ -798,7 +798,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <tr>
         <th scope="row"><label for="bo_download_point">다운로드 포인트<strong class="sound_only">필수</strong></label></th>
         <td>
-            <input type="text" id="bo_download_point" name="bo_download_point" class="required" required value="<?=$board['bo_download_point']?>" size="5">
+            <input type="text" id="bo_download_point" name="bo_download_point" class="required frm_input" required value="<?=$board['bo_download_point']?>" size="5">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_download_point" name="chk_download_point" value="1">
@@ -825,9 +825,9 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row">여분필드<?=$i?></th>
         <td>
             <label for="bo_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
-            <input type="text" id="bo_<?=$i?>_subj" name="bo_<?=$i?>_subj" value="<?=get_text($board['bo_'.$i.'_subj'])?>">
+            <input type="text" id="bo_<?=$i?>_subj" name="bo_<?=$i?>_subj" class="frm_input" value="<?=get_text($board['bo_'.$i.'_subj'])?>">
             <label for="bo_<?=$i?>">여분필드 <?=$i?> 내용</label>
-            <input type="text" id="bo_<?=$i?>" name="bo_<?=$i?>" value="<?=get_text($board['bo_'.$i])?>">
+            <input type="text" id="bo_<?=$i?>" name="bo_<?=$i?>" class="frm_input" value="<?=get_text($board['bo_'.$i])?>">
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_<?=$i?>" name="chk_<?=$i?>" value="1">
@@ -843,7 +843,7 @@ $pg_anchor = "<ul class=\"frm_list\">
     <legend>XSS 혹은 CSRF 방지</legend>
     <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
     <label for="admin_password">관리자 패스워드<strong class="sound_only">필수</strong></label>
-    <input type="password" id="admin_password" name="admin_password" class="required" required>
+    <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
 </fieldset>
 
 <div class="btn_confirm">

@@ -195,13 +195,13 @@ function point_clear()
 <fieldset>
     <legend>개별회원 포인트 증감 설정</legend>
     <label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label>
-    <input type="text" id="mb_id" name="mb_id" required value="<?=$mb_id?>">
+    <input type="text" id="mb_id" name="mb_id" class="required frm_input" required value="<?=$mb_id?>">
     <label for="po_content">포인트 내용<strong class="sound_only">필수</strong></label>
-    <input type="text" id="po_content" name="po_content" required>
+    <input type="text" id="po_content" name="po_content" class="required frm_input" required>
     <label for="po_point">포인트<strong class="sound_only">필수</strong></label>
-    <input type="text" id="po_point" name="po_point" required>
+    <input type="text" id="po_point" name="po_point" class="required frm_input" required>
     <label for="admin_password">관리자패스워드<strong class="sound_only">필수</strong></label>
-    <input type="password" id="admin_password" name="admin_password" required>
+    <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
     <input type="submit" class="btn_submit" value="확인">
 </fieldset>
 </form>
