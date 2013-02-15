@@ -49,49 +49,53 @@ $colspan = 3;
 </fieldset>
 </form>
 
-<form id="fpopularrank" name="fpopularrank" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<table class="tbl_pop_list">
-<thead>
-<tr>
-    <th scope="col">순위</th>
-    <th scope="col">검색어</th>
-    <th scope="col">검색회수</th>
-</tr>
-</thead>
-<tbody>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++) {
+<section class="cbox">
+    <h2>인기검색어 순위 및 내역</h2>
+    <form id="fpopularrank" name="fpopularrank" method="post">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
+    <table class="tbl_pop_list">
+    <thead>
+    <tr>
+        <th scope="col">순위</th>
+        <th scope="col">검색어</th>
+        <th scope="col">검색회수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
 
-    $word = get_text($row['pp_word']);
-    $rank = ($i + 1 + ($rows * ($page - 1)));
+        $word = get_text($row['pp_word']);
+        $rank = ($i + 1 + ($rows * ($page - 1)));
 
-?>
+    ?>
 
-<tr>
-    <td class="td_num"><?=$rank?></td>
-    <td><?=$word?></td>
-    <td class="td_bignum"><?=$row['cnt']?></td>
-</tr>
+    <tr>
+        <td class="td_num"><?=$rank?></td>
+        <td><?=$word?></td>
+        <td class="td_bignum"><?=$row['cnt']?></td>
+    </tr>
 
-<?
-}
+    <?
+    }
 
-if ($i == 0)
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-?>
-</tbody>
-</table>
+    if ($i == 0)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
+
+    </form>
+</section>
 
 <?
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
-</form>
 
 <?
 include_once('./admin.tail.php');

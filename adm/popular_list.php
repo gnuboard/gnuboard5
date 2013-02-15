@@ -89,60 +89,62 @@ var list_delete_php = 'popular_list.php';
 </fieldset>
 </form>
 
-<form id="fpopularlist" name="fpopularlist" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<table class="tbl_pop_list">
-<thead>
-<tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)" title="현재 페이지 인기검색어 전체선택"></th>
-    <th scope="col"><?=subject_sort_link('pp_word')?>검색어</a></th>
-    <th scope="col">등록일</th>
-    <th scope="col">등록IP</th>
-</tr>
-</thead>
-<tbody>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++) {
+<section class="cbox">
+    <h2>인기검색어 목록</h2>
 
-    $word = get_text($row['pp_word']);
-?>
+    <form id="fpopularlist" name="fpopularlist" method="post">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
 
-<tr>
-    <td class="td_chk">
-        <input type="hidden" name="pp_id[<?=$i?>]" value="<?=$row['pp_id']?>">
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$word?> 선택">
-    </td>
-    <td>&nbsp; <a href="<?=$_SERVER['PHP_SELF']?>?sfl=pp_word&amp;stx=<?=$word?>"><?=$word?></a></td>
-    <td><?=$row['pp_date']?></td>
-    <td><?=$row['pp_ip']?></td>
-</tr>
+    <table class="tbl_pop_list">
+    <thead>
+    <tr>
+        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)" title="현재 페이지 인기검색어 전체선택"></th>
+        <th scope="col"><?=subject_sort_link('pp_word')?>검색어</a></th>
+        <th scope="col">등록일</th>
+        <th scope="col">등록IP</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
 
-<?
-}
+        $word = get_text($row['pp_word']);
+    ?>
 
-if ($i == 0)
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-?>
-</tbody>
-</table>
+    <tr>
+        <td class="td_chk">
+            <input type="hidden" name="pp_id[<?=$i?>]" value="<?=$row['pp_id']?>">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$word?> 선택">
+        </td>
+        <td>&nbsp; <a href="<?=$_SERVER['PHP_SELF']?>?sfl=pp_word&amp;stx=<?=$word?>"><?=$word?></a></td>
+        <td><?=$row['pp_date']?></td>
+        <td><?=$row['pp_ip']?></td>
+    </tr>
 
-<?if ($is_admin == 'super'){ ?>
-<div class="btn_list">
-    <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
-</div>
-<?}?>
+    <?
+    }
 
-<?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
-echo $pagelist;
-?>
+    if ($i == 0)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
 
-</form>
+    <?if ($is_admin == 'super'){ ?>
+    <div class="btn_list">
+        <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+    </div>
+    <?}?>
+
+    </form>
+</section>
+
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
 <?
 if (isset($stx))

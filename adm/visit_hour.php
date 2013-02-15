@@ -27,52 +27,55 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 }
 ?>
 
-<table>
-<caption>시간대별 접속자 수</caption>
-<thead>
-<tr>
-    <th scope="col">시간</th>
-    <th scope="col">그래프</th>
-    <th scope="col">접속자수</th>
-    <th scope="col">비율(%)</th>
-</tr>
-</thead>
-<tfoot>
-<tr>
-    <td colspan="2">합계</td>
-    <td><strong><?=number_format($sum_count)?></strong></td>
-    <td></td>
-</tr>
-</tfoot>
-<tbody>
-<?
-$k = 0;
-if ($i) {
-    for ($i=0; $i<24; $i++) {
-        $hour = sprintf("%02d", $i);
-        $count = (int)$arr[$hour];
+<section class="cbox">
+    <h2>시간대별 접속자 수</h2>
 
-        $rate = ($count / $sum_count * 100);
-        $s_rate = number_format($rate, 1);
-?>
-<tr>
-    <td class="td_category"><?=$hour?></td>
-    <td>
-        <div class="visit_bar">
-            <span style="width:<?=$s_rate?>%"></span>
-        </div>
-    </td>
-    <td class="td_bignum"><?=number_format($count)?></td>
-    <td class="td_num"><?=$s_rate?></td>
-</tr>
-<?
+    <table>
+    <thead>
+    <tr>
+        <th scope="col">시간</th>
+        <th scope="col">그래프</th>
+        <th scope="col">접속자수</th>
+        <th scope="col">비율(%)</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <td colspan="2">합계</td>
+        <td><strong><?=number_format($sum_count)?></strong></td>
+        <td>100%</td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <?
+    $k = 0;
+    if ($i) {
+        for ($i=0; $i<24; $i++) {
+            $hour = sprintf("%02d", $i);
+            $count = (int)$arr[$hour];
+
+            $rate = ($count / $sum_count * 100);
+            $s_rate = number_format($rate, 1);
+    ?>
+    <tr>
+        <td class="td_category"><?=$hour?></td>
+        <td>
+            <div class="visit_bar">
+                <span style="width:<?=$s_rate?>%"></span>
+            </div>
+        </td>
+        <td class="td_bignum"><?=number_format($count)?></td>
+        <td class="td_num"><?=$s_rate?></td>
+    </tr>
+    <?
+        }
+    } else {
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
     }
-} else {
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-}
-?>
-</tbody>
-</table>
+    ?>
+    </tbody>
+    </table>
+</section>
 
 <?
 include_once('./admin.tail.php');

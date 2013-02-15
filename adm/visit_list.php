@@ -34,73 +34,78 @@ $sql = " select *
 $result = sql_query($sql);
 ?>
 
-<table>
-<caption>접속자 개요 (IP, 경로, 브라우저, 운영체제, 일시)</caption>
-<thead>
-<tr>
-    <th scope="col">IP</th>
-    <th scope="col">접속 경로</th>
-    <th scope="col">브라우저</th>
-    <th scope="col">운영체제</th>
-    <th scope="col">일시</th>
-</tr>
-</thead>
-<tbody>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $brow = get_brow($row['vi_agent']);
-    $os   = get_os($row['vi_agent']);
+<section class="cbox">
+    <h2>접속자 개요</h2>
+    <p>IP, 경로, 브라우저, 운영체제, 일시</p>
 
-    $link = '';
-    $link2 = '';
-    $referer = '';
-    $title = '';
-    if ($row['vi_referer']) {
+    <table>
+    <thead>
+    <tr>
+        <th scope="col">IP</th>
+        <th scope="col">접속 경로</th>
+        <th scope="col">브라우저</th>
+        <th scope="col">운영체제</th>
+        <th scope="col">일시</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $brow = get_brow($row['vi_agent']);
+        $os   = get_os($row['vi_agent']);
 
-        $referer = get_text(cut_str($row['vi_referer'], 255, ''));
-        $referer = urldecode($referer);
+        $link = '';
+        $link2 = '';
+        $referer = '';
+        $title = '';
+        if ($row['vi_referer']) {
 
-        if (strtolower($g4['charset']) == 'utf-8') {
-            if (!is_utf8($referer)) {
-                $referer = iconv('euc-kr', 'utf-8', $referer);
+            $referer = get_text(cut_str($row['vi_referer'], 255, ''));
+            $referer = urldecode($referer);
+
+            if (strtolower($g4['charset']) == 'utf-8') {
+                if (!is_utf8($referer)) {
+                    $referer = iconv('euc-kr', 'utf-8', $referer);
+                }
             }
-        }
-        else {
-            if (is_utf8($referer)) {
-                $referer = iconv('utf-8', 'euc-kr', $referer);
+            else {
+                if (is_utf8($referer)) {
+                    $referer = iconv('utf-8', 'euc-kr', $referer);
+                }
             }
+
+            $title = str_replace(array('<', '>', '&'), array("&lt;", "&gt;", "&amp;"), $referer);
+            $link = '<a href="'.$row['vi_referer'].'" target="_blank">';
+            $link = str_replace('&', "&amp;", $link);
+            $link2 = '</a>';
         }
 
-        $title = str_replace(array('<', '>', '&'), array("&lt;", "&gt;", "&amp;"), $referer);
-        $link = '<a href="'.$row['vi_referer'].'" target="_blank">';
-        $link = str_replace('&', "&amp;", $link);
-        $link2 = '</a>';
+        if ($is_admin == 'super')
+            $ip = $row['vi_ip'];
+        else
+            $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $row['vi_ip']);
+
+        if ($brow == '기타') { $brow = '<span title="'.$row['vi_agent'].'">'.$brow.'</span>'; }
+        if ($os == '기타') { $os = '<span title="'.$row['vi_agent'].'">'.$os.'</span>'; }
+
+    ?>
+    <tr>
+        <td class="td_category"><?=$ip?></td>
+        <td><?=$link?><?=$title?><?=$link2?></td>
+        <td class="td_category"><?=$brow?></td>
+        <td class="td_category"><?=$os?></td>
+        <td class="td_time"><?=$row['vi_date']?> <?=$row['vi_time']?></td>
+    </tr>
+
+    <?
     }
+    if ($i == 0)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
+</section>
 
-    if ($is_admin == 'super')
-        $ip = $row['vi_ip'];
-    else
-        $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $row['vi_ip']);
-
-    if ($brow == '기타') { $brow = '<span title="'.$row['vi_agent'].'">'.$brow.'</span>'; }
-    if ($os == '기타') { $os = '<span title="'.$row['vi_agent'].'">'.$os.'</span>'; }
-
-?>
-<tr>
-    <td class="td_category"><?=$ip?></td>
-    <td><?=$link?><?=$title?><?=$link2?></td>
-    <td class="td_category"><?=$brow?></td>
-    <td class="td_category"><?=$os?></td>
-    <td class="td_time"><?=$row['vi_date']?> <?=$row['vi_time']?></td>
-</tr>
-
-<?
-}
-if ($i == 0)
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-?>
-</tbody>
-</table>
 <?
 if (isset($domain)) 
     $qstr .= "&amp;domain=$domain";

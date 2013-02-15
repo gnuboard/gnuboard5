@@ -88,94 +88,96 @@ var list_update_php = "./boardgroup_list_update.php";
 </div>
 <?}?>
 
-<form id="fboardgrouplist" name="fboardgrouplist" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<table class="tbl_gr_list">
-<caption>
-게시판그룹 목록
-<p>
-    접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>
-    접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
-</p>
-</caption>
-<thead>
-<tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 그룹 전체선택" onclick="check_all(this.form)"></th>
-    <th scope="col"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
-    <th scope="col"><?=subject_sort_link('gr_subject')?>제목</a></th>
-    <th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th>
-    <th scope="col">게시판</th>
-    <th scope="col">접근사용</th>
-    <th scope="col">접근회원수</th>
-    <th scope="col"><?=subject_sort_link('gr_use')?>사용여부</a></th>
-    <th scope="col">관리</th>
-</tr>
-</thead>
-<tbody>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    // 접근회원수
-    $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$row['gr_id']}' ";
-    $row1 = sql_fetch($sql1);
+<section class="cbox">
+    <h2>게시판그룹 목록</h2>
+    <p>
+        접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>
+        접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
+    </p>
 
-    // 게시판수
-    $sql2 = " select count(*) as cnt from {$g4['board_table']} where gr_id = '{$row['gr_id']}' ";
-    $row2 = sql_fetch($sql2);
+    <form id="fboardgrouplist" name="fboardgrouplist" method="post">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <table class="tbl_gr_list">
+    <thead>
+    <tr>
+        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 그룹 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
+        <th scope="col"><?=subject_sort_link('gr_subject')?>제목</a></th>
+        <th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th>
+        <th scope="col">게시판</th>
+        <th scope="col">접근사용</th>
+        <th scope="col">접근회원수</th>
+        <th scope="col"><?=subject_sort_link('gr_use')?>사용여부</a></th>
+        <th scope="col">관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        // 접근회원수
+        $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$row['gr_id']}' ";
+        $row1 = sql_fetch($sql1);
 
-    $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
-    $s_del = '';
-    if ($is_admin == 'super') {
-        $s_del = '<a href="javascript:post_delete(\'boardgroup_delete.php\', \''.$row['gr_id'].'\');">삭제</a>';
-    }
-?>
+        // 게시판수
+        $sql2 = " select count(*) as cnt from {$g4['board_table']} where gr_id = '{$row['gr_id']}' ";
+        $row2 = sql_fetch($sql2);
 
-<tr>
-    <td class="td_chk">
-        <input type="hidden" id="gr_id" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>">
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
-    </td>
-    <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
-    <td>
-        <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
-    </td>
-    <td>
-    <?if ($is_admin == 'super'){?>
-        <input type="text" id="gr_admin" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" title="그룹관리자 수정" maxlength="20">
-    <?}else{?>
-        <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
-    <?}?>
-    </td>
-    <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
-    <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
-    <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
-    <td>
-        <select id="gr_use_<?=$i?>" name="gr_use[<?=$i?>]">
-        <option value="both" <?=get_selected($row['gr_use'], 'both', true);?>>양쪽</option>
-        <option value="pc" <?=get_selected($row['gr_use'], 'pc');?>>PC</option>
-        <option value="mobile" <?=get_selected($row['gr_use'], 'mobile');?>>모바일</option>
-        <option value="none" <?=get_selected($row['gr_use'], 'none');?>>미사용</option>
-        </select>
-    </td>
-    <td class="td_mng"><?=$s_upd?> <?=$s_del?></td>
-</tr>
+        $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
+        $s_del = '';
+        if ($is_admin == 'super') {
+            $s_del = '<a href="javascript:post_delete(\'boardgroup_delete.php\', \''.$row['gr_id'].'\');">삭제</a>';
+        }
+    ?>
 
-<?
-    }
-if ($i == 0)
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-?>
-</table>
+    <tr>
+        <td class="td_chk">
+            <input type="hidden" id="gr_id" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
+        </td>
+        <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+        <td>
+            <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
+        </td>
+        <td>
+        <?if ($is_admin == 'super'){?>
+            <input type="text" id="gr_admin" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" title="그룹관리자 수정" maxlength="20">
+        <?}else{?>
+            <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
+        <?}?>
+        </td>
+        <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
+        <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
+        <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
+        <td>
+            <select id="gr_use_<?=$i?>" name="gr_use[<?=$i?>]">
+            <option value="both" <?=get_selected($row['gr_use'], 'both', true);?>>양쪽</option>
+            <option value="pc" <?=get_selected($row['gr_use'], 'pc');?>>PC</option>
+            <option value="mobile" <?=get_selected($row['gr_use'], 'mobile');?>>모바일</option>
+            <option value="none" <?=get_selected($row['gr_use'], 'none');?>>미사용</option>
+            </select>
+        </td>
+        <td class="td_mng"><?=$s_upd?> <?=$s_del?></td>
+    </tr>
 
-<div class="btn_list">
-    <button onclick="btn_check(this.form, 'update')">선택수정</button>
-    <!-- <button onclick="btn_check(this.form, 'delete')">선택삭제</button> -->
-    <a href="./boardgroup_form.php">게시판그룹 추가</a>
-</div>
+    <?
+        }
+    if ($i == 0)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </table>
+
+    <div class="btn_list">
+        <button onclick="btn_check(this.form, 'update')">선택수정</button>
+        <!-- <button onclick="btn_check(this.form, 'delete')">선택삭제</button> -->
+        <a href="./boardgroup_form.php">게시판그룹 추가</a>
+    </div>
+    </form>
+</section>
 
 <?
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
@@ -186,7 +188,6 @@ echo $pagelist;
 if (isset($stx))
     echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>';
 ?>
-</form>
 
 <script>
 // POST 방식으로 삭제

@@ -102,92 +102,88 @@ function point_clear()
 </fieldset>
 </form>
 
-<form id="fpointlist" name="fpointlist" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
+<section class="cbox">
+    <h2>포인트 내역</h2>
 
-<table class="tbl_pt_list">
-<caption>
-    포인트 내역
-</caption>
-<thead>
-<tr>
-    <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 포인트 내역 전체선택" onclick="check_all(this.form)"></th>
-    <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
-    <th scope="col">이름</th>
-    <th scope="col">별명</th>
-    <th scope="col"><?=subject_sort_link('po_datetime')?>일시</a></th>
-    <th scope="col"><?=subject_sort_link('po_content')?>포인트 내용</a></th>
-    <th scope="col"><?=subject_sort_link('po_point')?>포인트</a></th>
-    <th scope="col">포인트합</th>
-</tr>
-</thead>
-<tbody>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++) {
-    if ($i==0 || ($row2['mb_id'] != $row['mb_id'])) {
-        $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
-        $row2 = sql_fetch($sql2);
+    <form id="fpointlist" name="fpointlist" method="post">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
+
+    <table class="tbl_pt_list">
+    <thead>
+    <tr>
+        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 포인트 내역 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
+        <th scope="col">이름</th>
+        <th scope="col">별명</th>
+        <th scope="col"><?=subject_sort_link('po_datetime')?>일시</a></th>
+        <th scope="col"><?=subject_sort_link('po_content')?>포인트 내용</a></th>
+        <th scope="col"><?=subject_sort_link('po_point')?>포인트</a></th>
+        <th scope="col">포인트합</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        if ($i==0 || ($row2['mb_id'] != $row['mb_id'])) {
+            $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $row2 = sql_fetch($sql2);
+        }
+
+        $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
+
+        $link1 = $link2 = '';
+        if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table']) {
+            $link1 = '<a href="'.$g4['bbs_path'].'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
+            $link2 = '</a>';
+        }
+    ?>
+
+    <tr>
+        <td class="td_chk">
+            <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
+            <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row['po_id']?>">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="내역선택">
+        </td>
+        <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
+        <td class="td_mbname"><?=$row2['mb_name']?></td>
+        <td class="td_name"><div><?=$mb_nick?></div></td>
+        <td><?=$row['po_datetime']?></td>
+        <td class="td_pt_log"><?=$link1?><?=$row['po_content']?><?=$link2?></td>
+        <td class="td_num"><?=number_format($row['po_point'])?></td>
+        <td class="td_bignum"><?=number_format($row2['mb_point'])?></td>
+    </tr>
+
+    <?
     }
 
-    $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
+    if ($i == 0)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
 
-    $link1 = $link2 = '';
-    if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table']) {
-        $link1 = '<a href="'.$g4['bbs_path'].'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
-        $link2 = '</a>';
-    }
-?>
+    <div class="btn_list">
+        <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+    </div>
 
-<tr>
-    <td class="td_chk">
-        <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-        <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row['po_id']?>">
-        <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="내역선택">
-    </td>
-    <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-    <td class="td_mbname"><?=$row2['mb_name']?></td>
-    <td class="td_name"><div><?=$mb_nick?></div></td>
-    <td><?=$row['po_datetime']?></td>
-    <td class="td_pt_log"><?=$link1?><?=$row['po_content']?><?=$link2?></td>
-    <td class="td_bignum"><?=number_format($row['po_point'])?></td>
-    <td class="td_bignum"><?=number_format($row2['mb_point'])?></td>
-</tr>
+    <?
+    if (isset($stx))
+        echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>'.PHP_EOL;
 
-<?
-}
+    if (strstr($sfl, 'mb_id'))
+        $mb_id = $stx;
+    else
+        $mb_id = '';
+    ?>
+    </form>
+</section>
 
-if ($i == 0)
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-?>
-</tbody>
-</table>
-
-<div class="btn_list">
-    <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
-</div>
-
-<?
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
-echo $pagelist;
-?>
-
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>'.PHP_EOL;
-
-if (strstr($sfl, 'mb_id'))
-    $mb_id = $stx;
-else
-    $mb_id = '';
-?>
-</form>
-
-<?$colspan=5?>
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
 <form id="fpointlist2" name="fpointlist2" method="post" onsubmit="return fpointlist2_submit(this);" autocomplete="off">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -210,7 +206,6 @@ else
     <input type="submit" class="fieldset_submit" value="확인">
 </fieldset>
 </form>
-
 
 <script>
 function fpointlist2_submit(f)

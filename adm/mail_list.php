@@ -26,61 +26,63 @@ $colspan = 6;
     <a href="./mail_form.php" id="mail_add">메일내용추가</a>
 </div>
 
-<table>
-<caption>
-    등록된 메일내용 목록 (전체 <?=$total_count ?>건)
+<section class="cbox">
+    <h2>등록된 메일내용 목록</h2>
     <p>
-        <strong>테스트</strong>는 등록된 최고관리자의 이메일로 테스트 메일을 발송
+        <strong>테스트</strong>는 등록된 최고관리자의 이메일로 테스트 메일을 발송합니다.<br>
+        현재 등록된 메일은 총 <?=$total_count ?>건입니다.
     </p>
-</caption>
-<thead>
-<tr>
-    <th scope="col">번호</th>
-    <th scope="col">제목</th>
-    <th scope="col">작성일시</th>
-    <th scope="col">테스트</th>
-    <th scope="col">보내기</th>
-    <th scope="col">관리</th>
-</tr>
-</thead>
-<tbody>
-<?
-for ($i=0; $row=mysql_fetch_array($result); $i++) {
-    $s_mod = '<a href="./mail_form.php?w=u&amp;ma_id='.$row['ma_id'].'">수정</a>';
-    $s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
-    $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
 
-    $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
-?>
+    <table>
+    <thead>
+    <tr>
+        <th scope="col">번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성일시</th>
+        <th scope="col">테스트</th>
+        <th scope="col">보내기</th>
+        <th scope="col">관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=mysql_fetch_array($result); $i++) {
+        $s_mod = '<a href="./mail_form.php?w=u&amp;ma_id='.$row['ma_id'].'">수정</a>';
+        $s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
+        $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
 
-<tr>
-    <td class="td_num"><?=$num?></td>
-    <td><?=$row['ma_subject']?></td>
-    <td class="td_time"><?=$row['ma_time']?></td>
-    <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row['ma_id']?>">테스트</a></td>
-    <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row['ma_id']?>">보내기</a></td>
-    <td class="td_mng"><?=$s_mod?> <?=$s_del?> <?=$s_vie?></td>
-</tr>
+        $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
+    ?>
 
-<?
-}
-if (!$i)
-    echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
-?>
-</tbody>
-</table>
+    <tr>
+        <td class="td_num"><?=$num?></td>
+        <td><?=$row['ma_subject']?></td>
+        <td class="td_time"><?=$row['ma_time']?></td>
+        <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row['ma_id']?>">테스트</a></td>
+        <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row['ma_id']?>">보내기</a></td>
+        <td class="td_mng"><?=$s_mod?> <?=$s_del?> <?=$s_vie?></td>
+    </tr>
+
+    <?
+    }
+    if (!$i)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
+</section>
 
 <script>
 // POST 방식으로 삭제
 function post_delete(action_url, val)
 {
-	var f = document.fpost;
+    var f = document.fpost;
 
-	if(confirm('한번 삭제한 자료는 복구할 방법이 없습니다. 정말 삭제하시겠습니까?')) {
+    if(confirm('한번 삭제한 자료는 복구할 방법이 없습니다. 정말 삭제하시겠습니까?')) {
         f.ma_id.value = val;
-		f.action = action_url;
-		f.submit();
-	}
+        f.action = action_url;
+        f.submit();
+    }
 }
 </script>
 
