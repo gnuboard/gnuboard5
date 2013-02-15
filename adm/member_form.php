@@ -189,9 +189,11 @@ include_once('./admin.head.php');
     </tr>
     <tr>
         <th scope="row"><label for="mb_signature">서명</label></th>
-        <td><textarea id="mb_signature" name="mb_signature"><?=$mb['mb_signature']?></textarea></td>
+        <td colspan="3"><textarea id="mb_signature" name="mb_signature"><?=$mb['mb_signature']?></textarea></td>
+    </tr>
+    <tr>
         <th scope="row"><label for="mb_profile">자기 소개</label></th>
-        <td><textarea id="mb_profile" name="mb_profile"><?=$mb['mb_profile']?></textarea></td>
+        <td colspan="3"><textarea id="mb_profile" name="mb_profile"><?=$mb['mb_profile']?></textarea></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_memo">메모</label></th>
