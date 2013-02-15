@@ -47,7 +47,7 @@ $pg_anchor = "
     <tbody>
     <tr>
         <th scope="row"><label for="cf_title">홈페이지 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="cf_title" name="cf_title" class="required" required value="<?=$config['cf_title']?>" size="40"></td>
+        <td><input type="text" id="cf_title" name="cf_title" class="required frm_input" required value="<?=$config['cf_title']?>" size="40"></td>
         <th scope="row"><label for="cf_admin">최고관리자<strong class="sound_only">필수</strong></label></th>
         <td><?=get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required')?></td>
     </tr>
@@ -59,61 +59,61 @@ $pg_anchor = "
         <th scope="row"><label for="cf_login_point">로그인시 포인트<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('회원에게 하루에 한번만 부여')?>
-            <input type="text" id="cf_login_point" name="cf_login_point" class="required" required value="<?=$config['cf_login_point']?>" size="2"> 점
+            <input type="text" id="cf_login_point" name="cf_login_point" class="required frm_input" required value="<?=$config['cf_login_point']?>" size="2"> 점
         </td>
         <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트<strong class="sound_only">필수</strong></label></th>
         <td>
              <?=help('양수로 입력하십시오. 0점은 쪽지 보낼시 포인트를 차감하지 않습니다.')?>
-            <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" class="required" required value="<?=$config['cf_memo_send_point']?>" size="2"> 점
+            <input type="text" id="cf_memo_send_point" name="cf_memo_send_point" class="required frm_input" required value="<?=$config['cf_memo_send_point']?>" size="2"> 점
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_cut_name">이름(별명) 표시</label></th>
         <td colspan="3">
             <?=help('영숫자 2글자 = 한글 1글자')?>
-            <input type="text" id="cf_cut_name" name="cf_cut_name" value="<?=$config['cf_cut_name']?>" size="2"> 자리만 표시
+            <input type="text" id="cf_cut_name" name="cf_cut_name" class="frm_input" value="<?=$config['cf_cut_name']?>" size="2"> 자리만 표시
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_nick_modify">별명 수정</label></th>
-        <td>수정하면 <input type="text" id="cf_nick_modify" name="cf_nick_modify" value="<?=$config['cf_nick_modify']?>" size="1"> 일 동안 바꿀 수 없음</td>
+        <td>수정하면 <input type="text" id="cf_nick_modify" name="cf_nick_modify" class="frm_input" value="<?=$config['cf_nick_modify']?>" size="1"> 일 동안 바꿀 수 없음</td>
         <th scope="row"><label for="cf_open_modify">정보공개 수정</label></th>
-        <td>수정하면 <input type="text" id="cf_open_modify" name="cf_open_modify" value="<?=$config['cf_open_modify']?>" size="1"> 일 동안 바꿀 수 없음</td>
+        <td>수정하면 <input type="text" id="cf_open_modify" name="cf_open_modify" class="frm_input" value="<?=$config['cf_open_modify']?>" size="1"> 일 동안 바꿀 수 없음</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_new_del">최근게시물 삭제</label></th>
         <td>
             <?=help('설정일이 지난 최근게시물 자동 삭제')?>
-            <input type="text" id="cf_new_del" name="cf_new_del" value="<?=$config['cf_new_del']?>" size="2"> 일
+            <input type="text" id="cf_new_del" name="cf_new_del" class="frm_input" value="<?=$config['cf_new_del']?>" size="2"> 일
         </td>
         <th scope="row"><label for="cf_memo_del">쪽지 삭제</label></th>
         <td>
             <?=help('설정일이 지난 쪽지 자동 삭제')?>
-            <input type="text" id="cf_memo_del" name="cf_memo_del" value="<?=$config['cf_memo_del']?>" size="2"> 일
+            <input type="text" id="cf_memo_del" name="cf_memo_del" class="frm_input" value="<?=$config['cf_memo_del']?>" size="2"> 일
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_visit_del">접속자로그 삭제</label></th>
         <td>
             <?=help('설정일이 지난 접속자 로그 자동 삭제')?>
-            <input type="text" id="cf_visit_del" name="cf_visit_del" value="<?=$config['cf_visit_del']?>" size="2"> 일
+            <input type="text" id="cf_visit_del" name="cf_visit_del" class="frm_input" value="<?=$config['cf_visit_del']?>" size="2"> 일
         </td>
         <th scope="row"><label for="cf_popular_del">인기검색어 삭제</label></th>
         <td>
             <?=help('설정일이 지난 인기검색어 자동 삭제')?>
-            <input type="text" id="cf_popular_del" name="cf_popular_del" value="<?=$config['cf_popular_del']?>" size="2"> 일
+            <input type="text" id="cf_popular_del" name="cf_popular_del" class="frm_input" value="<?=$config['cf_popular_del']?>" size="2"> 일
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_login_minutes">현재 접속자</label></th>
         <td>
             <?=help('설정값 이내의 접속자를 현재 접속자로 인정')?>
-            <input type="text" id="cf_login_minutes" name="cf_login_minutes" value="<?=$config['cf_login_minutes']?>" size="2"> 분
+            <input type="text" id="cf_login_minutes" name="cf_login_minutes" class="frm_input" value="<?=$config['cf_login_minutes']?>" size="2"> 분
         </td>
         <th scope="row"><label for="cf_page_rows">한페이지당 라인수</label></th>
         <td>
             <?=help('목록(리스트) 한페이지당 라인수')?>
-            <input type="text" id="cf_page_rows" name="cf_page_rows" value="<?=$config['cf_page_rows']?>" size="2"> 라인
+            <input type="text" id="cf_page_rows" name="cf_page_rows" class="frm_input" value="<?=$config['cf_page_rows']?>" size="2"> 라인
         </td>
     </tr>
     <tr>
@@ -130,7 +130,7 @@ $pg_anchor = "
         <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
         <td>
             <?=help('목록 한페이지당 라인수')?>
-            <input type="text" id="cf_new_rows" name="cf_new_rows" value="<?=$config['cf_new_rows']?>" size="2"> 라인
+            <input type="text" id="cf_new_rows" name="cf_new_rows" class="frm_input" value="<?=$config['cf_new_rows']?>" size="2"> 라인
         </td>
     </tr>
     <tr>
@@ -195,15 +195,15 @@ $pg_anchor = "
     <tbody>
     <tr>
         <th scope="row"><label for="cf_read_point">글읽기 포인트<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="cf_read_point" name="cf_read_point" class="required" required value="<?=$config['cf_read_point']?>" size="2"> 점</td>
+        <td><input type="text" id="cf_read_point" name="cf_read_point" class="required frm_input" required value="<?=$config['cf_read_point']?>" size="3"> 점</td>
         <th scope="row"><label for="cf_write_point">글쓰기 포인트</label></th>
-        <td><input type="text" id="cf_write_point" name="cf_write_point" class="required" required value="<?=$config['cf_write_point']?>" size="2"> 점</td>
+        <td><input type="text" id="cf_write_point" name="cf_write_point" class="required frm_input" required value="<?=$config['cf_write_point']?>" size="3"> 점</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_comment_point">댓글쓰기 포인트</label></th>
-        <td><input type="text" id="cf_comment_point" name="cf_comment_point" class="required" required value="<?=$config['cf_comment_point']?>" size="2"> 점</td>
+        <td><input type="text" id="cf_comment_point" name="cf_comment_point" class="required frm_input" required value="<?=$config['cf_comment_point']?>" size="3"> 점</td>
         <th scope="row"><label for="cf_download_point">다운로드 포인트</label></th>
-        <td><input type="text" id="cf_download_point" name="cf_download_point" class="required" required value="<?=$config['cf_download_point']?>" size="2"> 점</td>
+        <td><input type="text" id="cf_download_point" name="cf_download_point" class="required frm_input" required value="<?=$config['cf_download_point']?>" size="3"> 점</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_link_target">새창 링크</label></th>
@@ -217,33 +217,33 @@ $pg_anchor = "
             </select>
         </td>
         <th scope="row"><label for="cf_search_part">검색 단위</label></th>
-        <td><input type="text" id="cf_search_part" name="cf_search_part" value="<?=$config['cf_search_part']?>" size="2"> 건 단위로 검색</td>
+        <td><input type="text" id="cf_search_part" name="cf_search_part" class="frm_input" value="<?=$config['cf_search_part']?>" size="4"> 건 단위로 검색</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_delay_sec">글쓰기 간격<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" class="required numeric" required value="<?=$config['cf_delay_sec']?>" size="2"> 초 지난후 가능</td>
+        <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" class="required numeric frm_input" required value="<?=$config['cf_delay_sec']?>" size="3"> 초 지난후 가능</td>
         <th scope="row"><label for="cf_write_pages">페이지 표시 수<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="cf_write_pages" name="cf_write_pages" class="required numeric" required value="<?=$config['cf_write_pages']?>" size="2"> 페이지씩 표시</td>
+        <td><input type="text" id="cf_write_pages" name="cf_write_pages" class="required numeric frm_input" required value="<?=$config['cf_write_pages']?>" size="3"> 페이지씩 표시</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_image_extension">이미지 업로드 확장자</label></th>
         <td colspan="3">
             <?=help('게시판 글작성시 이미지 파일 업로드 가능 확장자. | 로 구분')?>
-            <input type="text" id="cf_image_extension" name="cf_image_extension" value="<?=$config['cf_image_extension']?>" size="70">
+            <input type="text" id="cf_image_extension" name="cf_image_extension" class="frm_input" value="<?=$config['cf_image_extension']?>" size="70">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_flash_extension">플래쉬 업로드 확장자</label></th>
         <td colspan="3">
             <?=help('게시판 글작성시 플래쉬 파일 업로드 가능 확장자. | 로 구분')?>
-            <input type="text" id="cf_flash_extension" name="cf_flash_extension" value="<?=$config['cf_flash_extension']?>" size="70">
+            <input type="text" id="cf_flash_extension" name="cf_flash_extension" class="frm_input" value="<?=$config['cf_flash_extension']?>" size="70">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_movie_extension">동영상 업로드 확장자</label></th>
         <td colspan="3">
             <?=help('게시판 글작성시 동영상 파일 업로드 가능 확장자. | 로 구분')?>
-            <input type="text" id="cf_movie_extension" name="cf_movie_extension" value="<?=$config['cf_movie_extension']?>" size="70">
+            <input type="text" id="cf_movie_extension" name="cf_movie_extension" class="frm_input" value="<?=$config['cf_movie_extension']?>" size="70">
         </td>
     </tr>
     <tr>
@@ -324,11 +324,11 @@ $pg_anchor = "
         <th scope="row"><label for="cf_register_level">회원가입시 권한</label></th>
         <td><?=get_member_level_select('cf_register_level', 1, 9, $config['cf_register_level']) ?></td>
         <th scope="row"><label for="cf_register_point">회원가입시 포인트</label></th>
-        <td><input type="text" id="cf_register_point" name="cf_register_point" value="<?=$config['cf_register_point']?>" size="5"> 점</td>
+        <td><input type="text" id="cf_register_point" name="cf_register_point" class="frm_input" value="<?=$config['cf_register_point']?>" size="5"> 점</td>
     </tr>
     <tr>
         <th scope='row' id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
-        <td colspan="3"><input type="text" id="cf_leave_day" name="cf_leave_day" value="<?=$config['cf_leave_day']?>" size="2"> 일 후 자동 삭제</td>
+        <td colspan="3"><input type="text" id="cf_leave_day" name="cf_leave_day" class="frm_input" value="<?=$config['cf_leave_day']?>" size="2"> 일 후 자동 삭제</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_use_member_icon">회원아이콘 사용</label></th>
@@ -346,13 +346,13 @@ $pg_anchor = "
     </tr>
     <tr>
         <th scope="row"><label for="cf_member_icon_size">회원아이콘 용량</label></th>
-        <td><input type="text" id="cf_member_icon_size" name="cf_member_icon_size" value="<?=$config['cf_member_icon_size']?>" size="10"> 바이트 이하</td>
-        <th scope="row"><label for="cf_member_icon_width">회원아이콘 사이즈</label></th>
+        <td><input type="text" id="cf_member_icon_size" name="cf_member_icon_size" class="frm_input" value="<?=$config['cf_member_icon_size']?>" size="10"> 바이트 이하</td>
+        <th scope="row">회원아이콘 사이즈</th>
         <td>
             <label for="cf_member_icon_width">가로</label>
-            <input type="text" id="cf_member_icon_width" name="cf_member_icon_width" value="<?=$config['cf_member_icon_width']?>" size="2">
+            <input type="text" id="cf_member_icon_width" name="cf_member_icon_width" class="frm_input" value="<?=$config['cf_member_icon_width']?>" size="2">
             <label for="cf_member_icon_height">세로</label>
-            <input type="text" id="cf_member_icon_height" name="cf_member_icon_height" value="<?=$config['cf_member_icon_height']?>" size="2">
+            <input type="text" id="cf_member_icon_height" name="cf_member_icon_height" class="frm_input" value="<?=$config['cf_member_icon_height']?>" size="2">
             픽셀 이하
         </td>
     </tr>
@@ -360,7 +360,7 @@ $pg_anchor = "
         <th scope="row"><label for="cf_use_recommend">추천인제도 사용</label></th>
         <td><input type="checkbox" id="cf_use_recommend" name="cf_use_recommend" value="1" <?=$config['cf_use_recommend']?'checked':'';?>> 사용</td>
         <th scope="row"><label for="cf_recommend_point">추천인 포인트</label></th>
-        <td><input type="text" id="cf_recommend_point" name="cf_recommend_point" value="<?=$config['cf_recommend_point']?>"> 점</td>
+        <td><input type="text" id="cf_recommend_point" name="cf_recommend_point" class="frm_input" value="<?=$config['cf_recommend_point']?>"> 점</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_prohibit_id">아이디,별명 금지단어</label></th>
@@ -421,7 +421,7 @@ $pg_anchor = "
         <th scope="row"><label for="cf_email_admin">관리자 메일주소<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('일괄 발송 또는 테스트 등에 사용하는 이메일 주소입니다.')?>
-            <input type="text" id="cf_email_admin" name="cf_email_admin" class="email required" value="<?=$config['cf_email_admin']?>" required size="40">
+            <input type="text" id="cf_email_admin" name="cf_email_admin" class="email required frm_input" value="<?=$config['cf_email_admin']?>" required size="40">
         </td>
     </tr>
     </table>
@@ -542,9 +542,9 @@ $pg_anchor = "
         <th scope="row">여분필드<?=$i?></th>
         <td>
             <label for="cf_<?=$i?>_subj">여분필드<?=$i?> 제목</label>
-            <input type="text" id="cf_<?=$i?>_subj" name="cf_<?=$i?>_subj" value="<?=get_text($config['cf_'.$i.'_subj'])?>" size="30">
+            <input type="text" id="cf_<?=$i?>_subj" name="cf_<?=$i?>_subj" class="frm_input" value="<?=get_text($config['cf_'.$i.'_subj'])?>" size="30">
             <label for="cf_<?=$i?>">여분필드<?=$i?> 설명</label>
-            <input type="text" id="cf_<?=$i?>" name="cf_<?=$i?>" value="<?=$config['cf_'.$i]?>" size="30">
+            <input type="text" id="cf_<?=$i?>" name="cf_<?=$i?>" class="frm_input" value="<?=$config['cf_'.$i]?>" size="30">
         </td>
     </tr>
     <? } ?>

@@ -116,7 +116,7 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 
 /* 폼 */
 label {vertical-align:middle}
-textarea, .frm_input {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
+textarea, .frm_input {padding:2px;border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea:focus,
 .frm_input:focus {background:#434f54;color:#fff}
 textarea {width:90%}

@@ -85,7 +85,7 @@ var list_delete_php = 'popular_list.php';
         <option value="pp_date">등록일</option>
     </select>
     <input type="text" name="stx" required value="<?=$stx?>" title="검색어(필수)">
-    <input type="submit" class="fieldset_submit" value="검색">
+    <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 
