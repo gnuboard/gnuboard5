@@ -27,18 +27,18 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 #to_content a:active {width:100%;height:70px;background:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.1em}
 
 /* 레이아웃 */
-#hd {z-index:10;background:url('../adm/img/hd_bg.jpg') #151618 top left repeat-x}
+#hd {z-index:10;background:url('../adm/img/hd_bg.jpg') #383b3f top left repeat-x}
 #hd h1,
 #hd h2 {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
 #hd_wrap {position:relative;margin:0 auto;width:1000px}
 #logo {position:relative;height:70px}
 #logo img {position:absolute;top:15px;left:0}
 
-#snb {z-index:2;position:absolute;top:25px;right:0;zoom:1}
+#snb {z-index:2;position:absolute;top:16px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
-#snb ul {float:right;margin:0;padding:0;background:#222;zoom:1}
+#snb ul {float:right;margin:0;padding:0;zoom:1}
 #snb ul:after {display:block;visibility:hidden;clear:both;content:""}
-#snb li {float:left;margin-left:10px}
+#snb li {float:left;margin-left:20px}
 #snb a {display:inline-block;padding:5px 0;color:#e0e0e0;text-decoration:none}
 
 /* gnb js off */
@@ -90,6 +90,7 @@ h1 {margin-bottom:20px;color:#333;font-size:1.5em;font-family:"dotum";letter-spa
 
 /* 공통박스 */
 .cbox {margin-bottom:30px;padding:20px;border:1px solid #dfdfdf;background:#fff}
+.cbox h2 {margin-bottom:10px}
 
 /* 테이블 */
 table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
