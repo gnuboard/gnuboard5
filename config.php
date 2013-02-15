@@ -7,11 +7,11 @@
 define('_GNUBOARD_', true);
 
 if (PHP_VERSION >= '5.3.0') {
-//if (function_exists("date_default_timezone_set")) date_default_timezone_set("Asia/Seoul");
-date_default_timezone_set("Asia/Seoul");
+    //if (function_exists("date_default_timezone_set")) date_default_timezone_set("Asia/Seoul");
+    date_default_timezone_set("Asia/Seoul");
 }
 
-//==============================================================================
+ //==============================================================================
 // 경로 상수
 //------------------------------------------------------------------------------
 
@@ -31,6 +31,8 @@ www.sir.co.kr 과 sir.co.kr 도메인은 서로 다른 도메인으로 인식합
 */
 define('G4_COOKIE_DOMAIN', '');
 
+define('G4_DBCONFIG_FILE', 'dbconfig.php');
+
 define('G4_ADMIN_DIR', 'adm');
 define('G4_BBS_DIR', 'bbs');
 define('G4_CSS_DIR', 'css');
@@ -47,8 +49,18 @@ define('G4_CKEDITOR_DIR', 'ckeditor');
 if (G4_DOMAIN) {
     define('G4_URL', G4_DOMAIN);
 } else {
-    define('G4_URL', $g4_path['url']);
+    if (isset($g4_path['url'])) 
+        define('G4_URL', $g4_path['url']);
+    else 
+        define('G4_URL', '');
 }
+
+if (isset($g4_path['path'])) {
+    define('G4_PATH', $g4_path['path']);
+} else {
+    define('G4_PATH', '');
+}
+
 define('G4_ADMIN_URL', G4_URL.'/'.G4_ADMIN_DIR);
 define('G4_BBS_URL', G4_URL.'/'.G4_BBS_DIR);
 define('G4_CSS_URL', G4_URL.'/'.G4_CSS_DIR);
@@ -60,7 +72,6 @@ define('G4_GCAPTCHA_URL', G4_BBS_URL.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_URL', G4_BBS_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
 
 // PATH 는 서버상에서의 절대경로
-define('G4_PATH', $g4_path['path']);
 define('G4_ADMIN_PATH', G4_PATH.'/'.G4_ADMIN_DIR);
 define('G4_BBS_PATH', G4_PATH.'/'.G4_BBS_DIR);
 define('G4_DATA_PATH', G4_PATH.'/'.G4_DATA_DIR);

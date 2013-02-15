@@ -4,156 +4,59 @@ set_time_limit(0);
 include_once ('../config.php');
 include_once ('./install.inc.php');
 
-$gmnow = gmdate("D, d M Y H:i:s") . " GMT";
-header("Expires: 0"); // rfc2616 - Section 14.21
-header("Last-Modified: " . $gmnow);
-header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
-header("Cache-Control: pre-check=0, post-check=0, max-age=0"); // HTTP/1.1
-header("Pragma: no-cache"); // HTTP/1.0
+$gmnow = gmdate('D, d M Y H:i:s') . ' GMT';
+header('Expires: 0'); // rfc2616 - Section 14.21
+header('Last-Modified: ' . $gmnow);
+header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
+header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
+header('Pragma: no-cache'); // HTTP/1.0
+
+//print_r($_POST); exit;
 
 $mysql_host  = $_POST['mysql_host'];
 $mysql_user  = $_POST['mysql_user'];
 $mysql_pass  = $_POST['mysql_pass'];
 $mysql_db    = $_POST['mysql_db'];
+$mysql_port  = $_POST['mysql_port'];
+$table_prefix= $_POST['table_prefix'];
 $admin_id    = $_POST['admin_id'];
 $admin_pass  = $_POST['admin_pass'];
 $admin_name  = $_POST['admin_name'];
 $admin_email = $_POST['admin_email'];
 
-if (strtolower($g4['charset']) == 'utf-8') @mysql_query("set names utf8");
-else if (strtolower($g4['charset']) == 'euc-kr') @mysql_query("set names euckr");
-$dblink = @mysql_connect($mysql_host, $mysql_user, $mysql_pass);
+@mysql_query('set names utf8');
+$dblink = @mysql_connect($mysql_host.':'.$mysql_port, $mysql_user, $mysql_pass);
 if (!$dblink) {
-    echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
-    echo "<script language='JavaScript'>alert('MySQL Host, User, Password 를 확인해 주십시오.');history.back();</script>";
+    echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
+    echo '<div>MySQL Host, User, Password 를 확인해 주십시오.</div>'.PHP_EOL;
+    echo '<div><a href="./install_config.php">뒤로가기</a></div>'.PHP_EOL;
     exit;
 }
 
-if (strtolower($g4['charset']) == 'utf-8') @mysql_query("set names utf8");
-else if (strtolower($g4['charset']) == 'euc-kr') @mysql_query("set names euckr");
+@mysql_query('set names utf8');
 $select_db = @mysql_select_db($mysql_db, $dblink);
 if (!$select_db) {
-    echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>";
-    echo "<script language='JavaScript'>alert('MySQL DB 를 확인해 주십시오.');history.back();</script>";
+    echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
+    echo '<div>MySQL DB 를 확인해 주십시오.</div>'.PHP_EOL;
+    echo '<div><a href="./install_config.php">뒤로가기</a></div>'.PHP_EOL;
     exit;
 }
 ?>
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=<?=$g4['charset']?>">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>그누보드4 설치 (3/3) - DB</title>
-<style type="text/css">
-.body {
-    font-family: 굴림;
-	font-size: 12px;
-}
-.box {
-	background-color: #FCFCFC;
-    color:#B19265;
-    font-family:굴림;
-	font-size: 12px;
-}
-.nobox {
-	background-color: #FCFCFC;
-    border-style:none;
-    font-family:굴림;
-    font-size: 12px;
-}
-</style>
 </head>
 
-<body background="img/all_bg.gif" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<div align="center">
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <table width="587" border="0" cellspacing="0" cellpadding="0">
-    <form name=frminstall2>
-    <tr>
-                <td colspan="3"><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="587" height="22">
-                        <param name="movie" value="../install/img/top.swf">
-                        <param name="quality" value="high">
-                        <embed src="../install/img/top.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="587" height="22"></embed></object></td>
-    </tr>
-    <tr>
-      <td width="3"><img src="../install/img/box_left.gif" width="3" height="340"></td>
-      <td width="581" valign="top" bgcolor="#FCFCFC"><table width="581" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td><img src="../install/img/box_title.gif" width="581" height="56"></td>
-          </tr>
-        </table>
-        <br>
-        <table width="541" border="0" align="center" cellpadding="0" cellspacing="0" class="body">
-          <tr>
-            <td>설치를 시작합니다. <font color="#CC0000">설치중 작업을 중단하지 마십시오. </font></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td><div align="left">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input name="status_bar" type="text" class="box" size="76" readonly></div></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td><table width="350" border="0" align="center" cellpadding="5" cellspacing="0" class="body">
-                <tr>
-                  <td width="50"> </td>
-                  <td width="300"><input type=text name=job1 class=nobox size=80 readonly></td>
-                </tr>
-                <tr>
-                  <td width="50"> </td>
-                  <td width="300"><input type=text name=job2 class=nobox size=80 readonly></td>
-                </tr>
-                <tr>
-                  <td width="50"> </td>
-                  <td width="300"><input type=text name=job3 class=nobox size=80 readonly></td>
-                </tr>
-                <tr>
-                  <td width="50">
-                    <div align="center"></div></td>
-                  <td width="300"><input type=text name=job4 class=nobox size=80 readonly></td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td><input type=text name=job5 class=nobox size=90 readonly></td>
-          </tr>
-        </table>
-        <table width="562" border="0" align="center" cellpadding="0" cellspacing="0">
-          <tr>
-            <td height=20><img src="../install/img/box_line.gif" width="562" height="2"></td>
-          </tr>
-        </table>
-        <table width="551" border="0" align="center" cellpadding="0" cellspacing="0">
-          <tr>
-            <td align="right">
-              <input type="button" name="btn_next" disabled value="메인화면" onclick="location.href='../';">
-            </td>
-          </tr>
-        </table></td>
-      <td width="3"><img src="../install/img/box_right.gif" width="3" height="340"></td>
-    </tr>
-    <tr>
-      <td colspan="3"><img src="../install/img/box_bottom.gif" width="587" height="3"></td>
-    </tr>
-    </form>
-  </table>
-</div>
+<body>
+<div>그누보드4S 설치시작</div>
 <?
-flush(); usleep(50000);
-
 // 테이블 생성 ------------------------------------
-$file = implode('', file('./sql_gnuboard4.sql'));
+$file = implode('', file('./gnuboard4s.sql'));
 eval("\$file = \"$file\";");
 
+$file = preg_replace('/^--.*$/m', '', $file);
+$file = preg_replace('/`g4s_([^`]+`)/', '`'.$table_prefix.'$1', $file);
 $f = explode(';', $file);
 for ($i=0; $i<count($f); $i++) {
     if (trim($f[$i]) == '') continue;
@@ -161,18 +64,7 @@ for ($i=0; $i<count($f); $i++) {
 }
 // 테이블 생성 ------------------------------------
 
-echo "<script>document.frminstall2.job1.value='전체 테이블 생성중';</script>";
-flush(); usleep(50000);
-
-for ($i=0; $i<45; $i++)
-{
-    echo "<script language='JavaScript'>document.frminstall2.status_bar.value += '■';</script>\n";
-    flush();
-    usleep(500);
-}
-
-echo "<script>document.frminstall2.job1.value='전체 테이블 생성 완료';</script>";
-flush(); usleep(50000);
+echo '<div>전체 테이블 생성 완료</div>';
 
 $read_point = -1;
 $write_point = 5;
@@ -181,7 +73,7 @@ $download_point = -20;
 
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
-$sql = " insert into {$g4['config_table']}
+$sql = " insert into `{$table_prefix}config`
             set cf_title = '그누보드4',
                 cf_admin = '$admin_id',
                 cf_use_point = '1',
@@ -236,7 +128,7 @@ $sql = " insert into {$g4['config_table']}
 mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
 // 운영자 회원가입
-$sql = " insert into {$g4['member_table']}
+$sql = " insert into `{$table_prefix}member`
             set mb_id = '$admin_id',
                 mb_password = PASSWORD('$admin_pass'),
                 mb_name = '$admin_name',
@@ -247,53 +139,72 @@ $sql = " insert into {$g4['member_table']}
                 mb_open = '1',
                 mb_email_certify = '".G4_TIME_YMDHIS."',
                 mb_datetime = '".G4_TIME_YMDHIS."',
-                mb_ip = '$_SERVER[REMOTE_ADDR]'
+                mb_ip = '{$_SERVER['REMOTE_ADDR']}'
                 ";
 @mysql_query($sql);
 
-echo "<script>document.frminstall2.job2.value='DB설정 완료';</script>";
-flush(); usleep(50000);
+echo '<div>DB설정 완료</div>';
 //-------------------------------------------------------------------------------------------------
-
-// DB 설정 파일 생성
-$file = '../data/dbconfig.php';
-$f = @fopen($file, "w");
-
-fwrite($f, "<?php\n");
-fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
-fwrite($f, "define('G4_MYSQL_HOST', '$mysql_host');\n");
-fwrite($f, "define('G4_MYSQL_USER', '$mysql_user');\n");
-fwrite($f, "define('G4_MYSQL_PASSWORD', '$mysql_pass');\n");
-fwrite($f, "define('G4_MYSQL_DB', '$mysql_db');\n");
-fwrite($f, "?>");
-
-fclose($f);
-@chmod($file, 0606);
-echo "<script>document.frminstall2.job3.value='DB설정 파일 생성 완료';</script>";
-
-flush(); usleep(50000);
 
 
 // 디렉토리 생성
 $dir_arr = array (
-    "../data",
-    "../data/cache",
-    "../data/cache/captcha",
-    "../data/cache/latest",
-    "../data/editor",
-    "../data/file",
-    "../data/log",
-    "../data/member",
-    "../data/session"
+    $data_path.'/cache',
+    $data_path.'/editor',
+    $data_path.'/file',
+    $data_path.'/log',
+    $data_path.'/member',
+    $data_path.'/session'
 );
-for ($i=0; $i<count($dir_arr); $i++)
-{
+
+for ($i=0; $i<count($dir_arr); $i++) {
     @mkdir($dir_arr[$i], 0707);
     @chmod($dir_arr[$i], 0707);
 }
 
+echo '<div>데이터 디렉토리 생성 완료</div>';
+//-------------------------------------------------------------------------------------------------
+
+// DB 설정 파일 생성
+$file = '../'.G4_DATA_DIR.'/'.G4_DBCONFIG_FILE;
+$f = @fopen($file, 'w');
+
+fwrite($f, "<?php\n");
+fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
+fwrite($f, "define('G4_MYSQL_HOST', '{$mysql_host}:{$mysql_port}');\n");
+fwrite($f, "define('G4_MYSQL_USER', '{$mysql_user}');\n");
+fwrite($f, "define('G4_MYSQL_PASSWORD', '{$mysql_pass}');\n");
+fwrite($f, "define('G4_MYSQL_DB', '{$mysql_db}');\n\n");
+fwrite($f, "define('G4_TABLE_PREFIX', '{$table_prefix}');\n\n");
+fwrite($f, "\$g4['write_prefix'] = G4_TABLE_PREFIX.'write_'; // 게시판 테이블명 접두사\n\n");
+fwrite($f, "\$g4['auth_table'] = G4_TABLE_PREFIX.'auth'; // 관리권한 설정 테이블\n");
+fwrite($f, "\$g4['config_table'] = G4_TABLE_PREFIX.'config'; // 기본환경 설정 테이블\n");
+fwrite($f, "\$g4['group_table'] = G4_TABLE_PREFIX.'group'; // 게시판 그룹 테이블\n");
+fwrite($f, "\$g4['group_member_table'] = G4_TABLE_PREFIX.'group_member'; // 게시판 그룹+회원 테이블\n");
+fwrite($f, "\$g4['board_table'] = G4_TABLE_PREFIX.'board'; // 게시판 설정 테이블\n");
+fwrite($f, "\$g4['board_file_table'] = G4_TABLE_PREFIX.'board_file'; // 게시판 첨부파일 테이블\n");
+fwrite($f, "\$g4['board_good_table'] = G4_TABLE_PREFIX.'board_good'; // 게시물 추천,비추천 테이블\n");
+fwrite($f, "\$g4['board_new_table'] = G4_TABLE_PREFIX.'board_new'; // 게시판 새글 테이블\n");
+fwrite($f, "\$g4['login_table'] = G4_TABLE_PREFIX.'login'; // 로그인 테이블 (접속자수)\n");
+fwrite($f, "\$g4['mail_table'] = G4_TABLE_PREFIX.'mail'; // 회원메일 테이블\n");
+fwrite($f, "\$g4['member_table'] = G4_TABLE_PREFIX.'member'; // 회원 테이블\n");
+fwrite($f, "\$g4['memo_table'] = G4_TABLE_PREFIX.'memo'; // 메모 테이블\n");
+fwrite($f, "\$g4['poll_table'] = G4_TABLE_PREFIX.'poll'; // 투표 테이블\n");
+fwrite($f, "\$g4['poll_etc_table'] = G4_TABLE_PREFIX.'poll_etc'; // 투표 기타의견 테이블\n");
+fwrite($f, "\$g4['point_table'] = G4_TABLE_PREFIX.'point'; // 포인트 테이블\n");
+fwrite($f, "\$g4['popular_table'] = G4_TABLE_PREFIX.'popular'; // 인기검색어 테이블\n");
+fwrite($f, "\$g4['scrap_table'] = G4_TABLE_PREFIX.'scrap'; // 게시글 스크랩 테이블\n");
+fwrite($f, "\$g4['visit_table'] = G4_TABLE_PREFIX.'visit'; // 방문자 테이블\n");
+fwrite($f, "\$g4['visit_sum_table'] = G4_TABLE_PREFIX.'visit_sum'; // 방문자 합계 테이블\n");
+fwrite($f, "\$g4['uniqid_table'] = G4_TABLE_PREFIX.'uniqid'; // 유니크한 값을 만드는 테이블\n");
+fwrite($f, "?>");
+
+fclose($f);
+@chmod($file, 0606);
+echo "<div>DB설정 파일 생성 완료 ($file)";
+
 // data 디렉토리 및 하위 디렉토리에서는 .htaccess .htpasswd .php .phtml .html .htm .inc .cgi .pl 파일을 실행할수 없게함.
-$f = fopen("../data/.htaccess", "w");
+$f = fopen($data_path.'/.htaccess', 'w');
 $str = <<<EOD
 <FilesMatch "\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll])">
 Order allow,deny
@@ -304,17 +215,10 @@ fwrite($f, $str);
 fclose($f);
 //-------------------------------------------------------------------------------------------------
 
-echo "<script language='JavaScript'>document.frminstall2.status_bar.value += '■';</script>\n";
-flush();
-sleep(1);
-
-echo "<script>document.frminstall2.job4.value='필요한 Table, File, 디렉토리 생성을 모두 완료 하였습니다.';</script>";
-echo "<script>document.frminstall2.job5.value='* 메인화면에서 운영자 로그인을 한 후 운영자 화면으로 이동하여 환경설정을 변경해 주십시오.';</script>";
-flush(); usleep(50000);
+echo '<div>필요한 DB Table, File, 디렉토리 생성을 모두 완료 하였습니다.</div>'.PHP_EOL;
+echo '<div>메인화면에서 운영자 로그인을 한 후 운영자 화면으로 이동하여 환경설정을 변경해 주십시오.</div>';
+echo '<div><a href="../index.php">메인화면으로 가기</a></div>';
 ?>
-
-<script>document.frminstall2.btn_next.disabled = false;</script>
-<script>document.frminstall2.btn_next.focus();</script>
 
 </body>
 </html>
