@@ -29,14 +29,11 @@ $colspan = 6;
         현재 등록된 메일은 총 <?=$total_count ?>건입니다.
     </p>
 
-<<<<<<< HEAD
     <div id="btn_add">
         <a href="./mail_form.php" id="mail_add">메일내용추가</a>
     </div>
 
-=======
     <form id="fmaillist" name="fmaillist" method="post" action="./mail_delete.php">
->>>>>>> 75f31cd998e7ebb2d18eed50b548a4ac81fa39b3
     <table>
     <thead>
     <tr>
