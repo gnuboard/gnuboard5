@@ -72,9 +72,9 @@ var list_update_php = "./boardgroup_list_update.php";
         생성된 그룹수 <?=number_format($total_count)?>개
     </span>
     <select name="sfl" title="검색대상">
-        <option value="gr_subject">제목</option>
-        <option value="gr_id">ID</option>
-        <option value="gr_admin">그룹관리자</option>
+        <option value="gr_subject" <?=get_selected("gr_subject", $_GET['sfl']);?>>제목</option>
+        <option value="gr_id" <?=get_selected("gr_id", $_GET['sfl']);?>>ID</option>
+        <option value="gr_admin" <?=get_selected("gr_admin", $_GET['sfl']);?>>그룹관리자</option>
     </select>
     <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
@@ -182,11 +182,6 @@ var list_update_php = "./boardgroup_list_update.php";
 <?
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 echo $pagelist;
-?>
-
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>';
 ?>
 
 <script>
