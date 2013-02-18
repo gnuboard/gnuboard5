@@ -79,9 +79,24 @@ function textarea_size(fld, size)
 
         <div id="snb">
             <ul>
-                <li><a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>"><img src="<?=G4_ADMIN_URL?>/img/snb_modify.jpg" alt="관리자 정보수정" width="28" height="28"></a></li>
-                <li><a href="<?=G4_URL?>/"><img src="<?=G4_ADMIN_URL?>/img/snb_home.jpg" alt="홈페이지로 돌아가기" width="28" height="28"></a></li>
-                <li><a href="<?=G4_BBS_URL?>/logout.php"><img src="<?=G4_ADMIN_URL?>/img/snb_logout.jpg" alt="로그아웃" width="28" height="28"></a></li>
+                <li>
+                    <a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">
+                        <img src="<?=G4_ADMIN_URL?>/img/snb_modify.jpg" alt="" width="28" height="28">
+                        관리자 정보수정
+                    </a>
+                </li>
+                <li>
+                    <a href="<?=G4_URL?>/">
+                        <img src="<?=G4_ADMIN_URL?>/img/snb_home.jpg" alt="" width="28" height="28">
+                        홈페이지 메인
+                    </a>
+                </li>
+                <li>
+                    <a href="<?=G4_BBS_URL?>/logout.php">
+                        <img src="<?=G4_ADMIN_URL?>/img/snb_logout.jpg" alt="로그아웃" width="28" height="28">
+                        로그아웃
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -124,19 +139,19 @@ function textarea_size(fld, size)
     <ul id="qnb">
         <li>
             <a href="<?=G4_ADMIN_URL?>/member_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_mb.jpg" alt="">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_mb.jpg" alt="" width="40" height="40">
                 회원
             </a>
         </li>
         <li>
             <a href="<?=G4_ADMIN_URL?>/board_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_board.jpg" alt="">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_board.jpg" alt="" width="40" height="40">
                 게시판
             </a>
         </li>
         <li>
             <a href="<?=G4_ADMIN_URL?>/visit_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_log.jpg" alt="">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_log.jpg" alt="" width="40" height="40">
                 접속자
             </a>
         </li>
