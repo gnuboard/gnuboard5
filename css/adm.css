@@ -152,13 +152,13 @@ fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#
 /* 폼 안내글 */
 .adm_field_explain {display:block;padding:0 0 5px;color:#5b747e}
 
-/* 폼 바로가기 */
-.frm_list {margin:0 0 10px;padding:0;zoom:1}
-.frm_list:after {display:block;visibility:hidden;clear:both;content:""}
-.frm_list li {float:left;margin-left:-1px;list-style:none}
-.frm_list a {display:inline-block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;text-decoration:none;line-height:2.3em}
-.frm_list a:focus,
-.frm_list a:hover {background:#434f54;text-decoration:none}
+/* 목록 바로가기 */
+.anchor {margin:0 0 10px;padding:0;zoom:1}
+.anchor:after {display:block;visibility:hidden;clear:both;content:""}
+.anchor li {float:left;margin-left:-1px;list-style:none}
+.anchor a {display:inline-block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;text-decoration:none;line-height:2.6em}
+.anchor a:focus,
+.anchor a:hover {background:#434f54;text-decoration:none}
 
 /* 테이블 */
 table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}

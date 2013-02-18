@@ -65,7 +65,7 @@ if ($is_admin != 'super') {
 $g4['title'] = $html_title;
 include_once ('./admin.head.php');
 
-$pg_anchor = "<ul class=\"frm_list\">
+$pg_anchor = "<ul class=\"anchor\">
     <li><a href=\"#frm_basic\">기본 설정</a></li>
     <li><a href=\"#frm_auth\">권한 설정</a></li>
     <li><a href=\"#frm_function\">기능 설정</a></li>

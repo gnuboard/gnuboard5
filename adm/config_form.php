@@ -18,7 +18,7 @@ $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 
 $pg_anchor = "
-<ul class=\"frm_list\">
+<ul class=\"anchor\">
     <li><a href=\"#frm_basic\">기본환경</a></li>
     <li><a href=\"#frm_board\">게시판기본</a></li>
     <li><a href=\"#frm_join\">회원가입</a></li>
