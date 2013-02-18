@@ -106,7 +106,7 @@ $colspan = 15;
     </div>
     <?}?>
 
-    <form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php">
+    <form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -209,8 +209,8 @@ $colspan = 15;
     </table>
 
     <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정">
-        <input type="submit" name="act_button" value="선택삭제">
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
         <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>
     </div>
 
@@ -220,30 +220,15 @@ $colspan = 15;
 <?=get_paging($config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page=');?>
 
 <script>
-$(function() {
-    $('input[name=act_button]').click(function(e) {
-        e.preventDefault();
+function fmemberlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
 
-        var act = $(this).val();
-        var cnt = $('input[name^=chk]:checked').length;
-
-        if(act == "선택삭제") {
-            if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-                if(cnt < 1) {
-                    alert(act+'할 회원을 1명 이상 선택해 주세요.');
-                    return false;
-                }
-            }
-        } else if(act == "선택수정") {
-            if(cnt < 1) {
-                alert(act+'할 회원을 1명 이상 선택해 주세요.');
-                return false;
-            }
-        }
-
-        $('#fmemberlist').submit();
-    });
-});
+    return true;
+}
 </script>
 
 <?

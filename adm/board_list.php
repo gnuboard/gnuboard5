@@ -92,7 +92,7 @@ $colspan = 8;
     </div>
     <?}?>
 
-    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php">
+    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -168,9 +168,9 @@ $colspan = 8;
     </table>
 
     <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정">
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
         <?if ($is_admin == 'super') {?>
-        <input type="submit" name="act_button" value="선택삭제">
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
         <a href="./board_form.php">게시판추가</a>
         <?}?>
     </div>
@@ -181,33 +181,20 @@ $colspan = 8;
 <?=get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');?>
 
 <script>
+function fboardlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    return true;
+}
+
 $(function(){
     $(".board_copy").click(function(){
         window.open(this.href, "win_board_copy", "left=100,top=100,width=550,height=450");
         return false;
-    });
-
-    $('input[name=act_button]').click(function(e) {
-        e.preventDefault();
-
-        var act = $(this).val();
-        var cnt = $('input[name^=chk]:checked').length;
-
-        if(act == "선택삭제") {
-            if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-                if(cnt < 1) {
-                    alert(act+'할 게시판을 1개 이상 선택해 주세요.');
-                    return false;
-                }
-            }
-        } else if(act == "선택수정") {
-            if(cnt < 1) {
-                alert(act+'할 게시판을 1개 이상 선택해 주세요.');
-                return false;
-            }
-        }
-
-        $('#fboardlist').submit();
     });
 });
 </script>
