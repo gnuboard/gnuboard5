@@ -37,7 +37,7 @@ $group_select = '<select name="gr_id" id="gr_id" title="검색대상" onchange="
 $sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $group_select .= '<option value="'.$row['gr_id'].'">'.$row['gr_subject'];
+    $group_select .= "<option value=\"".$row['gr_id']."\">".$row['gr_subject'];
 }
 $group_select .= '</select>';
 
