@@ -63,7 +63,7 @@ $colspan = 7;
     <select id="sfl" name="sfl">
         <option value='a.mb_id'>회원아이디</option>
     </select>
-    <input type="text" id="stx" name="stx" required value="<? echo $stx ?>" title="검색어(필수)">
+    <input type="text" id="stx" name="stx" class="required frm_input" required value="<? echo $stx ?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
@@ -98,7 +98,7 @@ $colspan = 7;
         $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
     ?>
     <tr>
-        <td class="td_chk"> <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?> 회원 선택"></td>
+        <td class="td_chk"><input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?> 회원 선택"></td>
         <td class="td_grid"><?=$group?></td>
         <td class="td_mbid"><?=$row['mb_id']?></td>
         <td class="td_mbname"><?=$row['mb_name']?></td>
