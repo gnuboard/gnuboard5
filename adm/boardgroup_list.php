@@ -190,28 +190,31 @@ if (isset($stx))
 ?>
 
 <script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
-{
-    var f = document.fpost;
+$(function() {
+    $('input[name=act_button]').click(function(e) {
+        e.preventDefault();
 
-    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.gr_id.value = val;
-        f.action      = action_url;
-        f.submit();
-    }
-}
+        var act = $(this).val();
+        var cnt = $('input[name^=chk]:checked').length;
+
+        if(act == "선택삭제") {
+            if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+                if(cnt < 1) {
+                    alert(act+'할 게시판그룹을 1개 이상 선택해 주세요.');
+                    return false;
+                }
+            }
+        } else if(act == "선택수정") {
+            if(cnt < 1) {
+                alert(act+'할 게시판그룹을 1개 이상 선택해 주세요.');
+                return false;
+            }
+        }
+
+        $('#fboardgrouplist').submit();
+    });
+});
 </script>
-
-<form id="fpost" name="fpost" method="post">
-<input type="hidden" name="sst"   value="<?=$sst?>">
-<input type="hidden" name="sod"   value="<?=$sod?>">
-<input type="hidden" name="sfl"   value="<?=$sfl?>">
-<input type="hidden" name="stx"   value="<?=$stx?>">
-<input type="hidden" name="page"  value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="gr_id">
-</form>
 
 <?
 include_once('./admin.tail.php');
