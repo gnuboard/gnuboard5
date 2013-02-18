@@ -104,7 +104,7 @@ function point_clear()
 <section class="cbox">
     <h2>포인트 내역</h2>
 
-    <form id="fpointlist" name="fpointlist" method="post">
+    <form id="fpointlist" name="fpointlist" method="post" action="./point_list_delete.php" onsubmit="return fpointlist_submit(this);">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -167,7 +167,7 @@ function point_clear()
     </table>
 
     <div class="btn_list">
-        <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+        <button>선택삭제</button>
     </div>
 
     </form>
@@ -196,6 +196,18 @@ function point_clear()
     <input type="submit" class="btn_submit" value="확인">
 </fieldset>
 </form>
+
+<script>
+function fpointlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert("선택삭제 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    return true;
+}
+</script>
 
 <?
 include_once ('./admin.tail.php');
