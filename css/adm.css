@@ -44,7 +44,7 @@ h2 {font-size:1.2em}
 #snb ul {float:right;margin:0;padding:0;zoom:1}
 #snb ul:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left;margin-left:20px}
-#snb a {display:inline-block;padding:5px 0;color:#e0e0e0;text-decoration:none}
+#snb a {display:inline-block;padding:5px 0;color:#e0e0e0;font-size:0.9em;text-decoration:none}
 
 /* gnb js off */
 #gnb {}
