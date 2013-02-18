@@ -63,7 +63,7 @@ if (isset($sfl) || isset($stx)) // 검색일 때만 처음 버튼을 보여줌
 $g4['title'] = '회원관리';
 include_once('./admin.head.php');
 
-$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} "; 
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
 $colspan = 15;
@@ -79,17 +79,17 @@ $colspan = 15;
         <a href="?sst=mb_leave_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">탈퇴 <?=number_format($leave_count)?></a>명
     </span>
     <select name="sfl" title="검색대상">
-        <option value="mb_id">회원아이디</option>
-        <option value="mb_nick">별명</option>
-        <option value="mb_name">이름</option>
-        <option value="mb_level">권한</option>
-        <option value="mb_email">E-MAIL</option>
-        <option value="mb_tel">전화번호</option>
-        <option value="mb_hp">핸드폰번호</option>
-        <option value="mb_point">포인트</option>
-        <option value="mb_datetime">가입일시</option>
-        <option value="mb_ip">IP</option>
-        <option value="mb_recommend">추천인</option>
+        <option value="mb_id" <?=get_selected("mb_id", $_GET['sfl']);?>>회원아이디</option>
+        <option value="mb_nick" <?=get_selected("mb_nick", $_GET['sfl']);?>>별명</option>
+        <option value="mb_name" <?=get_selected("mb_name", $_GET['sfl']);?>>이름</option>
+        <option value="mb_level" <?=get_selected("mb_level", $_GET['sfl']);?>>권한</option>
+        <option value="mb_email" <?=get_selected("mb_email", $_GET['sfl']);?>>E-MAIL</option>
+        <option value="mb_tel" <?=get_selected("mb_tel", $_GET['sfl']);?>>전화번호</option>
+        <option value="mb_hp" <?=get_selected("mb_hp", $_GET['sfl']);?>>핸드폰번호</option>
+        <option value="mb_point" <?=get_selected("mb_point", $_GET['sfl']);?>>포인트</option>
+        <option value="mb_datetime" <?=get_selected("mb_datetime", $_GET['sfl']);?>>가입일시</option>
+        <option value="mb_ip" <?=get_selected("mb_ip", $_GET['sfl']);?>>IP</option>
+        <option value="mb_recommend" <?=get_selected("mb_recommend", $_GET['sfl']);?>>추천인</option>
     </select>
     <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
@@ -100,6 +100,7 @@ $colspan = 15;
     <h2>회원 목록</h2>
     <p>회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.</p>
 
+<<<<<<< HEAD
     <? if ($is_admin == 'super') {?>
     <div id="btn_add">
         <a href="./member_form.php" id="member_add">회원추가</a>
@@ -107,6 +108,9 @@ $colspan = 15;
     <?}?>
 
     <form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);">
+=======
+    <form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php">
+>>>>>>> 6ed598e865fecf9bd14c8d69b500f5d2b05a1046
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -209,10 +213,8 @@ $colspan = 15;
     </table>
 
     <div class="btn_list">
-        <button>선택수정</button>
-        <button>선택삭제</button>
-        <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택수정">
-        <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제">
+        <input type="submit" name="act_button" value="선택수정">
+        <input type="submit" name="act_button" value="선택삭제">
         <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>
     </div>
 
@@ -222,18 +224,30 @@ $colspan = 15;
 <?=get_paging($config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page=');?>
 
 <script>
-<?
-if (isset($_GET['sfl'])) echo '$("#sfl").val("'.$sfl.'");'.PHP_EOL;
-?>
-function fmemberlist_submit(f)
-{
-    if (!is_checked("chk[]")) {
-        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
-        return false;
-    }
+$(function() {
+    $('input[name=act_button]').click(function(e) {
+        e.preventDefault();
 
-    return true;
-}
+        var act = $(this).val();
+        var cnt = $('input[name^=chk]:checked').length;
+
+        if(act == "선택삭제") {
+            if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+                if(cnt < 1) {
+                    alert(act+'할 회원을 1명 이상 선택해 주세요.');
+                    return false;
+                }
+            }
+        } else if(act == "선택수정") {
+            if(cnt < 1) {
+                alert(act+'할 회원을 1명 이상 선택해 주세요.');
+                return false;
+            }
+        }
+
+        $('#fmemberlist').submit();
+    });
+});
 </script>
 
 <?
