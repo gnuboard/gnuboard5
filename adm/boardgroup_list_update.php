@@ -2,6 +2,8 @@
 $sub_menu = "300200";
 include_once('./_common.php');
 
+//print_r2($_POST); exit;
+
 check_demo();
 
 auth_check($auth[$sub_menu], 'w');
@@ -13,15 +15,16 @@ if(!$count)
 
 for ($i=0; $i<$count; $i++)
 {
-    $gr_id = $_POST['chk'][$i];
-
+    $k     = $_POST['chk'][$i];
+    $gr_id = $_POST['group_id'][$k];
+    
     if($_POST['act_button'] == '선택수정') {
         $sql = " update {$g4['group_table']}
                     set gr_subject    = '{$_POST['gr_subject'][$k]}',
-                        gr_use        = '{$_POST['gr_use'][$k]}',
+                        gr_device     = '{$_POST['gr_device'][$k]}',
                         gr_admin      = '{$_POST['gr_admin'][$k]}',
                         gr_use_access = '{$_POST['gr_use_access'][$k]}'
-                  where gr_id         = '{$_POST['gr_id'][$k]}' ";
+                  where gr_id         = '{$gr_id}' ";
         if ($is_admin != 'super')
             $sql .= " and gr_admin    = '{$_POST['gr_admin'][$k]}' ";
         sql_query($sql);

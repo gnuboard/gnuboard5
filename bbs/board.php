@@ -5,7 +5,7 @@ if (!$board['bo_table']) {
    alert('존재하지 않는 게시판입니다.', G4_URL);
 }
 
-check_pc_mobile($board['bo_pc_mobile']);
+check_device($board['bo_device']);
 
 if (isset($write['wr_is_comment']) && $write['wr_is_comment']) {
     goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'#c_'.$wr_id);

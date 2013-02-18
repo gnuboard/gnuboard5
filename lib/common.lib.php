@@ -1637,7 +1637,8 @@ function convert_charset($from_charset, $to_charset, $str)
 // mysql_real_escape_string 의 alias 기능을 한다.
 function escape_trim($field)
 {
-    return mysql_real_escape_string(trim($field));
+    if ($field)
+        return mysql_real_escape_string(trim($field));
 }
 
 
@@ -1719,15 +1720,15 @@ function iconv_euckr($str)
 
 
 // PC 또는 모바일 사용인지를 검사
-function check_pc_mobile($pc_mobile)
+function check_device($device)
 {
     global $is_admin;
 
     if ($is_admin) return;
 
-    if ($pc_mobile=='pc' && G4_IS_MOBILE) {
+    if ($device=='pc' && G4_IS_MOBILE) {
         alert('PC 전용 게시판입니다.', G4_URL);
-    } else if ($pc_mobile=='mobile' && !G4_IS_MOBILE) {
+    } else if ($device=='mobile' && !G4_IS_MOBILE) {
         alert('모바일 전용 게시판입니다.', G4_URL);
     }
 }

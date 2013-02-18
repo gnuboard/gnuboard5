@@ -14,7 +14,7 @@ if (!$bo_table) {
     alert("bo_table 값이 넘어오지 않았습니다.\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", G4_URL);
 }
 
-check_pc_mobile($board['bo_pc_mobile']);
+check_device($board['bo_device']);
 
 @include_once (G4_PATH.'/skin/board/write.head.skin.php');
 @include_once ($board_skin_path.'/write.head.skin.php');

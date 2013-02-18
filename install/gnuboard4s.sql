@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `g4s_board` (
   `bo_table` varchar(20) NOT NULL default '',
   `gr_id` varchar(255) NOT NULL default '',
   `bo_subject` varchar(255) NOT NULL default '',
-  `bo_pc_mobile` enum('both','pc','mobile') NOT NULL DEFAULT 'both',
+  `bo_device` enum('both','pc','mobile') NOT NULL DEFAULT 'both',
   `bo_admin` varchar(255) NOT NULL default '',
   `bo_list_level` tinyint(4) NOT NULL default '0',
   `bo_read_level` tinyint(4) NOT NULL default '0',

@@ -58,14 +58,13 @@ include_once('./admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="gr_use">사용여부</label></th>
+        <th scope="row"><label for="gr_device">접속기기</label></th>
         <td>
-            <?=help("게시판그룹의 사용여부 설정이 게시판의 사용여부 설정보다 우선합니다.")?>
-            <select id="gr_use_" name="gr_use">
-            <option value="both" <?=get_selected($group['gr_use'], 'both', true);?>>PC와 모바일에서 모두 사용</option>
-            <option value="pc" <?=get_selected($group['gr_use'], 'pc');?>>PC 전용</option>
-            <option value="mobile" <?=get_selected($group['gr_use'], 'mobile');?>>모바일 전용</option>
-            <option value="none" <?=get_selected($group['gr_use'], 'none');?>>사용하지 않음</option>
+            <?=help("PC 와 모바일 사용을 구분합니다.")?>
+            <select id="gr_device_" name="gr_device">
+            <option value="both" <?=get_selected($group['gr_device'], 'both', true);?>>PC와 모바일에서 모두 사용</option>
+            <option value="pc" <?=get_selected($group['gr_device'], 'pc');?>>PC 전용</option>
+            <option value="mobile" <?=get_selected($group['gr_device'], 'mobile');?>>모바일 전용</option>
             </select>
         </td>
     </tr>
