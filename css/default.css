@@ -15,7 +15,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 a:link, a:visited {color:#000;text-decoration:none}
 a:hover,
 a:focus,
-a:active {color:#2a6bc4;text-decoration:underline}
+a:active {color:#ff3061;text-decoration:underline}
 
 /* 화면낭독기 사용자용 */
 .sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;border:0 !important;overflow:hidden !important}
@@ -100,11 +100,11 @@ a:active {color:#2a6bc4;text-decoration:underline}
 .btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn01:focus,
 .btn01:hover {text-decoration:none !important}
-.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #3f3f3f !important;background:#444 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
+.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #383b3f !important;background:#444 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 10px;height:24px;border:0;background:#444;color:#fff;letter-spacing:-0.1em;vertical-align:top}
+.btn_submit {padding:0 10px;height:24px;border:0;background:#ff3061;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#444;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
@@ -198,7 +198,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #reg_result_logo {margin-bottom:40px;text-align:center}
 #reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
 #reg_result_email span {display:inline-block;width:150px}
-#reg_result_email strong {color:#2a6bc4;font-size:1.2em}
+#reg_result_email strong {color:#ff3061;font-size:1.2em}
 
 /* 아이디/패스워드 찾기 */
 #find_info_fs {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#f7f7f7}
@@ -227,21 +227,21 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #ol_svc {padding-top:8px;text-align:right}
 
 #ol_after_hd {text-align:center}
-#ol_after_hd a {color:#2a6bc4}
+#ol_after_hd a {color:#ff3061}
 #ol_after_private {margin:7px 0 3px;zoom:1}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
 #ol_after_private a {display:block;padding-top:8px;height:37px;background:#fff;text-align:center}
-#ol_after_private a strong {display:block;padding-top:5px;color:#2a6bc4}
+#ol_after_private a strong {display:block;padding-top:5px;color:#ff3061;font-weight:normal}
 #ol_after_private a:focus,
-#ol_after_private a:hover {background:#2a6bc4;color:#fff;text-decoration:none}
+#ol_after_private a:hover {background:#ff3061;color:#fff;text-decoration:none}
 #ol_after_private a:focus strong,
 #ol_after_private a:hover strong {color:#fff;text-decoration:none}
 #ol_after_memo {width:50px;margin-right:1px}
 #ol_after_pt {width:100px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:justify}
-#ol_after_ft a {display:inline-block;width:98px;height:20px;background:#484848;color:#fff;text-align:center;line-height:1.8em}
+#ol_after_ft a {display:inline-block;width:98px;height:20px;background:#383b3f;color:#fff;text-align:center;line-height:1.8em}
 #ol_after_ft a:focus,
 #ol_after_ft a:hover {text-decoration:none !important}
 
@@ -296,7 +296,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 /* 설문조사 스킨 */
 #poll {}
 #poll header {padding:20px 14px 0}
-#poll header a {color:#2a6bc4}
+#poll header a {color:#ff3061}
 #poll header p {padding:5px 0 10px}
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
 #poll li {padding:3px 0}
@@ -322,7 +322,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #poll_result_list p strong {position:absolute;top:5px;right:5%;padding-right:80px;width:100px;text-align:right}
 #poll_result_list p span {position:absolute;top:5px;right:5%;width:80px;text-align:right}
 .poll_result_graph {position:relative;margin-right:5%;height:5px;background:#eee}
-.poll_result_graph span {position:absolute;top:0;left:0;height:5px;background:#2a6bc4;font-size:0.1em}
+.poll_result_graph span {position:absolute;top:0;left:0;height:5px;background:#ff3061;font-size:0.1em}
 #poll_result_cmt {margin:0 auto 20px}
 #poll_result_cmt h2 {text-align:center}
 #poll_result_cmt h3 {margin:0 auto 10px;padding-top:15px;width:93%}
@@ -377,9 +377,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #sch_result_bo dd {margin:0;padding:0}
 #sch_result_bo ul {margin-top:1px}
 #sch_result_bo li {position:relative;margin-top:-1px;height:40px}
-#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #1e5db3;border-right:0;background:#2a6bc4;color:#fff;text-decoration:none;line-height:3.4em}
+#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #1e5db3;border-right:0;background:#ff3061;color:#fff;text-decoration:none;line-height:3.4em}
 #sch_result_bo .sch_on {width:150px;border-color:#ddd;border-right:0;background:#fff;color:#000;font-weight:bold}
-#sch_result_bo .cnt_cmt {display:inline-block;margin-left:10px;color:#fff}
+#sch_result_bo .cnt_cmt {color:#fff}
 #sch_result_bo .sch_on .cnt_cmt {color:#000}
 #sch_result_atc {float:left;margin:0;padding:15px 25px;width:508px;border:1px solid #ddd;background:#fff}
 #sch_result_atc dt a {display:inline-block;margin-bottom:15px;color:#000;font-size:1.2em;font-weight:bold;text-decoration:none}
@@ -399,7 +399,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 /* 우편번호 검색 */
 #post_code fieldset {margin:0 auto 10px;padding:15px 10px;width:87%;text-align:center}
 #post_code dl {margin:0 auto 10px;padding:20px 10px;width:87%}
-#post_code dt {margin-bottom:15px;color:#2a6bc4}
+#post_code dt {margin-bottom:15px;color:#ff3061}
 #post_code dd {margin:0;padding:0}
 #post_code ul {margin:0;padding:0;list-style:none}
 #post_code li a {display:block;padding:8px 0 6px;border-bottom:1px solid #eee}
@@ -434,9 +434,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#ff3061}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#ff3061 !important;text-decoration:none} /* 글제목줄 분류스타일 */
-.bo_current {color:#2a6bc4}
+.bo_current {color:#ff3061}
 .td_subject img {margin-left:3px}
-.cnt_cmt {display:inline-block;margin:0 4px;color:#777;font-family:"verdana"}
+.cnt_cmt {color:#777}
 
 /* 게시판 읽기 */
 #bo_v_title {margin-bottom:5px;padding:5px 0;border-bottom:1px solid #484848;font-weight:bold;text-align:center}
@@ -481,7 +481,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #bo_v_img:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_img img {max-width:100%;height:auto}
 #bo_v_con {margin-bottom:30px;width:730px;line-height:1.7em;word-break:break-all;overflow:hidden}
-#bo_v_con a {color:#2a6bc4;text-decoration:underline}
+#bo_v_con a {color:#ff3061;text-decoration:underline}
 #bo_v_con img {max-width:100%;height:auto}
 
 #bo_v_act {margin-bottom:30px;text-align:center}
