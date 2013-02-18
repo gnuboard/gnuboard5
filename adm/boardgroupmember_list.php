@@ -70,6 +70,15 @@ $colspan = 7;
 
 <section class="cbox">
     <h2><?=$gr['gr_subject']?> 그룹에 접근가능한 회원 목록 (그룹아이디:<?=$gr['gr_id']?>)</h2>
+    <form id="fboardgroupmember" name="fboardgroupmember" method="post" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
+    <input type="hidden" name="gr_id" value="<?=$gr_id?>">
+    <input type="hidden" name="w" value="ld">
     <table>
     <thead>
     <tr>
@@ -98,7 +107,7 @@ $colspan = 7;
         $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
     ?>
     <tr>
-        <td class="td_chk"><input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['mb_nick']?> 회원 선택"></td>
+        <td class="td_chk"><input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['gm_id']?>" title="<?=$row['mb_nick']?> 회원 선택"></td>
         <td class="td_grid"><?=$group?></td>
         <td class="td_mbid"><?=$row['mb_id']?></td>
         <td class="td_mbname"><?=$row['mb_name']?></td>
@@ -120,34 +129,22 @@ $colspan = 7;
     <div class="btn_list">
         <input type="submit" name="" value="선택삭제">
     </div>
+    </form>
 </section>
 
 <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;gr_id=$gr_id&page=");?>
 
 <script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
+function fboardgroupmember_submit(f)
 {
-    var f = document.fpost;
-
-    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.gm_id.value = val;
-        f.action      = action_url;
-        f.submit();
+    if (!is_checked("chk[]")) {
+        alert("선택삭제 하실 항목을 하나 이상 선택하세요.");
+        return false;
     }
+
+    return true;
 }
 </script>
-
-<form id="fpost" name="fpost" method="post">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="w" value="listdelete">
-<input type="hidden" name="gm_id">
-</form>
 
 <?
 include_once('./admin.tail.php');

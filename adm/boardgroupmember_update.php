@@ -37,25 +37,33 @@ if ($w == '')
         sql_query($sql);
     }
 }
-else if ($w == 'd' || $w == 'listdelete')
+else if ($w == 'd' || $w == 'ld')
 {
     auth_check($auth[$sub_menu], 'd');
-    $sql = " select * from {$g4['group_member_table']} where gm_id = '{$_POST['gm_id']}' ";
-    $gm = sql_fetch($sql);
-    if (!$gm['gm_id']) {
-        alert('존재하지 않는 자료입니다.');
-    }
+
+    $count = count($_POST['chk']);
+    if(!$count)
+        alert('삭제할 목록을 하나이상 선택해 주세요.');
 
     check_token();
 
-    $gr_id = $gm['gr_id'];
-    $mb_id = $gm['mb_id'];
+    for($i=0; $i<$count; $i++) {
+        $gm_id = $_POST['chk'][$i];
+        $sql = " select * from {$g4['group_member_table']} where gm_id = '$gm_id' ";
+        $gm = sql_fetch($sql);
+        if (!$gm['gm_id']) {
+            if($count == 1)
+                alert('존재하지 않는 자료입니다.');
+            else
+                continue;
+        }
 
-    $sql = " delete from {$g4['group_member_table']} where gm_id = '{$_POST['gm_id']}' ";
-    sql_query($sql);
+        $sql = " delete from {$g4['group_member_table']} where gm_id = '$gm_id' ";
+        sql_query($sql);
+    }
 }
 
-if ($w == 'listdelete')
+if ($w == 'ld')
     goto_url('./boardgroupmember_list.php?gr_id='.$gr_id);
 else
     goto_url('./boardgroupmember_form.php?mb_id='.$mb_id);
