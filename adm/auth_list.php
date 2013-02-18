@@ -160,30 +160,52 @@ $colspan = 5;
     <h2>관리권한 추가</h2>
     <p>다음 양식에서 회원에게 관리권한을 부여하실 수 있습니다.</p>
 
-    <label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label>
-    <input type="text" id="mb_id" name="mb_id" class="required frm_input" required value="<?=$mb_id?>" title="회원아이디">
-    <label for="au_menu">접근가능메뉴<strong class="sound_only">필수</strong></label>
-    <select id="au_menu" name="au_menu" required title="접근가능메뉴">
-        <option value=''>선택하세요
-        <?
-        foreach($auth_menu as $key=>$value)
-        {
-            if (!(substr($key, -3) == '000' || $key == '-' || !$key))
-                echo '<option value="'.$key.'">'.$key.' '.$value;
-        }
-        ?>
-    </select>
-    <input type="checkbox" id="r" name="r" value="r" checked>
-    <label for="r">r (읽기)</label>
-    <input type="checkbox" id="w" name="w" value="w">
-    <label for="w">w (쓰기)</label>
-    <input type="checkbox" id="d" name="d" value="d">
-    <label for="d">d (삭제)</label>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" id="mb_id" name="mb_id" class="required frm_input" required value="<?=$mb_id?>" title="회원아이디"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="au_menu">접근가능메뉴<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <select id="au_menu" name="au_menu" required title="접근가능메뉴">
+                <option value=''>선택하세요
+                <?
+                foreach($auth_menu as $key=>$value)
+                {
+                    if (!(substr($key, -3) == '000' || $key == '-' || !$key))
+                        echo '<option value="'.$key.'">'.$key.' '.$value;
+                }
+                ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">권한지정</th>
+        <td>
+            <input type="checkbox" id="r" name="r" value="r" checked>
+            <label for="r">r (읽기)</label>
+            <input type="checkbox" id="w" name="w" value="w">
+            <label for="w">w (쓰기)</label>
+            <input type="checkbox" id="d" name="d" value="d">
+            <label for="d">d (삭제)</label>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+
     <fieldset id="admin_confirm">
+        <legend>XSS 혹은 CSRF 방지</legend>
         <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
         <label for="admin_password">관리자 패스워드</label>
         <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
     </fieldset>
+
     <div class="btn_confirm">
         <input type="submit" class="btn_submit" value="완료">
     </div>
