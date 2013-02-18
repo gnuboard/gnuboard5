@@ -202,7 +202,7 @@ $(function(){
             }
         } else if(act == "선택수정") {
             if(cnt < 1) {
-                alert(act+'할 게시판그룹을 1개 이상 선택해 주세요.');
+                alert(act+'할 게시판을 1개 이상 선택해 주세요.');
                 return false;
             }
         }
