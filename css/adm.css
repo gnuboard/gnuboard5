@@ -240,6 +240,8 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 /* 세션파일일괄삭제 */
 #session_del p,
 #cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
+#session_del p span,
+#cache_del p span {color:#ff3061}
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
@@ -255,6 +257,8 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #admin_confirm {padding:0 0 10px;background:#222;text-align:center}
 #admin_confirm p {margin:0 0 10px;color:#9ab9c5;background:#383a3f}
 #admin_confirm label {color:#fff}
+#admin_confirm .frm_input {border-color:#000}
+#admin_confirm .frm_input:focus {border-color:#000}
 
 /* pagination */
 .pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}

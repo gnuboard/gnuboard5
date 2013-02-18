@@ -21,6 +21,7 @@ $colspan = 4;
     <table>
     <thead>
     <tr>
+        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 접근가능그룹 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col">그룹아이디</th>
         <th scope="col">그룹</th>
         <th scope="col">처리일시</th>
@@ -40,6 +41,7 @@ $colspan = 4;
         $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
     ?>
     <tr>
+        <td class="td_chk"><input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹 선택"></td>
         <td class="td_grid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td class="td_category"><?=$row['gr_subject']?></td>
         <td class="td_time"><?=$row['gm_datetime']?></td>
@@ -54,6 +56,10 @@ $colspan = 4;
     ?>
     </tbody>
     </table>
+
+    <div class="btn_list">
+        <input type="submit" name="" value="선택삭제">
+    </div>
 </div>
 
 <form id="fboardgroupmember_form" name="fboardgroupmember_form" method="post" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)">
@@ -78,7 +84,7 @@ $colspan = 4;
     }
     ?>
     </select>
-    <input type="submit" class="btn_submit" value="완료" accesskey="s">
+    <input type="submit" class="btn_submit" value="선택" accesskey="s">
     <p>게시판 그룹이 존재하지 않는다면 <a href="./boardgroup_form.php">게시판그룹생성하기</a></p>
 </fieldset>
 </form>
