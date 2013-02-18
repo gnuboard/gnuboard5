@@ -122,7 +122,7 @@ function textarea_size(fld, size)
 <div id="wrapper">
 
     <ul id="qnb">
-        <li></li>
+        <li><a href="#" style="background:#ddd">1</a></li>
         <li></li>
         <li></li>
     </ul>
