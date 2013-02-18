@@ -66,6 +66,5 @@ var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
 <script src="<?=G4_JS_URL?>/jquery-1.8.3.min.js"></script>
 <script src="<?=G4_JS_URL?>/common.js"></script>
 <script src="<?=G4_JS_URL?>/wrest.js"></script>
-<script src="<?=G4_JS_URL?>/sideview.js"></script>
 </head>
 <body>
