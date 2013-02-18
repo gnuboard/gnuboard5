@@ -14,11 +14,11 @@ $sql_common = " from {$g4['group_member_table']} a
 
 $sql_search = " where gr_id = '{$gr_id}' ";
 // 회원아이디로 검색되지 않던 오류를 수정
-if (isset($stx)) {
+if (isset($stx) && $stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         default :
-            $sql_search .= " ({$sfl} like '%{$stx}%') ";
+            $sql_search .= " ($sfl like '%$stx%') ";
             break;
     }
     $sql_search .= " ) ";
