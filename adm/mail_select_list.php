@@ -64,54 +64,56 @@ $ma_last_option .= "||gr_id={$gr_id}";
 
 sql_query(" update {$g4['mail_table']} set ma_last_option = '{$ma_last_option}' where ma_id = '{$ma_id}' ");
 
-$g4['title'] = "선택된 메일발송 대상 회원";
+$g4['title'] = "메일발송 대상 회원";
 include_once('./admin.head.php');
 ?>
 
-<form id="fmailselectlist" name="fmailselectlist" method="post" action="./mail_select_update.php">
-<input type="hidden" name="token" value="<?=$token?>">
-<input type="hidden" name="ma_id" value="<?=$ma_id ?>">
-<table>
-<caption>선택된 회원 목록</caption>
-<thead>
-<tr>
-    <th scope="col">번호</th>
-    <th scope="col">회원아이디</th>
-    <th scope="col">이름</th>
-    <th scope="col">별명</th>
-    <th scope="col">생일</th>
-    <th scope="col">E-mail</th>
-</tr>
-</thead>
-<tbody>
-<?
-$sql = " select mb_id, mb_name, mb_nick, mb_email, mb_datetime $sql_common $sql_where order by mb_id ";
-$result = sql_query($sql);
-$i=0;
-$ma_list = "";
-$cr = "";
-while ($row=sql_fetch_array($result))
-{
-    $i++;
-    $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row['mb_datetime'];
-    $cr = "\n";
-?>
-<tr>
-    <td class="td_num"><?=$i?></td>
-    <td class="td_mbid"><?=$row['mb_id']?></td>
-    <td class="td_mbname"><?=$row['mb_name']?></td>
-    <td class="td_mbnick"><?=$row['mb_nick']?></td>
-    <td class="td_time"><?=$row['mb_birth']?></td>
-    <td><?=$row['mb_email']?></td>
-</tr>
-<?}?>
-</tbody>
-</table>
+<div class="cbox">
+    <p>조건에 따라 선택된 메일발송 대상자 목록입니다.</p>
 
-<input type="hidden" name="ma_list" value="<?=$ma_list?>">
+    <form id="fmailselectlist" name="fmailselectlist" method="post" action="./mail_select_update.php">
+    <input type="hidden" name="token" value="<?=$token?>">
+    <input type="hidden" name="ma_id" value="<?=$ma_id ?>">
+    <input type="hidden" name="ma_list" value="<?=$ma_list?>">
+    <table>
+    <thead>
+    <tr>
+        <th scope="col">번호</th>
+        <th scope="col">회원아이디</th>
+        <th scope="col">이름</th>
+        <th scope="col">별명</th>
+        <th scope="col">생일</th>
+        <th scope="col">E-mail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    $sql = " select mb_id, mb_name, mb_nick, mb_email, mb_datetime $sql_common $sql_where order by mb_id ";
+    $result = sql_query($sql);
+    $i=0;
+    $ma_list = "";
+    $cr = "";
+    while ($row=sql_fetch_array($result))
+    {
+        $i++;
+        $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row['mb_datetime'];
+        $cr = "\n";
+    ?>
+    <tr>
+        <td class="td_num"><?=$i?></td>
+        <td class="td_mbid"><?=$row['mb_id']?></td>
+        <td class="td_mbname"><?=$row['mb_name']?></td>
+        <td class="td_mbnick"><?=$row['mb_nick']?></td>
+        <td class="td_time"><?=$row['mb_birth']?></td>
+        <td><?=$row['mb_email']?></td>
+    </tr>
+    <?}?>
+    </tbody>
+    </table>
+</div>
 
 <div class="btn_confirm">
-    <input type="submit" value="메일보내기">
+    <input type="submit" class="btn_submit" value="메일보내기">
     <a href="./mail_select_form.php?ma_id=<?=$ma_id?>">뒤로</a>
 </div>
 

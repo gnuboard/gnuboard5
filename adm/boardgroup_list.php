@@ -4,13 +4,13 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-if (!isset($group['gr_use'])) {
+if (!isset($group['gr_device'])) {
     // 게시판 그룹 사용 필드 추가
     // both : pc, mobile 둘다 사용
     // pc : pc 전용 사용
     // mobile : mobile 전용 사용
     // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g4['board_group_table']}` ADD  `gr_use` ENUM(  'both',  'pc',  'mobile',  'none' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
+    sql_query(" ALTER TABLE  `{$g4['board_group_table']}` ADD  `gr_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
 }
 
 $sql_common = " from {$g4['group_table']} ";
@@ -60,10 +60,6 @@ include_once('./admin.head.php');
 $colspan = 8;
 ?>
 
-<script>
-var list_update_php = "./boardgroup_list_update.php";
-</script>
-
 <form id="fsearch" name="fsearch" method="get">
 <fieldset>
     <legend>그룹 검색</legend>
@@ -94,7 +90,7 @@ var list_update_php = "./boardgroup_list_update.php";
     </div>
     <?}?>
 
-    <form id="fboardgrouplist" name="fboardgrouplist" method="post" action="./boardgroup_list_update.php">
+    <form id="fboardgrouplist" name="fboardgrouplist" method="post" action="./boardgroup_list_update.php" onsubmit="return fboardgrouplist_submit(this);">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -112,7 +108,7 @@ var list_update_php = "./boardgroup_list_update.php";
         <th scope="col">게시판</th>
         <th scope="col">접근사용</th>
         <th scope="col">접근회원수</th>
-        <th scope="col"><?=subject_sort_link('gr_use')?>사용여부</a></th>
+        <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -129,15 +125,12 @@ var list_update_php = "./boardgroup_list_update.php";
         $row2 = sql_fetch($sql2);
 
         $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
-        /*$s_del = '';
-        if ($is_admin == 'super') {
-            $s_del = '<a href="javascript:post_delete(\'boardgroup_delete.php\', \''.$row['gr_id'].'\');">삭제</a>';
-        }*/
     ?>
 
     <tr>
         <td class="td_chk">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['gr_id']?>" title="<?=$row['gr_subject']?> 그룹선택">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
+            <input type="hidden" name="group_id[<?=$i?>]" value="<?=$row['gr_id']?>">
         </td>
         <td class="td_mbid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td>
@@ -154,11 +147,10 @@ var list_update_php = "./boardgroup_list_update.php";
         <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
         <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
         <td>
-            <select id="gr_use_<?=$i?>" name="gr_use[<?=$i?>]">
-                <option value="both"<?=get_selected($row['gr_use'], 'both', true);?>>양쪽</option>
-                <option value="pc"<?=get_selected($row['gr_use'], 'pc');?>>PC</option>
-                <option value="mobile"<?=get_selected($row['gr_use'], 'mobile');?>>모바일</option>
-                <option value="none"<?=get_selected($row['gr_use'], 'none');?>>미사용</option>
+            <select id="gr_device_<?=$i?>" name="gr_device[<?=$i?>]">
+                <option value="both"<?=get_selected($row['gr_device'], 'both');?>>모두</option>
+                <option value="pc"<?=get_selected($row['gr_device'], 'pc');?>>PC</option>
+                <option value="mobile"<?=get_selected($row['gr_device'], 'mobile');?>>모바일</option>
             </select>
         </td>
         <td class="td_mng"><?=$s_upd?></td>
@@ -172,8 +164,8 @@ var list_update_php = "./boardgroup_list_update.php";
     </table>
 
     <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정">
-        <input type="submit" name="act_button" value="선택삭제">
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
         <a href="./boardgroup_form.php">게시판그룹 추가</a>
     </div>
     </form>
@@ -185,30 +177,15 @@ echo $pagelist;
 ?>
 
 <script>
-$(function() {
-    $('input[name=act_button]').click(function(e) {
-        e.preventDefault();
+function fboardgrouplist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
 
-        var act = $(this).val();
-        var cnt = $('input[name^=chk]:checked').length;
-
-        if(act == "선택삭제") {
-            if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-                if(cnt < 1) {
-                    alert(act+'할 게시판그룹을 1개 이상 선택해 주세요.');
-                    return false;
-                }
-            }
-        } else if(act == "선택수정") {
-            if(cnt < 1) {
-                alert(act+'할 게시판그룹을 1개 이상 선택해 주세요.');
-                return false;
-            }
-        }
-
-        $('#fboardgrouplist').submit();
-    });
-});
+    return true;
+}
 </script>
 
 <?
