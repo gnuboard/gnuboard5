@@ -10,7 +10,7 @@ if (!count($_POST['chk'])) {
 
 auth_check($auth[$sub_menu], 'w');
 
-if ($_POST['btn_submit'] == "선택수정") {
+if ($_POST['act_button'] == "선택수정") {
 
     for ($i=0; $i<count($_POST['chk']); $i++)
     {
@@ -34,7 +34,7 @@ if ($_POST['btn_submit'] == "선택수정") {
         }
     }
 
-} else if ($_POST['btn_submit'] == "선택삭제") {
+} else if ($_POST['act_button'] == "선택삭제") {
 
     for ($i=0; $i<count($_POST['chk']); $i++)
     {
@@ -59,7 +59,8 @@ if ($_POST['btn_submit'] == "선택수정") {
 }
 
 if ($msg)
-    echo '<script> alert("'.$msg.'"); </script>';
+    //echo '<script> alert("'.$msg.'"); </script>';
+    alert($msg);
 
 goto_url('./member_list.php?'.$qstr);
 ?>
