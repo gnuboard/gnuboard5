@@ -21,14 +21,14 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
         $sql = " select * from {$tmp_write_table} where wr_is_comment = 0 order by wr_num limit 0, {$rows} ";
         $result = sql_query($sql);
         for ($i=0; $row = sql_fetch_array($result); $i++) {
-            $list[$i] = get_list($row, $board, $latest_skin_path, $subject_len);
+            $list[$i] = get_list($row, $board, $latest_skin_url, $subject_len);
         }
 
         $handle = fopen($cache_file, 'w');
         $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject=\"".get_text($board['bo_subject'])."\";\n\$list=".var_export($list, true)."?>";
         fwrite($handle, $cache_content);
         fclose($handle);
-    } 
+    }
 
     include_once($cache_file);
 
