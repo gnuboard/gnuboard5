@@ -8,7 +8,7 @@ if (!count($_POST['chk'])) {
     alert($_POST['btn_submit']." 하실 항목을 하나 이상 체크하세요.");
 }
 
-if ($_POST['btn_submit'] == "선택수정") {
+if ($_POST['act_button'] == "선택수정") {
 
     auth_check($auth[$sub_menu], 'w');
 
@@ -42,7 +42,7 @@ if ($_POST['btn_submit'] == "선택수정") {
         sql_query($sql);
     }
 
-} else if ($_POST['btn_submit'] == "선택삭제") {
+} else if ($_POST['act_button'] == "선택삭제") {
 
     if ($is_admin != 'super')
         alert('게시판 삭제는 최고관리자만 가능합니다.');

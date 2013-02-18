@@ -1,7 +1,7 @@
 <?
 $sub_menu = "300100";
-define('G4_CAPTCHA', 1);
 include_once("./_common.php");
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 auth_check($auth[$sub_menu], 'w');
 
@@ -9,7 +9,7 @@ $token = get_token();
 
 $g4['title'] = '게시판 복사';
 $administrator = 1;
-include_once($g4['path'].'/head.sub.php');
+include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <form id="fboardcopy" name="fboardcopy" method="post" action="./board_copy_update.php" onsubmit="return fboardcopy_check(this);">
@@ -66,5 +66,5 @@ function fboardcopy_check(f)
 
 
 <?
-include_once($g4['path'].'/tail.sub.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>
