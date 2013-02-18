@@ -112,6 +112,9 @@ h2 {font-size:1.2em}
 fieldset .btn_submit {height:21px;background:#383a3f;line-height:1.7em}
 fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:21px;border:0;background:#444;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:middle;line-height:2em} /* 우편번호검색버튼 등 */
+.btn_frmline:focus,
+.btn_frmline:hover,
+.btn_frmline:active {text-decoration:none}
 
 .btn_list input,
 .btn_list button {padding:0 15px;height:28px;border:0;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
