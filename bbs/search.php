@@ -218,7 +218,7 @@ $group_select = '<select id="gr_id" name="gr_id" class="select" title="그룹선
 $sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
-    $group_select .= '<option value="'.$row['gr_id'].'">'.$row['gr_subject'].'</option>';
+    $group_select .= "<option value=\"".$row['gr_id']."\"".get_selected($_GET['gr_id'], $row['gr_id']).">".$row['gr_subject']."</option>";
 $group_select .= '</select>';
 
 if (!$sfl) $sfl = 'wr_subject';
