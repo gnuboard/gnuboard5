@@ -16,17 +16,12 @@ include_once("./admin.head.php");
     <?
     flush();
 
-    $list_tag_st = "";
-    $list_tag_end = "";
     if (!$dir=@opendir(G4_DATA_PATH.'/cache')) {
         echo "<p>최신글 캐시디렉토리를 열지못했습니다.</p>";
-    } else {
-        $list_tag_st = "<ul>\n<li>완료됨</li>\n";
-        $list_tag_end = "</ul>\n";
     }
 
     $cnt=0;
-    echo $list_tag_st;
+    echo "<ul>\n";
     while($file=readdir($dir)) {
         if ($file=='.' || $file=='..') continue;
 
@@ -46,7 +41,7 @@ include_once("./admin.head.php");
             //echo "<script>document.getElementById('delete_message').innerHTML = '';</script>\n";
             echo "\n";
     }
-    echo $list_tag_end;
+    echo "<li>완료됨</li>\n</ul>\n";
     //echo "<script>document.getElementById('delete_message').innerHTML += '최신글 캐시파일 {$cnt}건 삭제 완료.<br><br>프로그램의 실행을 끝마치셔도 좋습니다.';</script>\n";
     echo "<p><span>최신글 캐시파일 {$cnt}건 삭제가 완료됐습니다.</span><br>프로그램의 실행을 끝마치셔도 좋습니다.</p>\n";
     ?>
