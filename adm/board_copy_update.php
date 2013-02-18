@@ -1,7 +1,7 @@
 <?
 $sub_menu = '300100';
-define('G4_CAPTCHA', 1);
 include_once('./_common.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 auth_check($auth[$sub_menu], 'w');
 
@@ -106,11 +106,11 @@ $sql = " insert into {$g4['board_table']}
 sql_query($sql);
 
 // 게시판 폴더 생성
-@mkdir($g4['path'].'/data/file/'.$target_table, 0707);
-@chmod($g4['path'].'/data/file/'.$target_table, 0707);
+@mkdir(G4_DATA_PATH.'/file/'.$target_table, 0707);
+@chmod(G4_DATA_PATH.'/file/'.$target_table, 0707);
 
 // 디렉토리에 있는 파일의 목록을 보이지 않게 한다.
-$board_path = $g4['path'].'/data/file/'.$target_table;
+$board_path = G4_DATA_PATH.'/file/'.$target_table;
 $file = $board_path . '/index.php';
 $f = @fopen($file, 'w');
 @fwrite($f, '');
@@ -119,26 +119,26 @@ $f = @fopen($file, 'w');
 
 $copy_file = 0;
 if ($copy_case == 'schema_data_both') {
-    $d = dir($g4['path'].'/data/file/'.$bo_table);
+    $d = dir(G4_DATA_PATH.'/file/'.$bo_table);
     while ($entry = $d->read()) {
         if ($entry == '.' || $entry == '..') continue;
 
         // 김선용 201007 :
-        if(is_dir($g4['path'].'/data/file/'.$bo_table.'/'.$entry)){
-            $dd = dir($g4['path'].'/data/file/'.$bo_table.'/'.$entry);
-            @mkdir($g4['path'].'/data/file/'.$target_table.'/'.$entry, 0707);
-            @chmod($g4['path'].'/data/file/'.$target_table.'/'.$entry, 0707);
+        if(is_dir(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry)){
+            $dd = dir(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry);
+            @mkdir(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, 0707);
+            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, 0707);
             while ($entry2 = $dd->read()) {
                 if ($entry2 == '.' || $entry2 == '..') continue;
-                @copy($g4['path'].'/data/file/'.$bo_table.'/'.$entry.'/'.$entry2, $g4['path'].'/data/file/'.$target_table.'/'.$entry.'/'.$entry2);
-                @chmod($g4['path'].'/data/file/'.$target_table.'/'.$entry.'/'.$entry2, 0707);
+                @copy(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry.'/'.$entry2, G4_DATA_PATH.'/file/'.$target_table.'/'.$entry.'/'.$entry2);
+                @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry.'/'.$entry2, 0707);
                 $copy_file++;
             }
             $dd->close();
         }
         else {
-            @copy($g4['path'].'/data/file/'.$bo_table.'/'.$entry, $g4['path'].'/data/file/'.$target_table.'/'.$entry);
-            @chmod($g4['path'].'/data/file/'.$target_table.'/'.$entry, 0707);
+            @copy(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry, G4_DATA_PATH.'/file/'.$target_table.'/'.$entry);
+            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, 0707);
             $copy_file++;
         }
     }
