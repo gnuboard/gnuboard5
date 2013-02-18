@@ -156,9 +156,10 @@ $colspan = 5;
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="token" value="<?=$token?>">
 
-<fieldset>
-    <legend>관리권한 추가</legend>
+<section id="add_admin" class="cbox">
+    <h2>관리권한 추가</h2>
     <p>다음 양식에서 회원에게 관리권한을 부여하실 수 있습니다.</p>
+
     <label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label>
     <input type="text" id="mb_id" name="mb_id" class="required frm_input" required value="<?=$mb_id?>" title="회원아이디">
     <label for="au_menu">접근가능메뉴<strong class="sound_only">필수</strong></label>
@@ -178,11 +179,15 @@ $colspan = 5;
     <label for="w">w (쓰기)</label>
     <input type="checkbox" id="d" name="d" value="d">
     <label for="d">d (삭제)</label>
-    <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
-    <label for="admin_password">관리자 패스워드</label>
-    <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
-    <input type="submit" class="btn_submit" value="완료">
-</fieldset>
+    <fieldset id="admin_confirm">
+        <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
+        <label for="admin_password">관리자 패스워드</label>
+        <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
+    </fieldset>
+    <div class="btn_confirm">
+        <input type="submit" class="btn_submit" value="완료">
+    </div>
+</section>
 
 </form>
 

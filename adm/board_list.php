@@ -86,17 +86,13 @@ $colspan = 8;
     <h2>생성된 게시판 목록</h2>
     <p>여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 체크기능을 이용하세요.</p>
 
-<<<<<<< HEAD
     <?if ($is_admin == 'super') {?>
     <div id="btn_add">
         <a href="./board_form.php" id="bo_add">게시판 추가</a>
     </div>
     <?}?>
 
-    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
-=======
     <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php">
->>>>>>> 6351d0732dbb9a7896c228d552d98ba457ee7b4f
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
