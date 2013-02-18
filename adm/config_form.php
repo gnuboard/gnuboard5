@@ -122,10 +122,9 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('new');
             for ($i=0; $i<count($arr); $i++) {
-                echo '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+                echo '<option '.get_selected($config['cf_new_skin'], $arr[$i]).' value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
             }
             ?></select>
-            <script> document.getElementById('cf_new_skin').value="<?=$config['cf_new_skin']?>";</script>
         </td>
         <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
         <td>
