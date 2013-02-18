@@ -168,11 +168,17 @@ $colspan = 8;
     </table>
 
     <div class="btn_list">
+<<<<<<< HEAD
         <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택수정">
         <!-- <input type="submit" name="act_button" value="선택수정"> -->
         <?if ($is_admin == 'super') {?>
         <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제">
         <!-- <input type="submit" name="act_button" value="선택삭제"> -->
+=======
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
+        <?if ($is_admin == 'super') {?>
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
+>>>>>>> 3312cd2377e2b47707196bdb3df5cdab13720d51
         <a href="./board_form.php">게시판추가</a>
         <?}?>
     </div>
