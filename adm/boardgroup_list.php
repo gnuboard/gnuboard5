@@ -68,9 +68,9 @@ $colspan = 8;
         생성된 그룹수 <?=number_format($total_count)?>개
     </span>
     <select name="sfl" title="검색대상">
-        <option value="gr_subject" <?=get_selected("gr_subject", $_GET['sfl']);?>>제목</option>
-        <option value="gr_id" <?=get_selected("gr_id", $_GET['sfl']);?>>ID</option>
-        <option value="gr_admin" <?=get_selected("gr_admin", $_GET['sfl']);?>>그룹관리자</option>
+        <option value="gr_subject"<?=get_selected($_GET['sfl'], "gr_subject", );?>>제목</option>
+        <option value="gr_id"<?=get_selected($_GET['sfl'], "gr_id");?>>ID</option>
+        <option value="gr_admin"<?=get_selected($_GET['sfl'], "gr_admin");?>>그룹관리자</option>
     </select>
     <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
@@ -148,9 +148,9 @@ $colspan = 8;
         <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
         <td>
             <select id="gr_device_<?=$i?>" name="gr_device[<?=$i?>]">
-            <option value="both" <?=get_selected($row['gr_device'], 'both');?>>모두</option>
-            <option value="pc" <?=get_selected($row['gr_device'], 'pc');?>>PC</option>
-            <option value="mobile" <?=get_selected($row['gr_device'], 'mobile');?>>모바일</option>
+                <option value="both"<?=get_selected($row['gr_device'], 'both');?>>모두</option>
+                <option value="pc"<?=get_selected($row['gr_device'], 'pc');?>>PC</option>
+                <option value="mobile"<?=get_selected($row['gr_device'], 'mobile');?>>모바일</option>
             </select>
         </td>
         <td class="td_mng"><?=$s_upd?></td>

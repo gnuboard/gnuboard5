@@ -62,9 +62,9 @@ include_once('./admin.head.php');
         <td>
             <?=help("PC 와 모바일 사용을 구분합니다.")?>
             <select id="gr_device_" name="gr_device">
-            <option value="both" <?=get_selected($group['gr_device'], 'both', true);?>>PC와 모바일에서 모두 사용</option>
-            <option value="pc" <?=get_selected($group['gr_device'], 'pc');?>>PC 전용</option>
-            <option value="mobile" <?=get_selected($group['gr_device'], 'mobile');?>>모바일 전용</option>
+                <option value="both"<?=get_selected($group['gr_device'], 'both', true);?>>PC와 모바일에서 모두 사용</option>
+                <option value="pc"<?=get_selected($group['gr_device'], 'pc');?>>PC 전용</option>
+                <option value="mobile"<?=get_selected($group['gr_device'], 'mobile');?>>모바일 전용</option>
             </select>
         </td>
     </tr>

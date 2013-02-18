@@ -123,9 +123,9 @@ $pg_anchor = "<ul class=\"frm_list\">
         <td>
             <?=help("PC 와 모바일 사용을 구분합니다.")?>
             <select id="bo_device" name="bo_device">
-            <option value="both" <?=get_selected($board['bo_device'], 'both');?>>PC와 모바일에서 모두 사용</option>
-            <option value="pc" <?=get_selected($board['bo_device'], 'pc');?>>PC 전용</option>
-            <option value="mobile" <?=get_selected($board['bo_device'], 'mobile');?>>모바일 전용</option>
+                <option value="both"<?=get_selected($board['bo_device'], 'both');?>>PC와 모바일에서 모두 사용</option>
+                <option value="pc"<?=get_selected($board['bo_device'], 'pc');?>>PC 전용</option>
+                <option value="mobile"<?=get_selected($board['bo_device'], 'mobile');?>>모바일 전용</option>
             </select>
         </td>
         <td class="group_setting">
@@ -332,9 +332,9 @@ $pg_anchor = "<ul class=\"frm_list\">
         <td>
             <?=help('"체크박스"는 글작성시 비밀글 체크가 가능합니다. "무조건"은 작성되는 모든글을 비밀글로 작성합니다. (관리자는 체크박스로 출력합니다.) 스킨에 따라 적용되지 않을 수 있습니다.')?>
             <select id="bo_use_secret" name="bo_use_secret">
-            <?=option_selected(0, $board['bo_use_secret'], "사용하지 않음");?>
-            <?=option_selected(1, $board['bo_use_secret'], "체크박스");?>
-            <?=option_selected(2, $board['bo_use_secret'], "무조건");?>
+                <?=option_selected(0, $board['bo_use_secret'], "사용하지 않음");?>
+                <?=option_selected(1, $board['bo_use_secret'], "체크박스");?>
+                <?=option_selected(2, $board['bo_use_secret'], "무조건");?>
             </select>
         </td>
         <td class="group_setting">
@@ -703,8 +703,8 @@ $pg_anchor = "<ul class=\"frm_list\">
         <th scope="row"><label for="bo_reply_order">답변 달기</label></th>
         <td>
             <select id="bo_reply_order" name="bo_reply_order">
-            <option value="1" <?=get_selected($board['bo_reply_order'], 1, true);?>>나중에 쓴 답변 아래로 달기 (기본)
-            <option value="0" <?=get_selected($board['bo_reply_order'], 0);?>>나중에 쓴 답변 위로 달기
+                <option value="1"<?=get_selected($board['bo_reply_order'], 1, true);?>>나중에 쓴 답변 아래로 달기 (기본)
+                <option value="0"<?=get_selected($board['bo_reply_order'], 0);?>>나중에 쓴 답변 위로 달기
             </select>
         </td>
         <td class="group_setting">
@@ -717,25 +717,25 @@ $pg_anchor = "<ul class=\"frm_list\">
         <td>
             <?=help('리스트에서 기본으로 정렬에 사용할 필드를 선택합니다. "기본"으로 사용하지 않으시는 경우 속도가 느려질 수 있습니다.')?>
             <select id="bo_sort_field" name="bo_sort_field">
-                <option value=""                                    <?=get_selected($board['bo_sort_field'], ""                                     );?>>wr_num, wr_reply : 기본</option>
-                <option value="wr_datetime asc"                     <?=get_selected($board['bo_sort_field'], "wr_datetime asc"                      );?>>wr_datetime asc : 날짜 이전것 부터</option>
-                <option value="wr_datetime desc"                    <?=get_selected($board['bo_sort_field'], "wr_datetime desc"                     );?>>wr_datetime desc : 날짜 최근것 부터</option>
-                <option value="wr_hit asc, wr_num, wr_reply"        <?=get_selected($board['bo_sort_field'], "wr_hit asc, wr_num, wr_reply"         );?>>wr_hit asc : 조회수 낮은것 부터</option>
-                <option value="wr_hit desc, wr_num, wr_reply"       <?=get_selected($board['bo_sort_field'], "wr_hit desc, wr_num, wr_reply"        );?>>wr_hit desc : 조회수 높은것 부터</option>
-                <option value="wr_last asc"                         <?=get_selected($board['bo_sort_field'], "wr_last asc"                          );?>>wr_last asc : 최근글 이전것 부터</option>
-                <option value="wr_last desc"                        <?=get_selected($board['bo_sort_field'], "wr_last desc"                         );?>>wr_last desc : 최근글 최근것 부터</option>
-                <option value="wr_comment asc, wr_num, wr_reply"    <?=get_selected($board['bo_sort_field'], "wr_comment asc, wr_num, wr_reply"     );?>>wr_comment asc : 댓글수 낮은것 부터</option>
-                <option value="wr_comment desc, wr_num, wr_reply"   <?=get_selected($board['bo_sort_field'], "wr_comment desc, wr_num, wr_reply"    );?>>wr_comment desc : 댓글수 높은것 부터</option>
-                <option value="wr_good asc, wr_num, wr_reply"       <?=get_selected($board['bo_sort_field'], "wr_good asc, wr_num, wr_reply"        );?>>wr_good asc : 추천수 낮은것 부터</option>
-                <option value="wr_good desc, wr_num, wr_reply"      <?=get_selected($board['bo_sort_field'], "wr_good desc, wr_num, wr_reply"       );?>>wr_good desc : 추천수 높은것 부터</option>
-                <option value="wr_nogood asc, wr_num, wr_reply"     <?=get_selected($board['bo_sort_field'], "wr_nogood asc, wr_num, wr_reply"      );?>>wr_nogood asc : 비추천수 낮은것 부터</option>
-                <option value="wr_nogood desc, wr_num, wr_reply"    <?=get_selected($board['bo_sort_field'], "wr_nogood desc, wr_num, wr_reply"     );?>>wr_nogood desc : 비추천수 높은것 부터</option>
-                <option value="wr_subject asc, wr_num, wr_reply"    <?=get_selected($board['bo_sort_field'], "wr_subject asc, wr_num, wr_reply"     );?>>wr_subject asc : 제목 내림차순</option>
-                <option value="wr_subject desc, wr_num, wr_reply"   <?=get_selected($board['bo_sort_field'], "wr_subject desc, wr_num, wr_reply"    );?>>wr_subject desc : 제목 오름차순</option>
-                <option value="wr_name asc, wr_num, wr_reply"       <?=get_selected($board['bo_sort_field'], "wr_name asc, wr_num, wr_reply"        );?>>wr_name asc : 글쓴이 내림차순</option>
-                <option value="wr_name desc, wr_num, wr_reply"      <?=get_selected($board['bo_sort_field'], "wr_name desc, wr_num, wr_reply"       );?>>wr_name desc : 글쓴이 오름차순</option>
-                <option value="ca_name asc, wr_num, wr_reply"       <?=get_selected($board['bo_sort_field'], "ca_name asc, wr_num, wr_reply"        );?>>ca_name asc : 분류명 내림차순</option>
-                <option value="ca_name desc, wr_num, wr_reply"      <?=get_selected($board['bo_sort_field'], "ca_name desc, wr_num, wr_reply"       );?>>ca_name desc : 분류명 오름차순</option>
+                <option value="" <?=get_selected($board['bo_sort_field'], "");?>>wr_num, wr_reply : 기본</option>
+                <option value="wr_datetime asc" <?=get_selected($board['bo_sort_field'], "wr_datetime asc");?>>wr_datetime asc : 날짜 이전것 부터</option>
+                <option value="wr_datetime desc" <?=get_selected($board['bo_sort_field'], "wr_datetime desc");?>>wr_datetime desc : 날짜 최근것 부터</option>
+                <option value="wr_hit asc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_hit asc, wr_num, wr_reply");?>>wr_hit asc : 조회수 낮은것 부터</option>
+                <option value="wr_hit desc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_hit desc, wr_num, wr_reply");?>>wr_hit desc : 조회수 높은것 부터</option>
+                <option value="wr_last asc" <?=get_selected($board['bo_sort_field'], "wr_last asc");?>>wr_last asc : 최근글 이전것 부터</option>
+                <option value="wr_last desc" <?=get_selected($board['bo_sort_field'], "wr_last desc");?>>wr_last desc : 최근글 최근것 부터</option>
+                <option value="wr_comment asc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_comment asc, wr_num, wr_reply");?>>wr_comment asc : 댓글수 낮은것 부터</option>
+                <option value="wr_comment desc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_comment desc, wr_num, wr_reply");?>>wr_comment desc : 댓글수 높은것 부터</option>
+                <option value="wr_good asc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_good asc, wr_num, wr_reply");?>>wr_good asc : 추천수 낮은것 부터</option>
+                <option value="wr_good desc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_good desc, wr_num, wr_reply");?>>wr_good desc : 추천수 높은것 부터</option>
+                <option value="wr_nogood asc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_nogood asc, wr_num, wr_reply");?>>wr_nogood asc : 비추천수 낮은것 부터</option>
+                <option value="wr_nogood desc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_nogood desc, wr_num, wr_reply");?>>wr_nogood desc : 비추천수 높은것 부터</option>
+                <option value="wr_subject asc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_subject asc, wr_num, wr_reply");?>>wr_subject asc : 제목 내림차순</option>
+                <option value="wr_subject desc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_subject desc, wr_num, wr_reply");?>>wr_subject desc : 제목 오름차순</option>
+                <option value="wr_name asc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_name asc, wr_num, wr_reply");?>>wr_name asc : 글쓴이 내림차순</option>
+                <option value="wr_name desc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "wr_name desc, wr_num, wr_reply");?>>wr_name desc : 글쓴이 오름차순</option>
+                <option value="ca_name asc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "ca_name asc, wr_num, wr_reply");?>>ca_name asc : 분류명 내림차순</option>
+                <option value="ca_name desc, wr_num, wr_reply" <?=get_selected($board['bo_sort_field'], "ca_name desc, wr_num, wr_reply");?>>ca_name desc : 분류명 오름차순</option>
             </select>
         </td>
         <td class="group_setting">

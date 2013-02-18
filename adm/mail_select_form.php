@@ -73,7 +73,6 @@ include_once('./admin.head.php');
                 <option value="1">수신동의한 회원만
                 <option value="">전체
             </select>
-            <script> document.getElementById('mb_mailling').value = '<?=$mb_mailling?>'; </script>
         </td>
     </tr>
     <tr>
@@ -81,16 +80,14 @@ include_once('./admin.head.php');
         <td>
             <select id="mb_level_from" name="mb_level_from" title="최소권한">
             <? for ($i=1; $i<=10; $i++) { ?>
-                <option value='<? echo $i ?>'><? echo $i ?></option>
+                <option value="<? echo $i ?>"><? echo $i ?></option>
             <? } ?>
             </select> 에서
             <select id="mb_level_to" name="mb_level_to" title="최대권한">
             <? for ($i=1; $i<=10; $i++) { ?>
-                <option value='<? echo $i ?>'><? echo $i ?></option>
+                <option value="<? echo $i ?>"><? echo $i ?></option>
             <? } ?>
             </select> 까지
-            <script> document.getElementById('mb_level_from').value = '<?=$mb_level_from?>'; </script>
-            <script> document.getElementById('mb_level_to').value = '<?=$mb_level_to?>'; </script>
         </td>
     </tr>
     <tr>
@@ -107,7 +104,6 @@ include_once('./admin.head.php');
                 }
                 ?>
             </select>
-            <script> document.getElementById('gr_id').value = '<?=$gr_id?>'; </script>
         </td>
     </tr>
     </tbody>

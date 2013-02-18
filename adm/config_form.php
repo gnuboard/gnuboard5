@@ -118,13 +118,15 @@ $pg_anchor = "
     </tr>
     <tr>
         <th scope="row"><label for="cf_new_skin">최근게시물 스킨<strong class="sound_only">필수</strong></label></th>
-        <td><select id="cf_new_skin" name="cf_new_skin" class="required" required>
+        <td>
+            <select id="cf_new_skin" name="cf_new_skin" class="required" required>
             <?
             $arr = get_skin_dir('new');
             for ($i=0; $i<count($arr); $i++) {
-                echo '<option '.get_selected($config['cf_new_skin'], $arr[$i]).' value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_new_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
             }
-            ?></select>
+            ?>
+            </select>
         </td>
         <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
         <td>
@@ -134,26 +136,28 @@ $pg_anchor = "
     </tr>
     <tr>
         <th scope="row"><label for="cf_search_skin">검색 스킨<strong class="sound_only">필수</strong></label></th>
-        <td colspan="3"><select id="cf_search_skin" name="cf_search_skin" class="required" required>
+        <td colspan="3">
+            <select id="cf_search_skin" name="cf_search_skin" class="required" required>
             <?
             $arr = get_skin_dir("search");
             for ($i=0; $i<count($arr); $i++) {
-                echo '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_search_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
             }
-            ?></select>
-            <script> document.getElementById('cf_search_skin').value="<?=$config['cf_search_skin']?>";</script>
+            ?>
+            </select>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_connect_skin">접속자 스킨<strong class="sound_only">필수</strong></label></th>
-        <td colspan="3"><select id="cf_connect_skin" name="cf_connect_skin" class="required" required>
+        <td colspan="3">
+            <select id="cf_connect_skin" name="cf_connect_skin" class="required" required>
             <?
             $arr = get_skin_dir('connect');
             for ($i=0; $i<count($arr); $i++) {
-                echo '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_connect_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
             }
-            ?></select>
-            <script> document.getElementById('cf_connect_skin').value="<?=$config['cf_connect_skin']?>";</script>
+            ?>
+            </select>
         </td>
     </tr>
     <tr>
@@ -209,10 +213,10 @@ $pg_anchor = "
         <td>
             <?=help('글내용중 자동 링크되는 타켓을 지정합니다.')?>
             <select id="cf_link_target">
-                <option value="_blank"<? if ($config['cf_link_target'] == '_blank') echo "selected";?>>_blank</option>
-                <option value="_self"<? if ($config['cf_link_target'] == '_self') echo "selected";?>>_self</option>
-                <option value="_top"<? if ($config['cf_link_target'] == '_top') echo "selected";?>>_top</option>
-                <option value="_new"<? if ($config['cf_link_target'] == '_new') echo "selected";?>>_new</option>
+                <option value="_blank"<?=get_selected($config['cf_link_target'], $arr[$i])?>>_blank</option>
+                <option value="_self"<?=get_selected($config['cf_link_target'], $arr[$i])?>>_self</option>
+                <option value="_top"<?=get_selected($config['cf_link_target'], $arr[$i])?>>_top</option>
+                <option value="_new"<?=get_selected($config['cf_link_target'], $arr[$i])?>>_new</option>
             </select>
         </td>
         <th scope="row"><label for="cf_search_part">검색 단위</label></th>
@@ -276,11 +280,10 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('member');
             for ($i=0; $i<count($arr); $i++) {
-                echo '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_member_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
             }
             ?>
             </select>
-            <script> document.getElementById('cf_member_skin').value="<?=$config['cf_member_skin']?>";</script>
         </td>
     </tr>
     <tr>
@@ -334,11 +337,10 @@ $pg_anchor = "
         <td>
             <?=help('게시물에 게시자 별명 대신 아이콘 사용')?>
             <select id="cf_use_member_icon" name="cf_use_member_icon">
-                <option value="0">미사용
-                <option value="1">아이콘만 표시
-                <option value="2">아이콘+이름 표시
+                <option value="0"<?=get_selected($config['cf_use_member_icon'], $arr[$i])?>>미사용
+                <option value="1"<?=get_selected($config['cf_use_member_icon'], $arr[$i])?>>아이콘만 표시
+                <option value="2"<?=get_selected($config['cf_use_member_icon'], $arr[$i])?>>아이콘+이름 표시
             </select>
-            <script> document.getElementById('cf_use_member_icon').value="<?=$config['cf_use_member_icon']?>";</script>
         </td>
         <th scope="row"><label for="cf_icon_level">아이콘 업로드 권한</label></th>
         <td><?=get_member_level_select('cf_icon_level', 1, 9, $config['cf_icon_level']) ?> 이상</td>

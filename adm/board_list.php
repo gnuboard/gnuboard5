@@ -73,9 +73,9 @@ $colspan = 8;
         생성된 게시판수 <?=number_format($total_count)?>개
     </span>
     <select name="sfl" title="검색대상">
-        <option value="bo_table" <?=get_selected($_GET['sfl'], "bo_subject", true);?>>TABLE</option>
-        <option value="bo_subject" <?=get_selected($_GET['sfl'], "bo_subject");?>>제목</option>
-        <option value="a.gr_id" <?=get_selected($_GET['sfl'], "a.gr_id");?>>그룹ID</option>
+        <option value="bo_table"<?=get_selected($_GET['sfl'], "bo_subject", true);?>>TABLE</option>
+        <option value="bo_subject"<?=get_selected($_GET['sfl'], "bo_subject");?>>제목</option>
+        <option value="a.gr_id"<?=get_selected($_GET['sfl'], "a.gr_id");?>>그룹ID</option>
     </select>
     <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
@@ -152,9 +152,9 @@ $colspan = 8;
         </td>
         <td>
             <select id="bo_device_<?=$i?>" name="bo_device[<?=$i?>]">
-            <option value="both" <?=get_selected($row['bo_device'], 'both', true);?>>모두</option>
-            <option value="pc" <?=get_selected($row['bo_device'], 'pc');?>>PC</option>
-            <option value="mobile" <?=get_selected($row['bo_device'], 'mobile');?>>모바일</option>
+                <option value="both"<?=get_selected($row['bo_device'], 'both', true);?>>모두</option>
+                <option value="pc"<?=get_selected($row['bo_device'], 'pc');?>>PC</option>
+                <option value="mobile"<?=get_selected($row['bo_device'], 'mobile');?>>모바일</option>
             </select>
         </td>
         <td><?=$one_update?> <?=$one_copy?></td>
@@ -168,17 +168,9 @@ $colspan = 8;
     </table>
 
     <div class="btn_list">
-<<<<<<< HEAD
-        <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택수정">
-        <!-- <input type="submit" name="act_button" value="선택수정"> -->
-        <?if ($is_admin == 'super') {?>
-        <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제">
-        <!-- <input type="submit" name="act_button" value="선택삭제"> -->
-=======
         <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
         <?if ($is_admin == 'super') {?>
         <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
->>>>>>> 3312cd2377e2b47707196bdb3df5cdab13720d51
         <a href="./board_form.php">게시판추가</a>
         <?}?>
     </div>

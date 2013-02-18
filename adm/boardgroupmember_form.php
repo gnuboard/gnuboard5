@@ -79,20 +79,20 @@ $colspan = 4;
     <legend><?=$mb['mb_id']?>님 접근가능그룹 추가</legend>
     <label for="gr_id">그룹지정</label>
     <select id="gr_id" name="gr_id">
-    <option value="">접근가능 그룹을 선택하세요.</option>
-    <?
-    $sql = " select *
-                from {$g4['group_table']}
-                where gr_use_access = 1 ";
-    //if ($is_admin == 'group') {
-    if ($is_admin != 'super')
-        $sql .= " and gr_admin = '{$member['mb_id']}' ";
-    $sql .= " order by gr_id ";
-    $result = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($result); $i++) {
-        echo '<option value="'.$row['gr_id'].'">'.$row['gr_subject'].'</option>';
-    }
-    ?>
+        <option value="">접근가능 그룹을 선택하세요.</option>
+        <?
+        $sql = " select * 
+                    from {$g4['group_table']}
+                    where gr_use_access = 1 ";
+        //if ($is_admin == 'group') {
+        if ($is_admin != 'super') 
+            $sql .= " and gr_admin = '{$member['mb_id']}' ";
+        $sql .= " order by gr_id ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++) {
+            echo "<option value=\"".$row['gr_id']."\">".$row['gr_subject']."</option>";
+        }
+        ?>
     </select>
     <input type="submit" class="btn_submit" value="선택" accesskey="s">
     <p>게시판 그룹이 존재하지 않는다면 <a href="./boardgroup_form.php">게시판그룹생성하기</a></p>

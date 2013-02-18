@@ -93,8 +93,8 @@ function point_clear()
         <? if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><? } ?>
     </span>
     <select name="sfl" title="검색대상">
-        <option value="mb_id">회원아이디</option>
-        <option value="po_content">내용</option>
+        <option value="mb_id"<?=get_selected($_GET['sfl'], "mb_id");?>>회원아이디</option>
+        <option value="po_content"<?=get_selected($_GET['sfl'], "po_content");?>>내용</option>
     </select>
     <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
@@ -170,15 +170,6 @@ function point_clear()
         <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
     </div>
 
-    <?
-    if (isset($stx))
-        echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>'.PHP_EOL;
-
-    if (strstr($sfl, 'mb_id'))
-        $mb_id = $stx;
-    else
-        $mb_id = '';
-    ?>
     </form>
 </section>
 

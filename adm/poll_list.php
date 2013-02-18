@@ -62,7 +62,7 @@ $colspan = 6;
         투표수 : <?=number_format($total_count)?>개
     </span>
     <select id="sfl" name="sfl" title="검색대상">
-        <option value='po_subject'>제목</option>
+        <option value="po_subject"<?=get_selected($_GET['sfl'], "po_subject");?>>제목</option>
     </select>
     <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
@@ -134,11 +134,6 @@ $colspan = 6;
 </section>
 
 <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
-
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>'.PHP_EOL;
-?>
 
 <script>
 $(function() {
