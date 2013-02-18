@@ -18,6 +18,15 @@ $colspan = 4;
 
 <div class="cbox">
     <p>아이디 <?=$mb['mb_id']?>, 이름 <?=$mb['mb_name']?>, 별명 <?=$mb['mb_nick']?>님이 접근가능한 그룹 목록</p>
+    <form id="fboardgroupmember" name="fboardgroupmember" method="post" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);">
+    <input type="hidden" id="sst" name="sst" value="<?=$sst?>">
+    <input type="hidden" id="sod" name="sod" value="<?=$sod?>">
+    <input type="hidden" id="sfl" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" id="stx" name="stx" value="<?=$stx?>">
+    <input type="hidden" id="page" name="page" value="<?=$page?>">
+    <input type="hidden" id="token" name="token" value="<?=$token?>">
+    <input type="hidden" id="mb_id" name="mb_id" value="<?=$mb['mb_id']?>">
+    <input type="hidden" id="w" name="w" value="d">
     <table>
     <thead>
     <tr>
@@ -41,7 +50,7 @@ $colspan = 4;
         $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
     ?>
     <tr>
-        <td class="td_chk"><input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹 선택"></td>
+        <td class="td_chk"><input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['gm_id']?>" title="<?=$row['gr_subject']?> 그룹 선택"></td>
         <td class="td_grid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td class="td_category"><?=$row['gr_subject']?></td>
         <td class="td_time"><?=$row['gm_datetime']?></td>
@@ -60,6 +69,7 @@ $colspan = 4;
     <div class="btn_list">
         <input type="submit" name="" value="선택삭제">
     </div>
+    </form>
 </div>
 
 <form id="fboardgroupmember_form" name="fboardgroupmember_form" method="post" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)">
@@ -71,11 +81,11 @@ $colspan = 4;
     <select id="gr_id" name="gr_id">
     <option value="">접근가능 그룹을 선택하세요.</option>
     <?
-    $sql = " select * 
+    $sql = " select *
                 from {$g4['group_table']}
                 where gr_use_access = 1 ";
     //if ($is_admin == 'group') {
-    if ($is_admin != 'super') 
+    if ($is_admin != 'super')
         $sql .= " and gr_admin = '{$member['mb_id']}' ";
     $sql .= " order by gr_id ";
     $result = sql_query($sql);
@@ -90,6 +100,16 @@ $colspan = 4;
 </form>
 
 <script>
+function fboardgroupmember_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert("선택삭제 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    return true;
+}
+
 function boardgroupmember_form_check(f)
 {
     if (f.gr_id.value == '') {
@@ -100,31 +120,6 @@ function boardgroupmember_form_check(f)
     return true;
 }
 </script>
-
-<script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
-{
-    var f = document.fpost;
-
-    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.gm_id.value = val;
-        f.action      = action_url;
-        f.submit();
-    }
-}
-</script>
-
-<form id="fpost" name="fpost" method="post">
-<input type="hidden" id="sst" name="sst" value="<?=$sst?>">
-<input type="hidden" id="sod" name="sod" value="<?=$sod?>">
-<input type="hidden" id="sfl" name="sfl" value="<?=$sfl?>">
-<input type="hidden" id="stx" name="stx" value="<?=$stx?>">
-<input type="hidden" id="page" name="page" value="<?=$page?>">
-<input type="hidden" id="token" name="token" value="<?=$token?>">
-<input type="hidden" id="w" name="w" value="d">
-<input type="hidden" id="gm_id" name="gm_id">
-</form>
 
 <?
 include_once('./admin.tail.php');
