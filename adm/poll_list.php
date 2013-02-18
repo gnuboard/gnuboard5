@@ -72,12 +72,10 @@ $colspan = 6;
 <section class="cbox">
     <h2>투표목록</h2>
 
-<<<<<<< HEAD
     <div id="btn_add">
         <a href="./poll_form.php" id="poll_add">투표 추가</a>
     </div>
 
-=======
     <form id="fpolllist" name="fpolllist" method="post" action="./poll_delete.php">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
@@ -85,7 +83,6 @@ $colspan = 6;
     <input type="hidden" name="stx" value="<?=$stx?>">
     <input type="hidden" name="page" value="<?=$page?>">
     <input type="hidden" name="token" value="<?=$token?>">
->>>>>>> 75f31cd998e7ebb2d18eed50b548a4ac81fa39b3
     <table>
     <thead>
     <tr>

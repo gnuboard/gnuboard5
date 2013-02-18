@@ -100,17 +100,13 @@ $colspan = 15;
     <h2>회원 목록</h2>
     <p>회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.</p>
 
-<<<<<<< HEAD
     <? if ($is_admin == 'super') {?>
     <div id="btn_add">
         <a href="./member_form.php" id="member_add">회원추가</a>
     </div>
     <?}?>
 
-    <form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);">
-=======
     <form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php">
->>>>>>> 6ed598e865fecf9bd14c8d69b500f5d2b05a1046
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">

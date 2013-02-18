@@ -88,17 +88,13 @@ var list_update_php = "./boardgroup_list_update.php";
         접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
     </p>
 
-<<<<<<< HEAD
     <?if ($is_admin == 'super') {?>
     <div id="btn_add">
         <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
     </div>
     <?}?>
 
-    <form id="fboardgrouplist" name="fboardgrouplist" method="post">
-=======
     <form id="fboardgrouplist" name="fboardgrouplist" method="post" action="./boardgroup_list_update.php">
->>>>>>> 75f31cd998e7ebb2d18eed50b548a4ac81fa39b3
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
