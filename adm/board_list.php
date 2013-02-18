@@ -92,7 +92,7 @@ $colspan = 8;
     <h2>생성된 게시판 목록</h2>
     <p>여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 체크기능을 이용하세요.</p>
 
-    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
+    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
