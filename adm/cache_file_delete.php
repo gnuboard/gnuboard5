@@ -14,11 +14,7 @@ include_once("./admin.head.php");
         완료 메세지가 나오기 전에 프로그램의 실행을 중지하지 마십시오.
     <p>
     <span id="delete_message">
-    </span>
-</div>
-
 <?
-include_once("./admin.tail.php");
 flush();
 
 if (!$dir=@opendir(G4_DATA_PATH.'/cache')) {
@@ -36,12 +32,21 @@ while($file=readdir($dir)) {
 
     $cnt++;
     $return = unlink($cache_file);
-    echo "<script>document.getElementById('delete_message').innerHTML += '{$cache_file}<br/>';</script>\n";
+    //echo "<script>document.getElementById('delete_message').innerHTML += '{$cache_file}<br/>';</script>\n";
+    echo "{$cache_file}<br/>\n";
 
     flush();
 
     if ($cnt%10==0)
-        echo "<script>document.getElementById('delete_message').innerHTML = '';</script>\n";
+        //echo "<script>document.getElementById('delete_message').innerHTML = '';</script>\n";
+        echo "\n";
 }
-echo "<script>document.getElementById('delete_message').innerHTML += '최신글 캐시파일 {$cnt}건 삭제 완료.<br><br>프로그램의 실행을 끝마치셔도 좋습니다.';</script>\n";
+//echo "<script>document.getElementById('delete_message').innerHTML += '최신글 캐시파일 {$cnt}건 삭제 완료.<br><br>프로그램의 실행을 끝마치셔도 좋습니다.';</script>\n";
+echo "최신글 캐시파일 {$cnt}건 삭제 완료.<br><br>프로그램의 실행을 끝마치셔도 좋습니다.\n";
+?>
+    </span>
+</div>
+
+<?php
+include_once("./admin.tail.php");
 ?>
