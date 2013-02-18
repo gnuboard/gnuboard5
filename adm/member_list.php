@@ -79,17 +79,17 @@ $colspan = 15;
         <a href="?sst=mb_leave_date&amp;sod=desc&amp;sfl=<?=$sfl?>&amp;stx=<?=$stx?>">탈퇴 <?=number_format($leave_count)?></a>명
     </span>
     <select name="sfl" title="검색대상">
-        <option value="mb_id" <?=get_selected("mb_id", $_GET['sfl']);?>>회원아이디</option>
-        <option value="mb_nick" <?=get_selected("mb_nick", $_GET['sfl']);?>>별명</option>
-        <option value="mb_name" <?=get_selected("mb_name", $_GET['sfl']);?>>이름</option>
-        <option value="mb_level" <?=get_selected("mb_level", $_GET['sfl']);?>>권한</option>
-        <option value="mb_email" <?=get_selected("mb_email", $_GET['sfl']);?>>E-MAIL</option>
-        <option value="mb_tel" <?=get_selected("mb_tel", $_GET['sfl']);?>>전화번호</option>
-        <option value="mb_hp" <?=get_selected("mb_hp", $_GET['sfl']);?>>핸드폰번호</option>
-        <option value="mb_point" <?=get_selected("mb_point", $_GET['sfl']);?>>포인트</option>
-        <option value="mb_datetime" <?=get_selected("mb_datetime", $_GET['sfl']);?>>가입일시</option>
-        <option value="mb_ip" <?=get_selected("mb_ip", $_GET['sfl']);?>>IP</option>
-        <option value="mb_recommend" <?=get_selected("mb_recommend", $_GET['sfl']);?>>추천인</option>
+        <option value="mb_id"<?=get_selected($_GET['sfl'], "mb_id");?>>회원아이디</option>
+        <option value="mb_nick"<?=get_selected($_GET['sfl'], "mb_nick");?>>별명</option>
+        <option value="mb_name"<?=get_selected($_GET['sfl'], "mb_name");?>>이름</option>
+        <option value="mb_level"<?=get_selected($_GET['sfl'], "mb_level");?>>권한</option>
+        <option value="mb_email"<?=get_selected($_GET['sfl'], "mb_email");?>>E-MAIL</option>
+        <option value="mb_tel"<?=get_selected($_GET['sfl'], "mb_tel");?>>전화번호</option>
+        <option value="mb_hp"<?=get_selected($_GET['sfl'], "mb_hp");?>>핸드폰번호</option>
+        <option value="mb_point"<?=get_selected($_GET['sfl'], "mb_point");?>>포인트</option>
+        <option value="mb_datetime"<?=get_selected($_GET['sfl'], "mb_datetime");?>>가입일시</option>
+        <option value="mb_ip"<?=get_selected($_GET['sfl'], "mb_ip");?>>IP</option>
+        <option value="mb_recommend"<?=get_selected($_GET['sfl'], "mb_recommend");?>>추천인</option>
     </select>
     <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">

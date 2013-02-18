@@ -61,7 +61,7 @@ $colspan = 7;
     <legend><?=$gr['gr_subject']?>(아이디 <?=$gr['gr_id']?>)에서 검색</legend>
     <label for="sfl">검색대상</label>
     <select id="sfl" name="sfl">
-        <option value='a.mb_id'>회원아이디</option>
+        <option value="a.mb_id"<?=get_selected($_GET['sfl'], "a.mb_id")?>>회원아이디</option>
     </select>
     <input type="text" id="stx" name="stx" class="required frm_input" required value="<? echo $stx ?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
@@ -123,11 +123,6 @@ $colspan = 7;
 </section>
 
 <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;gr_id=$gr_id&page=");?>
-
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>';
-?>
 
 <script>
 // POST 방식으로 삭제

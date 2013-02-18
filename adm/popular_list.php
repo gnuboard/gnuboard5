@@ -79,8 +79,8 @@ var list_delete_php = 'popular_list.php';
         건수 : <?=number_format($total_count)?>개
     </span>
     <select name="sfl" title="검색대상">
-        <option value="pp_word">검색어</option>
-        <option value="pp_date">등록일</option>
+        <option value="pp_word"<?=get_selected($_GET['sfl'], "pp_word");?>>검색어</option>
+        <option value="pp_date"<?=get_selected($_GET['sfl'], "pp_date");?>>등록일</option>
     </select>
     <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
     <input type="submit" class="btn_submit" value="검색">
@@ -142,11 +142,6 @@ var list_delete_php = 'popular_list.php';
 </section>
 
 <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
-
-<?
-if (isset($stx))
-    echo '<script>document.fsearch.sfl.value = \''.$sfl.'\';</script>';
-?>
 
 <script>
 $(function() {
