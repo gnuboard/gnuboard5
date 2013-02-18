@@ -27,6 +27,10 @@ h2 {font-size:1.2em}
 #to_content a:focus,
 #to_content a:active {width:100%;height:70px;background:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.1em}
 
+/* 캡챠 자동등록(입력)방지 기본 */
+#captcha img {border:1px solid #ddd;border-right:0}
+#captcha_wav img {border:1px solid #ddd;border-left:0;background:#494949}
+
 /* 레이아웃 */
 #hd {z-index:10;background:url('../adm/img/hd_bg.jpg') #383b3f top left repeat-x}
 #hd h1,
@@ -100,13 +104,14 @@ h2 {font-size:1.2em}
 .btn_confirm a:focus {background:#555}
 .btn_submit {padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;line-height:2.5em;vertical-align:middle}
 .btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;line-height:2.5em;vertical-align:middle}
+.btn_cancel {display:inline-block;padding:0 15px;height:30px;border:0;background:#74868b;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 fieldset .btn_submit {height:21px;background:#383a3f;line-height:1.7em}
 fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 
 .btn_list input,
-.btn_list button {padding:0 15px;height:30px;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_list button {padding:0 15px;height:28px;border:0;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_list input:focus,
-.btn_list button:focus {padding:0 15px;height:30px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_list button:focus {padding:0 15px;height:28px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
 .btn_list a:focus {background:#555}
 
@@ -131,6 +136,12 @@ fieldset span {display:block;margin-bottom:10px}
 fieldset p {color:#4c5f67}
 fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
 fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
+/* 캡챠 입력상자 */
+.fs_input,
+fieldset textarea {padding:3px 3px 4px;border:1px solid #ccc;background:#f7f7f7;vertical-align:middle}
+.fs_input:focus,
+fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#fff}
+
 .readonly {background:#a7bac2}
 
 /* 폼 안내글 */
@@ -178,6 +189,8 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 /* 폼 테이블 */
 .frm_tbl th {padding:0 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#eef2f3;text-align:left;font-weight:normal}
 .frm_tbl textarea {height:150px}
+.frm_tbl #captcha {margin:0;padding:0;border:0;background:transparent}
+.frm_tbl #captcha input {margin-left:5px;text-align:center}
 
 /* 컨텐츠별 테이블 설정 */
 /* 인덱스 */
@@ -242,6 +255,16 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
 #session_del p span,
 #cache_del p span {color:#ff3061}
+
+/* 새창 기본 스타일 */
+.new_win {}
+.new_win h1 {margin-bottom:20px;padding:0 20px;height:60px;border-top:2px solid #484848;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em;line-height:5em}
+.new_win table {margin:0 auto 20px;width:93%;background:#fff}
+.new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #515151;background:#484848;list-style:none;zoom:1}
+.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win_ul li {float:left;margin-left:-1px}
+.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
+.new_win_desc {margin:0 auto;width:93%}
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
