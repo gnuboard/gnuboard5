@@ -55,11 +55,6 @@ include_once('./admin.head.php');
 $colspan = 5;
 ?>
 
-<script>
-var list_update_php = '';
-var list_delete_php = 'auth_list_delete.php';
-</script>
-
 <form id="fsearch" name="fsearch" method="get">
 <input type="hidden" id="sfl" name="sfl" value="a.mb_id">
 <fieldset>
@@ -77,7 +72,7 @@ var list_delete_php = 'auth_list_delete.php';
     <h2>설정된 관리권한 내역</h2>
     <p>권한 <strong>r</strong>은 읽기권한, <strong>w</strong>는 쓰기권한, <strong>d</strong>는 삭제권한입니다.</p>
 
-    <form id="fauthlist" name="fauthlist" method="post">
+    <form id="fauthlist" name="fauthlist" method="post" action="./auth_list_delete.php">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -142,8 +137,8 @@ var list_delete_php = 'auth_list_delete.php';
     ?>
 
     <?
-    if (isset($stx))
-        echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'.PHP_EOL;
+    //if (isset($stx))
+    //    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'.PHP_EOL;
 
     if (strstr($sfl, 'mb_id'))
         $mb_id = $stx;
@@ -153,7 +148,7 @@ var list_delete_php = 'auth_list_delete.php';
     </form>
 </section>
 
-<form id="fauthlist2" name="fauthlist2" method="post" onsubmit="return fauthlist2_submit(this);" autocomplete="off">
+<form id="fauthlist2" name="fauthlist2" method="post" action="./auth_update.php" autocomplete="off">
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx" value="<?=$stx?>">
 <input type="hidden" name="sst" value="<?=$sst?>">
@@ -192,11 +187,18 @@ var list_delete_php = 'auth_list_delete.php';
 </form>
 
 <script>
-function fauthlist2_submit(f)
-{
-    f.action = "./auth_update.php";
-    return true;
-}
+$(function() {
+    $('#fauthlist').submit(function() {
+        var cnt = $('input[name^=chk]:checked').length;
+
+        if(cnt < 1) {
+            alert('삭제할 권한 내역을 1개 이상 선택해 주세요.');
+            return false;
+        }
+
+        return true;
+    });
+});
 </script>
 
 <?
