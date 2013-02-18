@@ -53,7 +53,7 @@ $bo_category_list = str_replace($src_char, $dst_char, $bo_category_list);
 
 $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_subject          = '{$_POST['bo_subject']}',
-                bo_pc_mobile        = '{$_POST['bo_pc_mobile']}',
+                bo_device        = '{$_POST['bo_device']}',
                 bo_admin            = '{$_POST['bo_admin']}',
                 bo_list_level       = '{$_POST['bo_list_level']}',
                 bo_read_level       = '{$_POST['bo_read_level']}',

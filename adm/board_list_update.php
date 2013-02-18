@@ -2,6 +2,9 @@
 $sub_menu = "300100";
 include_once('./_common.php');
 
+print_r2($_POST); exit;
+
+
 check_demo();
 
 if (!count($_POST['chk'])) {
@@ -30,7 +33,7 @@ if ($_POST['act_button'] == "선택수정") {
         $sql = " update {$g4['board_table']}
                     set gr_id               = '{$_POST['gr_id'][$k]}',
                         bo_subject          = '{$_POST['bo_subject'][$k]}',
-                        bo_pc_mobile        = '{$_POST['bo_pc_mobile'][$k]}',
+                        bo_device           = '{$_POST['bo_device'][$k]}',
                         bo_skin             = '{$_POST['bo_skin'][$k]}',
                         bo_read_point       = '{$_POST['bo_read_point'][$k]}',
                         bo_write_point      = '{$_POST['bo_write_point'][$k]}',

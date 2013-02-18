@@ -4,13 +4,13 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-if (!isset($board['bo_pc_mobile'])) {
+if (!isset($board['bo_device'])) {
     // 게시판 사용 필드 추가
     // both : pc, mobile 둘다 사용
     // pc : pc 전용 사용
     // mobile : mobile 전용 사용
     // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_pc_mobile` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
+    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
 }
 
 $sql_common = " from {$g4['board_table']} a ";
@@ -92,7 +92,7 @@ $colspan = 8;
     </div>
     <?}?>
 
-    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php">
+    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -151,10 +151,10 @@ $colspan = 8;
         <td><input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" class="frm_input" value="<?=$row['bo_order_search']?>" size="2" title="검색순서"></td>
         </td>
         <td>
-            <select id="bo_pc_mobile_<?=$i?>" name="bo_pc_mobile[<?=$i?>]">
-            <option value="both" <?=get_selected($row['bo_pc_mobile'], 'both', true);?>>양쪽</option>
-            <option value="pc" <?=get_selected($row['bo_pc_mobile'], 'pc');?>>PC</option>
-            <option value="mobile" <?=get_selected($row['bo_pc_mobile'], 'mobile');?>>모바일</option>
+            <select id="bo_device_<?=$i?>" name="bo_device[<?=$i?>]">
+            <option value="both" <?=get_selected($row['bo_device'], 'both', true);?>>모두</option>
+            <option value="pc" <?=get_selected($row['bo_device'], 'pc');?>>PC</option>
+            <option value="mobile" <?=get_selected($row['bo_device'], 'mobile');?>>모바일</option>
             </select>
         </td>
         <td><?=$one_update?> <?=$one_copy?></td>
@@ -168,9 +168,11 @@ $colspan = 8;
     </table>
 
     <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정">
+        <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택수정">
+        <!-- <input type="submit" name="act_button" value="선택수정"> -->
         <?if ($is_admin == 'super') {?>
-        <input type="submit" name="act_button" value="선택삭제">
+        <input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제">
+        <!-- <input type="submit" name="act_button" value="선택삭제"> -->
         <a href="./board_form.php">게시판추가</a>
         <?}?>
     </div>
@@ -181,33 +183,20 @@ $colspan = 8;
 <?=get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');?>
 
 <script>
+function fboardlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    return true;
+}
+
 $(function(){
     $(".board_copy").click(function(){
         window.open(this.href, "win_board_copy", "left=100,top=100,width=550,height=450");
         return false;
-    });
-
-    $('input[name=act_button]').click(function(e) {
-        e.preventDefault();
-
-        var act = $(this).val();
-        var cnt = $('input[name^=chk]:checked').length;
-
-        if(act == "선택삭제") {
-            if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-                if(cnt < 1) {
-                    alert(act+'할 게시판을 1개 이상 선택해 주세요.');
-                    return false;
-                }
-            }
-        } else if(act == "선택수정") {
-            if(cnt < 1) {
-                alert(act+'할 게시판을 1개 이상 선택해 주세요.');
-                return false;
-            }
-        }
-
-        $('#fboardlist').submit();
     });
 });
 </script>
