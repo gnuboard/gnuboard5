@@ -68,7 +68,7 @@ $colspan = 8;
         생성된 그룹수 <?=number_format($total_count)?>개
     </span>
     <select name="sfl" title="검색대상">
-        <option value="gr_subject"<?=get_selected($_GET['sfl'], "gr_subject", );?>>제목</option>
+        <option value="gr_subject"<?=get_selected($_GET['sfl'], "gr_subject");?>>제목</option>
         <option value="gr_id"<?=get_selected($_GET['sfl'], "gr_id");?>>ID</option>
         <option value="gr_admin"<?=get_selected($_GET['sfl'], "gr_admin");?>>그룹관리자</option>
     </select>
@@ -132,7 +132,7 @@ $colspan = 8;
             <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
             <input type="hidden" name="group_id[<?=$i?>]" value="<?=$row['gr_id']?>">
         </td>
-        <td class="td_mbid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+        <td class="td_mbid"><a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td>
             <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" class="frm_input" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
         </td>
