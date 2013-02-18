@@ -2,9 +2,6 @@
 $sub_menu = "300100";
 include_once('./_common.php');
 
-print_r2($_POST); exit;
-
-
 check_demo();
 
 if (!count($_POST['chk'])) {
