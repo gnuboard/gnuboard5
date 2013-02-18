@@ -68,7 +68,7 @@ $colspan = 8;
         생성된 그룹수 <?=number_format($total_count)?>개
     </span>
     <select name="sfl" title="검색대상">
-        <option value="gr_subject"<?=get_selected($_GET['sfl'], "gr_subject", );?>>제목</option>
+        <option value="gr_subject"<?=get_selected($_GET['sfl'], "gr_subject");?>>제목</option>
         <option value="gr_id"<?=get_selected($_GET['sfl'], "gr_id");?>>ID</option>
         <option value="gr_admin"<?=get_selected($_GET['sfl'], "gr_admin");?>>그룹관리자</option>
     </select>
