@@ -84,8 +84,12 @@ h2 {font-size:1.2em}
 #wrapper {margin:30px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #qnb {float:right;margin:0;padding:0;list-style:none}
-#qnb li {margin-bottom:1px}
-#qnb a {display:block;width:45px;height:45px}
+#qnb li {margin-bottom:20px}
+#qnb a {display:block;width:40px;font-size:0.9em;text-align:center}
+#qnb a:focus,
+#qnb a:hover,
+#qnb a:active {text-decoration:none}
+#qnb img {margin-bottom:5px}
 #container {float:left;width:942px}
 
 /* 하단 레이아웃 */

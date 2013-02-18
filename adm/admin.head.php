@@ -122,9 +122,24 @@ function textarea_size(fld, size)
 <div id="wrapper">
 
     <ul id="qnb">
-        <li><a href="#" style="background:#ddd">1</a></li>
-        <li></li>
-        <li></li>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/member_list.php">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_mb.jpg" alt="">
+                회원
+            </a>
+        </li>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/board_list.php">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_board.jpg" alt="">
+                게시판
+            </a>
+        </li>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/visit_list.php">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_log.jpg" alt="">
+                접속자
+            </a>
+        </li>
     </ul>
 
     <div id="container">
