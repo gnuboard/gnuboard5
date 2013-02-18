@@ -194,10 +194,8 @@ $colspan = 5;
 <script>
 $(function() {
     $('#fauthlist').submit(function() {
-        var cnt = $('input[name^=chk]:checked').length;
-
-        if(cnt < 1) {
-            alert('삭제할 권한 내역을 1개 이상 선택해 주세요.');
+        if (!is_checked("chk[]")) {
+            alert("선택삭제 하실 항목을 하나 이상 선택하세요.");
             return false;
         }
 
