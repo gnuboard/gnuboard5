@@ -20,35 +20,43 @@ if (isset($_POST['mail'])) {
     for ($i=0; $i<count($email); $i++)
         mailer($from_name, $from_email, trim($email[$i]), '[메일검사] 제목', '<span style="font-size:9pt;">[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>'.date("Y-m-d H:i:s").'<p>이 메일 주소로는 회신되지 않습니다.</span>', 1);
 
+    echo "<section class=\"cbox\">";
+    echo "<h2>결과메세지</h2>";
     echo "<p>";
-    echo "결과메세지<br>";
-    echo "----------------------------------------------------------------------------------------<br>";
-    echo "다음의 메일 주소로 메일을 발송 하였습니다. ($mail)<br>";
+    echo "다음의 메일 주소로 메일을 발송 하였습니다.";
+    echo "</p>";
+    echo "<ul>";
+    for ($i=0;$i<count($email);$i++) {
+        echo "<li>".$email[$i]."</li>";
+    }
+    echo "</ul>";
+    echo "<p>";
     echo "해당 주소로 메일이 왔는지 확인하여 주십시오.<br>";
     echo "만약, 메일이 오지 않는다면 여러곳의 메일 주소로 메일을 보내 보십시오.<br>";
     echo "그래도 메일이 하나도 도착하지 않는다면 메일 서버(sendmail server)의 오류일 가능성이 높습니다.<br>";
     echo "이런 경우에는 웹 서버관리자에게 문의하여 주십시오.<br>";
-    echo "----------------------------------------------------------------------------------------";
     echo "</p>";
+    echo "</section>";
 }
 ?>
 
-<form id="fsendmailtest" name="fsendmailtest" method="post">
 <p>
-    <span></span>
-    고객님들께서 메일이 오지 않는다고 하면 사용하는 메뉴입니다.<br>
-    입력한 메일주소로 테스트 메일을 발송합니다.<br>
-    만약 [메일검사] 라는 내용으로 메일이 도착하지 않는다면 보내는 메일서버와 받는 메일 서버중 문제가 발생했을 가능성이 있습니다.<br>
-    메일을 보냈는데도 도착하지 않는다면 다른 여러곳으로도 메일을 발송하여 주십시오.<br>
-    여러곳으로 메일을 발송하시려면 , 로 메일을 구분하십시오.
+    메일서버가 정상적으로 동작 중인지 확인할 수 있습니다.<br>
+    아래 입력칸에 테스트 메일을 발송하실 메일 주소를 입력하시면, [메일검사] 라는 제목으로 테스트 메일을 발송합니다.<br>
+    여러 곳으로 테스트 메일을 발송하시려면 , 로 메일을 구분하십시오.
 </p>
-<fieldset>
+<form name="fsendmailtest" method="post">
+<fieldset id="fsendmailtest">
     <legend>테스트메일 발송</legend>
     <label for="mail">받는 메일주소<strong class="sound_only">필수</strong></label>
     <input type="text" id="mail" name="mail" class="required frm_input" required value="<?=$member['mb_email']?>" size="80">
     <input type="submit" class="btn_submit" value="발송">
 </fieldset>
 </form>
+<p>
+    만약 [메일검사] 라는 내용으로 테스트 메일이 도착하지 않는다면 보내는 메일서버 혹은 받는 메일서버 중 문제가 발생했을 가능성이 있습니다.<br>
+    따라서 보다 정확한 테스트를 원하신다면 여러 곳으로 테스트 메일을 발송하시기 바랍니다.<br>
+</p>
 
 <?
 include_once('./admin.tail.php');

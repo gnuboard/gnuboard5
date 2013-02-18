@@ -23,10 +23,10 @@ $qstr = "fr_date=".$fr_date."&amp;to_date=".$to_date;
 
 <form id="fvisit" name="fvisit" method="get">
 <fieldset>
-    <legend>접속자집계 기간지정</legend>
+    <legend>기간별 접속자집계 검색</legend>
     <input type="text" id="fr_date" name="fr_date" class="frm_input" size="11" maxlength="10" value="<?=$fr_date?>"> 부터
     <input type="text" id="to_date" name="to_date" class="frm_input" size="11" maxlength="10" value="<?=$to_date?>"> 까지
-    <input type="submit" class="btn_submit" value="지정">
+    <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 

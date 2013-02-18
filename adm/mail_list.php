@@ -22,16 +22,16 @@ include_once('./admin.head.php');
 $colspan = 6;
 ?>
 
-<div id="btn_add">
-    <a href="./mail_form.php" id="mail_add">메일내용추가</a>
-</div>
-
 <section class="cbox">
     <h2>등록된 메일내용 목록</h2>
     <p>
         <strong>테스트</strong>는 등록된 최고관리자의 이메일로 테스트 메일을 발송합니다.<br>
         현재 등록된 메일은 총 <?=$total_count ?>건입니다.
     </p>
+
+    <div id="btn_add">
+        <a href="./mail_form.php" id="mail_add">메일내용추가</a>
+    </div>
 
     <form id="fmaillist" name="fmaillist" method="post" action="./mail_delete.php">
     <table>
@@ -43,13 +43,12 @@ $colspan = 6;
         <th scope="col">작성일시</th>
         <th scope="col">테스트</th>
         <th scope="col">보내기</th>
-        <th scope="col">관리</th>
+        <th scope="col">미리보기</th>
     </tr>
     </thead>
     <tbody>
     <?
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
-        $s_mod = '<a href="./mail_form.php?w=u&amp;ma_id='.$row['ma_id'].'">수정</a>';
         //$s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
         $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
 
@@ -61,17 +60,17 @@ $colspan = 6;
             <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['ma_id']?>" title="메일선택">
         </td>
         <td class="td_num"><?=$num?></td>
-        <td><?=$row['ma_subject']?></td>
+        <td><a href="./mail_form.php?w=u&amp;ma_id=<?=$row['ma_id']?>"><?=$row['ma_subject']?></a></td>
         <td class="td_time"><?=$row['ma_time']?></td>
         <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row['ma_id']?>">테스트</a></td>
         <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row['ma_id']?>">보내기</a></td>
-        <td class="td_mng"><?=$s_mod?> <?=$s_vie?></td>
+        <td class="td_mng"><?=$s_vie?></td>
     </tr>
 
     <?
     }
     if (!$i)
-        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+        echo "<tr><td colspan=\"".$colspan."\" class=\"empty_table\">자료가 없습니다.</td></tr>";
     ?>
     </tbody>
     </table>

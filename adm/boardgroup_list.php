@@ -81,18 +81,18 @@ var list_update_php = "./boardgroup_list_update.php";
 </fieldset>
 </form>
 
-<?if ($is_admin == 'super') {?>
-<div id="btn_add">
-    <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
-</div>
-<?}?>
-
 <section class="cbox">
     <h2>게시판그룹 목록</h2>
     <p>
         접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>
         접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
     </p>
+
+    <?if ($is_admin == 'super') {?>
+    <div id="btn_add">
+        <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
+    </div>
+    <?}?>
 
     <form id="fboardgrouplist" name="fboardgrouplist" method="post" action="./boardgroup_list_update.php">
     <input type="hidden" name="sst" value="<?=$sst?>">
@@ -139,7 +139,7 @@ var list_update_php = "./boardgroup_list_update.php";
         <td class="td_chk">
             <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['gr_id']?>" title="<?=$row['gr_subject']?> 그룹선택">
         </td>
-        <td><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+        <td class="td_mbid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td>
             <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" class="frm_input" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
         </td>
