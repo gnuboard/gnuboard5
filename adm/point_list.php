@@ -175,27 +175,50 @@ function point_clear()
 
 <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
-<form id="fpointlist2" name="fpointlist2" method="post" action="./point_update.php" autocomplete="off">
-<input type="hidden" name="sfl" value="<?=$sfl?>">
-<input type="hidden" name="stx" value="<?=$stx?>">
-<input type="hidden" name="sst" value="<?=$sst?>">
-<input type="hidden" name="sod" value="<?=$sod?>">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="token" value="<?=$token?>">
+<section id="point_mng" class="cbox">
+    <h2>개별회원 포인트 증감 설정</h2>
 
-<fieldset>
-    <legend>개별회원 포인트 증감 설정</legend>
-    <label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label>
-    <input type="text" id="mb_id" name="mb_id" class="required frm_input" required value="<?=$mb_id?>">
-    <label for="po_content">포인트 내용<strong class="sound_only">필수</strong></label>
-    <input type="text" id="po_content" name="po_content" class="required frm_input" required>
-    <label for="po_point">포인트<strong class="sound_only">필수</strong></label>
-    <input type="text" id="po_point" name="po_point" class="required frm_input" required>
-    <label for="admin_password">관리자패스워드<strong class="sound_only">필수</strong></label>
-    <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
-    <input type="submit" class="btn_submit" value="확인">
+    <form id="fpointlist2" name="fpointlist2" method="post" action="./point_update.php" autocomplete="off">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" id="mb_id" name="mb_id" class="required frm_input" required value="<?=$mb_id?>"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="po_content">포인트 내용<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" id="po_content" name="po_content" class="required frm_input" required size="80"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="po_point">포인트<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" id="po_point" name="po_point" class="required frm_input" required></td>
+    </tr>
+    </table>
+
+    <fieldset id="admin_confirm">
+        <legend>XSS 혹은 CSRF 방지</legend>
+        <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
+        <label for="admin_password">관리자패스워드<strong class="sound_only">필수</strong></label>
+        <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
+    </fieldset>
+
+    <div class="btn_confirm">
+        <input type="submit" class="btn_submit" value="확인">
+    </div>
+
+    </form>
+
 </fieldset>
-</form>
 
 <?
 include_once ('./admin.tail.php');
