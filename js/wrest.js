@@ -351,6 +351,7 @@ function wrestInitialized()
         }
         document.forms[i].onsubmit = wrestSubmit;
 
+        // 이 부분은 CSS 로 대체를 합니다. github issue #282, 지운아빠 작업예정
         for (var j = 0; j < document.forms[i].elements.length; j++) {
             // 필수 입력일 경우는 * 배경이미지를 준다.
             if (document.forms[i].elements[j].getAttribute("required") != null ||
