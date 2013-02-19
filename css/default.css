@@ -449,14 +449,14 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
-.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ccc;background:#fff}
+.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ccc;background:#fafafa}
 .bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#76a5a8 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#000}
 .td_subject img {margin-left:3px}
-.cnt_cmt {color:#ff5300}
+.cnt_cmt {font-weight:bold}
 
 #bo_sch {margin-bottom:10px;text-align:center}
 #bo_sch legend {width:0;height:0;overflow:hidden}
