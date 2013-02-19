@@ -410,7 +410,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_list_title {margin-bottom:20px;font-size:1.1em;letter-spacing:-0.1em}
 
 #bo_list_total {margin-bottom:10px}
-.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ccc;background:#fafafa}
 #bo_cate {margin-bottom:15px;padding-left:1px}
 #bo_cate h2 {width:0;height:0;overflow:hidden}
 #bo_cate_ul {zoom:1}
@@ -429,10 +428,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
+.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ccc;background:#fff}
 .bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
-.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#f28907 !important;text-decoration:none} /* 글제목줄 분류스타일 */
+.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#76a5a8 !important;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#000}
 .td_subject img {margin-left:3px}
 .cnt_cmt {color:#777}
@@ -443,7 +443,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_v {margin-bottom:20px;padding-bottom:20px}
 
 #bo_v_h1 {margin:0 0 15px;font-size:1.2em}
-#bo_v_h1 span {color:#f28907}
+#bo_v_h1 span {color:#76a5a8}
 
 #bo_v_info {padding:10px 0 9px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
@@ -498,7 +498,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_v form {padding-top:20px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 10px;padding:20px 0}
+#bo_vc {margin:0 0 10px;padding:20px 0 10px}
 #bo_vc h2 {margin-bottom:10px}
 #bo_vc article {padding:0 0 10px;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:15px 0 5px}
@@ -517,7 +517,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_vc #captcha {float:left;margin-left:10px;padding:0 5px 0 0;border:0}
 #bo_vc #captcha a {display:inline-block;margin-right:5px;text-decoration:underline;vertical-align:middle}
 #bo_vc .fs_input {margin-right:5px}
-#bo_vc_w {position:relative;border-top:1px solid #d9d9d9;zoom:1}
+#bo_vc_w {position:relative;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;zoom:1}
 #bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc_w h2 {padding:15px 0 5px}
 #bo_vc_w #char_cnt {position:absolute;top:5px;right:10px}
