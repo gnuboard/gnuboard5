@@ -101,7 +101,7 @@ a:active {color:#000;text-decoration:underline}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 10px;height:24px;border:0;background:#000;color:#fff;letter-spacing:-0.1em;vertical-align:top}
+.btn_submit {padding:0 10px;height:24px;border:0;background:#4e5d60;color:#fff;letter-spacing:-0.1em;vertical-align:top}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#444;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
@@ -300,7 +300,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #poll footer {padding:0 14px 14px;text-align:right}
 #poll footer a:focus,
 #poll footer a:hover {text-decoration:none !important}
-#poll .btn_submit {background:#4e5d60}
 /* 설문조사 결과 (새창) */
 #poll_result section {padding:15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#f7f7f2}
 #poll_result h2 {margin:0;padding:20px 0}
