@@ -39,17 +39,18 @@ a:active {color:#000;text-decoration:underline}
 #logo {padding:17px}
 #logo span {display:inline-block;margin-left:10px;color:#109ff1;font-family:"verdana";vertical-align:middle}
 
-#schall {position:absolute;top:20px;left:90px;margin:0;padding:0;letter-spacing:-5px}
+#schall {position:absolute;top:22px;left:90px;margin:0;padding:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
 #schall_stx {padding-left:5px;width:156px;height:27px;border:1px solid #ccc;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
 
 #snb {position:absolute;top:20px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
-#snb li {float:left;margin-left:15px}
-#snb a {display:block;padding:5px}
+#snb li {float:left}
+#snb a {display:block;padding:5px 10px;letter-spacing:-0.1em}
 #snb a:focus,
 #snb a:hover,
 #snb a:active {text-decoration:none}
+#snb img {margin-right:3px}
 
 /* 중간 레이아웃 */
 #wrapper {margin:50px auto;width:980px;zoom:1}
