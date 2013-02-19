@@ -8,6 +8,71 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
     return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create);
 }
 
+function get_board_contents($contents)
+{
+    if(!G4_IS_MOBILE)
+        return $contents;
+
+    $dvc_width = intval($_COOKIE['device_width']);
+
+    if(!$dvc_width)
+        return $contents;
+
+    // 썸네일 width 설정
+    $thumb_width = 320;
+
+    if($dvc_width >= 1000) {
+        return $contents;
+    } else if($dvc_width >= 760 && $dvc_width < 1000) {
+        $thumb_width = 760;
+    } else if($dvc_width >= 480 && $dvc_width < 760) {
+        $thumb_width = 480;
+    }
+
+    // $contents 중 img 태그 추출
+    $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+".str_replace(".", "\.", $_SERVER['HTTP_HOST'])."[^>\'\"]+)[\'\"]?[^>]*>/";
+    preg_match_all($pattern, $contents, $matchs);
+
+    for($i=0; $i<count($matchs[1]); $i++) {
+        // 이미지 path 구함
+        $imgurl = parse_url($matchs[1][$i]);
+        $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
+
+        if(is_file($srcfile)) {
+            // 썸네일 높이
+            $size = @getimagesize($srcfile);
+            if(empty($size))
+                continue;
+
+            $thumb_height = round(($thumb_width * $size[1]) / $size[0]);
+            $filename = basename($srcfile);
+            $filepath = dirname($srcfile);
+
+            // 썸네일 생성
+            $thumb_file = thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, false);
+
+            $img_tag = $matchs[0][$i];
+            $thumb_tag = str_replace($filename, $thumb_file, $img_tag);
+
+            // img 태그에 width 값이 있을 경우 width 값 바꿔줌
+            preg_match("/width=[\'\"]?([0-9]+)[\'\"]?/", $img_tag, $mw);
+            if(!empty($mw[1])) {
+                $thumb_tag = str_replace($mw[0], str_replace($mw[1], $thumb_width, $mw[0]), $thumb_tag);
+            }
+
+            // img 태그에 height 값이 있을 경우 height 값 바꿔줌
+            preg_match("/height=[\'\"]?([0-9]+)[\'\"]?/", $img_tag, $mh);
+            if(!empty($mh[1])) {
+                $thumb_tag = str_replace($mh[0], str_replace($mh[1], $thumb_height, $mh[0]), $thumb_tag);
+            }
+
+            $contents = str_replace($img_tag, $thumb_tag, $contents);
+        }
+    }
+
+    return $contents;
+}
+
 //function thumbnail($bo_table, $file, $width, $height, $is_create=false)
 function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create)
 {

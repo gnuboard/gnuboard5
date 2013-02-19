@@ -61,11 +61,14 @@ var g4_cookie_domain = "<?=G4_COOKIE_DOMAIN?>";
 var g4_is_gecko  = navigator.userAgent.toLowerCase().indexOf("gecko") != -1;
 // 사라질 변수
 var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
-<? if ($is_admin) { echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'; } 
+<? if ($is_admin) { echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'; }
 ?>
 </script>
 <script src="<?=G4_JS_URL?>/jquery-1.8.3.min.js"></script>
 <script src="<?=G4_JS_URL?>/common.js"></script>
 <script src="<?=G4_JS_URL?>/wrest.js"></script>
+<script>
+    document.cookie = "device_width=" + screen.width;
+</script>
 </head>
 <body>
