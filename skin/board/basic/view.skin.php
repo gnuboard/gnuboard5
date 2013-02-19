@@ -119,12 +119,17 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <?
         // 파일 출력
-        for ($i=0; $i<=count($view['file']); $i++) {
-            if ($view['file'][$i]['view']) {
-                if ($i == 0) echo "<div id=\"bo_v_img\">";
-                echo $view['file'][$i]['view'];
-                if ($i == 0) echo "</div>";
+        $v_img_count = count($view['file']);
+        if($v_img_count) {
+            echo "<div id=\"bo_v_img\">\n";
+
+            for ($i=0; $i<=count($view['file']); $i++) {
+                if ($view['file'][$i]['view']) {
+                    echo $view['file'][$i]['view'];
+                }
             }
+
+            echo "</div>\n";
         }
         ?>
 
