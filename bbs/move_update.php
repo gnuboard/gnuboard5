@@ -12,7 +12,7 @@ if(!count($_POST['chk_bo_table']))
     alert("게시물을 ".$act."할 게시판을 한개 이상 선택해 주십시오.", $url);
 
 // 원본 파일 디렉토리
-$src_dir = G4_PATH.'/data/file/'.$bo_table;
+$src_dir = G4_DATA_PATH.'/file/'.$bo_table;
 
 $save = array();
 $save_count_write = 0;
@@ -31,8 +31,8 @@ while ($row = sql_fetch_array($result))
         $move_bo_table = $_POST['chk_bo_table'][$i];
         $move_write_table = $g4['write_prefix'] . $move_bo_table;
 
-        $src_dir = G4_PATH.'/data/file/'.$bo_table; // 원본 디렉토리
-        $dst_dir = G4_PATH.'/data/file/'.$move_bo_table; // 복사본 디렉토리
+        $src_dir = G4_DATA_PATH.'/file/'.$bo_table; // 원본 디렉토리
+        $dst_dir = G4_DATA_PATH.'/file/'.$move_bo_table; // 복사본 디렉토리
 
         $count_write = 0;
         $count_comment = 0;

@@ -1,8 +1,8 @@
 <?
 include_once('./_common.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-include_once(G4_PATH.'/lib/register.lib.php');
-include_once(G4_PATH.'/lib/mailer.lib.php');
+include_once(G4_LIB_PATH.'/register.lib.php');
+include_once(G4_LIB_PATH.'/mailer.lib.php');
 
 // 리퍼러 체크
 referer_check();
@@ -89,7 +89,7 @@ if ($w == '' || $w == 'u') {
     if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg);
 }
 
-$mb_dir = G4_PATH.'/data/member/'.substr($mb_id,0,2);
+$mb_dir = G4_DATA_PATH.'/member/'.substr($mb_id,0,2);
 
 // 아이콘 삭제
 if (isset($_POST['del_mb_icon'])) {

@@ -359,7 +359,7 @@ function wrestInitialized()
             //if (regexp.test(document.forms[i].elements[j].className)) {
                 //document.forms[i].elements[j].style.backgroundColor = wrestFldDefaultColor;
                 //document.forms[i].elements[j].className = "wrest_required";
-                document.forms[i].elements[j].style.backgroundImage = "url('"+g4_url+"/js/wrest.gif')";
+                document.forms[i].elements[j].style.backgroundImage = "url('"+g4_img_url+"/wrest.gif')";
                 document.forms[i].elements[j].style.backgroundPosition = "top right";
                 document.forms[i].elements[j].style.backgroundRepeat = "no-repeat";
             }

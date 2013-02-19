@@ -34,7 +34,7 @@ if ($member['mb_level'] < $board['bo_download_level']) {
         alert($alert_msg.'\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode($g4['bbs_path'].'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
 }
 
-$filepath = G4_PATH.'/data/file/'.$bo_table.'/'.$file['bf_file'];
+$filepath = G4_DATA_PATH.'/file/'.$bo_table.'/'.$file['bf_file'];
 $filepath = addslashes($filepath);
 if (!is_file($filepath) || !file_exists($filepath))
     alert('파일이 존재하지 않습니다.');

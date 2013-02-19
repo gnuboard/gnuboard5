@@ -1,7 +1,7 @@
 <?
 include_once('./_common.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-include_once(G4_PATH.'/lib/register.lib.php');
+include_once(G4_LIB_PATH.'/register.lib.php');
 
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));
@@ -103,7 +103,7 @@ if ($w == "") {
 include_once('./_head.php');
 
 // 회원아이콘 경로
-$mb_icon = G4_PATH.'/data/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
+$mb_icon = G4_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
 
 $register_action_url = G4_HTTPS_BBS_URL.'/register_form_update.php';
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400)));

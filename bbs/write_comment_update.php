@@ -194,7 +194,7 @@ if ($w == 'c') // 코멘트 입력
         // 4.00.15 - 메일로 보내는 코멘트의 바로가기 링크 수정
         $link_url = G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
 
-        include_once(G4_PATH.'/lib/mailer.lib.php');
+        include_once(G4_LIB_PATH.'/mailer.lib.php');
 
         ob_start();
         include_once ('./write_update_mail.php');

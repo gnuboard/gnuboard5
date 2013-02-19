@@ -154,7 +154,7 @@ include_once('./admin.head.php');
             <input type="file" id="mb_icon" name="mb_icon">
             <?
             $mb_dir = substr($mb['mb_id'],0,2);
-            $icon_file = $g4['path'].'/data/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+            $icon_file = G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
             if (file_exists($icon_file)) {
                 echo '<img src="'.$icon_file.'">';
                 echo '<input type="checkbox" id="del_mb_icon" name="del_mb_icon" value="1">삭제';

@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <p id="bo_v_title"><?=$board['bo_subject']?></p>
@@ -171,9 +171,6 @@ function board_move(href)
 }
 </script>
 
-<script src="<?=G4_JS_URL?>/board.js"></script>
-<!-- 게시글 보기 끝 -->
-
 <script>
 // 이미지 등비율 리사이징
 $(window).load(function() {
@@ -196,3 +193,4 @@ function view_image_resize()
     });
 }
 </script>
+<!-- 게시글 보기 끝 -->

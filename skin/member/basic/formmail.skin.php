@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <div id="formmail" class="new_win">
@@ -65,8 +65,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </form>
 </div>
 
-<script src="<?="$g4[path]/js/md5.js"?>"></script>
-<script src="<?="$g4[path]/js/jquery.kcaptcha.js"?>"></script>
 <script>
 with (document.fformmail) {
     if (typeof fname != "undefined")

@@ -33,7 +33,7 @@ if ($file = $_POST['bo_include_tail']) {
     }
 }
 
-$board_path = $g4['path'].'/data/file/'.$bo_table;
+$board_path = G4_DATA_PATH.'/file/'.$bo_table;
 
 // 게시판 디렉토리 생성
 @mkdir($board_path, 0707);
