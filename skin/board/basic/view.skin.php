@@ -19,6 +19,34 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         댓글<strong><?=number_format($view['wr_comment'])?>건</strong>
     </section>
 
+    <nav id="bo_v_top">
+        <h2>게시물 상단 버튼</h2>
+        <?
+        ob_start();
+        ?>
+        <? if ($prev_href || $next_href) { ?>
+        <ul class="bo_v_nb">
+            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>">이전글</a></li><? } ?>
+            <? if ($next_href) { ?><li><a href="<?=$next_href?>">다음글</a></li><? } ?>
+        </ul>
+        <? } ?>
+
+        <ul class="bo_v_com">
+            <? if ($update_href) { ?><li><a href="<?=$update_href?>">수정</a></li><? } ?>
+            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" onclick="del(this.href); return false;">삭제</a></li><? } ?>
+            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" onclick="board_move(this.href); return false;">복사</a></li><? } ?>
+            <? if ($move_href) { ?><li><a href="<?=$move_href?>" onclick="board_move(this.href); return false;">이동</a></li><? } ?>
+            <? if ($search_href) { ?><li><a href="<?=$search_href?>">검색</a></li><? } ?>
+            <li><a href="<?=$list_href?>">목록</a></li>
+            <? if ($reply_href) { ?><li><a href="<?=$reply_href?>">답변</a></li><? } ?>
+            <? if ($write_href) { ?><li><a href="<?=$write_href?>">글쓰기</a></li><? } ?>
+        </ul>
+        <?
+        $link_buttons = ob_get_contents();
+        ob_end_flush();
+        ?>
+    </nav>
+
     <?
     if ($view['file']['count']) {
         $cnt = 0;
@@ -84,34 +112,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </section>
     <? } ?>
 
-    <nav id="bo_v_top">
-        <h2>게시물 상단 버튼</h2>
-        <?
-        ob_start();
-        ?>
-        <? if ($prev_href || $next_href) { ?>
-        <ul class="bo_v_nb">
-            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>">이전글</a></li><? } ?>
-            <? if ($next_href) { ?><li><a href="<?=$next_href?>">다음글</a></li><? } ?>
-        </ul>
-        <? } ?>
-
-        <ul class="bo_v_com">
-            <? if ($update_href) { ?><li><a href="<?=$update_href?>">수정</a></li><? } ?>
-            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" onclick="del(this.href); return false;">삭제</a></li><? } ?>
-            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" onclick="board_move(this.href); return false;">복사</a></li><? } ?>
-            <? if ($move_href) { ?><li><a href="<?=$move_href?>" onclick="board_move(this.href); return false;">이동</a></li><? } ?>
-            <? if ($search_href) { ?><li><a href="<?=$search_href?>">검색</a></li><? } ?>
-            <li><a href="<?=$list_href?>">목록</a></li>
-            <? if ($reply_href) { ?><li><a href="<?=$reply_href?>">답변</a></li><? } ?>
-            <? if ($write_href) { ?><li><a href="<?=$write_href?>">글쓰기</a></li><? } ?>
-        </ul>
-        <?
-        $link_buttons = ob_get_contents();
-        ob_end_flush();
-        ?>
-    </nav>
-
     <article id="bo_v_atc">
         <header>
             <h1>본문</h1>
@@ -141,7 +141,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
         <? if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
-            <? if ($scrap_href) { ?><a href="<? echo $scrap_href; ?>" target="_blank" onclick="win_scrap(this.href); return false;" class="btn01">스크랩</a><? } ?>
+            <? if ($scrap_href) { ?><a href="<?=$scrap_href; ?>" target="_blank" onclick="win_scrap(this.href); return false;" class="btn01">스크랩</a><? } ?>
             <? if ($good_href) {?><a href="<?=$good_href?>" class="btn01" target="hiddenframe">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
             <? if ($nogood_href) {?><a href="<?=$nogood_href?>" class="btn01" target="hiddenframe">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
         </div>

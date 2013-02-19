@@ -4,7 +4,7 @@
 html {overflow-y:scroll}
 body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
+h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
@@ -22,7 +22,7 @@ a:active {color:#000;text-decoration:underline}
 /* 본문 바로가기 */
 #to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
 #to_content a:focus,
-#to_content a:active {width:100%;height:75px;background:#000;color:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.3em}
+#to_content a:active {width:100%;height:75px;background:#25303d;color:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.3em}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -112,7 +112,8 @@ a:active {color:#000;text-decoration:underline}
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
 .basic_tbl caption {padding:0 0 10px;color:#777;text-align:left}
-.basic_tbl thead th {padding:12px 0 8px;border-top:1px solid #5b6964;background:#f9f9f9}
+.basic_tbl thead th {padding:12px 0 8px;border-top:1px solid #5b6964;background:#76a5a8;color:#fff}
+.basic_tbl thead a {color:#fff}
 .basic_tbl thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .basic_tbl tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
 .basic_tbl tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
@@ -154,7 +155,7 @@ td.empty_table {padding:85px 0;text-align:center}
 
 /* 새창 기본 스타일 */
 .new_win {}
-.new_win h1 {margin-bottom:20px;padding:0 20px;height:60px;border-top:2px solid #484848;border-bottom:1px solid #e9e9e9;background:#f7f7f2;font-size:1.2em;line-height:5em}
+.new_win h1 {margin-bottom:20px;padding:0 20px;height:60px;border-top:2px solid #484848;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em;line-height:5em}
 .new_win table {margin:0 auto 20px;width:93%}
 .new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #515151;background:#484848;list-style:none;zoom:1}
 .new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -198,7 +199,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #reg_result_email strong {color:#000;font-size:1.2em}
 
 /* 아이디/패스워드 찾기 */
-#find_info_fs {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#f7f7f7}
+#find_info_fs {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 #find_info #captcha {margin:0 auto 20px;width:87%}
 #find_info #captcha input {margin-left:5px}
 
@@ -404,10 +405,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .post_code {display:inline-block;width:50px;color:#999}
 
 /* 게시판 쓰기 */
-#bo_w caption {padding:0;height:0;overflow:hidden}
 
 /* 게시판 목록 */
-#bo_list_title {}
+#bo_list_title {margin-bottom:20px;font-size:1.1em;letter-spacing:-0.1em}
+
 #bo_list_total {margin-bottom:10px}
 .btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #ccc;background:#fafafa}
 #bo_cate {margin-bottom:15px;padding-left:1px}
@@ -428,21 +429,23 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
-.bo_notice td {background:#f7f7f7}
+.bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
-.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#000 !important;text-decoration:none} /* 글제목줄 분류스타일 */
+.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#f28907 !important;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#000}
 .td_subject img {margin-left:3px}
 .cnt_cmt {color:#777}
 
 /* 게시판 읽기 */
-#bo_v_title {padding:5px 0 0;font-weight:bold}
+#bo_v_title {color:#b3ccb7;font-size:1.1em;font-weight:bold;letter-spacing:-0.1em}
 
 #bo_v {margin-bottom:20px;padding-bottom:20px}
 
-#bo_v_h1 {padding:10px 0 5px;font-size:1.2em}
-#bo_v_info {padding:5px 0 8px}
+#bo_v_h1 {margin:0 0 15px;font-size:1.2em}
+#bo_v_h1 span {color:#f28907}
+
+#bo_v_info {padding:10px 0 9px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info {}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
@@ -450,24 +453,30 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_v_file {}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {padding:0 20px}
-#bo_v_file a {display:inline-block;padding:8px 0 7px}
+#bo_v_file a {display:inline-block;padding:8px 0 7px;color:#578689}
+#bo_v_file a:focus,
+#bo_v_file a:hover,
+#bo_v_file a:active {text-decoration:none}
 .bo_v_file_cnt {display:inline-block;margin:0 10px}
 #bo_v_link {}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
-#bo_v_link li {padding:0 20px}
-#bo_v_link a {display:inline-block;padding:8px 0 7px}
+#bo_v_link a {display:inline-block;padding:8px 0 7px;color:#578689}
+#bo_v_link a:focus,
+#bo_v_link a:hover,
+#bo_v_link a:active {text-decoration:none}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
 
-#bo_v_top {margin:10px 0 20px;zoom:1}
+#bo_v_top {margin:0 0 20px;padding:10px 0;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_top ul {margin-bottom:5px;list-style:none}
+#bo_v_top ul {list-style:none}
+
 #bo_v_bot {zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_bot ul {margin:0;padding:0;list-style:none}
+
 .bo_v_nb {float:left}
 .bo_v_nb li {float:left;margin-right:5px}
 .bo_v_com {float:right}
