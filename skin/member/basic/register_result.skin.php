@@ -36,8 +36,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         감사합니다.
     </p>
 
-</div>
+    <div class="btn_confirm">
+        <a href="<?=G4_URL?>/" class="btn02">메인으로</a>
+    </div>
 
-<div class="btn_confirm">
-    <a href="<?=G4_URL?>/" class="btn01">메인으로</a>
 </div>

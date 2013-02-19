@@ -193,11 +193,12 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #fregisterform textarea {height:50px}
 
 /* 회원가입 완료 */
-#reg_result {margin-bottom:20px;padding:70px 0 40px}
-#reg_result_logo {margin-bottom:40px;text-align:center}
+#reg_result {padding:50px 0 0}
+#reg_result_logo {margin-bottom:50px;text-align:center}
 #reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
 #reg_result_email span {display:inline-block;width:150px}
-#reg_result_email strong {color:#000;font-size:1.2em}
+#reg_result_email strong {color:#e8180c;font-size:1.2em}
+#reg_result .btn_confirm {margin:50px 0}
 
 /* 아이디/패스워드 찾기 */
 #find_info_fs {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
