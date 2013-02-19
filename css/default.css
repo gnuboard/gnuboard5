@@ -43,9 +43,14 @@ a:active {color:#000;text-decoration:underline}
 #schall legend {width:0;height:0;overflow:hidden}
 #schall_stx {padding-left:5px;width:156px;height:27px;border:1px solid #ccc;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
 
-#snb {position:absolute;top:10px;right:0;zoom:1}
+#snb {position:absolute;top:20px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
-#snb li {float:left;margin-left:7px}
+#snb li {float:left;margin-left:15px}
+#snb a {display:block;padding:5px}
+#snb a:focus,
+#snb a:hover,
+#snb a:active {text-decoration:none}
+/*
 #snb a {display:block;position:relative;width:50px;height:50px;background:url('../img/snb_icon.jpg');border:1px solid #cfded8;border-radius:10px;text-decoration:none}
 #snb #snb_login {background-position:0 0}
 #snb #snb_join {background-position:-50px 0}
@@ -54,6 +59,7 @@ a:active {color:#000;text-decoration:underline}
 #snb #snb_modify {background-position:-200px 0}
 #snb #snb_cnt {background-position:-250px 0}
 #snb #snb_new {background-position:-300px 0}
+*/
 #snb span {position:absolute;top:35px;left:0;width:50px;font-size:0.95em;letter-spacing:-0.1em;text-align:center}
 
 /* 중간 레이아웃 */
