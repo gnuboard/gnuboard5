@@ -58,7 +58,7 @@ a:active {color:#000;text-decoration:underline}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 #lnb {float:right;width:208px;border:1px solid #e7f1ed;background:#fff}
-#container {float:left;padding:30px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #e7f1ed;background:#fff;zoom:1}
+#container {float:left;padding:15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #e7f1ed;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
