@@ -179,13 +179,14 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 
 /* 스킨별 스타일 */
 /* 회원가입 약관 */
-#fregister section {margin:0 0 20px;padding:20px 0;border-bottom:3px solid #484848}
+#fregister section {margin:0 0 20px;padding:20px 0;border-bottom:3px solid #eee}
 #fregister h2 {margin:0 0 20px;text-align:center}
 #fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #cfded8;background:#f7f7f7}
-#fregister textarea:focus {background:#333;color:#fff}
+#fregister textarea:focus {background:#25303d;color:#fff}
 .fregister_agree {padding:10px 0 0;text-align:right}
 .fregister_agree label {display:inline-block;margin-right:5px}
-#fregister p {text-align:center}
+#fregister p {color:#e8180c;text-align:center}
+#fregister .btn_confirm {margin-bottom:20px}
 
 /* 회원가입 입력 */
 #fregisterform .cbg {margin-bottom:15px;padding:20px}
