@@ -41,7 +41,8 @@ a:active {color:#000;text-decoration:underline}
 
 #schall {position:absolute;top:22px;left:90px;margin:0;padding:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
-#schall_stx {padding-left:5px;width:156px;height:27px;border:1px solid #ccc;border-right:0;border-top-left-radius:10px;border-bottom-left-radius:10px;background:#fff;line-height:2em !important;line-height:2em}
+#schall_stx {padding-left:5px;width:156px;height:27px;border:1px solid #ccc;border-right:0;background:#fff;line-height:2em !important;line-height:2em}
+#schall_submit {border:1px solid #ccc;border-left:0}
 
 #snb {position:absolute;top:20px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
