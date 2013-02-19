@@ -229,7 +229,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
 #ol_after_private a {display:block;padding-top:8px;height:37px;background:#fff;text-align:center}
-#ol_after_private a strong {display:block;padding-top:5px;color:#000;font-weight:normal}
+#ol_after_private a strong {display:block;padding-top:3px;color:#000;font-weight:normal}
 #ol_after_private a:focus,
 #ol_after_private a:hover {background:#4e5d60;color:#fff;text-decoration:none}
 #ol_after_private a:focus strong,
@@ -275,7 +275,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:100px auto;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
-#mb_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0}
+#mb_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
 #mb_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f7f7f2;text-align:center}
 #mb_confirm label {letter-spacing:-0.1em}
@@ -284,7 +284,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 /* 비밀글 패스워드 확인 */
 #pw_confirm {margin:100px auto;width:500px}
 #pw_confirm h1 {margin:0 0 20px;font-size:1.3em}
-#pw_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0}
+#pw_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #pw_confirm p strong {display:block}
 #pw_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f7f7f2;text-align:center}
 #pw_confirm label {letter-spacing:-0.1em}
