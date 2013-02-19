@@ -381,11 +381,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #sch_result_bo dd {margin:0;padding:0}
 #sch_result_bo ul {margin-top:1px}
 #sch_result_bo li {position:relative;margin-top:-1px;height:40px}
-#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #1e5db3;border-right:0;background:#000;color:#fff;text-decoration:none;line-height:3.4em}
+#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #618588;border-right:0;background:#679295;color:#fff;text-decoration:none;line-height:3.4em}
 #sch_result_bo .sch_on {width:150px;border-color:#cfded8;border-right:0;background:#fff;color:#000;font-weight:bold}
 #sch_result_bo .cnt_cmt {color:#fff}
 #sch_result_bo .sch_on .cnt_cmt {color:#000}
-#sch_result_atc {float:left;margin:0;padding:15px 25px;width:508px;border:1px solid #cfded8;background:#fff}
+#sch_result_atc {float:left;margin:0;padding:15px 25px;width:506px;border:1px solid #cfded8;background:#fff}
 #sch_result_atc dt a {display:inline-block;margin-bottom:15px;color:#000;font-size:1.2em;font-weight:bold;text-decoration:none}
 #sch_result_atc dd {margin:0 0 15px}
 #sch_result_atc dd a {}
