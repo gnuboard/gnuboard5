@@ -103,7 +103,7 @@ a:active {color:#000;text-decoration:underline}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#4e5d60;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
-.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#444;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
+.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#4e5d60;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
 .btn_win a:focus,
@@ -398,7 +398,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 
 /* 우편번호 검색 */
 #post_code fieldset {margin:0 auto 10px;padding:15px 10px;width:87%;text-align:center}
-#post_code dl {margin:0 auto 10px;padding:20px 10px;width:87%}
+#post_code dl {margin:0 auto 10px;padding:20px 10px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 #post_code dt {margin-bottom:15px;color:#000}
 #post_code dd {margin:0;padding:0}
 #post_code ul {margin:0;padding:0;list-style:none}
