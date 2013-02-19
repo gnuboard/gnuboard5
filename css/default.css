@@ -418,22 +418,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 /* 게시판 목록 */
 #bo_list_title {margin-bottom:20px;font-size:1.2em;letter-spacing:-0.1em}
 
-/*
-#bo_cate {margin-bottom:10px;padding-left:1px}
-#bo_cate h2 {width:0;height:0;overflow:hidden}
-#bo_cate_ul {zoom:1}
-#bo_cate_ul:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_cate_ul li {position:relative;float:left}
-#bo_cate_ul a {display:block;padding:7px 0 5px;width:70px;text-align:center;text-decoration:none}
-#bo_cate_ul #bo_cate_on {background:#f7f7f2;color:#000;font-weight:bold}
-
-#bo_cate {clear:both;position:relative;float:left;width:727px;margin-bottom:5px;padding-left:1px;border-bottom:1px solid #e0e0e0;zoom:1}
-#bo_cate:after {display:block;visibility:hidden;clear:both;height:0;content:''}
-#bo_cate li {float:left;margin-bottom:-1px}
-#bo_cate a {display:block;position:relative;margin-left:-1px;padding:6px 0 5px;border:1px solid #e0e0e0;border-bottom:0;background:#f7f7f7;color:#888;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
-#bo_cate #bo_cate_on {z-index:2;padding:6px 0;border:1px solid #e0e0e0;border-bottom:0;background:#fff;color:#ff3061;font-weight:bold}
-*/
-
 #bo_cate h2 {width:0;height:0;overflow:hidden}
 #bo_cate ul {margin-bottom:10px;padding-left:1px;width:728px;zoom:1}
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -456,16 +440,16 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
-.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#76a5a8 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
+.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#000}
 .td_subject img {margin-left:3px}
 .cnt_cmt {font-weight:bold}
 
-#bo_sch {margin-bottom:10px;text-align:center}
+#bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}
 #bo_sch legend {width:0;height:0;overflow:hidden}
 
 /* 게시판 읽기 */
-#bo_v_title {margin:0;padding:0 0 10px;color:#76a5a8;font-weight:bold;line-height:1em}
+#bo_v_title {margin:0;padding:0 0 10px;color:#999;font-weight:bold;line-height:1em}
 
 #bo_v {margin-bottom:20px;padding-bottom:20px}
 
