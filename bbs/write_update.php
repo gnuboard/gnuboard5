@@ -602,9 +602,10 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 }
 
 // 사용자 코드 실행
-@include_once ($board_skin_path.'/write_update.skin.php');
-
+@include_once($board_skin_path.'/write_update.skin.php');
 @include_once($board_skin_path.'/write_update.tail.skin.php');
+
+delete_cache_latest($bo_table);
 
 if ($file_upload_msg)
     alert($file_upload_msg, G4_HTTPS_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);

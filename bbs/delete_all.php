@@ -92,7 +92,7 @@ for ($i=count($tmp_array)-1; $i>=0; $i--)
             $result2 = sql_query($sql2);
             while ($row2 = sql_fetch_array($result2))
                 // 파일삭제
-                @unlink(G4_PATH.'/data/file/'.$bo_table.'/'.$row2['bf_file']);
+                @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row2['bf_file']);
 
             // 파일테이블 행 삭제
             sql_query(" delete from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ");
@@ -135,6 +135,8 @@ if ($count_write > 0 || $count_comment > 0)
 
 // 4.11
 @include_once($board_skin_path.'/delete_all.tail.skin.php');
+
+delete_cache_latest($bo_table);
 
 goto_url('./board.php?bo_table='.$bo_table.'&amp;page='.$page.$qstr);
 ?>

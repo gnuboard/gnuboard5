@@ -1732,4 +1732,13 @@ function check_device($device)
         alert('모바일 전용 게시판입니다.', G4_URL);
     }
 }
+
+
+// 게시판 최신글 캐시 파일 삭제
+function delete_cache_latest($bo_table)
+{
+    foreach (glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*') as $filename) {
+        unlink($filename);
+    }
+}
 ?>
