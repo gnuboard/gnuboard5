@@ -2,7 +2,7 @@
 // board_delete.php , boardgroup_delete.php 에서 include 하는 파일
 
 if (!defined('_GNUBOARD_')) exit;
-if (!defined("_BOARD_DELETE_")) exit; // 개별 페이지 접근 불가
+if (!defined('_BOARD_DELETE_')) exit; // 개별 페이지 접근 불가
 
 // $tmp_bo_table 에는 $bo_table 값을 넘겨주어야 함
 if (!$tmp_bo_table) { return; }
@@ -27,5 +27,5 @@ sql_query(" delete from {$g4['board_file_table']} where bo_table = '{$tmp_bo_tab
 sql_query(" drop table {$g4['write_prefix']}{$tmp_bo_table} ", FALSE);
 
 // 게시판 폴더 전체 삭제
-rm_rf($g4['path'].'/data/file/'.$tmp_bo_table);
+rm_rf(G4_DATA_PATH.'/file/'.$tmp_bo_table);
 ?>

@@ -194,7 +194,7 @@ if ($w == 'c') // 코멘트 입력
         // 4.00.15 - 메일로 보내는 코멘트의 바로가기 링크 수정
         $link_url = G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
 
-        include_once(G4_PATH.'/lib/mailer.lib.php');
+        include_once(G4_LIB_PATH.'/mailer.lib.php');
 
         ob_start();
         include_once ('./write_update_mail.php');
@@ -311,6 +311,8 @@ else if ($w == 'cu') // 코멘트 수정
 // 사용자 코드 실행
 @include_once($board_skin_path.'/write_comment_update.skin.php');
 @include_once($board_skin_path.'/write_comment_update.tail.skin.php');
+
+delete_cache_latest($bo_table);
 
 goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr['wr_parent'].'&amp;page='.$page.$qstr.'&amp;#c_'.$comment_id);
 ?>

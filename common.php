@@ -172,7 +172,7 @@ else if (is_mobile())
 $_SESSION['ss_is_mobile'] = $is_mobile;
 define('G4_IS_MOBILE', $is_mobile);
 if (G4_IS_MOBILE) {
-    include_once(G4_PATH.'/lib/mobile.lib.php'); // 모바일 전용 라이브러리
+    include_once(G4_LIB_PATH.'/mobile.lib.php'); // 모바일 전용 라이브러리
     $g4['mobile_path'] = G4_PATH.'/'.$g4['mobile_dir'];
 }
 //==============================================================================

@@ -125,23 +125,6 @@ function auth_check($auth, $attr)
 }
 
 
-// 텍스트에리어 늘리기, 줄이기
-// 보류 : 지운아빠 2012-11-07
-function textarea_size($fld)
-{
-    /*
-    global $g4;
-
-    $size = 10;
-    $s  = "<table cellpadding=2 cellspacing=0 border=0 width=100%><tr><td align=right>";
-    $s .= "<span onclick='javascript:textarea_size(document.getElementById(\"$fld\"), {$size})'><img src='".$g4['admin_path']."/img/btn_up.gif'></span> ";
-    $s .= "<span onclick='javascript:textarea_size(document.getElementById(\"$fld\"), '.$size*(-1).')'><img src='".$g4['admin_path']."/img/btn_down.gif'></span>";
-    $s .= "</td></tr></table>";
-    return $s;
-    */
-}
-
-
 // 작업아이콘 출력
 function icon($act, $link='', $target='_parent')
 {
@@ -150,7 +133,6 @@ function icon($act, $link='', $target='_parent')
     $img = array('입력'=>'insert', '추가'=>'insert', '생성'=>'insert', '수정'=>'modify', '삭제'=>'delete', '이동'=>'move', '그룹'=>'move', '보기'=>'view', '미리보기'=>'view', '복사'=>'copy');
     $icon = '<img src="'.G4_ADMIN_PATH.'/img/icon_'.$img[$act].'.gif" title="'.$act.'">';
     if ($link)
-        //$s = '<a href="'.$link.'" target="'.$target.'">'.$icon.'</a>';
         $s = '<a href="'.$link.'">'.$icon.'</a>';
     else
         $s = $icon;
@@ -237,7 +219,7 @@ if (get_session('ss_mb_key') !== $admin_key) {
 
     session_destroy();
 
-    include_once($g4['path'].'/lib/mailer.lib.php');
+    include_once(G4_LIB_PATH.'/mailer.lib.php');
     // 메일 알림
     mailer($member['mb_nick'], $member['mb_email'], $member['mb_email'], 'XSS 공격 알림', $_SERVER['REMOTE_ADDR'].' 아이피로 XSS 공격이 있었습니다.\n\n관리자 권한을 탈취하려는 접근이므로 주의하시기 바랍니다.\n\n해당 아이피는 차단하시고 의심되는 게시물이 있는지 확인하시기 바랍니다.\n\n'.G4_URL, 0);
 

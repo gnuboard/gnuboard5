@@ -77,7 +77,7 @@ else if ($w == 'u')
 
     // 회원 아이콘 삭제
     if ($del_mb_icon)
-        @unlink($g4['path'].'/data/member/'.$mb_dir.'/'.$mb_id.'.gif');
+        @unlink(G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif');
 
     // 아이콘 업로드
     if (is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {
@@ -86,10 +86,10 @@ else if ($w == 'u')
         }
 
         if (preg_match("/(\.gif)$/i", $_FILES['mb_icon']['name'])) {
-            @mkdir($g4['path'].'/data/member/'.$mb_dir, 0707);
-            @chmod($g4['path'].'/data/member/'.$mb_dir, 0707);
+            @mkdir(G4_DATA_PATH.'/member/'.$mb_dir, 0707);
+            @chmod(G4_DATA_PATH.'/member/'.$mb_dir, 0707);
 
-            $dest_path = $g4['path'].'/data/member/'.$mb_dir.'/'.$mb_id.'.gif';
+            $dest_path = G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
 
             move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
             chmod($dest_path, 0606);

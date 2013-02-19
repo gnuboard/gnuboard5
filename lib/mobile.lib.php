@@ -60,7 +60,7 @@ function mobile_thumb($matches)
             $src = preg_replace("/^\.\.\//", "http://m.sir.co.kr/", $src);
             $absolute = preg_replace("/^http\:\/\/(www\.)?sir\.co\.kr\/(.*)$/", "/home/sir/$2", $src);
 
-            $thumb_dir = "$g4[path]/data/thumb/$bo_table";
+            $thumb_dir = G4_DATA_PATH.'/thumb/'.$bo_table;
             if (!is_dir($thumb_dir)) {
                 @mkdir($thumb_dir, 0707);
                 @chmod($thumb_dir, 0707);
@@ -100,12 +100,12 @@ function mobile_thumb($matches)
             $src = trim($m[1]);
             //if ($is_admin) echo $src."<br>";
             if (preg_match("/\.(jpe?g|png)$/i", $src)) {
-                // 상대경로(..)로 시작되면 sir.co.kr 도메인으로 여긴다.
-                $src = preg_replace("/^\.\.\//", "http://sir.co.kr/", $src);
+                // 상대경로(..)로 시작되면 도메인으로 여긴다.
+                $src = preg_replace("/^\.\.\//", 'http://'.$_SERVER['SERVER_NAME'].'/', $src);
 
                 // 유일한 파일명을 만든다.
                 $src_md5 = md5($src.$width);
-                $thumb = "$g4[path]/data/thumb/{$bo_table}-{$wr_id}-{$src_md5}";
+                $thumb = G4_DATA_PATH.'/thumb/'.$bo_table.'-'.$wr_id.'-'.$src_md5;
 
                 if (!file_exists($thumb)) {
                     $result = mobile_create_thumb($src, $width, $thumb);

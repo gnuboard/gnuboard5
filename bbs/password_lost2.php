@@ -1,7 +1,7 @@
 <?
 include_once('./_common.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-include_once(G4_PATH.'/lib/mailer.lib.php');
+include_once(G4_LIB_PATH.'/mailer.lib.php');
 
 if ($is_member) {
     alert("이미 로그인중입니다.");

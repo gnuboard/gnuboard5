@@ -216,7 +216,7 @@ $colspan = 5;
     </table>
 
     <div class="btn_ft">
-        <a href="../bbs/new.php">최근게시물 더보기</a>
+        <a href="<?=G4_BBS_URL?>/new.php">최근게시물 더보기</a>
     </div>
 </section>
 
