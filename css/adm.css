@@ -150,7 +150,7 @@ fieldset textarea {padding:3px 3px 4px;border:1px solid #ccc;background:#f7f7f7;
 .fs_input:focus,
 fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#fff}
 
-.readonly {border:1px solid #a7bac2;;background:#a7bac2;color:#fff}
+.readonly {}
 
 /* 폼 안내글 */
 .adm_field_explain {display:block;padding:0 0 5px;color:#5b747e}
