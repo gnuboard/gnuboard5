@@ -33,7 +33,6 @@ $(function(){
 
         if(oldX != e.pageX || oldY != e.pageY) {
             mouse_event = true;
-            return false;
         }
     });
 
