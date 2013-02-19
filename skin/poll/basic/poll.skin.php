@@ -28,8 +28,8 @@ $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
         <? } ?>
     </ul>
     <footer>
-        <input type="submit" class="btn_submit" value="투표하기">
-        <a href="<?=G4_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir"?>" class="btn_cancel" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
+        <input type="submit" value="투표하기">
+        <a href="<?=G4_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir"?>" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
     </footer>
 </section>
 </form>
