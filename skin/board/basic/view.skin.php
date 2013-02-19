@@ -1,15 +1,15 @@
 <?
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<p id="bo_v_title"><?=$board['bo_subject']?></p>
+<p id="bo_v_title">
+    <?=$board['bo_subject']?>
+    <? if ($category_name) { // 분류가 지정되었다면 ?><?=($category_name ? "{$view['ca_name']} " : "");?><? } // 분류 출력 끝 ?>
+</p>
 
 <div id="bo_v">
 
-    <h1 id="bo_v_h1">
-        <? if ($category_name) { // 분류가 지정되었다면 ?><span><?=($category_name ? "{$view['ca_name']} " : "");?></span><? } // 분류 출력 끝 ?>
-        <?=cut_str(get_text($view['wr_subject']), 70) // 글제목 출력?>
-    </h1>
+    <h1 id="bo_v_h1"><?=cut_str(get_text($view['wr_subject']), 70) // 글제목 출력?></h1>
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
@@ -176,6 +176,9 @@ function board_move(href)
 }
 </script>
 
+<script src="<?=G4_JS_URL?>/board.js"></script>
+<!-- 게시글 보기 끝 -->
+
 <script>
 // 이미지 등비율 리사이징
 $(window).load(function() {
@@ -198,4 +201,3 @@ function view_image_resize()
     });
 }
 </script>
-<!-- 게시글 보기 끝 -->

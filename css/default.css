@@ -41,8 +41,8 @@ a:active {color:#000;text-decoration:underline}
 
 #schall {position:absolute;top:22px;left:70px;margin:0;padding:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
-#schall_stx {padding-left:5px;width:156px;height:24px;border:1px solid #445052;border-right:0;background:#4e5d60;color:#fff;line-height:1.9em !important;line-height:1.6em}
-#schall_submit {border:1px solid #333;border-left:0}
+#schall_stx {padding-left:5px;width:156px;height:24px;border:1px solid #76a5a8;border-right:0;background:#f7f7f2;color:#fff;line-height:1.9em !important;line-height:1.6em}
+#schall_submit {border:1px solid #76a5a8;border-left:0}
 
 #snb {position:absolute;top:18px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
@@ -432,18 +432,17 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
-.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#76a5a8 !important;text-decoration:none} /* 글제목줄 분류스타일 */
+.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#76a5a8 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#000}
 .td_subject img {margin-left:3px}
-.cnt_cmt {color:#777}
+.cnt_cmt {color:#ff5300}
 
 /* 게시판 읽기 */
-#bo_v_title {color:#b3ccb7;font-size:1.1em;font-weight:bold;letter-spacing:-0.1em}
+#bo_v_title {color:#76a5a8;font-size:1.1em;font-weight:bold}
 
 #bo_v {margin-bottom:20px;padding-bottom:20px}
 
 #bo_v_h1 {margin:0 0 15px;font-size:1.2em}
-#bo_v_h1 span {color:#76a5a8}
 
 #bo_v_info {padding:10px 0 9px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
