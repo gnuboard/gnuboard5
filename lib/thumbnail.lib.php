@@ -41,6 +41,9 @@ function get_board_contents($contents)
         if(is_file($srcfile)) {
             // 썸네일 높이
             $size = @getimagesize($srcfile);
+            if(empty($size))
+                continue;
+
             $thumb_height = round(($thumb_width * $size[1]) / $size[0]);
             $filename = basename($srcfile);
             $filepath = dirname($srcfile);
