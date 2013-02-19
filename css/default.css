@@ -128,7 +128,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .frm_tbl th {padding-left:10px;width:100px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
 .frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
-.frm_input {padding:2px 2px 3px;border:1px solid #ccc;background:#f7f7f7;vertical-align:middle}
+.frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
 .frm_tbl textarea:focus,
 .frm_input:focus {padding:3px 3px 4px;border:0;background:#4e5d60;color:#fff}
 .frm_tbl textarea {width:90%;height:150px}
@@ -140,7 +140,7 @@ td.empty_table {padding:85px 0;text-align:center}
 
 /* 폼 컨트롤 */
 .fs_input,
-fieldset textarea {padding:3px 3px 4px;border:1px solid #ccc;background:#f7f7f7;vertical-align:middle}
+fieldset textarea {padding:3px 3px 4px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
 .fs_input:focus,
 fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#4e5d60;color:#fff}
 
