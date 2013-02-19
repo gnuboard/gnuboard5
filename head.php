@@ -61,6 +61,18 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         </fieldset>
 
         <ul id="snb">
+            <li>
+                <a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">
+                    <img src="<?=G4_URL?>/img/snb_cnt.jpg" alt="">
+                    현재접속자 <?=connect(); // 현재 접속자수 ?>
+                </a>
+            </li>
+            <li>
+                <a href="<?=G4_BBS_URL?>/new.php" id="snb_new">
+                    <img src="<?=G4_URL?>/img/snb_new.jpg" alt="">
+                    새글
+                </a>
+            </li>
             <? if ($is_member) { ?>
             <? if ($is_admin) { ?>
             <li>
@@ -96,18 +108,6 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 </a>
             </li>
             <? } ?>
-            <li>
-                <a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">
-                    <img src="<?=G4_URL?>/img/snb_cnt.jpg" alt="">
-                    현재접속자 <?=connect(); // 현재 접속자수 ?>
-                </a>
-            </li>
-            <li>
-                <a href="<?=G4_BBS_URL?>/new.php" id="snb_new">
-                    <img src="<?=G4_URL?>/img/snb_new.jpg" alt="">
-                    새글
-                </a>
-            </li>
         </ul>
 
     </div>

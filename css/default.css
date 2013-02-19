@@ -47,7 +47,7 @@ a:active {color:#000;text-decoration:underline}
 #snb {position:absolute;top:20px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
-#snb a {display:block;padding:5px 10px;letter-spacing:-0.1em}
+#snb a {display:block;padding:5px 10px;color:#899691;letter-spacing:-0.1em}
 #snb a:focus,
 #snb a:hover,
 #snb a:active {text-decoration:none}
@@ -210,9 +210,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 
 #ol_before fieldset {position:relative}
 #ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:188px;height:22px;border:1px solid #b8c9c2;background:#fff;line-height:1.6em}
-.ol_idlabel {position:absolute;top:6px;left:5px;color:#769297;font-size:0.9em}
+.ol_idlabel {position:absolute;top:6px;left:5px;color:#899691;font-size:0.9em}
 #ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:188px;height:22px;border:1px solid #b8c9c2;background:#fff;vertical-align:top;line-height:1.6em}
-.ol_pwlabel {position:absolute;top:35px;left:5px;color:#769297;font-size:0.9em}
+.ol_pwlabel {position:absolute;top:35px;left:5px;color:#899691;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
 #ol_submit {display:inline-block;width:60px;height:24px;border:0;background:#4e5d60;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
