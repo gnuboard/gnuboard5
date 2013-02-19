@@ -11,11 +11,6 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
 
-<!-- <p id="bo_list_total">
-    <span>Total <?=number_format($total_count)?>건</span>
-    <?=$page?> 페이지
-</p>
-
 <? if ($is_category) { ?>
 <form id="fcategory" name="fcategory" method="get">
 <nav id="bo_cate">
@@ -28,26 +23,10 @@ if ($is_nogood) $colspan++;
 <? } ?>
 
 <div class="bo_fx">
-    <fieldset id="bo_sch">
-        <legend>게시물 검색</legend>
-
-        <form name="fsearch" method="get">
-        <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-        <input type="hidden" name="sca" value="<?=$sca?>">
-        <input type="hidden" name="sop" value="and">
-        <select name="sfl" title="검색대상">
-            <option value="wr_subject"<?=get_selected($sfl, 'wr_subject', true);?>>제목</option>
-            <option value="wr_content"<?=get_selected($sfl, 'wr_content');?>>내용</option>
-            <option value="wr_subject||wr_content"<?=get_selected($sfl, 'wr_subject||wr_content');?>>제목+내용</option>
-            <option value="mb_id,1"<?=get_selected($sfl, 'mb_id,1');?>>회원아이디</option>
-            <option value="mb_id,0"<?=get_selected($sfl, 'mb_id,0');?>>회원아이디(코)</option>
-            <option value="wr_name,1"<?=get_selected($sfl, 'wr_name,1');?>>글쓴이</option>
-            <option value="wr_name,0"<?=get_selected($sfl, 'wr_name,0');?>>글쓴이(코)</option>
-        </select>
-        <input name="stx" class="fs_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어(필수)">
-        <input type="submit" class="fs_submit" value="검색">
-        </form>
-    </fieldset>
+    <div id="bo_list_total">
+        <span>Total <?=number_format($total_count)?>건</span>
+        <?=$page?> 페이지
+    </div>
 
     <? if ($rss_href || $write_href) {?>
     <ul class="btn_bo_user">
@@ -56,7 +35,7 @@ if ($is_nogood) $colspan++;
         <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
     </ul>
     <? } ?>
-</div> -->
+</div>
 
 <!-- 게시판 목록 시작 -->
 <div id="bo_list">
@@ -163,6 +142,27 @@ if ($is_nogood) $colspan++;
 
 <!-- 페이지 -->
 <? echo $write_pages; ?>
+
+<fieldset id="bo_sch">
+    <legend>게시물 검색</legend>
+
+    <form name="fsearch" method="get">
+    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
+    <input type="hidden" name="sca" value="<?=$sca?>">
+    <input type="hidden" name="sop" value="and">
+    <select name="sfl" title="검색대상">
+        <option value="wr_subject"<?=get_selected($sfl, 'wr_subject', true);?>>제목</option>
+        <option value="wr_content"<?=get_selected($sfl, 'wr_content');?>>내용</option>
+        <option value="wr_subject||wr_content"<?=get_selected($sfl, 'wr_subject||wr_content');?>>제목+내용</option>
+        <option value="mb_id,1"<?=get_selected($sfl, 'mb_id,1');?>>회원아이디</option>
+        <option value="mb_id,0"<?=get_selected($sfl, 'mb_id,0');?>>회원아이디(코)</option>
+        <option value="wr_name,1"<?=get_selected($sfl, 'wr_name,1');?>>글쓴이</option>
+        <option value="wr_name,0"<?=get_selected($sfl, 'wr_name,0');?>>글쓴이(코)</option>
+    </select>
+    <input name="stx" class="fs_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어(필수)">
+    <input type="submit" class="fs_submit" value="검색">
+    </form>
+</fieldset>
 
 <? if ($is_checkbox) { ?>
 <script>
