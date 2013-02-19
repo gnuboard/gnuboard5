@@ -10,7 +10,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
 <!-- 댓글 리스트 -->
 <section id="bo_vc">
-    <h2>댓글</h2>
+    <h2>댓글목록</h2>
     <?
     for ($i=0; $i<count($list); $i++) {
         $comment_id = $list[$i]['wr_id'];
@@ -39,7 +39,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
         <!-- 댓글 출력 -->
         <p>
-            <? if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"\" alt=\"비밀글\"><br>";?>
+            <? if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"".$board_skin_url."/img/icon_secret.gif\" alt=\"비밀글\">";?>
             <?=$str?>
         </p>
 

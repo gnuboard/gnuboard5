@@ -24,7 +24,6 @@ function print_menu2($key, $no)
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
             continue;
 
-        // if ($no == 2) $str .= "&nbsp;&nbsp;<img src='{$g4['admin_path']}/img/icon.gif' align=absmiddle> ";
         $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>';
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
@@ -55,17 +54,6 @@ function imageview(id, w, h)
 
     if (el_id.style.display != 'none')
         selectBoxHidden(id);
-}
-
-// TEXTAREA 사이즈 변경
-function textarea_size(fld, size)
-{
-    var rows = parseInt(fld.rows);
-
-    rows += parseInt(size);
-    if (rows > 0) {
-        fld.rows = rows;
-    }
 }
 </script>
 

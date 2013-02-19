@@ -1,8 +1,6 @@
 <?
-// 상대 경로
-$g4_path = '..';
-include_once($g4_path.'/common.php');
-include_once(G4_PATH.'/lib/latest.lib.php');
+include_once('./_common.php');
+include_once(G4_LIB_PATH.'/latest.lib.php');
 
 $g4['title'] = $group[gr_subject];
 include_once('./_head.php');
@@ -14,10 +12,7 @@ include_once('./_head.php');
     <td>
     <?
     //  최신글
-    $sql = " select bo_table, bo_subject from {$g4[board_table]}
-                where gr_id = '{$gr_id}'
-                and bo_list_level <= '{$member[mb_level]}'
-                order by bo_table ";
+    $sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' order by bo_table ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 이 함수가 바로 최신글을 추출하는 역할을 합니다.

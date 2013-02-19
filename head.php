@@ -28,7 +28,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             <form name="fsearchbox" method="get" action="<?=G4_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
             <input type="hidden" name="sop" value="and">
-            <input type="text" id="schall_stx" name="stx" title="검색어" maxlength="20"><input type="image" id="schall_submit" src="<?=G4_IMG_URL?>/btn_search.gif" width="29" height="27" alt="검색">
+            <input type="text" id="schall_stx" name="stx" title="검색어" maxlength="20"><input type="image" id="schall_submit" src="<?=G4_IMG_URL?>/btn_search.jpg" width="24" height="24" alt="검색">
             </form>
 
             <script>
@@ -63,13 +63,13 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         <ul id="snb">
             <li>
                 <a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">
-                    <img src="<?=G4_URL?>/img/snb_cnt.jpg" alt="">
+                    <img src="<?=G4_IMG_URL?>/snb_cnt.jpg" alt="">
                     현재접속자 <?=connect(); // 현재 접속자수 ?>
                 </a>
             </li>
             <li>
                 <a href="<?=G4_BBS_URL?>/new.php" id="snb_new">
-                    <img src="<?=G4_URL?>/img/snb_new.jpg" alt="">
+                    <img src="<?=G4_IMG_URL?>/snb_new.jpg" alt="">
                     새글
                 </a>
             </li>
@@ -77,33 +77,33 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             <? if ($is_admin) { ?>
             <li>
                 <a href="<?=G4_ADMIN_URL?>" id="snb_adm">
-                    <img src="<?=G4_URL?>/img/snb_admin.jpg" alt="">
+                    <img src="<?=G4_IMG_URL?>/snb_admin.jpg" alt="">
                     관리자
                 </a>
             </li>
             <? } ?>
             <li>
                 <a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php" id="snb_modify">
-                    <img src="<?=G4_URL?>/img/snb_modify.jpg" alt="">
+                    <img src="<?=G4_IMG_URL?>/snb_modify.jpg" alt="">
                     내 정보
                 </a>
             </li>
             <li>
                 <a href="<?=G4_BBS_URL?>/logout.php" id="snb_logout">
-                    <img src="<?=G4_URL?>/img/snb_logout.jpg" alt="">
+                    <img src="<?=G4_IMG_URL?>/snb_logout.jpg" alt="">
                     로그아웃
                 </a>
             </li>
             <? } else { ?>
             <li>
                 <a href="<?=G4_BBS_URL?>/register.php" id="snb_join">
-                    <img src="<?=G4_URL?>/img/snb_join.jpg" alt="">
+                    <img src="<?=G4_IMG_URL?>/snb_join.jpg" alt="">
                     회원가입
                 </a>
             </li>
             <li>
                 <a href="<?=G4_BBS_URL?>/login.php" id="snb_login">
-                    <img src="<?=G4_URL?>/img/snb_login.jpg" alt="">
+                    <img src="<?=G4_IMG_URL?>/snb_login.jpg" alt="">
                     로그인
                 </a>
             </li>

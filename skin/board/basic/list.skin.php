@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // 선택옵션으로 인해 셀합치기가 가변적으로 변함
 $colspan = 5;
@@ -11,7 +11,7 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
 
-<p id="bo_list_total">
+<!-- <p id="bo_list_total">
     <span>Total <?=number_format($total_count)?>건</span>
     <?=$page?> 페이지
 </p>
@@ -56,7 +56,7 @@ if ($is_nogood) $colspan++;
         <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
     </ul>
     <? } ?>
-</div>
+</div> -->
 
 <!-- 게시판 목록 시작 -->
 <div id="bo_list">
@@ -114,13 +114,13 @@ if ($is_nogood) $colspan++;
             <?
             // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
             // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
-            /*
+
             if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
             if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
             if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
             if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
             if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
-            */
+
             ?>
         </td>
         <td class="td_name"><?=$list[$i]['name']?></td>
