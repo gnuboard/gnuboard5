@@ -452,7 +452,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .btn_bo_user li {float:left;margin-left:5px}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
-.btn_bo_adm input {padding:0 10px;height:26px;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer}
+.btn_bo_adm input {padding:0 10px;height:25px;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer}
 .bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
