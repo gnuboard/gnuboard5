@@ -31,8 +31,8 @@ if ($is_nogood) $colspan++;
     <? if ($rss_href || $write_href) {?>
     <ul class="btn_bo_user">
         <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn01">RSS</a></li><? } ?>
-        <? if ($admin_href) { ?><li><a href="<?=$admin_href?>" class="btn02">관리자</a></li><? } ?>
-        <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn01">글쓰기</a></li><? } ?>
+        <? if ($admin_href) { ?><li><a href="<?=$admin_href?>" class="btn_admin">관리자</a></li><? } ?>
+        <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn02">글쓰기</a></li><? } ?>
     </ul>
     <? } ?>
 </div>
@@ -127,7 +127,7 @@ if ($is_nogood) $colspan++;
         </ul>
 
         <ul class="btn_bo_user">
-            <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn01">글쓰기</a><? } ?></li>
+            <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn02">글쓰기</a><? } ?></li>
         </ul>
     </div>
     <? } ?>
