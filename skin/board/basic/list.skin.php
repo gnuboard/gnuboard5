@@ -114,12 +114,13 @@ if ($is_nogood) $colspan++;
             <?
             // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
             // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
-
+            /*
             if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
             if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
             if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
             if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
             if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
+            */
             ?>
         </td>
         <td class="td_name"><?=$list[$i]['name']?></td>

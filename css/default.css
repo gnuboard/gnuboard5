@@ -32,19 +32,19 @@ a:active {color:#000;text-decoration:underline}
 #captcha_wav img {border:1px solid #cfded8;border-left:0;background:#494949}
 
 /* 상단 레이아웃 */
-#hd {border-top:5px solid #484848;border-bottom:1px solid #e7f1ed;background:#f7f7f2}
+#hd {border-top:5px solid #415353;border-bottom:1px solid #e7f1ed;background:#f7f7f2}
 #hd h1 {width:0;height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
 #logo {padding:17px}
 #logo span {display:inline-block;margin-left:10px;color:#109ff1;font-family:"verdana";vertical-align:middle}
 
-#schall {position:absolute;top:22px;left:90px;margin:0;padding:0;letter-spacing:-5px}
+#schall {position:absolute;top:20px;left:90px;margin:0;padding:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
 #schall_stx {padding-left:5px;width:156px;height:27px;border:1px solid #ccc;border-right:0;background:#fff;line-height:2em !important;line-height:2em}
 #schall_submit {border:1px solid #ccc;border-left:0}
 
-#snb {position:absolute;top:20px;right:0;zoom:1}
+#snb {position:absolute;top:18px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
 #snb a {display:block;padding:5px 10px;color:#899691;letter-spacing:-0.1em}
@@ -438,26 +438,26 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 .cnt_cmt {color:#777}
 
 /* 게시판 읽기 */
-#bo_v_title {margin-bottom:5px;padding:5px 0;border-bottom:1px solid #484848;font-weight:bold;text-align:center}
+#bo_v_title {padding:5px 0 0;font-weight:bold}
 
-#bo_v {margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #ccc}
+#bo_v {margin-bottom:20px;padding-bottom:20px}
 
 #bo_v_h1 {padding:10px 0 5px;font-size:1.2em}
 #bo_v_info {padding:5px 0 8px}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_info {border-bottom:1px dotted #ccc}
+#bo_v_info {}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
 
 #bo_v_file {}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {padding:0 20px;border-bottom:1px dotted #cfded8;background:#f9f9f9}
+#bo_v_file li {padding:0 20px}
 #bo_v_file a {display:inline-block;padding:8px 0 7px}
 .bo_v_file_cnt {display:inline-block;margin:0 10px}
 #bo_v_link {}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
-#bo_v_link li {padding:0 20px;border-bottom:1px dotted #cfded8;background:#f9f9f9}
+#bo_v_link li {padding:0 20px}
 #bo_v_link a {display:inline-block;padding:8px 0 7px}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
 
@@ -490,7 +490,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 #bo_v form {padding-top:20px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 10px;padding:20px 20px 20px 20px;border:1px solid #cfded8;background:#f7f7f2}
+#bo_vc {margin:0 0 10px;padding:20px 0}
 #bo_vc h2 {margin-bottom:10px}
 #bo_vc article {padding:0 0 10px;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:15px 0 5px}
