@@ -50,17 +50,6 @@ a:active {color:#000;text-decoration:underline}
 #snb a:focus,
 #snb a:hover,
 #snb a:active {text-decoration:none}
-/*
-#snb a {display:block;position:relative;width:50px;height:50px;background:url('../img/snb_icon.jpg');border:1px solid #cfded8;border-radius:10px;text-decoration:none}
-#snb #snb_login {background-position:0 0}
-#snb #snb_join {background-position:-50px 0}
-#snb #snb_adm {background-position:-100px 0}
-#snb #snb_logout {background-position:-150px 0}
-#snb #snb_modify {background-position:-200px 0}
-#snb #snb_cnt {background-position:-250px 0}
-#snb #snb_new {background-position:-300px 0}
-*/
-#snb span {position:absolute;top:35px;left:0;width:50px;font-size:0.95em;letter-spacing:-0.1em;text-align:center}
 
 /* 중간 레이아웃 */
 #wrapper {margin:50px auto;width:980px;zoom:1}
