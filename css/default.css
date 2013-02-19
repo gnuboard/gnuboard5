@@ -112,7 +112,7 @@ a:active {color:#000;text-decoration:underline}
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
 .basic_tbl caption {padding:0 0 10px;color:#777;text-align:left}
-.basic_tbl thead th {padding:12px 0 8px;border-top:1px solid #5b6964;background:#76a5a8;color:#fff}
+.basic_tbl thead th {padding:12px 0 8px;background:#76a5a8;color:#fff}
 .basic_tbl thead a {color:#fff}
 .basic_tbl thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .basic_tbl tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
@@ -497,7 +497,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_v form {padding-top:20px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 10px;padding:20px 0 10px}
+#bo_vc {margin:0 0 10px;padding:20px 0 10px;border-bottom:1px solid #d9d9d9}
 #bo_vc h2 {margin-bottom:10px}
 #bo_vc article {padding:0 0 10px;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:15px 0 5px}
@@ -516,7 +516,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_vc #captcha {float:left;margin-left:10px;padding:0 5px 0 0;border:0}
 #bo_vc #captcha a {display:inline-block;margin-right:5px;text-decoration:underline;vertical-align:middle}
 #bo_vc .fs_input {margin-right:5px}
-#bo_vc_w {position:relative;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;zoom:1}
+#bo_vc_w {position:relative;border-top:1px solid #d9d9d9;zoom:1}
 #bo_vc_w:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc_w h2 {padding:15px 0 5px}
 #bo_vc_w #char_cnt {position:absolute;top:5px;right:10px}
