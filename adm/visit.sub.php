@@ -9,7 +9,7 @@ if (empty($to_date)) $to_date = G4_TIME_YMD;
 $qstr = "fr_date=".$fr_date."&amp;to_date=".$to_date;
 ?>
 
-<ul class="frm_list">
+<ul class="anchor">
     <li><a href="./visit_list.php">접속자</a></li>
     <li><a href="./visit_domain.php">도메인</a></li>
     <li><a href="./visit_browser.php">브라우저</a></li>
