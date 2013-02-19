@@ -47,7 +47,7 @@ a:active {color:#000;text-decoration:underline}
 #snb {position:absolute;top:18px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
-#snb a {display:block;padding:5px 10px;color:#899691;letter-spacing:-0.1em}
+#snb a {display:block;padding:5px 10px;color:#4e5d60;letter-spacing:-0.1em}
 #snb a:focus,
 #snb a:hover,
 #snb a:active {text-decoration:none}
