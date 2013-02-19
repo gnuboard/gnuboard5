@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#fff;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -32,7 +32,7 @@ a:active {color:#000;text-decoration:underline}
 #captcha_wav img {border:1px solid #cfded8;border-left:0;background:#494949}
 
 /* 상단 레이아웃 */
-#hd {border-top:5px solid #415353;border-bottom:1px solid #e7f1ed;background:#f7f7f2}
+#hd {border-top:5px solid #415353;border-bottom:1px solid #e7f1ed;background:#fff}
 #hd h1 {width:0;height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
@@ -57,8 +57,8 @@ a:active {color:#000;text-decoration:underline}
 #wrapper {margin:50px auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
-#lnb {float:right;width:228px;border:1px solid #e7f1ed;background:#f7f7f2}
-#container {float:left;width:730px;min-height:500px;height:auto !important;height:500px;zoom:1}
+#lnb {float:right;width:208px;border:1px solid #e7f1ed;background:#fff}
+#container {float:left;padding:0 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #e7f1ed;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
@@ -209,10 +209,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#444;color:#fff;
 .ol a {}
 
 #ol_before fieldset {position:relative}
-#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:188px;height:22px;border:1px solid #b8c9c2;background:#fff;line-height:1.6em}
-.ol_idlabel {position:absolute;top:6px;left:5px;color:#899691;font-size:0.9em}
-#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:188px;height:22px;border:1px solid #b8c9c2;background:#fff;vertical-align:top;line-height:1.6em}
-.ol_pwlabel {position:absolute;top:35px;left:5px;color:#899691;font-size:0.9em}
+#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#fff;line-height:1.6em}
+.ol_idlabel {position:absolute;top:6px;left:5px;color:#4e5d60;font-size:0.9em}
+#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#fff;vertical-align:top;line-height:1.6em}
+.ol_pwlabel {position:absolute;top:35px;left:5px;color:#4e5d60;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
 #ol_submit {display:inline-block;width:60px;height:24px;border:0;background:#4e5d60;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
