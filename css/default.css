@@ -304,7 +304,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #poll footer a:focus,
 #poll footer a:hover {text-decoration:none !important}
 /* 설문조사 결과 (새창) */
-#poll_result section {padding:15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#f7f7f2}
+#poll_result section {padding:15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 #poll_result h2 {margin:0;padding:20px 0}
 #poll_result a {}
 #poll_result .sv_member,
@@ -315,14 +315,14 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #poll_result_list dt,
 #poll_result_list dd {margin:0;padding:0}
 #poll_result_list dl {padding-bottom:30px}
-#poll_result_list dt {margin-right:5%;color:#000;text-align:right}
+#poll_result_list dt {margin-right:5%;color:#e8180d;text-align:right}
 #poll_result_list ol {margin:0;padding-left:30px}
 #poll_result_list li {margin-top:10px}
 #poll_result_list p {position:relative;margin:0;padding:5px 0}
 #poll_result_list p strong {position:absolute;top:5px;right:5%;padding-right:80px;width:100px;text-align:right}
-#poll_result_list p span {position:absolute;top:5px;right:5%;width:80px;text-align:right}
+#poll_result_list p span {position:absolute;top:5px;right:5%;width:80px;color:#68999c;text-align:right}
 .poll_result_graph {position:relative;margin-right:5%;height:5px;background:#eee}
-.poll_result_graph span {position:absolute;top:0;left:0;height:5px;background:#000;font-size:0.1em}
+.poll_result_graph span {position:absolute;top:0;left:0;height:5px;background:#68999c;font-size:0.1em}
 #poll_result_cmt {margin:0 auto 20px}
 #poll_result_cmt h2 {text-align:center}
 #poll_result_cmt h3 {margin:0 auto 10px;padding-top:15px;width:93%}
