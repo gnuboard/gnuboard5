@@ -1,5 +1,6 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
 <p id="bo_v_title"><?=$board['bo_subject']?></p>
@@ -125,7 +126,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
             for ($i=0; $i<=count($view['file']); $i++) {
                 if ($view['file'][$i]['view']) {
-                    echo $view['file'][$i]['view'];
+                    //echo $view['file'][$i]['view'];
+                    echo get_board_contents($view['file'][$i]['view']);
                 }
             }
 
@@ -133,7 +135,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         }
         ?>
 
-        <div id="bo_v_con"><?=$view['content'];?></div>
+        <div id="bo_v_con"><?=get_board_contents($view['content']);?></div>
         <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
         <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
 
