@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <? for ($i=0; $i<count($list); $i++) { ?>
         <li>
             <?
-            echo $list[$i]['icon_reply']." ";
+            //echo $list[$i]['icon_reply']." ";
             echo "<a href=\"".$list[$i]['href']."\" title=\"".$list[$i]['wr_subject']."\">";
             if ($list[$i]['is_notice'])
                 echo "<strong>".$list[$i]['subject']."</strong>";
