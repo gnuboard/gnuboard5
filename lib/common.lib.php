@@ -380,16 +380,11 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
 
     $reply = $list['wr_reply'];
 
-    $list['reply'] = '';
-    if (strlen($reply) > 0)
-    {
-        for ($k=0; $k<strlen($reply); $k++)
-            $list['reply'] .= ' ';
-    }
+    $list['reply'] = strlen($reply)*10;
 
     $list['icon_reply'] = '';
     if ($list['reply'])
-        $list['icon_reply'] = '<img src="'.$skin_url.'/img/icon_reply.gif" alt="답변글">';
+        $list['icon_reply'] = '<img src="'.$skin_url.'/img/icon_reply.gif" style="margin-left:'.$list['reply'].'px;" alt="답변글">';
 
     $list['icon_link'] = '';
     if ($list['wr_link1'] || $list['wr_link2'])

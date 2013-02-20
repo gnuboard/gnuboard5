@@ -80,8 +80,9 @@ sql_query(" delete from {$g4[board_new_table]} where bo_table = '{$bo_table}' an
 
 // 사용자 코드 실행
 @include_once($board_skin_path.'/delete_comment.skin.php');
-// 4.1
 @include_once($board_skin_path.'/delete_comment.tail.skin.php');
+
+delete_cache_latest($bo_table);
 
 goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$write[wr_parent].'&amp;page='.$page. $qstr);
 ?>

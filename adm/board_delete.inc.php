@@ -26,6 +26,8 @@ sql_query(" delete from {$g4['board_file_table']} where bo_table = '{$tmp_bo_tab
 // 게시판 테이블 DROP
 sql_query(" drop table {$g4['write_prefix']}{$tmp_bo_table} ", FALSE);
 
+delete_cache_latest($tmp_bo_table);
+
 // 게시판 폴더 전체 삭제
 rm_rf(G4_DATA_PATH.'/file/'.$tmp_bo_table);
 ?>

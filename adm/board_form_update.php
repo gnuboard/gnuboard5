@@ -278,5 +278,7 @@ if ($fields) {
         sql_query($sql);
 }
 
+delete_cache_latest($bo_table);
+
 goto_url("./board_form.php?w=u&bo_table={$bo_table}&amp;{$qstr}");
 ?>

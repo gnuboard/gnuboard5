@@ -19,8 +19,6 @@ $save_count_write = 0;
 $save_count_comment = 0;
 $cnt = 0;
 
-// SQL Injection 으로 인한 코드 보완
-//$sql = " select distinct wr_num from {$write_table} where wr_id in (" . stripslashes($wr_id_list) . ") order by wr_id ";
 $sql = " select distinct wr_num from $write_table where wr_id in ({$wr_id_list}) order by wr_id ";
 $result = sql_query($sql);
 while ($row = sql_fetch_array($result))
@@ -39,14 +37,13 @@ while ($row = sql_fetch_array($result))
 
         $next_wr_num = get_next_num($move_write_table);
 
-        //$sql2 = " select * from {$write_table} where wr_num = '{$wr_num}' order by wr_parent, wr_comment desc, wr_id ";
         $sql2 = " select * from $write_table where wr_num = '$wr_num' order by wr_parent, wr_is_comment, wr_comment desc, wr_id ";
         $result2 = sql_query($sql2);
         while ($row2 = sql_fetch_array($result2))
         {
             $nick = cut_str($member['mb_nick'], $config['cf_cut_name']);
             if (!$row2['wr_is_comment'] && $config['cf_use_copy_log'])
-                $row2['wr_content'] .= "\n".'[이 게시물은 '.$nick.'님에 의해 '.G4_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]';
+                $row2['wr_content'] .= PHP_EOL.'[이 게시물은 '.$nick.'님에 의해 '.G4_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]';
 
             $sql = " insert into $move_write_table
                         set wr_num = '$next_wr_num',
@@ -152,14 +149,17 @@ while ($row = sql_fetch_array($result))
             $cnt++;
         }
 
-
         sql_query(" update {$g4['board_table']} set bo_count_write = bo_count_write + '$count_write' where bo_table = '$move_bo_table' ");
         sql_query(" update {$g4['board_table']} set bo_count_comment = bo_count_comment + '$count_comment' where bo_table = '$move_bo_table' ");
+
+        delete_cache_latest($move_bo_table);
     }
 
     $save_count_write += $count_write;
     $save_count_comment += $count_comment;
 }
+
+delete_cache_latest($bo_table);
 
 if ($sw == "move")
 {

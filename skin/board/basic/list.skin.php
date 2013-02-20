@@ -78,7 +78,6 @@ if ($is_nogood) $colspan++;
         <? if ($is_checkbox) { ?><td class="td_chk"><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
         <td class="td_subject">
             <?
-            echo $list[$i]['reply'];
             echo $list[$i]['icon_reply'];
             if ($is_category && $list[$i]['ca_name']) {
             ?>
