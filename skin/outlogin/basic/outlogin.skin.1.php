@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <section id="ol_before" class="ol">
-    <h2>멤버쉽</h2>
+    <h2>회원로그인</h2>
     <!-- 로그인 전 외부로그인 시작 -->
     <form name="foutlogin" method="post" action="<?=$outlogin_action_url?>" onsubmit="return fhead_submit(this);" autocomplete="off">
     <fieldset>

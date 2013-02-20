@@ -5,12 +5,12 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <div id="bo_v">
 
-    <h1 id="bo_v_h1"><?=cut_str(get_text($view['wr_subject']), 70) // 글제목 출력?></h1>
-
     <p id="bo_v_cate">
         <?=$board['bo_subject']?>
         <? if ($category_name) { // 분류가 지정되었다면 ?><?=($category_name ? "{$view['ca_name']} " : "");?><? } // 분류 출력 끝 ?>
     </p>
+
+    <h1 id="bo_v_h1"><?=cut_str(get_text($view['wr_subject']), 70) // 글제목 출력?></h1>
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
@@ -19,34 +19,6 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         조회<strong><?=number_format($view['wr_hit'])?>회</strong>
         댓글<strong><?=number_format($view['wr_comment'])?>건</strong>
     </section>
-
-    <nav id="bo_v_top">
-        <h2>게시물 상단 버튼</h2>
-        <?
-        ob_start();
-        ?>
-        <? if ($prev_href || $next_href) { ?>
-        <ul class="bo_v_nb">
-            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn_b01">이전글</a></li><? } ?>
-            <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn_b01">다음글</a></li><? } ?>
-        </ul>
-        <? } ?>
-
-        <ul class="bo_v_com">
-            <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn_b01">수정</a></li><? } ?>
-            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" class="btn_b01" onclick="del(this.href); return false;">삭제</a></li><? } ?>
-            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" class="btn_admin" onclick="board_move(this.href); return false;">복사</a></li><? } ?>
-            <? if ($move_href) { ?><li><a href="<?=$move_href?>" class="btn_admin" onclick="board_move(this.href); return false;">이동</a></li><? } ?>
-            <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn_b01">검색</a></li><? } ?>
-            <li><a href="<?=$list_href?>" class="btn_b01">목록</a></li>
-            <? if ($reply_href) { ?><li><a href="<?=$reply_href?>" class="btn_b01">답변</a></li><? } ?>
-            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn_b02">글쓰기</a></li><? } ?>
-        </ul>
-        <?
-        $link_buttons = ob_get_contents();
-        ob_end_flush();
-        ?>
-    </nav>
 
     <?
     if ($view['file']['count']) {
@@ -113,6 +85,34 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     </section>
     <? } ?>
 
+    <nav id="bo_v_top">
+        <h2>게시물 상단 버튼</h2>
+        <?
+        ob_start();
+        ?>
+        <? if ($prev_href || $next_href) { ?>
+        <ul class="bo_v_nb">
+            <? if ($prev_href) { ?><li><a href="<?=$prev_href?>" class="btn_b01">이전글</a></li><? } ?>
+            <? if ($next_href) { ?><li><a href="<?=$next_href?>" class="btn_b01">다음글</a></li><? } ?>
+        </ul>
+        <? } ?>
+
+        <ul class="bo_v_com">
+            <? if ($update_href) { ?><li><a href="<?=$update_href?>" class="btn_b01">수정</a></li><? } ?>
+            <? if ($delete_href) { ?><li><a href="<?=$delete_href?>" class="btn_b01" onclick="del(this.href); return false;">삭제</a></li><? } ?>
+            <? if ($copy_href) { ?><li><a href="<?=$copy_href?>" class="btn_admin" onclick="board_move(this.href); return false;">복사</a></li><? } ?>
+            <? if ($move_href) { ?><li><a href="<?=$move_href?>" class="btn_admin" onclick="board_move(this.href); return false;">이동</a></li><? } ?>
+            <? if ($search_href) { ?><li><a href="<?=$search_href?>" class="btn_b01">검색</a></li><? } ?>
+            <li><a href="<?=$list_href?>" class="btn_b01">목록</a></li>
+            <? if ($reply_href) { ?><li><a href="<?=$reply_href?>" class="btn_b01">답변</a></li><? } ?>
+            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn_b02">글쓰기</a></li><? } ?>
+        </ul>
+        <?
+        $link_buttons = ob_get_contents();
+        ob_end_flush();
+        ?>
+    </nav>
+
     <article id="bo_v_atc">
         <header>
             <h1>본문</h1>
@@ -178,6 +178,7 @@ function board_move(href)
 }
 </script>
 
+<script src="<?=G4_JS_URL?>/board.js"></script>
 <!-- 게시글 보기 끝 -->
 
 <script>
