@@ -5,12 +5,12 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <div id="bo_v">
 
-    <h1 id="bo_v_h1"><?=cut_str(get_text($view['wr_subject']), 70) // 글제목 출력?></h1>
-
     <p id="bo_v_cate">
         <?=$board['bo_subject']?>
         <? if ($category_name) { // 분류가 지정되었다면 ?><?=($category_name ? "{$view['ca_name']} " : "");?><? } // 분류 출력 끝 ?>
     </p>
+
+    <h1 id="bo_v_h1"><?=cut_str(get_text($view['wr_subject']), 70) // 글제목 출력?></h1>
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
@@ -127,7 +127,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             for ($i=0; $i<=count($view['file']); $i++) {
                 if ($view['file'][$i]['view']) {
                     //echo $view['file'][$i]['view'];
-                    echo get_view_thumbnail($view['file'][$i]['view']);
+//                    echo get_board_contents($view['file'][$i]['view']);
                 }
             }
 
@@ -135,7 +135,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         }
         ?>
 
-        <div id="bo_v_con"><?=get_view_thumbnail($view['content']);?></div>
+        <div id="bo_v_con"><?//=get_board_contents($view['content']);?></div>
         <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
         <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
 
@@ -178,6 +178,7 @@ function board_move(href)
 }
 </script>
 
+<script src="<?=G4_JS_URL?>/board.js"></script>
 <!-- 게시글 보기 끝 -->
 
 <script>
