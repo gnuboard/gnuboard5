@@ -206,8 +206,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #find_info #captcha input {margin-left:5px}
 
 /* 아웃로그인 스킨 */
-.ol {position:relative;padding:14px;border-bottom:1px solid #e7f1ed}
-.ol h2 {width:0;height:0;overflow:hidden}
+.ol {position:relative;padding:35px 14px 14px;border-bottom:1px solid #e7f1ed}
+.ol h2 {position:absolute;top:0px;left:14px;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 .ol ul {margin:0;padding:0;list-style:none}
 .ol a {}
 
@@ -297,9 +297,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 
 /* 설문조사 스킨 */
 #poll {}
-#poll header {padding:20px 14px 0}
+#poll header {position:relative;padding:30px 14px 0}
 #poll header a {color:#000}
 #poll header p {padding:5px 0 10px}
+#poll h2 {position:absolute;top:0px;left:14px;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
 #poll li {padding:3px 0}
 #poll footer {padding:0 14px 14px}
