@@ -106,7 +106,7 @@ include_once('./_head.php');
 $mb_icon = G4_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
 
 $register_action_url = G4_HTTPS_BBS_URL.'/register_form_update.php';
-$req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400)));
+$req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400)));
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
 
