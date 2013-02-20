@@ -47,7 +47,7 @@ a:active {color:#000;text-decoration:underline}
 #snb {position:absolute;top:18px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
 #snb li {float:left}
-#snb a {display:block;padding:5px 10px;color:#4e5d60;letter-spacing:-0.1em}
+#snb a {display:block;padding:5px 10px;color:#334356;letter-spacing:-0.1em}
 #snb a:focus,
 #snb a:hover,
 #snb a:active {text-decoration:none}
@@ -97,13 +97,13 @@ a:active {color:#000;text-decoration:underline}
 .btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn01:focus,
 .btn01:hover {text-decoration:none !important}
-.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #4e5d60 !important;background:#4e5d60 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
+.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #334356 !important;background:#334356 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 10px;height:24px;border:0;background:#4e5d60;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
+.btn_submit {padding:0 10px;height:24px;border:0;background:#334356;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
-.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#4e5d60;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
+.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#334356;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
 .btn_win a:focus,
@@ -149,7 +149,7 @@ fieldset textarea {padding:3px 3px 4px;border:1px solid #b8c9c2;background:#f7f7
 fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#21272e;color:#fff}
 
 .fs_submit,
-fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#fff;line-height:1.7em;vertical-align:middle;cursor:pointer}
+fieldset button {padding:0 15px;height:24px;border:0;background:#334356;color:#fff;line-height:1.7em;vertical-align:middle;cursor:pointer}
 
 .frm_info {display:block;padding:5px 0 0;color:#666;line-height:1.3em}
 
@@ -218,13 +218,13 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #ol_before fieldset {position:relative}
 #ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;line-height:1.6em}
 #ol_id:focus {border-color:#333;background:#21272e;color:#fff}
-.ol_idlabel {position:absolute;top:6px;left:5px;color:#4e5d60;font-size:0.9em}
+.ol_idlabel {position:absolute;top:6px;left:5px;color:#334356;font-size:0.9em}
 #ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:top;line-height:1.6em}
 #ol_pw:focus {border-color:#333;background:#21272e;color:#fff}
-.ol_pwlabel {position:absolute;top:35px;left:5px;color:#4e5d60;font-size:0.9em}
+.ol_pwlabel {position:absolute;top:35px;left:5px;color:#334356;font-size:0.9em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
-#ol_submit {display:inline-block;width:60px;height:24px;border:0;background:#4e5d60;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
+#ol_submit {display:inline-block;width:60px;height:24px;border:0;background:#334356;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before ul {float:right;margin:7px 0 13px;zoom:1}
 #ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_before li {float:left;margin-left:5px;padding-top:2px}
@@ -241,14 +241,14 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #ol_after_private a {display:block;padding-top:8px;height:37px;background:#f7f7f7;text-align:center}
 #ol_after_private a strong {display:block;padding-top:3px;color:#000;font-weight:normal}
 #ol_after_private a:focus,
-#ol_after_private a:hover {background:#4e5d60;color:#fff;text-decoration:none}
+#ol_after_private a:hover {background:#334356;color:#fff;text-decoration:none}
 #ol_after_private a:focus strong,
 #ol_after_private a:hover strong {color:#fff;text-decoration:none}
 #ol_after_memo {width:50px;margin-right:1px}
 #ol_after_pt {width:80px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:justify}
-#ol_after_ft a {display:inline-block;width:88px;height:22px;background:#4e5d60;color:#fff;text-align:center;line-height:1.8em}
+#ol_after_ft a {display:inline-block;width:88px;height:22px;background:#334356;color:#fff;text-align:center;line-height:1.8em}
 #ol_after_ft a:focus,
 #ol_after_ft a:hover {text-decoration:none !important}
 
@@ -309,7 +309,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
 #poll li {padding:3px 0}
 #poll footer {padding:0 14px 14px}
-#poll footer input {width:88px;height:24px;border:0;background:#4e5d60;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
+#poll footer input {width:88px;height:24px;border:0;background:#334356;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 #poll footer a {display:inline-block;width:86px;height:22px;border:1px solid #ccc;background:#fafafa;text-align:center;line-height:2em}
 #poll footer a:focus,
 #poll footer a:hover {text-decoration:none !important}
