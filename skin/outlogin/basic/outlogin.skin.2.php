@@ -6,7 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <section id="ol_after" class="ol">
     <header id="ol_after_hd">
         <h2><?=$nick?>님</h2>
-        <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=G4_ADMIN_URL?>" class="btn_admin">관리자</a><? } ?>
+        <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=G4_ADMIN_URL?>" class="btn_admin">관리자 모드</a><? } ?>
     </header>
     <ul id="ol_after_private">
         <li>
