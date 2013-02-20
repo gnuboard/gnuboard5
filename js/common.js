@@ -260,7 +260,7 @@ function image_window(img)
 
     win=window.open("","image_window",settings);
     win.document.open();
-    win.document.write ("<html><head> \n<meta http-equiv='imagetoolbar' CONTENT='no'> \n<meta http-equiv='content-type' content='text/html; charset="+g4_charset+"'>\n");
+    win.document.write ("<html><head> \n<meta http-equiv='imagetoolbar' CONTENT='no'> \n<meta http-equiv='content-type' content='text/html; charset=utf-8'>\n");
     var size = "이미지 사이즈 : "+w+" x "+h;
     win.document.write ("<title>"+size+"</title> \n");
     if(w >= screen.width || h >= screen.height) {
