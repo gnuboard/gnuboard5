@@ -544,7 +544,7 @@ $pg_anchor = "
         <td>
             <label for="cf_<?=$i?>_subj">여분필드<?=$i?> 제목</label>
             <input type="text" id="cf_<?=$i?>_subj" name="cf_<?=$i?>_subj" class="frm_input" value="<?=get_text($config['cf_'.$i.'_subj'])?>" size="30">
-            <label for="cf_<?=$i?>">여분필드<?=$i?> 설명</label>
+            <label for="cf_<?=$i?>">여분필드<?=$i?> 값</label>
             <input type="text" id="cf_<?=$i?>" name="cf_<?=$i?>" class="frm_input" value="<?=$config['cf_'.$i]?>" size="30">
         </td>
     </tr>
