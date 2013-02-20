@@ -452,7 +452,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 
 #bo_v_cate {margin:0;padding:0 0 10px;color:#999;font-weight:bold;line-height:1em}
 
-#bo_v_info {padding:10px 0 9px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8}
+#bo_v_info {padding:10px 0 9px}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info {}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
