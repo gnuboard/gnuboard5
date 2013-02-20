@@ -278,9 +278,9 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
-.sv_wrap .sv {z-index:5;display:none;margin:5px 0 0;border:1px solid #515151;background:#484848}
+.sv_wrap .sv {z-index:5;display:none;margin:5px 0 0;border:1px solid #283646;background:#334356}
 .sv_nojs .sv {display:block}
-.sv_wrap .sv a {display:inline-block !important;margin:0 !important;padding:3px !important;width:94px;border-bottom:1px solid #555;color:#fff !important}
+.sv_wrap .sv a {display:inline-block !important;margin:0 !important;padding:3px !important;width:94px;border-bottom:1px solid #283646;color:#fff !important}
 .sv_wrap a:focus,
 .sv_wrap a:hover,
 .sv_wrap a:active {text-decoration:none !important}
