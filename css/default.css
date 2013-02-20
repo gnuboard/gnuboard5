@@ -440,7 +440,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
-.bo_cate_link {display:inline-block;margin:0 3px 0 0;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
+.bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#000}
 .td_subject img {margin-left:3px}
 .cnt_cmt {font-weight:bold}
