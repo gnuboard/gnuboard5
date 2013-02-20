@@ -127,6 +127,7 @@ $pg_anchor = "
             }
             ?>
             </select>
+            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
         </td>
         <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
         <td>
@@ -145,6 +146,7 @@ $pg_anchor = "
             }
             ?>
             </select>
+            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
         </td>
     </tr>
     <tr>
@@ -158,6 +160,7 @@ $pg_anchor = "
             }
             ?>
             </select>
+            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
         </td>
     </tr>
     <tr>
@@ -284,6 +287,7 @@ $pg_anchor = "
             }
             ?>
             </select>
+            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
         </td>
     </tr>
     <tr>
