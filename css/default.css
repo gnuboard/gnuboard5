@@ -207,7 +207,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 
 /* 아웃로그인 스킨 */
 .ol {position:relative;padding:35px 14px 14px;border-bottom:1px solid #e7f1ed}
-.ol h2 {position:absolute;top:0px;left:14px;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
+.ol h2 {position:absolute;top:0px;left:14px !important;left:0;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 .ol ul {margin:0;padding:0;list-style:none}
 
 #ol_before fieldset {position:relative}
@@ -297,7 +297,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 /* 설문조사 스킨 */
 #poll {}
 #poll header {position:relative;padding:30px 14px 0}
-#poll h2 {position:absolute;top:0px;left:14px;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
+#poll h2 {position:absolute;top:0px;left:14px !important;left:0;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 #poll header a {position:absolute;top:10px;right:14px;color:#e8180c}
 #poll header p {padding:5px 0 10px}
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
@@ -448,7 +448,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 /* 게시판 읽기 */
 #bo_v {position:relative;margin-bottom:20px;padding-bottom:20px}
 
-#bo_v_cate {position:absolute;top:-25px;right:0;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
+#bo_v_cate {position:absolute;top:-25px;right:0 !important;right:14px;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 
 #bo_v_h1 {padding:0 0 10px;font-size:1.2em}
 
