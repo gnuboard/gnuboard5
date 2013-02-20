@@ -154,11 +154,11 @@ if ($is_guest && !chk_captcha()) {
 
 if ($w == '' || $w == 'r') {
     if (isset($_SESSION['ss_datetime'])) {
-        if ($_SESSION['ss_datetime'] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin)
+        if ($_SESSION['ss_datetime'] >= (G4_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
             alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
     }
 
-    set_session("ss_datetime", $g4['server_time']);
+    set_session("ss_datetime", G4_SERVER_TIME);
 }
 
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
@@ -246,15 +246,10 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         // 아래의 문자열이 들어간 파일은 -x 를 붙여서 웹경로를 알더라도 실행을 하지 못하도록 함
         $filename = preg_replace("/\.(php|phtm|htm|cgi|pl|exe|jsp|asp|inc)/i", "$0-x", $filename);
 
-        // 접미사를 붙인 파일명
-        //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr(md5(uniqid($g4['server_time'])),0,8).'_'.urlencode($filename);
-        // 달빛온도님 수정 : 한글파일은 urlencode($filename) 처리를 할경우 '%'를 붙여주게 되는데 '%'표시는 미디어플레이어가 인식을 못하기 때문에 재생이 안됩니다. 그래서 변경한 파일명에서 '%'부분을 빼주면 해결됩니다.
-        //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr(md5(uniqid($g4['server_time'])),0,8).'_'.str_replace('%', '', urlencode($filename));
         shuffle($chars_array);
         $shuffle = implode('', $chars_array);
 
         // 첨부파일 첨부시 첨부파일명에 공백이 포함되어 있으면 일부 PC에서 보이지 않거나 다운로드 되지 않는 현상이 있습니다. (길상여의 님 090925)
-        //$upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode($filename));
         $upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode(str_replace(' ', '_', $filename)));
 
         $dest_file = G4_DATA_PATH.'/file/'.$bo_table.'/'.$upload[$i]['file'];
@@ -264,9 +259,6 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
 
         // 올라간 파일의 퍼미션을 변경합니다.
         chmod($dest_file, 0606);
-
-        //$upload[$i]['image'] = @getimagesize($dest_file);
-
     }
 }
 

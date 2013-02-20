@@ -114,7 +114,7 @@ function verify_email($address, &$error)
         // 220 메세지들은 건너뜀
         // 3초가 지나도 응답이 없으면 포기
         socket_set_blocking($fp, false);
-        $stoptime = $g4['server_time'] + $WAIT_SECOND;
+        $stoptime = G4_SERVER_TIME + $WAIT_SECOND;
         $gotresponse = false;
 
         while (true) {
@@ -123,11 +123,11 @@ function verify_email($address, &$error)
 
             if (substr($line, 0, 3) == '220') {
                 // 타이머를 초기화
-                $stoptime = $g4['server_time'] + $WAIT_SECOND;
+                $stoptime = G4_SERVER_TIME + $WAIT_SECOND;
                 $gotresponse = true;
             } else if ($line == '' && $gotresponse)
                 break;
-            else if ($g4['server_time'] > $stoptime)
+            else if (G4_SERVER_TIME > $stoptime)
                 break;
         }
 

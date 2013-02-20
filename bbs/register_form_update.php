@@ -79,7 +79,7 @@ if ($w == '' || $w == 'u') {
     } else {
         // 자바스크립트로 정보변경이 가능한 버그 수정
         // 별명수정일이 지나지 않았다면
-        if ($member['mb_nick_date'] > date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400)))
+        if ($member['mb_nick_date'] > date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400)))
             $mb_nick = $member['mb_nick'];
         // 회원정보의 메일을 이전 메일로 옮기고 아래에서 비교함
         $old_email = $member['mb_email'];

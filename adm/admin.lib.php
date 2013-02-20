@@ -58,7 +58,7 @@ function member_delete($mb_id)
     }
 
     // 회원자료는 정보만 없앤 후 아이디는 보관하여 다른 사람이 사용하지 못하도록 함 : 061025
-    $sql = " update {$g4['member_table']} set mb_jumin = '', mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_password_q = '', mb_password_a = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd',$g4['server_time'])." 삭제함".PHP_EOL."{$mb['mb_memo']}', mb_leave_date = '".date('Ymd',$g4['server_time'])."' where mb_id = '{$mb_id}' ";
+    $sql = " update {$g4['member_table']} set mb_jumin = '', mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_password_q = '', mb_password_a = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G4_SERVER_TIME)." 삭제함".PHP_EOL."{$mb['mb_memo']}', mb_leave_date = '".date('Ymd', G4_SERVER_TIME)."' where mb_id = '{$mb_id}' ";
     sql_query($sql);
 }
 
