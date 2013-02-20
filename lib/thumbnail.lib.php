@@ -8,7 +8,8 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
     return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create);
 }
 
-function get_board_contents($contents)
+// 게시글보기 썸네일 생성
+function get_view_thumbnail($contents)
 {
     if(!G4_IS_MOBILE)
         return $contents;
