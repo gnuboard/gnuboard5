@@ -567,6 +567,7 @@ $pg_anchor = "<ul class=\"anchor\">
         <th scope="row"><label for="bo_skin">스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=get_skin_select("board", "bo_skin", "bo_skin", $board['bo_skin'], 'required');?>
+            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_skin" name="chk_skin" value="1">

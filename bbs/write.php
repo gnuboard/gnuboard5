@@ -156,6 +156,8 @@ if ($w == '') {
     $reply = $reply_array['wr_reply'] . $reply_char;
 
     $title_msg = '글답변';
+
+    $write['wr_subject'] = 'Re: '.$write['wr_subject'];
 }
 
 // 그룹접근 가능

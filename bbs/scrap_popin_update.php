@@ -87,6 +87,8 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
 $sql = " insert into {$g4['scrap_table']} ( mb_id, bo_table, wr_id, ms_datetime ) values ( '{$member['mb_id']}', '$bo_table', '$wr_id', '".G4_TIME_YMDHIS."' ) ";
 sql_query($sql);
 
+delete_cache_latest($bo_table);
+
 echo <<<HEREDOC
 <script>
     if (confirm('이 글을 스크랩 하였습니다.\\n\\n지금 스크랩을 확인하시겠습니까?'))

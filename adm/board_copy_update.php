@@ -181,6 +181,9 @@ if (count($file_copy)) {
     }
 }
 
+delete_cache_latest($bo_table);
+delete_cache_latest($target_table);
+
 echo "<script>opener.document.location.reload();</script>";
 
 alert("복사에 성공 했습니다.", './board_copy.php?bo_table='.$bo_table.'&amp;'.$qstr);
