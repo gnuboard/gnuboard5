@@ -18,15 +18,11 @@ if(is_file($filepath)) {
     $height = $size[1];
 
     $fileurl = G4_DATA_URL.'/file/'.$bo_table.'/'.$filename;
-    $img = '<img src="'.$fileurl.'" width="'.$width.'" height="'.$height.'" class="draggable" />';
+    $img = '<img src="'.$fileurl.'" alt="" width="'.$width.'" height="'.$height.'" class="draggable" style="position:relative;top:0;left:0">';
 } else {
     alert_close('파일이 존재하지 않습니다.');
 }
 ?>
-
-<style type="text/css">
-.draggable { position: relative; left: 0; top: 0; }
-</style>
 
 <div><?=$img?></div>
 
