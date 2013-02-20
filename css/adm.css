@@ -66,14 +66,14 @@ h2 {font-size:1.2em}
 .gnb_js {}
 .gnb_js ul {zoom:1}
 .gnb_js ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_js .gnb_1depth {position:relative;float:left;margin-left:-1px;border:1px solid #222;border-top:0;border-bottom:0}
+.gnb_js .gnb_1depth {position:relative;float:left;margin-left:-1px;width:90px;border:1px solid #222;border-top:0;border-bottom:0}
 .gnb_js .gnb_1depth a {display:inline-block;float:none;width:90px;height:35px;color:#e0e0e0;font-weight:bold;text-align:center}
 .gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
 .gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
 .gnb_js .gnb_1depth a:focus,
 .gnb_js .gnb_1depth a:hover,
 .gnb_js .gnb_1depth a:active {text-decoration:none}
-.gnb_js .gnb_1depth ul {width:0px;height:0px;overflow:hidden}
+.gnb_js .gnb_1depth ul {width:0;height:0;overflow:hidden}
 .gnb_js .gnb_1depth li {float:none}
 .gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:-1px;width:181px;height:auto;border:1px solid #ccc;border-top:0}
 .gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border-bottom:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em}
