@@ -477,7 +477,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_v_link a:active {text-decoration:none}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
 
-#bo_v_top {margin:0 0 20px;padding:10px 0;zoom:1}
+#bo_v_top {margin:0 0 10px;padding:10px 0;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_top ul {list-style:none}
