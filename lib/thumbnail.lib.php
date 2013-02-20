@@ -16,7 +16,7 @@ function get_view_thumbnail($contents)
 
     if(G4_IS_MOBILE && $dvc_width) {
         // 썸네일 width 설정
-        $thumb_width = 300;
+        $thumb_width = 320;
 
         if($dvc_width >= 1000) {
             return $contents;
@@ -172,8 +172,9 @@ function is_animated_gif($filename) {
     if(!($fh = @fopen($filename, 'rb')))
         return false;
     $count = 0;
-    //an animated gif contains multiple "frames", with each frame having a
-    //header made up of:
+    // 출처 : http://www.php.net/manual/en/function.imagecreatefromgif.php#104473
+    // an animated gif contains multiple "frames", with each frame having a
+    // header made up of:
     // * a static 4-byte sequence (\x00\x21\xF9\x04)
     // * 4 variable bytes
     // * a static 2-byte sequence (\x00\x2C) (some variants may use \x00\x21 ?)
