@@ -594,7 +594,7 @@ $pg_anchor = "<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="tx_bo_content_head">상단 내용</label></th>
+        <th scope="row"><label for="bo_content_head">상단 내용</label></th>
         <td>
             <?=editor_html("bo_content_head", $board['bo_content_head']);?>
         </td>
@@ -604,7 +604,7 @@ $pg_anchor = "<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="tx_bo_content_tail">하단 내용</label></th>
+        <th scope="row"><label for="bo_content_tail">하단 내용</label></th>
         <td>
             <?=editor_html("bo_content_tail", $board['bo_content_tail']);?>
         </td>
@@ -825,7 +825,7 @@ $pg_anchor = "<ul class=\"anchor\">
         <td>
             <label for="bo_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
             <input type="text" id="bo_<?=$i?>_subj" name="bo_<?=$i?>_subj" class="frm_input" value="<?=get_text($board['bo_'.$i.'_subj'])?>">
-            <label for="bo_<?=$i?>">여분필드 <?=$i?> 내용</label>
+            <label for="bo_<?=$i?>">여분필드 <?=$i?> 값</label>
             <input type="text" id="bo_<?=$i?>" name="bo_<?=$i?>" class="frm_input" value="<?=get_text($board['bo_'.$i])?>">
         </td>
         <td class="group_setting">
