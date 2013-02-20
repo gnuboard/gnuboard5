@@ -30,9 +30,9 @@ if ($is_nogood) $colspan++;
 
     <? if ($rss_href || $write_href) {?>
     <ul class="btn_bo_user">
-        <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn01">RSS</a></li><? } ?>
+        <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn_b01">RSS</a></li><? } ?>
         <? if ($admin_href) { ?><li><a href="<?=$admin_href?>" class="btn_admin">관리자</a></li><? } ?>
-        <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn02">글쓰기</a></li><? } ?>
+        <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn_b02">글쓰기</a></li><? } ?>
     </ul>
     <? } ?>
 </div>
@@ -117,7 +117,7 @@ if ($is_nogood) $colspan++;
     <div class="bo_fx">
         <ul class="btn_bo_adm">
             <? if ($list_href) { ?>
-            <li><a href="<?=$list_href?>" class="btn01"> 목록</a></li>
+            <li><a href="<?=$list_href?>" class="btn_b01"> 목록</a></li>
             <? } ?>
             <? if ($is_checkbox) { ?>
             <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제"></li>
@@ -127,7 +127,7 @@ if ($is_nogood) $colspan++;
         </ul>
 
         <ul class="btn_bo_user">
-            <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn02">글쓰기</a><? } ?></li>
+            <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn_b02">글쓰기</a><? } ?></li>
         </ul>
     </div>
     <? } ?>

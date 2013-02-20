@@ -143,9 +143,9 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
         <? if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
-            <? if ($scrap_href) { ?><a href="<?=$scrap_href; ?>" target="_blank" onclick="win_scrap(this.href); return false;" class="btn01">스크랩</a><? } ?>
-            <? if ($good_href) {?><a href="<?=$good_href?>" class="btn01" target="hiddenframe">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
-            <? if ($nogood_href) {?><a href="<?=$nogood_href?>" class="btn01" target="hiddenframe">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
+            <? if ($scrap_href) { ?><a href="<?=$scrap_href; ?>" target="_blank" onclick="win_scrap(this.href); return false;" class="btn_b01">스크랩</a><? } ?>
+            <? if ($good_href) {?><a href="<?=$good_href?>" class="btn_b01" target="hiddenframe">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
+            <? if ($nogood_href) {?><a href="<?=$nogood_href?>" class="btn_b01" target="hiddenframe">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
         </div>
         <? } ?>
     </article>
