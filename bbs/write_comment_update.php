@@ -31,10 +31,10 @@ else
 
 // 세션의 시간 검사
 // 4.00.15 - 코멘트 수정시 연속 게시물 등록 메시지로 인한 오류 수정
-if ($w == 'c' && $_SESSION['ss_datetime'] >= ($g4['server_time'] - $config['cf_delay_sec']) && !$is_admin)
+if ($w == 'c' && $_SESSION['ss_datetime'] >= (G4_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
     alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
 
-set_session('ss_datetime', $g4['server_time']);
+set_session('ss_datetime', G4_SERVER_TIME);
 
 $wr = get_write($write_table, $wr_id);
 if (empty($wr['wr_id']))

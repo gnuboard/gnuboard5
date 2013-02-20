@@ -114,7 +114,7 @@ function set_cookie($cookie_name, $value, $expire)
 {
     global $g4;
 
-    setcookie(md5($cookie_name), base64_encode($value), $g4['server_time'] + $expire, '/', G4_COOKIE_DOMAIN);
+    setcookie(md5($cookie_name), base64_encode($value), G4_SERVER_TIME + $expire, '/', G4_COOKIE_DOMAIN);
 }
 
 
@@ -402,7 +402,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     $list['comment_href'] = $list['href'];
 
     $list['icon_new'] = '';
-    if ($list['wr_datetime'] >= date("Y-m-d H:i:s", $g4['server_time'] - ($board['bo_new'] * 3600)))
+    if ($list['wr_datetime'] >= date("Y-m-d H:i:s", G4_SERVER_TIME - ($board['bo_new'] * 3600)))
         $list['icon_new'] = '<img src="'.$skin_url.'/img/icon_new.gif" alt="새글">';
 
     $list['icon_hot'] = '';

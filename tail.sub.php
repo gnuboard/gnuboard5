@@ -35,7 +35,7 @@ if ($tmp_row['cnt']) {
     sql_query($tmp_sql, FALSE);
 
     // 시간이 지난 접속은 삭제한다
-    sql_query(" delete from {$g4['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", $g4['server_time'] - (60 * $config['cf_login_minutes']))."' ");
+    sql_query(" delete from {$g4['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", G4_SERVER_TIME - (60 * $config['cf_login_minutes']))."' ");
 
     // 부담(overhead)이 있다면 테이블 최적화
     //$row = sql_fetch(" SHOW TABLE STATUS FROM `$mysql_db` LIKE '$g4['login_table']' ");

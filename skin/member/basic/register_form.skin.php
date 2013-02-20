@@ -10,7 +10,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="agree" value="<?=$agree?>">
 <input type="hidden" name="agree2" value="<?=$agree2?>">
 <? if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?=$member['mb_sex']?>"><? } ?>
-<? if (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
+<? if (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
 <input type="hidden" name="mb_nick_default" value="<?=$member['mb_nick']?>">
 <input type="hidden" name="mb_nick" value="<?=$member['mb_nick']?>">
 <? } ?>
@@ -165,7 +165,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </tr>
 <? } ?>
 
-<? if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", $g4['server_time'] - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
+<? if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G4_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
 <tr>
     <th scope="row"><label for="reg_mb_open">정보공개</label></th>
     <td>
@@ -183,7 +183,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <td>
         <input type="hidden" name="mb_open" value="<?=$member['mb_open']?>">
         <span class="frm_info">
-            정보공개는 수정후 <?=(int)$config['cf_open_modify']?>일 이내, <?=date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:$g4['server_time']+$config['cf_open_modify']*86400);?> 까지는 변경이 안됩니다.<br>
+            정보공개는 수정후 <?=(int)$config['cf_open_modify']?>일 이내, <?=date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:G4_SERVER_TIME+$config['cf_open_modify']*86400);?> 까지는 변경이 안됩니다.<br>
             이렇게 하는 이유는 잦은 정보공개 수정으로 인하여 쪽지를 보낸 후 받지 않는 경우를 막기 위해서 입니다.
         </span>
     </td>

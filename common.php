@@ -325,10 +325,6 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
     // 자동로그인 end ---------------------------------------
 }
 
-// 첫방문 쿠키
-// 1년간 저장
-if (!get_cookie('ck_first_call'))     set_cookie('ck_first_call', $g4['server_time'], 86400 * 365);
-if (!get_cookie('ck_first_referer'))  set_cookie('ck_first_referer', $_SERVER['HTTP_REFERER'], 86400 * 365);
 
 // 회원, 비회원 구분
 $is_member = $is_guest = false;
@@ -343,7 +339,6 @@ if ($member['mb_id']) {
     $member['mb_level'] = 1; // 비회원의 경우 회원레벨을 가장 낮게 설정
 }
 
-//$member['mb_level_title'] = $g4['member_level'][$member['mb_level']]; // 권한명
 
 $write = array();
 $write_table = "";

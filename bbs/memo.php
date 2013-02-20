@@ -10,7 +10,7 @@ include_once(G4_PATH.'/head.sub.php');
 // 설정일이 지난 메모 삭제
 $sql = " delete from {$g4['memo_table']}
             where me_recv_mb_id = '{$member['mb_id']}'
-            and me_send_datetime < '".date("Y-m-d H:i:s", $g4['server_time'] - (86400 * $config['cf_memo_del']))."' ";
+            and me_send_datetime < '".date("Y-m-d H:i:s", G4_SERVER_TIME - (86400 * $config['cf_memo_del']))."' ";
 sql_query($sql);
 
 if (!$kind) $kind = 'recv';
