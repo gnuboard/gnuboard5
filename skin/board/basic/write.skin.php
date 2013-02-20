@@ -191,8 +191,8 @@ function html_auto_br(obj)
 
 function fwrite_submit(f)
 {
-    <? echo get_editor_js('wr_content'); ?>
-    <? echo chk_editor_js('wr_content'); ?>
+    <? echo get_editor_js('wr_content', $is_dhtml_editor); ?>
+    <? echo chk_editor_js('wr_content', $is_dhtml_editor); ?>
 
     var subject = "";
     var content = "";
