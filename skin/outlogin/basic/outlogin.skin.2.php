@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- 로그인 후 외부로그인 시작 -->
 <section id="ol_after" class="ol">
     <header id="ol_after_hd">
-        <h2>나의 이용정보</h2>
+        <h2>내 회원정보</h2>
         <strong><?=$nick?></strong>님
         <? if ($is_admin == 'super' || $is_auth) { ?><a href="<?=G4_ADMIN_URL?>" id="ol_admin">관리자</a><? } ?>
     </header>
