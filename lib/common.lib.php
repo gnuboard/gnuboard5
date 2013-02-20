@@ -1047,10 +1047,13 @@ function view_file_link($file, $width, $height, $content='')
     else
         $attr = '';
 
-    if (preg_match("/\.({$config['cf_image_extension']})$/i", $file))
-        // 이미지에 속성을 주지 않는 이유는 이미지 클릭시 원본 이미지를 보여주기 위한것임
-        // 게시판설정 이미지보다 크다면 스킨의 자바스크립트에서 이미지를 줄여준다
-        return "<img src='".G4_DATA_URL."/file/{$board['bo_table']}/".urlencode($file)."' onclick='image_window(this);' alt='{$content}'>";
+    if (preg_match("/\.({$config['cf_image_extension']})$/i", $file)) {
+        $img = '<a href="'.G4_BBS_URL.'/view_image.php?bo_table='.$board['bo_table'].'&amp;fn='.urlencode($file).'" target="_blank" class="view_image">';
+        $img .= '<img src="'.G4_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'">';
+        $img .= '</a>';
+
+        return $img;
+    }
 }
 
 
