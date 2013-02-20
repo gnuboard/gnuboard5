@@ -127,7 +127,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             for ($i=0; $i<=count($view['file']); $i++) {
                 if ($view['file'][$i]['view']) {
                     //echo $view['file'][$i]['view'];
-                    echo get_board_contents($view['file'][$i]['view']);
+                    echo get_view_thumbnail($view['file'][$i]['view']);
                 }
             }
 
@@ -135,7 +135,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         }
         ?>
 
-        <div id="bo_v_con"><?=get_board_contents($view['content']);?></div>
+        <div id="bo_v_con"><?=get_view_thumbnail($view['content']);?></div>
         <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
         <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
 
@@ -178,7 +178,6 @@ function board_move(href)
 }
 </script>
 
-<script src="<?=G4_JS_URL?>/board.js"></script>
 <!-- 게시글 보기 끝 -->
 
 <script>
