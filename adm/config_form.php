@@ -216,10 +216,10 @@ $pg_anchor = "
         <td>
             <?=help('글내용중 자동 링크되는 타켓을 지정합니다.')?>
             <select id="cf_link_target">
-                <option value="_blank"<?=get_selected($config['cf_link_target'], $arr[$i])?>>_blank</option>
-                <option value="_self"<?=get_selected($config['cf_link_target'], $arr[$i])?>>_self</option>
-                <option value="_top"<?=get_selected($config['cf_link_target'], $arr[$i])?>>_top</option>
-                <option value="_new"<?=get_selected($config['cf_link_target'], $arr[$i])?>>_new</option>
+                <option value="_blank"<?=get_selected($config['cf_link_target'], '_blank')?>>_blank</option>
+                <option value="_self"<?=get_selected($config['cf_link_target'], '_self')?>>_self</option>
+                <option value="_top"<?=get_selected($config['cf_link_target'], '_top')?>>_top</option>
+                <option value="_new"<?=get_selected($config['cf_link_target'], '_new')?>>_new</option>
             </select>
         </td>
         <th scope="row"><label for="cf_search_part">검색 단위</label></th>
@@ -341,9 +341,9 @@ $pg_anchor = "
         <td>
             <?=help('게시물에 게시자 별명 대신 아이콘 사용')?>
             <select id="cf_use_member_icon" name="cf_use_member_icon">
-                <option value="0"<?=get_selected($config['cf_use_member_icon'], $arr[$i])?>>미사용
-                <option value="1"<?=get_selected($config['cf_use_member_icon'], $arr[$i])?>>아이콘만 표시
-                <option value="2"<?=get_selected($config['cf_use_member_icon'], $arr[$i])?>>아이콘+이름 표시
+                <option value="0"<?=get_selected($config['cf_use_member_icon'], '0')?>>미사용
+                <option value="1"<?=get_selected($config['cf_use_member_icon'], '1')?>>아이콘만 표시
+                <option value="2"<?=get_selected($config['cf_use_member_icon'], '2')?>>아이콘+이름 표시
             </select>
         </td>
         <th scope="row"><label for="cf_icon_level">아이콘 업로드 권한</label></th>
