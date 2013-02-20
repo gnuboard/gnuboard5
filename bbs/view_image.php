@@ -77,6 +77,10 @@ $(function() {
         is_draggable = false;
         return false;
     });
+
+    $(".draggable").dblclick(function() {
+        window.close();
+    });
 });
 </script>
 
