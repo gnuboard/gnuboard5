@@ -11,23 +11,22 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
 // 게시글보기 썸네일 생성
 function get_view_thumbnail($contents)
 {
-    if(!G4_IS_MOBILE)
-        return $contents;
-
+    global $board;
     $dvc_width = intval($_COOKIE['device_width']);
 
-    if(!$dvc_width)
-        return $contents;
+    if(G4_IS_MOBILE && $dvc_width) {
+        // 썸네일 width 설정
+        $thumb_width = 300;
 
-    // 썸네일 width 설정
-    $thumb_width = 320;
-
-    if($dvc_width >= 1000) {
-        return $contents;
-    } else if($dvc_width >= 760 && $dvc_width < 1000) {
-        $thumb_width = 760;
-    } else if($dvc_width >= 480 && $dvc_width < 760) {
-        $thumb_width = 480;
+        if($dvc_width >= 1000) {
+            return $contents;
+        } else if($dvc_width >= 760 && $dvc_width < 1000) {
+            $thumb_width = 760;
+        } else if($dvc_width >= 480 && $dvc_width < 760) {
+            $thumb_width = 480;
+        }
+    } else {
+        $thumb_width = $board['bo_image_width'];
     }
 
     // $contents 중 img 태그 추출
@@ -45,12 +44,25 @@ function get_view_thumbnail($contents)
             if(empty($size))
                 continue;
 
+            // 원본 width가 thumb_width보다 작다면
+            if($size[0] <= $thumb_width)
+                continue;
+
+            // Animated GIF 체크
+            $is_animated = false;
+            if($size[2] == 1) {
+                $is_animated = is_animated_gif($srcfile);
+            }
+
             $thumb_height = round(($thumb_width * $size[1]) / $size[0]);
             $filename = basename($srcfile);
             $filepath = dirname($srcfile);
 
             // 썸네일 생성
-            $thumb_file = thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, false);
+            if(!$is_animated)
+                $thumb_file = thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, false);
+            else
+                $thumb_file = $filename;
 
             $img_tag = $matchs[0][$i];
             $thumb_tag = str_replace($filename, $thumb_file, $img_tag);
@@ -111,6 +123,12 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         return basename($thumb_file);
     }
 
+    // Animated GIF 체크
+    if($size[2] == 1) {
+        if(is_animated_gif($source_file))
+            return basename($source_file);
+    }
+
     $is_imagecopyresampled = false;
     $is_large = false;
 
@@ -148,5 +166,26 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     chmod($thumb_file, 0606); // 추후 삭제를 위하여 파일모드 변경
 
     return basename($thumb_file);
+}
+
+function is_animated_gif($filename) {
+    if(!($fh = @fopen($filename, 'rb')))
+        return false;
+    $count = 0;
+    //an animated gif contains multiple "frames", with each frame having a
+    //header made up of:
+    // * a static 4-byte sequence (\x00\x21\xF9\x04)
+    // * 4 variable bytes
+    // * a static 2-byte sequence (\x00\x2C) (some variants may use \x00\x21 ?)
+
+    // We read through the file til we reach the end of the file, or we've found
+    // at least 2 frame headers
+    while(!feof($fh) && $count < 2) {
+        $chunk = fread($fh, 1024 * 100); //read 100kb at a time
+        $count += preg_match_all('#\x00\x21\xF9\x04.{4}\x00(\x2C|\x21)#s', $chunk, $matches);
+   }
+
+    fclose($fh);
+    return $count > 1;
 }
 ?>
