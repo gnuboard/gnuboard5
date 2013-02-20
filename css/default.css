@@ -585,4 +585,4 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#334356;color:#f
 .pg_prev {border-right:1px solid #cfded8}
 .pg_end,
 .pg_next {border-left:1px solid #cfded8}
-.pg_current {background:#5b6964;color:#fff;font-weight:bold}
+.pg_current {background:#334356;color:#fff;font-weight:bold}
