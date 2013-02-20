@@ -438,7 +438,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
-.bo_current {color:#000}
+.bo_current {color:#e8180c}
 .td_subject img {margin-left:3px}
 .cnt_cmt {font-weight:bold}
 
@@ -450,9 +450,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 
 #bo_v_cate {position:absolute;top:-25px;right:0;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 
-#bo_v_h1 {margin:0 0 10px;padding:0 0 10px;border-bottom:1px solid #eee;font-size:1.2em}
+#bo_v_h1 {padding:0 0 10px;font-size:1.2em}
 
-#bo_v_info {margin:0 0 10px}
+#bo_v_info {padding:0 0 10px;border-bottom:1px solid #cfded8}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_info {}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
@@ -460,15 +460,18 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_v_file {}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file a {display:inline-block;padding:8px 0 7px;color:#578689}
+#bo_v_file li {padding:0 10px;border-bottom:1px solid #eee;background:#f7f7f2}
+#bo_v_file a {display:inline-block;padding:8px 0 7px;color:#000}
 #bo_v_file a:focus,
 #bo_v_file a:hover,
 #bo_v_file a:active {text-decoration:none}
 .bo_v_file_cnt {display:inline-block;margin:0 10px}
+
 #bo_v_link {}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
-#bo_v_link a {display:inline-block;padding:8px 0 7px;color:#578689}
+#bo_v_link li {padding:0 10px;border-bottom:1px solid #eee;background:#f7f7f2}
+#bo_v_link a {display:inline-block;padding:8px 0 7px;color:#000}
 #bo_v_link a:focus,
 #bo_v_link a:hover,
 #bo_v_link a:active {text-decoration:none}
@@ -507,7 +510,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #bo_v form {padding-top:20px}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 10px;padding:20px 0 10px;border-bottom:1px solid #d9d9d9}
+#bo_vc {margin:0 0 10px;padding:20px 20px 10px;border:1px solid #cfded8;background:#f7f7f2}
 #bo_vc h2 {margin-bottom:10px}
 #bo_vc article {padding:0 0 10px;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:15px 0 5px}
