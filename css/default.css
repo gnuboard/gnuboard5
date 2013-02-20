@@ -210,10 +210,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #find_info #captcha input {margin-left:5px}
 
 /* 아웃로그인 스킨 */
-.ol {position:relative;padding:35px 14px 14px;border-bottom:1px solid #e7f1ed}
-.ol h2 {position:absolute;top:0px;left:14px !important;left:0;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
+.ol {position:relative;border-bottom:1px solid #e7f1ed}
+.ol h2 {position:absolute;top:0px;right:14px !important;right:0;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 .ol ul {margin:0;padding:0;list-style:none}
 
+#ol_before {padding:30px 14px 14px}
 #ol_before fieldset {position:relative}
 #ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;line-height:1.6em}
 #ol_id:focus {border-color:#333;background:#21272e;color:#fff}
@@ -231,12 +232,13 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 #ol_before a {letter-spacing:-0.1em}
 #ol_svc {padding-top:8px;text-align:right}
 
-#ol_after_hd {margin:0 0 5px;padding:5px 0;border-bottom:1px solid #cfded8;text-align:center}
-#ol_after_hd a {position:absolute;top:10px;right:14px;color:#e8180c}
+#ol_after {padding:25px 14px 14px}
+#ol_after_hd {margin:0 0 3px}
+#ol_after_hd .btn_admin {margin-top:5px;width:158px;text-align:center}
 #ol_after_private {margin:0 0 3px;zoom:1}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
-#ol_after_private a {display:block;padding-top:8px;height:37px;background:#fff;text-align:center}
+#ol_after_private a {display:block;padding-top:8px;height:37px;background:#f7f7f7;text-align:center}
 #ol_after_private a strong {display:block;padding-top:3px;color:#000;font-weight:normal}
 #ol_after_private a:focus,
 #ol_after_private a:hover {background:#4e5d60;color:#fff;text-decoration:none}
@@ -300,9 +302,9 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#4e5d60;color:#f
 
 /* 설문조사 스킨 */
 #poll {}
-#poll header {position:relative;padding:30px 14px 0}
-#poll h2 {position:absolute;top:0px;left:14px !important;left:0;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
-#poll header a {position:absolute;top:10px;right:14px;color:#e8180c}
+#poll header {position:relative;padding:25px 14px 0}
+#poll h2 {position:absolute;top:0px;right:14px !important;right:0;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
+#poll header .btn_admin {margin-top:5px;width:158px;text-align:center}
 #poll header p {padding:5px 0 10px}
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
 #poll li {padding:3px 0}
