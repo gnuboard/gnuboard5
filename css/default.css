@@ -122,6 +122,9 @@ a:active {color:#000;text-decoration:underline}
 .bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 td.empty_table {padding:85px 0;text-align:center}
 
+/* 필수입력 */
+.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
+
 /* 폼 테이블 */
 .frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 .frm_tbl caption {padding:10px 0;color:#4b8b99;font-weight:bold;text-align:left}
@@ -130,7 +133,8 @@ td.empty_table {padding:85px 0;text-align:center}
 .frm_tbl textarea,
 .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
 .frm_tbl textarea:focus,
-.frm_input:focus {padding:3px 3px 4px;border:0;background:#21272e;color:#fff}
+.frm_input:focus,
+.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important;color:#fff}
 .frm_tbl textarea {width:90%;height:150px}
 .frm_address {display:block;margin-top:5px}
 .frm_file {display:block;margin-bottom:5px}

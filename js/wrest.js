@@ -1,7 +1,5 @@
 var wrestMsg = "";
 var wrestFld = null;
-var wrestFldDefaultColor = "";
-var wrestFldBackColor = "#ff3061";
 
 // subject 속성값을 얻어 return, 없으면 tag의 name을 넘김
 function wrestItemname(fld)
@@ -284,8 +282,6 @@ function wrestSubmit()
 
             var array_css = el.className.split(" "); // class 를 공백으로 나눔
 
-            el.style.backgroundColor = wrestFldDefaultColor;
-
             // 배열의 길이만큼 돌려라
             for (var k=0; k<array_css.length; k++) {
                 var css = array_css[k];
@@ -323,7 +319,6 @@ function wrestSubmit()
         alert(wrestMsg);
 
         if (wrestFld.style.display != "none") {
-            wrestFld.style.backgroundColor = wrestFldBackColor;
             if (typeof(wrestFld.select) != "undefined")
                 wrestFld.select();
             wrestFld.focus();
@@ -350,20 +345,6 @@ function wrestInitialized()
             document.forms[i].oldsubmit = document.forms[i].onsubmit;
         }
         document.forms[i].onsubmit = wrestSubmit;
-
-        // 이 부분은 CSS 로 대체를 합니다. github issue #282, 지운아빠 작업예정
-        for (var j = 0; j < document.forms[i].elements.length; j++) {
-            // 필수 입력일 경우는 * 배경이미지를 준다.
-            if (document.forms[i].elements[j].getAttribute("required") != null ||
-                regexp.test(document.forms[i].elements[j].className)) {
-            //if (regexp.test(document.forms[i].elements[j].className)) {
-                //document.forms[i].elements[j].style.backgroundColor = wrestFldDefaultColor;
-                //document.forms[i].elements[j].className = "wrest_required";
-                document.forms[i].elements[j].style.backgroundImage = "url('"+g4_img_url+"/wrest.gif')";
-                document.forms[i].elements[j].style.backgroundPosition = "top right";
-                document.forms[i].elements[j].style.backgroundRepeat = "no-repeat";
-            }
-        }
     }
 }
 
