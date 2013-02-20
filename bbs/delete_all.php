@@ -90,9 +90,24 @@ for ($i=count($tmp_array)-1; $i>=0; $i--)
             // 업로드된 파일이 있다면
             $sql2 = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ";
             $result2 = sql_query($sql2);
-            while ($row2 = sql_fetch_array($result2))
+            while ($row2 = sql_fetch_array($result2)) {
                 // 파일삭제
                 @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row2['bf_file']);
+
+                // 썸네일삭제
+                $dir = G4_DATA_PATH.'/file/'.$bo_table;
+                if($dh = opendir($dir)) {
+                    while(($file = readdir($dh)) !== false) {
+                        if($file == "." || $file == "..")
+                            continue;
+
+                        $filename = preg_replace("/\.[^\.]+$/i", "", $row2['bf_file']);
+                        if(strstr($file, $filename) && strpos($file, $filename) != 0) {
+                            @unlink($dir.'/'.$file);
+                        }
+                    }
+                }
+            }
 
             // 파일테이블 행 삭제
             sql_query(" delete from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ");

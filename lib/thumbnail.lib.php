@@ -98,7 +98,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         @chmod($target_path, 0707);
     }
 
-    $thumb_file = "$target_path/{$thumb_filename}_{$thumb_width}x{$thumb_height}.png";
+    $thumb_file = "$target_path/thumb-{$thumb_filename}_{$thumb_width}x{$thumb_height}.png";
     $thumb_time = @filemtime($thumb_file);
     $source_file = "$source_path/$filename";
     $source_time = @filemtime($source_file);
@@ -112,7 +112,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     // 이미지 파일이 없거나 아님
     if (!$size[0]) {
         if (!$thumb_height) $thumb_height = $thumb_width;
-        $thumb_file = "$target_path/noimg_{$thumb_width}x{$thumb_height}.png";
+        $thumb_file = "$target_path/thumb-noimg_{$thumb_width}x{$thumb_height}.png";
         if (!file_exists($thumb_file)) {
             $target = imagecreate($thumb_width, $thumb_height);
             imagecolorallocate($target, 250, 250, 250);
