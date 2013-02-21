@@ -112,7 +112,7 @@ a:active {color:#000;text-decoration:underline}
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
 .basic_tbl caption {padding:0 0 10px;color:#777;text-align:left}
-.basic_tbl thead th {padding:12px 0 8px;background:#079dd2;color:#fff}
+.basic_tbl thead th {padding:12px 0 8px;background:#565e60;color:#fff}
 .basic_tbl thead a {color:#fff}
 .basic_tbl thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .basic_tbl tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
@@ -429,7 +429,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#334356;color:#f
 #bo_cate a:focus,
 #bo_cate a:hover,
 #bo_cate a:active {text-decoration:none}
-#bo_cate #bo_cate_on {z-index:2;border:1px solid #079dd2;background:#fff;color:#079dd2;font-weight:bold}
+#bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
 
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
