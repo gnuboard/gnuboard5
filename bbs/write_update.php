@@ -250,6 +250,8 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
                             @unlink($dir.'/'.$entry);
                         }
                     }
+
+                    closedir($dh);
                 }
             }
         }
