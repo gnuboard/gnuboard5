@@ -29,7 +29,7 @@ include_once('./admin.head.php');
         게시판을 생성하시려면 1개 이상의 게시판그룹이 필요합니다.<br>
         게시판그룹을 이용하시면 더 효과적으로 게시판을 관리할 수 있습니다.
     </p>
-    <form id="fboardgroup" name="fboardgroup" method="post" onsubmit="return fboardgroup_check(this);" autocomplete="off">
+    <form id="fboardgroup" name="fboardgroup" method="post" action="./boardgroup_form_update.php" onsubmit="return fboardgroup_check(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?=$w?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
     <input type="hidden" name="stx" value="<?=$stx?>">
