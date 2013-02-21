@@ -94,6 +94,8 @@ while ($row = sql_fetch_array($result))
                             @unlink($dir.'/'.$file);
                         }
                     }
+
+                    closedir($dh);
                 }
             }
         }

@@ -107,6 +107,8 @@ for ($i=count($tmp_array)-1; $i>=0; $i--)
                                 @unlink($dir.'/'.$file);
                             }
                         }
+
+                        closedir($dh);
                     }
                 }
             }
