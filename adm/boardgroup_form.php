@@ -53,7 +53,7 @@ include_once('./admin.head.php');
             <input type="text" id="gr_subject" name="gr_subject" class="required frm_input" required value="<?=get_text($group['gr_subject'])?>" size="80">
             <?
             if ($w == 'u')
-                echo '<input type="button" value="게시판생성" onclick="location.href=\'./board_form.php?gr_id='.$gr_id.'\';">';
+                echo '<a href="./board_form.php?gr_id='.$gr_id.'">게시판생성</a>';
             ?>
         </td>
     </tr>
@@ -114,7 +114,7 @@ include_once('./admin.head.php');
 
     <div class="btn_confirm">
         <input type="submit" class="btn_submit" accesskey="s" value="확인">
-        <button onclick="document.location.href='./boardgroup_list.php?<?=$qstr?>';">목록</button>
+        <a href="./boardgroup_list.php?<?=$qstr?>">목록</a>
     </div>
 
     </form>
