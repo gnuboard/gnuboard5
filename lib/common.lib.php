@@ -1720,4 +1720,34 @@ function delete_cache_latest($bo_table)
         unlink($filename);
     }
 }
+
+// 에디터 이미지 얻기
+function get_editor_image($contents)
+{
+    // $contents 중 img 태그 추출
+    $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+".str_replace(".", "\.", $_SERVER['HTTP_HOST'])."[^>\'\"]+)[\'\"]?[^>]*>/";
+    preg_match_all($pattern, $contents, $matchs);
+
+    return $matchs;
+}
+
+// 에디터 썸네일 삭제
+function delete_editor_thumbnail($contents)
+{
+    // $contents 중 img 태그 추출
+    $matchs = get_editor_image($contents);
+
+    for($i=0; $i<count($matchs[1]); $i++) {
+        // 이미지 path 구함
+        $imgurl = parse_url($matchs[1][$i]);
+        $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
+
+        $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
+        $filepath = dirname($srcfile);
+
+        foreach(glob($filepath.'/thumb-'.$filename.'*') as $file) {
+            unlink($file);
+        }
+    }
+}
 ?>
