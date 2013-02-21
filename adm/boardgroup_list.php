@@ -124,7 +124,7 @@ $colspan = 8;
         $sql2 = " select count(*) as cnt from {$g4['board_table']} where gr_id = '{$row['gr_id']}' ";
         $row2 = sql_fetch($sql2);
 
-        $s_upd = '<a href="./boardgroup_form.php?$qstr&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
+        $s_upd = '<a href="./boardgroup_form.php?'.$qstr.'&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
     ?>
 
     <tr>
