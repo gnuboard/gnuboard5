@@ -65,7 +65,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <ul class="bo_vc_act">
                 <? if ($list[$i]['is_reply']) { ?><li><a href="<? echo $c_reply_href; ?>" onclick="comment_box('<?=$comment_id?>', 'c'); return false;">답변</a></li><? } ?>
                 <? if ($list[$i]['is_edit']) { ?><li><a href="<? echo $c_edit_href; ?>" onclick="comment_box('<?=$comment_id?>', 'cu'); return false;">수정</a></li><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="commen_delete('<?=$list[$i]['del_link']?>'); return false;">삭제</a></li><? } ?>
+                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="comment_delete('<?=$list[$i]['del_link']?>'); return false;">삭제</a></li><? } ?>
             </ul>
         </footer>
         <? } ?>
