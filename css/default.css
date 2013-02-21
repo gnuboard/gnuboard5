@@ -41,8 +41,8 @@ a:active {color:#000;text-decoration:underline}
 
 #schall {position:absolute;top:22px;left:70px;margin:0;padding:0;letter-spacing:-5px}
 #schall legend {width:0;height:0;overflow:hidden}
-#schall_stx {padding-left:5px;width:156px;height:24px;border:1px solid #76a5a8;border-right:0;background:#f7f7f2;color:#fff;line-height:1.9em !important;line-height:1.6em}
-#schall_submit {border:1px solid #76a5a8;border-left:0}
+#schall_stx {padding-left:5px;width:156px;height:24px;border:1px solid #e7f1ed;border-right:0;background:#f7f7f2;color:#fff;line-height:1.9em !important;line-height:1.6em}
+#schall_submit {border:1px solid #e7f1ed;border-left:0}
 
 #snb {position:absolute;top:18px;right:0;zoom:1}
 #snb:after {display:block;visibility:hidden;clear:both;content:""}
@@ -132,7 +132,6 @@ td.empty_table {padding:85px 0;text-align:center}
 .frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
 .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
-.frm_tbl textarea:focus,
 .frm_input:focus,
 .required:focus {padding:3px 3px 4px;border:0;background:#21272e !important;color:#fff}
 .frm_tbl textarea {width:90%;height:150px}
@@ -145,8 +144,7 @@ td.empty_table {padding:85px 0;text-align:center}
 /* 폼 컨트롤 */
 .fs_input,
 fieldset textarea {padding:3px 3px 4px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
-.fs_input:focus,
-fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#21272e;color:#fff}
+.fs_input:focus {padding:4px 4px 5px;border:0;background:#21272e;color:#fff}
 
 .fs_submit,
 fieldset button {padding:0 15px;height:24px;border:0;background:#334356;color:#fff;line-height:1.7em;vertical-align:middle;cursor:pointer}
@@ -305,7 +303,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#334356;color:#f
 #poll header {position:relative;padding:25px 14px 0}
 #poll h2 {position:absolute;top:0px;right:14px;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 #poll header .btn_admin {margin-top:5px;width:158px;text-align:center}
-#poll header p {padding:5px 0 10px}
+#poll header p {padding:5px 0 0}
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
 #poll li {padding:3px 0}
 #poll footer {padding:0 14px 14px}
@@ -541,8 +539,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#334356;color:#f
 #bo_vc_w #char_cnt {position:absolute;top:5px;right:10px}
 #bo_vc_warea {clear:both;position:relative;margin:0 90px 10px 0}
 #bo_vc_warea textarea {padding:3px;width:100%;height:50px;border:1px solid #cfded8;background:#fff;vertical-align:middle}
-#bo_vc_warea textarea:focus {padding:4px;border:0;background:#21272e;color:#fff}
-#bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:0;width:75px;height:57px;border:1px solid #666;background:#494949;color:#fff;letter-spacing:-0.1em}
+#bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:0;width:75px;height:57px;border:1px solid #666;background:#334356;color:#fff;letter-spacing:-0.1em}
 #bo_vc footer {zoom:1}
 #bo_vc footer:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act {float:right;margin:0;list-style:none;zoom:1}
