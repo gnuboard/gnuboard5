@@ -227,6 +227,12 @@ function fmemberlist_submit(f)
         return false;
     }
 
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
     return true;
 }
 </script>
