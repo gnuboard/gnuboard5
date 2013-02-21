@@ -14,7 +14,7 @@ $(function() {
     $td_name.each(function() {
         $(this).css("z-index", count);
         $(this).css("position", "relative");
-        count--;
+        count = count - 1;
     });
 });
 </script>

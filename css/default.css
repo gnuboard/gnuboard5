@@ -305,7 +305,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#334356;color:#f
 #poll header {position:relative;padding:25px 14px 0}
 #poll h2 {position:absolute;top:0px;right:14px;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
 #poll header .btn_admin {margin-top:5px;width:158px;text-align:center}
-#poll header p {padding:5px 0 10px}
+#poll header p {padding:5px 0 0}
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
 #poll li {padding:3px 0}
 #poll footer {padding:0 14px 14px}
