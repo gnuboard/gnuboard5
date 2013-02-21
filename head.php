@@ -108,6 +108,23 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 </a>
             </li>
             <? } ?>
+            <? // 색상대비 on/off
+            $cr_path = g4_path();
+            if($contrast_use == 'on') {
+                $cr_uri = $cr_path['curr_url'].'?contrast=off';
+            } else {
+                $cr_uri = $cr_path['curr_url'].'?contrast=on';
+            }
+            if($_SERVER['QUERY_STRING']) {
+                $query_string = preg_replace("/contrast=(on|off)&?/", "", $_SERVER['QUERY_STRING']);
+                if($query_string)
+                    $cr_uri .= '&amp;'.$query_string;
+            }
+            unset($cr_path);
+            ?>
+            <li>
+                <a href="<?=$cr_uri;?>">색상대비</a>
+            </li>
         </ul>
 
     </div>
