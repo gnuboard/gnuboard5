@@ -95,15 +95,17 @@ for ($i=count($tmp_array)-1; $i>=0; $i--)
                 @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row2['bf_file']);
 
                 // 썸네일삭제
-                $dir = G4_DATA_PATH.'/file/'.$bo_table;
-                if($dh = opendir($dir)) {
-                    while(($file = readdir($dh)) !== false) {
-                        if($file == "." || $file == "..")
-                            continue;
+                if(preg_match("/\.({$config['cf_image_extension']})$/i", $row2['bf_file']) {
+                    $dir = G4_DATA_PATH.'/file/'.$bo_table;
+                    if($dh = opendir($dir)) {
+                        while(($file = readdir($dh)) !== false) {
+                            if($file == "." || $file == "..")
+                                continue;
 
-                        $filename = preg_replace("/\.[^\.]+$/i", "", $row2['bf_file']);
-                        if(strstr($file, $filename) && strpos($file, $filename) != 0) {
-                            @unlink($dir.'/'.$file);
+                            $filename = preg_replace("/\.[^\.]+$/i", "", $row2['bf_file']);
+                            if(strstr($file, $filename) && strpos($file, $filename) != 0) {
+                                @unlink($dir.'/'.$file);
+                            }
                         }
                     }
                 }
