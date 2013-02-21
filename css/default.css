@@ -542,7 +542,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#334356;color:#f
 #bo_vc_warea {clear:both;position:relative;margin:0 90px 10px 0}
 #bo_vc_warea textarea {padding:3px;width:100%;height:50px;border:1px solid #cfded8;background:#fff;vertical-align:middle}
 #bo_vc_warea textarea:focus {padding:4px;border:0;background:#21272e;color:#fff}
-#bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:0;width:75px;height:57px;border:1px solid #666;background:#494949;color:#fff;letter-spacing:-0.1em}
+#bo_vc_warea .bo_vc_submit {position:absolute;top:0;right:-90px !important;right:0;width:75px;height:57px;border:1px solid #666;background:#334356;color:#fff;letter-spacing:-0.1em}
 #bo_vc footer {zoom:1}
 #bo_vc footer:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act {float:right;margin:0;list-style:none;zoom:1}
