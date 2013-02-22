@@ -11,34 +11,35 @@ if ($is_nogood) $colspan++;
 
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
 
-<? if ($is_category) { ?>
-<form id="fcategory" name="fcategory" method="get">
-<nav id="bo_cate">
-    <h2><?=$board['bo_subject']?> 카테고리</h2>
-    <ul id="bo_cate_ul">
-        <?=$category_option?>
-    </ul>
-</nav>
-</form>
-<? } ?>
-
-<div class="bo_fx">
-    <div id="bo_list_total">
-        <span>Total <?=number_format($total_count)?>건</span>
-        <?=$page?> 페이지
-    </div>
-
-    <? if ($rss_href || $write_href) {?>
-    <ul class="btn_bo_user">
-        <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn_b01">RSS</a></li><? } ?>
-        <? if ($admin_href) { ?><li><a href="<?=$admin_href?>" class="btn_admin">관리자</a></li><? } ?>
-        <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn_b02">글쓰기</a></li><? } ?>
-    </ul>
-    <? } ?>
-</div>
-
 <!-- 게시판 목록 시작 -->
 <div id="bo_list">
+
+    <? if ($is_category) { ?>
+    <form id="fcategory" name="fcategory" method="get">
+    <nav id="bo_cate">
+        <h2><?=$board['bo_subject']?> 카테고리</h2>
+        <ul id="bo_cate_ul">
+            <?=$category_option?>
+        </ul>
+    </nav>
+    </form>
+    <? } ?>
+
+    <div class="bo_fx">
+        <div id="bo_list_total">
+            <span>Total <?=number_format($total_count)?>건</span>
+            <?=$page?> 페이지
+        </div>
+
+        <? if ($rss_href || $write_href) {?>
+        <ul class="btn_bo_user">
+            <? if ($rss_href) { ?><li><a href="<?=$rss_href?>" class="btn_b01">RSS</a></li><? } ?>
+            <? if ($admin_href) { ?><li><a href="<?=$admin_href?>" class="btn_admin">관리자</a></li><? } ?>
+            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn_b02">글쓰기</a></li><? } ?>
+        </ul>
+        <? } ?>
+    </div>
+
     <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
     <input type="hidden" name="bo_table" value="<?=$bo_table?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
