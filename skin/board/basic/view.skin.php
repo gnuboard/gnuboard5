@@ -147,7 +147,17 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             <? if ($good_href) {?><a href="<?=$good_href?>" class="btn_b01" target="hiddenframe">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
             <? if ($nogood_href) {?><a href="<?=$nogood_href?>" class="btn_b01" target="hiddenframe">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
         </div>
-        <? } ?>
+        <? } else {
+            if($board['bo_use_good'] || $board['bo_use_nogood']) {
+        ?>
+        <div id="bo_v_act">
+        <? if($board['bo_use_good']) { ?><strong><?=number_format($view['wr_good'])?></strong><? } ?>
+        <? if($board['bo_use_nogood']) { ?><strong><?=number_format($view['wr_nogood'])?></strong><? } ?>
+        </div>
+        <?
+            }
+        }
+        ?>
     </article>
 
     <?
