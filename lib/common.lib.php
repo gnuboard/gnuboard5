@@ -1721,9 +1721,24 @@ function delete_cache_latest($bo_table)
     }
 }
 
+// 게시판 첨부파일 썸네일 삭제
+function delete_board_thumbnail($bo_table, $file)
+{
+    if(!$bo_table || !$file)
+        return;
+
+    $fn = preg_replace("/\.[^\.]+$/i", "", basename($file));
+    foreach(glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*') as $file) {
+        unlink($file);
+    }
+}
+
 // 에디터 이미지 얻기
 function get_editor_image($contents)
 {
+    if(!$contents)
+        return false;
+
     // $contents 중 img 태그 추출
     $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+".str_replace(".", "\.", $_SERVER['HTTP_HOST'])."[^>\'\"]+)[\'\"]?[^>]*>/";
     preg_match_all($pattern, $contents, $matchs);
@@ -1734,8 +1749,14 @@ function get_editor_image($contents)
 // 에디터 썸네일 삭제
 function delete_editor_thumbnail($contents)
 {
+    if(!$contents)
+        return;
+
     // $contents 중 img 태그 추출
     $matchs = get_editor_image($contents);
+
+    if(!$matchs)
+        return;
 
     for($i=0; $i<count($matchs[1]); $i++) {
         // 이미지 path 구함
