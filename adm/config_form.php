@@ -215,7 +215,7 @@ $pg_anchor = "
         <th scope="row"><label for="cf_link_target">새창 링크</label></th>
         <td>
             <?=help('글내용중 자동 링크되는 타켓을 지정합니다.')?>
-            <select id="cf_link_target">
+            <select id="cf_link_target" name="cf_link_target">
                 <option value="_blank"<?=get_selected($config['cf_link_target'], '_blank')?>>_blank</option>
                 <option value="_self"<?=get_selected($config['cf_link_target'], '_self')?>>_self</option>
                 <option value="_top"<?=get_selected($config['cf_link_target'], '_top')?>>_top</option>
