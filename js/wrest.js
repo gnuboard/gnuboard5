@@ -331,10 +331,10 @@ function wrestSubmit()
         return false;
     }
 
-    if (this.oldsubmit && this.oldsubmit == false)
-            return false;
+    if (this.oldsubmit && this.oldsubmit() == false)
+        return false;
 
-        return true;
+    return true;
 }
 
 
