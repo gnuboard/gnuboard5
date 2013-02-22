@@ -1,6 +1,7 @@
 <?
 define('G4_CAPTCHA', true);
 include_once('./_common.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 // 090710
 if (substr_count($wr_content, "&#") > 50) {
@@ -20,6 +21,8 @@ if (!empty($_POST['wr_email']))
 if ($is_guest) {
     if ($wr_name == '')
         alert('이름은 필히 입력하셔야 합니다.');
+    if(!chk_captcha())
+        alert('스팸방지에 입력한 숫자가 틀렸습니다.');
 }
 
 if ($w == "c" || $w == "cu") {
@@ -45,7 +48,7 @@ if (empty($wr['wr_id']))
 // 이 옵션을 사용 안 함으로 설정할 경우 어떤 스크립트도 실행 되지 않습니다.
 //if (!trim($_POST["wr_content"])) die ("내용을 입력하여 주십시오.");
 
-if ($member[mb_id]) 
+if ($member[mb_id])
 {
     $mb_id = $member['mb_id'];
     // 4.00.13 - 실명 사용일때 코멘트에 별명으로 입력되던 오류를 수정

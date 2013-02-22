@@ -73,9 +73,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     <?}?>
     <? if ($i == 0) { //댓글이 없다면 ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><? } ?>
 
-</section>
-
-<? if ($is_comment_write) {
+    <? if ($is_comment_write) {
         if($w == '')
             $w = 'c';
     ?>
@@ -93,44 +91,23 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <input type="hidden" name="page" value="<?=$page?>">
         <input type="hidden" name="is_good" value="">
 
-        <table class="frm_tbl">
-        <tbody>
-        <? if ($is_guest) { ?>
-        <tr>
-            <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" maxLength="20" size="5" required></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
-            <td><input type="password" id="wr_password" name="wr_password" class="frm_input required" maxLength="20" size="10" required></td>
-        </tr>
-        <? } ?>
-        <tr>
-            <th scope="row"><label for="wr_secret">비밀글사용</label></th>
-            <td><input type="checkbox" id="wr_secret" name="wr_secret" value="secret"></td>
-        </tr>
-        <? if ($is_guest) { ?>
-        <tr>
-            <th scope="row">자동등록방지</th>
-            <td><?=$captcha_html;?></td>
-        </tr>
-        <? } ?>
-        <tr>
-            <th scope="row">내용</th>
-            <td>
-                <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
-                <textarea id="wr_content" name="wr_content" required
-                <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?> title="댓글내용입력(필수)"><? echo $c_wr_content; ?></textarea>
-                <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
-            </td>
-        </tr>
-        </tbody>
-        </table>
-
-        <div class="btn_confirm">
-            <input type="submit" class="btn_submit" value="댓글입력">
+        <fieldset id="bo_vc_winfo">
+            <legend class="sound_only">작성자</legend>
+            <? if ($is_guest) { ?>
+            <label for="wr_name">이름<strong class="sound_only">필수</strong></label> <input type="text" id="wr_name" name="wr_name" class="fs_input required" maxLength="20" size="5" required>
+            <label for="wr_password">패스워드<strong class="sound_only">필수</strong></label> <input type="password" id="wr_password" name="wr_password" class="fs_input required" maxLength="20" size="10" required>
+            <? } ?>
+            <input type="checkbox" id="wr_secret" name="wr_secret" value="secret">
+            <label for="wr_secret">비밀글</label>
+       </fieldset>
+       <? echo $captcha_html; ?>
+        <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
+        <div id="bo_vc_warea">
+            <textarea id="wr_content" name="wr_content" required
+            <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?> title="댓글내용입력(필수)"><? echo $c_wr_content; ?></textarea>
+            <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+            <input type="submit" class="bo_vc_submit" value="댓글입력">
         </div>
-
         </form>
     </aside>
 
@@ -280,9 +257,6 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
             save_before = el_id;
         }
-
-        if (typeof(wrestInitialized) != 'undefined')
-            wrestInitialized();
     }
 
     function comment_delete(url)
@@ -293,3 +267,4 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     comment_box('', 'c'); // 댓글 입력폼이 보이도록 처리하기위해서 추가 (root님)
     </script>
     <? } ?>
+</section>

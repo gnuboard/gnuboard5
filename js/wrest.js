@@ -331,39 +331,22 @@ function wrestSubmit()
         return false;
     }
 
-    if (this.oldsubmit && this.oldsubmit == false)
-            return false;
+    if (this.oldsubmit && this.oldsubmit() == false)
+        return false;
 
-        return true;
+    return true;
 }
 
 
 // 초기에 onsubmit을 가로채도록 한다.
 function wrestInitialized()
 {
-    //var regexp = /required/;
-    var regexp = /\brequired\b/;
-
     for (var i = 0; i < document.forms.length; i++) {
         // onsubmit 이벤트가 있다면 저장해 놓는다.
         if (document.forms[i].onsubmit) {
             document.forms[i].oldsubmit = document.forms[i].onsubmit;
         }
         document.forms[i].onsubmit = wrestSubmit;
-
-        // 이 부분은 CSS 로 대체를 합니다. github issue #282, 지운아빠 작업예정
-        for (var j = 0; j < document.forms[i].elements.length; j++) {
-            // 필수 입력일 경우는 * 배경이미지를 준다.
-            if (document.forms[i].elements[j].getAttribute("required") != null ||
-                regexp.test(document.forms[i].elements[j].className)) {
-            //if (regexp.test(document.forms[i].elements[j].className)) {
-                //document.forms[i].elements[j].style.backgroundColor = wrestFldDefaultColor;
-                //document.forms[i].elements[j].className = "wrest_required";
-                document.forms[i].elements[j].style.backgroundImage = "url('"+g4_url+"/js/wrest.gif')";
-                document.forms[i].elements[j].style.backgroundPosition = "top right";
-                document.forms[i].elements[j].style.backgroundRepeat = "no-repeat";
-            }
-        }
     }
 }
 
