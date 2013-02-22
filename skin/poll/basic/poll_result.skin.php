@@ -61,12 +61,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? if ($is_guest) { ?>
         <tr>
             <th scope="row"><label for="pc_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="pc_name" name="pc_name" class="fs_input required" size="10" required></td>
+            <td><input type="text" id="pc_name" name="pc_name" class="frm_input required" size="10" required></td>
         </tr>
         <? } ?>
         <tr>
             <th scope="row"><label for="pc_idea">의견<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="pc_idea" name="pc_idea" class="fs_input required" size="47" required maxlength="100"></td>
+            <td><input type="text" id="pc_idea" name="pc_idea" class="frm_input required" size="47" required maxlength="100"></td>
         </tr>
         <? if ($is_guest) { ?>
         <tr>
