@@ -280,9 +280,6 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
             save_before = el_id;
         }
-
-        if (typeof(wrestInitialized) != 'undefined')
-            wrestInitialized();
     }
 
     function comment_delete(url)
