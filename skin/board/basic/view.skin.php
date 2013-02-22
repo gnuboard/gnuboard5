@@ -151,8 +151,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
         ?>
         <div id="bo_v_act">
-        <? if($board['bo_use_good']) { ?><strong><?=number_format($view['wr_good'])?></strong><? } ?>
-        <? if($board['bo_use_nogood']) { ?><strong><?=number_format($view['wr_nogood'])?></strong><? } ?>
+            <? if($board['bo_use_good']) { ?><span>추천 <strong><?=number_format($view['wr_good'])?></strong></span><? } ?>
+            <? if($board['bo_use_nogood']) { ?><span>비추천 <strong><?=number_format($view['wr_nogood'])?></strong></span><? } ?>
         </div>
         <?
             }
