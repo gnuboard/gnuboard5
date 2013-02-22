@@ -138,7 +138,7 @@ label {vertical-align:middle}
 textarea, .frm_input {padding:2px;border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea:focus,
 .frm_input:focus,
-.required:focus {border-color:#000;background:#434f54 !important;color:#fff}
+input.required:focus {border-color:#000;background:#434f54 !important;color:#fff}
 textarea {width:90%}
 select {border:1px solid #ced9de}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
