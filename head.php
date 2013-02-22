@@ -134,6 +134,123 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <hr>
 
+<nav id="gnb">
+    <script>$('#gnb').addClass('gnb_js');</script>
+    <h2>홈페이지 메인메뉴</h2>
+    <ul>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=sirgle">써글톡</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">써글톡</a></li>
+                <li class="gnb_2depth"><a href="#">써글톡</a></li>
+                <li class="gnb_2depth"><a href="#">써글톡</a></li>
+                <li class="gnb_2depth"><a href="#">써글톡</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=cry">넋두리</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">넋두리</a></li>
+                <li class="gnb_2depth"><a href="#">넋두리</a></li>
+                <li class="gnb_2depth"><a href="#">넋두리</a></li>
+                <li class="gnb_2depth"><a href="#">넋두리</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=humor">써글유머</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">써글유머</a></li>
+                <li class="gnb_2depth"><a href="#">써글유머</a></li>
+                <li class="gnb_2depth"><a href="#">써글유머</a></li>
+                <li class="gnb_2depth"><a href="#">써글유머</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=debate">써글토론</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">써글토론</a></li>
+                <li class="gnb_2depth"><a href="#">써글토론</a></li>
+                <li class="gnb_2depth"><a href="#">써글토론</a></li>
+                <li class="gnb_2depth"><a href="#">써글토론</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=sirglenoms">써글놈들</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">써글놈들</a></li>
+                <li class="gnb_2depth"><a href="#">써글놈들</a></li>
+                <li class="gnb_2depth"><a href="#">써글놈들</a></li>
+                <li class="gnb_2depth"><a href="#">써글놈들</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=writtenby">자작써글</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">자작써글</a></li>
+                <li class="gnb_2depth"><a href="#">자작써글</a></li>
+                <li class="gnb_2depth"><a href="#">자작써글</a></li>
+                <li class="gnb_2depth"><a href="#">자작써글</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=liveloca">써글현장</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">써글현장</a></li>
+                <li class="gnb_2depth"><a href="#">써글현장</a></li>
+                <li class="gnb_2depth"><a href="#">써글현장</a></li>
+                <li class="gnb_2depth"><a href="#">써글현장</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=game">써글게임</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">써글게임</a></li>
+                <li class="gnb_2depth"><a href="#">써글게임</a></li>
+                <li class="gnb_2depth"><a href="#">써글게임</a></li>
+                <li class="gnb_2depth"><a href="#">써글게임</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=it">써글IT</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">써글IT</a></li>
+                <li class="gnb_2depth"><a href="#">써글IT</a></li>
+                <li class="gnb_2depth"><a href="#">써글IT</a></li>
+                <li class="gnb_2depth"><a href="#">써글IT</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=zzalbang">짤방대결</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">짤방대결</a></li>
+                <li class="gnb_2depth"><a href="#">짤방대결</a></li>
+                <li class="gnb_2depth"><a href="#">짤방대결</a></li>
+                <li class="gnb_2depth"><a href="#">짤방대결</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=goddess">여신대결</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">여신대결</a></li>
+                <li class="gnb_2depth"><a href="#">여신대결</a></li>
+                <li class="gnb_2depth"><a href="#">여신대결</a></li>
+                <li class="gnb_2depth"><a href="#">여신대결</a></li>
+            </ul>
+        </li>
+        <li class="gnb_1depth">
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=sports">스포츠</a>
+            <ul>
+                <li class="gnb_2depth"><a href="#">스포츠</a></li>
+                <li class="gnb_2depth"><a href="#">스포츠</a></li>
+                <li class="gnb_2depth"><a href="#">스포츠</a></li>
+                <li class="gnb_2depth"><a href="#">스포츠</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<hr>
+
 <div id="wrapper">
     <div id="lnb">
         <?=outlogin('basic'); // 외부 로그인 ?>

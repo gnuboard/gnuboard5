@@ -20,6 +20,80 @@ $(function() {
 </script>
 <![endif]-->
 
+<script>
+$(function(){
+    var hide_menu = false;
+    var mouse_event = false;
+    var oldX = oldY = 0;
+
+    $(document).mousemove(function(e) {
+        if(oldX == 0) {
+            oldX = e.pageX;
+            oldY = e.pageY;
+        }
+
+        if(oldX != e.pageX || oldY != e.pageY) {
+            mouse_event = true;
+        }
+    });
+
+    // 주메뉴
+    var $gnb = $('.gnb_1depth > a');
+    $gnb.mouseover(function() {
+        if(mouse_event) {
+            $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+            $(this).parent().addClass('gnb_1depth_over gnb_1depth_on');
+            hide_menu = false;
+        }
+    });
+
+    $gnb.mouseout(function() {
+        hide_menu = true;
+    });
+
+    $('.gnb_1depth li').mouseover(function() {
+        hide_menu = false;
+    });
+
+    $('.gnb_1depth li').mouseout(function() {
+        hide_menu = true;
+    });
+
+    $gnb.focusin(function() {
+        $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+        $(this).parent().addClass('gnb_1depth_over gnb_1depth_on');
+        hide_menu = false;
+    });
+
+    $gnb.focusout(function() {
+        hide_menu = true;
+    });
+
+    $('.gnb_1depth ul a').focusin(function() {
+        $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+        var $gnb_li = $(this).closest('.gnb_1depth').addClass('gnb_1depth_over gnb_1depth_on');
+        hide_menu = false;
+    });
+
+    $('.gnb_1depth ul a').focusout(function() {
+        hide_menu = true;
+    });
+
+    $(document).click(function() {
+        if(hide_menu) {
+            $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+        }
+    });
+
+    $(document).focusin(function() {
+        if(hide_menu) {
+            $('.gnb_1depth').removeClass('gnb_1depth_over gnb_1depth_on');
+        }
+    });
+});
+
+</script>
+
 </body>
 </html>
 <?
