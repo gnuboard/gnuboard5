@@ -96,22 +96,12 @@ for ($i=count($tmp_array)-1; $i>=0; $i--)
 
                 // 썸네일삭제
                 if(preg_match("/\.({$config['cf_image_extension']})$/i", $row2['bf_file'])) {
-                    $dir = G4_DATA_PATH.'/file/'.$bo_table;
-                    if($dh = opendir($dir)) {
-                        while(($file = readdir($dh)) !== false) {
-                            if($file == "." || $file == "..")
-                                continue;
-
-                            $filename = preg_replace("/\.[^\.]+$/i", "", $row2['bf_file']);
-                            if(strstr($file, $filename) && strpos($file, $filename) != 0) {
-                                @unlink($dir.'/'.$file);
-                            }
-                        }
-
-                        closedir($dh);
-                    }
+                    delete_board_thumbnail($bo_table, $row2['bf_file']);
                 }
             }
+
+            // 에디터 썸네일 삭제
+            delete_editor_thumbnail($row['wr_content']);
 
             // 파일테이블 행 삭제
             sql_query(" delete from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ");

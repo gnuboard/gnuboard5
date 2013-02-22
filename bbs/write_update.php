@@ -188,6 +188,10 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
 
         $row = sql_fetch(" select bf_file from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
         @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+        // 썸네일삭제
+        if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
+            delete_board_thumbnail($bo_table, $row['bf_file']);
+        }
     }
     else
         $upload[$i]['del_check'] = false;
@@ -239,20 +243,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
             @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
             // 이미지파일이면 썸네일삭제
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
-                $dir = G4_DATA_PATH.'/file/'.$bo_table;
-                if($dh = opendir($dir)) {
-                    while(($entry = readdir($dh)) !== false) {
-                        if($entry == "." || $entry == "..")
-                            continue;
-
-                        $fname = preg_replace("/\.[^\.]+$/i", "", $row['bf_file']);
-                        if(strstr($entry, $fname) && strpos($entry, $fname) != 0) {
-                            @unlink($dir.'/'.$entry);
-                        }
-                    }
-
-                    closedir($dh);
-                }
+                delete_board_thumbnail($bo_table, $row['bf_file']);
             }
         }
 
