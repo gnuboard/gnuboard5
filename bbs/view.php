@@ -94,7 +94,7 @@ if ($write['wr_reply'] == '' && ($is_admin == 'super' || $is_admin == 'group')) 
 $scrap_href = '';
 $good_href = '';
 $nogood_href = '';
-if ($member['mb_id']) {
+if ($is_member) {
     // 스크랩 링크
     $scrap_href = './scrap_popin.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
 
