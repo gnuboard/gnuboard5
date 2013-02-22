@@ -32,6 +32,9 @@ function get_view_thumbnail($contents)
     // $contents 중 img 태그 추출
     $matchs = get_editor_image($contents);
 
+    if(!$matchs)
+        return $contents;
+
     for($i=0; $i<count($matchs[1]); $i++) {
         // 이미지 path 구함
         $imgurl = parse_url($matchs[1][$i]);
