@@ -65,7 +65,7 @@ if ($row['cnt'] >= $board['bo_count_delete'] && !$is_admin)
 
 // 나라오름님 수정 : 원글과 코멘트수가 정상적으로 업데이트 되지 않는 오류를 잡아 주셨습니다.
 //$sql = " select wr_id, mb_id, wr_comment from $write_table where wr_parent = '$write[wr_id]' order by wr_id ";
-$sql = " select wr_id, mb_id, wr_is_comment from $write_table where wr_parent = '{$write['wr_id']}' order by wr_id ";
+$sql = " select wr_id, mb_id, wr_is_comment, wr_content from $write_table where wr_parent = '{$write['wr_id']}' order by wr_id ";
 $result = sql_query($sql);
 while ($row = sql_fetch_array($result))
 {
@@ -99,6 +99,9 @@ while ($row = sql_fetch_array($result))
                 }
             }
         }
+
+        // 에디터 썸네일 삭제
+        echo delete_editor_thumbnail($row['wr_content']);
 
         // 파일테이블 행 삭제
         sql_query(" delete from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ");

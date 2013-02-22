@@ -30,8 +30,7 @@ function get_view_thumbnail($contents)
     }
 
     // $contents 중 img 태그 추출
-    $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+".str_replace(".", "\.", $_SERVER['HTTP_HOST'])."[^>\'\"]+)[\'\"]?[^>]*>/";
-    preg_match_all($pattern, $contents, $matchs);
+    $matchs = get_editor_image($contents);
 
     for($i=0; $i<count($matchs[1]); $i++) {
         // 이미지 path 구함

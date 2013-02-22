@@ -112,8 +112,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             $cr_path = g4_path();
             if($contrast_use == 'on') {
                 $cr_uri = $cr_path['curr_url'].'?contrast=off';
+                $cr = "ON";
             } else {
                 $cr_uri = $cr_path['curr_url'].'?contrast=on';
+                $cr = "OFF";
             }
             if($_SERVER['QUERY_STRING']) {
                 $query_string = preg_replace("/contrast=(on|off)&?/", "", $_SERVER['QUERY_STRING']);
@@ -123,7 +125,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             unset($cr_path);
             ?>
             <li>
-                <a href="<?=$cr_uri;?>">색상대비</a>
+                <a href="<?=$cr_uri;?>">색상대비<?=$cr?></a>
             </li>
         </ul>
 
