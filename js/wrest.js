@@ -341,9 +341,6 @@ function wrestSubmit()
 // 초기에 onsubmit을 가로채도록 한다.
 function wrestInitialized()
 {
-    //var regexp = /required/;
-    var regexp = /\brequired\b/;
-
     for (var i = 0; i < document.forms.length; i++) {
         // onsubmit 이벤트가 있다면 저장해 놓는다.
         if (document.forms[i].onsubmit) {
