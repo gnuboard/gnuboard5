@@ -241,16 +241,16 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #find_info #captcha input {margin-left:5px}
 
 /* 아웃로그인 스킨 */
-.ol {position:relative}
-.ol h2 {position:absolute;top:0px;right:15px;margin:0;padding:0 5px;height:25px;background:#76a5a8;color:#fff;font-weight:bold;line-height:2.2em}
+.ol {position:relative;padding:15px 15px 14px 14px}
+.ol h2 {margin:0;padding:0;width:0;height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 
-#ol_before {padding:30px 15px 14px 14px}
+#ol_before {}
 #ol_before fieldset {position:relative}
-#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:178px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;line-height:1.6em}
+#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;line-height:1.6em}
 #ol_id:focus {border-color:#333;background:#21272e;color:#fff}
 .ol_idlabel {position:absolute;top:6px;left:5px;color:#333;font-size:0.9em}
-#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:178px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:top;line-height:1.6em}
+#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:top;line-height:1.6em}
 #ol_pw:focus {border-color:#333;background:#21272e;color:#fff}
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#333;font-size:0.9em}
 #auto_login {}
@@ -263,7 +263,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #ol_before a {letter-spacing:-0.1em}
 #ol_svc {padding-top:8px;text-align:right}
 
-#ol_after {padding:25px 15px 14px 14px}
+#ol_after {}
 #ol_after_hd {margin:0 0 3px}
 #ol_after_hd .btn_admin {margin-top:5px;width:168px;text-align:center}
 #ol_after_private {margin:0 0 3px;zoom:1}
@@ -276,10 +276,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #ol_after_private a:focus strong,
 #ol_after_private a:hover strong {color:#fff;text-decoration:none}
 #ol_after_memo {width:50px;margin-right:1px}
-#ol_after_pt {width:90px;margin-right:1px}
+#ol_after_pt {width:80px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:justify}
-#ol_after_ft a {display:inline-block;width:93px;height:22px;background:#333;color:#fff;text-align:center;line-height:1.8em}
+#ol_after_ft a {display:inline-block;width:88px;height:22px;background:#333;color:#fff;text-align:center;line-height:1.8em}
 #ol_after_ft a:focus,
 #ol_after_ft a:hover {text-decoration:none !important}
 
