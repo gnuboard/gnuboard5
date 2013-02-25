@@ -47,8 +47,7 @@ h2 {font-size:1.2em}
 #snb a {display:inline-block;padding:5px 0;color:#e0e0e0;font-size:0.9em;text-decoration:none}
 
 /* gnb js off */
-#gnb {}
-
+#gnb {margin-top:-1px}
 #gnb ul {z-index:10}
 .gnb_1depth {position:relative;margin-top:-1px;margin-left:-1px;background:#383a3f;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
@@ -73,7 +72,7 @@ h2 {font-size:1.2em}
 .gnb_js .gnb_1depth a:focus,
 .gnb_js .gnb_1depth a:hover,
 .gnb_js .gnb_1depth a:active {text-decoration:none}
-.gnb_js .gnb_1depth ul {width:1px;height:1px;overflow:hidden}
+.gnb_js .gnb_1depth ul {width:0;height:0;overflow:hidden}
 .gnb_js .gnb_1depth li {float:none}
 .gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:-1px;width:181px;height:auto;border:1px solid #ccc;border-top:0}
 .gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border-bottom:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em}

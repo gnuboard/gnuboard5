@@ -12,7 +12,8 @@ input {margin:0;padding:0;font-family:"dotum"}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
-a:link, a:visited {color:#000;text-decoration:none}
+a:link,
+a:visited {color:#000;text-decoration:none}
 a:hover,
 a:focus,
 a:active {color:#000;text-decoration:underline}
@@ -80,7 +81,7 @@ a:active {color:#000;text-decoration:underline}
 .gnb_js .gnb_1depth a:focus,
 .gnb_js .gnb_1depth a:hover,
 .gnb_js .gnb_1depth a:active {text-decoration:none}
-.gnb_js .gnb_1depth ul {width:1px !important;height:0 !important;overflow:hidden}
+.gnb_js .gnb_1depth ul {width:0 !important;height:0 !important;overflow:hidden}
 .gnb_js .gnb_1depth li {float:none}
 .gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:0;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
 .gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em !important}
@@ -394,7 +395,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 .lt {position:relative;float:left;margin-bottom:20px;padding-bottom:10px;width:354px;height:150px;border-bottom:1px solid #ddd}
 .lt ul {margin:0 0 10px;padding:0;list-style:none}
 .lt li {padding:3px 0}
-.lt a {}
 .lt_title {display:block;padding:10px 0 8px}
 .lt_more {position:absolute;top:10px;right:0}
 
