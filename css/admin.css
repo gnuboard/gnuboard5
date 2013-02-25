@@ -48,6 +48,7 @@ h2 {font-size:1.2em}
 
 /* gnb js off */
 #gnb {}
+
 #gnb ul {z-index:10}
 .gnb_1depth {position:relative;margin-left:-1px;background:#383a3f;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
