@@ -74,7 +74,7 @@ a:active {color:#000;text-decoration:underline}
 /* gnb js on */
 .gnb_js {border-bottom:1px solid #c3c7c5;background:#fff}
 .gnb_js .gnb_1depth {position:relative;float:left;margin-left:-1px}
-.gnb_js .gnb_1depth a {display:block;padding:0 15px;height:35px;border:1px solid #e0e5e9;border-top:0;border-bottom:0;color:#000;font-size:1.1em;font-weight:bold;letter-spacing:-0.1em;line-height:2.1em}
+.gnb_js .gnb_1depth a {display:inline-block;padding:0 15px;height:35px;border:1px solid #e0e5e9;border-top:0;border-bottom:0;color:#000;font-size:1.1em;font-weight:bold;letter-spacing:-0.1em;line-height:2.1em}
 .gnb_js .gnb_1depth a:focus,
 .gnb_js .gnb_1depth a:hover,
 .gnb_js .gnb_1depth a:active {text-decoration:none}
