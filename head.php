@@ -128,12 +128,10 @@ if ($config['cf_include_head']) {
     <h2>홈페이지 메인메뉴</h2>
     <ul>
         <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=sirgle">써글톡</a>
+            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=sirgle">분류1</a>
             <ul>
-                <li class="gnb_2depth"><a href="#">써글톡</a></li>
-                <li class="gnb_2depth"><a href="#">써글톡</a></li>
-                <li class="gnb_2depth"><a href="#">써글톡</a></li>
-                <li class="gnb_2depth"><a href="#">써글톡</a></li>
+                <li class="gnb_2depth"><a href="#">게시판1</a></li>
+                <li class="gnb_2depth"><a href="#">게시판2</a></li>
             </ul>
         </li>
     </ul>
