@@ -9,6 +9,14 @@ include_once(G4_LIB_PATH.'/visit.lib.php');
 include_once(G4_LIB_PATH.'/connect.lib.php');
 include_once(G4_LIB_PATH.'/popular.lib.php');
 
+// 상단 파일 경로 지정 : 이 코드는 가능한 삭제하지 마십시오.
+if ($config['cf_include_head']) {
+    if (!@include_once($config['cf_include_head'])) {
+        die('기본환경 설정에서 상단 파일 경로가 잘못 설정되어 있습니다.');
+    }
+    return; // 이 코드의 아래는 실행을 하지 않습니다.
+}
+
 //print_r2(get_defined_constants());
 ?>
 
@@ -108,25 +116,6 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 </a>
             </li>
             <? } ?>
-            <? // 색상대비 on/off
-            $cr_path = g4_path();
-            if($contrast_use == 'on') {
-                $cr_uri = $cr_path['curr_url'].'?contrast=off';
-                $cr = "ON";
-            } else {
-                $cr_uri = $cr_path['curr_url'].'?contrast=on';
-                $cr = "OFF";
-            }
-            if($_SERVER['QUERY_STRING']) {
-                $query_string = preg_replace("/contrast=(on|off)&?/", "", $_SERVER['QUERY_STRING']);
-                if($query_string)
-                    $cr_uri .= '&amp;'.$query_string;
-            }
-            unset($cr_path);
-            ?>
-            <li>
-                <a href="<?=$cr_uri;?>">색상대비<?=$cr?></a>
-            </li>
         </ul>
 
     </div>
@@ -145,105 +134,6 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 <li class="gnb_2depth"><a href="#">써글톡</a></li>
                 <li class="gnb_2depth"><a href="#">써글톡</a></li>
                 <li class="gnb_2depth"><a href="#">써글톡</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=cry">넋두리</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">넋두리</a></li>
-                <li class="gnb_2depth"><a href="#">넋두리</a></li>
-                <li class="gnb_2depth"><a href="#">넋두리</a></li>
-                <li class="gnb_2depth"><a href="#">넋두리</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=humor">써글유머</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">써글유머</a></li>
-                <li class="gnb_2depth"><a href="#">써글유머</a></li>
-                <li class="gnb_2depth"><a href="#">써글유머</a></li>
-                <li class="gnb_2depth"><a href="#">써글유머</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=debate">써글토론</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">써글토론</a></li>
-                <li class="gnb_2depth"><a href="#">써글토론</a></li>
-                <li class="gnb_2depth"><a href="#">써글토론</a></li>
-                <li class="gnb_2depth"><a href="#">써글토론</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=sirglenoms">써글놈들</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">써글놈들</a></li>
-                <li class="gnb_2depth"><a href="#">써글놈들</a></li>
-                <li class="gnb_2depth"><a href="#">써글놈들</a></li>
-                <li class="gnb_2depth"><a href="#">써글놈들</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=writtenby">자작써글</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">자작써글</a></li>
-                <li class="gnb_2depth"><a href="#">자작써글</a></li>
-                <li class="gnb_2depth"><a href="#">자작써글</a></li>
-                <li class="gnb_2depth"><a href="#">자작써글</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=liveloca">써글현장</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">써글현장</a></li>
-                <li class="gnb_2depth"><a href="#">써글현장</a></li>
-                <li class="gnb_2depth"><a href="#">써글현장</a></li>
-                <li class="gnb_2depth"><a href="#">써글현장</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=game">써글게임</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">써글게임</a></li>
-                <li class="gnb_2depth"><a href="#">써글게임</a></li>
-                <li class="gnb_2depth"><a href="#">써글게임</a></li>
-                <li class="gnb_2depth"><a href="#">써글게임</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=it">써글IT</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">써글IT</a></li>
-                <li class="gnb_2depth"><a href="#">써글IT</a></li>
-                <li class="gnb_2depth"><a href="#">써글IT</a></li>
-                <li class="gnb_2depth"><a href="#">써글IT</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=zzalbang">짤방대결</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">짤방대결</a></li>
-                <li class="gnb_2depth"><a href="#">짤방대결</a></li>
-                <li class="gnb_2depth"><a href="#">짤방대결</a></li>
-                <li class="gnb_2depth"><a href="#">짤방대결</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=goddess">여신대결</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">여신대결</a></li>
-                <li class="gnb_2depth"><a href="#">여신대결</a></li>
-                <li class="gnb_2depth"><a href="#">여신대결</a></li>
-                <li class="gnb_2depth"><a href="#">여신대결</a></li>
-            </ul>
-        </li>
-        <li class="gnb_1depth">
-            <a href="<?=$g4['url']?>/bbs/board.php?bo_table=sports">스포츠</a>
-            <ul>
-                <li class="gnb_2depth"><a href="#">스포츠</a></li>
-                <li class="gnb_2depth"><a href="#">스포츠</a></li>
-                <li class="gnb_2depth"><a href="#">스포츠</a></li>
-                <li class="gnb_2depth"><a href="#">스포츠</a></li>
             </ul>
         </li>
     </ul>

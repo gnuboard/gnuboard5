@@ -22,6 +22,10 @@ check_token();
 $sql = " update {$g4['config_table']}
             set cf_title = '{$_POST['cf_title']}',
                  cf_admin = '{$_POST['cf_admin']}',
+                 cf_include_index = '{$_POST['cf_include_index']}',
+                 cf_include_head = '{$_POST['cf_include_head']}',
+                 cf_include_tail = '{$_POST['cf_include_tail']}',
+                 cf_add_script = '{$_POST['cf_add_script']}',
                  cf_use_point = '{$_POST['cf_use_point']}',
                  cf_use_norobot = '{$_POST['cf_use_norobot']}',
                  cf_use_copy_log = '{$_POST['cf_use_copy_log']}',

@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit;
 
 $begin_time = get_microtime();
-$administrator = 1;
+
 include_once(G4_PATH.'/head.sub.php');
 
 function print_menu1($key, $no)

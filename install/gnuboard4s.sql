@@ -179,6 +179,9 @@ DROP TABLE IF EXISTS `g4s_config`;
 CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_title` varchar(255) NOT NULL default '',
   `cf_admin` varchar(255) NOT NULL default '',
+  `cf_include_head` varchar(255) NOT NULL default '',
+  `cf_include_tail` varchar(255) NOT NULL default '',
+  `cf_add_script` text NOT NULL default '',
   `cf_use_point` tinyint(4) NOT NULL default '0',
   `cf_use_norobot` tinyint(4) NOT NULL default '0',
   `cf_use_copy_log` tinyint(4) NOT NULL default '0',

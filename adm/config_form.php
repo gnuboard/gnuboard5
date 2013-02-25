@@ -14,6 +14,15 @@ if (!isset($config['cf_email_admin'])) {
     sql_query(" ALTER TABLE {$g4['config_table']} ADD cf_email_admin VARCHAR(255) NOT NULL DEFAULT '' AFTER cf_email_use ", TRUE);
 }
 
+if (!isset($config['cf_include_index'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}` 
+                    ADD `cf_include_index` VARCHAR(255) NOT NULL AFTER `cf_admin`,  
+                    ADD `cf_include_head` VARCHAR(255) NOT NULL AFTER `cf_include_index`, 
+                    ADD `cf_include_tail` VARCHAR(255) NOT NULL AFTER `cf_include_head`,
+                    ADD `cf_add_script` TEXT NOT NULL AFTER `cf_include_tail`
+            ", TRUE);
+}
+
 $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 
@@ -50,6 +59,34 @@ $pg_anchor = "
         <td><input type="text" id="cf_title" name="cf_title" class="required frm_input" required value="<?=$config['cf_title']?>" size="40"></td>
         <th scope="row"><label for="cf_admin">최고관리자<strong class="sound_only">필수</strong></label></th>
         <td><?=get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required')?></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_include_index">초기화면 파일 경로</label></th>
+        <td colspan="3">
+            <?=help('입력이 없으면 index.php가 초기화면 파일의 기본 경로로 설정됩니다.')?>
+            <input type="text" id="cf_include_index" name="cf_include_index" class="frm_input" value="<?=$config['cf_include_index']?>" size="50">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_include_head">상단 파일 경로</label></th>
+        <td colspan="3">
+            <?=help('입력이 없으면 head.php가 상단 파일의 기본 경로로 설정됩니다.')?>
+            <input type="text" id="cf_include_head" name="cf_include_head" class="frm_input" value="<?=$config['cf_include_head']?>" size="50">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_include_tail">하단 파일 경로</label></th>
+        <td colspan="3">
+            <?=help('입력이 없으면 tail.php가 상단 파일의 기본 경로로 설정됩니다.')?>
+            <input type="text" id="cf_include_tail" name="cf_include_tail" class="frm_input" value="<?=$config['cf_include_tail']?>" size="50">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_add_script">추가 script, css</label></th>
+        <td colspan="3">
+            <?=help('HTML의 </HEAD> 태그위로 추가될 JavaScript와 css 코드를 설정합니다.')?>
+            <textarea id="cf_add_script" name="cf_add_script"><?=$config['cf_add_script']?></textarea>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_use_point">포인트 사용</label></th>

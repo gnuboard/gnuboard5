@@ -244,7 +244,7 @@ function image_window(img)
 
     var settings;
 
-    if (g4_is_gecko) {
+    if (navigator.userAgent.toLowerCase().indexOf("gecko") != -1) {
         settings  ='width='+(w+10)+',';
         settings +='height='+(h+10)+',';
     } else {
