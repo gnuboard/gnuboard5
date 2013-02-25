@@ -74,14 +74,14 @@ a:active {color:#000;text-decoration:underline}
 .gnb_js {border-bottom:1px solid #c3c7c5;background:#fff}
 .gnb_js ul {zoom:1}
 .gnb_js ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_js .gnb_1depth {position:relative;float:left;margin-left:-1px;width:80px}
-.gnb_js .gnb_1depth a {display:inline-block;float:none;width:78px;height:35px;border:1px solid #e0e5e9;border-top:0;border-bottom:0;color:#000;font-size:1.1em;font-weight:bold;text-align:center;letter-spacing:-0.1em;line-height:2.1em}
+.gnb_js .gnb_1depth {position:relative;float:left;margin-left:-2px}
+.gnb_js .gnb_1depth a {display:inline-block;float:none;padding:0 15px;height:35px;border:1px solid #e0e5e9;border-top:0;border-bottom:0;color:#000;font-size:1.1em;font-weight:bold;text-align:center;letter-spacing:-0.1em;line-height:2.1em}
 .gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
 .gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
 .gnb_js .gnb_1depth a:focus,
 .gnb_js .gnb_1depth a:hover,
 .gnb_js .gnb_1depth a:active {text-decoration:none}
-.gnb_js .gnb_1depth ul {width:0 !important;height:0 !important;overflow:hidden}
+.gnb_js .gnb_1depth ul {width:1px !important;height:0 !important;overflow:hidden}
 .gnb_js .gnb_1depth li {float:none}
 .gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:0;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
 .gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em}
