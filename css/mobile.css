@@ -2,9 +2,9 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#f7f7f2;font-size:1em;font-family:"dotum"}
-html, body, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
+body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
@@ -14,17 +14,11 @@ hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
-.sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+.sound_only {display:none}
 
 /* 레이아웃 */
-#container {width:100%}
 
-#idx_catch img {width:100%;height:auto}
-
-#ft_catch_img {width:100%;height:auto}
-#ft_html5badge {display:block}
-
-/* 게시판 목록 */
+/* 게시판 목록
 #bo_list table {margin:0 auto;width:95%}
 #bo_list caption {display:none}
 #bo_list thead {display:none}
@@ -41,3 +35,4 @@ pre {overflow-x:scroll;font-size:1.1em}
 #bo_list td:nth-of-type(5):before {content:"조회"}
 #bo_list a {color:#000;text-decoration:none}
 .bo_cate_link {font-weight:bold}
+*/
