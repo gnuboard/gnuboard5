@@ -413,12 +413,12 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #sch_result_hd dd {float:right;margin:0;padding:10px 0 15px}
 #sch_result_hd ul {float:left}
 #sch_result_hd li {float:left;padding:0 10px;border-right:1px solid #cfded8}
-#sch_result_bo {float:left;margin:0;padding:0;width:170px}
+#sch_result_bo {float:left;margin:-1px 0 0;padding:0;width:170px}
 #sch_result_bo dt {margin:0;padding:0;width:1px;height:1px;border:0;overflow:hidden}
 #sch_result_bo dd {margin:0;padding:0}
 #sch_result_bo ul {margin-top:1px}
 #sch_result_bo li {position:relative;margin-top:-1px;height:40px}
-#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #618588;border-right:0;background:#679295;color:#fff;text-decoration:none;line-height:3.4em}
+#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #618588;border-right:0;background:#151515;color:#fff;text-decoration:none;line-height:3.4em}
 #sch_result_bo .sch_on {width:150px;border-color:#cfded8;border-right:0;background:#fff;color:#000;font-weight:bold}
 #sch_result_bo .cnt_cmt {color:#fff}
 #sch_result_bo .sch_on .cnt_cmt {color:#000}
