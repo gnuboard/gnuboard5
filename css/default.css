@@ -33,14 +33,14 @@ a:active {color:#000;text-decoration:underline}
 
 /* 상단 레이아웃 */
 #hd {border-top:3px solid #151515;border-bottom:1px solid #e7f1ed;background:#fff}
-#hd h1 {width:0;height:0;overflow:hidden}
+#hd h1 {width:1px;height:1px;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
 #logo {padding:17px 0 17px 0}
 #logo span {display:inline-block;margin-left:10px;color:#109ff1;font-family:"verdana";vertical-align:middle}
 
 #schall {position:absolute;top:22px;left:70px;margin:0;padding:0;letter-spacing:-5px}
-#schall legend {width:0;height:0;overflow:hidden}
+#schall legend {width:1px;height:1px;overflow:hidden}
 #schall_stx {padding-left:5px;width:156px;height:24px;border:1px solid #aaa;border-right:0;background:#f7f7f2;line-height:1.9em !important;line-height:1.6em}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
@@ -55,35 +55,35 @@ a:active {color:#000;text-decoration:underline}
 
 /* gnb js off */
 #gnb {background:#f0f4f8}
-#gnb h2 {margin:0;padding:0;width:0;height:0;overflow:hidden}
-#gnb ul {z-index:10;margin:0 auto;padding:0;width:980px;zoom:1}
-#gnb ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth {position:relative;margin-left:-1px;zoom:1}
+#gnb h2 {margin:0;padding:0;width:1px;height:1px;overflow:hidden}
+#gnb_ul {z-index:10;margin:0 auto;padding:0;width:980px}
+.gnb_1depth {position:relative;margin-top:-1px;margin-left:-1px;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth a {display:inline-block;float:left;height:35px;color:#fff;line-height:2.7em !important;line-height:2.4em}
+.gnb_1depth a {display:block;float:left;height:35px;color:#000;line-height:2.7em !important;line-height:2.4em}
 .gnb_1depth_air a,
 .gnb_1depth_on a {color:#000}
 .gnb_1depth a:focus,
 .gnb_1depth a:hover,
 .gnb_1depth a:active {text-decoration:none}
-.gnb_1depth ul {float:left !important;margin:0 !important;padding:0 !important;width:auto !important;zoom:1}
-.gnb_1depth ul:after {display:inline-block;visibility:hidden;clear:both;content:""}
+.gnb_1depth ul {float:left;zoom:1}
+.gnb_1depth ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth li {float:left}
-.gnb_1depth_over ul {top:35px;left:-1px;width:auto;height:auto;border:1px solid #ccc;border-top:0}
-.gnb_2depth a {display:inline-block;float:none;margin-right:10px;padding:5px;width:auto;height:25px;border-bottom:0;color:#fff;font-weight:normal;text-align:left;line-height:2.1em !important;line-height:1.8em}
+.gnb_2depth a {display:inline-block;float:none;margin-right:10px;padding:0 5px;width:auto;height:35px;border-bottom:0;color:#000;font-weight:normal;text-align:left;line-height:2.7em !important;line-height:2.4em}
 /* gnb js on */
-.gnb_js {border-bottom:1px solid #c3c7c5;background:#fff}
+.gnb_js {padding-left:1px;border-bottom:1px solid #c3c7c5;background:#fff}
+.gnb_js ul {zoom:1}
+.gnb_js ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_js .gnb_1depth {position:relative;float:left;margin-left:-1px}
-.gnb_js .gnb_1depth a {display:inline-block;padding:0 15px;height:35px;border:1px solid #e0e5e9;border-top:0;border-bottom:0;color:#000;font-size:1.1em;font-weight:bold;letter-spacing:-0.1em;line-height:2.1em}
+.gnb_js .gnb_1depth a {display:inline-block;float:none;padding:0 15px;height:35px;border:1px solid #e0e5e9;border-top:0;border-bottom:0;color:#000;font-size:1.1em;font-weight:bold;text-align:center;letter-spacing:-0.1em;line-height:2.1em}
+.gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
+.gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
 .gnb_js .gnb_1depth a:focus,
 .gnb_js .gnb_1depth a:hover,
 .gnb_js .gnb_1depth a:active {text-decoration:none}
-.gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
-.gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
-.gnb_js .gnb_1depth ul {width:0 !important;height:0 !important;overflow:hidden}
+.gnb_js .gnb_1depth ul {width:1px !important;height:0 !important;overflow:hidden}
 .gnb_js .gnb_1depth li {float:none}
 .gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:0;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
-.gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em}
+.gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em !important}
 
 /* 중간 레이아웃 */
 #wrapper {margin:50px auto;width:980px;zoom:1}
@@ -97,7 +97,7 @@ a:active {color:#000;text-decoration:underline}
 
 /* 하단 레이아웃 */
 #ft {background:#484848}
-#ft h1 {width:0;height:0;overflow:hidden}
+#ft h1 {width:1px;height:1px;overflow:hidden}
 
 #popular {background:#515151}
 #popular div {margin:0 auto;width:980px;zoom:1}
@@ -243,7 +243,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 /* 아웃로그인 스킨 */
 .ol {position:relative;padding:15px 15px 14px 14px}
-.ol h2 {margin:0;padding:0;width:0;height:0;overflow:hidden}
+.ol h2 {margin:0;padding:0;width:1px;height:1px;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 
 #ol_before {}
@@ -299,7 +299,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 /* 쪽지 */
 #memo_view section {margin:0 auto 20px;padding:20px;width:87%}
-#memo_view section h2 {width:0;height:0;overflow:hidden}
+#memo_view section h2 {width:1px;height:1px;overflow:hidden}
 #memo_view_ul {margin:0;padding:0 0 10px;border-bottom:1px solid #eee;list-style:none}
 .memo_view_li {position:relative;padding:5px 0}
 .memo_view_subj {display:inline-block;width:65px}
@@ -369,7 +369,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #poll_result_cmt h2 {text-align:center}
 #poll_result_cmt h3 {margin:0 auto 10px;padding-top:15px;width:93%}
 #poll_result_cmt article {margin:0 18px 15px;border-bottom:1px solid #eee}
-#poll_result_cmt h1 {margin:0;padding:0;width:0;height:0;overflow:hidden}
+#poll_result_cmt h1 {margin:0;padding:0;width:1px;height:1px;overflow:hidden}
 .poll_datetime {display:inline-block;margin-left:10px}
 #poll_result_cmt p {padding:3px 0}
 #poll_result_cmt fieldset {margin-bottom:0;text-align:left}
@@ -400,7 +400,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 /* 최근게시물 스킨 (new) */
 #new_sch {margin-bottom:10px;text-align:right}
-#new_sch legend {width:0;height:0;overflow:hidden}
+#new_sch legend {width:1px;height:1px;overflow:hidden}
 
 /* 전체검색결과 스킨 */
 #sch_result_detail {margin:0;padding:15px 0;border:0;text-align:right}
@@ -414,7 +414,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #sch_result_hd ul {float:left}
 #sch_result_hd li {float:left;padding:0 10px;border-right:1px solid #cfded8}
 #sch_result_bo {float:left;margin:0;padding:0;width:170px}
-#sch_result_bo dt {margin:0;padding:0;width:0;height:0;border:0;overflow:hidden}
+#sch_result_bo dt {margin:0;padding:0;width:1px;height:1px;border:0;overflow:hidden}
 #sch_result_bo dd {margin:0;padding:0}
 #sch_result_bo ul {margin-top:1px}
 #sch_result_bo li {position:relative;margin-top:-1px;height:40px}
@@ -452,7 +452,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 /* 게시판 목록 */
 #bo_list_title {margin-bottom:20px;font-size:1.2em;letter-spacing:-0.1em}
 
-#bo_cate h2 {width:0;height:0;overflow:hidden}
+#bo_cate h2 {width:1px;height:1px;overflow:hidden}
 #bo_cate ul {margin-bottom:10px;padding-left:1px;width:728px;zoom:1}
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_cate li {float:left;margin-bottom:-1px}
@@ -480,7 +480,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 .cnt_cmt {font-weight:bold}
 
 #bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}
-#bo_sch legend {width:0;height:0;overflow:hidden}
+#bo_sch legend {width:1px;height:1px;overflow:hidden}
 
 /* 게시판 읽기 */
 #bo_v {margin-bottom:20px;padding-bottom:20px}
@@ -557,7 +557,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_vc .sv_member,
 #bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo {display:inline-block;margin:0 15px 0 5px}
-#bo_vc h1 {width:0;height:0;overflow:hidden}
+#bo_vc h1 {width:1px;height:1px;overflow:hidden}
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc p a {text-decoration:underline}

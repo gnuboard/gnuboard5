@@ -112,7 +112,8 @@ $colspan = 8;
         <th scope="col">댓글P<span class="sound_only">포인트</span></th>
         <th scope="col">다운P<span class="sound_only">포인트</span></th>
         <th scope="col"><?=subject_sort_link('bo_use_search')?>검색<br>사용</a></th>
-        <th scope="col"><?=subject_sort_link('bo_order_search')?>검색<br>순서</a></th>
+        <th scope="col"><?=subject_sort_link('bo_show_menu')?>메뉴<br>보임</a></th>
+        <th scope="col"><?=subject_sort_link('bo_order')?>출력<br>순서</a></th>
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
@@ -147,8 +148,9 @@ $colspan = 8;
         <td><input type="text" name="bo_write_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_write_point']?>" size="2" title="쓰기포인트"></td>
         <td><input type="text" name="bo_comment_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_comment_point']?>" size="2" title="댓글포인트"></td>
         <td><input type="text" name="bo_download_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_download_point']?>" size="2" title="다운포인트"></td>
-        <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1" title="검색사용"></td>
-        <td><input type="text" id="bo_order_search_<?=$i?>" name="bo_order_search[<?=$i?>]" class="frm_input" value="<?=$row['bo_order_search']?>" size="2" title="검색순서"></td>
+        <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1" title="선택시 검색사용"></td>
+        <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_show_menu[<?=$i?>]" <?=$row['bo_show_menu']?"checked":""?> value="1" title="선택시 메뉴보이기"></td>
+        <td><input type="text" id="bo_order<?=$i?>" name="bo_order[<?=$i?>]" class="frm_input" value="<?=$row['bo_order']?>" size="2" title="출력순서"></td>
         </td>
         <td>
             <select id="bo_device_<?=$i?>" name="bo_device[<?=$i?>]">

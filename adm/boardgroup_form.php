@@ -13,12 +13,16 @@ if ($w == '') {
     $gr['gr_use_access'] = 0;
     $html_title .= ' 생성';
 } else if ($w == 'u') {
-    $gr_id_attr = 'readonly style="background-color:#dddddd"';
+    $gr_id_attr = 'readonly';
     $gr = sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
     $html_title .= ' 수정';
 }
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
+
+if (!isset($group['gr_show_menu'])) {
+    sql_query(" ALTER TABLE `{$g4['group_table']}`  ADD `gr_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `gr_use_access`,  ADD `gr_order` INT NOT NULL DEFAULT '0' AFTER `gr_show_menu` ", true);
+}
 
 $g4['title'] = $html_title;
 include_once('./admin.head.php');
@@ -45,7 +49,14 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="gr_id">그룹 ID<?=$sound_only?></label></th>
-        <td><input type="text" id="gr_id" name="gr_id" maxlength="10" class="<?=$gr_id_attr?> alnum_ frm_input" value="<?=$group['gr_id']?>"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
+        <td><input type="text" id="gr_id" name="gr_id" maxlength="10" class="<?=$gr_id_attr?> alnum_ frm_input" value="<?=$group['gr_id']?>"> 
+            <? 
+            if ($w=='')
+                echo '영문자, 숫자, _ 만 가능 (공백없이)';
+            else 
+                echo '<a href="'.G4_BBS_URL.'/group.php?gr_id='.$group['gr_id'].'">게시판그룹 바로가기</a>';
+            ?>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="gr_subject">그룹 제목<strong class="sound_only">필수</strong></label></th>
@@ -96,6 +107,14 @@ include_once('./admin.head.php');
             $row1 = sql_fetch($sql1);
             echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1['cnt'].'</a>';
             ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="gr_show_menu">메뉴보이기</label></th>
+        <td>
+            <?=help("사용에 체크하시면 게시판그룹 제목을 메뉴에 출력합니다.")?>
+            <input type="checkbox" id="gr_show_menu" name="gr_show_menu" value="1" <?=$gr['gr_show_menu']?'checked':'';?>>
+            사용
         </td>
     </tr>
     <? for ($i=1;$i<=10;$i++) { ?>

@@ -50,6 +50,7 @@ var g4_bbs_url   = "<?=G4_BBS_URL?>";
 var g4_img_url   = "<?=G4_IMG_URL?>";
 var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";
 var g4_is_admin  = "<?=isset($is_admin)?$is_admin:'';?>";
+var g4_is_mobile = "<?=G4_IS_MOBILE?>";
 var g4_bo_table  = "<?=isset($bo_table)?$bo_table:'';?>";
 var g4_sca       = "<?=isset($sca)?$sca:'';?>";
 var g4_cookie_domain = "<?=G4_COOKIE_DOMAIN?>";
