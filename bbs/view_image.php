@@ -7,7 +7,13 @@ include_once(G4_PATH.'/head.sub.php');
 $filename = $_GET['fn'];
 $bo_table = $_GET['bo_table'];
 
-$filepath = G4_DATA_PATH.'/file/'.$bo_table.'/'.$filename;
+if(strpos($filename, 'data/editor')) {
+    $editor_file = strstr($filename, 'editor');
+    $filepath = G4_DATA_PATH.'/'.$editor_file;
+} else {
+    $editor_file = '';
+    $filepath = G4_DATA_PATH.'/file/'.$bo_table.'/'.$filename;
+}
 
 if(is_file($filepath)) {
     $size = @getimagesize($filepath);
@@ -17,7 +23,11 @@ if(is_file($filepath)) {
     $width = $size[0];
     $height = $size[1];
 
-    $fileurl = G4_DATA_URL.'/file/'.$bo_table.'/'.$filename;
+    if($editor_file)
+        $fileurl = G4_DATA_URL.'/'.$editor_file;
+    else
+        $fileurl = G4_DATA_URL.'/file/'.$bo_table.'/'.$filename;
+
     $img = '<img src="'.$fileurl.'" alt="" width="'.$width.'" height="'.$height.'" class="draggable" style="position:relative;top:0;left:0;cursor:move;">';
 } else {
     alert_close('파일이 존재하지 않습니다.');
