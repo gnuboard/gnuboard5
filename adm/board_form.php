@@ -12,6 +12,10 @@ if (!$row['cnt'])
 
 $html_title = '게시판';
 
+if (!isset($board['bo_show_menu'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_order_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", false);
+}
+
 if ($w == '') {
 
     $html_title .= ' 생성';
@@ -40,6 +44,9 @@ if ($w == '') {
     $board['bo_skin'] = 'basic';
     $board['gr_id'] = $gr_id;
     $board['bo_use_secret'] = 0;
+    $board['bo_include_head'] = '_head.php';
+    $board['bo_include_tail'] = '_tail.php';
+    $board['bo_show_menu'] = true;
 
 } else if ($w == 'u') {
 
@@ -110,6 +117,7 @@ $pg_anchor = "<ul class=\"anchor\">
         <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
         <td colspan="2">
             <?=get_group_select('gr_id', $board['gr_id'], 'required');?>
+            <? if ($w=='u') { ?><script>document.write("<a href='javascript:;' onclick=\"location.href='./board_list.php?sfl=a.gr_id&stx='+document.getElementById('gr_id').value;\">동일그룹게시판목록</a>");</script><?}?></td>
         </td>
     </tr>
     <tr>
@@ -538,14 +546,26 @@ $pg_anchor = "<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="bo_order_search">전체 검색 순서</label></th>
+        <th scope="row"><label for="bo_show_menu">메뉴보이기</label></th>
         <td>
-            <?=help('숫자가 낮은 게시판 부터 검색')?>
-            <input type="text" id="bo_order_search" name="bo_order_search" class="frm_input" value="<?=$board['bo_order_search']?>" size="4">
+            <?=help("사용에 체크하시면 게시판 제목을 메뉴에 출력합니다.")?>
+            <input type="checkbox" id="bo_show_menu" name="bo_show_menu" value="1" <?=$board['bo_show_menu']?'checked':'';?>>
+            사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_order_search" name="chk_order_search" value="1">
-            <label for="chk_order_search">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_show_menu" name="chk_show_menu" value="1">
+            <label for="chk_show_menu">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_order">출력 순서</label></th>
+        <td>
+            <?=help('숫자가 낮은 게시판 부터 메뉴나 검색시 우선 출력합니다.')?>
+            <input type="text" id="bo_order" name="bo_order" class="frm_input" value="<?=$board['bo_order']?>" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_order" name="chk_order" value="1">
+            <label for="chk_order">동일그룹 모두 적용</label>
         </td>
     </tr>
     </tbody>

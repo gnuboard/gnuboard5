@@ -34,7 +34,7 @@ if ($is_admin == 'group')
     $sql .= " and b.gr_admin = '{$member['mb_id']}' ";
 else if ($is_admin == 'board')
     $sql .= " and a.bo_admin = '{$member['mb_id']}' ";
-$sql .= " order by a.gr_id, a.bo_order_search, a.bo_table ";
+$sql .= " order by a.gr_id, a.bo_order, a.bo_table ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
