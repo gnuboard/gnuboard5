@@ -105,9 +105,11 @@ $colspan = 8;
         <th scope="col"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
         <th scope="col"><?=subject_sort_link('gr_subject')?>제목</a></th>
         <?if ($is_admin == 'super'){?><th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th><?}?>
-        <th scope="col">게시판</th>
-        <th scope="col">접근사용</th>
-        <th scope="col">접근회원수</th>
+        <th scope="col">게시판<br>갯수</th>
+        <th scope="col">접근<br>사용</th>
+        <th scope="col">접근<br>회원수</th>
+        <th scope="col">메뉴<br>보임</th>
+        <th scope="col">출력<br>순서</th>
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
@@ -132,13 +134,13 @@ $colspan = 8;
             <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
             <input type="hidden" name="group_id[<?=$i?>]" value="<?=$row['gr_id']?>">
         </td>
-        <td class="td_mbid"><a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+        <td class="td_grid"><a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td>
             <input type="text" id="gr_subject_<?=$i?>" name="gr_subject[<?=$i?>]" class="frm_input" value="<?=get_text($row['gr_subject'])?>" title="그룹제목 수정">
         </td>
         <td>
         <?if ($is_admin == 'super'){?>
-            <input type="text" id="gr_admin" name="gr_admin[<?=$i?>]" class="frm_input" value="<?=$row['gr_admin']?>" title="그룹관리자 수정" maxlength="20">
+            <input type="text" id="gr_admin" name="gr_admin[<?=$i?>]" size="10" class="frm_input" value="<?=$row['gr_admin']?>" title="그룹관리자 수정" maxlength="20">
         <?}else{?>
             <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
         <?}?>
@@ -146,6 +148,10 @@ $colspan = 8;
         <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
         <td><input type="checkbox" id="gr_use_access" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" title="선택 시 접근회원 사용"></td>
         <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
+        <td><input type="checkbox" id="gr_show_menu" name="gr_show_menu[<?=$i?>]" <?=$row['gr_show_menu']?'checked':''?> value="1" title="선택 시 메뉴보이기"></td>
+        <td>
+            <input type="text" id="gr_order_<?=$i?>" name="gr_order[<?=$i?>]" size="2" class="frm_input" value="<?=$row['gr_order']?>" title="출력순서 수정">
+        </td>
         <td>
             <select id="gr_device_<?=$i?>" name="gr_device[<?=$i?>]">
                 <option value="both"<?=get_selected($row['gr_device'], 'both');?>>모두</option>

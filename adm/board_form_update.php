@@ -102,7 +102,7 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_upload_size      = '{$_POST['bo_upload_size']}',
                 bo_reply_order      = '{$_POST['bo_reply_order']}',
                 bo_use_search       = '{$_POST['bo_use_search']}',
-                bo_order_search     = '{$_POST['bo_order_search']}',
+                bo_order            = '{$_POST['bo_order']}',
                 bo_write_min        = '{$_POST['bo_write_min']}',
                 bo_write_max        = '{$_POST['bo_write_max']}',
                 bo_comment_min      = '{$_POST['bo_comment_min']}',
@@ -265,7 +265,7 @@ if (is_checked('chk_content_head'))     $fields .= " , bo_content_head = '{$bo_c
 if (is_checked('chk_content_tail'))     $fields .= " , bo_content_tail = '{$bo_content_tail}' ";
 if (is_checked('chk_insert_content'))   $fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_use_search'))       $fields .= " , bo_use_search = '{$bo_use_search}' ";
-if (is_checked('chk_order_search'))     $fields .= " , bo_order_search = '{$bo_order_search}' ";
+if (is_checked('chk_order'))            $fields .= " , bo_order = '{$bo_order}' ";
 for ($i=1; $i<=10; $i++) {
     if (is_checked('chk_'.$i)) {
         $fields .= " , bo_{$i}_subj = '".$_POST['bo_'.$i.'_subj']."' ";
