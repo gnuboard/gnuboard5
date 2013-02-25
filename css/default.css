@@ -56,43 +56,43 @@ a:active {color:#000;text-decoration:underline}
 /* gnb js off */
 #gnb {background:#f0f4f8}
 #gnb h2 {margin:0;padding:0;width:0;height:0;overflow:hidden}
-#gnb ul {z-index:10;margin:0 auto;padding:0;width:980px;zoom:1}
-#gnb ul:after {display:block;visibility:hidden;clear:both;content:""}
+#gnb_ul {z-index:10;margin:0 auto;padding:0;width:980px}
 .gnb_1depth {position:relative;margin-left:-1px;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth a {display:inline-block;float:left;height:35px;color:#fff;line-height:2.7em !important;line-height:2.4em}
+.gnb_1depth a {display:block;float:left;height:35px;color:#000;line-height:2.7em !important;line-height:2.4em}
 .gnb_1depth_air a,
 .gnb_1depth_on a {color:#000}
 .gnb_1depth a:focus,
 .gnb_1depth a:hover,
 .gnb_1depth a:active {text-decoration:none}
-.gnb_1depth ul {float:left !important;margin:0 !important;padding:0 !important;width:auto !important;zoom:1}
-.gnb_1depth ul:after {display:inline-block;visibility:hidden;clear:both;content:""}
+.gnb_1depth ul {float:left;zoom:1}
+.gnb_1depth ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth li {float:left}
-.gnb_1depth_over ul {top:35px;left:-1px;width:auto;height:auto;border:1px solid #ccc;border-top:0}
-.gnb_2depth a {display:inline-block;float:none;margin-right:10px;padding:5px;width:auto;height:25px;border-bottom:0;color:#fff;font-weight:normal;text-align:left;line-height:2.1em !important;line-height:1.8em}
+.gnb_2depth a {display:inline-block;float:none;margin-right:10px;padding:0 5px;width:auto;height:35px;border-bottom:0;color:#000;font-weight:normal;text-align:left;line-height:2.7em !important;line-height:2.4em}
 /* gnb js on */
 .gnb_js {border-bottom:1px solid #c3c7c5;background:#fff}
+.gnb_js ul {zoom:1}
+.gnb_js ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_js .gnb_1depth {position:relative;float:left;margin-left:-1px}
-.gnb_js .gnb_1depth a {display:block;padding:0 15px;height:35px;border:1px solid #e0e5e9;border-top:0;border-bottom:0;color:#000;font-size:1.1em;font-weight:bold;letter-spacing:-0.1em;line-height:2.1em}
+.gnb_js .gnb_1depth a {display:inline-block;float:none;padding:0 15px;height:35px;border:1px solid #e0e5e9;border-top:0;border-bottom:0;color:#000;font-size:1.1em;font-weight:bold;text-align:center;letter-spacing:-0.1em;line-height:2.1em}
+.gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
+.gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
 .gnb_js .gnb_1depth a:focus,
 .gnb_js .gnb_1depth a:hover,
 .gnb_js .gnb_1depth a:active {text-decoration:none}
-.gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
-.gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
-.gnb_js .gnb_1depth ul {width:0 !important;height:0 !important;overflow:hidden}
+.gnb_js .gnb_1depth ul {width:1px !important;height:0 !important;overflow:hidden}
 .gnb_js .gnb_1depth li {float:none}
 .gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:0;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
-.gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em}
+.gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em !important}
 
 /* 중간 레이아웃 */
 #wrapper {margin:50px auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
-#lnb {float:right;width:209px;border:1px solid #e7f1ed;background:#fff}
+#lnb {float:right;width:209px;border:1px solid #d5d9d7;background:#fff}
 
-#container {position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #e7f1ed;background:#fff;zoom:1}
+#container {position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #d5d9d7;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */

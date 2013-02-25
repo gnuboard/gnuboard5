@@ -4,6 +4,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <form id="fregister" name="fregister" method="POST" action="<?=$register_action_url?>" onsubmit="return fregister_submit(this);" autocomplete="off">
 
+<p>회원가입약관 및 개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.</p>
+
 <section id="fregister_term">
     <h2>회원가입약관</h2>
     <textarea readonly><?=get_text($config['cf_stipulation'])?></textarea>
@@ -23,7 +25,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </section>
 
 <div class="btn_confirm">
-    <p>회원가입약관 및 개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.</p>
     <input type="submit" class="btn_submit" value="회원가입">
 </div>
 
