@@ -531,11 +531,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_v_atc {min-height:200px;height:auto !important;height:200px}
 #bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
 
-#bo_v_img {margin:0 0 10px;width:730px;overflow:hidden:zoom:1}
+#bo_v_img {margin:0 0 10px;width:100%;overflow:hidden:zoom:1}
 #bo_v_img:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_img img {margin-bottom:20px;max-width:100%;height:auto}
 
-#bo_v_con {margin-bottom:30px;width:730px;line-height:1.7em;word-break:break-all;overflow:hidden}
+#bo_v_con {margin-bottom:30px;width:100%;line-height:1.7em;word-break:break-all;overflow:hidden}
 #bo_v_con a {color:#000;text-decoration:underline}
 #bo_v_con img {max-width:100%;height:auto}
 
