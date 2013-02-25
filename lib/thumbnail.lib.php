@@ -11,7 +11,7 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
 // 게시글보기 썸네일 생성
 function get_view_thumbnail($contents)
 {
-    global $board;
+    global $board, $config;
     $dvc_width = intval($_COOKIE['device_width']);
 
     if(G4_IS_MOBILE && $dvc_width) {
@@ -79,6 +79,11 @@ function get_view_thumbnail($contents)
             preg_match("/height=[\'\"]?([0-9]+)[\'\"]?/", $img_tag, $mh);
             if(!empty($mh[1])) {
                 $thumb_tag = str_replace($mh[0], str_replace($mh[1], $thumb_height, $mh[0]), $thumb_tag);
+            }
+
+            // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
+            if(strpos($matchs[1][$i], 'data/editor') && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
+                $thumb_tag = '<a href="'.G4_BBS_URL.'/view_image.php?fn='.urlencode($imgurl['path']).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
             }
 
             $contents = str_replace($img_tag, $thumb_tag, $contents);
