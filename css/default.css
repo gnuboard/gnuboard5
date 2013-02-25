@@ -57,7 +57,7 @@ a:active {color:#000;text-decoration:underline}
 #gnb {background:#f0f4f8}
 #gnb h2 {margin:0;padding:0;width:1px;height:1px;overflow:hidden}
 #gnb_ul {z-index:10;margin:0 auto;padding:0;width:980px}
-.gnb_1depth {position:relative;margin-left:-1px;zoom:1}
+.gnb_1depth {position:relative;margin-top:-1px;margin-left:-1px;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth a {display:block;float:left;height:35px;color:#000;line-height:2.7em !important;line-height:2.4em}
 .gnb_1depth_air a,
