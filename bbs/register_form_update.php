@@ -51,6 +51,9 @@ $mb_8           = isset($_POST['mb_8'])         ? escape_trim($_POST['mb_8'])   
 $mb_9           = isset($_POST['mb_9'])         ? escape_trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])        ? escape_trim($_POST['mb_10'])          : "";
 
+// 휴대폰인증체크
+@include_once($member_skin_path.'/register_certify.skin.php');
+
 if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
@@ -85,8 +88,8 @@ if ($w == '' || $w == 'u') {
         $old_email = $member['mb_email'];
     }
 
-    if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg);
-    if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg);
+    if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
+    if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
 }
 
 $mb_dir = G4_DATA_PATH.'/member/'.substr($mb_id,0,2);
