@@ -169,7 +169,6 @@ if ($w == '') {
                      mb_sms = '{$mb_sms}',
                      mb_open = '{$mb_open}',
                      mb_open_date = '".G4_TIME_YMD."',
-                     mb_hp_certify = '{$_POST['cert_time']}',
                      mb_1 = '{$mb_1}',
                      mb_2 = '{$mb_2}',
                      mb_3 = '{$mb_3}',
