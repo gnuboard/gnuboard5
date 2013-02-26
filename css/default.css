@@ -86,6 +86,10 @@ a:active {color:#000;text-decoration:underline}
 .gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:-1px;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
 .gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em !important}
 
+/* 배포시에는 필요없는 부분 */
+#sirgle_title {height:100px;color:#fff;font-size:3em}
+#sirgle_title_span {display:block;position:relative;top:33px;left:0;margin:0 auto;width:980px}
+
 /* 중간 레이아웃 */
 #wrapper {margin:50px auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}

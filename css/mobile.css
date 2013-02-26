@@ -45,8 +45,15 @@ pre {overflow-x:scroll;font-size:1.1em}
 #gnb li ul {display:none}
 .gnb_1depth a {display:block;padding:10px 0;border-right:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
 
+/* 배포시에는 필요없는 부분 */
+#sirgle_title {height:100px;color:#fff;font-size:3em}
+#sirgle_title_span {display:block;position:relative;top:33px;left:0}
+
 /* 중간 레이아웃 */
 #wrapper {margin:30px auto;width:96%}
+
+#lnb {display:none}
+
 #container {position:relative;padding:20px;border:1px solid #d5d9d7;background:#fff;width:auto;min-height:300px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
@@ -60,10 +67,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 sup {display:none !important}
 
 /* 아웃로그인 */
-.ol {display:none}
 
 /* 설문조사 */
-#poll {display:none}
 
 /* 최근게시물 스킨 (latest) */
 .lt {float:left}
@@ -82,7 +87,7 @@ sup {display:none !important}
 .lt_more {position:absolute;top:10px;right:0}
 */
 
-/* 게시판 목록 */
+/* 게시판 목록
 #bo_list table {margin:0 auto;width:100%}
 #bo_list caption {display:none}
 #bo_list thead {display:none}
@@ -99,3 +104,4 @@ sup {display:none !important}
 #bo_list td:nth-of-type(5):before {content:"조회"}
 #bo_list a {color:#000;text-decoration:none}
 .bo_cate_link {font-weight:bold}
+*/
