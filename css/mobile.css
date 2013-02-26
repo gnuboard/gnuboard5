@@ -9,6 +9,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;font-family:"dotum"}
+input[type=text], input[type=password], input[type=submit], input[type=image] {border-radius:0} /* 모바일에서만 사용 */
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
@@ -35,6 +36,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #snb li {border-right:1px solid #ddd}
 #snb li:nth-last-of-type(1) {border-right:0 !important}
 #snb a {display:inline-block;padding:5px 10px;color:#000;text-decoration:none}
+#snb img {display:none}
 
 #gnb {background:#151515;zoom:1}
 #gnb:after {display:block;visibility:hidden;clear:both;content:""}
