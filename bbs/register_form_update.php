@@ -51,8 +51,8 @@ $mb_8           = isset($_POST['mb_8'])         ? escape_trim($_POST['mb_8'])   
 $mb_9           = isset($_POST['mb_9'])         ? escape_trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])        ? escape_trim($_POST['mb_10'])          : "";
 
-// 휴대폰인증체크
-@include_once($member_skin_path.'/register_certify.skin.php');
+// 사용자 코드 실행
+@include_once($member_skin_path.'/register_form_update.head.skin.php');
 
 if ($w == '' || $w == 'u') {
 
@@ -311,7 +311,7 @@ if ($w == '') {
 
 
 // 사용자 코드 실행
-@include_once ($member_skin_path.'/register_update.skin.php');
+@include_once ($member_skin_path.'/register_form_update.tail.skin.php');
 
 
 if ($msg)
