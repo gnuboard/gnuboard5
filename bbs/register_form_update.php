@@ -51,17 +51,6 @@ $mb_8           = isset($_POST['mb_8'])         ? escape_trim($_POST['mb_8'])   
 $mb_9           = isset($_POST['mb_9'])         ? escape_trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])        ? escape_trim($_POST['mb_10'])          : "";
 
-// 본인인증체크
-$cert_no = trim($_POST['cert_no']);
-if(!$cert_no)
-    alert('휴대폰인증이 되지 않았습니다. 휴대폰인증을 해주세요.', true, true);
-
-// 본인인증 hash 체크
-$reg_hp = preg_replace("/[^0-9]/", "", $mb_hp);
-$reg_hash = md5($reg_hp.$mb_name.$cert_no);
-if(get_session('ss_kcpcert_hash') != $reg_hash)
-    alert('휴대폰인증 정보가 올바르지 않습니다. 정상적인 방법으로 이용해 주세요.', true, true);
-
 if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
