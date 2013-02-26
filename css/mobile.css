@@ -1,8 +1,8 @@
-/* SIR SOFT 지운아빠 Jan 2013 */
+/* SIR SOFT 지운아빠 Feb. 2013 */
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#f7f7f2;font-size:0.875em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -31,23 +31,23 @@ pre {overflow-x:scroll;font-size:1.1em}
 #schall_stx {padding-left:5px;width:100px;height:24px;border:1px solid #aaa;border-right:0;background:#f7f7f2;line-height:1.9em !important;line-height:1.6em}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
-#snb {clear:both;border-top:1px solid #ddd;text-align:center}
-#snb li {display:inline-block}
-#snb li {border-right:1px solid #ddd}
+#snb {clear:both;border-top:1px solid #e7f1ed;background:#151515;text-align:center}
+#snb li {display:inline-block;border-right:1px solid #333}
 #snb li:nth-last-of-type(1) {border-right:0 !important}
-#snb a {display:inline-block;padding:5px 10px;color:#000;text-decoration:none}
+#snb a {display:inline-block;padding:10px;color:#fff;text-decoration:none}
 #snb img {display:none}
 
-#gnb {background:#151515;zoom:1}
+#gnb {border-bottom:1px solid #c3c7c5;background:#f0f4f8;zoom:1}
 #gnb:after {display:block;visibility:hidden;clear:both;content:""}
 #gnb h2 {display:none}
-#gnb li {float:left}
+#gnb_ul {border-top:1px solid #e7f1ed}
+#gnb li {float:left;width:25%;border-bottom:1px solid #e7f1ed}
 #gnb li ul {display:none}
-.gnb_1depth a {color:#fff;text-decoration:none}
+.gnb_1depth a {display:block;padding:10px 0;border-right:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
 
 /* 중간 레이아웃 */
 #wrapper {margin:30px auto;width:96%}
-#container {padding:20px;border:1px solid #d5d9d7;background:#fff;width:auto;height:auto;zoom:1}
+#container {position:relative;padding:20px;border:1px solid #d5d9d7;background:#fff;width:auto;min-height:300px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
@@ -64,6 +64,23 @@ sup {display:none !important}
 
 /* 설문조사 */
 #poll {display:none}
+
+/* 최근게시물 스킨 (latest) */
+.lt {float:left}
+.lt ul {display:none}
+.lt_title {display:inline-block;padding:10px}
+.lt_title:focus ~ ul,
+.lt_title:hover ~ ul,
+.lt_title:active ~ ul {display:block;position:absolute;top:100px;left:0}
+.lt a {color:#000;text-decoration:none}
+.lt_more {display:none}
+/*
+.lt {position:relative;margin-bottom:20px;padding-bottom:10px;width:100%;height:150px;border-bottom:1px solid #ddd}
+.lt ul {margin:0 0 10px;padding:0;list-style:none}
+.lt li {padding:3px 0}
+.lt_title {display:block;padding:10px 0 8px}
+.lt_more {position:absolute;top:10px;right:0}
+*/
 
 /* 게시판 목록 */
 #bo_list table {margin:0 auto;width:100%}

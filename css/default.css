@@ -392,6 +392,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #profile h2 {margin:0}
 
 /* 최근게시물 스킨 (latest) */
+.lt_pc {float:left;margin-left:20px}
 .lt {position:relative;float:left;margin-bottom:20px;padding-bottom:10px;width:354px;height:150px;border-bottom:1px solid #ddd}
 .lt ul {margin:0 0 10px;padding:0;list-style:none}
 .lt li {padding:3px 0}

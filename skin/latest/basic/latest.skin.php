@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <div class="lt">
-    <strong class="lt_title"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>"><?=$bo_subject?></a></strong>
+    <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>" onclick="return false" class="lt_title"><strong><?=$bo_subject?></strong></a>
     <ul>
     <? for ($i=0; $i<count($list); $i++) { ?>
         <li>
@@ -31,9 +31,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             ?>
         </li>
     <? } ?>
-    </ul>
     <? if (count($list) == 0) { //게시물이 없을 때 ?>
-    <p>게시물이 없습니다.</p>
+    <li>게시물이 없습니다.</li>
     <? } ?>
+    </ul>
     <div class="lt_more"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>">더보기</a></div>
 </div>
