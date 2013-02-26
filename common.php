@@ -186,65 +186,73 @@ $qstr = '';
 
 if (isset($_REQUEST['sca']))  {
     $sca = escape_trim($_REQUEST['sca']);
-    $qstr .= '&amp;sca=' . urlencode($sca);
+    if ($sca)
+        $qstr .= '&amp;sca=' . urlencode($sca);
 } else {
-    $sca = "";
+    $sca = '';
 }
 
 if (isset($_REQUEST['sfl']))  {
     $sfl = escape_trim($_REQUEST['sfl']);
-    $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
+    if ($sfl)
+        $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
 } else {
-    $sfl = "";
+    $sfl = '';
 }
 
 
 if (isset($_REQUEST['stx']))  { // search text (검색어)
     $stx = escape_trim($_REQUEST['stx']);
-    $qstr .= '&amp;stx=' . urlencode($stx);
+    if ($stx)
+        $qstr .= '&amp;stx=' . urlencode($stx);
 } else {
-    $stx = "";
+    $stx = '';
 }
 
 if (isset($_REQUEST['sst']))  {
     $sst = escape_trim($_REQUEST['sst']);
-    $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
+    if ($sst)
+        $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 } else {
-    $sst = "";
+    $sst = '';
 }
 
 if (isset($_REQUEST['sod']))  { // search order (검색 오름, 내림차순)
     $sod = preg_match("/^(asc|desc)$/i", $sod) ? $sod : '';
-    $qstr .= '&amp;sod=' . urlencode($sod);
+    if ($sod)
+        $qstr .= '&amp;sod=' . urlencode($sod);
 } else {
-    $sod = "";
+    $sod = '';
 }
 
 if (isset($_REQUEST['sop']))  { // search operator (검색 or, and 오퍼레이터)
     $sop = preg_match("/^(or|and)$/i", $sop) ? $sop : '';
-    $qstr .= '&amp;sop=' . urlencode($sop);
+    if ($sop)
+        $qstr .= '&amp;sop=' . urlencode($sop);
 } else {
-    $sop = "";
+    $sop = '';
 }
 
 if (isset($_REQUEST['spt']))  { // search part (검색 파트[구간])
     $spt = (int)$spt;
-    $qstr .= '&amp;spt=' . urlencode($spt);
+    if ($spt)
+        $qstr .= '&amp;spt=' . urlencode($spt);
 } else {
-    $spt = "";
+    $spt = '';
 }
 
 if (isset($_REQUEST['page'])) { // 리스트 페이지
     $page = (int)$_REQUEST['page'];
-    $qstr .= '&amp;page=' . urlencode($page);
+    if ($page) 
+        $qstr .= '&amp;page=' . urlencode($page);
 } else {
-    $page = "";
+    $page = '';
 }
 
 if (isset($_REQUEST['w'])) {
     $w = substr($w, 0, 2);
 } else {
-    $w = "";
+    $w = '';
 }
 
 if (isset($_REQUEST['wr_id'])) {
@@ -257,7 +265,7 @@ if (isset($_REQUEST['bo_table'])) {
     $bo_table = escape_trim($_REQUEST['bo_table']);
     $bo_table = substr($bo_table, 0, 20);
 } else {
-    $bo_table = "";
+    $bo_table = '';
 }
 
 // URL ENCODING
@@ -265,14 +273,14 @@ if (isset($_REQUEST['url'])) {
     $url = escape_trim($_REQUEST['url']);
     $urlencode = urlencode($url);
 } else {
-    $url = "";
+    $url = '';
     $urlencode = urlencode(escape_trim($_SERVER['REQUEST_URI']));
 }
 
 if (isset($_REQUEST['gr_id'])) {
     $gr_id = escape_trim($_REQUEST['gr_id']);
 } else {
-    $gr_id = "";
+    $gr_id = '';
 }
 //===================================
 
@@ -427,11 +435,11 @@ while ($entry = $tmp->read()) {
 
 // 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면
 // 캐쉬의 내용을 가져옴. 완전한지는 검증되지 않음
-header("Content-Type: text/html; charset=utf-8");
-$gmnow = gmdate("D, d M Y H:i:s") . " GMT";
-header("Expires: 0"); // rfc2616 - Section 14.21
-header("Last-Modified: " . $gmnow);
-header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
-header("Cache-Control: pre-check=0, post-check=0, max-age=0"); // HTTP/1.1
-header("Pragma: no-cache"); // HTTP/1.0
+header('Content-Type: text/html; charset=utf-8');
+$gmnow = gmdate('D, d M Y H:i:s') . ' GMT';
+header('Expires: 0'); // rfc2616 - Section 14.21
+header('Last-Modified: ' . $gmnow);
+header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
+header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
+header('Pragma: no-cache'); // HTTP/1.0
 ?>
