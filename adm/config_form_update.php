@@ -70,7 +70,6 @@ $sql = " update {$g4['config_table']}
                  cf_leave_day = '{$_POST['cf_leave_day']}',
                  cf_search_part = '{$_POST['cf_search_part']}',
                  cf_email_use = '{$_POST['cf_email_use']}',
-                 cf_email_admin = '{$_POST['cf_email_admin']}',
                  cf_email_wr_super_admin = '{$_POST['cf_email_wr_super_admin']}',
                  cf_email_wr_group_admin = '{$_POST['cf_email_wr_group_admin']}',
                  cf_email_wr_board_admin = '{$_POST['cf_email_wr_board_admin']}',
