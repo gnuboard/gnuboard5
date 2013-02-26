@@ -6,8 +6,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <form id="fregisterform" name="fregisterform" method="post" action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
-<input type="hidden" name="kcpcert_no" value="">
-<input type="hidden" name="kcpcert_time" value="">
 <input type="hidden" name="url" value="<?=$urlencode?>">
 <input type="hidden" name="agree" value="<?=$agree?>">
 <input type="hidden" name="agree2" value="<?=$agree2?>">
@@ -93,9 +91,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_hp">핸드폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td>
+        <input type="hidden" name="kcpcert_no" value="">
+        <input type="hidden" name="kcpcert_time" value="<?=$member['mb_hp_certify']?>">
+        <input type="hidden" name="old_mb_hp" value="<?=$member['mb_hp']?>">
         <input type="text" id="reg_mb_hp" name="mb_hp" class="frm_input <?=$config['cf_req_hp']?"required":"";?>" maxlength="20" <?=$config['cf_req_hp']?"required":"";?> value="<?=$member['mb_hp']?>">
+        <? if($config['cf_req_hp']) { ?>
         <button type="button" id="win_kcpcert">휴대폰인증</button>
         <noscript>휴대폰인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
+        <? } ?>
     </td>
 </tr>
 <? } ?>
@@ -303,13 +306,28 @@ function fregisterform_submit(f)
         }
     }
 
+    <? if ($config['cf_use_hp'] && $config['cf_req_hp']) { ?>
     // 휴대폰인증 검사
-    if(f.w.value == "") {
-        if(f.kcpcert_no.value == "" || f.kcpcert_time.value == "") {
-            alert("휴대폰인증을 해주세요.");
-            return false;
+    if(f.kcpcert_time.value == "") {
+        alert("휴대폰인증을 해주세요.");
+        return false;
+    }
+
+    // 휴대폰번호 변경 검사
+    if(f.w.value == "u") {
+        var patt = /[^0-9]/g;
+        var old_hp = f.old_mb_hp.value.replace(patt, "");
+        var mb_hp = f.mb_hp.value.replace(patt, "");
+
+        if(old_hp != mb_hp) {
+            if(f.kcpcert_no.value == "") {
+                f.kcpcert_time.value = "";
+                alert("휴대폰번호가 변경됐습니다. 휴대폰인증을 해주세요.");
+                return false;
+            }
         }
     }
+    <? } ?>
 
     if (typeof f.mb_icon != 'undefined') {
         if (f.mb_icon.value) {
