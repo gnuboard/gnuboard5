@@ -749,24 +749,24 @@ function subject_sort_link($col, $query_string='', $flag='asc')
 
 
 // 관리자 정보를 얻음
-function get_admin($admin='super')
+function get_admin($admin='super', $fields='*')
 {
     global $config, $group, $board;
     global $g4;
 
     $is = false;
     if ($admin == 'board') {
-        $mb = sql_fetch("select * from {$g4['member_table']} where mb_id in ('{$board['bo_admin']}') limit 1 ");
+        $mb = sql_fetch("select {$fields} from {$g4['member_table']} where mb_id in ('{$board['bo_admin']}') limit 1 ");
         $is = true;
     }
 
     if (($is && !$mb['mb_id']) || $admin == 'group') {
-        $mb = sql_fetch("select * from {$g4['member_table']} where mb_id in ('{$group['gr_admin']}') limit 1 ");
+        $mb = sql_fetch("select {$fields} from {$g4['member_table']} where mb_id in ('{$group['gr_admin']}') limit 1 ");
         $is = true;
     }
 
     if (($is && !$mb['mb_id']) || $admin == 'super') {
-        $mb = sql_fetch("select * from {$g4['member_table']} where mb_id in ('{$config['cf_admin']}') limit 1 ");
+        $mb = sql_fetch("select {$fields} from {$g4['member_table']} where mb_id in ('{$config['cf_admin']}') limit 1 ");
     }
 
     return $mb;

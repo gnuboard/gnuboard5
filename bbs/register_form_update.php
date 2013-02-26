@@ -51,16 +51,8 @@ $mb_8           = isset($_POST['mb_8'])         ? escape_trim($_POST['mb_8'])   
 $mb_9           = isset($_POST['mb_9'])         ? escape_trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])        ? escape_trim($_POST['mb_10'])          : "";
 
-// 본인인증체크
-$cert_no = trim($_POST['cert_no']);
-if(!$cert_no)
-    alert('휴대폰인증이 되지 않았습니다. 휴대폰인증을 해주세요.', true, true);
-
-// 본인인증 hash 체크
-$reg_hp = preg_replace("/[^0-9]/", "", $mb_hp);
-$reg_hash = md5($reg_hp.$mb_name.$cert_no);
-if(get_session('ss_kcpcert_hash') != $reg_hash)
-    alert('휴대폰인증 정보가 올바르지 않습니다. 정상적인 방법으로 이용해 주세요.', true, true);
+// 사용자 코드 실행
+@include_once($member_skin_path.'/register_form_update.head.skin.php');
 
 if ($w == '' || $w == 'u') {
 
@@ -96,8 +88,8 @@ if ($w == '' || $w == 'u') {
         $old_email = $member['mb_email'];
     }
 
-    if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg);
-    if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg);
+    if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
+    if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
 }
 
 $mb_dir = G4_DATA_PATH.'/member/'.substr($mb_id,0,2);
@@ -177,7 +169,6 @@ if ($w == '') {
                      mb_sms = '{$mb_sms}',
                      mb_open = '{$mb_open}',
                      mb_open_date = '".G4_TIME_YMD."',
-                     mb_hp_certify = '{$_POST['cert_time']}',
                      mb_1 = '{$mb_1}',
                      mb_2 = '{$mb_2}',
                      mb_3 = '{$mb_3}',
@@ -319,7 +310,7 @@ if ($w == '') {
 
 
 // 사용자 코드 실행
-@include_once ($member_skin_path.'/register_update.skin.php');
+@include_once ($member_skin_path.'/register_form_update.tail.skin.php');
 
 
 if ($msg)

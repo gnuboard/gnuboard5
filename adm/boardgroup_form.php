@@ -21,7 +21,7 @@ else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
 if (!isset($group['gr_show_menu'])) {
-    sql_query(" ALTER TABLE `{$g4['group_table']}`  ADD `gr_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `gr_use_access`,  ADD `gr_order` INT NOT NULL DEFAULT '0' AFTER `gr_show_menu` ", true);
+    sql_query(" ALTER TABLE `{$g4['group_table']}`  ADD `gr_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `gr_use_access`,  ADD `gr_order` INT NOT NULL DEFAULT '0' AFTER `gr_show_menu` ", false);
 }
 
 $g4['title'] = $html_title;

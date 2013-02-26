@@ -80,6 +80,9 @@ $ct_cert = new C_CT_CLI;
 $ct_cert->mf_clear();
 
 
+$g4['title'] = '휴대폰인증 결과';
+include_once(G4_PATH.'/head.sub.php');
+
 // 결과 처리
 
 if( $cert_enc_use == "Y" )
@@ -145,9 +148,6 @@ else if( $cert_enc_use != "Y" )
 }
 
 $ct_cert->mf_clear();
-
-$g4['title'] = '휴대폰인증 결과';
-include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <script>
@@ -155,8 +155,8 @@ $(function() {
     var $opener = window.opener;
 
     // 인증번호
-    $opener.$("input[name=cert_no]").val("<?=$md5_cert_no?>");
-    $opener.$("input[name=cert_time]").val("<?=G4_TIME_YMDHIS?>");
+    $opener.$("input[name=kcpcert_no]").val("<?=$md5_cert_no?>");
+    $opener.$("input[name=kcpcert_time]").val("<?=G4_TIME_YMDHIS?>");
     window.close();
 });
 </script>

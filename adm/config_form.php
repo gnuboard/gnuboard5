@@ -9,11 +9,6 @@ $token = get_token();
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
-// 메일발송전용 이메일주소
-if (!isset($config['cf_email_admin'])) {
-    sql_query(" ALTER TABLE {$g4['config_table']} ADD cf_email_admin VARCHAR(255) NOT NULL DEFAULT '' AFTER cf_email_use ", TRUE);
-}
-
 if (!isset($config['cf_include_index'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}` 
                     ADD `cf_include_index` VARCHAR(255) NOT NULL AFTER `cf_admin`,  
@@ -457,13 +452,6 @@ $pg_anchor = "
         <td>
             <?=help('체크하지 않으면 비회원도 사용 할 수 있습니다.')?>
             <input type="checkbox" id="cf_formmail_is_member" name="cf_formmail_is_member" value="1" <?=$config['cf_formmail_is_member']?'checked':'';?>> 회원만 사용
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_email_admin">관리자 메일주소<strong class="sound_only">필수</strong></label></th>
-        <td>
-            <?=help('일괄 발송 또는 테스트 등에 사용하는 이메일 주소입니다.')?>
-            <input type="text" id="cf_email_admin" name="cf_email_admin" class="email required frm_input" value="<?=$config['cf_email_admin']?>" required size="40">
         </td>
     </tr>
     </table>

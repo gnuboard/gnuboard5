@@ -1,18 +1,13 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-// kcp 휴대폰인증파일
-include_once(G4_BBS_PATH.'/kcp/kcpcert_config.php');
-if(!$ordr_idxx = get_session('ss_uniqid'))
-    $ordr_idxx = get_uniqid();
 ?>
 
 <script src="<?=G4_JS_URL?>/jquery.register_form.js"></script>
 
 <form id="fregisterform" name="fregisterform" method="post" action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
-<input type="hidden" name="cert_no" value="">
-<input type="hidden" name="cert_time" value="">
+<input type="hidden" name="kcpcert_no" value="">
+<input type="hidden" name="kcpcert_time" value="">
 <input type="hidden" name="url" value="<?=$urlencode?>">
 <input type="hidden" name="agree" value="<?=$agree?>">
 <input type="hidden" name="agree2" value="<?=$agree2?>">
@@ -99,7 +94,8 @@ if(!$ordr_idxx = get_session('ss_uniqid'))
     <th scope="row"><label for="reg_mb_hp">핸드폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td>
         <input type="text" id="reg_mb_hp" name="mb_hp" class="frm_input <?=$config['cf_req_hp']?"required":"";?>" maxlength="20" <?=$config['cf_req_hp']?"required":"";?> value="<?=$member[mb_hp]?>">
-        <a href="#" class="btn_frmline win_person_auth" target="_blank">휴대폰인증</a>
+        <button type="button" id="win_kcpcert">휴대폰인증</button>
+        <noscript>휴대폰인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
     </td>
 </tr>
 <? } ?>
@@ -219,43 +215,9 @@ if(!$ordr_idxx = get_session('ss_uniqid'))
 </div>
 </form>
 
-<form name="form_auth" method="post" target="auth_popup" action="<?=$cert_url?>">
-<!-- 유저네임 -->
-<input type="hidden" name="user_name"    value="" />
-<!-- 주문번호 -->
-<input type="hidden" name="ordr_idxx" value="<?=$ordr_idxx?>">
-<!-- 요청종류 -->
-<input type="hidden" name="req_tx"       value="cert"/>
-<!-- 인증종류 -->
-<input type="hidden" name="cert_type"    value="01"/>
-<!-- 웹사이트아이디 -->
-<input type="hidden" name="web_siteid"   value=""/>
-<!-- 노출 통신사 default 처리시 아래의 주석을 해제하고 사용하십시요
-     SKT : SKT , KT : KTF , LGU+ : LGT
-<input type="hidden" name="fix_commid"      value="KTF"/>
--->
-<!-- 사이트코드 -->
-<input type="hidden" name="site_cd"      value="<?= $site_cd ?>" />
-<!-- Ret_URL : 인증결과 리턴 페이지 ( 가맹점 URL 로 설정해 주셔야 합니다. ) -->
-<input type="hidden" name="Ret_URL"      value="<?=G4_BBS_URL?>/kcp/kcpcert_result.php" />
-<!-- cert_otp_use 필수 ( 메뉴얼 참고)
-     Y : 실명 확인 + OTP 점유 확인 , N : 실명 확인 only
--->
-<input type="hidden" name="cert_otp_use" value="Y"/>
-<!-- cert_enc_use 필수 (고정값 : 메뉴얼 참고) -->
-<input type="hidden" name="cert_enc_use" value="Y"/>
-
-<input type="hidden" name="res_cd"       value=""/>
-<input type="hidden" name="res_msg"      value=""/>
-
-<!-- up_hash 검증 을 위한 필드 -->
-<input type="hidden" name="veri_up_hash" value=""/>
-
-<!-- 가맹점 사용 필드 (인증완료시 리턴)-->
-<input type="hidden" name="param_opt_1"  value="opt1"/>
-<input type="hidden" name="param_opt_2"  value="opt2"/>
-<input type="hidden" name="param_opt_3"  value="opt3"/>
-</form>
+<? // 휴대폰인증 form
+include_once(G4_BBS_PATH.'/kcp/kcpcert_form.php');
+?>
 
 <script>
 $(function() {
@@ -263,44 +225,12 @@ $(function() {
     $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
 
     // 휴대폰인증
-    $('.win_person_auth').click(function() {
-        auth_type_check();
+    $('#win_kcpcert').click(function() {
+        var name = document.fregisterform.mb_name.value;
+        auth_type_check(name);
         return false;
     });
 });
-
-// 인증창 호출 함수
-function auth_type_check()
-{
-    var auth_form = document.form_auth;
-    auth_form.user_name.value = encodeURIComponent(document.fregisterform.mb_name.value);
-
-    if( auth_form.ordr_idxx.value == "" )
-    {
-        alert( "주문번호는 필수 입니다." );
-
-        return false;
-    }
-    else
-    {
-        if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) == false ) // 스마트폰이 아닌경우
-        {
-            var return_gubun;
-            var width  = 410;
-            var height = 500;
-
-            var leftpos = screen.width  / 2 - ( width  / 2 );
-            var toppos  = screen.height / 2 - ( height / 2 );
-
-            var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
-            var position = ",left=" + leftpos + ", top="    + toppos;
-            var AUTH_POP = window.open('','auth_popup', winopts + position);
-        }
-
-
-        auth_form.submit();
-    }
-}
 
 // submit 최종 폼체크
 function fregisterform_submit(f)
@@ -369,6 +299,14 @@ function fregisterform_submit(f)
         if (msg) {
             alert(msg);
             f.reg_mb_email.select();
+            return false;
+        }
+    }
+
+    // 휴대폰인증 검사
+    if(f.w.value == "") {
+        if(f.kcpcert_no.value == "" || f.kcpcert_time.value == "") {
+            alert("휴대폰인증을 해주세요.");
             return false;
         }
     }

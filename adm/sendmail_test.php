@@ -1,5 +1,5 @@
 <?
-$sub_menu = "100300";
+$sub_menu = '100300';
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
@@ -14,28 +14,29 @@ include_once('./admin.head.php');
 
 if (isset($_POST['mail'])) {
     $from_name  = '메일검사';
-    $from_email = $config['cf_email_admin'];
+    $admin = get_admin('super', 'mb_email');
+    $from_email = $admin['mb_email'];
 
     $email = explode(',', $mail);
     for ($i=0; $i<count($email); $i++)
         mailer($from_name, $from_email, trim($email[$i]), '[메일검사] 제목', '<span style="font-size:9pt;">[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>'.date("Y-m-d H:i:s").'<p>이 메일 주소로는 회신되지 않습니다.</span>', 1);
 
-    echo "<section class=\"cbox\">";
-    echo "<h2>결과메세지</h2>";
-    echo "<p>";
-    echo "다음 ".count($email)."개의 메일 주소로 테스트 메일 발송이 완료되었습니다.";
-    echo "</p>";
-    echo "<ul>";
+    echo '<section class=\'cbox\'>';
+    echo '<h2>결과메세지</h2>';
+    echo '<p>';
+    echo '다음 '.count($email).'개의 메일 주소로 테스트 메일 발송이 완료되었습니다.';
+    echo '</p>';
+    echo '<ul>';
     for ($i=0;$i<count($email);$i++) {
-        echo "<li>".$email[$i]."</li>";
+        echo '<li>'.$email[$i].'</li>';
     }
-    echo "</ul>";
-    echo "<p>";
-    echo "해당 주소로 테스트 메일이 도착했는지 확인해 주십시오.<br>";
-    echo "만약, 테스트 메일이 오지 않는다면 더 다양한 계정의 메일 주소로 메일을 보내 보십시오.<br>";
-    echo "그래도 메일이 하나도 도착하지 않는다면 메일 서버(sendmail server)의 오류일 가능성이 높으니, 웹 서버관리자에게 문의하여 주십시오.<br>";
-    echo "</p>";
-    echo "</section>";
+    echo '</ul>';
+    echo '<p>';
+    echo '해당 주소로 테스트 메일이 도착했는지 확인해 주십시오.<br>';
+    echo '만약, 테스트 메일이 오지 않는다면 더 다양한 계정의 메일 주소로 메일을 보내 보십시오.<br>';
+    echo '그래도 메일이 하나도 도착하지 않는다면 메일 서버(sendmail server)의 오류일 가능성이 높으니, 웹 서버관리자에게 문의하여 주십시오.<br>';
+    echo '</p>';
+    echo '</section>';
 }
 ?>
 
