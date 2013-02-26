@@ -304,7 +304,7 @@ function fregisterform_submit(f)
 
     // 휴대폰인증 검사
     if(f.w.value == "") {
-        if(f.cert_no.value == "" || f.cert_time.value == "") {
+        if(f.kcpcert_no.value == "" || f.kcpcert_time.value == "") {
             alert("휴대폰인증을 해주세요.");
             return false;
         }
