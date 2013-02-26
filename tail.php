@@ -25,11 +25,5 @@ if ($config['cf_include_tail']) {
 </footer>
 
 <?
-if (is_mobile()) {
-    echo '<a href="'.G4_URL.'/?mobile">모바일 버전으로</a>';
-}
-?>
-
-<?
 include_once(G4_PATH."/tail.sub.php");
 ?>

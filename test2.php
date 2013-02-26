@@ -8,6 +8,8 @@
 #test {float:left;background:#ddd}
 #testb {float:left;background:#eee}
 p {clear:both;margin:10px;border-top:1px solid #ddd}
+
+textarea::selection{background:#98d33c;color:#fff;}
 </style>
 </head>
 <body>
@@ -17,5 +19,10 @@ p {clear:both;margin:10px;border-top:1px solid #ddd}
     <div id="testb">2</div>
 </div>
 <p>111213123232312</p>
+
+
+
+<textarea style="background:#000;color:#fff"></textarea>
+
 </body>
 </html>

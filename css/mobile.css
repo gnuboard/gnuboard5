@@ -47,7 +47,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 /* 중간 레이아웃 */
 #wrapper {margin:30px auto;width:96%}
-#container {background:#fff;width:auto;height:auto;zoom:1}
+#container {padding:20px;border:1px solid #d5d9d7;background:#fff;width:auto;height:auto;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
@@ -61,6 +61,9 @@ sup {display:none !important}
 
 /* 아웃로그인 */
 .ol {display:none}
+
+/* 설문조사 */
+#poll {display:none}
 
 /* 게시판 목록 */
 #bo_list table {margin:0 auto;width:100%}
