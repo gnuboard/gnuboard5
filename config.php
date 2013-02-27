@@ -44,6 +44,7 @@ define('G4_LIB_DIR', 'lib');
 define('G4_SKIN_DIR', 'skin');
 define('G4_GCAPTCHA_DIR', 'gcaptcha');
 define('G4_CKEDITOR_DIR', 'ckeditor');
+define('G4_MOBILE_DIR', 'mobile');
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G4_DOMAIN) {
@@ -70,6 +71,7 @@ define('G4_JS_URL', G4_URL.'/'.G4_JS_DIR);
 define('G4_SKIN_URL', G4_URL.'/'.G4_SKIN_DIR);
 define('G4_GCAPTCHA_URL', G4_BBS_URL.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_URL', G4_BBS_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
+define('G4_MOBILE_URL', G4_URL.'/'.G4_MOBILE_DIR);
 
 // PATH 는 서버상에서의 절대경로
 define('G4_ADMIN_PATH', G4_PATH.'/'.G4_ADMIN_DIR);
@@ -80,6 +82,7 @@ define('G4_LIB_PATH', G4_PATH.'/'.G4_LIB_DIR);
 define('G4_SKIN_PATH', G4_PATH.'/'.G4_SKIN_DIR);
 define('G4_GCAPTCHA_PATH', G4_BBS_PATH.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_PATH', G4_BBS_PATH.'/'.G4_CKEDITOR_DIR);
+define('G4_MOBILE_PATH', G4_PATH.'/'.G4_MOBILE_DIR);
 //==============================================================================
 
 
