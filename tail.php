@@ -1,6 +1,11 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+if (G4_IS_MOBILE) {
+    include_once(G4_MOBILE_PATH.'/tail.php');
+    return;
+}
+
 // 하단 파일 경로 지정 : 이 코드는 가능한 삭제하지 마십시오.
 if ($config['cf_include_tail']) {
     if (!@include_once($config['cf_include_tail'])) {

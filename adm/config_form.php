@@ -10,9 +10,9 @@ if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
 if (!isset($config['cf_include_index'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}` 
-                    ADD `cf_include_index` VARCHAR(255) NOT NULL AFTER `cf_admin`,  
-                    ADD `cf_include_head` VARCHAR(255) NOT NULL AFTER `cf_include_index`, 
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_include_index` VARCHAR(255) NOT NULL AFTER `cf_admin`,
+                    ADD `cf_include_head` VARCHAR(255) NOT NULL AFTER `cf_include_index`,
                     ADD `cf_include_tail` VARCHAR(255) NOT NULL AFTER `cf_include_head`,
                     ADD `cf_add_script` TEXT NOT NULL AFTER `cf_include_tail` ", true);
 }
@@ -23,6 +23,11 @@ if (!isset($config['cf_mobile_new_skin'])) {
                     ADD `cf_mobile_search_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_new_skin`,  
                     ADD `cf_mobile_connect_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_search_skin`,  
                     ADD `cf_mobile_member_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_connect_skin` ", true);
+}
+
+if(!isset($config['cf_adult_check'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_adult_check` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_memo_send_point` ", TRUE);
 }
 
 $g4['title'] = '환경설정';
@@ -412,6 +417,10 @@ $pg_anchor = "
         <td><?=get_member_level_select('cf_register_level', 1, 9, $config['cf_register_level']) ?></td>
         <th scope="row"><label for="cf_register_point">회원가입시 포인트</label></th>
         <td><input type="text" id="cf_register_point" name="cf_register_point" class="frm_input" value="<?=$config['cf_register_point']?>" size="5"> 점</td>
+    </tr>
+    <tr>
+        <th scope='row' id="th310"><label for='cf_adult_check'>성인인증 사용</label></th>
+        <td colspan="3"><input type="checkbox" id="cf_adult_check" name="cf_adult_check" value="1" <?=$config['cf_adult_check']?'checked':'';?>> 사용</td>
     </tr>
     <tr>
         <th scope='row' id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>

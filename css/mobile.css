@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#fff;font-size:0.875em}
+body {margin:0;padding:0;background:#fff;font-size:1em}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -44,7 +44,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 .gnb_1depth a {display:block;padding:10px 0;border-right:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
 
 /* 배포시에는 필요없는 부분 */
-#sirgle_title {height:100px;color:#fff;font-size:3em}
+#sirgle_title {padding:0 10px;height:100px;color:#fff;font-size:2em}
 #sirgle_title_span {display:block;position:relative;top:33px;left:0}
 
 /* 중간 레이아웃 */
@@ -57,6 +57,22 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 /* 하단 레이아웃 */
 #ft img {display:none}
+
+/* 버튼 */
+.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
+.btn01:focus,
+.btn01:hover {text-decoration:none !important}
+.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #333 !important;background:#333 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
+.btn02:focus,
+.btn02:hover {text-decoration:none !important}
+.btn_confirm {text-align:center} /* 서식단계 진행 */
+.btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
+.btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
+.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
+.btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
+.btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
+.btn_win a:focus,
+.btn_win a:hover {text-decoration:none}
 
 /* 광고 레이아웃 */
 .ad200200 {display:none}
@@ -86,34 +102,73 @@ sup {display:none !important}
 */
 
 /* 게시판 목록 */
-#bo_list table {width:100%}
-#bo_list th {padding:12px 0 8px;background:#565e60;color:#fff}
-#bo_list caption {display:none}
+.bo_list table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
+
+.bo_list th {padding:12px 0 8px;background:#565e60;color:#fff}
+.bo_list th a {color:#fff;text-decoration:none}
+
+.bo_list td {border-bottom:1px solid #ddd}
+.bo_list td a {display:block;padding:10px 5px;color:#000;text-decoration:none}
+
+.bo_list img {margin-right:4px}
+.bo_list img:nth-last-of-type(1) {margin-right:0}
+
+/* 관리자일 때 생략 */
+#bo_list_admin th:nth-of-type(1) {display:none}
+#bo_list_admin th:nth-of-type(4) {display:none}
+#bo_list_admin th:nth-of-type(6) {width:20%}
+#bo_list_admin th:nth-of-type(6) {display:none}
+#bo_list_admin th:nth-of-type(7) {display:none}
+#bo_list_admin td:nth-of-type(1) {display:none}
+#bo_list_admin td:nth-of-type(2) {text-align:center}
+#bo_list_admin td:nth-of-type(4) {display:none}
+#bo_list_admin td:nth-of-type(5) {text-align:center}
+#bo_list_admin td:nth-of-type(6) {display:none}
+#bo_list_admin td:nth-of-type(7) {display:none}
+
+/* 관리자가 아닐 때 생략 */
 #bo_list th:nth-of-type(1) {display:none}
-#bo_list td:nth-of-type(1) {display:none}
 #bo_list th:nth-of-type(3) {display:none}
-#bo_list td:nth-of-type(3) {display:none}
 #bo_list th:nth-of-type(4) {width:20%}
-#bo_list td:nth-of-type(4) {text-align:center}
 #bo_list th:nth-of-type(5) {display:none}
-#bo_list td:nth-of-type(5) {display:none}
 #bo_list th:nth-of-type(6) {display:none}
-#bo_list td:nth-of-type(6) {display:none}
-/*
-#bo_list table {margin:0 auto;width:100%}
-#bo_list caption {display:none}
-#bo_list thead {display:none}
-#bo_list tr {border:1px solid #ccc}
-#bo_list tr:nth-of-type(odd) {background:#eee}
-#bo_list td {display:block;position:relative;padding:5px 0 5px 20%}
-#bo_list td::before {position:absolute;top:5px;left:0}
 #bo_list td:nth-of-type(1) {display:none}
-#bo_list td:nth-of-type(1):before {content:"번호"}
-#bo_list td:nth-of-type(2):before {content:"제목"}
 #bo_list td:nth-of-type(3) {display:none}
-#bo_list td:nth-of-type(3):before {content:"글쓴이"}
-#bo_list td:nth-of-type(4):before {content:"날짜"}
-#bo_list td:nth-of-type(5):before {content:"조회"}
-#bo_list a {color:#000;text-decoration:none}
-.bo_cate_link {font-weight:bold}
-*/
+#bo_list td:nth-of-type(4) {text-align:center}
+#bo_list td:nth-of-type(5) {display:none}
+#bo_list td:nth-of-type(6) {display:none}
+
+.bo_fx {margin-bottom:5px;zoom:1}
+.bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
+.bo_fx ul {margin:0;padding:0;list-style:none}
+#bo_list_total {float:left;padding-top:5px}
+.btn_bo_user {float:right;margin:0;padding:0;list-style:none}
+.btn_bo_user li {float:left;margin-left:5px}
+.btn_bo_adm {float:left}
+.btn_bo_adm li {float:left;margin-right:5px}
+.btn_bo_adm input {padding:0 10px;height:25px;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer}
+.bo_notice td {background:#f7f7f2}
+.bo_notice td a {font-weight:bold}
+.td_num strong {color:#000}
+.bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
+.bo_current {color:#e8180c}
+.td_subject img {margin-left:3px}
+.cnt_cmt {font-weight:bold}
+
+#bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}
+#bo_sch legend {width:1px;height:1px;overflow:hidden}
+
+/* pagination */
+.pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
+.pg {display:inline-block;border:1px solid #cfded8;letter-spacing:-4px}
+.pg a:focus,
+.pg a:hover,
+.pg a:active {text-decoration:none}
+.pg_page,
+.pg_current {display:inline-block;padding:0 12px;height:30px;color:#000;letter-spacing:0;line-height:1.9em;vertical-align:middle}
+.pg_page {background:#f9f9f9;text-decoration:none}
+.pg_start,
+.pg_prev {border-right:1px solid #cfded8}
+.pg_end,
+.pg_next {border-left:1px solid #cfded8}
+.pg_current {background:#333;color:#fff;font-weight:bold}

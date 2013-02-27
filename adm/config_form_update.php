@@ -99,10 +99,14 @@ $sql = " update {$g4['config_table']}
                  cf_privacy = '{$_POST['cf_privacy']}',
                  cf_open_modify = '{$_POST['cf_open_modify']}',
                  cf_memo_send_point = '{$_POST['cf_memo_send_point']}',
+<<<<<<< HEAD
                  cf_mobile_new_skin = '{$_POST['cf_mobile_new_skin']}',
                  cf_mobile_search_skin = '{$_POST['cf_mobile_search_skin']}',
                  cf_mobile_connect_skin = '{$_POST['cf_mobile_connect_skin']}',
                  cf_mobile_member_skin = '{$_POST['cf_mobile_member_skin']}',
+=======
+                 cf_adult_check = '{$_POST['cf_adult_check']}',
+>>>>>>> aa1bdc7e789bc4b81151546f1180d34939329093
                  cf_1_subj = '{$_POST['cf_1_subj']}',
                  cf_2_subj = '{$_POST['cf_2_subj']}',
                  cf_3_subj = '{$_POST['cf_3_subj']}',
