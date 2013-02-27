@@ -245,6 +245,7 @@ if (is_checked('chk_use_list_view'))    $fields .= " , bo_use_list_view = '{$bo_
 if (is_checked('chk_use_list_content')) $fields .= " , bo_use_list_content = '{$bo_use_list_content}' ";
 if (is_checked('chk_use_email'))        $fields .= " , bo_use_email = '{$bo_use_email}' ";
 if (is_checked('chk_skin'))             $fields .= " , bo_skin = '{$bo_skin}' ";
+if (is_checked('chk_mobile_skin'))      $fields .= " , bo_mobile_skin = '{$bo_mobile_skin}' ";
 if (is_checked('chk_gallery_cols'))     $fields .= " , bo_gallery_cols = '{$bo_gallery_cols}' ";
 if (is_checked('chk_table_width'))      $fields .= " , bo_table_width = '{$bo_table_width}' ";
 if (is_checked('chk_page_rows'))        $fields .= " , bo_page_rows = '{$bo_page_rows}' ";

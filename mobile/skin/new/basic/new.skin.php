@@ -2,14 +2,6 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-
-
 <!-- 검색 -->
 <fieldset id="new_sch">
     <legend>상세검색</legend>
@@ -35,7 +27,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- 검색 끝 -->
 
 <!-- 제목 시작 -->
-<table class="basic_tbl">
+<table id="new_tbl" class="basic_tbl">
 <thead>
 <tr>
     <th scope="col">그룹</th>

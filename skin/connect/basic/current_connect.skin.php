@@ -3,7 +3,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <table id="current_connect_tbl" class="basic_tbl">
-<caption>현재접속자 목록</caption>
 <thead>
 <tr>
     <th scope="col">번호</th>

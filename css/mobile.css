@@ -8,12 +8,12 @@ h1, h2, h3, h4, h5, h6 {font-size:1em}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
-input {margin:0;padding:0}
+input,button {margin:0;padding:0;-webkit-appearance:none}
 input[type=text],
 input[type=password],
 input[type=submit],
 input[type=image],
-button {border-radius:0 !important;-webkit-appearance:none} /* 모바일에서만 사용 */
+button {border-radius:0 !important} /* 모바일에서만 사용 */
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
@@ -60,6 +60,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 /* 중간 레이아웃 */
 #wrapper {margin:30px 0}
+#wrapper:after {display:block;visibility:hidden;clear:both;content:""}
+#wrapper_title {margin-bottom:20px;padding:0 10px;font-size:1.2em}
 
 #lnb {display:none}
 
@@ -95,6 +97,19 @@ pre {overflow-x:scroll;font-size:1.1em}
 .btn_admin:focus,
 .btn_admin:hover {text-decoration:none !important}
 
+/* 기본테이블 */
+.basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
+.basic_tbl caption {padding:0 0 10px;color:#777;text-align:left}
+.basic_tbl thead th {padding:12px 0 8px;background:#565e60;color:#fff}
+.basic_tbl thead a {color:#fff}
+.basic_tbl thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+.basic_tbl tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
+.basic_tbl tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
+.basic_tbl td {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
+.basic_tbl a {display:block;padding:10px 5px;color:#000;text-decoration:none}
+.bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
+td.empty_table {padding:85px 0;text-align:center}
+
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
 
@@ -104,7 +119,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 .frm_tbl th {padding-left:10px;width:100px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
 .frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
-.frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
+.frm_input,
+select {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
 .frm_input:focus,
 input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important;color:#fff}
 .frm_tbl textarea {width:90%;height:150px}
@@ -156,15 +172,14 @@ sup {display:none !important}
 #scrap_do table {margin:0 0 10px;width:100%}
 #scrap_do textarea {height:100px}
 
-
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:30px 0}
 #mb_confirm h1 {margin:0 0 20px;padding:0 10px;font-size:1.3em}
-#mb_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
+#mb_confirm p {padding:20px 10px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
-#mb_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f7f7f2;text-align:center}
-#mb_confirm label {letter-spacing:-0.1em}
-#mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
+#mb_confirm fieldset {position:relative;margin:0 0 30px;padding:30px 10px;border:1px solid #cfded8;background:#f7f7f2}
+#mb_confirm_pw {display:block;margin-top:10px;padding:0;width:80%;height:25px}
+#mb_confirm .btn_submit {position:absolute;bottom:30px;right:10px;width:18%;height:27px}
 
 #mb_login {margin:30px 0}
 #mb_login h1 {margin:0 0 20px;padding:0 10px;font-size:1.3em}
@@ -195,22 +210,35 @@ sup {display:none !important}
 .lt_title:active ~ ul {display:block;position:absolute;top:100px;left:0}
 .lt a {color:#000;text-decoration:none}
 .lt_more {display:none}
-/*
-.lt {position:relative;margin-bottom:20px;padding-bottom:10px;width:100%;height:150px;border-bottom:1px solid #ddd}
-.lt ul {margin:0 0 10px;padding:0;list-style:none}
-.lt li {padding:3px 0}
-.lt_title {display:block;padding:10px 0 8px}
-.lt_more {position:absolute;top:10px;right:0}
-*/
+
+/* 현재접속자 */
+#current_connect_tbl {}
+#current_connect_tbl th:nth-of-type(1) {width:50px}
+#current_connect_tbl th:nth-of-type(2) {width:120px}
+
+#current_connect_tbl td:nth-of-type(1) {padding:10px 0;text-align:center}
+#current_connect_tbl .sv {display:none}
+
+/* 새글 */
+#new_sch {margin:0 0 5px;padding:5px 10px}
+#new_tbl {}
+#new_tbl th:nth-of-type(1) {display:none}
+#new_tbl th:nth-of-type(4) {display:none}
+#new_tbl th:nth-of-type(5) {width:50px}
+
+#new_tbl td:nth-of-type(1) {display:none}
+#new_tbl td:nth-of-type(4) {display:none}
+#new_tbl td:nth-of-type(5) {text-align:center}
+
+#new_tbl .sv {display:none}
 
 /* 게시판 목록 */
 .bo_list table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 
-.bo_list th {padding:12px 0 8px;background:#565e60;color:#fff}
+.bo_list th {}
 .bo_list th a {color:#fff;text-decoration:none}
 
 .bo_list td {border-bottom:1px solid #ddd}
-.bo_list td a {display:block;padding:10px 5px;color:#000;text-decoration:none}
 
 .bo_list img {margin-right:4px}
 .bo_list img:nth-last-of-type(1) {margin-right:0}
@@ -218,9 +246,10 @@ sup {display:none !important}
 /* 관리자일 때 생략 */
 #bo_list_admin th:nth-of-type(1) {display:none}
 #bo_list_admin th:nth-of-type(4) {display:none}
-#bo_list_admin th:nth-of-type(6) {width:20%}
+#bo_list_admin th:nth-of-type(5) {width:100px}
 #bo_list_admin th:nth-of-type(6) {display:none}
 #bo_list_admin th:nth-of-type(7) {display:none}
+
 #bo_list_admin td:nth-of-type(1) {display:none}
 #bo_list_admin td:nth-of-type(2) {text-align:center}
 #bo_list_admin td:nth-of-type(4) {display:none}
@@ -231,9 +260,10 @@ sup {display:none !important}
 /* 관리자가 아닐 때 생략 */
 #bo_list th:nth-of-type(1) {display:none}
 #bo_list th:nth-of-type(3) {display:none}
-#bo_list th:nth-of-type(4) {width:25%}
+#bo_list th:nth-of-type(4) {width:100px}
 #bo_list th:nth-of-type(5) {display:none}
 #bo_list th:nth-of-type(6) {display:none}
+
 #bo_list td:nth-of-type(1) {display:none}
 #bo_list td:nth-of-type(3) {display:none}
 #bo_list td:nth-of-type(4) {text-align:center}

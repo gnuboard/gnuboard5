@@ -2,15 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-<h1>모바일 버전</h1>
-
 <table id="current_connect_tbl" class="basic_tbl">
-<caption>현재접속자 목록</caption>
 <thead>
 <tr>
     <th scope="col">번호</th>
@@ -28,8 +20,8 @@ for ($i=0; $i<count($list); $i++) {
     else $display_location = $location;
 ?>
     <tr>
-        <td class="td_num"><?=$list[$i]['num']?></td>
-        <td class="td_name"><?=$list[$i]['name']?></td>
+        <td><?=$list[$i]['num']?></td>
+        <td><?=$list[$i]['name']?></td>
         <td><?=$display_location?></td>
     </tr>
 <?
