@@ -10,10 +10,7 @@ include_once(G4_LIB_PATH.'/connect.lib.php');
 include_once(G4_LIB_PATH.'/popular.lib.php');
 ?>
 
-모바일 헤드
-
 <header id="hd">
-    <div id="to_content"><a href="#container">본문 바로가기</a></div>
 
     <h1><?=$config['cf_title']?></h1>
 

@@ -16,8 +16,6 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
 .sound_only {display:none}
-/* 본문 바로가기 */
-#to_content {display:none}
 
 /* 상단 레이아웃 */
 #hd {background:#fff;zoom:1}
