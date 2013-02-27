@@ -58,52 +58,17 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         </fieldset>
 
         <ul id="snb">
-            <li>
-                <a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">
-                    <img src="<?=G4_IMG_URL?>/snb_cnt.jpg" alt="">
-                    현재접속자 <?=connect(); // 현재 접속자수 ?>
-                </a>
-            </li>
-            <li>
-                <a href="<?=G4_BBS_URL?>/new.php" id="snb_new">
-                    <img src="<?=G4_IMG_URL?>/snb_new.jpg" alt="">
-                    새글
-                </a>
-            </li>
+            <li><a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">접속자 <?=connect(); // 현재 접속자수 ?></a></li>
+            <li><a href="<?=G4_BBS_URL?>/new.php" id="snb_new">새글</a></li>
             <? if ($is_member) { ?>
             <? if ($is_admin) { ?>
-            <li>
-                <a href="<?=G4_ADMIN_URL?>" id="snb_adm">
-                    <img src="<?=G4_IMG_URL?>/snb_admin.jpg" alt="">
-                    관리자
-                </a>
-            </li>
+            <li><a href="<?=G4_ADMIN_URL?>" id="snb_adm">관리자</a></li>
             <? } ?>
-            <li>
-                <a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php" id="snb_modify">
-                    <img src="<?=G4_IMG_URL?>/snb_modify.jpg" alt="">
-                    내 정보
-                </a>
-            </li>
-            <li>
-                <a href="<?=G4_BBS_URL?>/logout.php" id="snb_logout">
-                    <img src="<?=G4_IMG_URL?>/snb_logout.jpg" alt="">
-                    로그아웃
-                </a>
-            </li>
+            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php" id="snb_modify">내 정보</a></li>
+            <li><a href="<?=G4_BBS_URL?>/logout.php" id="snb_logout">로그아웃</a></li>
             <? } else { ?>
-            <li>
-                <a href="<?=G4_BBS_URL?>/register.php" id="snb_join">
-                    <img src="<?=G4_IMG_URL?>/snb_join.jpg" alt="">
-                    회원가입
-                </a>
-            </li>
-            <li>
-                <a href="<?=G4_BBS_URL?>/login.php" id="snb_login">
-                    <img src="<?=G4_IMG_URL?>/snb_login.jpg" alt="">
-                    로그인
-                </a>
-            </li>
+            <li><a href="<?=G4_BBS_URL?>/register.php" id="snb_join">회원가입</a></li>
+            <li><a href="<?=G4_BBS_URL?>/login.php" id="snb_login">로그인</a></li>
             <? } ?>
         </ul>
 
