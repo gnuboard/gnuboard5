@@ -53,7 +53,7 @@ if ($_POST['act_button'] == "선택수정") {
     check_token();
 
     // _BOARD_DELETE_ 상수를 선언해야 board_delete.inc.php 가 정상 작동함
-    define("_BOARD_DELETE_", TRUE);
+    define('_BOARD_DELETE_', true);
 
     for ($i=0; $i<count($_POST['chk']); $i++) {
         // 실제 번호를 넘김

@@ -735,3 +735,19 @@ CREATE TABLE IF NOT EXISTS `g4s_uniqid` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `g4s_syndi_log`
+--
+
+DROP TABLE IF EXISTS `g4s_syndi_log`;
+CREATE TABLE IF NOT EXISTS `g4s_syndi_log` (
+  `content_id` int(11) NOT NULL, 
+  `bbs_id` varchar(50) NOT NULL, 
+  `title` text NOT NULL,
+  `link_alternative` varchar(250) NOT NULL, 
+  `delete_date` varchar(14) NOT NULL, 
+  PRIMARY KEY  (`content_id`,`bbs_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
