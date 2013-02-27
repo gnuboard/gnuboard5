@@ -1613,8 +1613,9 @@ function convert_charset($from_charset, $to_charset, $str)
 // mysql_real_escape_string 의 alias 기능을 한다.
 function escape_trim($field)
 {
-    if ($field)
-        return mysql_real_escape_string(trim($field));
+    if ($field) {
+        return mysql_real_escape_string(@trim($field));
+    }
 }
 
 

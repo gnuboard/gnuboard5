@@ -10,7 +10,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="agree" value="<?=$agree?>">
 <input type="hidden" name="agree2" value="<?=$agree2?>">
 <? if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?=$member['mb_sex']?>"><? } ?>
-<? if (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
+<? if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
 <input type="hidden" name="mb_nick_default" value="<?=$member['mb_nick']?>">
 <input type="hidden" name="mb_nick" value="<?=$member['mb_nick']?>">
 <? } ?>
@@ -87,21 +87,17 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </tr>
 <? } ?>
 
-<? if ($config['cf_use_hp']) { ?>
 <tr>
-    <th scope="row"><label for="reg_mb_hp">핸드폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
+    <th scope="row"><label for="reg_mb_hp">핸드폰번호<strong class="sound_only">필수</strong></label></th>
     <td>
         <input type="hidden" name="kcpcert_no" value="">
         <input type="hidden" name="kcpcert_time" value="<?=$member['mb_hp_certify']?>">
         <input type="hidden" name="old_mb_hp" value="<?=$member['mb_hp']?>">
-        <input type="text" id="reg_mb_hp" name="mb_hp" class="frm_input <?=$config['cf_req_hp']?"required":"";?>" maxlength="20" <?=$config['cf_req_hp']?"required":"";?> value="<?=$member['mb_hp']?>">
-        <? if($config['cf_req_hp']) { ?>
+        <input type="text" id="reg_mb_hp" name="mb_hp" class="frm_input required" maxlength="20" required value="<?=$member['mb_hp']?>">
         <button type="button" id="win_kcpcert">휴대폰인증</button>
         <noscript>휴대폰인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
-        <? } ?>
     </td>
 </tr>
-<? } ?>
 
 <? if ($config['cf_use_addr']) {
     $zip_href = G4_BBS_URL.'/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
@@ -306,10 +302,9 @@ function fregisterform_submit(f)
         }
     }
 
-    <? if ($config['cf_use_hp'] && $config['cf_req_hp']) { ?>
     // 휴대폰인증 검사
     if(f.kcpcert_time.value == "") {
-        alert("휴대폰인증을 해주세요.");
+        alert("휴대폰 본인인증을 해주세요.");
         return false;
     }
 
@@ -322,12 +317,11 @@ function fregisterform_submit(f)
         if(old_hp != mb_hp) {
             if(f.kcpcert_no.value == "") {
                 f.kcpcert_time.value = "";
-                alert("휴대폰번호가 변경됐습니다. 휴대폰인증을 해주세요.");
+                alert("휴대폰번호가 변경됐습니다. 휴대폰 본인인증을 해주세요.");
                 return false;
             }
         }
     }
-    <? } ?>
 
     if (typeof f.mb_icon != 'undefined') {
         if (f.mb_icon.value) {

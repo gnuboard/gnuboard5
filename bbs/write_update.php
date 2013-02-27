@@ -459,6 +459,8 @@ if ($w == '' || $w == 'r') {
     }
 }
 
+// syndication ping
+include G4_BBS_PATH.'/syndi/include/include.bbs.write_update.php';
 
 //------------------------------------------------------------------------------
 // 가변 파일 업로드
@@ -610,5 +612,5 @@ delete_cache_latest($bo_table);
 if ($file_upload_msg)
     alert($file_upload_msg, G4_HTTPS_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
 else
-    goto_url(G4_HTTPS_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
+    goto_url(G4_HTTPS_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
 ?>
