@@ -99,6 +99,7 @@ $sql = " update {$g4['config_table']}
                  cf_privacy = '{$_POST['cf_privacy']}',
                  cf_open_modify = '{$_POST['cf_open_modify']}',
                  cf_memo_send_point = '{$_POST['cf_memo_send_point']}',
+                 cf_adult_check = '{$_POST['cf_adult_check']}',
                  cf_1_subj = '{$_POST['cf_1_subj']}',
                  cf_2_subj = '{$_POST['cf_2_subj']}',
                  cf_3_subj = '{$_POST['cf_3_subj']}',

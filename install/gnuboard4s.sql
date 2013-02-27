@@ -260,6 +260,7 @@ CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_privacy` text NOT NULL,
   `cf_open_modify` int(11) NOT NULL default '0',
   `cf_memo_send_point` int(11) NOT NULL default '0',
+  `cf_adult_check` tinyint(4) NOT NULL default '0',
   `cf_1_subj` varchar(255) NOT NULL default '',
   `cf_2_subj` varchar(255) NOT NULL default '',
   `cf_3_subj` varchar(255) NOT NULL default '',
