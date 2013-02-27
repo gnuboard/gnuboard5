@@ -12,9 +12,23 @@ if (!$row['cnt'])
 
 $html_title = '게시판';
 
-if (!isset($board['bo_show_menu'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_order_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", false);
+if (!isset($board['bo_device'])) {
+    // 게시판 사용 필드 추가
+    // both : pc, mobile 둘다 사용
+    // pc : pc 전용 사용
+    // mobile : mobile 전용 사용
+    // none : 사용 안함
+    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", true);
 }
+
+if (!isset($board['bo_show_menu'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_order_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", true);
+}
+
+if (!isset($board['bo_mobile_skin'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", true);
+}
+
 
 if ($w == '') {
 
@@ -42,6 +56,7 @@ if ($w == '') {
     $board['bo_reply_order'] = 1;
     $board['bo_use_search'] = 1;
     $board['bo_skin'] = 'basic';
+    $board['bo_mobile_skin'] = 'basic';
     $board['gr_id'] = $gr_id;
     $board['bo_use_secret'] = 0;
     $board['bo_include_head'] = '_head.php';
@@ -586,12 +601,22 @@ $pg_anchor = "<ul class=\"anchor\">
         <tr>
         <th scope="row"><label for="bo_skin">스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
         <td>
-            <?=get_skin_select("board", "bo_skin", "bo_skin", $board['bo_skin'], 'required');?>
-            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
+            <?=get_skin_select('board', 'bo_skin', 'bo_skin', $board['bo_skin'], 'required');?>
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_skin" name="chk_skin" value="1">
             <label for="chk_skin">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tbody>
+        <tr>
+        <th scope="row"><label for="bo_mobile_skin">모바일<br>스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=get_mobile_skin_select('board', 'bo_mobile_skin', 'bo_mobile_skin', $board['bo_mobile_skin'], 'required');?>
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_mobile_skin" name="chk_mobile_skin" value="1">
+            <label for="chk_mobile_skin">동일그룹 모두 적용</label>
         </td>
     </tr>
     <tr>

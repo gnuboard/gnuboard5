@@ -32,6 +32,7 @@ if ($_POST['act_button'] == "선택수정") {
                         bo_subject          = '{$_POST['bo_subject'][$k]}',
                         bo_device           = '{$_POST['bo_device'][$k]}',
                         bo_skin             = '{$_POST['bo_skin'][$k]}',
+                        bo_mobile_skin      = '{$_POST['bo_mobile_skin'][$k]}',
                         bo_read_point       = '{$_POST['bo_read_point'][$k]}',
                         bo_write_point      = '{$_POST['bo_write_point'][$k]}',
                         bo_comment_point    = '{$_POST['bo_comment_point'][$k]}',

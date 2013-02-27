@@ -21,15 +21,27 @@ function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
     return $str;
 }
 
+// 모바일 스킨디렉토리를 SELECT 형식으로 얻음
+function get_mobile_skin_select($skin_gubun, $id, $name, $selected='', $event='')
+{
+    $skins = get_skin_dir($skin_gubun, G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+    $str = "<select id=\"$id\" name=\"$name\" $event>\n";
+    for ($i=0; $i<count($skins); $i++) {
+        $str .= option_selected($skins[$i], $selected);
+    }
+    $str .= "</select>";
+    return $str;
+}
+
 
 // 스킨경로를 얻는다
-function get_skin_dir($skin)
+function get_skin_dir($skin, $skin_path=G4_SKIN_PATH)
 {
     global $g4;
 
     $result_array = array();
 
-    $dirname = G4_SKIN_PATH.'/'.$skin.'/';
+    $dirname = $skin_path.'/'.$skin.'/';
     $handle = opendir($dirname);
     while ($file = readdir($handle)) {
         if($file == '.'||$file == '..') continue;
