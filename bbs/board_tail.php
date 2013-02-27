@@ -12,7 +12,10 @@ if ($board['bo_image_tail']) {
 }
 
 // 게시판 관리의 하단 파일 경로
-if ($board['bo_include_tail'] && !G4_IS_MOBILE) {
+if (G4_IS_MOBILE) {
+    // 모바일의 경우 설정을 따르지 않는다.
+    include_once('./_tail.php');
+} else if ($board['bo_include_tail']) {
     @include ($board['bo_include_tail']); 
 }
 ?>
