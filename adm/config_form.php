@@ -14,8 +14,15 @@ if (!isset($config['cf_include_index'])) {
                     ADD `cf_include_index` VARCHAR(255) NOT NULL AFTER `cf_admin`,
                     ADD `cf_include_head` VARCHAR(255) NOT NULL AFTER `cf_include_index`,
                     ADD `cf_include_tail` VARCHAR(255) NOT NULL AFTER `cf_include_head`,
-                    ADD `cf_add_script` TEXT NOT NULL AFTER `cf_include_tail`
-            ", TRUE);
+                    ADD `cf_add_script` TEXT NOT NULL AFTER `cf_include_tail` ", true);
+}
+
+if (!isset($config['cf_mobile_new_skin'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}` 
+                    ADD `cf_mobile_new_skin` VARCHAR(255) NOT NULL AFTER `cf_memo_send_point`,  
+                    ADD `cf_mobile_search_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_new_skin`,  
+                    ADD `cf_mobile_connect_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_search_skin`,  
+                    ADD `cf_mobile_member_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_connect_skin` ", true);
 }
 
 if(!isset($config['cf_adult_check'])) {
@@ -154,6 +161,13 @@ $pg_anchor = "
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
+        <td colspan="3">
+            <?=help('목록 한페이지당 라인수')?>
+            <input type="text" id="cf_new_rows" name="cf_new_rows" class="frm_input" value="<?=$config['cf_new_rows']?>" size="2"> 라인
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="cf_new_skin">최근게시물 스킨<strong class="sound_only">필수</strong></label></th>
         <td>
             <select id="cf_new_skin" name="cf_new_skin" class="required" required>
@@ -164,31 +178,46 @@ $pg_anchor = "
             }
             ?>
             </select>
-            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
         </td>
-        <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
+        <th scope="row"><label for="cf_mobile_new_skin">모바일<br>최근게시물 스킨<strong class="sound_only">필수</strong></label></th>
         <td>
-            <?=help('목록 한페이지당 라인수')?>
-            <input type="text" id="cf_new_rows" name="cf_new_rows" class="frm_input" value="<?=$config['cf_new_rows']?>" size="2"> 라인
+            <select id="cf_mobile_new_skin" name="cf_mobile_new_skin" class="required" required>
+            <?
+            $arr = get_skin_dir('new', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            for ($i=0; $i<count($arr); $i++) {
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_new_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+            }
+            ?>
+            </select>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_search_skin">검색 스킨<strong class="sound_only">필수</strong></label></th>
-        <td colspan="3">
+        <td>
             <select id="cf_search_skin" name="cf_search_skin" class="required" required>
             <?
-            $arr = get_skin_dir("search");
+            $arr = get_skin_dir('search');
             for ($i=0; $i<count($arr); $i++) {
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_search_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
             }
             ?>
             </select>
-            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
+        </td>
+        <th scope="row"><label for="cf_mobile_search_skin">모바일<br>검색 스킨<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <select id="cf_mobile_search_skin" name="cf_mobile_search_skin" class="required" required>
+            <?
+            $arr = get_skin_dir('search', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            for ($i=0; $i<count($arr); $i++) {
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_search_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+            }
+            ?>
+            </select>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_connect_skin">접속자 스킨<strong class="sound_only">필수</strong></label></th>
-        <td colspan="3">
+        <td>
             <select id="cf_connect_skin" name="cf_connect_skin" class="required" required>
             <?
             $arr = get_skin_dir('connect');
@@ -197,7 +226,17 @@ $pg_anchor = "
             }
             ?>
             </select>
-            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
+        </td>
+        <th scope="row"><label for="cf_mobile_connect_skin">모바일<br>접속자 스킨<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <select id="cf_mobile_connect_skin" name="cf_mobile_connect_skin" class="required" required>
+            <?
+            $arr = get_skin_dir('connect', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            for ($i=0; $i<count($arr); $i++) {
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_connect_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+            }
+            ?>
+            </select>
         </td>
     </tr>
     <tr>
@@ -315,16 +354,26 @@ $pg_anchor = "
     <tbody>
     <tr>
         <th scope="row"><label for="cf_member_skin">회원 스킨<strong class="sound_only">필수</strong></label></th>
-        <td colspan="3">
+        <td>
             <select id="cf_member_skin" name="cf_member_skin" class="required" required>
             <?
             $arr = get_skin_dir('member');
             for ($i=0; $i<count($arr); $i++) {
-                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_member_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+                echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'.PHP_EOL;
             }
             ?>
             </select>
-            <a href="" class="goto_sirskin" target="_blank">스킨자료실</a>
+        </td>
+        <th scope="row"><label for="cf_mobile_member_skin">모바일<br>회원 스킨<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <select id="cf_mobile_member_skin" name="cf_mobile_member_skin" class="required" required>
+            <?
+            $arr = get_skin_dir('member', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            for ($i=0; $i<count($arr); $i++) {
+                echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'.PHP_EOL;
+            }
+            ?>
+            </select>
         </td>
     </tr>
     <tr>

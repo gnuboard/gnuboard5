@@ -4,15 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-if (!isset($board['bo_device'])) {
-    // 게시판 사용 필드 추가
-    // both : pc, mobile 둘다 사용
-    // pc : pc 전용 사용
-    // mobile : mobile 전용 사용
-    // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
-}
-
 $sql_common = " from {$g4['board_table']} a ";
 $sql_search = " where (1) ";
 
@@ -106,6 +97,7 @@ $colspan = 8;
         <th scope="col"><?=subject_sort_link('a.gr_id')?>그룹</a></th>
         <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
         <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
+        <th scope="col"><?=subject_sort_link('bo_mobile_skin', '', 'desc')?>모바일<br>스킨</a></th>
         <th scope="col"><?=subject_sort_link('bo_subject')?>제목</a></th>
         <th scope="col">읽기P<span class="sound_only">포인트</span></th>
         <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
@@ -141,7 +133,10 @@ $colspan = 8;
             <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
         </td>
         <td>
-            <?=get_skin_select("board", "bo_skin_$i", "bo_skin[$i]", $row['bo_skin']);?>
+            <?=get_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']);?>
+        </td>
+        <td>
+            <?=get_mobile_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']);?>
         </td>
         <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required frm_input" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="10" required="required"></td>
         <td><input type="text" name="bo_read_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_read_point']?>" size="2" title="읽기포인트"></td>
