@@ -12,7 +12,10 @@ if ($board['bo_image_head']) {
 }
 
 // 게시판 관리의 상단 내용
-if ($board['bo_content_head']) {
+if (G4_IS_MOBILE) {
+    // 모바일의 경우 설정을 따르지 않는다.
+    include_once('./_head.php');
+} else if ($board['bo_content_head']) {
     echo stripslashes($board['bo_content_head']); 
 }
 ?>
