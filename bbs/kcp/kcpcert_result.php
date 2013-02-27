@@ -134,6 +134,11 @@ if( $cert_enc_use == "Y" )
         $md5_cert_no = md5($cert_no);
         $hash_data = md5($phone_no.$user_name.$md5_cert_no);
         set_session('ss_kcpcert_hash', $hash_data);
+
+        // 성인인증결과
+        $adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
+        if((int)$birth_day <= (int)$adult_day)
+            set_session('ss_adult_check', 'Y');
     }
     else if( $res_cd != "0000" )
     {
