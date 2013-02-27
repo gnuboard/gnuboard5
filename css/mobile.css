@@ -2,13 +2,13 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#fff;font-size:0.875em;font-family:"dotum"}
+body {margin:0;padding:0;background:#fff;font-size:0.875em}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em;font-family:"dotum"}
+h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
-input {margin:0;padding:0;font-family:"dotum"}
+input {margin:0;padding:0}
 input[type=text], input[type=password], input[type=submit], input[type=image] {border-radius:0} /* 모바일에서만 사용 */
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
