@@ -2,13 +2,13 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#f7f7f2;font-size:0.875em;font-family:"dotum"}
+body {margin:0;padding:0;background:#fff;font-size:0.875em}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em;font-family:"dotum"}
+h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
-input {margin:0;padding:0;font-family:"dotum"}
+input {margin:0;padding:0}
 input[type=text], input[type=password], input[type=submit], input[type=image] {border-radius:0} /* 모바일에서만 사용 */
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
@@ -16,8 +16,6 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
 .sound_only {display:none}
-/* 본문 바로가기 */
-#to_content {display:none}
 
 /* 상단 레이아웃 */
 #hd {background:#fff;zoom:1}
@@ -50,11 +48,11 @@ pre {overflow-x:scroll;font-size:1.1em}
 #sirgle_title_span {display:block;position:relative;top:33px;left:0}
 
 /* 중간 레이아웃 */
-#wrapper {margin:30px auto;width:96%}
+#wrapper {margin:30px 0}
 
 #lnb {display:none}
 
-#container {position:relative;padding:20px;border:1px solid #d5d9d7;background:#fff;width:auto;min-height:300px;zoom:1}
+#container {position:relative;min-height:300px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
@@ -87,7 +85,21 @@ sup {display:none !important}
 .lt_more {position:absolute;top:10px;right:0}
 */
 
-/* 게시판 목록
+/* 게시판 목록 */
+#bo_list table {width:100%}
+#bo_list th {padding:12px 0 8px;background:#565e60;color:#fff}
+#bo_list caption {display:none}
+#bo_list th:nth-of-type(1) {display:none}
+#bo_list td:nth-of-type(1) {display:none}
+#bo_list th:nth-of-type(3) {display:none}
+#bo_list td:nth-of-type(3) {display:none}
+#bo_list th:nth-of-type(4) {width:20%}
+#bo_list td:nth-of-type(4) {text-align:center}
+#bo_list th:nth-of-type(5) {display:none}
+#bo_list td:nth-of-type(5) {display:none}
+#bo_list th:nth-of-type(6) {display:none}
+#bo_list td:nth-of-type(6) {display:none}
+/*
 #bo_list table {margin:0 auto;width:100%}
 #bo_list caption {display:none}
 #bo_list thead {display:none}
