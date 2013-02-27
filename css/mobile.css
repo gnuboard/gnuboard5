@@ -104,6 +104,15 @@ sup {display:none !important}
 /* 게시판 목록 */
 .bo_list table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 
+.bo_list th {padding:12px 0 8px;background:#565e60;color:#fff}
+.bo_list th a {color:#fff;text-decoration:none}
+
+.bo_list td {border-bottom:1px solid #ddd}
+.bo_list td a {display:block;padding:10px 5px;color:#000;text-decoration:none}
+
+.bo_list img {margin-right:4px}
+.bo_list img:nth-last-of-type(1) {margin-right:0}
+
 /* 관리자일 때 생략 */
 #bo_list_admin th:nth-of-type(1) {display:none}
 #bo_list_admin th:nth-of-type(4) {display:none}
@@ -128,15 +137,6 @@ sup {display:none !important}
 #bo_list td:nth-of-type(4) {text-align:center}
 #bo_list td:nth-of-type(5) {display:none}
 #bo_list td:nth-of-type(6) {display:none}
-
-#bo_list th {padding:12px 0 8px;background:#565e60;color:#fff}
-#bo_list th a {color:#fff;text-decoration:none}
-
-#bo_list td {border-bottom:1px solid #ddd}
-#bo_list td a {display:block;padding:10px 5px;color:#000;text-decoration:none}
-
-#bo_list img {margin-right:4px}
-#bo_list img:nth-last-of-type(1) {margin-right:0}
 
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
