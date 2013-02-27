@@ -392,6 +392,7 @@ CREATE TABLE IF NOT EXISTS `g4s_member` (
   `mb_jumin` varchar(255) NOT NULL default '',
   `mb_sex` char(1) NOT NULL default '',
   `mb_birth` varchar(255) NOT NULL default '',
+  `mb_adult` enum('Y','N') NOT NULL default 'N',
   `mb_tel` varchar(255) NOT NULL default '',
   `mb_hp` varchar(255) NOT NULL default '',
   `mb_zip1` char(3) NOT NULL default '',
