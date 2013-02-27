@@ -4,7 +4,7 @@
 html {overflow-y:scroll}
 body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {color:#2a4959;font-size:1em;font-family:"dotum"}
+h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
@@ -95,9 +95,9 @@ a:active {color:#000;text-decoration:underline}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
-#lnb {float:right;width:209px;border:1px solid #d5d9d7;background:#fff}
+#lnb {float:right;width:209px;border:1px solid #cfded8;background:#fff}
 
-#container {position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #d5d9d7;background:#fff;zoom:1}
+#container {position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #cfded8;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */
@@ -147,6 +147,16 @@ a:active {color:#000;text-decoration:underline}
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
 .btn_win a:focus,
 .btn_win a:hover {text-decoration:none}
+/* 게시판용 버튼 */
+.btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
+.btn_b01:focus,
+.btn_b01:hover {text-decoration:none !important}
+.btn_b02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
+.btn_b02:focus,
+.btn_b02:hover {text-decoration:none !important}
+.btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c !important;background:#e8180c !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
+.btn_admin:focus,
+.btn_admin:hover {text-decoration:none !important}
 
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -581,17 +591,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_vc_w #char_cnt {display:block;margin-bottom:5px}
 
 #bo_vc form {padding:0}
-
-/* 게시판용 버튼 */
-.btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn_b01:focus,
-.btn_b01:hover {text-decoration:none !important}
-.btn_b02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn_b02:focus,
-.btn_b02:hover {text-decoration:none !important}
-.btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c !important;background:#e8180c !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
-.btn_admin:focus,
-.btn_admin:hover {text-decoration:none !important}
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
