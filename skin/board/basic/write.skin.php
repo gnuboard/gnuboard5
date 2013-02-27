@@ -104,7 +104,7 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_content">내용<strong class="sound_only">필수</strong></label></th>
-    <td class="wr_content"><?=editor_html("wr_content", $content, $is_dhtml_editor);?></td>
+    <td class="wr_content"><? echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?></td>
 </tr>
 
 <? for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
@@ -191,8 +191,7 @@ function html_auto_br(obj)
 
 function fwrite_submit(f)
 {
-    <? echo get_editor_js('wr_content', $is_dhtml_editor); ?>
-    <? echo chk_editor_js('wr_content', $is_dhtml_editor); ?>
+    <? echo $editor_js; // 에디터 사용시 자바스크립트에서 내용을 폼필드로 넣어주며 내용이 입력되었는지 검사함  ?>
 
     var subject = "";
     var content = "";
@@ -227,7 +226,7 @@ function fwrite_submit(f)
         return false;
     }
 
-    <? if ($is_guest) { echo chk_captcha_js(); } ?>
+    <? echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함 ?>
 
     return true;
 }
