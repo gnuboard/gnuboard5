@@ -88,7 +88,7 @@ class gcaptcha
         set_session('ss_captcha_key', $captcha_key);
 
         // Set the content-type
-        //header('Content-Type: image/png');
+        //header('Content-Type: image/jpeg');
         // Create the image
         $im = imagecreatetruecolor($this->width, $this->height);
 
@@ -172,14 +172,14 @@ function captcha_html($class="captcha")
     $obj = new gcaptcha();
     $obj->run();
 
-    $png_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.png';
+    $jpg_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.jpg';
     $wav_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.wav';
 
     $html .= PHP_EOL.'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>'; 
     $html .= PHP_EOL.'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>'; 
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">스팸방지</legend>';
-    $html .= '<img src="'.$png_file_url.'" alt="스팸방지 숫자">';
+    $html .= '<img src="'.$jpg_file_url.'" alt="스팸방지 숫자">';
     $html .= '<a href="'.$wav_file_url.'" id="captcha_wav" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
     $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box fs_input" size="6" maxlength="6" required title="스팸방지 숫자 입력">';
     $html .= '<p class="sound_only">스팸방지 숫자를 순서대로 입력하세요.</p>';
