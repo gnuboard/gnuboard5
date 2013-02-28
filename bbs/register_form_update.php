@@ -51,8 +51,6 @@ $mb_8           = isset($_POST['mb_8'])         ? escape_trim($_POST['mb_8'])   
 $mb_9           = isset($_POST['mb_9'])         ? escape_trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])        ? escape_trim($_POST['mb_10'])          : "";
 
-// 사용자 코드 실행
-@include_once($member_skin_path.'/register_form_update.head.skin.php');
 
 if ($w == '' || $w == 'u') {
 
@@ -91,6 +89,9 @@ if ($w == '' || $w == 'u') {
     if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
     if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
 }
+
+// 사용자 코드 실행
+@include_once($member_skin_path.'/register_form_update.head.skin.php');
 
 $mb_dir = G4_DATA_PATH.'/member/'.substr($mb_id,0,2);
 
