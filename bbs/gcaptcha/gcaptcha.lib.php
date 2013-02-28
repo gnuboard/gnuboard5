@@ -122,7 +122,7 @@ class gcaptcha
 
         $this->captcha_filename = $this->get_captcha_filename();
 
-        imagepng($im, G4_DATA_PATH.'/cache/gcaptcha-'.$this->captcha_filename.'.png', 0, NULL);
+        imagejpeg($im, G4_DATA_PATH.'/cache/gcaptcha-'.$this->captcha_filename.'.jpg');
         imagedestroy($im);
 
         $this->make_wav($this->captcha_filename.'.wav');        
