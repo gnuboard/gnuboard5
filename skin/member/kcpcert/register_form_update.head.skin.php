@@ -17,7 +17,8 @@ else if($hp_len == 11)
 else
     alert('핸드폰번호가 올바르지 않습니다.', "", true, true);
 
-$sql2 = " select count(*) as cnt from {$g4['member_table']} where mb_hp = '$reg_mb_hp' and mb_id <> '$mb_id' ";
+$sql2 = " select count(*) as cnt from {$g4['member_table']}
+                where mb_hp = '$reg_mb_hp' and mb_id <> '$mb_id' and mb_leave_date = '' ";
 $row2 = sql_fetch($sql2);
 if($row2['cnt'])
     alert('입력하신 핸드폰번호는 다른 회원님이 사용 중입니다.', "", true, true);
