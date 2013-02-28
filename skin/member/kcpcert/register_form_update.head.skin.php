@@ -3,25 +3,17 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // 자신만의 코드를 넣어주세요.
 
-// 핸드폰번호 중복체크
-$reg_hp = preg_replace("/[^0-9]/", "", $mb_hp);
-if(!$reg_hp)
-    alert('핸드폰번호를 입력해 주세요.', "", true, true);
+// 핸드폰번호 체크
+if ($msg = valid_mb_hp($mb_hp))   alert($msg, "", true, true);
+if ($msg = exist_mb_hp($mb_hp, $mb_id))   alert($msg, "", true, true);
 
+$reg_hp = preg_replace("/[^0-9]/", "", $mb_hp);
 $hp_len = strlen($reg_hp);
 
 if($hp_len == 10)
     $reg_mb_hp = preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "\\1-\\2-\\3", $reg_hp);
 else if($hp_len == 11)
     $reg_mb_hp = preg_replace("/([0-9]{3})([0-9]{4})([0-9]{4})/", "\\1-\\2-\\3", $reg_hp);
-else
-    alert('핸드폰번호가 올바르지 않습니다.', "", true, true);
-
-$sql2 = " select count(*) as cnt from {$g4['member_table']}
-                where mb_hp = '$reg_mb_hp' and mb_id <> '$mb_id' and mb_leave_date = '' ";
-$row2 = sql_fetch($sql2);
-if($row2['cnt'])
-    alert('입력하신 핸드폰번호는 다른 회원님이 사용 중입니다.', "", true, true);
 
 /* ======================================================================================================= */
 /* = 휴대폰인증 및 성인인증                                                                              = */

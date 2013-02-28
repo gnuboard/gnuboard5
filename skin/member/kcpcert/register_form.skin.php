@@ -302,6 +302,16 @@ function fregisterform_submit(f)
         }
     }
 
+    // 휴대폰번호 검사
+    if ((f.w.value == "") || (f.w.value == "u" && f.mb_hp.defaultValue != f.mb_hp.value)) {
+        var msg = reg_mb_hp_check();
+        if (msg) {
+            alert(msg);
+            f.reg_mb_hp.select();
+            return false;
+        }
+    }
+
     // 휴대폰인증 검사
     if(f.kcpcert_time.value == "") {
         alert("휴대폰 본인인증을 해주세요.");

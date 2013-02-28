@@ -52,3 +52,22 @@ var reg_mb_email_check = function() {
     });
     return result;
 }
+
+
+var reg_mb_hp_check = function() {
+    var result = "";
+    $.ajax({
+        type: "POST",
+        url: g4_bbs_url+"/ajax.mb_hp.php",
+        data: {
+            "reg_mb_hp": $("#reg_mb_hp").val(),
+            "reg_mb_id": encodeURIComponent($("#reg_mb_id").val())
+        },
+        cache: false,
+        async: false,
+        success: function(data) {
+            result = data;
+        }
+    });
+    return result;
+}
