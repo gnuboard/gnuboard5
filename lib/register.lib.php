@@ -147,9 +147,13 @@ function valid_mb_hp($reg_mb_hp)
 {
     $reg_mb_hp = preg_replace("/[^0-9]/", "", $reg_mb_hp);
     if(!$reg_mb_hp)
-        return "핸드폰번호를 올바르게 입력해 주십시오.";
-    else
-        return "";
+        return "핸드폰번호를 입력해 주십시오.";
+    else {
+        if(preg_match("/^01[0-9]{8,9}$/", $reg_mb_hp))
+            return "";
+        else
+            return "휴대폰번호를 올바르게 입력해 주십시오.";
+    }
 }
 
 function exist_mb_hp($reg_mb_hp, $reg_mb_id)
