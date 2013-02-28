@@ -18,15 +18,15 @@ if (!isset($board['bo_device'])) {
     // pc : pc 전용 사용
     // mobile : mobile 전용 사용
     // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", true);
+    sql_query(" ALTER TABLE  `{$g4['board_table']}` ADD  `bo_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
 }
 
 if (!isset($board['bo_show_menu'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_order_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", true);
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_order_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", false);
 }
 
 if (!isset($board['bo_mobile_skin'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", true);
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", false);
 }
 
 
@@ -498,7 +498,7 @@ $pg_anchor = "<ul class=\"anchor\">
         <th scope="row"><label for="bo_upload_size">파일 업로드 용량<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('최대 '.ini_get("upload_max_filesize").' 이하 업로드 가능, 1 MB = 1,024,768 bytes')?>
-            업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric frm_input" required value="<?=$board['bo_upload_size']?>" size="10"> bytes 이하 
+            업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric frm_input" required value="<?=$board['bo_upload_size']?>" size="10"> bytes 이하
         </td>
         <td class="group_setting">
             <input type="checkbox" id="chk_upload_size" name="chk_upload_size" value="1">
@@ -925,7 +925,7 @@ function set_point(f) {
     }
 }
 
-function fboardform_submit(f) 
+function fboardform_submit(f)
 {
     <?=get_editor_js("bo_content_head");?>
     <?=get_editor_js("bo_content_tail");?>
