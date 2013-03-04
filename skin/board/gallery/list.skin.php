@@ -48,8 +48,16 @@ if ($is_nogood) $colspan++;
     <input type="hidden" name="page" value="<?=$page?>">
     <input type="hidden" name="sw" value="">
 
+    <ul>
+        <?
+        for ($i=0; $i<count($list); $i++) {
+        ?>
+        <li></li>
+        <? } ?>
+    </ul>
+
+
     <table class="basic_tbl">
-    <caption><?=$board['bo_subject']?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">번호</th>
