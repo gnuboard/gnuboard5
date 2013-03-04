@@ -8,6 +8,12 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
     return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create);
 }
 
+// 게시글리스트 썸네일 생성
+function get_list_thumbnail($filename, $filepath, $thumb_width, $thumb_height, $is_create=false)
+{
+    return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create);
+}
+
 // 게시글보기 썸네일 생성
 function get_view_thumbnail($contents)
 {

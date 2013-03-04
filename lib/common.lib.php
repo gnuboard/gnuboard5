@@ -295,6 +295,18 @@ function get_file($bo_table, $wr_id)
 }
 
 
+// 게시글 리스트에 쓰일 1개의 파일 정보를 얻는다.
+function get_list_file($bo_table, $wr_id)
+{
+    global $g4;
+
+    $sql = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
+    $row = sql_fetch($sql);
+
+    return $row;
+}
+
+
 // 폴더의 용량 ($dir는 / 없이 넘기세요)
 function get_dirsize($dir)
 {

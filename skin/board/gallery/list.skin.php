@@ -1,5 +1,6 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
@@ -44,8 +45,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <h2>이미지 목록</h2>
 
     <ul id="bo_img_list">
-        <? for ($i=0; $i<count($list); $i++) { ?>
-        <li class="bo_img_list_li <? // 현재 읽고 있는 글이면, ?>bo_img_now">
+        <? for ($i=0; $i<count($list); $i++) {
+            if($i>0 && ($i % $board['bo_gallery_cols'] == 0))
+                $style = 'style="clear:both;"';
+            else
+                $style = '';
+        ?>
+        <li class="bo_img_list_li <? // 현재 읽고 있는 글이면, ?>bo_img_now" <?=$style?>>
             <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"><? } ?>
             <span class="sound_only">
                 <?
@@ -62,8 +68,20 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                     <?
                     // 파일 설명이 있을 경우 alt까지 출력해주세요.
                     // 이미지 사이즈는 어떻게 정해야 할까요?
+                    $file = get_list_file($bo_table, $list[$i]['wr_id']);
+
+                    $filepath = G4_DATA_PATH.'/file/'.$bo_table;
+                    if(preg_match("/\.({$config['cf_image_extension']})$/i", $file['bf_file']) && is_file($filepath.'/'.$file['bf_file'])) {
+                        $thumb = get_list_thumbnail($file['bf_file'], $filepath, $board['bo_1'], $board['bo_2']);
+                        $imgsrc = G4_DATA_URL.'/file/'.$bo_table.'/'.$thumb;
+                    } else {
+                        $imgsrc = $board_skin_url.'/img/noimg.jpg';
+                    }
+                    $imgalt = $file['bf_content'] ? get_text($file['bf_content']) : $list[$i]['subject'];
                     ?>
-                    <img src="" alt="">
+                    <a href="<?=$list[$i]['href']?>">
+                        <img src="<?=$imgsrc?>" alt="<?=$imgalt?>" width="<?=$board['bo_1']?>" height="<?=$board['bo_2']?>">
+                    </a>
                     <? } ?>
                 </li>
                 <li>
