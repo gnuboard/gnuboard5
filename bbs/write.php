@@ -16,7 +16,6 @@ if (!$bo_table) {
 
 check_device($board['bo_device']);
 
-@include_once (G4_SKIN_PATH.'/board/write.head.skin.php');
 @include_once ($board_skin_path.'/write.head.skin.php');
 
 $notice_array = explode(',', trim($board['bo_notice']));
