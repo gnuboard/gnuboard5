@@ -63,7 +63,7 @@ function imageview(id, w, h)
     <div id="hd_wrap">
         <h1><?=$config['cf_title']?></h1>
 
-        <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.jpg" alt="관리자 메인으로"></a></div>
+        <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.jpg" alt="<?=$config['cf_title']?> 관리자 처음으로"></a></div>
 
         <div id="snb">
             <ul>

@@ -31,7 +31,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 /* 상단 레이아웃 */
 #hd {background:#fff;zoom:1}
 #hd:after {display:block;visibility:hidden;clear:both;content:""}
-#hd h1 {display:none}
+#hd h1 {width:1px;height:1px;overflow:hidden}
 
 #logo {float:left;padding:5px 0;margin-left:10px}
 
