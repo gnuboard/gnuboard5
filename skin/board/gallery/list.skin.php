@@ -72,7 +72,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
                     $filepath = G4_DATA_PATH.'/file/'.$bo_table;
                     if(preg_match("/\.({$config['cf_image_extension']})$/i", $file['bf_file']) && is_file($filepath.'/'.$file['bf_file'])) {
-                        $thumb = get_list_thumbnail($file['bf_file'], $filepath, $board['bo_1'], $board['bo_2']);
+                        $thumb = get_list_thumbnail($file['bf_file'], $filepath, $board['bo_9'], $board['bo_10']);
                         $imgsrc = G4_DATA_URL.'/file/'.$bo_table.'/'.$thumb;
                     } else {
                         $imgsrc = $board_skin_url.'/img/noimg.jpg';
@@ -80,7 +80,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                     $imgalt = $file['bf_content'] ? get_text($file['bf_content']) : $list[$i]['subject'];
                     ?>
                     <a href="<?=$list[$i]['href']?>">
-                        <img src="<?=$imgsrc?>" alt="<?=$imgalt?>" width="<?=$board['bo_1']?>" height="<?=$board['bo_2']?>">
+                        <img src="<?=$imgsrc?>" alt="<?=$imgalt?>" width="<?=$board['bo_9']?>" height="<?=$board['bo_10']?>">
                     </a>
                     <? } ?>
                 </li>
