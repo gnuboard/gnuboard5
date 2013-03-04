@@ -14,10 +14,10 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
-        작성자 <strong><?=$view['name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
-        <span class="sound_only">작성일</span><strong><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></strong>
-        조회<strong><?=number_format($view['wr_hit'])?>회</strong>
-        댓글<strong><?=number_format($view['wr_comment'])?>건</strong>
+        작성자 <strong><?=$view['wr_name']?><? if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong><br>
+        작성일 <strong><?=date("y-m-d H:i", strtotime($view['wr_datetime']))?></strong><br>
+        조회 <strong><?=number_format($view['wr_hit'])?>회</strong><br>
+        댓글 <strong><?=number_format($view['wr_comment'])?>건</strong>
     </section>
 
     <?

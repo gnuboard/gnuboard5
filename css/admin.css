@@ -28,7 +28,7 @@ h2 {font-size:1.2em}
 /* 화면낭독기 사용자용 */
 .sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;border:0 !important;overflow:hidden !important}
 /* 본문 바로가기 */
-#to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
+#to_content a {z-index:100000;position:absolute;top:0;left:0;font-size:0;line-height:0;overflow:hidden}
 #to_content a:focus,
 #to_content a:active {width:100%;height:70px;background:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.1em}
 
@@ -39,7 +39,7 @@ h2 {font-size:1.2em}
 /* 레이아웃 */
 #hd {z-index:10;min-width:1000px;background:url('../adm/img/hd_bg.jpg') #383b3f top left repeat-x}
 #hd h1,
-#hd h2 {margin:0;padding:0;width:1px;height:1px;border:0;overflow:hidden}
+#hd h2 {margin:0;padding:0;font-size:0;line-height:0;border:0;overflow:hidden}
 #hd_wrap {position:relative;margin:0 auto;width:1000px}
 #logo {position:relative;height:70px}
 #logo img {position:absolute;top:15px;left:0}
@@ -148,7 +148,7 @@ textarea {width:90%}
 select {border:1px solid #ced9de}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
 fieldset {margin-bottom:20px}
-legend {margin:0;padding:0;width:1px;height:1px;border:0;overflow:hidden}
+legend {margin:0;padding:0;font-size:0;line-height:0;border:0;overflow:hidden}
 fieldset span {display:block;margin-bottom:10px}
 fieldset p {color:#4c5f67}
 fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}

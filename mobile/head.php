@@ -3,8 +3,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 include_once(G4_PATH.'/head.sub.php');
 include_once(G4_LIB_PATH.'/latest.lib.php');
-include_once(G4_LIB_PATH.'/outlogin.lib.php');
-include_once(G4_LIB_PATH.'/poll.lib.php');
+//include_once(G4_LIB_PATH.'/outlogin.lib.php');
+//include_once(G4_LIB_PATH.'/poll.lib.php');
 include_once(G4_LIB_PATH.'/visit.lib.php');
 include_once(G4_LIB_PATH.'/connect.lib.php');
 include_once(G4_LIB_PATH.'/popular.lib.php');
@@ -17,7 +17,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <div id="hd_wrapper">
 
         <div id="logo">
-            <a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="<?=$config['cf_title']?> 처음으로" width="53" height="37"></a>
+            <a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="53" height="37"></a>
         </div>
 
         <fieldset id="schall">
@@ -106,8 +106,8 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <div id="wrapper">
     <div id="lnb">
-        <?=outlogin('basic'); // 외부 로그인 ?>
-        <?=poll('basic'); // 설문조사 ?>
+        <?//=outlogin('basic'); // 외부 로그인 ?>
+        <?//=poll('basic'); // 설문조사 ?>
     </div>
     <div id="container">
         <? if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>

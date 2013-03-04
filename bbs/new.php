@@ -1,7 +1,7 @@
 <?
 include_once('./_common.php');
 
-$g4['title'] = '최근 게시물';
+$g4['title'] = '새글';
 include_once('./_head.php');
 
 $sql_common = " from {$g4['board_new_table']} a, {$g4['board_table']} b, {$g4['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id and b.bo_use_search = 1 ";

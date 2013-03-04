@@ -51,14 +51,9 @@ if ($is_nogood) $colspan++;
     <table class="basic_tbl">
     <thead>
     <tr>
-        <th scope="col">번호</th>
         <? if ($is_checkbox) { ?><th scope="col"><input type="checkbox" onclick="if (this.checked) all_checked(true); else all_checked(false);" title="현재 페이지 게시물 전체선택"></th><?}?>
         <th scope="col">제목</th>
-        <th scope="col">글쓴이</th>
         <th scope="col"><?=subject_sort_link('wr_datetime', $qstr2, 1)?>날짜</a></th>
-        <th scope="col"><?=subject_sort_link('wr_hit', $qstr2, 1)?>조회</a></th>
-        <? if ($is_good) { ?><th scope="col"><?=subject_sort_link('wr_good', $qstr2, 1)?>추천</a></th><?}?>
-        <? if ($is_nogood) { ?><th scope="col"><?=subject_sort_link('wr_nogood', $qstr2, 1)?>비추천</a></th><?}?>
     </tr>
     </thead>
     <tbody>
@@ -66,16 +61,6 @@ if ($is_nogood) $colspan++;
     for ($i=0; $i<count($list); $i++) {
     ?>
     <tr class="<? if ($list[$i]['is_notice']) echo "bo_notice";?><? if ($board[1]) echo "bo_sideview";?>">
-        <td class="td_num">
-        <?
-        if ($list[$i]['is_notice']) // 공지사항
-            echo '<strong>공지</strong>';
-        else if ($wr_id == $list[$i]['wr_id'])
-            echo "<span class=\"bo_current\">열람중</span>";
-        else
-            echo $list[$i]['num'];
-        ?>
-        </td>
         <? if ($is_checkbox) { ?><td class="td_chk"><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
         <td class="td_subject">
             <?
@@ -88,25 +73,21 @@ if ($is_nogood) $colspan++;
             <a href="<?=$list[$i]['href']?>">
                 <?=$list[$i]['subject']?>
                 <? if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?=$list[$i]['comment_cnt'];?><span class="sound_only">개</span><? } ?>
+                <?
+                // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
+                // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
+
+                if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
+                if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
+                if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
+                if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
+                if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
+
+                ?>
             </a>
 
-            <?
-            // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
-            // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
-
-            if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
-            if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
-            if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
-            if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
-            if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
-
-            ?>
         </td>
-        <td class="td_name"><?=$list[$i]['name']?></td>
         <td class="td_date"><?=$list[$i]['datetime2']?></td>
-        <td class="td_num"><?=$list[$i]['wr_hit']?></td>
-        <? if ($is_good) { ?><td class="td_num"><?=$list[$i]['wr_good']?></td><? } ?>
-        <? if ($is_nogood) { ?><td class="td_num"><?=$list[$i]['wr_nogood']?></td><? } ?>
     </tr>
     <?}?>
     <? if (count($list) == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
