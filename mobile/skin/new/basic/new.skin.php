@@ -30,10 +30,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <table id="new_tbl" class="basic_tbl">
 <thead>
 <tr>
-    <th scope="col">그룹</th>
     <th scope="col">게시판</th>
     <th scope="col">제목</th>
-    <th scope="col">이름</th>
     <th scope="col">일시</th>
 </tr>
 </thead>
@@ -46,10 +44,8 @@ for ($i=0; $i<count($list); $i++)
     $wr_subject = get_text(cut_str($list[$i]['wr_subject'], 80));
 ?>
 <tr>
-    <td class="td_group"><a href="./new.php?gr_id=<?=$list[$i]['gr_id']?>"><?=$gr_subject?></a></td>
     <td class="td_board"><a href="./board.php?bo_table=<?=$list[$i]['bo_table']?>"><?=$bo_subject?></a></td>
     <td><a href="<?=$list[$i]['href']?>"><?=$list[$i]['comment']?><?=$wr_subject?></a></td>
-    <td class="td_name"><div><?=$list[$i]['name']?></div></td>
     <td class="td_date"><?=$list[$i]['datetime2']?></td>
 </tr>
 <? } ?>

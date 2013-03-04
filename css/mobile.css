@@ -19,7 +19,7 @@ hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 
 /* 웹접근성 스킬 --- 기본 block 속성에는 적용 안됨*/
-.sound_only {display:none}
+.sound_only {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
@@ -31,12 +31,12 @@ pre {overflow-x:scroll;font-size:1.1em}
 /* 상단 레이아웃 */
 #hd {background:#fff;zoom:1}
 #hd:after {display:block;visibility:hidden;clear:both;content:""}
-#hd h1 {width:1px;height:1px;overflow:hidden}
+#hd h1 {font-size:0;line-height:0;overflow:hidden}
 
 #logo {float:left;padding:5px 0;margin-left:10px}
 
 #schall {position:absolute;top:12px;right:10px}
-#schall legend {display:none}
+#schall legend {width:0;height:0;overflow:hidden}
 #schall_stx {padding-left:5px;width:100px;height:24px;border:1px solid #aaa;border-right:0;background:#f7f7f2;line-height:1.9em !important;line-height:1.6em}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
@@ -158,7 +158,7 @@ sup {display:none !important}
 
 /* 쪽지 */
 #memo_view section {margin:0 auto 20px;padding:20px;width:87%}
-#memo_view section h2 {width:1px;height:1px;overflow:hidden}
+#memo_view section h2 {font-size:0;line-height:0;overflow:hidden}
 #memo_view_ul {margin:0;padding:0 0 10px;border-bottom:1px solid #eee;list-style:none}
 .memo_view_li {position:relative;padding:5px 0}
 .memo_view_subj {display:inline-block;width:65px}
@@ -222,15 +222,12 @@ sup {display:none !important}
 /* 새글 */
 #new_sch {margin:0 0 5px;padding:5px 10px}
 #new_tbl {}
-#new_tbl th:nth-of-type(1) {display:none}
-#new_tbl th:nth-of-type(4) {display:none}
 #new_tbl th:nth-of-type(5) {width:50px}
 
-#new_tbl td:nth-of-type(1) {display:none}
-#new_tbl td:nth-of-type(4) {display:none}
 #new_tbl td:nth-of-type(5) {text-align:center}
 
-#new_tbl .sv {display:none}
+/* 전체검색결과 스킨 */
+#sch_result_detail {}
 
 /* 게시판 목록 */
 .bo_list table {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -244,31 +241,15 @@ sup {display:none !important}
 .bo_list img:nth-last-of-type(1) {margin-right:0}
 
 /* 관리자일 때 생략 */
-#bo_list_admin th:nth-of-type(1) {display:none}
-#bo_list_admin th:nth-of-type(4) {display:none}
-#bo_list_admin th:nth-of-type(5) {width:100px}
-#bo_list_admin th:nth-of-type(6) {display:none}
-#bo_list_admin th:nth-of-type(7) {display:none}
+#bo_list_admin th:nth-of-type(3) {width:100px}
 
-#bo_list_admin td:nth-of-type(1) {display:none}
-#bo_list_admin td:nth-of-type(2) {text-align:center}
-#bo_list_admin td:nth-of-type(4) {display:none}
-#bo_list_admin td:nth-of-type(5) {text-align:center}
-#bo_list_admin td:nth-of-type(6) {display:none}
-#bo_list_admin td:nth-of-type(7) {display:none}
+#bo_list_admin td:nth-of-type(1) {text-align:center}
+#bo_list_admin td:nth-of-type(3) {text-align:center}
 
 /* 관리자가 아닐 때 생략 */
-#bo_list th:nth-of-type(1) {display:none}
-#bo_list th:nth-of-type(3) {display:none}
-#bo_list th:nth-of-type(4) {width:100px}
-#bo_list th:nth-of-type(5) {display:none}
-#bo_list th:nth-of-type(6) {display:none}
+#bo_list th:nth-of-type(2) {width:100px}
 
-#bo_list td:nth-of-type(1) {display:none}
-#bo_list td:nth-of-type(3) {display:none}
-#bo_list td:nth-of-type(4) {text-align:center}
-#bo_list td:nth-of-type(5) {display:none}
-#bo_list td:nth-of-type(6) {display:none}
+#bo_list td:nth-of-type(2) {text-align:center}
 
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
@@ -288,7 +269,7 @@ sup {display:none !important}
 .cnt_cmt {font-weight:bold}
 
 #bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}
-#bo_sch legend {width:1px;height:1px;overflow:hidden}
+#bo_sch legend {font-size:0;line-height:0;overflow:hidden}
 
 /* 게시판 읽기 */
 #bo_v {margin-bottom:20px;padding-bottom:20px}
@@ -365,7 +346,7 @@ sup {display:none !important}
 #bo_vc .sv_member,
 #bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo {display:inline-block;margin:0 15px 0 5px}
-#bo_vc h1 {width:1px;height:1px;overflow:hidden}
+#bo_vc h1 {font-size:0;line-height:0;overflow:hidden}
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc p a {text-decoration:underline}
