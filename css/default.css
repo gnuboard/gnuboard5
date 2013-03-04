@@ -477,6 +477,17 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_cate a:active {text-decoration:none}
 #bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
 
+.td_subject img {margin-left:3px}
+
+/* 갤러리 목록 */
+#bo_img h2 {margin:0;padding:0;width:1px;height:1px;overflow:hidden}
+#bo_img_list {margin:0;padding:0;list-style:none;zoom:1}
+#bo_img_list:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_img_list li {float:left}
+.bo_img_con {margin:0;padding:0;list-style:none}
+.bo_img_con li {float:none !important}
+
+/* 목록 공통 */
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
@@ -491,7 +502,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 .td_num strong {color:#000}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#e8180c}
-.td_subject img {margin-left:3px}
 .cnt_cmt {font-weight:bold}
 
 #bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}

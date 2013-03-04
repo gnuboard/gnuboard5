@@ -4,25 +4,30 @@
 <meta charset="UTF-8">
 <title>margin 계산</title>
 <style>
-#wrap {background:#bbb}
-#test {float:left;background:#ddd}
-#testb {float:left;background:#eee}
-p {clear:both;margin:10px;border-top:1px solid #ddd}
-
-textarea::selection{background:#98d33c;color:#fff;}
+ul {list-style:none;width:200px}
+li {float:left;width:50px;height:50px}
 </style>
 </head>
 <body>
-<p>112312</p>
-<div id="wrap">
-    <div id="test">1</div>
-    <div id="testb">2</div>
-</div>
-<p>111213123232312</p>
 
-
-
-<textarea style="background:#000;color:#fff"></textarea>
+<ul>
+    <li style="background:#eee">1</li>
+    <li style="background:#ddd">2</li>
+    <li style="background:#eee">3</li>
+    <li style="background:#ddd">4</li>
+    <li style="background:#ddd;clear:both">5</li>
+    <li style="background:#eee">6</li>
+    <li style="background:#ddd">7</li>
+    <li style="background:#eee">8</li>
+    <li style="background:#eee;clear:both">9</li>
+    <li style="background:#ddd">10</li>
+    <li style="background:#eee">11</li>
+    <li style="background:#ddd">12</li>
+    <li style="background:#ddd;clear:both">13</li>
+    <li style="background:#eee">14</li>
+    <li style="background:#ddd">15</li>
+    <li style="background:#eee">16</li>
+</ul>
 
 </body>
 </html>
