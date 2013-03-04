@@ -201,16 +201,6 @@ if ($member['mb_level'] >= $board['bo_html_level'])
 
 $is_secret = $board['bo_use_secret'];
 
-$is_dhtml_editor = false;
-$editor_js = '';
-// 모바일에서는 DHTML 에디터 사용불가
-if (!G4_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
-    $is_dhtml_editor = true;
-    $editor_js .= get_editor_js('wr_content', $is_dhtml_editor);
-    $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
-}
-$editor_html = editor_html('wr_content', $content, $is_dhtml_editor);
-
 $is_mail = false;
 if ($config['cf_email_use'] && $board['bo_use_email'])
     $is_mail = true;
@@ -355,6 +345,16 @@ if ($is_guest) {
     $captcha_html = captcha_html();
     $captcha_js   = chk_captcha_js();
 }
+
+$is_dhtml_editor = false;
+$editor_js = '';
+// 모바일에서는 DHTML 에디터 사용불가
+if (!G4_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
+    $is_dhtml_editor = true;
+    $editor_js .= get_editor_js('wr_content', $is_dhtml_editor);
+    $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
+}
+$editor_html = editor_html('wr_content', $content, $is_dhtml_editor);
 
 include_once(G4_PATH.'/head.sub.php');
 include_once('./board_head.php');
