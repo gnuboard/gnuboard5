@@ -31,7 +31,7 @@ $sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_leave_date <>
 $row = sql_fetch($sql);
 $leave_count = $row['cnt'];
 
-// 차단회원수 
+// 차단회원수
 $sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_intercept_date <> '' {$sql_order} ";
 $row = sql_fetch($sql);
 $intercept_count = $row['cnt'];
@@ -199,9 +199,9 @@ $colspan = 5;
     ?>
 
     <tr>
-        <td class="td_category"><a href="<?=$g4['bbs_path']?>/new.php?gr_id=<?=$row['gr_id']?>"><?=cut_str($row['gr_subject'],10)?></a></td>
-        <td class="td_category"><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>"><?=cut_str($row['bo_subject'],20)?></a></td>
-        <td><a href="<?=$g4['bbs_path']?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2['wr_id']?><?=$comment_link?>"><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
+        <td class="td_category"><a href="<?=G4_BBS_URL?>/new.php?gr_id=<?=$row['gr_id']?>"><?=cut_str($row['gr_subject'],10)?></a></td>
+        <td class="td_category"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row['bo_table']?>"><?=cut_str($row['bo_subject'],20)?></a></td>
+        <td><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2['wr_id']?><?=$comment_link?>"><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
         <td class="td_mbname"><div><?=$name?></div></td>
         <td class="td_time"><?=$datetime?></td>
     </tr>
@@ -273,7 +273,7 @@ $colspan = 7;
         $link1 = $link2 = "";
         if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table'])
         {
-            $link1 = '<a href="'.$g4['bbs_path'].'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
+            $link1 = '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
             $link2 = '</a>';
         }
     ?>
