@@ -92,7 +92,7 @@ function imageview(id, w, h)
             <h2>관리자 주메뉴</h2>
             <script>$('#gnb').addClass('gnb_js');</script>
             <?
-            $gnb_str = "<ul>";
+            $gnb_str = "<ul id=\"gnb_ul\">";
             foreach($amenu as $key=>$value) {
                 $href1 = $href2 = '';
                 if ($menu['menu'.$key][0][2]) {
