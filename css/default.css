@@ -84,6 +84,7 @@ a:active {color:#000;text-decoration:underline}
 .gnb_js .gnb_1depth ul {width:0 !important;height:0 !important;overflow:hidden}
 .gnb_js .gnb_1depth li {float:none}
 .gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:-1px;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
+.gnb_js .gnb_1depth_over2 ul {position:absolute;top:35px;right:-1px;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
 .gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em !important}
 
 /* 배포시에는 필요없는 부분 */
