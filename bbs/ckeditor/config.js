@@ -3,6 +3,26 @@
  * For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
+CKEDITOR.on('dialogDefinition', function(ev) {
+    var dialogName = ev.data.name;
+    var dialogDefinition = ev.data.definition;
+    if (dialogName=='image') {
+        dialogDefinition.removeContents('Link');
+        dialogDefinition.removeContents('advanced');
+    } else if (dialogName=='link') {
+        dialogDefinition.removeContents('advanced');
+    }
+    var infoTab = dialogDefinition.getContents('info');
+    if (infoTab) {
+        infoTab.remove('txtHSpace');
+        infoTab.remove('txtVSpace');
+        infoTab.remove('txtBorder');
+        infoTab.remove('txtWidth');
+        infoTab.remove('txtHeight');
+        infoTab.remove('ratioLock');
+    }
+});
+
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
@@ -10,12 +30,12 @@ CKEDITOR.editorConfig = function( config ) {
 
     config.language = "ko";
     config.toolbar = [
-        ['Styles','Format','Font','FontSize'],
+        ['Format','Font','FontSize'],
         ['Image','Flash','Link','-','Table','-','Smiley'],
         ['Print','Maximize'],
         ['Source'],
         '/',
-        ['Bold','Italic','Underline','Strike','-','TextColor','BGColor','-','Undo','Redo','-','Cut','Copy','Paste','Find','Replace','-','Outdent','Indent'],
+        ['Bold','Italic','Underline','Strike','-','TextColor','BGColor','-','Find','Replace','-','Outdent','Indent'],
         ['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']
         
     ];
