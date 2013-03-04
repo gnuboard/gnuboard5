@@ -30,7 +30,7 @@ if (($w == 'u' || $w == 'r') && !$write['wr_id']) {
 
 if ($w == '') {
     if ($wr_id) {
-        alert('글쓰기에는 \$wr_id 값을 사용하지 않습니다.', $g4['bbs_path'].'/board.php?bo_table='.$bo_table);
+        alert('글쓰기에는 \$wr_id 값을 사용하지 않습니다.', G4_BBS_URL.'/board.php?bo_table='.$bo_table);
     }
 
     if ($member['mb_level'] < $board['bo_write_level']) {
