@@ -350,7 +350,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
 
     $list['comment_cnt'] = '';
     if ($list['wr_comment'])
-        $list['comment_cnt'] = "<span class=\"cnt_cmt\"><span class=\"sound_only\">댓글</span>".$list['wr_comment']."</span>";
+        $list['comment_cnt'] = "<span class=\"cnt_cmt\">".$list['wr_comment']."</span>";
 
     // 당일인 경우 시간으로 표시함
     $list['datetime'] = substr($list['wr_datetime'],0,10);
