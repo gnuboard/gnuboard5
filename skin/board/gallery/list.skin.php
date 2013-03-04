@@ -45,7 +45,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <ul id="bo_img_list">
         <? for ($i=0; $i<count($list); $i++) { ?>
-        <li <? // 현재 읽고 있는 글이면, ?>class="bo_img_now">
+        <li class="bo_img_list_li <? // 현재 읽고 있는 글이면, ?>bo_img_now">
+            <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"><? } ?>
             <span class="sound_only">
                 <?
                 if ($wr_id == $list[$i]['wr_id'])
@@ -54,18 +55,20 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                     echo $list[$i]['num'];
                 ?>
             </span>
-            <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"><? } ?>
             <ul class="bo_img_con">
                 <li>
                     <? if ($list[$i]['is_notice']) { // 공지사항 ?><strong>공지</strong>
                     <? } else { ?>
-                    <? // 파일 설명이 있을 경우 alt까지 출력해주세요. ?>
+                    <?
+                    // 파일 설명이 있을 경우 alt까지 출력해주세요.
+                    // 이미지 사이즈는 어떻게 정해야 할까요?
+                    ?>
                     <img src="" alt="">
                     <? } ?>
                 </li>
                 <li>
                     <?
-                    echo $list[$i]['icon_reply'];
+                    // echo $list[$i]['icon_reply']; 갤러리는 reply 를 사용 안 할 것 같습니다. - 지운아빠 2013-03-04
                     if ($is_category && $list[$i]['ca_name']) {
                     ?>
                     <a href="<?=$list[$i]['ca_name_href']?>" class="bo_cate_link"><?=$list[$i]['ca_name']?></a>
@@ -83,12 +86,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                     if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
                     if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
                     if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
-
                     ?>
                 </li>
-                <li><?=$list[$i]['name']?></li>
-                <li><?=$list[$i]['datetime2']?></li>
-                <li><?=$list[$i]['wr_hit']?></li>
+                <li><span class="sound_only">작성자 </span><?=$list[$i]['name']?></li>
+                <li><span class="sound_only">작성일 </span><?=$list[$i]['datetime2']?></li>
+                <li><span class="sound_only">조회 </span><?=$list[$i]['wr_hit']?></li>
                 <li>
                     <span>추천<strong><?=$list[$i]['wr_good']?></strong></span>
                     <span>비추천<strong><?=$list[$i]['wr_nogood']?></strong></span>
@@ -117,6 +119,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </ul>
     </div>
     <? } ?>
+
     </form>
 </div>
 
