@@ -311,6 +311,17 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .sch_datetime {display:inline-block;margin-right:15px;color:#999}
 .sch_word {font-weight:bold} /* 검색어 강조 */
 
+/* 우편번호 검색 */
+#post_code fieldset {margin:0 auto 10px;padding:1em;text-align:center}
+#post_code dl {margin:0 0 1em;padding:1.5em 1em;background:#fff}
+#post_code dt {margin-bottom:15px;color:#000}
+#post_code dd {margin:0;padding:0}
+#post_code ul {margin:0;padding:0;list-style:none}
+#post_code li a {display:block;padding:0.7em 0;border-bottom:1px solid #eee;color:#000;text-decoration:none}
+#post_code p {margin:0 auto 30px;padding:0 1em}
+#post_code .btn_submit {height:1.9em !important;line-height:1.9em !important}
+.post_code {display:inline-block;width:100px;color:#999}
+
 /* 게시판 목록 */
 #bo_list_title {padding:0 1em}
 .bo_list table {margin-bottom:1.5em;width:100%;border-collapse:collapse;border-spacing:0}
