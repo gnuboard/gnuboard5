@@ -585,9 +585,9 @@ function font_resize(el, mode)
 {
     var x = 0;
     var fs = el.css("font-size");
-    unit = fs.replace(/[0-9\.]/g, "");
-    fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
-    nfsize;
+    var unit = fs.replace(/[0-9\.]/g, "");
+    var fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
+    var nfsize;
 
     if(!fsize)
         return true;
