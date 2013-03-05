@@ -997,29 +997,33 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $str = "<span class=\"sv_wrap\">\n";
     $str .= $tmp_name."\n";
-    $str2 = "<span class=\"sv\">\n";
-    if($mb_id)
-        $str2 .= "<a href=\"".G4_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
-    if($email)
-        $str2 .= "<a href=\"".G4_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
-    if($homepage)
-        $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
-    if($mb_id)
-        $str2 .= "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
-    if($bo_table) {
+
+    if(!G4_IS_MOBILE) {
+        $str2 = "<span class=\"sv\">\n";
         if($mb_id)
-            $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
-        else
-            $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\">이름으로 검색</a>\n";
+            $str2 .= "<a href=\"".G4_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
+        if($email)
+            $str2 .= "<a href=\"".G4_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
+        if($homepage)
+            $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
+        if($mb_id)
+            $str2 .= "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
+        if($bo_table) {
+            if($mb_id)
+                $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
+            else
+                $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\">이름으로 검색</a>\n";
+        }
+        if($mb_id)
+            $str2 .= "<a href=\"".G4_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
+        if($is_admin == "super" && $mb_id) {
+            $str2 .= "<a href=\"".G4_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
+            $str2 .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
+        }
+        $str2 .= "</span>\n";
+        $str .= $str2."\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
     }
-    if($mb_id)
-        $str2 .= "<a href=\"".G4_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
-    if($is_admin == "super" && $mb_id) {
-        $str2 .= "<a href=\"".G4_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
-        $str2 .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
-    }
-    $str2 .= "</span>\n";
-    $str .= $str2."\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
+
     $str .= "</span>";
 
     return $str;
