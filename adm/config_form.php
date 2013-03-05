@@ -215,7 +215,7 @@ $pg_anchor = "
             ?>
             </select>
         </td>
-        <th scope="row"><label for="cf_mobile_search_skin">모바일<br>검색 스킨<strong class="sound_only">필수</strong></label></th>
+        <th scope="row"><label for="cf_mobile_search_skin">모바일 검색 스킨<strong class="sound_only">필수</strong></label></th>
         <td>
             <select id="cf_mobile_search_skin" name="cf_mobile_search_skin" class="required" required>
             <?
@@ -239,7 +239,7 @@ $pg_anchor = "
             ?>
             </select>
         </td>
-        <th scope="row"><label for="cf_mobile_connect_skin">모바일<br>접속자 스킨<strong class="sound_only">필수</strong></label></th>
+        <th scope="row"><label for="cf_mobile_connect_skin">모바일 접속자 스킨<strong class="sound_only">필수</strong></label></th>
         <td>
             <select id="cf_mobile_connect_skin" name="cf_mobile_connect_skin" class="required" required>
             <?
