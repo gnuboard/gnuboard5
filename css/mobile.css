@@ -1,4 +1,4 @@
-/* SIR SOFT 지운아빠 Feb. 2013 */
+/* SIR SOFT 지운아빠 Mar. 2013 */
 
 /* 초기화 */
 html {overflow-y:scroll}
@@ -39,7 +39,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #logo {float:left;padding:0.3em 0;margin-left:1em}
 
 #schall {position:absolute;top:0.7em;right:1em}
-#schall_stx {padding-left:0.3em;width:100px;height:1.5em;border:1px solid #aaa;border-right:0;background:#f7f7f2;line-height:1.5em}
+#schall_stx {padding-left:0.3em;width:100px;height:1.5em;border:1px solid #aaa;border-right:0;background:#f7f7f7;line-height:1.5em}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
 #snb {clear:both;border-top:1px solid #e7f1ed;background:#151515;text-align:center}
@@ -201,6 +201,12 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #reg_result_email strong {color:#e8180c;font-size:1.2em}
 #reg_result .btn_confirm {margin:50px 0}
 
+/* 아이디/패스워드 찾기 */
+#find_info_fs {margin:0 auto 1em;padding:1em;border-bottom:1px solid #eee}
+#find_info_fs #mb_email {width:100%}
+#find_info #captcha {margin:0 0 1em;padding:0 1em 1em}
+#find_info #captcha input {margin-left:0.3em}
+
 /* 로그인 */
 #mb_login {margin:2em 0}
 #mb_login h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
@@ -208,7 +214,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #mb_login fieldset {position:relative;padding:0 0.5em;font-size:1em}
 #mb_login .frm_input {display:block;margin-bottom:0.3em;padding:0;width:80%;height:1.8em;line-height:1.8em}
 #mb_login .btn_submit {position:absolute;top:0em;right:0.5em;padding:0 !important;width:18%;height:4em !important;text-align:center}
-#mb_login section {margin:30px 0;padding:1.5em 1em;border:1px solid #cfded8;background:#f7f7f2}
+#mb_login section {margin:30px 0;padding:1.5em 1em;border:1px solid #cfded8;background:#f7f7f7}
 #mb_login section div {text-align:right}
 
 /* 쪽지 */
@@ -220,20 +226,22 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #memo_view_ul a {}
 #memo_view section p {min-height:150px;height:auto !important;height:150px}
 
-#memo_write #me_recv_mb_id {width:99%}
+#memo_write #me_recv_mb_id {width:98%}
 #memo_write textarea {width:99%;height:100px}
 
 /* 스크랩 */
-#scrap_do .cbg {margin:0 auto 1.5em;padding:1.5em;width:87%}
+#scrap td:nth-of-type(1) {width:150px}
+#scrap td:nth-last-of-type(1) {width:50px;text-align:center}
+
 #scrap_do table {margin:0 0 1em;width:100%}
-#scrap_do textarea {height:100px}
+#scrap_do textarea {width:99%;height:100px}
 
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:30px 0}
 #mb_confirm h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
 #mb_confirm p {padding:1.5em 1em;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
-#mb_confirm fieldset {position:relative;margin:0 0 3em;padding:2em 1em;border-bottom:1px solid #cfded8;background:#f7f7f2}
+#mb_confirm fieldset {position:relative;margin:0 0 3em;padding:2em 1em;border-bottom:1px solid #cfded8;background:#f7f7f7}
 #mb_confirm_pw {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em}
 #mb_confirm .btn_submit {position:absolute;bottom:2em;right:1em;width:18%;height:1.9em !important;line-height:1.9em}
 
@@ -242,14 +250,15 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #pw_confirm h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
 #pw_confirm p {padding:1.5em 1em;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
 #pw_confirm p strong {display:block}
-#pw_confirm fieldset {position:relative;margin:0 0 3em;padding:0.5em 0.5em 1em;border-bottom:1px solid #cfded8;background:#f7f7f2}
+#pw_confirm fieldset {position:relative;margin:0 0 3em;padding:0.5em 0.5em 1em;border-bottom:1px solid #cfded8;background:#f7f7f7}
 #pw_wr_password {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em}
 #pw_confirm .btn_submit {position:absolute;bottom:1em;right:0.5em;width:18%;height:1.9em !important;line-height:1.9em}
 
 /* 설문조사 */
 
 /* 폼메일 */
-#formmail textarea {height:100px}
+#formmail #subject {width:98%}
+#formmail textarea {width:99%;height:100px}
 
 /* 자기소개 */
 #profile table {margin-bottom:0}
@@ -316,7 +325,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:0.3em}
 .btn_bo_adm input {padding:0 1em;height:25px;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer}
-.bo_notice td {background:#f7f7f2}
+.bo_notice td {background:#f7f7f7}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
@@ -341,7 +350,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_v_file {}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
-#bo_v_file li {padding:0 1em;border-bottom:1px solid #eee;background:#f7f7f2}
+#bo_v_file li {padding:0 1em;border-bottom:1px solid #eee;background:#f7f7f7}
 #bo_v_file a {display:inline-block;padding:0.5em 0;color:#000}
 #bo_v_file a:focus,
 #bo_v_file a:hover,
@@ -351,7 +360,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_v_link {}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
-#bo_v_link li {padding:0 1em;border-bottom:1px solid #eee;background:#f7f7f2}
+#bo_v_link li {padding:0 1em;border-bottom:1px solid #eee;background:#f7f7f7}
 #bo_v_link a {display:inline-block;padding:0.5em 0;color:#000}
 #bo_v_link a:focus,
 #bo_v_link a:hover,
@@ -392,7 +401,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_v form {padding-top:1.5em}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 0.5em;padding:1.5em 1.5em 0.5em;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f7f7f2}
+#bo_vc {margin:0 0 0.5em;padding:1.5em 1.5em 0.5em;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f7f7f7}
 #bo_vc h2 {margin-bottom:0.5em}
 #bo_vc article {padding:0 0 0.5em;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:1.3em 0 0.3em}
@@ -417,6 +426,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_vc_w {position:relative;margin-bottom:1em;padding:0 1.5em 1.5em;border-bottom:1px solid #cfded8}
 #bo_vc_w h2 {padding:1em 0 0.3em}
 #bo_vc_w #char_cnt {display:block;margin-bottom:0.3em}
+#bo_vc_w textarea {width:99%}
 
 #bo_vc form {padding:0}
 
