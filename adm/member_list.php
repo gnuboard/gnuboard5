@@ -217,7 +217,7 @@ $colspan = 15;
     </form>
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page=');?>
+<?=get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page=');?>
 
 <script>
 function fmemberlist_submit(f)

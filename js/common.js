@@ -519,6 +519,75 @@ var win_poll = function(href) {
     new_win.focus();
 }
 
+/**
+ * 텍스트 크게
+**/
+function text_increase()
+{
+    var $elements = $("#container *:visible");
+    var fs = tx = unit = "";
+    var fsize;
+    var x = 0;
+    $elements.each(function() {
+        if($(this).hasClass("no_text_resize"))
+            return true;
+
+        fs = $(this).css("font-size");
+        tx = $(this).html();
+        unit = fs.replace(/[0-9]/g, "");
+        fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
+
+        if(!fsize)
+            return true;
+
+        if(tx.search("<") > -1)
+            return true;
+
+        if(unit == "em")
+            x = 1;
+
+        nfsize = (fsize * 1.2);
+        nfsize = nfsize.toFixed(x);
+
+        $(this).css("font-size", nfsize+unit);
+    });
+}
+
+/**
+ * 텍스트 작게
+**/
+function text_decrease()
+{
+    var $elements = $("#container *:visible");
+    var fs = tx = unit = "";
+    var fsize;
+    var x = 0;
+    $elements.each(function() {
+        if($(this).hasClass("no_text_resize"))
+            return true;
+
+        fs = $(this).css("font-size");
+        tx = $(this).html();
+        unit = fs.replace(/[0-9]/g, "");
+        fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
+
+        if(!fsize)
+            return true;
+
+        if(tx.search("<") > -1)
+            return true;
+
+        if(unit == "em")
+            x = 1;
+
+        nfsize = (fsize * 0.8);
+        nfsize = nfsize.toFixed(x);
+
+        $(this).css("font-size", nfsize+unit);
+    });
+}
+
+
 $(function(){
     $('.win_point').click(function() {
         win_point(this.href);
@@ -607,5 +676,16 @@ $(function(){
         if(sv_hide) {
             $('.sv').removeClass('sv_on');
         }
+    });
+
+    // 텍스트 리사이즈
+    $("#text_increase").click(function() {
+        text_increase();
+        return false;
+    });
+
+    $("#text_decrease").click(function() {
+        text_decrease();
+        return false;
     });
 });

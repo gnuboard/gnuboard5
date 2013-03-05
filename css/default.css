@@ -1,4 +1,4 @@
-/* SIR SOFT 지운아빠 Feb. 2013 */
+/* SIR SOFT 지운아빠 Mar. 2013 */
 
 /* 초기화 */
 html {overflow-y:scroll}
@@ -329,7 +329,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #scrap_do table {margin:0 0 10px;width:100%}
 #scrap_do textarea {height:100px}
 
-
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:100px auto;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
@@ -438,7 +437,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #sch_result_bo .sch_on {width:150px;border-color:#cfded8;border-right:0;background:#fff;color:#000;font-weight:bold}
 #sch_result_bo .cnt_cmt {color:#fff}
 #sch_result_bo .sch_on .cnt_cmt {color:#000}
-#sch_result_atc {float:left;margin:0;padding:15px 25px;width:506px;border:1px solid #cfded8;background:#fff}
+#sch_result_atc {float:left;margin:-1px 0 0;padding:15px 25px;width:506px;border:1px solid #cfded8;background:#fff}
 #sch_result_atc dt a {display:inline-block;margin-bottom:15px;color:#000;font-size:1.2em;font-weight:bold;text-decoration:none}
 #sch_result_atc dd {margin:0 0 15px}
 #sch_result_atc dd a {}
@@ -449,7 +448,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #sch_result_atc .cmt_def {display:inline-block;margin:0 10px 0 0}
 .sch_more {padding:10px 0 15px;text-align:right}
 .sch_more a {}
-.sch_sideview {position:relative;padding-top:5px}
 .sch_datetime {display:inline-block;margin-right:15px;color:#999}
 .sch_word {font-weight:bold} /* 검색어 강조 */
 
@@ -580,6 +578,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_vc header {position:relative;padding:15px 0 5px}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
 #bo_vc .sv_wrap {margin-right:15px}
+#bo_vc .member,
+#bo_vc .guest,
 #bo_vc .sv_member,
 #bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo {display:inline-block;margin:0 15px 0 5px}

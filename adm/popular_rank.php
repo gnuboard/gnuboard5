@@ -27,7 +27,7 @@ $sql = " select pp_word, count(*) as cnt {$sql_common} {$sql_search} {$sql_group
 $result = sql_query($sql);
 
 $listall = '';
-if (!empty($_GET['fr_date']) || !empty($_GET['to_date'])) 
+if (!empty($_GET['fr_date']) || !empty($_GET['to_date']))
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
 $g4['title'] = '인기검색어순위';
@@ -95,7 +95,7 @@ $colspan = 3;
 </section>
 
 <?
-echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
+echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 
 <?

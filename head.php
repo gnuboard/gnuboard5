@@ -161,6 +161,6 @@ if ($config['cf_include_head']) {
     <div id="container">
         <? if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
         <div id="text_size">
-            <button>크게</button>
-            <button>작게</button>
+            <button id="text_increase" class="no_text_resize">크게</button>
+            <button id="text_decrease" class="no_text_resize">작게</button>
         </div>

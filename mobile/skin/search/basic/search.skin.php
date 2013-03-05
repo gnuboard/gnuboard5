@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <form name="fsearch" method="get" onsubmit="return fsearch_submit(this);">
 <input type="hidden" name="srows" value="<?=$srows?>">
 <fieldset id="sch_result_detail">
-    <legend class="sound_only">상세검색</legend>
+    <legend>상세검색</legend>
     <?=$group_select?>
     <script>document.getElementById("gr_id").value = "<?=$gr_id?>";</script>
 
@@ -17,8 +17,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <option value="wr_name"<?=get_selected($_GET['sfl'], "wr_name")?>>이름</option>
     </select>
 
-    <input type="text" name="stx" class="fs_input" class="required" value="<?=$text_stx?>" maxlength="20" required title="검색어(필수)">
-    <input type="submit" class="fs_submit" value="검색">
+    <input type="text" name="stx" class="required" value="<?=$text_stx?>" maxlength="20" required title="검색어(필수)">
+    <input type="submit" value="검색">
 
     <script>
     function fsearch_submit(f)
@@ -63,9 +63,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <dt><strong><?=$stx?></strong>에 대한 검색 결과입니다.</dt>
         <dd>
             <ul>
-                <li><span style="color:<?=$config['cf_search_color']?>"><?=$board_count?></span>개의 게시판</li>
-                <li><span style="color:<?=$config['cf_search_color']?>"><?=number_format($total_count)?></span>개의 게시물</li>
-                <li>현재 <?=number_format($page)?>/<?=number_format($total_page)?> 페이지 열람 중</li>
+                <li>게시판 <span style="color:<?=$config['cf_search_color']?>"><?=$board_count?></span>개</li>
+                <li>게시물 <span style="color:<?=$config['cf_search_color']?>"><?=number_format($total_count)?></span>개</li>
+                <li><?=number_format($page)?>/<?=number_format($total_page)?> 페이지</li>
             </ul>
         </dd>
     </dl>
@@ -115,7 +115,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                     <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" class="sch_result_title"><?=$comment_def?><?=$list[$idx][$i][subject]?></a>
                     <a href="<?=$list[$idx][$i][href]?><?=$comment_href?>" target="_blank">새창</a>
                     <p><?=$list[$idx][$i][content]?></p>
-                    <div class="sch_sideview"><?=$list[$idx][$i][name]?></div>
+                    <?=$list[$idx][$i][name]?>
                     <span class="sch_datetime"><?=$list[$idx][$i][wr_datetime]?></span>
                 </li>
             <? } ?>

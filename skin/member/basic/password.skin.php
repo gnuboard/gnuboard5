@@ -43,7 +43,3 @@ else $g4['title'] = $g4['title'];
     </div>
 
 </div>
-
-<script>
-document.fboardpassword.wr_password.focus();
-</script>
