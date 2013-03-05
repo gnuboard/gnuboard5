@@ -29,9 +29,9 @@ if ($stx) {
         $sql .= " and bo_table = '{$onetable}' ";
     $sql .= " order by bo_order, gr_id, bo_table ";
     $result = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($result); $i++) 
+    for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        if ($is_admin != 'super') 
+        if ($is_admin != 'super')
         {
             // 그룹접근 사용에 대한 검색 차단
             $sql2 = " select gr_use_access, gr_admin from {$g4['group_table']} where gr_id = '{$row['gr_id']}' ";
@@ -44,7 +44,7 @@ if ($stx) {
                 } else {
                     $sql3 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$row['gr_id']}' and mb_id = '{$member['mb_id']}' and mb_id <> '' ";
                     $row3 = sql_fetch($sql3);
-                    if (!$row3['cnt']) 
+                    if (!$row3['cnt'])
                         continue;
                 }
             }
@@ -73,7 +73,7 @@ if ($stx) {
         $search_str = $s[$i];
         $str .= $op1;
         $str .= "(";
-        
+
         $op2 = '';
         // 필드의 수만큼 다중 필드 검색 가능 (필드1+필드2...)
         for ($k=0; $k<count($field); $k++) {
@@ -169,8 +169,8 @@ if ($stx) {
             $list[$idx][$i] = $row;
             $list[$idx][$i][href] = './board.php?bo_table='.$search_table[$idx].'&amp;wr_id='.$row['wr_parent'];
 
-            if ($row['wr_is_comment']) 
-            { 
+            if ($row['wr_is_comment'])
+            {
                 $link .= '#c'.$row['wr_id'];
                 $sql2 = " select wr_subject, wr_option from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ";
                 $row2 = sql_fetch($sql2);
@@ -179,17 +179,17 @@ if ($stx) {
             }
 
             // 비밀글은 검색 불가
-            if (strstr($row['wr_option'].$row2['wr_option'], 'secret')) 
+            if (strstr($row['wr_option'].$row2['wr_option'], 'secret'))
                 $row['wr_content'] = '[비밀글 입니다.]';
 
             $subject = get_text($row['wr_subject']);
-            if (strstr($sfl, 'wr_subject')) 
+            if (strstr($sfl, 'wr_subject'))
                 $subject = search_font($stx, $subject);
 
             if ($read_level[$idx] <= $member['mb_level'])
             {
                 $content = cut_str(get_text(strip_tags($row['wr_content'])),300,"…");
-                if (strstr($sfl, 'wr_content')) 
+                if (strstr($sfl, 'wr_content'))
                     $content = search_font($stx, $content);
             }
             else
@@ -198,20 +198,20 @@ if ($stx) {
             $list[$idx][$i]['subject'] = $subject;
             $list[$idx][$i]['content'] = $content;
             $list[$idx][$i]['name'] = get_sideview($row['mb_id'], cut_str($row['wr_name'], $config['cf_cut_name']), $row['wr_email'], $row['wr_homepage']);
-            
+
             $k++;
-            if ($k >= $rows) 
-                break; 
+            if ($k >= $rows)
+                break;
         }
         sql_free_result($result);
-        
-        if ($k >= $rows) 
-            break; 
+
+        if ($k >= $rows)
+            break;
 
         $from_record = 0;
     }
 
-    $write_pages = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;srows='.$srows.'&amp;onetable='.$onetable.'&amp;page=');
+    $write_pages = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;srows='.$srows.'&amp;onetable='.$onetable.'&amp;page=');
 }
 
 $group_select = '<select id="gr_id" name="gr_id" class="select" title="그룹선택"><option value="">전체 분류';
