@@ -173,7 +173,7 @@ function point_clear()
     </form>
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?=get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
 <section id="point_mng" class="cbox">
     <h2>개별회원 포인트 증감 설정</h2>
