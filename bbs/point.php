@@ -104,16 +104,8 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     <?=get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');?>
 
-    <div class="btn_win"><a>창닫기</a></div>
+    <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>
-
-<script>
-$(function() {
-    $(".btn_win a").click(function() {
-        window.close();
-    });
-});
-</script>
 
 <?
 include_once(G4_PATH.'/tail.sub.php');
