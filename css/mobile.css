@@ -38,7 +38,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #logo {float:left;padding:5px 0;margin-left:10px}
 
 #schall {position:absolute;top:12px;right:10px}
-#schall_stx {padding-left:5px;width:100px;height:24px;border:1px solid #aaa;border-right:0;background:#f7f7f2;line-height:1.9em !important;line-height:1.6em}
+#schall_stx {padding-left:5px;width:100px;height:1.5em;border:1px solid #aaa;border-right:0;background:#f7f7f2;line-height:1.5em}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
 #snb {clear:both;border-top:1px solid #e7f1ed;background:#151515;text-align:center}
