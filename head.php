@@ -155,7 +155,7 @@ if ($config['cf_include_head']) {
 
 <div id="wrapper">
     <div id="lnb">
-        <?=outlogin('basic'); // 외부 로그인 ?>
+        <?=(G4_IS_MOBILE?outlogin('basic'):outlogin('basic')); // 외부 로그인 ?>
         <?=poll('basic'); // 설문조사 ?>
     </div>
     <div id="container">
