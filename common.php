@@ -160,9 +160,9 @@ if (G4_HTTPS_DOMAIN) {
 // G4_MOBILE_AGENT : config.php 에서 선언
 //------------------------------------------------------------------------------
 $is_mobile = false;
-if (isset($_REQUEST['pc']))
+if ($_REQUEST['device']=='pc')
     $is_mobile = false;
-else if (isset($_REQUEST['mobile']))
+else if ($_REQUEST['device']=='mobile')
     $is_mobile = true;
 else if (isset($_SESSION['ss_is_mobile'])) 
     $is_mobile = $_SESSION['ss_is_mobile'];
