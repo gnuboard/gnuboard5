@@ -156,22 +156,28 @@ $pg_anchor = "
     </tr>
     <tr>
         <th scope="row"><label for="cf_login_minutes">현재 접속자</label></th>
-        <td>
+        <td colspan="3">
             <?=help('설정값 이내의 접속자를 현재 접속자로 인정')?>
             <input type="text" id="cf_login_minutes" name="cf_login_minutes" class="frm_input" value="<?=$config['cf_login_minutes']?>" size="2"> 분
         </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="cf_page_rows">한페이지당 라인수</label></th>
         <td>
             <?=help('목록(리스트) 한페이지당 라인수')?>
             <input type="text" id="cf_page_rows" name="cf_page_rows" class="frm_input" value="<?=$config['cf_page_rows']?>" size="2"> 라인
         </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
         <td colspan="3">
             <?=help('목록 한페이지당 라인수')?>
             <input type="text" id="cf_new_rows" name="cf_new_rows" class="frm_input" value="<?=$config['cf_new_rows']?>" size="2"> 라인
         </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_write_pages">페이지 표시 수<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" id="cf_write_pages" name="cf_write_pages" class="required numeric frm_input" required value="<?=$config['cf_write_pages']?>" size="3"> 페이지씩 표시</td>
+        <th scope="row"><label for="cf_mobile_pages">모바일 페이지 표시 수<strong class="sound_only">필수</strong></label></th>
+        <td colspan="3"><input type="text" id="cf_mobile_pages" name="cf_mobile_pages" class="required numeric frm_input" required value="<?=$config['cf_mobile_pages']?>" size="3"> 페이지씩 표시</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_new_skin">최근게시물 스킨<strong class="sound_only">필수</strong></label></th>
@@ -282,6 +288,20 @@ $pg_anchor = "
     </colgroup>
     <tbody>
     <tr>
+        <th scope="row"><label for="cf_delay_sec">글쓰기 간격<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" class="required numeric frm_input" required value="<?=$config['cf_delay_sec']?>" size="3"> 초 지난후 가능</td>
+        <th scope="row"><label for="cf_link_target">새창 링크</label></th>
+        <td>
+            <?=help('글내용중 자동 링크되는 타켓을 지정합니다.')?>
+            <select id="cf_link_target" name="cf_link_target">
+                <option value="_blank"<?=get_selected($config['cf_link_target'], '_blank')?>>_blank</option>
+                <option value="_self"<?=get_selected($config['cf_link_target'], '_self')?>>_self</option>
+                <option value="_top"<?=get_selected($config['cf_link_target'], '_top')?>>_top</option>
+                <option value="_new"<?=get_selected($config['cf_link_target'], '_new')?>>_new</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="cf_read_point">글읽기 포인트<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" id="cf_read_point" name="cf_read_point" class="required frm_input" required value="<?=$config['cf_read_point']?>" size="3"> 점</td>
         <th scope="row"><label for="cf_write_point">글쓰기 포인트</label></th>
@@ -294,28 +314,8 @@ $pg_anchor = "
         <td><input type="text" id="cf_download_point" name="cf_download_point" class="required frm_input" required value="<?=$config['cf_download_point']?>" size="3"> 점</td>
     </tr>
     <tr>
-        <th scope="row"><label for="cf_link_target">새창 링크</label></th>
-        <td>
-            <?=help('글내용중 자동 링크되는 타켓을 지정합니다.')?>
-            <select id="cf_link_target" name="cf_link_target">
-                <option value="_blank"<?=get_selected($config['cf_link_target'], '_blank')?>>_blank</option>
-                <option value="_self"<?=get_selected($config['cf_link_target'], '_self')?>>_self</option>
-                <option value="_top"<?=get_selected($config['cf_link_target'], '_top')?>>_top</option>
-                <option value="_new"<?=get_selected($config['cf_link_target'], '_new')?>>_new</option>
-            </select>
-        </td>
         <th scope="row"><label for="cf_search_part">검색 단위</label></th>
-        <td><input type="text" id="cf_search_part" name="cf_search_part" class="frm_input" value="<?=$config['cf_search_part']?>" size="4"> 건 단위로 검색</td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_delay_sec">글쓰기 간격<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" class="required numeric frm_input" required value="<?=$config['cf_delay_sec']?>" size="3"> 초 지난후 가능</td>
-        <th scope="row"><label for="cf_write_pages">페이지 표시 수<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="cf_write_pages" name="cf_write_pages" class="required numeric frm_input" required value="<?=$config['cf_write_pages']?>" size="3"> 페이지씩 표시</td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_mobile_pages">모바일 페이지 표시 수<strong class="sound_only">필수</strong></label></th>
-        <td colspan="3"><input type="text" id="cf_mobile_pages" name="cf_mobile_pages" class="required numeric frm_input" required value="<?=$config['cf_mobile_pages']?>" size="3"> 페이지씩 표시</td>
+        <td colspan="3"><input type="text" id="cf_search_part" name="cf_search_part" class="frm_input" value="<?=$config['cf_search_part']?>" size="4"> 건 단위로 검색</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_image_extension">이미지 업로드 확장자</label></th>
