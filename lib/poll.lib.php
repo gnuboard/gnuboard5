@@ -14,7 +14,11 @@ function poll($skin_dir='basic', $po_id=false)
     }
 
     ob_start();
-    $poll_skin_path = G4_SKIN_PATH.'/poll/'.$skin_dir;
+    if (G4_IS_MOBILE) {
+        $poll_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/poll/'.$skin_dir;
+    } else {
+        $poll_skin_path = G4_SKIN_PATH.'/poll/'.$skin_dir;
+    }
     include_once ($poll_skin_path.'/poll.skin.php');
     $content = ob_get_contents();
     ob_end_clean();
