@@ -52,9 +52,9 @@ h2 {font-size:1.2em}
 #snb a {display:inline-block;padding:5px 0;color:#e0e0e0;font-size:0.9em;text-decoration:none}
 
 /* gnb js off */
-#gnb {margin-top:-1px}
+#gnb {}
 #gnb ul {z-index:10}
-.gnb_1depth {position:relative;margin-top:-1px;margin-left:-1px;background:#383a3f;zoom:1}
+.gnb_1depth {position:relative;margin-left:-1px;background:#383a3f;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth a {display:block;float:left;width:90px;height:35px;color:#e0e0e0;font-weight:bold;line-height:2.95em !important;line-height:2.65em}
 .gnb_1depth_air a,
