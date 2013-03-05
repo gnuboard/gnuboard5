@@ -525,31 +525,26 @@ var win_poll = function(href) {
 function text_increase()
 {
     var $elements = $("#container *:visible");
-    var fs = tx = unit = "";
-    var fsize;
-    var x = 0;
+    var mode = "increase";
+
     $elements.each(function() {
         if($(this).hasClass("no_text_resize"))
             return true;
 
-        fs = $(this).css("font-size");
-        tx = $(this).html();
-        unit = fs.replace(/[0-9]/g, "");
-        fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
-
-        if(!fsize)
+        if($(this).children().length != 0) {
             return true;
+        } else {
+            var $parent = $(this).parent();
+            var text = $parent.contents().filter(function() {
+                return this.nodeType == 3;
+            }).text().replace(/\s*/, "");
 
-        if(tx.search("<") > -1)
-            return true;
-
-        if(unit == "em")
-            x = 1;
-
-        nfsize = (fsize * 1.2);
-        nfsize = nfsize.toFixed(x);
-
-        $(this).css("font-size", nfsize+unit);
+            if(text.length) {
+                font_resize($parent, mode);
+            } else {
+                font_resize($(this), mode);
+            }
+        }
     });
 }
 
@@ -559,32 +554,55 @@ function text_increase()
 function text_decrease()
 {
     var $elements = $("#container *:visible");
-    var fs = tx = unit = "";
-    var fsize;
-    var x = 0;
+    var mode = "decrease";
+
     $elements.each(function() {
         if($(this).hasClass("no_text_resize"))
             return true;
 
-        fs = $(this).css("font-size");
-        tx = $(this).html();
-        unit = fs.replace(/[0-9]/g, "");
-        fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
-
-        if(!fsize)
+        if($(this).children().length != 0) {
             return true;
+        } else {
+            var $parent = $(this).parent();
+            var text = $parent.contents().filter(function() {
+                return this.nodeType == 3;
+            }).text().replace(/\s*/, "");
 
-        if(tx.search("<") > -1)
-            return true;
-
-        if(unit == "em")
-            x = 1;
-
-        nfsize = (fsize * 0.8);
-        nfsize = nfsize.toFixed(x);
-
-        $(this).css("font-size", nfsize+unit);
+            if(text.length) {
+                font_resize($parent, mode);
+            } else {
+                font_resize($(this), mode);
+            }
+        }
     });
+}
+
+
+/**
+ * 텍스트 resize
+**/
+function font_resize(el, mode)
+{
+    var x = 0;
+    var fs = el.css("font-size");
+    unit = fs.replace(/[0-9\.]/g, "");
+    fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
+
+    if(!fsize)
+        return true;
+
+    if(unit == "em")
+        x = 1;
+
+    if(mode == "increase") {
+        nfsize = (fsize * 1.2);
+    } else {
+        nfsize = (fsize / 1.2);
+    }
+
+    nfsize = nfsize.toFixed(x);
+
+    el.css("font-size", nfsize+unit);
 }
 
 
