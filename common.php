@@ -95,7 +95,7 @@ unset($g4_path);
 //==============================================================================
 // 공통
 //------------------------------------------------------------------------------
-$dbconfig_file = G4_DATA_PATH.'/dbconfig.php';
+$dbconfig_file = G4_DATA_PATH.'/'.G4_DBCONFIG_FILE;
 if (file_exists($dbconfig_file)) {
     include_once($dbconfig_file);
     include_once(G4_LIB_PATH.'/common.lib.php');    // 공통 라이브러리
