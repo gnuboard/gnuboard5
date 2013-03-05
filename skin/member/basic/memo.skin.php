@@ -26,7 +26,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <tbody>
     <? for ($i=0; $i<count($list); $i++) { ?>
     <tr>
-        <td><div><?=$list[$i]['name']?></div></td>
+        <td><?=$list[$i]['name']?></td>
         <td class="td_datetime"><a href="<?=$list[$i]['view_href']?>"><?=$list[$i]['send_datetime']?></font></td>
         <td class="td_datetime"><a href="<?=$list[$i]['view_href']?>"><?=$list[$i]['read_datetime']?></font></td>
         <td class="td_mng"><a href="<?=$list[$i]['del_href']?>" onclick="del(this.href); return false;">삭제</a></td>
