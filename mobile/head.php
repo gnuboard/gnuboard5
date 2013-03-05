@@ -106,8 +106,8 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <div id="wrapper">
     <div id="lnb">
-        <?=outlogin('basic'); // 외부 로그인 ?>
-        <?=poll('basic'); // 설문조사 ?>
+        <?//=outlogin('basic'); // 외부 로그인 ?>
+        <?//=poll('basic'); // 설문조사 ?>
     </div>
     <div id="container">
         <? if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
