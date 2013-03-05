@@ -44,6 +44,7 @@ $sql = " update {$g4['config_table']}
                  cf_search_bgcolor = '{$_POST['cf_search_bgcolor']}',
                  cf_search_color = '{$_POST['cf_search_color']}',
                  cf_write_pages = '{$_POST['cf_write_pages']}',
+                 cf_mobile_pages = '{$_POST['cf_mobile_pages']}',
                  cf_link_target = '{$_POST['cf_link_target']}',
                  cf_delay_sec = '{$_POST['cf_delay_sec']}',
                  cf_filter = '{$_POST['cf_filter']}',

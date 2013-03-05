@@ -206,6 +206,7 @@ CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_search_bgcolor` varchar(255) NOT NULL default '',
   `cf_search_color` varchar(255) NOT NULL default '',
   `cf_write_pages` int(11) NOT NULL default '0',
+  `cf_mobile_pages` int(11) NOT NULL default '0',
   `cf_link_target` varchar(255) NOT NULL default '',
   `cf_delay_sec` int(11) NOT NULL default '0',
   `cf_filter` text NOT NULL,

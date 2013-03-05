@@ -18,7 +18,7 @@ if ($board['bo_use_category']) {
         $category = trim($categories[$i]);
         if ($category=='') continue;
         $category_option .= '<li><a href="'.($category_href."&amp;sca=".urlencode($category)).'"';
-        if ($category==$sca) 
+        if ($category==$sca)
             $category_option .= ' id="bo_cate_on"';
         $category_option .= '>'.$category.'</a></li>';
     }
@@ -137,7 +137,7 @@ while ($row = sql_fetch_array($result))
     $k++;
 }
 
-$write_pages = get_paging($config['cf_write_pages'], $page, $total_page, './board.php?bo_table='.$bo_table.$qstr.'&amp;page=');
+$write_pages = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './board.php?bo_table='.$bo_table.$qstr.'&amp;page=');
 
 $list_href = '';
 $prev_part_href = '';
@@ -149,13 +149,13 @@ if ($sca || $stx) {
     $prev_spt = $spt - $config['cf_search_part'];
     if (isset($min_spt) && $prev_spt >= $min_spt) {
         $prev_part_href = './board.php?bo_table='.$bo_table.$qstr.'&amp;spt='.$prev_spt.'&amp;page=1';
-        $write_pages = page_insertbefore($write_pages, '<a href="'.$prev_part_href.'" class="pg_page pg_prev">이전검색</a>'); 
+        $write_pages = page_insertbefore($write_pages, '<a href="'.$prev_part_href.'" class="pg_page pg_prev">이전검색</a>');
     }
 
     $next_spt = $spt + $config['cf_search_part'];
     if ($next_spt < 0) {
         $next_part_href = './board.php?bo_table='.$bo_table.$qstr.'&amp;spt='.$next_spt.'&amp;page=1';
-        $write_pages = page_insertafter($write_pages, '<a href="'.$next_part_href.'" class="pg_page pg_end">다음검색</a>'); 
+        $write_pages = page_insertafter($write_pages, '<a href="'.$next_part_href.'" class="pg_page pg_end">다음검색</a>');
     }
 }
 
