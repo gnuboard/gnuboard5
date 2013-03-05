@@ -248,6 +248,15 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 /* 설문조사 */
 
+/* 폼메일 */
+#formmail textarea {height:100px}
+
+/* 자기소개 */
+#profile table {margin-bottom:0}
+#profile section {padding:1em}
+#profile h2 {margin:0}
+#profile .sv_wrap a {margin:0 0 0.3em;padding:0;font-weight:bold;line-height:1em}
+
 /* 최근게시물 스킨 (latest) */
 .lt {float:left}
 .lt ul {display:none}
