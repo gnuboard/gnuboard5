@@ -1,22 +1,22 @@
 <?
 include_once('./_common.php');
 
-if (!$member[mb_id])
+if ($is_guest)
     alert_close('회원만 조회하실 수 있습니다.');
 
-$g4['title'] = $member[mb_nick].' 님의 포인트 내역';
+$g4['title'] = $member['mb_nick'].' 님의 포인트 내역';
 include_once(G4_PATH.'/head.sub.php');
 
 $list = array();
 
-$sql_common = " from {$g4[point_table]} where mb_id = '".mysql_escape_string($member[mb_id])."' ";
+$sql_common = " from {$g4['point_table']} where mb_id = '".mysql_escape_string($member['mb_id'])."' ";
 $sql_order = " order by po_id desc ";
 
 $sql = " select count(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -58,7 +58,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     </tr>
     <tr>
         <th scope="row" colspan="2">보유포인트</th>
-        <td colspan="2"><?=number_format($member[mb_point])?></td>
+        <td colspan="2"><?=number_format($member['mb_point'])?></td>
     </tr>
     </tfoot>
     <tbody>
@@ -72,18 +72,18 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         $point1 = $point2 = 0;
-        if ($row[po_point] > 0) {
-            $point1 = '+' .number_format($row[po_point]);
-            $sum_point1 += $row[po_point];
+        if ($row['po_point'] > 0) {
+            $point1 = '+' .number_format($row['po_point']);
+            $sum_point1 += $row['po_point'];
         } else {
-            $point2 = number_format($row[po_point]);
-            $sum_point2 += $row[po_point];
+            $point2 = number_format($row['po_point']);
+            $sum_point2 += $row['po_point'];
         }
 
     ?>
     <tr>
-        <td class="td_datetime"><?=$row[po_datetime]?></td>
-        <td><?=$row[po_content]?></td>
+        <td class="td_datetime"><?=$row['po_datetime']?></td>
+        <td><?=$row['po_content']?></td>
         <td class="td_bignum"><?=$point1?></td>
         <td class="td_bignum"><?=$point2?></td>
     </tr>
@@ -102,19 +102,10 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     </table>
 
 
-    <?=get_paging($config[cf_write_pages], $page, $total_page, $_SERVER[PHP_SELF].'?'.$qstr.'&amp;page=');?>
+    <?=get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');?>
 
+    <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>
-
-<script>
-$(function() {
-    $("#point").append("<div class=\"btn_win\"><a>창닫기</a></div>");
-
-    $(".btn_win a").click(function() {
-        window.close();
-    });
-});
-</script>
 
 <?
 include_once(G4_PATH.'/tail.sub.php');

@@ -27,7 +27,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </tbody>
     </table>
 
-    <?=get_paging($config['cf_write_pages'], $page, $total_page, "?$qstr&amp;page=");?>
+    <?=get_paging($config['cf_mobile_pages'], $page, $total_page, "?$qstr&amp;page=");?>
 
     <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>
