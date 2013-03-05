@@ -27,8 +27,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 .img_fix {float:left;width:100%;height:auto}
 
 /* 캡챠 자동등록(입력)방지 기본 */
-#captcha img {border:1px solid #cfded8;border-right:0}
-#captcha_wav img {border:1px solid #cfded8;border-left:0;background:#494949}
+#captcha img {height:1.8em;border:1px solid #cfded8;border-right:0}
+#captcha_wav img {padding:0.2em;height:22px !important;border:1px solid #cfded8;border-left:0;background:#494949}
 
 /* 상단 레이아웃 */
 #hd {background:#fff;zoom:1}
@@ -140,13 +140,13 @@ td.empty_table {padding:5em 0;text-align:center}
 
 /* 폼 테이블 */
 .frm_tbl {margin-bottom:1.5em;width:100%;border-collapse:collapse;border-spacing:0}
-.frm_tbl caption {padding:1em 0;color:#4b8b99;font-weight:bold;text-align:left}
+.frm_tbl caption {padding:1em;color:#4b8b99;font-weight:bold;text-align:left}
 .frm_tbl th {padding-left:1em;width:100px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
 .frm_tbl td {padding:0.4em 0.5em;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
-.frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
+.frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em}
 .frm_input:focus,
-input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important;color:#fff}
+input.required:focus {border:0;background:#21272e !important;color:#fff;line-height:1.8em}
 .frm_tbl textarea {width:90%;height:150px}
 .frm_address {display:block;margin-top:0.3em}
 .frm_file {display:block;margin-bottom:0.3em}
@@ -180,14 +180,25 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 .new_win_desc {padding:1em}
 
 /* 회원가입 약관 */
-#fregister section {margin:0 0 1.5em;padding:1.5em;border-bottom:3px solid #eee}
+#fregister section {padding:1.5em;border-bottom:1px solid #eee;background:#fafafa}
 #fregister h2 {margin:0 0 1.5em;text-align:center}
-#fregister textarea {display:block;margin-bottom:1em;padding:0.3em;width:98%;height:150px;border:1px solid #cfded8;background:#f7f7f7}
+#fregister textarea {display:block;margin-bottom:1em;padding:0.3em;width:99%;height:150px;border:1px solid #cfded8;background:#f7f7f7}
 #fregister textarea:focus {background:#21272e;color:#fff}
 .fregister_agree {padding:1em 0 0;text-align:right}
 .fregister_agree label {display:inline-block;margin-right:0.3em}
 #fregister p {color:#e8180c;text-align:center}
-#fregister .btn_confirm {margin-bottom:1.5em}
+#fregister .btn_confirm {margin:1.5em 0}
+
+/* 회원가입 입력 */
+#fregisterform textarea {height:50px}
+
+/* 회원가입 완료 */
+#reg_result {padding:4em 1em 0}
+#reg_result_logo {margin-bottom:50px;text-align:center}
+#reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
+#reg_result_email span {display:inline-block;width:150px}
+#reg_result_email strong {color:#e8180c;font-size:1.2em}
+#reg_result .btn_confirm {margin:50px 0}
 
 /* 로그인 */
 #mb_login {margin:2em 0}
