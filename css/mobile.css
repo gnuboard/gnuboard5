@@ -142,10 +142,9 @@ td.empty_table {padding:5em 0;text-align:center}
 .frm_tbl {margin-bottom:1.5em;width:100%;border-collapse:collapse;border-spacing:0}
 .frm_tbl caption {padding:1em 0;color:#4b8b99;font-weight:bold;text-align:left}
 .frm_tbl th {padding-left:1em;width:100px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
-.frm_tbl td {padding:7px 1em;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
+.frm_tbl td {padding:0.4em 0.5em;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
-.frm_input,
-select {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
+.frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
 .frm_input:focus,
 input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important;color:#fff}
 .frm_tbl textarea {width:90%;height:150px}
@@ -191,12 +190,12 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #fregister .btn_confirm {margin-bottom:1.5em}
 
 /* 로그인 */
-#mb_login {margin:30px 0}
+#mb_login {margin:2em 0}
 #mb_login h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
 #mb_login h2 {margin:0}
-#mb_login fieldset {position:relative;padding:1em}
-#mb_login .fs_input {display:block;margin-bottom:0.3em;padding:0;width:80%;height:25px}
-#mb_login .btn_submit {position:absolute;top:1em;right:1em;width:18%;height:59px;text-align:center}
+#mb_login fieldset {position:relative;padding:1em 0.5em;font-size:1em}
+#mb_login .frm_input {display:block;margin-bottom:0.3em;padding:0;width:79%;height:1.8em;line-height:1.8em}
+#mb_login .btn_submit {position:absolute;top:1em;right:0;padding:0 !important;width:18%;height:4em !important;text-align:center}
 #mb_login section {margin:30px 0;padding:1.5em 1em;border:1px solid #cfded8;background:#f7f7f2}
 #mb_login section div {text-align:right}
 
@@ -219,22 +218,21 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:30px 0}
 #mb_confirm h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
-#mb_confirm p {padding:1.5em 1em;border:1px solid #cfded8;border-bottom:0;background:#fff}
+#mb_confirm p {padding:1.5em 1em;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
-#mb_confirm fieldset {position:relative;margin:0 0 30px;padding:30px 1em;border:1px solid #cfded8;background:#f7f7f2}
-#mb_confirm_pw {display:block;margin-top:1em;padding:0;width:80%;height:25px}
-#mb_confirm .btn_submit {position:absolute;bottom:30px;right:1em;width:18%;height:27px}
-
-#mb_login {margin:30px 0}
-#mb_login h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
-#mb_login h2 {margin:0}
-#mb_login fieldset {position:relative;padding:1em}
-#mb_login .fs_input {display:block;margin-bottom:0.3em;padding:0;width:80%;height:25px}
-#mb_login .btn_submit {position:absolute;top:1em;right:1em;width:18%;height:59px}
-#mb_login section {margin:30px 0;padding:1.5em 1em;border:1px solid #cfded8;background:#f7f7f2}
-#mb_login section div {text-align:right}
+#mb_confirm fieldset {position:relative;margin:0 0 3em;padding:2em 1em;border-bottom:1px solid #cfded8;background:#f7f7f2}
+#mb_confirm_pw {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em}
+#mb_confirm .btn_submit {position:absolute;bottom:2em;right:1em;width:18%;height:1.9em !important;line-height:1.9em}
 
 /* 비밀글 패스워드 확인 */
+#pw_confirm {margin:30px 0}
+#pw_confirm h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
+#pw_confirm p {padding:1.5em 1em;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
+#pw_confirm p strong {display:block}
+#pw_confirm fieldset {position:relative;margin:0 0 3em;padding:1em 1em 2em;border-bottom:1px solid #cfded8;background:#f7f7f2}
+#pw_wr_password {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em}
+#pw_confirm .btn_submit {position:absolute;bottom:2em;right:1em;width:18%;height:1.9em !important;line-height:1.9em}
+/*
 #pw_confirm {margin:100px auto;width:500px}
 #pw_confirm h1 {margin:0 0 1.5em;font-size:1.3em}
 #pw_confirm p {padding:1.5em;border:1px solid #cfded8;border-bottom:0;background:#fff}
@@ -242,6 +240,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #pw_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f7f7f2;text-align:center}
 #pw_confirm label {letter-spacing:-0.1em}
 #pw_confirm_id {display:inline-block;margin-right:1.5em;font-weight:bold}
+*/
 
 /* 설문조사 */
 
@@ -268,7 +267,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #new_tbl {}
 #new_tbl th:nth-of-type(3) {width:50px}
 
-#new_tbl td:nth-of-type() {text-align:center}
+#new_tbl td:nth-of-type(3) {text-align:center}
 
 /* 전체검색결과 스킨 */
 #sch_result_detail {}

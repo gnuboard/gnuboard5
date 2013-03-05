@@ -32,9 +32,8 @@ else $g4['title'] = $g4['title'];
     <input type="hidden" name="page" value="<?=$page?>">
 
     <fieldset>
-        <label for="password_wr_password">패스워드<strong class="sound_only">필수</strong></label>
-        <input type="password" id="password_wr_password" name="wr_password" class="fs_input required" maxLength="20" size="15" required>
-        <input type="submit" class="fs_submit" value="확인">
+        <input type="password" id="pw_wr_password" name="wr_password" class="frm_input required" maxLength="20" required placeholder="패스워드(필수)" title="패스워드(필수)">
+        <input type="submit" class="btn_submit" value="확인">
     </fieldset>
     </form>
 
@@ -43,7 +42,3 @@ else $g4['title'] = $g4['title'];
     </div>
 
 </div>
-
-<script>
-document.fboardpassword.wr_password.focus();
-</script>
