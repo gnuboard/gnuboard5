@@ -19,7 +19,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <tr>
             <th scope="row"><label for="me_recv_mb_id">받는 회원아이디<strong class="sound_only">필수</strong></label></th>
             <td>
-                <input type="text" id="me_recv_mb_id" name="me_recv_mb_id" class="frm_input required" size="47" required value="<?=$me_recv_mb_id?>">
+                <input type="text" id="me_recv_mb_id" name="me_recv_mb_id" class="frm_input required" required value="<?=$me_recv_mb_id?>">
                 <span class="frm_info">여러 회원에게 보낼때는 컴마(,)로 구분하세요.</span>
             </td>
         </tr>
