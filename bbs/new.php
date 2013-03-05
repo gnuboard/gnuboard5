@@ -48,7 +48,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $tmp_write_table = $g4['write_prefix'].$row['bo_table'];
 
     if ($row['wr_id'] == $row['wr_parent']) {
-        
+
         // 원글
         $comment = "";
         $comment_link = "";
@@ -103,7 +103,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $list[$i]['wr_subject'] = $row2['wr_subject'];
 }
 
-$write_pages = get_paging($config['cf_write_pages'], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;page=");
+$write_pages = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;page=");
 
 include_once($new_skin_path.'/new.skin.php');
 
