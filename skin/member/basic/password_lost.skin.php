@@ -30,9 +30,6 @@ function fpasswordlost_submit(f)
     return true;
 }
 
-self.focus();
-document.fpasswordlost.mb_email.focus();
-
 $(function() {
     var sw = screen.width;
     var sh = screen.height;

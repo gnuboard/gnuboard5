@@ -1,4 +1,4 @@
-/* SIR SOFT 지운아빠 Feb. 2013 */
+/* SIR SOFT 지운아빠 Mar. 2013 */
 
 /* 초기화 */
 html {overflow-y:scroll}
@@ -329,7 +329,6 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #scrap_do table {margin:0 0 10px;width:100%}
 #scrap_do textarea {height:100px}
 
-
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:100px auto;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
@@ -580,6 +579,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_vc header {position:relative;padding:15px 0 5px}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
 #bo_vc .sv_wrap {margin-right:15px}
+#bo_vc .member,
+#bo_vc .guest,
 #bo_vc .sv_member,
 #bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo {display:inline-block;margin:0 15px 0 5px}

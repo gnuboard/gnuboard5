@@ -12,7 +12,7 @@ if ($is_nogood) $colspan++;
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
 
 <!-- 게시판 목록 시작 -->
-<div id="bo_list" style="width:<?=$width;?>">
+<div id="bo_list<? if ($is_admin) echo "_admin";?>" style="width:<?=$width;?>">
 
     <? if ($is_category) { ?>
     <form id="fcategory" name="fcategory" method="get">
@@ -60,7 +60,7 @@ if ($is_nogood) $colspan++;
     <?
     for ($i=0; $i<count($list); $i++) {
     ?>
-    <tr class="<? if ($list[$i]['is_notice']) echo "bo_notice";?><? if ($board[1]) echo "bo_sideview";?>">
+    <tr class="<? if ($list[$i]['is_notice']) echo "bo_notice";?>">
         <? if ($is_checkbox) { ?><td class="td_chk"><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
         <td class="td_subject">
             <?

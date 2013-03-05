@@ -28,7 +28,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <? } ?>
     <tr>
         <th scope="row"><label for="subject">제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type=text id="subject" name="subject" class="frm_input required" required></td>
+        <td><input type="text" id="subject" name="subject" class="frm_input required" required></td>
     </tr>
     <tr>
         <th scope="row">형식</th>

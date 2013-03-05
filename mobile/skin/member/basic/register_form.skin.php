@@ -20,9 +20,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
     <td>
+        <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
         <input type="text" id="reg_mb_id" name="mb_id" class="frm_input minlength_3 <?=$required?> <?=$readonly?>" value="<?=$member['mb_id']?>" maxlength="20" <?=$required?> <?=$readonly?>>
         <span id="msg_mb_id"></span>
-        <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
     </td>
 </tr>
 <tr>
@@ -40,21 +40,21 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input id="reg_mb_name" name="mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" value="<?=$member['mb_name']?>" size="10" <?=$required?> <?=$readonly?>>
         <? if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } ?>
+        <input type="text" id="reg_mb_name" name="mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" value="<?=$member['mb_name']?>" <?=$required?> <?=$readonly?>>
     </td>
 </tr>
 <? if ($req_nick) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_nick">별명<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="hidden" name="mb_nick_default" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>">
-        <input type="text" id="reg_mb_nick" name="mb_nick" class="frm_input required nospace" maxlength="20" size="10" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" required>
-        <span id="msg_mb_nick"></span>
         <span class="frm_info">
             공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br>
             별명을 바꾸시면 앞으로 <?=(int)$config['cf_nick_modify']?>일 이내에는 변경 할 수 없습니다.
         </span>
+        <input type="hidden" name="mb_nick_default" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>">
+        <input type="text" id="reg_mb_nick" name="mb_nick" class="frm_input required nospace" maxlength="20" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" required>
+        <span id="msg_mb_nick"></span>
     </td>
 </tr>
 <? } ?>
@@ -62,21 +62,21 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_email">E-mail<? if ($config['cf_use_email_certify']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td>
-        <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
-        <input type="text" id="reg_mb_email" name="mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" maxlength="100" size="50" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?>>
         <? if ($config['cf_use_email_certify']) { ?>
         <span class="frm_info">
             <? if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; } ?>
             <? if ($w=='u') { echo "E-mail 주소를 변경하시면 다시 인증하셔야 합니다."; } ?>
         </span>
         <? } ?>
+        <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
+        <input type="text" id="reg_mb_email" name="mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" maxlength="100" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?>>
     </td>
 </tr>
 
 <? if ($config['cf_use_homepage']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_homepage">홈페이지<? if ($config['cf_req_homepage']){?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><input type="text" id="reg_mb_homepage" name="mb_homepage" class="frm_input <?=$config['cf_req_homepage']?"required":"";?>" maxlength="255" size="50" <?=$config['cf_req_homepage']?"required":"";?> value="<?=$member['mb_homepage']?>"></td>
+    <td><input type="text" id="reg_mb_homepage" name="mb_homepage" class="frm_input <?=$config['cf_req_homepage']?"required":"";?>" maxlength="255" <?=$config['cf_req_homepage']?"required":"";?> value="<?=$member['mb_homepage']?>"></td>
 </tr>
 <? } ?>
 
@@ -103,12 +103,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <? if ($config['cf_req_addr']) {?><strong class="sound_only">필수</strong><? } ?>
     </th>
     <td>
-        <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
+        <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
          -
-        <input type="text" id="reg_mb_zip2" name="mb_zip2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip2']?>" title="우편번호 뒷자리">
+        <input type="text" id="reg_mb_zip2" name="mb_zip2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip2']?>" title="우편번호 뒷자리">
         <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">주소찾기</a>
-        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
-        <input type="text" id="reg_mb_addr2" name="mb_addr2" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr2']?>" title="상세주소">
+        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
+        <input type="text" id="reg_mb_addr2" name="mb_addr2" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr2']?>" title="상세주소">
     </td>
 </tr>
 <? } ?>
@@ -134,15 +134,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_icon">회원아이콘</label></th>
     <td>
+        <span class="frm_info">
+            이미지 크기는 가로 <?=$config['cf_member_icon_width']?>픽셀, 세로 <?=$config['cf_member_icon_height']?>픽셀 이하로 해주세요.<br>
+            gif만 가능하며 용량 <?=number_format($config['cf_member_icon_size'])?>바이트 이하만 등록됩니다.
+        </span>
         <input type="file" id="reg_mb_icon" name="mb_icon" class="frm_input">
         <? if ($w == 'u' && file_exists($mb_icon)) { ?>
         <input type="checkbox" id="del_mb_icon" name="del_mb_icon" value="1">
         <label for="del_mb_icon">삭제</label>
         <? } ?>
-        <span class="frm_info">
-            이미지 크기는 가로 <?=$config['cf_member_icon_width']?>픽셀, 세로 <?=$config['cf_member_icon_height']?>픽셀 이하로 해주세요.<br>
-            gif만 가능하며 용량 <?=number_format($config['cf_member_icon_size'])?>바이트 이하만 등록됩니다.
-        </span>
     </td>
 </tr>
 <? } ?>
@@ -169,23 +169,23 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_open">정보공개</label></th>
     <td>
-        <input type="hidden" name="mb_open_default" value="<?=$member['mb_open']?>">
-        <input type="checkbox" id="reg_mb_open" name="mb_open" value="1" <?=($w=='' || $member['mb_open'])?'checked':'';?>>
-        다른분들이 나의 정보를 볼 수 있도록 합니다.
         <span class="frm_info">
             정보공개를 바꾸시면 앞으로 <?=(int)$config['cf_open_modify']?>일 이내에는 변경이 안됩니다.
         </span>
+        <input type="hidden" name="mb_open_default" value="<?=$member['mb_open']?>">
+        <input type="checkbox" id="reg_mb_open" name="mb_open" value="1" <?=($w=='' || $member['mb_open'])?'checked':'';?>>
+        다른분들이 나의 정보를 볼 수 있도록 합니다.
     </td>
 </tr>
 <? } else { ?>
 <tr>
     <th scope="row">정보공개</th>
     <td>
-        <input type="hidden" name="mb_open" value="<?=$member['mb_open']?>">
         <span class="frm_info">
             정보공개는 수정후 <?=(int)$config['cf_open_modify']?>일 이내, <?=date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:G4_SERVER_TIME+$config['cf_open_modify']*86400);?> 까지는 변경이 안됩니다.<br>
             이렇게 하는 이유는 잦은 정보공개 수정으로 인하여 쪽지를 보낸 후 받지 않는 경우를 막기 위해서 입니다.
         </span>
+        <input type="hidden" name="mb_open" value="<?=$member['mb_open']?>">
     </td>
 </tr>
 <? } ?>
