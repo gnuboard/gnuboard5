@@ -14,7 +14,7 @@ input[type=text],
 input[type=password],
 input[type=submit],
 input[type=image],
-button {border-radius:0 !important;font-size:1em;-webkit-appearance:none} /* 모바일에서만 사용 */
+button {border-radius:0 !important;font-size:1em} /* 모바일에서만 사용 */
 select, textarea {font-size:1em}
 textarea {border-radius:0;-webkit-appearance:none}
 p {margin:0;padding:1em 0;line-height:1.7em;word-break:break-all}
@@ -145,7 +145,7 @@ td.empty_table {padding:5em 0;text-align:center}
 .frm_tbl th {padding-left:1em;width:110px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
 .frm_tbl td {padding:0.4em 0.5em;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
-.frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em}
+.frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em;-webkit-appearance:none}
 .frm_input:focus,
 input.required:focus {border:0;background:#21272e !important;color:#fff;line-height:1.8em}
 .frm_tbl textarea {width:90%;height:150px}
@@ -154,14 +154,6 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .frm_tbl #captcha {margin:0;padding:0;border:0;background:transparent}
 .frm_tbl #captcha input {margin-left:0.3em;text-align:center}
 .frm_tbl a {text-decoration:none}
-
-/* 폼 컨트롤 */
-.fs_input,
-fieldset textarea {padding:3px 3px 4px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
-.fs_input:focus {background:#21272e;color:#fff}
-
-.fs_submit,
-fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;line-height:1.7em;vertical-align:middle;cursor:pointer}
 
 .frm_info {display:block;padding:0.3em 0 0;color:#666;line-height:1.3em}
 
@@ -291,7 +283,38 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #new_tbl td:nth-of-type(3) {text-align:center}
 
 /* 전체검색결과 스킨 */
-#sch_result_detail {}
+#sch_result_detail {margin:0;padding:15px 0;border:0;text-align:right}
+#sch_result {padding:10px 0 0 0;border-top:1px solid #cfded8}
+#sch_result ul {margin:0;padding:0;list-style:none}
+#sch_result p {margin:5px 0;padding:0}
+#sch_result_hd {margin:0;padding:0;zoom:1}
+#sch_result_hd:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_result_hd dt {float:left;padding:10px 0 15px}
+#sch_result_hd dd {float:right;margin:0;padding:10px 0 15px}
+#sch_result_hd ul {float:left}
+#sch_result_hd li {float:left;padding:0 10px;border-right:1px solid #cfded8}
+#sch_result_bo {float:left;margin:-1px 0 0;padding:0;width:170px}
+#sch_result_bo dt {margin:0;padding:0;border:0;font-size:0;line-height:0;overflow:hidden}
+#sch_result_bo dd {margin:0;padding:0}
+#sch_result_bo ul {margin-top:1px}
+#sch_result_bo li {position:relative;margin-top:-1px;height:40px}
+#sch_result_bo a {position:absolute;padding:0 10px;width:149px;height:40px;border:1px solid #618588;border-right:0;background:#151515;color:#fff;text-decoration:none;line-height:3.4em}
+#sch_result_bo .sch_on {width:150px;border-color:#cfded8;border-right:0;background:#fff;color:#000;font-weight:bold}
+#sch_result_bo .cnt_cmt {color:#fff}
+#sch_result_bo .sch_on .cnt_cmt {color:#000}
+#sch_result_atc {float:left;margin:0;padding:15px 25px;width:506px;border:1px solid #cfded8;background:#fff}
+#sch_result_atc dt a {display:inline-block;margin-bottom:15px;color:#000;font-size:1.2em;font-weight:bold;text-decoration:none}
+#sch_result_atc dd {margin:0 0 15px}
+#sch_result_atc dd a {}
+#sch_result_atc .sch_result_title {display:inline-block;margin-bottom:5px;font-size:1.1em;font-weight:bold;text-decoration:underline}
+#sch_result_atc li {padding:13px 0;border-bottom:1px solid #f0f0f0}
+#sch_result_atc p {padding:0 0 5px}
+#sch_result_atc a {display:inline-block;margin:0 10px 0 0}
+#sch_result_atc .cmt_def {display:inline-block;margin:0 10px 0 0}
+.sch_more {padding:10px 0 15px;text-align:right}
+.sch_more a {}
+.sch_datetime {display:inline-block;margin-right:15px;color:#999}
+.sch_word {font-weight:bold} /* 검색어 강조 */
 
 /* 게시판 목록 */
 #bo_list_title {padding:0 1em}
