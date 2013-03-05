@@ -106,7 +106,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <div id="wrapper">
     <div id="lnb">
-        <?=outlogin('basic'); // 외부 로그인 ?>
+        <?//=outlogin('basic'); // 외부 로그인 ?>
         <?//=poll('basic'); // 설문조사 ?>
     </div>
     <div id="container">

@@ -63,9 +63,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <dt><strong><?=$stx?></strong>에 대한 검색 결과입니다.</dt>
         <dd>
             <ul>
-                <li><span style="color:<?=$config['cf_search_color']?>"><?=$board_count?></span>개의 게시판</li>
-                <li><span style="color:<?=$config['cf_search_color']?>"><?=number_format($total_count)?></span>개의 게시물</li>
-                <li>현재 <?=number_format($page)?>/<?=number_format($total_page)?> 페이지 열람 중</li>
+                <li>게시판 <span style="color:<?=$config['cf_search_color']?>"><?=$board_count?></span>개</li>
+                <li>게시물 <span style="color:<?=$config['cf_search_color']?>"><?=number_format($total_count)?></span>개</li>
+                <li><?=number_format($page)?>/<?=number_format($total_page)?> 페이지</li>
             </ul>
         </dd>
     </dl>
