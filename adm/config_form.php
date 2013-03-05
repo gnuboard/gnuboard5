@@ -18,16 +18,22 @@ if (!isset($config['cf_include_index'])) {
 }
 
 if (!isset($config['cf_mobile_new_skin'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}` 
-                    ADD `cf_mobile_new_skin` VARCHAR(255) NOT NULL AFTER `cf_memo_send_point`,  
-                    ADD `cf_mobile_search_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_new_skin`,  
-                    ADD `cf_mobile_connect_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_search_skin`,  
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_mobile_new_skin` VARCHAR(255) NOT NULL AFTER `cf_memo_send_point`,
+                    ADD `cf_mobile_search_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_new_skin`,
+                    ADD `cf_mobile_connect_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_search_skin`,
                     ADD `cf_mobile_member_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_connect_skin` ", true);
 }
 
 if(!isset($config['cf_adult_check'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_adult_check` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_memo_send_point` ", TRUE);
+}
+
+if(!isset($config['cf_mobile_pages'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", TRUE);
+    sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", TRUE);
 }
 
 $g4['title'] = '환경설정';
@@ -306,6 +312,10 @@ $pg_anchor = "
         <td><input type="text" id="cf_delay_sec" name="cf_delay_sec" class="required numeric frm_input" required value="<?=$config['cf_delay_sec']?>" size="3"> 초 지난후 가능</td>
         <th scope="row"><label for="cf_write_pages">페이지 표시 수<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" id="cf_write_pages" name="cf_write_pages" class="required numeric frm_input" required value="<?=$config['cf_write_pages']?>" size="3"> 페이지씩 표시</td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_mobile_pages">모바일 페이지 표시 수<strong class="sound_only">필수</strong></label></th>
+        <td colspan="3"><input type="text" id="cf_mobile_pages" name="cf_mobile_pages" class="required numeric frm_input" required value="<?=$config['cf_mobile_pages']?>" size="3"> 페이지씩 표시</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_image_extension">이미지 업로드 확장자</label></th>
