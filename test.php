@@ -2,29 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style> 
-caption span {display:inline-block;width:1px;height:1px;overflow:hidden} 
-</style> 
+<style>
+html {margin:0;padding:0;font-size:300%;font-family:"gulim"}
+#x1 {width:100px;padding:1%;background:#ddd}
+</style>
 </head>
 <body>
 
-<table> 
-<caption><span>테스트용 테이블</span></caption> 
-<thead> 
-<tr> 
-    <th>1st header</th> 
-    <th>2nd header</th> 
-    <th>3rd header</th> 
-</tr> 
-</thead> 
-<tbody> 
-<tr> 
-    <td>1</td> 
-    <td>2</td> 
-    <td>3</td> 
-</tr> 
-</tbody> 
-</table>
+<div id="x1">깊은 산 속 옹달샘 누가 와서 먹나요</div>
 
 </body>
 </html>

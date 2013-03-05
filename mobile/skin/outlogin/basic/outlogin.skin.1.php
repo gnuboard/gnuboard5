@@ -22,6 +22,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </section>
 
 <script>
+<? if (!G4_IS_MOBILE) {?>
 $omi = $('#ol_id');
 $omp = $('#ol_pw');
 $omp.css('display','inline-block').css('width',104);
@@ -43,6 +44,7 @@ $omp.blur(function() {
     $this = $(this);
     if($this.attr('id') == "ol_pw" && $this.attr('value') == "") $omp_label.css('visibility','visible');
 });
+<? } ?>
 
 $("#auto_login").click(function(){
     if (this.checked) {
