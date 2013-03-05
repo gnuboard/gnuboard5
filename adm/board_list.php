@@ -136,7 +136,7 @@ $colspan = 8;
             <?=get_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']);?>
         </td>
         <td>
-            <?=get_mobile_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']);?>
+            <?=get_mobile_skin_select('board', 'bo_mobile_skin_'.$i, "bo_mobile_skin[$i]", $row['bo_mobile_skin']);?>
         </td>
         <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required frm_input" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="10" required="required"></td>
         <td><input type="text" name="bo_read_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_read_point']?>" size="2" title="읽기포인트"></td>
