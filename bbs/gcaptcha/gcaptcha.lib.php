@@ -130,7 +130,7 @@ class gcaptcha
 
     function get_captcha_filename()
     {
-        return 'gcaptcha-'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'];
+        return 'gcaptcha-'.abs_ip2long().'_'.session_id();
     }
 
     function make_wav($captcha_filename)
