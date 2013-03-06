@@ -24,8 +24,6 @@ if ($config['cf_include_head']) {
 ?>
 
 <header id="hd">
-    <? if ($is_member) { ?><span class="sound_only"><?=$member['mb_nick']?>님 로그인 중</span><? } ?>
-
     <h1><?=$config['cf_title']?></h1>
 
     <div id="to_content"><a href="#container">본문 바로가기</a></div>

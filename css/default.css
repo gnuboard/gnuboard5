@@ -19,6 +19,7 @@ a:focus,
 a:active {color:#000;text-decoration:underline}
 
 /* 화면낭독기 사용자용 */
+#hd_login_msg {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
 .sound_only {display:inline-block !important;margin:0 !important;padding:0 !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}
 /* 본문 바로가기 */
 #to_content a {z-index:100000;position:absolute;top:0;left:0;font-size:0;line-height:0;overflow:hidden}
@@ -55,7 +56,7 @@ a:active {color:#000;text-decoration:underline}
 #snb img {margin-right:3px}
 
 /* gnb js off */
-#gnb {background:#f0f4f8}
+#gnb {margin-top:-1px;background:#f0f4f8}
 #gnb h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 #gnb_ul {z-index:10;margin:0 auto;padding:0;width:980px}
 .gnb_1depth {position:relative;margin-left:-1px;zoom:1}
