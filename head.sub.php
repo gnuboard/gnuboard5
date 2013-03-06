@@ -40,6 +40,20 @@ header("Pragma: no-cache"); // HTTP/1.0
 <? } else { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=(G4_IS_MOBILE?'mobile':'default')?>.css?=<?=date("md")?>">
 <?}?>
+<? // 스킨의 style sheet 불러옴
+if(isset($board_skin_path))
+    echo get_skin_stylesheet($board_skin_path);
+if(isset($member_skin_path))
+    echo get_skin_stylesheet($member_skin_path);
+if(isset($new_skin_path))
+    echo get_skin_stylesheet($new_skin_path);
+if(isset($search_skin_path))
+    echo get_skin_stylesheet($search_skin_path);
+if(isset($connect_skin_path))
+    echo get_skin_stylesheet($connect_skin_path);
+if(isset($poll_skin_path))
+    echo get_skin_stylesheet($poll_skin_path);
+?>
 <!--[if lte IE 8]>
 <script src="<?=G4_JS_URL?>/html5.js"></script>
 <![endif]-->
