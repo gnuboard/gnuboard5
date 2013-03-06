@@ -282,7 +282,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #poll header p {padding:0}
 #poll ul {margin:0 0 1em;padding:0.3em 1em;list-style:none}
 #poll li {padding:3px 0}
-#poll footer {padding:0 0.5em;text-align:justify}
+#poll footer {padding:0 0.5em;text-align:center}
 #poll footer input {width:49%;height:2.15em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer;-webkit-appearance:none}
 #poll footer a {display:inline-block;width:49%;height:2em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;text-align:center;line-height:2em}
 #poll footer a:focus,
