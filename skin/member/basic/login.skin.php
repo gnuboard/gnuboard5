@@ -5,16 +5,16 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="mb_login">
     <h1><?=$g4['title']?></h1>
 
-    <form name="flogin" method="post" action="<?=$login_action_url?>" onsubmit="return flogin_submit(this);">
+    <form name="flogin" action="<?=$login_action_url?>" onsubmit="return flogin_submit(this);" method="post">
     <input type="hidden" name="url" value='<?=$login_url?>'>
 
     <fieldset class="cbg">
         <label for="login_id" class="login_id">회원아이디<strong class="sound_only">필수</strong></label>
-        <input type="text" id="login_id" name="mb_id" class="fs_input required" maxLength="20" size="20" required>
+        <input type="text" name="mb_id" id="login_id" required class="fs_input required" size="20" maxLength="20">
         <label for="login_pw" class="login_pw">패스워드<strong class="sound_only">필수</strong></label>
-        <input type="password" id="login_pw" class="fs_input required" name="mb_password" maxLength="20" size="20" required>
-        <input type="submit" class="btn_submit" value="로그인">
-        <input type="checkbox" id="login_auto_login" name="auto_login">
+        <input type="password" name="mb_password" id="login_pw" required class="fs_input required" size="20" maxLength="20">
+        <input type="submit" value="로그인" class="btn_submit">
+        <input type="checkbox" name="auto_login" id="login_auto_login">
         <label for="login_auto_login">자동로그인</label>
     </fieldset>
 
@@ -25,7 +25,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             아직 회원이 아니시라면 회원으로 가입 후 이용해 주십시오.
         </p>
         <div>
-            <a href="<?=G4_BBS_URL?>/password_lost.php" id="login_password_lost" class="btn02" target="win_password_lost">아이디 패스워드 찾기</a>
+            <a href="<?=G4_BBS_URL?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
             <a href="./register.php" class="btn01">회원 가입</a>
         </div>
     </section>

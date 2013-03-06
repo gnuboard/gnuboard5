@@ -23,10 +23,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
             // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
 
-            if (isset($list[$i]['icon_new']))    echo " " . $list[$i]['icon_new'];
-            if (isset($list[$i]['icon_hot']))    echo " " . $list[$i]['icon_hot'];
-            if (isset($list[$i]['icon_file']))   echo " " . $list[$i]['icon_file'];
-            if (isset($list[$i]['icon_link']))   echo " " . $list[$i]['icon_link'];
+            if (isset($list[$i]['icon_new'])) echo " " . $list[$i]['icon_new'];
+            if (isset($list[$i]['icon_hot'])) echo " " . $list[$i]['icon_hot'];
+            if (isset($list[$i]['icon_file'])) echo " " . $list[$i]['icon_file'];
+            if (isset($list[$i]['icon_link'])) echo " " . $list[$i]['icon_link'];
             if (isset($list[$i]['icon_secret'])) echo " " . $list[$i]['icon_secret'];
             ?>
         </li>
@@ -35,5 +35,5 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <li>게시물이 없습니다.</li>
     <? } ?>
     </ul>
-    <div class="lt_more"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>">더보기</a></div>
+    <div class="lt_more"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>"><span class="sound_only"><?=$bo_subject?></span>더보기</a></div>
 </div>
