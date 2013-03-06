@@ -1812,6 +1812,7 @@ function get_skin_stylesheet($skin_path)
                 if(preg_match("/\.(css)$/i", $file))
                     $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date("md").'">'."\n";
             }
+            closedir($dh);
         }
     }
 
