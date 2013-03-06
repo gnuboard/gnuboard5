@@ -93,7 +93,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #visit dl {float:left;margin:0 0 0 0.5em;padding:0}
 #visit dt {float:left;margin:0;padding:0.5em 0.1em 0.5em 0;color:#fff}
 #visit dd {float:left;margin:0 1em 0 0;padding:0.5em 0.1em;color:#fff}
-#visit a {display:inline-block;padding:1em;color:#fff;text-decoration:none}
+#visit a {display:inline-block;padding:0.5em 0.1em;color:#fff;text-decoration:none}
 #visit a:focus,
 #visit a:hover {background:#333;color:#fff}
 
