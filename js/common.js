@@ -526,6 +526,9 @@ function font_resize(id, act)
 {
     var $elements = $("#"+id+" *");
     $elements.removeClass("applied");
+    var count = parseInt(get_cookie("ck_font_resize_count"));
+    if(isNaN(count))
+        count = 0;
 
     $elements.each(function() {
         if($(this).hasClass("no_text_resize"))
@@ -552,6 +555,28 @@ function font_resize(id, act)
             }
         }
     });
+
+    // 텍스트 리사이즈 회수 쿠키에 기록
+    if(act == "increase")
+        count++;
+    else
+        count--;
+
+    set_cookie("ck_font_resize_count", count, 1, g4_cookie_domain);
+}
+
+
+/**
+ * font_resize 함수를 반복 할 때 사용
+**/
+function font_resize2(id, act, loop)
+{
+    // fotn resize 카운트 초기화
+    set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
+
+    for(i=0; i<loop; i++) {
+        font_resize(id, act);
+    }
 }
 
 

@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 $captcha_html = "";
-if ($is_guest) {
+if ($is_guest && $board['bo_comment_level'] < 2) {
     $captcha_html = captcha_html('_comment');
 }
 
