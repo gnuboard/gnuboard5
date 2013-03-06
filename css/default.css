@@ -67,7 +67,7 @@ a:active {color:#000;text-decoration:underline}
 #gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth {z-index:10;clear:both;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth a {display:block;float:left;height:35px;width:80px;font-weight:bold;line-height:2.95em;text-decoration:none}
+.gnb_1depth a {display:block;float:left;width:80px;height:35px;font-weight:bold;line-height:2.95em;text-decoration:none}
 .gnb_1depth a:focus,
 .gnb_1depth a:hover {text-decoration:none}
 .gnb_1depth ul {float:left;width:auto}
