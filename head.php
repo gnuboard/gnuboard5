@@ -137,7 +137,7 @@ if ($config['cf_include_head']) {
         ?>
         <li class="gnb_1depth">
             <a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_subject']?></a>
-            <ul>
+            <ul class="gnb_sub_ul">
                 <?
                 $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' order by bo_order ";
                 $result2 = sql_query($sql2);
