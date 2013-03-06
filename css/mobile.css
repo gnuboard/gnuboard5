@@ -221,10 +221,8 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #ol_after_private a strong {color:#000;font-weight:normal}
 #ol_after_private a:nth-of-type(1) {border-right:1px solid #fff}
 #ol_after_private a:nth-of-type(2) {border-right:1px solid #fff}
-#ol_after_ft {margin-top:0.5em;text-align:justify}
-#ol_after_ft a {display:inline-block;width:88px;height:22px;background:#333;color:#fff;text-align:center;line-height:1.8em}
-#ol_after_ft a:focus,
-#ol_after_ft a:hover {text-decoration:none !important}
+#ol_after_ft {margin-top:0.5em;text-align:right}
+#ol_after_ft a {display:inline-block;padding:0 2em;height:2em;background:#333;color:#fff;text-decoration:none;text-align:center;line-height:2em}
 
 /* 로그인 */
 #mb_login {margin:2em 0}
