@@ -8,7 +8,12 @@ h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
-input {margin:0;padding:0;font-family:"dotum"}
+input {margin:0;padding:0;border-radius:0;font-family:"dotum"}
+input[type=text],
+input[type=password],
+input[type=submit],
+input[type=image] {-webkit-appearance:none}
+button {border-radius:0;-webkit-appearance:none}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
@@ -34,11 +39,11 @@ a:active {color:#000;text-decoration:underline}
 #captcha_wav img {border:1px solid #cfded8;border-left:0;background:#494949}
 
 /* 상단 레이아웃 */
-#hd {height:auto !important;height:0;border-top:3px solid #151515;border-bottom:1px solid #e7f1ed;background:#fff} /* height 중첩은 ie6 대응을 위한 것임 */
+#hd {height:73px;border-top:3px solid #151515;border-bottom:1px solid #e7f1ed;background:#fff}
 #hd h1 {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
-#logo {padding:17px 0 17px 0}
+#logo {padding:17px 0}
 #logo span {display:inline-block;margin-left:10px;color:#109ff1;font-family:"verdana";vertical-align:middle}
 
 #schall {position:absolute;top:22px;left:70px;margin:0;padding:0;letter-spacing:-5px}
@@ -56,50 +61,44 @@ a:active {color:#000;text-decoration:underline}
 #snb img {margin-right:3px}
 
 /* gnb js off */
-#gnb {margin-top:-1px;background:#f0f4f8}
+#gnb {z-index:10;margin:-1px 0 0;border-bottom:1px solid #c3c7c5;background:#f0f4f8}
 #gnb h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
-#gnb_ul {z-index:10;margin:0 auto;padding:0;width:980px}
-.gnb_1depth {position:relative;margin-left:-1px;zoom:1}
+#gnb_ul {margin:0 auto;padding:0;width:980px;zoom:1}
+#gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.gnb_1depth {z-index:10;clear:both;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth a {display:block;float:left;height:35px;color:#000;line-height:2.7em !important;line-height:2.4em}
-.gnb_1depth_air a,
-.gnb_1depth_on a {color:#000}
+.gnb_1depth a {display:block;float:left;height:35px;width:80px;font-weight:bold;line-height:2.95em;text-decoration:none}
 .gnb_1depth a:focus,
-.gnb_1depth a:hover,
-.gnb_1depth a:active {text-decoration:none}
-.gnb_1depth ul {float:left;zoom:1}
-.gnb_1depth ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth li {float:left}
-.gnb_2depth a {display:inline-block;float:none;margin-right:10px;padding:0 5px;width:auto;height:35px;border-bottom:0;color:#000;font-weight:normal;text-align:left;line-height:2.7em !important;line-height:2.4em}
+.gnb_1depth a:hover {text-decoration:none}
+.gnb_1depth ul {float:left;width:auto}
+.gnb_2depth {float:left}
+.gnb_2depth a {font-weight:normal}
 /* gnb js on */
-.gnb_js {padding-left:1px;border-bottom:1px solid #c3c7c5;background:#fff}
-.gnb_js ul {zoom:1}
-.gnb_js ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_js .gnb_1depth {position:relative;float:left;margin-left:-1px;width:80px;border:1px solid #e0e5e9;border-top:0;border-bottom:0}
-.gnb_js .gnb_1depth a {display:inline-block;float:none;width:100%;height:35px;color:#000;font-size:1.1em;font-weight:bold;text-align:center;letter-spacing:-0.1em;line-height:2.1em}
+.gnb_js {padding-left:1px}
+.gnb_js #gnb_ul {zoom:1}
+.gnb_js #gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.gnb_js .gnb_1depth {clear:none;position:relative;float:left;margin:0 0 0 -1px;border:1px solid #e0e5e9;border-top:0;border-bottom:0}
+.gnb_js .gnb_1depth a {text-align:center}
 .gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
 .gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
-.gnb_js .gnb_1depth a:focus,
-.gnb_js .gnb_1depth a:hover,
-.gnb_js .gnb_1depth a:active {text-decoration:none}
-.gnb_js .gnb_1depth ul {width:0 !important;height:0 !important;overflow:hidden}
-.gnb_js .gnb_1depth li {float:none}
-.gnb_js .gnb_1depth_over ul {position:absolute;top:35px;left:-1px;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
-.gnb_js .gnb_1depth_over2 ul {position:absolute;top:35px;right:-1px;width:181px !important;height:auto !important;border:1px solid #c3c7c5;border-top:0}
-.gnb_js .gnb_2depth a {display:inline-block;margin:0;padding:5px 10px;width:161px;height:25px;border:0;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:2.1em !important}
+.gnb_js ul ul {position:absolute;top:35px}
+.gnb_js .gnb_ul2 {width:1px;height:1px;overflow:hidden}
+.gnb_js .gnb_2depth a {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
+.gnb_1depth_over .gnb_ul2 {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
+.gnb_1depth_over2 .gnb_ul2 {right:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
 
 /* 배포시에는 필요없는 부분 */
 #sirgle_title {height:100px;color:#fff;font-size:3em}
 #sirgle_title_span {display:block;position:relative;top:33px;left:0;margin:0 auto;width:980px}
 
 /* 중간 레이아웃 */
-#wrapper {margin:50px auto;width:980px;zoom:1}
+#wrapper {z-index:5;margin:50px auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
 #lnb {float:right;width:209px;border:1px solid #cfded8;background:#fff}
 
-#container {position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #cfded8;background:#fff;zoom:1}
+#container {z-index:4;position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #cfded8;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 하단 레이아웃 */

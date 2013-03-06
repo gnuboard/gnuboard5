@@ -68,4 +68,4 @@ var g4_cookie_domain = "<?=G4_COOKIE_DOMAIN?>";
 <? if (!defined('G4_IS_ADMIN')) { echo $config['cf_add_script']; } ?>
 </head>
 <body>
-<? if ($is_member) { ?><span id="hd_login_msg"><?=$member['mb_nick']?>님 로그인 중</span><? } ?>
+<? if ($is_member) { ?><div id="hd_login_msg"><?=$member['mb_nick']?>님 로그인 중</div><? } ?>
