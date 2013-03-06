@@ -539,14 +539,15 @@ function font_resize(id, act)
         } else {
             set_font_size($(this), act);
 
-            // 텍스트 노드가 있는 경우 부모에 스타일 적용
+            // 텍스트 노드가 있는지 체크
             var $parent = $(this).parent();
             var text = $parent.contents().filter(function() {
                 return this.nodeType == 3;
             }).text().replace(/\s*/, "");
 
             if(text.length) {
-                // 텍스트노드와 형제가 있을 경우 마지막 형제엘리먼트에 스타일 적용 후 부모에 스타일 적용
+                // 텍스트노드의 형제가 있을 경우 마지막 형제에
+                // 스타일 적용 후 부모에 폰트 스타일 적용
                 var $child = $parent.children();
                 var chdlen = $child.length;
                 if(chdlen == ($child.index($(this)) + 1)) {
