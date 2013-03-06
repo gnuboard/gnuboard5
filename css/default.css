@@ -81,11 +81,10 @@ a:active {color:#000;text-decoration:underline}
 .gnb_js .gnb_1depth a {text-align:center}
 .gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
 .gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
-.gnb_js ul ul {position:absolute;top:35px}
-.gnb_js .gnb_ul2 {width:1px;height:1px;overflow:hidden}
+.gnb_js .gnb_sub_ul {position:absolute;top:35px;width:1px;height:1px;overflow:hidden}
 .gnb_js .gnb_2depth a {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
-.gnb_1depth_over .gnb_ul2 {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
-.gnb_1depth_over2 .gnb_ul2 {right:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
+.gnb_1depth_over .gnb_sub_ul {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
+.gnb_1depth_over2 .gnb_sub_ul {right:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
 
 /* 배포시에는 필요없는 부분 */
 #sirgle_title {height:100px;color:#fff;font-size:3em}
