@@ -317,6 +317,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #poll_result_cmt p {padding:0.3em 0}
 #poll_result_cmt footer {text-align:right}
 #poll_result_wcmt {margin:0 0 1em !important}
+#poll_result_wcmt td {padding:0 0 0.3em;border:0}
 #poll_result_wcmt input[type=text] {background:#fff !important}
 #pc_idea {width:98%}
 .poll_cmt_del a {display:inline-block;padding-bottom:1em}
