@@ -520,12 +520,12 @@ var win_poll = function(href) {
 }
 
 /**
- * 텍스트 크게
+ * 텍스트 리사이즈
 **/
-function text_increase()
+function font_resize(id, act)
 {
-    var $elements = $("#container *:visible");
-    var mode = "increase";
+    var $elements = $("#"+id+" *");
+    $elements.removeClass("applied");
 
     $elements.each(function() {
         if($(this).hasClass("no_text_resize"))
@@ -534,44 +534,21 @@ function text_increase()
         if($(this).children().length != 0) {
             return true;
         } else {
+            set_font_size($(this), act);
+
+            // 텍스트 노드가 있는 경우 부모에 스타일 적용
             var $parent = $(this).parent();
             var text = $parent.contents().filter(function() {
                 return this.nodeType == 3;
             }).text().replace(/\s*/, "");
 
             if(text.length) {
-                font_resize($parent, mode);
-            } else {
-                font_resize($(this), mode);
-            }
-        }
-    });
-}
-
-/**
- * 텍스트 작게
-**/
-function text_decrease()
-{
-    var $elements = $("#container *:visible");
-    var mode = "decrease";
-
-    $elements.each(function() {
-        if($(this).hasClass("no_text_resize"))
-            return true;
-
-        if($(this).children().length != 0) {
-            return true;
-        } else {
-            var $parent = $(this).parent();
-            var text = $parent.contents().filter(function() {
-                return this.nodeType == 3;
-            }).text().replace(/\s*/, "");
-
-            if(text.length) {
-                font_resize($parent, mode);
-            } else {
-                font_resize($(this), mode);
+                // 텍스트노드와 형제가 있을 경우 마지막 형제엘리먼트에 스타일 적용 후 부모에 스타일 적용
+                var $child = $parent.children();
+                var chdlen = $child.length;
+                if(chdlen == ($child.index($(this)) + 1)) {
+                    set_font_size($parent, act);
+                }
             }
         }
     });
@@ -579,10 +556,13 @@ function text_decrease()
 
 
 /**
- * 텍스트 resize
+ * font size 적용
 **/
-function font_resize(el, mode)
+function set_font_size(el, act)
 {
+    if(el.hasClass("applied"))
+        return true;
+
     var x = 0;
     var fs = el.css("font-size");
     var unit = fs.replace(/[0-9\.]/g, "");
@@ -595,7 +575,7 @@ function font_resize(el, mode)
     if(unit == "em")
         x = 1;
 
-    if(mode == "increase") {
+    if(act == "increase") {
         nfsize = (fsize * 1.2);
     } else {
         nfsize = (fsize / 1.2);
@@ -603,7 +583,7 @@ function font_resize(el, mode)
 
     nfsize = nfsize.toFixed(x);
 
-    el.css("font-size", nfsize+unit);
+    el.css("font-size", nfsize+unit).addClass("applied");
 }
 
 
@@ -695,16 +675,5 @@ $(function(){
         if(sv_hide) {
             $('.sv').removeClass('sv_on');
         }
-    });
-
-    // 텍스트 리사이즈
-    $("#text_increase").click(function() {
-        text_increase();
-        return false;
-    });
-
-    $("#text_decrease").click(function() {
-        text_decrease();
-        return false;
     });
 });
