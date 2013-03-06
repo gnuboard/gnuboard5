@@ -46,7 +46,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <span id="edit_<?=$comment_id?>"></span><!-- 수정 -->
         <span id="reply_<?=$comment_id?>"></span><!-- 답변 -->
 
-        <input type="hidden" id="secret_comment_<?=$comment_id?>" value="<?=strstr($list[$i]['wr_option'],"secret")?>">
+        <input  type="hidden" value="<?=strstr($list[$i]['wr_option'],"secret")?>" id="secret_comment_<?=$comment_id?>">
         <textarea id="save_comment_<?=$comment_id?>" style="display:none"><?=get_text($list[$i]['content1'], 0)?></textarea>
 
         <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
@@ -81,11 +81,11 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
     ?>
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
-        <form name="fviewcomment" method="post" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" autocomplete="off">
-        <input type="hidden" id="w" name="w" value="<?=$w?>">
+        <form name="fviewcomment" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" method="post" autocomplete="off">
+        <input type="hidden" name="w" value="<?=$w?>" id="w" >
         <input type="hidden" name="bo_table" value="<?=$bo_table?>">
         <input type="hidden" name="wr_id" value="<?=$wr_id?>">
-        <input type="hidden" id="comment_id" name="comment_id" value="<?=$c_id?>">
+        <input type="hidden" name="comment_id" value="<?=$c_id?>" id="comment_id">
         <input type="hidden" name="sca" value="<?=$sca?>">
         <input type="hidden" name="sfl" value="<?=$sfl?>">
         <input type="hidden" name="stx" value="<?=$stx?>">
@@ -98,16 +98,16 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         <? if ($is_guest) { ?>
         <tr>
             <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" maxLength="20" size="5" required></td>
+            <td><input type="text" name="wr_name" id="wr_name" required class="frm_input required" size="5" maxLength="20"></td>
         </tr>
         <tr>
             <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
-            <td><input type="password" id="wr_password" name="wr_password" class="frm_input required" maxLength="20" size="10" required></td>
+            <td><input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="10" maxLength="20"></td>
         </tr>
         <? } ?>
         <tr>
             <th scope="row"><label for="wr_secret">비밀글사용</label></th>
-            <td><input type="checkbox" id="wr_secret" name="wr_secret" value="secret"></td>
+            <td><input type="checkbox" name="wr_secret" value="secret" id="wr_secret"></td>
         </tr>
         <? if ($is_guest) { ?>
         <tr>
@@ -119,7 +119,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <th scope="row">내용</th>
             <td>
                 <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
-                <textarea id="wr_content" name="wr_content" required
+                <textarea name="wr_content" id="wr_content" required
                 <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?> title="댓글내용입력(필수)"><? echo $c_wr_content; ?></textarea>
                 <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
             </td>

@@ -22,12 +22,12 @@ function wrestItemname(fld)
         var text =  el.innerHTML.replace(/[<].*[>].*[<]\/+.*[>]/gi, "");
 
         if(text == '') {
-            return fld.getAttribute("title") ? fld.getAttribute("title") : ( fld.getAttribute("alt") ? fld.getAttribute("alt") : fld.name );
+            return fld.getAttribute("title") ? fld.getAttribute("title") : ( fld.getAttribute("placeholder") ? fld.getAttribute("placeholder") : fld.name );
         } else {
             return text;
         }
     } else {
-        return fld.getAttribute("title") ? fld.getAttribute("title") : ( fld.getAttribute("alt") ? fld.getAttribute("alt") : fld.name );
+        return fld.getAttribute("title") ? fld.getAttribute("title") : ( fld.getAttribute("placeholder") ? fld.getAttribute("placeholder") : fld.name );
     }
 }
 
