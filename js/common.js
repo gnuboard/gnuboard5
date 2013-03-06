@@ -524,7 +524,7 @@ var win_poll = function(href) {
 **/
 function font_resize(id, act)
 {
-    var $elements = $("#"+id+" *");
+    var $elements = $("#"+id+" *").not("select").not("option");
     $elements.removeClass("applied");
     var count = parseInt(get_cookie("ck_font_resize_count"));
     if(isNaN(count))
