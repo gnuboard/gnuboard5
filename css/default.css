@@ -385,7 +385,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #poll_result_cmt h2 {text-align:center}
 #poll_result_cmt h3 {margin:0 auto 10px;padding-top:15px;width:93%}
 #poll_result_cmt article {margin:0 18px 15px;border-bottom:1px solid #eee}
-#poll_result_cmt h1 {margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
+#poll_result_cmt h1 {margin:0;padding:0;height:0;border:0;font-size:0;line-height:0;overflow:hidden}
 .poll_datetime {display:inline-block;margin-left:10px}
 #poll_result_cmt p {padding:3px 0}
 #poll_result_cmt fieldset {margin-bottom:0;text-align:left}
