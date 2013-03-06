@@ -34,7 +34,7 @@ a:active {color:#000;text-decoration:underline}
 #captcha_wav img {border:1px solid #cfded8;border-left:0;background:#494949}
 
 /* 상단 레이아웃 */
-#hd {border-top:3px solid #151515;border-bottom:1px solid #e7f1ed;background:#fff}
+#hd {height:auto !important;height:0;border-top:3px solid #151515;border-bottom:1px solid #e7f1ed;background:#fff} /* height 중첩은 ie6 대응을 위한 것임 */
 #hd h1 {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
@@ -260,7 +260,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 /* 아웃로그인 스킨 */
 .ol {position:relative;padding:15px 15px 14px 14px}
-.ol h2 {margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
+.ol h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 
 #ol_before {}
