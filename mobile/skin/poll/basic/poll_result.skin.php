@@ -17,7 +17,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                         <p>
                             <?=$list[$i]['content']?>
                             <strong><?=$list[$i]['cnt']?> 표</strong>
-                            <span><?=number_format($list[$i]['rate'], 1)?> 퍼센트</span>
+                            <span><?=number_format($list[$i]['rate'], 1)?>%</span>
                         </p>
                         <div class="poll_result_graph">
                             <span style="width:<?=number_format($list[$i]['rate'], 1)?>%"></span>
