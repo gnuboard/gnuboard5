@@ -16,7 +16,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 echo $list[$i]['subject'];
 
             if ($list[$i]['comment_cnt'])
-                echo " <span class=\"cnt_cmt\">".$list[$i]['comment_cnt']."</span>";
+                echo $list[$i]['comment_cnt'];
 
             echo "</a>";
 
