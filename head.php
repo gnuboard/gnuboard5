@@ -163,4 +163,5 @@ if ($config['cf_include_head']) {
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
+            <button class="no_text_resize" onclick="font_default('container');">기본</button>
         </div>
