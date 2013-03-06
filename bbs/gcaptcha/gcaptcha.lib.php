@@ -122,7 +122,7 @@ class gcaptcha
 
         $this->captcha_filename = $this->get_captcha_filename();
 
-        imagejpeg($im, G4_DATA_PATH.'/cache/gcaptcha-'.$this->captcha_filename.'.jpg');
+        imagejpeg($im, G4_DATA_PATH.'/cache/'.$this->captcha_filename.'.jpg');
         imagedestroy($im);
 
         $this->make_wav($this->captcha_filename.'.wav');        
@@ -144,7 +144,7 @@ class gcaptcha
             $wavs[] = $file;
         }
 
-        $wav_filepath = G4_DATA_PATH.'/cache/gcaptcha-'.$captcha_filename;
+        $wav_filepath = G4_DATA_PATH.'/cache/'.$captcha_filename;
         $fp = fopen($wav_filepath, 'w+');
         fwrite($fp, join_wavs($wavs));
         fclose($fp);

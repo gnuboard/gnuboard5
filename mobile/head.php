@@ -12,7 +12,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <header id="hd">
 
+    <? if ($is_member) { ?><span class="sound_only"><?=$member['mb_nick']?>님 로그인 중</span><? } ?>
     <h1><?=$config['cf_title']?></h1>
+
+    <div id="to_content"><a href="#container">본문 바로가기</a></div>
 
     <div id="hd_wrapper">
 
