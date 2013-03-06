@@ -165,15 +165,15 @@ $gcaptcha->run();
 */
 
 // 캡챠이미지는 한개만 사용 가능함.
-function captcha_html($class="captcha")
+function captcha_html($class='captcha')
 {
     global $g4, $gcaptcha;
 
     $obj = new gcaptcha();
     $obj->run();
 
-    $jpg_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.jpg';
-    $wav_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.wav';
+    $jpg_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
+    $wav_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.wav';
 
     $html .= PHP_EOL.'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>'; 
     $html .= PHP_EOL.'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>'; 
