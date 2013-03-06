@@ -122,7 +122,7 @@ class gcaptcha
 
         $this->captcha_filename = $this->get_captcha_filename();
 
-        imagejpeg($im, G4_DATA_PATH.'/cache/gcaptcha-'.$this->captcha_filename.'.jpg');
+        imagejpeg($im, G4_DATA_PATH.'/cache/'.$this->captcha_filename.'.jpg');
         imagedestroy($im);
 
         $this->make_wav($this->captcha_filename.'.wav');        
@@ -130,7 +130,7 @@ class gcaptcha
 
     function get_captcha_filename()
     {
-        return 'gcaptcha-'.abs_ip2long().'_'.$_COOKIE['PHPSESSID'];
+        return 'gcaptcha-'.abs_ip2long().'_'.session_id();
     }
 
     function make_wav($captcha_filename)
@@ -144,7 +144,7 @@ class gcaptcha
             $wavs[] = $file;
         }
 
-        $wav_filepath = G4_DATA_PATH.'/cache/gcaptcha-'.$captcha_filename;
+        $wav_filepath = G4_DATA_PATH.'/cache/'.$captcha_filename;
         $fp = fopen($wav_filepath, 'w+');
         fwrite($fp, join_wavs($wavs));
         fclose($fp);
@@ -165,15 +165,15 @@ $gcaptcha->run();
 */
 
 // 캡챠이미지는 한개만 사용 가능함.
-function captcha_html($class="captcha")
+function captcha_html($class='captcha')
 {
     global $g4, $gcaptcha;
 
     $obj = new gcaptcha();
     $obj->run();
 
-    $jpg_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.jpg';
-    $wav_file_url = G4_DATA_URL.'/cache/gcaptcha-'.$obj->captcha_filename.'.wav';
+    $jpg_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
+    $wav_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.wav';
 
     $html .= PHP_EOL.'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>'; 
     $html .= PHP_EOL.'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>'; 

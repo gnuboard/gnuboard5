@@ -15,7 +15,7 @@ if ($is_nogood) $colspan++;
 <div id="bo_list" style="width:<?=$width;?>">
 
     <? if ($is_category) { ?>
-    <form id="fcategory" name="fcategory" method="get">
+    <form name="fcategory" id="fcategory" method="get">
     <nav id="bo_cate">
         <h2><?=$board['bo_subject']?> 카테고리</h2>
         <ul id="bo_cate_ul">
@@ -40,7 +40,7 @@ if ($is_nogood) $colspan++;
         <? } ?>
     </div>
 
-    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
+    <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     <input type="hidden" name="bo_table" value="<?=$bo_table?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
     <input type="hidden" name="stx" value="<?=$stx?>">
@@ -53,7 +53,7 @@ if ($is_nogood) $colspan++;
     <thead>
     <tr>
         <th scope="col">번호</th>
-        <? if ($is_checkbox) { ?><th scope="col"><input type="checkbox" onclick="if (this.checked) all_checked(true); else all_checked(false);" title="현재 페이지 게시물 전체선택"></th><?}?>
+        <? if ($is_checkbox) { ?><th scope="col"><input type="checkbox" title="현재 페이지 게시물 전체선택" onclick="if (this.checked) all_checked(true); else all_checked(false);"></th><?}?>
         <th scope="col">제목</th>
         <th scope="col">글쓴이</th>
         <th scope="col"><?=subject_sort_link('wr_datetime', $qstr2, 1)?>날짜</a></th>
@@ -121,9 +121,9 @@ if ($is_nogood) $colspan++;
             <li><a href="<?=$list_href?>" class="btn_b01"> 목록</a></li>
             <? } ?>
             <? if ($is_checkbox) { ?>
-            <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택삭제"></li>
-            <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택복사"></li>
-            <li><input type="submit" name="btn_submit" onclick="document.pressed=this.value" value="선택이동"></li>
+            <li><input type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"></li>
+            <li><input type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value"></li>
+            <li><input type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value"></li>
             <? } ?>
         </ul>
 
@@ -160,8 +160,8 @@ if ($is_nogood) $colspan++;
         <option value="wr_name,1"<?=get_selected($sfl, 'wr_name,1');?>>글쓴이</option>
         <option value="wr_name,0"<?=get_selected($sfl, 'wr_name,0');?>>글쓴이(코)</option>
     </select>
-    <input name="stx" class="fs_input required" maxlength="15" size="15" required value="<?=stripslashes($stx)?>" title="검색어(필수)">
-    <input type="submit" class="fs_submit" value="검색">
+    <input type="text" name="stx"  value="<?=stripslashes($stx)?>" title="검색어(필수)"  required  class="fs_input required" size="15" maxlength="15">
+    <input type="submit" value="검색" class="fs_submit">
     </form>
 </fieldset>
 

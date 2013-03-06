@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <h1 id="wrapper_title"><?=$g4['title']?></h1>
 
-<form id="fwrite" name="fwrite" method="post" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" enctype="multipart/form-data" autocomplete="off" style="width:<?=$width;?>">
+<form name="fwrite" id="fwrite" action="<?=$action_url?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?=$width;?>">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="bo_table" value="<?=$bo_table?>">
 <input type="hidden" name="wr_id" value="<?=$wr_id?>">
@@ -53,28 +53,28 @@ echo $option_hidden;
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="wr_name" name="wr_name" class="frm_input required" size="10" maxlength="20" required value="<?=$name?>"></td>
+    <td><input type="text" name="wr_name" value="<?=$name?>" id="wr_name" required class="frm_input required" size="10" maxlength="20"></td>
 </tr>
 <? } ?>
 
 <? if ($is_password) { ?>
 <tr>
     <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" id="wr_password" name="wr_password" class="frm_input" maxlength="20" <?=$password_required?>></td>
+    <td><input type="password" name="wr_password" id="wr_password" class="frm_input" maxlength="20" <?=$password_required?>></td>
 </tr>
 <? } ?>
 
 <? if ($is_email) { ?>
 <tr>
     <th scope="row"><label for="wr_email">이메일</label></th>
-    <td><input type="text" id="wr_email" name="wr_email" class="frm_input email" size="50" value="<?=$email?>" maxlength="100"></td>
+    <td><input type="text" name="wr_email" value="<?=$email?>" id="wr_email" class="frm_input email" size="50" maxlength="100"></td>
 </tr>
 <? } ?>
 
 <? if ($is_homepage) { ?>
 <tr>
     <th scope="row"><label for="wr_homepage">홈페이지</label></th>
-    <td><input type="text" id="wr_homepage" name="wr_homepage" class="frm_input" size="50" value="<?=$homepage?>"></td>
+    <td><input type="text" name="wr_homepage" value="<?=$homepage?>" id="wr_homepage" class="frm_input" size="50"></td>
 </tr>
 <? } ?>
 
@@ -89,7 +89,7 @@ echo $option_hidden;
 <tr>
     <th scope="row"><label for="ca_name">분류<strong class="sound_only">필수</strong></label></th>
     <td>
-        <select id="ca_name" name="ca_name" class="required" required>
+        <select name="ca_name" id="ca_name" required class="required" >
             <option value="">선택하세요</option>
             <?=$category_option?>
         </select>
@@ -99,7 +99,7 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_subject">제목<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" id="wr_subject" name="wr_subject" class="frm_input required" size="50" required value="<?=$subject?>"></td>
+    <td><input type="text" name="wr_subject" value="<?=$subject?>" id="wr_subject" required class="frm_input required" size="50"></td>
 </tr>
 
 <tr>
@@ -110,7 +110,7 @@ echo $option_hidden;
 <? for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?=$i?>">링크 #<?=$i?></label></th>
-    <td><input type="text" id="wr_link<?=$i?>" name="wr_link<?=$i?>" class="frm_input" size="50" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>"></td>
+    <td><input type="text" name="wr_link<?=$i?>" value="<?if($w=="u"){echo$write['wr_link'.$i];}?>" id="wr_link<?=$i?>" class="frm_input" size="50"></td>
 </tr>
 <? } ?>
 
@@ -118,9 +118,9 @@ echo $option_hidden;
 <tr>
     <th scope="row">파일 #<?=$i+1?></th>
     <td>
-        <input type="file" name="bf_file[]" class="frm_file frm_input" title="파일첨부 <?=$i+1?> :  용량 <?=$upload_max_filesize?> 이하만 업로드 가능">
+        <input type="file" name="bf_file[]" title="파일첨부 <?=$i+1?> :  용량 <?=$upload_max_filesize?> 이하만 업로드 가능" class="frm_file frm_input">
         <? if ($is_file_content) { ?>
-        <input type="text" name="bf_content[]" class="frm_file frm_input" value="<? echo $file[$i]['bf_content']; ?>" size="50" title="파일 설명을 입력해주세요.">
+        <input type="text" name="bf_content[]" value="<? echo $file[$i]['bf_content']; ?>" title="파일 설명을 입력해주세요." class="frm_file frm_input" size="50">
         <?}?>
         <? if($w == 'u' && $file[$i]['file']) { ?>
         <input type="checkbox" id="bf_file_del<?=$i?>" name="bf_file_del[<? echo $i; ?>]" value="1"> <label for="bf_file_del<?=$i?>"><? echo $file[$i]['source'].'('.$file[$i]['size'].')'; ?> 파일 삭제</label>
@@ -142,7 +142,7 @@ echo $option_hidden;
 </table>
 
 <div class="btn_confirm">
-    <input type="submit" id="btn_submit" class="btn_submit" value="글쓰기" accesskey="s">
+    <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
     <a href="./board.php?bo_table=<?=$bo_table?>" class="btn_cancel">취소</a>
 </div>
 </form>
