@@ -83,6 +83,7 @@ h2 {font-size:1.2em}
 /* 중간 레이아웃 */
 #wrapper {margin:30px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
+
 #qnb {float:right;margin:0;padding:0;list-style:none}
 #qnb li {margin-bottom:20px}
 #qnb a {display:block;width:40px;font-size:0.9em;text-align:center}
@@ -90,7 +91,12 @@ h2 {font-size:1.2em}
 #qnb a:hover,
 #qnb a:active {text-decoration:none}
 #qnb img {margin-bottom:5px}
-#container {float:left;width:942px}
+
+#container {position:relative;float:left;width:942px}
+
+/* 텍스트 크기 조절 */
+#text_size {position:absolute;top:0;right:0}
+#text_size button {padding:0 10px;height:30px;background:#000;color:#fff;cursor:pointer}
 
 /* 하단 레이아웃 */
 #ft {margin:20px 0;padding:5px 0;border-top:1px solid #d0d6d8}

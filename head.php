@@ -161,7 +161,7 @@ if ($config['cf_include_head']) {
     <div id="container">
         <? if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
         <div id="text_size">
-            <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
             <button class="no_text_resize" onclick="font_default('container');">기본</button>
+            <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
         </div>

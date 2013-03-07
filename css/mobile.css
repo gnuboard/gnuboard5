@@ -71,6 +71,9 @@ pre {overflow-x:scroll;font-size:1.1em}
 #container {position:relative;min-height:300px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
+/* 텍스트 크기 조절 */
+#text_size {margin:0 0 1em;text-align:center}
+
 /* 하단 레이아웃 */
 #ft {background:#484848}
 #ft h1 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
