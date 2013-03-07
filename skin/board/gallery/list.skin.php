@@ -5,6 +5,20 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
 
+<div class="ad72890">
+    <script type="text/javascript"><!--
+    google_ad_client = "ca-pub-9955166939194057";
+    /* 써글728-1 */
+    google_ad_slot = "9632665464";
+    google_ad_width = 728;
+    google_ad_height = 90;
+    //-->
+    </script>
+    <script type="text/javascript"
+    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+    </script>
+</div>
+
 <!-- 게시판 목록 시작 -->
 <div id="bo_img" style="width:<?=$width;?>">
 
@@ -54,7 +68,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             $k += 1;
             if ($k % $board['bo_gallery_cols'] == 0) $style .= "margin:0 !important;";
         ?>
-        <li class="bo_img_list_li <? // 현재 읽고 있는 글이면, ?>bo_img_now" style="<?=$style?>">
+        <li class="bo_img_list_li <? if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<? } ?>" style="<?=$style?>">
             <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"><? } ?>
             <span class="sound_only">
                 <?
@@ -65,9 +79,10 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                 ?>
             </span>
             <ul class="bo_img_con">
-                <li>
-                    <a href="<?=$list[$i]['href']?>" class="bo_img_href">
-                    <? if ($list[$i]['is_notice']) { // 공지사항 ?><strong>공지</strong>
+                <li class="bo_img_href">
+                    <a href="<?=$list[$i]['href']?>">
+                    <? if ($list[$i]['is_notice']) { // 공지사항 ?>
+                        <strong>공지</strong>
                     <? } else { ?>
                     <?
                     $file = get_list_file($bo_table, $list[$i]['wr_id']);
@@ -79,13 +94,12 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                     } else {
                         $imgsrc = $board_skin_url.'/img/noimg.jpg';
                     }
-                    $imgalt = $file['bf_content'] ? get_text($file['bf_content']) : "";
                     ?>
-                        <img src="<?=$imgsrc?>" alt="<?=$imgalt?>" width="<?=$board['bo_9']?>" height="<?=$board['bo_10']?>">
+                        <img src="<?=$imgsrc?>" alt="<?=get_text($file['bf_content'])?>" width="<?=$board['bo_9']?>" height="<?=$board['bo_10']?>">
                     <? } ?>
                     </a>
                 </li>
-                <li>
+                <li class="bo_img_text_href">
                     <?
                     // echo $list[$i]['icon_reply']; 갤러리는 reply 를 사용 안 할 것 같습니다. - 지운아빠 2013-03-04
                     if ($is_category && $list[$i]['ca_name']) {
@@ -102,20 +116,16 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
                     if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
                     if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
-                    if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
-                    if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
-                    if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
+                    //if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
+                    //if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
+                    //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
                     ?>
                 </li>
-                <li><span class="sound_only">작성자 </span><?=$list[$i]['name']?></li>
-                <li><span class="sound_only">작성일 </span><?=$list[$i]['datetime2']?></li>
-                <li><span class="sound_only">조회 </span><?=$list[$i]['wr_hit']?></li>
-                <? if ($is_good || $is_nogood) {?>
-                <li>
-                    <? if ($is_good) {?><span>추천<strong><?=$list[$i]['wr_good']?></strong></span><? } ?>
-                    <? if ($is_nogood) {?><span>비추천<strong><?=$list[$i]['wr_nogood']?></strong></span><? } ?>
-                </li>
-                <? } ?>
+                <li><span>작성자 </span><?=$list[$i]['name']?></li>
+                <li><span>작성일 </span><?=$list[$i]['datetime2']?></li>
+                <li><span>조회 </span><?=$list[$i]['wr_hit']?></li>
+                <? if ($is_good) {?><li><span>추천</span><strong><?=$list[$i]['wr_good']?></strong></li><? } ?>
+                <? if ($is_nogood) {?><li><span>비추천</span><strong><?=$list[$i]['wr_nogood']?></strong></li><? } ?>
             </ul>
         </li>
         <? } ?>
