@@ -211,7 +211,7 @@ function fboardlist_submit(f) {
 function select_copy(sw) {
     var f = document.fboardlist;
 
-    if (sw == 'copy')
+    if (sw == "copy")
         str = "복사";
     else
         str = "이동";
