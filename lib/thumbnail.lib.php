@@ -9,9 +9,9 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
 }
 
 // 게시글리스트 썸네일 생성
-function get_list_thumbnail($filename, $filepath, $thumb_width, $thumb_height, $is_create=false)
+function get_list_thumbnail($filename, $filepath, $thumb_width, $thumb_height, $is_create=false, $is_crop=true)
 {
-    return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create);
+    return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create, $is_crop);
 }
 
 // 게시글보기 썸네일 생성
@@ -100,7 +100,7 @@ function get_view_thumbnail($contents)
 }
 
 //function thumbnail($bo_table, $file, $width, $height, $is_create=false)
-function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create)
+function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create, $is_crop=false)
 {
     global $g4;
 
@@ -130,7 +130,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             $target = imagecreate($thumb_width, $thumb_height);
             imagecolorallocate($target, 250, 250, 250);
             imagecopy($target, $target, 0, 0, 0, 0, $thumb_width, $thumb_height);
-            imagepng($target, $thumb_file, 0);
+            imagejpeg($target, $thumb_file, 90);
             @chmod($thumb_file, 0606); // 추후 삭제를 위하여 파일모드 변경
         }
         return basename($thumb_file);
@@ -154,24 +154,36 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         $src = imagecreatefrompng($source_file);
     }
 
+    $src_width = $size[0];
+    $src_height = $size[1];
+
+    if($is_crop && $thumb_width && $thumb_height) {
+        $ratio = $thumb_height / $thumb_width;
+        if($src_height / $src_width >= $ratio) {
+            $src_height = ceil(($thumb_height * $src_width) / $thumb_width);
+        } else {
+            $src_width = ceil(($thumb_width * $src_height) / $thumb_height);
+        }
+    }
+
     if ($thumb_width) {
         if ($thumb_height) {
-            $rate = $thumb_width / $size[0];
-            $tmp_height = (int)($size[1] * $rate);
+            $rate = $thumb_width / $src_width;
+            $tmp_height = (int)($src_height * $rate);
             if ($tmp_height < $thumb_height) {
                 $dst = imagecreatetruecolor($thumb_width, $thumb_height);
                 $bgcolor = imagecolorallocate($dst, 250, 250, 250); // 배경색 여기야!!!
                 imagefill($dst, 0, 0, $bgcolor);
-                imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $thumb_height, $size[0], $size[1]);
+                imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $thumb_height, $src_width, $src_height);
             } else {
                 $dst = imagecreatetruecolor($thumb_width, $thumb_height);
-                imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $thumb_height, $size[0], $size[1]);
+                imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $thumb_height, $src_width, $src_height);
             }
         } else {
-            $rate = $thumb_width / $size[0];
-            $tmp_height = (int)($size[1] * $rate);
+            $rate = $thumb_width / $src_width;
+            $tmp_height = (int)($src_height * $rate);
             $dst = imagecreatetruecolor($thumb_width, $tmp_height);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $tmp_height, $size[0], $size[1]);
+            imagecopyresampled($dst, $src, 0, 0, 0, 0, $thumb_width, $tmp_height, $src_width, $src_height);
         }
     }
 
