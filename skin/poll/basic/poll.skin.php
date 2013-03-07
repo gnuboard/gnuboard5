@@ -13,7 +13,7 @@ if (!$po_id) {
 $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
 ?>
 
-<form name="fpoll" method="post" action="<?=G4_BBS_URL?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="win_poll">
+<form name="fpoll" action="<?=G4_BBS_URL?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="win_poll" method="post">
 <input type="hidden" name="po_id" value="<?=$po_id?>">
 <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
 <section id="poll">

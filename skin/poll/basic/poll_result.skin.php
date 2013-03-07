@@ -50,7 +50,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? } ?>
 
         <? if ($member['mb_level'] >= $po['po_level']) { ?>
-        <form name="fpollresult" method="post" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" autocomplete="off">
+        <form name="fpollresult" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" method="post" autocomplete="off">
         <input type=hidden name="po_id" value="<?=$po_id?>">
         <input type=hidden name="w" value="">
         <input type=hidden name="skin_dir" value="<?=$skin_dir?>">
@@ -61,12 +61,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <? if ($is_guest) { ?>
         <tr>
             <th scope="row"><label for="pc_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="pc_name" name="pc_name" class="frm_input required" size="10" required></td>
+            <td><input type="text" name="pc_name" id="pc_name" required class="frm_input required" size="10"></td>
         </tr>
         <? } ?>
         <tr>
             <th scope="row"><label for="pc_idea">의견<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="pc_idea" name="pc_idea" class="frm_input required" size="47" required maxlength="100"></td>
+            <td><input type="text" id="pc_idea" name="pc_idea" required class="frm_input required" size="47" maxlength="100"></td>
         </tr>
         <? if ($is_guest) { ?>
         <tr>

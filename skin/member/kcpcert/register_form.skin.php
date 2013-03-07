@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <script src="<?=G4_JS_URL?>/jquery.register_form.js"></script>
 
-<form id="fregisterform" name="fregisterform" method="post" action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" enctype="multipart/form-data" autocomplete="off">
+<form name="fregisterform" id="fregisterform"action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" method="post"  enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?=$w?>">
 <input type="hidden" name="url" value="<?=$urlencode?>">
 <input type="hidden" name="agree" value="<?=$agree?>">
@@ -20,18 +20,18 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" id="reg_mb_id" name="mb_id" class="frm_input minlength_3 <?=$required?> <?=$readonly?>" value="<?=$member['mb_id']?>" maxlength="20" <?=$required?> <?=$readonly?>>
+        <input type="text" name="mb_id" value="<?=$member['mb_id']?>" id="reg_mb_id" class="frm_input minlength_3 <?=$required?> <?=$readonly?>" maxlength="20" <?=$required?> <?=$readonly?>>
         <span id="msg_mb_id"></span>
         <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password">패스워드<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" id="reg_mb_password" name="mb_password" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?>></td>
+    <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?>></td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password_re">패스워드 확인<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" id="reg_mb_password_re" name="mb_password_re" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?>></td>
+    <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?>></td>
 </tr>
 </table>
 
@@ -40,7 +40,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input id="reg_mb_name" name="mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" value="<?=$member['mb_name']?>" size="10" <?=$required?> <?=$readonly?>>
+        <input name="mb_name" value="<?=$member['mb_name']?>" id="reg_mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" size="10" <?=$required?> <?=$readonly?>>
         <? if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } ?>
     </td>
 </tr>
@@ -49,7 +49,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_nick">별명<strong class="sound_only">필수</strong></label></th>
     <td>
         <input type="hidden" name="mb_nick_default" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>">
-        <input type="text" id="reg_mb_nick" name="mb_nick" class="frm_input required nospace" maxlength="20" size="10" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" required>
+        <input type="text" name="mb_nick" value="<?=isset($member['mb_nick'])?$member['mb_nick']:'';?>" id="reg_mb_nick" required class="frm_input required nospace" size="10" maxlength="20" >
         <span id="msg_mb_nick"></span>
         <span class="frm_info">
             공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br>
@@ -63,7 +63,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_email">E-mail<? if ($config['cf_use_email_certify']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td>
         <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
-        <input type="text" id="reg_mb_email" name="mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" maxlength="100" size="50" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?>>
+        <input type="text" name="mb_email" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?> id="reg_mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" size="50" maxlength="100">
         <? if ($config['cf_use_email_certify']) { ?>
         <span class="frm_info">
             <? if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; } ?>
@@ -76,14 +76,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <? if ($config['cf_use_homepage']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_homepage">홈페이지<? if ($config['cf_req_homepage']){?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><input type="text" id="reg_mb_homepage" name="mb_homepage" class="frm_input <?=$config['cf_req_homepage']?"required":"";?>" maxlength="255" size="50" <?=$config['cf_req_homepage']?"required":"";?> value="<?=$member['mb_homepage']?>"></td>
+    <td><input type="text" name="mb_homepage" value="<?=$member['mb_homepage']?>" id="reg_mb_homepage" class="frm_input <?=$config['cf_req_homepage']?"required":"";?>" size="50" maxlength="255"<?=$config['cf_req_homepage']?"required":"";?>></td>
 </tr>
 <? } ?>
 
 <? if ($config['cf_use_tel']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_tel">전화번호<? if ($config['cf_req_tel']) {?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><input type="text" id="reg_mb_tel" name="mb_tel" class="frm_input <?=$config['cf_req_tel']?"required":"";?>" maxlength="20" <?=$config['cf_req_tel']?"required":"";?> value="<?=$member['mb_tel']?>"></td>
+    <td><input type="text" name="mb_tel" value="<?=$member['mb_tel']?>" id="reg_mb_tel" class="frm_input <?=$config['cf_req_tel']?"required":"";?>" maxlength="20" <?=$config['cf_req_tel']?"required":"";?>></td>
 </tr>
 <? } ?>
 
@@ -93,7 +93,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <input type="hidden" name="kcpcert_no" value="">
         <input type="hidden" name="kcpcert_time" value="<?=$member['mb_hp_certify']?>">
         <input type="hidden" name="old_mb_hp" value="<?=$member['mb_hp']?>">
-        <input type="text" id="reg_mb_hp" name="mb_hp" class="frm_input required" maxlength="20" required value="<?=$member['mb_hp']?>">
+        <input type="text" name="mb_hp" value="<?=$member['mb_hp']?>" id="reg_mb_hp" required class="frm_input required" maxlength="20">
         <button type="button" id="win_kcpcert">휴대폰인증</button>
         <noscript>휴대폰인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
     </td>
@@ -108,12 +108,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <? if ($config['cf_req_addr']) {?><strong class="sound_only">필수</strong><? } ?>
     </th>
     <td>
-        <input type="text" id="reg_mb_zip1" name="mb_zip1" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip1']?>" title="우편번호 앞자리">
+        <input type="text" name="mb_zip1"value="<?=$member['mb_zip1']?>" id="reg_mb_zip1" title="우편번호 앞자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> >
          -
-        <input type="text" id="reg_mb_zip2" name="mb_zip2" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_zip2']?>" title="우편번호 뒷자리">
-        <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">주소찾기</a>
-        <input type="text" id="reg_mb_addr1" name="mb_addr1" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr1']?>" title="행정구역주소">
-        <input type="text" id="reg_mb_addr2" name="mb_addr2" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?> value="<?=$member['mb_addr2']?>" title="상세주소">
+        <input type="text" name="mb_zip2" value="<?=$member['mb_zip2']?>" id="reg_mb_zip2" title="우편번호 뒷자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?>>
+        <a href="<? echo $zip_href; ?>" target="_blank" id="reg_zip_find" class="btn_frmline win_zip_find">주소찾기</a>
+        <input type="text" name="mb_addr1" value="<?=$member['mb_addr1']?>" id="reg_mb_addr1" title="행정구역주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?>>
+        <input type="text" name="mb_addr2" value="<?=$member['mb_addr2']?>" id="reg_mb_addr2" title="상세주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?>>
     </td>
 </tr>
 <? } ?>
@@ -124,14 +124,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <? if ($config['cf_use_signature']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_signature">서명<? if ($config['cf_req_signature']){?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><textarea id="reg_mb_signature" name="mb_signature" class="<?=$config['cf_req_signature']?"required":"";?>" <?=$config['cf_req_signature']?"required":"";?>><?=$member['mb_signature']?></textarea></td>
+    <td><textarea name="mb_signature" id="reg_mb_signature" class="<?=$config['cf_req_signature']?"required":"";?>" <?=$config['cf_req_signature']?"required":"";?>><?=$member['mb_signature']?></textarea></td>
 </tr>
 <? } ?>
 
 <? if ($config['cf_use_profile']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_profile">자기소개</label></th>
-    <td><textarea id="reg_mb_profile" name="mb_profile" class="<?=$config['cf_req_profile']?"required":"";?>" <?=$config['cf_req_profile']?"required":"";?>><?=$member['mb_profile']?></textarea></td>
+    <td><textarea name="mb_profile" id="reg_mb_profile" class="<?=$config['cf_req_profile']?"required":"";?>" <?=$config['cf_req_profile']?"required":"";?>><?=$member['mb_profile']?></textarea></td>
 </tr>
 <? } ?>
 
@@ -139,9 +139,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_icon">회원아이콘</label></th>
     <td>
-        <input type="file" id="reg_mb_icon" name="mb_icon" class="frm_input">
+        <input type="file" name="mb_icon" id="reg_mb_icon" class="frm_input">
         <? if ($w == 'u' && file_exists($mb_icon)) { ?>
-        <input type="checkbox" id="del_mb_icon" name="del_mb_icon" value="1">
+        <input type="checkbox" name="del_mb_icon" value="1" id="del_mb_icon">
         <label for="del_mb_icon">삭제</label>
         <? } ?>
         <span class="frm_info">
@@ -155,7 +155,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_mailling">메일링서비스</label></th>
     <td>
-        <input type="checkbox" id="reg_mb_mailling" name="mb_mailling" value="1" <?=($w=='' || $member['mb_mailling'])?'checked':'';?>>
+        <input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?=($w=='' || $member['mb_mailling'])?'checked':'';?>>
         정보 메일을 받겠습니다.
     </td>
 </tr>
@@ -164,7 +164,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_sms">SMS 수신여부</label></th>
     <td>
-        <input type="checkbox" id="reg_mb_sms" name="mb_sms" value="1" <?=($w=='' || $member['mb_sms'])?'checked':'';?>>
+        <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?=($w=='' || $member['mb_sms'])?'checked':'';?>>
         핸드폰 문자메세지를 받겠습니다.
     </td>
 </tr>
@@ -175,7 +175,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_open">정보공개</label></th>
     <td>
         <input type="hidden" name="mb_open_default" value="<?=$member['mb_open']?>">
-        <input type="checkbox" id="reg_mb_open" name="mb_open" value="1" <?=($w=='' || $member['mb_open'])?'checked':'';?>>
+        <input type="checkbox" name="mb_open" value="1" id="reg_mb_open" <?=($w=='' || $member['mb_open'])?'checked':'';?>>
         다른분들이 나의 정보를 볼 수 있도록 합니다.
         <span class="frm_info">
             정보공개를 바꾸시면 앞으로 <?=(int)$config['cf_open_modify']?>일 이내에는 변경이 안됩니다.
@@ -198,7 +198,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <? if ($w == "" && $config['cf_use_recommend']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_recommend">추천인아이디</label></th>
-    <td><input type="text" id="reg_mb_recommend" name="mb_recommend" class="frm_input"></td>
+    <td><input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input"></td>
 </tr>
 <? } ?>
 
@@ -209,7 +209,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </table>
 
 <div class="btn_confirm">
-    <input type="submit" class="btn_submit" value="<?=$w==''?'회원가입':'정보수정';?>" accesskey="s">
+    <input type="submit" value="<?=$w==''?'회원가입':'정보수정';?>" class="btn_submit" accesskey="s">
     <a href="<?=$g4['path']?>/" class="btn_cancel">취소</a>
 </div>
 </form>
