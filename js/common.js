@@ -581,13 +581,13 @@ function font_default(id)
     if(isNaN(count))
         count = 0;
 
-    // font resize 카운트 초기화
-    set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
-
-    if(count > 0)
+    if(count > 0) {
         act = "decrease";
-    else
+    } else {
         act = "increase";
+        // 작게 후 기본 크기가 되지 않는 문제해결을 위해 추가
+        set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
+    }
 
     for(i=0; i<Math.abs(count); i++) {
         font_resize(id, act);
