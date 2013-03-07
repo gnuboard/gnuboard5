@@ -171,6 +171,8 @@ a:active {color:#000;text-decoration:underline}
 .bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 td.empty_table {padding:85px 0;text-align:center}
 
+.empty_list {padding:85px 0;text-align:center}
+
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
 
@@ -306,8 +308,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_login label {letter-spacing:-0.1em}
 #mb_login .login_id {position:absolute;top:26px;left:95px}
-#mb_login .login_pw {position:absolute;top:55px;left:95px}
-#mb_login .fs_input {display:block;margin:0 0 5px 80px}
+#mb_login .login_pw {position:absolute;top:52px;left:95px}
+#mb_login .frm_input {display:block;margin:0 0 5px 80px}
 #mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
 #mb_login section {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
 #mb_login section div {text-align:right}
@@ -485,10 +487,10 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 .bo_img_con {margin:0;padding:0;list-style:none}
 .bo_img_con li {}
-.bo_img_con li strong {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:10em}
 .bo_img_href:link,
 .bo_img_href:focus,
 .bo_img_href:hover {text-decoration:none}
+.bo_img_href strong {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:10em}
 
 /* 목록 공통 */
 .bo_fx {margin-bottom:5px;zoom:1}
