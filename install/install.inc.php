@@ -42,7 +42,10 @@ td span {display:block;margin:0 0 5px;color:#666;font-size:0.9em}
 $dbconfig_file = $data_path.'/'.G4_DBCONFIG_FILE;
 if (file_exists($dbconfig_file)) {
 ?>
-    <p>프로그램이 이미 설치되어 있습니다.<br />새로 설치하시려면 '.$dbconfig_file.' 파일을 삭제후 설치하시기 바랍니다.</p>
+    <p>프로그램이 이미 설치되어 있습니다.<br />새로 설치하시려면 다음 파일을 삭제 하신 후 새로고침 하십시오.</p>
+    <ul>
+        <li><?=$dbconfig_file?></li>
+    </ul>
 <?
     exit;
 }
