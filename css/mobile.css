@@ -23,7 +23,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 /* 화면낭독기 사용자용 */
 #hd_login_msg {position:absolute;top:0;left:0;width:0;height:0;overflow:hidden}
-.sound_only {display:inline-block;margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+.sound_only {display:inline-block;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;font-size:0 !important;line-height:0 !important;overflow:hidden}
 /* 본문 바로가기 */
 #to_content a {z-index:100000;position:absolute;top:0;left:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
@@ -420,6 +420,28 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 
 #bo_list td:nth-of-type(2) {text-align:center}
 
+/* 갤러리 목록 */
+#bo_img h2 {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#bo_img_list {margin:1em 0 0;padding:0 1em;list-style:none;zoom:1}
+#bo_img_list:after {display:block;visibility:hidden;clear:both;content:""}
+.bo_img_list_li {float:left;margin:0 0 2em;width:25%}
+
+.bo_img_con {margin:0;padding:0;list-style:none}
+.bo_img_con li {margin:0 0 0.3em}
+.bo_img_con .bo_img_subject {display:inline-block;width:50px}
+
+.bo_img_now .bo_img_text_href a {color:#ff3061}
+
+.bo_img_href a:link,
+.bo_img_href a:focus,
+.bo_img_href a:hover {text-decoration:none}
+.bo_img_href strong {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:10em}
+
+.bo_img_text_href {margin:1em 0 !important}
+.bo_img_text_href a {color:#000;font-weight:bold;text-decoration:none}
+.bo_img_text_href img {margin:0 0 0 0.3em}
+
+/* 게시판 목록 공통 */
 .bo_fx {margin-bottom:0.3em;padding:0.5em 1em;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}

@@ -487,7 +487,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 .bo_img_con {margin:0;padding:0;list-style:none}
 .bo_img_con li {margin:0 0 4px}
-.bo_img_con span {display:inline-block;width:50px}
+.bo_img_con .bo_img_subject {display:inline-block;width:50px}
 
 .bo_img_now .bo_img_text_href a {color:#ff3061}
 
@@ -501,7 +501,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 .bo_img_text_href span {display:inline !important}
 .bo_img_text_href img {margin:0 0 0 4px}
 
-/* 목록 공통 */
+/* 게시판 목록 공통 */
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
