@@ -102,7 +102,7 @@ a:active {color:#000;text-decoration:underline}
 
 /* 텍스트 크기 조절 */
 #text_size {position:absolute;top:-31px;left:-1px}
-#text_size button {padding:0 10px;height:30px;border:1px solid #cfded8;border-bottom:0;cursor:pointer}
+#text_size button {padding:0 10px;height:30px;border:1px solid #cfded8;border-bottom:0;background:#000;color:#fff;cursor:pointer}
 
 /* 하단 레이아웃 */
 #ft {background:#484848}
