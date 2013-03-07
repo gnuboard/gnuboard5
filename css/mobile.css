@@ -336,14 +336,12 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #profile .sv_wrap a {margin:0 0 0.3em;padding:0;font-weight:bold;line-height:1em}
 
 /* 최근게시물 스킨 (latest) */
-.lt {float:left}
-.lt ul {display:none}
-.lt_title {display:inline-block;padding:1em}
-.lt_title:focus ~ ul,
-.lt_title:hover ~ ul,
-.lt_title:active ~ ul {display:block;position:absolute;top:100px;left:0}
+.lt {position:relative;margin:0 0 1em;padding:0 1em 1.5em;border-bottom:1px solid #ddd}
+.lt ul {margin:0 0 1em;padding:0;list-style:none}
+.lt li {padding:0.2em 0}
 .lt a {color:#000;text-decoration:none}
-.lt_more {display:none}
+.lt_title {display:block;padding:1em 0}
+.lt_more {position:absolute;top:1em;right:1em}
 
 /* 현재접속자 */
 #current_connect_tbl {}

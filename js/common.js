@@ -530,6 +530,10 @@ function font_resize(id, act)
     if(isNaN(count))
         count = 0;
 
+    // 크롬의 최소 폰트사이즈 버그로 작게는 한단계만 가능
+    if(count == -1)
+        return;
+
     $elements.each(function() {
         if($(this).hasClass("no_text_resize"))
             return true;
@@ -568,11 +572,38 @@ function font_resize(id, act)
 
 
 /**
+ * 텍스트 기본사이즈
+**/
+function font_default(id)
+{
+    var act;
+    var count = parseInt(get_cookie("ck_font_resize_count"));
+    if(isNaN(count))
+        count = 0;
+
+    if(count > 0) {
+        act = "decrease";
+    } else {
+        act = "increase";
+        // 작게 후 기본 크기가 되지 않는 문제해결을 위해 추가
+        set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
+    }
+
+    for(i=0; i<Math.abs(count); i++) {
+        font_resize(id, act);
+    }
+
+    // font resize 카운트 초기화
+    set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
+}
+
+
+/**
  * font_resize 함수를 반복 할 때 사용
 **/
 function font_resize2(id, act, loop)
 {
-    // fotn resize 카운트 초기화
+    // font resize 카운트 초기화
     set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
 
     for(i=0; i<loop; i++) {

@@ -361,6 +361,7 @@ include_once('./board_head.php');
 
 $action_url = G4_HTTPS_BBS_URL."/write_update.php";
 
+echo '<!-- skin : '.$board_skin_path.' -->';
 include_once ($board_skin_path.'/write.skin.php');
 
 include_once('./board_tail.php');

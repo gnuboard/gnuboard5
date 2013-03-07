@@ -18,7 +18,7 @@ function print_menu2($key, $no)
 {
     global $menu, $auth_menu, $is_admin, $auth, $g4;
 
-    $str .= "<ul>";
+    $str .= "<ul class=\"gnb_sub_ul\">";
     for($i=1; $i<count($menu[$key]); $i++)
     {
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))

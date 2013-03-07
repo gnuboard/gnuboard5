@@ -987,6 +987,9 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
         $title_mb_id = '['.$mb_id.']';
     } else {
+        if(!$bo_table)
+            return $name;
+
         $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\" title=\"$name 이름으로 검색\"class=\"sv_guest\" onclick=\"return false;\">$name</a>";
         $title_mb_id = '[비회원]';
     }
@@ -1784,5 +1787,38 @@ function delete_editor_thumbnail($contents)
             unlink($file);
         }
     }
+}
+
+// 스킨 style sheet 파일 얻기
+function get_skin_stylesheet($skin_path)
+{
+    if(!$skin_path)
+        return "";
+
+    $str = "";
+
+    $p = parse_url(G4_URL);
+    $skin_url = $p['scheme'].'://'.$p['host'];
+    if(isset($p['port']))
+        $skin_url .= ':'.$p['port'];
+    $skin_url .= str_replace($_SERVER['DOCUMENT_ROOT'], "", $skin_path);
+
+    if(is_dir($skin_path)) {
+        if($dh = opendir($skin_path)) {
+            while(($file = readdir($dh)) !== false) {
+                if($file == "." || $file == "..")
+                    continue;
+
+                if(is_dir($skin_path.'/'.$file))
+                    continue;
+
+                if(preg_match("/\.(css)$/i", $file))
+                    $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date("md").'">'."\n";
+            }
+            closedir($dh);
+        }
+    }
+
+    return $str;
 }
 ?>

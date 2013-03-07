@@ -137,7 +137,7 @@ if ($config['cf_include_head']) {
         ?>
         <li class="gnb_1depth">
             <a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_subject']?></a>
-            <ul>
+            <ul class="gnb_sub_ul">
                 <?
                 $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' order by bo_order ";
                 $result2 = sql_query($sql2);
@@ -163,4 +163,5 @@ if ($config['cf_include_head']) {
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
+            <button class="no_text_resize" onclick="font_default('container');">기본</button>
         </div>

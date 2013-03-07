@@ -109,10 +109,12 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                 <li><span class="sound_only">작성자 </span><?=$list[$i]['name']?></li>
                 <li><span class="sound_only">작성일 </span><?=$list[$i]['datetime2']?></li>
                 <li><span class="sound_only">조회 </span><?=$list[$i]['wr_hit']?></li>
+                <? if ($is_good || $is_nogood) {?>
                 <li>
-                    <span>추천<strong><?=$list[$i]['wr_good']?></strong></span>
-                    <span>비추천<strong><?=$list[$i]['wr_nogood']?></strong></span>
+                    <? if ($is_good) {?><span>추천<strong><?=$list[$i]['wr_good']?></strong></span><? } ?>
+                    <? if ($is_nogood) {?><span>비추천<strong><?=$list[$i]['wr_nogood']?></strong></span><? } ?>
                 </li>
+                <? } ?>
             </ul>
         </li>
         <? } ?>
