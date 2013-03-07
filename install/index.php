@@ -4,12 +4,12 @@ include_once ('../config.php');
 include_once ('./install.inc.php');
 ?>
 
-<p>
-    <strong class="st_strong">라이센스(License) 내용을 반드시 확인하십시오.</strong><br>
-    라이센스에 동의하시는 경우에만 설치가 진행됩니다.
-</p>
+    <p>
+        <strong class="st_strong">라이센스(License) 내용을 반드시 확인하십시오.</strong><br>
+        라이센스에 동의하시는 경우에만 설치가 진행됩니다.
+    </p>
 
-<textarea name="textarea" id="idx_license" readonly><?=implode('', file('../LICENSE.txt'));?></textarea>
+    <textarea name="textarea" id="idx_license" readonly><?=implode('', file('../LICENSE.txt'));?></textarea>
 
 </div>
 

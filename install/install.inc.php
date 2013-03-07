@@ -14,6 +14,9 @@ if (!$title) $title = "그누보드4S 설치";
 body {margin:0;padding:0;background:#f7f7f7}
 h1 {margin:50px auto 30px;width:540px;font-size:1.4em}
 p {line-height:1.5em}
+table {width:100%;border-collapse:collapse;border-spacing:0}
+th,td {padding:5px;border:1px solid #ddd}
+th {text-align:left}
 
 #wrapper {margin:0 auto;padding:20px;width:500px;border:1px solid #eee;background:#fff}
 
@@ -22,6 +25,7 @@ p {line-height:1.5em}
 
 #btn_confirm {text-align:center}
 
+.outside {margin:0 auto;padding:20px 0;width:542px}
 .st_strong {color:#ff3061;font-weight:normal}
 </style>
 </head>
