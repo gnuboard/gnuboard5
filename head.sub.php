@@ -76,7 +76,7 @@ var g4_cookie_domain = "<?=G4_COOKIE_DOMAIN?>";
 <script src="<?=G4_JS_URL?>/wrest.js"></script>
 <? if(G4_IS_MOBILE) { ?>
 <script>
-    document.cookie = "device_width=" + screen.width;
+    set_cookie("device_width", screen.width, 6, g4_cookie_domain);
 </script>
 <? } ?>
 <? if (!defined('G4_IS_ADMIN')) { echo $config['cf_add_script']; } ?>
