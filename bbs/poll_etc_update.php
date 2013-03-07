@@ -2,9 +2,9 @@
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/mailer.lib.php');
 
-if ($w == "") 
+if ($w == '') 
 {
-    $po = sql_fetch(" select * from {$g4[poll_table]} where po_id = '{$po_id}' ");
+    $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '{$po_id}' ");
     if (!$po[po_id])
         alert('po_id 값이 제대로 넘어오지 않았습니다.');
 
@@ -18,15 +18,15 @@ if ($w == "")
 
     $pc_idea = stripslashes($pc_idea);
 
-    $name = cut_str($pc_name, $config[cf_cut_name]);
+    $name = cut_str($pc_name, $config['cf_cut_name']);
     $mb_id = '';
     if ($member[mb_id])
         $mb_id = '($member[mb_id])';
 
     // 환경설정의 투표 기타의견 작성시 최고관리자에게 메일발송 사용에 체크되어 있을 경우
-    if ($config[cf_email_po_super_admin])
+    if ($config['cf_email_po_super_admin'])
     {
-        $subject = $po[po_subject];
+        $subject = $po['po_subject'];
         $content = $pc_idea;
 
         ob_start();
@@ -36,7 +36,8 @@ if ($w == "")
 
         // 관리자에게 보내는 메일
         $admin = get_admin('super');
-        mailer($name, '', $admin[mb_email], '설문조사 기타의견 메일', $content, 1);
+        $from_email = $member['mb_email'] ? $member['mb_email'] : $admin['mb_email'];
+        mailer($name, $from_email, $admin['mb_email'], '설문조사 기타의견 메일', $content, 1);
     }
 } 
 else if ($w == 'd') 
@@ -45,7 +46,7 @@ else if ($w == 'd')
     {
         $sql = " delete from {$g4[poll_etc_table]} where pc_id = '{$pc_id}' ";
         if (!$is_admin)
-            $sql .= " and mb_id = '{$member[mb_id]}' ";
+            $sql .= " and mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
     }
 }
