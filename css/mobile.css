@@ -424,7 +424,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #bo_img h2 {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 #bo_img_list {margin:1em 0 0;padding:0 1em;list-style:none;zoom:1}
 #bo_img_list:after {display:block;visibility:hidden;clear:both;content:""}
-.bo_img_list_li {float:left;margin:0 0 2em;width:25%}
+.bo_img_list_li {float:left;margin:0 0 2em}
 
 .bo_img_con {margin:0;padding:0;list-style:none}
 .bo_img_con li {margin:0 0 0.3em}
