@@ -60,13 +60,13 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
     <ul id="bo_img_list">
         <? for ($i=0; $i<count($list); $i++) {
-            if($i>0 && ($i % $board['bo_gallery_cols'] == 0))
+            if($i>0 && ($i % $board['bo_mobile_gallery_cols'] == 0))
                 $style = 'clear:both;';
             else
                 $style = '';
             if ($i == 0) $k = 0;
             $k += 1;
-            if ($k % $board['bo_gallery_cols'] == 0) $style .= "margin:0 !important;";
+            if ($k % $board['bo_mobile_gallery_cols'] == 0) $style .= "margin:0 !important;";
         ?>
         <li class="bo_img_list_li <? if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<? } ?>" style="<?=$style?>">
             <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"><? } ?>
@@ -179,8 +179,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <option value="wr_name,1"<?=get_selected($sfl, "wr_name,1");?>>글쓴이</option>
         <option value="wr_name,0"<?=get_selected($sfl, "wr_name,0");?>>글쓴이(코)</option>
     </select>
-    <input name="stx" value="<?=stripslashes($stx)?>" title="검색어(필수)" required class="fs_input required" size="15" maxlength="15">
-    <input type="submit" class="fs_submit" value="검색">
+    <input name="stx" value="<?=stripslashes($stx)?>" title="검색어(필수)" required class="required" size="15" maxlength="15">
+    <input type="submit" value="검색">
     </form>
 </fieldset>
 

@@ -12,8 +12,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
-    <input type="text" id="mb_id" name="mb_id" class="fs_input" value="<?=$mb_id?>" title="검색어(필수)">
-    <input type="submit" class="fs_submit" value="검색">
+    <input type="text" id="mb_id" name="mb_id" class="required" required value="<?=$mb_id?>" title="검색어(필수)">
+    <input type="submit" value="검색">
     </form>
     <script>
     function select_change()

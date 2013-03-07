@@ -29,6 +29,9 @@ if (!isset($board['bo_mobile_skin'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", false);
 }
 
+if (!isset($board['bo_mobile_gallery_cols'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_gallery_cols` INT NOT NULL AFTER `bo_gallery_cols` ", false);
+}
 
 if ($w == '') {
 
@@ -699,6 +702,17 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_gallery_cols" name="chk_gallery_cols" value="1">
             <label for="chk_gallery_cols">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_mobile_gallery_cols">모바일<br>가로 이미지수<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=help('모바일 접속시 갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여줄것인지를 설정하는 값')?>
+            <input type="text" id="bo_mobile_gallery_cols" name="bo_mobile_gallery_cols" class="required numeric frm_input" required value="<?=$board['bo_mobile_gallery_cols']?>" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_mobile_gallery_cols" name="chk_mobile_gallery_cols" value="1">
+            <label for="chk_mobile_gallery_cols">동일그룹 모두 적용</label>
         </td>
     </tr>
     <tr>
