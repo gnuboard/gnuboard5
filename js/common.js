@@ -531,7 +531,7 @@ function font_resize(id, act)
         count = 0;
 
     // 크롬의 최소 폰트사이즈 버그로 작게는 한단계만 가능
-    if(count == -1)
+    if(act == "decrease" && count == -1)
         return;
 
     $elements.each(function() {
