@@ -29,8 +29,8 @@ if (!isset($board['bo_mobile_skin'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", false);
 }
 
-if (!isset($board['bo_mobile_gallery_cols'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_gallery_cols` INT NOT NULL AFTER `bo_gallery_cols` ", false);
+if (!isset($board['bo_gallery_width'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL AFTER `bo_gallery_width`,  ADD `bo_moblie_gallery_cols` INT NOT NULL AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_width` INT NOT NULL AFTER `bo_mobile_gallery_cols`,  ADD `bo_mobile_gallery_height` INT NOT NULL AFTER `bo_mobile_gallery_width` ", false);
 }
 
 if ($w == '') {
@@ -48,6 +48,11 @@ if ($w == '') {
     $board['bo_download_point'] = $config['cf_download_point'];
 
     $board['bo_gallery_cols'] = 4;
+    $board['bo_gallery_width'] = 200;
+    $board['bo_gallery_height'] = 150;
+    $board['bo_mobile_gallery_cols'] = 2;
+    $board['bo_mobile_gallery_width'] = 160;
+    $board['bo_mobile_gallery_height'] = 120;
     $board['bo_table_width'] = 97;
     $board['bo_page_rows'] = $config['cf_page_rows'];
     $board['bo_subject_len'] = 60;
@@ -694,9 +699,9 @@ $pg_anchor = "<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="bo_gallery_cols">가로 이미지수<strong class="sound_only">필수</strong></label></th>
+        <th scope="row"><label for="bo_gallery_cols">갤러리 이미지 수<strong class="sound_only">필수</strong></label></th>
         <td>
-            <?=help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여줄것인지를 설정하는 값')?>
+            <?=help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여 줄 것인지를 설정하는 값')?>
             <input type="text" id="bo_gallery_cols" name="bo_gallery_cols" class="required numeric frm_input" required value="<?=$board['bo_gallery_cols']?>" size="4">
         </td>
         <td class="group_setting">
@@ -705,14 +710,58 @@ $pg_anchor = "<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="bo_mobile_gallery_cols">모바일<br>가로 이미지수<strong class="sound_only">필수</strong></label></th>
+        <th scope="row"><label for="bo_gallery_width">갤러리 이미지 폭<strong class="sound_only">필수</strong></label></th>
         <td>
-            <?=help('모바일 접속시 갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여줄것인지를 설정하는 값')?>
+            <?=help('갤러리 형식의 게시판 목록에서 썸네일 이미지의 폭을 설정하는 값')?>
+            <input type="text" id="bo_gallery_width" name="bo_gallery_width" class="required numeric frm_input" required value="<?=$board['bo_gallery_width']?>" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_gallery_width" name="chk_gallery_width" value="1">
+            <label for="chk_gallery_width">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_gallery_height">갤러리 이미지 높이<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=help('갤러리 형식의 게시판 목록에서 썸네일 이미지의 높이를 설정하는 값')?>
+            <input type="text" id="bo_gallery_height" name="bo_gallery_height" class="required numeric frm_input" required value="<?=$board['bo_gallery_height']?>" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_gallery_height" name="chk_gallery_height" value="1">
+            <label for="chk_gallery_height">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_mobile_gallery_cols">모바일<br>갤러리 이미지 수<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=help('모바일로 접속시 갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여 줄 것인지를 설정하는 값')?>
             <input type="text" id="bo_mobile_gallery_cols" name="bo_mobile_gallery_cols" class="required numeric frm_input" required value="<?=$board['bo_mobile_gallery_cols']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_mobile_gallery_cols" name="chk_mobile_gallery_cols" value="1">
-            <label for="chk_mobile_gallery_cols">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_gallery_cols" name="chk_gallery_cols" value="1">
+            <label for="chk_gallery_cols">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_mobile_gallery_width">모바일<br>갤러리 이미지 폭<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=help('모바일로 접속시 갤러리 형식의 게시판 목록에서 썸네일 이미지의 폭을 설정하는 값')?>
+            <input type="text" id="bo_mobile_gallery_width" name="bo_mobile_gallery_width" class="required numeric frm_input" required value="<?=$board['bo_mobile_gallery_width']?>" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_gallery_width" name="chk_gallery_width" value="1">
+            <label for="chk_gallery_width">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_mobile_gallery_height">모바일<br>갤러리 이미지 높이<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=help('모바일로 접속시 갤러리 형식의 게시판 목록에서 썸네일 이미지의 높이를 설정하는 값')?>
+            <input type="text" id="bo_mobile_gallery_height" name="bo_mobile_gallery_height" class="required numeric frm_input" required value="<?=$board['bo_mobile_gallery_height']?>" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_gallery_height" name="chk_gallery_height" value="1">
+            <label for="chk_gallery_height">동일그룹 모두 적용</label>
         </td>
     </tr>
     <tr>

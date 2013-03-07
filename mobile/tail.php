@@ -16,7 +16,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
 </footer>
 
-<a href="?device=pc">PC버전</a>
+<a href="<?=$_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING'].'&amp;':'?').'device=pc';?>">PC 버전으로 보기</a>
 
 <?
 include_once(G4_PATH."/tail.sub.php");

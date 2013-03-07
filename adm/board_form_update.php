@@ -99,7 +99,11 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_content_tail     = '{$_POST['bo_content_tail']}',
                 bo_insert_content   = '{$_POST['bo_insert_content']}',
                 bo_gallery_cols     = '{$_POST['bo_gallery_cols']}',
-                bo_mobile_gallery_cols='{$_POST['bo_mobile_gallery_cols']}',
+                bo_gallery_width    = '{$_POST['bo_gallery_width']}',
+                bo_gallery_height   = '{$_POST['bo_gallery_height']}',
+                bo_mobile_gallery_cols  = '{$_POST['bo_mobile_gallery_cols']}',
+                bo_mobile_gallery_width = '{$_POST['bo_mobile_gallery_width']}',
+                bo_mobile_gallery_height= '{$_POST['bo_mobile_gallery_height']}',
                 bo_upload_count     = '{$_POST['bo_upload_count']}',
                 bo_upload_size      = '{$_POST['bo_upload_size']}',
                 bo_reply_order      = '{$_POST['bo_reply_order']}',
@@ -248,7 +252,11 @@ if (is_checked('chk_use_email'))        $fields .= " , bo_use_email = '{$bo_use_
 if (is_checked('chk_skin'))             $fields .= " , bo_skin = '{$bo_skin}' ";
 if (is_checked('chk_mobile_skin'))      $fields .= " , bo_mobile_skin = '{$bo_mobile_skin}' ";
 if (is_checked('chk_gallery_cols'))     $fields .= " , bo_gallery_cols = '{$bo_gallery_cols}' ";
-if (is_checked('chk_mobile_gallery_cols'))$fields.=" , bo_mobile_gallery_cols = '{$bo_mobile_gallery_cols}' ";
+if (is_checked('chk_gallery_width'))    $fields .= " , bo_gallery_width = '{$bo_gallery_width}' ";
+if (is_checked('chk_gallery_height'))   $fields .= " , bo_gallery_height = '{$bo_gallery_height}' ";
+if (is_checked('chk_mobile_gallery_cols'))  $fields .= " , bo_mobile_gallery_cols = '{$bo_mobile_gallery_cols}' ";
+if (is_checked('chk_mobile_gallery_width')) $fields .= " , bo_mobile_gallery_width = '{$bo_mobile_gallery_width}' ";
+if (is_checked('chk_mobile_gallery_height'))$fields .= " , bo_mobile_gallery_height = '{$bo_mobile_gallery_height}' ";
 if (is_checked('chk_table_width'))      $fields .= " , bo_table_width = '{$bo_table_width}' ";
 if (is_checked('chk_page_rows'))        $fields .= " , bo_page_rows = '{$bo_page_rows}' ";
 if (is_checked('chk_subject_len'))      $fields .= " , bo_subject_len = '{$bo_subject_len}' ";
