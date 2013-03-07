@@ -19,8 +19,12 @@ if ($_POST['agree'] != '동의함') {
 ?>
 
     <form id="frm_install" method="post" action="./install_db.php" onsubmit="return frm_install_submit(this)">
-    <table border>
+    <table style="margin-bottom:30px">
     <caption>MySQL 정보입력</caption>
+    <colgroup>
+        <col style="width:150px">
+        <col>
+    </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="">Host</label></th>
@@ -49,15 +53,15 @@ if ($_POST['agree'] != '동의함') {
     <tr>
         <th scope="row"><label for="">Port</label></th>
         <td>
+            <span>가능한 변경하지 마십시오.</span>
             <input name="mysql_port" type="text" value="3306" id="mysql_port">
-            <br>가능한 변경하지 마십시오.
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="">TABLE명 접두사</label></th>
         <td>
+            <span>가능한 변경하지 마십시오.</span>
             <input name="table_prefix" type="text" value="g4s_" id="table_prefix">
-            <br>가능한 변경하지 마십시오.
         </td>
     </tr>
     </tbody>
@@ -65,6 +69,11 @@ if ($_POST['agree'] != '동의함') {
 
     <table border>
     <caption>최고관리자 정보입력</caption>
+    <colgroup>
+        <col style="width:150px">
+        <col>
+    </colgroup>
+    <tbody>
     <tr>
         <th scope="row"><label for="">회원 ID</label></th>
         <td>
@@ -89,6 +98,7 @@ if ($_POST['agree'] != '동의함') {
             <input name="admin_email" type="text" value="admin@domain.com" id="admin_email">
         </td>
     </tr>
+    </tbody>
     </table>
 
 </div>
