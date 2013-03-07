@@ -27,13 +27,13 @@ if ($is_guest) {
 
 if ($w == "c" || $w == "cu") {
     if ($member['mb_level'] < $board['bo_comment_level'])
-        alert('코멘트를 쓸 권한이 없습니다.');
+        alert('댓글를 쓸 권한이 없습니다.');
 }
 else
     alert('w 값이 제대로 넘어오지 않았습니다.');
 
 // 세션의 시간 검사
-// 4.00.15 - 코멘트 수정시 연속 게시물 등록 메시지로 인한 오류 수정
+// 4.00.15 - 댓글 수정시 연속 게시물 등록 메시지로 인한 오류 수정
 if ($w == 'c' && $_SESSION['ss_datetime'] >= (G4_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
     alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
 
@@ -51,7 +51,7 @@ if (empty($wr['wr_id']))
 if ($member[mb_id])
 {
     $mb_id = $member['mb_id'];
-    // 4.00.13 - 실명 사용일때 코멘트에 별명으로 입력되던 오류를 수정
+    // 4.00.13 - 실명 사용일때 댓글에 별명으로 입력되던 오류를 수정
     $wr_name = $board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick'];
     $wr_password = $member['mb_password'];
     $wr_email = $member['mb_email'];
@@ -63,25 +63,25 @@ else
     $wr_password = sql_password($wr_password);
 }
 
-if ($w == 'c') // 코멘트 입력
+if ($w == 'c') // 댓글 입력
 {
     /*
     if ($member[mb_point] + $board[bo_comment_point] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 코멘트쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 코멘트를 써 주십시오.');
+        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 댓글쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 댓글를 써 주십시오.');
     */
-    // 코멘트쓰기 포인트설정시 회원의 포인트가 음수인 경우 코멘트를 쓰지 못하던 버그를 수정 (곱슬최씨님)
+    // 댓글쓰기 포인트설정시 회원의 포인트가 음수인 경우 댓글를 쓰지 못하던 버그를 수정 (곱슬최씨님)
     $tmp_point = ($member['mb_point'] > 0) ? $member['mb_point'] : 0;
     if ($tmp_point + $board['bo_comment_point'] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 코멘트쓰기('.number_format($board['bo_comment_point']).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 코멘트를 써 주십시오.');
+        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 댓글쓰기('.number_format($board['bo_comment_point']).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 댓글를 써 주십시오.');
 
-    // 코멘트 답변
+    // 댓글 답변
     if ($comment_id)
     {
         $sql = " select wr_id, wr_comment, wr_comment_reply from $write_table
                     where wr_id = '$comment_id' ";
         $reply_array = sql_fetch($sql);
         if (!$reply_array['wr_id'])
-            alert('답변할 코멘트가 없습니다.\\n\\n답변하는 동안 코멘트가 삭제되었을 수 있습니다.');
+            alert('답변할 댓글가 없습니다.\\n\\n답변하는 동안 댓글가 삭제되었을 수 있습니다.');
 
         $tmp_comment = $reply_array['wr_comment'];
 
@@ -167,17 +167,17 @@ if ($w == 'c') // 코멘트 입력
 
     $comment_id = mysql_insert_id();
 
-    // 원글에 코멘트수 증가 & 마지막 시간 반영
+    // 원글에 댓글수 증가 & 마지막 시간 반영
     sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_last = '".G4_TIME_YMDHIS."' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
     sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '".G4_TIME_YMDHIS."', '{$member['mb_id']}' ) ");
 
-    // 코멘트 1 증가
+    // 댓글 1 증가
     sql_query(" update {$g4['board_table']} set bo_count_comment = bo_count_comment + 1 where bo_table = '$bo_table' ");
 
     // 포인트 부여
-    insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 코멘트쓰기", $bo_table, $comment_id, '코멘트');
+    insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 댓글쓰기", $bo_table, $comment_id, '댓글');
 
     // 메일발송 사용
     if ($config['cf_email_use'] && $board['bo_use_email'])
@@ -188,13 +188,13 @@ if ($w == 'c') // 코멘트 입력
         $board_admin = get_admin('board');
 
         $wr_subject = get_text(stripslashes($wr['wr_subject']));
-        $wr_content = nl2br(get_text(stripslashes("----- 원글 -----\n\n{$wr['wr_subject']}\n\n\n----- 코멘트 -----\n\n$wr_content")));
+        $wr_content = nl2br(get_text(stripslashes("원글\n{$wr['wr_subject']}\n\n\n댓글\n$wr_content")));
 
-        $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'코멘트', 'cu'=>'코멘트 수정' );
+        $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'댓글 ', 'cu'=>'댓글 수정' );
         $str = $warr[$w];
 
         $subject = $board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
-        // 4.00.15 - 메일로 보내는 코멘트의 바로가기 링크 수정
+        // 4.00.15 - 메일로 보내는 댓글의 바로가기 링크 수정
         $link_url = G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
 
         include_once(G4_LIB_PATH.'/mailer.lib.php');
@@ -217,7 +217,7 @@ if ($w == 'c') // 코멘트 입력
             // 원글 메일발송에 체크가 되어 있다면
             if ($config['cf_email_wr_write']) $array_email[] = $wr['wr_email'];
 
-            // 코멘트 쓴 모든이에게 메일 발송이 되어 있다면 (자신에게는 발송하지 않는다)
+            // 댓글 쓴 모든이에게 메일 발송이 되어 있다면 (자신에게는 발송하지 않는다)
             if ($config['cf_email_wr_comment_all']) {
                 $sql = " select distinct wr_email from {$write_table}
                             where wr_email not in ( '{$wr['wr_email']}', '{$member['mb_email']}', '' )
@@ -236,7 +236,7 @@ if ($w == 'c') // 코멘트 입력
         }
     }
 }
-else if ($w == 'cu') // 코멘트 수정
+else if ($w == 'cu') // 댓글 수정
 {
     $sql = " select mb_id, wr_comment, wr_comment_reply from $write_table
                 where wr_id = '$comment_id' ";
@@ -256,18 +256,18 @@ else if ($w == 'cu') // 코멘트 수정
             if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
                 ;
             else
-                alert('그룹관리자의 권한보다 높은 회원의 코멘트이므로 수정할 수 없습니다.');
+                alert('그룹관리자의 권한보다 높은 회원의 댓글이므로 수정할 수 없습니다.');
         } else
-            alert('자신이 관리하는 그룹의 게시판이 아니므로 코멘트를 수정할 수 없습니다.');
+            alert('자신이 관리하는 그룹의 게시판이 아니므로 댓글를 수정할 수 없습니다.');
     } else if ($is_admin == 'board') { // 게시판관리자이면
         $mb = get_member($comment['mb_id']);
         if ($member['mb_id'] == $board['bo_admin']) { // 자신이 관리하는 게시판인가?
             if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
                 ;
             else
-                alert('게시판관리자의 권한보다 높은 회원의 코멘트이므로 수정할 수 없습니다.');
+                alert('게시판관리자의 권한보다 높은 회원의 댓글이므로 수정할 수 없습니다.');
         } else
-            alert('자신이 관리하는 게시판이 아니므로 코멘트를 수정할 수 없습니다.');
+            alert('자신이 관리하는 게시판이 아니므로 댓글를 수정할 수 없습니다.');
     } else if ($member['mb_id']) {
         if ($member['mb_id'] != $comment['mb_id'])
             alert('자신의 글이 아니므로 수정할 수 없습니다.');
@@ -281,7 +281,7 @@ else if ($w == 'cu') // 코멘트 수정
                 and wr_is_comment = 1 ";
     $row = sql_fetch($sql);
     if ($row['cnt'] && !$is_admin)
-        alert('이 코멘트와 관련된 답변코멘트가 존재하므로 수정 할 수 없습니다.');
+        alert('이 댓글와 관련된 답변댓글가 존재하므로 수정 할 수 없습니다.');
 
     $sql_ip = "";
     if (!$is_admin)
