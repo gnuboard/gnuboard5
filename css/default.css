@@ -481,9 +481,14 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #bo_img h2 {margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
 #bo_img_list {margin:0;padding:0;list-style:none;zoom:1}
 #bo_img_list:after {display:block;visibility:hidden;clear:both;content:""}
-.bo_img_list_li {float:left;margin-bottom:20px}
+.bo_img_list_li {float:left;margin:0 10px 20px 0}
+
 .bo_img_con {margin:0;padding:0;list-style:none}
 .bo_img_con li {}
+.bo_img_con li strong {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:10em}
+.bo_img_href,
+.bo_img_href:focus,
+.bo_img_href:hover {text-decoration:none}
 
 /* 목록 공통 */
 .bo_fx {margin-bottom:5px;zoom:1}

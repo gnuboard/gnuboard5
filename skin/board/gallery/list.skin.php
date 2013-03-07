@@ -47,11 +47,14 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     <ul id="bo_img_list">
         <? for ($i=0; $i<count($list); $i++) {
             if($i>0 && ($i % $board['bo_gallery_cols'] == 0))
-                $style = 'style="clear:both;"';
+                $style = 'clear:both;';
             else
                 $style = '';
+            if ($i == 0) $k = 0;
+            $k += 1;
+            if ($k % $board['bo_gallery_cols'] == 0) $style .= "margin:0 !important;";
         ?>
-        <li class="bo_img_list_li <? // 현재 읽고 있는 글이면, ?>bo_img_now" <?=$style?>>
+        <li class="bo_img_list_li <? // 현재 읽고 있는 글이면, ?>bo_img_now" style="<?=$style?>">
             <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"><? } ?>
             <span class="sound_only">
                 <?
@@ -63,11 +66,10 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             </span>
             <ul class="bo_img_con">
                 <li>
+                    <a href="<?=$list[$i]['href']?>" class="bo_img_href">
                     <? if ($list[$i]['is_notice']) { // 공지사항 ?><strong>공지</strong>
                     <? } else { ?>
                     <?
-                    // 파일 설명이 있을 경우 alt까지 출력해주세요.
-                    // 이미지 사이즈는 어떻게 정해야 할까요?
                     $file = get_list_file($bo_table, $list[$i]['wr_id']);
 
                     $filepath = G4_DATA_PATH.'/file/'.$bo_table;
@@ -77,12 +79,11 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                     } else {
                         $imgsrc = $board_skin_url.'/img/noimg.jpg';
                     }
-                    $imgalt = $file['bf_content'] ? get_text($file['bf_content']) : $list[$i]['subject'];
+                    $imgalt = $file['bf_content'] ? get_text($file['bf_content']) : "";
                     ?>
-                    <a href="<?=$list[$i]['href']?>">
                         <img src="<?=$imgsrc?>" alt="<?=$imgalt?>" width="<?=$board['bo_9']?>" height="<?=$board['bo_10']?>">
-                    </a>
                     <? } ?>
+                    </a>
                 </li>
                 <li>
                     <?
