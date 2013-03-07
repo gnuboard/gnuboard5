@@ -1,8 +1,13 @@
 <?
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/latest.lib.php');
+$g4['title'] = $group['gr_subject'];
 
-$g4['title'] = $group[gr_subject];
+if (G4_IS_MOBILE) {
+    include_once(G4_MOBILE_PATH.'/group.php');
+    return;
+}
+
 include_once('./_head.php');
 ?>
 
@@ -17,7 +22,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     // 사용방법
     // latest(스킨, 게시판아이디, 출력라인, 글자수);
-    echo latest('basic', $row[bo_table], 5, 70);
+    echo latest('basic', $row['bo_table'], 5, 70);
 }
 ?>
 <!-- 메인화면 최신글 끝 -->
