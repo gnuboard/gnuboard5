@@ -68,7 +68,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             $k += 1;
             if ($k % $board['bo_gallery_cols'] == 0) $style .= "margin:0 !important;";
         ?>
-        <li class="bo_img_list_li <? if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<? } ?>" style="<?=$style?>width:<?=$board['bo_9']?>px">
+        <li class="bo_img_list_li <? if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<? } ?>" style="<?=$style?>">
             <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"><? } ?>
             <span class="sound_only">
                 <?
@@ -89,13 +89,13 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
                     $filepath = G4_DATA_PATH.'/file/'.$bo_table;
                     if(preg_match("/\.({$config['cf_image_extension']})$/i", $file['bf_file']) && is_file($filepath.'/'.$file['bf_file'])) {
-                        $thumb = get_list_thumbnail($file['bf_file'], $filepath, $board['bo_9'], $board['bo_10']);
+                        $thumb = get_list_thumbnail($file['bf_file'], $filepath, $board['bo_gallery_width'], $board['bo_gallery_height']);
                         $imgsrc = G4_DATA_URL.'/file/'.$bo_table.'/'.$thumb;
                     } else {
                         $imgsrc = $board_skin_url.'/img/noimg.jpg';
                     }
                     ?>
-                        <img src="<?=$imgsrc?>" alt="<?=get_text($file['bf_content'])?>" width="<?=$board['bo_9']?>" height="<?=$board['bo_10']?>">
+                        <img src="<?=$imgsrc?>" alt="<?=get_text($file['bf_content'])?>" width="<?=$board['bo_gallery_width']?>" height="<?=$board['bo_gallery_height']?>">
                     <? } ?>
                     </a>
                 </li>
