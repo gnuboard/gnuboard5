@@ -1,18 +1,35 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $data_path = '../'.G4_DATA_DIR;
+
+if (!$title) $title = "그누보드4S 설치";
 ?>
 
 <!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>그누보드4S 설치 준비</title>
+<title><?=$title?></title>
 <style>
-html {background:#f7f7f7}
+body {margin:0;padding:0;background:#f7f7f7}
+h1 {margin:50px auto 30px;width:540px;font-size:1.4em}
+p {line-height:1.5em}
+
+#wrapper {margin:0 auto;padding:20px;width:500px;border:1px solid #eee;background:#fff}
+
+#idx_license {padding:10px;width:480px;height:300px;border:1px solid #ccc;background:#000;color:#fff}
+#idx_agree {padding:20px;font-weight:bold;text-align:center}
+
+#btn_confirm {text-align:center}
+
+.st_strong {color:#ff3061;font-weight:normal}
 </style>
 </head>
 <body>
+
+<h1><?=$title?></h1>
+
+<div id="wrapper">
 
 <?
 // 파일이 존재한다면 설치할 수 없다.
@@ -46,6 +63,3 @@ if (!(is_readable($data_path) && is_writeable($data_path) && is_executable($data
     exit;
 }
 ?>
-
-</body>
-</html>
