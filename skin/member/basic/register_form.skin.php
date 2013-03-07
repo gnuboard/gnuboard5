@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
     <td>
         <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
-        <input type="text" name="mb_id" value="<?=$member['mb_id']?>" class="frm_input minlength_3 <?=$required?> <?=$readonly?>" id="reg_mb_id" maxlength="20" <?=$required?> <?=$readonly?>>
+        <input type="text" name="mb_id" value="<?=$member['mb_id']?>" id="reg_mb_id"  class="frm_input minlength_3 <?=$required?> <?=$readonly?>"maxlength="20" <?=$required?> <?=$readonly?>>
         <span id="msg_mb_id"></span>
     </td>
 </tr>

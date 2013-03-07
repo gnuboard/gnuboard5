@@ -171,6 +171,8 @@ a:active {color:#000;text-decoration:underline}
 .bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 td.empty_table {padding:85px 0;text-align:center}
 
+.empty_list {padding:85px 0;text-align:center}
+
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
 
@@ -306,8 +308,8 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_login label {letter-spacing:-0.1em}
 #mb_login .login_id {position:absolute;top:26px;left:95px}
-#mb_login .login_pw {position:absolute;top:55px;left:95px}
-#mb_login .fs_input {display:block;margin:0 0 5px 80px}
+#mb_login .login_pw {position:absolute;top:52px;left:95px}
+#mb_login .frm_input {display:block;margin:0 0 5px 80px}
 #mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
 #mb_login section {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
 #mb_login section div {text-align:right}
@@ -479,13 +481,27 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 /* 갤러리 목록 */
 #bo_img h2 {margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
-#bo_img_list {margin:0;padding:0;list-style:none;zoom:1}
+#bo_img_list {margin:10px 0 0;padding:0;list-style:none;zoom:1}
 #bo_img_list:after {display:block;visibility:hidden;clear:both;content:""}
-.bo_img_list_li {float:left;margin-bottom:20px}
-.bo_img_con {margin:0;padding:0;list-style:none}
-.bo_img_con li {}
+.bo_img_list_li {float:left;margin:0 10px 30px 0}
 
-/* 목록 공통 */
+.bo_img_con {margin:0;padding:0;list-style:none}
+.bo_img_con li {margin:0 0 4px}
+.bo_img_con .bo_img_subject {display:inline-block;width:50px}
+
+.bo_img_now .bo_img_text_href a {color:#ff3061}
+
+.bo_img_href a:link,
+.bo_img_href a:focus,
+.bo_img_href a:hover {text-decoration:none}
+.bo_img_href strong {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:10em}
+
+.bo_img_text_href {margin:10px 0 !important}
+.bo_img_text_href a {font-weight:bold}
+.bo_img_text_href span {display:inline !important}
+.bo_img_text_href img {margin:0 0 0 4px}
+
+/* 게시판 목록 공통 */
 .bo_fx {margin-bottom:5px;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
@@ -514,8 +530,11 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 
 #bo_v_info {padding:0 0 10px;border-bottom:1px solid #ddd}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_info {}
 #bo_v_info strong {display:inline-block;margin:0 15px 0 5px;font-weight:normal}
+#bo_v_info .sv_member,
+#bo_v_info .sv_guest,
+#bo_v_info .member,
+#bo_v_info .guest {font-weight:bold}
 
 #bo_v_file {}
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}

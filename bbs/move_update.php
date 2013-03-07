@@ -9,7 +9,7 @@ if ($sw != 'move' && $sw != 'copy')
     alert('sw 값이 제대로 넘어오지 않았습니다.');
 
 if(!count($_POST['chk_bo_table']))
-    alert("게시물을 ".$act."할 게시판을 한개 이상 선택해 주십시오.", $url);
+    alert('게시물을 '.$act.'할 게시판을 한개 이상 선택해 주십시오.', $url);
 
 // 원본 파일 디렉토리
 $src_dir = G4_DATA_PATH.'/file/'.$bo_table;
@@ -43,7 +43,7 @@ while ($row = sql_fetch_array($result))
         {
             $nick = cut_str($member['mb_nick'], $config['cf_cut_name']);
             if (!$row2['wr_is_comment'] && $config['cf_use_copy_log'])
-                $row2['wr_content'] .= PHP_EOL.'[이 게시물은 '.$nick.'님에 의해 '.G4_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]';
+                $row2['wr_content'] .= PHP_EOL.'<div class="content_'.$sw.'">[이 게시물은 '.$nick.'님에 의해 '.G4_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]</div>';
 
             $sql = " insert into $move_write_table
                         set wr_num = '$next_wr_num',
@@ -161,7 +161,7 @@ while ($row = sql_fetch_array($result))
 
 delete_cache_latest($bo_table);
 
-if ($sw == "move")
+if ($sw == 'move')
 {
     for ($i=0; $i<count($save); $i++)
     {

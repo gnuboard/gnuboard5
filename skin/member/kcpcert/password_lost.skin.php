@@ -8,7 +8,7 @@ if((int)get_cookie('ck_passwordlost_count') > 2)
 <div id="find_info" class="new_win">
     <h1>아이디/패스워드 찾기</h1>
 
-    <form name="fpasswordlost" method="post" action="<?=$action_url?>" onsubmit="return fpasswordlost_submit(this);" autocomplete="off">
+    <form name="fpasswordlost" action="<?=$action_url?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
     <input type="hidden" name="kcpcert_no" value="">
     <input type="hidden" name="kcpcert_time" value="">
     <fieldset id="find_info_fs">
@@ -16,9 +16,9 @@ if((int)get_cookie('ck_passwordlost_count') > 2)
             회원가입 시 등록하신  이름과 핸드폰번호를 입력해 주세요.
         </p>
         <label for="mb_name">이름<strong class="sound_only">필수</strong></label>
-        <input type="text" id="mb_name" name="mb_name" class="fs_input hangul nospace required" required size="30">
+        <input type="text" name="mb_name" id="mb_name" required class="fs_input hangul nospace required" size="30">
         <label for="mb_hp">핸드폰번호<strong class="sound_only">필수</strong></label>
-        <input type="text" id="mb_hp" name="mb_hp" class="fs_input required" maxlength="20" required size="30">
+        <input type="text" name="mb_hp" id="mb_hp" required class="fs_input required" size="30" maxlength="20">
         <button type="button" id="win_kcpcert">휴대폰인증</button>
         <noscript>휴대폰인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
     </fieldset>

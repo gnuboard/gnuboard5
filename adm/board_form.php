@@ -29,6 +29,9 @@ if (!isset($board['bo_mobile_skin'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", false);
 }
 
+if (!isset($board['bo_mobile_gallery_cols'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_gallery_cols` INT NOT NULL AFTER `bo_gallery_cols` ", false);
+}
 
 if ($w == '') {
 
@@ -341,16 +344,6 @@ $pg_anchor = "<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="bo_use_file_content">파일 설명 사용</label></th>
-        <td>
-            <input type="checkbox" id="bo_use_file_content" name="bo_use_file_content" value="1" <?=$board['bo_use_file_content']?'checked':'';?>>사용
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" id="chk_use_file_content" name="chk_use_file_content" value="1">
-            <label for="chk_use_file_content">동일그룹 모두 적용</label>
-        </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="bo_use_secret">비밀글 사용</label></th>
         <td>
             <?=help('"체크박스"는 글작성시 비밀글 체크가 가능합니다. "무조건"은 작성되는 모든글을 비밀글로 작성합니다. (관리자는 체크박스로 출력합니다.) 스킨에 따라 적용되지 않을 수 있습니다.')?>
@@ -503,6 +496,16 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_upload_size" name="chk_upload_size" value="1">
             <label for="chk_upload_size">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_use_file_content">파일 설명 사용</label></th>
+        <td>
+            <input type="checkbox" id="bo_use_file_content" name="bo_use_file_content" value="1" <?=$board['bo_use_file_content']?'checked':'';?>>사용
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_use_file_content" name="chk_use_file_content" value="1">
+            <label for="chk_use_file_content">동일그룹 모두 적용</label>
         </td>
     </tr>
     <tr>
@@ -699,6 +702,17 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_gallery_cols" name="chk_gallery_cols" value="1">
             <label for="chk_gallery_cols">동일그룹 모두 적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_mobile_gallery_cols">모바일<br>가로 이미지수<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=help('모바일 접속시 갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여줄것인지를 설정하는 값')?>
+            <input type="text" id="bo_mobile_gallery_cols" name="bo_mobile_gallery_cols" class="required numeric frm_input" required value="<?=$board['bo_mobile_gallery_cols']?>" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" id="chk_mobile_gallery_cols" name="chk_mobile_gallery_cols" value="1">
+            <label for="chk_mobile_gallery_cols">동일그룹 모두 적용</label>
         </td>
     </tr>
     <tr>

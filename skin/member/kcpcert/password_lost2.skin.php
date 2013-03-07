@@ -68,7 +68,7 @@ include_once(G4_PATH.'/head.sub.php');
 <div id="find_info" class="new_win">
     <h1>아이디/패스워드 찾기</h1>
 
-    <form name="fpasswordlost" method="post" action="<?=$action_url?>" onsubmit="return fpasswordlost_submit(this);" autocomplete="off">
+    <form name="fpasswordlost" action="<?=$action_url?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
     <fieldset id="find_info_fs">
         <p>
             회원님의 아이디와 변경된 패스워드입니다.<br>
