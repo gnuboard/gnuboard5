@@ -1,4 +1,5 @@
 <?
+$title = "그누보드4S 설치 3단계 중 2단계 설정";
 include_once ('../config.php');
 include_once ('./install.inc.php');
 
@@ -16,88 +17,90 @@ if ($_POST['agree'] != '동의함') {
     exit;
 }
 ?>
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>그누보드4 설치 (2/3) - 설정</title>
-</head>
-<body>
 
-<form id="frm_install" method="post" action="./install_db.php" onsubmit="return frm_install_submit(this)">
-<table border>
-<caption>MySQL 정보입력</caption>
-<tr>
-    <td width=100>Host</td>
-    <td width=200>
-        <input name="mysql_host" type="text" value="localhost">
-    </td>
-</tr>
-<tr>
-    <td>User</td>
-    <td>
-        <input name="mysql_user" type="text">
-    </td>
-</tr>
-<tr>
-    <td>Password</td>
-    <td>
-        <input name="mysql_pass" type="text">
-    </td>
-</tr>
-<tr>
-    <td>DB</td>
-    <td>
-        <input name="mysql_db" type="text">
-    </td>
-</tr>
-<tr>
-    <td>Port</td>
-    <td>
-        <input name="mysql_port" type="text" value="3306">
-        <br>가능한 변경하지 마십시오.
-    </td>
-</tr>
-<tr>
-    <td>TABLE명 접두사</td>
-    <td>
-        <input name="table_prefix" type="text" value="g4s_">
-        <br>가능한 변경하지 마십시오.
-    </td>
-</tr>
-</table>
-<br>
+    <form id="frm_install" method="post" action="./install_db.php" onsubmit="return frm_install_submit(this)">
+    <table border>
+    <caption>MySQL 정보입력</caption>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="">Host</label></th>
+        <td>
+            <input name="mysql_host" type="text" value="localhost" id="mysql_host">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">User</label></th>
+        <td>
+            <input name="mysql_user" type="text" id="mysql_user">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">Password</label></th>
+        <td>
+            <input name="mysql_pass" type="text" id="mysql_pass">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">DB</label></th>
+        <td>
+            <input name="mysql_db" type="text" id="mysql_db">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">Port</label></th>
+        <td>
+            <input name="mysql_port" type="text" value="3306" id="mysql_port">
+            <br>가능한 변경하지 마십시오.
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">TABLE명 접두사</label></th>
+        <td>
+            <input name="table_prefix" type="text" value="g4s_" id="table_prefix">
+            <br>가능한 변경하지 마십시오.
+        </td>
+    </tr>
+    </tbody>
+    </table>
 
-<table border>
-<caption>최고관리자 정보입력</caption>
-<tr>
-    <td width=100>회원 ID</td>
-    <td width=200>
-        <input name="admin_id" type="text" value="admin">
-    </td>
-</tr>
-<tr>
-    <td>패스워드</td>
-    <td>
-        <input name="admin_pass" type="text">
-    </td>
-</tr>
-<tr>
-    <td>이름</td>
-    <td>
-        <input name="admin_name" type="text" value="최고관리자">
-    </td>
-</tr>
-<tr>
-    <td>E-mail</td>
-    <td>
-        <input name="admin_email" type="text" value="admin@domain.com">
-    </td>
-</tr>
-</table>
+    <table border>
+    <caption>최고관리자 정보입력</caption>
+    <tr>
+        <th scope="row"><label for="">회원 ID</label></th>
+        <td>
+            <input name="admin_id" type="text" value="admin" id="admin_id">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">패스워드</label></th>
+        <td>
+            <input name="admin_pass" type="text" id="admin_pass">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">이름</label></th>
+        <td>
+            <input name="admin_name" type="text" value="최고관리자" id="admin_name">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">E-mail</label></th>
+        <td>
+            <input name="admin_email" type="text" value="admin@domain.com" id="admin_email">
+        </td>
+    </tr>
+    </table>
 
-<h4>이미 그누보드4가 존재한다면 DB 자료가 망실되므로 주의하십시오.</h4>
+</div>
 
-<input type="submit" value="다음">
+<p class="outside">
+    <strong class="st_strong">주의! 이미 그누보드4S가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
+    주의사항을 읽으셨다면 다음을 눌러 설치를 계속하십시오.
+</p>
+
+<div id="btn_confirm">
+    <input type="submit" value="다음">
+</div>
 
 <script>
 function frm_install_submit(f)
