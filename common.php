@@ -104,9 +104,35 @@ if (file_exists($dbconfig_file)) {
     $select_db  = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
     @mysql_query(" set names utf8 ");
 } else {
-    echo "<meta http-equiv='content-type' content='text/html; charset=utf-8'>";
-    echo "<h3>$dbconfig_file 파일을 찾을 수 없습니다.<br>프로그램 설치 후 실행하시기 바랍니다.</h3>";
-    echo '<a href="'.G4_URL.'/install/">그누보드4S 설치하기</a>';
+?>
+
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>오류! 그누보드4S 설치하기</title>
+<style>
+body {background:#f7f7f2}
+h1 {margin:50px auto 30px;width:540px;font-size:1.4em}
+div {margin:0 auto;padding:20px;width:500px;border:1px solid #eee;background:#fff}
+div p {line-height:1.5em}
+div a {display:block;margin:50px 0 10px;text-align:center}
+</style>
+</head>
+<body>
+    <h1>오류가 있습니다.</h1>
+    <div>
+        <p>다음 파일을 찾을 수 없습니다.</p>
+        <ul>
+            <li><strong><?=$dbconfig_file?></strong></li>
+        </ul>
+        <p>프로그램 설치 후 실행하시기 바랍니다.</p>
+        <a href="'.G4_URL.'/install/">그누보드4S 설치하기</a>
+    </div>
+</body>
+</html>
+
+<?
     exit;
 }
 //==============================================================================
