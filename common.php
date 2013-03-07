@@ -113,10 +113,10 @@ if (file_exists($dbconfig_file)) {
 <title>오류! 그누보드4S 설치하기</title>
 <style>
 body {background:#f7f7f2}
-h1 {margin:50px auto 30px;width:540px;font-size:1.4em}
+h1 {margin:50px auto 30px;width:540px;color:#ff3061;font-size:1.4em}
 div {margin:0 auto;padding:20px;width:500px;border:1px solid #eee;background:#fff}
 div p {line-height:1.5em}
-div a {display:block;margin:50px 0 10px;text-align:center}
+div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
 </style>
 </head>
 <body>
