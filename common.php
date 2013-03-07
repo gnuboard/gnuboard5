@@ -127,7 +127,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
             <li><strong><?=$dbconfig_file?></strong></li>
         </ul>
         <p>프로그램 설치 후 실행하시기 바랍니다.</p>
-        <a href="'.G4_URL.'/install/">그누보드4S 설치하기</a>
+        <a href="<?=G4_URL?>/install/">그누보드4S 설치하기</a>
     </div>
 </body>
 </html>
