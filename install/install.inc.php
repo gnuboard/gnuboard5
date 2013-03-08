@@ -13,17 +13,18 @@ if (!$title) $title = "그누보드4S 설치";
 <style>
 body {margin:0;padding:0;background:#f7f7f7}
 h1 {margin:50px auto 30px;width:540px;font-size:1.4em}
+h2 {font-size:1.2em}
 p {line-height:1.5em}
-table {width:100%;border-collapse:collapse;border-spacing:0;font-size:0.895em}
+table {width:100%;border:0;border-collapse:collapse;border-spacing:0;font-size:0.895em}
 caption {padding:0 0 20px;font-weight:bold;text-align:left}
-th,td {padding:5px;border:1px solid #ddd}
+th,td {padding:5px;border:0;border-top:1px solid #ddd;border-bottom:1px solid #ddd}
 th {text-align:left}
 td span {display:block;margin:0 0 5px;color:#666;font-size:0.9em}
 
-#wrapper {margin:0 auto;padding:20px;width:500px;border:1px solid #eee;background:#fff}
+#wrapper {margin:0 auto 20px;padding:20px;width:500px;border:1px solid #eee;background:#fff}
 
 #idx_license {padding:10px;width:480px;height:300px;border:1px solid #ccc;background:#000;color:#fff}
-#idx_agree {padding:20px;font-weight:bold;text-align:center}
+#idx_agree {padding:0 20px 20px;font-weight:bold;text-align:center}
 
 #btn_confirm {text-align:center}
 

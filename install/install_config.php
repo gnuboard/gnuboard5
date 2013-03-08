@@ -11,9 +11,8 @@ header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
 if ($_POST['agree'] != '동의함') {
-    echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
-    echo '<div>라이센스(License) 내용에 동의하셔야 설치를 계속하실 수 있습니다.</div>'.PHP_EOL;
-    echo '<div><a href="./">뒤로가기</a></div>'.PHP_EOL;
+    echo "<div>라이센스(License) 내용에 동의하셔야 설치를 계속하실 수 있습니다.</div>".PHP_EOL;
+    echo "<div><a href=\"./\">뒤로가기</a></div>".PHP_EOL;
     exit;
 }
 ?>
@@ -105,7 +104,7 @@ if ($_POST['agree'] != '동의함') {
 
 <p class="outside">
     <strong class="st_strong">주의! 이미 그누보드4S가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
-    주의사항을 읽으셨다면 다음을 눌러 설치를 계속하십시오.
+    주의사항을 이해하고, 새로 설치하시려면 다음을 눌러 설치를 계속하십시오.
 </p>
 
 <div id="btn_confirm">
