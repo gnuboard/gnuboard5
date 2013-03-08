@@ -20,8 +20,8 @@ if ($w == '')
 
     $name = cut_str($pc_name, $config['cf_cut_name']);
     $mb_id = '';
-    if ($member[mb_id])
-        $mb_id = '($member[mb_id])';
+    if ($member['mb_id'])
+        $mb_id = '('.$member['mb_id'].')';
 
     // 환경설정의 투표 기타의견 작성시 최고관리자에게 메일발송 사용에 체크되어 있을 경우
     if ($config['cf_email_po_super_admin'])

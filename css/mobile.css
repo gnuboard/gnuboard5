@@ -45,19 +45,11 @@ pre {overflow-x:scroll;font-size:1.1em}
 #schall_stx {padding-left:0.3em;width:100px;height:1.5em;border:1px solid #aaa;border-right:0;background:#f7f7f7;line-height:1.5em;-webkit-appearance:none}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
-#snb {clear:both;border-top:1px solid #e7f1ed;background:#151515;text-align:center}
-#snb li {display:inline-block;border-right:1px solid #333}
-#snb li:nth-last-of-type(1) {border-right:0 !important}
-#snb a {display:inline-block;padding:0.5em;color:#fff;text-decoration:none}
-#snb img {display:none}
-
-#gnb {border-bottom:1px solid #c3c7c5;background:#f0f4f8;zoom:1}
-#gnb:after {display:block;visibility:hidden;clear:both;content:""}
-#gnb h2 {display:none}
-#gnb_ul {border-top:1px solid #e7f1ed}
-#gnb li {float:left;width:25%;border-bottom:1px solid #e7f1ed}
-#gnb li ul {display:none}
-.gnb_1depth a {display:block;padding:1em 0;border-right:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
+#mb_nb {clear:both;border-top:1px solid #e7f1ed;background:#151515;text-align:center}
+#mb_nb li {display:inline-block;border-right:1px solid #333}
+#mb_nb li:nth-last-of-type(1) {border-right:0 !important}
+#mb_nb a {display:inline-block;padding:0.5em;color:#fff;text-decoration:none}
+#mb_nb img {display:none}
 
 /* 배포시에는 필요없는 부분 */
 #sirgle_title {padding:0 1em;height:100px;color:#fff;font-size:2em}
@@ -75,6 +67,14 @@ pre {overflow-x:scroll;font-size:1.1em}
 #text_size {margin:0 0 1em;text-align:center}
 
 /* 하단 레이아웃 */
+#gnb {border-top:1px solid #c3c7c5;border-bottom:1px solid #c3c7c5;background:#f0f4f8;zoom:1}
+#gnb:after {display:block;visibility:hidden;clear:both;content:""}
+#gnb h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#gnb ul {border-top:1px solid #e7f1ed}
+#gnb li {float:left;width:25%;border-bottom:1px solid #e7f1ed}
+#gnb li ul {display:none}
+#gnb li a {display:block;padding:1em 0;border-right:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
+
 #ft {background:#484848}
 #ft h1 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
