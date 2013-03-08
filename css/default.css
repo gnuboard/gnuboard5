@@ -314,7 +314,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #mb_login .login_id {position:absolute;top:26px;left:95px}
 #mb_login .login_pw {position:absolute;top:52px;left:95px}
 #mb_login .frm_input {display:block;margin:0 0 5px 80px}
-#mb_login .btn_submit {position:absolute;top:20px;left:335px;height:53px}
+#mb_login .btn_submit {position:absolute;top:20px;left:335px;height:49px}
 #mb_login section {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
 #mb_login section div {text-align:right}
 

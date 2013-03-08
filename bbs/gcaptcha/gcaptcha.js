@@ -17,7 +17,7 @@ function chk_captcha()
         }
     });
     if (!captcha_result) {
-        alert("스팸방지 숫자가 틀렸습니다.");
+        alert("자동등록방지 숫자가 틀렸습니다.");
         captcha_key.select();
         return false;
     }

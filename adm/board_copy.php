@@ -1,7 +1,6 @@
 <?
 $sub_menu = "300100";
 include_once("./_common.php");
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 auth_check($auth[$sub_menu], 'w');
 
@@ -40,10 +39,6 @@ include_once(G4_PATH.'/head.sub.php');
             <label for="copy_case2">구조와 데이터</label>
         </td>
     </tr>
-    <tr>
-        <th scope="col">자동등록방지</th>
-        <td><?=captcha_html();?></td>
-    </tr>
     </tbody>
     </table>
 </div>
@@ -62,8 +57,6 @@ function fboardcopy_check(f)
         alert("원본 테이블명과 복사할 테이블명이 달라야 합니다.");
         return false;
     }
-
-    <? echo chk_captcha_js(); ?>
 
     return true;
 }

@@ -27,7 +27,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             회원 별명 : <?=$mb_nick?><br>
             추천인아이디 : <?=$mb_recommend?>
         </p>
-        <a href="<?=G4_BBS_URL?>/member_form.php?w=u&amp;mb_id=<?=$mb_id?>" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">관리자에서 회원정보 확인하기</a>
+        <a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$mb_id?>" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">관리자에서 회원정보 확인하기</a>
     </div>
 </div>
 

@@ -173,16 +173,23 @@ if ($w == '') {
     $bo_count_comment = $row['cnt'];
 
     // 글수 조정
+    /*
+        엔피씨님의 팁으로 교체합니다. 130308
+        http://sir.co.kr/bbs/board.php?bo_table=g4_tiptech&wr_id=27207
+    */
     if (isset($_POST['proc_count'])) {
         // 원글을 얻습니다.
-        $sql = " select wr_id from {$g4['write_prefix']}{$bo_table} where wr_is_comment = 0 ";
+        //$sql = " select wr_id from {$g4['write_prefix']}{$bo_table} where wr_is_comment = 0 ";
+        $sql = " select a.wr_id, (count(b.wr_parent) - 1) as cnt from {$g4['write_prefix']}{$bo_table} a, {$g4['write_prefix']}{$bo_table} b where a.wr_id=b.wr_parent and a.wr_is_comment=0 group by a.wr_id ";
         $result = sql_query($sql);
         for ($i=0; $row=sql_fetch_array($result); $i++) {
+            /*
             // 코멘트수를 얻습니다.
             $sql2 = " select count(*) as cnt from {$g4['write_prefix']}$bo_table where wr_parent = '{$row['wr_id']}' and wr_is_comment = 1 ";
             $row2 = sql_fetch($sql2);
+            */
 
-            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_comment = '{$row2['cnt']}' where wr_id = '{$row['wr_id']}' ");
+            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_comment = '{$row['cnt']}' where wr_id = '{$row['wr_id']}' ");
         }
     }
 

@@ -128,7 +128,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         </table>
 
         <div class="btn_confirm">
-            <input type="submit" class="btn_submit" value="댓글입력">
+            <input type="submit" class="btn_submit" value="댓글등록">
         </div>
 
         </form>

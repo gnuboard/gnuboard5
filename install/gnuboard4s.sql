@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS `g4s_board` (
   `bo_use_secret` tinyint(4) NOT NULL default '0',
   `bo_use_dhtml_editor` tinyint(4) NOT NULL default '0',
   `bo_use_rss_view` tinyint(4) NOT NULL default '0',
-  `bo_use_comment` tinyint(4) NOT NULL default '0',
   `bo_use_good` tinyint(4) NOT NULL default '0',
   `bo_use_nogood` tinyint(4) NOT NULL default '0',
   `bo_use_name` tinyint(4) NOT NULL default '0',
