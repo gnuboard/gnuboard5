@@ -30,7 +30,7 @@ if (!isset($board['bo_mobile_skin'])) {
 }
 
 if (!isset($board['bo_gallery_width'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL AFTER `bo_gallery_width`,  ADD `bo_moblie_gallery_cols` INT NOT NULL AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_width` INT NOT NULL AFTER `bo_mobile_gallery_cols`,  ADD `bo_mobile_gallery_height` INT NOT NULL AFTER `bo_mobile_gallery_width` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_width`,  ADD `bo_mobile_gallery_cols` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_width` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_cols`,  ADD `bo_mobile_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_width` ", false);
 }
 
 if ($w == '') {
