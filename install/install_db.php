@@ -124,7 +124,6 @@ $sql = " insert into `{$table_prefix}config`
                 cf_stipulation = '해당 홈페이지에 맞는 회원가입약관을 입력합니다.',
                 cf_privacy = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.'
                 ";
->>>>>>> 58918b3528c5945215be90227f5d74759b172042
 mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
 // 관리자 회원가입
