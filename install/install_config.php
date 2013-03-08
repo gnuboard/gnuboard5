@@ -1,5 +1,5 @@
 <?
-$title = "그누보드4S 설치 3단계 중 2단계 설정";
+$title = "그누보드4s 설치 3단계 중 2단계 설정";
 include_once ('../config.php');
 include_once ('./install.inc.php');
 
@@ -103,7 +103,7 @@ if ($_POST['agree'] != '동의함') {
 </div>
 
 <p class="outside">
-    <strong class="st_strong">주의! 이미 그누보드4S가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
+    <strong class="st_strong">주의! 이미 그누보드4s가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
     주의사항을 이해하고, 새로 설치하시려면 다음을 눌러 설치를 계속하십시오.
 </p>
 

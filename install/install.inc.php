@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $data_path = '../'.G4_DATA_DIR;
 
-if (!$title) $title = "그누보드4S 설치";
+if (!$title) $title = "그누보드4s 설치";
 ?>
 
 <!doctype html>
