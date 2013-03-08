@@ -204,7 +204,7 @@ $(window).load(function() {
 
 $(function() {
     $("a.view_image").click(function() {
-        window.open(this.href, "large_image", "top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
+        window.open(this.href, "large_image", "location=yes,links=no,toolbar=no,top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
         return false;
     });
 
