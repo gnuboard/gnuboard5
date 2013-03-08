@@ -109,7 +109,7 @@ $colspan = 8;
         <th scope="col">접근<br>사용</th>
         <th scope="col">접근<br>회원수</th>
         <th scope="col">메뉴<br>보임</th>
-        <th scope="col">출력<br>순서</th>
+        <th scope="col"><?=subject_sort_link('gr_order')?>출력<br>순서</a></th>
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
