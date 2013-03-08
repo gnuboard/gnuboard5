@@ -133,6 +133,7 @@ $pg_anchor = "<ul class=\"anchor\">
                 echo '영문자, 숫자, _ 만 가능 (공백없이 20자 이내)';
             else
                 echo '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'">게시판 바로가기</a>';
+                echo '<a href="./board_list.php">목록으로</a>';
             ?>
         </td>
     </tr>
@@ -140,7 +141,7 @@ $pg_anchor = "<ul class=\"anchor\">
         <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
         <td colspan="2">
             <?=get_group_select('gr_id', $board['gr_id'], 'required');?>
-            <? if ($w=='u') { ?><script>document.write("<a href='javascript:;' onclick=\"location.href='./board_list.php?sfl=a.gr_id&stx='+document.getElementById('gr_id').value;\">동일그룹게시판목록</a>");</script><?}?></td>
+            <? if ($w=='u') { ?><script>document.write("<a href='javascript:;' onclick=\"location.href='./board_list.php?sfl=a.gr_id&amp;stx='+document.getElementById('gr_id').value;\">동일 그룹 목록</a>");</script><?}?>
         </td>
     </tr>
     <tr>
@@ -160,8 +161,10 @@ $pg_anchor = "<ul class=\"anchor\">
             </select>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use" name="chk_use" value="1">
-            <label for="chk_use">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use" name="chk_grp_use" value="1">
+            <label for="chk_grp_use">그룹적용</label>
+            <input type="checkbox" id="chk_all_use" name="chk_all_use" value="1">
+            <label for="chk_all_use">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -173,9 +176,10 @@ $pg_anchor = "<ul class=\"anchor\">
             <label for="bo_use_category">사용</label>
         </td>
         <td class="group_setting">
-                <input type="checkbox" id="chk_category_list" name="chk_category_list" value="1">
-                <label for="chk_category_list">동일그룹 모두 적용</label>
-            </span>
+            <input type="checkbox" id="chk_grp_category_list" name="chk_grp_category_list" value="1">
+            <label for="chk_grp_category_list">그룹적용</label>
+            <input type="checkbox" id="chk_all_category_list" name="chk_all_category_list" value="1">
+            <label for="chk_all_category_list">전체적용</label>
         </td>
     </tr>
     <? if ($w == 'u') { ?>
@@ -208,8 +212,10 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_admin" name="bo_admin" class="frm_input" maxlength="20" value="<?=$board['bo_admin']?>">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_admin" name="chk_admin" value="1">
-            <label for="chk_admin">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_admin" name="chk_grp_admin" value="1">
+            <label for="chk_grp_admin">그룹적용</label>
+            <input type="checkbox" id="chk_all_admin" name="chk_all_admin" value="1">
+            <label for="chk_all_admin">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -219,8 +225,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_list_level', 1, 10, $board['bo_list_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_list_level" name="chk_list_level" value="1">
-            <label for="chk_list_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_list_level" name="chk_grp_list_level" value="1">
+            <label for="chk_grp_list_level">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -229,8 +235,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_read_level', 1, 10, $board['bo_read_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_read_level" name="chk_read_level" value="1">
-            <label for="chk_read_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_read_level" name="chk_grp_read_level" value="1">
+            <label for="chk_grp_read_level">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -239,8 +245,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_write_level', 1, 10, $board['bo_write_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_write_level" name="chk_write_level" value="1">
-            <label for="chk_write_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_write_level" name="chk_grp_write_level" value="1">
+            <label for="chk_grp_write_level">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -249,8 +255,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_reply_level', 1, 10, $board['bo_reply_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_reply_level" name="chk_reply_level" value="1">
-            <label for="chk_reply_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_reply_level" name="chk_grp_reply_level" value="1">
+            <label for="chk_grp_reply_level">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -259,8 +265,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_comment_level', 1, 10, $board['bo_comment_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_comment_level" name="chk_comment_level" value="1">
-            <label for="chk_comment_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_comment_level" name="chk_grp_comment_level" value="1">
+            <label for="chk_grp_comment_level">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -269,8 +275,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_link_level', 1, 10, $board['bo_link_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_link_level" name="chk_link_level" value="1">
-            <label for="chk_link_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_link_level" name="chk_grp_link_level" value="1">
+            <label for="chk_grp_link_level">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -279,8 +285,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_upload_level', 1, 10, $board['bo_upload_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_upload_level" name="chk_upload_level" value="1">
-            <label for="chk_upload_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_upload_level" name="chk_grp_upload_level" value="1">
+            <label for="chk_grp_upload_level">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -289,8 +295,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_download_level', 1, 10, $board['bo_download_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_download_level" name="chk_download_level" value="1">
-            <label for="chk_download_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_download_level" name="chk_grp_download_level" value="1">
+            <label for="chk_grp_download_level">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -299,8 +305,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_member_level_select('bo_html_level', 1, 10, $board['bo_html_level']) ?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_html_level" name="chk_html_level" value="1">
-            <label for="chk_html_level">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_html_level" name="chk_grp_html_level" value="1">
+            <label for="chk_grp_html_level">그룹적용</label>
         </td>
     </tr>
     </tbody>
@@ -324,8 +330,8 @@ $pg_anchor = "<ul class=\"anchor\">
             댓글 <input type="text" id="bo_count_modify" name="bo_count_modify" class="required numeric frm_input" required value="<?=$board['bo_count_modify']?>" size="3">개 이상 달리면 수정불가
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_count_modify" name="chk_count_modify" value="1">
-            <label for="chk_count_modify">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_count_modify" name="chk_grp_count_modify" value="1">
+            <label for="chk_grp_count_modify">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -334,8 +340,8 @@ $pg_anchor = "<ul class=\"anchor\">
             댓글 <input type="text" id="bo_count_delete" name="bo_count_delete" class="required numeric frm_input" required value="<?=$board['bo_count_delete']?>" size="3">개 이상 달리면 삭제불가
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_count_delete" name="chk_count_delete" value="1">
-            <label for="chk_count_delete">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_count_delete" name="chk_grp_count_delete" value="1">
+            <label for="chk_grp_count_delete">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -344,8 +350,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="checkbox" id="bo_use_sideview" name="bo_use_sideview" value="1" <?=$board['bo_use_sideview']?'checked':'';?>>사용 (글쓴이 클릭시 나오는 레이어 메뉴)
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_sideview" name="chk_use_sideview" value="1">
-            <label for="chk_use_sideview">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_sideview" name="chk_grp_use_sideview" value="1">
+            <label for="chk_grp_use_sideview">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -359,8 +365,8 @@ $pg_anchor = "<ul class=\"anchor\">
             </select>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_secret" name="chk_use_secret" value="1">
-            <label for="chk_use_secret">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_secret" name="chk_grp_use_secret" value="1">
+            <label for="chk_grp_use_secret">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -371,8 +377,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_dhtml_editor" name="chk_use_dhtml_editor" value="1">
-            <label for="chk_use_dhtml_editor">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_dhtml_editor" name="chk_grp_use_dhtml_editor" value="1">
+            <label for="chk_grp_use_dhtml_editor">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -383,8 +389,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_rss_view" name="chk_use_rss_view" value="1">
-            <label for="chk_use_rss_view">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_rss_view" name="chk_grp_use_rss_view" value="1">
+            <label for="chk_grp_use_rss_view">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -394,8 +400,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_good" name="chk_use_good" value="1">
-            <label for="chk_use_good">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_good" name="chk_grp_use_good" value="1">
+            <label for="chk_grp_use_good">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -405,8 +411,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_nogood" name="chk_use_nogood" value="1">
-            <label for="chk_use_nogood">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_nogood" name="chk_grp_use_nogood" value="1">
+            <label for="chk_grp_use_nogood">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -416,8 +422,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_name" name="chk_use_name" value="1">
-            <label for="chk_use_name">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_name" name="chk_grp_use_name" value="1">
+            <label for="chk_grp_use_name">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -427,8 +433,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_signature" name="chk_use_signature" value="1">
-            <label for="chk_use_signature">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_signature" name="chk_grp_use_signature" value="1">
+            <label for="chk_grp_use_signature">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -438,8 +444,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_ip_view" name="chk_use_ip_view" value="1">
-            <label for="chk_use_ip_view">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_ip_view" name="chk_grp_use_ip_view" value="1">
+            <label for="chk_grp_use_ip_view">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -449,8 +455,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용 (사용시 속도 느려질 수 있습니다.)
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_list_content" name="chk_use_list_content" value="1">
-            <label for="chk_use_list_content">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_list_content" name="chk_grp_use_list_content" value="1">
+            <label for="chk_grp_use_list_content">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -460,8 +466,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_list_view" name="chk_use_list_view" value="1">
-            <label for="chk_use_list_view">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_list_view" name="chk_grp_use_list_view" value="1">
+            <label for="chk_grp_use_list_view">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -471,8 +477,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_email" name="chk_use_email" value="1">
-            <label for="chk_use_email">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_email" name="chk_grp_use_email" value="1">
+            <label for="chk_grp_use_email">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -482,8 +488,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_upload_count" name="bo_upload_count" class="required numeric frm_input" required value="<?=$board['bo_upload_count']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_upload_count" name="chk_upload_count" value="1">
-            <label for="chk_upload_count">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_upload_count" name="chk_grp_upload_count" value="1">
+            <label for="chk_grp_upload_count">그룹적용</label>
         </td>
     </tr>
     <?
@@ -499,8 +505,8 @@ $pg_anchor = "<ul class=\"anchor\">
             업로드 파일 한개당 <input type="text" id="bo_upload_size" name="bo_upload_size" class="required numeric frm_input" required value="<?=$board['bo_upload_size']?>" size="10"> bytes 이하
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_upload_size" name="chk_upload_size" value="1">
-            <label for="chk_upload_size">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_upload_size" name="chk_grp_upload_size" value="1">
+            <label for="chk_grp_upload_size">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -509,8 +515,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="checkbox" id="bo_use_file_content" name="bo_use_file_content" value="1" <?=$board['bo_use_file_content']?'checked':'';?>>사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_file_content" name="chk_use_file_content" value="1">
-            <label for="chk_use_file_content">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_file_content" name="chk_grp_use_file_content" value="1">
+            <label for="chk_grp_use_file_content">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -520,8 +526,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_write_min" name="bo_write_min" class="numeric frm_input" value="<?=$board['bo_write_min']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_write_min" name="chk_write_min" value="1">
-            <label for="chk_write_min">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_write_min" name="chk_grp_write_min" value="1">
+            <label for="chk_grp_write_min">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -531,8 +537,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_write_max" name="bo_write_max" class="numeric frm_input" value="<?=$board['bo_write_max']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_write_max" name="chk_write_max" value="1">
-            <label for="chk_write_max">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_write_max" name="chk_grp_write_max" value="1">
+            <label for="chk_grp_write_max">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -542,8 +548,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_comment_min" name="bo_comment_min" class="numeric frm_input" value="<?=$board['bo_comment_min']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_comment_min" name="chk_comment_min" value="1">
-            <label for="chk_comment_min">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_comment_min" name="chk_grp_comment_min" value="1">
+            <label for="chk_grp_comment_min">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -553,8 +559,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_comment_max" name="bo_comment_max" class="numeric frm_input" value="<?=$board['bo_comment_max']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_comment_max" name="chk_comment_max" value="1">
-            <label for="chk_comment_max">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_comment_max" name="chk_grp_comment_max" value="1">
+            <label for="chk_grp_comment_max">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -564,8 +570,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_use_search" name="chk_use_search" value="1">
-            <label for="chk_use_search">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_use_search" name="chk_grp_use_search" value="1">
+            <label for="chk_grp_use_search">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -576,8 +582,8 @@ $pg_anchor = "<ul class=\"anchor\">
             사용
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_show_menu" name="chk_show_menu" value="1">
-            <label for="chk_show_menu">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_show_menu" name="chk_grp_show_menu" value="1">
+            <label for="chk_grp_show_menu">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -587,8 +593,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_order" name="bo_order" class="frm_input" value="<?=$board['bo_order']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_order" name="chk_order" value="1">
-            <label for="chk_order">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_order" name="chk_grp_order" value="1">
+            <label for="chk_grp_order">그룹적용</label>
         </td>
     </tr>
     </tbody>
@@ -612,8 +618,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_skin_select('board', 'bo_skin', 'bo_skin', $board['bo_skin'], 'required');?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_skin" name="chk_skin" value="1">
-            <label for="chk_skin">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_skin" name="chk_grp_skin" value="1">
+            <label for="chk_grp_skin">그룹적용</label>
         </td>
     </tr>
     <tbody>
@@ -623,8 +629,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=get_mobile_skin_select('board', 'bo_mobile_skin', 'bo_mobile_skin', $board['bo_mobile_skin'], 'required');?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_mobile_skin" name="chk_mobile_skin" value="1">
-            <label for="chk_mobile_skin">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_mobile_skin" name="chk_grp_mobile_skin" value="1">
+            <label for="chk_grp_mobile_skin">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -633,8 +639,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_include_head" name="bo_include_head" class="frm_input" value="<?=$board['bo_include_head']?>" size="50">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_include_head" name="chk_include_head" value="1">
-            <label for="chk_include_head">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_include_head" name="chk_grp_include_head" value="1">
+            <label for="chk_grp_include_head">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -643,8 +649,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_include_tail" name="bo_include_tail" class="frm_input" value="<?=$board['bo_include_tail']?>" size="50">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_include_tail" name="chk_include_tail" value="1">
-            <label for="chk_include_tail">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_include_tail" name="chk_grp_include_tail" value="1">
+            <label for="chk_grp_include_tail">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -653,8 +659,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=editor_html("bo_content_head", $board['bo_content_head']);?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_content_head" name="chk_content_head" value="1">
-            <label for="chk_content_head">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_content_head" name="chk_grp_content_head" value="1">
+            <label for="chk_grp_content_head">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -663,8 +669,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <?=editor_html("bo_content_tail", $board['bo_content_tail']);?>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_content_tail" name="chk_content_tail" value="1">
-            <label for="chk_content_tail">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_content_tail" name="chk_grp_content_tail" value="1">
+            <label for="chk_grp_content_tail">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -673,8 +679,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <textarea id="bo_insert_content" name="bo_insert_content" rows="5"><?=$board['bo_insert_content'] ?></textarea>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_insert_content" name="chk_insert_content" value="1">
-            <label for="chk_insert_content">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_insert_content" name="chk_grp_insert_content" value="1">
+            <label for="chk_grp_insert_content">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -684,8 +690,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_subject_len" name="bo_subject_len" class="required numeric frm_input" required value="<?=$board['bo_subject_len']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_subject_len" name="chk_subject_len" value="1">
-            <label for="chk_subject_len">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_subject_len" name="chk_grp_subject_len" value="1">
+            <label for="chk_grp_subject_len">그룹적용</label>
         </td>
     </tr>
         <tr>
@@ -694,8 +700,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_page_rows" name="bo_page_rows" class="required numeric frm_input" required value="<?=$board['bo_page_rows']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_page_rows" name="chk_page_rows" value="1">
-            <label for="chk_page_rows">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_page_rows" name="chk_grp_page_rows" value="1">
+            <label for="chk_grp_page_rows">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -705,8 +711,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_gallery_cols" name="bo_gallery_cols" class="required numeric frm_input" required value="<?=$board['bo_gallery_cols']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_gallery_cols" name="chk_gallery_cols" value="1">
-            <label for="chk_gallery_cols">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_gallery_cols" name="chk_grp_gallery_cols" value="1">
+            <label for="chk_grp_gallery_cols">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -716,8 +722,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_gallery_width" name="bo_gallery_width" class="required numeric frm_input" required value="<?=$board['bo_gallery_width']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_gallery_width" name="chk_gallery_width" value="1">
-            <label for="chk_gallery_width">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_gallery_width" name="chk_grp_gallery_width" value="1">
+            <label for="chk_grp_gallery_width">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -727,8 +733,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_gallery_height" name="bo_gallery_height" class="required numeric frm_input" required value="<?=$board['bo_gallery_height']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_gallery_height" name="chk_gallery_height" value="1">
-            <label for="chk_gallery_height">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_gallery_height" name="chk_grp_gallery_height" value="1">
+            <label for="chk_grp_gallery_height">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -738,8 +744,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_mobile_gallery_cols" name="bo_mobile_gallery_cols" class="required numeric frm_input" required value="<?=$board['bo_mobile_gallery_cols']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_gallery_cols" name="chk_gallery_cols" value="1">
-            <label for="chk_gallery_cols">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_gallery_cols" name="chk_grp_gallery_cols" value="1">
+            <label for="chk_grp_gallery_cols">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -749,8 +755,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_mobile_gallery_width" name="bo_mobile_gallery_width" class="required numeric frm_input" required value="<?=$board['bo_mobile_gallery_width']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_gallery_width" name="chk_gallery_width" value="1">
-            <label for="chk_gallery_width">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_gallery_width" name="chk_grp_gallery_width" value="1">
+            <label for="chk_grp_gallery_width">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -760,8 +766,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_mobile_gallery_height" name="bo_mobile_gallery_height" class="required numeric frm_input" required value="<?=$board['bo_mobile_gallery_height']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_gallery_height" name="chk_gallery_height" value="1">
-            <label for="chk_gallery_height">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_gallery_height" name="chk_grp_gallery_height" value="1">
+            <label for="chk_grp_gallery_height">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -771,8 +777,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_table_width" name="bo_table_width" class="required numeric frm_input" required value="<?=$board['bo_table_width']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_table_width" name="chk_table_width" value="1">
-            <label for="chk_table_width">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_table_width" name="chk_grp_table_width" value="1">
+            <label for="chk_grp_table_width">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -782,8 +788,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_image_width" name="bo_image_width" class="required numeric frm_input" required value="<?=$board['bo_image_width']?>" size="4"> 픽셀
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_image_width" name="chk_image_width" value="1">
-            <label for="chk_image_width">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_image_width" name="chk_grp_image_width" value="1">
+            <label for="chk_grp_image_width">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -793,8 +799,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_new" name="bo_new" class="required numeric frm_input" required value="<?=$board['bo_new']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_new" name="chk_new" value="1">
-            <label for="chk_new">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_new" name="chk_grp_new" value="1">
+            <label for="chk_grp_new">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -804,8 +810,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_hot" name="bo_hot" class="required numeric frm_input" required value="<?=$board['bo_hot']?>" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_hot" name="chk_hot" value="1">
-            <label for="chk_hot">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_hot" name="chk_grp_hot" value="1">
+            <label for="chk_grp_hot">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -817,8 +823,8 @@ $pg_anchor = "<ul class=\"anchor\">
             </select>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_reply_order" name="chk_reply_order" value="1">
-            <label for="chk_reply_order">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_reply_order" name="chk_grp_reply_order" value="1">
+            <label for="chk_grp_reply_order">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -848,8 +854,8 @@ $pg_anchor = "<ul class=\"anchor\">
             </select>
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_sort_field" name="chk_sort_field" value="1">
-            <label for="chk_sort_field">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_sort_field" name="chk_grp_sort_field" value="1">
+            <label for="chk_grp_sort_field">그룹적용</label>
         </td>
     </tbody>
     </table>
@@ -867,10 +873,10 @@ $pg_anchor = "<ul class=\"anchor\">
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="chk_point">기본값으로 설정</label></th>
+        <th scope="row"><label for="chk_grp_point">기본값으로 설정</label></th>
         <td colspan="2">
             <?=help('환경설정에 입력된 포인트로 설정')?>
-            <input type="checkbox" id="chk_point" name="chk_point" onclick="set_point(this.form)">
+            <input type="checkbox" id="chk_grp_point" name="chk_grp_point" onclick="set_point(this.form)">
         </td>
     </tr>
     <tr>
@@ -879,8 +885,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_read_point" name="bo_read_point" class="required frm_input" required value="<?=$board['bo_read_point']?>" size="5">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_read_point" name="chk_read_point" value="1">
-            <label for="chk_read_point">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_read_point" name="chk_grp_read_point" value="1">
+            <label for="chk_grp_read_point">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -889,8 +895,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_write_point" name="bo_write_point" class="required frm_input" required value="<?=$board['bo_write_point']?>" size="5">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_write_point" name="chk_write_point" value="1">
-            <label for="chk_write_point">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_write_point" name="chk_grp_write_point" value="1">
+            <label for="chk_grp_write_point">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -899,8 +905,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_comment_point" name="bo_comment_point" class="required frm_input" required value="<?=$board['bo_comment_point']?>" size="5">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_comment_point" name="chk_comment_point" value="1">
-            <label for="chk_comment_point">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_comment_point" name="chk_grp_comment_point" value="1">
+            <label for="chk_grp_comment_point">그룹적용</label>
         </td>
     </tr>
     <tr>
@@ -909,8 +915,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_download_point" name="bo_download_point" class="required frm_input" required value="<?=$board['bo_download_point']?>" size="5">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_download_point" name="chk_download_point" value="1">
-            <label for="chk_download_point">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_download_point" name="chk_grp_download_point" value="1">
+            <label for="chk_grp_download_point">그룹적용</label>
         </td>
     </tr>
     </tbody>
@@ -938,8 +944,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <input type="text" id="bo_<?=$i?>" name="bo_<?=$i?>" class="frm_input" value="<?=get_text($board['bo_'.$i])?>">
         </td>
         <td class="group_setting">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk_<?=$i?>" value="1">
-            <label for="chk_<?=$i?>">동일그룹 모두 적용</label>
+            <input type="checkbox" id="chk_grp_<?=$i?>" name="chk_grp_<?=$i?>" value="1">
+            <label for="chk_grp_<?=$i?>">그룹적용</label>
         </td>
     </tr>
     <? } ?>
@@ -975,7 +981,7 @@ function board_copy(bo_table) {
 }
 
 function set_point(f) {
-    if (f.chk_point.checked) {
+    if (f.chk_grp_point.checked) {
         f.bo_read_point.value = "<?=$config['cf_read_point']?>";
         f.bo_write_point.value = "<?=$config['cf_write_point']?>";
         f.bo_comment_point.value = "<?=$config['cf_comment_point']?>";

@@ -51,6 +51,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 #mb_nb a {display:inline-block;padding:0.5em;color:#fff;text-decoration:none}
 #mb_nb img {display:none}
 
+#lnb {}
+
 /* 배포시에는 필요없는 부분 */
 #sirgle_title {padding:0 1em;height:100px;color:#fff;font-size:2em}
 #sirgle_title_span {display:block;position:relative;top:33px;left:0}
