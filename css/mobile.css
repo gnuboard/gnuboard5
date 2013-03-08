@@ -534,7 +534,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #bo_v_act span {display:inline-block;margin-right:0.3em;padding:0 1em;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2em;vertical-align:top}
 #bo_v_act strong {color:#ff3061}
 #bo_v_act_good,
-#bo_v_act_nogood {display:none;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#bo_v_act_nogood {display:inline-block;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 
 #bo_v form {padding-top:1.5em}
 
