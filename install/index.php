@@ -1,5 +1,5 @@
 <?
-$title = "그누보드4S 설치 3단계 중 1단계 라이센스 확인";
+$title = "그누보드4s 설치 3단계 중 1단계 라이센스 확인";
 include_once ('../config.php');
 include_once ('./install.inc.php');
 ?>

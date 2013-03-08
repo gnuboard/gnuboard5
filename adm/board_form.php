@@ -53,7 +53,7 @@ if ($w == '') {
     $board['bo_mobile_gallery_cols'] = 2;
     $board['bo_mobile_gallery_width'] = 160;
     $board['bo_mobile_gallery_height'] = 120;
-    $board['bo_table_width'] = 97;
+    $board['bo_table_width'] = 100;
     $board['bo_page_rows'] = $config['cf_page_rows'];
     $board['bo_subject_len'] = 60;
     $board['bo_new'] = 24;
@@ -765,7 +765,7 @@ $pg_anchor = "<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="bo_table_width">게시판 테이블 폭<strong class="sound_only">필수</strong></label></th>
+        <th scope="row"><label for="bo_table_width">게시판 폭<strong class="sound_only">필수</strong></label></th>
         <td>
             <?=help('100 이하는 %')?>
             <input type="text" id="bo_table_width" name="bo_table_width" class="required numeric frm_input" required value="<?=$board['bo_table_width']?>" size="4">

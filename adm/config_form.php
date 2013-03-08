@@ -475,7 +475,7 @@ $pg_anchor = "
         </td>
         <th scope="row"><label for="cf_prohibit_email">입력 금지 메일</label></th>
         <td>
-            <?=help('hanmail.net과 같은 메일 주소는 입력을 못합니다. 엔터로 구분')?>
+            <?=help('hotmail.com과 같은 메일 주소는 사용하지 못하도록 못합니다. 엔터로 구분')?>
             <textarea id="cf_prohibit_email" name="cf_prohibit_email" rows="5"><?=$config['cf_prohibit_email']?></textarea>
         </td>
     </tr>
