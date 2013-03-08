@@ -419,13 +419,14 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .bo_list img {margin-right:4px}
 .bo_list img:nth-last-of-type(1) {margin-right:0}
 
-/* 관리자일 때 생략 */
+/* 관리자일 때 */
+#bo_list_admin th:nth-of-type(1) {width:40px}
 #bo_list_admin th:nth-of-type(3) {width:100px}
 
 #bo_list_admin td:nth-of-type(1) {text-align:center}
 #bo_list_admin td:nth-of-type(3) {text-align:center}
 
-/* 관리자가 아닐 때 생략 */
+/* 관리자가 아닐 때 */
 #bo_list th:nth-of-type(2) {width:100px}
 
 #bo_list td:nth-of-type(2) {text-align:center}
