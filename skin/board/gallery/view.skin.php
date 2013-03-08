@@ -144,8 +144,14 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <? if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
             <? if ($scrap_href) { ?><a href="<?=$scrap_href; ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><? } ?>
-            <? if ($good_href) {?><a href="<?=$good_href?>" target="hiddenframe" class="btn_b01">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
-            <? if ($nogood_href) {?><a href="<?=$nogood_href?>" target="hiddenframe" class="btn_b01">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
+            <? if ($good_href) {?>
+            <a href="<?=$good_href.'&amp;'.$qstr?>" id="good_button" class="btn_b01">추천 <strong><?=number_format($view['wr_good'])?></strong></a>
+            <span id="bo_v_act_good"></span>
+            <? } ?>
+            <? if ($nogood_href) {?>
+            <a href="<?=$nogood_href.'&amp;'.$qstr?>" id="nogood_button" class="btn_b01">비추천  <strong><?=number_format($view['wr_nogood'])?></strong></a>
+            <span id="bo_v_act_nogood"></span>
+            <? } ?>
         </div>
         <? } else {
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
@@ -201,6 +207,18 @@ $(function() {
         window.open(this.href, "large_image", "top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
         return false;
     });
+
+    // 추천, 비추천
+    $("#good_button, #nogood_button").click(function() {
+        var $tx;
+        if(this.id == "good_button")
+            $tx = $("#bo_v_act_good");
+        else
+            $tx = $("#bo_v_act_nogood");
+
+        excute_good(this.href, $(this), $tx);
+        return false;
+    });
 });
 
 function view_image_resize()
@@ -217,5 +235,28 @@ function view_image_resize()
             $(this).removeClass("img_fix");
         }
     });
+}
+
+function excute_good(href, $el, $tx)
+{
+    $.post(
+        href,
+        { js: "on" },
+        function(data) {
+            if(data.error) {
+                alert(data.error);
+                return false;
+            }
+
+            if(data.count) {
+                $el.find("strong").text(number_format(String(data.count)));
+                if($tx.attr("id").search("nogood") > -1) {
+                    $tx.text("이 글을 비추천하셨습니다.").css("display", "inline");
+                } else {
+                    $tx.text("이 글을 추천하셨습니다.").css("display", "inline");
+                }
+            }
+        }, "json"
+    );
 }
 </script>

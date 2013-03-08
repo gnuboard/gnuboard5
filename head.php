@@ -71,7 +71,7 @@ if ($config['cf_include_head']) {
             </script>
         </fieldset>
 
-        <ul id="snb">
+        <ul id="mb_nb">
             <li>
                 <a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">
                     <img src="<?=G4_IMG_URL?>/snb_cnt.jpg" alt="">
@@ -154,7 +154,7 @@ if ($config['cf_include_head']) {
 <hr>
 
 <div id="wrapper">
-    <div id="lnb">
+    <div id="side_nb">
         <?=(G4_IS_MOBILE?outlogin('basic'):outlogin('basic')); // 외부 로그인 ?>
         <?=(G4_IS_MOBILE?poll('basic'):poll('basic')); // 설문조사 ?>
     </div>

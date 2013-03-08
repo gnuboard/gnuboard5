@@ -58,7 +58,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             </script>
         </fieldset>
 
-        <ul id="snb">
+        <ul id="mb_nb">
             <li><a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">접속자 <?=connect(); // 현재 접속자수 ?></a></li>
             <li><a href="<?=G4_BBS_URL?>/new.php" id="snb_new">새글</a></li>
             <? if ($is_member) { ?>
@@ -78,27 +78,14 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <hr>
 
-<nav id="gnb">
-    <script>$('#gnb').addClass('gnb_js');</script>
-    <h2>홈페이지 메인메뉴</h2>
+<nav id="lnb">
     <ul>
         <?
-        $sql = " select * from {$g4['group_table']} where gr_show_menu order by gr_order ";
-        $result = sql_query($sql);
-        for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index 
+        $sql2 = " select * from {$g4['board_table']} where gr_id = '{$gr_id}' order by bo_order ";
+        $result2 = sql_query($sql2);
+        for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
         ?>
-        <li class="gnb_1depth">
-            <a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_subject']?></a>
-            <ul>
-                <?
-                $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' order by bo_order ";
-                $result2 = sql_query($sql2);
-                for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
-                ?>
-                <li class="gnb_2depth"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row2['bo_table']?>"><?=$row2['bo_subject']?></a></li>
-                <?}?>
-            </ul>
-        </li>
+        <li><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row2['bo_table']?>"><?=$row2['bo_subject']?></a></li>
         <?}?>
     </ul>
 </nav>
@@ -106,7 +93,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 <hr>
 
 <div id="wrapper">
-    <div id="lnb">
+    <div id="side_nb">
         <?=(G4_IS_MOBILE?outlogin('basic'):outlogin('basic')); // 외부 로그인 ?>
         <?=(G4_IS_MOBILE?poll('basic'):poll('basic')); // 설문조사 ?>
     </div>
