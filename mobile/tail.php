@@ -6,6 +6,22 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <hr>
 
+<nav id="gnb">
+    <script>$('#gnb').addClass('gnb_js');</script>
+    <h2>홈페이지 메인메뉴</h2>
+    <ul>
+        <?
+        $sql = " select * from {$g4['group_table']} where gr_show_menu order by gr_order ";
+        $result = sql_query($sql);
+        for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index 
+        ?>
+        <li><a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_subject']?></a></li>
+        <?}?>
+    </ul>
+</nav>
+
+<hr>
+
 <footer id="ft">
     <h1><?=$config['cf_title']?> 정보</h1>
     <?=popular('basic'); // 인기검색어 ?>

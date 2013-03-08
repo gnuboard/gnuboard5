@@ -66,7 +66,7 @@ function imageview(id, w, h)
 
         <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.jpg" alt="<?=$config['cf_title']?> 관리자 처음으로"></a></div>
 
-        <div id="snb">
+        <div id="mb_nb">
             <ul>
                 <li>
                     <a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">
