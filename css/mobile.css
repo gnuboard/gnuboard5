@@ -460,7 +460,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .btn_bo_user li {float:left;margin-left:0.3em}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:0.3em}
-.btn_bo_adm input {padding:0 1em;height:25px;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer}
+.btn_bo_adm input {padding:0 1em;height:2em;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer;-webkit-appearance:none}
 .bo_notice td {background:#f7f7f7}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
