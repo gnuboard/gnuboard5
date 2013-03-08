@@ -227,6 +227,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_list_level" name="chk_grp_list_level" value="1">
             <label for="chk_grp_list_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_list_level" name="chk_all_list_level" value="1">
+            <label for="chk_all_list_level">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -237,6 +239,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_read_level" name="chk_grp_read_level" value="1">
             <label for="chk_grp_read_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_read_level" name="chk_all_read_level" value="1">
+            <label for="chk_all_read_level">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -247,6 +251,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_write_level" name="chk_grp_write_level" value="1">
             <label for="chk_grp_write_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_write_level" name="chk_all_write_level" value="1">
+            <label for="chk_all_write_level">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -257,6 +263,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_reply_level" name="chk_grp_reply_level" value="1">
             <label for="chk_grp_reply_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_reply_level" name="chk_all_reply_level" value="1">
+            <label for="chk_all_reply_level">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -267,6 +275,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_comment_level" name="chk_grp_comment_level" value="1">
             <label for="chk_grp_comment_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_comment_level" name="chk_all_comment_level" value="1">
+            <label for="chk_all_comment_level">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -277,6 +287,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_link_level" name="chk_grp_link_level" value="1">
             <label for="chk_grp_link_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_link_level" name="chk_all_link_level" value="1">
+            <label for="chk_all_link_level">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -287,6 +299,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_upload_level" name="chk_grp_upload_level" value="1">
             <label for="chk_grp_upload_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_upload_level" name="chk_all_upload_level" value="1">
+            <label for="chk_all_upload_level">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -297,6 +311,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_download_level" name="chk_grp_download_level" value="1">
             <label for="chk_grp_download_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_download_level" name="chk_all_download_level" value="1">
+            <label for="chk_all_download_level">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -307,6 +323,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_html_level" name="chk_grp_html_level" value="1">
             <label for="chk_grp_html_level">그룹적용</label>
+            <input type="checkbox" id="chk_all_html_level" name="chk_all_html_level" value="1">
+            <label for="chk_all_html_level">전체적용</label>
         </td>
     </tr>
     </tbody>
@@ -332,6 +350,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_count_modify" name="chk_grp_count_modify" value="1">
             <label for="chk_grp_count_modify">그룹적용</label>
+            <input type="checkbox" id="chk_all_count_modify" name="chk_all_count_modify" value="1">
+            <label for="chk_all_count_modify">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -342,6 +362,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_count_delete" name="chk_grp_count_delete" value="1">
             <label for="chk_grp_count_delete">그룹적용</label>
+            <input type="checkbox" id="chk_all_count_delete" name="chk_all_count_delete" value="1">
+            <label for="chk_all_count_delete">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -352,6 +374,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_sideview" name="chk_grp_use_sideview" value="1">
             <label for="chk_grp_use_sideview">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_sideview" name="chk_all_use_sideview" value="1">
+            <label for="chk_all_use_sideview">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -367,6 +391,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_secret" name="chk_grp_use_secret" value="1">
             <label for="chk_grp_use_secret">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_secret" name="chk_all_use_secret" value="1">
+            <label for="chk_all_use_secret">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -379,6 +405,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_dhtml_editor" name="chk_grp_use_dhtml_editor" value="1">
             <label for="chk_grp_use_dhtml_editor">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_dhtml_editor" name="chk_all_use_dhtml_editor" value="1">
+            <label for="chk_all_use_dhtml_editor">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -391,6 +419,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_rss_view" name="chk_grp_use_rss_view" value="1">
             <label for="chk_grp_use_rss_view">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_rss_view" name="chk_all_use_rss_view" value="1">
+            <label for="chk_all_use_rss_view">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -402,6 +432,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_good" name="chk_grp_use_good" value="1">
             <label for="chk_grp_use_good">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_good" name="chk_all_use_good" value="1">
+            <label for="chk_all_use_good">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -413,6 +445,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_nogood" name="chk_grp_use_nogood" value="1">
             <label for="chk_grp_use_nogood">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_nogood" name="chk_all_use_nogood" value="1">
+            <label for="chk_all_use_nogood">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -424,6 +458,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_name" name="chk_grp_use_name" value="1">
             <label for="chk_grp_use_name">그룹적용</label>
+            <input type="checkbox" id="chk_grp_all_name" name="chk_all_use_name" value="1">
+            <label for="chk_all_use_name">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -435,6 +471,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_signature" name="chk_grp_use_signature" value="1">
             <label for="chk_grp_use_signature">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_signature" name="chk_all_use_signature" value="1">
+            <label for="chk_all_use_signature">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -446,6 +484,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_ip_view" name="chk_grp_use_ip_view" value="1">
             <label for="chk_grp_use_ip_view">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_ip_view" name="chk_all_use_ip_view" value="1">
+            <label for="chk_all_use_ip_view">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -457,6 +497,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_list_content" name="chk_grp_use_list_content" value="1">
             <label for="chk_grp_use_list_content">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_list_content" name="chk_all_use_list_content" value="1">
+            <label for="chk_all_use_list_content">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -468,6 +510,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_list_view" name="chk_grp_use_list_view" value="1">
             <label for="chk_grp_use_list_view">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_list_view" name="chk_all_use_list_view" value="1">
+            <label for="chk_all_use_list_view">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -479,6 +523,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_email" name="chk_grp_use_email" value="1">
             <label for="chk_grp_use_email">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_email" name="chk_all_use_email" value="1">
+            <label for="chk_all_use_email">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -490,6 +536,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_upload_count" name="chk_grp_upload_count" value="1">
             <label for="chk_grp_upload_count">그룹적용</label>
+            <input type="checkbox" id="chk_all_upload_count" name="chk_all_upload_count" value="1">
+            <label for="chk_all_upload_count">전체적용</label>
         </td>
     </tr>
     <?
@@ -507,6 +555,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_upload_size" name="chk_grp_upload_size" value="1">
             <label for="chk_grp_upload_size">그룹적용</label>
+            <input type="checkbox" id="chk_all_upload_size" name="chk_all_upload_size" value="1">
+            <label for="chk_all_upload_size">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -517,6 +567,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_file_content" name="chk_grp_use_file_content" value="1">
             <label for="chk_grp_use_file_content">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_file_content" name="chk_all_use_file_content" value="1">
+            <label for="chk_all_use_file_content">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -528,6 +580,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_write_min" name="chk_grp_write_min" value="1">
             <label for="chk_grp_write_min">그룹적용</label>
+            <input type="checkbox" id="chk_all_write_min" name="chk_all_write_min" value="1">
+            <label for="chk_all_write_min">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -539,6 +593,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_write_max" name="chk_grp_write_max" value="1">
             <label for="chk_grp_write_max">그룹적용</label>
+            <input type="checkbox" id="chk_all_write_max" name="chk_all_write_max" value="1">
+            <label for="chk_all_write_max">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -550,6 +606,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_comment_min" name="chk_grp_comment_min" value="1">
             <label for="chk_grp_comment_min">그룹적용</label>
+            <input type="checkbox" id="chk_all_comment_min" name="chk_all_comment_min" value="1">
+            <label for="chk_all_comment_min">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -561,6 +619,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_comment_max" name="chk_grp_comment_max" value="1">
             <label for="chk_grp_comment_max">그룹적용</label>
+            <input type="checkbox" id="chk_all_comment_max" name="chk_all_comment_max" value="1">
+            <label for="chk_all_comment_max">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -572,6 +632,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_use_search" name="chk_grp_use_search" value="1">
             <label for="chk_grp_use_search">그룹적용</label>
+            <input type="checkbox" id="chk_all_use_search" name="chk_all_use_search" value="1">
+            <label for="chk_all_use_search">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -584,6 +646,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_show_menu" name="chk_grp_show_menu" value="1">
             <label for="chk_grp_show_menu">그룹적용</label>
+            <input type="checkbox" id="chk_all_show_menu" name="chk_all_show_menu" value="1">
+            <label for="chk_all_show_menu">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -595,6 +659,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_order" name="chk_grp_order" value="1">
             <label for="chk_grp_order">그룹적용</label>
+            <input type="checkbox" id="chk_all_order" name="chk_all_order" value="1">
+            <label for="chk_all_order">전체적용</label>
         </td>
     </tr>
     </tbody>
@@ -620,6 +686,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_skin" name="chk_grp_skin" value="1">
             <label for="chk_grp_skin">그룹적용</label>
+            <input type="checkbox" id="chk_all_skin" name="chk_all_skin" value="1">
+            <label for="chk_all_skin">전체적용</label>
         </td>
     </tr>
     <tbody>
@@ -631,6 +699,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_mobile_skin" name="chk_grp_mobile_skin" value="1">
             <label for="chk_grp_mobile_skin">그룹적용</label>
+            <input type="checkbox" id="chk_all_mobile_skin" name="chk_all_mobile_skin" value="1">
+            <label for="chk_all_mobile_skin">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -641,6 +711,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_include_head" name="chk_grp_include_head" value="1">
             <label for="chk_grp_include_head">그룹적용</label>
+            <input type="checkbox" id="chk_all_include_head" name="chk_all_include_head" value="1">
+            <label for="chk_all_include_head">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -651,6 +723,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_include_tail" name="chk_grp_include_tail" value="1">
             <label for="chk_grp_include_tail">그룹적용</label>
+            <input type="checkbox" id="chk_all_include_tail" name="chk_all_include_tail" value="1">
+            <label for="chk_all_include_tail">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -661,6 +735,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_content_head" name="chk_grp_content_head" value="1">
             <label for="chk_grp_content_head">그룹적용</label>
+            <input type="checkbox" id="chk_all_content_head" name="chk_all_content_head" value="1">
+            <label for="chk_all_content_head">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -671,6 +747,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_content_tail" name="chk_grp_content_tail" value="1">
             <label for="chk_grp_content_tail">그룹적용</label>
+            <input type="checkbox" id="chk_all_content_tail" name="chk_all_content_tail" value="1">
+            <label for="chk_all_content_tail">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -681,6 +759,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_insert_content" name="chk_grp_insert_content" value="1">
             <label for="chk_grp_insert_content">그룹적용</label>
+            <input type="checkbox" id="chk_all_insert_content" name="chk_all_insert_content" value="1">
+            <label for="chk_all_insert_content">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -692,6 +772,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_subject_len" name="chk_grp_subject_len" value="1">
             <label for="chk_grp_subject_len">그룹적용</label>
+            <input type="checkbox" id="chk_all_subject_len" name="chk_all_subject_len" value="1">
+            <label for="chk_all_subject_len">전체적용</label>
         </td>
     </tr>
         <tr>
@@ -702,6 +784,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_page_rows" name="chk_grp_page_rows" value="1">
             <label for="chk_grp_page_rows">그룹적용</label>
+            <input type="checkbox" id="chk_all_page_rows" name="chk_all_page_rows" value="1">
+            <label for="chk_all_page_rows">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -713,6 +797,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_gallery_cols" name="chk_grp_gallery_cols" value="1">
             <label for="chk_grp_gallery_cols">그룹적용</label>
+            <input type="checkbox" id="chk_all_gallery_cols" name="chk_all_gallery_cols" value="1">
+            <label for="chk_all_gallery_cols">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -724,6 +810,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_gallery_width" name="chk_grp_gallery_width" value="1">
             <label for="chk_grp_gallery_width">그룹적용</label>
+            <input type="checkbox" id="chk_grp_gallery_width" name="chk_grp_gallery_width" value="1">
+            <label for="chk_grp_gallery_width">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -735,6 +823,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_gallery_height" name="chk_grp_gallery_height" value="1">
             <label for="chk_grp_gallery_height">그룹적용</label>
+            <input type="checkbox" id="chk_all_gallery_height" name="chk_all_gallery_height" value="1">
+            <label for="chk_all_gallery_height">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -746,6 +836,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_gallery_cols" name="chk_grp_gallery_cols" value="1">
             <label for="chk_grp_gallery_cols">그룹적용</label>
+            <input type="checkbox" id="chk_all_gallery_cols" name="chk_all_gallery_cols" value="1">
+            <label for="chk_all_gallery_cols">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -757,6 +849,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_gallery_width" name="chk_grp_gallery_width" value="1">
             <label for="chk_grp_gallery_width">그룹적용</label>
+            <input type="checkbox" id="chk_all_gallery_width" name="chk_all_gallery_width" value="1">
+            <label for="chk_all_gallery_width">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -768,6 +862,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_gallery_height" name="chk_grp_gallery_height" value="1">
             <label for="chk_grp_gallery_height">그룹적용</label>
+            <input type="checkbox" id="chk_all_gallery_height" name="chk_all_gallery_height" value="1">
+            <label for="chk_all_gallery_height">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -779,6 +875,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_table_width" name="chk_grp_table_width" value="1">
             <label for="chk_grp_table_width">그룹적용</label>
+            <input type="checkbox" id="chk_all_table_width" name="chk_all_table_width" value="1">
+            <label for="chk_all_table_width">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -790,6 +888,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_image_width" name="chk_grp_image_width" value="1">
             <label for="chk_grp_image_width">그룹적용</label>
+            <input type="checkbox" id="chk_all_image_width" name="chk_all_image_width" value="1">
+            <label for="chk_all_image_width">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -801,6 +901,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_new" name="chk_grp_new" value="1">
             <label for="chk_grp_new">그룹적용</label>
+            <input type="checkbox" id="chk_all_new" name="chk_all_new" value="1">
+            <label for="chk_all_new">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -812,6 +914,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_hot" name="chk_grp_hot" value="1">
             <label for="chk_grp_hot">그룹적용</label>
+            <input type="checkbox" id="chk_all_hot" name="chk_all_hot" value="1">
+            <label for="chk_all_hot">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -825,6 +929,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_reply_order" name="chk_grp_reply_order" value="1">
             <label for="chk_grp_reply_order">그룹적용</label>
+            <input type="checkbox" id="chk_all_reply_order" name="chk_all_reply_order" value="1">
+            <label for="chk_all_reply_order">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -856,6 +962,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_sort_field" name="chk_grp_sort_field" value="1">
             <label for="chk_grp_sort_field">그룹적용</label>
+            <input type="checkbox" id="chk_all_sort_field" name="chk_all_sort_field" value="1">
+            <label for="chk_all_sort_field">전체적용</label>
         </td>
     </tbody>
     </table>
@@ -887,6 +995,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_read_point" name="chk_grp_read_point" value="1">
             <label for="chk_grp_read_point">그룹적용</label>
+            <input type="checkbox" id="chk_all_read_point" name="chk_all_read_point" value="1">
+            <label for="chk_all_read_point">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -897,6 +1007,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_write_point" name="chk_grp_write_point" value="1">
             <label for="chk_grp_write_point">그룹적용</label>
+            <input type="checkbox" id="chk_all_write_point" name="chk_all_write_point" value="1">
+            <label for="chk_all_write_point">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -907,6 +1019,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_comment_point" name="chk_grp_comment_point" value="1">
             <label for="chk_grp_comment_point">그룹적용</label>
+            <input type="checkbox" id="chk_all_comment_point" name="chk_all_comment_point" value="1">
+            <label for="chk_all_comment_point">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -917,6 +1031,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_download_point" name="chk_grp_download_point" value="1">
             <label for="chk_grp_download_point">그룹적용</label>
+            <input type="checkbox" id="chk_all_download_point" name="chk_all_download_point" value="1">
+            <label for="chk_all_download_point">전체적용</label>
         </td>
     </tr>
     </tbody>
@@ -946,6 +1062,8 @@ $pg_anchor = "<ul class=\"anchor\">
         <td class="group_setting">
             <input type="checkbox" id="chk_grp_<?=$i?>" name="chk_grp_<?=$i?>" value="1">
             <label for="chk_grp_<?=$i?>">그룹적용</label>
+            <input type="checkbox" id="chk_all_<?=$i?>" name="chk_all_<?=$i?>" value="1">
+            <label for="chk_all_<?=$i?>">전체적용</label>
         </td>
     </tr>
     <? } ?>
