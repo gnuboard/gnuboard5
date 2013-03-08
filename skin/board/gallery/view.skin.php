@@ -250,9 +250,9 @@ function excute_good(href, $el, $tx)
             if(data.count) {
                 $el.find("strong").text(number_format(String(data.count)));
                 if($tx.attr("id").search("nogood") > -1) {
-                    $tx.text("이 글을 비추천하셨습니다.").css("display", "inline");
+                    $tx.text("이 글을 비추천하셨습니다.").css("display", "inline-block");
                 } else {
-                    $tx.text("이 글을 추천하셨습니다.").css("display", "inline");
+                    $tx.text("이 글을 추천하셨습니다.").css("display", "inline-block");
                 }
             }
         }, "json"
