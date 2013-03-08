@@ -144,8 +144,14 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <? if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
             <? if ($scrap_href) { ?><a href="<?=$scrap_href; ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><? } ?>
-            <? if ($good_href) {?><a href="<?=$good_href?>" target="hiddenframe" class="btn_b01">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
-            <? if ($nogood_href) {?><a href="<?=$nogood_href?>" target="hiddenframe" class="btn_b01">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
+            <? if ($good_href) {?>
+                <a href="<?=$good_href?>" target="hiddenframe" class="btn_b01">추천 <strong><?=number_format($view['wr_good'])?></strong></a>
+                <span id="bo_v_act_good"></span>
+            <? } ?>
+            <? if ($nogood_href) {?>
+                <a href="<?=$nogood_href?>" target="hiddenframe" class="btn_b01">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a>
+                <span id="bo_v_act_nogood"></span>
+            <? } ?>
         </div>
         <? } else {
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
