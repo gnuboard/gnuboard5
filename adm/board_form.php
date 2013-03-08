@@ -131,8 +131,8 @@ $pg_anchor = "<ul class=\"anchor\">
             <? if ($w == '') { ?>
                 영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
             <? } else { ?>
-                <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$board['bo_table']?>" style="display:inline-block;margin-right:10px">게시판 바로가기</a>
-                <a href="./board_list.php">목록으로</a>
+                <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$board['bo_table']?>" class="btn_frmline">게시판 바로가기</a>
+                <a href="./board_list.php" class="btn_frmline">목록으로</a>
             <? } ?>
         </td>
     </tr>
