@@ -42,14 +42,10 @@ if (!$select_db) {
     exit;
 }
 ?>
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>그누보드4 설치 (3/3) - DB</title>
-</head>
 
-<body>
-<div>그누보드4S 설치시작</div>
+<h2>그누보드4s 설치가 시작되었습니다.</h2>
+
+<ol>
 <?
 // 테이블 생성 ------------------------------------
 $file = implode('', file('./gnuboard4s.sql'));
@@ -63,9 +59,11 @@ for ($i=0; $i<count($f); $i++) {
     mysql_query($f[$i]) or die(mysql_error());
 }
 // 테이블 생성 ------------------------------------
+?>
 
-echo '<div>전체 테이블 생성 완료</div>';
+    <li>전체 테이블 생성 완료</li>
 
+<?
 $read_point = -1;
 $write_point = 5;
 $comment_point = 1;
@@ -74,7 +72,7 @@ $download_point = -20;
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
 $sql = " insert into `{$table_prefix}config`
-            set cf_title = '그누보드4S',
+            set cf_title = '그누보드4s',
                 cf_admin = '$admin_id',
                 cf_use_point = '1',
                 cf_use_norobot = '1',
@@ -126,27 +124,30 @@ $sql = " insert into `{$table_prefix}config`
                 cf_stipulation = '해당 홈페이지에 맞는 회원가입약관을 입력합니다.',
                 cf_privacy = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.'
                 ";
+>>>>>>> 58918b3528c5945215be90227f5d74759b172042
 mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
-// 운영자 회원가입
+// 관리자 회원가입
 $sql = " insert into `{$table_prefix}member`
             set mb_id = '$admin_id',
-                mb_password = PASSWORD('$admin_pass'),
-                mb_name = '$admin_name',
-                mb_nick = '$admin_name',
-                mb_email = '$admin_email',
-                mb_level = '10',
-                mb_mailling = '1',
-                mb_open = '1',
-                mb_email_certify = '".G4_TIME_YMDHIS."',
-                mb_datetime = '".G4_TIME_YMDHIS."',
-                mb_ip = '{$_SERVER['REMOTE_ADDR']}'
-                ";
+                 mb_password = PASSWORD('$admin_pass'),
+                 mb_name = '$admin_name',
+                 mb_nick = '$admin_name',
+                 mb_email = '$admin_email',
+                 mb_level = '10',
+                 mb_mailling = '1',
+                 mb_open = '1',
+                 mb_email_certify = '".G4_TIME_YMDHIS."',
+                 mb_datetime = '".G4_TIME_YMDHIS."',
+                 mb_ip = '{$_SERVER['REMOTE_ADDR']}'
+                 ";
 @mysql_query($sql);
+?>
 
-echo '<div>DB설정 완료</div>';
+    <li>DB설정 완료</li>
+
+<?
 //-------------------------------------------------------------------------------------------------
-
 
 // 디렉토리 생성
 $dir_arr = array (
@@ -162,8 +163,11 @@ for ($i=0; $i<count($dir_arr); $i++) {
     @mkdir($dir_arr[$i], 0707);
     @chmod($dir_arr[$i], 0707);
 }
+?>
 
-echo '<div>데이터 디렉토리 생성 완료</div>';
+    <li>데이터 디렉토리 생성 완료</li>
+
+<?
 //-------------------------------------------------------------------------------------------------
 
 // DB 설정 파일 생성
@@ -203,8 +207,11 @@ fwrite($f, "?>");
 
 fclose($f);
 @chmod($file, 0606);
-echo "<div>DB설정 파일 생성 완료 ($file)";
+?>
 
+    <li>DB설정 파일 생성 완료 (<?=$file?>)</li>
+
+<?
 // data 디렉토리 및 하위 디렉토리에서는 .htaccess .htpasswd .php .phtml .html .htm .inc .cgi .pl 파일을 실행할수 없게함.
 $f = fopen($data_path.'/.htaccess', 'w');
 $str = <<<EOD
@@ -216,11 +223,23 @@ EOD;
 fwrite($f, $str);
 fclose($f);
 //-------------------------------------------------------------------------------------------------
-
-echo '<div>필요한 DB Table, File, 디렉토리 생성을 모두 완료 하였습니다.</div>'.PHP_EOL;
-echo '<div>메인화면에서 운영자 로그인을 한 후 운영자 화면으로 이동하여 환경설정을 변경해 주십시오.</div>';
-echo '<div><a href="../index.php">메인화면으로 가기</a></div>';
 ?>
+</ol>
+
+<p class="st_strong">축하합니다. 그누보드4s 설치가 완료되었습니다.</p>
+
+<h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
+
+<ol>
+    <li>메인화면으로 이동</li>
+    <li>관리자 로그인</li>
+    <li>관리자 모드 접속</li>
+    <li>환경설정 메뉴의 기본환경설정 페이지로 이동</li>
+</ol>
+
+</div>
+
+<div id="btn_confirm"><a href="../index.php">메인화면으로 가기</a></div>
 
 </body>
 </html>
