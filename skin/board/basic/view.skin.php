@@ -137,7 +137,6 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
         <div id="bo_v_con"><?=get_view_thumbnail($view['content']);?></div>
         <?//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우?>
-        <!-- 테러 태그 방지용 --></xml></xmp><a href=""></a><a href=''></a>
 
         <? if ($is_signature) { ?><p><?=$signature?></p><? } ?>
 
