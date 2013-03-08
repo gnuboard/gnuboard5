@@ -18,6 +18,9 @@ if($kcpcert_test) { // 테스트
     $cert_url = 'https://cert.kcp.co.kr/kcp_cert/cert_view.jsp';
 }
 
+if(!$site_cd)
+    alert('KCP 휴대폰인증 사이트코드가 없습니다.', G4_URL);
+
 // KCP 인증 라이브러리
 require G4_BBS_PATH.'/kcp/lib/ct_cli_lib.php';
 
