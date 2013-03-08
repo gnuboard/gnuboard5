@@ -144,8 +144,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <? if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
             <? if ($scrap_href) { ?><a href="<?=$scrap_href; ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><? } ?>
-            <? if ($good_href) {?><a href="<?=$good_href?>" target="hiddenframe" class="btn_b01">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
-            <? if ($nogood_href) {?><a href="<?=$nogood_href?>" target="hiddenframe" class="btn_b01">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
+            <? if ($good_href) {?><a href="<?=$good_href.'&amp;'.$qstr?>" id="good_button" class="btn_b01">추천 <strong><?=number_format($view['wr_good'])?></strong></a><? } ?>
+            <? if ($nogood_href) {?><a href="<?=$nogood_href.'&amp;'.$qstr?>" id="nogood_button" class="btn_b01">비추천 <strong><?=number_format($view['wr_nogood'])?></strong></a><? } ?>
         </div>
         <? } else {
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
@@ -201,6 +201,18 @@ $(function() {
         window.open(this.href, "large_image", "top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
         return false;
     });
+
+    // 추천
+    $("#good_button").click(function() {
+        excute_good(this.href, this.id);
+        return false;
+    });
+
+    // 비추천
+    $("#nogood_button").click(function() {
+        excute_good(this.href, this.id);
+        return false;
+    });
 });
 
 function view_image_resize()
@@ -217,5 +229,23 @@ function view_image_resize()
             $(this).removeClass("img_fix");
         }
     });
+}
+
+function excute_good(href, id)
+{
+    $.post(
+        href,
+        { js: "on" },
+        function(data) {
+            if(data.error) {
+                alert(data.error);
+                return false;
+            }
+
+            if(data.count) {
+                $("#"+id).find("strong").text(number_format(String(data.count)));
+            }
+        }, "json"
+    );
 }
 </script>
