@@ -1,12 +1,5 @@
 <?
 include_once('./_common.php');
-/*
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-
-if ($is_guest && !chk_captcha()) {
-    alert('스팸방지에 입력한 숫자가 틀렸습니다.');
-}
-*/
 
 $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '{$_POST['po_id']}' ");
 if (!$po['po_id'])

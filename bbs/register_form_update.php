@@ -17,7 +17,7 @@ if ($w == 'u' && $is_admin == 'super') {
 }
 
 if (!chk_captcha()) {
-    alert('스팸방지에 입력한 숫자가 틀렸습니다.');
+    alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
 $mb_id          = escape_trim($_POST['mb_id']);
