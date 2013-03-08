@@ -25,7 +25,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #hd_login_msg {position:absolute;top:0;left:0;width:0;height:0;overflow:hidden}
 .sound_only {display:inline-block;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;font-size:0 !important;line-height:0 !important;overflow:hidden}
 /* 본문 바로가기 */
-#to_content a {z-index:100000;position:absolute;top:0;left:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+.to_content a {z-index:100000;position:absolute;top:0;left:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
 /* 이미지 등비율 리사이징 */
 .img_fix {float:left;width:100%;height:auto}
