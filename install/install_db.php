@@ -74,7 +74,7 @@ $download_point = -20;
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
 $sql = " insert into `{$table_prefix}config`
-            set cf_title = '그누보드4',
+            set cf_title = '그누보드4S',
                 cf_admin = '$admin_id',
                 cf_use_point = '1',
                 cf_use_norobot = '1',
