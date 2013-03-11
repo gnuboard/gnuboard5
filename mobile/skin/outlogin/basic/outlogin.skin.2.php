@@ -11,19 +11,19 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </header>
     <ul id="ol_after_private">
         <li id="ol_after_memo">
-            <a href="<?=G4_BBS_URL?>/memo.php" class="win_memo" target="_blank">
+            <a href="<?=G4_BBS_URL?>/memo.php" target="_blank" class="win_memo">
                 <span class="sound_only">안 읽은 </span>쪽지
                 <strong><?=$memo_not_read?></strong>
             </a>
         </li>
         <li id="ol_after_pt">
-            <a href="<?=G4_BBS_URL?>/point.php" class="win_point" target="_blank">
+            <a href="<?=G4_BBS_URL?>/point.php" target="_blank" class="win_point">
                 포인트
                 <strong><?=$point?></strong>
             </a>
         </li>
         <li id="ol_after_scrap">
-            <a href="<?=G4_BBS_URL?>/scrap.php" class="win_scrap" target="_blank">스크랩</a>
+            <a href="<?=G4_BBS_URL?>/scrap.php" target="_blank" class="win_scrap">스크랩</a>
         </li>
     </ul>
     <footer id="ol_after_ft">

@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <div class="lt">
-    <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>" onclick="return false" class="lt_title"><strong><?=$bo_subject?></strong></a>
+    <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$bo_table?>" class="lt_title" onclick="return false"><strong><?=$bo_subject?></strong></a>
     <ul>
     <? for ($i=0; $i<count($list); $i++) { ?>
         <li>

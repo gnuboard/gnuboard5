@@ -22,7 +22,7 @@ else $g4['title'] = $g4['title'];
         <? } ?>
     </p>
 
-    <form name="fboardpassword" method="post" action="<? echo $action; ?>">
+    <form name="fboardpassword" action="<? echo $action; ?>" method="post">
     <input type="hidden" name="w" value="<?=$w?>">
     <input type="hidden" name="bo_table" value="<?=$bo_table?>">
     <input type="hidden" name="wr_id" value="<?=$wr_id?>">
@@ -32,7 +32,7 @@ else $g4['title'] = $g4['title'];
     <input type="hidden" name="page" value="<?=$page?>">
 
     <fieldset>
-        <input type="password" id="pw_wr_password" name="wr_password" class="frm_input required" maxLength="20" required placeholder="패스워드(필수)" title="패스워드(필수)">
+        <input type="password" name="wr_password" id="pw_wr_password" title="패스워드(필수)" placeholder="패스워드(필수)" required class="frm_input required" maxLength="20">
         <input type="submit" class="btn_submit" value="확인">
     </fieldset>
     </form>
