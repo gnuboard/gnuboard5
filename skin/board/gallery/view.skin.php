@@ -145,11 +145,11 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             <? if ($scrap_href) { ?><a href="<?=$scrap_href; ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><? } ?>
             <? if ($good_href) {?>
             <a href="<?=$good_href.'&amp;'.$qstr?>" id="good_button" class="btn_b01">추천 <strong><?=number_format($view['wr_good'])?></strong></a>
-            <span id="bo_v_act_good"></span>
+            <b id="bo_v_act_good"></b>
             <? } ?>
             <? if ($nogood_href) {?>
             <a href="<?=$nogood_href.'&amp;'.$qstr?>" id="nogood_button" class="btn_b01">비추천  <strong><?=number_format($view['wr_nogood'])?></strong></a>
-            <span id="bo_v_act_nogood"></span>
+            <b id="bo_v_act_nogood"></b>
             <? } ?>
         </div>
         <? } else {
@@ -250,9 +250,9 @@ function excute_good(href, $el, $tx)
             if(data.count) {
                 $el.find("strong").text(number_format(String(data.count)));
                 if($tx.attr("id").search("nogood") > -1) {
-                    $tx.text("이 글을 비추천하셨습니다.").css("display", "inline");
+                    $tx.text("이 글을 비추천하셨습니다.");
                 } else {
-                    $tx.text("이 글을 추천하셨습니다.").css("display", "inline");
+                    $tx.text("이 글을 추천하셨습니다.");
                 }
             }
         }, "json"

@@ -25,9 +25,14 @@ if (!isset($config['cf_mobile_new_skin'])) {
                     ADD `cf_mobile_member_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_connect_skin` ", true);
 }
 
+if(!isset($config['cf_kcpcert_site_cd'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", TRUE);
+}
+
 if(!isset($config['cf_adult_check'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_adult_check` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_adult_check` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_kcpcert_site_cd` ", TRUE);
 }
 
 if(!isset($config['cf_mobile_pages'])) {
@@ -429,11 +434,13 @@ $pg_anchor = "
         <td><input type="text" id="cf_register_point" name="cf_register_point" class="frm_input" value="<?=$config['cf_register_point']?>" size="5"> 점</td>
     </tr>
     <tr>
-        <th scope='row' id="th310"><label for='cf_adult_check'>성인인증 사용</label></th>
-        <td colspan="3"><input type="checkbox" id="cf_adult_check" name="cf_adult_check" value="1" <?=$config['cf_adult_check']?'checked':'';?>> 사용</td>
+        <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
+        <td><input type="text" id="cf_kcpcert_site_cd" name="cf_kcpcert_site_cd" class="frm_input" value="<?=$config['cf_kcpcert_site_cd']?>" size="10"></td>
+        <th scope="row"><label for='cf_adult_check'>성인인증 사용</label></th>
+        <td><input type="checkbox" id="cf_adult_check" name="cf_adult_check" value="1" <?=$config['cf_adult_check']?'checked':'';?>> 사용</td>
     </tr>
     <tr>
-        <th scope='row' id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
+        <th scope="row" id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
         <td colspan="3"><input type="text" id="cf_leave_day" name="cf_leave_day" class="frm_input" value="<?=$config['cf_leave_day']?>" size="2"> 일 후 자동 삭제</td>
     </tr>
     <tr>
