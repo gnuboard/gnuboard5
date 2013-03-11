@@ -53,7 +53,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 $g4['title'] = '게시판관리';
 include_once('./admin.head.php');
 
-$colspan = 8;
+$colspan = 15;
 ?>
 
 <form id="fsearch" name="fsearch" method="get">
