@@ -320,7 +320,7 @@ if ($msg)
 if ($w == "") {
     goto_url(G4_BBS_URL.'/register_result.php');
 } else if ($w == 'u') {
-    $row  = sql_fetch(" select mb_password from {$g4['member_table']} where mb_id = '{$member[mb_id]}' ");
+    $row  = sql_fetch(" select mb_password from {$g4['member_table']} where mb_id = '{$member['mb_id']}' ");
     $tmp_password = $row['mb_password'];
 
     if ($old_email != $mb_email && $config['cf_use_email_certify']) {
