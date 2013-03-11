@@ -172,6 +172,7 @@ function captcha_html($class='captcha')
     $obj = new gcaptcha();
     $obj->run();
 
+    $rand = rand();
     $jpg_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
     $wav_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.wav';
 
@@ -179,8 +180,8 @@ function captcha_html($class='captcha')
     $html .= "\n".'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>';
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">자동등록방지</legend>';
-    $html .= '<img src="'.$jpg_file_url.'?_='.rand().'" alt="자동등록방지 숫자">';
-    $html .= '<a href="'.$wav_file_url.'" id="captcha_wav" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
+    $html .= '<img src="'.$jpg_file_url.'?_='.$rand.'" alt="자동등록방지 숫자">';
+    $html .= '<a href="'.$wav_file_url.'?_='.$rand.'" id="captcha_wav" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
     $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box frm_input" size="6" maxlength="6" required title="자동등록방지 숫자 입력">';
     $html .= '<p class="sound_only">자동등록방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';

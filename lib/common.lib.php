@@ -998,7 +998,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $email    = get_text($email);
     $homepage = get_text($homepage);
 
-    $str = "<span class=\"sv_wrap\">\n";
+    $str = "<span class=\"sv_wrap sv_js_off\">\n";
     $str .= $tmp_name."\n";
 
     if(!G4_IS_MOBILE) {
@@ -1024,7 +1024,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
             $str2 .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
         }
         $str2 .= "</span>\n";
-        $str .= $str2."\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
+        $str .= $str2;//."\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
     }
 
     $str .= "</span>";

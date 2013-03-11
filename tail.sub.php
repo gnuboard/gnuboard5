@@ -21,6 +21,8 @@ $(function() {
 <![endif]-->
 
 <script>
+$('.sv_wrap').removeClass('sv_js_off'); //js 사용 가능한지를 사이드뷰에 알려주는 역할
+
 $(function(){
     var hide_menu = false;
     var mouse_event = false;
