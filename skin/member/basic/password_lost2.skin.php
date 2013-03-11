@@ -39,7 +39,7 @@ sql_query($sql);
 
 $href = G4_BBS_URL.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_datetime='.$mb_datetime.'&amp;mb_lost_certify='.$mb_lost_certify;
 
-$subject = '['.$config['cf_title'].'] 요청하신 회원 아이디/패스워드 정보입니다.';
+$subject = "[".$config['cf_title']."] 요청하신 회원 아이디/패스워드 정보입니다.";
 
 $content = "";
 
