@@ -509,7 +509,7 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 .bo_img_href a:focus,
 .bo_img_href a:hover {text-decoration:none}
 .bo_img_href strong,
-.bo_img_href span {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:10em}
+.bo_img_href span {display:block;background:#f7f7f7;text-align:center;line-height:10em}
 
 .bo_img_text_href {margin:10px 0 !important}
 .bo_img_text_href a {font-weight:bold}

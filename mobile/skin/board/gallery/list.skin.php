@@ -84,7 +84,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                     <a href="<?=$list[$i]['href']?>">
                     <?
                     if ($list[$i]['is_notice']) { // 공지사항 ?>
-                        <strong>공지</strong>
+                        <strong style="width:<?=$board['bo_mobile_gallery_width']?>px;height:<?=$board['bo_mobile_gallery_height']?>px">공지</strong>
                     <?
                     } else {
                         $file = get_list_file($bo_table, $list[$i]['wr_id']);
@@ -95,7 +95,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                             $imgsrc = G4_DATA_URL.'/file/'.$bo_table.'/'.$thumb;
                             $img_content = '<img src="'.$imgsrc.'" alt="'.$file['bf_content'].'" width="'.$board['bo_mobile_gallery_width'].'" height="'.$board['bo_mobile_gallery_height'].'">';
                         } else {
-                            $img_content = '<span class="">no image</span>';
+                            $img_content = '<span style="width:'.$board['bo_mobile_gallery_width'].'px;height:'.$board['bo_mobile_gallery_height'].'px">no image</span>';
                         }
 
                         echo $img_content;
