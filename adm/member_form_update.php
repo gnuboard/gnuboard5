@@ -51,13 +51,13 @@ if ($w == '')
 {
     $mb = get_member($mb_id);
     if ($mb['mb_id'])
-        alert('이미 존재하는 회원입니다.'.PHP_EOL.'ＩＤ : '.$mb['mb_id'].PHP_EOL.'이름 : '.$mb['mb_name'].PHP_EOL.'별명 : '.$mb['mb_nick'].PHP_EOL.'메일 : '.$mb['mb_email']);
+        alert('이미 존재하는 회원입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n별명 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
 
     if ($mb['mb_nick'] == $mb_nick)
-        alert('이미 존재하는 별명입니다.'.PHP_EOL.'ＩＤ : '.$mb['mb_id'].PHP_EOL.'이름 : '.$mb['mb_name'].PHP_EOL.'별명 : '.$mb['mb_nick'].PHP_EOL.'메일 : '.$mb['mb_email']);
+        alert('이미 존재하는 별명입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n별명 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
 
     if ($mb['mb_email'] == $mb_email)
-        alert('이미 존재하는 E-mail 입니다.'.PHP_EOL.'ＩＤ : '.$mb['mb_id'].PHP_EOL.'이름 : '.$mb['mb_name'].PHP_EOL.'별명 : '.$mb['mb_nick'].PHP_EOL.'메일 : '.$mb['mb_email']);
+        alert('이미 존재하는 E-mail 입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n별명 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
 
     sql_query(" insert into {$g4['member_table']} set mb_id = '{$mb_id}', mb_password = '".sql_password($mb_password)."', mb_datetime = '".G4_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G4_TIME_YMDHIS."', {$sql_common} ");
 }
@@ -97,7 +97,7 @@ else if ($w == 'u')
             if (file_exists($dest_path)) {
                 $size = getimagesize($dest_path);
                 // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
-                if ($size[0] > $config[cf_member_icon_width] || $size[1] > $config[cf_member_icon_height]) {
+                if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height']) {
                     @unlink($dest_path);
                 }
             }
