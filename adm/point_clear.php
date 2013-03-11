@@ -16,7 +16,7 @@ echo '<span id="ct"></span>';
 include_once('./admin.tail.php');
 flush();
 
-echo '<script>document.getElementById(\'ct\').innerHTML += \'<p>포인트 정리중...</p>\';</script>'.PHP_EOL;
+echo '<script>document.getElementById(\'ct\').innerHTML += \'<p>포인트 정리중...</p>\';</script>'."\n";
 flush();
 
 $max_count = 50;
@@ -52,7 +52,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     insert_point($row['mb_id'], $total, '포인트 {$count}건 정리', '@clear', $row['mb_id'], G4_TIME_YMD."-".uniqid(""));
 
     $str = $row['mb_id']."님 포인트 내역 ".number_format($count)."건 ".number_format($total)."점 정리<br>";
-    echo '<script>document.getElementById(\'ct\').innerHTML += \''.$str.'\';</script>'.PHP_EOL;
+    echo '<script>document.getElementById(\'ct\').innerHTML += \''.$str.'\';</script>'."\n";
     flush();
 }
 
@@ -60,5 +60,5 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 $sql = " UNLOCK TABLES ";
 sql_query($sql);
 
-echo '<script>document.getElementById(\'ct\').innerHTML += \'<p>총 '.$i.'건의 회원포인트 내역이 정리 되었습니다.</p>\';</script>'.PHP_EOL;
+echo '<script>document.getElementById(\'ct\').innerHTML += \'<p>총 '.$i.'건의 회원포인트 내역이 정리 되었습니다.</p>\';</script>'."\n";
 ?>

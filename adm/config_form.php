@@ -191,7 +191,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('new');
             for ($i=0; $i<count($arr); $i++) {
-                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_new_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_new_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
             </select>
@@ -202,7 +202,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('new', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
-                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_new_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_new_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
             </select>
@@ -215,7 +215,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('search');
             for ($i=0; $i<count($arr); $i++) {
-                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_search_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_search_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
             </select>
@@ -226,7 +226,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('search', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
-                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_search_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_search_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
             </select>
@@ -239,7 +239,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('connect');
             for ($i=0; $i<count($arr); $i++) {
-                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_connect_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
             </select>
@@ -250,7 +250,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('connect', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
-                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_connect_skin'], $arr[$i]).">".$arr[$i]."</option>".PHP_EOL;
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
             </select>
@@ -374,7 +374,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('member');
             for ($i=0; $i<count($arr); $i++) {
-                echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'.PHP_EOL;
+                echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";
             }
             ?>
             </select>
@@ -385,7 +385,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('member', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
-                echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'.PHP_EOL;
+                echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";
             }
             ?>
             </select>
