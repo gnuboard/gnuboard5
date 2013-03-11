@@ -1,16 +1,16 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-function editor_html($id, $content, $ckeditor=true, $class="") 
+function editor_html($id, $content, $ckeditor=true, $class="")
 {
     global $g4;
     static $js = true;
 
     $html = "";
     if ($js) {
-        $html .= PHP_EOL.'<script src="'.G4_CKEDITOR_URL.'/ckeditor.js"></script>';
-        $html .= PHP_EOL.'<script>var g4_ckeditor_url = "'.G4_CKEDITOR_URL.'";</script>';
-        $html .= PHP_EOL.'<script src="'.G4_CKEDITOR_URL.'/config.js"></script>';
+        $html .= "\n".'<script src="'.G4_CKEDITOR_URL.'/ckeditor.js"></script>';
+        $html .= "\n".'<script>var g4_ckeditor_url = "'.G4_CKEDITOR_URL.'";</script>';
+        $html .= "\n".'<script src="'.G4_CKEDITOR_URL.'/config.js"></script>';
         $js = false;
     }
 
@@ -21,7 +21,7 @@ function editor_html($id, $content, $ckeditor=true, $class="")
 
 
 // textarea 로 값을 넘긴다. javascript 반드시 필요
-function get_editor_js($id, $ckeditor=true) 
+function get_editor_js($id, $ckeditor=true)
 {
     if ( $ckeditor ) {
         return "var {$id}_editor_data = CKEDITOR.instances.{$id}.getData();\n";

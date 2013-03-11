@@ -67,7 +67,7 @@ if ($w == 'c') // 댓글 입력
 {
     /*
     if ($member[mb_point] + $board[bo_comment_point] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 댓글쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 댓글를 써 주십시오.');
+        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 댓글쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 댓글를 써 주십시오.');
     */
     // 댓글쓰기 포인트설정시 회원의 포인트가 음수인 경우 댓글를 쓰지 못하던 버그를 수정 (곱슬최씨님)
     $tmp_point = ($member['mb_point'] > 0) ? $member['mb_point'] : 0;
