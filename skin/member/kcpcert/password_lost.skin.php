@@ -1,8 +1,8 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-if((int)get_cookie('ck_passwordlost_count') > 2)
-    alert_close('회원정보 찾기를 기준 횟수 이상 시도하였습니다.');
+//if((int)get_cookie('ck_passwordlost_count') > 2)
+//    alert_close('회원정보 찾기를 기준 횟수 이상 시도하였습니다.');
 ?>
 
 <div id="find_info" class="new_win">
