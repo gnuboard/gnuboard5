@@ -285,7 +285,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #pw_confirm .btn_submit {position:absolute;bottom:1em;right:0.5em;width:18%;height:1.9em !important;line-height:1.9em}
 
 /* 설문조사 스킨 */
-#poll {margin:0 0 1em;padding:0 0 1em;border-bottom:1px solid #e7f1ed}
+#poll {margin:1em 0 0;padding:0 0 1em}
 #poll header {position:relative;padding:0 0.5em}
 #poll h2 {padding:0 0 0.5em}
 #poll header .btn_admin {display:block;padding:0 !important;width:100%;text-align:center}

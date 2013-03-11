@@ -22,6 +22,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <hr>
 
+<?=(G4_IS_MOBILE?poll('basic'):poll('basic')); // 설문조사 ?>
+
+<hr>
+
 <footer id="ft">
     <h1><?=$config['cf_title']?> 정보</h1>
     <?=popular('basic'); // 인기검색어 ?>
