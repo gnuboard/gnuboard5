@@ -15,12 +15,35 @@ if ($member['mb_password'] != sql_password($_POST['admin_password'])) {
 
 $mb_id = mysql_real_escape_string(trim($_POST['mb_id']));
 
+// 핸드폰번호 체크
+$mb_hp = $_POST['mb_hp'];
+if($mb_hp) {
+    $mb_hp = preg_replace("/[^0-9]/", "", $mb_hp);
+    $hp_len = strlen($mb_hp);
+    if($hp_len == 10) {
+        $mb_hp = preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "\\1-\\2-\\3", $mb_hp);
+    } else if($hp_len == 11) {
+        $mb_hp = preg_replace("/([0-9]{3})([0-9]{4})([0-9]{4})/", "\\1-\\2-\\3", $mb_hp);
+    } else {
+        alert('핸드폰번호를 올바르게 입력해 주십시오.');
+    }
+
+    // 중복체크
+    $sql = " select count(*) as cnt from {$g4['member_table']} where mb_hp = '$mb_hp' ";
+    if($w == 'u')
+        $sql .= " and mb_id <> '$mb_id' ";
+
+    $row = sql_fetch($sql);
+    if($row['cnt'])
+        alert('다른 회원이 사용 중인 핸드폰번호입니다.');
+}
+
 $sql_common = " mb_name = '{$_POST['mb_name']}',
                          mb_nick = '{$_POST['mb_nick']}',
                          mb_email = '{$_POST['mb_email']}',
                          mb_homepage = '{$_POST['mb_homepage']}',
                          mb_tel = '{$_POST['mb_tel']}',
-                         mb_hp = '{$_POST['mb_hp']}',
+                         mb_hp = '$mb_hp',
                          mb_zip1 = '{$_POST['mb_zip1']}',
                          mb_zip2 = '{$_POST['mb_zip2']}',
                          mb_addr1 = '{$_POST['mb_addr1']}',

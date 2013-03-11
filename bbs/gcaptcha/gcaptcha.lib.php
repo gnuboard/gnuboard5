@@ -1,7 +1,7 @@
 <?php
 include_once("./_common.php");
 
-class gcaptcha 
+class gcaptcha
 {
     // 이미지크기 폭
     var $width = 70;
@@ -77,13 +77,13 @@ class gcaptcha
         return mt_rand($from, $to);
     }
 
-    function run() 
+    function run()
     {
         global $g4;
 
         // The text to draw
         $captcha_key = $this->get_captcha_key();
-        
+
         set_session('ss_captcha_cnt', 0);
         set_session('ss_captcha_key', $captcha_key);
 
@@ -125,7 +125,7 @@ class gcaptcha
         imagejpeg($im, G4_DATA_PATH.'/cache/'.$this->captcha_filename.'.jpg');
         imagedestroy($im);
 
-        $this->make_wav($this->captcha_filename.'.wav');        
+        $this->make_wav($this->captcha_filename.'.wav');
     }
 
     function get_captcha_filename()
@@ -152,7 +152,7 @@ class gcaptcha
 }
 
 /*
-사용법 : 
+사용법 :
 $gcaptcha = new gcaptcha();
 $gcaptcha->set_captcha_length(mt_rand(4, 6));
 $gcaptcha->set_position(mt_rand(0, 10), mt_rand(15, 20));
@@ -172,15 +172,16 @@ function captcha_html($class='captcha')
     $obj = new gcaptcha();
     $obj->run();
 
+    $rand = rand();
     $jpg_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
     $wav_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.wav';
 
-    $html .= PHP_EOL.'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>'; 
-    $html .= PHP_EOL.'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>'; 
+    $html .= "\n".'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>';
+    $html .= "\n".'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>';
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">자동등록방지</legend>';
-    $html .= '<img src="'.$jpg_file_url.'?_='.rand().'" alt="자동등록방지 숫자">';
-    $html .= '<a href="'.$wav_file_url.'" id="captcha_wav" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
+    $html .= '<img src="'.$jpg_file_url.'?_='.$rand.'" alt="자동등록방지 숫자">';
+    $html .= '<a href="'.$wav_file_url.'?_='.$rand.'" id="captcha_wav" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
     $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box frm_input" size="6" maxlength="6" required title="자동등록방지 숫자 입력">';
     $html .= '<p class="sound_only">자동등록방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';
