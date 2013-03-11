@@ -128,13 +128,12 @@ $pg_anchor = "<ul class=\"anchor\">
         <th scope="row"><label for="bo_table">TABLE<?=$sound_only?></label></th>
         <td colspan="2">
             <input type="text" id="bo_table" name="bo_table" class="frm_input" maxlength="20" <?=$bo_table_attr?> value="<?=$board['bo_table'] ?>" required>
-            <?
-            if ($w == '')
-                echo '영문자, 숫자, _ 만 가능 (공백없이 20자 이내)';
-            else
-                echo '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'">게시판 바로가기</a>';
-                echo '<a href="./board_list.php">목록으로</a>';
-            ?>
+            <? if ($w == '') { ?>
+                영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
+            <? } else { ?>
+                <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$board['bo_table']?>" class="btn_frmline">게시판 바로가기</a>
+                <a href="./board_list.php" class="btn_frmline">목록으로</a>
+            <? } ?>
         </td>
     </tr>
     <tr>

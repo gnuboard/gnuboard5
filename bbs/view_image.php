@@ -44,14 +44,22 @@ var win_t = (screen.height - win_h) / 2;
 
 if(win_w > screen.width) {
     win_l = 0;
-    win_w = screen.width;
-    win_h = parseInt((win_w * screen.height) / screen.width);
+    win_w = screen.width - 20;
+
+    if(win_h > screen.height) {
+        win_t = 0;
+        win_h = screen.height - 40;
+    }
 }
 
 if(win_h > screen.height) {
     win_t = 0;
-    win_h = screen_heigth;
-    win_w = parseInt((win_h * screen.width) / screen.height);
+    win_h = screen.height - 40;
+
+    if(win_w > screen.width) {
+        win_w = screen.width - 20;
+        win_l = 0;
+    }
 }
 
 window.moveTo(win_l, win_t);

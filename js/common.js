@@ -522,6 +522,7 @@ var win_poll = function(href) {
 /**
  * 텍스트 리사이즈
 **/
+var default_font_size_saved = false;
 function font_resize(id, act)
 {
     var $elements = $("#"+id+" *").not("select").not("option");
@@ -529,6 +530,11 @@ function font_resize(id, act)
     var count = parseInt(get_cookie("ck_font_resize_count"));
     if(isNaN(count))
         count = 0;
+
+    // 엘리먼트의 기본 폰트사이즈 저장
+    if(!default_font_size_saved) {
+        save_default_font_size($elements);
+    }
 
     // 크롬의 최소 폰트사이즈 버그로 작게는 한단계만 가능
     if(act == "decrease" && count == -1)
@@ -538,26 +544,8 @@ function font_resize(id, act)
         if($(this).hasClass("no_text_resize"))
             return true;
 
-        if($(this).children().length != 0) {
-            return true;
-        } else {
-            set_font_size($(this), act);
-
-            // 텍스트 노드가 있는지 체크
-            var $parent = $(this).parent();
-            var text = $parent.contents().filter(function() {
-                return this.nodeType == 3;
-            }).text().replace(/\s*/, "");
-
-            if(text.length) {
-                // 텍스트노드의 형제가 있을 경우 마지막 형제에
-                // 스타일 적용 후 부모에 폰트 스타일 적용
-                var $child = $parent.children();
-                var chdlen = $child.length;
-                if(chdlen == ($child.index($(this)) + 1)) {
-                    set_font_size($parent, act);
-                }
-            }
+        if($(this).data("fs")) {
+            set_font_size($(this), act)
         }
     });
 
@@ -615,13 +603,13 @@ function font_resize2(id, act, loop)
 /**
  * font size 적용
 **/
-function set_font_size(el, act)
+function set_font_size($el, act)
 {
-    if(el.hasClass("applied"))
+    if($el.hasClass("applied"))
         return true;
 
     var x = 0;
-    var fs = el.css("font-size");
+    var fs = $el.data("fs");
     var unit = fs.replace(/[0-9\.]/g, "");
     var fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
     var nfsize;
@@ -640,7 +628,28 @@ function set_font_size(el, act)
 
     nfsize = nfsize.toFixed(x);
 
-    el.css("font-size", nfsize+unit).addClass("applied");
+    $el.css("font-size", nfsize+unit).addClass("applied");
+    $el.data("fs", nfsize+unit);
+}
+
+
+/**
+ * 기본 font size .data()에 저장
+**/
+function save_default_font_size($el)
+{
+    $el.each(function() {
+        // 텍스트노드 있는지 체크
+        var text = $(this).contents().filter(function() {
+            return this.nodeType == 3;
+        }).text().replace(/\s*/, "");
+
+        if(text.length) {
+            $(this).data("fs", $(this).css("font-size"));
+        }
+    });
+
+    default_font_size_saved = true;
 }
 
 

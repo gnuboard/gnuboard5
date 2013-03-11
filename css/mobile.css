@@ -285,7 +285,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #pw_confirm .btn_submit {position:absolute;bottom:1em;right:0.5em;width:18%;height:1.9em !important;line-height:1.9em}
 
 /* 설문조사 스킨 */
-#poll {margin:0 0 1em;padding:0 0 1em;border-bottom:1px solid #e7f1ed}
+#poll {margin:1em 0 0;padding:0 0 1em}
 #poll header {position:relative;padding:0 0.5em}
 #poll h2 {padding:0 0 0.5em}
 #poll header .btn_admin {display:block;padding:0 !important;width:100%;text-align:center}
@@ -419,13 +419,14 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .bo_list img {margin-right:4px}
 .bo_list img:nth-last-of-type(1) {margin-right:0}
 
-/* 관리자일 때 생략 */
+/* 관리자일 때 */
+#bo_list_admin th:nth-of-type(1) {width:40px}
 #bo_list_admin th:nth-of-type(3) {width:100px}
 
 #bo_list_admin td:nth-of-type(1) {text-align:center}
 #bo_list_admin td:nth-of-type(3) {text-align:center}
 
-/* 관리자가 아닐 때 생략 */
+/* 관리자가 아닐 때 */
 #bo_list th:nth-of-type(2) {width:100px}
 
 #bo_list td:nth-of-type(2) {text-align:center}
@@ -460,7 +461,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .btn_bo_user li {float:left;margin-left:0.3em}
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:0.3em}
-.btn_bo_adm input {padding:0 1em;height:25px;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer}
+.btn_bo_adm input {padding:0 1em;height:2em;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer;-webkit-appearance:none}
 .bo_notice td {background:#f7f7f7}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
@@ -533,6 +534,8 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #bo_v_act a {margin-right:0.3em;vertical-align:top}
 #bo_v_act span {display:inline-block;margin-right:0.3em;padding:0 1em;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2em;vertical-align:top}
 #bo_v_act strong {color:#ff3061}
+#bo_v_act_good,
+#bo_v_act_nogood {display:inline-block;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 
 #bo_v form {padding-top:1.5em}
 
