@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<form name="fsearch" method="get" onsubmit="return fsearch_submit(this);">
+<form name="fsearch" onsubmit="return fsearch_submit(this);" method="get">
 <input type="hidden" name="srows" value="<?=$srows?>">
 <fieldset id="sch_result_detail">
     <legend>상세검색</legend>
@@ -17,7 +17,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <option value="wr_name"<?=get_selected($_GET['sfl'], "wr_name")?>>이름</option>
     </select>
 
-    <input type="text" name="stx" class="required" value="<?=$text_stx?>" maxlength="20" required title="검색어(필수)">
+    <input type="text" name="stx" value="<?=$text_stx?>" title="검색어(필수)" required class="required" maxlength="20">
     <input type="submit" value="검색">
 
     <script>

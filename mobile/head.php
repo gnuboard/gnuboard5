@@ -24,10 +24,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
         <fieldset id="schall">
             <legend>사이트 내 전체검색</legend>
-            <form name="fsearchbox" method="get" action="<?=G4_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);">
+            <form name="fsearchbox" action="<?=G4_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
             <input type="hidden" name="sop" value="and">
-            <input type="text" id="schall_stx" name="stx" title="검색어" maxlength="20"><input type="image" id="schall_submit" src="<?=G4_IMG_URL?>/btn_search.jpg" width="24" height="24" alt="검색">
+            <input type="text" name="stx" id="schall_stx" title="검색어" maxlength="20"><input type="image" alt="검색" src="<?=G4_IMG_URL?>/btn_search.jpg" id="schall_submit" width="24" height="24">
             </form>
 
             <script>

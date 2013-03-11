@@ -143,6 +143,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <? if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
             <? if ($scrap_href) { ?><a href="<?=$scrap_href; ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><? } ?>
+
             <? if ($good_href) {?>
             <a href="<?=$good_href.'&amp;'.$qstr?>" id="good_button" class="btn_b01">추천 <strong><?=number_format($view['wr_good'])?></strong></a>
             <b id="bo_v_act_good"></b>

@@ -5,12 +5,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 if(!(int)$pl_count = get_cookie('ck_passwordlost_count')) {
     set_cookie('ck_passwordlost_count', 1, 60*60*1);
 } else {
-    if($pl_count > 2) {
-        alert_close('아이디/패스워드 찾기를 기준회수이상 시도하였습니다.');
-    } else {
-        $pl_count++;
-        set_cookie('ck_passwordlost_count', $pl_count, 60*60*1);
-    }
+    //if($pl_count > 2) {
+    //    alert_close('아이디/패스워드 찾기를 기준 횟수 이상 시도하였습니다.');
+    //} else {
+    //    $pl_count++;
+    //    set_cookie('ck_passwordlost_count', $pl_count, 60*60*1);
+    //}
 }
 
 $mb_name = trim($_POST['mb_name']);
@@ -61,27 +61,27 @@ $sql = " update {$g4['member_table']}
             where mb_id = '{$mb['mb_id']}' ";
 sql_query($sql);
 
-$g4['title'] = '회원아이디/패스워드 찾기';
+$g4['title'] = '회원정보 찾기 결과';
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
-<div id="find_info" class="new_win">
-    <h1>아이디/패스워드 찾기</h1>
+<div id="find_info_result" class="new_win">
+    <h1>회원정보 찾기 결과</h1>
 
-    <form name="fpasswordlost" action="<?=$action_url?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
-    <fieldset id="find_info_fs">
+    <div id="find_info_result_wrap">
         <p>
             회원님의 아이디와 변경된 패스워드입니다.<br>
             로그인 후 패스워드를 변경해 주세요.
         </p>
-    <div>
-        <div> 아이디 : <?=$mb['mb_id']?></div>
-        <div> 패스워드 : <?=$change_password?></div>
+        <ul>
+            <li><span>아이디</span> <?=$mb['mb_id']?></li>
+            <li><span>패스워드</span> <strong><?=$change_password?></strong></li>
+        </ul>
     </div>
     <div class="btn_win">
         <a href="javascript:window.close();" class="btn_cancel">확인</a>
     </div>
-    </form>
+
 </div>
 
 <?php

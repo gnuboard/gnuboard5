@@ -82,22 +82,25 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             <ul class="bo_img_con">
                 <li class="bo_img_href">
                     <a href="<?=$list[$i]['href']?>">
-                    <? if ($list[$i]['is_notice']) { // 공지사항 ?>
-                        <strong>공지</strong>
-                    <? } else { ?>
                     <?
-                    $file = get_list_file($bo_table, $list[$i]['wr_id']);
-
-                    $filepath = G4_DATA_PATH.'/file/'.$bo_table;
-                    if(preg_match("/\.({$config['cf_image_extension']})$/i", $file['bf_file']) && is_file($filepath.'/'.$file['bf_file'])) {
-                        $thumb = get_list_thumbnail($file['bf_file'], $filepath, $board['bo_mobile_gallery_width'], $board['bo_mobile_gallery_height']);
-                        $imgsrc = G4_DATA_URL.'/file/'.$bo_table.'/'.$thumb;
+                    if ($list[$i]['is_notice']) { // 공지사항 ?>
+                        <strong style="width:<?=$board['bo_mobile_gallery_width']?>px;height:<?=$board['bo_mobile_gallery_height']?>px">공지</strong>
+                    <?
                     } else {
-                        $imgsrc = $board_skin_url.'/img/noimg.jpg';
+                        $file = get_list_file($bo_table, $list[$i]['wr_id']);
+
+                        $filepath = G4_DATA_PATH.'/file/'.$bo_table;
+                        if(preg_match("/\.({$config['cf_image_extension']})$/i", $file['bf_file']) && is_file($filepath.'/'.$file['bf_file'])) {
+                            $thumb = get_list_thumbnail($file['bf_file'], $filepath, $board['bo_mobile_gallery_width'], $board['bo_mobile_gallery_height']);
+                            $imgsrc = G4_DATA_URL.'/file/'.$bo_table.'/'.$thumb;
+                            $img_content = '<img src="'.$imgsrc.'" alt="'.$file['bf_content'].'" width="'.$board['bo_mobile_gallery_width'].'" height="'.$board['bo_mobile_gallery_height'].'">';
+                        } else {
+                            $img_content = '<span style="width:'.$board['bo_mobile_gallery_width'].'px;height:'.$board['bo_mobile_gallery_height'].'px">no image</span>';
+                        }
+
+                        echo $img_content;
                     }
                     ?>
-                        <img src="<?=$imgsrc?>" alt="<?=get_text($file['bf_content'])?>" width="<?=$board['bo_gallery_width']?>" height="<?=$board['bo_gallery_height']?>">
-                    <? } ?>
                     </a>
                 </li>
                 <li class="bo_img_text_href">

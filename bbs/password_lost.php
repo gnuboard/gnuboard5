@@ -6,7 +6,7 @@ if ($is_member) {
     alert("이미 로그인중입니다.");
 }
 
-$g4['title'] = '회원아이디/패스워드 찾기';
+$g4['title'] = '회원정보 찾기';
 include_once(G4_PATH.'/head.sub.php');
 
 $action_url = G4_HTTPS_BBS_URL."/password_lost2.php";
