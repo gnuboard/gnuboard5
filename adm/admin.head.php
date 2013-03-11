@@ -57,7 +57,7 @@ function imageview(id, w, h)
 }
 </script>
 
-<div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
+<div id="to_content"><a href="#container">본문 바로가기</a></div>
 
 <header id="hd">
     <div id="hd_wrap">
