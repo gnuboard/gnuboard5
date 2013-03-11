@@ -185,7 +185,7 @@ $pg_anchor = "<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="proc_count">카운트 조정</label></th>
         <td colspan="2">
-            <?=help('현재 원글수 : '.number_format($board['bo_count_write']).', 현재 댓글수 : '.number_format($board['bo_count_comment']).PHP_EOL.'게시판 목록에서 글의 번호가 맞지 않을 경우에 체크하십시오.')?>
+            <?=help('현재 원글수 : '.number_format($board['bo_count_write']).', 현재 댓글수 : '.number_format($board['bo_count_comment'])."\n".'게시판 목록에서 글의 번호가 맞지 않을 경우에 체크하십시오.')?>
             <input type="checkbox" id="proc_count" name="proc_count" value="1">
         </td>
     </tr>

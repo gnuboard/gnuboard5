@@ -138,7 +138,7 @@ $colspan = 5;
 
     <?
     //if (isset($stx))
-    //    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'.PHP_EOL;
+    //    echo '<script>document.fsearch.sfl.value = "'.$sfl.'";</script>'."\n";
 
     if (strstr($sfl, 'mb_id'))
         $mb_id = $stx;
