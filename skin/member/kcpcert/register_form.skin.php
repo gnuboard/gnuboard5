@@ -94,7 +94,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <input type="hidden" name="kcpcert_time" value="<?=$member['mb_hp_certify']?>">
         <input type="hidden" name="old_mb_hp" value="<?=$member['mb_hp']?>">
         <input type="text" name="mb_hp" value="<?=$member['mb_hp']?>" id="reg_mb_hp" required class="frm_input required" maxlength="20">
-        <button type="button" id="win_kcpcert">휴대폰인증</button>
+        <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰인증</button>
         <noscript>휴대폰인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
     </td>
 </tr>
