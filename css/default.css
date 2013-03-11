@@ -147,6 +147,8 @@ a:active {color:#000;text-decoration:underline}
 .btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 button.btn_submit {height:22px !important;font-size:1em}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
+.btn_cancel:focus,
+.btn_cancel:hover {text-decoration:none !important}
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
@@ -260,10 +262,15 @@ fieldset button {padding:0 15px;height:24px;border:0;background:#333;color:#fff;
 #reg_result .btn_confirm {margin:50px 0}
 
 /* 아이디/패스워드 찾기 */
-#find_info_fs {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
 #find_info #captcha {margin:0 auto 20px;width:87%}
 #find_info #captcha input {margin-left:5px}
+#find_info_fs {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
+
+#find_info_result li {margin:0 0 5px}
+#find_info_result span {display:inline-block;width:70px}
+#find_info_result strong {color:#ff3061}
+#find_info_result_wrap {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 
 /* 아웃로그인 스킨 */
 .ol {position:relative;padding:15px 15px 14px 14px}

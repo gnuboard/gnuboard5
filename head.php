@@ -75,7 +75,7 @@ if ($config['cf_include_head']) {
             <li>
                 <a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">
                     <img src="<?=G4_IMG_URL?>/snb_cnt.jpg" alt="">
-                    현재접속자 <?=connect(); // 현재 접속자수 ?>
+                    접속자 <?=connect(); // 현재 접속자수 ?>
                 </a>
             </li>
             <li>

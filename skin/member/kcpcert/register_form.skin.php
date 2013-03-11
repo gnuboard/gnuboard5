@@ -210,7 +210,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <div class="btn_confirm">
     <input type="submit" value="<?=$w==''?'회원가입':'정보수정';?>" class="btn_submit" accesskey="s">
-    <a href="<?=$g4['path']?>/" class="btn_cancel">취소</a>
+    <a href="<?=G4_URL?>/" class="btn_cancel">취소</a>
 </div>
 </form>
 
