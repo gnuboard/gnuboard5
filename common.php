@@ -360,20 +360,6 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
 }
 
 
-// 회원, 비회원 구분
-$is_member = $is_guest = false;
-$is_admin = "";
-if ($member['mb_id']) {
-    $is_member = true;
-    $is_admin = is_admin($member['mb_id']);
-    $member['mb_dir'] = substr($member['mb_id'],0,2);
-} else {
-    $is_guest = true;
-    $member['mb_id'] = "";
-    $member['mb_level'] = 1; // 비회원의 경우 회원레벨을 가장 낮게 설정
-}
-
-
 $write = array();
 $write_table = "";
 if ($bo_table) {
@@ -391,6 +377,21 @@ if ($bo_table) {
 if ($gr_id) {
     $group = sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
 }
+
+
+// 회원, 비회원 구분
+$is_member = $is_guest = false;
+$is_admin = '';
+if ($member['mb_id']) {
+    $is_member = true;
+    $is_admin = is_admin($member['mb_id']);
+    $member['mb_dir'] = substr($member['mb_id'],0,2);
+} else {
+    $is_guest = true;
+    $member['mb_id'] = '';
+    $member['mb_level'] = 1; // 비회원의 경우 회원레벨을 가장 낮게 설정
+}
+
 
 if ($is_admin != 'super') {
     // 접근가능 IP
