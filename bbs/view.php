@@ -121,9 +121,7 @@ else if (strstr($view['wr_option'], 'html2'))
 $view['content'] = conv_content($view['wr_content'], $html);
 if (strstr($sfl, 'content'))
     $view['content'] = search_font($stx, $view['content']);
-//$view['content'] = preg_replace("/(\<img )([^\>]*)(\>)/i", "\\1 onclick='image_window(this)'", $view['content']);
 
-//$view['rich_content'] = preg_replace("/{img\:([0-9]+)[:]?([^}]*)}/ie", "view_image(\$view, '\\1', '\\2')", $view['content']);
 $view['rich_content'] = preg_replace("/{이미지\:([0-9]+)[:]?([^}]*)}/ie", "view_image(\$view, '\\1', '\\2')", $view['content']);
 
 $is_signature = false;
@@ -133,8 +131,6 @@ if ($board['bo_use_signature'] && $view['mb_id']) {
     $mb = get_member($view['mb_id']);
     $signature = $mb['mb_signature'];
 
-    //$signature = bad_tag_convert($signature);
-    // 081022 : CSRF 보안 결함으로 인한 코드 수정
     $signature = conv_content($signature, 1);
 }
 
