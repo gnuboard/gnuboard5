@@ -42,29 +42,6 @@ $href = G4_BBS_URL.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_dat
 $subject = $config['cf_title']."요청하신 회원 아이디/패스워드 정보입니다.";
 
 $content = "";
-$content .= '<div style="line-height:180%;">';
-$content .= '<p>요청하신 계정정보는 다음과 같습니다.</p>';
-$content .= '<hr>';
-$content .= '<ul>';
-$content .= '<li>회원아이디 : '.$mb['mb_id'].'</li>';
-$content .= '<li>변경 패스워드 : <span style="color:#ff3300; font:13px Verdana;"><strong>'.$change_password.'</strong></span></li>';
-$content .= '<li>이름 : '.addslashes($mb['mb_name']).'</li>';
-$content .= '<li>별명 : '.addslashes($mb['mb_nick']).'</li>';
-$content .= '<li>이메일주소 : '.addslashes($mb['mb_email']).'</li>';
-$content .= '<li>요청일시 : '.G4_TIME_YMDHIS.'</li>';
-$content .= '<li>홈페이지 : '.G4_URL.'</li>';
-$content .= '</ul>';
-$content .= '<hr>';
-$content .= '<p><a href="'.$href.'" target="_blank">'.$href.'</a></p>';
-$content .= '<p>';
-$content .= '1. 위의 링크를 클릭하십시오. 링크가 클릭되지 않는다면 링크를 브라우저의 주소창에 직접 복사해 넣으시기 바랍니다.<br />';
-$content .= '2. 링크를 클릭하시면 패스워드가 변경 되었다는 인증 메세지가 출력됩니다.<br />';
-$content .= '3. 홈페이지에서 회원아이디와 위에 적힌 변경 패스워드로 로그인 하십시오.<br />';
-$content .= '4. 로그인 하신 후 새로운 패스워드로 변경하시면 됩니다.';
-$content .= '</p>';
-$content .= '<p>감사합니다.</p>';
-$content .= '<p>[끝]</p>';
-$content .= '</div>';
 
 $content .= "<div style=\"margin:30px auto;width:600px;border:10px solid #f7f7f7\">";
 $content .= "<div style=\"border:1px solid #dedede\">";
