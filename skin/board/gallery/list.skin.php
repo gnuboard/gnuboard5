@@ -94,7 +94,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                             $imgsrc = G4_DATA_URL.'/file/'.$bo_table.'/'.$thumb;
                             $img_content = '<img src="'.$imgsrc.'" alt="'.$file['bf_content'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
                         } else {
-                            $img_content = '<span class="">no image</span>';
+                            $img_content = '<span>no image</span>';
                         }
 
                         echo $img_content;
