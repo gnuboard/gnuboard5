@@ -446,7 +446,8 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .bo_img_href a:link,
 .bo_img_href a:focus,
 .bo_img_href a:hover {text-decoration:none}
-.bo_img_href strong {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:10em}
+.bo_img_href strong,
+.bo_img_href span {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:10em}
 
 .bo_img_text_href {margin:1em 0 !important}
 .bo_img_text_href a {color:#000;font-weight:bold;text-decoration:none}
