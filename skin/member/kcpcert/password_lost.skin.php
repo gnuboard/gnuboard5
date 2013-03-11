@@ -2,11 +2,11 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 if((int)get_cookie('ck_passwordlost_count') > 2)
-    alert_close('아이디/패스워드 찾기를 기준회수이상 시도하였습니다.');
+    alert_close('회원정보 찾기를 기준 횟수 이상 시도하였습니다.');
 ?>
 
 <div id="find_info" class="new_win">
-    <h1>아이디/패스워드 찾기</h1>
+    <h1>회원정보 찾기</h1>
 
     <form name="fpasswordlost" action="<?=$action_url?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
     <input type="hidden" name="kcpcert_no" value="">

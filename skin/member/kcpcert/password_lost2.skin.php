@@ -61,14 +61,14 @@ $sql = " update {$g4['member_table']}
             where mb_id = '{$mb['mb_id']}' ";
 sql_query($sql);
 
-$g4['title'] = '회원아이디/패스워드 찾기';
+$g4['title'] = '회원정보 찾기 결과';
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <div id="find_info" class="new_win">
-    <h1>아이디/패스워드 찾기</h1>
+    <h1>회원정보 찾기 결과</h1>
 
-    <form name="fpasswordlost" action="<?=$action_url?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
+    <form name="fpasswordlost" action="<?=$action_url?>" method="post" autocomplete="off" onsubmit="return fpasswordlost_submit(this);">
     <fieldset id="find_info_fs">
         <p>
             회원님의 아이디와 변경된 패스워드입니다.<br>
