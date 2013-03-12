@@ -2,6 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
+<link rel="stylesheet" href="<?=$outlogin_skin_url?>/style.css">
+
 <!-- 로그인 후 외부로그인 시작 -->
 <section id="ol_after" class="ol">
     <header id="ol_after_hd">

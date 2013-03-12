@@ -1,0 +1,94 @@
+/* 회원가입 약관 */
+#fregister section {padding:1.5em;border-bottom:1px solid #eee;background:#fafafa}
+#fregister h2 {margin:0 0 1.5em;text-align:center}
+#fregister textarea {display:block;margin-bottom:1em;padding:0.3em;width:99%;height:150px;border:1px solid #cfded8;background:#f7f7f7}
+#fregister textarea:focus {background:#21272e;color:#fff}
+.fregister_agree {padding:1em 0 0;text-align:right}
+.fregister_agree label {display:inline-block;margin-right:0.3em}
+#fregister p {color:#e8180c;text-align:center}
+#fregister .btn_confirm {margin:1.5em 0}
+
+/* 회원가입 입력 */
+#fregisterform textarea {height:50px}
+
+/* 회원가입 완료 */
+#reg_result {padding:4em 1em 0}
+#reg_result_logo {margin-bottom:50px;text-align:center}
+#reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
+#reg_result_email span {display:inline-block;width:150px}
+#reg_result_email strong {color:#e8180c;font-size:1.2em}
+#reg_result .btn_confirm {margin:50px 0}
+
+/* 아이디/패스워드 찾기 */
+#find_info_fs {margin:0 auto 1em;padding:1em;border-bottom:1px solid #eee}
+#find_info_fs #mb_email {width:100%}
+#find_info #captcha {margin:0 0 1em;padding:0 1em 1em}
+#find_info #captcha input {margin-left:0.3em}
+
+/* 로그인 */
+#mb_login {margin:2em 0}
+#mb_login h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
+#mb_login h2 {margin:0}
+#mb_login fieldset {position:relative;padding:0 0.5em;font-size:1em}
+#mb_login .frm_input {display:block;margin-bottom:0.3em;padding:0;width:80%;height:1.8em;line-height:1.8em}
+#mb_login .btn_submit {position:absolute;top:0em;right:0.5em;padding:0 !important;width:18%;height:4em !important;text-align:center}
+#mb_login section {margin:30px 0;padding:1.5em 1em;border:1px solid #cfded8;background:#f7f7f7}
+#mb_login section div {text-align:right}
+
+/* 쪽지 */
+#memo_view section {padding:1em}
+#memo_view section h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#memo_view_ul {margin:0;padding:0 0 1em;border-bottom:1px solid #eee;list-style:none}
+.memo_view_li {position:relative;padding:0.3em 0}
+.memo_view_subj {display:inline-block;width:65px}
+#memo_view_ul a {}
+#memo_view section p {min-height:150px;height:auto !important;height:150px}
+
+#memo_write #me_recv_mb_id {width:98%}
+#memo_write textarea {width:99%;height:100px}
+
+/* 스크랩 */
+#scrap td:nth-of-type(1) {width:150px}
+#scrap td:nth-last-of-type(1) {width:50px;text-align:center}
+
+#scrap_do table {margin:0 0 1em;width:100%}
+#scrap_do textarea {width:99%;height:100px}
+
+/* 회원 패스워드 확인 */
+#mb_confirm {margin:30px 0}
+#mb_confirm h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
+#mb_confirm p {padding:1.5em 1em;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
+#mb_confirm p strong {display:block}
+#mb_confirm fieldset {position:relative;margin:0 0 3em;padding:2em 1em;border-bottom:1px solid #cfded8;background:#f7f7f7}
+#mb_confirm_pw {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em}
+#mb_confirm .btn_submit {position:absolute;bottom:2em;right:1em;width:18%;height:1.9em !important;line-height:1.9em}
+
+/* 비밀글 패스워드 확인 */
+#pw_confirm {margin:30px 0}
+#pw_confirm h1 {margin:0 0 1.5em;padding:0 1em;font-size:1.3em}
+#pw_confirm p {padding:1.5em 1em;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
+#pw_confirm p strong {display:block}
+#pw_confirm fieldset {position:relative;margin:0 0 3em;padding:0.5em 0.5em 1em;border-bottom:1px solid #cfded8;background:#f7f7f7}
+#pw_wr_password {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em}
+#pw_confirm .btn_submit {position:absolute;bottom:1em;right:0.5em;width:18%;height:1.9em !important;line-height:1.9em}
+
+/* 폼메일 */
+#formmail #subject {width:98%}
+#formmail textarea {width:99%;height:100px}
+
+/* 자기소개 */
+#profile table {margin-bottom:0}
+#profile section {padding:1em}
+#profile h2 {margin:0}
+#profile .sv_wrap a {margin:0 0 0.3em;padding:0;font-weight:bold;line-height:1em}
+
+/* 우편번호 검색 */
+#post_code fieldset {margin:0 auto 10px;padding:1em;text-align:center}
+#post_code dl {margin:0 0 1em;padding:1.5em 1em;background:#fff}
+#post_code dt {margin-bottom:15px;color:#000}
+#post_code dd {margin:0;padding:0}
+#post_code ul {margin:0;padding:0;list-style:none}
+#post_code li a {display:block;padding:0.7em 0;border-bottom:1px solid #eee;color:#000;text-decoration:none}
+#post_code p {margin:0 auto 30px;padding:0 1em}
+#post_code .btn_submit {height:1.9em !important;line-height:1.9em !important}
+.post_code {display:inline-block;width:100px;color:#999}

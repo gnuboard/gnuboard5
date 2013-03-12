@@ -20,18 +20,18 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" name="mb_id" value="<?=$member['mb_id']?>" id="reg_mb_id" class="frm_input minlength_3 <?=$required?> <?=$readonly?>" maxlength="20" <?=$required?> <?=$readonly?>>
+        <input type="text" name="mb_id" value="<?=$member['mb_id']?>" id="reg_mb_id"<?=$required?> <?=$readonly?> class="frm_input minlength_3 <?=$required?> <?=$readonly?>" maxlength="20">
         <span id="msg_mb_id"></span>
         <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password">패스워드<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?>></td>
+    <td><input type="password" name="mb_password" id="reg_mb_password" <?=$required?> class="frm_input minlength_3 <?=$required?>" maxlength="20"></td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password_re">패스워드 확인<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input minlength_3 <?=$required?>" maxlength="20" <?=$required?>></td>
+    <td><input type="password" name="mb_password_re" id="reg_mb_password_re" <?=$required?> class="frm_input minlength_3 <?=$required?>" maxlength="20"></td>
 </tr>
 </table>
 
@@ -40,7 +40,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input name="mb_name" value="<?=$member['mb_name']?>" id="reg_mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" size="10" <?=$required?> <?=$readonly?>>
+        <input name="mb_name" value="<?=$member['mb_name']?>" id="reg_mb_name" <?=$required?> <?=$readonly?> class="frm_input hangul nospace <?=$required?> <?=$readonly?>" size="10">
         <? if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } ?>
     </td>
 </tr>

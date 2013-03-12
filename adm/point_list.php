@@ -96,7 +96,7 @@ function point_clear()
         <option value="mb_id"<?=get_selected($_GET['sfl'], "mb_id");?>>회원아이디</option>
         <option value="po_content"<?=get_selected($_GET['sfl'], "po_content");?>>내용</option>
     </select>
-    <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
