@@ -15,8 +15,10 @@ function outlogin($skin_dir='basic')
 
     if (G4_IS_MOBILE) {
         $outlogin_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/outlogin/'.$skin_dir;
+        $outlogin_skin_url = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/outlogin/'.$skin_dir;
     } else {
         $outlogin_skin_path = G4_SKIN_PATH.'/outlogin/'.$skin_dir;
+        $outlogin_skin_url = G4_SKIN_URL.'/outlogin/'.$skin_dir;
     }
 
     // 읽지 않은 쪽지가 있다면
