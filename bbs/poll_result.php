@@ -60,7 +60,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     $list2[$i]['del'] = '';
     if ($is_admin == 'super' || ($row['mb_id'] == $member['mb_id'] && $row['mb_id']))
-        $list2[$i]['del'] = '<a href="'.$g4['bbs_url'].'/poll_etc_update.php?w=d&amp;pc_id='.$row['pc_id'].'&amp;po_id='.$po_id.'&amp;skin_dir='.$skin_dir.'">';
+        $list2[$i]['del'] = '<a href="'.G4_BBS_URL.'/poll_etc_update.php?w=d&amp;pc_id='.$row['pc_id'].'&amp;po_id='.$po_id.'&amp;skin_dir='.$skin_dir.'">';
 }
 
 // 기타의견 입력
