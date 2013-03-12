@@ -330,9 +330,9 @@ function wrestSubmit()
 
             if(msg_el != null) {
                 msg_el.innerText = wrestMsg;
-                var new_href = curr_href+"#"+id+"_msg";
+                new_href = curr_href+"#"+id+"_msg";
             } else {
-                var new_href = curr_href+"#"+id;
+                new_href = curr_href+"#"+id;
             }
             document.location.href = new_href;
 
