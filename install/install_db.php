@@ -17,7 +17,6 @@ $mysql_host  = $_POST['mysql_host'];
 $mysql_user  = $_POST['mysql_user'];
 $mysql_pass  = $_POST['mysql_pass'];
 $mysql_db    = $_POST['mysql_db'];
-$mysql_port  = $_POST['mysql_port'];
 $table_prefix= $_POST['table_prefix'];
 $admin_id    = $_POST['admin_id'];
 $admin_pass  = $_POST['admin_pass'];
@@ -25,7 +24,7 @@ $admin_name  = $_POST['admin_name'];
 $admin_email = $_POST['admin_email'];
 
 @mysql_query('set names utf8');
-$dblink = @mysql_connect($mysql_host.':'.$mysql_port, $mysql_user, $mysql_pass);
+$dblink = @mysql_connect($mysql_host, $mysql_user, $mysql_pass);
 if (!$dblink) {
     echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
     echo '<div>MySQL Host, User, Password 를 확인해 주십시오.</div>'.PHP_EOL;
@@ -175,7 +174,7 @@ $f = @fopen($file, 'w');
 
 fwrite($f, "<?php\n");
 fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
-fwrite($f, "define('G4_MYSQL_HOST', '{$mysql_host}:{$mysql_port}');\n");
+fwrite($f, "define('G4_MYSQL_HOST', '{$mysql_host}');\n");
 fwrite($f, "define('G4_MYSQL_USER', '{$mysql_user}');\n");
 fwrite($f, "define('G4_MYSQL_PASSWORD', '{$mysql_pass}');\n");
 fwrite($f, "define('G4_MYSQL_DB', '{$mysql_db}');\n\n");

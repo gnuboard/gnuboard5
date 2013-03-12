@@ -50,13 +50,6 @@ if ($_POST['agree'] != '동의함') {
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">Port</label></th>
-        <td>
-            <span>가능한 변경하지 마십시오.</span>
-            <input name="mysql_port" type="text" value="3306" id="mysql_port">
-        </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="">TABLE명 접두사</label></th>
         <td>
             <span>가능한 변경하지 마십시오.</span>
