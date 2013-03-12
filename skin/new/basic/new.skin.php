@@ -7,13 +7,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <legend>상세검색</legend>
     <form name="fnew" method="get">
     <?=$group_select?>
-    <select name="view" id="view" title="검색종류" onchange="select_change()">
+    <select name="view" id="view" title="검색종류">
         <option value="">전체게시물
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
-    <input type="text" name="mb_id" value="<?=$mb_id?>" id="mb_id" title="검색어(필수)" class="fs_input">
-    <input type="submit" value="검색" class="fs_submit">
+    <input type="text" name="mb_id" value="<?=$mb_id?>" id="mb_id" title="검색어(필수)" required class="frm_input requird">
+    <input type="submit" value="검색" class="btn_submit">
     </form>
     <script>
     /* 셀렉트 박스에서 자동 이동 해제

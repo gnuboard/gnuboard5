@@ -74,13 +74,13 @@ a:active {color:#000;text-decoration:underline}
 .gnb_2depth {float:left}
 .gnb_2depth a {font-weight:normal}
 /* gnb js on */
-.gnb_js {padding-left:1px}
+.gnb_js {}
 .gnb_js #gnb_ul {zoom:1}
 .gnb_js #gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_js .gnb_1depth {clear:none;position:relative;float:left;margin:0 0 0 -1px;border:1px solid #e0e5e9;border-top:0;border-bottom:0}
+.gnb_js .gnb_1depth {clear:none;position:relative;float:left}
 .gnb_js .gnb_1depth a {text-align:center}
 .gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
-.gnb_js .gnb_1depth_on a {float:none;background:#fff;color:#000}
+.gnb_js .gnb_1depth_on a {float:none;border-color:#e0e5e9;background:#fff;color:#000}
 .gnb_js .gnb_sub_ul {position:absolute;top:35px;width:1px;height:1px;overflow:hidden}
 .gnb_js .gnb_2depth a {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
 .gnb_1depth_over .gnb_sub_ul {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
