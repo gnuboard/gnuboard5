@@ -324,16 +324,16 @@ function wrestSubmit()
 
         if (wrestFld.style.display != "none") {
             var id = wrestFld.getAttribute("id");
-            var msg_el = document.getElementById(id+"_msg");
-            var new_href;
-            var curr_href = document.location.href.replace(/#.+$/, "");
 
-            if(msg_el != null) {
-                msg_el.innerText = wrestMsg;
-                new_href = curr_href+"#"+id+"_msg";
-            } else {
-                new_href = curr_href+"#"+id;
-            }
+            // 오류메세지를 위한 element 추가
+            var msg_el = document.createElement("strong");
+            msg_el.id = "msg_"+id;
+            msg_el.className = "msg_sound_only";
+            msg_el.innerHTML = wrestMsg;
+            wrestFld.parentNode.insertBefore(msg_el, wrestFld);
+
+            var new_href = document.location.href.replace(/#msg.+$/, "")+"#msg_"+id;
+
             document.location.href = new_href;
 
             //wrestFld.style.backgroundColor = wrestFldBackColor;
