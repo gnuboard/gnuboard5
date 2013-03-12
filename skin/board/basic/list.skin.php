@@ -77,7 +77,7 @@ if ($is_nogood) $colspan++;
             echo $list[$i]['num'];
         ?>
         </td>
-        <? if ($is_checkbox) { ?><td class="td_chk"><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"></td><? } ?>
+        <? if ($is_checkbox) { ?><td class="td_chk"><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['wr_subject']?> 선택"></td><? } ?>
         <td class="td_subject">
             <?
             echo $list[$i]['icon_reply'];
