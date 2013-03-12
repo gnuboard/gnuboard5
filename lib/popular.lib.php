@@ -21,7 +21,13 @@ function popular($skin_dir='basic', $pop_cnt=7, $date_cnt=3)
     }
 
     ob_start();
-    $popular_skin_path = G4_SKIN_PATH.'/popular/'.$skin_dir;
+    if(G4_IS_MOBILE) {
+        $popular_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/popular/'.$skin_dir;
+        $popular_skin_url = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/popular/'.$skin_dir;
+    } else {
+        $popular_skin_path = G4_SKIN_PATH.'/popular/'.$skin_dir;
+        $popular_skin_url = G4_SKIN_URL.'/popular/'.$skin_dir;
+    }
     include_once ($popular_skin_path.'/popular.skin.php');
     $content = ob_get_contents();
     ob_end_clean();

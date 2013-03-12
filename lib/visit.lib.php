@@ -19,7 +19,13 @@ function visit($skin_dir='basic')
     settype($visit[3], "integer");
 
     ob_start();
-    $visit_skin_path = G4_SKIN_PATH.'/visit/'.$skin_dir;
+    if(G4_IS_MOBILE) {
+        $visit_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/visit/'.$skin_dir;
+        $visit_skin_url = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/visit/'.$skin_dir;
+    } else {
+        $visit_skin_path = G4_SKIN_PATH.'/visit/'.$skin_dir;
+        $visit_skin_url = G4_SKIN_URL.'/visit/'.$skin_dir;
+    }
     include_once ($visit_skin_path.'/visit.skin.php');
     $content = ob_get_contents();
     ob_end_clean();

@@ -64,7 +64,7 @@ $colspan = 6;
     <select name="sfl" id="sfl" title="검색대상">
         <option value="po_subject"<?=get_selected($_GET['sfl'], "po_subject");?>>제목</option>
     </select>
-    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" class="required frm_input" required>
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>

@@ -63,6 +63,7 @@ $colspan = 5;
         <?=$listall?>
         설정된 관리권한 <?=number_format($total_count)?>건
     </span>
+    <strong id="msg_stx" class="msg_sound_only"></strong>
     <input type="text" name="stx" value="<?=$stx?>" id="stx" title="회원아이디(필수)" required class="required frm_input">
     <input type="submit" value="검색" id="fsearch_submit" class="btn_submit">
 </fieldset>
@@ -168,12 +169,15 @@ $colspan = 5;
     <tbody>
     <tr>
         <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="mb_id" value="<?=$mb_id?>" id="mb_id" title="회원아이디" required class="required frm_input"></td>
+        <td>
+            <strong id="msg_mb_id" class="msg_sound_only"></strong>
+            <input type="text" name="mb_id" value="<?=$mb_id?>" id="mb_id" title="회원아이디" required class="required frm_input">
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="au_menu">접근가능메뉴<strong class="sound_only">필수</strong></label></th>
         <td>
-            <select id="au_menu" name="au_menu" required title="접근가능메뉴">
+            <select id="au_menu" name="au_menu" required class="required" title="접근가능메뉴">
                 <option value=''>선택하세요
                 <?
                 foreach($auth_menu as $key=>$value)
