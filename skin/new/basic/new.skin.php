@@ -16,10 +16,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="submit" value="검색" class="fs_submit">
     </form>
     <script>
+    /* 셀렉트 박스에서 자동 이동 해제
     function select_change()
     {
         document.fnew.submit();
     }
+    */
     document.getElementById("gr_id").value = "<?=$gr_id?>";
     document.getElementById("view").value = "<?=$view?>";
     </script>
