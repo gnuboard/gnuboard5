@@ -7,8 +7,14 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
     global $g4;
 
     if (!$skin_dir) $skin_dir = 'basic';
-    $latest_skin_path = G4_SKIN_PATH.'/latest/'.$skin_dir;
-    $latest_skin_url  = G4_SKIN_URL.'/latest/'.$skin_dir;
+
+    if(G4_IS_MOBILE) {
+        $latest_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/latest/'.$skin_dir;
+        $latest_skin_url  = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/latest/'.$skin_dir;
+    } else {
+        $latest_skin_path = G4_SKIN_PATH.'/latest/'.$skin_dir;
+        $latest_skin_url  = G4_SKIN_URL.'/latest/'.$skin_dir;
+    }
 
     $cache_file = G4_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
     if (!G4_USE_CACHE || !file_exists($cache_file)) {
