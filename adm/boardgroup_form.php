@@ -37,7 +37,7 @@ include_once('./admin.head.php');
         게시판을 생성하시려면 1개 이상의 게시판그룹이 필요합니다.<br>
         게시판그룹을 이용하시면 더 효과적으로 게시판을 관리할 수 있습니다.
     </p>
-    <form id="fboardgroup" name="fboardgroup" method="post" action="./boardgroup_form_update.php" onsubmit="return fboardgroup_check(this);" autocomplete="off">
+    <form name="fboardgroup" id="fboardgroup" action="./boardgroup_form_update.php" onsubmit="return fboardgroup_check(this);" method="post" autocomplete="off">
     <input type="hidden" name="w" value="<?=$w?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
     <input type="hidden" name="stx" value="<?=$stx?>">
@@ -53,7 +53,7 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="gr_id">그룹 ID<?=$sound_only?></label></th>
-        <td><input type="text" id="gr_id" name="gr_id" maxlength="10" class="<?=$gr_id_attr?> alnum_ frm_input" value="<?=$group['gr_id']?>"> 
+        <td><input type="text" name="gr_id" value="<?=$group['gr_id']?>" id="gr_id" class="<?=$gr_id_attr?> alnum_ frm_input" maxlength="10"> 
             <? 
             if ($w=='')
                 echo '영문자, 숫자, _ 만 가능 (공백없이)';
@@ -65,7 +65,7 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="gr_subject">그룹 제목<strong class="sound_only">필수</strong></label></th>
         <td>
-            <input type="text" id="gr_subject" name="gr_subject" class="required frm_input" required value="<?=get_text($group['gr_subject'])?>" size="80">
+            <input type="text" name="gr_subject" value="<?=get_text($group['gr_subject'])?>" id="gr_subject" required class="required frm_input" size="80">
             <?
             if ($w == 'u')
                 echo '<a href="./board_form.php?gr_id='.$gr_id.'">게시판생성</a>';
@@ -98,7 +98,7 @@ include_once('./admin.head.php');
         <th scope="row"><label for="gr_use_access">접근회원사용</label></th>
         <td>
             <?=help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.")?>
-            <input type="checkbox" id="gr_use_access" name="gr_use_access" value="1" <?=$gr['gr_use_access']?'checked':'';?>>
+            <input type="checkbox" name="gr_use_access" value="1" id="gr_use_access" <?=$gr['gr_use_access']?'checked':'';?>>
             사용
         </td>
     </tr>
@@ -117,7 +117,7 @@ include_once('./admin.head.php');
         <th scope="row"><label for="gr_show_menu">메뉴보이기</label></th>
         <td>
             <?=help("사용에 체크하시면 게시판그룹 제목을 메뉴에 출력합니다.")?>
-            <input type="checkbox" id="gr_show_menu" name="gr_show_menu" value="1" <?=$gr['gr_show_menu']?'checked':'';?>>
+            <input type="checkbox" name="gr_show_menu" value="1" id="gr_show_menu" <?=$gr['gr_show_menu']?'checked':'';?>>
             사용
         </td>
     </tr>
@@ -126,9 +126,9 @@ include_once('./admin.head.php');
         <th scope="row">회원여분필드<?=$i?></th>
         <td class="td_gr_extra">
             <label for="gr_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
-            <input type="text" id="gr_<?=$i?>_subj" name="gr_<?=$i?>_subj" class="frm_input" value="<?=get_text($group['gr_'.$i.'_subj'])?>">
+            <input type="text" name="gr_<?=$i?>_subj" value="<?=get_text($group['gr_'.$i.'_subj'])?>" id="gr_<?=$i?>_subj" class="frm_input">
             <label for="gr_<?=$i?>">여분필드 <?=$i?> 내용</label>
-            <input type="text" id="gr_<?=$i?>" name="gr_<?=$i?>" class="frm_input" value="<?=$gr['gr_'.$i]?>">
+            <input type="text" name="gr_<?=$i?>" value="<?=$gr['gr_'.$i]?>" id="gr_<?=$i?>" class="frm_input">
         </td>
     </tr>
     <? } ?>

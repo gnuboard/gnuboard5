@@ -71,7 +71,7 @@ include_once('./admin.head.php');
 <div class="cbox">
     <p>조건에 따라 선택된 메일발송 대상자 목록입니다.</p>
 
-    <form id="fmailselectlist" name="fmailselectlist" method="post" action="./mail_select_update.php">
+    <form name="fmailselectlist" id="fmailselectlist" method="post" action="./mail_select_update.php">
     <input type="hidden" name="token" value="<?=$token?>">
     <input type="hidden" name="ma_id" value="<?=$ma_id ?>">
     <input type="hidden" name="ma_list" value="<?=$ma_list?>">
@@ -113,7 +113,7 @@ include_once('./admin.head.php');
 </div>
 
 <div class="btn_confirm">
-    <input type="submit" class="btn_submit" value="메일보내기">
+    <input type="submit" value="메일보내기" class="btn_submit">
     <a href="./mail_select_form.php?ma_id=<?=$ma_id?>">뒤로</a>
 </div>
 

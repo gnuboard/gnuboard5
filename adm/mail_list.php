@@ -33,11 +33,11 @@ $colspan = 6;
         <a href="./mail_form.php" id="mail_add">메일내용추가</a>
     </div>
 
-    <form id="fmaillist" name="fmaillist" method="post" action="./mail_delete.php">
+    <form name="fmaillist" id="fmaillist" action="./mail_delete.php" method="post">
     <table>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 목록 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 목록 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col">번호</th>
         <th scope="col">제목</th>
         <th scope="col">작성일시</th>

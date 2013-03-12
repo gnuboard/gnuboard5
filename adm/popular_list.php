@@ -82,15 +82,15 @@ var list_delete_php = 'popular_list.php';
         <option value="pp_word"<?=get_selected($_GET['sfl'], "pp_word");?>>검색어</option>
         <option value="pp_date"<?=get_selected($_GET['sfl'], "pp_date");?>>등록일</option>
     </select>
-    <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
-    <input type="submit" class="btn_submit" value="검색">
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
+    <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
 
 <section class="cbox">
     <h2>인기검색어 목록</h2>
 
-    <form id="fpopularlist" name="fpopularlist" method="post">
+    <form name="fpopularlist" id="fpopularlist" method="post">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -101,7 +101,7 @@ var list_delete_php = 'popular_list.php';
     <table class="tbl_pop_list">
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" onclick="check_all(this.form)" title="현재 페이지 인기검색어 전체선택"></th>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 인기검색어 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col"><?=subject_sort_link('pp_word')?>검색어</a></th>
         <th scope="col">등록일</th>
         <th scope="col">등록IP</th>
@@ -116,7 +116,7 @@ var list_delete_php = 'popular_list.php';
 
     <tr>
         <td class="td_chk">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['pp_id']?>" title="<?=$word?> 선택">
+            <input type="checkbox" name="chk[]" value="<?=$row['pp_id']?>" id="chk_<?=$i?>" title="<?=$word?> 선택">
         </td>
         <td>&nbsp; <a href="<?=$_SERVER['PHP_SELF']?>?sfl=pp_word&amp;stx=<?=$word?>"><?=$word?></a></td>
         <td><?=$row['pp_date']?></td>
