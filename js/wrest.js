@@ -332,7 +332,7 @@ function wrestSubmit()
             msg_el.innerHTML = wrestMsg;
             wrestFld.parentNode.insertBefore(msg_el, wrestFld);
 
-            var new_href = document.location.href.replace(/#.+$/, "")+"#msg_"+id;
+            var new_href = document.location.href.replace(/#msg.+$/, "")+"#msg_"+id;
 
             document.location.href = new_href;
 
