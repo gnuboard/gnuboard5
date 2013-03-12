@@ -6,12 +6,75 @@
 CKEDITOR.on('dialogDefinition', function(ev) {
     var dialogName = ev.data.name;
     var dialogDefinition = ev.data.definition;
+    var dialog = dialogDefinition.dialog;
+    var editor = ev.editor;
+
     if (dialogName=='image') {
-        dialogDefinition.removeContents('Link');
-        dialogDefinition.removeContents('advanced');
+        // memo: dialogDefinition.onShow = ... throws JS error (C.preview not defined) 
+        /* 
+        // Get a reference to the 'Link Info' tab. 
+        var infoTab = dialogDefinition.getContents('info'); 
+        // Remove unnecessary widgets 
+        infoTab.remove( 'ratioLock' ); 
+        infoTab.remove( 'txtHeight' );          
+        infoTab.remove( 'txtWidth' );          
+        infoTab.remove( 'txtBorder'); 
+        infoTab.remove( 'txtHSpace'); 
+        infoTab.remove( 'txtVSpace'); 
+        infoTab.remove( 'cmbAlign' ); 
+        */
+        /*
+        dialogDefinition.onLoad = function(){ 
+            var dialog = CKEDITOR.dialog.getCurrent(); 
+            var elem = dialog.getContentElement('info','htmlPreview');     
+            elem.getElement().hide(); 
+            dialog.hidePage('Link'); 
+            dialog.hidePage('advanced'); 
+            dialog.hidePage('info'); // works now (CKEditor v3.6.4) 
+            this.selectPage('Upload'); 
+        }; 
+        */
+
+        dialogDefinition.onLoad = function(){ 
+            dialog.getContentElement('info', 'htmlPreview').getElement().hide();     
+            dialog.getContentElement('info', 'cmbAlign').getElement().hide();     
+            this.hidePage('Link');
+            this.hidePage('advanced');
+            this.selectPage('Upload'); 
+        }; 
+
+        dialogDefinition.onOk = function (e) {
+            var imageSrcUrl = e.sender.originalElement.$.src;
+            var imgHtml = CKEDITOR.dom.element.createFromHtml('<img src=' + imageSrcUrl + ' alt="" />');
+            editor.insertElement(imgHtml);
+
+            var uploadTab = dialogDefinition.getContents('Upload');
+            var uploadButton = uploadTab.get('uploadButton');
+            uploadButton['filebrowser']['onSelect'] = function(fileUrl, errorMessage) {
+                $("input.cke_dialog_ui_input_text").val(fileUrl);
+                $(".cke_dialog_ui_button_ok span").click();
+            }
+        };
+
+        /*
+        var uploadTab = dialogDefinition.getContents('Upload');
+        var uploadButton = uploadTab.get('uploadButton');
+        uploadButton['filebrowser']['onSelect'] = function(fileUrl, errorMessage) {
+            $("input.cke_dialog_ui_input_text").val(fileUrl);
+            $(".cke_dialog_ui_button_ok span").click();
+        }
+        */
     } else if (dialogName=='link') {
         dialogDefinition.removeContents('advanced');
+
+        dialogDefinition.onShow = function(){ 
+            dialog.getContentElement('info','anchorOptions').getElement().hide(); 
+            dialog.getContentElement('info','emailOptions').getElement().hide();
+            dialog.getContentElement('info','linkType').getElement().hide(); 
+            dialog.getContentElement('info','protocol').disable();
+        }; 
     }
+
     var infoTab = dialogDefinition.getContents('info');
     if (infoTab) {
         infoTab.remove('txtHSpace');
@@ -24,10 +87,6 @@ CKEDITOR.on('dialogDefinition', function(ev) {
 });
 
 CKEDITOR.editorConfig = function( config ) {
-	// Define changes to default configuration here. For example:
-	// config.language = 'fr';
-	// config.uiColor = '#AADC6E';
-
     config.language = "ko";
     config.toolbar = [
         ['Format','Font','FontSize'],

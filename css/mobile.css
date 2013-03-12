@@ -83,6 +83,8 @@ pre {overflow-x:scroll;font-size:1.1em}
 #gnb li ul {display:none}
 #gnb li a {display:block;padding:1em 0;border-right:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
 
+.gnb_empty {float:none !important;width:100% !important;height:10em;text-align:center;line-height:10em}
+
 #ft {background:#484848}
 #ft h1 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 

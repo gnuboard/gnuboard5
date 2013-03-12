@@ -17,6 +17,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         ?>
         <li><a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_subject']?></a></li>
         <?}?>
+        <? if ($gi == 0) { ?><li class="gnb_empty">생성된 메뉴가 없습니다.</a><? } ?>
     </ul>
 </nav>
 
