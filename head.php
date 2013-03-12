@@ -148,6 +148,7 @@ if ($config['cf_include_head']) {
             </ul>
         </li>
         <?}?>
+        <? if ($gi == 0) { ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><? } ?>
     </ul>
 </nav>
 

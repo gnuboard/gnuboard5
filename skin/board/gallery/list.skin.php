@@ -5,20 +5,6 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
 
-<div class="ad72890">
-    <script type="text/javascript"><!--
-    google_ad_client = "ca-pub-9955166939194057";
-    /* 써글728-1 */
-    google_ad_slot = "9632665464";
-    google_ad_width = 728;
-    google_ad_height = 90;
-    //-->
-    </script>
-    <script type="text/javascript"
-    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-    </script>
-</div>
-
 <!-- 게시판 목록 시작 -->
 <div id="bo_img" style="width:<?=$width;?>">
 
@@ -69,7 +55,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             if ($k % $board['bo_gallery_cols'] == 0) $style .= "margin:0 !important;";
         ?>
         <li class="bo_img_list_li <? if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<? } ?>" style="<?=$style?>">
-            <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['subject']?> 선택"><? } ?>
+            <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['wr_subject']?> 선택"><? } ?>
             <span class="sound_only">
                 <?
                 if ($wr_id == $list[$i]['wr_id'])
