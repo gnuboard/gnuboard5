@@ -57,8 +57,7 @@ function imageview(id, w, h)
 }
 </script>
 
-<? if ($is_member) { ?><span class="sound_only" style="position:absolute;top:0;left:0"><?=$member['mb_nick']?>님 로그인 중</span><? } ?>
-<div id="to_content"><a href="#wrapper">본문 바로가기</a></div>
+<div id="to_content"><a href="#container">본문 바로가기</a></div>
 
 <header id="hd">
     <div id="hd_wrap">

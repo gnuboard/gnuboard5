@@ -9,7 +9,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <fieldset>
         <input type="hidden" name="url" value="<?=$outlogin_url?>">
         <label for="ol_id" id="ol_idlabel">회원아이디<strong class="sound_only">필수</strong></label>
+        <span id="ol_id_msg" class="sound_only"></span>
         <input type="text" id="ol_id" name="mb_id" required class="required" maxlength="20">
+        <span id="ol_pw_msg" class="sound_only"></span>
         <label for="ol_pw" id="ol_pwlabel">패스워드<strong class="sound_only">필수</strong></label>
         <input type="password" name="mb_password" id="ol_pw" required class="required" maxlength="20">
         <input type="submit" id="ol_submit" value="로그인">

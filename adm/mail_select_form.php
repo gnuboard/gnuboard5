@@ -45,7 +45,7 @@ include_once('./admin.head.php');
         전체회원 <?=number_format($tot_cnt)?>명 , 탈퇴대기회원 <?=number_format($finish_cnt)?>명, 정상회원 <?=number_format($tot_cnt - $finish_cnt)?>명 중 메일 발송 대상 선택
     </p>
 
-    <form id="frmsendmailselectform" name="frmsendmailselectform" method="post" action="./mail_select_list.php" autocomplete="off">
+    <form name="frmsendmailselectform" id="frmsendmailselectform" action="./mail_select_list.php" method="post" autocomplete="off">
     <input type="hidden" name="ma_id" value='<?=$ma_id?>'>
 
     <table class="frm_tbl">
@@ -53,23 +53,23 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row">회원 ID</th>
         <td>
-            <input type="radio" id="mb_id1_all" name="mb_id1" value="1" <?=$mb_id1?"checked":"";?>> <label for="mb_id1_all">전체</label>
-            <input type="radio" id="mb_id1_section" name="mb_id1" value="0" <?=!$mb_id1?"checked":"";?>> <label for="mb_id1_section">구간</label>
-            <input type="text" id="mb_id1_from" name="mb_id1_from" class="frm_input" value="<?=$mb_id1_from?>" title="시작구간"> 에서
-            <input type="text" id="mb_id1_to" name="mb_id1_to" class="frm_input" value="<?=$mb_id1_to?>" title="종료구간"> 까지
+            <input type="radio" name="mb_id1" value="1" id="mb_id1_all" <?=$mb_id1?"checked":"";?>> <label for="mb_id1_all">전체</label>
+            <input type="radio" name="mb_id1" value="0" id="mb_id1_section" <?=!$mb_id1?"checked":"";?>> <label for="mb_id1_section">구간</label>
+            <input type="text" name="mb_id1_from" value="<?=$mb_id1_from?>" id="mb_id1_from" title="시작구간" class="frm_input"> 에서
+            <input type="text" name="mb_id1_to" value="<?=$mb_id1_to?>" id="mb_id1_to" title="종료구간" class="frm_input"> 까지
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_email">E-mail</label></th>
         <td>
             <?=help("메일 주소에 단어 포함 (예 : @sir.co.kr)")?>
-            <input type="text" id="mb_email" name="mb_email" class="frm_input" value="<?=$mb_email?>" size="50">
+            <input type="text" name="mb_email" value="<?=$mb_email?>" id="mb_email" class="frm_input" size="50">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_mailling">메일링</label></th>
         <td>
-            <select id="mb_mailling" name="mb_mailling">
+            <select name="mb_mailling" id="mb_mailling">
                 <option value="1">수신동의한 회원만
                 <option value="">전체
             </select>
@@ -78,12 +78,12 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="mb_level_from">권한</label></th>
         <td>
-            <select id="mb_level_from" name="mb_level_from" title="최소권한">
+            <select name="mb_level_from" id="mb_level_from" title="최소권한">
             <? for ($i=1; $i<=10; $i++) { ?>
                 <option value="<? echo $i ?>"><? echo $i ?></option>
             <? } ?>
             </select> 에서
-            <select id="mb_level_to" name="mb_level_to" title="최대권한">
+            <select name="mb_level_to" id="mb_level_to" title="최대권한">
             <? for ($i=1; $i<=10; $i++) { ?>
                 <option value="<? echo $i ?>"><? echo $i ?></option>
             <? } ?>
@@ -110,7 +110,7 @@ include_once('./admin.head.php');
     </table>
 
     <div class="btn_confirm">
-        <input type="submit" class="btn_submit" value="확인">
+        <input type="submit" value="확인" class="btn_submit">
         <a href="./mail_list.php">목록 </a>
     </div>
     </form>

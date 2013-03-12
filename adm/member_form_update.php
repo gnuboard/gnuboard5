@@ -29,9 +29,7 @@ if($mb_hp) {
     }
 
     // 중복체크
-    $sql = " select count(*) as cnt from {$g4['member_table']} where mb_hp = '$mb_hp' ";
-    if($w == 'u')
-        $sql .= " and mb_id <> '$mb_id' ";
+    $sql = " select count(*) as cnt from {$g4['member_table']} where mb_hp = '$mb_hp' and mb_id <> '$mb_id' ";
 
     $row = sql_fetch($sql);
     if($row['cnt'])

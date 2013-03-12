@@ -37,7 +37,7 @@ if ($w == '')
         // 관리자에게 보내는 메일
         $admin = get_admin('super');
         $from_email = $member['mb_email'] ? $member['mb_email'] : $admin['mb_email'];
-        mailer($name, $from_email, $admin['mb_email'], '설문조사 기타의견 메일', $content, 1);
+        mailer($name, $from_email, $admin['mb_email'], '['.$config['cf_title'].'] 설문조사 기타의견 메일', $content, 1);
     }
 } 
 else if ($w == 'd') 

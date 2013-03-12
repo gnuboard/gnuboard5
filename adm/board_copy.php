@@ -14,8 +14,8 @@ include_once(G4_PATH.'/head.sub.php');
 <div class="new_win">
     <h1>기존 게시판을 새 게시판으로 복사</h1>
 
-    <form id="fboardcopy" name="fboardcopy" method="post" action="./board_copy_update.php" onsubmit="return fboardcopy_check(this);">
-    <input type="hidden" id="bo_table" name="bo_table" value="<?=$bo_table?>">
+    <form name="fboardcopy" id="fboardcopy" action="./board_copy_update.php" onsubmit="return fboardcopy_check(this);" method="post">
+    <input type="hidden" name="bo_table" value="<?=$bo_table?>" id="bo_table">
     <table class="frm_tbl">
     <tbody>
     <tr>
@@ -24,18 +24,18 @@ include_once(G4_PATH.'/head.sub.php');
     </tr>
     <tr>
         <th scope="col"><label for="target_table">복사 테이블명<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="target_table" name="target_table" maxlength="20" class="required alnum_ frm_input" required>영문자, 숫자, _ 만 가능 (공백없이)</td>
+        <td><input type="text" name="target_table" id="target_table" required class="required alnum_ frm_input" maxlength="20">영문자, 숫자, _ 만 가능 (공백없이)</td>
     </tr>
     <tr>
         <th scope="col"><label for="target_subject">게시판 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="target_subject" name="target_subject" maxlength="120" class="required frm_input" value="[복사본] <?=$board['bo_subject']?>" required></td>
+        <td><input type="text" name="target_subject" value="[복사본] <?=$board['bo_subject']?>" id="target_subject" required class="required frm_input" maxlength="120"></td>
     </tr>
     <tr>
         <th scope="col">복사 유형</th>
         <td>
-            <input type="radio" id="copy_case" name="copy_case" value="schema_only" checked>
+            <input type="radio" name="copy_case" value="schema_only" id="copy_case" checked>
             <label for="copy_case">구조만</label>
-            <input type="radio" id="copy_case2" name="copy_case" value="schema_data_both">
+            <input type="radio" name="copy_case" value="schema_data_both" id="copy_case2">
             <label for="copy_case2">구조와 데이터</label>
         </td>
     </tr>

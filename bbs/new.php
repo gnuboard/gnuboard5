@@ -33,7 +33,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$group_select = '<select name="gr_id" id="gr_id" title="검색대상" onchange="select_change();"><option value="">전체그룹';
+$group_select = '<select name="gr_id" id="gr_id" title="검색대상"><option value="">전체그룹';
 $sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {

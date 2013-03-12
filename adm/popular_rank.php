@@ -36,7 +36,7 @@ include_once('./admin.head.php');
 $colspan = 3;
 ?>
 
-<form id="fsearch" name="fsearch" method="get">
+<form name="fsearch" id="fsearch" method="get">
 <fieldset>
     <legend>인기검색어 검색</legend>
     <span>
@@ -44,15 +44,15 @@ $colspan = 3;
         건수 <?=number_format($total_count)?>개
     </span>
     <label for="fr_date">기간설정</label>
-    <input type="text" id="fr_date" name="fr_date" class="frm_input" maxlength="10" value="<?=$fr_date?>" title="구간시작일"> 부터
-    <input type="text" id="to_date" name="to_date" class="frm_input" maxlength="10" value="<?=$to_date?>" title="구간종료일"> 까지
+    <input type="text" name="fr_date" value="<?=$fr_date?>" id="fr_date" title="구간시작일" class="frm_input" maxlength="10"> 부터
+    <input type="text" name="to_date" value="<?=$to_date?>" id="to_date" title="구간종료일" class="frm_input" maxlength="10"> 까지
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
 
 <section class="cbox">
     <h2>인기검색어 순위 및 내역</h2>
-    <form id="fpopularrank" name="fpopularrank" method="post">
+    <form name="fpopularrank" id="fpopularrank" method="post">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">

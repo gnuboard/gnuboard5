@@ -53,10 +53,10 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 $g4['title'] = '게시판관리';
 include_once('./admin.head.php');
 
-$colspan = 8;
+$colspan = 15;
 ?>
 
-<form id="fsearch" name="fsearch" method="get">
+<form name="fsearch" id="fsearch" method="get">
 <fieldset>
     <legend>게시판 검색</legend>
     <span>
@@ -68,8 +68,8 @@ $colspan = 8;
         <option value="bo_subject"<?=get_selected($_GET['sfl'], "bo_subject");?>>제목</option>
         <option value="a.gr_id"<?=get_selected($_GET['sfl'], "a.gr_id");?>>그룹ID</option>
     </select>
-    <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
-    <input type="submit" class="btn_submit" value="검색">
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
+    <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
 
@@ -83,7 +83,7 @@ $colspan = 8;
     </div>
     <?}?>
 
-    <form id="fboardlist" name="fboardlist" method="post" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);">
+    <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -93,7 +93,7 @@ $colspan = 8;
     <table class="tbl_bo_list">
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 게시판 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 게시판 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col"><?=subject_sort_link('a.gr_id')?>그룹</a></th>
         <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
         <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
@@ -119,7 +119,7 @@ $colspan = 8;
 
     <tr>
         <td>
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="<?=get_text($row['bo_subject'])?> 게시판선택">
+            <input type="checkbox" name="chk[]" value="<?=$i?>" id="chk_<?=$i?>" title="<?=get_text($row['bo_subject'])?> 게시판선택">
         </td>
         <td>
             <?if ($is_admin == 'super'){?>
@@ -138,17 +138,17 @@ $colspan = 8;
         <td>
             <?=get_mobile_skin_select('board', 'bo_mobile_skin_'.$i, "bo_mobile_skin[$i]", $row['bo_mobile_skin']);?>
         </td>
-        <td><input type="text" id="bo_subject[<?=$i?>]" name="bo_subject[<?=$i?>]" class="required frm_input" value="<?=get_text($row['bo_subject'])?>" title="게시판제목" size="10" required="required"></td>
-        <td><input type="text" name="bo_read_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_read_point']?>" size="2" title="읽기포인트"></td>
-        <td><input type="text" name="bo_write_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_write_point']?>" size="2" title="쓰기포인트"></td>
-        <td><input type="text" name="bo_comment_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_comment_point']?>" size="2" title="댓글포인트"></td>
-        <td><input type="text" name="bo_download_point[<?=$i?>]" class="frm_input" value="<?=$row['bo_download_point']?>" size="2" title="다운포인트"></td>
-        <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_use_search[<?=$i?>]" <?=$row['bo_use_search']?"checked":""?> value="1" title="선택시 검색사용"></td>
-        <td><input type="checkbox" id="bo_use_search_<?=$i?>" name="bo_show_menu[<?=$i?>]" <?=$row['bo_show_menu']?"checked":""?> value="1" title="선택시 메뉴보이기"></td>
-        <td><input type="text" id="bo_order<?=$i?>" name="bo_order[<?=$i?>]" class="frm_input" value="<?=$row['bo_order']?>" size="2" title="출력순서"></td>
+        <td><input type="text" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>" id="bo_subject[<?=$i?>]" title="게시판제목" class="required frm_input" size="10" required="required"></td>
+        <td><input type="text" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>"  title="읽기포인트" class="frm_input" size="2"></td>
+        <td><input type="text" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" title="쓰기포인트" class="frm_input" size="2"></td>
+        <td><input type="text" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" title="댓글포인트" class="frm_input" size="2"></td>
+        <td><input type="text" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" title="다운포인트" class="frm_input" size="2"></td>
+        <td><input type="checkbox" name="bo_use_search[<?=$i?>]" value="1" id="bo_use_search_<?=$i?>" <?=$row['bo_use_search']?"checked":""?> title="선택시 검색사용"></td>
+        <td><input type="checkbox" name="bo_show_menu[<?=$i?>]" value="1" id="bo_use_search_<?=$i?>" <?=$row['bo_show_menu']?"checked":""?> title="선택시 메뉴보이기"></td>
+        <td><input type="text" name="bo_order[<?=$i?>]" value="<?=$row['bo_order']?>" id="bo_order<?=$i?>" title="출력순서" class="frm_input" size="2"></td>
         </td>
         <td>
-            <select id="bo_device_<?=$i?>" name="bo_device[<?=$i?>]">
+            <select name="bo_device[<?=$i?>]" id="bo_device_<?=$i?>" title="접속기기 선택">
                 <option value="both"<?=get_selected($row['bo_device'], 'both', true);?>>모두</option>
                 <option value="pc"<?=get_selected($row['bo_device'], 'pc');?>>PC</option>
                 <option value="mobile"<?=get_selected($row['bo_device'], 'mobile');?>>모바일</option>
@@ -165,9 +165,9 @@ $colspan = 8;
     </table>
 
     <div class="btn_list">
-        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
+        <input type="submit" name="act_button" value="선택수정"onclick="document.pressed=this.value">
         <?if ($is_admin == 'super') {?>
-        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
         <a href="./board_form.php">게시판추가</a>
         <?}?>
     </div>

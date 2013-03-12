@@ -349,7 +349,7 @@ if ($w == '' || $w == 'r') {
     // 쓰기 포인트 부여
     if ($w == '') {
         if ($notice) {
-            $bo_notice = $wr_id.PHP_EOL.$board['bo_notice'];
+            $bo_notice = $wr_id."\n".$board['bo_notice'];
             sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
         }
 
@@ -561,7 +561,8 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'코멘트', 'cu'=>'코멘트 수정' );
     $str = $warr[$w];
 
-    $subject = '"'.$board['bo_subject'].'" 게시판에 '.$str.'글이 올라왔습니다.';
+    $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
+
     $link_url = G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr;
 
     include_once(G4_LIB_PATH.'/mailer.lib.php');

@@ -48,7 +48,7 @@ if (empty($wr['wr_id']))
 // 이 옵션을 사용 안 함으로 설정할 경우 어떤 스크립트도 실행 되지 않습니다.
 //if (!trim($_POST["wr_content"])) die ("내용을 입력하여 주십시오.");
 
-if ($member[mb_id])
+if ($is_member)
 {
     $mb_id = $member['mb_id'];
     // 4.00.13 - 실명 사용일때 댓글에 별명으로 입력되던 오류를 수정
@@ -67,7 +67,7 @@ if ($w == 'c') // 댓글 입력
 {
     /*
     if ($member[mb_point] + $board[bo_comment_point] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 댓글쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.'.PHP_EOL.PHP_EOL.'포인트를 적립하신 후 다시 댓글를 써 주십시오.');
+        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 댓글쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 댓글를 써 주십시오.');
     */
     // 댓글쓰기 포인트설정시 회원의 포인트가 음수인 경우 댓글를 쓰지 못하던 버그를 수정 (곱슬최씨님)
     $tmp_point = ($member['mb_point'] > 0) ? $member['mb_point'] : 0;
@@ -193,7 +193,7 @@ if ($w == 'c') // 댓글 입력
         $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'댓글 ', 'cu'=>'댓글 수정' );
         $str = $warr[$w];
 
-        $subject = $board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
+        $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
         // 4.00.15 - 메일로 보내는 댓글의 바로가기 링크 수정
         $link_url = G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
 
@@ -281,7 +281,7 @@ else if ($w == 'cu') // 댓글 수정
                 and wr_is_comment = 1 ";
     $row = sql_fetch($sql);
     if ($row['cnt'] && !$is_admin)
-        alert('이 댓글와 관련된 답변댓글가 존재하므로 수정 할 수 없습니다.');
+        alert('이 댓글와 관련된 답변댓글이 존재하므로 수정 할 수 없습니다.');
 
     $sql_ip = "";
     if (!$is_admin)

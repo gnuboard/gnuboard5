@@ -55,7 +55,7 @@ include_once('./admin.head.php');
 $colspan = 7;
 ?>
 
-<form id="fsearch" name="fsearch" method="get">
+<form name="fsearch" id="fsearch" method="get">
 <input type="hidden" name="gr_id" value="<?=$gr_id?>">
 <fieldset>
     <legend><?=$gr['gr_subject']?>(아이디 <?=$gr['gr_id']?>)에서 검색</legend>
@@ -63,14 +63,14 @@ $colspan = 7;
     <select id="sfl" name="sfl">
         <option value="a.mb_id"<?=get_selected($_GET['sfl'], "a.mb_id")?>>회원아이디</option>
     </select>
-    <input type="text" id="stx" name="stx" class="required frm_input" required value="<? echo $stx ?>" title="검색어(필수)">
-    <input type="submit" class="btn_submit" value="검색">
+    <input type="text" name="stx" value="<? echo $stx ?>" id="stx" title="검색어(필수)" required class="required frm_input">
+    <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
 
 <section class="cbox">
     <h2><?=$gr['gr_subject']?> 그룹에 접근가능한 회원 목록 (그룹아이디:<?=$gr['gr_id']?>)</h2>
-    <form id="fboardgroupmember" name="fboardgroupmember" method="post" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);">
+    <form name="fboardgroupmember" id="fboardgroupmember" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);" method="post">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -82,7 +82,7 @@ $colspan = 7;
     <table>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 접근가능회원 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 접근가능회원 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col">그룹</th>
         <th scope="col"><?=subject_sort_link('b.mb_id', 'gr_id='.$gr_id)?>회원아이디</a></th>
         <th scope="col"><?=subject_sort_link('b.mb_name', 'gr_id='.$gr_id)?>이름</a></th>
@@ -107,7 +107,7 @@ $colspan = 7;
         $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
     ?>
     <tr>
-        <td class="td_chk"><input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['gm_id']?>" title="<?=$row['mb_nick']?> 회원 선택"></td>
+        <td class="td_chk"><input type="checkbox" name="chk[]" value="<?=$row['gm_id']?>" id="chk_<?=$i?>" title="<?=$row['mb_nick']?> 회원 선택"></td>
         <td class="td_grid"><?=$group?></td>
         <td class="td_mbid"><?=$row['mb_id']?></td>
         <td class="td_mbname"><?=$row['mb_name']?></td>

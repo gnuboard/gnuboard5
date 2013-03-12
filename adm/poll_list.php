@@ -61,10 +61,10 @@ $colspan = 6;
         <?=$listall?>
         투표수 : <?=number_format($total_count)?>개
     </span>
-    <select id="sfl" name="sfl" title="검색대상">
+    <select name="sfl" id="sfl" title="검색대상">
         <option value="po_subject"<?=get_selected($_GET['sfl'], "po_subject");?>>제목</option>
     </select>
-    <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" class="required frm_input" required>
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
@@ -76,7 +76,7 @@ $colspan = 6;
         <a href="./poll_form.php" id="poll_add">투표 추가</a>
     </div>
 
-    <form id="fpolllist" name="fpolllist" method="post" action="./poll_delete.php">
+    <form name="fpolllist" id="fpolllist" action="./poll_delete.php" method="post">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -86,7 +86,7 @@ $colspan = 6;
     <table>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 투표 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 투표 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col">번호</th>
         <th scope="col">제목</th>
         <th scope="col">투표권한</th>
@@ -108,7 +108,7 @@ $colspan = 6;
 
     <tr>
         <td class="td_chk">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['po_id']?>" title="투표선택">
+            <input type="checkbox" name="chk[]" value="<?=$row['po_id']?>" id="chk_<?=$i?>" title="투표선택">
         </td>
         <td class="td_num"><?=$row['po_id']?></td>
         <td><?=cut_str(get_text($row['po_subject']),70)?></td>

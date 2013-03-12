@@ -21,7 +21,7 @@ include_once('./admin.head.php');
 ?>
 
 <div class="cbox">
-    <form id="fpoll" name="fpoll" method="post" action="./poll_form_update.php" enctype="multipart/form-data">
+    <form name="fpoll" id="fpoll" action="./poll_form_update.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="po_id" value="<?=$po_id?>">
     <input type="hidden" name="w" value="<?=$w?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -34,7 +34,7 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="po_subject">투표 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="po_subject" name="po_subject" class="required frm_input" value="<?=$po['po_subject']?>" size="80" maxlength="125"></td>
+        <td><input type="text" name="po_subject" value="<?=$po['po_subject']?>" id="po_subject" class="required frm_input" size="80" maxlength="125"></td>
     </tr>
 
     <?
@@ -51,9 +51,9 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="po_poll<?=$i?>">항목 <?=$i?><?=$sound_only?></label></th>
         <td>
-            <input type="text" id="po_poll<?=$i?>" name="po_poll<?=$i?>" class="frm_input <?=$required?>" value="<?=$po_poll?>" maxlength="125">
+            <input type="text" name="po_poll<?=$i?>" value="<?=$po_poll?>" id="po_poll<?=$i?>" class="frm_input <?=$required?>" maxlength="125">
             <label for="po_cnt<?=$i?>">항목 <?=$i?> 투표수</label>
-            <input type="text" id="po_cnt<?=$i?>" name="po_cnt<?=$i?>" class="frm_input" value="<?=$po['po_cnt'.$i]?>" size="3">
+            <input type="text" name="po_cnt<?=$i?>" value="<?=$po['po_cnt'.$i]?>" id="po_cnt<?=$i?>" class="frm_input" size="3">
        </td>
     </tr>
 
@@ -63,7 +63,7 @@ include_once('./admin.head.php');
         <th scope="row"><label for="po_etc">기타의견</label></th>
         <td>
             <?=help('기타 의견을 남길 수 있도록 하려면, 간단한 질문을 입력하세요.')?>
-            <input type="text" id="po_etc" name="po_etc" class="frm_input" value="<?=get_text($po['po_etc'])?>" size="80" maxlength="125">
+            <input type="text" name="po_etc" value="<?=get_text($po['po_etc'])?>" id="po_etc" class="frm_input" size="80" maxlength="125">
         </td>
     </tr>
     <tr>
@@ -77,29 +77,29 @@ include_once('./admin.head.php');
         <th scope="row"><label for="po_point">포인트</label></th>
         <td>
             <?=help('투표에 참여한 회원에게 포인트를 부여합니다.')?>
-            <input type="text" id="po_point" name="po_point" class="frm_input" value="<?=$po['po_point']?>"> 점
+            <input type="text" name="po_point" value="<?=$po['po_point']?>" id="po_point" class="frm_input"> 점
         </td>
     </tr>
 
     <? if ($w == 'u') { ?>
     <tr>
         <th scope="row"><label for="po_date">투표시작일</label></th>
-        <td><input type="text" id="po_date" name="po_date" class="frm_input" maxlength="10" value="<?=$po['po_date']?>"></td>
+        <td><input type="text" name="po_date" value="<?=$po['po_date']?>" id="po_date" class="frm_input" maxlength="10"></td>
     </tr>
     <tr>
         <th scope="row"><label for="po_ips">투표참가 IP</label></th>
-        <td><textarea id="po_ips" name="po_ips" rows="10" readonly><?=preg_replace("/\n/", " / ", $po['po_ips'])?></textarea></td>
+        <td><textarea name="po_ips" id="po_ips" readonly rows="10"><?=preg_replace("/\n/", " / ", $po['po_ips'])?></textarea></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_ids">투표참가 회원</label></th>
-        <td><textarea id="mb_ids" name="mb_ids" rows="10" readonly><?=preg_replace("/\n/", " / ", $po['mb_ids'])?></textarea></td>
+        <td><textarea name="mb_ids" id="mb_ids" readonly rows="10"><?=preg_replace("/\n/", " / ", $po['mb_ids'])?></textarea></td>
     </tr>
     <? } ?>
     </tbody>
     </table>
 
     <div class="btn_confirm">
-        <input type="submit" class="btn_submit" accesskey="s" value="확인">
+        <input type="submit" value="확인" class="btn_submit" accesskey="s">
         <a href="./poll_list.php?<?=$qstr?>">목록</a>
     </div>
     </form>

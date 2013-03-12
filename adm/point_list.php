@@ -76,7 +76,7 @@ function point_clear()
 }
 </script>
 
-<form id="fsearch" name="fsearch" method="get">
+<form name="fsearch" id="fsearch" method="get">
 <fieldset>
     <legend>포인트 내역 검색</legend>
     <span>
@@ -104,7 +104,7 @@ function point_clear()
 <section class="cbox">
     <h2>포인트 내역</h2>
 
-    <form id="fpointlist" name="fpointlist" method="post">
+    <form name="fpointlist" id="fpointlist" method="post">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -115,7 +115,7 @@ function point_clear()
     <table class="tbl_pt_list">
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 포인트 내역 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 포인트 내역 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
         <th scope="col">이름</th>
         <th scope="col">별명</th>
@@ -178,7 +178,7 @@ function point_clear()
 <section id="point_mng" class="cbox">
     <h2>개별회원 포인트 증감 설정</h2>
 
-    <form id="fpointlist2" name="fpointlist2" method="post" action="./point_update.php" autocomplete="off">
+    <form name="fpointlist2" method="post" id="fpointlist2" action="./point_update.php" autocomplete="off">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
     <input type="hidden" name="stx" value="<?=$stx?>">
     <input type="hidden" name="sst" value="<?=$sst?>">
@@ -194,15 +194,15 @@ function point_clear()
     <tbody>
     <tr>
         <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="mb_id" name="mb_id" class="required frm_input" required value="<?=$mb_id?>"></td>
+        <td><input type="text" name="mb_id" value="<?=$mb_id?>" id="mb_id" class="required frm_input" required></td>
     </tr>
     <tr>
         <th scope="row"><label for="po_content">포인트 내용<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="po_content" name="po_content" class="required frm_input" required size="80"></td>
+        <td><input type="text" name="po_content" id="po_content" required class="required frm_input" size="80"></td>
     </tr>
     <tr>
         <th scope="row"><label for="po_point">포인트<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="po_point" name="po_point" class="required frm_input" required></td>
+        <td><input type="text" name="po_point" id="po_point" required class="required frm_input"></td>
     </tr>
     </tbody>
     </table>
@@ -211,11 +211,11 @@ function point_clear()
         <legend>XSS 혹은 CSRF 방지</legend>
         <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
         <label for="admin_password">관리자패스워드<strong class="sound_only">필수</strong></label>
-        <input type="password" id="admin_password" name="admin_password" class="required frm_input" required>
+        <input type="password" name="admin_password" id="admin_password" required class="required frm_input">
     </fieldset>
 
     <div class="btn_confirm">
-        <input type="submit" class="btn_submit" value="확인">
+        <input type="submit" value="확인" class="btn_submit">
     </div>
 
     </form>

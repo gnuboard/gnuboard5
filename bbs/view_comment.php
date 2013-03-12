@@ -114,7 +114,7 @@ else
 include_once($board_skin_path.'/view_comment.skin.php');
 
 if (!$member['mb_id']) // 비회원일 경우에만
-    echo '<script src="'.G4_JS_URL.'/md5.js"></script>'.PHP_EOL;
+    echo '<script src="'.G4_JS_URL.'/md5.js"></script>'."\n";
 
 @include_once($board_skin_path.'/view_comment.tail.skin.php');
 ?>

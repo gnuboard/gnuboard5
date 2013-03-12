@@ -194,7 +194,7 @@ if ($w == '') {
 
     // 회원님께 메일 발송
     if ($config['cf_email_mb_member']) {
-        $subject = '회원가입을 축하드립니다.';
+        $subject = '['.$config['cf_title'].'] 회원가입을 축하드립니다.';
 
         $mb_md5 = md5($mb_id.$mb_email.G4_TIME_YMDHIS);
         $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
@@ -209,7 +209,7 @@ if ($w == '') {
 
     // 최고관리자님께 메일 발송
     if ($config['cf_email_mb_super_admin']) {
-        $subject = $mb_nick .' 님께서 회원으로 가입하셨습니다.';
+        $subject = '['.$config['cf_title'].'] '.$mb_nick .' 님께서 회원으로 가입하셨습니다.';
 
         ob_start();
         include_once ('./register_form_update_mail2.php');
@@ -295,7 +295,7 @@ if ($w == '') {
 
     // 인증메일 발송
     if ($old_email != $mb_email && $config['cf_use_email_certify']) {
-        $subject = '인증확인 메일입니다.';
+        $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
         $mb_md5 = md5($mb_id.$mb_email.$member['mb_datetime']);
         $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
@@ -320,7 +320,7 @@ if ($msg)
 if ($w == "") {
     goto_url(G4_BBS_URL.'/register_result.php');
 } else if ($w == 'u') {
-    $row  = sql_fetch(" select mb_password from {$g4['member_table']} where mb_id = '{$member[mb_id]}' ");
+    $row  = sql_fetch(" select mb_password from {$g4['member_table']} where mb_id = '{$member['mb_id']}' ");
     $tmp_password = $row['mb_password'];
 
     if ($old_email != $mb_email && $config['cf_use_email_certify']) {

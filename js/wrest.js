@@ -323,6 +323,19 @@ function wrestSubmit()
         alert(wrestMsg);
 
         if (wrestFld.style.display != "none") {
+            var id = wrestFld.getAttribute("id");
+            var msg_el = document.getElementById(id+"_msg");
+            var new_href;
+            var curr_href = document.location.href.replace(/#.+$/, "");
+
+            if(msg_el != null) {
+                msg_el.innerText = wrestMsg;
+                var new_href = curr_href+"#"+id+"_msg";
+            } else {
+                var new_href = curr_href+"#"+id;
+            }
+            document.location.href = new_href;
+
             //wrestFld.style.backgroundColor = wrestFldBackColor;
             if (typeof(wrestFld.select) != "undefined")
                 wrestFld.select();

@@ -91,7 +91,7 @@ $colspan = 15;
         <option value="mb_ip"<?=get_selected($_GET['sfl'], "mb_ip");?>>IP</option>
         <option value="mb_recommend"<?=get_selected($_GET['sfl'], "mb_recommend");?>>추천인</option>
     </select>
-    <input type="text" name="stx" class="required frm_input" required value="<?=$stx?>" title="검색어(필수)">
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
@@ -106,7 +106,7 @@ $colspan = 15;
     </div>
     <?}?>
 
-    <form id="fmemberlist" name="fmemberlist" method="post" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);">
+    <form name="fmemberlist" id="fmemberlist" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
     <input type="hidden" name="sst" value="<?=$sst?>">
     <input type="hidden" name="sod" value="<?=$sod?>">
     <input type="hidden" name="sfl" value="<?=$sfl?>">
@@ -116,7 +116,7 @@ $colspan = 15;
     <table class="tbl_mb_list">
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 회원 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 회원 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
         <th scope="col"><?=subject_sort_link('mb_nick')?>별명</a></th>
         <th scope="col"><?=subject_sort_link('mb_name')?>이름</a></th>
@@ -177,8 +177,8 @@ $colspan = 15;
 
     <tr>
         <td class="td_chk">
-            <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="회원선택">
+            <input type="hidden" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>" id="mb_id_<?=$i?>">
+            <input type="checkbox" name="chk[]" value="<?=$i?>" id="chk_<?=$i?>" title="회원선택">
         </td>
         <td class="td_mbid">
             <?=$mb_id?>
@@ -194,7 +194,7 @@ $colspan = 15;
         <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>';?></td>
         <td class="td_chk">
             <? if(empty($row['mb_leave_date'])){?>
-            <input type="checkbox" id="mb_intercept_date_<?=$i?>" name="mb_intercept_date[<?=$i?>]" <?=$row['mb_intercept_date']?'checked':'';?> value="<?=$intercept_date?>" title="<?=$intercept_title?>">
+            <input type="checkbox" name="mb_intercept_date[<?=$i?>]" <?=$row['mb_intercept_date']?'checked':'';?> value="<?=$intercept_date?>" id="mb_intercept_date_<?=$i?>" title="<?=$intercept_title?>">
             <?}?>
         </td>
         <td class="td_chk"><?=$group?></td>
@@ -209,8 +209,8 @@ $colspan = 15;
     </table>
 
     <div class="btn_list">
-        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
-        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
         <? if ($is_admin == 'super') {?><a href="./member_form.php">회원추가</a><?}?>
     </div>
 

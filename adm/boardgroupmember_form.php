@@ -18,19 +18,19 @@ $colspan = 4;
 
 <div class="cbox">
     <p>아이디 <?=$mb['mb_id']?>, 이름 <?=$mb['mb_name']?>, 별명 <?=$mb['mb_nick']?>님이 접근가능한 그룹 목록</p>
-    <form id="fboardgroupmember" name="fboardgroupmember" method="post" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);">
-    <input type="hidden" id="sst" name="sst" value="<?=$sst?>">
-    <input type="hidden" id="sod" name="sod" value="<?=$sod?>">
-    <input type="hidden" id="sfl" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" id="stx" name="stx" value="<?=$stx?>">
-    <input type="hidden" id="page" name="page" value="<?=$page?>">
-    <input type="hidden" id="token" name="token" value="<?=$token?>">
-    <input type="hidden" id="mb_id" name="mb_id" value="<?=$mb['mb_id']?>">
-    <input type="hidden" id="w" name="w" value="d">
+    <form name="fboardgroupmember" id="fboardgroupmember" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);" method="post">
+    <input type="hidden" name="sst" value="<?=$sst?>" id="sst">
+    <input type="hidden" name="sod" value="<?=$sod?>" id="sod">
+    <input type="hidden" name="sfl" value="<?=$sfl?>" id="sfl">
+    <input type="hidden" name="stx" value="<?=$stx?>" id="stx">
+    <input type="hidden" name="page" value="<?=$page?>" id="page">
+    <input type="hidden" name="token" value="<?=$token?>" id="token">
+    <input type="hidden" name="mb_id" value="<?=$mb['mb_id']?>" id="mb_id">
+    <input type="hidden" name="w" value="d" id="w">
     <table>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" id="chkall" name="chkall" value="1" title="현재 페이지 접근가능그룹 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 접근가능그룹 전체선택"  onclick="check_all(this.form)"></th>
         <th scope="col">그룹아이디</th>
         <th scope="col">그룹</th>
         <th scope="col">처리일시</th>
@@ -50,7 +50,7 @@ $colspan = 4;
         $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
     ?>
     <tr>
-        <td class="td_chk"><input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['gm_id']?>" title="<?=$row['gr_subject']?> 그룹 선택"></td>
+        <td class="td_chk"><input type="checkbox" name="chk[]" value="<?=$row['gm_id']?>" id="chk_<?=$i?>" title="<?=$row['gr_subject']?> 그룹 선택"></td>
         <td class="td_grid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
         <td class="td_category"><?=$row['gr_subject']?></td>
         <td class="td_time"><?=$row['gm_datetime']?></td>
@@ -72,13 +72,13 @@ $colspan = 4;
     </form>
 </div>
 
-<form id="fboardgroupmember_form" name="fboardgroupmember_form" method="post" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)">
-<input type="hidden" id="mb_id" name="mb_id" value="<?=$mb['mb_id']?>">
-<input type="hidden" id="token" name="token" value="<?=$token?>">
+<form name="fboardgroupmember_form" id="fboardgroupmember_form" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)" method="post">
+<input type="hidden" name="mb_id" value="<?=$mb['mb_id']?>" id="mb_id">
+<input type="hidden" name="token" value="<?=$token?>" id="token">
 <fieldset>
     <legend><?=$mb['mb_id']?>님 접근가능그룹 추가</legend>
     <label for="gr_id">그룹지정</label>
-    <select id="gr_id" name="gr_id">
+    <select name="gr_id" id="gr_id">
         <option value="">접근가능 그룹을 선택하세요.</option>
         <?
         $sql = " select * 
@@ -94,7 +94,7 @@ $colspan = 4;
         }
         ?>
     </select>
-    <input type="submit" class="btn_submit" value="선택" accesskey="s">
+    <input type="submit" value="선택" class="btn_submit" accesskey="s">
     <p>게시판 그룹이 존재하지 않는다면 <a href="./boardgroup_form.php">게시판그룹생성하기</a></p>
 </fieldset>
 </form>
