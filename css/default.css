@@ -49,7 +49,7 @@ a:active {color:#000;text-decoration:underline}
 
 #schall {position:absolute;top:22px;left:70px;margin:0;padding:0;letter-spacing:-5px}
 #schall legend {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
-#schall_stx {padding-left:5px;width:156px;height:24px;border:1px solid #aaa;border-right:0;background:#f7f7f2;line-height:1.9em !important;line-height:1.6em}
+#schall_stx {padding-left:5px;width:156px;height:24px;border:1px solid #aaa;border-right:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
 #mb_nb {position:absolute;top:18px;right:0;zoom:1}

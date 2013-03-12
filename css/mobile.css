@@ -43,7 +43,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #logo {float:left;padding:0.3em 0;margin-left:1em}
 
 #schall {position:absolute;top:0.7em;right:1em}
-#schall_stx {padding-left:0.3em;width:100px;height:1.5em;border:1px solid #aaa;border-right:0;background:#f7f7f7;line-height:1.5em;-webkit-appearance:none}
+#schall_stx {padding-left:0.3em;width:100px;height:1.5em;border:1px solid #aaa;border-right:0;background:#fff;line-height:1.5em;-webkit-appearance:none}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
 #mb_nb {clear:both;border-top:1px solid #e7f1ed;background:#151515;text-align:center}
