@@ -25,7 +25,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </tr>
         <tr>
             <th scope="row"><label for="me_memo">내용</label></th>
-            <td><textarea name="me_memo" id="me_memo" required><?=$content?></textarea></td>
+            <td><textarea name="me_memo" id="me_memo" required class="required"><?=$content?></textarea></td>
         </tr>
         <tr>
             <th scope="row">자동등록방지</th>

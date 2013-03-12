@@ -113,11 +113,11 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="mb_id">아이디<?=$sound_only?></label></th>
         <td>
-            <input type="text" name="mb_id" value="<?=$mb['mb_id']?>" id="mb_id"class="frm_input" size="15" maxlength="20"  <?=$required_mb_id?>>
+            <input type="text" name="mb_id" value="<?=$mb['mb_id']?>" id="mb_id" <?=$required_mb_id?> class="frm_input" size="15" maxlength="20" >
             <?if ($w=='u'){?><a href="./boardgroupmember_form.php?mb_id=<?=$mb['mb_id']?>">접근가능그룹보기</a><?}?>
         </td>
         <th scope="row"><label for="mb_password">패스워드<?=$sound_only?></label></th>
-        <td><input type="password" name="mb_password" id="mb_password" class="frm_input" size="15" maxlength="20" <?=$required_mb_password?>></td>
+        <td><input type="password" name="mb_password" id="mb_password" <?=$required_mb_password?> class="frm_input" size="15" maxlength="20"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>

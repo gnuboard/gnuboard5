@@ -127,7 +127,7 @@ $pg_anchor = "<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="bo_table">TABLE<?=$sound_only?></label></th>
         <td colspan="2">
-            <input type="text" name="bo_table" value="<?=$board['bo_table'] ?>" id="bo_table" required class="frm_input" maxlength="20" <?=$bo_table_attr?>>
+            <input type="text" name="bo_table" value="<?=$board['bo_table'] ?>" id="bo_table" required class="required frm_input" maxlength="20" <?=$bo_table_attr?>>
             <? if ($w == '') { ?>
                 영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
             <? } else { ?>
