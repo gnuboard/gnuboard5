@@ -41,7 +41,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
         <? if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } ?>
-        <input name="mb_name" value="<?=$member['mb_name']?>" id="reg_mb_name" <?=$required?> <?=$readonly?> class="frm_input hangul nospace <?=$required?> <?=$readonly?>" size="10">
+        <input type="text" name="mb_name" value="<?=$member['mb_name']?>" id="reg_mb_name" <?=$required?> <?=$readonly?> class="frm_input hangul nospace <?=$required?> <?=$readonly?>" size="10">
     </td>
 </tr>
 <? if ($req_nick) { ?>

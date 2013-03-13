@@ -51,20 +51,20 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
         <? if ($member['mb_level'] >= $po['po_level']) { ?>
         <form name="fpollresult" method="post" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" autocomplete="off">
-        <input type=hidden name="po_id" value="<?=$po_id?>">
-        <input type=hidden name="w" value="">
-        <input type=hidden name="skin_dir" value="<?=$skin_dir?>">
+        <input type="hidden" name="po_id" value="<?=$po_id?>">
+        <input type="hidden" name="w" value="">
+        <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
         <? if ($is_member) { ?><input type="hidden" name="pc_name" value="<?=cut_str($member['mb_nick'],255)?>"><? } ?>
         <h3><?=$po_etc?></h3>
         <table id="poll_result_wcmt" class="frm_tbl">
         <tbody>
         <? if ($is_guest) { ?>
         <tr>
-            <td><input type="text" id="pc_name" name="pc_name" class="frm_input required" required placeholder="이름(필수)"></td>
+            <td><input type="text" id="pc_name" name="pc_name" class="frm_input required" title="이름(필수)" required placeholder="이름(필수)"></td>
         </tr>
         <? } ?>
         <tr>
-            <td><input type="text" id="pc_idea" name="pc_idea" class="frm_input required" required maxlength="100" placeholder="의견(필수)"></td>
+            <td><input type="text" id="pc_idea" name="pc_idea" class="frm_input required" title="의견(필수)" required maxlength="100" placeholder="의견(필수)"></td>
         </tr>
         <? if ($is_guest) { ?>
         <tr>
