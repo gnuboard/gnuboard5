@@ -51,7 +51,7 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="po_poll<?=$i?>">항목 <?=$i?><?=$sound_only?></label></th>
         <td>
-            <input type="text" name="po_poll<?=$i?>" value="<?=$po_poll?>" id="po_poll<?=$i?>" required class="frm_input <?=$required?>" maxlength="125">
+            <input type="text" name="po_poll<?=$i?>" value="<?=$po_poll?>" id="po_poll<?=$i?>" <?=$required?> class="frm_input <?=$required?>" maxlength="125">
             <label for="po_cnt<?=$i?>">항목 <?=$i?> 투표수</label>
             <input type="text" name="po_cnt<?=$i?>" value="<?=$po['po_cnt'.$i]?>" id="po_cnt<?=$i?>" class="frm_input" size="3">
        </td>
