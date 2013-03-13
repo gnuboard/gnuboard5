@@ -125,7 +125,7 @@ class gcaptcha
         imagejpeg($im, G4_DATA_PATH.'/cache/'.$this->captcha_filename.'.jpg');
         imagedestroy($im);
 
-        $this->make_wav($this->captcha_filename.'.wav');
+        $this->make_mp3($this->captcha_filename);
     }
 
     function get_captcha_filename()
@@ -133,21 +133,24 @@ class gcaptcha
         return 'gcaptcha-'.abs_ip2long().'_'.session_id();
     }
 
-    function make_wav($captcha_filename)
+    function make_mp3($captcha_filename)
     {
         global $g4;
 
         $number = (string)$_SESSION['ss_captcha_key'];
-        $wavs = array();
+        $mp3s = array();
         for($i=0;$i<strlen($number);$i++){
-            $file = G4_GCAPTCHA_PATH.'/wavs/'.$number[$i].'.wav';
-            $wavs[] = $file;
+            $file = G4_GCAPTCHA_PATH.'/mp3/'.$number[$i].'.mp3';
+            $mp3s[] = $file;
         }
 
-        $wav_filepath = G4_DATA_PATH.'/cache/'.$captcha_filename;
-        $fp = fopen($wav_filepath, 'w+');
-        fwrite($fp, join_wavs($wavs));
-        fclose($fp);
+        $mp3_filepath = G4_DATA_PATH.'/cache/'.$captcha_filename.'.mp3';
+
+        $contents = '';
+        foreach ($mp3s as $mp3) {
+            $contents .= file_get_contents($mp3);
+        }
+        file_put_contents($mp3_filepath, $contents);
     }
 }
 
@@ -174,14 +177,18 @@ function captcha_html($class='captcha')
 
     $rand = rand();
     $jpg_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
-    $wav_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.wav';
+    $mp3_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.mp3';
 
     $html .= "\n".'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>';
     $html .= "\n".'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>';
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">자동등록방지</legend>';
     $html .= '<img src="'.$jpg_file_url.'?_='.$rand.'" alt="자동등록방지 숫자">';
-    $html .= '<a href="'.$wav_file_url.'?_='.$rand.'" id="captcha_wav" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
+    if (G4_IS_MOBILE) {
+        $html .= '<audio src="'.$mp3_file_url.'?_='.$rand.'" controls></audio>';
+    } else {
+        $html .= '<a href="'.$mp3_file_url.'?_='.$rand.'" id="captcha_mp3" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
+    }
     $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box frm_input" size="6" maxlength="6" required title="자동등록방지 숫자 입력">';
     $html .= '<p class="sound_only">자동등록방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';
@@ -206,51 +213,5 @@ function chk_captcha()
 function chk_captcha_js()
 {
     return "if (!chk_captcha()) return false;";
-}
-
-function join_wavs($wavs)
-{
-    $fields = join('/',array( 'H8ChunkID', 'VChunkSize', 'H8Format',
-                              'H8Subchunk1ID', 'VSubchunk1Size',
-                              'vAudioFormat', 'vNumChannels', 'VSampleRate',
-                              'VByteRate', 'vBlockAlign', 'vBitsPerSample' ));
-    $data = '';
-    $info = array();
-    foreach($wavs as $wav){
-        $fp     = fopen($wav,'rb');
-        $header = fread($fp,36);
-        $info   = unpack($fields,$header);
-
-        // read optional extra stuff
-        if($info['Subchunk1Size'] > 16){
-            $header .= fread($fp,($info['Subchunk1Size']-16));
-        }
-
-        // read SubChunk2ID
-        $header .= fread($fp,4);
-
-        // read Subchunk2Size
-        $size  = unpack('vsize',fread($fp, 4));
-        $size  = $size['size'];
-
-        // read data
-        $data .= fread($fp,$size);
-    }
-
-    return ''
-        .pack('a4', 'RIFF')
-        .pack('V', strlen($data) + 36)
-        .pack('a4', 'WAVE')
-        .pack('a4', 'fmt ')
-        .pack('V', $info['Subchunk1Size'])  // 16
-        .pack('v', $info['AudioFormat'])    // 1
-        .pack('v', $info['NumChannels'])    // 1
-        .pack('V', $info['SampleRate'])     // 8000
-        .pack('V', $info['ByteRate'])       // 8000
-        .pack('v', $info['BlockAlign'])     // 1
-        .pack('v', $info['BitsPerSample'])  // 8
-        .pack('a4', 'data')
-        .pack('V', strlen($data))
-        .$data;
 }
 ?>

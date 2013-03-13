@@ -36,7 +36,7 @@ h2 {font-size:1.2em}
 
 /* 캡챠 자동등록(입력)방지 기본 */
 #captcha img {border:1px solid #ddd;border-right:0}
-#captcha_wav img {border:1px solid #ddd;border-left:0;background:#494949}
+#captcha_mp3 img {border:1px solid #ddd;border-left:0;background:#494949}
 
 /* 레이아웃 */
 #hd {z-index:10;min-width:1000px;background:url('../adm/img/hd_bg.jpg') #383b3f top left repeat-x}

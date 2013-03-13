@@ -35,37 +35,37 @@ $(function() {
     })
     .trigger("click");
 
-    $("#captcha_wav").click(function(){
+    $("#captcha_mp3").click(function(){
         $("body").css("cursor", "wait");
 
-        var wav_url = this.href+"?t="+new Date().getTime();
+        var mp3_url = this.href+"?t="+new Date().getTime();
 
         var html5use = false;
         var html5audio = document.createElement("audio");
-        if (html5audio.canPlayType && html5audio.canPlayType("audio/wav")) {
-            var wav = new Audio(wav_url);
-            wav.id = "wav_audio";
+        if (html5audio.canPlayType && html5audio.canPlayType("audio/mpeg")) {
+            var wav = new Audio(mp3_url);
+            wav.id = "mp3_audio";
             wav.autoplay = true;
             wav.controls = false;
             wav.autobuffer = false;
             wav.loop = false;
             
-            if ($("#wav_audio").length) $("#wav_audio").remove();
-            $("#captcha_wav").after(wav);
+            if ($("#mp3_audio").length) $("#mp3_audio").remove();
+            $("#captcha_mp3").after(wav);
 
             html5use = true;
         } 
         
         if (!html5use) {
-            var object = '<object id="wav_object" classid="clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95" height="0" width="0" style="width:0; height:0;">';
+            var object = '<object id="mp3_object" classid="clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95" height="0" width="0" style="width:0; height:0;">';
             object += '<param name="AutoStart" value="1" />';
             object += '<param name="Volume" value="0" />';
             object += '<param name="PlayCount" value="1" />';
-            object += '<param name="FileName" value="' + wav_url + '" />';
-            object += '<embed id="wav_embed" src="' + wav_url + '" autoplay="true" hidden="true" volume="100" type="audio/x-wav" style="display:inline;" />';
+            object += '<param name="FileName" value="' + mp3_url + '" />';
+            object += '<embed id="mp3_embed" src="' + mp3_url + '" autoplay="true" hidden="true" volume="100" type="audio/x-wav" style="display:inline;" />';
             object += '</object>';
-            if ($("#wav_object").length) $("#wav_object").remove();
-            $("#captcha_wav").after(object);
+            if ($("#mp3_object").length) $("#mp3_object").remove();
+            $("#captcha_mp3").after(object);
         }
         
         $("body").css("cursor", "default");

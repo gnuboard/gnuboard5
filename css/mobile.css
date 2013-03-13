@@ -33,7 +33,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 /* 캡챠 자동등록(입력)방지 기본 */
 #captcha img {height:1.8em;border:1px solid #cfded8;border-right:0}
-#captcha_wav img {padding:0.2em;height:22px !important;border:1px solid #cfded8;border-left:0;background:#494949}
+#captcha_mp3 img {padding:0.2em;height:22px !important;border:1px solid #cfded8;border-left:0;background:#494949}
 
 /* 상단 레이아웃 */
 #hd {background:#fff}
