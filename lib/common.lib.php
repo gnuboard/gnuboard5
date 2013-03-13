@@ -1795,13 +1795,16 @@ function get_skin_stylesheet($skin_path)
     if(!$skin_path)
         return "";
 
+    $doc_root = realpath($_SERVER['DOCUMENT_ROOT']);
+    $skin_path = realpath($skin_path);
+
     $str = "";
 
     $p = parse_url(G4_URL);
     $skin_url = $p['scheme'].'://'.$p['host'];
     if(isset($p['port']))
         $skin_url .= ':'.$p['port'];
-    $skin_url .= str_replace($_SERVER['DOCUMENT_ROOT'], "", $skin_path);
+    $skin_url .= str_replace("\\", "/", str_replace($doc_root, "", $skin_path));
 
     if(is_dir($skin_path)) {
         if($dh = opendir($skin_path)) {
