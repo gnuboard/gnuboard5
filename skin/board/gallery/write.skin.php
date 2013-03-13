@@ -53,7 +53,7 @@ echo $option_hidden;
 <? if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" name="wr_name"  value="<?=$name?>"id="wr_name" required class="frm_input required" size="10" maxlength="20"></td>
+    <td><input type="text" name="wr_name" value="<?=$name?>"id="wr_name" required class="frm_input required" size="10" maxlength="20"></td>
 </tr>
 <? } ?>
 
