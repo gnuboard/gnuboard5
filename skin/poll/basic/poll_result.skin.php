@@ -101,6 +101,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </div>
 
 <script>
+$(function() {
+    $(".poll_delete").click(function() {
+        if(!confirm("해당 기타의견을 삭제하시겠습니까?"))
+            return false;
+    });
+});
+
 function fpollresult_submit(f)
 {
     <? if ($is_guest) { echo chk_captcha_js(); } ?>
