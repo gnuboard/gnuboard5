@@ -14,7 +14,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <fieldset>
         <label for="addr1">동/읍/면/리 검색</label>
-        <input type="text" name="addr1" value="<?=$addr1?>" id="addr1" required class="fs_input" minlength="2">
+        <input type="text" name="addr1" value="<?=$addr1?>" id="addr1" required  class="required fs_input" minlength="2">
         <input type="submit" value="검색" class="fs_submit">
     </fieldset>
 

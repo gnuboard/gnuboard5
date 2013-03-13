@@ -6,16 +6,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <h1><?=$g4['title']?></h1>
 
     <form name="fzip" method="get" autocomplete="off">
-    <input type="hidden" name="frm_name" value="<?=$frm_name?>">
-    <input type="hidden" name="frm_zip1" value="<?=$frm_zip1?>">
-    <input type="hidden" name="frm_zip2" value="<?=$frm_zip2?>">
+    <input type="hidden" name="frm_name"  value="<?=$frm_name?>">
+    <input type="hidden" name="frm_zip1"  value="<?=$frm_zip1?>">
+    <input type="hidden" name="frm_zip2"  value="<?=$frm_zip2?>">
     <input type="hidden" name="frm_addr1" value="<?=$frm_addr1?>">
     <input type="hidden" name="frm_addr2" value="<?=$frm_addr2?>">
 
     <fieldset>
-        <label for="addr1">동/읍/면/리 검색</label>
-        <input type="text" name="addr1" value="<?=$addr1?>" id="addr1" required class="fs_input" minlength="2">
-        <input type="submit" value="검색" class="fs_submit">
+        <input type="text" name="addr1" value="<?=$addr1?>" id="addr1" title="동/읍/면/리(필수)" placeholder="동/읍/면/리(필수)" required class="frm_input" minlength=2>
+        <input type="submit" class="btn_submit" value="검색">
     </fieldset>
 
     <!-- 검색결과 여기서부터 -->

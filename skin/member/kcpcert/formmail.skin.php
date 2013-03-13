@@ -19,16 +19,16 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <? if (!$is_member) { ?>
     <tr>
         <th scope="row"><label for="fnick">이름<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="fnick" name="fnick" required class="frm_input required"></td>
+        <td><input type="text"name="fnick" id="fnick" required class="frm_input required"></td>
     </tr>
     <tr>
         <th scope="row"><label for="fmail">E-mail<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="fmail" name="fmail" required class="frm_input required"></td>
+        <td><input type="text" name="fmail"  id="fmail" required class="frm_input required"></td>
     </tr>
     <? } ?>
     <tr>
         <th scope="row"><label for="subject">제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" id="subject" name="subject" required class="frm_input required"></td>
+        <td><input type="text" name="subject" id="subject" required class="frm_input required"></td>
     </tr>
     <tr>
         <th scope="row">형식</th>
@@ -44,7 +44,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </tr>
     <tr>
         <th scope="row"><label for="file1">첨부 1</label></th>
-        <td><input type="file" name="file1" id="file1" class="frm_input"></td>
+        <td><input type="file"name="file1"  id="file1"  class="frm_input"></td>
     </tr>
     <tr>
         <th scope="row"><label for="file2">첨부 2</label></th>

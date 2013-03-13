@@ -17,10 +17,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <fieldset>
         회원아이디
         <span id="mb_confirm_id"><?=$member[mb_id]?></span>
-
-        <label for="confirm_mb_password">패스워드<strong class="sound_only">필수</strong></label>
-        <input type="password" name="mb_password" id="confirm_mb_password" required class="fs_input" size="15" maxLength="20">
-        <input type="submit" value="확인" id="btn_submit" class="fs_submit">
+        <input type="password" name="mb_password" id="mb_confirm_pw" title="패스워드(필수)"placeholder="패스워드(필수)" required class="frm_input" size="15" maxLength="20">
+        <input type="submit" value="확인" id="btn_submit" class="btn_submit">
     </fieldset>
 
     </form>
@@ -32,8 +30,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </div>
 
 <script>
-document.onload = document.fmemberconfirm.mb_password.focus();
-
 function fmemberconfirm_submit(f)
 {
     document.getElementById("btn_submit").disabled = true;

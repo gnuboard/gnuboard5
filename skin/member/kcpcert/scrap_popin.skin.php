@@ -19,7 +19,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <tr>
         <th scope="row"><label for="wr_content">댓글</label></th>
         <td><textarea name="wr_content" id="wr_content"></textarea></td>
-    </tr>
+    </tr> 
     </tbody>
     </table>
 
@@ -28,7 +28,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </p>
 
     <div class="btn_win">
-        <input type="submit" value="스크랩" class="btn_submit">
+        <input type="submit" value="스크랩 확인" class="btn_submit">
     </div>
     </form>
 </div>

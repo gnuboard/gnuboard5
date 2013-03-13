@@ -28,7 +28,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </p>
 
     <div class="btn_win">
-        <input type="submit" value="스크랩" class="btn_submit">
+        <input type="submit" class="btn_submit" value="스크랩 확인">
     </div>
     </form>
 </div>
