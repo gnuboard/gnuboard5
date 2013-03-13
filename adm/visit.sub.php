@@ -25,7 +25,7 @@ $qstr = "fr_date=".$fr_date."&amp;to_date=".$to_date;
 <fieldset>
     <legend>기간별 접속자집계 검색</legend>
     <input type="text" name="fr_date" value="<?=$fr_date?>" id="fr_date" class="frm_input" size="11" maxlength="10"> 부터
-    <input type="text" name="to_date" value="<?=$to_date?>" id="to_date"class="frm_input" size="11" maxlength="10"> 까지
+    <input type="text" name="to_date" value="<?=$to_date?>" id="to_date" class="frm_input" size="11" maxlength="10"> 까지
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>

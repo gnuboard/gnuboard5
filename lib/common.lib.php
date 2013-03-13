@@ -978,7 +978,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
                 $icon_file_url = G4_DATA_URL.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
-                $tmp_name = '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" border="0" alt="">';
+                $tmp_name = '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt="">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
                     $tmp_name = $tmp_name . " <a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";

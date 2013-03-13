@@ -73,7 +73,7 @@ $colspan = 8;
         <option value="gr_admin"<?=get_selected($_GET['sfl'], "gr_admin");?>>그룹관리자</option>
     </select>
     <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)"  required class="required frm_input">
-    <input type="submit"  value="검색" value="검색" class="btn_submit">
+    <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
 
@@ -140,15 +140,15 @@ $colspan = 8;
         </td>
         <td>
         <?if ($is_admin == 'super'){?>
-            <input type="text" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" id="gr_admin" title="그룹관리자 수정" class="frm_input" size="10" maxlength="20">
+            <input type="text" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" id="gr_admin_<?=$i?>" title="그룹관리자 수정" class="frm_input" size="10" maxlength="20">
         <?}else{?>
             <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
         <?}?>
         </td>
         <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
-        <td><input type="checkbox" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" id="gr_use_access" title="선택 시 접근회원 사용"></td>
+        <td><input type="checkbox" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" id="gr_use_access_<?=$i?>" title="선택 시 접근회원 사용"></td>
         <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
-        <td><input type="checkbox" name="gr_show_menu[<?=$i?>]" <?=$row['gr_show_menu']?'checked':''?> value="1" id="gr_show_menu" title="선택 시 메뉴보이기"></td>
+        <td><input type="checkbox" name="gr_show_menu[<?=$i?>]" <?=$row['gr_show_menu']?'checked':''?> value="1" id="gr_show_menu_<?=$i?>" title="선택 시 메뉴보이기"></td>
         <td>
             <input type="text" name="gr_order[<?=$i?>]" value="<?=$row['gr_order']?>" id="gr_order_<?=$i?>" title="출력순서 수정" class="frm_input" size="2">
         </td>

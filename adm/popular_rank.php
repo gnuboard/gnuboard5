@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], 'r');
 if (empty($fr_date)) $fr_date = G4_TIME_YMD;
 if (empty($to_date)) $to_date = G4_TIME_YMD;
 
-$qstr = "fr_date={$fr_date}{&to_date}={$to_date}";
+$qstr = "fr_date={$fr_date}{&amp;to_date}={$to_date}";
 
 $sql_common = " from {$g4['popular_table']} a ";
 $sql_search = " where trim(pp_word) <> '' and pp_date between '{$fr_date}' and '{$to_date}' ";

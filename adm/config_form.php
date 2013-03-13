@@ -102,7 +102,7 @@ $pg_anchor = "
     <tr>
         <th scope="row"><label for="cf_add_script">추가 script, css</label></th>
         <td colspan="3">
-            <?=help('HTML의 </HEAD> 태그위로 추가될 JavaScript와 css 코드를 설정합니다.')?>
+            <?=help('HTML의 &lt;/HEAD&gt; 태그위로 추가될 JavaScript와 css 코드를 설정합니다.')?>
             <textarea name="cf_add_script" id="cf_add_script"><?=$config['cf_add_script']?></textarea>
         </td>
     </tr>
@@ -173,7 +173,7 @@ $pg_anchor = "
             <input type="text" name="cf_page_rows" value="<?=$config['cf_page_rows']?>" id="cf_page_rows" class="frm_input" size="2"> 라인
         </td>
         <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
-        <td colspan="3">
+        <td>
             <?=help('목록 한페이지당 라인수')?>
             <input type="text" name="cf_new_rows" value="<?=$config['cf_new_rows']?>" id="cf_new_rows" class="frm_input" size="2"> 라인
         </td>
@@ -182,7 +182,7 @@ $pg_anchor = "
         <th scope="row"><label for="cf_write_pages">페이지 표시 수<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="cf_write_pages" value="<?=$config['cf_write_pages']?>" id="cf_write_pages" required class="required numeric frm_input" size="3"> 페이지씩 표시</td>
         <th scope="row"><label for="cf_mobile_pages">모바일 페이지 표시 수<strong class="sound_only">필수</strong></label></th>
-        <td colspan="3"><input type="text" name="cf_mobile_pages" value="<?=$config['cf_mobile_pages']?>" id="cf_mobile_pages" required class="required numeric frm_input" size="3"> 페이지씩 표시</td>
+        <td><input type="text" name="cf_mobile_pages" value="<?=$config['cf_mobile_pages']?>" id="cf_mobile_pages" required class="required numeric frm_input" size="3"> 페이지씩 표시</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_new_skin">최근게시물 스킨<strong class="sound_only">필수</strong></label></th>
@@ -191,6 +191,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('new');
             for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_new_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
@@ -202,6 +203,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('new', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_new_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
@@ -215,6 +217,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('search');
             for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_search_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
@@ -226,6 +229,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('search', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_search_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
@@ -239,6 +243,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('connect');
             for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
@@ -250,6 +255,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('connect', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
@@ -374,6 +380,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('member');
             for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";
             }
             ?>
@@ -385,6 +392,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('member', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_mobile_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";
             }
             ?>

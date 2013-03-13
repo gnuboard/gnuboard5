@@ -52,7 +52,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     </thead>
     <tfoot>
     <tr>
-        <th scope="row" colspan="2">소계</td>
+        <th scope="row" colspan="2">소계</th>
         <td><?=number_format($sum_point1)?></td>
         <td><?=number_format($sum_point2)?></td>
     </tr>

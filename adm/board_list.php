@@ -144,9 +144,8 @@ $colspan = 15;
         <td><input type="text" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" title="댓글포인트" class="frm_input" size="2"></td>
         <td><input type="text" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" title="다운포인트" class="frm_input" size="2"></td>
         <td><input type="checkbox" name="bo_use_search[<?=$i?>]" value="1" id="bo_use_search_<?=$i?>" <?=$row['bo_use_search']?"checked":""?> title="선택시 검색사용"></td>
-        <td><input type="checkbox" name="bo_show_menu[<?=$i?>]" value="1" id="bo_use_search_<?=$i?>" <?=$row['bo_show_menu']?"checked":""?> title="선택시 메뉴보이기"></td>
+        <td><input type="checkbox" name="bo_show_menu[<?=$i?>]" value="1" id="bo_show_menu_<?=$i?>" <?=$row['bo_show_menu']?"checked":""?> title="선택시 메뉴보이기"></td>
         <td><input type="text" name="bo_order[<?=$i?>]" value="<?=$row['bo_order']?>" id="bo_order<?=$i?>" title="출력순서" class="frm_input" size="2"></td>
-        </td>
         <td>
             <select name="bo_device[<?=$i?>]" id="bo_device_<?=$i?>" title="접속기기 선택">
                 <option value="both"<?=get_selected($row['bo_device'], 'both', true);?>>모두</option>
@@ -165,7 +164,7 @@ $colspan = 15;
     </table>
 
     <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정"onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
         <?if ($is_admin == 'super') {?>
         <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
         <a href="./board_form.php">게시판추가</a>

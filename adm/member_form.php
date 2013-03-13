@@ -8,8 +8,9 @@ $token = get_token();
 
 if ($w == '')
 {
-    $required_mb_id = 'class="required minlength=3 alnum_"';
-    $required_mb_password = 'class="required"';
+    $required_mb_id = 'required';
+    $required_mb_id_class = 'required minlength=3 alnum_';
+    $required_mb_password = 'required';
     $sound_only = '<strong class="sound_only">필수</strong>';
 
     $mb['mb_mailling'] = 1;
@@ -113,11 +114,11 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="mb_id">아이디<?=$sound_only?></label></th>
         <td>
-            <input type="text" name="mb_id" value="<?=$mb['mb_id']?>" id="mb_id" <?=$required_mb_id?> class="frm_input" size="15" maxlength="20" >
+            <input type="text" name="mb_id" value="<?=$mb['mb_id']?>" id="mb_id" <?=$required_mb_id?> class="frm_input <?=$required_mb_id_class?>" size="15" maxlength="20" >
             <?if ($w=='u'){?><a href="./boardgroupmember_form.php?mb_id=<?=$mb['mb_id']?>">접근가능그룹보기</a><?}?>
         </td>
         <th scope="row"><label for="mb_password">패스워드<?=$sound_only?></label></th>
-        <td><input type="password" name="mb_password" id="mb_password" <?=$required_mb_password?> class="frm_input" size="15" maxlength="20"></td>
+        <td><input type="password" name="mb_password" id="mb_password" <?=$required_mb_password?> class="frm_input <?=$required_mb_password?>" size="15" maxlength="20"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
@@ -163,7 +164,7 @@ include_once('./admin.head.php');
             $icon_file = G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
             if (file_exists($icon_file)) {
                 $icon_url = G4_DATA_URL.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
-                echo '<img src="'.$icon_url.'">';
+                echo '<img src="'.$icon_url.'" alt="">';
                 echo '<input type="checkbox" id="del_mb_icon" name="del_mb_icon" value="1">삭제';
             }
             ?>
@@ -190,13 +191,13 @@ include_once('./admin.head.php');
         <td colspan="3">
             <input type="radio" name="mb_open" value="1" id="mb_open" <?=$open_checked?>>
             <label for="mb_open">예</label>
-            <input type="radio" name="mb_open" value="0" id="mb_open_no"<?=$open_no_checked?>>
+            <input type="radio" name="mb_open" value="0" id="mb_open_no" <?=$open_no_checked?>>
             <label for="mb_open_no">아니오</label>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_signature">서명</label></th>
-        <td colspan="3"><textarea  name="mb_signature"id="mb_signature"><?=$mb['mb_signature']?></textarea></td>
+        <td colspan="3"><textarea  name="mb_signature" id="mb_signature"><?=$mb['mb_signature']?></textarea></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_profile">자기 소개</label></th>

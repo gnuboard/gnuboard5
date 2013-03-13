@@ -220,7 +220,7 @@ function point_clear()
 
     </form>
 
-</fieldset>
+</section>
 
 <?
 include_once ('./admin.tail.php');
