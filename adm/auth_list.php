@@ -178,12 +178,12 @@ $colspan = 5;
         <th scope="row"><label for="au_menu">접근가능메뉴<strong class="sound_only">필수</strong></label></th>
         <td>
             <select id="au_menu" name="au_menu" required class="required" title="접근가능메뉴">
-                <option value=''>선택하세요
+                <option value=''>선택하세요</option>
                 <?
                 foreach($auth_menu as $key=>$value)
                 {
                     if (!(substr($key, -3) == '000' || $key == '-' || !$key))
-                        echo '<option value="'.$key.'">'.$key.' '.$value;
+                        echo '<option value="'.$key.'">'.$key.' '.$value.'</option>';
                 }
                 ?>
             </select>
