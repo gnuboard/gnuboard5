@@ -2,6 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
+<link rel="stylesheet" href="<?=$popular_skin_url?>/style.css">
+
 <section id="popular">
     <div>
         <h2>인기검색어</h2>
