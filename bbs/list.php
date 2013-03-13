@@ -36,7 +36,7 @@ if ($sca || $stx) {
     // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
     $sql = " select MIN(wr_num) as min_wr_num from {$write_table} ";
     $row = sql_fetch($sql);
-    $min_spt = $row['min_wr_num'];
+    $min_spt = (int)$row['min_wr_num'];
 
     if (!$spt) $spt = $min_spt;
 
