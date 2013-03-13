@@ -4,6 +4,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 global $is_admin;
 ?>
 
+<link rel="stylesheet" href="<?=$visit_skin_url?>/style.css">
+
 <section id="visit">
     <div>
         <h2>방문자집계</h2>
