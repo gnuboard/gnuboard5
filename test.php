@@ -1,1 +1,0 @@
-<embed height="50" width="100" src="/g4s/data/cache/gcaptcha-1890146535_50ecmttsoa8jl5214rqc7q18s2.wav" autostart="true">

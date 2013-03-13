@@ -385,7 +385,7 @@ $pg_anchor = "
             <?
             $arr = get_skin_dir('member', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
-                echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";
+                echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_mobile_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";
             }
             ?>
             </select>
