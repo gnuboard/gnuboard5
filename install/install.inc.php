@@ -67,13 +67,15 @@ if (!is_dir($data_path))
 
 <?
 // data 디렉토리에 파일 생성 가능한지 검사.
-if (!(is_readable($data_path) && is_writeable($data_path) && is_executable($data_path)))
-{
-?>
-    <p><?=G4_DATA_DIR?> 디렉토리의 퍼미션을 707로 변경하여 주십시오.<br /><br />
-    $> chmod 707 <?=G4_DATA_DIR?> 또는 chmod uo+rwx <?=G4_DATA_DIR?><br /><br />
-    위 명령 실행후 브라우저를 새로고침 하십시오.</p>
-<?
-    exit;
+if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+    if (!(is_readable($data_path) && is_writeable($data_path) && is_executable($data_path)))
+    {
+    ?>
+        <p><?=G4_DATA_DIR?> 디렉토리의 퍼미션을 707로 변경하여 주십시오.<br /><br />
+        $> chmod 707 <?=G4_DATA_DIR?> 또는 chmod uo+rwx <?=G4_DATA_DIR?><br /><br />
+        위 명령 실행후 브라우저를 새로고침 하십시오.</p>
+    <?
+        exit;
+    }
 }
 ?>
