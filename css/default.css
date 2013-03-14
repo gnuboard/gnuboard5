@@ -118,7 +118,7 @@ a:active {color:#000;text-decoration:underline}
 #ft_copy b {color:#fff}
 
 /* Mobile화면으로 */
-#g4s_cng {}
+#g4s_cng {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
 
 /* 콘텐츠별 스타일 */
 /* 버튼 */

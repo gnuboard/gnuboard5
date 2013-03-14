@@ -95,7 +95,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #ft_copy b {color:#fff}
 
 /* PC화면으로 */
-#g4s_cng {}
+#g4s_cng {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;color:#000;font-size:1em;text-decoration:none;text-align:center}
 
 /* 버튼 */
 .btn01 {display:inline-block;padding:0 0.5em;height:2em;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;font-size:1em;text-decoration:none !important;line-height:2em;vertical-align:middle}

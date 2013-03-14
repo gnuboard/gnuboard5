@@ -29,7 +29,7 @@ if ($config['cf_include_tail']) {
     </div>
 </footer>
 
-<?if(is_mobile()){?>
+<?if(!is_mobile()){?>
 <a href="<?=$_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING'].'&amp;':'?').'device=mobile';?>" id="g4s_cng">모바일 버전으로 보기</a>
 <?}?>
 
