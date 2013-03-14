@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <br>
@@ -7,7 +7,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <tr>
     <td width=50%>총 <span class=point><b><? echo number_format($total_count) ?></b></span>개의 상품이 있습니다.</td>
     <td width=50% align=right style='padding-top:3px; padding-bottom:3px;'>
-        <select id=it_sort name=sort onchange="if (this.value=='') return; document.location = '<? echo "$_SERVER[PHP_SELF]?ca_id=$ca_id&skin=$skin&ev_id=$ev_id&sort=" ?>'+this.value;" class=small>
+        <select id=it_sort name=sort onchange="if (this.value=='') return; document.location = '<? echo "{$_SERVER['PHP_SELF']}?ca_id=$ca_id&skin=$skin&ev_id=$ev_id&sort=" ?>'+this.value;" class=small>
             <option value=''>출력 순서
             <option value=''>---------
             <option value='it_amount asc'>낮은가격순
@@ -21,7 +21,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </select>
     </td>
 </tr>
-<tr><td colspan="2" background='<? echo "$g4[shop_img_path]/line_h.gif" ?>' height=1></td></tr>
+<tr><td colspan="2" background='<?=G4_SHOP_URL?>/img/line_h.gif' height=1></td></tr>
 </table>
 
 <script language='JavaScript'>

@@ -1,22 +1,15 @@
 <?
 $sub_menu = "300100";
-include_once("./_common.php");
+include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
-// DHTML 에디터 사용 필드 추가 : 061021
-sql_query(" ALTER TABLE `$g4[board_table]` ADD `bo_use_dhtml_editor` TINYINT NOT NULL AFTER `bo_use_secret` ", false);
-// RSS 보이기 사용 필드 추가 : 061106
-sql_query(" ALTER TABLE `$g4[board_table]` ADD `bo_use_rss_view` TINYINT NOT NULL AFTER `bo_use_dhtml_editor` ", false);
-
-$sql_common = " from $g4[board_table] a ";
+$sql_common = " from {$g4['board_table']} a ";
 $sql_search = " where (1) ";
 
 if ($is_admin != "super") {
-    $sql_common .= " , $g4[group_table] b ";
-    $sql_search .= " and (a.gr_id = b.gr_id and b.gr_admin = '$member[mb_id]') ";
+    $sql_common .= " , {$g4['group_table']} b ";
+    $sql_search .= " and (a.gr_id = b.gr_id and b.gr_admin = '{$member['mb_id']}') ";
 }
 
 if ($stx) {
@@ -28,7 +21,7 @@ if ($stx) {
         case "a.gr_id" :
             $sql_search .= " ($sfl = '$stx') ";
             break;
-        default : 
+        default :
             $sql_search .= " ($sfl like '%$stx%') ";
             break;
     }
@@ -41,208 +34,173 @@ if (!$sst) {
 }
 $sql_order = " order by $sst $sod ";
 
-$sql = " select count(*) as cnt
-         $sql_common
-         $sql_search
-         $sql_order ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = " select * 
-          $sql_common
-          $sql_search
-          $sql_order
-          limit $from_record, $rows ";
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = "<a href='$_SERVER[PHP_SELF]'>처음</a>";
+$listall = '';
+if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
-$g4[title] = "게시판관리";
-include_once("./admin.head.php");
+$g4['title'] = '게시판관리';
+include_once('./admin.head.php');
 
-$colspan = 13;
+$colspan = 15;
 ?>
 
-<script type="text/javascript">
-var list_update_php = 'board_list_update.php';
-var list_delete_php = 'board_list_delete.php';
-</script>
-
-<table width=100% cellpadding=3 cellspacing=1>
-<form name=fsearch method=get>
-<tr>
-    <td width=50% align=left><?=$listall?> (게시판수 : <?=number_format($total_count)?>개)</td>
-    <td width=50% align=right>
-        <select name=sfl>
-            <option value='bo_table'>TABLE</option>
-            <option value='bo_subject'>제목</option>
-            <option value='a.gr_id'>그룹ID</option>
-        </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle></td>
-</tr>
-</form>
-</table>
-
-<form name=fboardlist method=post>
-<input type=hidden name=sst   value="<?=$sst?>">
-<input type=hidden name=sod   value="<?=$sod?>">
-<input type=hidden name=sfl   value="<?=$sfl?>">
-<input type=hidden name=stx   value="<?=$stx?>">
-<input type=hidden name=page  value="<?=$page?>">
-<input type=hidden name=token value="<?=$token?>">
-<table width=100% cellpadding=0 cellspacing=1>
-<colgroup width=30>
-<colgroup width=>
-<colgroup width=100>
-<colgroup width=100>
-<colgroup width=55>
-<colgroup width=55>
-<colgroup width=55>
-<colgroup width=55>
-<colgroup width=35>
-<colgroup width=35>
-<colgroup width=80>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td rowspan=2><input type=checkbox name=chkall value="1" onclick="check_all(this.form)"></td>
-    <td rowspan=2><?=subject_sort_link("bo_table")?>TABLE</a></td>
-    <td colspan=2><?=subject_sort_link("bo_subject")?>제목</a></td>
-    <td rowspan=2 title="글읽기 포인트"><?=subject_sort_link("bo_read_point")?>읽기<br>포인트</a></td>
-    <td rowspan=2 title="글쓰기 포인트"><?=subject_sort_link("bo_write_point")?>쓰기<br>포인트</a></td>
-    <td rowspan=2 title="코멘트쓰기 포인트"><?=subject_sort_link("bo_comment_point")?>코멘트<br>포인트</a></td>
-    <td rowspan=2 title="다운로드 포인트"><?=subject_sort_link("bo_download_point")?>다운<br>포인트</a></td>
-    <td rowspan=2 title="검색사용"><?=subject_sort_link("bo_use_search")?>검색<br>사용</a></td>
-    <td rowspan=2 title="검색순서"><?=subject_sort_link("bo_order_search")?>검색<br>순서</a></td>
-	<td rowspan=2><a href="./board_form.php"><img src='<?=$g4[admin_path]?>/img/icon_insert.gif' border=0 title='생성'></a></td>
-</tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td><?=subject_sort_link("a.gr_id")?>그룹</a></td>
-    <td><?=subject_sort_link("bo_skin", "", "desc")?>스킨</a></td>
-</tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
-<?
-// 스킨디렉토리
-$skin_options = "";
-$arr = get_skin_dir("board");
-for ($k=0; $k<count($arr); $k++) 
-{
-    $option = $arr[$k];
-    if (strlen($option) > 10)
-        $option = substr($arr[$k], 0, 18) . "…";
-
-    $skin_options .= "<option value='$arr[$k]'>$option</option>";
-}
-
-for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $s_upd = "<a href='./board_form.php?w=u&bo_table=$row[bo_table]&$qstr'><img src='img/icon_modify.gif' border=0 title='수정'></a>";
-    $s_del = "";
-    if ($is_admin == "super") {
-        //$s_del = "<a href=\"javascript:del('./board_delete.php?bo_table=$row[bo_table]&$qstr');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
-        $s_del = "<a href=\"javascript:post_delete('board_delete.php', '$row[bo_table]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
-    }
-    $s_copy = "<a href=\"javascript:board_copy('$row[bo_table]');\"><img src='img/icon_copy.gif' border=0 title='복사'></a>";
-
-    /*
-    // 스킨디렉토리
-    $skin_options = "";
-    $arr = get_skin_dir("board");
-    for ($k=0; $k<count($arr); $k++) 
-    {
-        $option = $arr[$k];
-        if (strlen($option) > 10)
-            $option = substr($arr[$k], 0, 18) . "…";
-
-        $skin_options .= "<option value='$arr[$k]'";
-        if ($arr[$k] == $row[bo_skin])
-            $skin_options .= " selected";
-        $skin_options .= ">$option</option>";
-    }
-    */
-
-    $list = $i % 2;
-    echo "<input type=hidden name=board_table[$i] value='$row[bo_table]'>";
-    echo "<tr class='list$list col1 ht center'>";
-    echo "<td rowspan=2 height=25><input type=checkbox name=chk[] value='$i'></td>";
-    echo "<td rowspan=2><a href='$g4[bbs_path]/board.php?bo_table=$row[bo_table]'><b>$row[bo_table]</b></a></td>";
-    echo "<td colspan=2 align=left height=25><input type=text class=ed name=bo_subject[$i] value='".get_text($row[bo_subject])."' style='width:99%'></td>";
-    echo "<td rowspan=2 title='읽기 포인트'><input type=text class=ed name=bo_read_point[$i] value='$row[bo_read_point]' style='width:33px;'></td>";
-    echo "<td rowspan=2 title='쓰기 포인트'><input type=text class=ed name=bo_write_point[$i] value='$row[bo_write_point]' style='width:33px;'></td>";
-    echo "<td rowspan=2 title='속글쓰기 포인트'><input type=text class=ed name=bo_comment_point[$i] value='$row[bo_comment_point]' style='width:33px;'></td>";
-    echo "<td rowspan=2 title='다운로드 포인트'><input type=text class=ed name=bo_download_point[$i] value='$row[bo_download_point]' style='width:33px;'></td>";
-    echo "<td rowspan=2 title='검색사용'><input type=checkbox name=bo_use_search[$i] ".($row[bo_use_search]?'checked':'')." value='1'></td>";
-    echo "<td rowspan=2 title='검색순서'><input type=text class=ed name=bo_order_search[$i] value='$row[bo_order_search]' size=2></td>";
-    echo "<td rowspan=2>$s_upd $s_del $s_copy</td>";
-    echo "</tr>";
-    echo "<tr class='list$list col1 ht center'>";
-
-    if ($is_admin == "super")
-        echo "<td align=left>".get_group_select("gr_id[$i]", $row[gr_id])."</td>";
-    else
-        echo "<td align=center><input type=hidden name='gr_id[$i]' value='$row[gr_id]'>$row[gr_subject]</td>";
-
-    echo "<td align=left><select id=bo_skin_$i name=bo_skin[$i]>$skin_options</select></td>";
-    echo "</tr>\n";
-    echo "<script type='text/javascript'>document.getElementById('bo_skin_$i').value='$row[bo_skin]';</script>";
-} 
-
-if ($i == 0)
-    echo "<tr><td colspan='$colspan' align=center height=100 bgcolor=#ffffff>자료가 없습니다.</td></tr>"; 
-
-echo "<tr><td colspan='$colspan' class='line2'></td></tr>";
-echo "</table>";
-
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
-echo "<table width=100% cellpadding=3 cellspacing=1>";
-echo "<tr><td width=70%>";
-echo "<input type=button class='btn1' value='선택수정' onclick=\"btn_check(this.form, 'update')\"> ";
-
-if ($is_admin == "super")
-    echo "<input type=button class='btn1' value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
-
-echo "</td>";
-echo "<td width=30% align=right>$pagelist</td></tr></table>\n";
-
-if ($stx)
-    echo "<script>document.fsearch.sfl.value = '$sfl';</script>";
-?>
+<form name="fsearch" id="fsearch" method="get">
+<fieldset>
+    <legend>게시판 검색</legend>
+    <span>
+        <?=$listall?>
+        생성된 게시판수 <?=number_format($total_count)?>개
+    </span>
+    <select name="sfl" title="검색대상">
+        <option value="bo_table"<?=get_selected($_GET['sfl'], "bo_subject", true);?>>TABLE</option>
+        <option value="bo_subject"<?=get_selected($_GET['sfl'], "bo_subject");?>>제목</option>
+        <option value="a.gr_id"<?=get_selected($_GET['sfl'], "a.gr_id");?>>그룹ID</option>
+    </select>
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
+    <input type="submit" value="검색" class="btn_submit">
+</fieldset>
 </form>
 
-<script type="text/javascript">
-function board_copy(bo_table) {
-    window.open("./board_copy.php?bo_table="+bo_table, "BoardCopy", "left=10,top=10,width=500,height=200");
-}
-</script>
+<section class="cbox">
+    <h2>생성된 게시판 목록</h2>
+    <p>여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 체크기능을 이용하세요.</p>
+
+    <?if ($is_admin == 'super') {?>
+    <div id="btn_add">
+        <a href="./board_form.php" id="bo_add">게시판 추가</a>
+    </div>
+    <?}?>
+
+    <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
+    <table class="tbl_bo_list">
+    <thead>
+    <tr>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 게시판 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><?=subject_sort_link('a.gr_id')?>그룹</a></th>
+        <th scope="col"><?=subject_sort_link('bo_table')?>TABLE</a></th>
+        <th scope="col"><?=subject_sort_link('bo_skin', '', 'desc')?>스킨</a></th>
+        <th scope="col"><?=subject_sort_link('bo_mobile_skin', '', 'desc')?>모바일<br>스킨</a></th>
+        <th scope="col"><?=subject_sort_link('bo_subject')?>제목</a></th>
+        <th scope="col">읽기P<span class="sound_only">포인트</span></th>
+        <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
+        <th scope="col">댓글P<span class="sound_only">포인트</span></th>
+        <th scope="col">다운P<span class="sound_only">포인트</span></th>
+        <th scope="col"><?=subject_sort_link('bo_use_search')?>검색<br>사용</a></th>
+        <th scope="col"><?=subject_sort_link('bo_show_menu')?>메뉴<br>보임</a></th>
+        <th scope="col"><?=subject_sort_link('bo_order')?>출력<br>순서</a></th>
+        <th scope="col">접속기기</th>
+        <th scope="col">관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $one_update = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
+        $one_copy = '<a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy" target="win_board_copy">복사</a>';
+    ?>
+
+    <tr>
+        <td>
+            <input type="checkbox" name="chk[]" value="<?=$i?>" id="chk_<?=$i?>" title="<?=get_text($row['bo_subject'])?> 게시판선택">
+        </td>
+        <td>
+            <?if ($is_admin == 'super'){?>
+                <?=get_group_select("gr_id[$i]", $row['gr_id'])?>
+            <?}else{?>
+                <input type="hidden" name="gr_id[<?=$i?>]" value="<?=$row['gr_id']?>"><?=$row['gr_subject']?>
+            <?}?>
+        </td>
+        <td class="td_boid">
+            <input type="hidden" name="board_table[<?=$i?>]" value="<?=$row['bo_table']?>">
+            <a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row['bo_table']?>"><?=$row['bo_table']?></a>
+        </td>
+        <td>
+            <?=get_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']);?>
+        </td>
+        <td>
+            <?=get_mobile_skin_select('board', 'bo_mobile_skin_'.$i, "bo_mobile_skin[$i]", $row['bo_mobile_skin']);?>
+        </td>
+        <td><input type="text" name="bo_subject[<?=$i?>]" value="<?=get_text($row['bo_subject'])?>" id="bo_subject[<?=$i?>]" title="게시판제목" class="required frm_input" size="10" required="required"></td>
+        <td><input type="text" name="bo_read_point[<?=$i?>]" value="<?=$row['bo_read_point']?>"  title="읽기포인트" class="frm_input" size="2"></td>
+        <td><input type="text" name="bo_write_point[<?=$i?>]" value="<?=$row['bo_write_point']?>" title="쓰기포인트" class="frm_input" size="2"></td>
+        <td><input type="text" name="bo_comment_point[<?=$i?>]" value="<?=$row['bo_comment_point']?>" title="댓글포인트" class="frm_input" size="2"></td>
+        <td><input type="text" name="bo_download_point[<?=$i?>]" value="<?=$row['bo_download_point']?>" title="다운포인트" class="frm_input" size="2"></td>
+        <td><input type="checkbox" name="bo_use_search[<?=$i?>]" value="1" id="bo_use_search_<?=$i?>" <?=$row['bo_use_search']?"checked":""?> title="선택시 검색사용"></td>
+        <td><input type="checkbox" name="bo_show_menu[<?=$i?>]" value="1" id="bo_show_menu_<?=$i?>" <?=$row['bo_show_menu']?"checked":""?> title="선택시 메뉴보이기"></td>
+        <td><input type="text" name="bo_order[<?=$i?>]" value="<?=$row['bo_order']?>" id="bo_order<?=$i?>" title="출력순서" class="frm_input" size="2"></td>
+        <td>
+            <select name="bo_device[<?=$i?>]" id="bo_device_<?=$i?>" title="접속기기 선택">
+                <option value="both"<?=get_selected($row['bo_device'], 'both', true);?>>모두</option>
+                <option value="pc"<?=get_selected($row['bo_device'], 'pc');?>>PC</option>
+                <option value="mobile"<?=get_selected($row['bo_device'], 'mobile');?>>모바일</option>
+            </select>
+        </td>
+        <td><?=$one_update?> <?=$one_copy?></td>
+    </tr>
+    <?
+    }
+    if ($i == 0)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
+
+    <div class="btn_list">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+        <?if ($is_admin == 'super') {?>
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+        <a href="./board_form.php">게시판추가</a>
+        <?}?>
+    </div>
+
+    </form>
+</section>
+
+<?=get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');?>
 
 <script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
+function fboardlist_submit(f)
 {
-	var f = document.fpost;
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
 
-	if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.bo_table.value = val;
-		f.action         = action_url;
-		f.submit();
-	}
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    return true;
 }
+
+$(function(){
+    $(".board_copy").click(function(){
+        window.open(this.href, "win_board_copy", "left=100,top=100,width=550,height=450");
+        return false;
+    });
+});
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='bo_table'>
-</form>
-
 <?
-include_once("./admin.tail.php");
+include_once('./admin.tail.php');
 ?>

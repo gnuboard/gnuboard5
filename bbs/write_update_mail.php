@@ -1,69 +1,30 @@
 <?
 // 게시물 입력시 게시자, 관리자에게 드리는 메일을 수정하고 싶으시다면 이 파일을 수정하십시오.
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
-<html>
+<!doctype html>
+<html lang="ko">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=<?=$g4[charset]?>">
+<meta charset="utf-8">
 <title><?=$wr_subject?> 메일</title>
 </head>
 
-<style>
-body, th, td, form, input, select, text, textarea, caption { font-size: 12px; font-family:굴림;}
-.line {border: 1px solid #868F98;}
-</style>
+<body>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-
-<table width="600" border="0" cellspacing="0" cellpadding="0">
-<tr>
-    <td width="25" height="25"></td>
-    <td height="25"></td>
-    <td width="25" height="25"></td>
-</tr>
-<tr>
-    <td width="25" valign="top"></td>
-    <td align="center" class="line" >
-        <br>
-        <table width="500" border="0" align="center" cellpadding="0" cellspacing="0">
-        <tr>
-            <td>
-                <table width="500" border="0" cellspacing="0" cellpadding="4">
-                            <tr> 
-                                <td width="10%" height="25" bgcolor=#F7F1D8>제목</td>
-                                <td width="90%" bgcolor=#FBF7E7><?=$wr_subject?></td>
-                            </tr>
-                            <tr bgcolor="#FFFFFF"> 
-                                <td height="2" colspan="2"></td>
-                            </tr>
-                            <tr> 
-                                <td height="25" bgcolor=#F7F1D8>게시자</td>
-                                <td bgcolor=#FBF7E7><?=$wr_name?></td>
-                            </tr>
-                        </table>
-                <p>
-
-                <table width="500" border="0" align="center" cellpadding="4" cellspacing="0">
-                <tr><td height="150" style="word-break:break-all;"><?=$wr_content?></td></tr>
-                </table>
-                <p>
-
-                        <table width="500" border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed">
-                            <tr>
-                                <td height="2" bgcolor="#E0E0E0" align="center"></td>
-                            </tr>
-                            <tr> 
-                                <td height="25" bgcolor="#EDEDED" align="center">홈페이지에서도 게시물을 확인하실 수 있습니다.[<a href='<?=$link_url?>'>바로가기</a>]</td>
-                            </tr>
-                        </table>
-            </td>
-        </tr>
-        </table>
-        <br>
-    </td>
-    <td width="25" valign="top"></td>
-</tr>
-</table>
+<div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">
+    <div style="border:1px solid #dedede">
+        <h1 style="padding:30px 30px 0;background:#f7f7f7;color:#555;font-size:1.4em">
+            <?=$wr_subject?>
+        </h1>
+        <span style="display:block;padding:10px 30px 30px;background:#f7f7f7;text-align:right">
+            작성자 <?=$wr_name?>
+        </span>
+        <p style="margin:20px 0 0;padding:30px 30px 50px;min-height:200px;height:auto !important;height:200px;border-bottom:1px solid #eee">
+            <?=$wr_content?>
+        </p>
+        <a href="<?=$link_url?>" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">사이트에서 게시물 확인하기</a>
+    </div>
+</div>
 
 </body>
 </html>

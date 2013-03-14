@@ -1,20 +1,20 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
-$g4[title] = "현금영수증 발행";
-include_once("$g4[path]/head.sub.php");
+$g4['title'] = "현금영수증 발행";
+include_once(G4_PATH.'/head.sub.php');
 
-$od = sql_fetch(" select * from $g4[yc4_order_table] where od_id = '$od_id' and on_uid = '$on_uid' ");
-if (!$od) 
+$od = sql_fetch(" select * from {$g4['yc4_order_table']} where od_id = '$od_id' and on_uid = '$on_uid' ");
+if (!$od)
     die("주문서가 존재하지 않습니다.");
 
-$goods = get_goods($od[on_uid]);
-$goods_name = $goods[full_name];
+$goods = get_goods($od['on_uid']);
+$goods_name = $goods['full_name'];
 //if ($goods[count] > 1) $goods_name .= ' 외 '.$goods[count].'건';
 
 $trad_time = date("YmdHis");
 
-$amt_tot = (int)$od[od_receipt_bank];
+$amt_tot = (int)$od['od_receipt_bank'];
 $amt_sup = (int)round(($amt_tot * 10) / 11);
 $amt_svc = 0;
 $amt_tax = (int)($amt_tot - $amt_sup);
@@ -59,7 +59,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
             return;
         }
 
-        form.ordr_idxx.value = "<?=$od[od_id]?>";
+        form.ordr_idxx.value = "<?=$od['od_id']?>";
         form.amt_tot.value = "<?=$amt_tot?>";
         form.amt_sup.value = "<?=$amt_sup?>";
         form.amt_svc.value = "<?=$amt_svc?>";
@@ -155,9 +155,9 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 <input type="hidden" name="corp_type" value="0"> <!-- 사업자 구분 - 0:직접판매 , 1:입점몰판매 -->
 <input type="hidden" name="ordr_idxx">
 <input type="hidden" name="good_name" value="<?=addslashes($goods_name)?>">
-<input type="hidden" name="buyr_name" value="<?=$od[od_name]?>">
-<input type="hidden" name="buyr_mail" value="<?=$od[od_email]?>">
-<input type="hidden" name="buyr_tel1" value="<?=$od[od_tel]?>">
+<input type="hidden" name="buyr_name" value="<?=$od['od_name']?>">
+<input type="hidden" name="buyr_mail" value="<?=$od['od_email']?>">
+<input type="hidden" name="buyr_tel1" value="<?=$od['od_tel']?>">
 <input type="hidden" name="trad_time" value="<?=$trad_time?>">
 
 <input type="hidden" name="amt_tot">
@@ -182,7 +182,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
             <table width="90%" align="center">
                 <tr>
                     <td>주문 번호</td>
-                    <td><?=$od[od_id]?></td>
+                    <td><?=$od['od_id']?></td>
                 </tr>
                 <tr>
                     <td>상품 정보</td>
@@ -190,15 +190,15 @@ $amt_tax = (int)($amt_tot - $amt_sup);
                 </tr>
                 <tr>
                     <td>주문자 이름</td>
-                    <td><?=$od[od_name]?></td>
+                    <td><?=$od['od_name']?></td>
                 </tr>
                 <tr>
                     <td>주문자 E-Mail</td>
-                    <td><?=$od[od_email]?></td>
+                    <td><?=$od['od_email']?></td>
                 </tr>
                 <tr>
                     <td>주문자 전화번호</td>
-                    <td><?=$od[od_tel]?></td>
+                    <td><?=$od['od_tel']?></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -274,5 +274,5 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 </form>
 
 <?
-include_once("$g4[path]/tail.sub.php");
+include_once(G4_PATH.'/tail.sub.php');
 ?>

@@ -1,99 +1,103 @@
 <?
-$sub_menu = "200300";
-include_once("./_common.php");
+$sub_menu = '200300';
+include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
-$sql_common = " from $g4[mail_table] ";
+$sql_common = " from {$g4['mail_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
-$sql = " select COUNT(*) as cnt " . $sql_common;
+$sql = " select COUNT(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
 $page = 1;
 
-$sql = "select * $sql_common order by ma_id desc ";
+$sql = " select * {$sql_common} order by ma_id desc ";
 $result = sql_query($sql);
 
-$g4[title] = "회원메일발송";
-include_once("./admin.head.php");
+$g4['title'] = '회원메일발송';
+include_once('./admin.head.php');
 
 $colspan = 6;
 ?>
 
-<table width=100%>
-<tr>
-    <td width=20%>&nbsp;</td>
-    <td width=60% align=center>&nbsp;</td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
+<section class="cbox">
+    <h2>등록된 메일내용 목록</h2>
+    <p>
+        <strong>테스트</strong>는 등록된 최고관리자의 이메일로 테스트 메일을 발송합니다.<br>
+        현재 등록된 메일은 총 <?=$total_count ?>건입니다.
+    </p>
 
+    <div id="btn_add">
+        <a href="./mail_form.php" id="mail_add">메일내용추가</a>
+    </div>
 
-<table cellpadding=0 cellspacing=0 width=100%>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td width=40>ID</td>
-    <td width=''>제목</td>
-    <td width=120>작성일시</td>
-    <td width=50>테스트</td>
-    <td width=50>보내기</td>
-    <td width=80><a href='./mail_form.php'><img src='<?=$g4[admin_path]?>/img/icon_insert.gif' border=0></a></td>
-</tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
+    <form name="fmaillist" id="fmaillist" action="./mail_delete.php" method="post">
+    <table>
+    <thead>
+    <tr>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 목록 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col">번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성일시</th>
+        <th scope="col">테스트</th>
+        <th scope="col">보내기</th>
+        <th scope="col">미리보기</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=mysql_fetch_array($result); $i++) {
+        //$s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
+        $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
 
-<?
-for ($i=0; $row=mysql_fetch_array($result); $i++) {
-    $s_mod = icon("수정", "./mail_form.php?w=u&ma_id=$row[ma_id]");
-    //$s_del = icon("삭제", "javascript:del('./mail_update.php?w=d&ma_id=$row[ma_id]');");
-    $s_del = "<a href=\"javascript:post_delete('mail_update.php', '$row[ma_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제' align='absmiddle'></a>";
-    $s_vie = icon("보기", "./mail_preview.php?ma_id=$row[ma_id]", "_blank");
+        $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
+    ?>
 
-    $num = number_format($total_count - ($page - 1) * $config[cf_page_rows] - $i);
+    <tr>
+        <td class="td_chk">
+            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['ma_id']?>" title="메일선택">
+        </td>
+        <td class="td_num"><?=$num?></td>
+        <td><a href="./mail_form.php?w=u&amp;ma_id=<?=$row['ma_id']?>"><?=$row['ma_subject']?></a></td>
+        <td class="td_time"><?=$row['ma_time']?></td>
+        <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row['ma_id']?>">테스트</a></td>
+        <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row['ma_id']?>">보내기</a></td>
+        <td class="td_mng"><?=$s_vie?></td>
+    </tr>
 
-    $list = $i%2;
-    echo "
-    <tr class='list$list col1 ht center'>
-        <td>$num</td>
-        <td align=left>$row[ma_subject]</td>
-        <td>$row[ma_time]</td>
-        <td><a href='./mail_test.php?ma_id=$row[ma_id]'>테스트</a></td>
-        <td><a href='./mail_select_form.php?ma_id=$row[ma_id]'>보내기</a></td>
-        <td>$s_mod $s_del $s_vie</td>
-    </tr>";
-}
+    <?
+    }
+    if (!$i)
+        echo "<tr><td colspan=\"".$colspan."\" class=\"empty_table\">자료가 없습니다.</td></tr>";
+    ?>
+    </tbody>
+    </table>
 
-if (!$i)
-    echo "<tr><td colspan='$colspan' height=100 align=center bgcolor='#FFFFFF'>자료가 없습니다.</td></tr>";
-?>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
-</table>
+    <div class="btn_list">
+        <button>선택삭제</button>
+    </div>
+    </form>
+</section>
 
 <script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
-{
-	var f = document.fpost;
+$(function() {
+    $('#fmaillist').submit(function() {
+        if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+            if (!is_checked("chk[]")) {
+                alert("선택삭제 하실 항목을 하나 이상 선택하세요.");
+                return false;
+            }
 
-	if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.ma_id.value = val;
-		f.action      = action_url;
-		f.submit();
-	}
-}
+            return true;
+        } else {
+            return false;
+        }
+    });
+});
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'  value='<?=$sst?>'>
-<input type='hidden' name='sod'  value='<?=$sod?>'>
-<input type='hidden' name='sfl'  value='<?=$sfl?>'>
-<input type='hidden' name='stx'  value='<?=$stx?>'>
-<input type='hidden' name='page' value='<?=$page?>'>
-<input type='hidden' name='w'    value='d'>
-<input type='hidden' name='ma_id'>
-</form>
-
 <?
-include_once ("./admin.tail.php");
+include_once ('./admin.tail.php');
 ?>

@@ -1,16 +1,16 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $test = "";
 if ($default['de_card_test']) {
-    if ($default['de_escrow_use'] == 1) { 
+    if ($default['de_escrow_use'] == 1) {
         // 일반결제 테스트
-        $default['de_kcp_mid'] = "T0007";        
+        $default['de_kcp_mid'] = "T0007";
         $default['de_kcp_site_key'] = '2.mDT7R4lUIfHlHq4byhYjf__';
-    } 
-    else { 
+    }
+    else {
         // 에스크로결제 테스트
-        $default['de_kcp_mid'] = "T0000";        
+        $default['de_kcp_mid'] = "T0000";
         $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
     }
 
@@ -31,18 +31,18 @@ else
  * hashdata 암호화 적용( site_cd + ordr_idxx + good_mny + timestamp + site_key )
  * site_cd : 사이트코드
  * ordr_idxx : 주문번호
- * good_mny : 결제금액 
+ * good_mny : 결제금액
  * timestamp : 타임스탬프
  * site_key : 사이트키
  *
- * hashdata 검증을 위한 
+ * hashdata 검증을 위한
  * KCP에서 발급한 사이트키(site_key)를 반드시 입력해 주시기 바랍니다.
- */   
+ */
 
 $site_cd   = trim($default['de_kcp_mid']);
 $ordr_idxx = trim($od['od_id']);
 $good_mny  = (int)$settle_amount;
-$timestamp = $g4['server_time'];
+$timestamp = G4_SERVER_TIME;
 $serverkey = $_SERVER['SERVER_SOFTWARE'].$_SERVER['SERVER_ADDR']; // 사용자가 알수 없는 고유한 값들
 //echo $serverkey;
 $hashdata = md5($site_cd.$ordr_idxx.$good_mny.$timestamp.$serverkey);
@@ -54,7 +54,7 @@ $hashdata = md5($site_cd.$ordr_idxx.$good_mny.$timestamp.$serverkey);
 StartSmartUpdate();
 
 /*
-function OpenWindow() 
+function OpenWindow()
 {
     var form = document.order_info;
 
@@ -81,7 +81,7 @@ function  jsf__pay( form )
         openwin = window.open( './kcp/proc_win.php', 'proc_win', 'width=420, height=100, top=300, left=300' );
         RetVal = true ;
     }
-    
+
     else
     {
         /*  res_cd와 res_msg변수에 해당 오류코드와 오류메시지가 설정됩니다.
@@ -122,10 +122,10 @@ switch ($settle_case)
         break;
 }
 ?>
-<!-- 
+<!--
     2012.08.18 부터 개정 시행되는 '전자상거래 등에서의 소비자보호에 관한 법률'에 따른 코드 변경
-    이용기간이 제한되는 컨텐츠 상품이나 정기 과금 상품 등에 한하여 '용역의 제공기간'을 
-    표기/적용하여야 하며 이와 무관한 실물 배송상품 등의 결제에는 해당되지 않습니다. 
+    이용기간이 제한되는 컨텐츠 상품이나 정기 과금 상품 등에 한하여 '용역의 제공기간'을
+    표기/적용하여야 하며 이와 무관한 실물 배송상품 등의 결제에는 해당되지 않습니다.
     0 : 일반결제
     good_expr의 나머지 적용 방식에 대해서는 KCP에서 제공하는 매뉴얼을 참고해 주세요.
 -->
@@ -166,13 +166,13 @@ $sql = " select a.ct_id,
                 b.it_id,
                 b.it_name,
                 b.ca_id
-           from $g4[yc4_cart_table] a, 
-                $g4[yc4_item_table] b
+           from {$g4['yc4_cart_table']} a,
+                {$g4['yc4_item_table']} b
           where a.on_uid = '$s_on_uid'
             and a.it_id  = b.it_id
           order by a.ct_id ";
 $result = sql_query($sql);
-for ($i=1; $row=mysql_fetch_array($result); $i++) 
+for ($i=1; $row=mysql_fetch_array($result); $i++)
 {
     if ($i>1)
         $good_info .= chr(30);
@@ -192,7 +192,7 @@ for ($i=1; $row=mysql_fetch_array($result); $i++)
 <input type='hidden' name='site_cd'   value='<?=$site_cd?>'>
 
 <!-- MPI 결제창에서 사용 한글 사용 불가 -->
-<input type='hidden' name='site_name' value='<?=$default[de_admin_company_name]?>'>
+<input type='hidden' name='site_name' value='<?=$default['de_admin_company_name']?>'>
 <!-- http://testpay.kcp.co.kr/Pay/Test/site_key.jsp 로 접속하신후 부여받은 사이트코드를 입력하고 나온 값을 입력하시기 바랍니다. -->
 <input type='hidden' name='site_key'  value='<?=$default['de_kcp_site_key']?>'>
 
@@ -207,7 +207,7 @@ for ($i=1; $row=mysql_fetch_array($result); $i++)
 <input type='hidden' name='escw_used' value='Y'>
 
 <!-- 에스크로 결제처리 모드 : 에스크로: Y, 일반: N, KCP 설정 조건: O -->
-<input type='hidden' name='pay_mod' value='<?=($default[de_escrow_use]?"O":"N");?>'>
+<input type='hidden' name='pay_mod' value='<?=($default['de_escrow_use']?"O":"N");?>'>
 
 <!-- 배송 소요일 : 예상 배송 소요일을 입력 -->
 <input type='hidden' name='deli_term' value='03'>
@@ -249,5 +249,5 @@ for ($i=1; $row=mysql_fetch_array($result); $i++)
 <!-- 결제제외 카드 -->
 <input type="hidden" name="not_used_card"   value="">
 
-<p align="center"><input type="image" src="<?=$g4['shop_img_path']?>/btn_settle.gif" border="0"  onclick="return jsf__pay(this.form);" /></p>
+<p align="center"><input type="image" src="<?=G4_SHOP_URL?>/img/btn_settle.gif" border="0"  onclick="return jsf__pay(this.form);" /></p>
 </form>

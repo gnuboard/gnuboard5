@@ -1,4 +1,6 @@
 <?
+if (!defined('_GNUBOARD_')) exit;
+
 // 로그를 파일에 쓴다
 function write_log($file, $log) {
     $fp = fopen($file, "a+");

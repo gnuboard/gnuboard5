@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 if(get_magic_quotes_gpc())
 {
@@ -24,18 +24,18 @@ $error = "";
 $sql = " select a.it_id,
                 a.ct_qty,
                 b.it_name
-           from $g4[yc4_cart_table] a,
-                $g4[yc4_item_table] b
+           from {$g4['yc4_cart_table']} a,
+                {$g4['yc4_item_table']} b
           where a.on_uid = '$tmp_on_uid'
             and a.it_id = b.it_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     // 상품에 대한 현재고수량
-    $it_stock_qty = (int)get_it_stock_qty($row[it_id]);
+    $it_stock_qty = (int)get_it_stock_qty($row['it_id']);
     // 장바구니 수량이 재고수량보다 많다면 오류
-    if ($row[ct_qty] > $it_stock_qty)
-        $error .= "$row[it_name] 의 재고수량이 부족합니다. 현재고수량 : $it_stock_qty 개\\n\\n";
+    if ($row['ct_qty'] > $it_stock_qty)
+        $error .= "{$row['it_name']} 의 재고수량이 부족합니다. 현재고수량 : $it_stock_qty 개\\n\\n";
 }
 
 if ($error != "")
@@ -44,27 +44,27 @@ if ($error != "")
     alert($error);
 }
 
-$i_amount     = (int)$_POST[od_amount];
-$i_send_cost  = (int)$_POST[od_send_cost];
-$i_temp_point = (int)$_POST[od_temp_point];
+$i_amount     = (int)$_POST['od_amount'];
+$i_send_cost  = (int)$_POST['od_send_cost'];
+$i_temp_point = (int)$_POST['od_temp_point'];
 
 
 // 주문금액이 상이함
-$sql = " select SUM(ct_amount * ct_qty) as od_amount from $g4[yc4_cart_table] where on_uid = '$tmp_on_uid' ";
+$sql = " select SUM(ct_amount * ct_qty) as od_amount from {$g4['yc4_cart_table']} where on_uid = '$tmp_on_uid' ";
 $row = sql_fetch($sql);
-if ((int)$row[od_amount] !== $i_amount) {
+if ((int)$row['od_amount'] !== $i_amount) {
     die("Error.");
 }
 
 // 배송비가 상이함
-$tot_sell_amount = $row[od_amount];
+$tot_sell_amount = $row['od_amount'];
 // 배송비 계산
-if ($default[de_send_cost_case] == "없음") {
+if ($default['de_send_cost_case'] == "없음") {
     $send_cost = 0;
 } else {
     // 배송비 상한 : 여러단계의 배송비 적용 가능
-    $send_cost_limit = explode(";", $default[de_send_cost_limit]);
-    $send_cost_list  = explode(";", $default[de_send_cost_list]);
+    $send_cost_limit = explode(";", $default['de_send_cost_limit']);
+    $send_cost_list  = explode(";", $default['de_send_cost_list']);
     $send_cost = 0;
     for ($k=0; $k<count($send_cost_limit); $k++) {
         // 총판매금액이 배송비 상한가 보다 작다면
@@ -82,21 +82,21 @@ if ((int)$send_cost !== $i_send_cost) {
 $tot_amount = $tot_sell_amount + $send_cost;
 // 회원이면서 포인트사용이면
 $temp_point = 0;
-if ($is_member && $config[cf_use_point]) 
+if ($is_member && $config['cf_use_point'])
 {
     // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
-    if ($member[mb_point] >= $default[de_point_settle])
+    if ($member['mb_point'] >= $default['de_point_settle'])
     {
-        $temp_point = $tot_amount * ($default[de_point_per] / 100); // 포인트 결제 % 적용
+        $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
         $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
 
-        $member_point = (int)((int)($member[mb_point] / 100) * 100); // 100점 단위
-        if ($temp_point > $member_point) 
+        $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
+        if ($temp_point > $member_point)
             $temp_point = $member_point;
     }
 }
 
-if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config[cf_use_point])
+if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_point'])
     die("Error...");
 
 $i_amount = $i_amount + $i_send_cost - $i_temp_point;
@@ -128,30 +128,30 @@ else if ($od_settle_case == "신용카드")
     $od_temp_point      = $i_temp_point;
     $od_receipt_point   = 0;
 }
-else 
+else
 {
     die("od_settle_case Error!!!");
 }
 
 if ($od_temp_point)
 {
-    if ($member[mb_point] < $od_temp_point)
+    if ($member['mb_point'] < $od_temp_point)
         alert("회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.");
 }
 
-if ($member[mb_id])
-    $od_pwd = $member[mb_pwd];
+if ($member['mb_id'])
+    $od_pwd = $member['mb_pwd'];
 else
-    $od_pwd = sql_password($_POST[od_pwd]);
+    $od_pwd = sql_password($_POST['od_pwd']);
 
 // 새로운 주문번호를 얻는다.
 $od_id = get_new_od_id();
 
 // 주문서에 입력
-$sql = " insert $g4[yc4_order_table]
+$sql = " insert {$g4['yc4_order_table']}
             set od_id             = '$od_id',
                 on_uid            = '$tmp_on_uid',
-                mb_id             = '$member[mb_id]',
+                mb_id             = '{$member['mb_id']}',
                 od_pwd            = '$od_pwd',
                 od_name           = '$od_name',
                 od_email          = '$od_email',
@@ -182,7 +182,7 @@ $sql = " insert $g4[yc4_order_table]
                 od_bank_account   = '$od_bank_account',
                 od_shop_memo      = '',
                 od_hope_date      = '$od_hope_date',
-                od_time           = '$g4[time_ymdhis]',
+                od_time           = '".G4_TIME_YMDHIS."',
                 od_ip             = '$REMOTE_ADDR',
                 od_settle_case    = '$od_settle_case'
                 ";
@@ -192,45 +192,45 @@ sql_query($sql);
 // 신용카드로 주문하면서 신용카드 포인트 사용하지 않는다면 포인트 부여하지 않음
 $sql_card_point = "";
 //if ($od_receipt_card > 0 && $default[de_card_point] == false) {
-if (($od_receipt_card > 0 || $od_receipt_hp > 0) && $default[de_card_point] == false) {
+if (($od_receipt_card > 0 || $od_receipt_hp > 0) && $default['de_card_point'] == false) {
     $sql_card_point = " , ct_point = '0' ";
 }
-$sql = "update $g4[yc4_cart_table]
+$sql = "update {$g4['yc4_cart_table']}
            set ct_status = '주문'
                $sql_card_point
          where on_uid = '$tmp_on_uid' ";
 sql_query($sql);
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가
-if ($member[mb_id] && $od_receipt_point) {
-    insert_point($member[mb_id], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
+if ($member['mb_id'] && $od_receipt_point) {
+    insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
 }
 
 $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))) . "&nbsp;";
 
 
-include_once("./ordermail1.inc.php");
+include_once('./ordermail1.inc.php');
 
 if ($od_settle_case == "무통장")
-    include_once("./ordermail2.inc.php");
+    include_once('./ordermail2.inc.php');
 
 // SMS BEGIN --------------------------------------------------------
 // 쇼핑몰 운영자가 수신자가 됨
-$receive_number = preg_replace("/[^0-9]/", "", $default[de_sms_hp]); // 수신자번호
+$receive_number = preg_replace("/[^0-9]/", "", $default['de_sms_hp']); // 수신자번호
 $send_number = preg_replace("/[^0-9]/", "", $od_hp); // 발신자번호
 
-$sms_contents = $default[de_sms_cont2];
+$sms_contents = $default['de_sms_cont2'];
 $sms_contents = preg_replace("/{이름}/", $od_name, $sms_contents);
 $sms_contents = preg_replace("/{보낸분}/", $od_name, $sms_contents);
 $sms_contents = preg_replace("/{받는분}/", $od_b_name, $sms_contents);
 $sms_contents = preg_replace("/{주문번호}/", $od_id, $sms_contents);
 $sms_contents = preg_replace("/{주문금액}/", number_format($ttotal_amount), $sms_contents);
-$sms_contents = preg_replace("/{회원아이디}/", $member[mb_id], $sms_contents);
-$sms_contents = preg_replace("/{회사명}/", $default[de_admin_company_name], $sms_contents);
+$sms_contents = preg_replace("/{회원아이디}/", $member['mb_id'], $sms_contents);
+$sms_contents = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_contents);
 
-if ($default[de_sms_use2] && $receive_number)
+if ($default['de_sms_use2'] && $receive_number)
 {
-    include_once("$g4[path]/lib/icode.sms.lib.php");
+    include_once(G4_LIB_PATH.'/icode.sms.lib.php');
     $SMS = new SMS; // SMS 연결
     $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
     $SMS->Add($receive_number, $send_number, $default['de_icode_id'], stripslashes($sms_contents), "");
@@ -248,5 +248,5 @@ if (get_session("ss_direct"))
 else
     set_session("ss_on_uid", "");
 
-goto_url("$g4[url]/$g4[shop]/orderconfirm.php");
+goto_url(G4_SHOP_URL.'/orderconfirm.php');
 ?>

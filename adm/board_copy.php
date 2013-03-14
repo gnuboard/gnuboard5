@@ -2,65 +2,67 @@
 $sub_menu = "300100";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check($auth[$sub_menu], 'w');
 
 $token = get_token();
 
-$g4[title] = "게시판 복사";
-include_once("$g4[path]/head.sub.php");
+$g4['title'] = '게시판 복사';
+$administrator = 1;
+include_once(G4_PATH.'/head.sub.php');
 ?>
 
-<link rel="stylesheet" href="./admin.style.css" type="text/css">
+<div class="new_win">
+    <h1>기존 게시판을 새 게시판으로 복사</h1>
 
-<form name="fboardcopy" method='post' onsubmit="return fboardcopy_check(this);" autocomplete="off">
-<input type="hidden" name="bo_table" value="<?=$bo_table?>">
-<input type="hidden" name="token"    value="<?=$token?>">
-<table width=100% cellpadding=0 cellspacing=0>
-<colgroup width=30% class='col1 pad1 bold right'>
-<colgroup width=70% class='col2 pad2'>
-<tr><td colspan=2 height=5></td></tr>
-<tr>
-    <td colspan=2 class=title align=left><img src='<?=$g4[admin_path]?>/img/icon_title.gif'> <?=$g4[title]?></td>
-</tr>
-<tr><td colspan=2 class='line1'></td></tr>
-<tr class='ht'>
-	<td>원본 테이블</td>
-	<td><?=$bo_table?></td>
-</tr>
-<tr class='ht'>
-	<td>복사할 TABLE</td>
-	<td><input type=text class=ed name="target_table" size="20" maxlength="20" required alphanumericunderline itemname="TABLE"> 영문자, 숫자, _ 만 가능 (공백없이)</td>
-</tr>
-<tr class='ht'>
-	<td>게시판 제목</td>
-	<td><input type=text class=ed name='target_subject' size=60 maxlength=120 required itemname='게시판 제목' value='[복사본] <?=$board[bo_subject]?>'></td>
-</tr>
-<tr class='ht'>
-	<td>복사 유형</td>
-	<td>
-        <input type="radio" name="copy_case" value="schema_only" checked>구조만
-        <input type="radio" name="copy_case" value="schema_data_both">구조와 데이터
-    </td>
-</tr>
-<tr height=40>
-    <td></td>
-	<td>
-        <input type="submit" value="  복  사  " class=btn1>&nbsp;
-        <input type="button" value="창닫기" onclick="window.close();" class=btn1>
-    </td>
-</tr>
-</table>
+    <form name="fboardcopy" id="fboardcopy" action="./board_copy_update.php" onsubmit="return fboardcopy_check(this);" method="post">
+    <input type="hidden" name="bo_table" value="<?=$bo_table?>" id="bo_table">
+    <table class="frm_tbl">
+    <tbody>
+    <tr>
+        <th scope="col">원본 테이블명</th>
+        <td><?=$bo_table?></td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="target_table">복사 테이블명<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" name="target_table" id="target_table" required class="required alnum_ frm_input" maxlength="20">영문자, 숫자, _ 만 가능 (공백없이)</td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="target_subject">게시판 제목<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" name="target_subject" value="[복사본] <?=$board['bo_subject']?>" id="target_subject" required class="required frm_input" maxlength="120"></td>
+    </tr>
+    <tr>
+        <th scope="col">복사 유형</th>
+        <td>
+            <input type="radio" name="copy_case" value="schema_only" id="copy_case" checked>
+            <label for="copy_case">구조만</label>
+            <input type="radio" name="copy_case" value="schema_data_both" id="copy_case2">
+            <label for="copy_case2">구조와 데이터</label>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+
+<div class="btn_confirm">
+    <input type="submit" class="btn_submit" value="복사">
+    <input type="button" class="btn_cancel" value="창닫기" onclick="window.close();">
+</div>
 
 </form>
 
-<script type='text/javascript'>
+<script>
 function fboardcopy_check(f)
 {
-    f.action = "./board_copy_update.php";
+    if (f.bo_table.value == f.target_table.value) {
+        alert("원본 테이블명과 복사할 테이블명이 달라야 합니다.");
+        return false;
+    }
+
     return true;
 }
 </script>
 
+
 <?
-include_once("$g4[path]/tail.sub.php");
+include_once(G4_PATH.'/tail.sub.php');
 ?>

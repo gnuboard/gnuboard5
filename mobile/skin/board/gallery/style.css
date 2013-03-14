@@ -1,0 +1,138 @@
+/* 갤러리 목록 */
+#bo_img h2 {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#bo_img_list {margin:1em 0 0;padding:0 1em;list-style:none}
+#bo_img_list:after {display:block;visibility:hidden;clear:both;content:""}
+.bo_img_list_li {float:left;margin:0 0 2em}
+
+.bo_img_con {margin:0;padding:0;list-style:none}
+.bo_img_con li {margin:0 0 0.3em}
+.bo_img_con .bo_img_subject {display:inline-block;width:50px}
+
+.bo_img_now .bo_img_text_href a {color:#ff3061}
+
+.bo_img_href a:link,
+.bo_img_href a:focus,
+.bo_img_href a:hover {text-decoration:none}
+.bo_img_href strong,
+.bo_img_href span {display:block;width:174px;height:124px;background:#f7f7f7;text-align:center;line-height:8em}
+
+.bo_img_text_href {margin:1em 0 !important}
+.bo_img_text_href a {color:#000;font-weight:bold;text-decoration:none}
+.bo_img_text_href img {margin:0 0 0 0.3em}
+
+/* 게시판 목록 공통 */
+.bo_fx {margin-bottom:0.3em;padding:0.5em 1em}
+.bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
+.bo_fx ul {margin:0;padding:0;list-style:none}
+#bo_list_total {float:left;padding:0;height:2.5em;line-height:2.5em}
+.btn_bo_user {float:right;margin:0;padding:0;list-style:none}
+.btn_bo_user li {float:left;margin-left:0.3em}
+.btn_bo_adm {float:left}
+.btn_bo_adm li {float:left;margin-right:0.3em}
+.btn_bo_adm input {padding:0 1em;height:2em;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer;-webkit-appearance:none}
+.bo_notice td {background:#f7f7f7}
+.bo_notice td a {font-weight:bold}
+.td_num strong {color:#000}
+.bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
+.bo_current {color:#e8180c}
+.td_subject img {margin-left:3px}
+.cnt_cmt {font-weight:bold}
+
+#bo_sch {margin-bottom:1em;padding-top:0.3em;text-align:center}
+
+/* 게시판 읽기 */
+#bo_v {margin-bottom:1.5em;padding-bottom:1.5em}
+
+#bo_v_cate {padding:0 1em;color:#999;font-size:0.9em;font-weight:bold}
+
+#bo_v_h1 {padding:0 0.7em 0.5em;font-size:1.2em}
+
+#bo_v_info {padding:0 0.9em 1em;border-bottom:1px solid #ddd}
+#bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_info {}
+#bo_v_info strong {display:inline-block;margin:0 0 0 0.3em;font-weight:normal}
+
+#bo_v_file {}
+#bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_file ul {margin:0;padding:0;list-style:none}
+#bo_v_file li {padding:0 1em;border-bottom:1px solid #eee;background:#f7f7f7}
+#bo_v_file a {display:inline-block;padding:0.5em 0;color:#000}
+#bo_v_file a:focus,
+#bo_v_file a:hover,
+#bo_v_file a:active {text-decoration:none}
+.bo_v_file_cnt {display:inline-block;margin:0 1em}
+
+#bo_v_link {}
+#bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_link ul {margin:0;padding:0;list-style:none}
+#bo_v_link li {padding:0 1em;border-bottom:1px solid #eee;background:#f7f7f7}
+#bo_v_link a {display:inline-block;padding:0.5em 0;color:#000}
+#bo_v_link a:focus,
+#bo_v_link a:hover,
+#bo_v_link a:active {text-decoration:none}
+.bo_v_link_cnt {display:inline-block;margin:0 1em}
+
+#bo_v_top {margin:0 0 1em;padding:1em}
+#bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_top ul {list-style:none}
+
+#bo_v_bot {padding:0 1em}
+#bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_bot ul {margin:0;padding:0;list-style:none}
+
+.bo_v_nb {float:left}
+.bo_v_nb li {float:left;margin-right:0.3em}
+.bo_v_com {float:right}
+.bo_v_com li {float:left;margin-left:0.3em}
+
+#bo_v_atc {min-height:200px;padding:0 1em;min-height:200px}
+#bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
+
+#bo_v_img {margin:0 0 1em;width:100%;overflow:hidden:zoom:1}
+#bo_v_img:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_img img {margin-bottom:1.5em;max-width:100%;height:auto}
+
+#bo_v_con {margin-bottom:2em;width:100%;line-height:1.7em;word-break:break-all;overflow:hidden}
+#bo_v_con a {color:#000;text-decoration:underline}
+#bo_v_con img {max-width:100%;height:auto}
+
+#bo_v_act {margin-bottom:2em;text-align:center}
+#bo_v_act a {margin-right:0.3em;vertical-align:top}
+#bo_v_act span {display:inline-block;margin-right:0.3em;padding:0 1em;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2em;vertical-align:top}
+#bo_v_act strong {color:#ff3061}
+#bo_v_act_good,
+#bo_v_act_nogood {display:inline-block;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+
+#bo_v form {padding-top:1.5em}
+
+/* 게시판 댓글 */
+#bo_vc {margin:0 0 0.5em;padding:1.5em 1.5em 0.5em;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f7f7f7}
+#bo_vc h2 {margin-bottom:0.5em}
+#bo_vc article {padding:0 0 0.5em;border-top:1px dotted #ccc}
+#bo_vc header {position:relative;padding:1.3em 0 0.3em}
+#bo_vc header .icon_reply {position:absolute;top:1.5em;left:-1.3em}
+#bo_vc .sv_member,
+#bo_vc .sv_guest {font-weight:bold}
+.bo_vc_hdinfo {display:inline-block;margin:0 1em 0 0.3em}
+#bo_vc h1 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#bo_vc a {color:#000;text-decoration:none}
+#bo_vc p {padding:0 0 0.3em;line-height:1.8em}
+#bo_vc p a {text-decoration:underline}
+#bo_vc_empty {margin:0;padding:1.5em !important;border-bottom:1px dotted #ccc;text-align:center}
+#bo_vc fieldset {margin:0 0 1em;padding:0}
+#bo_vc #bo_vc_winfo {float:left}
+#bo_vc footer {zoom:1}
+#bo_vc footer:after {display:block;visibility:hidden;clear:both;content:""}
+
+.bo_vc_act {float:right;margin:0;list-style:none}
+.bo_vc_act:after {display:block;visibility:hidden;clear:both;content:""}
+.bo_vc_act li {float:left;margin-left:0.3em}
+
+#bo_vc_w {position:relative;margin-bottom:1em;padding:0 1.5em 1.5em;border-bottom:1px solid #cfded8}
+#bo_vc_w h2 {padding:1em 0 0.3em}
+#bo_vc_w #char_cnt {display:block;margin-bottom:0.3em}
+#bo_vc_w textarea {width:99%}
+
+#bo_vc form {padding:0}

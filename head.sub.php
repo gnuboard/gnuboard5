@@ -1,41 +1,26 @@
-<?
+<?php
 // 이 파일은 새로운 파일 생성시 반드시 포함되어야 함
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 $begin_time = get_microtime();
 
-if (!$g4['title'])
+if (!isset($g4['title'])) {
     $g4['title'] = $config['cf_title'];
-
-// 쪽지를 받았나?
-if ($member['mb_memo_call']) {
-    $mb = get_member($member[mb_memo_call], "mb_nick");
-    sql_query(" update {$g4[member_table]} set mb_memo_call = '' where mb_id = '$member[mb_id]' ");
-
-    alert($mb[mb_nick]."님으로부터 쪽지가 전달되었습니다.", $_SERVER[REQUEST_URI]);
+    $g4_head_title = $g4['title'];
+}
+else {
+    $g4_head_title = $g4['title']; // 상태바에 표시될 제목
+    $g4_head_title .= " : ".$config['cf_title'];
 }
 
-
 // 현재 접속자
-//$lo_location = get_text($g4[title]);
-//$lo_location = $g4[title];
 // 게시판 제목에 ' 포함되면 오류 발생
 $lo_location = addslashes($g4['title']);
 if (!$lo_location)
     $lo_location = $_SERVER['REQUEST_URI'];
-//$lo_url = $g4[url] . $_SERVER['REQUEST_URI'];
 $lo_url = $_SERVER['REQUEST_URI'];
-if (strstr($lo_url, "/$g4[admin]/") || $is_admin == "super") $lo_url = "";
+if (strstr($lo_url, '/'.G4_ADMIN_DIR.'/') || $is_admin == 'super') $lo_url = '';
 
-// 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면
-// 캐쉬의 내용을 가져옴. 완전한지는 검증되지 않음
-header("Content-Type: text/html; charset=$g4[charset]");
-$gmnow = gmdate("D, d M Y H:i:s") . " GMT";
-header("Expires: 0"); // rfc2616 - Section 14.21
-header("Last-Modified: " . $gmnow);
-header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
-header("Cache-Control: pre-check=0, post-check=0, max-age=0"); // HTTP/1.1
-header("Pragma: no-cache"); // HTTP/1.0
 /*
 // 만료된 페이지로 사용하시는 경우
 header("Cache-Control: no-cache"); // HTTP/1.1
@@ -43,30 +28,65 @@ header("Expires: 0"); // rfc2616 - Section 14.21
 header("Pragma: no-cache"); // HTTP/1.0
 */
 ?>
-<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> -->
-<html>
+<!doctype html>
+<html lang="ko">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=<?=$g4['charset']?>">
-<title><?=$g4['title']?></title>
-<link rel="stylesheet" href="<?=$g4['path']?>/style.css" type="text/css">
-</head>
-<script type="text/javascript">
+<meta charset="utf-8">
+<? if (G4_IS_MOBILE) {?><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"><? } ?>
+<!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
+<title><?=$g4_head_title?></title>
+<? if (defined('G4_IS_ADMIN')) { ?>
+<link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css?=<?=date("md")?>">
+<? } else { ?>
+<link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=(G4_IS_MOBILE?'mobile':'default')?>.css?=<?=date("md")?>">
+<?}?>
+<? // 스킨의 style sheet 불러옴
+if(isset($board_skin_path))
+    echo get_skin_stylesheet($board_skin_path);
+if(isset($member_skin_path))
+    echo get_skin_stylesheet($member_skin_path);
+if(isset($new_skin_path))
+    echo get_skin_stylesheet($new_skin_path);
+if(isset($search_skin_path))
+    echo get_skin_stylesheet($search_skin_path);
+if(isset($connect_skin_path))
+    echo get_skin_stylesheet($connect_skin_path);
+if(isset($poll_skin_path))
+    echo get_skin_stylesheet($poll_skin_path);
+?>
+<!--[if lte IE 8]>
+<script src="<?=G4_JS_URL?>/html5.js"></script>
+<![endif]-->
+<script>
 // 자바스크립트에서 사용하는 전역변수 선언
-var g4_path      = "<?=$g4['path']?>";
-var g4_bbs       = "<?=$g4['bbs']?>";
-var g4_bbs_img   = "<?=$g4['bbs_img']?>";
-var g4_url       = "<?=$g4['url']?>";
-var g4_is_member = "<?=$is_member?>";
-var g4_is_admin  = "<?=$is_admin?>";
+var g4_url       = "<?=G4_URL?>";
+var g4_bbs_url   = "<?=G4_BBS_URL?>";
+var g4_img_url   = "<?=G4_IMG_URL?>";
+var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";
+var g4_is_admin  = "<?=isset($is_admin)?$is_admin:'';?>";
+var g4_is_mobile = "<?=G4_IS_MOBILE?>";
 var g4_bo_table  = "<?=isset($bo_table)?$bo_table:'';?>";
 var g4_sca       = "<?=isset($sca)?$sca:'';?>";
-var g4_charset   = "<?=$g4['charset']?>";
-var g4_cookie_domain = "<?=$g4['cookie_domain']?>";
-var g4_is_gecko  = navigator.userAgent.toLowerCase().indexOf("gecko") != -1;
-var g4_is_ie     = navigator.userAgent.toLowerCase().indexOf("msie") != -1;
-<? if ($is_admin) { echo "var g4_admin = '{$g4['admin']}';"; } ?>
+var g4_cookie_domain = "<?=G4_COOKIE_DOMAIN?>";
+<? if ($is_admin) { echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'; }
+?>
 </script>
-<script type="text/javascript" src="<?=$g4['path']?>/js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="<?=$g4['path']?>/js/common.js"></script>
-<body topmargin="0" leftmargin="0" <?=isset($g4['body_script']) ? $g4['body_script'] : "";?>>
-<a name="g4_head"></a>
+<script src="<?=G4_JS_URL?>/jquery-1.8.3.min.js"></script>
+<script src="<?=G4_JS_URL?>/common.js"></script>
+<script src="<?=G4_JS_URL?>/wrest.js"></script>
+<? if(G4_IS_MOBILE) { ?>
+<script>
+    set_cookie("device_width", screen.width, 6, g4_cookie_domain);
+</script>
+<? } ?>
+<? if (!defined('G4_IS_ADMIN')) { echo $config['cf_add_script']; } ?>
+</head>
+<body>
+<?
+if ($is_member) { // 회원이라면 로그인 중이라는 메세지를 출력해준다.
+    if ($is_admin == 'super') $sr_admin_msg = "최고관리자 ";
+    else if ($is_admin == 'group') $sr_admin_msg = "그룹관리자 ";
+    else if ($is_admin == 'board') $sr_admin_msg = "게시판관리자 ";
+?>
+    <div id="hd_login_msg"><?=$sr_admin_msg?><?=$member['mb_nick']?>님 로그인 중</div>
+<? } ?>

@@ -4,8 +4,8 @@ if (!defined('_GNUBOARD_')) exit;
 /*******************************************************************************
     썸네일 Class
 
-    사용법 : 
-    
+    사용법 :
+
     $thumb = new g4_thumbnail(경로, 썸네일이미지폭);
     $thumb->run(이미지 경로가 포함된 컨텐츠);
 
@@ -57,11 +57,11 @@ class g4_thumb {
         $width = $this->get_width();
         $source = null;
         $size = @getimagesize($srcimg);
-        if ($size[2] == 1) 
+        if ($size[2] == 1)
             $source = @imagecreatefromgif($srcimg);
         else if ($size[2] == 2)
             $source = @imagecreatefromjpeg($srcimg);
-        else if ($size[2] == 3) 
+        else if ($size[2] == 3)
             $source = @imagecreatefrompng($srcimg);
 
         if ($source == null)
@@ -111,7 +111,7 @@ class g4_thumb {
                 if ($size[0] < $this->width) {
                     return "<img src='$thumb' width='$size[0]' />";
                 } else {
-                    return "<a href='$src' target='_blank' title='클릭하시면 이미지가 크게 보입니다.'><img src='$thumb' width='{$this->width}' border='0' /></a>";
+                    return "<a href='$src' target='_blank' title='새창으로 크게 보기'><img src='$thumb' width='{$this->width}' border='0' /></a>";
                 }
             }
         }

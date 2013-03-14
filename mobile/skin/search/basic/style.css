@@ -1,0 +1,28 @@
+/* 전체검색결과 스킨 */
+#sch_result_detail {margin:0;padding:0.5em 1em;border:0}
+#sch_result {padding:0 1em}
+
+#sch_result_hd dt {width:0;height:0;overflow:hidden}
+#sch_result_hd dd {margin:0}
+#sch_result_hd ul {margin:0;padding:0;border-top:1px solid #eee;border-bottom:1px solid #eee;list-style:none}
+#sch_result_hd ul:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_result_hd li {float:left;padding:0.5em 0;width:33%;text-align:center}
+
+#sch_result_bo dt {width:0;height:0;overflow:hidden}
+#sch_result_bo dd {margin:0}
+#sch_result_bo ul {margin:0;padding:0;list-style:none}
+#sch_result_bo li {border-bottom:1px solid #fff;background:#f7f7f7}
+#sch_result_bo a {display:block;padding:0.5em;color:#000;text-decoration:none}
+#sch_result_bo .cnt_cmt {display:inline-block;margin:0 0 0 0.5em;color:#ff3061}
+
+#sch_result_atc a {color:#000}
+#sch_result_atc dt {padding:0.5em 1em;background:#484848;color:#fff}
+#sch_result_atc dt a {color:#fff;text-decoration:none}
+#sch_result_atc dd {margin:0}
+#sch_result_atc ul {margin:0;padding:0;list-style:none}
+#sch_result_atc li {padding:1em;border-bottom:1px solid #eee}
+
+.sch_more {padding:10px 0 15px;text-align:right}
+.sch_more a {}
+.sch_datetime {display:inline-block;margin-right:15px;color:#999}
+.sch_word {font-weight:bold} /* 검색어 강조 */

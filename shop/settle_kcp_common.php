@@ -1,14 +1,14 @@
 <?
-include_once("./_common.php");
-include_once("$g4[path]/lib/etc.lib.php");
-include_once("$g4[path]/lib/mailer.lib.php");
+include_once('./_common.php');
+include_once(G4_LIB_PATH.'/etc.lib.php');
+include_once(G4_LIB_PATH..'/mailer.lib.php');
 
 /*------------------------------------------------------------------------------
-    ※ KCP 에서 가맹점의 결과처리 페이지로 데이터를 전송할 때에, 아래와 같은 
-       IP 에서 전송을 합니다. 따라서 가맹점측께서 전송받는 데이터에 대해 KCP 
-       에서 전송된 건이 맞는지 체크하는 부분을 구현할 때에, 아래의 IP 에 대해 
-       REMOTE ADDRESS 체크를 하여, 아래의 IP 이외의 다른 경로를 통해서 전송된 
-       데이터에 대해서는 결과처리를 하지 마시기 바랍니다. 
+    ※ KCP 에서 가맹점의 결과처리 페이지로 데이터를 전송할 때에, 아래와 같은
+       IP 에서 전송을 합니다. 따라서 가맹점측께서 전송받는 데이터에 대해 KCP
+       에서 전송된 건이 맞는지 체크하는 부분을 구현할 때에, 아래의 IP 에 대해
+       REMOTE ADDRESS 체크를 하여, 아래의 IP 이외의 다른 경로를 통해서 전송된
+       데이터에 대해서는 결과처리를 하지 마시기 바랍니다.
 ------------------------------------------------------------------------------*/
 switch ($_SERVER['REMOTE_ADDR']) {
     case '203.238.36.58' :
@@ -24,7 +24,7 @@ switch ($_SERVER['REMOTE_ADDR']) {
                    . "POST[" . serialize($_POST) . "]"
                    . "COOKIE[" . serialize($_COOKIE) . "]"
                    . "SESSION[" . serialize($_SESSION) . "]";
-        mailer('경고', 'waring', $super_admin[mb_email], '올바르지 않은 접속 보고', "$_SERVER[PHP_SELF] 에 $_SERVER[REMOTE_ADDR] 이 $g4[time_ymdhis] 에 접속을 시도하였습니다.\n\n" . $egpcs_str, 2);
+        mailer('경고', 'waring', $super_admin['mb_email'], '올바르지 않은 접속 보고', "{$_SERVER['PHP_SELF']} 에 {$_SERVER['REMOTE_ADDR']} 이 ".G4_TIME_YMDHIS." 에 접속을 시도하였습니다.\n\n" . $egpcs_str, 2);
         exit;
 }
 
@@ -140,7 +140,7 @@ switch ($_SERVER['REMOTE_ADDR']) {
     if ( $tx_cd == "TX00" )
     {
         // 주문서 UPDATE
-        $sql = " update $g4[yc4_order_table]
+        $sql = " update {$g4['yc4_order_table']}
                     set od_receipt_bank = '$ipgm_mnyx',
                         od_bank_time = '$tx_tm'
                   where od_id = '$order_no'

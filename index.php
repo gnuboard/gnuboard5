@@ -1,127 +1,48 @@
 <?
-include_once("./_common.php");
-include_once("$g4[path]/lib/latest.lib.php");
+define('_INDEX_', true);
+include_once('./_common.php');
 
-define("_INDEX_", TRUE);
+if (G4_IS_MOBILE) {
+    include_once(G4_MOBILE_PATH.'/index.php');
+    return;
+}
 
-$g4[title] = "";
-include_once("$g4[path]/head.php");
+// 초기화면 파일 경로 지정 : 이 코드는 가능한 삭제하지 마십시오.
+if ($config['cf_include_index']) {
+    if (!@include_once($config['cf_include_index'])) {
+        die('기본환경 설정에서 초기화면 파일 경로가 잘못 설정되어 있습니다.');
+    }
+    return; // 이 코드의 아래는 실행을 하지 않습니다.
+}
+
+include_once('./_head.php');
 ?>
 
-<script language="JavaScript" src="<?=$g4[path]?>/js/shop.js"></script>
-
-<table width=100% cellpadding=0 cellspacing=0>
-<tr>
-    <td valign=top>
-        <img src='<?=$g4[path]?>/data/common/main_img' border=0><br><br>
-        <table width=100% cellpadding=0 cellspacing=0>
-        <tr>
-            <td colspan=2>
-                <?
-                // 히트상품
-                $type = 1;
-                if ($default["de_type{$type}_list_use"]) 
-                {
-                    echo "<a href='$g4[shop_path]/listtype.php?type={$type}'><img src='$g4[shop_img_path]/bar_type{$type}.gif' border=0></a><br>";
-                    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-                }
-                ?>
-            </td>
-        </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td colspan=2>
-                <?
-                // 추천상품
-                $type = 2;
-                if ($default["de_type{$type}_list_use"]) 
-                {
-                    echo "<a href='$g4[shop_path]/listtype.php?type={$type}'><img src='$g4[shop_img_path]/bar_type{$type}.gif' border=0></a><br>";
-                    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-                }
-                ?>
-            </td>
-        </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td colspan=2>
-                <?
-                // 인기상품
-                $type = 4;
-                if ($default["de_type{$type}_list_use"]) 
-                {
-                    echo "<a href='$g4[shop_path]/listtype.php?type={$type}'><img src='$g4[shop_img_path]/bar_type{$type}.gif' border=0></a><br>";
-                    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-                }
-                ?>
-            </td>
-        </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td colspan=2>
-                <?
-                // 할인상품
-                $type = 5;
-                if ($default["de_type{$type}_list_use"]) 
-                {
-                    echo "<a href='$g4[shop_path]/listtype.php?type={$type}'><img src='$g4[shop_img_path]/bar_type{$type}.gif' border=0></a><br>";
-                    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-                }
-                ?>
-            </td>
-        </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td valign=top width=50% align=center>
-                <table width=95% cellpadding=0 cellspacing=0>
-                <tr><td><?=latest('basic', 'qa', 5, 30);?></td></tr>
-                </table></td>
-            <td valign=top width=50% align=center>
-                <table width=95% cellpadding=0 cellspacing=0>
-                <tr><td><?=latest('basic', 'free', 5, 30);?></td></tr>
-                </table></td>
-            </tr>
-        </table>
-    </td>
-    <td valign=top>
-
-		<!-- 공지사항 -->
-        <table width=177 bgcolor=#DEDEDE cellpadding=1 cellspacing=0>
-        <tr><td align=center>
-            <table cellpadding=0 cellspacing=0 bgcolor=#FFFFFF height=97>
-            <tr><td height=28><a href='<?=$g4[bbs_path]?>/board.php?bo_table=notice'><img src='<?=$g4[shop_img_path]?>/bar_notice.gif' border=0></a></td></tr>
-            <tr>
-                <td><?=latest('shop_notice', 'notice', 3, 25);?></td>
-            </tr>
-            </table>
-        </td></tr>
-        </table><BR>
-
+<!-- 메인화면 최신글 시작 -->
+<?
+//  최신글
+$sql = " select bo_table from {$g4['board_table']} order by gr_id, bo_table ";
+$result = sql_query($sql);
+for ($i=0; $row=sql_fetch_array($result); $i++) {
+    $lt_style = "";
+    if ($i%2==1) $lt_style = "margin-left:20px";
+    else $lt_style = "";
+?>
+    <div style="float:left;<?=$lt_style?>">
         <?
-        // 최신상품
-        $type = 3;
-        if ($default["de_type{$type}_list_use"]) 
-        {
-            echo "<a href='$g4[shop_path]/listtype.php?type={$type}'><img src='$g4[shop_img_path]/bar_type{$type}.gif' border=0></a><br>";
-            display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-        }
-        ?><br><br>
+        // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
+        // 스킨은 입력하지 않을 경우 관리자 > 환경설정의 최신글 스킨경로를 기본 스킨으로 합니다.
 
-		<!-- 온라인 투표 -->
-        <?=poll('shop_poll');?><br>
-
-		<!-- 방문자 수 -->
-        <?=visit('shop_visit');?><br>
-
-		<!-- 메인 배너 -->
-        <?=display_banner('메인');?><br>
-	</td>
-</tr>
-</table>
-<BR><BR>
+        // 사용방법
+        // latest(스킨, 게시판아이디, 출력라인, 글자수);
+        echo latest("basic", $row['bo_table'], 5, 25);
+        ?>
+    </div>
+<?
+}
+?>
+<!-- 메인화면 최신글 끝 -->
 
 <?
-include "$g4[shop_path]/newwin.inc.php"; // 새창띄우기
-
-include_once("$g4[path]/tail.php");
+include_once('./_tail.php');
 ?>

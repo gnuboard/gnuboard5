@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // 총몇개 = 한줄에 몇개 * 몇줄
 $items = $list_mod * $list_row;
@@ -8,7 +8,7 @@ $td_width = (int)(100 / $list_mod);
 
 $sql = "select COUNT(*) as cnt $sql_common ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
 // 전체 페이지 계산
 $total_page  = ceil($total_count / $items);

@@ -12,23 +12,23 @@ if (!$is_member) {
 if ($w == "") {
     $is_score = 10;
 } else if ($w == "u") {
-    $ps = sql_fetch(" select * from $g4[yc4_item_ps_table] where is_id = '$is_id' ");
+    $ps = sql_fetch(" select * from {$g4['yc4_item_ps_table']} where is_id = '$is_id' ");
     if (!$ps) {
         alert_close("사용후기 정보가 없습니다.");
     }
 
-    $it_id    = $ps[it_id];
-    $is_score = $ps[is_score];
+    $it_id    = $ps['it_id'];
+    $is_score = $ps['is_score'];
 }
 
 if ($w == "u") {
-    if (!$is_admin && $ps[mb_id] != $member[mb_id]) {
+    if (!$is_admin && $ps['mb_id'] != $member['mb_id']) {
         alert_close("자신의 사용후기만 수정이 가능합니다.");
     }
 }
 
-include_once("$g4[path]/lib/cheditor4.lib.php");
-include_once("$g4[path]/head.sub.php");
+include_once(G4_LIB_PATH."/cheditor4.lib.php");
+include_once(G4_PATH.'/head.sub.php');
 
 echo "<script src='$g4[cheditor4_path]/cheditor.js'></script>";
 echo cheditor1('is_content', '100%', '250');
@@ -48,19 +48,19 @@ label {width:130px;vertical-align:top;padding:3px 0;}
     <ul style="padding:10px;">
         <li>
             <label for="is_subject">제목</label>
-            <input type='text' id='is_subject' name='is_subject' size='100' class='ed' minlength='2' required itemname='제목' value='<?=get_text($ps[is_subject])?>'>
+            <input type='text' id='is_subject' name='is_subject' size='100' class='ed' minlength='2' required itemname='제목' value='<?=get_text($ps['is_subject'])?>'>
         </li>
         <li>
             <label for="" style="width:200px;">내용</label>
-            <?=cheditor2('is_content', $ps[is_content]);?>
+            <?=cheditor2('is_content', $ps['is_content']);?>
         </li>
         <li>
             <label>평가</label>
-            <input type=radio name=is_score value='10' <?=($is_score==10)?"checked='checked'":"";?>><img src='<?=$g4[shop_img_path]?>/star5.gif' align=absmiddle>
-            <input type=radio name=is_score value='8'  <?=($is_score==8)?"checked='checked'":"";?>><img src='<?=$g4[shop_img_path]?>/star4.gif' align=absmiddle>
-            <input type=radio name=is_score value='6'  <?=($is_score==6)?"checked='checked'":"";?>><img src='<?=$g4[shop_img_path]?>/star3.gif' align=absmiddle>
-            <input type=radio name=is_score value='4'  <?=($is_score==4)?"checked='checked'":"";?>><img src='<?=$g4[shop_img_path]?>/star2.gif' align=absmiddle>
-            <input type=radio name=is_score value='2'  <?=($is_score==2)?"checked='checked'":"";?>><img src='<?=$g4[shop_img_path]?>/star1.gif' align=absmiddle>
+            <input type=radio name=is_score value='10' <?=($is_score==10)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star5.gif' align=absmiddle>
+            <input type=radio name=is_score value='8'  <?=($is_score==8)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star4.gif' align=absmiddle>
+            <input type=radio name=is_score value='6'  <?=($is_score==6)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star3.gif' align=absmiddle>
+            <input type=radio name=is_score value='4'  <?=($is_score==4)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star2.gif' align=absmiddle>
+            <input type=radio name=is_score value='2'  <?=($is_score==2)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star1.gif' align=absmiddle>
         </li>
         <li>
             <label style="vertical-align:middle;"><img id='kcaptcha_image_use' /></label>
@@ -82,11 +82,11 @@ function fitemuse_submit(f)
     if (document.getElementById('tx_is_content')) {
         var len = ed_is_content.inputLength();
         if (len == 0) {
-            alert('내용을 입력하십시오.'); 
+            alert('내용을 입력하십시오.');
             ed_is_content.returnFalse();
             return false;
         } else if (len > 5000) {
-            alert('내용은 5000글자 까지만 입력해 주세요.'); 
+            alert('내용은 5000글자 까지만 입력해 주세요.');
             ed_is_content.returnFalse();
             return false;
         }
@@ -118,5 +118,5 @@ $(function() {
 });
 </script>
 <?
-include_once("$g4[path]/tail.sub.php");
+include_once(G4_PATH.'/tail.sub.php');
 ?>

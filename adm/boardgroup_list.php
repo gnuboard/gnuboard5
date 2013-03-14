@@ -1,192 +1,205 @@
 <?
 $sub_menu = "300200";
-include_once("./_common.php");
+include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
+if (!isset($group['gr_device'])) {
+    // 게시판 그룹 사용 필드 추가
+    // both : pc, mobile 둘다 사용
+    // pc : pc 전용 사용
+    // mobile : mobile 전용 사용
+    // none : 사용 안함
+    sql_query(" ALTER TABLE  `{$g4['board_group_table']}` ADD  `gr_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
+}
 
-$sql_common = " from $g4[group_table] ";
+$sql_common = " from {$g4['group_table']} ";
 
 $sql_search = " where (1) ";
-if ($is_admin != "super")
-    $sql_search .= " and (gr_admin = '$member[mb_id]') ";
+if ($is_admin != 'super')
+    $sql_search .= " and (gr_admin = '{$member['mb_id']}') ";
 
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
         case "gr_id" :
         case "gr_admin" :
-            $sql_search .= " ($sfl = '$stx') ";
+            $sql_search .= " ({$sfl} = '{$stx}') ";
             break;
-        default : 
-            $sql_search .= " ($sfl like '%$stx%') ";
+        default :
+            $sql_search .= " ({$sfl} like '%{$stx}%') ";
             break;
     }
     $sql_search .= " ) ";
 }
 
 if ($sst)
-    $sql_order = " order by $sst $sod ";
+    $sql_order = " order by {$sst} {$sod} ";
 else
     $sql_order = " order by gr_id asc ";
 
-$sql = " select count(*) as cnt
-         $sql_common 
-         $sql_search 
-         $sql_order ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = " select * 
-          $sql_common 
-          $sql_search
-          $sql_order 
-          limit $from_record, $rows ";
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = "<a href='$_SERVER[PHP_SELF]'>처음</a>";
+$listall = '';
+if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>';
 
-$g4[title] = "게시판그룹설정";
-include_once("./admin.head.php");
+$g4['title'] = '게시판그룹설정';
+include_once('./admin.head.php');
 
 $colspan = 8;
 ?>
 
-<script type="text/javascript">
-var list_update_php = "./boardgroup_list_update.php";
-</script>
-
-<table width=100% cellpadding=3 cellspacing=1>
-<form name=fsearch method=get>
-<tr>
-    <td width=50% align=left><?=$listall?> (그룹수 : <?=number_format($total_count)?>개)</td>
-    <td width=50% align=right>
-        <select name=sfl>
-            <option value="gr_subject">제목</option>
-            <option value="gr_id">ID</option>
-            <option value="gr_admin">그룹관리자</option>
-        </select>
-        <input type=text name=stx class=ed required itemname='검색어' value='<?=$stx?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle></td>
-</tr>
+<form id="fsearch" name="fsearch" method="get">
+<fieldset>
+    <legend>그룹 검색</legend>
+    <span>
+        <?=$listall?>
+        생성된 그룹수 <?=number_format($total_count)?>개
+    </span>
+    <select name="sfl" title="검색대상">
+        <option value="gr_subject"<?=get_selected($_GET['sfl'], "gr_subject");?>>제목</option>
+        <option value="gr_id"<?=get_selected($_GET['sfl'], "gr_id");?>>ID</option>
+        <option value="gr_admin"<?=get_selected($_GET['sfl'], "gr_admin");?>>그룹관리자</option>
+    </select>
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)"  required class="required frm_input">
+    <input type="submit" value="검색" class="btn_submit">
+</fieldset>
 </form>
-</table>
 
-<form name=fboardgrouplist method=post>
-<input type=hidden name=sst   value='<?=$sst?>'>
-<input type=hidden name=sod   value='<?=$sod?>'>
-<input type=hidden name=sfl   value='<?=$sfl?>'>
-<input type=hidden name=stx   value='<?=$stx?>'>
-<input type=hidden name=page  value='<?=$page?>'>
-<input type=hidden name=token value='<?=$token?>'>
-<table width=100% cellpadding=0 cellspacing=1 border=0>
-<colgroup width=30>
-<colgroup width=120>
-<colgroup width=180>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=60>
-<tr><td colspan='<?=$colspan?>' class='line1'></td></tr>
-<tr class='bgcol1 bold col1 ht center'>
-    <td><input type=checkbox name=chkall value="1" onclick="check_all(this.form)"></td>
-    <td><?=subject_sort_link("gr_id")?>그룹아이디</a></td>
-    <td><?=subject_sort_link("gr_subject")?>제목</a></td>
-    <td><?=subject_sort_link("gr_admin")?>그룹관리자</a></td>
-    <td>게시판</td>
-    <td>접근사용</td>
-    <td>접근회원수</td>
-    <td><? if ($is_admin == "super") { echo "<a href='./boardgroup_form.php'><img src='$g4[admin_path]/img/icon_insert.gif' border=0 title='생성'></a>"; } ?></td>
-</tr>
-<tr><td colspan='<?=$colspan?>' class='line2'></td></tr>
+<section class="cbox">
+    <h2>게시판그룹 목록</h2>
+    <p>
+        접근사용 옵션을 설정하시면 관리자가 지정한 회원만 해당 그룹에 접근할 수 있습니다.<br>
+        접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
+    </p>
+
+    <?if ($is_admin == 'super') {?>
+    <div id="btn_add">
+        <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
+    </div>
+    <?}?>
+
+    <form name="fboardgrouplist" id="fboardgrouplist" action="./boardgroup_list_update.php" onsubmit="return fboardgrouplist_submit(this);" method="post">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="token" value="<?=$token?>">
+
+    <table class="tbl_gr_list">
+    <thead>
+    <tr>
+        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 그룹 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
+        <th scope="col"><?=subject_sort_link('gr_subject')?>제목</a></th>
+        <?if ($is_admin == 'super'){?><th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th><?}?>
+        <th scope="col">게시판<br>갯수</th>
+        <th scope="col">접근<br>사용</th>
+        <th scope="col">접근<br>회원수</th>
+        <th scope="col">메뉴<br>보임</th>
+        <th scope="col"><?=subject_sort_link('gr_order')?>출력<br>순서</a></th>
+        <th scope="col">접속기기</th>
+        <th scope="col">관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        // 접근회원수
+        $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$row['gr_id']}' ";
+        $row1 = sql_fetch($sql1);
+
+        // 게시판수
+        $sql2 = " select count(*) as cnt from {$g4['board_table']} where gr_id = '{$row['gr_id']}' ";
+        $row2 = sql_fetch($sql2);
+
+        $s_upd = '<a href="./boardgroup_form.php?'.$qstr.'&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
+    ?>
+
+    <tr>
+        <td class="td_chk">
+            <input type="checkbox" name="chk[]" value="<?=$i?>" id="chk_<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
+            <input type="hidden" name="group_id[<?=$i?>]" value="<?=$row['gr_id']?>">
+        </td>
+        <td class="td_grid"><a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+        <td>
+            <input type="text" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>" id="gr_subject_<?=$i?>" title="그룹제목 수정" class="frm_input">
+        </td>
+        <td>
+        <?if ($is_admin == 'super'){?>
+            <input type="text" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" id="gr_admin_<?=$i?>" title="그룹관리자 수정" class="frm_input" size="10" maxlength="20">
+        <?}else{?>
+            <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
+        <?}?>
+        </td>
+        <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
+        <td><input type="checkbox" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" id="gr_use_access_<?=$i?>" title="선택 시 접근회원 사용"></td>
+        <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
+        <td><input type="checkbox" name="gr_show_menu[<?=$i?>]" <?=$row['gr_show_menu']?'checked':''?> value="1" id="gr_show_menu_<?=$i?>" title="선택 시 메뉴보이기"></td>
+        <td>
+            <input type="text" name="gr_order[<?=$i?>]" value="<?=$row['gr_order']?>" id="gr_order_<?=$i?>" title="출력순서 수정" class="frm_input" size="2">
+        </td>
+        <td>
+            <select id="gr_device_<?=$i?>" name="gr_device[<?=$i?>]" title="접속기기 선택">
+                <option value="both"<?=get_selected($row['gr_device'], 'both');?>>모두</option>
+                <option value="pc"<?=get_selected($row['gr_device'], 'pc');?>>PC</option>
+                <option value="mobile"<?=get_selected($row['gr_device'], 'mobile');?>>모바일</option>
+            </select>
+        </td>
+        <td class="td_smallmng"><?=$s_upd?></td>
+    </tr>
+
+    <?
+        }
+    if ($i == 0)
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </table>
+
+    <div class="btn_list">
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
+        <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
+        <a href="./boardgroup_form.php">게시판그룹 추가</a>
+    </div>
+    </form>
+</section>
+
 <?
-for ($i=0; $row=sql_fetch_array($result); $i++) 
-{
-    // 접근회원수
-    $sql1 = " select count(*) as cnt from $g4[group_member_table] where gr_id = '$row[gr_id]' ";
-    $row1 = sql_fetch($sql1);
-
-    // 게시판수
-    $sql2 = " select count(*) as cnt from $g4[board_table] where gr_id = '$row[gr_id]' ";
-    $row2 = sql_fetch($sql2);
-
-    $s_upd = "<a href='./boardgroup_form.php?$qstr&w=u&gr_id=$row[gr_id]'><img src='img/icon_modify.gif' border=0 title='수정'></a>";
-    $s_del = "";
-    if ($is_admin == "super") {
-        //$s_del = "<a href=\"javascript:del('./boardgroup_delete.php?$qstr&gr_id=$row[gr_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
-        $s_del = "<a href=\"javascript:post_delete('boardgroup_delete.php', '$row[gr_id]');\"><img src='img/icon_delete.gif' border=0 title='삭제'></a>";
-    }
-
-    $list = $i%2;
-    echo "<input type=hidden name=gr_id[$i] value='$row[gr_id]'>";
-    echo "<tr class='list$list' onmouseover=\"this.className='mouseover';\" onmouseout=\"this.className='list$list';\" height=27 align=center>";
-    echo "<td><input type=checkbox name=chk[] value='$i'></td>";
-    echo "<td><a href='$g4[bbs_path]/group.php?gr_id=$row[gr_id]'><b>$row[gr_id]</b></a></td>";
-    echo "<td><input type=text class=ed name=gr_subject[$i] value='".get_text($row[gr_subject])."' size=30></td>";
-
-    if ($is_admin == "super")
-        //echo "<td>".get_member_id_select("gr_admin[$i]", 9, $row[gr_admin])."</td>";
-        echo "<td><input type=text class=ed name=gr_admin[$i] value='$row[gr_admin]' maxlength=20></td>";
-    else
-        echo "<input type=hidden name='gr_admin[$i]' value='$row[gr_admin]'><td>$row[gr_admin]</td>";
-
-    echo "<td><a href='./board_list.php?sfl=a.gr_id&stx=$row[gr_id]'>$row2[cnt]</a></td>";
-    echo "<td><input type=checkbox name=gr_use_access[$i] ".($row[gr_use_access]?'checked':'')." value='1'></td>";
-    echo "<td><a href='./boardgroupmember_list.php?gr_id=$row[gr_id]'>$row1[cnt]</a></td>";
-    echo "<td>$s_upd $s_del</td>";
-    echo "</tr>\n";
-} 
-
-if ($i == 0)
-    echo "<tr><td colspan='$colspan' align=center height=100 bgcolor=#ffffff>자료가 없습니다.</td></tr>"; 
-
-echo "<tr><td colspan='$colspan' class='line2'></td></tr>";
-echo "</table>";
-
-$pagelist = get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");
-echo "<table width=100% cellpadding=3 cellspacing=1>";
-echo "<tr><td width=70%>";
-echo "<input type=button class='btn1' value='선택수정' onclick=\"btn_check(this.form, 'update')\">";
-//echo " <input type=button value='선택삭제' onclick=\"btn_check(this.form, 'delete')\">";
-echo "</td>";
-echo "<td width=30% align=right>$pagelist</td></tr></table>\n";
-
-if ($stx)
-    echo "<script>document.fsearch.sfl.value = '$sfl';</script>";
+$pagelist = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
+echo $pagelist;
 ?>
-</form>
 
 <script>
-// POST 방식으로 삭제
-function post_delete(action_url, val)
+function fboardgrouplist_submit(f)
 {
-	var f = document.fpost;
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
 
-	if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        f.gr_id.value = val;
-		f.action      = action_url;
-		f.submit();
-	}
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    return true;
 }
 </script>
 
-<form name='fpost' method='post'>
-<input type='hidden' name='sst'   value='<?=$sst?>'>
-<input type='hidden' name='sod'   value='<?=$sod?>'>
-<input type='hidden' name='sfl'   value='<?=$sfl?>'>
-<input type='hidden' name='stx'   value='<?=$stx?>'>
-<input type='hidden' name='page'  value='<?=$page?>'>
-<input type='hidden' name='token' value='<?=$token?>'>
-<input type='hidden' name='gr_id'>
-</form>
-
 <?
-include_once("./admin.tail.php");
+include_once('./admin.tail.php');
 ?>
