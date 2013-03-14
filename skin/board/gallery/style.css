@@ -53,7 +53,6 @@
 .td_num strong {color:#000}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#e8180c}
-.cnt_cmt {font-weight:bold}
 
 #bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}
 #bo_sch legend {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
