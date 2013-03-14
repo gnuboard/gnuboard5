@@ -94,6 +94,9 @@ pre {overflow-x:scroll;font-size:1.1em}
 #ft_copy p {padding:0.5em;color:#4a9ab8}
 #ft_copy b {color:#fff}
 
+/* PC화면으로 */
+#g4s_cng {}
+
 /* 버튼 */
 .btn01 {display:inline-block;padding:0 0.5em;height:2em;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;font-size:1em;text-decoration:none !important;line-height:2em;vertical-align:middle}
 .btn01:focus,

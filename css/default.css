@@ -117,6 +117,9 @@ a:active {color:#000;text-decoration:underline}
 #ft_copy p {margin:0 auto;width:980px;color:#4a9ab8}
 #ft_copy b {color:#fff}
 
+/* Mobile화면으로 */
+#g4s_cng {}
+
 /* 콘텐츠별 스타일 */
 /* 버튼 */
 .btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
