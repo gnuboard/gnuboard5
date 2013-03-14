@@ -1,0 +1,28 @@
+a:link, a:visited, a:active { text-decoration:none; color:#CD7444; }
+a:hover { text-decoration:underline; color:#C15B27; }
+
+.title { font-size:9pt; font-family:굴림; font-weight:bold; color:#616161; }
+
+.btn1 { background-color:#FBF8EE; } 
+
+.col1 { color:#616161; }
+.col2 { color:#868686; }
+
+.pad1 { padding:5px 10px 5px 10px; }
+.pad2 { padding:5px 0px 5px 0px; }
+
+.bgcol1 { background-color:#FBF8EE; padding:5px; }
+.bgcol2 { background-color:#F5F5F5; padding:5px; }
+
+.line1 { background-color:#CCCCCC; height:2px; }
+.line2 { background-color:#CCCCCC; height:1px; }
+
+.list0 { background-color:#FFFFFF; }
+.list1 { background-color:#F8F8F8; }
+
+.bold { font-weight:bold; }
+.center { text-align:center; }
+.right { text-align:right; }
+
+.w99 { width:99%; }
+.ht { height:30px; }

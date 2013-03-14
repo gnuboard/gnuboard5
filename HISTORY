@@ -1,0 +1,3740 @@
+4.36.19 (2013.02.26)
+    :   form 태그의 action 속성을 이용한 XSS 취약점 해결 (i2sec 13기 박성진님께서 직접 알려 주셨습니다.)
+        이 취약점은 ie 브라우저에서만 발생하는 것으로 알려져 있습니다.
+
+        lib/common.lib.php 의 bad_tag_convert() 함수중에서 
+
+            return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
+
+            를 
+
+            return preg_replace("/\<([\/]?)(script|iframe|form)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
+
+            와 같이 수정 하였습니다.
+
+4.36.18 (2013.02.22)
+    :   iframe 태그에 주석문을 사용한 XSS 취약점 해결 (i2sec 13기 김태현님께서 직접 알려 주셨습니다.)
+        기존 코드의 위치를 바꿔서 해결 했습니다.
+
+        lib/common.lib.php 의 conv_content() 함수중에서 
+
+            $content = bad_tag_convert($content);
+            이 코드의 위치가 변경 되었습니다.
+
+4.36.17 (2013.02.22)
+    :   게시물 링크를 통한 XSS 취약점 해결 (서울 대원고등학교 현성원님께서 한국인터넷진흥원을 통하여 알려 주셨습니다.)
+        링크에는 HTML 태그를 사용하지 못하도록 조치 하였습니다.
+
+        bbs/write_update.php 에 아래와 같이 두줄 수정해 주시면 됩니다.
+
+            $wr_link1 = mysql_real_escape_string(strip_tags($_POST['wr_link1']));
+            $wr_link2 = mysql_real_escape_string(strip_tags($_POST['wr_link2']));
+
+4.36.16 (2013.02.14)
+    :   XSS 취약점 해결 (i2sec 황도경님께서 알려 주셨습니다.)
+        파일명에 특수문자가 포함되는 경우에 발생할수 있어 파일명을 필터링 하였습니다.
+
+        bbs/write_update.php 에 한줄 추가해 주시면 됩니다.
+
+            $filename  = preg_replace('/(\s|\<|\>|\=|\(|\))/', '_', $filename);
+
+4.36.15 (2013.02.06)
+    :   SQL Injection 취약점 해결
+        김동현(Stealth) 님께서 한국인터넷진흥원(KISA)을 통하여 알려 주셨습니다.
+
+        ※ php.ini 또는 .htaccess 에서 register_globals = On, magic_quotes_gpc = Off 으로 설정하였을 경우에만 해당됩니다.
+
+        bbs/memo_view.php 의 SQL 코드 위에 아래와 같이 한줄 추가해 넣으시면 됩니다.
+
+            $me_id = (int)$me_id;
+
+        bbs/memo_delete.php 의 SQL 코드 위에 아래와 같이 한줄 추가해 넣으시면 됩니다.
+            
+            $me_id = (int)$me_id;
+
+4.36.14 (2013.02.02)
+    :   오타로 인한 XSS 취약점 해결
+        ㈜윈스테크넷 침해사고대응센터에서 한국인터넷진흥원(KISA)을 통하여 알려 주셨습니다.
+
+        lib/common.lib.php 를 다음과 같이 수정 하였습니다.
+
+            //$pattern .= "(i|&#(x6a|105);?)";
+            $pattern .= "(i|&#(x69|105);?)";
+
+4.36.13 (2013.01.29)
+    :   iframe 등의 tag 에 주석 처리가 되어 있는 경우의 (/**/) XSS 취약점 해결
+        장원용 님께서 한국인터넷진흥원(KISA)을 통하여 알려 주셨습니다.
+
+        lib/common.lib.php 를 다음과 같이 수정 하였습니다.
+
+            // tag 내의 주석문 무효화 하기
+            function bad130128($matches)
+            {
+                $str = $matches[2];
+                return '<'.$matches[1].preg_replace('#(\/\*|\*\/)#', '', $str).'>';
+            }
+            ...
+            $content = preg_replace_callback("/<([^>]+)>/s", 'bad130128', $content); 
+
+4.36.12 (2013.01.09)
+    :   XSS 취약점 해결, 패치된 내역 수정 보완
+        UN Security팀에서 한국인터넷진흥원을 통하여 알려 주셨습니다.
+
+        lib/common.lib.php 의 아래 코드가 추가 되었습니다.
+
+            $content = preg_replace_callback("#style\s*=\s*[\"\']?[^\"\']+[\"\']?#i",
+                        create_function('$matches', 'return str_replace("\\\\", "", stripslashes($matches[0]));'), $content);
+
+    :   session_unregister 는 PHP 5.3 이상 에서 더이상 사용되지 않고 PHP 5.4 에서 사라지는 함수입니다.
+        unset($_SESSION['const']) 로 대체합니다.
+        김선용 님께서 알려 주셨습니다.
+
+        bbs/formmail_send.php
+        bbs/member_leave.php
+        bbs/memo_form_update.php
+        bbs/password_lost2.php
+        bbs/register_form_update.php
+        bbs/write_comment_update.php
+        bbs/write_update.php
+
+4.36.11 (2012.12.13)
+    :   글읽기에서 실행되는 XSS 취약점 보완
+        UN Security팀에서 한국인터넷진흥원을 통하여 알려 주셨습니다.
+
+        lib/common.lib.php 에 아래와 같이 추가합니다.
+        
+        // <IMG STYLE="xss:e\xpression(alert('XSS'))"></IMG> 와 같은 코드에 취약점이 있어 수정함. 121213
+        $content = preg_replace("/(?<=style)(\s*=\s*[\"\']?xss\:)/i", '="__XSS__', $content); 
+
+4.36.10 (2012.12.04)
+    :   크롬에서만 실행되는 XSS 취약점 보완
+        서울 대원고등학교 현성원님 께서 한국인터넷진흥원을 통하여 알려 주셨습니다.
+
+        common.php 에 아래와 같이 추가합니다.
+        
+            // 코드 $sfl 변수값에서 < > ' " % = ( ) 공백 문자를 없앤다.
+            $sfl = preg_replace("/[\<\>\'\"\%\=\(\)\s]/", "", $sfl);
+
+4.36.09 (2012.11.30)
+    :   게시판에서 DHTML 에디터를 사용하지 않고 html 글을 작성하는 경우에 XSS 취약점이 발견되어 보완합니다.
+        윤태성(삽지리)님 께서 한국인터넷진흥원을 통하여 알려 주셨습니다.
+
+        lib/common.lib.php 를 아래와 같이 수정합니다.
+        
+            //$content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "", $content);
+            $content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "_$1$2_", $content);
+
+4.36.08 (2012.11.01)
+    :   SQL Injection 취약점 보완 (Stealth in BlackFalcon 김동현님께서 한국인터넷진흥원을 통하여 알려 주셨습니다.)
+        단, register_globals = On, magic_quotes_gpc = Off 설정을 만족하는 경우에만 해당됩니다.
+    :   태그에 포함되지 않은 expression 속성이 변환되는 것을 방지
+
+        bbs/memo_form.php 의
+            
+            $me_id = mysql_real_escape_string($me_id);
+
+        lib/common.lib.php 의
+
+            //$content = preg_replace("/".$pattern."/i", "__EXPRESSION__", $content);
+            $content = preg_replace("/<[^>]*".$pattern."/i", "__EXPRESSION__", $content); 
+
+4.36.07 (2012.10.23)
+    :   일부 브라우저에서 template.xml 로딩 오류 발생으로 인하여 template.xml 코드를 cheditor.js 에 포함시켜서 해결함.
+        (CHSOFT 나창호님께서 도움 주셨습니다.)
+
+        cheditor5/cheditor.js 수정
+        cheditor5/template.xml 삭제 (그냥 둬도 상관 없음)
+
+4.36.06 (2012.10.12)
+    :   [보안] XSS 취약점 보완 (unsecurity 김강섭님께서 한국인터넷진흥원을 통하여 알려 주셨습니다.)
+
+        lib/common.lib.php 
+
+        // 이런 경우를 방지함 <IMG STYLE="xss:expr/*XSS*/ession(alert('XSS'))">
+        //$content = preg_replace("#\/\*.*\*\/#iU", "", $content);
+        // 위의 정규식이 아래와 같은 내용을 통과시키므로 not greedy(비탐욕수량자?) 옵션을 제거함. ignore case 옵션도 필요 없으므로 제거
+        // <IMG STYLE="xss:ex//*XSS*/**/pression(alert('XSS'))"></IMG>
+        $content = preg_replace("#\/\*.*\*\/#", "", $content);
+
+4.36.05 (2012.09.24)
+    :   우편번호 2012.07.13.자 반영 52,017건
+
+        bbs/zip.db 
+
+4.36.04 (2012.08.22)
+    :   플래시 플레이어 업그레이드로 인한 에디터 파일업로드에 문제가 생겨 cheditor 5.04 에서 cheditor 5.09.2 로 업데이트 합니다.
+    :   4.36.03 에서 추가된 CHARSET 관련 패치를 제거합니다. 일부 페이지들과의 호환성에서 문제가 있었습니다.
+
+        cheidtor5/*
+
+        common.php 에
+
+            header("Content-Type: text/html; charset={$g4['charset']}"); 를 제거했습니다.
+
+4.36.03 (2012.07.20)
+    :   [보안] 비회원 글쓰기에서 다른 사람의 글에 수정할수 있는 오류가 있어 수정 (이준호님께서 알려 주셨습니다.)
+    :   공백 비교 코드 오류로 인한 수정 (letsgolee님께서 알려 주셨습니다.)
+    :   CHARSET 고정 - 상,하단 레이아웃을 사용하지 않는 경우 경고창등이 깨지는 경우를 방지 (곱슬최씨님께서 제안해 주셨습니다.)
+
+        bbs/write.php
+
+            set_session('ss_bo_table', $_REQUEST['bo_table']);
+            set_session('ss_wr_id', $_REQUEST['wr_id']);
+
+        bbs/write_update.php
+
+            if (get_session('ss_bo_table') != $_POST['bo_table'] || get_session('ss_wr_id') != $_POST['wr_id']) {
+                alert('올바른 방법으로 수정하여 주십시오.');
+            }
+        
+        lib/common.lib.php 의 check_string() 함수중
+        
+            else if ($oc >= 0x20) { 를
+            else if ($oc == 0x20) { 와 같이 수정했습니다.
+
+        common.php 에
+
+            header("Content-Type: text/html; charset={$g4['charset']}"); 를 추가했습니다.
+
+4.36.02 (2012.06.27)
+    :   플래시의 액션스크립트와 자바스크립트의 연동을 차단하여 악의적인 사이트로의 이동을 막는다. (i2sec 김준규님께서 알려 주셨습니다.)
+        value="always" 를 value="never" 로, allowScriptaccess="always" 를 allowScriptaccess="never" 로 변환하는데 목적이 있다.
+    :   4.36.01 의 코드에 오류가 있어 수정했습니다.
+
+        lib/common.lib.php 의 아래 코드를 수정 및 추가하십시오.
+
+            $content = preg_replace_callback("#<([^>]+)#", create_function('$m', 'return "<".str_replace("<", "&lt;", $m[1]);'), $content);
+            $content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "", $content);
+
+            // 플래시의 액션스크립트와 자바스크립트의 연동을 차단하여 악의적인 사이트로의 이동을 막는다.
+            // value="always" 를 value="never" 로, allowScriptaccess="always" 를 allowScriptaccess="never" 로 변환하는데 목적이 있다.
+            $content = preg_replace("/((?<=\<param|\<embed)[^>]+)(\s*=\s*[\'\"]?)always([\'\"]?)([^>]+(?=\>))/i", "$1$2never$3$4", $content);
+
+4.36.01 (2012.06.26)
+    :   XSS 취약점 수정 보완 (i2sec 강우석님께서 원인과 해결책을 모두 알려 주셨습니다.)
+        기존코드에 헛점이 있어 코드를 수정 보완 하였습니다.
+            
+        lib/common.lib.php 의 conv_content() 함수에 아래와 같이 한줄 추가 하였습니다.
+
+            $content = preg_replace_callback("#<([^>]+)#", create_function('$m', 'return "<".htmlspecialchars($m[1], ENT_NOQUOTES);'), $content);
+
+4.36.00 (2012.06.21)
+    :   DB SESSION 의 MySQL 과부하로 인하여 기존의 FILE SESSION 으로 되돌림
+
+
+        data/session 디렉토리를 생성하신 후 
+        chmod 777 data/session 명령으로 세션데이터 쓰기가 가능하도록 퍼미션을 변경하시기 바랍니다.
+
+
+        data/session 디렉토리에 deny from all 과 같은 내용으로 .htaccess 파일을 생성하십시오.
+
+
+        common.php 를 아래와 같이 수정하십시오.
+
+            //-------------------------------------------
+            // SESSION 설정
+            //-------------------------------------------
+            ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
+            ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
+
+            session_save_path("{$g4['path']}/data/session");
+
+            if (isset($SESSION_CACHE_LIMITER))
+                @session_cache_limiter($SESSION_CACHE_LIMITER);
+            else
+                @session_cache_limiter("no-cache, must-revalidate");
+
+            //==============================================================================
+            // 공용 변수
+            //==============================================================================
+            // 기본환경설정
+            // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
+            $config = sql_fetch(" select * from $g4[config_table] ");
+
+            ini_set("session.cache_expire", 180); // 세션 캐쉬 보관시간 (분)
+            ini_set("session.gc_maxlifetime", 10800); // session data의 garbage collection 존재 기간을 지정 (초)
+            ini_set("session.gc_probability", 1); // session.gc_probability는 session.gc_divisor와 연계하여 gc(쓰레기 수거) 루틴의 시작 확률을 관리합니다. 기본값은 1입니다. 자세한 내용은 session.gc_divisor를 참고하십시오.
+            ini_set("session.gc_divisor", 100); // session.gc_divisor는 session.gc_probability와 결합하여 각 세션 초기화 시에 gc(쓰레기 수거) 프로세스를 시작할 확률을 정의합니다. 확률은 gc_probability/gc_divisor를 사용하여 계산합니다. 즉, 1/100은 각 요청시에 GC 프로세스를 시작할 확률이 1%입니다. session.gc_divisor의 기본값은 100입니다.
+
+            session_set_cookie_params(0, "/");
+            ini_set("session.cookie_domain", $g4['cookie_domain']);
+
+            @session_start();
+
+4.35.02 (2012.06.15)
+    :   4.35.01 의 세션테이블 생성할때 utf-8 사용시 세션테이블을 utf8 로 생성 (내일을위하여 님이 알려주시고 모바일님이 해결해 주셨습니다.)
+        
+        lib/dbsession.lib.php 에 추가하세요.
+
+            if (strtolower($g4['charset']) == 'utf-8') {
+                $sql .= " DEFAULT CHARSET=utf8 ";
+            }
+
+4.35.01 (2012.06.13)
+    :   4.35.00 에서 cookie_domain 의 설정등이 누락되어 서브도메인간의 세션 공유가 되지 않던 오류를 수정 (cosy님께서 알려주셨습니다.)
+    :   세션 데이터의 유지시간이 기본 1440초(24분)으로 짧아 10800초(3시간) 동안 유지되도록 수정
+    :   세션 테이블 생성시 날짜시간에 인덱스를 추가
+
+        common.php 를 아래와 같이 수정하세요.
+
+            //-------------------------------------------
+            // SESSION 설정
+            //-------------------------------------------
+            include_once("$g4[path]/lib/dbsession.lib.php");
+            $session = new g4_dbsession();
+            session_set_save_handler(array($session, 'open'), 
+                                     array($session, 'close'),
+                                     array($session, 'read'),
+                                     array($session, 'write'),
+                                     array($session, 'destroy'),
+                                     array($session, 'gc'));
+
+            session_set_cookie_params(0, "/");
+            ini_set("session.cookie_domain", $g4['cookie_domain']);
+            ini_set("session.cache_expire", 180); // 세션 캐쉬 보관시간 (분) 180분 == 3시간
+            ini_set("session.gc_maxlifetime", 10800); // session data의 garbage collection 존재 기간을 지정 (초) 10800초 == 3시간
+            ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
+            ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
+
+            if (isset($SESSION_CACHE_LIMITER))
+                @session_cache_limiter($SESSION_CACHE_LIMITER);
+            else
+                @session_cache_limiter("no-cache, must-revalidate");
+
+            @session_start();
+            //-------------------------------------------
+
+        lib/dbsession.lib.php 를 아래와 같이 수정하세요.
+
+            $sql = " CREATE TABLE `$g4[session_table]` (`ss_id` CHAR(32) NOT NULL, `ss_data` TEXT NOT NULL, `ss_datetime` DATETIME NOT NULL, PRIMARY KEY (`ss_id`), KEY `ss_datetime` (`ss_datetime`)) ENGINE = MYISAM ";
+     
+4.35.00 (2012.06.12)
+    :   SESSION Data 가 노출되지 않도록 DB SESSION 사용 (HSEngine 님께서 알려 주셨습니다.)
+    :   $_SERVER['PHP_SELF'] 변수를 사용한 XSS 취약점 수정
+
+        lib/dbsession.lib.php 파일 추가
+
+        config.php 파일에 추가하세요.
+
+            $g4['session_table']       = $g4['table_prefix'] . "session";       // 세션 테이블
+
+        common.php 파일에서
+
+            SESSION 관련 코드를 모두 삭제하신 후 아래 코드로 대체하세요.
+
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            $_SERVER['PHP_SELF'] = htmlentities($_SERVER['PHP_SELF']);
+
+            //-------------------------------------------
+            // SESSION 설정
+            //-------------------------------------------
+            include_once("$g4[path]/lib/dbsession.lib.php");
+            $session = new g4_dbsession();
+            session_set_save_handler(array($session, 'open'), 
+                                     array($session, 'close'),
+                                     array($session, 'read'),
+                                     array($session, 'write'),
+                                     array($session, 'destroy'),
+                                     array($session, 'gc'));
+
+            ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
+            ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
+
+            if (isset($SESSION_CACHE_LIMITER))
+                @session_cache_limiter($SESSION_CACHE_LIMITER);
+            else
+                @session_cache_limiter("no-cache, must-revalidate");
+
+            @session_start();
+            //-------------------------------------------
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+4.34.30 (2012.05.29)
+    :   4.34.28 의 검색 구문 수정후 게시판에서 분류 검색이 되지 않는것을 수정
+
+        lib/common.lib.php 의 get_sql_search() 함수가 수정 되었습니다.
+
+4.34.29 (2012.05.27)
+    :   4.34.28 패치에서 embed 태그중 allowscriptaccess 코드를 script 로 인식하여 동영상 작동이 안되는것을 수정
+
+        lib/common.lib.php 의 bad120422() 함수가 수정 되었습니다.
+
+            function bad120422($matches)
+            {
+                $tag  = $matches[1];
+                $code = $matches[2];
+                if (preg_match("#\bscript\b#i", $code)) {
+                    return "$tag 태그에 스크립트는 사용 불가합니다.";
+                } else if (preg_match("#\bbase64\b#i", $code)) {
+                    return "$tag 태그에 BASE64는 사용 불가합니다.";
+                }
+                return $matches[0];
+            }
+
+4.34.28 (2012.05.24)
+    :   게시판 검색시 검색어에 태그가 들어가는 경우 쿼리 에러가 나는것을 수정 (곱슬최씨님께서 알려 주셨습니다.)
+        get_sql_search() 함수 수정
+    :   [보안패치] XSS 취약점 오류 수정 (i2sec 하동민님께서 알려 주셨습니다.)
+        conv_content(), bad120422() 함수 수정
+
+        lib/common.lib.php
+
+4.34.27 (2012.05.22)
+    :   [보안패치] SQL Injection 공격 취약점을, 김동현(BlackFalcon)님께서 한국인터넷진흥원을 통하여 알려 주셨습니다.
+
+        bbs/download.php 에 아래 코드를 한줄 추가해 주시기 바랍니다.
+
+            $no = (int)$no;
+
+4.34.26 (2012.05.03)
+    :   4.34.23 에서 이상 없는 OBJECT 태그의 반환이 제대로 되지 않던 오류 수정 (곱슬최씨님께서 고쳐 주셨습니다.)
+
+        lib/common.lib.php 의
+
+            function bad120422($matches)
+            {
+                $code = $matches[1];
+                if (preg_match("#script#i", $code)) {
+                    return "OBJECT 태그에 스크립트는 사용 불가합니다.";
+                } else if (preg_match("#base64#i", $code)) {
+                    return "OBJECT 태그에 BASE64는 사용 불가합니다.";
+                }
+                return $matches[0]; // 이 코드가 추가 되었습니다.
+            }
+
+4.34.25 (2012.04.30)
+    :   [보안강화] 설치시 data 디렉토리에 .htaccess 파일을 생성하여 data 디렉토리 및 하위 디렉토리에서는 
+        .htaccess .htpasswd .php .phtml .html .htm .inc .cgi .pl 파일을 실행 할 수 없습니다.
+
+        기존에 운영중인 사이트에서는 data 디렉토리에 .htaccess 파일을 아래와 같은 내용으로 작성하십시오.
+
+        <FilesMatch "\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll])">
+        Order allow,deny 
+        Deny from all
+        </FilesMatch>
+
+4.34.24 (2012.04.23)
+    :   4.34.23의 conv_content() 함수내에 함수가 선언되어 그누보드외 프로그램에서 오류가 발생했습니다.
+        bad120422() 함수를 conv_content() 바깥으로 이동시켜 해결하였습니다. (지니아빠님께서 알려 주셨습니다.)
+
+        lib/common.lib.php
+
+4.34.23 (2012.04.22)
+    :   [XSS] OBJECT 태그에서 javascript를 실행할수 있는 버그를 수정 (i2Sec 8기 하동민님께서 알려 주셨습니다.)
+    :   [XSS] 글쓰기시 이름에 HTML 태그가 입력되지 못하도록 수정 (i2Sec 8기 강우창님께서 알려 주셨습니다.)
+    :   login, logout시 외부로 리다이렉트 할 우려가 있어 url에 도메인을 지정하지 못하도록 수정 (i2Sec 8기 조민기님께서 알려 주셨습니다.)
+    :   cheditor4의 삭제 코드에 문제가 있어 이번 버전부터는 cheditor4는 제외하고 배포합니다. (i2Sec 8기 조민기님께서 알려 주셨습니다.)
+    :   이외에도 i2Sec 8기 여러분들께서 SQL Injection 등의 오류를 알려 주셨으나 그누보드4가 소스코드를 오픈하고 있으므로
+        해당 오류는 SQL Injection으로 보기 어렵습니다. 도움주신 i2Sec 8기 여러분들께 감사의 말씀을 전합니다.
+
+        lib/common.lib.php 의
+
+            function bad120422($matches)
+            {
+                $code = $matches[1];
+                if (preg_match("#script#i", $code)) {
+                    return "OBJECT 태그에 스크립트는 사용 불가합니다.";
+                } else if (preg_match("#base64#i", $code)) {
+                    return "OBJECT 태그에 BASE64는 사용 불가합니다.";
+                }
+            }
+
+            // object 태그에서 javascript 코드 막기
+            $content = preg_replace_callback("#<object([^>]+)>#i", "bad120422", $content);
+
+        bbs/write_update.php 의
+
+            $wr_name = strip_tags(mysql_escape_string($_POST['wr_name']));
+
+        bbs/login.php
+        bbs/logout.php 의
+
+            $p = parse_url($url);
+            if ($p['scheme'] || $p['host']) {
+                alert("url에 도메인을 지정할 수 없습니다.");
+            }
+
+4.34.22 (2012.03.30)
+    :   2012년 3월 30일 부터 시행되는 개인정보보호법으로 인해 회원가입시 주민등록번호를 입력 받지 못하도록 수정
+
+        adm/config_form.php
+        bbs/register_form.php
+        skin/member/basic/register.skin.php
+
+4.34.21 (2012.03.09)
+    :   [보안패치] 파일명을 이용한 XSS 취약점 수정 (wh1ant님께서 도움 주셨습니다.)
+    :   UTF-8 사용시 링크에서 한글이 깨지던 오류 수정 (forever님, NaviGator님께서 도움 주셨습니다.)
+
+
+        skin/board/basic/view.skin.php 을 아래와 같이 수정하세요.
+
+            echo "<a href=\"javascript:file_download('{$view[file][$i][href]}', '".urlencode($view[file][$i][source])."');\" title='{$view[file][$i][content]}'>";
+            ...
+            <? if ($board[bo_download_point] < 0) { ?>if (confirm("'"+decodeURIComponent(file)+"' 파일을 다운로드 하시면 포인트가 차감(<?=number_format($board[bo_download_point])?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?"))<?}?>
+
+
+        lib/common.lib.php 의 function url_auto_link($str) 에서
+
+            $str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET='$config[cf_link_target]'>\\2</A>", $str);
+            를 
+
+            global $g4;
+            ...
+            if (strtoupper($g4['charset']) == 'UTF-8') {
+                $str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[가-힣\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET='$config[cf_link_target]'>\\2</A>", $str);
+            } else {
+                $str = preg_replace("/([^(HREF=\"?'?)|(SRC=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET='$config[cf_link_target]'>\\2</A>", $str);
+            }
+            로 수정하세요.
+
+
+4.34.20 (2012.03.02)
+    :   UTF-8 사용시 cut_str 함수가 제대로 작동되지 않던 부분을 수정 (곱슬최씨님께서 도움 주셨습니다.)
+        거친마루님의 팁이 적용 되었습니다.
+        http://www.sir.co.kr/bbs/board.php?bo_table=g4_tiptech&wr_id=1328#c_1355
+    :   우편번호 2012.01.26.자 반영 51,898건 (FM2fmedia님께서 도움 주셨습니다.)
+
+        lib/common.lib.php 의 cut_str() 함수 수정
+        bbs/zip.db 
+
+4.34.19 (2012.01.17)
+    :   특정 서버에 따라 캡챠이미지의 결과를 인식하지 못하는 오류를 수정
+        (해외 서버에서 euc-kr 을 사용하는 경우에 오류가 보고된바 있습니다.)
+
+        bbs/kcaptcha_result.php 에 아래 코드가 한줄 추가 되었습니다.
+
+            header("Content-Type: text/html; charset=$g4[charset]");
+
+4.34.18 (2012.01.03)
+    :   PHP 버전에 따른 basic 회원 스킨 사용시 euc-kr 버전에서 ajax 가 제대로 작동되도록 수정 (konahn님)
+
+        skin/member/basic/_common.php 를 아래와 같이 수정하십시오.
+
+        $g4_path = "../../.."; // common.php 의 상대 경로
+        include_once("$g4_path/common.php");
+        header("Content-Type: text/html; charset=$g4[charset]"); // 추가된 코드
+
+
+4.34.17 (11.12.09)
+    :   [보안패치] 게시물 검색시 $sfl 변수를 이용하여 패스워드 유추가 가능한 부분을 수정 (i2Sec-김세연[kaist]님)
+
+        bbs/search.php 의
+
+            switch ($field[$k]) 
+            {
+                case "mb_id" :
+                case "mb_name" :
+                    $str .= "$field[$k] = '$s[$i]'";
+                    break;
+                default :
+                    if (preg_match("/[a-zA-Z]/", $search_str))
+                        $str .= "INSTR(LOWER($field[$k]), LOWER('$search_str'))";
+                    else
+                        $str .= "INSTR($field[$k], '$search_str')";
+                    break;
+            }
+
+            위 코드를 
+
+            switch ($field[$k]) 
+            {
+                case "mb_id" :
+                case "wr_name" :
+                    $str .= "$field[$k] = '$s[$i]'";
+                    break;
+                case "wr_subject" :
+                case "wr_content" :
+                    if (preg_match("/[a-zA-Z]/", $search_str))
+                        $str .= "INSTR(LOWER($field[$k]), LOWER('$search_str'))";
+                    else
+                        $str .= "INSTR($field[$k], '$search_str')";
+                    break;
+                default :
+                    $str .= "1=0"; // 항상 거짓
+                    break;
+            }
+
+            위와 같이 수정하여 주십시오.
+
+
+        lib/common.lib.php 의
+
+            switch ($field[$k]) {
+                case "mb_id" :
+                case "wr_name" :
+                    $str .= " $field[$k] = '$s[$i]' ";
+                    break;
+                case "wr_hit" :
+                case "wr_good" :
+                case "wr_nogood" :
+                    $str .= " $field[$k] >= '$s[$i]' ";
+                    break;
+                // 번호는 해당 검색어에 -1 을 곱함
+                case "wr_num" :
+                    $str .= "$field[$k] = ".((-1)*$s[$i]);
+                    break;
+                // LIKE 보다 INSTR 속도가 빠름
+                default :
+                    if (preg_match("/[a-zA-Z]/", $search_str))
+                        $str .= "INSTR(LOWER($field[$k]), LOWER('$search_str'))";
+                    else
+                        $str .= "INSTR($field[$k], '$search_str')";
+                    break;
+            }
+
+            위 코드를
+
+            switch ($field[$k]) {
+                case "mb_id" :
+                case "wr_name" :
+                    $str .= " $field[$k] = '$s[$i]' ";
+                    break;
+                case "wr_hit" :
+                case "wr_good" :
+                case "wr_nogood" :
+                    $str .= " $field[$k] >= '$s[$i]' ";
+                    break;
+                // 번호는 해당 검색어에 -1 을 곱함
+                case "wr_num" :
+                    $str .= "$field[$k] = ".((-1)*$s[$i]);
+                    break;
+                case "wr_ip" :
+                case "wr_password" :
+                    $str .= "1=0"; // 항상 거짓
+                    break;
+                // LIKE 보다 INSTR 속도가 빠름
+                default :
+                    if (preg_match("/[a-zA-Z]/", $search_str))
+                        $str .= "INSTR(LOWER($field[$k]), LOWER('$search_str'))";
+                    else
+                        $str .= "INSTR($field[$k], '$search_str')";
+                    break;
+            }
+
+            위와 같이 수정하여 주십시오.
+
+4.34.16 (11.11.15)
+    :   [보안패치] XSS 취약점 권고에 대한 수정 (i2Sec-김태형님)
+
+        lib/common.lib.php 의 function conv_content() 에서
+    
+        $content = preg_replace("#\/\*.*\*\/#iU", "", $content); 
+
+        이 코드의 위치를 바꿔 해결함
+
+4.34.15 (11.10.24)
+    :   [보안패치] SQL Injection 공격이 가능한 취약점 코드 조치 요청으로 인한 수정 (packet storm -> 한국인터넷진흥원)
+
+        bbs/tb.php 의 아래 코드가 수정 되었습니다.
+
+            // 영문자 숫자 _ 과 일치하지 않는 문자는 삭제한다. (최대 20자)
+            $bo_table = preg_replace("/\W/", "", substr($arr[1],0,20));
+            // 정수형으로 변환
+            $wr_id = (int)$arr[2];
+            // 영소문자 숫자 와 일치하지 않는 문자는 삭제한다. (최대 32자)
+            $to_token = preg_replace("/[^a-z0-9]/", "", substr($arr[3],0,32));
+
+        추신) 트랙백은 거의 사용하지 않는 기능으로 차기 버전에서는 기능 자체가 사라질수 있습니다.
+
+4.34.14 (11.10.04)
+    :   [보안패치] 회원가입시 홈페이지 필드를 통한 SQL Injection 공격 예방
+    :   [보안패치] 글수정, 답변시 링크 필드를 통한 XSS 공격 예방
+        (팔팔이님께서 알려 주셨습니다.)
+
+        bbs/register_form_update.php 에 추가 되었습니다.
+
+            $mb_homepage = trim(strip_tags(mysql_escape_string($_POST[mb_homepage])));
+
+        bbs/write_update.php 에 추가 되었습니다.
+            
+            $wr_link1 = mysql_real_escape_string($_POST['wr_link1']);
+            $wr_link2 = mysql_real_escape_string($_POST['wr_link2']);
+
+        bbs/write.php 에 추가 되었습니다.
+
+            else if ($w == "u") {
+                ...
+                for ($i=1; $i<=$g4[link_count]; $i++) {
+                    $write["wr_link".$i] = get_text($write["wr_link".$i]);
+                    $link[$i] = $write["wr_link".$i];
+                }
+                ...
+            } else if ($w == "r") {
+                ...
+                for ($i=1; $i<=$g4[link_count]; $i++) {
+                    $write["wr_link".$i] = get_text($write["wr_link".$i]);
+                }
+
+4.34.13 (11.10.01)
+    :   [보안패치] 회원가입 및 수정시 회원테이블 필드에 올바르지 않은 값이 포함될 수 있는 오류가 발견 되었습니다.
+        (팔팔이님께서 알려 주셨습니다.)
+
+        bbs/register_form.php
+
+            $member[mb_email]       = get_text($member[mb_email]);
+            ... 생략 ...
+            $member[mb_10]          = get_text($member[mb_10]);
+
+        adm/member_form.php
+
+            $mb[mb_email]       = get_text($mb[mb_email]);
+            ... 생략 ...
+            $mb[mb_10]          = get_text($mb[mb_10]);
+
+        lib/common.lib.php
+
+            function get_sideview($mb_id, $name="", $email="", $homepage="") 함수에 아래 코드가 추가 되었습니다.
+
+            $name     = get_text($name);
+            $email    = get_text($email);
+            $homepage = get_text($homepage);
+
+4.34.12 (11.09.22)
+    :   글 또는 코멘트를 쓴 후 메일 발송을 하는 경우에 전체 회원에게 메일이 발송되지 않던 오류를 수정
+        (개미인간님께서 알려 주셨습니다.)
+
+        bbs/write_update.php
+        bbs/write_comment_update.php
+
+            두개의 파일 모두 아래 코드만 추가 되었습니다.
+
+            $unique_email = array_values($unique_email);
+        
+4.34.11 (11.09.20)
+    :   우편번호 2011.08.30.자 반영 (곱슬최씨님께서 도움 주셨습니다.)
+
+        bbs/zip.db
+
+4.34.10 (11.08.10)
+    :   [보안패치] $_SERVER 배열변수 값의 변조를 이용한 SQL Injection 공격을 막는 코드입니다.
+        (SK Infosec 장경칩님께서 알려 주셨습니다.)
+
+        bbs/visit_insert.inc.php 의
+
+            $sql = " insert $g4[visit_table] ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent ) values ( '$vi_id', '$_SERVER[REMOTE_ADDR]', '$g4[time_ymd]', '$g4[time_his]', '$_SERVER[HTTP_REFERER]', '$_SERVER[HTTP_USER_AGENT]' ) ";
+
+            를 아래 코드로 대체합니다.
+
+            $remote_addr = mysql_real_escape_string($_SERVER['REMOTE_ADDR']);
+            $referer     = mysql_real_escape_string($_SERVER['HTTP_REFERER']);
+            $user_agent  = mysql_real_escape_string($_SERVER['HTTP_USER_AGENT']);
+            $sql = " insert $g4[visit_table] ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent ) values ( '$vi_id', '$remote_addr', '$g4[time_ymd]', '$g4[time_his]', '$referer', '$user_agent' ) ";
+
+
+4.34.09 (11.07.26)
+    :   우편번호 파일 업데이트 2011.07.21 조정내역
+        http://zipfinder.co.kr/zipcode/modi_list.htm
+    :   admin.menu300.php.bak 파일은 메뉴로 불러 들이지 않기
+        ( pogusm 님께서 도움 주셨습니다. )
+
+        bbs/zip.db
+
+        adm/admin.lib.php
+
+            if (!preg_match("/^admin.menu([0-9]{3}).*\.php$/", $entry, $m)) 
+
+4.34.08 (11.07.22)
+    :   접속자현황에서 한글 깨지는 오류 수정
+    :   관리자 > 게시판관리 > 인기검색어 관리, 인기검색어 순위 추가
+
+        lib/common.lib.php : is_utf8() 함수 추가
+        visit_list.php
+
+        adm/admin.menu300.php
+        adm/popular_list.php
+        adm/popular_rank.php
+
+4.34.07 (11.07.01)
+    :   [보안패치] 파일업로드의 오류를 이용한 XSS 공격 취약점을 수정 ( wh1ant님께서 도움 주셨습니다. )
+        php.ini 의 magic_quotes_gpc = Off 로 사용하는 경우에만 오류가 발생합니다.
+    :   [보안패치] CHEDITOR5 에서 허가받지 않은 파일 삭제 버그가 발견 되었습니다. ( letsgolee님께서 도움 주셨습니다. )
+    :   우편번호 파일 업데이트 (잉크님께서 도움 주셨습니다.)
+        리 다음에 공란이 없어 "계곡리" 같은 주소가 표시되지 않던 버그를 수정
+
+        bbs/write_update.php 에 아래 코드를 추가하세요.
+
+        if (!get_magic_quotes_gpc()) {
+            $upload[$i]['source'] = addslashes($upload[$i]['source']);
+        }
+
+
+        아래 3개 파일을 교체해 주시기 바랍니다.
+        
+        cheditor5/imageUpload/upload.php
+        cheditor5/imageUpload/delete.php
+        bbs/zip.db
+
+4.34.06 (11.06.21)
+    :   [추가보안패치] CHSOFT 대표 나창호님께서 도움 주셨습니다. ( CHEDITOR 제작자 )
+        4.34.05 에서 보완된 패치입니다.
+        플래시에서 이미지 파일이 아닌 경우에는 업로드 하지 않습니다.
+
+        아래 3개 파일을 교체해 주시기 바랍니다.
+
+        cheditor5/imageUpload/upload.php
+        cheditor5/popup/js/image.js
+        cheditor5/popup/flash/CHXImage.swf
+
+4.34.05 (11.06.18)
+    :   [보안패치] CHSOFT 대표 나창호님께서 도움 주셨습니다. ( CHEDITOR 제작자 )
+        GIF Exploit 이라고 불리우는 이 공격은 이미지 파일에 PHP 코드를 심어 서버에 업로드 합니다.
+        CHEDITOR5 버전에만 해당됩니다.
+
+        참고) 심각한 사안이므로 되도록 빨리 패치해 주시는 것이 좋습니다.
+
+      
+        아래 2개 파일을 교체해 주시기 바랍니다.
+
+        cheditor5/imageUpload/upload.php
+        cheditor5/popup/js/image.js
+
+
+        추가사항) 
+        data 폴더에서 php 나 html 파일을 실행하지 못하게 하려면 아래의 파일을 data 폴더에 만들어 놓으시기 바랍니다.
+        data 폴더에 하나만 만들어 놓으시면 됩니다.
+
+        파일명 : .htaccess (파일명 앞에 점이 붙습니다. 숨김 기능을 합니다.)
+
+        내용 : 
+
+        <FilesMatch "\.([Pp][Hh][Pp]|[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll])"> 
+            Order allow,deny 
+            Deny from all
+        </FilesMatch>
+
+4.34.04 (11.05.27)
+    :   글복사, 이동시 코멘트 삭제, 추가가 있었다면 코멘트가 제대로 복사, 이동되지 않는 버그를 수정하였습니다.
+        ( 진서기님께서 이미 2009년에 알려주신 버그인데 패치가 늦었습니다. http://sir.co.kr/bbs/board.php?bo_table=g4_tiptech&wr_id=18926 )
+
+        bbs/move_update.php 에서
+
+        $sql2 = " select * from $write_table where wr_num = '$wr_num' order by wr_parent, wr_comment desc, wr_id ";
+
+        를
+
+        $sql2 = " select * from $write_table where wr_num = '$wr_num' order by wr_parent, wr_is_comment, wr_comment desc, wr_id ";
+
+        이렇게 수정하시면 됩니다.
+
+4.34.03 (11.05.17)
+    :   [보안패치] SQL Injection 취약점에 대비한 코드 수정
+        (한국인터넷진흥원을 통하여 과천고등학교 권혁님께서 취약점과 해결방안을 자세하게 알려주셨습니다.)
+    :   [보안패치] 이미지 태그의 src 속성에 download.php 링크가 있는 경우 게시물을 확인하는 것만으로도 파일의 다운로드가 가능한 취약점 수정
+        (국제정보보안센터[i2Sec]의 최종훈님께서 알려주셨습니다.)
+
+        lib/common.lib.php 의 get_sql_search() 함수에 추가
+
+            $field[$k] = preg_match("/^[\w\,\|]+$/", $field[$k]) ? $field[$k] : "wr_subject";
+
+        lib/common.lib.php 의 conv_content() 함수 추가
+            
+            $content = preg_replace("/<(img[^>]+download\.php[^>]+bo_table[^>]+)/i", "*** CSRF 감지 : &lt;$1", $content);
+
+4.34.02 (11.05.13)
+    :   [보안패치] 이미지 태그의 src 속성에 삭제등의 링크가 있는 경우 게시물을 확인하는 것만으로도 데이터의 위변조가 가능하므로 이것을 막음
+        (국제정보보안센터[i2Sec]의 최종훈님께서 알려주셨습니다.)
+    :   캡챠 코드 변경 (비회원이 코멘트 댓글을 다른 경우 캡챠이미지를 변경할 수 있도록 수정)
+        (letsgolee 님께서 알려주셨습니다.)
+
+        [보안패치]
+
+        lib/common.lib.php 의 conv_content() 함수에 아래 코드를 추가합니다.
+
+            $content = preg_replace("/<(img[^>]+delete\.php[^>]+bo_table[^>]+)/i", "*** CSRF 감지 : &lt;$1", $content);
+            $content = preg_replace("/<(img[^>]+delete_comment\.php[^>]+bo_table[^>]+)/i", "*** CSRF 감지 : &lt;$1", $content);
+            $content = preg_replace("/<(img[^>]+logout\.php[^>]+)/i", "*** CSRF 감지 : &lt;$1", $content);
+
+        bbs/delete.php 와 bbs/delete_comment.php 에 아래 코드를 추가합니다.
+
+        if ($is_admin)
+        {
+            if (!($token && get_session("ss_delete_token") == $token)) 
+                alert("토큰 에러로 삭제 불가합니다.");
+        }
+            
+        bbs/view.php 에 아래 코드를 추가합니다.
+
+            if ($is_admin) 
+            {
+                set_session("ss_delete_token", $token = uniqid(time()));
+                $delete_href = "javascript:del('./delete.php?bo_table=$bo_table&wr_id=$wr_id&token=$token&page=$page".urldecode($qstr)."');";
+            }
+
+        bbs/view_comment.php 에 추가 또는 수정합니다.
+
+            추가 
+            
+            // 코멘트를 새창으로 여는 경우 세션값이 없으므로 생성한다.
+            if ($is_admin && !$token) 
+            {
+                set_session("ss_delete_token", $token = uniqid(time()));
+            }
+
+            ...
+
+            수정
+
+            $list[$i][del_link]  = "./delete_comment.php?bo_table=$bo_table&comment_id=$row[wr_id]&token=$token&cwin=$cwin&page=$page".$qstr;
+
+        [캡챠코드변경]
+
+        js/jquery.kcaptcha.js 전체
+
+        skin/board/basic/view_comment.skin.php 를 아래와 같이 변경합니다.
+
+            jQuery.fn.extend({...}); 를 삭제하시고
+
+            //jQuery(this).kcaptcha_load(); 이 코드를 아래 코드로 수정합니다.
+            if (comment_id && work == 'c')
+                $.kcaptcha_run();
+
+4.34.01 (11.05.11)
+    :   비회원의 답변 코멘트 쓰기에서 캡챠가 뜨지 않는 오류를 수정 (휴온님이 알려주셨습니다.)
+        4.33.00 에 있던 코드를 적용하였습니다.
+        단점) 캡챠이미지를 클릭하여 새로운 이미지로 변경할수 없음
+
+        skin/board/basic/view_comment.skin.php 를 아래와 같이 수정합니다.
+
+        jQuery.fn.extend({
+            kcaptcha_load: function() {
+                $.ajax({
+                    type: 'POST',
+                    url: g4_path+'/'+g4_bbs+'/kcaptcha_session.php',
+                    cache: false,
+                    async: false,
+                    success: function(text) {
+                        $('#kcaptcha_image')
+                            .attr('src', g4_path+'/'+g4_bbs+'/kcaptcha_image.php?t=' + (new Date).getTime())
+                            .css('cursor', '')
+                            .attr('title', '');
+                        md5_norobot_key = text;
+                    }
+                });
+            }
+        });
+
+        function comment_box(comment_id, work)
+        {
+            ...
+            if (typeof(wrestInitialized) != 'undefined')
+                wrestInitialized();
+
+            jQuery(this).kcaptcha_load();
+
+4.34.00 (11.04.29)
+    :   cheditor v5.04 탑재 (그누보드에서 사용할 수 있게 허락해주신 CHSOFT 나창호 대표님께 감사드립니다. www.chcode.com)
+        최신 버전(v5.06)은 약간의 문제가 있어 버전이 약간 낮은것으로 탑재합니다.
+        이미지 업로드시 플래시를 사용하는데 .htaccess 에 패스워드를 걸었다던지 하는 경우에는 이미지 업로드가 안됩니다.
+        플래시동영상은 <object><embed> 코드롤 넣으셔야 합니다. 유튜브의 경우 > 소스코드 > 이전 소스코드 사용으로 나온 코드
+    :   [보안패치] 4.33.10 의 코드를 보완 하였습니다. (letsgolee 님께서 알려주셨습니다.)
+
+        =======================================================
+        cheditor5 적용 방법 (참! 쉽죠! 잉!)
+        =======================================================
+        
+        cheditor5 폴더 전체 업로드 
+        
+        lib/cheditor4.lib.php 교체 
+        
+        config.php 에 $g4['is_cheditor5']   = true; 추가
+        
+        skin/board/?????/write.skin.php 의
+
+            <?
+            if ($is_dhtml_editor) echo cheditor3('wr_content');
+            ?>
+
+            if (document.getElementById('tx_wr_content')) {
+                if (!ed_wr_content.outputBodyText()) { 
+                    alert('내용을 입력하십시오.'); 
+                    ed_wr_content.returnFalse();
+                    return false;
+                }
+            }
+
+            를
+
+            if (document.getElementById('tx_wr_content')) {
+                if (!ed_wr_content.outputBodyText()) { 
+                    alert('내용을 입력하십시오.'); 
+                    ed_wr_content.returnFalse();
+                    return false;
+                }
+            }
+
+            <?
+            if ($is_dhtml_editor) echo cheditor3('wr_content');
+            ?>
+
+            이렇게 순서만 바꿔 주세요.
+            
+        =======================================================
+
+        bbs/register_form.php
+
+            /*
+            if (!($member[mb_password] == sql_password($_POST[mb_password]) && $_POST[mb_password]))
+                alert("패스워드가 틀립니다.");
+
+            // 수정 후 다시 이 폼으로 돌아오기 위해 임시로 저장해 놓음
+            set_session("ss_tmp_password", $_POST[mb_password]);
+            */
+
+            if ($_POST['mb_password']) {
+                // 수정된 정보를 업데이트후 되돌아 온것이라면 패스워드가 암호화 된채로 넘어온것임
+                if ($_POST['is_update'])
+                    $tmp_password = $_POST['mb_password'];
+                else
+                    $tmp_password = sql_password($_POST['mb_password']);
+
+                if ($member['mb_password'] != $tmp_password)
+                    alert("패스워드가 틀립니다.");
+            }
+
+        bbs/register_form_update.php
+
+            /* 삭제
+            // 패스워드를 암호화하여 넘김
+            if ($mb_password)
+                $tmp_password = sql_password($mb_password);
+            else
+                $tmp_password = get_session("ss_tmp_password");
+            */
+
+            $row  = sql_fetch(" select mb_password from $g4[member_table] where mb_id = '$member[mb_id]' ");
+            $tmp_password = $row['mb_password'];
+
+            ...
+
+            <input type='hidden' name='is_update' value='1'> 추가
+
+4.33.11 (11.04.28)
+    :   [보안패치] 4.33.10 의 보안패치에 문제가 있어 다시 패치합니다.
+        (한국인터넷진흥원을 통하여 Null@Root 소속의 Hacker@n 님께서 다시 알려주셨습니다.)
+
+        * 배포된 소스파일을 열어 사용중인 코드와 비교하여 패치해 주시기 바랍니다.
+
+        bbs/register_form.php
+
+            /*
+            if (!($member[mb_password] == sql_password($_POST[mb_password]) && $_POST[mb_password]))
+                alert("패스워드가 틀립니다.");
+
+            // 수정 후 다시 이 폼으로 돌아오기 위해 임시로 저장해 놓음
+            set_session("ss_tmp_password", $_POST[mb_password]);
+            */
+
+            if ($_POST['mb_password']) {
+                // 수정된 정보를 업데이트후 되돌아 온것이라면 패스워드가 암호화 된채로 넘어온것임
+                if ($_POST['is_update'])
+                    $tmp_password = $_POST['mb_password'];
+                else
+                    $tmp_password = sql_password($_POST['mb_password']);
+
+                if ($member['mb_password'] != $tmp_password)
+                    alert("패스워드가 틀립니다.");
+            }
+
+        bbs/register_form_update.php
+
+            // 패스워드를 암호화하여 넘김
+            if ($mb_password)
+                $tmp_password = sql_password($mb_password);
+            else
+                $tmp_password = get_session("ss_tmp_password");
+
+            ...
+
+            <input type='hidden' name='is_update' value='1'> 추가
+
+4.33.10 (11.04.27)
+    :   [보안패치] 회원정보수정시 세션에 기록된 패스워드를 알아낼 수 있는 취약점이 발견되었습니다.
+        (한국인터넷진흥원을 통하여 Null@Root 소속의 Hacker@n 님께서 알려주셨습니다.)
+    :   게시판복사시 복사되는 게시판 테이블의 CHARSET 이 제대로 생성되지 않는 오류를 수정하였습니다. 
+        ( 밀로즈님께서 알려주셨습니다. )
+
+        bbs/register_form.php
+
+            // 패스워드를 알아볼 수 없도록 회원가입일시를 넣어서 암호화 함
+            set_session("ss_tmp_password", base64_encode($member[mb_datetime].$_POST[mb_password]));
+
+        bbs/register_form_update.php
+
+            // 복호화를 한 후 회원가입일시를 없애주면 원래 패스워드가 나옴
+            $tmp_password = preg_replace("/^".$member[mb_datetime]."/", "", base64_decode(get_session("ss_tmp_password")));
+
+        lib/common.lib.php
+
+        function get_table_define($table, $crlf="\n")
+        {
+            global $g4;
+
+            ...
+            
+            if (strtolower($g4['charset']) == "utf-8")
+                $schema_create .= $crlf . ') DEFAULT CHARSET=utf8';
+            else
+                $schema_create .= $crlf . ')';
+
+4.33.09 (11.04.15)
+    :   아래 두개의 취약점은 한국인터넷진흥원(KISA)을 통하여 
+        선린인터넷고등학교 1학년에 재학중인 강인욱님께서 알려 주셨습니다.
+
+        XSS 취약점
+        embed, object 태그를 막지 않는 경우의 우회적인 공격에 대한 취약점
+
+
+        lib/common.lib.php 의 두개 함수가 수정 되었습니다.
+
+
+        function conv_content($content, $html)
+            
+            ...
+
+            //$content = preg_replace("/(ex)(pression)/i", "&#101&#120;$2", $content);
+            ...
+            // 이런 경우를 방지함 <IMG STYLE="xss:expr/*XSS*/ession(alert('XSS'))">
+            $content = preg_replace("#\/\*.*\*\/#iU", "", $content);
+
+            $pattern = "";
+            $pattern .= "(e|&#(x65|101);?)";
+            $pattern .= "(x|&#(x78|120);?)";
+            $pattern .= "(p|&#(x70|112);?)";
+            $pattern .= "(r|&#(x72|114);?)";
+            $pattern .= "(e|&#(x65|101);?)";
+            $pattern .= "(s|&#(x73|115);?)";
+            $pattern .= "(s|&#(x73|115);?)";
+            $pattern .= "(i|&#(x6a|105);?)";
+            $pattern .= "(o|&#(x6f|111);?)";
+            $pattern .= "(n|&#(x6e|110);?)";
+            $content = preg_replace("/".$pattern."/i", "__EXPRESSION__", $content);
+
+
+        ...
+
+
+        function bad_tag_convert($code)
+            
+            ...
+
+            if ($is_admin && $member[mb_id] != $view[mb_id]) {
+                //$code = preg_replace_callback("#(\<(embed|object)[^\>]*)\>(\<\/(embed|object)\>)?#i",
+                // embed 또는 object 태그를 막지 않는 경우 필터링이 되도록 수정
+                $code = preg_replace_callback("#(\<(embed|object)[^\>]*)\>?(\<\/(embed|object)\>)?#i",
+                            create_function('$matches', 'return "<div class=\"embedx\">보안문제로 인하여 관리자 아이디로는 embed 또는 object 태그를 볼 수 없습니다. 확인하시려면 관리권한이 없는 다른 아이디로 접속하세요.</div>";'),
+                            $code);
+            }
+
+            //return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>/i", "&lt;$1$2$3&gt;", $code);
+            // script 나 iframe 태그를 막지 않는 경우 필터링이 되도록 수정
+            return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
+
+
+4.33.08 (11.04.01)
+    :   아래 두개의 취약점은 한국인터넷진흥원(KISA)을 통하여 
+        선린인터넷고등학교 1학년에 재학중인 강인욱님께서 알려 주셨습니다.
+    :   [보안패치] XSS(Cross Site Scripting) 취약점 보완
+        이 취약점은 XML의 namespace를 이용하여 공격하는 방식입니다. 
+        게시판에서 DHTML 에디터를 사용하지 않는 경우에만 취약한 것으로 확인 되었습니다.
+    :   [보안패치] RFI(Remote File Inclusion) 원격파일유입 취약점 보완
+        이 취약점은 관리자 권한을 취득한 후에 게시판 관리의 상단, 하단파일경로에 
+        Data URI scheme (http://en.wikipedia.org/wiki/Data_URI_scheme) 를 이용하여 
+        서버에 remote 파일을 생성하고 해당 remote 파일을 이용하여 해당 서버를 공격하는 
+        방식입니다.
+        PHP 5.x 이상 그리고 allow_url_fopen 이 On 인 경우에만 발생합니다.
+        
+        lib/common.lib.php
+
+            $content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "", $content);
+
+        adm/board_form.php 
+
+            <tr class='ht'>
+                <td colspan='2'>
+                    관리자 패스워드
+                </td>
+                <td>
+                    <input class='ed' type='password' name='admin_password' itemname="관리자 패스워드" required>
+                    <?=help("관리자 권한을 빼앗길 것에 대비하여 로그인한 관리자의 패스워드를 한번 더 묻는것 입니다.");?>
+                </td>
+            </tr>
+
+        adm/board_form_update.php 
+
+            if ($member[mb_password] != sql_password($_POST['admin_password'])) {
+                alert("패스워드가 다릅니다.");
+            }
+
+4.33.07 (11.03.22)
+    :   트랙백 테이블 누락되어 있던것 추가 (웹스타일 님께서 알려 주셨습니다.)
+        (거의 사용하지 않는 기능이므로 패치하지 않으셔도 무방합니다.)
+    :   트랙백 메세지 출력시 한글 깨지던것 수정
+
+        bbs/write_update.php
+
+        if ($msg) {
+            echo "<meta http-equiv='content-type' content='text/html; charset={$g4['charset']}'>\n";
+            echo "<script type='text/javascript'>alert('$msg $wr_trackback');</script>";
+        }
+
+4.33.06 (11.02.22)
+    :   [보안패치] 스팸글 등록으로 인한 자동등록방지 캡챠이미지 관련 코드 보완
+
+        기존에 PHPSESSID를 사용하였으나 사용자가 PHPSESSID 값을 쉽게 확인할수 
+        있으므로 이것을 유추하여 자동등록방지 코드를 알아낼 수 있는 버그가 
+        있었습니다. (jacobswell 님께서 알려 주셨습니다.)
+        사용자가 확인할수 없도록 코드를 수정하였으며 입력값이 5회이상 틀리면
+        다시 입력을 하도록 하였습니다.
+
+        참고) 스팸으로 인하여 피해를 입고 계시다면 회원제로 글쓰기 해주실것을 
+              권해 드립니다. 비회원 글쓰기의 경우 프로그램 보다는 사람이 글을
+              올리는 것으로 확인 되었습니다.
+
+        js/jquery.kcaptcha.js
+        bbs/kcaptcha_session.php
+        bbs/kcaptcha_result.php
+
+        4.33.05 의 이것(↓↓↓)은 적용하셔야 합니다.
+
+        -------------------------------------------------------------------------
+            기타) 기존 스킨에 대한 패치방법
+        -------------------------------------------------------------------------
+            
+            if (typeof(f.wr_key) != 'undefined') {
+                if (hex_md5(f.wr_key.value) != md5_norobot_key) {
+                    alert('자동등록방지용 글자가 제대로 입력되지 않았습니다.');
+                    f.wr_key.select();
+                    f.wr_key.focus();
+                    return false;
+                }
+            }
+
+            위와 같은 코드를
+
+            if (!check_kcaptcha(f.wr_key)) {
+                return false;
+            }
+
+            이렇게 바꾸시면 됩니다.
+
+        -------------------------------------------------------------------------
+
+
+4.33.05 (11.02.20)
+    :   [보안패치] 스팸글 등록으로 인한 자동등록방지 캡챠이미지 관련 코드 변경
+        
+        요즈음의 그누보드 스팸등록기는 캡챠이미지 생성시 나오는 md5 값을 유추하여 
+        원래 데이터(숫자)값을 알아내는 방법을 사용합니다.
+        쉽게 말씀드리자면 다음과 같습니다. 
+        md5 DB를 아래와 같이 구축해 놓습니다.
+
+        왼쪽은 md5 해시키이며 오른쪽은 원래 데이터 입니다.
+        c4ca4238a0b923820dcc509a6f75849b = 1
+        c81e728d9d4c2f636f067f89cc14862c = 2
+        eccbc87e4b5ce2fe28308fd9f2a7baf3 = 3
+        ...
+        52c69e3a57331081823331c4e69d3f2e = 999999
+        
+        가령 js/jquery.kcaptcha.js 의 md5_norobot_key 값이 52c69e3a57331081823331c4e69d3f2e 라면 
+        md5 DB에서 52c69e3a57331081823331c4e69d3f2e 값을 찾아내어 원 데이터 999999 값을 알아낸다는 것이죠.
+        (이것은 복호화가 아닙니다. 편법이죠. 어쨌든 뚫렸기 때문에 패치는 해야겠죠?)
+        그래서 이번 패치는 원래 데이터에 추가로 PHPSESSID 값을 넣어서 md5 DB 에서 값을 찾아낼 수 없도록 
+        만들었습니다.
+
+
+        js/jquery.kcaptcha.js
+        bbs/kcaptcha_session.php
+        skin/board/basic/write.skin.php
+        skin/board/basic/view_comment.skin.php
+        skin/member/basic/formmail.skin.php
+        skin/member/basic/memo_form.skin.php
+        skin/member/basic/password_lost.skin.php
+        skin/member/basic/register_form.skin.php
+
+
+        -------------------------------------------------------------------------
+            기타) 기존 스킨에 대한 패치방법
+        -------------------------------------------------------------------------
+            
+            if (typeof(f.wr_key) != 'undefined') {
+                if (hex_md5(f.wr_key.value) != md5_norobot_key) {
+                    alert('자동등록방지용 글자가 제대로 입력되지 않았습니다.');
+                    f.wr_key.select();
+                    f.wr_key.focus();
+                    return false;
+                }
+            }
+
+            위와 같은 코드를
+
+            if (!check_kcaptcha(f.wr_key)) {
+                return false;
+            }
+
+            이렇게 바꾸시면 됩니다.
+
+        -------------------------------------------------------------------------
+
+
+4.33.04 (11.02.12)
+    :   4.33.03 에서 common.php 에 보안패치한 코드는 오류가 많아 4.33.02 로 되돌립니다.
+    :   4.33.03 의 adm/member_form.php 에 패치한 코드에 오류가 있었습니다.
+
+        common.php
+
+            if (isset($sca))  {
+                $sca = mysql_real_escape_string($sca);
+                $qstr .= '&sca=' . urlencode($sca);
+            }
+
+            if (isset($sfl))  {
+                $sfl = mysql_real_escape_string($sfl);
+                $qstr .= '&sfl=' . urlencode($sfl); // search field (검색 필드)
+            }
+
+            if (isset($stx))  { // search text (검색어)
+                $stx = mysql_real_escape_string($stx);
+                $qstr .= '&stx=' . urlencode($stx);
+            }
+
+            if (isset($sst))  {
+                $sst = mysql_real_escape_string($sst);
+                $qstr .= '&sst=' . urlencode($sst); // search sort (검색 정렬 필드)
+            }
+
+
+        adm/member_form.php
+
+            <?=get_member_level_select("mb_level", 1, $member[mb_level], $mb[mb_level])?>
+
+
+4.33.03 (11.02.10)
+    :   회원권한 코드 수정 (코타군님)
+    :   글읽기 포인트가 설정되어 있을때 글읽기 레벨이 1로 설정되어 있으면 포인트 차감이 제대로 되지 않던 오류 수정 (forever님, 진서기님)
+    :   [보안패치] SQL INJECTION 공격에 대비한 코드 수정 (개미인간님)
+
+        adm/member_form.php
+
+            <?=get_member_level_select("mb_level", 1, $member[mb_level], $member[mb_level])?>
+
+        bbs/board.php
+
+            if (!get_session($ss_name))
+            {
+                sql_query(" update $write_table set wr_hit = wr_hit + 1 where wr_id = '$wr_id' ");
+
+                // 자신의 글이면 통과
+                if ($write[mb_id] && $write[mb_id] == $member[mb_id]) {
+                    ;
+                } else if ($is_guest && $board[bo_read_level] == 1 && $write[wr_ip] == $_SERVER['REMOTE_ADDR']) {
+                    // 비회원이면서 읽기레벨이 1이고 등록된 아이피가 같다면 자신의 글이므로 통과
+                    ;
+                } else {
+                    /*
+                    // 회원이상 글읽기가 가능하다면
+                    if ($board[bo_read_level] > 1) {
+                        if ($member[mb_point] + $board[bo_read_point] < 0)
+                            alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글읽기(".number_format($board[bo_read_point]).")가 불가합니다.\\n\\n포인트를 모으신 후 다시 글읽기 해 주십시오.");
+
+                        insert_point($member[mb_id], $board[bo_read_point], "$board[bo_subject] $wr_id 글읽기", $bo_table, $wr_id, '읽기');
+                    }
+                    */
+                    // 글읽기 포인트가 설정되어 있다면
+                    if ($board[bo_read_point] && $member[mb_point] + $board[bo_read_point] < 0)
+                        alert("보유하신 포인트(".number_format($member[mb_point]).")가 없거나 모자라서 글읽기(".number_format($board[bo_read_point]).")가 불가합니다.\\n\\n포인트를 모으신 후 다시 글읽기 해 주십시오.");
+
+                    insert_point($member[mb_id], $board[bo_read_point], "$board[bo_subject] $wr_id 글읽기", $bo_table, $wr_id, '읽기');
+                }
+
+                set_session($ss_name, TRUE);
+            }
+
+
+        common.php
+        
+            if (isset($sca))  {
+                $sca = preg_replace("/([\'\"\`\<\>\(\)\;\/~@?=%&!]+)/", "", $sca);
+                $qstr .= '&sca=' . urlencode($sca);
+            }
+
+            if (isset($sfl))  {
+                $sfl = preg_replace("/([\'\"\`\<\>\(\)\;\/~@?=%&!]+)/", "", $sfl);
+                $qstr .= '&sfl=' . urlencode($sfl); // search field (검색 필드)
+            }
+
+            if (isset($stx))  { // search text (검색어)
+                $stx = preg_replace("/([\'\"\`\<\>\(\)\;\/~@?=%&!]+)/", "", $stx);
+                $qstr .= '&stx=' . urlencode($stx);
+            }
+
+            if (isset($sst))  {
+                $sst = preg_replace("/([\'\"\`\<\>\(\)\;\/~@?=%&!]+)/", "", $sst);
+                $qstr .= '&sst=' . urlencode($sst); // search sort (검색 정렬 필드)
+            }
+
+
+4.33.02 (11.01.24)
+    :   [보안패치] LFI(Local File Include )
+        LFI 취약점이 발견되어 수정한 코드입니다. (SK인포섹 장경칩님)
+
+        common.php
+            if ($_GET['g4_path'] || $_POST['g4_path'] || $_COOKIE['g4_path']) { ... }
+            위 코드만 수정 되었습니다.
+
+4.33.01 (11.01.10)
+    :   [보안패치] XSS / CSRF
+        4.33.00 에 object 태그로도 플래시를 실행할 수 없도록 수정한 코드입니다. (아갈갤러리님)
+
+        lib/common.lib.php 
+            의 bad_tag_convert() 함수 코드만 수정
+
+4.33.00 (11.01.06)
+    :   [보안패치] XSS / CSRF
+        FLASH 파일의 ACTION SCRIPT로 관리자의 세션값을 알아내고 공유하여 결국에는 관리자권한을 모두 갖게 되는 
+        치명적인 오류가 발견 되었습니다. (간단하게 말해서 플래시를 보는것만으로 세션값이 노출됩니다.)
+        이것은 해커가 관리권한을 공유하는 것으로 관리자의 패스워드가 노출된것은 아닙니다.
+        패치의 주된 내용은 게시판의 다른 회원이 올린 embed 태그는 관리자에게 보여지지 않게 하는 것입니다.
+        또한, 세션키가 공개되더라도 관리자 페이지에서 직접 로그인한 관리자인지를 이중으로 체크합니다.
+        기본환경설정, 관리권한설정, 회원관리, 포인트관리에는 관리자 패스워드를 다시 물어서 관리권한을 완전히 넘겨주지 않도록 하였습니다.
+        이것과 관련된 자세한 내용은 보안뉴스의 내용을 참고하십시오.
+        http://www.boannews.com/media/view.asp?idx=24280&kind=1
+        (i2Sec 교육팀 강성호님께서 알려주신 내용입니다.)
+
+        아래 패치를 모두 적용하기 힘든 사이트는 중요라고 되어 있는 파일만 수정해 주시기 바랍니다.
+
+        === 중요 ===
+        lib/common.lib.php 
+            의 bad_tag_convert(), view_file_link() 함수 코드 수정
+        skin/board/basic/view_comment.skin.php 
+            의 $str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp)\:\/\/([^[:space:]]+)\.(swf)\".*\<\/a\>\]/i", "<script>doc_write(flash_movie('$1://$2.$3'));</script>", $str);
+            위 코드 제거 또는 주석처리
+        bbs/login_check.php
+            에 ss_mb_key 세션키 추가
+        adm/admin.lib.php
+            에서 ss_mb_key 비교
+        === /중요 ===
+
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/auth_list.php
+        adm/auth_update.php
+        adm/member_form.php
+        adm/member_form_update.php
+        adm/point_list.php
+        adm/point_update.php
+
+4.32.15 (10.12.28)
+    :   [보안패치] $write_table 변수값 초기화  (몽구스님)
+
+        common.php
+
+4.32.14 (10.12.07)
+    :   글쓰기, 코멘트쓰기 메일 발송 코드 수정
+    :   코멘트쓰기 포인트설정시 회원의 포인트가 음수인 경우 코멘트를 쓰지 못하던 버그를 수정 (곱슬최씨님)
+    :   우편번호 파일 변경 (2010년 11월 19일자) - 배추빌더의 우편번호 파일을 적용 (곱슬최씨님)
+
+        bbs/write_update.php
+        bbs/write_comment_update.php
+        bbs/zip.db
+
+4.32.13 (10.11.02)
+    :   [보안패치] 비밀글을 무조건 사용으로 설정한 경우 관리자 이외에는 비밀글을 해제하지 못하도록 수정 (난폭탄님께서 알려 주셨습니다.)
+    :   [보안패치] 다른사람의 글을 수정할 수 있는 버그 수정 (난폭탄님께서 알려 주셨습니다.)
+    :   회원정보수정시 정보공개 설정 문구 변경 (곱슬최씨님께서 요청해 주셨습니다.)
+
+        bbs/write_update.php
+        skin/member/basic/register_form.skin.php
+
+4.32.12 (10.10.21)
+    :   [보안패치] 특정 회원에게 동일한 내용의 스팸 쪽지가 온다면 패치하시기 바랍니다.
+    :   쪽지의 전송방식을 POST 로만 전송하도록 수정
+    :   쪽지전송시 자동등록방지 코드를 적용하여 CSRF를 방지하였습니다.
+
+        bbs/memo_form_update.php
+        skin/member/basic/memo_form.skin.php
+
+4.32.11 (10.09.11)
+    :   [보안패치] 반드시 패치하시기 바랍니다.
+        자동로그인 기능에 심각한 버그가 존재합니다. 
+
+        common.php 의 코드를 아래와 같이 수정해 주십시오.
+
+        if ($tmp_mb_id = get_cookie("ck_mb_id"))
+        {
+            $tmp_mb_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $tmp_mb_id), 0, 20);
+            // 최고관리자는 자동로그인 금지
+            if ($tmp_mb_id != $config['cf_admin'])
+            {
+                $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g4['member_table']} where mb_id = '{$tmp_mb_id}' ";
+
+        common.php
+
+4.32.10 (10.09.07)
+    :   아이디/패스워드 찾기 코드 보완 (보안서버 적용 등)
+        기존에 사용하던 password_forget 을 더 이상 사용하지 않으며 password_lost 로 대체합니다.
+        회원가입시 패스워드 분실시 질문, 답변을 더 이상 입력 받지 않습니다.
+    
+        bbs/password_lost.php
+        bbs/password_lost2.php
+        bbs/password_lost_certify.php
+        skin/member/basic/password_lost.skin.php
+        skin/member/basic/register_form.skin.php
+        skin/member/basic/login.skin.php            : win_password_forget() -> win_password_lost() 로 대체
+        skin/outlogin/basic/outlogin.skin.1.php     : win_password_forget() -> win_password_lost() 로 대체
+        js/common.js                                : function win_password_lost() 추가
+
+        // 위의 패치를 적용하신 후 아래 3개의 파일은 반드시 삭제하시기 바랍니다.
+        bbs/password_forget.php
+        bbs/password_forget2.php
+        bbs/password_forget3.php
+
+4.32.09 (10.09.07)
+    :   게시판에서 \ 를 검색할 수 있도록 수정 (애나양님께서 알려주셨습니다.)
+    
+        lib/common.lib.php                          : $search_text = trim(stripslashes($search_text)); 로 변경
+        skin/board/basic/list.skin.php              : value='<?=stripslashes($stx)?>' 로 변경
+
+4.32.08 (10.08.25)
+    :   url_auto_link() 함수 코드 보완
+    
+        lib/common.lib.php 
+
+4.32.07 (10.08.23)
+    :   [보안] XSS(Cross Site Scripting) 공격에 의한 데이터 검증 및 차단 기능을 보완하였습니다. (sjsjin 님께서 알려주셨습니다.)
+    :   회원의 포인트가 0 미만일 경우 게시판의 글쓰기 포인트가 설정된 경우에 나오던 오류를 수정 (곱슬최씨님께서 다시 알려 주셨습니다.)    
+    :   회원가입의 약관선택시 checkbox 에서 radio 선택으로 변경하였습니다. (한국인터넷진흥원 권고)
+    :   회원가입의 생일 날짜선택시 달력을 jquery datepicker로 사용하도록 수정
+
+        common.php
+        bbs/write.php
+        skin/member/basic/register.skin.php
+        skin/member/basic/register_form.skin.php
+
+4.32.06 (10.08.09)
+    :   [보안] XSS(Cross Site Scripting) 공격에 의한 데이터 검증 및 차단 (sjsjin 님께서 알려주셨습니다.)
+    :   글쓰기, 코멘트쓰기시 욕 단어 필터링 버그 수정 (유창화님, 불당님께서 알려주셨습니다.)
+
+        common.php
+        skin/board/basic/ajax.filter.php
+
+4.32.05 (10.07.26)
+    :   우편번호 2010년 7월 22일자 반영 (51,031건)
+    :   글쓰기, 코멘트쓰기시 욕 단어 필터링이 외부에서 보이지 않도록 AJAX 처리함
+    :   게시판관리에서 게시판복사시 서브디렉토리도 복사가 가능하도록 수정 (김선용님께서 코드를 알려 주셨습니다.)
+    :   받은쪽지를 타인이 읽은 상태로 변경할 수 있는 오류 수정 (유아원님께서 알려주셨습니다.)
+    
+        adm/board_copy_update.php
+        bbs/memo_view.php
+        bbs/view_comment.php
+        bbs/write.php
+        bbs/zip.db
+        skin/board/basic/ajax.filter.php
+        skin/board/basic/view_comment.skin.php
+        skin/board/basic/write.skin.php
+        
+4.32.04 (10.07.02)
+    :   게시판 이전, 다음 검색시 1페이지로 이동하도록 수정 (intel님께서 알려주셨습니다.)
+    :   파일명에 특수문자가 들어간 경우 다운로드 되지 않던 오류 수정 (곱슬최씨님께서 알려주셨습니다.)
+    :   게시판에서 두단어 이상 검색 후 검색된 게시물에 코멘트를 남기면 나오던 오류 수정 (곱슬최씨님께서 알려주셨습니다.)
+    :   $g4[https_url] 을 지정한 경우 도메인 이외의 추가 경로를 사용하면 로그인시 나던 오류를 수정
+
+        bbs/view.php
+        bbs/list.php
+        lib/common.lib.php
+        skin/member/basic/login.skin.php
+        skin/outlogin/basic/outlogin.skin.1.php
+
+4.32.03 (10.04.30)
+    :   코멘트 답변시 캡챠이미지, 입력박스 체크가 제대로 표시되지 않던 오류 수정
+    :   회원의 포인트가 0 미만일 경우 게시판의 글쓰기 포인트가 설정된 경우에 나오던 오류를 수정
+        (곱슬최씨님께서 알려 주셨습니다.)
+    :   회원메일발송에서 게시판그룹선택시 해당 게시판그룹에 속한 회원이 한명도 없는 경우 나오던 SQL 오류 수정 (웹스타일님께서 알려주셨습니다.)
+
+        adm/mail_select_list.php
+        bbs/write.php
+        skin/board/basic/view_comment.skin.php
+
+4.32.02 (10.03.16)
+    :   로그인 중인 관리자 레벨 수정시 버그 수정
+    :   회원가입시 별명에서 한글을 제대로 인식하지 못하는 버그 수정
+
+        adm/member_form_update.php
+        skin/member/basic/ajax_mb_nick_check.php
+        skin/member/basic/ajax_register_form.jquery.js
+
+4.32.01 (10.03.12)
+    :   다양한 플러그인을 사용할 수 있도록 prototype.js 에서 jquery.js 로 대체합니다.
+        기존 코드를 유지하기 위하여 js/prototype.js 는 삭제하지 않습니다.
+    :   2010년 2월 25일자 우편번호로 변경 (곱슬최씨님께서 올려주신 자료입니다.)
+    :   게시판관리에 cheditor 기능 추가
+
+        head.sub.php
+        adm/board_form.php
+        adm/config_form.php
+        bbs/zip.db
+        js/jquery-1.4.2.min.js
+        js/jquery.kcaptcha.js
+        skin/board/basic/view_comment.skin.php
+        skin/board/basic/write.skin.php
+        skin/member/basic/ajax_register_form.jquery.js
+        skin/member/basic/formmail.skin.php
+        skin/member/basic/password_forget2.skin.php
+        skin/member/basic/register_form.skin.php                
+
+4.31.15 (10.02.08)
+    :   회원삭제시 주민등록번호도 공란으로 수정
+        function member_delete($mb_id) { ... mb_jumin = '', ...
+    :   접속자현황 OS에 Windows7 추가 (Justin님께서 알려주셨습니다.)
+    :   POSIX Regex 함수 제거 ( ereg_replace, ereg, eregi_replace, eregi, split, spliti, sql_regcase )
+        이 기능은 PHP 5.3.0 부터 배제되고 PHP 6.0.0 부터 제거됩니다. 이 기능에 의존하지 않기를 권합니다.
+    :   기본시간대를 설정 PHP 5.1 부터 가능 date_default_timezone_set()
+    :   2009년 제4차 우편번호 변경내역 (2009.12.16.자 : 50,742건) http://www.zipfinder.co.kr
+    :   password_check.php 의 $qstr 에 $sop 추가 
+    :   js/common.js 의 del() 함수에 charset 별로 처리되도록 수정
+
+        adm/admin.lib.php
+        adm/board_copy_update.php
+        adm/board_form_update.php
+        adm/boardgroup_form_update.php
+        adm/mail_select_update.php
+        bbs/download.php
+        bbs/list.php
+        bbs/password_check.php
+        bbs/zip.db
+        cheditor4/imageupload-class.php
+        config.php
+        js/common.js
+        lib/common.lib.php
+        lib/mailer.lib.php
+        lib/visit.lib.php
+
+4.31.14 (09.10.15)
+    :   관리자 게시판 등록시 상,하단 이미지, 상, 하단 파일 경로를 통한 보안 취약점 수정 (로빈아빠 님 091015)
+
+        adm/board_form_update.php        
+
+4.31.13 (09.10.14)
+    :   utf-8 버전에서 게시판분류 선택시 제대로 검색되지 않는 오류 수정
+        skin/board/basic/list.skin.php 의
+        <select name=sca onchange="location='<?=$category_location?>'+this.value;"> 를
+        <select name=sca onchange="location='<?=$category_location?>'+<?=strtolower($g4[charset])=='utf-8' ? "encodeURIComponent(this.value)" : "this.value"?>;"> 와 같이 수정하십시오.
+    :   한글로 검색후 검색된 글을 삭제하고 다시 목록으로 돌아올때 한글이 깨지는 오류를 수정 (진념님 090930)
+        bbs/view.php 의
+        $delete_href = "javascript:del('./delete.php?bo_table=$bo_table&wr_id=$wr_id&page=$page".$qstr."');"; 를
+        $delete_href = "javascript:del('./delete.php?bo_table=$bo_table&wr_id=$wr_id&page=$page".urldecode($qstr)."');"; 로 수정하십시오.
+    :   2009년 제3차 우편번호 변경내역 (2009.09.29.자 : 50,554건) http://www.zipfinder.co.kr
+
+        skin/board/basic/list.skin.php
+        bbs/view.php
+        bbs/zip.db
+
+4.31.12 (09.09.25)
+    :   접속자현황 접속경로에 <!-- 주석 코드가 포함되면 화면이 제대로 표시되지 않는 오류 수정 (neue님께서 알려주셨습니다.)
+        $title = str_replace(array("<", ">"), array("&lt;", "&gt;"), urldecode($row[vi_referer]));
+    :   접속자현황에 IE 8, CHROME, WINDOWS NT 6 이 제대로 표시되도록 수정
+    :   첨부파일 첨부시 첨부파일명에 공백이 포함되어 있으면 일부 PC에서 보이지 않거나 다운로드 되지 않는 현상이 있습니다. (길상여의 님 090925)
+        (bbs/write_update.php) $upload[$i][file] = abs(ip2long($_SERVER[REMOTE_ADDR])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode(str_replace(' ', '_', $filename))); 
+    :   파일다운로드시 실제 파일이 존재하지 않을 경우 포인트만 차감되는 오류 수정 (아빠불당님 090914)
+
+        adm/visit_list.php
+        lib/visit.lib.php
+        bbs/write_update.php
+        bbs/download.php
+
+4.31.11 (09.07.14)
+    :   파일을 변조후 업로드된 파일을 이용한 보안취약점을 보완 (반드시 패치해 주십시오.)
+
+        lib/common.lib.php : view_file_link() 함수
+        bbs/write_update.php : 파일 업로드 부분
+        bbs/register_form_update.php : 회원아이콘 업로드 부분
+
+4.31.10 (09.07.13)
+    :   write.php 에서 존재하는 게시판($bo_table)인지 검사하는 코드 추가 (nasca님께서 알려주셨습니다.)
+    :   HTML 쓰기 권한이 있는 경우에만 DHTML 사용 가능하도록 수정 (TopSchooL님께서 알려주셨습니다.)
+
+        bbs/write.php
+
+4.31.09 (09.07.10)
+    :   글쓰기, 코멘트 쓰기시에 내용을 &# 문자로 다수 등록하는 경우 화면에 내용이 보이지 않으면서 브라우저가 느려지는 현상을 수정
+    :   2009.06.23 우편번호 파일로 변경 (50,353건) http://www.zipfinder.co.kr/
+
+        bbs/zip.db
+        bbs/write_update.php
+        bbs/write_comment_update.php
+
+4.31.08 (09.06.23)
+    :   세션 가비시 콜렉션 기본값으로 코드 수정
+        ini_set("session.gc_probability", 1); // session.gc_probability는 session.gc_divisor와 연계하여 gc(쓰레기 수거) 루틴의 시작 확률을 관리합니다. 기본값은 1입니다. 자세한 내용은 session.gc_divisor를 참고하십시오.
+        ini_set("session.gc_divisor", 100); // session.gc_divisor는 session.gc_probability와 결합하여 각 세션 초기화 시에 gc(쓰레기 수거) 프로세스를 시작할 확률을 정의합니다. 확률은 gc_probability/gc_divisor를 사용하여 계산합니다. 즉, 1/100은 각 요청시에 GC 프로세스를 시작할 확률이 1%입니다. session.gc_divisor의 기본값은 100입니다.
+    :   한페이지에서 여러개의 CHEDITOR 사용시 하단 탭이 제대로 표시되도록 수정
+
+        common.php
+        cheditor4/cheditor.js
+
+4.31.07 (09.06.16)
+    :   회원가입시 주민번호 사용하는 경우 동일 주민번호로 회원가입이 가능한 오류 수정 (letsgolee 님)
+    :   게시물 리스트의 정렬 대상 필드가 아닐때 오류나는 부분 수정 (nasca 님)
+    :   패스워드 분실시 답변 비교시 != 를 !== 로 수정 ( 1 != 1. 의 경우에도 같은 답변으로 인식함)
+    :   정해진 시간에 100% 가비지 콜렉션
+
+        bbs/list.php
+        bbs/register_form_update.php
+        bbs/password_forget3.php
+        common.php
+
+4.31.06 (09.02.03)
+    :   SQL Injection 취약점 보완
+    :   게시판 업로드 파일명을 유추해 볼 수 있는 코드를 보완
+
+        /bbs/point.php
+            $sql_common = " from $g4[point_table] where mb_id = '".mysql_escape_string($member[mb_id])."' ";
+
+        /bbs/poll_result.php
+            if (!file_exists("$poll_skin_path/poll_result.skin.php")) die("skin error");
+
+        /bbs/register_form_update.php
+            $mb_id = trim(strip_tags(mysql_escape_string($_POST[mb_id])));
+            $mb_password = trim(mysql_escape_string($_POST[mb_password]));
+            $mb_name = trim(strip_tags(mysql_escape_string($_POST[mb_name])));
+            $mb_nick = trim(strip_tags(mysql_escape_string($_POST[mb_nick])));
+            $mb_email = trim(strip_tags(mysql_escape_string($_POST[mb_email])));
+
+        /bbs/write_update.php
+            $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
+            ...
+            shuffle($chars_array);
+            $shuffle = implode("", $chars_array);
+            $upload[$i][file] = abs(ip2long($_SERVER[REMOTE_ADDR])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode($filename)); 
+
+
+        // 수정된 파일
+        /bbs/point.php
+        /bbs/poll_result.php
+        /bbs/register_form_update.php
+        /bbs/write_update.php
+
+4.31.05 (09.01.30)
+    :   XSS 취약점 수정
+
+        if ($wr_id) {
+            $wr_id = (int)$wr_id;
+        }
+
+        if ($bo_table) {
+            $bo_table = preg_match("/^[a-zA-Z0-9_]+$/", $bo_table) ? $bo_table : "";
+        }
+
+        common.php
+
+4.31.04 (09.01.17)
+    :   PHP의 설정중 register_globals=on 로 사용하는 경우에 $g4_path 변수를 이용한 그누보드 취약점을 수정 하였습니다.
+        register_globals=off 로 사용하는 경우에는 문제되지 않습니다.
+        GENESYS 님께서 알려 주셨습니다.
+
+        // common.php 의 94라인부터 아래 코드만 추가해 주시면 됩니다. common.php 를 참고하십시오.
+        if ($_GET['g4_path'] || $_POST['g4_path']) {
+            unset($_GET['g4_path']);
+            unset($_POST['g4_path']);
+            unset($g4_path);
+        }
+    
+        common.php
+
+4.31.03 (08.12.29)
+    :   잦은 토큰 에러로 인하여 토큰을 사용하지 않도록 수정 (check_token 함수)
+    :   CAPTCHA 이미지 제대로 출력되지 않는 오류 수정 (character-set 문제)
+
+        lib/common.lib.php
+        bbs/kcaptcha_session.php
+
+4.31.02 (08.11.03)
+    :   HTML 쓰기에서 on으로 시작되는 이벤트(예:onclick) 사용시 에러나는 부분을 수정 : conv_content()
+
+        lib/common.lib.php            
+
+4.31.01 (08.10.29)
+    :   extract($_GET); 으로 인한 오류 수정
+        letsgolee 님께서 도움 주셨습니다.
+    :   token 적용이 되지 않은 페이지 token 적용
+    
+        adm/member_form.php
+        adm/member_form_update.php
+        common.php
+        lib/common.lib.php            
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.31.00 (08.10.28)
+    :   CSRF 보안 강화를 위한 코드 수정
+        관리자 > 기본환경설정 페이지에 cpatcha 적용
+        추천) 관리자 기본 폴더명인 adm 폴더를 다른 이름 변경하신 후 
+              config.php 의 $g4['admin'] = "adm"; 값을 변경하시면 CSRF 에서 좀 더 안전할 수 있습니다.
+    :   대부분의 관리자 페이지에 CSRF 보안 강화를 위한 토큰 적용
+    :   cheditor4 코드 수정
+    :   회원정보 수정시에도 captcha 적용
+    :   "개인정보보호정책" 문구를 "개인정보취급방침"으로 수정
+
+        adm/* (대부분의 코드가 변경 되었습니다.)
+        bbs/password_forget2.php
+        bbs/register_form_update.php
+        lib/cheditor4.lib.php
+        lib/common.lib.php
+        skin/board/basic/*
+        skin/member/basic/register_form.skin.php
+        skin/member/basic/register.skin.php
+        skin/board/basic/write.skin.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.30.00 (08.10.01)
+    :   DHTML 사용시 geditor를 cheditor4.2 버전으로 변경
+
+        config.php 파일에 아래의 코드를 추가하십시오.
+        $g4['cheditor4']      = "cheditor4";
+        $g4['cheditor4_path'] = $g4['path'] . "/" . $g4['cheditor4'];
+
+        lib/cheditor4.lib.php 파일을 추가하십시오.
+        cheditor4/* 를 추가하십시오.
+
+    :   구글 크롬에서 정상 작동되도록 많은 부분의 코드 수정
+    :   SQL Injection, PHP Injection 공격으로 인한 코드 보완 (한국정보보호진흥원에서 알려주셨습니다.)
+    :   XSS (Cross Site Scripting) 취약점 보완 (한국정보보호진흥원에서 알려주셨습니다.)
+    :   GET, POST 로 g4_path 넘길때 발생하는 오류 수정 (광존님께서 알려주셨습니다.)
+    :   프로그램에 의한 회원가입, 글쓰기, 아이디/패스워드 찾기 capcha 코드 보완 (명랑폐인님께서 도움주셨습니다.)
+    :   프로그램에 의한 메일발송을 막는 capcha 코드 추가
+    :   비밀번호(패스워드) 입력시 CapsLock 이 눌러져 있는지 검사하는 코드 추가
+
+    *   이번 버전은 상당수의 코드가 변경이 되었습니다.
+        이전 버전을 사용하시는 분은 아래의 파일이 변경되었으니 파일 비교 프로그램(AcroDiff 프로그램 추천)등을 이용하여 바뀐 코드만 수정해 주시기 바랍니다.
+
+    *   cheditor는 CHSOFT Corp(http://chcode.com)의 재산이므로 그누보드의 라이센스와는 별개입니다.
+        cheditor를 빌더등에 포함하여 배포, 판매하시는 경우에는 반드시 cheditor를 별도로 구입하셔야 합니다.
+
+    *   4.30.00 에서 바뀐 파일 전체 목록
+
+        adm/auth_list.php
+        adm/board_copy.php
+        adm/board_form.php
+        adm/boardgroup_form.php
+        adm/config_form.php
+        adm/index.php
+        adm/mail_select_list.php
+        adm/member_form.php
+        adm/point_list.php
+        adm/poll_form.php
+        bbs/delete_all.php
+        bbs/delete_comment.php
+        bbs/formmail_send.php
+        bbs/fonts/*
+        bbs/kcaptcha_config.php
+        bbs/kcaptcha_image.php
+        bbs/kcaptcha.php
+        bbs/kcaptcha_session.php
+        bbs/member_nick_check.php
+        bbs/move.php
+        bbs/move_update.php
+        bbs/password_forget3.php
+        bbs/register_form_update.php
+        bbs/search.php
+        bbs/view.php
+        bbs/write_comment_update.php
+        bbs/write_update.php
+        cheditor4/_common.php
+        cheditor4/imageupload-class.php
+        cheditor4/insert_image.php
+        common.php
+        config.php
+        head.php
+        head.sub.php
+        img/capslock.gif 
+        index.php
+        js/capslock.js 
+        lib/cheditor4.lib.php
+        lib/common.lib.php
+        skin/board/basic/list.skin.php
+        skin/board/basic/view_comment.skin.php
+        skin/board/basic/view.skin.php
+        skin/board/basic/write.skin.php
+        skin/latest/basic/latest.skin.php
+        skin/member/basic/formmail.skin.php
+        skin/member/basic/login.skin.php
+        skin/member/basic/member_confirm.skin.php
+        skin/member/basic/memo_form.skin.php
+        skin/member/basic/password_forget2.skin.php
+        skin/member/basic/password_forget3.skin.php
+        skin/member/basic/password_forget.skin.php
+        skin/member/basic/password.skin.php
+        skin/member/basic/register_form.skin.php
+        skin/member/basic/register.skin.php
+        skin/new/basic/new.skin.php
+        skin/outlogin/basic/outlogin.skin.1.php
+        skin/poll/basic/poll_result.skin.php
+        skin/search/basic/search.skin.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.22.06 (08.09.07)
+    :   geditor에서 이미지 업로드시 이미지 확장자만 업로드 가능하도록 수정
+
+        geditor/upload.php
+
+4.22.05 (08.09.01)
+    :   2008.08.28 우편번호 파일로 교체 (49,893건)
+
+        bbs/zip.db
+
+4.22.04 (08.06.11)
+    :   [필수패치] 웜 취약점 수정 ★★★★★★★★★★
+
+        common.php 를 아래와 같이 반드시 반드시 반드시 수정하시기 바랍니다.
+        // 스킨경로
+        $board_skin_path = ''; // <!-- 이 코드 한줄이 반드시 들어가야 합니다. 
+        if (isset($board['bo_skin']))
+            $board_skin_path = "{$g4['path']}/skin/board/{$board['bo_skin']}"; // 게시판 스킨 경로
+
+4.22.03 (08.03.31)
+    :   아이디/패스워드 찾기 페이지 로봇에 의한 접근 차단 (GD LIB 사용자만 가능)
+
+        skin/member/basic/password_forget2.skin.php
+        bbs/password_forget2.php
+        bbs/password_forget3.php
+
+4.22.02 (08.03.28)
+    :   UTF-8 사용시 폼메일 창에서 이름이 깨지던 오류 수정
+    :   우편번호 파일을 zzzz님이 올리신 파일로 교체
+    :   자동등록방지 이미지에 캐시를 방지하기 위한 코드 추가
+
+        js/common.js
+        bbs/zip.db
+        skin/board/basic/write.skin.php
+        skin/member/basic/register_form.skin.php
+
+4.22.01 (08.02.29)
+    :   메모리 부족시 우편번호를 제대로 불러오지 못하던 오류 수정
+
+        bbs/zip.php
+
+4.22.00 (08.02.18) [자동등록방지 필수 패치]
+    :   상대경로 지정시 자동으로 절대경로로 바뀌던 오류 수정
+        
+        cheditor/cheditor.js
+
+    :   지에디터 사용시 본문 required 옵션 무시되는 오류를 수정
+        
+        js/wrest.js
+
+    :   자동등록방지 코드 추가 (gd lib 를 지원하는 서버에서만 정상 적용됩니다.)
+        
+        bbs/norobot.inc.php
+        bbs/norobot_image.php
+        skin/member/basic/register_form.skin.php
+        skin/board/basic/write.skin.php
+        skin/board/basic/view_comment.skin.php
+
+4.21.04 (07.12.04) [보안관련 필수 패치]
+    :   외부에서 회원정보를 수정할 수 있는 오류를 수정
+        회원정보 입력폼에서 f.submit() 전에 이 코드가 반드시 추가 되어야 합니다.
+        set_cookie("<?=md5($token)?>", "<?=base64_encode($token)?>", 1, "<?=$g4['cookie_domain']?>");
+        morssola 님께서 도움 주셨습니다.
+    :   기본 게시판 스킨 변경 (GEditor 포함)
+        config.php 에 두 줄 추가 되었습니다.
+        $g4['geditor']        = "geditor";
+        $g4['geditor_path']   = $g4['path'] . "/" . $g4['geditor'];
+
+
+        skin/member/basic/register_form.skin.php
+        bbs/register_form_update.php
+        geditor/*
+        skin/board/basic/*
+        config.php
+
+4.21.03 (07.11.30) [보안관련 필수 패치]
+    :   외부에서 회원정보를 수정할 수 있는 오류를 수정
+    :   폼메일에도 토큰 적용
+    :   기존 회원가입스킨(register_form.skin.php)에 
+        <input type=hidden name=token value="<?=$token?>"> 이 코드를 추가해 주십시오. 
+    :   기존 폼메일스킨(formmail.skin.php)에 
+        <input type=hidden name=token value="<?=$token?>"> 이 코드를 추가해 주십시오. 
+        
+        bbs/register_form.php
+        bbs/register_form_update.php
+        skin/member/basic/register_form.skin.php
+        bbs/formmail.php
+        bbs/formmail_send.php
+        skin/member/basic/formmail.skin.php
+
+4.21.02 (07.08.22)
+    :   referer_check() 주석 처리 사용하지 않음
+        같은 URL 에서 온 값인지 체크하지 않음
+    :   보안 로그인 코드 수정
+    :   게시판관리의 상,하단 이미지 코드 수정
+        김선용님(sucjin)께서 코드를 알려주셨습니다.
+    :   트랙백 핑 받는 페이지 코드 수정
+    :   금지단어에 공백이 있는 경우 trim 처리 word_filter_check()
+    :   링크 클릭시 링크될 대상이 없으면 파이어폭스에서 계속 로딩되던 오류를 수정
+    :   글쓰기 레벨에 관계없이 자신의 글은 수정이 가능하도록 코드 수정
+        김선용님(sucjin)께서 코드를 알려주셨습니다.
+
+        bbs/link.php
+        bbs/norobot_check.inc.php
+        bbs/tb.php
+        bbs/write.php
+        bbs/write_update.php
+        lib/common.lib.php
+        skin/member/basic/login.skin.php
+        skin/outlogin/basic/outlogin.skin.1.php
+        adm/board_form.php
+        adm/board_form_update.php
+        js/filter.js
+
+4.21.01 (07.06.05)
+    :   비밀글 버그 패치
+        나스카님께서 알려 주셨습니다.
+
+        bbs/view_comment.php
+        skin/board/basic/view_comment.skin.php
+
+4.21.00 (07.05.30)
+    :   보안서버와 관련하여 로그인, 회원가입 주소를 https 로 변경하는 코드 추가
+    :   외부로그인 비회원시 쿼리 횟수를 줄임
+    :   회원가입시 중복확인을 ajax 로 대체
+    :   코멘트에 비밀글 가능하도록 수정
+    :   게시물 복사/이동시 게시판이 출력되는 순서를 그룹, 검색순서로 수정
+    :   공지사항이 없다면 건너뜀
+    :   [마이너그레이드] 1:1 게시판 기능 삭제
+
+        config.php 에 아래와 같이 한 줄 추가해 주십시오.
+        $g4['https_url'] = "";
+
+        bbs/list.php
+        bbs/move.php
+        bbs/view_comment.php
+        bbs/write_comment_update.php
+        bbs/write_update.php
+        bbs/register_form_update.php
+        lib/outlogin.lib.php
+        skin/board/basic/view_comment.skin.php
+        skin/member/basic/_common.php
+        skin/member/basic/ajax_mb_email_check.php
+        skin/member/basic/ajax_mb_id_check.php
+        skin/member/basic/ajax_mb_nick_check.php
+        skin/member/basic/ajax_register_form.js
+        skin/member/basic/register_form.skin.php
+        skin/outlogin/basic/outlogin.skin.1.php
+
+4.20.03 (07.05.04)
+    :   최신글 속도를 빠르게 하기 위해 SELECT 쿼리를 수정
+    :   lib/one.lib.php 의 upload_file() 함수명을 upload_file2() 로 수정
+
+        lib/latest.lib.php
+        lib/one.lib.php
+        bbs/oneanswer.php
+        bbs/onequestion.php
+
+4.20.02 (07.04.26)
+    :   1:1 게시판 기능 수정
+        sql_one.sql 에 누락된 여분필드 on_1 ~ on_10 필드 추가
+        파이어폭스에서는 dhtml editor 사용시 답변에서 오류 발생합니다.
+
+        adm/sql_one.sql
+        bbs/oneanswer.php
+        bbs/onequestion.php
+
+4.20.01 (07.04.23 16:25)
+    :   1:1 게시판 기능 수정
+
+        bbs/one.php
+        bbs/oneanswer.php
+        skin/oneboard/one/oneanswermail.skin.php
+        skin/oneboard/one/oneview.skin.php
+    
+4.20.00 (07.04.23)
+    :   접근가능 IP, 접근차단 IP 코드 수정
+        sjsjin님께서 알려 주셨습니다.
+    :   세션데이터 삭제 기능 추가
+        자동으로 삭제되지 않는 세션데이터를 삭제 
+    :   회원테이블에 mb_no AUTO_INCREMENT PRIMARY KEY 로 대체
+    :   1:1 게시판 기능 추가
+
+        config.php 에
+        $g4['one_prefix']          = $g4['table_prefix'] . "one_";   // 1:1 게시판 테이블명 접두사
+        $g4['oneboard_table']      = $g4['table_prefix'] . "oneboard";      // 1:1게시판 설정 테이블
+        와 같이 두줄 추가해 주십시오.
+
+        테이블이 변경 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        common.php
+        config.php
+        adm/admin.menu100.php
+        adm/admin.menu300.php
+        adm/config_form.php
+        adm/oneboard*.php
+        adm/sql_one.sql
+        adm/session_delete.php
+        adm/upgrade.php
+        bbs/one*.php
+        lib/one.lib.php
+        skin/oneboard/one/*
+
+4.11.00 (06.12.29)
+    :   게시판 검색에서 공란이 두개 연속될 경우 오류 발생하는 현상을 수정
+        lib/common.lib.php 의 get_sql_search(), search_font() 함수 수정
+        bob님께서 도움 주셨습니다.
+    :   회원 사이드 레이어 메뉴에 "회원게시물" 검색 추가
+    :   download.tail.skin.php 가 실행되지 않아 bbs/download.php 에서 코드 위치 변경
+    :   쪽지발송시 포인트 차감 기능 추가
+    :   스팸트랙백을 막기 위해 기능 수정
+        config.php 에 $g4['token_time'] = 3; 추가
+    :   head.sub.php 에 아래와 같이 한줄 추가하십시오.
+        <script type="text/javascript" src="<?=$g4['path']?>/js/ajax.js"></script> 
+
+        테이블이 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        config.php
+        head.sub.php
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/upgrade.php
+        bbs/download.php
+        bbs/memo_form_update.php
+        bbs/tb.php
+        bbs/tb_token.php
+        bbs/view.php
+        lib/common.lib.php
+        js/ajax.js
+        js/sideview.js
+        skin/board/basic/view.skin.php
+
+4.10.00 (06.11.27)
+    :   cheditor 에서 입력이 없이 엔터만 치는 경우 <DIV>&nbsp;</DIV> 나오는 현상을 수정
+    :   게시판관리에서 비밀글 사용에 '무조건' 비밀글 옵션 추가
+    :   RSS 보기 사용 필드 추가 
+        비회원 글읽기가 가능하고 RSS 보기 사용에 체크가 되어야만 RSS(XML) 보기 가능
+    :   게시판관리에서 DHTML 에디터 사용 선택 옵션 추가
+        basic, cheditor 스킨을 통합함
+        필드가 추가되었으니 adm/board_list.php 를 반드시 한번은 실행하여 주십시오.
+    :   회원삭제시 회원의 정보만 삭제하고 회원아이디는 영구 보관함
+    :   bbs/view.php , bbs/view_comment.php 에 스킨 상, 하단 파일을 include 할 수 있도록 수정
+    :   회원정보 수정시 생년월일 입력을 매번 요구하는 에러 수정
+    :   회원관리 리스트에서 차단, 탈퇴 링크 추가
+    :   파일 설명에 ' 있으면 게시물 복사, 이동시 에러나는 현상을 수정
+    :   set_cookie() 자바스크립트 함수에 cookie domain 오류 수정
+    :   회원가입시 개인정보보호정책 동의 추가
+        필드 추가로 인해 adm/config_form.php 를 반드시 한번 이상 실행하여 주십시오.
+    :   접근가능 IP 기능 수정
+    :   UTF-8 보완 : common.lib.php : check_string(), cut_hangul_last()
+        0sama님께서 도움 주셨습니다.
+        귀때기님께서 도움 주셨습니다.
+    :   게시판스킨에 글자크기변경 기능 추가
+        js/board.js 필수 추가
+        head.sub.php 에 아래 코드 필수 추가
+            var g4_cookie_domain = "<?=$g4['cookie_domain']?>"; 
+    :   접속자의 레벨이 설정된 읽기권한보다 작다면 경고창이 계속뜨는 오류를 수정
+        나스카님께서 도움 주셨습니다.
+
+        adm/admin.lib.php
+        adm/board_copy_update.php
+        adm/board_form.php
+        adm/board_form_update.php
+        adm/board_list.php
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/member_delete.php
+        adm/member_list.php
+        bbs/board.php
+        bbs/list.php
+        bbs/move_update.php
+        bbs/register_form.php
+        bbs/rss.php
+        bbs/view.php
+        bbs/view_comment.php
+        bbs/write.php
+        cheditor/cheditor.js
+        common.php
+        head.sub.php
+        js/board.js
+        js/common.js
+        skin/board/basic/*
+        skin/member/basic/register.skin.php
+        skin/member/basic/register_form.skin.php
+
+4.09.02 (06.10.10)
+    :   첨부파일설명에서 ' 또는 " 입력되면 오류나는 부분 수정
+    :   코멘트 수정의 경우에는 동일한 내용을 등록할 수 없는 오류 수정
+    :   게시판 분류에 & 나 = 사용이 불가한것을 2바이트 문자로 처리
+    :   상수 정의 (lib/constant.php)
+    :   관리자 > 게시판 복사시에 트랙백쓰기 권한이 복사되지 않던 오류 수정
+    :   게시판 글쓰기에 bo_table 없이 직접 접근하는 경우 메인으로 이동하도록 수정
+    :   한글(2bytes)에서 마지막 글자가 1byte로 끝나는 경우
+        출력시 깨지는 현상이 발생하므로 
+        마지막 완전하지 않은 글자(1byte)를 하나 없앰 (cut_hangul_last)
+    :   새창으로 코멘트로 띄운 경우 삭제하면 head.php, tail.php 가 적용되어 출력되던 오류 수정
+    :   쪽지 보관일수를 알림
+    :   이메일 정규표현식 수정 ( lib/common.lib.php -> url_auto_link() )
+    :   게시판 분류를 select 형식으로 가져오는 함수 수정 ( get_category_option() )
+    :   타인의 코멘트를 수정할 수 있는 오류 수정
+    :   답변 메일받기 (원게시자에게 보내는 메일) 오류 수정
+    :   사용하지 않는 $cfg 배열 변수 삭제
+
+        adm/board_copy_update.php
+        adm/board_form_update.php
+        bbs/delete_comment.php
+        bbs/formmail_send.php
+        bbs/tb.php
+        bbs/view_comment.php
+        bbs/write.php
+        bbs/write_comment_update.php
+        lib/common.lib.php
+        lib/constant.php
+        skin/member/basic/memo.skin.php
+
+4.09.01 (06.08.28)
+    :   우편번호파일 2006년 7월 1일자로 변경
+    :   자바스크립트로 회원정보수정시 정보변경이 가능한 버그 수정
+
+        common.php
+        bbs/zip.db
+        bbs/register_form_update.php
+        bbs/delete.php
+
+4.09.00 (06.07.01)
+    :   정보공개 하지 않은 회원에게 쪽지를 발송할 수 있는 오류 수정
+        헐랭이님께서 알아내셨습니다.
+    :   회원정보수정시 별명, E-mail을 중복 등록할 수 있는 오류 수정
+        가을님께서 알아내셨습니다.
+    :   회원이 비밀글을 올리고 관리자가 답변글을 올렸을 경우 회원이 관리자가 올린 답변글을 바로 볼 수 없던 오류를 수정
+    :   관리자화면에서 최근포인트 리스트에 첫줄의 회원별명이 나오지 않던 오류 수정
+    :   게시판 복사시 쿼리문 오류 수정
+        01010101010101010101님께서 알려주셨습니다.
+    :   게시판에 최근(마지막 코멘트 쓴 시간) 기능 추가
+    :   게시판 스킨의 구조 변경 (basic 스킨 참고하세요)
+    :   게시판 테이블에 게시판 리스트 정렬 필드 추가
+    :   게시판 테이블에 여분필드 제목 필드 추가
+    :   게시판 그룹 테이블에 여분필드 제목 필드 추가
+    :   기본환경설정 테이블에 여분필드 제목 필드 추가
+    :   쪽지보내고 삭제했을 경우 쪽지메세지를 보내지 않도록 수정
+        유아원님께서 알려주셨습니다.
+
+        필드가 추가, 변경 되었으니 반드시 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/board_copy_update.php
+        adm/board_form.php
+        adm/board_form_update.php
+        adm/boardgroup_form.php
+        adm/boardgroup_form_update.php
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/index.php
+        adm/point_list.php
+        adm/upgrade.php
+        bbs/board.php
+        bbs/delete_all.php
+        bbs/delete_comment.php
+        bbs/download.php
+        bbs/good.php
+        bbs/list.php
+        bbs/member_id_check.php
+        bbs/member_nick_check.php
+        bbs/memo_delete.php
+        bbs/memo_form_update.php
+        bbs/move_update.php
+        bbs/register_form_update.php
+        bbs/write.php
+        bbs/write_comment_update.php
+        bbs/write_update.php
+        lib/common.lib.php
+        skin/member/basic/register_form.skin.php
+        skin/board/basic/*
+        skin/board/cheditor/*
+
+4.08.00 (06.05.13) [필수패치]
+    :   파이어폭스(불여우)에서 게시판 파일이 제대로 다운로드 되지 않던 오류 수정
+        zzzz님께서 알려주셨습니다.
+    :   회원가입시 회원아이디, 별명, 이메일 검사에서 검사할 변수값을 trim() 함수로 좌우공백을 없앰
+    :   회원가입시 별명에 특수문자 입력시 동일한 별명을 만들 수 있는 오류 수정
+        유아원님께서 알려주셨습니다.
+    :   게시판리스트 수정시 게시판관리자가 사라지던 오류 수정
+    :   정보공개 수정후 설정일 동안 변경할 수 없도록 수정
+    :   추천, 비추천을 테이블로 관리하여 중복 추천하지 못하도록 수정
+        config.php 에 아래와 같이 한줄 추가하십시오.
+        $g4['board_good_table']    = $g4['table_prefix'] . "board_good";
+    :   UTF-8 관련 수정
+
+        필드가 추가, 변경 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        config.php
+        adm/board_list_update.php
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/upgrade.php
+        cheditor/insert_image.php
+        bbs/download.php
+        bbs/member_id_check.php
+        bbs/member_nick_check.php
+        bbs/member_email_check.php
+        bbs/register_form_update.php
+        bbs/search.php
+        bbs/good.php
+        js/wrest.js
+        lib/mailer.lib.php
+        skin/member/basic/register.skin.php
+        skin/member/basic/register_form.skin.php
+        skin/board/basic/list.skin.php
+
+4.07.00 (06.04.28)
+    :   cheditor에서 수정시 글제대로 보이지 않던 오류 수정
+    :   cheditor에서 글자의 크기를 크게할 경우 겹치던 오류 수정
+    :   board_new_table 에 회원아이디 필드를 추가하여 자신이 쓴 모든 글을 확인할 수 있는 기능을 추가함
+
+        필드가 추가, 변경 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        cheditor/cheditor.js
+        adm/upgrade.php
+        bbs/new.php
+        bbs/scrap_popin_update.php
+        bbs/write_comment_update.php
+        bbs/write_update.php
+        skin/new/basic/new.skin.php
+
+4.06.19 (06.04.14)
+    :   ie 패치에 따른 코드 수정
+    :   현재접속자 select 구문에 mb_point 필드 추가
+    :   관리자 > 게시판 설정에서 게시판 그룹에 분류 사용 체크시 반영되지 않던 오류 수정
+    :   bbs/move_update.php의 경고창 출력전에 캐릭터셋 코드 추가
+        zzzz님께서 알려 주셨습니다.
+    :   메일발송에서 수신거부 되지 않던 오류 수정
+        유자님께서 알려 주셨습니다.
+    :   쪽지 발송시 회원아이디 대신 별명으로 발송 메세지 출력하도록 수정
+    :   쪽지보기에서 이전, 다음 쪽지를 볼 수 있도록 수정
+    :   g4_charset.toUpperCase -> g4_charset.toUpperCase() 수정
+        알릭님께서 알려 주셨습니다.
+    :   | 문자로 검색시 오류 수정
+        신이z, 유아원님께서 알려 주셨습니다.
+    :   입력필드검사 스크립트(wrest.js)에 전화번호(telnumber) 속성 추가
+        sisjin님께서 만들어 주셨습니다.
+    :   관리자화면 help() 스크립트 코드 수정
+        NOGOON님께서 알려 주셨습니다.
+
+        js/common.js
+        js/wrest.js
+        lib/common.lib.php  :   view_file_link() 함수
+        lib/common.lib.php  :   search_font() 함수
+        bbs/current_connect.php
+        bbs/move_update.php
+        bbs/memo.php
+        bbs/memo_form_update.php
+        bbs/memo_view.php
+        skin/member/basic/memo_view.skin.php
+        skin/member/basic/register_form.skin.php
+        adm/admin.head.php
+        adm/board_form_update.php
+        adm/mail_select_list.php
+        adm/mail_select_update.php
+
+4.06.18 (06.03.07)
+    :   latest() 함수 수정 
+        $skin_dir 인수가 넘어오지 않는 경우 오류나는 부분 수정
+    :   페이징 함수 수정 (책갈피 변수 추가)
+    :   wrest.js 의 trim 부분 코드 수정
+        hammer님께서 알려 주셨습니다.
+    :   UTF-8 적용을 위해 cheditor의 html 확장자를 php로 수정하고 charset 설정 가능하도록 수정
+    :   notice error 줄임
+        hammer님께서 알려 주셨습니다.
+
+        lib/latest.lib.php
+        lib/common.lib.php
+        js/wrest.js
+        cheditor/* (폴더 전부)
+        adm/admin.head.php
+
+4.06.17 (06.02.17)
+    :   메일러 함수 수정
+    :   그룹접근회원테이블의 gm_id 필드에 auto_increment 추가
+    :   calendar/2006.txt 추가
+        진정한승리님께서 제작해 주셨습니다.
+    :   get_sql_search() 함수 수정 - 코멘트를 제외한 원글에서만 검색이 가능하도록 수정
+    :   UTF-8 에서 한글 별명 오류 수정
+        심플로그님께서 알려 주셨습니다.
+        
+        필드가 추가, 변경 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/upgrade.php
+        adm/boardgroupmember_update.php
+        bbs/formmail_send.php
+        bbs/calendar/2006.txt
+        lib/common.lib.php
+        lib/mailer.lib.php
+        js/sideview.js
+        skin/member/basic/register_form.skin.php
+
+4.06.16 (06.01.31)
+    :   검색된 게시판 리스트에 숫자가 제대로 표시되지 않던 스킨 수정
+        나스카님께서 알려 주셨습니다.
+    :   화면 표시할 때 가끔씩 멈추는 현상을 부분 해결
+        현재 접속자의 처리 코드를 head.sub.php 에서 tail.sub.php 로 옮김
+    :   회원정보수정시 경고창에 charset 설정
+        세아토님께서 알려 주셨습니다.
+    :   게시판관리자가 존재할 경우 최고관리자에게 메일이 두번씩 발송되는 문제 해결
+    :   get_brow() 함수에 MSIE 7.0 추가
+    :   사용금지태그에 대소문자 구분하지 않도록 수정
+        달빛온도님께서 알려 주셨습니다.
+    :   우편번호 파일 변경
+        네잎클로버님께서 제작해 주셨습니다.
+        
+        head.sub.php
+        tail.sub.php
+        bbs/register_form_update.php
+        bbs/write_update.php
+        bbs/zip.db
+        lib/common.lib.php
+        lib/visit.lib.php
+        skin/search/basic/search.skin.php
+
+4.06.15 (06.01.13)
+    :   폼메일에서 스팸 발송이 힘들도록 수정
+        한번에 한사람에게만 메일을 발송할 수 있도록 함
+    :   코멘트 수정시 텍스트박스를 글 높이에 맞추도록 함
+        균이님의 팁을 적용하였습니다.
+    :   회원메일 발송시 탈퇴, 차단된 회원은 메일 발송에서 제외
+        대장군님께서 알려 주셨습니다.
+    :   bbs/delete_all.php 의 사용자 실행 코드 위치 변경
+    :   세션 설정값 변경
+    :   input 태그에 name 누락된것 수정
+        나라오름님께서 알려 주셨습니다.
+    :   bbs/good.php 에 charset 변경시 경고메세지 정상 출력되도록 수정
+    :   utf-8 에서 한글파일명 다운로드시 파일명 깨지는 오류 수정
+
+        common.php
+        adm/board_form.php
+        adm/mail_select_list.php
+        bbs/delete_all.php
+        bbs/download.php
+        bbs/formmail_send.php
+        bbs/good.php
+        skin/board/basic/view_comment.skin.php
+
+4.06.14 (05.12.31)
+    :   delete.skin.php 의 실행 순서를 수정 (프로그램 하단에서 중앙부분으로 위치만 이동함)
+        헐랭이, 플록, 달빛온도님께서 제안하셨습니다.
+    :   cut_str() 함수에서 유니코드 문자 제대로 자르도록 수정
+        http://g4uni.winnwe.net/bbs/board.php?bo_table=g4uni_faq&wr_id=7 의 Mr.Learn님의 글을 참고하였습니다.
+    :   charset 변경으로 인한 코드 수정 (기능과 전혀 상관 없음)
+
+        common.php
+        js/common.js
+        bbs/delete.php
+        bbs/rss.php
+        lib/common.lib.php
+        install/index.php
+        install/install_config.php
+        install/install_db.php
+
+4.06.13 (05.12.25)
+    :   [필수패치] 비밀글을 타인이 열람할 수 있는 오류 수정
+        헐랭이, 플록님께서 알려 주셨습니다.
+
+        bbs/write.php
+
+4.06.12 (05.12.15)
+    :   경로가 명확하지 않아 제대로 include 되지 않던 오류 수정 (일부 서버에서 발생)
+    :   alert(), alert_close() 함수에 charset 메타태그 추가
+    :   latest() 함수에 $options 인자 추가 (스크롤 스킨때문에 추가)
+    :   스크롤되는 최신글 추가
+
+        adm/admin.lib.php
+        lib/common.lib.php
+        lib/latest.lib.php
+        skin/latest/scroll/latest.lib.php
+
+4.06.11 (05.12.6)
+    :   wr_html 을 wr_option 으로 수정
+        김도깡님께서 알려 주셨습니다.
+    :   로그인테이블에서 인덱스 삭제
+    :   외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글은 사용일 경우에만 가능해야 함
+        외부에서 글을 등록할 수 있는 버그가 존재하므로 공지는 관리자만 등록이 가능해야 함
+        꼬마후니님께서 알려 주셨습니다.
+
+        필드가 추가, 변경 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        lib/common.lib.php
+        bbs/write.php
+        bbs/write_update.php
+        adm/upgrade.php
+
+4.06.10 (05.11.30)
+    :   head.sub.php 의 현재접속자 코드 수정 (체감 속도를 약간 높임)
+    :   게시판이 없어진 경우 스크랩 리스트 오류 수정
+        나스카님께서 알려 주셨습니다.
+    :   검색에서 그룹으로 검색시 페이지 링크했을때 그룹이 풀리는 오류 수정
+        Daeng`2님께서 알려 주셨습니다.
+    :   회원테이블의 회원가입일시에 인덱스 추가
+
+        필드가 추가, 변경 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        head.sub.php
+        bbs/scrap.php
+        bbs/search.php
+        adm/upgrade.php
+
+4.06.09 (05.11.21)
+    :   다운로드 페이지 스킨 적용
+    :   비회원 글쓰기 후 로그인하여 같은 글을 수정할때 이름이 사라지지 않도록 수정
+        전상희님께서 알려 주셨습니다.
+    :   접근권한이 없는 사용자 메시지를 출력한 후 메인페이지로 이동하도록 수정
+        나스카님께서 알려 주셨습니다.
+    :   원글, 코멘트 수정시 관리자가 수정하면 관리자의 IP로 글이 수정되는 문제 해결
+        헐랭이님께서 알려 주셨습니다.
+    :   RSS 리더 스킨에서 날짜가 제대로 표시되지 않던 오류 수정
+        해뜰녘님께서 알려 주셨습니다.
+
+        bbs/board.php
+        bbs/download.php
+        bbs/rss.php
+        bbs/write_update.php
+        bbs/write_comment_update.php
+        skin/board/basic/download.skin.php
+
+4.06.08 (05.11.14)
+    :   회원정보수정에서 SMS 수신여부 수정되지 않던 오류 수정
+        김도깡님께서 알려 주셨습니다.
+    :   게시판복사시 상,하단 내용에 '(따옴표) 들어가는 경우의 오류 수정
+        JEDI님께서 알려 주셨습니다.
+    :   [보안] 게시판 글쓰기에서 존재하는 wr_id 값을 넘기는 경우 해당 글 내용을 볼 수 있는 오류 수정
+        sjsjin님께서 알려 주셨습니다.
+
+        bbs/register_form_update.php
+        bbs/write.php
+        adm/board_copy_update.php
+
+4.06.07 (05.11.11)
+    :   admin.lib.php 에 order_select() 함수 추가
+    :   분류를 선택하고 코멘트 작성 후 해당 분류가 풀리는 현상을 수정
+        livefree 님께서 알려 주셨습니다.
+    :   레이어와 셀렉트 박스가 겹치는 경우에 셀렉트 박스가 없어지지 않던 오류 수정 (IE 전용 오류)
+
+        adm/admin.lib.php
+        bbs/write_comment_update.php
+        js/sideview.js
+
+4.06.06 (05.11.01)
+    :   글읽기시 포인트 차감 부분 수정
+    :   view.php 의 $scrap_href 변수에 올바르지 않은 링크 수정
+        pardner님께서 알려 주셨습니다.
+    :   필요없는 bbs/visit.inc.php 삭제
+        pardner님께서 알려 주셨습니다.
+    :   비회원의 글쓰기,수정시 이름이 누락되는 경우가 있음. 약간의 코드 수정
+    :   admin.head.php 수정
+    :   페이지 이동 방법 변경 goto_url() 함수
+        달빛온도님께서 알려 주셨습니다.
+    :   우편번호 2005년 10월 18일자 추가 (postman.pe.kr dbf 활용)
+
+        adm/admin.head.php
+        bbs/board.php
+        bbs/view.php
+        bbs/write_update.php
+        bbs/zip.db
+        lib/common.lib.php
+
+4.06.05 (05.10.20)
+    :   메뉴번호가 바뀌는 경우에 현재 없는 저장된 메뉴는 삭제함 (관리권한설정)
+    :   lib/common.lib.php 의 url_auto_link() 함수에서 &nbsp; 로 인해
+        링크를 제대로 인식하지 못하던 오류를 수정
+    :   우편번호 검색에서 번지를 제대로 넘기지 못하는 오류 수정
+        오광호님께서 알려 주셨습니다.
+
+        adm/auth_list.php
+        lib/common.lib.php
+        bbs/zip.php
+        skin/member/basic/zip.skin.php
+
+4.06.04 (05.10.17)
+    :   현재 선택한 날짜가 bbs/calendar/*.txt 에 있다면 색상 표시하지 못하던 오류 수정
+    :   [필수] cheditor 보안 관련 패치
+        배부른꿀꿀이님께서 알려 주셨습니다.
+
+        skin/member/basic/calendar.skin.php
+        cheditor/insert_image.php
+
+4.06.03 (05.10.12)
+    :   한글파일은 urlencode($filename) 처리를 할경우 '%'를 붙여주게 되는데 '%'표시는 미디어플레이어가 인식을 못하기 때문에 재생이 안됩니다. 
+        그래서 변경한 파일명에서 '%'부분을 빼주면 해결됩니다. 
+        달빛온도님께서 알려 주셨습니다.
+    :   글삭제시 원글과 코멘트수가 정상적으로 업데이트 되지 않던 오류를 수정
+        나라오름님께서 알려 주셨습니다.
+
+        bbs/write_update.php
+        bbs/delete.php
+        bbs/delete_all.php
+
+4.06.02 (05.10.06)
+    :   관리자 페이지에 직접 접근시 $_GET[] 변수값 넘기지 못하던 오류 수정
+    :   관리자 상단 메뉴 읽는 코드 수정
+    :   패스워드 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 가도록 수정
+    :   회원관리에서 포인트부분 클릭시 오류 수정
+        
+        adm/admin.lib.php
+        adm/member_form.php
+        bbs/password.php
+
+4.06.01 (05.09.29)
+    :   그룹관리자의 접근 권한 수정
+    :   [보안] 게시판 목록보기 권한이 없을 경우에도 임의의 글(wr_id) 값을 넘기면 목록 보기가 가능한 오류 수정 (bbs/board.php)
+        고냉이님, zzzz님께서 알려 주셨습니다.
+    :   부관리자의 경우 자신보다 회원관리에서 자신보다 권한을 높게 수정 할 수 없도록 수정
+        라이너스님께서 알려 주셨습니다.
+    :   ca_id -> ca_name (bbs/write.php)
+        보람찬님께서 알려 주셨습니다.
+    :   메일 발송에서 게시판그룹 회원을 선택할 수 있도록 수정
+    :   업로드 하는 파일, 글내용의 크기가 서버에서 설정한 값을 넘었을 경우 오류메세지 출력
+        php.ini 의 post_max_size, upload_max_filesize 와 관련이 있습니다.
+        
+        adm/admin.menu300.php
+        adm/index.php
+        adm/member_list.php
+        adm/boardgroupmember_form.php
+        adm/mail_select_form.php
+        adm/mail_select_list.php
+        adm/mail_preview.php
+        bbs/board.php
+        bbs/write_update.php
+
+4.06.00 (05.09.21)
+    :   분류가 수정되는 경우 해당되는 코멘트의 분류명도 모두 수정함
+    :   수정시 분류명을 넘김
+    :   첨부파일 추가, 삭제시 갯수를 제대로 검사하지 못하던 오류 수정
+        zzzz님께서 알려 주셨습니다.
+    :   관리자 페이지 대폭 수정
+    :   부관리자가 자신보다 높은 권한의 회원을 생성하지 못하도록 수정
+    :   관리자 포인트관리에서 게시판관련 포인트 내역은 해당 게시판 보기가 가능하도록 수정
+    :   게시판 보기에서 코멘트 아이디로 넘어올 경우 원글이 보이도록 수정
+    :   포인트 관리 리스트 속도 개선
+    :   a.mb_id -> mb_id 로 수정 (js/sideview.js)
+    :   게시물당 여러개의 파일이 있어도 포인트를 한번만 차감하도록 수정
+    :   다운로드시 차감 포인트가 있다면 사용자에게 확인함
+
+        adm/*
+        bbs/board.php
+        bbs/download.php
+        bbs/write_update.php
+        skin/board/basic/write.skin.php
+        skin/board/bisic/view.skin.php
+        js/sideview.js
+        lib/common.lib.php
+
+4.05.01 (05.09.06)
+    :   불여우에서 제대로 인식하지 못하는 코드를 수정
+    :   검색제목에 HTML 태그가 들어간 경우의 오류를 수정
+    :   게시판 복사시에 data/file 디렉토리에 index.php 생성
+        yesmoa님께서 알려 주셨습니다.
+    :   아이디/패스워드 찾기에서 주민등록번호로 자료를 찾지 못하던 오류를 수정
+        너부리님께서 알려 주셨습니다.
+    :   게시판 제목, 게시판그룹 제목에 ' 표시 가능하도록 수정
+        손명철님께서 알려 주셨습니다.
+
+        lib/common.lib.php : alert() 함수
+        bbs/search.php
+        bbs/password_forget2.php
+        adm/board_list.php
+        adm/board_form.php
+        adm/boardgroup_list.php
+        adm/boardgroup_form.php
+
+4.05.00 (05.09.01)
+    :   검색사용 게시판만 최근게시물에 출력
+    :   게시판 설정에서 필드별로 그룹적용이 가능하도록 수정
+    :   게시판 설정에 메일발송 사용 필드 추가
+    :   검색어 없이 검색페이지로 이동할 수 있게 수정 
+    :   비회원에게 폼메일 보낼 경우 이름대신 메일 주소를 표시하도록 수정
+        하나Yun님께서 알려 주셨습니다.
+
+        필드가 추가, 변경 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+    
+        adm/upgrade.php
+        adm/board_form.php
+        adm/board_form_update.php
+        bbs/new.php
+        bbs/write.php
+        bbs/write_update.php
+        bbs/write_comment_update.php
+        bbs/tb.php
+        bbs/search.php
+        bbs/formmail.php
+        skin/search/basic/search.skin.php
+
+4.04.00 (05.08.17)
+    :   메일발송 설정 필드 추가
+    :   수정시 공지사항 수정되지 않던 오류 수정
+    :   게시글 작성시 이름이 누락되는 경우를 수정
+    :   최근게시물에 원글, 코멘트글 분리하여 볼 수 있도록 수정
+
+        필드가 추가, 변경 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/upgrade.php
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/mail_test.php
+        adm/sendmail_test.php
+        adm/mail_form.php
+        adm/mail_select_form.php
+        bbs/register_form_update.php
+        bbs/formmail.php
+        bbs/formmail_send.php
+        bbs/poll_etc_update.php
+        bbs/write_update.php
+        bbs/write_comment_update.php
+        bbs/tb.php
+        bbs/write.php
+        bbs/new.php
+        skin/board/basic/write.skin.php
+        skin/new/basic/new.skin.php
+        lib/mailer.lib.php
+
+4.03.03 (05.08.11)
+    :   이메일인증 사용시 자동로그인 제대로 되지 않던 오류 수정
+        g6man님께서 알려 주셨습니다.
+    :   member(로그인)스킨에 login_check.skin.php 추가
+    :   같은 그룹 동일 옵션 체크 수정
+        댕2님께서 알려 주셨습니다.
+    :   달력 스킨 추가
+    :   공지사항 변수가 넘어오는 경우에만 공지사항 반영
+    :   게시판 제목에 ' 포함되면 오류 발생
+        나라오름님께서 알려 주셨습니다.
+
+        common.php
+        adm/board_form.php
+        bbs/calendar.php
+        bbs/calendar/2005.txt
+        bbs/write_update.php
+        bbs/login_check.php
+        skin/member/basic/register_form.skin.php
+        skin/member/basic/login_check.skin.php
+        skin/member/basic/calendar.skin.php
+        skin/member/basic/img/calendar.gif
+        js/common.js
+        head.sub.php
+
+4.03.02 (05.08.04)
+    :   관리자화면 디자인 변경
+        adm/menu/m100900_etc.php 를 삭제하세요.
+    :   포인트정리 추가
+        
+        adm/img/*
+        adm/admin.head.php
+        adm/admin.lib.php
+        adm/admin.tail.php
+        adm/index.php
+        adm/point_clear.php
+        adm/menu/m200210_point_clear.php
+
+4.03.01 (05.08.01)
+    :   우편번호를 파일DB로 변경
+        우편번호 변경시 파일만 교체하면 됨
+    :   게시판관리에서 그룹관리자가 그룹 클릭시 오류나던 부분을 수정
+    :   접근 권한 체크시 회원은 글목록이 보이도록 수정
+    :   관리자 프로그램, 메뉴 대폭 수정
+    :   common.js 의 menu() 함수 변경
+    :   공지글 삭제시 삭제 반영되지 않던 오류 수정
+    :   투표 수정
+
+        adm/*
+        adm/menu/*
+        js/common.js
+        bbs/board.php
+        bbs/delete.php
+        bbs/delete_all.php
+        bbs/poll_update.php
+        bbs/zip.php
+        bbs/zip.db
+
+4.03.00 (05.07.23)
+    :   추후 확장을 위하여 SMS 수신여부 필드를 회원테이블에 추가
+    :   그룹, 게시판관리자가 있어도 최고관리자에게 메일을 발송
+    :   게시물 복사, 이동시 그룹관리자가 관리하는 게시판이 모두 출력되지 않던 오류 수정
+    :   투표 수정
+    :   게시판테이블에 wr_is_comment 필드를 추가하여 원글과 코멘트를 구분하여 쿼리 실행시 속도를 월등히 향상 시킴
+    :   게시판관리자, 그룹관리자 선택하는것에서 입력하는것으로 수정
+    :   관리자 > 회원관리 수정에 수동인증 추가
+    :   회원가입시 회원결과페이지로 이동하지 않던 오류 수정
+
+        필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/sql_write.sql
+        adm/board_form.php
+        adm/board_form_update.php
+        adm/board_list.php
+        adm/boardgroup_form.php
+        adm/boardgroup_form_update.php
+        adm/boardgroup_list.php
+        adm/index.php
+        adm/member_form.php
+        adm/member_form_update.php
+        adm/repair.php
+        adm/upgrade.php
+        bbs/board.php
+        bbs/delete.php
+        bbs/delete_all.php
+        bbs/delete_comment.php
+        bbs/list.php
+        bbs/move.php
+        bbs/move_update.php
+        bbs/poll_update.php
+        bbs/register_form_update.php
+        bbs/rss.php
+        bbs/search.php
+        bbs/scrap_popin.php
+        bbs/scrap_popin_update.php
+        bbs/tb.php
+        bbs/view.php
+        bbs/view_comment.php
+        bbs/write.php
+        bbs/write_comment_update.php
+        bbs/write_update.php
+        lib/latest.lib.php
+        skin/search/basic/search.skin.php
+        skin/member/basic/register_form.skin.php
+
+4.02.01 (05.07.18)
+    :   관리자가 회원아이디 직접 생성시 메일인증일시 입력
+    :   게시판그룹관리자가 관리자페이지에서 게시판 생성, 수정을 할 수 없었던 오류 수정
+    :   동일회원에게 포인트 계속 부여하는 경우 한건만 부여되던 오류 수정
+    :   view_file_link() 함수 수정
+    :   브라우저에서 객체의 왼쪽, 상단 좌표 함수 수정
+        get_left_pos(), get_top_pos()
+    :   검색 코드 수정
+
+        adm/board_form.php
+        adm/board_form_update.php
+        adm/board_list.php
+        adm/board_list_delete.php
+        adm/board_delete.php
+        adm/member_form_update.php
+        common.lib.php
+        adm/point_update.php
+        bbs/search.php
+        js/common.js
+
+4.02.00 (05.07.13)
+    :   회원이 투표할 경우 포인트 제대로 부여되지 않던 오류 수정
+    :   파일테이블에 이미지 속정 필드 추가
+        getimagesize() 함수보다 속도가 빠름
+        g6man 님께서 제안하셨습니다.
+    :   help(), menu() 자바스크립트 함수 수정
+    :   검색시 버그 수정 (lib/common.lib.php)
+        수정전 : $pattern .= $bar . str_replace("/", "\/", quotemeta($s[$m]));
+        수정후 : $pattern .= $bar . str_replace("/", "\/", quotemeta($s[$m])) . "(?![^<]*>)";
+        yesmoa 님께서 알려주시고 g6man 님께서 해결해 주셨습니다. ^^
+    :   설치시 data 디렉토리 밑에 index.php 생성
+        root 님께서 알려 주셨습니다.
+    :   cheditor 부분 수정
+    :   게시판생성에서 게시판그룹없을 경우 게시판그룹 생성하라는 메세지 출력
+    :   게시판생성시 게시판 디렉토리 밑에 index.php 생성
+    :   bbs/good.php 에서 SQL Injection 에 대비한 코드 수정
+        root 님께서 알려 주셨습니다.
+    :   회원로그인검사에서 메일인증코드 위치 변경
+    :   트랙백 부분 수정
+        수정전 : $msg = send_trackback($wr_trackback, $trackback_url, $wr_subject, $board[bo_subject], $wr_content);
+        수정후 : $msg = send_trackback($wr_trackback, $trackback_url, $wr_subject, $board[bo_subject], $_POST[wr_content]);
+    :   환경설정의 E-mail 인증사용 위치 수정
+
+        필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/upgrade.php
+        adm/admin.head.php
+        adm/board_copy_update.php
+        adm/board_form.php
+        adm/board_form_update.php 
+        adm/config_form.php
+        bbs/good.php
+        bbs/login_check.php
+        bbs/move_update.php
+        bbs/poll_update.php
+        bbs/write_update.php
+        cheditor/cheditor.js
+        install/install_db.php
+        js/common.js
+        lib/common.lib.php
+
+4.01.00 (05.07.11)
+    :   방문자수 전체구하는 코드 오류 수정
+        todayis 님께서 알려 주셨습니다.
+    :   투표결과페이지 스킨 적용
+    :   bbs/link.php 에서 SQL Injection 에 대비한 코드 수정
+        root 님께서 알려 주셨습니다.
+    :   검색 코드 수정
+    :   관리자일 경우에만 자바스크립트 변수에 관리자 디렉토리 정보 생성
+    :   E-mail 본인인증 기능추가로 인한 코드 상당부분 수정
+        bbs/mail_stop.php 를 bbs/email_stop.php 로 이름 변경합니다.
+        
+        ※ 기존 사용자가 업그레이드 할 경우에는 별도로 email_certify.php, email_certify2.php 를 다운로드 하셔야 합니다.
+
+        필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/_common.php
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/mail_preview.php
+        adm/mail_select_update.php
+        adm/mail_test.php
+        adm/member_form.php
+        adm/member_list.php
+        adm/upgrade.php
+        bbs/link.php
+        bbs/email_certify.php
+        bbs/email_stop.php
+        bbs/login_check.php
+        bbs/register_form.php
+        bbs/register_form_update.php
+        bbs/register_form_update_mail1.php
+        bbs/register_form_update_mail2.php
+        bbs/register_form_update_mail3.php
+        bbs/poll_result.php
+        bbs/poll_update.php
+        bbs/search.php
+        bbs/visit_insert.inc.php
+        lib/common.lib.php
+        lib/poll.lib.php
+        skin/member/basic/register_form.skin.php
+        skin/member/basic/register_result.skin.php
+        skin/poll_result.skin.php
+        head.sub.php
+
+4.00.20 (05.07.06)
+    :   lib/common.lib.php 에 get_yoil() 함수등 추가
+    :   bbs/download.php 에서 중복된 코드 삭제
+        prosper 님께서 알려 주셨습니다.
+
+    :   한국소프트웨어진흥원 공개SW지원센터에서 보내온 문서를 토대로 PHP, SQL Injection 에 대처하기 위해 코드 수정
+        한국소프트웨어진흥원 신민석님, 정현철연구원님, 서강대학교 김우현님, 
+        ㈜A3 Security consulting 구본근님, 김동우님, 한남대학교 컴퓨터공학과 최민성님,
+        함지만님, INetCop Security 유동훈님 께 감사드립니다.
+
+        common.php
+        adm/board_form.php
+        bbs/download.php
+        bbs/link.php
+        bbs/formmail.php
+        bbs/formmail_send.php
+        bbs/write_update.php
+        lib/popular.lib.php
+        lib/common.lib.php
+
+4.00.19 (05.07.05)
+    :   중복으로 투표가 가능하던 오류를 수정
+        Gatzz 님께서 알려 주셨습니다.
+    :   delete_point() 함수에서 포인트 합을 반영
+        jjuni 님께서 알려 주셨습니다.
+    :   회원가입시 본인을 추천할 수 있는 오류 수정
+        아꽈 님께서 알려 주셨습니다.
+
+        bbs/poll_update.php
+        bbs/register_form_update.php
+        lib/common.lib.php
+        skin/member/basic/register_form.skin.php
+
+4.00.18 (05.07.04)
+    :   설치시 data/cheditor 디렉토리 생성
+    :   별명 수정일에서 계산이 틀린 오류를 수정
+    :   제목에 " 들어가는 경우 수정 안되던 오류를 수정
+        yesmoa, 보람찬 님께서 알려 주셨습니다.
+    :   게시판 복사시 게시판 제목 입력 가능하게 수정
+    :   포인트 부여와 관련된 모든 파일 수정
+        (글[코멘트]삭제시 원글[코멘트]포인트 부여 레코드 삭제)
+        (다운로드시 한번만 포인트 부여)
+    :   디렉토리에 m000 이름이 존재하면 관리자 메뉴를 불러오지 못하던 오류를 수정
+    :   필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/board_copy.php
+        adm/board_copy_update.php
+        adm/point_update.php
+        adm/menu/*
+        bbs/board.php
+        bbs/delete.php
+        bbs/delete_all.php
+        bbs/delete_comment.php
+        bbs/download.php
+        bbs/poll_update.php
+        bbs/register_form_update.php
+        bbs/scrap_popin_update.php
+        bbs/write.php
+        bbs/write_comment_update.php
+        bbs/write_update.php
+        common.php
+        lib/common.lib.php
+        skin/member/basic/register_form.skin.php
+        install/install_db.php
+        cheditor/insert_image.php
+        cheditor/imageupload-class.php
+
+4.00.17 (05.06.29)
+    :   버전확인 페이지 추가
+        조병완(korone)님 , 남규아빠(eagletalon)님께서 만들어 주셨습니다.
+    :   게시판설정에서 연관성없는 그룹동일적용 분리
+    :   cheditor 연동 부분 상당부분 수정
+    :   common.lib.php 의 goto_url() 수정
+    :   쪽지, 스크랩, 우편번호, 아이디/패스워드 찾기, 회원정보조회 페이지 
+        모두 스킨으로 대체 (skin/member/basic/*)
+    :   투표한 회원을 저장하여 두번이상 투표를 하지 못하도록 수정
+    :   필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+        
+        adm/version.php
+        adm/menu/m100960_version.php
+        adm/board_form.php
+        adm/board_form_update.php
+        adm/poll_form.php
+        adm/upgrade.php
+        bbs/formmail.php
+        bbs/memo.php
+        bbs/memo_form.php
+        bbs/memo_view.php
+        bbs/password_forget.php
+        bbs/password_forget2.php
+        bbs/password_forget3.php
+        bbs/poll_update.php
+        bbs/profile.php
+        bbs/scrap.php
+        bbs/scrap_popin.php
+        bbs/write_update.php
+        bbs/zip.php
+        lib/common.lib.php
+        lib/cheditor.lib.php
+        cheditor/cheditor.js
+        cheditor/cheditorSimple.js
+        skin/board/cheditor/*
+        skin/member/basic/*
+
+4.00.16 (05.06.28)
+    :   사용자의 레벨보다 읽기 레벨이 더 큰 경우 내용을 보여주지 않고 검색되게 함
+        아꽈님께서 알려 주셨습니다.
+    :   DHTML Editor (cheditor : http://chsoft.co.kr) 기본 탑재
+    :   불여우에서 글등록시 글읽기로 넘어가지 않던 오류 수정
+    :   config.php 에 아래와 같이 두줄 추가하세요
+        $g4[editor]         = "cheditor";
+        $g4[editor_path]    = $g4[path] . "/" . $g4[editor];
+
+        bbs/search.php
+        bbs/write_update.php
+        cheditor/*
+        lib/cheditor.lib.php
+
+4.00.15 (05.06.21)
+    :   코멘트 수정시 연속 게시물 등록 메시지로 인한 오류 수정
+    :   회원메일 발송시 생일부분의 코드 오류 수정
+    :   포인트 관리 목록에 내용 검색 추가
+    :   메일로 보내는 코멘트의 바로가기 링크 수정
+    :   코멘트 입력, 수정 후 코멘트로 이동
+    :   admin.tail.php 하단에 있던 자바스크립트를 admin.js 로 분리
+    :   [보안관련] 다른 회원의 쪽지를 읽을 수 있는 오류 수정
+        
+        bbs/write_comment_update.php
+        adm/mail_select_list.php
+        adm/point_list.php
+        adm/admin.tail.php
+        adm/admin.js
+        bbs/memo_form.php
+
+4.00.14 (05.06.20)
+    :   쪽지 답장하기에서 이전글 보여주기
+    :   게시판복사시 글쓴이 사이드뷰 필드 복사되지 않던것을 수정
+    :   관리자페이지에서 사용할 help() 함수 및 스타일 시트 추가
+    :   js/common.js 의 check_byte() 함수에서 cnt 값 return
+
+        bbs/memo_form.php
+        adm/board_copy_update.php
+        adm/_common.php
+        adm/admin.head.php
+        js/common.js
+
+4.00.13 (05.06.18)
+    :   공지사항 제대로 체크되지 않던 오류를 수정
+    :   실명 사용일때 코멘트에 별명으로 입력되던 오류를 수정
+    :   회원의 권한이 게시판의 권한보다 낮으면 그룹 최신글에서 해당 게시판 출력 안함
+    :   그외 다수
+
+        bbs/write.php
+        bbs/write_update.php
+        bbs/write_comment_update.php
+        bbs/group.php
+        adm/admin.head.php
+        adm/board_form.php
+        adm/boardgroupmember_form.php
+        adm/member_form.php
+
+4.00.12 (05.06.17)
+    :   글복사, 이동시 게시판 선택창에서 제목을 클릭해도 체크되도록 수정
+    :   게시판 스킨 코드 최적화
+    :   [ie 버그] 
+        게시판의 글내용이 많을시 <form> 바로 아래의 <input hidden 값 하나가 
+        사라지는 현상이 발생하는 경우가 있습니다. (그렇지 않은 경우가 더 많네요)
+        이것을 해결하는 방법은 <form> 태그 바로 아래에 
+        <input hidden=null> 을 한줄 추가시켜 주면 됩니다.
+    :   RSS 링크 추가
+
+        bbs/move.php
+        bbs/list.php
+        skin/board/basic/*
+
+4.00.11 (05.06.15)
+    :   글답변에서 파일 업로드시 원글의 파일이 삭제되는 오류를 수정
+    :   common.lib.php의 get_sideview() 함수 코드 약간 수정
+    :   common.lib.php의 get_file() 함수에 파일 path 추가
+    :   폼메일에서 파일첨부시 확인클릭하면 메일 발송되지 않던 오류 수정
+    :   테이블 복구 및 최적화 프로그램 추가
+    :   그외 다수
+
+        adm/auth_update.php
+        adm/board_form_update.php
+        adm/boardgroup_form_update.php
+        adm/boardgroupmember_update.php
+        adm/config_form_update.php
+        adm/mail_update.php
+        adm/member_form_update.php
+        adm/point_update.php
+        adm/poll_form_update.php
+        adm/repair.php
+        adm/upgrade.php        
+        adm/menu/m100991_repair.php
+        bbs/formmail.php
+        bbs/write_update.php
+        lib/common.lib.php
+
+4.00.10 (05.06.14)
+    :   서명 출력 되도록 수정
+    :   첫로그인 부분 코드 수정
+    :   글읽기 포인트 부여방법 수정
+    :   코멘트에 답변하는 동안 원 코멘트 삭제되는 경우의 오류 수정
+
+        bbs/board.php
+        bbs/view.php
+        bbs/write_comment_update.php
+        skin/board/basic/view.skin.php
+        common.php
+
+4.00.09 (05.06.13)
+    :   글입력시 공지사항에 나오지 않던 오류를 수정
+    :   끌쓰기, 코멘트쓰기, 글읽기에서 관리자도 포인트 가감
+    :   사이드뷰 사용하지 않을 경우 코멘트 이름에 사이드뷰 출력되는 오류 수정
+    :   인덱스 필드가 아니면 정렬에 사용하지 않음 코드 제거
+
+        bbs/write_update.php
+        bbs/write_comment_update.php
+        bbs/board.php
+        bbs/view_comment.php
+        bbs/list.php
+
+4.00.08 (05.06.10)
+    :   검색 수정
+    :   최근게시물 수정
+    :   게시판관리 리스트 페이지 수정 (제목을 넓게 ... 관리자 선택부분 삭제)
+    :   코멘트 입력 체크 루틴 추가
+    :   회원가입, 글쓰기, 코멘트쓰기시에 이름에 태그 적용할 수 없도록 수정
+
+        adm/board_list.php
+        bbs/search.php
+        bbs/new.php
+        bbs/register_form_update.php
+        bbs/write_update.php
+        bbs/write_comment_update.php
+        skin/new/basic/new.skin.php
+        skin/board/basic/view_comment.skin.php
+
+4.00.07 (05.06.09)
+    :   관리자는 글읽기, 글쓰기, 코멘트쓰기, 다운로드시 포인트 가감하지 않음
+        nasca님께서 알려 주셨습니다.
+    :   회원메일발송에서 잘못된 변수명 바로 잡음
+        smile4u님께서 알려 주셨습니다.
+    :   게시판스킨의 잘못된 주석 바로 잡음
+        까만도둑님께서 알려 주셨습니다.
+    :   게시판스킨의 테이블폭(500->100%) 수정
+        wanie님께서 알려 주셨습니다.
+
+        adm/mail_select_update.php
+        adm/mail_test.php
+        bbs/board.php
+        bbs/write_comment_update.php
+        bbs/write.php
+        bbs/write_update.php
+        skin/board/basic/view.skin.php
+        skin/board/basic/list.skin.php
+
+4.00.06 (05.06.07)
+    :   환경설정테이블에 여분필드 10개 추가
+    :   필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/upgrade.php
+
+4.00.05 (05.06.06)
+    :   bbs/member_confirm.php 를 스킨화
+    :   login 스킨과 register 스킨을 묶어 member 스킨으로 수정
+    :   login 스킨과 register 스킨은 삭제
+    :   출력되는 제목에 get_text() 함수 적용 (스크립트 실행 무력화)
+    :   그외 다수
+    :   필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/upgrade.php
+        bbs/register_form.php
+        bbs/member_confirm.php
+        bbs/register_result.php
+        bbs/register_form_update.php
+        bbs/register.php
+        bbs/good.php
+        bbs/scrap.php
+        bbs/scrap_popin.php
+        bbs/login.php
+        skin/member/*
+        
+
+4.00.04 (05.06.03)
+    :   다른 디렉토리와 구조를 맞추기 위하여 파일 추가
+        _common.php , _head.php , _tail.php
+
+        _common.php
+        _head.php
+        _tail.php
+        index.php
+
+
+4.00.03 (05.06.01)
+    :   [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
+    :   data 및 자동생성되는 디렉토리에 내용없는 index.php 생성
+        (서버의 설정에 따라 해당 디렉토리의 파일이 보이는것을 사전에 차단)
+    :   $g4[url] 경로 부분 수정
+
+        common.php
+        install/install_db.php
+
+4.00.02 (05.05.31)
+    :   검색에서 제대로 출력되지 않던 오류 수정
+
+        skin/search/basic/search.skin.php
+
+4.00.01 (05.05.30)
+    :   관리자 > 게시판관리 > 게시판복사시에 쿼리 오류 발생
+
+        adm/board_copy_update.php
+
+4.00.00 (05.05.30)
+    :   안정버전 배포
+
+05.05.30
+    :   로그인 페이지를 스킨으로 사용할 수 있게 수정
+    :   그외 다수
+    :   필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/board_copy_update.php
+        adm/config_form.php
+        adm/config_form_update.php
+        adm/member_form_update.php
+        adm/upgrade.php
+        bbs/login.php
+        bbs/password.php
+        bbs/register_form_update.php
+        skin/login/*
+
+05.05.28
+    :   현재접속자 스킨으로 수정
+    :   그외 다수
+    :   필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+        adm/upgrade.php
+        adm/config_form_update.php
+        adm/config_form.php
+        bbs/current_connect.php
+        bbs/view_comment.php
+        skin/new/*
+        skin/connect/*
+        lib/connect.lib.php
+
+05.05.27
+    :   글삭제시 최근게시물에서 코멘트 삭제되지 않던 오류를 수정
+        root님께서 알려 주셨습니다.
+
+        bbs/delete.php
+        bbs/delete_all.php
+
+05.05.26
+    :   파일 테이블에 파일 내용을 필드 추가
+        관리자 > 게시판설정에서 파일 설명 사용에 체크하십시오.
+    :   자기소개 페이지에 자신보다 높은 권한의 사용자는 가입일과 최종접속일을 알 수 없게 함
+        황제.com님께서 알려 주셨습니다.
+    :   프레임 사용시 중복 회원아이디, 이메일 계속 묻는 오류 수정
+        root님께서 알려 주셨습니다. top.document -> parent.document
+    :   gallery 형식 스킨 추가
+        이 스킨은 기존의 답사기 스킨을 구현한것으로 아직 썸네일 기능은 넣지 못하였습니다.
+        관리자 > 게시판설정에 아래의 값을 반드시 입력해 주세요.
+        여분필드 1은 한행에 출력하는 이미지 수 지정
+        여분필드 2는 이미지의 폭을 픽셀로 지정
+
+    adm/board_form_update.php
+    adm/board_form.php
+    adm/upgrade.php
+    bbs/write.php
+    bbs/member_email_check.php
+    bbs/member_nick_check.php
+    bbs/write_update.php
+    bbs/view.php
+    bbs/profile.php
+    lib/common.lib.php
+    skin/board/basic/view.skin.php
+    skin/board/basic/write.skin.php
+    skin/board/gallery/*
+
+05.05.25
+    :   검색을 스킨으로 수정
+    :   접속자로그 삭제일, 인기검색어 삭제일 설정 추가
+    :   필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+    config.php
+    adm/config_form.php
+    adm/config_form_update.php
+    adm/index.php
+    adm/upgrade.php
+    bbs/search.php
+    skin/search/*
+
+05.05.24
+    :   게시판관리 > 게시판복사 할때 파일 복사 안되던 오류를 수정
+    :   최근게시물 스킨으로 수정
+    :   그외 다수
+    :   필드가 추가 되었으니 adm/upgrade.php 를 한번 이상 실행하여 주십시오.
+
+    install/install_db.php
+    adm/board_copy_update.php
+    adm/config_form.php
+    adm/config_form_update.php
+    adm/index.php
+    adm/upgrade.php
+    bbs/board.php
+    bbs/current_connect.php
+    bbs/delete_comment.php
+    bbs/download.php
+    bbs/new.php
+    bbs/search.php
+    bbs/tb.php
+    bbs/view_comment.php
+    bbs/write.php
+    bbs/write_comment_update.php
+    bbs/write_update.php
+    lib/common.lib.php
+    skin/new/*
+
+05.05.23
+    :   약관(provision -> stipulation) 필드명 변경
+    :   최근게시물 코멘트에 작성자, 시간 출력 오류 수정
+        root님께서 알려 주셨습니다.
+    :   OPTIMIZER TABLE 추가
+    :   그누3 투표변화시 오류 수정
+
+    adm/auth_update.php
+    adm/board_form_update.php
+    adm/boardgroup_form_update.php
+    adm/boardgroupmember_update.php
+    adm/config_form.php
+    adm/config_form_update.php
+    adm/mail_update.php
+    adm/member_form_update.php
+    adm/point_update.php
+    adm/poll_form_update.php
+    adm/upgrade.php
+    bbs/new.php
+    skin/register/basic/register.skin.php
+    convert/g3_vote.php
+
+05.05.22
+    :   RSS 수정
+    :   답변있는 코멘트는 수정, 삭제 불가
+    :   글자수 입력 제한을 게시판 설정에서 지정할 수 있게 수정
+        필드가 추가 되었으므로 adm/upgrade.php 반드시 한번 이상 실행하세요.
+    :   현재접속자 링크는 최고관리자에게만 허용
+    :   검색에서 게시판 링크에서 검색 쿼리문 삭제
+    :   코멘트 삭제시 새글도 삭제
+        torry님께서 알려 주셨습니다.
+    :   포인트 부분 코딩 새로함
+    :   설치시 최고관리자 회원정보를 공개로 설정
+        hepburnstyle님께서 알려 주셨습니다.
+
+    bbs/download.php
+    bbs/board.php
+    bbs/write_comment_update.php
+    bbs/write.php
+    bbs/write_update.php
+    bbs/search.php
+    bbs/delete_comment.php
+    bbs/current_connect.php
+    bbs/view_comment.php
+    bbs/list.php
+    bbs/rss.php
+    adm/index.php
+    adm/board_form_update.php
+    adm/board_form.php
+    adm/upgrade.php
+    install/install_db.php
+
+05.05.21
+    :   비밀글은 검색에서 제외
+        zzzz님께서 알려 주셨습니다.
+        bbs/search.php
+
+    :   게시판 검색어도 인기검색어에 포함
+        root님께서 알려 주셨습니다.
+        lib/common.lib.php
+
+05.05.20
+    :   인기검색어 기능 추가
+        adm/upgrade.php 실행
+        bbs/search.php
+        lib/popular.lib.php
+        skin/popular/*
+        common.php
+        config.php
+
+    :   관리자 메뉴 개편
+        adm/*
+
+    :   투표 참여시 포인트 부여
+        adm/poll_form.php
+        adm/poll_form_update.php
+        bbs/poll_update.php
+
+    :   최신글에 코멘트 포함
+        bbs/new.php
+        bbs/write_comment_update.php
+        bbs/write_update.php
+        bbs/tb.php
+        bbs/scrap_popin_update.php
+
+    :   글이동시 최신코멘트도 이동
+        bbs/move_update.php
+
+    :   RSS 추가
+        bbs/rss.php
+
+05.05.17
+    :   게시물 복사, 이동시 코멘트 답변 정상 복사, 이동 되도록 수정
+        bbs/move_update.php
+
+    :   코멘트 수정, 삭제 오류 수정
+        bbs/write_comment_update.php
+        bbs/delete_commnet.php
+
+05.05.16
+    :   admin 디렉토리를 adm 으로 변경
+        tomcat 설치시 충돌 미연에 방지
+        config.php
+
+    :   코멘트에 답변 기능 추가
+        필드가 추가 되었으므로 adm/upgrade.php 를 한번 이상 실행하셔야 합니다.
+        *
+
+    :   config.php 에 $g4[url] 을 직접 입력할 수 있도록 수정
+        windows 서버에서는 제대로 경로를 알 수 없어 수동으로 입력할 수 있도록 하였습니다.
+        config.php
+
+05.05.15
+    :   게시물 이동시 제대로 계산되지 않던 게시물 수를 수정
+        그외 다수
+        adm/board_delete.inc.php
+        adm/config_form.php
+        adm/board_form.php
+        bbs/move_update.php
+        bbs/write.php
+
+05.05.14
+    :   윈도우 서버에서 관리자메뉴 정상 출력되도록 수정
+        adm/menu/*
+
+    :   설정일이 지난 새글 삭제, 설정일이 지난 쪽지 삭제, 탈퇴회원 자동 삭제 루틴을
+        adm/index.php 로 옮겼습니다.
+
+    :   복사, 이동시 로그 남김 기능 추가
+        필드가 추가 되었으므로 adm/upgrade.php 를 한번 이상 실행하셔야 합니다.
+        adm/config_form.php
+        adm/config_form_update.php
+        bbs/move_update.php
+
+    :   이동시 최신글에서 사라지는 게시물 오류 수정
+        torry님께서 알려 주셨습니다.
+        bbs/new.php
+        bbs/move_update.php
+
+    :   사이드뷰에서 홈페이지 클릭시 제대로 이동하지 않던 오류 수정
+        말탄개미(sehonet)님께서 알려 주셨습니다.
+        lib/common.lib.php
+
+    :   코멘트 새창 사용 체크하지 않았을 때 최신글에서 코멘트 클릭시 오류 수정
+        bbking님께서 알려 주셨습니다.
+        skin/latest/basic/latest.skin.php
+
+    :   회원메일에서 미리보기 기능 추가
+        NARU(kingljm)님께서 알려 주셨습니다.
+        adm/mail_list.php
+        adm/mail_preview.php
+
+    :   관리자가 직접 등록한 회원 로그인 되지 않던 오류 수정
+        패스워드 입력이 되지 않고 있었음
+        정진상(chung96)님께서 알려 주셨습니다.
+        adm/member_form_update.php
+
+    :   게시판 그룹 입력시 여분 필드 입력되지 않던 오류 수정
+        NARU(kingljm)님께서 알려 주셨습니다.
+        boardgroup_form_update.php
+
+05.05.13
+    : 글자수 최소/제한하는 코드 추가
+      skin/board/basic/write.skin.php
+      skin/board/basic/view_comment.skin.php
+
+    : 회원가입을 스킨 방식으로 수정
+      필드가 추가 되었으므로 adm/upgrade.php 를 한번 이상 실행하셔야 합니다.
+      adm/config_*
+      skin/register/*
+      bbs/member_*_check.php
+      bbs/register_*
+
+    : 공지에는 답변할 수 없는 메세지 출력 오류 수정
+      bbs/write_update.php
+
+    : 검색 수정
+      head.php
+
+05.05.12
+    : 관리자가 직접 회원 등록 가능하도록 수정
+      adm/member_list.php
+      adm/member_form.php
+      adm/member_form_update.php
+
+    : 동일내용 연속등록 불가
+      bbs/write_update.php
+      bbs/write_comment_update.php
+
+    : 글 이동시 스크랩도 이동하도록 수정
+      bbs/move_update.php
+
+    : 글쓴이 사이드뷰 사용 기능 추가
+      필드가 추가 되었으므로 adm/upgrade.php 를 한번 이상 실행하셔야 합니다.
+      adm/board_form.php
+      adm/board_form_update.php
+
+05.05.11
+    : 게시판관리 > 수정에서 오류나는 부분들 수정
+      adm/board_form.php
+      adm/board_form_update.php
+
+    : 불여우에서 alphanumeric 과 alphanumeric_ 을 제대로 인식하지 못하던 오류를 수정
+      alphanumeric_ 을 alphanumericunderline 으로 수정
+      js/wrest.js
+
+    : bbs , admin path 전체 수정
+      *
+
+05.05.10
+    : 같은 서버에 존재하는 타계정에서 DB 정보를 감출 수 있는 방법이 마련되지 않아
+      원래의 설치 파일로 돌려 놓았습니다.
+      install/*
+      common.php
+      config.php
+
+    : php 인젝션 ( 임의로 변수조작으로 인한 리모트공격) 취약점에 대비한 코드를 추가
+      prosper 님께서 알려 주셨습니다.
+      common.php
+
+    : 회원메일발송 추가
+      회원메일 테이블 추가로 인한 프로그램 실행
+      http://도메인/지포/adm/upgrade.php 를 한번 이상은 최고관리자 권한으로 실행해 주십시오.
+
+      adm/*
+      common.php
+      config.php
+
+05.05.09
+    : dbconfig.php 를 완전히 없애고 common.php 에 mysql 정보를 넣는 방식으로 수정하였습니다.
+      어떤 코드로 하던 dbconfig.php 가 따로 분리되어 있으면 같은 서버에 존재하는 타 계정들로
+      부터 자유로울 수 없습니다.
+      타인에게 mysql 정보를 알려주지 않는 한 완벽(?)하게 DB를 안전하게 보호 할 수 있습니다.
+      common.php
+      config.php
+      install/*
+
+    : 여분 필드 코드 오류 수정
+      김선용(sucjin)님께서 알려 주셨습니다.
+      adm/board_form.php
+      adm/boardgroup_form.php
+      adm/member_form.php
+
+    : 회원정보수정시 관리자 아이디 접근 불가 해제
+      bbs/register_form.hp
+
+    : 설치시 퍼미션 확인 코드 수정
+      install/index.php
+
+    : sql_zip.sql 을 admin 디렉토리로 이동
+
+05.05.06
+    : 코멘트 입력시 여분 필드 입력되도록 수정
+      bbs/write_comment_update.php
+
+    : 접근권한(부관리자) 설정 기능 추가
+      가변적으로 추가되는 프로그램도 적용 가능
+      r : 읽기 , w : 입력, 수정 , d : 삭제
+      config.php
+      adm/*
+
+05.05.04
+    : 제목 길이 자르기 수정
+      김선용(sucjin)님께서 알려 주셨습니다.
+      bbs/list.php 
+    : 코멘트보기 사용하지 않을 경우 오류 수정
+      lib/common.lib.php
+      skin/board/*/list.skin.php
+    : 관리자 메뉴 수정
+      adm/*
+
+05.05.03
+    : 게시판그룹설정에서 옵션 입력 가능하게 수정
+      adm/boardgroup_form.php
+      adm/boardgroup_form_update.php
+
+    : 관리자메뉴에 DHTML 메뉴 삭제
+      adm/*
+
+05.05.02
+    : 게시판설정 > 수정에서 bo_image_size 필드 존재하지 않음 오류 수정
+      adm/board_form_update.php
+    
+    : 최신글의 글자수 표시 오류 수정 
+      get_list() 함수에서 $len => $subject_len 으로 수정
+      김선용(sucjin)님께서 알려 주셨습니다.
+      lib/common.lib.php 
+    
+    : get_view() 함수 수정
+      lib/common.lib.php 
+    
+    : url_auto_list() 함수 수정
+      lib/common.lib.php 
+    
+    : 답사기 게시판 변환기 추가
+      convert/g3_dabsagi.php
+
+05.04.30
+    : 회원가입시 별명에서 0일 이내 변경 안됨 부분 수정
+      bbs/register_form.php
+
+05.04.29
+    : 불여우에서 쪽지보내기 클릭시 자바스크립트 콘솔창이 뜨는것을 수정
+      js/sideview.js
+
+    : 전체검색 자바스크립트 오류 수정
+      bbs/search.php
+
+    : 회원자신의 코멘트는 삭제할 수 없는 오류 수정
+      bbs/delete_comment.php
+
+    : 게시판설정 > 수정에서 스킨디렉토리 변경되지 않던 오류를 수정
+      adm/board_form.php
+
+    : 현재접속자 오류 수정
+      head.sub.php
+
+    : 존재하지 않는 게시판일 경우 오류 출력
+      bbs/board.php
+
+    : FireFox 에서 가변파일 업로드 되지 않던 오류를 수정
+      김선용(sucjin)님께서 알려 주셨습니다.
+      <!-- 김선용 2005.4 - FF(불여우) 에서는 innerHTML 사용시 폼이 <table> 아래에 있으면 인식하지 못합니다. --> 
+      게시판스킨의 write.skin.php
+
+    : 게시판설정 > 수정시 공지사항 없어지던 오류를 수정
+      adm/board_form_update.php
+
+    : 투표리스트에서 링크 수정
+      박규석(nosty)님께서 알려 주셨습니다.
+      adm/poll_list.php
+
+    : 게시판설정 > 수정시 가로이미지수 필드 오류 수정
+      강남호(namo)님께서 알려 주셨습니다.
+      adm/board_form_update.php
+
+    : 게시판설정에서 HTML 쓰기 권한 수정
+      바리미(koxel)님께서 알려 주셨습니다.
+      adm/board_form.php
+
+    : 게시판설정에서 스킨 디렉토리 반드시 설정하도록 수정
+      adm/board_form.php
+
+    : allow_url_fopen = Off 일 경우 트랙백 오류나던 부분을 수정 (소켓 사용)
+      lib/trackback.lib.php
+
+05.04.28
+    : 포인트 변환시 오류 수정
+      convert/g3_member.php
+
+05.04.28
+    : 정식버전 배포 (안정버전 아님)
+
+05.04.28
+    : 불여우에서 회원정보수정 후 정지하던것을 수정
+    : 그누보드3 게시판자료 변환 프로그램 추가
+      convert/g3_board.php
+    : MySQL 관리툴 phpMyAdmin 2.6.2 탑재
+
+05.04.27
+    : 설치시 implode() 인수 갯수 오류 수정
+    : 그누보드3 회원자료 변환 프로그램 추가
+      convert/g3_member.php
+
+05.04.26
+    : 코멘트 몇건 이상 등록시 원글 수정, 삭제 불가 기능 추가
+    : 게시판 생성 기능 추가
+    : 게시판에 상, 하단 이미지 업로드 기능 추가
+    : 별명 변경 후 설정일 동안 별명 변경하지 못하는 기능 추가
+    : 새글 리스트에 분류검색 기능 추가
+    : 전체검색에 분류검색 기능 추가
+
+05.04.25
+    : bbs/zip2.php 삭제 (새창에서 상세주소를 입력받지 않음)
+
+05.04.24
+    : 카페24 에서 설치 되지 않던 문제와 설치시 Unknown table 'g4_board' 오류 수정
+
+05.04.22    
+    : 그룹접근 사용에 따른 글목록 보기 차단 기능 추가
+    : 그룹접근 사용에 따른 검색 차단 기능 추가
+    : 최고관리자는 포인트 추가 내역 남기지 않음
+
+05.04.21    
+    : 게시판 테이블의 wr_option 에서 set(html, htmlbr) 을 set(html1, html2) 로 변경
+    : 관리자 > 회원정보 수정시 오류 수정
+    : 회원가입시 추천인 아이디 입력 부분 수정
+    : common.lib.php 의 insert_point() 함수에서 회원아이디를 찾아 없으면 return 함
+    : 전체 검색 수정
+    : 게시판 검색에서 검색어에 색상 출력
+    : common.lib.php 의 search_font() 함수에서 검색어가 없는 경우 return 함
+
+05.04.21    오픈 베타 2 배포
+
+05.03.29    베타 1 배포
+
+그누보드4 이력 ↑
+
+
+================================================================================
+그누보드4 주요기능
+--------------------------------------------------------------------------------
+    1. 가변 파일 업로드 지원
+    2. 관리자 페이지에 가변적으로 메뉴 추가 가능
+    3. 관리자 메뉴별 접근 기능
+    4. 트랙백 기능
+    5. 최근게시물 지원으로 게시판이 많아도 새글을 확인할 수 있음
+    6. 로봇에 의한 글쓰기 차단 기능
+    7. RSS
+    8. 게시판별로 포인트 점수를 다르게 부여할 수 있음
+    9. 회원가입시 이메일 본인인증 가능
+   10. 그외 다수
+--------------------------------------------------------------------------------
+알려진 버그
+--------------------------------------------------------------------------------
+    1. 코멘트가 검색에 포함된 경우 목록에서 정렬(조회순 등등)이 제대로 되지 않습니다.
+================================================================================

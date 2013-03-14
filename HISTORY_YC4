@@ -1,0 +1,1319 @@
+주의) 이 패치내역은 영카트4에 대한 패치내역입니다.
+      그누보드4에 대한 패치내역은 HISTORY 파일에 있습니다.
+      그누보드4는 영카트4와 별도로 패치하셔야 합니다.
+      이점 참고하셔서 패치하시기 바랍니다.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.16.03 (2013.01.21)
+    :   현금영수증을 재발급하지 못하도록 원천 차단
+
+        kcp/pp_cli_hub.php
+
+            $sql = " select count(*) as cnt from $g4[yc4_order_table] where od_id = '{$_POST['ordr_idxx']}' and od_cash = 1 ";
+            $row = sql_fetch($sql);
+            if ($row[cnt]) {
+                alert("이미 등록된 현금영수증 입니다.");
+            }
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4.16.02 (2012.12.20)
+    :   윈도우즈8, 익스플로러10 에서 제대로 결제가 되지 않던 오류 수정
+
+        shop/orderconfirm.php 의 아래 코드를 삭제해 주세요.
+
+            echo "<p align=center><input type='image' src='$g4[shop_img_path]/btn_settle.gif' border=0 onclick='OpenWindow();'>";
+
+        shop/settle_kcp.inc.php 에 아래 코드를 추가해 주세요.
+
+            /* Payplus Plug-in 실행 */
+            function  jsf__pay( form )
+            {
+                var RetVal = false;
+
+                /* Payplus Plugin 실행 */
+                if ( MakePayMessage( form ) == true )
+                {
+                    //openwin = window.open( './kcp/proc_win.php', 'proc_win', 'width=420, height=100, top=300, left=300' );
+                    openwin = window.open( './kcp/proc_win.php', 'proc_win', 'width=420, height=100, top=300, left=300' );
+                    RetVal = true ;
+                }
+                
+                else
+                {
+                    /*  res_cd와 res_msg변수에 해당 오류코드와 오류메시지가 설정됩니다.
+                        ex) 고객이 Payplus Plugin에서 취소 버튼 클릭시 res_cd=3001, res_msg=사용자 취소
+                        값이 설정됩니다.
+                    */
+                    res_cd  = document.order_info.res_cd.value ;
+                    res_msg = document.order_info.res_msg.value ;
+
+                }
+
+                return RetVal ;
+            }
+            ...
+            <p align="center"><input type="image" src="<?=$g4['shop_img_path']?>/btn_settle.gif" border="0"  onclick="return jsf__pay(this.form);" /></p>
+
+4.16.01 (2012.12.17)
+    :   다음 쇼핑하우, 네이버 지식쇼핑 페이지에서 변수값을 지우지 않고 노출하는 오류를 수정
+
+        shop/price/daum.php
+        shop/price/naver.php
+
+4.16.00 (2012.12.06)
+    :   공정거래위원회 상품정보제공고시에 따라 상품등록/수정시 "요약상품정보"를 입력할 수 있는 기능 추가
+        아래의 파일이 추가 되거나 수정 되었습니다.
+
+        추가
+        adm/shop_admin/iteminfo.php
+        adm/shop_admin/iteminfoupdate.php
+        lib/iteminfo.lib.php
+
+        수정
+        adm/shop_admin/itemform.php
+        shop.config.php
+        shop/item.php
+
+4.15.06 (2012.11.12)
+    :   오늘본상품 코드 변경
+
+        head.php
+        tail.php
+
+4.15.05 (2012.08.29)
+    :   익스9에서 관리자 메뉴 위치가 제대로 표시되지 않던 부분 수정
+    :   익스9에서 분류 메뉴 위치가 제대로 표시되지 않던 부분 수정
+
+        adm/admin.head.php
+	shop/boxcategory.inc.php
+
+4.15.04 (2012.08.24)
+    :   휴대폰결제 영수증 링크 수정
+
+        shop/orderinquiryview.php
+
+4.15.03 (2012.08.10)
+    :   2012.08.18 부터 개정 시행되는 '전자상거래 등에서의 소비자보호에 관한 법률'에 따른 코드 변경
+
+        shop/settle_kcp.inc.php 에 한줄 추가
+
+            <input type=hidden name='good_expr'     value='0'>
+
+4.15.02 (2012.08.06)
+    :   $type 변수를 내부에서 사용하는 경우 유형별 상품리스트에서 오류 발생하지 않도록 수정
+
+        shop/listtype.php
+
+4.15.01 (2012.07.03)
+    :   사용후기에서 "관리자 승인없이 등록"으로 사용할 때 부모창으로 이동하지 않는 오류가 있어 수정
+
+        shop/itemusewinupdate.php
+
+4.15.00 (2012.05.25)
+    :   사용후기에 에디터적용 및 사용후기 리스트 페이지 추가
+
+        shop/itemusewin.php
+        shop/itemusewinupdate.php
+        shop/itemuselist.php
+        shop/itemuse.inc.php
+        lib/thumb.lib.php
+        lib/shop.lib.php
+
+4.14.68 (2012.04.19)
+    :   결제금액을 조작하여 결제하는 것을 방지하는 코드를 추가
+
+        shop/settle_kcp.inc.php
+        shop/kcp/pp_ax_hub.php
+
+4.14.67 (2012.03.21)
+    :   잘못된 옵션값 입력으로 상품을 제대로 등록하지 못하는 경우를 방지
+
+        adm/shop_admin/itemform.php 의 // 옵션값 검사 코드를 참고하세요.
+
+4.14.66 (2012.02.20)
+    :   오늘본상품 정확히 가운데를 기준으로 가변위치에서 출력되도록 코드 수정
+
+        head.php        
+        tail.php
+
+4.14.65 (2012.01.18)
+    :   POSIX Regex 함수 제거 ( ereg_replace, ereg, eregi_replace, eregi, split, spliti, sql_regcase )
+        이 기능은 PHP 5.3.0 부터 배제되고 PHP 6.0.0 부터 제거됩니다. 이 기능에 의존하지 않기를 권합니다.
+
+        adm/shop_admin/configform.php
+        adm/shop_admin/contentformupdate.php
+        adm/shop_admin/orderprintresult.php
+        lib/shop.lib.php
+        lib/icode.sms.lib.php
+
+4.14.64 (2012.01.18)
+    :   온라인견적 기능 제거
+
+        shop/onlinecalc.php
+        shop/onlinecalcprint.php
+        adm/shop_admin/onlinecalcform.php
+        adm/shop_admin/onlinecalcformupdate.php
+        adm/shop_admin/onlinecalclist.php
+
+4.14.63 (2012.01.04)
+    :   ie9 에서 플러그인 제대로 설치 및 결제가 되지 않는 경우 주문자님께 아래 파일의 설치를 안내해 주십시오.
+        http://pay.kcp.co.kr/plugin_new/file/KCPUXWizard.exe
+
+        shop/settle_kcp.inc.php
+        shop/kcp/chk_plugin.php <-- shop/kcp/chk_plugin.html 에서 파일명 변경 및 코드 수정
+        shop/kcp/proc_win.php   <-- shop/kcp/proc_win.html 에서 파일명 변경 및 코드 수정
+
+4.14.62 (2011.09.06)
+    :   password() 함수대신 sql_password() 함수를 적용
+
+        shop/orderinquiry.php
+
+4.14.61 (2011.07.26)
+    :   현금영수증 발급시 상점아이디 SR 누락으로 인한 RC10 (미등록 가맹점) 메세지가 나오는 오류 수정
+
+        shop/kcp/pp_cli_hub.php
+
+            $g_conf_site_id   = strlen($default[de_kcp_mid]) == 3 ? "SR".$default[de_kcp_mid] : $default[de_kcp_mid]; // 리얼 반영시 KCP에 발급된 site_cd 사용 ex) T0000
+
+4.14.60 (2011.07.21)
+    :   주문상세내역에서 취소된 주문도 다시 결제할 수 있는 오류 수정
+    :   장바구니 담기와 바로구매 기능을 분리
+        (기존에는 바로구매시 장바구니에 먼저 담긴 상품과 같이 주문됨)
+        수정 방법 : http://sir.co.kr/manual/direct/
+    :   장바구니에 상품을 담을 경우 https 주소가 제대로 적용되도록 수정
+
+        extend/shop.extend.php
+        shop/cartupdate.php
+        shop/orderform.php
+        shop/orderformupdate.php
+        shop/orderinquiryview.php
+        skin/member/shop_member/login.skin.php
+
+4.14.53 (2011.06.27)
+    : 보안서버 주소 적용이 가능하도록 수정
+
+        shop/cartupdate.php
+
+4.14.52 (2011.03.30)
+    : 새로운 캡챠코드 적용
+
+        skin/board/shop_board/_common.php
+        skin/board/shop_board/ajax.filter.php
+        skin/board/shop_board/write.skin.php
+        skin/board/shop_board/view_comment.skin.php
+
+        skin/board/shop_member/register_form.skin.php
+        skin/board/shop_member/password_lost.skin.php
+        skin/board/shop_member/formmail.skin.php
+        skin/board/shop_member/memo_form.skin.php
+
+        shop/item.php
+        shop/itemqa.inc.php
+        shop/itemuse.inc.php
+
+4.14.51 (2011.03.24)
+    : 관리자 > 상품리스트 출력 쿼리를 left join 으로 변경하여 속도 향상
+
+        adm/shop_admin/itemlist.php
+
+4.14.50 (2011.03.17)
+    : [보안패치] 스팸글 등록으로 인한 자동등록방지 캡챠이미지 관련 코드 보완
+
+        shop/itemqa.inc.php
+        shop/itemuse.inc.php
+
+4.14.49 (2011.03.11)
+    :   상품복사시 prompt를 없애고 새창에서 복사하도록 수정
+
+        adm/shop_admin/item_copy.php
+        adm/shop_admin/itemlist.php
+
+4.14.48 (2010.12.03)
+    :   비회원 주문의 경우 외부에서 직접 링크시 조회가 되던 오류 수정
+
+        shop/orderinquiry.php
+        shop/orderinquiryview.php
+        shop/orderconfirm.php
+
+4.14.47 (2010.12.03)
+    :   포인트 사용하지 않을 경우 장바구니 변조에서 오류가 나던것 수정
+
+        shop/cartupdate.php
+
+4.14.46 (2010.12.01)
+    :   옥션 어바웃 가격비교사이트 연동
+
+        adm/shop_admin/price.php
+        shop/price/about.php
+        shop/price/about_new.php
+
+4.14.45 (2010.12.01)
+    :   쏜다넷 SMS URL 변경 및 보안키(smskey) 적용
+    :   쏜다넷 소스 수정하신 후에 반드시 쏜다넷 보안키를 발급받아야 합니다. (주)쏜다넷 고객센터(02-2646-7280)로 연락하세요.
+    :   SMS 사용시 쏜다넷을 사용하시는 경우 쇼핑몰설정에서 쏜다넷 아이디와 쏜다넷 보안키를 입력한 후 사용하시기 바랍니다.
+
+        adm/shop_admin/configform.php
+        adm/shop_admin/configformupdate.php
+        adm/shop_admin/smssend.php
+        shop/sms.inc.php
+    
+4.14.44 (2010.10.04)
+    :   KSPAY 의 신용카드 결제시 승인된 건만 DB에 업데이트 하도록 수정
+
+        shop/settle_kspay_rcv.php
+    
+4.14.43 (2010.09.07)
+    :   [보안패치] 데이터(폼값) 변조에 의한 코드 수정
+
+        shop/cartupdate.php
+
+4.14.42 (2010.08.23)
+    :   동방시스템 결제 및 결제내역 DB 에 업데이트 되지 않도록 수정
+
+        shop/kcp/pp_ax_hub.php
+
+4.14.41 (2010.08.02)
+    :   KCP 를 UTF-8 로 사용시 가상계좌에 은행명이 나오지 않던 오류 수정
+
+        shop/kcp/pp_ax_hub.php
+
+4.14.40 (2010.07.22)
+    :   LG텔레콤 신버전에 주문서 작성시 에스크로 정보 추가
+
+        shop/settle_dacom_xpay.inc.php
+
+4.14.39 (2010.07.13)
+    :   입금완료 미배송내역의 more 클릭시 미배송내역이 제대로 출력되지 않던 오류 수정
+
+        adm/shop_admin/index.php
+        adm/shop_admin/deliverylist.php
+
+4.14.38 (2010.06.30)
+    :   KSPAY 의 신용카드 결제시 승인된 내역의 반영에 이상이 있어 수정
+        shop/settle_kspay_result.php 에서 신용카드 결제시 승인된 내역이 반영되는 것을 shop/settle_kspay_rcv.php 에서 처리함
+        승인후에는 form 의 action url 로 이동됨
+
+        shop/settle_kspay_rcv.php
+        shop/settle_kspay_result.php
+
+4.14.37 (2010.01.24)
+    :   다양한 플러그인을 사용할 수 있도록 prototype.js 에서 jquery.js 로 대체합니다.
+
+        shop/item.php
+        shop/itemqa.inc.php
+        shop/itemuse.inc.php
+
+4.14.37 (2010.01.24)
+    :   옥션 오픈쇼핑 엔진페이지의 utf-8 미지원 해결
+
+        shop/price/auction.php
+        shop/price/auction_new.php
+        shop/price/auction_summary.php
+
+4.14.36 (2010.01.20)
+    :   소스코드상의 데이콤 문구를 LG텔레콤으로 변경
+    :   LG텔레콤의 결제모듈 신버전인 XPay-lite 탑재 (UTF-8 지원)
+        신버전을 사용하시는 경우 반드시 "LG텔레콤 관리자 > 계약정보 > 상점정보관리 > 시스템 연동정보 > 승인 결과 전송 여부 > 수정 > 결제창2.0"으로 설정하십시오.
+        쇼핑몰설정의 결제대행사를 반드시 "LG텔레콤 신버전" 으로 선택하시기 바랍니다.
+
+        shop/settle_dacom_xpay.inc.php
+        shop/settle_dacom_xpay_cas_noteurl.php
+        shop/settle_dacom_xpay_noteurl.php
+        shop/taxsave_dacom.php
+        shop/taxsave_dacom_receipt.php
+        shop/orderinquiryview.php
+        adm/shop_admin/configform.php
+        adm/shop_admin/orderform.main.php
+        shop.config.php
+
+4.14.35 (09.12.23)
+    :   네이버 지식쇼핑 엔진페이지의 utf-8 미지원 해결
+
+        shop/price/naver.php
+        shop/price/naver_summary.php
+        shop/price/naver_new.php
+        shop/price/naver_new_summary.php
+
+4.14.34 (09.12.01)
+    :   올더게이트 신용카드 영수증 24시간 이후에도 조회가 가능하도록 수정
+        send_dt 추가
+
+        shop/orderinquiryview.php
+
+4.14.33 (09.11.23)
+    :   UTF-8 에서 상품복사시 검색 후 에러나는 부분 수정
+
+        adm/shop_admin/itemlist.php
+        adm/shop_admin/item_copy_update.php
+        adm/shop_admin/itemformupdate.php
+        js/common.js
+
+4.14.32 (09.10.27)
+    :   가상계좌에서 입금전(채번)에는 입금확인일시가 들어가지 않아야 함
+
+        shop/settle_allthegate_pay_ing.php
+
+4.14.31 (09.09.22)
+    :   네이버 신규요약상품 URL 추가
+
+        adm/shop_admin/price.php
+        shop/price/naver_new_summary.php
+
+4.14.30 (09.09.07)
+    :   상단, 하단 파일경로 필드 추가
+        
+        adm/shop_admin/contentform.php
+        adm/shop_admin/contentformupdate.php
+        shop/content.php
+
+4.14.29 (09.07.22)
+    :   비회원 구매, 글쓰기 시 개인정보수집 동의문 내용 추가
+
+        adm/shop_admin/configform.php
+        skin/board/shop_board/write.skin.php
+
+4.14.28 (09.07.16)
+    :   비회원구입시 개인정보수집 동의문 내용 추가
+        
+        adm/shop_admin/configform.php
+        adm/shop_admin/configformupdate.php
+        skin/member/shop_member/login.skin.php
+
+4.14.27 (09.06.26)
+    :   쏜다넷 문자 보내기 socket 통신 코드로 수정
+        
+        shop/sms.inc.php
+
+4.14.26 (09.05.21)
+    :   옥션 오픈쇼핑 코드 수정
+        
+        price/auction.php
+
+4.14.26 (09.05.11)
+    :   올더게이트 결제 모듈 수정
+        
+        shop/settle_allthegate*.php        
+
+4.14.25 (09.04.21)
+    :   https_url 설정시 로그인 페이지에서 제대로 이동하지 않는 오류 수정
+        
+        skin/member/shop_member/login.skin.php
+
+4.14.24 (09.04.17)
+    :   상품리스트 스킨에서 파이어폭스 사용시 상품이 장바구니에 담기지 않던 오류 수정
+        
+        shop/list.skin.11.php
+
+4.14.23 (09.04.01)
+    :   현금영수증 발급시 상품명에 특수문자가 포함되면 RCF1 결과 메세지 FORMAT ERROR(발급정보) 
+        에러가 발생하는데 특수문자를 제거하여 이 오류가 발생하지 않도록 수정
+        function get_goods($on_uid) 함수 부분 수정
+
+        lib/shop.lib.php
+
+4.14.22 (09.03.24)
+    :   상품설명 이미지폭 자동 변경 스크립트 수정
+    :   가격비교사이트 "다나와" 엔진페이지 수정
+    :   네이버 "지식쇼핑" 엔진페이지 배송비 적용되도록 수정
+        
+        shop/item.php
+        shop/price/danawa.php
+        shop/price/naver.php
+        shop/price/naver_new.php
+
+4.14.21 (09.02.04)
+    :   옥션 오픈쇼핑 요약상품, 신규상품 URL 추가
+        
+        adm/shop_admin/price.php
+        shop/price/auction_summary.php
+        shop/price/auction_new.php
+
+4.14.20 (09.02.02)
+    :   주문내역출력에서 엑셀파일(xls) 다운로드 기능 추가
+        
+        adm/shop_admin/orderprint.php
+        adm/shop_admin/orderprintresult.php
+
+4.14.19 (09.01.30)
+    :   분류관리에서 검색이 가능하도록 수정
+        
+        adm/shop_admin/categorylist.php
+
+4.14.18 (09.01.08)
+    :   KCP, LG DACOM, INICIS 신용카드 결제시 주문상세내역에서 영수증 출력 보이도록 수정
+        
+        shop/settle_dacom_noteurl.php
+        shop/orderinquiryview.php
+
+4.14.17 (08.12.02)
+    :   관리자 사용후기, 상품문의 리스트에서 검색시 페이지가 정상 작동하지 않던 부분 수정
+        
+        adm/shop_admin/itempslist.php
+        adm/shop_admin/itemqalist.php
+
+4.14.16 (08.11.27)
+    :   UTF-8 사용시 KCP 현금영수증 발급하면 한글 깨지던 문제 해결
+        (단, PHP에서 iconv() 함수 지원해야 합니다.)
+        
+        shop/kcp/pp_cli_hub.php
+        shop/kcp/pp_cli_result.php
+
+4.14.15 (08.10.09)
+    :   cheditor4 적용
+    :   자동등록방지 capcha 코드 보완
+
+        adm/shop_admin/categoryform.php
+        adm/shop_admin/configform.php
+        adm/shop_admin/contentform.php
+        adm/shop_admin/faqform.php
+        adm/shop_admin/faqmasterform.php
+        adm/shop_admin/itemeventform.php
+        adm/shop_admin/itemform.php
+        adm/shop_admin/newwinform.php
+        adm/shop_admin/onlinecalcform.php
+        shop/item.php
+        shop/itemqa.inc.php
+        shop/itemqaupdate.php
+        shop/itemuse.inc.php
+        shop/itemuseupdate.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.14 (08.10.09)
+    :   올더게이트 가상계좌 입금시 자동 통보 코드 수정
+
+        shop/settle_allthegate.inc.php
+        shop/settle_allthegate_pay_ing.php
+        shop/settle_allthegate_vbank.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.13 (08.10.07)
+    :   네이버 지식쇼핑 입점시 사용하는 신규상품URL 추가
+
+        adm/shop_admin/price.php
+        shop/price/naver_new.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.12 (08.10.02)
+    :   온라인견적에서 비회원가, 회원가, 특별회원가 반영하지 못하고 비회원가로만 계산하던 오류를 수정
+
+        shop/onlinecalc.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.11 (08.09.30)
+    :   약관 변경
+
+        LICENSE_YC4
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.10 (08.09.26)
+    :   옥션 오픈쇼핑 상품DB파일 페이지 추가
+
+        adm/shop_admin/price.php
+        shop/price/auction.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.09 (08.09.03)
+    :   이니시스 결제시 지불실패 : 경고창이 뜨는것을 수정
+
+        shop/settle_inicis_INIpay41Lib.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.08 (08.08.27)
+    :   LG데이콤 현금영수증 패치
+
+        shop/settle_dacom.inc.php 를 수정해서 사용하시는 고객님들께서는
+        <input type="hidden" name="taxUseYN" value="Y"> 를 한줄 추가해 주십시오.
+        계좌이체, 가상계좌 거래시에 현금영수증 발급이 출력되는것을 막는 코드입니다.
+
+        adm/shop_admin/orderform.main.php 
+        shop/shop/settle_dacom.inc.php
+        shop/orderinquiryview.php 
+        shop/taxsave_dacom.php
+        shop/taxsave_dacom_receipt.php
+        shop/img/dacom/*
+      
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.07 (08.08.23)
+    :   UTF-8 에서 '비회원가격과 회원가격이 다릅니다. 로그인 후 구입하여 주십시오.' 경고창 한글 메세지 깨지는것 수정
+
+        shop/cartupdate.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.06 (08.08.02)
+    :   KCP 공통 URL 페이지에 KCP 서버 이외의 알려지지 않은 IP 접속시 최고관리자에게 메일로 올바르지 않은 접속 보고서를 보냄
+
+        shop/settle_kcp_common.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.05 (08.07.16)
+    :   상품 복사시 상품명에 " 가 들어가면 자바스크립트 오류가 나던것을 수정
+
+        adm/shop_admin/itemlist.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.04 (08.07.15)
+    :   이니시스 현금영수증 패치
+
+        현금영수증 처리에서 오류가 발생하는 경우 이니시스에서 제공하는 INIpay41 for Unix.zip 이 파일을 압축 해제하여 INIpay41_escrow 폴더로 업로드 해 보시기 바랍니다.
+
+        adm/shop_admin/orderform.main.php 
+        shop/orderinquiryview.php 
+        shop/taxsave_inicis.php
+        shop/taxsave_inicis_receipt.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.03 (08.07.07)
+    :   UTF-8 버전의 주문개별관리에서 상태로 검색시 오류가 발생하던 부분을 수정
+
+        adm/shop_admin/orderstatuslist.php
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.02 (08.07.07)
+    :   KCP, 티지코프, 올더게이트 현금영수증 패치
+
+        마이페이지( http://sir.co.kr/customer/mypage.php )에서 프로그램을 다운로드 하십시오. 
+
+
+        공통 : 
+
+        adm/shop_admin/configform.php 
+        adm/shop_admin/configformupdate.php 
+        adm/shop_admin/orderform.head.php 
+        adm/shop_admin/orderform.main.php 
+        shop/orderinquiryview.php 
+
+
+        KCP : 
+
+        shop/kcp/pp_cli_hub.php 
+        shop/kcp/pp_cli_hub_lib.php 
+        shop/kcp/pp_cli_result.php 
+        shop/settle_kcp.inc.php 
+        shop/taxsave_kcp.php 
+
+
+        티지코프 : 
+
+        shop/taxsave_tgcorp.php 
+        shop/taxsave_tgcorp_dbinsert.php 
+
+
+        올더게이트 : 
+
+        shop/img/allthegate/* 
+        shop/taxsave_allthegate.php 
+        shop/taxsave_allthegate_ing.php 
+        shop/taxsave_allthegate_receipt.php 
+
+
+        * 다음과 같은 순서대로 처리해 주시기 바랍니다. 
+
+        1. KCP 의 경우 https://admin.kcp.co.kr 에 접속하여 부가서비스 > 현금영수증 > 현금영수증 설정을 "자동등록"으로 설정하시기 바랍니다. (필수) 
+
+        2. http://도메인/adm/shop_admin/configformo.php 에 접속하여 쇼핑몰관리 > 쇼핑몰설정 > 결제정보 > 현금영수증발급사용을 "예"로 설정하시기 바랍니다. (현금영수증을 사용하실 경우에만 해당) 
+
+        3. KCP의 경우 shop/settle_kcp.inc.php 에 <input type="hidden" name="disp_tax_yn" value="N"> 와 같은 코드를 추가하시거나 값을 "N"으로 설정하시기 바랍니다. 
+
+        4. KCP의 경우 기존에 가상계좌를 사용하지 않으시던 분들께서는 https://admin.kcp.co.kr 에 접속하여 쇼핑몰관리 > 가상계좌 V 클릭 > 리턴 URL 정보에 
+        http://도메인/영카트4폴더/shop/settle_kcp_common.php 
+        로 설정하여 주십시오. 
+        이렇게 설정하셔야 가상계좌로 은행에 입금된 금액이 해당 쇼핑몰에 자동으로 통보됩니다. 
+
+        5. 무통장이나 가상계좌, 계좌이체를 입금 처리한에는 사용자의 마이페이지나 관리자 > 주문관리 > 수정에 현금영수증 발급과 관련된 내용이 표시됩니다. 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.14.01 (08.07.03)
+    :   KCP 현금영수증 발급 기능 추가
+
+        https://admin.kcp.co.kr 에 접속하여 부가서비스 > 현금영수증 > 현금영수증 설정을 "자동등록"으로 설정하시기 바랍니다. (필수)
+        adm/shop_admin/configformo.php 에 접속하여 쇼핑몰관리 > 쇼핑몰설정 > 결제정보 > 현금영수증발급사용을 "예"로 설정하시기 바랍니다. (현금영수증을 사용하실 경우에만 해당)
+        shop/settle_kcp.inc.php 에 <input type="hidden" name="disp_tax_yn" value="N"> 와 같은 코드를 추가하시거나 값을 "N"으로 설정하시기 바랍니다.
+
+
+        adm/shop_admin/configform.php
+        adm/shop_admin/configformupdate.php
+        adm/shop_admin/orderform.main.php
+        shop/settle_kcp.inc.php
+        shop/orderinquiryview.php
+        shop/taxsave_kcp.php
+        shop/kcp/pp_cli_hub.php
+        shop/kcp/pp_cli_hub_lib.php
+        shop/kcp/pp_cli_result.php
+
+4.13.03 (08.06.26)
+    :   FF 3.0 에서 오류나는 코드를 수정 elements('name') -> elements['name']
+
+        adm/shop_admin/deliverylist.php
+
+4.13.02 (08.05.14)
+    :   주문건수가 많아지면 속도가 느려지는것을 개선 
+        (김선용[sjsjin]님께서 많은 도움 주셨습니다.)
+
+        adm/shop_admin/orderlist.php
+        adm/shop_admin/orderlist2.php
+        adm/shop_admin/orderstatuslist.php
+        adm/shop_admin/deliverylist.php
+        adm/shop_admin/ordercardhistory.php
+
+4.13.02 (08.04.10)
+    :   주문서 작성시 이름에 ' 와 " 입력이 가능하도록 수정
+
+        shop/orderreceipt.php    
+
+4.13.01 (08.03.27)
+    :   상품문의, 사용후기를 자동으로 등록시키지 못하도록 수정
+
+        bbs/norobot_image.php
+        shop/item.php
+        shop/itemqa.inc.php
+        shop/itemqaupdate.php
+        shop/itemuse.inc.php
+        shop/itemuseupdate.php
+
+4.12.04 (08.03.26)
+    :   상품복사기능 추가 (능금돌이 님께서 올리신 소스코드를 참고하였습니다.)
+    :   주문 포인트 부여된 후 제대로 차감되지 않던 오류 수정
+
+        adm/admin.lib.php
+        adm/shop_admin/itemlist.php
+        adm/shop_admin/item_copy_update.php
+        adm/shop_admin/orderform.php
+
+4.12.03 (08.02.21)
+    :   KSPAY 가상계좌 결제시 에스크로 약관 화면 출력 되도록 수정 및 추가
+        (계좌이체는 에스크로 약관 표시하지 않음 : KSPAY 기본매뉴얼에서도 가상계좌만 가능함)
+
+        shop/settle_kspay.inc.php
+        shop/settle_kspay_KEscrowRcv.html
+
+4.12.02 (08.01.30)
+    :   포인트로 결제하는 내역이 있으면서 회원의 포인트가 - (마이너스) 포인트라면 오류메세지 출력
+
+        shop/kcp/pp_ax_hub.php
+
+4.12.01 (08.01.22)
+    :   관련상품 호출시 charset이 지정되지 않아 문자가 깨지던 오류 수정
+    
+        adm/shop_admin/itemformrelation.php
+
+4.12.00 (07.10.30)
+    :   CSV 파일로 일괄 배송처리가 가능하도록 수정
+    :   유일키 생성시 이틀전 자료는 삭제하도록 코드 수정 get_unique_id() 함수
+
+        adm/shop_admin/invoicebundle.php
+        adm/shop_admin/invoicebundleupdate.php
+        adm/shop_admin/orderprintresult.php
+        lib/shop.lib.php
+
+4.11.48 (07.09.19)
+    :   주문상세내역에 누락된 "전하실 말씀" 출력
+        포대장님께서 알려주셨습니다.
+
+        shop/orderinquiryview.php
+
+4.11.47 (07.08.29)
+    :   계좌이체시 동방시스템, 금융결제원 모두 가능하도록 수정
+        KCP 개발자께서 알려주셨습니다.
+
+        shop/settle_kcp.inc.php
+        shop/kcp/pp_ax_hub.php
+
+4.11.46 (07.08.24)
+    :   KCP 결제시 UTF-8 버전에서 자바스크립트 나오던 오류 수정
+
+        shop/settle_kcp.inc.php
+
+4.11.45 (07.08.20)
+    :   올더게이트 DB 업데이트 코드 수정
+        sjsjin님께서 알려 주셨습니다.
+    :   이니시스 계좌이체 결제 가능하도록 수정
+
+        shop/settle_allthegate_pay_ing.php
+        shop/settle_inicis.inc.php
+
+4.11.44 (07.08.09)
+    :   올더게이트 결제후 네트워크 문제로 DB에 반영이 제대로 되지 않던 오류 수정
+
+        shop/settle_allthegate_pay_ing.php
+        shop/settle_allthegate_pay_result.php
+
+4.11.43 (07.07.28)
+    :   사용후기, 상품문의를 회원만 가능하도록 자바스크립트 수정
+
+        shop/itemuse.inc.php
+        shop/itemqa.inc.php
+
+4.11.42 (07.07.26)
+    :   검색어 공란입력시 제대로 검색되지 않던 오류 수정
+
+        shop/search.php
+
+4.11.41 (07.07.02)
+    :   주문상세내역에서 비회원의 경우 재결제 되지 않는 부분 수정
+
+        shop/orderinquiryview.php
+
+4.11.40 (07.06.29)
+    :   상품삭제시 상품설명에 들어간 이미지 삭제 기능 추가
+        
+        adm/shop_admin/itemformupdate.php    
+
+4.11.39 (07.06.26)
+    :   브라우저의 다른창을 열고(세션 별도) 포인트결제를 하면 중복결제되어 - (마이너스) 처리 되는 부분을 수정
+    :   utf8 에서 코드중복체크시 글자 깨짐 수정
+
+        shop/orderupdate.php
+        adm/shop_admin/codedupcheck.php
+
+4.11.38 (07.06.20)
+    :   KCP 모듈 수정 (계좌이체가 잘되지 않던 오류 수정)
+    :   아이코드 모듈에 utf-8에서도 문자가 잘 전송되도록 수정
+
+        shop/kcp/pp_ax_hub.php
+        lib/icode.sms.lib.php
+
+4.11.37 (07.06.13)
+    :   티지코프 계좌이체 코드 수정
+    :   티지코프 가상계좌 결제 코드 추가
+
+        shop/settle_tgcorp.inc.php
+        shop/settle_tgcorp_dbinsert.php
+
+4.11.36 (07.05.17)
+    :   관련상품을 제대로 가져오지 못하던 버그를 수정
+    :   주문자가 직접 취소시 배송비를 0으로 설정
+
+        adm/shop_admin/itemform.php
+        adm/shop_admin/itemformrelation.php
+        shop/orderinquiryview.php
+        shop/orderinquirycancel.php
+
+4.11.35 (07.05.01)
+    :   자바스크립트로 상품의 가격을 변경할 수 있는 버그를 수정
+        수량이 바뀌면 소비자가격도 수량에 따라 변경되도록 수정
+
+        /shop/item.php
+
+4.11.34 (07.04.03)
+    :   상품입력에서 기본분류, 2차분류, 3차분류의 선택이 다음번 상품 입력에서
+        이전 설정이 기본으로 설정되도록 수정
+
+        adm/shop_admin/itemform.php
+        adm/shop_admin/itemformupdate.php
+
+4.11.33 (07.03.27)
+    :   관련상품에서 관련상품이 제대로 출력되지 않는 오류 수정
+
+        adm/shop_admin/itemformrelation.php
+
+4.11.32 (07.03.15)
+    :   입금전 주문은 주문자 본인이 취소할 수 있도록 수정하였습니다.
+    :   상품문의, 사용후기를 프로그램이 자동으로 등록하지 못하도록 토큰값을 적용하였습니다.
+    :   상품판매순위의 잘못된 코드를 수정하였습니다. (sjsjin님 도움)
+
+        shop/orderinquiryview.php
+        shop/orderinquirycancel.php
+        shop/item.php
+        shop/itemqa.inc.php
+        shop/itemqaupdate.php
+        shop/itemuse.inc.php
+        shop/itemuseupdate.php
+        adm/shop_admin/itemsellrank.php
+
+4.11.31 (07.03.07)
+    :   신용카드, 계좌이체, 가상계좌 결제에서 포인트를 사용한 경우 결제 실패시
+        회원의 보유포인트가 모자라는 경우 마이페이지에서 다시 결제할 수 없도록
+        수정하였습니다.
+
+        shop/orderinquiryview.php
+
+4.11.30 (07.01.23)
+    :   포인트 결제사용 점수와 포인트결제 %를 계산하여 체크해야 하는데
+        포인트 결제사용 점수만으로 체크하여 생긴 오류를 수정
+
+        shop/orderreceipt.php
+
+4.11.29 (07.01.22)
+    :   운송장번호 등록시 배송회사 클릭하면 운송장번호도 같이 넘겨지도록 수정
+
+        adm/shop_admin/orderform.main.php
+        shop/orderinquiryview.php
+
+4.11.28 (07.01.17)
+    :   상품수정시 상품수가 많은 경우 관련상품에서 많은 부하가 걸리는것을 수정
+    :   상품검색에 인기검색어를 반영
+
+        adm/shop_admin/itemform.php
+        adm/shop_admin/itemformrelation.php
+        shop/search.php
+
+4.11.27 (07.01.11)
+    :   데이콤 권고 사항에 따른 수정
+        1. 결제창을 호출하는 상점 주문 부분의 소스보기 차단
+        2. 데이콤결제창 호출시 넘겨준 주문금액과 데이콤이 상점으로 결제 결과를 전송한 결제 금액과의 일치 여부 비교 체크
+        3. 데이콤 결제창 호출시 넘겨주는 파라메터에 대한 암호화 적용
+
+        settle_dacom.inc.php
+        shop/settle_dacom.inc.php
+        shop/settle_dacom_noteurl.php
+
+4.11.26 (07.01.04)
+    :   주문서관리 리스트에 주문자 전화번호, 핸드폰 그리고 받는분 전화번호, 핸드폰 검색 가능하도록 수정
+
+        adm/shop_admin/orderlist.php
+
+4.11.25 (06.12.05)
+    :   에누리 가격비교 사이트 엔진 페이지 수정
+
+        shop/price/enuri.php
+
+4.11.24 (06.11.20)
+    :   비회원이 보관함에 상품을 보관하는 경우 제대로 보관함에 저장하지 못하던 오류 수정
+
+        shop/wishupdate.php
+
+4.11.23 (06.11.06)
+    :   비회원가격과 회원가격이 틀린 경우 비회원으로 주문할 수 없던 오류 수정
+
+        shop/cartupdate.php
+
+4.11.22 (06.10.27)
+    :   회원의 포인트가 주문 금액보다 작은 경우에도 포인트 결제가 가능한 오류 수정
+
+        shop/orderform.php
+
+4.11.21 (06.10.26)
+    :   상품등록시 관련상품 선택에서 이미지를 보이도록 수정
+        김선용님께서 제작해 주셨습니다(SIR 회원아이디 : sucjin) 감사합니다.
+
+        adm/shop_admin/itemform.php
+
+4.11.20 (06.10.25)
+    :   상품상세보기에서 관련상품 쿼리 수정
+
+        shop/item.php
+
+4.11.19 (06.10.20)
+    :   네이버 가격비교연동페이지 수정 및 추가
+
+        adm/shop_admin/price.php
+        shop/price/naver.php
+        shop/price/naver_summary.php
+
+4.11.18 (06.10.19)
+    :   on_uid 중복되지 않도록 보완
+        shop.config.php 에 $g4[yc4_on_uid_table] = "yc4_on_uid"; 한 줄 추가하십시오.
+
+        shop.config.php
+        lib/shop.lib.php
+
+4.11.17 (06.10.19)
+    :   티지코프 결제 페이지 수정
+        가상계좌는 사용할 수 없습니다.
+
+        shop/settle_tgcorp.inc.php
+        shop/settle_tgcorp_dbinsert.php
+        shop/settle_tgcorp_result.php
+
+4.11.16 (06.10.19)
+    :   뱅크타운 결제 페이지 수정
+        가상계좌는 사용할 수 없습니다.
+
+        shop/settle_banktown.inc.php
+        shop/settle_banktown_callback.php
+        shop/settle_banktown_result.php
+        shop/settle_banktown_rnoti.php
+
+4.11.15 (06.09.08)
+    :   주문개별관리에서 페이지 이동 제대로 되지 않던 오류 수정
+
+        adm/shop_admin/orderstatuslist.php
+
+4.11.14 (06.08.24)
+    :   장바구니에 상품을 멀티로 담을 경우 시간이 제대로 반영되지 않던 오류 수정
+        $now -> $g4[time_ymdhis]
+
+        shop/cartupdate.php
+
+4.11.13 (06.08.10)
+    :   스팸발송으로 인한 추천메일 코드 수정
+    :   주문통합관리의 $sub_menu 변수값 수정
+
+        shop/itemrecommendmail.php
+        adm/shop_admin/orderlist2.php
+
+4.11.12 (06.07.24)
+    :   상품상세보기 자바스크립트 코드 수정
+
+        shop/item.php
+
+4.11.11 (06.07.21)
+    :   올더게이트 계좌이체 결제 추가
+
+        shop/settle_allthegate.inc.php
+        shop/settle_allthegate_pay_result.php
+
+4.11.10 (06.07.20)
+    :   네이버 지식쇼핑 입점 DB url 코드 변경
+
+        adm/shop_admin/price.php
+        shop/price/naver.php
+
+4.11.09 (06.07.17)
+    :   KSNET(KSPAY) 계좌이체 결제모듈추가
+
+        shop/settle_kspay_result.php
+        shop/settle_kspay.inc.php
+
+4.11.08 (06.07.13)
+    -   get_amount() 함수 코드 수정
+
+        lib/shop.lib.php
+
+4.11.07 (06.07.10)
+    -   주문내역수정에서 실행순서 변경
+        adm/shop_admin/orderform.head.php 에서 include 실행
+
+        adm/shop_admin/orderform.head.php
+        adm/shop_admin/orderform.php
+
+4.11.06 (06.07.01)
+    -   상품명에 " 포함되면 오늘 본 상품에서 자바스크립트 오류나는것 수정
+
+        shop/boxtodayview.inc.php
+
+4.11.05 (06.06.30)
+    -   주문취소시 배송비 반영되지 않던 오류를 배송비를 수정하도록 하여 해결
+
+        adm/shop_admin/orderform.main.php
+        adm/shop_admin/orderreceiptupdate.php
+
+4.11.04 (06.06.29)
+    -   관리자 주문리스트의 2페이지 이상에서 검색시 하위 페이지에 검색이 된 경우
+        "자료가 한건도 없습니다." 나오는 오류 수정
+
+        adm/shop_admin/orderlist.php
+        adm/shop_admin/orderlist2.php
+        adm/shop_admin/orderstatuslist.php
+
+4.11.03 (06.06.22)
+    -   관리자 상품리스트의 2페이지 이상에서 검색시 하위 페이지에 검색이 된 경우
+        "자료가 한건도 없습니다." 나오는 오류 수정
+    -   주문통합관리에서 제대로 표시되지 않던 상품옵션을 수정
+
+        adm/shop_admin/itemlist.php
+        adm/shop_admin/orderlist2.php
+
+4.11.02 (06.05.18)
+    -   상품관리에서 2, 3차 분류로 검색되지 않던 오류 수정
+
+        adm/shop_admin/itemlist.php
+        adm/shop_admin/categorylist.php
+
+4.11.01 (06.05.03)
+    -   주문내역출력에서 엑셀 CSV 데이터 다운로드시 "전하실말씀" 추가
+
+        adm/shop_admin/orderprintresult.php
+
+4.11.00 (06.04.29)
+    -   오늘 본 상품 기능 추가
+
+        head.php 의 테이블 태그 부분을 참고하여 수정하십시오.
+        tail.php 에 <?include("$g4[shop_path]/boxtodayview.inc.php");?> 코드를 추가하십시오.
+
+
+        수정된 파일
+
+        shop/boxtodayview.inc.php
+        shop/item.php
+
+        이미지 수정 및 추가
+
+        shop/img/bar_type1.gif
+        shop/img/bar_type2.gif
+        shop/img/bar_type4.gif
+        shop/img/bar_type5.gif
+        shop/img/my_bg.gif
+        shop/img/my_box01.gif
+        shop/img/my_box02.gif
+        shop/img/todayview.gif
+        shop/img/todayview01.gif
+        shop/img/todayview02.gif
+        shop/img/todayview03.gif
+        shop/img/todayview04.gif
+        shop/img/todayview05.gif
+        shop/img/todayview06.gif
+        shop/img/top_cart.gif
+        shop/img/top_faq.gif
+        shop/img/top_mypage.gif
+        shop/img/top_onlinecalc.gif
+        shop/img/top_orderconfirm.gif
+        shop/img/top_orderform.gif
+        shop/img/top_orderform.jpg
+        shop/img/top_orderinquiry.gif
+        shop/img/top_orderinquiryview.gif
+        shop/img/top_orderreceipt.gif
+        shop/img/top_search.gif
+        shop/img/top_type1.jpg
+        shop/img/top_type2.jpg
+        shop/img/top_type3.jpg
+        shop/img/top_type4.jpg
+        shop/img/top_type5.jpg
+        shop/img/top_wishlist.gif
+
+4.10.04 (06.04.20)
+    -   display_event(), get_goods() 함수 수정
+
+        lib/shop.lib.php
+
+4.10.03 (06.04.18)
+    -   주문서 통합관리 리스트에서 상품이미지 클릭하면 상품상세화면으로 이동하도록 수정
+
+        adm/shop_admin/orderlist2.php
+
+4.10.02 (06.04.12)
+    -   에스크로 제도 시행으로 인한 결제 모듈 패치 (kspay)
+
+        계좌이체는 결제 가능하지 않으므로 사용하실 고객님께서는 별도로 요청하여 주십시오.
+
+        가상계좌의 경우 입금되면 쇼핑몰로 자동 통보해주는 기능이 기본 모듈로 제공하지 않습니다.
+        이 부분은 별도로 의뢰(유료)하여 주십시오.
+
+
+        추가되거나 수정된 파일 내역
+        shop/settle_kspay.inc.php
+        shop/settle_kspay_rcv.php
+        shop/settle_kspay_result.php
+
+4.10.01 (06.04.12)
+    -   에스크로 제도 시행으로 인한 결제 모듈 패치 (이니시스)
+        계좌이체는 이니시스에서 개발중이므로 결제 가능하지 않습니다.
+        테스트 하시는 경우 hanatest01 / 1111 을 사용하십시오.
+
+        퍼미션을 다음과 같이 변경하십시오.
+
+        chmod 777 shop/INIpay41_escrow
+        chmod 777 shop/INIpay41_escrow/log
+        chmod 777 shop/INIpay41_escrow/phpexec/*
+
+
+        추가되거나 수정된 파일 내역
+
+        shop/settle_inicis.inc.php
+        shop/settle_inicis_INIpay41Lib.php
+        shop/settle_inicis_childwin.php
+        shop/settle_inicis_result.php
+        shop/INIpay41_escrow    // 폴더 전체
+
+4.10.00 (06.04.06)
+    -   에스크로 제도 시행으로 인한 결제 모듈 패치 (중요한 내용이므로 한번 이상 읽어 주십시오.)
+
+        적용전에 http://도메인/영카트4/adm/shop_admin/configform.php 는 반드시 한번 이상 실행하셔야 합니다.
+
+        kcp, dacom 모듈만 우선 변경 하였습니다.
+
+        kcp :
+            shop/kcp/payplus/bin/pp_cli 는 반드시 바이너리 모드로 올려주십시오.
+            shop/kcp/payplus 폴더의 퍼미션을 777 로 변경
+            shop/kcp/payplus/bin/pp_cli 의 퍼미션을 777로 변경
+            shop/kcp/payplus/log 폴더의 퍼미션을 777 로 변경
+
+        * 무통장으로 현금 거래시 가상계좌 서비스 신청을 PG사에 별도로 하여야 합니다.
+
+        가상계좌에 입금시 자동으로 쇼핑몰에 통보가 되게 하는 방법
+        kcp :
+            1. kcp 관리자 홈페이지에 접속
+            2. 쇼핑몰관리 > 정보변경 > 쇼핑몰정보 > 업체쇼핑몰정보 > 가상계좌 V 를 클릭하여 리턴 URL 정보를 변경하십시오.
+            3. http://도메인/영카트 설치 폴더/shop/settle_kcp_common.php 로 설정합니다.
+        dacom :
+            1. dacom 관리자 홈페이지에 접속
+            2. 계약정보 > 상점정보관리 > 에스크로거래 처리결과 수신url 을
+            3. http://도메인/영카트 설치 폴더/shop/settle_dacom_noteurl.php 로 설정합니다.
+
+
+        추가되거나 수정된 파일 내역
+
+        adm/shop_admin/configform.php
+        adm/shop_admin/configformupdate.php
+        adm/shop_admin/index.php
+        adm/shop_admin/orderform.main.php
+        adm/shop_admin/orderlist.php
+        adm/shop_admin/orderlist2.php
+        shop/mail/orderupdate1.mail.php
+        shop/mail/orderupdate2.mail.php
+        shop/orderconfirm.php
+        shop/orderform.php
+        shop/orderinquiryview.php
+        shop/orderreceipt.php
+        shop/orderupdate.php
+        shop/settle_dacom.inc.php
+        shop/settle_dacom_noteurl.php
+        shop/settle_kcp.inc.php
+        shop/settle_kcp_common.php
+        shop/settleresult.php
+        shop/kcp // 폴더 전체
+
+4.00.14 (06.03.09)
+    :   올더게이트 카드 결제 추가 (계좌이체는 사용 불가)
+
+        shop/ordercardallthegate.inc.php
+        shop/ordercardallthegatefunc.php
+        shop/ordercardallthegatepaying.php
+        shop/ordercardallthegatepayresult.php
+        shop/ordercardallthegateresult.php
+
+4.00.13 (06.03.08)
+    :   실시간 계좌이체 사용하지 않을 시 주문서 수정에서 계좌번호에 실시간 계좌이체를 출력하지 않도록 수정
+
+        adm/shop_admin/orderform.main.php
+
+4.00.12 (06.03.03)
+    :   데이콤 계좌이체 결제 추가
+
+        shop/orderichedacom.inc.php
+        shop/orderichedacomresult.php
+
+4.00.11 (06.03.01)
+    :   관리자 상품 리스트에서 상품 검색 페이징 코드 수정
+    :   KSPAY 결제시 로그 남김 (결과가 넘어오지 않는 경우가 종종 발생함)
+    :   보관함 합계 현황 추가
+    :   여러개의 상품에서 하나 이상의 주문취소시 입금완료 미배송내역에 출력되지 않던 오류 수정
+    :   추천메일로 스팸메일을 발송하지 못하도록 수정
+
+        adm/shop_admin/index.php
+        adm/shop_admin/itemlist.php
+        adm/shop_admin/itemlistupdate.php
+        adm/shop_admin/itemform.php
+        adm/shop_admin/itemformupdate.php
+        adm/admin.menu500.shop_2of2.php
+        adm/shop_admin/wishlist.php
+        shop/ordercardkspayrev.php
+        shop/itemrecommend.php
+        shop/itemrecommendmail.php
+
+4.00.10 (06.02.25)
+    :   회원가와 비회원가가 서로 틀린 경우 보관함에 담았다가 장바구니에 담는 경우 비회원가로 표시되는 오류 수정
+    :   상품문의, 사용후기 페이지 이동 오류 수정
+    :   페이징 함수 수정 (책갈피 변수 추가)
+
+        shop/wishlist.php
+        shop/itemqa.inc.php
+        shop/itemuse.inc.php
+        lib/common.lib.php
+
+4.00.09 (06.02.14)
+    :   이벤트에서 페이지 이동 오류 수정
+    :   이벤트에서 회원등급별 가격적용이 안되는 오류 수정
+    :   검색에서 가격적용이 안되는 오류 수정
+
+        shop/event.php
+        shop/search.php
+
+4.00.08 (06.01.10)
+    :   display_category() 함수의 쿼리 오류 수정
+    :   상품유형 리스트에서 페이지 이동 오류
+    :   상품유형 리스트에서 SELECT 시 모든 필드값을 가지고 오도록 수정
+    :   주문내역출력에서 CSV 변환시 0으로 시작하는 전화번호를 숫자로 인식하는 오류 수정
+
+        adm/admin.menu400.shop_1of2.php
+        adm/shop_admin/orderlist2.php
+        adm/shop_admin/orderprintresult.php
+        lib/shop.lib.php
+        shop/listtype.php
+
+4.00.07 (05.12.23)
+    :   쏜다넷 고객아이디에 입력값이 있어야 SMS 전송되던 오류 수정
+    :   메일에 링크가 제대로 걸려있지 않던 오류 수정
+
+        adm/shop_admin/smssend.php
+        shop/mail/orderupdate1.mail.php
+        shop/mail/orderupdate2.mail.php
+        shop/mail/orderupdate3.mail.php
+
+4.00.06 (05.12.9)
+    :   SMS 에 아이코드(icodekorea.com) 모듈을 추가하였습니다.
+        소켓방식이라 안정적이며 속도가 빠릅니다.
+
+        adm/shop_admin/configform.php
+        adm/shop_admin/configformupdate.php
+        adm/shop_admin/deliverylistupdate.php
+        adm/shop_admin/smssend.php
+        adm/shop_admin/smssendicode.php
+        adm/shop_admin/orderreceiptupdate.php
+        adm/shop_admin/ordersms.inc.php
+        skin/member/shop_member/register_update.skin.php
+        shop/orderupdate.php
+        lib/icode.sms.lib.php
+
+4.00.05 (05.12.6)
+    :   데이콤 카드 결제모듈추가
+        계좌이체의 경우 테스트 할 방법이 없어 모듈을 추가하지 못하였습니다.
+
+        상점관리자 페이지에서 상점관리 > 상점정보관리 > 결과전송정보의
+        승인결과전송여부에 전송(웹전송) 이란 문구가 나타나 있어야 하며
+        mertkey 도 발급이 되어 있어야 결제가 가능합니다.
+
+        shop/ordercarddacom.inc.php
+        shop/ordercarddacomresult.php
+        shop/ordercarddacomnoteurl.php
+
+4.00.04 (05.12.6)
+    :   KSNET(KSPAY) 카드 결제모듈추가
+        계좌이체의 경우 테스트 할 방법이 없어 모듈을 추가하지 못하였습니다.
+
+        shop/ordercardkspay.inc.php
+        shop/ordercardkspayresult.php
+        shop/ordercardkspayrev.php
+
+4.00.03 (05.12.6)
+    :   이니시스 전자결제모듈추가
+        테스트 하실 경우에는 쇼핑몰설정 > 결제정보에 다음과 같이 입력하십시오.
+            이니시스 아이디 : INIpayTest
+            이니시스 패스워드 : 1111
+        계좌이체 테스트시에는 올바른 계좌번호 입력 후 비밀번호는 0000 입력하셔야 정상 테스트 됩니다.
+
+        INIpay41 // 디렉토리 전체
+        shop/ordercardinicis.inc.php
+        shop/ordercardinicischildwin.php
+        shop/ordercardinicisINIpay41Lib.php
+        shop/ordercardinicisresult.php
+        shop/ordericheinicis.inc.php
+        shop/ordericheinicisresult.php
+
+4.00.02 (05.12.5)
+    :   주문서 수정에서 입금, 배송메일 발송시 보내는 사람 메일이 없던 부분을 수정
+    :   티지코프 전자결제모듈추가
+
+        adm/shop_admin/ordermain.inc.php
+        adm/shop_admin/configform.php
+        shop/ordercardtgcorp.inc.php
+        shop/ordercardtgcorpdbinsert.php
+        shop/ordercardtgcorpresult.php
+        shop/orderichetgcorp.inc.php
+        shop/orderichetgcorpdbinsert.php
+        shop/orderichetgcorpresult.php
+
+4.00.01 (05.12.3)
+    :   뱅크타운 전자결제모듈 추가
+
+        adm/shop_admin/configform.php
+        shop/ordercardbanktown.inc.php
+        shop/ordercardbanktowncallback.php
+        shop/ordercardbanktownrnoti.php
+        shop/ordercardbanktownresult.php
+        shop/orderichebanktown.inc.php
+        shop/orderichebanktownresult.php

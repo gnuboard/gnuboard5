@@ -1,0 +1,133 @@
+body {
+    background-color: #ebe9ed;
+    margin: 0px;
+    border: 0px;
+    padding: 10px;
+    font-size: 9pt;
+    font-family: gulim,tahoma,helvetica;
+}
+
+td, input, select {
+    font-size: 9pt;
+    vertical-align: middle;
+    margin:0px;
+}
+
+.handCursor {
+    cursor: pointer;
+}
+
+td.hover
+{
+    background-color : Fuchsia;
+}
+
+table.dlg {
+    border: 0px;
+}
+
+fieldset {
+    border: 1px solid #c5c5cc;
+    padding: 2px;
+    margin: 0px;
+}
+
+.dlg td {
+    text-align: left;
+    height: 20px;
+}
+
+form {
+    display: inline;
+}
+
+.dlg input {
+    border: 2px;
+}
+
+.img {
+    border: 0px;
+    vertical-align: middle;
+}
+
+.font-normal {
+    font-size: 9pt;
+}
+
+.button {
+    width: 64px;
+    height: 22px;
+    margin: 0px 2px 0px 2px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.button8em {
+    font-size: 9pt;
+    padding-top:2px !important; padding-top:2px;
+    height: 21px;
+    width: 8em;
+}
+
+.button10em {
+    font-size: 9pt;
+    padding-top:1px !important;padding-top:2px;
+    height: 21px;
+    width: 10em;
+}
+
+.emIcon {
+    width: 19px;
+    height: 19px;
+    cursor: pointer;
+}
+
+.emImgBlock {
+    padding: 5px;
+    text-align: center;
+}
+
+.emImgRow {
+    margin: 3px;
+    text-align: center;
+}
+
+.schar {
+    border:1px solid #ccc;
+    background-color:#fff;
+    width: 18px;
+    height: 17px;
+    text-align:center;
+    cursor: pointer;
+    font-size: 9pt;
+    line-height: 17px;
+}
+
+.spacer {
+    margin: 10px 0px 0px 0px;
+}
+.spacer5 {
+    margin: 5px 0px 0px 0px;
+    clear: both;
+}
+.wrapper {
+    text-align: center;
+}
+
+.clear { clear: both }
+.flash-player-wrapper {
+    width:480px;
+    height:385px;
+    margin-top:5px;
+    border:1px #c5c5cc solid;
+    text-align:center;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+.media-player-wrapper {
+    height:200px;
+    margin-top:5px;
+    text-align:center;
+    overflow-x:auto;
+    overflow-y:hidden;
+}

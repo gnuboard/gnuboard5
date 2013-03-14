@@ -1,0 +1,429 @@
+a.cheditor-tag-path-elem {
+    text-decoration:none;
+    color:#0033cc;
+    font-size: 8pt;
+    font-family: dotum,tahoma,helvetica;
+    cursor:pointer;
+}
+a.cheditor-tag-path-elem:hover {
+    color:#0033cc;
+    text-decoration:underline;
+    cursor:pointer;
+}
+.cheditor-container {
+    border-top: 1px #ccc solid;
+    position: relative;
+    text-align: left;
+}
+.cheditor-tb-wrapper {
+    border-right:1px #ccc solid;
+    border-left:1px #ccc solid;
+    position: relative;
+    display: block;
+    background: #f5f5f5 url(../icons/toolbar-wrapper-bg.png) repeat-x left bottom;
+}
+.cheditor-editarea-wrapper {
+    border-right: 1px #ccc solid;
+    border-bottom: 1px #ccc solid;
+    border-left: 1px #ccc solid;
+    vertical-align: top;
+}
+.cheditor-editarea {
+    width:100%;
+    overflow:auto;
+    background-color: #fff;
+}
+.cheditor-modify-block .cheditor-ico {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.cheditor-modify-block select {
+    font-size: 9pt;
+    color: #000;
+}
+.cheditor-modify-block div {
+    padding: 5px 10px 5px 10px;
+    color: #000;
+    display: block;
+}
+.cheditor-modify-block div .wrap-text-desc {
+    line-height: 1em;
+    color: #000;
+}
+.cheditor-modify-block div .user-input-width {
+    width: 30px;
+    margin-left: 5px;
+    font-size: 9pt;
+    color: #000;
+}
+.cheditor-modify-block div .user-input-alt {
+    width: 150px;
+    margin: 3px 10px 0px 5px;
+    font-size: 9pt;
+    color: #000;
+}
+.cheditor-modify-block div .wrap-checked {
+    vertical-align: middle;
+    padding: 0px;
+    margin-right: 2px;
+}
+.cheditor-modify-block div .input-submit {
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 20px;
+    height:20px;
+    width:64px;
+}
+.cheditor-modify-block div .color-picker {
+    cursor: pointer;
+    vertical-align: middle;
+    height:20px;
+    width:20px;
+}
+.cheditor-modify-block div .delete-submit {
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 3px;
+    height:20px;
+    width:64px;    
+}
+.cheditor-modify-block div .edit-table-ico {
+    cursor: pointer;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    margin: 0px 3px;
+}
+.cheditor-modify-block {
+    display:none;
+    border-right: 1px #ccc solid;
+    border-bottom: 1px #ccc solid;
+    border-left: 1px #ccc solid;
+    padding:2px;
+    background-color:#eee;
+    font-size:9pt;
+    font-family: gulim,tahoma,helvetica;
+    text-align:center;
+}
+.cheditor-status-bar {
+    font-size:8pt;
+    font-family: dotum,tahoma,helvetica;
+    color:#333;
+}
+.cheditor-tag-path {
+    border-right: 1px #ccc solid;
+    border-bottom: 1px #ccc solid;
+    border-left: 1px #ccc solid;
+    padding: 0px 2px 0px 2px;
+    display: none;
+    height: 18px;
+    line-height:18px;
+    overflow: hidden;
+}
+.cheditor-fullscreen {
+    float: right;
+    background: transparent url(../icons/fullscreen.png) no-repeat 0 0;
+}
+.cheditor-viewmode {
+    padding: 0px 4px 0px 4px;
+    height: 16px;
+    background: transparent url(../icons/statusbar_bgline.gif) repeat-x 0 0;
+}
+.cheditor-viewmode div {
+    width: 24px;
+    height: 16px;
+    cursor: pointer;
+}
+.cheditor-tab-rich {
+    background: transparent url(../icons/edit_mode_rich_a.png) no-repeat 0 0;
+    float: left;
+}
+.cheditor-tab-rich-off {
+    background: transparent url(../icons/edit_mode_rich_b.png) no-repeat 0 0;
+    float: left;
+}
+.cheditor-tab-code {
+    background: transparent url(../icons/edit_mode_code_a.png) no-repeat 0 0;
+    float: left;
+}
+.cheditor-tab-code-off {
+    background: transparent url(../icons/edit_mode_code_b.png) no-repeat 0 0;
+    float: left;
+}
+.cheditor-tab-preview {
+    background: transparent url(../icons/edit_mode_view_a.png) no-repeat 0 0;
+    float: left;
+}
+.cheditor-tab-preview-off {
+    background: transparent url(../icons/edit_mode_view_b.png) no-repeat 0 0;
+    float: left;
+}
+
+.cheditor-popup-window {
+    border:1px solid #8db3e5;
+    display:none;
+    position:absolute;
+    background-color:#ebe9ed;
+    left:0px;
+    top:0px;
+}
+.cheditor-popup-drag-handle {
+    border-bottom:1px solid #8db3e5;
+    height:24px;
+    background: #6b90c0 url(../icons/title_bar_bg.gif) repeat-x 0 0;
+}
+.cheditor-popup-titlebar {
+    padding: 4px 0px 0px 0px !important;
+    line-height: 1em;
+}
+.cheditor-resizebar {
+    height: 11px;
+    overflow:hidden;
+    border-left: 1px #ccc solid;
+    border-right: 1px #ccc solid;
+    cursor:s-resize;
+    background: #eee url(../icons/splitter.gif) no-repeat center top;
+}
+.cheditor_mode_icon { width: 24px; height: 16px; cursor: pointer; vertical-align:top }
+.cheditor-popup-title { font-size: 9pt; font-family:gulim,tahoma,helvetica; font-weight:bold; color:#003366; }
+.cheditor-popup-cframe {
+    background-color: #ebe9ed;
+}
+.cheditor-pulldown-container {
+    border:#8db3e5 1px solid;
+    background-color:#fff;
+    padding:1px;
+    position: relative;
+}
+.cheditor-pulldown-container div {
+    padding: 2px 2px 2px 15px;
+    line-height: 1.1;
+    margin: 1px;
+    font-size: 9pt;
+    font-family: gulim,tahoma,helvetica;
+    color: #000;
+    position: relative;
+}
+.cheditor-pulldown-color-container {
+    border:#8db3e5 1px solid;
+    background-color:#fff;
+    padding:2px;
+    height: 160px;
+}
+.cheditor-pulldown-container div label, .cheditor-pulldown-textblock-container div label {
+    position: relative;
+    overflow: hidden;
+}
+.cheditor-pulldown-textblock-container div div {
+    text-align: center;
+    padding: 2px;
+    font-size: 9pt;
+    color: #000;
+    line-height: 1;
+}
+.cheditor-pulldown-textblock-container div {
+    padding: 1px;
+}
+.cheditor-pulldown-textblock-out {
+    border: #fff 1px solid;
+}
+.cheditor-pulldown-textblock-over {
+    border: #316ac5 1px solid;
+}
+.cheditor-pulldown-textblock-container {
+    border:#8db3e5 1px solid;
+    background-color:#fff;
+    padding:2px;
+}
+.cheditor-pulldown-mouseout {
+    border: #fff 1px solid;
+}
+.cheditor-pulldown-mouseover {
+    background-color: #f0f0f0;
+    border: #e0e0e0 1px solid;
+}
+
+.cheditor-pulldown-frame {	
+    position:absolute;
+    visibility:hidden;
+    z-index: -1;
+    width:1px;
+    height:1px;
+    line-height:12px;
+}
+.cheditor-pulldown-color-over {
+    float: left;
+    border: 1px solid #c00000;
+    width: 15px;
+    height: 15px;
+    margin: 1px;
+    font-size: 7px;
+    cursor: pointer;
+}
+.cheditor-pulldown-color-cell {
+    float: left;
+    border: 1px #000 solid;
+    width: 15px;
+    height: 15px;
+    margin: 1px;
+    font-size: 7px;
+    cursor: pointer;
+}
+.cheditor-pulldown-color-selected {
+    border: 1px solid #000;
+    text-align: center;
+    margin: 1px;
+    height: 15px;
+    line-height: 1.1;
+}
+.cheditor-pulldown-color-selected label {
+    font-family: verdana;
+    font-size: 8pt;
+    color: #000;
+}
+.cheditor-pulldown-color-spacer {
+    clear: both;
+    height: 4px;
+    overflow: hidden;
+}
+.cheditor-pulldown-color-wrapper {
+    line-height: 1;
+    height: 340px;
+}
+.cheditor-container-fullscreen {
+    border-top: 1px #ccc solid;
+    position: fixed;
+    left: 0px;
+	top: 0px;
+	_position: absolute;
+	_left: expression((0 + (ignoreMe2 = 
+		document.documentElement.scrollLeft ? 
+		document.documentElement.scrollLeft : 
+		document.body.scrollLeft)) + 'px');	
+	_top: expression((270 + (ignoreMe = 
+		document.documentElement.scrollTop ? 
+		document.documentElement.scrollTop : 
+		document.body.scrollTop)) + 'px');    	
+    z-index: 1000;
+    text-align: left;
+    background-color: #fff;
+}
+.cheditor-modalPopupTransparent { 	
+	background-color: #f0f0f0; 
+	position: fixed; 
+	display: none; 
+	top: 0px; 
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	_position: absolute;
+	_left: expression((0 + (ignoreMe2 = 
+		document.documentElement.scrollLeft ? 
+		document.documentElement.scrollLeft : 
+		document.body.scrollLeft)) + 'px');
+	_top: expression((270 + (ignoreMe = 
+		document.documentElement.scrollTop ? 
+		document.documentElement.scrollTop : 
+		document.body.scrollTop)) + 'px');    	
+}
+.cheditor-dragWindowTransparent { background-color: #fff; position: absolute; display: block; left:0px; top: 24px; }
+.cheditor-pulldown-wrapper {line-height: 1; }
+.cheditor-toolbar-icon-wrapper {
+    margin: 0px 2px 0px 0px;
+    float: left;
+    height: 24px;
+    overflow: hidden;
+}
+.cheditor-tb-icon {
+    height: 22px;
+    width: 16px;
+    margin-left: 3px;
+    overflow: hidden;
+}
+.cheditor-tb-text {
+    height: 22px;
+    margin-left: 5px;
+    color: #555;
+    font-family: gulim,tahoma,helvetica;
+    font-size: 9pt;
+    overflow: hidden;
+    margin-right: 13px;
+    line-height: 24px;
+    position: relative;
+}
+.cheditor-tb-bg55 {
+    float: left;
+    overflow: hidden;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -414px;
+    position: relative;
+}
+.cheditor-tb-bg40 {
+    float: left;
+    overflow: hidden;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -483px;
+    position: relative;
+}
+.cheditor-tb-icon23 {
+    height: 22px;
+    width: 23px;
+    margin-left: 3px;
+    overflow: hidden;
+}
+.cheditor-tb-bg30 {
+    float: left;
+    overflow: hidden;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -276px;
+    position: relative;
+}
+.cheditor-tb-bg30-last {
+    float: left;
+    overflow: hidden;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -345px;
+    position: relative;
+}
+.cheditor-tb-bg {
+    float: left;
+    overflow: hidden;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -69px;
+    position: relative;
+}
+.cheditor-tb-bg-first {
+    float: left;
+    overflow: hidden;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left top;
+    position: relative;
+}
+.cheditor-tb-bg-last {
+    float: left;
+    overflow: hidden;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -138px;
+    position: relative;
+}
+.cheditor-tb-bg-single {
+    float: left;
+    overflow: hidden;
+    background: transparent url(../icons/toolbar-background.png) no-repeat left -207px;
+    position: relative;
+}
+.cheditor-tb-color-btn {
+	width: 16px;
+	height: 3px;
+	overflow: hidden;
+	position: absolute;
+	top: 16px;
+	left: 3px;
+}
+.cheditor-tb-button-spacer {
+    overflow: hidden;
+    width: 4px;
+    height: 4px;
+    float: left;
+}
+.cheditor-tb-split {
+	overflow: hidden;
+    height: 2px;
+    width: 3px;
+    clear: both;
+}

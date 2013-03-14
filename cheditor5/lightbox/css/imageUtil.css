@@ -1,0 +1,95 @@
+/************************************************
+
+          CHEditor Image Caption Util
+
+************************************************/
+img.chimg_photo
+{
+  border: 1px darkgray solid;
+  padding:10px;
+}
+div.imgblock
+{
+}
+div.leftjust
+{
+}
+div.rightjust
+{
+}
+div.caption
+{
+  margin-top: 5px;
+  margin-left: 0.2em;
+  color: darkgray;
+  font-size: 9pt;
+}
+div.caption-marker
+{
+  float: left;
+  margin-right: 0.2em;
+}
+div.caption-text
+{
+  float: left;
+  clear: right;
+  text-align: left;
+}
+.imageUtil {
+	cursor: url(icons/imageutil/zoomin.cur), pointer;
+    outline: none;
+}
+.imageUtil img {
+	border: 2px solid gray;
+}
+.imageUtil:hover img {
+	border: 2px solid silver;
+}
+
+.imageUtil-image {
+    border-bottom: 1px solid white;
+}
+.imageUtil-image-blur {
+}
+.imageUtil-caption {
+    display: none;
+    border-bottom: 1px solid white;
+    font-family: gulim, Verdana, Helvetica;
+    font-size: 9pt;
+    padding: 5px;
+    background-color: #fff;
+}
+.imageUtil-loading {
+    display: block;
+	color: white;
+	font-size: 9px;
+	font-weight: normal;
+    text-decoration: none;
+	padding: 3px;
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+    background-color: black;
+    padding-left: 22px;
+    background-image: url(icons/imageutil/loader.gif);
+    background-repeat: no-repeat;
+    background-position: 3px 1px;
+}
+
+a.imageUtil-credits,
+a.imageUtil-credits i {
+    padding: 2px;
+    color: silver;
+    text-decoration: none;
+	font-size: 10px;
+}
+a.imageUtil-credits:hover,
+a.imageUtil-credits:hover i {
+    color: white;
+    background-color: gray;
+}
+.imageUtil-display-block {
+    display: block;
+}
+.imageUtil-display-none {
+    display: none;
+}
