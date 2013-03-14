@@ -837,6 +837,7 @@ function get_group_select($name, $selected='', $event='')
     $result = sql_query($sql);
     $str = "<select id=\"$name\" name=\"$name\" $event>\n";
     for ($i=0; $row=sql_fetch_array($result); $i++) {
+        if ($i == 0) $str .= "<option value=\"\">선택</option>";
         $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
     }
     $str .= "</select>";

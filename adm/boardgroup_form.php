@@ -76,7 +76,7 @@ include_once('./admin.head.php');
         <th scope="row"><label for="gr_device">접속기기</label></th>
         <td>
             <?=help("PC 와 모바일 사용을 구분합니다.")?>
-            <select id="gr_device_" name="gr_device">
+            <select id="gr_device" name="gr_device">
                 <option value="both"<?=get_selected($group['gr_device'], 'both', true);?>>PC와 모바일에서 모두 사용</option>
                 <option value="pc"<?=get_selected($group['gr_device'], 'pc');?>>PC 전용</option>
                 <option value="mobile"<?=get_selected($group['gr_device'], 'mobile');?>>모바일 전용</option>
@@ -144,11 +144,6 @@ include_once('./admin.head.php');
 </div>
 
 <script>
-if (document.fboardgroup.w.value == '')
-    document.fboardgroup.gr_id.focus();
-else
-    document.fboardgroup.gr_subject.focus();
-
 function fboardgroup_check(f)
 {
     f.action = './boardgroup_form_update.php';
