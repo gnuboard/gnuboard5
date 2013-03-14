@@ -17,7 +17,7 @@ if ($_POST['agree'] != '동의함') {
 }
 ?>
 
-    <form id="frm_install" method="post" action="./install_db.php" onsubmit="return frm_install_submit(this)">
+    <form id="frm_install" method="post" action="./install_db.php" autocomplete="off" onsubmit="return frm_install_submit(this)">
     <table style="margin-bottom:30px">
     <caption>MySQL 정보입력</caption>
     <colgroup>
