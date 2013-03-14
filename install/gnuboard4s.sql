@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `g4s_board` (
   `bo_hot` int(11) NOT NULL default '0',
   `bo_image_width` int(11) NOT NULL default '0',
   `bo_skin` varchar(255) NOT NULL default '',
+  `bo_mobile_skin` varchar(255) NOT NULL default '',
   `bo_image_head` varchar(255) NOT NULL default '',
   `bo_image_tail` varchar(255) NOT NULL default '',
   `bo_include_head` varchar(255) NOT NULL default '',
@@ -304,6 +305,7 @@ DROP TABLE IF EXISTS `g4s_group`;
 CREATE TABLE IF NOT EXISTS `g4s_group` (
   `gr_id` varchar(10) NOT NULL default '',
   `gr_subject` varchar(255) NOT NULL default '',
+  `gr_device` ENUM('both','pc','mobile') NOT NULL DEFAULT 'both',
   `gr_admin` varchar(255) NOT NULL default '',
   `gr_use_access` tinyint(4) NOT NULL default '0',
   `gr_show_menu` tinyint(4) NOT NULL default '0',
