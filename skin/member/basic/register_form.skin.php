@@ -88,7 +88,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <? } ?>
 
 <? if ($config['cf_use_hp']) { ?>
-<tr> 
+<tr>
     <th scope="row"><label for="reg_mb_hp">핸드폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td><input type="text" name="mb_hp" value="<?=$member[mb_hp]?>" id="reg_mb_hp" class="frm_input <?=$config['cf_req_hp']?"required":"";?>"  maxlength="20" <?=$config['cf_req_hp']?"required":"";?>></td>
 </tr>
@@ -130,7 +130,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </tr>
 <? } ?>
 
-<? if ($member['mb_level'] >= $config['cf_icon_level']) { ?>
+<? if ($config['cf_use_member_icon'] && $member['mb_level'] >= $config['cf_icon_level']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_icon">회원아이콘</label></th>
     <td>
