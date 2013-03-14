@@ -122,6 +122,7 @@ a:active {color:#000;text-decoration:underline}
 #g4s_cng {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
 
 /* 콘텐츠별 스타일 */
+.cnt_cmt {font-weight:bold}
 /* 버튼 */
 .btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn01:focus,
