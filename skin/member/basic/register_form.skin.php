@@ -69,7 +69,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </span>
         <? } ?>
         <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
-        <input type="text" name="mb_email" value="<?=isset($member['mb_email'])?$member['mb_email']:'';?>" id="reg_mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" size="50" maxlength="100" <?=$config['cf_use_email_certify']?"required":"";?>>
+        <input type="text" name="mb_email" value="<?=isset($member['mb_email'])?$member['mb_email']:'';?>" id="reg_mb_email" <?=$config['cf_use_email_certify']?"required":"";?> class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" size="50" maxlength="100" >
     </td>
 </tr>
 
