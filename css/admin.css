@@ -42,7 +42,7 @@ h2 {font-size:1.2em}
 #hd {z-index:10;min-width:1000px;background:url('../adm/img/hd_bg.jpg') #383b3f top left repeat-x}
 #hd h1,
 #hd h2 {margin:0;padding:0;font-size:0;line-height:0;border:0;overflow:hidden}
-#hd_wrap {position:relative;margin:0 auto;width:1000px}
+#hd_wrap {z-index:11;position:relative;margin:0 auto;width:1000px}
 #logo {position:relative;height:70px}
 #logo img {position:absolute;top:15px;left:0}
 
@@ -54,11 +54,11 @@ h2 {font-size:1.2em}
 #mb_nb a {display:inline-block;padding:5px 0;color:#e0e0e0;font-size:0.9em;text-decoration:none}
 
 /* gnb js off */
-#gnb {z-index:10;background:#383a3f}
+#gnb {z-index:12;background:#383a3f}
 #gnb h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 #gnb_ul {margin:0 auto;padding:0;width:1000px;zoom:1}
 #gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth {z-index:10;clear:both;zoom:1}
+.gnb_1depth {z-index:13;clear:both;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth a {display:block;float:left;width:80px;height:35px;color:#e0e0e0;font-weight:bold;line-height:2.95em;text-decoration:none}
 .gnb_1depth a:focus,
@@ -79,10 +79,8 @@ h2 {font-size:1.2em}
 .gnb_1depth_over .gnb_sub_ul {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
 .gnb_1depth_over2 .gnb_sub_ul {right:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
 
-#current_loc {position:absolute;top:-5000px;left:0}
-
 /* 중간 레이아웃 */
-#wrapper {margin:30px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
+#wrapper {z-index:5;margin:30px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 
 #qnb {float:right;margin:0;padding:0;list-style:none}
@@ -93,7 +91,7 @@ h2 {font-size:1.2em}
 #qnb a:active {text-decoration:none}
 #qnb img {margin-bottom:5px}
 
-#container {position:relative;float:left;width:942px}
+#container {z-index:4;position:relative;float:left;width:942px}
 
 /* 텍스트 크기 조절 */
 #text_size {position:absolute;top:0;right:0}
