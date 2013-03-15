@@ -124,7 +124,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
     <div>
         <p>다음 파일을 찾을 수 없습니다.</p>
         <ul>
-            <li><strong><?=$dbconfig_file?></strong></li>
+            <li><strong><?=G4_DATA_DIR.'/'.G4_DBCONFIG_FILE?></strong></li>
         </ul>
         <p>프로그램 설치 후 실행하시기 바랍니다.</p>
         <a href="<?=G4_URL?>/install/">그누보드4S 설치하기</a>
