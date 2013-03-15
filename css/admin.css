@@ -13,7 +13,7 @@ input[type=text],
 input[type=password],
 input[type=submit],
 input[type=image] {-webkit-appearance:none}
-button {border-radius:0;-webkit-appearance:none}
+button {border-radius:0;font-size:1em;-webkit-appearance:none}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
