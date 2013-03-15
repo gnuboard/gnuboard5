@@ -104,6 +104,8 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 {
     global $g4;
 
+    if ($thumb_width==0 || $thumb_height==0) return;
+
     $thumb_filename = preg_replace("/\.[^\.]+$/i", "", $filename); // 확장자제거
 
     if (!is_dir($target_path)) {
