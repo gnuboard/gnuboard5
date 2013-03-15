@@ -1,16 +1,16 @@
 <?
-$sub_menu = "500120";
-include_once("./_common.php");
+$sub_menu = '500120';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "주문내역출력";
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = '주문내역출력';
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <table width=550><tr><td>
 
-<?=subtitle($g4[title])?>
+<?=subtitle($g4['title'])?>
 
 <table cellpadding=0 cellspacing=0 border=0 width=100%>
 <form name=forderprint action="./orderprintresult.php" onsubmit="return forderprintcheck(this);" autocomplete="off" style="margin:0px;">
@@ -30,9 +30,9 @@ include_once ("$g4[admin_path]/admin.head.php");
         </tr>
         <tr>
             <td align=right>
-                <input type=text name=fr_date id='fr_date' size=10 maxlength=8 value="<?=date("Ymd");?>" class=ed><a href="javascript:win_calendar('fr_date', document.getElementById('fr_date').value, '');"><img src='<?=$g4[path]?>/img/calendar.gif' border=0 align=absmiddle title='달력 - 날짜를 선택하세요'></a>
+                <input type=text name=fr_date id='fr_date' size=10 maxlength=8 value="<?=date("Ymd");?>" class=ed><a href="javascript:win_calendar('fr_date', document.getElementById('fr_date').value, '');"><img src='<?=G4_URL?>/img/calendar.gif' border=0 align=absmiddle title='달력 - 날짜를 선택하세요'></a>
                 ∼
-                <input type=text name=to_date id='to_date' size=10 maxlength=8 value="<?=date("Ymd");?>" class=ed><a href="javascript:win_calendar('to_date', document.getElementById('to_date').value, '');"><img src='<?=$g4[path]?>/img/calendar.gif' border=0 align=absmiddle title='달력 - 날짜를 선택하세요'></a>
+                <input type=text name=to_date id='to_date' size=10 maxlength=8 value="<?=date("Ymd");?>" class=ed><a href="javascript:win_calendar('to_date', document.getElementById('to_date').value, '');"><img src='<?=G4_URL?>/img/calendar.gif' border=0 align=absmiddle title='달력 - 날짜를 선택하세요'></a>
                 &nbsp;
                 <select name=ct_status>
                     <option value='주문'>주문
@@ -97,7 +97,7 @@ include_once ("$g4[admin_path]/admin.head.php");
 <script language="JavaScript">
 function forderprintcheck(f)
 {
-    if (f.csv[0].checked || f.csv[1].checked) 
+    if (f.csv[0].checked || f.csv[1].checked)
     {
         f.target = "_top";
     }
@@ -112,5 +112,5 @@ function forderprintcheck(f)
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

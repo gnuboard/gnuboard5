@@ -1,7 +1,7 @@
 <?
-$sub_menu = "500200";
-include_once("./_common.php");
-include_once("$g4[path]/lib/icode.sms.lib.php");
+$sub_menu = '500200';
+include_once('./_common.php');
+include_once(G4_LIB_PATH.'/icode.sms.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -14,13 +14,13 @@ $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default[
 $recv = explode(",", $receive_number);
 
 $tran_callback = preg_replace("/[^0-9]/", "", $send_number);
-$sms_id = $default[de_icode_id];
+$sms_id = $default['de_icode_id'];
 $tran_msg = $sms_contents;
 $tran_date = "";
 if ($reserved_flag) // 예약전송
 {
-	$tran_date = $reserved_year . 
-		substr("0".$reserved_month, -2) . 
+	$tran_date = $reserved_year .
+		substr("0".$reserved_month, -2) .
 		substr("0".$reserved_day, -2).
 		substr("0".$reserved_hour, -2).
 		substr("0".$reserved_minute, -2);
@@ -33,20 +33,20 @@ for($i=0; $i<count($recv); $i++)
 	$result = $SMS->Add($tran_phone, $tran_callback, $sms_id, stripslashes($tran_msg), $tran_date);
 }
 $result = $SMS->Send();
-if ($result) 
+if ($result)
 {
 	//echo "SMS 서버에 접속했습니다.<br>";
 	$success = $fail = 0;
-	foreach($SMS->Result as $result) 
+	foreach($SMS->Result as $result)
 	{
 		list($phone,$code)=explode(":",$result);
-		if ($code=="Error") 
+		if ($code=="Error")
 		{
 			//echo $phone.'로 발송하는데 에러가 발생했습니다.<br>';
 			$msg .= $phone."로 발송하는데 에러가 발생했습니다.\\n";
 			$fail++;
-		} 
-		else 
+		}
+		else
 		{
 			//echo $phone."로 전송했습니다. (메시지번호:".$code.")<br>";
 			$success++;
@@ -64,5 +64,5 @@ else
 if (!$msg)
 	$msg = "정상적으로 전송하였습니다.";
 
-alert($msg, "./smssend.php");
+alert($msg, './smssend.php');
 ?>

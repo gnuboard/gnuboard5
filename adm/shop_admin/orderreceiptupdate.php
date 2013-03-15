@@ -1,30 +1,30 @@
 <?
-$sub_menu = "400400";
-include_once("./_common.php");
-include_once("$g4[path]/lib/mailer.lib.php");
-include_once("$g4[path]/lib/icode.sms.lib.php");
+$sub_menu = '400400';
+include_once('./_common.php');
+include_once(G4_LIB_PATH.'/mailer.lib.php');
+include_once(G4_LIB_PATH.'/icode.sms.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
-if ($od_bank_time) 
+if ($od_bank_time)
 {
     if (check_datetime($od_bank_time) == false)
-        alert("무통장 입금일시 오류입니다.");
+        alert('무통장 입금일시 오류입니다.');
 }
 
-if ($od_card_time) 
+if ($od_card_time)
 {
     if (check_datetime($od_card_time) == false)
-        alert("신용카드 결제일시 오류입니다.");
+        alert('신용카드 결제일시 오류입니다.');
 }
 
-if ($od_hp_time) 
+if ($od_hp_time)
 {
     if (check_datetime($od_hp_time) == false)
         alert("휴대폰 결제일시 오류입니다.");
 }
 
-$sql = " update $g4[yc4_order_table]
+$sql = " update {$g4['yc4_order_table']}
             set od_deposit_name  = '$od_deposit_name',
                 od_bank_account  = '$od_bank_account',
                 od_bank_time     = '$od_bank_time',

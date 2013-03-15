@@ -1,8 +1,8 @@
 <?
-$sub_menu = "400400";
-include_once("./_common.php");
+$sub_menu = '400400';
+include_once('./_common.php');
 
-$sql = " update $g4[yc4_order_table]
+$sql = " update {$g4['yc4_order_table']}
             set od_shop_memo = '$od_shop_memo',
                 od_name = '$od_name',
                 od_tel = '$od_tel',
@@ -19,7 +19,7 @@ $sql = " update $g4[yc4_order_table]
                 od_b_zip2 = '$od_b_zip2',
                 od_b_addr1 = '$od_b_addr1',
                 od_b_addr2 = '$od_b_addr2' ";
-if ($default[de_hope_date_use])
+if ($default['de_hope_date_use'])
     $sql .= " , od_hope_date = '$od_hope_date' ";
 $sql .= " where od_id = '$od_id' ";
 sql_query($sql);

@@ -1,17 +1,17 @@
 <?
-$sub_menu = "500200";
-include_once("./_common.php");
+$sub_menu = '500200';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "SMS 문자전송";
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = 'SMS 문자전송';
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 // 발신자번호
-$send_number = preg_replace("/[^0-9]/", "", $default[de_admin_company_tel]);
+$send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
 ?>
 
-<?=subtitle($g4[title])?>
+<?=subtitle($g4['title'])?>
 
 <script language="JavaScript">
 function byte_check(cont, bytes)
@@ -69,7 +69,7 @@ var StrComma = "";
 function tel_enter()
 {
     /*
-    if(window.event.keyCode ==13) 
+    if(window.event.keyCode ==13)
     {
         receive_add();
     }
@@ -86,7 +86,7 @@ function receive_add()
 	var intCount = 0;
 	var strMobile = document.smsform.receive_input.value;
 	//strMobile = strMobile.replace("-", "", strMobile);
-    strMobile = strMobile.replace("-", ""); 
+    strMobile = strMobile.replace("-", "");
 
 	for (i = 0; i < document.smsform.receive_buffer.length; i++)
 	{
@@ -205,7 +205,7 @@ function receive_alldel()
 }
 </script>
 
-<? if ($default[de_sms_use] == "icode") { // 아이코드 사용 ?>
+<? if ($default['de_sms_use'] == "icode") { // 아이코드 사용 ?>
 <form action="./smssendicode.php" name="smsform" method=post autocomplete=off>
 <input type="hidden" name="receive_number" value="">
 <? } else { ?>
@@ -329,13 +329,13 @@ document.smsform.reserved_day.value = '<?=date("j")?>';
 function smsform_check(f)
 {
     <?
-    if (file_exists("$g4[path]/DEMO")) {
+    if (file_exists(G4_PATH.'/DEMO')) {
         echo "alert('데모에서는 문자메세지를 발송할 수 없습니다.');";
         echo "return;";
     }
 
 
-    if ($default[de_sms_use] == "") {
+    if ($default['de_sms_use'] == "") {
         echo "alert('우선 SMS 환경을 설정하여 주십시오.');";
         echo "return;";
     }
@@ -359,5 +359,5 @@ function smsform_check(f)
 
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

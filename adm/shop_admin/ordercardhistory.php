@@ -1,19 +1,19 @@
 <?
-$sub_menu = "500130";
-include_once("./_common.php");
+$sub_menu = '500130';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "전자결제내역";
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = '전자결제내역';
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-sql_query(" ALTER TABLE `$g4[yc4_card_history_table]` ADD INDEX `od_id` ( `od_id` ) ", false);
+sql_query(" ALTER TABLE `{$g4['yc4_card_history_table']}` ADD INDEX `od_id` ( `od_id` ) ", false);
 
 $where = " where ";
 $sql_search = "";
-if ($search != "") 
+if ($search != "")
 {
-	if ($sel_field != "") 
+	if ($sel_field != "")
     {
     	$sql_search .= " $where $sel_field like '%$search%' ";
         $where = " and ";
@@ -24,16 +24,16 @@ if ($sel_field == "")  $sel_field = "a.od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from $g4[yc4_card_history_table] a
-                left join $g4[yc4_order_table] b on (a.od_id = b.od_id)
+$sql_common = " from {$g4['yc4_card_history_table']} a
+                left join {$g4['yc4_order_table']} b on (a.od_id = b.od_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -54,7 +54,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <input type=hidden name=page  value="<? echo $page ?>">
 <table width=100% cellpadding=4 cellspacing=0>
 <tr>
-    <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td width=20%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
     <td width=70% align=center>
         <select name=sel_field>
             <option value='a.od_id'>주문번호
@@ -64,7 +64,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
 
         <input type=text name=search value='<? echo $search ?>' autocomplete="off">
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -89,17 +89,17 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 </tr>
 <tr><td colspan=6 height=1 bgcolor=#CCCCCC></td></tr>
 <?
-for ($i=0; $row=sql_fetch_array($result); $i++) 
+for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $list = $i%2;
     echo "
     <tr class='list$list center ht'>
-        <td><a href='./orderform.php?od_id=$row[od_id]'><U>$row[od_id]</U></a></td>
-        <td>".display_amount($row[cd_amount])."</td>
-        <td>$row[cd_app_no]</td>
-        <td>$row[cd_app_rt]</td>
-        <td>$row[cd_app_time]</td>
-        <td>$row[cd_opt01]</td>
+        <td><a href='./orderform.php?od_id={$row['od_id']}'><U>{$row['od_id']}</U></a></td>
+        <td>".display_amount($row['cd_amount'])."</td>
+        <td>{$row['cd_app_no']}</td>
+        <td>{$row['cd_app_rt']}</td>
+        <td>{$row['cd_app_time']}</td>
+        <td>{$row['cd_opt01']}</td>
     </tr><tr><td colspan=6 height=1 bgcolor=F5F5F5></td></tr>";
 }
 
@@ -112,7 +112,7 @@ if ($i == 0)
 <table width=100%>
 <tr>
     <td width=50%></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
 </tr>
 </table>
 </form>
@@ -121,5 +121,5 @@ if ($i == 0)
 
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
