@@ -41,7 +41,7 @@ a:active {color:#000;text-decoration:underline}
 #mp3_embed {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden} /* 익스 8 이하에서 음성캡챠 실행 스타일 */
 
 /* ckeditor 단축키 */
-div.cke_sc {margin:0 0 5px;text-align:right}
+.cke_sc {margin:0 0 5px;text-align:right}
 .btn_cke_sc{display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:1.9em;vertical-align:middle}
 .cke_sc_def {display:none;margin:0 0 5px;padding:10px;border:1px solid #ccc;background:#f7f7f7;text-align:center}
 .cke_sc_def dl{margin:0 0 5px;text-align:left;zoom:1}
