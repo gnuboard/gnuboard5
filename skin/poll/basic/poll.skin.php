@@ -11,6 +11,9 @@ if (!$po_id) {
 }
 
 $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
+
+if(!$po['po_id'])
+    return;
 ?>
 
 <form name="fpoll" action="<?=G4_BBS_URL?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="win_poll" method="post">
