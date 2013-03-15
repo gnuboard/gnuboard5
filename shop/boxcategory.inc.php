@@ -9,10 +9,10 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
 ?>
 
 <table bgcolor=#FFFFFF width=100% cellpadding=0 cellspacing=0>
-<tr><td align=center valign=top height=50><img src='<?=$g4[shop_img_path]?>/bar_category.gif'></td></tr>
+<tr><td align=center valign=top height=50><img src='<?=G4_SHOP_URL?>/img/bar_category.gif'></td></tr>
 <?
 // 1단계 분류 판매가능한것만
-$hsql = " select ca_id, ca_name from $g4[yc4_category_table]
+$hsql = " select ca_id, ca_name from {$g4['yc4_category_table']}
           where length(ca_id) = '2'
             and ca_use = '1'
           order by ca_id ";
@@ -24,19 +24,19 @@ for ($i=0; $row=sql_fetch_array($hresult); $i++)
     $menubody = "";
     $onmouseover = "";
     $onmouseout  = "";
-    $sql2 = " select ca_id, ca_name from $g4[yc4_category_table]
+    $sql2 = " select ca_id, ca_name from {$g4['yc4_category_table']}
                where LENGTH(ca_id) = '4'
-                 and SUBSTRING(ca_id,1,2) = '$row[ca_id]'
+                 and SUBSTRING(ca_id,1,2) = '{$row['ca_id']}'
                  and ca_use = '1'
                order by ca_id ";
     $result2 = sql_query($sql2);
     $hnum2 = @mysql_num_rows($result2);
     for ($j=0; $row2=sql_fetch_array($result2); $j++)
     {
-        $menubody .= "<tr height='22'><td>&nbsp;&nbsp;· <a href='$g4[shop_path]/list.php?ca_id=$row2[ca_id]'>$row2[ca_name]</a></td></tr>";
+        $menubody .= "<tr height='22'><td>&nbsp;&nbsp;· <a href='".G4_SHOP_URL."/list.php?ca_id={$row2['ca_id']}'>{$row2['ca_name']}</a></td></tr>";
         // 맨밑줄은 출력하지 않음
         if ($j < $hnum2)
-            $menubody .= "<tr><td align=center><img src='$g4[shop_img_path]/dot_line.gif'></td></tr>";
+            $menubody .= "<tr><td align=center><img src='".G4_SHOP_URL."/img/dot_line.gif'></td></tr>";
     }
 
     if ($menubody)
@@ -45,9 +45,9 @@ for ($i=0; $row=sql_fetch_array($hresult); $i++)
         $onmouseout  = " layer_view('lmenu{$i}', 'lmenu_layer{$i}', 'hide'); ";
     }
 
-    $category_link = "<a href='$g4[shop_path]/list.php?ca_id=$row[ca_id]'>";
+    $category_link = "<a href='".G4_SHOP_URL."/list.php?ca_id={$row['ca_id']}'>";
     echo "<tr id='lmenu{$i}' onmouseover=\"$onmouseover\" onmouseout=\"$onmouseout\">";
-    echo "<td height='22'>&nbsp;&nbsp;· $category_link$row[ca_name]</a>\n";
+    echo "<td height='22'>&nbsp;&nbsp;· $category_link{$row['ca_name']}</a>\n";
 
     if ($menubody)
     {
@@ -62,7 +62,7 @@ for ($i=0; $row=sql_fetch_array($hresult); $i++)
     echo "</td></tr>\n";
 
     if ($i<$hnum-1) // 맨밑줄은 출력하지 않음
-        echo "<tr><td align=center><img src='$g4[shop_img_path]/dot_line.gif'></td></tr>\n";
+        echo "<tr><td align=center><img src='".G4_SHOP_URL."/img/dot_line.gif'></td></tr>\n";
 }
 
 if ($i==0)

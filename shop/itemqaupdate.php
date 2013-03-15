@@ -1,5 +1,5 @@
-<? 
-include_once("./_common.php");
+<?
+include_once('./_common.php');
 
 if ($w == '' || $w == 'u')
 {
@@ -10,7 +10,7 @@ if ($w == '' || $w == 'u')
     */
 
     $key = get_session("captcha_keystring");
-    if (!($key && $key == $_POST[iq_key])) {
+    if (!($key && $key == $_POST['iq_key'])) {
         session_unregister("captcha_keystring");
         alert("정상적인 접근이 아닌것 같습니다.");
     }
@@ -26,46 +26,46 @@ if ($w == '' || $w == 'u')
     }
     */
 
-    if (!$is_member) 
+    if (!$is_member)
     {
-        if (!trim($_POST[iq_name])) alert("이름을 입력하여 주십시오.");
-        if (!trim($_POST[iq_password])) alert("패스워드를 입력하여 주십시오.");
+        if (!trim($_POST['iq_name'])) alert('이름을 입력하여 주십시오.');
+        if (!trim($_POST['iq_password'])) alert('패스워드를 입력하여 주십시오.');
     }
     else
     {
-        $iq_name = $member[mb_name];
-        $iq_password = $member[mb_password];
+        $iq_name = $member['mb_name'];
+        $iq_password = $member['mb_password'];
     }
 
     $iq_password = sql_password($iq_password);
 
-    if (!trim($_POST[iq_subject])) alert("제목을 입력하여 주십시오.");
-    if (!trim($_POST[iq_question])) alert("내용을 입력하여 주십시오.");
+    if (!trim($_POST['iq_subject'])) alert('제목을 입력하여 주십시오.');
+    if (!trim($_POST['iq_question'])) alert('내용을 입력하여 주십시오.');
 }
 
 $url = "./item.php?it_id=$it_id";
 
 if ($w == '')
 {
-    $sql = " select max(iq_id) as max_iq_id from $g4[yc4_item_qa_table] ";
+    $sql = " select max(iq_id) as max_iq_id from {$g4['yc4_item_qa_table']} ";
     $row = sql_fetch($sql);
-    $max_iq_id = $row[max_iq_id];
+    $max_iq_id = $row['max_iq_id'];
 
-    $sql = " select max(iq_id) as max_iq_id from $g4[yc4_item_qa_table]
+    $sql = " select max(iq_id) as max_iq_id from {$g4['yc4_item_qa_table']}
               where it_id = '$it_id'
-                and mb_id = '$member[mb_id]' ";
+                and mb_id = '{$member['mb_id']}' ";
     $row = sql_fetch($sql);
-    if ($row[max_iq_id] && $row[max_iq_id] == $max_iq_id) 
-        alert("같은 상품에 대하여 계속해서 질문 하실 수 없습니다.");
+    if ($row['max_iq_id'] && $row['max_iq_id'] == $max_iq_id)
+        alert('같은 상품에 대하여 계속해서 질문 하실 수 없습니다.');
 
-    $sql = "insert $g4[yc4_item_qa_table]
+    $sql = "insert {$g4['yc4_item_qa_table']}
                set it_id = '$it_id',
-                   mb_id = '$member[mb_id]',
+                   mb_id = '{$member['mb_id']}',
                    iq_name  = '$iq_name',
                    iq_password  = '$iq_password',
                    iq_subject  = '$iq_subject',
                    iq_question = '$iq_question',
-                   iq_time = '$g4[time_ymdhis]',
+                   iq_time = '".G4_TIME_YMDHIS."',
                    iq_ip = '$REMOTE_ADDR' ";
     sql_query($sql);
 
@@ -73,12 +73,12 @@ if ($w == '')
 }
 else if ($w == 'u')
 {
-    $sql = " select iq_password from $g4[yc4_item_qa_table] where iq_id = '$iq_id' ";
+    $sql = " select iq_password from {$g4['yc4_item_qa_table']} where iq_id = '$iq_id' ";
     $row = sql_fetch($sql);
-    if ($row[iq_password] != $iq_password)
-        alert("패스워드가 틀리므로 수정하실 수 없습니다.");
+    if ($row['iq_password'] != $iq_password)
+        alert('패스워드가 틀리므로 수정하실 수 없습니다.');
 
-    $sql = " update $g4[yc4_item_qa_table] 
+    $sql = " update {$g4['yc4_item_qa_table']}
                 set iq_subject = '$iq_subject',
                     iq_question = '$iq_question'
               where iq_id = '$iq_id' ";
@@ -90,22 +90,22 @@ else if ($w == 'd')
 {
     if ($is_member)
     {
-        $sql = " select count(*) as cnt from $g4[yc4_item_qa_table] where mb_id = '$member[mb_id]' and iq_id = '$iq_id' ";
+        $sql = " select count(*) as cnt from {$g4['yc4_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
         $row = sql_fetch($sql);
-        if (!$row[cnt])
-            alert("자신의 상품문의만 삭제하실 수 있습니다.");
+        if (!$row['cnt'])
+            alert('자신의 상품문의만 삭제하실 수 있습니다.');
     }
     else
     {
         $iq_password = sql_password($iq_password);
 
-        $sql = " select iq_password from $g4[yc4_item_qa_table] where iq_id = '$iq_id' ";
+        $sql = " select iq_password from {$g4['yc4_item_qa_table']} where iq_id = '$iq_id' ";
         $row = sql_fetch($sql);
-        if ($row[iq_password] != $iq_password)
-            alert("패스워드가 틀리므로 삭제하실 수 없습니다.");
+        if ($row['iq_password'] != $iq_password)
+            alert('패스워드가 틀리므로 삭제하실 수 없습니다.');
     }
 
-    $sql = " delete from $g4[yc4_item_qa_table] where mb_id = '$member[mb_id]' and iq_id = '$iq_id' ";
+    $sql = " delete from {$g4['yc4_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
     sql_query($sql);
 
     goto_url($url);
