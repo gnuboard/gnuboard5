@@ -49,7 +49,7 @@ ob_end_clean();
 
 mailer($from_name, $from_email, $to_email, $subject, $content, 1);
 
-echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
+echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
 ?>
 <meta http-equiv="content-type" content="text/html; charset=<?=$g4['charset']?>">
 <script language="JavaScript">

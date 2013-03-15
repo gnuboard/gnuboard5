@@ -20,10 +20,7 @@ else {
     $default['de_kcp_mid'] = "SR".$default['de_kcp_mid'];
 }
 
-if (strtolower($g4['charset']) == 'utf-8')
-    $js_url = "https://pay.kcp.co.kr/plugin/payplus{$test}_un.js";
-else
-    $js_url = "https://pay.kcp.co.kr/plugin/payplus{$test}.js";
+$js_url = "https://pay.kcp.co.kr/plugin/payplus{$test}_un.js";
 
 /*
  * hashdata 암호화 (수정하지 마세요)
