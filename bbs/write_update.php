@@ -364,26 +364,28 @@ if ($w == '' || $w == 'r') {
         alert('올바른 방법으로 수정하여 주십시오.');
     }
 
+    $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+
     if ($is_admin == 'super') // 최고관리자 통과
         ;
     else if ($is_admin == 'group') { // 그룹관리자
         $mb = get_member($write['mb_id']);
         if ($member['mb_id'] != $group['gr_admin']) // 자신이 관리하는 그룹인가?
-            alert('자신이 관리하는 그룹의 게시판이 아니므로 수정할 수 없습니다.');
+            alert('자신이 관리하는 그룹의 게시판이 아니므로 수정할 수 없습니다.', $return_url);
         else if ($member['mb_level'] < $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
-            alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.');
+            alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.', $return_url);
     } else if ($is_admin == 'board') { // 게시판관리자이면
         $mb = get_member($write['mb_id']);
         if ($member['mb_id'] != $board['bo_admin']) // 자신이 관리하는 게시판인가?
-            alert('자신이 관리하는 게시판이 아니므로 수정할 수 없습니다.');
+            alert('자신이 관리하는 게시판이 아니므로 수정할 수 없습니다.', $return_url);
         else if ($member['mb_level'] < $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
-            alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.');
+            alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 수정할 수 없습니다.', $return_url);
     } else if ($member['mb_id']) {
         if ($member['mb_id'] != $write['mb_id'])
-            alert('자신의 글이 아니므로 수정할 수 없습니다.');
+            alert('자신의 글이 아니므로 수정할 수 없습니다.', $return_url);
     } else {
         if ($write['mb_id'])
-            alert('로그인 후 수정하세요.', './login.php?url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert('로그인 후 수정하세요.', './login.php?url='.urlencode($return_url));
     }
 
     if ($member['mb_id']) {

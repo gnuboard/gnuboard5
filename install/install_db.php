@@ -7,6 +7,7 @@ header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
+$title = "그누보드4s 설치 3단계 중 3단계 설치 완료";
 include_once ('../config.php');
 include_once ('./install.inc.php');
 
