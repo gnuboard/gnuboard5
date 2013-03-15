@@ -530,7 +530,7 @@ $pg_anchor = "<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="bo_upload_count">파일 업로드 갯수<strong class="sound_only">필수</strong></label></th>
         <td>
-            <?=help('게시물 한건당 업로드 할 수 있는 파일의 최대 개수 (0 이면 제한 없음)')?>
+            <?=help('게시물 한건당 업로드 할 수 있는 파일의 최대 개수 (0 은 파일첨부 사용하지 않음)')?>
             <input type="text" name="bo_upload_count" value="<?=$board['bo_upload_count']?>" id="bo_upload_count" required class="required numeric frm_input" size="4">
         </td>
         <td class="group_setting">
