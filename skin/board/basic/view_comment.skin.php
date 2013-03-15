@@ -195,17 +195,17 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             var cnt = parseInt(document.getElementById('char_count').innerHTML);
             if (char_min > 0 && char_min > cnt)
             {
-                alert("댓글는 "+char_min+"글자 이상 쓰셔야 합니다.");
+                alert("댓글은 "+char_min+"글자 이상 쓰셔야 합니다.");
                 return false;
             } else if (char_max > 0 && char_max < cnt)
             {
-                alert("댓글는 "+char_max+"글자 이하로 쓰셔야 합니다.");
+                alert("댓글은 "+char_max+"글자 이하로 쓰셔야 합니다.");
                 return false;
             }
         }
         else if (!document.getElementById('wr_content').value)
         {
-            alert("댓글를 입력하여 주십시오.");
+            alert("댓글을 입력하여 주십시오.");
             return false;
         }
 
