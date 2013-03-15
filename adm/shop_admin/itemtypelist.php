@@ -1,11 +1,11 @@
 <?
-$sub_menu = "400610";
-include_once("./_common.php");
+$sub_menu = '400610';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "상품유형관리";
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = '상품유형관리';
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 /*
 $sql_search = " where 1 ";
@@ -45,20 +45,20 @@ if (!$sst)  {
 }
 $sql_order = "order by $sst $sod";
 
-$sql_common = "  from $g4[yc4_item_table] ";
+$sql_common = "  from {$g4['yc4_item_table']} ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select it_id, 
+$sql  = " select it_id,
                  it_name,
                  it_type1,
                  it_type2,
@@ -82,18 +82,18 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 <input type=hidden name=sort2 value="<? echo $sort2 ?>">
 <input type=hidden name=page  value="<? echo $page ?>">
 <tr>
-    <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td width=10%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
     <td width=80% align=center>
         <select name="sca">
             <option value=''>전체분류
             <?
-            $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
+            $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
             $result1 = sql_query($sql1);
             for ($i=0; $row1=sql_fetch_array($result1); $i++) {
-                $len = strlen($row1[ca_id]) / 2 - 1;
+                $len = strlen($row1['ca_id']) / 2 - 1;
                 $nbsp = "";
                 for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-                echo "<option value='$row1[ca_id]'>$nbsp$row1[ca_name]\n";
+                echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
             }
             ?>
         </select>
@@ -106,7 +106,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         <? if ($slf) echo "<script> document.flist.slf.value = '$sfl';</script>"; ?>
 
         <input type=text name=stx value='<? echo $stx ?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -143,25 +143,25 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
     <td>수정</td>
 </tr>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
-<? 
-for ($i=0; $row=sql_fetch_array($result); $i++) 
+<?
+for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $href = "{$g4[shop_path]}/item.php?it_id=$row[it_id]";
+    $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
-    $s_mod = icon("수정", "./itemform.php?w=u&it_id=$row[it_id]&ca_id=$row[ca_id]&$qstr");
+    $s_mod = icon("수정", "./itemform.php?w=u&it_id={$row['it_id']}&ca_id={$row['ca_id']}&$qstr");
 
     $list = $i%2;
     echo "
-    <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
+    <input type='hidden' name='it_id[$i]' value='{$row['it_id']}'>
     <tr class='list$list center'>
-        <td>$row[it_id]</td> 
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
-        <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td> 
-        <td><input type=checkbox name='it_type1[$i]' value='1' ".($row[it_type1] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type2[$i]' value='1' ".($row[it_type2] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type3[$i]' value='1' ".($row[it_type3] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type4[$i]' value='1' ".($row[it_type4] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type5[$i]' value='1' ".($row[it_type5] ? 'checked' : '')."></td>
+        <td>{$row['it_id']}</td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'].'_s', 50, 50)."</a></td>
+        <td align=left><a href='$href'>".cut_str(stripslashes($row['it_name']), 60, "&#133")."</a></td>
+        <td><input type=checkbox name='it_type1[$i]' value='1' ".($row['it_type1'] ? 'checked' : '')."></td>
+        <td><input type=checkbox name='it_type2[$i]' value='1' ".($row['it_type2'] ? 'checked' : '')."></td>
+        <td><input type=checkbox name='it_type3[$i]' value='1' ".($row['it_type3'] ? 'checked' : '')."></td>
+        <td><input type=checkbox name='it_type4[$i]' value='1' ".($row['it_type4'] ? 'checked' : '')."></td>
+        <td><input type=checkbox name='it_type5[$i]' value='1' ".($row['it_type5'] ? 'checked' : '')."></td>
         <td>$s_mod</td>
     </tr>";
 }
@@ -175,7 +175,7 @@ if (!$i)
 <table width=100%>
 <tr>
     <td colspan=50%><input type=submit class=btn1 value='일괄수정' accesskey='s'></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
 </tr>
 </form>
 </table><br>
@@ -183,5 +183,5 @@ if (!$i)
 * 상품의 유형을 일괄 처리합니다.
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
