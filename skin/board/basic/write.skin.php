@@ -161,21 +161,6 @@ if ($is_admin)
 }
 ?>
 
-with (document.fwrite)
-{
-    if (typeof(wr_name) != "undefined")
-        wr_name.focus();
-    else if (typeof(wr_subject) != "undefined")
-        wr_subject.focus();
-    else if (typeof(wr_content) != "undefined")
-        wr_content.focus();
-
-    if (typeof(ca_name) != "undefined")
-        if (w.value == "u") {
-            ca_name.value = "<?=isset($write['ca_name'])?$write['ca_name']:'';?>";
-    }
-}
-
 function html_auto_br(obj)
 {
     if (obj.checked) {
