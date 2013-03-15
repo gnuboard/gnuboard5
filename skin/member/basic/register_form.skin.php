@@ -60,7 +60,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <? } ?>
 
 <tr>
-    <th scope="row"><label for="reg_mb_email">E-mail<? if ($config['cf_use_email_certify']) {?><strong class="sound_only">필수</strong><?}?></label></th>
+    <th scope="row"><label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
     <td>
         <? if ($config['cf_use_email_certify']) { ?>
         <span class="frm_info">
@@ -69,28 +69,28 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </span>
         <? } ?>
         <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
-        <input type="text" name="mb_email" value="<?=isset($member['mb_email'])?$member['mb_email']:'';?>" id="reg_mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" size="50" maxlength="100" <?=$config['cf_use_email_certify']?"required":"";?>>
+        <input type="text" name="mb_email" value="<?=isset($member['mb_email'])?$member['mb_email']:'';?>" id="reg_mb_email" required class="frm_input email required" size="50" maxlength="100">
     </td>
 </tr>
 
 <? if ($config['cf_use_homepage']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_homepage">홈페이지<? if ($config['cf_req_homepage']){?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><input type="text" name="mb_homepage" value="<?=$member['mb_homepage']?>" id="reg_mb_homepage" class="frm_input <?=$config['cf_req_homepage']?"required":"";?>" size="50" maxlength="255" <?=$config['cf_req_homepage']?"required":"";?>></td>
+    <td><input type="text" name="mb_homepage" value="<?=$member['mb_homepage']?>" id="reg_mb_homepage" <?=$config['cf_req_homepage']?"required":"";?> class="frm_input <?=$config['cf_req_homepage']?"required":"";?>" size="50" maxlength="255"></td>
 </tr>
 <? } ?>
 
 <? if ($config['cf_use_tel']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_tel">전화번호<? if ($config['cf_req_tel']) {?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><input type="text" name="mb_tel" value="<?=$member['mb_tel']?>" id="reg_mb_tel" class="frm_input <?=$config['cf_req_tel']?"required":"";?>" maxlength="20" <?=$config['cf_req_tel']?"required":"";?>></td>
+    <td><input type="text" name="mb_tel" value="<?=$member['mb_tel']?>" id="reg_mb_tel" <?=$config['cf_req_tel']?"required":"";?> class="frm_input <?=$config['cf_req_tel']?"required":"";?>" maxlength="20"></td>
 </tr>
 <? } ?>
 
 <? if ($config['cf_use_hp']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_hp">핸드폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><input type="text" name="mb_hp" value="<?=$member[mb_hp]?>" id="reg_mb_hp" class="frm_input <?=$config['cf_req_hp']?"required":"";?>"  maxlength="20" <?=$config['cf_req_hp']?"required":"";?>></td>
+    <td><input type="text" name="mb_hp" value="<?=$member[mb_hp]?>" id="reg_mb_hp" <?=$config['cf_req_hp']?"required":"";?> class="frm_input <?=$config['cf_req_hp']?"required":"";?>"  maxlength="20"></td>
 </tr>
 <? } ?>
 
@@ -103,12 +103,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <? if ($config['cf_req_addr']) {?><strong class="sound_only">필수</strong><? } ?>
     </th>
     <td>
-        <input type="text" name="mb_zip1" value="<?=$member['mb_zip1']?>" id="reg_mb_zip1" title="우편번호 앞자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?>>
+        <input type="text" name="mb_zip1" value="<?=$member['mb_zip1']?>" id="reg_mb_zip1" <?=$config['cf_req_addr']?"required":"";?> title="우편번호 앞자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3">
         -
-        <input type="text"  name="mb_zip2" value="<?=$member['mb_zip2']?>" id="reg_mb_zip2" title="우편번호 뒷자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?>>
+        <input type="text"  name="mb_zip2" value="<?=$member['mb_zip2']?>" id="reg_mb_zip2" <?=$config['cf_req_addr']?"required":"";?> title="우편번호 뒷자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3">
         <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">주소찾기</a>
-        <input type="text"  name="mb_addr1" value="<?=$member['mb_addr1']?>" id="reg_mb_addr1"  title="행정구역주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?>>
-        <input type="text" name="mb_addr2" value="<?=$member['mb_addr2']?>" id="reg_mb_addr2" title="상세주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?>>
+        <input type="text"  name="mb_addr1" value="<?=$member['mb_addr1']?>" id="reg_mb_addr1" <?=$config['cf_req_addr']?"required":"";?> title="행정구역주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50">
+        <input type="text" name="mb_addr2" value="<?=$member['mb_addr2']?>" id="reg_mb_addr2" <?=$config['cf_req_addr']?"required":"";?> title="상세주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50">
     </td>
 </tr>
 <? } ?>
@@ -119,14 +119,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <? if ($config['cf_use_signature']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_signature">서명<? if ($config['cf_req_signature']){?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><textarea name="mb_signature" id="reg_mb_signature" class="<?=$config['cf_req_signature']?"required":"";?>" <?=$config['cf_req_signature']?"required":"";?>><?=$member['mb_signature']?></textarea></td>
+    <td><textarea name="mb_signature" id="reg_mb_signature" <?=$config['cf_req_signature']?"required":"";?> class="<?=$config['cf_req_signature']?"required":"";?>"><?=$member['mb_signature']?></textarea></td>
 </tr>
 <? } ?>
 
 <? if ($config['cf_use_profile']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_profile">자기소개</label></th>
-    <td><textarea name="mb_profile" id="reg_mb_profile" class="<?=$config['cf_req_profile']?"required":"";?>" <?=$config['cf_req_profile']?"required":"";?>><?=$member['mb_profile']?></textarea></td>
+    <td><textarea name="mb_profile" id="reg_mb_profile" <?=$config['cf_req_profile']?"required":"";?> class="<?=$config['cf_req_profile']?"required":"";?>"><?=$member['mb_profile']?></textarea></td>
 </tr>
 <? } ?>
 
