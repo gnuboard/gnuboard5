@@ -48,11 +48,11 @@ if ($w == '') {
     $board['bo_download_point'] = $config['cf_download_point'];
 
     $board['bo_gallery_cols'] = 4;
-    $board['bo_gallery_width'] = 200;
-    $board['bo_gallery_height'] = 150;
-    $board['bo_mobile_gallery_cols'] = 2;
-    $board['bo_mobile_gallery_width'] = 160;
-    $board['bo_mobile_gallery_height'] = 120;
+    $board['bo_gallery_width'] = 174;
+    $board['bo_gallery_height'] = 124;
+    $board['bo_mobile_gallery_cols'] = 3;
+    $board['bo_mobile_gallery_width'] = 125;
+    $board['bo_mobile_gallery_height'] = 100;
     $board['bo_table_width'] = 100;
     $board['bo_page_rows'] = $config['cf_page_rows'];
     $board['bo_subject_len'] = 60;
