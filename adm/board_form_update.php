@@ -286,6 +286,7 @@ if (is_checked('chk_grp_content_tail'))         $grp_fields .= " , bo_content_ta
 if (is_checked('chk_grp_insert_content'))       $grp_fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_grp_use_search'))           $grp_fields .= " , bo_use_search = '{$bo_use_search}' ";
 if (is_checked('chk_grp_order'))                $grp_fields .= " , bo_order = '{$bo_order}' ";
+if (is_checked('chk_grp_show_menu'))            $grp_fields .= " , bo_show_menu = '{$bo_show_menu}' ";
 for ($i=1; $i<=10; $i++) {
     if (is_checked('chk_grp_'.$i)) {
         $grp_fields .= " , bo_{$i}_subj = '".$_POST['bo_'.$i.'_subj']."' ";
