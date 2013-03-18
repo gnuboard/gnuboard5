@@ -1,6 +1,6 @@
 <?
-$sub_menu = "400710";
-include_once("./_common.php");
+$sub_menu = '400710';
+include_once('./_common.php');
 
 if ($w == "u" || $w == "d")
     check_demo();
@@ -14,25 +14,25 @@ $sql_common = " fa_subject = '$fa_subject',
                 fa_content = '$fa_content',
                 fa_order = '$fa_order' ";
 
-if ($w == "") 
+if ($w == "")
 {
-    $sql = " insert $g4[yc4_faq_table]
+    $sql = " insert {$g4['yc4_faq_table']}
                 set fm_id ='$fm_id',
                     $sql_common ";
     sql_query($sql);
 
     $fa_id = mysql_insert_id();
-} 
-else if ($w == "u") 
+}
+else if ($w == "u")
 {
-    $sql = " update $g4[yc4_faq_table]
-                set $sql_common 
+    $sql = " update {$g4['yc4_faq_table']}
+                set $sql_common
               where fa_id = '$fa_id' ";
     sql_query($sql);
-} 
-else if ($w == "d") 
+}
+else if ($w == "d")
 {
-	$sql = " delete from $g4[yc4_faq_table] where fa_id = '$fa_id' ";
+	$sql = " delete from {$g4['yc4_faq_table']} where fa_id = '$fa_id' ";
     sql_query($sql);
 }
 

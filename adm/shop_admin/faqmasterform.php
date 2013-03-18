@@ -1,27 +1,27 @@
 <?
-$sub_menu = "400710";
-include_once("./_common.php");
+$sub_menu = '400710';
+include_once('./_common.php');
 include_once ("$g4[path]/lib/cheditor4.lib.php");
 
 auth_check($auth[$sub_menu], "w");
 
-$html_title = "FAQ";
-if ($w == "u") 
+$html_title = 'FAQ';
+if ($w == "u")
 {
-    $html_title .= " 수정";
-    $readonly = " readonly";
+    $html_title .= ' 수정';
+    $readonly = ' readonly';
 
-    $sql = " select * from $g4[yc4_faq_master_table] where fm_id = '$fm_id' ";
+    $sql = " select * from {$g4['yc4_faq_master_table']} where fm_id = '$fm_id' ";
     $fm = sql_fetch($sql);
-    if (!$fm[fm_id]) alert("등록된 자료가 없습니다.");
-} 
-else 
+    if (!$fm['fm_id']) alert('등록된 자료가 없습니다.');
+}
+else
 {
-    $html_title .= " 입력";
+    $html_title .= ' 입력';
 }
 
-$g4[title] = $html_title;
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = $html_title;
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <?=subtitle($html_title)?>
@@ -40,13 +40,13 @@ include_once ("$g4[admin_path]/admin.head.php");
 <tr class=ht>
     <td>제목</td>
     <td>
-        <input type=text class=ed name=fm_subject size=60 value='<?=get_text($fm[fm_subject]) ?>' required itemname="제목">
-        <? 
-        if ($w == 'u') 
-        { 
-            echo icon("보기", "$g4[shop_path]/faq.php?fm_id=$fm_id"); 
+        <input type=text class=ed name=fm_subject size=60 value='<?=get_text($fm['fm_subject']) ?>' required itemname="제목">
+        <?
+        if ($w == 'u')
+        {
+            echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
             echo " <a href='./faqlist.php?fm_id=$fm_id'>상세보기</a>";
-        } 
+        }
         ?>
     </td>
 </tr>
@@ -55,10 +55,10 @@ include_once ("$g4[admin_path]/admin.head.php");
     <td colspan=3>
         <input type=file class=ed name=fm_himg size=40>
         <?
-        $himg = "$g4[path]/data/faq/{$fm[fm_id]}_h";
+        $himg = G4_DATA_PATH."/faq/{$fm['fm_id']}_h";
         if (file_exists($himg)) {
             echo "<input type=checkbox name=fm_himg_del value='1'>삭제";
-            $himg_str = "<img src='$himg' border=0>";
+            $himg_str = "<img src='".G4_DATA_URL."/faq/{$fm['fm_id']}_h' border=0>";
         }
         ?>
     </td>
@@ -70,10 +70,10 @@ include_once ("$g4[admin_path]/admin.head.php");
     <td colspan=3>
         <input type=file class=ed name=fm_timg size=40>
         <?
-        $timg = "$g4[path]/data/faq/{$fm[fm_id]}_t";
+        $timg = G4_DATA_PATH."/faq/{$fm['fm_id']}_t";
         if (file_exists($timg)) {
             echo "<input type=checkbox name=fm_timg_del value='1'>삭제";
-            $timg_str = "<img src='$timg' border=0>";
+            $timg_str = "<img src='".G4_DATA_URL."/faq/{$fm['fm_id']}_t' border=0>";
         }
         ?>
     </td>
@@ -97,7 +97,7 @@ include_once ("$g4[admin_path]/admin.head.php");
 </form>
 
 <script language="javascript">
-function frmfaqmasterform_check(f) 
+function frmfaqmasterform_check(f)
 {
     <?=cheditor3('fm_head_html');?>
     <?=cheditor3('fm_tail_html');?>
@@ -107,5 +107,5 @@ document.frmfaqmasterform.fm_subject.focus();
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

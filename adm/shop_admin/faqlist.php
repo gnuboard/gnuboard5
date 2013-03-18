@@ -1,16 +1,16 @@
 <?
-$sub_menu = "400710";
-include_once("./_common.php");
+$sub_menu = '400710';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "FAQ 상세관리 : $fm[fm_subject]";
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = 'FAQ 상세관리 : '.$fm['fm_subject'];
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$sql = " select * from $g4[yc4_faq_master_table] where fm_id = '$fm_id' ";
+$sql = " select * from {$g4['yc4_faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
-$sql_common = " from $g4[yc4_faq_table] where fm_id = '$fm_id' ";
+$sql_common = " from {$g4['yc4_faq_table']} where fm_id = '$fm_id' ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -41,19 +41,19 @@ $result = sql_query($sql);
     <td>제목</td>
     <td>순서</td>
     <td>
-        <a href='./faqform.php?fm_id=<?=$fm[fm_id]?>'><img src='<?=$g4[admin_path]?>/img/icon_insert.gif' border=0></a>
-        <a href='<?="$g4[shop_path]/faq.php?fm_id=$fm[fm_id]"?>'><img src='<?=$g4[admin_path]?>/img/icon_view.gif' border=0></a>
+        <a href='./faqform.php?fm_id=<?=$fm['fm_id']?>'><img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif' border=0></a>
+        <a href='<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$fm['fm_id']?>'><img src='<?=G4_ADMIN_URL?>/img/icon_view.gif' border=0></a>
     </td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $row1 = sql_fetch(" select COUNT(*) as cnt from $g4[yc4_faq_table] where fm_id = '$row[fm_id]' ");
+    $row1 = sql_fetch(" select COUNT(*) as cnt from {$g4['yc4_faq_table']} where fm_id = '{$row['fm_id']}' ");
     $cnt = $row1[cnt];
 
-    $s_mod = icon("수정", "./faqform.php?w=u&fm_id=$row[fm_id]&fa_id=$row[fa_id]");
-    $s_del = icon("삭제", "javascript:del('./faqformupdate.php?w=d&fm_id=$row[fm_id]&fa_id=$row[fa_id]');");
+    $s_mod = icon("수정", "./faqform.php?w=u&fm_id={$row['fm_id']}&fa_id={$row['fa_id']}");
+    $s_del = icon("삭제", "javascript:del('./faqformupdate.php?w=d&fm_id={$row['fm_id']}&fa_id={$row['fa_id']}');");
 
     $num = $i + 1;
 
@@ -61,8 +61,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     echo "
     <tr class='list$list ht'>
         <td align=center>$num</td>
-        <td>" . stripslashes($row[fa_subject]) . "</td>
-        <td align=center>$row[fa_order]</td>
+        <td>" . stripslashes($row['fa_subject']) . "</td>
+        <td align=center>{$row['fa_order']}</td>
         <td align=center>$s_mod $s_del</td>
     </tr>";
 }
@@ -81,9 +81,9 @@ if ($i == 0) {
                 <tr>
                     <td style="line-height:220%;">
                         <B><FONT COLOR="#18ABFF">&middot; FAQ 질문, 답변 등록하기</FONT></B><BR>
-        
+
                         &nbsp;&nbsp;: FAQ는 무제한으로 등록할 수 있습니다.<BR>
-                        1. <img src='<?=$g4[admin_path]?>/img/icon_insert.gif' align=absmiddle>를 눌러 세부적인 질문과 답변을 입력합니다.<BR>
+                        1. <img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif' align=absmiddle>를 눌러 세부적인 질문과 답변을 입력합니다.<BR>
                     </td>
                 </tr>
             </table>
@@ -96,5 +96,5 @@ if ($i == 0) {
 
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -1,34 +1,34 @@
 <?
-$sub_menu = "400710";
-include_once("./_common.php");
+$sub_menu = '400710';
+include_once('./_common.php');
 include_once ("$g4[path]/lib/cheditor4.lib.php");
 
 auth_check($auth[$sub_menu], "w");
 
-$html_title = "FAQ 상세";
+$html_title = 'FAQ 상세';
 
-$sql = " select * from $g4[yc4_faq_master_table] where fm_id = '$fm_id' ";
+$sql = " select * from {$g4['yc4_faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
-if ($w == "u") 
+if ($w == "u")
 {
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from $g4[yc4_faq_table] where fa_id = '$fa_id' ";
+    $sql = " select * from {$g4['yc4_faq_table']} where fa_id = '$fa_id' ";
     $fa = sql_fetch($sql);
-    if (!$fa[fa_id]) alert("등록된 자료가 없습니다.");
+    if (!$fa['fa_id']) alert("등록된 자료가 없습니다.");
 
-    $fa[fa_subject] = htmlspecialchars2($fa[fa_subject]);
-    $fa[fa_content] = htmlspecialchars2($fa[fa_content]);
-} 
+    $fa['fa_subject'] = htmlspecialchars2($fa['fa_subject']);
+    $fa['fa_content'] = htmlspecialchars2($fa['fa_content']);
+}
 else
-    $html_title .= " 입력";
+    $html_title .= ' 입력';
 
-$html_title .= " : $fm[fm_subject]";
+$html_title .= ' : '.$fm['fm_subject'];
 
-$g4[title] = $html_title;
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = $html_title;
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <?=subtitle($html_title)?><p>
@@ -48,14 +48,14 @@ include_once ("$g4[admin_path]/admin.head.php");
 <tr class=ht>
     <td> 출력 순서</td>
     <td>
-        <input type=text id=fa_order name=fa_order size=10 maxlength=10 value='<?=$fa[fa_order]?>' class=ed>
+        <input type=text id=fa_order name=fa_order size=10 maxlength=10 value='<?=$fa['fa_order']?>' class=ed>
         <?=help('숫자가 작을수록 FAQ 페이지의 상단에 출력합니다.', 60, -50)?>
     </td>
 </tr>
 <tr>
-    <td> 질문        
+    <td> 질문
 		<? if ($w == 'u') {
-            echo icon("보기", "$g4[shop_path]/faq.php?fm_id=$fm_id");
+            echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
             }
         ?>
     </td>
@@ -78,7 +78,7 @@ include_once ("$g4[admin_path]/admin.head.php");
 </form>
 
 <script language="javascript">
-function frmfaqform_check(f) 
+function frmfaqform_check(f)
 {
     errmsg = "";
     errfld = "";
@@ -86,7 +86,7 @@ function frmfaqform_check(f)
     //check_field(f.fa_subject, "제목을 입력하세요.");
     //check_field(f.fa_content, "내용을 입력하세요.");
 
-    if (errmsg != "") 
+    if (errmsg != "")
     {
         alert(errmsg);
         errfld.focus();
@@ -103,5 +103,5 @@ document.getElementById('fa_order').focus();
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
