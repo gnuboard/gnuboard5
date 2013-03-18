@@ -53,7 +53,7 @@ $bo_category_list = str_replace($src_char, $dst_char, $bo_category_list);
 
 $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_subject          = '{$_POST['bo_subject']}',
-                bo_device        = '{$_POST['bo_device']}',
+                bo_device           = '{$_POST['bo_device']}',
                 bo_admin            = '{$_POST['bo_admin']}',
                 bo_list_level       = '{$_POST['bo_list_level']}',
                 bo_read_level       = '{$_POST['bo_read_level']}',
@@ -223,7 +223,7 @@ if ($w == '') {
 
 // 같은 그룹내 게시판 동일 옵션 적용
 $grp_fields = '';
-if (is_checked('chk_grp_use'))                  $grp_fields .= " , bo_use = '{$bo_use}' ";
+if (is_checked('chk_grp_device'))               $grp_fields .= " , bo_device = '{$bo_device}' ";
 if (is_checked('chk_grp_admin'))                $grp_fields .= " , bo_admin = '{$bo_admin}' ";
 if (is_checked('chk_grp_list_level'))           $grp_fields .= " , bo_list_level = '{$bo_list_level}' ";
 if (is_checked('chk_grp_read_level'))           $grp_fields .= " , bo_read_level = '{$bo_read_level}' ";
@@ -300,7 +300,7 @@ if ($grp_fields) {
 
 // 모든 게시판 동일 옵션 적용
 $all_fields = '';
-if (is_checked('chk_all_use'))                  $all_fields .= " , bo_use = '{$bo_use}' ";
+if (is_checked('chk_all_device'))               $all_fields .= " , bo_device = '{$bo_device}' ";
 if (is_checked('chk_all_admin'))                $all_fields .= " , bo_admin = '{$bo_admin}' ";
 if (is_checked('chk_all_list_level'))           $all_fields .= " , bo_list_level = '{$bo_list_level}' ";
 if (is_checked('chk_all_read_level'))           $all_fields .= " , bo_read_level = '{$bo_read_level}' ";

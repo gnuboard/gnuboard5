@@ -160,10 +160,10 @@ $pg_anchor = "<ul class=\"anchor\">
             </select>
         </td>
         <td class="group_setting">
-            <input type="checkbox" name="chk_grp_use" value="1" id="chk_grp_use">
-            <label for="chk_grp_use">그룹적용</label>
-            <input type="checkbox" name="chk_all_use" value="1" id="chk_all_use">
-            <label for="chk_all_use">전체적용</label>
+            <input type="checkbox" name="chk_grp_device" value="1" id="chk_grp_device">
+            <label for="chk_grp_device">그룹적용</label>
+            <input type="checkbox" name="chk_all_device" value="1" id="chk_all_device">
+            <label for="chk_all_device">전체적용</label>
         </td>
     </tr>
     <tr>
