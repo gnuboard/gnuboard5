@@ -1,7 +1,7 @@
 <?
-include_once("./_common.php");
-include_once("$g4[path]/lib/iteminfo.lib.php");
-include_once("$g4[path]/head.sub.php");
+include_once('./_common.php');
+include_once(G4_LIB_PATH.'/iteminfo.lib.php');
+include_once(G4_PATH.'/head.sub.php');
 
 $it_id = trim($_GET['it_id']);
 if ($_GET['gubun']) {
@@ -71,7 +71,7 @@ if ($article) {
         }
         echo "</td>\n";
         echo "</tr>\n";
-    } 
+    }
 }
 ?>
 </tbody>
@@ -104,7 +104,7 @@ $(function(){
     });
 });
 
-function fiteminfo_submit(f) 
+function fiteminfo_submit(f)
 {
     f.action = "./iteminfoupdate.php";
     return true;
@@ -112,5 +112,5 @@ function fiteminfo_submit(f)
 </script>
 
 <?
-include_once("$g4[path]/tail.sub.php");
+include_once(G4_PATH.'/tail.sub.php');
 ?>

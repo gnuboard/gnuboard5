@@ -1,6 +1,6 @@
 <?
-$sub_menu = "400300";
-include_once("./_common.php");
+$sub_menu = '400300';
+include_once('./_common.php');
 
 if ($w == "u" || $w == "d")
     check_demo();
@@ -17,22 +17,22 @@ function itemdelete($it_id)
     global $g4, $is_admin;
 
     $str = $comma = $od_id = "";
-    $sql = " select b.od_id 
-               from $g4[yc4_cart_table] a,
-                    $g4[yc4_order_table] b
+    $sql = " select b.od_id
+               from {$g4['yc4_cart_table']} a,
+                    {$g4['yc4_order_table']} b
               where a.on_uid = b.on_uid
-                and a.it_id = '$it_id' 
+                and a.it_id = '$it_id'
                 and a.ct_status != '쇼핑' ";
     $result = sql_query($sql);
     $i=0;
-    while ($row = sql_fetch_array($result)) 
+    while ($row = sql_fetch_array($result))
     {
         if (!$od_id)
-            $od_id = $row[od_id];
+            $od_id = $row['od_id'];
 
         $i++;
         if ($i % 10 == 0) $str .= "\\n";
-        $str .= "$comma$row[od_id]";
+        $str .= "$comma{$row['od_id']}";
         $comma = " , ";
     }
     if ($str)
@@ -42,49 +42,49 @@ function itemdelete($it_id)
 
 
 	// 상품 이미지 삭제
-    @unlink("$g4[path]/data/item/$it_id"."_s");
-    @unlink("$g4[path]/data/item/$it_id"."_m");
-    @unlink("$g4[path]/data/item/$it_id"."_l1");
-    @unlink("$g4[path]/data/item/$it_id"."_l2");
-    @unlink("$g4[path]/data/item/$it_id"."_l3");
-    @unlink("$g4[path]/data/item/$it_id"."_l4");
-    @unlink("$g4[path]/data/item/$it_id"."_l5");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_s");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_m");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_l1");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_l2");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_l3");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_l4");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_l5");
 
     // 상, 하단 이미지 삭제
-    @unlink("$g4[path]/data/item/$it_id"."_h");
-    @unlink("$g4[path]/data/item/$it_id"."_t");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_h");
+    @unlink(G4_DATA_PATH."/item/$it_id"."_t");
 
     // 장바구니 삭제
-	$sql = " delete from $g4[yc4_cart_table] where it_id = '$it_id' ";
+	$sql = " delete from {$g4['yc4_cart_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 이벤트삭제
-    $sql = " delete from $g4[yc4_event_item_table] where it_id = '$it_id' ";
+    $sql = " delete from {$g4['yc4_event_item_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 사용후기삭제
-    $sql = " delete from $g4[yc4_item_ps_table] where it_id = '$it_id' ";
+    $sql = " delete from {$g4['yc4_item_ps_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 상품문의삭제
-    $sql = " delete from $g4[yc4_item_qa_table] where it_id = '$it_id' ";
+    $sql = " delete from {$g4['yc4_item_qa_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 관련상품삭제
-    $sql = " delete from $g4[yc4_item_relation_table] where it_id = '$it_id' or it_id2 = '$it_id' ";
+    $sql = " delete from {$g4['yc4_item_relation_table']} where it_id = '$it_id' or it_id2 = '$it_id' ";
 	sql_query($sql);
 
     // 상품요약정보삭제
-    $sql = " delete from $g4[yc4_item_info_table] where it_id = '$it_id' ";
+    $sql = " delete from {$g4['yc4_item_info_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
 
     //------------------------------------------------------------------------
     // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
     //------------------------------------------------------------------------
-    $sql = " select * from $g4[yc4_item_table] where it_id = '$it_id' ";
+    $sql = " select * from {$g4['yc4_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
-    $s = $it[it_explan];
+    $s = $it['it_explan'];
 
     $img_file = Array();
     while($s) {
@@ -95,7 +95,7 @@ function itemdelete($it_id)
         // 결과값
         $file_path = substr($s, 0, $pos);
         if (!$file_path) break;
-        
+
         $img_file[] = $file_path;
 
         $s = substr($s, $pos, strlen($s));
@@ -103,14 +103,14 @@ function itemdelete($it_id)
 
     for($i=0;$i<count($img_file);$i++) {
         $f = $g4[path].$img_file[$i];
-        if (file_exists($f)) 
+        if (file_exists($f))
             @unlink($f);
     }
     //------------------------------------------------------------------------
 
 
     // 상품 삭제
-	$sql = " delete from $g4[yc4_item_table] where it_id = '$it_id' ";
+	$sql = " delete from {$g4['yc4_item_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 }
 
@@ -163,32 +163,32 @@ if ($cnt > 0) {
 }
 //------------------------------------------------------------------------------
 
-@mkdir("$g4[path]/data/item", 0707);
-@chmod("$g4[path]/data/item", 0707);
+@mkdir(G4_DATA_PATH."/item", 0707);
+@chmod(G4_DATA_PATH."/item", 0707);
 
-if ($it_himg_del)  @unlink("$g4[path]/data/item/{$it_id}_h");
-if ($it_timg_del)  @unlink("$g4[path]/data/item/{$it_id}_t");
+if ($it_himg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_h");
+if ($it_timg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_t");
 
-if ($it_simg_del)  @unlink("$g4[path]/data/item/{$it_id}_s");
-if ($it_mimg_del)  @unlink("$g4[path]/data/item/{$it_id}_m");
-if ($it_limg1_del) @unlink("$g4[path]/data/item/{$it_id}_l1");
-if ($it_limg2_del) @unlink("$g4[path]/data/item/{$it_id}_l2");
-if ($it_limg3_del) @unlink("$g4[path]/data/item/{$it_id}_l3");
-if ($it_limg4_del) @unlink("$g4[path]/data/item/{$it_id}_l4");
-if ($it_limg5_del) @unlink("$g4[path]/data/item/{$it_id}_l5");
+if ($it_simg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_s");
+if ($it_mimg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_m");
+if ($it_limg1_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l1");
+if ($it_limg2_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l2");
+if ($it_limg3_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l3");
+if ($it_limg4_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l4");
+if ($it_limg5_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l5");
 
 // 이미지(대)만 업로드하고 자동생성 체크일 경우 이미지(중,소) 자동생성
-if ($createimage && $_FILES[it_limg1][name])
+if ($createimage && $_FILES['it_limg1']['name'])
 {
-    upload_file($_FILES[it_limg1][tmp_name], $it_id."_l1", "$g4[path]/data/item");
+    upload_file($_FILES['it_limg1']['tmp_name'], $it_id."_l1", "$g4[path]/data/item");
 
-    $image = "$g4[path]/data/item/$it_id"."_l1";
+    $image = G4_DATA_PATH."/item/$it_id"."_l1";
     $size = getimagesize($image);
     $src = @imagecreatefromjpeg($image);
 
     if (!$src)
     {
-        echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=$g4[charset]\">";
+        echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
         echo "<script>alert('이미지(대)가 JPG 파일이 아닙니다.');</script>";
     }
     else
@@ -196,25 +196,25 @@ if ($createimage && $_FILES[it_limg1][name])
         // gd 버전에 따라
         if (function_exists("imagecopyresampled")) {
             // 이미지(소) 생성
-            $dst = imagecreatetruecolor($default[de_simg_width], $default[de_simg_height]);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $default[de_simg_width], $default[de_simg_height], $size[0], $size[1]);
+            $dst = imagecreatetruecolor($default['de_simg_width'], $default['de_simg_height']);
+            imagecopyresampled($dst, $src, 0, 0, 0, 0, $default['de_simg_width'], $default['de_simg_height'], $size[0], $size[1]);
         } else {
             // 이미지(소) 생성
-            $dst = imagecreate($default[de_simg_width], $default[de_simg_height]);
-            imagecopyresized($dst, $src, 0, 0, 0, 0, $default[de_simg_width], $default[de_simg_height], $size[0], $size[1]);
+            $dst = imagecreate($default['de_simg_width'], $default['de_simg_height']);
+            imagecopyresized($dst, $src, 0, 0, 0, 0, $default['de_simg_width'], $default['de_simg_height'], $size[0], $size[1]);
         }
-        imagejpeg($dst, "$g4[path]/data/item/$it_id"."_s", 90);
+        imagejpeg($dst, G4_DATA_PATH."/item/$it_id"."_s", 90);
 
         if (function_exists("imagecopyresampled")) {
             // 이미지(중) 생성
-            $dst = imagecreatetruecolor($default[de_mimg_width], $default[de_mimg_height]);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $default[de_mimg_width], $default[de_mimg_height], $size[0], $size[1]);
+            $dst = imagecreatetruecolor($default['de_mimg_width'], $default['de_mimg_height']);
+            imagecopyresampled($dst, $src, 0, 0, 0, 0, $default['de_mimg_width'], $default['de_mimg_height'], $size[0], $size[1]);
         } else {
             // 이미지(중) 생성
-            $dst = imagecreate($default[de_mimg_width], $default[de_mimg_height]);
-            imagecopyresized($dst, $src, 0, 0, 0, 0, $default[de_mimg_width], $default[de_mimg_height], $size[0], $size[1]);
+            $dst = imagecreate($default['de_mimg_width'], $default['de_mimg_height']);
+            imagecopyresized($dst, $src, 0, 0, 0, 0, $default['de_mimg_width'], $default['de_mimg_height'], $size[0], $size[1]);
         }
-        @imagejpeg($dst, "$g4[path]/data/item/$it_id"."_m", 90);
+        @imagejpeg($dst, G4_DATA_PATH."/item/$it_id"."_m", 90);
     }
 }
 
@@ -233,13 +233,13 @@ if ($w == "" || $w == "u")
 
 
 // 관련상품을 우선 삭제함
-sql_query(" delete from $g4[yc4_item_relation_table] where it_id = '$it_id' ");
+sql_query(" delete from {$g4['yc4_item_relation_table']} where it_id = '$it_id' ");
 
 // 관련상품의 반대도 삭제
-sql_query(" delete from $g4[yc4_item_relation_table] where it_id2 = '$it_id' ");
+sql_query(" delete from {$g4['yc4_item_relation_table']} where it_id2 = '$it_id' ");
 
 // 이벤트상품을 우선 삭제함
-sql_query(" delete from $g4[yc4_event_item_table] where it_id = '$it_id' ");
+sql_query(" delete from {$g4['yc4_event_item_table']} where it_id = '$it_id' ");
 
 
 $sql_common = " ca_id            = '$ca_id',
@@ -279,8 +279,8 @@ $sql_common = " ca_id            = '$ca_id',
                 it_stock_qty     = '$it_stock_qty',
                 it_head_html     = '$it_head_html',
                 it_tail_html     = '$it_tail_html',
-                it_time          = '$g4[time_ymdhis]',
-                it_ip            = '$_SERVER[REMOTE_ADDR]',
+                it_time          = '".G4_TIME_YMDHIS."',
+                it_ip            = '{$_SERVER['REMOTE_ADDR']}',
                 it_order         = '$it_order',
                 it_tel_inq       = '$it_tel_inq'
                 ";
@@ -291,14 +291,14 @@ if ($w == "")
         alert("상품 코드가 없으므로 상품을 추가하실 수 없습니다.");
     }
 
-    $sql = " insert $g4[yc4_item_table]
+    $sql = " insert {$g4['yc4_item_table']}
                 set it_id = '$it_id',
 					$sql_common	";
     sql_query($sql);
 }
 else if ($w == "u")
 {
-    $sql = " update $g4[yc4_item_table]
+    $sql = " update {$g4['yc4_item_table']}
                 set $sql_common
               where it_id = '$it_id' ";
     sql_query($sql);
@@ -307,13 +307,13 @@ else if ($w == "d")
 {
     if ($is_admin != 'super')
     {
-        $sql = " select it_id from $g4[yc4_item_table] a, $g4[yc4_category_table] b
+        $sql = " select it_id from {$g4['yc4_item_table']} a, {$g4['yc4_category_table']} b
                   where a.it_id = '$it_id'
                     and a.ca_id = b.ca_id
-                    and b.ca_mb_id = '$member[mb_id]' ";
+                    and b.ca_mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
-        if (!$row[it_id])
-            alert("\'{$member[mb_id]}\' 님께서 삭제 할 권한이 없는 상품입니다.");
+        if (!$row['it_id'])
+            alert("\'{$member['mb_id']}\' 님께서 삭제 할 권한이 없는 상품입니다.");
     }
 
     itemdelete($it_id);
@@ -323,17 +323,17 @@ if ($w == "" || $w == "u")
 {
     // 관련상품 등록
     $it_id2 = explode(",", $it_list);
-    for ($i=0; $i<count($it_id2); $i++) 
+    for ($i=0; $i<count($it_id2); $i++)
     {
-        if (trim($it_id2[$i])) 
+        if (trim($it_id2[$i]))
         {
-            $sql = " insert into $g4[yc4_item_relation_table]
+            $sql = " insert into {$g4['yc4_item_relation_table']}
                         set it_id  = '$it_id',
                             it_id2 = '$it_id2[$i]' ";
             sql_query($sql, false);
 
             // 관련상품의 반대로도 등록
-            $sql = " insert into $g4[yc4_item_relation_table]
+            $sql = " insert into {$g4['yc4_item_relation_table']}
                         set it_id  = '$it_id2[$i]',
                             it_id2 = '$it_id' ";
             sql_query($sql, false);
@@ -342,27 +342,27 @@ if ($w == "" || $w == "u")
 
     // 이벤트상품 등록
     $ev_id = explode(",", $ev_list);
-    for ($i=0; $i<count($ev_id); $i++) 
+    for ($i=0; $i<count($ev_id); $i++)
     {
-        if (trim($ev_id[$i])) 
+        if (trim($ev_id[$i]))
         {
-            $sql = " insert into $g4[yc4_event_item_table]
+            $sql = " insert into {$g4['yc4_event_item_table']}
                         set ev_id = '$ev_id[$i]',
                             it_id = '$it_id' ";
             sql_query($sql, false);
         }
     }
 
-    if ($_FILES[it_simg][name])  upload_file($_FILES[it_simg][tmp_name],  $it_id . "_s",  "$g4[path]/data/item");
-    if ($_FILES[it_mimg][name])  upload_file($_FILES[it_mimg][tmp_name],  $it_id . "_m",  "$g4[path]/data/item");
-    if ($_FILES[it_limg1][name]) upload_file($_FILES[it_limg1][tmp_name], $it_id . "_l1", "$g4[path]/data/item");
-    if ($_FILES[it_limg2][name]) upload_file($_FILES[it_limg2][tmp_name], $it_id . "_l2", "$g4[path]/data/item");
-    if ($_FILES[it_limg3][name]) upload_file($_FILES[it_limg3][tmp_name], $it_id . "_l3", "$g4[path]/data/item");
-    if ($_FILES[it_limg4][name]) upload_file($_FILES[it_limg4][tmp_name], $it_id . "_l4", "$g4[path]/data/item");
-    if ($_FILES[it_limg5][name]) upload_file($_FILES[it_limg5][tmp_name], $it_id . "_l5", "$g4[path]/data/item");
+    if ($_FILES['it_simg']['name'])  upload_file($_FILES['it_simg']['tmp_name'],  $it_id."_s",  G4_DATA_PATH."/item");
+    if ($_FILES['it_mimg']['name'])  upload_file($_FILES['it_mimg']['tmp_name'],  $it_id."_m",  G4_DATA_PATH."/item");
+    if ($_FILES['it_limg1']['name']) upload_file($_FILES['it_limg1']['tmp_name'], $it_id."_l1", G4_DATA_PATH."/item");
+    if ($_FILES['it_limg2']['name']) upload_file($_FILES['it_limg2']['tmp_name'], $it_id."_l2", G4_DATA_PATH."/item");
+    if ($_FILES['it_limg3']['name']) upload_file($_FILES['it_limg3']['tmp_name'], $it_id."_l3", G4_DATA_PATH."/item");
+    if ($_FILES['it_limg4']['name']) upload_file($_FILES['it_limg4']['tmp_name'], $it_id."_l4", G4_DATA_PATH."/item");
+    if ($_FILES['it_limg5']['name']) upload_file($_FILES['it_limg5']['tmp_name'], $it_id."_l5", G4_DATA_PATH."/item");
 
-    if ($_FILES[it_himg][name])  upload_file($_FILES[it_himg][tmp_name], $it_id . "_h", "$g4[path]/data/item");
-    if ($_FILES[it_timg][name])  upload_file($_FILES[it_timg][tmp_name], $it_id . "_t", "$g4[path]/data/item");
+    if ($_FILES['it_himg']['name'])  upload_file($_FILES['it_himg']['tmp_name'], $it_id."_h", G4_DATA_PATH."/item");
+    if ($_FILES['it_timg']['name'])  upload_file($_FILES['it_timg']['tmp_name'], $it_id."_t", G4_DATA_PATH."/item");
 }
 
 $qstr = "$qstr&sca=$sca&page=$page";
@@ -375,7 +375,7 @@ if ($w == "u") {
     goto_url("./itemlist.php?$qstr");
 }
 
-echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=$g4[charset]\">";
+echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
 ?>
 <script>
     if (confirm("계속 입력하시겠습니까?"))

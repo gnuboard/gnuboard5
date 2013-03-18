@@ -1,11 +1,11 @@
 <?
-$sub_menu = "400620";
-include_once("./_common.php");
+$sub_menu = '400620';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "상품재고관리";
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = '상품재고관리';
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 $sql_search = " where 1 ";
 if ($search != "") {
@@ -28,16 +28,16 @@ $sql_common .= $sql_search;
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select it_id, 
-                 it_name, 
-                 it_use, 
+$sql  = " select it_id,
+                 it_name,
+                 it_use,
                  it_stock_qty
            $sql_common
           order by $sort1 $sort2
@@ -55,18 +55,18 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <input type=hidden name=sort2 value="<? echo $sort2 ?>">
 <input type=hidden name=page  value="<? echo $page ?>">
 <tr>
-    <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td width=10%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
     <td width=80% align=center>
         <select name="sel_ca_id">
             <option value=''>전체분류
             <?
-            $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
+            $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
             $result1 = sql_query($sql1);
             for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
-                $len = strlen($row1[ca_id]) / 2 - 1;
+                $len = strlen($row1['ca_id']) / 2 - 1;
                 $nbsp = "";
                 for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-                echo "<option value='$row1[ca_id]'>$nbsp$row1[ca_name]\n";
+                echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
             }
             ?>
         </select>
@@ -79,7 +79,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
 
         <input type=text name=search value='<? echo $search ?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -117,13 +117,13 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 </tr>
 <tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
 <?
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $href = "{$g4[shop_path]}/item.php?it_id=$row[it_id]";
+    $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
     $sql1 = " select SUM(ct_qty) as sum_qty
-                from $g4[yc4_cart_table]
-               where it_id = '$row[it_id]'
+                from {$g4['yc4_cart_table']}
+               where it_id = '{$row['it_id']}'
                  and ct_stock_use = '0'
                  and ct_status in ('주문', '준비') ";
     $row1 = sql_fetch($sql1);
@@ -132,20 +132,20 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     // 가재고 (미래재고)
     $temporary_qty = $row['it_stock_qty'] - $wait_qty;
 
-    $s_mod = icon("수정", "./itemform.php?w=u&it_id=$row[it_id]&ca_id=$row[ca_id]&$qstr");
+    $s_mod = icon("수정", "./itemform.php?w=u&it_id={$row['it_id']}&ca_id={$row['ca_id']}&$qstr");
 
     $list = $i%2;
     echo "
-    <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
+    <input type='hidden' name='it_id[$i]' value='{$row['it_id']}'>
     <tr class='list$list center'>
-        <td>$row[it_id]</td> 
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
-        <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td> 
-        <td align=right>".number_format($row[it_stock_qty])."</td>
+        <td>{$row['it_id']}</td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'].'_s', 50, 50)."</a></td>
+        <td align=left><a href='$href'>".cut_str(stripslashes($row['it_name']), 60, "&#133")."</a></td>
+        <td align=right>".number_format($row['it_stock_qty'])."</td>
         <td align=right>".number_format($wait_qty)."</td>
         <td align=right>".number_format($temporary_qty)."</td>
-        <td align=right><input type='text' name='it_stock_qty[$i]' value='$row[it_stock_qty]' class=ed size=10 style='text-align:right;' autocomplete='off'></td>
-        <td><input type=checkbox name='it_use[$i]' value='1' ".($row[it_use] ? "checked" : "")."></td>
+        <td align=right><input type='text' name='it_stock_qty[$i]' value='{$row['it_stock_qty']}' class=ed size=10 style='text-align:right;' autocomplete='off'></td>
+        <td><input type=checkbox name='it_use[$i]' value='1' ".($row['it_use'] ? "checked" : "")."></td>
         <td>$s_mod</td>
     </tr><tr>";
 }
@@ -159,7 +159,7 @@ if (!$i)
 <table width=100%>
 <tr>
     <td colspan=50%><input type=submit class=btn1 value='일괄수정' accesskey='s'></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
 </tr>
 </form>
 </table><br>
@@ -169,5 +169,5 @@ if (!$i)
 * 재고수정의 수량은 창고재고를 수정하는것입니다.
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
