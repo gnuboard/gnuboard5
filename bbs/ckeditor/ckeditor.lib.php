@@ -8,7 +8,8 @@ function editor_html($id, $content, $ckeditor=true, $class="")
 
     $html = "";
     $html .= "<span class=\"sound_only\">웹에디터 시작</span>";
-    $html .= '<script>document.write("<div class=\'cke_sc\'><button type=\'button\' class=\'btn_cke_sc\'>단축키 일람</button></div>");</script>';
+    if ($ckeditor)
+        $html .= '<script>document.write("<div class=\'cke_sc\'><button type=\'button\' class=\'btn_cke_sc\'>단축키 일람</button></div>");</script>';
 
     if ($js) {
         $html .= "\n".'<script src="'.G4_CKEDITOR_URL.'/ckeditor.js"></script>';
