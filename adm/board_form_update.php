@@ -109,6 +109,7 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_reply_order      = '{$_POST['bo_reply_order']}',
                 bo_use_search       = '{$_POST['bo_use_search']}',
                 bo_order            = '{$_POST['bo_order']}',
+                bo_show_menu        = '{$_POST['bo_show_menu']}',
                 bo_write_min        = '{$_POST['bo_write_min']}',
                 bo_write_max        = '{$_POST['bo_write_max']}',
                 bo_comment_min      = '{$_POST['bo_comment_min']}',
@@ -362,6 +363,7 @@ if (is_checked('chk_all_content_tail'))         $all_fields .= " , bo_content_ta
 if (is_checked('chk_all_insert_content'))       $all_fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_all_use_search'))           $all_fields .= " , bo_use_search = '{$bo_use_search}' ";
 if (is_checked('chk_all_order'))                $all_fields .= " , bo_order = '{$bo_order}' ";
+if (is_checked('chk_all_show_menu'))            $all_fields .= " , bo_show_menu = '{$bo_show_menu}' ";
 for ($i=1; $i<=10; $i++) {
     if (is_checked('chk_all_'.$i)) {
         $all_fields .= " , bo_{$i}_subj = '".$_POST['bo_'.$i.'_subj']."' ";
