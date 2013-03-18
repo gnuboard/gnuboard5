@@ -72,13 +72,10 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                         <strong style="width:<?=$board['bo_gallery_width']?>px;height:<?=$board['bo_gallery_height']?>px">공지</strong>
                     <?
                     } else {
-                        $file = get_list_file($bo_table, $list[$i]['wr_id']);
+                        $thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height']);
 
-                        $filepath = G4_DATA_PATH.'/file/'.$bo_table;
-                        if(preg_match("/\.({$config['cf_image_extension']})$/i", $file['bf_file']) && is_file($filepath.'/'.$file['bf_file'])) {
-                            $thumb = get_list_thumbnail($file['bf_file'], $filepath, $board['bo_gallery_width'], $board['bo_gallery_height']);
-                            $imgsrc = G4_DATA_URL.'/file/'.$bo_table.'/'.$thumb;
-                            $img_content = '<img src="'.$imgsrc.'" alt="'.$file['bf_content'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
+                        if($thumb['src']) {
+                            $img_content = '<img src="'.$thumb['src'].'" alt="'.$thumb['alt'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
                         } else {
                             $img_content = '<span style="width:'.$board['bo_gallery_width'].'px;height:'.$board['bo_gallery_height'].'px">no image</span>';
                         }

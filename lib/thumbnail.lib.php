@@ -9,9 +9,62 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
 }
 
 // 게시글리스트 썸네일 생성
-function get_list_thumbnail($filename, $filepath, $thumb_width, $thumb_height, $is_create=false, $is_crop=true)
+function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=true)
 {
-    return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create, $is_crop);
+    global $g4, $config;
+    $filename = $alt = "";
+    $edt = false;
+
+    $sql = " select bf_file, bf_content from {$g4['board_file_table']}
+                where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_type between '1' and '3' order by bf_no limit 0, 1 ";
+    $row = sql_fetch($sql);
+
+    if($row['bf_file']) {
+        $filename = $row['bf_file'];
+        $filepath = G4_DATA_PATH.'/file/'.$bo_table;
+        $src_url = G4_DATA_URL.'/file/'.$bo_table;
+        $alt = get_text($row['bf_content']);
+    } else {
+        $write_table = $g4['write_prefix'].$bo_table;
+        $sql = " select wr_content from $write_table where wr_id = '$wr_id' ";
+        $write = sql_fetch($sql);
+        $matchs = get_editor_image($write['wr_content']);
+        $edt = true;
+
+        for($i=0; $i<count($matchs[1]); $i++)
+        {
+            // 이미지 path 구함
+            $imgurl = parse_url($matchs[1][$i]);
+            $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
+            $src_url = $matchs[1][$i];
+
+            if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
+                $filename = basename($srcfile);
+                $filepath = dirname($srcfile);
+
+                break;
+            }
+        }
+    }
+
+    if(!$filename)
+        return false;
+
+    $tname = thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create, $is_crop);
+
+    if($tname) {
+        if($edt) {
+            $src = str_replace($filename, $tname, $src_url);
+        } else {
+            $src = $src_url.'/'.$tname;
+        }
+    } else {
+        return false;
+    }
+
+    $thumb = array("src"=>$src, "alt"=>$alt);
+
+    return $thumb;
 }
 
 // 게시글보기 썸네일 생성

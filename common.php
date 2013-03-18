@@ -71,7 +71,8 @@ function g4_path()
 {
     $path           = dirname(__FILE__);                                        // 예) /home/sir/www/g4s
     $linux_dir      = str_replace("\\", "/", $path);                            // 예) /home/sir/www/g4s
-    $document_root  = str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']);        // 예) /home/sir/www
+    //$document_root  = str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']);        // 예) /home/sir/www
+	$document_root  = str_replace("\\", "/", realpath($_SERVER['DOCUMENT_ROOT']));
     $base_dir       = preg_replace('#^'.$document_root.'#i', '', $linux_dir);   // 예) /g4s
     $port           = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
     $http           = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
