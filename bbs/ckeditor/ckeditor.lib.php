@@ -20,8 +20,10 @@ function editor_html($id, $content, $ckeditor=true, $class="")
             $(".btn_cke_sc").click(function(){
                 if ($(this).next("div.cke_sc_def").length) {
                     $(this).next("div.cke_sc_def").remove();
+                    $(this).text("단축키 일람");
                 } else {
                     $(this).after("<div class=\'cke_sc_def\' />").next("div.cke_sc_def").load("'.G4_CKEDITOR_URL.'/shortcut.html");
+                    $(this).text("단축키 일람 닫기");
                 }
             });
             $(".btn_cke_sc_close").live("click",function(){
