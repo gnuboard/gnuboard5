@@ -1,11 +1,11 @@
 <?
-$sub_menu = "400640";
-include_once("./_common.php");
+$sub_menu = '400640';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "이벤트일괄처리";
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = '이벤트일괄처리';
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 $where = " where ";
 $sql_search = "";
@@ -24,16 +24,16 @@ if ($sel_field == "")  {
     $sel_field = "it_name";
 }
 
-$sql_common = " from $g4[yc4_item_table] a
-                left join $g4[yc4_event_item_table] b on (a.it_id=b.it_id and b.ev_id='$ev_id') ";
+$sql_common = " from {$g4['yc4_item_table']} a
+                left join {$g4['yc4_event_item_table']} b on (a.it_id=b.it_id and b.ev_id='$ev_id') ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -61,16 +61,16 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <table width=100% cellpadding=4 cellspacing=0>
 <input type=hidden name=page value="<? echo $page ?>">
 <tr>
-    <td width=10%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td width=10%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
     <td width=20% align=center>
 	    <?
         // 이벤트 옵션처리
         $event_option = "<option value=''>이벤트를 선택하세요";
-        $sql1 = " select ev_id, ev_subject from $g4[yc4_event_table] order by ev_id desc ";
+        $sql1 = " select ev_id, ev_subject from {$g4['yc4_event_table']} order by ev_id desc ";
         $result1 = sql_query($sql1);
-        while ($row1=mysql_fetch_array($result1)) 
-            $event_option .= "<option value='$row1[ev_id]'>".conv_subject($row1[ev_subject], 20,"…");
-        
+        while ($row1=mysql_fetch_array($result1))
+            $event_option .= "<option value='{$row1['ev_id']}'>".conv_subject($row1['ev_subject'], 20,"…");
+
         echo "<select name='ev_id' onchange='this.form.submit();'>$event_option</select>";
         if ($ev_id)
             echo "<script> document.flist.ev_id.value = '$ev_id'; </script>";
@@ -80,14 +80,14 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <select name="sel_ca_id">
         <option value=''>전체분류
         <?
-        $sql1 = " select ca_id, ca_name from $g4[yc4_category_table] order by ca_id ";
+        $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
-        for ($i=0; $row1=mysql_fetch_array($result1); $i++) 
+        for ($i=0; $row1=mysql_fetch_array($result1); $i++)
         {
-            $len = strlen($row1[ca_id]) / 2 - 1;
+            $len = strlen($row1['ca_id']) / 2 - 1;
             $nbsp = "";
             for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-            echo "<option value='$row1[ca_id]'>$nbsp$row1[ca_name]\n";
+            echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
         }
         ?>
         </select>
@@ -100,7 +100,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
 
         <input type=text name=search value='<? echo $search ?>' size=10>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -129,23 +129,23 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 <?
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $href = "{$g4[shop_path]}/item.php?it_id=$row[it_id]";
+    $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
-    $sql = " select ev_id from $g4[yc4_event_item_table]
-              where it_id = '$row[it_id]'
+    $sql = " select ev_id from {$g4['yc4_event_item_table']}
+              where it_id = '{$row['it_id']}'
                 and ev_id = '$ev_id' ";
     $ev = sql_fetch($sql);
 
     $list = $i%2;
     echo "
-    <input type='hidden' name='it_id[$i]' value='$row[it_id]'>
+    <input type='hidden' name='it_id[$i]' value='{$row['it_id']}'>
     <tr class='list$list center'>
-        <td><input type=checkbox name='ev_chk[$i]' ".($row[ev_id] ? "checked" : "")." value='1'></td>
-        <td><a href='$href'>$row[it_id]</a></td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row[it_id]}_s", 50, 50)."</a></td>
-        <td align=left><a href='$href'>".cut_str(stripslashes($row[it_name]), 60, "&#133")."</a></td> 
+        <td><input type=checkbox name='ev_chk[$i]' ".($row['ev_id'] ? "checked" : "")." value='1'></td>
+        <td><a href='$href'>{$row['it_id']}</a></td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image("{$row['it_id']}_s", 50, 50)."</a></td>
+        <td align=left><a href='$href'>".cut_str(stripslashes($row['it_name']), 60, "&#133")."</a></td>
     </tr>";
 }
 
@@ -158,7 +158,7 @@ if ($i == 0)
 <table width=100%>
 <tr>
     <td colspan=50%><input type=submit class=btn1 value='일괄수정' accesskey='s'></td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
 </tr>
 </form>
 </table><br>
@@ -168,7 +168,7 @@ if ($i == 0)
 <script language="JavaScript">
 function fitemeventlistupdatecheck(f)
 {
-    if (!f.ev_id.value) 
+    if (!f.ev_id.value)
     {
         alert('이벤트를 선택하세요');
         document.flist.ev_id.focus();
@@ -180,5 +180,5 @@ function fitemeventlistupdatecheck(f)
 </script>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
