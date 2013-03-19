@@ -20,7 +20,7 @@ ob_start();
 $lt = "[[";
 $gt = "]]";
 
-$sql =" select * from $g4[yc4_item_table] where it_use = '1' order by ca_id";
+$sql =" select * from {$g4['yc4_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -40,9 +40,7 @@ $content = ob_get_contents();
 ob_end_clean();
 
 // 100124 : 옥션에서는 아직 utf-8 을 지원하지 않고 있음
-if (strtolower($g4[charset]) == 'utf-8') {
-    $content = iconv('utf-8', 'euc-kr', $content);
-}
+$content = iconv('utf-8', 'euc-kr', $content);
 
 echo $content;
 ?>

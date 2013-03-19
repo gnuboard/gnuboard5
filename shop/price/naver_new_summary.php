@@ -21,16 +21,16 @@ Field   Status  Notes
 $lt = "<<<";
 $gt = ">>>";
 
-$time = date("Y-m-d 00:00:00", $g4[server_time] - 86400);
-$sql =" select * from $g4[yc4_item_table] where it_use = '1' and it_time >= '$time' order by ca_id";
+$time = date("Y-m-d 00:00:00", G4_SERVER_TIME - 86400);
+$sql =" select * from {$g4['yc4_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $stock_qty = get_it_stock_qty($row[it_id]);
+    $stock_qty = get_it_stock_qty($row['it_id']);
 
     echo "{$lt}begin{$gt}\n";
-    echo "{$lt}mapid{$gt}$row[it_id]\n";
+    echo "{$lt}mapid{$gt}{$row['it_id']}\n";
     if ($stock_qty <= 0)
     {
         // 품절 상품 양식
@@ -39,11 +39,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     else
     {
         // 업데이트 상품 양식 & 품절 복구 상품 양식
-        echo "{$lt}pname{$gt}$row[it_name]\n";
-        echo "{$lt}price{$gt}$row[it_amount]\n";
+        echo "{$lt}pname{$gt}{$row['it_name']}\n";
+        echo "{$lt}price{$gt}{$row['it_amount']}\n";
         echo "{$lt}class{$gt}U\n";
     }
-    echo "{$lt}utime{$gt}$row[it_time]\n";
+    echo "{$lt}utime{$gt}{$row['it_time']}\n";
     echo "{$lt}ftend{$gt}\n";
 }
 
@@ -51,9 +51,7 @@ $content = ob_get_contents();
 ob_end_clean();
 
 // 091223 : 네이버에서는 아직 utf-8 을 지원하지 않고 있음
-if (strtolower($g4[charset]) == 'utf-8') {
-    $content = iconv('utf-8', 'euc-kr', $content);
-}
+$content = iconv('utf-8', 'euc-kr', $content);
 
 echo $content;
 ?>

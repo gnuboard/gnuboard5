@@ -35,11 +35,11 @@ function it_image($img)
 {
     global $g4;
 
-    $tmp = "$g4[path]/data/item/$img";
+    $tmp = G4_DATA_PATH."/item/$img";
     if (file_exists($tmp) && $img) {
-        $str = "$g4[url]/data/item/$img";
+        $str = G4_DATA_URL."/item/$img";
     } else {
-        $str = "$g4[shop_url]/img/no_image.gif";
+        $str = G4_SHOP_URL."/img/no_image.gif";
     }
     return $str;
 }
@@ -49,16 +49,16 @@ include_once("./_common.php");
 // 페이지당 행수
 $page_rows = 100;
 
-$sql = " select count(*) as cnt from $g4[yc4_item_table] where it_use = '1' ";
+$sql = " select count(*) as cnt from {$g4['yc4_item_table']} where it_use = '1' ";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 ?>
 <html>
 <title>마이마진 엔진페이지</title>
 <head>
-<meta http-equiv="Cache-Control" content="no-cache"/> 
-<meta http-equiv="Expires" content="0"/> 
-<meta http-equiv="Pragma" content="no-cache"/> 
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<meta http-equiv="Pragma" content="no-cache"/>
 <style type="text/css">
 <!--
 body, td {font-family:굴림; font-size:10pt;}
@@ -86,38 +86,38 @@ if ($page == "") $page = 1;
 // 시작 레코드 구함
 $from_record = ($page - 1) * $page_rows;
 
-$sql = " select * from $g4[yc4_item_table]
+$sql = " select * from {$g4['yc4_item_table']}
           where it_use = '1'
-          order by ca_id 
+          order by ca_id
           limit $from_record, $page_rows ";
 $result = sql_query($sql);
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $image = it_image("$row[it_id]_m");
+    $image = it_image($row['it_id'].'_m');
 
     $num = (($page - 1) * $page_rows) + $i;
 
     $category = $bar = "";
-    $len = strlen($row[ca_id]) / 2;
-    for ($k=1; $k<=$len; $k++) 
+    $len = strlen($row['ca_id']) / 2;
+    for ($k=1; $k<=$len; $k++)
     {
-        $code = substr($row[ca_id],0,$k*2);
+        $code = substr($row['ca_id'],0,$k*2);
 
-        $sql3 = " select ca_name from $g4[yc4_category_table] where ca_id = '$code' ";
+        $sql3 = " select ca_name from {$g4['yc4_category_table']} where ca_id = '$code' ";
         $row3 = sql_fetch($sql3);
 
-        $category .= $bar . $row3[ca_name];
+        $category .= $bar . $row3['ca_name'];
         $bar = "/";
     }
 
     echo "
 	<tr>
 		<td>$num</td>
-		<td>$row[it_id]</td>
-		<td><a href='{$g4[shop_url]}/item.php?it_id=$row[it_id]'>$row[it_name]</a></td>
-		<td>$row[it_amount]</td>
+		<td>{$row['it_id']}</td>
+		<td><a href='".G4_SHOP_URL."/item.php?it_id={$row['it_id']}'>{$row['it_name']}</a></td>
+		<td>{$row['it_amount']}</td>
 		<td>$category</td>
-		<td>$row[it_maker]</td>
+		<td>{$row['it_maker']}</td>
 		<td>$image</td>
 	</tr>
         ";

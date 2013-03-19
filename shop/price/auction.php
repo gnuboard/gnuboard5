@@ -47,43 +47,43 @@ $lt = "[[";
 $gt = "]]";
 
 // 배송비
-if ($default[de_send_cost_case] == '없음')
+if ($default['de_send_cost_case'] == '없음')
     $delivery = 0;
 else
 {
     // 배송비 상한일 경우 제일 앞에 배송비 얼마 금액 이하
-    $tmp = explode(';', $default[de_send_cost_limit]);
+    $tmp = explode(';', $default['de_send_cost_limit']);
     $delivery_limit = (int)$tmp[0];
 
     // 배송비 상한일 경우 제일 앞에 배송비
-    $tmp = explode(';', $default[de_send_cost_list]);
+    $tmp = explode(';', $default['de_send_cost_list']);
     $delivery = (int)$tmp[0];
 }
 
-$sql =" select * from $g4[yc4_item_table] where it_use = '1' order by ca_id";
+$sql =" select * from {$g4['yc4_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,2)."' ");
-    $ca_name1 = $row2[ca_name];
+    $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
+    $ca_name1 = $row2['ca_name'];
 
-    if (strlen($row[ca_id]) >= 4) {
-        $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,4)."' ");
-        $ca_name2 = $row2[ca_name];
+    if (strlen($row['ca_id']) >= 4) {
+        $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
+        $ca_name2 = $row2['ca_name'];
     }
 
-    if (strlen($row[ca_id]) >= 6) {
-        $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,6)."' ");
-        $ca_name3 = $row2[ca_name];
+    if (strlen($row['ca_id']) >= 6) {
+        $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,6)."' ");
+        $ca_name3 = $row2['ca_name'];
     }
 
-    if (strlen($row[ca_id]) >= 8) {
-        $row2 = sql_fetch(" select ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,8)."' ");
-        $ca_name4 = $row2[ca_name];
+    if (strlen($row['ca_id']) >= 8) {
+        $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,8)."' ");
+        $ca_name4 = $row2['ca_name'];
     }
 
-    $PRDATE = substr($row[it_time], 0, 10);
+    $PRDATE = substr($row['it_time'], 0, 10);
 
 echo <<< HEREDOC
 {$lt}_BEGIN{$gt}
@@ -117,9 +117,7 @@ $content = ob_get_contents();
 ob_end_clean();
 
 // 100124 : 옥션에서는 아직 utf-8 을 지원하지 않고 있음
-if (strtolower($g4[charset]) == 'utf-8') {
-    $content = iconv('utf-8', 'euc-kr', $content);
-}
+$content = iconv('utf-8', 'euc-kr', $content);
 
 echo $content;
 ?>

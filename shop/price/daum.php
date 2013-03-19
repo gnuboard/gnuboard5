@@ -1,7 +1,7 @@
 <?
 include_once("./_common.php");
 
-header("Content-Type: text/html; charset=$g4[charset]");
+header("Content-Type: text/html; charset=utf-8");
 
 /*
 	 구분 태그명	내용	설명	크기
@@ -10,7 +10,7 @@ header("Content-Type: text/html; charset=$g4[charset]");
 3	<<<price>>>	    가격	상품 가격 	필수,number
 4	<<<pname>>>	    상품명	상품명	필수,varchar(500)
 5	<<<pgurl>>>	    상품링크	해당 상품으로 갈 상품URL	필수,varchar(255)
-6	<<<igurl>>>	    이미지링크	상품이미지 링크 
+6	<<<igurl>>>	    이미지링크	상품이미지 링크
                     (상품이미지 중 제일 큰이미지링크)	필수,varchar(255)
 7	<<<cate1>>>     대분류ID	대분류 코드	필수,varchar(20)
 8	<<<cate2>>>     중분류ID	중분류 코드	varchar(20)
@@ -41,11 +41,11 @@ header("Content-Type: text/html; charset=$g4[charset]");
                     0개월 일 때에는 값을 제거	varchar(255)
 23	<<<point>>>	    적립금/포인트	텍스트정보
                     0일 때에는 값을 제거	varchar(255)
-24	<<<deliv>>>	    배송비	무료일 때는 0 
+24	<<<deliv>>>	    배송비	무료일 때는 0
                     유료일 때는 1
                     조건부무료일 때는 2 로 표기	number
 25	<<<deliv2>>>	배송비 조건	유료(deliv필드 코드1번) or
-                    조건부무료(deliv필드 코드2번) 
+                    조건부무료(deliv필드 코드2번)
                     인 경우에 상세 조건 표기
                     ex)3만원미만무료 or 2500원	varchar(20)
 26	<<<review>>>	상품평수	상품의 상품평개수가 몇 개인지 숫자만 표기	number
@@ -66,59 +66,59 @@ $lt = "<<<";
 $gt = ">>>";
 
 // 배송비
-if ($default[de_send_cost_case] == '없음') {
+if ($default['de_send_cost_case'] == '없음') {
     $deliv  = 0;
     $deliv2 = "";
 }
 else {
     $deliv = 1;
     // 배송비 상한일 경우 제일 앞에 배송비
-    $send_cost_limit = explode(";", $default[de_send_cost_limit]);
-    $send_cost_list  = explode(";", $default[de_send_cost_list]);
+    $send_cost_limit = explode(";", $default['de_send_cost_limit']);
+    $send_cost_list  = explode(";", $default['de_send_cost_list']);
     $cost_limit = (int)$send_cost_limit[0];
     $deliv2  = (int)$send_cost_list[0]."원";
 }
 
-$sql =" select * from $g4[yc4_item_table] where it_use = '1' order by ca_id";
+$sql =" select * from {$g4['yc4_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $cate1 = $cate2 = $cate3 = $cate4 = "";
 
-    $row2 = sql_fetch(" select ca_id, ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,2)."' ");
-    $cate1     = $row2[ca_id];
-    $catename1 = $row2[ca_name];
+    $row2 = sql_fetch(" select ca_id, ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
+    $cate1     = $row2['ca_id'];
+    $catename1 = $row2['ca_name'];
 
     $cate2 = $cate3 = $cate4 = "";
     $catename2 = $catename3 = $catename4 = "";
 
-    if (strlen($row[ca_id]) >= 8) {
-        $row2 = sql_fetch(" select ca_id, ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,8)."' ");
-        $cate4     = $row2[ca_id];
-        $catename4 = $row2[ca_name];
+    if (strlen($row['ca_id']) >= 8) {
+        $row2 = sql_fetch(" select ca_id, ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,8)."' ");
+        $cate4     = $row2['ca_id'];
+        $catename4 = $row2['ca_name'];
     }
 
-    if (strlen($row[ca_id]) >= 6) {
-        $row2 = sql_fetch(" select ca_id, ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,6)."' ");
-        $cate3     = $row2[ca_id];
-        $catename3 = $row2[ca_name];
+    if (strlen($row['ca_id']) >= 6) {
+        $row2 = sql_fetch(" select ca_id, ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,6)."' ");
+        $cate3     = $row2['ca_id'];
+        $catename3 = $row2['ca_name'];
     }
 
-    if (strlen($row[ca_id]) >= 4) {
-        $row2 = sql_fetch(" select ca_id, ca_name from $g4[yc4_category_table] where ca_id = '".substr($row[ca_id],0,4)."' ");
-        $cate2     = $row2[ca_id];
-        $catename2 = $row2[ca_name];
+    if (strlen($row['ca_id']) >= 4) {
+        $row2 = sql_fetch(" select ca_id, ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
+        $cate2     = $row2['ca_id'];
+        $catename2 = $row2['ca_name'];
     }
 
     // 배송비 상한가 미만이면 배송비 적용
     $delivery = 0;
-    if ($row[it_amount] < $cost_limit) {
+    if ($row['it_amount'] < $cost_limit) {
         $delivery = $send_cost;
     }
 
-    $pdate = date("Ymd", strtotime($row[it_time]));
-    $point = ($row[it_point] <= 0) ? "" : (int)$row[it_point];
+    $pdate = date("Ymd", strtotime($row['it_time']));
+    $point = ($row['it_point'] <= 0) ? "" : (int)$row['it_point'];
 
     echo <<< HEREDOC
 {$lt}begin{$gt}
