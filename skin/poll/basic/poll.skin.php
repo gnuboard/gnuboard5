@@ -44,7 +44,7 @@ function fpoll_submit(f)
         return false;
     }
 
-    win_poll();
+    win_poll(f.action);
     return true;
 }
 
