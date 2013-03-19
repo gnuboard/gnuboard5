@@ -112,7 +112,7 @@ $result = sql_query($sql);
 <p>
 <table width=100% cellpadding=0 cellspacing=0>
 	<tr>
-        <td><?=subtitle("주문상품")?></td>
+        <td><?//=subtitle("주문상품")?></td>
         <td align=right>
         <? if ($default['de_hope_date_use']) { ?>
             희망배송일은
@@ -215,7 +215,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <br>
 <br>
 
-<?=subtitle("주문결제")?>
+<?//=subtitle("주문결제")?>
 
 <?
 // 주문금액 = 상품구입금액 + 배송비
@@ -278,7 +278,7 @@ if ($od['od_receipt_point'] > 0)
 <tr>
     <td width=49% valign=top>
 
-        <?=subtitle("결제상세정보")?>
+        <?//=subtitle("결제상세정보")?>
         <table width=100% cellpadding=0 cellspacing=0 border=0>
         <colgroup width=110>
         <colgroup width='' bgcolor=#ffffff>
@@ -436,7 +436,7 @@ if ($od['od_receipt_point'] > 0)
     <td width=1%> </td>
     <td width=50% valign=top align=center>
 
-        <?=subtitle("결제상세정보 수정")?>
+        <?//=subtitle("결제상세정보 수정")?>
         <table width=100% cellpadding=0 cellspacing=0 border=0>
         <colgroup width=110>
         <colgroup width='' bgcolor=#ffffff>
@@ -648,7 +648,7 @@ if ($od['od_receipt_point'] > 0)
 </table>
 </form>
 
-<?=subtitle("상점메모")?>
+<?//=subtitle("상점메모")?>
 <form name=frmorderform2 method=post action="./orderformupdate.php" style="margin:0px;">
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <input type=hidden name=od_id     value="<?=$od_id?>">
@@ -669,7 +669,7 @@ if ($od['od_receipt_point'] > 0)
 </tr>
 </table>
 
-<p><?=subtitle("주소정보")?>
+<p><?//=subtitle("주소정보")?>
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <tr>
     <td width=49% valign=top bgcolor=#ffffff>

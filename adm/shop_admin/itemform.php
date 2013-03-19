@@ -99,7 +99,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <?=cheditor1('it_tail_html', '100%', '150');?>
 
 <form name=fitemform method=post action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" enctype="MULTIPART/FORM-DATA" autocomplete="off" style="margin:0px;">
-<?=subtitle("기본정보")?>
+<?//=subtitle("기본정보")?>
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <input type=hidden name=codedup     value="<?=$default['de_code_dup_use']?>">
 <input type=hidden name=w           value="<?=$w?>">
@@ -345,7 +345,7 @@ if ($ii) {
 </table>
 
 <p>
-<?=subtitle("이미지")?>
+<?//=subtitle("이미지")?>
 <table width=100% cellpadding=0 cellspacing=0>
 <colgroup width=15%></colgroup>
 <colgroup width=85% bgcolor=#FFFFFF></colgroup>
@@ -427,7 +427,7 @@ if ($ii) {
     <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemlist.php?<?=$qstr?>';">
 
 <p>
-<?=subtitle("선택정보")?>
+<?//=subtitle("선택정보")?>
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <colgroup width=14%></colgroup>
 <colgroup width=35% bgcolor=#FFFFFF></colgroup>

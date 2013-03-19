@@ -1,20 +1,20 @@
 <?
-$sub_menu = "400500";
-include_once("./_common.php");
+$sub_menu = '400500';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "배송일괄처리";
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = '배송일괄처리';
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 //sql_query(" update $g4[yc4_cart_table] set ct_status = '완료' where ct_status = '배송' ");
 
 // 배송회사리스트 ---------------------------------------------
 $delivery_options = "";
-$sql = " select * from $g4[yc4_delivery_table] order by dl_order ";
+$sql = " select * from {$g4['yc4_delivery_table']} order by dl_order ";
 $result = sql_query($sql);
 for($i=0; $row=sql_fetch_array($result); $i++) {
-    $delivery_options .= "<option value='$row[dl_id]'>$row[dl_company]";
+    $delivery_options .= "<option value='{$row['dl_id']}'>{$row['dl_company']}";
 }
 // 배송회사리스트 end ---------------------------------------------
 
@@ -33,8 +33,8 @@ if ($sel_ca_id != "") {
 
 if ($sel_field == "")  $sel_field = "od_id";
 
-$sql_common = " from $g4[yc4_order_table] a
-                left join $g4[yc4_cart_table] b on (a.on_uid=b.on_uid)
+$sql_common = " from {$g4['yc4_order_table']} a
+                left join {$g4['yc4_cart_table']} b on (a.on_uid=b.on_uid)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -45,10 +45,10 @@ if ($chk_misu) {
 }
 else {
     $row = sql_fetch("select count(od_id) as cnt from {$g4['yc4_order_table']} $sql_search ");
-    $total_count = $row[cnt];
+    $total_count = $row['cnt'];
 }
 
-$rows = $config[cf_page_rows];
+$rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
@@ -76,7 +76,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <input type=hidden name=page value="<?=$page?>">
 <table width=100% cellpadding=4 cellspacing=0>
 <tr>
-    <td width=20%><a href='<?=$_SERVER[PHP_SELF]?>'>처음</a></td>
+    <td width=20%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
     <td width=60% align=center>
         <label><input type="checkbox" name="chk_misu" value="1" <?=$chk_misu?"checked='checked'":"";?> /> 미수금없음</label>
         &nbsp;&nbsp;
@@ -88,7 +88,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
 
         <input type=text name=search value='<? echo $search ?>'>
-        <input type=image src='<?=$g4[admin_path]?>/img/btn_search.gif' align=absmiddle>
+        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
     </td>
     <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
 </tr>
@@ -136,31 +136,31 @@ if ($chk_misu)
 $sql .= "  order by $sort1 $sort2/* 김선용 심각한 트래픽으로 미사용, a.od_invoice asc*/
           limit $from_record, $config[cf_page_rows] ";
 $result = sql_query($sql);
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $invoice_time = $g4[time_ymdhis];
-    if (!is_null_time($row[od_invoice_time])) 
-        $invoice_time = $row[od_invoice_time];
+    $invoice_time = G4_TIME_YMDHIS;
+    if (!is_null_time($row['od_invoice_time']))
+        $invoice_time = $row['od_invoice_time'];
 
-    $sql1 = " select * from $g4[member_table] where mb_id = '$row[mb_id]' ";
+    $sql1 = " select * from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
     $row1 = sql_fetch($sql1);
-    $name = get_sideview($row[mb_id], $row[mb_name], $row[mb_email], $row[mb_homepage]);
+    $name = get_sideview($row['mb_id'], $row['mb_name'], $row['mb_email'], $row['mb_homepage']);
 
-    if ($default[de_hope_date_use])
-        $hope_date = substr($row[od_hope_date],2,8)." (".get_yoil($row[od_hope_date]).")";
+    if ($default['de_hope_date_use'])
+        $hope_date = substr($row['od_hope_date'],2,8)." (".get_yoil($row['od_hope_date']).")";
     else
         $hope_date = "<span title='사용안함'>-</span>";
 
     $list = $i%2;
     echo "
-    <input type='hidden' name='od_id[$i]' value='$row[od_id]'>
-    <input type='hidden' name='on_uid[$i]' value='$row[on_uid]'>
+    <input type='hidden' name='od_id[$i]' value='{$row['od_id']}'>
+    <input type='hidden' name='on_uid[$i]' value='{$row['on_uid']}'>
     <tr class='list$list center ht'>
-        <td><a href='./orderform.php?od_id=$row[od_id]'>$row[od_id]</a></td>
+        <td><a href='./orderform.php?od_id={$row['od_id']}'>{$row['od_id']}</a></td>
         <td>$row[od_name]</td>
-        <td align=right>".display_amount($row[orderamount])."&nbsp;</td>
-        <td align=right>".display_amount($row[receiptamount])."&nbsp;</td>
-        <td align=right>".display_amount($row[misu])."&nbsp;</td>
+        <td align=right>".display_amount($row['orderamount'])."&nbsp;</td>
+        <td align=right>".display_amount($row['receiptamount'])."&nbsp;</td>
+        <td align=right>".display_amount($row['misu'])."&nbsp;</td>
         <td>$hope_date</td>
         <td><input type='text' name='od_invoice_time[$i]' class=ed size=20 maxlength=19 value='$invoice_time'></td>
         <td>
@@ -170,16 +170,16 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
             </select>
         </td>
         <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
-        <input type='hidden' name='save_dl_id[$i]' value='$row[dl_id]'>
-        <input type='hidden' name='save_od_invoice[$i]' value='$row[od_invoice]'>
-        <td><input type='text' name='od_invoice[$i]' class=ed size=10 value='$row[od_invoice]'></td>
-        <td>$row[it_hit]</td>
+        <input type='hidden' name='save_dl_id[$i]' value='{$row['dl_id']}'>
+        <input type='hidden' name='save_od_invoice[$i]' value='{$row['od_invoice']}'>
+        <td><input type='text' name='od_invoice[$i]' class=ed size=10 value='{$row['od_invoice']}'></td>
+        <td>{$row['it_hit']}</td>
     </tr>";
 
-    if ($row[dl_id]) {
+    if ($row['dl_id']) {
         //echo "<script> document.fdeliverylistupate.elements('dl_id[$i]').value = '$row[dl_id]'; </script>";
         // FF 3.0 에서 위의 코드는 에러를 발생함 (080626 수정)
-        echo "<script> document.fdeliverylistupate.elements['dl_id[$i]'].value = '$row[dl_id]'; </script>";
+        echo "<script> document.fdeliverylistupate.elements['dl_id[$i]'].value = '{$row['dl_id']}'; </script>";
     }
 }
 if ($i == 0)
@@ -199,7 +199,7 @@ if ($i == 0)
         </tr>
         </table>
     </td>
-    <td width=50% align=right><?=get_paging($config[cf_write_pages], $page, $total_page, "$_SERVER[PHP_SELF]?$qstr&page=");?></td>
+    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
 </tr>
 </table>
 </form>
@@ -210,5 +210,5 @@ if ($i == 0)
 * 배송일시, 배송회사는 입력의 편의성을 위하여 기본값으로 설정되어 있습니다. 운송장번호만 없는것이 미배송 주문자료입니다.
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

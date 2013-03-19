@@ -8,7 +8,7 @@ $g4['title'] = '가격비교사이트 연동';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?=subtitle($g4['title'])?>
+<?//=subtitle($g4['title'])?>
 <p align=lh>
 사용하실 가격비교사이트에 입점하신 후 해당하는 <B>엔진페이지 URL</B> 을 해당 사이트에 알려주시면 됩니다.
 

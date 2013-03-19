@@ -10,7 +10,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <table width=550><tr><td>
 
-<?=subtitle($g4['title'])?>
+<?//=subtitle($g4['title'])?>
 
 <table cellpadding=0 cellspacing=0 border=0 width=100%>
 <form name=forderprint action="./orderprintresult.php" onsubmit="return forderprintcheck(this);" autocomplete="off" style="margin:0px;">

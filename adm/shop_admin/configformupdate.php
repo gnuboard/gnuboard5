@@ -1,6 +1,6 @@
 <?
-$sub_menu = "400100";
-include_once("./_common.php");
+$sub_menu = '400100';
+include_once('./_common.php');
 
 check_demo();
 
@@ -9,18 +9,18 @@ auth_check($auth[$sub_menu], "w");
 // 로그인을 바로 이 주소로 하는 경우 쇼핑몰설정값이 사라지는 현상을 방지
 if (!$de_admin_company_owner) goto_url("./configform.php");
 
-if ($logo_img_del)  @unlink("$g4[path]/data/common/logo_img");
-if ($main_img_del)  @unlink("$g4[path]/data/common/main_img");
+if ($logo_img_del)  @unlink(G4_DATA_PATH."/common/logo_img");
+if ($main_img_del)  @unlink(G4_DATA_PATH."/common/main_img");
 
-if ($_FILES[logo_img][name]) upload_file($_FILES[logo_img][tmp_name], "logo_img", "$g4[path]/data/common");
-if ($_FILES[main_img][name]) upload_file($_FILES[main_img][tmp_name], "main_img", "$g4[path]/data/common");
+if ($_FILES['logo_img']['name']) upload_file($_FILES['logo_img']['tmp_name'], "logo_img", G4_DATA_PATH."/common");
+if ($_FILES['main_img']['name']) upload_file($_FILES['main_img']['tmp_name'], "main_img", G4_DATA_PATH."/common");
 
 $de_kcp_mid = substr($_POST['de_kcp_mid'],0,3);
 
 //
 // 영카트 default
 //
-$sql = " update $g4[yc4_default_table]
+$sql = " update {$g4['yc4_default_table']}
             set de_admin_company_owner      = '$de_admin_company_owner',
                 de_admin_company_name       = '$de_admin_company_name',
                 de_admin_company_saupja_no  = '$de_admin_company_saupja_no',
@@ -137,7 +137,7 @@ $sql = " update $g4[yc4_default_table]
 sql_query($sql);
 
 // 환경설정 > 포인트 사용
-sql_query(" update $g4[config_table] set cf_use_point = '$cf_use_point' ");
+sql_query(" update {$g4['config_table']} set cf_use_point = '$cf_use_point' ");
 
 goto_url("./configform.php");
 ?>

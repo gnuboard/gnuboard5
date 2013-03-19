@@ -24,7 +24,7 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?=subtitle($html_title)?>
+<?//=subtitle($html_title)?>
 
 <script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
 <?=cheditor1('fm_head_html', '100%', '150');?>

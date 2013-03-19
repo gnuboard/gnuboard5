@@ -57,7 +57,7 @@ while (($item = fgetcsv($handle, 1000, ",")) !== FALSE)
 $g4['title'] = "배송일괄등록 처리결과";
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-echo subtitle($g4['title']);
+//echo subtitle($g4['title']);
 echo "<p>";
 
 if ($msg)

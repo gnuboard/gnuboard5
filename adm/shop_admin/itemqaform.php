@@ -19,7 +19,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 ?>
 
-<?=subtitle($g4['title'])?>
+<?//=subtitle($g4['title'])?>
 
 <table cellpadding=0 cellspacing=0 width=100%>
 <form name=frmitemqaform method=post action="./itemqaformupdate.php">

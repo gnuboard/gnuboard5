@@ -35,7 +35,7 @@ function print_line($save)
 }
 ?>
 
-<?=subtitle($g4['title'])?>
+<?//=subtitle($g4['title'])?>
 
 <table cellpadding=0 cellspacing=0 width=100%>
 <tr><td colspan=9 height=2 bgcolor=#0E87F9></td></tr>

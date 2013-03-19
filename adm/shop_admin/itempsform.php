@@ -24,7 +24,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 <script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
 <?=cheditor1('is_content', '100%', '350');?>
 
-<?=subtitle($g4['title'])?>
+<?//=subtitle($g4['title'])?>
 
 <form name=fitemps method=post onsubmit="return fitemps_submit(this);" style="margin:0px;">
 <input type=hidden name=w     value='<? echo $w ?>'>

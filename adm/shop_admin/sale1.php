@@ -8,7 +8,7 @@ $g4['title'] = '매출현황';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?=subtitle($g4['title'])?>
+<?//=subtitle($g4['title'])?>
 
 <table cellpadding=0 cellspacing=0 border=0>
 <colgroup width=150></colgroup>

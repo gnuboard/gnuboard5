@@ -11,7 +11,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
 ?>
 
-<?=subtitle($g4['title'])?>
+<?//=subtitle($g4['title'])?>
 
 <script language="JavaScript">
 function byte_check(cont, bytes)

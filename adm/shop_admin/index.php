@@ -13,7 +13,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 	<td width=50% valign=top>
         <table width=100% cellpadding=0 cellspacing=0>
         <tr>
-            <td width=70%><?=subtitle("입금완료 미배송내역")?></td>
+            <td width=70%><?//=subtitle("입금완료 미배송내역")?></td>
             <td width=30% align=right><a href='./deliverylist.php?sort1=od_invoice&sort2=asc&chk_misu=1'><img src='<?=G4_ADMIN_URL?>/img/icon_more.gif' border=0></a>&nbsp;</td>
         </tr>
         </table>
@@ -83,7 +83,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 	<td width=49% valign=top>
         <table width=100% cellpadding=0 cellspacing=0>
         <tr>
-            <td width=70%><?=subtitle("미입금 주문내역")?></td>
+            <td width=70%><?//=subtitle("미입금 주문내역")?></td>
             <td width=30% align=right><a href='./orderlist.php?sort1=receiptamount&sort2=asc'><img src='<?=G4_ADMIN_URL?>/img/icon_more.gif' border=0></a>&nbsp;</td>
         </tr>
         </table>
@@ -157,7 +157,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 	<td width=50% valign=top>
         <table width=100% cellpadding=0 cellspacing=0>
         <tr>
-            <td width=70%><?=subtitle("사용후기")?></td>
+            <td width=70%><?//=subtitle("사용후기")?></td>
             <td width=30% align=right><a href='./itempslist.php?sort1=is_confirm&sort2=asc'><img src='<?=G4_ADMIN_URL?>/img/icon_more.gif' border=0></a>&nbsp;</td>
         </tr>
         </table>
@@ -202,7 +202,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 	<td width=50% valign=top>
         <table width=100% cellpadding=0 cellspacing=0>
         <tr>
-            <td width=70%><?=subtitle("상품문의")?></td>
+            <td width=70%><?//=subtitle("상품문의")?></td>
             <td width=30% align=right><a href='./itemqalist.php?sort1=iq_answer&sort2=asc'><img src='<?=G4_ADMIN_URL?>/img/icon_more.gif' border=0></a>&nbsp;</td>
         </tr>
         </table>

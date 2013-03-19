@@ -1,29 +1,29 @@
 <?
-$sub_menu = "400740";
-include_once("./_common.php");
+$sub_menu = '400740';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$html_title = "배송회사";
+$html_title = '배송회사';
 if ($w == "u") {
-    $html_title .= " 수정";
-    $readonly = " readonly";
+    $html_title .= ' 수정';
+    $readonly = ' readonly';
 
-    $sql = " select * from $g4[yc4_delivery_table] where dl_id = '$dl_id' ";
+    $sql = " select * from {$g4['yc4_delivery_table']} where dl_id = '$dl_id' ";
     $dl = sql_fetch($sql);
-    if (!$dl[dl_id]) alert("등록된 자료가 없습니다.");
+    if (!$dl['dl_id']) alert('등록된 자료가 없습니다.');
 }
 else
 {
-    $html_title .= " 입력";
-    $dl[dl_url] = "http://";
+    $html_title .= ' 입력';
+    $dl['dl_url'] = "http://";
 }
 
-$g4[title] = $html_title;
-include_once ("$g4[admin_path]/admin.head.php");
+$g4['title'] = $html_title;
+include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?=subtitle($html_title);?>
+<?//=subtitle($html_title);?>
 
 <table cellpadding=0 cellspacing=0 width=100%>
 <form name=fdeliverycodeform method=post action='./deliverycodeformupdate.php'>
@@ -34,20 +34,20 @@ include_once ("$g4[admin_path]/admin.head.php");
 <tr><td colspan=2 height=2 bgcolor=#0E87F9></td></tr>
 <tr class=ht>
     <td>배송회사명</td>
-    <td><input type=text class=ed name=dl_company value='<? echo stripslashes($dl[dl_company]) ?>' required itemname="배송회사명"></td>
+    <td><input type=text class=ed name=dl_company value='<? echo stripslashes($dl['dl_company']) ?>' required itemname="배송회사명"></td>
 </tr>
 <tr class=ht>
     <td>화물추적 URL</td>
-    <td><input type=text class=ed name=dl_url value='<? echo stripslashes($dl[dl_url]) ?>' style='width:98%;'></td>
+    <td><input type=text class=ed name=dl_url value='<? echo stripslashes($dl['dl_url']) ?>' style='width:98%;'></td>
 </tr>
 <tr class=ht>
     <td>고객센터 전화</td>
-    <td><input type=text class=ed name=dl_tel value='<? echo stripslashes($dl[dl_tel]) ?>'></td>
+    <td><input type=text class=ed name=dl_tel value='<? echo stripslashes($dl['dl_tel']) ?>'></td>
 </tr>
 <tr class=ht>
     <td>출력 순서</td>
     <td>
-        <?=order_select("dl_order", $dl[dl_order])?>
+        <?=order_select("dl_order", $dl['dl_order'])?>
         <?=help("셀렉트박스에서 출력할 때 순서를 정합니다.\n\n숫자가 작을수록 상단에 출력합니다.");?>
     </td>
 </tr>
@@ -60,5 +60,5 @@ include_once ("$g4[admin_path]/admin.head.php");
 </form>
 
 <?
-include_once ("$g4[admin_path]/admin.tail.php");
+include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

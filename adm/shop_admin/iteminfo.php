@@ -22,7 +22,7 @@ $null_text = "상품페이지 참고";
 <form id="fiteminfo" method="post" action="#" onsubmit="return fiteminfo_submit(this)">
 <input type="hidden" name="it_id" value="<?=$it_id?>">
 <div style="width:95%;padding:10px">
-<div style="float:left;"><?=subtitle("요약상품정보")?></div>
+<div style="float:left;"><?//=subtitle("요약상품정보")?></div>
 <div style="float:right;">(모든필드 필수입력)</div>
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <colgroup width=15%></colgroup>

@@ -1,5 +1,4 @@
 <?
-$g4_path = "../..";
-include_once ("$g4_path/common.php");
-include_once("$g4[admin_path]/admin.lib.php");
+include_once ('../../common.php');
+include_once(G4_ADMIN_PATH.'/admin.lib.php');
 ?>

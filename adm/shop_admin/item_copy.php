@@ -12,7 +12,7 @@ include_once("$g4[path]/head.sub.php");
 
 <table width=100% cellpadding=8><tr><td>
 
-<?=subtitle($g4[title]);?>
+<?//=subtitle($g4[title]);?>
 <table cellpadding=4 cellspacing=1 width=100%>
 <tr><td colspan=2 height=3 bgcolor=0E87F9></td></tr>
 <tr align=center>

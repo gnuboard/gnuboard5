@@ -10,7 +10,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <table width=550><tr><td>
 
-<?=subtitle($g4['title'])?>
+<?//=subtitle($g4['title'])?>
 
 <form name="finvoicebundle" method="post" action="invoicebundleupdate.php" onsubmit="return finvoicebundle_submit(this);" enctype="multipart/form-data" style="margin:0px;">
 <input type=hidden name=case value="1">
