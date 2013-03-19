@@ -68,6 +68,7 @@ function get_os($agent)
     else if(preg_match("/windows nt 5\.2/", $agent))        { $s = "2003"; }
     else if(preg_match("/windows nt 6\.0/", $agent))        { $s = "Vista"; }
     else if(preg_match("/windows nt 6\.1/", $agent))        { $s = "Windows7"; }
+    else if(preg_match("/windows nt 6\.2/", $agent))        { $s = "Windows8"; }
     else if(preg_match("/windows 9x/", $agent))             { $s = "ME"; }
     else if(preg_match("/windows ce/", $agent))             { $s = "CE"; }
     else if(preg_match("/mac/", $agent))                    { $s = "MAC"; }
