@@ -2,19 +2,20 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
 
 // 컴퓨터의 아이피와 쿠키에 저장된 아이피가 다르다면 테이블에 반영함
-if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR']) {
+if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR']) 
+{
     set_cookie('ck_visit_ip', $_SERVER['REMOTE_ADDR'], 86400); // 하루동안 저장
 
     $tmp_row = sql_fetch(" select max(vi_id) as max_vi_id from {$g4['visit_table']} ");
     $vi_id = $tmp_row['max_vi_id'] + 1;
 
     // $_SERVER 배열변수 값의 변조를 이용한 SQL Injection 공격을 막는 코드입니다. 110810
-    $remote_addr = mysql_real_escape_string($_SERVER['REMOTE_ADDR']);
+    $remote_addr = escape_trim($_SERVER['REMOTE_ADDR']);
     $referer = "";
     if (isset($_SERVER['HTTP_REFERER']))
-        $referer     = mysql_real_escape_string($_SERVER['HTTP_REFERER']);
-    $user_agent  = mysql_real_escape_string($_SERVER['HTTP_USER_AGENT']);
-    $sql = " insert {$g4['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent ) values ( '{$vi_id}', '{$remote_addr}', '".G4_TIME_YMD."', '{$g4['time_his']}', '{$referer}', '{$user_agent}' ) ";
+        $referer = escape_trim($_SERVER['HTTP_REFERER']);
+    $user_agent  = escape_trim($_SERVER['HTTP_USER_AGENT']);
+    $sql = " insert {$g4['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent ) values ( '{$vi_id}', '{$remote_addr}', '".G4_TIME_YMD."', '".G4_TIME_HIS."', '{$referer}', '{$user_agent}' ) ";
 
     $result = sql_query($sql, FALSE);
     // 정상으로 INSERT 되었다면 방문자 합계에 반영
