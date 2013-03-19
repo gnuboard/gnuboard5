@@ -27,11 +27,8 @@ if ($w == "u") {
     }
 }
 
-include_once(G4_LIB_PATH."/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 include_once(G4_PATH.'/head.sub.php');
-
-echo "<script src='$g4[cheditor4_path]/cheditor.js'></script>";
-echo cheditor1('is_content', '100%', '250');
 ?>
 <style>
 ul {list-style:none;margin:0px;padding:0px;}
@@ -52,7 +49,7 @@ label {width:130px;vertical-align:top;padding:3px 0;}
         </li>
         <li>
             <label for="" style="width:200px;">내용</label>
-            <?=cheditor2('is_content', $ps['is_content']);?>
+            <?=editor_html('is_content', $ps['is_content']);?>
         </li>
         <li>
             <label>평가</label>
@@ -92,7 +89,7 @@ function fitemuse_submit(f)
         }
     }
 
-    <? echo cheditor3('is_content'); ?>
+    <? echo get_editor_js('is_content'); ?>
 
     f.action = "./itemusewinupdate.php";
 }
