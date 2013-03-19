@@ -1,7 +1,7 @@
 <?
 $sub_menu = '400300';
 include_once('./_common.php');
-include_once("$g4[path]/lib/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
 /*
@@ -92,11 +92,6 @@ $qstr  = "$qstr&sca=$sca&page=$page";
 $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('it_explan', '100%', '350');?>
-<?=cheditor1('it_head_html', '100%', '150');?>
-<?=cheditor1('it_tail_html', '100%', '150');?>
 
 <form name=fitemform method=post action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" enctype="MULTIPART/FORM-DATA" autocomplete="off" style="margin:0px;">
 <?//=subtitle("기본정보")?>
@@ -320,7 +315,7 @@ if ($ii) {
 <input type=hidden name=it_explan_html value=1>
 <tr>
     <td>상품설명</td>
-    <td colspan=3 style='padding-top:7px; padding-bottom:7px;'><?=cheditor2('it_explan', $it[it_explan]);?></td>
+    <td colspan=3 style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_explan', $it['it_explan']);?></td>
 </tr>
 <tr class=ht>
     <td>판매자 e-mail</td>
@@ -358,7 +353,7 @@ if ($ii) {
         $limg1 = G4_DATA_PATH."/item/{$it[it_id]}_l1";
         if (file_exists($limg1)) {
             $size = getimagesize($limg1);
-            echo "<img src='"G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('limg1', $size[0], $size[1]);\"><input type=checkbox name=it_limg1_del value='1'>삭제";
+            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('limg1', $size[0], $size[1]);\"><input type=checkbox name=it_limg1_del value='1'>삭제";
             echo "<div id='limg1' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_l1' border=1></div>";
         }
         ?>
@@ -755,11 +750,11 @@ if ($ii) {
 
 <tr>
     <td>상품상단내용 <?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?></td>
-    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=cheditor2('it_head_html', $it[it_head_html]);?></td>
+    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_head_html', $it['it_head_html']);?></td>
 </tr>
 <tr>
     <td>상품하단내용 <?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?></td>
-    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=cheditor2('it_tail_html', $it[it_tail_html]);?></td>
+    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_tail_html', $it['it_tail_html']);?></td>
 </tr>
 
 <? if ($w == "u") { ?>
@@ -790,7 +785,20 @@ function codedupcheck(id)
         f.it_id.focus();
         return;
     }
-    window.open("./codedupcheck.php?it_id="+id+"&frmname=fitemform", "hiddenframe");
+
+    $.post(
+        "./codedupcheck.php",
+        { it_id: id },
+        function(data) {
+            if(data.name) {
+                alert("코드 '"+data.code+"' 는 '".data.name+"' (으)로 이미 등록되어 있으므로\n\n사용하실 수 없습니다.");
+                return false;
+            } else {
+                alert("'"+data.code+"' 은(는) 등록된 코드가 없으므로 사용하실 수 있습니다.");
+                document.fcategoryform.codedup.value = '';
+            }
+        }, "json"
+    );
 }
 
 function fitemformcheck(f)
@@ -835,9 +843,9 @@ function fitemformcheck(f)
         }
     }
 
-    <?=cheditor3('it_explan')."\n";?>
-    <?=cheditor3('it_head_html')."\n";?>
-    <?=cheditor3('it_tail_html')."\n";?>
+    <?=get_editor_js('it_explan');?>
+    <?=get_editor_js('it_head_html');?>
+    <?=get_editor_js('it_tail_html');?>
     return true;
 }
 

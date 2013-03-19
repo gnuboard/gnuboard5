@@ -1,7 +1,7 @@
 <?
 $sub_menu = '400650';
 include_once('./_common.php');
-include_once ("$g4[path]/lib/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -21,8 +21,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 ?>
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('is_content', '100%', '350');?>
 
 <?//=subtitle($g4['title'])?>
 
@@ -58,7 +56,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
     <td>
         <!-- <?=textarea_size("is_content")?>
         <textarea id='is_content' name="is_content" rows="10" style='width:99%;' class=ed required itemname='내용'><? echo get_text($is[is_content]) ?></textarea> -->
-        <?=cheditor2('is_content', $is['is_content']);?>
+        <?=editor_html('is_content', $is['is_content']);?>
     </td>
 </tr>
 <tr height=25>
@@ -76,7 +74,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 <script>
 function fitemps_submit(f)
 {
-    <? echo cheditor3('is_content'); ?>
+    <? echo get_editor_js('is_content'); ?>
 
     f.action="./itempsformupdate.php";
     return true;

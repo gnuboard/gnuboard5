@@ -1,7 +1,7 @@
 <?
 $sub_menu = '400710';
 include_once('./_common.php');
-include_once ("$g4[path]/lib/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -33,10 +33,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <?//=subtitle($html_title)?><p>
 
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('fa_subject', '100%', '150');?>
-<?=cheditor1('fa_content', '100%', '300');?>
-
 <form name=frmfaqform method=post action='./faqformupdate.php' onsubmit="return frmfaqform_check(this);" style="margin:0px;">
 <input type=hidden name=w     value='<? echo $w ?>'>
 <input type=hidden name=fm_id value='<? echo $fm_id ?>'>
@@ -60,13 +56,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         ?>
     </td>
     <td style='padding-top:5px; padding-bottom:5px;'>
-        <?=cheditor2('fa_subject', $fa[fa_subject]);?>
+        <?=editor_html('fa_subject', $fa['fa_subject']);?>
     </td>
 </tr>
 <tr>
     <td> 답변</td>
     <td style='padding-top:5px; padding-bottom:5px;'>
-        <?=cheditor2('fa_content', $fa[fa_content]);?>
+        <?=editor_html('fa_content', $fa['fa_content']);?>
     </td>
 </tr>
 <tr><td colspan=2 height=1 bgcolor=CCCCCC><td></tr>
@@ -93,8 +89,8 @@ function frmfaqform_check(f)
         return false;
     }
 
-    <?=cheditor3('fa_subject');?>
-    <?=cheditor3('fa_content');?>
+    <?=get_editor_js('fa_subject');?>
+    <?=get_editor_js('fa_content');?>
 
     return true;
 }

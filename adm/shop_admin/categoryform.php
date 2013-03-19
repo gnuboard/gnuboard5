@@ -1,7 +1,7 @@
 <?
 $sub_menu = '400200';
 include_once('./_common.php');
-include_once ("$g4[path]/lib/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -78,10 +78,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <?//=subtitle("기본 입력")?>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('ca_head_html', '100%', '150');?>
-<?=cheditor1('ca_tail_html', '100%', '150');?>
 
 <form name=fcategoryform method=post action="./categoryformupdate.php" enctype="multipart/form-data" onsubmit='return fcategoryformcheck(this);' style="margin:0px;">
 
@@ -265,11 +261,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <tr class=ht>
     <td>상단 내용 <?=help("상품리스트 페이지 상단에 출력하는 HTML 내용입니다.", -150);?> </td>
-    <td colspan=3 align=right><br /><?=cheditor2('ca_head_html', $ca[ca_head_html]);?></td>
+    <td colspan=3 align=right><?=editor_html('ca_head_html', $ca['ca_head_html']);?></td>
 </tr>
 <tr class=ht>
     <td>하단 내용 <?=help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다.", -150);?></td>
-    <td colspan=3 align=right><br /><?=cheditor2('ca_tail_html', $ca[ca_tail_html]);?></td>
+    <td colspan=3 align=right><?=editor_html('ca_tail_html', $ca['ca_tail_html']);?></td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
@@ -302,8 +298,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <script language='javascript'>
 function fcategoryformcheck(f)
 {
-    <?=cheditor3('ca_head_html');?>
-    <?=cheditor3('ca_tail_html');?>
+    <?=get_editor_js('ca_head_html');?>
+    <?=get_editor_js('ca_tail_html');?>
 
     if (f.w.value == "") {
         if (f.codedup.value == '1') {
@@ -318,18 +314,28 @@ function fcategoryformcheck(f)
 function codedupcheck(id)
 {
     if (!id) {
-        alert('분류코드를 입력하십시오.');
+        alert("분류코드를 입력하십시오.");
         f.ca_id.focus();
         return;
     }
 
-    window.open("./codedupcheck.php?ca_id="+id+'&frmname=fcategoryform', "hiddenframe");
+    $.post(
+        "./codedupcheck.php",
+        { ca_id: id },
+        function(data) {
+            if(data.name) {
+                alert("코드 '"+data.code+"' 는 '".data.name+"' (으)로 이미 등록되어 있으므로\n\n사용하실 수 없습니다.");
+                return false;
+            } else {
+                alert("'"+data.code+"' 은(는) 등록된 코드가 없으므로 사용하실 수 있습니다.");
+                document.fcategoryform.codedup.value = '';
+            }
+        }, "json"
+    );
 }
 
 document.fcategoryform.ca_name.focus();
 </script>
-
-<iframe name='hiddenFrame' width=0 height=0></iframe>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');

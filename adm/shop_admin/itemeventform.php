@@ -1,7 +1,7 @@
 <?
 $sub_menu = '400630';
 include_once('./_common.php');
-include_once ("$g4[path]/lib/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -36,10 +36,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <?//=subtitle($html_title);?><p>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('ev_head_html', '100%', '150');?>
-<?=cheditor1('ev_tail_html', '100%', '150');?>
 
 <form name=feventform method=post action="./itemeventformupdate.php" enctype="MULTIPART/FORM-DATA" style="margin:0px;" onsubmit="return feventform_check(this);">
 <input type=hidden name=w     value='<? echo $w ?>'>
@@ -164,11 +160,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <tr>
     <td>상단 내용</td>
-    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('ev_head_html', $ev[ev_head_html]);?></td>
+    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=editor_html('ev_head_html', $ev['ev_head_html']);?></td>
 </tr>
 <tr>
     <td>하단 내용</td>
-    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('ev_tail_html', $ev[ev_tail_html]);?></td>
+    <td colspan=3 align=right style='padding-top:5px; padding-bottom:5px;'><?=editor_html('ev_tail_html', $ev['ev_tail_html']);?></td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
@@ -182,8 +178,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <script language="javascript">
 function feventform_check(f)
 {
-    <?=cheditor3('ev_head_html');?>
-    <?=cheditor3('ev_tail_html');?>
+    <?=get_editor_js('ev_head_html');?>
+    <?=get_editor_js('ev_tail_html');?>
 
     return true;
 }

@@ -1,7 +1,7 @@
 <?
 $sub_menu = '400100';
 include_once('./_common.php');
-include_once("$g4[path]/lib/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -98,11 +98,6 @@ if ($default['de_icode_id'] && $default['de_icode_pw']) {
 $g4['title'] = '쇼핑몰설정';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('de_baesong_content', '100%', '150');?>
-<?=cheditor1('de_change_content', '100%', '150');?>
-<?=cheditor1('de_guest_privacy', '100%', '150');?>
 
 <form name=fconfig method=post action='./configformupdate.php' onsubmit="return fconfig_check(this)" enctype="MULTIPART/FORM-DATA" style="margin:0px;">
 
@@ -580,11 +575,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 </tr>
 <tr class=ht>
 	<td>배송정보</td>
-	<td colspan=3><br /><?=cheditor2('de_baesong_content', $default['de_baesong_content']);?></td>
+	<td colspan=3><br /><?=editor_html('de_baesong_content', $default['de_baesong_content']);?></td>
 </tr>
 <tr>
 	<td>교환/반품</td>
-	<td colspan=3><br /><?=cheditor2('de_change_content', $default['de_change_content']);?></td>
+	<td colspan=3><br /><?=editor_html('de_change_content', $default['de_change_content']);?></td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
 </table>
@@ -718,7 +713,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 </tr>
 <tr>
 	<td>비회원에 대한<br/>개인정보수집 내용</td>
-	<td colspan=3><br /><?=cheditor2('de_guest_privacy', $default['de_guest_privacy']);?></td>
+	<td colspan=3><br /><?=editor_html('de_guest_privacy', $default['de_guest_privacy']);?></td>
 </tr>
 <tr class=ht>
 	<td>MYSQL USER</td>
@@ -950,9 +945,9 @@ $sms_daesang = array (1=>"고객님께 발송", "관리자께 발송", "고객�
 <script language="JavaScript">
 function fconfig_check(f)
 {
-	<?=cheditor3('de_baesong_content');?>
-	<?=cheditor3('de_change_content');?>
-	<?=cheditor3('de_guest_privacy');?>
+	<?=get_editor_js('de_baesong_content');?>
+	<?=get_editor_js('de_change_content');?>
+	<?=get_editor_js('de_guest_privacy');?>
 
 	return true;
 }

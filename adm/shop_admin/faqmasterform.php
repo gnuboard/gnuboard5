@@ -1,7 +1,7 @@
 <?
 $sub_menu = '400710';
 include_once('./_common.php');
-include_once ("$g4[path]/lib/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -25,10 +25,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <?//=subtitle($html_title)?>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('fm_head_html', '100%', '150');?>
-<?=cheditor1('fm_tail_html', '100%', '150');?>
 
 <form name=frmfaqmasterform method=post action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);"enctype="MULTIPART/FORM-DATA" style="margin:0px;">
 <input type=hidden name=w     value='<? echo $w ?>'>
@@ -82,11 +78,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <tr>
     <td>상단 내용</td>
-    <td style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('fm_head_html', $fm[fm_head_html]);?></td>
+    <td style='padding-top:5px; padding-bottom:5px;'><?=editor_html('fm_head_html', $fm['fm_head_html']);?></td>
 </tr>
 <tr>
     <td>하단 내용</td>
-    <td style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('fm_tail_html', $fm[fm_tail_html]);?></td>
+    <td style='padding-top:5px; padding-bottom:5px;'><?=editor_html('fm_tail_html', $fm['fm_tail_html']);?></td>
 </tr>
 <tr><td colspan=2 height=1 bgcolor=CCCCCC></td></tr>
 </table>
@@ -99,8 +95,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <script language="javascript">
 function frmfaqmasterform_check(f)
 {
-    <?=cheditor3('fm_head_html');?>
-    <?=cheditor3('fm_tail_html');?>
+    <?=get_editor_js('fm_head_html');?>
+    <?=get_editor_js('fm_tail_html');?>
 }
 
 document.frmfaqmasterform.fm_subject.focus();

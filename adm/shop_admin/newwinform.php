@@ -1,7 +1,7 @@
 <?
 $sub_menu = '400720';
 include_once('./_common.php');
-include_once ("$g4[path]/lib/cheditor4.lib.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -29,9 +29,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <?//=subtitle($html_title)?>
-
-<script src="<?=$g4[cheditor4_path]?>/cheditor.js"></script>
-<?=cheditor1('nw_content', '100%', '350');?>
 
 <form name=frmnewwin method=post action="./newwinformupdate.php" onsubmit="return frmnewwin_check(this);" style="margin:0px;">
 <input type=hidden name=w     value='<? echo $w ?>'>
@@ -75,7 +72,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <input type=hidden name=nw_content_html value=1>
 <tr>
     <td>내용</td>
-    <td colspan=3 style='padding-top:5px; padding-bottom:5px;'><?=cheditor2('nw_content', $nw[nw_content]);?></td>
+    <td colspan=3 style='padding-top:5px; padding-bottom:5px;'><?=editor_html('nw_content', $nw['nw_content']);?></td>
 </tr>
 <tr><td colspan=4 height=1 bgcolor=CCCCCC></td></tr>
 </table>
@@ -91,7 +88,7 @@ function frmnewwin_check(f)
     errmsg = "";
     errfld = "";
 
-    <?=cheditor3('nw_content');?>
+    <?=get_editor_js('nw_content');?>
 
     check_field(f.nw_subject, "제목을 입력하세요.");
 
