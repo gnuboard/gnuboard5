@@ -1790,7 +1790,7 @@ function delete_editor_thumbnail($contents)
         $filepath = dirname($srcfile);
         $files = glob($filepath.'/thumb-'.$filename.'*');
         if (is_array($files)) {
-            foreach($files as $filename) {
+            foreach($files as $filename)
                 unlink($filename);
         }
     }
