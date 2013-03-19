@@ -183,7 +183,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $list = $i%2;
     echo "
     <tr class='list$list ht'>
-        <td align=center title='주문일시 : {$row['od_time']}'><a href='"G4_SHOP_URL."/orderinquiryview.php?od_id={$row['od_id']}&on_uid={$row['on_uid']}'>{$row['od_id']}</a></td>
+        <td align=center title='주문일시 : {$row['od_time']}'><a href='".G4_SHOP_URL."/orderinquiryview.php?od_id={$row['od_id']}&on_uid={$row['on_uid']}'>{$row['od_id']}</a></td>
         <!-- <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$row['od_name']}'><span title='$od_deposit_name'>".cut_str($row['od_name'],8,"")."</span></a></td> -->
         <td align=center>$mb_nick</td>
         <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$row['mb_id']}'>{$row['mb_id']}</a></td>
