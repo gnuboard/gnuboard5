@@ -29,7 +29,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 .to_content a {z-index:100000;position:absolute;top:0;left:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
 /* 이미지 등비율 리사이징 */
-.img_fix {float:left;width:100%;height:auto}
+.img_fix {width:100%;height:auto}
 
 /* 캡챠 자동등록(입력)방지 기본 */
 #captcha img {height:1.8em;border:1px solid #cfded8;border-right:0}
