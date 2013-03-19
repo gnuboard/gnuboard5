@@ -32,7 +32,11 @@ header("Pragma: no-cache"); // HTTP/1.0
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<? if (G4_IS_MOBILE) {?><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"><? } ?>
+<? if (G4_IS_MOBILE) {?>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
+<meta name="HandheldFriendly" content="true">
+<meta name="format-detection" content="telephone=no">
+<? } ?>
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
 <title><?=$g4_head_title?></title>
 <? if (defined('G4_IS_ADMIN')) { ?>
