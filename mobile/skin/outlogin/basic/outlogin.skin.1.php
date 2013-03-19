@@ -10,8 +10,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <form name="foutlogin" action="<?=$outlogin_action_url?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
     <fieldset>
         <input type="hidden" name="url" value="<?=$outlogin_url?>">
-        <input type="text" name="mb_id" id="ol_id" title="회원아이디(필수)" placeholder="회원아이디(필수)" required class="required" maxlength="20">
-        <input type="password" id="ol_pw" name="mb_password" title="패스워드(필수)" placeholder="패스워드(필수)" required class="required" maxlength="20">
+        <input type="text" name="mb_id" id="ol_id" placeholder="회원아이디(필수)" required class="required" maxlength="20">
+        <input type="password" id="ol_pw" name="mb_password" placeholder="패스워드(필수)" required class="required" maxlength="20">
         <input type="submit" id="ol_submit" value="로그인">
         <div id="ol_svc">
             <input type="checkbox" id="auto_login" name="auto_login" value="1">
