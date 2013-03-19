@@ -33,7 +33,7 @@ a:active {color:#000;text-decoration:underline}
 #to_content a:active {width:100%;height:75px;background:#21272e;color:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.3em}
 
 /* 이미지 등비율 리사이징 */
-.img_fix {float:left;width:100%;height:auto}
+.img_fix {width:100%;height:auto}
 
 /* 캡챠 자동등록(입력)방지 기본 */
 #captcha img {border:1px solid #cfded8;border-right:0}
