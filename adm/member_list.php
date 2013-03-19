@@ -123,6 +123,7 @@ $colspan = 15;
         <th scope="col"><?=subject_sort_link('mb_level', '', 'desc')?>권한</a></th>
         <th scope="col"><?=subject_sort_link('mb_point', '', 'desc')?> 포인트</a></th>
         <th scope="col"><?=subject_sort_link('mb_today_login', '', 'desc')?>최종접속</a></th>
+        <th scope="col"><?=subject_sort_link('mb_datetime', '', 'desc')?>가입일</a></th>
         <th scope="col"><?=subject_sort_link('mb_mailling', '', 'desc')?>수신</a></th>
         <th scope="col"><?=subject_sort_link('mb_open', '', 'desc')?>공개</a></th>
         <th scope="col"><?=subject_sort_link('mb_email_certify', '', 'desc')?>인증</a></th>
@@ -189,6 +190,7 @@ $colspan = 15;
         <td><?=get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level'])?></td>
         <td class="td_bignum"><a href="point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
         <td><?=substr($row['mb_today_login'],2,8)?></td>
+        <td><?=substr($row['mb_datetime'],2,8)?></td>
         <td><?=$row['mb_mailling']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>';?></td>
         <td><?=$row['mb_open']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>';?></td>
         <td><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>';?></td>
