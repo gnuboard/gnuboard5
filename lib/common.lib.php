@@ -1735,8 +1735,10 @@ function check_device($device)
 // 게시판 최신글 캐시 파일 삭제
 function delete_cache_latest($bo_table)
 {
-    foreach (glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*') as $filename) {
-        unlink($filename);
+    $files = glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
+    if (is_array($files)) {
+        foreach ($files as $filename) 
+            unlink($filename);
     }
 }
 
@@ -1747,8 +1749,10 @@ function delete_board_thumbnail($bo_table, $file)
         return;
 
     $fn = preg_replace("/\.[^\.]+$/i", "", basename($file));
-    foreach(glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*') as $file) {
-        unlink($file);
+    $files = glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*');
+    if (is_array($files)) {
+        foreach ($files as $filename) 
+            unlink($filename);
     }
 }
 
@@ -1784,9 +1788,10 @@ function delete_editor_thumbnail($contents)
 
         $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
         $filepath = dirname($srcfile);
-
-        foreach(glob($filepath.'/thumb-'.$filename.'*') as $file) {
-            unlink($file);
+        $files = glob($filepath.'/thumb-'.$filename.'*');
+        if (is_array($files)) {
+            foreach($files as $filename) {
+                unlink($filename);
         }
     }
 }
