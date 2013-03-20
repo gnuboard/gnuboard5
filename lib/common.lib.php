@@ -477,6 +477,13 @@ function bad120422($matches)
     return $matches['0'];
 }
 
+// tag 내의 주석문 무효화 하기
+function bad130128($matches)
+{
+    $str = $matches[2];
+    return '<'.$matches[1].preg_replace('#(\/\*|\*\/)#', '', $str).'>';
+}
+
 // 내용을 변환
 function conv_content($content, $html)
 {
@@ -503,14 +510,18 @@ function conv_content($content, $html)
             $content .= "</table>";
         }
 
+        $content = preg_replace_callback("/<([^>]+)>/s", 'bad130128', $content); 
+
         $content = preg_replace($source, $target, $content);
-        $content = bad_tag_convert($content);
 
         // XSS (Cross Site Script) 막기
         // 완벽한 XSS 방지는 없다.
-
+        
         // 이런 경우를 방지함 <IMG STYLE="xss:expr/*XSS*/ession(alert('XSS'))">
-        $content = preg_replace("#\/\*.*\*\/#iU", "", $content);
+        //$content = preg_replace("#\/\*.*\*\/#iU", "", $content);
+        // 위의 정규식이 아래와 같은 내용을 통과시키므로 not greedy(비탐욕수량자?) 옵션을 제거함. ignore case 옵션도 필요 없으므로 제거
+        // <IMG STYLE="xss:ex//*XSS*/**/pression(alert('XSS'))"></IMG>
+        $content = preg_replace("#\/\*.*\*\/#", "", $content);
 
         // object, embed 태그에서 javascript 코드 막기
         $content = preg_replace_callback("#<(object|embed)([^>]+)>#i", "bad120422", $content);
@@ -520,7 +531,8 @@ function conv_content($content, $html)
         $content = preg_replace("/(lo)(wsrc)/i", "&#108;&#111;$2", $content);
         $content = preg_replace("/(sc)(ript)/i", "&#115;&#99;$2", $content);
         $content = preg_replace_callback("#<([^>]+)#", create_function('$m', 'return "<".str_replace("<", "&lt;", $m[1]);'), $content);
-        $content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "", $content);
+        //$content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "", $content);
+        $content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "_$1$2_", $content);
 
         // 플래시의 액션스크립트와 자바스크립트의 연동을 차단하여 악의적인 사이트로의 이동을 막는다.
         // value="always" 를 value="never" 로, allowScriptaccess="always" 를 allowScriptaccess="never" 로 변환하는데 목적이 있다.
@@ -532,6 +544,9 @@ function conv_content($content, $html)
         $content = preg_replace("/<(img[^>]+logout\.php[^>]+)/i", "*** CSRF 감지 : &lt;$1", $content);
         $content = preg_replace("/<(img[^>]+download\.php[^>]+bo_table[^>]+)/i", "*** CSRF 감지 : &lt;$1", $content);
 
+        $content = preg_replace_callback("#style\s*=\s*[\"\']?[^\"\']+[\"\']?#i",
+                    create_function('$matches', 'return str_replace("\\\\", "", stripslashes($matches[0]));'), $content);
+
         $pattern = "";
         $pattern .= "(e|&#(x65|101);?)";
         $pattern .= "(x|&#(x78|120);?)";
@@ -540,10 +555,15 @@ function conv_content($content, $html)
         $pattern .= "(e|&#(x65|101);?)";
         $pattern .= "(s|&#(x73|115);?)";
         $pattern .= "(s|&#(x73|115);?)";
-        $pattern .= "(i|&#(x6a|105);?)";
+        //$pattern .= "(i|&#(x6a|105);?)";
+        $pattern .= "(i|&#(x69|105);?)";
         $pattern .= "(o|&#(x6f|111);?)";
         $pattern .= "(n|&#(x6e|110);?)";
-        $content = preg_replace("/".$pattern."/i", "__EXPRESSION__", $content);
+        //$content = preg_replace("/".$pattern."/i", "__EXPRESSION__", $content);
+        $content = preg_replace("/<[^>]*".$pattern."/i", "__EXPRESSION__", $content); 
+        // <IMG STYLE="xss:e\xpression(alert('XSS'))"></IMG> 와 같은 코드에 취약점이 있어 수정함. 121213
+        $content = preg_replace("/(?<=style)(\s*=\s*[\"\']?xss\:)/i", '="__XSS__', $content); 
+        $content = bad_tag_convert($content);
     }
     else // text 이면
     {
@@ -1526,9 +1546,7 @@ function bad_tag_convert($code)
                     $code);
     }
 
-    //return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>/i", "&lt;$1$2$3&gt;", $code);
-    // script 나 iframe 태그를 막지 않는 경우 필터링이 되도록 수정
-    return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
+    return preg_replace("/\<([\/]?)(script|iframe|form)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
 }
 
 

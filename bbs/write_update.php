@@ -42,8 +42,8 @@ if (empty($_POST)) {
 }
 
 $w = $_POST['w'];
-$wr_link1 = mysql_real_escape_string($_POST['wr_link1']);
-$wr_link2 = mysql_real_escape_string($_POST['wr_link2']);
+$wr_link1 = escape_trim(strip_tags($_POST['wr_link1']));
+$wr_link2 = escape_trim(strip_tags($_POST['wr_link2']));
 
 $notice_array = explode(',', trim($board['bo_notice']));
 
