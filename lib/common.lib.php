@@ -137,19 +137,6 @@ function alert($msg='', $url='', $error=true, $post=false)
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
 
-    /*
-    //header("Content-Type: text/html; charset=$g4['charset']");
-    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
-    echo "<script>alert('$msg');";
-    if (!$url)
-        echo "history.go(-1);";
-    echo "</script>";
-    if ($url)
-        // 4.06.00 : 불여우의 경우 아래의 코드를 제대로 인식하지 못함
-        //echo "<meta http-equiv='refresh' content='0;url=$url'>";
-        goto_url($url);
-    exit;
-    */
     $header = '';
     if (isset($g4['title'])) {
         $header = $g4['title'];
@@ -164,11 +151,6 @@ function alert_close($msg, $error=true)
 {
     global $g4;
 
-    /*
-    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
-    echo "<script> alert('$msg'); window.close(); </script>";
-    exit;
-    */
     $header = '';
     if (isset($g4['title'])) {
         $header = $g4['title'];
@@ -1309,10 +1291,7 @@ function get_table_define($table, $crlf="\n")
         $schema_create     .= implode($columns, ', ') . ')';
     } // end while
 
-    if (strtolower($g4['charset']) == 'utf-8')
-        $schema_create .= $crlf . ') DEFAULT CHARSET=utf8';
-    else
-        $schema_create .= $crlf . ')';
+    $schema_create .= $crlf . ') DEFAULT CHARSET=utf8';
 
     return $schema_create;
 } // end of the 'PMA_getTableDef()' function
@@ -1514,13 +1493,6 @@ function cut_hangul_last($hangul)
         // 한글만 센다
         if (ord($hangul[$i]) >= 0xA0) {
             $cnt++;
-        }
-    }
-
-    // 홀수라면 한글이 반쪽난 상태이므로
-    if (strtoupper($g4['charset']) != 'UTF-8') {
-        if ($cnt%2) {
-            $hangul = substr($hangul, 0, $cnt-1);
         }
     }
 
