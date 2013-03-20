@@ -1753,7 +1753,7 @@ function get_editor_image($contents)
         return false;
 
     // $contents 중 img 태그 추출
-    $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+".str_replace(".", "\.", $_SERVER['HTTP_HOST'])."[^>\'\"]+)[\'\"]?[^>]*>/";
+    $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/";
     preg_match_all($pattern, $contents, $matchs);
 
     return $matchs;
