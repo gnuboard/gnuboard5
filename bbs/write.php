@@ -3,8 +3,8 @@ include_once('./_common.php');
 include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
-set_session('ss_bo_table', $bo_table);
-set_session('ss_wr_id', $wr_id);
+set_session('ss_bo_table', $_REQUEST['bo_table']);
+set_session('ss_wr_id', $_REQUEST['wr_id']);
 
 if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.', G4_URL);
