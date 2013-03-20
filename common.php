@@ -81,6 +81,7 @@ function g4_path()
     //print_r($base_dir);
     /*
     $linux_dir      = str_replace("\\", "/", $path);                            // 예) /home/sir/www/g4s
+<<<<<<< HEAD
     $document_root  = str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']);        // 예) /home/sir/www
 
     if (strpos($linux_dir, $document_root) === false) {
@@ -96,6 +97,11 @@ function g4_path()
 
 	if (strlen($base_dir) && substr($base_dir, 0, 1) != '/') $base_dir = '/'.$base_dir;
 
+=======
+    //$document_root  = str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']);        // 예) /home/sir/www
+	$document_root  = str_replace("\\", "/", realpath($_SERVER['DOCUMENT_ROOT']));
+    $base_dir       = preg_replace('#^'.$document_root.'#i', '', $linux_dir);   // 예) /g4s
+>>>>>>> f40cfc08dc1a42a24c3acd0ebaee829f94dccd3a
     $port           = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
     $http           = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
 
@@ -150,7 +156,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
     <div>
         <p>다음 파일을 찾을 수 없습니다.</p>
         <ul>
-            <li><strong><?=$dbconfig_file?></strong></li>
+            <li><strong><?=G4_DATA_DIR.'/'.G4_DBCONFIG_FILE?></strong></li>
         </ul>
         <p>프로그램 설치 후 실행하시기 바랍니다.</p>
         <a href="./install/">그누보드4S 설치하기</a>

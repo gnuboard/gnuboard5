@@ -4,14 +4,18 @@ if (!defined('_GNUBOARD_')) exit;
 // 설문조사
 function poll($skin_dir='basic', $po_id=false)
 {
-    global $config, $member, $g4;
+    global $config, $member, $g4, $is_admin;
 
     // 투표번호가 넘어오지 않았다면 가장 큰(최근에 등록한) 투표번호를 얻는다
-    if (empty($po_id)) {
-        $po_id = $config['cf_max_po_id'];
-        if (empty($po_id))
-            return "<!-- po_id를 찾을 수 없습니다. -->";
+    if (!$po_id) {
+        $row = sql_fetch(" select MAX(po_id) as max_po_id from {$g4['poll_table']} ");
+        $po_id = $row['max_po_id'];
     }
+
+    if(!$po_id)
+        return;
+
+    $po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
 
     ob_start();
     if (G4_IS_MOBILE) {

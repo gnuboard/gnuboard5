@@ -1,5 +1,16 @@
 /* 게시판 목록 */
 #bo_list_title {padding:0 1em}
+
+#bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#bo_cate ul {margin:0.5em 1em;padding-left:1px;zoom:1}
+#bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_cate li {float:left;margin-bottom:-1px;width:25%}
+#bo_cate a {display:block;position:relative;margin-left:-1px;padding:0.4em 0;border:1px solid #ddd;background:#f7f7f7;color:#888;text-align:center;text-decoration:none;letter-spacing:-0.1em}
+#bo_cate a:focus,
+#bo_cate a:hover,
+#bo_cate a:active {text-decoration:none}
+#bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
+
 .bo_list table {margin-bottom:1.5em;width:100%;border-collapse:collapse;border-spacing:0}
 
 .bo_list th {}

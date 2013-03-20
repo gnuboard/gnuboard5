@@ -1003,7 +1003,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $str .= $tmp_name."\n";
 
     if(!G4_IS_MOBILE) {
-        $str2 = "<span class=\"sv sv_js_off\">\n";
+        $str2 = "<span class=\"sv\">\n";
         if($mb_id)
             $str2 .= "<a href=\"".G4_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
         if($email)
@@ -1025,7 +1025,8 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
             $str2 .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
         }
         $str2 .= "</span>\n";
-        $str .= $str2;//."\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
+        $str .= $str2;
+        $str .= "\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
     }
 
     $str .= "</span>";
@@ -1734,8 +1735,10 @@ function check_device($device)
 // 게시판 최신글 캐시 파일 삭제
 function delete_cache_latest($bo_table)
 {
-    foreach (glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*') as $filename) {
-        unlink($filename);
+    $files = glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
+    if (is_array($files)) {
+        foreach ($files as $filename) 
+            unlink($filename);
     }
 }
 
@@ -1746,8 +1749,10 @@ function delete_board_thumbnail($bo_table, $file)
         return;
 
     $fn = preg_replace("/\.[^\.]+$/i", "", basename($file));
-    foreach(glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*') as $file) {
-        unlink($file);
+    $files = glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*');
+    if (is_array($files)) {
+        foreach ($files as $filename) 
+            unlink($filename);
     }
 }
 
@@ -1783,9 +1788,10 @@ function delete_editor_thumbnail($contents)
 
         $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
         $filepath = dirname($srcfile);
-
-        foreach(glob($filepath.'/thumb-'.$filename.'*') as $file) {
-            unlink($file);
+        $files = glob($filepath.'/thumb-'.$filename.'*');
+        if (is_array($files)) {
+            foreach($files as $filename)
+                unlink($filename);
         }
     }
 }
