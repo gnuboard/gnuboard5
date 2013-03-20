@@ -44,7 +44,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
                 $filename = basename($srcfile);
                 $filepath = dirname($srcfile);
 
-                preg_match("/alt=[\'\"]{1}(.*)[\'\"]{1}/", $matchs[0][$i], $malt);
+                preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matchs[0][$i], $malt);
                 $alt = get_text($malt[1]);
 
                 break;
