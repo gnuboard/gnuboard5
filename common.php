@@ -2,9 +2,6 @@
 /*******************************************************************************
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
-//error_reporting(E_ALL ^ E_NOTICE);
-//error_reporting(E_ALL & ~E_NOTICE);
-//error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR );
 
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
@@ -75,45 +72,6 @@ function g4_path()
     $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
     $user = str_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', $_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']);
     $result['url'] = $http.$_SERVER['SERVER_NAME'].$port.$user.$root;
-
-
-    //$base_dir  = parse_url($_SERVER['REQUEST_URI']);
-    //print_r($base_dir);
-    /*
-    $linux_dir      = str_replace("\\", "/", $path);                            // 예) /home/sir/www/g4s
-<<<<<<< HEAD
-    $document_root  = str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']);        // 예) /home/sir/www
-
-    if (strpos($linux_dir, $document_root) === false) {
-		for($base_dir = dirname($_SERVER['SCRIPT_NAME']); strpos($linux_dir, $base_dir) === false; $base_dir = dirname($base_dir));
-
-		if (strlen($base_dir) && strlen($linux_dir) != (strrpos($linux_dir, $base_dir)+strlen($base_dir))) {
-			$base_dir = substr($linux_dir, strrpos($linux_dir, $base_dir));
-		}
-    }
-    else {
-        $base_dir       = preg_replace('#^'.$document_root.'#i', '', $linux_dir);   // 예) /g4s
-    }
-
-	if (strlen($base_dir) && substr($base_dir, 0, 1) != '/') $base_dir = '/'.$base_dir;
-
-=======
-    //$document_root  = str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']);        // 예) /home/sir/www
-	$document_root  = str_replace("\\", "/", realpath($_SERVER['DOCUMENT_ROOT']));
-    $base_dir       = preg_replace('#^'.$document_root.'#i', '', $linux_dir);   // 예) /g4s
->>>>>>> f40cfc08dc1a42a24c3acd0ebaee829f94dccd3a
-    $port           = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
-    $http           = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
-
-    $result = array();
-	// 윈도우의 경우 역슬레쉬 경로인데 그다지 권장하지 않는다. php에서는 슬레쉬도 경로 인자로 인식하므로 슬레쉬 사용.
-	$result['path'] = $linux_dir;
-
-    $result['url']      = $http.$_SERVER['SERVER_NAME'].$port.$base_dir;
-    $result['curr_url'] = $http.$_SERVER['SERVER_NAME'].$port.$_SERVER['PHP_SELF'];
-    $result['curr_uri'] = $result['curr_url'] . ($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : '');
-    */
-
     return $result;
 }
 
