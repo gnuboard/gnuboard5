@@ -1737,7 +1737,7 @@ function delete_cache_latest($bo_table)
 {
     $files = glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
     if (is_array($files)) {
-        foreach ($files as $filename) 
+        foreach ($files as $filename)
             unlink($filename);
     }
 }
@@ -1751,7 +1751,7 @@ function delete_board_thumbnail($bo_table, $file)
     $fn = preg_replace("/\.[^\.]+$/i", "", basename($file));
     $files = glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*');
     if (is_array($files)) {
-        foreach ($files as $filename) 
+        foreach ($files as $filename)
             unlink($filename);
     }
 }
@@ -1802,16 +1802,9 @@ function get_skin_stylesheet($skin_path)
     if(!$skin_path)
         return "";
 
-    $doc_root = realpath($_SERVER['DOCUMENT_ROOT']);
-    $skin_path = realpath($skin_path);
-
     $str = "";
 
-    $p = parse_url(G4_URL);
-    $skin_url = $p['scheme'].'://'.$p['host'];
-    if(isset($p['port']))
-        $skin_url .= ':'.$p['port'];
-    $skin_url .= str_replace("\\", "/", str_replace($doc_root, "", $skin_path));
+    $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
 
     if(is_dir($skin_path)) {
         if($dh = opendir($skin_path)) {
