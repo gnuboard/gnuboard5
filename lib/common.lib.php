@@ -87,7 +87,7 @@ function goto_url($url)
 {
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
-    header("Location:$url");
+    @header("Location:$url");
     exit;
 }
 
