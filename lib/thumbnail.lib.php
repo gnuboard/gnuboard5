@@ -34,9 +34,11 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
         for($i=0; $i<count($matchs[1]); $i++)
         {
             // 이미지 path 구함
-            $imgurl = parse_url($matchs[1][$i]);
-            $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
             $src_url = $matchs[1][$i];
+            if(!stristr($src_url, G4_URL) || stripos($src_url, G4_URL) != 0)
+                continue;
+
+            $srcfile = G4_PATH.str_replace(G4_URL, "", $matchs[1][$i]);
 
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
                 $filename = basename($srcfile);
@@ -94,13 +96,15 @@ function get_view_thumbnail($contents)
     // $contents 중 img 태그 추출
     $matchs = get_editor_image($contents);
 
-    if(!$matchs)
+    if(empty($matchs))
         return $contents;
 
     for($i=0; $i<count($matchs[1]); $i++) {
+        if(!stristr($matchs[1][$i], G4_URL) || stripos($matchs[1][$i], G4_URL) != 0)
+            continue;
+
         // 이미지 path 구함
-        $imgurl = parse_url($matchs[1][$i]);
-        $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
+        $srcfile = G4_PATH.str_replace(G4_URL, "", $matchs[1][$i]);
 
         if(is_file($srcfile)) {
             // 썸네일 높이
@@ -145,7 +149,8 @@ function get_view_thumbnail($contents)
 
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             if(strpos($matchs[1][$i], 'data/editor') && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
-                $thumb_tag = '<a href="'.G4_BBS_URL.'/view_image.php?fn='.urlencode($imgurl['path']).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
+                $imgurl = str_replace(G4_URL, "", $matchs[1][$i]);
+                $thumb_tag = '<a href="'.G4_BBS_URL.'/view_image.php?fn='.urlencode($imgurl).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
             }
 
             $contents = str_replace($img_tag, $thumb_tag, $contents);
