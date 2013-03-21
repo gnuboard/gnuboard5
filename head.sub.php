@@ -32,7 +32,11 @@ header("Pragma: no-cache"); // HTTP/1.0
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<? if (G4_IS_MOBILE) {?><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"><? } ?>
+<? if (G4_IS_MOBILE) {?>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
+<meta name="HandheldFriendly" content="true">
+<meta name="format-detection" content="telephone=no">
+<? } ?>
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
 <title><?=$g4_head_title?></title>
 <? if (defined('G4_IS_ADMIN')) { ?>
@@ -88,5 +92,5 @@ if ($is_member) { // 회원이라면 로그인 중이라는 메세지를 출력�
     else if ($is_admin == 'group') $sr_admin_msg = "그룹관리자 ";
     else if ($is_admin == 'board') $sr_admin_msg = "게시판관리자 ";
 ?>
-    <div id="hd_login_msg"><?=$sr_admin_msg?><?=$member['mb_nick']?>님 로그인 중</div>
+    <div id="hd_login_msg"><?=$sr_admin_msg?><?=$member['mb_nick']?>님 로그인 중 <a href="<?=G4_URL?>/bbs/logout.php">로그아웃</a></div>
 <? } ?>

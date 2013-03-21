@@ -5,6 +5,7 @@ if (!defined('_GNUBOARD_')) exit;
 function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
 {
     global $g4;
+    static $css = array();
 
     if (!$skin_dir) $skin_dir = 'basic';
 
@@ -37,6 +38,12 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
     }
 
     include_once($cache_file);
+
+    // 같은 스킨은 .css 를 한번만 호출한다.
+    if (!in_array($skin_dir, $css)) {
+        echo '<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">';
+        $css[] = $skin_dir;
+    }
 
     ob_start();
     include $latest_skin_path.'/latest.skin.php';

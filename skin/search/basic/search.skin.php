@@ -17,8 +17,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <option value="wr_name"<?=get_selected($_GET['sfl'], "wr_name")?>>이름</option>
     </select>
 
-    <input type="text" name="stx" value="<?=$text_stx?>" title="검색어(필수)" class="fs_input" required class="required" maxlength="20">
-    <input type="submit" class="fs_submit" value="검색">
+    <input type="text" name="stx" value="<?=$text_stx?>" title="검색어(필수)" class="frm_input" required class="required" maxlength="20">
+    <input type="submit" class="btn_submit" value="검색">
 
     <script>
     function fsearch_submit(f)

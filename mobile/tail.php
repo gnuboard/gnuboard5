@@ -33,7 +33,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <?=visit("basic"); // 방문자수 ?>
     <div id="ft_catch"><a href="<?=$g4['url']?>/"><img src="<?=G4_IMG_URL?>/ft_catch.jpg" alt="Sharing All Possibilities"></a></div>
     <div id="ft_copy">
-        <p>Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</p>
+        <p>
+            Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.<br>
+            <a href="#">상단으로</a>
+        </p>
     </div>
 </footer>
 

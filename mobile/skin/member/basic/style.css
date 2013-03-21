@@ -60,7 +60,7 @@
 #mb_confirm p {padding:1.5em 1em;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
 #mb_confirm fieldset {position:relative;margin:0 0 3em;padding:2em 1em;border-bottom:1px solid #cfded8;background:#f7f7f7}
-#mb_confirm_pw {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em}
+#mb_confirm_pw {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em !important}
 #mb_confirm .btn_submit {position:absolute;bottom:2em;right:1em;width:18%;height:1.9em !important;line-height:1.9em}
 
 /* 비밀글 패스워드 확인 */
@@ -69,7 +69,7 @@
 #pw_confirm p {padding:1.5em 1em;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
 #pw_confirm p strong {display:block}
 #pw_confirm fieldset {position:relative;margin:0 0 3em;padding:0.5em 0.5em 1em;border-bottom:1px solid #cfded8;background:#f7f7f7}
-#pw_wr_password {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em}
+#pw_wr_password {display:block;margin-top:1em;padding:0;width:80%;line-height:1.8em !important}
 #pw_confirm .btn_submit {position:absolute;bottom:1em;right:0.5em;width:18%;height:1.9em !important;line-height:1.9em}
 
 /* 폼메일 */

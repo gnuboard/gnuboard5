@@ -44,7 +44,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </tr>
     <tr>
         <th scope="row"><label for="file1">첨부 1</label></th>
-        <td><input type="file"name="file1"  id="file1"  class="frm_input"></td>
+        <td><input type="file" name="file1"  id="file1"  class="frm_input"></td>
     </tr>
     <tr>
         <th scope="row"><label for="file2">첨부 2</label></th>

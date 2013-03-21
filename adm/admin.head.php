@@ -114,10 +114,6 @@ function imageview(id, w, h)
             echo $gnb_str;
             ?>
         </nav>
-
-        <div id="current_loc">
-            <p><?=$member['mb_id']?>님 현재위치</p>
-        </div>
     </div>
 
 </header>

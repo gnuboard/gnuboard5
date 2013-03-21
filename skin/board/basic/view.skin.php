@@ -40,7 +40,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
         ?>
             <li>
-                <a href="<? echo $view['file'][$i]['href']; ?>" onclick="javascript:file_download('<? echo $view['file'][$i]['href'].'&amp;confirm=yes'; ?>', '<?=$view['file'][$i]['source']?>'); return false;">
+                <a href="<? echo $view['file'][$i]['href']; ?>" class="view_file_download">
                     <img src="<?=$board_skin_url?>/img/icon_file.gif" alt="첨부파일">
                     <strong><?=$view['file'][$i]['source']?></strong>
                     <span> (<?=$view['file'][$i]['size']?>)</span>
@@ -184,10 +184,22 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 
 <script>
-function file_download(link, file) {
-    <? if ($board['bo_download_point'] < 0) { ?>if (confirm("'"+file+"' 파일을 다운로드 하시면 포인트가 차감(<?=number_format($board['bo_download_point'])?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?"))<?}?>
-    document.location.href=link;
-}
+<? if ($board['bo_download_point'] < 0) { ?>
+$(function() {
+    $("a.view_file_download").click(function() {
+        var msg = "파일을 다운로드 하시면 포인트가 차감(<?=number_format($board['bo_download_point'])?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?";
+
+        if(confirm(msg)) {
+            var href = $(this).attr("href")+"&js=on";
+            $(this).attr("href", href);
+
+            return true;
+        } else {
+            return false;
+        }
+    });
+});
+<?}?>
 
 function board_move(href)
 {

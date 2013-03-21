@@ -87,7 +87,7 @@ function goto_url($url)
 {
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
-    header("Location:$url");
+    @header("Location:$url");
     exit;
 }
 
@@ -137,19 +137,6 @@ function alert($msg='', $url='', $error=true, $post=false)
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
 
-    /*
-    //header("Content-Type: text/html; charset=$g4['charset']");
-    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
-    echo "<script>alert('$msg');";
-    if (!$url)
-        echo "history.go(-1);";
-    echo "</script>";
-    if ($url)
-        // 4.06.00 : 불여우의 경우 아래의 코드를 제대로 인식하지 못함
-        //echo "<meta http-equiv='refresh' content='0;url=$url'>";
-        goto_url($url);
-    exit;
-    */
     $header = '';
     if (isset($g4['title'])) {
         $header = $g4['title'];
@@ -164,11 +151,6 @@ function alert_close($msg, $error=true)
 {
     global $g4;
 
-    /*
-    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
-    echo "<script> alert('$msg'); window.close(); </script>";
-    exit;
-    */
     $header = '';
     if (isset($g4['title'])) {
         $header = $g4['title'];
@@ -495,6 +477,13 @@ function bad120422($matches)
     return $matches['0'];
 }
 
+// tag 내의 주석문 무효화 하기
+function bad130128($matches)
+{
+    $str = $matches[2];
+    return '<'.$matches[1].preg_replace('#(\/\*|\*\/)#', '', $str).'>';
+}
+
 // 내용을 변환
 function conv_content($content, $html)
 {
@@ -521,14 +510,18 @@ function conv_content($content, $html)
             $content .= "</table>";
         }
 
+        $content = preg_replace_callback("/<([^>]+)>/s", 'bad130128', $content); 
+
         $content = preg_replace($source, $target, $content);
-        $content = bad_tag_convert($content);
 
         // XSS (Cross Site Script) 막기
         // 완벽한 XSS 방지는 없다.
-
+        
         // 이런 경우를 방지함 <IMG STYLE="xss:expr/*XSS*/ession(alert('XSS'))">
-        $content = preg_replace("#\/\*.*\*\/#iU", "", $content);
+        //$content = preg_replace("#\/\*.*\*\/#iU", "", $content);
+        // 위의 정규식이 아래와 같은 내용을 통과시키므로 not greedy(비탐욕수량자?) 옵션을 제거함. ignore case 옵션도 필요 없으므로 제거
+        // <IMG STYLE="xss:ex//*XSS*/**/pression(alert('XSS'))"></IMG>
+        $content = preg_replace("#\/\*.*\*\/#", "", $content);
 
         // object, embed 태그에서 javascript 코드 막기
         $content = preg_replace_callback("#<(object|embed)([^>]+)>#i", "bad120422", $content);
@@ -538,7 +531,8 @@ function conv_content($content, $html)
         $content = preg_replace("/(lo)(wsrc)/i", "&#108;&#111;$2", $content);
         $content = preg_replace("/(sc)(ript)/i", "&#115;&#99;$2", $content);
         $content = preg_replace_callback("#<([^>]+)#", create_function('$m', 'return "<".str_replace("<", "&lt;", $m[1]);'), $content);
-        $content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "", $content);
+        //$content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "", $content);
+        $content = preg_replace("/\<(\w|\s|\?)*(xml)/i", "_$1$2_", $content);
 
         // 플래시의 액션스크립트와 자바스크립트의 연동을 차단하여 악의적인 사이트로의 이동을 막는다.
         // value="always" 를 value="never" 로, allowScriptaccess="always" 를 allowScriptaccess="never" 로 변환하는데 목적이 있다.
@@ -550,6 +544,9 @@ function conv_content($content, $html)
         $content = preg_replace("/<(img[^>]+logout\.php[^>]+)/i", "*** CSRF 감지 : &lt;$1", $content);
         $content = preg_replace("/<(img[^>]+download\.php[^>]+bo_table[^>]+)/i", "*** CSRF 감지 : &lt;$1", $content);
 
+        $content = preg_replace_callback("#style\s*=\s*[\"\']?[^\"\']+[\"\']?#i",
+                    create_function('$matches', 'return str_replace("\\\\", "", stripslashes($matches[0]));'), $content);
+
         $pattern = "";
         $pattern .= "(e|&#(x65|101);?)";
         $pattern .= "(x|&#(x78|120);?)";
@@ -558,10 +555,15 @@ function conv_content($content, $html)
         $pattern .= "(e|&#(x65|101);?)";
         $pattern .= "(s|&#(x73|115);?)";
         $pattern .= "(s|&#(x73|115);?)";
-        $pattern .= "(i|&#(x6a|105);?)";
+        //$pattern .= "(i|&#(x6a|105);?)";
+        $pattern .= "(i|&#(x69|105);?)";
         $pattern .= "(o|&#(x6f|111);?)";
         $pattern .= "(n|&#(x6e|110);?)";
-        $content = preg_replace("/".$pattern."/i", "__EXPRESSION__", $content);
+        //$content = preg_replace("/".$pattern."/i", "__EXPRESSION__", $content);
+        $content = preg_replace("/<[^>]*".$pattern."/i", "__EXPRESSION__", $content); 
+        // <IMG STYLE="xss:e\xpression(alert('XSS'))"></IMG> 와 같은 코드에 취약점이 있어 수정함. 121213
+        $content = preg_replace("/(?<=style)(\s*=\s*[\"\']?xss\:)/i", '="__XSS__', $content); 
+        $content = bad_tag_convert($content);
     }
     else // text 이면
     {
@@ -837,6 +839,7 @@ function get_group_select($name, $selected='', $event='')
     $result = sql_query($sql);
     $str = "<select id=\"$name\" name=\"$name\" $event>\n";
     for ($i=0; $row=sql_fetch_array($result); $i++) {
+        if ($i == 0) $str .= "<option value=\"\">선택</option>";
         $str .= option_selected($row['gr_id'], $selected, $row['gr_subject']);
     }
     $str .= "</select>";
@@ -1002,7 +1005,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $str .= $tmp_name."\n";
 
     if(!G4_IS_MOBILE) {
-        $str2 = "<span class=\"sv sv_js_off\">\n";
+        $str2 = "<span class=\"sv\">\n";
         if($mb_id)
             $str2 .= "<a href=\"".G4_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
         if($email)
@@ -1024,7 +1027,8 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
             $str2 .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
         }
         $str2 .= "</span>\n";
-        $str .= $str2;//."\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
+        $str .= $str2;
+        $str .= "\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
     }
 
     $str .= "</span>";
@@ -1307,10 +1311,7 @@ function get_table_define($table, $crlf="\n")
         $schema_create     .= implode($columns, ', ') . ')';
     } // end while
 
-    if (strtolower($g4['charset']) == 'utf-8')
-        $schema_create .= $crlf . ') DEFAULT CHARSET=utf8';
-    else
-        $schema_create .= $crlf . ')';
+    $schema_create .= $crlf . ') DEFAULT CHARSET=utf8';
 
     return $schema_create;
 } // end of the 'PMA_getTableDef()' function
@@ -1515,13 +1516,6 @@ function cut_hangul_last($hangul)
         }
     }
 
-    // 홀수라면 한글이 반쪽난 상태이므로
-    if (strtoupper($g4['charset']) != 'UTF-8') {
-        if ($cnt%2) {
-            $hangul = substr($hangul, 0, $cnt-1);
-        }
-    }
-
     return $hangul;
 }
 
@@ -1552,9 +1546,7 @@ function bad_tag_convert($code)
                     $code);
     }
 
-    //return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>/i", "&lt;$1$2$3&gt;", $code);
-    // script 나 iframe 태그를 막지 않는 경우 필터링이 되도록 수정
-    return preg_replace("/\<([\/]?)(script|iframe)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
+    return preg_replace("/\<([\/]?)(script|iframe|form)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
 }
 
 
@@ -1733,8 +1725,10 @@ function check_device($device)
 // 게시판 최신글 캐시 파일 삭제
 function delete_cache_latest($bo_table)
 {
-    foreach (glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*') as $filename) {
-        unlink($filename);
+    $files = glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
+    if (is_array($files)) {
+        foreach ($files as $filename)
+            unlink($filename);
     }
 }
 
@@ -1745,8 +1739,10 @@ function delete_board_thumbnail($bo_table, $file)
         return;
 
     $fn = preg_replace("/\.[^\.]+$/i", "", basename($file));
-    foreach(glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*') as $file) {
-        unlink($file);
+    $files = glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*');
+    if (is_array($files)) {
+        foreach ($files as $filename)
+            unlink($filename);
     }
 }
 
@@ -1757,7 +1753,7 @@ function get_editor_image($contents)
         return false;
 
     // $contents 중 img 태그 추출
-    $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+".str_replace(".", "\.", $_SERVER['HTTP_HOST'])."[^>\'\"]+)[\'\"]?[^>]*>/";
+    $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/";
     preg_match_all($pattern, $contents, $matchs);
 
     return $matchs;
@@ -1782,9 +1778,10 @@ function delete_editor_thumbnail($contents)
 
         $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
         $filepath = dirname($srcfile);
-
-        foreach(glob($filepath.'/thumb-'.$filename.'*') as $file) {
-            unlink($file);
+        $files = glob($filepath.'/thumb-'.$filename.'*');
+        if (is_array($files)) {
+            foreach($files as $filename)
+                unlink($filename);
         }
     }
 }
@@ -1795,16 +1792,9 @@ function get_skin_stylesheet($skin_path)
     if(!$skin_path)
         return "";
 
-    $doc_root = realpath($_SERVER['DOCUMENT_ROOT']);
-    $skin_path = realpath($skin_path);
-
     $str = "";
 
-    $p = parse_url(G4_URL);
-    $skin_url = $p['scheme'].'://'.$p['host'];
-    if(isset($p['port']))
-        $skin_url .= ':'.$p['port'];
-    $skin_url .= str_replace("\\", "/", str_replace($doc_root, "", $skin_path));
+    $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
 
     if(is_dir($skin_path)) {
         if($dh = opendir($skin_path)) {

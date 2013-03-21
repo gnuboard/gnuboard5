@@ -4,7 +4,7 @@
  * @author sol (ngleader@gmail.com)
  * @brief 글 삭제시 Syndication Ping
  *        gnuboard4/bbs/bbs.delete.php 파일에 추가
- *        include '../syndi/include/gnuboard4_euckr/include.bbs.delete.php';
+ *        include '../syndi/include/include.bbs.delete.php';
  */
 if(!defined('_GNUBOARD_')) return;
 

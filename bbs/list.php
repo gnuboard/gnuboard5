@@ -64,9 +64,9 @@ if ($is_member && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id'
 // 정렬에 사용하는 QUERY_STRING
 $qstr2 = 'bo_table='.$bo_table.'&amp;sop='.$sop;
 
-if ($board['bo_gallery_cols']) {
-    $td_width = (int)(100 / $board['bo_gallery_cols']);
-}
+// 0 으로 나눌시 오류를 방지하기 위하여 값이 없으면 1 로 설정
+$bo_gallery_cols = $board['bo_gallery_cols'] ? $board['bo_gallery_cols'] : 1;
+$td_width = (int)(100 / $bo_gallery_cols);
 
 // 정렬
 // 인덱스 필드가 아니면 정렬에 사용하지 않음

@@ -9,9 +9,71 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
 }
 
 // 게시글리스트 썸네일 생성
-function get_list_thumbnail($filename, $filepath, $thumb_width, $thumb_height, $is_create=false, $is_crop=true)
+function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=true)
 {
-    return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create, $is_crop);
+    global $g4, $config;
+    $filename = $alt = "";
+    $edt = false;
+
+    $sql = " select bf_file, bf_content from {$g4['board_file_table']}
+                where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_type between '1' and '3' order by bf_no limit 0, 1 ";
+    $row = sql_fetch($sql);
+
+    if($row['bf_file']) {
+        $filename = $row['bf_file'];
+        $filepath = G4_DATA_PATH.'/file/'.$bo_table;
+        $src_url = G4_DATA_URL.'/file/'.$bo_table;
+        $alt = get_text($row['bf_content']);
+    } else {
+        $write_table = $g4['write_prefix'].$bo_table;
+        $sql = " select wr_content from $write_table where wr_id = '$wr_id' ";
+        $write = sql_fetch($sql);
+        $matchs = get_editor_image($write['wr_content']);
+        $edt = true;
+
+        for($i=0; $i<count($matchs[1]); $i++)
+        {
+            // 이미지 path 구함
+            $src_url = $matchs[1][$i];
+            if(!stristr($src_url, G4_URL) || stripos($src_url, G4_URL) != 0)
+                continue;
+
+            $srcfile = G4_PATH.str_replace(G4_URL, "", $matchs[1][$i]);
+
+            if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
+                $size = @getimagesize($srcfile);
+                if(empty($size))
+                    continue;
+
+                $filename = basename($srcfile);
+                $filepath = dirname($srcfile);
+
+                preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matchs[0][$i], $malt);
+                $alt = get_text($malt[1]);
+
+                break;
+            }
+        }
+    }
+
+    if(!$filename)
+        return false;
+
+    $tname = thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create, $is_crop);
+
+    if($tname) {
+        if($edt) {
+            $src = str_replace($filename, $tname, $src_url);
+        } else {
+            $src = $src_url.'/'.$tname;
+        }
+    } else {
+        return false;
+    }
+
+    $thumb = array("src"=>$src, "alt"=>$alt);
+
+    return $thumb;
 }
 
 // 게시글보기 썸네일 생성
@@ -38,13 +100,15 @@ function get_view_thumbnail($contents)
     // $contents 중 img 태그 추출
     $matchs = get_editor_image($contents);
 
-    if(!$matchs)
+    if(empty($matchs))
         return $contents;
 
     for($i=0; $i<count($matchs[1]); $i++) {
+        if(!stristr($matchs[1][$i], G4_URL) || stripos($matchs[1][$i], G4_URL) != 0)
+            continue;
+
         // 이미지 path 구함
-        $imgurl = parse_url($matchs[1][$i]);
-        $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
+        $srcfile = G4_PATH.str_replace(G4_URL, "", $matchs[1][$i]);
 
         if(is_file($srcfile)) {
             // 썸네일 높이
@@ -89,7 +153,8 @@ function get_view_thumbnail($contents)
 
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             if(strpos($matchs[1][$i], 'data/editor') && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
-                $thumb_tag = '<a href="'.G4_BBS_URL.'/view_image.php?fn='.urlencode($imgurl['path']).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
+                $imgurl = str_replace(G4_URL, "", $matchs[1][$i]);
+                $thumb_tag = '<a href="'.G4_BBS_URL.'/view_image.php?fn='.urlencode($imgurl).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
             }
 
             $contents = str_replace($img_tag, $thumb_tag, $contents);
@@ -103,6 +168,8 @@ function get_view_thumbnail($contents)
 function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create, $is_crop=false)
 {
     global $g4;
+
+    if ($thumb_width==0 || $thumb_height==0) return;
 
     $thumb_filename = preg_replace("/\.[^\.]+$/i", "", $filename); // 확장자제거
 

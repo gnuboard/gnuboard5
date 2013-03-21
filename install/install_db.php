@@ -7,6 +7,7 @@ header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
+$title = "그누보드4s 설치 3단계 중 3단계 설치 완료";
 include_once ('../config.php');
 include_once ('./install.inc.php');
 
@@ -97,6 +98,10 @@ $sql = " insert into `{$table_prefix}config`
                 cf_possible_ip = '',
                 cf_intercept_ip = '',
                 cf_member_skin = 'basic',
+                cf_mobile_new_skin = 'basic',
+                cf_mobile_search_skin = 'basic',
+                cf_mobile_connect_skin = 'basic',
+                cf_mobile_member_skin = 'basic',
                 cf_register_level = '2',
                 cf_register_point = '1000',
                 cf_icon_level = '2',

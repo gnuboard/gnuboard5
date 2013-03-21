@@ -33,8 +33,8 @@ else $g4['title'] = $g4['title'];
 
     <fieldset>
         <label for="pw_wr_password">패스워드<strong class="sound_only">필수</strong></label>
-        <input type="password" name="wr_password" id="password_wr_password" required class="fs_input required" size="15" maxLength="20">
-        <input type="submit" value="확인" class="fs_submit">
+        <input type="password" name="wr_password" id="password_wr_password" required class="frm_input required" size="15" maxLength="20">
+        <input type="submit" value="확인" class="btn_submit">
     </fieldset>
     </form>
 
