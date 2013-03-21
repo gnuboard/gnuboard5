@@ -349,7 +349,7 @@ if ($w == '' || $w == 'r') {
     // 쓰기 포인트 부여
     if ($w == '') {
         if ($notice) {
-            $bo_notice = $wr_id."\n".$board['bo_notice'];
+            $bo_notice = $wr_id.",".$board['bo_notice'];
             sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
         }
 
@@ -447,7 +447,7 @@ if ($w == '' || $w == 'r') {
     if ($notice) {
         //if (!preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board['bo_notice']))
         if (!in_array((int)$wr_id, $notice_array)) {
-            $bo_notice = $wr_id . '\n' . $board['bo_notice'];
+            $bo_notice = $wr_id . ',' . $board['bo_notice'];
             sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
         }
     } else {
