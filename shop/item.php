@@ -54,7 +54,7 @@ if (!($it['ca_use'] && $it['it_use'])) {
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
 $sql = " select ca_include_head, ca_include_tail
-           from $g4['yc4_category_table']
+           from {$g4['yc4_category_table']}
           where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
 
@@ -132,7 +132,7 @@ $item_relation_count = $row['cnt'];
 <table width=99% cellpadding=0 cellspacing=0 align=center border=0><tr><td>
 
 <?
-if (G4_HTTPS_DOMAIN])
+if (G4_HTTPS_DOMAIN)
     $action_url = G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR.'/cartupdate.php';
 else
     $action_url = './cartupdate.php';
@@ -360,7 +360,7 @@ else
         <tr>
             <td width=30></td>
             <!-- 상품정보 --><td><a href="javascript:click_item('*');"><img src='<?=G4_SHOP_URL?>/img/btn_tab01.gif' border=0></a></td>
-            <!-- 사용후기 --><td width=109 background='<?=G4_SHOP_URL?>/btn_tab02.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_use');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_use_count>0</span>)</span></a></td>
+            <!-- 사용후기 --><td width=109 background='<?=G4_SHOP_URL?>/img/btn_tab02.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_use');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_use_count>0</span>)</span></a></td>
             <!-- 상품문의 --><td width=109 background='<?=G4_SHOP_URL?>/img/btn_tab03.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_qa');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_qa_count>0</span>)</span></a></td>
             <? if ($default['de_baesong_content']) { ?><!-- 배송정보 --><td><a href="javascript:click_item('item_baesong');"><img src='<?=G4_SHOP_URL?>/img/btn_tab04.gif' border=0></a></td><?}?>
             <? if ($default['de_change_content']) { ?><!-- 교환/반품 --><td><a href="javascript:click_item('item_change');"><img src='<?=G4_SHOP_URL?>/img/btn_tab05.gif' border=0></a></td><?}?>
@@ -751,7 +751,7 @@ echo stripslashes($it['it_tail_html']);
 
 $timg = G4_DATA_PATH."/item/{$it_id}_t";
 if (file_exists($timg))
-    echo "<img src='"G4_DATA_URL."/item/{$it_id}_t' border=0><br>";
+    echo "<img src='".G4_DATA_URL."/item/{$it_id}_t' border=0><br>";
 
 if ($ca['ca_include_tail'])
     @include_once($ca['ca_include_tail']);

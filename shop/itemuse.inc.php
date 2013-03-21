@@ -42,7 +42,7 @@ include_once(G4_LIB_PATH.'/thumb.lib.php');
         for ($i=0; $row=sql_fetch_array($result); $i++)
         {
             if ($i > 0)
-                echo "<tr><td colspan=3 background='"G4_SHOP_URL."/img/dot_line.gif' height='1'></td></tr>";
+                echo "<tr><td colspan=3 background='".G4_SHOP_URL."/img/dot_line.gif' height='1'></td></tr>";
 
             $num = $use_total_count - ($use_page - 1) * $use_page_rows - $i;
 
