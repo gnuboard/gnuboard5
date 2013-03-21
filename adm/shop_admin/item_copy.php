@@ -1,11 +1,11 @@
 <?
-$sub_menu = "400300";
-include_once("./_common.php");
+$sub_menu = '400300';
+include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "상품 복사";
-include_once("$g4[path]/head.sub.php");
+$g4['title'] = '상품 복사';
+include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <link rel='stylesheet' href='./admin.style.css' type='text/css'>

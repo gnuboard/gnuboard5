@@ -20,7 +20,7 @@ $cp = sql_fetch($sql);
 
 // 상품테이블의 필드가 추가되어도 수정하지 않도록 필드명을 추출하여 insert 퀴리를 생성한다. (상품코드만 새로운것으로 대체)
 $sql_common = "";
-$fields = mysql_list_fields($mysql_db, $g4['yc4_item_table']);
+$fields = mysql_list_fields(G4_MYSQL_DB, $g4['yc4_item_table']);
 $columns = mysql_num_fields($fields);
 for ($i = 0; $i < $columns; $i++) {
   $fld = mysql_field_name($fields, $i);
