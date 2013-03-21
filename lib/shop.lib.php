@@ -32,7 +32,7 @@ function get_image($img, $width=0, $height=0)
     }
     else
     {
-        $str = "<img id=\"$img\" src='\"".G4_SHOP_URL."/img/no_image.gif\" border=\"0\" ";
+        $str = "<img id=\"$img\" src=\"".G4_SHOP_URL."/img/no_image.gif\" border=\"0\" ";
         if ($width)
             $str .= "width=\"$width\" height=\"$height\"";
         else
