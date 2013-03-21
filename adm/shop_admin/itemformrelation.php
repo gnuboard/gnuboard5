@@ -11,12 +11,7 @@ $sql = " select ca_id, it_id, it_name, it_amount
             and it_id <> '$it_id'
           order by ca_id, it_name ";
 $result = sql_query($sql);
-$num = @mysql_num_rows($result);
-?>
-<script>
-parent.document.getElementById('relation').length = <?=$num?>;
-<?
-$cnt = 0;
+
 for($i=0;$row=sql_fetch_array($result);$i++) {
     //$sql2 = " select count(*) as cnt from $g4[yc4_item_relation_table] where it_id = '$row[it_id]' ";
     $sql2 = " select count(*) as cnt from {$g4['yc4_item_relation_table']} where it_id = '$it_id' and it_id2 = '{$row['it_id']}' ";
@@ -33,14 +28,9 @@ for($i=0;$row=sql_fetch_array($result);$i++) {
         $it_image = "{$row['it_id']}_s";
     else
         $it_image = "";
-    //echo "parent.document.getElementById('relation').length++;";
-    echo "parent.document.getElementById('relation').options[$cnt].text = '$ca_name : $it_name';\n";
-    echo "parent.document.getElementById('relation').options[$cnt].value = '$row[it_id]/$it_image/{$row['it_amount']}';\n";
-    $cnt++;
+
+    $options .= "<option value=\"".$row['it_id']."/".$it_image."/".$row['it_amount']."\">$ca_name : $it_name</option>\n";
 }
-?>
-parent.document.getElementById('relation').length = <?=$cnt?>;
-</script>
-<?
-include_once (G4_PATH.'/tail.sub.php');
+
+echo $options;
 ?>
