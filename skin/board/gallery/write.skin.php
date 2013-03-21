@@ -60,7 +60,7 @@ echo $option_hidden;
 <? if ($is_password) { ?>
 <tr>
     <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" name="wr_password" id="wr_password" <?=$password_required?> class="required frm_input" maxlength="20"></td>
+    <td><input type="password" name="wr_password" id="wr_password" <?=$password_required?> class="frm_input <?=$password_required?>" maxlength="20"></td>
 </tr>
 <? } ?>
 
