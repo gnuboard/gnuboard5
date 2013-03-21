@@ -103,12 +103,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <? if ($config['cf_req_addr']) {?><strong class="sound_only">필수</strong><? } ?>
     </th>
     <td>
-        <input type="text" name="mb_zip1" value="<?=$member['mb_zip1']?>" id="reg_mb_zip1" <?=$config['cf_req_addr']?"required":"";?> title="우편번호 앞자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3">
+        <input type="text" name="mb_zip1" value="<?=$member['mb_zip1']?>" id="reg_mb_zip1" <?=$config['cf_req_addr']?"required":"";?> title="우편번호 앞자리<?=$config['cf_req_addr']?"(필수)":"";?>" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3">
         -
-        <input type="text"  name="mb_zip2" value="<?=$member['mb_zip2']?>" id="reg_mb_zip2" <?=$config['cf_req_addr']?"required":"";?> title="우편번호 뒷자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3">
+        <input type="text"  name="mb_zip2" value="<?=$member['mb_zip2']?>" id="reg_mb_zip2" <?=$config['cf_req_addr']?"required":"";?> title="우편번호 뒷자리<?=$config['cf_req_addr']?"(필수)":"";?>" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3">
         <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">주소찾기</a>
-        <input type="text"  name="mb_addr1" value="<?=$member['mb_addr1']?>" id="reg_mb_addr1" <?=$config['cf_req_addr']?"required":"";?> title="행정구역주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50">
-        <input type="text" name="mb_addr2" value="<?=$member['mb_addr2']?>" id="reg_mb_addr2" <?=$config['cf_req_addr']?"required":"";?> title="상세주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50">
+        <input type="text"  name="mb_addr1" value="<?=$member['mb_addr1']?>" id="reg_mb_addr1" <?=$config['cf_req_addr']?"required":"";?> title="행정구역주소<?=$config['cf_req_addr']?"(필수)":"";?>" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50">
+        <input type="text" name="mb_addr2" value="<?=$member['mb_addr2']?>" id="reg_mb_addr2" <?=$config['cf_req_addr']?"required":"";?> title="상세주소<?=$config['cf_req_addr']?"(필수)":"";?>" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50">
     </td>
 </tr>
 <? } ?>

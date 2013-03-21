@@ -11,11 +11,8 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file='', $cc=
     // 메일발송 사용을 하지 않는다면
     if (!$config['cf_email_use']) return;
 
-    //$fname   = "=?$g4[charset]?B?" . base64_encode($fname) . "?=";
-    //$subject = "=?$g4[charset]?B?" . base64_encode($subject) . "?=";
     $fname   = "=?utf-8?B?" . base64_encode($fname) . "?=";
     $subject = "=?utf-8?B?" . base64_encode($subject) . "?=";
-    //$g4[charset] = ($g4[charset] != "") ? "charset=$g4[charset]" : "";
 
     $header  = "Return-Path: <$fmail>\n";
     $header .= "From: $fname <$fmail>\n";

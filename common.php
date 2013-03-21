@@ -2,9 +2,6 @@
 /*******************************************************************************
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
-//error_reporting(E_ALL ^ E_NOTICE);
-//error_reporting(E_ALL & ~E_NOTICE);
-//error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR );
 
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
@@ -69,20 +66,14 @@ $g4     = array();
 
 function g4_path()
 {
-    $path           = dirname(__FILE__);                                        // 예) /home/sir/www/g4s
-    $linux_dir      = str_replace("\\", "/", $path);                            // 예) /home/sir/www/g4s
-    //$document_root  = str_replace("\\", "/", $_SERVER['DOCUMENT_ROOT']);        // 예) /home/sir/www
-	$document_root  = str_replace("\\", "/", realpath($_SERVER['DOCUMENT_ROOT']));
-    $base_dir       = preg_replace('#^'.$document_root.'#i', '', $linux_dir);   // 예) /g4s
-    $port           = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
-    $http           = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
-
-    $result = array();
-    $result['path']     = $path;
-    $result['url']      = $http.$_SERVER['SERVER_NAME'].$port.$base_dir;
-    $result['curr_url'] = $http.$_SERVER['SERVER_NAME'].$port.$_SERVER['PHP_SELF'];
-    $result['curr_uri'] = $result['curr_url'] . ($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : '');
-
+    $result['path'] = str_replace('\\', '/', dirname(__FILE__));
+    $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $_SERVER['SCRIPT_NAME']);
+    $document_root = str_replace($tilde_remove, '', $_SERVER['SCRIPT_FILENAME']);
+    $root = str_replace($document_root, '', $result['path']);
+    $port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
+    $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
+    $user = str_replace(str_replace($document_root, '', $_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']);
+    $result['url'] = $http.$_SERVER['SERVER_NAME'].$port.$user.$root;
     return $result;
 }
 
@@ -128,7 +119,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
             <li><strong><?=G4_DATA_DIR.'/'.G4_DBCONFIG_FILE?></strong></li>
         </ul>
         <p>프로그램 설치 후 실행하시기 바랍니다.</p>
-        <a href="<?=G4_URL?>/install/">그누보드4S 설치하기</a>
+        <a href="./install/">그누보드4S 설치하기</a>
     </div>
 </body>
 </html>
@@ -221,6 +212,7 @@ if (isset($_REQUEST['sca']))  {
 
 if (isset($_REQUEST['sfl']))  {
     $sfl = escape_trim($_REQUEST['sfl']);
+    $sfl = preg_replace("/[\<\>\'\"\%\=\(\)\s]/", "", $sfl);
     if ($sfl)
         $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
 } else {

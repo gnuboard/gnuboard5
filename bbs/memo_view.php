@@ -4,6 +4,8 @@ include_once('./_common.php');
 if (!$is_member)
     alert('회원만 이용하실 수 있습니다.');
 
+$me_id = (int)$_REQUEST['me_id'];
+
 if ($kind == 'recv')
 {
     $t = '받은';
