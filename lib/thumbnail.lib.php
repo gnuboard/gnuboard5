@@ -41,6 +41,10 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
             $srcfile = G4_PATH.str_replace(G4_URL, "", $matchs[1][$i]);
 
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
+                $size = @getimagesize($srcfile);
+                if(empty($size))
+                    continue;
+
                 $filename = basename($srcfile);
                 $filepath = dirname($srcfile);
 
