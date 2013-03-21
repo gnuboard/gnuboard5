@@ -29,7 +29,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 .to_content a {z-index:100000;position:absolute;top:0;left:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
 /* 이미지 등비율 리사이징 */
-.img_fix {float:left;width:100%;height:auto}
+.img_fix {width:100%;height:auto}
 
 /* 캡챠 자동등록(입력)방지 기본 */
 #captcha img {height:1.8em;border:1px solid #cfded8;border-right:0}
@@ -91,8 +91,9 @@ pre {overflow-x:scroll;font-size:1.1em}
 #ft img {display:none}
 
 #ft_copy {background:#232323}
-#ft_copy p {padding:0.5em;color:#4a9ab8}
+#ft_copy p {position:relative;padding:0.5em;color:#4a9ab8}
 #ft_copy b {color:#fff}
+#ft_copy a {position:absolute;top:0.5em;right:0.5em;color:#fff;text-decoration:none}
 
 /* PC화면으로 */
 #g4s_cng {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;color:#000;font-size:1em;text-decoration:none;text-align:center}

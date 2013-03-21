@@ -84,17 +84,19 @@ $(function(){
         hide_menu = true;
     });
 
-    $(document).click(function() {
+    $('#gnb_ul>li').bind('mouseleave',function(){
+        submenu_hide();
+    });
+
+    $(document).bind('click focusin',function(){
         if(hide_menu) {
-            $(".gnb_1depth").removeClass("gnb_1depth_over gnb_1depth_over2 gnb_1depth_on");
+            submenu_hide();
         }
     });
 
-    $(document).focusin(function() {
-        if(hide_menu) {
-            $(".gnb_1depth").removeClass("gnb_1depth_over gnb_1depth_over2 gnb_1depth_on");
-        }
-    });
+    function submenu_hide() {
+        $(".gnb_1depth").removeClass("gnb_1depth_over gnb_1depth_over2 gnb_1depth_on");
+    }
 
     // 텍스트 리사이즈 카운트 쿠키있으면 실행
     var resize_act;

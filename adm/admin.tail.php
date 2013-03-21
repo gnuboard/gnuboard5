@@ -13,7 +13,10 @@ if (!defined('_GNUBOARD_')) exit;
 </div>
 
 <footer id="ft">
-    <p>Copyright &copy; 소유하신 도메인. All rights reserved.</p>
+    <p>
+        Copyright &copy; 소유하신 도메인. All rights reserved.<br>
+        <a href="#">상단으로</a>
+    </p>
 </footer>
 
 <!-- <p>실행시간 : <?=get_microtime() - $begin_time;?> -->

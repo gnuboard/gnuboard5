@@ -15,6 +15,7 @@ function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
     $skins = get_skin_dir($skin_gubun);
     $str = "<select id=\"$id\" name=\"$name\" $event>\n";
     for ($i=0; $i<count($skins); $i++) {
+        if ($i == 0) $str .= "<option value=\"\">선택</option>";
         $str .= option_selected($skins[$i], $selected);
     }
     $str .= "</select>";
@@ -27,6 +28,7 @@ function get_mobile_skin_select($skin_gubun, $id, $name, $selected='', $event=''
     $skins = get_skin_dir($skin_gubun, G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
     $str = "<select id=\"$id\" name=\"$name\" $event>\n";
     for ($i=0; $i<count($skins); $i++) {
+        if ($i == 0) $str .= "<option value=\"\">선택</option>";
         $str .= option_selected($skins[$i], $selected);
     }
     $str .= "</select>";

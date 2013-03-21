@@ -53,6 +53,7 @@ if (file_exists($dbconfig_file)) {
 ?>
 
 <?
+$exists_data_dir = true;
 // data 디렉토리가 있는가?
 if (!is_dir($data_path))
 {
@@ -62,10 +63,12 @@ if (!is_dir($data_path))
     $> mkdir <?=G4_DATA_DIR?><br /><br />
     위 명령 실행후 브라우저를 새로고침 하십시오.</p>
 <?
+    $exists_data_dir = false;
 }
 ?>
 
 <?
+$write_data_dir = true;
 // data 디렉토리에 파일 생성 가능한지 검사.
 if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
     if (!(is_readable($data_path) && is_writeable($data_path) && is_executable($data_path)))
@@ -75,7 +78,7 @@ if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
         $> chmod 707 <?=G4_DATA_DIR?> 또는 chmod uo+rwx <?=G4_DATA_DIR?><br /><br />
         위 명령 실행후 브라우저를 새로고침 하십시오.</p>
     <?
-        exit;
+        $write_data_dir = false;
     }
 }
 ?>

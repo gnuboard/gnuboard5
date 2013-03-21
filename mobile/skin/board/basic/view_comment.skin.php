@@ -62,7 +62,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <ul class="bo_vc_act">
                 <? if ($list[$i]['is_reply']) { ?><li><a href="<? echo $c_reply_href; ?>" onclick="comment_box('<?=$comment_id?>', 'c'); return false;">답변</a></li><? } ?>
                 <? if ($list[$i]['is_edit']) { ?><li><a href="<? echo $c_edit_href; ?>" onclick="comment_box('<?=$comment_id?>', 'cu'); return false;">수정</a></li><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="comment_delete('<?=$list[$i]['del_link']?>'); return false;">삭제</a></li><? } ?>
+                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="return comment_delete();">삭제</a></li><? } ?>
             </ul>
         </footer>
         <? } ?>
@@ -195,17 +195,17 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             var cnt = parseInt(document.getElementById('char_count').innerHTML);
             if (char_min > 0 && char_min > cnt)
             {
-                alert("댓글는 "+char_min+"글자 이상 쓰셔야 합니다.");
+                alert("댓글은 "+char_min+"글자 이상 쓰셔야 합니다.");
                 return false;
             } else if (char_max > 0 && char_max < cnt)
             {
-                alert("댓글는 "+char_max+"글자 이하로 쓰셔야 합니다.");
+                alert("댓글은 "+char_max+"글자 이하로 쓰셔야 합니다.");
                 return false;
             }
         }
         else if (!document.getElementById('wr_content').value)
         {
-            alert("댓글를 입력하여 주십시오.");
+            alert("댓글을 입력하여 주십시오.");
             return false;
         }
 
@@ -279,9 +279,9 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         }
     }
 
-    function comment_delete(url)
+    function comment_delete()
     {
-        if (confirm("이 댓글를 삭제하시겠습니까?")) location.href = url;
+        return confirm("이 댓글을 삭제하시겠습니까?");
     }
 
     comment_box('', 'c'); // 댓글 입력폼이 보이도록 처리하기위해서 추가 (root님)

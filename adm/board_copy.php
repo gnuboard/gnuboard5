@@ -41,14 +41,15 @@ include_once(G4_PATH.'/head.sub.php');
     </tr>
     </tbody>
     </table>
-</div>
 
-<div class="btn_confirm">
-    <input type="submit" class="btn_submit" value="복사">
-    <input type="button" class="btn_cancel" value="창닫기" onclick="window.close();">
-</div>
+    <div class="btn_confirm">
+        <input type="submit" class="btn_submit" value="복사">
+        <input type="button" class="btn_cancel" value="창닫기" onclick="window.close();">
+    </div>
 
-</form>
+    </form>
+
+</div>
 
 <script>
 function fboardcopy_check(f)

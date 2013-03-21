@@ -1,19 +1,8 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-
-global $is_admin;
-
-// 투표번호가 넘어오지 않았다면 가장 큰(최근에 등록한) 투표번호를 얻는다
-if (!$po_id) {
-    $po_id = $config['cf_max_po_id'];
-
-    if (!$po_id) return;
-}
-
-$po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '$po_id' ");
 ?>
 
-<form name="fpoll" action="<?=G4_BBS_URL?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="win_poXll" method="post">
+<form name="fpoll" action="<?=G4_BBS_URL?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="win_poll" method="post">
 <input type="hidden" name="po_id" value="<?=$po_id?>">
 <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
 <section id="poll">
@@ -55,7 +44,7 @@ function fpoll_submit(f)
         return false;
     }
 
-    win_poll();
+    win_poll(f.action);
     return true;
 }
 

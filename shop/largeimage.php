@@ -5,6 +5,7 @@ $sql = " select it_name from {$g4['yc4_item_table']} where it_id='$it_id' ";
 $row = sql_fetch_array(sql_query($sql));
 
 $imagefile = G4_DATA_PATH."/item/$img";
+$imagefileurl = G4_DATA_URL."/item/$img";
 $size = getimagesize($imagefile);
 
 $g4['title'] = "{$row['it_name']} ($it_id)";
@@ -12,7 +13,7 @@ include_once(G4_PATH.'/head.sub.php');
 ?>
 <br>
 <div align=center>
-    <a href='#' onclick='window.close();'><img id='largeimage' src='<?=$imagefile?>' width='<?=$size[0]?>' height='<?=$size[1]?>' alt='<?=$row['it_name']?>' border=0 style='border:1 solid #E4E4E4;'></a>
+    <a href='#' onclick='window.close();'><img id='largeimage' src='<?=$imagefileurl?>' width='<?=$size[0]?>' height='<?=$size[1]?>' alt='<?=$row['it_name']?>' border=0 style='border:1 solid #E4E4E4;'></a>
 </div>
 <p>
 <table width=100% cellpadding=0 cellspacing=0>

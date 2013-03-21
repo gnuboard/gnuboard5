@@ -1,8 +1,9 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-if(!G4_USE_SHOP)
-    return;
+define('G4_USE_SHOP', true);
+
+if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
 
 include_once(G4_LIB_PATH.'/shop.lib.php');
 

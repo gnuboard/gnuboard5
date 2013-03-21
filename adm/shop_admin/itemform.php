@@ -482,7 +482,15 @@ if ($ii) {
         <script>
         function search_relation(fld) {
             if (fld.value) {
-                window.open('itemformrelation.php?it_id=<?=$it_id?>&ca_id='+fld.value, 'hiddenframe', '');
+                $.post(
+                    './itemformrelation.php',
+                    { it_id: '<?=$it_id?>', ca_id: fld.value },
+                    function(data) {
+                        if(data) {
+                            $("#relation").html(data);
+                        }
+                    }
+                );
             }
         }
         </script>
@@ -527,16 +535,18 @@ if ($ii) {
 			// 김선용 2006.10
 			function relation_img(name, id)
 			{
-				item_image_dir = "<?=G4_DATA_URL?>/item";
-				if(!name) return;
+				var item_image_url = "";
+                if(!name) return;
 				temp = name.split("/");
 				if(temp[1] == ''){
 					temp[1] = "no_image.gif";
-					var item_image_dir = "<?=G4_SHOP_URL?>/img";
-				}
+					item_image_url = "<?=G4_SHOP_URL?>/img";
+				} else {
+                    item_image_url = "<?=G4_DATA_URL?>/item";
+                }
 				view_span = document.getElementById(id);
 				item_price = number_format(String(temp[2]));
-				view_span.innerHTML = "<img src='"+item_image_dir+"/"+temp[1]+"' width=100 height=80 border=1 style='border-color:#333333; cursor:pointer' onclick=\"popup_window('"+g4_path+"/shop/item.php?it_id="+temp[0]+"', '', '')\" title='새창으로 상품보기' alt='새창으로 상품보기'><br>"+item_price+" 원";
+				view_span.innerHTML = "<a href=\"<?=G4_SHOP_URL?>/item.php?it_id="+temp[0]+"\" target=\"_blank\"><img src=\""+item_image_url+"/"+temp[1]+"\"width=\"100\" height=\"80\" border=\"1\" style=\"border-color:#333333;\" title=\"상품 새창으로 보기\"></a><br>"+item_price+" 원";
 			}
 
 			function relation_add(fld)
@@ -795,7 +805,7 @@ function codedupcheck(id)
                 return false;
             } else {
                 alert("'"+data.code+"' 은(는) 등록된 코드가 없으므로 사용하실 수 있습니다.");
-                document.fcategoryform.codedup.value = '';
+                document.fitemform.codedup.value = '';
             }
         }, "json"
     );

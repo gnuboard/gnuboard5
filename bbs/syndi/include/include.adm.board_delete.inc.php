@@ -4,7 +4,7 @@
  * @author sol (ngleader@gmail.com)
  * @brief 게시판 삭제시 Syndication Ping
  *        gnuboard4/adm/board_delete.inc.php 파일에 추가
- *        include '../syndi/include/gnuboard4_euckr/include.adm.board_delete.inc.php';
+ *        include '../syndi/include/include.adm.board_delete.inc.php';
  */
 if(!defined('_GNUBOARD_')) return;
 

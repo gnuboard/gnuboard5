@@ -43,6 +43,8 @@ CKEDITOR.on('dialogDefinition', function(ev) {
             this.selectPage('Upload'); 
         }; 
 
+        /*
+        alt 를 넘기지 못하는 관계로 주석 처리함. 130314 kagla
         dialogDefinition.onOk = function (e) {
             var imageSrcUrl = e.sender.originalElement.$.src;
             var imgHtml = CKEDITOR.dom.element.createFromHtml('<img src=' + imageSrcUrl + ' alt="" />');
@@ -55,6 +57,7 @@ CKEDITOR.on('dialogDefinition', function(ev) {
                 $(".cke_dialog_ui_button_ok span").click();
             }
         };
+        */
 
         /*
         var uploadTab = dialogDefinition.getContents('Upload');

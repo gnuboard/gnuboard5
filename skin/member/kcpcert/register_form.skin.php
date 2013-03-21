@@ -60,10 +60,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <? } ?>
 
 <tr>
-    <th scope="row"><label for="reg_mb_email">E-mail<? if ($config['cf_use_email_certify']) {?><strong class="sound_only">필수</strong><?}?></label></th>
+    <th scope="row"><label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
     <td>
         <input type="hidden" name="old_email" value="<?=$member['mb_email']?>">
-        <input type="text" name="mb_email" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' <?=$config['cf_use_email_certify']?"required":"";?> id="reg_mb_email" class="frm_input email <?=$config['cf_use_email_certify']?"required":"";?>" size="50" maxlength="100">
+        <input type="text" name="mb_email" value='<?=isset($member['mb_email'])?$member['mb_email']:'';?>' id="reg_mb_email" required class="frm_input email required" size="50" maxlength="100">
         <? if ($config['cf_use_email_certify']) { ?>
         <span class="frm_info">
             <? if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; } ?>
@@ -109,7 +109,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </th>
     <td>
         <input type="text" name="mb_zip1"value="<?=$member['mb_zip1']?>" id="reg_mb_zip1" title="우편번호 앞자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> >
-          -
+        -
         <input type="text" name="mb_zip2" value="<?=$member['mb_zip2']?>" id="reg_mb_zip2" title="우편번호 뒷자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3" <?=$config['cf_req_addr']?"required":"";?>>
         <a href="<? echo $zip_href; ?>" target="_blank" id="reg_zip_find" class="btn_frmline win_zip_find">주소찾기</a>
         <input type="text" name="mb_addr1" value="<?=$member['mb_addr1']?>" id="reg_mb_addr1" title="행정구역주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50" <?=$config['cf_req_addr']?"required":"";?>>
@@ -135,7 +135,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </tr>
 <? } ?>
 
-<? if ($member['mb_level'] >= $config['cf_icon_level']) { ?>
+<? if ($config['cf_use_member_icon'] && $member['mb_level'] >= $config['cf_icon_level']) { ?>
 <tr>
     <th scope="row"><label for="reg_mb_icon">회원아이콘</label></th>
     <td>

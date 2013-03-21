@@ -37,7 +37,7 @@ if ($w == '') {
 
     $html_title .= ' 생성';
 
-    $bo_table_attr = 'class="required alnum_"';
+    $bo_table_attr = 'required alnum_';
     $sound_only = '<strong class="sound_only">필수</strong>';
 
     $board['bo_count_delete'] = 1;
@@ -48,11 +48,11 @@ if ($w == '') {
     $board['bo_download_point'] = $config['cf_download_point'];
 
     $board['bo_gallery_cols'] = 4;
-    $board['bo_gallery_width'] = 200;
-    $board['bo_gallery_height'] = 150;
-    $board['bo_mobile_gallery_cols'] = 2;
-    $board['bo_mobile_gallery_width'] = 160;
-    $board['bo_mobile_gallery_height'] = 120;
+    $board['bo_gallery_width'] = 174;
+    $board['bo_gallery_height'] = 124;
+    $board['bo_mobile_gallery_cols'] = 3;
+    $board['bo_mobile_gallery_width'] = 125;
+    $board['bo_mobile_gallery_height'] = 100;
     $board['bo_table_width'] = 100;
     $board['bo_page_rows'] = $config['cf_page_rows'];
     $board['bo_subject_len'] = 60;
@@ -127,7 +127,7 @@ $pg_anchor = "<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="bo_table">TABLE<?=$sound_only?></label></th>
         <td colspan="2">
-            <input type="text" name="bo_table" value="<?=$board['bo_table'] ?>" id="bo_table" required class="required frm_input" maxlength="20" <?=$bo_table_attr?>>
+            <input type="text" name="bo_table" value="<?=$board['bo_table'] ?>" id="bo_table" required class="frm_input <?=$bo_table_attr?>" maxlength="20">
             <? if ($w == '') { ?>
                 영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
             <? } else { ?>
@@ -160,10 +160,10 @@ $pg_anchor = "<ul class=\"anchor\">
             </select>
         </td>
         <td class="group_setting">
-            <input type="checkbox" name="chk_grp_use" value="1" id="chk_grp_use">
-            <label for="chk_grp_use">그룹적용</label>
-            <input type="checkbox" name="chk_all_use" value="1" id="chk_all_use">
-            <label for="chk_all_use">전체적용</label>
+            <input type="checkbox" name="chk_grp_device" value="1" id="chk_grp_device">
+            <label for="chk_grp_device">그룹적용</label>
+            <input type="checkbox" name="chk_all_device" value="1" id="chk_all_device">
+            <label for="chk_all_device">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -530,7 +530,7 @@ $pg_anchor = "<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="bo_upload_count">파일 업로드 갯수<strong class="sound_only">필수</strong></label></th>
         <td>
-            <?=help('게시물 한건당 업로드 할 수 있는 파일의 최대 개수 (0 이면 제한 없음)')?>
+            <?=help('게시물 한건당 업로드 할 수 있는 파일의 최대 개수 (0 은 파일첨부 사용하지 않음)')?>
             <input type="text" name="bo_upload_count" value="<?=$board['bo_upload_count']?>" id="bo_upload_count" required class="required numeric frm_input" size="4">
         </td>
         <td class="group_setting">

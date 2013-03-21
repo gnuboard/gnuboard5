@@ -11,9 +11,8 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file='', $cc=
     // 메일발송 사용을 하지 않는다면
     if (!$config['cf_email_use']) return;
 
-    $fname   = "=?$g4[charset]?B?" . base64_encode($fname) . "?=";
-    $subject = "=?$g4[charset]?B?" . base64_encode($subject) . "?=";
-    //$g4[charset] = ($g4[charset] != "") ? "charset=$g4[charset]" : "";
+    $fname   = "=?utf-8?B?" . base64_encode($fname) . "?=";
+    $subject = "=?utf-8?B?" . base64_encode($subject) . "?=";
 
     $header  = "Return-Path: <$fmail>\n";
     $header .= "From: $fname <$fmail>\n";
@@ -31,11 +30,11 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file='', $cc=
     }
 
     if ($type) {
-        $header .= "Content-Type: TEXT/HTML; charset=$g4[charset]\n";
+        $header .= "Content-Type: TEXT/HTML; charset=utf-8\n";
         if ($type == 2)
             $content = nl2br($content);
     } else {
-        $header .= "Content-Type: TEXT/PLAIN; charset=$g4[charset]\n";
+        $header .= "Content-Type: TEXT/PLAIN; charset=utf-8\n";
         $content = stripslashes($content);
     }
     $header .= "Content-Transfer-Encoding: BASE64\n\n";

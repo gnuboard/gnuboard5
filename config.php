@@ -17,7 +17,7 @@ if (PHP_VERSION >= '5.3.0') {
 
 /*
 보안서버 도메인
-회원가입, 글쓰기에 사용되는 https 로 시작되는 주소를 말합니다.
+회원가입, 글쓰기에 사용되는 https 로 시작되는 주소를 말합니다. 
 포트가 있다면 도메인 뒤에 :443 과 같이 입력하세요.
 보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.
 입력예) https://www.domain.com:443/gnuboard4s
@@ -50,9 +50,9 @@ define('G4_MOBILE_DIR', 'mobile');
 if (G4_DOMAIN) {
     define('G4_URL', G4_DOMAIN);
 } else {
-    if (isset($g4_path['url']))
+    if (isset($g4_path['url'])) 
         define('G4_URL', $g4_path['url']);
-    else
+    else 
         define('G4_URL', '');
 }
 
@@ -87,7 +87,6 @@ define('G4_MOBILE_PATH', G4_PATH.'/'.G4_MOBILE_DIR);
 
 
 define('G4_USE_CACHE', true); // 최신글등에 cache 기능 사용 여부
-define('G4_USE_SHOP', true);  // 쇼핑몰 사용 여부
 
 
 // 시간 상수

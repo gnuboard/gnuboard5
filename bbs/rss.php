@@ -30,15 +30,15 @@ if (!$row['bo_use_rss_view']) {
     exit;
 }
 
-Header("Content-type: text/xml");
-header("Cache-Control: no-cache, must-revalidate");
-header("Pragma: no-cache");
+header('Content-type: text/xml');
+header('Cache-Control: no-cache, must-revalidate');
+header('Pragma: no-cache');
 
 $sql = " select gr_subject from {$g4['group_table']} where gr_id = '{$row['gr_id']}' ";
 $row = sql_fetch($sql);
 $subj1 = specialchars_replace($row['gr_subject'], 255);
 
-echo '<?xml version="1.0" encoding="'.$g4['charset'].'"?>'."\n";
+echo '<?xml version="1.0" encoding="utf-8"?>'."\n";
 ?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
