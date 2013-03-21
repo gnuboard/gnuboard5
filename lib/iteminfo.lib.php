@@ -46,7 +46,7 @@ $item_info = array(
     ),
     "fashion"=>array(
         "title"=>"패션잡화(모자/벨트/액세서리)",
-        "article"=>array( 
+        "article"=>array(
             "kind"=>array("종류", ""),
             "material"=>array("소재", ""),
             "size"=>array("치수", ""),
@@ -560,11 +560,11 @@ $item_info = array(
 
 
 // 상품상세정보 테이블 생성
-function create_table_item_info() 
+function create_table_item_info()
 {
     global $g4;
     return sql_query("
-        CREATE TABLE IF NOT EXISTS `{$g4['shop_item_info_table']}` (
+        CREATE TABLE IF NOT EXISTS `{$g4['yc4_item_info_table']}` (
           `ii_id` int(11) NOT NULL AUTO_INCREMENT,
           `it_id` varchar(10) NOT NULL,
           `ii_gubun` varchar(50) NOT NULL,
@@ -577,7 +577,7 @@ function create_table_item_info()
     ", false);
 }
 
-function item_info_gubun($gubun) 
+function item_info_gubun($gubun)
 {
     global $item_info;
     return $item_info[$gubun]['title'];
