@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<form name="fpoll" action="<?=G4_BBS_URL?>/poll_update.php" onsubmit="return fpoll_submit(this);" target="win_poll" method="post">
+<form name="fpoll" action="<?=G4_BBS_URL?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
 <input type="hidden" name="po_id" value="<?=$po_id?>">
 <input type="hidden" name="skin_dir" value="<?=$skin_dir?>">
 <section id="poll">
@@ -44,9 +44,9 @@ function fpoll_submit(f)
         return false;
     }
 
-    var url = "<?=G4_BBS_URL?>/poll.php";
-    f.action = url;
-    win_poll(url);
+    var new_win = window.open("about:blank", "win_poll", "width=616,height=500,scrollbars=yes,resizable=yes"); 
+    f.target = "win_poll"; 
+
     return true;
 }
 
