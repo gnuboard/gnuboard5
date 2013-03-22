@@ -57,8 +57,8 @@ for ($i=1; $i<=$tv_idx; $i++)
     $rowx = sql_fetch(" select it_name from $g4[yc4_item_table] where it_id = '$tv_it_id' ");
     $it_name = get_text(addslashes($rowx['it_name']));
     $img = get_it_image($tv_it_id."_s", $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
-    $img = preg_replace("/\<a /", "<a title='$it_name' ", $img);
-    echo "goods_link[$i] = \"{$img}<br/><span class=small>".cut_str($it_name,10,"")."</span>\";\n";
+    $img = str_replace('"', '\"', preg_replace("/\<a /", "<a title=\"$it_name\" ", $img));
+    echo "goods_link[$i] = \"{$img}<br/><span class=\\\"small\\\">".cut_str($it_name,10,"")."</span>\";\n";
 }
 ?>
 
@@ -133,10 +133,13 @@ function CheckUIElements()
     var yMenuFrom, yMenuTo, yButtonFrom, yButtonTo, yOffset, timeoutNextCheck;
 
     yMenuFrom   = parseInt (document.getElementById('divToday').style.top, 10);
-    if ( g4_is_gecko )
+    /*
+        if ( g4_is_gecko )
         yMenuTo = top.pageYOffset + <?=$tv_div[top]?>;
     else if ( g4_is_ie )
         yMenuTo = document.body.scrollTop + parseInt("<?=$tv_div['top']?>");
+    */
+    yMenuTo = document.body.scrollTop + parseInt("<?=$tv_div['top']?>");
 
     timeoutNextCheck = 500;
 
