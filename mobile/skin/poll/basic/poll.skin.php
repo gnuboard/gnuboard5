@@ -44,7 +44,9 @@ function fpoll_submit(f)
         return false;
     }
 
-    win_poll(f.action);
+    var url = "<?=G4_BBS_URL?>/poll.php";
+    f.action = url;
+    win_poll(url);
     return true;
 }
 
