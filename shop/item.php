@@ -168,9 +168,9 @@ else
                     {
                         echo get_large_image("{$it_id}_l{$i}", $it['it_id'], false);
                         if ($i==1 && file_exists(G4_DATA_PATH."/item/{$it_id}_m"))
-                            echo "<img id='middle{$i}' src='".G4_DATA_URL."/item/{$it_id}_m' border=0 width=40 height=40 style='border:1px solid #E4E4E4;' ";
+                            echo "<img id=\"middle{$i}\" src=\"".G4_DATA_URL."/item/{$it_id}_m\" border=\"0\" width=\"40\" height=\"40\" style=\"border:1px solid #E4E4E4;\" ";
                         else
-                            echo "<img id='middle{$i}' src='".G4_DATA_URL."/item/{$it_id}_l{$i}' border=0 width=40 height=40 style='border:1px solid #E4E4E4;' ";
+                            echo "<img id=\"middle{$i}\" src=\"".G4_DATA_URL."/item/{$it_id}_l{$i}\" border=\"0\" width=\"40\" height=\"40\" style=\"border:1px solid #E4E4E4;\" ";
                         echo " onmouseover=\"document.getElementById('$middle_image').src=document.getElementById('middle{$i}').src;\">";
                         echo "</a> &nbsp;";
                     }
@@ -180,7 +180,7 @@ else
             </tr>
             <tr><td colspan=3 height=7></td></tr>
             <tr><td height=20><?=$prev_href?><img src='<?=G4_SHOP_URL?>/img/prev.gif' border=0 title='<?=$prev_title?>'></a></td>
-                <td align=center><?=get_large_image($it['it_id']."_l1", $it[it_id])?></td>
+                <td align=center><?=get_large_image($it['it_id']."_l1", $it['it_id'])?></td>
                 <td align=right><?=$next_href?><img src='<?=G4_SHOP_URL?>/img/next.gif' border=0 title='<?=$next_title?>'></a></td></tr>
         </table>
     </td>
