@@ -160,6 +160,7 @@ function itemusewin(query_string)
 }
 </script>
 
+        <? /*
         <!-- 사용후기 폼 -->
         <div id=itemuse style='display:none;'>
         <form name="fitemuse" method="post" onsubmit="return fitemuse_submit(this);" autocomplete=off style="padding:0px;">
@@ -195,16 +196,15 @@ function itemusewin(query_string)
                 <input type=radio name=is_score value='4'><img src='<?=G4_SHOP_URL?>/img/star2.gif' align=absmiddle>
                 <input type=radio name=is_score value='2'><img src='<?=G4_SHOP_URL?>/img/star1.gif' align=absmiddle></td></tr>
         <tr bgcolor=#fafafa>
-            <td width=100 align=right><img id='kcaptcha_image_use' /></td>
-            <td>
-                &nbsp;<input type='text' name='is_key' class='ed' required itemname='자동등록방지용 코드'>
-                &nbsp;* 왼쪽의 자동등록방지 코드를 입력하세요.</td></tr>
+            <td colspan="2"><?=$captcha_html?>abc</td>
+        </tr>
         <tr><td height=2 bgcolor=#6ea7d3 colspan=2></td></tr>
         <tr><td colspan=2 align=right height=30><input type=image src='<?=G4_SHOP_URL?>/img/btn_confirm.gif' border=0></a></td></tr>
         </table>
         </form>
         <br><br>
         </div>
+        */ ?>
     </td>
 </tr>
 <tr><td colspan=2 height=1></td></tr>
@@ -215,9 +215,7 @@ function itemusewin(query_string)
 <script type="text/javascript">
 function fitemuse_submit(f)
 {
-    if (!check_kcaptcha(f.is_key)) {
-        return false;
-    }
+    <? echo chk_captcha_js(); ?>
 
     f.action = "itemuseupdate.php"
     return true;

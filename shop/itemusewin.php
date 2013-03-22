@@ -28,7 +28,10 @@ if ($w == "u") {
 }
 
 include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 include_once(G4_PATH.'/head.sub.php');
+
+$captcha_html = captcha_html();
 ?>
 <style>
 ul {list-style:none;margin:0px;padding:0px;}
@@ -60,9 +63,8 @@ label {width:130px;vertical-align:top;padding:3px 0;}
             <input type=radio name=is_score value='2'  <?=($is_score==2)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star1.gif' align=absmiddle>
         </li>
         <li>
-            <label style="vertical-align:middle;"><img id='kcaptcha_image_use' /></label>
-            <input type='text' name='is_key' class='ed' required itemname='자동등록방지용 코드'>
-            &nbsp;* 왼쪽의 자동등록방지 코드를 입력하세요.
+            <label style="vertical-align:middle;"></label>
+            <?=$captcha_html?>
         </li>
     </ul>
     <input type="submit" value="   확   인   ">
@@ -70,7 +72,6 @@ label {width:130px;vertical-align:top;padding:3px 0;}
     </form>
 </div>
 
-<script type="text/javascript" src="<?=$g4[path]?>/js/jquery.kcaptcha.js"></script>
 <script type="text/javascript">
 self.focus();
 
@@ -91,27 +92,13 @@ function fitemuse_submit(f)
 
     <? echo get_editor_js('is_content'); ?>
 
+    <? echo chk_captcha_js(); ?>
+
     f.action = "./itemusewinupdate.php";
 }
 
 $(function() {
     $("#is_subject").focus();
-    $("#kcaptcha_image_use").bind("click", function() {
-        $.ajax({
-            type: 'POST',
-            url: g4_path+'/'+g4_bbs+'/kcaptcha_session.php',
-            cache: false,
-            async: false,
-            success: function(text) {
-                $("#kcaptcha_image_use, #kcaptcha_image_qa").attr('src', g4_path+'/'+g4_bbs+'/kcaptcha_image.php?t=' + (new Date).getTime());
-            }
-        });
-    })
-    .css('cursor', 'pointer')
-    .attr('title', '글자가 잘 안보이시는 경우 클릭하시면 새로운 글자가 나옵니다.')
-    .attr('width', '120')
-    .attr('height', '60')
-    .trigger('click');
 });
 </script>
 <?
