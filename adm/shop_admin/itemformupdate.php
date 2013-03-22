@@ -173,7 +173,7 @@ if ($it_limg5_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l5");
 // 이미지(대)만 업로드하고 자동생성 체크일 경우 이미지(중,소) 자동생성
 if ($createimage && $_FILES['it_limg1']['name'])
 {
-    upload_file($_FILES['it_limg1']['tmp_name'], $it_id."_l1", "$g4[path]/data/item");
+    upload_file($_FILES['it_limg1']['tmp_name'], $it_id."_l1", G4_DATA_PATH."/item");
 
     $image = G4_DATA_PATH."/item/$it_id"."_l1";
     $size = @getimagesize($image);
