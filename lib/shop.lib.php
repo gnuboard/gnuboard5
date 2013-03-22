@@ -32,7 +32,7 @@ function get_image($img, $width=0, $height=0)
     }
     else
     {
-        $str = "<img id=\"$img\" src='\"".G4_SHOP_URL."/img/no_image.gif\" border=\"0\" ";
+        $str = "<img id=\"$img\" src=\"".G4_SHOP_URL."/img/no_image.gif\" border=\"0\" ";
         if ($width)
             $str .= "width=\"$width\" height=\"$height\"";
         else
@@ -49,7 +49,7 @@ function get_it_image($img, $width=0, $height=0, $id="")
 {
     $str = get_image($img, $width, $height);
     if ($id) {
-        $str = "<a href=\"".G4_SHOP_URL."/item.php?it_id=$id'>$str</a>";
+        $str = "<a href=\"".G4_SHOP_URL."/item.php?it_id=$id\">$str</a>";
     }
     return $str;
 }

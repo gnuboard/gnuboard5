@@ -1,5 +1,6 @@
 <?
 include_once('./_common.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 if ($w == '' || $w == 'u')
 {
@@ -9,10 +10,8 @@ if ($w == '' || $w == 'u')
     }
     */
 
-    $key = get_session("captcha_keystring");
-    if (!($key && $key == $_POST['iq_key'])) {
-        session_unregister("captcha_keystring");
-        alert("정상적인 접근이 아닌것 같습니다.");
+    if (!chk_captcha()) {
+        alert('자동등록방지 숫자가 틀렸습니다.');
     }
 
     /*

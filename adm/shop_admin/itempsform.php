@@ -54,8 +54,6 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 <tr>
     <td>&nbsp;내 용</td>
     <td>
-        <!-- <?=textarea_size("is_content")?>
-        <textarea id='is_content' name="is_content" rows="10" style='width:99%;' class=ed required itemname='내용'><? echo get_text($is[is_content]) ?></textarea> -->
         <?=editor_html('is_content', $is['is_content']);?>
     </td>
 </tr>

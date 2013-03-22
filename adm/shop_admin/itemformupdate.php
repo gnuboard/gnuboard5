@@ -82,29 +82,22 @@ function itemdelete($it_id)
     //------------------------------------------------------------------------
     // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
     //------------------------------------------------------------------------
-    $sql = " select * from {$g4['yc4_item_table']} where it_id = '$it_id' ";
+    $sql = " select it_explan from {$g4['yc4_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
-    $s = $it['it_explan'];
 
-    $img_file = Array();
-    while($s) {
-        $pos = strpos($s, "/data/cheditor");
-        $s = substr($s, $pos, strlen($s));
-        $pos = strpos($s, '"');
+    $imgs = get_editor_image($it['it_explan']);
 
-        // 결과값
-        $file_path = substr($s, 0, $pos);
-        if (!$file_path) break;
+    for($i=0;$i<count($imgs[1]);$i++) {
+        $p = parse_url($imgs[1][$i]);
+        if(strpos($p['path'], "/data/") != 0)
+            $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        else
+            $data_path = $p['path'];
 
-        $img_file[] = $file_path;
+        $destfile = G4_PATH.$data_path;
 
-        $s = substr($s, $pos, strlen($s));
-    }
-
-    for($i=0;$i<count($img_file);$i++) {
-        $f = $g4[path].$img_file[$i];
-        if (file_exists($f))
-            @unlink($f);
+        if(is_file($destfile))
+            @unlink($destfile);
     }
     //------------------------------------------------------------------------
 
@@ -180,10 +173,10 @@ if ($it_limg5_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l5");
 // 이미지(대)만 업로드하고 자동생성 체크일 경우 이미지(중,소) 자동생성
 if ($createimage && $_FILES['it_limg1']['name'])
 {
-    upload_file($_FILES['it_limg1']['tmp_name'], $it_id."_l1", "$g4[path]/data/item");
+    upload_file($_FILES['it_limg1']['tmp_name'], $it_id."_l1", G4_DATA_PATH."/item");
 
     $image = G4_DATA_PATH."/item/$it_id"."_l1";
-    $size = getimagesize($image);
+    $size = @getimagesize($image);
     $src = @imagecreatefromjpeg($image);
 
     if (!$src)

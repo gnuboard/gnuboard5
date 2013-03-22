@@ -50,10 +50,10 @@ function imageview(id, w, h)
     submenu.left = tempX - ( w + 11 );
     submenu.top  = tempY - ( h / 2 );
 
-    selectBoxVisible();
+    //selectBoxVisible();
 
-    if (el_id.style.display != 'none')
-        selectBoxHidden(id);
+    //if (el_id.style.display != 'none')
+    //    selectBoxHidden(id);
 }
 </script>
 

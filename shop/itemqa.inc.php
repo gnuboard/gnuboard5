@@ -17,8 +17,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                     <td width=40 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>번호</td>
                     <td background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>제목</td>
                     <td width=80 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>작성자</td>
-                    <td width=100 background='<?=G4_SHOP_URL?>/box_bg01.gif'>작성일</td>
-                    <td width=80 background='<?=G4_SHOP_URL?>/box_bg01.gif'>답변</td>
+                    <td width=100 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>작성일</td>
+                    <td width=80 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>답변</td>
                 </tr>
                 </table></td>
             <td width=11><img src='<?=G4_SHOP_URL?>/img/corner02.gif'></td>
@@ -101,7 +101,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                         <textarea id='tmp_iq_subject{$i}' style='display:none;'>{$row['iq_subject']}</textarea>
                         <textarea id='tmp_iq_question{$i}' style='display:none;'>{$row['iq_question']}</textarea>";
 
-            if ($row[mb_id] == $member[mb_id] && !$iq_answer)
+            if ($row['mb_id'] == $member['mb_id'] && !$iq_answer)
             {
                 echo "<a href='javascript:itemqa_update({$i});'><span class=small><b>수정</b></span></a>&nbsp;";
                 echo "<a href='javascript:itemqa_delete(fitemqa_password{$i}, {$i});'><span class=small><b>삭제</b></span></a>&nbsp;";
@@ -197,10 +197,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <td align=right>내용&nbsp;</td>
             <td>&nbsp;<textarea name="iq_question" rows="7" style='width:90%;' class=ed required itemname="내용"></textarea></td></tr>
         <tr bgcolor=#fafafa>
-            <td width=100 align=right><img id='kcaptcha_image_qa' /></td>
-            <td>
-                &nbsp;<input type='text' name='iq_key' class='ed' required itemname='자동등록방지용 코드'>
-                &nbsp;* 왼쪽의 자동등록방지 코드를 입력하세요.</td></tr>
+            <td colspan="2"><?=$captcha_html?></td>
+        </tr>
         <tr><td height=5 colspan=2></td></tr>
         <tr><td height=2 bgcolor=#63bcc0 colspan=2></td></tr>
         <tr><td colspan=2 align=right height=30><input type=image src='<?=G4_SHOP_URL?>/img/btn_confirm.gif' border=0></td></tr>
@@ -218,9 +216,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <script type="text/javascript">
 function fitemqa_submit(f)
 {
-    if (!check_kcaptcha(f.iq_key)) {
-        return false;
-    }
+    <? echo chk_captcha_js(); ?>
 
     f.action = "itemqaupdate.php";
     return true;

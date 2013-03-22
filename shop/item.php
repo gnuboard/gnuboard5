@@ -1,6 +1,9 @@
 <?
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
+include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+
+$captcha_html = captcha_html();
 
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
 $token = md5(uniqid(rand(), true));
@@ -165,9 +168,9 @@ else
                     {
                         echo get_large_image("{$it_id}_l{$i}", $it['it_id'], false);
                         if ($i==1 && file_exists(G4_DATA_PATH."/item/{$it_id}_m"))
-                            echo "<img id='middle{$i}' src='".G4_DATA_URL."/item/{$it_id}_m' border=0 width=40 height=40 style='border:1px solid #E4E4E4;' ";
+                            echo "<img id=\"middle{$i}\" src=\"".G4_DATA_URL."/item/{$it_id}_m\" border=\"0\" width=\"40\" height=\"40\" style=\"border:1px solid #E4E4E4;\" ";
                         else
-                            echo "<img id='middle{$i}' src='".G4_DATA_URL."/item/{$it_id}_l{$i}' border=0 width=40 height=40 style='border:1px solid #E4E4E4;' ";
+                            echo "<img id=\"middle{$i}\" src=\"".G4_DATA_URL."/item/{$it_id}_l{$i}\" border=\"0\" width=\"40\" height=\"40\" style=\"border:1px solid #E4E4E4;\" ";
                         echo " onmouseover=\"document.getElementById('$middle_image').src=document.getElementById('middle{$i}').src;\">";
                         echo "</a> &nbsp;";
                     }
@@ -177,7 +180,7 @@ else
             </tr>
             <tr><td colspan=3 height=7></td></tr>
             <tr><td height=20><?=$prev_href?><img src='<?=G4_SHOP_URL?>/img/prev.gif' border=0 title='<?=$prev_title?>'></a></td>
-                <td align=center><?=get_large_image($it['it_id']."_l1", $it[it_id])?></td>
+                <td align=center><?=get_large_image($it['it_id']."_l1", $it['it_id'])?></td>
                 <td align=right><?=$next_href?><img src='<?=G4_SHOP_URL?>/img/next.gif' border=0 title='<?=$next_title?>'></a></td></tr>
         </table>
     </td>
@@ -721,26 +724,8 @@ function explan_resize_image()
 }
 </script>
 
-<script type="text/javascript" src="<?=$g4[path]?>/js/jquery.kcaptcha.js"></script>
 <script type="text/javascript">
 $(function() {
-    $("#kcaptcha_image_use, #kcaptcha_image_qa").bind("click", function() {
-        $.ajax({
-            type: 'POST',
-            url: g4_path+'/'+g4_bbs+'/kcaptcha_session.php',
-            cache: false,
-            async: false,
-            success: function(text) {
-                $("#kcaptcha_image_use, #kcaptcha_image_qa").attr('src', g4_path+'/'+g4_bbs+'/kcaptcha_image.php?t=' + (new Date).getTime());
-            }
-        });
-    })
-    .css('cursor', 'pointer')
-    .attr('title', '글자가 잘 안보이시는 경우 클릭하시면 새로운 글자가 나옵니다.')
-    .attr('width', '120')
-    .attr('height', '60')
-    .trigger('click');
-
     explan_resize_image();
 });
 </script>

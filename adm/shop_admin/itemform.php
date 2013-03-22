@@ -747,10 +747,10 @@ if ($ii) {
         <input type=file class=ed name=it_timg size=40>
         <?
         $timg_str = "";
-        $timg = G4_DATA_PATH."/item/{$it[it_id]}_t";
+        $timg = G4_DATA_PATH."/item/{$it['it_id']}_t";
         if (file_exists($timg)) {
             echo "<input type=checkbox name=it_timg_del value='1'>삭제";
-            $timg_str = "<img src='".G4_DATA_URL."/item/{$it[it_id]}_t' border=0>";
+            $timg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_t' border=0>";
         }
         ?>
         <?=help("상품상세설명 페이지 하단에 출력하는 이미지입니다.");?>
@@ -771,7 +771,7 @@ if ($ii) {
 <tr class=ht>
     <td>입력일시</td>
     <td colspan=3>
-        <?=$it[it_time]?>
+        <?=$it['it_time']?>
         <?=help("상품을 처음 입력(등록)한 시간입니다.");?>
     </td>
 </tr>
