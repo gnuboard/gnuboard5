@@ -751,6 +751,7 @@ function subject_sort_link($col, $query_string='', $flag='asc')
     }
 
     $arr_query = array();
+    $arr_query[] = $query_string;
     $arr_query[] = $q1;
     $arr_query[] = $q2;
     $arr_query[] = 'sfl='.$sfl;
