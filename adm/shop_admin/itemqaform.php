@@ -42,14 +42,12 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 <tr>
     <td>&nbsp;질 문</td>
     <td style='padding-top:5px; padding-bottom:5px;'>
-        <?=textarea_size('iq_question')?>
         <textarea id='iq_question' name='iq_question' rows="7" style='width:99%;' class=ed required itemname='질문'><? echo get_text($iq['iq_question']) ?></textarea>
     </td>
 </tr>
 <tr>
     <td>&nbsp;답 변</td>
     <td style='padding-top:5px; padding-bottom:5px;'>
-        <?=textarea_size('iq_answer')?>
         <textarea id='iq_answer' name='iq_answer' rows="7" style='width:99%;' class=ed itemname='답변'><? echo get_text($iq['iq_answer']) ?></textarea>
     </td>
 </tr>
