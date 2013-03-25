@@ -9,7 +9,7 @@ if ($sw_direct) {
     }
 }
 else {
-    $tmp_on_uid = get_session("ss_on_uid");
+    $tmp_on_uid = get_session('ss_on_uid');
     if(!$tmp_on_uid) {
         $tmp_on_uid = get_uniqid();
         set_session('ss_on_uid', $tmp_on_uid);
@@ -19,7 +19,7 @@ else {
 // 브라우저에서 쿠키를 허용하지 않은 경우라고 볼 수 있음.
 if (!$tmp_on_uid)
 {
-    alert("더 이상 작업을 진행할 수 없습니다.\\n\\n브라우저의 쿠키 허용을 사용하지 않음으로 설정한것 같습니다.\\n\\n브라우저의 인터넷 옵션에서 쿠키 허용을 사용으로 설정해 주십시오.\\n\\n그래도 진행이 되지 않는다면 쇼핑몰 운영자에게 문의 바랍니다.");
+    alert('더 이상 작업을 진행할 수 없습니다.\\n\\n브라우저의 쿠키 허용을 사용하지 않음으로 설정한것 같습니다.\\n\\n브라우저의 인터넷 옵션에서 쿠키 허용을 사용으로 설정해 주십시오.\\n\\n그래도 진행이 되지 않는다면 쇼핑몰 운영자에게 문의 바랍니다.');
 }
 
 
@@ -260,7 +260,7 @@ else // 장바구니에 담기
 // 바로 구매일 경우
 if ($sw_direct)
 {
-    if ($member['mb_id'])
+    if ($is_member)
     {
     	goto_url(G4_SHOP_URL."/orderform.php?sw_direct=$sw_direct");
     }
