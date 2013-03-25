@@ -100,7 +100,7 @@ function  jsf__pay( form )
 <input type=hidden name='timestamp'     value='<?=$timestamp?>'>
 <input type=hidden name='d_url'         value='<?=$g4['url']?>'>
 <input type=hidden name='shop_dir'      value='<?=$g4['shop']?>'>
-<input type=hidden name='on_uid'        value='<?=$_SESSION['ss_temp_on_uid']?>'>
+<input type=hidden name='uq_id'        value='<?=$_SESSION['ss_temp_uq_id']?>'>
 
 <?
 switch ($settle_case)
@@ -165,7 +165,7 @@ $sql = " select a.ct_id,
                 b.ca_id
            from {$g4['yc4_cart_table']} a,
                 {$g4['yc4_item_table']} b
-          where a.on_uid = '$s_on_uid'
+          where a.uq_id = '$s_uq_id'
             and a.it_id  = b.it_id
           order by a.ct_id ";
 $result = sql_query($sql);

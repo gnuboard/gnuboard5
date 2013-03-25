@@ -3,11 +3,11 @@
 // 쇼핑몰 함수 모음 시작
 //==============================================================================
 // 장바구니 건수 검사
-function get_cart_count($on_uid)
+function get_cart_count($uq_id)
 {
     global $g4;
 
-    $sql = " select count(ct_id) as cnt from {$g4['yc4_cart_table']} where on_uid = '$on_uid' ";
+    $sql = " select count(ct_id) as cnt from {$g4['yc4_cart_table']} where uq_id = '$uq_id' ";
     $row = sql_fetch($sql);
     $cnt = (int)$row[cnt];
     return $cnt;
@@ -532,12 +532,12 @@ function get_yn($val, $case='')
 }
 
 // 상품명과 건수를 반환
-function get_goods($on_uid)
+function get_goods($uq_id)
 {
     global $g4;
 
     // 상품명만들기
-    $row = sql_fetch(" select a.it_id, b.it_name from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b where a.it_id = b.it_id and a.on_uid = '$on_uid' order by ct_id limit 1 ");
+    $row = sql_fetch(" select a.it_id, b.it_name from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b where a.it_id = b.it_id and a.uq_id = '$uq_id' order by ct_id limit 1 ");
     // 상품명에 "(쌍따옴표)가 들어가면 오류 발생함
     $goods['it_id'] = $row['it_id'];
     $goods['full_name']= $goods['name'] = addslashes($row['it_name']);
@@ -545,7 +545,7 @@ function get_goods($on_uid)
     $goods['full_name'] = preg_replace ("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i", "",  $goods['full_name']);
 
     // 상품건수
-    $row = sql_fetch(" select count(*) as cnt from {$g4['yc4_cart_table']} where on_uid = '$on_uid' ");
+    $row = sql_fetch(" select count(*) as cnt from {$g4['yc4_cart_table']} where uq_id = '$uq_id' ");
     $cnt = $row['cnt'] - 1;
     if ($cnt)
         $goods['full_name'] .= " 외 {$cnt}건";
@@ -614,6 +614,32 @@ function alert_opener($msg='', $url='')
     echo "self.close();";
     echo "</script>";
     exit;
+}
+
+// 주문서 번호를 얻는다.
+function get_new_od_id()
+{
+    global $g4;
+
+    // 주문서 테이블 Lock 걸고
+    sql_query(" LOCK TABLES {$g4['yc4_order_table']} READ, {$g4['yc4_order_table']} WRITE ", FALSE);
+    // 주문서 번호를 만든다.
+    $date = date("ymd", time());    // 2002년 3월 7일 일경우 020307
+    $sql = " select max(od_id) as max_od_id from {$g4['yc4_order_table']} where SUBSTRING(od_id, 1, 6) = '$date' ";
+    $row = sql_fetch($sql);
+    $od_id = $row['max_od_id'];
+    if ($od_id == 0)
+        $od_id = 1;
+    else
+    {
+        $od_id = (int)substr($od_id, -4);
+        $od_id++;
+    }
+    $od_id = $date . substr("0000" . $od_id, -4);
+    // 주문서 테이블 Lock 풀고
+    sql_query(" UNLOCK TABLES ", FALSE);
+
+    return $od_id;
 }
 //==============================================================================
 // 쇼핑몰 함수 모음 끝

@@ -6,21 +6,21 @@ $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
 
 if (!$is_member) {
-    if (get_session("ss_on_uid_inquiry") != $_GET['on_uid'])
+    if (get_session("ss_uq_id_inquiry") != $_GET['uq_id'])
         alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.");
 }
 
-$sql = "select * from {$g4['yc4_order_table']} where od_id = '$od_id' and on_uid = '$on_uid' ";
+$sql = "select * from {$g4['yc4_order_table']} where od_id = '$od_id' and uq_id = '$uq_id' ";
 $od = sql_fetch($sql);
 if (!$od['od_id']) {
-    echo "$od_id $on_uid $MxIssueNO";
-    alert("조회하실 주문서가 없습니다.", G4_URL);
+    echo "$od_id $uq_id $MxIssueNO";
+    alert("조회하실 주문서가 없습니다.", G4_SHOP_URL);
 }
 
 // 결제방법
 $settle_case = $od['od_settle_case'];
 
-set_session('ss_temp_on_uid', $on_uid);
+set_session('ss_temp_uq_id', $uq_id);
 
 $g4['title'] = "주문상세내역 : 주문번호 - $od_id";
 include_once('./_head.php');
@@ -29,7 +29,7 @@ include_once('./_head.php');
 <img src="<?=G4_SHOP_URL?>/img/top_orderinquiryview.gif" border=0><p>
 
 <?
-$s_on_uid = $od['on_uid'];
+$s_uq_id = $od['uq_id'];
 $s_page = 'orderinquiryview.php';
 include './cartsub.inc.php';
 ?>
@@ -297,7 +297,7 @@ if ($tot_cancel_amount == 0) {
         ($od['od_temp_card'] > 0 && $od['od_receipt_card'] == 0)) {
         echo "<br><form method='post' action='./orderinquirycancel.php' style='margin:0;'>";
         echo "<input type=hidden name=od_id  value='{$od['od_id']}'>";
-        echo "<input type=hidden name=on_uid value='{$od['on_uid']}'>";
+        echo "<input type=hidden name=uq_id value='{$od['uq_id']}'>";
         echo "<input type=hidden name=token  value='$token'>";
         echo "<br><table cellpadding=4 cellspacing=0 width=100%>";
         echo "<colgroup width=120><colgroup width=''>";
@@ -332,7 +332,7 @@ if ($default['de_taxsave_use']) {
             if ($od['od_cash'])
                 echo "<a href=\"javascript:;\" onclick=\"window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no={$od['od_cash_no']}', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');\">현금영수증 확인하기</a>";
             else
-                echo "<a href=\"javascript:;\" onclick=\"window.open('taxsave_kcp.php?od_id=$od_id&on_uid={$od['on_uid']}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\">현금영수증을 발급하시려면 클릭하십시오.</a>";
+                echo "<a href=\"javascript:;\" onclick=\"window.open('taxsave_kcp.php?od_id=$od_id&uq_id={$od['uq_id']}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\">현금영수증을 발급하시려면 클릭하십시오.</a>";
             echo "</td></tr>";
             echo "</table>";
         }

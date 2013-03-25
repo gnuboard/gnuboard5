@@ -2,13 +2,13 @@
 include_once('./_common.php');
 
 // 장바구니가 비어있는가?
-$tmp_on_uid = get_session('ss_temp_on_uid');
-if (get_cart_count($tmp_on_uid) == 0)// 장바구니에 담기
+$tmp_uq_id = get_session('ss_temp_uq_id');
+if (get_cart_count($tmp_uq_id) == 0)// 장바구니에 담기
     alert("장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.", "./cart.php");
 
-set_session("ss_on_uid_inquiry", $tmp_on_uid);
+set_session("ss_uq_id_inquiry", $tmp_uq_id);
 
-$sql = " select * from {$g4['yc4_order_table']} where on_uid = '$tmp_on_uid' ";
+$sql = " select * from {$g4['yc4_order_table']} where uq_id = '$tmp_uq_id' ";
 $od = sql_fetch($sql);
 
 //print_r2($od);
@@ -21,7 +21,7 @@ include_once('./_head.php');
 $sql = " select a.it_id, b.it_name
            from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b
           where a.it_id = b.it_id
-            and a.on_uid = '$tmp_on_uid'
+            and a.uq_id = '$tmp_uq_id'
           order by ct_id
           limit 1 ";
 $row = sql_fetch($sql);
@@ -31,7 +31,7 @@ $row = sql_fetch($sql);
 
 <?
 $s_page = '';
-$s_on_uid = $tmp_on_uid;
+$s_uq_id = $tmp_uq_id;
 $od_id = $od['od_id'];
 include_once('./cartsub.inc.php');
 ?>
@@ -186,7 +186,7 @@ if (file_exists("./settle_{$default['de_card_pg']}.inc.php"))
     }
     else if ($settle_case == '무통장')
     {
-        echo "<p align=center><a href='./orderinquiryview.php?od_id={$od['od_id']}&on_uid={$od['on_uid']}'><img src='".G4_SHOP_URL."/img/btn_order_end.gif' border=0></a>";
+        echo "<p align=center><a href='./orderinquiryview.php?od_id={$od['od_id']}&uq_id={$od['uq_id']}'><img src='".G4_SHOP_URL."/img/btn_order_end.gif' border=0></a>";
     }
     else
     {
@@ -199,7 +199,7 @@ if (file_exists("./settle_{$default['de_card_pg']}.inc.php"))
 
         include "./settle_{$default['de_card_pg']}.inc.php";
         //echo "<p align=center><input type='image' src='$g4[shop_img_path]/btn_settle.gif' border=0 onclick='OpenWindow();'>";
-        echo "<p align=left>&nbsp; &middot; 결제가 제대로 되지 않은 경우 [<a href='./orderinquiryview.php?od_id={$od['od_id']}&on_uid={$od['on_uid']}'><u>주문상세조회 페이지</u></a>] 에서 다시 결제하실 수 있습니다.</p>";
+        echo "<p align=left>&nbsp; &middot; 결제가 제대로 되지 않은 경우 [<a href='./orderinquiryview.php?od_id={$od['od_id']}&uq_id={$od['uq_id']}'><u>주문상세조회 페이지</u></a>] 에서 다시 결제하실 수 있습니다.</p>";
     }
 }
 else
@@ -207,11 +207,11 @@ else
     if ($od['od_temp_card']) {
         include "./ordercard{$default['de_card_pg']}.inc.php";
         echo "<p align=center><input type='image' src='".G4_SHOP_URL."/img/btn_card.gif' border=0 onclick='OpenWindow();'></p>";
-        echo "<p align=left>&nbsp; &middot; 결제가 제대로 되지 않은 경우 <a href='./orderinquiryview.php?od_id={$od['od_id']}&on_uid={$od['on_uid']}'><u>주문상세조회 페이지</u></a>에서 다시 결제하실 수 있습니다.</p>";
+        echo "<p align=left>&nbsp; &middot; 결제가 제대로 되지 않은 경우 <a href='./orderinquiryview.php?od_id={$od['od_id']}&uq_id={$od['uq_id']}'><u>주문상세조회 페이지</u></a>에서 다시 결제하실 수 있습니다.</p>";
     } else if ($od['od_temp_bank'] && $od['od_bank_account'] == "계좌이체")  {
         include "./orderiche{$default['de_card_pg']}.inc.php";
         echo "<p align=center><input type='image' src='".G4_SHOP_URL."/img/btn_iche.gif' border=0 onclick='OpenWindow();'></p>";
-        echo "<p align=left>&nbsp; &middot; 결제가 제대로 되지 않은 경우 [<a href='./orderinquiryview.php?od_id={$od['od_id']}&on_uid={$od['on_uid']}'><u>주문상세조회 페이지</u></a>] 에서 다시 결제하실 수 있습니다.</p>";
+        echo "<p align=left>&nbsp; &middot; 결제가 제대로 되지 않은 경우 [<a href='./orderinquiryview.php?od_id={$od['od_id']}&uq_id={$od['uq_id']}'><u>주문상세조회 페이지</u></a>] 에서 다시 결제하실 수 있습니다.</p>";
     } else {
         echo "<p align=center><a href='".G4_SHOP_URL."'><img src='".G4_SHOP_URL."/img/btn_order_end.gif' border=0></a>";
     }

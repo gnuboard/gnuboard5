@@ -52,7 +52,7 @@ $table_width = 900;
         <a href='<?=G4_BBS_URL?>/register.php'>회원가입</a> |
         <? } ?>
 
-        <a href='<?=G4_SHOP_URL?>/cart.php'>장바구니<span class=small>(<?=get_cart_count(get_session('ss_on_uid'));?>)</span></a> |
+        <a href='<?=G4_SHOP_URL?>/cart.php'>장바구니<span class=small>(<?=get_cart_count(get_session('ss_uq_id'));?>)</span></a> |
         <a href='<?=G4_SHOP_URL?>/orderinquiry.php'>주문조회</a> |
         <a href='<?=G4_SHOP_URL?>/faq.php'>FAQ</a> |
         <a href='<?=G4_SHOP_URL?>/itemuselist.php'>사용후기</a> |

@@ -2,16 +2,34 @@
 include_once('./_common.php');
 
 if ($sw_direct) {
-    $tmp_on_uid = get_session("ss_on_direct");
+    $tmp_uq_id = get_session('ss_uq_direct');
+    if(!$tmp_uq_id) {
+        $tmp_uq_id = get_uniqid();
+        set_session('ss_uq_direct', $tmp_uq_id);
+    }
 }
 else {
-    $tmp_on_uid = get_session("ss_on_uid");
+    $tmp_uq_id = get_session('ss_uq_id');
+    if(!$tmp_uq_id) {
+        $tmp_uq_id = get_uniqid();
+        set_session('ss_uq_id', $tmp_uq_id);
+    }
+}
+
+// uq_id 필드추가
+$sql = " select uq_id from {$g4['yc4_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
 }
 
 // 브라우저에서 쿠키를 허용하지 않은 경우라고 볼 수 있음.
-if (!$tmp_on_uid)
+if (!$tmp_uq_id)
 {
-    alert("더 이상 작업을 진행할 수 없습니다.\\n\\n브라우저의 쿠키 허용을 사용하지 않음으로 설정한것 같습니다.\\n\\n브라우저의 인터넷 옵션에서 쿠키 허용을 사용으로 설정해 주십시오.\\n\\n그래도 진행이 되지 않는다면 쇼핑몰 운영자에게 문의 바랍니다.");
+    alert('더 이상 작업을 진행할 수 없습니다.\\n\\n브라우저의 쿠키 허용을 사용하지 않음으로 설정한것 같습니다.\\n\\n브라우저의 인터넷 옵션에서 쿠키 허용을 사용으로 설정해 주십시오.\\n\\n그래도 진행이 되지 않는다면 쇼핑몰 운영자에게 문의 바랍니다.');
 }
 
 
@@ -26,13 +44,13 @@ if ($w == "d") // 삭제이면
 {
     $sql = " delete from {$g4['yc4_cart_table']}
               where ct_id = '$ct_id'
-                and on_uid = '$tmp_on_uid' ";
+                and uq_id = '$tmp_uq_id' ";
     sql_query($sql);
 }
 else if ($w == "alldelete") // 모두 삭제이면
 {
     $sql = " delete from {$g4['yc4_cart_table']}
-              where on_uid = '$tmp_on_uid' ";
+              where uq_id = '$tmp_uq_id' ";
     sql_query($sql);
 }
 else if ($w == "allupdate") // 수량 변경이면 : 모두 수정이면
@@ -59,7 +77,7 @@ else if ($w == "allupdate") // 수량 변경이면 : 모두 수정이면
         $sql = " update {$g4['yc4_cart_table']}
                     set ct_qty = '{$_POST['ct_qty'][$i]}'
                   where ct_id  = '{$_POST['ct_id'][$i]}'
-                    and on_uid = '$tmp_on_uid' ";
+                    and uq_id = '$tmp_uq_id' ";
         sql_query($sql);
     }
 }
@@ -87,7 +105,7 @@ else if ($w == "multi") // 온라인견적(등)에서 여러개의 상품이 한
         //--------------------------------------------------------
         //  변조 검사
         //--------------------------------------------------------
-        $sql = " select * from {$g4['yc4_item_table'] where it_id = '{$_POST['it_id'][$i]}' ";
+        $sql = " select * from {$g4['yc4_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
         $it = sql_fetch($sql);
 
         $amount = get_amount($it);
@@ -102,7 +120,7 @@ else if ($w == "multi") // 온라인견적(등)에서 여러개의 상품이 한
         //--------------------------------------------------------
 
         // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-        $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table'] where it_id = '{$_POST['it_id'][$i]}' and on_uid = '$tmp_on_uid' ";
+        $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']} where it_id = '{$_POST['it_id'][$i]}' and uq_id = '$tmp_uq_id' ";
         $row = sql_fetch($sql);
         $sum_qty = $row['cnt'];
 
@@ -125,7 +143,7 @@ else if ($w == "multi") // 온라인견적(등)에서 여러개의 상품이 한
 
         // 장바구니에 Insert
         $sql = " insert {$g4['yc4_cart_table']}
-                    set on_uid       = '$tmp_on_uid',
+                    set uq_id       = '$tmp_uq_id',
                         it_id        = '{$_POST['it_id'][$i]}',
                         ct_status    = '쇼핑',
                         ct_amount    = '{$_POST['it_amount'][$i]}',
@@ -205,7 +223,7 @@ else // 장바구니에 담기
     // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
     $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']}
               where it_id = '{$_POST['it_id']}'
-                and on_uid = '$tmp_on_uid' ";
+                and uq_id = '$tmp_uq_id' ";
     $row = sql_fetch($sql);
     $sum_qty = $row['cnt'];
 
@@ -218,7 +236,7 @@ else // 장바구니에 담기
     //--------------------------------------------------------
 
     // 바로구매에 있던 장바구니 자료를 지운다.
-    $result = sql_query(" delete from {$g4['yc4_cart_table']} where on_uid = '$tmp_on_uid' and ct_direct = 1 ", false);
+    $result = sql_query(" delete from {$g4['yc4_cart_table']} where uq_id = '$tmp_uq_id' and ct_direct = 1 ", false);
     if (!$result) {
         // 삭제중 에러가 발생했다면 필드가 없다는 것이므로 바로구매 필드를 생성한다.
         sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD `ct_direct` TINYINT NOT NULL ");
@@ -229,7 +247,7 @@ else // 장바구니에 담기
 
     // 장바구니에 Insert
     $sql = " insert {$g4['yc4_cart_table']}
-                set on_uid       = '$tmp_on_uid',
+                set uq_id       = '$tmp_uq_id',
                     it_id        = '{$_POST['it_id']}',
                     it_opt1      = '{$_POST['it_opt1']}',
                     it_opt2      = '{$_POST['it_opt2']}',
@@ -252,7 +270,7 @@ else // 장바구니에 담기
 // 바로 구매일 경우
 if ($sw_direct)
 {
-    if ($member['mb_id'])
+    if ($is_member)
     {
     	goto_url(G4_SHOP_URL."/orderform.php?sw_direct=$sw_direct");
     }

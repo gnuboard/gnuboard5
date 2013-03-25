@@ -9,7 +9,7 @@ include_once('./_head.php');
 
 <?
 $s_page = 'cart.php';
-$s_on_uid = get_session('ss_on_uid');
+$s_uq_id = get_session('ss_uq_id');
 include G4_SHOP_PATH.'/cartsub.inc.php';
 ?>
 <br><br>
