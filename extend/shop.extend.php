@@ -64,7 +64,6 @@ $g4['yc4_new_win_table']       = YC4_TABLE_PREFIX.'new_win';               // �
 $g4['yc4_onlinecalc_table']    = YC4_TABLE_PREFIX.'onlinecalc';            // 온라인견적 테이블
 $g4['yc4_order_table']         = YC4_TABLE_PREFIX.'order';                 // 주문서 테이블
 $g4['yc4_wish_table']          = YC4_TABLE_PREFIX.'wish';                  // 보관함(위시리스트) 테이블
-$g4['yc4_uqid_table']          = YC4_TABLE_PREFIX.'uniqid';                // 주문번호생성 유니크키 테이블
 $g4['yc4_item_info_table']     = YC4_TABLE_PREFIX.'item_info';             // 상품요약정보 테이블 (상품정보고시)
 
 
@@ -88,7 +87,15 @@ $g4[yc4_cardpg][dacom_xpay] = "https://pgweb.dacom.net";
 // 쇼핑몰 필수 실행코드 모음 시작
 //==============================================================================
 // 쇼핑몰 설정값 배열변수
-$default = sql_fetch(" select * from $g4[yc4_default_table] ");
+$default = sql_fetch(" select * from {$g4['yc4_default_table']} ");
+
+// uniqid 테이블이 없을 경우 생성
+if(!sql_query(" select 1 from {$g4['uniqid_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
+                  `uq_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`uq_id`)
+                ) ", false);
+}
 
 //==============================================================================
 // 쇼핑몰 필수 실행코드 모음 끝
