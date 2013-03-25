@@ -85,7 +85,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                     ?>
                     </a>
                 </li>
-                <li class="bo_img_text_href">
+                <li class="bo_img_text_href" style="width:<?=$board['bo_gallery_width']?>px">
                     <?
                     // echo $list[$i]['icon_reply']; 갤러리는 reply 를 사용 안 할 것 같습니다. - 지운아빠 2013-03-04
                     if ($is_category && $list[$i]['ca_name']) {
