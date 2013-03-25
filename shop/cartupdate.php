@@ -87,7 +87,7 @@ else if ($w == "multi") // 온라인견적(등)에서 여러개의 상품이 한
         //--------------------------------------------------------
         //  변조 검사
         //--------------------------------------------------------
-        $sql = " select * from {$g4['yc4_item_table'] where it_id = '{$_POST['it_id'][$i]}' ";
+        $sql = " select * from {$g4['yc4_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
         $it = sql_fetch($sql);
 
         $amount = get_amount($it);
@@ -102,7 +102,7 @@ else if ($w == "multi") // 온라인견적(등)에서 여러개의 상품이 한
         //--------------------------------------------------------
 
         // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-        $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table'] where it_id = '{$_POST['it_id'][$i]}' and on_uid = '$tmp_on_uid' ";
+        $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']} where it_id = '{$_POST['it_id'][$i]}' and on_uid = '$tmp_on_uid' ";
         $row = sql_fetch($sql);
         $sum_qty = $row['cnt'];
 
