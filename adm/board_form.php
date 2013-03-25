@@ -33,11 +33,14 @@ if (!isset($board['bo_gallery_width'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_width`,  ADD `bo_mobile_gallery_cols` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_width` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_cols`,  ADD `bo_mobile_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_width` ", false);
 }
 
+$required = "";
+$readonly = "";
 if ($w == '') {
 
     $html_title .= ' 생성';
 
-    $bo_table_attr = 'required alnum_';
+    $required = 'required';
+    $required_valid = 'alnum_';
     $sound_only = '<strong class="sound_only">필수</strong>';
 
     $board['bo_count_delete'] = 1;
@@ -83,7 +86,7 @@ if ($w == '') {
             alert('그룹이 틀립니다.');
     }
 
-    $bo_table_attr = 'readonly';
+    $readonly = 'readonly';
 
 }
 
@@ -127,7 +130,7 @@ $pg_anchor = "<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="bo_table">TABLE<?=$sound_only?></label></th>
         <td colspan="2">
-            <input type="text" name="bo_table" value="<?=$board['bo_table'] ?>" id="bo_table" required class="frm_input <?=$bo_table_attr?>" maxlength="20">
+            <input type="text" name="bo_table" value="<?=$board['bo_table'] ?>" id="bo_table" <?=$required?> <?=$readonly?> class="frm_input <?=$reaonly?> <?=$required?> <?=$required_valid?>" maxlength="20">
             <? if ($w == '') { ?>
                 영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
             <? } else { ?>
