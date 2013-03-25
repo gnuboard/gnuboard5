@@ -128,10 +128,10 @@ if ($tot_amount - $tot_cancel_amount == $receipt_amount) {
 
 // 120615 : 취소된 값을 두번 빼주는 결과가 되어 코드 수정 (군포돼지님)
 //$misu_amount = $tot_amount - $tot_cancel_amount - $receipt_amount - $od[od_dc_amount];
-$misu_amount = $tot_amount - $receipt_amount - $od[od_dc_amount];
+$misu_amount = $tot_amount - $receipt_amount - $od['od_dc_amount'];
 
 echo "<tr>";
-echo "<td align=center bgcolor=#FFEFFD height=60><img src=\"".G4_SHOP_URL."/t_data04.gif\"></td>";
+echo "<td align=center bgcolor=#FFEFFD height=60><img src=\"".G4_SHOP_URL."/img/t_data04.gif\"></td>";
 echo "<td style='padding:20px'>";
 
 if ($od['od_settle_case'] == '신용카드')
