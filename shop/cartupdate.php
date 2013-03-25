@@ -40,20 +40,20 @@ if ($member['mb_level'] < $default['de_level_sell'])
 }
 
 
-if ($w == "d") // 삭제이면
+if ($act == "d") // 삭제이면
 {
     $sql = " delete from {$g4['yc4_cart_table']}
               where ct_id = '$ct_id'
                 and uq_id = '$tmp_uq_id' ";
     sql_query($sql);
 }
-else if ($w == "alldelete") // 모두 삭제이면
+else if ($act == "alldelete") // 모두 삭제이면
 {
     $sql = " delete from {$g4['yc4_cart_table']}
               where uq_id = '$tmp_uq_id' ";
     sql_query($sql);
 }
-else if ($w == "allupdate") // 수량 변경이면 : 모두 수정이면
+else if ($act == "allupdate") // 수량 변경이면 : 모두 수정이면
 {
     $fldcnt = count($_POST['ct_id']);
 
@@ -81,7 +81,7 @@ else if ($w == "allupdate") // 수량 변경이면 : 모두 수정이면
         sql_query($sql);
     }
 }
-else if ($w == "multi") // 온라인견적(등)에서 여러개의 상품이 한꺼번에 들어옴.
+else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 한꺼번에 들어옴.
 {
     // 보관함에서 금액이 제대로 반영되지 않던 오류를 수정
     $fldcnt = count($_POST['it_name']);
