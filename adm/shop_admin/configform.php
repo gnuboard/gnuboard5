@@ -109,7 +109,6 @@ $pg_anchor ="<ul class=\"anchor\">
 ";
 ?>
 
-
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
 <section id="frm_info" class="cbox">
     <h2>사업자정보</h2>
@@ -165,7 +164,9 @@ $pg_anchor ="<ul class=\"anchor\">
             <input type="text" name="de_admin_company_zip" value="<?=$default['de_admin_company_zip']?>" id="de_admin_company_zip" class="frm_input" size="10">
         </td>
         <th scope="row"><label for="de_admin_company_addr">사업장주소</label></th>
-        <td><input type="text" name="de_admin_company_addr" value="<?=$default['de_admin_company_addr']?>" id="de_admin_company_addr" class="frm_input" size="30"></td>
+        <td>
+            <input type="text" name="de_admin_company_addr" value="<?=$default['de_admin_company_addr']?>" id="de_admin_company_addr" class="frm_input" size="30">
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_admin_info_name">정보관리책임자명</label></th>
@@ -200,38 +201,38 @@ $pg_anchor ="<ul class=\"anchor\">
             <select name="de_type1_list_skin" id="de_type1_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type1_list_skin').value='<?=$default['de_type1_list_skin']?>';</script>
             <label for="de_type1_list_mod">1라인이미지수</label>
             <input type="text" name="de_type1_list_mod" value="<?=$default['de_type1_list_mod']?>" id="de_type1_list_mod" class="frm_input" size="3">
-            <label for="de_type1_list_row"> 라인</label>
+            <label for="de_type1_list_row">라인</label>
             <input type="text" name="de_type1_list_row" value="<?=$default['de_type1_list_row']?>" id="de_type1_list_row" class="frm_input" size="3">
-            <label for="de_type1_img_width"> 폭</label>
+            <label for="de_type1_img_width">폭</label>
             <input type="text" name="de_type1_img_width" value="<?=$default['de_type1_img_width']?>" id="de_type1_img_width" class="frm_input" size="3">
-            <label for="de_type1_img_height"> 높이</label>
+            <label for="de_type1_img_height">높이</label>
             <input type="text" name="de_type1_img_height" value="<?=$default['de_type1_img_height']?>" id="de_type1_img_height" class="frm_input" size="3">
         </td>
     </tr>
     <tr>
         <th scope="row">추천상품출력</th>
         <td>
-             <label for="de_type2_list_use">출력</label>
-             <input type="checkbox" name="de_type2_list_use" value="1" id="de_type2_list_use" <?=$default['de_type2_list_use']?"checked":"";?>>
+            <label for="de_type2_list_use">출력</label>
+            <input type="checkbox" name="de_type2_list_use" value="1" id="de_type2_list_use" <?=$default['de_type2_list_use']?"checked":"";?>>
             <label for="de_type2_list_skin">스킨</label>
             <select id="de_type2_list_skin" name="de_type2_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
             <script>document.getElementById('de_type2_list_skin').value='<?=$default['de_type2_list_skin']?>';</script>
-            <label for="de_type2_list_mod">1라인이미지수 : </label>
+            <label for="de_type2_list_mod">1라인이미지수</label>
             <input type="text" name="de_type2_list_mod" value="<?=$default['de_type2_list_mod']?>" id="de_type2_list_mod" class="frm_input" size="3">
-            <label for="de_type2_list_row"> 라인 : </label>
+            <label for="de_type2_list_row">라인</label>
             <input type="text" name="de_type2_list_row" value="<?=$default['de_type2_list_row']?>" id="de_type2_list_row" class="frm_input" size="3">
-            <label for="de_type2_img_width"> 폭 : </label>
+            <label for="de_type2_img_width">폭</label>
             <input type="text" name="de_type2_img_width" value="<?=$default['de_type2_img_width']?>" id="de_type2_img_width" class="frm_input" size="3">
-            <label for="de_type2_img_height"> 높이 : </label>
+            <label for="de_type2_img_height">높이</label>
             <input type="text" name="de_type2_img_height" value="<?=$default['de_type2_img_height']?>" id="de_type2_img_height" class="frm_input" size="3">
         </td>
     </tr>
     <tr>
         <th scope="row">최신상품출력</th>
         <td>
-             <label for="de_type3_list_use">출력</label>
-             <input type="checkbox" name="de_type3_list_use" value="1" id="de_type3_list_use" <?=$default['de_type3_list_use']?"checked":"";?>>
-             <label for="de_type3_list_skin">스킨</label>
+            <label for="de_type3_list_use">출력</label>
+            <input type="checkbox" name="de_type3_list_use" value="1" id="de_type3_list_use" <?=$default['de_type3_list_use']?"checked":"";?>>
+            <label for="de_type3_list_skin">스킨</label>
             <select id="de_type3_list_skin" name="de_type3_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
             <script>document.getElementById('de_type3_list_skin').value='<?=$default['de_type3_list_skin']?>';</script>
             <label for="de_type3_list_mod">1라인이미지수</label>
@@ -247,36 +248,36 @@ $pg_anchor ="<ul class=\"anchor\">
     <tr>
         <th scope="row">인기상품출력</th>
         <td>
-             <label for="de_type4_list_use">출력</label> 
-             <input type="checkbox" name="de_type4_list_use" value="1" id="de_type4_list_use" <?=$default['de_type4_list_use']?"checked":"";?>>
+            <label for="de_type4_list_use">출력</label>
+            <input type="checkbox" name="de_type4_list_use" value="1" id="de_type4_list_use" <?=$default['de_type4_list_use']?"checked":"";?>>
             <label for="de_type4_list_skin">스킨</label>
             <select id="de_type4_list_skin" name="de_type4_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
             <script>document.getElementById('de_type4_list_skin').value='<?=$default['de_type4_list_skin']?>';</script>
             <label for="de_type4_list_mod">1라인이미지수</label>
             <input type="text" name="de_type4_list_mod" value="<?=$default['de_type4_list_mod']?>" id="de_type4_list_mod" class="frm_input" size="3">
-            <label for="de_type4_list_row"> 라인</label>
+            <label for="de_type4_list_row">라인</label>
             <input type="text" name="de_type4_list_row" value="<?=$default['de_type4_list_row']?>" id="de_type4_list_row" class="frm_input" size="3">
-            <label for="de_type4_img_width"> 폭</label>
+            <label for="de_type4_img_width">폭</label>
             <input type="text" name="de_type4_img_width" value="<?=$default['de_type4_img_width']?>" id="de_type4_img_width" class="frm_input" size="3">
-            <label for="de_type4_img_height"> 높이</label>
+            <label for="de_type4_img_height">높이</label>
             <input type="text" name="de_type4_img_height" value="<?=$default['de_type4_img_height']?>" id="de_type4_img_height" class="frm_input" size="3">
         </td>
     </tr>
     <tr>
         <th scope="row">할인상품출력</th>
         <td>
-             <label for="de_type5_list_use">출력 :</label> 
-             <input type="checkbox" name="de_type5_list_use" value="1" id="de_type5_list_use" <?=$default['de_type5_list_use']?"checked":"";?>>
-            <label for="de_type5_list_skin">스킨 : </label>
+            <label for="de_type5_list_use">출력</label>
+            <input type="checkbox" name="de_type5_list_use" value="1" id="de_type5_list_use" <?=$default['de_type5_list_use']?"checked":"";?>>
+            <label for="de_type5_list_skin">스킨</label>
             <select id="de_type5_list_skin" name="de_type5_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
             <script>document.getElementById('de_type5_list_skin').value='<?=$default['de_type5_list_skin']?>';</script>
-            <label for="de_type5_list_mod">1라인이미지수 : </label>
+            <label for="de_type5_list_mod">1라인이미지수</label>
             <input type="text" name="de_type5_list_mod" value="<?=$default['de_type5_list_mod']?>" id="de_type5_list_mod" class="frm_input" size="3">
-            <label for="de_type5_list_row"> 라인 : </label>
+            <label for="de_type5_list_row">라인</label>
             <input type="text" name="de_type5_list_row" value="<?=$default['de_type5_list_row']?>" id="de_type5_list_row" class="frm_input" size="3">
-            <label for="de_type5_img_width"> 폭 : </label>
+            <label for="de_type5_img_width">폭</label>
             <input type="text" name="de_type5_img_width" value="<?=$default['de_type5_img_width']?>" id="de_type5_img_width" class="frm_input" size="3">
-            <label for="de_type5_img_height"> 높이 : </label>
+            <label for="de_type5_img_height">높이</label>
             <input type="text" name="de_type5_img_height" value="<?=$default['de_type5_img_height']?>" id="de_type5_img_height" class="frm_input" size="3">
         </td>
     </tr>
@@ -299,7 +300,7 @@ $pg_anchor ="<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="de_bank_account">은행계좌번호</label></th>
         <td colspan="3">
-            <textarea name="de_bank_account" id="de_bank_account" style="width:99%"><?=$default['de_bank_account']?></textarea>
+            <textarea name="de_bank_account" id="de_bank_account"><?=$default['de_bank_account']?></textarea>
         </td>
     </tr>
     <tr>
@@ -391,7 +392,7 @@ $pg_anchor ="<ul class=\"anchor\">
             <select id="de_point_per" name="de_point_per">
             <? for ($i=100; $i>0; $i=$i-5) echo "<option value='$i'>{$i}\n"; ?>
             </select>%
-            <script type="text/javascript">
+            <script>
               document.getElementById('de_point_per').value='<?=$default['de_point_per']?>';
             </script>
         </td>
@@ -770,7 +771,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </table>
 </section>
 
-<script type="text/javascript">
+<script>
 function byte_check(el_cont, el_byte)
 {
     var cont = document.getElementById(el_cont);
@@ -846,7 +847,7 @@ function byte_check(el_cont, el_byte)
         </ul>
     </div>
 
-    <script type="text/javascript"> 
+    <script> 
     byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');
     </script>
     <? } ?>                
@@ -860,7 +861,7 @@ function byte_check(el_cont, el_byte)
     </colgroup>
     <tbody>
     <tr>
-        <th><label for="de_sms_use">SMS 사용</label></th>
+        <th scope="row"><label for="de_sms_use">SMS 사용</label></th>
         <td colspan="3">
             <?=help("서비스 회사를 선택하신 경우에만 SMS 를 사용합니다.\n위의 개별적인 기능별 사용(회원가입시, 주문서작성시 ...)보다 우선합니다.\n아이코드의 경우 무료테스트 환경을 지원합니다.");?>
             <select id="de_sms_use" name="de_sms_use">
@@ -871,28 +872,28 @@ function byte_check(el_cont, el_byte)
         </td>
     </tr>
     <tr>
-        <th><label for="de_sms_hp">관리자 핸드폰번호</label></th>
+        <th scope="row"><label for="de_sms_hp">관리자 핸드폰번호</label></th>
         <td colspan="3">
             <?=help("쇼핑몰관리자 또는 보내시는분의 핸드폰번호를 입력하세요.\n\n주문서작성시 쇼핑몰관리자가 문자메세지를 받으시려면 반드시 입력하셔야 합니다.\n\n숫자만 입력하세요.\n예) 0101234567");?>
             <input type="text" name="de_sms_hp" value="<?=$default['de_sms_hp']?>" id="de_sms_hp" class="frm_input" size="20">
         </td>
     </tr>
     <tr>
-        <th><label for="de_icode_id">아이코드 회원아이디</label></th>
+        <th scope="row"><label for="de_icode_id">아이코드 회원아이디</label></th>
         <td colspan="3">
             <?=help("아이코드에서 사용하시는 회원아이디를 입력합니다.");?>
             <input type="text" name="de_icode_id" value="<?=$default['de_icode_id']?>" id="de_icode_id" class="frm_input" size="20">
         </td>
     </tr>
     <tr>
-        <th><label for="de_icode_pw">아이코드 패스워드</label></th>
+        <th scope="row"><label for="de_icode_pw">아이코드 패스워드</label></th>
         <td colspan="3">
             <?=help("아이코드에서 사용하시는 패스워드를 입력합니다.");?>
             <input type="password" name="de_icode_pw" value="<?=$default['de_icode_pw']?>" class="frm_input" id="de_icode_pw">
         </td>
     </tr>
     <tr>
-        <th>요금제</th>
+        <th scope="row">요금제</th>
         <td>
             <input type="hidden" name="de_icode_server_ip" value="<?=$default['de_icode_server_ip']?>">
             <?
@@ -910,7 +911,7 @@ function byte_check(el_cont, el_byte)
                 }
             ?>
         </td>
-        <th>아이코드 서비스 신청(회원가입)</th>
+        <th scope="row">아이코드 서비스 신청(회원가입)</th>
         <td>
             <?=help("이 페이지에서 회원가입 하시면 문자 건당 16원에 제공 받을 수 있습니다.");?>
             <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank">http://www.icodekorea.com</a>
@@ -918,28 +919,28 @@ function byte_check(el_cont, el_byte)
     </tr>
      <? if ($userinfo['payment'] == 'A') { ?>
     <tr>
-        <td>충전 잔액</td>
+        <th scope="row">충전 잔액</th>
         <td colspan="3">
             <?=number_format($userinfo['coin'])?> 원.
             <input type=button class=btn1 value='충전하기' onclick="window.open('http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$sms4['cf_id']?>&icode_passwd=<?=$sms4['cf_pw']?>','icode_payment', 'scrollbars=1,resizable=1')">
         </td>
     </tr>
     <tr>
-        <td>건수별 금액</td>
+        <th scope="row">건수별 금액</th>
         <td colspan="3">
             <?=number_format($userinfo['gpay'])?> 원.
         </td>
     </tr>
     <? } ?>
-    <!-- <tr class=ht>
-        <td>아이코드 서버 IP</td>
+    <!-- <tr>
+        <th scope="row">아이코드 서버 IP</th>
         <td colspan=3>
             <input type=text name=de_icode_server_ip value='<?=$default[de_icode_server_ip]?$default[de_icode_server_ip]:"211.172.232.124";?>' size=20>
             <?=help("아이코드에서 문자메세지를 발송하는 서버의 IP 를 입력하십시오.\n\n기본값은 211.172.232.124 입니다.");?>
         </td>
     </tr>
-    <tr class=ht>
-        <td>아이코드 서버 Port</td>
+    <tr>
+        <th scope="row">아이코드 서버 Port</th>
         <td colspan=3>
             <select id=de_icode_server_port name=de_icode_server_port>
             <option value=''>사용안함
@@ -963,12 +964,13 @@ function byte_check(el_cont, el_byte)
      </tr>
      </tbody>
     </table>
-    <p style="text-align:center">
-    <input type="submit" value="  확  인  " class="btn1" accesskey="s">
+    <div class="btn_confirm">
+        <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    </div>
 </section>
-    </form>
+</form>
 
-<script type="text/javascript">
+<script>
 function fconfig_check(f)
 {
     <?=get_editor_js('de_baesong_content');?>
