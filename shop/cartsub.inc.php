@@ -123,7 +123,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     echo "<td align=right>" . number_format($point) . "&nbsp;</td>";
 
     if ($s_page == "cart.php")
-        echo "<td align=center><a href='./cartupdate.php?w=d&ct_id={$row['ct_id']}'><img src='".G4_SHOP_URL."/img/btn_del.gif' border='0' align=absmiddle alt='삭제'></a></td>";
+        echo "<td align=center><a href='./cartupdate.php?act=d&ct_id={$row['ct_id']}'><img src='".G4_SHOP_URL."/img/btn_del.gif' border='0' align=absmiddle alt='삭제'></a></td>";
     else if ($s_page == "orderinquiryview.php")
     {
         switch($row['ct_status'])
@@ -182,7 +182,7 @@ if ($i == 0) {
         }
 
         // 이미 주문된 내역을 보여주는것이므로 배송비를 주문서에서 얻는다.
-        $sql = "select od_send_cost from $g4[yc4_order_table] where od_id = '$od_id' ";
+        $sql = "select od_send_cost from {$g4['yc4_order_table']} where od_id = '$od_id' ";
         $row = sql_fetch($sql);
         if ($row['od_send_cost'] > 0)
             $send_cost = $row['od_send_cost'];
@@ -212,7 +212,7 @@ if ($i == 0) {
     if ($s_page == "cart.php" || $s_page == "orderinquiryview.php")
         echo "<td> &nbsp;</td>";
     echo "</tr>";
-    echo "<input type=hidden name=w value=''>";
+    echo "<input type=hidden name=act value=''>";
     echo "<input type=hidden name=records value='$i'>";
 }
 ?>
@@ -249,7 +249,7 @@ if ($i == 0) {
 
             if (act == "buy")
             {
-                f.w.value = act;
+                f.act.value = act;
 
                 <?
                 if (get_session('ss_mb_id')) // 회원인 겨우
@@ -263,7 +263,7 @@ if ($i == 0) {
             }
             else if (act == "alldelete")
             {
-                f.w.value = act;
+                f.act.value = act;
                 f.action = "<?="./cartupdate.php"?>";
                 f.submit();
             }
@@ -296,7 +296,7 @@ if ($i == 0) {
                         return;
                     }
                 }
-                f.w.value = act;
+                f.act.value = act;
                 f.action = "./cartupdate.php";
                 f.submit();
             }

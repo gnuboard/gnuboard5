@@ -64,13 +64,16 @@ include_once('./cartsub.inc.php');
             <td>핸드폰</td>
             <td><input type=text name=od_hp value='<?=$member['mb_hp']?>' maxlength=20 class=ed></td>
         </tr>
+        <?
+        $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2';
+        ?>
         <tr>
             <td rowspan=2>주 소</td>
             <td>
                 <input type=text name=od_zip1 size=3 maxlength=3 value='<?=$member['mb_zip1']?>' class=ed readonly>
                 -
                 <input type=text name=od_zip2 size=3 maxlength=3 value='<?=$member['mb_zip2']?>' class=ed readonly>
-                <a href="javascript:;" onclick="win_zip('forderform', 'od_zip1', 'od_zip2', 'od_addr1', 'od_addr2');"><img
+                <a href="<? echo $zip_href;?>" class="win_zip_find" target="_blank"><img
                     src="<?=G4_SHOP_URL?>/img/btn_zip_find.gif" border="0" align=absmiddle></a>
             </td>
         </tr>
@@ -133,13 +136,16 @@ include_once('./cartsub.inc.php');
             <td><input type=text name=od_b_hp class=ed
                 maxlength=20></td>
         </tr>
+        <?
+        $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2';
+        ?>
         <tr>
             <td rowspan=2>주 소</td>
             <td>
                 <input type=text name=od_b_zip1 size=3 maxlength=3 class=ed readonly>
                 -
                 <input type=text name=od_b_zip2 size=3 maxlength=3 class=ed readonly>
-                <a href="javascript:;" onclick="win_zip('forderform', 'od_b_zip1', 'od_b_zip2', 'od_b_addr1', 'od_b_addr2');"><img
+                <a href="<? echo $zip_href; ?>" class="win_zip_find" target="_blank"><img
                     src="<?=G4_SHOP_URL?>/img/btn_zip_find.gif" border="0" align=absmiddle></a>
                 </a>
             </td>
