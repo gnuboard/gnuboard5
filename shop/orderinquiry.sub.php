@@ -26,7 +26,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 $sql = " select a.od_id,
                 a.*, "._MISU_QUERY_."
            from {$g4['yc4_order_table']} a
-           left join {$g4['yc4_cart_table']} b on (b.on_uid=a.on_uid)
+           left join {$g4['yc4_cart_table']} b on (b.uq_id=a.uq_id)
           where mb_id = '{$member['mb_id']}'
           group by a.od_id
           order by a.od_id desc
@@ -40,7 +40,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     echo "<tr height=28>\n";
     echo "<td align=center>";
     echo "<input type=hidden name='ct_id[$i]' value='{$row['ct_id']}'>\n";
-    echo "<a href='./orderinquiryview.php?od_id={$row['od_id']}&on_uid={$row['on_uid']}'><U>{$row['od_id']}</U></a></td>\n";
+    echo "<a href='./orderinquiryview.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}'><U>{$row['od_id']}</U></a></td>\n";
     echo "<td align=center>".substr($row['od_time'],0,16)." (".get_yoil($row['od_time']).")</td>\n";
     echo "<td align=center>$row[itemcount]</td>\n";
     echo "<td align=right>".display_amount($row['orderamount'])."&nbsp;&nbsp;</td>\n";

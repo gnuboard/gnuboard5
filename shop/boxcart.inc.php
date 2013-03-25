@@ -6,7 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <tr><td><a href='<?=$g4[shop_path]?>/cart.php'><img src='<?=G4_SHOP_URL?>/img/bar_cart.gif' border=0></a></td></tr>
 <?
 $hsql = " select a.it_id, b.it_name, a.ct_qty from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b
-          where a.on_uid = '".get_session('ss_on_uid')."'
+          where a.uq_id = '".get_session('ss_uq_id')."'
             and a.it_id  = b.it_id
           order by a.ct_id ";
 $hresult = sql_query($hsql);

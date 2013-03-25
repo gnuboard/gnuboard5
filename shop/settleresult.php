@@ -4,32 +4,32 @@ include_once('./_common.php');
 $html_title = '결제 결과';
 include_once('./_head.php');
 
-if (get_session('ss_temp_on_uid') != $on_uid)
+if (get_session('ss_temp_uq_id') != $uq_id)
     alert('정상적인 방법으로 확인하실 수 있습니다.', G4_URL);
 
 
-$sql = " select * from {$g4['yc4_card_history_table']} where on_uid = '$on_uid' ";
+$sql = " select * from {$g4['yc4_card_history_table']} where uq_id = '$uq_id' ";
 $cd = sql_fetch($sql);
 if ($cd['cd_id'] == "")
     alert('값이 제대로 전달되지 않았습니다.');
 
 /*
 // 포인트 결제를 했다면 실제 포인트 결제한 것으로 수정합니다.
-$sql = " select od_id, on_uid, od_receipt_point, od_temp_point from $g4[yc4_order_table] where on_uid = '$on_uid' ";
+$sql = " select od_id, uq_id, od_receipt_point, od_temp_point from $g4[yc4_order_table] where uq_id = '$uq_id' ";
 $row = sql_fetch($sql);
 if ($row[od_receipt_point] == 0 && $row[od_temp_point] != 0)
 {
-    sql_query(" update $g4[yc4_order_table] set od_receipt_point = od_temp_point where on_uid = '$on_uid' ");
-    insert_point($member[mb_id], (-1) * $row[od_temp_point], "주문번호:$row[od_id] 결제", "@order", $member[mb_id], "$row[od_id],$row[on_uid]");
+    sql_query(" update $g4[yc4_order_table] set od_receipt_point = od_temp_point where uq_id = '$uq_id' ");
+    insert_point($member[mb_id], (-1) * $row[od_temp_point], "주문번호:$row[od_id] 결제", "@order", $member[mb_id], "$row[od_id],$row[uq_id]");
 }
 */
 
-$sql = " select * from {$g4['yc4_order_table']} where on_uid = '$on_uid' ";
+$sql = " select * from {$g4['yc4_order_table']} where uq_id = '$uq_id' ";
 $od = sql_fetch($sql);
 
 // 이곳에서 정상 결제되었다는 메일도 같이 발송합니다.
 @extract($od);
-$tmp_on_uid = $on_uid;
+$tmp_uq_id = $uq_id;
 
 if ($od['od_settle_case'] == '가상계좌')
     $od_receipt_bank = $od_temp_bank;
@@ -90,7 +90,7 @@ else
 <? } ?>
 
 <p align=center>
-    <a href='<?=G4_SHOP_URL."/orderinquiryview.php?od_id={$od['od_id']}&on_uid={$od['on_uid']}";?>'><img src='<?=G4_SHOP_URL?>/img/btn_confirm.gif' border=0></a>
+    <a href='<?=G4_SHOP_URL."/orderinquiryview.php?od_id={$od['od_id']}&uq_id={$od['uq_id']}";?>'><img src='<?=G4_SHOP_URL?>/img/btn_confirm.gif' border=0></a>
 <!-- <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?=$_POST[trace_no]?>', 'winreceipt', 'width=620,height=670')">영수증 출력</a> -->
 
 <?

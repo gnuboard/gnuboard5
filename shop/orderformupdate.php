@@ -11,11 +11,11 @@ $_POST = array_map("mysql_real_escape_string", $_POST);
 
 // 장바구니가 비어있는가?
 if (get_session("ss_direct"))
-    $tmp_on_uid = get_session("ss_on_direct");
+    $tmp_uq_id = get_session("ss_uq_direct");
 else
-    $tmp_on_uid = get_session("ss_on_uid");
+    $tmp_uq_id = get_session("ss_uq_id");
 
-if (get_cart_count($tmp_on_uid) == 0)// 장바구니에 담기
+if (get_cart_count($tmp_uq_id) == 0)// 장바구니에 담기
     alert("장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.", "./cart.php");
 
 $error = "";
@@ -26,7 +26,7 @@ $sql = " select a.it_id,
                 b.it_name
            from {$g4['yc4_cart_table']} a,
                 {$g4['yc4_item_table']} b
-          where a.on_uid = '$tmp_on_uid'
+          where a.uq_id = '$tmp_uq_id'
             and a.it_id = b.it_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -50,7 +50,7 @@ $i_temp_point = (int)$_POST['od_temp_point'];
 
 
 // 주문금액이 상이함
-$sql = " select SUM(ct_amount * ct_qty) as od_amount from {$g4['yc4_cart_table']} where on_uid = '$tmp_on_uid' ";
+$sql = " select SUM(ct_amount * ct_qty) as od_amount from {$g4['yc4_cart_table']} where uq_id = '$tmp_uq_id' ";
 $row = sql_fetch($sql);
 if ((int)$row['od_amount'] !== $i_amount) {
     die("Error.");
@@ -150,7 +150,7 @@ $od_id = get_new_od_id();
 // 주문서에 입력
 $sql = " insert {$g4['yc4_order_table']}
             set od_id             = '$od_id',
-                on_uid            = '$tmp_on_uid',
+                uq_id             = '$tmp_uq_id',
                 mb_id             = '{$member['mb_id']}',
                 od_pwd            = '$od_pwd',
                 od_name           = '$od_name',
@@ -198,7 +198,7 @@ if (($od_receipt_card > 0 || $od_receipt_hp > 0) && $default['de_card_point'] ==
 $sql = "update {$g4['yc4_cart_table']}
            set ct_status = '주문'
                $sql_card_point
-         where on_uid = '$tmp_on_uid' ";
+         where uq_id = '$tmp_uq_id' ";
 sql_query($sql);
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가
@@ -240,13 +240,13 @@ if ($default['de_sms_use2'] && $receive_number)
 
 
 // order_confirm 에서 사용하기 위해 tmp에 넣고
-set_session('ss_temp_on_uid', $tmp_on_uid);
+set_session('ss_temp_uq_id', $tmp_uq_id);
 
-// ss_on_uid 기존자료 세션에서 제거
+// ss_uq_id 기존자료 세션에서 제거
 if (get_session("ss_direct"))
-    set_session("ss_on_direct", "");
+    set_session("ss_uq_direct", "");
 else
-    set_session("ss_on_uid", "");
+    set_session("ss_uq_id", "");
 
 goto_url(G4_SHOP_URL.'/orderconfirm.php');
 ?>

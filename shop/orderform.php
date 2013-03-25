@@ -4,13 +4,13 @@ include_once('./_common.php');
 set_session("ss_direct", $sw_direct);
 // 장바구니가 비어있는가?
 if ($sw_direct) {
-    $tmp_on_uid = get_session("ss_on_direct");
+    $tmp_uq_id = get_session("ss_uq_direct");
 }
 else {
-    $tmp_on_uid = get_session("ss_on_uid");
+    $tmp_uq_id = get_session("ss_uq_id");
 }
 
-if (get_cart_count($tmp_on_uid) == 0)
+if (get_cart_count($tmp_uq_id) == 0)
     alert("장바구니가 비어 있습니다.", "./cart.php");
 
 // 포인트 결제 대기 필드 추가
@@ -25,7 +25,7 @@ include_once('./_head.php');
 
 <?
 $s_page = 'orderform.php';
-$s_on_uid = $tmp_on_uid;
+$s_uq_id = $tmp_uq_id;
 include_once('./cartsub.inc.php');
 ?>
 

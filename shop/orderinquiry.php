@@ -43,11 +43,11 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 // 비회원 주문확인의 경우 바로 주문서 상세조회로 이동
 if (!$is_member)
 {
-    $sql = " select od_id, on_uid from {$g4['yc4_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
+    $sql = " select od_id, uq_id from {$g4['yc4_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
     $row = sql_fetch($sql);
     if ($row['od_id']) {
-        set_session("ss_on_uid_inquiry", $row['on_uid']);
-        goto_url(G4_ShOP_URL."/orderinquiryview.php?od_id={$row['od_id']}&on_uid={$row['on_uid']}");
+        set_session("ss_uq_id_inquiry", $row['uq_id']);
+        goto_url(G4_ShOP_URL."/orderinquiryview.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}");
     }
 }
 
