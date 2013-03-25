@@ -135,31 +135,47 @@ $pg_anchor ="<ul class=\"anchor\">
     </tr>
     <tr>
         <th scope="row"><label for="de_admin_company_owner">대표자명</label></th>
-        <td colspan="3"><input type="text" name="de_admin_company_owner" value="<?=$default['de_admin_company_owner']?>" id="de_admin_company_owner" class="frm_input" size="30"></td>
+        <td colspan="3">
+            <input type="text" name="de_admin_company_owner" value="<?=$default['de_admin_company_owner']?>" id="de_admin_company_owner" class="frm_input" size="30">
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_admin_company_tel">대표전화번호</label></th>
-        <td><input type="text" name="de_admin_company_tel" value="<?=$default['de_admin_company_tel']?>" id="de_admin_company_tel" class="frm_input" size="30"></td>
+        <td>
+            <input type="text" name="de_admin_company_tel" value="<?=$default['de_admin_company_tel']?>" id="de_admin_company_tel" class="frm_input" size="30">
+        </td>
         <th scope="row"><label for="de_admin_company_fax">팩스번호</label></th>
-        <td><input type="text" name="de_admin_company_fax" value="<?=$default['de_admin_company_fax']?>" id="de_admin_company_fax" class="frm_input" size="30"></td>
+        <td>
+            <input type="text" name="de_admin_company_fax" value="<?=$default['de_admin_company_fax']?>" id="de_admin_company_fax" class="frm_input" size="30">
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_admin_tongsin_no">통신판매업 신고번호</label></th>
-        <td><input type="text" name="de_admin_tongsin_no" value="<?=$default['de_admin_tongsin_no']?>" id="de_admin_tongsin_no" class="frm_input" size="30"></td>
+        <td>
+            <input type="text" name="de_admin_tongsin_no" value="<?=$default['de_admin_tongsin_no']?>" id="de_admin_tongsin_no" class="frm_input" size="30">
+        </td>
         <th scope="row"><label for="de_admin_buga_no">부가통신 사업자번호</label></th>
-        <td><input type="text" name="de_admin_buga_no" value="<?=$default['de_admin_buga_no']?>" id="de_admin_buga_no" class="frm_input" size="30"></td>
+        <td>
+            <input type="text" name="de_admin_buga_no" value="<?=$default['de_admin_buga_no']?>" id="de_admin_buga_no" class="frm_input" size="30">
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_admin_company_zip">사업장우편번호</label></th>
-        <td><input type="text" name="de_admin_company_zip" value="<?=$default['de_admin_company_zip']?>" id="de_admin_company_zip" class="frm_input" size="10"></td>
+        <td>
+            <input type="text" name="de_admin_company_zip" value="<?=$default['de_admin_company_zip']?>" id="de_admin_company_zip" class="frm_input" size="10">
+        </td>
         <th scope="row"><label for="de_admin_company_addr">사업장주소</label></th>
         <td><input type="text" name="de_admin_company_addr" value="<?=$default['de_admin_company_addr']?>" id="de_admin_company_addr" class="frm_input" size="30"></td>
     </tr>
     <tr>
         <th scope="row"><label for="de_admin_info_name">정보관리책임자명</label></th>
-        <td><input type="text" name="de_admin_info_name" value="<?=$default['de_admin_info_name']?>" id="de_admin_info_name" class="frm_input" size="30"></td>
+        <td>
+            <input type="text" name="de_admin_info_name" value="<?=$default['de_admin_info_name']?>" id="de_admin_info_name" class="frm_input" size="30">
+        </td>
         <th scope="row"><label for="de_admin_info_email">정보책임자 e-mail</label></th>
-        <td><input type="text" name="de_admin_info_email" value="<?=$default['de_admin_info_email']?>" id="de_admin_info_email" class="frm_input" size="30"></td>
+        <td>
+            <input type="text" name="de_admin_info_email" value="<?=$default['de_admin_info_email']?>" id="de_admin_info_email" class="frm_input" size="30">
+        </td>
     </tr>
 
     </tbody>
@@ -171,93 +187,99 @@ $pg_anchor ="<ul class=\"anchor\">
     <?=$pg_anchor?>
     <p><?=help("상품관리에서 히트상품으로 선택한 상품들을 설정값대로 초기화면에 출력합니다.\n히트상품으로 체크한 상품이 없다면 초기화면에 출력하지 않습니다.\n추천상품과 신상품도 같은 방법으로 사용합니다.", -150)?></p>
     <table class="frm_tbl">
-        <colgroup>
-            <col class="grid_3">
-            <col class="grid_13">
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="row">히트상품출력</th>
-            <td>
-                <label for="de_type1_list_use">출력 :</label> <input type="checkbox" name="de_type1_list_use" value="1" id="de_type1_list_use" <?=$default['de_type1_list_use']?"checked":"";?>>
-                ,<label for="de_type1_list_skin">스킨 : </label>
-                <select name="de_type1_list_skin" id="de_type1_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type1_list_skin').value='<?=$default['de_type1_list_skin']?>';</script>
-                ,<label for="de_type1_list_mod">1라인이미지수 : </label>
-                <input type="text" name="de_type1_list_mod" value="<?=$default['de_type1_list_mod']?>" id="de_type1_list_mod" class="frm_input" size="3">
-                ,<label for="de_type1_list_row"> 라인 : </label>
-                <input type="text" name="de_type1_list_row" value="<?=$default['de_type1_list_row']?>" id="de_type1_list_row" class="frm_input" size="3">
-                ,<label for="de_type1_img_width"> 폭 : </label>
-                <input type="text" name="de_type1_img_width" value="<?=$default['de_type1_img_width']?>" id="de_type1_img_width" class="frm_input" size="3">
-                ,<label for="de_type1_img_height"> 높이 : </label>
-                <input type="text" name="de_type1_img_height" value="<?=$default['de_type1_img_height']?>" id="de_type1_img_height" class="frm_input" size="3">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">추천상품출력</th>
-            <td>
-                 <label for="de_type2_list_use">출력 :</label> <input type="checkbox" name="de_type2_list_use" value="1" id="de_type2_list_use" <?=$default['de_type2_list_use']?"checked":"";?>>
-                ,<label for="de_type2_list_skin">스킨 : </label>
-                <select id="de_type2_list_skin" name="de_type2_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type2_list_skin').value='<?=$default['de_type2_list_skin']?>';</script>
-                ,<label for="de_type2_list_mod">1라인이미지수 : </label>
-                <input type="text" name="de_type2_list_mod" value="<?=$default['de_type2_list_mod']?>" id="de_type2_list_mod" class="frm_input" size="3">
-                ,<label for="de_type2_list_row"> 라인 : </label>
-                <input type="text" name="de_type2_list_row" value="<?=$default['de_type2_list_row']?>" id="de_type2_list_row" class="frm_input" size="3">
-                ,<label for="de_type2_img_width"> 폭 : </label>
-                <input type="text" name="de_type2_img_width" value="<?=$default['de_type2_img_width']?>" id="de_type2_img_width" class="frm_input" size="3">
-                ,<label for="de_type2_img_height"> 높이 : </label>
-                <input type="text" name="de_type2_img_height" value="<?=$default['de_type2_img_height']?>" id="de_type2_img_height" class="frm_input" size="3">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">최신상품출력</th>
-            <td>
-                 <label for="de_type3_list_use">출력 :</label> <input type="checkbox" name="de_type3_list_use" value="1" id="de_type3_list_use" <?=$default['de_type3_list_use']?"checked":"";?>>
-                ,<label for="de_type3_list_skin">스킨 : </label>
-                <select id="de_type3_list_skin" name="de_type3_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type3_list_skin').value='<?=$default['de_type3_list_skin']?>';</script>
-                ,<label for="de_type3_list_mod">1라인이미지수 : </label>
-                <input type="text" name="de_type3_list_mod" value="<?=$default['de_type3_list_mod']?>" id="de_type3_list_mod" class="frm_input" size="3">
-                ,<label for="de_type3_list_row"> 라인 : </label>
-                <input type="text" name="de_type3_list_row" value="<?=$default['de_type3_list_row']?>" id="de_type3_list_row" class="frm_input" size="3">
-                ,<label for="de_type3_img_width"> 폭 : </label>
-                <input type="text" name="de_type3_img_width" value="<?=$default['de_type3_img_width']?>" id="de_type3_img_width" class="frm_input" size="3">
-                ,<label for="de_type3_img_height"> 높이 : </label>
-                <input type="text" name="de_type3_img_height" value="<?=$default['de_type3_img_height']?>" id="de_type3_img_height" class="frm_input" size="3">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">인기상품출력</th>
-            <td>
-                 <label for="de_type4_list_use">출력 :</label> 
-                 <input type="checkbox" name="de_type4_list_use" value="1" id="de_type4_list_use" <?=$default['de_type4_list_use']?"checked":"";?>>
-                ,<label for="de_type4_list_skin">스킨 : </label>
-                <select id="de_type4_list_skin" name="de_type4_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type4_list_skin').value='<?=$default['de_type4_list_skin']?>';</script>
-                ,<label for="de_type4_list_mod">1라인이미지수 : </label>
-                <input type="text" name="de_type4_list_mod" value="<?=$default['de_type4_list_mod']?>" id="de_type4_list_mod" class="frm_input" size="3">
-                ,<label for="de_type4_list_row"> 라인 : </label>
-                <input type="text" name="de_type4_list_row" value="<?=$default['de_type4_list_row']?>" id="de_type4_list_row" class="frm_input" size="3">
-                ,<label for="de_type4_img_width"> 폭 : </label>
-                <input type="text" name="de_type4_img_width" value="<?=$default['de_type4_img_width']?>" id="de_type4_img_width" class="frm_input" size="3">
-                ,<label for="de_type4_img_height"> 높이 : </label>
-                <input type="text" name="de_type4_img_height" value="<?=$default['de_type4_img_height']?>" id="de_type4_img_height" class="frm_input" size="3">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">할인상품출력</th>
-            <td>
-                 <label for="de_type5_list_use">출력 :</label> 
-                 <input type="checkbox" name="de_type5_list_use" value="1" id="de_type5_list_use" <?=$default['de_type5_list_use']?"checked":"";?>>
-                ,<label for="de_type5_list_skin">스킨 : </label>
-                <select id="de_type5_list_skin" name="de_type5_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type5_list_skin').value='<?=$default['de_type5_list_skin']?>';</script>
-                ,<label for="de_type5_list_mod">1라인이미지수 : </label>
-                <input type="text" name="de_type5_list_mod" value="<?=$default['de_type5_list_mod']?>" id="de_type5_list_mod" class="frm_input" size="3">
-                ,<label for="de_type5_list_row"> 라인 : </label>
-                <input type="text" name="de_type5_list_row" value="<?=$default['de_type5_list_row']?>" id="de_type5_list_row" class="frm_input" size="3">
-                ,<label for="de_type5_img_width"> 폭 : </label>
-                <input type="text" name="de_type5_img_width" value="<?=$default['de_type5_img_width']?>" id="de_type5_img_width" class="frm_input" size="3">
-                ,<label for="de_type5_img_height"> 높이 : </label>
-                <input type="text" name="de_type5_img_height" value="<?=$default['de_type5_img_height']?>" id="de_type5_img_height" class="frm_input" size="3">
-            </td>
-        </tr>
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_13">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row">히트상품출력</th>
+        <td>
+            <label for="de_type1_list_use">출력</label> <input type="checkbox" name="de_type1_list_use" value="1" id="de_type1_list_use" <?=$default['de_type1_list_use']?"checked":"";?>>
+            <label for="de_type1_list_skin">스킨 </label>
+            <select name="de_type1_list_skin" id="de_type1_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type1_list_skin').value='<?=$default['de_type1_list_skin']?>';</script>
+            <label for="de_type1_list_mod">1라인이미지수</label>
+            <input type="text" name="de_type1_list_mod" value="<?=$default['de_type1_list_mod']?>" id="de_type1_list_mod" class="frm_input" size="3">
+            <label for="de_type1_list_row"> 라인</label>
+            <input type="text" name="de_type1_list_row" value="<?=$default['de_type1_list_row']?>" id="de_type1_list_row" class="frm_input" size="3">
+            <label for="de_type1_img_width"> 폭</label>
+            <input type="text" name="de_type1_img_width" value="<?=$default['de_type1_img_width']?>" id="de_type1_img_width" class="frm_input" size="3">
+            <label for="de_type1_img_height"> 높이</label>
+            <input type="text" name="de_type1_img_height" value="<?=$default['de_type1_img_height']?>" id="de_type1_img_height" class="frm_input" size="3">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">추천상품출력</th>
+        <td>
+             <label for="de_type2_list_use">출력</label>
+             <input type="checkbox" name="de_type2_list_use" value="1" id="de_type2_list_use" <?=$default['de_type2_list_use']?"checked":"";?>>
+            <label for="de_type2_list_skin">스킨</label>
+            <select id="de_type2_list_skin" name="de_type2_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
+            <script>document.getElementById('de_type2_list_skin').value='<?=$default['de_type2_list_skin']?>';</script>
+            <label for="de_type2_list_mod">1라인이미지수 : </label>
+            <input type="text" name="de_type2_list_mod" value="<?=$default['de_type2_list_mod']?>" id="de_type2_list_mod" class="frm_input" size="3">
+            <label for="de_type2_list_row"> 라인 : </label>
+            <input type="text" name="de_type2_list_row" value="<?=$default['de_type2_list_row']?>" id="de_type2_list_row" class="frm_input" size="3">
+            <label for="de_type2_img_width"> 폭 : </label>
+            <input type="text" name="de_type2_img_width" value="<?=$default['de_type2_img_width']?>" id="de_type2_img_width" class="frm_input" size="3">
+            <label for="de_type2_img_height"> 높이 : </label>
+            <input type="text" name="de_type2_img_height" value="<?=$default['de_type2_img_height']?>" id="de_type2_img_height" class="frm_input" size="3">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">최신상품출력</th>
+        <td>
+             <label for="de_type3_list_use">출력</label>
+             <input type="checkbox" name="de_type3_list_use" value="1" id="de_type3_list_use" <?=$default['de_type3_list_use']?"checked":"";?>>
+             <label for="de_type3_list_skin">스킨</label>
+            <select id="de_type3_list_skin" name="de_type3_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
+            <script>document.getElementById('de_type3_list_skin').value='<?=$default['de_type3_list_skin']?>';</script>
+            <label for="de_type3_list_mod">1라인이미지수</label>
+            <input type="text" name="de_type3_list_mod" value="<?=$default['de_type3_list_mod']?>" id="de_type3_list_mod" class="frm_input" size="3">
+            <label for="de_type3_list_row">라인</label>
+            <input type="text" name="de_type3_list_row" value="<?=$default['de_type3_list_row']?>" id="de_type3_list_row" class="frm_input" size="3">
+            <label for="de_type3_img_width">폭</label>
+            <input type="text" name="de_type3_img_width" value="<?=$default['de_type3_img_width']?>" id="de_type3_img_width" class="frm_input" size="3">
+            <label for="de_type3_img_height">높이</label>
+            <input type="text" name="de_type3_img_height" value="<?=$default['de_type3_img_height']?>" id="de_type3_img_height" class="frm_input" size="3">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">인기상품출력</th>
+        <td>
+             <label for="de_type4_list_use">출력</label> 
+             <input type="checkbox" name="de_type4_list_use" value="1" id="de_type4_list_use" <?=$default['de_type4_list_use']?"checked":"";?>>
+            <label for="de_type4_list_skin">스킨</label>
+            <select id="de_type4_list_skin" name="de_type4_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
+            <script>document.getElementById('de_type4_list_skin').value='<?=$default['de_type4_list_skin']?>';</script>
+            <label for="de_type4_list_mod">1라인이미지수</label>
+            <input type="text" name="de_type4_list_mod" value="<?=$default['de_type4_list_mod']?>" id="de_type4_list_mod" class="frm_input" size="3">
+            <label for="de_type4_list_row"> 라인</label>
+            <input type="text" name="de_type4_list_row" value="<?=$default['de_type4_list_row']?>" id="de_type4_list_row" class="frm_input" size="3">
+            <label for="de_type4_img_width"> 폭</label>
+            <input type="text" name="de_type4_img_width" value="<?=$default['de_type4_img_width']?>" id="de_type4_img_width" class="frm_input" size="3">
+            <label for="de_type4_img_height"> 높이</label>
+            <input type="text" name="de_type4_img_height" value="<?=$default['de_type4_img_height']?>" id="de_type4_img_height" class="frm_input" size="3">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">할인상품출력</th>
+        <td>
+             <label for="de_type5_list_use">출력 :</label> 
+             <input type="checkbox" name="de_type5_list_use" value="1" id="de_type5_list_use" <?=$default['de_type5_list_use']?"checked":"";?>>
+            <label for="de_type5_list_skin">스킨 : </label>
+            <select id="de_type5_list_skin" name="de_type5_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
+            <script>document.getElementById('de_type5_list_skin').value='<?=$default['de_type5_list_skin']?>';</script>
+            <label for="de_type5_list_mod">1라인이미지수 : </label>
+            <input type="text" name="de_type5_list_mod" value="<?=$default['de_type5_list_mod']?>" id="de_type5_list_mod" class="frm_input" size="3">
+            <label for="de_type5_list_row"> 라인 : </label>
+            <input type="text" name="de_type5_list_row" value="<?=$default['de_type5_list_row']?>" id="de_type5_list_row" class="frm_input" size="3">
+            <label for="de_type5_img_width"> 폭 : </label>
+            <input type="text" name="de_type5_img_width" value="<?=$default['de_type5_img_width']?>" id="de_type5_img_width" class="frm_input" size="3">
+            <label for="de_type5_img_height"> 높이 : </label>
+            <input type="text" name="de_type5_img_height" value="<?=$default['de_type5_img_height']?>" id="de_type5_img_height" class="frm_input" size="3">
+        </td>
+    </tr>
     </tbody>
     </table>
 </section>
@@ -267,7 +289,6 @@ $pg_anchor ="<ul class=\"anchor\">
     <h2>결제정보</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
-    <caption>결제정보</caption>
     <colgroup>
         <col class="grid_3">
         <col class="grid_5">
@@ -286,8 +307,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td>
             <?=help("주문시 무통장으로 입금을 가능하게 할것인지를 설정합니다.\n사용할 경우 은행계좌번호를 반드시 입력하여 주십시오.", 50)?>
             <select id="de_bank_use" name="de_bank_use">
-            <option value='0'>아니오
-            <option value='1'>예
+                <option value="0">아니오</option>
+                <option value="1">예</option>
             </select>
             <script>document.getElementById('de_bank_use').value="<?=$default['de_bank_use']?>";</script>
         </td>
@@ -295,8 +316,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td>
         <?=help("주문시 실시간 계좌이체를 가능하게 할것인지를 설정합니다.", 50)?>
             <select id="de_iche_use" name="de_iche_use">
-                <option value="0">아니오
-                <option value="1">예
+                <option value="0">아니오</option>
+                <option value="1">예</option>
             </select>
             <script>document.getElementById('de_iche_use').value="<?=$default['de_iche_use']?>";</script>
         </td>
@@ -306,8 +327,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td colspan="3">
         <?=help("주문자가 현금거래를 원할 경우, 해당 거래건에 대해 주문자에게 고유로 발행되는 일회용 계좌번호입니다.", 50)?>
         <select name="de_vbank_use" id="de_vbank_use">
-            <option value="0">아니오
-            <option value="1">예
+            <option value="0">아니오</option>
+            <option value="1">예</option>
         </select>
         <script>document.fconfig.de_vbank_use.value="<?=$default['de_vbank_use']?>";</script>
         </td>
@@ -317,8 +338,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td colspan="3">
             <?=help("주문시 신용카드 결제를 가능하게 할것인지를 설정합니다.", 50)?>
             <select id="de_hp_use" name="de_hp_use">
-                <option value="0">아니오
-                <option value="1">예
+                <option value="0">아니오</option>
+                <option value="1">예</option>
             </select>
             <script>document.getElementById('de_hp_use').value="<?=$default['de_hp_use']?>";</script>
         </td>
@@ -328,15 +349,15 @@ $pg_anchor ="<ul class=\"anchor\">
         <td>
             <?=help("주문시 신용카드 결제를 가능하게 할것인지를 설정합니다.", 50)?>
             <select id="de_card_use" name="de_card_use">
-                <option value="0">아니오
-                <option value="1">예
+                <option value="0">아니오</option>
+                <option value="1">예<option>
             </select>
             <script>document.getElementById('de_card_use').value="<?=$default['de_card_use']?>";</script>
         </td>
         <th scope="row"><label for="de_card_max_amount">카드결제최소금액</label></th>
         <td>
-        <?=help("신용카드의 경우 1000원 미만은 결제가 가능하지 않습니다.\n1000원 이상으로 설정하십시오.")?>
-        <input type="text" name="de_card_max_amount" value="<?=$default['de_card_max_amount']?>"  id="de_card_max_amount" class="frm_input" size="10"> 원
+            <?=help("신용카드의 경우 1000원 미만은 결제가 가능하지 않습니다.\n1000원 이상으로 설정하십시오.")?>
+            <input type="text" name="de_card_max_amount" value="<?=$default['de_card_max_amount']?>"  id="de_card_max_amount" class="frm_input" size="10"> 원
         </td>
     </tr>
     <tr>
@@ -345,8 +366,8 @@ $pg_anchor ="<ul class=\"anchor\">
             <?=help("현금 입금후 주문자가 주문상세내역에서 현금영수증 발급을 가능하게 할것인지를 설정합니다.\n\n관리자는 설정에 관계없이 주문관리 > 수정에서 발급이 가능합니다.\n\n현금영수증의 취소 기능은 없으므로 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.", 50)?>
             &nbsp; 현금영수증의 취소 기능은 없으므로 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.
             <select id="de_taxsave_use" name="de_taxsave_use">
-                <option value='0'>아니오
-                <option value='1'>예
+                <option value="0">아니오</option>
+                <option value="1">예</option>
             </select>
             <script>document.getElementById('de_taxsave_use').value="<?=$default['de_taxsave_use']?>";</script>
         </td>
@@ -380,8 +401,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td>
             <?=help("신용카드, 계좌이체 결제시 포인트를 부여할지를 설정합니다. (기본값은 '아니오')", 50)?>
             <select id="de_card_point" name="de_card_point">
-                <option value='0'>아니오
-                <option value='1'>예
+                <option value="0">아니오</option>
+                <option value="1">예</option>
             </select>
             <script>document.getElementById('de_card_point').value="<?=$default['de_card_point']?>";</script>
         </td>
@@ -405,19 +426,23 @@ $pg_anchor ="<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_escrow_use">에스크로 사용</label></th>
+        <th scope="row">에스크로 사용</th>
         <td colspan="3">
             <?=help("일반결제와 에스크로 결제를 선택하실 수 있습니다.<br/>반드시 KCP 관리자 > 고객센터 > 서비스변경 및 추가 > 에스크로 신청 메뉴에서 에스크로를 사용 선택하고, 결제수단별로 적용 신청한 후 사용하셔야 합니다.<br/>에스크로 사용시 배송과의 연동은 되지 않으며 에스크로 결제만 지원됩니다.")?>
-            <label><input type="radio" name="de_escrow_use" value="0" <?=$default['de_escrow_use']==0?"checked":"";?> id="de_escrow_use"> 일반결제 사용</label>
-            <label><input type="radio" name="de_escrow_use" value="1"<?=$default['de_escrow_use']==1?"checked":"";?>> 에스크로결제 사용</label>
+                <input type="radio" name="de_escrow_use" value="0" <?=$default['de_escrow_use']==0?"checked":"";?> id="de_escrow_use1">
+                <label for="de_escrow_use1">일반결제 사용</label>
+                <input type="radio" name="de_escrow_use" value="1"<?=$default['de_escrow_use']==1?"checked":"";?> id="de_escrow_use2">
+                <label for="de_escrow_use2"> 에스크로결제 사용</label>
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_card_test">신용카드 결제테스트</label></th>
+        <th scope="row">신용카드 결제테스트</th>
         <td colspan="3">
             <?=help("신용카드를 테스트 하실 경우에 체크하세요. 결제단위 최소 1,000원")?>
-            <label><input type="radio" name="de_card_test" value="0" <?=$default['de_card_test']==0?"checked":"";?>id="de_card_test"> 실결제</label>
-            <label><input type="radio" name="de_card_test" value="1" <?=$default['de_card_test']==1?"checked":"";?>> 테스트결제</label>
+            <input type="radio" name="de_card_test" value="0" <?=$default['de_card_test']==0?"checked":"";?> id="de_card_test1">
+            <label for="de_card_test1">실결제 </label>
+            <input type="radio" name="de_card_test" value="1" <?=$default['de_card_test']==1?"checked":"";?> id="de_card_test2">
+            <label for="de_card_test2">테스트결제</label>
             &nbsp;
             [ <a href="https://admin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">실결제 관리자</a> &nbsp;|&nbsp;
             <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">테스트 관리자</a> ]
@@ -425,105 +450,105 @@ $pg_anchor ="<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
-    <td colspan="4" id="test_tip_help" style="display:none">
-        <strong>일반결제 사용시 테스트 결제</strong><br />
-        &middot; 신용카드 : 1000원 이상, 모든 카드가 테스트 되는 것은 아니므로 여러가지 카드로 결제해 보셔야 합니다. (BC, 현대, 롯데, 삼성카드)<br />
-        &middot; 계좌이체 : 150원 이상, 계좌번호, 비밀번호는 가짜로 입력해도 되며, 주민등록번호는 공인인증서의 것과 일치해야 합니다.<br />
-        &middot; 가상계좌 : 1원 이상, 모든 은행이 테스트 되는 것은 아니며 "VB10 : 해당 은행 계좌 없음" 자주 발생함. (광주은행, 하나은행)<br />
-        &middot; 휴대폰   : 1004원, 실결제가 되며 다음날 새벽에 일괄 취소됨.<br />
-        <br />
-        <strong>에스크로 사용시 테스트 결제</strong><br />
-        &middot; 신용카드 : 1000원 이상, 모든 카드가 테스트 되는 것은 아니므로 여러가지 카드로 결제해 보셔야 합니다. (BC, 현대, 롯데, 삼성카드)<br />
-        &middot; 계좌이체 : 150원 이상, 계좌번호, 비밀번호는 가짜로 입력해도 되며, 주민등록번호는 공인인증서의 것과 일치해야 합니다.<br />
-        &middot; 가상계좌 : 1원 이상, 입금통보는 제대로 되지 않음.<br />
-        &middot; 휴대폰   : 테스트 지원되지 않음.<br />
-        <br />
-        <div style="float:left; color:#ff3300;">
-        * 테스트결제의 경우 상점관리자(<a href='http://testadmin8.kcp.co.kr/assist/login.LoginAction.do' target='_blank'>http://testadmin8.kcp.co.kr/assist/login.LoginAction.do</a>)의 로그인 정보가 사용하시는 것과 다르므로 아이디/패스워드를 KCP로 문의하시기 바랍니다. (기술지원 1544-8661)<br>
-        * 참고로 일반결제의 테스트 사이트코드는 T0000 이며, 에스크로 결제의 테스트 사이트코드는 T0007 입니다.
-        </div>
-    </td>
+        <td colspan="4" id="test_tip_help" style="display:none">
+            <strong>일반결제 사용시 테스트 결제</strong><br />
+            &middot; 신용카드 : 1000원 이상, 모든 카드가 테스트 되는 것은 아니므로 여러가지 카드로 결제해 보셔야 합니다. (BC, 현대, 롯데, 삼성카드)<br />
+            &middot; 계좌이체 : 150원 이상, 계좌번호, 비밀번호는 가짜로 입력해도 되며, 주민등록번호는 공인인증서의 것과 일치해야 합니다.<br />
+            &middot; 가상계좌 : 1원 이상, 모든 은행이 테스트 되는 것은 아니며 "VB10 : 해당 은행 계좌 없음" 자주 발생함. (광주은행, 하나은행)<br />
+            &middot; 휴대폰   : 1004원, 실결제가 되며 다음날 새벽에 일괄 취소됨.<br />
+            <br />
+            <strong>에스크로 사용시 테스트 결제</strong><br />
+            &middot; 신용카드 : 1000원 이상, 모든 카드가 테스트 되는 것은 아니므로 여러가지 카드로 결제해 보셔야 합니다. (BC, 현대, 롯데, 삼성카드)<br />
+            &middot; 계좌이체 : 150원 이상, 계좌번호, 비밀번호는 가짜로 입력해도 되며, 주민등록번호는 공인인증서의 것과 일치해야 합니다.<br />
+            &middot; 가상계좌 : 1원 이상, 입금통보는 제대로 되지 않음.<br />
+            &middot; 휴대폰   : 테스트 지원되지 않음.<br />
+            <br />
+            <div style="float:left; color:#ff3300;">
+            * 테스트결제의 경우 상점관리자(<a href='http://testadmin8.kcp.co.kr/assist/login.LoginAction.do' target='_blank'>http://testadmin8.kcp.co.kr/assist/login.LoginAction.do</a>)의 로그인 정보가 사용하시는 것과 다르므로 아이디/패스워드를 KCP로 문의하시기 바랍니다. (기술지원 1544-8661)<br>
+            * 참고로 일반결제의 테스트 사이트코드는 T0000 이며, 에스크로 결제의 테스트 사이트코드는 T0007 입니다.
+            </div>
+        </td>
     </tr>
     <tr>
         <th scope="row">공통 URL</th>
         <td colspan="3">
-        <?=help("가상계좌 사용시 이 주소를 \"KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후\"에 넣으셔야 상점에 자동으로 입금 통보됩니다.")?>
-        <?=G4_SHOP_URL?>/settle_kcp_common.php
+            <?=help("가상계좌 사용시 이 주소를 \"KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후\"에 넣으셔야 상점에 자동으로 입금 통보됩니다.")?>
+            <?=G4_SHOP_URL?>/settle_kcp_common.php
         </td>
     </tr>
-    <tr class="ht" style='display:none;'>
-        <td>LG텔레콤 상점아이디</td>
+    <tr style='display:none;'>
+        <td><label for="de_dacom_mid">LG텔레콤 상점아이디</label></td>
         <td>
-        <input type="text" name="de_dacom_mid" value="<?=$default['de_dacom_mid']?>" size="40">
+            <input type="text" name="de_dacom_mid" value="<?=$default['de_dacom_mid']?>" id="de_dacom_mid" size="40">
         <?=help("tsi_ 로 시작되는 상점아이디로만 테스트 결제가 가능합니다.");?>
         </td>
-        <td>LG텔레콤 mertkey</td>
+        <td><label for="de_dacom_mertkey">LG텔레콤 mertkey</label></td>
         <td>
-        <input type="text" name="de_dacom_mertkey" value="<?=$default['de_dacom_mertkey']?>" size="40">
+          <input type="text" name="de_dacom_mertkey" value="<?=$default['de_dacom_mertkey']?>" id="de_dacom_mertkey" size="40">
     </td>
     <!-- <td>LG텔레콤 테스트 모드</td>
     <td><input type=checkbox name=de_dacom_test value='1' <?=$default[de_dacom_test]?"checked":"";?>> 테스트로 결제하실 경우에 체크하세요.</td> -->
     </tr>
-    <tr class="ht" style="display:none;">
-        <td>이니시스 아이디</td>
+    <tr style="display:none;">
+        <td><label for="de_inicis_mid">이니시스 아이디</label></td>
         <td>
-        <input type="text" name="de_inicis_mid" value="<?=$default['de_inicis_mid']?>" size="40">
+         <input type="text" name="de_inicis_mid" value="<?=$default['de_inicis_mid']?>" id="de_inicis_mid" size="40">
     </td>
-        <td>이니시스 패스워드</td>
+        <td><label for="de_inicis_passwd">이니시스 패스워드</label></td>
         <td>
-            <input type="text" name="de_inicis_passwd" value="<?=$default['de_inicis_passwd']?>">
+            <input type="text" name="de_inicis_passwd" value="<?=$default['de_inicis_passwd']?>" id="de_inicis_passwd">
         </td>
     </tr>
-    <tr class="ht" style="display:none">
-        <td>뱅크타운 상점ID</td>
+    <tr style="display:none">
+        <td><label for="de_banktown_mid">뱅크타운 상점ID</label></td>
         <td>
-            <input type="text" name="de_banktown_mid" value="<?=$default['de_banktown_mid']?>" size="40">
+            <input type="text" name="de_banktown_mid" value="<?=$default['de_banktown_mid']?>" id="de_banktown_mid" size="40">
         </td>
-        <td>뱅크타운 라이센스 키<!-- AuthKey --></td>
+        <td><label for="de_banktown_auth_key">뱅크타운 라이센스 키<!-- AuthKey --></label></td>
         <td>
-            <input type="text" name="de_banktown_auth_key" value="<?=$default['de_banktown_auth_key']?>" size="40" maxlength="32">
+            <input type="text" name="de_banktown_auth_key" value="<?=$default['de_banktown_auth_key']?>" id="de_banktown_auth_key" size="40" maxlength="32">
         </td>
     </tr>
-    <tr class="ht" style="display:none">
-        <td>올더게이트 몰ID</td>
+    <tr style="display:none">
+        <td><label for="de_allthegate_mid">올더게이트 몰ID</label></td>
         <td colspan="3">
-           <input type="text" name="de_allthegate_mid" value="<?=$default['de_allthegate_mid']?>" size="40">
+           <input type="text" name="de_allthegate_mid" value="<?=$default['de_allthegate_mid']?>" id="de_allthegate_mid" size="40">
         </td>
     </tr>
-    <tr class="ht" style="display:none">
-        <td>올앳 파트너 ID</td>
+    <tr style="display:none">
+        <td><label for="de_allat_partner_id">올앳 파트너 ID</label></td>
         <td>
-        <input type="text" name="de_allat_partner_id" value="<?=$default['de_allat_partner_id']?>" size="40">
+          <input type="text" name="de_allat_partner_id" value="<?=$default['de_allat_partner_id']?>" id="de_allat_partner_id" size="40">
         </td>
-        <td>주문번호 Prefix</td>
+        <td><label for="de_allat_prefix">주문번호 Prefix</label></td>
         <td>
-        <input type="text" name="de_allat_prefix" value="<?=$default['de_allat_prefix']?>"> 3자리
-        </td>
-    </tr>
-    <tr class="ht" style="display:none">
-        <td>올앳 FormKey 값</td>
-        <td>
-        <input type="text" name="de_allat_formkey" value="<?=$default['de_allat_formkey']?>" size="40">
-        </td>
-        <td>올앳 CrossKey 값</td>
-        <td>
-        <input type="text" name="de_allat_crosskey" value="<?=$default['de_allat_crosskey']?>" size="40">
+            <input type="text" name="de_allat_prefix" value="<?=$default['de_allat_prefix']?>" id="de_allat_prefix"> 3자리
         </td>
     </tr>
-    <tr class="ht" style="display:none">
-        <td>티지코프 ID</td>
+    <tr style="display:none">
+        <td><label for="de_allat_formkey">올앳 FormKey 값</label></td>
         <td>
-        <input type="text" name="de_tgcorp_mxid" value="<?=$default['de_tgcorp_mxid']?>" size="40">
+           <input type="text" name="de_allat_formkey" value="<?=$default['de_allat_formkey']?>" id="de_allat_formkey" size="40">
         </td>
-        <td>티지코프 접근키</td>
+        <td><label for="de_allat_crosskey">올앳 CrossKey 값</label></td>
         <td>
-        <input type="text" name="de_tgcorp_mxotp" value="<?=$default['de_tgcorp_mxotp']?>" size="40">
+            <input type="text" name="de_allat_crosskey" value="<?=$default['de_allat_crosskey']?>" id="de_allat_crosskey" size="40">
         </td>
     </tr>
-    <tr class="ht" style="display:none">
-        <td>KSPAY 상점아이디</td>
+    <tr style="display:none">
+        <td><label for="de_tgcorp_mxid">티지코프 ID</label></td>
+        <td>
+          <input type="text" name="de_tgcorp_mxid" value="<?=$default['de_tgcorp_mxid']?>" id="de_tgcorp_mxid" size="40">
+        </td>
+        <td><label for="de_tgcorp_mxotp">티지코프 접근키</label></td>
+        <td>
+           <input type="text" name="de_tgcorp_mxotp" value="<?=$default['de_tgcorp_mxotp']?>" id="de_tgcorp_mxotp" size="40">
+        </td>
+    </tr>
+    <tr style="display:none">
+        <td><label for="de_kspay_id">KSPAY 상점아이디</label></td>
         <td colspan="3">
-        <input type="text" name="de_kspay_id" value="<?=$default['de_kspay_id']?>" size="40">
+           <input type="text" name="de_kspay_id" value="<?=$default['de_kspay_id']?>" id="de_kspay_id" size="40">
         </td>
     </tr>
     </tbody>
@@ -546,9 +571,9 @@ $pg_anchor ="<ul class=\"anchor\">
         <td colspan="3">
             <?=help("'상한'으로 설정한 경우는 주문총액이 배송비상한가 미만일 경우 배송비를 받습니다.\n\n'없음'으로 설정한 경우에는 배송비상한가, 배송비를 무시하며 착불의 경우도 없음으로 설정하여 사용합니다.", 50);?>
             <select id="de_send_cost_case" name="de_send_cost_case">
-                <option value="상한">상한
-                <option value="없음">없음
-                </select>
+                <option value="상한">상한</option>
+                <option value="없음">없음</option>
+            </select>
             <script>document.getElementById('de_send_cost_case').value="<?=$default['de_send_cost_case']?>";</script>
         </td>
     </tr>
@@ -570,8 +595,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td>
             <?=help("'예'로 설정한 경우 주문서에서 희망배송일을 입력 받습니다.", 50);?>
             <select id="de_hope_date_use" name="de_hope_date_use">
-            <option value="0">아니오
-            <option value="1">예
+                <option value="0">아니오</option>
+                <option value="1">예</option>
             </select>
             <script>document.getElementById('de_hope_date_use').value="<?=$default['de_hope_date_use']?>";</script>
         </td>
@@ -611,28 +636,31 @@ $pg_anchor ="<ul class=\"anchor\">
     <tr>
         <th scope="row">관련상품출력</th>
         <td colspan="3">
-        <?=help("$cart_dir/item.sub.adding.php 에서 $cart_dir/maintype1.inc.php 를 include 하여 출력합니다.");?>
-        <label for="de_rel_list_mod">1라인이미지수 : </label><input type="text" name="de_rel_list_mod" value="<?=$default['de_rel_list_mod']?>" id="de_rel_list_mod" class="frm_input" size="3">
-        <label for="de_rel_img_width">, 이미지폭 : </label><input type="text" name="de_rel_img_width" value="<?=$default['de_rel_img_width']?>" id="de_rel_img_width" class="frm_input" size="3">
-        <label for="de_rel_img_height">, 이미지높이 : </label><input type="text" name="de_rel_img_height" value="<?=$default['de_rel_img_height']?>" id="de_rel_img_height" class="frm_input" size="3">
+            <?=help("$cart_dir/item.sub.adding.php 에서 $cart_dir/maintype1.inc.php 를 include 하여 출력합니다.");?>
+            <label for="de_rel_list_mod">1라인이미지수</label>
+            <input type="text" name="de_rel_list_mod" value="<?=$default['de_rel_list_mod']?>" id="de_rel_list_mod" class="frm_input" size="3">
+            <label for="de_rel_img_width">, 이미지폭</label>
+            <input type="text" name="de_rel_img_width" value="<?=$default['de_rel_img_width']?>" id="de_rel_img_width" class="frm_input" size="3">
+            <label for="de_rel_img_height">, 이미지높이</label>
+            <input type="text" name="de_rel_img_height" value="<?=$default['de_rel_img_height']?>" id="de_rel_img_height" class="frm_input" size="3">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_simg_width">이미지(소) 폭</label></th>
         <td>
-        <?=help("상품관리의 상품입력에서 이미지(대) 입력으로 자동생성해 줄때 이미지(중)의 폭과 높이를 설정한 값으로 생성하여 줍니다.");?>
-        <input type="text" name="de_simg_width" value="<?=$default['de_simg_width']?>" id="de_simg_width" class="frm_input" size="5"> 픽셀
+            <?=help("상품관리의 상품입력에서 이미지(대) 입력으로 자동생성해 줄때 이미지(중)의 폭과 높이를 설정한 값으로 생성하여 줍니다.");?>
+            <input type="text" name="de_simg_width" value="<?=$default['de_simg_width']?>" id="de_simg_width" class="frm_input" size="5"> 픽셀
         </td>
         <th scope="row"><label for="de_simg_height">이미지(소) 높이</label></th>
         <td>
-        <input type="text" name="de_simg_height" value="<?=$default['de_simg_height']?>" id="de_simg_height" class="frm_input" size="5"> 픽셀
+            <input type="text" name="de_simg_height" value="<?=$default['de_simg_height']?>" id="de_simg_height" class="frm_input" size="5"> 픽셀
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_mimg_width">이미지(중) 폭</label></th>
         <td>
-        <?=help("상품관리의 상품입력에서 이미지(대) 입력으로 자동생성해 줄때 이미지(중)의 폭과 높이를 설정한 값으로 생성하여 줍니다.");?>
-        <input type="text" name="de_mimg_width" value="<?=$default['de_mimg_width']?>" id="de_mimg_width" class="frm_input" size="5"> 픽셀
+            <?=help("상품관리의 상품입력에서 이미지(대) 입력으로 자동생성해 줄때 이미지(중)의 폭과 높이를 설정한 값으로 생성하여 줍니다.");?>
+            <input type="text" name="de_mimg_width" value="<?=$default['de_mimg_width']?>" id="de_mimg_width" class="frm_input" size="5"> 픽셀
         </td>
         <th scope="row"><label for="de_mimg_height">이미지(중) 높이</label></th>
         <td>
@@ -642,17 +670,17 @@ $pg_anchor ="<ul class=\"anchor\">
     <tr>
         <th scope="row">로고이미지</th>
         <td colspan="3">
-        <?=help("쇼핑몰에 사용하는 로고이미지 입니다.\n이미지 파일만 업로드 가능합니다.");?>
-        <input type="file" name="logo_img" id="logo_img">
-        <?
-        $logo_img = G4_DATA_PATH."/common/logo_img";
-        if (file_exists($logo_img))
-        {
-            $size = getimagesize($logo_img);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('id_logo_img', $size[0], $size[1]);\"><input type=checkbox name=logo_img_del value='1'>삭제";
-            echo "<div id='id_logo_img' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/common/logo_img' border=1></div>";
-        }
-        ?>
+            <?=help("쇼핑몰에 사용하는 로고이미지 입니다.\n이미지 파일만 업로드 가능합니다.");?>
+            <input type="file" name="logo_img" id="logo_img">
+            <?
+            $logo_img = G4_DATA_PATH."/common/logo_img";
+            if (file_exists($logo_img))
+            {
+                $size = getimagesize($logo_img);
+                echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('id_logo_img', $size[0], $size[1]);\"><input type=checkbox name=logo_img_del value='1'>삭제";
+                echo "<div id='id_logo_img' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/common/logo_img' border=1></div>";
+            }
+            ?>
         </td>
     </tr>
     <tr>
@@ -676,8 +704,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td colspan="3">
              <?=help("고객이 특정 상품에 사용후기를 작성하였을 경우 바로 출력할것인지 관리자 승인 후 출력할것인지를 설정합니다.", 50);?>
             <select id="de_item_ps_use" name="de_item_ps_use">
-                <option value="0">관리자 승인없이 출력
-                <option value="1">관리자 승인 후 출력
+                <option value="0">관리자 승인없이 출력</option>
+                <option value="1">관리자 승인 후 출력</option>
             </select>
             <script>document.getElementById('de_item_ps_use').value="<?=$default['de_item_ps_use']?>";</script>
         </td>
@@ -688,8 +716,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td colspan="3">
             <?=help("'예'로 설정한 경우 쇼핑몰 우측에 스크롤배너가 출력됩니다.", 50);?>
             <select id="de_scroll_banner_use" name="de_scroll_banner_use">
-                <option value="0">아니오
-                <option value="1">예
+                <option value="0">아니오</option>
+                <option value="1">예</option>
             </select>
             <script>document.getElementById('de_scroll_banner_use').value="<?=$default['de_scroll_banner_use']?>";</script>
         </td>
@@ -720,7 +748,7 @@ $pg_anchor ="<ul class=\"anchor\">
     <tr>
         <th scope="row">비회원에 대한<br/>개인정보수집 내용</th>
         <td colspan="3">
-         <br /><?=editor_html('de_guest_privacy', $default['de_guest_privacy']);?>
+           <br /><?=editor_html('de_guest_privacy', $default['de_guest_privacy']);?>
         </td>
     </tr>
     <tr>
@@ -792,6 +820,7 @@ function byte_check(el_cont, el_byte)
     }
 }
 </script>
+
 <section id="frm_sms" class="cbox" >
     <h2>SMS정보</h2>
     <?=$pg_anchor?>
@@ -801,21 +830,22 @@ function byte_check(el_cont, el_byte)
     ?>
 
     <? for ($i=1; $i<=4; $i++) { ?>
-<div style="width:225px;float:left">
-<h3 style="display:inline-block;text-align:center;width:225px" ><?=$sms_title[$i]?></h3>
-    <ul style="list-style:none;margin:0 auto;width:163px;padding:0 !important">
-        <li style="text-align:center">(<?=$sms_daesang[$i]?>)</li>
-        <li style="background:url(./img/sms_back.gif) no-repeat 0 0;width:163px;height:191px">
-            <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');" style="margin-left:22px;margin-top:54px;width:114px;overflow:hidden;height:85px;background-color:#C4FFFF; FONT-SIZE: 8pt; font-family:굴림체"><?=$default["de_sms_cont".$i]?></textarea>
-        </li>
-        <li style="text-align:center">
-            <span id="byte<?=$i?>" style="text-align:center">0 / 80 바이트</span>
-            <br><input type="checkbox" name="de_sms_use<?=$i?>" value="1" id="de_sms_use<?=$i?>"<?=($default["de_sms_use".$i] ? " checked" : "")?>>
-            <label for="de_sms_use<?=$i?>">사용</label>
-        </li>
-    </ul>
-</div>
-  
+    <div style="width:225px;float:left">
+    <h3 style="display:inline-block;text-align:center;width:225px" ><?=$sms_title[$i]?></h3>
+        <ul style="list-style:none;margin:0 auto;width:163px;padding:0 !important">
+            <li style="text-align:center">(<?=$sms_daesang[$i]?>)</li>
+            <li style="background:url(./img/sms_back.gif) no-repeat 0 0;width:163px;height:191px">
+                <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');" style="margin-left:22px;margin-top:54px;width:114px;overflow:hidden;height:85px;background-color:#C4FFFF; FONT-SIZE: 8pt; font-family:굴림체"><?=$default["de_sms_cont".$i]?></textarea>
+            </li>
+            <li style="text-align:center">
+                <span id="byte<?=$i?>" style="text-align:center">0 / 80 바이트</span>
+                <br />
+                <input type="checkbox" name="de_sms_use<?=$i?>" value="1" id="de_sms_use<?=$i?>" <?=($default["de_sms_use".$i] ? " checked" : "")?>>
+                <label for="de_sms_use<?=$i?>">사용</label>
+            </li>
+        </ul>
+    </div>
+
     <script type="text/javascript"> 
     byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');
     </script>
@@ -834,8 +864,8 @@ function byte_check(el_cont, el_byte)
         <td colspan="3">
             <?=help("서비스 회사를 선택하신 경우에만 SMS 를 사용합니다.\n위의 개별적인 기능별 사용(회원가입시, 주문서작성시 ...)보다 우선합니다.\n아이코드의 경우 무료테스트 환경을 지원합니다.");?>
             <select id="de_sms_use" name="de_sms_use">
-                <option value="">사용안함
-                <option value="icode">아이코드
+                <option value="">사용안함</option>
+                <option value="icode">아이코드</option>
             </select>
             <script>document.getElementById('de_sms_use').value="<?=$default['de_sms_use']?>";</script>
         </td>
@@ -885,17 +915,16 @@ function byte_check(el_cont, el_byte)
             <?=help("이 페이지에서 회원가입 하시면 문자 건당 16원에 제공 받을 수 있습니다.");?>
             <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank">http://www.icodekorea.com</a>
         </td>
-
     </tr>
      <? if ($userinfo['payment'] == 'A') { ?>
-    <tr class="ht">
+    <tr>
         <td>충전 잔액</td>
         <td colspan="3">
             <?=number_format($userinfo['coin'])?> 원.
             <input type=button class=btn1 value='충전하기' onclick="window.open('http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$sms4['cf_id']?>&icode_passwd=<?=$sms4['cf_pw']?>','icode_payment', 'scrollbars=1,resizable=1')">
         </td>
     </tr>
-    <tr class="ht">
+    <tr>
         <td>건수별 금액</td>
         <td colspan="3">
             <?=number_format($userinfo['gpay'])?> 원.

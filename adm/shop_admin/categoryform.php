@@ -79,6 +79,63 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <?//=subtitle("기본 입력")?>
 
+<form name="fcategoryform" method="post" action="./categoryformupdate.php" enctype="multipart/form-data" onsubmit="return fcategoryformcheck(this);" style="margin:0px;">
+
+
+<input type="hidden" name="codedup"  value="<?=$default['de_code_dup_use']?>">
+<input type="hidden" name="w" value="<?=$w?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="sort1" value="<?=$sort1?>">
+<input type="hidden" name="sort2" value="<?=$sort2?>">
+<section>
+<table>
+<colgroup>
+    <col class="grid_3">
+    <col class="grid_5">
+    <col class="grid_3">
+    <col class="grid_5">
+</colgroup>
+<tbody> 
+<tr>
+    <th><label for="ca_id">분류코드</label></th>
+    <td colspan="3">
+        <? if ($w == "") { ?>
+            <input type="text " id="ca_id" name="ca_id" class="frm_input"size="<?=$sublen?>" maxlength="<?=$sublen?>" minlength="<?=$sublen?>" nospace alphanumeric value="<?=$subid?>">
+            <? if ($default['de_code_dup_use']) { ?><a href="javascript" onclick="codedupcheck(document.getElementById('ca_id').value)"><img src="./img/btn_code.gif" border="0" align=
+            "absmiddle"></a><? } ?>
+            <?=help("자동으로 보여지는 분류코드를 사용하시길 권해드리지만 직접 입력한 값으로도 사용할 수 있습니다.\n분류코드는 나중에 수정이 되지 않으므로 신중하게 결정하여 사용하십시오.\n\n분류코드는 2자리씩 10자리를 사용하여 5단계를 표현할 수 있습니다.\n0~z까지 입력이 가능하며 한 분류당 최대 1296가지를 표현할 수 있습니다.\n그러므로 총 3656158440062976가지의 분류를 사용할 수 있습니다.");?>
+        <? } else { ?>
+            <input type="hidden" name="ca_id" value="<?=$ca['ca_id']?>"><?=$ca['ca_id']?>
+            <? echo icon("미리보기", G4_SHOP_URL."/list.php?ca_id=$ca_id"); ?>
+            <? echo "<a href='./categoryform.php?ca_id=$ca_id&$qstr' title='하위분류 추가'><img src='".G4_ADMIN_URL."/img/icon_insert.gif' border=0 align=absmiddle></a>"; ?>
+            <a href="./itemlist.php?sca=<?=$ca['ca_id']?>">상품리스트</a>
+        <? } ?>
+    </td>
+</tr>
+<tr class="ht">
+    <th><label for="ca_name">분류명<span style="color:#ff6600">*</span></label></th>
+    <td colspan="3"><input type="text" name="ca_name" value="<? echo $ca['ca_name'] ?>" size="38" id="ca_name" required class="required frm_input" itemname="분류명"></td>
+</tr>
+
+<tr>
+    <th><label for="ca_mb_id">관리 회원아이디</label></th>
+    <td colspan="3">
+        <?
+        if ($is_admin == 'super')
+            echo "<input type=text name=ca_mb_id value='{$ca['ca_mb_id']}' maxlength=20 class=ed>";
+        else
+            echo "<input type=hidden name=ca_mb_id value='{$ca['ca_mb_id']}'>{$ca['ca_mb_id']}";
+        ?>
+    </td>
+</tr>
+
+</tbody>
+</table>
+</section>
+
+
+
+
 <form name=fcategoryform method=post action="./categoryformupdate.php" enctype="multipart/form-data" onsubmit='return fcategoryformcheck(this);' style="margin:0px;">
 
 <table cellpadding=0 cellspacing=0 width=100%>
