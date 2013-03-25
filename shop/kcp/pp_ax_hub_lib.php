@@ -1,12 +1,12 @@
 <?
   /* ============================================================================== */
-  /* =   PAGE : ë¼ì´ë¸Œë²„ë¦¬ PAGE                                                   = */
+  /* =   PAGE : ¶óÀÌºê¹ö¸® PAGE                                                   = */
   /* = -------------------------------------------------------------------------- = */
-  /* =   Copyright (c)  2010.02   KCP Inc.   All Rights Reserved.                 = */
+  /* =   Copyright (c)  2010.02   KCP Inc.   All Rights Reserverd.                = */
   /* ============================================================================== */
 
   /* ============================================================================== */
-  /* =   ì§€ë¶ˆ ì—°ë™ CLASS                                                          = */
+  /* =   ÁöºÒ ¿¬µ¿ CLASS                                                          = */
   /* ============================================================================== */
   class   C_PP_CLI
   {
@@ -20,14 +20,14 @@
     var   $m_encx_info;
 
     /* -------------------------------------------------------------------- */
-    /* -   ì²˜ë¦¬ ê²°ê³¼ ê°’                                                   - */
+    /* -   Ã³¸® °á°ú °ª                                                   - */
     /* -------------------------------------------------------------------- */
     var   $m_res_data;
     var   $m_res_cd;
     var   $m_res_msg;
 
     /* -------------------------------------------------------------------- */
-    /* -   ìƒì„±ì                                                         - */
+    /* -   »ı¼ºÀÚ                                                         - */
     /* -------------------------------------------------------------------- */
     function  C_PP_CLI()
     {
@@ -79,7 +79,7 @@
     }
 
     /* -------------------------------------------------------------------- */
-    /* -   FUNC  :  ENC DATA ì •ë³´ ì„¤ì • í•¨ìˆ˜                               - */
+    /* -   FUNC  :  ENC DATA Á¤º¸ ¼³Á¤ ÇÔ¼ö                               - */
     /* -------------------------------------------------------------------- */
     function  mf_set_payx_common_data( $name, $val )
     {
@@ -136,14 +136,13 @@
     }
 
     /* -------------------------------------------------------------------- */
-    /* -   FUNC  :  ì§€ë¶ˆ ì²˜ë¦¬ í•¨ìˆ˜                                        - */
+    /* -   FUNC  :  ÁöºÒ Ã³¸® ÇÔ¼ö                                        - */
     /* -------------------------------------------------------------------- */
     function  mf_do_tx( $trace_no,  $home_dir, $site_cd,
                         $site_key,  $tx_cd,    $pub_key_str,
                         $pa_url,    $pa_port,  $user_agent,
                         $ordr_idxx, $cust_ip,
-                        $log_level, $opt, $mode,
-                        $key_dir,   $log_dir)
+                        $log_level, $opt, $mode )
     {
       $payx_data = $this->mf_get_payx_data();
 
@@ -166,56 +165,29 @@
       }
       else
       {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') 
-        {
-            $res_data = $this->mf_exec( $home_dir  . "/bin/pp_cli_exe " . "\"".
-                                    "site_cd="   . $site_cd             . "," .
-                                    "site_key="  . $site_key            . "," .
-                                    "tx_cd="     . $tx_cd               . "," .
-                                    "pa_url="    . $pa_url              . "," .
-                                    "pa_port="   . $pa_port             . "," .
-                                    "ordr_idxx=" . $ordr_idxx           . "," .
-                                    "enc_data="  . $this->m_encx_data   . "," .
-                                    "enc_info="  . $this->m_encx_info   . "," .
-                                    "trace_no="  . $trace_no            . "," .
-                                    "cust_ip="   . $cust_ip             . "," .
-                                    "key_path="  . $key_dir             . "," .
-                                    "log_path="  . $log_dir             . "," .
-                                    "log_level=" . $log_level           . "," .
-                                    "plan_data=" . $payx_data           .
-                                                   $ordr_data           .
-                                                   $rcvr_data           .
-                                                   $escw_data           .
-                                                   $modx_data           .
-                                "\"") ;
-        }
-        else 
-        {
-            $res_data = $this->mf_exec( $home_dir . "/bin/pp_cli",
-                                        "-h",
-                                        "home="      . $home_dir          . "," .
-                                        "site_cd="   . $site_cd           . "," .
-                                        "site_key="  . $site_key          . "," .
-                                        "tx_cd="     . $tx_cd             . "," .
-                                        "pa_url="    . $pa_url            . "," .
-                                        "pa_port="   . $pa_port           . "," .
-                                        "ordr_idxx=" . $ordr_idxx         . "," .
-                                        "payx_data=" . $payx_data         . "," .
-                                        "ordr_data=" . $ordr_data         . "," .
-                                        "rcvr_data=" . $rcvr_data         . "," .
-                                        "escw_data=" . $escw_data         . "," .
-                                        "modx_data=" . $modx_data         . "," .
-                                        "enc_data="  . $this->m_encx_data . "," .
-                                        "enc_info="  . $this->m_encx_info . "," .
-                                        "trace_no="  . $trace_no          . "," .
-                                        "cust_ip="   . $cust_ip           . "," .
-                                        "log_level=" . $log_level         . "," .
-                                        "opt="       . $opt               . "" );
-        }
-
+        $res_data = $this->mf_exec( $home_dir . "/bin/pp_cli",
+                                    "-h",
+                                    "home="      . $home_dir          . "," .
+                                    "site_cd="   . $site_cd           . "," .
+                                    "site_key="  . $site_key          . "," .
+                                    "tx_cd="     . $tx_cd             . "," .
+                                    "pa_url="    . $pa_url            . "," .
+                                    "pa_port="   . $pa_port           . "," .
+                                    "ordr_idxx=" . $ordr_idxx         . "," .
+                                    "payx_data=" . $payx_data         . "," .
+                                    "ordr_data=" . $ordr_data         . "," .
+                                    "rcvr_data=" . $rcvr_data         . "," .
+                                    "escw_data=" . $escw_data         . "," .
+                                    "modx_data=" . $modx_data         . "," .
+                                    "enc_data="  . $this->m_encx_data . "," .
+                                    "enc_info="  . $this->m_encx_info . "," .
+                                    "trace_no="  . $trace_no          . "," .
+                                    "cust_ip="   . $cust_ip           . "," .
+                                    "log_level=" . $log_level         . "," .
+                                    "opt="       . $opt               . "" );
         if ( $res_data == "" )
         {
-            $res_data = "res_cd=9502" . chr( 31 ) . "res_msg=ì—°ë™ ëª¨ë“ˆ í˜¸ì¶œ ì˜¤ë¥˜";
+           $res_data = "res_cd=9502" . chr( 31 ) . "res_msg=¿¬µ¿ ¸ğµâ È£Ãâ ¿À·ù";
         }
       }
 
@@ -226,7 +198,7 @@
     }
 
     /* -------------------------------------------------------------------- */
-    /* -   FUNC  :  ì²˜ë¦¬ ê²°ê³¼ ê°’ì„ ë¦¬í„´í•˜ëŠ” í•¨ìˆ˜                          - */
+    /* -   FUNC  :  Ã³¸® °á°ú °ªÀ» ¸®ÅÏÇÏ´Â ÇÔ¼ö                          - */
     /* -------------------------------------------------------------------- */
     function  mf_get_res_data( $name )
     {

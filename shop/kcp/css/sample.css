@@ -1,8 +1,8 @@
-body {FONT-FAMILY: êµ´ë¦¼;font-size:12px;}
+body {FONT-FAMILY: ±¼¸²;font-size:12px;}
 
 /*base link*/
-*, a {FONT-FAMILY: "Arial", "êµ´ë¦¼"; font-size: 12px; TEXT-DECORATION: none}
-a:hover {FONT-FAMILY: "Arial",êµ´ë¦¼; FONT-SIZE: 12px; color: #4D82A2; TEXT-DECORATION:none}
+a {FONT-FAMILY: "Arial", "±¼¸²"; font-size: 12px; TEXT-DECORATION: none}
+a:hover {FONT-FAMILY: "Arial",±¼¸²; FONT-SIZE: 12px; color: #4D82A2; TEXT-DECORATION:none}
 
 img { border:0; }
 .bold {font-weight:bold;}
@@ -13,8 +13,8 @@ img { border:0; }
 .red { color:red;}
 .blue { color:blue;}
 .orange {color:orange;}
-.frmselect {font-size:12px;font-family:"Arial",êµ´ë¦¼;color:#2c2c2c;border:1 solid #7f9db9;height:20px;margin-left:10px;}
-.frminput {font-size:12px;font-family:"Arial",êµ´ë¦¼;color:#2c2c2c;border:1 solid #7f9db9;height:15px;margin-left:10px;}
+.frmselect {font-size:12px;font-family:"Arial",±¼¸²;color:#2c2c2c;border:1 solid #7f9db9;height:20px;margin-left:10px;}
+.frminput {font-size:12px;font-family:"Arial",±¼¸²;color:#2c2c2c;border:1 solid #7f9db9;height:15px;margin-left:10px;}
 .width95 {width:95px;}
 .celpadd {padding: 3 0 3 3;}
 .celpadd1 {padding: 3 0 3 13;}
