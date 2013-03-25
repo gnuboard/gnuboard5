@@ -104,6 +104,18 @@ if(!sql_query(" select 1 from {$g4['uniqid_table']} limit 1 ", false)) {
                 ) ", false);
 }
 
+// uq_id 필드추가
+$sql = " select uq_id from {$g4['yc4_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_card_history_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
+}
+
 //==============================================================================
 // 쇼핑몰 필수 실행코드 모음 끝
 //==============================================================================

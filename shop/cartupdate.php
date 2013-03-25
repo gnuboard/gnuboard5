@@ -16,16 +16,6 @@ else {
     }
 }
 
-// uq_id 필드추가
-$sql = " select uq_id from {$g4['yc4_cart_table']} limit 1 ";
-$result = sql_query($sql, false);
-if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
-}
-
 // 브라우저에서 쿠키를 허용하지 않은 경우라고 볼 수 있음.
 if (!$tmp_uq_id)
 {
