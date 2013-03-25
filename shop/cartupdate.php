@@ -2,10 +2,18 @@
 include_once('./_common.php');
 
 if ($sw_direct) {
-    $tmp_on_uid = get_session("ss_on_direct");
+    $tmp_on_uid = get_session('ss_on_direct');
+    if(!$tmp_on_uid) {
+        $tmp_on_uid = get_uniqid();
+        set_session('ss_on_direct', $tmp_on_uid);
+    }
 }
 else {
     $tmp_on_uid = get_session("ss_on_uid");
+    if(!$tmp_on_uid) {
+        $tmp_on_uid = get_uniqid();
+        set_session('ss_on_uid', $tmp_on_uid);
+    }
 }
 
 // 브라우저에서 쿠키를 허용하지 않은 경우라고 볼 수 있음.
