@@ -16,6 +16,13 @@ define('G4_SHOP_DIR', 'shop');
 define('G4_SHOP_PATH', G4_PATH.'/'.G4_SHOP_DIR);
 define('G4_SHOP_URL', G4_URL.'/'.G4_SHOP_DIR);
 
+// 보안서버주소 설정
+if (G4_HTTPS_DOMAIN) {
+    define('G4_HTTPS_SHOP_URL', G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR);
+} else {
+    define('G4_HTTPS_SHOP_URL', G4_SHOP_URL);
+}
+
 // 미수금에 대한 QUERY 문
 // 테이블 a 는 주문서 ($g4[yc4_order_table])
 // 테이블 b 는 장바구니 ($g4[yc4_cart_table])
