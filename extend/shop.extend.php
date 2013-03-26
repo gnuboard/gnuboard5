@@ -114,6 +114,7 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
     sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
     sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` DROP INDEX index1", false);
 }
 
 //==============================================================================
