@@ -12,7 +12,7 @@ for ($i=0; $i<$cnt; $i++)
         $ct_id = $_POST['ct_id'][$i];
 
         $sql = " select * from {$g4['yc4_cart_table']}
-                  where on_uid = '$on_uid'
+                  where uq_id = '$uq_id'
                     and ct_id  = '$ct_id' ";
         $ct = sql_fetch($sql);
 
@@ -55,7 +55,7 @@ for ($i=0; $i<$cnt; $i++)
         {
             $point_use = 0;
             //insert_point($mb_id, (-1) * ($ct[ct_point] * $ct[ct_qty]), "주문번호 $od_id ($ct_id) 취소");
-            delete_point($mb_id, "@delivery", $mb_id, "$od_id,$on_uid,$ct_id");
+            delete_point($mb_id, "@delivery", $mb_id, "$od_id,$uq_id,$ct_id");
         }
 
         // 히스토리에 남김
@@ -67,7 +67,7 @@ for ($i=0; $i<$cnt; $i++)
                         ct_stock_use  = '$stock_use',
                         ct_status     = '$ct_status',
                         ct_history    = CONCAT(ct_history,'$ct_history')
-                  where on_uid = '$on_uid'
+                  where uq_id = '$uq_id'
                     and ct_id  = '$ct_id' ";
         sql_query($sql);
     }

@@ -33,7 +33,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         $sql = " select a.od_id,
                         a.*, "._MISU_QUERY_."
                    from {$g4['yc4_order_table']} a
-                   left join {$g4['yc4_cart_table']} b on (b.on_uid=a.on_uid)
+                   left join {$g4['yc4_cart_table']} b on (b.uq_id=a.uq_id)
                   group by a.od_id
                   /*having misu <= 0 and a.od_invoice = '' and ordercancel = 0*/
                   /*having orderamount - receiptamount = 0 and a.od_invoice = ''*/
@@ -103,7 +103,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         $sql = " select a.od_id,
                         a.*, "._MISU_QUERY_."
                    from {$g4['yc4_order_table']} a
-                   left join {$g4['yc4_cart_table']} b on (b.on_uid=a.on_uid)
+                   left join {$g4['yc4_cart_table']} b on (b.uq_id=a.uq_id)
                   group by a.od_id
                   /* having receiptamount <= 0 */
                   having misu > 0

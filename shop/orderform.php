@@ -29,10 +29,8 @@ $s_uq_id = $tmp_uq_id;
 include_once('./cartsub.inc.php');
 
 // 새로운 주문번호 생성
-if(!get_session('ss_order_uniqid')) {
-    set_session('ss_order_uniqid', get_uniqid());
-}
-$od_uq_id = get_session('ss_order_uniqid');
+$od_id = get_uniqid();
+set_session('ss_order_uniqid', $od_id);
 
 if (file_exists("./settle_{$default['de_card_pg']}.inc.php")) {
     include "./settle_{$default['de_card_pg']}.inc.php";
@@ -168,7 +166,7 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
     */
 ?>
     <input type="hidden" name="pay_method"  value="" />
-    <input type="hidden" name="ordr_idxx"   value="<? echo $od_uq_id; ?>" />
+    <input type="hidden" name="ordr_idxx"   value="<? echo $od_id; ?>" />
     <input type="hidden" name="good_name"   value="<? echo $goods; ?>" />
     <input type="hidden" name="good_mny"    value="<? echo $good_mny; ?>" />
     <input type="hidden" name="buyr_name"   value="" />
@@ -619,9 +617,16 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 </tr>
 </table>
 
-<p align=center>
-    <input type="image" src="<?=G4_SHOP_URL?>/img/btn_next2.gif" border=0 alt="다음">&nbsp;
+<p align=center id="display_pay_button" style="display:none">
+    <input type="image" src="<?=G4_SHOP_URL?>/img/btn_next2.gif" border=0 alt="결제하기">&nbsp;
     <a href='javascript:history.go(-1);'><img src="<?=G4_SHOP_URL?>/img/btn_back1.gif" alt="뒤로" border=0></a>
+</p>
+<!-- Payplus Plug-in 설치 안내 -->
+<p id="display_setup_message" style="display:none">
+    <span class="red">결제를 계속 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나<br/>
+    <a href="http://pay.kcp.co.kr/plugin/file_vista/PayplusWizard.exe"><span class="bold">[수동설치]</span></a>를 눌러 Payplus Plug-in을 설치하시기 바랍니다.<br/>
+    [수동설치]를 눌러 설치하신 경우 <span class="red bold">새로고침(F5)키</span>를 눌러 진행하시기 바랍니다.
+</p>
 </form>
 
 <!-- <? if ($default[de_card_use] || $default[de_iche_use]) { echo "결제대행사 : $default[de_card_pg]"; } ?> -->
@@ -844,7 +849,15 @@ function forderform_check(f)
     f.rcvr_add1.value = f.od_b_addr1.value;
     f.rcvr_add2.value = f.od_b_addr2.value;
 
-    return true;
+    if(f.pay_method.value != "무통장") {
+        if(jsf__pay( f )) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
 }
 
 // 구매자 정보와 동일합니다.

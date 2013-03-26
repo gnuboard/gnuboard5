@@ -757,9 +757,9 @@ $pg_anchor ="<ul class=\"anchor\">
     </tr>
     <tr>
         <th scope="row">MYSQL USER</th>
-        <td><br/><?=$mysql_user?></td>
+        <td><?=G4_MYSQL_USER?></td>
         <th scope="row">MYSQL DB</th>
-        <td><br/><?=$mysql_db?></td>
+        <td><?=G4_MYSQL_DB?></td>
     </tr>
     <tr>
         <th scope="row">서버 IP</th>
@@ -860,7 +860,7 @@ function byte_check(el_cont, el_byte)
         </ul>
     </div>
 
-    <script> 
+    <script>
     byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');
     </script>
     <? } ?>

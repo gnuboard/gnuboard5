@@ -23,7 +23,7 @@ while (($item = fgetcsv($handle, 1000, ",")) !== FALSE)
 
     if ($od_id && $od_invoice)
     {
-        $sql = " select od_id, on_uid, dl_id, od_invoice from {$g4['yc4_order_table']} where od_id = '$od_id' ";
+        $sql = " select od_id, uq_id, dl_id, od_invoice from {$g4['yc4_order_table']} where od_id = '$od_id' ";
         $row = sql_fetch($sql);
         //echo $sql; echo "<br/>";
         //print_r2($row);
@@ -44,7 +44,7 @@ while (($item = fgetcsv($handle, 1000, ",")) !== FALSE)
         {
             $sql = " update {$g4['yc4_cart_table']}
                         set ct_status = '$ct_status'
-                      where on_uid = '{$row['on_uid']}'
+                      where uq_id = '{$row['uq_id']}'
                         and ct_status in ('주문', '준비', '배송', '완료') ";
             sql_query($sql);
         }
