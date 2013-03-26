@@ -1,0 +1,25 @@
+0326-110750 -  7296 - T00003QB32AibeOk - MSG : TX_START - site_cd=[T0000]+tx_cd=[00100000]+ordr_idxx=[13032609441253]+log_level=[3]
+0326-110750 -  7296 - T00003QB32AibeOk - MSG : PG_서버_접속__정상
+0326-110750 -  7296 - T00003QB32AibeOk - MSG : PG_서버_요청_전문_전송__정상
+0326-110751 -  7296 - T00003QB32AibeOk - MSG : PG_서버_응답_전문_수신__정상
+0326-110751 -  7296 - T00003QB32AibeOk - MSG : TX_ENDED - res=[res_cd=0000res_msg=정상처리pay_method=PACAorder_no=13032609441253res_en_msg=processing completedcard_cd=CCSScard_name=삼성카드acqu_cd=CCSSacqu_name=삼성카드card_no=5310708000009287mcht_taxno=1138521083mall_taxno=1138521083ca_order_id=13032609441253tno=20130326962625amount=5000card_mny=5000coupon_mny=0escw_yn=Nvan_cd=VNKCapp_time=20130326110751van_apptime=20130326110751app_no=31756924bizx_numb=24450105quota=00noinf=Npg_txid=0326110751MP01AB7TL1WT0000000050000031756924partcanc_yn=Ycard_bin_type_01=0card_bin_type_02=0join_cd=0000]
+0326-111822 -  7346 - T00003QBHKAibeOk - MSG : TX_START - site_cd=[T0000]+tx_cd=[00100000]+ordr_idxx=[13032609441253]+log_level=[3]
+0326-111822 -  7346 - T00003QBHKAibeOk - MSG : PG_서버_접속__정상
+0326-111822 -  7346 - T00003QBHKAibeOk - MSG : PG_서버_요청_전문_전송__정상
+0326-111822 -  7346 - T00003QBHKAibeOk - MSG : PG_서버_응답_전문_수신__정상
+0326-111822 -  7346 - T00003QBHKAibeOk - MSG : TX_ENDED - res=[res_cd=0000res_msg=정상처리pay_method=PACAorder_no=13032609441253res_en_msg=processing completedcard_cd=CCSScard_name=삼성카드acqu_cd=CCSSacqu_name=삼성카드card_no=5310708000009287mcht_taxno=1138521083mall_taxno=1138521083ca_order_id=13032609441253tno=20130326962648amount=5000card_mny=5000coupon_mny=0escw_yn=Nvan_cd=VNKCapp_time=20130326111822van_apptime=20130326111822app_no=41661223bizx_numb=24450105quota=00noinf=Npg_txid=0326111822MP01AF7TYLB60000000050000041661223partcanc_yn=Ycard_bin_type_01=0card_bin_type_02=0join_cd=0000]
+0326-113357 -  7394 - T00003QBXBAibeOk - MSG : TX_START - site_cd=[T0000]+tx_cd=[00100000]+ordr_idxx=[13032609441253]+log_level=[3]
+0326-113357 -  7394 - T00003QBXBAibeOk - MSG : PG_서버_접속__정상
+0326-113357 -  7394 - T00003QBXBAibeOk - MSG : PG_서버_요청_전문_전송__정상
+0326-113357 -  7394 - T00003QBXBAibeOk - MSG : PG_서버_응답_전문_수신__정상
+0326-113357 -  7394 - T00003QBXBAibeOk - MSG : TX_ENDED - res=[res_cd=0000res_msg=정상처리pay_method=PACAorder_no=13032609441253res_en_msg=processing completedcard_cd=CCSScard_name=삼성카드acqu_cd=CCSSacqu_name=삼성카드card_no=5310708000009287mcht_taxno=1138521083mall_taxno=1138521083ca_order_id=13032609441253tno=20130326962663amount=5000card_mny=5000coupon_mny=0escw_yn=Nvan_cd=VNKCapp_time=20130326113357van_apptime=20130326113357app_no=62333915bizx_numb=24450105quota=00noinf=Npg_txid=0326113357MP01AF7UIMMY0000000050000062333915partcanc_yn=Ycard_bin_type_01=0card_bin_type_02=0join_cd=0000]
+0326-115452 -  7493 - T00003QBs6AibeOk - MSG : TX_START - site_cd=[T0000]+tx_cd=[00100000]+ordr_idxx=[13032609441253]+log_level=[3]
+0326-115452 -  7493 - T00003QBs6AibeOk - MSG : PG_서버_접속__정상
+0326-115452 -  7493 - T00003QBs6AibeOk - MSG : PG_서버_요청_전문_전송__정상
+0326-115452 -  7493 - T00003QBs6AibeOk - MSG : PG_서버_응답_전문_수신__정상
+0326-115452 -  7493 - T00003QBs6AibeOk - MSG : TX_ENDED - res=[res_cd=0000res_msg=정상처리pay_method=PACAorder_no=13032609441253res_en_msg=processing completedcard_cd=CCSScard_name=삼성카드acqu_cd=CCSSacqu_name=삼성카드card_no=5310708000009287mcht_taxno=1138521083mall_taxno=1138521083ca_order_id=13032609441253tno=20130326962692amount=5000card_mny=5000coupon_mny=0escw_yn=Nvan_cd=VNKCapp_time=20130326115453van_apptime=20130326115453app_no=56365335bizx_numb=24450105quota=00noinf=Npg_txid=0326115453MP01AD7V9J8B0000000050000056365335partcanc_yn=Ycard_bin_type_01=0card_bin_type_02=0join_cd=0000]
+0326-134833 -  8007 - T00003QDmNAibeOk - MSG : TX_START - site_cd=[T0000]+tx_cd=[00100000]+ordr_idxx=[13032613480042]+log_level=[3]
+0326-134833 -  8007 - T00003QDmNAibeOk - MSG : PG_서버_접속__정상
+0326-134833 -  8007 - T00003QDmNAibeOk - MSG : PG_서버_요청_전문_전송__정상
+0326-134835 -  8007 - T00003QDmNAibeOk - MSG : PG_서버_응답_전문_수신__정상
+0326-134835 -  8007 - T00003QDmNAibeOk - MSG : TX_ENDED - res=[res_cd=0000res_msg=정상처리pay_method=PAVCorder_no=13032613480042tno=20130326962727van_txid=DP002013032600147047amount=5000escw_yn=Nvan_cd=SCWRbankcode=BK04bankname=국민은행depositor=KCP 테스트account=T0400000040774app_time=20130326134836van_apptime=20130326134834mall_taxno=1138521083va_date=20130402235959va_name=최고관리자]

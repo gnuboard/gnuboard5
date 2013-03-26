@@ -6,7 +6,7 @@ $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
 
 if (!$is_member) {
-    if (get_session("ss_uq_id_inquiry") != $_GET['uq_id'])
+    if (get_session("ss_temp_uq_id") != $_GET['uq_id'])
         alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.");
 }
 
@@ -33,6 +33,13 @@ $s_uq_id = $od['uq_id'];
 $s_page = 'orderinquiryview.php';
 include './cartsub.inc.php';
 ?>
+
+<script>
+var openwin = window.open( './kcp/proc_win.html', 'proc_win', '' );
+if(openwin != null) {
+    openwin.close();
+}
+</script>
 
 <br>
 <div align=right><img src='<?=G4_SHOP_URL?>/img/status01.gif' align=absmiddle> : 주문대기, <img src='<?=G4_SHOP_URL?>/img/status02.gif' align=absmiddle> : 상품준비중, <img src='<?=G4_SHOP_URL?>/img/status03.gif' align=absmiddle> : 배송중, <img src='<?=G4_SHOP_URL?>/img/status04.gif' align=absmiddle> : 배송완료</div>
@@ -356,6 +363,27 @@ if ($default['de_taxsave_use']) {
 <tr><td colspan=2 height=2 bgcolor=#94A9E7></td></tr>
 </table>
 <br><br>
+
+<? if ($od['od_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
+    preg_match("/(\s[^\s]+\s)/", $od['od_bank_account'], $matchs);
+    $deposit_no = trim($matchs[1]);
+?>
+<center>
+<div style="width:500px">
+<fieldset>
+<legend>모의입금처리</legend>
+<p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
+<form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
+<input type="text" name="e_trade_no" value="<?=$od['od_escrow1']?>" size="80"><br />
+<input type="text" name="deposit_no" value="<?=$deposit_no?>" size="80"><br />
+<input type="text" name="req_name" value="<?=$od['od_name']?>" size="80"><br />
+<input type="text" name="noti_url" value="<?=G4_SHOP_URL?>/settle_kcp_common.php" size="80"><br /><br />
+<input type="submit" value="입금통보 테스트">
+</form>
+</fieldset>
+</div>
+</center>
+<? } ?>
 
 <?
 include_once('./_tail.php');
