@@ -77,9 +77,9 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?//=subtitle("기본 입력")?>
 
-<form name="fcategoryform" method="post" action="./categoryformupdate.php" enctype="multipart/form-data" onsubmit="return fcategoryformcheck(this);" style="margin:0px;">
+
+<form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data" style="margin:0px">
 
 <input type="hidden" name="codedup"  value="<?=$default['de_code_dup_use']?>">
 <input type="hidden" name="w" value="<?=$w?>">
@@ -88,6 +88,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="sort2" value="<?=$sort2?>">
 <input type="hidden" name="ca_explan_html" value="<?=$ca['ca_explan_html']?>"><!--input-->
 <section class="cbox">
+    <?//=subtitle("기본 입력")?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -115,7 +116,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="col"><label for="ca_name">분류명<span style="color:#ff6600">*</span></label></th>
         <td colspan="3"><input type="text" name="ca_name" value="<? echo $ca['ca_name'] ?>" id="ca_name" size="38" required class="required frm_input"></td>
     </tr>
-
     <tr>
         <th scope="col"><label for="ca_mb_id">관리 회원아이디</label></th>
         <td colspan="3">
@@ -188,7 +188,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
         <th scope="col"><label for="ca_opt6_subject">옵션 제목 6</label></th>
         <td>
-        <input type="text" name="ca_opt6_subject" value="<? echo $ca['ca_opt6_subject'] ?>" id="ca_opt6_subject" class="frm_input">
+            <input type="text" name="ca_opt6_subject" value="<? echo $ca['ca_opt6_subject'] ?>" id="ca_opt6_subject" class="frm_input">
         </td>
     </tr>
     <tr>
@@ -216,9 +216,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </table>
 </section>
 
-
-<?//=subtitle("선택 입력")?>
 <section class="cbox">
+    <?//=subtitle("선택 입력")?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -294,27 +293,29 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <? if ($w == "u") { ?>
 <p>
-<?//=subtitle("기타")?>
-<table class="frm_tbl">
-<colgroup>
-    <col class="grid_3">
-    <col class="grid_13">
-</colgroup>
-<tbody>
-<tr>
-    <th scope="col">하위분류</th>
-    <td>
-        <?=help("이 분류의 코드가 10 이라면 10 으로 시작하는 하위분류의 설정값을 이 분류와 동일하게 설정합니다.", 0, -100);?>
-        <input type="checkbox" name="sub_category" value="1" onclick="if (this.checked) if (confirm('이 분류에 속한 하위 분류의 속성을 똑같이 변경합니다.\n\n이 작업은 되돌릴 방법이 없습니다.\n\n그래도 변경하시겠습니까?')) return ; this.checked = false;"> 이 분류의 설정과 같은 설정으로 반영
-    </td>
-</tr>
-</tbody>
-</table>
+<section class="cbox">
+    <?//=subtitle("기타")?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_13">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="col">하위분류</th>
+        <td>
+            <?=help("이 분류의 코드가 10 이라면 10 으로 시작하는 하위분류의 설정값을 이 분류와 동일하게 설정합니다.", 0, -100);?>
+            <input type="checkbox" name="sub_category" value="1" onclick="if (this.checked) if (confirm('이 분류에 속한 하위 분류의 속성을 똑같이 변경합니다.\n\n이 작업은 되돌릴 방법이 없습니다.\n\n그래도 변경하시겠습니까?')) return ; this.checked = false;"> 이 분류의 설정과 같은 설정으로 반영
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</section>
 <? } ?>
 
-<div class="btn_confirm" style="text-align:center">
+<div class="btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./categorylist.php?<?=$qstr?>';">목록</a>
+    <a href="./categorylist.php?<?=$qstr?>">목록</a>
 </div>
 
 
@@ -359,7 +360,7 @@ function codedupcheck(id)
     );
 }
 
-document.fcategoryform.ca_name.focus();
+/*document.fcategoryform.ca_name.focus(); 포커스 해제*/
 </script>
 
 <?
