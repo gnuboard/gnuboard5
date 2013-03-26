@@ -22,55 +22,51 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 $sql = "select * $sql_common order by co_id limit $from_record, {$config['cf_page_rows']} ";
 $result = sql_query($sql);
 ?>
+<style type="text/css">
+    #content_head{width:900px;height:37px;line-height:37px ;text-align:center}
+    #content_head th{text-align:center}
+    #content_head span{display:inline-block;margin-left:690px}
+    #content_fir{position:relative}
+    #content_fir span{position:absolute;top:-12;right:10px}
+</style>
 
-<table width=100%>
-<tr>
-    <td width=20%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
-    <td width=60% align=center>&nbsp;</td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
+<section class="cbox">
+    <p id="content_fir"><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a><span>건수 : <? echo $total_count ?>&nbsp;</span></p>
+    <table class="frm_tbl">
+    <colgroup>
+    <col class="grid_3">
+    <col class="gird_13">
+    </colgroup>
+    <thead id="content_head">
+    <tr>
+        <th scope="row">ID</th>
+        <th scope="row">제목<span><a href="./contentform.php"><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif"></a></span></th>
+    </tr>
+    </thead>
+    <tbody>
+        <?
+        for ($i=0; $row=mysql_fetch_array($result); $i++) {
+            $s_mod = icon("수정", "./contentform.php?w=u&co_id={$row['co_id']}");
+            $s_del = icon("삭제", "javascript:del('./contentformupdate.php?w=d&co_id={$row['co_id']}')");
+            $s_vie = icon("보기", G4_SHOP_URL."/content.php?co_id={$row['co_id']}");
 
+            $list = $i%2;
+            echo "
+            <tr class='list$list ht'>
+                <td align=center>{$row['co_id']}</td>
+                <td>".htmlspecialchars2($row['co_subject'])."</td>
+                <td>$s_mod $s_del $s_vie</td>
+            </tr>";
+        }
 
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=120>
-<colgroup width=''>
-<colgroup width=80>
-<tr><td colspan=3 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td>ID</td>
-    <td>제목</td>
-    <td><a href='./contentform.php'><img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif' border=0></a></td>
-</tr>
-<tr><td colspan=3 height=1 bgcolor=#CCCCCC></td></tr>
-<?
-for ($i=0; $row=mysql_fetch_array($result); $i++) {
-    $s_mod = icon("수정", "./contentform.php?w=u&co_id={$row['co_id']}");
-    $s_del = icon("삭제", "javascript:del('./contentformupdate.php?w=d&co_id={$row['co_id']}')");
-    $s_vie = icon("보기", G4_SHOP_URL."/content.php?co_id={$row['co_id']}");
-
-    $list = $i%2;
-    echo "
-    <tr class='list$list ht'>
-        <td align=center>{$row['co_id']}</td>
-        <td>".htmlspecialchars2($row['co_subject'])."</td>
-        <td align=center width=80>$s_mod $s_del $s_vie</td>
-    </tr>";
-}
-
-if ($i == 0) {
-    echo "<tr><td colspan=3 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
-}
-?>
-<tr><td colspan=3 height=1 bgcolor=#CCCCCC></td></tr>
-</table>
-
-<table width=100%>
-<tr bgcolor=#ffffff>
-    <td width=50%></td>
-    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
-</tr>
-</table>
+        if ($i == 0) {
+            echo "<tr><td colspan=3 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+        }
+        ?>
+    </tbody>
+    </table>
+    <div><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></div>
+</section>
 
 
 <?
