@@ -33,6 +33,18 @@ if (!isset($board['bo_gallery_width'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_width`,  ADD `bo_mobile_gallery_cols` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_width` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_cols`,  ADD `bo_mobile_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_width` ", false);
 }
 
+if (!isset($board['bo_mobile_subject_len'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_subject_len` INT(11) NOT NULL DEFAULT '0' AFTER `bo_subject_len` ", false);
+}
+
+if (!isset($board['bo_mobile_page_rows'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_page_rows` INT(11) NOT NULL DEFAULT '0' AFTER `bo_page_rows` ", false);
+}
+
+if (!isset($board['bo_mobile_content_head'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_content_head` TEXT NOT NULL AFTER `bo_content_head`, ADD `bo_mobile_content_tail` TEXT NOT NULL AFTER `bo_content_tail`", false);
+}
+
 $required = "";
 $readonly = "";
 if ($w == '') {
@@ -58,7 +70,9 @@ if ($w == '') {
     $board['bo_mobile_gallery_height'] = 100;
     $board['bo_table_width'] = 100;
     $board['bo_page_rows'] = $config['cf_page_rows'];
+    $board['bo_mobile_page_rows'] = $config['cf_page_rows'];
     $board['bo_subject_len'] = 60;
+    $board['bo_mobile_subject_len'] = 30;
     $board['bo_new'] = 24;
     $board['bo_hot'] = 100;
     $board['bo_image_width'] = 600;
@@ -755,6 +769,30 @@ $pg_anchor = "<ul class=\"anchor\">
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="bo_mobile_content_head">모바일 상단 내용</label></th>
+        <td>
+            <?=editor_html("bo_mobile_content_head", $board['bo_mobile_content_head']);?>
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_grp_mobile_content_head" value="1" id="chk_grp_mobile_content_head">
+            <label for="chk_grp_mobile_content_head">그룹적용</label>
+            <input type="checkbox" name="chk_all_mobile_content_head" value="1" id="chk_all_mobile_content_head">
+            <label for="chk_all_mobile_content_head">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_mobile_content_tail">모바일 하단 내용</label></th>
+        <td>
+            <?=editor_html("bo_mobile_content_tail", $board['bo_mobile_content_tail']);?>
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_grp_mobile_content_tail" value="1" id="chk_grp_mobile_content_tail">
+            <label for="chk_grp_mobile_content_tail">그룹적용</label>
+            <input type="checkbox" name="chk_all_mobile_content_tail" value="1" id="chk_all_mobile_content_tail">
+            <label for="chk_all_mobile_content_tail">전체적용</label>
+        </td>
+    </tr>
+     <tr>
         <th scope="row"><label for="bo_insert_content">글쓰기 기본 내용</label></th>
         <td>
             <textarea id="bo_insert_content" name="bo_insert_content" rows="5"><?=$board['bo_insert_content'] ?></textarea>
@@ -779,7 +817,20 @@ $pg_anchor = "<ul class=\"anchor\">
             <label for="chk_all_subject_len">전체적용</label>
         </td>
     </tr>
-        <tr>
+    <tr>
+        <th scope="row"><label for="bo_mobile_subject_len">모바일 제목 길이<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?=help('목록에서의 제목 글자수. 잘리는 글은 … 로 표시')?>
+            <input type="text" name="bo_mobile_subject_len" value="<?=$board['bo_mobile_subject_len']?>" id="bo_mobile_subject_len" required class="required numeric frm_input" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_grp_mobile_subject_len" value="1" id="chk_grp_mobile_subject_len">
+            <label for="chk_grp_mobile_subject_len">그룹적용</label>
+            <input type="checkbox" name="chk_all_mobile_subject_len" value="1" id="chk_all_mobile_subject_len">
+            <label for="chk_all_mobile_subject_len">전체적용</label>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="bo_page_rows">페이지당 목록 수<strong class="sound_only">필수</strong></label></th>
         <td>
             <input type="text" name="bo_page_rows" value="<?=$board['bo_page_rows']?>" id="bo_page_rows" required class="required numeric frm_input" size="4">
@@ -789,6 +840,18 @@ $pg_anchor = "<ul class=\"anchor\">
             <label for="chk_grp_page_rows">그룹적용</label>
             <input type="checkbox" name="chk_all_page_rows" value="1" id="chk_all_page_rows">
             <label for="chk_all_page_rows">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_mobile_page_rows">모바일 페이지당 목록 수<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <input type="text" name="bo_mobile_page_rows" value="<?=$board['bo_mobile_page_rows']?>" id="bo_mobile_page_rows" required class="required numeric frm_input" size="4">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_grp_mobile_page_rows" value="1" id="chk_grp_mobile_page_rows">
+            <label for="chk_grp_mobile_page_rows">그룹적용</label>
+            <input type="checkbox" name="chk_all_mobile_page_rows" value="1" id="chk_all_mobile_page_rows">
+            <label for="chk_all_mobile_page_rows">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -1119,6 +1182,8 @@ function fboardform_submit(f)
 {
     <?=get_editor_js("bo_content_head");?>
     <?=get_editor_js("bo_content_tail");?>
+    <?=get_editor_js("bo_mobile_content_head");?>
+    <?=get_editor_js("bo_mobile_content_tail");?>
 
     if (parseInt(f.bo_count_modify.value) < 1) {
         alert("원글 수정 불가 댓글수는 1 이상 입력하셔야 합니다.");
