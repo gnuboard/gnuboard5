@@ -36,18 +36,18 @@ for ($m=0; $m<count($_POST['od_id']); $m++)
             $od_id = $_POST['od_id'][$m];
 
             // 장바구니 상태가 '주문', '준비' 일 경우 '배송' 으로 상태를 변경
-            $on_uid = $_POST['on_uid'][$m];
+            $uq_id = $_POST['uq_id'][$m];
             $sql = " update {$g4['yc4_cart_table']}
                         set ct_status = '배송'
                       where ct_status in ('주문', '준비')
-                        and on_uid = '$on_uid' ";
+                        and uq_id = '$uq_id' ";
             sql_query($sql);
 
             include "./ordermail.inc.php";
 
             // 재고 반영
             $sql2 = " select it_id, ct_id, ct_stock_use, ct_qty from {$g4['yc4_cart_table']}
-                       where on_uid = '$on_uid'
+                       where uq_id = '$uq_id'
                          and ct_stock_use = '0' ";
             $result2 = sql_query($sql2);
             for ($k=0; $row2=mysql_fetch_array($result2); $k++)
@@ -58,7 +58,7 @@ for ($m=0; $m<count($_POST['od_id']); $m++)
                 $sql4 = " update {$g4['yc4_cart_table']}
                             set ct_stock_use  = '1',
                                 ct_history    = CONCAT(ct_history,'\n배송일괄|$now|$REMOTE_ADDR')
-                          where on_uid = '$on_uid'
+                          where uq_id = '$uq_id'
                             and ct_id  = '{$row2['ct_id']}' ";
                 sql_query($sql4);
             }

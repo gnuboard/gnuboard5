@@ -45,14 +45,14 @@ if (!isset($order_not_point)) {
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 회원 ID 를 얻는다.
-        $tmp_row = sql_fetch("select od_id, mb_id from {$g4['yc4_order_table']} where on_uid = '{$row['on_uid']}' ");
+        $tmp_row = sql_fetch("select od_id, mb_id from {$g4['yc4_order_table']} where uq_id = '{$row['uq_id']}' ");
 
         // 회원이면서 포인트가 0보다 크다면
         if ($tmp_row['mb_id'] && $row['ct_point'] > 0)
         {
             $po_point = $row['ct_point'] * $row['ct_qty'];
             $po_content = "$cart_title3 {$tmp_row['od_id']} ({$row['ct_id']}) $cart_title4";
-            insert_point($tmp_row['mb_id'], $po_point, $po_content, "@delivery", $tmp_row['mb_id'], "{$tmp_row['od_id']},{$row['on_uid']},{$row['ct_id']}");
+            insert_point($tmp_row['mb_id'], $po_point, $po_content, "@delivery", $tmp_row['mb_id'], "{$tmp_row['od_id']},{$row['uq_id']},{$row['ct_id']}");
         }
 
         sql_query("update {$g4['yc4_cart_table']} set ct_point_use = '1' where ct_id = '{$row['ct_id']}' ");
@@ -103,7 +103,7 @@ $sql = " select a.ct_id,
                 a.it_opt6,
                 b.it_name
            from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b
-          where a.on_uid = '{$od['on_uid']}'
+          where a.uq_id = '{$od['uq_id']}'
             and a.it_id  = b.it_id
           order by a.ct_id ";
 $result = sql_query($sql);
@@ -125,7 +125,7 @@ $result = sql_query($sql);
 
 <form name=frmorderform method=post action='' style="margin:0px;">
 <input type=hidden name=ct_status value=''>
-<input type=hidden name=on_uid    value='<? echo $od['on_uid'] ?>'>
+<input type=hidden name=uq_id    value='<? echo $od['uq_id'] ?>'>
 <input type=hidden name=od_id     value='<? echo $od_id ?>'>
 <input type=hidden name=mb_id     value='<? echo $od['mb_id'] ?>'>
 <input type=hidden name=od_email  value='<? echo $od['od_email'] ?>'>
@@ -236,7 +236,7 @@ if ($od['od_receipt_point'] > 0)
 
 
 <table width=100% cellpadding=0 cellspacing=0 border=0>
-<!-- on_uid : <? echo $od[on_uid] ?> -->
+<!-- uq_id : <? echo $od[uq_id] ?> -->
 <tr><td colspan=8 height=2 bgcolor=#0E87F9></td></tr>
 <tr align=center class=ht>
 	<td>주문번호</td>
@@ -425,7 +425,7 @@ if ($od['od_receipt_point'] > 0)
                 if ($od["od_cash"])
                     echo "<a href=\"javascript:;\" onclick=\"window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no={$od['od_cash_no']}', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');\">현금영수증 확인하기</a>";
                 else
-                    echo "<a href=\"javascript:;\" onclick=\"window.open('".G4_SHOP_URL."/taxsave_kcp.php?od_id=$od_id&on_uid={$od['on_uid']}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\">현금영수증을 발급하시려면 클릭하십시오.</a>";
+                    echo "<a href=\"javascript:;\" onclick=\"window.open('".G4_SHOP_URL."/taxsave_kcp.php?od_id=$od_id&uq_id={$od['uq_id']}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\">현금영수증을 발급하시려면 클릭하십시오.</a>";
                 echo "</td></tr>";
             }
         }
@@ -765,7 +765,7 @@ if ($od['od_receipt_point'] > 0)
 <p align=center>
     <input type=submit class=btn1 value='주소정보 수정'>&nbsp;
     <input type=button class=btn1 value='  목  록  ' accesskey='l' onclick="document.location.href='./orderlist.php?<?=$qstr?>';">&nbsp;
-    <input type=button class=btn1 value='주문서 삭제' onclick="del('<?="./orderdelete.php?od_id={$od['od_id']}&on_uid={$od['on_uid']}&mb_id={$od['mb_id']}&$qstr"?>');">
+    <input type=button class=btn1 value='주문서 삭제' onclick="del('<?="./orderdelete.php?od_id={$od['od_id']}&uq_id={$od['uq_id']}&mb_id={$od['mb_id']}&$qstr"?>');">
 </form>
 
 <script language='javascript'>

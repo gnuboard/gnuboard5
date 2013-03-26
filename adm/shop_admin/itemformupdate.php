@@ -20,7 +20,7 @@ function itemdelete($it_id)
     $sql = " select b.od_id
                from {$g4['yc4_cart_table']} a,
                     {$g4['yc4_order_table']} b
-              where a.on_uid = b.on_uid
+              where a.uq_id = b.uq_id
                 and a.it_id = '$it_id'
                 and a.ct_status != '쇼핑' ";
     $result = sql_query($sql);

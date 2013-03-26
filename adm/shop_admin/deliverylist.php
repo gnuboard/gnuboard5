@@ -34,7 +34,7 @@ if ($sel_ca_id != "") {
 if ($sel_field == "")  $sel_field = "od_id";
 
 $sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.on_uid=b.on_uid)
+                left join {$g4['yc4_cart_table']} b on (a.uq_id=b.uq_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -154,7 +154,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $list = $i%2;
     echo "
     <input type='hidden' name='od_id[$i]' value='{$row['od_id']}'>
-    <input type='hidden' name='on_uid[$i]' value='{$row['on_uid']}'>
+    <input type='hidden' name='uq_id[$i]' value='{$row['uq_id']}'>
     <tr class='list$list center ht'>
         <td><a href='./orderform.php?od_id={$row['od_id']}'>{$row['od_id']}</a></td>
         <td>$row[od_name]</td>

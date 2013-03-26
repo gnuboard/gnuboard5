@@ -49,7 +49,7 @@ function print_line($save)
 <?
 unset($save);
 unset($tot);
-$sql = " select on_uid,
+$sql = " select uq_id,
                 SUBSTRING(od_time,1,4) as od_date,
                 od_send_cost,
                 od_receipt_bank,
@@ -77,7 +77,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $sql1 = " select (SUM(ct_amount * ct_qty)) as orderamount, /* 주문합계 */
                      (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_amount * ct_qty, 0))) as ordercancel /* 주문취소 */
                 from {$g4['yc4_cart_table']}
-               where on_uid = '{$row['on_uid']}' ";
+               where uq_id = '{$row['uq_id']}' ";
     $row1 = sql_fetch($sql1);
 
     $row1['orderamount'] += $row['od_send_cost'];

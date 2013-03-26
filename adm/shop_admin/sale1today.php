@@ -31,7 +31,7 @@ unset($tot);
 $sql = " select od_id,
                 mb_id,
                 od_name,
-                on_uid,
+                uq_id,
                 od_send_cost,
                 od_receipt_bank,
                 od_receipt_card,
@@ -52,7 +52,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $sql1 = " select (SUM(ct_amount * ct_qty)) as orderamount, /* 주문합계 */
                      (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_amount * ct_qty, 0))) as ordercancel /* 주문취소 */
                 from {$g4['yc4_cart_table']}
-               where on_uid = '{$row['on_uid']}' ";
+               where uq_id = '{$row['uq_id']}' ";
     $row1 = sql_fetch($sql1);
 
     if ($row['mb_id'] == '') { // 비회원일 경우는 주문자로 링크

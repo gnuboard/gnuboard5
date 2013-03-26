@@ -6,16 +6,16 @@ check_demo();
 
 auth_check($auth[$sub_menu], "d");
 
-if ($od_id && $on_uid)
+if ($od_id && $uq_id)
 {
     // 장바구니 삭제
-    sql_query(" delete from {$g4['yc4_cart_table']} where on_uid = '$on_uid' ");
+    sql_query(" delete from {$g4['yc4_cart_table']} where uq_id = '$uq_id' ");
 
     // 카드결제내역 삭제
-    sql_query(" delete from {$g4['yc4_card_history_table']} where od_id = '$od_id' and on_uid = '$on_uid' ");
+    sql_query(" delete from {$g4['yc4_card_history_table']} where od_id = '$od_id' and uq_id = '$uq_id' ");
 
     // 주문서 삭제
-    sql_query(" delete from {$g4['yc4_order_table']} where od_id = '$od_id' and on_uid = '$on_uid' ");
+    sql_query(" delete from {$g4['yc4_order_table']} where od_id = '$od_id' and uq_id = '$uq_id' ");
 }
 
 if ($return_url)

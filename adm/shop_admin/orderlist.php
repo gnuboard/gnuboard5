@@ -26,7 +26,7 @@ if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
 $sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.on_uid=b.on_uid)
+                left join {$g4['yc4_cart_table']} b on (a.uq_id=b.uq_id)
                 $sql_search ";
 
 // 김선용 200805 : 조인 사용으로 전체카운트가 일정레코드 이상일 때 지연시간 문제가 심각하므로 변경
@@ -168,7 +168,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $s_receipt_way .= $s_br."포인트";
 
     $s_mod = icon("수정", "./orderform.php?od_id=$row[od_id]&$qstr");
-    $s_del = icon("삭제", "javascript:del('./orderdelete.php?od_id={$row['od_id']}&on_uid={$row['on_uid']}&mb_id={$row['mb_id']}&$qstr');");
+    $s_del = icon("삭제", "javascript:del('./orderdelete.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}&mb_id={$row['mb_id']}&$qstr');");
 
     $mb_nick = get_sideview($row['mb_id'], $row['od_name'], $row['od_email'], '');
 
@@ -183,7 +183,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $list = $i%2;
     echo "
     <tr class='list$list ht'>
-        <td align=center title='주문일시 : {$row['od_time']}'><a href='".G4_SHOP_URL."/orderinquiryview.php?od_id={$row['od_id']}&on_uid={$row['on_uid']}'>{$row['od_id']}</a></td>
+        <td align=center title='주문일시 : {$row['od_time']}'><a href='".G4_SHOP_URL."/orderinquiryview.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}'>{$row['od_id']}</a></td>
         <!-- <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$row['od_name']}'><span title='$od_deposit_name'>".cut_str($row['od_name'],8,"")."</span></a></td> -->
         <td align=center>$mb_nick</td>
         <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$row['mb_id']}'>{$row['mb_id']}</a></td>

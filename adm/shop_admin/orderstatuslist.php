@@ -27,7 +27,7 @@ if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
 $sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.on_uid = b.on_uid)
+                left join {$g4['yc4_cart_table']} b on (a.uq_id = b.uq_id)
                 left join {$g4['yc4_item_table']} c on (b.it_id = c.it_id)
                 $sql_search ";
 
