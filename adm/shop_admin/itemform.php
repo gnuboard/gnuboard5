@@ -93,6 +93,203 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
+<form name="fitemform" action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" style="margin:0px;">
+
+<input type="hidden" name="codedup"     value="<?=$default['de_code_dup_use']?>">
+<input type="hidden" name="w" value="<?=$w?>">
+<!-- <input type=hidden name=sel_ca_id   value="<?=$sel_ca_id?>">
+<input type=hidden name=sel_field   value="<?=$sel_field?>">
+<input type=hidden name=search      value="<?=$search?>">
+<input type=hidden name=sort1       value="<?=$sort1?>">
+<input type=hidden name=sort2       value="<?=$sort2?>"> -->
+<input type="hidden" name="sca" value="<?=$sca?>">
+<input type="hidden" name="sst" value="<?=$sst?>">
+<input type="hidden" name="sod"  value="<?=$sod?>">
+<input type="hidden" name="sfl" value="<?=$sfl?>">
+<input type="hidden" name="stx"  value="<?=$stx?>">
+<input type="hidden" name="page" value="<?=$page?>">
+
+
+<section class="cbox">
+    <?//=subtitle("기본정보")?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_5">
+        <col class="grid_3">
+        <col class="grid_5">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="col">분류명</th>
+        <td colspan="3">
+            <select name="ca_id" onchange="categorychange(this.form)">
+            <option value="">= 기본분류 =
+                <?
+                $script = "";
+                $sql = " select * from {$g4['yc4_category_table']} ";
+                if ($is_admin != 'super')
+                    $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
+                $sql .= " order by ca_id ";
+                $result = sql_query($sql);
+                for ($i=0; $row=sql_fetch_array($result); $i++)
+                {
+                    $len = strlen($row['ca_id']) / 2 - 1;
+
+                    $nbsp = "";
+                    for ($i=0; $i<$len; $i++)
+                        $nbsp .= "&nbsp;&nbsp;&nbsp;";
+
+                    $str = "<option value='{$row['ca_id']}'>$nbsp{$row['ca_name']}\n";
+                    $category_select .= $str;
+                    echo $str;
+
+                    $script .= "ca_use['{$row['ca_id']}'] = {$row['ca_use']};\n";
+                    $script .= "ca_stock_qty['{$row['ca_id']}'] = {$row['ca_stock_qty']};\n";
+                    //$script .= "ca_explan_html['$row[ca_id]'] = $row[ca_explan_html];\n";
+                    $script .= "ca_sell_email['{$row['ca_id']}'] = '{$row['ca_sell_email']}';\n";
+                    $script .= "ca_opt1_subject['{$row['ca_id']}'] = '{$row['ca_opt1_subject']}';\n";
+                    $script .= "ca_opt2_subject['{$row['ca_id']}'] = '{$row['ca_opt2_subject']}';\n";
+                    $script .= "ca_opt3_subject['{$row['ca_id']}'] = '{$row['ca_opt3_subject']}';\n";
+                    $script .= "ca_opt4_subject['{$row['ca_id']}'] = '{$row['ca_opt4_subject']}';\n";
+                    $script .= "ca_opt5_subject['{$row['ca_id']}'] = '{$row['ca_opt5_subject']}';\n";
+                    $script .= "ca_opt6_subject['{$row['ca_id']}'] = '{$row['ca_opt6_subject']}';\n";
+                }
+                ?>
+            </select>
+            <script> document.fitemform.ca_id.value = '<?=$it['ca_id']?>'; </script>
+            <script>
+                var ca_use = new Array();
+                var ca_stock_qty = new Array();
+                //var ca_explan_html = new Array();
+                var ca_sell_email = new Array();
+                var ca_opt1_subject = new Array();
+                var ca_opt2_subject = new Array();
+                var ca_opt3_subject = new Array();
+                var ca_opt4_subject = new Array();
+                var ca_opt5_subject = new Array();
+                var ca_opt6_subject = new Array();
+                <?="\n$script"?>
+            </script>
+
+            <? if ($w == "") { ?>
+                <?=help("기본분류를 선택하면 선택한 분류의 기본값인 판매, 재고, HTML사용, 판매자 E-mail 을 기본값으로 설정합니다.");?>
+            <? } ?>
+
+            <?
+            for ($i=2; $i<=3; $i++)
+            {
+                echo "&nbsp; <select name='ca_id{$i}'><option value=''>= {$i}차 분류 ={$category_select}</select>\n";
+                echo "<script> document.fitemform.ca_id{$i}.value = '".$it["ca_id{$i}"]."'; </script>\n";
+            }
+            ?>
+            <?=help("기본분류는 반드시 선택하셔야 합니다.<br><br>하나의 상품에 최대 3개의 다른 분류를 지정할 수 있습니다.<br><br>2차, 3차 분류는 기본 분류의 하위 분류 개념이 아니므로 기본 분류 선택시 해당 상품이 포함될 최하위 분류만 선택하시면 됩니다.");?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="it_id">상품코드</label></th>
+        <td colspan="3">
+            <? if ($w == "") { // 추가 ?>
+                <!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
+                <!-- <input type=text class=required name=it_id value="<?=10000000000-time()?>" size=12 maxlength=10 required> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
+                <input type=text name=it_id value="<?=time()?>" id=it_id required class=required size=12 maxlength=10>
+                <? if ($default['de_code_dup_use']) { ?><a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='<?=G4_ADMIN_URL?>/img/btn_code.gif' border=0 align=absmiddle></a><? } ?>
+                <?=help("상품의 코드는 10자리 숫자로 자동생성합니다.\n운영자 임의로 상품코드를 입력하실 수 있습니다.\n상품코드는 영문자와 숫자만 입력 가능합니다.");?>
+            <? } else { ?>
+                <input type=hidden name=it_id value="<?=$it['it_id']?>">
+                <?=$it['it_id']?>
+                <?=icon("보기", G4_SHOP_URL."/item.php?it_id=$it_id");?>
+                <a href='<?=G4_ADMIN_URL?>/shop_admin/itempslist.php?sel_field=a.it_id&search=<?=$it_id?>'>사용후기</a>
+                <a href='<?=G4_ADMIN_URL?>/shop_admin/itemqalist.php?sel_field=a.it_id&search=<?=$it_id?>'>상품문의</a>
+            <? } ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="it_name">상품명</label></th>
+        <td colspan="3">
+            <input type="text" name="it_name" value="<?=get_text(cut_str($it['it_name'], 250, ""))?>" style="width:97%;" id="it_name" required class="frm_input required">
+        </td>
+    </tr>
+    <tr>
+    <th scope="col"><label for="it_gallery">출력유형</label></th>
+    <td>
+       <?=help("금액표시는 하지 않고 상품을 구매할 수 없으며 상품설명만 나타낼때 사용합니다.");?>
+        <input type="checkbox" name="it_gallery" value="1" id="it_gallery" class="frm_input" <?=($it['it_gallery'] ? "checked" : "")?>> 갤러리로 사용
+    </td>
+    <th scope="col"><label for="it_order">출력순서</label></th>
+    <td>
+        <?=help("상품의 출력순서를 인위적으로 변경할때 사용합니다.\n숫자를 입력하며 기본은 0 입니다.\n숫자가 작을 수록 상위에 출력됩니다.\n음수 입력도 가능합니다.\n구간 :  -2147483648 ~ 2147483647");?>
+        <input type="text" name="it_order" value="<? echo $it['it_order'] ?>" id="it_order" class="frm_input" size="10">
+    </td>
+    </tr>
+    <tr>
+    <th>상품유형</th>
+    <td colspan="3">
+        <?=help("메인화면에 유형별로 출력할때 사용합니다.\n\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다.");?>
+        <input type="checkbox" name="it_type1" value="1" <?=($it['it_type1'] ? "checked" : "");?> id="it_type1">
+        <label for="it_type1"><img src="<?=G4_SHOP_URL?>/img/icon_type1.gif" alt="hit"></label>
+        <input type="checkbox" name="it_type2" value="1" <?=($it['it_type2'] ? "checked" : "");?> id="it_type2">
+        <label for="it_type2"><img src="<?=G4_SHOP_URL?>/img/icon_type2.gif" alt="추천"></label>
+        <input type="checkbox" name="it_type3" value="1" <?=($it['it_type3'] ? "checked" : "");?> id="it_type3">
+        <label for="it_type3"><img src="<?=G4_SHOP_URL?>/img/icon_type3.gif" alt="new"></label>
+        <input type="checkbox" name="it_type4" value="1" <?=($it['it_type4'] ? "checked" : "");?> id="it_type4">
+        <label for="it_type4"><img src="<?=G4_SHOP_URL?>/img/icon_type4.gif" alt="인기"></label>
+        <input type="checkbox" name="it_type5" value="1" <?=($it['it_type5'] ? "checked" : "");?> id="it_type5">
+        <label for="it_type5"><img src="<?=G4_SHOP_URL?>/img/icon_type5.gif" alt="go"></label>
+    </td>
+    </tr>
+    <tr>
+        <th><label for="it_maker">제조사</label></th>
+        <td>
+            <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
+            <input type="text" name="it_maker" value="<?=get_text($it['it_maker'])?>"id="it_maker" class="frm_input" size="41">
+        </td>
+        <th><label for="it_origin">원산지</label></th>
+        <td>
+            <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
+            <input type="text" name="it_origin" value="<?=get_text($it['it_origin'])?>" id="it_origin" class="frm_input" size="41">
+        </td>
+    </tr>
+    <?
+    for ($i=1; $i<=3; $i++) {
+        $k1=$i*2-1;
+        $k2=$i*2;
+        $val11 = stripslashes($it["it_opt".$k1."_subject"]);
+        $val12 = stripslashes($it["it_opt".$k1]);
+        $val21 = stripslashes($it["it_opt".$k2."_subject"]);
+        $val22 = stripslashes($it["it_opt".$k2]);
+
+        echo "
+        <tr>
+            <td><input type=text name='it_opt{$k1}_subject' size=15 class=frm_input value='".get_text($val11)."'></td>
+            <td><textarea name='it_opt{$k1}' rows='3' cols=40 class=frm_input>$val12</textarea></td>
+            <td><input type=text name='it_opt{$k2}_subject' size=15 class=frm_input value='".get_text($val21)."'></td>
+            <td><textarea name='it_opt{$k2}' rows='3' cols=40 class=frm_input>$val22</textarea></td>
+        </tr>\n";
+    }
+    ?>
+    <tr>
+        <th></th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+    <th scope="col">기본설명</th>
+    <td colspan="3">
+        <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
+        <input type="text" class="frm_input" name="it_basic" value="<?=get_text($it['it_basic'])?>"  style="width:97%">
+    </td>
+    </tr>
+    </tbody>
+    </table>
+</section>
+
+
+
 <form name=fitemform method=post action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" enctype="MULTIPART/FORM-DATA" autocomplete="off" style="margin:0px;">
 <?//=subtitle("기본정보")?>
 <table width=100% cellpadding=0 cellspacing=0 border=0>

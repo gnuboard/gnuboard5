@@ -477,7 +477,7 @@ $pg_anchor ="<ul class=\"anchor\">
             <?=G4_SHOP_URL?>/settle_kcp_common.php
         </td>
     </tr>
-    <tr style='display:none;'>
+    <tr style="display:none;">
         <td><label for="de_dacom_mid">LG텔레콤 상점아이디</label></td>
         <td>
             <input type="text" name="de_dacom_mid" value="<?=$default['de_dacom_mid']?>" id="de_dacom_mid" size="40">
@@ -488,7 +488,10 @@ $pg_anchor ="<ul class=\"anchor\">
           <input type="text" name="de_dacom_mertkey" value="<?=$default['de_dacom_mertkey']?>" id="de_dacom_mertkey" size="40">
     </td>
     <!-- <td>LG텔레콤 테스트 모드</td>
-    <td><input type=checkbox name=de_dacom_test value='1' <?=$default[de_dacom_test]?"checked":"";?>> 테스트로 결제하실 경우에 체크하세요.</td> -->
+    <td>
+        <input type="checkbox" name="de_dacom_test" value="1" <?=$default[de_dacom_test]?"checked":"";?>> 
+        테스트로 결제하실 경우에 체크하세요.
+    </td> -->
     </tr>
     <tr style="display:none;">
         <td><label for="de_inicis_mid">이니시스 아이디</label></td>
@@ -822,6 +825,16 @@ function byte_check(el_cont, el_byte)
 }
 </script>
 
+<style type="text/css">
+    .sms_box{float:left;width:225px}
+    .sms_box h3{display:inline-block;width:225px;text-align:center}
+    .sms_box ul{margin:0 auto;padding:0 !important;width:163px;list-style:none}
+    .sms_box ul li{text-align:center}
+    .sms_box textarea{margin-top:54px;width:115px;height:85px;background:#c4ffff;font-size: 8pt; font-family:굴림체;overflow:hidden}
+    .sms_img{width:163px;height:191px;background:url(./img/sms_back.gif) no-repeat 0 0}
+</style>
+
+
 <section id="frm_sms" class="cbox" >
     <h2>SMS정보</h2>
     <?=$pg_anchor?>
@@ -831,15 +844,15 @@ function byte_check(el_cont, el_byte)
     ?>
 
     <? for ($i=1; $i<=4; $i++) { ?>
-    <div style="width:225px;float:left">
-    <h3 style="display:inline-block;text-align:center;width:225px" ><?=$sms_title[$i]?></h3>
-        <ul style="list-style:none;margin:0 auto;width:163px;padding:0 !important">
-            <li style="text-align:center">(<?=$sms_daesang[$i]?>)</li>
-            <li style="background:url(./img/sms_back.gif) no-repeat 0 0;width:163px;height:191px">
-                <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');" style="margin-left:22px;margin-top:54px;width:114px;overflow:hidden;height:85px;background-color:#C4FFFF; FONT-SIZE: 8pt; font-family:굴림체"><?=$default["de_sms_cont".$i]?></textarea>
+    <div  class="sms_box">
+    <h3><?=$sms_title[$i]?></h3>
+        <ul>
+            <li>(<?=$sms_daesang[$i]?>)</li>
+            <li class="sms_img">
+                <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');"><?=$default["de_sms_cont".$i]?></textarea>
             </li>
-            <li style="text-align:center">
-                <span id="byte<?=$i?>" style="text-align:center">0 / 80 바이트</span>
+            <li>
+                <span id="byte<?=$i?>">0 / 80 바이트</span>
                 <br />
                 <input type="checkbox" name="de_sms_use<?=$i?>" value="1" id="de_sms_use<?=$i?>" <?=($default["de_sms_use".$i] ? " checked" : "")?>>
                 <label for="de_sms_use<?=$i?>">사용</label>
@@ -850,7 +863,7 @@ function byte_check(el_cont, el_byte)
     <script> 
     byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');
     </script>
-    <? } ?>                
+    <? } ?>
 
     <table class="frm_tbl">
     <colgroup>
@@ -934,18 +947,18 @@ function byte_check(el_cont, el_byte)
     <? } ?>
     <!-- <tr>
         <th scope="row">아이코드 서버 IP</th>
-        <td colspan=3>
-            <input type=text name=de_icode_server_ip value='<?=$default[de_icode_server_ip]?$default[de_icode_server_ip]:"211.172.232.124";?>' size=20>
+        <td colspan="3">
             <?=help("아이코드에서 문자메세지를 발송하는 서버의 IP 를 입력하십시오.\n\n기본값은 211.172.232.124 입니다.");?>
+            <input type="text" name="de_icode_server_ip" value="<?=$default[de_icode_server_ip]?$default[de_icode_server_ip]:"211.172.232.124";?>"size="20">
         </td>
     </tr>
     <tr>
         <th scope="row">아이코드 서버 Port</th>
-        <td colspan=3>
-            <select id=de_icode_server_port name=de_icode_server_port>
-            <option value=''>사용안함
-            <option value='7295'>충전식
-            <option value='7296'>정액제
+        <td colspan="3">
+            <select id="de_icode_server_port" name="de_icode_server_port">
+                <option value="">사용안함
+                <option value="7295">충전식
+                <option value="7296">정액제
             </select>
             <script>document.getElementById('de_icode_server_port').value="<?=$default[de_icode_server_port]?>";</script>
         </td>
