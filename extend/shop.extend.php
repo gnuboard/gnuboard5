@@ -97,7 +97,7 @@ $g4[yc4_cardpg][dacom_xpay] = "https://pgweb.dacom.net";
 $default = sql_fetch(" select * from {$g4['yc4_default_table']} ");
 
 // uniqid 테이블이 없을 경우 생성
-if(!sql_query(" select 1 from {$g4['uniqid_table']} limit 1 ", false)) {
+if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
                   `uq_id` bigint(20) unsigned NOT NULL,
                   PRIMARY KEY (`uq_id`)
