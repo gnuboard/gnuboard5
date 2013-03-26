@@ -108,6 +108,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="sfl" value="<?=$sfl?>">
 <input type="hidden" name="stx"  value="<?=$stx?>">
 <input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="it_explan_html" value="1"><!---->
 
 
 <section class="cbox">
@@ -121,9 +122,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </colgroup>
     <tbody>
     <tr>
-        <th scope="col">분류명</th>
+        <th scope="col"><label for="ca_id">분류명</label></th>
         <td colspan="3">
-            <select name="ca_id" onchange="categorychange(this.form)">
+            <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
             <option value="">= 기본분류 =
                 <?
                 $script = "";
@@ -223,7 +224,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </td>
     </tr>
     <tr>
-    <th>상품유형</th>
+    <th scope="col">상품유형</th>
     <td colspan="3">
         <?=help("메인화면에 유형별로 출력할때 사용합니다.\n\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다.");?>
         <input type="checkbox" name="it_type1" value="1" <?=($it['it_type1'] ? "checked" : "");?> id="it_type1">
@@ -239,10 +240,10 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </td>
     </tr>
     <tr>
-        <th><label for="it_maker">제조사</label></th>
+        <th scope="col"><label for="it_maker">제조사</label></th>
         <td>
             <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
-            <input type="text" name="it_maker" value="<?=get_text($it['it_maker'])?>"id="it_maker" class="frm_input" size="41">
+            <input type="text" name="it_maker" value="<?=get_text($it['it_maker'])?>" id="it_maker" class="frm_input" size="41">
         </td>
         <th><label for="it_origin">원산지</label></th>
         <td>
@@ -269,283 +270,112 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     }
     ?>
     <tr>
-        <th></th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td colspan="4">
+
+<style type="text/css">
+#cost_box{width:900px}
+#cost_box h3{width:158px;height:300px;line-height:300px;float:left}
+#cost_box li{list-style:none;position:relative;float:left;width:110px;height:300px;margin-right:12px}
+#cost_box input{background:#fedddd}
+.cost_input{position:absolute;bottom:0;left:0}
+.cost_margin{margin-right:0 !important}
+</style>
+        <div id="cost_box">
+            <h3>가격/포인트/재고</h3>
+            <ul>
+                <li>
+                    <label for="it_amount">비회원가격</label><?=help("상품의 기본판매가격(로그인 이전 가격)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.", 50);?>
+                    <span class="cost_input"><input type="text" name="it_amount" value="<?=$it['it_amount']?>" id="it_amount" class="frm_input" size="8"></span>
+                </li>
+                <li>
+                    <label for="it_amount2">회원가격</label><?=help("상품의 로그인 이후 가격(회원 권한 2 에만 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n\n입력이 없다면 비회원가격으로 대신합니다.", 50);?>
+                    <span class="cost_input"><input type="text" name="it_amount2" value="<?=$it['it_amount2']?>" id="it_amount2" class="frm_input"  size="8"></span>
+                </li>
+                <li>
+                    <label for="it_amount3">특별회원가격</label><?=help("상품의 로그인 이후 가격(회원 권한 3 이상에 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n\n입력이 없다면 회원가격으로 대신합니다.\n회원가격도 없다면 비회원가격으로 대신합니다.", 50);?>
+                    <span class="cost_input"><input type="text" name="it_amount3" value="<?=$it['it_amount3']?>" id="it_amount3" class="frm_input" size="8"></span>
+                </li>
+                <li>
+                    <label for="it_cust_amount">시중가격</label><?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.", 50);?>
+                    <span class="cost_input"><input type="text" name="it_cust_amount" value="<?=$it['it_cust_amount']?>" id="it_cust_amount" class="frm_input" size="8"></span>
+                </li>
+                <li>
+                    <label for="it_point">포인트</label><?=help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n포인트를 사용하지 않는다면 의미가 없습니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.", -150);?>
+                    <span class="cost_input"><input type="text" name="it_point" value="<? echo $it['it_point'] ?>" id="it_point" class="frm_input" size="8"> 점</span>
+                </li>
+                <li class="cost_margin">
+                    <label for="it_stock_qty">재고수량</label><?=help("<span style='width:500px'>재고는 규격, 색상별로 관리되지는 않으며 상품별로 관리됩니다.\n이곳에 100개를 설정하고 상품 10개가 주문,준비,배송,완료 상태에 있다면 현재고는 90개로 나타내어집니다.\n주문관리에서 상품별로 상태가 변경될때 재고를 가감하게 됩니다.</span>", -450, -120);?>
+                    <span class="cost_input"><input type="text" name="it_stock_qty" value="<? echo $it['it_stock_qty'] ?>" id="it_stock_qty" class="frm_input" size="8"> 개</span></li>
+            </ul>
+        </div>
+        </td>
     </tr>
     <tr>
-    <th scope="col">기본설명</th>
-    <td colspan="3">
-        <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
-        <input type="text" class="frm_input" name="it_basic" value="<?=get_text($it['it_basic'])?>"  style="width:97%">
+        <th scope="col"><label for="it_basic">기본설명</label></th>
+        <td colspan="3">
+            <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
+            <input type="text" name="it_basic" value="<?=get_text($it['it_basic'])?>" id="it_basic" class="frm_input" style="width:97%">
+        </td>
+    </tr>
+    <? if ($it['it_id']) { ?>
+    <?
+    $sql = " select distinct ii_gubun from {$g4['yc4_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
+    $ii = sql_fetch($sql, false);
+    if ($ii) {
+        $item_info_gubun = item_info_gubun($ii['ii_gubun']);
+        $item_info_gubun .= $item_info_gubun ? " 등록됨" : "";
+    } else {
+        // 상품상세정보 테이블이 없다고 가정하여 생성
+        create_table_item_info();
+    }
+    ?>
+    <tr>
+        <th scope="col">요약상품정보</th>
+        <td colspan="3">
+            <?=help("전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.");?>
+            <input type="button" value="상품요약정보 설정" onclick="window.open('./iteminfo.php?it_id=<?=$it['it_id']?>', '_blank', 'width=670 height=800');">
+            <span id="item_info_gubun"><?=$item_info_gubun?></span>
+        </td>
+    </tr>
+    <?}//if?>
+
+    <tr>
+        <th scope="col">상품설명</th>
+        <td colspan="3"> <?=editor_html('it_explan', $it['it_explan']);?></td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="it_sell_email">판매자 e-mail</label></th>
+        <td colspan="3">
+            <?=help("운영자와 판매자가 다른 경우 이곳에 판매자의 e-mail을 입력해 놓으면 이 상품이 주문되는 시점에서 판매자에게 별도의 주문서 메일을 발송합니다.");?>
+            <input type="text" name="it_sell_email" value="<? echo $it['it_sell_email'] ?>" id="it_sell_email" class="frm_input" size="40">
+        </td>
+    </tr>
+    <tr>
+    <th scope="col"><label for="it_tel_inq">전화문의</label></th>
+    <td>
+        <?=help("상품 금액 대신 전화문의로 표시됩니다.");?>
+        <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <? echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
+    </td>
+    <th scope="col"><label for="it_use">판매가능</label></th>
+    <td>
+        <?=help("잠시 판매를 중단하거나 재고가 없을 경우에 체크하면 이 상품은 출력하지 않으며 주문도 할 수 없습니다.");?>
+        <input type="checkbox" name="it_use" value="1" id="it_use" <? echo ($it['it_use']) ? "checked" : ""; ?>> 예
     </td>
     </tr>
     </tbody>
     </table>
 </section>
-
-
-
-<form name=fitemform method=post action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" enctype="MULTIPART/FORM-DATA" autocomplete="off" style="margin:0px;">
-<?//=subtitle("기본정보")?>
-<table width=100% cellpadding=0 cellspacing=0 border=0>
-<input type=hidden name=codedup     value="<?=$default['de_code_dup_use']?>">
-<input type=hidden name=w           value="<?=$w?>">
-<!-- <input type=hidden name=sel_ca_id   value="<?=$sel_ca_id?>">
-<input type=hidden name=sel_field   value="<?=$sel_field?>">
-<input type=hidden name=search      value="<?=$search?>">
-<input type=hidden name=sort1       value="<?=$sort1?>">
-<input type=hidden name=sort2       value="<?=$sort2?>"> -->
-<input type=hidden name=sca  value="<?=$sca?>">
-<input type=hidden name=sst  value="<?=$sst?>">
-<input type=hidden name=sod  value="<?=$sod?>">
-<input type=hidden name=sfl  value="<?=$sfl?>">
-<input type=hidden name=stx  value="<?=$stx?>">
-<input type=hidden name=page value="<?=$page?>">
-<colgroup width=15%></colgroup>
-<colgroup width=35% bgcolor=#FFFFFF></colgroup>
-<colgroup width=15%></colgroup>
-<colgroup width=35% bgcolor=#FFFFFF></colgroup>
-<tr><td colspan=4 height=2 bgcolor=0E87F9></td></tr>
-<tr class=ht>
-    <td>분류명</td>
-    <td colspan=3>
-        <select name="ca_id" onchange="categorychange(this.form)">
-            <option value="">= 기본분류 =
-            <?
-            $script = "";
-            $sql = " select * from {$g4['yc4_category_table']} ";
-            if ($is_admin != 'super')
-                $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
-            $sql .= " order by ca_id ";
-            $result = sql_query($sql);
-            for ($i=0; $row=sql_fetch_array($result); $i++)
-            {
-                $len = strlen($row['ca_id']) / 2 - 1;
-
-                $nbsp = "";
-                for ($i=0; $i<$len; $i++)
-                    $nbsp .= "&nbsp;&nbsp;&nbsp;";
-
-                $str = "<option value='{$row['ca_id']}'>$nbsp{$row['ca_name']}\n";
-                $category_select .= $str;
-                echo $str;
-
-                $script .= "ca_use['{$row['ca_id']}'] = {$row['ca_use']};\n";
-                $script .= "ca_stock_qty['{$row['ca_id']}'] = {$row['ca_stock_qty']};\n";
-                //$script .= "ca_explan_html['$row[ca_id]'] = $row[ca_explan_html];\n";
-                $script .= "ca_sell_email['{$row['ca_id']}'] = '{$row['ca_sell_email']}';\n";
-                $script .= "ca_opt1_subject['{$row['ca_id']}'] = '{$row['ca_opt1_subject']}';\n";
-                $script .= "ca_opt2_subject['{$row['ca_id']}'] = '{$row['ca_opt2_subject']}';\n";
-                $script .= "ca_opt3_subject['{$row['ca_id']}'] = '{$row['ca_opt3_subject']}';\n";
-                $script .= "ca_opt4_subject['{$row['ca_id']}'] = '{$row['ca_opt4_subject']}';\n";
-                $script .= "ca_opt5_subject['{$row['ca_id']}'] = '{$row['ca_opt5_subject']}';\n";
-                $script .= "ca_opt6_subject['{$row['ca_id']}'] = '{$row['ca_opt6_subject']}';\n";
-            }
-            ?>
-        </select>
-        <script> document.fitemform.ca_id.value = '<?=$it['ca_id']?>'; </script>
-        <script>
-            var ca_use = new Array();
-            var ca_stock_qty = new Array();
-            //var ca_explan_html = new Array();
-            var ca_sell_email = new Array();
-            var ca_opt1_subject = new Array();
-            var ca_opt2_subject = new Array();
-            var ca_opt3_subject = new Array();
-            var ca_opt4_subject = new Array();
-            var ca_opt5_subject = new Array();
-            var ca_opt6_subject = new Array();
-            <?="\n$script"?>
-        </script>
-
-        <? if ($w == "") { ?>
-            <?=help("기본분류를 선택하면 선택한 분류의 기본값인 판매, 재고, HTML사용, 판매자 E-mail 을 기본값으로 설정합니다.");?>
-        <? } ?>
-
-        <?
-        for ($i=2; $i<=3; $i++)
-        {
-            echo "&nbsp; <select name='ca_id{$i}'><option value=''>= {$i}차 분류 ={$category_select}</select>\n";
-            echo "<script> document.fitemform.ca_id{$i}.value = '".$it["ca_id{$i}"]."'; </script>\n";
-        }
-        ?>
-        <?=help("기본분류는 반드시 선택하셔야 합니다.<br><br>하나의 상품에 최대 3개의 다른 분류를 지정할 수 있습니다.<br><br>2차, 3차 분류는 기본 분류의 하위 분류 개념이 아니므로 기본 분류 선택시 해당 상품이 포함될 최하위 분류만 선택하시면 됩니다.");?>
-    </td>
-</tr>
-<tr class=ht>
-	<td>상품코드</td>
-	<td colspan=3>
-
-	<? if ($w == "") { // 추가 ?>
-		<!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
-		<!-- <input type=text class=ed name=it_id value="<?=10000000000-time()?>" size=12 maxlength=10 required nospace alphanumeric itemname="상품코드"> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
-		<input type=text class=ed name=it_id value="<?=time()?>" size=12 maxlength=10 required nospace alphanumeric itemname="상품코드">
-        <? if ($default['de_code_dup_use']) { ?><a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='<?=G4_ADMIN_URL?>/img/btn_code.gif' border=0 align=absmiddle></a><? } ?>
-        <?=help("상품의 코드는 10자리 숫자로 자동생성합니다.\n운영자 임의로 상품코드를 입력하실 수 있습니다.\n상품코드는 영문자와 숫자만 입력 가능합니다.");?>
-	<? } else { ?>
-		<input type=hidden name=it_id value="<?=$it['it_id']?>">
-		<?=$it['it_id']?>
-		<?=icon("보기", G4_SHOP_URL."/item.php?it_id=$it_id");?>
-        <a href='<?=G4_ADMIN_URL?>/shop_admin/itempslist.php?sel_field=a.it_id&search=<?=$it_id?>'>사용후기</a>
-        <a href='<?=G4_ADMIN_URL?>/shop_admin/itemqalist.php?sel_field=a.it_id&search=<?=$it_id?>'>상품문의</a>
-	<? } ?>
-
-	</td>
-</tr>
-<tr class=ht>
-    <td>상품명</td>
-    <td colspan=3>
-        <input type=text name=it_name value='<?=get_text(cut_str($it['it_name'], 250, ""))?>' style='width:97%;' required itemname='상품명' class=ed>
-    </td>
-</tr>
-<tr class=ht>
-    <td>출력유형</td>
-    <td>
-        <input type=checkbox name=it_gallery value='1' <?=($it['it_gallery'] ? "checked" : "")?>> 갤러리로 사용
-        <?=help("금액표시는 하지 않고 상품을 구매할 수 없으며 상품설명만 나타낼때 사용합니다.");?>
-    </td>
-    <td>출력순서</td>
-    <td>
-        <input type=text class=ed name=it_order size=10 value='<? echo $it['it_order'] ?>'>
-        <?=help("상품의 출력순서를 인위적으로 변경할때 사용합니다.\n숫자를 입력하며 기본은 0 입니다.\n숫자가 작을 수록 상위에 출력됩니다.\n음수 입력도 가능합니다.\n구간 :  -2147483648 ~ 2147483647");?>
-    </td>
-</tr>
-<tr class=ht>
-    <td>상품유형</td>
-    <td colspan=3>
-        <input type=checkbox name=it_type1 value='1' <?=($it['it_type1'] ? "checked" : "");?>><img src='<?=G4_SHOP_URL?>/img/icon_type1.gif' align=absmiddle>
-        <input type=checkbox name=it_type2 value='1' <?=($it['it_type2'] ? "checked" : "");?>><img src='<?=G4_SHOP_URL?>/img/icon_type2.gif' align=absmiddle>
-        <input type=checkbox name=it_type3 value='1' <?=($it['it_type3'] ? "checked" : "");?>><img src='<?=G4_SHOP_URL?>/img/icon_type3.gif' align=absmiddle>
-        <input type=checkbox name=it_type4 value='1' <?=($it['it_type4'] ? "checked" : "");?>><img src='<?=G4_SHOP_URL?>/img/icon_type4.gif' align=absmiddle>
-        <input type=checkbox name=it_type5 value='1' <?=($it['it_type5'] ? "checked" : "");?>><img src='<?=G4_SHOP_URL?>/img/icon_type5.gif' align=absmiddle>
-        <?=help("메인화면에 유형별로 출력할때 사용합니다.\n\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다.");?>
-    </td>
-</tr>
-<tr class=ht>
-    <td>제조사</td>
-    <td>
-        <input type=text class=ed name=it_maker value='<?=get_text($it['it_maker'])?>' size=41>
-        <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
-    </td>
-    <td>원산지</td>
-    <td>
-        <input type=text class=ed name=it_origin value='<?=get_text($it['it_origin'])?>' size=41>
-        <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
-    </td>
-</tr>
-<?
-for ($i=1; $i<=3; $i++) {
-    $k1=$i*2-1;
-    $k2=$i*2;
-    $val11 = stripslashes($it["it_opt".$k1."_subject"]);
-    $val12 = stripslashes($it["it_opt".$k1]);
-    $val21 = stripslashes($it["it_opt".$k2."_subject"]);
-    $val22 = stripslashes($it["it_opt".$k2]);
-
-    echo "
-    <tr class=ht>
-        <td><input type=text name='it_opt{$k1}_subject' size=15 class=ed value='".get_text($val11)."'></td>
-        <td><textarea name='it_opt{$k1}' rows='3' cols=40 class=ed>$val12</textarea></td>
-        <td><input type=text name='it_opt{$k2}_subject' size=15 class=ed value='".get_text($val21)."'></td>
-        <td><textarea name='it_opt{$k2}' rows='3' cols=40 class=ed>$val22</textarea></td>
-    </tr>\n";
-}
-?>
-<tr>
-    <td height=80>가격/포인트/재고</td>
-    <td colspan=3>
-        <table width=100% cellpadding=0 cellspacing=0>
-        <tr>
-        	<td width=16%>비회원가격 <?=help("상품의 기본판매가격(로그인 이전 가격)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.", 50);?></td>
-        	<td width=16%>회원가격 <?=help("상품의 로그인 이후 가격(회원 권한 2 에만 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n\n입력이 없다면 비회원가격으로 대신합니다.", 50);?></td>
-        	<td width=16%>특별회원가격 <?=help("상품의 로그인 이후 가격(회원 권한 3 이상에 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n\n입력이 없다면 회원가격으로 대신합니다.\n회원가격도 없다면 비회원가격으로 대신합니다.", 50);?></td>
-        	<td width=16%>시중가격 <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.", 50);?></td>
-        	<td width=16%>포인트 <?=help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n포인트를 사용하지 않는다면 의미가 없습니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.", -150);?></td>
-        	<td width=16%>재고수량 <?=help("<span style='width:500px'>재고는 규격, 색상별로 관리되지는 않으며 상품별로 관리됩니다.\n이곳에 100개를 설정하고 상품 10개가 주문,준비,배송,완료 상태에 있다면 현재고는 90개로 나타내어집니다.\n주문관리에서 상품별로 상태가 변경될때 재고를 가감하게 됩니다.</span>", -450, -120);?></td>
-        </tr>
-        <tr>
-            <!-- 비회원가 대비 회원가격은 90%, 특별회원가격은 75%로 자동 설정할 경우의 코드
-            <td><input type=text class=ed name=it_amount size=8 value='<?=$it[it_amount]?>' style='text-align:right; background-color:#DDE6FE;' onblur="document.fitemform.it_amount2.value=document.fitemform.it_amount.value*.9;document.fitemform.it_amount3.value=document.fitemform.it_amount.value*.75;"></td>
-            -->
-            <td><input type=text class=ed name=it_amount size=8 value='<?=$it['it_amount']?>' style='text-align:right; background-color:#DDE6FE;'></td>
-            <td><input type=text class=ed name=it_amount2 size=8 value='<?=$it['it_amount2']?>' style='text-align:right; background-color:#DDFEDE;'></td>
-            <td><input type=text class=ed name=it_amount3 size=8 value='<?=$it['it_amount3']?>' style='text-align:right; background-color:#FEDDDD;'></td>
-            <td><input type=text class=ed name=it_cust_amount size=8 value='<?=$it['it_cust_amount']?>' style='text-align:right;'></td>
-            <td><input type=text class=ed name=it_point size=8 value='<? echo $it['it_point'] ?>' style='text-align:right;'> 점</td>
-            <td><input type=text class=ed name=it_stock_qty size=8 value='<? echo $it['it_stock_qty'] ?>' style='text-align:right;'> 개</td>
-        </table>
-    </td>
-</tr>
-<tr class=ht>
-    <td>기본설명</td>
-    <td colspan=3>
-        <input type=text class=ed name=it_basic style='width:97%;' value='<?=get_text($it['it_basic'])?>'>
-        <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
-    </td>
-</tr>
-<? if ($it['it_id']) { ?>
-<?
-$sql = " select distinct ii_gubun from {$g4['yc4_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
-$ii = sql_fetch($sql, false);
-if ($ii) {
-    $item_info_gubun = item_info_gubun($ii['ii_gubun']);
-    $item_info_gubun .= $item_info_gubun ? " 등록됨" : "";
-} else {
-    // 상품상세정보 테이블이 없다고 가정하여 생성
-    create_table_item_info();
-}
-?>
-<tr class=ht>
-    <td>요약상품정보</td>
-    <td colspan=3>
-        <input type="button" onclick="window.open('./iteminfo.php?it_id=<?=$it['it_id']?>', '_blank', 'width=670 height=800');" value="상품요약정보 설정" />
-        <span id="item_info_gubun"><?=$item_info_gubun?></span>
-        <?=help("전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.");?>
-    </td>
-</tr>
-<?}//if?>
-<input type=hidden name=it_explan_html value=1>
-<tr>
-    <td>상품설명</td>
-    <td colspan=3 style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_explan', $it['it_explan']);?></td>
-</tr>
-<tr class=ht>
-    <td>판매자 e-mail</td>
-    <td colspan=3>
-        <input type=text class=ed name=it_sell_email size=40 value='<? echo $it['it_sell_email'] ?>'>
-        <?=help("운영자와 판매자가 다른 경우 이곳에 판매자의 e-mail을 입력해 놓으면 이 상품이 주문되는 시점에서 판매자에게 별도의 주문서 메일을 발송합니다.");?>
-    </td>
-</tr>
-<tr class=ht>
-    <td>전화문의</td>
-    <td>
-        <input type=checkbox name='it_tel_inq' <? echo ($it['it_tel_inq']) ? "checked" : ""; ?> value='1'> 예
-        <?=help("상품 금액 대신 전화문의로 표시됩니다.");?>
-    </td>
-    <td>판매가능</td>
-    <td>
-        <input type=checkbox name='it_use' <? echo ($it['it_use']) ? "checked" : ""; ?> value='1'> 예
-        <?=help("잠시 판매를 중단하거나 재고가 없을 경우에 체크하면 이 상품은 출력하지 않으며 주문도 할 수 없습니다.");?>
-    </td>
-</tr>
-<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
-</table>
-
-<p>
-<?//=subtitle("이미지")?>
-<table width=100% cellpadding=0 cellspacing=0>
-<colgroup width=15%></colgroup>
-<colgroup width=85% bgcolor=#FFFFFF></colgroup>
-<tr><td colspan=4 height=2 bgcolor=0E87F9></td></tr>
-<tr>
-    <td>이미지(대)</td>
-    <td colspan=3>
-        <input type=file class=ed name=it_limg1 size=40>
+<section class="cbox">
+    <?//=subtitle("이미지")?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_13">
+    </colgroup>
+    <tr>
+        <th scope="col">이미지(대)</th>
+        <td>
+        <input type="file" name="it_limg1">
         <?
         $limg1 = G4_DATA_PATH."/item/{$it[it_id]}_l1";
         if (file_exists($limg1)) {
@@ -562,44 +392,44 @@ if ($ii) {
             echo help("이미지(중) 이미지(소) 의 사이즈를 환경설정에서 정한 폭과 높이로 자동생성합니다.\n\nJPG 파일만 가능합니다.");
         }
         ?>
-    </td>
-</tr>
-<tr class=ht>
-    <td>이미지(중)</td>
-    <td colspan=3>
-        <input type=file class=ed name=it_mimg size=40>
-        <?
-        $mimg = G4_DATA_PATH."/item/{$it[it_id]}_m";
-        if (file_exists($mimg)) {
-            $size = getimagesize($mimg);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('mimg', $size[0], $size[1]);\"><input type=checkbox name=it_mimg_del value='1'>삭제";
-            echo "<div id='mimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_m' border=1></div>";
-        }
-        ?>
-        &nbsp;<?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
-    </td>
-</tr>
-<tr class=ht>
-    <td>이미지(소)</td>
-    <td colspan=3>
-        <input type=file class=ed name=it_simg size=40>
-        <?
-        $simg = G4_DATA_PATH."/item/{$it[it_id]}_s";
-        if (file_exists($simg)) {
-            $size = getimagesize($simg);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('simg', $size[0], $size[1]);\"><input type=checkbox name=it_simg_del value='1'>삭제";
-            echo "<div id='simg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_s' border=1></div>";
-        }
-        ?>
-        &nbsp;<?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
-    </td>
-</tr>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">이미지(중)</th>
+        <td>
+        <input type="file" name="it_mimg">
+            <?
+            $mimg = G4_DATA_PATH."/item/{$it[it_id]}_m";
+            if (file_exists($mimg)) {
+                $size = getimagesize($mimg);
+                echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('mimg', $size[0], $size[1]);\"><input type=checkbox name=it_mimg_del value='1'>삭제";
+                echo "<div id='mimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_m' border=1></div>";
+            }
+            ?>
+            &nbsp;<?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">이미지(소)</th>
+        <td>
+            <input type="file" name="it_simg">
+            <?
+            $simg = G4_DATA_PATH."/item/{$it[it_id]}_s";
+            if (file_exists($simg)) {
+                $size = getimagesize($simg);
+                echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('simg', $size[0], $size[1]);\"><input type=checkbox name=it_simg_del value='1'>삭제";
+                echo "<div id='simg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_s' border=1></div>";
+            }
+            ?>
+            &nbsp;<?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
+        </td>
+    </tr>
 
-<? for ($i=2; $i<=5; $i++) { // 이미지(대)는 5개 ?>
-<tr class=ht>
-    <td>이미지(대) <?=$i?></td>
-    <td colspan=3>
-        <input type=file class=ed name=it_limg<?=$i?> size=40>
+    <? for ($i=2; $i<=5; $i++) { // 이미지(대)는 5개 ?>
+    <tr>
+        <th scope="col">이미지(대)<?=$i?></th>
+        <td>
+        <input type="file" name="it_limg<?=$i?>">
         <?
         $limg = G4_DATA_PATH."/item/{$it[it_id]}_l{$i}";
         if (file_exists($limg)) {
@@ -608,17 +438,22 @@ if ($ii) {
             echo "<span id=limg{$i} style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_l{$i}' border=1></div>";
         }
         ?>
-    </td>
-</tr>
-<? } ?>
-<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
-</table>
+        </td>
+    </tr>
+    <? } ?>
+    </table>
 
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemlist.php?<?=$qstr?>';">
+</section>
 
-<p>
+    <div class="btn_confirm">
+        <input type="submit" value="확인" class="btn_submit" accesskey="s">
+        <a href="./itemlist.php?<?=$qstr?>">목록</a>
+    </div>
+
+
+
+<!--선택된 목록 / 등록된 목록 구조 다시 짜야함 start-->
+
 <?//=subtitle("선택정보")?>
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <colgroup width=14%></colgroup>
@@ -917,72 +752,87 @@ if ($ii) {
     </td>
 </tr>
 </table>
+<!--선택된 목록 / 등록된 목록 구조 다시 짜야함 end-->
 
-<table width=100% cellpadding=0 cellspacing=0>
-<colgroup width=15%></colgroup>
-<colgroup width=85% bgcolor=#FFFFFF></colgroup>
-<tr class=ht>
-    <td>상단이미지</td>
-    <td colspan=3>
-        <input type=file class=ed name=it_himg size=40>
-        <?
-        $himg_str = "";
-        $himg = G4_DATA_PATH."/item/{$it['it_id']}_h";
-        if (file_exists($himg)) {
-            echo "<input type=checkbox name=it_himg_del value='1'>삭제";
-            $himg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_h' border=0>";
-        }
-        ?>
-        <?=help("상품상세설명 페이지 상단에 출력하는 이미지입니다.");?>
-    </td>
-</tr>
+
+
+
+
+<section class="cbox">
+    <?//=subtitle("선택정보")?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_5">
+        <col class="grid_3">
+        <col class="grid_5">
+    </colgroup>
+    <tr>
+    <th scope="col"></th>
+    <td></td>
+    <th scope="col"></th>
+    <td></td>
+    </tr>
+    <tr>
+        <th scope="col">상단이미지</th>
+        <td colspan="3">
+            <input type="file" name="it_himg">
+            <?
+            $himg_str = "";
+            $himg = G4_DATA_PATH."/item/{$it['it_id']}_h";
+            if (file_exists($himg)) {
+                echo "<input type=checkbox name=it_himg_del value='1'>삭제";
+                $himg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_h' border=0>";
+            }
+            ?>
+            <?=help("상품상세설명 페이지 상단에 출력하는 이미지입니다.");?>
+        </td>
+    </tr>
 <? if ($himg_str) { echo "<tr><td colspan=4>$himg_str</td></tr>"; } ?>
-
-<tr class=ht>
-    <td>하단이미지</td>
-    <td colspan=3>
-        <input type=file class=ed name=it_timg size=40>
-        <?
-        $timg_str = "";
-        $timg = G4_DATA_PATH."/item/{$it['it_id']}_t";
-        if (file_exists($timg)) {
-            echo "<input type=checkbox name=it_timg_del value='1'>삭제";
-            $timg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_t' border=0>";
-        }
-        ?>
-        <?=help("상품상세설명 페이지 하단에 출력하는 이미지입니다.");?>
-    </td>
-</tr>
+    <tr>
+        <th scope="col">하단이미지</th>
+        <td colspan="3">
+            <input type="file" name="it_timg">
+            <?
+            $timg_str = "";
+            $timg = G4_DATA_PATH."/item/{$it['it_id']}_t";
+            if (file_exists($timg)) {
+                echo "<input type=checkbox name=it_timg_del value='1'>삭제";
+                $timg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_t' border=0>";
+            }
+            ?>
+            <?=help("상품상세설명 페이지 하단에 출력하는 이미지입니다.");?>
+        </td>
+    </tr>
 <? if ($timg_str) { echo "<tr><td colspan=4>$timg_str</td></tr>"; } ?>
+    <tr>
+        <th scope="col">상품상단내용 <?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?></th>
+        <td colspan="3"><?=editor_html('it_head_html', $it['it_head_html']);?></td>
+    </tr>
+    <tr>
+        <th scope="col">상품하단내용 <?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?></th>
+        <td colspan="3"><?=editor_html('it_tail_html', $it['it_tail_html']);?></td>
+    </tr>
+    <? if ($w == "u") { ?>
+    <tr>
+        <th scope="col">입력일시</th>
+        <td colspan="3">
+            <?=$it['it_time']?>
+            <?=help("상품을 처음 입력(등록)한 시간입니다.");?>
+        </td>
+    </tr>
+    <? } ?>
+    </table>
+</section>
 
-<tr>
-    <td>상품상단내용 <?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?></td>
-    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_head_html', $it['it_head_html']);?></td>
-</tr>
-<tr>
-    <td>상품하단내용 <?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?></td>
-    <td colspan=3 align=right style='padding-top:7px; padding-bottom:7px;'><?=editor_html('it_tail_html', $it['it_tail_html']);?></td>
-</tr>
-
-<? if ($w == "u") { ?>
-<tr class=ht>
-    <td>입력일시</td>
-    <td colspan=3>
-        <?=$it['it_time']?>
-        <?=help("상품을 처음 입력(등록)한 시간입니다.");?>
-    </td>
-</tr>
-<? } ?>
-<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
-</table><br>
-
-
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemlist.php?<?=$qstr?>';">
+    <div class="btn_confirm">
+        <input type="submit" value="확인" class="btn_submit" accesskey="s">
+        <a href="./itemlist.php?<?=$qstr?>">목록</a>
+    </div>
 </form>
 
-<script language='javascript'>
+
+<script>
 var f = document.fitemform;
 
 function codedupcheck(id)
@@ -1077,7 +927,7 @@ function categorychange(f)
 
 categorychange(document.fitemform);
 
-document.fitemform.it_name.focus();
+/*document.fitemform.it_name.focus(); 포커스제거*/
 </script>
 
 <?
