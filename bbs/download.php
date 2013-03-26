@@ -69,10 +69,7 @@ if (!get_session($ss_name))
 
 $g4['title'] = '다운로드 &gt; '.conv_subject($write['wr_subject'], 255);
 
-if (preg_match("/^utf/i", $g4['charset']))
-    $original = urlencode($file['bf_source']);
-else
-    $original = $file['bf_source'];
+$original = urlencode($file['bf_source']);
 
 @include_once($board_skin_path.'/download.tail.skin.php');
 
