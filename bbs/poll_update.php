@@ -45,7 +45,7 @@ if (get_cookie('ck_po_id') != $po['po_id']) {
     }
 
     if (!$search_mb_id)
-        insert_point($member['mb_id'], $po['po_point'], $po['po_id'] . '. ' . cut_str($po['po_subject'],20) . ' 투표 참여 ', '{@poll}', $po['po_id'], '투표');
+        insert_point($member['mb_id'], $po['po_point'], $po['po_id'] . '. ' . cut_str($po['po_subject'],20) . ' 투표 참여 ', '@poll', $po['po_id'], '투표');
 }
 
 set_cookie('ck_po_id', $po['po_id'], 86400 * 15); // 투표 쿠키 보름간 저장
