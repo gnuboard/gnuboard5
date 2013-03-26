@@ -99,53 +99,103 @@ if ($is_member && $config['cf_use_point'])
 if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_point'])
     die("Error...");
 
-$i_amount = $i_amount + $i_send_cost - $i_temp_point;
-
-if ($od_settle_case == "무통장")
-{
-    $od_receipt_bank    = $i_amount;
-    $od_temp_point      = $i_temp_point;
-    $od_receipt_point   = $i_temp_point;
-}
-else if ($od_settle_case == "계좌이체" || $od_settle_case == "가상계좌")
-{
-    $od_receipt_bank    = $i_amount;
-    $od_temp_point      = $i_temp_point;
-    $od_receipt_point   = 0;
-
-    $od_bank_account    = $od_settle_case;
-    $od_deposit_name    = $od_name;
-}
-else if ($od_settle_case == "휴대폰")
-{
-    $od_receipt_hp      = $i_amount;
-    $od_temp_point      = $i_temp_point;
-    $od_receipt_point   = 0;
-}
-else if ($od_settle_case == "신용카드")
-{
-    $od_receipt_card    = $i_amount;
-    $od_temp_point      = $i_temp_point;
-    $od_receipt_point   = 0;
-}
-else
-{
-    die("od_settle_case Error!!!");
-}
-
 if ($od_temp_point)
 {
     if ($member['mb_point'] < $od_temp_point)
         alert("회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.");
 }
 
-if ($member['mb_id'])
-    $od_pwd = $member['mb_pwd'];
+$i_amount = $i_amount + $i_send_cost - $i_temp_point;
+
+$same_amount_check = false;
+if ($od_settle_case == "무통장")
+{
+    $od_temp_bank       = $i_amount;
+    $od_temp_point      = $i_temp_point;
+    $od_receipt_point   = $i_temp_point;
+    $od_receipt_bank    = 0;
+}
+else if ($od_settle_case == "계좌이체")
+{
+    include "./kcp/pp_ax_hub.php";
+
+    $od_temp_bank       = $i_amount;
+    $od_temp_point      = $i_temp_point;
+
+    $od_receipt_bank    = $amount;
+    $od_receipt_point   = $i_temp_point;
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_bank_account    = $od_settle_case;
+    $od_deposit_name    = $od_name;
+    $bank_name          = iconv("cp949", "utf8", $bank_name);
+    $od_bank_account    = $bank_name;
+    $same_amount_check  = true;
+    $pg_receipt_amount  = $amount;
+}
+else if ($od_settle_case == "가상계좌")
+{
+    include "./kcp/pp_ax_hub.php";
+
+    $od_temp_bank       = $i_amount;
+    $od_temp_point      = $i_temp_point;
+    $od_receipt_point   = 0;
+
+    $od_receipt_amount  = 0;
+    $bankname           = iconv("cp949", "utf8", $bankname);
+    $depositor          = iconv("cp949", "utf8", $depositor);
+    $od_bank_account    = $bankname.' '.$account.' '.$depositor;
+    $od_deposit_name    = $od_name;
+}
+else if ($od_settle_case == "휴대폰")
+{
+    include "./kcp/pp_ax_hub.php";
+
+    $od_temp_bank       = $i_amount;
+    $od_temp_point      = $i_temp_point;
+
+    $od_receipt_hp      = $amount;
+    $od_receipt_point   = $i_temp_point;
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_bank_account    = $commid.' '.$mobile_no;
+    $same_amount_check  = true;
+    $pg_receipt_amount  = $amount;
+}
+else if ($od_settle_case == "신용카드")
+{
+    include "./kcp/pp_ax_hub.php";
+
+    $od_temp_card       = $i_amount;
+    $od_temp_point      = $i_temp_point;
+
+    $od_receipt_card    = $amount;
+    $od_receipt_point   = $i_temp_point;
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $card_name          = iconv("cp949", "utf8", $card_name);
+    $od_bank_account    = $card_name;
+    $same_amount_check  = true;
+    $pg_receipt_amount  = $amount;
+}
+else
+{
+    die("od_settle_case Error!!!");
+}
+
+// 주문금액과 결제금액이 일치하는지 체크
+if($same_amount_check) {
+    if((int)$i_amount !== (int)$pg_receipt_amount) {
+        include "./kcp/pp_ax_hub_cancel.php"; // 결제취소처리
+
+        die("Receipt Amount Error");
+    }
+}
+
+if ($is_member)
+    $od_pwd = $member['mb_password'];
 else
     $od_pwd = sql_password($_POST['od_pwd']);
 
-// 새로운 주문번호를 얻는다.
-$od_id = get_new_od_id();
+// 주문번호를 얻는다.
+$od_id = get_session('ss_order_uniqid');
 
 // 주문서에 입력
 $sql = " insert {$g4['yc4_order_table']}
@@ -175,9 +225,9 @@ $sql = " insert {$g4['yc4_order_table']}
                 od_temp_card      = '$od_receipt_card',
                 od_temp_hp        = '$od_receipt_hp',
                 od_temp_point     = '$od_temp_point',
-                od_receipt_bank   = '0',
-                od_receipt_card   = '0',
-                od_receipt_hp     = '0',
+                od_receipt_bank   = '$od_receipt_bank',
+                od_receipt_card   = '$od_receipt_card',
+                od_receipt_hp     = '$od_receipt_hp',
                 od_receipt_point  = '$od_receipt_point',
                 od_bank_account   = '$od_bank_account',
                 od_shop_memo      = '',
@@ -202,7 +252,7 @@ $sql = "update {$g4['yc4_cart_table']}
 sql_query($sql);
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가
-if ($member['mb_id'] && $od_receipt_point) {
+if ($is_member && $od_receipt_point) {
     insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
 }
 
@@ -210,9 +260,7 @@ $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))) . "&nbsp;";
 
 
 include_once('./ordermail1.inc.php');
-
-if ($od_settle_case == "무통장")
-    include_once('./ordermail2.inc.php');
+include_once('./ordermail2.inc.php');
 
 // SMS BEGIN --------------------------------------------------------
 // 쇼핑몰 운영자가 수신자가 됨
@@ -248,5 +296,5 @@ if (get_session("ss_direct"))
 else
     set_session("ss_uq_id", "");
 
-goto_url(G4_SHOP_URL.'/orderconfirm.php');
+goto_url(G4_SHOP_URL.'./orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$tmp_uq_id);
 ?>

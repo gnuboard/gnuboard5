@@ -15,13 +15,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     /* =   환경 설정                                                                = */
     /* = -------------------------------------------------------------------------- = */
 
-    $g_conf_home_dir  = dirname($_SERVER['DOCUMENT_ROOT'] . $_SERVER['PHP_SELF']) . '/kcp/';
+    $g_conf_home_dir  = G4_SHOP_PATH.'/kcp';
     $g_conf_key_dir   = '';
     $g_conf_log_dir   = '';
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
     {
-        $g_conf_key_dir   = dirname($_SERVER['DOCUMENT_ROOT'] . $_SERVER['PHP_SELF']) . '/kcp/bin/pub.key';
-        $g_conf_log_dir   = dirname($_SERVER['DOCUMENT_ROOT'] . $_SERVER['PHP_SELF']) . '/kcp/log';
+        $g_conf_key_dir   = G4_SHOP_PATH.'/kcp/bin/pub.key';
+        $g_conf_log_dir   = G4_SHOP_PATH.'/kcp/log';
     }
 
     $g_conf_site_cd = $_POST['site_cd'];
@@ -134,280 +134,232 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     /* ============================================================================== */
 
-    /* ============================================================================== */
-    /* =   02. 인스턴스 생성 및 초기화                                              = */
-    /* = -------------------------------------------------------------------------- = */
-    /* =       결제에 필요한 인스턴스를 생성하고 초기화 합니다.                     = */
-    /* = -------------------------------------------------------------------------- = */
-    $c_PayPlus = new C_PP_CLI;
+/* ============================================================================== */
+/* =   02. 인스턴스 생성 및 초기화                                              = */
+/* = -------------------------------------------------------------------------- = */
+/* =       결제에 필요한 인스턴스를 생성하고 초기화 합니다.                     = */
+/* = -------------------------------------------------------------------------- = */
+$c_PayPlus = new C_PP_CLI;
 
-    $c_PayPlus->mf_clear();
-    /* ------------------------------------------------------------------------------ */
-	/* =   02. 인스턴스 생성 및 초기화 END											= */
-	/* ============================================================================== */
+$c_PayPlus->mf_clear();
+/* ------------------------------------------------------------------------------ */
+/* =   02. 인스턴스 생성 및 초기화 END											= */
+/* ============================================================================== */
 
 
-    /* ============================================================================== */
-    /* =   03. 처리 요청 정보 설정                                                  = */
-    /* = -------------------------------------------------------------------------- = */
+/* ============================================================================== */
+/* =   03. 처리 요청 정보 설정                                                  = */
+/* = -------------------------------------------------------------------------- = */
 
-    /* = -------------------------------------------------------------------------- = */
-    /* =   03-1. 승인 요청                                                          = */
-    /* = -------------------------------------------------------------------------- = */
-    if ( $req_tx == "pay" )
+/* = -------------------------------------------------------------------------- = */
+/* =   03-1. 승인 요청                                                          = */
+/* = -------------------------------------------------------------------------- = */
+if ( $req_tx == "pay" )
+{
+        /* 1004원은 실제로 업체에서 결제하셔야 될 원 금액을 넣어주셔야 합니다. 결제금액 유효성 검증 */
+        $c_PayPlus->mf_set_ordr_data( "ordr_mony",  $good_mny );
+
+        $c_PayPlus->mf_set_encx_data( $_POST[ "enc_data" ], $_POST[ "enc_info" ] );
+}
+
+/* = -------------------------------------------------------------------------- = */
+/* =   03-2. 취소/매입 요청                                                     = */
+/* = -------------------------------------------------------------------------- = */
+else if ( $req_tx == "mod" )
+{
+    $tran_cd = "00200000";
+
+    $c_PayPlus->mf_set_modx_data( "tno",      $tno      ); // KCP 원거래 거래번호
+    $c_PayPlus->mf_set_modx_data( "mod_type", $mod_type ); // 원거래 변경 요청 종류
+    $c_PayPlus->mf_set_modx_data( "mod_ip",   $cust_ip  ); // 변경 요청자 IP
+    $c_PayPlus->mf_set_modx_data( "mod_desc", $mod_desc ); // 변경 사유
+}
+
+/* = -------------------------------------------------------------------------- = */
+/* =   03-3. 에스크로 상태변경 요청                                             = */
+/* = -------------------------------------------------------------------------- = */
+else if ($req_tx = "mod_escrow")
+{
+    $tran_cd = "00200000";
+
+    $c_PayPlus->mf_set_modx_data( "tno",      $tno      );						// KCP 원거래 거래번호
+    $c_PayPlus->mf_set_modx_data( "mod_type", $mod_type );						// 원거래 변경 요청 종류
+    $c_PayPlus->mf_set_modx_data( "mod_ip",   $cust_ip  );						// 변경 요청자 IP
+    $c_PayPlus->mf_set_modx_data( "mod_desc", $mod_desc );						// 변경 사유
+
+    if ($mod_type == "STE1")													// 상태변경 타입이 [배송요청]인 경우
     {
-		    /* 1004원은 실제로 업체에서 결제하셔야 될 원 금액을 넣어주셔야 합니다. 결제금액 유효성 검증 */
-            $c_PayPlus->mf_set_ordr_data( "ordr_mony",  $good_mny );
-
-            $c_PayPlus->mf_set_encx_data( $_POST[ "enc_data" ], $_POST[ "enc_info" ] );
+        $c_PayPlus->mf_set_modx_data( "deli_numb",   $_POST[ "deli_numb" ] );   // 운송장 번호
+        $c_PayPlus->mf_set_modx_data( "deli_corp",   $_POST[ "deli_corp" ] );   // 택배 업체명
     }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   03-2. 취소/매입 요청                                                     = */
-    /* = -------------------------------------------------------------------------- = */
-    else if ( $req_tx == "mod" )
+    else if ($mod_type == "STE2" || $mod_type == "STE4") // 상태변경 타입이 [즉시취소] 또는 [취소]인 계좌이체, 가상계좌의 경우
     {
-        $tran_cd = "00200000";
-
-        $c_PayPlus->mf_set_modx_data( "tno",      $tno      ); // KCP 원거래 거래번호
-        $c_PayPlus->mf_set_modx_data( "mod_type", $mod_type ); // 원거래 변경 요청 종류
-        $c_PayPlus->mf_set_modx_data( "mod_ip",   $cust_ip  ); // 변경 요청자 IP
-        $c_PayPlus->mf_set_modx_data( "mod_desc", $mod_desc ); // 변경 사유
-    }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   03-3. 에스크로 상태변경 요청                                             = */
-    /* = -------------------------------------------------------------------------- = */
-    else if ($req_tx = "mod_escrow")
-	{
-		$tran_cd = "00200000";
-
-        $c_PayPlus->mf_set_modx_data( "tno",      $tno      );						// KCP 원거래 거래번호
-        $c_PayPlus->mf_set_modx_data( "mod_type", $mod_type );						// 원거래 변경 요청 종류
-        $c_PayPlus->mf_set_modx_data( "mod_ip",   $cust_ip  );						// 변경 요청자 IP
-        $c_PayPlus->mf_set_modx_data( "mod_desc", $mod_desc );						// 변경 사유
-
-		if ($mod_type == "STE1")													// 상태변경 타입이 [배송요청]인 경우
+        if ($vcnt_yn == "Y")
         {
-            $c_PayPlus->mf_set_modx_data( "deli_numb",   $_POST[ "deli_numb" ] );   // 운송장 번호
-            $c_PayPlus->mf_set_modx_data( "deli_corp",   $_POST[ "deli_corp" ] );   // 택배 업체명
+            $c_PayPlus->mf_set_modx_data( "refund_account",   $_POST[ "refund_account" ] );      // 환불수취계좌번호
+            $c_PayPlus->mf_set_modx_data( "refund_nm",        $_POST[ "refund_nm"      ] );      // 환불수취계좌주명
+            $c_PayPlus->mf_set_modx_data( "bank_code",        $_POST[ "bank_code"      ] );      // 환불수취은행코드
         }
-        else if ($mod_type == "STE2" || $mod_type == "STE4") // 상태변경 타입이 [즉시취소] 또는 [취소]인 계좌이체, 가상계좌의 경우
+    }
+}
+/* = -------------------------------------------------------------------------- = */
+/* =   03-3. 에스크로 상태변경 요청 END                                         = */
+/* = -------------------------------------------------------------------------- = */
+
+/* ------------------------------------------------------------------------------ */
+/* =   03.  처리 요청 정보 설정 END  											= */
+/* ============================================================================== */
+
+
+
+/* ============================================================================== */
+/* =   04. 실행                                                                 = */
+/* = -------------------------------------------------------------------------- = */
+if ( $tran_cd != "" )
+{
+    $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, "", $tran_cd, "",
+                          $g_conf_gw_url, $g_conf_gw_port, "payplus_cli_slib", $ordr_idxx,
+                          $cust_ip, "3" , 0, 0, $g_conf_key_dir, $g_conf_log_dir); // 응답 전문 처리
+
+    $res_cd  = $c_PayPlus->m_res_cd;  // 결과 코드
+    $res_msg = $c_PayPlus->m_res_msg; // 결과 메시지
+    /* $res_en_msg = $c_PayPlus->mf_get_res_data( "res_en_msg" );  // 결과 영문 메세지 */
+}
+else
+{
+    $c_PayPlus->m_res_cd  = "9562";
+    $c_PayPlus->m_res_msg = "연동 오류|Payplus Plugin이 설치되지 않았거나 tran_cd값이 설정되지 않았습니다.";
+}
+
+if ($res_cd != '0000')
+{
+    $res_msg = iconv("euc-kr", "utf-8", $res_msg);
+
+    echo "<script>
+    var openwin = window.open( './kcp/proc_win.php', 'proc_win', '' );
+    openwin.close();
+    </script>";
+    alert("$res_cd : $res_msg");
+    exit;
+}
+
+/* = -------------------------------------------------------------------------- = */
+/* =   04. 실행 END                                                             = */
+/* ============================================================================== */
+
+
+/* ============================================================================== */
+/* =   05. 승인 결과 값 추출                                                    = */
+/* = -------------------------------------------------------------------------- = */
+if ( $req_tx == "pay" )
+{
+    if( $res_cd == "0000" )
+    {
+        $tno       = $c_PayPlus->mf_get_res_data( "tno"       ); // KCP 거래 고유 번호
+        $amount    = $c_PayPlus->mf_get_res_data( "amount"    ); // KCP 실제 거래 금액
+        $pnt_issue = $c_PayPlus->mf_get_res_data( "pnt_issue" ); // 결제 포인트사 코드
+
+/* = -------------------------------------------------------------------------- = */
+/* =   05-1. 신용카드 승인 결과 처리                                            = */
+/* = -------------------------------------------------------------------------- = */
+        if ( $use_pay_method == "100000000000" )
         {
-            if ($vcnt_yn == "Y")
+            $card_cd   = $c_PayPlus->mf_get_res_data( "card_cd"   ); // 카드사 코드
+            $card_name = $c_PayPlus->mf_get_res_data( "card_name" ); // 카드 종류
+            $app_time  = $c_PayPlus->mf_get_res_data( "app_time"  ); // 승인 시간
+            $app_no    = $c_PayPlus->mf_get_res_data( "app_no"    ); // 승인 번호
+            $noinf     = $c_PayPlus->mf_get_res_data( "noinf"     ); // 무이자 여부 ( 'Y' : 무이자 )
+            $quota     = $c_PayPlus->mf_get_res_data( "quota"     ); // 할부 개월 수
+            $partcanc_yn = $c_PayPlus->mf_get_res_data( "partcanc_yn" ); // 부분취소 가능유무
+            $card_bin_type_01 = $c_PayPlus->mf_get_res_data( "card_bin_type_01" ); // 카드구분1
+            $card_bin_type_02 = $c_PayPlus->mf_get_res_data( "card_bin_type_02" ); // 카드구분2
+
+            /* = -------------------------------------------------------------- = */
+            /* =   05-1.1. 복합결제(포인트+신용카드) 승인 결과 처리               = */
+            /* = -------------------------------------------------------------- = */
+            if ( $pnt_issue == "SCSK" || $pnt_issue == "SCWB" )
             {
-                $c_PayPlus->mf_set_modx_data( "refund_account",   $_POST[ "refund_account" ] );      // 환불수취계좌번호
-                $c_PayPlus->mf_set_modx_data( "refund_nm",        $_POST[ "refund_nm"      ] );      // 환불수취계좌주명
-                $c_PayPlus->mf_set_modx_data( "bank_code",        $_POST[ "bank_code"      ] );      // 환불수취은행코드
+                $pt_idno      = $c_PayPlus->mf_get_res_data ( "pt_idno"      ); // 결제 및 인증 아이디
+                $pnt_amount   = $c_PayPlus->mf_get_res_data ( "pnt_amount"   ); // 적립금액 or 사용금액
+                $pnt_app_time = $c_PayPlus->mf_get_res_data ( "pnt_app_time" ); // 승인시간
+                $pnt_app_no   = $c_PayPlus->mf_get_res_data ( "pnt_app_no"   ); // 승인번호
+                $add_pnt      = $c_PayPlus->mf_get_res_data ( "add_pnt"      ); // 발생 포인트
+                $use_pnt      = $c_PayPlus->mf_get_res_data ( "use_pnt"      ); // 사용가능 포인트
+                $rsv_pnt      = $c_PayPlus->mf_get_res_data ( "rsv_pnt"      ); // 총 누적 포인트
+                $total_amount = $amount + $pnt_amount;                          // 복합결제시 총 거래금액
             }
         }
-    }
-    /* = -------------------------------------------------------------------------- = */
-    /* =   03-3. 에스크로 상태변경 요청 END                                         = */
-    /* = -------------------------------------------------------------------------- = */
 
-	/* ------------------------------------------------------------------------------ */
-	/* =   03.  처리 요청 정보 설정 END  											= */
-	/* ============================================================================== */
-
-
-
-    /* ============================================================================== */
-    /* =   04. 실행                                                                 = */
-    /* = -------------------------------------------------------------------------- = */
-    if ( $tran_cd != "" )
-    {
-        $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, "", $tran_cd, "",
-                              $g_conf_gw_url, $g_conf_gw_port, "payplus_cli_slib", $ordr_idxx,
-                              $cust_ip, "3" , 0, 0, $g_conf_key_dir, $g_conf_log_dir); // 응답 전문 처리
-
-		$res_cd  = $c_PayPlus->m_res_cd;  // 결과 코드
-		$res_msg = $c_PayPlus->m_res_msg; // 결과 메시지
-		/* $res_en_msg = $c_PayPlus->mf_get_res_data( "res_en_msg" );  // 결과 영문 메세지 */
-    }
-    else
-    {
-        $c_PayPlus->m_res_cd  = "9562";
-        $c_PayPlus->m_res_msg = "연동 오류|Payplus Plugin이 설치되지 않았거나 tran_cd값이 설정되지 않았습니다.";
-    }
-
-    if ($res_cd != '0000')
-    {
-        $res_msg = iconv("euc-kr", "utf-8", $res_msg);
-
-        echo "<script>
-        var openwin = window.open( './kcp/proc_win.php', 'proc_win', '' );
-        openwin.close();
-        </script>";
-        alert("$res_cd : $res_msg");
-        exit;
-    }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   04. 실행 END                                                             = */
-    /* ============================================================================== */
-
-
-    /* ============================================================================== */
-    /* =   05. 승인 결과 값 추출                                                    = */
-    /* = -------------------------------------------------------------------------- = */
-    if ( $req_tx == "pay" )
-    {
-        if( $res_cd == "0000" )
+/* = -------------------------------------------------------------------------- = */
+/* =   05-2. 계좌이체 승인 결과 처리                                            = */
+/* = -------------------------------------------------------------------------- = */
+        if ( $use_pay_method == "010000000000" )
         {
-            $tno       = $c_PayPlus->mf_get_res_data( "tno"       ); // KCP 거래 고유 번호
-            $amount    = $c_PayPlus->mf_get_res_data( "amount"    ); // KCP 실제 거래 금액
-			$pnt_issue = $c_PayPlus->mf_get_res_data( "pnt_issue" ); // 결제 포인트사 코드
+            $app_time  = $c_PayPlus->mf_get_res_data( "app_time"   );  // 승인 시간
+            $bank_name = $c_PayPlus->mf_get_res_data( "bank_name"  );  // 은행명
+            $bank_code = $c_PayPlus->mf_get_res_data( "bank_code"  );  // 은행코드
+        }
 
-    /* = -------------------------------------------------------------------------- = */
-    /* =   05-1. 신용카드 승인 결과 처리                                            = */
-    /* = -------------------------------------------------------------------------- = */
-            if ( $use_pay_method == "100000000000" )
-            {
-                $card_cd   = $c_PayPlus->mf_get_res_data( "card_cd"   ); // 카드사 코드
-                $card_name = $c_PayPlus->mf_get_res_data( "card_name" ); // 카드 종류
-                $app_time  = $c_PayPlus->mf_get_res_data( "app_time"  ); // 승인 시간
-                $app_no    = $c_PayPlus->mf_get_res_data( "app_no"    ); // 승인 번호
-                $noinf     = $c_PayPlus->mf_get_res_data( "noinf"     ); // 무이자 여부 ( 'Y' : 무이자 )
-                $quota     = $c_PayPlus->mf_get_res_data( "quota"     ); // 할부 개월 수
-				$partcanc_yn = $c_PayPlus->mf_get_res_data( "partcanc_yn" ); // 부분취소 가능유무
-				$card_bin_type_01 = $c_PayPlus->mf_get_res_data( "card_bin_type_01" ); // 카드구분1
-				$card_bin_type_02 = $c_PayPlus->mf_get_res_data( "card_bin_type_02" ); // 카드구분2
-
-                /* = -------------------------------------------------------------- = */
-                /* =   05-1.1. 복합결제(포인트+신용카드) 승인 결과 처리               = */
-                /* = -------------------------------------------------------------- = */
-                if ( $pnt_issue == "SCSK" || $pnt_issue == "SCWB" )
-                {
-					$pt_idno      = $c_PayPlus->mf_get_res_data ( "pt_idno"      ); // 결제 및 인증 아이디
-                    $pnt_amount   = $c_PayPlus->mf_get_res_data ( "pnt_amount"   ); // 적립금액 or 사용금액
-	                $pnt_app_time = $c_PayPlus->mf_get_res_data ( "pnt_app_time" ); // 승인시간
-	                $pnt_app_no   = $c_PayPlus->mf_get_res_data ( "pnt_app_no"   ); // 승인번호
-	                $add_pnt      = $c_PayPlus->mf_get_res_data ( "add_pnt"      ); // 발생 포인트
-                    $use_pnt      = $c_PayPlus->mf_get_res_data ( "use_pnt"      ); // 사용가능 포인트
-                    $rsv_pnt      = $c_PayPlus->mf_get_res_data ( "rsv_pnt"      ); // 총 누적 포인트
-					$total_amount = $amount + $pnt_amount;                          // 복합결제시 총 거래금액
-                }
-            }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   05-2. 계좌이체 승인 결과 처리                                            = */
-    /* = -------------------------------------------------------------------------- = */
-            if ( $use_pay_method == "010000000000" )
-            {
-				$app_time  = $c_PayPlus->mf_get_res_data( "app_time"   );  // 승인 시간
-                $bank_name = $c_PayPlus->mf_get_res_data( "bank_name"  );  // 은행명
-                $bank_code = $c_PayPlus->mf_get_res_data( "bank_code"  );  // 은행코드
-            }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   05-3. 가상계좌 승인 결과 처리                                            = */
-    /* = -------------------------------------------------------------------------- = */
-            if ( $use_pay_method == "001000000000" )
-            {
-                $bankname  = $c_PayPlus->mf_get_res_data( "bankname"  ); // 입금할 은행 이름
-                $depositor = $c_PayPlus->mf_get_res_data( "depositor" ); // 입금할 계좌 예금주
-                $account   = $c_PayPlus->mf_get_res_data( "account"   ); // 입금할 계좌 번호
-                $va_date   = $c_PayPlus->mf_get_res_data( "va_date"   ); // 가상계좌 입금마감시간
-            }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   05-4. 포인트 승인 결과 처리                                               = */
-    /* = -------------------------------------------------------------------------- = */
-            if ( $use_pay_method == "000100000000" )
-            {
-				$pt_idno      = $c_PayPlus->mf_get_res_data( "pt_idno"      ); // 결제 및 인증 아이디
-                $pnt_amount   = $c_PayPlus->mf_get_res_data( "pnt_amount"   ); // 적립금액 or 사용금액
-	            $pnt_app_time = $c_PayPlus->mf_get_res_data( "pnt_app_time" ); // 승인시간
-	            $pnt_app_no   = $c_PayPlus->mf_get_res_data( "pnt_app_no"   ); // 승인번호
-	            $add_pnt      = $c_PayPlus->mf_get_res_data( "add_pnt"      ); // 발생 포인트
-                $use_pnt      = $c_PayPlus->mf_get_res_data( "use_pnt"      ); // 사용가능 포인트
-                $rsv_pnt      = $c_PayPlus->mf_get_res_data( "rsv_pnt"      ); // 적립 포인트
-            }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   05-5. 휴대폰 승인 결과 처리                                              = */
-    /* = -------------------------------------------------------------------------- = */
-            if ( $use_pay_method == "000010000000" )
-            {
-				$app_time  = $c_PayPlus->mf_get_res_data( "hp_app_time"  ); // 승인 시간
-				$commid    = $c_PayPlus->mf_get_res_data( "commid"	     ); // 통신사 코드
-				$mobile_no = $c_PayPlus->mf_get_res_data( "mobile_no"	 ); // 휴대폰 번호
-            }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   05-6. 상품권 승인 결과 처리                                              = */
-    /* = -------------------------------------------------------------------------- = */
-            if ( $use_pay_method == "000000001000" )
-            {
-				$app_time    = $c_PayPlus->mf_get_res_data( "tk_app_time"  ); // 승인 시간
-				$tk_van_code = $c_PayPlus->mf_get_res_data( "tk_van_code"  ); // 발급사 코드
-				$tk_app_no   = $c_PayPlus->mf_get_res_data( "tk_app_no"    ); // 승인 번호
-            }
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   05-7. 현금영수증 결과 처리                                               = */
-    /* = -------------------------------------------------------------------------- = */
-            $cash_yn      = $c_PayPlus->mf_get_res_data( "cash_yn"  ); // 현금영수증 등록여부
-            $cash_authno  = $c_PayPlus->mf_get_res_data( "cash_authno"  ); // 현금 영수증 승인 번호
-            $cash_tr_code = $c_PayPlus->mf_get_res_data( "cash_tr_code"  ); // 현금영수증 등록구분
-
-    /* = -------------------------------------------------------------------------- = */
-    /* =   05-8. 에스크로 여부 결과 처리                                            = */
-    /* = -------------------------------------------------------------------------- = */
-		    $escw_yn = $c_PayPlus->mf_get_res_data( "escw_yn"  ); // 에스크로 여부
-		}
-	}
-
-	/* = -------------------------------------------------------------------------- = */
-    /* =   05. 승인 결과 처리 END                                                   = */
-    /* ============================================================================== */
-
-	/* ============================================================================== */
-    /* =   06. 승인 및 실패 결과 DB처리                                             = */
-    /* = -------------------------------------------------------------------------- = */
-	/* =       결과를 업체 자체적으로 DB처리 작업하시는 부분입니다.                 = */
-    /* = -------------------------------------------------------------------------- = */
-
-	if ( $req_tx == "pay" )
-    {
-		if( $res_cd == "0000" )
+/* = -------------------------------------------------------------------------- = */
+/* =   05-3. 가상계좌 승인 결과 처리                                            = */
+/* = -------------------------------------------------------------------------- = */
+        if ( $use_pay_method == "001000000000" )
         {
-			// 06-1-1. 신용카드
-			if ( $use_pay_method == "100000000000" )
-            {
-				// 06-1-1-1. 복합결제(신용카드 + 포인트)
-				if ( $pnt_issue == "SCSK" || $pnt_issue == "SCWB" )
-                {
-				}
-			}
-			// 06-1-2. 계좌이체
-			if ( $use_pay_method == "010000000000" )
-            {
-			}
-			// 06-1-3. 가상계좌
-			if ( $use_pay_method == "001000000000" )
-            {
-			}
-			// 06-1-4. 포인트
-			if ( $use_pay_method == "000100000000" )
-            {
-			}
-			// 06-1-5. 휴대폰
-			if ( $use_pay_method == "000010000000" )
-            {
-			}
-			// 06-1-6. 상품권
-			 if ( $use_pay_method == "000000001000" )
-            {
-			}
-		}
+            $bankname  = $c_PayPlus->mf_get_res_data( "bankname"  ); // 입금할 은행 이름
+            $depositor = $c_PayPlus->mf_get_res_data( "depositor" ); // 입금할 계좌 예금주
+            $account   = $c_PayPlus->mf_get_res_data( "account"   ); // 입금할 계좌 번호
+            $va_date   = $c_PayPlus->mf_get_res_data( "va_date"   ); // 가상계좌 입금마감시간
+        }
 
-	/* = -------------------------------------------------------------------------- = */
-    /* =   06. 승인 및 실패 결과 DB처리                                             = */
-    /* ============================================================================== */
-		else if ( $res_cd != "0000" )
-		{
-		}
-	}
+/* = -------------------------------------------------------------------------- = */
+/* =   05-4. 포인트 승인 결과 처리                                               = */
+/* = -------------------------------------------------------------------------- = */
+        if ( $use_pay_method == "000100000000" )
+        {
+            $pt_idno      = $c_PayPlus->mf_get_res_data( "pt_idno"      ); // 결제 및 인증 아이디
+            $pnt_amount   = $c_PayPlus->mf_get_res_data( "pnt_amount"   ); // 적립금액 or 사용금액
+            $pnt_app_time = $c_PayPlus->mf_get_res_data( "pnt_app_time" ); // 승인시간
+            $pnt_app_no   = $c_PayPlus->mf_get_res_data( "pnt_app_no"   ); // 승인번호
+            $add_pnt      = $c_PayPlus->mf_get_res_data( "add_pnt"      ); // 발생 포인트
+            $use_pnt      = $c_PayPlus->mf_get_res_data( "use_pnt"      ); // 사용가능 포인트
+            $rsv_pnt      = $c_PayPlus->mf_get_res_data( "rsv_pnt"      ); // 적립 포인트
+        }
+
+/* = -------------------------------------------------------------------------- = */
+/* =   05-5. 휴대폰 승인 결과 처리                                              = */
+/* = -------------------------------------------------------------------------- = */
+        if ( $use_pay_method == "000010000000" )
+        {
+            $app_time  = $c_PayPlus->mf_get_res_data( "hp_app_time"  ); // 승인 시간
+            $commid    = $c_PayPlus->mf_get_res_data( "commid"	     ); // 통신사 코드
+            $mobile_no = $c_PayPlus->mf_get_res_data( "mobile_no"	 ); // 휴대폰 번호
+        }
+
+/* = -------------------------------------------------------------------------- = */
+/* =   05-6. 상품권 승인 결과 처리                                              = */
+/* = -------------------------------------------------------------------------- = */
+        if ( $use_pay_method == "000000001000" )
+        {
+            $app_time    = $c_PayPlus->mf_get_res_data( "tk_app_time"  ); // 승인 시간
+            $tk_van_code = $c_PayPlus->mf_get_res_data( "tk_van_code"  ); // 발급사 코드
+            $tk_app_no   = $c_PayPlus->mf_get_res_data( "tk_app_no"    ); // 승인 번호
+        }
+
+/* = -------------------------------------------------------------------------- = */
+/* =   05-7. 현금영수증 결과 처리                                               = */
+/* = -------------------------------------------------------------------------- = */
+        $cash_yn      = $c_PayPlus->mf_get_res_data( "cash_yn"  ); // 현금영수증 등록여부
+        $cash_authno  = $c_PayPlus->mf_get_res_data( "cash_authno"  ); // 현금 영수증 승인 번호
+        $cash_tr_code = $c_PayPlus->mf_get_res_data( "cash_tr_code"  ); // 현금영수증 등록구분
+
+/* = -------------------------------------------------------------------------- = */
+/* =   05-8. 에스크로 여부 결과 처리                                            = */
+/* = -------------------------------------------------------------------------- = */
+        $escw_yn = $c_PayPlus->mf_get_res_data( "escw_yn"  ); // 에스크로 여부
+    }
+}
+
+/* = -------------------------------------------------------------------------- = */
+/* =   05. 승인 결과 처리 END                                                   = */
+/* ============================================================================== */
 ?>
