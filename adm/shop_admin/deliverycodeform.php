@@ -23,40 +23,52 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?//=subtitle($html_title);?>
+<form name="fdeliverycodeform" action="./deliverycodeformupdate.php" method="post">
+<input type="hidden" name="w" value="<? echo $w ?>">
+<input type="hidden" name="dl_id" value="<? echo $dl_id ?>">
 
-<table cellpadding=0 cellspacing=0 width=100%>
-<form name=fdeliverycodeform method=post action='./deliverycodeformupdate.php'>
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=dl_id value='<? echo $dl_id ?>'>
-<colgroup width=15%></colgroup>
-<colgroup width=85% bgcolor=#ffffff></colgroup>
-<tr><td colspan=2 height=2 bgcolor=#0E87F9></td></tr>
-<tr class=ht>
-    <td>배송회사명</td>
-    <td><input type=text class=ed name=dl_company value='<? echo stripslashes($dl['dl_company']) ?>' required itemname="배송회사명"></td>
-</tr>
-<tr class=ht>
-    <td>화물추적 URL</td>
-    <td><input type=text class=ed name=dl_url value='<? echo stripslashes($dl['dl_url']) ?>' style='width:98%;'></td>
-</tr>
-<tr class=ht>
-    <td>고객센터 전화</td>
-    <td><input type=text class=ed name=dl_tel value='<? echo stripslashes($dl['dl_tel']) ?>'></td>
-</tr>
-<tr class=ht>
-    <td>출력 순서</td>
-    <td>
-        <?=order_select("dl_order", $dl['dl_order'])?>
-        <?=help("셀렉트박스에서 출력할 때 순서를 정합니다.\n\n숫자가 작을수록 상단에 출력합니다.");?>
-    </td>
-</tr>
-<tr><td colspan=2 height=1 bgcolor=#CCCCCC></td></tr>
-</table>
+<section class="cbox">
+    <h2>배송회사 입력 수정</h2>
+    <?=$pg_anchor?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="gird_3">
+        <col class="grid_13">
+    </colgroup>
+    <tbody>
+    <tr >
+        <th scope="col"><label for="dl_company">배송회사명</label></th>
+        <td>
+            <input type="text" name="dl_company" value="<? echo stripslashes($dl['dl_company']) ?>" id="dl_company" required class="frm_input">
+        </td>
+    </tr>
+    <tr >
+        <th scope="col"><label for="dl_url">화물추적 URL</label></th>
+        <td>
+           <input type="text" class="frm_input" name="dl_url" value="<? echo stripslashes($dl['dl_url']) ?>" id="dl_url" size="120">
+        </td>
+    </tr>
+    <tr >
+        <th scope="col"><label for="dl_tel">고객센터 전화</label></th>
+        <td>
+            <input type="text" class="frm_input" name="dl_tel" value="<? echo stripslashes($dl['dl_tel']) ?>" id="dl_tel">
+        </td>
+    </tr>
+    <tr >
+        <th scope="col"><label for="dl_order">출력 순서</label></th>
+        <td>
+            <?=help("셀렉트박스에서 출력할 때 순서를 정합니다.\n\n숫자가 작을수록 상단에 출력합니다.");?>
+            <?=order_select("dl_order", $dl['dl_order'])?>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</section>
 
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./deliverycodelist.php';">
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./deliverycodelist.php">목록</a>
+</div>
 </form>
 
 <?

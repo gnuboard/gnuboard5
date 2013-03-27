@@ -28,6 +28,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <section class="cbox">
     <h2>배너 입력 수정</h2>
+    <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="3">
@@ -120,7 +121,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
            <?=order_select("bn_order", $bn['bn_order'])?>
         </td>
     </tr>
-
     </tbody>
     </table>
 </section>

@@ -59,14 +59,13 @@ $result = sql_query($sql);
             $list = $i%2;
             echo "
             <tr class='list$list ht'>
-                <td align=center>{$row['co_id']}</td>
+                <td style=\"text-align:center\">{$row['co_id']}</td>
                 <td>".htmlspecialchars2($row['co_subject'])."</td>
                 <td>$s_mod $s_del $s_vie</td>
             </tr>";
         }
-
         if ($i == 0) {
-            echo "<tr><td colspan=\"3\" align=\"center\" height="100" bgcolor=\"#ffffff\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
+            echo "<tr><td colspan=\"3\" align=\"center\" height=\"100\" bgcolor=\"#ffffff\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
         }
         ?>
     </tbody>

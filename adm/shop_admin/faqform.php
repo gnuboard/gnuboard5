@@ -99,7 +99,7 @@ function frmfaqform_check(f)
     return true;
 }
 
-document.getElementById('fa_order').focus();
+// document.getElementById('fa_order').focus(); 포커스 해제
 </script>
 
 <?
