@@ -93,6 +93,7 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
+
 <form name="fitemform" action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" style="margin:0px;">
 
 <input type="hidden" name="codedup"     value="<?=$default['de_code_dup_use']?>">
@@ -449,6 +450,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <input type="submit" value="확인" class="btn_submit" accesskey="s">
         <a href="./itemlist.php?<?=$qstr?>">목록</a>
     </div>
+
 
 
 
