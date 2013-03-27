@@ -236,14 +236,14 @@ if ($i == 0) {
     <?
     if ($s_page == "cart.php") {
         if ($i == 0) {
-            echo "<br><a href='".G4_URL."'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0'></a>";
+            echo "<br><a href='".G4_SHOP_URL."'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0'></a>";
         } else {
             echo "
             <br><input type=hidden name=url value='./orderform.php'>
             <a href=\"javascript:form_check('buy')\"><img src='".G4_SHOP_URL."/img/btn_buy.gif' border='0' alt='구매하기'></a>&nbsp;
             <a href=\"javascript:form_check('allupdate')\"><img src='".G4_SHOP_URL."/img/btn_cart_quan.gif' border='0' alt='장바구니 수량 변경'></a>&nbsp;
             <a href=\"javascript:form_check('alldelete');\"><img src='".G4_SHOP_URL."/img/btn_cart_out.gif' border='0' alt='장바구니 비우기'></a>&nbsp;
-            <a href='./list.php?ca_id=$continue_ca_id'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0' alt='계속쇼핑하기'></a>";
+            <a href='".G4_SHOP_URL."/list.php?ca_id=$continue_ca_id'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0' alt='계속쇼핑하기'></a>";
         }
     }
     ?>
