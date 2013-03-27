@@ -68,6 +68,9 @@ $sql = " select a.ct_id,
             and a.it_id  = b.it_id
           order by a.ct_id ";
 $result = sql_query($sql);
+
+$good_info = '';
+
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     if (!$goods)
@@ -78,6 +81,17 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $goods_it_id = $row['it_id'];
     }
     $goods_count++;
+
+    // 에스크로 상품정보
+    if($s_page == 'orderform.php' && $default['de_escrow_use']) {
+        if ($i>0)
+            $good_info .= chr(30);
+        $good_info .= "seq=".($i+1).chr(31);
+        $good_info .= "ordr_numb={$od_id}_".sprintf("%04d", $i).chr(31);
+        $good_info .= "good_name=".addslashes($row['it_name']).chr(31);
+        $good_info .= "good_cntx=".$row['ct_qty'].chr(31);
+        $good_info .= "good_amtx=".$row['ct_amount'].chr(31);
+    }
 
     if ($i==0) { // 계속쇼핑
         $continue_ca_id = $row['ca_id'];
