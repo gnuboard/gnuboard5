@@ -6,12 +6,16 @@ $g4['title'] = '패스워드 입력';
 switch ($w) {
     case 'u' :
         $action = './write.php';
+        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
         break;
     case 'd' :
         $action = './delete.php';
+        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
         break;
     case 'x' :
         $action = './delete_comment.php';
+        $row = sql_fetch(" select wr_parent from $write_table where wr_id = '$comment_id' ");
+        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_parent'];
         break;
     case 's' :
         // 패스워드 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
@@ -20,7 +24,7 @@ switch ($w) {
         else
             $action = './password_check.php';
         break;
-    default : 
+    default :
         alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
