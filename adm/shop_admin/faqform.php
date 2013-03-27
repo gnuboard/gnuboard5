@@ -31,7 +31,16 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?//=subtitle($html_title)?><p>
+<form name="frmfaqform" action="./faqformupdate.php" onsubmit="return frmfaqform_check(this);" method="post" style="margin:0px;">
+<input type="hidden" name="w" value="<? echo $w ?>">
+<input type="hidden" name="fm_id" value="<? echo $fm_id ?>">
+<input type="hidden" name="fa_id" value="<? echo $fa_id ?>">
+
+<section>
+<?//=subtitle($html_title)?>
+
+</section>
+
 
 <form name=frmfaqform method=post action='./faqformupdate.php' onsubmit="return frmfaqform_check(this);" style="margin:0px;">
 <input type=hidden name=w     value='<? echo $w ?>'>
