@@ -125,7 +125,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="col"><label for="ca_id">분류명</label></th>
         <td colspan="3">
             <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
-            <option value="">= 기본분류 =
+            <option value="">= 기본분류 =</option>
                 <?
                 $script = "";
                 $sql = " select * from {$g4['yc4_category_table']} ";
@@ -250,24 +250,24 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <input type="text" name="it_origin" value="<?=get_text($it['it_origin'])?>" id="it_origin" class="frm_input" size="41">
         </td>
     </tr>
-    <?
-    for ($i=1; $i<=3; $i++) {
-    $k1=$i*2-1;
-    $k2=$i*2;
-    $val11 = stripslashes($it["it_opt".$k1."_subject"]);
-    $val12 = stripslashes($it["it_opt".$k1]);
-    $val21 = stripslashes($it["it_opt".$k2."_subject"]);
-    $val22 = stripslashes($it["it_opt".$k2]);
+        <?
+        for ($i=1; $i<=3; $i++) {
+        $k1=$i*2-1;
+        $k2=$i*2;
+        $val11 = stripslashes($it["it_opt".$k1."_subject"]);
+        $val12 = stripslashes($it["it_opt".$k1]);
+        $val21 = stripslashes($it["it_opt".$k2."_subject"]);
+        $val22 = stripslashes($it["it_opt".$k2]);
 
-    echo "
-    <tr>
-        <td><input type=text name='it_opt{$k1}_subject' size=15 class=frm_input value='".get_text($val11)."'></td>
-        <td><textarea name='it_opt{$k1}' rows='3' cols=40 class=frm_input>$val12</textarea></td>
-        <td><input type=text name='it_opt{$k2}_subject' size=15 class=frm_input value='".get_text($val21)."'></td>
-        <td><textarea name='it_opt{$k2}' rows='3' cols=40 class=frm_input>$val22</textarea></td>
-    </tr>\n";
-    }
-    ?>
+        echo "
+        <tr>
+            <td><input type=text name='it_opt{$k1}_subject' size=15 class=frm_input value='".get_text($val11)."'></td>
+            <td><textarea name='it_opt{$k1}' rows='3' cols=40 class=frm_input>$val12</textarea></td>
+            <td><input type=text name='it_opt{$k2}_subject' size=15 class=frm_input value='".get_text($val21)."'></td>
+            <td><textarea name='it_opt{$k2}' rows='3' cols=40 class=frm_input>$val22</textarea></td>
+        </tr>\n";
+        }
+        ?>
     <tr>
         <td colspan="4">
 <style type="text/css">
@@ -527,8 +527,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </script>
         ※ 상품 선택후 <FONT COLOR="#0E87F9">더블클릭하면 왼쪽에 추가됨</FONT><br>※ 한 번 클릭시 상품이미지/상품금액 출력<br>
         <select onchange="search_relation(this)">
-            <option value=''>분류별 관련상품
-            <option value=''>----------------------
+            <option value=''>분류별 관련상품</option>
+            <option value=''>----------------------</option>
             <?
                 $sql = " select ca_id, ca_name from {$g4['yc4_category_table']} where length(ca_id) = 2 order by ca_id ";
                 $result = sql_query($sql);
@@ -672,7 +672,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         }
         ?>
         </select>
-        <input type='hidden' name='ev_list' value='<?=$str?>'>
+        <input type="hidden" name="ev_list" value="<?=$str?>">
     </td>
     <td>이벤트목록</td>
     <td>
@@ -821,10 +821,10 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </table>
 </section>
 
-    <div class="btn_confirm">
-        <input type="submit" value="확인" class="btn_submit" accesskey="s">
-        <a href="./itemlist.php?<?=$qstr?>">목록</a>
-    </div>
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./itemlist.php?<?=$qstr?>">목록</a>
+</div>
 </form>
 
 

@@ -31,55 +31,50 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<form name="frmfaqform" action="./faqformupdate.php" onsubmit="return frmfaqform_check(this);" method="post" style="margin:0px;">
+<form name="frmfaqform" action="./faqformupdate.php" onsubmit="return frmfaqform_check(this);" method="post">
 <input type="hidden" name="w" value="<? echo $w ?>">
 <input type="hidden" name="fm_id" value="<? echo $fm_id ?>">
 <input type="hidden" name="fa_id" value="<? echo $fa_id ?>">
 
-<section>
-<?//=subtitle($html_title)?>
-
+<section class="cbox">
+    <h2>FAQ상세입력 수정</h2>
+    <?=$pg_anchor?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_13">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="col"><label for="fa_order">출력순서</label></th>
+        <td >
+            <input type="text" name="fa_order" value="<?=$fa['fa_order']?>" id="fa_order" class="frm_input" maxlength="10" size="10">
+            <?=help('숫자가 작을수록 FAQ 페이지의 상단에 출력합니다.', 60, -50)?>
+        </td>
+    </tr>
+        <tr>
+        <th scope="col">질문
+            <? if ($w == 'u') {
+                echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
+                }
+            ?>
+        </th>
+        <td >
+            <?=editor_html('fa_subject', $fa['fa_subject']);?>
+        </td>
+    </tr>
+        <tr>
+        <th scope="col">답변</th>
+        <td ><?=editor_html('fa_content', $fa['fa_content']);?></td>
+    </tr>
+    </tbody>
+    </table>
 </section>
 
-
-<form name=frmfaqform method=post action='./faqformupdate.php' onsubmit="return frmfaqform_check(this);" style="margin:0px;">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=fm_id value='<? echo $fm_id ?>'>
-<input type=hidden name=fa_id value='<? echo $fa_id ?>'>
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=15%></colgroup>
-<colgroup width=85% bgcolor=#ffffff></colgroup>
-<tr><td colspan=2 height=2 bgcolor=#0E87F9></td></tr>
-<tr class=ht>
-    <td> 출력 순서</td>
-    <td>
-        <input type=text id=fa_order name=fa_order size=10 maxlength=10 value='<?=$fa['fa_order']?>' class=ed>
-        <?=help('숫자가 작을수록 FAQ 페이지의 상단에 출력합니다.', 60, -50)?>
-    </td>
-</tr>
-<tr>
-    <td> 질문
-		<? if ($w == 'u') {
-            echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
-            }
-        ?>
-    </td>
-    <td style='padding-top:5px; padding-bottom:5px;'>
-        <?=editor_html('fa_subject', $fa['fa_subject']);?>
-    </td>
-</tr>
-<tr>
-    <td> 답변</td>
-    <td style='padding-top:5px; padding-bottom:5px;'>
-        <?=editor_html('fa_content', $fa['fa_content']);?>
-    </td>
-</tr>
-<tr><td colspan=2 height=1 bgcolor=CCCCCC><td></tr>
-</table>
-
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./faqlist.php?fm_id=<?=$fm_id?>';">
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./faqlist.php?fm_id=<?=$fm_id?>">목록</a>
+</div>
 </form>
 
 <script language="javascript">
