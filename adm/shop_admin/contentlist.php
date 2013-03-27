@@ -23,24 +23,30 @@ $sql = "select * $sql_common order by co_id limit $from_record, {$config['cf_pag
 $result = sql_query($sql);
 ?>
 <style type="text/css">
-    #content_head{width:900px;height:37px;line-height:37px ;text-align:center}
+    #content_head{width:900px;height:35px;line-height:35px ;text-align:center}
     #content_head th{text-align:center}
-    #content_head span{display:inline-block;margin-left:690px}
     #content_fir{position:relative}
-    #content_fir span{position:absolute;top:-12;right:10px}
+    #content_fir span{position:absolute;top:-12;right:5px}
 </style>
 
 <section class="cbox">
-    <p id="content_fir"><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a><span>건수 : <? echo $total_count ?>&nbsp;</span></p>
+    <h2>내용관리</h2>
+    <?=$pg_anchor?>
+    <p id="content_fir">
+        <a href='<?=$_SERVER['PHP_SELF']?>'>처음</a>
+        <span>건수 : <? echo $total_count ?>&nbsp;</span>
+    </p>
     <table class="frm_tbl">
     <colgroup>
-    <col class="grid_3">
-    <col class="gird_13">
+        <col class="grid_3">
+        <col class="gird_14">
+        <col class="grid_1">
     </colgroup>
     <thead id="content_head">
     <tr>
         <th scope="row">ID</th>
-        <th scope="row">제목<span><a href="./contentform.php"><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif"></a></span></th>
+        <th scope="row">제목</th>
+        <th><a href="./contentform.php"><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="내용입력버튼"></a></th>
     </tr>
     </thead>
     <tbody>
@@ -53,14 +59,13 @@ $result = sql_query($sql);
             $list = $i%2;
             echo "
             <tr class='list$list ht'>
-                <td align=center>{$row['co_id']}</td>
+                <td style=\"text-align:center\">{$row['co_id']}</td>
                 <td>".htmlspecialchars2($row['co_subject'])."</td>
                 <td>$s_mod $s_del $s_vie</td>
             </tr>";
         }
-
         if ($i == 0) {
-            echo "<tr><td colspan=3 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+            echo "<tr><td colspan=\"3\" align=\"center\" height=\"100\" bgcolor=\"#ffffff\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
         }
         ?>
     </tbody>

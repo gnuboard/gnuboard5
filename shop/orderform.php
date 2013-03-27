@@ -19,6 +19,10 @@ if (get_cart_count($tmp_uq_id) == 0)
 $g4['title'] = '주문서 작성';
 
 include_once('./_head.php');
+
+// 새로운 주문번호 생성
+$od_id = get_uniqid();
+set_session('ss_order_uniqid', $od_id);
 ?>
 
 <img src="<?=G4_SHOP_URL?>/img/top_orderform.gif" border="0"><p>
@@ -28,35 +32,8 @@ $s_page = 'orderform.php';
 $s_uq_id = $tmp_uq_id;
 include_once('./cartsub.inc.php');
 
-// 새로운 주문번호 생성
-$od_id = get_uniqid();
-set_session('ss_order_uniqid', $od_id);
-
 if (file_exists("./settle_{$default['de_card_pg']}.inc.php")) {
     include "./settle_{$default['de_card_pg']}.inc.php";
-}
-
-$good_info = '';
-
-// 상품수만큼 정보 필드 미리 만들어둠
-for($k=0;$itemlist = sql_fetch_array($result); $k++) {
-    // 에스크로 상품정보
-    if ($k>0)
-        $good_info .= chr(30);
-    $good_info .= "seq=".($k+1).chr(31);
-    $good_info .= "ordr_numb={$od_uq_id}_".sprintf("%04d", $k).chr(31);
-    $good_info .= "good_name=".addslashes(preg_replace("/\'|\"|\||\,|\&|\;/", "", $itemlist[$k]['it_name'])).chr(31);
-    $good_info .= "good_cntx=".$itemlist[$k]['qty'].chr(31);
-    $good_info .= "good_amtx=".$itemlist[$k]['amount'].chr(31);
-
-    // 상품명
-    if($k == 0) {
-        $goods = preg_replace("/\'|\"|\||\,|\&|\;/", "", $itemlist[$k]['it_name']);
-    }
-}
-
-if($goods_count > 1) {
-    $goods .= "외 ".($goods_count - 1);
 }
 
 $good_mny = (int)$tot_sell_amount + (int)$send_cost;
@@ -251,7 +228,7 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
     <input type='hidden' name='deli_term' value='03'>
 
     <!-- 장바구니 상품 개수 : 장바구니에 담겨있는 상품의 개수를 입력 -->
-    <input type='hidden' name='bask_cntx' value="<? echo (int)$goods_count; ?>" />
+    <input type='hidden' name='bask_cntx' value="<? echo (int)$goods_count + 1; ?>" />
 
     <!-- 장바구니 상품 상세 정보 (자바 스크립트 샘플(create_goodInfo()) 참고) -->
     <input type='hidden' name='good_info' value="<? echo $good_info; ?>" />

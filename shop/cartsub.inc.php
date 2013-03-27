@@ -5,8 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     $s_page 는 cart.php 일때 수량의 수정, 물품의 삭제를 위한 변수이다.
                orderinquiryview.php 일때 배송상태등을 나타내는 변수이다.
 
-    $s_uq_id 는 유일한 키인데 orderupdate.php 에서 ck_uq_id 를 죽이면서
-    ck_tmp_uq_id 에 복사본을 넣어준다. ck_tmp_uq_id 는 orderconfirm.php 에서만 사용한다.
+    $s_uq_id 는 유일한 키
 */
 
 if ($s_page == 'cart.php' || $s_page == 'orderinquiryview.php')
@@ -68,6 +67,9 @@ $sql = " select a.ct_id,
             and a.it_id  = b.it_id
           order by a.ct_id ";
 $result = sql_query($sql);
+
+$good_info = '';
+
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     if (!$goods)
@@ -78,6 +80,17 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $goods_it_id = $row['it_id'];
     }
     $goods_count++;
+
+    // 에스크로 상품정보
+    if($s_page == 'orderform.php' && $default['de_escrow_use']) {
+        if ($i>0)
+            $good_info .= chr(30);
+        $good_info .= "seq=".($i+1).chr(31);
+        $good_info .= "ordr_numb={$od_id}_".sprintf("%04d", $i).chr(31);
+        $good_info .= "good_name=".addslashes($row['it_name']).chr(31);
+        $good_info .= "good_cntx=".$row['ct_qty'].chr(31);
+        $good_info .= "good_amtx=".$row['ct_amount'].chr(31);
+    }
 
     if ($i==0) { // 계속쇼핑
         $continue_ca_id = $row['ca_id'];
@@ -222,14 +235,14 @@ if ($i == 0) {
     <?
     if ($s_page == "cart.php") {
         if ($i == 0) {
-            echo "<br><a href='".G4_URL."'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0'></a>";
+            echo "<br><a href='".G4_SHOP_URL."'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0'></a>";
         } else {
             echo "
             <br><input type=hidden name=url value='./orderform.php'>
             <a href=\"javascript:form_check('buy')\"><img src='".G4_SHOP_URL."/img/btn_buy.gif' border='0' alt='구매하기'></a>&nbsp;
             <a href=\"javascript:form_check('allupdate')\"><img src='".G4_SHOP_URL."/img/btn_cart_quan.gif' border='0' alt='장바구니 수량 변경'></a>&nbsp;
             <a href=\"javascript:form_check('alldelete');\"><img src='".G4_SHOP_URL."/img/btn_cart_out.gif' border='0' alt='장바구니 비우기'></a>&nbsp;
-            <a href='./list.php?ca_id=$continue_ca_id'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0' alt='계속쇼핑하기'></a>";
+            <a href='".G4_SHOP_URL."/list.php?ca_id=$continue_ca_id'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0' alt='계속쇼핑하기'></a>";
         }
     }
     ?>
