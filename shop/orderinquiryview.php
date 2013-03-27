@@ -143,73 +143,33 @@ echo "<td style='padding:20px'>";
 
 if ($od['od_settle_case'] == '신용카드')
 {
-    if ($od['od_receipt_card'] > 0)
-    {
-        $sql = " select * from {$g4['yc4_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
-        $result = sql_query($sql);
-        $cd = mysql_fetch_array($result);
-    }
+    $sql = " select * from {$g4['yc4_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
+    $result = sql_query($sql);
+    $cd = mysql_fetch_array($result);
 
     echo "<table cellpadding=4 cellspacing=0 width=100%>";
     echo "<colgroup width=120><colgroup width=''>";
     echo "<tr><td>· 결제방식</td><td>: 신용카드 결제</td></tr>";
-
-    if ($od['od_receipt_card'])
-    {
-        echo "<tr><td>· 결제금액</td><td class=amount>: " . display_amount($cd['cd_amount']) . "</td></tr>";
-        echo "<tr><td>· 승인일시</td><td>: {$cd['cd_trade_ymd']} {$cd['cd_trade_hms']}</td>";
-        echo "<tr><td>· 승인번호</td><td>: {$cd['cd_app_no']}</td></tr>";
-        echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no={$od['od_escrow1']}', 'winreceipt', 'width=620,height=670')\">영수증 출력</a></td></tr>";
-    }
-    else if ($default['de_card_use'] && $tot_cancel_amount == 0)
-    {
-        $settle_amount = $od['od_temp_card'];
-        echo "<tr><td>· 결제정보</td><td>: 아직 승인되지 않았거나 승인을 확인하지 못하였습니다.</td>";
-        echo "<tr><td colspan=2>";
-        if ((int)$member['mb_point'] >= $od['od_temp_point']) {
-            include "./settle_{$default['de_card_pg']}.inc.php";
-            echo "<input type='image' src=\"".G4_SHOP_URL."/img/btn_settle.gif\" border=0 onclick='OpenWindow();'>";
-        } else {
-            echo "<font color=red>· 보유포인트가 모자라서 결제할 수 없습니다. 주문후 다시 결제하시기 바랍니다.</font>";
-        }
-        echo "</td></tr>";
-    }
+    echo "<tr><td>· 결제금액</td><td class=amount>: " . display_amount($cd['cd_amount']) . "</td></tr>";
+    echo "<tr><td>· 승인일시</td><td>: {$cd['cd_trade_ymd']} {$cd['cd_trade_hms']}</td>";
+    echo "<tr><td>· 승인번호</td><td>: {$cd['cd_app_no']}</td></tr>";
+    echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no={$od['od_escrow1']}', 'winreceipt', 'width=620,height=670')\">영수증 출력</a></td></tr>";
     echo "</table><br>";
 }
 else if ($od['od_settle_case'] == '휴대폰')
 {
-    if ($od['od_receipt_hp'] > 0)
-    {
-        $sql = " select * from {$g4['yc4_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
-        $result = sql_query($sql);
-        $cd = mysql_fetch_array($result);
-    }
+    $sql = " select * from {$g4['yc4_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
+    $result = sql_query($sql);
+    $cd = mysql_fetch_array($result);
 
     echo "<table cellpadding=4 cellspacing=0 width=100%>";
     echo "<colgroup width=120><colgroup width=''>";
     echo "<tr><td>· 결제방식</td><td>: 휴대폰 결제</td></tr>";
-
-    if ($od['od_receipt_hp'])
-    {
-        echo "<tr><td>· 결제금액</td><td class=amount>: " . display_amount($cd['cd_amount']) . "</td></tr>";
-        echo "<tr><td>· 승인일시</td><td>: {$cd['cd_trade_ymd']} {$cd['cd_trade_hms']}</td>";
-        echo "<tr><td>· 휴대폰번호</td><td>: {$cd['cd_opt02']}</td></tr>";
-        //echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=$od[od_escrow1]', 'winreceipt', 'width=620,height=670')\">영수증 출력</a></td></tr>";
-        echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no={$od['od_escrow1']}', 'winreceipt', 'width=370,height=550')\">영수증 출력</a></td></tr>";
-    }
-    else if ($default['de_hp_use'])
-    {
-        $settle_amount = $od['od_temp_card'];
-        echo "<tr><td>· 결제정보</td><td>: 아직 승인되지 않았거나 승인을 확인하지 못하였습니다.</td>";
-        echo "<tr><td colspan=2>";
-        if ((int)$member['mb_point'] >= $od['od_temp_point']) {
-            include "./settle_{$default['de_card_pg']}.inc.php";
-            echo "<input type='image' src=\"".G4_SHOP_URL."/img/btn_settle.gif\" border=0 onclick='OpenWindow();'>";
-        } else {
-            echo "<font color=red>· 보유포인트가 모자라서 결제할 수 없습니다. 주문후 다시 결제하시기 바랍니다.</font>";
-        }
-        echo "</td></tr>";
-    }
+    echo "<tr><td>· 결제금액</td><td class=amount>: " . display_amount($cd['cd_amount']) . "</td></tr>";
+    echo "<tr><td>· 승인일시</td><td>: {$cd['cd_trade_ymd']} {$cd['cd_trade_hms']}</td>";
+    echo "<tr><td>· 휴대폰번호</td><td>: {$cd['cd_opt02']}</td></tr>";
+    //echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=$od[od_escrow1]', 'winreceipt', 'width=620,height=670')\">영수증 출력</a></td></tr>";
+    echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no={$od['od_escrow1']}', 'winreceipt', 'width=370,height=550')\">영수증 출력</a></td></tr>";
     echo "</table><br>";
 }
 else
@@ -236,35 +196,6 @@ else
     if ($od['od_escrow1'])
         echo "<tr><td>· KCP 거래번호</td><td>: {$od['od_escrow1']}</td></tr>";
 
-    if ($od['od_receipt_bank'] == 0 && $tot_cancel_amount == 0)
-    {
-        if ($od['od_settle_case'] == '계좌이체' && $default['de_iche_use'])
-        {
-            $settle_amount = $od['od_temp_bank'];
-            echo "<tr><td colspan=2>";
-            if ((int)$member['mb_point'] >= $od['od_temp_point']) {
-                include "./settle_{$default['de_card_pg']}.inc.php";
-                echo "<input type='image' src=\"".G4_SHOP_URL."/img/btn_settle.gif\" border=0 onclick='OpenWindow();'>";
-            } else {
-                echo "<font color=red>· 보유포인트가 모자라서 결제할 수 없습니다. 주문후 다시 결제하시기 바랍니다.</font>";
-            }
-            echo "</td></tr>";
-        }
-
-        if ($od['od_settle_case'] == '가상계좌' && $od['od_bank_account'] == '가상계좌' && $default['de_vbank_use'])
-        {
-            $settle_amount = $od['od_temp_bank'];
-            echo "<tr><td colspan=2>";
-            if ((int)$member['mb_point'] >= $od['od_temp_point']) {
-                include "./settle_{$default['de_card_pg']}.inc.php";
-                echo "<input type='image' src=\"".G4_SHOP_URL."/img/btn_settle.gif\" border=0 onclick='OpenWindow();'>";
-            } else {
-                echo "<font color=red>· 보유포인트가 모자라서 결제할 수 없습니다. 주문후 다시 결제하시기 바랍니다.</font>";
-            }
-            echo "</td></tr>";
-        }
-    }
-
     echo "</table><br>";
 }
 
@@ -273,12 +204,6 @@ if ($od['od_receipt_point'] > 0)
     echo "<table cellpadding=4 cellspacing=0 width=100%>";
     echo "<colgroup width=120><colgroup width=''>";
     echo "<tr><td>· 포인트사용</td><td>: " . display_point($od['od_receipt_point']) . "</td></tr>";
-    echo "</table>";
-//} else if ($od[od_temp_point] > 0) {
-} else if ($od['od_temp_point'] > 0 && $member['mb_point'] >= $od['od_temp_point']) {
-    echo "<table cellpadding=4 cellspacing=0 width=100%>";
-    echo "<colgroup width=120><colgroup width=''>";
-    echo "<tr><td>· 포인트사용</td><td>: " . display_point($od['od_temp_point']) . "</td></tr>";
     echo "</table>";
 }
 
@@ -300,8 +225,7 @@ if ($od['od_refund_amount'] > 0)
 
 // 취소한 내역이 없다면
 if ($tot_cancel_amount == 0) {
-    if (($od['od_temp_bank'] > 0 && $od['od_receipt_bank'] == 0) ||
-        ($od['od_temp_card'] > 0 && $od['od_receipt_card'] == 0)) {
+    if ($od['od_temp_bank'] > 0 && $od['od_receipt_bank'] == 0) {
         echo "<br><form method='post' action='./orderinquirycancel.php' style='margin:0;'>";
         echo "<input type=hidden name=od_id  value='{$od['od_id']}'>";
         echo "<input type=hidden name=uq_id value='{$od['uq_id']}'>";
@@ -311,11 +235,6 @@ if ($tot_cancel_amount == 0) {
         echo "<tr><td>· 주문취소</td><td>: <a href='javascript:;' onclick=\"document.getElementById('_ordercancel').style.display='block';\">위의 주문을 취소합니다.</a></td></tr>";
         echo "<tr id='_ordercancel' style='display:none;'><td>· 취소사유</td><td>: <input type=text name='cancel_memo' size=40 maxlength=100 required itemname='취소사유'></textarea> <input type=submit value='확인'></td></tr>";
         echo "</table></form>";
-    } else if ($od['od_invoice'] == "") {
-        echo "<br><table cellpadding=4 cellspacing=0 width=100%>";
-        echo "<colgroup width=120><colgroup width=''>";
-        echo "<tr><td style='color:blue;'>· 이 주문은 직접 취소가 불가하므로 상점에 전화 연락 후 취소해 주십시오.</td></tr>";
-        echo "</table>";
     }
 } else {
     $misu_amount = $misu_amount - $send_cost;
