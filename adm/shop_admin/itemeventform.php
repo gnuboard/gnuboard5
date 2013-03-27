@@ -34,12 +34,13 @@ else
 $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
-<form name="feventform" action="./itemeventformupdate.php" onsubmit="return feventform_check(this);" method="post" enctype="MULTIPART/FORM-DATA" style="margin:0px">
+<form name="feventform" action="./itemeventformupdate.php" onsubmit="return feventform_check(this);" method="post" enctype="MULTIPART/FORM-DATA">
 <input type="hidden" name="w" value="<? echo $w ?>">
 <input type="hidden" name="ev_id" value="<? echo $ev_id ?>">
 
 <section class="cbox">
-<?//=subtitle($html_title);?>
+    <h2>이벤트 입력 수정</h2>
+    <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -62,6 +63,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="col">출력스킨</th>
         <td colspan="3">
+            <?=help("기본으로 제공하는 스킨은 $cart_dir/list.skin.*.php 입니다.\n\n$cart_dir/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.");?>
             <select name=ev_skin>
             <?  echo get_list_skin_options("^list\.skin\.(.*)\.php", G4_SHOP_PATH); ?>
             </select>
@@ -69,7 +71,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <? if ($w == 'u') { ?>
             <script>document.all.ev_skin.value='<?=$ev['ev_skin']?>';</script>
             <? } ?>
-            <?=help("기본으로 제공하는 스킨은 $cart_dir/list.skin.*.php 입니다.\n\n$cart_dir/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.");?>
         </td>
     </tr>
     <tr>
@@ -93,15 +94,15 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-    <th scope="col"><label for="ev_use">사용</label></th>
-    <td colspan="3">
-        <?=help("사용하지 않으면 왼쪽의 이벤트 메뉴와 이벤트리스트 페이지에 접근할 수 없습니다.");?>
-        <select name="ev_use" id="ev_use">
-            <option value="1">예
-            <option value="0">아니오
-        </select>
-        <script>document.all.ev_use.value='<?=$ev['ev_use']?>';</script>
-    </td>
+        <th scope="col"><label for="ev_use">사용</label></th>
+        <td colspan="3">
+            <?=help("사용하지 않으면 왼쪽의 이벤트 메뉴와 이벤트리스트 페이지에 접근할 수 없습니다.");?>
+            <select name="ev_use" id="ev_use">
+                <option value="1">예</option>
+                <option value="0">아니오</option>
+            </select>
+            <script>document.all.ev_use.value='<?=$ev['ev_use']?>';</script>
+        </td>
     </tr>
     <tr>
         <th scope="col"><label for="ev_subject">이벤트제목</label></th>
@@ -118,13 +119,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $mimg_str = "";
             $mimg = G4_DATA_PATH."/event/{$ev['ev_id']}_m";
             if (file_exists($mimg)) {
-                echo "<input type=checkbox name=ev_mimg_del value='1'>삭제";
-                $mimg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_m' border=0>";
+                echo "<input type=\"checkbox\" name=\"ev_mimg_del\" value=\"1\">삭제";
+                $mimg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_m' border=\"0\">";
             }
             ?>
         </td>
     </tr>
-    <? if ($mimg_str) { echo "<tr><td></td><td colspan=3>$mimg_str</td></tr>"; } ?>
+    <? if ($mimg_str) { echo "<tr><td></td><td colspan=\"3\">$mimg_str</td></tr>"; } ?>
 
 
     <tr>
@@ -136,13 +137,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $himg_str = "";
             $himg = G4_DATA_PATH."/event/{$ev['ev_id']}_h";
             if (file_exists($himg)) {
-                echo "<input type=checkbox name=ev_himg_del value='1'>삭제";
-                $himg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_h' border=0>";
+                echo "<input type=\"checkbox\" name=\"ev_himg_del\" value='1'>삭제";
+                $himg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_h' border=\"0\">";
             }
             ?>
         </td>
     </tr>
-    <? if ($himg_str) { echo "<tr><td colspan=4>$himg_str</td></tr>"; } ?>
+    <? if ($himg_str) { echo "<tr><td colspan=\"4\">$himg_str</td></tr>"; } ?>
 
 
     <tr>
@@ -154,13 +155,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $timg_str = "";
             $timg = G4_DATA_PATH."/event/{$ev['ev_id']}_t";
             if (file_exists($timg)) {
-                echo "<input type=checkbox name=ev_timg_del value='1'>삭제";
-                $timg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_t' border=0>";
+                echo "<input type=\"checkbox\" name=\"ev_timg_del\" value='1'>삭제";
+                $timg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_t' border=\"0\">";
             }
             ?>
         </td>
     </tr>
-    <? if ($timg_str) { echo "<tr><td colspan=4>$timg_str</td></tr>"; } ?>
+    <? if ($timg_str) { echo "<tr><td colspan=\"4\">$timg_str</td></tr>"; } ?>
     <tr>
         <th scope="col">상단내용</th>
         <td colspan="3">
@@ -177,10 +178,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tbody>
     </table>
 </section>
-    <div class="btn_confirm">
-        <input type="submit" value="확인" class="btn_submit" accesskey="s">
-        <a href="./itemevent.php">목록</a>
-    </div>
+
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./itemevent.php">목록</a>
+</div>
 </form>
 
 <script>

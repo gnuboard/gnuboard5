@@ -31,12 +31,16 @@ $result = sql_query($sql);
 
 <section class="cbox">
     <h2>내용관리</h2>
-    <p id="content_fir"><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a><span>건수 : <? echo $total_count ?>&nbsp;</span></p>
+    <?=$pg_anchor?>
+    <p id="content_fir">
+        <a href='<?=$_SERVER['PHP_SELF']?>'>처음</a>
+        <span>건수 : <? echo $total_count ?>&nbsp;</span>
+    </p>
     <table class="frm_tbl">
     <colgroup>
-    <col class="grid_3">
-    <col class="gird_14">
-    <col class="grid_1">
+        <col class="grid_3">
+        <col class="gird_14">
+        <col class="grid_1">
     </colgroup>
     <thead id="content_head">
     <tr>
@@ -62,7 +66,7 @@ $result = sql_query($sql);
         }
 
         if ($i == 0) {
-            echo "<tr><td colspan=3 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+            echo "<tr><td colspan=\"3\" align=\"center\" height="100" bgcolor=\"#ffffff\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
         }
         ?>
     </tbody>

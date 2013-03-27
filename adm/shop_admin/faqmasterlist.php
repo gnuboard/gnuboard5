@@ -27,14 +27,15 @@ $result = sql_query($sql);
 #faq_box th{height:35px;line-height:35px;text-align:center}
 #faq_box p{position:relative}
 #faq_box span{position:absolute;top:-12;right:5px}
-#faq_register h3{color:#18abff}
+#faq_register h2{color:#18abff}
 #faq_register ul{list-style:none;padding-left:0}
-#faq_register ul li{height:20px;line-height:20px}
+#faq_register ul li{height:25px;line-height:25px}
 </style>
 
 <section id="faq_box" class="cbox">
-<h2>FAQ관리</h2>
-<p><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a><span>건수 : <? echo $total_count ?></span></p>
+    <h2>FAQ관리</h2>
+    <?=$pg_anchor?>
+    <p><a href="<?=$_SERVER['PHP_SELF']?>">처음</a><span>건수 : <? echo $total_count ?></span></p>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -49,7 +50,7 @@ $result = sql_query($sql);
         <th scope="col">제목</th>
         <th scope="col">FAQ수</th>
         <th scope="col">상세보기</th>
-        <th scope="col"><a href='./faqmasterform.php'><img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif' border=0 title='등록'></a></th>
+        <th scope="col"><a href='./faqmasterform.php'><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" title="등록"></a></th>
     </tr>
     </thead>
     <tbody>
@@ -69,16 +70,16 @@ $result = sql_query($sql);
             $list = $i%2;
             echo "
             <tr class='list$list ht'>
-                <td align=center>{$row['fm_id']}</td>
+                <td align=\"center\">{$row['fm_id']}</td>
                 <td>" . stripslashes($row['fm_subject']) . "</td>
-                <td align=center>$cnt</td>
-                <td align=center>$s_detail_vie</td>
-                <td align=center>$s_mod $s_del $s_vie</td>
+                <td align=\"center\">$cnt</td>
+                <td align=\"center\">$s_detail_vie</td>
+                <td align=\"center\">$s_mod $s_del $s_vie</td>
             </tr>";
         }
 
         if ($i == 0)
-            echo "<tr><td colspan=5 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+            echo "<tr><td colspan=\"5\" align=\"center\" height=\"100\" bgcolor=#ffffff><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
         ?>
     </tbody>
     </table>
@@ -88,11 +89,12 @@ $result = sql_query($sql);
 
 <section id="faq_register" class="cbox">
     <h2>FAQ 등록하기</h2>
-    <ul>
-        <li>: FAQ는 무제한으로 등록할 수 있습니다</li>
-        <li>1. 먼저 <img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif'>를 눌러 FAQ Master를 생성합니다. (하나의 FAQ 타이틀 생성 : 자주하시는 질문, 이용안내..등 )</li>
-        <li> 2. 상세보기에 있는 <img src='<?=G4_ADMIN_URL?>/img/icon_viewer.gif'>을 눌러 세부 내용으로 들어갑니다.</li>
-    </ul>
+    <?=$pg_anchor?>
+        <ul>
+            <li>: FAQ는 무제한으로 등록할 수 있습니다</li>
+            <li>1. 먼저 <img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif">를 눌러 FAQ Master를 생성합니다. (하나의 FAQ 타이틀 생성 : 자주하시는 질문, 이용안내..등 )</li>
+            <li> 2. 상세보기에 있는 <img src="<?=G4_ADMIN_URL?>/img/icon_viewer.gif">을 눌러 세부 내용으로 들어갑니다.</li>
+        </ul>
 </section>
 
 
