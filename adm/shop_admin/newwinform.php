@@ -28,61 +28,78 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?//=subtitle($html_title)?>
+<form name="frmnewwin" action="./newwinformupdate.php" onsubmit="return frmnewwin_check(this);" method="post">
+<input type="hidden" name="w" value="<? echo $w ?>">
+<input type="hidden" name="nw_id" value="<? echo $nw_id ?>">
 
-<form name=frmnewwin method=post action="./newwinformupdate.php" onsubmit="return frmnewwin_check(this);" style="margin:0px;">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=nw_id value='<? echo $nw_id ?>'>
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=15%>
-<colgroup width=35% bgcolor=#ffffff>
-<colgroup width=15%>
-<colgroup width=35% bgcolor=#ffffff>
-<tr><td colspan=4 height=2 bgcolor=#0E87F9></td></tr>
-<tr class=ht>
-    <td>시간</td>
-    <td colspan=3><input type=text class=ed name=nw_disable_hours size=5 value='<? echo $nw['nw_disable_hours'] ?>' required itemname="시간"> 시간 동안 다시 띄우지 않음</td>
-</tr>
-<tr class=ht>
-    <td>시작일시</td>
-    <td>
-        <input type=text class=ed name=nw_begin_time size=21 maxlength=19 value='<? echo $nw['nw_begin_time'] ?>' required itemname="시작일시">
-        <input type=checkbox name=nw_begin_chk value="<? echo date("Y-m-d 00:00:00", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.nw_begin_time.value=this.form.nw_begin_chk.value; else this.form.nw_begin_time.value = this.form.nw_begin_time.defaultValue;">오늘
-    <td>종료일시</td>
-    <td>
-        <input type=text class=ed name=nw_end_time size=21 maxlength=19 value='<? echo $nw['nw_end_time'] ?>' required itemname="종료일시">
-        <input type=checkbox name=nw_end_chk value="<? echo date("Y-m-d 23:59:59", G4_SERVER_TIME+(60*60*24*7)); ?>" onclick="if (this.checked == true) this.form.nw_end_time.value=this.form.nw_end_chk.value; else this.form.nw_end_time.value = this.form.nw_end_time.defaultValue;">오늘+7일
-</tr>
-<tr class=ht>
-    <td>창위치 왼쪽</td>
-    <td><input type=text class=ed name=nw_left size=5 value='<? echo $nw['nw_left'] ?>' required itemname="창위치 왼쪽"></td>
-    <td>창위치 위</td>
-    <td><input type=text class=ed name=nw_top  size=5 value='<? echo $nw['nw_top'] ?>' required itemname="창위치 위"></td>
-</tr>
-<tr class=ht>
-    <td>창크기 폭</td>
-    <td><input type=text class=ed name=nw_width  size=5 value='<? echo $nw['nw_width'] ?>' required itemname="창크기폭"></td>
-    <td>창크기 높이</td>
-    <td><input type=text class=ed name=nw_height size=5 value='<? echo $nw['nw_height'] ?>' required itemname="창크기높이"></td>
-</tr>
-<tr class=ht>
-    <td>창제목</td>
-    <td colspan=3><input type=text class=ed name=nw_subject size=80 value='<? echo stripslashes($nw['nw_subject']) ?>' required itemname="제목"></td>
-</tr>
-<input type=hidden name=nw_content_html value=1>
-<tr>
-    <td>내용</td>
-    <td colspan=3 style='padding-top:5px; padding-bottom:5px;'><?=editor_html('nw_content', $nw['nw_content']);?></td>
-</tr>
-<tr><td colspan=4 height=1 bgcolor=CCCCCC></td></tr>
-</table>
+<section class="cbox">
+    <h2>새창 입력 수정</h2>
+    <?=$pg_anchor?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_5">
+        <col class="grid_3">
+        <col class="grid_5">
+    </colgroup>
+    <tr>
+        <th scope="col"><label for="nw_disable_hours">시간</label></th>
+        <td colspan="3"><input type="text" name="nw_disable_hours" value="<? echo $nw['nw_disable_hours'] ?>" id="nw_disable_hours" required class="frm_input required" size="5"> 시간 동안 다시 띄우지 않음</td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="nw_begin_time">시작일시</label></th>
+        <td>
+            <input type="text" name="nw_begin_time" value="<? echo $nw['nw_begin_time'] ?>" id="nw_begin_time" required class="frm_input required" size="21" maxlength="19">
+            <input type="checkbox" name="nw_begin_chk" value="<? echo date("Y-m-d 00:00:00", G4_SERVER_TIME); ?>" id="nw_begin_chk" onclick="if (this.checked == true) this.form.nw_begin_time.value=this.form.nw_begin_chk.value; else this.form.nw_begin_time.value = this.form.nw_begin_time.defaultValue;">
+            <label for="nw_begin_chk">오늘</label>
+        </td>
+        <th scope="col"><label for="nw_end_time">종료일시</label></th>
+        <td>
+            <input type="text" name="nw_end_time" value="<? echo $nw['nw_end_time'] ?>" id="nw_end_time" required class="frm_input requried" size="21" maxlength="19">
+            <input type="checkbox" name="nw_end_chk" value="<? echo date("Y-m-d 23:59:59", G4_SERVER_TIME+(60*60*24*7)); ?>" id="nw_end_chk" onclick="if (this.checked == true) this.form.nw_end_time.value=this.form.nw_end_chk.value; else this.form.nw_end_time.value = this.form.nw_end_time.defaultValue;">
+            <label for="nw_end_chk">오늘+7일</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="nw_left">창위치 왼쪽</label></th>
+        <td>
+           <input type="text" name="nw_left" value="<? echo $nw['nw_left'] ?>" id="nw_left" required class="frm_input requried" size="5">
+        </td>
+        <th scope="col"><label for="nw_top">창위치 위</label></th>
+        <td>
+            <input type="text" name="nw_top" value="<? echo $nw['nw_top'] ?>" id="nw_top" required class="frm_input requried"  size="5">
+        </td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="nw_width">창크기 폭</label></th>
+        <td>
+            <input type="text" name="nw_width" value="<? echo $nw['nw_width'] ?>" id="nw_width" required class="frm_input requried" size="5">
+        </td>
+        <th scope="col"><label for="nw_height">창크기 높이</label></th>
+        <td>
+            <input type="text" name="nw_height" value="<? echo $nw['nw_height'] ?>" id="nw_height" required class="frm_input requried" size="5">
+        </td>
+    </tr>
+    <tr>
+        <th scope="col"><label for="nw_subject">창제목</label></th>
+        <td colspan="3">
+            <input type="text" name="nw_subject" size="80" value="<? echo stripslashes($nw['nw_subject']) ?>" id="nw_subject" required class="frm_input requried">
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">내용</th>
+        <td colspan="3"><?=editor_html('nw_content', $nw['nw_content']);?></td>
+    </tr>
+    </table>
+</section>
 
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./newwinlist.php';">
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./newwinlist.php">목록</a>
+</div>
 </form>
 
-<script language="javascript">
+<script>
 function frmnewwin_check(f)
 {
     errmsg = "";

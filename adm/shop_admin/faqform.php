@@ -77,7 +77,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 </div>
 </form>
 
-<script language="javascript">
+<script>
 function frmfaqform_check(f)
 {
     errmsg = "";

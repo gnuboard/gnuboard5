@@ -50,7 +50,7 @@ $result = sql_query($sql);
         <th scope="col">제목</th>
         <th scope="col">FAQ수</th>
         <th scope="col">상세보기</th>
-        <th scope="col"><a href='./faqmasterform.php'><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" title="등록"></a></th>
+        <th scope="col"><a href='./faqmasterform.php'><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="등록"></a></th>
     </tr>
     </thead>
     <tbody>
@@ -70,11 +70,11 @@ $result = sql_query($sql);
             $list = $i%2;
             echo "
             <tr class='list$list ht'>
-                <td align=\"center\">{$row['fm_id']}</td>
+                <td style=\"text-align:center\">{$row['fm_id']}</td>
                 <td>" . stripslashes($row['fm_subject']) . "</td>
-                <td align=\"center\">$cnt</td>
-                <td align=\"center\">$s_detail_vie</td>
-                <td align=\"center\">$s_mod $s_del $s_vie</td>
+                <td style=\"text-align:center\">$cnt</td>
+                <td style=\"text-align:center\">$s_detail_vie</td>
+                <td style=\"text-align:center\">$s_mod $s_del $s_vie</td>
             </tr>";
         }
 
@@ -92,8 +92,8 @@ $result = sql_query($sql);
     <?=$pg_anchor?>
         <ul>
             <li>: FAQ는 무제한으로 등록할 수 있습니다</li>
-            <li>1. 먼저 <img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif">를 눌러 FAQ Master를 생성합니다. (하나의 FAQ 타이틀 생성 : 자주하시는 질문, 이용안내..등 )</li>
-            <li> 2. 상세보기에 있는 <img src="<?=G4_ADMIN_URL?>/img/icon_viewer.gif">을 눌러 세부 내용으로 들어갑니다.</li>
+            <li>1. 먼저 <img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="등록">를 눌러 FAQ Master를 생성합니다. (하나의 FAQ 타이틀 생성 : 자주하시는 질문, 이용안내..등 )</li>
+            <li> 2. 상세보기에 있는 <img src="<?=G4_ADMIN_URL?>/img/icon_viewer.gif" alt="보기">을 눌러 세부 내용으로 들어갑니다.</li>
         </ul>
 </section>
 
