@@ -40,9 +40,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     echo "<tr height=28>\n";
     echo "<td align=center>";
     echo "<input type=hidden name='ct_id[$i]' value='{$row['ct_id']}'>\n";
-    echo "<a href='./orderinquiryview.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}'><U>{$row['od_id']}</U></a></td>\n";
+    echo "<a href='".G4_SHOP_URL."/orderinquiryview.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}'><U>{$row['od_id']}</U></a></td>\n";
     echo "<td align=center>".substr($row['od_time'],0,16)." (".get_yoil($row['od_time']).")</td>\n";
-    echo "<td align=center>$row[itemcount]</td>\n";
+    echo "<td align=center>{$row['itemcount']}</td>\n";
     echo "<td align=right>".display_amount($row['orderamount'])."&nbsp;&nbsp;</td>\n";
     echo "<td align=right>".display_amount($row['receiptamount'])."&nbsp;&nbsp;</td>\n";
     echo "<td align=right>".display_amount($row['misu'])."&nbsp;&nbsp;</td>\n";

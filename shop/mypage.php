@@ -19,15 +19,14 @@ include_once('./_head.php');
     <td align=right>
         <? if ($is_admin == 'super') { echo "<a href='".G4_ADMIN_URL."/'><img src='".G4_SHOP_URL."/img/btn_admin.gif' border=0 align='absmiddle'></a>"; } ?>
         <a href='<?=G4_BBS_URL?>/member_confirm.php?url=register_form.php'><img src='<?=G4_SHOP_URL?>/img/my_modify.gif' border=0 align='absmiddle'></a>
-        <a href="javascript:member_leave();"><img src='<?=G4_SHOP_URL?>/img/my_leave.gif' border=0 align='absmiddle'></a></td>
+        <a href="<?=G4_BBS_URL?>/member_confirm.php?url=member_leave.php" onclick="return member_leave();"><img src='<?=G4_SHOP_URL?>/img/my_leave.gif' border=0 align='absmiddle'></a></td>
 </tr>
 </table>
 
-<script language="JavaScript">
+<script>
 function member_leave()
 {
-    if (confirm("정말 회원에서 탈퇴 하시겠습니까?"))
-            location.href = "<?=G4_BBS_URL?>/member_confirm.php?url=member_leave.php";
+    return confirm('정말 회원에서 탈퇴 하시겠습니까?')
 }
 </script>
 
@@ -35,9 +34,9 @@ function member_leave()
 <tr><td colspan=4><img src='<?=G4_SHOP_URL?>/img/my_box01.gif'></td></tr>
 <tr>
     <td height=25>&nbsp;&nbsp;&nbsp;보유포인트 </td>
-    <td>: <a href="javascript:win_point();"><?=number_format($member['mb_point'])?>점</a></td>
+    <td>: <a href="<?=G4_BBS_URL?>/point.php" target="_blank" class="win_point"><?=number_format($member['mb_point'])?>점</a></td>
     <td>쪽지함</td>
-    <td>: <a href="javascript:win_memo();">쪽지보기</a></td>
+    <td>: <a href="<?=G4_BBS_URL?>/memo.php" target="_blank" class="win_memo">쪽지보기</a></td>
 </tr>
 <tr>
     <td height=25>&nbsp;&nbsp;&nbsp;주소</td>
