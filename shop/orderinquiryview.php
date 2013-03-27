@@ -258,7 +258,7 @@ if ($default['de_taxsave_use']) {
             if ($od['od_cash'])
                 echo "<a href=\"javascript:;\" onclick=\"window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no={$od['od_cash_no']}', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');\">현금영수증 확인하기</a>";
             else
-                echo "<a href=\"javascript:;\" onclick=\"window.open('taxsave_kcp.php?od_id=$od_id&uq_id={$od['uq_id']}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\">현금영수증을 발급하시려면 클릭하십시오.</a>";
+                echo "<a href=\"javascript:;\" onclick=\"window.open('".G4_SHOP_URL."/taxsave_kcp.php?od_id=$od_id&uq_id={$od['uq_id']}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\">현금영수증을 발급하시려면 클릭하십시오.</a>";
             echo "</td></tr>";
             echo "</table>";
         }

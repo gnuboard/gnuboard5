@@ -27,28 +27,8 @@ $amt_tax = (int)($amt_tot - $amt_sup);
     /* ============================================================================== */
 //-->
 
-<script language="javascript">
-
-	// 주문번호 생성 예제
-	function init_orderid()
-	{
-	    var today = new Date();
-	    var year  = today.getFullYear();
-	    var month = today.getMonth()+ 1;
-	    var date  = today.getDate();
-	    var time  = today.getTime();
-
-	    if(parseInt(month) < 10)
-	    {
-	        month = "0" + month;
-	    }
-
-	    var vOrderID = year + "" + month + "" + date + "" + time;
-
-	    document.forms[0].ordr_idxx.value = vOrderID;
-	}
-
-    // 현금영수증 MAIN FUNC
+<script>
+	// 현금영수증 MAIN FUNC
     function  jsf__pay_cash( form )
     {
         jsf__show_progress(true);
@@ -149,9 +129,8 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 
 </script>
 </head>
-<!-- <body onload="init_orderid();"> -->
 <body>
-<form name="cash_form" action="./kcp/pp_cli_hub.php" method="post">
+<form name="cash_form" action="<?=G4_SHOP_URL?>/kcp/pp_cli_hub.php" method="post">
 <input type="hidden" name="corp_type" value="0"> <!-- 사업자 구분 - 0:직접판매 , 1:입점몰판매 -->
 <input type="hidden" name="ordr_idxx">
 <input type="hidden" name="good_name" value="<?=addslashes($goods_name)?>">
