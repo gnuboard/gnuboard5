@@ -5,8 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     $s_page 는 cart.php 일때 수량의 수정, 물품의 삭제를 위한 변수이다.
                orderinquiryview.php 일때 배송상태등을 나타내는 변수이다.
 
-    $s_uq_id 는 유일한 키인데 orderupdate.php 에서 ck_uq_id 를 죽이면서
-    ck_tmp_uq_id 에 복사본을 넣어준다. ck_tmp_uq_id 는 orderconfirm.php 에서만 사용한다.
+    $s_uq_id 는 유일한 키
 */
 
 if ($s_page == 'cart.php' || $s_page == 'orderinquiryview.php')
