@@ -63,10 +63,10 @@ for ($i=0; $i<count($f); $i++) {
     <li>전체 테이블 생성 완료</li>
 
 <?
-$read_point = -1;
-$write_point = 5;
-$comment_point = 1;
-$download_point = -20;
+$read_point = 0;
+$write_point = 0;
+$comment_point = 0;
+$download_point = 0;
 
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
