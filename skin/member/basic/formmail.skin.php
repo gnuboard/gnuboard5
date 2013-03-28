@@ -59,7 +59,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <div class="btn_win">
         <input type="submit" value="메일발송" id="btn_submit" class="btn_submit">
-        <a href="javascript:window.close();">창닫기</a>
+        <button type="button" class="btn_cancel" onclick="javascript:window.close();">창닫기</button>
     </div>
 
     </form>

@@ -204,6 +204,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </table>
 
 <div class="btn_confirm">
+    <p>
+        작성하신 내용을 제출하시려면 <strong><?=$w==''?'회원가입':'정보수정';?></strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
+    </p>
     <input type="submit" value="<?=$w==''?'회원가입':'정보수정';?>" class="btn_submit" accesskey="s">
     <a href="<?=$g4['path']?>/" class="btn_cancel">취소</a>
 </div>
