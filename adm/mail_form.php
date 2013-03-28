@@ -50,6 +50,9 @@ include_once('./admin.head.php');
     </table>
 
     <div class="btn_confirm">
+        <p>
+            작성하신 내용을 제출하시려면 <strong>확인</strong> 버튼을 누르세요.
+        </p>
         <input type="submit" class="btn_submit" accesskey="s" value="확인">
     </div>
     </form>
