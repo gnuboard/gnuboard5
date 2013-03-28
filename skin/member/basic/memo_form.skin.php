@@ -38,6 +38,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
 
     <div class="btn_win">
+        <p>
+            작성하신 쪽지를 발송하시려면 <strong>보내기</strong> 버튼을, 작성을 취소하고 창을 닫으시려면 <strong>창닫기</strong> 링크를 누르세요.
+        </p>
         <input type="submit" value="보내기" id="btn_submit" class="btn_submit">
         <a href="javascript:;" onclick="window.close();">창닫기</a>
     </div>

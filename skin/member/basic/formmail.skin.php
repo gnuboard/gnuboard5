@@ -58,6 +58,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </table>
 
     <div class="btn_win">
+        <p>
+           작성하신 메일을 발송하시려면 <strong>메일발송</strong> 버튼을, 작성을 취소하고 창을 닫으시려면 <strong>창닫기</strong> 버튼을 누르세요.
+        </p>
         <input type="submit" value="메일발송" id="btn_submit" class="btn_submit">
         <button type="button" class="btn_cancel" onclick="javascript:window.close();">창닫기</button>
     </div>
