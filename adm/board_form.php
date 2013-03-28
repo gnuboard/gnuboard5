@@ -1145,6 +1145,10 @@ $pg_anchor = "<ul class=\"anchor\">
 </fieldset>
 
 <div class="btn_confirm">
+    <p>
+        작성하신 내용을 제출하시려면 <strong>확인</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>목록</strong> 링크를 누르세요.
+        <? if ($w == 'u') { ?><br>게시판을 복사하시려면 <strong>게시판복사</strong> 링크를 누르세요.<? } ?>
+    </p>
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./board_list.php?<?=$qstr?>">목록</a>
     <? if ($w == 'u') { ?><a href="./board_copy.php?bo_table=<?=$bo_table?>" id="board_copy" target="win_board_copy">게시판복사</a><?}?>
