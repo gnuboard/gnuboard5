@@ -122,7 +122,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </colgroup>
     <tbody>
     <tr>
-        <th scope="col"><label for="ca_id">분류명</label></th>
+        <th scope="row"><label for="ca_id">분류명</label></th>
         <td colspan="3">
             <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
                 <option value="">= 기본분류 =</option>
@@ -187,7 +187,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="it_id">상품코드</label></th>
+        <th scope="row"><label for="it_id">상품코드</label></th>
         <td colspan="3">
             <? if ($w == "") { // 추가 ?>
                 <!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
@@ -205,25 +205,25 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="it_name">상품명</label></th>
+        <th scope="row"><label for="it_name">상품명</label></th>
         <td colspan="3">
             <input type="text" name="it_name" value="<?=get_text(cut_str($it['it_name'], 250, ""))?>" id="it_name" required class="frm_input required" size="120">
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="it_gallery">출력유형</label></th>
+        <th scope="row"><label for="it_gallery">출력유형</label></th>
         <td>
            <?=help("금액표시는 하지 않고 상품을 구매할 수 없으며 상품설명만 나타낼때 사용합니다.");?>
             <input type="checkbox" name="it_gallery" value="1" id="it_gallery" <?=($it['it_gallery'] ? "checked" : "")?>> 갤러리로 사용
         </td>
-        <th scope="col"><label for="it_order">출력순서</label></th>
+        <th scope="row"><label for="it_order">출력순서</label></th>
         <td>
             <?=help("상품의 출력순서를 인위적으로 변경할때 사용합니다.\n숫자를 입력하며 기본은 0 입니다.\n숫자가 작을 수록 상위에 출력됩니다.\n음수 입력도 가능합니다.\n구간 :  -2147483648 ~ 2147483647");?>
             <input type="text" name="it_order" value="<? echo $it['it_order'] ?>" id="it_order" class="frm_input" size="10">
         </td>
     </tr>
     <tr>
-        <th scope="col">상품유형</th>
+        <th scope="row">상품유형</th>
         <td colspan="3">
             <?=help("메인화면에 유형별로 출력할때 사용합니다.\n\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다.");?>
             <input type="checkbox" name="it_type1" value="1" <?=($it['it_type1'] ? "checked" : "");?> id="it_type1">
@@ -239,12 +239,12 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="it_maker">제조사</label></th>
+        <th scope="row"><label for="it_maker">제조사</label></th>
         <td>
             <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
             <input type="text" name="it_maker" value="<?=get_text($it['it_maker'])?>" id="it_maker" class="frm_input" size="41">
         </td>
-        <th scope="col"><label for="it_origin">원산지</label></th>
+        <th scope="row"><label for="it_origin">원산지</label></th>
         <td>
             <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
             <input type="text" name="it_origin" value="<?=get_text($it['it_origin'])?>" id="it_origin" class="frm_input" size="41">
@@ -310,7 +310,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="it_basic">기본설명</label></th>
+        <th scope="row"><label for="it_basic">기본설명</label></th>
         <td colspan="3">
             <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
             <input type="text" name="it_basic" value="<?=get_text($it['it_basic'])?>" id="it_basic" class="frm_input" size="120"><!-- width:727px-->
@@ -329,7 +329,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     }
     ?>
     <tr>
-        <th scope="col">요약상품정보</th>
+        <th scope="row">요약상품정보</th>
         <td colspan="3">
             <?=help("전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.");?>
             <input type="button" value="상품요약정보 설정" onclick="window.open('./iteminfo.php?it_id=<?=$it['it_id']?>', '_blank', 'width=670 height=800');">
@@ -338,23 +338,23 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tr>
     <?}//if?>
     <tr>
-        <th scope="col">상품설명</th>
+        <th scope="row">상품설명</th>
         <td colspan="3"> <?=editor_html('it_explan', $it['it_explan']);?></td>
     </tr>
     <tr>
-        <th scope="col"><label for="it_sell_email">판매자 e-mail</label></th>
+        <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
         <td colspan="3">
             <?=help("운영자와 판매자가 다른 경우 이곳에 판매자의 e-mail을 입력해 놓으면 이 상품이 주문되는 시점에서 판매자에게 별도의 주문서 메일을 발송합니다.");?>
             <input type="text" name="it_sell_email" value="<? echo $it['it_sell_email'] ?>" id="it_sell_email" class="frm_input" size="40">
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="it_tel_inq">전화문의</label></th>
+        <th scope="row"><label for="it_tel_inq">전화문의</label></th>
         <td>
             <?=help("상품 금액 대신 전화문의로 표시됩니다.");?>
             <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <? echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
         </td>
-        <th scope="col"><label for="it_use">판매가능</label></th>
+        <th scope="row"><label for="it_use">판매가능</label></th>
         <td>
             <?=help("잠시 판매를 중단하거나 재고가 없을 경우에 체크하면 이 상품은 출력하지 않으며 주문도 할 수 없습니다.");?>
             <input type="checkbox" name="it_use" value="1" id="it_use" <? echo ($it['it_use']) ? "checked" : ""; ?>> 예
@@ -372,8 +372,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <col class="grid_3">
         <col class="grid_13">
     </colgroup>
+    <tbody>
     <tr>
-        <th scope="col">이미지(대)</th>
+        <th scope="row">이미지(대)</th>
         <td>
             <input type="file" name="it_limg1">
             <?
@@ -395,7 +396,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col">이미지(중)</th>
+        <th scope="row">이미지(중)</th>
         <td>
             <input type="file" name="it_mimg">
             <?
@@ -410,7 +411,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col">이미지(소)</th>
+        <th scope="row">이미지(소)</th>
         <td>
             <input type="file" name="it_simg">
             <?
@@ -426,7 +427,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tr>
     <? for ($i=2; $i<=5; $i++) { // 이미지(대)는 5개 ?>
     <tr>
-        <th scope="col">이미지(대)<?=$i?></th>
+        <th scope="row">이미지(대)<?=$i?></th>
         <td>
             <input type="file" name="it_limg<?=$i?>">
             <?
@@ -440,6 +441,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <? } ?>
+    </tbody>
     </table>
 
 </section>
@@ -761,14 +763,15 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <col class="grid_3">
         <col class="grid_5">
     </colgroup>
+    <tbody>
     <tr>
-        <th scope="col"></th>
+        <th scope="row"></th>
         <td></td>
-        <th scope="col"></th>
+        <th scope="row"></th>
         <td></td>
     </tr>
     <tr>
-        <th scope="col">상단이미지</th>
+        <th scope="row">상단이미지</th>
         <td colspan="3">
             <input type="file" name="it_himg">
             <?
@@ -784,7 +787,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tr>
     <? if ($himg_str) { echo "<tr><td colspan=\"4\">$himg_str</td></tr>"; } ?>
     <tr>
-        <th scope="col">하단이미지</th>
+        <th scope="row">하단이미지</th>
         <td colspan="3">
             <input type="file" name="it_timg">
             <?
@@ -800,22 +803,23 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tr>
     <? if ($timg_str) { echo "<tr><td colspan=\"4\">$timg_str</td></tr>"; } ?>
     <tr>
-        <th scope="col"><?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?>상품상단내용</th>
+        <th scope="row"><?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?>상품상단내용</th>
         <td colspan="3"><?=editor_html('it_head_html', $it['it_head_html']);?></td>
     </tr>
     <tr>
-        <th scope="col"><?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?>상품하단내용</th>
+        <th scope="row"><?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?>상품하단내용</th>
         <td colspan="3"><?=editor_html('it_tail_html', $it['it_tail_html']);?></td>
     </tr>
     <? if ($w == "u") { ?>
     <tr>
-        <th scope="col">입력일시</th>
+        <th scope="row">입력일시</th>
         <td colspan="3">
             <?=$it['it_time']?>
             <?=help("상품을 처음 입력(등록)한 시간입니다.");?>
         </td>
     </tr>
     <? } ?>
+    </tbody>
     </table>
 </section>
 
