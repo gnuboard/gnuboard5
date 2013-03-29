@@ -125,7 +125,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="col"><label for="ca_id">분류명</label></th>
         <td colspan="3">
             <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
-            <option value="">= 기본분류 =</option>
+                <option value="">= 기본분류 =</option>
                 <?
                 $script = "";
                 $sql = " select * from {$g4['yc4_category_table']} ";
