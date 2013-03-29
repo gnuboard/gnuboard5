@@ -37,25 +37,25 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </colgroup>
     <tbody>
     <tr >
-        <th scope="col"><label for="dl_company">배송회사명</label></th>
+        <th scope="row"><label for="dl_company">배송회사명</label></th>
         <td>
             <input type="text" name="dl_company" value="<? echo stripslashes($dl['dl_company']) ?>" id="dl_company" required class="frm_input">
         </td>
     </tr>
     <tr >
-        <th scope="col"><label for="dl_url">화물추적 URL</label></th>
+        <th scope="row"><label for="dl_url">화물추적 URL</label></th>
         <td>
            <input type="text" class="frm_input" name="dl_url" value="<? echo stripslashes($dl['dl_url']) ?>" id="dl_url" size="120">
         </td>
     </tr>
     <tr >
-        <th scope="col"><label for="dl_tel">고객센터 전화</label></th>
+        <th scope="row"><label for="dl_tel">고객센터 전화</label></th>
         <td>
             <input type="text" class="frm_input" name="dl_tel" value="<? echo stripslashes($dl['dl_tel']) ?>" id="dl_tel">
         </td>
     </tr>
     <tr >
-        <th scope="col"><label for="dl_order">출력 순서</label></th>
+        <th scope="row"><label for="dl_order">출력 순서</label></th>
         <td>
             <?=help("셀렉트박스에서 출력할 때 순서를 정합니다.\n\n숫자가 작을수록 상단에 출력합니다.");?>
             <?=order_select("dl_order", $dl['dl_order'])?>
