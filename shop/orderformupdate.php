@@ -277,10 +277,11 @@ if($result_check && !$result) {
     $cancel_msg = 'Order status update error';
     include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
 
+    echo "<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}";
+
     // 주문삭제
     sql_query(" delete from {$g4['yc4_order_table']} where od_id = '$od_id' and uq_id = '$tmp_uq_id' ");
-
-    die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
+    exit;
 }
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가
