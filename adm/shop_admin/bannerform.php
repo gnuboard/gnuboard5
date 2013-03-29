@@ -36,7 +36,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </colgroup>
     <tbody>
     <tr>
-        <th scope="col">이미지</th>
+        <th scope="row">이미지</th>
         <td>
             <input type="file" name="bn_bimg">
             <?
@@ -54,21 +54,21 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tr>
     <? if ($bimg_str) { echo "<tr><td></td><td>$bimg_str</td></tr>"; } ?>
     <tr>
-        <th scope="col"><label for="bn_alt">이미지 설명</label></th>
+        <th scope="row"><label for="bn_alt">이미지 설명</label></th>
         <td>
             <?=help("img 태그의 alt, title 에 해당되는 내용입니다.\n배너에 마우스를 오버하면 이미지의 설명이 나옵니다.");?>
             <input type="text" name="bn_alt" value="<? echo $bn['bn_alt'] ?>" id="bn_alt" class="frm_input" size="80">
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="bn_url">링크</label></th>
+        <th scope="row"><label for="bn_url">링크</label></th>
         <td>
             <?=help("배너클릭시 이동하는 주소입니다.");?>
             <input type="text" name="bn_url" size="80" value="<? echo $bn['bn_url'] ?>" id="bn_url" class="frm_input">
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="bn_position">출력위치</label></th>
+        <th scope="row"><label for="bn_position">출력위치</label></th>
         <td>
             <?=help("왼쪽 : 쇼핑몰화면 왼쪽에 출력합니다.\n메인 : 쇼핑몰 메인화면(index.php)에만 출력합니다.", 50);?>
             <select name="bn_position" id="bn_position">
@@ -78,7 +78,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="bn_border">테두리</label></th>
+        <th scope="row"><label for="bn_border">테두리</label></th>
         <td>
              <?=help("배너이미지에 테두리를 넣을지를 설정합니다.", 50);?>
             <select name="bn_border" id="bn_border">
@@ -88,7 +88,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="bn_new_win">새창</label></th>
+        <th scope="row"><label for="bn_new_win">새창</label></th>
         <td>
             <?=help("배너클릭시 새창을 띄울지를 설정합니다.", 50);?>
             <select name="bn_new_win" id="bn_new_win">
@@ -98,7 +98,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="bn_begin_time">시작일시</label></th>
+        <th scope="row"><label for="bn_begin_time">시작일시</label></th>
         <td>
             <?=help("현재시간이 시작일시와 종료일시 기간안에 있어야 배너가 출력됩니다.");?>
             <input type="text" name="bn_begin_time" value="<? echo $bn['bn_begin_time'] ?>" id="bn_begin_time" class="frm_input"  size="21" maxlength="19">
@@ -107,7 +107,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="bn_end_time">종료일시</label></th>
+        <th scope="row"><label for="bn_end_time">종료일시</label></th>
         <td>
             <input type="text" name="bn_end_time" value="<? echo $bn['bn_end_time'] ?>" id="bn_end_time" class="frm_input" size=21 maxlength=19>
             <input type="checkbox" name="bn_end_chk" value="<? echo date("Y-m-d 23:59:59", time()+60*60*24*31); ?>" id="bn_end_chk" onclick="if (this.checked == true) this.form.bn_end_time.value=this.form.bn_end_chk.value; else this.form.bn_end_time.value = this.form.bn_end_time.defaultValue;">
@@ -115,7 +115,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="bn_order">출력 순서</label></th>
+        <th scope="row"><label for="bn_order">출력 순서</label></th>
         <td>
            <?=help("배너를 출력할 때 순서를 정합니다.\n\n숫자가 작을수록 상단에 출력합니다.");?>
            <?=order_select("bn_order", $bn['bn_order'])?>
