@@ -52,7 +52,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <?=help('숫자가 작을수록 FAQ 페이지의 상단에 출력합니다.', 60, -50)?>
         </td>
     </tr>
-        <tr>
+    <tr>
         <th scope="col">질문
             <? if ($w == 'u') {
                 echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
@@ -63,7 +63,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <?=editor_html('fa_subject', $fa['fa_subject']);?>
         </td>
     </tr>
-        <tr>
+    <tr>
         <th scope="col">답변</th>
         <td ><?=editor_html('fa_content', $fa['fa_content']);?></td>
     </tr>

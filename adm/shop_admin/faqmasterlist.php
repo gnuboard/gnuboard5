@@ -46,41 +46,41 @@ $result = sql_query($sql);
     </colgroup>
     <thead>
     <tr>
-        <th scope="col">ID</th>
-        <th scope="col">제목</th>
-        <th scope="col">FAQ수</th>
-        <th scope="col">상세보기</th>
-        <th scope="col"><a href='./faqmasterform.php'><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="등록"></a></th>
+        <th scope="row">ID</th>
+        <th scope="row">제목</th>
+        <th scope="row">FAQ수</th>
+        <th scope="row">상세보기</th>
+        <th scope="row"><a href='./faqmasterform.php'><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="등록"></a></th>
     </tr>
     </thead>
     <tbody>
-        <?
-        for ($i=0; $row=mysql_fetch_array($result); $i++)
-        {
-            $sql1 = " select COUNT(*) as cnt from {$g4['yc4_faq_table']} where fm_id = '{$row['fm_id']}' ";
-            $row1 = sql_fetch($sql1);
-            $cnt = $row1['cnt'];
+    <?
+    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    {
+        $sql1 = " select COUNT(*) as cnt from {$g4['yc4_faq_table']} where fm_id = '{$row['fm_id']}' ";
+        $row1 = sql_fetch($sql1);
+        $cnt = $row1['cnt'];
 
-            $s_detail_vie = icon("보기", "./faqlist.php?fm_id={$row['fm_id']}");
+        $s_detail_vie = icon("보기", "./faqlist.php?fm_id={$row['fm_id']}");
 
-            $s_mod = icon("수정", "./faqmasterform.php?w=u&fm_id={$row['fm_id']}");
-            $s_del = icon("삭제", "javascript:del('./faqmasterformupdate.php?w=d&fm_id={$row['fm_id']}');");
-            $s_vie = icon("보기", G4_SHOP_URL."/faq.php?fm_id={$row['fm_id']}");
+        $s_mod = icon("수정", "./faqmasterform.php?w=u&fm_id={$row['fm_id']}");
+        $s_del = icon("삭제", "javascript:del('./faqmasterformupdate.php?w=d&fm_id={$row['fm_id']}');");
+        $s_vie = icon("보기", G4_SHOP_URL."/faq.php?fm_id={$row['fm_id']}");
 
-            $list = $i%2;
-            echo "
-            <tr class='list$list ht'>
-                <td style=\"text-align:center\">{$row['fm_id']}</td>
-                <td>" . stripslashes($row['fm_subject']) . "</td>
-                <td style=\"text-align:center\">$cnt</td>
-                <td style=\"text-align:center\">$s_detail_vie</td>
-                <td style=\"text-align:center\">$s_mod $s_del $s_vie</td>
-            </tr>";
-        }
+        $list = $i%2;
+        echo "
+        <tr class='list$list ht'>
+            <td style=\"text-align:center\">{$row['fm_id']}</td>
+            <td>" . stripslashes($row['fm_subject']) . "</td>
+            <td style=\"text-align:center\">$cnt</td>
+            <td style=\"text-align:center\">$s_detail_vie</td>
+            <td style=\"text-align:center\">$s_mod $s_del $s_vie</td>
+        </tr>";
+    }
 
-        if ($i == 0)
-            echo "<tr><td colspan=\"5\" align=\"center\" height=\"100\" bgcolor=#ffffff><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
-        ?>
+    if ($i == 0)
+        echo "<tr><td colspan=\"5\" align=\"center\" height=\"100\" bgcolor=#ffffff><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
+    ?>
     </tbody>
     </table>
 </section>
@@ -90,11 +90,11 @@ $result = sql_query($sql);
 <section id="faq_register" class="cbox">
     <h2>FAQ 등록하기</h2>
     <?=$pg_anchor?>
-        <ul>
-            <li>: FAQ는 무제한으로 등록할 수 있습니다</li>
-            <li>1. 먼저 <img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="등록">를 눌러 FAQ Master를 생성합니다. (하나의 FAQ 타이틀 생성 : 자주하시는 질문, 이용안내..등 )</li>
-            <li> 2. 상세보기에 있는 <img src="<?=G4_ADMIN_URL?>/img/icon_viewer.gif" alt="보기">을 눌러 세부 내용으로 들어갑니다.</li>
-        </ul>
+    <ul>
+        <li>: FAQ는 무제한으로 등록할 수 있습니다</li>
+        <li>1. 먼저 <img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="등록">를 눌러 FAQ Master를 생성합니다. (하나의 FAQ 타이틀 생성 : 자주하시는 질문, 이용안내..등 )</li>
+        <li> 2. 상세보기에 있는 <img src="<?=G4_ADMIN_URL?>/img/icon_viewer.gif" alt="보기">을 눌러 세부 내용으로 들어갑니다.</li>
+    </ul>
 </section>
 
 
