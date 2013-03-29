@@ -44,30 +44,30 @@ $result = sql_query($sql);
     </colgroup>
     <thead id="content_head">
     <tr>
-        <th scope="row">ID</th>
-        <th scope="row">제목</th>
+        <th scope="col">ID</th>
+        <th scope="col">제목</th>
         <th><a href="./contentform.php"><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="내용입력버튼"></a></th>
     </tr>
     </thead>
     <tbody>
-        <?
-        for ($i=0; $row=mysql_fetch_array($result); $i++) {
-            $s_mod = icon("수정", "./contentform.php?w=u&co_id={$row['co_id']}");
-            $s_del = icon("삭제", "javascript:del('./contentformupdate.php?w=d&co_id={$row['co_id']}')");
-            $s_vie = icon("보기", G4_SHOP_URL."/content.php?co_id={$row['co_id']}");
+    <?
+    for ($i=0; $row=mysql_fetch_array($result); $i++) {
+        $s_mod = icon("수정", "./contentform.php?w=u&co_id={$row['co_id']}");
+        $s_del = icon("삭제", "javascript:del('./contentformupdate.php?w=d&co_id={$row['co_id']}')");
+        $s_vie = icon("보기", G4_SHOP_URL."/content.php?co_id={$row['co_id']}");
 
-            $list = $i%2;
-            echo "
-            <tr class='list$list ht'>
-                <td style=\"text-align:center\">{$row['co_id']}</td>
-                <td>".htmlspecialchars2($row['co_subject'])."</td>
-                <td>$s_mod $s_del $s_vie</td>
-            </tr>";
-        }
-        if ($i == 0) {
-            echo "<tr><td colspan=\"3\" align=\"center\" height=\"100\" bgcolor=\"#ffffff\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
-        }
-        ?>
+        $list = $i%2;
+        echo "
+        <tr class='list$list ht'>
+            <td style=\"text-align:center\">{$row['co_id']}</td>
+            <td>".htmlspecialchars2($row['co_subject'])."</td>
+            <td>$s_mod $s_del $s_vie</td>
+        </tr>";
+    }
+    if ($i == 0) {
+        echo "<tr><td colspan=\"3\" align=\"center\" height=\"100\" bgcolor=\"#ffffff\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
+    }
+    ?>
     </tbody>
     </table>
     <div><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></div>
