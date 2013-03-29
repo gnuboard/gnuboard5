@@ -112,7 +112,7 @@ if (isset($wr_id) && $wr_id) {
         set_session($ss_name, TRUE);
     }
 
-    $g4['title'] = strip_tags(conv_subject($write['wr_subject'], 255));
+    $g4['title'] = strip_tags(conv_subject($write['wr_subject'], 255))." > ".$board['bo_subject'];
 } else {
     if ($member['mb_level'] < $board['bo_list_level']) {
         if ($member['mb_id'])
@@ -123,7 +123,7 @@ if (isset($wr_id) && $wr_id) {
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
 
-    $g4['title'] = $board['bo_subject'];
+    $g4['title'] = $board['bo_subject']."&nbsp;".$page." 페이지";
 }
 
 include_once(G4_PATH.'/head.sub.php');

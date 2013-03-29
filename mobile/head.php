@@ -94,7 +94,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 <hr>
 
 <div id="wrapper">
-    <aside>
+    <aside id="aside">
         <?=(G4_IS_MOBILE?outlogin('basic'):outlogin('basic')); // 외부 로그인 ?>
     </aside>
     <div id="container">
