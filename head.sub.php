@@ -10,7 +10,7 @@ if (!isset($g4['title'])) {
 }
 else {
     $g4_head_title = $g4['title']; // 상태바에 표시될 제목
-    $g4_head_title .= " : ".$config['cf_title'];
+    $g4_head_title .= " | ".$config['cf_title'];
 }
 
 // 현재 접속자
