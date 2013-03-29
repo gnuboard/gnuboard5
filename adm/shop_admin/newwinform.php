@@ -42,18 +42,19 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <col class="grid_3">
         <col class="grid_5">
     </colgroup>
+    <tbody>
     <tr>
-        <th scope="col"><label for="nw_disable_hours">시간</label></th>
+        <th scope="row"><label for="nw_disable_hours">시간</label></th>
         <td colspan="3"><input type="text" name="nw_disable_hours" value="<? echo $nw['nw_disable_hours'] ?>" id="nw_disable_hours" required class="frm_input required" size="5"> 시간 동안 다시 띄우지 않음</td>
     </tr>
     <tr>
-        <th scope="col"><label for="nw_begin_time">시작일시</label></th>
+        <th scope="row"><label for="nw_begin_time">시작일시</label></th>
         <td>
             <input type="text" name="nw_begin_time" value="<? echo $nw['nw_begin_time'] ?>" id="nw_begin_time" required class="frm_input required" size="21" maxlength="19">
             <input type="checkbox" name="nw_begin_chk" value="<? echo date("Y-m-d 00:00:00", G4_SERVER_TIME); ?>" id="nw_begin_chk" onclick="if (this.checked == true) this.form.nw_begin_time.value=this.form.nw_begin_chk.value; else this.form.nw_begin_time.value = this.form.nw_begin_time.defaultValue;">
             <label for="nw_begin_chk">오늘</label>
         </td>
-        <th scope="col"><label for="nw_end_time">종료일시</label></th>
+        <th scope="row"><label for="nw_end_time">종료일시</label></th>
         <td>
             <input type="text" name="nw_end_time" value="<? echo $nw['nw_end_time'] ?>" id="nw_end_time" required class="frm_input requried" size="21" maxlength="19">
             <input type="checkbox" name="nw_end_chk" value="<? echo date("Y-m-d 23:59:59", G4_SERVER_TIME+(60*60*24*7)); ?>" id="nw_end_chk" onclick="if (this.checked == true) this.form.nw_end_time.value=this.form.nw_end_chk.value; else this.form.nw_end_time.value = this.form.nw_end_time.defaultValue;">
@@ -61,35 +62,36 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="nw_left">창위치 왼쪽</label></th>
+        <th scope="row"><label for="nw_left">창위치 왼쪽</label></th>
         <td>
            <input type="text" name="nw_left" value="<? echo $nw['nw_left'] ?>" id="nw_left" required class="frm_input requried" size="5">
         </td>
-        <th scope="col"><label for="nw_top">창위치 위</label></th>
+        <th scope="row"><label for="nw_top">창위치 위</label></th>
         <td>
             <input type="text" name="nw_top" value="<? echo $nw['nw_top'] ?>" id="nw_top" required class="frm_input requried"  size="5">
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="nw_width">창크기 폭</label></th>
+        <th scope="row"><label for="nw_width">창크기 폭</label></th>
         <td>
             <input type="text" name="nw_width" value="<? echo $nw['nw_width'] ?>" id="nw_width" required class="frm_input requried" size="5">
         </td>
-        <th scope="col"><label for="nw_height">창크기 높이</label></th>
+        <th scope="row"><label for="nw_height">창크기 높이</label></th>
         <td>
             <input type="text" name="nw_height" value="<? echo $nw['nw_height'] ?>" id="nw_height" required class="frm_input requried" size="5">
         </td>
     </tr>
     <tr>
-        <th scope="col"><label for="nw_subject">창제목</label></th>
+        <th scope="row"><label for="nw_subject">창제목</label></th>
         <td colspan="3">
             <input type="text" name="nw_subject" size="80" value="<? echo stripslashes($nw['nw_subject']) ?>" id="nw_subject" required class="frm_input requried">
         </td>
     </tr>
     <tr>
-        <th scope="col">내용</th>
+        <th scope="row">내용</th>
         <td colspan="3"><?=editor_html('nw_content', $nw['nw_content']);?></td>
     </tr>
+    </tbody>
     </table>
 </section>
 
