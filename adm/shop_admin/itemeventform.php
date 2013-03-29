@@ -67,7 +67,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <select name=ev_skin>
             <?  echo get_list_skin_options("^list\.skin\.(.*)\.php", G4_SHOP_PATH); ?>
             </select>
-
             <? if ($w == 'u') { ?>
             <script>document.all.ev_skin.value='<?=$ev['ev_skin']?>';</script>
             <? } ?>
@@ -79,7 +78,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
               <input type="text" name="ev_img_width" value="<? echo $ev['ev_img_width'] ?>" id="ev_img_width" class="frm_input" size="5"> 픽셀
         </td>
         <th scope="col"><label for="ev_img_height">출력이미지 높이</label></th>
-        <td><input type="text" name="ev_img_height" value="<? echo $ev['ev_img_height'] ?>" id="ev_img_height" class="frm_input" size="5"> 픽셀</td>
+        <td>
+          <input type="text" name="ev_img_height" value="<? echo $ev['ev_img_height'] ?>" id="ev_img_height" class="frm_input" size="5"> 픽셀
+        </td>
     </tr>
     <tr>
         <th scope="col"><label for="ev_list_mod">1라인 이미지수</label></th>
@@ -126,8 +127,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <? if ($mimg_str) { echo "<tr><td></td><td colspan=\"3\">$mimg_str</td></tr>"; } ?>
-
-
     <tr>
         <th scope="col">상단이미지</th>
         <td colspan="3">
@@ -144,8 +143,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <? if ($himg_str) { echo "<tr><td colspan=\"4\">$himg_str</td></tr>"; } ?>
-
-
     <tr>
         <th scope="col">하단이미지</th>
         <td colspan="3">
@@ -174,7 +171,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <?=editor_html('ev_tail_html', $ev['ev_tail_html']);?>
         </td>
     </tr>
-
     </tbody>
     </table>
 </section>

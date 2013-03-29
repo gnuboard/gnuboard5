@@ -117,7 +117,7 @@ function frmnewwin_check(f)
     return true;
 }
 
-document.frmnewwin.nw_subject.focus();
+// document.frmnewwin.nw_subject.focus();
 </script>
 
 <?
