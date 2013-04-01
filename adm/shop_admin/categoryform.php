@@ -89,6 +89,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="ca_explan_html" value="<?=$ca['ca_explan_html']?>">
 <section class="cbox">
     <h2>기본입력</h2>
+    <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -218,6 +219,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <section class="cbox">
     <h2>선택 입력</h2>
+    <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -294,6 +296,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <p>
 <section class="cbox">
     <h2>기타</h2>
+    <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
