@@ -48,8 +48,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="col"><label for="fa_order">출력순서</label></th>
         <td >
-            <input type="text" name="fa_order" value="<?=$fa['fa_order']?>" id="fa_order" class="frm_input" maxlength="10" size="10">
             <?=help('숫자가 작을수록 FAQ 페이지의 상단에 출력합니다.', 60, -50)?>
+            <input type="text" name="fa_order" value="<?=$fa['fa_order']?>" id="fa_order" class="frm_input" maxlength="10" size="10">
         </td>
     </tr>
     <tr>
