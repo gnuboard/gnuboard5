@@ -28,7 +28,7 @@ if (isset($wr_id) && $wr_id) {
     if (isset($group['gr_use_access']) && $group['gr_use_access']) {
         if ($is_guest) {
             $msg = "비회원은 이 게시판에 접근할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.";
-            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
         }
 
         // 그룹관리자 이상이라면 통과
@@ -49,7 +49,7 @@ if (isset($wr_id) && $wr_id) {
         if ($is_member)
             alert('글을 읽을 권한이 없습니다.', G4_URL);
         else
-            alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
     }
 
     // 자신의 글이거나 관리자라면 통과
@@ -118,7 +118,7 @@ if (isset($wr_id) && $wr_id) {
         if ($member['mb_id'])
             alert('목록을 볼 권한이 없습니다.', G4_URL);
         else
-            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
     }
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
