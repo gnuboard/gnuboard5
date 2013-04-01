@@ -107,7 +107,7 @@ if ($od_temp_point)
 
 $i_amount = $i_amount + $i_send_cost - $i_temp_point;
 
-$same_amount_check = false;
+$same_amount_check = $result_check = false;
 if ($od_settle_case == "무통장")
 {
     $od_temp_bank       = $i_amount;
@@ -131,6 +131,7 @@ else if ($od_settle_case == "계좌이체")
     $bank_name          = iconv("cp949", "utf8", $bank_name);
     $od_bank_account    = $bank_name;
     $same_amount_check  = true;
+    $result_check       = true;
     $pg_receipt_amount  = $amount;
 }
 else if ($od_settle_case == "가상계좌")
@@ -147,6 +148,7 @@ else if ($od_settle_case == "가상계좌")
     $depositor          = iconv("cp949", "utf8", $depositor);
     $od_bank_account    = $bankname.' '.$account.' '.$depositor;
     $od_deposit_name    = $od_name;
+    $result_check       = true;
 }
 else if ($od_settle_case == "휴대폰")
 {
@@ -161,6 +163,7 @@ else if ($od_settle_case == "휴대폰")
     $od_hp_time         = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $od_bank_account    = $commid.' '.$mobile_no;
     $same_amount_check  = true;
+    $result_check       = true;
     $pg_receipt_amount  = $amount;
 }
 else if ($od_settle_case == "신용카드")
@@ -177,6 +180,7 @@ else if ($od_settle_case == "신용카드")
     $card_name          = iconv("cp949", "utf8", $card_name);
     $od_bank_account    = $card_name;
     $same_amount_check  = true;
+    $result_check       = true;
     $pg_receipt_amount  = $amount;
 }
 else
@@ -187,6 +191,7 @@ else
 // 주문금액과 결제금액이 일치하는지 체크
 if($same_amount_check) {
     if((int)$i_amount !== (int)$pg_receipt_amount) {
+        $cancel_msg = 'Receipt amount error';
         include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
 
         die("Receipt Amount Error");
@@ -244,7 +249,15 @@ $sql = " insert {$g4['yc4_order_table']}
                 od_ip             = '$REMOTE_ADDR',
                 od_settle_case    = '$od_settle_case'
                 ";
-sql_query($sql);
+$result = sql_query($sql, false);
+
+// 주문정보 입력 오류시 kcp 결제 취소
+if($result_check && !$result) {
+    $cancel_msg = 'Order update error';
+    include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+
+    die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
+}
 
 // 장바구니 쇼핑에서 주문으로
 // 신용카드로 주문하면서 신용카드 포인트 사용하지 않는다면 포인트 부여하지 않음
@@ -257,7 +270,19 @@ $sql = "update {$g4['yc4_cart_table']}
            set ct_status = '주문'
                $sql_card_point
          where uq_id = '$tmp_uq_id' ";
-sql_query($sql);
+$result = sql_query($sql, false);
+
+// 주문정보 입력 오류시 kcp 결제 취소
+if($result_check && !$result) {
+    $cancel_msg = 'Order status update error';
+    include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+
+    echo "<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}";
+
+    // 주문삭제
+    sql_query(" delete from {$g4['yc4_order_table']} where od_id = '$od_id' and uq_id = '$tmp_uq_id' ");
+    exit;
+}
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가
 if ($is_member && $od_receipt_point) {

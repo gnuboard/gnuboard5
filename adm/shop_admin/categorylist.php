@@ -44,134 +44,124 @@ $sql_order = "order by $sst $sod";
 
 // 출력할 레코드를 얻음
 $sql  = " select *
-           $sql_common
-           $sql_order
-           limit $from_record, $rows ";
+             $sql_common
+             $sql_order
+             limit $from_record, $rows ";
 $result = sql_query($sql);
 
-//$qstr = "page=$page&sort1=$sort1&sort2=$sort2";
-$qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
+//$qstr = "page=".$page."&amp;sort1=".$sort1."&amp;sort2=".$sort2;
+$qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
 ?>
 
-<table width=100% cellpadding=4 cellspacing=0>
-<form name=flist>
-<input type=hidden name=page value="<?=$page?>">
-<tr>
-    <td width=20%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
-    <td width=60% align=center>
-        <select name=sfl>
-            <option value='ca_name'>분류명
-            <option value='ca_id'>분류코드
-            <option value='ca_mb_id'>회원아이디
-        </select>
-        <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
+<form name="flist">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="save_stx" value="<?=$stx?>">
 
-        <input type=hidden name=save_stx value='<?=$stx?>'>
-        <input type=text name=stx value='<?=$stx?>'>
-        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
-    </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
+<fieldset>
+    <legend>분류 검색</legend>
+    <span>
+        <?=$listall?>
+        생성된 분류 수 <?=number_format($total_count)?>개
+    </span>
+    <select name="sfl" title="검색대상">
+        <option value="ca_name"<?=get_selected($_GET['sfl'], "ca_name", true);?>>분류명</option>
+        <option value="ca_id"<?=get_selected($_GET['sfl'], "ca_id", true);?>>분류코드</option>
+        <option value="ca_mb_id"<?=get_selected($_GET['sfl'], "ca_mb_id", true);?>>회원아이디</option>
+    </select>
+    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
+    <input type="submit" value="검색" class="btn_submit">
+</fieldset>
+
 </form>
-</table>
 
-<form name=fcategorylist method='post' action='./categorylistupdate.php' autocomplete='off' style="margin:0px;">
+<section class="cbox">
+    <h2>생성된 분류 전체 목록</h2>
+    <p>생성된 분류 확인, 추가 및 간단한 수정을 할 수 있습니다. 수정한 내용 적용은 <a href="#form_to_submit"><strong>일괄수정</strong></a> 버튼을 누르세요.</p>
 
-<table cellpadding=0 cellspacing=0 width=100%>
-<input type=hidden name=page  value='<? echo $page ?>'>
-<input type=hidden name=sort1 value='<? echo $sort1 ?>'>
-<input type=hidden name=sort2 value='<? echo $sort2 ?>'>
-<tr><td colspan=11 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td width=80><?=subject_sort_link("ca_id");?>분류코드</a></td>
-    <td width='' ><?=subject_sort_link("ca_name");?>분류명</a></td>
-    <td width=80 title='해당분류관리 회원아이디'><?=subject_sort_link("ca_mb_id");?>회원아이디</a></td>
-    <td width=60 ><?=subject_sort_link("ca_use");?>판매가능</a></td>
-    <td width=60 ><?=subject_sort_link("ca_stock_qty");?>기본재고</a></td>
-    <td width=50 >상품수</td>
-    <td width=120>
-        <?
+    <?if ($is_admin == 'super') {?>
+    <div id="btn_add">
+        <a href="./categoryform.php" id="cate_add">분류 추가</a>
+    </div>
+    <?}?>
+
+    <form name="fcategorylist" method="post" action="./categorylistupdate.php" autocomplete="off">
+    <input type="hidden" name="page"  value="<?=$page ?>">
+    <input type="hidden" name="sort1" value="<?=$sort1 ?>">
+    <input type="hidden" name="sort2" value="<?=$sort2 ?>">
+
+    <table class="frm_basic">
+    <thead>
+    <tr>
+        <th scope="col"><?=subject_sort_link("ca_id");?>분류<br>코드</a></th>
+        <th scope="col"><?=subject_sort_link("ca_name");?>분류명</a></th>
+        <th scope="col"><?=subject_sort_link("ca_mb_id");?>회원아이디</a></th>
+        <th scope="col"><?=subject_sort_link("ca_use");?>판매<br>가능</a></th>
+        <th scope="col"><?=subject_sort_link("ca_stock_qty");?>기본재고</a></th>
+        <th scope="col">상품수</th>
+        <th scope="col">관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        $level = strlen($row['ca_id']) / 2 - 1;
+        $s_level = '<label for="ca_name_'.$i.'">'.($level+1).'단계 분류</label>';
+        if ($level > 0) { // 2단계 이상
+            $style = 'style="text-align:right;"';
+        } else { // 1단계
+        }
+
+        $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">2단계 추가</a>';
+        $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'">수정</a>';
+        $s_vie = '<a href="'.$g4['shop_path'].'/list.php?ca_id='.$row['ca_id'].'">보기</a>';
+
         if ($is_admin == 'super')
-            echo "<a href='./categoryform.php'><img src='".G4_ADMIN_URL."/img/icon_insert.gif' border=0 title='1단계분류 추가'></a>";
-        else
-            echo "&nbsp;";
-        ?>
-    </td>
-</tr>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+            $s_del = '<a href="javascript:del(\'./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'\');">삭제</a>';
 
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    $s_level = "";
-    $level = strlen($row['ca_id']) / 2 - 1;
-    if ($level > 0) // 2단계 이상
-    {
-        $s_level = "&nbsp;&nbsp;<img src='".G4_ADMIN_URL."/img/icon_catlevel.gif' border=0 width=17 height=15 align=absmiddle alt='".($level+1)."단계 분류'>";
-        for ($k=1; $k<$level; $k++)
-            $s_level = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $s_level;
-        $style = " ";
-    }
-    else // 1단계
-    {
-        $style = " style='border:1 solid; border-color:#0071BD;' ";
-    }
+        // 해당 분류에 속한 상품의 갯수
+        $sql1 = " select COUNT(*) as cnt from {$g4['yc4_item_table']}
+                      where ca_id = '{$row['ca_id']}'
+                      or ca_id2 = '{$row['ca_id']}'
+                      or ca_id3 = '{$row['ca_id']}' ";
+        $row1 = sql_fetch($sql1);
 
-    $s_add = icon("추가", "./categoryform.php?ca_id={$row['ca_id']}&$qstr");
-    $s_upd = icon("수정", "./categoryform.php?w=u&ca_id={$row['ca_id']}&$qstr");
-    $s_vie = icon("보기", "$g4[shop_path]/list.php?ca_id={$row['ca_id']}");
+    ?>
+    <tr>
+        <td class="td_num">
+            <input type="hidden" name="ca_id[<?=$i?>]" value="<?=$row['ca_id']?>">
+            <?=$row['ca_id']?>
+        </td>
+        <td <?=$style?>><?=$s_level?> <input type="text" name="ca_name[<?=$i?>]" value="<?=get_text($row['ca_name'])?>" id="ca_name_<?=$i?>" title="<?=$row['ca_id']?>" required class="frm_input required" size="35"></td>
 
-    if ($is_admin == 'super')
-        $s_del = icon("삭제", "javascript:del('./categoryformupdate.php?w=d&ca_id={$row['ca_id']}&$qstr');");
+        <td class="td_mbid">
+            <? if ($is_admin == 'super') {?><input type="text" name="ca_mb_id[<?=$i?>]" size="10" maxlength="20" value="<?=$row['ca_mb_id']?>" class="frm_input">
+            <? } else { ?>
+                <input type="hidden" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>">
+                <?=$row['ca_mb_id']?>
+            <? } ?>
+        </td>
 
+        <td class="td_chk"><input type="checkbox" name="ca_use[<?=$i?>]" value="1" <?=($row['ca_use'] ? "checked" : "")?>></td>
+        <td class="td_bignum"><input type="text" name="ca_stock_qty[<?=$i?>]" value="<?=$row['ca_stock_qty']?>" class="frm_input" size="6" style="text-align:right"></td>
+        <td class="td_num"><a href="./itemlist.php?sca=<?=$row['ca_id']?>"><?=$row1['cnt']?></a></td>
+        <td class="td_mng"><?=$s_add?><br><?=$s_vie?> <?=$s_upd?> <?=$s_del?></td>
+    </tr>
+    <? }
+    if ($i == 0) echo "<tr><td colspan=\"7\" class=\"empty_table\">자료가 한 건도 없습니다.</td></tr>\n";
+    ?>
+    </tbody>
+    </table>
 
-    // 해당 분류에 속한 상품의 갯수
-    $sql1 = " select COUNT(*) as cnt from {$g4['yc4_item_table']}
-               where ca_id = '{$row['ca_id']}'
-                  or ca_id2 = '{$row['ca_id']}'
-                  or ca_id3 = '{$row['ca_id']}' ";
-    $row1 = sql_fetch($sql1);
+    <div id="form_to_submit" class="btn_list">
+        <input type="submit" value="일괄수정">
+    </div>
 
-    $list = $i%2;
-    echo "
-    <input type=hidden name='ca_id[$i]' value='{$row['ca_id']}'>
-    <tr class='list$list center ht'>
-        <td align=left>{$row['ca_id']}</td>
-        <td align=left>$s_level <input type=text name='ca_name[$i]' value='".get_text($row['ca_name'])."' title='{$row['ca_id']}' required itemname='분류명' class=ed size=35 $style></td>";
+    </form>
 
-    if ($is_admin == 'super')
-        echo "<td><input type=text class=ed name='ca_mb_id[$i]' size=10 maxlength=20 value='{$row['ca_mb_id']}'></td>";
-    else
-    {
-        echo "<input type=hidden name='ca_mb_id[$i]' value='{$row['ca_mb_id']}'>";
-        echo "<td>{$row['ca_mb_id']}</td>";
-    }
+    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
-    echo "
-        <td><input type=checkbox name='ca_use[$i]' ".($row['ca_use'] ? "checked" : "")." value='1'></td>
-        <td><input type=text name='ca_stock_qty[$i]'        size=6 style='text-align:right;' class=ed value='{$row['ca_stock_qty']}'></td>
-        <td><a href='./itemlist.php?sca=$row[ca_id]'><U>{$row1['cnt']}</U></a></td>
-        <td>$s_upd $s_del $s_vie $s_add</td>
-    </tr>";
-}
-
-if ($i == 0) {
-    echo "<tr><td colspan=20 height=100 bgcolor='#ffffff' align=center><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
-}
-?>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
-
-</table>
-
-
-<table width=100%>
-<tr>
-    <td width=50%><input type=submit class=btn1 value='일괄수정'></td>
-    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
-</tr>
-</form>
-</table>
-
+</section>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
