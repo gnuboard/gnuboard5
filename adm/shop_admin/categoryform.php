@@ -100,7 +100,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tbody> 
     <tr>
         <th scope="row"><label for="ca_id">분류코드</label></th>
-        <td rowspan="3">
+        <td colspan="3">
             <? if ($w == "") { ?>
                 <?=help("자동으로 보여지는 분류코드를 사용하시길 권해드리지만 직접 입력한 값으로도 사용할 수 있습니다.\n분류코드는 나중에 수정이 되지 않으므로 신중하게 결정하여 사용하십시오.\n\n분류코드는 2자리씩 10자리를 사용하여 5단계를 표현할 수 있습니다.\n0~z까지 입력이 가능하며 한 분류당 최대 1296가지를 표현할 수 있습니다.\n그러므로 총 3656158440062976가지의 분류를 사용할 수 있습니다.");?>
                 <input type="text" name="ca_id" value="<?=$subid?>" id="ca_id" class="frm_input" size="<?=$sublen?>" maxlength="<?=$sublen?>">
