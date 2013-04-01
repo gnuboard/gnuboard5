@@ -34,7 +34,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <section class="cbox">
     <h2>새창 입력 수정</h2>
-    <?=$pg_anchor?>
+    <p><?=help("쇼핑몰 초기화면 접속 시 자동으로 뜰 새창을 설정/관리합니다.")?></p>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
