@@ -75,8 +75,14 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 
 $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
-?>
 
+
+$pg_anchor ="<ul class=\"anchor\">
+<li><a href=\"#frm_basic\">기본입력</a></li>
+<li><a href=\"#frm_select\">선택입력</a></li>
+</ul>
+";
+?>
 
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -87,15 +93,15 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="sort1" value="<?=$sort1?>">
 <input type="hidden" name="sort2" value="<?=$sort2?>">
 <input type="hidden" name="ca_explan_html" value="<?=$ca['ca_explan_html']?>">
-<section class="cbox">
+<section id="frm_basic" class="cbox">
     <h2>기본입력</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_5">
+        <col class="grid_6">
         <col class="grid_3">
-        <col class="grid_5">
+        <col class="grid_6">
     </colgroup>
     <tbody> 
     <tr>
@@ -217,13 +223,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </table>
 </section>
 
-<section class="cbox">
+<section id="frm_select" class="cbox">
     <h2>선택 입력</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_13">
+        <col class="grid_15">
     </colgroup>
     <tbody>
     <tr>
