@@ -24,82 +24,87 @@ $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<?//=subtitle($html_title)?>
+<form name="frmfaqmasterform" action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);" method="post" enctype="MULTIPART/FORM-DATA">
+<input type="hidden" name="w" value="<? echo $w ?>">
+<input type="hidden" name="fm_id" value="<? echo $fm_id ?>">
 
-<form name=frmfaqmasterform method=post action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);"enctype="MULTIPART/FORM-DATA" style="margin:0px;">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=fm_id value='<? echo $fm_id ?>'>
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=15% class=tdsl></colgroup>
-<colgroup width=85% bgcolor=#ffffff></colgroup>
-<tr><td colspan=2 height=2 bgcolor=0E87F9></td></tr>
-<tr class=ht>
-    <td>제목</td>
-    <td>
-        <input type=text class=ed name=fm_subject size=60 value='<?=get_text($fm['fm_subject']) ?>' required itemname="제목">
-        <?
-        if ($w == 'u')
-        {
-            echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
-            echo " <a href='./faqlist.php?fm_id=$fm_id'>상세보기</a>";
-        }
-        ?>
-    </td>
-</tr>
-<tr class=ht>
-    <td>상단이미지</td>
-    <td colspan=3>
-        <input type=file class=ed name=fm_himg size=40>
-        <?
-        $himg = G4_DATA_PATH."/faq/{$fm['fm_id']}_h";
-        if (file_exists($himg)) {
-            echo "<input type=checkbox name=fm_himg_del value='1'>삭제";
-            $himg_str = "<img src='".G4_DATA_URL."/faq/{$fm['fm_id']}_h' border=0>";
-        }
-        ?>
-    </td>
-</tr>
-<? if ($himg_str) { echo "<tr><td colspan=4>$himg_str</td></tr>"; } ?>
+<section class="cbox">
+    <h2>FAQ입력</h2>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_15">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="fm_subject">제목</label></th>
+        <td>
+            <input type="text" value="<?=get_text($fm['fm_subject']) ?>" name="fm_subject" id="fm_subject" required class="frm_input requried"  size="60">
+            <?
+            if ($w == 'u')
+            {
+                echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
+                echo " <a href='./faqlist.php?fm_id=$fm_id'>상세보기</a>";
+            }
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">상단이미지</th>
+        <td>
+            <input type="file" name="fm_himg">
+            <?
+            $himg = G4_DATA_PATH."/faq/{$fm['fm_id']}_h";
+            if (file_exists($himg)) {
+                echo "<input type=checkbox name=fm_himg_del value='1'>삭제";
+                $himg_str = "<img src='".G4_DATA_URL."/faq/{$fm['fm_id']}_h' border=0>";
+            }
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">하단이미지</th>
+        <td>
+            <input type="file" name="fm_timg">
+            <?
+            $timg = G4_DATA_PATH."/faq/{$fm['fm_id']}_t";
+            if (file_exists($timg)) {
+                echo "<input type=checkbox name=fm_timg_del value='1'>삭제";
+                $timg_str = "<img src='".G4_DATA_URL."/faq/{$fm['fm_id']}_t' border=0>";
+            }
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">상단 내용</th>
+        <td>
+            <?=editor_html('fm_head_html', $fm['fm_head_html']);?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">하단 내용</th>
+        <td>
+            <?=editor_html('fm_tail_html', $fm['fm_tail_html']);?>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</section>
 
-<tr class=ht>
-    <td>하단이미지</td>
-    <td colspan=3>
-        <input type=file class=ed name=fm_timg size=40>
-        <?
-        $timg = G4_DATA_PATH."/faq/{$fm['fm_id']}_t";
-        if (file_exists($timg)) {
-            echo "<input type=checkbox name=fm_timg_del value='1'>삭제";
-            $timg_str = "<img src='".G4_DATA_URL."/faq/{$fm['fm_id']}_t' border=0>";
-        }
-        ?>
-    </td>
-</tr>
-<? if ($timg_str) { echo "<tr><td colspan=4>$timg_str</td></tr>"; } ?>
-
-<tr>
-    <td>상단 내용</td>
-    <td style='padding-top:5px; padding-bottom:5px;'><?=editor_html('fm_head_html', $fm['fm_head_html']);?></td>
-</tr>
-<tr>
-    <td>하단 내용</td>
-    <td style='padding-top:5px; padding-bottom:5px;'><?=editor_html('fm_tail_html', $fm['fm_tail_html']);?></td>
-</tr>
-<tr><td colspan=2 height=1 bgcolor=CCCCCC></td></tr>
-</table>
-
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./faqmasterlist.php';">
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./faqmasterlist.php">목록</a>
+</div>
 </form>
 
-<script language="javascript">
+<script>
 function frmfaqmasterform_check(f)
 {
     <?=get_editor_js('fm_head_html');?>
     <?=get_editor_js('fm_tail_html');?>
 }
 
-document.frmfaqmasterform.fm_subject.focus();
+// document.frmfaqmasterform.fm_subject.focus(); 김혜련 2013-04-02 포커스해제
 </script>
 
 <?
