@@ -105,13 +105,15 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $level = strlen($row['ca_id']) / 2 - 1;
-        $s_level = '<label for="ca_name_'.$i.'">'.($level+1).'단 분류</label>';
-        $s_level_input_size = 40 - $level *5; // 단이 낮아질 수록 입력칸의 넓이도 작아짐
+        if ($level > 0) $class = 'class="cate_list_lbl"'; // 2단 이상 분류의 label 에 스타일 부여 - 지운아빠 2013-04-02
+        else $class = '';
+        $s_level = '<label for="ca_name_'.$i.'" '.$class.'>'.($level+1).'단 분류</label>';
+        $s_level_input_size = 40 - $level *5; // 하위 분류일 수록 입력칸 넓이 작아짐 - 지운아빠 2013-04-02
 
         if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">'.($level+2).'단 추가</a><br>'; // 분류는 5단계까지만 가능
         else $s_add = '';
         $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'">수정</a>';
-        $s_vie = '<a href="'.$g4['shop_path'].'/list.php?ca_id='.$row['ca_id'].'">보기</a>';
+        $s_vie = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'">보기</a>';
 
         if ($is_admin == 'super')
             $s_del = '<a href="javascript:del(\'./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'\');">삭제</a>';
