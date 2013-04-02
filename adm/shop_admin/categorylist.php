@@ -113,7 +113,7 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
             $p_ca_id = substr($row['ca_id'], 0, $level*2);
             $sql = " select ca_name from {$g4['yc4_category_table']} where ca_id = '$p_ca_id' ";
             $temp = sql_fetch($sql);
-            $p_ca_name = $temp['ca_name'].'의';
+            $p_ca_name = $temp['ca_name'].'의하위';
         } else
             $class = '';
 
