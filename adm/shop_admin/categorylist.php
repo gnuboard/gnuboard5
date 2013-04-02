@@ -7,7 +7,6 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = '분류관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-
 $where = " where ";
 $sql_search = "";
 if ($stx != "") {
@@ -76,7 +75,7 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
 
 <section class="cbox">
     <h2>생성된 분류 전체 목록</h2>
-    <p>생성된 분류 확인, 추가 및 간단한 수정을 할 수 있습니다. 수정한 내용 적용은 <a href="#form_to_submit"><strong>일괄수정</strong></a> 버튼을 누르세요.</p>
+    <p>생성된 분류 확인, 추가 및 간략 수정을 할 수 있습니다.</p>
 
     <?if ($is_admin == 'super') {?>
     <div id="btn_add">
@@ -106,13 +105,11 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $level = strlen($row['ca_id']) / 2 - 1;
-        $s_level = '<label for="ca_name_'.$i.'">'.($level+1).'단계 분류</label>';
-        if ($level > 0) { // 2단계 이상
-            $style = 'style="text-align:right;"';
-        } else { // 1단계
-        }
+        $s_level = '<label for="ca_name_'.$i.'">'.($level+1).'단 분류</label>';
+        $s_level_input_size = 40 - $level *5; // 단이 낮아질 수록 입력칸의 넓이도 작아짐
 
-        $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">2단계 추가</a>';
+        if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">'.($level+2).'단 추가</a><br>'; // 분류는 5단계까지만 가능
+        else $s_add = '';
         $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'">수정</a>';
         $s_vie = '<a href="'.$g4['shop_path'].'/list.php?ca_id='.$row['ca_id'].'">보기</a>';
 
@@ -125,27 +122,27 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
                       or ca_id2 = '{$row['ca_id']}'
                       or ca_id3 = '{$row['ca_id']}' ";
         $row1 = sql_fetch($sql1);
-
     ?>
     <tr>
         <td class="td_num">
             <input type="hidden" name="ca_id[<?=$i?>]" value="<?=$row['ca_id']?>">
             <?=$row['ca_id']?>
         </td>
-        <td <?=$style?>><?=$s_level?> <input type="text" name="ca_name[<?=$i?>]" value="<?=get_text($row['ca_name'])?>" id="ca_name_<?=$i?>" title="<?=$row['ca_id']?>" required class="frm_input required" size="35"></td>
+        <td class="td_shop_category"><?=$s_level?> <input type="text" name="ca_name[<?=$i?>]" value="<?=get_text($row['ca_name'])?>" id="ca_name_<?=$i?>" title="<?=$row['ca_id']?>" required class="frm_input required" size="<?=$s_level_input_size?>"></td>
 
-        <td class="td_mbid">
-            <? if ($is_admin == 'super') {?><input type="text" name="ca_mb_id[<?=$i?>]" size="10" maxlength="20" value="<?=$row['ca_mb_id']?>" class="frm_input">
+        <td class="td_mbid_input">
+            <? if ($is_admin == 'super') {?>
+            <input type="text" name="ca_mb_id[<?=$i?>]" size="10" maxlength="20" value="<?=$row['ca_mb_id']?>" class="frm_input" title="회원아이디">
             <? } else { ?>
-                <input type="hidden" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>">
-                <?=$row['ca_mb_id']?>
+            <input type="hidden" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>">
+            <?=$row['ca_mb_id']?>
             <? } ?>
         </td>
 
         <td class="td_chk"><input type="checkbox" name="ca_use[<?=$i?>]" value="1" <?=($row['ca_use'] ? "checked" : "")?>></td>
         <td class="td_bignum"><input type="text" name="ca_stock_qty[<?=$i?>]" value="<?=$row['ca_stock_qty']?>" class="frm_input" size="6" style="text-align:right"></td>
         <td class="td_num"><a href="./itemlist.php?sca=<?=$row['ca_id']?>"><?=$row1['cnt']?></a></td>
-        <td class="td_mng"><?=$s_add?><br><?=$s_vie?> <?=$s_upd?> <?=$s_del?></td>
+        <td class="td_mng"><?=$s_add?><?=$s_vie?> <?=$s_upd?> <?=$s_del?></td>
     </tr>
     <? }
     if ($i == 0) echo "<tr><td colspan=\"7\" class=\"empty_table\">자료가 한 건도 없습니다.</td></tr>\n";
@@ -153,7 +150,7 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
     </tbody>
     </table>
 
-    <div id="form_to_submit" class="btn_list">
+    <div class="btn_list">
         <input type="submit" value="일괄수정">
     </div>
 
