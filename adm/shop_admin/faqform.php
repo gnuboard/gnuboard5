@@ -38,22 +38,21 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <section class="cbox">
     <h2>FAQ상세입력 수정</h2>
-    <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_13">
+        <col class="grid_15">
     </colgroup>
     <tbody>
     <tr>
-        <th scope="col"><label for="fa_order">출력순서</label></th>
+        <th scope="row"><label for="fa_order">출력순서</label></th>
         <td >
             <?=help('숫자가 작을수록 FAQ 페이지의 상단에 출력합니다.', 60, -50)?>
             <input type="text" name="fa_order" value="<?=$fa['fa_order']?>" id="fa_order" class="frm_input" maxlength="10" size="10">
         </td>
     </tr>
     <tr>
-        <th scope="col">질문
+        <th scope="row">질문
             <? if ($w == 'u') {
                 echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
                 }
@@ -64,7 +63,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="col">답변</th>
+        <th scope="row">답변</th>
         <td ><?=editor_html('fa_content', $fa['fa_content']);?></td>
     </tr>
     </tbody>

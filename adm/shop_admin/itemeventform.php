@@ -40,13 +40,12 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <section class="cbox">
     <h2>이벤트 입력 수정</h2>
-    <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_5">
+        <col class="grid_6">
         <col class="grid_3">
-        <col class="grid_5">
+        <col class="grid_6">
     </colgroup>
     <tbody>
     <? if ($w == "u") { ?>
