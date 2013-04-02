@@ -20,12 +20,15 @@ if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페�
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 <style type="text/css">
-
+    .banner_center{text-align:center}
 </style>
 
 <section class="cbox">
     <h2>배너관리</h2>
     <p>건수 <? echo $total_count ?></p>
+    <div id="btn_add">
+        <a href="./bannerform.php">배너추가</a>
+    </div>
     <table class="frm_flb">
     <colgroup>
         <col class="grid_1">
@@ -46,7 +49,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         <th scope="col">종료일시</th>
         <th scope="col">출력순서</th>
         <th scope="col">조회</th>
-        <th scope="col"><?=icon("입력", "./bannerform.php");?></th>
+        <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
@@ -76,14 +79,14 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         $list = $i%2;
         ?>
         <tr class="list<?=$list?> center">
-            <td><?=$row['bn_id']?></td>
+            <td class="banner_center"><?=$row['bn_id']?></td>
             <td><?=$bn_img?></td>
-            <td><?=$row['bn_position']?></td>
+            <td class="banner_center"><?=$row['bn_position']?></td>
             <td><?=$bn_begin_time?></td>
             <td><?=$bn_end_time?></td>
-            <td><?=$row['bn_order']?></td>
-            <td><?=$row['bn_hit']?></td>
-            <td><?=$s_mod?> <?=$s_del?></td>
+            <td class="banner_center"><?=$row['bn_order']?></td>
+            <td class="banner_center"><?=$row['bn_hit']?></td>
+            <td class="banner_center"><a href="./bannerform.php">수정</a> <a href="./bannerformupdate.php">삭제</a></td>
         </tr>
         <?
         }
