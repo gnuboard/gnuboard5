@@ -105,9 +105,19 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $level = strlen($row['ca_id']) / 2 - 1;
-        if ($level > 0) $class = 'class="cate_list_lbl"'; // 2단 이상 분류의 label 에 스타일 부여 - 지운아빠 2013-04-02
-        else $class = '';
-        $s_level = '<label for="ca_name_'.$i.'" '.$class.'>'.($level+1).'단 분류</label>';
+        $p_ca_name = '';
+
+        if ($level > 0) {
+            $class = 'class="cate_list_lbl"'; // 2단 이상 분류의 label 에 스타일 부여 - 지운아빠 2013-04-02
+            // 상위단계의 분류명
+            $p_ca_id = substr($row['ca_id'], 0, $level*2);
+            $sql = " select ca_name from {$g4['yc4_category_table']} where ca_id = '$p_ca_id' ";
+            $temp = sql_fetch($sql);
+            $p_ca_name = $temp['ca_name'].'의';
+        } else
+            $class = '';
+
+        $s_level = '<label for="ca_name_'.$i.'" '.$class.'>'.$p_ca_name.($level+1).'단 분류</label>';
         $s_level_input_size = 40 - $level *5; // 하위 분류일 수록 입력칸 넓이 작아짐 - 지운아빠 2013-04-02
 
         if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">'.($level+2).'단 추가</a><br>'; // 분류는 5단계까지만 가능
