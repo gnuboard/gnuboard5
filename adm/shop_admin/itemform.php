@@ -91,6 +91,13 @@ $qstr  = "$qstr&sca=$sca&page=$page";
 
 $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
+
+$pg_anchor ="<ul class=\"anchor\">
+<li><a href=\"#frm_basic_item\">기본정보</a></li>
+<li><a href=\"#frm_image\">이미지</a></li>
+<li><a href=\"#frm_select_item\">선택정보</a></li>
+</ul>
+";
 ?>
 
 <form name="fitemform" action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off">
@@ -110,15 +117,15 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="it_explan_html" value="1"><!---->
 
-<section class="cbox">
+<section id="frm_basic_item" class="cbox">
     <h2>기본정보</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_5">
+        <col class="grid_6">
         <col class="grid_3">
-        <col class="grid_5">
+        <col class="grid_6">
     </colgroup>
     <tbody>
     <tr>
@@ -207,7 +214,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="it_name">상품명</label></th>
         <td colspan="3">
-            <input type="text" name="it_name" value="<?=get_text(cut_str($it['it_name'], 250, ""))?>" id="it_name" required class="frm_input required" size="120">
+            <input type="text" name="it_name" value="<?=get_text(cut_str($it['it_name'], 250, ""))?>" id="it_name" required class="frm_input required" size="100">
         </td>
     </tr>
     <tr>
@@ -219,7 +226,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="it_order">출력순서</label></th>
         <td>
             <?=help("상품의 출력순서를 인위적으로 변경할때 사용합니다.\n숫자를 입력하며 기본은 0 입니다.\n숫자가 작을 수록 상위에 출력됩니다.\n음수 입력도 가능합니다.\n구간 :  -2147483648 ~ 2147483647");?>
-            <input type="text" name="it_order" value="<? echo $it['it_order'] ?>" id="it_order" class="frm_input" size="10">
+            <input type="text" name="it_order" value="<? echo $it['it_order'] ?>" id="it_order" class="frm_input" size="12">
         </td>
     </tr>
     <tr>
@@ -242,12 +249,12 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="it_maker">제조사</label></th>
         <td>
             <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
-            <input type="text" name="it_maker" value="<?=get_text($it['it_maker'])?>" id="it_maker" class="frm_input" size="41">
+            <input type="text" name="it_maker" value="<?=get_text($it['it_maker'])?>" id="it_maker" class="frm_input" size="40">
         </td>
         <th scope="row"><label for="it_origin">원산지</label></th>
         <td>
             <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
-            <input type="text" name="it_origin" value="<?=get_text($it['it_origin'])?>" id="it_origin" class="frm_input" size="41">
+            <input type="text" name="it_origin" value="<?=get_text($it['it_origin'])?>" id="it_origin" class="frm_input" size="40">
         </td>
     </tr>
         <?
@@ -271,7 +278,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <td colspan="4">
 <style type="text/css">
-#cost_box{width:900px}
+#cost_box{width:890px}
 #cost_box h3{width:158px;height:300px;line-height:300px;float:left}
 #cost_box li{list-style:none;position:relative;float:left;width:110px;height:300px;margin-right:12px}
 #cost_box input{background:#fedddd}
@@ -313,7 +320,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="it_basic">기본설명</label></th>
         <td colspan="3">
             <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
-            <input type="text" name="it_basic" value="<?=get_text($it['it_basic'])?>" id="it_basic" class="frm_input" size="120"><!-- width:727px-->
+            <input type="text" name="it_basic" value="<?=get_text($it['it_basic'])?>" id="it_basic" class="frm_input" size="90">
         </td>
     </tr>
     <? if ($it['it_id']) { ?>
@@ -364,13 +371,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </table>
 </section>
 
-<section class="cbox">
+<section id="frm_image" class="cbox">
     <h2>이미지</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_13">
+        <col class="grid_15">
     </colgroup>
     <tbody>
     <tr>
@@ -398,6 +405,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row">이미지(중)</th>
         <td>
+            <?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
             <input type="file" name="it_mimg">
             <?
             $mimg = G4_DATA_PATH."/item/{$it[it_id]}_m";
@@ -407,12 +415,12 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                 echo "<div id='mimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_m' border=\"1\"></div>";
             }
             ?>
-            &nbsp;<?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
         </td>
     </tr>
     <tr>
         <th scope="row">이미지(소)</th>
         <td>
+            <?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
             <input type="file" name="it_simg">
             <?
             $simg = G4_DATA_PATH."/item/{$it[it_id]}_s";
@@ -422,7 +430,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                 echo "<div id='simg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_s' border=\"1\"></div>";
             }
             ?>
-            &nbsp;<?=help("업로드 하지 않으면 기본 noimage 로 출력합니다.");?>
         </td>
     </tr>
     <? for ($i=2; $i<=5; $i++) { // 이미지(대)는 5개 ?>
@@ -451,7 +458,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <a href="./itemlist.php?<?=$qstr?>">목록</a>
 </div>
 
-<!--2013-03-26 김혜련 선택된 목록 / 등록된 목록 구조 다시 짜야함 start-->
+<!-- 김혜련 2013-03-26 선택된 목록 / 등록된 목록 구조 다시 짜야함 start-->
 
 <?//=subtitle("선택정보")?>
 <table width=100% cellpadding=0 cellspacing=0 border=0>
@@ -751,9 +758,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </td>
 </tr>
 </table>
-<!--2013-03-26 김혜련 선택된 목록 / 등록된 목록 구조 다시 짜야함 end-->
+<!-- 김혜련 2013-03-26 선택된 목록 / 등록된 목록 구조 다시 짜야함 end-->
 
-<section class="cbox">
+<section id="frm_select_item" class="cbox">
     <h2>선택정보</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
@@ -765,6 +772,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </colgroup>
     <tbody>
     <tr>
+        <!--김혜련 2013-04-02 선택된 목록 / 등록된 목록 넣을 곳-->
         <th scope="row"></th>
         <td></td>
         <th scope="row"></th>
@@ -773,6 +781,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row">상단이미지</th>
         <td colspan="3">
+            <?=help("상품상세설명 페이지 상단에 출력하는 이미지입니다.");?>
             <input type="file" name="it_himg">
             <?
             $himg_str = "";
@@ -782,13 +791,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                 $himg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_h' border=0>";
             }
             ?>
-            <?=help("상품상세설명 페이지 상단에 출력하는 이미지입니다.");?>
         </td>
     </tr>
     <? if ($himg_str) { echo "<tr><td colspan=\"4\">$himg_str</td></tr>"; } ?>
     <tr>
         <th scope="row">하단이미지</th>
         <td colspan="3">
+            <?=help("상품상세설명 페이지 하단에 출력하는 이미지입니다.");?>
             <input type="file" name="it_timg">
             <?
             $timg_str = "";
@@ -798,17 +807,16 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                 $timg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_t' border=\"0\">";
             }
             ?>
-            <?=help("상품상세설명 페이지 하단에 출력하는 이미지입니다.");?>
         </td>
     </tr>
     <? if ($timg_str) { echo "<tr><td colspan=\"4\">$timg_str</td></tr>"; } ?>
     <tr>
-        <th scope="row"><?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?>상품상단내용</th>
-        <td colspan="3"><?=editor_html('it_head_html', $it['it_head_html']);?></td>
+        <th scope="row">상품상단내용</th>
+        <td colspan="3"><?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?><?=editor_html('it_head_html', $it['it_head_html']);?></td>
     </tr>
     <tr>
-        <th scope="row"><?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?>상품하단내용</th>
-        <td colspan="3"><?=editor_html('it_tail_html', $it['it_tail_html']);?></td>
+        <th scope="row">상품하단내용</th>
+        <td colspan="3"><?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?><?=editor_html('it_tail_html', $it['it_tail_html']);?></td>
     </tr>
     <? if ($w == "u") { ?>
     <tr>
