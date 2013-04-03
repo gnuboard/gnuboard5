@@ -36,11 +36,11 @@ $result = sql_query($sql);
     </colgroup>
     <thead>
     <tr>
-        <th>ID</th>
-        <th>배송회사명</th>
-        <th>고객센터</th>
-        <th>순서</th>
-        <th>관리</th>
+        <th scope="col">ID</th>
+        <th scope="col">배송회사명</th>
+        <th scope="col">고객센터</th>
+        <th scope="col">순서</th>
+        <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
@@ -51,8 +51,8 @@ $result = sql_query($sql);
         $s_del = icon("삭제", "javascript:del('./deliverycodeformupdate.php?w=d&dl_id={$row['dl_id']}');");
         $s_vie = icon("보기", $row['dl_url'], $target="_blank");
 
-        if ($i)
-            echo "<tr><td colspan=5 height=1 bgcolor=F1F1F1></td></tr>";
+        /*if ($i)
+            echo "<tr><td colspan=\"5\"></td></tr>"; 줄 없앰 김혜련 2013-04-03*/
 
         $list = $i%2;
         ?>
@@ -61,7 +61,7 @@ $result = sql_query($sql);
             <td><?=stripslashes($row['dl_company'])?></td>
             <td class="deliverycode_center"><?=$row['dl_tel']?></td>
             <td class="deliverycode_center"><?=$row['dl_order']?></td>
-            <td class="deliverycode_center"><a href="./deliverycodeform.php">수정</a> <a href="./deliverycodeformupdate.php">삭제</a> <a href="<?=$row['dl_url']?>" target="_blank">보기</a></td>
+            <td class="deliverycode_center"><a href="./deliverycodeform.php?w=u&dl_id=<?=$row['dl_id']?>">수정</a> <a href="./deliverycodeformupdate.php?w=d&dl_id=<?=$row['dl_id']?>">삭제</a> <a href="<?=$row['dl_url']?>" target="_blank">보기</a></td>
         </tr>
         <?
     }
