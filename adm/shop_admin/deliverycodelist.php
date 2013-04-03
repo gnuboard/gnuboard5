@@ -56,7 +56,7 @@ $result = sql_query($sql);
 
         $list = $i%2;
         ?>
-        <tr class="list<?=$list?>">
+        <tr>
             <td class="deliverycode_center"><?=$row['dl_id']?></td>
             <td><?=stripslashes($row['dl_company'])?></td>
             <td class="deliverycode_center"><?=$row['dl_tel']?></td>
@@ -67,7 +67,7 @@ $result = sql_query($sql);
     }
 
     if ($i == 0)
-        echo "<tr><td colspan=\"5\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
+        echo "<tr><td colspan=\"5\" class=\"deliverycode_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
     ?>
     </tbody>
     </table>

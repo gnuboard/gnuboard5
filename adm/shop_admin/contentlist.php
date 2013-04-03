@@ -59,7 +59,7 @@ $result = sql_query($sql);
 
         $list = $i%2;
     ?>
-    <tr class="list<?=$list?>">
+    <tr>
         <td class="content_center"><?=$row['co_id']?></td>
         <td><?=htmlspecialchars2($row['co_subject'])?></td>
         <td class="content_center"><a href="./contentform.php?w=u&co_id=<?=$row['co_id']?>">수정</a> <a href="./contentformupdate.php?w=d&co_id=<?=$row['co_id']?>">삭제</a> <a href="<?=G4_SHOP_URL?>/content.php?co_id=<?=$row['co_id']?>">보기</a></td>
@@ -67,7 +67,7 @@ $result = sql_query($sql);
     <?
     }
     if ($i == 0) {
-        echo "<tr><td colspan=\"3\" class=\"content_center\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
+        echo "<tr><td colspan=\"3\" class=\"content_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
     }
     ?>
     </tbody>

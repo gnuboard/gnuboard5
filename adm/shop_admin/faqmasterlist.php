@@ -70,7 +70,7 @@ $result = sql_query($sql);
         $s_vie = icon("보기", G4_SHOP_URL."/faq.php?fm_id={$row['fm_id']}");
         $list = $i%2;
         ?>
-        <tr class="list<?=$list?>">
+        <tr>
             <td class="faq_center"><?=$row['fm_id']?></td>
             <td><?=stripslashes($row['fm_subject']) ?></td>
             <td class="faq_center"><?=$cnt?></td>
@@ -81,7 +81,7 @@ $result = sql_query($sql);
     }
 
     if ($i == 0)
-        echo "<tr><td colspan=\"5\" class=\"faq_center\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
+        echo "<tr><td colspan=\"5\" class=\"faq_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
     ?>
     </tbody>
     </table>
