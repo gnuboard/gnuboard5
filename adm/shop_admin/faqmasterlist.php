@@ -24,33 +24,35 @@ $result = sql_query($sql);
 ?>
 
 <style type="text/css">
-#faq_box th{height:35px;line-height:35px;text-align:center}
-#faq_box p{position:relative}
-#faq_box span{position:absolute;top:-12;right:5px}
+#faq_box span{position:absolute;top:-12;right:30px}
 #faq_register h2{color:#18abff}
 #faq_register ul{list-style:none;padding-left:0}
 #faq_register ul li{height:25px;line-height:25px}
+.faq_center{text-align:center}
 </style>
 
 <section id="faq_box" class="cbox">
     <h2>FAQ관리</h2>
     <?=$pg_anchor?>
-    <p><a href="<?=$_SERVER['PHP_SELF']?>">처음</a><span>건수 : <? echo $total_count ?></span></p>
-    <table class="frm_tbl">
+    <p><a href="<?=$_SERVER['PHP_SELF']?>">처음</a><span>건수  <? echo $total_count ?></span></p>
+    <div id="btn_add">
+        <a href="./faqmasterform.php">FAQ추가</a>
+    </div>
+    <table>
     <colgroup>
-        <col class="grid_3">
+        <col class="grid_1">
         <col class="grid_11">
         <col class="grid_2">
-        <col class="gird_2">
-        <col class="grid_1">
+        <col class="gird_1">
+        <col class="grid_3">
     </colgroup>
     <thead>
     <tr>
-        <th scope="row">ID</th>
-        <th scope="row">제목</th>
-        <th scope="row">FAQ수</th>
-        <th scope="row">상세보기</th>
-        <th scope="row"><a href='./faqmasterform.php'><img src="<?=G4_ADMIN_URL?>/img/icon_insert.gif" alt="등록"></a></th>
+        <th scope="col">ID</th>
+        <th scope="col">제목</th>
+        <th scope="col">FAQ수</th>
+        <th scope="col">상세보기</th>
+        <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
@@ -66,20 +68,20 @@ $result = sql_query($sql);
         $s_mod = icon("수정", "./faqmasterform.php?w=u&fm_id={$row['fm_id']}");
         $s_del = icon("삭제", "javascript:del('./faqmasterformupdate.php?w=d&fm_id={$row['fm_id']}');");
         $s_vie = icon("보기", G4_SHOP_URL."/faq.php?fm_id={$row['fm_id']}");
-
         $list = $i%2;
-        echo "
-        <tr class='list$list ht'>
-            <td style=\"text-align:center\">{$row['fm_id']}</td>
-            <td>" . stripslashes($row['fm_subject']) . "</td>
-            <td style=\"text-align:center\">$cnt</td>
-            <td style=\"text-align:center\">$s_detail_vie</td>
-            <td style=\"text-align:center\">$s_mod $s_del $s_vie</td>
-        </tr>";
+        ?>
+        <tr>
+            <td class="faq_center"><?=$row['fm_id']?></td>
+            <td><?=stripslashes($row['fm_subject']) ?></td>
+            <td class="faq_center"><?=$cnt?></td>
+            <td class="faq_center"><a href="./faqlist.php?fm_id=<?=$row['fm_id']?>">상세보기</a></td>
+            <td class="faq_center"><a href="">수정</a> <a href="./faqmasterformupdate.php?w=d&fm_id=<?=$row['fm_id']?>">삭제</a> <a href="<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$row['fm_id']?>">보기</a></td>
+        </tr>
+        <?
     }
 
     if ($i == 0)
-        echo "<tr><td colspan=\"5\" align=\"center\" height=\"100\" bgcolor=#ffffff><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
+        echo "<tr><td colspan=\"5\" class=\"faq_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
     ?>
     </tbody>
     </table>

@@ -18,69 +18,74 @@ $sql = "select * $sql_common order by nw_id desc ";
 $result = sql_query($sql);
 ?>
 
-<table width=100%>
-<tr>
-    <td width=20%>&nbsp;</td>
-    <td width=60% align=center>&nbsp;</td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
+<style type="text/css">
+    .newwin_center{text-align:center}
+</style>
 
+<section class="cbox">
+    <h2>새창관리</h2>
+    <p>건수 <? echo $total_count ?></p>
+    <div id="btn_add">
+        <a href="./newwinform.php">새창관리추가</a>
+    </div>
+    <table>
+    <colgroup>
+        <col class="grid_1">
+        <col class="grid_2">
+        <col class="grid_2">
+        <col class="grid_1">
+        <col class="grid_1">
+        <col class="grid_1">
+        <col class="grid_1">
+        <col class="grid_1">
+        <col class="grid_6">
+        <col class="grid_2">
+    </colgroup>
+    <thead>
+    <tr>
+        <th scope="col">번호</th>
+        <th scope="col">시작일시</th>
+        <th scope="col">종료일시</th>
+        <th scope="col">시간</th>
+        <th scope="col">Left</th>
+        <th scope="col">Top</th>
+        <th scope="col">Height</th>
+        <th scope="col">Width</th>
+        <th scope="col">제목</th>
+        <th scope="col">관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    {
+        $s_mod = icon("수정", "./newwinform.php?w=u&nw_id={$row['nw_id']}");
+        $s_del = icon("삭제", "javascript:del('./newwinformupdate.php?w=d&nw_id={$row['nw_id']}');");
 
-<table cellpadding=0 cellspacing=0 width=100% border=0>
-<colgroup width=40>
-<colgroup width=100>
-<colgroup width=100>
-<colgroup width=40>
-<colgroup width=50>
-<colgroup width=50>
-<colgroup width=50>
-<colgroup width=50>
-<colgroup width=''>
-<colgroup width=80>
-<tr><td colspan=10 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td>번호</td>
-    <td>시작일시</td>
-    <td>종료일시</td>
-    <td>시간</td>
-    <td>Left</td>
-    <td>Top</td>
-    <td>Height</td>
-    <td>Width</td>
-    <td>제목</td>
-    <td><a href='./newwinform.php'><img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif' border=0></a></td>
-</tr>
-<tr><td colspan=10 height=1 bgcolor=#CCCCCC></td></tr>
+        $list = $i%2;
+        ?>
+        <tr>
+            <td class="newwin_center"><?=$row['nw_id']?></td>
+            <td><?=substr($row['nw_begin_time'],2,14)?></td>
+            <td><?=substr($row['nw_end_time'],2,14)?></td>
+            <td class="newwin_center"><?=$row['nw_disable_hours']?></td>
+            <td class="newwin_center"><?=$row['nw_left']?></td>
+            <td class="newwin_center"><?=$row['nw_top']?></td>
+            <td class="newwin_center"><?=$row['nw_height']?></td>
+            <td class="newwin_center"><?=$row['nw_width']?></td>
+            <td><?=$row['nw_subject']?></td>
+            <td class="newwin_center"><a href="./newwinform.php?w=u&nw_id=<?=$row['nw_id']?>">수정</a> <a href="./newwinformupdate.php?w=d&nw_id=<?=$row['nw_id']?>">삭제</a></td>
+        </tr>
+        <?
+    }
 
-<?
-for ($i=0; $row=mysql_fetch_array($result); $i++)
-{
-    $s_mod = icon("수정", "./newwinform.php?w=u&nw_id={$row['nw_id']}");
-    $s_del = icon("삭제", "javascript:del('./newwinformupdate.php?w=d&nw_id={$row['nw_id']}');");
-
-    $list = $i%2;
-    echo "
-    <tr class='list$list center ht'>
-        <td>".$row['nw_id']."</td>
-        <td>".substr($row['nw_begin_time'],2,14)."</td>
-        <td>".substr($row['nw_end_time'],2,14)."</td>
-        <td>".$row['nw_disable_hours']."</td>
-        <td>".$row['nw_left']."</td>
-        <td>".$row['nw_top']."</td>
-        <td>".$row['nw_height']."</td>
-        <td>".$row['nw_width']."</td>
-        <td align=left>".$row['nw_subject']."</td>
-        <td>$s_mod $s_del</td>
-    </tr>";
-}
-
-if ($i == 0) {
-    echo "<tr><td colspan=10 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
-}
-?>
-<tr><td colspan=10 height=1 bgcolor=CCCCCC></td></tr>
-</table>
+    if ($i == 0) {
+        echo "<tr><td colspan=\"10\" class=\"newwin_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
+    }
+    ?>
+    </tbody>
+    </table>
+</section>
 
 
 <?

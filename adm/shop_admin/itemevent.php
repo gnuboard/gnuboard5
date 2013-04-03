@@ -17,65 +17,70 @@ $total_count = $row['cnt'];
 $sql = "select * $sql_common order by ev_id desc ";
 $result = sql_query($sql);
 ?>
+<style type="text/css">
+.itemevent_center{text-align:center}
+</style>
 
-<table width=100%>
-<tr>
-    <td width=20%>&nbsp;</td>
-    <td width=60% align=center>&nbsp;</td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
+<section class="cbox">
+    <h2>이벤트관리</h2>
+    <p>건수 <? echo $total_count ?></p>
+    <div id="btn_add">
+        <a href="./itemeventform.php">이벤트관리추가</a>
+    </div>
+    <table>
+    <colgroup>
+        <col class="grid_2">
+        <col class="gird_10">
+        <col class="grid_2">
+        <col class="grid_1">
+        <col class="grid_3">
+    </colgroup>
+    <thead>
+    <tr>
+        <th scope="col">이벤트 번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">연결 상품</th>
+        <th scope="col">사용</th>
+        <th scope="col">구분</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    {
+        $s_mod = icon("수정", "./itemeventform.php?w=u&ev_id={$row['ev_id']}");
+        $s_del = icon("삭제", "javascript:del('./itemeventformupdate.php?w=d&ev_id={$row['ev_id']}');");
+        $s_vie = icon("보기", G4_SHOP_URL."/event.php?ev_id={$row['ev_id']}");
 
+        $href = "";
+        $sql = " select count(ev_id) as cnt from {$g4['yc4_event_item_table']} where ev_id = '{$row['ev_id']}' ";
+        $ev = sql_fetch($sql);
+        if ($ev[cnt]) {
+            $href = "<a href='javascript:;' onclick='itemeventwin({$row['ev_id']});'>";
+        }
 
-<table cellpadding=0 cellspacing=0 width=100% border=0>
-<colgroup width=100>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=40>
-<colgroup width=80>
-<tr><td colspan=5 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td>이벤트번호</td>
-    <td>제목</td>
-    <td>연결상품</td>
-    <td>사용</td>
-    <td><a href='./itemeventform.php'><img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif' border=0 title='등록'></a></td>
-</tr>
-<tr><td colspan=5 height=1 bgcolor=#CCCCCC></td></tr>
-<?
-for ($i=0; $row=mysql_fetch_array($result); $i++)
-{
-    $s_mod = icon("수정", "./itemeventform.php?w=u&ev_id={$row['ev_id']}");
-    $s_del = icon("삭제", "javascript:del('./itemeventformupdate.php?w=d&ev_id={$row['ev_id']}');");
-    $s_vie = icon("보기", G4_SHOP_URL."/event.php?ev_id={$row['ev_id']}");
-
-    $href = "";
-    $sql = " select count(ev_id) as cnt from {$g4['yc4_event_item_table']} where ev_id = '{$row['ev_id']}' ";
-    $ev = sql_fetch($sql);
-    if ($ev[cnt]) {
-        $href = "<a href='javascript:;' onclick='itemeventwin({$row['ev_id']});'>";
+        $list = $i%2;
+        ?>
+        <tr>
+            <td class="itemevent_center"><?=$row['ev_id']?></td>
+            <td><?=$row['ev_subject']?></td>
+            <td class="itemevent_center"><?=$href?><?=$ev['cnt']?></td>
+            <td class="itemevent_center"><?=$row['ev_use'] ? "예" : "아니오"?></td>
+            <td class="itemevent_center"><a href="./itemeventform.php?w=u&ev_id=<?=$row['ev_id']?>">수정</a> <a href="./itemeventformupdate.php?w=d&ev_id=<?=$row['ev_id']?>">삭제</a> <a href="<?=G4_SHOP_URL?>/event.php?ev_id=<?=$row['ev_id']?>">보기</a></td>
+        </tr>
+        <?
     }
 
-    $list = $i%2;
-    echo "
-    <tr class='list$list center ht'>
-        <td>{$row['ev_id']}</td>
-        <td align=left>{$row['ev_subject']}</td>
-        <td>$href<U>{$ev['cnt']}</U></a></td>
-        <td>".($row['ev_use'] ? "예" : "아니오")."</td>
-        <td>$s_mod $s_del $s_vie</td>
-    </tr><tr><td colspan=5 height=1 bgcolor=F5F5F5></td></tr>";
-}
+    if ($i == 0) {
+        echo "<tr><td colspan=\"5\" class=\"itemevent_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
+    }
+    ?>
+    </tbody>
+    </table>
+</section>
 
-if ($i == 0) {
-    echo "<tr><td colspan=5 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
-}
-?>
 
-<tr><td colspan=5 height=1 bgcolor=CCCCCC></td></tr>
-</table>
-
-<SCRIPT LANGUAGE="JavaScript">
+<SCRIPT>
 function itemeventwin(ev_id)
 {
     window.open("./itemeventwin.php?ev_id="+ev_id, "itemeventwin", "left=10,top=10,width=500,height=600,scrollbars=1");

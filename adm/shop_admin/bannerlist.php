@@ -29,7 +29,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     <div id="btn_add">
         <a href="./bannerform.php">배너추가</a>
     </div>
-    <table class="frm_flb">
+    <table>
     <colgroup>
         <col class="grid_1">
         <col class="grid_7">
@@ -78,7 +78,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
         $list = $i%2;
         ?>
-        <tr class="list<?=$list?> center">
+        <tr>
             <td class="banner_center"><?=$row['bn_id']?></td>
             <td><?=$bn_img?></td>
             <td class="banner_center"><?=$row['bn_position']?></td>
@@ -86,13 +86,13 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
             <td><?=$bn_end_time?></td>
             <td class="banner_center"><?=$row['bn_order']?></td>
             <td class="banner_center"><?=$row['bn_hit']?></td>
-            <td class="banner_center"><a href="./bannerform.php">수정</a> <a href="./bannerformupdate.php">삭제</a></td>
+            <td class="banner_center"><a href="./bannerform.php?w=u&bn_id=<?=$row['bn_id']?>">수정</a> <a href="./bannerformupdate.php?w=d&bn_id=<?=$row['bn_id']?>">삭제</a></td>
         </tr>
         <?
         }
 
         if ($i == 0) {
-        echo "<tr><td colspan=\"8\"><span class=\"point\">자료가 한건도 없습니다.</span></td></tr>\n";
+        echo "<tr><td colspan=\"8\" class=\"banner_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
     }
     ?>
     </tbody>
