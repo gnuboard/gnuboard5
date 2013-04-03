@@ -29,7 +29,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     <div id="btn_add">
         <a href="./bannerform.php">배너추가</a>
     </div>
-    <table class="frm_flb">
+    <table>
     <colgroup>
         <col class="grid_1">
         <col class="grid_7">
@@ -78,7 +78,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
         $list = $i%2;
         ?>
-        <tr class="list<?=$list?> center">
+        <tr class="list<?=$list?>">
             <td class="banner_center"><?=$row['bn_id']?></td>
             <td><?=$bn_img?></td>
             <td class="banner_center"><?=$row['bn_position']?></td>

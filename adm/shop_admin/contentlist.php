@@ -23,7 +23,7 @@ $sql = "select * $sql_common order by co_id limit $from_record, {$config['cf_pag
 $result = sql_query($sql);
 ?>
 <style type="text/css">
-    #content_head{width:900px;height:35px;line-height:35px ;text-align:center}
+    #content_head{width:890px;height:35px;line-height:35px ;text-align:center}
     #content_head th{text-align:center}
     #content_fir{position:relative}
     #content_fir span{position:absolute;top:-12;right:5px}
@@ -31,10 +31,9 @@ $result = sql_query($sql);
 
 <section class="cbox">
     <h2>내용관리</h2>
-    <?=$pg_anchor?>
     <p id="content_fir">
-        <a href='<?=$_SERVER['PHP_SELF']?>'>처음</a>
-        <span>건수 : <? echo $total_count ?>&nbsp;</span>
+        <a href="<?=$_SERVER['PHP_SELF']?>">처음</a>
+        <span>건수 <? echo $total_count ?>&nbsp;</span>
     </p>
     <table class="frm_tbl">
     <colgroup>
