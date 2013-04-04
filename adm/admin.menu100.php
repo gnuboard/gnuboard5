@@ -10,6 +10,7 @@ $menu['menu100'] = array (
     //array('100700', '복구/최적화', G4_ADMIN_URL.'/repair.php', 'cf_repair'),
     array('100800', '세션파일 일괄삭제',G4_ADMIN_URL.'/session_file_delete.php', 'cf_session'),
     array('100900', '캐쉬파일 일괄삭제',G4_ADMIN_URL.'/cache_file_delete.php',   'cf_cache'),
+    array('100910', '캡챠파일 일괄삭제',G4_ADMIN_URL.'/gcaptcha_file_delete.php',   'cf_gcaptcha'),
     //array('', 'phpMyAdmin', ''.$g4['path'].'/'.$g4['phpmyadmin_dir'].'', 'cf_phpmyadmin')
 );
 ?>
