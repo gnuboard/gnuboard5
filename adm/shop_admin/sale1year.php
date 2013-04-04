@@ -122,7 +122,7 @@ function print_line($save)
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="9" calss=""><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="9" calss="sale1"><span>자료가 한건도 없습니다.</span></td></tr>';
     } else {
         print_line($save);
     }
