@@ -14,7 +14,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 </style>
 
 <section class="cbox">
-    <h2>일별 매출현황</h2>
+    <h2>당일 매출현황</h2>
     <table>
     <colgroup>
         <col class="grid_2">
