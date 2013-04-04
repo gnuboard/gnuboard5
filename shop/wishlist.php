@@ -11,7 +11,7 @@ include_once('./_head.php');
 <img src="<?=G4_SHOP_URL?>/img/top_wishlist.gif" border="0"><p>
 
 <form name=fwishlist method=post action="" style="padding:0px;">
-<input type=hidden name=w         value="multi">
+<input type=hidden name=act       value="multi">
 <input type=hidden name=sw_direct value=''>
 <input type=hidden name=prog      value='wish'>
 <table width=100% align=center cellpadding=0 cellspacing=0>
