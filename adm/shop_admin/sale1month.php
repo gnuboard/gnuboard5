@@ -53,17 +53,17 @@ function print_line($save)
         <col class="grid_2">
     </colgroup>
     <thead>
-        <tr>
-            <th scope="col">주문월</th>
-            <th scope="col">주문수</th>
-            <th scope="col">주문합계</th>
-            <th scope="col">취소+DC</th>
-            <th scope="col">무통장입금</th>
-            <th scope="col">카드입금</th>
-            <th scope="col">포인트입금</th>
-            <th scope="col">입금취소</th>
-            <th scope="col">미수금</th>
-        </tr>
+    <tr>
+        <th scope="col">주문월</th>
+        <th scope="col">주문수</th>
+        <th scope="col">주문합계</th>
+        <th scope="col">취소+DC</th>
+        <th scope="col">무통장입금</th>
+        <th scope="col">카드입금</th>
+        <th scope="col">포인트입금</th>
+        <th scope="col">입금취소</th>
+        <th scope="col">미수금</th>
+    </tr>
     </thead>
     <tbody>
     <?
