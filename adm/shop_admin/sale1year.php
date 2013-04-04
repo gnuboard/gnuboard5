@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = "$fr_date ~ $to_date 매출현황";
+$g4['title'] = "$fr_year ~ $to_year 매출현황"; /*레이블 중복 인식과 페이지와의 연결 때문에 year로 바꿈 김혜련 2013-04-04*/
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)

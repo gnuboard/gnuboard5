@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $fr_date = preg_replace("/([0-9]{4})([0-9]{2})/", "\\1-\\2", $fr_date);
 $to_date = preg_replace("/([0-9]{4})([0-9]{2})/", "\\1-\\2", $to_date);
 
-$g4['title'] = "$fr_date ~ $to_date 매출현황";
+$g4['title'] = "$fr_month ~ $to_month 매출현황"; /*레이블 중복 인식과 페이지와의 연결 때문에 year로 바꿈 김혜련 2013-04-04*/
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)
