@@ -95,7 +95,7 @@ define('G4_USE_CACHE', true); // 최신글등에 cache 기능 사용 여부
 // 6시간이 빠른 경우 time() + (3600 * 6);
 // 6시간이 느린 경우 time() - (3600 * 6);
 define('G4_SERVER_TIME', time());
-define('G4_TIME_YMDHIS', date("Y-m-d H:i:s", G4_SERVER_TIME));
+define('G4_TIME_YMDHIS', date('Y-m-d H:i:s', G4_SERVER_TIME));
 define('G4_TIME_YMD', substr(G4_TIME_YMDHIS, 0, 10));
 define('G4_TIME_HIS', substr(G4_TIME_YMDHIS, 11, 8));
 
