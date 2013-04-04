@@ -95,7 +95,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <div id="wrapper">
     <aside id="aside">
-        <?=(G4_IS_MOBILE?outlogin('basic'):outlogin('basic')); // 외부 로그인 ?>
+        <?=outlogin('basic'); // 외부 로그인 ?>
     </aside>
     <div id="container">
         <? if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
