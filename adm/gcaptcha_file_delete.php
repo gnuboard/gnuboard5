@@ -25,9 +25,9 @@ include_once('./admin.head.php');
 
     $files = glob(G4_DATA_PATH.'/cache/gcaptcha-*');
     if (is_array($files)) {
-        $before_time  = date('ymdHis', G4_SERVER_TIME - 3600); // 한시간전
+        $before_time  = G4_SERVER_TIME - 3600; // 한시간전
         foreach ($files as $gcaptcha_file) {
-            $access_time = date('ymdHis', fileatime($gcaptcha_file)); // 파일접근시간
+            $access_time = fileatime($gcaptcha_file); // 파일접근시간
 
             if ($access_time > $before_time) continue;
 
