@@ -31,10 +31,10 @@ $result = sql_query($sql);
 .faq_center{text-align:center}
 </style>
 
-<section id="faq_box" class="cbox">
+<section class="cbox">
     <h2>FAQ관리</h2>
     <?=$pg_anchor?>
-    <p><a href="<?=$_SERVER['PHP_SELF']?>">처음</a><span>건수  <? echo $total_count ?></span></p>
+    <p id="faq_box"><a href="<?=$_SERVER['PHP_SELF']?>">처음</a><span>건수  <? echo $total_count ?></span></p>
     <div id="btn_add">
         <a href="./faqmasterform.php">FAQ추가</a>
     </div>
@@ -80,8 +80,9 @@ $result = sql_query($sql);
         <?
     }
 
-    if ($i == 0)
-        echo "<tr><td colspan=\"5\" class=\"faq_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
+    if ($i == 0){
+        echo '<tr><td colspan="5" class="faq_center"><span class="faq_center">자료가 한건도 없습니다.</span></td></tr>';
+    }
     ?>
     </tbody>
     </table>

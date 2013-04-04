@@ -67,7 +67,7 @@ $result = sql_query($sql);
     <?
     }
     if ($i == 0) {
-        echo "<tr><td colspan=\"3\" class=\"content_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
+        echo '<tr><td colspan="3" class="content_center"><span>자료가 한건도 없습니다.</span></td></tr>';
     }
     ?>
     </tbody>

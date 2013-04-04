@@ -92,7 +92,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         }
 
         if ($i == 0) {
-        echo "<tr><td colspan=\"8\" class=\"banner_center\"><span>자료가 한건도 없습니다.</span></td></tr>\n";
+        echo '<tr><td colspan="8" class="banner_center"><span>자료가 한건도 없습니다.</span></td></tr>';
     }
     ?>
     </tbody>
