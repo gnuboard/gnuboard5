@@ -22,7 +22,7 @@ function print_line($save)
 
     ?>
     <tr class="sale1">
-        <td><a href='./sale1today.php?date=$date'><?=$save['od_date']?></a></td>
+        <td><a href="./sale1today.php?date=<?=$date?>"><?=$save['od_date']?></a></td>
         <td><?=number_format($save['ordercount'])?></td>
         <td><?=number_format($save['orderamount'])?></td>
         <td><?=number_format($save['ordercancel'] + $save['dc'])?></td>

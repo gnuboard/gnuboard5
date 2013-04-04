@@ -79,7 +79,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
         ?>
         <tr class="sale1">
-            <td><a href='./orderform.php?od_id=$row[od_id]'><?=$row[od_id]?></a></td>
+            <td><a href="./orderform.php?od_id=<?=$row[od_id]?>"><?=$row[od_id]?></a></td>
             <td ><?=$href?><?=$row[od_name]?></a></td>
             <td><?=number_format($row1['orderamount'])?></td>
             <td><?=number_format($row1['ordercancel'] + $row['od_dc_amount'])?></td>
