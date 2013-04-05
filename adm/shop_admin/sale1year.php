@@ -13,7 +13,7 @@ function print_line($save)
     static $count = 0;
 
     if ($count++ > 0)
-        echo "<tr><td colspan=9 height=1 bgcolor=#EEEEEE></td></tr>\n";
+        echo '<tr><td colspan="9"></td></tr>\n';
 
     ?>
     <tr class="sale1">
