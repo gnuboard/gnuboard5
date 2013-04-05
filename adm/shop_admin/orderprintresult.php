@@ -123,7 +123,7 @@ if ($csv == 'xls')
     echo "<style>.txt {mso-number-format:'\\@';}</style>";
     echo "</head>";
     echo "<body>";
-    echo "<table border='1'>";
+    echo '<table class="frm_tbl">';
     echo "<tr>";
     echo "<td>우편번호</td>";
     echo "<td>주소</td>";
@@ -157,7 +157,7 @@ if ($csv == 'xls')
         echo "</tr>";
     }
     if ($i == 0)
-        echo "<tr><td colspan='11'>자료가 없습니다.</td></tr>";
+        echo '<tr><td colspan="11">자료가 없습니다.</td></tr>';
     echo "</table>";
     echo "</body>";
     echo "</html>";
@@ -200,193 +200,184 @@ if (mysql_num_rows($result) == 0)
     exit;
 }
 ?>
-<html>
-<head>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<title>주문내역</title>
-<style>
-    body, table, tr, td, p { font-size:9pt; }
+
+<style type="text/css">
+    #orderprint{width:900px}
 </style>
-</head>
-<body bgcolor=ffffff leftmargin=0 topmargin=0 marginheight=0 marginwidth=0>
 
-<?
-if ($case == 1)
-    echo "<p><b>[ $fr_date - $to_date $ct_status 내역 ]</b>";
-else
-    echo "<p><b>[ $fr_od_id - $to_od_id $ct_status 내역 ]</b>";
-?>
-<table width=650 cellpadding=2 cellspacing=0 border=0 bordercolordark="white" bordercolorlight="gray">
-<tr><td colspan=5><hr></td></tr>
-<tr>
-    <td rowspan=2 width=70 valign=top align=center>주문번호</td>
-    <td width=60>보낸분</td>
-    <td>주소</td>
-    <td width=100>전화번호</td>
-    <td width=100>핸드폰</td>
-</tr>
-<tr>
-    <td>받는분</td>
-    <td>주소</td>
-    <td>전화번호</td>
-    <td>핸드폰</td>
-</tr>
-<tr><td colspan=5><hr></td></tr>
-<?
-$mod = 10;
-$tot_total_amount = 0;
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    $sql1 = " select * from {$g4['yc4_order_table']} where uq_id = '{$row['uq_id']}' ";
-    $row1 = sql_fetch($sql1);
-
-    // 1.03.02
-    $row1['od_addr'] = "(".$row1['od_zip1']."-".$row1['od_zip2'].") ".$row1['od_addr1']." ".$row1['od_addr2'];
-    $row1['od_b_addr'] = "(".$row1['od_b_zip1']."-".$row1['od_b_zip2'].") ".$row1['od_b_addr1']." ".$row1['od_b_addr2'];
-
-    $row1['od_addr'] = ($row1['od_addr']) ? $row1['od_addr'] : "&nbsp;";
-    $row1['od_tel'] = ($row1['od_tel']) ? $row1['od_tel'] : "&nbsp;";
-    $row1['od_hp']  = ($row1['od_hp']) ? $row1['od_hp'] : "&nbsp;";
-    $row1['od_b_tel'] = ($row1['od_b_tel']) ? $row1['od_b_tel'] : "&nbsp;";
-    $row1['od_b_hp']  = ($row1['od_b_hp']) ? $row1['od_b_hp'] : "&nbsp;";
-
-    if ($row1['od_name'] == $row1['od_b_name']) $row1['od_b_name'] = '"';
-    if ($row1['od_addr'] == $row1['od_b_addr']) $row1['od_b_addr'] = '"';
-    if ($row1['od_tel'] == $row1['od_b_tel']) $row1['od_b_tel'] = '"';
-    if ($row1['od_hp'] == $row1['od_b_hp'] && $row1['od_hp'] != "&nbsp;") $row1['od_b_hp'] = '"';
-
-    $od_memo = ($row1['od_memo']) ? stripslashes($row1['od_memo']) : "";
-    $od_shop_memo = ($row1['od_shop_memo']) ? stripslashes($row1['od_shop_memo']) : "";
-
-    echo "
-        <tr>
-            <td rowspan=3 align=center valign=top>$row1[od_id]</td>
-            <td>".$row1['od_name']."</td>
-            <td>".$row1['od_addr']."</td>
-            <td>".$row1['od_tel']."</td>
-            <td>".$row1['od_hp']."</td>
-        </tr>
-        <tr>
-            <td>".$row1['od_b_name']."</td>
-            <td>".$row1['od_b_addr']."</td>
-            <td>".$row1['od_b_tel']."</td>
-            <td>".$row1['od_b_hp']."</td>
-        </tr>
-        <tr>
-            <td colspan=4>
-                <table width=100% cellpadding=2 cellspacing=0 border=1 bordercolordark='white' bordercolorlight='gray'>
-    ";
-
-    $sql2 = " select    a.*,
-                        b.it_opt1_subject,
-                        b.it_opt2_subject,
-                        b.it_opt3_subject,
-                        b.it_opt4_subject,
-                        b.it_opt5_subject,
-                        b.it_opt6_subject,
-                        b.it_name
-                from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b
-               where a.it_id = b.it_id
-                 and a.uq_id = '{$row['uq_id']}' ";
-    if ($ct_status)
-        $sql2 .= " and a.ct_status = '$ct_status' ";
-    $sql2 .= "  order by a.ct_id ";
-
-    $res2 = sql_query($sql2);
-    $cnt = $sub_tot_qty = $sub_tot_amount = 0;
-    while ($row2 = sql_fetch_array($res2))
-    {
-        $row2_tot_amount = $row2['ct_amount'] * $row2['ct_qty'];
-        $sub_tot_qty    += $row2['ct_qty'];
-        $sub_tot_amount += $row2_tot_amount;
-
-        $it_name = stripslashes($row2['it_name']);
-        $it_name = "$it_name ($row2[it_id])<br><font color=#555555>";
-
-        $str_split = "";
-        for ($k=1; $k<=6; $k++)
-        {
-            if ($row2["it_opt{$k}"] == "") continue;
-            $it_name .= $str_split;
-            $it_opt_subject = $row2["it_opt{$k}_subject"];
-            $opt = explode( ";", trim($row2["it_opt{$k}"]) );
-            $it_name .= "&nbsp;&nbsp; $it_opt_subject = $opt[0]";
-
-            if ($opt[1] != 0)
-            {
-                $it_name .= " (";
-                //if (ereg("[+]", $opt[1]) == true)
-                if (preg_match("/[+]/", $opt[1]) == true)
-                    $it_name .= "+";
-                // 금액을 전화문의 표시로
-                $it_name .= display_amount($opt[1]) . ")";
-            }
-            $str_split = "<br>";
-        }
-        $it_name .= "</font>";
-
-        $fontqty1 = $fontqty2 = "";
-        if ($row2['ct_qty'] >= 2)
-        {
-            $fontqty1 = "<font color=crimson><b>";
-            $fontqty2 = "</b></font>";
-        }
-
-        echo "
-            <tr>
-                <td>$it_name</td>
-                <td width=80 align=right>".number_format($row2['ct_amount'])."&nbsp;</td>
-                <td width=50 align=center>$fontqty1".number_format($row2['ct_qty'])."$fontqty2</td>
-                <td width=80 align=right>".number_format($row2_tot_amount)."&nbsp;</td>
-            </tr>
-        ";
-        $cnt++;
-    }
-
-    if ($cnt >= 2)
-    {
-        echo "
-        <tr>
-            <td colspan=2 align=right><b>합 계</b> &nbsp;</td>
-            <td align=center>".number_format($sub_tot_qty)."</td>
-            <td align=right>".number_format($sub_tot_amount)."&nbsp;</td>
-        </tr>";
-    }
-
-    $tot_tot_qty    += $sub_tot_qty;
-    $tot_tot_amount += $sub_tot_amount;
-
-    if ($od_memo) $od_memo = "<font color=crimson>비고 : $od_memo</font>";
-    if ($od_shop_memo) $od_shop_memo = "<br/><font color=crimson>상점메모 : $od_shop_memo</font>";
-
-    echo "
-            </table>
-            $od_memo
-            $od_shop_memo
-        </td>
-    </tr>
-    <tr><td colspan=5><hr></td></tr>";
-}
-?>
-<tr>
-    <td></td>
-    <td colspan=4>
-        <table width=100% cellpadding=2 cellspacing=0 border=1 bordercolordark='white' bordercolorlight='gray'>
-        <tr>
+<section id="orderprint" class="cbox">
+    <h2>
         <?
-        echo "
-            <td colspan=2 align=right><b>전 체 합 계</b> &nbsp;</td>
-            <td align=center width=50>".number_format($tot_tot_qty)."</td>
-            <td align=right width=80>".number_format($tot_tot_amount)."&nbsp;</td>
-        ";
+        if ($case == 1)
+            echo "[ $fr_date - $to_date $ct_status 내역 ]";
+        else
+            echo "[ $fr_od_id - $to_od_id $ct_status 내역 ]";
         ?>
-        </tr>
-        </table>
-    </td>
-</tr>
-</table>
+    </h2>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_2">
+        <col class="grid_5">
+        <col class="grid_2">
+        <col class="grid_2">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row" rowspan="2">주문번호</th>
+        <td>보낸분</td>
+        <td>주소</td>
+        <td>전화번호</td>
+        <td>핸드폰</td>
+    </tr>
+    <tr>
+        <td>받는분</td>
+        <td>주소</td>
+        <td>전화번호</td>
+        <td>핸드폰</td>
+    </tr>
+    <?
+    $mod = 10;
+    $tot_total_amount = 0;
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        $sql1 = " select * from {$g4['yc4_order_table']} where uq_id = '{$row['uq_id']}' ";
+        $row1 = sql_fetch($sql1);
 
-<br>&lt;끝&gt;
+        // 1.03.02
+        $row1['od_addr'] = "(".$row1['od_zip1']."-".$row1['od_zip2'].") ".$row1['od_addr1']." ".$row1['od_addr2'];
+        $row1['od_b_addr'] = "(".$row1['od_b_zip1']."-".$row1['od_b_zip2'].") ".$row1['od_b_addr1']." ".$row1['od_b_addr2'];
+
+        $row1['od_addr'] = ($row1['od_addr']) ? $row1['od_addr'] : "&nbsp;";
+        $row1['od_tel'] = ($row1['od_tel']) ? $row1['od_tel'] : "&nbsp;";
+        $row1['od_hp']  = ($row1['od_hp']) ? $row1['od_hp'] : "&nbsp;";
+        $row1['od_b_tel'] = ($row1['od_b_tel']) ? $row1['od_b_tel'] : "&nbsp;";
+        $row1['od_b_hp']  = ($row1['od_b_hp']) ? $row1['od_b_hp'] : "&nbsp;";
+
+        if ($row1['od_name'] == $row1['od_b_name']) $row1['od_b_name'] = '"';
+        if ($row1['od_addr'] == $row1['od_b_addr']) $row1['od_b_addr'] = '"';
+        if ($row1['od_tel'] == $row1['od_b_tel']) $row1['od_b_tel'] = '"';
+        if ($row1['od_hp'] == $row1['od_b_hp'] && $row1['od_hp'] != "&nbsp;") $row1['od_b_hp'] = '"';
+
+        $od_memo = ($row1['od_memo']) ? stripslashes($row1['od_memo']) : "";
+        $od_shop_memo = ($row1['od_shop_memo']) ? stripslashes($row1['od_shop_memo']) : "";
+
+    ?>
+            <tr>
+                <th scope="row" rowspan="3"><?=$row1[od_id]?></th>
+                <td><?=$row1['od_name']?></td>
+                <td><?=$row1['od_addr']?></td>
+                <td><?=$row1['od_tel']?></td>
+                <td><?=$row1['od_hp']?></td>
+            </tr>
+            <tr>
+                <td><?=$row1['od_b_name']?></td>
+                <td><?=$row1['od_b_addr']?></td>
+                <td><?=$row1['od_b_tel']?></td>
+                <td><?=$row1['od_b_hp']?></td>
+            </tr>
+    <?
+
+        $sql2 = " select    a.*,
+                            b.it_opt1_subject,
+                            b.it_opt2_subject,
+                            b.it_opt3_subject,
+                            b.it_opt4_subject,
+                            b.it_opt5_subject,
+                            b.it_opt6_subject,
+                            b.it_name
+                    from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b
+                   where a.it_id = b.it_id
+                     and a.uq_id = '{$row['uq_id']}' ";
+        if ($ct_status)
+            $sql2 .= " and a.ct_status = '$ct_status' ";
+        $sql2 .= "  order by a.ct_id ";
+
+        $res2 = sql_query($sql2);
+        $cnt = $sub_tot_qty = $sub_tot_amount = 0;
+        while ($row2 = sql_fetch_array($res2))
+        {
+            $row2_tot_amount = $row2['ct_amount'] * $row2['ct_qty'];
+            $sub_tot_qty    += $row2['ct_qty'];
+            $sub_tot_amount += $row2_tot_amount;
+
+            $it_name = stripslashes($row2['it_name']);
+            $it_name = "$it_name ($row2[it_id])";
+
+            $str_split = "";
+            for ($k=1; $k<=6; $k++)
+            {
+                if ($row2["it_opt{$k}"] == "") continue;
+                $it_name .= $str_split;
+                $it_opt_subject = $row2["it_opt{$k}_subject"];
+                $opt = explode( ";", trim($row2["it_opt{$k}"]) );
+                $it_name .= "&nbsp;&nbsp; $it_opt_subject = $opt[0]";
+
+                if ($opt[1] != 0)
+                {
+                    $it_name .= " (";
+                    //if (ereg("[+]", $opt[1]) == true)
+                    if (preg_match("/[+]/", $opt[1]) == true)
+                        $it_name .= "+";
+                    // 금액을 전화문의 표시로
+                    $it_name .= display_amount($opt[1]) . ")";
+                }
+                $str_split = "<br />";
+            }
+            $it_name .= "";
+
+            $fontqty1 = $fontqty2 = "";
+            if ($row2['ct_qty'] >= 2)
+            {
+                $fontqty1 = "";
+                $fontqty2 = "";
+            }
+
+            ?>
+                <tr>
+                    <td><?=$it_name?></td>
+                    <td><?=number_format($row2['ct_amount'])?></td>
+                    <td><?=$fontqty1?><?=number_format($row2['ct_qty'])?><?=$fontqty2?></td>
+                    <td><?=number_format($row2_tot_amount)?></td>
+                </tr>
+            <?
+            $cnt++;
+        }
+
+        if ($cnt >= 2)
+        {
+            ?>
+            <tr>
+                <th scope="row" colspan="3"><b>합 계</b></th>
+                <td><?=number_format($sub_tot_qty)?></td>
+                <td><?=number_format($sub_tot_amount)?></td>
+            </tr>
+            <?
+        }
+
+        $tot_tot_qty    += $sub_tot_qty;
+        $tot_tot_amount += $sub_tot_amount;
+
+        if ($od_memo) $od_memo = "비고 : $od_memo";
+        if ($od_shop_memo) $od_shop_memo = "<br />상점메모 : $od_shop_memo";
+
+        echo "
+                $od_memo
+                $od_shop_memo
+";
+    }
+    ?>
+
+        <tr>
+            <th scope="row" colspan="3">전 체 합 계</th>
+            <td><?=number_format($tot_tot_qty)?></td>
+            <td><?=number_format($tot_tot_amount)?></td>
+        </tr>
+    </tbody>
+    </table>
+    <p>&lt;끝&gt;</p>
+</section>
+
 
 </body>
 </html>
