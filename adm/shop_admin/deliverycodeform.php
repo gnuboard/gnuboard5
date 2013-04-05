@@ -44,7 +44,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr >
         <th scope="row"><label for="dl_url">화물추적 URL</label></th>
         <td>
-           <input type="text" class="frm_input" name="dl_url" value="<? echo stripslashes($dl['dl_url']) ?>" id="dl_url" size="120">
+           <input type="text" class="frm_input" name="dl_url" value="<? echo stripslashes($dl['dl_url']) ?>" id="dl_url" size="100">
         </td>
     </tr>
     <tr >
