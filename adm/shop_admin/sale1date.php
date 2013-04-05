@@ -55,6 +55,7 @@ function print_line($save)
         <col class="grid_2">
     </colgroup>
     <thead>
+    <tr>
         <th scope="col">주문일</th>
         <th scope="col">주문수</th>
         <th scope="col">주문합계</th>
@@ -64,6 +65,7 @@ function print_line($save)
         <th scope="col">포인트입금</th>
         <th scope="col">입금취소</th>
         <th scope="col">미수금</th>
+    </tr>
     </thead>
     <tbody>
     <?

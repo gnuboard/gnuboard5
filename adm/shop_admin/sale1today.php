@@ -28,6 +28,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <col class="grid_2">
     </colgroup>
     <thead>
+    <tr>
         <th scope="col" class="sale1">주문번호</th>
         <th scope="col" class="sale1">주문자</th>
         <th scope="col">주문합계</th>
@@ -37,6 +38,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="col">포인트입금</th>
         <th scope="col">입금취소</th>
         <th scope="col">미수금</th>
+    </tr>
     </thead>
     <tbody>
     <?
