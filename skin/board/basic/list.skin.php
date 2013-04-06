@@ -128,7 +128,7 @@ if ($is_nogood) $colspan++;
         </ul>
 
         <ul class="btn_bo_user">
-            <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn_b02">글쓰기</a><? } ?></li>
+            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn_b02">글쓰기</a></li><? } ?>
         </ul>
     </div>
     <? } ?>
