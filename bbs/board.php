@@ -129,7 +129,10 @@ if (isset($wr_id) && $wr_id) {
 include_once(G4_PATH.'/head.sub.php');
 
 $width = $board['bo_table_width'];
-if ($width <= 100) $width .= '%';
+if ($width <= 100)
+    $width .= '%';
+else
+    $width .='px';
 
 // IP보이기 사용 여부
 $ip = "";
