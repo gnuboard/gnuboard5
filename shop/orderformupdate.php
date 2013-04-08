@@ -252,9 +252,11 @@ $sql = " insert {$g4['yc4_order_table']}
 $result = sql_query($sql, false);
 
 // 주문정보 입력 오류시 kcp 결제 취소
-if($result_check && !$result) {
-    $cancel_msg = 'Order update error';
-    include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+if(!$result) {
+    if($result_check) {
+        $cancel_msg = 'Order update error';
+        include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+    }
 
     die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
 }
@@ -273,9 +275,11 @@ $sql = "update {$g4['yc4_cart_table']}
 $result = sql_query($sql, false);
 
 // 주문정보 입력 오류시 kcp 결제 취소
-if($result_check && !$result) {
-    $cancel_msg = 'Order status update error';
-    include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+if(!$result) {
+    if($result_check) {
+        $cancel_msg = 'Order status update error';
+        include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+    }
 
     echo "<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}";
 
