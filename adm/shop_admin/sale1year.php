@@ -29,6 +29,49 @@ function print_line($save)
     </tr>
     <?
 }
+
+$lines = $lines1 = array();
+unset($save);
+unset($tot);
+$sql = " select uq_id,
+                SUBSTRING(od_time,1,4) as od_date,
+                od_send_cost,
+                od_receipt_bank,
+                od_receipt_card,
+                od_receipt_point,
+                od_dc_amount,
+                (od_receipt_bank + od_receipt_card + od_receipt_point) as receiptamount,
+                (od_refund_amount + od_cancel_card) as receiptcancel
+           from {$g4['yc4_order_table']}
+          where SUBSTRING(od_time,1,4) between '$fr_year' and '$to_year'
+          order by od_time desc ";
+$result = sql_query($sql);
+for ($i=0; $row=mysql_fetch_array($result); $i++)
+{
+    $lines[$i] = $row;
+
+    // 장바구니 상태별 금액
+    $sql1 = " select (SUM(ct_amount * ct_qty)) as orderamount, /* 주문합계 */
+                     (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_amount * ct_qty, 0))) as ordercancel /* 주문취소 */
+                from {$g4['yc4_cart_table']}
+               where uq_id = '{$row['uq_id']}' ";
+    $row1 = sql_fetch($sql1);
+
+    $row1['orderamount'] += $row['od_send_cost'];
+    $misu = $row1['orderamount'] - $row1['ordercancel'] - $row['od_dc_amount'] - $row['receiptamount'] + $row['receiptcancel'];
+    $lines1[$i] = $row1;
+
+    $tot['ordercount']++;
+    $tot['orderamount']   += $row1['orderamount'];
+    $tot['ordercancel']   += $row1['ordercancel'];
+    $tot['dc']            += $row['od_dc_amount'];
+    $tot['receiptbank']   += $row['od_receipt_bank'];
+    $tot['receiptcard']   += $row['od_receipt_card'];
+    $tot['receiptpoint']  += $row['od_receipt_point'];
+    $tot['receiptamount'] += $row['receiptamount'];
+    $tot['receiptcancel'] += $row['receiptcancel'];
+    $tot['misu']          += $misu;
+}
 ?>
 
 <style type="text/css">
@@ -61,73 +104,6 @@ function print_line($save)
         <th scope="col">미수금</th>
     </tr>
     </thead>
-    <tbody>
-    <?
-    unset($save);
-    unset($tot);
-    $sql = " select uq_id,
-                    SUBSTRING(od_time,1,4) as od_date,
-                    od_send_cost,
-                    od_receipt_bank,
-                    od_receipt_card,
-                    od_receipt_point,
-                    od_dc_amount,
-                    (od_receipt_bank + od_receipt_card + od_receipt_point) as receiptamount,
-                    (od_refund_amount + od_cancel_card) as receiptcancel
-               from {$g4['yc4_order_table']}
-              where SUBSTRING(od_time,1,4) between '$fr_year' and '$to_year'
-              order by od_time desc ";
-    $result = sql_query($sql);
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
-    {
-        if ($i == 0)
-            $save['od_date'] = $row['od_date'];
-
-        if ($save['od_date'] != $row['od_date']) {
-            print_line($save);
-            unset($save);
-            $save['od_date'] = $row['od_date'];
-        }
-
-        // 장바구니 상태별 금액
-        $sql1 = " select (SUM(ct_amount * ct_qty)) as orderamount, /* 주문합계 */
-                         (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_amount * ct_qty, 0))) as ordercancel /* 주문취소 */
-                    from {$g4['yc4_cart_table']}
-                   where uq_id = '{$row['uq_id']}' ";
-        $row1 = sql_fetch($sql1);
-
-        $row1['orderamount'] += $row['od_send_cost'];
-        $misu = $row1['orderamount'] - $row1['ordercancel'] - $row['od_dc_amount'] - $row['receiptamount'] + $row['receiptcancel'];
-
-        $save['ordercount']++;
-        $save['orderamount']   += $row1['orderamount'];
-        $save['ordercancel']   += $row1['ordercancel'];
-        $save['dc']            += $row['od_dc_amount'];
-        $save['receiptbank']   += $row['od_receipt_bank'];
-        $save['receiptcard']   += $row['od_receipt_card'];
-        $save['receiptpoint']  += $row['od_receipt_point'];
-        $save['receiptcancel'] += $row['receiptcancel'];
-        $save['misu']          += $misu;
-
-        $tot['ordercount']++;
-        $tot['orderamount']   += $row1['orderamount'];
-        $tot['ordercancel']   += $row1['ordercancel'];
-        $tot['dc']            += $row['od_dc_amount'];
-        $tot['receiptbank']   += $row['od_receipt_bank'];
-        $tot['receiptcard']   += $row['od_receipt_card'];
-        $tot['receiptpoint']  += $row['od_receipt_point'];
-        $tot['receiptamount'] += $row['receiptamount'];
-        $tot['receiptcancel'] += $row['receiptcancel'];
-        $tot['misu']          += $misu;
-    }
-
-    if ($i == 0) {
-        echo '<tr><td colspan="9" calss="sale1"><span>자료가 한건도 없습니다.</span></td></tr>';
-    } else {
-        print_line($save);
-    }
-    ?>
-    </tbody>
     <tfoot>
     <tr class="sale1">
         <td>합 계</td>
@@ -141,6 +117,41 @@ function print_line($save)
         <td><?=number_format($tot['misu'])?></td>
     </tr>
     </tfoot>
+    <tbody>
+    <?
+    unset($save);
+    unset($tot);
+    for ($i=0; $i<count($lines); $i++)
+    {
+        if ($i == 0)
+            $save['od_date'] = $lines[$i]['od_date'];
+
+        if ($save['od_date'] != $lines[$i]['od_date']) {
+            print_line($save);
+            unset($save);
+            $save['od_date'] = $$lines[$i]['od_date'];
+        }
+
+        $misu = $lines1[$i]['orderamount'] - $lines1[$i]['ordercancel'] - $lines[$i]['od_dc_amount'] - $lines[$i]['receiptamount'] + $lines[$i]['receiptcancel'];
+
+        $save['ordercount']++;
+        $save['orderamount']   += $lines1[$i]['orderamount'];
+        $save['ordercancel']   += $lines1[$i]['ordercancel'];
+        $save['dc']            += $lines[$i]['od_dc_amount'];
+        $save['receiptbank']   += $lines[$i]['od_receipt_bank'];
+        $save['receiptcard']   += $lines[$i]['od_receipt_card'];
+        $save['receiptpoint']  += $lines[$i]['od_receipt_point'];
+        $save['receiptcancel'] += $lines[$i]['receiptcancel'];
+        $save['misu']          += $misu;
+    }
+
+    if ($i == 0) {
+        echo '<tr><td colspan="9" calss="sale1"><span>자료가 한건도 없습니다.</span></td></tr>';
+    } else {
+        print_line($save);
+    }
+    ?>
+    </tbody>
     </table>
 </section>
 
