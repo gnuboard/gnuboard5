@@ -75,17 +75,17 @@ $result = sql_query($sql);
 $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
 ?>
 
-<form name=flist style="margin:0px;">
-<table width=100% cellpadding=4 cellspacing=0>
-<input type=hidden name=doc   value="<? echo $doc ?>">
-<input type=hidden name=sort1 value="<? echo $sort1 ?>">
-<input type=hidden name=sort2 value="<? echo $sort2 ?>">
-<input type=hidden name=page  value="<? echo $page ?>">
-<tr>
-    <td width=10%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
-    <td width=80% align=center>
-        <select name="sca">
-            <option value=''>전체분류
+
+    <form name="flist">
+    <fieldset>
+        <legend>게시판 검색</legend>
+        <input type="hidden" name="doc" value="<? echo $doc ?>">
+        <input type="hidden" name="sort1" value="<? echo $sort1 ?>">
+        <input type="hidden" name="sort2" value="<? echo $sort2 ?>">
+        <input type="hidden" name="page" value="<? echo $page ?>">
+        <p><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></p>
+        <select name="sca" title="검색분류">
+            <option value="">전체분류</option>
             <?
             $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
             $result1 = sql_query($sql1);
@@ -98,89 +98,91 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
             ?>
         </select>
         <script> document.flist.sca.value = '<?=$sca?>';</script>
-
-        <select name=sfl>
-            <option value='it_name'>상품명
-            <option value='it_id'>상품코드
+        <select name="sfl" title="검색대상">
+            <option value='it_name'>상품명</option>
+            <option value='it_id'>상품코드</option>
         </select>
         <? if ($slf) echo "<script> document.flist.slf.value = '$sfl';</script>"; ?>
+        <input type="text" name="stx" value="<? echo $stx ?>" title="검색어">
+        <input type="submit" value="검색" class="btn_submit">
+    </fieldset>
+    <p>건수 : <? echo $total_count ?></p>
+    </form>
 
-        <input type=text name=stx value='<? echo $stx ?>'>
-        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
-    </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
-</form>
+    <section class="cbox">
+    <h2>상품유형관리</h2>
+    <p>*상품의 유형을 일괄처리합니다.</p>
+    <form name="fitemtypelist" method="post" action="./itemtypelistupdate.php">
+    <input type="hidden" name="sca" value="<?=$sca?>">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod"  value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+    <table>
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_10">
+        <col class="grid_1">
+        <col class="grid_1">
+        <col class="grid_1">
+        <col class="grid_2">
+        <col class="grid_2">
+        <col class="grid_2">
+        <col class="grid_1">
+    </colgroup>
+    <thead>
+    <tr>
+        <th scope="col"><?=subject_sort_link("it_id", $qstr, 1)?>상품코드</a></th>
+        <th scope="col"><?=subject_sort_link("it_name")?>상품명</a></th>
+        <th scope="col"><?=subject_sort_link("it_type1", $qstr, 1)?>히트상품</a></th>
+        <th scope="col"><?=subject_sort_link("it_type2", $qstr, 1)?>추천상품</a></th>
+        <th scope="col"><?=subject_sort_link("it_type3", $qstr, 1)?>신규상품</a></th>
+        <th scope="col"><?=subject_sort_link("it_type4", $qstr, 1)?>인기상품</a></th>
+        <th scope="col"><?=subject_sort_link("it_type5", $qstr, 1)?>할인상품</a></th>
+        <th scope="col">수정</th>
+    </tr>
+    </thead>
+    <tbody>
+        <?
+        for ($i=0; $row=sql_fetch_array($result); $i++)
+        {
+            $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
+
+            $s_mod = icon("수정", "./itemform.php?w=u&it_id={$row['it_id']}&ca_id={$row['ca_id']}&$qstr");
+
+            $list = $i%2;
+            ?>
+            <input type="hidden" name="it_id[$i]" value="<?=$row['it_id']?>">
+            <tr>
+                <td><?=$row['it_id']?></td>
+                <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?></a><?=cut_str(stripslashes($row['it_name']), 60, "&#133")?></a></td>
+                <td><input type="checkbox" name="it_type1[$i]" value="1" <?=($row['it_type1'] ? 'checked' : '')?> title="히트상품"></td>
+                <td><input type="checkbox" name="it_type2[$i]" value="1" <?=($row['it_type2'] ? 'checked' : '')?> title="추천상품"></td>
+                <td><input type="checkbox" name="it_type3[$i]" value="1" <?=($row['it_type3'] ? 'checked' : '')?> title="신규상품"></td>
+                <td><input type="checkbox" name="it_type4[$i]" value="1" <?=($row['it_type4'] ? 'checked' : '')?> title="인기상품"></td>
+                <td><input type="checkbox" name="it_type5[$i]" value="1" <?=($row['it_type5'] ? 'checked' : '')?> title="할인상품"></td>
+                <td><?=$s_mod?></td>
+            </tr>
+            <?
+        }
+
+        if (!$i)
+            echo '<tr><td colspan="9"><span>자료가 한건도 없습니다.</span></td></tr>';
+        ?>
+    </tbody>
+    <tfoot>
+
+    </tfoot>
+    </table>
+    </form>
+
+    <input type="submit" value="일괄수정" accesskey="s">
+    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+
+</section>
 
 
-<form name=fitemtypelist method=post action="./itemtypelistupdate.php" style="margin:0px;">
-<input type=hidden name=sca  value="<?=$sca?>">
-<input type=hidden name=sst  value="<?=$sst?>">
-<input type=hidden name=sod  value="<?=$sod?>">
-<input type=hidden name=sfl  value="<?=$sfl?>">
-<input type=hidden name=stx  value="<?=$stx?>">
-<input type=hidden name=page value="<?=$page?>">
-<table cellpadding=0 cellspacing=0 width=100%>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=40>
-<tr><td colspan=9 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td><?=subject_sort_link("it_id", $qstr, 1)?>상품코드</a></td>
-    <td colspan=2><?=subject_sort_link("it_name")?>상품명</a></td>
-    <td><?=subject_sort_link("it_type1", $qstr, 1)?>히트상품</a></td>
-    <td><?=subject_sort_link("it_type2", $qstr, 1)?>추천상품</a></td>
-    <td><?=subject_sort_link("it_type3", $qstr, 1)?>신규상품</a></td>
-    <td><?=subject_sort_link("it_type4", $qstr, 1)?>인기상품</a></td>
-    <td><?=subject_sort_link("it_type5", $qstr, 1)?>할인상품</a></td>
-    <td>수정</td>
-</tr>
-<tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
-
-    $s_mod = icon("수정", "./itemform.php?w=u&it_id={$row['it_id']}&ca_id={$row['ca_id']}&$qstr");
-
-    $list = $i%2;
-    echo "
-    <input type='hidden' name='it_id[$i]' value='{$row['it_id']}'>
-    <tr class='list$list center'>
-        <td>{$row['it_id']}</td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'].'_s', 50, 50)."</a></td>
-        <td align=left><a href='$href'>".cut_str(stripslashes($row['it_name']), 60, "&#133")."</a></td>
-        <td><input type=checkbox name='it_type1[$i]' value='1' ".($row['it_type1'] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type2[$i]' value='1' ".($row['it_type2'] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type3[$i]' value='1' ".($row['it_type3'] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type4[$i]' value='1' ".($row['it_type4'] ? 'checked' : '')."></td>
-        <td><input type=checkbox name='it_type5[$i]' value='1' ".($row['it_type5'] ? 'checked' : '')."></td>
-        <td>$s_mod</td>
-    </tr>";
-}
-
-if (!$i)
-    echo "<tr><td colspan=9 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>";
-?>
-<tr><td colspan=9 height=1 bgcolor=#CCCCCC></td></tr>
-</table>
-
-<table width=100%>
-<tr>
-    <td colspan=50%><input type=submit class=btn1 value='일괄수정' accesskey='s'></td>
-    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
-</tr>
-</form>
-</table><br>
-
-* 상품의 유형을 일괄 처리합니다.
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
