@@ -74,9 +74,9 @@ function imageview(id, w, h)
                     </a>
                 </li>
                 <li>
-                    <a href="<?=G4_URL?>/">
+                    <a href="<?=G4_SHOP_URL?>/">
                         <img src="<?=G4_ADMIN_URL?>/img/snb_home.jpg" alt="" width="28" height="28">
-                        홈페이지 메인
+                        쇼핑몰 메인
                     </a>
                 </li>
                 <li>
