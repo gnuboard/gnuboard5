@@ -338,6 +338,8 @@ $upload_max_filesize = number_format($board['bo_upload_size']) . ' 바이트';
 $width = $board['bo_table_width'];
 if ($width <= 100)
     $width .= '%';
+else
+    $width .= 'px';
 
 $captcha_html = '';
 $captcha_js   = '';
