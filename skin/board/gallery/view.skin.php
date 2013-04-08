@@ -1,5 +1,5 @@
 <?
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+`if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
@@ -41,9 +41,9 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         ?>
             <li>
                 <a href="<? echo $view['file'][$i]['href']; ?>" class="view_file_download">
-                    <img src="<?=$board_skin_url?>/img/icon_file.gif" alt="첨부파일">
+                    <img src="<?=$board_skin_url?>/img/icon_file.gif" alt="첨부">
                     <strong><?=$view['file'][$i]['source']?></strong>
-                    <span> (<?=$view['file'][$i]['size']?>)</span>
+                    <?=$view['file'][$i]['bf_content']?> (<?=$view['file'][$i]['size']?>)
                 </a>
                 <span class="bo_v_file_cnt"><?=$view['file'][$i]['download']?>회 다운로드</span>
                 <span>DATE : <?=$view['file'][$i]['datetime']?></span>
