@@ -24,12 +24,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <b><?=$mb_name?></b> 님의 E-mail 주소가 변경되었습니다.<br><br>
 
             아래의 주소를 클릭하시면 인증이 완료됩니다.<br>
-            <a href="<?=$certify_href?>"><b><?=$certify_href?></b></a><br><br>
+            <a href="<?=$certify_href?>" target="_blank"><b><?=$certify_href?></b></a><br><br>
 
             회원님의 성원에 보답하고자 더욱 더 열심히 하겠습니다.<br>
             감사합니다.
         </p>
-        <a href="<?=G4_BBS_URL?>/login.php" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center"><?=$config['cf_title']?> 로그인</a>
+        <a href="<?=G4_BBS_URL?>/login.php" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center"><?=$config['cf_title']?> 로그인</a>
     </div>
 </div>
 
