@@ -23,7 +23,7 @@ switch ($w) {
             goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
         else {
             $action = './password_check.php';
-            $return_url = $_SERVER['HTTP_REFERER'];
+            $return_url = './board.php?bo_table='.$bo_table;
         }
         break;
     default :
