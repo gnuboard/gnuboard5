@@ -108,7 +108,6 @@
 .bo_v_com li {float:left;margin-left:5px}
 
 #bo_v_atc {min-height:200px;height:auto !important;height:200px}
-#bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
 
 #bo_v_img {margin:0 0 10px;width:100%;overflow:hidden:zoom:1}
 #bo_v_img:after {display:block;visibility:hidden;clear:both;content:""}
