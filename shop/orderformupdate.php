@@ -184,7 +184,7 @@ else
 // 주문금액과 결제금액이 일치하는지 체크
 if($tno) {
     if((int)$i_amount !== (int)$pg_amount) {
-        $cancel_msg = 'Receipt amount error';
+        $cancel_msg = '결제금액 불일치';
         include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
 
         die("Receipt Amount Error");
@@ -247,7 +247,7 @@ $result = sql_query($sql, false);
 // 주문정보 입력 오류시 kcp 결제 취소
 if(!$result) {
     if($tno) {
-        $cancel_msg = 'Order update error';
+        $cancel_msg = '주문정보 입력 오류';
         include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
     }
 
@@ -270,7 +270,7 @@ $result = sql_query($sql, false);
 // 주문정보 입력 오류시 kcp 결제 취소
 if(!$result) {
     if($tno) {
-        $cancel_msg = 'Order status update error';
+        $cancel_msg = '주문상태 변경 오류';
         include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
     }
 
