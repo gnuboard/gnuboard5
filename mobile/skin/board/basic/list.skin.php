@@ -12,7 +12,7 @@ if ($is_nogood) $colspan++;
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
 
 <!-- 게시판 목록 시작 -->
-<div id="bo_list<? if ($is_admin) echo "_admin";?>" style="width:<?=$width;?>">
+<div id="bo_list<? if ($is_admin) echo "_admin";?>">
 
     <? if ($is_category) { ?>
     <form name="fcategory" id="fcategory" method="get">
