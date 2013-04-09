@@ -24,14 +24,14 @@ function print_menu2($key, $no)
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
             continue;
 
-        if ($menu[$key][$i][4] == 1 && $gnb_grp_style == false) $gnb_grp_div = 'style="border-top:1px solid #eee"';
-        else if ($menu[$key][$i][4] == 0 && $gnb_grp_style == true) $gnb_grp_div = 'style="border-top:1px solid #eee"';
+        if ($menu[$key][$i][4] == 1 && $gnb_grp_style == false) $gnb_grp_div = 'gnb_grp_div';
+        else if ($menu[$key][$i][4] != 1 && $gnb_grp_style == true) $gnb_grp_div = 'gnb_grp_div';
         else $gnb_grp_div = '';
 
-        if ($menu[$key][$i][4] == 1) $gnb_grp_style = 'class="gnb_grp_style"';
+        if ($menu[$key][$i][4] == 1) $gnb_grp_style = 'gnb_grp_style';
         else $gnb_grp_style = '';
 
-        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'" '.$gnb_grp_style.$gnb_grp_div.'>'.$menu[$key][$i][1].'</a></li>';
+        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'" class="'.$gnb_grp_style.$gnb_grp_div.'">'.$menu[$key][$i][1].'</a></li>';
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
