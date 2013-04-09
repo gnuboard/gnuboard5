@@ -163,7 +163,9 @@ $pg_anchor ="<ul class=\"anchor\">
         <td>
             <label for="de_type1_list_use">출력</label> <input type="checkbox" name="de_type1_list_use" value="1" id="de_type1_list_use" <?=$default['de_type1_list_use']?"checked":"";?>>
             <label for="de_type1_list_skin">스킨 </label>
-            <select name="de_type1_list_skin" id="de_type1_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type1_list_skin').value='<?=$default['de_type1_list_skin']?>';</script>
+            <select name="de_type1_list_skin" id="de_type1_list_skin">
+                <?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH, $default['de_type1_list_skin'] );?>
+            </select>
             <label for="de_type1_list_mod">1라인이미지수</label>
             <input type="text" name="de_type1_list_mod" value="<?=$default['de_type1_list_mod']?>" id="de_type1_list_mod" class="frm_input" size="3">
             <label for="de_type1_list_row">라인</label>

@@ -556,9 +556,9 @@ function get_goods($uq_id)
 
 
 // 패턴의 내용대로 해당 디렉토리에서 정렬하여 <select> 태그에 적용할 수 있게 반환
-function get_list_skin_options($pattern, $dirname="./")
+function get_list_skin_options($pattern, $dirname='./', $sval='')
 {
-    $str = "";
+    $str = '<option value="">선택</option>'.PHP_EOL;
 
     unset($arr);
     $handle = opendir($dirname);
@@ -571,7 +571,12 @@ function get_list_skin_options($pattern, $dirname="./")
 
     sort($arr);
     foreach($arr as $key=>$value) {
-        $str .= "<option value=\"$arr[$key]\">$arr[$key]</option>\n";
+        if($key == $sval)
+            $selected = ' selected="selected"';
+        else
+            $selected = '';
+
+        $str .= '<option value="'.$arr[$key].'"'.$selected.'>'.$arr[$key].'</option>'.PHP_EOL;
     }
 
     return $str;
