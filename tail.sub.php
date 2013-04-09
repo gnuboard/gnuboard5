@@ -132,14 +132,6 @@ function menu_rearrange(el)
 </body>
 </html>
 <?
-// uniqid 테이블이 없을 경우 생성
-if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
-                  `uq_id` bigint(20) unsigned NOT NULL,
-                  PRIMARY KEY (`uq_id`)
-                ) ", false);
-}
-
 $tmp_sql = " select count(*) as cnt from {$g4['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 $tmp_row = sql_fetch($tmp_sql);
 
