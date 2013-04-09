@@ -130,6 +130,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <colgroup width=30>
 <colgroup width=30>
 <tr><td colspan=11 height=3 bgcolor=#0E87F9></td></tr>
+<thead>
 <tr align=center class=ht>
     <td><a href="<?=title_sort("od_id")."&$qstr1";?>">주문번호</a></td>
     <td><a href="<?=title_sort("od_name")."&$qstr1";?>">주문자</a></td>
@@ -143,9 +144,20 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
     <td><a href="<?=title_sort("ct_status")."&$qstr1";?>">상태</a></td>
     <td>수정</td>
 </tr>
+</thead>
+<tfoot>
+<tr class=ht>
+    <td colspan=5 align=right>합 계&nbsp;</td>
+    <td align=right><?=number_format($tot_amount)?>&nbsp;</td>
+    <td align=right><?=number_format($tot_qty)?>&nbsp;</td>
+    <td align=right><?=number_format($tot_sub_amount)?>&nbsp;</td>
+    <td align=right><?=number_format($tot_sub_point)?>&nbsp;</td>
+    <td colspan=2></td>
+</tr>
 <tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
 <tr><td colspan=11 height=3 bgcolor=#F8F8F8></td></tr>
-
+</tfoot>
+<tbody>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++) {
 
@@ -185,15 +197,8 @@ if ($i == 0)
     echo "<tr><td colspan=11 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
 ?>
 <tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
-<tr class=ht>
-    <td colspan=5 align=right>합 계&nbsp;</td>
-    <td align=right><?=number_format($tot_amount)?>&nbsp;</td>
-    <td align=right><?=number_format($tot_qty)?>&nbsp;</td>
-    <td align=right><?=number_format($tot_sub_amount)?>&nbsp;</td>
-    <td align=right><?=number_format($tot_sub_point)?>&nbsp;</td>
-    <td colspan=2></td>
-</tr>
 <tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+</tbody>
 </table>
 
 <table width=100%>
