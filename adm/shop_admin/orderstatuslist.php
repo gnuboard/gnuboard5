@@ -26,9 +26,9 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.uq_id = b.uq_id)
-                left join {$g4['yc4_item_table']} c on (b.it_id = c.it_id)
+$sql_common = " from {$g4['shop_order_table']} a
+                left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
+                left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음

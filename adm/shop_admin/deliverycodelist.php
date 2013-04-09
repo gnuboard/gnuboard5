@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = '배송회사관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g4['yc4_delivery_table']} ";
+$sql_common = " from {$g4['shop_delivery_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;

@@ -54,7 +54,7 @@ echo "\n";
 for ($i=1; $i<=$tv_idx; $i++)
 {
     $tv_it_id = get_session("ss_tv[$i]");
-    $rowx = sql_fetch(" select it_name from $g4[yc4_item_table] where it_id = '$tv_it_id' ");
+    $rowx = sql_fetch(" select it_name from $g4[shop_item_table] where it_id = '$tv_it_id' ");
     $it_name = get_text(addslashes($rowx['it_name']));
     $img = get_it_image($tv_it_id."_s", $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
     $img = str_replace('"', '\"', preg_replace("/\<a /", "<a title=\"$it_name\" ", $img));

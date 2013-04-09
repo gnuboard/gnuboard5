@@ -22,7 +22,7 @@ if ($sel_field == "")  $sel_field = "it_name";
 if ($sort1 == "") $sort1 = "it_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = "  from $g4[yc4_item_table] ";
+$sql_common = "  from $g4[shop_item_table] ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
@@ -60,7 +60,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <select name="sel_ca_id">
             <option value=''>전체분류
             <?
-            $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
+            $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
             $result1 = sql_query($sql1);
             for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
                 $len = strlen($row1['ca_id']) / 2 - 1;
@@ -122,7 +122,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
     $sql1 = " select SUM(ct_qty) as sum_qty
-                from {$g4['yc4_cart_table']}
+                from {$g4['shop_cart_table']}
                where it_id = '{$row['it_id']}'
                  and ct_stock_use = '0'
                  and ct_status in ('주문', '준비') ";

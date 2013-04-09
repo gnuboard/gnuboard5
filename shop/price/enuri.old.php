@@ -48,21 +48,21 @@ include_once("./_common.php");
 // 페이지당 행수
 $page_rows = 1000;
 
-$sql = " select count(*) as cnt from $g4[yc4_item_table] where it_use = '1' and ca_id LIKE '$ca_id%'";
+$sql = " select count(*) as cnt from $g4[shop_item_table] where it_use = '1' and ca_id LIKE '$ca_id%'";
 $row = sql_fetch($sql);
 $total_count = $row[cnt];
 ?>
 <html>
 <title>에누리 엔진페이지</title>
 <head>
-<meta http-equiv="Cache-Control" content="no-cache"/> 
-<meta http-equiv="Expires" content="0"/> 
-<meta http-equiv="Pragma" content="no-cache"/> 
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<meta http-equiv="Pragma" content="no-cache"/>
 <style type="text/css">
 <!--
 A:link		{text-decoration: underline; color:steelblue}
 A:visited	{text-decoration: none; color:steelblue}
-A:hover		{text-decoration: underline; color:RoyalBlue}   
+A:hover		{text-decoration: underline; color:RoyalBlue}
 font		{font-family:굴림; font-size:10pt}
 th,td		{font-family:굴림; font-size:10pt ; height:15pt}
 
@@ -89,15 +89,15 @@ if ($page == "") $page = 1;
 $from_record = ($page - 1) * $page_rows;
 
 $caid = addslashes($ca_id);
-$sql = " select * from $g4[yc4_item_table]
-          where it_use = '1' 
+$sql = " select * from $g4[shop_item_table]
+          where it_use = '1'
           and ca_id LIKE '$caid%'
-          order by ca_id    
+          order by ca_id
           limit $from_record, $page_rows ";
 
 $result = sql_query($sql);
 
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     $stock = get_it_stock_qty($row[it_id]);
 

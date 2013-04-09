@@ -7,7 +7,7 @@ if (!defined("_ORDERMAIL_")) exit;
 // 주문자님께 메일발송 체크를 했다면
 if ($od_send_mail)
 {
-    $od = sql_fetch(" select * from {$g4['yc4_order_table']} where od_id = '$od_id' ");
+    $od = sql_fetch(" select * from {$g4['shop_order_table']} where od_id = '$od_id' ");
 
     $addmemo = nl2br(stripslashes($addmemo));
 
@@ -25,7 +25,7 @@ if ($od_send_mail)
                     b.it_opt4_subject,
                     b.it_opt5_subject,
                     b.it_opt6_subject
-               from {$g4['yc4_cart_table']} a inner join {$g4['yc4_item_table']} b on (b.it_id=a.it_id)
+               from {$g4['shop_cart_table']} a inner join {$g4['shop_item_table']} b on (b.it_id=a.it_id)
               where a.uq_id = '{$od['uq_id']}'
               order by a.ct_id ";
     $result = sql_query($sql);
@@ -100,7 +100,7 @@ if ($od_send_mail)
     // 배송정보
     $is_delivery = false;
     if ((int)$od[dl_id] > 0) {
-        $dl = sql_fetch(" select * from {$g4['yc4_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+        $dl = sql_fetch(" select * from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
         $delivery_list['dl_url']          = $dl['dl_url'];
         if (strpos($delivery_list['dl_url'], "=")) $delivery_list['dl_url'] .= $od['od_invoice'];
@@ -133,7 +133,7 @@ if ($od_send_mail)
             $od_shop_memo .= ", 송장번호";
         */
 
-        sql_query(" update {$g4['yc4_order_table']} set od_shop_memo = '$od_shop_memo' where od_id = '$od_id' ");
+        sql_query(" update {$g4['shop_order_table']} set od_shop_memo = '$od_shop_memo' where od_id = '$od_id' ");
 
         $admin = get_admin('super');
 

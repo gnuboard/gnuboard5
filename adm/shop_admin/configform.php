@@ -5,41 +5,6 @@ include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
-//------------------------------------------------------------------------------
-// 설정테이블에 필드 추가
-//------------------------------------------------------------------------------
-
-sql_query(" ALTER TABLE `{$g4['yc4_default_table']}`    ADD `de_hp_use` TINYINT NOT NULL DEFAULT '0' ", false);
-sql_query(" ALTER TABLE `{$g4['yc4_default_table']}`    ADD `de_escrow_use` TINYINT NOT NULL DEFAULT '0' ", false);
-
-// 쏜다넷 smskey 필드 추가 : 101201
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_xonda_smskey` VARCHAR( 255 ) NOT NULL ");
-
-// 비회원에 대한 개인정보 수집에 대한 내용
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_guest_privacy` TEXT NOT NULL ");
-
-// 현금영수증 발급
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_taxsave_use` TINYINT NOT NULL ");
-
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_kcp_site_key` VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_dacom_mertkey` VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_vbank_use` VARCHAR( 255 ) NOT NULL ");
-
-@mysql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_settle_case` VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_escrow1`     VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_escrow2`     VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_escrow3`     VARCHAR( 255 ) NOT NULL ");
-
-// SMS 아이코드 추가 (icodekorea.com)
-$sql = " ALTER TABLE `{$g4['yc4_default_table']}`   ADD `de_sms_use` VARCHAR( 255 ) NOT NULL ,
-                                                    ADD `de_icode_id` VARCHAR( 255 ) NOT NULL ,
-                                                    ADD `de_icode_pw` VARCHAR( 255 ) NOT NULL ,
-                                                    ADD `de_icode_server_ip` VARCHAR( 255 ) NOT NULL ,
-                                                    ADD `de_icode_server_port` VARCHAR( 255 ) NOT NULL ";
-sql_query($sql, false);
-
-//------------------------------------------------------------------------------
-
 if (!function_exists("get_sock")) {
     function get_sock($url)
     {
@@ -475,84 +440,6 @@ $pg_anchor ="<ul class=\"anchor\">
         <td colspan="3">
             <?=help("가상계좌 사용시 이 주소를 \"KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후\"에 넣으셔야 상점에 자동으로 입금 통보됩니다.")?>
             <?=G4_SHOP_URL?>/settle_kcp_common.php
-        </td>
-    </tr>
-    <tr style="display:none;">
-        <th scope="row"><label for="de_dacom_mid">LG텔레콤 상점아이디</label></th>
-        <td>
-            <input type="text" name="de_dacom_mid" value="<?=$default['de_dacom_mid']?>" id="de_dacom_mid" size="40">
-        <?=help("tsi_ 로 시작되는 상점아이디로만 테스트 결제가 가능합니다.");?>
-        </td>
-        <th scope="row"><label for="de_dacom_mertkey">LG텔레콤 mertkey</label></th>
-        <td>
-          <input type="text" name="de_dacom_mertkey" value="<?=$default['de_dacom_mertkey']?>" id="de_dacom_mertkey" size="40">
-    </td>
-    <!-- <td>LG텔레콤 테스트 모드</td>
-    <td>
-        <input type="checkbox" name="de_dacom_test" value="1" <?=$default[de_dacom_test]?"checked":"";?>> 
-        테스트로 결제하실 경우에 체크하세요.
-    </td> -->
-    </tr>
-    <tr style="display:none;">
-        <th scope="row"><label for="de_inicis_mid">이니시스 아이디</label></th>
-        <td>
-         <input type="text" name="de_inicis_mid" value="<?=$default['de_inicis_mid']?>" id="de_inicis_mid" size="40">
-    </td>
-        <th scope="row"><label for="de_inicis_passwd">이니시스 패스워드</label></th>
-        <td>
-            <input type="text" name="de_inicis_passwd" value="<?=$default['de_inicis_passwd']?>" id="de_inicis_passwd">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_banktown_mid">뱅크타운 상점ID</label></th>
-        <td>
-            <input type="text" name="de_banktown_mid" value="<?=$default['de_banktown_mid']?>" id="de_banktown_mid" size="40">
-        </td>
-        <th scope="row"><label for="de_banktown_auth_key">뱅크타운 라이센스 키<!-- AuthKey --></label></th>
-        <td>
-            <input type="text" name="de_banktown_auth_key" value="<?=$default['de_banktown_auth_key']?>" id="de_banktown_auth_key" size="40" maxlength="32">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_allthegate_mid">올더게이트 몰ID</label></th>
-        <td colspan="3">
-           <input type="text" name="de_allthegate_mid" value="<?=$default['de_allthegate_mid']?>" id="de_allthegate_mid" size="40">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_allat_partner_id">올앳 파트너 ID</label></th>
-        <td>
-          <input type="text" name="de_allat_partner_id" value="<?=$default['de_allat_partner_id']?>" id="de_allat_partner_id" size="40">
-        </td>
-        <th scope="row"><label for="de_allat_prefix">주문번호 Prefix</label></th>
-        <td>
-            <input type="text" name="de_allat_prefix" value="<?=$default['de_allat_prefix']?>" id="de_allat_prefix"> 3자리
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_allat_formkey">올앳 FormKey 값</label></th>
-        <td>
-           <input type="text" name="de_allat_formkey" value="<?=$default['de_allat_formkey']?>" id="de_allat_formkey" size="40">
-        </td>
-        <th scope="row"><label for="de_allat_crosskey">올앳 CrossKey 값</label></th>
-        <td>
-            <input type="text" name="de_allat_crosskey" value="<?=$default['de_allat_crosskey']?>" id="de_allat_crosskey" size="40">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_tgcorp_mxid">티지코프 ID</label></th>
-        <td>
-          <input type="text" name="de_tgcorp_mxid" value="<?=$default['de_tgcorp_mxid']?>" id="de_tgcorp_mxid" size="40">
-        </td>
-        <th scope="row"><label for="de_tgcorp_mxotp">티지코프 접근키</label></th>
-        <td>
-           <input type="text" name="de_tgcorp_mxotp" value="<?=$default['de_tgcorp_mxotp']?>" id="de_tgcorp_mxotp" size="40">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_kspay_id">KSPAY 상점아이디</label></th>
-        <td colspan="3">
-           <input type="text" name="de_kspay_id" value="<?=$default['de_kspay_id']?>" id="de_kspay_id" size="40">
         </td>
     </tr>
     </tbody>

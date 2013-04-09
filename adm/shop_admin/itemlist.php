@@ -9,7 +9,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 // 분류
 $ca_list  = "";
-$sql = " select * from {$g4['yc4_category_table']} ";
+$sql = " select * from {$g4['shop_category_table']} ";
 if ($is_admin != 'super')
     $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
 $sql .= " order by ca_id ";
@@ -43,8 +43,8 @@ if ($sca != "") {
 
 if ($sfl == "")  $sfl = "it_name";
 
-$sql_common = " from {$g4['yc4_item_table']} a ,
-                     {$g4['yc4_category_table']} b
+$sql_common = " from {$g4['shop_item_table']} a ,
+                     {$g4['shop_category_table']} b
                where (a.ca_id = b.ca_id";
 if ($is_admin != 'super')
     $sql_common .= " and b.ca_mb_id = '{$member['mb_id']}'";
@@ -87,7 +87,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         <select name="sca">
             <option value=''>전체분류
             <?
-            $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
+            $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
             $result1 = sql_query($sql1);
             for ($i=0; $row1=sql_fetch_array($result1); $i++)
             {

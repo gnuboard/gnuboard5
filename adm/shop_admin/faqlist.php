@@ -7,10 +7,10 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = 'FAQ 상세관리 : '.$fm['fm_subject'];
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$sql = " select * from {$g4['yc4_faq_master_table']} where fm_id = '$fm_id' ";
+$sql = " select * from {$g4['shop_faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
-$sql_common = " from {$g4['yc4_faq_table']} where fm_id = '$fm_id' ";
+$sql_common = " from {$g4['shop_faq_table']} where fm_id = '$fm_id' ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -49,7 +49,7 @@ $result = sql_query($sql);
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $row1 = sql_fetch(" select COUNT(*) as cnt from {$g4['yc4_faq_table']} where fm_id = '{$row['fm_id']}' ");
+    $row1 = sql_fetch(" select COUNT(*) as cnt from {$g4['shop_faq_table']} where fm_id = '{$row['fm_id']}' ");
     $cnt = $row1[cnt];
 
     $s_mod = icon("수정", "./faqform.php?w=u&fm_id={$row['fm_id']}&fa_id={$row['fa_id']}");

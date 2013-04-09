@@ -24,8 +24,8 @@ if (G4_HTTPS_DOMAIN) {
 }
 
 // 미수금에 대한 QUERY 문
-// 테이블 a 는 주문서 ($g4[yc4_order_table])
-// 테이블 b 는 장바구니 ($g4[yc4_cart_table])
+// 테이블 a 는 주문서 ($g4[shop_order_table])
+// 테이블 b 는 장바구니 ($g4[shop_cart_table])
 define(_MISU_QUERY_, "
     count(distinct a.od_id) as ordercount, /* 주문서건수 */
     count(b.ct_id) as itemcount, /* 상품건수 */
@@ -49,42 +49,29 @@ define(_MISU_QUERY_, "
 //------------------------------------------------------------------------------
 // 쇼핑몰 변수 모음 시작
 //------------------------------------------------------------------------------
-define('YC4_TABLE_PREFIX', 'yc4_');
+define('SHOP_TABLE_PREFIX', 'yc4_');
 
 // 쇼핑몰 테이블명
-$g4['yc4_default_table']       = YC4_TABLE_PREFIX.'default';               // 쇼핑몰설정 테이블
-$g4['yc4_banner_table']        = YC4_TABLE_PREFIX.'banner';                // 배너 테이블
-$g4['yc4_card_history_table']  = YC4_TABLE_PREFIX.'card_history';          // 전자결제이력 테이블
-$g4['yc4_cart_table']          = YC4_TABLE_PREFIX.'cart';                  // 장바구니 테이블
-$g4['yc4_category_table']      = YC4_TABLE_PREFIX.'category';              // 상품분류 테이블
-$g4['yc4_content_table']       = YC4_TABLE_PREFIX.'content';               // 내용(컨텐츠)정보 테이블
-$g4['yc4_delivery_table']      = YC4_TABLE_PREFIX.'delivery';              // 배송정보 테이블
-$g4['yc4_event_table']         = YC4_TABLE_PREFIX.'event';                 // 이벤트 테이블
-$g4['yc4_event_item_table']    = YC4_TABLE_PREFIX.'event_item';            // 상품, 이벤트 연결 테이블
-$g4['yc4_faq_table']           = YC4_TABLE_PREFIX.'faq';                   // 자주하시는 질문 테이블
-$g4['yc4_faq_master_table']    = YC4_TABLE_PREFIX.'faq_master';            // 자주하시는 질문 마스터 테이블
-$g4['yc4_item_table']          = YC4_TABLE_PREFIX.'item';                  // 상품 테이블
-$g4['yc4_item_ps_table']       = YC4_TABLE_PREFIX.'item_ps';               // 상품 사용후기 테이블
-$g4['yc4_item_qa_table']       = YC4_TABLE_PREFIX.'item_qa';               // 상품 질문답변 테이블
-$g4['yc4_item_relation_table'] = YC4_TABLE_PREFIX.'item_relation';         // 관련 상품 테이블
-$g4['yc4_new_win_table']       = YC4_TABLE_PREFIX.'new_win';               // 새창 테이블
-$g4['yc4_onlinecalc_table']    = YC4_TABLE_PREFIX.'onlinecalc';            // 온라인견적 테이블
-$g4['yc4_order_table']         = YC4_TABLE_PREFIX.'order';                 // 주문서 테이블
-$g4['yc4_wish_table']          = YC4_TABLE_PREFIX.'wish';                  // 보관함(위시리스트) 테이블
-$g4['yc4_item_info_table']     = YC4_TABLE_PREFIX.'item_info';             // 상품요약정보 테이블 (상품정보고시)
-
-
-// 신용카드결제대행사 URL
-$g4[yc4_cardpg][kcp]        = "http://admin.kcp.co.kr";
-$g4[yc4_cardpg][banktown]   = "http://ebiz.banktown.com/index.cs";
-$g4[yc4_cardpg][telec]      = "http://www.ebizpro.co.kr";
-$g4[yc4_cardpg][inicis]     = "https://iniweb.inicis.com/DefaultWebApp/index.html";
-$g4[yc4_cardpg][allthegate] = "http://www.allthegate.com/login/r_login.jsp";
-$g4[yc4_cardpg][allat]      = "http://www.allatbiz.net/servlet/AllatBizSrvX/bizcon/jspx/login/login.jsp?next=/servlet/AllatBizSrvX/bizable/jspx/login/login.jsp";
-$g4[yc4_cardpg][tgcorp]     = "https://npg.tgcorp.com/mdbop/login.jsp";
-$g4[yc4_cardpg][kspay]      = "http://nims.ksnet.co.kr:7001/pg_infoc/src/login.jsp"; // ksnet
-$g4[yc4_cardpg][dacom]      = "https://pgweb.dacom.net";
-$g4[yc4_cardpg][dacom_xpay] = "https://pgweb.dacom.net";
+$g4['shop_default_table']       = SHOP_TABLE_PREFIX.'default';               // 쇼핑몰설정 테이블
+$g4['shop_banner_table']        = SHOP_TABLE_PREFIX.'banner';                // 배너 테이블
+$g4['shop_card_history_table']  = SHOP_TABLE_PREFIX.'card_history';          // 전자결제이력 테이블
+$g4['shop_cart_table']          = SHOP_TABLE_PREFIX.'cart';                  // 장바구니 테이블
+$g4['shop_category_table']      = SHOP_TABLE_PREFIX.'category';              // 상품분류 테이블
+$g4['shop_content_table']       = SHOP_TABLE_PREFIX.'content';               // 내용(컨텐츠)정보 테이블
+$g4['shop_delivery_table']      = SHOP_TABLE_PREFIX.'delivery';              // 배송정보 테이블
+$g4['shop_event_table']         = SHOP_TABLE_PREFIX.'event';                 // 이벤트 테이블
+$g4['shop_event_item_table']    = SHOP_TABLE_PREFIX.'event_item';            // 상품, 이벤트 연결 테이블
+$g4['shop_faq_table']           = SHOP_TABLE_PREFIX.'faq';                   // 자주하시는 질문 테이블
+$g4['shop_faq_master_table']    = SHOP_TABLE_PREFIX.'faq_master';            // 자주하시는 질문 마스터 테이블
+$g4['shop_item_table']          = SHOP_TABLE_PREFIX.'item';                  // 상품 테이블
+$g4['shop_item_ps_table']       = SHOP_TABLE_PREFIX.'item_ps';               // 상품 사용후기 테이블
+$g4['shop_item_qa_table']       = SHOP_TABLE_PREFIX.'item_qa';               // 상품 질문답변 테이블
+$g4['shop_item_relation_table'] = SHOP_TABLE_PREFIX.'item_relation';         // 관련 상품 테이블
+$g4['shop_new_win_table']       = SHOP_TABLE_PREFIX.'new_win';               // 새창 테이블
+$g4['shop_onlinecalc_table']    = SHOP_TABLE_PREFIX.'onlinecalc';            // 온라인견적 테이블
+$g4['shop_order_table']         = SHOP_TABLE_PREFIX.'order';                 // 주문서 테이블
+$g4['shop_wish_table']          = SHOP_TABLE_PREFIX.'wish';                  // 보관함(위시리스트) 테이블
+$g4['shop_item_info_table']     = SHOP_TABLE_PREFIX.'item_info';             // 상품요약정보 테이블 (상품정보고시)
 //------------------------------------------------------------------------------
 // 쇼핑몰 변수 모음 끝
 //------------------------------------------------------------------------------
@@ -94,7 +81,7 @@ $g4[yc4_cardpg][dacom_xpay] = "https://pgweb.dacom.net";
 // 쇼핑몰 필수 실행코드 모음 시작
 //==============================================================================
 // 쇼핑몰 설정값 배열변수
-$default = sql_fetch(" select * from {$g4['yc4_default_table']} ");
+$default = sql_fetch(" select * from {$g4['shop_default_table']} ");
 
 // uniqid 테이블이 없을 경우 생성
 if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
@@ -105,17 +92,17 @@ if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
 }
 
 // uq_id 필드추가
-$sql = " select uq_id from {$g4['yc4_cart_table']} limit 1 ";
+$sql = " select uq_id from {$g4['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_card_history_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_card_history_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` DROP INDEX index1", false);
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_card_history_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_card_history_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` DROP INDEX index1", false);
 }
 
 //==============================================================================

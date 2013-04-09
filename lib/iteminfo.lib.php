@@ -564,7 +564,7 @@ function create_table_item_info()
 {
     global $g4;
     return sql_query("
-        CREATE TABLE IF NOT EXISTS `{$g4['yc4_item_info_table']}` (
+        CREATE TABLE IF NOT EXISTS `{$g4['shop_item_info_table']}` (
           `ii_id` int(11) NOT NULL AUTO_INCREMENT,
           `it_id` varchar(10) NOT NULL,
           `ii_gubun` varchar(50) NOT NULL,

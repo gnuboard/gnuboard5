@@ -6,7 +6,7 @@ include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 auth_check($auth[$sub_menu], "w");
 
 // 상단, 하단 파일경로 필드 추가
-$sql = " ALTER TABLE `{$g4['yc4_content_table']}`	ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
+$sql = " ALTER TABLE `{$g4['shop_content_table']}`	ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
 												ADD `co_include_tail` VARCHAR( 255 ) NOT NULL ";
 sql_query($sql, false);
 
@@ -17,7 +17,7 @@ if ($w == "u")
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from {$g4['yc4_content_table']} where co_id = '$co_id' ";
+    $sql = " select * from {$g4['shop_content_table']} where co_id = '$co_id' ";
     $co = sql_fetch($sql);
     if (!$co['co_id'])
         alert('등록된 자료가 없습니다.');
@@ -75,7 +75,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="co_include_tail">하단 파일 경로</label></th>
         <td>
             <?=help("내용별로 하단+우측의 내용이 다를 경우 하단+우측 디자인 파일의 경로를 입력합니다.\n입력이 없으면 기본 하단 파일을 사용합니다.\n하단 내용과 달리 PHP 코드를 사용할 수 있습니다.\n");?>
-            <input type="text" name="co_include_tail" value="<?=$co['co_include_tail']?>" id="co_include_tail" class="frm_input" size="60"> 
+            <input type="text" name="co_include_tail" value="<?=$co['co_include_tail']?>" id="co_include_tail" class="frm_input" size="60">
         </td>
     </tr>
     <tr>

@@ -20,7 +20,7 @@ ob_start();
 $lt = "[[";
 $gt = "]]";
 
-$sql =" select * from {$g4['yc4_item_table']} where it_use = '1' order by ca_id";
+$sql =" select * from {$g4['shop_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)

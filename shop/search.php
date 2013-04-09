@@ -19,8 +19,8 @@ include_once('./_head.php');
         <?
         // QUERY 문에 공통적으로 들어가는 내용
         // 상품명에 검색어가 포한된것과 상품판매가능인것만
-        $sql_common = " from {$g4['yc4_item_table']} a,
-                             {$g4['yc4_category_table']} b
+        $sql_common = " from {$g4['shop_item_table']} a,
+                             {$g4['shop_category_table']} b
                        where a.ca_id=b.ca_id
                          and a.it_use = 1
                          and b.ca_use = 1
@@ -98,7 +98,7 @@ function write_search_save($save)
 {
 	global $g4, $search_str , $default , $image_rate , $cart_dir;
 
-    $sql = " select ca_name from {$g4['yc4_category_table']} where ca_id = '{$save['ca_id']}' ";
+    $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$save['ca_id']}' ";
     $row = sql_fetch($sql);
 
     /*
@@ -122,7 +122,7 @@ function write_search_save($save)
      $ca_temp = "";
      if(strlen($save['ca_id']) > 2) // 중분류 이하일 경우
      {
-         $sql2 = " select ca_name from $g4[yc4_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
+         $sql2 = " select ca_name from $g4[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
         $row2 = sql_fetch($sql2);
         $ca_temp = "<b><a href='./list.php?ca_id=".substr($save['ca_id'],0,2)."'>{$row2['ca_name']}</a></b> &gt; ";
      }
@@ -153,7 +153,7 @@ function write_search_save($save)
                         it_type3,
                         it_type4,
                         it_type5
-                   from {$g4['yc4_item_table']} where it_id = '{$save['it_id'][$i]}' ";
+                   from {$g4['shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
         $row = sql_fetch($sql);
 
         $image = get_it_image("{$row['it_id']}_s", (int)($default['de_simg_width'] / $image_rate), (int)($default['de_simg_height'] / $image_rate), $row['it_id']);

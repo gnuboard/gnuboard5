@@ -9,7 +9,7 @@ auth_check($auth[$sub_menu], "w");
 // 판매가격 일괄수정
 for ($i=0; $i<count($_POST['it_id']); $i++)
 {
-    $sql = "update {$g4['yc4_item_table']}
+    $sql = "update {$g4['shop_item_table']}
                set ca_id          = '{$_POST['ca_id'][$i]}',
                    it_name        = '{$_POST['it_name'][$i]}',
                    it_cust_amount = '{$_POST['it_cust_amount'][$i]}',

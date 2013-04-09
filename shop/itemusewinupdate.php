@@ -25,16 +25,16 @@ $url = "./item.php?it_id=$it_id";
 
 if ($w == '')
 {
-    $sql = " select max(is_id) as max_is_id from {$g4['yc4_item_ps_table']} ";
+    $sql = " select max(is_id) as max_is_id from {$g4['shop_item_ps_table']} ";
     $row = sql_fetch($sql);
     $max_is_id = $row['max_is_id'];
 
-    $sql = " select max(is_id) as max_is_id from {$g4['yc4_item_ps_table']} where it_id = '$it_id' and mb_id = '{$member['mb_id']}' ";
+    $sql = " select max(is_id) as max_is_id from {$g4['shop_item_ps_table']} where it_id = '$it_id' and mb_id = '{$member['mb_id']}' ";
     $row = sql_fetch($sql);
     if ($row['max_is_id'] && $row['max_is_id'] == $max_is_id)
         alert("같은 상품에 대하여 계속해서 평가하실 수 없습니다.");
 
-    $sql = "insert {$g4['yc4_item_ps_table']}
+    $sql = "insert {$g4['shop_item_ps_table']}
                set it_id = '$it_id',
                    mb_id = '{$member['mb_id']}',
                    is_score = '$is_score',
@@ -56,12 +56,12 @@ if ($w == '')
 }
 else if ($w == 'u')
 {
-    $sql = " select is_password from {$g4['yc4_item_ps_table']} where is_id = '$is_id' ";
+    $sql = " select is_password from {$g4['shop_item_ps_table']} where is_id = '$is_id' ";
     $row = sql_fetch($sql);
     if ($row['is_password'] != $is_password)
         alert("패스워드가 틀리므로 수정하실 수 없습니다.");
 
-    $sql = " update {$g4['yc4_item_ps_table']}
+    $sql = " update {$g4['shop_item_ps_table']}
                 set is_subject = '$is_subject',
                     is_content = '$is_content',
                     is_score = '$is_score'

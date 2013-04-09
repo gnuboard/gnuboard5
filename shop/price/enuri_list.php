@@ -34,7 +34,7 @@ th,td		{font-family:굴림; font-size:10pt ; height:15pt}
 $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]);
 
 $sql =" SELECT LENGTH(ca_id)=2 AS cnt, ca_id
-        FROM {$g4['yc4_category_table']}
+        FROM {$g4['shop_category_table']}
         HAVING cnt";
 $result = @mysql_query($sql);
 
@@ -42,11 +42,11 @@ $tr = "";
 
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '".$row['ca_id']."'");
+    $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".$row['ca_id']."'");
     echo $tr;
     echo "    <td align=center><a href='./enuri.php?ca_id={$row['ca_id']}'>{$row2['ca_name']}</a></td>\n";
     $str = "  <td>";
-    $sql3 = "select ca_name,ca_id from {$g4['yc4_category_table']} where ca_id LIKE '".$row['ca_id']."%' AND LENGTH(ca_id) !=2 AND LENGTH(ca_id) < 5";
+    $sql3 = "select ca_name,ca_id from {$g4['shop_category_table']} where ca_id LIKE '".$row['ca_id']."%' AND LENGTH(ca_id) !=2 AND LENGTH(ca_id) < 5";
     $result3 = @mysql_query($sql3);
 
     $bar = "";
