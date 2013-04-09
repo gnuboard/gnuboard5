@@ -26,9 +26,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             감사합니다.
         </p>
         <? if ($config['cf_use_email_certify']) { ?>
-        <p>아래의 주소를 클릭하시면 회원가입이 완료됩니다.<br><a href="<?=$certify_href?>"><?=$certify_href?></a></p>
+        <p>아래의 메일인증하기를 클릭하시면 회원가입이 완료됩니다.</p>
+        <a href="<?=$certify_href?>" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">메일인증하기</a>
+        <? } else { ?>
+        <a href="<?=G4_URL?>" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">사이트바로가기</a>
         <? } ?>
-        <a href="<?=$link_url?>" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">사이트에서 게시물 확인하기</a>
     </div>
 </div>
 
