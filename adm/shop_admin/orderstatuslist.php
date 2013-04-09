@@ -71,6 +71,17 @@ $sql  = " select a.od_id,
            limit $from_record, $rows ";
 $result = sql_query($sql);
 
+$lines = array();
+for ($i=0; $row=sql_fetch_array($result); $i++)
+{
+    $lines[$i] = $row;
+
+    $tot_amount += $row['ct_amount'];
+    $tot_qty    += $row['ct_qty'];
+    $tot_sub_amount += $row['ct_sub_amount'];
+    $tot_sub_point  += $row['ct_sub_point'];
+}
+
 $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search&save_search=$search";
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
@@ -159,38 +170,33 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 </tfoot>
 <tbody>
 <?
-for ($i=0; $row=sql_fetch_array($result); $i++) {
+for ($i=0; $i<count($lines); $i++) {
 
     $od_deposit_name = "";
-    if ($row['od_deposit_name'] != "")
-        $od_deposit_name = "title='입금자 : {$row['od_deposit_name']}'";
+    if ($lines[$i]['od_deposit_name'] != "")
+        $od_deposit_name = "title='입금자 : {$lines[$i]['od_deposit_name']}'";
 
-    $href = "$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=c.it_id&search=$row[it_id]";
-    $it_name = "<a href='$href'>".cut_str($row['it_name'],35)."</a><br>";
-    $it_name .= print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
+    $href = "$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=c.it_id&search=$lines[$i][it_id]";
+    $it_name = "<a href='$href'>".cut_str($lines[$i]['it_name'],35)."</a><br>";
+    $it_name .= print_item_options($lines[$i]['it_id'], $lines[$i]['it_opt1'], $lines[$i]['it_opt2'], $lines[$i]['it_opt3'], $lines[$i]['it_opt4'], $lines[$i]['it_opt5'], $lines[$i]['it_opt6']);
 
-    $s_mod = icon("수정", "./orderform.php?od_id={$row['od_id']}");
+    $s_mod = icon("수정", "./orderform.php?od_id={$lines[$i]['od_id']}");
 
     $list = $i%2;
     echo "
     <tr class='list$list center'>
-        <td align=center title='주문일시 : {$row['od_time']}'><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_id&search={$row['od_id']}'>{$row['od_id']}</a></td>
-        <td align=center $od_deposit_name><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$row['od_name']}'>".cut_str($row['od_name'],10,"")."</a></td>
-        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$row['mb_id']}'>{$row['mb_id']}</a></td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'].'_s', 50, 50)."</a></td>
+        <td align=center title='주문일시 : {$lines[$i]['od_time']}'><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_id&search={$lines[$i]['od_id']}'>{$lines[$i]['od_id']}</a></td>
+        <td align=center $od_deposit_name><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$lines[$i]['od_name']}'>".cut_str($lines[$i]['od_name'],10,"")."</a></td>
+        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$lines[$i]['mb_id']}'>{$lines[$i]['mb_id']}</a></td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($lines[$i]['it_id'].'_s', 50, 50)."</a></td>
         <td align=left>$it_name</td>
-        <td align=right>".number_format($row['ct_amount'])."&nbsp;</td>
-        <td align=center>$row[ct_qty]</td>
-        <td align=right>".number_format($row['ct_sub_amount'])."&nbsp;</td>
-        <td align=right>".number_format($row['ct_sub_point'])."&nbsp;</td>
-        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search={$row['ct_status']}'>{$row['ct_status']}</a></td>
+        <td align=right>".number_format($lines[$i]['ct_amount'])."&nbsp;</td>
+        <td align=center>{$lines[$i]['ct_qty']}</td>
+        <td align=right>".number_format($lines[$i]['ct_sub_amount'])."&nbsp;</td>
+        <td align=right>".number_format($lines[$i]['ct_sub_point'])."&nbsp;</td>
+        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search={$lines[$i]['ct_status']}'>{$lines[$i]['ct_status']}</a></td>
         <td align=center>$s_mod</td>
     </tr>";
-
-    $tot_amount += $row['ct_amount'];
-    $tot_qty    += $row['ct_qty'];
-    $tot_sub_amount += $row['ct_sub_amount'];
-    $tot_sub_point  += $row['ct_sub_point'];
 }
 
 if ($i == 0)

@@ -49,12 +49,27 @@ $sql  = " select a.*, "._MISU_QUERY_."
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql, false);
-if (!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `od_temp_hp` INT NOT NULL AFTER `od_temp_card` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `od_receipt_hp` INT NOT NULL AFTER `od_receipt_card` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `od_hp_time` DATETIME NOT NULL AFTER `od_card_time` ", false);
+
+$lines = array();
+$tot_itemcnt       = 0;
+$tot_orderamount   = 0;
+$tot_ordercancel   = 0;
+$tot_dc_amount     = 0;
+$tot_receiptamount = 0;
+$tot_receiptcancel = 0;
+$tot_misuamount    = 0;
+for ($i=0; $row=mysql_fetch_array($result); $i++)
+{
+    $lines[$i] = $row;
+
+    $tot_itemcount     += $row['itemcount'];
+    $tot_orderamount   += $row['orderamount'];
+    $tot_ordercancel   += $row['ordercancel'];
+    $tot_dc_amount     += $row['od_dc_amount'];
+    $tot_receiptamount += $row['receiptamount'];
+    $tot_receiptcancel += $row['receiptcancel'];
+    $tot_misu          += $row['misu'];
 }
-//echo $sql;
 
 //$qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
 // 김선용 200805 : sel_ca_id - 쓰레기 코드
@@ -144,58 +159,51 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
     </tfoot>
     <tbody>
     <?
-    $tot_itemcnt       = 0;
-    $tot_orderamount   = 0;
-    $tot_ordercancel   = 0;
-    $tot_dc_amount     = 0;
-    $tot_receiptamount = 0;
-    $tot_receiptcancel = 0;
-    $tot_misuamount    = 0;
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    for ($i=0; $i<count($lines[$i]); $i++)
     {
         // 결제 수단
         $s_receipt_way = $s_br = "";
-        if ($row[od_settle_case])
+        if ($lines[$i]['od_settle_case'])
         {
-            $s_receipt_way = $row['od_settle_case'];
+            $s_receipt_way = $lines[$i]['od_settle_case'];
             $s_br = '<br />';
         }
         else
         {
-            if ($row['od_temp_bank'] > 0 || $row['od_receipt_bank'] > 0)
+            if ($lines[$i]['od_temp_bank'] > 0 || $lines[$i]['od_receipt_bank'] > 0)
             {
                 //$s_receipt_way = "무통장입금";
-                $s_receipt_way = cut_str($row['od_bank_account'],8,"");
+                $s_receipt_way = cut_str($lines[$i]['od_bank_account'],8,"");
                 $s_br = "<br />";
             }
 
-            if ($row['od_temp_card'] > 0 || $row['od_receipt_card'] > 0)
+            if ($lines[$i]['od_temp_card'] > 0 || $lines[$i]['od_receipt_card'] > 0)
             {
                 // 미수금이 없고 카드결제를 하지 않았다면 카드결제를 선택후 무통장 입금한 경우임
-                if ($row['misuamount'] <= 0 && $row['od_receipt_card'] == 0)
+                if ($lines[$i]['misuamount'] <= 0 && $lines[$i]['od_receipt_card'] == 0)
                     ; // 화면 출력하지 않음
                 else
                 {
                     $s_receipt_way .= $s_br."카드";
-                    if ($row['od_receipt_card'] == 0)
+                    if ($lines[$i]['od_receipt_card'] == 0)
                         $s_receipt_way .= "<span><span>(미승인)</span></span>";
                     $s_br = "<br />";
                 }
             }
         }
 
-        if ($row['od_receipt_point'] > 0)
+        if ($lines[$i]['od_receipt_point'] > 0)
             $s_receipt_way .= $s_br."포인트";
 
-        $s_mod = icon("수정", "./orderform.php?od_id=$row[od_id]&$qstr");
-        $s_del = icon("삭제", "javascript:del('./orderdelete.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}&mb_id={$row['mb_id']}&$qstr');");
+        $s_mod = icon("수정", "./orderform.php?od_id={$lines[$i]['od_id']}&amp;$qstr");
+        $s_del = icon("삭제", "javascript:del('./orderdelete.php?od_id={$lines[$i]['od_id']}&uq_id={$lines[$i]['uq_id']}&mb_id={$lines[$i]['mb_id']}&$qstr');");
 
-        $mb_nick = get_sideview($row['mb_id'], $row['od_name'], $row['od_email'], '');
+        $mb_nick = get_sideview($lines[$i]['mb_id'], $lines[$i]['od_name'], $lines[$i]['od_email'], '');
 
         $tot_cnt = "";
-        if ($row['mb_id'])
+        if ($lines[$i]['mb_id'])
         {
-            $sql2 = " select count(*) as cnt from {$g4['shop_order_table']} where mb_id = '{$row['mb_id']}' ";
+            $sql2 = " select count(*) as cnt from {$g4['shop_order_table']} where mb_id = '{$lines[$i]['mb_id']}' ";
             $row2 = sql_fetch($sql2);
             $tot_cnt = '('.$row2['cnt'].')';
         }
@@ -203,29 +211,21 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         $list = $i%2;
         ?>
         <tr class="orderlist">
-            <td title="주문일시 : <?=$row['od_time']?>"><a href="<?=G4_SHOP_URL?>/orderinquiryview.php?od_id=<?=$row['od_id']?>&uq_id=<?=$row['uq_id']?>"><?=$row['od_id']?></a></td>
-            <!-- <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$row['od_name']}'><span title='$od_deposit_name'>".cut_str($row['od_name'],8,"")."</span></a></td> -->
+            <td title="주문일시 : <?=$lines[$i]['od_time']?>"><a href="<?=G4_SHOP_URL?>/orderinquiryview.php?od_id=<?=$lines[$i]['od_id']?>&amp;uq_id=<?=$lines[$i]['uq_id']?>"><?=$lines[$i]['od_id']?></a></td>
+            <!-- <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$lines[$i]['od_name']}'><span title='$od_deposit_name'>".cut_str($lines[$i]['od_name'],8,"")."</span></a></td> -->
             <td><?=$mb_nick?></td>
-            <td><a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&sort2=<?=$sort2?>&sel_field=mb_id&search=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-            <td><?=$row['itemcount']?>건 <?=$tot_cnt?></td>
-            <td class="order_sum"><?=number_format($row['orderamount'])?></td>
-            <td><?=number_format($row['ordercancel'])?></td>
-            <td><?=number_format($row['od_dc_amount'])?></td>
-            <td class="order_sum"><?=number_format($row['receiptamount'])?></td>
-            <td><?=number_format($row['receiptcancel'])?></td>
-            <td class="order_outstanding"><?=number_format($row['misu'])?></td>
+            <td><a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&sort2=<?=$sort2?>&sel_field=mb_id&search=<?=$lines[$i]['mb_id']?>"><?=$lines[$i]['mb_id']?></a></td>
+            <td><?=$lines[$i]['itemcount']?>건 <?=$tot_cnt?></td>
+            <td class="order_sum"><?=number_format($lines[$i]['orderamount'])?></td>
+            <td><?=number_format($lines[$i]['ordercancel'])?></td>
+            <td><?=number_format($lines[$i]['od_dc_amount'])?></td>
+            <td class="order_sum"><?=number_format($lines[$i]['receiptamount'])?></td>
+            <td><?=number_format($lines[$i]['receiptcancel'])?></td>
+            <td class="order_outstanding"><?=number_format($lines[$i]['misu'])?></td>
             <td><?=$s_receipt_way?></td>
-            <td><a href="./orderform.php?od_id=<?=$row[od_id]?>&<?=$qstr?>">수정</a> <a href="javascript:del('./orderdelete.php?od_id=<?=$row['od_id']?>&uq_id=<?=$row['uq_id']?>&mb_id=<?=$row['mb_id']?>&<?=$qstr?>)">삭제</a></td>
+            <td><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>&amp;<?=$qstr?>">수정</a> <a href="javascript:del('./orderdelete.php?od_id=<?=$lines[$i]['od_id']?>&amp;uq_id=<?=$lines[$i]['uq_id']?>&amp;mb_id=<?=$lines[$i]['mb_id']?>&amp;<?=$qstr?>)">삭제</a></td>
         </tr>
-        <?
-
-        $tot_itemcount     += $row['itemcount'];
-        $tot_orderamount   += $row['orderamount'];
-        $tot_ordercancel   += $row['ordercancel'];
-        $tot_dc_amount     += $row['od_dc_amount'];
-        $tot_receiptamount += $row['receiptamount'];
-        $tot_receiptcancel += $row['receiptcancel'];
-        $tot_misu          += $row['misu'];
+    <?
     }
     mysql_free_result($result);
     if ($i == 0)
@@ -235,7 +235,7 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
     </table>
 </section>
 </form>
-<p><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></p>
+<p><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?></p>
 
 <p><span class="order_care">주의)</span> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.</p>
 
