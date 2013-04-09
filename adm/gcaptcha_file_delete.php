@@ -27,9 +27,9 @@ include_once('./admin.head.php');
     if (is_array($files)) {
         $before_time  = G4_SERVER_TIME - 3600; // 한시간전
         foreach ($files as $gcaptcha_file) {
-            $access_time = fileatime($gcaptcha_file); // 파일접근시간
+            $modification_time = filemtime($gcaptcha_file); // 파일접근시간
 
-            if ($access_time > $before_time) continue;
+            if ($modification_time > $before_time) continue;
 
             $cnt++;
             unlink($gcaptcha_file);
