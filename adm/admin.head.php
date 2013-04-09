@@ -31,7 +31,7 @@ function print_menu2($key, $no)
         if ($menu[$key][$i][4] == 1) $gnb_grp_style = 'gnb_grp_style';
         else $gnb_grp_style = '';
 
-        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'" class="'.$gnb_grp_style.$gnb_grp_div.'">'.$menu[$key][$i][1].'</a></li>';
+        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'" class="'.$gnb_grp_style.' '.$gnb_grp_div.'">'.$menu[$key][$i][1].'</a></li>';
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
