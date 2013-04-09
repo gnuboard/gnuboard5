@@ -11,9 +11,9 @@ $where = " where ";
 $sql_search = "";
 if ($search != "")
 {
-	if ($sel_field != "")
+    if ($sel_field != "")
     {
-    	$sql_search .= " $where $sel_field like '%$search%' ";
+        $sql_search .= " $where $sel_field like '%$search%' ";
         $where = " and ";
     }
 
@@ -129,6 +129,19 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         <th>관리</th>
     </tr>
     </thead>
+    <tfoot>
+    <tr class="orderlist">
+        <td colspan="3">합 계</td>
+        <td><?=(int)$tot_itemcount?>건</td>
+        <td class="order_sum"><?=number_format($tot_orderamount)?></td>
+        <td><?=number_format($tot_ordercancel)?></td>
+        <td><?=number_format($tot_dc_amount)?></td>
+        <td class="order_sum"><?=number_format($tot_receiptamount)?></td>
+        <td><?=number_format($tot_receiptcancel)?></td>
+        <td class="order_outstanding"><?=number_format($tot_misu)?></td>
+        <td colspan="2"></td>
+    </tr>
+    </tfoot>
     <tbody>
     <?
     $tot_itemcnt       = 0;
@@ -219,19 +232,6 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         echo '<tr><td colspan="12" class="orderlist"><span>자료가 한건도 없습니다.</span></td></tr>';
     ?>
     </tbody>
-    <tfoot>
-    <tr class="orderlist">
-        <td colspan="3">합 계</td>
-        <td><?=(int)$tot_itemcount?>건</td>
-        <td class="order_sum"><?=number_format($tot_orderamount)?></td>
-        <td><?=number_format($tot_ordercancel)?></td>
-        <td><?=number_format($tot_dc_amount)?></td>
-        <td class="order_sum"><?=number_format($tot_receiptamount)?></td>
-        <td><?=number_format($tot_receiptcancel)?></td>
-        <td class="order_outstanding"><?=number_format($tot_misu)?></td>
-        <td colspan="2"></td>
-    </tr>
-    </tfoot>
     </table>
 </section>
 </form>

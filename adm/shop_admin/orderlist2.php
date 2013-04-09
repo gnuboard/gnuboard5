@@ -91,6 +91,7 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <colgroup width=60>
 <colgroup width=55>
 <tr><td colspan=12 height=2 bgcolor=#0E87F9></td></tr>
+<thead>
 <tr align=center class=ht>
     <td><a href='<?=title_sort("od_id", 1)."&$qstr1";?>'>주문번호</a></td>
     <td><a href='<?=title_sort("od_name")."&$qstr1";?>'>주문자</a></td>
@@ -117,7 +118,21 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
     <td></td>
 </tr>
 <tr><td colspan=12 height=1 bgcolor=#CCCCCC></td></tr>
-
+</thead>
+<tfoot>
+<tr class=ht>
+    <td colspan=3 align=center>합 계</td>
+    <td align=center><?=(int)$tot_itemcount?>건</td>
+    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_orderamount)?></FONT></td>
+    <td align=right><?=number_format($tot_ordercancel)?></td>
+    <td align=right><?=number_format($tot_dc_amount)?></td>
+    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_receiptamount)?></FONT></td>
+    <td align=right><?=number_format($tot_receiptcancel)?></td>
+    <td align=right><FONT COLOR='#FF6600'><?=number_format($tot_misu)?></FONT></td>
+    <td colspan=2></td>
+</tr>
+</tfoot>
+<tbody>
 <?
 $tot_itemcnt       = 0;
 $tot_orderamount   = 0;
@@ -236,18 +251,8 @@ if ($i == 0)
 ?>
 </form>
 <tr><td colspan=12 bgcolor='#CCCCCC'></td></tr>
-<tr class=ht>
-    <td colspan=3 align=center>합 계</td>
-    <td align=center><?=(int)$tot_itemcount?>건</td>
-    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_orderamount)?></FONT></td>
-    <td align=right><?=number_format($tot_ordercancel)?></td>
-    <td align=right><?=number_format($tot_dc_amount)?></td>
-    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_receiptamount)?></FONT></td>
-    <td align=right><?=number_format($tot_receiptcancel)?></td>
-    <td align=right><FONT COLOR='#FF6600'><?=number_format($tot_misu)?></FONT></td>
-    <td colspan=2></td>
-</tr>
 <tr><td colspan=12 bgcolor='#CCCCCC'></td></tr>
+</tbody>
 </table>
 
 <table width=100%>
