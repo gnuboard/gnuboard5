@@ -15,14 +15,17 @@ $row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where bo_tab
 if ($row['cnt'])
     alert($target_table.'은(는) 이미 존재하는 게시판 테이블명 입니다.\\n복사할 테이블명으로 사용할 수 없습니다.');
 
-check_token();
-
 // 게시판 테이블 생성
 $sql = get_table_define($g4['write_prefix'] . $bo_table);
 $sql = str_replace($g4['write_prefix'] . $bo_table, $g4['write_prefix'] . $target_table, $sql);
 sql_query($sql);
 
 $file_copy = array();
+
+// 구조만 복사시에는 공지사항 번호는 복사하지 않는다.
+if ($copy_case == 'schema_only') {
+    $board['bo_notice'] = '';
+}
 
 // 게시판 정보
 $sql = " insert into {$g4['board_table']}
