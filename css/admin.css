@@ -167,11 +167,6 @@ fieldset span {display:block;margin-bottom:10px}
 fieldset p {color:#4c5f67}
 fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
 fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
-/* 캡챠 입력상자 */
-.fs_input,
-fieldset textarea {padding:3px 3px 4px;border:1px solid #ccc;background:#f7f7f7;vertical-align:middle}
-.fs_input:focus,
-fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#fff}
 
 .readonly {}
 
