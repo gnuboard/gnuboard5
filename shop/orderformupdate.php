@@ -11,12 +11,12 @@ $_POST = array_map("mysql_real_escape_string", $_POST);
 
 // 장바구니가 비어있는가?
 if (get_session("ss_direct"))
-    $tmp_uq_id = get_session("ss_uq_direct");
+    $tmp_uq_id = get_session('ss_uq_direct');
 else
-    $tmp_uq_id = get_session("ss_uq_id");
+    $tmp_uq_id = get_session('ss_uq_id');
 
 if (get_cart_count($tmp_uq_id) == 0)// 장바구니에 담기
-    alert("장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.", "./cart.php");
+    alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', './cart.php');
 
 $error = "";
 // 장바구니 상품 재고 검사
@@ -102,7 +102,7 @@ if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_p
 if ($od_temp_point)
 {
     if ($member['mb_point'] < $od_temp_point)
-        alert("회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.");
+        alert('회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.');
 }
 
 $i_amount = $i_amount + $i_send_cost - $i_temp_point;
