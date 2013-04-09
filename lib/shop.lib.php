@@ -570,13 +570,13 @@ function get_list_skin_options($pattern, $dirname='./', $sval='')
     closedir($handle);
 
     sort($arr);
-    foreach($arr as $key=>$value) {
-        if($key == $sval)
+    foreach($arr as $value) {
+        if($value == $sval)
             $selected = ' selected="selected"';
         else
             $selected = '';
 
-        $str .= '<option value="'.$arr[$key].'"'.$selected.'>'.$arr[$key].'</option>'.PHP_EOL;
+        $str .= '<option value="'.$value.'"'.$selected.'>'.$value.'</option>'.PHP_EOL;
     }
 
     return $str;
