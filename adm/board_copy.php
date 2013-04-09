@@ -4,8 +4,6 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], 'w');
 
-$token = get_token();
-
 $g4['title'] = '게시판 복사';
 $administrator = 1;
 include_once(G4_PATH.'/head.sub.php');
