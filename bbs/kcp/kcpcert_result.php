@@ -159,7 +159,8 @@ $ct_cert->mf_clear();
 $(function() {
     var $opener = window.opener;
 
-    // 인증번호
+    // 인증정보
+    $opener.$("input[name=mb_hp]").val("<?=$phone_no?>");
     $opener.$("input[name=kcpcert_no]").val("<?=$md5_cert_no?>");
     $opener.$("input[name=kcpcert_time]").val("<?=G4_TIME_YMDHIS?>");
     window.close();
