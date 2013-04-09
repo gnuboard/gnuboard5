@@ -7,7 +7,7 @@ $len2 = $ca_id_len + 2;
 $len4 = $ca_id_len + 4;
 
 // 차차기 분류의 건수를 얻음
-$sql = " select count(*) as cnt from {$g4['yc4_category_table']}
+$sql = " select count(*) as cnt from {$g4['shop_category_table']}
           where ca_id like '$ca_id%'
             and length(ca_id) = $len4
             and ca_use = '1' ";
@@ -16,7 +16,7 @@ $cnt = $row['cnt'];
 if (!$cnt)
     $str .= "<tr><td width=11 background='".G4_SHOP_URL."/img/ca_bg02.gif'></td><td>";
 
-$sql = " select ca_id, ca_name from {$g4['yc4_category_table']}
+$sql = " select ca_id, ca_name from {$g4['shop_category_table']}
           where ca_id like '$ca_id%'
             and length(ca_id) = $len2
             and ca_use = '1'
@@ -26,8 +26,8 @@ $str .= "<tr><td width=11 background='".G4_SHOP_URL."/img/ca_bg02.gif'></td>";
 $str .= "<td><table width=100% border=0><tr><td>";
 while ($row=sql_fetch_array($result)) {
 
-    //$row2 = sql_fetch(" select count(*) as cnt from $g4[yc4_category_table] where ca_id like '$row[ca_id]%' ");
-    $row2 = sql_fetch(" select count(*) as cnt from {$g4['yc4_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1'  ");
+    //$row2 = sql_fetch(" select count(*) as cnt from $g4[shop_category_table] where ca_id like '$row[ca_id]%' ");
+    $row2 = sql_fetch(" select count(*) as cnt from {$g4['shop_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1'  ");
 
     $str .= "<a href='./list.php?ca_id={$row['ca_id']}'>{$row['ca_name']} ({$row2['cnt']})</a> &nbsp; ";
     $exists = true;

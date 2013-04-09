@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = '배너관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g4['yc4_banner_table']} ";
+$sql_common = " from {$g4['shop_banner_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -54,7 +54,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     </thead>
     <tbody>
     <?
-        $sql = " select * from {$g4['yc4_banner_table']}
+        $sql = " select * from {$g4['shop_banner_table']}
               order by bn_order, bn_id desc
               limit $from_record, $rows  ";
         $result = sql_query($sql);

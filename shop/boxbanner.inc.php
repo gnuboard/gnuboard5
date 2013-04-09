@@ -1,6 +1,6 @@
 <?
 // 배너 출력
-$sql = " select * from {$g4['yc4_banner_table']}
+$sql = " select * from {$g4['shop_banner_table']}
           where '".G4_TIME_YMDHIS."' between bn_begin_time and bn_end_time
             and bn_position = '$position'
           order by bn_order, bn_id desc ";

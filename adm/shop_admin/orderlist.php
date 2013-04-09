@@ -25,8 +25,8 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.uq_id=b.uq_id)
+$sql_common = " from {$g4['shop_order_table']} a
+                left join {$g4['shop_cart_table']} b on (a.uq_id=b.uq_id)
                 $sql_search ";
 
 // 김선용 200805 : 조인 사용으로 전체카운트가 일정레코드 이상일 때 지연시간 문제가 심각하므로 변경
@@ -50,9 +50,9 @@ $sql  = " select a.*, "._MISU_QUERY_."
            limit $from_record, $rows ";
 $result = sql_query($sql, false);
 if (!$result) {
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_temp_hp` INT NOT NULL AFTER `od_temp_card` ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_receipt_hp` INT NOT NULL AFTER `od_receipt_card` ", false);
-    sql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_hp_time` DATETIME NOT NULL AFTER `od_card_time` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `od_temp_hp` INT NOT NULL AFTER `od_temp_card` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `od_receipt_hp` INT NOT NULL AFTER `od_receipt_card` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `od_hp_time` DATETIME NOT NULL AFTER `od_card_time` ", false);
 }
 //echo $sql;
 
@@ -195,7 +195,7 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
         $tot_cnt = "";
         if ($row['mb_id'])
         {
-            $sql2 = " select count(*) as cnt from {$g4['yc4_order_table']} where mb_id = '{$row['mb_id']}' ";
+            $sql2 = " select count(*) as cnt from {$g4['shop_order_table']} where mb_id = '{$row['mb_id']}' ";
             $row2 = sql_fetch($sql2);
             $tot_cnt = '('.$row2['cnt'].')';
         }

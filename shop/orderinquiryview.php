@@ -10,7 +10,7 @@ if (!$is_member) {
         alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.");
 }
 
-$sql = "select * from {$g4['yc4_order_table']} where od_id = '$od_id' and uq_id = '$uq_id' ";
+$sql = "select * from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id = '$uq_id' ";
 $od = sql_fetch($sql);
 if (!$od['od_id']) {
     echo "$od_id $uq_id $MxIssueNO";
@@ -92,7 +92,7 @@ if(openwin != null) {
 
 <?
 // 배송회사 정보
-$dl = sql_fetch(" select * from {$g4['yc4_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+$dl = sql_fetch(" select * from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
 if ($od['od_invoice'] || !$od['misu'])
 {
@@ -143,7 +143,7 @@ echo "<td style='padding:20px'>";
 
 if ($od['od_settle_case'] == '신용카드')
 {
-    $sql = " select * from {$g4['yc4_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
+    $sql = " select * from {$g4['shop_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
     $result = sql_query($sql);
     $cd = mysql_fetch_array($result);
 
@@ -158,7 +158,7 @@ if ($od['od_settle_case'] == '신용카드')
 }
 else if ($od['od_settle_case'] == '휴대폰')
 {
-    $sql = " select * from {$g4['yc4_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
+    $sql = " select * from {$g4['shop_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
     $result = sql_query($sql);
     $cd = mysql_fetch_array($result);
 

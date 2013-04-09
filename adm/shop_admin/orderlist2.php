@@ -25,12 +25,12 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.uq_id=b.uq_id)
+$sql_common = " from {$g4['shop_order_table']} a
+                left join {$g4['shop_cart_table']} b on (a.uq_id=b.uq_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
-$row = sql_fetch("select count(od_id) as cnt from {$g4['yc4_order_table']} $sql_search ");
+$row = sql_fetch("select count(od_id) as cnt from {$g4['shop_order_table']} $sql_search ");
 $total_count = $row['cnt'];
 
 $rows = $config['cf_page_rows'];
@@ -211,9 +211,9 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     // 상품개별출력
     $sql2 = " select c.it_name,
                      b.*
-                from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.uq_id = b.uq_id)
-                left join {$g4['yc4_item_table']} c on (b.it_id = c.it_id)
+                from {$g4['shop_order_table']} a
+                left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
+                left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
                where od_id = '{$row['od_id']}' ";
     $result2 = sql_query($sql2);
     for ($k=0; $row2=sql_fetch_array($result2); $k++)

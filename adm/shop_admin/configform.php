@@ -5,41 +5,6 @@ include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "r");
 
-//------------------------------------------------------------------------------
-// 설정테이블에 필드 추가
-//------------------------------------------------------------------------------
-
-sql_query(" ALTER TABLE `{$g4['yc4_default_table']}`    ADD `de_hp_use` TINYINT NOT NULL DEFAULT '0' ", false);
-sql_query(" ALTER TABLE `{$g4['yc4_default_table']}`    ADD `de_escrow_use` TINYINT NOT NULL DEFAULT '0' ", false);
-
-// 쏜다넷 smskey 필드 추가 : 101201
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_xonda_smskey` VARCHAR( 255 ) NOT NULL ");
-
-// 비회원에 대한 개인정보 수집에 대한 내용
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_guest_privacy` TEXT NOT NULL ");
-
-// 현금영수증 발급
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_taxsave_use` TINYINT NOT NULL ");
-
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_kcp_site_key` VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_dacom_mertkey` VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_default_table']}` ADD `de_vbank_use` VARCHAR( 255 ) NOT NULL ");
-
-@mysql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_settle_case` VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_escrow1`     VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_escrow2`     VARCHAR( 255 ) NOT NULL ");
-@mysql_query(" ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_escrow3`     VARCHAR( 255 ) NOT NULL ");
-
-// SMS 아이코드 추가 (icodekorea.com)
-$sql = " ALTER TABLE `{$g4['yc4_default_table']}`   ADD `de_sms_use` VARCHAR( 255 ) NOT NULL ,
-                                                    ADD `de_icode_id` VARCHAR( 255 ) NOT NULL ,
-                                                    ADD `de_icode_pw` VARCHAR( 255 ) NOT NULL ,
-                                                    ADD `de_icode_server_ip` VARCHAR( 255 ) NOT NULL ,
-                                                    ADD `de_icode_server_port` VARCHAR( 255 ) NOT NULL ";
-sql_query($sql, false);
-
-//------------------------------------------------------------------------------
-
 if (!function_exists("get_sock")) {
     function get_sock($url)
     {
@@ -198,8 +163,12 @@ $pg_anchor ="<ul class=\"anchor\">
         <td>
             <label for="de_type1_list_use">출력</label> <input type="checkbox" name="de_type1_list_use" value="1" id="de_type1_list_use" <?=$default['de_type1_list_use']?"checked":"";?>>
             <label for="de_type1_list_skin">스킨 </label>
-            <select name="de_type1_list_skin" id="de_type1_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select><script>document.getElementById('de_type1_list_skin').value='<?=$default['de_type1_list_skin']?>';</script>
+
+            <select name="de_type1_list_skin" id="de_type1_list_skin">
+                <?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH, $default['de_type1_list_skin']);?>
+            </select>
             <label for="de_type1_list_row">출력할 줄 수</label>
+
             <input type="text" name="de_type1_list_row" value="<?=$default['de_type1_list_row']?>" id="de_type1_list_row" class="frm_input" size="3">
             <label for="de_type1_list_mod">1줄당 이미지 수</label>
             <input type="text" name="de_type1_list_mod" value="<?=$default['de_type1_list_mod']?>" id="de_type1_list_mod" class="frm_input" size="3">
@@ -215,8 +184,9 @@ $pg_anchor ="<ul class=\"anchor\">
             <label for="de_type2_list_use">출력</label>
             <input type="checkbox" name="de_type2_list_use" value="1" id="de_type2_list_use" <?=$default['de_type2_list_use']?"checked":"";?>>
             <label for="de_type2_list_skin">스킨</label>
-            <select id="de_type2_list_skin" name="de_type2_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
-            <script>document.getElementById('de_type2_list_skin').value='<?=$default['de_type2_list_skin']?>';</script>
+            <select name="de_type2_list_skin" id="de_type2_list_skin">
+                <?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH, $default['de_type2_list_skin']);?>
+            </select>
             <label for="de_type2_list_row">출력할 줄 수</label>
             <input type="text" name="de_type2_list_row" value="<?=$default['de_type2_list_row']?>" id="de_type2_list_row" class="frm_input" size="3">
             <label for="de_type2_list_mod">1줄당 이미지 수</label>
@@ -233,8 +203,9 @@ $pg_anchor ="<ul class=\"anchor\">
             <label for="de_type3_list_use">출력</label>
             <input type="checkbox" name="de_type3_list_use" value="1" id="de_type3_list_use" <?=$default['de_type3_list_use']?"checked":"";?>>
             <label for="de_type3_list_skin">스킨</label>
-            <select id="de_type3_list_skin" name="de_type3_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
-            <script>document.getElementById('de_type3_list_skin').value='<?=$default['de_type3_list_skin']?>';</script>
+            <select name="de_type3_list_skin" id="de_type3_list_skin">
+                <?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH, $default['de_type3_list_skin']);?>
+            </select>
             <label for="de_type3_list_row">출력할 줄 수</label>
             <input type="text" name="de_type3_list_row" value="<?=$default['de_type3_list_row']?>" id="de_type3_list_row" class="frm_input" size="3">
             <label for="de_type3_list_mod">1줄당 이미지 수</label>
@@ -251,8 +222,9 @@ $pg_anchor ="<ul class=\"anchor\">
             <label for="de_type4_list_use">출력</label>
             <input type="checkbox" name="de_type4_list_use" value="1" id="de_type4_list_use" <?=$default['de_type4_list_use']?"checked":"";?>>
             <label for="de_type4_list_skin">스킨</label>
-            <select id="de_type4_list_skin" name="de_type4_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
-            <script>document.getElementById('de_type4_list_skin').value='<?=$default['de_type4_list_skin']?>';</script>
+            <select name="de_type4_list_skin" id="de_type4_list_skin">
+                <?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH, $default['de_type4_list_skin']);?>
+            </select>
             <label for="de_type4_list_row">출력할 줄 수</label>
             <input type="text" name="de_type4_list_row" value="<?=$default['de_type4_list_row']?>" id="de_type4_list_row" class="frm_input" size="3">
             <label for="de_type4_list_mod">1줄당 이미지 수</label>
@@ -269,8 +241,9 @@ $pg_anchor ="<ul class=\"anchor\">
             <label for="de_type5_list_use">출력</label>
             <input type="checkbox" name="de_type5_list_use" value="1" id="de_type5_list_use" <?=$default['de_type5_list_use']?"checked":"";?>>
             <label for="de_type5_list_skin">스킨</label>
-            <select id="de_type5_list_skin" name="de_type5_list_skin"><?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH);?></select>
-            <script>document.getElementById('de_type5_list_skin').value='<?=$default['de_type5_list_skin']?>';</script>
+            <select id="de_type5_list_skin" name="de_type5_list_skin">
+                <?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH, $default['de_type5_list_skin']);?>
+            </select>
             <label for="de_type5_list_row">출력할 줄 수</label>
             <input type="text" name="de_type5_list_row" value="<?=$default['de_type5_list_row']?>" id="de_type5_list_row" class="frm_input" size="3">
             <label for="de_type5_list_mod">1줄당 이미지 수</label>
@@ -356,7 +329,7 @@ $pg_anchor ="<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="de_card_max_amount">카드결제최소금액</label></th>
         <td>
-            <?=help("신용카드의 경우 1000원 미만은 결제가 가능하지 않습니다.\n1000원 이상으로 설정하십시오.")?>
+            <?=help("신용카드는 경우 1000원 미만은 결제가 불가능합니다.\n카드결제최소금액을 1000원 이상으로 설정하십시오.")?>
             <input type="text" name="de_card_max_amount" value="<?=$default['de_card_max_amount']?>"  id="de_card_max_amount" class="frm_input" size="10"> 원
         </td>
     </tr>
@@ -388,7 +361,7 @@ $pg_anchor ="<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="de_point_per">포인트결제 %</label></th>
         <td>
-            <?=help("회원의 포인트가 포인트 결제사용 포인트 보다 클 경우 주문금액의 몇% 까지 사용 가능하게 할지를 설정합니다.")?>
+            <?=help("회원 보유 포인트가 결제액보다 많을 경우, 결제액의 몇% 까지 포인트 사용 가능하게 할지 설정합니다.")?>
             <select id="de_point_per" name="de_point_per">
             <? for ($i=100; $i>0; $i=$i-5) echo "<option value='$i'>{$i}\n"; ?>
             </select>%

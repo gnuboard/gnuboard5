@@ -24,8 +24,8 @@ $error = "";
 $sql = " select a.it_id,
                 a.ct_qty,
                 b.it_name
-           from {$g4['yc4_cart_table']} a,
-                {$g4['yc4_item_table']} b
+           from {$g4['shop_cart_table']} a,
+                {$g4['shop_item_table']} b
           where a.uq_id = '$tmp_uq_id'
             and a.it_id = b.it_id ";
 $result = sql_query($sql);
@@ -50,7 +50,7 @@ $i_temp_point = (int)$_POST['od_temp_point'];
 
 
 // 주문금액이 상이함
-$sql = " select SUM(ct_amount * ct_qty) as od_amount from {$g4['yc4_cart_table']} where uq_id = '$tmp_uq_id' ";
+$sql = " select SUM(ct_amount * ct_qty) as od_amount from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' ";
 $row = sql_fetch($sql);
 if ((int)$row['od_amount'] !== $i_amount) {
     die("Error.");
@@ -200,7 +200,7 @@ else
 $od_id = get_session('ss_order_uniqid');
 
 // 주문서에 입력
-$sql = " insert {$g4['yc4_order_table']}
+$sql = " insert {$g4['shop_order_table']}
             set od_id             = '$od_id',
                 uq_id             = '$tmp_uq_id',
                 mb_id             = '{$member['mb_id']}',
@@ -261,7 +261,7 @@ $sql_card_point = "";
 if (($od_receipt_card > 0 || $od_receipt_hp > 0) && $default['de_card_point'] == false) {
     $sql_card_point = " , ct_point = '0' ";
 }
-$sql = "update {$g4['yc4_cart_table']}
+$sql = "update {$g4['shop_cart_table']}
            set ct_status = '주문'
                $sql_card_point
          where uq_id = '$tmp_uq_id' ";
@@ -277,7 +277,7 @@ if(!$result) {
     echo "<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}";
 
     // 주문삭제
-    sql_query(" delete from {$g4['yc4_order_table']} where od_id = '$od_id' and uq_id = '$tmp_uq_id' ");
+    sql_query(" delete from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id = '$tmp_uq_id' ");
     exit;
 }
 

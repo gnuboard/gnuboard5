@@ -48,10 +48,20 @@ if (!$select_db) {
 <?
 // 테이블 생성 ------------------------------------
 $file = implode('', file('./gnuboard4s.sql'));
-eval("\$file = \"$file\";");
 
 $file = preg_replace('/^--.*$/m', '', $file);
 $file = preg_replace('/`g4s_([^`]+`)/', '`'.$table_prefix.'$1', $file);
+$f = explode(';', $file);
+for ($i=0; $i<count($f); $i++) {
+    if (trim($f[$i]) == '') continue;
+    mysql_query($f[$i]) or die(mysql_error());
+}
+
+// 쇼핑몰 테이블 생성 -----------------------------
+$file = implode('', file('./shop.sql'));
+
+$file = preg_replace('/^--.*$/m', '', $file);
+$file = preg_replace('/`shop_([^`]+`)/', '`'.$shop_prefix.'$1', $file);
 $f = explode(';', $file);
 for ($i=0; $i<count($f); $i++) {
     if (trim($f[$i]) == '') continue;
@@ -71,7 +81,7 @@ $download_point = -20;
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
 $sql = " insert into `{$table_prefix}config`
-            set cf_title = '그누보드4s',
+            set cf_title = '쇼핑몰',
                 cf_admin = '$admin_id',
                 cf_use_point = '1',
                 cf_use_norobot = '1',
@@ -144,6 +154,96 @@ $sql = " insert into `{$table_prefix}member`
                  mb_ip = '{$_SERVER['REMOTE_ADDR']}'
                  ";
 @mysql_query($sql);
+
+// 내용관리 생성
+@mysql_query(" insert into `{$shop_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b>' ") or die(mysql_error() . "<p>" . $sql);
+@mysql_query(" insert into `{$shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 취급방침', co_content= '<p align=center><b>개인정보 취급방침에 대한 내용을 입력하십시오.' ") or die(mysql_error() . "<p>" . $sql);
+@mysql_query(" insert into `{$shop_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.' ") or die(mysql_error() . "<p>" . $sql);
+
+// 온라인견적
+@mysql_query(" insert into `{$shop_prefix}onlinecalc` set oc_id = '1', oc_subject = '온라인견적' ") or die(mysql_error() . "<p>" . $sql);
+
+// FAQ Master
+@mysql_query(" insert into `{$shop_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ") or die(mysql_error() . "<p>" . $sql);
+
+// default 설정 (쇼핑몰 설정)
+$sql = " insert into `{$shop_prefix}default`
+            set de_admin_company_name = '회사명',
+                de_admin_company_saupja_no = '123-45-67890',
+                de_admin_company_owner = '대표자명',
+                de_admin_company_tel = '02-123-4567',
+                de_admin_company_fax = '02-123-4568',
+                de_admin_tongsin_no = '제 OO구 - 123호',
+                de_admin_buga_no = '12345호',
+                de_admin_company_zip = '123-456',
+                de_admin_company_addr = 'OO도 OO시 OO구 OO동 123-45',
+                de_admin_info_name = '정보책임자명',
+                de_admin_info_email = '정보책임자 E-mail',
+                de_type1_list_use = '1',
+                de_type1_list_skin = 'maintype10.inc.php',
+                de_type1_list_mod = '3',
+                de_type1_list_row = '2',
+                de_type1_img_width = '$simg_width',
+                de_type1_img_height = '$simg_height',
+                de_type2_list_use = '1',
+                de_type2_list_skin = 'maintype20.inc.php',
+                de_type2_list_mod = '3',
+                de_type2_list_row = '2',
+                de_type2_img_width = '$simg_width',
+                de_type2_img_height = '$simg_height',
+                de_type3_list_use = '1',
+                de_type3_list_skin = 'maintype30.inc.php',
+                de_type3_list_mod = '1',
+                de_type3_list_row = '3',
+                de_type3_img_width = '$simg_width',
+                de_type3_img_height = '$simg_height',
+                de_type4_list_use = '1',
+                de_type4_list_skin = 'maintype40.inc.php',
+                de_type4_list_mod = '3',
+                de_type4_list_row = '1',
+                de_type4_img_width = '$simg_width',
+                de_type4_img_height = '$simg_height',
+                de_type5_list_use = '1',
+                de_type5_list_skin = 'maintype50.inc.php',
+                de_type5_list_mod = '3',
+                de_type5_list_row = '1',
+                de_type5_img_width = '$simg_width',
+                de_type5_img_height = '$simg_height',
+                de_bank_use = '1',
+                de_bank_account = 'OO은행 12345-67-89012 예금주명',
+                de_vbank_use = '0',
+                de_iche_use = '0',
+                de_card_use = '0',
+                de_card_max_amount = '1000',
+                de_point_settle = '10000',
+                de_point_per = '5',
+                de_card_point = '0',
+                de_point_days = '7',
+                de_card_pg = 'kcp',
+                de_kcp_mid = 'T0000',
+                de_send_cost_case = '상한',
+                de_send_cost_limit = '20000;30000;40000',
+                de_send_cost_list = '4000;3000;2000',
+                de_hope_date_use = '0',
+                de_hope_date_after = '3',
+                de_baesong_content = '<b>배송 안내 입력전입니다.</b>',
+                de_change_content = '<b>교환/반품 안내 입력전입니다.</b>',
+                de_rel_list_mod = '4',
+                de_rel_img_width = '$simg_width',
+                de_rel_img_height = '$simg_height',
+                de_simg_width = '$simg_width',
+                de_simg_height = '$simg_height',
+                de_mimg_width = '$mimg_width',
+                de_mimg_height = '$mimg_height',
+                de_item_ps_use = '1',
+                de_level_sell = '1',
+                de_code_dup_use = '1',
+                de_sms_cont1 = '{이름}님의 회원가입을 축하드립니다.\nID:{회원아이디}\n{회사명}',
+                de_sms_cont2 = '{이름}님께서 주문하셨습니다.\n{주문번호}\n{주문금액}원\n{회사명}',
+                de_sms_cont3 = '{이름}님 입금 감사합니다.\n{입금액}원\n주문번호:\n{주문번호}\n{회사명}',
+                de_sms_cont4 = '{이름}님 배송합니다.\n택배:{택배회사}\n운송장번호:\n{운송장번호}\n{회사명}'
+                ";
+mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 ?>
 
     <li>DB설정 완료</li>
@@ -158,7 +258,15 @@ $dir_arr = array (
     $data_path.'/file',
     $data_path.'/log',
     $data_path.'/member',
-    $data_path.'/session'
+    $data_path.'/session',
+    $data_path.'/banner',
+    $data_path.'/category',
+    $data_path.'/common',
+    $data_path.'/content',
+    $data_path.'/event',
+    $data_path.'/faq',
+    $data_path.'/item',
+    $data_path.'/onlinecalc'
 );
 
 for ($i=0; $i<count($dir_arr); $i++) {
@@ -228,7 +336,7 @@ fclose($f);
 ?>
 </ol>
 
-<p class="st_strong">축하합니다. 그누보드4s 설치가 완료되었습니다.</p>
+<p class="st_strong">축하합니다. 쇼핑몰 설치가 완료되었습니다.</p>
 
 <h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
 

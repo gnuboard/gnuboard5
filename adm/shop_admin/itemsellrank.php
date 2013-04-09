@@ -23,7 +23,7 @@ $sql  = " select a.it_id,
                  SUM(IF(ct_status = '반품',ct_qty, 0)) as ct_status_7,
                  SUM(IF(ct_status = '품절',ct_qty, 0)) as ct_status_8,
                  SUM(ct_qty) as ct_status_sum
-            from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b ";
+            from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b ";
 $sql .= " where a.it_id = b.it_id ";
 if ($fr_date && $to_date)
 {
@@ -66,7 +66,7 @@ $qstr1 = "$qstr&sort1=$sort1&sort2=$sort2&fr_date=$fr_date&to_date=$to_date&sel_
         <select name="sel_ca_id">
             <option value=''>전체분류
             <?
-            $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
+            $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
             $result1 = sql_query($sql1);
             for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
                 $len = strlen($row1['ca_id']) / 2 - 1;

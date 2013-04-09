@@ -1,7 +1,7 @@
 <?
 include_once('./_common.php');
 
-$sql = " select it_name from {$g4['yc4_item_table']} where it_id='$it_id' ";
+$sql = " select it_name from {$g4['shop_item_table']} where it_id='$it_id' ";
 $row = sql_fetch_array(sql_query($sql));
 
 $imagefile = G4_DATA_PATH."/item/$img";

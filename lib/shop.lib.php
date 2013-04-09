@@ -7,7 +7,7 @@ function get_cart_count($uq_id)
 {
     global $g4;
 
-    $sql = " select count(ct_id) as cnt from {$g4['yc4_cart_table']} where uq_id = '$uq_id' ";
+    $sql = " select count(ct_id) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ";
     $row = sql_fetch($sql);
     $cnt = (int)$row[cnt];
     return $cnt;
@@ -59,13 +59,13 @@ function get_it_stock_qty($it_id)
 {
     global $g4;
 
-    $sql = " select it_stock_qty from {$g4['yc4_item_table']} where it_id = '$it_id' ";
+    $sql = " select it_stock_qty from {$g4['shop_item_table']} where it_id = '$it_id' ";
     $row = sql_fetch($sql);
     $jaego = (int)$row['it_stock_qty'];
 
     // 재고에서 빼지 않았고 주문인것만
     $sql = " select SUM(ct_qty) as sum_qty
-               from {$g4['yc4_cart_table']}
+               from {$g4['shop_cart_table']}
               where it_id = '$it_id'
                 and ct_stock_use = 0
                 and ct_status in ('주문', '준비') ";
@@ -205,7 +205,7 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
     // 1.02.00
     // it_order 추가
     $sql = " select *
-               from {$g4['yc4_item_table']}
+               from {$g4['shop_item_table']}
               where it_use = '1'
                 and it_type{$type} = '1' ";
     if ($ca_id) $sql .= " and ca_id like '$ca_id%' ";
@@ -234,7 +234,7 @@ function display_category($no, $list_mod, $list_row, $img_width, $img_height, $c
     // 상품의 갯수
     $items = $list_mod * $list_row;
 
-    $sql = " select * from {$g4['yc4_item_table']} where it_use = '1'";
+    $sql = " select * from {$g4['shop_item_table']} where it_use = '1'";
     if ($ca_id)
         $sql .= " and ca_id LIKE '{$ca_id}%' ";
     $sql .= " order by it_order, it_id desc limit $items ";
@@ -270,7 +270,7 @@ function get_star_image($it_id)
 {
     global $g4;
 
-    $sql = "select (SUM(is_score) / COUNT(*)) as score from {$g4['yc4_item_ps_table']} where it_id = '$it_id' ";
+    $sql = "select (SUM(is_score) / COUNT(*)) as score from {$g4['shop_item_ps_table']} where it_id = '$it_id' ";
     $row = sql_fetch($sql);
 
     return (int)get_star($row['score']);
@@ -408,7 +408,7 @@ function print_item_options()
                     it_opt4_subject,
                     it_opt5_subject,
                     it_opt6_subject
-               from {$g4['yc4_item_table']}
+               from {$g4['shop_item_table']}
               where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
@@ -500,8 +500,8 @@ function display_event($no, $event, $list_mod, $list_row, $img_width, $img_heigh
     // 1.02.00
     // b.it_order 추가
     $sql = " select b.*
-               from {$g4['yc4_event_item_table']} a,
-                    {$g4['yc4_item_table']} b
+               from {$g4['shop_event_item_table']} a,
+                    {$g4['shop_item_table']} b
               where a.it_id = b.it_id
                 and b.it_use = '1'
                 and a.ev_id = '$event' ";
@@ -537,7 +537,7 @@ function get_goods($uq_id)
     global $g4;
 
     // 상품명만들기
-    $row = sql_fetch(" select a.it_id, b.it_name from {$g4['yc4_cart_table']} a, {$g4['yc4_item_table']} b where a.it_id = b.it_id and a.uq_id = '$uq_id' order by ct_id limit 1 ");
+    $row = sql_fetch(" select a.it_id, b.it_name from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b where a.it_id = b.it_id and a.uq_id = '$uq_id' order by ct_id limit 1 ");
     // 상품명에 "(쌍따옴표)가 들어가면 오류 발생함
     $goods['it_id'] = $row['it_id'];
     $goods['full_name']= $goods['name'] = addslashes($row['it_name']);
@@ -545,7 +545,7 @@ function get_goods($uq_id)
     $goods['full_name'] = preg_replace ("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i", "",  $goods['full_name']);
 
     // 상품건수
-    $row = sql_fetch(" select count(*) as cnt from {$g4['yc4_cart_table']} where uq_id = '$uq_id' ");
+    $row = sql_fetch(" select count(*) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ");
     $cnt = $row['cnt'] - 1;
     if ($cnt)
         $goods['full_name'] .= " 외 {$cnt}건";
@@ -556,9 +556,9 @@ function get_goods($uq_id)
 
 
 // 패턴의 내용대로 해당 디렉토리에서 정렬하여 <select> 태그에 적용할 수 있게 반환
-function get_list_skin_options($pattern, $dirname="./")
+function get_list_skin_options($pattern, $dirname='./', $sval='')
 {
-    $str = "";
+    $str = '<option value="">선택</option>'.PHP_EOL;
 
     unset($arr);
     $handle = opendir($dirname);
@@ -571,7 +571,12 @@ function get_list_skin_options($pattern, $dirname="./")
 
     sort($arr);
     foreach($arr as $key=>$value) {
-        $str .= "<option value=\"$arr[$key]\">$arr[$key]</option>\n";
+        if($key == $sval)
+            $selected = ' selected="selected"';
+        else
+            $selected = '';
+
+        $str .= '<option value="'.$arr[$key].'"'.$selected.'>'.$arr[$key].'</option>'.PHP_EOL;
     }
 
     return $str;
@@ -622,10 +627,10 @@ function get_new_od_id()
     global $g4;
 
     // 주문서 테이블 Lock 걸고
-    sql_query(" LOCK TABLES {$g4['yc4_order_table']} READ, {$g4['yc4_order_table']} WRITE ", FALSE);
+    sql_query(" LOCK TABLES {$g4['shop_order_table']} READ, {$g4['shop_order_table']} WRITE ", FALSE);
     // 주문서 번호를 만든다.
     $date = date("ymd", time());    // 2002년 3월 7일 일경우 020307
-    $sql = " select max(od_id) as max_od_id from {$g4['yc4_order_table']} where SUBSTRING(od_id, 1, 6) = '$date' ";
+    $sql = " select max(od_id) as max_od_id from {$g4['shop_order_table']} where SUBSTRING(od_id, 1, 6) = '$date' ";
     $row = sql_fetch($sql);
     $od_id = $row['max_od_id'];
     if ($od_id == 0)
