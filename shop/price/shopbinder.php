@@ -28,7 +28,7 @@ function paging($write_pages, $cur_page, $total_page, $url)
     return $str;
 }
 
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 페이지당 행수
 $page_rows = 500;

@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 ob_start();
 
@@ -45,6 +45,8 @@ ob_start();
 
 $lt = "[[";
 $gt = "]]";
+$shop_url = G4_SHOP_URL;
+$data_url = G4_DATA_URL;
 
 // 배송비
 if ($default['de_send_cost_case'] == '없음')
@@ -87,25 +89,25 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 echo <<< HEREDOC
 {$lt}_BEGIN{$gt}
-{$lt}PRODID{$gt}$row[it_id]
-{$lt}PRNAME{$gt}$row[it_name]
-{$lt}_PRICE{$gt}$row[it_amount]
-{$lt}PRDURL{$gt}$g4[shop_url]/item.php?it_id=$row[it_id]
-{$lt}IMGURL{$gt}$g4[url]/data/item/{$row[it_id]}_l1
+{$lt}PRODID{$gt}{$row['it_id']}
+{$lt}PRNAME{$gt}{$row['it_name']}
+{$lt}_PRICE{$gt}{$row['it_amount']}
+{$lt}PRDURL{$gt}$shop_url/item.php?it_id={$row['it_id']}
+{$lt}IMGURL{$gt}$data_url/item/{$row['it_id']}_l1
 {$lt}CATE_1{$gt}$ca_name1
 {$lt}CATE_2{$gt}$ca_name2
 {$lt}CATE_3{$gt}$ca_name3
 {$lt}CATE_4{$gt}$ca_name4
 {$lt}_MODEL{$gt}
 {$lt}_BRAND{$gt}
-{$lt}_MAKER{$gt}$row[it_maker]
-{$lt}ORIGIN{$gt}$row[it_origin]
+{$lt}_MAKER{$gt}{$row['it_maker']}
+{$lt}ORIGIN{$gt}{$row['it_origin']}
 {$lt}PRDATE{$gt}$PRDATE
 {$lt}DELIVR{$gt}0/$delivery_limit/$delivery
 {$lt}_EVENT{$gt}
 {$lt}COUPON{$gt}
 {$lt}PRCARD{$gt}
-{$lt}_POINT{$gt}$row[it_point]
+{$lt}_POINT{$gt}{$row['it_point']}
 {$lt}MODIMG{$gt}Y
 {$lt}SRATIO{$gt}
 {$lt}___END{$gt}

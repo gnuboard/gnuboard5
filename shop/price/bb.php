@@ -6,16 +6,16 @@ function it_image($img)
 {
     global $g4;
 
-    $tmp = G4_DATA_PATH."/item/$img";
+    $tmp = G4_DATA_PATH.'/item/'.$img;
     if (file_exists($tmp) && $img) {
-        $str = G4_DATA_URL."/item/$img";
+        $str = G4_DATA_URL.'/item/'.$img;
     } else {
-        $str = G4_SHOP_URL."/img/no_image.gif";
+        $str = G4_SHOP_URL.'/img/no_image.gif';
     }
     return $str;
 }
 
-include_once("./_common.php");
+include_once('./_common.php');
 ?>
 <html>
 <title>비비 엔진페이지</title>

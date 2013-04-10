@@ -43,7 +43,7 @@ function paging($write_pages, $cur_page, $total_page, $url )
 }
 
 
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 페이지당 행수
 $page_rows = 1000;
@@ -119,20 +119,20 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     else
         $send_cost = '유료';
 
-    echo "
-	<tr bgcolor='white'>
-		<td align='center'>$num</td>
-		<td><a href='".G4_SHOP_URL."/item.php?it_id={$row['it_id']}'>{$row['it_name']}</a></td>
-		<td align='center'>".number_format($row['it_amount'])."</td>
-		<td align='center'>$stock</td>
-		<td align='center'>$send_cost</td>
-		<td align='center'>".G4_DATA_URL."/item/{$row['it_id']}_m</td>
-		<td align='center'>1</td>
-		<td align='center'>N</td>
-		<td align='center'>".get_text($row['it_maker'])."</td>
-		<td align='center'>{$row['it_id']}</td>
+    echo '
+	<tr bgcolor="white">
+		<td align="center">'.$num.'</td>
+		<td><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">'.$row['it_name'].'</a></td>
+		<td align="center">'.number_format($row['it_amount']).'</td>
+		<td align="center">'.$stock.'</td>
+		<td align="center">'.$send_cost.'</td>
+		<td align="center">'.G4_DATA_URL.'/item/'.$row['it_id'].'_m</td>
+		<td align="center">1</td>
+		<td align="center">N</td>
+		<td align="center">'.get_text($row['it_maker']).'</td>
+		<td align="center">'.$row['it_id'].'</td>
 	</tr>
-        ";
+        ';
 }
 
 ?>
