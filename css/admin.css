@@ -90,6 +90,9 @@ h2 {font-size:1.2em}
 .gnb_1depth_over .gnb_sub_ul {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
 .gnb_1depth_over2 .gnb_sub_ul {right:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
 
+.gnb_js .gnb_grp_style {background:#f7f7f7 !important}
+.gnb_js .gnb_grp_div {border-top:1px solid #eee}
+
 /* 중간 레이아웃 */
 #wrapper {z-index:5;margin:30px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
@@ -164,11 +167,6 @@ fieldset span {display:block;margin-bottom:10px}
 fieldset p {color:#4c5f67}
 fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
 fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
-/* 캡챠 입력상자 */
-.fs_input,
-fieldset textarea {padding:3px 3px 4px;border:1px solid #ccc;background:#f7f7f7;vertical-align:middle}
-.fs_input:focus,
-fieldset textarea:focus {padding:4px 4px 5px;border:0;background:#494949;color:#fff}
 
 .readonly {}
 

@@ -41,6 +41,14 @@ if(!isset($config['cf_mobile_pages'])) {
     sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", TRUE);
 }
 
+// uniqid 테이블이 없을 경우 생성
+if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
+                  `uq_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`uq_id`)
+                ) ", false);
+}
+
 $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 

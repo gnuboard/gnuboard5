@@ -110,7 +110,7 @@ a:active {color:#000;text-decoration:underline}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
-#side_nb {float:right;width:209px;border:1px solid #cfded8;background:#fff}
+#wrapper #aside {float:right;width:209px;border:1px solid #cfded8;background:#fff}
 
 #container {z-index:4;position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #cfded8;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
@@ -145,6 +145,7 @@ a:active {color:#000;text-decoration:underline}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 button.btn_submit {height:22px !important;font-size:1em}
+fieldset .btn_submit {height:22px;font-size:1em}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 button.btn_cancel {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 .btn_cancel:focus,

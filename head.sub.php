@@ -10,7 +10,7 @@ if (!isset($g4['title'])) {
 }
 else {
     $g4_head_title = $g4['title']; // 상태바에 표시될 제목
-    $g4_head_title .= " : ".$config['cf_title'];
+    $g4_head_title .= " | ".$config['cf_title'];
 }
 
 // 현재 접속자
@@ -32,13 +32,14 @@ header("Pragma: no-cache"); // HTTP/1.0
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<title><?=$g4_head_title?></title>
 <? if (G4_IS_MOBILE) {?>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
 <meta name="HandheldFriendly" content="true">
 <meta name="format-detection" content="telephone=no">
 <? } ?>
+<meta http-equiv="imagetoolbar" content="no">
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
-<title><?=$g4_head_title?></title>
 <? if (defined('G4_IS_ADMIN')) { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css?=<?=date("md")?>">
 <? } else { ?>
@@ -67,7 +68,6 @@ if (!defined('G4_IS_ADMIN')) {
 // 자바스크립트에서 사용하는 전역변수 선언
 var g4_url       = "<?=G4_URL?>";
 var g4_bbs_url   = "<?=G4_BBS_URL?>";
-var g4_img_url   = "<?=G4_IMG_URL?>";
 var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";
 var g4_is_admin  = "<?=isset($is_admin)?$is_admin:'';?>";
 var g4_is_mobile = "<?=G4_IS_MOBILE?>";

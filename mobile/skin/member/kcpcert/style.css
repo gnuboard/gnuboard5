@@ -22,6 +22,7 @@
 /* 아이디/패스워드 찾기 */
 #find_info_fs {margin:0 auto 1em;padding:1em;border-bottom:1px solid #eee}
 #find_info_fs #mb_email {width:100%}
+#find_info_fs .btn_submit {height:1.85em !important}
 #find_info #captcha {margin:0 0 1em;padding:0 1em 1em}
 #find_info #captcha input {margin-left:0.3em}
 

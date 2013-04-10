@@ -28,7 +28,7 @@ if (isset($wr_id) && $wr_id) {
     if (isset($group['gr_use_access']) && $group['gr_use_access']) {
         if ($is_guest) {
             $msg = "비회원은 이 게시판에 접근할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.";
-            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
         }
 
         // 그룹관리자 이상이라면 통과
@@ -49,7 +49,7 @@ if (isset($wr_id) && $wr_id) {
         if ($is_member)
             alert('글을 읽을 권한이 없습니다.', G4_URL);
         else
-            alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
     }
 
     // 자신의 글이거나 관리자라면 통과
@@ -112,24 +112,27 @@ if (isset($wr_id) && $wr_id) {
         set_session($ss_name, TRUE);
     }
 
-    $g4['title'] = strip_tags(conv_subject($write['wr_subject'], 255));
+    $g4['title'] = strip_tags(conv_subject($write['wr_subject'], 255))." > ".$board['bo_subject'];
 } else {
     if ($member['mb_level'] < $board['bo_list_level']) {
         if ($member['mb_id'])
             alert('목록을 볼 권한이 없습니다.', G4_URL);
         else
-            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
     }
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
 
-    $g4['title'] = $board['bo_subject'];
+    $g4['title'] = $board['bo_subject']." ".$page." 페이지";
 }
 
 include_once(G4_PATH.'/head.sub.php');
 
 $width = $board['bo_table_width'];
-if ($width <= 100) $width .= '%';
+if ($width <= 100)
+    $width .= '%';
+else
+    $width .='px';
 
 // IP보이기 사용 여부
 $ip = "";

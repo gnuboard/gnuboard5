@@ -198,6 +198,7 @@ function chk_captcha()
     $captcha_cnt = (int)$_SESSION['ss_captcha_cnt'];
     if ($captcha_cnt > 5) return false;
 
+    if (!trim($_POST['captcha_key'])) return false;
     if (!isset($_POST['captcha_key'])) return false;
     if ($_POST['captcha_key'] != $_SESSION['ss_captcha_key']) {
         $_SESSION['ss_captcha_cnt'] = $captcha_cnt + 1;

@@ -87,7 +87,17 @@ function goto_url($url)
 {
     $url = str_replace("&amp;", "&", $url);
     //echo "<script> location.replace('$url'); </script>";
-    @header("Location:$url");
+
+    if (!headers_sent())
+        header('Location: '.$url);
+    else {
+        echo '<script>';
+        echo 'location.replace("'.$url.'");';
+        echo '</script>';
+        echo '<noscript>';
+        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+        echo '</noscript>';
+    }
     exit;
 }
 
@@ -510,13 +520,13 @@ function conv_content($content, $html)
             $content .= "</table>";
         }
 
-        $content = preg_replace_callback("/<([^>]+)>/s", 'bad130128', $content); 
+        $content = preg_replace_callback("/<([^>]+)>/s", 'bad130128', $content);
 
         $content = preg_replace($source, $target, $content);
 
         // XSS (Cross Site Script) 막기
         // 완벽한 XSS 방지는 없다.
-        
+
         // 이런 경우를 방지함 <IMG STYLE="xss:expr/*XSS*/ession(alert('XSS'))">
         //$content = preg_replace("#\/\*.*\*\/#iU", "", $content);
         // 위의 정규식이 아래와 같은 내용을 통과시키므로 not greedy(비탐욕수량자?) 옵션을 제거함. ignore case 옵션도 필요 없으므로 제거
@@ -560,9 +570,9 @@ function conv_content($content, $html)
         $pattern .= "(o|&#(x6f|111);?)";
         $pattern .= "(n|&#(x6e|110);?)";
         //$content = preg_replace("/".$pattern."/i", "__EXPRESSION__", $content);
-        $content = preg_replace("/<[^>]*".$pattern."/i", "__EXPRESSION__", $content); 
+        $content = preg_replace("/<[^>]*".$pattern."/i", "__EXPRESSION__", $content);
         // <IMG STYLE="xss:e\xpression(alert('XSS'))"></IMG> 와 같은 코드에 취약점이 있어 수정함. 121213
-        $content = preg_replace("/(?<=style)(\s*=\s*[\"\']?xss\:)/i", '="__XSS__', $content); 
+        $content = preg_replace("/(?<=style)(\s*=\s*[\"\']?xss\:)/i", '="__XSS__', $content);
         $content = bad_tag_convert($content);
     }
     else // text 이면

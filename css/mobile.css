@@ -94,7 +94,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #ft_copy {background:#232323}
 #ft_copy p {position:relative;padding:0.5em;color:#4a9ab8}
 #ft_copy b {color:#fff}
-#ft_copy a {position:absolute;top:0.5em;right:0.5em;color:#fff;text-decoration:none}
+#ft_copy a {color:#fff;text-decoration:none}
 
 /* PC화면으로 */
 #g4s_cng {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;color:#000;font-size:1em;text-decoration:none;text-align:center}
@@ -109,7 +109,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 1em;height:2.6em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer;-webkit-appearance:none}
 .btn_cancel {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2.5em}
-.btn_frmline {display:inline-block;padding:0 7px 0 0.3em;height:22px;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.4em} /* 우편번호검색버튼 등 */
+.btn_frmline {display:inline-block;padding:0 0.3em;height:1.9em;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.9em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:1.5em;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em;cursor:pointer}
 /* 게시판용 버튼 */

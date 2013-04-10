@@ -1,12 +1,14 @@
 <?php
+include_once('./_common.php');
+
 /**
  * @file syndi_echo.php
  * @author sol (ngleader@gmail.com)
  * @brief Print Syndication Data XML
  */
 
-header("Content-Type: text/html; charset=UTF-8");
-header("Pragma: no-cache");
+header('Content-Type: text/html; charset=UTF-8');
+header('Pragma: no-cache');
 
 if(version_compare(PHP_VERSION, '5.3.0') >= 0)
 {

@@ -61,6 +61,7 @@ if (!is_dir($data_path))
     <p>루트 디렉토리에 아래로 <?=G4_DATA_DIR?> 디렉토리를 생성하여 주십시오.<br />
     (common.php 파일이 있는곳이 루트 디렉토리 입니다.)<br /><br />
     $> mkdir <?=G4_DATA_DIR?><br /><br />
+    윈도우의 경우 data 폴더를 하나 생성해 주시기 바랍니다.<br /><br />
     위 명령 실행후 브라우저를 새로고침 하십시오.</p>
 <?
     $exists_data_dir = false;
