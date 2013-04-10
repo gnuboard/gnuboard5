@@ -219,7 +219,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </form>
 
 <? // 휴대폰인증 form
-include_once(G4_PLUGIN_PATH.'/kcp/kcpcert_form.php');
+include_once(G4_KCP_PATH.'/kcpcert_form.php');
 ?>
 
 <script>

@@ -20,7 +20,7 @@ if(!$site_cd)
     alert('KCP 휴대폰인증 사이트코드가 없습니다.\\관리자 > 기본환경설정에 사이트코드를 입력해 주십시오.', G4_URL);
 
 // KCP 인증 라이브러리
-require G4_PLUGIN_PATH.'/kcp/lib/ct_cli_lib.php';
+require G4_KCP_PATH.'/lib/ct_cli_lib.php';
 
 /* ============================================================================== */
 /* =   null 값을 처리하는 메소드                                                = */
