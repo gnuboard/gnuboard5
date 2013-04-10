@@ -566,7 +566,7 @@ $pg_anchor = "<ul class=\"anchor\">
     <tr>
         <th scope="row"><label for="bo_upload_size">파일 업로드 용량<strong class="sound_only">필수</strong></label></th>
         <td>
-            <?=help('최대 '.ini_get("upload_max_filesize").' 이하 업로드 가능, 1 MB = 1,024,768 bytes')?>
+            <?=help('최대 '.ini_get("upload_max_filesize").' 이하 업로드 가능, 1 MB = 1,048,576 bytes')?>
             업로드 파일 한개당 <input type="text" name="bo_upload_size" value="<?=$board['bo_upload_size']?>" id="bo_upload_size" required class="required numeric frm_input"  size="10"> bytes 이하
         </td>
         <td class="group_setting">
