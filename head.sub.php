@@ -68,7 +68,6 @@ if (!defined('G4_IS_ADMIN')) {
 // 자바스크립트에서 사용하는 전역변수 선언
 var g4_url       = "<?=G4_URL?>";
 var g4_bbs_url   = "<?=G4_BBS_URL?>";
-var g4_img_url   = "<?=G4_IMG_URL?>";
 var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";
 var g4_is_admin  = "<?=isset($is_admin)?$is_admin:'';?>";
 var g4_is_mobile = "<?=G4_IS_MOBILE?>";
