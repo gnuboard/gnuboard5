@@ -147,11 +147,17 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="mb_zip1">주소</label></th>
         <td colspan="3" style="line-height:2em">
-            <input type="text" name="mb_zip1" value="<?=$mb['mb_zip1']?>" id="mb_zip1" title="우편번호 앞자리" class="frm_input readonly" size="3" maxlength="3" readonly> -
-            <input type="text" name="mb_zip2" value="<?=$mb['mb_zip2']?>" id="mb_zip2" title="우편번호 뒷자리" class="frm_input readonly" size="3" maxlength="3" readonly>
-            <a href="<?=G4_BBS_URL.'/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2'?>" class="win_zip_find btn_frmline">우편번호 검색</a><br>
-            <input type="text" name="mb_addr1" value="<?=$mb['mb_addr1']?>" id="mb_addr1" title="행정기본주소" class="frm_input readonly" size="50" readonly><br>
+            <input type="text" name="mb_zip1" value="<?=$mb['mb_zip1']?>" id="mb_zip1" title="우편번호 앞자리" class="frm_input readonly" size="3" maxlength="3"> -
+            <input type="text" name="mb_zip2" value="<?=$mb['mb_zip2']?>" id="mb_zip2" title="우편번호 뒷자리" class="frm_input readonly" size="3" maxlength="3">
+            <span id="win_zip" style="display:block"></span>
+            <input type="text" name="mb_addr1" value="<?=$mb['mb_addr1']?>" id="mb_addr1" title="행정기본주소" class="frm_input readonly" size="50"><br>
             <input type="text" name="mb_addr2" value="<?=$mb['mb_addr2']?>" id="mb_addr2" title="상세주소" class="frm_input" size="50"> 상세주소 입력
+            <script>
+            // 우편번호 자바스크립트 비활성화 대응을 위한 코드
+            $('<a href="<?=G4_BBS_URL?>/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2" id="win_zip" class="win_zip_find btn_frmline" target="_blank">우편번호 검색</a><br>').appendTo('#win_zip');
+            $('#win_zip').css('display','inline');
+            $('#mb_zip1,#mb_zip2,#mb_addr1').attr('readonly','readonly');
+            </script>
         </td>
     </tr>
     <tr>
