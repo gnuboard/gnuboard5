@@ -99,9 +99,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </td>
 </tr>
 
-<? if ($config['cf_use_addr']) {
-    $zip_href = G4_BBS_URL.'/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
-?>
+<? if ($config['cf_use_addr']) { ?>
 <tr>
     <th scope="row">
         주소
