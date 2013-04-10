@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 // /home/kcpcert_enc ( 서버상 bin 폴더 이전까지 경로)
-$home_dir = G4_BBS_PATH.'/kcp'; // ct_cli 절대경로 ( bin 전까지 )
+$home_dir = G4_PLUGIN_PATH.'/kcp'; // ct_cli 절대경로 ( bin 전까지 )
 
 // DI 를 위한 중복확인 식별 아이디
 //web_siteid 값이 없으면 KCP 에서 지정한 값으로 설정됨
@@ -20,7 +20,7 @@ if(!$site_cd)
     alert('KCP 휴대폰인증 사이트코드가 없습니다.\\관리자 > 기본환경설정에 사이트코드를 입력해 주십시오.', G4_URL);
 
 // KCP 인증 라이브러리
-require G4_BBS_PATH.'/kcp/lib/ct_cli_lib.php';
+require G4_PLUGIN_PATH.'/kcp/lib/ct_cli_lib.php';
 
 /* ============================================================================== */
 /* =   null 값을 처리하는 메소드                                                = */
