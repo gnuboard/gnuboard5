@@ -2,7 +2,7 @@
 /*
 **  가격비교사이트 다나와 엔진페이지
 */
-include_once("./_common.php");
+include_once('./_common.php');
 
 $nl = ""; // new line \n
 

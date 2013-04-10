@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 ob_start();
 
@@ -28,9 +28,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 echo <<< HEREDOC
 {$lt}_BEGIN{$gt}
-{$lt}PRODID{$gt}$row[it_id]
-{$lt}PRNAME{$gt}$row[it_name]
-{$lt}_PRICE{$gt}$row[it_amount]
+{$lt}PRODID{$gt}{$row['it_id']}
+{$lt}PRNAME{$gt}{$row['it_name']}
+{$lt}_PRICE{$gt}{$row['it_amount']}
 {$lt}___END{$gt}
 
 HEREDOC;

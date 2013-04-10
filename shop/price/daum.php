@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 header("Content-Type: text/html; charset=utf-8");
 
@@ -64,6 +64,8 @@ header("Content-Type: text/html; charset=utf-8");
 
 $lt = "<<<";
 $gt = ">>>";
+$shop_url = G4_SHOP_URL;
+$data_url = G4_DATA_URL;
 
 // 배송비
 if ($default['de_send_cost_case'] == '없음') {
@@ -122,11 +124,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     echo <<< HEREDOC
 {$lt}begin{$gt}
-{$lt}pid{$gt}$row[it_id]
-{$lt}price{$gt}$row[it_amount]
-{$lt}pname{$gt}$row[it_name]
-{$lt}pgurl{$gt}$g4[shop_url]/item.php?it_id={$row[it_id]}
-{$lt}igurl{$gt}$g4[url]/data/item/{$row[it_id]}_m
+{$lt}pid{$gt}{$row['it_id']}
+{$lt}price{$gt}{$row['it_amount']}
+{$lt}pname{$gt}{$row['it_name']}
+{$lt}pgurl{$gt}$shop_url/item.php?it_id={$row['it_id']}
+{$lt}igurl{$gt}$data_url/item/{$row['it_id']}_m
 {$lt}cate1{$gt}$cate1
 {$lt}cate2{$gt}$cate2
 {$lt}cate3{$gt}$cate3
@@ -135,7 +137,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {$lt}catename2{$gt}$catename2
 {$lt}catename3{$gt}$catename3
 {$lt}catename4{$gt}$catename4
-{$lt}maker{$gt}$row[it_maker]
+{$lt}maker{$gt}{$row['it_maker']}
 {$lt}pdate{$gt}$pdate
 {$lt}point{$gt}$point
 {$lt}deliv{$gt}$deliv

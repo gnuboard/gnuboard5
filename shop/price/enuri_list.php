@@ -2,7 +2,7 @@
 /*
 **  가격비교사이트 에누리 분류페이지
 */
-include_once("./_common.php");
+include_once('./_common.php');
 ?>
 <html>
 <title>에누리 분류페이지</title>
@@ -28,10 +28,10 @@ th,td		{font-family:굴림; font-size:10pt ; height:15pt}
 		<th width=60 align='center'>대분류</th>
 		<th>중분류</th>
 	</tr>
-    <tr bgcolor='white'>
+    <tr bgcolor="white">
 
 <?PHP
-$url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]);
+$url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
 
 $sql =" SELECT LENGTH(ca_id)=2 AS cnt, ca_id
         FROM {$g4['shop_category_table']}
@@ -54,7 +54,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     for ($j=0;$row3=mysql_fetch_array($result3);$j++)
     {
         $str .= $bar;
-        $str .= "<a href='./enuri.php?ca_id={$row3['ca_id']}'>{$row3['ca_name']}</a>";
+        $str .= "<a href=\"./enuri.php?ca_id={$row3['ca_id']}\">{$row3['ca_name']}</a>";
         $bar = " | \n";
     }
 
@@ -62,7 +62,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     echo $str;
 
-    $tr = "  </tr>\n  <tr bgcolor='white'>\n";
+    $tr = "  </tr>\n  <tr bgcolor=\"white\">\n";
 }
 ?>
   </tr>
