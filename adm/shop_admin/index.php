@@ -6,10 +6,19 @@ $max_limit = 7; // 몇행 출력할 것인지?
 
 $g4['title'] = ' 쇼핑몰관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
+
+$pg_anchor ="<ul class=\"anchor\">
+<li><a href=\"#frm_rdy\">입금완료미배송내역</a></li>
+<li><a href=\"#frm_wait\">미입금주문내역</a></li>
+<li><a href=\"#frm_ps\">사용후기</a></li>
+<li><a href=\"#frm_qna\">상품문의</a></li>
+</ul>
+";
 ?>
 
-<section class="cbox">
+<section id="frm_rdy" class="cbox">
     <h2>입금완료 미배송내역</h2>
+    <?=$pg_anchor?>
 
     <table>
     <thead>
@@ -55,11 +64,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         }
     ?>
     <tr>
-        <td><?=$row['od_id']?></td>
-        <td><?=$name?></td>
-        <td><?=display_amount($row['receiptamount'])?></td>
-        <td><?=$settle_method?></td>
-        <td><a href="./orderform.php?od_id=<?=$row['od_id']?>">수정</a></td>
+        <td class="td_odrnum2"><?=$row['od_id']?></td>
+        <td class="td_name"><?=$name?></td>
+        <td class="td_bignum"><?=display_amount($row['receiptamount'])?></td>
+        <td class="td_payby"><?=$settle_method?></td>
+        <td class="td_mng"><a href="./orderform.php?od_id=<?=$row['od_id']?>">수정</a></td>
     </tr>
     <?
     }
@@ -73,8 +82,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </div>
 </section>
 
-<section class="cbox">
+<section id="frm_wait" class="cbox">
     <h2>미입금 주문내역</h2>
+    <?=$pg_anchor?>
 
     <table>
     <thead>
@@ -119,11 +129,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         }
     ?>
     <tr>
-        <td><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?=$row['od_id']?>"><?=$row['od_id']?></a></td>
-        <td><?=$name?></td>
-        <td><?=display_amount($row['orderamount'])?></td>
-        <td><?=$settle_method?></td>
-        <td><a href="./orderform.php?od_id=<?=$row['od_id']?>">수정</a></td>
+        <td class="td_odrnum2"><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?=$row['od_id']?>"><?=$row['od_id']?></a></td>
+        <td class="td_name"><?=$name?></td>
+        <td class="td_bignum"><?=display_amount($row['orderamount'])?></td>
+        <td class="td_payby"><?=$settle_method?></td>
+        <td class="td_mng"><a href="./orderform.php?od_id=<?=$row['od_id']?>">수정</a></td>
     </tr>
     <?
     }
@@ -137,8 +147,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </div>
 </section>
 
-<section class="cbox">
+<section id="frm_ps" class="cbox">
     <h2>사용후기</h2>
+    <?=$pg_anchor?>
 
     <table>
     <thead>
@@ -163,9 +174,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
     ?>
     <tr>
-        <td><?=$name?></td>
+        <td class="td_name"><?=$name?></td>
         <td><?=cut_str($row['is_subject'],40)?></td>
-        <td><a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>">수정</a></td>
+        <td class="td_mng"><a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>">수정</a></td>
     </tr>
     <?
     }
@@ -179,8 +190,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </div>
 </section>
 
-<section class="cbox">
+<section id="frm_qna" class="cbox">
     <h2>상품문의</h2>
+    <?=$pg_anchor?>
 
     <table>
     <thead>
@@ -205,9 +217,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
     ?>
     <tr>
-        <td><?=$name?></td>
+        <td class="td_name"><?=$name?></td>
         <td><?=cut_str($row['iq_subject'],40)?></td>
-        <td><a href="./itemqaform.php?w=u&amp;iq_id=<?=$row['iq_id']?>">수정</a></td>
+        <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?=$row['iq_id']?>">수정</a></td>
     </tr>";
     <?
     }
