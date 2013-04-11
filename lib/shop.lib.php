@@ -28,11 +28,11 @@ function get_image($img, $width=0, $height=0)
             $width = $size[0];
             $height = $size[1];
         }
-        $str = "<img id=\"$img\" src=\"".G4_DATA_URL."/item/$img\" width=\"$width\" height=\"$height\" border=\"0\">";
+        $str = "<img id=\"$img\" src=\"".G4_DATA_URL."/item/$img\" width=\"$width\" height=\"$height\">";
     }
     else
     {
-        $str = "<img id=\"$img\" src=\"".G4_SHOP_URL."/img/no_image.gif\" border=\"0\" ";
+        $str = "<img id=\"$img\" src=\"".G4_SHOP_URL."/img/no_image.gif\" ";
         if ($width)
             $str .= "width=\"$width\" height=\"$height\"";
         else
