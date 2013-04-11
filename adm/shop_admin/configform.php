@@ -733,7 +733,7 @@ $pg_anchor ="<ul class=\"anchor\">
         <th scope="row"><label for="de_register">프로그램 등록번호</label></th>
         <td>
             <?=help("정품에 한해 발급해 드립니다. 등록번호가 없거나 틀리면, 주문서를 확인할 수 없습니다.\n등록번호는 서버 IP, MYSQL USER, DB 를 알려주셔야 발급이 가능합니다.", -180, -160);?>
-            <input type="text" name="de_register" value="<?=$default['de_register']?>" id="de_register" class="frm_input" required size="30">
+            <input type="text" name="de_register" value="<?=$default['de_register']?>" id="de_register" class="frm_input required" required size="30">
         </td>
     </tr>
     </tbody>
