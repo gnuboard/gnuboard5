@@ -18,6 +18,7 @@ $mysql_user  = $_POST['mysql_user'];
 $mysql_pass  = $_POST['mysql_pass'];
 $mysql_db    = $_POST['mysql_db'];
 $table_prefix= $_POST['table_prefix'];
+$shop_prefix = $_POST['shop_prefix'];
 $admin_id    = $_POST['admin_id'];
 $admin_pass  = $_POST['admin_pass'];
 $admin_name  = $_POST['admin_name'];
