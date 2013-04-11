@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '주문서관리';
+$g4['title'] = '주문통합내역';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 $where = " where ";
@@ -67,213 +67,185 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $tot_misu          += $row['misu'];
 }
 
-//$qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
-$qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search&save_search=$search";
-$qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
+//$qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search";
+$qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
+$qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
+
+$listall = '';
+if ($search) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 ?>
 
-<table width=100% cellpadding=4 cellspacing=0>
-<form name=frmorderlist>
-<input type=hidden name=doc   value="<? echo $doc   ?>">
-<input type=hidden name=sort1 value="<? echo $sort1 ?>">
-<input type=hidden name=sort2 value="<? echo $sort2 ?>">
-<input type=hidden name=page  value="<? echo $page ?>">
-<tr>
-    <td width=20%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
-    <td width=60% align=center>
-        <select name=sel_field>
-            <option value='od_id'>주문번호
-            <option value='mb_id'>회원 ID
-            <option value='od_name'>주문자
-            <option value='od_b_name'>받는분
-            <option value='od_deposit_name'>입금자
-            <option value='od_invoice'>운송장번호
-        </select>
-        <input type=hidden name=save_search value='<?=$search?>'>
-        <input type=text name=search value='<? echo $search ?>' autocomplete="off">
-        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
-    </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
+<form name="frmorderlist">
+<input type="hidden" name="doc" value="<?=$doc?>">
+<input type="hidden" name="sort1" value="<?=$sort1?>">
+<input type="hidden" name="sort2" value="<?=$sort2?>">
+<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="save_search" value="<?=$search?>">
+<fieldset>
+    <legend>주문내역 검색</legend>
+    <span>
+        <?=$listall?>
+        전체 주문내역 <?=$total_count ?>건
+    </span>
+    <select name="sel_field" title="검색대상">
+        <option value="od_id" <?=get_selected($sel_field, 'od_id')?>>주문번호</option>
+        <option value="mb_id" <?=get_selected($sel_field, 'mb_id')?>>회원 ID</option>
+        <option value="od_name" <?=get_selected($sel_field, 'od_name')?>>주문자</option>
+        <option value="od_b_name" <?=get_selected($sel_field, 'od_b_name')?>>받는분</option>
+        <option value="od_deposit_name" <?=get_selected($sel_field, 'od_deposit_name')?>>입금자</option>
+        <option value="od_invoice" <?=get_selected($sel_field, 'od_invoice')?>>운송장번호</option>
+    </select>
+    <input type="text" name="search" value="<?=$search?>" title="검색어" autocomplete="off">
+    <input type="submit" value="검색" class="btn_submit">
+</fieldset>
+</form>
 
+<section class="cbox">
+    <h2>주문통합내역 목록</h2>
+    <p><strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.</p>
 
-<table width=100% cellpadding=0 cellspacing=0>
-<colgroup width=60>
-<colgroup width=''>
-<colgroup width=70>
-<colgroup width=30>
-<colgroup width=70>
-<colgroup width=60>
-<colgroup width=60>
-<colgroup width=70>
-<colgroup width=60>
-<colgroup width=70>
-<colgroup width=60>
-<colgroup width=55>
-<tr><td colspan=12 height=2 bgcolor=#0E87F9></td></tr>
-<thead>
-<tr align=center class=ht>
-    <td><a href='<?=title_sort("od_id", 1)."&$qstr1";?>'>주문번호</a></td>
-    <td><a href='<?=title_sort("od_name")."&$qstr1";?>'>주문자</a></td>
-    <td><a href='<? echo title_sort("mb_id")."&$qstr1"; ?>'>회원ID</a></td>
-    <td><a href='<?=title_sort("itemcount", 1)."&$qstr1";?>'>건수</a></td>
-    <td><a href='<?=title_sort("orderamount", 1)."&$qstr1";?>'><FONT COLOR="1275D3">주문합계</a></FONT></td>
-    <td><a href='<?=title_sort("ordercancel", 1)."&$qstr1";?>'>주문취소</a></td>
-    <td><a href='<?=title_sort("od_dc_amount", 1)."&$qstr1";?>'>DC</a></td>
-    <td><a href='<?=title_sort("receiptamount")."&$qstr1";?>'><FONT COLOR="1275D3">입금합계</font></a></td>
-    <td><a href='<?=title_sort("receiptcancel", 1)."&$qstr1";?>'>입금취소</a></td>
-    <td><a href='<?=title_sort("misu", 1)."&$qstr1";?>'><font color='#FF6600'>미수금</font></a></td>
-    <td>결제수단</td>
-    <td>수정 삭제</td>
-</tr>
-<tr align=center>
-    <td></td>
-    <td colspan=3>상품명</td>
-    <td>판매가</td>
-    <td>수량</td>
-    <td>포인트</td>
-    <td colspan=2>상태</td>
-    <td>소계</td>
-    <td></td>
-    <td></td>
-</tr>
-<tr><td colspan=12 height=1 bgcolor=#CCCCCC></td></tr>
-</thead>
-<tfoot>
-<tr class=ht>
-    <td colspan=3 align=center>합 계</td>
-    <td align=center><?=(int)$tot_itemcount?>건</td>
-    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_orderamount)?></FONT></td>
-    <td align=right><?=number_format($tot_ordercancel)?></td>
-    <td align=right><?=number_format($tot_dc_amount)?></td>
-    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_receiptamount)?></FONT></td>
-    <td align=right><?=number_format($tot_receiptcancel)?></td>
-    <td align=right><FONT COLOR='#FF6600'><?=number_format($tot_misu)?></FONT></td>
-    <td colspan=2></td>
-</tr>
-</tfoot>
-<tbody>
-<?
-for ($i=0; $i<count($lines); $i++)
-{
-    // 결제 수단
-    $s_receipt_way = $s_br = "";
-    if ($lines[$i]['od_settle_case'])
+    <table id="sodr_all">
+    <thead>
+    <tr>
+        <th id="sodr_all_num"><a href="<?=title_sort("od_id", 1)."&amp;$qstr1";?>">주문번호<br>주문일시</a></th>
+        <th id="sodr_all_id"><a href="<?=title_sort("od_name")."&amp;$qstr1";?>">주문자/입금자</a><br><a href="<?=title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID</a></th>
+        <th id="sodr_all_cnt"><a href="<?=title_sort("itemcount", 1)."&amp;$qstr1";?>">건수</a></th>
+        <th id="sodr_all_calc"><a href="<?=title_sort("orderamount", 1)."&amp;$qstr1";?>">주문합계</a></th>
+        <th id="sodr_all_cancel"><a href="<?=title_sort("ordercancel", 1)."&amp;$qstr1";?>">주문취소</a></th>
+        <th id="sodr_all_dc"><a href="<?=title_sort("od_dc_amount", 1)."&amp;$qstr1";?>">DC</a></th>
+        <th id="sodr_all_inc"><a href="<?=title_sort("receiptamount")."&amp;$qstr1";?>">입금합계</a></th>
+        <th id="sodr_all_inc_cancel"><a href="<?=title_sort("receiptcancel", 1)."&amp;$qstr1";?>">입금취소</a></th>
+        <th id="sodr_all_nonpay"><a href="<?=title_sort("misu", 1)."&amp;$qstr1";?>">미수금</a></th>
+        <th id="sodr_all_payby">결제수단</th>
+        <th id="sodr_all_mng">관리</th>
+    </tr>
+    <tr>
+        <th colspan="5" id="sodr_all_item">상품명</th>
+        <th id="sodr_all_cost">판매가</th>
+        <th id="sodr_all_qtt">수량</th>
+        <th id="sodr_all_pt">포인트</th>
+        <th id="sodr_all_tot">소계</th>
+        <th colspan="2" id="sodr_all_stats">상태</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th scope="row" colspan="2">합 계</td>
+        <td><?=(int)$tot_itemcount?>건</td>
+        <td><?=number_format($tot_orderamount)?></td>
+        <td><?=number_format($tot_ordercancel)?></td>
+        <td><?=number_format($tot_dc_amount)?></td>
+        <td><?=number_format($tot_receiptamount)?></td>
+        <td><?=number_format($tot_receiptcancel)?></td>
+        <td><?=number_format($tot_misu)?></td>
+        <td colspan="2"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <?
+    for ($i=0; $i<count($lines); $i++)
     {
-        $s_receipt_way = $lines[$i]['od_settle_case'];
-        $s_br = '<br/>';
-    }
-    else
-    {
-        if ($lines[$i]['od_temp_bank'] > 0 || $lines[$i]['od_receipt_bank'] > 0)
+        // 결제 수단
+        $s_receipt_way = $s_br = "";
+        if ($lines[$i]['od_settle_case'])
         {
-            //$s_receipt_way = "무통장입금";
-            $s_receipt_way = cut_str($lines[$i]['od_bank_account'],8,"");
-            $s_br = "<br>";
+            $s_receipt_way = $lines[$i]['od_settle_case'];
+            $s_br = '<br/>';
         }
-
-        if ($lines[$i]['od_temp_card'] > 0 || $lines[$i]['od_receipt_card'] > 0)
+        else
         {
-            // 미수금이 없고 카드결제를 하지 않았다면 카드결제를 선택후 무통장 입금한 경우임
-            if ($lines[$i]['misuamount'] <= 0 && $lines[$i]['od_receipt_card'] == 0)
-                ; // 화면 출력하지 않음
-            else
+            if ($lines[$i]['od_temp_bank'] > 0 || $lines[$i]['od_receipt_bank'] > 0)
             {
-                $s_receipt_way .= $s_br."카드";
-                if ($lines[$i]['od_receipt_card'] == 0)
-                    $s_receipt_way .= '<span class="small"><span class="point" style="font-size:8pt;">(미승인)</span></span>';
-                $s_br = '<br>';
+                //$s_receipt_way = "무통장입금";
+                $s_receipt_way = cut_str($lines[$i]['od_bank_account'],8,"");
+                $s_br = "<br>";
+            }
+
+            if ($lines[$i]['od_temp_card'] > 0 || $lines[$i]['od_receipt_card'] > 0)
+            {
+                // 미수금이 없고 카드결제를 하지 않았다면 카드결제를 선택후 무통장 입금한 경우임
+                if ($lines[$i]['misuamount'] <= 0 && $lines[$i]['od_receipt_card'] == 0)
+                    ; // 화면 출력하지 않음
+                else
+                {
+                    $s_receipt_way .= $s_br."카드";
+                    if ($lines[$i]['od_receipt_card'] == 0)
+                        $s_receipt_way .= '<span class="small"><span class="point" style="font-size:8pt;">(미승인)</span></span>';
+                    $s_br = '<br>';
+                }
             }
         }
+
+        if ($lines[$i]['od_receipt_point'] > 0)
+            $s_receipt_way .= $s_br.'포인트';
+        ?>
+
+        <tr>
+            <td headers="sodr_all_num"><a href="<?=G4_SHOP_URL?>/orderinquiryview.php?od_id=<?=$lines[$i]['od_id']?>&amp;uq_id=<?=$lines[$i]['uq_id']?>"><?=$lines[$i]['od_id']?><br><?=$lines[$i]['od_time']?></a></td>
+            <td headers="sodr_all_id" class="td_name">
+                <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=od_name&amp;search=<?=$lines[$i]['od_name']?>">
+                    <?=cut_str($lines[$i]['od_name'],30,"")?>/<?=$od_deposit_name?>
+                </a><br>
+                <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=mb_id&amp;search=<?=$lines[$i]['mb_id']?>"><?=$lines[$i]['mb_id']?></a>
+            </td>
+            <td headers="sodr_all_cnt"><?=$lines[$i]['itemcount']?>건</td>
+            <td headers="sodr_all_calc" class="td_sodr_sum"><?=number_format($lines[$i]['orderamount'])?></td>
+            <td headers="sodr_all_cancel"><?=number_format($lines[$i]['ordercancel'])?></td>
+            <td headers="sodr_all_dc"><?=number_format($lines[$i]['od_dc_amount'])?></td>
+            <td headers="sodr_all_inc" class="td_sodr_sum"><?=number_format($lines[$i]['receiptamount'])?></td>
+            <td headers="sodr_all_inc_cancel"><?=number_format($lines[$i]['receiptcancel'])?></td>
+            <td headers="sodr_all_nonpay" class="td_sodr_nonpay"><?=number_format($lines[$i]['misu'])?></td>
+            <td headers="sodr_all_payby"><?=$s_receipt_way?></td>
+            <td headers="sodr_all_mng">
+                <a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>&amp;$qstr?>">수정</a>
+                <a href="javascript:del('./orderdelete.php?od_id=<?=$lines[$i]['od_id']?>&amp;uq_id=<?=$lines[$i]['uq_id']?>&amp;mb_id=<?=$lines[$i]['mb_id']?>&amp;$qstr&amp;list=2');">삭제</a>
+            </td>
+        </tr>
+
+        <?
+        // 상품개별출력
+        $sql2 = " select c.it_name,
+                         b.*
+                    from {$g4['shop_order_table']} a
+                    left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
+                    left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
+                   where od_id = '{$lines[$i]['od_id']}' ";
+        $result2 = sql_query($sql2);
+        for ($k=0;$row2=sql_fetch_array($result2);$k++) {
+            $href = G4_SHOP_URL."/item.php?it_id={$row2['it_id']}";
+            $it_name = '<a href="'.$href.'">'.cut_str($row2['it_name'],35).'</a><br>';
+            $it_name .= print_item_options($row2['it_id'], $row2['it_opt1'], $row2['it_opt2'], $row2['it_opt3'], $row2['it_opt4'], $row2['it_opt5'], $row2['it_opt6']);
+
+            $sub_amount = $row2['ct_qty'] * $row2['ct_amount'];
+            $sub_point  = $row2['ct_qty'] * $row2['ct_point'];
+        ?>
+
+        <tr>
+            <td headers="sodr_all_item" colspan="5">
+                <ul>
+                    <li><a href="<?=$href?>"><?=get_it_image($row2['it_id'].'_s', 50, 50)?><?=$it_name?></a></li>
+                </ul>
+            </td>
+            <td headers="sodr_all_cost"><?=number_format($row2['ct_amount'])?></td>
+            <td headers="sodr_all_qtt"><?=$row2['ct_qty']?></td>
+            <td headers="sodr_all_pt"><?=number_format($sub_point)?></td>
+            <td headers="sodr_all_tot"><?=number_format($sub_amount)?></td>
+            <td headers="sodr_all_stats" colspan="2"><?=$row2['ct_status']?></td>
+        </tr>
+
+        <?
+        }
     }
 
-    if ($lines[$i]['od_receipt_point'] > 0)
-        $s_receipt_way .= $s_br.'포인트';
+    if ($i == 0)
+        echo '<tr><td colspan="12" class="empty_table">자료가 한건도 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
+</section>
 
-    $s_mod = icon("수정", "./orderform.php?od_id={$lines[$i]['od_id']}&$qstr");
-    $s_del = icon("삭제", "javascript:del('./orderdelete.php?od_id={$lines[$i]['od_id']}&uq_id={$lines[$i]['uq_id']}&mb_id={$lines[$i]['mb_id']}&$qstr&list=2');");
-
-    if ($i>0)
-        echo '<tr><td colspan="12" height="1" bgcolor="#CCCCCC"></td></tr>';
-
-    $list = $i%2;
-    echo "
-    <tr class=\"list$list ht\">
-        <td align=center title='주문일시 : {$lines[$i]['od_time']}'><a href='".G4_SHOP_URL."/orderinquiryview.php?od_id={$lines[$i]['od_id']}&uq_id={$lines[$i]['uq_id']}'>{$lines[$i]['od_id']}</a></td>
-        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$lines[$i]['od_name']}'><span title='$od_deposit_name'>".cut_str($lines[$i]['od_name'],30,"")."</span></a></td>
-        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$lines[$i]['mb_id']}'>{$lines[$i]['mb_id']}</a></td>
-        <td align=center>{$lines[$i]['itemcount']}건</td>
-        <td align=right><FONT COLOR='#1275D3'>".number_format($lines[$i]['orderamount'])."</font></td>
-        <td align=right>".number_format($lines[$i]['ordercancel'])."</td>
-        <td align=right>".number_format($lines[$i]['od_dc_amount'])."</td>
-        <td align=right><FONT COLOR='#1275D3'>".number_format($lines[$i]['receiptamount'])."</font></td>
-        <td align=right>".number_format($lines[$i]['receiptcancel'])."</td>
-        <td align=right><FONT COLOR='#FF6600'>".number_format($lines[$i]['misu'])."</FONT></td>
-        <td align=center>$s_receipt_way</td>
-        <td align=center>$s_mod $s_del</a></td>
-    </tr>";
-
-    // 상품개별출력
-    $sql2 = " select c.it_name,
-                     b.*
-                from {$g4['shop_order_table']} a
-                left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
-                left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
-               where od_id = '{$lines[$i]['od_id']}' ";
-    $result2 = sql_query($sql2);
-    for ($k=0; $row2=sql_fetch_array($result2); $k++)
-    {
-        $href = G4_SHOP_URL."/item.php?it_id={$row2['it_id']}";
-        $it_name = "<a href='$href'>".cut_str($row2['it_name'],35)."</a><br>";
-        $it_name .= print_item_options($row2['it_id'], $row2['it_opt1'], $row2['it_opt2'], $row2['it_opt3'], $row2['it_opt4'], $row2['it_opt5'], $row2['it_opt6']);
-
-        $sub_amount = $row2['ct_qty'] * $row2['ct_amount'];
-        $sub_point  = $row2['ct_qty'] * $row2['ct_point'];
-
-        echo "
-        <tr class='list$list ht'>
-            <td></td>
-            <td colspan=3>
-                <table width=100% cellpadding=0 cellspacing=0>
-                <tr>
-                	<td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row2['it_id'].'_s', 50, 50)."</a></td>
-                	<td>$it_name</td>
-                </tr>
-                </table></td>
-            <td align=right>".number_format($row2['ct_amount'])."&nbsp;</td>
-            <td align=center>".$row2['ct_qty']."</td>
-            <td align=right>".number_format($sub_point)."&nbsp;</td>
-            <td align=center colspan=2>".$row2['ct_status']."</td>
-            <td align=right>".number_format($sub_amount)."&nbsp;</td>
-            <td></td>
-            <td></td>
-        </tr>";
-    }
-}
-
-if ($i == 0)
-    echo "<tr><td colspan=12 align=center height=100 bgcolor='#FFFFFF'><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
-?>
-</form>
-<tr><td colspan=12 bgcolor='#CCCCCC'></td></tr>
-<tr><td colspan=12 bgcolor='#CCCCCC'></td></tr>
-</tbody>
-</table>
-
-<table width=100%>
-<tr>
-    <td width=50%>&nbsp;</td>
-    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
-</tr>
-</table>
-
-<font color=crimson>주의)</font> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
-
-<script language="JavaScript">
-var f = document.frmorderlist;
-f.sel_field.value  = '<? echo $sel_field ?>';
-</script>
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
