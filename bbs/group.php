@@ -18,7 +18,7 @@ include_once('./_head.php');
 <!-- 메인화면 최신글 시작 -->
 <?
 //  최신글
-$sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' and bo_device <> 'mobile' order by bo_table ";
+$sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' and bo_device <> 'mobile' order by bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $lt_style = "";
