@@ -39,7 +39,7 @@ else $g4['title'] = $g4['title'];
     </form>
 
     <div class="btn_confirm">
-        <a href="<?=$_SERVER['HTTP_REFERER']?>">돌아가기</a>
+        <a href="<?=$return_url?>">돌아가기</a>
     </div>
 
 </div>

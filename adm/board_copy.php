@@ -4,8 +4,6 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], 'w');
 
-$token = get_token();
-
 $g4['title'] = '게시판 복사';
 $administrator = 1;
 include_once(G4_PATH.'/head.sub.php');
@@ -43,6 +41,9 @@ include_once(G4_PATH.'/head.sub.php');
     </table>
 
     <div class="btn_confirm">
+        <p>
+            게시판을 복사하시려면 <strong>복사</strong> 버튼을, 작성을 취소하고 창을 닫으시려면 <strong>창닫기</strong> 버튼을 누르세요.
+        </p>
         <input type="submit" class="btn_submit" value="복사">
         <input type="button" class="btn_cancel" value="창닫기" onclick="window.close();">
     </div>

@@ -13,7 +13,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?
         $sql = " select * from {$g4['group_table']} where gr_show_menu = 1 order by gr_order ";
         $result = sql_query($sql);
-        for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index 
+        for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index
         ?>
         <li><a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_subject']?></a></li>
         <?}?>
@@ -23,7 +23,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <hr>
 
-<?=(G4_IS_MOBILE?poll('basic'):poll('basic')); // 설문조사 ?>
+<?=poll('basic'); // 설문조사 ?>
 
 <hr>
 

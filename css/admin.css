@@ -71,7 +71,7 @@ h2 {font-size:1.2em}
 #gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth {z-index:13;clear:both;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth a {display:block;float:left;width:110px;height:35px;color:#e0e0e0;font-weight:bold;line-height:2.95em;text-decoration:none}
+.gnb_1depth a {display:block;float:left;width:80px;height:35px;color:#e0e0e0;font-weight:bold;line-height:2.95em;text-decoration:none}
 .gnb_1depth a:focus,
 .gnb_1depth a:hover {text-decoration:none}
 .gnb_sub_ul {float:left;width:auto}
@@ -267,11 +267,9 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_mbid,
 .td_name,
 .td_mbname {width:100px;text-align:left !important}
-.td_mbid_input {width:100px;text-align:center}
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
 .td_pt {text-align:right !important}
-.td_shop_category {text-align:right}
 
 .txt_true {color:#e8180c}
 .txt_false {color:#ccc}
@@ -287,34 +285,6 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
 #session_del p span,
 #cache_del p span {color:#ff3061}
-
-/* 쇼핑몰 설정 */
-#frm_payment textarea {height:50px}
-
-#scf_cardtest_btn {margin-left:5px;vertical-align:middle}
-#scf_cardtest_tip {margin:10px 0 0;padding:10px;border:3px solid #ddd}
-#scf_cardtest_tip strong {display:inline-block;margin:0 0 5px}
-#scf_cardtest_tip dl {margin:0 0 15px;padding:0;zoom:1}
-#scf_cardtest_tip dl:after {display:block;visibility:hidden;clear:both;content:""}
-#scf_cardtest_tip dt {float:left;width:100px}
-#scf_cardtest_tip dd {padding:0;overflow:hidden}
-.scf_cardtest_tip {display:none}
-
-#frm_sms dl {border-bottom:1px solid #ddd;zoom:1}
-#frm_sms dl:after {display:block;visibility:hidden;clear:both;content:""}
-#frm_sms dt {clear:both;float:left;padding:5px 0;width:100px}
-#frm_sms dd {padding:5px 0;overflow:hidden}
-#scf_sms {padding:0 0 10px;border-bottom:1px solid #ddd;zoom:1}
-#scf_sms:after {display:block;visibility:hidden;clear:both;content:""}
-.scf_sms_box {float:left;margin:0 31px;width:163px;text-align:center}
-.scf_sms_box h3 {margin:0 0 10px}
-.scf_sms_img {margin:0 0 10px;width:163px;height:191px;background:url('../adm/shop_admin/img/sms_back.gif') no-repeat 0 0;text-align:center}
-.scf_sms_img textarea {margin:54px 0 0;width:115px;height:85px;border:0;background:transparent;font-size:0.95em;overflow:hidden}
-.scf_sms_img span {display:block}
-.scf_sms_cnt {display:block}
-
-/* 분류관리 목록 */
-.cate_list_lbl {display:inline-block;padding-left:15px;background:url('../adm/shop_admin/img/icon_reply.gif') 0 2px no-repeat}
 
 /* 새창 기본 스타일 */
 .new_win {}

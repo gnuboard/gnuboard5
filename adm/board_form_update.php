@@ -87,7 +87,9 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_use_email        = '{$_POST['bo_use_email']}',
                 bo_table_width      = '{$_POST['bo_table_width']}',
                 bo_subject_len      = '{$_POST['bo_subject_len']}',
+                bo_mobile_subject_len      = '{$_POST['bo_mobile_subject_len']}',
                 bo_page_rows        = '{$_POST['bo_page_rows']}',
+                bo_mobile_page_rows = '{$_POST['bo_mobile_page_rows']}',
                 bo_new              = '{$_POST['bo_new']}',
                 bo_hot              = '{$_POST['bo_hot']}',
                 bo_image_width      = '{$_POST['bo_image_width']}',
@@ -97,6 +99,8 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_include_tail     = '{$_POST['bo_include_tail']}',
                 bo_content_head     = '{$_POST['bo_content_head']}',
                 bo_content_tail     = '{$_POST['bo_content_tail']}',
+                bo_mobile_content_head     = '{$_POST['bo_mobile_content_head']}',
+                bo_mobile_content_tail     = '{$_POST['bo_mobile_content_tail']}',
                 bo_insert_content   = '{$_POST['bo_insert_content']}',
                 bo_gallery_cols     = '{$_POST['bo_gallery_cols']}',
                 bo_gallery_width    = '{$_POST['bo_gallery_width']}',
@@ -267,7 +271,9 @@ if (is_checked('chk_grp_mobile_gallery_width')) $grp_fields .= " , bo_mobile_gal
 if (is_checked('chk_grp_mobile_gallery_height'))$grp_fields .= " , bo_mobile_gallery_height = '{$bo_mobile_gallery_height}' ";
 if (is_checked('chk_grp_table_width'))          $grp_fields .= " , bo_table_width = '{$bo_table_width}' ";
 if (is_checked('chk_grp_page_rows'))            $grp_fields .= " , bo_page_rows = '{$bo_page_rows}' ";
+if (is_checked('chk_grp_mobile_page_rows'))            $grp_fields .= " , bo_mobile_page_rows = '{$bo_mobile_page_rows}' ";
 if (is_checked('chk_grp_subject_len'))          $grp_fields .= " , bo_subject_len = '{$bo_subject_len}' ";
+if (is_checked('chk_grp_mobile_subject_len'))          $grp_fields .= " , bo_mobile_subject_len = '{$bo_mobile_subject_len}' ";
 if (is_checked('chk_grp_new'))                  $grp_fields .= " , bo_new = '{$bo_new}' ";
 if (is_checked('chk_grp_hot'))                  $grp_fields .= " , bo_hot = '{$bo_hot}' ";
 if (is_checked('chk_grp_image_width'))          $grp_fields .= " , bo_image_width = '{$bo_image_width}' ";
@@ -283,6 +289,8 @@ if (is_checked('chk_grp_include_head'))         $grp_fields .= " , bo_include_he
 if (is_checked('chk_grp_include_tail'))         $grp_fields .= " , bo_include_tail = '{$bo_include_tail}' ";
 if (is_checked('chk_grp_content_head'))         $grp_fields .= " , bo_content_head = '{$bo_content_head}' ";
 if (is_checked('chk_grp_content_tail'))         $grp_fields .= " , bo_content_tail = '{$bo_content_tail}' ";
+if (is_checked('chk_grp_mobile_content_head'))         $grp_fields .= " , bo_mobile_content_head = '{$bo_mobile_content_head}' ";
+if (is_checked('chk_grp_mobile_content_tail'))         $grp_fields .= " , bo_mobile_content_tail = '{$bo_mobile_content_tail}' ";
 if (is_checked('chk_grp_insert_content'))       $grp_fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_grp_use_search'))           $grp_fields .= " , bo_use_search = '{$bo_use_search}' ";
 if (is_checked('chk_grp_order'))                $grp_fields .= " , bo_order = '{$bo_order}' ";
@@ -345,7 +353,9 @@ if (is_checked('chk_all_mobile_gallery_width')) $all_fields .= " , bo_mobile_gal
 if (is_checked('chk_all_mobile_gallery_height'))$all_fields .= " , bo_mobile_gallery_height = '{$bo_mobile_gallery_height}' ";
 if (is_checked('chk_all_table_width'))          $all_fields .= " , bo_table_width = '{$bo_table_width}' ";
 if (is_checked('chk_all_page_rows'))            $all_fields .= " , bo_page_rows = '{$bo_page_rows}' ";
+if (is_checked('chk_all_mobile_page_rows'))            $all_fields .= " , bo_mobile_page_rows = '{$bo_mobile_page_rows}' ";
 if (is_checked('chk_all_subject_len'))          $all_fields .= " , bo_subject_len = '{$bo_subject_len}' ";
+if (is_checked('chk_all_mobile_subject_len'))          $all_fields .= " , bo_mobile_subject_len = '{$bo_mobile_subject_len}' ";
 if (is_checked('chk_all_new'))                  $all_fields .= " , bo_new = '{$bo_new}' ";
 if (is_checked('chk_all_hot'))                  $all_fields .= " , bo_hot = '{$bo_hot}' ";
 if (is_checked('chk_all_image_width'))          $all_fields .= " , bo_image_width = '{$bo_image_width}' ";
@@ -361,6 +371,8 @@ if (is_checked('chk_all_include_head'))         $all_fields .= " , bo_include_he
 if (is_checked('chk_all_include_tail'))         $all_fields .= " , bo_include_tail = '{$bo_include_tail}' ";
 if (is_checked('chk_all_content_head'))         $all_fields .= " , bo_content_head = '{$bo_content_head}' ";
 if (is_checked('chk_all_content_tail'))         $all_fields .= " , bo_content_tail = '{$bo_content_tail}' ";
+if (is_checked('chk_all_mobile_content_head'))         $all_fields .= " , bo_mobile_content_head = '{$bo_mobile_content_head}' ";
+if (is_checked('chk_all_mobile_content_tail'))         $all_fields .= " , bo_mobile_content_tail = '{$bo_mobile_content_tail}' ";
 if (is_checked('chk_all_insert_content'))       $all_fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_all_use_search'))           $all_fields .= " , bo_use_search = '{$bo_use_search}' ";
 if (is_checked('chk_all_order'))                $all_fields .= " , bo_order = '{$bo_order}' ";

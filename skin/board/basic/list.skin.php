@@ -9,7 +9,7 @@ if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
 ?>
 
-<? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
+<? if (!$wr_id) {?><h1 id="bo_list_title"><?=$board['bo_subject']?></h1><?}?>
 
 <!-- 게시판 목록 시작 -->
 <div id="bo_list" style="width:<?=$width;?>">
@@ -128,7 +128,7 @@ if ($is_nogood) $colspan++;
         </ul>
 
         <ul class="btn_bo_user">
-            <li><? if ($write_href) { ?><a href="<?=$write_href?>" class="btn_b02">글쓰기</a><? } ?></li>
+            <? if ($write_href) { ?><li><a href="<?=$write_href?>" class="btn_b02">글쓰기</a></li><? } ?>
         </ul>
     </div>
     <? } ?>

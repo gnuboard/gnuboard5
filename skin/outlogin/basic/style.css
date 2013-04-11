@@ -14,11 +14,7 @@
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
 #ol_submit {display:inline-block;width:60px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
-#ol_before ul {float:right;margin:7px 0 13px;zoom:1}
-#ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
-#ol_before li {float:left;margin-left:5px;padding-top:2px}
-#ol_before #ol_auto {float:left;margin:4px 0 0;padding:0}
-#ol_before a {letter-spacing:-0.1em}
+#ol_before a {letter-spacing:-0.15em}
 #ol_svc {padding-top:8px;text-align:right}
 
 #ol_after {}

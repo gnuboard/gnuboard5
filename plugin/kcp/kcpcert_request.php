@@ -1,8 +1,16 @@
 <?
 include_once('./kcpcert_config.php');
 
-// UTF-8 È¯°æ¿¡¼­ ÇØ½Ã µ¥ÀÌÅÍ ¿À·ù¸¦ ¸·±â À§ÇÑ ÄÚµå
-setlocale(LC_CTYPE, 'ko_KR.euc-kr');
+// utf-8ë¡œ ë„˜ì–´ëˆ post ê°’ì„ euc-kr ë¡œ ë³€ê²½
+$_POST = array_map("iconv_euckr", $_POST);
+
+// UTF-8 í™˜ê²½ì—ì„œ í•´ì‹œ ë°ì´í„° ì˜¤ë¥˜ë¥¼ ë§‰ê¸° ìœ„í•œ ì½”ë“œ
+$def_locale = setlocale(LC_CTYPE, 0);
+$locale_change = false;
+if(preg_match("/utf[\-]?8/i", $def_locale)) {
+    setlocale(LC_CTYPE, 'ko_KR.euc-kr');
+    $locale_change = true;
+}
 
 $req_tx        = "";
 
@@ -18,16 +26,13 @@ $local_code    = "";
 
 $up_hash       = "";
 /*------------------------------------------------------------------------*/
-/*  :: ÀüÃ¼ ÆÄ¶ó¹ÌÅÍ ³²±â±â                                               */
+/*  :: ì „ì²´ íŒŒë¼ë¯¸í„° ë‚¨ê¸°ê¸°                                               */
 /*------------------------------------------------------------------------*/
 
 $ct_cert = new C_CT_CLI;
 $ct_cert->mf_clear();
 
-// utf-8·Î ³Ñ¾îµ· post °ªÀ» euc-kr ·Î º¯°æ
-$_POST = array_map("iconv_euckr", $_POST);
-
-// request ·Î ³Ñ¾î¿Â °ª Ã³¸®
+// request ë¡œ ë„˜ì–´ì˜¨ ê°’ ì²˜ë¦¬
 $key = array_keys($_POST);
 $sbParam ="";
 
@@ -81,16 +86,16 @@ for($i=0; $i<count($key); $i++)
         $local_code = f_get_parm_str ( $valParam );
     }
 
-    // ÀÎÁõÃ¢À¸·Î ³Ñ±â´Â form µ¥ÀÌÅÍ »ı¼º ÇÊµå
+    // ì¸ì¦ì°½ìœ¼ë¡œ ë„˜ê¸°ëŠ” form ë°ì´í„° ìƒì„± í•„ë“œ
     $sbParam .= "<input type='hidden' name='" . $nmParam . "' value='" . f_get_parm_str( $valParam ) . "'/>";
 }
 
 if ( $req_tx == "cert" )
 {
-    // !!up_hash µ¥ÀÌÅÍ »ı¼º½Ã ÁÖÀÇ »çÇ×
-    // year , month , day °¡ ºñ¾î ÀÖ´Â °æ¿ì "00" , "00" , "00" À¸·Î ¼³Á¤ÀÌ µË´Ï´Ù
-    // ±×¿ÜÀÇ °ªÀº ¾øÀ» °æ¿ì ""(null) ·Î ¼¼ÆÃÇÏ½Ã¸é µË´Ï´Ù.
-    // up_hash µ¥ÀÌÅÍ »ı¼º½Ã site_cd ¿Í ordr_idxx ´Â ÇÊ¼ö °ªÀÔ´Ï´Ù.
+    // !!up_hash ë°ì´í„° ìƒì„±ì‹œ ì£¼ì˜ ì‚¬í•­
+    // year , month , day ê°€ ë¹„ì–´ ìˆëŠ” ê²½ìš° "00" , "00" , "00" ìœ¼ë¡œ ì„¤ì •ì´ ë©ë‹ˆë‹¤
+    // ê·¸ì™¸ì˜ ê°’ì€ ì—†ì„ ê²½ìš° ""(null) ë¡œ ì„¸íŒ…í•˜ì‹œë©´ ë©ë‹ˆë‹¤.
+    // up_hash ë°ì´í„° ìƒì„±ì‹œ site_cd ì™€ ordr_idxx ëŠ” í•„ìˆ˜ ê°’ì…ë‹ˆë‹¤.
     $hash_data = $site_cd                  .
                  $ordr_idxx                .
                  $user_name                .
@@ -102,7 +107,7 @@ if ( $req_tx == "cert" )
 
     $up_hash = $ct_cert->make_hash_data( $home_dir, $hash_data );
 
-    // ÀÎÁõÃ¢À¸·Î ³Ñ±â´Â form µ¥ÀÌÅÍ »ı¼º ÇÊµå ( up_hash )
+    // ì¸ì¦ì°½ìœ¼ë¡œ ë„˜ê¸°ëŠ” form ë°ì´í„° ìƒì„± í•„ë“œ ( up_hash )
     $sbParam .= "<input type='hidden' name='up_hash' value='" . $up_hash . "'/>";
 }
 
@@ -119,10 +124,10 @@ $ct_cert->mf_clear();
             {
                 var frm = document.form_auth;
 
-                // ÀÎÁõ ¿äÃ» ½Ã È£Ãâ ÇÔ¼ö
+                // ì¸ì¦ ìš”ì²­ ì‹œ í˜¸ì¶œ í•¨ìˆ˜
                 if ( frm.req_tx.value == "cert" )
                 {
-                    opener.document.form_auth.veri_up_hash.value = frm.up_hash.value; // up_hash µ¥ÀÌÅÍ °ËÁõÀ» À§ÇÑ ÇÊµå
+                    opener.document.form_auth.veri_up_hash.value = frm.up_hash.value; // up_hash ë°ì´í„° ê²€ì¦ì„ ìœ„í•œ í•„ë“œ
 
                     frm.action="<?=$cert_url?>";
                     frm.submit();
@@ -136,3 +141,8 @@ $ct_cert->mf_clear();
         </form>
     </body>
 </html>
+
+<?
+if($locale_change)
+    setlocale(LC_CTYPE, $def_locale);
+?>

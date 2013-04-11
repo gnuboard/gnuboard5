@@ -62,7 +62,7 @@ $content .= "<p style=\"margin:0;padding:30px 30px 30px;border-bottom:1px solid 
 $content .= "<span style=\"display:inline-block;width:100px\">회원아이디</span> ".$mb['mb_id']."<br>";
 $content .= "<span style=\"display:inline-block;width:100px\">변경될 패스워드</span> <strong style=\"color:#ff3061\">".$change_password."</strong>";
 $content .= "</p>";
-$content .= "<a href=\"".$href."/\" style=\"display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center\">패스워드 변경</a>";
+$content .= "<a href=\"".$href."\" target=\"_blank\" style=\"display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center\">패스워드 변경</a>";
 $content .= "</div>";
 $content .= "</div>";
 

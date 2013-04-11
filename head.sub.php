@@ -10,7 +10,7 @@ if (!isset($g4['title'])) {
 }
 else {
     $g4_head_title = $g4['title']; // 상태바에 표시될 제목
-    $g4_head_title .= " : ".$config['cf_title'];
+    $g4_head_title .= " | ".$config['cf_title'];
 }
 
 // 현재 접속자
@@ -32,31 +32,34 @@ header("Pragma: no-cache"); // HTTP/1.0
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<title><?=$g4_head_title?></title>
 <? if (G4_IS_MOBILE) {?>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
 <meta name="HandheldFriendly" content="true">
 <meta name="format-detection" content="telephone=no">
 <? } ?>
+<meta http-equiv="imagetoolbar" content="no">
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
-<title><?=$g4_head_title?></title>
 <? if (defined('G4_IS_ADMIN')) { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css?=<?=date("md")?>">
 <? } else { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=(G4_IS_MOBILE?'mobile':'default')?>.css?=<?=date("md")?>">
 <?}?>
 <? // 스킨의 style sheet 불러옴
-if(isset($board_skin_path))
-    echo get_skin_stylesheet($board_skin_path);
-if(isset($member_skin_path))
-    echo get_skin_stylesheet($member_skin_path);
-if(isset($new_skin_path))
-    echo get_skin_stylesheet($new_skin_path);
-if(isset($search_skin_path))
-    echo get_skin_stylesheet($search_skin_path);
-if(isset($connect_skin_path))
-    echo get_skin_stylesheet($connect_skin_path);
-if(isset($poll_skin_path))
-    echo get_skin_stylesheet($poll_skin_path);
+if (!defined('G4_IS_ADMIN')) {
+    if(isset($board_skin_path))
+        echo get_skin_stylesheet($board_skin_path);
+    if(isset($member_skin_path))
+        echo get_skin_stylesheet($member_skin_path);
+    if(isset($new_skin_path))
+        echo get_skin_stylesheet($new_skin_path);
+    if(isset($search_skin_path))
+        echo get_skin_stylesheet($search_skin_path);
+    if(isset($connect_skin_path))
+        echo get_skin_stylesheet($connect_skin_path);
+    if(isset($poll_skin_path))
+        echo get_skin_stylesheet($poll_skin_path);
+}
 ?>
 <!--[if lte IE 8]>
 <script src="<?=G4_JS_URL?>/html5.js"></script>
@@ -65,7 +68,6 @@ if(isset($poll_skin_path))
 // 자바스크립트에서 사용하는 전역변수 선언
 var g4_url       = "<?=G4_URL?>";
 var g4_bbs_url   = "<?=G4_BBS_URL?>";
-var g4_img_url   = "<?=G4_IMG_URL?>";
 var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";
 var g4_is_admin  = "<?=isset($is_admin)?$is_admin:'';?>";
 var g4_is_mobile = "<?=G4_IS_MOBILE?>";

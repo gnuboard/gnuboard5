@@ -41,6 +41,14 @@ if(!isset($config['cf_mobile_pages'])) {
     sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", TRUE);
 }
 
+// uniqid 테이블이 없을 경우 생성
+if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
+                  `uq_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`uq_id`)
+                ) ", false);
+}
+
 $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 
@@ -490,7 +498,7 @@ $pg_anchor = "
         </td>
         <th scope="row"><label for="cf_prohibit_email">입력 금지 메일</label></th>
         <td>
-            <?=help('hotmail.com과 같은 메일 주소는 사용하지 못하도록 못합니다. 엔터로 구분')?>
+            <?=help('입력 받지 않을 도메인을 지정합니다. 엔터로 구분 ex) hotmail.com')?>
             <textarea name="cf_prohibit_email" id="cf_prohibit_email" rows="5"><?=$config['cf_prohibit_email']?></textarea>
         </td>
     </tr>
@@ -673,6 +681,9 @@ $pg_anchor = "
 </fieldset>
 
 <div class="btn_confirm">
+    <p>
+        작성하신 내용을 제출하시려면 <strong>확인</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>목록</strong> 링크를 누르세요.
+    </p>
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
 </div>
 
