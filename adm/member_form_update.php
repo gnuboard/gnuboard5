@@ -94,6 +94,12 @@ else if ($w == 'u')
     if ($_POST['mb_id'] == $member['mb_id'] && $_POST['mb_level'] != $mb['mb_level'])
         alert($mb['mb_id'].' : 로그인 중인 관리자 레벨은 수정 할 수 없습니다.');
 
+    // 이메일중복체크
+    $sql = " select count(*) as cnt from {$g4['member_table']} where mb_email = '{$_POST['mb_email']}' and mb_id <> '$mb_id' ";
+    $row = sql_fetch($sql);
+    if($row['cnt'])
+        alert('다른 회원이 사용 중인 이메일입니다.');
+
     $mb_dir = substr($mb_id,0,2);
 
     // 회원 아이콘 삭제
