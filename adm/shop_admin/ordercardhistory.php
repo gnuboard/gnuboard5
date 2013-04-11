@@ -49,75 +49,74 @@ $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
-<form name=flist style="margin:0px;">
-<input type=hidden name=sort1 value="<? echo $sort1 ?>">
-<input type=hidden name=page  value="<? echo $page ?>">
-<table width=100% cellpadding=4 cellspacing=0>
-<tr>
-    <td width=20%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
-    <td width=70% align=center>
-        <select name=sel_field>
-            <option value='a.od_id'>주문번호
-            <option value='cd_app_no'>승인번호
-            <option value='cd_opt01'>결제자
-        </select>
-        <? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
+<style type="text/css">
+.ordercardhistory{text-align:center}
+</style>
 
-        <input type=text name=search value='<? echo $search ?>' autocomplete="off">
-        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
-    </td>
-    <td width=20% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
+<form name="flist">
+<input type="hidden" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" name="page" value="<? echo $page ?>">
+<p><a href="<?=$_SERVER['PHP_SELF']?>">처음</a></p>
+<fieldset>
+<legend>전자결제내역 검색</legend>
+<select name="sel_field" title="검색대상">
+    <option value="a.od_id">주문번호</option>
+    <option value="cd_app_no">승인번호</option>
+    <option value="cd_opt01">결제자</option>
+</select>
+<? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
+<input type="text" name="search" value="<? echo $search ?>" class="frm_input" autocomplete="off">
+<input type="submit" value="검색" class="btn_submit">
+</fieldset>
+<p>건수 : <? echo $total_count ?></p>
 
+<section class="cbox">
+    <h2>전자결제내역</h2>
+    <p>*신용카드, 실시간 계좌이체로 승인한 내역이며, 주문번호를 클릭하시면 주문상세 페이지로 이동합니다.</p>
+    <table class="frm_basic">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_8">
+        <col class="grid_2">
+        <col class="grid_2">
+        <col class="grid_2">
+        <col class="grid_2">
+    </colgroup>
+    <thead>
+    <tr>
+        <th scope="col"><a href="<? echo title_sort("od_id") . "&$qstr1"; ?>">주문번호</a></th>
+        <th scope="col"><a href="<? echo title_sort("cd_amount") . "&$qstr1"; ?>">승인금액</a></th>
+        <th scope="col"><a href="<? echo title_sort("cd_app_no") . "&$qstr1"; ?>">승인번호</a></th>
+        <th scope="col"><a href="<? echo title_sort("cd_app_rt") . "&$qstr1"; ?>">승인결과</a></th>
+        <th scope="col"><a href="<? echo title_sort("cd_app_time") . "&$qstr1"; ?>">승인일시</a></th>
+        <th scope="col"><a href="<? echo title_sort("cd_opt01") . "&$qstr1"; ?>">결제자</a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        $list = $i%2;
+    ?>
+    <tr>
+        <td class="ordercardhistory"><a href="./orderform.php?od_id=<?=$row['od_id']?>"><?=$row['od_id']?></a></td>
+        <td><?=display_amount($row['cd_amount'])?></td>
+        <td class="ordercardhistory"><?=$row['cd_app_no']?></td>
+        <td class="ordercardhistory"><?=$row['cd_app_rt']?></td>
+        <td class="ordercardhistory"><?=$row['cd_app_time']?></td>
+        <td class="ordercardhistory"><?=$row['cd_opt01']?></td>
+    </tr>
+    <?
+    }
 
-<table width=100% cellpadding=0 cellspacing=0>
-<colgroup width=110>
-<colgroup width=''>
-<colgroup width=110>
-<colgroup width=110>
-<colgroup width=120>
-<colgroup width=110>
-<tr><td colspan=6 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td><a href="<? echo title_sort("od_id") . "&$qstr1"; ?>">주문번호</a></td>
-    <td><a href="<? echo title_sort("cd_amount") . "&$qstr1"; ?>">승인금액</a></td>
-    <td><a href="<? echo title_sort("cd_app_no") . "&$qstr1"; ?>">승인번호</a></td>
-    <td><a href="<? echo title_sort("cd_app_rt") . "&$qstr1"; ?>">승인결과</a></td>
-    <td><a href="<? echo title_sort("cd_app_time") . "&$qstr1"; ?>">승인일시</a></td>
-    <td><a href="<? echo title_sort("cd_opt01") . "&$qstr1"; ?>">결제자</a></td>
-</tr>
-<tr><td colspan=6 height=1 bgcolor=#CCCCCC></td></tr>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    $list = $i%2;
-    echo "
-    <tr class='list$list center ht'>
-        <td><a href='./orderform.php?od_id={$row['od_id']}'><U>{$row['od_id']}</U></a></td>
-        <td>".display_amount($row['cd_amount'])."</td>
-        <td>{$row['cd_app_no']}</td>
-        <td>{$row['cd_app_rt']}</td>
-        <td>{$row['cd_app_time']}</td>
-        <td>{$row['cd_opt01']}</td>
-    </tr><tr><td colspan=6 height=1 bgcolor=F5F5F5></td></tr>";
-}
-
-if ($i == 0)
-    echo "<tr><td colspan=6 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
-?>
-<tr><td colspan=6 height=1 bgcolor=#CCCCCC></td></tr>
-</table>
-
-<table width=100%>
-<tr>
-    <td width=50%></td>
-    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
-</tr>
-</table>
+    if ($i == 0)
+        echo '<tr><td colspan="6" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>'
+    ?>
+    </tbody>
+    </table>
+    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+</section>
 </form>
-
-* 신용카드, 실시간 계좌이체로 승인한 내역이며, 주문번호를 클릭하시면 주문상세 페이지로 이동합니다.
 
 
 <?
