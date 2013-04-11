@@ -2,5 +2,5 @@
 include_once('../common.php');
 
 if (!defined('G4_USE_SHOP') || !G4_USE_SHOP)
-    die('<p>ÇöÀç ¼îÇÎ¸ô »ç¿ë ¾ÈÇÔÀ¸·Î ¼³Á¤µÇ¾î ÀÖ½À´Ï´Ù.</p><p>'.G4_EXTEND_DIR.'/shop.extend.php ¿¡ define(\'G4_USE_SHOP\', true); ·Î ¼³Á¤ÇØ ÁÖ¼¼¿ä.</p>');
+    die('<p>ì‡¼í•‘ëª° ì„¤ì¹˜ í›„ ì´ìš©í•´ ì£¼ì‹­ì‹œì˜¤.</p>');
 ?>
