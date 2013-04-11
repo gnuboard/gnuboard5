@@ -133,10 +133,9 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <thead>
     <tr>
         <th scope="col"><a href="<?=title_sort("od_id")."&amp;$qstr1";?>">주문번호<br>주문일시</a></th>
+        <th scope="col"><a href="<?=title_sort("it_name")."&amp;$qstr1";?>">상품명</a></th>
         <th scope="col"><a href="<?=title_sort("od_name")."&amp;$qstr1";?>">주문자<br>입금자</a></th>
         <th scope="col"><a href="<?=title_sort("mb_id")."&amp;$qstr1";?>">회원ID</a></th>
-        <th scope="col">이미지</th>
-        <th scope="col"><a href="<?=title_sort("it_name")."&amp;$qstr1";?>">상품명</a></th>
         <th scope="col"><a href="<?=title_sort("ct_amount")."&amp;$qstr1";?>">판매가</a></th>
         <th scope="col"><a href="<?=title_sort("ct_qty")."&amp;$qstr1";?>">수량</a></th>
         <th scope="col"><a href="<?=title_sort("ct_sub_amount")."&amp;$qstr1";?>">소계</a></th>
@@ -147,11 +146,11 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </thead>
     <tfoot>
     <tr>
-        <th scope="row" colspan="5">합 계&nbsp;</td>
-        <td><?=number_format($tot_amount)?>&nbsp;</td>
-        <td><?=number_format($tot_qty)?>&nbsp;</td>
-        <td><?=number_format($tot_sub_amount)?>&nbsp;</td>
-        <td><?=number_format($tot_sub_point)?>&nbsp;</td>
+        <th scope="row" colspan="4">합 계</td>
+        <td><?=number_format($tot_amount)?></td>
+        <td><?=number_format($tot_qty)?></td>
+        <td><?=number_format($tot_sub_amount)?></td>
+        <td><?=number_format($tot_sub_point)?></td>
         <td colspan="2"></td>
     </tr>
     </tfoot>
@@ -163,8 +162,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         if ($lines[$i]['od_deposit_name'] != "")
             $od_deposit_name = "title='입금자 : }'";
 
-        $href = "$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=c.it_id&search=$lines[$i][it_id]";
-        $it_name = "<a href='$href'>".cut_str($lines[$i]['it_name'],35)."</a><br>";
+        $href = $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=c.it_id&amp;search='.$lines[$i]['it_id'];
+        $it_name = '<a href="'.$href.'">'.cut_str($lines[$i]['it_name'],35).'</a><br>';
         $it_name .= print_item_options($lines[$i]['it_id'], $lines[$i]['it_opt1'], $lines[$i]['it_opt2'], $lines[$i]['it_opt3'], $lines[$i]['it_opt4'], $lines[$i]['it_opt5'], $lines[$i]['it_opt6']);
 
         $s_mod = icon("수정", "");
@@ -176,6 +175,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 <?=$lines[$i]['od_time']?>
             </a>
         </td>
+        <td class="td_it_img"><a href="<?=$href?>"><?=get_it_image($lines[$i]['it_id'].'_s', 50, 50)?><?=$it_name?></a></td>
         <td class="td_name">
             <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=od_name&amp;search=<?=$lines[$i]['od_name']?>">
                 <span class="sound_only">주문자 </span><?=cut_str($lines[$i]['od_name'],10,"")?>
@@ -183,8 +183,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             </a>
         </td>
         <td class="td_name"><a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=mb_id&amp;search=<?=$lines[$i]['mb_id']?>"><?=$lines[$i]['mb_id']?></a></td>
-        <td><a href="<?=$href?>"><?=get_it_image($lines[$i]['it_id'].'_s', 50, 50)?></a></td>
-        <td><?=$it_name?></td>
         <td><?=number_format($lines[$i]['ct_amount'])?></td>
         <td><?=$lines[$i]['ct_qty']?></td>
         <td><?=number_format($lines[$i]['ct_sub_amount'])?></td>
