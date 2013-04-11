@@ -322,6 +322,9 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_sodr_sum {color:#1275d3}
 .td_sodr_nonpay {color:#ff6600}
 
+/* 주문내역 */
+#sodr_status {text-align:center}
+
 /* 분류관리 목록 */
 .cate_list_lbl {display:inline-block;padding-left:15px;background:url('../adm/shop_admin/img/icon_reply.gif') 0 2px no-repeat}
 
