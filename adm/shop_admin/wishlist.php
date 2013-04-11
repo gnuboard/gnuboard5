@@ -46,6 +46,88 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 $qstr1 = "fr_date=$fr_date&to_date=$to_date&sel_ca_id=$sel_ca_id";
 ?>
 
+<style type="text/css">
+    .wishlist{text-align:center}
+</style>
+
+<form name="flist">
+<input type="hidden" name="doc" value="<? echo $doc ?>">
+<input type="hidden" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" name="sort2" value="<? echo $sort2 ?>">
+<input type="hidden" name="page" value="<? echo $page ?>">
+<p><a href="<?=$_SERVER['PHP_SELF']?>">처음</a></p>
+<fieldset>
+
+</fieldset>
+    <td width=80% align=center>
+        <select name="sel_ca_id">
+            <option value=''>전체분류
+            <?
+            $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
+            $result1 = sql_query($sql1);
+            for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
+                $len = strlen($row1['ca_id']) / 2 - 1;
+                $nbsp = "";
+                for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+                echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
+            }
+            ?>
+        </select>
+        <script> document.flist.sel_ca_id.value = '<?=$sel_ca_id?>';</script>
+
+        기간 : <input type=text name=fr_date size=8 maxlength=8 itemname='기간' value='<?=$fr_date?>'> ~ <input type=text name=to_date size=8 maxlength=8 itemname='기간' value='<?=$to_date?>'>
+        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
+    </td>
+    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
+</tr>
+</table>
+
+
+<section class="cbox">
+<h2>보관함현황</h2>
+<p> *수량을 합산하여 순위를 출력합니다.</p>
+<table>
+<colgroup>
+    <col class="grid_2">
+    <col class="gird_14">
+    <col class="grid_2">
+</colgroup>
+<thead>
+<tr>
+    <th scope="col">순위</th>
+    <th scope="col">상품평</th>
+    <th scope="col">건수</th>
+</tr>
+</thead>
+<tbody>
+<?
+for ($i=0; $row=mysql_fetch_array($result); $i++)
+{
+    $s_mod = icon("수정", "./itemqaform.php?w=u&iq_id={$row['iq_id']}&$qstr");
+    $s_del = icon("삭제", "javascript:del('./itemqaupdate.php?w=d&iq_id={$row['iq_id']}&$qstr');");
+
+    $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
+
+    $num = $rank + $i + 1;
+
+    $list = $i%2;
+    ?>
+    <tr>
+        <td class="wishlist"><?=$num?></td>
+        <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str($row['it_name'],30)?></a></td>
+        <td class="wishlist"><?=$row[it_id_cnt]?></td>
+    </tr>
+    <?
+}
+
+if ($i == 0) {
+    echo "<tr><td colspan=20 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+}
+?>
+</tbody>
+</table>
+</section>
+
 <table width=100% cellpadding=4 cellspacing=0>
 <form name=flist>
 <input type=hidden name=doc   value="<? echo $doc ?>">
