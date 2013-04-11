@@ -141,12 +141,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <tr class="orderlist">
         <th scope="row" colspan="2">합 계</td>
         <td><?=(int)$tot_itemcount?>건</td>
-        <td class="td_sodr_sum"><?=number_format($tot_orderamount)?></td>
+        <td><?=number_format($tot_orderamount)?></td>
         <td><?=number_format($tot_ordercancel)?></td>
         <td><?=number_format($tot_dc_amount)?></td>
-        <td class="td_sodr_sum"><?=number_format($tot_receiptamount)?></td>
+        <td><?=number_format($tot_receiptamount)?></td>
         <td><?=number_format($tot_receiptcancel)?></td>
-        <td class="td_sodr_nonpay"><?=number_format($tot_misu)?></td>
+        <td><?=number_format($tot_misu)?></td>
         <td colspan="2"></td>
     </tr>
     </tfoot>
@@ -210,7 +210,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                     <?=$lines[$i]['mb_id']?>
                 </a>
             </td>
-            <td class="td_sodr_cnt"><b><?=$lines[$i]['itemcount']?></b>건<br><span class="sodr_tot">누적 <?=$row2['cnt']?>건</span></td>
+            <td class="td_sodr_cnt"><b><?=$lines[$i]['itemcount']?></b>건<br>누적 <?=$row2['cnt']?>건</td>
             <td class="td_sodr_sum"><?=number_format($lines[$i]['orderamount'])?></td>
             <td><?=number_format($lines[$i]['ordercancel'])?></td>
             <td><?=number_format($lines[$i]['od_dc_amount'])?></td>
