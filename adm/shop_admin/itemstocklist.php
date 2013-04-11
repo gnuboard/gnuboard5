@@ -48,6 +48,130 @@ $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 ?>
 
+<style type="text/css">
+.itemstocklist{text-align:center}
+</style>
+
+<form name="flist">
+<input type="hidden" name="doc" value="<? echo $doc ?>">
+<input type="hidden" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" name="sort2" value="<? echo $sort2 ?>">
+<input type="hidden" name="page" value="<? echo $page ?>">
+<p><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></p>
+<fieldset>
+    <legend>상품재고관리 검색</legend>
+    <select name="sel_ca_id" title="분류 검색">
+        <option value=''>전체분류</option>
+        <?
+        $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
+        $result1 = sql_query($sql1);
+        for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
+            $len = strlen($row1['ca_id']) / 2 - 1;
+            $nbsp = "";
+            for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+            echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
+        }
+        ?>
+    </select>
+    <script> document.flist.sel_ca_id.value = '<?=$sel_ca_id?>';</script>
+
+    <select name="sel_field" title="검색대상">
+        <option value="it_name">상품명</option>
+        <option value="it_id">상품코드</option>
+    </select>
+    <? if ($sel_field) echo "<script> document.flist.sel_field.value = '$sel_field';</script>"; ?>
+
+    <input type="text" name="search" value="<? echo $search ?>" class="frm_input">
+    <input type="submit" value="검색" class="btn_submit">
+</fieldset>
+<p>건수 : <? echo $total_count ?></p>
+</form>
+
+
+<section class="cbox">
+    <h2>상품재고관리</h2>
+    <p>
+        *상품의 재고와 판매를 일괄 처리합니다.<br />
+        *가재고는 창고재고 -주문대기 수량입니다.<br />
+        *재고수정의 수량은 창고재고를 수정하는것입니다.
+    </p>
+    <form name="fitemstocklist" action="./itemstocklistupdate.php" method="post">
+    <input type="hidden" name="sort1" value="<? echo $sort1 ?>">
+    <input type="hidden" name="sort2" value="<? echo $sort2 ?>">
+    <input type="hidden" name="sel_ca_id" value="<? echo $sel_ca_id ?>">
+    <input type="hidden" name="sel_field" value="<? echo $sel_field ?>">
+    <input type="hidden" name="search" value="<? echo $search ?>">
+    <input type="hidden" name="page" value="<? echo $page ?>">
+
+    <table class="frm_basic">
+    <colgroup>
+        <col class="grid_2">
+        <col class="grid_5">
+        <col class="grid_2">
+        <col class="grid_2">
+        <col class="grid_2">
+        <col class="grid_2">
+        <col class="grid_1">
+        <col class="grid_1">
+    </colgroup>
+    <thead>
+    <tr>
+        <th scope="col"><a href="<?=title_sort("it_id") . "&$qstr1"; ?>">상품코드</a></th>
+        <th scope="col"><a href="<?=title_sort("it_name") . "&$qstr1"; ?>">상품명</a></th>
+        <th scope="col"><a href="<?=title_sort("it_stock_qty") . "&$qstr1"; ?>">창고재고</a></th>
+        <th scope="col">주문대기</th>
+        <th scope="col">가재고</th>
+        <th scope="col">재고수정</th>
+        <th scope="col"><a href="<?=title_sort("it_use") . "&$qstr1"; ?>">판매</a></th>
+        <th scope="col">관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    {
+        $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
+
+        $sql1 = " select SUM(ct_qty) as sum_qty
+                    from {$g4['shop_cart_table']}
+                   where it_id = '{$row['it_id']}'
+                     and ct_stock_use = '0'
+                     and ct_status in ('주문', '준비') ";
+        $row1 = sql_fetch($sql1);
+        $wait_qty = $row1['sum_qty'];
+
+        // 가재고 (미래재고)
+        $temporary_qty = $row['it_stock_qty'] - $wait_qty;
+
+        $s_mod = icon("수정", "./itemform.php?w=u&it_id={$row['it_id']}&ca_id={$row['ca_id']}&$qstr");
+
+        $list = $i%2;
+    ?>
+    <input type="hidden" name="it_id[$i]" value="<?=$row['it_id']?>">
+    <tr>
+        <td class="itemstocklist"><?=$row['it_id']?></td>
+        <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str(stripslashes($row['it_name']), 60, "&#133")?></a></td>
+        <td class="itemstocklist"><?=number_format($row['it_stock_qty'])?></td>
+        <td class="itemstocklist"><?=number_format($wait_qty)?></td>
+        <td class="itemstocklist"><?=number_format($temporary_qty)?></td>
+        <td class="itemstocklist"><input type="text" name="it_stock_qty[$i]" value="<?=$row['it_stock_qty']?>" class="frm_input" size="10" autocomplete="off"></td>
+        <td class="itemstocklist"><input type="checkbox" name="it_use[$i]" value="1" <?=($row['it_use'] ? "checked" : "")?>></td>
+        <td class="itemstocklist"><a href="./itemform.php?w=u&it_id=<?=$row['it_id']?>&ca_id=<?=$row['ca_id']?>&$qstr">수정</a></td>
+    </tr><tr>
+    <?
+    }
+    if (!$i)
+        echo '<tr><td colspan="8" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
+    ?>
+    </tbody>
+    </table>
+    <div class="btn_list"><input type="submit" value="일괄수정"></div>
+    </form>
+    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+</section>
+
+<!-- 원본 일괄수정이 안 넘어감 김혜련 2013-04-11
+
 <form name=flist style="margin:0px;">
 <table width=100% cellpadding=4 cellspacing=0>
 <input type=hidden name=doc   value="<? echo $doc ?>">
@@ -163,10 +287,7 @@ if (!$i)
 </tr>
 </form>
 </table><br>
-
-* 상품의 재고와 판매를 일괄 처리합니다.<br>
-* 가재고는 창고재고 - 주문대기 수량입니다.<br>
-* 재고수정의 수량은 창고재고를 수정하는것입니다.
+-->
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
