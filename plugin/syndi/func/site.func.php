@@ -15,15 +15,15 @@
 
 
 // include gnuboard config & lib
-include '../config.php';
-include '../'.G4_LIB_DIR.'/common.lib.php';
-include '../'.G4_DATA_DIR.'/dbconfig.php';
+include G4_PATH.'/config.php';
+//include G4_LIB_PATH.'/common.lib.php';
+include G4_DATA_PATH.'/dbconfig.php';
 
-$connect_db = sql_connect($mysql_host, $mysql_user, $mysql_password);
+$connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD);
 if(!$connect_db) return;
 $GLOBALS['connect_db'] = $connect_db;
 
-sql_select_db($mysql_db, $connect_db);
+sql_select_db(G4_MYSQL_DB, $connect_db);
 
 
 /**

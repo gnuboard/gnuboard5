@@ -22,7 +22,6 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     if($row['bf_file']) {
         $filename = $row['bf_file'];
         $filepath = G4_DATA_PATH.'/file/'.$bo_table;
-        $src_url = G4_DATA_URL.'/file/'.$bo_table;
         $alt = get_text($row['bf_content']);
     } else {
         $write_table = $g4['write_prefix'].$bo_table;
@@ -34,11 +33,13 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
         for($i=0; $i<count($matchs[1]); $i++)
         {
             // 이미지 path 구함
-            $src_url = $matchs[1][$i];
-            if(!stristr($src_url, G4_URL) || stripos($src_url, G4_URL) != 0)
-                continue;
+            $p = parse_url($matchs[1][$i]);
+            if(strpos($p['path'], "/data/") != 0)
+                $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+            else
+                $data_path = $p['path'];
 
-            $srcfile = G4_PATH.str_replace(G4_URL, "", $matchs[1][$i]);
+            $srcfile = G4_PATH.$data_path;
 
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
                 $size = @getimagesize($srcfile);
@@ -63,9 +64,9 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
 
     if($tname) {
         if($edt) {
-            $src = str_replace($filename, $tname, $src_url);
+            $src = G4_URL.str_replace($filename, $tname, $data_path);
         } else {
-            $src = $src_url.'/'.$tname;
+            $src = G4_DATA_URL.'/file/'.$bo_table.'/'.$tname;
         }
     } else {
         return false;
@@ -104,11 +105,14 @@ function get_view_thumbnail($contents)
         return $contents;
 
     for($i=0; $i<count($matchs[1]); $i++) {
-        if(!stristr($matchs[1][$i], G4_URL) || stripos($matchs[1][$i], G4_URL) != 0)
-            continue;
-
         // 이미지 path 구함
-        $srcfile = G4_PATH.str_replace(G4_URL, "", $matchs[1][$i]);
+        $p = parse_url($matchs[1][$i]);
+        if(strpos($p['path'], "/data/") != 0)
+            $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        else
+            $data_path = $p['path'];
+
+        $srcfile = G4_PATH.$data_path;
 
         if(is_file($srcfile)) {
             // 썸네일 높이
@@ -137,19 +141,9 @@ function get_view_thumbnail($contents)
                 $thumb_file = $filename;
 
             $img_tag = $matchs[0][$i];
-            $thumb_tag = str_replace($filename, $thumb_file, $img_tag);
-
-            // img 태그에 width 값이 있을 경우 width 값 바꿔줌
-            preg_match("/width=[\'\"]?([0-9]+)[\'\"]?/", $img_tag, $mw);
-            if(!empty($mw[1])) {
-                $thumb_tag = str_replace($mw[0], str_replace($mw[1], $thumb_width, $mw[0]), $thumb_tag);
-            }
-
-            // img 태그에 height 값이 있을 경우 height 값 바꿔줌
-            preg_match("/height=[\'\"]?([0-9]+)[\'\"]?/", $img_tag, $mh);
-            if(!empty($mh[1])) {
-                $thumb_tag = str_replace($mh[0], str_replace($mh[1], $thumb_height, $mh[0]), $thumb_tag);
-            }
+            preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $img_tag, $malt);
+            $alt = get_text($malt[1]);
+            $thumb_tag = '<img src="'.G4_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'"/>';
 
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             if(strpos($matchs[1][$i], 'data/editor') && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {

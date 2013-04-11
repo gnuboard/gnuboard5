@@ -52,9 +52,15 @@ if ($sca || $stx) {
     $total_count = $board['bo_count_write'];
 }
 
-$total_page  = ceil($total_count / $board['bo_page_rows']);  // 전체 페이지 계산
+if(G4_IS_MOBILE) {
+    $page_rows = $board['bo_mobile_page_rows'];
+} else {
+    $page_rows = $board['bo_page_rows'];
+}
+
+$total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
 if (!$page) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
-$from_record = ($page - 1) * $board['bo_page_rows']; // 시작 열을 구함
+$from_record = ($page - 1) * $page_rows; // 시작 열을 구함
 
 // 관리자라면 CheckBox 보임
 $is_checkbox = false;
@@ -90,9 +96,9 @@ if ($sst) {
 }
 
 if ($sca || $stx) {
-    $sql = " select distinct wr_parent from {$write_table} where {$sql_search} {$sql_order} limit {$from_record}, {$board['bo_page_rows']} ";
+    $sql = " select distinct wr_parent from {$write_table} where {$sql_search} {$sql_order} limit {$from_record}, $page_rows ";
 } else {
-    $sql = " select * from {$write_table} where wr_is_comment = 0 {$sql_order} limit {$from_record}, {$board['bo_page_rows']} ";
+    $sql = " select * from {$write_table} where wr_is_comment = 0 {$sql_order} limit {$from_record}, $page_rows ";
 }
 $result = sql_query($sql);
 
@@ -111,7 +117,7 @@ if (!$sca && !$stx) {
 
         if (!$row['wr_id']) continue;
 
-        $list[$i] = get_list($row, $board, $board_skin_url, $board['bo_subject_len']);
+        $list[$i] = get_list($row, $board, $board_skin_url, G4_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         $list[$i]['is_notice'] = true;
 
         $i++;
@@ -126,12 +132,12 @@ while ($row = sql_fetch_array($result))
     if ($sca || $stx)
         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
 
-    $list[$i] = get_list($row, $board, $board_skin_url, $board['bo_subject_len']);
+    $list[$i] = get_list($row, $board, $board_skin_url, G4_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
     if (strstr($sfl, 'subject')) {
         $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
     }
     $list[$i]['is_notice'] = false;
-    $list[$i]['num'] = $total_count - ($page - 1) * $board['bo_page_rows'] - $k;
+    $list[$i]['num'] = $total_count - ($page - 1) * $page_rows - $k;
 
     $i++;
     $k++;

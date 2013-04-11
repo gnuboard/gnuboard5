@@ -7,7 +7,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <p>
         <strong>패스워드를 한번 더 입력해주세요.</strong>
+        <? if ($url == 'member_leave.php') {?>
+        패스워드를 입력하시면 회원탈퇴가 완료됩니다.
+        <?}else{?>
         회원님의 정보를 안전하게 보호하기 위해 패스워드를 한번 더 확인합니다.
+        <? } ?>
     </p>
 
     <form name="fmemberconfirm" onsubmit="return fmemberconfirm_submit(this);" method="post">

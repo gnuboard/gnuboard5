@@ -61,7 +61,7 @@ $colspan = 15;
     <legend>게시판 검색</legend>
     <span>
         <?=$listall?>
-        생성된 게시판 수 <?=number_format($total_count)?>개
+        생성된 게시판수 <?=number_format($total_count)?>개
     </span>
     <select name="sfl" title="검색대상">
         <option value="bo_table"<?=get_selected($_GET['sfl'], "bo_subject", true);?>>TABLE</option>

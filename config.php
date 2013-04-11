@@ -41,10 +41,13 @@ define('G4_EXTEND_DIR', 'extend');
 define('G4_IMG_DIR', 'img');
 define('G4_JS_DIR', 'js');
 define('G4_LIB_DIR', 'lib');
+define('G4_PLUGIN_DIR', 'plugin');
 define('G4_SKIN_DIR', 'skin');
 define('G4_GCAPTCHA_DIR', 'gcaptcha');
 define('G4_CKEDITOR_DIR', 'ckeditor');
 define('G4_MOBILE_DIR', 'mobile');
+define('G4_KCP_DIR', 'kcp');
+define('G4_OKNAME_DIR', 'okname');
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G4_DOMAIN) {
@@ -69,8 +72,11 @@ define('G4_DATA_URL', G4_URL.'/'.G4_DATA_DIR);
 define('G4_IMG_URL', G4_URL.'/'.G4_IMG_DIR);
 define('G4_JS_URL', G4_URL.'/'.G4_JS_DIR);
 define('G4_SKIN_URL', G4_URL.'/'.G4_SKIN_DIR);
-define('G4_GCAPTCHA_URL', G4_BBS_URL.'/'.G4_GCAPTCHA_DIR);
-define('G4_CKEDITOR_URL', G4_BBS_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
+define('G4_PLUGIN_URL', G4_URL.'/'.G4_PLUGIN_DIR);
+define('G4_GCAPTCHA_URL', G4_PLUGIN_URL.'/'.G4_GCAPTCHA_DIR);
+define('G4_CKEDITOR_URL', G4_PLUGIN_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
+define('G4_KCP_URL', G4_PLUGIN_URL.'/'.G4_KCP_DIR);
+define('G4_OKNAME_URL', G4_PLUGIN_URL.'/'.G4_OKNAME_DIR);
 define('G4_MOBILE_URL', G4_URL.'/'.G4_MOBILE_DIR);
 
 // PATH 는 서버상에서의 절대경로
@@ -79,9 +85,12 @@ define('G4_BBS_PATH', G4_PATH.'/'.G4_BBS_DIR);
 define('G4_DATA_PATH', G4_PATH.'/'.G4_DATA_DIR);
 define('G4_EXTEND_PATH', G4_PATH.'/'.G4_EXTEND_DIR);
 define('G4_LIB_PATH', G4_PATH.'/'.G4_LIB_DIR);
+define('G4_PLUGIN_PATH', G4_PATH.'/'.G4_PLUGIN_DIR);
 define('G4_SKIN_PATH', G4_PATH.'/'.G4_SKIN_DIR);
-define('G4_GCAPTCHA_PATH', G4_BBS_PATH.'/'.G4_GCAPTCHA_DIR);
-define('G4_CKEDITOR_PATH', G4_BBS_PATH.'/'.G4_CKEDITOR_DIR);
+define('G4_GCAPTCHA_PATH', G4_PLUGIN_PATH.'/'.G4_GCAPTCHA_DIR);
+define('G4_CKEDITOR_PATH', G4_PLUGIN_PATH.'/'.G4_CKEDITOR_DIR);
+define('G4_KCP_PATH', G4_PLUGIN_PATH.'/'.G4_KCP_DIR);
+define('G4_OKNAME_PATH', G4_PLUGIN_PATH.'/'.G4_OKNAME_DIR);
 define('G4_MOBILE_PATH', G4_PATH.'/'.G4_MOBILE_DIR);
 //==============================================================================
 
@@ -95,7 +104,7 @@ define('G4_USE_CACHE', true); // 최신글등에 cache 기능 사용 여부
 // 6시간이 빠른 경우 time() + (3600 * 6);
 // 6시간이 느린 경우 time() - (3600 * 6);
 define('G4_SERVER_TIME', time());
-define('G4_TIME_YMDHIS', date("Y-m-d H:i:s", G4_SERVER_TIME));
+define('G4_TIME_YMDHIS', date('Y-m-d H:i:s', G4_SERVER_TIME));
 define('G4_TIME_YMD', substr(G4_TIME_YMDHIS, 0, 10));
 define('G4_TIME_HIS', substr(G4_TIME_YMDHIS, 11, 8));
 

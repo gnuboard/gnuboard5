@@ -15,14 +15,17 @@ $row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where bo_tab
 if ($row['cnt'])
     alert($target_table.'은(는) 이미 존재하는 게시판 테이블명 입니다.\\n복사할 테이블명으로 사용할 수 없습니다.');
 
-check_token();
-
 // 게시판 테이블 생성
 $sql = get_table_define($g4['write_prefix'] . $bo_table);
 $sql = str_replace($g4['write_prefix'] . $bo_table, $g4['write_prefix'] . $target_table, $sql);
 sql_query($sql);
 
 $file_copy = array();
+
+// 구조만 복사시에는 공지사항 번호는 복사하지 않는다.
+if ($copy_case == 'schema_only') {
+    $board['bo_notice'] = '';
+}
 
 // 게시판 정보
 $sql = " insert into {$g4['board_table']}
@@ -63,16 +66,20 @@ $sql = " insert into {$g4['board_table']}
                 bo_use_list_content = '{$board[bo_use_list_content]}',
                 bo_table_width = '{$board[bo_table_width]}',
                 bo_subject_len = '{$board[bo_subject_len]}',
+                bo_mobile_subject_len = '{$board[bo_mobile_subject_len]}',
                 bo_page_rows = '{$board[bo_page_rows]}',
+                bo_mobile_page_rows = '{$board[bo_mobile_page_rows]}',
                 bo_new = '{$board[bo_new]}',
                 bo_hot = '{$board[bo_hot]}',
                 bo_image_width = '{$board[bo_image_width]}',
                 bo_skin = '{$board['bo_skin']}',
-                bo_mobile_skin = '{$board['bo_mobile']}',
+                bo_mobile_skin = '{$board['bo_mobile_skin']}',
                 bo_include_head = '{$board['bo_include_head']}',
                 bo_include_tail = '{$board['bo_include_tail']}',
                 bo_content_head = '".addslashes($board['bo_content_head'])."',
                 bo_content_tail = '".addslashes($board['bo_content_tail'])."',
+                bo_mobile_content_head = '".addslashes($board['bo_mobile_content_head'])."',
+                bo_mobile_content_tail = '".addslashes($board['bo_mobile_content_tail'])."',
                 bo_insert_content = '".addslashes($board['bo_insert_content'])."',
                 bo_gallery_cols = '{$board[bo_gallery_cols]}',
                 bo_gallery_width = '{$board[bo_gallery_width]}',

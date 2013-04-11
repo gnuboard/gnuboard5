@@ -5,9 +5,9 @@ global $lo_url;
 include_once('./_common.php');
 
 if($error) {
-    $g4['title'] = "오류가 있습니다.";
+    $g4['title'] = "오류안내 페이지";
 } else {
-    $g4['title'] = "내용을 확인해 주세요.";
+    $g4['title'] = "결과안내 페이지";
 }
 include_once(G4_PATH.'/head.sub.php');
 // 필수 입력입니다.

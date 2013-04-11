@@ -71,7 +71,7 @@ h2 {font-size:1.2em}
 #gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth {z-index:13;clear:both;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth a {display:block;float:left;width:110px;height:35px;color:#e0e0e0;font-weight:bold;line-height:2.95em;text-decoration:none}
+.gnb_1depth a {display:block;float:left;width:80px;height:35px;color:#e0e0e0;font-weight:bold;line-height:2.95em;text-decoration:none}
 .gnb_1depth a:focus,
 .gnb_1depth a:hover {text-decoration:none}
 .gnb_sub_ul {float:left;width:auto}
@@ -267,11 +267,9 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_mbid,
 .td_name,
 .td_mbname {width:100px;text-align:left !important}
-.td_mbid_input {width:100px;text-align:center}
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
 .td_pt {text-align:right !important}
-.td_shop_category {text-align:right}
 
 .txt_true {color:#e8180c}
 .txt_false {color:#ccc}
@@ -287,6 +285,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
 #session_del p span,
 #cache_del p span {color:#ff3061}
+
 
 /* 쇼핑몰 설정 */
 #frm_payment textarea {height:50px}
@@ -317,6 +316,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 
 /* 분류관리 목록 */
 .cate_list_lbl {display:inline-block;padding-left:15px;background:url('../adm/shop_admin/img/icon_reply.gif') 0 2px no-repeat}
+
 
 /* 새창 기본 스타일 */
 .new_win {}
