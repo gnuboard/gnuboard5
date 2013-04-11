@@ -71,7 +71,7 @@ h2 {font-size:1.2em}
 #gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1depth {z-index:13;clear:both;zoom:1}
 .gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth a {display:block;float:left;width:80px;height:35px;color:#e0e0e0;font-weight:bold;line-height:2.95em;text-decoration:none}
+.gnb_1depth a {display:block;float:left;width:120px;height:35px;color:#e0e0e0;font-weight:bold;line-height:2.95em;text-decoration:none}
 .gnb_1depth a:focus,
 .gnb_1depth a:hover {text-decoration:none}
 .gnb_sub_ul {float:left;width:auto}
