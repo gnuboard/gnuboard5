@@ -1,8 +1,6 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-define('G4_USE_SHOP', true);
-
 if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
 
 include_once(G4_LIB_PATH.'/shop.lib.php');
@@ -42,38 +40,6 @@ define(_MISU_QUERY_, "
     ) as misu /* 미수금 = 주문합계 - 주문취소 - DC - 입금합계 + 입금취소 */");
 //------------------------------------------------------------------------------
 // 쇼핑몰 상수 모음 끝
-//------------------------------------------------------------------------------
-
-
-
-//------------------------------------------------------------------------------
-// 쇼핑몰 변수 모음 시작
-//------------------------------------------------------------------------------
-define('SHOP_TABLE_PREFIX', 'yc4_');
-
-// 쇼핑몰 테이블명
-$g4['shop_default_table']       = SHOP_TABLE_PREFIX.'default';               // 쇼핑몰설정 테이블
-$g4['shop_banner_table']        = SHOP_TABLE_PREFIX.'banner';                // 배너 테이블
-$g4['shop_card_history_table']  = SHOP_TABLE_PREFIX.'card_history';          // 전자결제이력 테이블
-$g4['shop_cart_table']          = SHOP_TABLE_PREFIX.'cart';                  // 장바구니 테이블
-$g4['shop_category_table']      = SHOP_TABLE_PREFIX.'category';              // 상품분류 테이블
-$g4['shop_content_table']       = SHOP_TABLE_PREFIX.'content';               // 내용(컨텐츠)정보 테이블
-$g4['shop_delivery_table']      = SHOP_TABLE_PREFIX.'delivery';              // 배송정보 테이블
-$g4['shop_event_table']         = SHOP_TABLE_PREFIX.'event';                 // 이벤트 테이블
-$g4['shop_event_item_table']    = SHOP_TABLE_PREFIX.'event_item';            // 상품, 이벤트 연결 테이블
-$g4['shop_faq_table']           = SHOP_TABLE_PREFIX.'faq';                   // 자주하시는 질문 테이블
-$g4['shop_faq_master_table']    = SHOP_TABLE_PREFIX.'faq_master';            // 자주하시는 질문 마스터 테이블
-$g4['shop_item_table']          = SHOP_TABLE_PREFIX.'item';                  // 상품 테이블
-$g4['shop_item_ps_table']       = SHOP_TABLE_PREFIX.'item_ps';               // 상품 사용후기 테이블
-$g4['shop_item_qa_table']       = SHOP_TABLE_PREFIX.'item_qa';               // 상품 질문답변 테이블
-$g4['shop_item_relation_table'] = SHOP_TABLE_PREFIX.'item_relation';         // 관련 상품 테이블
-$g4['shop_new_win_table']       = SHOP_TABLE_PREFIX.'new_win';               // 새창 테이블
-$g4['shop_onlinecalc_table']    = SHOP_TABLE_PREFIX.'onlinecalc';            // 온라인견적 테이블
-$g4['shop_order_table']         = SHOP_TABLE_PREFIX.'order';                 // 주문서 테이블
-$g4['shop_wish_table']          = SHOP_TABLE_PREFIX.'wish';                  // 보관함(위시리스트) 테이블
-$g4['shop_item_info_table']     = SHOP_TABLE_PREFIX.'item_info';             // 상품요약정보 테이블 (상품정보고시)
-//------------------------------------------------------------------------------
-// 쇼핑몰 변수 모음 끝
 //------------------------------------------------------------------------------
 
 
