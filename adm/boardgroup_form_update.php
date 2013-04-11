@@ -67,7 +67,7 @@ if ($w == '') {
 }
 
 // syndication ping
-include G4_BBS_PATH.'/syndi/include/include.adm.boardgroup_form_update.php';
+include G4_SYNDI_PATH.'/include/include.adm.boardgroup_form_update.php';
 
 goto_url('./boardgroup_form.php?w=u&amp;gr_id='.$gr_id.'&amp;'.$qstr);
 ?>

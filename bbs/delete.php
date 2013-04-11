@@ -94,7 +94,7 @@ while ($row = sql_fetch_array($result))
         sql_query(" delete from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ");
 
 		// syndication ping
-		include G4_BBS_PATH.'/syndi/include/include.bbs.delete.php';
+		include G4_SYNDI_PATH.'/include/include.bbs.delete.php';
 
         $count_write++;
     }

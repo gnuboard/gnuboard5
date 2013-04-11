@@ -15,5 +15,5 @@ $GLOBALS['syndi_tag_year'] = '2010';
 $GLOBALS['syndi_homepage_title'] = $config['cf_title'];
 
 // Syndication 출력 url (syndi_echo.php의 웹경로)
-$GLOBALS['syndi_echo_url'] = G4_BBS_URL.'/syndi/syndi_echo.php';
+$GLOBALS['syndi_echo_url'] = G4_SYNDI_URL.'/syndi_echo.php';
 ?>

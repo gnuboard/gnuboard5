@@ -391,7 +391,7 @@ if ($all_fields) {
 delete_cache_latest($bo_table);
 
 // syndication ping
-include G4_BBS_PATH.'/syndi/include/include.adm.board_form_update.php';
+include G4_SYNDI_PATH.'/include/include.adm.board_form_update.php';
 
 goto_url("./board_form.php?w=u&bo_table={$bo_table}&amp;{$qstr}");
 ?>

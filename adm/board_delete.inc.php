@@ -32,5 +32,5 @@ delete_cache_latest($tmp_bo_table);
 rm_rf(G4_DATA_PATH.'/file/'.$tmp_bo_table);
 
 // syndication ping
-include G4_BBS_PATH.'/syndi/include/include.adm.board_delete.inc.php';
+include G4_SYNDI_PATH.'/include/include.adm.board_delete.inc.php';
 ?>

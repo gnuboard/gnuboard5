@@ -462,7 +462,7 @@ if ($w == '' || $w == 'r') {
 }
 
 // syndication ping
-include G4_BBS_PATH.'/syndi/include/include.bbs.write_update.php';
+include G4_SYNDI_PATH.'/include/include.bbs.write_update.php';
 
 //------------------------------------------------------------------------------
 // 가변 파일 업로드
