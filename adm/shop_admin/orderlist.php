@@ -109,7 +109,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <option value="od_deposit_name" <?=get_selected($sel_field, 'od_deposit_name')?>>입금자</option>
         <option value="od_invoice" <?=get_selected($sel_field, 'od_invoice')?>>운송장번호</option>
     </select>
-    <input type="text" name="search" value="<? echo $search ?>" required class="required frm_input" autocomplete="off">
+    <input type="text" name="search" value="<?=$search?>" required class="required frm_input" autocomplete="off">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
