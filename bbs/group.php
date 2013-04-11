@@ -8,6 +8,9 @@ if (G4_IS_MOBILE) {
     return;
 }
 
+if(!$is_admin && $group['gr_device'] == 'mobile')
+    alert($group['gr_subject'].' 그룹은 모바일에서만 접근할 수 있습니다.');
+
 include_once('./_head.php');
 ?>
 
@@ -15,7 +18,7 @@ include_once('./_head.php');
 <!-- 메인화면 최신글 시작 -->
 <?
 //  최신글
-$sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' order by bo_table ";
+$sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' and bo_device <> 'mobile' order by bo_table ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $lt_style = "";

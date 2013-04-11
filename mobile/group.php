@@ -1,13 +1,16 @@
 <?
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+if(!$is_admin && $group['gr_device'] == 'pc')
+    alert($group['gr_subject'].' 그룹은 PC에서만 접근할 수 있습니다.');
+
 include_once(G4_MOBILE_PATH.'/_head.php');
 ?>
 
 <!-- 메인화면 최신글 시작 -->
 <?
 //  최신글
-$sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' order by bo_table ";
+$sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' and bo_device <> 'pc' order by bo_table ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
