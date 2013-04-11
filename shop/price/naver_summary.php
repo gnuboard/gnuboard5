@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 ob_start();
 
@@ -19,7 +19,7 @@ Field   Status  Notes
 $lt = "<<<";
 $gt = ">>>";
 
-$sql =" select it_id, it_name, it_amount, it_time from {$g4['yc4_item_table']} where it_use = '1' order by ca_id";
+$sql =" select it_id, it_name, it_amount, it_time from {$g4['shop_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)

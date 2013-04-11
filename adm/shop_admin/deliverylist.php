@@ -7,11 +7,11 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = '배송일괄처리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-//sql_query(" update $g4[yc4_cart_table] set ct_status = '완료' where ct_status = '배송' ");
+//sql_query(" update $g4[shop_cart_table] set ct_status = '완료' where ct_status = '배송' ");
 
 // 배송회사리스트 ---------------------------------------------
 $delivery_options = "";
-$sql = " select * from {$g4['yc4_delivery_table']} order by dl_order ";
+$sql = " select * from {$g4['shop_delivery_table']} order by dl_order ";
 $result = sql_query($sql);
 for($i=0; $row=sql_fetch_array($result); $i++) {
     $delivery_options .= "<option value='{$row['dl_id']}'>{$row['dl_company']}";
@@ -33,8 +33,8 @@ if ($sel_ca_id != "") {
 
 if ($sel_field == "")  $sel_field = "od_id";
 
-$sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.uq_id=b.uq_id)
+$sql_common = " from {$g4['shop_order_table']} a
+                left join {$g4['shop_cart_table']} b on (a.uq_id=b.uq_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -44,7 +44,7 @@ if ($chk_misu) {
     $total_count = mysql_num_rows($result);
 }
 else {
-    $row = sql_fetch("select count(od_id) as cnt from {$g4['yc4_order_table']} $sql_search ");
+    $row = sql_fetch("select count(od_id) as cnt from {$g4['shop_order_table']} $sql_search ");
     $total_count = $row['cnt'];
 }
 

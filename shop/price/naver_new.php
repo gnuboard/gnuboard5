@@ -1,5 +1,5 @@
 <?
-include_once("./_common.php");
+include_once('./_common.php');
 
 ob_start();
 
@@ -41,6 +41,8 @@ Field   Status  Notes
 
 $lt = "<<<";
 $gt = ">>>";
+$shop_url = G4_SHOP_URL;
+$data_url = G4_DATA_URL;
 
 // 배송비
 if ($default['de_send_cost_case'] == '없음') {
@@ -56,7 +58,7 @@ else {
 
 // 하루전의 상품
 $time = date("Y-m-d 00:00:00", G4_SERVER_TIME - 86400);
-$sql =" select * from {$g4['yc4_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
+$sql =" select * from {$g4['shop_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -65,24 +67,24 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $caid1 = $caid2 = $caid3 = $caid4 = "";
 
     $caid1 = substr($row['ca_id'],0,2);
-    $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '$caid1' ");
+    $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$caid1' ");
     $cate1 = $row2['ca_name'];
 
     if (strlen($row['ca_id']) >= 8) {
         $caid4 = substr($row['ca_id'],0,8);
-        $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '$caid4' ");
+        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$caid4' ");
         $cate4 = $row2['ca_name'];
     }
 
     if (strlen($row['ca_id']) >= 6) {
         $caid3 = substr($row['ca_id'],0,6);
-        $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '$caid3' ");
+        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$caid3' ");
         $cate3 = $row2['ca_name'];
     }
 
     if (strlen($row['ca_id']) >= 4) {
         $caid2 = substr($row['ca_id'],0,4);
-        $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '$caid2' ");
+        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$caid2' ");
         $cate2 = $row2['ca_name'];
     }
 
@@ -94,11 +96,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     echo <<< HEREDOC
 {$lt}begin{$gt}
-{$lt}mapid{$gt}$row[it_id]
-{$lt}pname{$gt}$row[it_name]
-{$lt}price{$gt}$row[it_amount]
-{$lt}pgurl{$gt}$g4[shop_url]/item.php?it_id={$row[it_id]}
-{$lt}igurl{$gt}$g4[url]/data/item/{$row[it_id]}_m
+{$lt}mapid{$gt}{$row['it_id']}
+{$lt}pname{$gt}{$row['it_name']}
+{$lt}price{$gt}{$row['it_amount']}
+{$lt}pgurl{$gt}$shop_url/item.php?it_id={$row['it_id']}
+{$lt}igurl{$gt}$data_url/item/{$row['it_id']}_m
 {$lt}cate1{$gt}$cate1
 {$lt}cate2{$gt}$cate2
 {$lt}cate3{$gt}$cate3
@@ -109,13 +111,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {$lt}caid4{$gt}$caid4
 {$lt}model{$gt}
 {$lt}brand{$gt}
-{$lt}maker{$gt}$row[it_maker]
-{$lt}origi{$gt}$row[it_origin]
+{$lt}maker{$gt}{$row['it_maker']}
+{$lt}origi{$gt}{$row['it_origin']}
 {$lt}deliv{$gt}$delivery
 {$lt}event{$gt}
 {$lt}coupo{$gt}
 {$lt}pcard{$gt}
-{$lt}point{$gt}$row[it_point]
+{$lt}point{$gt}{$row['it_point']}
 {$lt}mvurl{$gt}
 {$lt}selid{$gt}
 {$lt}barcode{$gt}

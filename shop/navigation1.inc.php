@@ -9,7 +9,7 @@ if ($ca_id)
     {
         $code = substr($ca_id,0,$i*2);
 
-        $sql = " select ca_name from {$g4['yc4_category_table']} where ca_id = '$code' ";
+        $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '$code' ";
         $row = sql_fetch($sql);
 
         $style = "";

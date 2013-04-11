@@ -25,12 +25,12 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.uq_id=b.uq_id)
+$sql_common = " from {$g4['shop_order_table']} a
+                left join {$g4['shop_cart_table']} b on (a.uq_id=b.uq_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
-$row = sql_fetch("select count(od_id) as cnt from {$g4['yc4_order_table']} $sql_search ");
+$row = sql_fetch("select count(od_id) as cnt from {$g4['shop_order_table']} $sql_search ");
 $total_count = $row['cnt'];
 
 $rows = $config['cf_page_rows'];
@@ -45,6 +45,27 @@ $sql  = " select a.od_id,
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql);
+
+$lines = array();
+$tot_itemcnt       = 0;
+$tot_orderamount   = 0;
+$tot_ordercancel   = 0;
+$tot_dc_amount     = 0;
+$tot_receiptamount = 0;
+$tot_receiptcancel = 0;
+$tot_misuamount    = 0;
+for ($i=0; $row=mysql_fetch_array($result); $i++)
+{
+    $lines[$i] = $row;
+
+    $tot_itemcount     += $row['itemcount'];
+    $tot_orderamount   += $row['orderamount'];
+    $tot_ordercancel   += $row['ordercancel'];
+    $tot_dc_amount     += $row['od_dc_amount'];
+    $tot_receiptamount += $row['receiptamount'];
+    $tot_receiptcancel += $row['receiptcancel'];
+    $tot_misu          += $row['misu'];
+}
 
 //$qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
 $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search&save_search=$search";
@@ -91,6 +112,7 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <colgroup width=60>
 <colgroup width=55>
 <tr><td colspan=12 height=2 bgcolor=#0E87F9></td></tr>
+<thead>
 <tr align=center class=ht>
     <td><a href='<?=title_sort("od_id", 1)."&$qstr1";?>'>주문번호</a></td>
     <td><a href='<?=title_sort("od_name")."&$qstr1";?>'>주문자</a></td>
@@ -117,89 +139,88 @@ $qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
     <td></td>
 </tr>
 <tr><td colspan=12 height=1 bgcolor=#CCCCCC></td></tr>
-
+</thead>
+<tfoot>
+<tr class=ht>
+    <td colspan=3 align=center>합 계</td>
+    <td align=center><?=(int)$tot_itemcount?>건</td>
+    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_orderamount)?></FONT></td>
+    <td align=right><?=number_format($tot_ordercancel)?></td>
+    <td align=right><?=number_format($tot_dc_amount)?></td>
+    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_receiptamount)?></FONT></td>
+    <td align=right><?=number_format($tot_receiptcancel)?></td>
+    <td align=right><FONT COLOR='#FF6600'><?=number_format($tot_misu)?></FONT></td>
+    <td colspan=2></td>
+</tr>
+</tfoot>
+<tbody>
 <?
-$tot_itemcnt       = 0;
-$tot_orderamount   = 0;
-$tot_ordercancel   = 0;
-$tot_dc_amount     = 0;
-$tot_receiptamount = 0;
-$tot_receiptcancel = 0;
-$tot_misuamount    = 0;
-for ($i=0; $row=mysql_fetch_array($result); $i++)
+for ($i=0; $i<count($lines); $i++)
 {
     // 결제 수단
     $s_receipt_way = $s_br = "";
-    if ($row['od_settle_case'])
+    if ($lines[$i]['od_settle_case'])
     {
-        $s_receipt_way = $row['od_settle_case'];
+        $s_receipt_way = $lines[$i]['od_settle_case'];
         $s_br = '<br/>';
     }
     else
     {
-        if ($row['od_temp_bank'] > 0 || $row['od_receipt_bank'] > 0)
+        if ($lines[$i]['od_temp_bank'] > 0 || $lines[$i]['od_receipt_bank'] > 0)
         {
             //$s_receipt_way = "무통장입금";
-            $s_receipt_way = cut_str($row['od_bank_account'],8,"");
+            $s_receipt_way = cut_str($lines[$i]['od_bank_account'],8,"");
             $s_br = "<br>";
         }
 
-        if ($row['od_temp_card'] > 0 || $row['od_receipt_card'] > 0)
+        if ($lines[$i]['od_temp_card'] > 0 || $lines[$i]['od_receipt_card'] > 0)
         {
             // 미수금이 없고 카드결제를 하지 않았다면 카드결제를 선택후 무통장 입금한 경우임
-            if ($row['misuamount'] <= 0 && $row['od_receipt_card'] == 0)
+            if ($lines[$i]['misuamount'] <= 0 && $lines[$i]['od_receipt_card'] == 0)
                 ; // 화면 출력하지 않음
             else
             {
                 $s_receipt_way .= $s_br."카드";
-                if ($row['od_receipt_card'] == 0)
-                    $s_receipt_way .= "<span class=small><span class=point style='font-size:8pt;'>(미승인)</span></span>";
-                $s_br = "<br>";
+                if ($lines[$i]['od_receipt_card'] == 0)
+                    $s_receipt_way .= '<span class="small"><span class="point" style="font-size:8pt;">(미승인)</span></span>';
+                $s_br = '<br>';
             }
         }
     }
 
-    if ($row['od_receipt_point'] > 0)
-        $s_receipt_way .= $s_br."포인트";
+    if ($lines[$i]['od_receipt_point'] > 0)
+        $s_receipt_way .= $s_br.'포인트';
 
-    $s_mod = icon("수정", "./orderform.php?od_id={$row['od_id']}&$qstr");
-    $s_del = icon("삭제", "javascript:del('./orderdelete.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}&mb_id={$row['mb_id']}&$qstr&list=2');");
+    $s_mod = icon("수정", "./orderform.php?od_id={$lines[$i]['od_id']}&$qstr");
+    $s_del = icon("삭제", "javascript:del('./orderdelete.php?od_id={$lines[$i]['od_id']}&uq_id={$lines[$i]['uq_id']}&mb_id={$lines[$i]['mb_id']}&$qstr&list=2');");
 
     if ($i>0)
-        echo "<tr><td colspan=12 height=1 bgcolor='#CCCCCC'></td></tr>";
+        echo '<tr><td colspan="12" height="1" bgcolor="#CCCCCC"></td></tr>';
 
     $list = $i%2;
     echo "
-    <tr class='list$list ht'>
-        <td align=center title='주문일시 : {$row['od_time']}'><a href='".G4_SHOP_URL."/orderinquiryview.php?od_id={$row['od_id']}&uq_id={$row['uq_id']}'>{$row['od_id']}</a></td>
-        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$row['od_name']}'><span title='$od_deposit_name'>".cut_str($row['od_name'],30,"")."</span></a></td>
-        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$row['mb_id']}'>{$row['mb_id']}</a></td>
-        <td align=center>{$row['itemcount']}건</td>
-        <td align=right><FONT COLOR='#1275D3'>".number_format($row['orderamount'])."</font></td>
-        <td align=right>".number_format($row['ordercancel'])."</td>
-        <td align=right>".number_format($row['od_dc_amount'])."</td>
-        <td align=right><FONT COLOR='#1275D3'>".number_format($row['receiptamount'])."</font></td>
-        <td align=right>".number_format($row['receiptcancel'])."</td>
-        <td align=right><FONT COLOR='#FF6600'>".number_format($row['misu'])."</FONT></td>
+    <tr class=\"list$list ht\">
+        <td align=center title='주문일시 : {$lines[$i]['od_time']}'><a href='".G4_SHOP_URL."/orderinquiryview.php?od_id={$lines[$i]['od_id']}&uq_id={$lines[$i]['uq_id']}'>{$lines[$i]['od_id']}</a></td>
+        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$lines[$i]['od_name']}'><span title='$od_deposit_name'>".cut_str($lines[$i]['od_name'],30,"")."</span></a></td>
+        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$lines[$i]['mb_id']}'>{$lines[$i]['mb_id']}</a></td>
+        <td align=center>{$lines[$i]['itemcount']}건</td>
+        <td align=right><FONT COLOR='#1275D3'>".number_format($lines[$i]['orderamount'])."</font></td>
+        <td align=right>".number_format($lines[$i]['ordercancel'])."</td>
+        <td align=right>".number_format($lines[$i]['od_dc_amount'])."</td>
+        <td align=right><FONT COLOR='#1275D3'>".number_format($lines[$i]['receiptamount'])."</font></td>
+        <td align=right>".number_format($lines[$i]['receiptcancel'])."</td>
+        <td align=right><FONT COLOR='#FF6600'>".number_format($lines[$i]['misu'])."</FONT></td>
         <td align=center>$s_receipt_way</td>
         <td align=center>$s_mod $s_del</a></td>
     </tr>";
 
-    $tot_itemcount     += $row['itemcount'];
-    $tot_orderamount   += $row['orderamount'];
-    $tot_ordercancel   += $row['ordercancel'];
-    $tot_dc_amount     += $row['od_dc_amount'];
-    $tot_receiptamount += $row['receiptamount'];
-    $tot_receiptcancel += $row['receiptcancel'];
-    $tot_misu          += $row['misu'];
-
     // 상품개별출력
     $sql2 = " select c.it_name,
                      b.*
-                from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.uq_id = b.uq_id)
-                left join {$g4['yc4_item_table']} c on (b.it_id = c.it_id)
-               where od_id = '{$row['od_id']}' ";
+                from {$g4['shop_order_table']} a
+                left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
+                left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
+               where od_id = '{$lines[$i]['od_id']}' ";
     $result2 = sql_query($sql2);
     for ($k=0; $row2=sql_fetch_array($result2); $k++)
     {
@@ -236,18 +257,8 @@ if ($i == 0)
 ?>
 </form>
 <tr><td colspan=12 bgcolor='#CCCCCC'></td></tr>
-<tr class=ht>
-    <td colspan=3 align=center>합 계</td>
-    <td align=center><?=(int)$tot_itemcount?>건</td>
-    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_orderamount)?></FONT></td>
-    <td align=right><?=number_format($tot_ordercancel)?></td>
-    <td align=right><?=number_format($tot_dc_amount)?></td>
-    <td align=right><FONT COLOR='#1275D3'><?=number_format($tot_receiptamount)?></FONT></td>
-    <td align=right><?=number_format($tot_receiptcancel)?></td>
-    <td align=right><FONT COLOR='#FF6600'><?=number_format($tot_misu)?></FONT></td>
-    <td colspan=2></td>
-</tr>
 <tr><td colspan=12 bgcolor='#CCCCCC'></td></tr>
+</tbody>
 </table>
 
 <table width=100%>

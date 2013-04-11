@@ -18,7 +18,7 @@ if ($stx != "") {
         $page = 1;
 }
 
-$sql_common = " from {$g4['yc4_category_table']} ";
+$sql_common = " from {$g4['shop_category_table']} ";
 if ($is_admin != 'super')
     $sql_common .= " $where ca_mb_id = '{$member['mb_id']}' ";
 $sql_common .= $sql_search;
@@ -111,7 +111,7 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
             $class = 'class="cate_list_lbl"'; // 2단 이상 분류의 label 에 스타일 부여 - 지운아빠 2013-04-02
             // 상위단계의 분류명
             $p_ca_id = substr($row['ca_id'], 0, $level*2);
-            $sql = " select ca_name from {$g4['yc4_category_table']} where ca_id = '$p_ca_id' ";
+            $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '$p_ca_id' ";
             $temp = sql_fetch($sql);
             $p_ca_name = $temp['ca_name'].'의하위';
         } else
@@ -129,7 +129,7 @@ $qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
             $s_del = '<a href="javascript:del(\'./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'\');">삭제</a>';
 
         // 해당 분류에 속한 상품의 갯수
-        $sql1 = " select COUNT(*) as cnt from {$g4['yc4_item_table']}
+        $sql1 = " select COUNT(*) as cnt from {$g4['shop_item_table']}
                       where ca_id = '{$row['ca_id']}'
                       or ca_id2 = '{$row['ca_id']}'
                       or ca_id3 = '{$row['ca_id']}' ";

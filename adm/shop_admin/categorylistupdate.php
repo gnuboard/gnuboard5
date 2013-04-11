@@ -16,7 +16,7 @@ for ($i=0; $i<count($_POST['ca_id']); $i++)
             alert("\'{$_POST['ca_mb_id'][$i]}\' 은(는) 존재하는 회원아이디가 아닙니다.", "./categorylist.php?page=$page&sort1=$sort1&sort2=$sort2");
     }
 
-    $sql = " update {$g4['yc4_category_table']}
+    $sql = " update {$g4['shop_category_table']}
                 set ca_name       = '{$_POST['ca_name'][$i]}',
                     ca_mb_id      = '{$_POST['ca_mb_id'][$i]}',
                     ca_use        = '{$_POST['ca_use'][$i]}',

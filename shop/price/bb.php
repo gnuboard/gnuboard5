@@ -6,16 +6,16 @@ function it_image($img)
 {
     global $g4;
 
-    $tmp = G4_DATA_PATH."/item/$img";
+    $tmp = G4_DATA_PATH.'/item/'.$img;
     if (file_exists($tmp) && $img) {
-        $str = G4_DATA_URL."/item/$img";
+        $str = G4_DATA_URL.'/item/'.$img;
     } else {
-        $str = G4_SHOP_URL."/img/no_image.gif";
+        $str = G4_SHOP_URL.'/img/no_image.gif';
     }
     return $str;
 }
 
-include_once("./_common.php");
+include_once('./_common.php');
 ?>
 <html>
 <title>비비 엔진페이지</title>
@@ -28,7 +28,7 @@ include_once("./_common.php");
 <?
 // <p>상품번호^대분류^중분류^소분류^제조사^모델명^상품Url^이미지Url^가격
 $str = "";
-$sql = " select * from {$g4['yc4_item_table']}
+$sql = " select * from {$g4['shop_item_table']}
           where it_use = '1'
           order by ca_id ";
 $result = sql_query($sql);
@@ -36,13 +36,13 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     $image = it_image($row['it_id'].'_m');
 
-    $row2 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
+    $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
 
     if (strlen($row['ca_id']) >= 4)
-        $row3 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
+        $row3 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
 
     if (strlen($row['ca_id']) >= 6)
-        $row4 = sql_fetch(" select ca_name from {$g4['yc4_category_table']} where ca_id = '".substr($row['ca_id'],0,6)."' ");
+        $row4 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,6)."' ");
 
     // 재고검사해서 없으면 상품가격을 0 으로 설정
     $stock = get_it_stock_qty($row['it_id']);

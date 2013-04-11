@@ -43,26 +43,26 @@ function paging($write_pages, $cur_page, $total_page, $url )
 }
 
 
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 페이지당 행수
 $page_rows = 1000;
 
-$sql = " select count(*) as cnt from $g4[yc4_item_table] where it_use = '1' and ca_id LIKE '$ca_id%'";
+$sql = " select count(*) as cnt from {$g4['shop_item_table']} where it_use = '1' and ca_id LIKE '$ca_id%'";
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 ?>
 <html>
 <title>에누리 엔진페이지</title>
 <head>
-<meta http-equiv="Cache-Control" content="no-cache"/> 
-<meta http-equiv="Expires" content="0"/> 
-<meta http-equiv="Pragma" content="no-cache"/> 
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<meta http-equiv="Pragma" content="no-cache"/>
 <style type="text/css">
 <!--
 A:link		{text-decoration: underline; color:steelblue}
 A:visited	{text-decoration: none; color:steelblue}
-A:hover		{text-decoration: underline; color:RoyalBlue}   
+A:hover		{text-decoration: underline; color:RoyalBlue}
 font		{font-family:굴림; font-size:10pt}
 th,td		{font-family:굴림; font-size:10pt ; height:15pt}
 
@@ -89,17 +89,17 @@ if ($page == "") $page = 1;
 $from_record = ($page - 1) * $page_rows;
 
 $caid = addslashes($ca_id);
-$sql = " select * from $g4[yc4_item_table]
-          where it_use = '1' 
+$sql = " select * from {$g4['shop_item_table']}
+          where it_use = '1'
           and ca_id LIKE '$caid%'
-          order by ca_id    
+          order by ca_id
           limit $from_record, $page_rows ";
 
 $result = sql_query($sql);
 
-for ($i=0; $row=mysql_fetch_array($result); $i++) 
+for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $stock = get_it_stock_qty($row[it_id]);
+    $stock = get_it_stock_qty($row['it_id']);
 
     if ($stock)
         $stock = "재고있음";
@@ -108,14 +108,14 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     $num = (($page - 1) * $page_rows) + $i + 1;
 
-    echo "
-	<tr bgcolor='white'>
-		<td align='center'>$num</td>
-		<td><a href='{$g4[shop_url]}/item.php?it_id=$row[it_id]'>$row[it_name]</a></td>
-		<td align='center'>".number_format($row[it_amount])."</td>
-		<td align='center'>$stock</td>
+    echo '
+	<tr bgcolor="white">
+		<td align="center">'.$num.'</td>
+		<td><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">'.$row['it_name'].'</a></td>
+		<td align="center">'.number_format($row['it_amount']).'</td>
+		<td align="center">'.$stock.'</td>
 	</tr>
-        ";
+        ';
 }
 
 ?>

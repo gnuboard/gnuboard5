@@ -18,8 +18,8 @@ function itemdelete($it_id)
 
     $str = $comma = $od_id = "";
     $sql = " select b.od_id
-               from {$g4['yc4_cart_table']} a,
-                    {$g4['yc4_order_table']} b
+               from {$g4['shop_cart_table']} a,
+                    {$g4['shop_order_table']} b
               where a.uq_id = b.uq_id
                 and a.it_id = '$it_id'
                 and a.ct_status != '쇼핑' ";
@@ -55,34 +55,34 @@ function itemdelete($it_id)
     @unlink(G4_DATA_PATH."/item/$it_id"."_t");
 
     // 장바구니 삭제
-	$sql = " delete from {$g4['yc4_cart_table']} where it_id = '$it_id' ";
+	$sql = " delete from {$g4['shop_cart_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 이벤트삭제
-    $sql = " delete from {$g4['yc4_event_item_table']} where it_id = '$it_id' ";
+    $sql = " delete from {$g4['shop_event_item_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 사용후기삭제
-    $sql = " delete from {$g4['yc4_item_ps_table']} where it_id = '$it_id' ";
+    $sql = " delete from {$g4['shop_item_ps_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 상품문의삭제
-    $sql = " delete from {$g4['yc4_item_qa_table']} where it_id = '$it_id' ";
+    $sql = " delete from {$g4['shop_item_qa_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
     // 관련상품삭제
-    $sql = " delete from {$g4['yc4_item_relation_table']} where it_id = '$it_id' or it_id2 = '$it_id' ";
+    $sql = " delete from {$g4['shop_item_relation_table']} where it_id = '$it_id' or it_id2 = '$it_id' ";
 	sql_query($sql);
 
     // 상품요약정보삭제
-    $sql = " delete from {$g4['yc4_item_info_table']} where it_id = '$it_id' ";
+    $sql = " delete from {$g4['shop_item_info_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 
 
     //------------------------------------------------------------------------
     // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
     //------------------------------------------------------------------------
-    $sql = " select it_explan from {$g4['yc4_item_table']} where it_id = '$it_id' ";
+    $sql = " select it_explan from {$g4['shop_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
     $imgs = get_editor_image($it['it_explan']);
@@ -103,7 +103,7 @@ function itemdelete($it_id)
 
 
     // 상품 삭제
-	$sql = " delete from {$g4['yc4_item_table']} where it_id = '$it_id' ";
+	$sql = " delete from {$g4['shop_item_table']} where it_id = '$it_id' ";
 	sql_query($sql);
 }
 
@@ -226,13 +226,13 @@ if ($w == "" || $w == "u")
 
 
 // 관련상품을 우선 삭제함
-sql_query(" delete from {$g4['yc4_item_relation_table']} where it_id = '$it_id' ");
+sql_query(" delete from {$g4['shop_item_relation_table']} where it_id = '$it_id' ");
 
 // 관련상품의 반대도 삭제
-sql_query(" delete from {$g4['yc4_item_relation_table']} where it_id2 = '$it_id' ");
+sql_query(" delete from {$g4['shop_item_relation_table']} where it_id2 = '$it_id' ");
 
 // 이벤트상품을 우선 삭제함
-sql_query(" delete from {$g4['yc4_event_item_table']} where it_id = '$it_id' ");
+sql_query(" delete from {$g4['shop_event_item_table']} where it_id = '$it_id' ");
 
 
 $sql_common = " ca_id            = '$ca_id',
@@ -284,14 +284,14 @@ if ($w == "")
         alert("상품 코드가 없으므로 상품을 추가하실 수 없습니다.");
     }
 
-    $sql = " insert {$g4['yc4_item_table']}
+    $sql = " insert {$g4['shop_item_table']}
                 set it_id = '$it_id',
 					$sql_common	";
     sql_query($sql);
 }
 else if ($w == "u")
 {
-    $sql = " update {$g4['yc4_item_table']}
+    $sql = " update {$g4['shop_item_table']}
                 set $sql_common
               where it_id = '$it_id' ";
     sql_query($sql);
@@ -300,7 +300,7 @@ else if ($w == "d")
 {
     if ($is_admin != 'super')
     {
-        $sql = " select it_id from {$g4['yc4_item_table']} a, {$g4['yc4_category_table']} b
+        $sql = " select it_id from {$g4['shop_item_table']} a, {$g4['shop_category_table']} b
                   where a.it_id = '$it_id'
                     and a.ca_id = b.ca_id
                     and b.ca_mb_id = '{$member['mb_id']}' ";
@@ -320,13 +320,13 @@ if ($w == "" || $w == "u")
     {
         if (trim($it_id2[$i]))
         {
-            $sql = " insert into {$g4['yc4_item_relation_table']}
+            $sql = " insert into {$g4['shop_item_relation_table']}
                         set it_id  = '$it_id',
                             it_id2 = '$it_id2[$i]' ";
             sql_query($sql, false);
 
             // 관련상품의 반대로도 등록
-            $sql = " insert into {$g4['yc4_item_relation_table']}
+            $sql = " insert into {$g4['shop_item_relation_table']}
                         set it_id  = '$it_id2[$i]',
                             it_id2 = '$it_id' ";
             sql_query($sql, false);
@@ -339,7 +339,7 @@ if ($w == "" || $w == "u")
     {
         if (trim($ev_id[$i]))
         {
-            $sql = " insert into {$g4['yc4_event_item_table']}
+            $sql = " insert into {$g4['shop_event_item_table']}
                         set ev_id = '$ev_id[$i]',
                             it_id = '$it_id' ";
             sql_query($sql, false);

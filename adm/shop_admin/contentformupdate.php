@@ -27,19 +27,19 @@ if ($w == "")
     //if(eregi("[^a-z0-9_]", $co_id)) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
     if(preg_match("/[^a-z0-9_]/i", $co_id)) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
 
-    $sql = " select co_id from {$g4['yc4_content_table']} where co_id = '$co_id' ";
+    $sql = " select co_id from {$g4['shop_content_table']} where co_id = '$co_id' ";
     $row = sql_fetch($sql);
     if ($row['co_id'])
         alert("이미 같은 ID로 등록된 내용이 있습니다.");
 
-    $sql = " insert {$g4['yc4_content_table']}
+    $sql = " insert {$g4['shop_content_table']}
                 set co_id = '$co_id',
                     $sql_common ";
     sql_query($sql);
 }
 else if ($w == "u")
 {
-    $sql = " update {$g4['yc4_content_table']}
+    $sql = " update {$g4['shop_content_table']}
                 set $sql_common
               where co_id = '$co_id' ";
     sql_query($sql);
@@ -49,7 +49,7 @@ else if ($w == "d")
     @unlink(G4_DATA_PATH."/content/{$co_id}_h");
     @unlink(G4_DATA_PATH."/content/{$co_id}_t");
 
-    $sql = " delete from {$g4['yc4_content_table']} where co_id = '$co_id' ";
+    $sql = " delete from {$g4['shop_content_table']} where co_id = '$co_id' ";
     sql_query($sql);
 }
 

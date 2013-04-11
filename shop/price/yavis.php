@@ -35,21 +35,21 @@ function it_image($img)
 {
     global $g4;
 
-    $tmp = G4_DATA_PATH."item/$img";
+    $tmp = G4_DATA_PATH.'/item/'.$img;
     if (file_exists($tmp) && $img) {
-        $str = G4_DATA_URL."/item/$img";
+        $str = G4_DATA_URL.'/item/'.$img;
     } else {
-        $str = G4_SHOP_URL."/img/no_image.gif";
+        $str = G4_SHOP_URL.'/img/no_image.gif';
     }
     return $str;
 }
 
-include_once("./_common.php");
+include_once('./_common.php');
 
 // 페이지당 행수
 $page_rows = 100;
 
-$sql = " select count(*) as cnt from {$g4['yc4_item_table']} where it_use = '1' ";
+$sql = " select count(*) as cnt from {$g4['shop_item_table']} where it_use = '1' ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 ?>
@@ -88,7 +88,7 @@ if ($page == "") $page = 1;
 // 시작 레코드 구함
 $from_record = ($page - 1) * $page_rows;
 
-$sql = " select * from {$g4['yc4_item_table']}
+$sql = " select * from {$g4['shop_item_table']}
           where it_use = '1'
           order by ca_id
           limit $from_record, $page_rows ";
@@ -103,7 +103,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         $code = substr($row['ca_id'],0,$i*2);
 
-        $sql3 = " select ca_name from {$g4['yc4_category_table']} where ca_id = '$code' ";
+        $sql3 = " select ca_name from {$g4['shop_category_table']} where ca_id = '$code' ";
         $row3 = sql_fetch($sql3);
 
         $category .= $bar . $row3['ca_name'];

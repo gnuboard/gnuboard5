@@ -15,7 +15,7 @@ if ($sort2 == "") $sort2 = "desc";
 $sql  = " select a.it_id,
                  b.it_name,
                  COUNT(a.it_id) as it_id_cnt
-            from {$g4['yc4_wish_table']} a, {$g4['yc4_item_table']} b ";
+            from {$g4['shop_wish_table']} a, {$g4['shop_item_table']} b ";
 $sql .= " where a.it_id = b.it_id ";
 if ($fr_date && $to_date)
 {
@@ -58,7 +58,7 @@ $qstr1 = "fr_date=$fr_date&to_date=$to_date&sel_ca_id=$sel_ca_id";
         <select name="sel_ca_id">
             <option value=''>전체분류
             <?
-            $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
+            $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
             $result1 = sql_query($sql1);
             for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
                 $len = strlen($row1['ca_id']) / 2 - 1;

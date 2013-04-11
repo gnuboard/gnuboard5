@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <table bgcolor=#FFFFFF width=100% cellpadding=0 cellspacing=0>
 <tr><td align=center valign=top height=50><img src='<?=G4_SHOP_URL?>/img/bar_event.gif'></td></tr>
 <?
-$hsql = " select ev_id, ev_subject from {$g4['yc4_event_table']} where ev_use = '1' order by ev_id desc ";
+$hsql = " select ev_id, ev_subject from {$g4['shop_event_table']} where ev_use = '1' order by ev_id desc ";
 $hresult = sql_query($hsql);
 for ($i=0; $row=sql_fetch_array($hresult); $i++)
 {

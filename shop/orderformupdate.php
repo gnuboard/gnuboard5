@@ -11,12 +11,12 @@ $_POST = array_map("mysql_real_escape_string", $_POST);
 
 // 장바구니가 비어있는가?
 if (get_session("ss_direct"))
-    $tmp_uq_id = get_session("ss_uq_direct");
+    $tmp_uq_id = get_session('ss_uq_direct');
 else
-    $tmp_uq_id = get_session("ss_uq_id");
+    $tmp_uq_id = get_session('ss_uq_id');
 
 if (get_cart_count($tmp_uq_id) == 0)// 장바구니에 담기
-    alert("장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.", "./cart.php");
+    alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', './cart.php');
 
 $error = "";
 // 장바구니 상품 재고 검사
@@ -24,8 +24,8 @@ $error = "";
 $sql = " select a.it_id,
                 a.ct_qty,
                 b.it_name
-           from {$g4['yc4_cart_table']} a,
-                {$g4['yc4_item_table']} b
+           from {$g4['shop_cart_table']} a,
+                {$g4['shop_item_table']} b
           where a.uq_id = '$tmp_uq_id'
             and a.it_id = b.it_id ";
 $result = sql_query($sql);
@@ -50,7 +50,7 @@ $i_temp_point = (int)$_POST['od_temp_point'];
 
 
 // 주문금액이 상이함
-$sql = " select SUM(ct_amount * ct_qty) as od_amount from {$g4['yc4_cart_table']} where uq_id = '$tmp_uq_id' ";
+$sql = " select SUM(ct_amount * ct_qty) as od_amount from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' ";
 $row = sql_fetch($sql);
 if ((int)$row['od_amount'] !== $i_amount) {
     die("Error.");
@@ -102,12 +102,11 @@ if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_p
 if ($od_temp_point)
 {
     if ($member['mb_point'] < $od_temp_point)
-        alert("회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.");
+        alert('회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.');
 }
 
 $i_amount = $i_amount + $i_send_cost - $i_temp_point;
 
-$same_amount_check = $result_check = false;
 if ($od_settle_case == "무통장")
 {
     $od_temp_bank       = $i_amount;
@@ -130,9 +129,7 @@ else if ($od_settle_case == "계좌이체")
     $od_deposit_name    = $od_name;
     $bank_name          = iconv("cp949", "utf8", $bank_name);
     $od_bank_account    = $bank_name;
-    $same_amount_check  = true;
-    $result_check       = true;
-    $pg_receipt_amount  = $amount;
+    $pg_amount          = $amount;
 }
 else if ($od_settle_case == "가상계좌")
 {
@@ -148,7 +145,7 @@ else if ($od_settle_case == "가상계좌")
     $depositor          = iconv("cp949", "utf8", $depositor);
     $od_bank_account    = $bankname.' '.$account.' '.$depositor;
     $od_deposit_name    = $od_name;
-    $result_check       = true;
+    $pg_amount          = $amount;
 }
 else if ($od_settle_case == "휴대폰")
 {
@@ -162,9 +159,7 @@ else if ($od_settle_case == "휴대폰")
     $od_receipt_point   = $i_temp_point;
     $od_hp_time         = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $od_bank_account    = $commid.' '.$mobile_no;
-    $same_amount_check  = true;
-    $result_check       = true;
-    $pg_receipt_amount  = $amount;
+    $pg_amount          = $amount;
 }
 else if ($od_settle_case == "신용카드")
 {
@@ -179,9 +174,7 @@ else if ($od_settle_case == "신용카드")
     $od_card_time       = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $card_name          = iconv("cp949", "utf8", $card_name);
     $od_bank_account    = $card_name;
-    $same_amount_check  = true;
-    $result_check       = true;
-    $pg_receipt_amount  = $amount;
+    $pg_amount          = $amount;
 }
 else
 {
@@ -189,9 +182,9 @@ else
 }
 
 // 주문금액과 결제금액이 일치하는지 체크
-if($same_amount_check) {
-    if((int)$i_amount !== (int)$pg_receipt_amount) {
-        $cancel_msg = 'Receipt amount error';
+if($tno) {
+    if((int)$i_amount !== (int)$pg_amount) {
+        $cancel_msg = '결제금액 불일치';
         include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
 
         die("Receipt Amount Error");
@@ -207,7 +200,7 @@ else
 $od_id = get_session('ss_order_uniqid');
 
 // 주문서에 입력
-$sql = " insert {$g4['yc4_order_table']}
+$sql = " insert {$g4['shop_order_table']}
             set od_id             = '$od_id',
                 uq_id             = '$tmp_uq_id',
                 mb_id             = '{$member['mb_id']}',
@@ -252,9 +245,11 @@ $sql = " insert {$g4['yc4_order_table']}
 $result = sql_query($sql, false);
 
 // 주문정보 입력 오류시 kcp 결제 취소
-if($result_check && !$result) {
-    $cancel_msg = 'Order update error';
-    include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+if(!$result) {
+    if($tno) {
+        $cancel_msg = '주문정보 입력 오류';
+        include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+    }
 
     die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
 }
@@ -266,21 +261,23 @@ $sql_card_point = "";
 if (($od_receipt_card > 0 || $od_receipt_hp > 0) && $default['de_card_point'] == false) {
     $sql_card_point = " , ct_point = '0' ";
 }
-$sql = "update {$g4['yc4_cart_table']}
+$sql = "update {$g4['shop_cart_table']}
            set ct_status = '주문'
                $sql_card_point
          where uq_id = '$tmp_uq_id' ";
 $result = sql_query($sql, false);
 
 // 주문정보 입력 오류시 kcp 결제 취소
-if($result_check && !$result) {
-    $cancel_msg = 'Order status update error';
-    include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+if(!$result) {
+    if($tno) {
+        $cancel_msg = '주문상태 변경 오류';
+        include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+    }
 
     echo "<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}";
 
     // 주문삭제
-    sql_query(" delete from {$g4['yc4_order_table']} where od_id = '$od_id' and uq_id = '$tmp_uq_id' ");
+    sql_query(" delete from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id = '$tmp_uq_id' ");
     exit;
 }
 

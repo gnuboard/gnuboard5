@@ -26,9 +26,9 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['yc4_order_table']} a
-                left join {$g4['yc4_cart_table']} b on (a.uq_id = b.uq_id)
-                left join {$g4['yc4_item_table']} c on (b.it_id = c.it_id)
+$sql_common = " from {$g4['shop_order_table']} a
+                left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
+                left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -70,6 +70,17 @@ $sql  = " select a.od_id,
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql);
+
+$lines = array();
+for ($i=0; $row=sql_fetch_array($result); $i++)
+{
+    $lines[$i] = $row;
+
+    $tot_amount += $row['ct_amount'];
+    $tot_qty    += $row['ct_qty'];
+    $tot_sub_amount += $row['ct_sub_amount'];
+    $tot_sub_point  += $row['ct_sub_point'];
+}
 
 $qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search&save_search=$search";
 $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
@@ -130,6 +141,7 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
 <colgroup width=30>
 <colgroup width=30>
 <tr><td colspan=11 height=3 bgcolor=#0E87F9></td></tr>
+<thead>
 <tr align=center class=ht>
     <td><a href="<?=title_sort("od_id")."&$qstr1";?>">주문번호</a></td>
     <td><a href="<?=title_sort("od_name")."&$qstr1";?>">주문자</a></td>
@@ -143,48 +155,8 @@ $qstr  = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
     <td><a href="<?=title_sort("ct_status")."&$qstr1";?>">상태</a></td>
     <td>수정</td>
 </tr>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
-<tr><td colspan=11 height=3 bgcolor=#F8F8F8></td></tr>
-
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++) {
-
-    $od_deposit_name = "";
-    if ($row['od_deposit_name'] != "")
-        $od_deposit_name = "title='입금자 : {$row['od_deposit_name']}'";
-
-    $href = "$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=c.it_id&search=$row[it_id]";
-    $it_name = "<a href='$href'>".cut_str($row['it_name'],35)."</a><br>";
-    $it_name .= print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
-
-    $s_mod = icon("수정", "./orderform.php?od_id={$row['od_id']}");
-
-    $list = $i%2;
-    echo "
-    <tr class='list$list center'>
-        <td align=center title='주문일시 : {$row['od_time']}'><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_id&search={$row['od_id']}'>{$row['od_id']}</a></td>
-        <td align=center $od_deposit_name><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$row['od_name']}'>".cut_str($row['od_name'],10,"")."</a></td>
-        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$row['mb_id']}'>{$row['mb_id']}</a></td>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'].'_s', 50, 50)."</a></td>
-        <td align=left>$it_name</td>
-        <td align=right>".number_format($row['ct_amount'])."&nbsp;</td>
-        <td align=center>$row[ct_qty]</td>
-        <td align=right>".number_format($row['ct_sub_amount'])."&nbsp;</td>
-        <td align=right>".number_format($row['ct_sub_point'])."&nbsp;</td>
-        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search={$row['ct_status']}'>{$row['ct_status']}</a></td>
-        <td align=center>$s_mod</td>
-    </tr>";
-
-    $tot_amount += $row['ct_amount'];
-    $tot_qty    += $row['ct_qty'];
-    $tot_sub_amount += $row['ct_sub_amount'];
-    $tot_sub_point  += $row['ct_sub_point'];
-}
-
-if ($i == 0)
-    echo "<tr><td colspan=11 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
-?>
-<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+</thead>
+<tfoot>
 <tr class=ht>
     <td colspan=5 align=right>합 계&nbsp;</td>
     <td align=right><?=number_format($tot_amount)?>&nbsp;</td>
@@ -194,6 +166,45 @@ if ($i == 0)
     <td colspan=2></td>
 </tr>
 <tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+<tr><td colspan=11 height=3 bgcolor=#F8F8F8></td></tr>
+</tfoot>
+<tbody>
+<?
+for ($i=0; $i<count($lines); $i++) {
+
+    $od_deposit_name = "";
+    if ($lines[$i]['od_deposit_name'] != "")
+        $od_deposit_name = "title='입금자 : {$lines[$i]['od_deposit_name']}'";
+
+    $href = "$_SERVER[PHP_SELF]?sort1=$sort1&sort2=$sort2&sel_field=c.it_id&search=$lines[$i][it_id]";
+    $it_name = "<a href='$href'>".cut_str($lines[$i]['it_name'],35)."</a><br>";
+    $it_name .= print_item_options($lines[$i]['it_id'], $lines[$i]['it_opt1'], $lines[$i]['it_opt2'], $lines[$i]['it_opt3'], $lines[$i]['it_opt4'], $lines[$i]['it_opt5'], $lines[$i]['it_opt6']);
+
+    $s_mod = icon("수정", "./orderform.php?od_id={$lines[$i]['od_id']}");
+
+    $list = $i%2;
+    echo "
+    <tr class='list$list center'>
+        <td align=center title='주문일시 : {$lines[$i]['od_time']}'><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_id&search={$lines[$i]['od_id']}'>{$lines[$i]['od_id']}</a></td>
+        <td align=center $od_deposit_name><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=od_name&search={$lines[$i]['od_name']}'>".cut_str($lines[$i]['od_name'],10,"")."</a></td>
+        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=mb_id&search={$lines[$i]['mb_id']}'>{$lines[$i]['mb_id']}</a></td>
+        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($lines[$i]['it_id'].'_s', 50, 50)."</a></td>
+        <td align=left>$it_name</td>
+        <td align=right>".number_format($lines[$i]['ct_amount'])."&nbsp;</td>
+        <td align=center>{$lines[$i]['ct_qty']}</td>
+        <td align=right>".number_format($lines[$i]['ct_sub_amount'])."&nbsp;</td>
+        <td align=right>".number_format($lines[$i]['ct_sub_point'])."&nbsp;</td>
+        <td align=center><a href='{$_SERVER['PHP_SELF']}?sort1=$sort1&sort2=$sort2&sel_field=ct_status&search={$lines[$i]['ct_status']}'>{$lines[$i]['ct_status']}</a></td>
+        <td align=center>$s_mod</td>
+    </tr>";
+}
+
+if ($i == 0)
+    echo "<tr><td colspan=11 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+?>
+<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+<tr><td colspan=11 height=1 bgcolor=#CCCCCC></td></tr>
+</tbody>
 </table>
 
 <table width=100%>

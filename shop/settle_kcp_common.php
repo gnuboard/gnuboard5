@@ -142,7 +142,7 @@ if(!$default['de_card_test']) {
     if ( $tx_cd == "TX00" )
     {
         // 주문서 UPDATE
-        $sql = " update {$g4['yc4_order_table']}
+        $sql = " update {$g4['shop_order_table']}
                     set od_receipt_bank = '$ipgm_mnyx',
                         od_bank_time = '$tx_tm'
                   where od_id = '$order_no'

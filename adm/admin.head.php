@@ -24,7 +24,14 @@ function print_menu2($key, $no)
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
             continue;
 
-        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'">'.$menu[$key][$i][1].'</a></li>';
+        if ($menu[$key][$i][4] == 1 && $gnb_grp_style == false) $gnb_grp_div = 'gnb_grp_div';
+        else if ($menu[$key][$i][4] != 1 && $gnb_grp_style == true) $gnb_grp_div = 'gnb_grp_div';
+        else $gnb_grp_div = '';
+
+        if ($menu[$key][$i][4] == 1) $gnb_grp_style = 'gnb_grp_style';
+        else $gnb_grp_style = '';
+
+        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'" class="'.$gnb_grp_style.' '.$gnb_grp_div.'">'.$menu[$key][$i][1].'</a></li>';
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
@@ -74,9 +81,9 @@ function imageview(id, w, h)
                     </a>
                 </li>
                 <li>
-                    <a href="<?=G4_URL?>/">
+                    <a href="<?=G4_SHOP_URL?>/">
                         <img src="<?=G4_ADMIN_URL?>/img/snb_home.jpg" alt="" width="28" height="28">
-                        홈페이지 메인
+                        쇼핑몰 메인
                     </a>
                 </li>
                 <li>

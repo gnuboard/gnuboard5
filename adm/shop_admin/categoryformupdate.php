@@ -85,7 +85,7 @@ if ($w == "")
     // 소문자로 변환
     $ca_id = strtolower($ca_id);
 
-    $sql = " insert {$g4['yc4_category_table']}
+    $sql = " insert {$g4['shop_category_table']}
                 set ca_id   = '$ca_id',
                     ca_name = '$ca_name',
                     $sql_common ";
@@ -93,7 +93,7 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    $sql = " update {$g4['yc4_category_table']}
+    $sql = " update {$g4['shop_category_table']}
                 set ca_name = '$ca_name',
                     $sql_common
               where ca_id = '$ca_id' ";
@@ -102,7 +102,7 @@ else if ($w == "u")
     // 하위분류를 똑같은 설정으로 반영
     if ($sub_category) {
         $len = strlen($ca_id);
-        $sql = " update {$g4['yc4_category_table']}
+        $sql = " update {$g4['shop_category_table']}
                     set $sql_common
                   where SUBSTRING(ca_id,1,$len) = '$ca_id' ";
         if ($is_admin != 'super')
@@ -115,7 +115,7 @@ else if ($w == "d")
     // 분류의 길이
     $len = strlen($ca_id);
 
-    $sql = " select COUNT(*) as cnt from {$g4['yc4_category_table']}
+    $sql = " select COUNT(*) as cnt from {$g4['shop_category_table']}
               where SUBSTRING(ca_id,1,$len) = '$ca_id'
                 and ca_id <> '$ca_id' ";
     $row = sql_fetch($sql);
@@ -123,7 +123,7 @@ else if ($w == "d")
         alert("이 분류에 속한 하위 분류가 있으므로 삭제 할 수 없습니다.\\n\\n하위분류를 우선 삭제하여 주십시오.");
 
     $str = $comma = "";
-    $sql = " select it_id from {$g4['yc4_item_table']} where ca_id = '$ca_id' ";
+    $sql = " select it_id from {$g4['shop_item_table']} where ca_id = '$ca_id' ";
     $result = sql_query($sql);
     $i=0;
     while ($row = mysql_fetch_array($result))
@@ -146,7 +146,7 @@ else if ($w == "d")
     @unlink("{$g4['category_path']}/$ca_id"."_t");
 
     // 분류 삭제
-    $sql = " delete from {$g4['yc4_category_table']} where ca_id = '$ca_id' ";
+    $sql = " delete from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
     sql_query($sql);
 }
 

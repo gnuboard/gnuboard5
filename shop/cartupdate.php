@@ -32,14 +32,14 @@ if ($member['mb_level'] < $default['de_level_sell'])
 
 if ($act == "d") // 삭제이면
 {
-    $sql = " delete from {$g4['yc4_cart_table']}
+    $sql = " delete from {$g4['shop_cart_table']}
               where ct_id = '$ct_id'
                 and uq_id = '$tmp_uq_id' ";
     sql_query($sql);
 }
 else if ($act == "alldelete") // 모두 삭제이면
 {
-    $sql = " delete from {$g4['yc4_cart_table']}
+    $sql = " delete from {$g4['shop_cart_table']}
               where uq_id = '$tmp_uq_id' ";
     sql_query($sql);
 }
@@ -64,7 +64,7 @@ else if ($act == "allupdate") // 수량 변경이면 : 모두 수정이면
 
 	for ($i=0; $i<$fldcnt; $i++)
     {
-        $sql = " update {$g4['yc4_cart_table']}
+        $sql = " update {$g4['shop_cart_table']}
                     set ct_qty = '{$_POST['ct_qty'][$i]}'
                   where ct_id  = '{$_POST['ct_id'][$i]}'
                     and uq_id = '$tmp_uq_id' ";
@@ -85,7 +85,7 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
         // 비회원가격과 회원가격이 다르다면
         if (!$is_member && $default['de_different_msg'])
         {
-            $sql = " select it_amount, it_amount2 from {$g4['yc4_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
+            $sql = " select it_amount, it_amount2 from {$g4['shop_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
             $row = sql_fetch($sql);
             if ($row['it_amount2'] && $row['it_amount'] != $row['it_amount2']) {
                 $error .= "\"{$_POST['it_name'][$i]}\" 의 비회원가격과 회원가격이 다릅니다. 로그인 후 구입하여 주십시오.\\n\\n";
@@ -95,7 +95,7 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
         //--------------------------------------------------------
         //  변조 검사
         //--------------------------------------------------------
-        $sql = " select * from {$g4['yc4_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
+        $sql = " select * from {$g4['shop_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
         $it = sql_fetch($sql);
 
         $amount = get_amount($it);
@@ -110,7 +110,7 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
         //--------------------------------------------------------
 
         // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-        $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']} where it_id = '{$_POST['it_id'][$i]}' and uq_id = '$tmp_uq_id' ";
+        $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']} where it_id = '{$_POST['it_id'][$i]}' and uq_id = '$tmp_uq_id' ";
         $row = sql_fetch($sql);
         $sum_qty = $row['cnt'];
 
@@ -132,7 +132,7 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
         if (!$config['cf_use_point']) $_POST['it_point'][$i] = 0;
 
         // 장바구니에 Insert
-        $sql = " insert {$g4['yc4_cart_table']}
+        $sql = " insert {$g4['shop_cart_table']}
                     set uq_id       = '$tmp_uq_id',
                         it_id        = '{$_POST['it_id'][$i]}',
                         ct_status    = '쇼핑',
@@ -157,7 +157,7 @@ else // 장바구니에 담기
     // 비회원가격과 회원가격이 다르다면
     if (!$is_member && $default['de_different_msg'])
     {
-        $sql = " select it_amount, it_amount2 from {$g4['yc4_item_table']} where it_id = '{$_POST['it_id']}' ";
+        $sql = " select it_amount, it_amount2 from {$g4['shop_item_table']} where it_id = '{$_POST['it_id']}' ";
         $row = sql_fetch($sql);
         if ($row['it_amount2'] && $row['it_amount'] != $row['it_amount2']) {
             echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
@@ -170,7 +170,7 @@ else // 장바구니에 담기
     //  변조 검사
     //--------------------------------------------------------
     $opt_amount = 0;
-    $sql = " select * from {$g4['yc4_item_table']} where it_id = '{$_POST['it_id']}' ";
+    $sql = " select * from {$g4['shop_item_table']} where it_id = '{$_POST['it_id']}' ";
     $it = sql_fetch($sql);
     for ($i=1; $i<=6; $i++) {
         //$dst_opt = $_POST["it_opt".$i];
@@ -211,7 +211,7 @@ else // 장바구니에 담기
     //  재고 검사
     //--------------------------------------------------------
     // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-    $sql = " select SUM(ct_qty) as cnt from {$g4['yc4_cart_table']}
+    $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
               where it_id = '{$_POST['it_id']}'
                 and uq_id = '$tmp_uq_id' ";
     $row = sql_fetch($sql);
@@ -226,17 +226,17 @@ else // 장바구니에 담기
     //--------------------------------------------------------
 
     // 바로구매에 있던 장바구니 자료를 지운다.
-    $result = sql_query(" delete from {$g4['yc4_cart_table']} where uq_id = '$tmp_uq_id' and ct_direct = 1 ", false);
+    $result = sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and ct_direct = 1 ", false);
     if (!$result) {
         // 삭제중 에러가 발생했다면 필드가 없다는 것이므로 바로구매 필드를 생성한다.
-        sql_query(" ALTER TABLE `{$g4['yc4_cart_table']}` ADD `ct_direct` TINYINT NOT NULL ");
+        sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD `ct_direct` TINYINT NOT NULL ");
     }
 
     // 포인트 사용하지 않는다면
     if (!$config['cf_use_point']) { $_POST['it_point'] = 0; }
 
     // 장바구니에 Insert
-    $sql = " insert {$g4['yc4_cart_table']}
+    $sql = " insert {$g4['shop_cart_table']}
                 set uq_id       = '$tmp_uq_id',
                     it_id        = '{$_POST['it_id']}',
                     it_opt1      = '{$_POST['it_opt1']}',
