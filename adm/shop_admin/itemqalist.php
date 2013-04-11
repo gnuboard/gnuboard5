@@ -62,7 +62,7 @@ $qstr  = "$qstr&sca=$sca&save_stx=$stx";
     <fieldset>
     <legend>상품문의 검색</legend>
     <select name="sca">
-        <option value=''>전체분류</option>
+        <option value='' title="검색분류">전체분류</option>
         <?
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);

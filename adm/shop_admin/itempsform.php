@@ -24,49 +24,54 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 
 <?//=subtitle($g4['title'])?>
 
-<form name=fitemps method=post onsubmit="return fitemps_submit(this);" style="margin:0px;">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=is_id value='<? echo $is_id ?>'>
-<input type=hidden name=page  value='<? echo $page ?>'>
-<input type=hidden name=sort1 value='<? echo $sort1 ?>'>
-<input type=hidden name=sort2 value='<? echo $sort2 ?>'>
-<table cellpadding=0 cellspacing=1 width=100%>
-<colgroup width=120 class=tdsl></colgroup>
-<colgroup width='' bgcolor=#ffffff></colgroup>
-<tr><td colspan=4 height=3 bgcolor=0E87F9></td></tr>
-<tr height=25>
-    <td>&nbsp;상품명</td>
-    <td><a href='<?=G4_SHOP_URL?>/item.php?it_id=<?=$is['it_id']?>'><?=$is['it_name']?></a></td>
-</tr>
-<tr height=25>
-    <td>&nbsp;이 름</td>
-    <td><?=$name?></td>
-</tr>
-<tr height=25>
-    <td>&nbsp;점 수</td>
-    <td><? echo stripslashes($is['is_score']) ?> 점</td>
-</tr>
-<tr height=25>
-    <td>&nbsp;제 목</td>
-    <td><input type=text class=ed name=is_subject required itenmae='제목' style='width:99%;'
-        value='<?=conv_subject($is['is_subject'], 120)?>'></td>
-</tr>
-<tr>
-    <td>&nbsp;내 용</td>
-    <td>
-        <?=editor_html('is_content', $is['is_content']);?>
-    </td>
-</tr>
-<tr height=25>
-    <td>&nbsp;확 인</td>
-    <td><input type=checkbox name=is_confirm value='1' <?=($is['is_confirm']?"checked":"")?> id=is_confirm> <label for='is_confirm'>확인하였습니다.</a></td>
-</tr>
-<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
-</table>
+<form name="fitemps" method="post" onsubmit="return fitemps_submit(this);">
+<input type="hidden" name="w" value="<? echo $w ?>">
+<input type="hidden" name="is_id" value="<? echo $is_id ?>">
+<input type="hidden" name="page" value="<? echo $page ?>">
+<input type="hidden" name="sort1" value="<? echo $sort1 ?>">
+<input type="hidden" name="sort2" value="<? echo $sort2 ?>">
 
-<p align=center>
-    <input type=submit class=btn1 value='  확  인  ' accesskey='s'>&nbsp;
-    <input type=button class=btn1 value='  목  록  ' onclick="document.location.href='./itempslist.php?<?=$qstr?>';">
+<section class="cbox">
+    <h2>사용후기 수정</h2>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_15">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row">상품명</th>
+        <td><a href="<?=G4_SHOP_URL?>/item.php?it_id=<?=$is['it_id']?>"><?=$is['it_name']?></a></td>
+    </tr>
+    <tr>
+        <th scope="row">이름</th>
+        <td><?=$name?></td>
+    </tr>
+    <tr>
+        <th scope="row">점수</th>
+        <td><?=stripslashes($is['is_score']) ?> 점</td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="is_subject">제목</label></th>
+        <td><input type="text" name="is_subject" required class="required frm_input" id="is_subject" size="100"
+        value='<?=conv_subject($is['is_subject'], 120)?>'></td>
+    </tr>
+    <tr>
+        <th scope="row">내용</th>
+        <td><?=editor_html('is_content', $is['is_content']);?></td>
+    </tr>
+    <tr>
+        <th scope="row">확인</th>
+        <td><input type="checkbox" name="is_confirm" value="1" <?=($is['is_confirm']?"checked":"")?> id="is_confirm"><label for="is_confirm">확인하였습니다</label></td>
+    </tr>
+    </tbody>
+    </table>
+</section>
+
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./itempslist.php?<?=$qstr?>">목록</a>
+</div>
 </form>
 
 <script>

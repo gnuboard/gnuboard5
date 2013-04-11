@@ -63,6 +63,12 @@ if ($_POST['agree'] != '동의함') {
             <input name="shop_prefix" type="text" value="shop_" id="shop_prefix">
         </td>
     </tr>
+    <tr>
+        <th scope="row"><label for="">쇼핑몰설치</label></th>
+        <td>
+            <input name="shop_install" type="checkbox" value="1" id="shop_install">설치
+        </td>
+    </tr>
     </tbody>
     </table>
 

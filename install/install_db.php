@@ -19,6 +19,7 @@ $mysql_pass  = $_POST['mysql_pass'];
 $mysql_db    = $_POST['mysql_db'];
 $table_prefix= $_POST['table_prefix'];
 $shop_prefix = $_POST['shop_prefix'];
+$shop_install= $_POST['shop_install'];
 $admin_id    = $_POST['admin_id'];
 $admin_pass  = $_POST['admin_pass'];
 $admin_name  = $_POST['admin_name'];
@@ -47,6 +48,7 @@ if (!$select_db) {
 
 <ol>
 <?
+$cf_title = '그누보드4s';
 // 테이블 생성 ------------------------------------
 $file = implode('', file('./gnuboard4s.sql'));
 
@@ -59,14 +61,18 @@ for ($i=0; $i<count($f); $i++) {
 }
 
 // 쇼핑몰 테이블 생성 -----------------------------
-$file = implode('', file('./shop.sql'));
+if($shop_install) {
+    $file = implode('', file('./shop.sql'));
 
-$file = preg_replace('/^--.*$/m', '', $file);
-$file = preg_replace('/`shop_([^`]+`)/', '`'.$shop_prefix.'$1', $file);
-$f = explode(';', $file);
-for ($i=0; $i<count($f); $i++) {
-    if (trim($f[$i]) == '') continue;
-    mysql_query($f[$i]) or die(mysql_error());
+    $file = preg_replace('/^--.*$/m', '', $file);
+    $file = preg_replace('/`shop_([^`]+`)/', '`'.$shop_prefix.'$1', $file);
+    $f = explode(';', $file);
+    for ($i=0; $i<count($f); $i++) {
+        if (trim($f[$i]) == '') continue;
+        mysql_query($f[$i]) or die(mysql_error());
+    }
+
+    $cf_title = '쇼핑몰';
 }
 // 테이블 생성 ------------------------------------
 ?>
@@ -82,7 +88,7 @@ $download_point = -20;
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
 $sql = " insert into `{$table_prefix}config`
-            set cf_title = '쇼핑몰',
+            set cf_title = '$cf_title',
                 cf_admin = '$admin_id',
                 cf_use_point = '1',
                 cf_use_norobot = '1',
@@ -156,95 +162,185 @@ $sql = " insert into `{$table_prefix}member`
                  ";
 @mysql_query($sql);
 
-// 내용관리 생성
-@mysql_query(" insert into `{$shop_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b>' ") or die(mysql_error() . "<p>" . $sql);
-@mysql_query(" insert into `{$shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 취급방침', co_content= '<p align=center><b>개인정보 취급방침에 대한 내용을 입력하십시오.' ") or die(mysql_error() . "<p>" . $sql);
-@mysql_query(" insert into `{$shop_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.' ") or die(mysql_error() . "<p>" . $sql);
+if($shop_install) {
+    // 내용관리 생성
+    @mysql_query(" insert into `{$shop_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b>' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 취급방침', co_content= '<p align=center><b>개인정보 취급방침에 대한 내용을 입력하십시오.' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$shop_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.' ") or die(mysql_error() . "<p>" . $sql);
 
-// 온라인견적
-@mysql_query(" insert into `{$shop_prefix}onlinecalc` set oc_id = '1', oc_subject = '온라인견적' ") or die(mysql_error() . "<p>" . $sql);
+    // 온라인견적
+    @mysql_query(" insert into `{$shop_prefix}onlinecalc` set oc_id = '1', oc_subject = '온라인견적' ") or die(mysql_error() . "<p>" . $sql);
 
-// FAQ Master
-@mysql_query(" insert into `{$shop_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ") or die(mysql_error() . "<p>" . $sql);
+    // FAQ Master
+    @mysql_query(" insert into `{$shop_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ") or die(mysql_error() . "<p>" . $sql);
 
-// default 설정 (쇼핑몰 설정)
-$sql = " insert into `{$shop_prefix}default`
-            set de_admin_company_name = '회사명',
-                de_admin_company_saupja_no = '123-45-67890',
-                de_admin_company_owner = '대표자명',
-                de_admin_company_tel = '02-123-4567',
-                de_admin_company_fax = '02-123-4568',
-                de_admin_tongsin_no = '제 OO구 - 123호',
-                de_admin_buga_no = '12345호',
-                de_admin_company_zip = '123-456',
-                de_admin_company_addr = 'OO도 OO시 OO구 OO동 123-45',
-                de_admin_info_name = '정보책임자명',
-                de_admin_info_email = '정보책임자 E-mail',
-                de_type1_list_use = '1',
-                de_type1_list_skin = 'maintype10.inc.php',
-                de_type1_list_mod = '3',
-                de_type1_list_row = '2',
-                de_type1_img_width = '$simg_width',
-                de_type1_img_height = '$simg_height',
-                de_type2_list_use = '1',
-                de_type2_list_skin = 'maintype20.inc.php',
-                de_type2_list_mod = '3',
-                de_type2_list_row = '2',
-                de_type2_img_width = '$simg_width',
-                de_type2_img_height = '$simg_height',
-                de_type3_list_use = '1',
-                de_type3_list_skin = 'maintype30.inc.php',
-                de_type3_list_mod = '1',
-                de_type3_list_row = '3',
-                de_type3_img_width = '$simg_width',
-                de_type3_img_height = '$simg_height',
-                de_type4_list_use = '1',
-                de_type4_list_skin = 'maintype40.inc.php',
-                de_type4_list_mod = '3',
-                de_type4_list_row = '1',
-                de_type4_img_width = '$simg_width',
-                de_type4_img_height = '$simg_height',
-                de_type5_list_use = '1',
-                de_type5_list_skin = 'maintype50.inc.php',
-                de_type5_list_mod = '3',
-                de_type5_list_row = '1',
-                de_type5_img_width = '$simg_width',
-                de_type5_img_height = '$simg_height',
-                de_bank_use = '1',
-                de_bank_account = 'OO은행 12345-67-89012 예금주명',
-                de_vbank_use = '0',
-                de_iche_use = '0',
-                de_card_use = '0',
-                de_card_max_amount = '1000',
-                de_point_settle = '10000',
-                de_point_per = '5',
-                de_card_point = '0',
-                de_point_days = '7',
-                de_card_pg = 'kcp',
-                de_kcp_mid = 'T0000',
-                de_send_cost_case = '상한',
-                de_send_cost_limit = '20000;30000;40000',
-                de_send_cost_list = '4000;3000;2000',
-                de_hope_date_use = '0',
-                de_hope_date_after = '3',
-                de_baesong_content = '<b>배송 안내 입력전입니다.</b>',
-                de_change_content = '<b>교환/반품 안내 입력전입니다.</b>',
-                de_rel_list_mod = '4',
-                de_rel_img_width = '$simg_width',
-                de_rel_img_height = '$simg_height',
-                de_simg_width = '$simg_width',
-                de_simg_height = '$simg_height',
-                de_mimg_width = '$mimg_width',
-                de_mimg_height = '$mimg_height',
-                de_item_ps_use = '1',
-                de_level_sell = '1',
-                de_code_dup_use = '1',
-                de_sms_cont1 = '{이름}님의 회원가입을 축하드립니다.\nID:{회원아이디}\n{회사명}',
-                de_sms_cont2 = '{이름}님께서 주문하셨습니다.\n{주문번호}\n{주문금액}원\n{회사명}',
-                de_sms_cont3 = '{이름}님 입금 감사합니다.\n{입금액}원\n주문번호:\n{주문번호}\n{회사명}',
-                de_sms_cont4 = '{이름}님 배송합니다.\n택배:{택배회사}\n운송장번호:\n{운송장번호}\n{회사명}'
-                ";
-mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
+    // default 설정 (쇼핑몰 설정)
+    $sql = " insert into `{$shop_prefix}default`
+                set de_admin_company_name = '회사명',
+                    de_admin_company_saupja_no = '123-45-67890',
+                    de_admin_company_owner = '대표자명',
+                    de_admin_company_tel = '02-123-4567',
+                    de_admin_company_fax = '02-123-4568',
+                    de_admin_tongsin_no = '제 OO구 - 123호',
+                    de_admin_buga_no = '12345호',
+                    de_admin_company_zip = '123-456',
+                    de_admin_company_addr = 'OO도 OO시 OO구 OO동 123-45',
+                    de_admin_info_name = '정보책임자명',
+                    de_admin_info_email = '정보책임자 E-mail',
+                    de_type1_list_use = '1',
+                    de_type1_list_skin = 'maintype10.inc.php',
+                    de_type1_list_mod = '3',
+                    de_type1_list_row = '2',
+                    de_type1_img_width = '$simg_width',
+                    de_type1_img_height = '$simg_height',
+                    de_type2_list_use = '1',
+                    de_type2_list_skin = 'maintype10.inc.php',
+                    de_type2_list_mod = '3',
+                    de_type2_list_row = '2',
+                    de_type2_img_width = '$simg_width',
+                    de_type2_img_height = '$simg_height',
+                    de_type3_list_use = '1',
+                    de_type3_list_skin = 'maintype10.inc.php',
+                    de_type3_list_mod = '1',
+                    de_type3_list_row = '3',
+                    de_type3_img_width = '$simg_width',
+                    de_type3_img_height = '$simg_height',
+                    de_type4_list_use = '1',
+                    de_type4_list_skin = 'maintype10.inc.php',
+                    de_type4_list_mod = '3',
+                    de_type4_list_row = '1',
+                    de_type4_img_width = '$simg_width',
+                    de_type4_img_height = '$simg_height',
+                    de_type5_list_use = '1',
+                    de_type5_list_skin = 'maintype10.inc.php',
+                    de_type5_list_mod = '3',
+                    de_type5_list_row = '1',
+                    de_type5_img_width = '$simg_width',
+                    de_type5_img_height = '$simg_height',
+                    de_bank_use = '1',
+                    de_bank_account = 'OO은행 12345-67-89012 예금주명',
+                    de_vbank_use = '0',
+                    de_iche_use = '0',
+                    de_card_use = '0',
+                    de_card_max_amount = '1000',
+                    de_point_settle = '10000',
+                    de_point_per = '5',
+                    de_card_point = '0',
+                    de_point_days = '7',
+                    de_card_pg = 'kcp',
+                    de_kcp_mid = 'T0000',
+                    de_send_cost_case = '상한',
+                    de_send_cost_limit = '20000;30000;40000',
+                    de_send_cost_list = '4000;3000;2000',
+                    de_hope_date_use = '0',
+                    de_hope_date_after = '3',
+                    de_baesong_content = '<b>배송 안내 입력전입니다.</b>',
+                    de_change_content = '<b>교환/반품 안내 입력전입니다.</b>',
+                    de_rel_list_mod = '4',
+                    de_rel_img_width = '$simg_width',
+                    de_rel_img_height = '$simg_height',
+                    de_simg_width = '$simg_width',
+                    de_simg_height = '$simg_height',
+                    de_mimg_width = '$mimg_width',
+                    de_mimg_height = '$mimg_height',
+                    de_item_ps_use = '1',
+                    de_level_sell = '1',
+                    de_code_dup_use = '1',
+                    de_sms_cont1 = '{이름}님의 회원가입을 축하드립니다.\nID:{회원아이디}\n{회사명}',
+                    de_sms_cont2 = '{이름}님께서 주문하셨습니다.\n{주문번호}\n{주문금액}원\n{회사명}',
+                    de_sms_cont3 = '{이름}님 입금 감사합니다.\n{입금액}원\n주문번호:\n{주문번호}\n{회사명}',
+                    de_sms_cont4 = '{이름}님 배송합니다.\n택배:{택배회사}\n운송장번호:\n{운송장번호}\n{회사명}'
+                    ";
+    mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
+
+    // 게시판 그룹 생성
+    @mysql_query(" insert into `{$table_prefix}group` set gr_id = 'shop', gr_subject = '쇼핑몰' ");
+
+    // 게시판 생성
+    $tmp_bo_table   = array ("qa", "free", "notice");
+    $tmp_bo_subject = array ("질문답변", "자유게시판", "공지사항");
+    for ($i=0; $i<count($tmp_bo_table); $i++)
+    {
+        $sql = " insert into `{$table_prefix}board`
+                    set bo_table = '$tmp_bo_table[$i]',
+                        gr_id = 'shop',
+                        bo_subject = '$tmp_bo_subject[$i]',
+                        bo_device           = 'both',
+                        bo_admin            = '',
+                        bo_list_level       = '1',
+                        bo_read_level       = '1',
+                        bo_write_level      = '1',
+                        bo_reply_level      = '1',
+                        bo_comment_level    = '1',
+                        bo_html_level       = '1',
+                        bo_link_level       = '1',
+                        bo_count_modify     = '1',
+                        bo_count_delete     = '1',
+                        bo_upload_level     = '1',
+                        bo_download_level   = '1',
+                        bo_read_point       = '-1',
+                        bo_write_point      = '5',
+                        bo_comment_point    = '1',
+                        bo_download_point   = '-20',
+                        bo_use_category     = '0',
+                        bo_category_list    = '',
+                        bo_use_sideview     = '0',
+                        bo_use_file_content = '0',
+                        bo_use_secret       = '0',
+                        bo_use_dhtml_editor = '0',
+                        bo_use_rss_view     = '0',
+                        bo_use_good         = '0',
+                        bo_use_nogood       = '0',
+                        bo_use_name         = '0',
+                        bo_use_signature    = '0',
+                        bo_use_ip_view      = '0',
+                        bo_use_list_view    = '0',
+                        bo_use_list_content = '0',
+                        bo_use_email        = '0',
+                        bo_table_width      = '97',
+                        bo_subject_len      = '60',
+                        bo_mobile_subject_len      = '30',
+                        bo_page_rows        = '15',
+                        bo_mobile_page_rows = '15',
+                        bo_new              = '24',
+                        bo_hot              = '100',
+                        bo_image_width      = '600',
+                        bo_skin             = 'basic',
+                        bo_mobile_skin      = 'basic',
+                        bo_include_head     = '_head.php',
+                        bo_include_tail     = '_tail.php',
+                        bo_content_head     = '',
+                        bo_content_tail     = '',
+                        bo_mobile_content_head     = '',
+                        bo_mobile_content_tail     = '',
+                        bo_insert_content   = '',
+                        bo_gallery_cols     = '4',
+                        bo_gallery_width    = '174',
+                        bo_gallery_height   = '124',
+                        bo_mobile_gallery_cols  = '3',
+                        bo_mobile_gallery_width = '125',
+                        bo_mobile_gallery_height= '100',
+                        bo_upload_count     = '2',
+                        bo_upload_size      = '1048576',
+                        bo_reply_order      = '1',
+                        bo_use_search       = '0',
+                        bo_order            = '0'
+                        ";
+        @mysql_query($sql);
+
+        // 게시판 테이블 생성
+        $file = file("../adm/sql_write.sql");
+        $sql = implode($file, "\n");
+
+        $create_table = $table_prefix.'write_' . $tmp_bo_table[$i];
+
+        // sql_board.sql 파일의 테이블명을 변환
+        $source = array("/__TABLE_NAME__/", "/;/");
+        $target = array($create_table, "");
+        $sql = preg_replace($source, $target, $sql);
+        @mysql_query($sql);
+    }
+}
 ?>
 
     <li>DB설정 완료</li>
@@ -259,20 +355,30 @@ $dir_arr = array (
     $data_path.'/file',
     $data_path.'/log',
     $data_path.'/member',
-    $data_path.'/session',
-    $data_path.'/banner',
-    $data_path.'/category',
-    $data_path.'/common',
-    $data_path.'/content',
-    $data_path.'/event',
-    $data_path.'/faq',
-    $data_path.'/item',
-    $data_path.'/onlinecalc'
+    $data_path.'/session'
 );
 
 for ($i=0; $i<count($dir_arr); $i++) {
     @mkdir($dir_arr[$i], 0707);
     @chmod($dir_arr[$i], 0707);
+}
+
+if($shop_install) {
+    $dir_arr = array (
+        $data_path.'/banner',
+        $data_path.'/category',
+        $data_path.'/common',
+        $data_path.'/content',
+        $data_path.'/event',
+        $data_path.'/faq',
+        $data_path.'/item',
+        $data_path.'/onlinecalc'
+    );
+
+    for ($i=0; $i<count($dir_arr); $i++) {
+        @mkdir($dir_arr[$i], 0707);
+        @chmod($dir_arr[$i], 0707);
+    }
 }
 ?>
 
@@ -291,7 +397,14 @@ fwrite($f, "define('G4_MYSQL_HOST', '{$mysql_host}');\n");
 fwrite($f, "define('G4_MYSQL_USER', '{$mysql_user}');\n");
 fwrite($f, "define('G4_MYSQL_PASSWORD', '{$mysql_pass}');\n");
 fwrite($f, "define('G4_MYSQL_DB', '{$mysql_db}');\n\n");
-fwrite($f, "define('G4_TABLE_PREFIX', '{$table_prefix}');\n\n");
+if($shop_install) {
+    fwrite($f, "define('G4_USE_SHOP', true);\n\n");
+    fwrite($f, "define('G4_TABLE_PREFIX', '{$table_prefix}');\n");
+    fwrite($f, "define('SHOP_TABLE_PREFIX', '{$shop_prefix}');\n\n");
+
+} else {
+    fwrite($f, "define('G4_TABLE_PREFIX', '{$table_prefix}');\n\n");
+}
 fwrite($f, "\$g4['write_prefix'] = G4_TABLE_PREFIX.'write_'; // 게시판 테이블명 접두사\n\n");
 fwrite($f, "\$g4['auth_table'] = G4_TABLE_PREFIX.'auth'; // 관리권한 설정 테이블\n");
 fwrite($f, "\$g4['config_table'] = G4_TABLE_PREFIX.'config'; // 기본환경 설정 테이블\n");
@@ -314,6 +427,29 @@ fwrite($f, "\$g4['visit_table'] = G4_TABLE_PREFIX.'visit'; // 방문자 테이�
 fwrite($f, "\$g4['visit_sum_table'] = G4_TABLE_PREFIX.'visit_sum'; // 방문자 합계 테이블\n");
 fwrite($f, "\$g4['uniqid_table'] = G4_TABLE_PREFIX.'uniqid'; // 유니크한 값을 만드는 테이블\n");
 fwrite($f, "\$g4['syndi_log_table'] = G4_TABLE_PREFIX.'syndi_log'; // 네이버 신디케이션 컨텐츠 삭제 로그 테이블\n");
+if($shop_install) {
+    fwrite($f, "\n");
+    fwrite($f, "\$g4['shop_default_table'] = SHOP_TABLE_PREFIX.'default'; // 쇼핑몰설정 테이블\n");
+    fwrite($f, "\$g4['shop_banner_table'] = SHOP_TABLE_PREFIX.'banner'; // 배너 테이블\n");
+    fwrite($f, "\$g4['shop_card_history_table'] = SHOP_TABLE_PREFIX.'card_history'; // 전자결제이력 테이블\n");
+    fwrite($f, "\$g4['shop_cart_table'] = SHOP_TABLE_PREFIX.'cart'; // 장바구니 테이블\n");
+    fwrite($f, "\$g4['shop_category_table'] = SHOP_TABLE_PREFIX.'category'; // 상품분류 테이블\n");
+    fwrite($f, "\$g4['shop_content_table'] = SHOP_TABLE_PREFIX.'content'; // 내용(컨텐츠)정보 테이블\n");
+    fwrite($f, "\$g4['shop_delivery_table'] = SHOP_TABLE_PREFIX.'delivery'; // 배송정보 테이블\n");
+    fwrite($f, "\$g4['shop_event_table'] = SHOP_TABLE_PREFIX.'event'; // 이벤트 테이블\n");
+    fwrite($f, "\$g4['shop_event_item_table'] = SHOP_TABLE_PREFIX.'event_item'; // 상품, 이벤트 연결 테이블\n");
+    fwrite($f, "\$g4['shop_faq_table'] = SHOP_TABLE_PREFIX.'faq'; // 자주하시는 질문 테이블\n");
+    fwrite($f, "\$g4['shop_faq_master_table'] = SHOP_TABLE_PREFIX.'faq_master'; // 자주하시는 질문 마스터 테이블\n");
+    fwrite($f, "\$g4['shop_item_table'] = SHOP_TABLE_PREFIX.'item'; // 상품 테이블\n");
+    fwrite($f, "\$g4['shop_item_ps_table'] = SHOP_TABLE_PREFIX.'item_ps'; // 상품 사용후기 테이블\n");
+    fwrite($f, "\$g4['shop_item_qa_table'] = SHOP_TABLE_PREFIX.'item_qa'; // 상품 질문답변 테이블\n");
+    fwrite($f, "\$g4['shop_item_relation_table'] = SHOP_TABLE_PREFIX.'item_relation'; // 관련 상품 테이블\n");
+    fwrite($f, "\$g4['shop_new_win_table'] = SHOP_TABLE_PREFIX.'new_win'; // 새창 테이블\n");
+    fwrite($f, "\$g4['shop_onlinecalc_table'] = SHOP_TABLE_PREFIX.'onlinecalc'; // 온라인견적 테이블\n");
+    fwrite($f, "\$g4['shop_order_table'] = SHOP_TABLE_PREFIX.'order'; // 주문서 테이블\n");
+    fwrite($f, "\$g4['shop_wish_table'] = SHOP_TABLE_PREFIX.'wish'; // 보관함(위시리스트) 테이블\n");
+    fwrite($f, "\$g4['shop_item_info_table'] = SHOP_TABLE_PREFIX.'item_info'; // 상품요약정보 테이블 (상품정보고시)\n");
+}
 fwrite($f, "?>");
 
 fclose($f);
@@ -337,7 +473,7 @@ fclose($f);
 ?>
 </ol>
 
-<p class="st_strong">축하합니다. 쇼핑몰 설치가 완료되었습니다.</p>
+<p class="st_strong">축하합니다. <?=$cf_title?> 설치가 완료되었습니다.</p>
 
 <h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
 
