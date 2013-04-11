@@ -45,7 +45,7 @@ if (!$sst)  {
 }
 $sql_order = "order by $sst $sod";
 
-$sql_common = "  from {$g4['shop_item_table']} ";
+$sql_common = "  from {$g4['yc4_item_table']} ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
@@ -89,7 +89,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         <select name="sca" title="검색분류">
             <option value="">전체분류</option>
             <?
-            $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
+            $sql1 = " select ca_id, ca_name from {$g4['yc4_category_table']} order by ca_id ";
             $result1 = sql_query($sql1);
             for ($i=0; $row1=sql_fetch_array($result1); $i++) {
                 $len = strlen($row1['ca_id']) / 2 - 1;
@@ -135,7 +135,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
     </colgroup>
     <thead>
     <tr>
-        <th scope="col"><?=subject_sort_link("it_id", $qstr, 1)?>상품<br>코드</a></th>
+        <th scope="col"><?=subject_sort_link("it_id", $qstr, 1)?>상품코드</a></th>
         <th scope="col"><?=subject_sort_link("it_name")?>상품명</a></th>
         <th scope="col"><?=subject_sort_link("it_type1", $qstr, 1)?>히트<br>상품</a></th>
         <th scope="col"><?=subject_sort_link("it_type2", $qstr, 1)?>추천<br>상품</a></th>
