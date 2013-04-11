@@ -108,15 +108,18 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <table id="sodr_all">
     <thead>
     <tr>
-        <th id="sodr_all_num"><a href="<?=title_sort("od_id", 1)."&amp;$qstr1";?>">주문번호<br>주문일시</a></th>
-        <th id="sodr_all_id"><a href="<?=title_sort("od_name")."&amp;$qstr1";?>">주문자/입금자</a><br><a href="<?=title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID</a></th>
-        <th id="sodr_all_cnt"><a href="<?=title_sort("itemcount", 1)."&amp;$qstr1";?>">건수</a></th>
-        <th id="sodr_all_calc"><a href="<?=title_sort("orderamount", 1)."&amp;$qstr1";?>">주문합계</a></th>
-        <th id="sodr_all_cancel"><a href="<?=title_sort("ordercancel", 1)."&amp;$qstr1";?>">주문취소</a></th>
-        <th id="sodr_all_dc"><a href="<?=title_sort("od_dc_amount", 1)."&amp;$qstr1";?>">DC</a></th>
-        <th id="sodr_all_inc"><a href="<?=title_sort("receiptamount")."&amp;$qstr1";?>">입금합계</a></th>
-        <th id="sodr_all_inc_cancel"><a href="<?=title_sort("receiptcancel", 1)."&amp;$qstr1";?>">입금취소</a></th>
-        <th id="sodr_all_nonpay"><a href="<?=title_sort("misu", 1)."&amp;$qstr1";?>">미수금</a></th>
+        <th id="sodr_all_num"><a href="<?=title_sort("od_id", 1)."&amp;$qstr1";?>">주문번호<span class="sound_only"> 순 정렬</span></a><br>주문일시</th>
+        <th id="sodr_all_id">
+            <a href="<?=title_sort("od_name")."&amp;$qstr1";?>">주문자<span class="sound_only"> 순 정렬</span>/입금자</a><br>
+            <a href="<?=title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID</a>
+        </th>
+        <th id="sodr_all_cnt"><a href="<?=title_sort("itemcount", 1)."&amp;$qstr1";?>">건수<span class="sound_only"> 순 정렬</span></a></th>
+        <th id="sodr_all_calc"><a href="<?=title_sort("orderamount", 1)."&amp;$qstr1";?>">주문합계<span class="sound_only"> 순 정렬</span></a></th>
+        <th id="sodr_all_cancel"><a href="<?=title_sort("ordercancel", 1)."&amp;$qstr1";?>">주문취소<span class="sound_only"> 순 정렬</span></a></th>
+        <th id="sodr_all_dc"><a href="<?=title_sort("od_dc_amount", 1)."&amp;$qstr1";?>">DC<span class="sound_only"> 순 정렬</span></a></th>
+        <th id="sodr_all_inc"><a href="<?=title_sort("receiptamount")."&amp;$qstr1";?>">입금합계<span class="sound_only"> 순 정렬</span></a></th>
+        <th id="sodr_all_inc_cancel"><a href="<?=title_sort("receiptcancel", 1)."&amp;$qstr1";?>">입금취소<span class="sound_only"> 순 정렬</span></a></th>
+        <th id="sodr_all_nonpay"><a href="<?=title_sort("misu", 1)."&amp;$qstr1";?>">미수금<span class="sound_only"> 순 정렬</span></a></th>
         <th id="sodr_all_payby">결제수단</th>
         <th id="sodr_all_mng">관리</th>
     </tr>

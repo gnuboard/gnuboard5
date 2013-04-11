@@ -132,15 +132,15 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <table id="sodr_status">
     <thead>
     <tr>
-        <th scope="col"><a href="<?=title_sort("od_id")."&amp;$qstr1";?>">주문번호<br>주문일시</a></th>
-        <th scope="col"><a href="<?=title_sort("it_name")."&amp;$qstr1";?>">상품명</a></th>
-        <th scope="col"><a href="<?=title_sort("od_name")."&amp;$qstr1";?>">주문자<br>입금자</a></th>
-        <th scope="col"><a href="<?=title_sort("mb_id")."&amp;$qstr1";?>">회원ID</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_amount")."&amp;$qstr1";?>">판매가</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_qty")."&amp;$qstr1";?>">수량</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_sub_amount")."&amp;$qstr1";?>">소계</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_sub_point")."&amp;$qstr1";?>">포인트</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status")."&amp;$qstr1";?>">상태</a></th>
+        <th scope="col"><a href="<?=title_sort("od_id")."&amp;$qstr1";?>">주문번호<span class="sound_only"> 순 정렬</span></a><br>주문일시</th>
+        <th scope="col"><a href="<?=title_sort("it_name")."&amp;$qstr1";?>">상품명<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("od_name")."&amp;$qstr1";?>">주문자<span class="sound_only"> 순 정렬</span></a><br>입금자</th>
+        <th scope="col"><a href="<?=title_sort("mb_id")."&amp;$qstr1";?>">회원ID<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_amount")."&amp;$qstr1";?>">판매가<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_qty")."&amp;$qstr1";?>">수량<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_sub_amount")."&amp;$qstr1";?>">소계<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_sub_point")."&amp;$qstr1";?>">포인트<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status")."&amp;$qstr1";?>">상태<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col">수정</th>
     </tr>
     </thead>
@@ -170,17 +170,13 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     <tr>
         <td class="td_odrnum2">
-            <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=od_id&amp;search=<?=$lines[$i]['od_id']?>">
-                <?=$lines[$i]['od_id']?><br>
-                <?=$lines[$i]['od_time']?>
-            </a>
+            <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=od_id&amp;search=<?=$lines[$i]['od_id']?>"><?=$lines[$i]['od_id']?></a><br>
+            <?=$lines[$i]['od_time']?>
         </td>
         <td class="td_it_img"><a href="<?=$href?>"><?=get_it_image($lines[$i]['it_id'].'_s', 50, 50)?><?=$it_name?></a></td>
         <td class="td_name">
-            <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=od_name&amp;search=<?=$lines[$i]['od_name']?>">
-                <span class="sound_only">주문자 </span><?=cut_str($lines[$i]['od_name'],10,"")?>
-                <? if ($lines[$i]['od_deposit_name'] != "") echo '<br><span class="sound_only">입금자 </span>'.$lines[$i]['od_deposit_name']?>
-            </a>
+            <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=od_name&amp;search=<?=$lines[$i]['od_name']?>"><?=cut_str($lines[$i]['od_name'],10,"")?></a>
+            <? if ($lines[$i]['od_deposit_name'] != "") echo '<br>'.$lines[$i]['od_deposit_name']?>
         </td>
         <td class="td_name"><a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=mb_id&amp;search=<?=$lines[$i]['mb_id']?>"><?=$lines[$i]['mb_id']?></a></td>
         <td><?=number_format($lines[$i]['ct_amount'])?></td>
