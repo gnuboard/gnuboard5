@@ -170,7 +170,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         }
 
         if (!$i)
-            echo '<tr><td colspan="9" class="itemtypelist empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
+            echo '<tr><td colspan="9" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
         ?>
     </tbody>
     <tfoot>
