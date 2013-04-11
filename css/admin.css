@@ -191,7 +191,7 @@ tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-
 td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
 .bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 /* 내용 없는 테이블 */
-.empty_table {padding:200px 0;text-align:center}
+.empty_table {padding:100px 0;text-align:center}
 /* 테이블 그리드 padding 0 5px 고려한 넓이 */
 .grid_1 {width:40px}
 .grid_2 {width:90px}
@@ -300,15 +300,17 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #scf_cardtest_tip dd {padding:0;overflow:hidden}
 .scf_cardtest_tip {display:none}
 
-#frm_sms dl {border-bottom:1px solid #ddd;zoom:1}
-#frm_sms dl:after {display:block;visibility:hidden;clear:both;content:""}
-#frm_sms dt {clear:both;float:left;padding:5px 0;width:100px}
-#frm_sms dd {padding:5px 0;overflow:hidden}
-#scf_sms {padding:0 0 10px;border-bottom:1px solid #ddd;zoom:1}
+#scf_sms_pre h3 {padding:10px 0 0}
+#scf_sms_pre dl {margin:10px 0 0;zoom:1}
+#scf_sms_pre dl:after {display:block;visibility:hidden;clear:both;content:""}
+#scf_sms_pre dt {clear:both;float:left;padding:5px 0;width:100px}
+#scf_sms_pre dd {padding:5px 0;overflow:hidden}
+#scf_sms_pre p {margin:0 0 20px}
+#scf_sms {margin:0 0 30px;zoom:1}
 #scf_sms:after {display:block;visibility:hidden;clear:both;content:""}
 .scf_sms_box {float:left;margin:0 31px;width:163px;text-align:center}
-.scf_sms_box h3 {margin:0 0 10px}
-.scf_sms_img {margin:0 0 10px;width:163px;height:191px;background:url('../adm/shop_admin/img/sms_back.gif') no-repeat 0 0;text-align:center}
+.scf_sms_box h4 {margin:0 0 5px}
+.scf_sms_img {margin:10px 0;width:163px;height:191px;background:url('../adm/shop_admin/img/sms_back.gif') no-repeat 0 0;text-align:center}
 .scf_sms_img textarea {margin:54px 0 0;width:115px;height:85px;border:0;background:transparent;font-size:0.95em;overflow:hidden}
 .scf_sms_img span {display:block}
 .scf_sms_cnt {display:block}
