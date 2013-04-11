@@ -5,7 +5,7 @@ include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$html_title = "새창";
+$html_title = "팝업레이어";
 if ($w == "u")
 {
     $html_title .= " 수정";
@@ -33,63 +33,70 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="nw_id" value="<? echo $nw_id ?>">
 
 <section class="cbox">
-    <h2>새창 입력 수정</h2>
-    <p><?=help("쇼핑몰 초기화면 접속 시 자동으로 뜰 새창을 설정/관리합니다.")?></p>
+    <h2><?=$html_title?></h2>
+    <p><?=help("쇼핑몰 초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다.")?></p>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_5">
-        <col class="grid_3">
-        <col class="grid_5">
+        <col class="grid_12">
     </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="nw_disable_hours">시간</label></th>
-        <td colspan="3"><input type="text" name="nw_disable_hours" value="<? echo $nw['nw_disable_hours'] ?>" id="nw_disable_hours" required class="frm_input required" size="5"> 시간 동안 다시 띄우지 않음</td>
+        <td>
+            <?=help("고객이 다시 보지 않음을 선택할 시 몇 시간동안 팝업레이어를 보여주지 않을지 설정합니다.")?>
+            <input type="text" name="nw_disable_hours" value="<? echo $nw['nw_disable_hours'] ?>" id="nw_disable_hours" required class="frm_input required" size="5"> 시간
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="nw_begin_time">시작일시</label></th>
         <td>
             <input type="text" name="nw_begin_time" value="<? echo $nw['nw_begin_time'] ?>" id="nw_begin_time" required class="frm_input required" size="21" maxlength="19">
+            <label for="nw_begin_chk">시작일시를 오늘로</label>
             <input type="checkbox" name="nw_begin_chk" value="<? echo date("Y-m-d 00:00:00", G4_SERVER_TIME); ?>" id="nw_begin_chk" onclick="if (this.checked == true) this.form.nw_begin_time.value=this.form.nw_begin_chk.value; else this.form.nw_begin_time.value = this.form.nw_begin_time.defaultValue;">
-            <label for="nw_begin_chk">오늘</label>
         </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="nw_end_time">종료일시</label></th>
         <td>
-            <input type="text" name="nw_end_time" value="<? echo $nw['nw_end_time'] ?>" id="nw_end_time" required class="frm_input requried" size="21" maxlength="19">
+            <input type="text" name="nw_end_time" value="<? echo $nw['nw_end_time'] ?>" id="nw_end_time" required class="frm_input required" size="21" maxlength="19">
+            <label for="nw_end_chk">종료일시를 오늘로부터 7일 후로</label>
             <input type="checkbox" name="nw_end_chk" value="<? echo date("Y-m-d 23:59:59", G4_SERVER_TIME+(60*60*24*7)); ?>" id="nw_end_chk" onclick="if (this.checked == true) this.form.nw_end_time.value=this.form.nw_end_chk.value; else this.form.nw_end_time.value = this.form.nw_end_time.defaultValue;">
-            <label for="nw_end_chk">오늘+7일</label>
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="nw_left">창위치 왼쪽</label></th>
+        <th scope="row"><label for="nw_left">팝업레이어 좌측 위치</label></th>
         <td>
-           <input type="text" name="nw_left" value="<? echo $nw['nw_left'] ?>" id="nw_left" required class="frm_input requried" size="5">
-        </td>
-        <th scope="row"><label for="nw_top">창위치 위</label></th>
-        <td>
-            <input type="text" name="nw_top" value="<? echo $nw['nw_top'] ?>" id="nw_top" required class="frm_input requried"  size="5">
+           <input type="text" name="nw_left" value="<? echo $nw['nw_left'] ?>" id="nw_left" required class="frm_input required" size="5"> px
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="nw_width">창크기 폭</label></th>
+        <th scope="row"><label for="nw_top">팝업레이어 상단 위치</label></th>
         <td>
-            <input type="text" name="nw_width" value="<? echo $nw['nw_width'] ?>" id="nw_width" required class="frm_input requried" size="5">
-        </td>
-        <th scope="row"><label for="nw_height">창크기 높이</label></th>
-        <td>
-            <input type="text" name="nw_height" value="<? echo $nw['nw_height'] ?>" id="nw_height" required class="frm_input requried" size="5">
+            <input type="text" name="nw_top" value="<? echo $nw['nw_top'] ?>" id="nw_top" required class="frm_input required"  size="5"> px
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="nw_subject">창제목</label></th>
-        <td colspan="3">
-            <input type="text" name="nw_subject" size="80" value="<? echo stripslashes($nw['nw_subject']) ?>" id="nw_subject" required class="frm_input requried">
+        <th scope="row"><label for="nw_width">팝업레이어 넓이</label></th>
+        <td>
+            <input type="text" name="nw_width" value="<? echo $nw['nw_width'] ?>" id="nw_width" required class="frm_input required" size="5"> px
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="nw_height">팝업레이어 높이</label></th>
+        <td>
+            <input type="text" name="nw_height" value="<? echo $nw['nw_height'] ?>" id="nw_height" required class="frm_input required" size="5"> px
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="nw_subject">팝업 제목</label></th>
+        <td>
+            <input type="text" name="nw_subject" value="<? echo stripslashes($nw['nw_subject']) ?>" id="nw_subject" required class="frm_input required" size="80">
         </td>
     </tr>
     <tr>
         <th scope="row">내용</th>
-        <td colspan="3"><?=editor_html('nw_content', $nw['nw_content']);?></td>
+        <td><?=editor_html('nw_content', $nw['nw_content']);?></td>
     </tr>
     </tbody>
     </table>
@@ -118,8 +125,6 @@ function frmnewwin_check(f)
     }
     return true;
 }
-
-// document.frmnewwin.nw_subject.focus();
 </script>
 
 <?
