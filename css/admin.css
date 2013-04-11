@@ -333,6 +333,8 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 
 /* 분류관리 목록 */
 .cate_list_lbl {display:inline-block;padding-left:15px;background:url('../adm/shop_admin/img/icon_reply.gif') 0 2px no-repeat}
+.td_scate {text-align:right}
+.td_scate_admin {text-align:center}
 
 /* 팝업레이어 관리 */
 #spop_list {text-align:center}
