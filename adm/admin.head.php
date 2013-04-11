@@ -57,10 +57,10 @@ function imageview(id, w, h)
     submenu.left = tempX - ( w + 11 );
     submenu.top  = tempY - ( h / 2 );
 
-    //selectBoxVisible();
+    selectBoxVisible();
 
-    //if (el_id.style.display != 'none')
-    //    selectBoxHidden(id);
+    if (el_id.style.display != 'none')
+        selectBoxHidden(id);
 }
 </script>
 
@@ -81,9 +81,9 @@ function imageview(id, w, h)
                     </a>
                 </li>
                 <li>
-                    <a href="<?=G4_SHOP_URL?>/">
+                    <a href="<?=G4_URL?>/">
                         <img src="<?=G4_ADMIN_URL?>/img/snb_home.jpg" alt="" width="28" height="28">
-                        쇼핑몰 메인
+                        홈페이지 메인
                     </a>
                 </li>
                 <li>

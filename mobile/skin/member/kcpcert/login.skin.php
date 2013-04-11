@@ -23,7 +23,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             아직 회원이 아니시라면 회원으로 가입 후 이용해 주십시오.
         </p>
         <div>
-            <a href="<?=$g4['bbs_url']?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
+            <a href="<?=G4_BBS_URL?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
             <a href="./register.php" class="btn01">회원 가입</a>
         </div>
     </section>

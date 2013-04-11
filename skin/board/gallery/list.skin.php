@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
-<? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
+<? if (!$wr_id) {?><h1 id="bo_list_title"><?=$board['bo_subject']?></h1><?}?>
 
 <!-- 게시판 목록 시작 -->
 <div id="bo_img" style="width:<?=$width;?>">
@@ -85,7 +85,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                     ?>
                     </a>
                 </li>
-                <li class="bo_img_text_href">
+                <li class="bo_img_text_href" style="width:<?=$board['bo_gallery_width']?>px">
                     <?
                     // echo $list[$i]['icon_reply']; 갤러리는 reply 를 사용 안 할 것 같습니다. - 지운아빠 2013-03-04
                     if ($is_category && $list[$i]['ca_name']) {

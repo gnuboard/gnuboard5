@@ -20,7 +20,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 </div>
 
 <!-- 게시판 목록 시작 -->
-<div id="bo_img" style="width:<?=$width;?>">
+<div id="bo_img">
 
     <? if ($is_category) { ?>
     <form name="fcategory" id="fcategory" method="get">

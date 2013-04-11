@@ -94,21 +94,25 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </tr>
 <? } ?>
 
-<? if ($config['cf_use_addr']) {
-    $zip_href = G4_BBS_URL.'/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2';
-?>
+<? if ($config['cf_use_addr']) {?>
 <tr>
     <th scope="row">
         주소
         <? if ($config['cf_req_addr']) {?><strong class="sound_only">필수</strong><? } ?>
     </th>
     <td>
-        <input type="text" name="mb_zip1" value="<?=$member['mb_zip1']?>" id="reg_mb_zip1" title="우편번호 앞자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" maxlength="3" <?=$config['cf_req_addr']?"required":"";?>>
+        <input type="text" name="mb_zip1" value="<?=$member['mb_zip1']?>" id="reg_mb_zip1" <?=$config['cf_req_addr']?"required":"";?> title="우편번호 앞자리<?=$config['cf_req_addr']?"(필수)":"";?>" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3">
         -
-        <input type="text" name="mb_zip2" value="<?=$member['mb_zip2']?>" id="reg_mb_zip2" title="우편번호 뒷자리" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" maxlength="3" <?=$config['cf_req_addr']?"required":"";?> >
-        <a href="<? echo $zip_href; ?>" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">주소찾기</a>
-        <input type="text" name="mb_addr1" value="<?=$member['mb_addr1']?>" id="reg_mb_addr1" title="행정구역주소" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" <?=$config['cf_req_addr']?"required":"";?> >
-        <input type="text" name="mb_addr2" value="<?=$member['mb_addr2']?>" id="reg_mb_addr2"  title="상세주소"class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" <?=$config['cf_req_addr']?"required":"";?>>
+        <input type="text"  name="mb_zip2" value="<?=$member['mb_zip2']?>" id="reg_mb_zip2" <?=$config['cf_req_addr']?"required":"";?> title="우편번호 뒷자리<?=$config['cf_req_addr']?"(필수)":"";?>" class="frm_input <?=$config['cf_req_addr']?"required":"";?>" size="2" maxlength="3">
+        <span id="reg_win_zip" style="display:block"></span>
+        <input type="text"  name="mb_addr1" value="<?=$member['mb_addr1']?>" id="reg_mb_addr1" <?=$config['cf_req_addr']?"required":"";?> title="행정구역주소<?=$config['cf_req_addr']?"(필수)":"";?>" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50">
+        <input type="text" name="mb_addr2" value="<?=$member['mb_addr2']?>" id="reg_mb_addr2" <?=$config['cf_req_addr']?"required":"";?> title="상세주소<?=$config['cf_req_addr']?"(필수)":"";?>" class="frm_input frm_address <?=$config['cf_req_addr']?"required":"";?>" size="50">
+        <script>
+        // 우편번호 자바스크립트 비활성화 대응을 위한 코드
+        $('<a href="<?=G4_BBS_URL?>/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#reg_win_zip');
+        $("#reg_win_zip").css("display", "inline");
+        $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr('readonly', 'readonly');
+        </script>
     </td>
 </tr>
 <? } ?>
@@ -204,6 +208,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </table>
 
 <div class="btn_confirm">
+    <p>
+        작성하신 내용을 제출하시려면 <strong><?=$w==''?'회원가입':'정보수정';?></strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
+    </p>
     <input type="submit" value="<?=$w==''?'회원가입':'정보수정';?>" class="btn_submit" accesskey="s">
     <a href="<?=$g4['path']?>/" class="btn_cancel">취소</a>
 </div>

@@ -76,7 +76,7 @@ $colspan = 6;
     </table>
 
     <div class="btn_list">
-        <button>선택삭제</button>
+        <button type="submit">선택삭제</button>
     </div>
     </form>
 </section>

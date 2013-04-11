@@ -60,7 +60,7 @@ echo $option_hidden;
 <? if ($is_password) { ?>
 <tr>
     <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" name="wr_password" id="wr_password" class="frm_input" maxlength="20" <?=$password_required?>></td>
+    <td><input type="password" name="wr_password" id="wr_password" <?=$password_required?> class="frm_input <?=$password_required?>" maxlength="20"></td>
 </tr>
 <? } ?>
 
@@ -142,6 +142,9 @@ echo $option_hidden;
 </table>
 
 <div class="btn_confirm">
+    <p>
+       작성하신 내용을 제출하시려면 <strong>글쓰기</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
+    </p>
     <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
     <a href="./board.php?bo_table=<?=$bo_table?>" class="btn_cancel">취소</a>
 </div>

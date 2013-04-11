@@ -799,44 +799,6 @@ function byte_check(el_cont, el_byte)
     <h2>SMS설정</h2>
     <?=$pg_anchor?>
 
-    <p><?=help('주의! 80 bytes 까지만 전송됩니다. (영문 한글자 : 1byte , 한글 한글자 : 2bytes , 특수문자의 경우 1 또는 2 bytes 임)')?></p>
-
-    <section>
-        <h3>사전에 정의된 문자프리셋</h3>
-        <dl>
-            <dt>회원가입시</dt>
-            <dd>{이름} {회원아이디} {회사명}</dd>
-            <dt>주문서작성</dt>
-            <dd>{이름} {보낸분} {받는분} {주문번호} {주문금액} {회사명}</dd>
-            <dt>입금확인시</dt>
-            <dd>{이름} {입금액} {주문번호} {회사명}</dd>
-            <dt>상품배송시</dt>
-            <dd>{이름} {택배회사} {운송장번호} {주문번호} {회사명}</dd>
-        </dl>
-    </section>
-
-    <div id="scf_sms">
-        <?
-        $scf_sms_title = array (1=>"회원가입시 고객님께 발송", "주문시 관리자에게 발송", "입금확인시 고객님께 발송", "상품배송시 고객님께 발송");
-        for ($i=1; $i<=4; $i++) {
-        ?>
-        <section class="scf_sms_box">
-            <h3><?=$scf_sms_title[$i]?></h3>
-            <span><?=$scf_sms_to[$i]?></span>
-            <div class="scf_sms_img">
-                <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');"><?=$default["de_sms_cont".$i]?></textarea>
-            </div>
-            <span id="byte<?=$i?>" class="scf_sms_cnt">0 / 80 바이트</span>
-            <label for="de_sms_use<?=$i?>"><span class="sound_only"><?=$scf_sms_title?></span>사용</label>
-            <input type="checkbox" name="de_sms_use<?=$i?>" value="1" id="de_sms_use<?=$i?>" <?=($default["de_sms_use".$i] ? " checked" : "")?>>
-        </section>
-
-        <script>
-        byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');
-        </script>
-        <? } ?>
-    </div>
-
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -846,7 +808,7 @@ function byte_check(el_cont, el_byte)
     <tr>
         <th scope="row"><label for="de_sms_use">SMS 사용</label></th>
         <td>
-            <?=help("SMS 를 사용하려면 서비스 회사를 선택해야 합니다. 개별 기능 (회원가입시, 주문서작성시 발송 등)보다 우선합니다.\n아이코드는 무료 문자메세지 발송 테스트 환경을 지원합니다.");?>
+            <?=help("SMS  서비스 회사를 선택하십시오. 서비스 회사를 선택하지 않으면, SMS 발송 기능이 동작하지 않습니다.\n아이코드는 무료 문자메세지 발송 테스트 환경을 지원합니다.");?>
             <select id="de_sms_use" name="de_sms_use">
                 <option value="" <?=get_selected($default['de_sms_use'], '')?>>사용안함</option>
                 <option value="icode" <?=get_selected($default['de_sms_use'], 'icode')?>>아이코드</option>
@@ -933,19 +895,52 @@ function byte_check(el_cont, el_byte)
         </td>
     </tr>
      -->
-     <tr>
-         <td colspan="4">
-            <br>
-            <br>
-            <br>
-         </td>
-     </tr>
      </tbody>
     </table>
-    <div class="btn_confirm">
-        <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    </div>
+
+    <section id="scf_sms_pre">
+        <h3>사전에 정의된 SMS프리셋</h3>
+        <dl>
+            <dt>회원가입시</dt>
+            <dd>{이름} {회원아이디} {회사명}</dd>
+            <dt>주문서작성</dt>
+            <dd>{이름} {보낸분} {받는분} {주문번호} {주문금액} {회사명}</dd>
+            <dt>입금확인시</dt>
+            <dd>{이름} {입금액} {주문번호} {회사명}</dd>
+            <dt>상품배송시</dt>
+            <dd>{이름} {택배회사} {운송장번호} {주문번호} {회사명}</dd>
+        </dl>
+
+        <p><?=help('주의! 80 bytes 까지만 전송됩니다. (영문 한글자 : 1byte , 한글 한글자 : 2bytes , 특수문자의 경우 1 또는 2 bytes 임)')?></p>
+
+        <div id="scf_sms">
+            <?
+            $scf_sms_title = array (1=>"회원가입시 고객님께 발송", "주문시 관리자에게 발송", "입금확인시 고객님께 발송", "상품배송시 고객님께 발송");
+            for ($i=1; $i<=4; $i++) {
+            ?>
+            <section class="scf_sms_box">
+                <h4><?=$scf_sms_title[$i]?></h4>
+                <label for="de_sms_use<?=$i?>"><span class="sound_only"><?=$scf_sms_title?></span>사용</label>
+                <input type="checkbox" name="de_sms_use<?=$i?>" value="1" id="de_sms_use<?=$i?>" <?=($default["de_sms_use".$i] ? " checked" : "")?>>
+                <div class="scf_sms_img">
+                    <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');"><?=$default["de_sms_cont".$i]?></textarea>
+                </div>
+                <span id="byte<?=$i?>" class="scf_sms_cnt">0 / 80 바이트</span>
+            </section>
+
+            <script>
+            byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');
+            </script>
+            <? } ?>
+        </div>
+    </section>
+
 </section>
+
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+</div>
+
 </form>
 
 <script>
