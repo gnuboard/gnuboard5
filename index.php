@@ -21,7 +21,7 @@ include_once('./_head.php');
 <!-- 메인화면 최신글 시작 -->
 <?
 //  최신글
-$sql = " select bo_table from {$g4['board_table']} order by gr_id, bo_table ";
+$sql = " select bo_table from {$g4['board_table']} where bo_device <> 'mobile' order by gr_id, bo_table ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $lt_style = "";
