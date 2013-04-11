@@ -82,7 +82,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 <nav id="lnb">
     <ul>
         <?
-        $sql2 = " select * from {$g4['board_table']} where gr_id = '{$gr_id}' and bo_show_menu = 1 order by bo_order ";
+        $sql2 = " select * from {$g4['board_table']} where bo_show_menu = 1 and bo_device <> 'pc' order by bo_order ";
         $result2 = sql_query($sql2);
         for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
         ?>

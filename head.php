@@ -131,7 +131,7 @@ if ($config['cf_include_head']) {
     <h2>홈페이지 메인메뉴</h2>
     <ul id="gnb_ul">
         <?
-        $sql = " select * from {$g4['group_table']} where gr_show_menu order by gr_order ";
+        $sql = " select * from {$g4['group_table']} where gr_show_menu = '1' and gr_device <> 'mobile' order by gr_order ";
         $result = sql_query($sql);
         for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index
         ?>
@@ -139,7 +139,7 @@ if ($config['cf_include_head']) {
             <a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_subject']?></a>
             <ul class="gnb_sub_ul">
                 <?
-                $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' and bo_show_menu = '1' order by bo_order ";
+                $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' and bo_show_menu = '1' and bo_device <> 'mobile' order by bo_order ";
                 $result2 = sql_query($sql2);
                 for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
                 ?>

@@ -11,7 +11,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <h2>홈페이지 메인메뉴</h2>
     <ul>
         <?
-        $sql = " select * from {$g4['group_table']} where gr_show_menu = 1 order by gr_order ";
+        $sql = " select * from {$g4['group_table']} where gr_show_menu = 1 and gr_device <> 'pc' order by gr_order ";
         $result = sql_query($sql);
         for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index
         ?>
