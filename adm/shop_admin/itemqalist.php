@@ -83,7 +83,7 @@ $qstr  = "$qstr&sca=$sca&save_stx=$stx";
     <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
 
     <input type="hidden" name="save_stx" value="<?=$stx?>">
-    <input type="text" name="stx" value="<?=$stx?>">
+    <input type="text" name="stx" value="<?=$stx?>" class="frm_input">
     <input type="submit" value="검색" class="btn_submit">
     </fieldset>
 <p>건수 : <? echo $total_count ?></p>
