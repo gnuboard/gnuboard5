@@ -52,63 +52,64 @@ $result = sql_query($sql);
 //$qstr = "page=$page&sst=$sst&sod=$sod&stx=$stx";
 $qstr  = "$qstr&sca=$sca&save_stx=$stx";
 ?>
+<style type="text/css">
+    .itempslist{text-align:center}
+</style>
 
-<form name=flist style="margin:0px;">
-<table width=100% cellpadding=4 cellspacing=0>
-<input type=hidden name=page value="<?=$page?>">
-<tr>
-    <td width=10%><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></td>
-    <td width=80% align=center>
-        <select name="sca">
-            <option value=''>전체분류
-            <?
-            $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
-            $result1 = sql_query($sql1);
-            for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
-                $len = strlen($row1['ca_id']) / 2 - 1;
-                $nbsp = "";
-                for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-                echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
-            }
-            ?>
+<form name="flist">
+<input type="hidden" name="page" value="<?=$page?>">
+<p><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></p>
+<fieldset>
+    <legend>상품후기 검색</legend>
+    <select name="sca" title="검색분류">
+        <option value=''>전체분류</option>
+        <?
+        $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
+        $result1 = sql_query($sql1);
+        for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
+            $len = strlen($row1['ca_id']) / 2 - 1;
+            $nbsp = "";
+            for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+            echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
+        }
+        ?>
         </select>
         <script> document.flist.sca.value = '<?=$sca?>';</script>
 
-        <select name=sfl>
-            <option value='it_name'>상품명
-            <option value='a.it_id'>상품코드
-            <option value='is_name'>이름
+        <select name="sfl" title="검색대상">
+        <option value="it_name">상품명</option>
+        <option value="a.it_id">상품코드</option>
+        <option value="is_name">이름</option>
         </select>
         <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
 
-        <input type=hidden name=save_stx value='<?=$stx?>'>
-        <input type=text name=stx value='<?=$stx?>'>
-        <input type=image src='<?=G4_ADMIN_URL?>/img/btn_search.gif' align=absmiddle>
-    </td>
-    <td width=10% align=right>건수 : <? echo $total_count ?>&nbsp;</td>
-</tr>
-</table>
+        <input type="hidden" name="save_stx" value="<?=$stx?>">
+        <input type="text" name="stx" value="<?=$stx?>" class="frm_input" title="검색어">
+        <input type="submit" value="검색" class="btn_submit">
+</fieldset>
+<p>건수 : <? echo $total_count ?></p>
 </form>
-
-<table cellpadding=0 cellspacing=0 width=100% border=0>
-<colgroup width=80>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=200>
-<colgroup width=40>
-<colgroup width=40>
-<colgroup width=80>
-<tr><td colspan=7 height=2 bgcolor=#0E87F9></td></tr>
-<tr align=center class=ht>
-    <td></td>
-    <td><?=subject_sort_link("it_name"); ?>상품명</a></td>
-    <td><?=subject_sort_link("mb_name"); ?>이름</a></td>
-    <td><?=subject_sort_link("is_subject"); ?>제목</a></td>
-    <td><?=subject_sort_link("is_score"); ?>점수</a></td>
-    <td><?=subject_sort_link("is_confirm"); ?>확인</a></td>
-    <td>수정 삭제</td>
+<section class="cbox">
+<table class="frm_basic">
+<colgroup>
+    <col class="grid_8">
+    <col class="grid_2">
+    <col class="grid_4">
+    <col class="grid_1">
+    <col class="grid_1">
+    <col class="grid_2">
+</colgroup>
+<thead>
+<tr>
+    <th scope="col" class="itempslist"><?=subject_sort_link("it_name"); ?>상품명</a></th>
+    <th scope="col"><?=subject_sort_link("mb_name"); ?>이름</a></th>
+    <th scope="col"><?=subject_sort_link("is_subject"); ?>제목</a></th>
+    <th scope="col"><?=subject_sort_link("is_score"); ?>점수</a></th>
+    <th scope="col"><?=subject_sort_link("is_confirm"); ?>확인</a></th>
+    <th scope="col">관리</th>
 </tr>
-<tr><td colspan=7 height=1 bgcolor=#CCCCCC></td></tr>
+</thead>
+<tbody>
 <?
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
@@ -124,32 +125,28 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $confirm = $row['is_confirm'] ? "Y" : "&nbsp;";
 
     $list = $i%2;
-    echo "
-    <tr class='list$list'>
-        <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'].'_s', 50, 50)."</a></td>
-        <td><a href='$href'>".cut_str($row['it_name'],30)."</a></td>
-        <td align=center>$name</td>
-        <td>".$row['is_subject']."</td>
-        <td align=center>".$row['is_score']."</td>
-        <td align=center>$confirm</td>
-        <td align=center>$s_mod $s_del</td>
-    </tr>";
+    ?>
+    <tr>
+        <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str($row['it_name'],30)?></a></td>
+        <td class="itempslist"><?=$name?></td>
+        <td><?=$row['is_subject']?></td>
+        <td class="itempslist"><?=$row['is_score']?></td>
+        <td class="itempslist"><?=$confirm?></td>
+        <td class="itempslist"><a href="./itempsform.php?w=u&is_id=<?=$row['is_id']?>&$qstr">수정</a> <a href="./itempsformupdate.php?w=d&is_id=<?=$row['is_id']?>&$qstr')">삭제</a></td>
+    </tr>
+    <?
 }
 
 if ($i == 0) {
-    echo "<tr><td colspan=7 align=center height=100 bgcolor=#ffffff><span class=point>자료가 한건도 없습니다.</span></td></tr>\n";
+    echo '<tr><td colspan="7" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
 }
 ?>
-<tr><td colspan=7 height=1 bgcolor=CCCCCC></td></tr>
+</tbody>
 </table>
+</section>
 
 
-<table width=100%>
-<tr>
-    <td width=50%>&nbsp;</td>
-    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
-</tr>
-</table>
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');

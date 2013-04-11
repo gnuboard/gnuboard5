@@ -1,11 +1,11 @@
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_banner`
+-- Table structure for table `shop_banner`
 --
 
-DROP TABLE IF EXISTS `yc4_banner`;
-CREATE TABLE IF NOT EXISTS `yc4_banner` (
+DROP TABLE IF EXISTS `shop_banner`;
+CREATE TABLE IF NOT EXISTS `shop_banner` (
   `bn_id` int(11) NOT NULL AUTO_INCREMENT,
   `bn_alt` varchar(255) NOT NULL DEFAULT '',
   `bn_url` varchar(255) NOT NULL DEFAULT '',
@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS `yc4_banner` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_card_history`
+-- Table structure for table `shop_card_history`
 --
 
-DROP TABLE IF EXISTS `yc4_card_history`;
-CREATE TABLE IF NOT EXISTS `yc4_card_history` (
+DROP TABLE IF EXISTS `shop_card_history`;
+CREATE TABLE IF NOT EXISTS `shop_card_history` (
   `cd_id` int(11) NOT NULL AUTO_INCREMENT,
   `od_id` bigint(20) unsigned NOT NULL,
   `uq_id` bigint(20) unsigned NOT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE IF NOT EXISTS `yc4_card_history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_cart`
+-- Table structure for table `shop_cart`
 --
 
-DROP TABLE IF EXISTS `yc4_cart`;
-CREATE TABLE IF NOT EXISTS `yc4_cart` (
+DROP TABLE IF EXISTS `shop_cart`;
+CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_id` int(11) NOT NULL AUTO_INCREMENT,
   `uq_id` bigint(20) unsigned NOT NULL,
   `it_id` varchar(10) NOT NULL DEFAULT '0',
@@ -75,18 +75,17 @@ CREATE TABLE IF NOT EXISTS `yc4_cart` (
   `ct_send_cost` varchar(255) NOT NULL,
   `ct_direct` tinyint(4) NOT NULL,
   PRIMARY KEY (`ct_id`),
-  KEY `on_uid` (`on_uid`),
   KEY `uq_id` (`uq_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_category`
+-- Table structure for table `shop_category`
 --
 
-DROP TABLE IF EXISTS `yc4_category`;
-CREATE TABLE IF NOT EXISTS `yc4_category` (
+DROP TABLE IF EXISTS `shop_category`;
+CREATE TABLE IF NOT EXISTS `shop_category` (
   `ca_id` varchar(10) NOT NULL DEFAULT '0',
   `ca_name` varchar(255) NOT NULL DEFAULT '',
   `ca_skin` varchar(255) NOT NULL DEFAULT '',
@@ -115,11 +114,11 @@ CREATE TABLE IF NOT EXISTS `yc4_category` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_content`
+-- Table structure for table `shop_content`
 --
 
-DROP TABLE IF EXISTS `yc4_content`;
-CREATE TABLE IF NOT EXISTS `yc4_content` (
+DROP TABLE IF EXISTS `shop_content`;
+CREATE TABLE IF NOT EXISTS `shop_content` (
   `co_id` varchar(20) NOT NULL DEFAULT '',
   `co_html` tinyint(4) NOT NULL DEFAULT '0',
   `co_subject` varchar(255) NOT NULL DEFAULT '',
@@ -133,11 +132,11 @@ CREATE TABLE IF NOT EXISTS `yc4_content` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_default`
+-- Table structure for table `shop_default`
 --
 
-DROP TABLE IF EXISTS `yc4_default`;
-CREATE TABLE IF NOT EXISTS `yc4_default` (
+DROP TABLE IF EXISTS `shop_default`;
+CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_admin_company_owner` varchar(255) NOT NULL DEFAULT '',
   `de_admin_company_name` varchar(255) NOT NULL DEFAULT '',
   `de_admin_company_saupja_no` varchar(255) NOT NULL DEFAULT '',
@@ -240,11 +239,11 @@ CREATE TABLE IF NOT EXISTS `yc4_default` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_delivery`
+-- Table structure for table `shop_delivery`
 --
 
-DROP TABLE IF EXISTS `yc4_delivery`;
-CREATE TABLE IF NOT EXISTS `yc4_delivery` (
+DROP TABLE IF EXISTS `shop_delivery`;
+CREATE TABLE IF NOT EXISTS `shop_delivery` (
   `dl_id` int(11) NOT NULL AUTO_INCREMENT,
   `dl_company` varchar(255) NOT NULL DEFAULT '',
   `dl_url` varchar(255) NOT NULL DEFAULT '',
@@ -256,11 +255,11 @@ CREATE TABLE IF NOT EXISTS `yc4_delivery` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_event`
+-- Table structure for table `shop_event`
 --
 
-DROP TABLE IF EXISTS `yc4_event`;
-CREATE TABLE IF NOT EXISTS `yc4_event` (
+DROP TABLE IF EXISTS `shop_event`;
+CREATE TABLE IF NOT EXISTS `shop_event` (
   `ev_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_group` int(11) NOT NULL DEFAULT '0',
   `ev_skin` varchar(255) NOT NULL DEFAULT '',
@@ -278,11 +277,11 @@ CREATE TABLE IF NOT EXISTS `yc4_event` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_event_item`
+-- Table structure for table `shop_event_item`
 --
 
-DROP TABLE IF EXISTS `yc4_event_item`;
-CREATE TABLE IF NOT EXISTS `yc4_event_item` (
+DROP TABLE IF EXISTS `shop_event_item`;
+CREATE TABLE IF NOT EXISTS `shop_event_item` (
   `ev_id` int(11) NOT NULL DEFAULT '0',
   `it_id` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`ev_id`,`it_id`),
@@ -292,11 +291,11 @@ CREATE TABLE IF NOT EXISTS `yc4_event_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_faq`
+-- Table structure for table `shop_faq`
 --
 
-DROP TABLE IF EXISTS `yc4_faq`;
-CREATE TABLE IF NOT EXISTS `yc4_faq` (
+DROP TABLE IF EXISTS `shop_faq`;
+CREATE TABLE IF NOT EXISTS `shop_faq` (
   `fa_id` int(11) NOT NULL AUTO_INCREMENT,
   `fm_id` int(11) NOT NULL DEFAULT '0',
   `fa_subject` text NOT NULL,
@@ -309,11 +308,11 @@ CREATE TABLE IF NOT EXISTS `yc4_faq` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_faq_master`
+-- Table structure for table `shop_faq_master`
 --
 
-DROP TABLE IF EXISTS `yc4_faq_master`;
-CREATE TABLE IF NOT EXISTS `yc4_faq_master` (
+DROP TABLE IF EXISTS `shop_faq_master`;
+CREATE TABLE IF NOT EXISTS `shop_faq_master` (
   `fm_id` int(11) NOT NULL AUTO_INCREMENT,
   `fm_subject` varchar(255) NOT NULL DEFAULT '',
   `fm_head_html` text NOT NULL,
@@ -325,11 +324,11 @@ CREATE TABLE IF NOT EXISTS `yc4_faq_master` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_item`
+-- Table structure for table `shop_item`
 --
 
-DROP TABLE IF EXISTS `yc4_item`;
-CREATE TABLE IF NOT EXISTS `yc4_item` (
+DROP TABLE IF EXISTS `shop_item`;
+CREATE TABLE IF NOT EXISTS `shop_item` (
   `it_id` varchar(10) NOT NULL DEFAULT '',
   `ca_id` varchar(10) NOT NULL DEFAULT '0',
   `ca_id2` varchar(255) NOT NULL DEFAULT '',
@@ -382,11 +381,11 @@ CREATE TABLE IF NOT EXISTS `yc4_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_item_info`
+-- Table structure for table `shop_item_info`
 --
 
-DROP TABLE IF EXISTS `yc4_item_info`;
-CREATE TABLE IF NOT EXISTS `yc4_item_info` (
+DROP TABLE IF EXISTS `shop_item_info`;
+CREATE TABLE IF NOT EXISTS `shop_item_info` (
   `ii_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(10) NOT NULL,
   `ii_gubun` varchar(50) NOT NULL,
@@ -400,11 +399,11 @@ CREATE TABLE IF NOT EXISTS `yc4_item_info` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_item_ps`
+-- Table structure for table `shop_item_ps`
 --
 
-DROP TABLE IF EXISTS `yc4_item_ps`;
-CREATE TABLE IF NOT EXISTS `yc4_item_ps` (
+DROP TABLE IF EXISTS `shop_item_ps`;
+CREATE TABLE IF NOT EXISTS `shop_item_ps` (
   `is_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(10) NOT NULL DEFAULT '0',
   `mb_id` varchar(20) NOT NULL DEFAULT '',
@@ -423,11 +422,11 @@ CREATE TABLE IF NOT EXISTS `yc4_item_ps` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_item_qa`
+-- Table structure for table `shop_item_qa`
 --
 
-DROP TABLE IF EXISTS `yc4_item_qa`;
-CREATE TABLE IF NOT EXISTS `yc4_item_qa` (
+DROP TABLE IF EXISTS `shop_item_qa`;
+CREATE TABLE IF NOT EXISTS `shop_item_qa` (
   `iq_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(10) NOT NULL DEFAULT '',
   `mb_id` varchar(20) NOT NULL DEFAULT '',
@@ -444,11 +443,11 @@ CREATE TABLE IF NOT EXISTS `yc4_item_qa` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_item_relation`
+-- Table structure for table `shop_item_relation`
 --
 
-DROP TABLE IF EXISTS `yc4_item_relation`;
-CREATE TABLE IF NOT EXISTS `yc4_item_relation` (
+DROP TABLE IF EXISTS `shop_item_relation`;
+CREATE TABLE IF NOT EXISTS `shop_item_relation` (
   `it_id` varchar(10) NOT NULL DEFAULT '',
   `it_id2` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`it_id`,`it_id2`)
@@ -457,11 +456,11 @@ CREATE TABLE IF NOT EXISTS `yc4_item_relation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_new_win`
+-- Table structure for table `shop_new_win`
 --
 
-DROP TABLE IF EXISTS `yc4_new_win`;
-CREATE TABLE IF NOT EXISTS `yc4_new_win` (
+DROP TABLE IF EXISTS `shop_new_win`;
+CREATE TABLE IF NOT EXISTS `shop_new_win` (
   `nw_id` int(11) NOT NULL AUTO_INCREMENT,
   `nw_begin_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nw_end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -479,11 +478,11 @@ CREATE TABLE IF NOT EXISTS `yc4_new_win` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_onlinecalc`
+-- Table structure for table `shop_onlinecalc`
 --
 
-DROP TABLE IF EXISTS `yc4_onlinecalc`;
-CREATE TABLE IF NOT EXISTS `yc4_onlinecalc` (
+DROP TABLE IF EXISTS `shop_onlinecalc`;
+CREATE TABLE IF NOT EXISTS `shop_onlinecalc` (
   `oc_id` int(11) NOT NULL AUTO_INCREMENT,
   `oc_subject` varchar(255) NOT NULL DEFAULT '',
   `oc_category` text NOT NULL,
@@ -495,11 +494,11 @@ CREATE TABLE IF NOT EXISTS `yc4_onlinecalc` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_order`
+-- Table structure for table `shop_order`
 --
 
-DROP TABLE IF EXISTS `yc4_order`;
-CREATE TABLE IF NOT EXISTS `yc4_order` (
+DROP TABLE IF EXISTS `shop_order`;
+CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_id` bigint(20) unsigned NOT NULL,
   `uq_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(20) NOT NULL DEFAULT '',
@@ -564,11 +563,11 @@ CREATE TABLE IF NOT EXISTS `yc4_order` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `yc4_wish`
+-- Table structure for table `shop_wish`
 --
 
-DROP TABLE IF EXISTS `yc4_wish`;
-CREATE TABLE IF NOT EXISTS `yc4_wish` (
+DROP TABLE IF EXISTS `shop_wish`;
+CREATE TABLE IF NOT EXISTS `shop_wish` (
   `wi_id` int(11) NOT NULL AUTO_INCREMENT,
   `mb_id` varchar(20) NOT NULL DEFAULT '',
   `it_id` varchar(10) NOT NULL DEFAULT '0',

@@ -135,7 +135,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
     </colgroup>
     <thead>
     <tr>
-        <th scope="col"><?=subject_sort_link("it_id", $qstr, 1)?>상품<br>코드</a></th>
+        <th scope="col"><?=subject_sort_link("it_id", $qstr, 1)?>상품코드</a></th>
         <th scope="col"><?=subject_sort_link("it_name")?>상품명</a></th>
         <th scope="col"><?=subject_sort_link("it_type1", $qstr, 1)?>히트<br>상품</a></th>
         <th scope="col"><?=subject_sort_link("it_type2", $qstr, 1)?>추천<br>상품</a></th>
@@ -170,7 +170,7 @@ $qstr  = "$qstr&sca=$sca&page=$page&save_stx=$stx";
         }
 
         if (!$i)
-            echo '<tr><td colspan="9" class="itemtypelist empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
+            echo '<tr><td colspan="9" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
         ?>
     </tbody>
     <tfoot>

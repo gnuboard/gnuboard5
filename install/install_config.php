@@ -56,6 +56,13 @@ if ($_POST['agree'] != '동의함') {
             <input name="table_prefix" type="text" value="g4s_" id="table_prefix">
         </td>
     </tr>
+    <tr>
+        <th scope="row"><label for="">쇼핑몰TABLE명 접두사</label></th>
+        <td>
+            <span>가능한 변경하지 마십시오.</span>
+            <input name="shop_prefix" type="text" value="shop_" id="shop_prefix">
+        </td>
+    </tr>
     </tbody>
     </table>
 
