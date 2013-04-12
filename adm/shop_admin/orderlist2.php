@@ -224,7 +224,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $sub_point  = $row2['ct_qty'] * $row2['ct_point'];
         ?>
 
-        <tr>
+        <tr class="tr_sodr_item">
             <td headers="sodr_all_item" colspan="5">
                 <ul>
                     <li><a href="<?=$href?>"><?=get_it_image($row2['it_id'].'_s', 50, 50)?><?=$it_name?></a></li>
