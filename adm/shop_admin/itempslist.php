@@ -49,19 +49,28 @@ $sql  = " select *
           limit $from_record, $rows ";
 $result = sql_query($sql);
 
-//$qstr = "page=$page&sst=$sst&sod=$sod&stx=$stx";
-$qstr  = "$qstr&sca=$sca&save_stx=$stx";
+//$qstr = 'page='.$page.'&amp;sst='.$sst.'&amp;sod='.$sod.'&amp;stx='.$stx;
+$qstr  = $qstr.'&amp;sca='.$sca.'&amp;save_stx='.$stx;
+
+$listall = '';
+if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 ?>
-<style type="text/css">
-    .itempslist{text-align:center}
-</style>
 
 <form name="flist">
 <input type="hidden" name="page" value="<?=$page?>">
-<p><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></p>
+<input type="hidden" name="save_stx" value="<?=$stx?>">
+
 <fieldset>
-    <legend>상품후기 검색</legend>
-    <select name="sca" title="검색분류">
+    <legend>사용후기 검색</legend>
+
+    <span>
+        <?=$listall?>
+        전체 문의내역 <?=$total_count ?>건
+    </span>
+
+    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
+    <select name="sca">
         <option value=''>전체분류</option>
         <?
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
@@ -73,80 +82,74 @@ $qstr  = "$qstr&sca=$sca&save_stx=$stx";
             echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
         }
         ?>
-        </select>
-        <script> document.flist.sca.value = '<?=$sca?>';</script>
+    </select>
+    <? // ##### // 웹 접근성 취약 지점 끝 ?>
+    <select name="sfl">
+        <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
+        <option value="a.it_id" <?=get_selected($sfl, 'a.it_id')?>>상품코드</option>
+        <option value="is_name" <?=get_selected($sfl, 'is_name')?>>이름</option>
+    </select>
 
-        <select name="sfl" title="검색대상">
-        <option value="it_name">상품명</option>
-        <option value="a.it_id">상품코드</option>
-        <option value="is_name">이름</option>
-        </select>
-        <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
+    <input type="text" name="stx" value="<?=$stx?>" required class="frm_input required">
+    <input type="submit" value="검색" class="btn_submit">
 
-        <input type="hidden" name="save_stx" value="<?=$stx?>">
-        <input type="text" name="stx" value="<?=$stx?>" class="frm_input" title="검색어">
-        <input type="submit" value="검색" class="btn_submit">
 </fieldset>
-<p>건수 : <? echo $total_count ?></p>
+
 </form>
+
 <section class="cbox">
-<table class="frm_basic">
-<colgroup>
-    <col class="grid_8">
-    <col class="grid_2">
-    <col class="grid_4">
-    <col class="grid_1">
-    <col class="grid_1">
-    <col class="grid_2">
-</colgroup>
-<thead>
-<tr>
-    <th scope="col" class="itempslist"><?=subject_sort_link("it_name"); ?>상품명</a></th>
-    <th scope="col"><?=subject_sort_link("mb_name"); ?>이름</a></th>
-    <th scope="col"><?=subject_sort_link("is_subject"); ?>제목</a></th>
-    <th scope="col"><?=subject_sort_link("is_score"); ?>점수</a></th>
-    <th scope="col"><?=subject_sort_link("is_confirm"); ?>확인</a></th>
-    <th scope="col">관리</th>
-</tr>
-</thead>
-<tbody>
-<?
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    $row['is_subject'] = cut_str($row['is_subject'], 30, "...");
+    <h2>사용후기 목록</h2>
 
-    $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
+    <table class="frm_basic">
+    <thead>
+    <tr>
+        <th scope="col"><?=subject_sort_link("it_name"); ?>상품명</a></th>
+        <th scope="col"><?=subject_sort_link("mb_name"); ?>이름</a></th>
+        <th scope="col"><?=subject_sort_link("is_subject"); ?>제목</a></th>
+        <th scope="col"><?=subject_sort_link("is_score"); ?>점수</a></th>
+        <th scope="col"><?=subject_sort_link("is_confirm"); ?>확인</a></th>
+        <th scope="col">관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        $row['is_subject'] = cut_str($row['is_subject'], 30, "...");
 
-    $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row['mb_email'], $row['mb_homepage']);
+        $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
-    $s_mod = icon("수정", "./itempsform.php?w=u&is_id={$row['is_id']}&$qstr");
-    $s_del = icon("삭제", "javascript:del('./itempsformupdate.php?w=d&is_id={$row['is_id']}&$qstr');");
+        $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row['mb_email'], $row['mb_homepage']);
 
-    $confirm = $row['is_confirm'] ? "Y" : "&nbsp;";
-
-    $list = $i%2;
+        $confirm = $row['is_confirm'] ? 'Y' : '&nbsp;';
     ?>
+
     <tr>
         <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str($row['it_name'],30)?></a></td>
-        <td class="itempslist"><?=$name?></td>
-        <td><?=$row['is_subject']?></td>
-        <td class="itempslist"><?=$row['is_score']?></td>
-        <td class="itempslist"><?=$confirm?></td>
-        <td class="itempslist"><a href="./itempsform.php?w=u&is_id=<?=$row['is_id']?>&$qstr">수정</a> <a href="./itempsformupdate.php?w=d&is_id=<?=$row['is_id']?>&$qstr')">삭제</a></td>
+        <td class="td_name"><?=$name?></td>
+        <td class="sit_ps_subject"><?=$row['is_subject']?></td>
+        <td class="td_num"><?=$row['is_score']?></td>
+        <td class="sit_ps_confirm"><?=$confirm?></td>
+        <td class="td_smallmng">
+            <a href="./itempsform.php?w=u&is_id=<?=$row['is_id']?>&amp;$qstr">수정</a>
+            <a href="javascript:del('./itempsformupdate.php?w=d&amp;is_id={$row['is_id']}&amp;$qstr');">삭제</a>
+        </td>
     </tr>
-    <?
-}
 
-if ($i == 0) {
-    echo '<tr><td colspan="7" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
-}
-?>
-</tbody>
-</table>
+    <?
+    }
+
+    if ($i == 0) {
+        echo '<tr><td colspan="6" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
+    }
+    ?>
+    </tbody>
+    </table>
+
 </section>
 
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
