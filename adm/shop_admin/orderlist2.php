@@ -126,7 +126,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <th colspan="5" id="sodr_all_item">상품명</th>
         <th id="sodr_all_cost">판매가</th>
-        <th id="sodr_all_qtt">수량</th>
+        <th id="sodr_all_qty">수량</th>
         <th id="sodr_all_pt">포인트</th>
         <th id="sodr_all_tot">소계</th>
         <th colspan="2" id="sodr_all_stats">상태</th>
@@ -231,7 +231,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 </ul>
             </td>
             <td headers="sodr_all_cost"><?=number_format($row2['ct_amount'])?></td>
-            <td headers="sodr_all_qtt"><?=$row2['ct_qty']?></td>
+            <td headers="sodr_all_qty"><?=$row2['ct_qty']?></td>
             <td headers="sodr_all_pt"><?=number_format($sub_point)?></td>
             <td headers="sodr_all_tot"><?=number_format($sub_amount)?></td>
             <td headers="sodr_all_stats" colspan="2"><?=$row2['ct_status']?></td>
