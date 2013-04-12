@@ -9,6 +9,15 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 //sql_query(" update $g4[shop_cart_table] set ct_status = '완료' where ct_status = '배송' ");
 
+// 배송회사리스트 ---------------------------------------------
+$delivery_options = '<option value="">선택하세요</option>'.PHP_EOL;
+$sql = " select * from {$g4['shop_delivery_table']} order by dl_order ";
+$result = sql_query($sql);
+for($i=0; $row=sql_fetch_array($result); $i++) {
+    $delivery_options .= '<option value="'.$row['dl_id'].'">'.$row['dl_company'].'</option>'.PHP_EOL;
+}
+// 배송회사리스트 end ---------------------------------------------
+
 $where = " where ";
 $sql_search = "";
 if ($search != "") {
@@ -155,7 +164,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?=$hope_date?></td>
         <td><input type="text" name="od_invoice_time[<?=$i?>]" value="<?=$invoice_time?>" class="frm_input" size="20" maxlength="19"></td>
         <td>
-            <?=print_delivery_company($i, $row['dl_id'])?>
+            <label for="dl_id_<?=$i?>">배송업체</label>
+            <select name="dl_id[<?=$i?>]" id="dl_id_<?=$i?>">
+                <?=conv_selected_option($delivery_options, $row['dl_id'])?>
+            </select>
         </td>
         <td>
             <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
