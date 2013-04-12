@@ -28,7 +28,7 @@ if ( $req_tx == "pay" )
             $trade_hms = substr($app_time,8,2).":".substr($app_time,10,2).":".substr($app_time,12,2);
 
             // 카드내역 INSERT
-            $sql = "insert {$g4['yc4_card_history_table']}
+            $sql = "insert {$g4['shop_card_history_table']}
                        set od_id = '$ordr_idxx',
                            uq_id = '$tmp_uq_id',
                            cd_mall_id = '$site_cd',
@@ -49,7 +49,7 @@ if ( $req_tx == "pay" )
             $trade_hms = date("H:i:s", time());
 
             // 계좌이체내역 INSERT
-            $sql = "insert {$g4['yc4_card_history_table']}
+            $sql = "insert {$g4['shop_card_history_table']}
                        set od_id = '$ordr_idxx',
                            uq_id = '$tmp_uq_id',
                            cd_mall_id = '$site_cd',
@@ -73,7 +73,7 @@ if ( $req_tx == "pay" )
             $trade_hms = date("H:i:s", time());
 
             // 가상계좌내역 INSERT
-            $sql = "insert {$g4['yc4_card_history_table']}
+            $sql = "insert {$g4['shop_card_history_table']}
                        set od_id = '$ordr_idxx',
                            uq_id = '$tmp_uq_id',
                            cd_mall_id = '$site_cd',
@@ -99,7 +99,7 @@ if ( $req_tx == "pay" )
             $trade_hms = substr($app_time,8,6);
 
             // 휴대폰결제내역 INSERT
-            $sql = "insert {$g4['yc4_card_history_table']}
+            $sql = "insert {$g4['shop_card_history_table']}
                        set od_id = '$ordr_idxx',
                            uq_id = '$tmp_uq_id',
                            cd_mall_id = '$site_cd',

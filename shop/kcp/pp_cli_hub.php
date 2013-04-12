@@ -3,7 +3,7 @@ include './_common.php';
 include G4_LIB_PATH.'/etc.lib.php';
 
 // 현금영수증 필드생성
-$sql = " ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_cash_no` VARCHAR( 255 ) NOT NULL ,
+$sql = " ALTER TABLE `{$g4['shop_order_table']}` ADD `od_cash_no` VARCHAR( 255 ) NOT NULL ,
                                             ADD `od_cash_receipt_no` VARCHAR( 255 ) NOT NULL ,
                                             ADD `od_cash_app_time` VARCHAR( 255 ) NOT NULL ,
                                             ADD `od_cash_reg_stat` VARCHAR( 255 ) NOT NULL ,
@@ -13,10 +13,10 @@ $sql = " ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_cash_no` VARCHAR( 255 ) 
 sql_query($sql, false);
 
 // 현금영수증 사용, 미사용 구분
-$sql = " ALTER TABLE `{$g4['yc4_order_table']}` ADD `od_cash` TINYINT NOT NULL ";
+$sql = " ALTER TABLE `{$g4['shop_order_table']}` ADD `od_cash` TINYINT NOT NULL ";
 sql_query($sql, false);
 
-$sql = " select count(*) as cnt from {$g4['yc4_order_table']} where od_id = '{$_POST['ordr_idxx']}' and od_cash = 1 ";
+$sql = " select count(*) as cnt from {$g4['shop_order_table']} where od_id = '{$_POST['ordr_idxx']}' and od_cash = 1 ";
 $row = sql_fetch($sql);
 if ($row['cnt']) {
     alert('이미 등록된 현금영수증 입니다.');
@@ -241,7 +241,7 @@ if ($row['cnt']) {
     /* = -------------------------------------------------------------------------- = */
                 $bSucc = "";             // DB 작업 실패일 경우 "false" 로 세팅
 
-                $sql = " update {$g4['yc4_order_table']}
+                $sql = " update {$g4['shop_order_table']}
                             set od_cash_no = '$cash_no',
                                 od_cash_receipt_no = '$receipt_no',
                                 od_cash_app_time = '$app_time',
