@@ -14,7 +14,7 @@ for ($i=0; $row_nw=sql_fetch_array($result); $i++)
     $sql = " select * from {$g4['shop_new_win_table']} where nw_id = '{$row_nw['nw_id']}' ";
     $nw = sql_fetch($sql);
 ?>
-    <div id="div_popup_<? echo $nw['nw_id'] ?>" style="position:absolute;left:<?=$nw['nw_left']?>px;top:<?=$nw['nw_top']?>px;background-color:#eee;z-index:100">
+    <div id="div_popup_<? echo $nw['nw_id'] ?>" style="position:absolute;left:<?=$nw['nw_left']?>px;top:<?=$nw['nw_top']?>px;background-color:#eee">
         <table width="<? echo $nw['nw_width'] ?>" height="<? echo $nw['nw_height'] ?>" cellpadding="0" cellspacing="0">
         <tr>
             <td valign="top"><?=conv_content($nw['nw_content'], 1);?></td>
