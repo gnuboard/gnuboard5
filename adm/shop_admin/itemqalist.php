@@ -79,19 +79,18 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             $len = strlen($row1['ca_id']) / 2 - 1;
             $nbsp = "";
             for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-            echo '<option value="'.$row1['ca_id'].'">'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
+            echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
         }
         ?>
     </select>
     <? // ##### // 웹 접근성 취약 지점 끝 ?>
 
     <select name="sfl">
-    <option value="it_name">상품명</option>
-    <option value="a.it_id">상품코드</option>
+        <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
+        <option value="a.it_id" <?=get_selected($sfl, 'a.it_id')?>>상품코드</option>
     </select>
-    <? if ($sfl) echo "<script> document.flist.sfl.value = '$sfl';</script>"; ?>
 
-    <input type="text" name="stx" value="<?=$stx?>" class="frm_input">
+    <input type="text" name="stx" value="<?=$stx?>" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 
 </fieldset>
