@@ -110,11 +110,11 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     </select>
     <? // ##### // 웹 접근성 취약 지점 끝 ?>
     <select name="sfl">
-        <option value="it_name">상품명</option>
-        <option value="it_id">상품코드</option>
-        <option value="it_maker">제조사</option>
-        <option value="it_origin">원산지</option>
-        <option value="it_sell_email">판매자 e-mail</option>
+        <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
+        <option value="it_id" <?=get_selected($sfl, 'it_id')?>>상품코드</option>
+        <option value="it_maker" <?=get_selected($sfl, 'it_maker')?>>제조사</option>
+        <option value="it_origin" <?=get_selected($sfl, 'it_origin')?>>원산지</option>
+        <option value="it_sell_email" <?=get_selected($sfl, 'it_sell_email')?>>판매자 e-mail</option>
     </select>
     <input type="text" name="stx" value="<?=$stx?>" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
