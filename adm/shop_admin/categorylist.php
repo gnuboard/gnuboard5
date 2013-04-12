@@ -48,8 +48,12 @@ $sql  = " select *
              limit $from_record, $rows ";
 $result = sql_query($sql);
 
-//$qstr = "page=".$page."&amp;sort1=".$sort1."&amp;sort2=".$sort2;
-$qstr = $qstr."&amp;sca=".$sca."&amp;page=".$page."&amp;save_stx=".$stx;
+//$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
+$qstr = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
+
+$listall = '';
+if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 ?>
 
 <form name="flist">
