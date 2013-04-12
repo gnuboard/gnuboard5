@@ -111,7 +111,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <input type="hidden" name="sort1" value="<?=$sort1 ?>">
     <input type="hidden" name="sort2" value="<?=$sort2 ?>">
 
-    <table>
+    <table id="sdeli_proc">
     <thead>
     <tr>
         <th scope="col"><a href="<?=title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
@@ -157,7 +157,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <input type="hidden" name="uq_id[<?=$i?>]" value="<?=$row['uq_id']?>">
             <a href="./orderform.php?od_id=<?=$row['od_id']?>"><?=$row['od_id']?></a>
         </td>
-        <td><?=$row['od_name']?></td>
+        <td class="td_name"><?=$row['od_name']?></td>
         <td><?=display_amount($row['orderamount'])?></td>
         <td><?=display_amount($row['receiptamount'])?></td>
         <td><?=display_amount($row['misu'])?></td>
@@ -189,23 +189,23 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     </table>
 
-    <table width=100%>
-    <tr bgcolor=#ffffff>
-        <td width=50%>
-            <table>
-            <tr>
-                <td><input type=checkbox name='od_send_mail' value='1' checked> 메일발송&nbsp;</td>
-                <td><input type=checkbox name='send_sms' value='1' checked> SMS&nbsp;</td>
-                <td><input type=submit class=btn1 accesskey='s' value='일괄수정'></td>
-            </tr>
-            </table>
-        </td>
-        <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
-    </tr>
-    </table>
+    <fieldset id="sdeli_proc_fs">
+        <legend>배송 처리 후 안내 발송 선택</legend>
+        <label for="od_send_mail">메일발송</label>
+        <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail" checked>
+        <label for="od_send_sms">SMS</label>
+        <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked>
+    </fieldset>
+
+    <div class="btn_confirm">
+        <input type="submit" value="일괄수정" class="btn_submit" accesskey='s'>
+    </div>
+
     </form>
 
 </section>
+
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
