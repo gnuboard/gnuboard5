@@ -337,6 +337,15 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_scate {text-align:right}
 .td_scate_admin {text-align:center}
 
+/* 상품관리 */
+.sit_odrby {text-align:center}
+.sit_amt {text-align:right;background-color:#dde6fe}
+.sit_amt2 {text-align:right;background-color:#ddeede}
+.sit_amt3 {text-align:right;background-color:#fedddd}
+.sit_camt,
+.sit_pt,
+.sit_qty {text-align:right}
+
 /* 배송일괄처리 */
 #sdeli_proc {text-align:center}
 #sdeli_proc_fs {padding:20px 0;border-bottom:1px solid #f7f7f7;text-align:center}

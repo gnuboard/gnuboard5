@@ -114,88 +114,85 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 <section class="cbox">
     <h2>상품 목록</h2>
 
-    <table cellpadding=0 cellspacing=0 width=100% border=0>
-    <tr><td colspan=13 height=2 bgcolor=0E87F9></td></tr>
-    <tr align=center class=ht>
-        <td width=70><?=subject_sort_link("it_id", "sca=$sca")?>상품코드</a></td>
-        <td width='' colspan=2><?=subject_sort_link("it_name", "sca=$sca")?>상품명</a></td>
-        <td width=70><?=subject_sort_link("it_amount", "sca=$sca")?>비회원가격</a><br><?=subject_sort_link("it_cust_amount", "sca=$sca")?>시중가격</a></td>
-        <td width=70><?=subject_sort_link("it_amount2", "sca=$sca")?>회원가격</a><br><?=subject_sort_link("it_point", "sca=$sca")?>포인트</a></td>
-        <td width=70><?=subject_sort_link("it_amount3", "sca=$sca")?>특별가격</a><br><?=subject_sort_link("it_stock_qty", "sca=$sca")?>재고</a></td>
-        <td width=30><?=subject_sort_link("it_order", "sca=$sca")?>순서</a></td>
-        <td width=30><?=subject_sort_link("it_use", "sca=$sca", 1)?>판매</a></td>
-        <td width=30><?=subject_sort_link("it_hit", "sca=$sca", 1)?>조회</a></td>
-        <td width=100><a href='./itemform.php'><img src='<?=G4_ADMIN_URL?>/img/icon_insert.gif' border=0 title='상품등록'></a></td>
-    </tr>
-    <tr><td colspan=13 height=1 bgcolor=#CCCCCC></td></tr>
+    <div id="btn_add">
+        <a href="./itemform.php">상품등록</a>
+    </div>
 
-    <form name=fitemlistupdate method=post action="./itemlistupdate.php" autocomplete='off'>
-    <input type=hidden name=sca  value="<?=$sca?>">
-    <input type=hidden name=sst  value="<?=$sst?>">
-    <input type=hidden name=sod  value="<?=$sod?>">
-    <input type=hidden name=sfl  value="<?=$sfl?>">
-    <input type=hidden name=stx  value="<?=$stx?>">
-    <input type=hidden name=page value="<?=$page?>">
+    <form name="fitemlistupdate" method="post" action="./itemlistupdate.php" autocomplete="off">
+    <input type="hidden" name="sca" value="<?=$sca?>">
+    <input type="hidden" name="sst" value="<?=$sst?>">
+    <input type="hidden" name="sod" value="<?=$sod?>">
+    <input type="hidden" name="sfl" value="<?=$sfl?>">
+    <input type="hidden" name="stx" value="<?=$stx?>">
+    <input type="hidden" name="page" value="<?=$page?>">
+
+    <table>
+    <thead>
+    <tr>
+        <th scope="col" rowspan="2"><?=subject_sort_link("it_id", "sca=$sca")?>상품코드 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" colspan="2" rowspan="2">분류 및 <?=subject_sort_link("it_name", "sca=$sca")?>상품명 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_amt"><?=subject_sort_link("it_amount", "sca=$sca")?>비회원가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_amt2"><?=subject_sort_link("it_amount2", "sca=$sca")?>회원가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_amt3"><?=subject_sort_link("it_amount3", "sca=$sca")?>특별가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2"><?=subject_sort_link("it_order", "sca=$sca")?>순서 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2"><?=subject_sort_link("it_use", "sca=$sca", 1)?>판매 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2"><?=subject_sort_link("it_hit", "sca=$sca", 1)?>조회 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2">관리</th>
+    </tr>
+    <tr>
+        <th scope="col" id="sit_camt"><?=subject_sort_link("it_cust_amount", "sca=$sca")?>시중가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_pt"><?=subject_sort_link("it_point", "sca=$sca")?>포인트 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_qty"><?=subject_sort_link("it_stock_qty", "sca=$sca")?>재고 <span class="sound_only">순 정렬</span></a></th>
+    </tr>
+    </thead>
+    <tbody>
     <?
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
-        $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
+        $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
-        $s_mod = icon("수정", "./itemform.php?w=u&it_id={$row['it_id']}&ca_id={$row['ca_id']}&$qstr");
-        $s_del = icon("삭제", "javascript:del('./itemformupdate.php?w=d&it_id={$row['it_id']}&ca_id={$row['ca_id']}&$qstr');");
-        $s_vie = icon("보기", $href);
-        //$s_copy = "<a href=\"javascript:board_copy('$row[bo_table]');\"><img src='img/icon_copy.gif' border=0 title='복사'></a>";
-        //$s_copy = icon("복사", "javascript:_copy('".get_text(htmlspecialchars2($row[it_name]))."', 'item_copy_update.php?it_id=$row[it_id]&ca_id=$row[ca_id]&$qstr');");
-        $s_copy = icon("복사", "javascript:_copy('{$row['it_id']}', '{$row['ca_id']}');");
+        $gallery = $row['it_gallery'] ? 'Y' : '';
 
-        $gallery = $row['it_gallery'] ? "Y" : "";
-
-        $tmp_ca_list  = "<select id='ca_id_$i' name='ca_id[$i]'>" . $ca_list;
+        $tmp_ca_list  = '<select name="ca_id['.$i.']" id="ca_id_'.$i.'">'.$ca_list;
         $tmp_ca_list .= "<script language='javascript'>document.getElementById('ca_id_$i').value='{$row['ca_id']}';</script>";
-
-        $list = $i%2;
-        echo "
-        <input type='hidden' name='it_id[$i]' value='{$row['it_id']}'>
-        <tr class='list$list'>
-            <td>{$row['it_id']}</td>
-            <td style='padding-top:5px; padding-bottom:5px;'><a href='$href'>".get_it_image($row['it_id'].'_s', 50, 50)."</a></td>
-            <td align=left>$tmp_ca_list<br><input type='text' name='it_name[$i]' value='".htmlspecialchars2(cut_str($row['it_name'],250, ""))."' required size=40 class=ed></td>
-            <td colspan=3>
-                <table width=210 cellpadding=0 cellspacing=0>
-                <tr>
-                    <td>
-                        <table cellpadding=0 cellspacing=0>
-                        <tr>
-                            <td width=70 align=center><input type='text' name='it_amount[$i]' value='{$row['it_amount']}' class=ed size=7 style='text-align:right; background-color:#DDE6FE;'></td>
-                            <td width=70 align=center><input type='text' name='it_amount2[$i]' value='{$row['it_amount2']}' class=ed size=7 style='text-align:right; background-color:#DDFEDE;'></td>
-                            <td width=70 align=center><input type='text' name='it_amount3[$i]' value='{$row['it_amount3']}' class=ed size=7 style='text-align:right; background-color:#FEDDDD;'></td>
-                        </tr>
-                        </table></td>
-                </tr>
-                <tr>
-                    <td>
-                        <table cellpadding=0 cellspacing=0>
-                        <tr>
-                            <td width=70 align=center><input type='text' name='it_cust_amount[$i]' value='{$row['it_cust_amount']}' class=ed size=7 style='text-align:right;'></td>
-                            <td width=70 align=center><input type='text' name='it_point[$i]' value='{$row['it_point']}' class=ed size=7 style='text-align:right;'></td>
-                            <td width=70 align=center><input type='text' name='it_stock_qty[$i]' value='{$row['it_stock_qty']}' class=ed size=7 style='text-align:right;'></td>
-                        </tr>
-                        </table></td>
-                </tr>
-                </table></td>
-            <td><input type='text' name='it_order[$i]' value='{$row['it_order']}' class=ed size=3 style='text-align:right;'></td>
-            <td><input type=checkbox name='it_use[$i]' ".($row['it_use'] ? "checked" : "")." value='1'></td>
-            <td>{$row['it_hit']}</td>
-            <td>$s_mod $s_del $s_vie $s_copy</td>
-        </tr>";
+    ?>
+    <tr>
+        <td rowspan="2">
+            <input type="hidden" name="it_id[<?=$i?>]" value="<?=$row['it_id']?>">
+            <?=$row['it_id']?>
+        </td>
+        <td rowspan="2"><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?></a></td>
+        <td rowspan="2">
+            <?=$tmp_ca_list?><br>
+            <input type="text" name="it_name[<?=$i?>]" value="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?>" required class="frm_input required" size="40">
+        </td>
+        <td headers="sit_amt"><input type="text" name="it_amount[<?=$i?>]" value="<?=$row['it_amount']?>" class="frm_input sit_amt" size="7"></td>
+        <td headers="sit_amt2"><input type="text" name="it_amount2[<?=$i?>]" value="<?=$row['it_amount2']?>" class="frm_input sit_amt2" size="7"></td>
+        <td headers="sit_amt3"><input type="text" name="it_amount3[<?=$i?>]" value="<?=$row['it_amount3']?>" class="frm_input sit_amt3" size="7"></td>
+        <td rowspan="2"><input type="text" name="it_order[<?=$i?>]" value="<?=$row['it_order']?>" class="frm_input sit_odrby" size="3"></td>
+        <td rowspan="2"><input type="checkbox" name="it_use[<?=$i?>]" <?=($row['it_use'] ? 'checked' : '')?> value="1"></td>
+        <td rowspan="2"><?=$row['it_hit']?></td>
+        <td rowspan="2">
+            <a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>">수정</a>
+            <a href="javascript:del('./itemformupdate.php?w=d&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>');">삭제</a>
+            <a href="<?=$href?>">보기</a>
+            <a href="javascript:_copy('<?=$row['it_id']?>', '<?=$row['ca_id']?>');">복사</a>
+        </td>
+    </tr>
+    <tr>
+        <td headers="sit_camt"><input type="text" name="it_cust_amount[<?=$i?>]" value="<?=$row['it_cust_amount']?>" class="frm_input sit_camt" size="7"></td>
+        <td headers="sit_pt"><input type="text" name="it_point[<?=$i?>]" value="<?=$row['it_point']?>" class="frm_input sit_pt" size="7"></td>
+        <td headers="sit_qty"><input type="text" name="it_stock_qty[<?=$i?>]" value="<?=$row['it_stock_qty']?>" class="frm_input sit_qty" size="7"></td>
+    </tr>
+    <?
     }
     if ($i == 0)
-        echo "<tr><td colspan=20 align=center height=100 bgcolor=#FFFFFF><span class=point>자료가 한건도 없습니다.</span></td></tr>";
+        echo '<tr><td colspan="20" class="empty_table">자료가 한건도 없습니다.</td></tr>';
     ?>
-    <tr><td colspan=13 height=1 bgcolor=#CCCCCC></td></tr>
+    </tbody>
     </table>
 
-    <div class="btn_submit">
+    <div class="btn_confirm">
         <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
     </div>
     </form>
