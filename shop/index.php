@@ -121,7 +121,5 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 <BR><BR>
 
 <?
-include G4_SHOP_PATH.'/newwin.inc.php'; // 새창띄우기
-
 include_once(G4_SHOP_PATH.'/shop.tail.php');
 ?>

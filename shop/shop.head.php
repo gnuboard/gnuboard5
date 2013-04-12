@@ -29,6 +29,11 @@ $table_width = 900;
 <table align=center cellpadding=0 cellspacing=0 border=0>
 <tr>
     <td width='900'>
+        <!-- 새창 -->
+        <? if(defined('_INDEX_')) { // index에서만 실행 ?>
+        <div style="position:relative;z-index:100"><? include G4_SHOP_PATH.'/newwin.inc.php'; // 새창띄우기 ?></div>
+        <? } ?>
+
         <!-- 오늘본 상품 {-->
         <div style="position:relative">
             <div style='position:absolute; top:70px; left:<?=($table_width+10)?>px'>
