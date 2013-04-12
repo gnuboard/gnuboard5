@@ -621,6 +621,28 @@ function alert_opener($msg='', $url='')
     exit;
 }
 
+// 배송회사를 select 로 출력
+function print_delivery_company($no, $val)
+{
+    global $g4;
+
+    $delivery_options = '';
+    $sql = " select * from {$g4['shop_delivery_table']} order by dl_order ";
+    $result = sql_query($sql);
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        $selected = get_selected($row['dl_id'], $val);
+        $delivery_options .= '<option value="'.$row['dl_id'].'"'.$selected.'>'.$row['dl_company'].'</option>'.PHP_EOL;
+    }
+
+    $str = '<label for="dl_id_'.$no.'">배송업체</label>'.PHP_EOL;
+    $str .= '<select name="dl_id['.$no.']" id="dl_id_'.$no.'">'.PHP_EOL;
+    $str .= '<option value="">선택하세요</option>'.PHP_EOL;
+    $str .= $delivery_options;
+    $str .= '</select>';
+
+    return $str;
+}
+
 // 주문서 번호를 얻는다.
 function get_new_od_id()
 {
