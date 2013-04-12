@@ -175,7 +175,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <input type="hidden" name="save_od_invoice[<?=$i?>]" value="<?=$row['od_invoice']?>">
             <input type="text" name="od_invoice[<?=$i?>]" value="<?=$row['od_invoice']?>" class="frm_input" size="10">
         </td>
-        <td><?=$row['it_hit']?></td>
     </tr>
     <?
         if ($row['dl_id']) {
