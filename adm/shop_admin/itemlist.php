@@ -129,20 +129,20 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
     <table>
     <thead>
     <tr>
-        <th scope="col" rowspan="2"><?=subject_sort_link("it_id", "sca=$sca")?>상품코드 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" colspan="2" rowspan="2">분류 및 <?=subject_sort_link("it_name", "sca=$sca")?>상품명 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_amt"><?=subject_sort_link("it_amount", "sca=$sca")?>비회원가격 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_amt2"><?=subject_sort_link("it_amount2", "sca=$sca")?>회원가격 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_amt3"><?=subject_sort_link("it_amount3", "sca=$sca")?>특별가격 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" rowspan="2"><?=subject_sort_link("it_order", "sca=$sca")?>순서 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" rowspan="2"><?=subject_sort_link("it_use", "sca=$sca", 1)?>판매 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" rowspan="2"><?=subject_sort_link("it_hit", "sca=$sca", 1)?>조회 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2"><?=subject_sort_link('it_id', 'sca='.$sca)?>상품코드 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" colspan="2" rowspan="2">분류 및 <?=subject_sort_link('it_name', 'sca='.$sca)?>상품명 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_amt"><?=subject_sort_link('it_amount', 'sca='.$sca)?>비회원가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_amt2"><?=subject_sort_link('it_amount2', 'sca='.$sca)?>회원가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_amt3"><?=subject_sort_link('it_amount3', 'sca='.$sca)?>특별가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2"><?=subject_sort_link('it_order', 'sca='.$sca)?>순서 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2"><?=subject_sort_link('it_use', 'sca='.$sca, 1)?>판매 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2"><?=subject_sort_link('it_hit', 'sca='.$sca, 1)?>조회 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
-        <th scope="col" id="sit_camt"><?=subject_sort_link("it_cust_amount", "sca=$sca")?>시중가격 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_pt"><?=subject_sort_link("it_point", "sca=$sca")?>포인트 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_qty"><?=subject_sort_link("it_stock_qty", "sca=$sca")?>재고 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_camt"><?=subject_sort_link('it_cust_amount', 'sca='.$sca)?>시중가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_pt"><?=subject_sort_link('it_point', 'sca='.$sca)?>포인트 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_qty"><?=subject_sort_link('it_stock_qty', 'sca='.$sca)?>재고 <span class="sound_only">순 정렬</span></a></th>
     </tr>
     </thead>
     <tbody>
@@ -199,7 +199,7 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
 <script>
 function _trim(str)
