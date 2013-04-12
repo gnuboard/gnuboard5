@@ -164,7 +164,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?=$hope_date?></td>
         <td><input type="text" name="od_invoice_time[<?=$i?>]" value="<?=$invoice_time?>" class="frm_input" size="20" maxlength="19"></td>
         <td>
-            <select name="dl_id[<?=$i?>]">
+            <label for="dl_id_<?=$i?>">배송업체</label>
+            <select name="dl_id[<?=$i?>]" id="dl_id_<?=$i?>">
                 <option value="">선택하세요</option>
                 <?=$delivery_options?>
             </select>
