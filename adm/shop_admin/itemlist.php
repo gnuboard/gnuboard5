@@ -83,6 +83,8 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 <input type="hidden" name="save_stx" value="<?=$stx?>">
 
 <fieldset>
+    <legend>상품 검색</legend>
+
     <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
     <select name="sca">
         <option value="">전체분류</option>
