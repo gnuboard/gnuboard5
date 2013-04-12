@@ -198,7 +198,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </fieldset>
 
     <div class="btn_confirm">
-        <input type="submit" value="일괄수정" class="btn_submit" accesskey='s'>
+        <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
     </div>
 
     </form>
