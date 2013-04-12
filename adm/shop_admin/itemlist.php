@@ -76,6 +76,10 @@ $result = sql_query($sql);
 
 //$qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
 $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
+
+$listall = '';
+if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 ?>
 
 <form name="flist">
@@ -84,6 +88,11 @@ $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 
 <fieldset>
     <legend>상품 검색</legend>
+
+    <span>
+        <?=$listall?>
+        전체 주문내역 <?=$total_count ?>건
+    </span>
 
     <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
     <select name="sca">
