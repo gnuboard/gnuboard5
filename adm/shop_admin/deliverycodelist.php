@@ -21,7 +21,7 @@ $result = sql_query($sql);
 <section class="cbox">
 
     <h2>배송업체 목록</h2>
-    <p>건수 <?=$total_count ?></p>
+    <p>등록된 배송업체 <?=$total_count ?>곳</p>
 
      <div id="btn_add">
         <a href="./deliverycodeform.php">배송회사추가</a>
