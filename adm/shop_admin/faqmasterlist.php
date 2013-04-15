@@ -61,7 +61,7 @@ $result = sql_query($sql);
         <td class="td_num"><?=$row['fm_id']?></td>
         <td><?=stripslashes($row['fm_subject']) ?></td>
         <td class="td_num"><?=$cnt?></td>
-        <td class="td_smallmng"><a href="./faqlist.php?fm_id=<?=$row['fm_id']?>">상세보기</a></td>
+        <td class="td_smallmng"><a href="./faqlist.php?fm_id=<?=$row['fm_id']?>&amp;fm_subject=<?=$row['fm_subject']?>">상세보기</a></td>
         <td class="td_mng">
             <a href="<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$row['fm_id']?>">보기</a>
             <a href="./faqmasterform.php?w=u&amp;fm_id=<?=$row['fm_id']?>">수정</a>
