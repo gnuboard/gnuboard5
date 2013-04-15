@@ -22,27 +22,17 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 $sql = "select * $sql_common order by co_id limit $from_record, {$config['cf_page_rows']} ";
 $result = sql_query($sql);
 ?>
-<style type="text/css">
-    #content_fir{position:relative}
-    #content_fir span{position:absolute;top:-12;right:5px}
-    .content_center{text-align:center}
-</style>
 
 <section class="cbox">
     <h2>내용관리</h2>
-    <p id="content_fir">
-        <a href="<?=$_SERVER['PHP_SELF']?>">처음</a>
-        <span>건수 <? echo $total_count ?>&nbsp;</span>
+    <p>
+        <? if ($page > 1) {?><a href="<?=$_SERVER['PHP_SELF']?>">처음으로</a><? } ?>
+        <span>전체 내용 <?=$total_count?>건</span>
     </p>
     <div id="btn_add">
-        <a href="./contentform.php">내용관리추가</a>
+        <a href="./contentform.php">내용 추가</a>
     </div>
     <table>
-    <colgroup>
-        <col class="grid_2">
-        <col class="gird_13">
-        <col class="grid_3">
-    </colgroup>
     <thead>
     <tr>
         <th scope="col">ID</th>
@@ -51,30 +41,27 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <?
-    for ($i=0; $row=mysql_fetch_array($result); $i++) {
-        $s_mod = icon("수정", "./contentform.php?w=u&co_id={$row['co_id']}");
-        $s_del = icon("삭제", "javascript:del('./contentformupdate.php?w=d&co_id={$row['co_id']}')");
-        $s_vie = icon("보기", G4_SHOP_URL."/content.php?co_id={$row['co_id']}");
-
-        $list = $i%2;
-    ?>
+    <? for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
     <tr>
-        <td class="content_center"><?=$row['co_id']?></td>
+        <td class="td_odrnum"><?=$row['co_id']?></td>
         <td><?=htmlspecialchars2($row['co_subject'])?></td>
-        <td class="content_center"><a href="./contentform.php?w=u&co_id=<?=$row['co_id']?>">수정</a> <a href="./contentformupdate.php?w=d&co_id=<?=$row['co_id']?>">삭제</a> <a href="<?=G4_SHOP_URL?>/content.php?co_id=<?=$row['co_id']?>">보기</a></td>
+        <td class="td_mng">
+            <a href="<?=G4_SHOP_URL?>/content.php?co_id=<?=$row['co_id']?>">보기</a>
+            <a href="./contentform.php?w=u&amp;co_id=<?=$row['co_id']?>">수정</a>
+            <a href="javascript:del('./contentformupdate.php?w=d&amp;co_id=<?=$row['co_id']?>')">삭제</a>
+        </td>
     </tr>
     <?
     }
     if ($i == 0) {
-        echo '<tr><td colspan="3" class="content_center"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="3" class="empty_table">자료가 한건도 없습니다.</td></tr>';
     }
     ?>
     </tbody>
     </table>
-    <div><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></div>
 </section>
 
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
