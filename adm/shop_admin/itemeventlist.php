@@ -128,7 +128,7 @@ if (isset($ev_set)) {
 
 <section class="cbox">
     <h2>상품 목록</h2>
-    <p>상품을 이벤트별로 일괄 처리합니다.</p>
+    <p>상품을 이벤트별로 일괄 처리합니다. 현재 선택된 이벤트는 <?=$ev_title?>입니다.</p>
 
     <form name="fitemeventlistupdate" method="post" action="./itemeventlistupdate.php" onsubmit="return fitemeventlistupdatecheck(this)">
     <input type="hidden" name="ev_id" value="<?=$ev_id?>">
