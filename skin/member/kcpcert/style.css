@@ -32,7 +32,7 @@
 #find_info_result_wrap {margin:0 auto 20px;padding:10px 20px 15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 
 /* 로그인 */
-#mb_login {margin:100px auto;width:500px}
+#mb_login {margin:0 auto;padding:100px 0;width:500px}
 #mb_login h1 {margin:0 0 20px;font-size:1.3em}
 #mb_login h2 {margin:0}
 #mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
@@ -61,7 +61,7 @@
 #scrap_do textarea {height:100px}
 
 /* 회원 패스워드 확인 */
-#mb_confirm {margin:100px auto;width:500px}
+#mb_confirm {margin:0 auto;padding:100px 0;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
 #mb_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
@@ -70,7 +70,7 @@
 #mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
 /* 비밀글 패스워드 확인 */
-#pw_confirm {margin:100px auto;width:500px}
+#pw_confirm {margin:0 auto;padding:100px 0;width:500px}
 #pw_confirm h1 {margin:0 0 20px;font-size:1.3em}
 #pw_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #pw_confirm p strong {display:block}
