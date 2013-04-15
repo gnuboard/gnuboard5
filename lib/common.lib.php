@@ -1798,15 +1798,12 @@ function delete_editor_thumbnail($contents)
 }
 
 // 스킨 style sheet 파일 얻기
-function get_skin_stylesheet($skin_path, $dir='')
+function get_skin_stylesheet($skin_path)
 {
     if(!$skin_path)
         return "";
 
     $str = "";
-
-    if($dir)
-        $skin_path .= '/'.$dir;
 
     $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
 
@@ -1829,35 +1826,19 @@ function get_skin_stylesheet($skin_path, $dir='')
     return $str;
 }
 
-// 스킨 javascript 파일 얻기
-function get_skin_javascript($skin_path, $dir='js')
-{
-    if(!$skin_path)
-        return "";
 
-    $str = "";
-
-    if($dir)
-        $skin_path .= '/'.$dir;
-
-    $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
-
-    if(is_dir($skin_path)) {
-        if($dh = opendir($skin_path)) {
-            while(($file = readdir($dh)) !== false) {
-                if($file == "." || $file == "..")
-                    continue;
-
-                if(is_dir($skin_path.'/'.$file))
-                    continue;
-
-                if(preg_match("/\.(js)$/i", $file))
-                    $str .= '<script src="'.$skin_url.'/'.$file.'"></script>'."\n";
-            }
-            closedir($dh);
+// file_put_contents 는 PHP5 전용 함수이므로 PHP4 하위버전에서 사용하기 위함
+// http://www.phpied.com/file_get_contents-for-php4/
+if (!function_exists('file_put_contents')) {
+    function file_put_contents($filename, $data) {
+        $f = @fopen($filename, 'w');
+        if (!$f) {
+            return false;
+        } else {
+            $bytes = fwrite($f, $data);
+            fclose($f);
+            return $bytes;
         }
     }
-
-    return $str;
 }
 ?>
