@@ -65,11 +65,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td colspan="3">
             <?=help("기본으로 제공하는 스킨은 $cart_dir/list.skin.*.php 입니다.\n\n$cart_dir/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.");?>
             <select name="ev_skin" id="ev_skin">
-                <?  echo get_list_skin_options("^list\.skin\.(.*)\.php", G4_SHOP_PATH); ?>
+                <?  echo get_list_skin_options("^list\.skin\.(.*)\.php", G4_SHOP_PATH, $ev['ev_skin']); ?>
             </select>
-            <? if ($w == 'u') { ?>
-            <script>document.all.ev_skin.value='<?=$ev['ev_skin']?>';</script>
-            <? } ?>
         </td>
     </tr>
     <tr>
