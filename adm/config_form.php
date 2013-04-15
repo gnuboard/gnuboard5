@@ -25,6 +25,11 @@ if (!isset($config['cf_mobile_new_skin'])) {
                     ADD `cf_mobile_member_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_connect_skin` ", true);
 }
 
+if(!isset($config['cf_gcaptcha_mp3'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", TRUE);
+}
+
 if(!isset($config['cf_kcpcert_site_cd'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", TRUE);
@@ -265,6 +270,21 @@ $pg_anchor = "
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
+            }
+            ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_gcaptcha_mp3">음성캡챠 선택<strong class="sound_only">필수</strong></label></th>
+        <td colspan="3">
+            <?=help(G4_GCAPTCHA_URL.'/mp3 밑의 음성 폴더를 선택합니다.')?>
+            <select name="cf_gcaptcha_mp3" id="cf_gcaptcha_mp3" required class="required">
+            <?
+            $arr = get_skin_dir('mp3', G4_GCAPTCHA_PATH);
+            for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_gcaptcha_mp3'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
             </select>
