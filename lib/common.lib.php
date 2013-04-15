@@ -1852,7 +1852,7 @@ function get_skin_javascript($skin_path, $dir='js')
                     continue;
 
                 if(preg_match("/\.(js)$/i", $file))
-                    $str .= '<srcript src="'.$skin_url.'/'.$file.'"></script>'."\n";
+                    $str .= '<script src="'.$skin_url.'/'.$file.'"></script>'."\n";
             }
             closedir($dh);
         }
