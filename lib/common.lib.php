@@ -1860,4 +1860,19 @@ function get_skin_javascript($skin_path, $dir='')
 
     return $str;
 }
+
+// file_put_contents 는 PHP5 전용 함수이므로 PHP4 하위버전에서 사용하기 위함
+// http://www.phpied.com/file_get_contents-for-php4/
+if (!function_exists('file_put_contents')) {
+    function file_put_contents($filename, $data) {
+        $f = @fopen($filename, 'w');
+        if (!$f) {
+            return false;
+        } else {
+            $bytes = fwrite($f, $data);
+            fclose($f);
+            return $bytes;
+        }
+    }
+}
 ?>
