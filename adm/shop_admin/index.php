@@ -220,7 +220,7 @@ $pg_anchor ="<ul class=\"anchor\">
         <td class="td_name"><?=$name?></td>
         <td><?=cut_str($row['iq_subject'],40)?></td>
         <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?=$row['iq_id']?>">수정</a></td>
-    </tr>";
+    </tr>
     <?
     }
 
