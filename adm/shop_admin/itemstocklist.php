@@ -94,7 +94,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 </form>
 
 <section class="cbox">
-    <h2>상품재고관리</h2>
+    <h2>상품재고 목록</h2>
     <p>재고수정의 수치를 수정하시면 창고재고의 수치가 변경됩니다.</p>
 
     <form name="fitemstocklist" action="./itemstocklistupdate.php" method="post">
