@@ -1,8 +1,8 @@
 <?
 include_once('./_common.php');
 
-if (!$member[mb_id]) 
-    alert('로그인 한 회원만 접근하실 수 있습니다.');
+if ($is_guest)
+    alert('로그인 한 회원만 접근하실 수 있습니다.', G4_BBS_URL.'/login.php');
 
 /*
 if ($url)
