@@ -30,6 +30,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 <input type="hidden" name="page" value="<? echo $page ?>">
 <input type="hidden" name="sort1" value="<? echo $sort1 ?>">
 <input type="hidden" name="sort2" value="<? echo $sort2 ?>">
+<input type="hidden" name="is_confirm" value="<? echo $is['is_confirm']?>">
 
 <section class="cbox">
     <h2>사용후기 수정</h2>
@@ -62,7 +63,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
     </tr>
     <tr>
         <th scope="row">확인</th>
-        <td><input type="checkbox" name="is_confirm" value="1" <?=($is['is_confirm']?"checked":"")?> id="is_confirm"><label for="is_confirm">확인하였습니다</label></td>
+        <td><input type="submit" name="btn_confirm" value="확인하였습니다"></td>
     </tr>
     </tbody>
     </table>
