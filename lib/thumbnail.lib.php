@@ -213,7 +213,12 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         $src = imagecreatefromjpeg($source_file);
     } else if ($size[2] == 3) {
         $src = imagecreatefrompng($source_file);
+    } else {
+        return;
     }
+
+    if(!$src)
+        return;
 
     $src_width = $size[0];
     $src_height = $size[1];
