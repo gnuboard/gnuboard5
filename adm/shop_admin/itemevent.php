@@ -24,7 +24,7 @@ $result = sql_query($sql);
     <h2>이벤트 목록</h2>
 
     <div id="btn_add">
-        <a href="./itemeventform.php">이벤트관리추가</a>
+        <a href="./itemeventform.php">이벤트 추가</a>
     </div>
 
     <table>
