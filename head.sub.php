@@ -83,17 +83,17 @@ var g4_cookie_domain = "<?=G4_COOKIE_DOMAIN?>";
 <? // 스킨의 javascript 불러옴
 if (!defined('G4_IS_ADMIN')) {
     if(isset($board_skin_path))
-        echo get_skin_javascript($board_skin_path);
+        echo get_skin_javascript($board_skin_path, 'js');
     if(isset($member_skin_path))
-        echo get_skin_javascript($member_skin_path);
+        echo get_skin_javascript($member_skin_path, 'js');
     if(isset($new_skin_path))
-        echo get_skin_javascript($new_skin_path);
+        echo get_skin_javascript($new_skin_path 'js');
     if(isset($search_skin_path))
-        echo get_skin_javascript($search_skin_path);
+        echo get_skin_javascript($search_skin_path 'js');
     if(isset($connect_skin_path))
-        echo get_skin_javascript($connect_skin_path);
+        echo get_skin_javascript($connect_skin_path 'js');
     if(isset($poll_skin_path))
-        echo get_skin_javascript($poll_skin_path);
+        echo get_skin_javascript($poll_skin_path 'js');
 }
 ?>
 <? if(G4_IS_MOBILE) { ?>

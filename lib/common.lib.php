@@ -1830,7 +1830,7 @@ function get_skin_stylesheet($skin_path, $dir='')
 }
 
 // 스킨 javascript 파일 얻기
-function get_skin_javascript($skin_path, $dir='js')
+function get_skin_javascript($skin_path, $dir='')
 {
     if(!$skin_path)
         return "";
