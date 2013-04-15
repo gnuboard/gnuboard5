@@ -17,62 +17,56 @@ $total_count = $row['cnt'];
 $sql = "select * $sql_common order by ev_id desc ";
 $result = sql_query($sql);
 ?>
-<style type="text/css">
-.itemevent_center{text-align:center}
-</style>
+
+<p>전체 이벤트 <?=$total_count ?>건</p>
 
 <section class="cbox">
-    <h2>이벤트관리</h2>
-    <p>건수 <? echo $total_count ?></p>
+    <h2>이벤트 목록</h2>
+
     <div id="btn_add">
         <a href="./itemeventform.php">이벤트관리추가</a>
     </div>
+
     <table>
-    <colgroup>
-        <col class="grid_2">
-        <col class="gird_10">
-        <col class="grid_2">
-        <col class="grid_1">
-        <col class="grid_3">
-    </colgroup>
     <thead>
     <tr>
-        <th scope="col">이벤트 번호</th>
+        <th scope="col">이벤트번호</th>
         <th scope="col">제목</th>
-        <th scope="col">연결 상품</th>
+        <th scope="col">연결상품</th>
         <th scope="col">사용</th>
         <th scope="col">구분</th>
     </tr>
     </thead>
     <tbody>
     <?
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
-    {
-        $s_mod = icon("수정", "./itemeventform.php?w=u&ev_id={$row['ev_id']}");
-        $s_del = icon("삭제", "javascript:del('./itemeventformupdate.php?w=d&ev_id={$row['ev_id']}');");
-        $s_vie = icon("보기", G4_SHOP_URL."/event.php?ev_id={$row['ev_id']}");
+    for ($i=0; $row=mysql_fetch_array($result); $i++) {
 
         $href = "";
         $sql = " select count(ev_id) as cnt from {$g4['shop_event_item_table']} where ev_id = '{$row['ev_id']}' ";
         $ev = sql_fetch($sql);
         if ($ev[cnt]) {
-            $href = "<a href='javascript:;' onclick='itemeventwin({$row['ev_id']});'>";
+            $href = '<a href="javascript:;" onclick="itemeventwin('.$row['ev_id'].');">';
+            $href_close = '</a>';
         }
+    ?>
 
-        $list = $i%2;
-        ?>
-        <tr>
-            <td class="itemevent_center"><?=$row['ev_id']?></td>
-            <td><?=$row['ev_subject']?></td>
-            <td class="itemevent_center"><?=$href?><?=$ev['cnt']?></td>
-            <td class="itemevent_center"><?=$row['ev_use'] ? "예" : "아니오"?></td>
-            <td class="itemevent_center"><a href="./itemeventform.php?w=u&ev_id=<?=$row['ev_id']?>">수정</a> <a href="./itemeventformupdate.php?w=d&ev_id=<?=$row['ev_id']?>">삭제</a> <a href="<?=G4_SHOP_URL?>/event.php?ev_id=<?=$row['ev_id']?>">보기</a></td>
-        </tr>
-        <?
+    <tr>
+        <td class="td_bignum"><?=$row['ev_id']?></td>
+        <td><?=$row['ev_subject']?></td>
+        <td class="td_num"><?=$href?><?=$ev['cnt']?><?=$href_close?></td>
+        <td class="td_chk"><?=$row['ev_use'] ? '<span class="txt_true">예</span>' : '<span class="txt_false">아니오</span>'?></td>
+        <td class="td_mng">
+            <a href="<?=G4_SHOP_URL?>/event.php?ev_id=<?=$row['ev_id']?>">보기</a>
+            <a href="./itemeventform.php?w=u&amp;ev_id=<?=$row['ev_id']?>">수정</a>
+            <a href="javascript:del('./itemeventformupdate.php?w=d&amp;ev_id=<?=$row['ev_id']?>');">삭제</a>
+        </td>
+    </tr>
+
+    <?
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="5" class="itemevent_center"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="5" class="empty_class">자료가 없습니다.</td></tr>';
     }
     ?>
     </tbody>
