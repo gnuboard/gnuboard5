@@ -53,7 +53,7 @@ $result = sql_query($sql);
 $qstr  = $qstr.'&amp;sca='.$sca.'&amp;save_stx='.$stx;
 
 $listall = '';
-if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
+if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 ?>
 
