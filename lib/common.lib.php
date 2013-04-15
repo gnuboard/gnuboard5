@@ -1798,12 +1798,15 @@ function delete_editor_thumbnail($contents)
 }
 
 // 스킨 style sheet 파일 얻기
-function get_skin_stylesheet($skin_path)
+function get_skin_stylesheet($skin_path, $dir='')
 {
     if(!$skin_path)
         return "";
 
     $str = "";
+
+    if($dir)
+        $skin_path .= '/'.$dir;
 
     $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
 
@@ -1818,6 +1821,38 @@ function get_skin_stylesheet($skin_path)
 
                 if(preg_match("/\.(css)$/i", $file))
                     $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date("md").'">'."\n";
+            }
+            closedir($dh);
+        }
+    }
+
+    return $str;
+}
+
+// 스킨 javascript 파일 얻기
+function get_skin_javascript($skin_path, $dir='js')
+{
+    if(!$skin_path)
+        return "";
+
+    $str = "";
+
+    if($dir)
+        $skin_path .= '/'.$dir;
+
+    $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
+
+    if(is_dir($skin_path)) {
+        if($dh = opendir($skin_path)) {
+            while(($file = readdir($dh)) !== false) {
+                if($file == "." || $file == "..")
+                    continue;
+
+                if(is_dir($skin_path.'/'.$file))
+                    continue;
+
+                if(preg_match("/\.(js)$/i", $file))
+                    $str .= '<srcript src="'.$skin_url.'/'.$file.'"></script>'."\n";
             }
             closedir($dh);
         }
