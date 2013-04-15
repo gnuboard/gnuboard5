@@ -627,9 +627,9 @@ function conv_selected_option($options, $value)
     if(!$options)
         return '';
 
-    $str = str_replace('value="'.$value.'"', 'value="'.$value.'" selected="selected"', $options);
+    $options = preg_replace('/(value=[\'\"]?'.$value.'[\'\"]?)/i', '\\1 selected="selected"', $options);
 
-    return $str;
+    return $options;
 }
 
 // 주문서 번호를 얻는다.

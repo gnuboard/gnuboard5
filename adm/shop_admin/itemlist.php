@@ -8,7 +8,7 @@ $g4['title'] = '상품관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 // 분류
-$ca_list  = "";
+$ca_list  = '<option value="">선택</option>'.PHP_EOL;
 $sql = " select * from {$g4['shop_category_table']} ";
 if ($is_admin != 'super')
     $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
@@ -19,11 +19,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $len = strlen($row['ca_id']) / 2 - 1;
     $nbsp = "";
     for ($i=0; $i<$len; $i++) {
-        $nbsp .= "&nbsp;&nbsp;&nbsp;";
+        $nbsp .= '&nbsp;&nbsp;&nbsp;';
     }
-    $ca_list .= "<option value='{$row['ca_id']}'>$nbsp{$row['ca_name']}";
+    $ca_list .= '<option value="'.$row['ca_id'].'">'.$nbsp.$row['ca_name'].'</option>'.PHP_EOL;
 }
-$ca_list .= "</select>";
 
 
 $where = " and ";
@@ -163,9 +162,6 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
         $gallery = $row['it_gallery'] ? 'Y' : '';
-
-        $tmp_ca_list  = '<select name="ca_id['.$i.']" id="ca_id_'.$i.'">'.$ca_list;
-        $tmp_ca_list .= "<script language='javascript'>document.getElementById('ca_id_$i').value='{$row['ca_id']}';</script>";
     ?>
     <tr>
         <td rowspan="2">
@@ -174,6 +170,10 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         </td>
         <td rowspan="2"><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?></a></td>
         <td rowspan="2">
+            <label for="ca_id_<?=$i?>">분류</label>
+            <select name="ca_id[<?=$i?>]" id="ca_id_<?=$i?>">
+                <?=conv_selected_option($ca_list, $row['ca_id'])?>
+            </select>
             <?=$tmp_ca_list?><br>
             <input type="text" name="it_name[<?=$i?>]" value="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?>" required class="frm_input required" size="40">
         </td>

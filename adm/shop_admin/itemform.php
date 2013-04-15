@@ -92,6 +92,36 @@ $qstr  = "$qstr&sca=$sca&page=$page";
 $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
+// 분류리스트
+$category_select = '';
+$script = '';
+$sql = " select * from {$g4['shop_category_table']} ";
+if ($is_admin != 'super')
+    $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
+$sql .= " order by ca_id ";
+$result = sql_query($sql);
+for ($i=0; $row=sql_fetch_array($result); $i++)
+{
+    $len = strlen($row['ca_id']) / 2 - 1;
+
+    $nbsp = "";
+    for ($i=0; $i<$len; $i++)
+        $nbsp .= "&nbsp;&nbsp;&nbsp;";
+
+    $category_select .= "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
+
+    $script .= "ca_use['{$row['ca_id']}'] = {$row['ca_use']};\n";
+    $script .= "ca_stock_qty['{$row['ca_id']}'] = {$row['ca_stock_qty']};\n";
+    //$script .= "ca_explan_html['$row[ca_id]'] = $row[ca_explan_html];\n";
+    $script .= "ca_sell_email['{$row['ca_id']}'] = '{$row['ca_sell_email']}';\n";
+    $script .= "ca_opt1_subject['{$row['ca_id']}'] = '{$row['ca_opt1_subject']}';\n";
+    $script .= "ca_opt2_subject['{$row['ca_id']}'] = '{$row['ca_opt2_subject']}';\n";
+    $script .= "ca_opt3_subject['{$row['ca_id']}'] = '{$row['ca_opt3_subject']}';\n";
+    $script .= "ca_opt4_subject['{$row['ca_id']}'] = '{$row['ca_opt4_subject']}';\n";
+    $script .= "ca_opt5_subject['{$row['ca_id']}'] = '{$row['ca_opt5_subject']}';\n";
+    $script .= "ca_opt6_subject['{$row['ca_id']}'] = '{$row['ca_opt6_subject']}';\n";
+}
+
 $pg_anchor ="<ul class=\"anchor\">
 <li><a href=\"#frm_basic_item\">기본정보</a></li>
 <li><a href=\"#frm_image\">이미지</a></li>
@@ -133,39 +163,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td colspan="3">
             <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
                 <option value="">= 기본분류 =</option>
-                <?
-                $script = "";
-                $sql = " select * from {$g4['shop_category_table']} ";
-                if ($is_admin != 'super')
-                    $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
-                $sql .= " order by ca_id ";
-                $result = sql_query($sql);
-                for ($i=0; $row=sql_fetch_array($result); $i++)
-                {
-                    $len = strlen($row['ca_id']) / 2 - 1;
-
-                    $nbsp = "";
-                    for ($i=0; $i<$len; $i++)
-                        $nbsp .= "&nbsp;&nbsp;&nbsp;";
-
-                    $str = "<option value='{$row['ca_id']}'>$nbsp{$row['ca_name']}\n";
-                    $category_select .= $str;
-                    echo $str;
-
-                    $script .= "ca_use['{$row['ca_id']}'] = {$row['ca_use']};\n";
-                    $script .= "ca_stock_qty['{$row['ca_id']}'] = {$row['ca_stock_qty']};\n";
-                    //$script .= "ca_explan_html['$row[ca_id]'] = $row[ca_explan_html];\n";
-                    $script .= "ca_sell_email['{$row['ca_id']}'] = '{$row['ca_sell_email']}';\n";
-                    $script .= "ca_opt1_subject['{$row['ca_id']}'] = '{$row['ca_opt1_subject']}';\n";
-                    $script .= "ca_opt2_subject['{$row['ca_id']}'] = '{$row['ca_opt2_subject']}';\n";
-                    $script .= "ca_opt3_subject['{$row['ca_id']}'] = '{$row['ca_opt3_subject']}';\n";
-                    $script .= "ca_opt4_subject['{$row['ca_id']}'] = '{$row['ca_opt4_subject']}';\n";
-                    $script .= "ca_opt5_subject['{$row['ca_id']}'] = '{$row['ca_opt5_subject']}';\n";
-                    $script .= "ca_opt6_subject['{$row['ca_id']}'] = '{$row['ca_opt6_subject']}';\n";
-                }
-                ?>
+                <?=conv_selected_option($category_select, $it['ca_id'])?>
             </select>
-            <script> document.fitemform.ca_id.value = '<?=$it['ca_id']?>'; </script>
             <script>
                 var ca_use = new Array();
                 var ca_stock_qty = new Array();
@@ -186,8 +185,10 @@ $pg_anchor ="<ul class=\"anchor\">
             <?
             for ($i=2; $i<=3; $i++)
             {
-                echo "&nbsp; <select name='ca_id{$i}'><option value=''>= {$i}차 분류 ={$category_select}</select>\n";
-                echo "<script> document.fitemform.ca_id{$i}.value = '".$it["ca_id{$i}"]."'; </script>\n";
+                echo "&nbsp; <select name='ca_id{$i}'>\n";
+                echo "<option value=\"\">= {$i}차 분류 =</option>\n";
+                echo conv_selected_option($category_select, $it['ca_id'.$i]);
+                echo "</select>\n";
             }
             ?>
             <?=help("기본분류는 반드시 선택하셔야 합니다.<br><br>하나의 상품에 최대 3개의 다른 분류를 지정할 수 있습니다.<br><br>2차, 3차 분류는 기본 분류의 하위 분류 개념이 아니므로 기본 분류 선택시 해당 상품이 포함될 최하위 분류만 선택하시면 됩니다.");?>

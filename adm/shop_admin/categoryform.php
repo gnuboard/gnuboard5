@@ -139,9 +139,8 @@ $pg_anchor ="<ul class=\"anchor\">
         <td colspan="3">
             <?=help("기본으로 제공하는 스킨은 ".G4_SHOP_DIR."/list.skin.*.php 입니다.");?>
             <select id="ca_skin" name="ca_skin">
-            <?  echo get_list_skin_options("^list.skin.(.*)\.php", G4_SHOP_PATH); ?>
+            <?  echo get_list_skin_options("^list.skin.(.*)\.php", G4_SHOP_PATH, $ca['ca_skin']); ?>
             </select>
-            <script>document.getElementById('ca_skin').value='<?=$ca['ca_skin']?>';</script>
         </td>
     </tr>
     <tr>
