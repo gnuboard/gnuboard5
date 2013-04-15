@@ -215,6 +215,9 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         $src = imagecreatefrompng($source_file);
     }
 
+    if(!$src)
+        return;
+
     $src_width = $size[0];
     $src_height = $size[1];
 
