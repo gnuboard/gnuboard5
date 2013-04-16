@@ -33,8 +33,6 @@ if (substr_count($wr_content, '&#') > 50) {
     exit;
 }
 
-@include_once($board_skin_path.'/write_update.head.skin.php');
-
 $upload_max_filesize = ini_get('upload_max_filesize');
 
 if (empty($_POST)) {
@@ -83,9 +81,11 @@ for ($i=1; $i<=10; $i++) {
     $var = "wr_$i";
     $$var = "";
     if (isset($_POST['wr_'.$i]) && $_POST['wr_'.$i]) {
-        $$var = $_POST['wr_'.$i];
+        $$var = escape_trim($_POST['wr_'.$i]);
     }
 }
+
+@include_once($board_skin_path.'/write_update.head.skin.php');
 
 if ($w == '' || $w == 'u') {
 
