@@ -1827,6 +1827,21 @@ function get_skin_stylesheet($skin_path, $dir='')
     }
 
     return $str;
+    
+    /*
+    // glob 를 이용한 코드
+    if (!$skin_path) return '';
+    $skin_path .= $dir ? '/'.$dir : '';
+    
+    $str = '';
+    $skin_url = G4_URL.str_replace('\\', '/', str_replace(G4_PATH, '', $skin_path));
+    
+    foreach (glob($skin_path.'/*.css') as $filepath) {
+        $file = str_replace($skin_path, '', $filepath);
+        $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date('md').'">'."\n";
+    }
+    return $str;
+    */
 }
 
 // 스킨 javascript 파일 얻기
