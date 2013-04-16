@@ -1804,6 +1804,7 @@ function get_skin_stylesheet($skin_path, $dir='')
         return "";
 
     $str = "";
+    $files = array();
 
     if($dir)
         $skin_path .= '/'.$dir;
@@ -1820,22 +1821,30 @@ function get_skin_stylesheet($skin_path, $dir='')
                     continue;
 
                 if(preg_match("/\.(css)$/i", $file))
-                    $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date("md").'">'."\n";
+                    $files[] = $file;
             }
             closedir($dh);
         }
     }
 
+    if(!empty($files)) {
+        sort($files);
+
+        foreach($files as $file) {
+            $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date("md").'">'."\n";
+        }
+    }
+
     return $str;
-    
+
     /*
     // glob 를 이용한 코드
     if (!$skin_path) return '';
     $skin_path .= $dir ? '/'.$dir : '';
-    
+
     $str = '';
     $skin_url = G4_URL.str_replace('\\', '/', str_replace(G4_PATH, '', $skin_path));
-    
+
     foreach (glob($skin_path.'/*.css') as $filepath) {
         $file = str_replace($skin_path, '', $filepath);
         $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date('md').'">'."\n";
@@ -1851,6 +1860,7 @@ function get_skin_javascript($skin_path, $dir='')
         return "";
 
     $str = "";
+    $files = array();
 
     if($dir)
         $skin_path .= '/'.$dir;
@@ -1867,9 +1877,17 @@ function get_skin_javascript($skin_path, $dir='')
                     continue;
 
                 if(preg_match("/\.(js)$/i", $file))
-                    $str .= '<script src="'.$skin_url.'/'.$file.'"></script>'."\n";
+                    $files[] = $file;
             }
             closedir($dh);
+        }
+    }
+
+    if(!empty($files)) {
+        sort($files);
+
+        foreach($files as $file) {
+            $str .= '<script src="'.$skin_url.'/'.$file.'"></script>'."\n";
         }
     }
 
