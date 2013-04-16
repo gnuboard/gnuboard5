@@ -40,7 +40,7 @@ if($error) {
 ?>
 
 <script>
-alert("<? echo $msg; ?>");
+alert("<? echo strip_tags($msg); ?>");
 //document.location.href = "<? echo $url; ?>";
 document.location.replace("<? echo $url; ?>");
 </script>
