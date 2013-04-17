@@ -51,7 +51,12 @@ if ($is_nogood) $colspan++;
     <table class="basic_tbl">
     <thead>
     <tr>
-        <? if ($is_checkbox) { ?><th scope="col"><input type="checkbox" title="현재 페이지 게시물 전체선택" onclick="if (this.checked) all_checked(true); else all_checked(false);"></th><?}?>
+        <? if ($is_checkbox) { ?>
+        <th scope="col">
+            <label for="chkall">현재 페이지 게시물 전체</label>
+            <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+        </th>
+        <?}?>
         <th scope="col">제목</th>
         <th scope="col"><?=subject_sort_link('wr_datetime', $qstr2, 1)?>날짜</a></th>
     </tr>
@@ -61,7 +66,11 @@ if ($is_nogood) $colspan++;
     for ($i=0; $i<count($list); $i++) {
     ?>
     <tr class="<? if ($list[$i]['is_notice']) echo "bo_notice";?>">
-        <? if ($is_checkbox) { ?><td class="td_chk"><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="이 게시물 선택"></td><? } ?>
+        <? if ($is_checkbox) { ?>
+        <td class="td_chk">
+            <label for="chk_wr_id_<?=$i?>" class="sound_only"><?=$list[$i]['subject']?></label>
+            <input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" id="chk_wr_id_<?=$i?>">
+        </td><? } ?>
         <td class="td_subject">
             <?
             echo $list[$i]['icon_reply'];
@@ -131,7 +140,8 @@ if ($is_nogood) $colspan++;
     <input type="hidden" name="bo_table" value="<?=$bo_table?>">
     <input type="hidden" name="sca" value="<?=$sca?>">
     <input type="hidden" name="sop" value="and">
-    <select name="sfl" title="검색대상">
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl">
         <option value="wr_subject"<?=get_selected($sfl, 'wr_subject', true);?>>제목</option>
         <option value="wr_content"<?=get_selected($sfl, 'wr_content');?>>내용</option>
         <option value="wr_subject||wr_content"<?=get_selected($sfl, 'wr_subject||wr_content');?>>제목+내용</option>
@@ -140,7 +150,7 @@ if ($is_nogood) $colspan++;
         <option value="wr_name,1"<?=get_selected($sfl, 'wr_name,1');?>>글쓴이</option>
         <option value="wr_name,0"<?=get_selected($sfl, 'wr_name,0');?>>글쓴이(코)</option>
     </select>
-    <input name="stx" value="<?=stripslashes($stx)?>" title="검색어(필수)" required class="required" size="15" maxlength="15">
+    <input name="stx" value="<?=stripslashes($stx)?>" placeholder="검색어(필수)" required class="required" size="15" maxlength="15">
     <input type="submit" value="검색">
     </form>
 </fieldset>

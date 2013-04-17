@@ -9,7 +9,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <?=$group_select?>
     <script>document.getElementById("gr_id").value = "<?=$gr_id?>";</script>
 
-    <select name="sfl" title="검색조건">
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="wr_subject||wr_content"<?=get_selected($_GET['sfl'], "wr_subject||wr_content")?>>제목+내용</option>
         <option value="wr_subject"<?=get_selected($_GET['sfl'], "wr_subject")?>>제목</option>
         <option value="wr_content"<?=get_selected($_GET['sfl'], "wr_content")?>>내용</option>
@@ -17,7 +18,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <option value="wr_name"<?=get_selected($_GET['sfl'], "wr_name")?>>이름</option>
     </select>
 
-    <input type="text" name="stx" value="<?=$text_stx?>" title="검색어(필수)" required class="required" maxlength="20">
+    <input type="text" name="stx" value="<?=$text_stx?>" id="stx" required class="required" placeholder="검색어(필수)" maxlength="20">
     <input type="submit" value="검색">
 
     <script>

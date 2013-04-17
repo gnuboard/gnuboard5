@@ -55,7 +55,10 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             if ($k % $bo_gallery_cols == 0) $style .= "margin:0 !important;";
         ?>
         <li class="bo_img_list_li <? if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<? } ?>" style="<?=$style?>width:<?=$board['bo_gallery_width']?>px">
-            <? if ($is_checkbox) { ?><input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" title="<?=$list[$i]['wr_subject']?> 선택"><? } ?>
+            <? if ($is_checkbox) { ?>
+            <label for="chk_wr_id_<?=$i?>" class="sound_only"><?=$list[$i]['wr_subject']?></label>
+            <input type="checkbox" name="chk_wr_id[]" value="<?=$list[$i]['wr_id']?>" id="chk_wr_id_<?=$i?>">
+            <? } ?>
             <span class="sound_only">
                 <?
                 if ($wr_id == $list[$i]['wr_id'])
@@ -155,7 +158,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     <input type="hidden" name="bo_table" value="<?=$bo_table?>">
     <input type="hidden" name="sca" value="<?=$sca?>">
     <input type="hidden" name="sop" value="and">
-    <select name="sfl" title="검색대상">
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="wr_subject"<?=get_selected($sfl, "wr_subject", true);?>>제목</option>
         <option value="wr_content"<?=get_selected($sfl, "wr_content");?>>내용</option>
         <option value="wr_subject||wr_content"<?=get_selected($sfl, "wr_subject||wr_content");?>>제목+내용</option>
@@ -164,7 +168,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <option value="wr_name,1"<?=get_selected($sfl, "wr_name,1");?>>글쓴이</option>
         <option value="wr_name,0"<?=get_selected($sfl, "wr_name,0");?>>글쓴이(코)</option>
     </select>
-    <input type="text" name="stx" value="<?=stripslashes($stx)?>" title="검색어(필수)" required class="frm_input required" size="15" maxlength="15">
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?=stripslashes($stx)?>" required class="frm_input required" size="15" maxlength="15">
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </fieldset>
