@@ -168,7 +168,6 @@ $pg_anchor ="<ul class=\"anchor\">
                 <?=get_list_skin_options("^maintype(.*)\.php", G4_SHOP_PATH, $default['de_type1_list_skin']);?>
             </select>
             <label for="de_type1_list_row">출력할 줄 수</label>
-
             <input type="text" name="de_type1_list_row" value="<?=$default['de_type1_list_row']?>" id="de_type1_list_row" class="frm_input" size="3">
             <label for="de_type1_list_mod">1줄당 이미지 수</label>
             <input type="text" name="de_type1_list_mod" value="<?=$default['de_type1_list_mod']?>" id="de_type1_list_mod" class="frm_input" size="3">
@@ -463,7 +462,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </td>
     <!-- <td>LG텔레콤 테스트 모드</td>
     <td>
-        <input type="checkbox" name="de_dacom_test" value="1" <?=$default[de_dacom_test]?"checked":"";?>> 
+        <input type="checkbox" name="de_dacom_test" value="1" <?=$default[de_dacom_test]?"checked":"";?>>
         테스트로 결제하실 경우에 체크하세요.
     </td> -->
     </tr>
@@ -606,7 +605,7 @@ $pg_anchor ="<ul class=\"anchor\">
     <tr>
         <th scope="row">관련상품출력</th>
         <td>
-            <?=help("$cart_dir/item.sub.adding.php 에서 $cart_dir/maintype1.inc.php 를 include 하여 출력합니다.");?>
+            <?=help(G4_SHOP_DIR.'/item.php 에서 '.G4_SHOP_DIR.'/maintype10.inc.php 를 include 하여 출력합니다.');?>
             <label for="de_rel_list_mod">1줄당 이미지 수</label>
             <input type="text" name="de_rel_list_mod" value="<?=$default['de_rel_list_mod']?>" id="de_rel_list_mod" class="frm_input" size="3">
             <label for="de_rel_img_width">이미지폭</label>
