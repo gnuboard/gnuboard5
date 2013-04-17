@@ -44,16 +44,20 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $bimg_str = "";
             $bimg = G4_DATA_PATH."/banner/{$bn['bn_id']}";
             if (file_exists($bimg) && $bn['bn_id']) {
-                echo "<input type=\"checkbox\" name=\"bn_bimg_del\" value='1'>삭제";
-                $bimg_str = "<img src='".G4_DATA_URL."/banner/{$bn['bn_id']}' border=0>";
+                echo '<input type="checkbox" name="bn_bimg_del" value="1"> 삭제';
+                $bimg_str = '<img src="'.G4_DATA_URL.'/banner/'.$bn['bn_id'].'">';
                 //$size = getimagesize($bimg);
                 //echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('bimg', $size[0], $size[1]);\"><input type=checkbox name=bn_bimg_del value='1'>삭제";
                 //echo "<div id='bimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$bimg' border=1></div>";
             }
+            if ($bimg_str) {
+                echo '<div class="banner_or_img">';
+                echo $bimg_str;
+                echo '</div>';
+            }
             ?>
         </td>
     </tr>
-    <? if ($bimg_str) { echo "<tr><td></td><td>$bimg_str</td></tr>"; } ?>
     <tr>
         <th scope="row"><label for="bn_alt">이미지 설명</label></th>
         <td>
