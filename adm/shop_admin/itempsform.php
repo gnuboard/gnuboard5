@@ -16,13 +16,11 @@ if (!$is['is_id'])
 
 $name = get_sideview($is['mb_id'], get_text($is['is_name']), $is['mb_email'], $is['mb_homepage']);
 
-$g4['title'] = '사용후기 수정';
+$g4['title'] = '사용후기';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$qstr = "page=$page&sort1=$sort1&sort2=$sort2";
+$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 ?>
-
-<?//=subtitle($g4['title'])?>
 
 <form name="fitemps" method="post" onsubmit="return fitemps_submit(this);">
 <input type="hidden" name="w" value="<? echo $w ?>">
@@ -37,7 +35,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_15">
+        <col>
     </colgroup>
     <tbody>
     <tr>
@@ -63,7 +61,7 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
     </tr>
     <tr>
         <th scope="row">확인</th>
-        <td><input type="submit" name="btn_confirm" value="확인하였습니다"></td>
+        <td><input type="submit" name="btn_confirm" value="확인하였습니다" class="btn_frmline"></td>
     </tr>
     </tbody>
     </table>
