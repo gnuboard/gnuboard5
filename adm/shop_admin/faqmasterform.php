@@ -6,6 +6,8 @@ include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 auth_check($auth[$sub_menu], "w");
 
 $html_title = 'FAQ';
+$g4['title'] = $html_title.' 관리';
+
 if ($w == "u")
 {
     $html_title .= ' 수정';
@@ -20,7 +22,6 @@ else
     $html_title .= ' 입력';
 }
 
-$g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
@@ -33,44 +34,51 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_15">
+        <col>
     </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="fm_subject">제목</label></th>
         <td>
-            <input type="text" value="<?=get_text($fm['fm_subject']) ?>" name="fm_subject" id="fm_subject" required class="frm_input requried"  size="60">
-            <?
-            if ($w == 'u')
-            {
-                echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
-                echo " <a href='./faqlist.php?fm_id=$fm_id'>상세보기</a>";
-            }
-            ?>
+            <input type="text" value="<?=get_text($fm['fm_subject']) ?>" name="fm_subject" id="fm_subject" required class="frm_input required"  size="70">
+            <? if ($w == 'u') { ?>
+            <a href="<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$fm_id?>" class="btn_frmline">보기</a>
+            <a href="./faqlist.php?fm_id=<?=$fm_id?>" class="btn_frmline">상세보기</a>
+            <? } ?>
         </td>
     </tr>
     <tr>
-        <th scope="row">상단이미지</th>
+        <th scope="row"><label for="fm_himg">상단이미지</label></th>
         <td>
-            <input type="file" name="fm_himg">
+            <input type="file" name="fm_himg" id="fm_himg">
             <?
-            $himg = G4_DATA_PATH."/faq/{$fm['fm_id']}_h";
+            $himg = G4_DATA_PATH.'/faq/'.$fm['fm_id'].'_h';
             if (file_exists($himg)) {
-                echo "<input type=checkbox name=fm_himg_del value='1'>삭제";
-                $himg_str = "<img src='".G4_DATA_URL."/faq/{$fm['fm_id']}_h' border=0>";
+                echo '<input type="checkbox" name="fm_himg_del" value="1" id="fm_himg_del"> <label for="fm_himg_del">삭제</label>';
+                $himg_str = '<img src="'.$himg.'" alt="">';
+            }
+            if ($himg_str) {
+                echo '<div class="banner_or_img">';
+                echo $himg_str;
+                echo '</div>';
             }
             ?>
         </td>
     </tr>
     <tr>
-        <th scope="row">하단이미지</th>
+        <th scope="row"><label for="fm_timg">하단이미지</label></th>
         <td>
-            <input type="file" name="fm_timg">
+            <input type="file" name="fm_timg" id="fm_timg">
             <?
-            $timg = G4_DATA_PATH."/faq/{$fm['fm_id']}_t";
+            $timg = G4_DATA_PATH.'/faq/'.$fm['fm_id'].'_t';
             if (file_exists($timg)) {
-                echo "<input type=checkbox name=fm_timg_del value='1'>삭제";
-                $timg_str = "<img src='".G4_DATA_URL."/faq/{$fm['fm_id']}_t' border=0>";
+                echo '<input type="checkbox" name="fm_timg_del" value="1" id="fm_timg_del"><label for="fm_timg_del">삭제</label>';
+                $timg_str = '<img src="'.$timg.'" alt="">';
+            }
+            if ($timg_str) {
+                echo '<div class="banner_or_img">';
+                echo $timg_str;
+                echo '</div>';
             }
             ?>
         </td>
@@ -89,12 +97,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tr>
     </tbody>
     </table>
-</section>
 
-<div class="btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./faqmasterlist.php">목록</a>
-</div>
+    <div class="btn_confirm">
+        <input type="submit" value="확인" class="btn_submit" accesskey="s">
+        <a href="./faqmasterlist.php">목록</a>
+    </div>
+
+</section>
 </form>
 
 <script>
