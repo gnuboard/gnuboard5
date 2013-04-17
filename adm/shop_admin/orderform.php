@@ -456,7 +456,7 @@ $pg_anchor = '<ul class="anchor">
         <? if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌') { ?>
         <tr>
             <th scope="row">계좌번호</th>
-            <td scope="row"><?=$bank_account?></td>
+            <td><?=$bank_account?></td>
         </tr>
         <? } ?>
         <tr>
