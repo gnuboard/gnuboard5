@@ -7,18 +7,19 @@ if (empty($fr_date)) $fr_date = G4_TIME_YMD;
 if (empty($to_date)) $to_date = G4_TIME_YMD;
 
 $qstr = "fr_date=".$fr_date."&amp;to_date=".$to_date;
+$query_string = $qstr ? '?'.$qstr : '';
 ?>
 
 <ul class="anchor">
-    <li><a href="./visit_list.php">접속자</a></li>
-    <li><a href="./visit_domain.php">도메인</a></li>
-    <li><a href="./visit_browser.php">브라우저</a></li>
-    <li><a href="./visit_os.php">운영체제</a></li>
-    <li><a href="./visit_hour.php">시간</a></li>
-    <li><a href="./visit_week.php">요일</a></li>
-    <li><a href="./visit_date.php">일</a></li>
-    <li><a href="./visit_month.php">월</a></li>
-    <li><a href="./visit_year.php">년</a></li>
+    <li><a href="./visit_list.php<?=$query_string?>">접속자</a></li>
+    <li><a href="./visit_domain.php<?=$query_string?>">도메인</a></li>
+    <li><a href="./visit_browser.php<?=$query_string?>">브라우저</a></li>
+    <li><a href="./visit_os.php<?=$query_string?>">운영체제</a></li>
+    <li><a href="./visit_hour.php<?=$query_string?>">시간</a></li>
+    <li><a href="./visit_week.php<?=$query_string?>">요일</a></li>
+    <li><a href="./visit_date.php<?=$query_string?>">일</a></li>
+    <li><a href="./visit_month.php<?=$query_string?>">월</a></li>
+    <li><a href="./visit_year.php<?=$query_string?>">년</a></li>
 </ul>
 
 <form name="fvisit" id="fvisit" method="get">
