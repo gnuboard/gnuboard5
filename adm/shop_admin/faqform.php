@@ -5,10 +5,11 @@ include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$html_title = 'FAQ 상세';
-
 $sql = " select * from {$g4['shop_faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
+
+$html_title = 'FAQ '.$fm['fm_subject'];;
+$g4['title'] = $html_title.' 관리';
 
 if ($w == "u")
 {
@@ -23,11 +24,8 @@ if ($w == "u")
     $fa['fa_content'] = htmlspecialchars2($fa['fa_content']);
 }
 else
-    $html_title .= ' 입력';
+    $html_title .= ' 항목 입력';
 
-$html_title .= ' : '.$fm['fm_subject'];
-
-$g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
@@ -37,43 +35,38 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="fa_id" value="<? echo $fa_id ?>">
 
 <section class="cbox">
-    <h2>FAQ상세입력 수정</h2>
+    <h2><?=$html_title?></h2>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_15">
+        <col>
     </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="fa_order">출력순서</label></th>
-        <td >
-            <?=help('숫자가 작을수록 FAQ 페이지의 상단에 출력합니다.', 60, -50)?>
+        <td>
+            <?=help('숫자가 작을수록 FAQ 페이지에서 먼저 출력됩니다.')?>
             <input type="text" name="fa_order" value="<?=$fa['fa_order']?>" id="fa_order" class="frm_input" maxlength="10" size="10">
+            <? if ($w == 'u') { ?><a href="<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$fm_id?>" class="btn_frmline">내용보기</a><? } ?>
         </td>
     </tr>
     <tr>
-        <th scope="row">질문
-            <? if ($w == 'u') {
-                echo icon("보기", G4_SHOP_URL."/faq.php?fm_id=$fm_id");
-                }
-            ?>
-        </th>
-        <td >
-            <?=editor_html('fa_subject', $fa['fa_subject']);?>
-        </td>
+        <th scope="row">질문</th>
+        <td><?=editor_html('fa_subject', $fa['fa_subject']);?></td>
     </tr>
     <tr>
         <th scope="row">답변</th>
-        <td ><?=editor_html('fa_content', $fa['fa_content']);?></td>
+        <td><?=editor_html('fa_content', $fa['fa_content']);?></td>
     </tr>
     </tbody>
     </table>
-</section>
 
-<div class="btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./faqlist.php?fm_id=<?=$fm_id?>">목록</a>
-</div>
+    <div class="btn_confirm">
+        <input type="submit" value="확인" class="btn_submit" accesskey="s">
+        <a href="./faqlist.php?fm_id=<?=$fm_id?>">목록</a>
+    </div>
+
+</section>
 </form>
 
 <script>
