@@ -38,7 +38,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 <meta name="HandheldFriendly" content="true">
 <meta name="format-detection" content="telephone=no">
 <? } ?>
-<meta http-equiv="imagetoolbar" content="no">
+<!-- <meta http-equiv="imagetoolbar" content="no"> -->
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
 <? if (defined('G4_IS_ADMIN')) { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css?=<?=date("md")?>">
@@ -101,7 +101,7 @@ if (!defined('G4_IS_ADMIN')) {
     set_cookie("device_width", screen.width, 6, g4_cookie_domain);
 </script>
 <? } ?>
-<? echo $config['cf_add_script']; ?>
+<? if(!G4_IS_ADMIN)echo $config['cf_add_script']; ?>
 </head>
 <body>
 <?
