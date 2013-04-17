@@ -1,7 +1,9 @@
 <?
 if (!defined('_GNUBOARD_')) exit;
 
+include_once(G4_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 include_once(G4_LIB_PATH.'/visit.lib.php');
+include_once('./admin.head.php');
 
 if (empty($fr_date)) $fr_date = G4_TIME_YMD;
 if (empty($to_date)) $to_date = G4_TIME_YMD;
@@ -32,6 +34,10 @@ $query_string = $qstr ? '?'.$qstr : '';
 </form>
 
 <script>
+$(function(){
+    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); 
+});
+
 function fvisit_submit(act)
 {
     var f = document.fvisit;

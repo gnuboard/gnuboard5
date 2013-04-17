@@ -5,7 +5,6 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], 'r');
 
 $g4['title'] = '브라우저별 접속자집계';
-include_once('./admin.head.php');
 include_once('./visit.sub.php');
 
 $colspan = 5;
