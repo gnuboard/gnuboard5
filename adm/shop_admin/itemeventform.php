@@ -5,7 +5,8 @@ include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$html_title = "이벤트 ";
+$html_title = "이벤트";
+$g4['title'] = $html_title.' 관리';
 
 if ($w == "u")
 {
@@ -31,21 +32,19 @@ else
     $ev['ev_list_row'] = 5;
 }
 
-$g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
+
 <form name="feventform" action="./itemeventformupdate.php" onsubmit="return feventform_check(this);" method="post" enctype="MULTIPART/FORM-DATA">
 <input type="hidden" name="w" value="<? echo $w ?>">
 <input type="hidden" name="ev_id" value="<? echo $ev_id ?>">
 
 <section class="cbox">
-    <h2>이벤트 입력 수정</h2>
+    <h2><?=$html_title?></h2>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_6">
-        <col class="grid_3">
-        <col class="grid_6">
+        <col>
     </colgroup>
     <tbody>
     <? if ($w == "u") { ?>
@@ -62,8 +61,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <? } ?>
     <tr>
         <th scope="row"><label for="ev_skin">출력스킨</label></th>
-        <td colspan="3">
-            <?=help("기본으로 제공하는 스킨은 $cart_dir/list.skin.*.php 입니다.\n\n$cart_dir/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.");?>
+        <td>
+            <?=help("기본으로 제공하는 스킨은 $cart_dir/list.skin.*.php 입니다.\n$cart_dir/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.");?>
             <select name="ev_skin" id="ev_skin">
                 <?  echo get_list_skin_options("^list\.skin\.(.*)\.php", G4_SHOP_PATH, $ev['ev_skin']); ?>
             </select>
@@ -74,97 +73,106 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
               <input type="text" name="ev_img_width" value="<? echo $ev['ev_img_width'] ?>" id="ev_img_width" class="frm_input" size="5"> 픽셀
         </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="ev_img_height">출력이미지 높이</label></th>
         <td>
           <input type="text" name="ev_img_height" value="<? echo $ev['ev_img_height'] ?>" id="ev_img_height" class="frm_input" size="5"> 픽셀
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ev_list_mod">1라인 이미지수</label></th>
+        <th scope="row"><label for="ev_list_mod">1줄당 이미지 수</label></th>
         <td>
-            <?=help("1라인에 설정한 값만큼의 상품을 출력하지만 스킨에 따라 1라인에 하나의 상품만 출력할 수도 있습니다.", 50);?>
+            <?=help("1행에 설정한 값만큼의 상품을 출력합니다. 스킨 설정에 따라 1행에 하나의 상품만 출력할 수도 있습니다.", 50);?>
             <input type="text" name="ev_list_mod" value="<? echo $ev['ev_list_mod'] ?>" id="ev_list_mod" class="frm_input" size="3"> 개
         </td>
-        <th scope="row"><label for="ev_list_row">총라인수</label></th>
+    </tr>
+    <tr>
+        <th scope="row"><label for="ev_list_row">총 출력행수</label></th>
         <td>
-            <?=help("한페이지에 몇라인을 출력할것인지를 설정합니다.\n\n한페이지에서 표시하는 상품수는 (1라인 이미지수 x 총라인수) 입니다.");?>
+            <?=help("한페이지 당 출력할 행수를 설정합니다.\n한 페이지에 표시되는 상품수는 (1줄당 이미지 수 x 총 출력행수) 입니다.");?>
             <input type="text" name="ev_list_row" value="<? echo $ev['ev_list_row'] ?>" id="ev_list_row" class="frm_input" size="3"> 라인
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ev_use">사용</label></th>
-        <td colspan="3">
+        <td>
             <?=help("사용하지 않으면 왼쪽의 이벤트 메뉴와 이벤트리스트 페이지에 접근할 수 없습니다.");?>
             <select name="ev_use" id="ev_use">
-                <option value="1">예</option>
-                <option value="0">아니오</option>
+                <option value="1" <?=get_selected($ev['ev_use'], 1)?>>사용</option>
+                <option value="0" <?=get_selected($ev['ev_use'], 0)?>>사용안함</option>
             </select>
-            <script>document.all.ev_use.value='<?=$ev['ev_use']?>';</script>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ev_subject">이벤트제목</label></th>
-        <td colspan="3">
+        <td>
             <input type="text" name="ev_subject" value="<? echo htmlspecialchars2($ev['ev_subject']) ?>" id="ev_subject" required class="required frm_input"  size="60">
         </td>
     </tr>
     <tr>
-        <th scope="row">메뉴이미지</th>
-        <td colspan="3">
+        <th scope="row"><label for="ev_mimg">메뉴이미지</label></th>
+        <td>
             <?=help("쇼핑몰 왼쪽 메뉴에 텍스트 메뉴 대신 이미지로 넣을 경우 사용합니다.");?>
-            <input type="file" name="ev_mimg">
+            <input type="file" name="ev_mimg" id="ev_mimg">
+            <div>
             <?
             $mimg_str = "";
-            $mimg = G4_DATA_PATH."/event/{$ev['ev_id']}_m";
+            $mimg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_m';
             if (file_exists($mimg)) {
-                echo "<input type=\"checkbox\" name=\"ev_mimg_del\" value=\"1\">삭제";
-                $mimg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_m' border=\"0\">";
+                echo '<input type="checkbox" name="ev_mimg_del" value="1"> 삭제';
+                $mimg_str = '<img src="'.G4_DATA_URL.'"/event/'.$ev['ev_id'].'_m" alt="">';
             }
+            if ($mimg_str) echo $mimg_str;
             ?>
+            </div>
         </td>
     </tr>
-    <? if ($mimg_str) { echo "<tr><td></td><td colspan=\"3\">$mimg_str</td></tr>"; } ?>
     <tr>
-        <th scope="row">상단이미지</th>
-        <td colspan="3">
+        <th scope="row"><label for="ev_himg">상단이미지</label></th>
+        <td>
             <?=help("이벤트 페이지 상단에 업로드 한 이미지를 출력합니다.");?>
-            <input type="file" name="ev_himg">
+            <input type="file" name="ev_himg" id="ev_himg">
+            <div>
             <?
             $himg_str = "";
-            $himg = G4_DATA_PATH."/event/{$ev['ev_id']}_h";
+            $himg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_h';
             if (file_exists($himg)) {
-                echo "<input type=\"checkbox\" name=\"ev_himg_del\" value='1'>삭제";
-                $himg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_h' border=\"0\">";
+                echo '<input type="checkbox" name="ev_himg_del" value="1"> 삭제';
+                $himg_str = '<img src="'.G4_DATA_URL.'"/event/'.$ev['ev_id'].'_h" alt="">';
             }
+            if ($himg_str) echo $himg_str;
             ?>
+            </div>
         </td>
     </tr>
-    <? if ($himg_str) { echo "<tr><td colspan=\"4\">$himg_str</td></tr>"; } ?>
     <tr>
-        <th scope="row">하단이미지</th>
-        <td colspan="3">
+        <th scope="row"><label for="ev_timg">하단이미지</label></th>
+        <td>
             <?=help("이벤트 페이지 하단에 업로드 한 이미지를 출력합니다.");?>
-            <input type="file" name="ev_timg">
+            <input type="file" name="ev_timg" id="ev_timg">
+            <div>
             <?
             $timg_str = "";
-            $timg = G4_DATA_PATH."/event/{$ev['ev_id']}_t";
+            $timg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_t';
             if (file_exists($timg)) {
-                echo "<input type=\"checkbox\" name=\"ev_timg_del\" value='1'>삭제";
-                $timg_str = "<img src='".G4_DATA_URL."/event/{$ev['ev_id']}_t' border=\"0\">";
+                echo '<input type="checkbox" name="ev_timg_del" value="1"> 삭제';
+                $timg_str = '<img src="'.G4_DATA_URL.'"/event/'.$ev['ev_id'].'_t" alt="">';
             }
+            if ($timg_str) echo $timg_str;
             ?>
+            </div>
         </td>
     </tr>
-    <? if ($timg_str) { echo "<tr><td colspan=\"4\">$timg_str</td></tr>"; } ?>
     <tr>
         <th scope="row">상단내용</th>
-        <td colspan="3">
+        <td>
             <?=editor_html('ev_head_html', $ev['ev_head_html']);?>
         </td>
     </tr>
     <tr>
         <th scope="row">하단내용</th>
-        <td colspan="3">
+        <td>
             <?=editor_html('ev_tail_html', $ev['ev_tail_html']);?>
         </td>
     </tr>
