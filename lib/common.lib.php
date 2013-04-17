@@ -1612,6 +1612,26 @@ function is_utf8($str)
 }
 
 
+// UTF-8 문자열 자르기
+// 출처 : https://www.google.co.kr/search?q=utf8_strcut&aq=f&oq=utf8_strcut&aqs=chrome.0.57j0l3.826j0&sourceid=chrome&ie=UTF-8
+function utf8_strcut( $str, $size, $suffix='...' )
+{
+        $substr = substr( $str, 0, $size * 2 );
+        $multi_size = preg_match_all( '/[\x80-\xff]/', $substr, $multi_chars );
+
+        if ( $multi_size > 0 )
+            $size = $size + intval( $multi_size / 3 ) - 1;
+
+        if ( strlen( $str ) > $size ) {
+            $str = substr( $str, 0, $size );
+            $str = preg_replace( '/(([\x80-\xff]{3})*?)([\x80-\xff]{0,2})$/', '$1', $str );
+            $str .= $suffix;
+        }
+
+        return $str;
+}
+
+
 /*
 -----------------------------------------------------------
     Charset 을 변환하는 함수
