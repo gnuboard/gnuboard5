@@ -21,7 +21,7 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 
 <?//=subtitle($g4['title'])?>
 
-<div class="cbox">
+<section class="cbox">
     <h2>상품문의 수정/답변</h2>
     <p>상품에 대한 문의에 답변하실 수 있습니다. 상품 문의 내용의 수정도 가능합니다.</p>
 
@@ -63,7 +63,7 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     </div>
     </form>
 
-</div>
+</section>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
