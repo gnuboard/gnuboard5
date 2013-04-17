@@ -1,4 +1,4 @@
-/* SIR SOFT 지운아빠 Mar. 2013 */
+/* SIR SOFT 지운아빠 Apr. 2013 */
 
 /* 초기화 */
 html {overflow-y:scroll}
@@ -44,7 +44,7 @@ a:active {color:#000;text-decoration:underline}
 .cke_sc {margin:0 0 5px;text-align:right}
 .btn_cke_sc{display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:1.9em;vertical-align:middle}
 .cke_sc_def {margin:0 0 5px;padding:10px;border:1px solid #ccc;background:#f7f7f7;text-align:center}
-.cke_sc_def dl{margin:0 0 5px;text-align:left;zoom:1}
+.cke_sc_def dl {margin:0 0 5px;text-align:left;zoom:1}
 .cke_sc_def dl:after {display:block;visibility:hidden;clear:both;content:""}
 .cke_sc_def dt,
 .cke_sc_def dd {float:left;margin:0;padding:5px 0;border-bottom:1px solid .e9e9e9}
