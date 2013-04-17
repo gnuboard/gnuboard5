@@ -50,72 +50,70 @@ $rank = ($page - 1) * $rows;
 $sql = $sql . " limit $from_record, $rows ";
 $result = sql_query($sql);
 
-//$qstr = "page=$page&sort1=$sort1&sort2=$sort2";
-$qstr1 = "$qstr&sort1=$sort1&sort2=$sort2&fr_date=$fr_date&to_date=$to_date&sel_ca_id=$sel_ca_id";
+//$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
+$qstr1 = $qstr.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;fr_date='.$fr_date.'&amp;to_date='.$to_date.'&amp;sel_ca_id='.$sel_ca_id;
+
+$listall = '';
+if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
+    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 ?>
 
-<style type="text/css">
-    .itemsellrank{text-align:center}
-</style>
-
 <form name="flist">
-<input type="hidden" name="doc" value="<? echo $doc ?>">
-<input type="hidden" name="sort1" value="<? echo $sort1 ?>">
-<input type="hidden" name="sort2" value="<? echo $sort2 ?>">
-<input type="hidden" name="page" value="<? echo $page ?>">
+<input type="hidden" name="doc" value="<?=$doc?>">
+<input type="hidden" name="sort1" value="<?=$sort1?>">
+<input type="hidden" name="sort2" value="<?=$sort2?>">
+<input type="hidden" name="page" value="<?=$page?>">
+
 <p><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></p>
 <fieldset>
-<legend>상품판매순위 검색</legend>
-<select name="sel_ca_id" title="검색분류">
-    <option value=''>전체분류</option>
-    <?
-    $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
-    $result1 = sql_query($sql1);
-    for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
-        $len = strlen($row1['ca_id']) / 2 - 1;
-        $nbsp = "";
-        for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-        echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
-    }
-    ?>
-</select>
-<script> document.flist.sel_ca_id.value = '<?=$sel_ca_id?>';</script>
+    <legend>상품판매순위 검색</legend>
 
-기간 : <input type="text" name="fr_date" value="<?=$fr_date?>" class="frm_input" size="8" maxlength="8"> ~ <input type="text" name="to_date" value="<?=$to_date?>" class="frm_input" size="8" maxlength="8">
+    <span>
+        <?=$listall?>
+        등록상품 <?=$total_count ?>건
+    </span>
+
+    <label for="sel_ca_id" class="sound_only">검색대상</label>
+    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-17 ?>
+    <select name="sel_ca_id" id="sel_ca_id">
+        <option value=''>전체분류</option>
+        <?
+        $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
+        $result1 = sql_query($sql1);
+        for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
+            $len = strlen($row1['ca_id']) / 2 - 1;
+            $nbsp = "";
+            for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+            echo '<option value="'.$row1['ca_id'].'" '.get_selected($sel_ca_id, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
+        }
+        ?>
+    </select>
+    <? // ##### // 웹 접근성 취약 지점 끝 ?>
+
+    기간설정
+    <input type="text" name="fr_date" value="<?=$fr_date?>" class="frm_input" size="8" maxlength="8"> 에서 <input type="text" name="to_date" value="<?=$to_date?>" class="frm_input" size="8" maxlength="8"> 까지
 <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
-<p>건수 : <? echo $total_count ?></p>
+
 <section class="cbox">
     <h2>상품판매순위</h2>
-    <p>*수량을 합산하여 순위를 출력합니다.</p>
-    <table class="frm_basic">
-    <colgroup>
-        <col class="grid_1">
-        <col class="grid_8">
-        <col class="grid_1">
-        <col class="grid_1">
-        <col class="grid_1">
-        <col class="grid_1">
-        <col class="grid_1">
-        <col class="grid_1">
-        <col class="grid_1">
-        <col class="grid_1">
-        <col class="grid_1">
-    </colgroup>
+    <p>판매량을 합산하여 상품판매순위를 집계합니다.</p>
+
+    <table>
     <thead>
     <tr>
         <th scope="col">순위</th>
         <th scope="col">상품평</th>
-        <th scope="col"><a href="<?=title_sort("ct_status_1",1)."&$qstr1"?>">쇼핑</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_2",1)."&$qstr1"?>">주문</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_3",1)."&$qstr1"?>">준비</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_4",1)."&$qstr1"?>">배송</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_5",1)."&$qstr1"?>">완료</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_6",1)."&$qstr1"?>">취소</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_7",1)."&$qstr1"?>">반품</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_8",1)."&$qstr1"?>">품절</a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_sum",1)."&$qstr1"?>">합계</a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_1",1)."&amp;$qstr1"?>">쇼핑<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_2",1)."&amp;$qstr1"?>">주문<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_3",1)."&amp;$qstr1"?>">준비<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_4",1)."&amp;$qstr1"?>">배송<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_5",1)."&amp;$qstr1"?>">완료<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_6",1)."&amp;$qstr1"?>">취소<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_7",1)."&amp;$qstr1"?>">반품<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_8",1)."&amp;$qstr1"?>">품절<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?=title_sort("ct_status_sum",1)."&amp;$qstr1"?>">합계<span class="sound_only"> 순 정렬</span></a></th>
     </tr>
     </thead>
     <tbody>
@@ -129,17 +127,17 @@ $qstr1 = "$qstr&sort1=$sort1&sort2=$sort2&fr_date=$fr_date&to_date=$to_date&sel_
         $list = $i%2;
         ?>
         <tr>
-            <td class="itemsellrank"><?=$num?></td>
+            <td class="td_num"><?=$num?></td>
             <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str($row['it_name'],30)?></a></td>
-            <td class="itemsellrank"><?=$row['ct_status_1']?></td>
-            <td class="itemsellrank"><?=$row['ct_status_2']?></td>
-            <td class="itemsellrank"><?=$row['ct_status_3']?></td>
-            <td class="itemsellrank"><?=$row['ct_status_4']?></td>
-            <td class="itemsellrank"><?=$row['ct_status_5']?></td>
-            <td class="itemsellrank"><?=$row['ct_status_6']?></td>
-            <td class="itemsellrank"><?=$row['ct_status_7']?></td>
-            <td class="itemsellrank"><?=$row['ct_status_8']?></td>
-            <td class="itemsellrank"><?=$row['ct_status_sum']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_1']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_2']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_3']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_4']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_5']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_6']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_7']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_8']?></td>
+            <td class="td_smallnum"><?=$row['ct_status_sum']?></td>
         </tr>
         <?
     }
@@ -150,8 +148,9 @@ $qstr1 = "$qstr&sort1=$sort1&sort2=$sort2&fr_date=$fr_date&to_date=$to_date&sel_
     ?>
     </tbody>
     </table>
-    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&page=");?>
 </section>
+
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&amp;page=");?>
 
 
 <?
