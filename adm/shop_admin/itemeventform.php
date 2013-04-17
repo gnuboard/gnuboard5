@@ -51,11 +51,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th>이벤트번호</th>
         <td>
-            <?
-            echo $ev_id;
-            echo "&nbsp;&nbsp;&nbsp;";
-            echo icon("보기", G4_SHOP_URL."/event.php?ev_id={$ev['ev_id']}");
-            ?>
+            <span class="frm_ev_id"><?=$ev_id?></span>
+            <a href="<?=G4_SHOP_URL?>/event.php?ev_id=<?=$ev['ev_id']?>" class="btn_frmline">이벤트바로가기</a>
         </td>
     </tr>
     <? } ?>
@@ -115,17 +112,19 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <?=help("쇼핑몰 왼쪽 메뉴에 텍스트 메뉴 대신 이미지로 넣을 경우 사용합니다.");?>
             <input type="file" name="ev_mimg" id="ev_mimg">
-            <div>
             <?
             $mimg_str = "";
             $mimg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_m';
             if (file_exists($mimg)) {
-                echo '<input type="checkbox" name="ev_mimg_del" value="1"> 삭제';
-                $mimg_str = '<img src="'.G4_DATA_URL.'"/event/'.$ev['ev_id'].'_m" alt="">';
+                echo '<input type="checkbox" name="ev_mimg_del" value="1" id="ev_mimg_del"> <label for="ev_mimg_del">삭제</label>';
+                $mimg_str = '<img src="'.$mimg.'" alt="">';
             }
-            if ($mimg_str) echo $mimg_str;
+            if ($mimg_str) {
+                echo '<div class="banner_or_img">';
+                echo $mimg_str;
+                echo '</div>';
+            }
             ?>
-            </div>
         </td>
     </tr>
     <tr>
@@ -133,17 +132,19 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <?=help("이벤트 페이지 상단에 업로드 한 이미지를 출력합니다.");?>
             <input type="file" name="ev_himg" id="ev_himg">
-            <div>
             <?
             $himg_str = "";
             $himg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_h';
             if (file_exists($himg)) {
-                echo '<input type="checkbox" name="ev_himg_del" value="1"> 삭제';
-                $himg_str = '<img src="'.G4_DATA_URL.'"/event/'.$ev['ev_id'].'_h" alt="">';
+                echo '<input type="checkbox" name="ev_himg_del" value="1" id="ev_himg_del"> <label for="ev_himg_del">삭제</label>';
+                $himg_str = '<img src="'.$himg.'" alt="">';
             }
-            if ($himg_str) echo $himg_str;
+            if ($himg_str) {
+                echo '<div class="banner_or_img">';
+                echo $himg_str;
+                echo '</div>';
+            }
             ?>
-            </div>
         </td>
     </tr>
     <tr>
@@ -151,17 +152,19 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <?=help("이벤트 페이지 하단에 업로드 한 이미지를 출력합니다.");?>
             <input type="file" name="ev_timg" id="ev_timg">
-            <div>
             <?
             $timg_str = "";
             $timg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_t';
             if (file_exists($timg)) {
-                echo '<input type="checkbox" name="ev_timg_del" value="1"> 삭제';
-                $timg_str = '<img src="'.G4_DATA_URL.'"/event/'.$ev['ev_id'].'_t" alt="">';
+                echo '<input type="checkbox" name="ev_timg_del" value="1" id="ev_timg_del"> <label for="ev_timg_del">삭제</label>';
+                $timg_str = '<img src="'.$timg.'" alt="">';
             }
-            if ($timg_str) echo $timg_str;
+            if ($timg_str) {
+                echo '<div class="banner_or_img">';
+                echo $timg_str;
+                echo '</div>';
+            }
             ?>
-            </div>
         </td>
     </tr>
     <tr>

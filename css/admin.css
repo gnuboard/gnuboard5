@@ -387,6 +387,9 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sdeli_proc {text-align:center}
 #sdeli_proc_fs {padding:20px 0;border-bottom:1px solid #f7f7f7;text-align:center}
 
+/* 이벤트 입력/수정 */
+.frm_ev_id {display:inline-block;margin:0 10px 0 0;font-weight:bold}
+
 /* 팝업레이어 관리 */
 #spop_list {text-align:center}
 
