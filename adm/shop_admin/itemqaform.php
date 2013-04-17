@@ -13,51 +13,57 @@ if (!$iq['iq_id']) alert('등록된 자료가 없습니다.');
 
 $name = get_sideview($is['mb_id'], $iq['iq_name'], $is['mb_email'], $is['mb_homepage']);
 
-$g4['title'] = '상품문의 수정';
+$g4['title'] = '상품문의';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$qstr = "page=$page&sort1=$sort1&sort2=$sort2";
+$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 ?>
 
 <?//=subtitle($g4['title'])?>
 
-<table cellpadding=0 cellspacing=0 width=100%>
-<form name=frmitemqaform method=post action="./itemqaformupdate.php">
-<input type=hidden name=w     value='<? echo $w ?>'>
-<input type=hidden name=iq_id value='<? echo $iq_id ?>'>
-<input type=hidden name=page  value='<? echo $page ?>'>
-<input type=hidden name=sort1 value='<? echo $sort1 ?>'>
-<input type=hidden name=sort2 value='<? echo $sort2 ?>'>
-<colgroup width=120></colgroup>
-<colgroup width='' bgcolor=#ffffff></colgroup>
-<tr><td colspan=2 height=2 bgcolor=#0E87F9></td></tr>
-<tr class=ht>
-    <td>&nbsp;이 름</td>
-    <td><?=$name?></td>
-</tr>
-<tr class=ht>
-    <td>&nbsp;제 목</td>
-    <td><input type=text class=ed name=iq_subject required itenmae='제목' style='width:99%;' value='<?=conv_subject($iq['iq_subject'],120)?>'></td>
-</tr>
-<tr>
-    <td>&nbsp;질 문</td>
-    <td style='padding-top:5px; padding-bottom:5px;'>
-        <textarea id='iq_question' name='iq_question' rows="7" style='width:99%;' class=ed required itemname='질문'><? echo get_text($iq['iq_question']) ?></textarea>
-    </td>
-</tr>
-<tr>
-    <td>&nbsp;답 변</td>
-    <td style='padding-top:5px; padding-bottom:5px;'>
-        <textarea id='iq_answer' name='iq_answer' rows="7" style='width:99%;' class=ed itemname='답변'><? echo get_text($iq['iq_answer']) ?></textarea>
-    </td>
-</tr>
-<tr><td colspan=2 height=1 bgcolor=#CCCCCC></td></tr>
-</table>
+<div class="cbox">
+    <h2>상품문의 수정/답변</h2>
+    <p>상품에 대한 문의에 답변하실 수 있습니다. 상품 문의 내용의 수정도 가능합니다.</p>
 
-<p align=center>
-    <input type=submit class=btn1 accesskey='s' value='  확  인  '>&nbsp;
-    <input type=button class=btn1 accesskey='l' value='  목  록  ' onclick="document.location.href='./itemqalist.php?<?=$qstr?>';">
-</form>
+    <form name="frmitemqaform" action="./itemqaformupdate.php" method="post">
+    <input type="hidden" name="w" value="<?=$w ?>">
+    <input type="hidden" name="iq_id" value="<?=$iq_id ?>">
+    <input type="hidden" name="page" value="<?=$page ?>">
+    <input type="hidden" name="sort1" value="<?=$sort1 ?>">
+    <input type="hidden" name="sort2" value="<?=$sort2 ?>">
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row">이름</th>
+        <td><?=$name?></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="iq_subject">제목</label></th>
+        <td><input type="text" name="iq_subject" value="<?=conv_subject($iq['iq_subject'],120)?>" id="iq_subject" required class="frm_input required" size="95"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="iq_question">질문</label></th>
+        <td><textarea name="iq_question" id="iq_question" rows="7" required class="required"><?=get_text($iq['iq_question'])?></textarea></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="iq_answer">답변</label></th>
+        <td><textarea name="iq_answer" id="iq_answer" rows="7"><?=get_text($iq['iq_answer'])?></textarea></td>
+    </tr>
+    </tbody>
+    </table>
+
+    <div class="btn_confirm">
+        <input type="submit" accesskey='s' value="확인" class="btn_submit">
+        <a href="./itemqalist.php?<?=$qstr?>">목록</a>
+    </div>
+    </form>
+
+</div>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
