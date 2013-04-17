@@ -361,6 +361,9 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .td_scate {text-align:right}
 .td_scate_admin {text-align:center}
 
+/* 분류 추가/수정 */
+.frm_ca_id {display:inline-block;margin:0 10px 0 0;font-weight:bold}
+
 /* 상품관리 */
 .sit_odrby {text-align:center}
 .sit_amt {text-align:right;background-color:#dde6fe}
