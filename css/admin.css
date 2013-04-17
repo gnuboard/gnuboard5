@@ -159,7 +159,7 @@ fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 #btn_add a {display:inline-block;padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 
 /* 필수입력 */
-.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
+.required {background:url('../img/wrest.gif') #f6f9fa top right no-repeat !important}
 
 /* submit 안내 */
 .btn_confirm_msg {text-align:center}
