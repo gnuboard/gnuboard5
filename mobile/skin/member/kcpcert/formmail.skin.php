@@ -33,9 +33,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <tr>
         <th scope="row">형식</th>
         <td>
-            <input type="radio" name="type" value="0" id="type_text" checked> <label for="type_text">TEXT</label>
-            <input type="radio" name="type" value="1" id="type_html"> <label for="type_html">HTML</label>
-            <input type="radio" name="type" value="2" id="type_both"> <label for="type_both">TEXT+HTML</label>
+            <label for="type_text">TEXT</label>
+            <input type="radio" name="type" value="0" id="type_text" checked>
+            <label for="type_html">HTML</label>
+            <input type="radio" name="type" value="1" id="type_html">
+            <label for="type_both">TEXT+HTML</label>
+            <input type="radio" name="type" value="2" id="type_both">
         </td>
     </tr>
     <tr>

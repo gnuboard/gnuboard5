@@ -13,14 +13,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="kcpcert_time" value="">
     <fieldset id="find_info_fs">
         <p>
-            회원가입 시 등록하신  이름과 핸드폰번호를 입력해 주세요.
+            회원가입 시 등록하신 이름과 휴대폰번호를 입력해 주세요.
         </p>
-        <label for="mb_name">이름<strong class="sound_only">필수</strong></label>
-        <input type="text" name="mb_name" id="mb_name" required class="frm_input hangul nospace required" size="10">
-        <label for="mb_hp" id="mb_hp_label">핸드폰번호<strong class="sound_only">필수</strong></label>
-        <input type="text" name="mb_hp" id="mb_hp" required class="frm_input required" size="12" maxlength="20">
+        <input type="text" name="mb_name" id="mb_name" placeholder="이름(필수)" required class="frm_input hangul nospace required" size="10">
+        <input type="text" name="mb_hp" id="mb_hp" placeholder="휴대폰번호(필수)" required class="frm_input required" size="12" maxlength="20">
         <button type="button" id="win_kcpcert" class="btn_submit">휴대폰인증</button>
-        <noscript>휴대폰인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
+        <noscript>휴대폰 인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
     </fieldset>
     <?=captcha_html();?>
     <div class="btn_win">

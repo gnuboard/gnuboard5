@@ -24,7 +24,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 /* 화면낭독기 사용자용 */
 #hd_login_msg {position:absolute;top:0;left:0;width:0;height:0;overflow:hidden}
 .msg_sound_only,
-.sound_only {display:inline-block;margin:0 !important;padding:0 !important;width:0 !important;height:0 !important;font-size:0 !important;line-height:0 !important;overflow:hidden}
+.sound_only {display:inline-block;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;width:1px !important;height:1px !important;font-size:0 !important;line-height:0 !important;overflow:hidden}
 /* 본문 바로가기 */
 .to_content a {z-index:100000;position:absolute;top:0;left:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
@@ -43,7 +43,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 
 #logo {float:left;padding:0.3em 0;margin-left:1em}
 
-#schall {position:absolute;top:0.7em;right:1em}
+#schall {position:absolute;top:0.7em;right:1em;letter-spacing:-0.3em}
 #schall_stx {padding-left:0.3em;width:100px;height:1.5em;border:1px solid #aaa;border-right:0;background:#fff;line-height:1.5em;-webkit-appearance:none}
 #schall_submit {border:1px solid #aaa;border-left:0}
 

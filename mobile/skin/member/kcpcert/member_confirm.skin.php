@@ -17,7 +17,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <fieldset>
         회원아이디
         <span id="mb_confirm_id"><?=$member['mb_id']?></span>
-        <input type="password" name="mb_password" id="mb_confirm_pw" title="패스워드(필수)" placeholder="패스워드(필수)" required class="frm_input" size="15" maxLength="20">
+        <input type="password" name="mb_password" id="mb_confirm_pw" placeholder="패스워드(필수)" required class="frm_input" size="15" maxLength="20">
         <input type="submit" value="확인" id="btn_submit" class="btn_submit">
     </fieldset>
 

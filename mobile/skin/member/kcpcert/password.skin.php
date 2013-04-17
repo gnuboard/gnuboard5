@@ -32,7 +32,7 @@ else $g4['title'] = $g4['title'];
     <input type="hidden" name="page" value="<?=$page?>">
 
     <fieldset>
-        <input type="password" name="wr_password" id="pw_wr_password" title="패스워드(필수)" placeholder="패스워드(필수)" required class="frm_input required" maxLength="20">
+        <input type="password" name="wr_password" id="pw_wr_password" placeholder="패스워드(필수)" required class="frm_input required" maxLength="20">
         <input type="submit" class="btn_submit" value="확인">
     </fieldset>
     </form>
