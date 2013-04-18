@@ -67,9 +67,9 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="a.od_id" <?=get_selected($sel_field, 'a.od_id')?>>주문번호</option>
-        <option value="cd_app_no" <?=get_selected($sel_field, 'cp_app_no')?>>승인번호</option>
-        <option value="cd_opt01" <?=get_selected($sel_field, 'cp_opt01')?>>결제자</option>
+        <option value="a.od_id" <?=get_selected($_GET['sel_field'], 'a.od_id')?>>주문번호</option>
+        <option value="cd_app_no" <?=get_selected($_GET['sel_field'], 'cd_app_no')?>>승인번호</option>
+        <option value="cd_opt01" <?=get_selected($_GET['sel_field'], 'cd_opt01')?>>결제자</option>
     </select>
     <label for="search" class="sound_only">검색어</label>
     <input type="text" name="search" value="<?=$search?>" id="search" required class="frm_input required" autocomplete="off">
