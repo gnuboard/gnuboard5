@@ -9,8 +9,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 if (!$to_date) $to_date = date("Ymd", time());
 
-//if ($sort1 == "") $sort1 = "ct_status_sum";
-if ($sort1 == "") $sort1 = "sell_qty";
+if ($sort1 == "") $sort1 = "ct_status_sum";
 if ($sort2 == "") $sort2 = "desc";
 
 $sql  = " select a.it_id,
@@ -23,11 +22,7 @@ $sql  = " select a.it_id,
                  SUM(IF(ct_status = '취소',ct_qty, 0)) as ct_status_6,
                  SUM(IF(ct_status = '반품',ct_qty, 0)) as ct_status_7,
                  SUM(IF(ct_status = '품절',ct_qty, 0)) as ct_status_8,
-                 SUM(ct_qty) as ct_status_sum,
-                 (
-                    SUM(IF(ct_status = '주문' OR ct_status = '준비' OR ct_status = '배송' OR ct_status = '완료', ct_qty, 0))
-                    - SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_qty, 0))
-                 ) as sell_qty
+                 SUM(ct_qty) as ct_status_sum
             from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b ";
 $sql .= " where a.it_id = b.it_id ";
 if ($fr_date && $to_date)
@@ -147,7 +142,7 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="20" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="20" class="empty_table">자료가 없습니다.</td></tr>';
     }
     ?>
     </tbody>
