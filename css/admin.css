@@ -395,6 +395,13 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 팝업레이어 관리 */
 #spop_list {text-align:center}
 
+/* 가격비교사이트 */
+#frm_compare_info li {margin:5px 0}
+
+#frm_compare_engine dt a {font-weight:bold}
+#frm_compare_engine dd {margin:0 0 30px}
+#frm_compare_engine li {margin:5px 0}
+
 
 /* 새창 기본 스타일 */
 .new_win {}
