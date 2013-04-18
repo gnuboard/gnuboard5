@@ -36,7 +36,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     <option value="취소">취소</option>
                     <option value="반품">반품</option>
                     <option value="품절">품절</option>
-                    <option value="전체">전체</option>
+                    <option value="">전체</option>
                 </select>
                 <input type="text" name="fr_date" value="<?=date("Ymd");?>" id="fr_date" class="frm_input" size="10" maxlength="8"> 부터
                 <input type="text" name="to_date" value="<?=date("Ymd");?>" id="to_date" class="frm_input" size="10" maxlength="8"> 까지
@@ -64,7 +64,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     <option value="취소">취소</option>
                     <option value="반품">반품</option>
                     <option value="품절">품절</option>
-                    <option value="전체">전체</option>
+                    <option value="">전체</option>
                 </select>
                 <input type="text" name="fr_od_id" class="frm_input" size="10" maxlength="10"> 부터
                 <input type="text" name="to_od_id" class="frm_input" size="10" maxlength="10"> 까지
