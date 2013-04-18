@@ -59,7 +59,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="ev_skin">출력스킨</label></th>
         <td>
-            <?=help("기본으로 제공하는 스킨은 $cart_dir/list.skin.*.php 입니다.\n$cart_dir/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.");?>
+            <?=help('기본으로 제공하는 스킨은 '.G4_SHOP_DIR.'/list.skin.*.php 입니다.'.PHP_EOL.G4_SHOP_DIR.'/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.');?>
             <select name="ev_skin" id="ev_skin">
                 <?  echo get_list_skin_options("^list\.skin\.(.*)\.php", G4_SHOP_PATH, $ev['ev_skin']); ?>
             </select>
