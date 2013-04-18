@@ -69,7 +69,6 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
 <input type="hidden" name="sort2" value="<?=$sort2?>">
 <input type="hidden" name="page" value="<?=$page?>">
 
-<p><a href='<?=$_SERVER['PHP_SELF']?>'>처음</a></p>
 <fieldset>
     <legend>상품판매순위 검색</legend>
 
