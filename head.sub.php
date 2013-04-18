@@ -38,7 +38,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 <meta name="HandheldFriendly" content="true">
 <meta name="format-detection" content="telephone=no">
 <? } ?>
-<meta http-equiv="imagetoolbar" content="no">
+<!-- <meta http-equiv="imagetoolbar" content="no"> -->
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
 <? if (defined('G4_IS_ADMIN')) { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css?=<?=date("md")?>">
