@@ -59,7 +59,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="ev_skin">출력스킨</label></th>
         <td>
-            <?=help("기본으로 제공하는 스킨은 $cart_dir/list.skin.*.php 입니다.\n$cart_dir/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.");?>
+            <?=help('기본으로 제공하는 스킨은 '.G4_SHOP_DIR.'/list.skin.*.php 입니다.'.PHP_EOL.G4_SHOP_DIR.'/list.php&skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.');?>
             <select name="ev_skin" id="ev_skin">
                 <?  echo get_list_skin_options("^list\.skin\.(.*)\.php", G4_SHOP_PATH, $ev['ev_skin']); ?>
             </select>
@@ -117,7 +117,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $mimg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_m';
             if (file_exists($mimg)) {
                 echo '<input type="checkbox" name="ev_mimg_del" value="1" id="ev_mimg_del"> <label for="ev_mimg_del">삭제</label>';
-                $mimg_str = '<img src="'.$mimg.'" alt="">';
+                $mimg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_m" alt="">';
             }
             if ($mimg_str) {
                 echo '<div class="banner_or_img">';
@@ -137,7 +137,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $himg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_h';
             if (file_exists($himg)) {
                 echo '<input type="checkbox" name="ev_himg_del" value="1" id="ev_himg_del"> <label for="ev_himg_del">삭제</label>';
-                $himg_str = '<img src="'.$himg.'" alt="">';
+                $himg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_h" alt="">';
             }
             if ($himg_str) {
                 echo '<div class="banner_or_img">';
@@ -157,7 +157,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $timg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_t';
             if (file_exists($timg)) {
                 echo '<input type="checkbox" name="ev_timg_del" value="1" id="ev_timg_del"> <label for="ev_timg_del">삭제</label>';
-                $timg_str = '<img src="'.$timg.'" alt="">';
+                $timg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_t" alt="">';
             }
             if ($timg_str) {
                 echo '<div class="banner_or_img">';
