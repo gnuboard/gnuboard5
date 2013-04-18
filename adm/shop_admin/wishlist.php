@@ -121,12 +121,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="20" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
     }
     ?>
     </tbody>
     </table>
-    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 </section>
 
 <?
