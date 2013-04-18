@@ -12,13 +12,13 @@ $msg .= "process_type=$process_type|usrdata1=$usrdata1|usrdata2=$usrdata2|usrdat
 fwrite($fp, $msg);
 fclose($fp);
 
-echo "<script language='JavaScript'>";
+echo '<script>';
 if ($return_value == 1) {
-    echo "alert('정상적으로 전송하였습니다.');";
+    echo 'alert("정상적으로 전송하였습니다.");';
 } else {
-    echo "alert('오류발생 : $error_msg ($error_code)');";
+    echo 'alert("오류발생 : '.$error_msg .'('.$error_code.')");';
 }
-echo "</script>";
+echo '</script>';
 
 goto_url('./smssend.php');
 ?>
