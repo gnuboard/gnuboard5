@@ -124,8 +124,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 $pg_anchor ="<ul class=\"anchor\">
 <li><a href=\"#frm_basic_item\">기본정보</a></li>
-<li><a href=\"#frm_image\">이미지</a></li>
-<li><a href=\"#frm_select_item\">선택정보</a></li>
+<li><a href=\"#frm_image\">상품이미지</a></li>
+<li><a href=\"#frm_item\">관련상품</a></li>
+<li><a href=\"#frm_event\">관련이벤트</a></li>
+<li><a href=\"#frm_select_item\">상세설명설정</a></li>
 </ul>
 ";
 ?>
@@ -461,7 +463,6 @@ $pg_anchor ="<ul class=\"anchor\">
 
 <!-- 김혜련 2013-03-26 선택된 목록 / 등록된 목록 구조 다시 짜야함 start-->
 
-<?//=subtitle("선택정보")?>
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <colgroup width=14%></colgroup>
 <colgroup width=35% bgcolor=#FFFFFF></colgroup>
@@ -762,7 +763,7 @@ $pg_anchor ="<ul class=\"anchor\">
 <!-- 김혜련 2013-03-26 선택된 목록 / 등록된 목록 구조 다시 짜야함 end-->
 
 <section id="frm_select_item" class="cbox">
-    <h2>선택정보</h2>
+    <h2>상세설명설정</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
     <colgroup>
