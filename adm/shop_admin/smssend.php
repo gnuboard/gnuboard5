@@ -27,25 +27,25 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row">발신번호</th>
+            <th scope="row"><label for="send_number">발신번호</label></th>
             <td>
                 <?=help('SMS 발신자 번호를 입력하세요.')?>
                 <input name="send_number" type="text" value="<?=$send_number?>" id="send_number" class="frm_input">
             </td>
         </tr>
         <tr>
-            <th scope="row">수신번호</th>
+            <th scope="row"><label for="receive_number">수신번호</th>
             <td>
                 <?=help('여러명에게 보내실 때는 전화번호를 엔터로 구분하세요.')?>
-                <textarea name="receive_number" onkeyup="addressee_count();"></textarea>
+                <textarea name="receive_number" id="receive_number" onkeyup="addressee_count();"></textarea>
                 <div><span>총 수신인 <strong id="sms_addressee">0</strong>명</span></div>
             </td>
         </tr>
         <tr>
-            <th scope="row">문자내용</th>
+            <th scope="row"><label for="sms_contents">문자내용</label></th>
             <td>
                 <?=help("주의! 80 bytes 까지만 전송됩니다.\n영문 한글자 : 1byte , 한글 한글자 : 2bytes , 특수문자의 경우 1 또는 2 bytes 입니다.")?>
-                <textarea name="sms_contents" onkeyup="byte_check();"></textarea>
+                <textarea name="sms_contents" id="sms_contents" onkeyup="byte_check();"></textarea>
                 <div id="bytes">0 / 80 바이트</div>
             </td>
         </tr>
