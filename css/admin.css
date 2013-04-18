@@ -375,6 +375,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sit_camt,
 .sit_pt,
 .sit_qty {text-align:right}
+.frm_sit_title {margin:5px 0 0}
 
 /* 상품문의 */
 .sit_qa_subject {width:300px}

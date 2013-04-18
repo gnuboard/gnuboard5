@@ -170,12 +170,12 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         </td>
         <td rowspan="2"><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?></a></td>
         <td rowspan="2">
-            <label for="ca_id_<?=$i?>">분류</label>
+            <label for="ca_id_<?=$i?>" class="sound_only">분류</label>
             <select name="ca_id[<?=$i?>]" id="ca_id_<?=$i?>">
                 <?=conv_selected_option($ca_list, $row['ca_id'])?>
             </select>
             <?=$tmp_ca_list?><br>
-            <input type="text" name="it_name[<?=$i?>]" value="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?>" required class="frm_input required" size="40">
+            <input type="text" name="it_name[<?=$i?>]" value="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?>" required class="frm_input frm_sit_title required" size="40">
         </td>
         <td headers="sit_amt"><input type="text" name="it_amount[<?=$i?>]" value="<?=$row['it_amount']?>" class="frm_input sit_amt" size="7"></td>
         <td headers="sit_amt2"><input type="text" name="it_amount2[<?=$i?>]" value="<?=$row['it_amount2']?>" class="frm_input sit_amt2" size="7"></td>
