@@ -117,59 +117,59 @@ if ($csv == 'xls')
     header('Content-Disposition: attachment; filename="' . date("ymd", time()) . '.xls"');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
-    echo "<html>";
-    echo "<head>";
-    echo "<title>xls</title>";
-    echo "<style>.txt {mso-number-format:'\\@';}</style>";
-    echo "</head>";
-    echo "<body>";
+    echo '<html>';
+    echo '<head>';
+    echo '<title>xls</title>';
+    echo '<style>.mso_txt {mso-number-format:"\\@"}</style>';
+    echo '</head>';
+    echo '<body>';
     echo '<table class="frm_tbl">';
-    echo "<tr>";
-    echo "<td>우편번호</td>";
-    echo "<td>주소</td>";
-    echo "<td>이름</td>";
-    echo "<td>전화1</td>";
-    echo "<td>전화2</td>";
-    echo "<td>상품명</td>";
-    echo "<td>수량</td>";
-    echo "<td>상품코드</td>";
-    echo "<td>주문번호</td>";
-    echo "<td>운송장번호</td>";
-    echo "<td>전하실말씀</td>";
-    echo "</tr>";
+    echo '<tr>';
+    echo '<td>우편번호</td>';
+    echo '<td>주소</td>';
+    echo '<td>이름</td>';
+    echo '<td>전화1</td>';
+    echo '<td>전화2</td>';
+    echo '<td>상품명</td>';
+    echo '<td>수량</td>';
+    echo '<td>상품코드</td>';
+    echo '<td>주문번호</td>';
+    echo '<td>운송장번호</td>';
+    echo '<td>전하실말씀</td>';
+    echo '</tr>';
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         $it_name = stripslashes($row['it_name']) . "<br />";
         $it_name .= print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
 
-        echo "<tr>";
-        echo "<td>" . $row['od_b_zip1'] . '-' . $row['od_b_zip2'] . "</td>";
-        echo "<td>" . $row['od_b_addr1'] . ' ' . $row['od_b_addr2'] . "</td>";
-        echo "<td>" . $row['od_b_name'] . "</td>";
-        echo "<td class='txt'>" . $row['od_b_tel'] . "</td>";
-        echo "<td class='txt'>" . $row['od_b_hp'] . "</td>";
-        echo "<td>" . $it_name . "</td>";
-        echo "<td>" . $row['ct_qty'] . "</td>";
-        echo "<td class='txt'>" . $row['it_id'] . "</td>";
-        echo "<td class='txt'>'" . urlencode($row['od_id']) . "'</td>";
-        echo "<td class='txt'>" . $row['od_invoice'] . "</td>";
-        echo "<td>" . $row['od_memo'] . "</td>";
-        echo "</tr>";
+        echo '<tr>';
+        echo '<td>'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'</td>';
+        echo '<td>'.$row['od_b_addr1'].' '.$row['od_b_addr2'].'</td>';
+        echo '<td>'.$row['od_b_name'].'</td>';
+        echo '<td class="mso_txt">'.$row['od_b_tel'].'</td>';
+        echo '<td class="mso_txt">'.$row['od_b_hp'].'</td>';
+        echo '<td>'.$it_name.'</td>';
+        echo '<td>'.$row['ct_qty'].'</td>';
+        echo '<td class="mso_txt">'.$row['it_id'].'</td>';
+        echo '<td class="mso_txt">'. urlencode($row['od_id']).'</td>';
+        echo '<td class="mso_txt">'.$row['od_invoice'].'</td>';
+        echo '<td>'.$row['od_memo'].'</td>';
+        echo '</tr>';
     }
     if ($i == 0)
         echo '<tr><td colspan="11">자료가 없습니다.</td></tr>';
-    echo "</table>";
-    echo "</body>";
-    echo "</html>";
+    echo '</table>';
+    echo '</body>';
+    echo '</html>';
 
     exit;
 }
 
 function get_order($uq_id)
 {
-	global $g4;
+    global $g4;
 
-	$sql = " select * from {$g4['shop_order_table']} where uq_id = '$uq_id' ";
+    $sql = " select * from {$g4['shop_order_table']} where uq_id = '$uq_id' ";
     return sql_fetch($sql);
 }
 
@@ -201,11 +201,7 @@ if (mysql_num_rows($result) == 0)
 }
 ?>
 
-<style type="text/css">
-    #orderprint{width:900px}
-</style>
-
-<section id="orderprint" class="cbox">
+<section class="cbox">
     <h2>
         <?
         if ($case == 1)
@@ -214,28 +210,30 @@ if (mysql_num_rows($result) == 0)
             echo "[ $fr_od_id - $to_od_id $ct_status 내역 ]";
         ?>
     </h2>
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col class="grid_2">
-        <col class="grid_5">
-        <col class="grid_2">
-        <col class="grid_2">
-    </colgroup>
+
+    <table>
+    <thead>
+    <tr>
+        <th scope="row" rowspan="3">주문번호</th>
+        <th scope="row">보낸분</th>
+        <th scope="row">주소</th>
+        <th scope="row">전화번호</th>
+        <th scope="row">핸드폰</th>
+    </tr>
+    <tr>
+        <th scope="row">받는분</th>
+        <th scope="row">주소</th>
+        <th scope="row">전화번호</th>
+        <th scope="row">핸드폰</th>
+    </tr>
+    <tr>
+        <th scope="row"></th>
+        <th scope="row"></th>
+        <th scope="row"></th>
+        <th scope="row"></th>
+    </tr>
+    </thead>
     <tbody>
-    <tr>
-        <th scope="row" rowspan="2">주문번호</th>
-        <td>보낸분</td>
-        <td>주소</td>
-        <td>전화번호</td>
-        <td>핸드폰</td>
-    </tr>
-    <tr>
-        <td>받는분</td>
-        <td>주소</td>
-        <td>전화번호</td>
-        <td>핸드폰</td>
-    </tr>
     <?
     $mod = 10;
     $tot_total_amount = 0;
@@ -245,8 +243,8 @@ if (mysql_num_rows($result) == 0)
         $row1 = sql_fetch($sql1);
 
         // 1.03.02
-        $row1['od_addr'] = "(".$row1['od_zip1']."-".$row1['od_zip2'].") ".$row1['od_addr1']." ".$row1['od_addr2'];
-        $row1['od_b_addr'] = "(".$row1['od_b_zip1']."-".$row1['od_b_zip2'].") ".$row1['od_b_addr1']." ".$row1['od_b_addr2'];
+        $row1['od_addr'] = "(".$row1['od_zip1']."-".$row1['od_zip2'].")<br>".$row1['od_addr1']."<br>".$row1['od_addr2'];
+        $row1['od_b_addr'] = "(".$row1['od_b_zip1']."-".$row1['od_b_zip2'].")<br>".$row1['od_b_addr1']."<br>".$row1['od_b_addr2'];
 
         $row1['od_addr'] = ($row1['od_addr']) ? $row1['od_addr'] : "&nbsp;";
         $row1['od_tel'] = ($row1['od_tel']) ? $row1['od_tel'] : "&nbsp;";
@@ -264,7 +262,7 @@ if (mysql_num_rows($result) == 0)
 
     ?>
             <tr>
-                <th scope="row" rowspan="3"><?=$row1[od_id]?></th>
+                <td rowspan="3"><?=$row1['od_id']?></th>
                 <td><?=$row1['od_name']?></td>
                 <td><?=$row1['od_addr']?></td>
                 <td><?=$row1['od_tel']?></td>
@@ -367,15 +365,16 @@ if (mysql_num_rows($result) == 0)
 ";
     }
     ?>
-
-        <tr>
-            <th scope="row" colspan="3">전 체 합 계</th>
-            <td><?=number_format($tot_tot_qty)?></td>
-            <td><?=number_format($tot_tot_amount)?></td>
-        </tr>
     </tbody>
     </table>
-    <p>&lt;끝&gt;</p>
+
+    <div>
+        <span>전체합계</span>
+        <strong><?=number_format($tot_tot_qty)?></strong>
+        <strong><?=number_format($tot_tot_amount)?></strong>
+    </div>
+
+    <span>&lt;출력 끝&gt;</span>
 </section>
 
 
