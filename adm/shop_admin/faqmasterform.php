@@ -55,7 +55,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $himg = G4_DATA_PATH.'/faq/'.$fm['fm_id'].'_h';
             if (file_exists($himg)) {
                 echo '<input type="checkbox" name="fm_himg_del" value="1" id="fm_himg_del"> <label for="fm_himg_del">삭제</label>';
-                $himg_str = '<img src="'.$himg.'" alt="">';
+                $himg_str = '<img src="'.G4_DATA_URL.'/faq/'.$fm['fm_id'].'_h" alt="">';
             }
             if ($himg_str) {
                 echo '<div class="banner_or_img">';
@@ -73,7 +73,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $timg = G4_DATA_PATH.'/faq/'.$fm['fm_id'].'_t';
             if (file_exists($timg)) {
                 echo '<input type="checkbox" name="fm_timg_del" value="1" id="fm_timg_del"><label for="fm_timg_del">삭제</label>';
-                $timg_str = '<img src="'.$timg.'" alt="">';
+                $timg_str = '<img src="'.G4_DATA_URL.'/faq/'.$fm['fm_id'].'_t" alt="">';
             }
             if ($timg_str) {
                 echo '<div class="banner_or_img">';
