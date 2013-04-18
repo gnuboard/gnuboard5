@@ -240,7 +240,7 @@ function receive_alldel()
             <th>문자내용</th>
             <td>
                 <?=help("주의! 80 bytes 까지만 전송됩니다.\n영문 한글자 : 1byte , 한글 한글자 : 2bytes , 특수문자의 경우 1 또는 2 bytes 입니다.")?>
-                <textarea name="sms_contents" ONKEYUP="byte_check(document.smsform.sms_contents, bytes);"></textarea>
+                <textarea name="sms_contents" onkeyup="byte_check(document.smsform.sms_contents, bytes);"></textarea>
                 <div id="bytes">0 / 80 바이트</div>
             </td>
         </tr>
@@ -251,23 +251,23 @@ function receive_alldel()
                 예약발송 사용
                 <label for="reserved_year" class="sound_only">연도 설정</label>
                 <select name="reserved_year" id="reserved_year">
-                    <? for ($i=date("Y"); $i<=date("Y")+1; $i++) { echo "<option value='$i'>".substr($i,-2)."</option>"; } ?>
+                    <? for ($i=date("Y"); $i<=date("Y")+1; $i++) { echo '<option value="'.$i.'">'.substr($i,-2).'</option>'; } ?>
                 </select>년
                 <label for="reserved_month" class="sound_only">월 설정</label>
                 <select name="reserved_month" id="reserved_month">
-                    <? for ($i=1; $i<=12; $i++) { echo "<option value='$i'>$i</option>"; } ?>
+                    <? for ($i=1; $i<=12; $i++) { echo '<option value="'.$i.'">'.$i.'</option>'; } ?>
                 </select>월
                 <label for="reserved_day" class="sound_only">일 설정</label>
                 <select name="reserved_day" id="reserved_day">
-                    <? for ($i=1; $i<=31; $i++) { echo "<option value='$i'>$i</option>"; } ?>
+                    <? for ($i=1; $i<=31; $i++) { echo '<option value="'.$i.'">'.$i.'</option>'; } ?>
                 </select>일
                 <label for="reserved_hour" class="sound_only">시 설정</label>
                 <select name="reserved_hour" id="reserved_hour">
-                    <? for ($i=1; $i<=24; $i++) { echo "<option value='$i'>$i</option>"; } ?>
+                    <? for ($i=1; $i<=24; $i++) { echo '<option value="'.$i.'">'.$i.'</option>'; } ?>
                 </select>시
                 <label for="reserved_minute" class="sound_only">분 설정</label>
                 <select name="reserved_minute" id="reserved_minute">
-                    <? for ($i=1; $i<=60; $i++) { echo "<option value='$i'>$i</option>"; } ?>
+                    <? for ($i=1; $i<=60; $i++) { echo '<option value="'.$i.'">'.$i.'</option>'; } ?>
                 </select>분
             </td>
         </tr>
