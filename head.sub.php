@@ -101,7 +101,7 @@ if (!defined('G4_IS_ADMIN')) {
     set_cookie("device_width", screen.width, 6, g4_cookie_domain);
 </script>
 <? } ?>
-<? if(!G4_IS_ADMIN)echo $config['cf_add_script']; ?>
+<? if (!defined('G4_IS_ADMIN')) { echo $config['cf_add_script']; } ?>
 </head>
 <body>
 <?
