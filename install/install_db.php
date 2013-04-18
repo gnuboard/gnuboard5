@@ -102,6 +102,7 @@ $sql = " insert into `{$table_prefix}config`
                 cf_mobile_search_skin = 'basic',
                 cf_mobile_connect_skin = 'basic',
                 cf_mobile_member_skin = 'basic',
+                cf_gcaptcha_mp3 = 'basic',
                 cf_register_level = '2',
                 cf_register_point = '1000',
                 cf_icon_level = '2',
