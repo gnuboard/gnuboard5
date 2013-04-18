@@ -369,9 +369,9 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 
 /* 상품관리 */
 .sit_odrby {text-align:center}
-.sit_amt {text-align:right;background-color:#dde6fe}
-.sit_amt2 {text-align:right;background-color:#ddeede}
-.sit_amt3 {text-align:right;background-color:#fedddd}
+.sit_amt {text-align:right;background-color:#e8fbff}
+.sit_amt2 {text-align:right;border-color:#c3e189;background-color:#f6ffe6}
+.sit_amt3 {text-align:right;border-color:#f6c8c4;background-color:#ffedeb}
 .sit_camt,
 .sit_pt,
 .sit_qty {text-align:right}
