@@ -68,8 +68,10 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     <option value="품절">품절</option>
                     <option value="">전체</option>
                 </select>
-                <input type="text" name="fr_od_id" class="frm_input" size="10" maxlength="10"> 부터
-                <input type="text" name="to_od_id" class="frm_input" size="10" maxlength="10"> 까지
+                <label for="fr_od_id" class="sound_only">주문번호 구간 시작</label>
+                <input type="text" name="fr_od_id" id="fr_od_id" class="frm_input" size="10" maxlength="10"> 부터
+                <label for="fr_od_id" class="sound_only">주문번호 구간 종료</label>
+                <input type="text" name="to_od_id" id="to_od_id" class="frm_input" size="10" maxlength="10"> 까지
                 <button type="submit" class="btn_frmline">출력 (새창)</button>
             </div>
 
