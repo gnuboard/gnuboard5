@@ -66,24 +66,24 @@ if ($csv == 'csv')
     echo "우편번호,주소,이름,전화1,전화2,상품명,수량,상품코드,주문번호,운송장번호,전하실말씀\n";
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
-        echo '"' . $row['od_b_zip1'] . '-' . $row['od_b_zip2'] . '"' . ',';
-        echo '"' . $row['od_b_addr1'] . ' ' . $row['od_b_addr2'] . '"' . ',';
-        echo '"' . $row['od_b_name'] . '"' . ',';
-        //echo '"' . multibyte_digit((string)$row[od_b_tel]) . '"' . ',';
-        //echo '"' . multibyte_digit((string)$row[od_b_hp]) . '"' . ',';
-        echo '"' . conv_telno($row['od_b_tel']) . '"' . ',';
-        echo '"' . conv_telno($row['od_b_hp']) . '"' . ',';
-        echo '"' . preg_replace("/\"/", "&#034;", $row['it_name']) . '"' . ',';
-        echo '"' . $row['ct_qty'] . '"' . ',';
-        echo '"\'' . $row['it_id'] . '\'"' . ',';
-        echo '"\'' . $row['od_id'] . '\'"' . ',';
-        echo '"' . $row['od_invoice'] . '"' . ',';
-        //echo '"' . preg_replace("/\"/", "&#034;", preg_replace("/\n/", "", $row[od_memo])) . '"';
-        echo '"' . preg_replace("/\"/", "&#034;", $row['od_memo']) . '"';
+        echo '"'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'"'.',';
+        echo '"'.$row['od_b_addr1'].' '.$row['od_b_addr2'].'"'.',';
+        echo '"'.$row['od_b_name'].'"'.',';
+        //echo '"'.multibyte_digit((string)$row[od_b_tel]).'"'.',';
+        //echo '"'.multibyte_digit((string)$row[od_b_hp]).'"'.',';
+        echo '"'.conv_telno($row['od_b_tel']) . '"'.',';
+        echo '"'.conv_telno($row['od_b_hp']) . '"'.',';
+        echo '"'.preg_replace("/\"/", "&#034;", $row['it_name']) . '"'.',';
+        echo '"'.$row['ct_qty'].'"'.',';
+        echo '"\''.$row['it_id'].'\'"'.',';
+        echo '"\''.$row['od_id'].'\'"'.',';
+        echo '"'.$row['od_invoice'].'"'.',';
+        //echo '"'.preg_replace("/\"/", "&#034;", preg_replace("/\n/", "", $row[od_memo])).'"';
+        echo '"'.preg_replace("/\"/", "&#034;", $row['od_memo']).'"';
         echo "\n";
     }
     if ($i == 0)
-        echo "자료가 없습니다.\n";
+        echo '자료가 없습니다.'.PHP_EOL;
 
     exit;
 }
@@ -201,39 +201,16 @@ if (mysql_num_rows($result) == 0)
 }
 ?>
 
-<section class="cbox">
-    <h2>
+<div id="sodr_print_pop" class="cbox">
+    <h1>
         <?
         if ($case == 1)
-            echo "[ $fr_date - $to_date $ct_status 내역 ]";
+            echo $fr_date.' 부터 '.$to_date.' 까지 '.$ct_status.' 내역';
         else
-            echo "[ $fr_od_id - $to_od_id $ct_status 내역 ]";
+            echo $fr_od_id.' 부터 '.$to_od_id.' 까지 '.$ct_status.' 내역';
         ?>
-    </h2>
+    </h1>
 
-    <table>
-    <thead>
-    <tr>
-        <th scope="row" rowspan="3">주문번호</th>
-        <th scope="row">보낸분</th>
-        <th scope="row">주소</th>
-        <th scope="row">전화번호</th>
-        <th scope="row">핸드폰</th>
-    </tr>
-    <tr>
-        <th scope="row">받는분</th>
-        <th scope="row">주소</th>
-        <th scope="row">전화번호</th>
-        <th scope="row">핸드폰</th>
-    </tr>
-    <tr>
-        <th scope="row"></th>
-        <th scope="row"></th>
-        <th scope="row"></th>
-        <th scope="row"></th>
-    </tr>
-    </thead>
-    <tbody>
     <?
     $mod = 10;
     $tot_total_amount = 0;
@@ -243,39 +220,61 @@ if (mysql_num_rows($result) == 0)
         $row1 = sql_fetch($sql1);
 
         // 1.03.02
-        $row1['od_addr'] = "(".$row1['od_zip1']."-".$row1['od_zip2'].")<br>".$row1['od_addr1']."<br>".$row1['od_addr2'];
-        $row1['od_b_addr'] = "(".$row1['od_b_zip1']."-".$row1['od_b_zip2'].")<br>".$row1['od_b_addr1']."<br>".$row1['od_b_addr2'];
+        $row1['od_addr'] = '('.$row1['od_zip1'].'-'.$row1['od_zip2'].') '.$row1['od_addr1'].' '.$row1['od_addr2'];
+        $row1['od_b_addr'] = '('.$row1['od_b_zip1'].'-'.$row1['od_b_zip2'].') '.$row1['od_b_addr1'].' '.$row1['od_b_addr2'];
 
-        $row1['od_addr'] = ($row1['od_addr']) ? $row1['od_addr'] : "&nbsp;";
-        $row1['od_tel'] = ($row1['od_tel']) ? $row1['od_tel'] : "&nbsp;";
-        $row1['od_hp']  = ($row1['od_hp']) ? $row1['od_hp'] : "&nbsp;";
-        $row1['od_b_tel'] = ($row1['od_b_tel']) ? $row1['od_b_tel'] : "&nbsp;";
-        $row1['od_b_hp']  = ($row1['od_b_hp']) ? $row1['od_b_hp'] : "&nbsp;";
+        $row1['od_addr'] = ($row1['od_addr']) ? $row1['od_addr'] : '입력안함';
+        $row1['od_tel'] = ($row1['od_tel']) ? $row1['od_tel'] : '입력안함';
+        $row1['od_hp']  = ($row1['od_hp']) ? $row1['od_hp'] : '입력안함';
+        $row1['od_b_tel'] = ($row1['od_b_tel']) ? $row1['od_b_tel'] : '입력안함';
+        $row1['od_b_hp']  = ($row1['od_b_hp']) ? $row1['od_b_hp'] : '입력안함';
 
-        if ($row1['od_name'] == $row1['od_b_name']) $row1['od_b_name'] = '"';
-        if ($row1['od_addr'] == $row1['od_b_addr']) $row1['od_b_addr'] = '"';
-        if ($row1['od_tel'] == $row1['od_b_tel']) $row1['od_b_tel'] = '"';
-        if ($row1['od_hp'] == $row1['od_b_hp'] && $row1['od_hp'] != "&nbsp;") $row1['od_b_hp'] = '"';
+        // 보내는 사람과 받는 사람이 완전 일치하면 간단하게 출력
+        // 보내는 사람과 받는 사람이 부분 일치하더라도 원래 내용을 모두 출력
+        // 지운아빠 2013-04-18
+        if ($row1['od_name'] == $row1['od_b_name'] && $row1['od_addr'] == $row1['od_b_addr'] && $row1['od_tel'] == $row1['od_b_tel'] &&  $row1['od_hp'] == $row1['od_b_hp'] && $row1['od_hp'] != "&nbsp;") $samesamesame = 1;
+        else $samesamesame = '';
 
-        $od_memo = ($row1['od_memo']) ? stripslashes($row1['od_memo']) : "";
-        $od_shop_memo = ($row1['od_shop_memo']) ? stripslashes($row1['od_shop_memo']) : "";
-
+        $od_memo = ($row1['od_memo']) ? stripslashes($row1['od_memo']) : '';
+        $od_shop_memo = ($row1['od_shop_memo']) ? stripslashes($row1['od_shop_memo']) : '';
     ?>
-            <tr>
-                <td rowspan="3"><?=$row1['od_id']?></th>
-                <td><?=$row1['od_name']?></td>
-                <td><?=$row1['od_addr']?></td>
-                <td><?=$row1['od_tel']?></td>
-                <td><?=$row1['od_hp']?></td>
-            </tr>
-            <tr>
-                <td><?=$row1['od_b_name']?></td>
-                <td><?=$row1['od_b_addr']?></td>
-                <td><?=$row1['od_b_tel']?></td>
-                <td><?=$row1['od_b_hp']?></td>
-            </tr>
-    <?
-
+    <!-- 반복시작 - 지운아빠 2013-04-18 -->
+    <div class="sodr_print_pop_list">
+        <h2>주문번호 <?=$row1['od_id']?></h2>
+        <h3>보내는 사람 : <?=$row1['od_name']?></h3>
+        <dl>
+            <dt>주소</dt>
+            <dd><?=$row1['od_addr']?></dd>
+            <dt>휴대폰</dt>
+            <dd><?=$row1['od_hp']?></dd>
+            <dt>전화번호</dt>
+            <dd><?=$row1['od_tel']?></dd>
+        </dl>
+        <? if ($samesamesame) { ?>
+        <p class="sodr_print_pop_same">보내는 사람과 받는 사람이 동일합니다.</p>
+        <? } else { ?>
+        <h3>받는 사람 : <?=$row1['od_b_name']?></h3>
+        <dl>
+            <dt>주소</dt>
+            <dd><?=$row1['od_b_addr']?></dd>
+            <dt>휴대폰</dt>
+            <dd><?=$row1['od_b_hp']?></dd>
+            <dt>전화번호</dt>
+            <dd><?=$row1['od_b_tel']?></dd>
+        </dl>
+        <? } ?>
+        <h3>주문목록</h3>
+        <table>
+        <thead>
+        <tr>
+            <th scope="col">상품명(주문번호)</th>
+            <th scope="col">판매가</th>
+            <th scope="col">수량</th>
+            <th scope="col">소계</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?
         $sql2 = " select    a.*,
                             b.it_opt1_subject,
                             b.it_opt2_subject,
@@ -296,7 +295,7 @@ if (mysql_num_rows($result) == 0)
         while ($row2 = sql_fetch_array($res2))
         {
             $row2_tot_amount = $row2['ct_amount'] * $row2['ct_qty'];
-            $sub_tot_qty    += $row2['ct_qty'];
+            $sub_tot_qty += $row2['ct_qty'];
             $sub_tot_amount += $row2_tot_amount;
 
             $it_name = stripslashes($row2['it_name']);
@@ -309,7 +308,7 @@ if (mysql_num_rows($result) == 0)
                 $it_name .= $str_split;
                 $it_opt_subject = $row2["it_opt{$k}_subject"];
                 $opt = explode( ";", trim($row2["it_opt{$k}"]) );
-                $it_name .= "&nbsp;&nbsp; $it_opt_subject = $opt[0]";
+                $it_name .= $it_opt_subject.' = '.$opt[0];
 
                 if ($opt[1] != 0)
                 {
@@ -327,55 +326,53 @@ if (mysql_num_rows($result) == 0)
             $fontqty1 = $fontqty2 = "";
             if ($row2['ct_qty'] >= 2)
             {
-                $fontqty1 = "";
-                $fontqty2 = "";
+                $fontqty1 = "<strong>";
+                $fontqty2 = "</strong>";
             }
 
-            ?>
-                <tr>
-                    <td><?=$it_name?></td>
-                    <td><?=number_format($row2['ct_amount'])?></td>
-                    <td><?=$fontqty1?><?=number_format($row2['ct_qty'])?><?=$fontqty2?></td>
-                    <td><?=number_format($row2_tot_amount)?></td>
-                </tr>
-            <?
-            $cnt++;
-        }
-
-        if ($cnt >= 2)
-        {
-            ?>
-            <tr>
-                <th scope="row" colspan="3"><b>합 계</b></th>
-                <td><?=number_format($sub_tot_qty)?></td>
-                <td><?=number_format($sub_tot_amount)?></td>
-            </tr>
-            <?
-        }
-
+        ?>
+        <tr>
+            <td><?=$it_name?></td>
+            <td class="td_bignum"><?=number_format($row2['ct_amount'])?></td>
+            <td class="td_smallnum"><?=$fontqty1?><?=number_format($row2['ct_qty'])?><?=$fontqty2?></td>
+            <td class="td_bignum"><?=number_format($row2_tot_amount)?></td>
+        </tr>
+        <? $cnt++; } ?>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th scope="row" colspan="2">합계</th>
+            <td><?=number_format($sub_tot_qty)?></td>
+            <td><?=number_format($sub_tot_amount)?></td>
+        </tr>
+        </tfoot>
+        </table>
+        <?
         $tot_tot_qty    += $sub_tot_qty;
         $tot_tot_amount += $sub_tot_amount;
 
-        if ($od_memo) $od_memo = "비고 : $od_memo";
-        if ($od_shop_memo) $od_shop_memo = "<br />상점메모 : $od_shop_memo";
+        if ($od_memo) $od_memo = "<p><strong>비고</strong> $od_memo</p>";
+        if ($od_shop_memo) $od_shop_memo = "<p><strong>상점메모</strong> $od_shop_memo</p>";
 
         echo "
                 $od_memo
                 $od_shop_memo
-";
-    }
-    ?>
-    </tbody>
-    </table>
+        ";
+       ?>
+    </div>
+    <!-- 반복 끝 -->
+    <? } ?>
 
-    <div>
-        <span>전체합계</span>
-        <strong><?=number_format($tot_tot_qty)?></strong>
-        <strong><?=number_format($tot_tot_amount)?></strong>
+    <div id="sodr_print_pop_total">
+        <span>
+            전체
+            <strong><?=number_format($tot_tot_qty)?></strong>개
+            <strong><?=number_format($tot_tot_amount)?></strong>원
+        </span>
+        &lt;출력 끝&gt;
     </div>
 
-    <span>&lt;출력 끝&gt;</span>
-</section>
+</div>
 
 
 </body>
