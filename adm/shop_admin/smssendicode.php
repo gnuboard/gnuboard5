@@ -11,7 +11,7 @@ auth_check($auth[$sub_menu], "w");
 $SMS	= new SMS;
 $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
 
-$recv = explode(",", $receive_number);
+$recv = explode("\n", $receive_number);
 
 $tran_callback = preg_replace("/[^0-9]/", "", $send_number);
 $sms_id = $default['de_icode_id'];
