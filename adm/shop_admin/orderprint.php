@@ -38,7 +38,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     <option value="품절">품절</option>
                     <option value="">전체</option>
                 </select>
+                <label for="fr_date" class="sound_only">기간 시작일</label>
                 <input type="text" name="fr_date" value="<?=date("Ymd");?>" id="fr_date" class="frm_input" size="10" maxlength="8"> 부터
+                <label for="to_date" class="sound_only">기간 종료일</label>
                 <input type="text" name="to_date" value="<?=date("Ymd");?>" id="to_date" class="frm_input" size="10" maxlength="8"> 까지
                 <button type="submit" class="btn_frmline">출력 (새창)</button>
             </div>
