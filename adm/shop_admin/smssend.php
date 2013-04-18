@@ -12,8 +12,7 @@ $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
 ?>
 
 <?
-if ($is_admin) {
-//if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
+if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
 ?>
 <form action="./smssendicode.php" name="smsform" method="post" onsubmit="return smsform_check(this);" autocomplete="off">
 <section id="sms_send" class="cbox">
