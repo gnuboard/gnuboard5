@@ -12,12 +12,9 @@ $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
 ?>
 
 <?
-//if ($default['de_sms_use'] == "icode") { // 아이코드 사용
-if ($is_admin) {
+if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
 ?>
-<form action="./smssendicode.php" name="smsform" method="post" autocomplete="off">
-<input type="hidden" name="receive_number" value="">
-
+<form action="./smssendicode.php" name="smsform" method="post" onsubmit="return smsform_check(this);" autocomplete="off">
 <section id="sms_send" class="cbox">
     <h2>SMS 문자전송 내용 입력</h2>
     <p>예약발송 기능을 이용하시면, 예약된 시간에 맞춰 SMS 문자를 일괄발송할 수 있습니다.</p>
@@ -40,15 +37,15 @@ if ($is_admin) {
             <th>수신번호</th>
             <td>
                 <?=help('여러명에게 보내실 때는 전화번호를 엔터로 구분하세요.')?>
-                <textarea></textarea>
-                <div><span>총 수신인 <strong></strong>명</span></div>
+                <textarea name="receive_number" onkeyup="addressee_count();"></textarea>
+                <div><span>총 수신인 <strong id="sms_addressee">0</strong>명</span></div>
             </td>
         </tr>
         <tr>
             <th>문자내용</th>
             <td>
                 <?=help("주의! 80 bytes 까지만 전송됩니다.\n영문 한글자 : 1byte , 한글 한글자 : 2bytes , 특수문자의 경우 1 또는 2 bytes 입니다.")?>
-                <textarea name="sms_contents" onkeyup="byte_check(document.smsform.sms_contents, bytes);"></textarea>
+                <textarea name="sms_contents" onkeyup="byte_check();"></textarea>
                 <div id="bytes">0 / 80 바이트</div>
             </td>
         </tr>
@@ -111,113 +108,23 @@ if ($is_admin) {
     </div>
 
     <div id="sms_sm">
-        <span id="sms_sm_text">여기에 문자내용 입력한 것이 실시간으로...</span>
+        <span id="sms_sm_text">문자내용을 입력해 주세요</span>
         <p>이 이미지는 이해를 돕기 위한 이미지로써, 실제 발송 시 화면에서 보이는 것과 차이가 있을 수 있습니다.</p>
     </div>
 </section>
-
-
-<table border="0" cellpadding="0" cellspacing="0">
-<tr>
-    <td>
-    <table align=center><tr><td></table>
-    <table border="0" cellpadding="0" cellspacing="0">
-    <tr>
-        <td align="center" valign="middle"><table width="182" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td height="184" colspan="3" background="./img/skinL1_top.gif" align=center><bR><br><br>
-              </td>
-            </tr>
-            <tr>
-              <td width="39"><img src="./img/skinL1_img1.gif" width="39" height="20"></td>
-              <td width="102"><img src="./img/skinL1_img2.gif" width="102" height="20"></td>
-              <td><img src="./img/skinL1_img3.gif" width="41" height="20"></td>
-            </tr>
-            <tr valign="top" >
-              <td height="226" colspan="3" background="./img/skinL1_under.gif"><table width="172" border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td width="10" height="13"></td>
-                    <td width="162" height="13"></td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td align="center"><table width="156" height="37" border="0" cellpadding="0" cellspacing="0">
-                        <tr>
-                          <td><a href="javascript:smsform_check(document.smsform);"><img src="./img/skinL1_btnsnd.gif" border=0 width="76" height="30"></a></td>
-                          <td align="right"><a href="javascript:;" onclick="document.smsform.sms_contents.value='';"><img src="./img/skinL1_btncnl.gif" border=0 width="76" height="30"></a></td>
-                        </tr>
-                      </table></td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td><table width="164" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                          <td width="10" align="right"><img src="./img/skinL1_icon.gif" width="8" height="8"></td>
-                          <td width="52" align="center" valign="middle">발신번호</td>
-                          <td width="102" height="22"> </td>
-                        </tr>
-                      </table></td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td valign="bottom"><table width="164" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                          <td width="10" align="right"><img src="./img/skinL1_icon.gif" width="8" height="8"></td>
-                          <td width="52" align="center" valign="middle">수신번호</td>
-                          <input type=hidden id='keycode'>
-                          <td width="70"> <input name="receive_input" type="text" class=ed size="10" onkeydown="document.getElementById('keycode').value=event.keyCode; tel_enter();"></td>
-                          <td width="32" height="20" align="center"><a href="javascript:receive_add();"><img src="./img/skinL1_btnpls.gif" width="27" height="18" border=0></a></td>
-                        </tr>
-                      </table></td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td><table width="164" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                          <td height="22" align="right">&nbsp;</td>
-                          <td width="52" align="center" valign="middle"><input type="text" name="count" size="3" class=ed readonly>명</td>
-                          <td width="102" rowspan="2"><select name="receive_buffer"  size=4 style="font-size: 9pt; border: 0; width:100px;" >
-                          </td>
-                        </tr>
-                        <tr>
-                          <td width="10" height="22" align="right">&nbsp;</td>
-                          <td align="center" valign="middle"><table width="43" border="0" cellspacing="0" cellpadding="0">
-                              <tr>
-                                <td><a href="javascript:receive_del();"><img src="./img/skinL1_btndel.gif" width="17" height="32" border=0></a></td>
-                                <td align="right"><a href="javascript:receive_alldel();"><img src="./img/skinL1_btnalldel.gif" width="24" height="32" border=0></a></td>
-                              </tr>
-                            </table></td>
-                        </tr>
-                      </table></td>
-                  </tr>
-                </table>
-                <table width="172" border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td height="10"></td>
-                    <td height="8" ></td>
-                  </tr>
-                  <tr>
-                    <td width="12">&nbsp;</td>
-                    <td width="164" height="25" class=small></td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td height="23" class=small></td>
-                  </tr>
-                </table></td>
-            </tr>
-          </table></td>
-      </tr>
-    </table>
 </form>
 
 <script>
-function byte_check(cont, bytes)
+function byte_check()
 {
     var i = 0;
     var cnt = 0;
     var exceed = 0;
-    var ch = '';
+    var ch = "";
+    var cont = document.smsform.sms_contents;
+    var bytes = document.getElementById("bytes");
+    var disp = document.getElementById("sms_sm_text");
+    var disp_str = "";
 
     for (i=0; i<cont.value.length; i++) {
         ch = cont.value.charAt(i);
@@ -228,7 +135,6 @@ function byte_check(cont, bytes)
         }
     }
 
-    //byte.value = cnt + ' / 80 bytes';
     bytes.innerHTML = cnt + ' / 80 bytes';
 
     if (cnt > 80) {
@@ -253,186 +159,80 @@ function byte_check(cont, bytes)
             }
         }
         cont.value = tmp;
-        //byte.value = xcnt + ' / 80 bytes';
         bytes.innerHTML = xcnt + ' / 80 bytes';
         return;
     }
-}
-</script>
 
-
-<script>
-var StrComma = "";
-
-function tel_enter()
-{
-    /*
-    if(window.event.keyCode ==13)
-    {
-        receive_add();
-    }
-    */
-    var code = document.getElementById('keycode').value;
-    if (code == 13)
-    {
-        receive_add();
-    }
-}
-
-function receive_add()
-{
-    var intCount = 0;
-    var strMobile = document.smsform.receive_input.value;
-    //strMobile = strMobile.replace("-", "", strMobile);
-    strMobile = strMobile.replace("-", "");
-
-    for (i = 0; i < document.smsform.receive_buffer.length; i++)
-    {
-        if (strMobile == document.smsform.receive_buffer.options[i].value)
-        {
-            return alert("같은 번호는 재입력 하실수 없습니다");
-            document.smsform.receive_buffer.options.remove(i);
-            intCount = intCount - 1;
-            document.smsform.count.value = intCount ;
-            document.smsform.receive_input.focus();
-        }
-    }
-
-
-
-    strDigit= "0123456789-";
-    intIdLength = strMobile.length;
-    var blnChkFlag;
-
-    for (i = 0; i < intIdLength; i++)
-    {
-        strNumberChar = strMobile.charAt(i);
-        blnChkFlag = false;
-
-        for (j = 0; j < strDigit.length ; j++)
-        {
-            strCompChar = strDigit.charAt(j);
-
-            if (strNumberChar == strCompChar)
-            {
-                blnChkFlag = true;
-            }
-        }
-
-        if (blnChkFlag == false)
-        {
-            break;
-        }
-    }
-
-    if (strMobile == "" )
-    {
-        alert ("추가할 수신번호를 입력해 주세요");
-    }
-    else if (strMobile.length < 10 || strMobile.length > 13 )
-    {
-        alert ("수신번호는 최대 13자, 최소 10자이내로 입력해 주세요.\n\n 예) 01X-123-4567 또는 01X1234567  ");
-        document.smsform.receive_input.value="";
-        document.smsform.receive_input.focus();
-    }
-    else if ( !blnChkFlag )
-    {
-        alert("수신번호는 숫자만 가능합니다.");
-        document.smsform.receive_input.value="";
-        document.smsform.receive_input.focus();
-    }
+    if(cnt == 0)
+        disp_str = "문자내용을 입력해 주세요";
     else
-    {
+        disp_str = cont.value;
 
-
-        document.smsform.receive_number.value = document.smsform.receive_number.value + document.smsform.receive_input.value + "," ;
-        StrComma = ",";
-        add() ;
-
-    }
-
+    disp.innerHTML = disp_str;
 }
 
-function add()
+function addressee_count()
 {
-        var intCount = document.smsform.count.value ;
-        var newOpt = document.createElement('OPTION');
-        newOpt.text =  document.smsform.receive_input.value;
-        newOpt.value = document.smsform.receive_input.value;
-        document.smsform.receive_buffer.options.add(newOpt);
-
-        document.smsform.receive_input.value = "" ;
-        intCount = intCount - 1 + 2;
-        document.smsform.count.value = intCount ;
-        document.smsform.receive_input.focus();
-
-}
-
-function receive_del()
-{
-    if (document.smsform.receive_buffer.selectedIndex < 0)
-    {
-        alert ("삭제할 번호를 선택해 주세요");
-    }
-    else
-    {
-        var aaa;
-        aaa = document.smsform.receive_number.value ;
-        aaa = aaa.replace(document.smsform.receive_buffer.value + ",","");
-        document.smsform.receive_number.value = aaa ;
-
-        var num ;
-        var intCount = document.smsform.count.value ;
-        num = document.smsform.receive_buffer.selectedIndex ;
-        document.smsform.receive_buffer.options.remove(num);
-        intCount = intCount - 1;
-        document.smsform.count.value = intCount ;
-    }
-}
-
-function receive_alldel()
-{
-
-        document.smsform.receive_number.value = "0" ;
-        var intCount = document.smsform.count.value ;
-        for (i = 0; i < intCount; i++)
-        {
-            document.smsform.receive_buffer.options.remove(0);
+    if(window.event.keyCode == 13) {
+        var count = 0;
+        var number = document.smsform.receive_number.value;
+        var tel = "";
+        number = number.replace(/\s+$/g, "");
+        var list = number.split("\n");
+        for(i=0; i<list.length; i++) {
+            tel = list[i].replace(/[^0-9]/g, "");
+            if(tel.length)
+                count++;
         }
-        document.smsform.count.value = "0" ;
-}
-</script>
+    } else {
+        return;
+    }
 
-<script language="JavaScript">
+    document.getElementById("sms_addressee").innerHTML = number_format(String(count));
+}
 
 function smsform_check(f)
 {
     <?
     if (file_exists(G4_PATH.'/DEMO')) {
         echo "alert('데모에서는 문자메세지를 발송할 수 없습니다.');";
-        echo "return;";
+        echo "return false;";
     }
-
 
     if ($default['de_sms_use'] == "") {
         echo "alert('우선 SMS 환경을 설정하여 주십시오.');";
-        echo "return;";
+        echo "return false;";
     }
     ?>
 
+    var count = 0;
+    var number = f.receive_number.value;
+    if(number == "") {
+        alert("수신번호를 입력하십시오.");
+        f.receive_number.focus();
+        return false;
+    }
+    var tel = "";
+    number = number.replace(/\s+$/g, "");
+    var list = number.split("\n");
+    for(i=0; i<list.length; i++) {
+        tel = list[i].replace(/[^0-9]/g, "");
+        if(tel.length)
+            count++;
+    }
+    if(count == 0) {
+        alert("수신번호를 올바르게 입력하십시오.");
+        f.receive_number.focus();
+        return false;
+    }
+
     if (f.sms_contents.value == "") {
-        alert("문자메세지를 입력하십시오");
+        alert("문자내용을 입력하십시오");
         f.sms_contents.focus();
-        return;
+        return false;
     }
 
-    if (f.receive_number.value == "") {
-        alert("수신 핸드폰번호를 입력하십시오");
-        f.receive_input.focus();
-        return;
-    }
-
-    f.submit();
+    return true;
 }
 </script>
 
