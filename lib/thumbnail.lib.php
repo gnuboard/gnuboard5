@@ -304,6 +304,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     imagejpeg($dst, $thumb_file, 90);
     chmod($thumb_file, 0606); // 추후 삭제를 위하여 파일모드 변경
 
+    imagedestroy($src);
     imagedestroy($dst);
 
     return basename($thumb_file);
