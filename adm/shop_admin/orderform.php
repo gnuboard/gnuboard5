@@ -261,7 +261,7 @@ $pg_anchor = '<ul class="anchor">
 </section>
 
 
-<div class="cbox compare_wrap">
+<section class="cbox compare_wrap">
     <h2>결제상세정보</h2>
     <?=$pg_anchor?>
 
@@ -606,7 +606,7 @@ $pg_anchor = '<ul class="anchor">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
     </div>
     </form>
-</div>
+</section>
 
 <section id="frm_odr_memo" class="cbox">
     <h2>상점메모</h2>
