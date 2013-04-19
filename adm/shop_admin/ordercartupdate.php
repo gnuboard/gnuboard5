@@ -4,6 +4,38 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
+$ct_chk_count = count($_POST['ct_chk']);
+if(!$ct_chk_count)
+    alert('처리할 자료를 하나 이상 선택해 주십시오.');
+
+switch($_POST['act_button'])
+{
+    case '주문':
+        $ct_status = '주문';
+        break;
+    case '상품준비중':
+        $ct_status = '준비';
+        break;
+    case '배송중':
+        $ct_status = '배송';
+        break;
+    case '완료':
+        $ct_status = '완료';
+        break;
+    case '취소':
+        $ct_status = '취소';
+        break;
+    case '반품':
+        $ct_status = '반품';
+        break;
+    case '품절':
+        $ct_status = '품절';
+        break;
+    default:
+        alert('변경할 상태가 올바르지 않습니다.');
+        break;
+}
+
 $cnt = count($_POST['ct_id']);
 for ($i=0; $i<$cnt; $i++)
 {
