@@ -85,9 +85,9 @@ if (!$it['it_explan_html'])
     $it['it_explan'] = get_text($it['it_explan'], 1);
 }
 
-//$qstr1 = "sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search";
-//$qstr = "$qstr1&sort1=$sort1&sort2=$sort2&page=$page";
-$qstr  = "$qstr&sca=$sca&page=$page";
+//$qstr1 = 'sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search;
+//$qstr = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
+$qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
 
 $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');

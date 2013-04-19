@@ -330,7 +330,7 @@ $pg_anchor = '<ul class="anchor">
 
         <? if ($od['od_settle_case'] == '신용카드') { ?>
         <tr>
-            <th scope="row" bgcolor=#F8FFED>신용카드 입금액</th>
+            <th scope="row" class="sodr_sppay">신용카드 입금액</th>
             <td>
                 <? if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>0원
                 <? } else { ?><?=display_amount($od['od_receipt_card'])?>
@@ -338,7 +338,7 @@ $pg_anchor = '<ul class="anchor">
             </td>
         </tr>
         <tr>
-            <th scope="row" bgcolor=#F8FFED>카드 승인일시</th>
+            <th scope="row" class="sodr_sppay">카드 승인일시</th>
             <td>
                 <? if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>신용카드 결제 일시 정보가 없습니다.
                 <? } else { ?><?=substr($od['od_card_time'], 0, 20)?>
@@ -346,7 +346,7 @@ $pg_anchor = '<ul class="anchor">
             </td>
         </tr>
         <tr>
-            <th scope="row" bgcolor=#F8FFED>카드 승인취소</th>
+            <th scope="row" class="sodr_sppay">카드 승인취소</th>
             <td><?=display_amount($od['od_cancel_card'])?></td>
         </tr>
         <? } ?>
@@ -518,15 +518,15 @@ $pg_anchor = '<ul class="anchor">
 
         <? if ($od['od_settle_case'] == '신용카드') { ?>
         <tr>
-            <th scope="row" bgcolor=#F8FFED><label for="od_receipt_card">신용카드 결제액</label></th>
+            <th scope="row" class="sodr_sppay"><label for="od_receipt_card">신용카드 결제액</label></th>
             <td>
-                <input type="text" name="od_receipt_card" value="<?=$od['od_receipt_card'] ?>" id="od_receipt_card" size="10"> 원
+                <input type="text" name="od_receipt_card" value="<?=$od['od_receipt_card'] ?>" id="od_receipt_card" class="frm_input" size="10"> 원
                 <? $card_url = $g4['shop_cardpg'][$default['de_card_pg']]; ?>
                 <a href="<?=$card_url ?>" target="_blank">결제대행사</a>
             </td>
         </tr>
         <tr>
-            <th scope="row" bgcolor=#F8FFED><label for="od_card_time">카드 승인일시</label></th>
+            <th scope="row" class="sodr_sppay"><label for="od_card_time">카드 승인일시</label></th>
             <td>
                 <label for="od_card_chk">현재 시간으로 설정</label>
                 <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<? echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_card_time.value=this.form.od_card_chk.value; else this.form.od_card_time.value = this.form.od_card_time.defaultValue;"><br>
@@ -534,7 +534,7 @@ $pg_anchor = '<ul class="anchor">
             </td>
         </tr>
         <tr>
-            <th scope="row" bgcolor=#F8FFED><label for="od_cancel_card">카드 승인취소</label></th>
+            <th scope="row" class="sodr_sppay"><label for="od_cancel_card">카드 승인취소</label></th>
             <td><input type="text" name="od_cancel_card" value="<?=$od['od_cancel_card']?>" class="frm_input" size="10"> 원</td>
         </tr>
         <? } ?>
@@ -660,15 +660,15 @@ $pg_anchor = '<ul class="anchor">
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row"><label for="od_name"><span class="sound_only">주문하시는 분 </span>이름</label></th>
+            <th scope="row"><label for="od_name"><span class="sound_only">주문하신 분 </span>이름</label></th>
             <td><input type="text" name="od_name" value="<?=$od['od_name']?>" id="od_name" required class="frm_input required"></td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_tel"><span class="sound_only">주문하시는 분 </span>전화번호</label></th>
+            <th scope="row"><label for="od_tel"><span class="sound_only">주문하신 분 </span>전화번호</label></th>
             <td><input type="text" name="od_tel" value="<?=$od['od_tel']?>" id="od_tel" required class="frm_input required"></td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_hp"><span class="sound_only">주문하시는 분 </span>핸드폰</label></th>
+            <th scope="row"><label for="od_hp"><span class="sound_only">주문하신 분 </span>핸드폰</label></th>
             <td><input type="text" name="od_hp" value="<?=$od['od_hp']?>" id="od_hp" class="frm_input"></td>
         </tr>
         <tr>
@@ -694,11 +694,11 @@ $pg_anchor = '<ul class="anchor">
                 </script>
         </tr>
         <tr>
-            <th scope="row"><label for="od_email"><span class="sound_only">주문하시는 분 </span>E-mail</label></th>
+            <th scope="row"><label for="od_email"><span class="sound_only">주문하신 분 </span>E-mail</label></th>
             <td><input type="text" name="od_email" value="<?=$od['od_email']?>" id="od_email" required class="frm_input email required" size="30"></td>
         </tr>
         <tr>
-            <th scope="row"><span class="sound_only">주문하시는 분 </span>IP Address</th>
+            <th scope="row"><span class="sound_only">주문하신 분 </span>IP Address</th>
             <td><?=$od[od_ip]?></td>
         </tr>
         </tbody>
@@ -777,8 +777,8 @@ $pg_anchor = '<ul class="anchor">
 </div>
 
 <div class="btn_confirm">
-    <button type="button" accesskey="l" onclick="document.location.href='./orderlist.php?<?=$qstr?>';">목록</button>
     <button type="button" onclick="del('./orderdelete.php?od_id=<?=$od['od_id']?>&amp;uq_id=<?=$od['uq_id']?>&amo;mb_id=<?=$od['mb_id']?>&amp;<?=$qstr?>');">주문서 삭제</button>
+    <a href="./orderlist.php?<?=$qstr?>">목록</a>
 </div>
 
 <script>
