@@ -17,7 +17,9 @@ $qstr = "page=$page&sort1=$sort1&sort2=$sort2";
 
 if ($w == "u")
 {
-    if($btn_confirm)
+    if($_POST['btn_no_display'])
+        $is_confirm = 0;
+    else
         $is_confirm = 1;
 
     $sql = "update {$g4['shop_item_ps_table']}

@@ -777,7 +777,7 @@ $pg_anchor = '<ul class="anchor">
 </div>
 
 <div class="btn_confirm">
-    <button type="button" onclick="del('./orderdelete.php?od_id=<?=$od['od_id']?>&amp;uq_id=<?=$od['uq_id']?>&amo;mb_id=<?=$od['mb_id']?>&amp;<?=$qstr?>');">주문서 삭제</button>
+    <a href="./orderdelete.php?od_id=<?=$od['od_id']?>&amp;uq_id=<?=$od['uq_id']?>&amo;mb_id=<?=$od['mb_id']?>&amp;<?=$qstr?>" onclick="return del_confirm();">주문서 삭제</a>
     <a href="./orderlist.php?<?=$qstr?>">목록</a>
 </div>
 
@@ -820,6 +820,15 @@ function form_submit(f)
     }
 
     if (confirm("\'" + status + "\'을(를) 선택하셨습니다.\n\n이대로 처리 하시겠습니까?")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function del_confirm()
+{
+    if(confirm("주문서를 삭제하시겠습니까?")) {
         return true;
     } else {
         return false;
