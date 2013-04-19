@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], "r");
 
 $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $date);
 
-$g4['title'] = "$date 매출현황";
+$g4['title'] = "$date 일일 매출현황";
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 unset($tot);
@@ -52,33 +52,20 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $tot['misu']          += $misu;
 }
 ?>
-<style type="text/css">
-    .sale1{text-align:center}
-</style>
 
 <section class="cbox">
-    <h2>당일 매출현황</h2>
+    <h2>일일 매출현황</h2>
+
     <table>
-    <colgroup>
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-    </colgroup>
     <thead>
     <tr>
-        <th scope="col" class="sale1">주문번호</th>
-        <th scope="col" class="sale1">주문자</th>
+        <th scope="col">주문번호</th>
+        <th scope="col">주문자</th>
         <th scope="col">주문합계</th>
         <th scope="col">취소+DC</th>
-        <th scope="col">무통장입금</th>
-        <th scope="col">카드입금</th>
-        <th scope="col">포인트입금</th>
+        <th scope="col">무통장</th>
+        <th scope="col">카드</th>
+        <th scope="col">포인트</th>
         <th scope="col">입금취소</th>
         <th scope="col">미수금</th>
     </tr>
@@ -100,34 +87,31 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     unset($tot);
     for ($i=0; $i<count($lines); $i++)
     {
-        if ($i > 0)
-            echo '<tr><td colspan="9"></td></tr>';
-
         if ($row['mb_id'] == '') { // 비회원일 경우는 주문자로 링크
-            $href = '<a href="./orderlist.php?sel_field=od_name&search='.$lines[$i]['od_name'].'">';
+            $href = '<a href="./orderlist.php?sel_field=od_name&amp;search='.$lines[$i]['od_name'].'">';
         } else { // 회원일 경우는 회원아이디로 링크
-            $href = '<a href="./orderlist.php?sel_field=mb_id&search='.$lines[$i]['mb_id'].'">';
+            $href = '<a href="./orderlist.php?sel_field=mb_id&amp;search='.$lines[$i]['mb_id'].'">';
         }
 
         $misu = $lines1[$i]['orderamount'] - $lines1[$i]['ordercancel'] - $lines[$i]['od_dc_amount'] - $lines[$i]['receiptamount'] + $lines[$i]['receiptcancel'];
 
-        ?>
-        <tr class="sale1">
-            <td><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>"><?=$lines[$i]['od_id']?></a></td>
-            <td ><?=$href?><?=$lines[$i]['od_name']?></a></td>
-            <td><?=number_format($lines1[$i]['orderamount'])?></td>
-            <td><?=number_format($lines1[$i]['ordercancel'] + $lines[$i]['od_dc_amount'])?></td>
-            <td><?=number_format($lines[$i]['od_receipt_bank'])?></td>
-            <td><?=number_format($lines[$i]['od_receipt_card'])?></td>
-            <td><?=number_format($lines[$i]['od_receipt_point'])?></td>
-            <td><?=number_format($lines[$i]['receiptcancel'])?></td>
-            <td><?=number_format($misu)?></td>
+    ?>
+        <tr>
+            <td class="td_odrnum2"><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>"><?=$lines[$i]['od_id']?></a></td>
+            <td class="td_name"><?=$href?><?=$lines[$i]['od_name']?></a></td>
+            <td class="td_num"><?=number_format($lines1[$i]['orderamount'])?></td>
+            <td class="td_num"><?=number_format($lines1[$i]['ordercancel'] + $lines[$i]['od_dc_amount'])?></td>
+            <td class="td_num"><?=number_format($lines[$i]['od_receipt_bank'])?></td>
+            <td class="td_num"><?=number_format($lines[$i]['od_receipt_card'])?></td>
+            <td class="td_num"><?=number_format($lines[$i]['od_receipt_point'])?></td>
+            <td class="td_num"><?=number_format($lines[$i]['receiptcancel'])?></td>
+            <td class="td_num"><?=number_format($misu)?></td>
         </tr>
     <?
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="9" class="sale1"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="9" class="empty_table">자료가 없습니다</td></tr>';
     }
     ?>
     </tbody>
