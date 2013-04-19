@@ -468,7 +468,7 @@ $pg_anchor ='<ul class="anchor">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
             <script>
-            $('<button type="button" id="it_mimg_view" class="btn_frmline sit_wimg_view">이미지(대) 확인</button>').appendTo('.sit_wimg_mimg');
+            $('<button type="button" id="it_mimg_view" class="btn_frmline sit_wimg_view">이미지(중) 확인</button>').appendTo('.sit_wimg_mimg');
             </script>
             <? } ?>
         </td>
@@ -491,7 +491,7 @@ $pg_anchor ='<ul class="anchor">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
             <script>
-            $('<button type="button" id="it_simg_view" class="btn_frmline sit_wimg_view">이미지(대) 확인</button>').appendTo('.sit_wimg_simg');
+            $('<button type="button" id="it_simg_view" class="btn_frmline sit_wimg_view">이미지(소) 확인</button>').appendTo('.sit_wimg_simg');
             </script>
             <? } ?>
         </td>
@@ -525,14 +525,24 @@ $pg_anchor ='<ul class="anchor">
 
     <? if (file_exists($limg1) || file_exists($mimg) || file_exists($simg)) { ?>
     <script>
-    $('.banner_or_img').addClass('sit_wimg');
+    $(".banner_or_img").addClass("sit_wimg");
     $(function() {
-        $('.sit_wimg_view').bind("click", function() {
-            $sit_wimg_id = $(this).attr('id').split('_');
-            $('#'+$sit_wimg_id[1]).toggle();
+        $(".sit_wimg_view").bind("click", function() {
+            var sit_wimg_id = $(this).attr("id").split("_");
+            var $img_display = $("#"+sit_wimg_id[1]);
+            $img_display.toggle();
+            if($img_display.is(":visible")) {
+                $(this).text($(this).text().replace("확인", "닫기"));
+            } else {
+                $(this).text($(this).text().replace("닫기", "확인"));
+            }
         });
-        $('.sit_wimg_close').bind("click", function() {
-            $(this).parents('.banner_or_img').toggle();
+        $(".sit_wimg_close").bind("click", function() {
+            var $img_display = $(this).parents(".banner_or_img");
+            var id = $img_display.attr("id");
+            $img_display.toggle();
+            var $button = $("#it_"+id+"_view");
+            $button.text($button.text().replace("닫기", "확인"));
         });
     });
     </script>

@@ -954,7 +954,16 @@ function fconfig_check(f)
 
 $(function() {
     $("#scf_cardtest_btn").bind("click", function() {
-        $("#scf_cardtest_tip").toggle();
+        var $cf_cardtest_tip = $("#scf_cardtest_tip");
+        var $cf_cardtest_btn = $("#scf_cardtest_btn");
+
+        $cf_cardtest_tip.toggle();
+
+        if($cf_cardtest_tip.is(":visible")) {
+            $cf_cardtest_btn.text("테스트결제 팁 닫기");
+        } else {
+            $cf_cardtest_btn.text("테스트결제 팁 더보기");
+        }
     })
 });
 </script>
