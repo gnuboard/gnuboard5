@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = "$fr_year ~ $to_year 매출현황"; /*레이블 중복 인식과 페이지와의 연결 때문에 year로 바꿈 김혜련 2013-04-04*/
+$g4['title'] = "$fr_year ~ $to_year 연간 매출현황"; /*레이블 중복 인식과 페이지와의 연결 때문에 year로 바꿈 김혜련 2013-04-04*/
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)
@@ -12,11 +12,8 @@ function print_line($save)
     global $admin_dir;
     static $count = 0;
 
-    if ($count++ > 0)
-        echo '<tr><td colspan="9"></td></tr>\n';
-
     ?>
-    <tr class="sale1">
+    <tr>
         <td><a href="./sale1month.php?fr_month=<?=$save['od_date']?>01&to_month=<?=$save['od_date']?>12"><?=$save['od_date']?></a></td>
         <td><?=number_format($save['ordercount'])?></td>
         <td><?=number_format($save['orderamount'])?></td>
@@ -74,23 +71,10 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 ?>
 
-<style type="text/css">
-    .sale1{text-align:center}
-</style>
-<section class="cbox">
-    <h2>연별 매출현황</h2>
+<section id="ssale_year" class="cbox">
+    <h2>연간 매출 집계 목록</h2>
+
     <table>
-    <colgroup>
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-    </colgroup>
     <thead>
     <tr>
         <th scope="col">주문년도</th>
@@ -105,7 +89,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     </tr>
     </thead>
     <tfoot>
-    <tr class="sale1">
+    <tr>
         <td>합 계</td>
         <td><?=number_format($tot['ordercount'])?></td>
         <td><?=number_format($tot['orderamount'])?></td>
@@ -146,7 +130,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="9" calss="sale1"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="9" calss="empty_table">자료가 없습니다.</td></tr>';
     } else {
         print_line($save);
     }
