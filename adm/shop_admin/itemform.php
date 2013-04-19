@@ -569,69 +569,18 @@ $pg_anchor ='<ul class="anchor">
     <a href="./itemlist.php?<?=$qstr?>">목록</a>
 </div>
 
-<section class="cbox compare_wrap">
+<section id="frm_item" class="cbox compare_wrap">
     <h2>관련상품</h2>
+    <?=$pg_anchor?>
 
+    <p>
+        오른쪽 등록된 전체상품 목록에서 상품을 더블클릭하면 선택된 관련상품 목록에 추가됩니다.<br>
+        예를 들어, A 상품에 B 상품을 관련상품으로 등록하면, B 상품에도 A 상품이 관련상품으로 자동 추가되며, <strong>확인 버튼을 누르셔야 정상 반영됩니다.</strong>
+    </p>
 
-
-</div>
-
-<table width=100% cellpadding=0 cellspacing=0 border=0>
-<colgroup width=14%></colgroup>
-<colgroup width=35% bgcolor=#FFFFFF></colgroup>
-<colgroup width=3 bgcolor=#FFFFFF></colgroup>
-<colgroup width=13%></colgroup>
-<colgroup width=35% bgcolor=#FFFFFF></colgroup>
-<tr><td colspan=5 height=2 bgcolor=0E87F9></td></tr>
-<tr>
-    <td colspan=5>
-        <table width=100% cellpadding=0 cellspacing=0>
-            <tr class=ht align=center>
-                <td width=50%><b>선택된 목록</b></td>
-                <td width=50%><b>등록된 목록</b></td>
-            </tr>
-        </table>
-    </td>
-</tr>
-<tr>
-    <td align="center">
-        선택된 관련상품
-        <?=help("오른쪽 등록된 목록의 상품목록에서 더블클릭하면 선택된 관련상품에 추가됩니다.\n만약, 이 상품이 a 이고 b 라는 상품을 관련상품으로 등록하면 b 라는 상품에도 a 라는 상품을 관련상품으로 자동 등록합니다.\n반드시 아래의 확인버튼을 클릭하셔야 정상 등록되므로 이점 유의하여 주십시오", -100);?><br><span id="sel_span" style="line-height:200%"></span>
-    </td>
-    <td>
-        ※ 상품 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>※ 한 번 클릭시 상품이미지/상품금액 출력<br>
-        <br>
-        <select name='relationselect' size=8 style='width:250px;' onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);">
-        <?
-        $str = array();
-        $sql = " select b.ca_id, b.it_id, b.it_name, b.it_amount
-                   from {$g4['shop_item_relation_table']} a
-                   left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
-                  where a.it_id = '$it_id'
-                  order by b.ca_id, b.it_name ";
-        $result = sql_query($sql);
-        while($row=sql_fetch_array($result))
-        {
-            $sql2 = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['ca_id']}' ";
-            $row2 = sql_fetch($sql2);
-
-            // 김선용 2006.10
-            if(file_exists(G4_DATA_PATH."/item/{$row['it_id']}_s"))
-                $it_image = "{$row['it_id']}_s";
-            else
-                $it_image = "";
-
-            echo "<option value='{$row['it_id']}/$it_image/{$row['it_amount']}'>{$row2['ca_name']} : ".cut_str(get_text(strip_tags($row['it_name'])),30);
-            $str[] = $row['it_id'];
-        }
-        $str = implode(",", $str);
-        ?>
-        </select>
-        <input type='hidden' name='it_list' value='<?=$str?>'>
-    </td>
-    <td rowspan=2 width=20 bgcolor=#FFFFFF>◀</td>
-    <td align="center">상품목록<br><span id="add_span" style="line-height:200%"></span></td>
-    <td>
+    <section class="compare_left">
+        <h3>등록된 전체상품 목록</h3>
+        <span id="add_span" style="line-height:200%"></span>
         <script>
         function search_relation(fld) {
             if (fld.value) {
@@ -647,10 +596,9 @@ $pg_anchor ='<ul class="anchor">
             }
         }
         </script>
-        ※ 상품 선택후 <FONT COLOR="#0E87F9">더블클릭하면 왼쪽에 추가됨</FONT><br>※ 한 번 클릭시 상품이미지/상품금액 출력<br>
-        <select onchange="search_relation(this)">
+        <label for="sch_relation" class="sound_only">상품분류</label>
+        <select id="sch_relation" onchange="search_relation(this)">
             <option value=''>분류별 관련상품</option>
-            <option value=''>----------------------</option>
             <?
                 $sql = " select ca_id, ca_name from {$g4['shop_category_table']} where length(ca_id) = 2 order by ca_id ";
                 $result = sql_query($sql);
@@ -765,40 +713,53 @@ $pg_anchor ='<ul class="anchor">
                 //f.it_list.value = str;
                 f.it_list.value = str.join(",");
             }
-        </SCRIPT>
-    </td>
-</tr>
+        </script>
+    </section>
 
-<script> var eventselect = new Array(); </script>
-<tr>
-    <td>
-        선택된 이벤트<br>
-        <?=help("오른쪽 등록된 목록의 이벤트목록에서 더블클릭하면 선택된 이벤트에 추가됩니다.\n이벤트는 분류가 다른 상품들을 묶을 수 있는 또다른 방법입니다.\n이벤트목록은 이벤트관리에서 등록한 내용이 나타납니다.\n반드시 아래의 확인버튼을 클릭하셔야 정상 등록되므로 이점 유의하여 주십시오", -100);?>
-    </td>
-    <td>
-        이벤트 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>
-        <select name=eventselect size=6 style='width:250px;' ondblclick="event_del(this);">
+    <section class="compare_right">
+        <h3>선택된 관련상품 목록</h3>
+        <span id="sel_span" style="line-height:200%"></span>
+        ※ 상품 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>※ 한 번 클릭시 상품이미지/상품금액 출력<br>
+        <br>
+        <select name='relationselect' size=8 style='width:250px;' onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);">
         <?
-        $str = "";
-        $comma = "";
-        $sql = " select b.ev_id, b.ev_subject
-                   from {$g4['shop_event_item_table']} a
-                   left join {$g4['shop_event_table']} b on (a.ev_id=b.ev_id)
+        $str = array();
+        $sql = " select b.ca_id, b.it_id, b.it_name, b.it_amount
+                   from {$g4['shop_item_relation_table']} a
+                   left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
                   where a.it_id = '$it_id'
-                  order by b.ev_id desc ";
+                  order by b.ca_id, b.it_name ";
         $result = sql_query($sql);
-        while ($row=sql_fetch_array($result)) {
-            echo "<option value='{$row['ev_id']}'>".get_text($row['ev_subject']);
-            $str .= $comma . $row['ev_id'];
-            $comma = ",";
+        while($row=sql_fetch_array($result))
+        {
+            $sql2 = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['ca_id']}' ";
+            $row2 = sql_fetch($sql2);
+
+            // 김선용 2006.10
+            if(file_exists(G4_DATA_PATH."/item/{$row['it_id']}_s"))
+                $it_image = "{$row['it_id']}_s";
+            else
+                $it_image = "";
+
+            echo "<option value='{$row['it_id']}/$it_image/{$row['it_amount']}'>{$row2['ca_name']} : ".cut_str(get_text(strip_tags($row['it_name'])),30);
+            $str[] = $row['it_id'];
         }
+        $str = implode(",", $str);
         ?>
         </select>
-        <input type="hidden" name="ev_list" value="<?=$str?>">
-    </td>
-    <td>이벤트목록</td>
-    <td>
-        이벤트 선택후 <FONT COLOR="#0E87F9">더블클릭하면 왼쪽에 추가됨</FONT><br>
+        <input type='hidden' name='it_list' value='<?=$str?>'>
+    </section>
+
+</section>
+
+<section id="frm_event" class="cbox compare_wrap">
+    <h2>관련이벤트</h2>
+    <?=$pg_anchor?>
+
+    <script> var eventselect = new Array(); </script>
+    <section class="compare_left">
+        <h3>등록된 전체이벤트 목록</h3>
+                이벤트 선택후 <FONT COLOR="#0E87F9">더블클릭하면 왼쪽에 추가됨</FONT><br>
         <select size=6 style='width:250px; background-color:#F6F6F6;' ondblclick="event_add(this);">
         <?
         $sql = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
@@ -870,9 +831,33 @@ $pg_anchor ='<ul class="anchor">
                 f.ev_list.value = str;
             }
         </script>
-    </td>
-</tr>
-</table>
+    </section>
+
+    <section class="compare_right">
+        <h3>선택된 관련이벤트 목록</h3>
+        이벤트 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>
+        <select name=eventselect size=6 style='width:250px;' ondblclick="event_del(this);">
+        <?
+        $str = "";
+        $comma = "";
+        $sql = " select b.ev_id, b.ev_subject
+                   from {$g4['shop_event_item_table']} a
+                   left join {$g4['shop_event_table']} b on (a.ev_id=b.ev_id)
+                  where a.it_id = '$it_id'
+                  order by b.ev_id desc ";
+        $result = sql_query($sql);
+        while ($row=sql_fetch_array($result)) {
+            echo "<option value='{$row['ev_id']}'>".get_text($row['ev_subject']);
+            $str .= $comma . $row['ev_id'];
+            $comma = ",";
+        }
+        ?>
+        </select>
+        <input type="hidden" name="ev_list" value="<?=$str?>">
+
+    </section>
+
+</section>
 
 <section id="frm_select_item" class="cbox">
     <h2>상세설명설정</h2>
@@ -901,13 +886,13 @@ $pg_anchor ='<ul class="anchor">
             $himg_str = "";
             $himg = G4_DATA_PATH."/item/{$it['it_id']}_h";
             if (file_exists($himg)) {
-                echo "<input type=\"checkbox\" name=\"it_himg_del\" value=\"1\">삭제";
-                $himg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_h' border=0>";
-            }
             ?>
+            <label for="it_himg_del">상단이미지 삭제</label>
+            <input type="checkbox" name="it_himg_del" value="1" id="it_himg_del">
+            <div class="banner_or_img"><img src="<?=G4_DATA_URL?>/item/<?=$it['it_id']?>_h" alt=""></div>
+            <? } ?>
         </td>
     </tr>
-    <? if ($himg_str) { echo "<tr><td colspan=\"4\">$himg_str</td></tr>"; } ?>
     <tr>
         <th scope="row">하단이미지</th>
         <td colspan="3">
@@ -917,13 +902,13 @@ $pg_anchor ='<ul class="anchor">
             $timg_str = "";
             $timg = G4_DATA_PATH."/item/{$it['it_id']}_t";
             if (file_exists($timg)) {
-                echo "<input type=\"checkbox\" name=\"it_timg_del\" value=\"1\">삭제";
-                $timg_str = "<img src='".G4_DATA_URL."/item/{$it['it_id']}_t' border=\"0\">";
-            }
             ?>
+            <label for="it_timg_del">삭제</label>
+            <input type="checkbox" name="it_timg_del" value="1" id="it_timg_del">
+            <div class="banner_or_img"><img src="<?=G4_DATA_URL?>/item/<?=$it['it_id']?>_t" alt=""></div>
+            <? } ?>
         </td>
     </tr>
-    <? if ($timg_str) { echo "<tr><td colspan=\"4\">$timg_str</td></tr>"; } ?>
     <tr>
         <th scope="row">상품상단내용</th>
         <td colspan="3"><?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?><?=editor_html('it_head_html', $it['it_head_html']);?></td>
@@ -936,8 +921,8 @@ $pg_anchor ='<ul class="anchor">
     <tr>
         <th scope="row">입력일시</th>
         <td colspan="3">
-            <?=$it['it_time']?>
             <?=help("상품을 처음 입력(등록)한 시간입니다.");?>
+            <?=$it['it_time']?>
         </td>
     </tr>
     <? } ?>
