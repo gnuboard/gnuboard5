@@ -125,8 +125,7 @@ $pg_anchor = '<ul class="anchor">
     <p>주문일시 <?=substr($od['od_time'],0,16)?> (<?=get_yoil($od['od_time']);?>) / 주문총액 <strong><?=number_format($t_ct_amount['합계']); ?></strong>원</p>
     <? if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?=$od['od_hope_date']?> (<?=get_yoil($od['od_hope_date'])?>) 입니다.</p><? } ?>
 
-    <form name="frmorderform" method="post">
-    <input type="hidden" name="ct_status" value="">
+    <form name="frmorderform" method="post" action="./ordercartupdate.php" onsubmit="return form_submit(this);">
     <input type="hidden" name="uq_id" value="<?=$od['uq_id']?>">
     <input type="hidden" name="od_id" value="<?=$od_id?>">
     <input type="hidden" name="mb_id" value="<?=$od['mb_id']?>">
@@ -197,13 +196,13 @@ $pg_anchor = '<ul class="anchor">
 
     <div class="btn_list">
         <input type="hidden" name="chk_cnt" value="<?=$i?>">
-        <a href="javascript:form_submit('주문')">주문</a>
-        <a href="javascript:form_submit('준비')">상품준비중</a>
-        <a href="javascript:form_submit('배송')">배송중</a>
-        <a href="javascript:form_submit('완료')">완료</a>
-        <a href="javascript:form_submit('취소')">취소</a>
-        <a href="javascript:form_submit('반품')">반품</a>
-        <a href="javascript:form_submit('품절')">품절</a>
+        <input type="submit" name="act_button" value="주문" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="상품준비중" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="배송중" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="완료" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="취소" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="반품" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="품절" onclick="document.pressed=this.value">
     </div>
 
     </form>
@@ -803,27 +802,26 @@ function select_all()
         select_all_sw = false;
 }
 
-function form_submit(status)
+function form_submit(f)
 {
-    var f = document.frmorderform;
     var check = false;
+    var status = document.pressed;
 
     for (i=0; i<f.chk_cnt.value; i++) {
-        if (document.getElementById('ct_chk_'+i).checked == true) check = true;
+        if (document.getElementById('ct_chk_'+i).checked == true)
+            check = true;
     }
 
     if (check == false) {
         alert("처리할 자료를 하나 이상 선택해 주십시오.");
-        return;
+        return false;
     }
 
-    if (confirm("\'" + status + "\'을(를) 선택하셨습니다.\n\n이대로 처리 하시겠습니까?") == true) {
-        f.ct_status.value = status;
-        f.action = "./ordercartupdate.php";
-        f.submit();
+    if (confirm("\'" + status + "\'을(를) 선택하셨습니다.\n\n이대로 처리 하시겠습니까?")) {
+        return true;
+    } else {
+        return false;
     }
-
-    return;
 }
 </script>
 
