@@ -374,7 +374,7 @@ $pg_anchor ='<ul class="anchor">
         <th scope="row">요약상품정보</th>
         <td>
             <?=help("<strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.");?>
-            <button type="button" class="btn_frmline" onclick="window.open('./iteminfo.php?it_id=<?=$it['it_id']?>', '_blank', 'width=670 height=800');">상품요약정보 설정</button>
+            <button type="button" class="btn_frmline" onclick="window.open('./iteminfo.php?it_id=<?=$it['it_id']?>', '_blank', 'width=670 height=800 scroll=yes');">상품요약정보 설정</button>
             <span id="item_info_gubun"><?=$item_info_gubun?></span>
         </td>
     </tr>
