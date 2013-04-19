@@ -121,13 +121,13 @@ h2 {font-size:1.2em}
 
 /* 버튼 */
 .btn_confirm {margin-bottom:20px;text-align:center}
-.btn_confirm button {padding:0 15px;height:30px;border:0;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_confirm button {padding:0 15px;height:30px;border:0;background:#617d46;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_confirm button:focus {padding:0 15px;height:30px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
-.btn_confirm a {display:inline-block;padding:0 15px;height:30px;background:#74868b;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
+.btn_confirm a {display:inline-block;padding:0 15px;height:30px;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 .btn_confirm a:focus {background:#555}
 .btn_submit {padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;line-height:2.5em;vertical-align:middle}
 .btn_submit:focus {padding:0 15px;height:30px;border:0;background:#555;color:#fff;line-height:2.5em;vertical-align:middle}
-.btn_cancel {display:inline-block;padding:0 15px;height:30px;border:0;background:#74868b;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
+.btn_cancel {display:inline-block;padding:0 15px;height:30px;border:0;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 fieldset .btn_submit {height:21px;background:#383a3f;line-height:1.7em}
 fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:21px;border:0;background:#444;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:middle;line-height:2em} /* 우편번호검색버튼 등 */
@@ -136,14 +136,14 @@ fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 .btn_frmline:active {text-decoration:none}
 
 .btn_list input,
-.btn_list button {padding:0 15px;height:28px;border:0;background:#74868b;color:#fff;line-height:2.2em;vertical-align:middle}
+.btn_list button {padding:0 15px;height:28px;border:0;background:#617d46;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_list input:focus,
 .btn_list button:focus {padding:0 15px;height:28px;background:#555;color:#fff;line-height:2.2em;vertical-align:middle}
-.btn_list a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
+.btn_list a {display:inline-block;padding:0 15px;height:28px;background:#617d46;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
 .btn_list a:focus {background:#555}
 
 .btn_ft {text-align:right}
-.btn_ft a {display:inline-block;padding:0 15px;height:28px;background:#74868b;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
+.btn_ft a {display:inline-block;padding:0 15px;height:28px;background:#617d46;color:#fff;text-decoration:none;line-height:2.4em;vertical-align:middle}
 .btn_ft a:focus {background:#555}
 
 #btn_add {margin-bottom:10px;text-align:right}
@@ -165,7 +165,7 @@ fieldset {margin-bottom:20px}
 legend {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;border:0;overflow:hidden}
 fieldset span {display:block;margin-bottom:10px}
 fieldset p {color:#4c5f67}
-fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#74868b;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
+fieldset button, .fieldset_submit {padding:0 15px;height:23px;border:0;background:#617d46;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle;cursor:pointer}
 fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border:0;background:#555;color:#fff;font-size:1em;line-height:2.1em;vertical-align:middle}
 
 .readonly {}
