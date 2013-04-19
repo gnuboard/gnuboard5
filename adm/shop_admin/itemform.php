@@ -436,10 +436,18 @@ $pg_anchor ='<ul class="anchor">
             $limg1 = G4_DATA_PATH.'/item/'.$it['it_id'].'_l1';
             if (file_exists($limg1)) {
                 $size = getimagesize($limg1);
-                echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=\"0\" onclick=\"imageview('limg1', $size[0], $size[1]);\"><input type=\"checkbox\" name=\"it_limg1_del\" value=\"1\">삭제";
-                echo "<div id='limg1' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_l1' border=\"1\"></div>";
-            }
             ?>
+            <label for="it_limg1_del"><span class="sound_only">이미지(대) </span>파일삭제</label>
+            <input type="checkbox" name="it_limg1_del" value="1">
+            <span class="sit_wimg_limg1"></span>
+            <div id="limg1" class="banner_or_img">
+                <img src="<?=G4_DATA_URL?>/item/<?=$it['it_id']?>_l1" alt="" width="<?=$size[0]?>" height="<?=$size[1]?>">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="it_limg1_view" class="btn_frmline sit_wimg_view">이미지(대) 확인</button>').appendTo('.sit_wimg_limg1');
+            </script>
+            <? } ?>
         </td>
     </tr>
     <tr>
@@ -451,10 +459,18 @@ $pg_anchor ='<ul class="anchor">
             $mimg = G4_DATA_PATH.'/item/'.$it['it_id'].'_m';
             if (file_exists($mimg)) {
                 $size = getimagesize($mimg);
-                echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=\"0\" onclick=\"imageview('mimg', $size[0], $size[1]);\"><input type=\"checkbox\" name=\"it_mimg_del\" value='1'>삭제";
-                echo "<div id='mimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_m' border=\"1\"></div>";
-            }
             ?>
+            <label for="it_mimg_del"><span class="sound_only">이미지(중) </span>파일삭제</label>
+            <input type="checkbox" name="it_mimg_del" value="1" id="it_mimg_del">
+            <span class="sit_wimg_mimg"></span>
+            <div id="mimg" class="banner_or_img">
+                <img src="<?=G4_DATA_URL?>/item/<?=$it['it_id']?>_m" alt="" width="<?=$size[0]?>" height="<?=$size[1]?>">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="it_mimg_view" class="btn_frmline sit_wimg_view">이미지(대) 확인</button>').appendTo('.sit_wimg_mimg');
+            </script>
+            <? } ?>
         </td>
     </tr>
     <tr>
@@ -466,10 +482,18 @@ $pg_anchor ='<ul class="anchor">
             $simg = G4_DATA_PATH.'/item/'.$it['it_id'].'_s';
             if (file_exists($simg)) {
                 $size = getimagesize($simg);
-                echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=\"0\" onclick=\"imageview('simg', $size[0], $size[1]);\"><input type=\"checkbox\" name=\"it_simg_del\" value='1'>삭제";
-                echo "<div id='simg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_s' border=\"1\"></div>";
-            }
             ?>
+            <label for="it_simg_del"><span class="sound_only">이미지(소) </span>파일삭제</label>
+            <input type="checkbox" name="it_simg_del" value="1" id="it_simg_del">
+            <span class="sit_wimg_simg"></span>
+            <div id="simg" class="banner_or_img">
+                <img src="<?=G4_DATA_URL?>/item/<?=$it['it_id']?>_s" alt="" width="<?=$size[0]?>" height="<?=$size[1]?>">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="it_simg_view" class="btn_frmline sit_wimg_view">이미지(대) 확인</button>').appendTo('.sit_wimg_simg');
+            </script>
+            <? } ?>
         </td>
     </tr>
     <? for ($i=2; $i<=5; $i++) { // 이미지(대)는 5개 ?>
@@ -481,15 +505,38 @@ $pg_anchor ='<ul class="anchor">
             $limg = G4_DATA_PATH.'/item/'.$it['it_id'].'_l'.$i;
             if (file_exists($limg)) {
                 $size = getimagesize($limg);
-                echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=\"0\" onclick=\"imageview('limg$i', $size[0], $size[1]);\"><input type=\"checkbox\" name=\"it_limg{$i}_del\" value='1'>삭제";
-                echo "<span id=\"limg{$i}\" style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/item/{$it[it_id]}_l{$i}' border=\"1\"></div>";
-            }
             ?>
+            <label for="it_limg<?=$i?>_del"><span class="sound_only">이미지(대)<?=$i?> </span>파일삭제</label>
+            <input type="checkbox" name="it_limg<?=$i?>_del" value="1" id="it_limg<?=$i?>_del">
+            <span class="sit_wimg_limg<?=$i?>"></span>
+            <div id="limg<?=$i?>" class="banner_or_img">
+                <img src="<?=G4_DATA_URL?>/item/<?=$it['it_id']?>_l<?=$i?>">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <? } ?>
+            <script>
+            $('<button type="button" id="it_limg<?=$i?>_view" class="btn_frmline sit_wimg_view">이미지(대)<?=$i?> 확인</button>').appendTo('.sit_wimg_limg<?=$i?>');
+            </script>
         </td>
     </tr>
     <? } ?>
     </tbody>
     </table>
+
+    <? if (file_exists($limg1) || file_exists($mimg) || file_exists($simg)) { ?>
+    <script>
+    $('.banner_or_img').addClass('sit_wimg');
+    $(function() {
+        $('.sit_wimg_view').bind("click", function() {
+            $sit_wimg_id = $(this).attr('id').split('_');
+            $('#'+$sit_wimg_id[1]).toggle();
+        });
+        $('.sit_wimg_close').bind("click", function() {
+            $(this).parents('.banner_or_img').toggle();
+        });
+    });
+    </script>
+    <? } ?>
 
 </section>
 
@@ -497,8 +544,6 @@ $pg_anchor ='<ul class="anchor">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./itemlist.php?<?=$qstr?>">목록</a>
 </div>
-
-<!-- 김혜련 2013-03-26 선택된 목록 / 등록된 목록 구조 다시 짜야함 start-->
 
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <colgroup width=14%></colgroup>
@@ -607,7 +652,7 @@ $pg_anchor ='<ul class="anchor">
         */
         ?>
         </select>
-        <SCRIPT LANGUAGE="JavaScript">
+        <script>
 
             // 김선용 2006.10
             function relation_img(name, id)
@@ -797,7 +842,6 @@ $pg_anchor ='<ul class="anchor">
     </td>
 </tr>
 </table>
-<!-- 김혜련 2013-03-26 선택된 목록 / 등록된 목록 구조 다시 짜야함 end-->
 
 <section id="frm_select_item" class="cbox">
     <h2>상세설명설정</h2>

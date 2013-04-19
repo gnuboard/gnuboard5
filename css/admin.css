@@ -294,6 +294,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .txt_false {color:#ccc}
 
 .banner_or_img {margin:10px 0 0}
+.banner_or_img button {display:block;margin:5px 0 0}
 
 /* 관리권한설정 */
 #add_admin fieldset {margin-top:20px}
@@ -429,6 +430,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 
 /* 상품입력 */
 .sit_w_opt {height:70px !important}
+.sit_wimg {display:none}
 
 /* 상품문의 */
 .sit_qa_subject {width:300px}
