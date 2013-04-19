@@ -122,17 +122,18 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $script .= "ca_opt6_subject['{$row['ca_id']}'] = '{$row['ca_opt6_subject']}';\n";
 }
 
-$pg_anchor ="<ul class=\"anchor\">
-<li><a href=\"#frm_basic_item\">기본정보</a></li>
-<li><a href=\"#frm_image\">상품이미지</a></li>
-<li><a href=\"#frm_item\">관련상품</a></li>
-<li><a href=\"#frm_event\">관련이벤트</a></li>
-<li><a href=\"#frm_select_item\">상세설명설정</a></li>
+$pg_anchor ='<ul class="anchor">
+<li><a href="#frm_cate">상품분류</a></li>
+<li><a href="#frm_basic_item">기본정보</a></li>
+<li><a href="#frm_image">상품이미지</a></li>
+<li><a href="#frm_item">관련상품</a></li>
+<li><a href="#frm_event">관련이벤트</a></li>
+<li><a href="#frm_select_item">상세설명설정</a></li>
 </ul>
-";
+';
 ?>
 
-<form name="fitemform" action="./itemformupdate.php" onsubmit="return fitemformcheck(this)" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off">
+<form name="fitemform" action="./itemformupdate.php" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" onsubmit="return fitemformcheck(this)">
 
 <input type="hidden" name="codedup" value="<?=$default['de_code_dup_use']?>">
 <input type="hidden" name="w" value="<?=$w?>">
@@ -149,22 +150,23 @@ $pg_anchor ="<ul class=\"anchor\">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="it_explan_html" value="1"><!---->
 
-<section id="frm_basic_item" class="cbox">
-    <h2>기본정보</h2>
+<section id="frm_cate" class="cbox">
+    <h2>상품분류</h2>
     <?=$pg_anchor?>
+    <p>기본분류는 반드시 선택하셔야 합니다. 하나의 상품에 최대 3개의 다른 분류를 지정할 수 있습니다.</p>
+
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_6">
-        <col class="grid_3">
-        <col class="grid_6">
+        <col>
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="ca_id">분류명</label></th>
-        <td colspan="3">
+        <th scope="row"><label for="ca_id">기본분류</label></th>
+        <td>
+            <? if ($w == "") echo help("기본분류를 선택하면, 판매, 재고, HTML사용, 판매자 E-mail 을 선택한 분류의 기본값으로 설정합니다."); ?>
             <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
-                <option value="">= 기본분류 =</option>
+                <option value="">기본분류</option>
                 <?=conv_selected_option($category_select, $it['ca_id'])?>
             </select>
             <script>
@@ -180,25 +182,69 @@ $pg_anchor ="<ul class=\"anchor\">
                 var ca_opt6_subject = new Array();
                 <?="\n$script"?>
             </script>
-            <? if ($w == "") { ?>
-                <?=help("기본분류를 선택하면 선택한 분류의 기본값인 판매, 재고, HTML사용, 판매자 E-mail 을 기본값으로 설정합니다.");?>
-            <? } ?>
-
-            <?
-            for ($i=2; $i<=3; $i++)
-            {
-                echo "&nbsp; <select name='ca_id{$i}'>\n";
-                echo "<option value=\"\">= {$i}차 분류 =</option>\n";
-                echo conv_selected_option($category_select, $it['ca_id'.$i]);
-                echo "</select>\n";
-            }
-            ?>
-            <?=help("기본분류는 반드시 선택하셔야 합니다.<br><br>하나의 상품에 최대 3개의 다른 분류를 지정할 수 있습니다.<br><br>2차, 3차 분류는 기본 분류의 하위 분류 개념이 아니므로 기본 분류 선택시 해당 상품이 포함될 최하위 분류만 선택하시면 됩니다.");?>
         </td>
     </tr>
+    <? for ($i=2; $i<=3; $i++) { ?>
+    <tr>
+        <th scope="row"><?=$i?>차 분류</th>
+        <td>
+            <?=help($i.'차 분류는 기본 분류의 하위 분류 개념이 아니므로 기본 분류 선택시 해당 상품이 포함될 최하위 분류만 선택하시면 됩니다.')?>
+            <select name="ca_id<?=$i?>" id="ca_id_<?=$i?>">
+                <option value=""><?=$i?>차 분류</option>
+                <?=conv_selected_option($category_select, $it['ca_id'.$i]);?>
+            </select>
+        </td>
+    </tr>
+    <? } ?>
+    </table>
+</section>
+
+<section id="frm_basic_item" class="cbox">
+    <h2>기본정보</h2>
+    <?=$pg_anchor?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="ca_id">기본분류</label></th>
+        <td>
+            <? if ($w == "") echo help("기본분류를 선택하면 선택한 분류의 기본값인 판매, 재고, HTML사용, 판매자 E-mail 을 기본값으로 설정합니다."); ?>
+            <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
+                <option value="">기본분류</option>
+                <?=conv_selected_option($category_select, $it['ca_id'])?>
+            </select>
+            <script>
+                var ca_use = new Array();
+                var ca_stock_qty = new Array();
+                //var ca_explan_html = new Array();
+                var ca_sell_email = new Array();
+                var ca_opt1_subject = new Array();
+                var ca_opt2_subject = new Array();
+                var ca_opt3_subject = new Array();
+                var ca_opt4_subject = new Array();
+                var ca_opt5_subject = new Array();
+                var ca_opt6_subject = new Array();
+                <?="\n$script"?>
+            </script>
+        </td>
+    </tr>
+    <? for ($i=2; $i<=3; $i++) { ?>
+    <tr>
+        <th scope="row"><?=$i?>차 분류</th>
+        <td>
+            <select name="ca_id<?=$i?>" id="ca_id_<?=$i?>">
+                <option value=""><?=$i?>차 분류</option>
+                <?=conv_selected_option($category_select, $it['ca_id'.$i]);?>
+            </select>
+        </td>
+    </tr>
+    <? } ?>
     <tr>
         <th scope="row"><label for="it_id">상품코드</label></th>
-        <td colspan="3">
+        <td>
             <? if ($w == "") { // 추가 ?>
                 <!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
                 <!-- <input type=text class=required name=it_id value="<?=10000000000-time()?>" size=12 maxlength=10 required> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
@@ -216,8 +262,8 @@ $pg_anchor ="<ul class=\"anchor\">
     </tr>
     <tr>
         <th scope="row"><label for="it_name">상품명</label></th>
-        <td colspan="3">
-            <input type="text" name="it_name" value="<?=get_text(cut_str($it['it_name'], 250, ""))?>" id="it_name" required class="frm_input required" size="100">
+        <td>
+            <input type="text" name="it_name" value="<?=get_text(cut_str($it['it_name'], 250, ""))?>" id="it_name" required class="frm_input required" size="95">
         </td>
     </tr>
     <tr>
@@ -226,6 +272,8 @@ $pg_anchor ="<ul class=\"anchor\">
            <?=help("금액표시는 하지 않고 상품을 구매할 수 없으며 상품설명만 나타낼때 사용합니다.");?>
             <input type="checkbox" name="it_gallery" value="1" id="it_gallery" <?=($it['it_gallery'] ? "checked" : "")?>> 갤러리로 사용
         </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="it_order">출력순서</label></th>
         <td>
             <?=help("상품의 출력순서를 인위적으로 변경할때 사용합니다.\n숫자를 입력하며 기본은 0 입니다.\n숫자가 작을 수록 상위에 출력됩니다.\n음수 입력도 가능합니다.\n구간 :  -2147483648 ~ 2147483647");?>
@@ -234,7 +282,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </tr>
     <tr>
         <th scope="row">상품유형</th>
-        <td colspan="3">
+        <td>
             <?=help("메인화면에 유형별로 출력할때 사용합니다.\n\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다.");?>
             <input type="checkbox" name="it_type1" value="1" <?=($it['it_type1'] ? "checked" : "");?> id="it_type1">
             <label for="it_type1"><img src="<?=G4_SHOP_URL?>/img/icon_type1.gif" alt="hit"></label>
@@ -254,75 +302,78 @@ $pg_anchor ="<ul class=\"anchor\">
             <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
             <input type="text" name="it_maker" value="<?=get_text($it['it_maker'])?>" id="it_maker" class="frm_input" size="40">
         </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="it_origin">원산지</label></th>
         <td>
             <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
             <input type="text" name="it_origin" value="<?=get_text($it['it_origin'])?>" id="it_origin" class="frm_input" size="40">
         </td>
     </tr>
-        <?
-        for ($i=1; $i<=3; $i++) {
+    <?
+    for ($i=1; $i<=3; $i++) {
         $k1=$i*2-1;
         $k2=$i*2;
         $val11 = stripslashes($it["it_opt".$k1."_subject"]);
         $val12 = stripslashes($it["it_opt".$k1]);
         $val21 = stripslashes($it["it_opt".$k2."_subject"]);
         $val22 = stripslashes($it["it_opt".$k2]);
-
-        echo "
-        <tr>
-            <td><input type=text name='it_opt{$k1}_subject' size=15 class=frm_input value='".get_text($val11)."'></td>
-            <td><textarea name='it_opt{$k1}' rows='3' cols=40 class=frm_input>$val12</textarea></td>
-            <td><input type=text name='it_opt{$k2}_subject' size=15 class=frm_input value='".get_text($val21)."'></td>
-            <td><textarea name='it_opt{$k2}' rows='3' cols=40 class=frm_input>$val22</textarea></td>
-        </tr>\n";
-        }
-        ?>
+    ?>
     <tr>
-        <td colspan="4">
-<style type="text/css">
-#cost_box{width:890px}
-#cost_box h3{width:158px;height:300px;line-height:300px;float:left}
-#cost_box li{list-style:none;position:relative;float:left;width:110px;height:300px;margin-right:12px}
-#cost_box input{background:#fedddd}
-.cost_input{position:absolute;bottom:0;left:0}
-.cost_margin{margin-right:0 !important}
-</style>
-            <div id="cost_box">
-                <h3>가격/포인트/재고</h3>
-                <ul>
-                    <li>
-                        <label for="it_amount">비회원가격</label><?=help("상품의 기본판매가격(로그인 이전 가격)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.", 50);?>
-                        <span class="cost_input"><input type="text" name="it_amount" value="<?=$it['it_amount']?>" id="it_amount" class="frm_input" size="8"></span>
-                    </li>
-                    <li>
-                        <label for="it_amount2">회원가격</label><?=help("상품의 로그인 이후 가격(회원 권한 2 에만 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n\n입력이 없다면 비회원가격으로 대신합니다.", 50);?>
-                        <span class="cost_input"><input type="text" name="it_amount2" value="<?=$it['it_amount2']?>" id="it_amount2" class="frm_input"  size="8"></span>
-                    </li>
-                    <li>
-                        <label for="it_amount3">특별회원가격</label><?=help("상품의 로그인 이후 가격(회원 권한 3 이상에 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n\n입력이 없다면 회원가격으로 대신합니다.\n회원가격도 없다면 비회원가격으로 대신합니다.", 50);?>
-                        <span class="cost_input"><input type="text" name="it_amount3" value="<?=$it['it_amount3']?>" id="it_amount3" class="frm_input" size="8"></span>
-                    </li>
-                    <li>
-                        <label for="it_cust_amount">시중가격</label><?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.", 50);?>
-                        <span class="cost_input"><input type="text" name="it_cust_amount" value="<?=$it['it_cust_amount']?>" id="it_cust_amount" class="frm_input" size="8"></span>
-                    </li>
-                    <li>
-                        <label for="it_point">포인트</label><?=help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n포인트를 사용하지 않는다면 의미가 없습니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.", -150);?>
-                        <span class="cost_input"><input type="text" name="it_point" value="<? echo $it['it_point'] ?>" id="it_point" class="frm_input" size="8"> 점</span>
-                    </li>
-                    <li class="cost_margin">
-                        <label for="it_stock_qty">재고수량</label><?=help("<span style='width:500px'>재고는 규격, 색상별로 관리되지는 않으며 상품별로 관리됩니다.\n이곳에 100개를 설정하고 상품 10개가 주문,준비,배송,완료 상태에 있다면 현재고는 90개로 나타내어집니다.\n주문관리에서 상품별로 상태가 변경될때 재고를 가감하게 됩니다.</span>", -450, -120);?>
-                        <span class="cost_input"><input type="text" name="it_stock_qty" value="<? echo $it['it_stock_qty'] ?>" id="it_stock_qty" class="frm_input" size="8"> 개</span>
-                    </li>
-                </ul>
-            </div>
+        <th scope="row"><input type="text" name="it_opt<?=$k1?>_subject" value="<?=get_text($val11)?>" class="frm_input" size="15"></th>
+        <td><textarea name="it_opt<?=$k1?>" id="it_opt<?=$k1?>" class="sit_w_opt"><?=$val12?></textarea></td>
+    </tr>
+    <tr>
+        <th scope="row"><input type="text" name="it_opt<?=$k2?>_subject" value="<?=get_text($val21)?>" class="frm_input" size="15"></th>
+        <td><textarea name="it_opt<?=$k2?>" id="it_opt<?=$k2?>" class="sit_w_opt"><?=$val22?></textarea></td>
+    </tr>
+    <? } ?>
+    <tr>
+        <th scope="row"><label for="it_amount">비회원가격</label></th>
+        <td>
+            <?=help("상품의 기본판매가격(로그인 이전 가격)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.");?>
+            <input type="text" name="it_amount" value="<?=$it['it_amount']?>" id="it_amount" class="frm_input" size="8"> 원
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_amount2">회원가격</label></th>
+        <td>
+            <?=help("상품의 로그인 이후 가격(회원 권한 2 에만 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n\n입력이 없다면 비회원가격으로 대신합니다.");?>
+            <input type="text" name="it_amount2" value="<?=$it['it_amount2']?>" id="it_amount2" class="frm_input"  size="8"> 원
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_amount3">특별회원가격</label></th>
+        <td>
+            <?=help("상품의 로그인 이후 가격(회원 권한 3 이상에 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n\n입력이 없다면 회원가격으로 대신합니다.\n회원가격도 없다면 비회원가격으로 대신합니다.");?>
+            <input type="text" name="it_amount3" value="<?=$it['it_amount3']?>" id="it_amount3" class="frm_input" size="8"> 원
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_cust_amount">시중가격</label></th>
+        <td>
+            <?=help("입력하지 않으면 상품상세페이지에 출력하지 않습니다.");?>
+            <input type="text" name="it_cust_amount" value="<?=$it['it_cust_amount']?>" id="it_cust_amount" class="frm_input" size="8"> 원
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_point">포인트</label></th>
+        <td>
+            <?=help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n포인트를 사용하지 않는다면 의미가 없습니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.");?>
+            <input type="text" name="it_point" value="<? echo $it['it_point'] ?>" id="it_point" class="frm_input" size="8"> 점
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_stock_qty">재고수량</label></th>
+        <td>
+            <?=help("재고는 규격, 색상별로 관리되지는 않으며 상품별로 관리됩니다.\n이곳에 100개를 설정하고 상품 10개가 주문,준비,배송,완료 상태에 있다면 현재고는 90개로 나타내어집니다.\n주문관리에서 상품별로 상태가 변경될때 재고를 가감하게 됩니다.");?>
+            <input type="text" name="it_stock_qty" value="<? echo $it['it_stock_qty'] ?>" id="it_stock_qty" class="frm_input" size="8"> 개</span>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_basic">기본설명</label></th>
-        <td colspan="3">
-            <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.", -150, -100);?>
+        <td>
+            <?=help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다.\nHTML 입력도 가능합니다.");?>
             <input type="text" name="it_basic" value="<?=get_text($it['it_basic'])?>" id="it_basic" class="frm_input" size="90">
         </td>
     </tr>
@@ -340,7 +391,7 @@ $pg_anchor ="<ul class=\"anchor\">
     ?>
     <tr>
         <th scope="row">요약상품정보</th>
-        <td colspan="3">
+        <td>
             <?=help("전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.");?>
             <input type="button" value="상품요약정보 설정" onclick="window.open('./iteminfo.php?it_id=<?=$it['it_id']?>', '_blank', 'width=670 height=800');">
             <span id="item_info_gubun"><?=$item_info_gubun?></span>
@@ -349,11 +400,11 @@ $pg_anchor ="<ul class=\"anchor\">
     <?}//if?>
     <tr>
         <th scope="row">상품설명</th>
-        <td colspan="3"> <?=editor_html('it_explan', $it['it_explan']);?></td>
+        <td> <?=editor_html('it_explan', $it['it_explan']);?></td>
     </tr>
     <tr>
         <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
-        <td colspan="3">
+        <td>
             <?=help("운영자와 판매자가 다른 경우 이곳에 판매자의 e-mail을 입력해 놓으면 이 상품이 주문되는 시점에서 판매자에게 별도의 주문서 메일을 발송합니다.");?>
             <input type="text" name="it_sell_email" value="<? echo $it['it_sell_email'] ?>" id="it_sell_email" class="frm_input" size="40">
         </td>
@@ -364,6 +415,8 @@ $pg_anchor ="<ul class=\"anchor\">
             <?=help("상품 금액 대신 전화문의로 표시됩니다.");?>
             <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <? echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
         </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="it_use">판매가능</label></th>
         <td>
             <?=help("잠시 판매를 중단하거나 재고가 없을 경우에 체크하면 이 상품은 출력하지 않으며 주문도 할 수 없습니다.");?>
