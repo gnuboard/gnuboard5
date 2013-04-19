@@ -530,7 +530,21 @@ $pg_anchor ='<ul class="anchor">
         $(".sit_wimg_view").bind("click", function() {
             var sit_wimg_id = $(this).attr("id").split("_");
             var $img_display = $("#"+sit_wimg_id[1]);
+
+            if(sit_wimg_id[1].search("limg") > -1) {
+                var $img = $("#"+sit_wimg_id[1]);
+                var width = $img_display.width();
+                var height = $img_display.height();
+                if(width > 750) {
+                    var img_width = 750;
+                    var img_height = Math.round((img_width * height) / width);
+
+                    $img_display.children("img").width(img_width).height(img_height);
+                }
+            }
+
             $img_display.toggle();
+
             if($img_display.is(":visible")) {
                 $(this).text($(this).text().replace("확인", "닫기"));
             } else {
