@@ -545,6 +545,13 @@ $pg_anchor ='<ul class="anchor">
     <a href="./itemlist.php?<?=$qstr?>">목록</a>
 </div>
 
+<section class="cbox compare_wrap">
+    <h2>관련상품</h2>
+
+
+
+</div>
+
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <colgroup width=14%></colgroup>
 <colgroup width=35% bgcolor=#FFFFFF></colgroup>
