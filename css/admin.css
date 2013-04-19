@@ -451,6 +451,18 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 팝업레이어 관리 */
 #spop_list {text-align:center}
 
+/* 매출현황 */
+#ssale_stats {zoom:1}
+#ssale_stats:after {display:block;clear:both;visibility:hidden;content:''}
+#ssale_stats div {float:left;padding:2%;width:46%;border-bottom:1px solid #eee;text-align:center}
+#ssale_stats h3 {margin:30px 0 0;font-size:1.3em;text-align:center}
+#ssale_stats form {margin:20px 0 10px;padding:10px 0}
+#ssale_stats .frm_input {padding:0 10px !important;height:24px !important}
+
+#ssale_date table {text-align:center}
+#ssale_month table {text-align:center}
+#ssale_year table {text-align:center}
+
 /* 주문내역출력 (새창) */
 #sodr_print_pop h2 {padding:15px 0;color:#ff3600;text-align:right}
 #sodr_print_pop h3 {margin:0 0 10px}
