@@ -7,16 +7,13 @@ auth_check($auth[$sub_menu], "r");
 $fr_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $fr_date);
 $to_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $to_date);
 
-$g4['title'] = "$fr_date ~ $to_date 매출현황";
+$g4['title'] = "$fr_date ~ $to_date 일간 매출현황";
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)
 {
     global $admin_dir;
     static $count = 0;
-
-    if ($count++ > 0)
-        echo '<tr><td colspan="9"></td></tr>';
 
     $date = preg_replace("/-/", "", $save['od_date']);
 
@@ -79,24 +76,10 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 ?>
 
-<style type="text/css">
-    .sale1{text-align:center}
-</style>
+<section id="ssale_date" class="cbox">
+    <h2>일간 매출 집계 목록</h2>
 
-<section class="cbox">
-    <h2>일별 매출현황</h2>
     <table>
-    <colgroup>
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-        <col class="grid_2">
-    </colgroup>
     <thead>
     <tr>
         <th scope="col">주문일</th>
@@ -111,8 +94,8 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     </tr>
     </thead>
     <tfoot>
-    <tr class="sale1">
-        <td>합 계</td>
+    <tr>
+        <td>합계</td>
         <td><?=number_format($tot['ordercount'])?></td>
         <td><?=number_format($tot['orderamount'])?></td>
         <td><?=number_format($tot['ordercancel'] + $tot['dc'])?></td>
@@ -152,7 +135,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="9" class="sale1"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="9" class="empty_table">자료가 없습니다.</td></tr>';
     } else {
         print_line($save);
     }
