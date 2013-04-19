@@ -24,7 +24,7 @@ include_once(G4_PATH.'/head.sub.php');
 <input type="hidden" name="it_id" value="<?=$it_id?>">
 
 <div class="cbox">
-    <h1>상품요약정보 설정</h1>
+    <h1><?=$g4['title']?></h1>
     <p>모든 필드를 반드시 입력하셔야 합니다.</p>
     <table class="frm_tbl">
     <colgroup>
