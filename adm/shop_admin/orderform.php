@@ -623,6 +623,7 @@ $pg_anchor = '<ul class="anchor">
     <input type="hidden" name="sel_field" value="<?=$sel_field?>">
     <input type="hidden" name="search" value="<?=$search?>">
     <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="mod_type" value="memo">
 
     <div>
         <label for="od_shop_memo" class="sound_only">상점메모</label>
@@ -640,13 +641,14 @@ $pg_anchor = '<ul class="anchor">
     <h2>주문자/배송지 정보</h2>
     <?=$pg_anchor?>
 
-    <form name="frmorderform2" action="./orderformupdate.php" method="post">
+    <form name="frmorderform3" action="./orderformupdate.php" method="post">
     <input type="hidden" name="od_id" value="<?=$od_id?>">
     <input type="hidden" name="sort1" value="<?=$sort1?>">
     <input type="hidden" name="sort2" value="<?=$sort2?>">
     <input type="hidden" name="sel_field" value="<?=$sel_field?>">
     <input type="hidden" name="search" value="<?=$search?>">
     <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="mod_type" value="info">
 
     <section id="frm_odr_payer" class="compare_left">
         <h3>주문하신 분</h3>
