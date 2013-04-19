@@ -1,8 +1,6 @@
 <?
 include_once('./_common.php');
-$g4['title'] = "상품요약정보 설정"; // 상품군 선택 시 제목에 상품군을 포함했으면 합니다. ex) 상품요약정보 설정 : 의류
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
-include_once(G4_PATH.'/head.sub.php');
 
 $it_id = trim($_GET['it_id']);
 if ($_GET['gubun']) {
@@ -14,6 +12,12 @@ if ($_GET['gubun']) {
 }
 
 $null_text = "상품페이지 참고";
+
+$g4['title'] = "상품요약정보 설정";
+if($gubun)
+    $g4['title'] .= ' : '.$item_info[$gubun]['title'];
+
+include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <form id="fiteminfo" method="post" action="#" onsubmit="return fiteminfo_submit(this)">
