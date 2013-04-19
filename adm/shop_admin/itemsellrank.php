@@ -99,6 +99,11 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     <h2>상품판매순위</h2>
     <p>판매량을 합산하여 상품판매순위를 집계합니다.</p>
 
+    <div id="btn_add">
+        <a href="./itemlist.php" class="btn_add_optional">상품등록</a>
+        <a href="./itemstocklist.php" class="btn_add_optional">상품재고관리</a>
+    </div>
+
     <table>
     <thead>
     <tr>

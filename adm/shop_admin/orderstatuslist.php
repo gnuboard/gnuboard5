@@ -129,6 +129,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
 <section class="cbox">
     <h2><?=$g4['title']?> 목록</h2>
+
+    <div id="btn_add">
+        <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
+        <a href="./ordercardhistory.php" class="btn_add_optional">전자결제내역</a>
+    </div>
+
     <table id="sodr_status">
     <thead>
     <tr>

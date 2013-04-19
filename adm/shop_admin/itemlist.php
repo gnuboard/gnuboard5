@@ -126,6 +126,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 
     <div id="btn_add">
         <a href="./itemform.php">상품등록</a>
+        <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
     </div>
 
     <form name="fitemlistupdate" method="post" action="./itemlistupdate.php" autocomplete="off">

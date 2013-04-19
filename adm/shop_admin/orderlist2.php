@@ -105,6 +105,11 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <h2>주문통합내역 목록</h2>
     <p><strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.</p>
 
+    <div id="btn_add">
+        <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
+        <a href="./ordercardhistory.php" class="btn_add_optional">전자결제내역</a>
+    </div>
+
     <table id="sodr_all">
     <thead>
     <tr>

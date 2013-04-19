@@ -97,6 +97,10 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     <h2>상품재고 목록</h2>
     <p>재고수정의 수치를 수정하시면 창고재고의 수치가 변경됩니다.</p>
 
+    <div id="btn_add">
+        <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
+    </div>
+
     <form name="fitemstocklist" action="./itemstocklistupdate.php" method="post">
     <input type="hidden" name="sort1" value="<?=$sort1 ?>">
     <input type="hidden" name="sort2" value="<?=$sort2 ?>">

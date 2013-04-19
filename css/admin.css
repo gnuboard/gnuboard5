@@ -157,6 +157,7 @@ fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 
 #btn_add {margin-bottom:10px;text-align:right}
 #btn_add a {display:inline-block;padding:0 15px;height:30px;border:0;background:#ff3061;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
+#btn_add .btn_add_optional {background:#617d46 !important}
 
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f6f9fa top right no-repeat !important}

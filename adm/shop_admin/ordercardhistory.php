@@ -81,6 +81,13 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 <section class="cbox">
     <h2>전자결제내역</h2>
     <p>신용카드 혹은 실시간 계좌이체로 결제(승인) 된 내역이며, 주문번호를 클릭하시면 주문상세 페이지로 이동합니다.</p>
+
+    <div id="btn_add">
+        <a href="./orderlist.php" class="btn_add_optional">주문내역</a>
+        <a href="./orderstatuslist.php" class="btn_add_optional">주문개별내역</a>
+        <a href="./orderlist2.php" class="btn_add_optional">주문통합내역</a>
+    </div>
+
     <table class="frm_basic">
     <thead>
     <tr>
