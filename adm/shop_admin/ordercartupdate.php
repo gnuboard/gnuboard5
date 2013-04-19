@@ -105,9 +105,9 @@ for ($i=0; $i<$cnt; $i++)
     }
 }
 
-$qstr = "sort1=$sort1&sort2=$sort2&sel_field=$sel_field&search=$search&page=$page";
+$qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
-$url = "./orderform.php?od_id=$od_id&$qstr";
+$url = "./orderform.php?od_id=$od_id&amp;$qstr";
 
 // 1.06.06
 $od = sql_fetch(" select od_receipt_point from {$g4['shop_order_table']} where od_id = '$od_id' ");

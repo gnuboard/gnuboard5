@@ -150,7 +150,7 @@ else if ($w == "d")
     sql_query($sql);
 }
 
-$qstr = "page=$page&sort1=$sort1&sort2=$sort2";
+$qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
 
 if ($w == "" || $w == "u")
 {
@@ -160,7 +160,7 @@ if ($w == "" || $w == "u")
     if ($_FILES['ca_himg']['name']) upload_file($_FILES['ca_himg']['tmp_name'], $ca_id."_h", $g4['category_path']);
     if ($_FILES['ca_timg']['name']) upload_file($_FILES['ca_timg']['tmp_name'], $ca_id."_t", $g4['category_path']);
 
-    goto_url("./categoryform.php?w=u&ca_id=$ca_id&$qstr");
+    goto_url("./categoryform.php?w=u&amp;ca_id=$ca_id&amp;$qstr");
 } else {
     goto_url("./categorylist.php?$qstr");
 }

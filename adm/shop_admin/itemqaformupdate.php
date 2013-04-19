@@ -14,7 +14,7 @@ if (!$iq['iq_id']) {
     alert('등록된 자료가 없습니다.');
 }
 
-$qstr = "page=$page&sort1=$sort1&sort2=$sort2";
+$qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
 
 if ($w == "u") {
     $sql = "update {$g4['shop_item_qa_table']}
@@ -24,7 +24,7 @@ if ($w == "u") {
              where iq_id = '$iq_id' ";
     sql_query($sql);
 
-    goto_url("./itemqaform.php?w=$w&iq_id=$iq_id&$qstr");
+    goto_url("./itemqaform.php?w=$w&amp;iq_id=$iq_id&amp;$qstr");
 } else if ($w == "d") {
     $sql = "delete from {$g4['shop_item_qa_table']} where iq_id = '$iq_id' ";
     sql_query($sql);

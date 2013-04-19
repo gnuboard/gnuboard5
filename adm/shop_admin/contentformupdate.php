@@ -58,7 +58,7 @@ if ($w == "" || $w == "u")
     if ($_FILES['co_himg']['name'])  upload_file($_FILES['co_himg']['tmp_name'], $co_id."_h", G4_DATA_PATH."/content");
     if ($_FILES['co_timg']['name'])  upload_file($_FILES['co_timg']['tmp_name'], $co_id."_t", G4_DATA_PATH."/content");
 
-    goto_url("./contentform.php?w=u&co_id=$co_id");
+    goto_url("./contentform.php?w=u&amp;co_id=$co_id");
 }
 else
 {

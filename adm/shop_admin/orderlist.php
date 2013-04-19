@@ -211,7 +211,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <!-- <td align=center><a href="<?=$_SERVER['PHP_SELF']?>?sort1=$sort1&amp;sort2=$sort2&amp;sel_field=od_name&amp;search=<?=$lines[$i]['od_name']?>'><span title="<?=$od_deposit_name?>"><?=cut_str($lines[$i]['od_name'],8,"")?></span></a></td> -->
             <td class="td_name">
                 <?=$mb_nick?><br>
-                <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&sort2=<?=$sort2?>&sel_field=mb_id&search=<?=$lines[$i]['mb_id']?>">
+                <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=mb_id&amp;search=<?=$lines[$i]['mb_id']?>">
                     <?=$lines[$i]['mb_id']?>
                 </a>
             </td>

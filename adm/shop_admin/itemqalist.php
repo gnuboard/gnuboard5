@@ -142,7 +142,7 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');

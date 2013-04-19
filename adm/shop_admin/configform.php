@@ -49,7 +49,7 @@ if (!$default['de_icode_server_ip'])   $default['de_icode_server_ip'] = '211.172
 if (!$default['de_icode_server_port']) $default['de_icode_server_port'] = '7295';
 
 if ($default['de_icode_id'] && $default['de_icode_pw']) {
-    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=$default[de_icode_id]&userpw={$default['de_icode_pw']}");
+    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=$default[de_icode_id]&amp;userpw={$default['de_icode_pw']}");
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드
@@ -865,7 +865,7 @@ function byte_check(el_cont, el_byte)
         <th scope="row">충전 잔액</th>
         <td colspan="3">
             <?=number_format($userinfo['coin'])?> 원.
-            <input type="button" class="btn1" value="충전하기" onclick="window.open('http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$sms4['cf_id']?>&icode_passwd=<?=$sms4['cf_pw']?>','icode_payment', 'scrollbars=1,resizable=1')">
+            <input type="button" class="btn1" value="충전하기" onclick="window.open('http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$sms4['cf_id']?>&amp;icode_passwd=<?=$sms4['cf_pw']?>','icode_payment', 'scrollbars=1,resizable=1')">
         </td>
     </tr>
     <tr>

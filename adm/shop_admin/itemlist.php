@@ -232,15 +232,15 @@ function _copy(it_name, link)
     }
 
     if (g4_charset.toUpperCase() == 'EUC-KR')
-        location.href = link+'&new_it_id='+new_it_id;
+        location.href = link+'&amp;new_it_id='+new_it_id;
     else
-        location.href = encodeURI(link+'&new_it_id='+new_it_id);
+        location.href = encodeURI(link+'&amp;new_it_id='+new_it_id);
 }
 */
 
 function _copy(it_id, ca_id)
 {
-    window.open('./item_copy.php?it_id='+it_id+'&ca_id='+ca_id, 'copywin', 'left=100, top=100, width=300, height=200, scrollbars=0');
+    window.open('./item_copy.php?it_id='+it_id+'&amp;ca_id='+ca_id, 'copywin', 'left=100, top=100, width=300, height=200, scrollbars=0');
 }
 </script>
 

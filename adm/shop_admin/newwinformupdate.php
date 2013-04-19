@@ -48,6 +48,6 @@ if ($w == "d")
 }
 else
 {
-    goto_url("./newwinform.php?w=u&nw_id=$nw_id");
+    goto_url("./newwinform.php?w=u&amp;nw_id=$nw_id");
 }
 ?>

@@ -37,7 +37,7 @@ function itemdelete($it_id)
     }
     if ($str)
     {
-        alert("이 상품과 관련된 주문이 총 {$i} 건 존재하므로 주문서를 삭제한 후 상품을 삭제하여 주십시오.\\n\\n$str", "./orderstatuslist.php?sort1=od_id&sel_field=od_id&search=$od_id");
+        alert("이 상품과 관련된 주문이 총 {$i} 건 존재하므로 주문서를 삭제한 후 상품을 삭제하여 주십시오.\\n\\n$str", "./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=$od_id");
     }
 
 
@@ -358,13 +358,13 @@ if ($w == "" || $w == "u")
     if ($_FILES['it_timg']['name'])  upload_file($_FILES['it_timg']['tmp_name'], $it_id."_t", G4_DATA_PATH."/item");
 }
 
-$qstr = "$qstr&sca=$sca&page=$page";
+$qstr = "$qstr&amp;sca=$sca&amp;page=$page";
 
 if ($w == "u") {
-    goto_url("./itemform.php?w=u&it_id=$it_id&$qstr");
+    goto_url("./itemform.php?w=u&amp;it_id=$it_id&amp;$qstr");
 } else if ($w == "d")  {
     // 091123 추가 utf-8
-    $qstr = "ca_id=$ca_id&sfl=$sfl&sca=$sca&page=$page&stx=".urlencode($stx)."&save_stx=".urlencode($save_stx);
+    $qstr = "ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx)."&amp;save_stx=".urlencode($save_stx);
     goto_url("./itemlist.php?$qstr");
 }
 
@@ -372,8 +372,8 @@ echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
 ?>
 <script>
     if (confirm("계속 입력하시겠습니까?"))
-        //location.href = "<?="./itemform.php?it_id=$it_id&sort1=$sort1&sort2=$sort2&sel_ca_id=$sel_ca_id&sel_field=$sel_field&search=$search&page=$page"?>";
-        location.href = "<?="./itemform.php?it_id=$it_id&$qstr"?>";
+        //location.href = "<?="./itemform.php?it_id=$it_id&amp;sort1=$sort1&amp;sort2=$sort2&amp;sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page"?>";
+        location.href = "<?="./itemform.php?it_id=$it_id&amp;$qstr"?>";
     else
         location.href = "<?="./itemlist.php?$qstr"?>";
 </script>

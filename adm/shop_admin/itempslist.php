@@ -131,7 +131,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td class="td_num"><?=$row['is_score']?></td>
         <td class="sit_ps_confirm"><?=$confirm?></td>
         <td class="td_smallmng">
-            <a href="./itempsform.php?w=u&is_id=<?=$row['is_id']?>&amp;$qstr">수정</a>
+            <a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>&amp;$qstr">수정</a>
             <a href="javascript:del('./itempsformupdate.php?w=d&amp;is_id={$row['is_id']}&amp;$qstr');">삭제</a>
         </td>
     </tr>

@@ -39,5 +39,5 @@ else if ($w == "d")
 if ($w == 'd')
     goto_url("./faqlist.php?fm_id=$fm_id");
 else
-    goto_url("./faqform.php?w=u&fm_id=$fm_id&fa_id=$fa_id");
+    goto_url("./faqform.php?w=u&amp;fm_id=$fm_id&amp;fa_id=$fa_id");
 ?>

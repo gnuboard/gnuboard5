@@ -14,7 +14,7 @@ function print_line($save)
 
     ?>
     <tr>
-        <td><a href="./sale1month.php?fr_month=<?=$save['od_date']?>01&to_month=<?=$save['od_date']?>12"><?=$save['od_date']?></a></td>
+        <td><a href="./sale1month.php?fr_month=<?=$save['od_date']?>01&amp;to_month=<?=$save['od_date']?>12"><?=$save['od_date']?></a></td>
         <td><?=number_format($save['ordercount'])?></td>
         <td><?=number_format($save['orderamount'])?></td>
         <td><?=number_format($save['ordercancel'] + $save['dc'])?></td>

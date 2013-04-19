@@ -35,6 +35,6 @@ if ($w == "") {
 if ($w == 'd') {
     goto_url("./deliverycodelist.php");
 } else {
-    goto_url("./deliverycodeform.php?w=u&dl_id=$dl_id");
+    goto_url("./deliverycodeform.php?w=u&amp;dl_id=$dl_id");
 }
 ?>

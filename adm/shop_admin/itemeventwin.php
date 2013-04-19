@@ -41,7 +41,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <td width=50><a href='$href' target=_blank>".get_it_image($row['it_id'].'_s', 40, 40)."</a></td>
         <td align=left><a href='$href' target=_blank>".cut_str(stripslashes($row['it_name']), 60, "&#133")."</a></td>
         <td>".($row['it_use']?"사용":"미사용")."</td>
-        <td>".icon("삭제", "javascript:del('./itemeventwindel.php?ev_id=$ev_id&it_id={$row['it_id']}');")."</td>
+        <td>".icon("삭제", "javascript:del('./itemeventwindel.php?ev_id=$ev_id&amp;it_id={$row['it_id']}');")."</td>
     <tr>";
 }
 

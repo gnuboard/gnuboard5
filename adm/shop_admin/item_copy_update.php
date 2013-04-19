@@ -60,7 +60,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     sql_query($sql);
 }
 
-$qstr = "$ca_id=$ca_id&sfl=$sfl&sca=$sca&page=$page&stx=".urlencode($stx)."&save_stx=".urlencode($save_stx);
+$qstr = "$ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx)."&amp;save_stx=".urlencode($save_stx);
 
 goto_url("itemlist.php?$qstr");
 ?>

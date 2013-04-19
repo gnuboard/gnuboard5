@@ -106,8 +106,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <?
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
-        // $s_mod = icon("수정", "./itemqaform.php?w=u&iq_id={$row['iq_id']}&$qstr");
-        // $s_del = icon("삭제", "javascript:del('./itemqaupdate.php?w=d&iq_id={$row['iq_id']}&$qstr');");
+        // $s_mod = icon("수정", "./itemqaform.php?w=u&amp;iq_id={$row['iq_id']}&amp;$qstr");
+        // $s_del = icon("삭제", "javascript:del('./itemqaupdate.php?w=d&amp;iq_id={$row['iq_id']}&amp;$qstr');");
 
         $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         $num = $rank + $i + 1;

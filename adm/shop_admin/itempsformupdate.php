@@ -13,7 +13,7 @@ $iv = sql_fetch(" select * from {$g4['shop_item_ps_table']} where is_id = '$is_i
 if (!$iv['is_id'])
     alert('등록된 자료가 없습니다.');
 
-$qstr = "page=$page&sort1=$sort1&sort2=$sort2";
+$qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
 
 if ($w == "u")
 {
@@ -29,7 +29,7 @@ if ($w == "u")
              where is_id = '$is_id' ";
     sql_query($sql);
 
-    goto_url("./itempsform.php?w=$w&is_id=$is_id&$qstr");
+    goto_url("./itempsform.php?w=$w&amp;is_id=$is_id&amp;$qstr");
 }
 else if ($w == "d")
 {

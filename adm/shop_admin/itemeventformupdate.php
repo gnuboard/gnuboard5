@@ -60,7 +60,7 @@ if ($w == "" || $w == "u")
     if ($_FILES['ev_himg']['name']) upload_file($_FILES['ev_himg']['tmp_name'], $ev_id."_h", G4_DATA_PATH."/event");
     if ($_FILES['ev_timg']['name']) upload_file($_FILES['ev_timg']['tmp_name'], $ev_id."_t", G4_DATA_PATH."/event");
 
-    goto_url("./itemeventform.php?w=u&ev_id=$ev_id");
+    goto_url("./itemeventform.php?w=u&amp;ev_id=$ev_id");
 }
 else
 {

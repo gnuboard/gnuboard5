@@ -23,7 +23,7 @@ include_once(G4_PATH.'/head.sub.php');
 
 <p>
 <div align='center'>
-<input type='button' value='복사하기' onclick="_copy('item_copy_update.php?it_id=<?=$it_id?>&ca_id=<?=$ca_id?>');">
+<input type='button' value='복사하기' onclick="_copy('item_copy_update.php?it_id=<?=$it_id?>&amp;ca_id=<?=$ca_id?>');">
 &nbsp;
 <input type='button' value='창닫기' onclick='self.close();'>
 </div>
@@ -33,7 +33,7 @@ include_once(G4_PATH.'/head.sub.php');
 function _copy(link)
 {
     var new_it_id = document.getElementById('new_it_id').value;
-    opener.parent.location.href = encodeURI(link+'&new_it_id='+new_it_id);
+    opener.parent.location.href = encodeURI(link+'&amp;new_it_id='+new_it_id);
     self.close();
 }
 </script>

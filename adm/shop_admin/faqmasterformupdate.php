@@ -54,7 +54,7 @@ if ($w == "" || $w == "u")
     if ($_FILES['fm_himg']['name']) upload_file($_FILES['fm_himg']['tmp_name'], $fm_id."_h", G4_DATA_PATH."/faq");
     if ($_FILES['fm_timg']['name']) upload_file($_FILES['fm_timg']['tmp_name'], $fm_id."_t", G4_DATA_PATH."/faq");
 
-    goto_url("./faqmasterform.php?w=u&fm_id=$fm_id");
+    goto_url("./faqmasterform.php?w=u&amp;fm_id=$fm_id");
 }
 else
     goto_url("./faqmasterlist.php");

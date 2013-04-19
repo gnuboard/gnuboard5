@@ -65,7 +65,7 @@ if ($w == "" || $w == "u")
 {
     if ($_FILES['bn_bimg']['name']) upload_file($_FILES['bn_bimg']['tmp_name'], $bn_id, G4_DATA_PATH."/banner");
 
-    goto_url("./bannerform.php?w=u&bn_id=$bn_id");
+    goto_url("./bannerform.php?w=u&amp;bn_id=$bn_id");
 } else {
     goto_url("./bannerlist.php");
 }

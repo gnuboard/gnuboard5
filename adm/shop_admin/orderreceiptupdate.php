@@ -56,7 +56,7 @@ define("_ORDERSMS_", true);
 include "./ordersms.inc.php";
 
 
-$qstr = "sort1=$sort1&sort2=$sort2&sel_field=$sel_field&search=$search&page=$page";
+$qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
-goto_url("./orderform.php?od_id=$od_id&$qstr");
+goto_url("./orderform.php?od_id=$od_id&amp;$qstr");
 ?>
