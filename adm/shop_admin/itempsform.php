@@ -61,7 +61,13 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     </tr>
     <tr>
         <th scope="row">확인</th>
-        <td><input type="submit" name="btn_confirm" value="확인하였습니다" class="btn_frmline"></td>
+        <td>
+            <? if($is['is_confirm']) { ?>
+            <input type="submit" name="btn_no_display" value="사용후기를 고객님들에게 노출하지 않습니다." class="btn_frmline">
+            <? } else { ?>
+            <input type="submit" name="btn_confirm" value="사용후기를 확인했으며 고객님들에게 노출합니다." class="btn_frmline">
+            <? } ?>
+        </td>
     </tr>
     </tbody>
     </table>
