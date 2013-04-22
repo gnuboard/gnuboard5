@@ -170,6 +170,7 @@ $(function() {
 
     // 인증정보
     $opener.$("input[name=mb_hp]").val("<?=$phone_no?>");
+    $opener.$("input[name=mb_name]").val("<?=$user_name?>");
     $opener.$("input[name=kcpcert_no]").val("<?=$md5_cert_no?>");
     $opener.$("input[name=kcpcert_time]").val("<?=G4_TIME_YMDHIS?>");
     window.close();

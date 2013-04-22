@@ -88,12 +88,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <? } ?>
 
 <tr>
-    <th scope="row"><label for="reg_mb_hp">핸드폰번호<strong class="sound_only">필수</strong></label></th>
+    <th scope="row"><label for="reg_mb_hp">휴대폰번호<strong class="sound_only">필수</strong></label></th>
     <td>
         <input type="hidden" name="kcpcert_no" value="">
         <input type="hidden" name="kcpcert_time" value="<?=$member['mb_hp_certify']?>">
         <input type="hidden" name="old_mb_hp" value="<?=$member['mb_hp']?>">
-        <input type="text" id="reg_mb_hp" name="mb_hp" class="frm_input required" maxlength="20" required value="<?=$member['mb_hp']?>">
+        <input type="text" id="reg_mb_hp" name="mb_hp" class="frm_input required" maxlength="20" required readonly value="<?=$member['mb_hp']?>">
         <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰인증</button>
         <noscript>휴대폰인증을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
     </td>
@@ -173,7 +173,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_sms">SMS 수신여부</label></th>
     <td>
         <input type="checkbox" id="reg_mb_sms" name="mb_sms" value="1" <?=($w=='' || $member['mb_sms'])?'checked':'';?>>
-        핸드폰 문자메세지를 받겠습니다.
+        휴대폰 문자메세지를 받겠습니다.
     </td>
 </tr>
 <? } ?>

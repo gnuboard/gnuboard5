@@ -11,7 +11,7 @@ if(!$ordr_idxx = get_session('ss_uniqid'))
 <!-- 유저네임 -->
 <input type="hidden" name="user_name"    value="" />
 <!-- 주문번호 -->
-<input type="hidden" name="ordr_idxx" value="<?=$ordr_idxx?>">
+<input type="hidden" name="ordr_idxx"    value="<?=$ordr_idxx?>">
 <!-- 요청종류 -->
 <input type="hidden" name="req_tx"       value="cert"/>
 <!-- 인증종류 -->
@@ -25,7 +25,7 @@ if(!$ordr_idxx = get_session('ss_uniqid'))
 <!-- 사이트코드 -->
 <input type="hidden" name="site_cd"      value="<?= $site_cd ?>" />
 <!-- Ret_URL : 인증결과 리턴 페이지 ( 가맹점 URL 로 설정해 주셔야 합니다. ) -->
-<input type="hidden" name="Ret_URL"      value="<?=G4_KCP_PATH?>/kcpcert_result.php" />
+<input type="hidden" name="Ret_URL"      value="<?=G4_KCP_URL?>/kcpcert_result.php" />
 <!-- cert_otp_use 필수 ( 메뉴얼 참고)
      Y : 실명 확인 + OTP 점유 확인 , N : 실명 확인 only
 -->

@@ -90,7 +90,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <? if ($config['cf_use_hp']) { ?>
 <tr>
-    <th scope="row"><label for="reg_mb_hp">핸드폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
+    <th scope="row"><label for="reg_mb_hp">휴대폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
     <td><input type="text" name="mb_hp" value="<?=$member[mb_hp]?>" id="reg_mb_hp" <?=$config['cf_req_hp']?"required":"";?> class="frm_input <?=$config['cf_req_hp']?"required":"";?>"  maxlength="20"></td>
 </tr>
 <? } ?>
@@ -169,7 +169,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_sms">SMS 수신여부</label></th>
     <td>
         <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?=($w=='' || $member['mb_sms'])?'checked':'';?>>
-        핸드폰 문자메세지를 받겠습니다.
+        휴대폰 문자메세지를 받겠습니다.
     </td>
 </tr>
 <? } ?>
