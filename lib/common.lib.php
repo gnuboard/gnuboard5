@@ -1961,9 +1961,10 @@ function html_end()
     preg_match('#<body>(.*)</body>#is', $buffer, $bodys);
     preg_match_all('/<link[^>]+>/i', $bodys[0], $links);
     $stylesheet = '';
-    for ($i=0; $i<count($links[0]); $i++) {
-        $link = PHP_EOL.$links[0][$i];
-        $stylesheet .= $link;
+    $links[0] = array_unique($links[0]);
+    foreach ($links[0] as $key=>$link) {
+        //$link = PHP_EOL.$links[0][$i];
+        $stylesheet .= PHP_EOL.$link;
         $buffer = preg_replace('#'.$link.'#', '', $buffer);
     }
     return preg_replace('#(</title>)#', "$1$stylesheet", $buffer);
