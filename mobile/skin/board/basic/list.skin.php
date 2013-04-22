@@ -9,6 +9,8 @@ if ($is_good) $colspan++;
 if ($is_nogood) $colspan++;
 ?>
 
+<link rel="stylesheet" href="<?=$board_skin_url?>/style.css">
+
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$g4['title']?></h1><?}?>
 
 <!-- 게시판 목록 시작 -->
