@@ -29,17 +29,19 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         <a href="./bannerform.php">배너추가</a>
     </div>
 
-    <table>
+    <table id="tbl_bn_list">
     <thead>
     <tr>
-        <th scope="col">ID</th>
-        <th scope="col">이미지</th>
+        <th scope="col" rowspan="2">ID</th>
         <th scope="col">위치</th>
         <th scope="col">시작일시</th>
         <th scope="col">종료일시</th>
         <th scope="col">출력순서</th>
         <th scope="col">조회</th>
         <th scope="col">관리</th>
+    </tr>
+    <tr>
+        <th scope="col" colspan="6">이미지</th>
     </tr>
     </thead>
     <tbody>
@@ -64,17 +66,19 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     ?>
 
     <tr>
-        <td class="td_num"><?=$row['bn_id']?></td>
-        <td><?=$bn_img?></td>
-        <td class="td_num"><?=$row['bn_position']?></td>
-        <td class="td_time"><?=$bn_begin_time?></td>
-        <td class="td_time"><?=$bn_end_time?></td>
-        <td class="td_num"><?=$row['bn_order']?></td>
-        <td class="td_num"><?=$row['bn_hit']?></td>
+        <td rowspan="2" class="td_num"><?=$row['bn_id']?></td>
+        <td><?=$row['bn_position']?></td>
+        <td><?=$bn_begin_time?></td>
+        <td><?=$bn_end_time?></td>
+        <td><?=$row['bn_order']?></td>
+        <td><?=$row['bn_hit']?></td>
         <td class="td_smallmng">
             <a href="./bannerform.php?w=u&amp;bn_id=<?=$row['bn_id']?>"><img src="./img/icon_mod.jpg" alt="배너수정"></a>
             <a href="javascript:del('./bannerformupdate.php?w=d&amp;bn_id=<?=$row['bn_id']?>');"><img src="./img/icon_del.jpg" alt="배너삭제"></a>
         </td>
+    </tr>
+    <tr>
+        <td colspan="6" class="td_img_view"><?=$bn_img?></td>
     </tr>
 
     <?
