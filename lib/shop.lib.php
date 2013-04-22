@@ -412,9 +412,10 @@ function print_item_options()
               where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
-    $it_name = $str_split = "";
+    $it_name = $str_split = '';
     for ($i=1; $i<=6; $i++)
     {
+        if ($i == 1) $str_split .= '<span class="sound_only">상품옵션 </span>';
         $it_opt = trim(func_get_arg($i));
         // 상품옵션에서 0은 제외되는 현상을 수정
         if ($it_opt==null) continue;
@@ -422,7 +423,7 @@ function print_item_options()
         $it_name .= $str_split;
         $it_opt_subject = $it["it_opt{$i}_subject"];
         $opt = explode( ";", $it_opt );
-        $it_name .= "&nbsp; $it_opt_subject = $opt[0]";
+        $it_name .= $it_opt_subject.' = '.$opt[0];
 
         if ($opt[1] != 0)
         {
