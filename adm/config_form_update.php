@@ -100,6 +100,7 @@ $sql = " update {$g4['config_table']}
                  cf_privacy = '{$_POST['cf_privacy']}',
                  cf_open_modify = '{$_POST['cf_open_modify']}',
                  cf_memo_send_point = '{$_POST['cf_memo_send_point']}',
+                 cf_kcpcert_use = '{$_POST['cf_kcpcert_use']}',
                  cf_kcpcert_site_cd = '{$_POST['cf_kcpcert_site_cd']}',
                  cf_adult_check = '{$_POST['cf_adult_check']}',
                  cf_mobile_new_skin = '{$_POST['cf_mobile_new_skin']}',

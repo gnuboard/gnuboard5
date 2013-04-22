@@ -40,6 +40,11 @@ if(!isset($config['cf_adult_check'])) {
                     ADD `cf_adult_check` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_kcpcert_site_cd` ", TRUE);
 }
 
+if(!isset($config['cf_kcpcert_use'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_kcpcert_use` TINYINT NOT NULL AFTER 'cf_memo_send_point' AFTER `cf_memo_send_point` ", TRUE);
+}
+
 if(!isset($config['cf_mobile_pages'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", TRUE);
@@ -470,10 +475,23 @@ $pg_anchor = "
         <td><input type="text" name="cf_register_point" value="<?=$config['cf_register_point']?>" id="cf_register_point" class="frm_input" size="5"> 점</td>
     </tr>
     <tr>
+        <th scope="row"><label for="cf_kcpcert_use">휴대폰 본인확인<br>서비스 사용</label></th>
+        <td colspan="3">
+            <?=help('테스트의 경우에는 이동통신사를 KT로 선택하세요.')?>
+            <select id="cf_kcpcert_use" name="cf_kcpcert_use">
+                <option value="0"<?=get_selected($config['cf_kcpcert_use'], '0')?>>미사용
+                <option value="1"<?=get_selected($config['cf_kcpcert_use'], '1')?>>실제사용
+                <option value="-1"<?=get_selected($config['cf_kcpcert_use'], '-1')?>>테스트
+            </select>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
-        <td><input type="text" name="cf_kcpcert_site_cd" value="<?=$config['cf_kcpcert_site_cd']?>" id="cf_kcpcert_site_cd" class="frm_input" size="10"></td>
+        <td><?=help('휴대폰 본인확인 서비스에서 사용하는 코드입니다.')?>
+            <input type="text" name="cf_kcpcert_site_cd" value="<?=$config['cf_kcpcert_site_cd']?>" id="cf_kcpcert_site_cd" class="frm_input" size="10"></td>
         <th scope="row"><label for='cf_adult_check'>성인인증 사용</label></th>
-        <td><input type="checkbox" name="cf_adult_check" value="1" id="cf_adult_check" <?=$config['cf_adult_check']?'checked':'';?>> 사용</td>
+        <td><?=help('휴대폰 본인확인 서비스로 성인인증을 사용할수 있습니다.')?>
+            <input type="checkbox" name="cf_adult_check" value="1" id="cf_adult_check" <?=$config['cf_adult_check']?'checked':'';?>> 사용</td>
     </tr>
     <tr>
         <th scope="row" id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
