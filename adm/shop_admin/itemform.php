@@ -607,7 +607,7 @@ $pg_anchor ='<ul class="anchor">
                 }
             ?>
         </select><br>
-        <select  id='relation' size=8 style='width:250px; background-color:#F6F6F6;' onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);">
+        <select id="relation" size=8 style='width:250px; background-color:#F6F6F6;' onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);">
         <?
         /*
         $sql = " select ca_id, it_id, it_name, it_amount

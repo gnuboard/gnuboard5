@@ -69,8 +69,9 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         전체 문의내역 <?=$total_count ?>건
     </span>
 
+    <label for="sca" class="sound_only">분류선택</label>
     <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
-    <select name="sca">
+    <select name="sca" id="sca">
         <option value=''>전체분류</option>
         <?
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
@@ -84,12 +85,15 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         ?>
     </select>
     <? // ##### // 웹 접근성 취약 지점 끝 ?>
-    <select name="sfl">
+
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
         <option value="a.it_id" <?=get_selected($sfl, 'a.it_id')?>>상품코드</option>
         <option value="is_name" <?=get_selected($sfl, 'is_name')?>>이름</option>
     </select>
 
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong>
     <input type="text" name="stx" value="<?=$stx?>" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 

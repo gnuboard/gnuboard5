@@ -74,6 +74,7 @@ if (isset($ev_set)) {
     <form name="flist" autocomplete="off">
     <input type="hidden" name="page" value="<?=$page?>">
     전체 이벤트 <?=$total_count ?>건
+    <label for="ev_set" class="sound_only">이벤트</label>
     <select name="ev_set" id="ev_set" action="<?=$_SERVER['PHP_SELF']?>">
         <?
         // 이벤트 옵션처리
@@ -95,10 +96,11 @@ if (isset($ev_set)) {
 
     <form name="flist" autocomplete="off">
     <input type="hidden" name="page" value="<?=$page?>">
-    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-15 ?>
     <?=$listall?>
 
-    <select name="sel_ca_id">
+    <label for="sel_ca_id" class="sound_only">분류선택</label>
+    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-15 ?>
+    <select name="sel_ca_id" id="sel_ca_id">
         <option value=''>전체분류</option>
         <?
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
@@ -114,12 +116,14 @@ if (isset($ev_set)) {
     </select>
     <? // ##### // 웹 접근성 취약 지점 끝 ?>
 
-    <select name="sel_field">
+    <label for="sel_field" class="sound_only">검색대상</label>
+    <select name="sel_field" id="sel_field">
         <option value="it_name" <?=get_selected($sel_field, 'it_name')?>>상품명</option>
         <option value="a.it_id" <?=get_selected($sel_field, 'a.it_id')?>>상품코드</option>
     </select>
 
-    <input type="text" name="search" value="<?=$search?>" required class="frm_input required">
+    <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="search" value="<?=$search?>" id="search" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 
     </form>

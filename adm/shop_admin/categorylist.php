@@ -66,12 +66,16 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <?=$listall?>
         생성된 분류 수 <?=number_format($total_count)?>개
     </span>
-    <select name="sfl" title="검색대상">
+
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="ca_name"<?=get_selected($_GET['sfl'], "ca_name", true);?>>분류명</option>
         <option value="ca_id"<?=get_selected($_GET['sfl'], "ca_id", true);?>>분류코드</option>
         <option value="ca_mb_id"<?=get_selected($_GET['sfl'], "ca_mb_id", true);?>>회원아이디</option>
     </select>
-    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
+
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?=$stx?>" id="stx" required class="required frm_input">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 
@@ -145,10 +149,11 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <input type="hidden" name="ca_id[<?=$i?>]" value="<?=$row['ca_id']?>">
             <?=$row['ca_id']?>
         </td>
-        <td class="td_scate"><?=$s_level?> <input type="text" name="ca_name[<?=$i?>]" value="<?=get_text($row['ca_name'])?>" id="ca_name_<?=$i?>" title="<?=$row['ca_id']?>" required class="frm_input required" size="<?=$s_level_input_size?>"></td>
+        <td class="td_scate"><?=$s_level?> <input type="text" name="ca_name[<?=$i?>]" value="<?=get_text($row['ca_name'])?>" id="ca_name_<?=$i?>" required class="frm_input required" size="<?=$s_level_input_size?>"></td>
         <td class="td_scate_admin">
             <? if ($is_admin == 'super') {?>
-            <input type="text" name="ca_mb_id[<?=$i?>]" size="10" maxlength="20" value="<?=$row['ca_mb_id']?>" class="frm_input" title="회원아이디">
+            <label for="ca_mb_id<?=$i?>" class="sound_only">회원아이디</label>
+            <input type="text" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>" id="ca_mb_id<?=$i?>" class="frm_input" size="10" maxlength="20">
             <? } else { ?>
             <input type="hidden" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>">
             <?=$row['ca_mb_id']?>

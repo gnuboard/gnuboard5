@@ -90,7 +90,10 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     <? // ##### // 웹 접근성 취약 지점 끝 ?>
 
     기간설정
-    <input type="text" name="fr_date" value="<?=$fr_date?>" class="frm_input" size="8" maxlength="8"> 에서 <input type="text" name="to_date" value="<?=$to_date?>" class="frm_input" size="8" maxlength="8"> 까지
+    <label for="fr_date" class="sound_only">시작일</label>
+    <input type="text" name="fr_date" value="<?=$fr_date?>" class="frm_input" size="8" maxlength="8"> 에서
+    <label for="to_date" class="sound_only">종료일</label>
+    <input type="text" name="to_date" value="<?=$to_date?>" class="frm_input" size="8" maxlength="8"> 까지
 <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>

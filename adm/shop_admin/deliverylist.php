@@ -84,13 +84,19 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <?=$listall?>
         전체 주문내역 <?=$total_count ?>건
     </span>
-    <label><input type="checkbox" name="chk_misu" value="1" <?=$chk_misu?"checked='checked'":"";?> /> 미수금없음</label>
+
+    <label for="chk_misu">미수금없음</label>
+    <input type="checkbox" name="chk_misu" value="1" id="chk_misu" <?=$chk_misu?"checked='checked'":"";?> />
+
+    <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field">
         <option value="od_id" <?=get_selected($sel_field, 'od_id')?>>주문번호</option>
         <option value="od_name" <?=get_selected($sel_field, 'od_name')?>>주문자</option>
         <option value="od_invoice" <?=get_selected($sel_field, 'od_invoice')?>>운송장번호</option>
     </select>
-    <input type="text" name="search" value="<?=$search ?>">
+
+    <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="search" value="<?=$search ?>" id="search" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>

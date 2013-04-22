@@ -438,7 +438,7 @@ $pg_anchor = '<ul class="anchor">
         {
             // 은행계좌를 배열로 만든후
             $str = explode("\n", $default['de_bank_account']);
-            $bank_account = '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
+            $bank_account .= '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
             $bank_account .= '<option value="">선택하십시오</option>'.PHP_EOL;
             for ($i=0; $i<count($str); $i++) {
                 $str[$i] = str_replace("\r", "", $str[$i]);
@@ -454,7 +454,7 @@ $pg_anchor = '<ul class="anchor">
 
         <? if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌') { ?>
         <tr>
-            <th scope="row">계좌번호</th>
+            <th scope="row"><label for="od_bank_account">계좌번호</label></th>
             <td><?=$bank_account?></td>
         </tr>
         <? } ?>
