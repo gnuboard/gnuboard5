@@ -607,7 +607,7 @@ $pg_anchor ='<ul class="anchor">
                 }
             ?>
         </select><br>
-        <select id="relation" size=8 style='width:250px; background-color:#F6F6F6;' onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);">
+        <select id="relation" class="sit_relation_list" size="8" onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);">
         <?
         /*
         $sql = " select ca_id, it_id, it_name, it_amount
@@ -719,9 +719,9 @@ $pg_anchor ='<ul class="anchor">
     <section class="compare_right">
         <h3>선택된 관련상품 목록</h3>
         <span id="sel_span" style="line-height:200%"></span>
-        ※ 상품 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>※ 한 번 클릭시 상품이미지/상품금액 출력<br>
-        <br>
-        <select name='relationselect' size=8 style='width:250px;' onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);">
+        ※ 상품 선택후 더블클릭하면 삭제됨<br>
+        ※ 한 번 클릭시 상품이미지/상품금액 출력<br>
+        <select name="relationselect" size="8" class="sit_relation_selected" onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);">
         <?
         $str = array();
         $sql = " select b.ca_id, b.it_id, b.it_name, b.it_amount
@@ -740,8 +740,9 @@ $pg_anchor ='<ul class="anchor">
                 $it_image = "{$row['it_id']}_s";
             else
                 $it_image = "";
-
-            echo "<option value='{$row['it_id']}/$it_image/{$row['it_amount']}'>{$row2['ca_name']} : ".cut_str(get_text(strip_tags($row['it_name'])),30);
+        ?>
+            <option value="<?=$row['it_id']?>/<?=$it_image?>/<?=$row['it_amount']?>"><?=$row2['ca_name']?> : <?=cut_str(get_text(strip_tags($row['it_name'])),30)?></option>
+        <?
             $str[] = $row['it_id'];
         }
         $str = implode(",", $str);
@@ -759,8 +760,8 @@ $pg_anchor ='<ul class="anchor">
     <script> var eventselect = new Array(); </script>
     <section class="compare_left">
         <h3>등록된 전체이벤트 목록</h3>
-                이벤트 선택후 <FONT COLOR="#0E87F9">더블클릭하면 왼쪽에 추가됨</FONT><br>
-        <select size=6 style='width:250px; background-color:#F6F6F6;' ondblclick="event_add(this);">
+                이벤트 선택후 더블클릭하면 왼쪽에 추가됨<br>
+        <select size="8" class="sit_relation_list" ondblclick="event_add(this);">
         <?
         $sql = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
         $result = sql_query($sql);
@@ -835,8 +836,8 @@ $pg_anchor ='<ul class="anchor">
 
     <section class="compare_right">
         <h3>선택된 관련이벤트 목록</h3>
-        이벤트 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>
-        <select name=eventselect size=6 style='width:250px;' ondblclick="event_del(this);">
+        이벤트 선택후 더블클릭하면 삭제됨<br>
+        <select name="eventselect" class="sit_relation_selected" size="8" ondblclick="event_del(this);">
         <?
         $str = "";
         $comma = "";
