@@ -56,10 +56,19 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         // 새창 띄우기인지
         $bn_new_win = ($row['bn_new_win']) ? 'target="_new"' : '';
 
+        $bimg = G4_DATA_PATH.'/banner/'.$row['bn_id'];
+        if(file_exists($bimg)) {
+            $size = @getimagesize($bimg);
+            if($size[0] && $size[0] > 800)
+                $width = 800;
+            else
+                $width = $size[0];
+        }
+
         $bn_img = "";
         if ($row['bn_url'] && $row['bn_url'] != "http://")
             $bn_img .= '<a href="'.$row['bn_url'].'" '.$bn_new_win.'>';
-        $bn_img .= '<img src="'.G4_DATA_URL.'/banner/'.$row['bn_id'].'" alt="'.$row['bn_alt'].'"></a>';
+        $bn_img .= '<img src="'.G4_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$width.'" alt="'.$row['bn_alt'].'"></a>';
 
         $bn_begin_time = substr($row['bn_begin_time'], 2, 14);
         $bn_end_time   = substr($row['bn_end_time'], 2, 14);
