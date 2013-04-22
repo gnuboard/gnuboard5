@@ -109,17 +109,17 @@ $sql = " select a.ct_id,
 $result = sql_query($sql);
 
 $pg_anchor = '<ul class="anchor">
-<li><a href="#frm_odr_list">주문상품 목록</a></li>
-<li><a href="#frm_odr_pay">주문결제 내역</a></li>
-<li><a href="#frm_odr_chk">결제상세정보 확인</a></li>
-<li><a href="#frm_odr_paymo">결제상세정보 수정</a></li>
-<li><a href="#frm_odr_memo">상점메모</a></li>
-<li><a href="#frm_odr_payer">주문하신 분</a></li>
-<li><a href="#frm_odr_addressee">받으시는 분</a></li>
+<li><a href="#anc_sodr_list">주문상품 목록</a></li>
+<li><a href="#anc_sodr_pay">주문결제 내역</a></li>
+<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
+<li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
+<li><a href="#anc_sodr_memo">상점메모</a></li>
+<li><a href="#anc_sodr_payer">주문하신 분</a></li>
+<li><a href="#anc_sodr_addressee">받으시는 분</a></li>
 </ul>';
 ?>
 
-<section id="frm_odr_list" class="cbox">
+<section id="anc_sodr_list" class="cbox">
     <h2>주문상품 목록</h2>
     <?=$pg_anchor?>
     <p>주문일시 <?=substr($od['od_time'],0,16)?> (<?=get_yoil($od['od_time']);?>) / 주문총액 <strong><?=number_format($t_ct_amount['합계']); ?></strong>원</p>
@@ -209,7 +209,7 @@ $pg_anchor = '<ul class="anchor">
 
 </section>
 
-<section id="frm_odr_pay" class="cbox">
+<section id="anc_sodr_pay" class="cbox">
     <h2>주문결제 내역</h2>
     <?=$pg_anchor?>
 
@@ -275,7 +275,7 @@ $pg_anchor = '<ul class="anchor">
     <input type="hidden" name="od_name" value="<?=$od['od_name']?>">
     <input type="hidden" name="od_hp" value="<?=$od['od_hp']?>">
 
-    <section id="frm_odr_chk" class="compare_left">
+    <section id="anc_sodr_chk" class="compare_left">
         <h3>결제상세정보 확인</h3>
 
         <table class="frm_tbl">
@@ -418,7 +418,7 @@ $pg_anchor = '<ul class="anchor">
         </table>
     </section>
 
-    <section id="frm_odr_paymo" class="compare_right">
+    <section id="anc_sodr_paymo" class="compare_right">
         <h3>결제상세정보 수정</h3>
 
         <table class="frm_tbl">
@@ -438,7 +438,7 @@ $pg_anchor = '<ul class="anchor">
         {
             // 은행계좌를 배열로 만든후
             $str = explode("\n", $default['de_bank_account']);
-            $bank_account = '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
+            $bank_account .= '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
             $bank_account .= '<option value="">선택하십시오</option>'.PHP_EOL;
             for ($i=0; $i<count($str); $i++) {
                 $str[$i] = str_replace("\r", "", $str[$i]);
@@ -454,7 +454,7 @@ $pg_anchor = '<ul class="anchor">
 
         <? if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌') { ?>
         <tr>
-            <th scope="row">계좌번호</th>
+            <th scope="row"><label for="od_bank_account">계좌번호</label></th>
             <td><?=$bank_account?></td>
         </tr>
         <? } ?>
@@ -608,7 +608,7 @@ $pg_anchor = '<ul class="anchor">
     </form>
 </section>
 
-<section id="frm_odr_memo" class="cbox">
+<section id="anc_sodr_memo" class="cbox">
     <h2>상점메모</h2>
     <?=$pg_anchor?>
     <p>
@@ -650,7 +650,7 @@ $pg_anchor = '<ul class="anchor">
     <input type="hidden" name="page" value="<?=$page?>">
     <input type="hidden" name="mod_type" value="info">
 
-    <section id="frm_odr_payer" class="compare_left">
+    <section id="anc_sodr_payer" class="compare_left">
         <h3>주문하신 분</h3>
 
         <table class="frm_tbl">
@@ -706,7 +706,7 @@ $pg_anchor = '<ul class="anchor">
 
     </section>
 
-    <section id="frm_odr_addressee" class="compare_right">
+    <section id="anc_sodr_addressee" class="compare_right">
         <h3>받으시는 분</h3>
 
         <table class="frm_tbl">

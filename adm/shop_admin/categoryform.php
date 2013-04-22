@@ -76,12 +76,11 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-
-$pg_anchor ="<ul class=\"anchor\">
-<li><a href=\"#frm_basic\">필수입력</a></li>
-<li><a href=\"#frm_optional\">선택입력</a></li>";
-if ($w == "u") $pg_anchor .= "<li><a href=\"#frm_etc\">기타설정</a></li>";
-$pg_anchor .= "</ul>";
+$pg_anchor ='<ul class="anchor">
+<li><a href="#anc_scatefrm_basic">필수입력</a></li>
+<li><a href="#anc_scatefrm_optional">선택입력</a></li>';
+if ($w == 'u') $pg_anchor .= '<li><a href="#frm_etc">기타설정</a></li>';
+$pg_anchor .= '</ul>';
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -93,9 +92,10 @@ $pg_anchor .= "</ul>";
 <input type="hidden" name="sort2" value="<?=$sort2?>">
 <input type="hidden" name="ca_explan_html" value="<?=$ca['ca_explan_html']?>">
 
-<section id="frm_basic" class="cbox">
+<section id="anc_scatefrm_basic" class="cbox">
     <h2>필수입력</h2>
     <?=$pg_anchor?>
+
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -157,17 +157,17 @@ $pg_anchor .= "</ul>";
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ca_list_mod">1줄당 이미지수</label></th>
+        <th scope="row"><label for="ca_list_mod">1줄당 이미지 수</label></th>
         <td>
-            <?=help("1라인에 설정한 값만큼의 상품을 출력하지만 스킨에 따라 1라인에 하나의 상품만 출력할 수도 있습니다.");?>
+            <?=help("한 줄에 설정한 값만큼의 상품을 출력하지만 스킨에 따라 한 줄에 하나의 상품만 출력할 수도 있습니다.");?>
             <input type="text" name="ca_list_mod" size="3" value="<? echo $ca['ca_list_mod'] ?>" id="ca_list_mod" required class="required frm_input"> 개
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ca_list_row">총라인수</label></th>
+        <th scope="row"><label for="ca_list_row">이미지 줄 수</label></th>
         <td>
-            <?=help("한페이지에 몇라인을 출력할것인지를 설정합니다.\n한페이지에서 표시하는 상품수는 (1줄당 이미지수 x 총라인수) 입니다.");?>
-            <input type="text" name="ca_list_row" value='<? echo $ca['ca_list_row'] ?>' id="ca_list_row" required class="required frm_input" size="3"> 라인
+            <?=help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에서 표시하는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다.");?>
+            <input type="text" name="ca_list_row" value='<? echo $ca['ca_list_row'] ?>' id="ca_list_row" required class="required frm_input" size="3"> 줄
         </td>
     </tr>
     <tr>
@@ -237,7 +237,7 @@ $pg_anchor .= "</ul>";
     </table>
 </section>
 
-<section id="frm_optional" class="cbox">
+<section id="frm_scatefrm_optional" class="cbox">
     <h2>선택 입력</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">

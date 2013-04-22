@@ -113,7 +113,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <li><a href="<?=$_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("품절")?>">품절</a></li>
     </ul>
 
-    <select name="sel_field" title="검색대상">
+    <label for="sel_field" class="sound_only">검색대상</label>
+    <select name="sel_field" id="sel_field">
         <option value="od_id" <?=get_selected($sel_field, 'od_id')?>>주문번호</option>
         <option value="od_name" <?=get_selected($sel_field, 'od_name')?>>주문자</option>
         <option value="mb_id" <?=get_selected($sel_field, 'mb_id')?>>회원 ID</option>
@@ -122,7 +123,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <option value="c.ca_id" <?=get_selected($sel_field, 'c.ca_id')?>>분류코드</option>
         <option value="ct_status" <?=get_selected($sel_field, 'ct_status')?>>상태</option>
     </select>
-    <input type="text" name="search" value="<?=$search ?>" title="검색어" required class="required frm_input" autocomplete="off">
+    <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="search" value="<?=$search ?>" id="search" required class="required frm_input" autocomplete="off">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
@@ -164,10 +166,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <?
     for ($i=0; $i<count($lines); $i++) {
 
-        $od_deposit_name = "";
-        if ($lines[$i]['od_deposit_name'] != "")
-            $od_deposit_name = "title='입금자 : }'";
-
         $href = $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=c.it_id&amp;search='.$lines[$i]['it_id'];
         $it_name = '<a href="'.$href.'">'.cut_str($lines[$i]['it_name'],35).'</a><br>';
         $it_name .= print_item_options($lines[$i]['it_id'], $lines[$i]['it_opt1'], $lines[$i]['it_opt2'], $lines[$i]['it_opt3'], $lines[$i]['it_opt4'], $lines[$i]['it_opt5'], $lines[$i]['it_opt6']);
@@ -190,7 +188,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?=number_format($lines[$i]['ct_sub_amount'])?></td>
         <td><?=number_format($lines[$i]['ct_sub_point'])?></td>
         <td><a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=ct_status&amp;search=<?=$lines[$i]['ct_status']?>"><?=$lines[$i]['ct_status']?></a></td>
-        <td><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>">수정</a></td>
+        <td><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$lines[$i]['od_id']?> 수정"></a></td>
     </tr>
     <?
     }

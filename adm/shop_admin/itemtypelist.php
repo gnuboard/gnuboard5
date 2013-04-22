@@ -93,7 +93,9 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
         전체 상품 <?=$total_count ?>개
     </span>
 
-    <select name="sca">
+    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-22 ?>
+    <label for="sca" class="sound_only">분류선택</label>
+    <select name="sca" id="sca">
         <option value="">전체분류</option>
         <?
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
@@ -106,13 +108,16 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
         }
         ?>
     </select>
+    <? // ##### // 웹 접근성 취약 지점 끝 ?>
 
-    <select name="sfl" title="검색대상">
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
         <option value="it_id" <?=get_selected($sfl, 'it_id')?>>상품코드</option>
     </select>
 
-    <input type="text" name="stx" value="<?=$stx ?>" required class="frm_input required">
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?=$stx ?>" id="stx" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 
@@ -157,7 +162,7 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
             <td class="td_chk"><input type="checkbox" name="it_type3[<?=$i?>]" value="1" <?=($row['it_type3'] ? 'checked' : '')?>></td>
             <td class="td_chk"><input type="checkbox" name="it_type4[<?=$i?>]" value="1" <?=($row['it_type4'] ? 'checked' : '')?>></td>
             <td class="td_chk"><input type="checkbox" name="it_type5[<?=$i?>]" value="1" <?=($row['it_type5'] ? 'checked' : '')?>></td>
-            <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>">수정</a></td>
+            <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=cut_str(stripslashes($row['it_name']), 60, "&#133")?> 수정"></a></td>
         </tr>
         <?
         }

@@ -97,7 +97,9 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <?=$listall?>
         전체 주문내역 <?=$total_count ?>건
     </span>
-    <select name="sel_field" title="검색대상">
+
+    <label for="sel_field" class="sound_only">검색대상</label>
+    <select name="sel_field" id="sel_field">
         <option value="od_id" <?=get_selected($sel_field, 'od_id')?>>주문번호</option>
         <option value="mb_id" <?=get_selected($sel_field, 'mb_id')?>>회원 ID</option>
         <option value="od_name" <?=get_selected($sel_field, 'od_name')?>>주문자</option>
@@ -109,7 +111,9 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <option value="od_deposit_name" <?=get_selected($sel_field, 'od_deposit_name')?>>입금자</option>
         <option value="od_invoice" <?=get_selected($sel_field, 'od_invoice')?>>운송장번호</option>
     </select>
-    <input type="text" name="search" value="<?=$search?>" title="검색어" required class="required frm_input" autocomplete="off">
+
+    <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="search" value="<?=$search?>" id="search" required class="required frm_input" autocomplete="off">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
@@ -224,15 +228,15 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <td class="td_sodr_nonpay"><?=number_format($lines[$i]['misu'])?></td>
             <td><?=$s_receipt_way?></td>
             <td>
-                <a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>&amp;<?=$qstr?>">수정</a>
-                <a href="javascript:del('./orderdelete.php?od_id=<?=$lines[$i]['od_id']?>&amp;uq_id=<?=$lines[$i]['uq_id']?>&amp;mb_id=<?=$lines[$i]['mb_id']?>&amp;<?=$qstr?>)">삭제</a>
+                <a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=$lines[$i]['od_id']?> 수정"></a>
+                <a href="javascript:del('./orderdelete.php?od_id=<?=$lines[$i]['od_id']?>&amp;uq_id=<?=$lines[$i]['uq_id']?>&amp;mb_id=<?=$lines[$i]['mb_id']?>&amp;<?=$qstr?>)"><img src="./img/icon_del.jpg" alt="<?=$lines[$i]['od_id']?> 삭제"></a>
             </td>
         </tr>
     <?
     }
     mysql_free_result($result);
     if ($i == 0)
-        echo '<tr><td colspan="11" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="11" class="empty_table">자료가 없습니다.</td></tr>';
     ?>
     </tbody>
     </table>

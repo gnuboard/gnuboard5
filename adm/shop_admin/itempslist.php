@@ -69,8 +69,9 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         전체 문의내역 <?=$total_count ?>건
     </span>
 
+    <label for="sca" class="sound_only">분류선택</label>
     <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
-    <select name="sca">
+    <select name="sca" id="sca">
         <option value=''>전체분류</option>
         <?
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
@@ -84,12 +85,15 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         ?>
     </select>
     <? // ##### // 웹 접근성 취약 지점 끝 ?>
-    <select name="sfl">
+
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
         <option value="a.it_id" <?=get_selected($sfl, 'a.it_id')?>>상품코드</option>
         <option value="is_name" <?=get_selected($sfl, 'is_name')?>>이름</option>
     </select>
 
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong>
     <input type="text" name="stx" value="<?=$stx?>" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 
@@ -131,8 +135,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td class="td_num"><?=$row['is_score']?></td>
         <td class="sit_ps_confirm"><?=$confirm?></td>
         <td class="td_smallmng">
-            <a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>&amp;$qstr">수정</a>
-            <a href="javascript:del('./itempsformupdate.php?w=d&amp;is_id={$row['is_id']}&amp;$qstr');">삭제</a>
+            <a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>&amp;$qstr"><img src="./img/icon_mod.jpg" alt="<?=$row['is_subject']?> 수정"></a>
+            <a href="javascript:del('./itempsformupdate.php?w=d&amp;is_id={$row['is_id']}&amp;$qstr');"><img src="./img/icon_del.jpg" alt="<?=$row['is_subject']?> 삭제"></a>
         </td>
     </tr>
 
@@ -140,7 +144,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="6" class="empty_table"><span>자료가 한건도 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="6" class="empty_table">자료가 없습니다.</td></tr>';
     }
     ?>
     </tbody>

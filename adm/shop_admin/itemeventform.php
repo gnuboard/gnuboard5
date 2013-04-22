@@ -85,10 +85,10 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ev_list_row">총 출력행수</label></th>
+        <th scope="row"><label for="ev_list_row">이미지 줄 수</label></th>
         <td>
-            <?=help("한페이지 당 출력할 행수를 설정합니다.\n한 페이지에 표시되는 상품수는 (1줄당 이미지 수 x 총 출력행수) 입니다.");?>
-            <input type="text" name="ev_list_row" value="<? echo $ev['ev_list_row'] ?>" id="ev_list_row" class="frm_input" size="3"> 라인
+            <?=help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에 표시되는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다.");?>
+            <input type="text" name="ev_list_row" value="<? echo $ev['ev_list_row'] ?>" id="ev_list_row" class="frm_input" size="3"> 줄
         </td>
     </tr>
     <tr>

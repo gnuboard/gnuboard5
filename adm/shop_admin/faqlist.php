@@ -63,8 +63,8 @@ $result = sql_query($sql);
             <td><?=stripslashes($row['fa_subject'])?></td>
             <td class="td_num"><?=$row['fa_order']?></td>
             <td class="td_smallmng">
-                <a href="./faqform.php?w=u&amp;fm_id=<?=$row['fm_id']?>&amp;fa_id=<?=$row['fa_id']?>">수정</a>
-                <a href="javascript:del('./faqformupdate.php?w=d&amp;fm_id=<?=$row['fm_id']?>&amp;fa_id=<?=$row['fa_id']?>');">삭제</a>
+                <a href="./faqform.php?w=u&amp;fm_id=<?=$row['fm_id']?>&amp;fa_id=<?=$row['fa_id']?>"><img src="./img/icon_mod.jpg" alt="<?=stripslashes($row['fa_subject'])?> 수정"></a>
+                <a href="javascript:del('./faqformupdate.php?w=d&amp;fm_id=<?=$row['fm_id']?>&amp;fa_id=<?=$row['fa_id']?>');"><img src="./img/icon_del.jpg" alt="<?=stripslashes($row['fa_subject'])?> 삭제"></a>
             </td>
         </tr>
 

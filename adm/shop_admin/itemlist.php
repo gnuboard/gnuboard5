@@ -93,8 +93,9 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         등록된 상품 <?=$total_count ?>건
     </span>
 
+    <label for="sca" class="sound_only">분류선택</label>
     <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
-    <select name="sca">
+    <select name="sca" id="sca">
         <option value="">전체분류</option>
         <?
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
@@ -108,13 +109,17 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         ?>
     </select>
     <? // ##### // 웹 접근성 취약 지점 끝 ?>
-    <select name="sfl">
+
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
         <option value="it_id" <?=get_selected($sfl, 'it_id')?>>상품코드</option>
         <option value="it_maker" <?=get_selected($sfl, 'it_maker')?>>제조사</option>
         <option value="it_origin" <?=get_selected($sfl, 'it_origin')?>>원산지</option>
         <option value="it_sell_email" <?=get_selected($sfl, 'it_sell_email')?>>판매자 e-mail</option>
     </select>
+
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?=$stx?>" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
@@ -176,7 +181,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
                 <?=conv_selected_option($ca_list, $row['ca_id'])?>
             </select>
             <?=$tmp_ca_list?><br>
-            <input type="text" name="it_name[<?=$i?>]" value="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?>" required class="frm_input frm_sit_title required" size="40">
+            <input type="text" name="it_name[<?=$i?>]" value="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?>" required class="frm_input frm_sit_title required" size="30">
         </td>
         <td headers="sit_amt"><input type="text" name="it_amount[<?=$i?>]" value="<?=$row['it_amount']?>" class="frm_input sit_amt" size="7"></td>
         <td headers="sit_amt2"><input type="text" name="it_amount2[<?=$i?>]" value="<?=$row['it_amount2']?>" class="frm_input sit_amt2" size="7"></td>
@@ -184,11 +189,11 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td rowspan="2"><input type="text" name="it_order[<?=$i?>]" value="<?=$row['it_order']?>" class="frm_input sit_odrby" size="3"></td>
         <td rowspan="2"><input type="checkbox" name="it_use[<?=$i?>]" <?=($row['it_use'] ? 'checked' : '')?> value="1"></td>
         <td rowspan="2"><?=$row['it_hit']?></td>
-        <td rowspan="2">
-            <a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>">수정</a>
-            <a href="javascript:del('./itemformupdate.php?w=d&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>');">삭제</a>
-            <a href="<?=$href?>">보기</a>
-            <a href="javascript:_copy('<?=$row['it_id']?>', '<?=$row['ca_id']?>');">복사</a>
+        <td rowspan="2" class="td_mng">
+            <a href="<?=$href?>"><img src="./img/icon_view.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 보기"></a>
+            <a href="javascript:_copy('<?=$row['it_id']?>', '<?=$row['ca_id']?>');"><img src="./img/icon_copy.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 복사"></a>
+            <a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 수정"></a>
+            <a href="javascript:del('./itemformupdate.php?w=d&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>');"><img src="./img/icon_del.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 삭제"></a>
         </td>
     </tr>
     <tr>

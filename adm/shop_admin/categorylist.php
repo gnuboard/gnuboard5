@@ -66,12 +66,16 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <?=$listall?>
         생성된 분류 수 <?=number_format($total_count)?>개
     </span>
-    <select name="sfl" title="검색대상">
+
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="ca_name"<?=get_selected($_GET['sfl'], "ca_name", true);?>>분류명</option>
         <option value="ca_id"<?=get_selected($_GET['sfl'], "ca_id", true);?>>분류코드</option>
         <option value="ca_mb_id"<?=get_selected($_GET['sfl'], "ca_mb_id", true);?>>회원아이디</option>
     </select>
-    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
+
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?=$stx?>" id="stx" required class="required frm_input">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 
@@ -125,13 +129,13 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         $s_level = '<label for="ca_name_'.$i.'" '.$class.'><span class="sound_only">'.$p_ca_name.'</span>'.($level+1).'단 분류</label>';
         $s_level_input_size = 40 - $level *5; // 하위 분류일 수록 입력칸 넓이 작아짐 - 지운아빠 2013-04-02
 
-        if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">'.($level+2).'단 추가</a><br>'; // 분류는 5단계까지만 가능
+        if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'"><img src="./img/icon_add.jpg" alt="'.($level+2).'단 추가"></a>'; // 분류는 5단계까지만 가능
         else $s_add = '';
-        $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'">수정</a>';
-        $s_vie = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'">보기</a>';
+        $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'"><img src="./img/icon_mod.jpg" alt="'.get_text($row['ca_name']).' 수정"></a>';
+        $s_vie = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'"><img src="./img/icon_view.jpg" alt="'.get_text($row['ca_name']).' 이동"></a>';
 
         if ($is_admin == 'super')
-            $s_del = '<a href="javascript:del(\'./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'\');">삭제</a>';
+            $s_del = '<a href="javascript:del(\'./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'\');"><img src="./img/icon_del.jpg" alt="'.get_text($row['ca_name']).' 삭제"></a>';
 
         // 해당 분류에 속한 상품의 갯수
         $sql1 = " select COUNT(*) as cnt from {$g4['shop_item_table']}
@@ -145,10 +149,11 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <input type="hidden" name="ca_id[<?=$i?>]" value="<?=$row['ca_id']?>">
             <?=$row['ca_id']?>
         </td>
-        <td class="td_scate"><?=$s_level?> <input type="text" name="ca_name[<?=$i?>]" value="<?=get_text($row['ca_name'])?>" id="ca_name_<?=$i?>" title="<?=$row['ca_id']?>" required class="frm_input required" size="<?=$s_level_input_size?>"></td>
+        <td class="td_scate"><?=$s_level?> <input type="text" name="ca_name[<?=$i?>]" value="<?=get_text($row['ca_name'])?>" id="ca_name_<?=$i?>" required class="frm_input required" size="<?=$s_level_input_size?>"></td>
         <td class="td_scate_admin">
             <? if ($is_admin == 'super') {?>
-            <input type="text" name="ca_mb_id[<?=$i?>]" size="10" maxlength="20" value="<?=$row['ca_mb_id']?>" class="frm_input" title="회원아이디">
+            <label for="ca_mb_id<?=$i?>" class="sound_only">회원아이디</label>
+            <input type="text" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>" id="ca_mb_id<?=$i?>" class="frm_input" size="10" maxlength="20">
             <? } else { ?>
             <input type="hidden" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>">
             <?=$row['ca_mb_id']?>
@@ -157,7 +162,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td class="td_chk"><input type="checkbox" name="ca_use[<?=$i?>]" value="1" <?=($row['ca_use'] ? "checked" : "")?>></td>
         <td class="td_bignum"><input type="text" name="ca_stock_qty[<?=$i?>]" value="<?=$row['ca_stock_qty']?>" class="frm_input" size="6" style="text-align:right"></td>
         <td class="td_num"><a href="./itemlist.php?sca=<?=$row['ca_id']?>"><?=$row1['cnt']?></a></td>
-        <td class="td_mng"><?=$s_add?><?=$s_vie?> <?=$s_upd?> <?=$s_del?></td>
+        <td class="td_mng"><?=$s_add?> <?=$s_vie?> <?=$s_upd?> <?=$s_del?></td>
     </tr>
     <? }
     if ($i == 0) echo "<tr><td colspan=\"7\" class=\"empty_table\">자료가 한 건도 없습니다.</td></tr>\n";
