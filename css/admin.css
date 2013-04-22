@@ -241,10 +241,10 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .tbl_bo_list td {text-align:center}
 /* 게시판추가/수정 */
 .group_setting {width:130px;border-left:1px solid #e9ecee}
-#frm_extra .group_setting label {width:auto}
-#frm_extra .group_setting input {margin:0}
-#frm_extra label {display:inline-block;width:100px}
-#frm_extra input {margin-right:10px}
+#anc_bo_extra .group_setting label {width:auto}
+#anc_bo_extra .group_setting input {margin:0}
+#anc_bo_extra label {display:inline-block;width:100px}
+#anc_bo_extra input {margin-right:10px}
 /* 게시판그룹관리 목록 */
 .tbl_gr_list td {text-align:center}
 /* 게시판그룹 추가/수정 목록 */

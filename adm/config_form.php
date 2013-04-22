@@ -57,23 +57,22 @@ if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
 $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 
-$pg_anchor = "
-<ul class=\"anchor\">
-    <li><a href=\"#frm_basic\">기본환경</a></li>
-    <li><a href=\"#frm_board\">게시판기본</a></li>
-    <li><a href=\"#frm_join\">회원가입</a></li>
-    <li><a href=\"#frm_mail\">기본메일환경</a></li>
-    <li><a href=\"#frm_article_mail\">글작성메일</a></li>
-    <li><a href=\"#frm_join_mail\">가입메일</a></li>
-    <li><a href=\"#frm_vote_mail\">투표메일</a></li>
-    <li><a href=\"#frm_extra\">여분필드</a></li>
-</ul>";
+$pg_anchor = '<ul class="anchor">
+    <li><a href="#anc_cf_basic">기본환경</a></li>
+    <li><a href="#anc_cf_board">게시판기본</a></li>
+    <li><a href="#anc_cf_join">회원가입</a></li>
+    <li><a href="#anc_cf_mail">기본메일환경</a></li>
+    <li><a href="#anc_cf_article_mail">글작성메일</a></li>
+    <li><a href="#anc_cf_join_mail">가입메일</a></li>
+    <li><a href="#anc_cf_vote_mail">투표메일</a></li>
+    <li><a href="#anc_cf_extra">여분필드</a></li>
+</ul>';
 ?>
 
 <form name="fconfigform" id="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
 <input type="hidden" name="token" value="<?=$token?>" id="token">
 
-<section id="frm_basic" class="cbox">
+<section id="anc_cf_basic" class="cbox">
     <h2>홈페이지 기본환경 설정</h2>
     <?=$pg_anchor?>
 
@@ -313,7 +312,7 @@ $pg_anchor = "
     </table>
 </section>
 
-<section id="frm_board" class="cbox">
+<section id="anc_cf_board" class="cbox">
     <h2>게시판 기본 설정</h2>
     <?=$pg_anchor?>
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
@@ -388,7 +387,7 @@ $pg_anchor = "
     </table>
 </section>
 
-<section id="frm_join" class="cbox">
+<section id="anc_cf_join" class="cbox">
     <h2>회원가입 설정</h2>
     <?=$pg_anchor?>
     <p>회원가입 시 사용할 스킨과 입력 받을 정보 등을 설정할 수 있습니다.</p>
@@ -534,7 +533,7 @@ $pg_anchor = "
     </table>
 </section>
 
-<section id="frm_mail" class="cbox">
+<section id="anc_cf_mail" class="cbox">
     <h2>기본 메일환경 설정</h2>
     <?=$pg_anchor?>
 
@@ -568,7 +567,7 @@ $pg_anchor = "
     </table>
 </section>
 
-<section id="frm_article_mail" class="cbox">
+<section id="anc_cf_article_mail" class="cbox">
     <h2>게시판 글 작성 시 메일 설정</h2>
     <?=$pg_anchor?>
 
@@ -617,7 +616,7 @@ $pg_anchor = "
     </table>
 </section>
 
-<section id="frm_join_mail" class="cbox">
+<section id="anc_cf_join_mail" class="cbox">
     <h2>회원가입 시 메일 설정</h2>
     <?=$pg_anchor?>
 
@@ -646,7 +645,7 @@ $pg_anchor = "
 </section>
 
 
-<section id="frm_vote_mail" class="cbox">
+<section id="anc_cf_vote_mail" class="cbox">
     <h2>투표 기타의견 작성시 메일 설정</h2>
     <?=$pg_anchor?>
 
@@ -667,7 +666,7 @@ $pg_anchor = "
     </table>
 </section>
 
-<section id="frm_extra" class="cbox">
+<section id="anc_cf_extra" class="cbox">
     <h2>여분필드 기본 설정</h2>
     <?=$pg_anchor?>
     <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
