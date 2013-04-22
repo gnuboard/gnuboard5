@@ -42,7 +42,12 @@ if($error) {
 <script>
 alert("<? echo strip_tags($msg); ?>");
 //document.location.href = "<? echo $url; ?>";
+<? if ($url) { ?>
 document.location.replace("<? echo $url; ?>");
+<? } else { ?>
+    alert('history.back();');
+history.back();
+<?}?>
 </script>
 
 <noscript>
