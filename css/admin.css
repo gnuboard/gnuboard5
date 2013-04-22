@@ -439,7 +439,8 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 상품입력/수정 */
 .sit_w_opt {height:70px !important}
 .sit_wimg {display:none}
-.sit_relation {width:100%}
+.sit_relation_list {width:100%;background:#f6f6f6}
+.sit_relation_selected {width:100%;background:#fcfff2}
 
 /* 상품문의 */
 .sit_qa_subject {width:300px}
