@@ -46,9 +46,9 @@ $result = sql_query($sql);
         <td class="td_odrnum"><?=$row['co_id']?></td>
         <td><?=htmlspecialchars2($row['co_subject'])?></td>
         <td class="td_mng">
-            <a href="<?=G4_SHOP_URL?>/content.php?co_id=<?=$row['co_id']?>">보기</a>
-            <a href="./contentform.php?w=u&amp;co_id=<?=$row['co_id']?>">수정</a>
-            <a href="javascript:del('./contentformupdate.php?w=d&amp;co_id=<?=$row['co_id']?>')">삭제</a>
+            <a href="<?=G4_SHOP_URL?>/content.php?co_id=<?=$row['co_id']?>"><img src="./img/icon_view.jpg" alt="<?=htmlspecialchars2($row['co_subject'])?> 보기"></a>
+            <a href="./contentform.php?w=u&amp;co_id=<?=$row['co_id']?>"><img src="./img/icon_mod.jpg" alt="<?=htmlspecialchars2($row['co_subject'])?> 수정"></a>
+            <a href="javascript:del('./contentformupdate.php?w=d&amp;co_id=<?=$row['co_id']?>')"><img src="./img/icon_del.jpg" alt="<?=htmlspecialchars2($row['co_subject'])?> 삭제"></a>
         </td>
     </tr>
     <?

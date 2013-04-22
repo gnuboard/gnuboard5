@@ -67,7 +67,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="td_name"><?=$name?></td>
         <td class="td_bignum"><?=display_amount($row['receiptamount'])?></td>
         <td class="td_payby"><?=$settle_method?></td>
-        <td class="td_mng"><a href="./orderform.php?od_id=<?=$row['od_id']?>">수정</a></td>
+        <td class="td_smallmng"><a href="./orderform.php?od_id=<?=$row['od_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$row['od_id']?> 수정"></a></td>
     </tr>
     <?
     }
@@ -132,7 +132,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="td_name"><?=$name?></td>
         <td class="td_bignum"><?=display_amount($row['orderamount'])?></td>
         <td class="td_payby"><?=$settle_method?></td>
-        <td class="td_mng"><a href="./orderform.php?od_id=<?=$row['od_id']?>">수정</a></td>
+        <td class="td_smallmng"><a href="./orderform.php?od_id=<?=$row['od_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$row['od_id']?> 수정"></a></td>
     </tr>
     <?
     }
@@ -175,7 +175,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_name"><?=$name?></td>
         <td><?=cut_str($row['is_subject'],40)?></td>
-        <td class="td_mng"><a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>">수정</a></td>
+        <td class="td_smallmng"><a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>"><img src="./img/icon_mod.jpg" alt="<?=cut_str($row['is_subject'],40)?> 수정"></a></td>
     </tr>
     <?
     }

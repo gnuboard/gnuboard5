@@ -129,13 +129,13 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         $s_level = '<label for="ca_name_'.$i.'" '.$class.'><span class="sound_only">'.$p_ca_name.'</span>'.($level+1).'단 분류</label>';
         $s_level_input_size = 40 - $level *5; // 하위 분류일 수록 입력칸 넓이 작아짐 - 지운아빠 2013-04-02
 
-        if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">'.($level+2).'단 추가</a><br>'; // 분류는 5단계까지만 가능
+        if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'"><img src="./img/icon_add.jpg" alt="'.($level+2).'단 추가"></a>'; // 분류는 5단계까지만 가능
         else $s_add = '';
-        $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'">수정</a>';
-        $s_vie = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'">보기</a>';
+        $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'"><img src="./img/icon_mod.jpg" alt="'.get_text($row['ca_name']).' 수정"></a>';
+        $s_vie = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'"><img src="./img/icon_view.jpg" alt="'.get_text($row['ca_name']).' 이동"></a>';
 
         if ($is_admin == 'super')
-            $s_del = '<a href="javascript:del(\'./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'\');">삭제</a>';
+            $s_del = '<a href="javascript:del(\'./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'\');"><img src="./img/icon_del.jpg" alt="'.get_text($row['ca_name']).' 삭제"></a>';
 
         // 해당 분류에 속한 상품의 갯수
         $sql1 = " select COUNT(*) as cnt from {$g4['shop_item_table']}
@@ -162,7 +162,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td class="td_chk"><input type="checkbox" name="ca_use[<?=$i?>]" value="1" <?=($row['ca_use'] ? "checked" : "")?>></td>
         <td class="td_bignum"><input type="text" name="ca_stock_qty[<?=$i?>]" value="<?=$row['ca_stock_qty']?>" class="frm_input" size="6" style="text-align:right"></td>
         <td class="td_num"><a href="./itemlist.php?sca=<?=$row['ca_id']?>"><?=$row1['cnt']?></a></td>
-        <td class="td_mng"><?=$s_add?><?=$s_vie?> <?=$s_upd?> <?=$s_del?></td>
+        <td class="td_mng"><?=$s_add?> <?=$s_vie?> <?=$s_upd?> <?=$s_del?></td>
     </tr>
     <? }
     if ($i == 0) echo "<tr><td colspan=\"7\" class=\"empty_table\">자료가 한 건도 없습니다.</td></tr>\n";

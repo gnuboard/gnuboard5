@@ -188,7 +188,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?=number_format($lines[$i]['ct_sub_amount'])?></td>
         <td><?=number_format($lines[$i]['ct_sub_point'])?></td>
         <td><a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=ct_status&amp;search=<?=$lines[$i]['ct_status']?>"><?=$lines[$i]['ct_status']?></a></td>
-        <td><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>">수정</a></td>
+        <td><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$lines[$i]['od_id']?> 수정"></a></td>
     </tr>
     <?
     }

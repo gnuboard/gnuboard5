@@ -130,8 +130,8 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
         <td class="sit_qa_subject"><?=$row['iq_subject']?></td>
         <td class="sit_qa_answer"><?=$answer?></td>
         <td class="td_smallmng">
-            <a href="./itemqaform.php?w=u&amp;iq_id=<?=$row['iq_id']?>&amp;<?=$qstr?>">수정</a>
-            <a href="javascript:del('./itemqaformupdate.php?w=d&amp;iq_id=<?=$row['iq_id']?>&amp;$qstr');">삭제</a>
+            <a href="./itemqaform.php?w=u&amp;iq_id=<?=$row['iq_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=$row['iq_subject']?> 수정"></a>
+            <a href="javascript:del('./itemqaformupdate.php?w=d&amp;iq_id=<?=$row['iq_id']?>&amp;$qstr');"><img src="./img/icon_del.jpg" alt="<?=$row['iq_subject']?> 삭제"></a>
         </td>
     </tr>
     <?

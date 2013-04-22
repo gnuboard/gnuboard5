@@ -181,7 +181,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
                 <?=conv_selected_option($ca_list, $row['ca_id'])?>
             </select>
             <?=$tmp_ca_list?><br>
-            <input type="text" name="it_name[<?=$i?>]" value="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?>" required class="frm_input frm_sit_title required" size="40">
+            <input type="text" name="it_name[<?=$i?>]" value="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?>" required class="frm_input frm_sit_title required" size="30">
         </td>
         <td headers="sit_amt"><input type="text" name="it_amount[<?=$i?>]" value="<?=$row['it_amount']?>" class="frm_input sit_amt" size="7"></td>
         <td headers="sit_amt2"><input type="text" name="it_amount2[<?=$i?>]" value="<?=$row['it_amount2']?>" class="frm_input sit_amt2" size="7"></td>
@@ -189,11 +189,11 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td rowspan="2"><input type="text" name="it_order[<?=$i?>]" value="<?=$row['it_order']?>" class="frm_input sit_odrby" size="3"></td>
         <td rowspan="2"><input type="checkbox" name="it_use[<?=$i?>]" <?=($row['it_use'] ? 'checked' : '')?> value="1"></td>
         <td rowspan="2"><?=$row['it_hit']?></td>
-        <td rowspan="2">
-            <a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>">수정</a>
-            <a href="javascript:del('./itemformupdate.php?w=d&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>');">삭제</a>
-            <a href="<?=$href?>">보기</a>
-            <a href="javascript:_copy('<?=$row['it_id']?>', '<?=$row['ca_id']?>');">복사</a>
+        <td rowspan="2" class="td_mng">
+            <a href="<?=$href?>"><img src="./img/icon_view.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 보기"></a>
+            <a href="javascript:_copy('<?=$row['it_id']?>', '<?=$row['ca_id']?>');"><img src="./img/icon_copy.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 복사"></a>
+            <a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 수정"></a>
+            <a href="javascript:del('./itemformupdate.php?w=d&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>');"><img src="./img/icon_del.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 삭제"></a>
         </td>
     </tr>
     <tr>

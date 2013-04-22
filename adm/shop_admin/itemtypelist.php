@@ -162,7 +162,7 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
             <td class="td_chk"><input type="checkbox" name="it_type3[<?=$i?>]" value="1" <?=($row['it_type3'] ? 'checked' : '')?>></td>
             <td class="td_chk"><input type="checkbox" name="it_type4[<?=$i?>]" value="1" <?=($row['it_type4'] ? 'checked' : '')?>></td>
             <td class="td_chk"><input type="checkbox" name="it_type5[<?=$i?>]" value="1" <?=($row['it_type5'] ? 'checked' : '')?>></td>
-            <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>">수정</a></td>
+            <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=cut_str(stripslashes($row['it_name']), 60, "&#133")?> 수정"></a></td>
         </tr>
         <?
         }
