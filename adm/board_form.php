@@ -112,14 +112,14 @@ if ($is_admin != 'super') {
 $g4['title'] = $html_title;
 include_once ('./admin.head.php');
 
-$pg_anchor = "<ul class=\"anchor\">
-    <li><a href=\"#frm_basic\">기본 설정</a></li>
-    <li><a href=\"#frm_auth\">권한 설정</a></li>
-    <li><a href=\"#frm_function\">기능 설정</a></li>
-    <li><a href=\"#frm_design\">디자인/양식</a></li>
-    <li><a href=\"#frm_point\">포인트 설정</a></li>
-    <li><a href=\"#frm_extra\">여분필드</a></li>
-</ul>";
+$pg_anchor = '<ul class="anchor">
+    <li><a href="#anc_bo_basic">기본 설정</a></li>
+    <li><a href="#anc_bo_auth">권한 설정</a></li>
+    <li><a href="#anc_bo_function">기능 설정</a></li>
+    <li><a href="#anc_bo_design">디자인/양식</a></li>
+    <li><a href="#anc_bo_point">포인트 설정</a></li>
+    <li><a href="#anc_bo_extra">여분필드</a></li>
+</ul>';
 ?>
 
 <form name="fboardform" id="fboardform" action="./board_form_update.php" onsubmit="return fboardform_submit(this)" method="post" enctype="multipart/form-data">
@@ -130,7 +130,7 @@ $pg_anchor = "<ul class=\"anchor\">
 <input type="hidden" name="sod" value="<?=$sod?>">
 <input type="hidden" name="page" value="<?=$page?>">
 
-<section id="frm_basic" class="cbox">
+<section id="anc_bo_basic" class="cbox">
     <h2>게시판 기본 설정</h2>
     <?=$pg_anchor?>
 
@@ -211,7 +211,7 @@ $pg_anchor = "<ul class=\"anchor\">
     </table>
 </section>
 
-<section id="frm_auth" class="cbox">
+<section id="anc_bo_auth" class="cbox">
     <h2>게시판 권한 설정</h2>
     <?=$pg_anchor?>
 
@@ -347,7 +347,7 @@ $pg_anchor = "<ul class=\"anchor\">
     </table>
 </section>
 
-<section id="frm_function" class="cbox">
+<section id="anc_bo_function" class="cbox">
     <h2>게시판 기능 설정</h2>
     <?=$pg_anchor?>
 
@@ -684,7 +684,7 @@ $pg_anchor = "<ul class=\"anchor\">
     </table>
 </section>
 
-<section id="frm_design" class="cbox">
+<section id="anc_bo_design" class="cbox">
     <h2>게시판 디자인/양식</h2>
     <?=$pg_anchor?>
 
@@ -1035,7 +1035,7 @@ $pg_anchor = "<ul class=\"anchor\">
     </table>
 </section>
 
-<section id="frm_point" class="cbox">
+<section id="anc_bo_point" class="cbox">
     <h2>게시판 포인트 설정</h2>
     <?=$pg_anchor?>
 
@@ -1105,7 +1105,7 @@ $pg_anchor = "<ul class=\"anchor\">
     </table>
 </section>
 
-<section id="frm_extra" class="cbox">
+<section id="anc_bo_extra" class="cbox">
     <h2>게시판 여분필드 설정</h2>
     <?=$pg_anchor?>
 

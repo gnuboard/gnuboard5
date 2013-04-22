@@ -384,6 +384,19 @@ var win_poll = function(href) {
 }
 
 /**
+ * 스크린리더 미사용자를 위한 스크립트 - 지운아빠 2013-04-22
+ * alt 값만 갖는 그래픽 링크에 마우스오버 시 title 값 부여, 마우스아웃 시 title 값 제거
+ **/
+$(function() {
+    $('a img').mouseover(function() {
+        $a_img_title = $(this).attr('alt');
+        $(this).attr('title', $a_img_title);
+    }).mouseout(function() {
+        $(this).attr('title', '');
+    });
+});
+
+/**
  * 텍스트 리사이즈
 **/
 var default_font_size_saved = false;

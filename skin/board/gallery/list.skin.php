@@ -3,6 +3,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
+<link rel="stylesheet" href="<?=$board_skin_url?>/style.css">
+
 <? if (!$wr_id) {?><h1 id="bo_list_title"><?=$board['bo_subject']?></h1><?}?>
 
 <!-- 게시판 목록 시작 -->
