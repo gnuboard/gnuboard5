@@ -44,8 +44,14 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $bimg_str = "";
             $bimg = G4_DATA_PATH."/banner/{$bn['bn_id']}";
             if (file_exists($bimg) && $bn['bn_id']) {
+                $size = @getimagesize($bimg);
+                if($size[0] && $size[0] > 750)
+                    $width = 750;
+                else
+                    $width = $size[0];
+
                 echo '<input type="checkbox" name="bn_bimg_del" value="1" id="bn_bimg_del"> <label for="bn_bimg_del">삭제</label>';
-                $bimg_str = '<img src="'.G4_DATA_URL.'/banner/'.$bn['bn_id'].'">';
+                $bimg_str = '<img src="'.G4_DATA_URL.'/banner/'.$bn['bn_id'].'" width="'.$width.'">';
                 //$size = getimagesize($bimg);
                 //echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('bimg', $size[0], $size[1]);\"><input type=checkbox name=bn_bimg_del value='1'>삭제";
                 //echo "<div id='bimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$bimg' border=1></div>";
