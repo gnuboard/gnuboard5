@@ -9,7 +9,7 @@ function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_cre
 }
 
 // 게시글리스트 썸네일 생성
-function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=true)
+function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=true, $crop_mode='center', $is_sharpen=true, $um_value='80/0.5/3')
 {
     global $g4, $config;
     $filename = $alt = "";
