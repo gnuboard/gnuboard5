@@ -366,7 +366,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 /* ########## 쇼핑몰 사용시 적용 ########## */
 
 /* 쇼핑몰 설정 */
-#anc_cf_payment textarea {height:50px}
+#anc_scf_payment textarea {height:50px}
 
 #scf_cardtest_btn {margin-left:5px;vertical-align:middle}
 #scf_cardtest_tip {margin:10px 0 0;padding:10px;border:3px solid #ddd}
