@@ -442,7 +442,7 @@ $pg_anchor = '<ul class="anchor">
             $bank_account .= '<option value="">선택하십시오</option>'.PHP_EOL;
             for ($i=0; $i<count($str); $i++) {
                 $str[$i] = str_replace("\r", "", $str[$i]);
-                $bank_account .= '<option value="'.$str[$i].'" '.get_selected($od_bank_account, $str[$i]).'>'.$str[$i].'</option>'.PHP_EOL;
+                $bank_account .= '<option value="'.$str[$i].'" '.get_selected($od['od_bank_account'], $str[$i]).'>'.$str[$i].'</option>'.PHP_EOL;
             }
             $bank_account .= "</select> ";
         }
@@ -564,7 +564,7 @@ $pg_anchor = '<ul class="anchor">
                     $result = sql_query($sql);
                     for ($i=0; $row=sql_fetch_array($result); $i++) {
                     ?>
-                    <option value="<?=$row['dl_id']?>" <?=get_selected($dl_id, $row['dl_id'])?>><?=$row['dl_company']?></option>
+                    <option value="<?=$row['dl_id']?>" <?=get_selected($od['dl_id'], $row['dl_id'])?>><?=$row['dl_company']?></option>
                     <?
                     }
                     mysql_free_result($result);

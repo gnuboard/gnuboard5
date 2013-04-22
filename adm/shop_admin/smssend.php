@@ -59,28 +59,28 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
                     <?
                     $yy = date("Y");
                     for ($i=$yy; $i<=$yy+1; $i++) {
-                        echo '<option value="'.$i.'"'.get_selected($i, $yy).'>'.substr($i,-2).'</option>';
+                        echo '<option value="'.$i.'">'.substr($i,-2).'</option>';
                     }
                     ?>
-                </select>년
+                </select> 년
                 <label for="reserved_month" class="sound_only">월 설정</label>
                 <select name="reserved_month" id="reserved_month">
                     <?
                     $mm = date("n");
                     for ($i=1; $i<=12; $i++) {
-                        echo '<option value="'.$i.'"'.get_selected($i, $mm).'>'.$i.'</option>';
+                        echo '<option value="'.$i.'">'.$i.'</option>';
                     }
                     ?>
-                </select>월
+                </select> 월
                 <label for="reserved_day" class="sound_only">일 설정</label>
                 <select name="reserved_day" id="reserved_day">
                     <?
                     $dd = date("j");
                     for ($i=1; $i<=31; $i++) {
-                        echo '<option value="'.$i.'"'.get_selected($i, $dd).'>'.$i.'</option>';
+                        echo '<option value="'.$i.'">'.$i.'</option>';
                     }
                     ?>
-                </select>일
+                </select> 일
                 <label for="reserved_hour" class="sound_only">시 설정</label>
                 <select name="reserved_hour" id="reserved_hour">
                     <?
@@ -88,7 +88,7 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
                         echo '<option value="'.$i.'">'.$i.'</option>';
                     }
                     ?>
-                </select>시
+                </select> 시
                 <label for="reserved_minute" class="sound_only">분 설정</label>
                 <select name="reserved_minute" id="reserved_minute">
                     <?
@@ -96,7 +96,7 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
                         echo '<option value="'.$i.'">'.$i.'</option>';
                     }
                     ?>
-                </select>분
+                </select> 분
             </td>
         </tr>
         </tbody>
