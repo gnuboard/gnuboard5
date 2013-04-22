@@ -7,52 +7,54 @@ auth_check($auth[$sub_menu], "r");
 $sql = " select ev_subject from {$g4['shop_event_table']} where ev_id = '$ev_id' ";
 $ev = sql_fetch($sql);
 
-$g4['title'] = '['.$ev['ev_subject'].'] 이벤트상품';
+$g4['title'] = $ev['ev_subject'].' 이벤트상품';
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
-<link rel="stylesheet" href="./admin.style.css" type="text/css">
+<div class="cbox">
+    <h1><?=$g4['title']?></h1>
+    <table>
+    <thead>
+    <tr>
+        <th scope="col">상품명</th>
+        <th scope="col">사용구분</th>
+        <th scope="col">삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?
+    $sql = " select b.it_id, b.it_name, b.it_use from {$g4['shop_event_item_table']} a
+               left join {$g4['shop_item_table']} b on (a.it_id=b.it_id)
+              where a.ev_id = '$ev_id'
+              order by b.it_id desc ";
+    $result = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    ?>
+    <tr>
+        <td>
+            <a href="<?=$href?>" target="_blank">
+                <?=get_it_image($row['it_id'].'_s', 40, 40)?>
+                <?=cut_str(stripslashes($row['it_name']), 60, "&#133")?>
+            </a>
+        </td>
+        <td class="td_smallmng"><?=($row['it_use']?"사용":"미사용")?></td>
+        <td class="td_smallmng"><a href="javascript:del('./itemeventwindel.php?ev_id=$ev_id&amp;it_id=<?=$row['it_id']?>');"><img src="./img/icon_del.jpg" alt="<?=$ev['ev_subject']?> 이벤트에서 삭제 : <?=cut_str(stripslashes($row['it_name']), 60, "&#133")?>"></a></td>
+    <tr>
+    <?
+    }
+    if ($i == 0)
+        echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
 
-<table width=100% cellpadding=8><tr><td>
+</div>
 
-<?//=subtitle($g4['title']);?>
-<table cellpadding=4 cellspacing=1 width=100%>
-<tr><td colspan=20 height=3 bgcolor=0E87F9></td></tr>
-<tr align=center>
-    <td colspan=2>상품명</td>
-    <td width=60>사용구분</td>
-    <td width=60>삭제</td>
-</tr>
-<tr><td colspan=20 height=1 bgcolor=#CCCCCC></td></tr>
-<tr><td colspan=20 height=3 bgcolor=#F8F8F8></td></tr>
-
-<?
-$sql = " select b.it_id, b.it_name, b.it_use from {$g4['shop_event_item_table']} a
-           left join {$g4['shop_item_table']} b on (a.it_id=b.it_id)
-          where a.ev_id = '$ev_id'
-          order by b.it_id desc ";
-$result = sql_query($sql);
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
-
-    echo "
-    <tr align=center>
-        <td width=50><a href='$href' target=_blank>".get_it_image($row['it_id'].'_s', 40, 40)."</a></td>
-        <td align=left><a href='$href' target=_blank>".cut_str(stripslashes($row['it_name']), 60, "&#133")."</a></td>
-        <td>".($row['it_use']?"사용":"미사용")."</td>
-        <td>".icon("삭제", "javascript:del('./itemeventwindel.php?ev_id=$ev_id&amp;it_id={$row['it_id']}');")."</td>
-    <tr>";
-}
-
-if ($i == 0)
-    echo "<tr><td colspan=20 align=center height=100 bgcolor=#ffffff class=point>자료가 한건도 없습니다.</td></tr>";
-?>
-
-<tr><td colspan=20 height=1 bgcolor=CCCCCC></td></tr>
-</table>
-
-</td></tr></table>
+<div class="btn_win">
+    <button type="button" onclick="javascript:window.close()">창 닫기</button>
+</div>
 
 <?
 include_once(G4_PATH.'/tail.sub.php');

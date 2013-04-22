@@ -144,6 +144,12 @@ fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 .btn_frmline:hover,
 .btn_frmline:active {text-decoration:none}
 
+.btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
+.btn_win a,
+.btn_win button {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
+.btn_win a:focus,
+.btn_win a:hover {text-decoration:none}
+
 .btn_list input,
 .btn_list button {padding:0 15px;height:28px;border:0;background:#617d46;color:#fff;line-height:2.2em;vertical-align:middle}
 .btn_list input:focus,
