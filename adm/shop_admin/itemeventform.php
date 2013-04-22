@@ -116,8 +116,14 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $mimg_str = "";
             $mimg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_m';
             if (file_exists($mimg)) {
+                $size = @getimagesize($mimg);
+                if($size[0] && $size[0] > 750)
+                    $width = 750;
+                else
+                    $width = $size[0];
+
                 echo '<input type="checkbox" name="ev_mimg_del" value="1" id="ev_mimg_del"> <label for="ev_mimg_del">삭제</label>';
-                $mimg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_m" alt="">';
+                $mimg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_m" width="'.$width.'" alt="">';
             }
             if ($mimg_str) {
                 echo '<div class="banner_or_img">';
@@ -136,8 +142,14 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $himg_str = "";
             $himg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_h';
             if (file_exists($himg)) {
+                $size = @getimagesize($himg);
+                if($size[0] && $size[0] > 750)
+                    $width = 750;
+                else
+                    $width = $size[0];
+
                 echo '<input type="checkbox" name="ev_himg_del" value="1" id="ev_himg_del"> <label for="ev_himg_del">삭제</label>';
-                $himg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_h" alt="">';
+                $himg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_h" width="'.$width.'" alt="">';
             }
             if ($himg_str) {
                 echo '<div class="banner_or_img">';
@@ -156,8 +168,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             $timg_str = "";
             $timg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_t';
             if (file_exists($timg)) {
+                $size = @getimagesize($timg);
+                if($size[0] && $size[0] > 750)
+                    $width = 750;
+                else
+                    $width = $size[0];
                 echo '<input type="checkbox" name="ev_timg_del" value="1" id="ev_timg_del"> <label for="ev_timg_del">삭제</label>';
-                $timg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_t" alt="">';
+                $timg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_t" width="'.$width.'" alt="">';
             }
             if ($timg_str) {
                 echo '<div class="banner_or_img">';
