@@ -588,9 +588,7 @@ $pg_anchor ='<ul class="anchor">
                     './itemformrelation.php',
                     { it_id: '<?=$it_id?>', ca_id: fld.value },
                     function(data) {
-                        if(data) {
-                            $("#relation").html(data);
-                        }
+                        $("#relation").html(data);
                     }
                 );
             }
@@ -607,7 +605,7 @@ $pg_anchor ='<ul class="anchor">
                 }
             ?>
         </select><br>
-        <select id="relation" class="sit_relation_list" size="8" onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);">
+        <select id="relation" class="sit_relation_list" size="8" onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);" onkeyup="relation_add2(this);">
         <?
         /*
         $sql = " select ca_id, it_id, it_name, it_amount
@@ -673,6 +671,31 @@ $pg_anchor ='<ul class="anchor">
                 relation_hidden();
             }
 
+            function relation_add2(fld)
+            {
+                if(window.event.keyCode == 32) {
+                    var f = document.fitemform;
+                    var len = f.relationselect.length;
+                    var find = false;
+
+                    for (i=0; i<len; i++) {
+                        if (fld.options[fld.selectedIndex].value == f.relationselect.options[i].value) {
+                            find = true;
+                            break;
+                        }
+                    }
+
+                    // 같은 이벤트를 찾지못하였다면 입력
+                    if (!find) {
+                        f.relationselect.length += 1;
+                        f.relationselect.options[len].value = fld.options[fld.selectedIndex].value;
+                        f.relationselect.options[len].text  = fld.options[fld.selectedIndex].text;
+                    }
+
+                    relation_hidden();
+                }
+            }
+
             function relation_del(fld)
             {
                 if (fld.length == 0) {
@@ -695,6 +718,32 @@ $pg_anchor ='<ul class="anchor">
                 fld.length -= 1;
 
                 relation_hidden();
+            }
+
+            function relation_del2(fld)
+            {
+                if(window.event.keyCode == 32) {
+                    if (fld.length == 0) {
+                        return;
+                    }
+
+                    if (fld.selectedIndex < 0)
+                        return;
+
+                    for (i=0; i<fld.length; i++) {
+                        // 선택된것과 값이 같다면 1을 더한값을 현재것에 복사
+                        if (fld.options[i].value == fld.options[fld.selectedIndex].value) {
+                            for (k=i; k<fld.length-1; k++) {
+                                fld.options[k].value = fld.options[k+1].value;
+                                fld.options[k].text  = fld.options[k+1].text;
+                            }
+                            break;
+                        }
+                    }
+                    fld.length -= 1;
+
+                    relation_hidden();
+                }
             }
 
             // hidden 값을 변경 : 김선용 2006.10 일부수정
@@ -721,7 +770,7 @@ $pg_anchor ='<ul class="anchor">
         <span id="sel_span" style="line-height:200%"></span>
         ※ 상품 선택후 더블클릭하면 삭제됨<br>
         ※ 한 번 클릭시 상품이미지/상품금액 출력<br>
-        <select name="relationselect" size="8" class="sit_relation_selected" onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);">
+        <select name="relationselect" size="8" class="sit_relation_selected" onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);" onkeyup="relation_del2(this);">
         <?
         $str = array();
         $sql = " select b.ca_id, b.it_id, b.it_name, b.it_amount
@@ -760,8 +809,7 @@ $pg_anchor ='<ul class="anchor">
     <script> var eventselect = new Array(); </script>
     <section class="compare_left">
         <h3>등록된 전체이벤트 목록</h3>
-                이벤트 선택후 더블클릭하면 왼쪽에 추가됨<br>
-        <select size="8" class="sit_relation_list" ondblclick="event_add(this);">
+        <select size="8" class="sit_relation_list" ondblclick="event_add(this);" onkeyup="event_add2(this);">
         <?
         $sql = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
         $result = sql_query($sql);
@@ -794,6 +842,31 @@ $pg_anchor ='<ul class="anchor">
                 event_hidden();
             }
 
+            function event_add2(fld)
+            {
+                if(window.event.keyCode == 32) {
+                    var f = document.fitemform;
+                    var len = f.eventselect.length;
+                    var find = false;
+
+                    for (i=0; i<len; i++) {
+                        if (fld.options[fld.selectedIndex].value == f.eventselect.options[i].value) {
+                            find = true;
+                            break;
+                        }
+                    }
+
+                    // 같은 이벤트를 찾지못하였다면 입력
+                    if (!find) {
+                        f.eventselect.length += 1;
+                        f.eventselect.options[len].value = fld.options[fld.selectedIndex].value;
+                        f.eventselect.options[len].text  = fld.options[fld.selectedIndex].text;
+                    }
+
+                    event_hidden();
+                }
+            }
+
             function event_del(fld)
             {
                 if (fld.length == 0) {
@@ -818,6 +891,32 @@ $pg_anchor ='<ul class="anchor">
                 event_hidden();
             }
 
+            function event_del2(fld)
+            {
+                if(window.event.keyCode == 32) {
+                    if (fld.length == 0) {
+                        return;
+                    }
+
+                    if (fld.selectedIndex < 0)
+                        return;
+
+                    for (i=0; i<fld.length; i++) {
+                        // 선택된것과 값이 같다면 1을 더한값을 현재것에 복사
+                        if (fld.options[i].value == fld.options[fld.selectedIndex].value) {
+                            for (k=i; k<fld.length-1; k++) {
+                                fld.options[k].value = fld.options[k+1].value;
+                                fld.options[k].text  = fld.options[k+1].text;
+                            }
+                            break;
+                        }
+                    }
+                    fld.length -= 1;
+
+                    event_hidden();
+                }
+            }
+
             // hidden 값을 변경
             function event_hidden()
             {
@@ -836,8 +935,7 @@ $pg_anchor ='<ul class="anchor">
 
     <section class="compare_right">
         <h3>선택된 관련이벤트 목록</h3>
-        이벤트 선택후 더블클릭하면 삭제됨<br>
-        <select name="eventselect" class="sit_relation_selected" size="8" ondblclick="event_del(this);">
+        <select name="eventselect" class="sit_relation_selected" size="8" ondblclick="event_del(this);" onkeyup="event_del2(this);">
         <?
         $str = "";
         $comma = "";
