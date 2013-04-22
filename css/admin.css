@@ -360,7 +360,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 /* ########## 쇼핑몰 사용시 적용 ########## */
 
 /* 쇼핑몰 설정 */
-#frm_payment textarea {height:50px}
+#anc_cf_payment textarea {height:50px}
 
 #scf_cardtest_btn {margin-left:5px;vertical-align:middle}
 #scf_cardtest_tip {margin:10px 0 0;padding:10px;border:3px solid #ddd}
@@ -395,12 +395,12 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .sodr_nonpay {color:#ff6600}
 strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sodr_sppay {color:#1f9bff}
-#frm_odr_memo textarea {width:98%}
-#frm_odr_memo .btn_confirm {margin:10px 0 0}
-#frm_odr_payer #od_addr1,
-#frm_odr_payer #od_addr2 {margin:5px 0 0}
-#frm_odr_addressee #od_b_addr1,
-#frm_odr_addressee #od_b_addr2 {margin:5px 0 0}
+#anc_sodr_memo textarea {width:98%}
+#anc_sodr_memo .btn_confirm {margin:10px 0 0}
+#anc_sodr_payer #od_addr1,
+#anc_sodr_payer #od_addr2 {margin:5px 0 0}
+#anc_sodr_addressee #od_b_addr1,
+#anc_sodr_addressee #od_b_addr2 {margin:5px 0 0}
 
 /* 주문개별내역 */
 #sodr_status {text-align:center}
@@ -492,8 +492,8 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sms_sm p {position:absolute;bottom:-100px;left:0}
 
 /* 가격비교사이트 */
-#frm_compare_info li {margin:5px 0}
+#anc_pricecompare_info li {margin:5px 0}
 
-#frm_compare_engine dt a {font-weight:bold}
-#frm_compare_engine dd {margin:0 0 30px}
-#frm_compare_engine li {margin:5px 0}
+#anc_pricecompare_engine dt a {font-weight:bold}
+#anc_pricecompare_engine dd {margin:0 0 30px}
+#anc_pricecompare_engine li {margin:5px 0}

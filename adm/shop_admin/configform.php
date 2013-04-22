@@ -63,19 +63,18 @@ if ($default['de_icode_id'] && $default['de_icode_pw']) {
 $g4['title'] = '쇼핑몰설정';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$pg_anchor ="<ul class=\"anchor\">
-<li><a href=\"#frm_info\">사업자정보</a></li>
-<li><a href=\"#frm_index\">쇼핑몰 초기화면</a></li>
-<li><a href=\"#frm_payment\">결제설정</a></li>
-<li><a href=\"#frm_delivery\">배송설정</a></li>
-<li><a href=\"#frm_etc\">기타설정</a></li>
-<li><a href=\"#frm_sms\">SMS설정</a></li>
-</ul>
-";
+$pg_anchor = '<ul class="anchor">
+<li><a href="#anc_cf_info">사업자정보</a></li>
+<li><a href="#anc_cf_index">쇼핑몰 초기화면</a></li>
+<li><a href="#anc_cf_payment">결제설정</a></li>
+<li><a href="#anc_cf_delivery">배송설정</a></li>
+<li><a href="#anc_cf_etc">기타설정</a></li>
+<li><a href="#anc_cf_sms">SMS설정</a></li>
+</ul>';
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
-<section id="frm_info" class="cbox">
+<section id="anc_cf_info" class="cbox">
     <h2>사업자정보</h2>
     <?=$pg_anchor?>
     <p><?=help("사업자정보는 tail.php 와 content.php 에서 표시합니다.")?></p>
@@ -148,7 +147,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </table>
 </section>
 
-<section id="frm_index" class="cbox">
+<section id="anc_cf_index" class="cbox">
     <h2>쇼핑몰 초기화면</h2>
     <?=$pg_anchor?>
     <p><?=help("상품관리에서 선택한 상품의 타입대로 쇼핑몰 초기화면에 출력합니다. (상품 타입 히트/추천/최신/인기/할인)\n각 타입별로 선택된 상품이 없으면 쇼핑몰 초기화면에 출력하지 않습니다.")?></p>
@@ -532,7 +531,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </table>
 </section>
 
-<section id="frm_delivery" class="cbox">
+<section id="anc_cf_delivery" class="cbox">
     <h2 >배송정보</h2>
      <?=$pg_anchor?>
     <table class="frm_tbl">
@@ -593,7 +592,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </table>
 </section>
 
-<section id="frm_etc" class="cbox">
+<section id="anc_cf_etc" class="cbox">
     <h2>기타정보</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
@@ -794,7 +793,7 @@ function byte_check(el_cont, el_byte)
 
 </style>
 
-<section id="frm_sms" class="cbox" >
+<section id="anc_cf_sms" class="cbox" >
     <h2>SMS설정</h2>
     <?=$pg_anchor?>
 

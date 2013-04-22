@@ -76,12 +76,11 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 $g4['title'] = $html_title;
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-
-$pg_anchor ="<ul class=\"anchor\">
-<li><a href=\"#frm_basic\">필수입력</a></li>
-<li><a href=\"#frm_optional\">선택입력</a></li>";
-if ($w == "u") $pg_anchor .= "<li><a href=\"#frm_etc\">기타설정</a></li>";
-$pg_anchor .= "</ul>";
+$pg_anchor ='<ul class="anchor">
+<li><a href="#anc_scatefrm_basic">필수입력</a></li>
+<li><a href="#anc_scatefrm_optional">선택입력</a></li>';
+if ($w == 'u') $pg_anchor .= '<li><a href="#frm_etc">기타설정</a></li>';
+$pg_anchor .= '</ul>';
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -93,9 +92,10 @@ $pg_anchor .= "</ul>";
 <input type="hidden" name="sort2" value="<?=$sort2?>">
 <input type="hidden" name="ca_explan_html" value="<?=$ca['ca_explan_html']?>">
 
-<section id="frm_basic" class="cbox">
+<section id="anc_scatefrm_basic" class="cbox">
     <h2>필수입력</h2>
     <?=$pg_anchor?>
+
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -237,7 +237,7 @@ $pg_anchor .= "</ul>";
     </table>
 </section>
 
-<section id="frm_optional" class="cbox">
+<section id="frm_scatefrm_optional" class="cbox">
     <h2>선택 입력</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">

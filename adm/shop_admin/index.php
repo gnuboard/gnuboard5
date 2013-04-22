@@ -7,16 +7,15 @@ $max_limit = 7; // 몇행 출력할 것인지?
 $g4['title'] = ' 쇼핑몰관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$pg_anchor ="<ul class=\"anchor\">
-<li><a href=\"#frm_rdy\">입금완료미배송내역</a></li>
-<li><a href=\"#frm_wait\">미입금주문내역</a></li>
-<li><a href=\"#frm_ps\">사용후기</a></li>
-<li><a href=\"#frm_qna\">상품문의</a></li>
-</ul>
-";
+$pg_anchor = '<ul class="anchor">
+<li><a href="#anc_sidx_rdy">입금완료미배송내역</a></li>
+<li><a href="#anc_sidx_wait">미입금주문내역</a></li>
+<li><a href="#anc_sidx_ps">사용후기</a></li>
+<li><a href="#anc_sidx_qna">상품문의</a></li>
+</ul>';
 ?>
 
-<section id="frm_rdy" class="cbox">
+<section id="anc_sidx_rdy" class="cbox">
     <h2>입금완료 미배송내역</h2>
     <?=$pg_anchor?>
 
@@ -82,7 +81,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </div>
 </section>
 
-<section id="frm_wait" class="cbox">
+<section id="anc_sidx_wait" class="cbox">
     <h2>미입금 주문내역</h2>
     <?=$pg_anchor?>
 
@@ -147,7 +146,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </div>
 </section>
 
-<section id="frm_ps" class="cbox">
+<section id="anc_sidx_ps" class="cbox">
     <h2>사용후기</h2>
     <?=$pg_anchor?>
 
@@ -190,7 +189,7 @@ $pg_anchor ="<ul class=\"anchor\">
     </div>
 </section>
 
-<section id="frm_qna" class="cbox">
+<section id="anc_sidx_qna" class="cbox">
     <h2>상품문의</h2>
     <?=$pg_anchor?>
 

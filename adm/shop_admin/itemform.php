@@ -123,12 +123,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 
 $pg_anchor ='<ul class="anchor">
-<li><a href="#frm_cate">상품분류</a></li>
-<li><a href="#frm_basic_item">기본정보</a></li>
-<li><a href="#frm_image">상품이미지</a></li>
-<li><a href="#frm_item">관련상품</a></li>
-<li><a href="#frm_event">관련이벤트</a></li>
-<li><a href="#frm_select_item">상세설명설정</a></li>
+<li><a href="#anc_sitfrm_cate">상품분류</a></li>
+<li><a href="#anc_sitfrm_ini">기본정보</a></li>
+<li><a href="#anc_sitfrm_img">상품이미지</a></li>
+<li><a href="#anc_sitfrm_relation">관련상품</a></li>
+<li><a href="#anc_sitfrm_event">관련이벤트</a></li>
+<li><a href="#anc_sitfrm_optional">상세설명설정</a></li>
 </ul>
 ';
 ?>
@@ -150,7 +150,7 @@ $pg_anchor ='<ul class="anchor">
 <input type="hidden" name="page" value="<?=$page?>">
 <input type="hidden" name="it_explan_html" value="1"><!---->
 
-<section id="frm_cate" class="cbox">
+<section id="anc_sitfrm_cate" class="cbox">
     <h2>상품분류</h2>
     <?=$pg_anchor?>
     <p>기본분류는 반드시 선택하셔야 합니다. 하나의 상품에 최대 3개의 다른 분류를 지정할 수 있습니다.</p>
@@ -202,7 +202,7 @@ $pg_anchor ='<ul class="anchor">
     </table>
 </section>
 
-<section id="frm_basic_item" class="cbox">
+<section id="anc_sitfrm_ini" class="cbox">
     <h2>기본정보</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
@@ -408,7 +408,7 @@ $pg_anchor ='<ul class="anchor">
     </table>
 </section>
 
-<section id="frm_image" class="cbox">
+<section id="anc_sitfrm_img" class="cbox">
     <h2>이미지</h2>
     <?=$pg_anchor?>
     <p>이미지 자동생성 기능을 이용하시면, 이미지(대) 1장만 업로드 해서 자동으로 이미지(중), 이미지(소) 를 생성할 수 있습니다.</p>
@@ -569,7 +569,7 @@ $pg_anchor ='<ul class="anchor">
     <a href="./itemlist.php?<?=$qstr?>">목록</a>
 </div>
 
-<section id="frm_item" class="cbox compare_wrap">
+<section id="anc_sitfrm_relation" class="cbox compare_wrap">
     <h2>관련상품</h2>
     <?=$pg_anchor?>
 
@@ -752,7 +752,7 @@ $pg_anchor ='<ul class="anchor">
 
 </section>
 
-<section id="frm_event" class="cbox compare_wrap">
+<section id="anc_sitfrm_event" class="cbox compare_wrap">
     <h2>관련이벤트</h2>
     <?=$pg_anchor?>
 
@@ -859,7 +859,7 @@ $pg_anchor ='<ul class="anchor">
 
 </section>
 
-<section id="frm_select_item" class="cbox">
+<section id="anc_sitfrm_optional" class="cbox">
     <h2>상세설명설정</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">

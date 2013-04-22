@@ -7,12 +7,12 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = '가격비교사이트';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 $pg_anchor = '<ul class="anchor">
-<li><a href="#frm_compare_info">가격비교사이트 연동 안내</a></li>
-<li><a href="#frm_compare_engine">사이트별 엔진페이지 URL</a></li>
+<li><a href="#anc_pricecompare_info">가격비교사이트 연동 안내</a></li>
+<li><a href="#anc_pricecompare_engine">사이트별 엔진페이지 URL</a></li>
 </ul>';
 ?>
 
-<section id="frm_compare_info" class="cbox">
+<section id="anc_pricecompare_info" class="cbox">
     <h2>가격비교사이트 연동 안내</h2>
     <?=$pg_anchor?>
 
@@ -23,7 +23,7 @@ $pg_anchor = '<ul class="anchor">
     </ol>
 </section>
 
-<section id="frm_compare_engine" class="cbox">
+<section id="anc_pricecompare_engine" class="cbox">
     <h2>사이트별 엔진페이지 URL</h2>
     <?=$pg_anchor?>
     <p>사이트 명을 클릭하시면 해당 사이트로 이동합니다.</p>
