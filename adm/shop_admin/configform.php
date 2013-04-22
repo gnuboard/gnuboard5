@@ -257,7 +257,7 @@ $pg_anchor = '<ul class="anchor">
 </section>
 
 
-<section id ="frm_payment" class="cbox">
+<section id ="anc_cf_payment" class="cbox">
     <h2>결제정보</h2>
     <?=$pg_anchor?>
     <table class="frm_tbl">
