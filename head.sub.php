@@ -32,35 +32,19 @@ header("Pragma: no-cache"); // HTTP/1.0
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title><?=$g4_head_title?></title>
 <? if (G4_IS_MOBILE) {?>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
 <meta name="HandheldFriendly" content="true">
 <meta name="format-detection" content="telephone=no">
 <? } ?>
+<? if (defined('G4_IS_ADMIN')) { ?>
+<link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css">
+<? } else { ?>
+<link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=(G4_IS_MOBILE?'mobile':'default')?>.css">
+<?}?>
+<title><?=$g4_head_title?></title>
 <!-- <meta http-equiv="imagetoolbar" content="no"> -->
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
-<? if (defined('G4_IS_ADMIN')) { ?>
-<link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css?=<?=date("md")?>">
-<? } else { ?>
-<link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=(G4_IS_MOBILE?'mobile':'default')?>.css?=<?=date("md")?>">
-<?}?>
-<? // 스킨의 style sheet 불러옴
-if (!defined('G4_IS_ADMIN')) {
-    if(isset($board_skin_path))
-        echo get_skin_stylesheet($board_skin_path);
-    if(isset($member_skin_path))
-        echo get_skin_stylesheet($member_skin_path);
-    if(isset($new_skin_path))
-        echo get_skin_stylesheet($new_skin_path);
-    if(isset($search_skin_path))
-        echo get_skin_stylesheet($search_skin_path);
-    if(isset($connect_skin_path))
-        echo get_skin_stylesheet($connect_skin_path);
-    if(isset($poll_skin_path))
-        echo get_skin_stylesheet($poll_skin_path);
-}
-?>
 <!--[if lte IE 8]>
 <script src="<?=G4_JS_URL?>/html5.js"></script>
 <![endif]-->
@@ -78,24 +62,9 @@ var g4_cookie_domain = "<?=G4_COOKIE_DOMAIN?>";
 ?>
 </script>
 <script src="<?=G4_JS_URL?>/jquery-1.8.3.min.js"></script>
+<script src="<?=G4_JS_URL?>/jquery.menu.js"></script>
 <script src="<?=G4_JS_URL?>/common.js"></script>
 <script src="<?=G4_JS_URL?>/wrest.js"></script>
-<? // 스킨의 javascript 불러옴
-if (!defined('G4_IS_ADMIN')) {
-    if(isset($board_skin_path))
-        echo get_skin_javascript($board_skin_path, 'js');
-    if(isset($member_skin_path))
-        echo get_skin_javascript($member_skin_path, 'js');
-    if(isset($new_skin_path))
-        echo get_skin_javascript($new_skin_path, 'js');
-    if(isset($search_skin_path))
-        echo get_skin_javascript($search_skin_path, 'js');
-    if(isset($connect_skin_path))
-        echo get_skin_javascript($connect_skin_path, 'js');
-    if(isset($poll_skin_path))
-        echo get_skin_javascript($poll_skin_path, 'js');
-}
-?>
 <? if(G4_IS_MOBILE) { ?>
 <script>
     set_cookie("device_width", screen.width, 6, g4_cookie_domain);

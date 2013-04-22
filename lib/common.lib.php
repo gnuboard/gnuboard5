@@ -1928,4 +1928,44 @@ if (!function_exists('file_put_contents')) {
         }
     }
 }
+
+
+// HTML 마지막 처리
+function html_end()
+{
+    global $g4;
+
+    // 현재접속자 처리
+    $tmp_sql = " select count(*) as cnt from {$g4['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+    $tmp_row = sql_fetch($tmp_sql);
+
+    //sql_query(" lock table $g4['login_table'] write ", false);
+    if ($tmp_row['cnt']) {
+        $tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G4_TIME_YMDHIS."', lo_location = '$lo_location', lo_url = '$lo_url' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        sql_query($tmp_sql, FALSE);
+    } else {
+        $tmp_sql = " insert into {$g4['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G4_TIME_YMDHIS."', '$lo_location',  '$lo_url' ) ";
+        sql_query($tmp_sql, FALSE);
+
+        // 시간이 지난 접속은 삭제한다
+        sql_query(" delete from {$g4['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", G4_SERVER_TIME - (60 * $config['cf_login_minutes']))."' ");
+
+        // 부담(overhead)이 있다면 테이블 최적화
+        //$row = sql_fetch(" SHOW TABLE STATUS FROM `$mysql_db` LIKE '$g4['login_table']' ");
+        //if ($row['Data_free'] > 0) sql_query(" OPTIMIZE TABLE $g4['login_table'] ");
+    }
+
+    // 버퍼의 내용에서 body 태그 중간의 외부 css 파일을 CAPTURE 하여 head 태그로 이동시켜준다.
+    $buffer = ob_get_contents();
+    ob_end_clean();
+    preg_match('#<body>(.*)</body>#is', $buffer, $bodys);
+    preg_match_all('/<link[^>]+>/i', $bodys[0], $links);
+    $stylesheet = '';
+    for ($i=0; $i<count($links[0]); $i++) {
+        $link = PHP_EOL.$links[0][$i];
+        $stylesheet .= $link;
+        $buffer = preg_replace('#'.$link.'#', '', $buffer);
+    }
+    return preg_replace('#(</title>)#', "$1$stylesheet", $buffer);
+}
 ?>

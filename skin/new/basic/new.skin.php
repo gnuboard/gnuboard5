@@ -2,6 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
+<link rel="stylesheet" href="<?=$new_skin_url?>/style.css">
+
 <!-- 검색 -->
 <fieldset id="new_sch">
     <legend>상세검색</legend>
