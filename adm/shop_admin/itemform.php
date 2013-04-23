@@ -535,8 +535,8 @@ $pg_anchor ='<ul class="anchor">
                 var $img = $("#"+sit_wimg_id[1]);
                 var width = $img_display.width();
                 var height = $img_display.height();
-                if(width > 750) {
-                    var img_width = 750;
+                if(width > 700) {
+                    var img_width = 700;
                     var img_height = Math.round((img_width * height) / width);
 
                     $img_display.children("img").width(img_width).height(img_height);
