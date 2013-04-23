@@ -32,7 +32,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <dd>
             <ul>
                 <? for ($i=0; $i<count($list); $i++) { ?>
-                <li><a href='javascript:;' onclick="find_zip('<?=$list[$i][zip1]?>', '<?=$list[$i][zip2]?>', '<?=$list[$i][addr]?>');"><span class="post_code"><?=$list[$i][zip1]?>-<?=$list[$i][zip2]?></span> <?=$list[$i][addr]?> <?=$list[$i][bunji]?></a></li>
+                <li><a href='javascript:;' onclick="find_zip('<?=$list[$i]['zip1']?>', '<?=$list[$i]['zip2']?>', '<?=$list[$i]['addr']?>');"><span class="post_code"><?=$list[$i]['zip1']?>-<?=$list[$i]['zip2']?></span> <?=$list[$i]['addr']?> <?=$list[$i]['bunji']?></a></li>
                 <? } ?>
             </ul>
         </dd>
