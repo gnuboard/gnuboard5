@@ -93,7 +93,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <option value="is_name" <?=get_selected($sfl, 'is_name')?>>이름</option>
     </select>
 
-    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong>
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?=$stx?>" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 
