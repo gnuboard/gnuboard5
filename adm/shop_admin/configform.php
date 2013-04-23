@@ -645,10 +645,18 @@ $pg_anchor = '<ul class="anchor">
             if (file_exists($logo_img))
             {
                 $size = getimagesize($logo_img);
-                echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('id_logo_img', $size[0], $size[1]);\"><input type=checkbox name=logo_img_del value='1'>삭제";
-                echo "<div id='id_logo_img' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/common/logo_img' border=1></div>";
-            }
             ?>
+            <label for="logo_img_del"><span class="sound_only">로고이미지</span> 삭제</label>
+            <input type="checkbox" name="logo_img_del" value="1" id="logo_img_del">
+            <span class="scf_img_logoimg"></span>
+            <div id="logoimg" class="banner_or_img">
+                <img src="<?=G4_DATA_URL?>/common/logo_img" alt="">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="cf_logoimg_view" class="btn_frmline sit_wimg_view">로고이미지 확인</button>').appendTo('.scf_img_logoimg');
+            </script>
+            <? } ?>
         </td>
     </tr>
     <tr>
@@ -660,11 +668,19 @@ $pg_anchor = '<ul class="anchor">
             $main_img = G4_DATA_PATH."/common/main_img";
             if (file_exists($main_img))
             {
-            $size = getimagesize($main_img);
-            echo "<img src='".G4_ADMIN_URL."/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('id_main_img', $size[0], $size[1]);\"><input type=checkbox name=main_img_del value='1'>삭제";
-            echo "<div id='id_main_img' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='".G4_DATA_URL."/common/main_img' border=1></div>";
-            }
+                $size = getimagesize($main_img);
             ?>
+            <label for="logo_img_del"><span class="sound_only">메인이미지</span> 삭제</label>
+            <input type="checkbox" name="main_img_del" value="1" id="main_img_del">
+            <span class="scf_img_mainimg"></span>
+            <div id="mainimg">
+                <img src="<?=G4_DATA_URL?>/common/main_img" alt="">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="cf_logoimg_view" class="btn_frmline sit_wimg_view">로고이미지 확인</button>').appendTo('.scf_img_mainimg');
+            </script>
+            <? } ?>
         </td>
     </tr>
     <tr>
