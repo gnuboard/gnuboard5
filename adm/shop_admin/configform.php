@@ -49,7 +49,7 @@ if (!$default['de_icode_server_ip'])   $default['de_icode_server_ip'] = '211.172
 if (!$default['de_icode_server_port']) $default['de_icode_server_port'] = '7295';
 
 if ($default['de_icode_id'] && $default['de_icode_pw']) {
-    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=$default[de_icode_id]&userpw={$default['de_icode_pw']}");
+    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=$default[de_icode_id]&amp;userpw={$default['de_icode_pw']}");
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드
@@ -872,7 +872,7 @@ function byte_check(el_cont, el_byte)
         <th scope="row">아이코드 SMS 신청<br>회원가입</th>
         <td>
             <?=help("아래 링크에서 회원가입 하시면 문자 건당 16원에 제공 받을 수 있습니다.");?>
-            <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank">아이코드 회원가입</a>
+            <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
         </td>
     </tr>
      <? if ($userinfo['payment'] == 'A') { ?>
