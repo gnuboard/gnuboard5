@@ -5,6 +5,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 //    alert_close('회원정보 찾기를 기준 횟수 이상 시도하였습니다.');
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+
 <div id="find_info" class="new_win">
     <h1>회원정보 찾기</h1>
 
