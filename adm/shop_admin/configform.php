@@ -49,7 +49,7 @@ if (!$default['de_icode_server_ip'])   $default['de_icode_server_ip'] = '211.172
 if (!$default['de_icode_server_port']) $default['de_icode_server_port'] = '7295';
 
 if ($default['de_icode_id'] && $default['de_icode_pw']) {
-    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=$default[de_icode_id]&amp;userpw={$default['de_icode_pw']}");
+    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=$default[de_icode_id]&userpw={$default['de_icode_pw']}");
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드
