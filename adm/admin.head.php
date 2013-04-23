@@ -128,24 +128,6 @@ function imageview(id, w, h)
 <div id="wrapper">
 
     <ul id="qnb">
-        <li>
-            <a href="<?=G4_ADMIN_URL?>/member_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_mb.jpg" alt="" width="40" height="40">
-                회원
-            </a>
-        </li>
-        <li>
-            <a href="<?=G4_ADMIN_URL?>/board_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_board.jpg" alt="" width="40" height="40">
-                게시판
-            </a>
-        </li>
-        <li>
-            <a href="<?=G4_ADMIN_URL?>/visit_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_log.jpg" alt="" width="40" height="40">
-                접속자
-            </a>
-        </li>
         <? // ### 쇼핑몰 사용일 때만?>
         <li>
             <a href="<?=G4_ADMIN_URL?>/shop_admin/orderlist.php">
@@ -172,6 +154,24 @@ function imageview(id, w, h)
             </a>
         </li>
         <? // ### 쇼핑몰 사용일 때만 끝 ?>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/member_list.php">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_mb.jpg" alt="" width="40" height="40">
+                회원
+            </a>
+        </li>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/board_list.php">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_board.jpg" alt="" width="40" height="40">
+                게시판
+            </a>
+        </li>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/visit_list.php">
+                <img src="<?=G4_ADMIN_URL?>/img/qnb_log.jpg" alt="" width="40" height="40">
+                접속자
+            </a>
+        </li>
     </ul>
 
     <div id="container">
