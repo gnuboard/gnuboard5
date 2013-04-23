@@ -1,4 +1,6 @@
 <?
+if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
+
 $menu['menu400'] = array (
     array('400000', '쇼핑몰관리', G4_ADMIN_URL.'/shop_admin/', 'shop_config'),
     array('400100', '쇼핑몰설정', G4_ADMIN_URL.'/shop_admin/configform.php', 'scf_config'),
