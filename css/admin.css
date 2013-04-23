@@ -378,6 +378,8 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #scf_cardtest_tip dd {padding:0;overflow:hidden}
 .scf_cardtest_tip {display:none}
 
+.scf_img {display:none}
+
 #scf_sms_pre h3 {padding:10px 0 0}
 #scf_sms_pre dl {margin:10px 0 0;zoom:1}
 #scf_sms_pre dl:after {display:block;visibility:hidden;clear:both;content:""}
