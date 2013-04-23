@@ -9,7 +9,7 @@ if ($od_sms_ipgum_check)
 {
 	if ($od_bank_account && $od_receipt_bank && $od_deposit_name)
 	{
-		$sms_contents = $default['de_sms_cont3'];
+		$sms_contents = $default['de_sms_cont4'];
 		$sms_contents = preg_replace("/{이름}/", $od_name, $sms_contents);
 		$sms_contents = preg_replace("/{입금액}/", number_format($od_receipt_bank), $sms_contents);
 		$sms_contents = preg_replace("/{주문번호}/", $od_id, $sms_contents);
@@ -19,7 +19,7 @@ if ($od_sms_ipgum_check)
 		{
 			$SMS = new SMS;
 			$SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
-			$SMS->Add($receive_number, $send_number, $default['de_icode_id'], stripslashes($sms_contents), "");
+			$SMS->Add($receive_number, $send_number, $default['de_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_contents)), "");
 			$SMS->Send();
 		}
 	}
@@ -29,7 +29,7 @@ if ($od_sms_baesong_check)
 {
 	if ($dl_id && $od_invoice)
 	{
-		$sms_contents = $default['de_sms_cont4'];
+		$sms_contents = $default['de_sms_cont5'];
 		$sms_contents = preg_replace("/{이름}/", $od_name, $sms_contents);
 		$sql = " select dl_company from $g4[shop_delivery_table] where dl_id = '$dl_id' ";
 		$row = sql_fetch($sql);
@@ -42,7 +42,7 @@ if ($od_sms_baesong_check)
 		{
 			$SMS = new SMS;
 			$SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
-			$SMS->Add($receive_number, $send_number, $default['de_icode_id'], stripslashes($sms_contents), "");
+			$SMS->Add($receive_number, $send_number, $default['de_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_contents)), "");
 			$SMS->Send();
 		}
 	}
