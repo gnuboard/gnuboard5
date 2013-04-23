@@ -45,11 +45,17 @@ if (!function_exists("get_sock")) {
     }
 }
 
+if (!isset($default['de_sms_cont5'])) {
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    ADD `de_sms_cont5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_sms_cont4`,
+                    ADD `de_sms_use5` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_sms_use4` ", true);
+}
+
 if (!$default['de_icode_server_ip'])   $default['de_icode_server_ip'] = '211.172.232.124';
 if (!$default['de_icode_server_port']) $default['de_icode_server_port'] = '7295';
 
 if ($default['de_icode_id'] && $default['de_icode_pw']) {
-    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=$default[de_icode_id]&amp;userpw={$default['de_icode_pw']}");
+    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$default['de_icode_id'].'&userpw='.$default['de_icode_pw']);
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드
@@ -762,12 +768,12 @@ $(function() {
         var sit_wimg_id = $(this).attr("id").split("_");
         var $img_display = $("#"+sit_wimg_id[1]);
 
-        if(sit_wimg_id[1].search("limg") > -1) {
+        if(sit_wimg_id[1].search("mainimg") > -1) {
             var $img = $("#"+sit_wimg_id[1]);
             var width = $img_display.width();
             var height = $img_display.height();
-            if(width > 750) {
-                var img_width = 750;
+            if(width > 700) {
+                var img_width = 700;
                 var img_height = Math.round((img_width * height) / width);
 
                 $img_display.children("img").width(img_width).height(img_height);
@@ -786,7 +792,7 @@ $(function() {
         var $img_display = $(this).parents(".banner_or_img");
         var id = $img_display.attr("id");
         $img_display.toggle();
-        var $button = $("#it_"+id+"_view");
+        var $button = $("#cf_"+id+"_view");
         $button.text($button.text().replace("닫기", "확인"));
     });
 });
@@ -919,7 +925,7 @@ function byte_check(el_cont, el_byte)
         <th scope="row">충전 잔액</th>
         <td colspan="3">
             <?=number_format($userinfo['coin'])?> 원.
-            <input type="button" class="btn1" value="충전하기" onclick="window.open('http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$sms4['cf_id']?>&amp;icode_passwd=<?=$sms4['cf_pw']?>','icode_payment', 'scrollbars=1,resizable=1')">
+            <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$default['de_icode_id']?>&amp;icode_passwd=<?=$default['de_icode_pw']?>" target="_blank" class="btn_frmline" onclick="window.open(this.href,'icode_payment', 'scrollbars=1,resizable=1'); return false;">충전하기</a>
         </td>
     </tr>
     <tr>
@@ -929,25 +935,6 @@ function byte_check(el_cont, el_byte)
         </td>
     </tr>
     <? } ?>
-    <!-- <tr>
-        <th scope="row">아이코드 서버 IP</th>
-        <td colspan="3">
-            <?=help("아이코드에서 문자메세지를 발송하는 서버의 IP 를 입력하십시오.\n\n기본값은 211.172.232.124 입니다.");?>
-            <input type="text" name="de_icode_server_ip" value="<?=$default[de_icode_server_ip]?$default[de_icode_server_ip]:"211.172.232.124";?>"size="20">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">아이코드 서버 Port</th>
-        <td colspan="3">
-            <select id="de_icode_server_port" name="de_icode_server_port">
-                <option value="">사용안함
-                <option value="7295">충전식
-                <option value="7296">정액제
-            </select>
-            <script>document.getElementById('de_icode_server_port').value="<?=$default[de_icode_server_port]?>";</script>
-        </td>
-    </tr>
-     -->
      </tbody>
     </table>
 
@@ -968,7 +955,7 @@ function byte_check(el_cont, el_byte)
 
         <div id="scf_sms">
             <?
-            $scf_sms_title = array (1=>"회원가입시 고객님께 발송", "주문시 관리자에게 발송", "입금확인시 고객님께 발송", "상품배송시 고객님께 발송");
+            $scf_sms_title = array (1=>"회원가입시 고객님께 발송", "주문시 고객님께 발송", "주문시 관리자에게 발송", "입금확인시 고객님께 발송", "상품배송시 고객님께 발송");
             for ($i=1; $i<=5; $i++) {
             ?>
             <section class="scf_sms_box">
@@ -976,7 +963,7 @@ function byte_check(el_cont, el_byte)
                 <label for="de_sms_use<?=$i?>"><span class="sound_only"><?=$scf_sms_title?></span>사용</label>
                 <input type="checkbox" name="de_sms_use<?=$i?>" value="1" id="de_sms_use<?=$i?>" <?=($default["de_sms_use".$i] ? " checked" : "")?>>
                 <div class="scf_sms_img">
-                    <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');"><?=$default["de_sms_cont".$i]?></textarea>
+                    <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');"><?=$default['de_sms_cont'.$i]?></textarea>
                 </div>
                 <span id="byte<?=$i?>" class="scf_sms_cnt">0 / 80 바이트</span>
             </section>
