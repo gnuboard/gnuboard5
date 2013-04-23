@@ -146,6 +146,32 @@ function imageview(id, w, h)
                 접속자
             </a>
         </li>
+        <? // ### 쇼핑몰 사용일 때만?>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/shop_admin/orderlist.php">
+                <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sodr.jpg" alt="" width="40" height="40">
+                주문관리
+            </a>
+        </li>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/shop_admin/itemlist.php">
+                <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sit.jpg" alt="" width="40" height="40">
+                상품관리
+            </a>
+        </li>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/shop_admin/itemqalist.php">
+                <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sqna.jpg" alt="" width="40" height="40">
+                상품문의
+            </a>
+        </li>
+        <li>
+            <a href="<?=G4_ADMIN_URL?>/shop_admin/itempslist.php">
+                <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sps.jpg" alt="" width="40" height="40">
+                사용후기
+            </a>
+        </li>
+        <? // ### 쇼핑몰 사용일 때만 끝 ?>
     </ul>
 
     <div id="container">
