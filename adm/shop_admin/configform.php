@@ -45,6 +45,12 @@ if (!function_exists("get_sock")) {
     }
 }
 
+if (!isset($default['de_sms_cont5'])) {
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    ADD `de_sms_cont5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_sms_cont4`,
+                    ADD `de_sms_use5` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_sms_use4` ", true);
+}
+
 if (!$default['de_icode_server_ip'])   $default['de_icode_server_ip'] = '211.172.232.124';
 if (!$default['de_icode_server_port']) $default['de_icode_server_port'] = '7295';
 
@@ -949,7 +955,7 @@ function byte_check(el_cont, el_byte)
 
         <div id="scf_sms">
             <?
-            $scf_sms_title = array (1=>"회원가입시 고객님께 발송", "주문시 관리자에게 발송", "입금확인시 고객님께 발송", "상품배송시 고객님께 발송");
+            $scf_sms_title = array (1=>"회원가입시 고객님께 발송", "주문시 고객님께 발송", "주문시 관리자에게 발송", "입금확인시 고객님께 발송", "상품배송시 고객님께 발송");
             for ($i=1; $i<=5; $i++) {
             ?>
             <section class="scf_sms_box">
@@ -957,7 +963,7 @@ function byte_check(el_cont, el_byte)
                 <label for="de_sms_use<?=$i?>"><span class="sound_only"><?=$scf_sms_title?></span>사용</label>
                 <input type="checkbox" name="de_sms_use<?=$i?>" value="1" id="de_sms_use<?=$i?>" <?=($default["de_sms_use".$i] ? " checked" : "")?>>
                 <div class="scf_sms_img">
-                    <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');"><?=$default["de_sms_cont".$i]?></textarea>
+                    <textarea id="de_sms_cont<?=$i?>" name="de_sms_cont<?=$i?>" ONKEYUP="byte_check('de_sms_cont<?=$i?>', 'byte<?=$i?>');"><?=$default['de_sms_cont'.$i]?></textarea>
                 </div>
                 <span id="byte<?=$i?>" class="scf_sms_cnt">0 / 80 바이트</span>
             </section>
