@@ -2,8 +2,6 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
-
 <script src="<?=G4_JS_URL?>/jquery.register_form.js"></script>
 
 <form name="fregisterform" id="fregisterform" action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
@@ -42,8 +40,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
-        <? if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } ?>
-        <input type="text" name="mb_name" value="<?=$member['mb_name']?>" id="reg_mb_name" class="frm_input hangul nospace <?=$required?> <?=$readonly?>" <?=$required?> <?=$readonly?>>
+        <? echo $config['cf_kcpcert_use'] ? '<span class="frm_info">이름과 휴대폰번호는 아래의 휴대폰 본인확인 기능을 사용하여 입력해 주십시오.</span>' : ''; ?>
+        <? echo ($config['cf_kcpcert_use']==-1) ? '<span class="frm_info">테스트의 경우 이동통신사는 반드시 KT를 선택해 주십시오. 나머지 항목은 임의로 입력하시면 됩니다.</span>' : ''; ?>
+        <input type="text" name="mb_name" value="<?=$member['mb_name']?>" id="reg_mb_name" class="frm_input nospace <?=$required?> <?=$readonly?>" <?=$required?> <?=$readonly?>>
     </td>
 </tr>
 <? if ($req_nick) { ?>
@@ -89,10 +88,20 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </tr>
 <? } ?>
 
-<? if ($config['cf_use_hp']) { ?>
+<? if ($config['cf_use_hp'] || $config['cf_kcpcert_use']) { ?>
 <tr>
-    <th scope="row"><label for="reg_mb_hp">핸드폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
-    <td><input type="text" name="mb_hp" value="<?=$member[mb_hp]?>" id="reg_mb_hp" class="frm_input <?=$config['cf_req_hp']?"required":"";?>" maxlength="20" <?=$config['cf_req_hp']?"required":"";?>></td>
+    <th scope="row"><label for="reg_mb_hp">휴대폰번호<? if ($config['cf_req_hp']) {?><strong class="sound_only">필수</strong><?}?></label></th>
+    <td>
+        <? if ($config['cf_kcpcert_use']) {?>
+        <span class="frm_info">휴대폰번호는 휴대폰 본인확인 기능을 이용하여 입력하세요.</span>
+        <?}?>
+        <input type="text" name="mb_hp" value="<?=$member[mb_hp]?>" id="reg_mb_hp" <?=($config['cf_req_hp']||$config['cf_kcpcert_use'])?"required":"";?> class="frm_input <?=($config['cf_req_hp']||$config['cf_kcpcert_use'])?"required":"";?>" <?=$config['cf_kcpcert_use']?"readonly":"";?>  maxlength="20">
+        <? if ($config['cf_kcpcert_use']) {?>
+        <input type="hidden" name="old_mb_hp" value="<?=$member['mb_hp']?>">
+        <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰 본인확인</button>
+        <noscript>휴대폰 본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
+        <?}?>
+    </td>
 </tr>
 <? } ?>
 
@@ -222,12 +231,28 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </div>
 </form>
 
+
+<? 
+if ($config['cf_kcpcert_use']) {
+    // 휴대폰인증 form
+    include_once(G4_KCP_PATH.'/kcpcert_form.php');
+?>
+
 <script>
 $(function() {
     $("#reg_zip_find").css("display", "inline-block");
     $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
-});
 
+    // 휴대폰인증
+    $('#win_kcpcert').click(function() {
+        auth_type_check($("#reg_mb_name").val());
+        return false;
+    });
+});
+</script>
+<?}?>
+
+<script>
 // submit 최종 폼체크
 function fregisterform_submit(f)
 {
@@ -271,12 +296,14 @@ function fregisterform_submit(f)
             return false;
         }
 
+        /*
         var pattern = /([^가-힣\x20])/i;
         if (pattern.test(f.mb_name.value)) {
             alert('이름은 한글로 입력하십시오.');
             f.mb_name.select();
             return false;
         }
+        */
     }
 
     // 별명 검사
@@ -316,6 +343,31 @@ function fregisterform_submit(f)
             return false;
         }
     }
+
+    <? if ($config['cf_kcpcert_use']) { ?>
+    var error = "";
+    $.ajax({
+        url: "<?=G4_KCP_URL?>/kcpcert.ajax.php",
+        type: "POST",
+        data: {
+            "w":        f.w.value,
+            "mb_name":  f.mb_name.value,
+            "mb_hp":    f.mb_hp.value,
+            "old_mb_hp":f.old_mb_hp.value
+        },
+        dataType: "json",
+        async: false,
+        cache: false,
+        success: function(data, textStatus) {
+            error = data.error;
+        }
+    });
+
+    if (error) {
+        alert(error);
+        return false;
+    }
+    <?}?>
 
     <? echo chk_captcha_js(); ?>
 
