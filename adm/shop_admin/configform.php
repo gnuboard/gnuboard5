@@ -654,7 +654,7 @@ $pg_anchor = '<ul class="anchor">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
             <script>
-            $('<button type="button" id="cf_logoimg_view" class="btn_frmline sit_wimg_view">로고이미지 확인</button>').appendTo('.scf_img_logoimg');
+            $('<button type="button" id="cf_logoimg_view" class="btn_frmline scf_img_view">로고이미지 확인</button>').appendTo('.scf_img_logoimg');
             </script>
             <? } ?>
         </td>
@@ -673,12 +673,12 @@ $pg_anchor = '<ul class="anchor">
             <label for="logo_img_del"><span class="sound_only">메인이미지</span> 삭제</label>
             <input type="checkbox" name="main_img_del" value="1" id="main_img_del">
             <span class="scf_img_mainimg"></span>
-            <div id="mainimg">
+            <div id="mainimg" class="banner_or_img">
                 <img src="<?=G4_DATA_URL?>/common/main_img" alt="">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
             <script>
-            $('<button type="button" id="cf_logoimg_view" class="btn_frmline sit_wimg_view">로고이미지 확인</button>').appendTo('.scf_img_mainimg');
+            $('<button type="button" id="cf_mainimg_view" class="btn_frmline scf_img_view">메인이미지 확인</button>').appendTo('.scf_img_mainimg');
             </script>
             <? } ?>
         </td>
@@ -753,6 +753,45 @@ $pg_anchor = '<ul class="anchor">
     </tbody>
     </table>
 </section>
+
+<? if (file_exists($logo_img) || file_exists($main_img)) { ?>
+<script>
+$(".banner_or_img").addClass("scf_img");
+$(function() {
+    $(".scf_img_view").bind("click", function() {
+        var sit_wimg_id = $(this).attr("id").split("_");
+        var $img_display = $("#"+sit_wimg_id[1]);
+
+        if(sit_wimg_id[1].search("limg") > -1) {
+            var $img = $("#"+sit_wimg_id[1]);
+            var width = $img_display.width();
+            var height = $img_display.height();
+            if(width > 750) {
+                var img_width = 750;
+                var img_height = Math.round((img_width * height) / width);
+
+                $img_display.children("img").width(img_width).height(img_height);
+            }
+        }
+
+        $img_display.toggle();
+
+        if($img_display.is(":visible")) {
+            $(this).text($(this).text().replace("확인", "닫기"));
+        } else {
+            $(this).text($(this).text().replace("닫기", "확인"));
+        }
+    });
+    $(".sit_wimg_close").bind("click", function() {
+        var $img_display = $(this).parents(".banner_or_img");
+        var id = $img_display.attr("id");
+        $img_display.toggle();
+        var $button = $("#it_"+id+"_view");
+        $button.text($button.text().replace("닫기", "확인"));
+    });
+});
+</script>
+<? } ?>
 
 <script>
 function byte_check(el_cont, el_byte)
