@@ -574,37 +574,27 @@ $pg_anchor ='<ul class="anchor">
     <?=$pg_anchor?>
 
     <p>
-        오른쪽 등록된 전체상품 목록에서 상품을 더블클릭하면 선택된 관련상품 목록에 추가됩니다.<br>
-        예를 들어, A 상품에 B 상품을 관련상품으로 등록하면, B 상품에도 A 상품이 관련상품으로 자동 추가되며, <strong>확인 버튼을 누르셔야 정상 반영됩니다.</strong>
+        등록된 전체상품 목록에서 상품분류를 선택하면 해당 상품 리스트가 연이어 나타납니다.<br>
+        상품리스트에서 관련 상품으로 추가하길 원하는 상품을 마우스 더블클릭하거나 키보드 스페이스바를 누르면, 선택된 관련상품 목록에 <strong>함께</strong> 추가됩니다.<br>
+        예를 들어, A 상품에 B 상품을 관련상품으로 등록하면 B 상품에도 A 상품이 관련상품으로 자동 추가되며, <strong>확인 버튼을 누르셔야 정상 반영됩니다.</strong><br>
+        선택된 관련상품 목록에서 상품을 마우스 더블클릭하거나 키보드 스페이스바를 누르면 선택된 관련상품 목록에서 제거됩니다.
     </p>
 
     <section class="compare_left">
         <h3>등록된 전체상품 목록</h3>
-        <span id="add_span" style="line-height:200%"></span>
-        <script>
-        function search_relation(fld) {
-            if (fld.value) {
-                $.post(
-                    './itemformrelation.php',
-                    { it_id: '<?=$it_id?>', ca_id: fld.value },
-                    function(data) {
-                        $("#relation").html(data);
-                    }
-                );
-            }
-        }
-        </script>
         <label for="sch_relation" class="sound_only">상품분류</label>
-        <select id="sch_relation" onchange="search_relation(this)">
-            <option value=''>분류별 관련상품</option>
-            <?
-                $sql = " select ca_id, ca_name from {$g4['shop_category_table']} where length(ca_id) = 2 order by ca_id ";
-                $result = sql_query($sql);
-                for ($i=0; $row=sql_fetch_array($result); $i++)  {
-                    echo "<option value='{$row['ca_id']}'>{$row['ca_name']}\n";
-                }
-            ?>
-        </select><br>
+        <span class="sit_relation_selwrap">
+            <select id="sch_relation" onchange="search_relation(this)">
+                <option value=''>분류별 관련상품</option>
+                <?
+                    $sql = " select ca_id, ca_name from {$g4['shop_category_table']} where length(ca_id) = 2 order by ca_id ";
+                    $result = sql_query($sql);
+                    for ($i=0; $row=sql_fetch_array($result); $i++)  {
+                        echo "<option value='{$row['ca_id']}'>{$row['ca_name']}\n";
+                    }
+                ?>
+            </select>
+        </span>
         <select id="relation" class="sit_relation_list" size="8" onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);" onkeyup="relation_add(this);">
         <?
         /*
@@ -629,6 +619,23 @@ $pg_anchor ='<ul class="anchor">
         */
         ?>
         </select>
+        <div>
+            <strong class="sound_only">현재 활성화 된 상품</strong>
+            <span id="add_span"></span>
+        </div>
+        <script>
+        function search_relation(fld) {
+            if (fld.value) {
+                $.post(
+                    './itemformrelation.php',
+                    { it_id: '<?=$it_id?>', ca_id: fld.value },
+                    function(data) {
+                        $("#relation").html(data);
+                    }
+                );
+            }
+        }
+        </script>
         <script>
 
             // 김선용 2006.10
@@ -722,9 +729,7 @@ $pg_anchor ='<ul class="anchor">
 
     <section class="compare_right">
         <h3>선택된 관련상품 목록</h3>
-        <span id="sel_span" style="line-height:200%"></span>
-        ※ 상품 선택후 더블클릭하면 삭제됨<br>
-        ※ 한 번 클릭시 상품이미지/상품금액 출력<br>
+        <span class="sit_relation_selwrap"></span>
         <select name="relationselect" size="8" class="sit_relation_selected" onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);" onkeyup="relation_del(this);">
         <?
         $str = array();
@@ -752,7 +757,11 @@ $pg_anchor ='<ul class="anchor">
         $str = implode(",", $str);
         ?>
         </select>
-        <input type='hidden' name='it_list' value='<?=$str?>'>
+        <div>
+            <strong class="sound_only">현재 활성화 된 상품</strong>
+            <span id="sel_span"></span>
+        </div>
+        <input type="hidden" name="it_list" value="<?=$str?>">
     </section>
 
 </section>
@@ -760,11 +769,14 @@ $pg_anchor ='<ul class="anchor">
 <section id="anc_sitfrm_event" class="cbox compare_wrap">
     <h2>관련이벤트</h2>
     <?=$pg_anchor?>
+    <p>
+        등록된 전체이벤트 목록에서 추가하길 원하는 이벤트를 마우스 더블클릭하거나 키보드 스페이스바를 누르면, 선택된 관련이벤트 목록에 추가됩니다.<br>
+        선택된 관련이벤트 목록에서 이벤트 선택 후 마우스 더블클릭하거나 키보드 스페이스바를 누르면 선택된 관련이벤트 목록에서 제거됩니다.
+    </p>
 
     <script> var eventselect = new Array(); </script>
     <section class="compare_left">
         <h3>등록된 전체이벤트 목록</h3>
-        이벤트 선택후 <FONT COLOR="#0E87F9">더블클릭하면 왼쪽에 추가됨</FONT><br>
         <select size="8" class="sit_relation_list" ondblclick="event_add(this);" onkeyup="event_add(this);">
         <?
         $sql = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
@@ -846,7 +858,6 @@ $pg_anchor ='<ul class="anchor">
 
     <section class="compare_right">
         <h3>선택된 관련이벤트 목록</h3>
-        이벤트 선택후 <FONT COLOR="#FF6600">더블클릭하면 삭제됨</FONT><br>
         <select name="eventselect" class="sit_relation_selected" size="8" ondblclick="event_del(this);" onkeyup="event_del(this);">
         <?
         $str = "";
@@ -876,21 +887,12 @@ $pg_anchor ='<ul class="anchor">
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_5">
-        <col class="grid_3">
-        <col class="grid_5">
+        <col>
     </colgroup>
     <tbody>
     <tr>
-        <!--김혜련 2013-04-02 선택된 목록 / 등록된 목록 넣을 곳-->
-        <th scope="row"></th>
-        <td></td>
-        <th scope="row"></th>
-        <td></td>
-    </tr>
-    <tr>
         <th scope="row">상단이미지</th>
-        <td colspan="3">
+        <td>
             <?=help("상품상세설명 페이지 상단에 출력하는 이미지입니다.");?>
             <input type="file" name="it_himg">
             <?
@@ -906,7 +908,7 @@ $pg_anchor ='<ul class="anchor">
     </tr>
     <tr>
         <th scope="row">하단이미지</th>
-        <td colspan="3">
+        <td>
             <?=help("상품상세설명 페이지 하단에 출력하는 이미지입니다.");?>
             <input type="file" name="it_timg">
             <?
@@ -922,16 +924,16 @@ $pg_anchor ='<ul class="anchor">
     </tr>
     <tr>
         <th scope="row">상품상단내용</th>
-        <td colspan="3"><?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?><?=editor_html('it_head_html', $it['it_head_html']);?></td>
+        <td><?=help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150);?><?=editor_html('it_head_html', $it['it_head_html']);?></td>
     </tr>
     <tr>
         <th scope="row">상품하단내용</th>
-        <td colspan="3"><?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?><?=editor_html('it_tail_html', $it['it_tail_html']);?></td>
+        <td><?=help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150);?><?=editor_html('it_tail_html', $it['it_tail_html']);?></td>
     </tr>
     <? if ($w == "u") { ?>
     <tr>
         <th scope="row">입력일시</th>
-        <td colspan="3">
+        <td>
             <?=help("상품을 처음 입력(등록)한 시간입니다.");?>
             <?=$it['it_time']?>
         </td>
@@ -1042,8 +1044,6 @@ function categorychange(f)
 }
 
 categorychange(document.fitemform);
-
-/*document.fitemform.it_name.focus(); 포커스제거*/
 </script>
 
 <?
