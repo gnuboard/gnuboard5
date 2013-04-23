@@ -65,7 +65,7 @@ $result = sql_query($sql);
         <td class="td_mng">
             <a href="<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$row['fm_id']?>"><img src="./img/icon_view.jpg" alt="<?=stripslashes($row['fm_subject']) ?> 보기"></a>
             <a href="./faqmasterform.php?w=u&amp;fm_id=<?=$row['fm_id']?>"><img src="./img/icon_mod.jpg" alt="<?=stripslashes($row['fm_subject']) ?> 수정"></a>
-            <a href="javascript:del('./faqmasterformupdate.php?w=d&amp;fm_id=<?=$row['fm_id']?>');"><img src="./icon_del.jpg" alt="<?=stripslashes($row['fm_subject']) ?> 삭제"></a>
+            <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?=$row['fm_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=stripslashes($row['fm_subject']) ?> 삭제"></a>
         </td>
     </tr>
     <?

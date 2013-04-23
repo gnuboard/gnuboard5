@@ -193,7 +193,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="<?=$href?>"><img src="./img/icon_view.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 보기"></a>
             <a href="javascript:_copy('<?=$row['it_id']?>', '<?=$row['ca_id']?>');"><img src="./img/icon_copy.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 복사"></a>
             <a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 수정"></a>
-            <a href="javascript:del('./itemformupdate.php?w=d&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>');"><img src="./img/icon_del.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 삭제"></a>
+            <a href="./itemformupdate.php?w=d&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=htmlspecialchars2(cut_str($row['it_name'],250, ""))?> 삭제"></a>
         </td>
     </tr>
     <tr>

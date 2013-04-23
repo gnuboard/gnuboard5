@@ -58,7 +58,7 @@ $result = sql_query($sql);
         <td class="td_mng">
             <a href="<?=G4_SHOP_URL?>/event.php?ev_id=<?=$row['ev_id']?>"><img src="./img/icon_view.jpg" alt="<?=$row['ev_subject']?> 보기"></a>
             <a href="./itemeventform.php?w=u&amp;ev_id=<?=$row['ev_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$row['ev_subject']?> 수정"></a>
-            <a href="javascript:del('./itemeventformupdate.php?w=d&amp;ev_id=<?=$row['ev_id']?>');"><img src="./img/icon_del.jpg" alt="<?=$row['ev_subject']?> 삭제"></a>
+            <a href="./itemeventformupdate.php?w=d&amp;ev_id=<?=$row['ev_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=$row['ev_subject']?> 삭제"></a>
         </td>
     </tr>
 

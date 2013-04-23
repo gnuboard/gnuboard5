@@ -244,16 +244,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
 <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
 
-<script>
-function delete_confirm()
-{
-    if(confirm('주문내역을 삭제하시겠습니까?'))
-        return true;
-    else
-        return false;
-}
-</script>
-
 <?
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -47,7 +47,7 @@ $result = sql_query($sql);
         <td class="td_mng">
             <a href="<?=$row['dl_url']?>" target="_blank"><img src="./img/icon_view.jpg" alt="<?=stripslashes($row['dl_company'])?> 홈페이지"></a>
             <a href="./deliverycodeform.php?w=u&amp;dl_id=<?=$row['dl_id']?>"><img src="./img/icon_mod.jpg" alt="<?=stripslashes($row['dl_company'])?> 수정"></a>
-            <a href="javascript:del('./deliverycodeformupdate.php?w=d&amp;dl_id=<?=$row['dl_id']?>');"><img src="./img/icon_del.jpg" alt="<?=stripslashes($row['dl_company'])?> 삭제"></a>
+            <a href="./deliverycodeformupdate.php?w=d&amp;dl_id=<?=$row['dl_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=stripslashes($row['dl_company'])?> 삭제"></a>
         </td>
     </tr>
     <?
