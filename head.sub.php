@@ -37,12 +37,12 @@ header("Pragma: no-cache"); // HTTP/1.0
 <meta name="HandheldFriendly" content="true">
 <meta name="format-detection" content="telephone=no">
 <? } ?>
+<title><?=$g4_head_title?></title>
 <? if (defined('G4_IS_ADMIN')) { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css">
 <? } else { ?>
 <link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=(G4_IS_MOBILE?'mobile':'default')?>.css">
 <?}?>
-<title><?=$g4_head_title?></title>
 <!-- <meta http-equiv="imagetoolbar" content="no"> -->
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
 <!--[if lte IE 8]>

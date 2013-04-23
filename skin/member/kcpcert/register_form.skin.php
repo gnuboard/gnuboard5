@@ -2,6 +2,8 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+
 <script src="<?=G4_JS_URL?>/jquery.register_form.js"></script>
 
 <form id="fregisterform" name="fregisterform" method="post" action="<?=$register_action_url?>" onsubmit="return fregisterform_submit(this);" enctype="multipart/form-data" autocomplete="off">

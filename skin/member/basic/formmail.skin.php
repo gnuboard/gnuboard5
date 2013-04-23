@@ -2,6 +2,8 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+
 <div id="formmail" class="new_win">
     <h1><?=$name?>님께 메일보내기</h1>
 

@@ -2,6 +2,8 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+
 <div id="reg_result">
 
     <div id="reg_result_logo"><img src="<?=$member_skin_url?>/img/reg_result_logo.jpg" alt=""></div>

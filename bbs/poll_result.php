@@ -85,6 +85,14 @@ for ($i=0; $row2=sql_fetch_array($result); $i++) {
     $list3[$i]['subject'] = cut_str($row2['po_subject'],60,"…");
 }
 
+if (G4_IS_MOBILE) {
+    $poll_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/poll/'.$skin_dir;
+    $poll_skin_url  = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/poll/'.$skin_dir;
+} else {
+    $poll_skin_path = G4_SKIN_PATH.'/poll/'.$skin_dir;
+    $poll_skin_url  = G4_SKIN_URL.'/poll/'.$skin_dir;
+}
+
 include_once(G4_PATH.'/head.sub.php');
 
 if (!file_exists($poll_skin_path.'/poll_result.skin.php')) die('skin error');

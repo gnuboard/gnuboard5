@@ -11,6 +11,8 @@ else {
 }
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+
 <div id="memo_view" class="new_win">
     <h1><?=$g4['title']?></h1>
     <ul class="new_win_ul">

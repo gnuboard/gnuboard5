@@ -65,6 +65,8 @@ $g4['title'] = '회원정보 찾기 결과';
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+
 <div id="find_info_result" class="new_win">
     <h1>회원정보 찾기 결과</h1>
 
