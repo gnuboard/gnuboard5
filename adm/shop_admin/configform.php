@@ -925,7 +925,7 @@ function byte_check(el_cont, el_byte)
         <th scope="row">충전 잔액</th>
         <td colspan="3">
             <?=number_format($userinfo['coin'])?> 원.
-            <input type="button" class="btn1" value="충전하기" onclick="window.open('http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$default['de_icode_id']?>&amp;icode_passwd=<?=$default['de_icode_pw']?>','icode_payment', 'scrollbars=1,resizable=1')">
+            <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?=$default['de_icode_id']?>&amp;icode_passwd=<?=$default['de_icode_pw']?>" class="btn1" target="_blank" onclick="window.open(this.href,'icode_payment', 'scrollbars=1,resizable=1'); return false;">충전하기</a>
         </td>
     </tr>
     <tr>
