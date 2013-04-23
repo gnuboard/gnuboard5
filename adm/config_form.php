@@ -449,7 +449,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="cf_use_tel" value="1" id="cf_use_tel" <?=$config['cf_use_tel']?'checked':'';?>> <label for="cf_use_tel">보이기</label>
             <input type="checkbox" name="cf_req_tel" value="1" id="cf_req_tel" <?=$config['cf_req_tel']?'checked':'';?>> <label for="cf_req_tel">필수입력</label>
         </td>
-        <th scope="row">핸드폰 입력</th>
+        <th scope="row">휴대폰번호 입력</th>
         <td>
             <input type="checkbox" name="cf_use_hp" value="1" id="cf_use_hp" <?=$config['cf_use_hp']?'checked':'';?>> <label for="cf_use_hp">보이기</label>
             <input type="checkbox" name="cf_req_hp" value="1" id="cf_req_hp" <?=$config['cf_req_hp']?'checked':'';?>> <label for="cf_req_hp">필수입력</label>
@@ -476,20 +476,48 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="cf_kcpcert_use">휴대폰 본인확인<br>서비스 사용</label></th>
         <td colspan="3">
-            <?=help('테스트의 경우에는 이동통신사를 KT로 선택하세요.')?>
             <select id="cf_kcpcert_use" name="cf_kcpcert_use">
-                <option value="0"<?=get_selected($config['cf_kcpcert_use'], '0')?>>미사용
-                <option value="1"<?=get_selected($config['cf_kcpcert_use'], '1')?>>실제사용
+                <option value="0"<?=get_selected($config['cf_kcpcert_use'], '0')?>>사용안함
+                <option value="1"<?=get_selected($config['cf_kcpcert_use'], '1')?>>실서비스
                 <option value="-1"<?=get_selected($config['cf_kcpcert_use'], '-1')?>>테스트
             </select>
+            <script>
+            $(function(){
+                $("#cf_kcpcert_use").change(function(){
+                    switch (parseInt(this.value)) {
+                        case 0 : 
+                            $("#kcpcert1").hide();
+                            $("#kcpcert2").hide();
+                            break;
+                        case 1 : 
+                            $("#kcpcert1").show();
+                            $("#kcpcert2").show();
+                            break;
+                        case -1 : 
+                            $("#kcpcert1").hide();
+                            $("#kcpcert2").show();
+                            break;
+                    }
+                   
+                }).trigger("change");
+            });
+            </script>
         </td>
     </tr>
-    <tr>
+    <tr id="kcpcert1" style="display:none;">
         <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
-        <td><?=help('휴대폰 본인확인 서비스에서 사용하는 코드입니다.')?>
-            <input type="text" name="cf_kcpcert_site_cd" value="<?=$config['cf_kcpcert_site_cd']?>" id="cf_kcpcert_site_cd" class="frm_input" size="10"></td>
-        <th scope="row"><label for='cf_adult_check'>성인인증 사용</label></th>
-        <td><?=help('휴대폰 본인확인 서비스로 성인인증을 사용할수 있습니다.')?>
+        <td colspan="3">
+            <?=help('휴대폰 본인확인 서비스에서 사용하는 코드입니다.')?>
+            <input type="text" name="cf_kcpcert_site_cd" value="<?=$config['cf_kcpcert_site_cd']?>" id="cf_kcpcert_site_cd" class="frm_input" size="10">
+            <div>
+                실서비스시에는 아래 링크를 통하여 KCP에서 휴대폰 본인인증 상점코드를 신청한후 사용하시면 됩니다.<br>
+                <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank">http://sir.co.kr/main/g4s/kcpcert.html</a>
+            </div>
+        </td>
+    </tr>
+    <tr id="kcpcert2" style="display:none;">
+        <th scope="row"><label for='cf_adult_check'>휴대폰 성인인증<br>기능 사용</label></th>
+        <td colspan="3"><?=help('휴대폰 본인확인 서비스로 성인인증 기능을 사용 할 수 있습니다.')?>
             <input type="checkbox" name="cf_adult_check" value="1" id="cf_adult_check" <?=$config['cf_adult_check']?'checked':'';?>> 사용</td>
     </tr>
     <tr>
