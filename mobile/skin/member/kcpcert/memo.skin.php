@@ -2,6 +2,8 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+
 <div id="memo_list" class="new_win">
     <h1><?=$g4['title']?></h1>
 
