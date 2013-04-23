@@ -762,12 +762,12 @@ $(function() {
         var sit_wimg_id = $(this).attr("id").split("_");
         var $img_display = $("#"+sit_wimg_id[1]);
 
-        if(sit_wimg_id[1].search("limg") > -1) {
+        if(sit_wimg_id[1].search("mainimg") > -1) {
             var $img = $("#"+sit_wimg_id[1]);
             var width = $img_display.width();
             var height = $img_display.height();
-            if(width > 750) {
-                var img_width = 750;
+            if(width > 700) {
+                var img_width = 700;
                 var img_height = Math.round((img_width * height) / width);
 
                 $img_display.children("img").width(img_width).height(img_height);
@@ -786,7 +786,7 @@ $(function() {
         var $img_display = $(this).parents(".banner_or_img");
         var id = $img_display.attr("id");
         $img_display.toggle();
-        var $button = $("#it_"+id+"_view");
+        var $button = $("#cf_"+id+"_view");
         $button.text($button.text().replace("닫기", "확인"));
     });
 });
