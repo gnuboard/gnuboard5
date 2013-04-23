@@ -670,7 +670,7 @@ $pg_anchor = '<ul class="anchor">
             {
                 $size = getimagesize($main_img);
             ?>
-            <label for="logo_img_del"><span class="sound_only">메인이미지</span> 삭제</label>
+            <label for="main_img_del"><span class="sound_only">메인이미지</span> 삭제</label>
             <input type="checkbox" name="main_img_del" value="1" id="main_img_del">
             <span class="scf_img_mainimg"></span>
             <div id="mainimg" class="banner_or_img">
