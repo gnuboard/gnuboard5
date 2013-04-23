@@ -386,7 +386,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #scf_sms_pre p {margin:0 0 20px}
 #scf_sms {margin:0 0 30px;zoom:1}
 #scf_sms:after {display:block;visibility:hidden;clear:both;content:""}
-.scf_sms_box {float:left;margin:0 31px;width:163px;text-align:center}
+.scf_sms_box {float:left;margin:0 8px 0 9px;width:163px;text-align:center}
 .scf_sms_box h4 {margin:0 0 5px}
 .scf_sms_img {margin:10px 0;width:163px;height:191px;background:url('../adm/shop_admin/img/sms_back.gif') no-repeat 0 0;text-align:center}
 .scf_sms_img textarea {margin:54px 0 0;width:115px;height:85px;border:0;background:transparent;font-size:0.95em;overflow:hidden}

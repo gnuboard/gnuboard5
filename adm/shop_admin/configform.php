@@ -930,7 +930,7 @@ function byte_check(el_cont, el_byte)
         <div id="scf_sms">
             <?
             $scf_sms_title = array (1=>"회원가입시 고객님께 발송", "주문시 관리자에게 발송", "입금확인시 고객님께 발송", "상품배송시 고객님께 발송");
-            for ($i=1; $i<=4; $i++) {
+            for ($i=1; $i<=5; $i++) {
             ?>
             <section class="scf_sms_box">
                 <h4><?=$scf_sms_title[$i]?></h4>
