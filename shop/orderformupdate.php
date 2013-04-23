@@ -300,6 +300,28 @@ include_once(G4_SHOP_PATH.'/ordermail2.inc.php');
 $receive_number = preg_replace("/[^0-9]/", "", $default['de_sms_hp']); // 수신자번호
 $send_number = preg_replace("/[^0-9]/", "", $od_hp); // 발신자번호
 
+$sms_contents = $default['de_sms_cont3'];
+$sms_contents = preg_replace("/{이름}/", $od_name, $sms_contents);
+$sms_contents = preg_replace("/{보낸분}/", $od_name, $sms_contents);
+$sms_contents = preg_replace("/{받는분}/", $od_b_name, $sms_contents);
+$sms_contents = preg_replace("/{주문번호}/", $od_id, $sms_contents);
+$sms_contents = preg_replace("/{주문금액}/", number_format($ttotal_amount), $sms_contents);
+$sms_contents = preg_replace("/{회원아이디}/", $member['mb_id'], $sms_contents);
+$sms_contents = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_contents);
+
+if ($default['de_sms_use3'] && $receive_number)
+{
+    include_once(G4_LIB_PATH.'/icode.sms.lib.php');
+    $SMS = new SMS; // SMS 연결
+    $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
+    $SMS->Add($receive_number, $send_number, $default['de_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_contents)), "");
+    $SMS->Send();
+}
+
+// 주문고객이 수신자가 됨
+$receive_number = preg_replace("/[^0-9]/", "", $od_hp); // 수신자번호
+$send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
+
 $sms_contents = $default['de_sms_cont2'];
 $sms_contents = preg_replace("/{이름}/", $od_name, $sms_contents);
 $sms_contents = preg_replace("/{보낸분}/", $od_name, $sms_contents);
@@ -309,12 +331,12 @@ $sms_contents = preg_replace("/{주문금액}/", number_format($ttotal_amount), 
 $sms_contents = preg_replace("/{회원아이디}/", $member['mb_id'], $sms_contents);
 $sms_contents = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_contents);
 
-if ($default['de_sms_use2'] && $receive_number)
+if ($default['de_sms_use3'] && $receive_number)
 {
     include_once(G4_LIB_PATH.'/icode.sms.lib.php');
     $SMS = new SMS; // SMS 연결
     $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
-    $SMS->Add($receive_number, $send_number, $default['de_icode_id'], stripslashes($sms_contents), "");
+    $SMS->Add($receive_number, $send_number, $default['de_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_contents)), "");
     $SMS->Send();
 }
 // SMS END   --------------------------------------------------------
