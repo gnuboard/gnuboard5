@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
 <form  name="fregister" id="fregister" action="<?=$register_action_url?>" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">
 
 <p>회원가입약관 및 개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.</p>

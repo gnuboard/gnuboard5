@@ -7,6 +7,8 @@ else if ($w == 'd' || $w == 'x') $g4['title'] = $delete_str."글 삭제";
 else $g4['title'] = $g4['title'];
 ?>
 
+<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+
 <div id="pw_confirm">
     <h1><?=$g4['title']?></h1>
     <p>
