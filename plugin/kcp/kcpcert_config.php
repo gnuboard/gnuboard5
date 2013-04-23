@@ -58,4 +58,8 @@ function f_get_parm_int( $val )
     return  $ret_val;
 }
 /* ============================================================================== */
+
+// ss_adult_check clear
+if(get_session('ss_adult_check'))
+    set_session('ss_adult_check', '');
 ?>
