@@ -76,7 +76,7 @@ $table_width = 900;
         <option value='게시판'>게시판
         </select>
         <input type=text name=search_str class='ed' value='<?=stripslashes(get_text($search_str))?>'>
-        <input type=image src='<?=G4_IMG_URL?>/btn_search.gif' border=0 align=absmiddle>&nbsp;
+        <input type=image src='<?=G4_SHOP_URL?>/img/btn_search.gif' border=0 align=absmiddle>&nbsp;
         </form>
         <script>
         function search_submit(f) {

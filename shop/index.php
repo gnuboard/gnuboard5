@@ -8,7 +8,7 @@ $g4[title] = "";
 include_once(G4_SHOP_PATH.'/shop.head.php');
 ?>
 
-<script src="<?=G4_JS_PATH?>/shop.js"></script>
+<script src="<?=G4_JS_URL?>/shop.js"></script>
 
 <table width=100% cellpadding=0 cellspacing=0>
 <tr>
@@ -89,9 +89,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
         <table width=177 bgcolor=#DEDEDE cellpadding=1 cellspacing=0>
         <tr><td align=center>
             <table cellpadding=0 cellspacing=0 bgcolor=#FFFFFF height=97>
-            <tr><td height=28><a href='<?=$g4[bbs_path]?>/board.php?bo_table=notice'><img src='<?=$g4[shop_img_path]?>/bar_notice.gif' border=0></a></td></tr>
+            <tr><td height=28><a href='<?=G4_BBS_URL?>/board.php?bo_table=notice'><img src='<?=G4_SHOP_URL?>/img/bar_notice.gif' border=0></a></td></tr>
             <tr>
-                <td><?=latest('shop_notice', 'notice', 3, 25);?></td>
+                <td><?=latest('basic', 'notice', 3, 25);?></td>
             </tr>
             </table>
         </td></tr>
@@ -108,10 +108,10 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
         ?><br><br>
 
 		<!-- 온라인 투표 -->
-        <?=poll('shop_poll');?><br>
+        <?=poll('basic');?><br>
 
 		<!-- 방문자 수 -->
-        <?=visit('shop_visit');?><br>
+        <?=visit('basic');?><br>
 
 		<!-- 메인 배너 -->
         <?=display_banner('메인');?><br>
