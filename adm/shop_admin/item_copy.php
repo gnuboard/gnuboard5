@@ -8,28 +8,27 @@ $g4['title'] = '상품 복사';
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
-<link rel='stylesheet' href='./admin.style.css' type='text/css'>
+<div class="cbox">
+    <h1>상품 복사</h1>
 
-<table width=100% cellpadding=8><tr><td>
+    <table class="frm_tbl">
+    <tbody>
+    <tr>
+        <th scope="row"><label for="new_it_id">상품코드</label></th>
+        <td><input type="text" value="<?=time()?>" id="new_it_id" class="frm_input"></td>
+    </tr>
+    </tbody>
+    </table>
 
-<?//=subtitle($g4[title]);?>
-<table cellpadding=4 cellspacing=1 width=100%>
-<tr><td colspan=2 height=3 bgcolor=0E87F9></td></tr>
-<tr align=center>
-    <td>상품코드</td>
-    <td><input type='text' id='new_it_id' value='<?=time()?>'></td>
-</tr>
-</table>
+    <div class="btn_confirm">
+        <input type="button" value="복사하기" class="btn_submit" onclick="_copy('item_copy_update.php?it_id=<?=$it_id?>&amp;ca_id=<?=$ca_id?>');">
+        <button type="button" onclick="self.close();">창닫기</button>
+    </div>
 
-<p>
-<div align='center'>
-<input type='button' value='복사하기' onclick="_copy('item_copy_update.php?it_id=<?=$it_id?>&amp;ca_id=<?=$ca_id?>');">
-&nbsp;
-<input type='button' value='창닫기' onclick='self.close();'>
 </div>
 </form>
 
-<script type='text/javascript'>
+<script>
 function _copy(link)
 {
     var new_it_id = document.getElementById('new_it_id').value;
