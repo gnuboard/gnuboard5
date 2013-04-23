@@ -60,6 +60,5 @@ function f_get_parm_int( $val )
 /* ============================================================================== */
 
 // ss_adult_check clear
-if(get_session('ss_adult_check'))
-    set_session('ss_adult_check', '');
+//if(get_session('ss_adult_check')) set_session('ss_adult_check', '');
 ?>

@@ -3,7 +3,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // kcp 휴대폰인증파일
 include_once(G4_KCP_PATH.'/kcpcert_config.php');
-if(!$ordr_idxx = get_session('ss_uniqid'))
+
+$ordr_idxx = get_session('ss_uniqid');
+if(!$ordr_idxx)
     $ordr_idxx = get_uniqid();
 ?>
 
