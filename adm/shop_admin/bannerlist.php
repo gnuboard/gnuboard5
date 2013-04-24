@@ -83,7 +83,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         <td><?=$row['bn_hit']?></td>
         <td class="td_smallmng">
             <a href="./bannerform.php?w=u&amp;bn_id=<?=$row['bn_id']?>"><img src="./img/icon_mod.jpg" alt="배너수정"></a>
-            <a href="javascript:del('./bannerformupdate.php?w=d&amp;bn_id=<?=$row['bn_id']?>');"><img src="./img/icon_del.jpg" alt="배너삭제"></a>
+            <a href="./bannerformupdate.php?w=d&amp;bn_id=<?=$row['bn_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="배너삭제"></a>
         </td>
     </tr>
     <tr>

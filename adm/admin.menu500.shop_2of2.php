@@ -1,4 +1,6 @@
 <?
+if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
+
 $menu['menu500'] = array (
     array('500000', '쇼핑몰현황/기타', G4_ADMIN_URL.'/shop_admin/itemsellrank.php', 'shop_stats'),
     array('500110', '매출현황', G4_ADMIN_URL.'/shop_admin/sale1.php', 'sst_order_stats'),

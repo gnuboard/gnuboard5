@@ -229,7 +229,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <td><?=$s_receipt_way?></td>
             <td>
                 <a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=$lines[$i]['od_id']?> 수정"></a>
-                <a href="javascript:del('./orderdelete.php?od_id=<?=$lines[$i]['od_id']?>&amp;uq_id=<?=$lines[$i]['uq_id']?>&amp;mb_id=<?=$lines[$i]['mb_id']?>&amp;<?=$qstr?>)"><img src="./img/icon_del.jpg" alt="<?=$lines[$i]['od_id']?> 삭제"></a>
+                <a href="./orderdelete.php?od_id=<?=$lines[$i]['od_id']?>&amp;uq_id=<?=$lines[$i]['uq_id']?>&amp;mb_id=<?=$lines[$i]['mb_id']?>&amp;<?=$qstr?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=$lines[$i]['od_id']?> 삭제"></a>
             </td>
         </tr>
     <?

@@ -135,7 +135,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         $s_vie = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'"><img src="./img/icon_view.jpg" alt="'.get_text($row['ca_name']).' 이동"></a>';
 
         if ($is_admin == 'super')
-            $s_del = '<a href="javascript:del(\'./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'\');"><img src="./img/icon_del.jpg" alt="'.get_text($row['ca_name']).' 삭제"></a>';
+            $s_del = '<a href="./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="'.get_text($row['ca_name']).' 삭제"></a>';
 
         // 해당 분류에 속한 상품의 갯수
         $sql1 = " select COUNT(*) as cnt from {$g4['shop_item_table']}

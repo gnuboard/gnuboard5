@@ -15,7 +15,7 @@ $recv = explode("\n", $receive_number);
 
 $tran_callback = preg_replace("/[^0-9]/", "", $send_number);
 $sms_id = $default['de_icode_id'];
-$tran_msg = $sms_contents;
+$tran_msg = iconv("utf-8", "euc-kr", stripslashes($sms_contents));
 $tran_date = "";
 if ($reserved_flag) // 예약전송
 {
@@ -30,7 +30,7 @@ for($i=0; $i<count($recv); $i++)
 	$tran_phone = trim(preg_replace("/[^0-9]/", "", $recv[$i]));
 	if (!$tran_phone) continue;
 
-	$result = $SMS->Add($tran_phone, $tran_callback, $sms_id, stripslashes($tran_msg), $tran_date);
+	$result = $SMS->Add($tran_phone, $tran_callback, $sms_id, $tran_msg, $tran_date);
 }
 $result = $SMS->Send();
 if ($result)
