@@ -152,6 +152,12 @@ fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
 
+/* submit 안내 */
+.btn_confirm_msg {text-align:center}
+
+/* 외부서비스 사이트코드 */
+.sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
+
 /* 폼 */
 label {vertical-align:middle}
 textarea, .frm_input {padding:2px;border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}

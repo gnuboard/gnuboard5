@@ -61,6 +61,7 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_basic">기본환경</a></li>
     <li><a href="#anc_cf_board">게시판기본</a></li>
     <li><a href="#anc_cf_join">회원가입</a></li>
+    <li><a href="#anc_cf_cert">본인확인</a></li>
     <li><a href="#anc_cf_mail">기본메일환경</a></li>
     <li><a href="#anc_cf_article_mail">글작성메일</a></li>
     <li><a href="#anc_cf_join_mail">가입메일</a></li>
@@ -469,37 +470,6 @@ $pg_anchor = '<ul class="anchor">
         <td><input type="text" name="cf_register_point" value="<?=$config['cf_register_point']?>" id="cf_register_point" class="frm_input" size="5"> 점</td>
     </tr>
     <tr>
-        <th scope="row"><label for="cf_kcpcert_use">휴대폰 본인확인<br>서비스 사용</label></th>
-        <td colspan="3">
-            <select id="cf_kcpcert_use" name="cf_kcpcert_use">
-                <option value="0"<?=get_selected($config['cf_kcpcert_use'], '0')?>>사용안함
-                <option value="-1"<?=get_selected($config['cf_kcpcert_use'], '-1')?>>테스트
-                <option value="1"<?=get_selected($config['cf_kcpcert_use'], '1')?>>실서비스
-            </select>
-            <script>
-            $(function(){
-                $("#cf_kcpcert_use").change(function(){
-                    if (this.value == "1")
-                        $("#kcpcert1").show();
-                    else
-                        $("#kcpcert1").hide();
-                }).trigger("change");
-            });
-            </script>
-        </td>
-    </tr>
-    <tr id="kcpcert1" style="display:none;">
-        <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
-        <td colspan="3">
-            <?=help('휴대폰 본인확인 서비스에서 사용하는 코드입니다. SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.')?>
-            <b>SM</b><input type="text" name="cf_kcpcert_site_cd" value="<?=$config['cf_kcpcert_site_cd']?>" id="cf_kcpcert_site_cd" class="frm_input" size="3">
-            <div>
-                실서비스시에는 아래 링크를 통하여 KCP에서 휴대폰 본인확인 서비스를 신청하신 후 사이트코드를 발급 받아 사용하시면 됩니다.<br>
-                <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank">http://sir.co.kr/main/g4s/kcpcert.html</a>
-            </div>
-        </td>
-    </tr>
-    <tr>
         <th scope="row" id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
         <td colspan="3"><input type="text" name="cf_leave_day" value="<?=$config['cf_leave_day']?>" id="cf_leave_day" class="frm_input" size="2"> 일 후 자동 삭제</td>
     </tr>
@@ -553,6 +523,40 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="cf_privacy">개인정보취급방침</label></th>
         <td colspan="3"><textarea id="cf_privacy" name="cf_privacy" rows="10"><?=$config['cf_privacy']?> </textarea></td>
+    </tr>
+    </tbody>
+    </table>
+</section>
+
+<section id="anc_cf_cert" class="cbox">
+    <h2>본인확인</h2>
+    <?=$pg_anchor?>
+    <p>회원가입 시 본인확인 수단을 설정합니다.</p>
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="cf_kcpcert_use">휴대폰 본인확인</label></th>
+        <td>
+            <?=help('KCP 사이트코드가 없으면 테스트만 가능합니다.')?>
+            <select name="cf_kcpcert_use" id="cf_kcpcert_use">
+                <option value="0" <?=get_selected($config['cf_kcpcert_use'], '0')?>>사용안함</option>
+                <option value="-1" <?=get_selected($config['cf_kcpcert_use'], '-1')?>>테스트</option>
+                <option value="1" <?=get_selected($config['cf_kcpcert_use'], '1')?>>실서비스</option>
+            </select>
+        </td>
+    </tr>
+    <tr id="kcpcert1">
+        <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
+        <td colspan="3">
+            <?=help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.')?>
+            <span class="sitecode">SM</span>
+            <input type="text" name="cf_kcpcert_site_cd" value="<?=$config['cf_kcpcert_site_cd']?>" id="cf_kcpcert_site_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">본인확인 서비스 신청페이지</a>
+        </td>
     </tr>
     </tbody>
     </table>
