@@ -42,7 +42,7 @@ if(!isset($config['cf_adult_check'])) {
 
 if(!isset($config['cf_kcpcert_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_use` TINYINT NOT NULL AFTER 'cf_memo_send_point' ", TRUE);
+                    ADD `cf_kcpcert_use` TINYINT(4) NOT NULL AFTER `cf_memo_send_point` ", TRUE);
 }
 
 if(!isset($config['cf_mobile_pages'])) {
@@ -485,20 +485,20 @@ $pg_anchor = '<ul class="anchor">
             $(function(){
                 $("#cf_kcpcert_use").change(function(){
                     switch (parseInt(this.value)) {
-                        case 0 : 
+                        case 0 :
                             $("#kcpcert1").hide();
                             $("#kcpcert2").hide();
                             break;
-                        case 1 : 
+                        case 1 :
                             $("#kcpcert1").show();
                             $("#kcpcert2").show();
                             break;
-                        case -1 : 
+                        case -1 :
                             $("#kcpcert1").hide();
                             $("#kcpcert2").show();
                             break;
                     }
-                   
+
                 }).trigger("change");
             });
             </script>
