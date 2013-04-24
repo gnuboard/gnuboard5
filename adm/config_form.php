@@ -42,7 +42,7 @@ if(!isset($config['cf_adult_check'])) {
 
 if(!isset($config['cf_kcpcert_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_use` TINYINT(4) NOT NULL AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_kcpcert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_memo_send_point` ", TRUE);
 }
 
 if(!isset($config['cf_mobile_pages'])) {
