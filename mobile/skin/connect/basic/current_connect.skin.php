@@ -2,6 +2,8 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<link rel="stylesheet" href="<?=$connect_skin_url?>/style.css">
+
 <table id="current_connect_tbl" class="basic_tbl">
 <thead>
 <tr>

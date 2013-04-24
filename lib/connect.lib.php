@@ -12,8 +12,13 @@ function connect($skin_dir='')
 
     if (!$skin_dir) 
         $skin_dir = $config['cf_connect_skin'];
-    $connect_skin_path = G4_SKIN_PATH.'/connect/'.$skin_dir;
-    $connect_skin_url  = G4_SKIN_URL.'/connect/'.$skin_dir;
+    if(G4_IS_MOBILE) {
+        $connect_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/connect/'.$skin_dir;
+        $connect_skin_url  = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/connect/'.$skin_dir;
+    } else {
+        $connect_skin_path = G4_SKIN_PATH.'/connect/'.$skin_dir;
+        $connect_skin_url  = G4_SKIN_URL.'/connect/'.$skin_dir;
+    }
 
     ob_start();
     include_once ($connect_skin_path.'/connect.skin.php');
