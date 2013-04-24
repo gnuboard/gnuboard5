@@ -35,11 +35,6 @@ if(!isset($config['cf_kcpcert_site_cd'])) {
                     ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", TRUE);
 }
 
-if(!isset($config['cf_adult_check'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_adult_check` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_kcpcert_site_cd` ", TRUE);
-}
-
 if(!isset($config['cf_kcpcert_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_kcpcert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_memo_send_point` ", TRUE);
@@ -478,27 +473,16 @@ $pg_anchor = '<ul class="anchor">
         <td colspan="3">
             <select id="cf_kcpcert_use" name="cf_kcpcert_use">
                 <option value="0"<?=get_selected($config['cf_kcpcert_use'], '0')?>>사용안함
-                <option value="1"<?=get_selected($config['cf_kcpcert_use'], '1')?>>실서비스
                 <option value="-1"<?=get_selected($config['cf_kcpcert_use'], '-1')?>>테스트
+                <option value="1"<?=get_selected($config['cf_kcpcert_use'], '1')?>>실서비스
             </select>
             <script>
             $(function(){
                 $("#cf_kcpcert_use").change(function(){
-                    switch (parseInt(this.value)) {
-                        case 0 :
-                            $("#kcpcert1").hide();
-                            $("#kcpcert2").hide();
-                            break;
-                        case 1 :
-                            $("#kcpcert1").show();
-                            $("#kcpcert2").show();
-                            break;
-                        case -1 :
-                            $("#kcpcert1").hide();
-                            $("#kcpcert2").show();
-                            break;
-                    }
-
+                    if (this.value == "1")
+                        $("#kcpcert1").show();
+                    else
+                        $("#kcpcert1").hide();
                 }).trigger("change");
             });
             </script>
@@ -507,18 +491,13 @@ $pg_anchor = '<ul class="anchor">
     <tr id="kcpcert1" style="display:none;">
         <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
         <td colspan="3">
-            <?=help('휴대폰 본인확인 서비스에서 사용하는 코드입니다.')?>
-            <input type="text" name="cf_kcpcert_site_cd" value="<?=$config['cf_kcpcert_site_cd']?>" id="cf_kcpcert_site_cd" class="frm_input" size="10">
+            <?=help('휴대폰 본인확인 서비스에서 사용하는 코드입니다. SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.')?>
+            <b>SM</b><input type="text" name="cf_kcpcert_site_cd" value="<?=$config['cf_kcpcert_site_cd']?>" id="cf_kcpcert_site_cd" class="frm_input" size="3">
             <div>
-                실서비스시에는 아래 링크를 통하여 KCP에서 휴대폰 본인인증 상점코드를 신청한후 사용하시면 됩니다.<br>
+                실서비스시에는 아래 링크를 통하여 KCP에서 휴대폰 본인확인 서비스를 신청하신 후 사이트코드를 발급 받아 사용하시면 됩니다.<br>
                 <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank">http://sir.co.kr/main/g4s/kcpcert.html</a>
             </div>
         </td>
-    </tr>
-    <tr id="kcpcert2" style="display:none;">
-        <th scope="row"><label for='cf_adult_check'>휴대폰 성인인증<br>기능 사용</label></th>
-        <td colspan="3"><?=help('휴대폰 본인확인 서비스로 성인인증 기능을 사용 할 수 있습니다.')?>
-            <input type="checkbox" name="cf_adult_check" value="1" id="cf_adult_check" <?=$config['cf_adult_check']?'checked':'';?>> 사용</td>
     </tr>
     <tr>
         <th scope="row" id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>

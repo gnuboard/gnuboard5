@@ -18,14 +18,6 @@ if ($w=='' || ($w=='u' && $reg_hp != $old_hp)) {
     $ss_hash  = get_session('ss_kcpcert_hash');
     if(get_session('ss_kcpcert_hash') != $reg_hash)
         die("{\"error\":\"이름 또는 휴대폰번호가 올바르지 않습니다. 정상적인 방법으로 이용해 주세요.\"}");
-
-    /*
-    // 성인인증을 사용한다면
-    if($config['cf_adult_check']) {
-        if(get_session('ss_adult_check') != 'Y')
-            die('성인인증이 되지 않았습니다. 다음에 다시 가입해 주세요.');
-    }
-    */
 }
 
 die("{\"error\":\"\"}"); // 정상

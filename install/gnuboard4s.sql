@@ -278,7 +278,6 @@ CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_gcaptcha_mp3` varchar(255) NOT NULL default'',
   `cf_kcpcert_site_cd` varchar(255) NOT NULL default '',
   `cf_kcpcert_use` tinyint(4) NOT NULL default '0',
-  `cf_adult_check` tinyint(4) NOT NULL default '0',
   `cf_1_subj` varchar(255) NOT NULL default '',
   `cf_2_subj` varchar(255) NOT NULL default '',
   `cf_3_subj` varchar(255) NOT NULL default '',

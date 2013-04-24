@@ -102,7 +102,6 @@ $sql = " update {$g4['config_table']}
                  cf_memo_send_point = '{$_POST['cf_memo_send_point']}',
                  cf_kcpcert_use = '{$_POST['cf_kcpcert_use']}',
                  cf_kcpcert_site_cd = '{$_POST['cf_kcpcert_site_cd']}',
-                 cf_adult_check = '{$_POST['cf_adult_check']}',
                  cf_mobile_new_skin = '{$_POST['cf_mobile_new_skin']}',
                  cf_mobile_search_skin = '{$_POST['cf_mobile_search_skin']}',
                  cf_mobile_connect_skin = '{$_POST['cf_mobile_connect_skin']}',
