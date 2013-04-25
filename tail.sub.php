@@ -20,13 +20,6 @@ $(function() {
 </script>
 <![endif]-->
 
-<script>
-
-</script>
-
 </body>
 </html>
-<?php
-// HTML 마지막 처리 함수 : 반드시 넣어주시기 바랍니다.
-echo html_end();
-?>
+<?php echo html_end(); // HTML 마지막 처리 함수 : 반드시 넣어주시기 바랍니다. ?>

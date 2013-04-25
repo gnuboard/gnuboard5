@@ -85,6 +85,7 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_use_list_view    = '{$_POST['bo_use_list_view']}',
                 bo_use_list_content = '{$_POST['bo_use_list_content']}',
                 bo_use_email        = '{$_POST['bo_use_email']}',
+                bo_use_cert         = '{$_POST['bo_use_cert']}',
                 bo_table_width      = '{$_POST['bo_table_width']}',
                 bo_subject_len      = '{$_POST['bo_subject_len']}',
                 bo_mobile_subject_len      = '{$_POST['bo_mobile_subject_len']}',
@@ -261,6 +262,7 @@ if (is_checked('chk_grp_use_ip_view'))          $grp_fields .= " , bo_use_ip_vie
 if (is_checked('chk_grp_use_list_view'))        $grp_fields .= " , bo_use_list_view = '{$bo_use_list_view}' ";
 if (is_checked('chk_grp_use_list_content'))     $grp_fields .= " , bo_use_list_content = '{$bo_use_list_content}' ";
 if (is_checked('chk_grp_use_email'))            $grp_fields .= " , bo_use_email = '{$bo_use_email}' ";
+if (is_checked('chk_grp_use_cert'))             $grp_fields .= " , bo_use_cert = '{$bo_use_cert}' ";
 if (is_checked('chk_grp_skin'))                 $grp_fields .= " , bo_skin = '{$bo_skin}' ";
 if (is_checked('chk_grp_mobile_skin'))          $grp_fields .= " , bo_mobile_skin = '{$bo_mobile_skin}' ";
 if (is_checked('chk_grp_gallery_cols'))         $grp_fields .= " , bo_gallery_cols = '{$bo_gallery_cols}' ";
@@ -343,6 +345,7 @@ if (is_checked('chk_all_use_ip_view'))          $all_fields .= " , bo_use_ip_vie
 if (is_checked('chk_all_use_list_view'))        $all_fields .= " , bo_use_list_view = '{$bo_use_list_view}' ";
 if (is_checked('chk_all_use_list_content'))     $all_fields .= " , bo_use_list_content = '{$bo_use_list_content}' ";
 if (is_checked('chk_all_use_email'))            $all_fields .= " , bo_use_email = '{$bo_use_email}' ";
+if (is_checked('chk_all_use_cert'))             $all_fields .= " , bo_use_cert = '{$bo_use_cert}' ";
 if (is_checked('chk_all_skin'))                 $all_fields .= " , bo_skin = '{$bo_skin}' ";
 if (is_checked('chk_all_mobile_skin'))          $all_fields .= " , bo_mobile_skin = '{$bo_mobile_skin}' ";
 if (is_checked('chk_all_gallery_cols'))         $all_fields .= " , bo_gallery_cols = '{$bo_gallery_cols}' ";

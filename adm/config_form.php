@@ -531,7 +531,11 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_cf_cert" class="cbox">
     <h2>본인확인</h2>
     <?php echo $pg_anchor ?>
-    <p>회원가입 시 본인확인 수단을 설정합니다.</p>
+    <p>
+        회원가입 시 본인확인 수단을 설정합니다.<br>
+        실명과 휴대폰 번호 그리고 본인확인 당시에 성인인지의 여부만을 저장하며 생일, 성별 등의 정보는 저장하지 않습니다.<br>
+        게시판의 경우 본인확인 또는 성인여부를 따져 게시물을 조회할 수 권한을 줄 수 있습니다.
+    </p>
 
     <table class="frm_tbl">
     <colgroup>
@@ -544,15 +548,15 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <?php echo help('KCP 사이트코드가 없으면 테스트만 가능합니다.') ?>
             <select name="cf_kcpcert_use" id="cf_kcpcert_use">
-                <option value="none"    <?php echo get_selected($config['cf_kcpcert_use'], 'none'   ); ?>>사용안함</option>
-                <option value="test"    <?php echo get_selected($config['cf_kcpcert_use'], 'test'   ); ?>>테스트</option>
-                <option value="service" <?php echo get_selected($config['cf_kcpcert_use'], 'service'); ?>>실서비스</option>
+                <?php echo option_selected("none",    $config['cf_kcpcert_use'], "사용안함"); ?>
+                <?php echo option_selected("test",    $config['cf_kcpcert_use'], "테스트"); ?>
+                <?php echo option_selected("service", $config['cf_kcpcert_use'], "실서비스"); ?>
             </select>
         </td>
     </tr>
-    <tr id="kcpcert1">
-        <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
-        <td colspan="3">
+    <tr>
+        <th scope="row" class="cf_cert_kcp"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
+        <td colspan="3" class="cf_cert_kcp">
             <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
             <span class="sitecode">SM</span>
             <input type="text" name="cf_kcpcert_site_cd" value="<?php echo $config['cf_kcpcert_site_cd'] ?>" id="cf_kcpcert_site_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">본인확인 서비스 신청페이지</a>
@@ -738,6 +742,21 @@ $pg_anchor = '<ul class="anchor">
 </form>
 
 <script>
+$(function(){
+    <?php if($config['cf_kcpcert_use'] != 'service') { ?>
+    $(".cf_cert_kcp").addClass("cf_cert_kcp_hide");
+    <?php } ?>
+    $("#cf_kcpcert_use").change(function(){
+        var cf_cert_kcp_sel = $("#cf_kcpcert_use option:selected").val();
+        if (cf_cert_kcp_sel == "service")
+        {
+            $(".cf_cert_kcp").removeClass("cf_cert_kcp_hide");
+        } else {
+            $(".cf_cert_kcp").addClass("cf_cert_kcp_hide");
+        }
+    });
+});
+
 function fconfigform_submit(f)
 {
     f.action = "./config_form_update.php";

@@ -1,6 +1,7 @@
 <?php
 $sub_menu = "300400";
 include_once('./_common.php');
+include_once(G4_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], 'r');
 
@@ -36,6 +37,12 @@ include_once('./admin.head.php');
 $colspan = 3;
 ?>
 
+<script>
+$(function(){
+    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); 
+});
+</script>
+
 <form name="fsearch" id="fsearch" method="get">
 <fieldset>
     <legend>인기검색어 검색</legend>
@@ -44,8 +51,8 @@ $colspan = 3;
         건수 <?php echo number_format($total_count) ?>개
     </span>
     <label for="fr_date">기간설정</label>
-    <input type="text" name="fr_date" value="<?php echo $fr_date ?>" id="fr_date" title="구간시작일" class="frm_input" maxlength="10"> 부터
-    <input type="text" name="to_date" value="<?php echo $to_date ?>" id="to_date" title="구간종료일" class="frm_input" maxlength="10"> 까지
+    <input type="text" name="fr_date" value="<?php echo $fr_date ?>" id="fr_date" title="구간시작일" class="frm_input" size="11" maxlength="10"> 부터
+    <input type="text" name="to_date" value="<?php echo $to_date ?>" id="to_date" title="구간종료일" class="frm_input" size="11" maxlength="10"> 까지
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>

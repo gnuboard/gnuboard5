@@ -32,19 +32,23 @@ header("Pragma: no-cache"); // HTTP/1.0
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<?php if (G4_IS_MOBILE) { ?>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
-<meta name="HandheldFriendly" content="true">
-<meta name="format-detection" content="telephone=no">
-<?php }  ?>
-<title><?php echo $g4_head_title ?></title>
-<?php if (defined('G4_IS_ADMIN')) {  ?>
-<link rel="stylesheet" href="<?php echo G4_CSS_URL ?>/admin.css">
-<?php } else {  ?>
-<link rel="stylesheet" href="<?php echo G4_CSS_URL ?>/<?php echo (G4_IS_MOBILE?'mobile':'default') ?>.css">
-<?php } ?>
-<!-- <meta http-equiv="imagetoolbar" content="no"> -->
-<!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge" /> -->
+<?php
+if (G4_IS_MOBILE) {
+    echo '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">'.PHP_EOL;
+    echo '<meta name="HandheldFriendly" content="true">'.PHP_EOL;
+    echo '<meta name="format-detection" content="telephone=no">'.PHP_EOL;
+}
+?>
+<title><?php echo $g4_head_title; ?></title>
+<?php 
+if (defined('G4_IS_ADMIN')) {
+    echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/admin.css">'.PHP_EOL;
+} else {
+    echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/'.(G4_IS_MOBILE?'mobile':'default').'.css">'.PHP_EOL;
+}
+// echo '<meta http-equiv="imagetoolbar" content="no">';
+// echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge" />';
+?>
 <!--[if lte IE 8]>
 <script src="<?php echo G4_JS_URL ?>/html5.js"></script>
 <![endif]-->
@@ -58,19 +62,22 @@ var g4_is_mobile = "<?php echo G4_IS_MOBILE ?>";
 var g4_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
 var g4_sca       = "<?php echo isset($sca)?$sca:''; ?>";
 var g4_cookie_domain = "<?php echo G4_COOKIE_DOMAIN ?>";
-<?php if ($is_admin) { echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'; }
+<?php 
+if ($is_admin) {
+    echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'.PHP_EOL; 
+} 
 ?>
 </script>
 <script src="<?php echo G4_JS_URL ?>/jquery-1.8.3.min.js"></script>
 <script src="<?php echo G4_JS_URL ?>/jquery.menu.js"></script>
 <script src="<?php echo G4_JS_URL ?>/common.js"></script>
 <script src="<?php echo G4_JS_URL ?>/wrest.js"></script>
-<?php if(G4_IS_MOBILE) {  ?>
-<script>
-    set_cookie("device_width", screen.width, 6, g4_cookie_domain);
-</script>
-<?php }  ?>
-<?php echo $config['cf_add_script'];  ?>
+<?php 
+if(G4_IS_MOBILE) {
+    echo '<script> set_cookie("device_width", screen.width, 6, g4_cookie_domain); </script>'.PHP_EOL;
+}
+echo $config['cf_add_script'];  
+?>
 </head>
 <body>
 <?php
@@ -78,6 +85,8 @@ if ($is_member) { // 회원이라면 로그인 중이라는 메세지를 출력�
     if ($is_admin == 'super') $sr_admin_msg = "최고관리자 ";
     else if ($is_admin == 'group') $sr_admin_msg = "그룹관리자 ";
     else if ($is_admin == 'board') $sr_admin_msg = "게시판관리자 ";
+
+    echo '<div id="hd_login_msg">'.$sr_admin_msg.$member['mb_nick'].'님 로그인 중 ';
+    echo '<a href="'.G4_BBS_URL.'/logout.php">로그아웃</a></div>';
+}
 ?>
-    <div id="hd_login_msg"><?php echo $sr_admin_msg ?><?php echo $member['mb_nick'] ?>님 로그인 중 <a href="<?php echo G4_URL ?>/bbs/logout.php">로그아웃</a></div>
-<?php }  ?>
