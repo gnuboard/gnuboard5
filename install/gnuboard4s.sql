@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS `g4s_board` (
   `bo_notice` text NOT NULL,
   `bo_upload_count` tinyint(4) NOT NULL default '0',
   `bo_use_email` tinyint(4) NOT NULL default '0',
+  `bo_use_cert` enum('none','cert','adult') NOT NULL DEFAULT 'none',
   `bo_sort_field` varchar(255) NOT NULL default '',
   `bo_1_subj` varchar(255) NOT NULL default '',
   `bo_2_subj` varchar(255) NOT NULL default '',
