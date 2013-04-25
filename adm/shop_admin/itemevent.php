@@ -44,15 +44,17 @@ $result = sql_query($sql);
         $href = "";
         $sql = " select count(ev_id) as cnt from {$g4['shop_event_item_table']} where ev_id = '{$row['ev_id']}' ";
         $ev = sql_fetch($sql);
-        if ($ev[cnt]) {
+        if ($ev['cnt']) {
             $href = '<a href="javascript:;" onclick="itemeventwin('.$row['ev_id'].');">';
             $href_close = '</a>';
         }
+        if ($row['ev_subject_strong']) $subject = '<strong>'.$row['ev_subject'].'</strong>';
+        else $subject = $row['ev_subject'];
     ?>
 
     <tr>
         <td class="td_bignum"><?=$row['ev_id']?></td>
-        <td><?=$row['ev_subject']?></td>
+        <td><?=$subject?></td>
         <td class="td_num"><?=$href?><?=$ev['cnt']?><?=$href_close?></td>
         <td class="td_smallmng"><?=$row['ev_use'] ? '<span class="txt_true">예</span>' : '<span class="txt_false">아니오</span>'?></td>
         <td class="td_mng">

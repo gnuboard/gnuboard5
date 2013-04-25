@@ -36,8 +36,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="feventform" action="./itemeventformupdate.php" onsubmit="return feventform_check(this);" method="post" enctype="MULTIPART/FORM-DATA">
-<input type="hidden" name="w" value="<? echo $w ?>">
-<input type="hidden" name="ev_id" value="<? echo $ev_id ?>">
+<input type="hidden" name="w" value="<?=$w ?>">
+<input type="hidden" name="ev_id" value="<?=$ev_id ?>">
 
 <section class="cbox">
     <h2><?=$html_title?></h2>
@@ -68,27 +68,27 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="ev_img_width">출력이미지 폭</label></th>
         <td>
-              <input type="text" name="ev_img_width" value="<? echo $ev['ev_img_width'] ?>" id="ev_img_width" class="frm_input" size="5"> 픽셀
+              <input type="text" name="ev_img_width" value="<?=$ev['ev_img_width'] ?>" id="ev_img_width" class="frm_input" size="5"> 픽셀
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ev_img_height">출력이미지 높이</label></th>
         <td>
-          <input type="text" name="ev_img_height" value="<? echo $ev['ev_img_height'] ?>" id="ev_img_height" class="frm_input" size="5"> 픽셀
+          <input type="text" name="ev_img_height" value="<?=$ev['ev_img_height'] ?>" id="ev_img_height" class="frm_input" size="5"> 픽셀
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ev_list_mod">1줄당 이미지 수</label></th>
         <td>
             <?=help("1행에 설정한 값만큼의 상품을 출력합니다. 스킨 설정에 따라 1행에 하나의 상품만 출력할 수도 있습니다.", 50);?>
-            <input type="text" name="ev_list_mod" value="<? echo $ev['ev_list_mod'] ?>" id="ev_list_mod" class="frm_input" size="3"> 개
+            <input type="text" name="ev_list_mod" value="<?=$ev['ev_list_mod'] ?>" id="ev_list_mod" class="frm_input" size="3"> 개
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ev_list_row">이미지 줄 수</label></th>
         <td>
             <?=help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에 표시되는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다.");?>
-            <input type="text" name="ev_list_row" value="<? echo $ev['ev_list_row'] ?>" id="ev_list_row" class="frm_input" size="3"> 줄
+            <input type="text" name="ev_list_row" value="<?=$ev['ev_list_row'] ?>" id="ev_list_row" class="frm_input" size="3"> 줄
         </td>
     </tr>
     <tr>
@@ -105,6 +105,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="ev_subject">이벤트제목</label></th>
         <td>
             <input type="text" name="ev_subject" value="<? echo htmlspecialchars2($ev['ev_subject']) ?>" id="ev_subject" required class="required frm_input"  size="60">
+            <label for="ev_subject_strong">제목 강조</label>
+            <input type="checkbox" name="ev_subject_strong" value="<?=$ev['ev_subject_strong']?>" id="ev_subject_strong">
         </td>
     </tr>
     <tr>
