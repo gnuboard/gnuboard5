@@ -543,14 +543,14 @@ $pg_anchor = '<ul class="anchor">
         <th scope="row"><label for="cf_kcpcert_use">휴대폰 본인확인</label></th>
         <td>
             <?php echo help('KCP 사이트코드가 없으면 테스트만 가능합니다.') ?>
-            <select name="cf_kcpcert_use" id="cf_kcpcert_use">
+            <select name="cf_kcpcert_use" id="cf_cert_kcpuse">
                 <option value="0" <?php echo get_selected($config['cf_kcpcert_use'], '0') ?>>사용안함</option>
                 <option value="-1" <?php echo get_selected($config['cf_kcpcert_use'], '-1') ?>>테스트</option>
                 <option value="1" <?php echo get_selected($config['cf_kcpcert_use'], '1') ?>>실서비스</option>
             </select>
         </td>
     </tr>
-    <tr id="kcpcert1">
+    <tr id="cf_cert_kcp">
         <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
         <td colspan="3">
             <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
@@ -738,6 +738,19 @@ $pg_anchor = '<ul class="anchor">
 </form>
 
 <script>
+$(function(){
+    $('#cf_cert_kcp').css('display','none');
+    $('#cf_cert_kcpuse').change(function(){
+        var cf_cert_kcp_sel = $('#cf_cert_kcpuse option:selected').val();
+        if (cf_cert_kcp_sel == 1)
+        {
+            $('#cf_cert_kcp').css('display','block');
+        } else {
+            $('#cf_cert_kcp').css('display','none');
+        }
+    });
+});
+
 function fconfigform_submit(f)
 {
     f.action = "./config_form_update.php";
