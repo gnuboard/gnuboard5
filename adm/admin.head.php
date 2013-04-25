@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 
 $begin_time = get_microtime();
@@ -68,27 +68,27 @@ function imageview(id, w, h)
 
 <header id="hd">
     <div id="hd_wrap">
-        <h1><?=$config['cf_title']?></h1>
+        <h1><?php echo $config['cf_title'] ?></h1>
 
-        <div id="logo"><a href="<?=G4_ADMIN_URL?>"><img src="<?=G4_ADMIN_URL?>/img/logo.jpg" alt="<?=$config['cf_title']?> 관리자 처음으로"></a></div>
+        <div id="logo"><a href="<?php echo G4_ADMIN_URL ?>"><img src="<?php echo G4_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자 처음으로"></a></div>
 
         <div id="mb_nb">
             <ul>
                 <li>
-                    <a href="<?=G4_ADMIN_URL?>/member_form.php?w=u&amp;mb_id=<?=$member['mb_id']?>">
-                        <img src="<?=G4_ADMIN_URL?>/img/snb_modify.jpg" alt="" width="28" height="28">
+                    <a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">
+                        <img src="<?php echo G4_ADMIN_URL ?>/img/snb_modify.jpg" alt="" width="28" height="28">
                         관리자 정보수정
                     </a>
                 </li>
                 <li>
-                    <a href="<?=G4_URL?>/">
-                        <img src="<?=G4_ADMIN_URL?>/img/snb_home.jpg" alt="" width="28" height="28">
+                    <a href="<?php echo G4_URL ?>/">
+                        <img src="<?php echo G4_ADMIN_URL ?>/img/snb_home.jpg" alt="" width="28" height="28">
                         홈페이지 메인
                     </a>
                 </li>
                 <li>
-                    <a href="<?=G4_BBS_URL?>/logout.php">
-                        <img src="<?=G4_ADMIN_URL?>/img/snb_logout.jpg" alt="로그아웃" width="28" height="28">
+                    <a href="<?php echo G4_BBS_URL ?>/logout.php">
+                        <img src="<?php echo G4_ADMIN_URL ?>/img/snb_logout.jpg" alt="로그아웃" width="28" height="28">
                         로그아웃
                     </a>
                 </li>
@@ -98,7 +98,7 @@ function imageview(id, w, h)
         <nav id="gnb">
             <h2>관리자 주메뉴</h2>
             <script>$('#gnb').addClass('gnb_js');</script>
-            <?
+            <?php
             $gnb_str = "<ul id=\"gnb_ul\">";
             foreach($amenu as $key=>$value) {
                 $href1 = $href2 = '';
@@ -129,20 +129,20 @@ function imageview(id, w, h)
 
     <ul id="qnb">
         <li>
-            <a href="<?=G4_ADMIN_URL?>/member_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_mb.jpg" alt="" width="40" height="40">
+            <a href="<?php echo G4_ADMIN_URL ?>/member_list.php">
+                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_mb.jpg" alt="" width="40" height="40">
                 회원
             </a>
         </li>
         <li>
-            <a href="<?=G4_ADMIN_URL?>/board_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_board.jpg" alt="" width="40" height="40">
+            <a href="<?php echo G4_ADMIN_URL ?>/board_list.php">
+                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_board.jpg" alt="" width="40" height="40">
                 게시판
             </a>
         </li>
         <li>
-            <a href="<?=G4_ADMIN_URL?>/visit_list.php">
-                <img src="<?=G4_ADMIN_URL?>/img/qnb_log.jpg" alt="" width="40" height="40">
+            <a href="<?php echo G4_ADMIN_URL ?>/visit_list.php">
+                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_log.jpg" alt="" width="40" height="40">
                 접속자
             </a>
         </li>
@@ -154,4 +154,4 @@ function imageview(id, w, h)
             <button class="no_text_resize" onclick="font_default('container');">기본</button>
             <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
         </div>
-        <h1><?=$g4['title']?></h1>
+        <h1><?php echo $g4['title'] ?></h1>

@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 
 // 설문조사

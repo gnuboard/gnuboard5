@@ -34,11 +34,11 @@ if(is_file($filepath)) {
 }
 ?>
 
-<div><?=$img?></div>
+<div><?php echo $img ?></div>
 
 <script>
-var win_w = <?=$width?>;
-var win_h = <?=$height?> + 70;
+var win_w = <?php echo $width ?>;
+var win_h = <?php echo $height ?> + 70;
 var win_l = (screen.width - win_w) / 2;
 var win_t = (screen.height - win_h) / 2;
 

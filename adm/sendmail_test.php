@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '100300';
 include_once('./_common.php');
 
@@ -51,7 +51,7 @@ if (isset($_POST['mail'])) {
     <fieldset id="fsendmailtest">
         <legend>테스트메일 발송</legend>
         <label for="mail">받는 메일주소<strong class="sound_only">필수</strong></label>
-        <input type="text" name="mail" value="<?=$member['mb_email']?>" id="mail" required class="required frm_input" size="80">
+        <input type="text" name="mail" value="<?php echo $member['mb_email'] ?>" id="mail" required class="required frm_input" size="80">
         <input type="submit" value="발송" class="btn_submit">
     </fieldset>
     </form>
@@ -61,6 +61,6 @@ if (isset($_POST['mail'])) {
     </p>
 </section>
 
-<?
+<?php
 include_once('./admin.tail.php');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 /*******************************************************************************
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
@@ -116,7 +116,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
     <div>
         <p>다음 파일을 찾을 수 없습니다.</p>
         <ul>
-            <li><strong><?=G4_DATA_DIR.'/'.G4_DBCONFIG_FILE?></strong></li>
+            <li><strong><?php echo G4_DATA_DIR.'/'.G4_DBCONFIG_FILE ?></strong></li>
         </ul>
         <p>프로그램 설치 후 실행하시기 바랍니다.</p>
         <a href="./install/">그누보드4s 설치하기</a>
@@ -124,7 +124,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
 </body>
 </html>
 
-<?
+<?php
     exit;
 }
 //==============================================================================

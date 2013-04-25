@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 if (isset($_SESSION['ss_mb_reg']))

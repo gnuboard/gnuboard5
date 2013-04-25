@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_PATH.'/head.sub.php');
 
@@ -14,29 +14,29 @@ if($error) {
 ?>
 
 <script>
-alert("<? echo $msg; ?>");
+alert("<?php echo $msg; ?>");
 window.close();
 </script>
 
 <noscript>
 <div id="validation_check">
-    <h1><?=$header2?></h1>
+    <h1><?php echo $header2 ?></h1>
     <p class="cbg">
-        <?=$msg2?>
+        <?php echo $msg2 ?>
     </p>
     <p class="cbg">
-        <?=$msg3?>
+        <?php echo $msg3 ?>
     </p>
 
 </div>
 
-<? /*
+<?php /*
 <article id="validation_check">
 <header>
     <hgroup>
         <!-- <h1>회원가입 정보 입력 확인</h1> --> <!-- 수행 중이던 작업 내용 -->
-        <h1><?=$header?></h1> <!-- 수행 중이던 작업 내용 -->
-        <h2><?=$header2?></h2>
+        <h1><?php echo $header ?></h1> <!-- 수행 중이던 작업 내용 -->
+        <h2><?php echo $header2 ?></h2>
     </hgroup>
 </header>
 <p>
@@ -45,17 +45,17 @@ window.close();
     <strong>이름</strong> 필수 입력입니다. 한글만 입력할 수 있습니다.<br>
     <strong>이메일</strong> 올바르게 입력하지 않았습니다.<br>
     -->
-    <?=$msg2?>
+    <?php echo $msg2 ?>
 </p>
 <p>
-    <?=$msg3?>
+    <?php echo $msg3 ?>
 </p>
 
 </article>
-*/?>
+*/ ?>
 
 </noscript>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

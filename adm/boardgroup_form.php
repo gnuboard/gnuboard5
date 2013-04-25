@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "300200";
 include_once('./_common.php');
 
@@ -38,12 +38,12 @@ include_once('./admin.head.php');
         게시판그룹을 이용하시면 더 효과적으로 게시판을 관리할 수 있습니다.
     </p>
     <form name="fboardgroup" id="fboardgroup" action="./boardgroup_form_update.php" onsubmit="return fboardgroup_check(this);" method="post" autocomplete="off">
-    <input type="hidden" name="w" value="<?=$w?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="sst" value="<?=$sst?>">
-    <input type="hidden" name="sod" value="<?=$sod?>">
-    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="w" value="<?php echo $w ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
+    <input type="hidden" name="page" value="<?php echo $page ?>">
 
     <table id="frm_gr" class="frm_tbl">
     <colgroup>
@@ -52,9 +52,9 @@ include_once('./admin.head.php');
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="gr_id">그룹 ID<?=$sound_only?></label></th>
-        <td><input type="text" name="gr_id" value="<?=$group['gr_id']?>" id="gr_id" class="<?=$gr_id_attr?> alnum_ frm_input" maxlength="10"> 
-            <? 
+        <th scope="row"><label for="gr_id">그룹 ID<?php echo $sound_only ?></label></th>
+        <td><input type="text" name="gr_id" value="<?php echo $group['gr_id'] ?>" id="gr_id" class="<?php echo $gr_id_attr ?> alnum_ frm_input" maxlength="10"> 
+            <?php 
             if ($w=='')
                 echo '영문자, 숫자, _ 만 가능 (공백없이)';
             else 
@@ -65,8 +65,8 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="gr_subject">그룹 제목<strong class="sound_only">필수</strong></label></th>
         <td>
-            <input type="text" name="gr_subject" value="<?=get_text($group['gr_subject'])?>" id="gr_subject" required class="required frm_input" size="80">
-            <?
+            <input type="text" name="gr_subject" value="<?php echo get_text($group['gr_subject']) ?>" id="gr_subject" required class="required frm_input" size="80">
+            <?php
             if ($w == 'u')
                 echo '<a href="./board_form.php?gr_id='.$gr_id.'">게시판생성</a>';
             ?>
@@ -75,18 +75,18 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="gr_device">접속기기</label></th>
         <td>
-            <?=help("PC 와 모바일 사용을 구분합니다.")?>
+            <?php echo help("PC 와 모바일 사용을 구분합니다.") ?>
             <select id="gr_device" name="gr_device">
-                <option value="both"<?=get_selected($group['gr_device'], 'both', true);?>>PC와 모바일에서 모두 사용</option>
-                <option value="pc"<?=get_selected($group['gr_device'], 'pc');?>>PC 전용</option>
-                <option value="mobile"<?=get_selected($group['gr_device'], 'mobile');?>>모바일 전용</option>
+                <option value="both"<?php echo get_selected($group['gr_device'], 'both', true); ?>>PC와 모바일에서 모두 사용</option>
+                <option value="pc"<?php echo get_selected($group['gr_device'], 'pc'); ?>>PC 전용</option>
+                <option value="mobile"<?php echo get_selected($group['gr_device'], 'mobile'); ?>>모바일 전용</option>
             </select>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="gr_admin">그룹 관리자</label></th>
         <td>
-            <?
+            <?php
             if ($is_admin == 'super')
                 echo '<input type="text" id="gr_admin" name="gr_admin" class="frm_input" value="'.$gr['gr_admin'].'" maxlength="20">';
             else
@@ -97,15 +97,15 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="gr_use_access">접근회원사용</label></th>
         <td>
-            <?=help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.")?>
-            <input type="checkbox" name="gr_use_access" value="1" id="gr_use_access" <?=$gr['gr_use_access']?'checked':'';?>>
+            <?php echo help("사용에 체크하시면 이 그룹에 속한 게시판은 접근가능한 회원만 접근이 가능합니다.") ?>
+            <input type="checkbox" name="gr_use_access" value="1" id="gr_use_access" <?php echo $gr['gr_use_access']?'checked':''; ?>>
             사용
         </td>
     </tr>
     <tr>
         <th scope="row">접근회원수</th>
         <td>
-            <?
+            <?php
             // 접근회원수
             $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$gr_id}' ";
             $row1 = sql_fetch($sql1);
@@ -116,22 +116,22 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="gr_show_menu">메뉴보이기</label></th>
         <td>
-            <?=help("사용에 체크하시면 게시판그룹 제목을 메뉴에 출력합니다.")?>
-            <input type="checkbox" name="gr_show_menu" value="1" id="gr_show_menu" <?=$gr['gr_show_menu']?'checked':'';?>>
+            <?php echo help("사용에 체크하시면 게시판그룹 제목을 메뉴에 출력합니다.") ?>
+            <input type="checkbox" name="gr_show_menu" value="1" id="gr_show_menu" <?php echo $gr['gr_show_menu']?'checked':''; ?>>
             사용
         </td>
     </tr>
-    <? for ($i=1;$i<=10;$i++) { ?>
+    <?php for ($i=1;$i<=10;$i++) { ?>
     <tr>
-        <th scope="row">회원여분필드<?=$i?></th>
+        <th scope="row">회원여분필드<?php echo $i ?></th>
         <td class="td_gr_extra">
-            <label for="gr_<?=$i?>_subj">여분필드 <?=$i?> 제목</label>
-            <input type="text" name="gr_<?=$i?>_subj" value="<?=get_text($group['gr_'.$i.'_subj'])?>" id="gr_<?=$i?>_subj" class="frm_input">
-            <label for="gr_<?=$i?>">여분필드 <?=$i?> 내용</label>
-            <input type="text" name="gr_<?=$i?>" value="<?=$gr['gr_'.$i]?>" id="gr_<?=$i?>" class="frm_input">
+            <label for="gr_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
+            <input type="text" name="gr_<?php echo $i ?>_subj" value="<?php echo get_text($group['gr_'.$i.'_subj']) ?>" id="gr_<?php echo $i ?>_subj" class="frm_input">
+            <label for="gr_<?php echo $i ?>">여분필드 <?php echo $i ?> 내용</label>
+            <input type="text" name="gr_<?php echo $i ?>" value="<?php echo $gr['gr_'.$i] ?>" id="gr_<?php echo $i ?>" class="frm_input">
         </td>
     </tr>
-    <? } ?>
+    <?php } ?>
     </tbody>
     </table>
 
@@ -140,7 +140,7 @@ include_once('./admin.head.php');
             작성하신 내용을 제출하시려면 <strong>확인</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>목록</strong> 링크를 누르세요.
         </p>
         <input type="submit" class="btn_submit" accesskey="s" value="확인">
-        <a href="./boardgroup_list.php?<?=$qstr?>">목록</a>
+        <a href="./boardgroup_list.php?<?php echo $qstr ?>">목록</a>
     </div>
 
     </form>
@@ -154,6 +154,6 @@ function fboardgroup_check(f)
 }
 </script>
 
-<?
+<?php
 include_once ('./admin.tail.php');
 ?>

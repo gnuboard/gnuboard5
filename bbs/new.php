@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 $g4['title'] = '새글';

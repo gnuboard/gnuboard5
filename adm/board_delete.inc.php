@@ -1,4 +1,4 @@
-<?
+<?php
 // board_delete.php , boardgroup_delete.php 에서 include 하는 파일
 
 if (!defined('_GNUBOARD_')) exit;

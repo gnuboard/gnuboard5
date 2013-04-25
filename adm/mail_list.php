@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '200300';
 include_once('./_common.php');
 
@@ -26,7 +26,7 @@ $colspan = 6;
     <h2>등록된 메일내용 목록</h2>
     <p>
         <strong>테스트</strong>는 등록된 최고관리자의 이메일로 테스트 메일을 발송합니다.<br>
-        현재 등록된 메일은 총 <?=$total_count ?>건입니다.
+        현재 등록된 메일은 총 <?php echo $total_count ?>건입니다.
     </p>
 
     <div id="btn_add">
@@ -47,7 +47,7 @@ $colspan = 6;
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
         //$s_del = '<a href="javascript:post_delete(\'mail_update.php\', '.$row['ma_id'].');">삭제</a>';
         $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
@@ -57,17 +57,17 @@ $colspan = 6;
 
     <tr>
         <td class="td_chk">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$row['ma_id']?>" title="메일선택">
+            <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['ma_id'] ?>" title="메일선택">
         </td>
-        <td class="td_num"><?=$num?></td>
-        <td><a href="./mail_form.php?w=u&amp;ma_id=<?=$row['ma_id']?>"><?=$row['ma_subject']?></a></td>
-        <td class="td_time"><?=$row['ma_time']?></td>
-        <td class="td_test"><a href="./mail_test.php?ma_id=<?=$row['ma_id']?>">테스트</a></td>
-        <td class="td_send"><a href="./mail_select_form.php?ma_id=<?=$row['ma_id']?>">보내기</a></td>
-        <td class="td_mng"><?=$s_vie?></td>
+        <td class="td_num"><?php echo $num ?></td>
+        <td><a href="./mail_form.php?w=u&amp;ma_id=<?php echo $row['ma_id'] ?>"><?php echo $row['ma_subject'] ?></a></td>
+        <td class="td_time"><?php echo $row['ma_time'] ?></td>
+        <td class="td_test"><a href="./mail_test.php?ma_id=<?php echo $row['ma_id'] ?>">테스트</a></td>
+        <td class="td_send"><a href="./mail_select_form.php?ma_id=<?php echo $row['ma_id'] ?>">보내기</a></td>
+        <td class="td_mng"><?php echo $s_vie ?></td>
     </tr>
 
-    <?
+    <?php
     }
     if (!$i)
         echo "<tr><td colspan=\"".$colspan."\" class=\"empty_table\">자료가 없습니다.</td></tr>";
@@ -98,6 +98,6 @@ $(function() {
 });
 </script>
 
-<?
+<?php
 include_once ('./admin.tail.php');
 ?>

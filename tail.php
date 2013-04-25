@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 if (G4_IS_MOBILE) {
@@ -20,10 +20,10 @@ if ($config['cf_include_tail']) {
 <hr>
 
 <footer id="ft">
-    <h1><?=$config['cf_title']?> 정보</h1>
-    <?=popular('basic'); // 인기검색어 ?>
-    <?=visit("basic"); // 방문자수 ?>
-    <div id="ft_catch"><a href="<?=$g4['url']?>/"><img src="<?=G4_IMG_URL?>/ft_catch.jpg" alt="Sharing All Possibilities"></a></div>
+    <h1><?php echo $config['cf_title'] ?> 정보</h1>
+    <?php echo popular('basic'); // 인기검색어  ?>
+    <?php echo visit("basic"); // 방문자수  ?>
+    <div id="ft_catch"><a href="<?php echo $g4['url'] ?>/"><img src="<?php echo G4_IMG_URL ?>/ft_catch.jpg" alt="Sharing All Possibilities"></a></div>
     <div id="ft_copy">
         <p>
             Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.<br>
@@ -32,10 +32,10 @@ if ($config['cf_include_tail']) {
     </div>
 </footer>
 
-<?if(!G4_IS_MOBILE){?>
-<a href="<?=$_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING'].'&amp;':'?').'device=mobile';?>" id="g4s_cng">모바일 버전으로 보기</a>
-<?}?>
+<?php if(!G4_IS_MOBILE){ ?>
+<a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING'].'&amp;':'?').'device=mobile'; ?>" id="g4s_cng">모바일 버전으로 보기</a>
+<?php } ?>
 
-<?
+<?php
 include_once(G4_PATH."/tail.sub.php");
 ?>

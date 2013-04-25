@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 header("Content-Type: text/html; charset=utf-8");

@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 if ($is_guest)
@@ -38,7 +38,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <div id="point" class="new_win">
-    <h1><?=$g4['title']?></h1>
+    <h1><?php echo $g4['title'] ?></h1>
 
     <table class="basic_tbl">
     <caption>포인트 사용내역 목록</caption>
@@ -53,16 +53,16 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     <tfoot>
     <tr>
         <th scope="row" colspan="2">소계</th>
-        <td><?=number_format($sum_point1)?></td>
-        <td><?=number_format($sum_point2)?></td>
+        <td><?php echo number_format($sum_point1) ?></td>
+        <td><?php echo number_format($sum_point2) ?></td>
     </tr>
     <tr>
         <th scope="row" colspan="2">보유포인트</th>
-        <td colspan="2"><?=number_format($member['mb_point'])?></td>
+        <td colspan="2"><?php echo number_format($member['mb_point']) ?></td>
     </tr>
     </tfoot>
     <tbody>
-    <?
+    <?php
     $sum_point1 = $sum_point2 = 0;
 
     $sql = " select *
@@ -82,12 +82,12 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     ?>
     <tr>
-        <td class="td_datetime"><?=$row['po_datetime']?></td>
-        <td><?=$row['po_content']?></td>
-        <td class="td_bignum"><?=$point1?></td>
-        <td class="td_bignum"><?=$point2?></td>
+        <td class="td_datetime"><?php echo $row['po_datetime'] ?></td>
+        <td><?php echo $row['po_content'] ?></td>
+        <td class="td_bignum"><?php echo $point1 ?></td>
+        <td class="td_bignum"><?php echo $point2 ?></td>
     </tr>
-    <?
+    <?php
     }
 
     if ($i == 0)
@@ -102,11 +102,11 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     </table>
 
 
-    <?=get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');?>
+    <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page='); ?>
 
     <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

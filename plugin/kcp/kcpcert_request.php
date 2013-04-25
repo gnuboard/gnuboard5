@@ -129,7 +129,7 @@ $ct_cert->mf_clear();
                 {
                     opener.document.form_auth.veri_up_hash.value = frm.up_hash.value; // up_hash 데이터 검증을 위한 필드
 
-                    frm.action="<?=$cert_url?>";
+                    frm.action="<?php echo $cert_url ?>";
                     frm.submit();
                 }
             }
@@ -137,12 +137,12 @@ $ct_cert->mf_clear();
     </head>
     <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
         <form name="form_auth" method="post">
-            <?= $sbParam ?>
+            <?php echo  $sbParam ?>
         </form>
     </body>
 </html>
 
-<?
+<?php
 if($locale_change)
     setlocale(LC_CTYPE, $def_locale);
 ?>

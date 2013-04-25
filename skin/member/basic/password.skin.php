@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $delete_str = "";
 if ($w == 'x') $delete_str = "댓";
@@ -7,31 +7,31 @@ else if ($w == 'd' || $w == 'x') $g4['title'] = $delete_str."글 삭제";
 else $g4['title'] = $g4['title'];
 ?>
 
-<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="pw_confirm">
-    <h1><?=$g4['title']?></h1>
+    <h1><?php echo $g4['title'] ?></h1>
     <p>
-        <? if ($w == 'u') {?>
+        <?php if ($w == 'u') { ?>
         <strong>작성자만 글을 수정할 수 있습니다.</strong>
         작성자 본인이라면, 글 작성시 입력한 패스워드를 입력하여 글을 수정할 수 있습니다.
-        <? } else if ($w == 'd' || $w == 'x') { ?>
+        <?php } else if ($w == 'd' || $w == 'x') {  ?>
         <strong>작성자만 글을 삭제할 수 있습니다.</strong>
         작성자 본인이라면, 글 작성시 입력한 패스워드를 입력하여 글을 삭제할 수 있습니다.
-        <? } else { ?>
+        <?php } else {  ?>
         <strong>비밀글 기능으로 보호된 글입니다.</strong>
         작성자와 관리자만 열람하실 수 있습니다. 본인이라면 패스워드를 입력하세요.
-        <? } ?>
+        <?php }  ?>
     </p>
 
-    <form name="fboardpassword" action="<? echo $action; ?>" method="post">
-    <input type="hidden" name="w" value="<?=$w?>">
-    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-    <input type="hidden" name="wr_id" value="<?=$wr_id?>">
-    <input type="hidden" name="comment_id" value="<?=$comment_id?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="page" value="<?=$page?>">
+    <form name="fboardpassword" action="<?php echo $action;  ?>" method="post">
+    <input type="hidden" name="w" value="<?php echo $w ?>">
+    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+    <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
+    <input type="hidden" name="comment_id" value="<?php echo $comment_id ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>">
+    <input type="hidden" name="page" value="<?php echo $page ?>">
 
     <fieldset>
         <label for="pw_wr_password">패스워드<strong class="sound_only">필수</strong></label>
@@ -41,7 +41,7 @@ else $g4['title'] = $g4['title'];
     </form>
 
     <div class="btn_confirm">
-        <a href="<?=$return_url?>">돌아가기</a>
+        <a href="<?php echo $return_url ?>">돌아가기</a>
     </div>
 
 </div>

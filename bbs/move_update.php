@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // 게시판 관리자 이상 복사, 이동 가능

@@ -1,24 +1,24 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="formmail" class="new_win">
-    <h1><?=$name?>님께 메일보내기</h1>
+    <h1><?php echo $name ?>님께 메일보내기</h1>
 
     <form name="fformmail" action="./formmail_send.php" onsubmit="return fformmail_submit(this);" method="post" enctype="multipart/form-data" style="margin:0px;">
-    <input type="hidden" name="to" value="<?=$email?>">
+    <input type="hidden" name="to" value="<?php echo $email ?>">
     <input type="hidden" name="attach" value="2">
-    <input type="hidden" name="token" value="<?=$token?>">
-    <? if ($is_member) { // 회원이면 ?>
-    <input type="hidden" name="fnick" value="<?=$member['mb_nick']?>">
-    <input type="hidden" name="fmail" value="<?=$member['mb_email']?>">
-    <? } ?>
+    <input type="hidden" name="token" value="<?php echo $token ?>">
+    <?php if ($is_member) { // 회원이면 ?>
+    <input type="hidden" name="fnick" value="<?php echo $member['mb_nick'] ?>">
+    <input type="hidden" name="fmail" value="<?php echo $member['mb_email'] ?>">
+    <?php } ?>
     <table class="frm_tbl">
     <caption>메일쓰기</caption>
     <tbody>
-    <? if (!$is_member) { ?>
+    <?php if (!$is_member) { ?>
     <tr>
         <th scope="row"><label for="fnick">이름<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="fnick" id="fnick" required class="frm_input required"></td>
@@ -27,7 +27,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <th scope="row"><label for="fmail">E-mail<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="fmail" id="fmail" required class="frm_input required"></td>
     </tr>
-    <? } ?>
+    <?php } ?>
     <tr>
         <th scope="row"><label for="subject">제목<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="subject" id="subject" required class="frm_input required"></td>
@@ -54,7 +54,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </tr>
     <tr>
         <th scope="row">자동등록방지</th>
-        <td><?=captcha_html();?></td>
+        <td><?php echo captcha_html(); ?></td>
     </tr>
     </tbody>
     </table>
@@ -80,7 +80,7 @@ with (document.fformmail) {
 
 function fformmail_submit(f)
 {
-    <? echo chk_captcha_js(); ?>
+    <?php echo chk_captcha_js(); ?>
 
     if (f.file1.value || f.file2.value) {
         // 4.00.11

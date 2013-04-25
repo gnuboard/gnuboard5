@@ -1,4 +1,4 @@
-<?
+<?php
 $menu['menu200'] = array (
     array('200000', '회원관리', G4_ADMIN_URL.'/member_list.php', 'member'),
     array('200100', '회원관리', G4_ADMIN_URL.'/member_list.php', 'mb_list'),

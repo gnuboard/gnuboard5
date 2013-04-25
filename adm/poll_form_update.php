@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "200900";
 include_once('./_common.php');
 

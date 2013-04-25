@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 if(!$is_admin && $group['gr_device'] == 'pc')
@@ -8,7 +8,7 @@ include_once(G4_MOBILE_PATH.'/_head.php');
 ?>
 
 <!-- 메인화면 최신글 시작 -->
-<?
+<?php
 //  최신글
 $sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' and bo_device <> 'pc' order by bo_table ";
 $result = sql_query($sql);
@@ -23,6 +23,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 <!-- 메인화면 최신글 끝 -->
 
-<?
+<?php
 include_once(G4_MOBILE_PATH.'/_tail.php');
 ?>

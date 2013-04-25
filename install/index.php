@@ -1,10 +1,10 @@
-<?
+<?php
 $title = "그누보드4s 설치 3단계 중 1단계 라이센스 확인";
 include_once ('../config.php');
 include_once ('./install.inc.php');
 ?>
 
-<?
+<?php
 if ($exists_data_dir && $write_data_dir) {
 ?>
     <p>
@@ -12,7 +12,7 @@ if ($exists_data_dir && $write_data_dir) {
         라이센스에 동의하시는 경우에만 설치가 진행됩니다.
     </p>
 
-    <textarea name="textarea" id="idx_license" readonly><?=implode('', file('../LICENSE.txt'));?></textarea>
+    <textarea name="textarea" id="idx_license" readonly><?php echo implode('', file('../LICENSE.txt')); ?></textarea>
 
 <form action="./install_config.php" method="post" onsubmit="return frm_submit(this);">
 <div id="idx_agree">
@@ -36,7 +36,7 @@ function frm_submit(f)
     return true;
 }
 </script>
-<?
+<?php
 } // if
 ?>
 

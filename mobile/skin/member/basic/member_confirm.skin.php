@@ -1,24 +1,24 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?=$member_skin_url?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="mb_confirm">
-    <h1><?=$g4['title']?></h1>
+    <h1><?php echo $g4['title'] ?></h1>
 
     <p>
         <strong>패스워드를 한번 더 입력해주세요.</strong>
         회원님의 정보를 안전하게 보호하기 위해 패스워드를 한번 더 확인합니다.
     </p>
 
-    <form name="fmemberconfirm" action="<?=$url?>" onsubmit="return fmemberconfirm_submit(this);" method="post">
-    <input type="hidden" name="mb_id" value="<?=$member['mb_id']?>">
+    <form name="fmemberconfirm" action="<?php echo $url ?>" onsubmit="return fmemberconfirm_submit(this);" method="post">
+    <input type="hidden" name="mb_id" value="<?php echo $member['mb_id'] ?>">
     <input type="hidden" name="w" value="u">
 
     <fieldset>
         회원아이디
-        <span id="mb_confirm_id"><?=$member['mb_id']?></span>
+        <span id="mb_confirm_id"><?php echo $member['mb_id'] ?></span>
         <input type="password" name="mb_password" id="mb_confirm_pw" placeholder="패스워드(필수)" required class="frm_input" size="15" maxLength="20">
         <input type="submit" value="확인" id="btn_submit" class="btn_submit">
     </fieldset>
@@ -26,7 +26,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </form>
 
     <div class="btn_confirm">
-        <a href="<?=G4_URL?>">메인으로 돌아가기</a>
+        <a href="<?php echo G4_URL ?>">메인으로 돌아가기</a>
     </div>
 
 </div>
