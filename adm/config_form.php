@@ -37,7 +37,7 @@ if(!isset($config['cf_kcpcert_site_cd'])) {
 
 if(!isset($config['cf_kcpcert_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_kcpcert_use` ENUM('none','test','service') NOT NULL DEFAULT 'none' AFTER `cf_memo_send_point` ", TRUE);
 }
 
 if(!isset($config['cf_mobile_pages'])) {
@@ -115,7 +115,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="cf_add_script">추가 script, css</label></th>
         <td colspan="3">
-            <?php echo help('HTML의 &lt;/HEAD&gt; 태그위로 추가될 JavaScript와 css 코드를 설정합니다.') ?>
+            <?php echo help('HTML의 &lt;/HEAD&gt; 태그위로 추가될 JavaScript와 css 코드를 설정합니다.<br>관리자 페이지에서는 이 코드를 사용하지 않습니다.') ?>
             <textarea name="cf_add_script" id="cf_add_script"><?php echo $config['cf_add_script'] ?></textarea>
         </td>
     </tr>
@@ -544,9 +544,9 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <?php echo help('KCP 사이트코드가 없으면 테스트만 가능합니다.') ?>
             <select name="cf_kcpcert_use" id="cf_kcpcert_use">
-                <option value="0" <?php echo get_selected($config['cf_kcpcert_use'], '0') ?>>사용안함</option>
-                <option value="-1" <?php echo get_selected($config['cf_kcpcert_use'], '-1') ?>>테스트</option>
-                <option value="1" <?php echo get_selected($config['cf_kcpcert_use'], '1') ?>>실서비스</option>
+                <option value="none"    <?php echo get_selected($config['cf_kcpcert_use'], 'none'   ); ?>>사용안함</option>
+                <option value="test"    <?php echo get_selected($config['cf_kcpcert_use'], 'test'   ); ?>>테스트</option>
+                <option value="service" <?php echo get_selected($config['cf_kcpcert_use'], 'service'); ?>>실서비스</option>
             </select>
         </td>
     </tr>
