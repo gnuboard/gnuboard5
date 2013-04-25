@@ -550,9 +550,9 @@ $pg_anchor = '<ul class="anchor">
             </select>
         </td>
     </tr>
-    <tr id="cf_cert_kcp">
-        <th scope="row"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
-        <td colspan="3">
+    <tr>
+        <th scope="row" class="cf_cert_kcp"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
+        <td colspan="3" class="cf_cert_kcp">
             <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
             <span class="sitecode">SM</span>
             <input type="text" name="cf_kcpcert_site_cd" value="<?php echo $config['cf_kcpcert_site_cd'] ?>" id="cf_kcpcert_site_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">본인확인 서비스 신청페이지</a>
@@ -739,14 +739,14 @@ $pg_anchor = '<ul class="anchor">
 
 <script>
 $(function(){
-    $('#cf_cert_kcp').css('display','none');
+    $('.cf_cert_kcp').addClass('cf_cert_kcp_hide');
     $('#cf_cert_kcpuse').change(function(){
         var cf_cert_kcp_sel = $('#cf_cert_kcpuse option:selected').val();
         if (cf_cert_kcp_sel == 1)
         {
-            $('#cf_cert_kcp').css('display','block');
+            $('.cf_cert_kcp').removeClass('cf_cert_kcp_hide');
         } else {
-            $('#cf_cert_kcp').css('display','none');
+            $('.cf_cert_kcp').addClass('cf_cert_kcp_hide');
         }
     });
 });
