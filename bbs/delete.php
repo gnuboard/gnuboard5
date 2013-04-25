@@ -47,7 +47,7 @@ $sql = " select count(*) as cnt from $write_table
             and wr_is_comment = 0 ";
 $row = sql_fetch($sql);
 if ($row['cnt'] && !$is_admin)
-    alert('이 글과 관련된 답변글이 존재하므로 삭제 할 수 없습니다.'."\n\n".'우선 답변글부터 삭제하여 주십시오.');
+    alert('이 글과 관련된 답변글이 존재하므로 삭제 할 수 없습니다.\\n\\n우선 답변글부터 삭제하여 주십시오.');
 
 // 코멘트 달린 원글의 삭제 여부
 $sql = " select count(*) as cnt from $write_table
@@ -56,7 +56,7 @@ $sql = " select count(*) as cnt from $write_table
             and wr_is_comment = 1 ";
 $row = sql_fetch($sql);
 if ($row['cnt'] >= $board['bo_count_delete'] && !$is_admin)
-    alert('이 글과 관련된 코멘트가 존재하므로 삭제 할 수 없습니다.'."\n\n".'코멘트가 '.$board['bo_count_delete'].'건 이상 달린 원글은 삭제할 수 없습니다.');
+    alert('이 글과 관련된 코멘트가 존재하므로 삭제 할 수 없습니다.\\n\\n코멘트가 '.$board['bo_count_delete'].'건 이상 달린 원글은 삭제할 수 없습니다.');
 
 
 // 사용자 코드 실행
