@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400630';
 include_once('./_common.php');
 
@@ -17,15 +17,16 @@ if ($ev_mimg_del)  @unlink(G4_DATA_PATH."/event/{$ev_id}_m");
 if ($ev_himg_del)  @unlink(G4_DATA_PATH."/event/{$ev_id}_h");
 if ($ev_timg_del)  @unlink(G4_DATA_PATH."/event/{$ev_id}_t");
 
-$sql_common = " set ev_skin       = '$ev_skin',
-                    ev_img_width  = '$ev_img_width',
-                    ev_img_height = '$ev_img_height',
-                    ev_list_mod   = '$ev_list_mod',
-                    ev_list_row   = '$ev_list_row',
-                    ev_subject    = '$ev_subject',
-                    ev_head_html  = '$ev_head_html',
-                    ev_tail_html  = '$ev_tail_html',
-                    ev_use        = '$ev_use'
+$sql_common = " set ev_skin             = '$ev_skin',
+                    ev_img_width        = '$ev_img_width',
+                    ev_img_height       = '$ev_img_height',
+                    ev_list_mod         = '$ev_list_mod',
+                    ev_list_row         = '$ev_list_row',
+                    ev_subject          = '$ev_subject',
+                    ev_head_html        = '$ev_head_html',
+                    ev_tail_html        = '$ev_tail_html',
+                    ev_use              = '$ev_use',
+                    ev_subject_strong   = '$ev_subject_strong'
                     ";
 
 if ($w == "")

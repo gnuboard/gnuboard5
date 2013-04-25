@@ -32,6 +32,11 @@ else
     $ev['ev_list_row'] = 5;
 }
 
+if(!isset($ev['ev_subject_strong'])) {
+    sql_query(" ALTER TABLE `{$g4['shop_event_table']}`
+                    ADD `ev_subject_strong` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ev_subject` ", false);
+}
+
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
@@ -106,7 +111,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="text" name="ev_subject" value="<? echo htmlspecialchars2($ev['ev_subject']) ?>" id="ev_subject" required class="required frm_input"  size="60">
             <label for="ev_subject_strong">제목 강조</label>
-            <input type="checkbox" name="ev_subject_strong" value="<?=$ev['ev_subject_strong']?>" id="ev_subject_strong">
+            <input type="checkbox" name="ev_subject_strong" value="1" id="ev_subject_strong" <?php if($ev['ev_subject_strong']) echo 'checked="checked"'; ?>>
         </td>
     </tr>
     <tr>
