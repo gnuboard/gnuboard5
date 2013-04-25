@@ -390,7 +390,7 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <?=help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SRZ89");?>
             <input type="hidden" name="de_card_pg" value="kcp">
-            <span style="font:bold 15px Verdana;">SR</span> <input type="text" name="de_kcp_mid" value="<?=$default['de_kcp_mid']?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
+            <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?=$default['de_kcp_mid']?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
         </td>
     </tr>
     <tr>
