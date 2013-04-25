@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "300200";
 include_once('./_common.php');
 
@@ -17,15 +17,15 @@ $colspan = 4;
 ?>
 
 <div class="cbox">
-    <p>아이디 <?=$mb['mb_id']?>, 이름 <?=$mb['mb_name']?>, 별명 <?=$mb['mb_nick']?>님이 접근가능한 그룹 목록</p>
+    <p>아이디 <?php echo $mb['mb_id'] ?>, 이름 <?php echo $mb['mb_name'] ?>, 별명 <?php echo $mb['mb_nick'] ?>님이 접근가능한 그룹 목록</p>
     <form name="fboardgroupmember" id="fboardgroupmember" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);" method="post">
-    <input type="hidden" name="sst" value="<?=$sst?>" id="sst">
-    <input type="hidden" name="sod" value="<?=$sod?>" id="sod">
-    <input type="hidden" name="sfl" value="<?=$sfl?>" id="sfl">
-    <input type="hidden" name="stx" value="<?=$stx?>" id="stx">
-    <input type="hidden" name="page" value="<?=$page?>" id="page">
-    <input type="hidden" name="token" value="<?=$token?>" id="token">
-    <input type="hidden" name="mb_id" value="<?=$mb['mb_id']?>" id="mb_id">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>" id="sst">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>" id="sod">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>" id="sfl">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>" id="stx">
+    <input type="hidden" name="page" value="<?php echo $page ?>" id="page">
+    <input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+    <input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
     <input type="hidden" name="w" value="d" id="w">
     <table>
     <thead>
@@ -38,7 +38,7 @@ $colspan = 4;
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $sql = " select * from {$g4['group_member_table']} a, {$g4['group_table']} b
                 where a.mb_id = '{$mb['mb_id']}'
                 and a.gr_id = b.gr_id ";
@@ -50,13 +50,13 @@ $colspan = 4;
         $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
     ?>
     <tr>
-        <td class="td_chk"><input type="checkbox" name="chk[]" value="<?=$row['gm_id']?>" id="chk_<?=$i?>" title="<?=$row['gr_subject']?> 그룹 선택"></td>
-        <td class="td_grid"><a href="<?=$g4['bbs_path']?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
-        <td class="td_category"><?=$row['gr_subject']?></td>
-        <td class="td_time"><?=$row['gm_datetime']?></td>
-        <td class="td_mng"><?=$s_del?></td>
+        <td class="td_chk"><input type="checkbox" name="chk[]" value="<?php echo $row['gm_id'] ?>" id="chk_<?php echo $i ?>" title="<?php echo $row['gr_subject'] ?> 그룹 선택"></td>
+        <td class="td_grid"><a href="<?php echo $g4['bbs_path'] ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
+        <td class="td_category"><?php echo $row['gr_subject'] ?></td>
+        <td class="td_time"><?php echo $row['gm_datetime'] ?></td>
+        <td class="td_mng"><?php echo $s_del ?></td>
     </tr>
-    <?
+    <?php
     }
 
     if ($i == 0) {
@@ -73,14 +73,14 @@ $colspan = 4;
 </div>
 
 <form name="fboardgroupmember_form" id="fboardgroupmember_form" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)" method="post">
-<input type="hidden" name="mb_id" value="<?=$mb['mb_id']?>" id="mb_id">
-<input type="hidden" name="token" value="<?=$token?>" id="token">
+<input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
+<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
 <fieldset>
-    <legend><?=$mb['mb_id']?>님 접근가능그룹 추가</legend>
+    <legend><?php echo $mb['mb_id'] ?>님 접근가능그룹 추가</legend>
     <label for="gr_id">그룹지정</label>
     <select name="gr_id" id="gr_id">
         <option value="">접근가능 그룹을 선택하세요.</option>
-        <?
+        <?php
         $sql = " select * 
                     from {$g4['group_table']}
                     where gr_use_access = 1 ";
@@ -121,6 +121,6 @@ function boardgroupmember_form_check(f)
 }
 </script>
 
-<?
+<?php
 include_once('./admin.tail.php');
 ?>

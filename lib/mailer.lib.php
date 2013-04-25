@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 
 // 메일 보내기 (파일 여러개 첨부 가능)

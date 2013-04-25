@@ -1,4 +1,4 @@
-<?
+<?php
 // 회원가입축하 메일 (회원님께 발송)
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
@@ -18,20 +18,20 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             회원가입을 축하합니다.
         </h1>
         <span style="display:block;padding:10px 30px 30px;background:#f7f7f7;text-align:right">
-            <a href="<?=G4_URL?>" target="_blank"><?=$config['cf_title']?></a>
+            <a href="<?php echo G4_URL ?>" target="_blank"><?php echo $config['cf_title'] ?></a>
         </span>
         <p style="margin:20px 0 0;padding:30px 30px 50px;min-height:200px;height:auto !important;height:200px;border-bottom:1px solid #eee">
-            <b><?=$mb_name?></b> 님의 회원가입을 진심으로 축하합니다.<br>
+            <b><?php echo $mb_name ?></b> 님의 회원가입을 진심으로 축하합니다.<br>
             회원님의 성원에 보답하고자 더욱 더 열심히 하겠습니다.<br>
-            <? if ($config['cf_use_email_certify']) { ?>아래의 <strong>메일인증</strong>을 클릭하시면 회원가입이 완료됩니다.<br><? } ?>
+            <?php if ($config['cf_use_email_certify']) { ?>아래의 <strong>메일인증</strong>을 클릭하시면 회원가입이 완료됩니다.<br><?php } ?>
             감사합니다.
         </p>
 
-        <? if ($config['cf_use_email_certify']) { ?>
-        <a href="<?=$certify_href?>" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">메일인증</a>
-        <? } else { ?>
-        <a href="<?=G4_URL?>" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">사이트바로가기</a>
-        <? } ?>
+        <?php if ($config['cf_use_email_certify']) { ?>
+        <a href="<?php echo $certify_href ?>" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">메일인증</a>
+        <?php } else { ?>
+        <a href="<?php echo G4_URL ?>" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">사이트바로가기</a>
+        <?php } ?>
     </div>
 </div>
 

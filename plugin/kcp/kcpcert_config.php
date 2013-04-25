@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // /home/kcpcert_enc ( 서버상 bin 폴더 이전까지 경로)
@@ -17,9 +17,8 @@ if($config['cf_kcpcert_site_cd'] && $config['cf_kcpcert_site_cd'] != 'S6186') { 
     $cert_url = 'https://testcert.kcp.co.kr/kcp_cert/cert_view.jsp';
 }
 */
-if ($config['cf_kcpcert_use'] == 1) { // 실제사용
-    //$site_cd = 'SM'.$config['cf_kcpcert_site_cd'];
-    $site_cd = $config['cf_kcpcert_site_cd'];
+if ($config['cf_kcpcert_use'] == 1) { // 실서비스
+    $site_cd = 'SM'.$config['cf_kcpcert_site_cd'];
     $cert_url = 'https://cert.kcp.co.kr/kcp_cert/cert_view.jsp';
 } else if ($config['cf_kcpcert_use'] == -1) { // 테스트사용
     $site_cd = 'S6186';

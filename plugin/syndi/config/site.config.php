@@ -1,4 +1,4 @@
-<?PHP
+<?php
 // 타임존
 $GLOBALS['syndi_time_zone'] = '+09:00';
 

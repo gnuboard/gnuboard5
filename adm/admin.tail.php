@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 ?>
 
@@ -19,9 +19,9 @@ if (!defined('_GNUBOARD_')) exit;
     </p>
 </footer>
 
-<!-- <p>실행시간 : <?=get_microtime() - $begin_time;?> -->
+<!-- <p>실행시간 : <?php echo get_microtime() - $begin_time; ?> -->
 
-<script src="<?=G4_ADMIN_URL?>/admin.js"></script>
+<script src="<?php echo G4_ADMIN_URL ?>/admin.js"></script>
 <script>
 $(function(){
     var hide_menu = false;
@@ -96,6 +96,6 @@ $(function(){
 
 </script>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

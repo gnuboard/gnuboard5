@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "100800";
 include_once("./_common.php");
 
@@ -14,7 +14,7 @@ include_once("./admin.head.php");
         완료 메세지가 나오기 전에 프로그램의 실행을 중지하지 마십시오.
     </p>
 
-    <?
+    <?php
     flush();
 
     $list_tag_st = "";

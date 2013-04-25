@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // 특수문자 변환
@@ -38,16 +38,16 @@ $sql = " select gr_subject from {$g4['group_table']} where gr_id = '{$row['gr_id
 $row = sql_fetch($sql);
 $subj1 = specialchars_replace($row['gr_subject'], 255);
 
-echo '<?xml version="1.0" encoding="utf-8"?>'."\n";
+echo '<?phpxml version="1.0" encoding="utf-8" ?>'."\n";
 ?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
-<title><?=specialchars_replace($config['cf_title'].' &gt; '.$subj1.' &gt; '.$subj2)?></title>
-<link><?=specialchars_replace(G4_BBS_URL.'/board.php?bo_table='.$bo_table)?></link>
+<title><?php echo specialchars_replace($config['cf_title'].' &gt; '.$subj1.' &gt; '.$subj2) ?></title>
+<link><?php echo specialchars_replace(G4_BBS_URL.'/board.php?bo_table='.$bo_table) ?></link>
 <description>테스트 버전 0.2 (2004-04-26)</description>
 <language>ko</language>
 
-<?
+<?php
 $sql = " select wr_id, wr_subject, wr_content, wr_name, wr_datetime, wr_option
             from {$g4['write_prefix']}$bo_table
             where wr_is_comment = 0
@@ -64,20 +64,20 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <item>
-<title><?=specialchars_replace($row['wr_subject'])?></title>
-<link><?=specialchars_replace(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_id'])?></link>
-<description><![CDATA[<?=$file?><?=conv_content($row['wr_content'], $html)?>]]></description>
-<dc:creator><?=specialchars_replace($row['wr_name'])?></dc:creator>
-<?
+<title><?php echo specialchars_replace($row['wr_subject']) ?></title>
+<link><?php echo specialchars_replace(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_id']) ?></link>
+<description><![CDATA[<?php echo $file ?><?php echo conv_content($row['wr_content'], $html) ?>]]></description>
+<dc:creator><?php echo specialchars_replace($row['wr_name']) ?></dc:creator>
+<?php
 $date = $row['wr_datetime'];
 // rss 리더 스킨으로 호출하면 날짜가 제대로 표시되지 않음
 //$date = substr($date,0,10) . "T" . substr($date,11,8) . "+09:00";
 $date = date('r', strtotime($date));
 ?>
-<dc:date><?=$date?></dc:date>
+<dc:date><?php echo $date ?></dc:date>
 </item>
 
-<?
+<?php
 }
 
 echo '</channel>'."\n";

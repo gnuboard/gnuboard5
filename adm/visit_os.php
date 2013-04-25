@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "200800";
 include_once('./_common.php');
 
@@ -41,12 +41,12 @@ while ($row=sql_fetch_array($result)) {
     <tfoot>
     <tr>
         <td colspan="3">합계</td>
-        <td><strong><?=$sum_count?></strong></td>
+        <td><strong><?php echo $sum_count ?></strong></td>
         <td>100%</td>
     </tr>
     </tfoot>
     <tbody>
-    <?
+    <?php
     $i = 0;
     $k = 0;
     $save_count = -1;
@@ -72,18 +72,18 @@ while ($row=sql_fetch_array($result)) {
     ?>
 
     <tr>
-        <td class="td_num"><?=$no?></td>
-        <td class="td_category"><?=$key?></td>
+        <td class="td_num"><?php echo $no ?></td>
+        <td class="td_category"><?php echo $key ?></td>
         <td>
             <div class="visit_bar">
-                <span style="width:<?=$s_rate?>%"></span>
+                <span style="width:<?php echo $s_rate ?>%"></span>
             </div>
         </td>
-        <td class="td_bignum"><?=$count?></td>
-        <td class="td_num"><?=$s_rate?></td>
+        <td class="td_bignum"><?php echo $count ?></td>
+        <td class="td_num"><?php echo $s_rate ?></td>
     </tr>
 
-    <?
+    <?php
         }
     } else {
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
@@ -93,6 +93,6 @@ while ($row=sql_fetch_array($result)) {
     </table>
 </section>
 
-<?
+<?php
 include_once('./admin.tail.php');
 ?>

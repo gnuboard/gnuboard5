@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 if ($sw == 'move')
@@ -43,20 +43,20 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <div id="copymove" class="new_win">
-    <h1><?=$g4['title']?></h1>
+    <h1><?php echo $g4['title'] ?></h1>
 
     <form name="fboardmoveall" method="post" action="./move_update.php" onsubmit="return fboardmoveall_submit(this);">
-    <input type="hidden" name="sw" value="<?=$sw?>">
-    <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-    <input type="hidden" name="wr_id_list" value="<?=$wr_id_list?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="spt" value="<?=$spt?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="act" value="<?=$act?>">
-    <input type="hidden" name="url" value="<?=$_SERVER['HTTP_REFERER']?>">
+    <input type="hidden" name="sw" value="<?php echo $sw ?>">
+    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+    <input type="hidden" name="wr_id_list" value="<?php echo $wr_id_list ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>">
+    <input type="hidden" name="spt" value="<?php echo $spt ?>">
+    <input type="hidden" name="page" value="<?php echo $page ?>">
+    <input type="hidden" name="act" value="<?php echo $act ?>">
+    <input type="hidden" name="url" value="<?php echo $_SERVER['HTTP_REFERER'] ?>">
     <table class="basic_tbl">
-    <caption><?=$act?>할 게시판을 한개 이상 선택하여 주십시오.</caption>
+    <caption><?php echo $act ?>할 게시판을 한개 이상 선택하여 주십시오.</caption>
     <thead>
     <tr>
         <th scope="col">선택</th>
@@ -64,27 +64,27 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     </tr>
     </thead>
     <tbody>
-    <? for ($i=0; $i<count($list); $i++) { ?>
+    <?php for ($i=0; $i<count($list); $i++) { ?>
     <tr>
         <td class="td_chk">
-            <input type="checkbox" id="chk<?=$i?>" name="chk_bo_table[]" value="<?=$list[$i]['bo_table']?>">
+            <input type="checkbox" id="chk<?php echo $i ?>" name="chk_bo_table[]" value="<?php echo $list[$i]['bo_table'] ?>">
         </td>
         <td>
-            <label for="chk<?=$i?>">
-            <?
+            <label for="chk<?php echo $i ?>">
+            <?php
             echo $list[$i]['gr_subject'] . " &gt; ";
             $save_gr_subject = $list[$i]['gr_subject'];
             ?>
-            <?=$list[$i]['bo_subject']?> (<?=$list[$i]['bo_table']?>)
+            <?php echo $list[$i]['bo_subject'] ?> (<?php echo $list[$i]['bo_table'] ?>)
             </label>
         </td>
     </tr>
-    <? } ?>
+    <?php } ?>
     </tbody>
     </table>
 
     <div class="btn_win btn_confirm">
-        <input type="submit" id="btn_submit" class="btn_submit" value="<?=$act?>">
+        <input type="submit" id="btn_submit" class="btn_submit" value="<?php echo $act ?>">
     </div>
     </form>
 
@@ -133,6 +133,6 @@ function fboardmoveall_submit(f)
 
 </td></tr></table>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

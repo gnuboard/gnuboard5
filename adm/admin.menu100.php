@@ -1,4 +1,4 @@
-<?
+<?php
 $menu['menu100'] = array (
     array('100000', '환경설정', G4_ADMIN_URL.'/config_form.php',   'config'),
     array('', '기본환경설정', G4_ADMIN_URL.'/config_form.php',   'cf_basic'),

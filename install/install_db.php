@@ -1,4 +1,4 @@
-<?
+<?php
 set_time_limit(0);
 $gmnow = gmdate('D, d M Y H:i:s') . ' GMT';
 header('Expires: 0'); // rfc2616 - Section 14.21
@@ -45,7 +45,7 @@ if (!$select_db) {
 <h2>그누보드4s 설치가 시작되었습니다.</h2>
 
 <ol>
-<?
+<?php
 // 테이블 생성 ------------------------------------
 $file = implode('', file('./gnuboard4s.sql'));
 eval("\$file = \"$file\";");
@@ -62,7 +62,7 @@ for ($i=0; $i<count($f); $i++) {
 
     <li>전체 테이블 생성 완료</li>
 
-<?
+<?php
 $read_point = 0;
 $write_point = 0;
 $comment_point = 0;
@@ -149,7 +149,7 @@ $sql = " insert into `{$table_prefix}member`
 
     <li>DB설정 완료</li>
 
-<?
+<?php
 //-------------------------------------------------------------------------------------------------
 
 // 디렉토리 생성
@@ -170,7 +170,7 @@ for ($i=0; $i<count($dir_arr); $i++) {
 
     <li>데이터 디렉토리 생성 완료</li>
 
-<?
+<?php
 //-------------------------------------------------------------------------------------------------
 
 // DB 설정 파일 생성
@@ -206,15 +206,15 @@ fwrite($f, "\$g4['visit_table'] = G4_TABLE_PREFIX.'visit'; // 방문자 테이�
 fwrite($f, "\$g4['visit_sum_table'] = G4_TABLE_PREFIX.'visit_sum'; // 방문자 합계 테이블\n");
 fwrite($f, "\$g4['uniqid_table'] = G4_TABLE_PREFIX.'uniqid'; // 유니크한 값을 만드는 테이블\n");
 fwrite($f, "\$g4['syndi_log_table'] = G4_TABLE_PREFIX.'syndi_log'; // 네이버 신디케이션 컨텐츠 삭제 로그 테이블\n");
-fwrite($f, "?>");
+fwrite($f, " ?>");
 
 fclose($f);
 @chmod($file, 0606);
 ?>
 
-    <li>DB설정 파일 생성 완료 (<?=$file?>)</li>
+    <li>DB설정 파일 생성 완료 (<?php echo $file ?>)</li>
 
-<?
+<?php
 // data 디렉토리 및 하위 디렉토리에서는 .htaccess .htpasswd .php .phtml .html .htm .inc .cgi .pl 파일을 실행할수 없게함.
 $f = fopen($data_path.'/.htaccess', 'w');
 $str = <<<EOD

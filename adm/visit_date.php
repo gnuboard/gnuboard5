@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "200800";
 include_once('./_common.php');
 
@@ -40,12 +40,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <tfoot>
     <tr>
         <td colspan="2">합계</td>
-        <td><strong><?=number_format($sum_count)?></strong></td>
+        <td><strong><?php echo number_format($sum_count) ?></strong></td>
         <td>100%</td>
     </tr>
     </tfoot>
     <tbody>
-    <?
+    <?php
     $i = 0;
     $k = 0;
     $save_count = -1;
@@ -59,17 +59,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     ?>
 
     <tr>
-        <td class="td_category"><a href="./visit_list.php?fr_date=<?=$key?>&amp;to_date=<?=$key?>"><?=$key?></a></td>
+        <td class="td_category"><a href="./visit_list.php?fr_date=<?php echo $key ?>&amp;to_date=<?php echo $key ?>"><?php echo $key ?></a></td>
         <td>
             <div class="visit_bar">
-                <span style="width:<?=$s_rate?>%"></span>
+                <span style="width:<?php echo $s_rate ?>%"></span>
             </div>
         </td>
-        <td class="td_bignum"><?=number_format($value)?></td>
-        <td class="td_num"><?=$s_rate?></td>
+        <td class="td_bignum"><?php echo number_format($value) ?></td>
+        <td class="td_num"><?php echo $s_rate ?></td>
     </tr>
 
-    <?
+    <?php
         }
     } else {
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
@@ -79,6 +79,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </table>
 </section>
 
-<?
+<?php
 include_once('./admin.tail.php');
 ?>

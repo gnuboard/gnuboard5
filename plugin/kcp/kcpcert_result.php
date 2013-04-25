@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./kcpcert_config.php');
 
 set_session('ss_kcpcert_no',    '');
@@ -177,10 +177,10 @@ $(function() {
     var $opener = window.opener;
 
     // 인증정보
-    $opener.$("input[name=mb_hp]").val("<?=$phone_no?>");
-    $opener.$("input[name=mb_name]").val("<?=$user_name?>");
-    //$opener.$("input[name=kcpcert_no]").val("<?=$md5_cert_no?>");
-    //$opener.$("input[name=kcpcert_time]").val("<?=G4_TIME_YMDHIS?>");
+    $opener.$("input[name=mb_hp]").val("<?php echo $phone_no ?>");
+    $opener.$("input[name=mb_name]").val("<?php echo $user_name ?>");
+    //$opener.$("input[name=kcpcert_no]").val("<?php echo $md5_cert_no ?>");
+    //$opener.$("input[name=kcpcert_time]").val("<?php echo G4_TIME_YMDHIS ?>");
     window.close();
 });
 </script>

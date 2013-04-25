@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "300200";
 include_once('./_common.php');
 
@@ -64,15 +64,15 @@ $colspan = 8;
 <fieldset>
     <legend>그룹 검색</legend>
     <span>
-        <?=$listall?>
-        생성된 그룹수 <?=number_format($total_count)?>개
+        <?php echo $listall ?>
+        생성된 그룹수 <?php echo number_format($total_count) ?>개
     </span>
     <select name="sfl" title="검색대상">
-        <option value="gr_subject"<?=get_selected($_GET['sfl'], "gr_subject");?>>제목</option>
-        <option value="gr_id"<?=get_selected($_GET['sfl'], "gr_id");?>>ID</option>
-        <option value="gr_admin"<?=get_selected($_GET['sfl'], "gr_admin");?>>그룹관리자</option>
+        <option value="gr_subject"<?php echo get_selected($_GET['sfl'], "gr_subject"); ?>>제목</option>
+        <option value="gr_id"<?php echo get_selected($_GET['sfl'], "gr_id"); ?>>ID</option>
+        <option value="gr_admin"<?php echo get_selected($_GET['sfl'], "gr_admin"); ?>>그룹관리자</option>
     </select>
-    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)"  required class="required frm_input">
+    <input type="text" name="stx" value="<?php echo $stx ?>" title="검색어(필수)"  required class="required frm_input">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
@@ -84,38 +84,38 @@ $colspan = 8;
         접근사용 옵션은 해당 그룹에 속한 모든 게시판에 적용됩니다.
     </p>
 
-    <?if ($is_admin == 'super') {?>
+    <?php if ($is_admin == 'super') { ?>
     <div id="btn_add">
         <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
     </div>
-    <?}?>
+    <?php } ?>
 
     <form name="fboardgrouplist" id="fboardgrouplist" action="./boardgroup_list_update.php" onsubmit="return fboardgrouplist_submit(this);" method="post">
-    <input type="hidden" name="sst" value="<?=$sst?>">
-    <input type="hidden" name="sod" value="<?=$sod?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="token" value="<?=$token?>">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>">
+    <input type="hidden" name="page" value="<?php echo $page ?>">
+    <input type="hidden" name="token" value="<?php echo $token ?>">
 
     <table class="tbl_gr_list">
     <thead>
     <tr>
         <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 그룹 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col"><?=subject_sort_link('gr_id')?>그룹아이디</a></th>
-        <th scope="col"><?=subject_sort_link('gr_subject')?>제목</a></th>
-        <?if ($is_admin == 'super'){?><th scope="col"><?=subject_sort_link('gr_admin')?>그룹관리자</a></th><?}?>
+        <th scope="col"><?php echo subject_sort_link('gr_id') ?>그룹아이디</a></th>
+        <th scope="col"><?php echo subject_sort_link('gr_subject') ?>제목</a></th>
+        <?php if ($is_admin == 'super'){ ?><th scope="col"><?php echo subject_sort_link('gr_admin') ?>그룹관리자</a></th><?php } ?>
         <th scope="col">게시판<br>갯수</th>
         <th scope="col">접근<br>사용</th>
         <th scope="col">접근<br>회원수</th>
         <th scope="col">메뉴<br>보임</th>
-        <th scope="col"><?=subject_sort_link('gr_order')?>출력<br>순서</a></th>
+        <th scope="col"><?php echo subject_sort_link('gr_order') ?>출력<br>순서</a></th>
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 접근회원수
@@ -131,38 +131,38 @@ $colspan = 8;
 
     <tr>
         <td class="td_chk">
-            <input type="checkbox" name="chk[]" value="<?=$i?>" id="chk_<?=$i?>" title="<?=$row['gr_subject']?> 그룹선택">
-            <input type="hidden" name="group_id[<?=$i?>]" value="<?=$row['gr_id']?>">
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>" title="<?php echo $row['gr_subject'] ?> 그룹선택">
+            <input type="hidden" name="group_id[<?php echo $i ?>]" value="<?php echo $row['gr_id'] ?>">
         </td>
-        <td class="td_grid"><a href="<?=G4_BBS_URL?>/group.php?gr_id=<?=$row['gr_id']?>"><?=$row['gr_id']?></a></td>
+        <td class="td_grid"><a href="<?php echo G4_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
         <td>
-            <input type="text" name="gr_subject[<?=$i?>]" value="<?=get_text($row['gr_subject'])?>" id="gr_subject_<?=$i?>" title="그룹제목 수정" class="frm_input">
-        </td>
-        <td>
-        <?if ($is_admin == 'super'){?>
-            <input type="text" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>" id="gr_admin_<?=$i?>" title="그룹관리자 수정" class="frm_input" size="10" maxlength="20">
-        <?}else{?>
-            <input type="hidden" name="gr_admin[<?=$i?>]" value="<?=$row['gr_admin']?>"><td><?=$row['gr_admin']?>
-        <?}?>
-        </td>
-        <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?=$row['gr_id']?>"><?=$row2['cnt']?></a></td>
-        <td><input type="checkbox" name="gr_use_access[<?=$i?>]" <?=$row['gr_use_access']?'checked':''?> value="1" id="gr_use_access_<?=$i?>" title="선택 시 접근회원 사용"></td>
-        <td><a href="./boardgroupmember_list.php?gr_id=<?=$row['gr_id']?>"><?=$row1['cnt']?></a></td>
-        <td><input type="checkbox" name="gr_show_menu[<?=$i?>]" <?=$row['gr_show_menu']?'checked':''?> value="1" id="gr_show_menu_<?=$i?>" title="선택 시 메뉴보이기"></td>
-        <td>
-            <input type="text" name="gr_order[<?=$i?>]" value="<?=$row['gr_order']?>" id="gr_order_<?=$i?>" title="출력순서 수정" class="frm_input" size="2">
+            <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" title="그룹제목 수정" class="frm_input">
         </td>
         <td>
-            <select id="gr_device_<?=$i?>" name="gr_device[<?=$i?>]" title="접속기기 선택">
-                <option value="both"<?=get_selected($row['gr_device'], 'both');?>>모두</option>
-                <option value="pc"<?=get_selected($row['gr_device'], 'pc');?>>PC</option>
-                <option value="mobile"<?=get_selected($row['gr_device'], 'mobile');?>>모바일</option>
+        <?php if ($is_admin == 'super'){ ?>
+            <input type="text" name="gr_admin[<?php echo $i ?>]" value="<?php echo $row['gr_admin'] ?>" id="gr_admin_<?php echo $i ?>" title="그룹관리자 수정" class="frm_input" size="10" maxlength="20">
+        <?php }else{ ?>
+            <input type="hidden" name="gr_admin[<?php echo $i ?>]" value="<?php echo $row['gr_admin'] ?>"><td><?php echo $row['gr_admin'] ?>
+        <?php } ?>
+        </td>
+        <td><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?php echo $row['gr_id'] ?>"><?php echo $row2['cnt'] ?></a></td>
+        <td><input type="checkbox" name="gr_use_access[<?php echo $i ?>]" <?php echo $row['gr_use_access']?'checked':'' ?> value="1" id="gr_use_access_<?php echo $i ?>" title="선택 시 접근회원 사용"></td>
+        <td><a href="./boardgroupmember_list.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row1['cnt'] ?></a></td>
+        <td><input type="checkbox" name="gr_show_menu[<?php echo $i ?>]" <?php echo $row['gr_show_menu']?'checked':'' ?> value="1" id="gr_show_menu_<?php echo $i ?>" title="선택 시 메뉴보이기"></td>
+        <td>
+            <input type="text" name="gr_order[<?php echo $i ?>]" value="<?php echo $row['gr_order'] ?>" id="gr_order_<?php echo $i ?>" title="출력순서 수정" class="frm_input" size="2">
+        </td>
+        <td>
+            <select id="gr_device_<?php echo $i ?>" name="gr_device[<?php echo $i ?>]" title="접속기기 선택">
+                <option value="both"<?php echo get_selected($row['gr_device'], 'both'); ?>>모두</option>
+                <option value="pc"<?php echo get_selected($row['gr_device'], 'pc'); ?>>PC</option>
+                <option value="mobile"<?php echo get_selected($row['gr_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
-        <td class="td_smallmng"><?=$s_upd?></td>
+        <td class="td_smallmng"><?php echo $s_upd ?></td>
     </tr>
 
-    <?
+    <?php
         }
     if ($i == 0)
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
@@ -177,7 +177,7 @@ $colspan = 8;
     </form>
 </section>
 
-<?
+<?php
 $pagelist = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 echo $pagelist;
 ?>
@@ -200,6 +200,6 @@ function fboardgrouplist_submit(f)
 }
 </script>
 
-<?
+<?php
 include_once('./admin.tail.php');
 ?>

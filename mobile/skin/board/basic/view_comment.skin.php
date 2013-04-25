@@ -1,17 +1,17 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <script>
 // 글자수 제한
-var char_min = parseInt(<?=$comment_min?>); // 최소
-var char_max = parseInt(<?=$comment_max?>); // 최대
+var char_min = parseInt(<?php echo $comment_min ?>); // 최소
+var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 </script>
 
 <!-- 댓글 리스트 -->
 <section id="bo_vc">
     <h2>댓글목록</h2>
-    <?
+    <?php
     for ($i=0; $i<count($list); $i++) {
         $comment_id = $list[$i]['wr_id'];
         $cmt_depth = ""; // 댓글단계
@@ -21,32 +21,32 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
                 $str = $str;
             $str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $str);
     ?>
-    <article id="c_<?=$comment_id?>" <?if ($cmt_depth) {?>style="margin-left:<?=$cmt_depth?>px;border-top-color:#e0e0e0"<?}?>>
+    <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
         <header>
-            <h1><?=$list[$i]['wr_name']?>님의 댓글</h1>
-            <?=$list[$i]['name']?>
-            <? if ($cmt_depth) {?><img src="<?=$board_skin_url?>/img/icon_reply.gif" alt="댓글의 댓글" class="icon_reply"><? } ?>
-            <? if ($is_ip_view) { ?>
+            <h1><?php echo $list[$i]['wr_name'] ?>님의 댓글</h1>
+            <?php echo $list[$i]['name'] ?>
+            <?php if ($cmt_depth) { ?><img src="<?php echo $board_skin_url ?>/img/icon_reply.gif" alt="댓글의 댓글" class="icon_reply"><?php } ?>
+            <?php if ($is_ip_view) { ?>
             아이피
-            <span class="bo_vc_hdinfo"><?=$list[$i]['ip'];?></span>
-            <? } ?>
+            <span class="bo_vc_hdinfo"><?php echo $list[$i]['ip']; ?></span>
+            <?php } ?>
             작성일
-            <span class="bo_vc_hdinfo"><time datetime="<?=date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime']))?>"><?=$list[$i]['datetime']?></time></span>
+            <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
         </header>
 
         <!-- 댓글 출력 -->
         <p>
-            <? if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"".$board_skin_url."/img/icon_secret.gif\" alt=\"비밀글\">";?>
-            <?=$str?>
+            <?php if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"".$board_skin_url."/img/icon_secret.gif\" alt=\"비밀글\">"; ?>
+            <?php echo $str ?>
         </p>
 
-        <span id="edit_<?=$comment_id?>"></span><!-- 수정 -->
-        <span id="reply_<?=$comment_id?>"></span><!-- 답변 -->
+        <span id="edit_<?php echo $comment_id ?>"></span><!-- 수정 -->
+        <span id="reply_<?php echo $comment_id ?>"></span><!-- 답변 -->
 
-        <input type="hidden" id="secret_comment_<?=$comment_id?>" value="<?=strstr($list[$i]['wr_option'],"secret")?>">
-        <textarea id="save_comment_<?=$comment_id?>" style="display:none"><?=get_text($list[$i]['content1'], 0)?></textarea>
+        <input type="hidden" id="secret_comment_<?php echo $comment_id ?>" value="<?php echo strstr($list[$i]['wr_option'],"secret") ?>">
+        <textarea id="save_comment_<?php echo $comment_id ?>" style="display:none"><?php echo get_text($list[$i]['content1'], 0) ?></textarea>
 
-        <? if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
+        <?php if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
             $query_string = str_replace("&", "&amp;", $_SERVER['QUERY_STRING']);
 
             if($w == 'cu') {
@@ -60,39 +60,39 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
         ?>
         <footer>
             <ul class="bo_vc_act">
-                <? if ($list[$i]['is_reply']) { ?><li><a href="<? echo $c_reply_href; ?>" onclick="comment_box('<?=$comment_id?>', 'c'); return false;">답변</a></li><? } ?>
-                <? if ($list[$i]['is_edit']) { ?><li><a href="<? echo $c_edit_href; ?>" onclick="comment_box('<?=$comment_id?>', 'cu'); return false;">수정</a></li><? } ?>
-                <? if ($list[$i]['is_del'])  { ?><li><a href="<? echo $list[$i]['del_link']; ?>" onclick="return comment_delete();">삭제</a></li><? } ?>
+                <?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;">답변</a></li><?php } ?>
+                <?php if ($list[$i]['is_edit']) { ?><li><a href="<?php echo $c_edit_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;">수정</a></li><?php } ?>
+                <?php if ($list[$i]['is_del'])  { ?><li><a href="<?php echo $list[$i]['del_link']; ?>" onclick="return comment_delete();">삭제</a></li><?php } ?>
             </ul>
         </footer>
-        <? } ?>
+        <?php } ?>
     </article>
-    <?}?>
-    <? if ($i == 0) { //댓글이 없다면 ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><? } ?>
+    <?php } ?>
+    <?php if ($i == 0) { //댓글이 없다면 ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><?php } ?>
 
 </section>
 
-<? if ($is_comment_write) {
+<?php if ($is_comment_write) {
         if($w == '')
             $w = 'c';
     ?>
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
         <form name="fviewcomment" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" method="post" autocomplete="off">
-        <input type="hidden" name="w" value="<?=$w?>" id="w">
-        <input type="hidden" name="bo_table" value="<?=$bo_table?>">
-        <input type="hidden" name="wr_id" value="<?=$wr_id?>">
-        <input type="hidden" name="comment_id" value="<?=$c_id?>" id="comment_id">
-        <input type="hidden" name="sca" value="<?=$sca?>">
-        <input type="hidden" name="sfl" value="<?=$sfl?>">
-        <input type="hidden" name="stx" value="<?=$stx?>">
-        <input type="hidden" name="spt" value="<?=$spt?>">
-        <input type="hidden" name="page" value="<?=$page?>">
+        <input type="hidden" name="w" value="<?php echo $w ?>" id="w">
+        <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+        <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
+        <input type="hidden" name="comment_id" value="<?php echo $c_id ?>" id="comment_id">
+        <input type="hidden" name="sca" value="<?php echo $sca ?>">
+        <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+        <input type="hidden" name="stx" value="<?php echo $stx ?>">
+        <input type="hidden" name="spt" value="<?php echo $spt ?>">
+        <input type="hidden" name="page" value="<?php echo $page ?>">
         <input type="hidden" name="is_good" value="">
 
         <table class="frm_tbl">
         <tbody>
-        <? if ($is_guest) { ?>
+        <?php if ($is_guest) { ?>
         <tr>
             <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
             <td><input type="text" name="wr_name" id="wr_name" required class="frm_input required" size="5" maxLength="20"></td>
@@ -101,24 +101,24 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
             <td><input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="10" maxLength="20"></td>
         </tr>
-        <? } ?>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="wr_secret">비밀글사용</label></th>
             <td><input type="checkbox" name="wr_secret" value="secret" id="wr_secret"></td>
         </tr>
-        <? if ($is_guest) { ?>
+        <?php if ($is_guest) { ?>
         <tr>
             <th scope="row">자동등록방지</th>
-            <td><?=$captcha_html;?></td>
+            <td><?php echo $captcha_html; ?></td>
         </tr>
-        <? } ?>
+        <?php } ?>
         <tr>
             <th scope="row">내용</th>
             <td>
-                <? if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?}?>
+                <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
                 <textarea id="wr_content" name="wr_content" required
-                <? if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?}?>><? echo $c_wr_content; ?></textarea>
-                <? if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?}?>
+                <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content; ?></textarea>
+                <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
             </td>
         </tr>
         </tbody>
@@ -231,7 +231,7 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
             }
         }
 
-        <? if($is_guest) echo chk_captcha_js(); ?>
+        <?php if($is_guest) echo chk_captcha_js(); ?>
 
         return true;
     }
@@ -286,4 +286,4 @@ var char_max = parseInt(<?=$comment_max?>); // 최대
 
     comment_box('', 'c'); // 댓글 입력폼이 보이도록 처리하기위해서 추가 (root님)
     </script>
-    <? } ?>
+    <?php } ?>

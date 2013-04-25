@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 $g4['title'] = '관리자메인';
@@ -43,8 +43,8 @@ $colspan = 12;
 ?>
 
 <section class="cbox">
-    <h2>신규가입회원 <?=$new_member_rows?>건 목록</h2>
-    <p>총회원수 <?=number_format($total_count)?>명 중 차단 <?=number_format($intercept_count)?>명, 탈퇴 : <?=number_format($leave_count)?>명</p>
+    <h2>신규가입회원 <?php echo $new_member_rows ?>건 목록</h2>
+    <p>총회원수 <?php echo number_format($total_count) ?>명 중 차단 <?php echo number_format($intercept_count) ?>명, 탈퇴 : <?php echo number_format($leave_count) ?>명</p>
 
     <table>
     <thead>
@@ -62,7 +62,7 @@ $colspan = 12;
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 접근가능한 그룹수
@@ -97,18 +97,18 @@ $colspan = 12;
 
     ?>
     <tr>
-        <td><?=$mb_id?></td>
-        <td class="td_mbname"><?=$row['mb_name']?></td>
-        <td class="td_name"><div><?=$mb_nick?></div></td>
-        <td class="td_num"><?=$row['mb_level']?></td>
-        <td class="td_bignum"><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=number_format($row['mb_point'])?></a></td>
-        <td class="td_boolean"><?=$row['mb_mailling']?'예':'아니오';?></td>
-        <td class="td_boolean"><?=$row['mb_open']?'예':'아니오';?></td>
-        <td class="td_boolean"><?=preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오';?></td>
-        <td class="td_boolean"><?=$row['mb_intercept_date']?'예':'아니오';?></td>
-        <td class="td_category"><?=$group?></td>
+        <td><?php echo $mb_id ?></td>
+        <td class="td_mbname"><?php echo $row['mb_name'] ?></td>
+        <td class="td_name"><div><?php echo $mb_nick ?></div></td>
+        <td class="td_num"><?php echo $row['mb_level'] ?></td>
+        <td class="td_bignum"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
+        <td class="td_boolean"><?php echo $row['mb_mailling']?'예':'아니오'; ?></td>
+        <td class="td_boolean"><?php echo $row['mb_open']?'예':'아니오'; ?></td>
+        <td class="td_boolean"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오'; ?></td>
+        <td class="td_boolean"><?php echo $row['mb_intercept_date']?'예':'아니오'; ?></td>
+        <td class="td_category"><?php echo $group ?></td>
     </tr>
-    <?
+    <?php
         }
     if ($i == 0)
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
@@ -122,7 +122,7 @@ $colspan = 12;
 
 </section>
 
-<?
+<?php
 $sql_common = " from {$g4['board_new_table']} a, {$g4['board_table']} b, {$g4['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id ";
 
 if ($gr_id)
@@ -144,7 +144,7 @@ $colspan = 5;
 
 <section class="cbox">
     <h2>최근게시물</h2>
-    <p>사이트 전체게시물 중 최근게시물 <?=$new_write_rows?>건 목록</p>
+    <p>사이트 전체게시물 중 최근게시물 <?php echo $new_write_rows ?>건 목록</p>
 
     <table>
     <thead>
@@ -157,7 +157,7 @@ $colspan = 5;
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id {$sql_common} {$sql_order} limit {$new_write_rows} ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -199,14 +199,14 @@ $colspan = 5;
     ?>
 
     <tr>
-        <td class="td_category"><a href="<?=G4_BBS_URL?>/new.php?gr_id=<?=$row['gr_id']?>"><?=cut_str($row['gr_subject'],10)?></a></td>
-        <td class="td_category"><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row['bo_table']?>"><?=cut_str($row['bo_subject'],20)?></a></td>
-        <td><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row['bo_table']?>&amp;wr_id=<?=$row2['wr_id']?><?=$comment_link?>"><?=$comment?><?=conv_subject($row2['wr_subject'], 100)?></a></td>
-        <td class="td_mbname"><div><?=$name?></div></td>
-        <td class="td_time"><?=$datetime?></td>
+        <td class="td_category"><a href="<?php echo G4_BBS_URL ?>/new.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo cut_str($row['gr_subject'],10) ?></a></td>
+        <td class="td_category"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>"><?php echo cut_str($row['bo_subject'],20) ?></a></td>
+        <td><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>&amp;wr_id=<?php echo $row2['wr_id'] ?><?php echo $comment_link ?>"><?php echo $comment ?><?php echo conv_subject($row2['wr_subject'], 100) ?></a></td>
+        <td class="td_mbname"><div><?php echo $name ?></div></td>
+        <td class="td_time"><?php echo $datetime ?></td>
     </tr>
 
-    <?
+    <?php
     }
     if ($i == 0)
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
@@ -215,11 +215,11 @@ $colspan = 5;
     </table>
 
     <div class="btn_ft">
-        <a href="<?=G4_BBS_URL?>/new.php">최근게시물 더보기</a>
+        <a href="<?php echo G4_BBS_URL ?>/new.php">최근게시물 더보기</a>
     </div>
 </section>
 
-<?
+<?php
 $sql_common = " from {$g4['point_table']} ";
 $sql_search = " where (1) ";
 $sql_order = " order by po_id desc ";
@@ -243,7 +243,7 @@ $colspan = 7;
 
 <section class="cbox">
     <h2>최근 포인트 발생내역</h2>
-    <p>전체 <?=number_format($total_count)?> 건 중 <?=$new_point_rows?>건 목록</p>
+    <p>전체 <?php echo number_format($total_count) ?> 건 중 <?php echo $new_point_rows ?>건 목록</p>
 
     <table>
     <thead>
@@ -258,7 +258,7 @@ $colspan = 7;
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $row2['mb_id'] = '';
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
@@ -279,16 +279,16 @@ $colspan = 7;
     ?>
 
     <tr>
-        <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-        <td class="td_mbname"><?=$row2['mb_name']?></td>
-        <td class="td_name"><div><?=$mb_nick?></div></td>
-        <td class="td_time"><?=$row['po_datetime']?></td>
-        <td><?=$link1.$row['po_content'].$link2?></td>
-        <td class="td_bignum"><?=number_format($row['po_point'])?></td>
-        <td class="td_bignum"><?=number_format($row2['mb_point'])?></td>
+        <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
+        <td class="td_mbname"><?php echo $row2['mb_name'] ?></td>
+        <td class="td_name"><div><?php echo $mb_nick ?></div></td>
+        <td class="td_time"><?php echo $row['po_datetime'] ?></td>
+        <td><?php echo $link1.$row['po_content'].$link2 ?></td>
+        <td class="td_bignum"><?php echo number_format($row['po_point']) ?></td>
+        <td class="td_bignum"><?php echo number_format($row2['mb_point']) ?></td>
     </tr>
 
-    <?
+    <?php
     }
 
     if ($i == 0)
@@ -302,6 +302,6 @@ $colspan = 7;
     </div>
 </section>
 
-<?
+<?php
 include_once ('./admin.tail.php');
 ?>
