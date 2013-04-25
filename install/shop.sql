@@ -270,6 +270,7 @@ CREATE TABLE IF NOT EXISTS `shop_event` (
   `ev_list_mod` int(11) NOT NULL DEFAULT '0',
   `ev_list_row` int(11) NOT NULL DEFAULT '0',
   `ev_subject` varchar(255) NOT NULL DEFAULT '',
+  `ev_subject_strong` tinyint(4) NOT NULL DEFAULT '0',
   `ev_head_html` text NOT NULL,
   `ev_tail_html` text NOT NULL,
   `ev_use` tinyint(4) NOT NULL DEFAULT '0',
