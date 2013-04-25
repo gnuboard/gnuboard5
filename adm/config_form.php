@@ -739,7 +739,9 @@ $pg_anchor = '<ul class="anchor">
 
 <script>
 $(function(){
+    <?php if($config['cf_kcpcert_use'] != 1) { ?>
     $('.cf_cert_kcp').addClass('cf_cert_kcp_hide');
+    <?php } ?>
     $('#cf_cert_kcpuse').change(function(){
         var cf_cert_kcp_sel = $('#cf_cert_kcpuse option:selected').val();
         if (cf_cert_kcp_sel == 1)
