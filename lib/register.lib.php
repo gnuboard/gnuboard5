@@ -159,14 +159,8 @@ function valid_mb_hp($reg_mb_hp)
 function exist_mb_hp($reg_mb_hp, $reg_mb_id)
 {
     global $g4;
-    $reg_mb_hp = preg_replace("/[^0-9]/", "", $reg_mb_hp);
-    $len = strlen($reg_mb_hp);
-    if($len == 10)
-        $reg_mb_hp = preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "\\1-\\2-\\3", $reg_mb_hp);
-    else if($len == 11)
-        $reg_mb_hp = preg_replace("/([0-9]{3})([0-9]{4})([0-9]{4})/", "\\1-\\2-\\3", $reg_mb_hp);
-    else
-        return "핸드폰번호를 올바르게 입력해 주십시오.";
+
+    $reg_mb_hp = hyphen_hp_number($reg_mb_hp);
 
     $sql = "select count(*) as cnt from {$g4['member_table']} where mb_hp = '$reg_mb_hp' and mb_id <> '$reg_mb_id' ";
     $row = sql_fetch($sql);
