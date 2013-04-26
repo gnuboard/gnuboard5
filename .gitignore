@@ -1,6 +1,5 @@
 dbconfig.php
 log
-g4s
 .htaccess
 data
 config.php
@@ -12,3 +11,4 @@ skin/latest/basic2
 Rankiss*
 thumb.lib.php
 test.php
+g4s_tree
