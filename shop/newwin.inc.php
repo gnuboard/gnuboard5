@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $sql = " select * from {$g4['shop_new_win_table']}
@@ -8,31 +8,32 @@ $result = sql_query($sql);
 for ($i=0; $row_nw=sql_fetch_array($result); $i++)
 {
     // 이미 체크 되었다면 Continue
-    if ($_COOKIE["ck_popup_{$row_nw['nw_id']}"])
+    if ($_COOKIE["hd_pops_{$row_nw['nw_id']}"])
         continue;
 
     $sql = " select * from {$g4['shop_new_win_table']} where nw_id = '{$row_nw['nw_id']}' ";
     $nw = sql_fetch($sql);
 ?>
-    <div id="div_popup_<? echo $nw['nw_id'] ?>" style="position:absolute;left:<?=$nw['nw_left']?>px;top:<?=$nw['nw_top']?>px;background-color:#eee">
-        <table width="<? echo $nw['nw_width'] ?>" height="<? echo $nw['nw_height'] ?>" cellpadding="0" cellspacing="0">
-        <tr>
-            <td valign="top"><?=conv_content($nw['nw_content'], 1);?></td>
-        </tr>
-        <tr>
-            <td height="30" align="center"><input type="checkbox" id="check_popup_<?=$nw['nw_id']?>" name="check_popup_<?=$nw['nw_id']?>" value="<?=$nw['nw_disable_hours']?>" class="popup_close">&nbsp;<label for='check_popup_<?=$nw['nw_id']?>'><?=$nw['nw_disable_hours']?>시간동안 이창을 열지 않습니다.</label></td>
-        </tr>
-        </table>
+<div id="hd_pops_<?php echo $nw['nw_id'] ?>" class="hd_pops" style="top:<?php echo $nw['nw_top']?>px;left:<?php echo $nw['nw_left']?>px;width:<?php echo $nw['nw_width'] ?>px;height:<?php echo $nw['nw_height'] ?>px">
+    <div class="hd_pops_con">
+        <?=conv_content($nw['nw_content'], 1);?>
     </div>
-<? } ?>
+    <div class="hd_pops_chk">
+        <label for="hd_pops_chk<?=$nw['nw_id']?>"><strong><?=$nw['nw_disable_hours']?></strong>시간동안 이 내용을 열람하지 않습니다.</label>
+        <input type="checkbox" name="check_popup_<?=$nw['nw_id']?>" value="<?=$nw['nw_disable_hours']?>" id="hd_pops_chk<?=$nw['nw_id']?>" class="hd_pops_close">
+    </div>
+</div>
+<?php }
+if ($i == 0) echo '<span class="sound_only">팝업레이어 알림이 없습니다.</span>';
+?>
 
 <script>
 $(function() {
-    $(".popup_close").click(function() {
+    $(".hd_pops_close").click(function() {
         if($(this).is(":checked")) {
             var id = $(this).attr("id");
-            var layer_id = id.replace("check", "div");
-            var ck_name = id.replace("check", "ck");
+            var layer_id = id.replace("chk", "");
+            var ck_name = id.replace("chk", "");
             var exp_time = parseInt($(this).val());
             $("#"+layer_id).css("display", "none");
             set_cookie(ck_name, 1, exp_time, g4_cookie_domain);
