@@ -141,7 +141,7 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="mb_tel">전화번호</label></th>
         <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
-        <th scope="row"><label for="mb_hp">핸드폰번호</label></th>
+        <th scope="row"><label for="mb_hp">휴대폰번호</label></th>
         <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" class="frm_input" size="15" maxlength="20"></td>
     </tr>
     <tr>

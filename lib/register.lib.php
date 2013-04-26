@@ -147,7 +147,7 @@ function valid_mb_hp($reg_mb_hp)
 {
     $reg_mb_hp = preg_replace("/[^0-9]/", "", $reg_mb_hp);
     if(!$reg_mb_hp)
-        return "핸드폰번호를 입력해 주십시오.";
+        return "휴대폰번호를 입력해 주십시오.";
     else {
         if(preg_match("/^01[0-9]{8,9}$/", $reg_mb_hp))
             return "";
@@ -168,7 +168,7 @@ function exist_mb_hp($reg_mb_hp, $reg_mb_id)
     $row = sql_fetch($sql);
 
     if($row['cnt'])
-        return " 이미 사용 중인 핸드폰번호입니다. ".$reg_mb_hp;
+        return " 이미 사용 중인 휴대폰번호입니다. ".$reg_mb_hp;
     else
         return "";
 }

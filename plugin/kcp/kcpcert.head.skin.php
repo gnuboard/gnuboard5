@@ -1,7 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-// 핸드폰번호 체크
+// 휴대폰번호 체크
 if ($msg = valid_mb_hp($mb_hp))   alert($msg, "", true, true);
 if ($msg = exist_mb_hp($mb_hp, $mb_id))   alert($msg, "", true, true);
 
