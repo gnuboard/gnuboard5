@@ -61,7 +61,7 @@ $sql = " select ca_include_head, ca_include_tail
           where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
 
-$g4['title'] = "상품 상세보기 : {$it['ca_name']} - {$it['it_name']} ";
+$g4['title'] = $it['it_name'].' 상세보기 &gt; '.$it['ca_name'];
 
 // 분류 상단 코드가 있으면 출력하고 없으면 기본 상단 코드 출력
 if ($ca['ca_include_head'])

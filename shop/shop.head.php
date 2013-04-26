@@ -19,11 +19,12 @@ $table_width = 900;
 //$dir = dirname($HTTP_SERVER_VARS["PHP_SELF"]);
 ?>
 
-<style>
-.amount { color:#2266BB; font-weight:bold; font-family:Verdana; }
-.c1 { background-color:#94D7E7; }
-.c2 { background-color:#E7F3F7; }
-</style>
+<header id="shd">
+    <h1><?php echo $config['cf_title'] ?></h1>
+
+    <div id="to_content"><a href="#container">내용 바로가기</a></div>
+
+</header>
 
 <!-- 전체 -->
 <table align=center cellpadding=0 cellspacing=0 border=0>
