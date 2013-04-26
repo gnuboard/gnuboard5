@@ -160,13 +160,15 @@ function exist_mb_hp($reg_mb_hp, $reg_mb_id)
 {
     global $g4;
 
+    if (!trim($reg_mb_hp)) return "";
+
     $reg_mb_hp = hyphen_hp_number($reg_mb_hp);
 
     $sql = "select count(*) as cnt from {$g4['member_table']} where mb_hp = '$reg_mb_hp' and mb_id <> '$reg_mb_id' ";
     $row = sql_fetch($sql);
 
     if($row['cnt'])
-        return "이미 사용 중인 핸드폰번호입니다.";
+        return " 이미 사용 중인 핸드폰번호입니다. ".$reg_mb_hp;
     else
         return "";
 }
