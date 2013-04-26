@@ -1,0 +1,7 @@
+/* 최근게시물 스킨 (latest) */
+.lt {position:relative;margin:0 0 1em;padding:0 1em 1.5em;border-bottom:1px solid #ddd}
+.lt ul {margin:0 0 1em;padding:0;list-style:none}
+.lt li {padding:0.2em 0}
+.lt a {color:#000;text-decoration:none}
+.lt_title {display:block;padding:1em 0}
+.lt_more {position:absolute;top:1em;right:1em}

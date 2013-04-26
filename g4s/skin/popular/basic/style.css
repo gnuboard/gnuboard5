@@ -1,0 +1,10 @@
+/* 인기검색어 */
+#popular {background:#515151}
+#popular div {margin:0 auto;width:980px;zoom:1}
+#popular div:after {display:block;visibility:hidden;clear:both;content:""}
+#popular h2 {float:left;padding:10px 45px 10px 0;color:#fff}
+#popular ul {float:left;list-style:none}
+#popular li {float:left}
+#popular a {display:inline-block;padding:10px;color:#fff;text-decoration:none}
+#popular a:focus,
+#popular a:hover {background:#333;color:#fff}
