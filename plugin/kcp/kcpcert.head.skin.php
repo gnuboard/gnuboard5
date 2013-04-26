@@ -5,13 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 if ($msg = valid_mb_hp($mb_hp))   alert($msg, "", true, true);
 if ($msg = exist_mb_hp($mb_hp, $mb_id))   alert($msg, "", true, true);
 
-$reg_hp = preg_replace("/[^0-9]/", "", $mb_hp);
-$hp_len = strlen($reg_hp);
-
-if($hp_len == 10)
-    $reg_mb_hp = preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "\\1-\\2-\\3", $reg_hp);
-else if($hp_len == 11)
-    $reg_mb_hp = preg_replace("/([0-9]{3})([0-9]{4})([0-9]{4})/", "\\1-\\2-\\3", $reg_hp);
+$reg_hp = hyphen_hp_number($mb_hp);
 
 /* ======================================================================================================= */
 /* = 휴대폰인증 및 성인인증                                                                              = */

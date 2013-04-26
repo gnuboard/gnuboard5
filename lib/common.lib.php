@@ -1969,4 +1969,12 @@ function html_end()
     }
     return preg_replace('#(</title>)#', "$1$stylesheet", $buffer);
 }
+
+
+// 휴대폰번호의 숫자만 취한 후 중간에 하이픈(-)을 넣는다.
+function hyphen_hp_number($hp)
+{
+    $hp = preg_replace("/[^0-9]/", "", $hp); 
+    return preg_replace("/([0-9]{3})([0-9]{3,4})([0-9]{4})$/", "\\1-\\2-\\3", $hp);
+}
 ?>
