@@ -57,7 +57,6 @@ a:active {color:#000;text-decoration:underline}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
 #logo {padding:17px 0}
-#logo span {display:inline-block;margin-left:10px;color:#109ff1;font-family:"verdana";vertical-align:middle}
 
 #schall {position:absolute;top:22px;left:70px;margin:0;padding:0;letter-spacing:-5px}
 #schall legend {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
