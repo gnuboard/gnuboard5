@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 if ($msg = valid_mb_hp($mb_hp))   alert($msg, "", true, true);
 if ($msg = exist_mb_hp($mb_hp, $mb_id))   alert($msg, "", true, true);
 
-$reg_hp = hyphen_hp_number($mb_hp);
+$reg_hp = preg_replace("/[^0-9]/", "", trim($_POST['mb_hp']));
 
 /* ======================================================================================================= */
 /* = 휴대폰인증 및 성인인증                                                                              = */
@@ -23,7 +23,7 @@ if($w == '') {
 
 } else if($w == 'u') {
     // 휴대폰번호 변경체크
-    $old_hp = preg_replace("/[^0-9]/", "", $_POST['old_mb_hp']);
+    $old_hp = preg_replace("/[^0-9]/", "", trim($_POST['old_mb_hp']));
 
     if($old_hp !== $reg_hp) {
         // 본인인증체크
