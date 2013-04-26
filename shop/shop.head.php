@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 define('_SHOP_', true);
 
@@ -15,9 +15,15 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <div id="to_content"><a href="#s_container">내용 바로가기</a></div>
 
+    <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
+    <div id="hd_pop">
+        <h2>팝업레이어 알림</h2>
+        <?php include G4_SHOP_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
+    </div>
+    <?php } ?>
+
     <aside id="hd_nb">
         <ul>
-            <li><a href=""><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_help.gif" alt="고객센터"></a></li>
             <li><a href=""><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_cart.gif" alt="장바구니"></a></li>
             <li><a href=""><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_wish.gif" alt="위시리스트"></a></li>
             <li id="hd_nb_last"><a href=""><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
@@ -27,9 +33,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <div id="logo"><a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="쇼핑몰 처음으로"></a></div>
 
     <aside id="hd_aside">
-
         <div>
-
             <section id="sch_all">
                 <h2>쇼핑몰 검색</h2>
                 <form name="frmsearch1" onsubmit="return search_submit(this);">
@@ -74,45 +78,36 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 <li><a href="<?php echo G4_SHOP_URL; ?>/faq.php">FAQ</a></li>
                 <li><a href="<?php echo G4_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
             </ul>
-
         </div>
-
     </aside>
 
 </header>
 
 <div id="wrapper">
 
-        <!-- 새창 -->
-        <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
-        <div style="position:relative;z-index:100"><?php include G4_SHOP_PATH.'/newwin.inc.php'; // 새창띄우기 ?></div>
-        <?php } ?>
-
-        <!-- 오늘본 상품 {-->
-        <div>
-            <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
-        </div>
-        <!-- 오늘본 상품 }-->
+    <!-- 오늘본 상품 {-->
+    <div>
+        <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
+    </div>
+    <!-- 오늘본 상품 }-->
 
 
-        <?php echo outlogin("shop_outlogin"); // 외부 로그인 ?>
-        <br>
+    <?php echo outlogin("shop_outlogin"); // 외부 로그인 ?>
 
-        <!-- 상품분류 -->
-        <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); ?>
+    <!-- 상품분류 -->
+    <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); ?>
 
+    <!-- 이벤트 -->
+    <?php include_once(G4_SHOP_PATH.'/boxevent.inc.php'); ?>
 
-        <!-- 이벤트 -->
-        <?php include_once(G4_SHOP_PATH.'/boxevent.inc.php'); ?>
+    <!-- 커뮤니티 -->
+    <?php include_once(G4_SHOP_PATH.'/boxcommunity.inc.php'); ?>
 
-        <!-- 커뮤니티 -->
-        <?php include_once(G4_SHOP_PATH.'/boxcommunity.inc.php'); ?>
+    <!-- 장바구니 -->
+    <?php // include_once(G4_SHOP_PATH.'/boxcart.inc.php'); ?>
 
-        <!-- 장바구니 -->
-        <?php // include_once(G4_SHOP_PATH.'/boxcart.inc.php'); ?>
+    <!-- 보관함 -->
+    <?php // include_once(G4_SHOP_PATH.'/boxwish.inc.php'); ?>
 
-        <!-- 보관함 -->
-        <?php // include_once(G4_SHOP_PATH.'/boxwish.inc.php'); ?>
-
-        <!-- 왼쪽 배너 -->
-        <?php echo display_banner('왼쪽'); ?><br>
+    <!-- 왼쪽 배너 -->
+    <?php echo display_banner('왼쪽'); ?><br>
