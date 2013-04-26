@@ -1,5 +1,6 @@
 <?
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+define('_SHOP_', true);
 
 include_once(G4_PATH.'/head.sub.php');
 include_once(G4_LIB_PATH.'/outlogin.lib.php');
@@ -7,22 +8,14 @@ include_once(G4_LIB_PATH.'/poll.lib.php');
 include_once(G4_LIB_PATH.'/visit.lib.php');
 include_once(G4_LIB_PATH.'/connect.lib.php');
 include_once(G4_LIB_PATH.'/popular.lib.php');
-
-//print_r2(get_defined_constants());
-
-// 사용자 화면 상단과 좌측을 담당하는 페이지입니다.
-// 상단, 좌측 화면을 꾸미려면 이 파일을 수정합니다.
-
-$table_width = 900;
-
-//print_r2($g4);
-//$dir = dirname($HTTP_SERVER_VARS["PHP_SELF"]);
 ?>
 
-<header id="shd">
+<header id="hd">
     <h1><?php echo $config['cf_title'] ?></h1>
 
-    <div id="to_content"><a href="#container">내용 바로가기</a></div>
+    <div id="to_content"><a href="#s_container">내용 바로가기</a></div>
+
+    <div id="hd_wrapper">1</div>
 
 </header>
 

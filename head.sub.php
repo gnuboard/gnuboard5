@@ -44,7 +44,9 @@ if (G4_IS_MOBILE) {
 if (defined('G4_IS_ADMIN')) {
     echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/admin.css">'.PHP_EOL;
 } else {
-    echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/'.(G4_IS_MOBILE?'mobile':'default').'.css">'.PHP_EOL;
+    $shop_css = '';
+    if (defined('_SHOP_')) $shop_css = '_shop';
+    echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/'.(G4_IS_MOBILE?'mobile':'default').$shop_css.'.css">'.PHP_EOL;
 }
 // echo '<meta http-equiv="imagetoolbar" content="no">';
 // echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge" />';
