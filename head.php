@@ -34,13 +34,14 @@ if ($config['cf_include_head']) {
             <a href="<?php echo G4_URL ?>"><img src="<?php echo G4_IMG_URL ?>/logo.jpg" alt="처음으로" width="53" height="37"></a>
         </div>
 
-        <fieldset id="schall">
+        <fieldset id="sch_all">
             <legend>사이트 내 전체검색</legend>
             <form name="fsearchbox" method="get" action="<?php echo G4_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
             <input type="hidden" name="sop" value="and">
-            <label for="schall_stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="stx" id="schall_stx" maxlength="20"><input type="image" id="schall_submit" src="<?php echo G4_IMG_URL ?>/btn_search.jpg" width="24" height="24" alt="검색">
+            <label for="sch_all_stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+            <input type="text" name="stx" id="sch_all_stx" maxlength="20">
+            <input type="image" id="sch_all_submit" src="<?php echo G4_IMG_URL ?>/btn_search.jpg" width="24" height="24" alt="검색">
             </form>
 
             <script>
@@ -124,35 +125,35 @@ if ($config['cf_include_head']) {
 
     </div>
 
-    <hr>
-
-    <nav id="gnb">
-        <script>$('#gnb').addClass('gnb_js');</script>
-        <h2>홈페이지 메인메뉴</h2>
-        <ul id="gnb_ul">
-            <?php
-            $sql = " select * from {$g4['group_table']} where gr_show_menu = '1' and gr_device <> 'mobile' order by gr_order ";
-            $result = sql_query($sql);
-            for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index
-             ?>
-            <li class="gnb_1depth">
-                <a href="<?php echo G4_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_subject'] ?></a>
-                <ul class="gnb_sub_ul">
-                    <?php
-                    $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' and bo_show_menu = '1' and bo_device <> 'mobile' order by bo_order ";
-                    $result2 = sql_query($sql2);
-                    for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
-                     ?>
-                    <li class="gnb_2depth"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>"><?php echo $row2['bo_subject'] ?></a></li>
-                    <?php } ?>
-                </ul>
-            </li>
-            <?php } ?>
-            <?php if ($gi == 0) {  ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php }  ?>
-        </ul>
-    </nav>
-
 </header>
+
+<hr>
+
+<nav id="gnb">
+    <script>$('#gnb').addClass('gnb_js');</script>
+    <h2>홈페이지 메인메뉴</h2>
+    <ul id="gnb_ul">
+        <?php
+        $sql = " select * from {$g4['group_table']} where gr_show_menu = '1' and gr_device <> 'mobile' order by gr_order ";
+        $result = sql_query($sql);
+        for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index
+         ?>
+        <li class="gnb_1depth">
+            <a href="<?php echo G4_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_subject'] ?></a>
+            <ul class="gnb_sub_ul">
+                <?php
+                $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' and bo_show_menu = '1' and bo_device <> 'mobile' order by bo_order ";
+                $result2 = sql_query($sql2);
+                for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
+                 ?>
+                <li class="gnb_2depth"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>"><?php echo $row2['bo_subject'] ?></a></li>
+                <?php } ?>
+            </ul>
+        </li>
+        <?php } ?>
+        <?php if ($gi == 0) {  ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php }  ?>
+    </ul>
+</nav>
 
 <hr>
 
