@@ -46,7 +46,7 @@ if (!isset($board['bo_mobile_content_head'])) {
 }
 
 if (!isset($board['bo_use_cert'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_cert` ENUM('none','cert','adult') NOT NULL DEFAULT 'none' AFTER `bo_use_email` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT 'none' AFTER `bo_use_email` ", false);
 }
 
 $required = "";
@@ -91,7 +91,6 @@ if ($w == '') {
     $board['bo_include_head'] = '_head.php';
     $board['bo_include_tail'] = '_tail.php';
     $board['bo_show_menu'] = true;
-    $board['bo_use_cert'] = 'none';
 
 } else if ($w == 'u') {
 
@@ -555,8 +554,8 @@ $pg_anchor = '<ul class="anchor">
             <?php echo help("본인확인 여부에 따라 게시물을 조회 할 수 있도록 합니다."); ?>
             <select id="bo_use_cert" name="bo_use_cert">
                 <?php 
-                echo option_selected("none",  $board['bo_use_cert'], "사용안함");
-                if ($config['cf_kcpcert_use'] != 'none') {
+                echo option_selected("",  $board['bo_use_cert'], "사용안함");
+                if ($config['cf_kcpcert_use'] != '') {
                     echo option_selected("cert",  $board['bo_use_cert'], "본인확인된 회원전체");
                     echo option_selected("adult", $board['bo_use_cert'], "본인확인된 성인회원만");
                 }

@@ -1,6 +1,7 @@
 <?php
 $sub_menu = "200100";
-include_once('./_common.php');
+include_once("./_common.php");
+include_once(G4_LIB_PATH."/register.lib.php");
 
 if ($w == 'u')
     check_demo();
@@ -13,60 +14,47 @@ if ($member['mb_password'] != sql_password($_POST['admin_password'])) {
     alert('패스워드가 다릅니다.');
 }
 
-$mb_id = mysql_real_escape_string(trim($_POST['mb_id']));
+$mb_id = escape_trim($_POST['mb_id']);
 
 // 핸드폰번호 체크
 $mb_hp = $_POST['mb_hp'];
 if($mb_hp) {
-    $mb_hp = preg_replace("/[^0-9]/", "", $mb_hp);
-    $hp_len = strlen($mb_hp);
-    if($hp_len == 10) {
-        $mb_hp = preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "\\1-\\2-\\3", $mb_hp);
-    } else if($hp_len == 11) {
-        $mb_hp = preg_replace("/([0-9]{3})([0-9]{4})([0-9]{4})/", "\\1-\\2-\\3", $mb_hp);
-    } else {
-        alert('핸드폰번호를 올바르게 입력해 주십시오.');
-    }
-
-    // 중복체크
-    $sql = " select count(*) as cnt from {$g4['member_table']} where mb_hp = '$mb_hp' and mb_id <> '$mb_id' ";
-
-    $row = sql_fetch($sql);
-    if($row['cnt'])
-        alert('다른 회원이 사용 중인 핸드폰번호입니다.');
+    $result = exist_mb_hp($mb_hp, $mb_id);
+    if ($result) 
+        alert($result);
 }
 
-$sql_common = " mb_name = '{$_POST['mb_name']}',
-                         mb_nick = '{$_POST['mb_nick']}',
-                         mb_email = '{$_POST['mb_email']}',
-                         mb_homepage = '{$_POST['mb_homepage']}',
-                         mb_tel = '{$_POST['mb_tel']}',
-                         mb_hp = '$mb_hp',
-                         mb_zip1 = '{$_POST['mb_zip1']}',
-                         mb_zip2 = '{$_POST['mb_zip2']}',
-                         mb_addr1 = '{$_POST['mb_addr1']}',
-                         mb_addr2 = '{$_POST['mb_addr2']}',
-                         mb_birth = '{$_POST['mb_birth']}',
-                         mb_sex = '{$_POST['mb_sex']}',
-                         mb_signature = '{$_POST['mb_signature']}',
-                         mb_leave_date = '{$_POST['mb_leave_date']}',
-                         mb_intercept_date='{$_POST['mb_intercept_date']}',
-                         mb_memo = '{$_POST['mb_memo']}',
-                         mb_mailling = '{$_POST['mb_mailling']}',
-                         mb_sms = '{$_POST['mb_sms']}',
-                         mb_open = '{$_POST['mb_open']}',
-                         mb_profile = '{$_POST['mb_profile']}',
-                         mb_level = '{$_POST['mb_level']}',
-                         mb_1 = '{$_POST['mb_1']}',
-                         mb_2 = '{$_POST['mb_2']}',
-                         mb_3 = '{$_POST['mb_3']}',
-                         mb_4 = '{$_POST['mb_4']}',
-                         mb_5 = '{$_POST['mb_5']}',
-                         mb_6 = '{$_POST['mb_6']}',
-                         mb_7 = '{$_POST['mb_7']}',
-                         mb_8 = '{$_POST['mb_8']}',
-                         mb_9 = '{$_POST['mb_9']}',
-                         mb_10 = '{$_POST['mb_10']}' ";
+$sql_common = "  mb_name = '{$_POST['mb_name']}',
+                 mb_nick = '{$_POST['mb_nick']}',
+                 mb_email = '{$_POST['mb_email']}',
+                 mb_homepage = '{$_POST['mb_homepage']}',
+                 mb_tel = '{$_POST['mb_tel']}',
+                 mb_hp = '$mb_hp',
+                 mb_zip1 = '{$_POST['mb_zip1']}',
+                 mb_zip2 = '{$_POST['mb_zip2']}',
+                 mb_addr1 = '{$_POST['mb_addr1']}',
+                 mb_addr2 = '{$_POST['mb_addr2']}',
+                 mb_birth = '{$_POST['mb_birth']}',
+                 mb_sex = '{$_POST['mb_sex']}',
+                 mb_signature = '{$_POST['mb_signature']}',
+                 mb_leave_date = '{$_POST['mb_leave_date']}',
+                 mb_intercept_date='{$_POST['mb_intercept_date']}',
+                 mb_memo = '{$_POST['mb_memo']}',
+                 mb_mailling = '{$_POST['mb_mailling']}',
+                 mb_sms = '{$_POST['mb_sms']}',
+                 mb_open = '{$_POST['mb_open']}',
+                 mb_profile = '{$_POST['mb_profile']}',
+                 mb_level = '{$_POST['mb_level']}',
+                 mb_1 = '{$_POST['mb_1']}',
+                 mb_2 = '{$_POST['mb_2']}',
+                 mb_3 = '{$_POST['mb_3']}',
+                 mb_4 = '{$_POST['mb_4']}',
+                 mb_5 = '{$_POST['mb_5']}',
+                 mb_6 = '{$_POST['mb_6']}',
+                 mb_7 = '{$_POST['mb_7']}',
+                 mb_8 = '{$_POST['mb_8']}',
+                 mb_9 = '{$_POST['mb_9']}',
+                 mb_10 = '{$_POST['mb_10']}' ";
 
 if ($w == '')
 {

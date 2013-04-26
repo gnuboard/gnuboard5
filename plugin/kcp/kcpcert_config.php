@@ -1,26 +1,17 @@
 <?php
 include_once('./_common.php');
 
-// /home/kcpcert_enc ( 서버상 bin 폴더 이전까지 경로)
-$home_dir = G4_PLUGIN_PATH.'/kcp'; // ct_cli 절대경로 ( bin 전까지 )
+// 서버상 bin 폴더 이전까지 경로
+$home_dir = G4_KCP_PATH; // ct_cli 절대경로 ( bin 전까지 )
 
 // DI 를 위한 중복확인 식별 아이디
 //web_siteid 값이 없으면 KCP 에서 지정한 값으로 설정됨
 $web_siteid = '';
 
-/*
-if($config['cf_kcpcert_site_cd'] && $config['cf_kcpcert_site_cd'] != 'S6186') { // 실인증
-    $site_cd = $config['cf_kcpcert_site_cd'];
-    $cert_url = 'https://cert.kcp.co.kr/kcp_cert/cert_view.jsp';
-} else { // 테스트인증
-    $site_cd = 'S6186';
-    $cert_url = 'https://testcert.kcp.co.kr/kcp_cert/cert_view.jsp';
-}
-*/
-if ($config['cf_kcpcert_use'] == 1) { // 실서비스
+if ($config['cf_kcpcert_use'] == 'service') { // 실서비스
     $site_cd = 'SM'.$config['cf_kcpcert_site_cd'];
     $cert_url = 'https://cert.kcp.co.kr/kcp_cert/cert_view.jsp';
-} else if ($config['cf_kcpcert_use'] == -1) { // 테스트사용
+} else if ($config['cf_kcpcert_use'] == 'test') { // 테스트사용
     $site_cd = 'S6186';
     $cert_url = 'https://testcert.kcp.co.kr/kcp_cert/cert_view.jsp';
 } else { // 사용안함

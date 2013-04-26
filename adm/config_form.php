@@ -37,7 +37,7 @@ if(!isset($config['cf_kcpcert_site_cd'])) {
 
 if(!isset($config['cf_kcpcert_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_use` ENUM('none','test','service') NOT NULL DEFAULT 'none' AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT 'none' AFTER `cf_memo_send_point` ", TRUE);
 }
 
 if(!isset($config['cf_mobile_pages'])) {
@@ -548,7 +548,7 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <?php echo help('KCP 사이트코드가 없으면 테스트만 가능합니다.') ?>
             <select name="cf_kcpcert_use" id="cf_kcpcert_use">
-                <?php echo option_selected("none",    $config['cf_kcpcert_use'], "사용안함"); ?>
+                <?php echo option_selected("",        $config['cf_kcpcert_use'], "사용안함"); ?>
                 <?php echo option_selected("test",    $config['cf_kcpcert_use'], "테스트"); ?>
                 <?php echo option_selected("service", $config['cf_kcpcert_use'], "실서비스"); ?>
             </select>

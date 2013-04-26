@@ -163,13 +163,7 @@ else if( $cert_enc_use != "Y" )
 $ct_cert->mf_clear();
 
 // 휴대폰번호 포맷변경
-$phone_no = preg_replace("/[^0-9]/", "", $phone_no);
-$hp_len = strlen($phone_no);
-
-if($hp_len == 10)
-    $phone_no = preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "\\1-\\2-\\3", $phone_no);
-else if($hp_len == 11)
-    $phone_no = preg_replace("/([0-9]{3})([0-9]{4})([0-9]{4})/", "\\1-\\2-\\3", $phone_no);
+$phone_no = hyphen_hp_number($phone_no);
 ?>
 
 <script>
