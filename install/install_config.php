@@ -1,4 +1,4 @@
-<?
+<?php
 $gmnow = gmdate('D, d M Y H:i:s').' GMT';
 header('Expires: 0'); // rfc2616 - Section 14.21
 header('Last-Modified: ' . $gmnow);

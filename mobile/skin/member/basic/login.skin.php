@@ -1,16 +1,20 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<div id="mb_login">
-    <h1><?=$g4['title']?></h1>
+<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
-    <form name="flogin" action="<?=$login_action_url?>" onsubmit="return flogin_submit(this);" method="post">
-    <input type="hidden" name="url" value='<?=$login_url?>'>
+<div id="mb_login">
+    <h1><?php echo $g4['title'] ?></h1>
+
+    <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post">
+    <input type="hidden" name="url" value='<?php echo $login_url ?>'>
 
     <fieldset>
-        <input type="text" name="mb_id" id="login_id" title="아이디(필수)" placeholder="아이디(필수)" required class="frm_input required" maxLength="20">
-        <input type="password" name="mb_password" id="login_pw" title="패스워드(필수)" placeholder="패스워드(필수)" required class="frm_input required" maxLength="20">
+        <label for="login_id" class="sound_only">아이디<strong class="sound_only"> 필수</strong></label>
+        <input type="text" name="mb_id" id="login_id" placeholder="아이디(필수)" required class="frm_input required" maxLength="20">
+        <label for="login_pw" class="sound_only">패스워드<strong class="sound_only"> 필수</strong></label>
+        <input type="password" name="mb_password" id="login_pw" placeholder="패스워드(필수)" required class="frm_input required" maxLength="20">
         <input type="submit" value="로그인" class="btn_submit">
         <input type="checkbox" name="auto_login" id="login_auto_login">
         <label for="login_auto_login">자동로그인</label>
@@ -23,13 +27,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             아직 회원이 아니시라면 회원으로 가입 후 이용해 주십시오.
         </p>
         <div>
-            <a href="<?=G4_BBS_URL?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
+            <a href="<?php echo G4_BBS_URL ?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
             <a href="./register.php" class="btn01">회원 가입</a>
         </div>
     </section>
 
     <div class="btn_confirm">
-        <a href="<?=G4_URL?>/">메인으로 돌아가기</a>
+        <a href="<?php echo G4_URL ?>/">메인으로 돌아가기</a>
     </div>
 
     </form>

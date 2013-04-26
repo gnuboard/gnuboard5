@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // 게시판 관리자 이상 복사, 이동 가능
@@ -176,7 +176,7 @@ if ($sw == 'move')
 }
 
 // syndication ping
-include G4_BBS_PATH.'/syndi/include/include.bbs.move_update.php';
+include G4_SYNDI_PATH.'/include/include.bbs.move_update.php';
 
 $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.';
 $opener_href = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;'.$qstr;

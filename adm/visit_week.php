@@ -1,11 +1,10 @@
-<?
+<?php
 $sub_menu = "200800";
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
 $g4['title'] = '요일별 접속자집계';
-include_once('./admin.head.php');
 include_once('./visit.sub.php');
 
 $colspan = 4;
@@ -40,12 +39,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     <tfoot>
     <tr>
         <td colspan="2">합계</td>
-        <td><strong><?=$sum_count?></strong></td>
+        <td><strong><?php echo $sum_count ?></strong></td>
         <td>100%</td>
     </tr>
     </tfoot>
     <tbody>
-    <?
+    <?php
     $k = 0;
     if ($i) {
         for ($i=0; $i<7; $i++) {
@@ -56,17 +55,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     ?>
 
     <tr>
-        <td class="td_category"><?=$weekday[$i]?></td>
+        <td class="td_category"><?php echo $weekday[$i] ?></td>
         <td>
             <div class="visit_bar">
-                <span style="width:<?=$s_rate?>%"></span>
+                <span style="width:<?php echo $s_rate ?>%"></span>
             </div>
         </td>
-        <td class="td_bignum"><?=$count?></td>
-        <td class="td_num"><?=$s_rate?></td>
+        <td class="td_bignum"><?php echo $count ?></td>
+        <td class="td_num"><?php echo $s_rate ?></td>
     </tr>
 
-    <?
+    <?php
         }
     } else {
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
@@ -76,6 +75,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </table>
 </section>
 
-<?
+<?php
 include_once('./admin.tail.php');
 ?>

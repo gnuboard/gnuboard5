@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 
 /*
@@ -263,4 +263,7 @@ if (isset($sfl))  $arr_query[] = 'sfl='.$sfl;
 if (isset($stx))  $arr_query[] = 'stx='.$stx;
 if (isset($page)) $arr_query[] = 'page='.$page;
 $qstr = implode("&amp;", $arr_query);
+
+// 관리자에서는 추가 스크립트는 사용하지 않는다.
+$config['cf_add_script'] = '';
 ?>

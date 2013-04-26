@@ -1,11 +1,10 @@
-<?
+<?php
 $sub_menu = "200800";
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
 $g4['title'] = '접속자집계';
-include_once('./admin.head.php');
 include_once('./visit.sub.php');
 
 $colspan = 5;
@@ -49,7 +48,7 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         $brow = get_brow($row['vi_agent']);
         $os   = get_os($row['vi_agent']);
@@ -83,14 +82,14 @@ $result = sql_query($sql);
 
     ?>
     <tr>
-        <td class="td_category"><?=$ip?></td>
-        <td><?=$link?><?=$title?><?=$link2?></td>
-        <td class="td_category"><?=$brow?></td>
-        <td class="td_category"><?=$os?></td>
-        <td class="td_time"><?=$row['vi_date']?> <?=$row['vi_time']?></td>
+        <td class="td_category"><?php echo $ip ?></td>
+        <td><?php echo $link ?><?php echo $title ?><?php echo $link2 ?></td>
+        <td class="td_category"><?php echo $brow ?></td>
+        <td class="td_category"><?php echo $os ?></td>
+        <td class="td_time"><?php echo $row['vi_date'] ?> <?php echo $row['vi_time'] ?></td>
     </tr>
 
-    <?
+    <?php
     }
     if ($i == 0)
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
@@ -99,7 +98,7 @@ $result = sql_query($sql);
     </table>
 </section>
 
-<?
+<?php
 if (isset($domain)) 
     $qstr .= "&amp;domain=$domain";
 $qstr .= "&amp;page=";

@@ -135,12 +135,12 @@ class gcaptcha
 
     function make_mp3($captcha_filename)
     {
-        global $g4;
+        global $g4, $config;
 
         $number = (string)$_SESSION['ss_captcha_key'];
         $mp3s = array();
         for($i=0;$i<strlen($number);$i++){
-            $file = G4_GCAPTCHA_PATH.'/mp3/'.$number[$i].'.mp3';
+            $file = G4_GCAPTCHA_PATH.'/mp3/'.$config['cf_gcaptcha_mp3'].'/'.$number[$i].'.mp3';
             $mp3s[] = $file;
         }
 

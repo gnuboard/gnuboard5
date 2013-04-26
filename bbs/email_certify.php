@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 $sql = " select mb_id, mb_email, mb_datetime from {$g4['member_table']} where mb_id = '{$mb_id}' ";

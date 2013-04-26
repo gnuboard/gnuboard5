@@ -1,4 +1,4 @@
-<?
+<?php
 set_time_limit(0);
 $gmnow = gmdate('D, d M Y H:i:s') . ' GMT';
 header('Expires: 0'); // rfc2616 - Section 14.21
@@ -47,10 +47,10 @@ if (!$select_db) {
 <h2>그누보드4s 설치가 시작되었습니다.</h2>
 
 <ol>
-<?
-$cf_title = '그누보드4s';
+<?php
 // 테이블 생성 ------------------------------------
 $file = implode('', file('./gnuboard4s.sql'));
+eval("\$file = \"$file\";");
 
 $file = preg_replace('/^--.*$/m', '', $file);
 $file = preg_replace('/`g4s_([^`]+`)/', '`'.$table_prefix.'$1', $file);
@@ -79,11 +79,11 @@ if($shop_install) {
 
     <li>전체 테이블 생성 완료</li>
 
-<?
-$read_point = -1;
-$write_point = 5;
-$comment_point = 1;
-$download_point = -20;
+<?php
+$read_point = 0;
+$write_point = 0;
+$comment_point = 0;
+$download_point = 0;
 
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
@@ -347,7 +347,7 @@ if($shop_install) {
 
     <li>DB설정 완료</li>
 
-<?
+<?php
 //-------------------------------------------------------------------------------------------------
 
 // 디렉토리 생성
@@ -386,7 +386,7 @@ if($shop_install) {
 
     <li>데이터 디렉토리 생성 완료</li>
 
-<?
+<?php
 //-------------------------------------------------------------------------------------------------
 
 // DB 설정 파일 생성
@@ -458,9 +458,9 @@ fclose($f);
 @chmod($file, 0606);
 ?>
 
-    <li>DB설정 파일 생성 완료 (<?=$file?>)</li>
+    <li>DB설정 파일 생성 완료 (<?php echo $file ?>)</li>
 
-<?
+<?php
 // data 디렉토리 및 하위 디렉토리에서는 .htaccess .htpasswd .php .phtml .html .htm .inc .cgi .pl 파일을 실행할수 없게함.
 $f = fopen($data_path.'/.htaccess', 'w');
 $str = <<<EOD
@@ -475,7 +475,7 @@ fclose($f);
 ?>
 </ol>
 
-<p class="st_strong">축하합니다. <?=$cf_title?> 설치가 완료되었습니다.</p>
+<p class="st_strong">축하합니다. <?php echo $cf_title; ?> 설치가 완료되었습니다.</p>
 
 <h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
 

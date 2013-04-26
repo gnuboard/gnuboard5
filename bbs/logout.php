@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // 이호경님 제안 코드

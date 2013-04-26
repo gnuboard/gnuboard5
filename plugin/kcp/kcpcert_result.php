@@ -1,5 +1,10 @@
-<?
+<?php
 include_once('./kcpcert_config.php');
+
+set_session('ss_kcpcert_no',    '');
+set_session('ss_kcpcert_time',  '');
+set_session('ss_kcpcert_hash',  '');
+set_session('ss_adult_check',   '');
 
 $site_cd       = "";
 $ordr_idxx     = "";
@@ -128,23 +133,26 @@ if( $cert_enc_use == "Y" )
 
         // 정상인증인지 체크
         if(!$phone_no)
-            alert_close('정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.');
+            alert_close("정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.");
 
         // hash 데이터
         $md5_cert_no = md5($cert_no);
         $hash_data = md5($phone_no.$user_name.$md5_cert_no);
-        set_session('ss_kcpcert_hash', $hash_data);
+        set_session("ss_kcpcert_no",    $md5_cert_no);
+        set_session("ss_kcpcert_time",  G4_TIME_YMDHIS);
+        set_session("ss_kcpcert_hash",  $hash_data);
+        //alert_close($phone_no.$user_name.$md5_cert_no);
 
         // 성인인증결과
         $adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
         if((int)$birth_day <= (int)$adult_day)
-            set_session('ss_adult_check', 'Y');
+            set_session("ss_adult_check", "Y");
     }
     else if( $res_cd != "0000" )
     {
-       // 인증실패
-       alert_close('코드 : '.$_POST['res_cd'].'  '.urldecode($_POST['res_msg']));
-       exit;
+        // 인증실패
+        alert_close('코드 : '.$_POST['res_cd'].'  '.urldecode($_POST['res_msg']));
+        exit;
     }
 }
 else if( $cert_enc_use != "Y" )
@@ -169,9 +177,10 @@ $(function() {
     var $opener = window.opener;
 
     // 인증정보
-    $opener.$("input[name=mb_hp]").val("<?=$phone_no?>");
-    $opener.$("input[name=kcpcert_no]").val("<?=$md5_cert_no?>");
-    $opener.$("input[name=kcpcert_time]").val("<?=G4_TIME_YMDHIS?>");
+    $opener.$("input[name=mb_hp]").val("<?php echo $phone_no ?>");
+    $opener.$("input[name=mb_name]").val("<?php echo $user_name ?>");
+    //$opener.$("input[name=kcpcert_no]").val("<?php echo $md5_cert_no ?>");
+    //$opener.$("input[name=kcpcert_time]").val("<?php echo G4_TIME_YMDHIS ?>");
     window.close();
 });
 </script>

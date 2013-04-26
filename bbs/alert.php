@@ -1,4 +1,4 @@
-<?
+<?php
 global $lo_location;
 global $lo_url;
 
@@ -40,20 +40,25 @@ if($error) {
 ?>
 
 <script>
-alert("<? echo $msg; ?>");
-//document.location.href = "<? echo $url; ?>";
-document.location.replace("<? echo $url; ?>");
+alert("<?php echo strip_tags($msg); ?>");
+//document.location.href = "<?php echo $url; ?>";
+<?php if ($url) { ?>
+document.location.replace("<?php echo $url; ?>");
+<?php } else { ?>
+    alert('history.back();');
+history.back();
+<?php } ?>
 </script>
 
 <noscript>
 <div id="validation_check">
-    <h1><?=$header2?></h1>
+    <h1><?php echo $header2 ?></h1>
     <p class="cbg">
-        <?=$msg2?>
+        <?php echo $msg2 ?>
     </p>
-    <? if($post) { ?>
-    <form method="post" action="<?=$url?>">
-    <?
+    <?php if($post) { ?>
+    <form method="post" action="<?php echo $url ?>">
+    <?php
     foreach($_POST as $key => $value) {
         if(strlen($value) < 1)
             continue;
@@ -61,25 +66,25 @@ document.location.replace("<? echo $url; ?>");
         if(preg_match("/pass|pwd|capt|url/", $key))
             continue;
     ?>
-    <input type="hidden" name="<?=$key?>" value="<?=$value?>">
-    <?
+    <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value ?>">
+    <?php
     }
     ?>
     <input type="submit" value="돌아가기">
     </form>
-    <? } else { ?>
+    <?php } else { ?>
     <div class="btn_confirm">
-        <a href="<?=$url?>">돌아가기</a>
+        <a href="<?php echo $url ?>">돌아가기</a>
     </div>
-    <? } ?>
+    <?php } ?>
 
-<? /*
+<?php /*
 <article id="validation_check">
 <header>
     <hgroup>
         <!-- <h1>회원가입 정보 입력 확인</h1> --> <!-- 수행 중이던 작업 내용 -->
-        <h1><?=$header?></h1> <!-- 수행 중이던 작업 내용 -->
-        <h2><?=$header2?></h2>
+        <h1><?php echo $header ?></h1> <!-- 수행 중이던 작업 내용 -->
+        <h2><?php echo $header2 ?></h2>
     </hgroup>
 </header>
 <p>
@@ -88,15 +93,15 @@ document.location.replace("<? echo $url; ?>");
     <strong>이름</strong> 필수 입력입니다. 한글만 입력할 수 있습니다.<br>
     <strong>이메일</strong> 올바르게 입력하지 않았습니다.<br>
     -->
-    <?=$msg2?>
+    <?php echo $msg2 ?>
 </p>
 
-<a href="<?=$url?>">돌아가기</a>
+<a href="<?php echo $url ?>">돌아가기</a>
 </article>
 */ ?>
 </div>
 </noscript>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

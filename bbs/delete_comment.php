@@ -1,4 +1,4 @@
-<?
+<?php
 // 코멘트 삭제
 include_once('./_common.php');
 

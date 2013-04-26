@@ -32,67 +32,61 @@ header("Pragma: no-cache"); // HTTP/1.0
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title><?=$g4_head_title?></title>
-<? if (G4_IS_MOBILE) {?>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">
-<meta name="HandheldFriendly" content="true">
-<meta name="format-detection" content="telephone=no">
-<? } ?>
-<!-- <meta http-equiv="imagetoolbar" content="no"> -->
-<!-- <meta http-equiv="X-UA-Compatible" content="IE=Edge"> -->
-<? if (defined('G4_IS_ADMIN')) { ?>
-<link rel="stylesheet" href="<?=G4_CSS_URL?>/admin.css?=<?=date("md")?>">
-<? } else { ?>
-<link rel="stylesheet" href="<?=G4_CSS_URL?>/<?=(G4_IS_MOBILE?'mobile':'default')?>.css?=<?=date("md")?>">
-<?}?>
-<? // 스킨의 style sheet 불러옴
-if (!defined('G4_IS_ADMIN')) {
-    if(isset($board_skin_path))
-        echo get_skin_stylesheet($board_skin_path);
-    if(isset($member_skin_path))
-        echo get_skin_stylesheet($member_skin_path);
-    if(isset($new_skin_path))
-        echo get_skin_stylesheet($new_skin_path);
-    if(isset($search_skin_path))
-        echo get_skin_stylesheet($search_skin_path);
-    if(isset($connect_skin_path))
-        echo get_skin_stylesheet($connect_skin_path);
-    if(isset($poll_skin_path))
-        echo get_skin_stylesheet($poll_skin_path);
+<?php
+if (G4_IS_MOBILE) {
+    echo '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10,user-scalable=yes">'.PHP_EOL;
+    echo '<meta name="HandheldFriendly" content="true">'.PHP_EOL;
+    echo '<meta name="format-detection" content="telephone=no">'.PHP_EOL;
 }
 ?>
+<title><?php echo $g4_head_title; ?></title>
+<?php 
+if (defined('G4_IS_ADMIN')) {
+    echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/admin.css">'.PHP_EOL;
+} else {
+    echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/'.(G4_IS_MOBILE?'mobile':'default').'.css">'.PHP_EOL;
+}
+// echo '<meta http-equiv="imagetoolbar" content="no">';
+// echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge" />';
+?>
 <!--[if lte IE 8]>
-<script src="<?=G4_JS_URL?>/html5.js"></script>
+<script src="<?php echo G4_JS_URL ?>/html5.js"></script>
 <![endif]-->
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
-var g4_url       = "<?=G4_URL?>";
-var g4_bbs_url   = "<?=G4_BBS_URL?>";
-var g4_is_member = "<?=isset($is_member)?$is_member:'';?>";
-var g4_is_admin  = "<?=isset($is_admin)?$is_admin:'';?>";
-var g4_is_mobile = "<?=G4_IS_MOBILE?>";
-var g4_bo_table  = "<?=isset($bo_table)?$bo_table:'';?>";
-var g4_sca       = "<?=isset($sca)?$sca:'';?>";
-var g4_cookie_domain = "<?=G4_COOKIE_DOMAIN?>";
-<? if ($is_admin) { echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'; }
+var g4_url       = "<?php echo G4_URL ?>";
+var g4_bbs_url   = "<?php echo G4_BBS_URL ?>";
+var g4_is_member = "<?php echo isset($is_member)?$is_member:''; ?>";
+var g4_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
+var g4_is_mobile = "<?php echo G4_IS_MOBILE ?>";
+var g4_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
+var g4_sca       = "<?php echo isset($sca)?$sca:''; ?>";
+var g4_cookie_domain = "<?php echo G4_COOKIE_DOMAIN ?>";
+<?php 
+if ($is_admin) {
+    echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'.PHP_EOL; 
+} 
 ?>
 </script>
-<script src="<?=G4_JS_URL?>/jquery-1.8.3.min.js"></script>
-<script src="<?=G4_JS_URL?>/common.js"></script>
-<script src="<?=G4_JS_URL?>/wrest.js"></script>
-<? if(G4_IS_MOBILE) { ?>
-<script>
-    set_cookie("device_width", screen.width, 6, g4_cookie_domain);
-</script>
-<? } ?>
-<? if (!defined('G4_IS_ADMIN')) { echo $config['cf_add_script']; } ?>
+<script src="<?php echo G4_JS_URL ?>/jquery-1.8.3.min.js"></script>
+<script src="<?php echo G4_JS_URL ?>/jquery.menu.js"></script>
+<script src="<?php echo G4_JS_URL ?>/common.js"></script>
+<script src="<?php echo G4_JS_URL ?>/wrest.js"></script>
+<?php 
+if(G4_IS_MOBILE) {
+    echo '<script> set_cookie("device_width", screen.width, 6, g4_cookie_domain); </script>'.PHP_EOL;
+}
+echo $config['cf_add_script'];  
+?>
 </head>
 <body>
-<?
+<?php
 if ($is_member) { // 회원이라면 로그인 중이라는 메세지를 출력해준다.
     if ($is_admin == 'super') $sr_admin_msg = "최고관리자 ";
     else if ($is_admin == 'group') $sr_admin_msg = "그룹관리자 ";
     else if ($is_admin == 'board') $sr_admin_msg = "게시판관리자 ";
+
+    echo '<div id="hd_login_msg">'.$sr_admin_msg.$member['mb_nick'].'님 로그인 중 ';
+    echo '<a href="'.G4_BBS_URL.'/logout.php">로그아웃</a></div>';
+}
 ?>
-    <div id="hd_login_msg"><?=$sr_admin_msg?><?=$member['mb_nick']?>님 로그인 중 <a href="<?=G4_URL?>/bbs/logout.php">로그아웃</a></div>
-<? } ?>

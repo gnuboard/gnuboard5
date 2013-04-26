@@ -57,7 +57,6 @@ function is_checked(elements_name)
     return checked;
 }
 
-
 function delete_confirm()
 {
     if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?"))

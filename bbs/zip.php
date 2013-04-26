@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // 메모리를 많이 잡아먹어서 아래의 코드로 대체

@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "300100";
 include_once("./_common.php");
 
@@ -13,12 +13,12 @@ include_once(G4_PATH.'/head.sub.php');
     <h1>기존 게시판을 새 게시판으로 복사</h1>
 
     <form name="fboardcopy" id="fboardcopy" action="./board_copy_update.php" onsubmit="return fboardcopy_check(this);" method="post">
-    <input type="hidden" name="bo_table" value="<?=$bo_table?>" id="bo_table">
+    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>" id="bo_table">
     <table class="frm_tbl">
     <tbody>
     <tr>
         <th scope="col">원본 테이블명</th>
-        <td><?=$bo_table?></td>
+        <td><?php echo $bo_table ?></td>
     </tr>
     <tr>
         <th scope="col"><label for="target_table">복사 테이블명<strong class="sound_only">필수</strong></label></th>
@@ -26,7 +26,7 @@ include_once(G4_PATH.'/head.sub.php');
     </tr>
     <tr>
         <th scope="col"><label for="target_subject">게시판 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="target_subject" value="[복사본] <?=$board['bo_subject']?>" id="target_subject" required class="required frm_input" maxlength="120"></td>
+        <td><input type="text" name="target_subject" value="[복사본] <?php echo $board['bo_subject'] ?>" id="target_subject" required class="required frm_input" maxlength="120"></td>
     </tr>
     <tr>
         <th scope="col">복사 유형</th>
@@ -65,6 +65,6 @@ function fboardcopy_check(f)
 </script>
 
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

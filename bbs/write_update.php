@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
@@ -32,8 +32,6 @@ if (substr_count($wr_content, '&#') > 50) {
     alert('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');
     exit;
 }
-
-@include_once($board_skin_path.'/write_update.head.skin.php');
 
 $upload_max_filesize = ini_get('upload_max_filesize');
 
@@ -83,9 +81,11 @@ for ($i=1; $i<=10; $i++) {
     $var = "wr_$i";
     $$var = "";
     if (isset($_POST['wr_'.$i]) && $_POST['wr_'.$i]) {
-        $$var = $_POST['wr_'.$i];
+        $$var = escape_trim($_POST['wr_'.$i]);
     }
 }
+
+@include_once($board_skin_path.'/write_update.head.skin.php');
 
 if ($w == '' || $w == 'u') {
 
@@ -462,7 +462,7 @@ if ($w == '' || $w == 'r') {
 }
 
 // syndication ping
-include G4_BBS_PATH.'/syndi/include/include.bbs.write_update.php';
+include G4_SYNDI_PATH.'/include/include.bbs.write_update.php';
 
 //------------------------------------------------------------------------------
 // 가변 파일 업로드

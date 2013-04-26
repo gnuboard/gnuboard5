@@ -1,13 +1,13 @@
-<?
+<?php
 include_once('./kcpcert_config.php');
 
 // utf-8로 넘어돈 post 값을 euc-kr 로 변경
-$_POST = array_map("iconv_euckr", $_POST);
+$_POST = array_map('iconv_euckr', $_POST);
 
 // UTF-8 환경에서 해시 데이터 오류를 막기 위한 코드
 $def_locale = setlocale(LC_CTYPE, 0);
 $locale_change = false;
-if(preg_match("/utf[\-]?8/i", $def_locale)) {
+if(preg_match('/utf[\-]?8/i', $def_locale)) {
     setlocale(LC_CTYPE, 'ko_KR.euc-kr');
     $locale_change = true;
 }
@@ -129,7 +129,7 @@ $ct_cert->mf_clear();
                 {
                     opener.document.form_auth.veri_up_hash.value = frm.up_hash.value; // up_hash 데이터 검증을 위한 필드
 
-                    frm.action="<?=$cert_url?>";
+                    frm.action="<?php echo $cert_url ?>";
                     frm.submit();
                 }
             }
@@ -137,12 +137,12 @@ $ct_cert->mf_clear();
     </head>
     <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
         <form name="form_auth" method="post">
-            <?= $sbParam ?>
+            <?php echo  $sbParam ?>
         </form>
     </body>
 </html>
 
-<?
+<?php
 if($locale_change)
     setlocale(LC_CTYPE, $def_locale);
 ?>

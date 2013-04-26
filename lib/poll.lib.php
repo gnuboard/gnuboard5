@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 
 // 설문조사
@@ -20,8 +20,10 @@ function poll($skin_dir='basic', $po_id=false)
     ob_start();
     if (G4_IS_MOBILE) {
         $poll_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/poll/'.$skin_dir;
+        $poll_skin_url  = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/poll/'.$skin_dir;
     } else {
         $poll_skin_path = G4_SKIN_PATH.'/poll/'.$skin_dir;
+        $poll_skin_url  = G4_SKIN_URL.'/poll/'.$skin_dir;
     }
     include_once ($poll_skin_path.'/poll.skin.php');
     $content = ob_get_contents();

@@ -1,18 +1,22 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
+
+<link rel="stylesheet" href="<?php echo $new_skin_url ?>/style.css">
 
 <!-- 검색 -->
 <fieldset id="new_sch">
     <legend>상세검색</legend>
     <form name="fnew" method="get">
-    <?=$group_select?>
-    <select name="view" id="view" title="검색종류">
+    <?php echo $group_select ?>
+    <label for="view" class="sound_only">검색대상</label>
+    <select name="view" id="view">
         <option value="">전체게시물
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
-    <input type="text" name="mb_id" value="<?=$mb_id?>" id="mb_id" title="검색어(필수)" required class="frm_input requird">
+    <label for="mb_id" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
     </form>
     <script>
@@ -22,8 +26,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         document.fnew.submit();
     }
     */
-    document.getElementById("gr_id").value = "<?=$gr_id?>";
-    document.getElementById("view").value = "<?=$view?>";
+    document.getElementById("gr_id").value = "<?php echo $gr_id ?>";
+    document.getElementById("view").value = "<?php echo $view ?>";
     </script>
 </fieldset>
 <!-- 검색 끝 -->
@@ -40,7 +44,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </tr>
 </thead>
 <tbody>
-<?
+<?php
 for ($i=0; $i<count($list); $i++) 
 {
     $gr_subject = cut_str($list[$i]['gr_subject'], 20);
@@ -48,18 +52,18 @@ for ($i=0; $i<count($list); $i++)
     $wr_subject = get_text(cut_str($list[$i]['wr_subject'], 80));
 ?>
 <tr>
-    <td class="td_group"><a href="./new.php?gr_id=<?=$list[$i]['gr_id']?>"><?=$gr_subject?></a></td>
-    <td class="td_board"><a href="./board.php?bo_table=<?=$list[$i]['bo_table']?>"><?=$bo_subject?></a></td>
-    <td><a href="<?=$list[$i]['href']?>"><?=$list[$i]['comment']?><?=$wr_subject?></a></td>
-    <td class="td_name"><div><?=$list[$i]['name']?></div></td>
-    <td class="td_date"><?=$list[$i]['datetime2']?></td>
+    <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
+    <td class="td_board"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>"><?php echo $bo_subject ?></a></td>
+    <td><a href="<?php echo $list[$i]['href'] ?>"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
+    <td class="td_name"><div><?php echo $list[$i]['name'] ?></div></td>
+    <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>
 </tr>
-<? } ?>
+<?php }  ?>
 
-<? if ($i == 0)
+<?php if ($i == 0)
     echo "<tr><td colspan=\"5\" class=\"empty_table\">게시물이 없습니다.</td></tr>";
 ?>
 </tbody>
 </table>
 
-<?=$write_pages?>
+<?php echo $write_pages ?>

@@ -1,17 +1,19 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // kcp 휴대폰인증파일
 include_once(G4_KCP_PATH.'/kcpcert_config.php');
-if(!$ordr_idxx = get_session('ss_uniqid'))
+
+$ordr_idxx = get_session('ss_uniqid');
+if(!$ordr_idxx)
     $ordr_idxx = get_uniqid();
 ?>
 
-<form name="form_auth" method="post" target="auth_popup" action="<?=$cert_url?>">
+<form name="form_auth" method="post" target="auth_popup" action="<?php echo $cert_url ?>">
 <!-- 유저네임 -->
 <input type="hidden" name="user_name"    value="" />
 <!-- 주문번호 -->
-<input type="hidden" name="ordr_idxx" value="<?=$ordr_idxx?>">
+<input type="hidden" name="ordr_idxx"    value="<?php echo $ordr_idxx ?>">
 <!-- 요청종류 -->
 <input type="hidden" name="req_tx"       value="cert"/>
 <!-- 인증종류 -->
@@ -23,9 +25,9 @@ if(!$ordr_idxx = get_session('ss_uniqid'))
 <input type="hidden" name="fix_commid"      value="KTF"/>
 -->
 <!-- 사이트코드 -->
-<input type="hidden" name="site_cd"      value="<?= $site_cd ?>" />
+<input type="hidden" name="site_cd"      value="<?php echo $site_cd; ?>" />
 <!-- Ret_URL : 인증결과 리턴 페이지 ( 가맹점 URL 로 설정해 주셔야 합니다. ) -->
-<input type="hidden" name="Ret_URL"      value="<?=G4_KCP_PATH?>/kcpcert_result.php" />
+<input type="hidden" name="Ret_URL"      value="<?php echo G4_KCP_URL; ?>/kcpcert_result.php" />
 <!-- cert_otp_use 필수 ( 메뉴얼 참고)
      Y : 실명 확인 + OTP 점유 확인 , N : 실명 확인 only
 -->

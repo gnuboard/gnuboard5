@@ -1,30 +1,30 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?=$outlogin_skin_url?>/style.css">
+<link rel="stylesheet" href="<?php echo $outlogin_skin_url ?>/style.css">
 
 <section id="ol_before" class="ol">
     <h2>회원로그인</h2>
     <!-- 로그인 전 외부로그인 시작 -->
-    <form name="foutlogin" action="<?=$outlogin_action_url?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
+    <form name="foutlogin" action="<?php echo $outlogin_action_url ?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
     <fieldset>
-        <input type="hidden" name="url" value="<?=$outlogin_url?>">
+        <input type="hidden" name="url" value="<?php echo $outlogin_url ?>">
         <input type="text" name="mb_id" id="ol_id" placeholder="회원아이디(필수)" required class="required" maxlength="20">
         <input type="password" id="ol_pw" name="mb_password" placeholder="패스워드(필수)" required class="required" maxlength="20">
         <input type="submit" id="ol_submit" value="로그인">
         <div id="ol_svc">
             <input type="checkbox" id="auto_login" name="auto_login" value="1">
             <label for="auto_login" id="auto_login_label">자동로그인</label>
-            <a href="<?=G4_BBS_URL?>/register.php"><b>회원가입</b></a>
-            <a href="<?=G4_BBS_URL?>/password_lost.php" id="ol_password_lost">정보찾기</a>
+            <a href="<?php echo G4_BBS_URL ?>/register.php"><b>회원가입</b></a>
+            <a href="<?php echo G4_BBS_URL ?>/password_lost.php" id="ol_password_lost">정보찾기</a>
         </div>
     </fieldset>
     </form>
 </section>
 
 <script>
-<? if (!G4_IS_MOBILE) {?>
+<?php if (!G4_IS_MOBILE) { ?>
 $omi = $('#ol_id');
 $omp = $('#ol_pw');
 $omp.css('display','inline-block').css('width',104);
@@ -46,7 +46,7 @@ $omp.blur(function() {
     $this = $(this);
     if($this.attr('id') == "ol_pw" && $this.attr('value') == "") $omp_label.css('visibility','visible');
 });
-<? } ?>
+<?php } ?>
 
 $("#auto_login").click(function(){
     if (this.checked) {

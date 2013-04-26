@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 include_once(G4_PATH.'/head.sub.php');
@@ -11,7 +11,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 ?>
 
 <header id="hd">
-    <h1><?=$config['cf_title']?></h1>
+    <h1><?php echo $config['cf_title'] ?></h1>
 
     <div class="to_content"><a href="#container">본문 바로가기</a></div>
     <div class="to_content"><a href="#gnb">메인메뉴 바로가기</a></div>
@@ -19,15 +19,16 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <div id="hd_wrapper">
 
         <div id="logo">
-            <a href="<?=G4_URL?>"><img src="<?=G4_IMG_URL?>/logo.jpg" alt="처음으로" width="53" height="37"></a>
+            <a href="<?php echo G4_URL ?>"><img src="<?php echo G4_IMG_URL ?>/logo.jpg" alt="처음으로" width="53" height="37"></a>
         </div>
 
         <fieldset id="schall">
             <legend>사이트 내 전체검색</legend>
-            <form name="fsearchbox" action="<?=G4_BBS_URL?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get">
+            <form name="fsearchbox" action="<?php echo G4_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
             <input type="hidden" name="sop" value="and">
-            <input type="text" name="stx" id="schall_stx" title="검색어" maxlength="20"><input type="image" alt="검색" src="<?=G4_IMG_URL?>/btn_search.jpg" id="schall_submit" width="24" height="24">
+            <input type="text" name="stx" id="schall_stx" placeholder="검색어(필수)" required class="required" maxlength="20">
+            <input type="image" alt="검색" src="<?php echo G4_IMG_URL ?>/btn_search.jpg" id="schall_submit" width="24" height="24">
             </form>
 
             <script>
@@ -60,18 +61,18 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         </fieldset>
 
         <ul id="mb_nb">
-            <li><a href="<?=G4_BBS_URL?>/current_connect.php" id="snb_cnt">접속자 <?=connect(); // 현재 접속자수 ?></a></li>
-            <li><a href="<?=G4_BBS_URL?>/new.php" id="snb_new">새글</a></li>
-            <? if ($is_member) { ?>
-            <? if ($is_admin) { ?>
-            <li><a href="<?=G4_ADMIN_URL?>" id="snb_adm">관리자</a></li>
-            <? } ?>
-            <li><a href="<?=G4_BBS_URL?>/member_confirm.php?url=<?=G4_BBS_URL?>/register_form.php" id="snb_modify">내 정보</a></li>
-            <li><a href="<?=G4_BBS_URL?>/logout.php" id="snb_logout">로그아웃</a></li>
-            <? } else { ?>
-            <li><a href="<?=G4_BBS_URL?>/register.php" id="snb_join">회원가입</a></li>
-            <li><a href="<?=G4_BBS_URL?>/login.php" id="snb_login">로그인</a></li>
-            <? } ?>
+            <li><a href="<?php echo G4_BBS_URL ?>/current_connect.php" id="snb_cnt">접속자 <?php echo connect(); // 현재 접속자수 ?></a></li>
+            <li><a href="<?php echo G4_BBS_URL ?>/new.php" id="snb_new">새글</a></li>
+            <?php if ($is_member) { ?>
+            <?php if ($is_admin) { ?>
+            <li><a href="<?php echo G4_ADMIN_URL ?>" id="snb_adm">관리자</a></li>
+            <?php } ?>
+            <li><a href="<?php echo G4_BBS_URL ?>/member_confirm.php?url=<?php echo G4_BBS_URL ?>/register_form.php" id="snb_modify">내 정보</a></li>
+            <li><a href="<?php echo G4_BBS_URL ?>/logout.php" id="snb_logout">로그아웃</a></li>
+            <?php } else { ?>
+            <li><a href="<?php echo G4_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>
+            <li><a href="<?php echo G4_BBS_URL ?>/login.php" id="snb_login">로그인</a></li>
+            <?php } ?>
         </ul>
 
     </div>
@@ -81,13 +82,15 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <nav id="lnb">
     <ul>
-        <?
-        $sql2 = " select * from {$g4['board_table']} where gr_id = '{$gr_id}' and bo_show_menu = 1 order by bo_order ";
+        <?php
+        $sql2 = " select * from {$g4['board_table']} where bo_show_menu = 1 and bo_device <> 'pc' ";
+        if ($gr_id) $sql2 .= " and gr_id = '$gr_id' ";
+        $sql2 .= " order by bo_order ";
         $result2 = sql_query($sql2);
         for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
         ?>
-        <li><a href="<?=G4_BBS_URL?>/board.php?bo_table=<?=$row2['bo_table']?>"><?=$row2['bo_subject']?></a></li>
-        <?}?>
+        <li><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>"><?php echo $row2['bo_subject'] ?></a></li>
+        <?php } ?>
     </ul>
 </nav>
 
@@ -95,10 +98,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <div id="wrapper">
     <aside id="aside">
-        <?=outlogin('basic'); // 외부 로그인 ?>
+        <?php echo outlogin('basic'); // 외부 로그인 ?>
     </aside>
     <div id="container">
-        <? if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) {?><h1 id="wrapper_title"><?=$g4['title']?></h1><?}?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="wrapper_title"><?php echo $g4['title'] ?></h1><?php } ?>
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
             <button class="no_text_resize" onclick="font_default('container');">기본</button>

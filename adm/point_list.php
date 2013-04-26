@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "200200";
 include_once('./_common.php');
 
@@ -80,9 +80,9 @@ function point_clear()
 <fieldset>
     <legend>포인트 내역 검색</legend>
     <span>
-        <?=$listall?>
-        전체 <?=number_format($total_count)?> 건
-        <?
+        <?php echo $listall ?>
+        전체 <?php echo number_format($total_count) ?> 건
+        <?php
         if (isset($mb['mb_id']) && $mb['mb_id']) {
             echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
         } else {
@@ -90,13 +90,13 @@ function point_clear()
             echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
         }
         ?>
-        <? if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><? } ?>
+        <?php if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><?php } ?>
     </span>
     <select name="sfl" title="검색대상">
-        <option value="mb_id"<?=get_selected($_GET['sfl'], "mb_id");?>>회원아이디</option>
-        <option value="po_content"<?=get_selected($_GET['sfl'], "po_content");?>>내용</option>
+        <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
+        <option value="po_content"<?php echo get_selected($_GET['sfl'], "po_content"); ?>>내용</option>
     </select>
-    <input type="text" name="stx" value="<?=$stx?>" title="검색어(필수)" required class="required frm_input">
+    <input type="text" name="stx" value="<?php echo $stx ?>" title="검색어(필수)" required class="required frm_input">
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
@@ -105,28 +105,28 @@ function point_clear()
     <h2>포인트 내역</h2>
 
     <form name="fpointlist" id="fpointlist" method="post">
-    <input type="hidden" name="sst" value="<?=$sst?>">
-    <input type="hidden" name="sod" value="<?=$sod?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="token" value="<?=$token?>">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>">
+    <input type="hidden" name="page" value="<?php echo $page ?>">
+    <input type="hidden" name="token" value="<?php echo $token ?>">
 
     <table class="tbl_pt_list">
     <thead>
     <tr>
         <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 포인트 내역 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col"><?=subject_sort_link('mb_id')?>회원아이디</a></th>
+        <th scope="col"><?php echo subject_sort_link('mb_id') ?>회원아이디</a></th>
         <th scope="col">이름</th>
         <th scope="col">별명</th>
-        <th scope="col"><?=subject_sort_link('po_datetime')?>일시</a></th>
-        <th scope="col"><?=subject_sort_link('po_content')?>포인트 내용</a></th>
-        <th scope="col"><?=subject_sort_link('po_point')?>포인트</a></th>
+        <th scope="col"><?php echo subject_sort_link('po_datetime') ?>일시</a></th>
+        <th scope="col"><?php echo subject_sort_link('po_content') ?>포인트 내용</a></th>
+        <th scope="col"><?php echo subject_sort_link('po_point') ?>포인트</a></th>
         <th scope="col">포인트합</th>
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($i==0 || ($row2['mb_id'] != $row['mb_id'])) {
             $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
@@ -144,20 +144,20 @@ function point_clear()
 
     <tr>
         <td class="td_chk">
-            <input type="hidden" id="mb_id_<?=$i?>" name="mb_id[<?=$i?>]" value="<?=$row['mb_id']?>">
-            <input type="hidden" id="po_id_<?=$i?>" name="po_id[<?=$i?>]" value="<?=$row['po_id']?>">
-            <input type="checkbox" id="chk_<?=$i?>" name="chk[]" value="<?=$i?>" title="내역선택">
+            <input type="hidden" id="mb_id_<?php echo $i ?>" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>">
+            <input type="hidden" id="po_id_<?php echo $i ?>" name="po_id[<?php echo $i ?>]" value="<?php echo $row['po_id'] ?>">
+            <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $i ?>" title="내역선택">
         </td>
-        <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?=$row['mb_id']?>"><?=$row['mb_id']?></a></td>
-        <td class="td_mbname"><?=$row2['mb_name']?></td>
-        <td class="td_name"><div><?=$mb_nick?></div></td>
-        <td class="td_time"><?=$row['po_datetime']?></td>
-        <td class="td_pt_log"><?=$link1?><?=$row['po_content']?><?=$link2?></td>
-        <td class="td_num td_pt"><?=number_format($row['po_point'])?></td>
-        <td class="td_bignum td_pt"><?=number_format($row2['mb_point'])?></td>
+        <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
+        <td class="td_mbname"><?php echo $row2['mb_name'] ?></td>
+        <td class="td_name"><div><?php echo $mb_nick ?></div></td>
+        <td class="td_time"><?php echo $row['po_datetime'] ?></td>
+        <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
+        <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
+        <td class="td_bignum td_pt"><?php echo number_format($row2['mb_point']) ?></td>
     </tr>
 
-    <?
+    <?php
     }
 
     if ($i == 0)
@@ -173,18 +173,18 @@ function point_clear()
     </form>
 </section>
 
-<?=get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <section id="point_mng" class="cbox">
     <h2>개별회원 포인트 증감 설정</h2>
 
     <form name="fpointlist2" method="post" id="fpointlist2" action="./point_update.php" autocomplete="off">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="sst" value="<?=$sst?>">
-    <input type="hidden" name="sod" value="<?=$sod?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="token" value="<?=$token?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
+    <input type="hidden" name="page" value="<?php echo $page ?>">
+    <input type="hidden" name="token" value="<?php echo $token ?>">
 
     <table class="frm_tbl">
     <colgroup>
@@ -194,7 +194,7 @@ function point_clear()
     <tbody>
     <tr>
         <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="mb_id" value="<?=$mb_id?>" id="mb_id" class="required frm_input" required></td>
+        <td><input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" class="required frm_input" required></td>
     </tr>
     <tr>
         <th scope="row"><label for="po_content">포인트 내용<strong class="sound_only">필수</strong></label></th>
@@ -222,6 +222,6 @@ function point_clear()
 
 </section>
 
-<?
+<?php
 include_once ('./admin.tail.php');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 @include_once($board_skin_path.'/good.head.skin.php');

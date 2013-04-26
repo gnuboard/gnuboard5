@@ -1,4 +1,4 @@
-<?
+<?php
 /*******************************************************************************
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
@@ -116,7 +116,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
     <div>
         <p>다음 파일을 찾을 수 없습니다.</p>
         <ul>
-            <li><strong><?=G4_DATA_DIR.'/'.G4_DBCONFIG_FILE?></strong></li>
+            <li><strong><?php echo G4_DATA_DIR.'/'.G4_DBCONFIG_FILE ?></strong></li>
         </ul>
         <p>프로그램 설치 후 실행하시기 바랍니다.</p>
         <a href="./install/">그누보드4s 설치하기</a>
@@ -124,7 +124,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
 </body>
 </html>
 
-<?
+<?php
     exit;
 }
 //==============================================================================
@@ -434,22 +434,22 @@ if (G4_IS_MOBILE) {
     $member_skin_path   = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/member/'.$config['cf_mobile_member_skin'];
     $member_skin_url    = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/member/'.$config['cf_mobile_member_skin'];
     $new_skin_path      = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/new/'.$config['cf_mobile_new_skin'];
+    $new_skin_url       = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/new/'.$config['cf_mobile_new_skin'];
     $search_skin_path   = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/search/'.$config['cf_mobile_search_skin'];
+    $search_skin_url    = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/search/'.$config['cf_mobile_search_skin'];
     $connect_skin_path  = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
-    $poll_skin_path     = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/poll/basic';
-    if (isset($_GET['skin_dir']))
-        $poll_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/poll/'.$_GET['skin_dir'];
+    $connect_skin_url   = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
 } else {
     $board_skin_path    = G4_SKIN_PATH.'/board/'.$board['bo_skin'];
     $board_skin_url     = G4_SKIN_URL .'/board/'.$board['bo_skin'];
     $member_skin_path   = G4_SKIN_PATH.'/member/'.$config['cf_member_skin'];
     $member_skin_url    = G4_SKIN_URL .'/member/'.$config['cf_member_skin'];
     $new_skin_path      = G4_SKIN_PATH.'/new/'.$config['cf_new_skin'];
+    $new_skin_url       = G4_SKIN_URL .'/new/'.$config['cf_new_skin'];
     $search_skin_path   = G4_SKIN_PATH.'/search/'.$config['cf_search_skin'];
+    $search_skin_url    = G4_SKIN_URL .'/search/'.$config['cf_search_skin'];
     $connect_skin_path  = G4_SKIN_PATH.'/connect/'.$config['cf_connect_skin'];
-    $poll_skin_path     = G4_SKIN_PATH.'/poll/basic';
-    if (isset($_GET['skin_dir']))
-        $poll_skin_path = G4_SKIN_PATH.'/poll/'.$_GET['skin_dir'];
+    $connect_skin_url   = G4_SKIN_URL .'/connect/'.$config['cf_connect_skin'];
 }
 //==============================================================================
 
@@ -465,6 +465,8 @@ while ($entry = $tmp->read()) {
     if (preg_match("/(\.php)$/i", $entry))
         include_once(G4_EXTEND_PATH.'/'.$entry);
 }
+
+ob_start();
 
 // 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면
 // 캐쉬의 내용을 가져옴. 완전한지는 검증되지 않음

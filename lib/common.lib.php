@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 
 /*************************************************************************
@@ -1612,6 +1612,26 @@ function is_utf8($str)
 }
 
 
+// UTF-8 문자열 자르기
+// 출처 : https://www.google.co.kr/search?q=utf8_strcut&aq=f&oq=utf8_strcut&aqs=chrome.0.57j0l3.826j0&sourceid=chrome&ie=UTF-8
+function utf8_strcut( $str, $size, $suffix='...' )
+{
+        $substr = substr( $str, 0, $size * 2 );
+        $multi_size = preg_match_all( '/[\x80-\xff]/', $substr, $multi_chars );
+
+        if ( $multi_size > 0 )
+            $size = $size + intval( $multi_size / 3 ) - 1;
+
+        if ( strlen( $str ) > $size ) {
+            $str = substr( $str, 0, $size );
+            $str = preg_replace( '/(([\x80-\xff]{3})*?)([\x80-\xff]{0,2})$/', '$1', $str );
+            $str .= $suffix;
+        }
+
+        return $str;
+}
+
+
 /*
 -----------------------------------------------------------
     Charset 을 변환하는 함수
@@ -1798,12 +1818,16 @@ function delete_editor_thumbnail($contents)
 }
 
 // 스킨 style sheet 파일 얻기
-function get_skin_stylesheet($skin_path)
+function get_skin_stylesheet($skin_path, $dir='')
 {
     if(!$skin_path)
         return "";
 
     $str = "";
+    $files = array();
+
+    if($dir)
+        $skin_path .= '/'.$dir;
 
     $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
 
@@ -1817,12 +1841,132 @@ function get_skin_stylesheet($skin_path)
                     continue;
 
                 if(preg_match("/\.(css)$/i", $file))
-                    $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date("md").'">'."\n";
+                    $files[] = $file;
             }
             closedir($dh);
         }
     }
 
+    if(!empty($files)) {
+        sort($files);
+
+        foreach($files as $file) {
+            $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date("md").'">'."\n";
+        }
+    }
+
     return $str;
+
+    /*
+    // glob 를 이용한 코드
+    if (!$skin_path) return '';
+    $skin_path .= $dir ? '/'.$dir : '';
+
+    $str = '';
+    $skin_url = G4_URL.str_replace('\\', '/', str_replace(G4_PATH, '', $skin_path));
+
+    foreach (glob($skin_path.'/*.css') as $filepath) {
+        $file = str_replace($skin_path, '', $filepath);
+        $str .= '<link rel="stylesheet" href="'.$skin_url.'/'.$file.'?='.date('md').'">'."\n";
+    }
+    return $str;
+    */
+}
+
+// 스킨 javascript 파일 얻기
+function get_skin_javascript($skin_path, $dir='')
+{
+    if(!$skin_path)
+        return "";
+
+    $str = "";
+    $files = array();
+
+    if($dir)
+        $skin_path .= '/'.$dir;
+
+    $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
+
+    if(is_dir($skin_path)) {
+        if($dh = opendir($skin_path)) {
+            while(($file = readdir($dh)) !== false) {
+                if($file == "." || $file == "..")
+                    continue;
+
+                if(is_dir($skin_path.'/'.$file))
+                    continue;
+
+                if(preg_match("/\.(js)$/i", $file))
+                    $files[] = $file;
+            }
+            closedir($dh);
+        }
+    }
+
+    if(!empty($files)) {
+        sort($files);
+
+        foreach($files as $file) {
+            $str .= '<script src="'.$skin_url.'/'.$file.'"></script>'."\n";
+        }
+    }
+
+    return $str;
+}
+
+// file_put_contents 는 PHP5 전용 함수이므로 PHP4 하위버전에서 사용하기 위함
+// http://www.phpied.com/file_get_contents-for-php4/
+if (!function_exists('file_put_contents')) {
+    function file_put_contents($filename, $data) {
+        $f = @fopen($filename, 'w');
+        if (!$f) {
+            return false;
+        } else {
+            $bytes = fwrite($f, $data);
+            fclose($f);
+            return $bytes;
+        }
+    }
+}
+
+
+// HTML 마지막 처리
+function html_end()
+{
+    global $g4;
+
+    // 현재접속자 처리
+    $tmp_sql = " select count(*) as cnt from {$g4['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+    $tmp_row = sql_fetch($tmp_sql);
+
+    //sql_query(" lock table $g4['login_table'] write ", false);
+    if ($tmp_row['cnt']) {
+        $tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G4_TIME_YMDHIS."', lo_location = '$lo_location', lo_url = '$lo_url' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        sql_query($tmp_sql, FALSE);
+    } else {
+        $tmp_sql = " insert into {$g4['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G4_TIME_YMDHIS."', '$lo_location',  '$lo_url' ) ";
+        sql_query($tmp_sql, FALSE);
+
+        // 시간이 지난 접속은 삭제한다
+        sql_query(" delete from {$g4['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", G4_SERVER_TIME - (60 * $config['cf_login_minutes']))."' ");
+
+        // 부담(overhead)이 있다면 테이블 최적화
+        //$row = sql_fetch(" SHOW TABLE STATUS FROM `$mysql_db` LIKE '$g4['login_table']' ");
+        //if ($row['Data_free'] > 0) sql_query(" OPTIMIZE TABLE $g4['login_table'] ");
+    }
+
+    // 버퍼의 내용에서 body 태그 중간의 외부 css 파일을 CAPTURE 하여 head 태그로 이동시켜준다.
+    $buffer = ob_get_contents();
+    ob_end_clean();
+    preg_match('#<body>(.*)</body>#is', $buffer, $bodys);
+    preg_match_all('/(\r|\n)<link[^>]+>/i', $bodys[0], $links);
+    $stylesheet = '';
+    $links[0] = array_unique($links[0]);
+    foreach ($links[0] as $key=>$link) {
+        //$link = PHP_EOL.$links[0][$i];
+        $stylesheet .= $link;
+        $buffer = preg_replace('#'.$link.'#', '', $buffer);
+    }
+    return preg_replace('#(</title>)#', "$1$stylesheet", $buffer);
 }
 ?>

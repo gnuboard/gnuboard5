@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "200300";
 include_once('./_common.php');
 
@@ -72,9 +72,9 @@ include_once('./admin.head.php');
     <p>조건에 따라 선택된 메일발송 대상자 목록입니다.</p>
 
     <form name="fmailselectlist" id="fmailselectlist" method="post" action="./mail_select_update.php">
-    <input type="hidden" name="token" value="<?=$token?>">
-    <input type="hidden" name="ma_id" value="<?=$ma_id ?>">
-    <input type="hidden" name="ma_list" value="<?=$ma_list?>">
+    <input type="hidden" name="token" value="<?php echo $token ?>">
+    <input type="hidden" name="ma_id" value="<?php echo $ma_id ?>">
+    <input type="hidden" name="ma_list" value="<?php echo $ma_list ?>">
     <table>
     <thead>
     <tr>
@@ -87,7 +87,7 @@ include_once('./admin.head.php');
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $sql = " select mb_id, mb_name, mb_nick, mb_email, mb_datetime $sql_common $sql_where order by mb_id ";
     $result = sql_query($sql);
     $i=0;
@@ -100,25 +100,25 @@ include_once('./admin.head.php');
         $cr = "\n";
     ?>
     <tr>
-        <td class="td_num"><?=$i?></td>
-        <td class="td_mbid"><?=$row['mb_id']?></td>
-        <td class="td_mbname"><?=$row['mb_name']?></td>
-        <td class="td_mbnick"><?=$row['mb_nick']?></td>
-        <td class="td_time"><?=$row['mb_birth']?></td>
-        <td><?=$row['mb_email']?></td>
+        <td class="td_num"><?php echo $i ?></td>
+        <td class="td_mbid"><?php echo $row['mb_id'] ?></td>
+        <td class="td_mbname"><?php echo $row['mb_name'] ?></td>
+        <td class="td_mbnick"><?php echo $row['mb_nick'] ?></td>
+        <td class="td_time"><?php echo $row['mb_birth'] ?></td>
+        <td><?php echo $row['mb_email'] ?></td>
     </tr>
-    <?}?>
+    <?php } ?>
     </tbody>
     </table>
 </div>
 
 <div class="btn_confirm">
     <input type="submit" value="메일보내기" class="btn_submit">
-    <a href="./mail_select_form.php?ma_id=<?=$ma_id?>">뒤로</a>
+    <a href="./mail_select_form.php?ma_id=<?php echo $ma_id ?>">뒤로</a>
 </div>
 
 </form>
 
-<?
+<?php
 include_once('./admin.tail.php');
 ?>

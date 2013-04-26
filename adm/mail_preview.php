@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = "200300";
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/mailer.lib.php');
@@ -20,10 +20,10 @@ $content = $se['ma_content'] . "<hr size=0><p><span style='font-size:9pt; font-f
 
 <body>
 
-<h1><?=$subject?></h1>
+<h1><?php echo $subject ?></h1>
 
 <p>
-    <?=$se['ma_content']?>
+    <?php echo $se['ma_content'] ?>
 </p>
 
 <p>

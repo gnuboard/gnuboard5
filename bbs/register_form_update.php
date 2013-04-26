@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 include_once(G4_LIB_PATH.'/register.lib.php');
@@ -66,7 +66,8 @@ if ($w == '' || $w == 'u') {
     if ($msg = empty_mb_email($mb_email))   alert($msg, "", true, true);
     if ($msg = reserve_mb_id($mb_id))       alert($msg, "", true, true);
     if ($msg = reserve_mb_nick($mb_nick))   alert($msg, "", true, true);
-    if ($msg = valid_mb_name($mb_name))     alert($msg, "", true, true);
+    // 이름에 한글명 체크를 하지 않는다.
+    //if ($msg = valid_mb_name($mb_name))     alert($msg, "", true, true);
     if ($msg = valid_mb_nick($mb_nick))     alert($msg, "", true, true);
     if ($msg = valid_mb_email($mb_email))   alert($msg, "", true, true);
     if ($msg = prohibit_mb_email($mb_email))alert($msg, "", true, true);
