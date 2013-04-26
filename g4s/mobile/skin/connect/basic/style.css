@@ -1,0 +1,6 @@
+/* 현재접속자 */
+#current_connect_tbl {}
+#current_connect_tbl th:nth-of-type(1) {width:50px}
+#current_connect_tbl th:nth-of-type(2) {width:120px}
+
+#current_connect_tbl td:nth-of-type(1) {padding:1em 0;text-align:center}
