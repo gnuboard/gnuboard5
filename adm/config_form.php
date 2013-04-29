@@ -37,7 +37,7 @@ if(!isset($config['cf_kcpcert_site_cd'])) {
 
 if(!isset($config['cf_kcpcert_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT 'none' AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", TRUE);
 }
 
 if(!isset($config['cf_mobile_pages'])) {
