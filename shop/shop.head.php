@@ -85,13 +85,11 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <div id="wrapper">
 
-    <aside id="aside">
-        <!-- 오늘본 상품 {-->
-        <div>
-            <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
-        </div>
-        <!-- 오늘본 상품 }-->
+    <aside id="stod">
+        <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
+    </aside>
 
+    <aside id="aside">
         <?php echo outlogin("shop_outlogin"); // 외부 로그인 ?>
 
         <!-- 상품분류 -->
