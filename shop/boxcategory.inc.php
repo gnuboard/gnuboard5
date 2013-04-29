@@ -10,7 +10,7 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
 
 <nav id="gnb">
     <h2>쇼핑몰 카테고리</h2>
-    <ul class="gnb_1dul">
+    <ul id="gnb_1dul">
         <?php
         // 1단계 분류 판매 가능한 것만
         $hsql = " select ca_id, ca_name from {$g4['shop_category_table']}
@@ -19,10 +19,12 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
                   order by ca_id ";
         $hresult = sql_query($hsql);
         $hnum = @mysql_num_rows($hresult);
+        $gnb_zindex = 10000; // gnb_1dli z-index 값 설정용
         for ($i=0; $row=sql_fetch_array($hresult); $i++)
         {
+            $gnb_zindex -= 1; // html 구조에서 앞선 gnb_1dli 에 더 높은 z-index 값 부여
         ?>
-        <li class="gnb_1dli">
+        <li class="gnb_1dli" style="z-index:<?php echo $gnb_zindex; ?>">
             <a href="<?php echo G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id']; ?>" class="gnb_1da"><?php echo $row['ca_name']; ?></a>
             <ul class="gnb_2dul">
                 <?php
