@@ -115,9 +115,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ev_mimg">메뉴이미지</label></th>
+        <th scope="row"><label for="ev_mimg">배너이미지</label></th>
         <td>
-            <?=help("쇼핑몰 왼쪽 메뉴에 텍스트 메뉴 대신 이미지로 넣을 경우 사용합니다.");?>
+            <?=help("쇼핑몰 레이아웃에서 글자 대신 이미지로 출력할 경우 사용합니다.");?>
             <input type="file" name="ev_mimg" id="ev_mimg">
             <?
             $mimg_str = "";
