@@ -10,7 +10,7 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
 
 <nav id="gnb">
     <h2>쇼핑몰 카테고리</h2>
-    <ul>
+    <ul class="gnb_1dul">
         <?php
         // 1단계 분류 판매 가능한 것만
         $hsql = " select ca_id, ca_name from {$g4['shop_category_table']}
@@ -22,9 +22,9 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
         for ($i=0; $row=sql_fetch_array($hresult); $i++)
         {
         ?>
-        <li class="gnb_1d_li">
-            <a href="<?php echo G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id']; ?>" class="gnb_1d_a"><?php echo $row['ca_name']; ?></a>
-            <ul>
+        <li class="gnb_1dli">
+            <a href="<?php echo G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id']; ?>" class="gnb_1da"><?php echo $row['ca_name']; ?></a>
+            <ul class="gnb_2dul">
                 <?
                 // 2단계 분류 판매 가능한 것만
                  $sql2 = " select ca_id, ca_name from {$g4['shop_category_table']}
@@ -37,7 +37,7 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
                 for ($j=0; $row2=sql_fetch_array($result2); $j++)
                 {
                 ?>
-                <li class="gnb_2d_li"><a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $row2['ca_id']; ?>" class="gnb_2d_a"><?php echo $row2['ca_name']; ?></a></li>
+                <li class="gnb_2dli"><a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $row2['ca_id']; ?>" class="gnb_2da"><?php echo $row2['ca_name']; ?></a></li>
                 <? } ?>
             </ul>
         </li>

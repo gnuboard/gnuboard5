@@ -88,12 +88,15 @@ a:active {color:#000;text-decoration:underline}
 /* gnb js off */
 #gnb {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#faf9f5}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#gnb ul {margin:0;padding:10px 0 0;border:0;background:#fff;list-style:none}
-#gnb ul ul {display:none}
-#gnb .gnb_1d_a {display:block;padding:0 10px;height:33px;border-bottom:1px solid #f4f4f4;background:url('../img/shop/gnb_bg.gif') top right repeat-x;font-weight:bold;text-decoration:none;line-height:2.9em}
+.gnb_1dul {margin:0;padding:10px 0 0;border:0;background:#fff;list-style:none}
+.gnb_1dli {position:relative}
+.gnb_1da {display:block;padding:0 10px;height:33px;border-bottom:1px solid #f4f4f4;background:url('../img/shop/gnb_bg.gif') top right repeat-x;font-weight:bold;text-decoration:none;line-height:2.9em}
+.gnb_1da:focus,
+.gnb_1da:hover {background-position:right -33px;color:#fff;text-decoration:none}
+.gnb_2dul {display:none}
 
 /* 중간 레이아웃 */
-#wrapper {z-index:5;margin:30px auto;width:980px;zoom:1}
+#wrapper {z-index:5;margin:30px auto;width:1000px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
