@@ -37,6 +37,6 @@
 #ol_after_memo {width:74px;margin:0 1px 0 0}
 #ol_after_pt {width:75px}
 #ol_after_ft {text-align:justify}
-#ol_after_ft a {display:inline-block;padding:3px 0 4px;width:73px;background:#333;color:#fff;text-align:center}
+#ol_after_ft a {display:inline-block;padding:4px 0 3px;width:73px;background:#333;color:#fff;text-align:center}
 #ol_after_ft a:focus,
 #ol_after_ft a:hover {text-decoration:none !important}
