@@ -84,6 +84,8 @@ a:active {color:#000;text-decoration:underline}
 #hd_aside ul:after {display:block;visibility:hidden;clear:both;content:''}
 #hd_aside li {float:left;border-left:1px solid #e9e9e9}
 #hd_aside a {display:inline-block;padding:0 15px;height:38px;font-weight:bold;text-decoration:none;line-height:3.4em !important;line-height:3em}
+#hd_aside a:focus,
+#hd_aside a:hover {background:#626870;color:#fff}
 
 /* gnb js off */
 #gnb {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f7f7f7}
