@@ -16,7 +16,7 @@ if ($member['mb_password'] != sql_password($_POST['admin_password'])) {
 
 $mb_id = escape_trim($_POST['mb_id']);
 
-// 핸드폰번호 체크
+// 휴대폰번호 체크
 $mb_hp = $_POST['mb_hp'];
 if($mb_hp) {
     $result = exist_mb_hp($mb_hp, $mb_id);
