@@ -7,7 +7,8 @@ $admin = get_admin("super");
 // 우측, 하단 화면을 꾸미려면 이 파일을 수정합니다.
 ?>
 
-</div>
+    </div><!-- Container End -->
+</div><!-- Wrapper End -->
 
 <footer id="ft">
     <div>
@@ -18,16 +19,16 @@ $admin = get_admin("super");
             <li><a href="<?=G4_SHOP_URL?>/content.php?co_id=privacy">개인정보 취급방침</a></li>
         </ul>
         <p>
-        <?=$default['de_admin_company_addr']?> /
-        전화 : <?=$default['de_admin_company_tel']?> /
-        팩스 : <?=$default['de_admin_company_fax']?> /
-        운영자 : <?=$admin['mb_name']?><br>
-        사업자 등록번호 : <?=$default['de_admin_company_saupja_no']?> /
-        대표 : <?=$default['de_admin_company_owner']?> /
-        개인정보관리책임자 : <?=$default['de_admin_info_name']?><br>
-        통신판매업신고번호 : <?=$default['de_admin_tongsin_no']?>
-        <? if ($default['de_admin_buga_no']) echo " / 부가통신사업신고번호 : {$default['de_admin_buga_no']}"; ?><br>
-        Copyright &copy; 2001-2013 <?=$default['de_admin_company_name']?>. All Rights Reserved.
+            <span><?=$default['de_admin_company_addr']?></span>
+            <span><b>전화</b> <?=$default['de_admin_company_tel']?></span>
+            <span><b>팩스</b> <?=$default['de_admin_company_fax']?></span>
+            <span><b>운영자</b> <?=$admin['mb_name']?></span><br>
+            <span><b>사업자 등록번호</b> <?=$default['de_admin_company_saupja_no']?></span>
+            <span><b>대표</b> <?=$default['de_admin_company_owner']?></span>
+            <span><b>개인정보관리책임자</b> <?=$default['de_admin_info_name']?></span><br>
+            <span><b>통신판매업신고번호</b> <?=$default['de_admin_tongsin_no']?></span>
+            <?php if ($default['de_admin_buga_no']) echo '<span>부가통신사업신고번호 '.$default['de_admin_buga_no'].'</span>'; ?><br>
+            Copyright &copy; 2001-2013 <?=$default['de_admin_company_name']?>. All Rights Reserved.
         </p>
         <a href="#" id="ft_totop">상단으로</a>
     </div>
