@@ -130,8 +130,18 @@ a:active {color:#000;text-decoration:underline}
 #scomm a:hover {background:#f9f9f9}
 #scomm_empty {padding:15px 0;text-align:center}
 
+#sbn_aside {margin:0 0 5px}
+#sbn_aside h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sbn_aside ul {margin:0;padding:0;border:0;list-style:none}
+#sbn_aside li {margin:0 0 1px}
+
 #container {z-index:4;position:relative;float:left;width:740px;min-height:500px;height:auto !important;height:500px;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
+
+#sbn_idx {}
+#sbn_idx h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sbn_idx ul {margin:0;padding:0;border:0;list-style:none}
+#sbn_idx li {margin:0 0 1px}
 
 /* 텍스트 크기 조절 */
 #text_size {display:none;position:absolute;top:-31px;left:-1px}

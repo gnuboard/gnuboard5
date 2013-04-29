@@ -6,10 +6,11 @@ $sql = " select * from {$g4['shop_banner_table']}
           order by bn_order, bn_id desc ";
 $result = sql_query($sql);
 ?>
-<table width=100% cellpadding=0 cellspacing=0>
+
 <?php
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
+    if ($i==0) echo '<ul>'.PHP_EOL;
     //print_r2($row);
     // 테두리 있는지
     $bn_border  = $row['bn_border'];
@@ -20,15 +21,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     if (file_exists($bimg))
     {
         $size = getimagesize($bimg);
-        echo '<tr><td>';
+        echo '<li>'.PHP_EOL;
         if ($row['bn_url'][0] == '#')
             echo '<a href="'.$row['bn_url'].'">';
         else if ($row['bn_url'] && $row['bn_url'] != 'http://') {
             echo '<a href="'.G4_SHOP_URL.'/bannerhit.php?bn_id='.$row['bn_id'].'&amp;url='.urlencode($row['bn_url']).'"'.$bn_new_win.'>';
         }
-        echo '<img src="'.G4_DATA_URL.'/banner/'.$row['bn_id'].'" border="'.$bn_border.'" alt="'.$row['bn_alt'].'" width="'.$size[0].'" height="'.$size[1].'"></a>';
-        echo '</td></tr>'.PHP_EOL;
+        echo '<img src="'.G4_DATA_URL.'/banner/'.$row['bn_id'].'" border="'.$bn_border.'" alt="'.$row['bn_alt'].'" width="'.$size[0].'" height="'.$size[1].'"></a>'.PHP_EOL;
+        echo '</li>'.PHP_EOL;
     }
 }
+if ($i>0) echo '</ul>'.PHP_EOL;
 ?>
-</table>

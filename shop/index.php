@@ -87,10 +87,11 @@ if ($default["de_type{$type}_list_use"])
 <?php //echo visit('basic'); ?>
 </div>
 
-<div>
-<!-- 메인 배너 -->
-<?php echo display_banner('메인'); ?>
-</div>
+<section id="sbn_idx">
+    <h2>쇼핑몰 메인 배너</h2>
+    <!-- 메인 배너 -->
+    <?php echo display_banner('메인'); ?>
+</section>
 
 <?php
 include_once(G4_SHOP_PATH.'/shop.tail.php');
