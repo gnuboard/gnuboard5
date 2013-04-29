@@ -87,7 +87,19 @@ a:active {color:#000;text-decoration:underline}
 #hd_aside a:focus,
 #hd_aside a:hover {background:#626870;color:#fff}
 
-/* gnb */
+/* 중간 레이아웃 */
+#wrapper {z-index:5;margin:30px auto;width:1000px;zoom:1}
+#wrapper:after {display:block;visibility:hidden;clear:both;content:""}
+#wrapper_title {margin-bottom:20px;font-size:1.2em}
+
+/* 오늘 본 상품 */
+#stod {float:right}
+#stod span {display:none}
+
+/* aside wrapper */
+#aside {float:left;margin:0 10px 0 0;width:150px}
+
+/* aside:gnb */
 #gnb {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f7f7f7}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 .gnb_1dul {margin:0;border:0;background:#fff;list-style:none}
@@ -103,15 +115,7 @@ a:active {color:#000;text-decoration:underline}
 .gnb_2da:focus,
 .gnb_2da:hover {text-decoration:none}
 
-/* 중간 레이아웃 */
-#wrapper {z-index:5;margin:30px auto;width:1000px;zoom:1}
-#wrapper:after {display:block;visibility:hidden;clear:both;content:""}
-#wrapper_title {margin-bottom:20px;font-size:1.2em}
-
-#stod {float:right}
-
-#aside {float:left;margin:0 10px 0 0;width:150px}
-
+/* aside:이벤트 링크 */
 #sev {margin:0 0 5px;padding:0 0 10px;border:1px solid #ecc9d6;background:#fff8fb}
 #sev h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sev ul {margin:0;padding:0;border:0;background:#fff;list-style:none}
@@ -122,6 +126,7 @@ a:active {color:#000;text-decoration:underline}
 #sev strong {}
 #sev_empty {padding:15px 0;text-align:center}
 
+/* aside:커뮤니티 링크 */
 #scomm {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f7f7f7}
 #scomm h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #scomm ul {margin:0;padding:0;border:0;background:#fff;list-style:none}
@@ -130,6 +135,7 @@ a:active {color:#000;text-decoration:underline}
 #scomm a:hover {background:#f9f9f9}
 #scomm_empty {padding:15px 0;text-align:center}
 
+/* asdie:배너 */
 #sbn_aside {margin:0 0 5px}
 #sbn_aside h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sbn_aside ul {margin:0;padding:0;border:0;list-style:none}

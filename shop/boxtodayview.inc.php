@@ -4,13 +4,55 @@ $tv_idx = get_session("ss_tv_idx");
 $tv_div['top'] = 0;
 $tv_div['img_width'] = 70;
 $tv_div['img_height'] = 70;
-$tv_div['img_length'] = 4; // 보여지는 최대 이미지수
+$tv_div['img_length'] = 3; // 노출할 이미지 순
+
+echo '<button id="up">위로</button>';
+echo '<button id="down">아래로</button>';
+echo '<br>';
+
+for ($i=0;$i<9;$i++) {
+    if ($i==0) $k=0;
+    if ($i%3==0) $k++;
+    echo '<span class="tdlist c'.$k.'">class'.$k.'</span>';
+}
 ?>
 
-<div id='divTodayHidden' style="position:relative; top:<?php echo $tv_div['top']; ?>;display:none;"><a href='javascript:todayview_visible();'><img src='<?php echo G4_SHOP_URL; ?>/img/todayview.gif' border=0></a></div>
-<div id='divToday' style="position:relative; top:0;">
-<table cellpadding=0 cellspacing=0 border="0" bgcolor="#FFFFFF">
-<tr><td background='<?php echo G4_SHOP_URL; ?>/img/todayview01.gif' height=31 align=right><span id='todayviewcount'></span>&nbsp;&nbsp;</td></tr>
+<script>
+$(function() {
+    var flag = 1; // 페이지값
+    var show = 3;
+    var goal = parseInt(<?php echo $i; ?>/show); // 전체 리스트를 3(한 번에 보여줄 값)으로 나눠 flag 최대값을 구하고
+    var goalrest = parseInt(<?php echo $i; ?>%show); // 나머지 값을 구한 후
+    if (goalrest > 0) // 나머지 값이 있다면
+    {
+        goal++; // flag 최댓값에 1을 더한다.
+    }
+    $('.c'+flag).css('display','block');
+    $('#up').click(function() {
+        if (flag == 1)
+        {
+            alert('처음 목록입니다.');
+        } else {
+            flag--;
+            $('.c'+flag).css('display','block');
+            $('.c'+(flag+1)).css('display','none');
+        }
+    })
+    $('#down').click(function() {
+        if (flag == goal)
+        {
+            alert('마지막 목록입니다.');
+        } else {
+            flag++;
+            $('.c'+flag).css('display','block');
+            $('.c'+(flag-1)).css('display','none');
+        }
+    });
+});
+</script>
+
+
+<span id='todayviewcount'></span>
 <?php
 // 오늘 본 상품이 있다면
 if ($tv_idx)
@@ -38,9 +80,7 @@ else
     echo "<tr><td><img src='".G4_SHOP_URL."/img/todayview04.gif'></td></tr>";
 }
 ?>
-<tr><td><a href='javascript:todayview_hidden();'><img src='<?php echo G4_SHOP_URL; ?>/img/todayview06.gif' border=0></a></td></tr>
 </table>
-</div>
 
 <!-- 오늘 본 상품 -->
 <script language="JavaScript">
@@ -127,7 +167,7 @@ if ($tv_idx)
 ?>
 </script>
 
-<script language=javascript>
+<script>
 function CheckUIElements()
 {
     var yMenuFrom, yMenuTo, yButtonFrom, yButtonTo, yOffset, timeoutNextCheck;
@@ -162,22 +202,5 @@ function CheckUIElements()
 
     setTimeout ("CheckUIElements()", timeoutNextCheck);
 }
-
-function OnLoad() {
-    var y;
-
-    if ( top.frames.length )
-        document.getElementById('divToday').style.display = '';
-
-    CheckUIElements();
-    return true;
-}
-
-OnLoad();
-
-<?php
-if ($_COOKIE['ck_tvhidden'])
-    echo "todayview_hidden();";
-?>
 //-->
 </script>
