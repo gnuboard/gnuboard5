@@ -1,5 +1,5 @@
 /* 아웃로그인 스킨 */
-.ol {position:relative;padding:15px 15px 14px 14px}
+.ol {position:relative;margin:0 0 5px;width:150px}
 .ol h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 
