@@ -1,4 +1,4 @@
-<?
+<?php
 //==============================================================================
 // 쇼핑몰 함수 모음 시작
 //==============================================================================
@@ -657,6 +657,51 @@ function get_new_od_id()
     sql_query(" UNLOCK TABLES ", FALSE);
 
     return $od_id;
+}
+
+// 관련상품출력
+function display_relation_item($it_id, $width, $height, $rows=3)
+{
+    global $g4;
+
+    $str = '';
+
+    if(!$it_id)
+        return $str;
+
+    $sql = " select b.it_id, b.it_name, b.it_amount, b.it_amount2, b.it_amount3, b.it_tel_inq, b.it_gallery
+                from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id )
+                where a.it_id = '$it_id'
+                limit 0, $rows ";
+    $result = sql_query($sql);
+
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        if($i == 0)
+            $str .= '<ul>';
+
+        $full_img = G4_DATA_PATH.'/item/'.$row['it_id'].'_s';
+        $it_name = get_text($row['it_name']); // 상품명
+        $it_amount = ''; // 상품가격
+        if(!$row['it_gallery']) {
+            $it_amount = get_amount($row);
+            if(!$row['it_tel_inq'])
+                $it_amount = display_amount($it_amount);
+        }
+
+        if(is_file($full_img)) {
+            $img_url = G4_DATA_URL.'/item/'.$row['it_id'].'_s';
+            $img = '<img src="'.$img_url.'" width="'.$width.'" height="'.$height.'">';
+        } else {
+            $img = '<img src="'.G4_SHOP_URL.'/img/no_image.gif" width="'.$width.'" height="'.$height.'">';
+        }
+
+        $str .= '<li><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">'.$img.'</a></li>';
+    }
+
+    if($i > 0)
+        $str .= '</ul>';
+
+    return $str;
 }
 //==============================================================================
 // 쇼핑몰 함수 모음 끝
