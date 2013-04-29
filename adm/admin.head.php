@@ -84,6 +84,14 @@ function imageview(id, w, h)
                         홈페이지 메인
                     </a>
                 </li>
+                <?php if(G4_USE_SHOP) { ?>
+                <li>
+                    <a href="<?php echo G4_SHOP_URL ?>/">
+                        <img src="<?php echo G4_ADMIN_URL ?>/img/snb_home.jpg" alt="" width="28" height="28">
+                        쇼핑몰 메인
+                    </a>
+                </li>
+                <?php } ?>
                 <li>
                     <a href="<?php echo G4_BBS_URL ?>/logout.php">
                         <img src="<?php echo G4_ADMIN_URL ?>/img/snb_logout.jpg" alt="로그아웃" width="28" height="28">
