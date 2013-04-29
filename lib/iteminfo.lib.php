@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 
 // 품목별 재화등에 관한 상품요약 정보

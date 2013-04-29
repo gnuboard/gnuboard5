@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 // 아이코드에서 제공하는 함수
 
@@ -14,7 +14,7 @@ function spacing($text,$size) {
 function cut_char($word, $cut) {
 //	$word=trim(stripslashes($word));
 	$word=substr($word,0,$cut);						// 필요한 길이만큼 취함.
-	for ($k=$cut-1; $k>1; $k--) {	 
+	for ($k=$cut-1; $k>1; $k--) {
 		if (ord(substr($word,$k,1))<128) break;		// 한글값은 160 이상.
 	}
 	$word=substr($word,0,$cut-($cut-$k+1)%2);
@@ -134,7 +134,7 @@ class SMS {
 		set_time_limit(300);
 
 		## php4.3.10일경우
-        ## zend 최신버전으로 업해주세요.. 
+        ## zend 최신버전으로 업해주세요..
         ## 또는 122번째 줄을 $this->Data as $tmp => $puts 로 변경해 주세요.
 
 		foreach($this->Data as $puts) {

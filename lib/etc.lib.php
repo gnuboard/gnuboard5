@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('_GNUBOARD_')) exit;
 
 // 로그를 파일에 쓴다
