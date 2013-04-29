@@ -28,7 +28,7 @@ a:active {color:#000;text-decoration:underline}
 .msg_sound_only,
 .sound_only {display:inline-block !important;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}
 /* 본문 바로가기 */
-#to_content a {z-index:100000;position:absolute;top:0;left:0;font-size:0;line-height:0;overflow:hidden}
+#to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 #to_content a:focus,
 #to_content a:active {width:100%;height:75px;background:#21272e;color:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.3em}
 
