@@ -44,7 +44,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php /* if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } */ ?>
         <?php echo $config['cf_kcpcert_use'] ? '<span class="frm_info">이름과 휴대폰번호는 아래의 휴대폰 본인확인 기능을 사용하여 입력해 주십시오.</span>' : '';  ?>
         <?php echo ($config['cf_kcpcert_use']=='test') ? '<span class="frm_info">테스트의 경우 이동통신사는 반드시 KT를 선택해 주십시오. 나머지 항목은 임의로 입력하시면 됩니다.</span>' : '';  ?>
-        <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($config['cf_kcpcert_use']!='none'||$w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
+        <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($config['cf_kcpcert_use']!=''||$w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
     </td>
 </tr>
 <?php if ($req_nick) {  ?>
