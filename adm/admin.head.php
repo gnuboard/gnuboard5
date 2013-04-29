@@ -18,7 +18,7 @@ function print_menu2($key, $no)
 {
     global $menu, $auth_menu, $is_admin, $auth, $g4;
 
-    $str .= "<ul class=\"gnb_sub_ul\">";
+    $str .= "<ul class=\"gnb_2dul\">";
     for($i=1; $i<count($menu[$key]); $i++)
     {
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
@@ -31,7 +31,7 @@ function print_menu2($key, $no)
         if ($menu[$key][$i][4] == 1) $gnb_grp_style = 'gnb_grp_style';
         else $gnb_grp_style = '';
 
-        $str .= '<li class="gnb_2depth"><a href="'.$menu[$key][$i][2].'" class="'.$gnb_grp_style.' '.$gnb_grp_div.'">'.$menu[$key][$i][1].'</a></li>';
+        $str .= '<li class="gnb_2dli"><a href="'.$menu[$key][$i][2].'" class="gnb_2da '.$gnb_grp_style.' '.$gnb_grp_div.'">'.$menu[$key][$i][1].'</a></li>';
 
         $auth_menu[$menu[$key][$i][0]] = $menu[$key][$i][1];
     }
@@ -105,19 +105,19 @@ function imageview(id, w, h)
             <h2>관리자 주메뉴</h2>
             <script>$('#gnb').addClass('gnb_js');</script>
             <?php
-            $gnb_str = "<ul id=\"gnb_ul\">";
+            $gnb_str = "<ul id=\"gnb_1dul\">";
             foreach($amenu as $key=>$value) {
                 $href1 = $href2 = '';
                 if ($menu['menu'.$key][0][2]) {
-                    $href1 = '<a href="'.$menu['menu'.$key][0][2].'">';
+                    $href1 = '<a href="'.$menu['menu'.$key][0][2].'" class="gnb_1da">';
                     $href2 = '</a>';
                 } else {
                     continue;
                 }
                 $current_class = "";
                 if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)))
-                    $current_class = " gnb_1depth_air";
-                $gnb_str .= "<li class=\"gnb_1depth".$current_class."\">";
+                    $current_class = " gnb_1dli_air";
+                $gnb_str .= '<li class="gnb_1dli'.$current_class.'">'.PHP_EOL;
                 $gnb_str .=  $href1 . $menu['menu'.$key][0][1] . $href2;
                 $gnb_str .=  print_menu1('menu'.$key, 1);
                 $gnb_str .=  "</li>";
