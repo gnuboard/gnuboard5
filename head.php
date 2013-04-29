@@ -132,21 +132,21 @@ if ($config['cf_include_head']) {
 <nav id="gnb">
     <script>$('#gnb').addClass('gnb_js');</script>
     <h2>홈페이지 메인메뉴</h2>
-    <ul id="gnb_ul">
+    <ul id="gnb_1dul">
         <?php
         $sql = " select * from {$g4['group_table']} where gr_show_menu = '1' and gr_device <> 'mobile' order by gr_order ";
         $result = sql_query($sql);
         for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index
          ?>
-        <li class="gnb_1depth">
-            <a href="<?php echo G4_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_subject'] ?></a>
-            <ul class="gnb_sub_ul">
+        <li class="gnb_1dli">
+            <a href="<?php echo G4_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>" class="gnb_1da"><?php echo $row['gr_subject'] ?></a>
+            <ul class="gnb_2dul">
                 <?php
                 $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' and bo_show_menu = '1' and bo_device <> 'mobile' order by bo_order ";
                 $result2 = sql_query($sql2);
                 for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
                  ?>
-                <li class="gnb_2depth"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>"><?php echo $row2['bo_subject'] ?></a></li>
+                <li class="gnb_2dli"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>" class="gnb_2da"><?php echo $row2['bo_subject'] ?></a></li>
                 <?php } ?>
             </ul>
         </li>
