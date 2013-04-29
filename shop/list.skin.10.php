@@ -1,10 +1,10 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <table width=100% cellpadding=2 cellspacing=0>
 <tr>
-<?
+<?php
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     if ( ($i>0) && (($i%$list_mod)==0) )

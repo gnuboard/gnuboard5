@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // 로그를 남김

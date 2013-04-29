@@ -25,7 +25,7 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
         <li class="gnb_1dli">
             <a href="<?php echo G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id']; ?>" class="gnb_1da"><?php echo $row['ca_name']; ?></a>
             <ul class="gnb_2dul">
-                <?
+                <?php
                 // 2단계 분류 판매 가능한 것만
                  $sql2 = " select ca_id, ca_name from {$g4['shop_category_table']}
                    where LENGTH(ca_id) = '4'
@@ -38,9 +38,9 @@ $sub_menu_left = 100; // 2단계 메뉴 왼쪽 좌표 (1단계 좌표에서 부�
                 {
                 ?>
                 <li class="gnb_2dli"><a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $row2['ca_id']; ?>" class="gnb_2da"><?php echo $row2['ca_name']; ?></a></li>
-                <? } ?>
+                <?php } ?>
             </ul>
         </li>
-        <? } ?>
+        <?php } ?>
     </ul>
 </nav>

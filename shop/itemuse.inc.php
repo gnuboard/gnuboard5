@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 include_once(G4_LIB_PATH.'/thumb.lib.php');
 ?>
@@ -7,24 +7,24 @@ include_once(G4_LIB_PATH.'/thumb.lib.php');
 <a name="use"></a>
 <div id='item_use' style='display:block;'>
 <table width=100% cellpadding=0 cellspacing=0>
-<tr><td rowspan=2 width=31 valign=top bgcolor=#BDD3E5><img src='<?=G4_SHOP_URL?>/img/item_t02.gif'></td><td height=2 bgcolor=#BDD3E5></td></tr>
+<tr><td rowspan=2 width=31 valign=top bgcolor=#BDD3E5><img src='<?php echo G4_SHOP_URL; ?>/img/item_t02.gif'></td><td height=2 bgcolor=#BDD3E5></td></tr>
 <tr><td style='padding:15px;'>
         <table width=100% cellpadding=0 cellspacing=0 border=0>
         <tr>
-            <td width=11><img src='<?=G4_SHOP_URL?>/img/corner01.gif'></td>
+            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner01.gif'></td>
             <td valign=top>
                 <table width=100% height=31 cellpadding=0 cellspacing=0 border=0>
                 <tr align=center>
-                    <td width=40 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>번호</td>
-                    <td background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>제목</td>
-                    <td width=80 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>작성자</td>
-                    <td width=100 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>작성일</td>
-                    <td width=80 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>평가점수</td>
+                    <td width=40 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>번호</td>
+                    <td background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>제목</td>
+                    <td width=80 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>작성자</td>
+                    <td width=100 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>작성일</td>
+                    <td width=80 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>평가점수</td>
                 </tr>
                 </table></td>
-            <td width=11><img src='<?=G4_SHOP_URL?>/img/corner02.gif'></td>
+            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner02.gif'></td>
         </tr>
-        <?
+        <?php
         $sql_common = " from {$g4['shop_item_ps_table']} where it_id = '{$it['it_id']}' and is_confirm = '1' ";
 
         // 테이블의 전체 레코드수만 얻음
@@ -139,9 +139,9 @@ include_once(G4_LIB_PATH.'/thumb.lib.php');
         }
         ?>
         <tr>
-            <td width=11><img src='<?=G4_SHOP_URL?>/img/corner03.gif'></td>
-            <td width=100% background='<?=G4_SHOP_URL?>/img/box_bg04.gif'></td>
-            <td width=11><img src='<?=G4_SHOP_URL?>/img/corner04.gif'></td>
+            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner03.gif'></td>
+            <td width=100% background='<?php echo G4_SHOP_URL; ?>/img/box_bg04.gif'></td>
+            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner04.gif'></td>
         </tr>
         </table>
 
@@ -149,8 +149,7 @@ include_once(G4_LIB_PATH.'/thumb.lib.php');
 
         <table width=100% cellpadding=0 cellspacing=0>
         <tr><td colspan=2 height=35>* 이 상품을 사용해 보셨다면 사용후기를 써 주십시오.
-            <!-- <input type=image src='<?="$g4[shop_img_path]/btn_story.gif"?>' onclick="itemuse_insert();" align=absmiddle></td></tr> -->
-            <input type=image src='<?=G4_SHOP_URL?>/img/btn_story.gif' onclick="itemusewin('it_id=<?=$it_id?>');" align=absmiddle></td></tr>
+            <input type=image src='<?php echo G4_SHOP_URL; ?>/img/btn_story.gif' onclick="itemusewin('it_id=<?php echo $it_id; ?>');" align=absmiddle></td></tr>
         </table>
 
 <script>
@@ -160,7 +159,7 @@ function itemusewin(query_string)
 }
 </script>
 
-        <? /*
+        <?php /*
         <!-- 사용후기 폼 -->
         <div id=itemuse style='display:none;'>
         <form name="fitemuse" method="post" onsubmit="return fitemuse_submit(this);" autocomplete=off style="padding:0px;">
@@ -215,7 +214,7 @@ function itemusewin(query_string)
 <script type="text/javascript">
 function fitemuse_submit(f)
 {
-    <? echo chk_captcha_js(); ?>
+    <?php echo chk_captcha_js(); ?>
 
     f.action = "itemuseupdate.php"
     return true;

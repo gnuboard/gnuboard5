@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 $g4['title'] = "현금영수증 발행";
@@ -39,11 +39,11 @@ $amt_tax = (int)($amt_tot - $amt_sup);
             return;
         }
 
-        form.ordr_idxx.value = "<?=$od['od_id']?>";
-        form.amt_tot.value = "<?=$amt_tot?>";
-        form.amt_sup.value = "<?=$amt_sup?>";
-        form.amt_svc.value = "<?=$amt_svc?>";
-        form.amt_tax.value = "<?=$amt_tax?>";
+        form.ordr_idxx.value = "<?php echo $od['od_id']; ?>";
+        form.amt_tot.value = "<?php echo $amt_tot; ?>";
+        form.amt_sup.value = "<?php echo $amt_sup; ?>";
+        form.amt_svc.value = "<?php echo $amt_svc; ?>";
+        form.amt_tax.value = "<?php echo $amt_tax; ?>";
 
         form.submit();
     }
@@ -130,14 +130,14 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 </script>
 </head>
 <body>
-<form name="cash_form" action="<?=G4_SHOP_URL?>/kcp/pp_cli_hub.php" method="post">
+<form name="cash_form" action="<?php echo G4_SHOP_URL; ?>/kcp/pp_cli_hub.php" method="post">
 <input type="hidden" name="corp_type" value="0"> <!-- 사업자 구분 - 0:직접판매 , 1:입점몰판매 -->
 <input type="hidden" name="ordr_idxx">
-<input type="hidden" name="good_name" value="<?=addslashes($goods_name)?>">
-<input type="hidden" name="buyr_name" value="<?=$od['od_name']?>">
-<input type="hidden" name="buyr_mail" value="<?=$od['od_email']?>">
-<input type="hidden" name="buyr_tel1" value="<?=$od['od_tel']?>">
-<input type="hidden" name="trad_time" value="<?=$trad_time?>">
+<input type="hidden" name="good_name" value="<?php echo addslashes($goods_name); ?>">
+<input type="hidden" name="buyr_name" value="<?php echo $od['od_name']; ?>">
+<input type="hidden" name="buyr_mail" value="<?php echo $od['od_email']; ?>">
+<input type="hidden" name="buyr_tel1" value="<?php echo $od['od_tel']; ?>">
+<input type="hidden" name="trad_time" value="<?php echo $trad_time; ?>">
 
 <input type="hidden" name="amt_tot">
 <input type="hidden" name="amt_sup">
@@ -161,23 +161,23 @@ $amt_tax = (int)($amt_tot - $amt_sup);
             <table width="90%" align="center">
                 <tr>
                     <td>주문 번호</td>
-                    <td><?=$od['od_id']?></td>
+                    <td><?php echo $od['od_id']; ?></td>
                 </tr>
                 <tr>
                     <td>상품 정보</td>
-                    <td><?=$goods_name?></td>
+                    <td><?php echo $goods_name; ?></td>
                 </tr>
                 <tr>
                     <td>주문자 이름</td>
-                    <td><?=$od['od_name']?></td>
+                    <td><?php echo $od['od_name']; ?></td>
                 </tr>
                 <tr>
                     <td>주문자 E-Mail</td>
-                    <td><?=$od['od_email']?></td>
+                    <td><?php echo $od['od_email']; ?></td>
                 </tr>
                 <tr>
                     <td>주문자 전화번호</td>
-                    <td><?=$od['od_tel']?></td>
+                    <td><?php echo $od['od_tel']; ?></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -193,7 +193,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
                 </tr>
                 <tr>
                     <td>원 거래 시각</td>
-                    <td><?=$trad_time?></td>
+                    <td><?php echo $trad_time; ?></td>
                 </tr>
                 <tr><td colspan="2"></td></tr>
                 <tr>
@@ -214,19 +214,19 @@ $amt_tax = (int)($amt_tot - $amt_sup);
                 </tr>
                 <tr>
                     <td>거래금액 총합</td>
-                    <td><?=number_format($amt_tot)?>원</td>
+                    <td><?php echo number_format($amt_tot); ?>원</td>
                 </tr>
                 <tr>
                     <td>공급가액</td>
-                    <td><?=number_format($amt_sup)?>원<!-- ((거래금액 총합 * 10) / 11) --></td>
+                    <td><?php echo number_format($amt_sup); ?>원<!-- ((거래금액 총합 * 10) / 11) --></td>
                 </tr>
                 <tr>
                     <td>봉사료</td>
-                    <td><?=number_format($amt_svc)?>원</td>
+                    <td><?php echo number_format($amt_svc); ?>원</td>
                 </tr>
                 <tr>
                     <td>부가가치세</td>
-                    <td><?=number_format($amt_tax)?>원<!-- 거래금액 총합 - 공급가액 - 봉사료 --></td>
+                    <td><?php echo number_format($amt_tax); ?>원<!-- 거래금액 총합 - 공급가액 - 봉사료 --></td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
@@ -252,6 +252,6 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 <input type="hidden" name="req_tx" value="pay">
 </form>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

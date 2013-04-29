@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/latest.lib.php');
 
@@ -12,7 +12,7 @@ include_once('./_head.php');
 
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <tr>
-    <?
+    <?php
     //  최신글 시작
     $sql = " select bo_table, bo_subject from {$g4['board_table']} order by gr_id, bo_table ";
     $result = sql_query($sql);
@@ -43,6 +43,6 @@ include_once('./_head.php');
 </tr>
 </table>
 
-<?
+<?php
 include_once('./_tail.php');
 ?>

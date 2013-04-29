@@ -57,10 +57,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 <script>
                 function search_submit(f) {
                     if (f.search_flag.value == '상품') {
-                        f.action = '<?=G4_SHOP_URL?>/search.php';
+                        f.action = '<?php echo G4_SHOP_URL; ?>/search.php';
                     } else {
                         f.stx.value = f.search_str.value;
-                        f.action = '<?=G4_BBS_URL?>/search.php';
+                        f.action = '<?php echo G4_BBS_URL; ?>/search.php';
                     }
                 }
                 </script>
@@ -90,7 +90,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     </aside>
 
     <aside id="aside">
-        <?php echo outlogin("shop_outlogin"); // 외부 로그인 ?>
+        <?php echo outlogin('shop_outlogin'); // 외부 로그인 ?>
 
         <!-- 상품분류 -->
         <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); ?>
@@ -112,7 +112,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     </aside>
 
     <div id="container">
-        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="wrapper_title"><?php echo $g4['title'] ?></h1><?php } ?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><h1 id="wrapper_title"><?php echo $g4['title'] ?></h1><?php } ?>
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
             <button class="no_text_resize" onclick="font_default('container');">기본</button>

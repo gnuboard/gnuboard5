@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 $sql = " select it_name from {$g4['shop_item_table']} where it_id='$it_id' ";
@@ -13,14 +13,14 @@ include_once(G4_PATH.'/head.sub.php');
 ?>
 <br>
 <div align=center>
-    <a href='#' onclick='window.close();'><img id='largeimage' src='<?=$imagefileurl?>' width='<?=$size[0]?>' height='<?=$size[1]?>' alt='<?=$row['it_name']?>' border=0 style='border:1 solid #E4E4E4;'></a>
+    <a href='#' onclick='window.close();'><img id='largeimage' src='<?php echo $imagefileurl; ?>' width='<?php echo $size[0]; ?>' height='<?php echo $size[1]; ?>' alt='<?php echo $row['it_name']; ?>' border=0 style='border:1 solid #E4E4E4;'></a>
 </div>
 <p>
 <table width=100% cellpadding=0 cellspacing=0>
 <tr>
-    <td width=30% align=center><a href='#' onclick='window.close();'><img src='<?=G4_SHOP_URL?>/img/btn_close.gif' border=0 alt="창닫기"></a></td>
+    <td width=30% align=center><a href='#' onclick='window.close();'><img src='<?php echo G4_SHOP_URL; ?>/img/btn_close.gif' border=0 alt="창닫기"></a></td>
     <td width=70% align=right>
-        <?
+        <?php
         for ($i=1; $i<=5; $i++)
         {
             if (file_exists(G4_DATA_PATH."/item/{$it_id}_l{$i}"))
@@ -31,6 +31,6 @@ include_once(G4_PATH.'/head.sub.php');
         &nbsp;</td>
 </tr>
 </table>
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

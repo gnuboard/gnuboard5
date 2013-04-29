@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 $sql = " select * from {$g4['shop_event_table']}
@@ -26,7 +26,7 @@ echo stripslashes($ev['ev_head_html']);
     <tr>
         <td>
 
-<?
+<?php
 // 상품 출력순서가 있다면
 if ($sort != "")
     $order_by = $sort . " , ";
@@ -111,13 +111,13 @@ if ($i==0)
 
 <br>
 <div align=center>
-<?
+<?php
 $qstr .= "ca_id=$ca_id&skin=$skin&ev_id=$ev_id&sort=$sort";
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");
 ?>
 </div><br>
 
-<?
+<?php
 // 하단 HTML
 echo stripslashes($ev['ev_tail_html']);
 

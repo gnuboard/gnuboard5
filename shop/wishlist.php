@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 if (!$is_member)
@@ -8,7 +8,7 @@ $g4['title'] = "보관함";
 include_once('./_head.php');
 ?>
 
-<img src="<?=G4_SHOP_URL?>/img/top_wishlist.gif" border="0"><p>
+<img src="<?php echoG4_SHOP_URL; ?>/img/top_wishlist.gif" border="0"><p>
 
 <form name=fwishlist method=post action="" style="padding:0px;">
 <input type=hidden name=act       value="multi">
@@ -23,7 +23,7 @@ include_once('./_head.php');
     <td width=50>삭제</td>
 </tr>
 <tr><td colspan=6 height=1 class=c1></td></tr>
-<?
+<?php
 $sql = " select *
            from {$g4['shop_wish_table']} a,
                 {$g4['shop_item_table']} b
@@ -85,8 +85,8 @@ if ($i == 0)
 </form>
 
 <div align=right>
-    <a href="javascript:fwishlist_check(document.fwishlist,'');"><img src='<?=G4_SHOP_URL?>/img/btn_cart_in.gif' border=0></a>
-    <a href="javascript:fwishlist_check(document.fwishlist,'direct_buy');"><img src='<?=G4_SHOP_URL?>/img/btn_buy.gif' border=0></a>&nbsp;
+    <a href="javascript:fwishlist_check(document.fwishlist,'');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn_cart_in.gif' border=0></a>
+    <a href="javascript:fwishlist_check(document.fwishlist,'direct_buy');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn_buy.gif' border=0></a>&nbsp;
 </div>
 
 <script language="JavaScript">
@@ -139,6 +139,6 @@ if ($i == 0)
 //-->
 </script>
 
-<?
+<?php
 include_once('./_tail.php');
 ?>

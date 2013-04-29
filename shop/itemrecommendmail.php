@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/mailer.lib.php');
 
@@ -51,7 +51,7 @@ mailer($from_name, $from_email, $to_email, $subject, $content, 1);
 
 echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
 ?>
-<meta http-equiv="content-type" content="text/html; charset=<?=$g4['charset']?>">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 <script language="JavaScript">
 alert("메일을 전달하였습니다");
 window.close();

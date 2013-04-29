@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $test = "";
@@ -26,3 +26,4 @@ $g_conf_js_url = "https://pay.kcp.co.kr/plugin/payplus{$test}_un.js";
 
 $g_conf_log_level = "3";           // 변경불가
 $g_conf_gw_port   = "8090";        // 포트번호(변경불가)
+?>

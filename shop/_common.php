@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('../common.php');
 
 if (!defined('G4_USE_SHOP') || !G4_USE_SHOP)

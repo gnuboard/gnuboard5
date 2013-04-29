@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("./_common.php");
 
 if (!$is_member)
@@ -22,8 +22,8 @@ include_once(G4_PATH.'/head.sub.php');
     <td align="center" valign="middle" bgcolor="#EBEBEB">
         <table width="590" height="40" border="0" cellspacing="0" cellpadding="0">
         <tr>
-            <td width="25" align="center" bgcolor="#FFFFFF" ><img src="<?=G4_SHOP_URL?>/img/icon_01.gif" width="5" height="5"></td>
-            <td width="490" align="left" bgcolor="#FFFFFF" ><font color="#666666"><b><?=get_text($g4['title'])?></b></font></td>
+            <td width="25" align="center" bgcolor="#FFFFFF" ><img src="<?php echo G4_SHOP_URL; ?>/img/icon_01.gif" width="5" height="5"></td>
+            <td width="490" align="left" bgcolor="#FFFFFF" ><font color="#666666"><b><?php echo get_text($g4['title']); ?></b></font></td>
             <td width="75" bgcolor="#FFFFFF" ></td>
         </tr>
         </table></td>
@@ -32,8 +32,8 @@ include_once(G4_PATH.'/head.sub.php');
 
 
 <form name="fitemrecommend" method="post" action="./itemrecommendmail.php" onsubmit="return fitemrecommend_check(this);" style='margin:0px;' autocomplete='off'>
-<input type=hidden name=token value='<?=$token?>'>
-<input type=hidden name=it_id value='<?=$it_id?>'>
+<input type=hidden name=token value='<?php echo $token; ?>'>
+<input type=hidden name=it_id value='<?php echo $it_id; ?>'>
 <table width="600" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td height="300" align="center" valign="top">
@@ -84,8 +84,8 @@ include_once(G4_PATH.'/head.sub.php');
 </tr>
 <tr>
     <td height="40" align="center" valign="bottom">
-        <input id=btn_submit type=image src="<?=G4_SHOP_URL?>/img/btn_confirm.gif" border=0>&nbsp;
-        <a href="javascript:window.close();"><img src="<?=G4_SHOP_URL?>/img/btn_close.gif" border="0"></a>
+        <input id=btn_submit type=image src="<?php echo G4_SHOP_URL; ?>/img/btn_confirm.gif" border=0>&nbsp;
+        <a href="javascript:window.close();"><img src="<?php echo G4_SHOP_URL; ?>/img/btn_close.gif" border="0"></a>
     </td>
 </tr>
 </table>
@@ -100,6 +100,6 @@ function fitemrecommend_check(f)
 document.getElementById('to_email').focus();
 </script>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once('./_head.php');
 
@@ -19,13 +19,13 @@ $img_width  = 100;  // 출력이미지 폭
 $img_height = 100;  // 출력이미지 높이
 ?>
 
-<img src="<?=G4_SHOP_URL."/img/top_type{$type}.jpg"?>" border="0"><p>
+<img src="<?php echo G4_SHOP_URL."/img/top_type{$type}.jpg"; ?>" border="0"><p>
 
 <table width=100% cellpadding=0 cellspacing=0>
     <tr>
         <td>
 
-<?
+<?php
 // 상품 출력순서가 있다면
 if ($sort != "")
     $order_by = $sort . " , ";
@@ -80,13 +80,13 @@ if ($i==0)
 
 <br>
 <div align=center>
-<?
+<?php
 $qstr .= "&type=$type&sort=$sort";
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");
 ?>
 </div><br>
 
-<?
+<?php
 // 테스트
 // 분류를 링크하는 코드
 /*
@@ -105,6 +105,6 @@ for($i=0;$row=sql_fetch_array($result);$i++) {
 */
 ?>
 
-<?
+<?php
 include_once('./_tail.php');
 ?>

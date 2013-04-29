@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/thumb.lib.php');
 
@@ -51,7 +51,7 @@ $(function(){
  <td>평가점수</td>
 </tr>
 <tr><td colspan="5" height="1" bgcolor="#ededed"></td></tr>
-<?
+<?php
 $sql = " select *
           $sql_common
           $sql_search
@@ -99,9 +99,9 @@ if ($i == 0)
 <br><br>
 
 <div style="text-align:center;">
-    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+    <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page="); ?>
 </div>
 
-<?
+<?php
 include_once('./_tail.php');
 ?>
