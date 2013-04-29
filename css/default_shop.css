@@ -86,37 +86,18 @@ a:active {color:#000;text-decoration:underline}
 #hd_aside a {display:inline-block;padding:0 15px;height:38px;font-weight:bold;text-decoration:none;line-height:3.4em !important;line-height:3em}
 
 /* gnb js off */
-#gnb {z-index:10;margin:-1px 0 0;border-bottom:1px solid #c3c7c5;background:#f0f4f8}
-#gnb h2 {position:absolute;margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
-#gnb_ul {margin:0 auto;padding:0;width:980px;zoom:1}
-#gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth {z-index:10;clear:both;zoom:1}
-.gnb_1depth:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1depth a {display:block;float:left;width:80px;height:35px;font-weight:bold;line-height:2.95em;text-decoration:none}
-.gnb_1depth a:focus,
-.gnb_1depth a:hover {text-decoration:none}
-.gnb_1depth ul {float:left;width:auto}
-.gnb_2depth {float:left}
-.gnb_2depth a {font-weight:normal}
-/* gnb js on */
-.gnb_js {}
-.gnb_js #gnb_ul {zoom:1}
-.gnb_js #gnb_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_js .gnb_1depth {clear:none;position:relative;float:left}
-.gnb_js .gnb_1depth a {text-align:center}
-.gnb_js .gnb_1depth_air a {float:none;background:#f7f7f2;color:#000}
-.gnb_js .gnb_1depth_on a {float:none;border-color:#e0e5e9;background:#fff;color:#000}
-.gnb_js .gnb_sub_ul {position:absolute;top:35px;width:1px;height:1px;overflow:hidden}
-.gnb_js .gnb_2depth a {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
-.gnb_1depth_over .gnb_sub_ul {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
-.gnb_1depth_over2 .gnb_sub_ul {right:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
-
-.gnb_empty {width:100%;height:35px;text-align:center;line-height:2.95em}
+#gnb {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#faf9f5}
+#gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#gnb ul {margin:0;padding:10px 0 0;border:0;background:#fff;list-style:none}
+#gnb ul ul {display:none}
+#gnb .gnb_1d_a {display:block;padding:0 10px;height:33px;border-bottom:1px solid #f4f4f4;background:url('../img/shop/gnb_bg.gif') top right repeat-x;font-weight:bold;text-decoration:none;line-height:2.9em}
 
 /* 중간 레이아웃 */
 #wrapper {z-index:5;margin:30px auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
+
+#stod {float:right}
 
 #aside {float:left;margin:0 10px 0 0;width:150px}
 
@@ -124,14 +105,14 @@ a:active {color:#000;text-decoration:underline}
 #sev h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sev ul {margin:0;padding:10px 0 0;border:0;background:#fff;list-style:none}
 #sev .sev_img {display:block;border-bottom:1px solid #faedf2}
-#sev .sev_text {display:block;padding:7px 10px 5px;border-bottom:1px solid #faedf2;text-decoration:none}
+#sev .sev_text {display:block;padding:7px 10px 6px;border-bottom:1px solid #faedf2;text-decoration:none}
 #sev strong {}
 #sev_empty {padding:15px 0;text-align:center}
 
 #scomm {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#faf9f5}
 #scomm h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #scomm ul {margin:0;padding:10px 0 0;border:0;background:#fff;list-style:none}
-#scomm a {display:block;padding:7px 10px 5px;border-bottom:1px solid #f4f4f4;text-decoration:none}
+#scomm a {display:block;padding:7px 10px 6px;border-bottom:1px solid #f4f4f4;text-decoration:none}
 #scomm_empty {padding:15px 0;text-align:center}
 
 #container {z-index:4;position:relative;float:left;width:740px;min-height:500px;height:auto !important;height:500px;background:#fff;zoom:1}
