@@ -93,7 +93,7 @@ a:active {color:#000;text-decoration:underline}
 .gnb_1dul {margin:0;border:0;background:#fff;list-style:none}
 .gnb_1dli {position:relative;background:url('../img/shop/gnb_bg.gif') top right repeat-x}
 .gnb_1dli_on {background-position:right -33px;color:#fff;text-decoration:none}
-.gnb_1da {display:block;padding:0 10px;height:33px;border-bottom:1px solid #f4f4f4;font-weight:bold;text-decoration:none;line-height:2.9em !important;line-height:2.7em}
+.gnb_1da {display:inline-block;padding:0 10px;width:128px;height:33px;border-bottom:1px solid #f4f4f4;font-weight:bold;text-decoration:none;line-height:2.9em !important;line-height:2.7em}
 .gnb_1dli_on .gnb_1da {color:#fff !important;text-decoration:none !important}
 .gnb_2dul {display:none;z-index:1000;position:absolute}
 .gnb_1dli_over .gnb_2dul,
