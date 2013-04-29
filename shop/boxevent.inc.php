@@ -2,29 +2,37 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<table bgcolor=#FFFFFF width=100% cellpadding=0 cellspacing=0>
-<tr><td align=center valign=top height=50><img src='<?=G4_SHOP_URL?>/img/bar_event.gif'></td></tr>
-<?
-$hsql = " select ev_id, ev_subject, ev_subject_strong from {$g4['shop_event_table']} where ev_use = '1' order by ev_id desc ";
-$hresult = sql_query($hsql);
-for ($i=0; $row=sql_fetch_array($hresult); $i++)
-{
-    if ($i > 0)
-        echo "<tr><td align=center><img src='".G4_SHOP_URL."/img/dot_line.gif'></td></tr>\n";
+<section id="sev">
+    <h2>쇼핑몰 이벤트</h2>
 
-    $href = G4_SHOP_URL."/event.php?ev_id={$row['ev_id']}";
+    <ul>
+    <?php
+    $hsql = " select ev_id, ev_subject, ev_subject_strong from {$g4['shop_event_table']} where ev_use = '1' order by ev_id desc ";
+    $hresult = sql_query($hsql);
+    for ($i=0; $row=sql_fetch_array($hresult); $i++)
+    {
 
-    // 이벤트 메뉴이미지가 있다면
-    $event_img = G4_DATA_PATH."/event/{$row['ev_id']}_m";
-    if (file_exists($event_img)) {
-        echo "<tr><td><a href='$href'><img src='".G4_DATA_URL."/event/{$row['ev_id']}_m' border=0 align=absmiddle></a></td></tr>";
-    } else {
-        echo "<tr><td height=22>&nbsp;&nbsp;· <a href='$href'>{$row['ev_subject']}</a></td></tr>\n";;
+        echo '<li>';
+        $href = G4_SHOP_URL.'/event.php?ev_id='.$row['ev_id'];
+
+        $event_img = G4_DATA_PATH.'/event/'.$row['ev_id'].'_m'; // 이벤트 이미지
+
+        if (file_exists($event_img)) { // 이벤트 이미지가 있다면 이미지 출력
+            echo '<a href="'.$href.'" class="sev_img"><img src="'.G4_DATA_URL.'/event/'.$row['ev_id'].'_m" alt="'.$row['ev_subject'].'"></a>'.PHP_EOL;
+        } else { // 없다면 텍스트 출력
+            echo '<a href="'.$href.'" class="sev_text">';
+            if ($row['ev_subject_strong']) echo '<strong>';
+            echo $row['ev_subject'];
+            if ($row['ev_subject_strong']) echo '</strong>';
+            echo '</a>'.PHP_EOL;
+        }
+        echo '</li>'.PHP_EOL;
+
     }
 
-}
+    if ($i==0)
+        echo '<li id="sev_empty">이벤트 없음</li>'.PHP_EOL;
+    ?>
+    </ul>
 
-if ($i==0)
-    echo "<tr><td height=50 align=center>등록된 자료가 없습니다.</td></tr>\n";
-?>
-</table>
+</section>

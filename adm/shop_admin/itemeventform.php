@@ -99,7 +99,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="ev_use">사용</label></th>
         <td>
-            <?=help("사용하지 않으면 왼쪽의 이벤트 메뉴와 이벤트리스트 페이지에 접근할 수 없습니다.");?>
+            <?=help("사용하지 않으면 레이아웃의 이벤트 메뉴 및 이벤트 관련 페이지에 접근할 수 없습니다.");?>
             <select name="ev_use" id="ev_use">
                 <option value="1" <?=get_selected($ev['ev_use'], 1)?>>사용</option>
                 <option value="0" <?=get_selected($ev['ev_use'], 0)?>>사용안함</option>
@@ -115,9 +115,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ev_mimg">메뉴이미지</label></th>
+        <th scope="row"><label for="ev_mimg">배너이미지</label></th>
         <td>
-            <?=help("쇼핑몰 왼쪽 메뉴에 텍스트 메뉴 대신 이미지로 넣을 경우 사용합니다.");?>
+            <?=help("쇼핑몰 레이아웃에서 글자 대신 이미지로 출력할 경우 사용합니다.");?>
             <input type="file" name="ev_mimg" id="ev_mimg">
             <?
             $mimg_str = "";

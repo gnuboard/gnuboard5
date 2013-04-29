@@ -126,7 +126,7 @@ a:active {color:#000;text-decoration:underline}
 #ft_copy a {position:absolute;top:10px;right:0;color:#fff}
 
 /* Mobile화면으로 */
-#g4s_cng {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
+#device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
 
 /* 콘텐츠별 스타일 */
 .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
