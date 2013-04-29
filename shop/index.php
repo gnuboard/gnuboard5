@@ -1,124 +1,96 @@
-<?
+<?php
 include_once("./_common.php");
 include_once(G4_LIB_PATH.'/latest.lib.php');
 
 define("_INDEX_", TRUE);
 
-$g4[title] = "";
 include_once(G4_SHOP_PATH.'/shop.head.php');
 ?>
 
-<script src="<?=G4_JS_URL?>/shop.js"></script>
+<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 
-<table width=100% cellpadding=0 cellspacing=0>
-<tr>
-    <td valign=top>
-        <img src="<?=G4_DATA_URL?>/common/main_img" border="0"><br><br>
-        <table width=100% cellpadding=0 cellspacing=0>
-        <tr>
-            <td colspan=2>
-                <?
-                // 히트상품
-                $type = 1;
-                if ($default["de_type{$type}_list_use"])
-                {
-                    echo "<a href=\"".G4_SHOP_URL."/listtype.php?type={$type}\"><img src=\"".G4_SHOP_URL."/img/bar_type{$type}.gif\" border=\"0\"></a><br>";
-                    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-                }
-                ?>
-            </td>
-        </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td colspan=2>
-                <?
-                // 추천상품
-                $type = 2;
-                if ($default["de_type{$type}_list_use"])
-                {
-                    echo "<a href=\"".G4_SHOP_URL."/listtype.php?type={$type}\"><img src=\"".G4_SHOP_URL."/img/bar_type{$type}.gif\" border=\"0\"></a><br>";
-                    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-                }
-                ?>
-            </td>
-        </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td colspan=2>
-                <?
-                // 인기상품
-                $type = 4;
-                if ($default["de_type{$type}_list_use"])
-                {
-                    echo "<a href=\"".G4_SHOP_URL."/listtype.php?type={$type}\"><img src=\"".G4_SHOP_URL."/img/bar_type{$type}.gif\" border=\"0\"></a><br>";
-                    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-                }
-                ?>
-            </td>
-        </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td colspan=2>
-                <?
-                // 할인상품
-                $type = 5;
-                if ($default["de_type{$type}_list_use"])
-                {
-                    echo "<a href=\"".G4_SHOP_URL."/listtype.php?type={$type}\"><img src=\"".G4_SHOP_URL."/img/bar_type{$type}.gif\" border=\"0\"></a><br>";
-                    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-                }
-                ?>
-            </td>
-        </tr>
-        <tr><td colspan=2 height=20></td></tr>
-        <tr>
-            <td valign=top width=50% align=center>
-                <table width=95% cellpadding=0 cellspacing=0>
-                <tr><td><?=latest('basic', 'qa', 5, 30);?></td></tr>
-                </table></td>
-            <td valign=top width=50% align=center>
-                <table width=95% cellpadding=0 cellspacing=0>
-                <tr><td><?=latest('basic', 'free', 5, 30);?></td></tr>
-                </table></td>
-            </tr>
-        </table>
-    </td>
-    <td valign=top>
+<div id="sidx_img">
+    <img src="<?=G4_DATA_URL?>/common/main_img" alt="">
+</div>
 
-        <!-- 공지사항 -->
-        <table width=177 bgcolor=#DEDEDE cellpadding=1 cellspacing=0>
-        <tr><td align=center>
-            <table cellpadding=0 cellspacing=0 bgcolor=#FFFFFF height=97>
-            <tr><td height=28><a href='<?=G4_BBS_URL?>/board.php?bo_table=notice'><img src='<?=G4_SHOP_URL?>/img/bar_notice.gif' border=0></a></td></tr>
-            <tr>
-                <td><?//=latest('basic', 'notice', 3, 25);?></td>
-            </tr>
-            </table>
-        </td></tr>
-        </table><BR>
+<div>
+<?php
+// 히트상품
+$type = 1;
+if ($default['de_type'.$type.'_list_use'])
+{
+    echo '<a href="'.G4_SHOP_URL.'/listtype.php?type='.$type.'"><img src="'.G4_SHOP_URL.'/img/bar_type'.$type.'.gif" alt="히트상품"></a><br>';
+    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+}
+?>
+</div>
+<div>
+<?php
+// 추천상품
+$type = 2;
+if ($default['de_type'.$type.'_list_use'])
+{
+    echo '<a href="'.G4_SHOP_URL.'/listtype.php?type='.$type.'"><img src="'.G4_SHOP_URL.'/img/bar_type'.$type.'.gif" alt="추천상품"></a><br>';
+    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+}
+?>
+</div>
+<div>
+<?php
+// 인기상품
+$type = 4;
+if ($default['de_type'.$type.'_list_use'])
+{
+    echo '<a href="'.G4_SHOP_URL.'"/listtype.php?type='.$type.'"><img src="'.G4_SHOP_URL.'/img/bar_type'.$type.'.gif" alt="인기상품"></a><br>';
+    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+}
+?>
+</div>
+<div>
+<?php
+// 할인상품
+$type = 5;
+if ($default['de_type'.$type.'_list_use'])
+{
+    echo '<a href="'.G4_SHOP_URL.'"/listtype.php?type='.$type.'"><img src="'.G4_SHOP_URL.'/img/bar_type'.$type.'.gif" alt="할인상품"></a><br>';
+    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+}
+?>
+</div>
+<div>
+<?=latest('basic', 'qa', 5, 30);?>
+</div>
+<div>
+<?=latest('basic', 'free', 5, 30);?>
+</div>
+<div>
+<!-- 공지사항 -->
+<?//=latest('basic', 'notice', 3, 25);?>
+</div>
+<div>
+<?
+// 최신상품
+$type = 3;
+if ($default["de_type{$type}_list_use"])
+{
+    echo '<a href="'.G4_SHOP_URL.'"/listtype.php?type='.$type.'"><img src="'.G4_SHOP_URL.'/img/bar_type'.$type.'.gif" alt="최신상품"></a><br>';
+    display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+}
+?>
+</div>
+<div>
+<!-- 온라인 투표 -->
+<?=poll('basic');?>
+</div>
+<div>
+<!-- 방문자 수 -->
+<?//=visit('basic');?>
+</div>
 
-        <?
-        // 최신상품
-        $type = 3;
-        if ($default["de_type{$type}_list_use"])
-        {
-            echo "<a href=\"".G4_SHOP_URL."/listtype.php?type={$type}\"><img src=\"".G4_SHOP_URL."/img/bar_type{$type}.gif\" border=\"0\"></a><br>";
-            display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
-        }
-        ?><br><br>
-
-        <!-- 온라인 투표 -->
-        <?=poll('basic');?><br>
-
-        <!-- 방문자 수 -->
-        <?//=visit('basic');?><br>
-
-        <!-- 메인 배너 -->
-        <?=display_banner('메인');?><br>
-    </td>
-</tr>
-</table>
-<BR><BR>
+<div>
+<!-- 메인 배너 -->
+<?=display_banner('메인');?>
+</div>
 
 <?
 include_once(G4_SHOP_PATH.'/shop.tail.php');

@@ -114,14 +114,11 @@ a:active {color:#000;text-decoration:underline}
 .gnb_empty {width:100%;height:35px;text-align:center;line-height:2.95em}
 
 /* 중간 레이아웃 */
-#wrapper {z-index:5;margin:50px auto;width:980px;zoom:1}
+#wrapper {z-index:5;margin:30px auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
-#wrapper #aside {float:right;width:209px;border:1px solid #cfded8;background:#fff}
-
-#container {z-index:4;position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #cfded8;background:#fff;zoom:1}
-#container:after {display:block;visibility:hidden;clear:both;content:""}
+#aside {float:left;margin:0 10px 0 0;width:150px}
 
 #sev {margin:0 0 5px;padding:0 0 10px;border:1px solid #ecc9d6;background:#fff8fb}
 #sev h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -137,12 +134,17 @@ a:active {color:#000;text-decoration:underline}
 #scomm a {display:block;padding:7px 10px 5px;border-bottom:1px solid #f4f4f4;text-decoration:none}
 #scomm_empty {padding:15px 0;text-align:center}
 
+#container {z-index:4;position:relative;float:left;width:740px;min-height:500px;height:auto !important;height:500px;background:#fff;zoom:1}
+#container:after {display:block;visibility:hidden;clear:both;content:""}
+
 /* 텍스트 크기 조절 */
-#text_size {position:absolute;top:-31px;left:-1px}
+#text_size {display:none;position:absolute;top:-31px;left:-1px}
 #text_size button {padding:0 10px;height:30px;border:1px solid #cfded8;border-bottom:0;background:#000;color:#fff;cursor:pointer}
 
+#sidx_img {margin:0 0 20px}
+
 /* 하단 레이아웃 */
-#ft {padding:0 0 40px;border-top:1px solid #e9e9e9}
+#ft {clear:both;padding:0 0 40px;border-top:1px solid #e9e9e9}
 #ft h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #ft div {position:relative;margin:0 auto;padding:0 0 0 160px;width:820px}
 #ft_logo {position:absolute;top:0;left:40px}
@@ -151,6 +153,8 @@ a:active {color:#000;text-decoration:underline}
 #ft li {float:left;margin:0 20px 0 0}
 #ft a {text-decoration:none}
 #ft p {margin:0;padding:0}
+#ft span {display:inline-block;margin:0 15px 0 0}
+#ft b {display:inline-block;margin:0 5px 0 0}
 #ft_totop {position:absolute;top:20px;right:0}
 
 /* Mobile화면으로 */

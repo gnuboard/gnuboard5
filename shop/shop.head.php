@@ -85,29 +85,38 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <div id="wrapper">
 
-    <!-- 오늘본 상품 {-->
-    <div>
-        <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
-    </div>
-    <!-- 오늘본 상품 }-->
+    <aside id="aside">
+        <!-- 오늘본 상품 {-->
+        <div>
+            <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
+        </div>
+        <!-- 오늘본 상품 }-->
 
+        <?php echo outlogin("shop_outlogin"); // 외부 로그인 ?>
 
-    <?php echo outlogin("shop_outlogin"); // 외부 로그인 ?>
+        <!-- 상품분류 -->
+        <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); ?>
 
-    <!-- 상품분류 -->
-    <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); ?>
+        <!-- 이벤트 -->
+        <?php include_once(G4_SHOP_PATH.'/boxevent.inc.php'); ?>
 
-    <!-- 이벤트 -->
-    <?php include_once(G4_SHOP_PATH.'/boxevent.inc.php'); ?>
+        <!-- 커뮤니티 -->
+        <?php include_once(G4_SHOP_PATH.'/boxcommunity.inc.php'); ?>
 
-    <!-- 커뮤니티 -->
-    <?php include_once(G4_SHOP_PATH.'/boxcommunity.inc.php'); ?>
+        <!-- 장바구니 -->
+        <?php // include_once(G4_SHOP_PATH.'/boxcart.inc.php'); ?>
 
-    <!-- 장바구니 -->
-    <?php // include_once(G4_SHOP_PATH.'/boxcart.inc.php'); ?>
+        <!-- 보관함 -->
+        <?php // include_once(G4_SHOP_PATH.'/boxwish.inc.php'); ?>
 
-    <!-- 보관함 -->
-    <?php // include_once(G4_SHOP_PATH.'/boxwish.inc.php'); ?>
+        <!-- 왼쪽 배너 -->
+        <?php echo display_banner('왼쪽'); ?><br>
+    </aside>
 
-    <!-- 왼쪽 배너 -->
-    <?php echo display_banner('왼쪽'); ?><br>
+    <div id="container">
+        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="wrapper_title"><?php echo $g4['title'] ?></h1><?php } ?>
+        <div id="text_size">
+            <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
+            <button class="no_text_resize" onclick="font_default('container');">기본</button>
+            <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
+        </div>
