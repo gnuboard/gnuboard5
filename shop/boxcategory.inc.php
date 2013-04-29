@@ -12,7 +12,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                     and ca_use = '1'
                   order by ca_id ";
         $hresult = sql_query($hsql);
-        $gnb_zindex = 10000; // gnb_1dli z-index 값 설정용
+        $gnb_zindex = 999; // gnb_1dli z-index 값 설정용
         $count = count($hresult);
         for ($i=0; $row=sql_fetch_array($hresult); $i++)
         {
