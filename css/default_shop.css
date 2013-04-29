@@ -86,9 +86,9 @@ a:active {color:#000;text-decoration:underline}
 #hd_aside a {display:inline-block;padding:0 15px;height:38px;font-weight:bold;text-decoration:none;line-height:3.4em !important;line-height:3em}
 
 /* gnb js off */
-#gnb {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#faf9f5}
+#gnb {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f7f7f7}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-.gnb_1dul {margin:0;padding:10px 0 0;border:0;background:#fff;list-style:none}
+.gnb_1dul {margin:0;border:0;background:#fff;list-style:none}
 .gnb_1dli {position:relative}
 .gnb_1da {display:block;padding:0 10px;height:33px;border-bottom:1px solid #f4f4f4;background:url('../img/shop/gnb_bg.gif') top right repeat-x;font-weight:bold;text-decoration:none;line-height:2.9em}
 .gnb_1da:focus,
@@ -106,16 +106,20 @@ a:active {color:#000;text-decoration:underline}
 
 #sev {margin:0 0 5px;padding:0 0 10px;border:1px solid #ecc9d6;background:#fff8fb}
 #sev h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#sev ul {margin:0;padding:10px 0 0;border:0;background:#fff;list-style:none}
+#sev ul {margin:0;padding:0;border:0;background:#fff;list-style:none}
 #sev .sev_img {display:block;border-bottom:1px solid #faedf2}
 #sev .sev_text {display:block;padding:7px 10px 6px;border-bottom:1px solid #faedf2;text-decoration:none}
+#sev .sev_text:focus,
+#sev .sev_text:hover {background:#fffafc}
 #sev strong {}
 #sev_empty {padding:15px 0;text-align:center}
 
-#scomm {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#faf9f5}
+#scomm {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f7f7f7}
 #scomm h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#scomm ul {margin:0;padding:10px 0 0;border:0;background:#fff;list-style:none}
+#scomm ul {margin:0;padding:0;border:0;background:#fff;list-style:none}
 #scomm a {display:block;padding:7px 10px 6px;border-bottom:1px solid #f4f4f4;text-decoration:none}
+#scomm a:focus,
+#scomm a:hover {background:#f9f9f9}
 #scomm_empty {padding:15px 0;text-align:center}
 
 #container {z-index:4;position:relative;float:left;width:740px;min-height:500px;height:auto !important;height:500px;background:#fff;zoom:1}
