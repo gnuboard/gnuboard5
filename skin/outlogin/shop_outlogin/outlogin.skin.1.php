@@ -18,6 +18,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <div id="ol_svc">
             <a href="<?=G4_BBS_URL?>/register.php"><b>회원가입</b></a>
             <a href="<?=G4_BBS_URL?>/password_lost.php" id="ol_password_lost">정보찾기</a>
+        </div>
+        <div id="ol_auto">
             <input type="checkbox" name="auto_login" value="1" id="auto_login">
             <label for="auto_login" id="auto_login_label">자동로그인</label>
         </div>
@@ -28,7 +30,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <script>
 $omi = $('#ol_id');
 $omp = $('#ol_pw');
-$omp.css('display','inline-block').css('width',104);
 $omi_label = $('#ol_idlabel');
 $omi_label.addClass('ol_idlabel');
 $omp_label = $('#ol_pwlabel');

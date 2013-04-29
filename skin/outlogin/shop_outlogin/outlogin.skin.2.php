@@ -24,9 +24,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 <strong><?=$point?></strong>
             </a>
         </li>
-        <li>
-            <a href="<?=G4_BBS_URL?>/scrap.php" target="_blank" id="ol_after_scrap" class="win_scrap">스크랩</a>
-        </li>
     </ul>
     <footer id="ol_after_ft">
         <a href="<?=G4_BBS_URL?>/member_confirm.php?url=register_form.php" id="ol_after_info">정보수정</a>
