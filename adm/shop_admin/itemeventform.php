@@ -99,7 +99,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="ev_use">사용</label></th>
         <td>
-            <?=help("사용하지 않으면 왼쪽의 이벤트 메뉴와 이벤트리스트 페이지에 접근할 수 없습니다.");?>
+            <?=help("사용하지 않으면 레이아웃의 이벤트 메뉴 및 이벤트 관련 페이지에 접근할 수 없습니다.");?>
             <select name="ev_use" id="ev_use">
                 <option value="1" <?=get_selected($ev['ev_use'], 1)?>>사용</option>
                 <option value="0" <?=get_selected($ev['ev_use'], 0)?>>사용안함</option>
