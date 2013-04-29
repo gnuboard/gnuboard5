@@ -18,9 +18,9 @@ for ($i=0; $row_nw=sql_fetch_array($result); $i++)
     <div class="hd_pops_con">
         <?=conv_content($nw['nw_content'], 1);?>
     </div>
-    <div class="hd_pops_chk">
-        <label for="hd_pops_chk<?=$nw['nw_id']?>"><strong><?=$nw['nw_disable_hours']?></strong>시간동안 이 내용을 열람하지 않습니다.</label>
-        <input type="checkbox" name="check_popup_<?=$nw['nw_id']?>" value="<?=$nw['nw_disable_hours']?>" id="hd_pops_chk<?=$nw['nw_id']?>" class="hd_pops_close">
+    <div class="hd_pops_footer">
+        <button class="hd_pops_reject hd_pops_<?=$nw['nw_id']?> <?=$nw['nw_disable_hours']?>"><strong><?=$nw['nw_disable_hours']?></strong>시간 동안 다시 열람하지 않습니다.</button>
+        <button class="hd_pops_close hd_pops_<?=$nw['nw_id']?>">닫기</button>
     </div>
 </div>
 <?php }
@@ -29,15 +29,16 @@ if ($i == 0) echo '<span class="sound_only">팝업레이어 알림이 없습니�
 
 <script>
 $(function() {
-    $(".hd_pops_close").click(function() {
-        if($(this).is(":checked")) {
-            var id = $(this).attr("id");
-            var layer_id = id.replace("chk", "");
-            var ck_name = id.replace("chk", "");
-            var exp_time = parseInt($(this).val());
-            $("#"+layer_id).css("display", "none");
-            set_cookie(ck_name, 1, exp_time, g4_cookie_domain);
-        }
+    $(".hd_pops_reject").click(function() {
+        var id = $(this).attr('class').split(' ');
+        var ck_name = id[1];
+        var exp_time = parseInt(id[2]);
+        $("#"+id[1]).css("display", "none");
+        set_cookie(ck_name, 1, exp_time, g4_cookie_domain);
+    });
+    $('.hd_pops_close').click(function() {
+        var idb = $(this).attr('class').split(' ');
+        $('#'+idb[1]).css('display','none');
     });
 });
 </script>
