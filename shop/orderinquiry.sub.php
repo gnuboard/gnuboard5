@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
@@ -11,7 +11,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 <colgroup width=120>
 <colgroup width=120>
 <colgroup width=120>
-<? if (!$limit) { echo "<tr><td colspan=6 align=right>총 {$cnt} 건</td></tr>"; } ?>
+<?php if (!$limit) { echo "<tr><td colspan=6 align=right>총 {$cnt} 건</td></tr>"; } ?>
 <tr><td height=2 colspan=6 class=c1></td></tr>
 <tr align=center height=28 class=c2>
     <td>주문서번호</td>
@@ -22,7 +22,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
     <td>미입금액</td>
 </tr>
 <tr><td height=1 colspan=6 class=c1></td></tr>
-<?
+<?php
 $sql = " select a.od_id,
                 a.*, "._MISU_QUERY_."
            from {$g4['shop_order_table']} a

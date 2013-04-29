@@ -179,7 +179,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_sms">SMS 수신여부</label></th>
     <td>
         <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?>>
-        핸드폰 문자메세지를 받겠습니다.
+        휴대폰 문자메세지를 받겠습니다.
     </td>
 </tr>
 <?php } ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 $str = "";
 $exists = false;
 

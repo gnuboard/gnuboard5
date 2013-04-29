@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 set_session("ss_direct", $sw_direct);
@@ -25,9 +25,9 @@ $od_id = get_uniqid();
 set_session('ss_order_uniqid', $od_id);
 ?>
 
-<img src="<?=G4_SHOP_URL?>/img/top_orderform.gif" border="0"><p>
+<img src="<?php echo G4_SHOP_URL; ?>/img/top_orderform.gif" border="0"><p>
 
-<?
+<?php
 $s_page = 'orderform.php';
 $s_uq_id = $tmp_uq_id;
 include_once('./cartsub.inc.php');
@@ -41,15 +41,15 @@ $good_mny = (int)$tot_sell_amount + (int)$send_cost;
 $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 ?>
 
-<?
+<?php
     /* ============================================================================== */
     /* =   Javascript source Include                                                = */
     /* = -------------------------------------------------------------------------- = */
     /* =   ※ 필수                                                                  = */
     /* = -------------------------------------------------------------------------- = */
 ?>
-    <script type="text/javascript" src="<? echo $g_conf_js_url; ?>"></script>
-<?
+    <script type="text/javascript" src="<?php echo $g_conf_js_url; ?>"></script>
+<?php
     /* = -------------------------------------------------------------------------- = */
     /* =   Javascript source Include END                                            = */
     /* ============================================================================== */
@@ -118,11 +118,11 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
     setTimeout("init_pay_button();",300);
 </script>
 
-<form name=forderform method=post action="<?=$order_action_url?>" onsubmit="return forderform_check(this);" autocomplete=off>
-<input type=hidden name=od_amount    value='<?=$tot_sell_amount?>'>
-<input type=hidden name=od_send_cost value='<?=$send_cost?>'>
+<form name=forderform method=post action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete=off>
+<input type=hidden name=od_amount    value='<?php echo $tot_sell_amount; ?>'>
+<input type=hidden name=od_send_cost value='<?php echo $send_cost; ?>'>
 
-<?
+<?php
     /* ============================================================================== */
     /* =   2. 가맹점 필수 정보 설정                                                 = */
     /* = -------------------------------------------------------------------------- = */
@@ -131,11 +131,11 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
     // 요청종류 : 승인(pay)/취소,매입(mod) 요청시 사용
 ?>
     <input type="hidden" name="req_tx"          value="pay" />
-    <input type="hidden" name="site_cd"         value="<? echo $default['de_kcp_mid'];	?>" />
-    <input type="hidden" name="site_key"        value="<? echo $default['de_kcp_site_key'];  ?>" />
-    <input type="hidden" name="site_name"       value="<? echo $default['de_admin_company_name']; ?>" />
+    <input type="hidden" name="site_cd"         value="<?php echo $default['de_kcp_mid']; ?>" />
+    <input type="hidden" name="site_key"        value="<?php echo $default['de_kcp_site_key']; ?>" />
+    <input type="hidden" name="site_name"       value="<?php echo $default['de_admin_company_name']; ?>" />
 
-<?
+<?php
     /*
     할부옵션 : Payplus Plug-in에서 카드결제시 최대로 표시할 할부개월 수를 설정합니다.(0 ~ 18 까지 설정 가능)
     ※ 주의  - 할부 선택은 결제금액이 50,000원 이상일 경우에만 가능, 50000원 미만의 금액은 일시불로만 표기됩니다
@@ -143,9 +143,9 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
     */
 ?>
     <input type="hidden" name="pay_method"  value="" />
-    <input type="hidden" name="ordr_idxx"   value="<? echo $od_id; ?>" />
-    <input type="hidden" name="good_name"   value="<? echo $goods; ?>" />
-    <input type="hidden" name="good_mny"    value="<? echo $good_mny; ?>" />
+    <input type="hidden" name="ordr_idxx"   value="<?php echo $od_id; ?>" />
+    <input type="hidden" name="good_name"   value="<?php echo $goods; ?>" />
+    <input type="hidden" name="good_mny"    value="<?php echo $good_mny; ?>" />
     <input type="hidden" name="buyr_name"   value="" />
     <input type="hidden" name="buyr_mail"   value="" />
     <input type="hidden" name="buyr_tel1"   value="" />
@@ -164,13 +164,13 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 	<!-- 필수 항목 : 결제 금액/화폐단위 -->
     <input type="hidden" name="currency"    value="WON"/>
 
-<?
+<?php
     /* = -------------------------------------------------------------------------- = */
     /* =   2. 가맹점 필수 정보 설정 END                                             = */
     /* ============================================================================== */
 ?>
 
-<?
+<?php
     /* ============================================================================== */
     /* =   3. Payplus Plugin 필수 정보(변경 불가)                                   = */
     /* = -------------------------------------------------------------------------- = */
@@ -222,24 +222,24 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
     <input type='hidden' name='escw_used' value='Y'>
 
     <!-- 에스크로 결제처리 모드 : 에스크로: Y, 일반: N, KCP 설정 조건: O -->
-    <input type='hidden' name='pay_mod' value='<?=($default['de_escrow_use']?"O":"N");?>'>
+    <input type='hidden' name='pay_mod' value='<?php echo ($default['de_escrow_use']?"O":"N"); ?>'>
 
     <!-- 배송 소요일 : 예상 배송 소요일을 입력 -->
     <input type='hidden' name='deli_term' value='03'>
 
     <!-- 장바구니 상품 개수 : 장바구니에 담겨있는 상품의 개수를 입력 -->
-    <input type='hidden' name='bask_cntx' value="<? echo (int)$goods_count + 1; ?>" />
+    <input type='hidden' name='bask_cntx' value="<?php echo (int)$goods_count + 1; ?>" />
 
     <!-- 장바구니 상품 상세 정보 (자바 스크립트 샘플(create_goodInfo()) 참고) -->
-    <input type='hidden' name='good_info' value="<? echo $good_info; ?>" />
+    <input type='hidden' name='good_info' value="<?php echo $good_info; ?>" />
 
-<?
+<?php
     /* = -------------------------------------------------------------------------- = */
     /* =   3. Payplus Plugin 필수 정보 END                                          = */
     /* ============================================================================== */
 ?>
 
-<?
+<?php
     /* ============================================================================== */
     /* =   4. 옵션 정보                                                             = */
     /* = -------------------------------------------------------------------------- = */
@@ -284,7 +284,7 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
          ※ 해당 은행을 결제창에서 보이게 합니다.(은행코드는 매뉴얼을 참조) */
 ?>
     <input type="hidden" name="wish_vbank_list" value="05:03:04:07:11:23:26:32:34:81:71"/>
-<?
+<?php
 
 
 	/*  가상계좌 입금 기한 설정하는 파라미터 - 발급일 + 3일
@@ -311,26 +311,26 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 		 ※ 주의 : 현금영수증 사용 시 KCP 상점관리자 페이지에서 현금영수증 사용 동의를 하셔야 합니다 */
 ?>
     <input type="hidden" name="disp_tax_yn"     value="N"/>
-<?
+<?php
     /* 결제창에 가맹점 사이트의 로고를 플러그인 좌측 상단에 출력하는 파라미터 입니다
        업체의 로고가 있는 URL을 정확히 입력하셔야 하며, 최대 150 X 50  미만 크기 지원
 
 	※ 주의 : 로고 용량이 150 X 50 이상일 경우 site_name 값이 표시됩니다. */
 ?>
     <input type="hidden" name="site_logo"       value="" />
-<?
+<?php
 	/* 결제창 영문 표시 파라미터 입니다. 영문을 기본으로 사용하시려면 Y로 세팅하시기 바랍니다
 		2010-06월 현재 신용카드와 가상계좌만 지원됩니다
 		<input type='hidden' name='eng_flag'      value='Y'> */
 ?>
 
-<?
+<?php
      /* skin_indx 값은 스킨을 변경할 수 있는 파라미터이며 총 7가지가 지원됩니다.
 	    변경을 원하시면 1부터 7까지 값을 넣어주시기 바랍니다. */
 ?>
     <input type='hidden' name='skin_indx'      value='1'>
 
-<?
+<?php
 	/* 상품코드 설정 파라미터 입니다.(상품권을 따로 구분하여 처리할 수 있는 옵션기능입니다.)
 	<input type='hidden' name='good_cd'      value=''> */
 
@@ -344,62 +344,62 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 <colgroup width=140>
 <colgroup width=''>
 <tr>
-    <td bgcolor=#F3F2FF align=center><img src='<?=G4_SHOP_URL?>/img/t_data01.gif'></td>
+    <td bgcolor=#F3F2FF align=center><img src='<?php echo G4_SHOP_URL; ?>/img/t_data01.gif'></td>
     <td bgcolor=#FAFAFA style='padding-left:10px'>
         <table cellpadding=3>
         <colgroup width=100>
         <colgroup width=''>
         <tr>
             <td>이름</td>
-            <td><input type=text id=od_name name=od_name value='<?=$member['mb_name']?>' maxlength=20 class=ed></td>
+            <td><input type=text id=od_name name=od_name value='<?php echo $member['mb_name']; ?>' maxlength=20 class=ed></td>
         </tr>
 
-        <? if (!$is_member) { // 비회원이면 ?>
+        <?php if (!$is_member) { // 비회원이면 ?>
         <tr>
             <td>비밀번호</td>
             <td><input type=password name=od_pwd class=ed maxlength=20>
                 영,숫자 3~20자 (주문서 조회시 필요)</td>
         </tr>
-        <? } ?>
+        <?php } ?>
 
         <tr>
             <td>전화번호</td>
-            <td><input type=text name=od_tel value='<?=$member['mb_tel']?>' maxlength=20 class=ed></td>
+            <td><input type=text name=od_tel value='<?php echo $member['mb_tel']; ?>' maxlength=20 class=ed></td>
         </tr>
         <tr>
             <td>핸드폰</td>
-            <td><input type=text name=od_hp value='<?=$member['mb_hp']?>' maxlength=20 class=ed></td>
+            <td><input type=text name=od_hp value='<?php echo $member['mb_hp']; ?>' maxlength=20 class=ed></td>
         </tr>
-        <?
+        <?php
         $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2';
         ?>
         <tr>
             <td rowspan=2>주 소</td>
             <td>
-                <input type=text name=od_zip1 size=3 maxlength=3 value='<?=$member['mb_zip1']?>' class=ed readonly>
+                <input type=text name=od_zip1 size=3 maxlength=3 value='<?php echo $member['mb_zip1']; ?>' class=ed readonly>
                 -
-                <input type=text name=od_zip2 size=3 maxlength=3 value='<?=$member['mb_zip2']?>' class=ed readonly>
-                <a href="<? echo $zip_href;?>" class="win_zip_find" target="_blank"><img
-                    src="<?=G4_SHOP_URL?>/img/btn_zip_find.gif" border="0" align=absmiddle></a>
+                <input type=text name=od_zip2 size=3 maxlength=3 value='<?php echo $member['mb_zip2']; ?>' class=ed readonly>
+                <a href="<?php echo $zip_href; ?>" class="win_zip_find" target="_blank"><img
+                    src="<?php echo G4_SHOP_URL; ?>/img/btn_zip_find.gif" border="0" align=absmiddle></a>
             </td>
         </tr>
         <tr>
             <td>
-                <input type=text name=od_addr1 size=35 maxlength=50 value='<?=$member['mb_addr1']?>' class=ed readonly>
-                <input type=text name=od_addr2 size=20 maxlength=50 value='<?=$member['mb_addr2']?>' class=ed> (상세주소)
+                <input type=text name=od_addr1 size=35 maxlength=50 value='<?php echo $member['mb_addr1']; ?>' class=ed readonly>
+                <input type=text name=od_addr2 size=20 maxlength=50 value='<?php echo $member['mb_addr2']; ?>' class=ed> (상세주소)
             </td>
         </tr>
         <tr>
             <td>E-mail</td>
-            <td><input type=text name=od_email size=35 maxlength=100 value='<?=$member['mb_email']?>' class=ed></td>
+            <td><input type=text name=od_email size=35 maxlength=100 value='<?php echo $member['mb_email']; ?>' class=ed></td>
         </tr>
 
-        <? if ($default['de_hope_date_use']) { // 배송희망일 사용 ?>
+        <?php if ($default['de_hope_date_use']) { // 배송희망일 사용 ?>
         <tr>
             <td>희망배송일</td>
             <td><select name=od_hope_date>
                 <option value=''>선택하십시오.
-                <?
+                <?php
                 for ($i=0; $i<7; $i++) {
                     $sdate = date("Y-m-d", time()+86400*($default['de_hope_date_after']+$i));
                     echo "<option value='$sdate'>$sdate (".get_yoil($sdate).")\n";
@@ -407,7 +407,7 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
                 ?>
                 </select></td>
         </tr>
-        <? } ?>
+        <?php } ?>
         </table>
     </td>
 </tr>
@@ -418,7 +418,7 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 <colgroup width=140>
 <colgroup width=''>
 <tr>
-    <td bgcolor=#F3F2FF align=center><img src='<?=G4_SHOP_URL?>/img/t_data03.gif'></td>
+    <td bgcolor=#F3F2FF align=center><img src='<?php echo G4_SHOP_URL; ?>/img/t_data03.gif'></td>
     <td bgcolor=#FAFAFA style='padding-left:10px'>
         <table cellpadding=3>
         <colgroup width=100>
@@ -442,7 +442,7 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
             <td><input type=text name=od_b_hp class=ed
                 maxlength=20></td>
         </tr>
-        <?
+        <?php
         $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2';
         ?>
         <tr>
@@ -451,8 +451,8 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
                 <input type=text name=od_b_zip1 size=3 maxlength=3 class=ed readonly>
                 -
                 <input type=text name=od_b_zip2 size=3 maxlength=3 class=ed readonly>
-                <a href="<? echo $zip_href; ?>" class="win_zip_find" target="_blank"><img
-                    src="<?=G4_SHOP_URL?>/img/btn_zip_find.gif" border="0" align=absmiddle></a>
+                <a href="<?php echo $zip_href; ?>" class="win_zip_find" target="_blank"><img
+                    src="<?php echo G4_SHOP_URL; ?>/img/btn_zip_find.gif" border="0" align=absmiddle></a>
                 </a>
             </td>
         </tr>
@@ -476,12 +476,12 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 <colgroup width=140>
 <colgroup width=''>
 <tr>
-    <td bgcolor=#FFEFFD align=center><img src='<?=G4_SHOP_URL?>/img/t_data04.gif'></td>
+    <td bgcolor=#FFEFFD align=center><img src='<?php echo G4_SHOP_URL; ?>/img/t_data04.gif'></td>
     <td bgcolor=#FAFAFA style='padding-left:10px'>
         <table cellpadding=3>
         <tr>
             <td height=50>
-                <?
+                <?php
                 $multi_settle == 0;
                 $checked = "";
 
@@ -555,7 +555,7 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
         </tr>
         </table>
 
-        <?
+        <?php
         if ($default['de_bank_use']) {
             // 은행계좌를 배열로 만든후
             $str = explode("\n", trim($default['de_bank_account']));
@@ -580,7 +580,7 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
         <table width=100%>
         <tr>
             <td>계좌번호</td>
-            <td><?=$bank_account?></td>
+            <td><?php echo $bank_account; ?></td>
         </tr>
         <tr>
             <td>입금자명</td>
@@ -588,15 +588,15 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
         </tr>
         </table>
         </div>
-        <? } ?>
+        <?php } ?>
 
     </td>
 </tr>
 </table>
 
 <p align=center id="display_pay_button" style="display:none">
-    <input type="image" src="<?=G4_SHOP_URL?>/img/btn_next2.gif" border=0 alt="결제하기">&nbsp;
-    <a href='javascript:history.go(-1);'><img src="<?=G4_SHOP_URL?>/img/btn_back1.gif" alt="뒤로" border=0></a>
+    <input type="image" src="<?php echo G4_SHOP_URL; ?>/img/btn_next2.gif" border=0 alt="결제하기">&nbsp;
+    <a href='javascript:history.go(-1);'><img src="<?php echo G4_SHOP_URL; ?>/img/btn_back1.gif" alt="뒤로" border=0></a>
 </p>
 <!-- Payplus Plug-in 설치 안내 -->
 <p id="display_setup_message" style="display:none">
@@ -606,9 +606,9 @@ $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 </p>
 </form>
 
-<!-- <? if ($default[de_card_use] || $default[de_iche_use]) { echo "결제대행사 : $default[de_card_pg]"; } ?> -->
+<!-- <?php if ($default[de_card_use] || $default[de_iche_use]) { echo "결제대행사 : $default[de_card_pg]"; } ?> -->
 
-<? if ($default['de_escrow_use']) { ?>
+<?php if ($default['de_escrow_use']) { ?>
 <script type="text/javascript">
 function escrow_foot_check()
 {
@@ -624,10 +624,10 @@ function escrow_foot_check()
 </script>
 
 <form name="escrow_foot" method="post" action="http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp">
-<input type="hidden" name="site_cd" value="SR<?=$default['de_kcp_mid']?>">
+<input type="hidden" name="site_cd" value="SR<?php echo $default['de_kcp_mid']; ?>">
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-    <td align='center'><img src="<?=G4_SHOP_URL?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
+    <td align='center'><img src="<?php echo G4_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
 </tr>
 <tr>
     <td style='line-height:150%;'>
@@ -649,7 +649,7 @@ function escrow_foot_check()
 <area shape="rect" coords="5,62,74,83" href="javascript:escrow_foot_check()" alt="가입사실확인"  onfocus="this.blur()"/>
 </map>
 </form>
-<? } ?>
+<?php } ?>
 
 <script type='text/javascript'>
 function forderform_check(f)
@@ -725,8 +725,8 @@ function forderform_check(f)
         return false;
     }
 
-    var tot_amount = <?=(int)$tot_amount?>;
-    var max_point  = <?=(int)$temp_point?>;
+    var tot_amount = <?php echo (int)$tot_amount; ?>;
+    var max_point  = <?php echo (int)$temp_point; ?>;
 
     var temp_point = 0;
     if (typeof(f.od_temp_point) != "undefined") {
@@ -746,7 +746,7 @@ function forderform_check(f)
                 return false;
             }
 
-            if (temp_point > <?=(int)$member[mb_point]?>) {
+            if (temp_point > <?php echo (int)$member['mb_point']; ?>) {
                 alert("회원님의 포인트보다 많이 결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
@@ -861,6 +861,6 @@ $(function() {
 });
 </script>
 
-<?
+<?php
 include_once('./_tail.php');
 ?>

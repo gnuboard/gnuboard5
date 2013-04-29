@@ -1,10 +1,10 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <table cellpadding=0 cellspacing=0 bgcolor=#FFFFFF>
-<tr><td><a href='<?=G4_SHOP_URL?>/wishlist.php'><img src='<?=G4_SHOP_URL?>/img/bar_wishlist.gif' border=0></a></td></tr>
-<?
+<tr><td><a href='<?php echo G4_SHOP_URL; ?>/wishlist.php'><img src='<?php echo G4_SHOP_URL; ?>/img/bar_wishlist.gif' border=0></a></td></tr>
+<?php
 $hsql = " select a.it_id, b.it_name from {$g4['shop_wish_table']} a, {$g4['shop_item_table']} b
           where a.mb_id = '{$member['mb_id']}'
             and a.it_id  = b.it_id

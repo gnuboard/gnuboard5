@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("./_common.php");
 
 $sql = " select *
@@ -40,7 +40,7 @@ include G4_SHOP_PATH.'/listcategory2.inc.php';
     <tr>
         <td>
 
-<?
+<?php
 // 상품 출력순서가 있다면
 if ($sort != "") {
     $order_by = $sort . " , ";
@@ -101,13 +101,13 @@ if ($i==0)
 
 <br>
 <div align=center style='clear:both;'>
-<?
+<?php
 $qstr1 .= "ca_id=$ca_id&skin=$skin&ev_id=$ev_id&sort=$sort";
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&page=");
 ?>
 </div><br>
 
-<?
+<?php
 // 하단 HTML
 echo stripslashes($ca['ca_tail_html']);
 

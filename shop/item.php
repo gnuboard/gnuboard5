@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
@@ -128,13 +128,13 @@ $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
 ?>
 
-<script src="<?=G4_JS_URL?>/shop.js"></script>
-<script src="<?=G4_JS_URL?>/md5.js"></script>
+<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
+<script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
 
 <br>
 <table width=99% cellpadding=0 cellspacing=0 align=center border=0><tr><td>
 
-<?
+<?php
 if (G4_HTTPS_DOMAIN)
     $action_url = G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR.'/cartupdate.php';
 else
@@ -142,26 +142,26 @@ else
 ?>
 
 <table width=100% cellpadding=0 cellspacing=0>
-<form name=fitem method=post action="<?=$action_url?>">
-<input type=hidden name=it_id value='<?=$it['it_id']?>'>
-<input type=hidden name=it_name value='<?=$it['it_name']?>'>
+<form name=fitem method=post action="<?php echo $action_url; ?>">
+<input type=hidden name=it_id value='<?php echo $it['it_id']; ?>'>
+<input type=hidden name=it_name value='<?php echo $it['it_name']; ?>'>
 <input type=hidden name=sw_direct>
 <input type=hidden name=url>
 <tr>
 
     <!-- 상품중간이미지 -->
-    <?
+    <?php
     $middle_image = $it['it_id']."_m";
     ?>
     <td align=center valign=top>
         <table cellpadding=0 cellspacing=0>
             <tr><td height=22></td></tr>
             <tr><td colspan=3 align=center>
-                <table cellpadding=1 cellspacing=0 bgcolor=#E4E4E4><tr><td><?=get_large_image($it['it_id']."_l1", $it['it_id'], false)?><?=get_it_image($middle_image);?></a></td></tr></table></td></tr>
+                <table cellpadding=1 cellspacing=0 bgcolor=#E4E4E4><tr><td><?php echo get_large_image($it['it_id']."_l1", $it['it_id'], false); ?><?php echo get_it_image($middle_image); ?></a></td></tr></table></td></tr>
             <tr><td colspan=3 height=10></td></tr>
             <tr>
                 <td colspan=3 align=center>
-                <?
+                <?php
                 for ($i=1; $i<=5; $i++)
                 {
                     if (file_exists(G4_DATA_PATH."/item/{$it_id}_l{$i}"))
@@ -179,51 +179,51 @@ else
                 </td>
             </tr>
             <tr><td colspan=3 height=7></td></tr>
-            <tr><td height=20><?=$prev_href?><img src='<?=G4_SHOP_URL?>/img/prev.gif' border=0 title='<?=$prev_title?>'></a></td>
-                <td align=center><?=get_large_image($it['it_id']."_l1", $it['it_id'])?></td>
-                <td align=right><?=$next_href?><img src='<?=G4_SHOP_URL?>/img/next.gif' border=0 title='<?=$next_title?>'></a></td></tr>
+            <tr><td height=20><?php echo $prev_href; ?><img src='<?php echo G4_SHOP_URL; ?>/img/prev.gif' border=0 title='<?php echo $prev_title; ?>'></a></td>
+                <td align=center><?php echo get_large_image($it['it_id']."_l1", $it['it_id']); ?></td>
+                <td align=right><?php echo $next_href; ?><img src='<?php echo G4_SHOP_URL; ?>/img/next.gif' border=0 title='<?php echo $next_title; ?>'></a></td></tr>
         </table>
     </td>
     <!-- 상품중간이미지 END -->
 
     <td width=460 valign=top align=center>
-        <table width=430><tr><td colspan=2 valign=top><span style='font-size:14px; font-family:돋움;'><strong><?=it_name_icon($it, stripslashes($it['it_name']), 0)?></strong></span></td></tr></table>
+        <table width=430><tr><td colspan=2 valign=top><span style='font-size:14px; font-family:돋움;'><strong><?php echo it_name_icon($it, stripslashes($it['it_name']), 0); ?></strong></span></td></tr></table>
 
-        <table width=430 cellpadding=0 cellspacing=0 background='<?=G4_SHOP_URL?>/img/bg_item.gif'>
+        <table width=430 cellpadding=0 cellspacing=0 background='<?php echo G4_SHOP_URL; ?>/img/bg_item.gif'>
         <colgroup width=110></colgroup>
         <colgroup width=20></colgroup>
         <colgroup width=300></colgroup>
-        <tr><td colspan=3><img src='<?=G4_SHOP_URL?>/img/itembox_01.gif' width=430></td></tr>
+        <tr><td colspan=3><img src='<?php echo G4_SHOP_URL; ?>/img/itembox_01.gif' width=430></td></tr>
 
 
-        <? if ($score = get_star_image($it['it_id'])) { ?>
+        <?php if ($score = get_star_image($it['it_id'])) { ?>
         <tr>
             <td height=25>&nbsp;&nbsp;&nbsp; · 고객선호도</td>
             <td align=center>:</td>
-            <td><img src='<?=G4_SHOP_URL."/img/star{$score}.gif"?>' border=0></td></tr>
-        <tr><td colspan=3 height=1 background='<?=G4_SHOP_URL?>/img/dot_line.gif'></td></tr>
-        <? } ?>
+            <td><img src='<?php echo G4_SHOP_URL."/img/star{$score}.gif"; ?>' border=0></td></tr>
+        <tr><td colspan=3 height=1 background='<?php echo G4_SHOP_URL; ?>/img/dot_line.gif'></td></tr>
+        <?php } ?>
 
 
-        <? if ($it['it_maker']) { ?>
+        <?php if ($it['it_maker']) { ?>
         <tr>
             <td height=25>&nbsp;&nbsp;&nbsp; · 제조사</td>
             <td align=center>:</td>
-            <td><?=$it['it_maker']?></td></tr>
-        <tr><td colspan=3 height=1 background='<?=G4_SHOP_URL?>/img/dot_line.gif'></td></tr>
-        <? } ?>
+            <td><?php echo $it['it_maker']; ?></td></tr>
+        <tr><td colspan=3 height=1 background='<?php echo G4_SHOP_URL; ?>/img/dot_line.gif'></td></tr>
+        <?php } ?>
 
 
-        <? if ($it['it_origin']) { ?>
+        <?php if ($it['it_origin']) { ?>
         <tr>
             <td height=25>&nbsp;&nbsp;&nbsp; · 원산지</td>
             <td align=center>:</td>
-            <td><?=$it['it_origin']?></td></tr>
-        <tr><td colspan=3 height=1 background='<?=G4_SHOP_URL?>/img/dot_line.gif'></td></tr>
-        <? } ?>
+            <td><?php echo $it['it_origin']; ?></td></tr>
+        <tr><td colspan=3 height=1 background='<?php echo G4_SHOP_URL; ?>/img/dot_line.gif'></td></tr>
+        <?php } ?>
 
 
-        <?
+        <?php
         // 선택옵션 출력
         for ($i=1; $i<=6; $i++)
         {
@@ -241,26 +241,26 @@ else
         ?>
 
 
-        <? if (!$it['it_gallery']) { // 갤러리 형식이라면 가격, 구매하기 출력하지 않음 ?>
+        <?php if (!$it['it_gallery']) { // 갤러리 형식이라면 가격, 구매하기 출력하지 않음 ?>
 
-            <? if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
+            <?php if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
 
                 <tr>
                     <td height=25>&nbsp;&nbsp;&nbsp; · 판매가격</td>
                     <td align=center>:</td>
                     <td><FONT COLOR="#FF5D00">전화문의</FONT></td></tr>
-                <tr><td colspan=3 height=1 background='<?=G4_SHOP_URL?>/img/dot_line.gif'></td></tr>
+                <tr><td colspan=3 height=1 background='<?php echo G4_SHOP_URL; ?>/img/dot_line.gif'></td></tr>
 
-            <? } else { ?>
+            <?php } else { ?>
 
-                <? if ($it['it_cust_amount']) { // 1.00.03 ?>
+                <?php if ($it['it_cust_amount']) { // 1.00.03 ?>
                 <tr height=25>
                     <td>&nbsp;&nbsp;&nbsp; · 시중가격</td>
                     <td align=center>:</td>
-                    <td><input type=text name=disp_cust_amount size=12 style='text-align:right; border:none; border-width:0px; font-weight:bold; width:80px; color:#777777; text-decoration:line-through;' readonly value='<?=number_format($it['it_cust_amount'])?>'> 원</td>
+                    <td><input type=text name=disp_cust_amount size=12 style='text-align:right; border:none; border-width:0px; font-weight:bold; width:80px; color:#777777; text-decoration:line-through;' readonly value='<?php echo number_format($it['it_cust_amount']); ?>'> 원</td>
                 </tr>
-                <tr><td colspan=3 height=1 background='<?=G4_SHOP_URL?>/img/dot_line.gif'></td></tr>
-                <? } ?>
+                <tr><td colspan=3 height=1 background='<?php echo G4_SHOP_URL; ?>/img/dot_line.gif'></td></tr>
+                <?php } ?>
 
 
                 <tr height=25>
@@ -270,20 +270,20 @@ else
                         <input type=hidden name=it_amount value='0'>
                     </td>
                 </tr>
-                <tr><td colspan=3 height=1 background='<?=G4_SHOP_URL?>/img/dot_line.gif'></td></tr>
+                <tr><td colspan=3 height=1 background='<?php echo G4_SHOP_URL; ?>/img/dot_line.gif'></td></tr>
 
-                <?
+                <?php
                 /* 재고를 표시하는 경우 주석을 풀어주세요.
                 <tr height=25>
                     <td>&nbsp;&nbsp;&nbsp; · 재고수량</td>
                     <td align=center>:</td>
-                    <td><?=number_format(get_it_stock_qty($it_id))?> 개</td>
+                    <td><?php echo number_format(get_it_stock_qty($it_id)); ?> 개</td>
                 </tr>
-                <tr><td colspan=3 height=1 background='<?=$g4[shop_img_path]?>/dot_line.gif'></td></tr>
+                <tr><td colspan=3 height=1 background='<?php echo G4_SHOP_URL; ?>/img/dot_line.gif'></td></tr>
                 */
                 ?>
 
-                <? if ($config['cf_use_point']) { // 포인트 사용한다면 ?>
+                <?php if ($config['cf_use_point']) { // 포인트 사용한다면 ?>
                 <tr height=25>
                     <td>&nbsp;&nbsp;&nbsp; · 포 인 트</td>
                     <td align=center>:</td>
@@ -291,26 +291,26 @@ else
                         <input type=hidden name=it_point value='0'>
                     </td>
                 </tr>
-                <tr><td colspan=3 height=1 background='<?=G4_SHOP_URL?>/img/dot_line.gif'></td></tr>
-                <? } ?>
+                <tr><td colspan=3 height=1 background='<?php echo G4_SHOP_URL; ?>/img/dot_line.gif'></td></tr>
+                <?php } ?>
 
                 <tr height=25>
                     <td>&nbsp;&nbsp;&nbsp; · 수 량</td>
                     <td align=center>:</td>
                     <td>
                         <input type=text name=ct_qty value='1' size=4 maxlength=4 class=ed autocomplete='off' style='text-align:right;' onkeyup='amount_change()'>
-                        <img src='<?=G4_SHOP_URL?>/img/qty_control.gif' border=0 align=absmiddle usemap="#qty_control_map"> 개
+                        <img src='<?php echo G4_SHOP_URL; ?>/img/qty_control.gif' border=0 align=absmiddle usemap="#qty_control_map"> 개
                         <map name="qty_control_map">
                         <area shape="rect" coords="0, 0, 10, 9" href="javascript:qty_add(+1);">
                         <area shape="rect" coords="0, 10, 10, 19" href="javascript:qty_add(-1);">
                         </map></td>
                 </tr>
-            <? } ?>
+            <?php } ?>
 
-        <? } ?>
+        <?php } ?>
 
 
-        <tr><td colspan=3><img src='<?=G4_SHOP_URL?>/img/itembox_02.gif' width=430></td></tr>
+        <tr><td colspan=3><img src='<?php echo G4_SHOP_URL; ?>/img/itembox_02.gif' width=430></td></tr>
 
 
         </table><BR>
@@ -318,22 +318,22 @@ else
         <table>
         <tr>
             <td>
-            <? if (!$it['it_tel_inq'] && !$it['it_gallery']) { ?>
-            <a href="javascript:fitemcheck(document.fitem, 'direct_buy');"><img src='<?=G4_SHOP_URL?>/img/btn2_now_buy.gif' border=0></a>
-            <a href="javascript:fitemcheck(document.fitem, 'cart_update');"><img src='<?=G4_SHOP_URL?>/img/btn2_cart.gif' border=0></a>
-            <? } ?>
+            <?php if (!$it['it_tel_inq'] && !$it['it_gallery']) { ?>
+            <a href="javascript:fitemcheck(document.fitem, 'direct_buy');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn2_now_buy.gif' border=0></a>
+            <a href="javascript:fitemcheck(document.fitem, 'cart_update');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn2_cart.gif' border=0></a>
+            <?php } ?>
 
-            <? if (!$it['it_gallery']) { ?>
-            <a href="javascript:item_wish(document.fitem, '<?=$it['it_id']?>');"><img src='<?=G4_SHOP_URL?>/img/btn2_wish.gif' border=0></a>
-            <a href="javascript:popup_item_recommend('<?=$it['it_id']?>');"><img src='<?=G4_SHOP_URL?>/img/btn_item_recommend.gif' border=0></a>
-            <? } ?>
+            <?php if (!$it['it_gallery']) { ?>
+            <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn2_wish.gif' border=0></a>
+            <a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn_item_recommend.gif' border=0></a>
+            <?php } ?>
 
             <script language="JavaScript">
             // 상품보관
             function item_wish(f, it_id)
             {
-                f.url.value = "<?=G4_SHOP_URL?>/wishupdate.php?it_id="+it_id;
-                f.action = "<?=G4_SHOP_URL?>/wishupdate.php";
+                f.url.value = "<?php echo G4_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
+                f.action = "<?php echo G4_SHOP_URL; ?>/wishupdate.php";
                 f.submit();
             }
 
@@ -343,7 +343,7 @@ else
                 if (!g4_is_member)
                 {
                     if (confirm("회원만 추천하실 수 있습니다."))
-                        document.location.href = "<?=G4_BBS_URL?>/login.php?url=<?=urlencode(G4_SHOP_URL."/item.php?it_id=$it_id")?>";
+                        document.location.href = "<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo urlencode(G4_SHOP_URL."/item.php?it_id=$it_id"); ?>";
                 }
                 else
                 {
@@ -359,15 +359,15 @@ else
     </tr>
     <tr><td colspan=3 height=20></td></tr>
     <tr><td colspan=3>
-        <table cellpadding=0 cellspacing=0 background='<?=G4_SHOP_URL?>/img/bg_tab.gif'>
+        <table cellpadding=0 cellspacing=0 background='<?php echo G4_SHOP_URL; ?>/img/bg_tab.gif'>
         <tr>
             <td width=30></td>
-            <!-- 상품정보 --><td><a href="javascript:click_item('*');"><img src='<?=G4_SHOP_URL?>/img/btn_tab01.gif' border=0></a></td>
-            <!-- 사용후기 --><td width=109 background='<?=G4_SHOP_URL?>/img/btn_tab02.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_use');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_use_count>0</span>)</span></a></td>
-            <!-- 상품문의 --><td width=109 background='<?=G4_SHOP_URL?>/img/btn_tab03.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_qa');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_qa_count>0</span>)</span></a></td>
-            <? if ($default['de_baesong_content']) { ?><!-- 배송정보 --><td><a href="javascript:click_item('item_baesong');"><img src='<?=G4_SHOP_URL?>/img/btn_tab04.gif' border=0></a></td><?}?>
-            <? if ($default['de_change_content']) { ?><!-- 교환/반품 --><td><a href="javascript:click_item('item_change');"><img src='<?=G4_SHOP_URL?>/img/btn_tab05.gif' border=0></a></td><?}?>
-            <!-- 관련상품 --><td width=109 background='<?=G4_SHOP_URL?>/img/btn_tab06.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_relation');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_relation_count>0</span>)</span></a></td>
+            <!-- 상품정보 --><td><a href="javascript:click_item('*');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn_tab01.gif' border=0></a></td>
+            <!-- 사용후기 --><td width=109 background='<?php echo G4_SHOP_URL; ?>/img/btn_tab02.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_use');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_use_count>0</span>)</span></a></td>
+            <!-- 상품문의 --><td width=109 background='<?php echo G4_SHOP_URL; ?>/img/btn_tab03.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_qa');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_qa_count>0</span>)</span></a></td>
+            <?php if ($default['de_baesong_content']) { ?><!-- 배송정보 --><td><a href="javascript:click_item('item_baesong');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn_tab04.gif' border=0></a></td><?php } ?>
+            <?php if ($default['de_change_content']) { ?><!-- 교환/반품 --><td><a href="javascript:click_item('item_change');"><img src='<?php echo G4_SHOP_URL; ?>/img/btn_tab05.gif' border=0></a></td><?php } ?>
+            <!-- 관련상품 --><td width=109 background='<?php echo G4_SHOP_URL; ?>/img/btn_tab06.gif' border=0 style='padding-top:2px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:click_item('item_relation');" style="cursor:pointer;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=small style='color:#ff5d00;'>(<span id=item_relation_count>0</span>)</span></a></td>
         </tr>
         </table>
 </td></tr>
@@ -377,7 +377,7 @@ else
 <script language="JavaScript">
 function click_item(id)
 {
-    <?
+    <?php
     echo "var str = 'item_explan,item_use,item_qa";
     if ($default['de_baesong_content']) echo ",item_baesong";
     if ($default['de_change_content']) echo ",item_change";
@@ -404,9 +404,9 @@ function click_item(id)
 <!-- 상품설명 -->
 <div id='item_explan' style='display:block;'>
 <table width=100% cellpadding=0 cellspacing=0>
-<tr><td rowspan=2 width=31 valign=top bgcolor=#CACDE2><img src='<?=G4_SHOP_URL?>/img/item_t01.gif'></td><td height=2 bgcolor=#CACDE2></td></tr>
+<tr><td rowspan=2 width=31 valign=top bgcolor=#CACDE2><img src='<?php echo G4_SHOP_URL; ?>/img/item_t01.gif'></td><td height=2 bgcolor=#CACDE2></td></tr>
 <tr><td style='padding:15px'>
-    <?
+    <?php
     $sql = " select * from {$g4['shop_item_info_table']} where it_id = '$it_id' order by ii_id ";
     $result = sql_query($sql, false);
     if (@mysql_num_rows($result)) {
@@ -414,27 +414,27 @@ function click_item(id)
     <!-- 상품정보고시 -->
     <table class='item_info_open' width=100% cellpadding=0 cellspacing=0 style="border:1px solid #f6dbab;border-bottom:0">
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
     ?>
     <tr valign="top">
-        <th scope="row" style="padding:8px 15px;width:30%;border-bottom:1px solid #f6dbab;background:#f8f4ee;font-size:12px;text-align:left"><?=$row['ii_title']?></th>
-        <td style="padding:8px 15px;border-bottom:1px solid #f6dbab"><?=$row['ii_value']?></th>
+        <th scope="row" style="padding:8px 15px;width:30%;border-bottom:1px solid #f6dbab;background:#f8f4ee;font-size:12px;text-align:left"><?php echo $row['ii_title']; ?></th>
+        <td style="padding:8px 15px;border-bottom:1px solid #f6dbab"><?php echo $row['ii_value']; ?></th>
     </tr>
-    <?}//for?>
+    <?php } //for?>
     </tbody>
     </table>
     <!-- 상품정보고시 end -->
-    <?}//if?>
+    <?php } //if?>
 
     <table width=100% cellspacing=0 border=0>
-    <? if ($it['it_basic']) { ?>
-    <tr><td height=30><font color='#3179BD'><?=$it['it_basic']?></font></td></tr>
-    <? } ?>
+    <?php if ($it['it_basic']) { ?>
+    <tr><td height=30><font color='#3179BD'><?php echo $it['it_basic']; ?></font></td></tr>
+    <?php } ?>
 
-    <? if ($it['it_explan']) { ?>
-    <tr><td><div id='div_explan'><?=conv_content($it['it_explan'], 1);?></div><td></tr>
-    <? } ?>
+    <?php if ($it['it_explan']) { ?>
+    <tr><td><div id='div_explan'><?php echo conv_content($it['it_explan'], 1); ?></div><td></tr>
+    <?php } ?>
     </table>
 </td></tr>
 <tr><td colspan=2 height=1></td></tr>
@@ -444,7 +444,7 @@ function click_item(id)
 
 
 
-<?
+<?php
 // 사용후기
 $use_page_rows = 10;    // 사용후기 페이지당 목록수
 include_once('./itemuse.inc.php');
@@ -456,40 +456,40 @@ include_once('./itemqa.inc.php');
 ?>
 
 
-<? if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>
+<?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>
 <!-- 배송정보 -->
 <div id='item_baesong' style='display:block;'>
 <table width=100% cellpadding=0 cellspacing=0>
-<tr><td rowspan=2 width=31 valign=top bgcolor=#D6E1A7><img src='<?=G4_SHOP_URL?>/img/item_t04.gif'></td><td height=2 bgcolor=#D6E1A7></td></tr>
-<tr><td style='padding:15px' height=130><?=conv_content($default['de_baesong_content'], 1);?></td></tr>
+<tr><td rowspan=2 width=31 valign=top bgcolor=#D6E1A7><img src='<?php echo G4_SHOP_URL; ?>/img/item_t04.gif'></td><td height=2 bgcolor=#D6E1A7></td></tr>
+<tr><td style='padding:15px' height=130><?php echo conv_content($default['de_baesong_content'], 1); ?></td></tr>
 <tr><td colspan=2 height=1></td></tr>
 </table>
 </div>
 <!-- 배송정보 end -->
-<? } ?>
+<?php } ?>
 
 
-<? if ($default['de_change_content']) { // 교환/반품 내용이 있다면 ?>
+<?php if ($default['de_change_content']) { // 교환/반품 내용이 있다면 ?>
 <!-- 교환/반품 -->
 <div id='item_change' style='display:block;'>
 <table width=100% cellpadding=0 cellspacing=0>
-<tr><td rowspan=2 width=31 valign=top bgcolor=#F6DBAB><img src='<?=G4_SHOP_URL?>/img/item_t05.gif'></td><td height=2 bgcolor=#F6DBAB></td></tr>
-<tr><td style='padding:15px' height=130><?=conv_content($default['de_change_content'], 1);?></td></tr>
+<tr><td rowspan=2 width=31 valign=top bgcolor=#F6DBAB><img src='<?php echo G4_SHOP_URL; ?>/img/item_t05.gif'></td><td height=2 bgcolor=#F6DBAB></td></tr>
+<tr><td style='padding:15px' height=130><?php echo conv_content($default['de_change_content'], 1); ?></td></tr>
 <tr><td colspan=2 height=1></td></tr>
 </table>
 </div>
 <!-- 교환/반품 end -->
-<? } ?>
+<?php } ?>
 
 
 <!-- 관련상품 -->
 <div id='item_relation' style='display:block;'>
 <table width=100% cellpadding=0 cellspacing=0>
-<tr><td rowspan=2 width=31 valign=top bgcolor=#E0E0E0><img src='<?=G4_SHOP_URL?>/img/item_t06.gif'></td><td height=2 bgcolor=#E0E0E0></td></tr>
+<tr><td rowspan=2 width=31 valign=top bgcolor=#E0E0E0><img src='<?php echo G4_SHOP_URL; ?>/img/item_t06.gif'></td><td height=2 bgcolor=#E0E0E0></td></tr>
 <tr><td style='padding:15px' height=130>
         <table width=100% cellpadding=0 cellspacing=0 border=0>
         <tr><td align=center>
-        <?
+        <?php
         $list_mod   = $default['de_rel_list_mod'];
         $img_width  = $default['de_rel_img_width'];
         $img_height = $default['de_rel_img_height'];
@@ -556,9 +556,9 @@ function get_amount(data)
 
 function amount_change()
 {
-    var basic_amount = parseInt("<?=get_amount($it)?>");
-    var basic_point  = parseFloat("<?=$it['it_point']?>");
-    var cust_amount  = parseFloat("<?=$it['it_cust_amount']?>");
+    var basic_amount = parseInt("<?php echo get_amount($it); ?>");
+    var basic_point  = parseFloat("<?php echo $it['it_point']; ?>");
+    var cust_amount  = parseFloat("<?php echo $it['it_cust_amount']; ?>");
 
     var f = document.fitem;
     var opt1 = 0;
@@ -597,7 +597,7 @@ function amount_change()
     }
 }
 
-<? if (!$it[it_gallery]) { echo "amount_change();"; } // 처음시작시 한번 실행 ?>
+<?php if (!$it['it_gallery']) { echo "amount_change();"; } // 처음시작시 한번 실행 ?>
 
 // 바로구매 또는 장바구니 담기
 function fitemcheck(f, act)
@@ -676,11 +676,11 @@ function qa_menu(id)
 }
 
 if (document.getElementById("item_use_count"))
-    document.getElementById("item_use_count").innerHTML = "<?=$use_total_count?>";
+    document.getElementById("item_use_count").innerHTML = "<?php echo $use_total_count; ?>";
 if (document.getElementById("item_qa_count"))
-    document.getElementById("item_qa_count").innerHTML = "<?=$qa_total_count?>";
+    document.getElementById("item_qa_count").innerHTML = "<?php echo $qa_total_count; ?>";
 if (document.getElementById("item_relation_count"))
-    document.getElementById("item_relation_count").innerHTML = "<?=$item_relation_count?>";
+    document.getElementById("item_relation_count").innerHTML = "<?php echo $item_relation_count; ?>";
 
 // 상품상세설명에 있는 이미지의 사이즈를 줄임
 function explan_resize_image()
@@ -730,7 +730,7 @@ $(function() {
 });
 </script>
 
-<?
+<?php
 // 하단 HTML
 echo stripslashes($it['it_tail_html']);
 

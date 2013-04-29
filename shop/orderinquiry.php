@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("./_common.php");
 
 define("_ORDERINQUIRY_", true);
@@ -55,7 +55,7 @@ $g4['title'] = "주문내역";
 include_once('./_head.php');
 ?>
 
-<img src="<?=G4_SHOP_URL?>/img/top_orderinquiry.gif" border=0><p>
+<img src="<?php echo G4_SHOP_URL; ?>/img/top_orderinquiry.gif" border=0><p>
 
 <table width=100% cellpadding=0 cellspacing=0 border=0>
 <tr>
@@ -65,7 +65,7 @@ include_once('./_head.php');
         &nbsp;&nbsp;※ <font color="#FF6600">주문서번호를 클릭</font>하시면 주문, 입금, 배송정보등 세부 내역을 확인하실 수 있습니다.
         </div>
 
-        <?
+        <?php
         $limit = " limit $from_record, $rows ";
         include "./orderinquiry.sub.php";
         ?>
@@ -77,10 +77,10 @@ include_once('./_head.php');
 <table width=98%>
 <tr>
     <td width=50%>&nbsp;</td>
-    <td width=50% align=right><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?></td>
+    <td width=50% align=right><?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page="); ?></td>
 </tr>
 </table>
 
-<?
+<?php
 include_once('./_tail.php');
 ?>

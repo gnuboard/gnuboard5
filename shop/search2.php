@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // 상품이미지 사이즈(폭, 높이)를 몇배 축소 할것인지를 설정
@@ -9,14 +9,14 @@ $g4['title'] = "상품 검색";
 include_once('./_head.php');
 ?>
 
-<img src="<?=G4_SHOP_URL?>/img/top_search.gif" border="0"><p>
+<img src="<?php echo G4_SHOP_URL; ?>/img/top_search.gif" border="0"><p>
 
 <table width=100% cellpadding=0 cellspacing=0 align=center border=0>
 <tr>
     <td>
-        &nbsp;&nbsp; 찾으시는 검색어는 &quot;<b><?=stripslashes(get_text($search_str))?></b>&quot; 입니다.
+        &nbsp;&nbsp; 찾으시는 검색어는 &quot;<b><?php echo stripslashes(get_text($search_str)); ?></b>&quot; 입니다.
         <br><br>
-        <?
+        <?php
         // QUERY 문에 공통적으로 들어가는 내용
         // 상품명에 검색어가 포한된것과 상품판매가능인것만
         $sql_common = " from {$g4['shop_item_table']} a,
@@ -74,7 +74,7 @@ include_once('./_head.php');
 </tr>
 </table>
 
-<?
+<?php
 function write_search_save($save)
 {
 	global $g4, $search_str , $default , $image_rate , $cart_dir;

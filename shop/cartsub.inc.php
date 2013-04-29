@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 /*
@@ -22,23 +22,23 @@ else
 <colgroup width=80>
 <colgroup width=80>
 <colgroup width=80>
-<? if ($colspan == 7) echo '<colgroup width=50>'; ?>
-<tr><td colspan='<?=$colspan?>' height=2 class=c1></td></tr>
+<?php if ($colspan == 7) echo '<colgroup width=50>'; ?>
+<tr><td colspan='<?php echo $colspan; ?>' height=2 class=c1></td></tr>
 <tr align=center height=28 class=c2>
     <td colspan=2>상품명</td>
     <td>수량</td>
     <td>판매가</td>
     <td>소계</td>
     <td>포인트</td>
-<?
+<?php
 if ($s_page == 'cart.php')
     echo '<td>삭제</td>';
 else if ($s_page == 'orderinquiryview.php')
     echo '<td>상태</td>';
 ?>
 </tr>
-<tr><td colspan='<?=$colspan?>' height=1 class=c1></td></tr>
-<?
+<tr><td colspan='<?php echo $colspan; ?>' height=1 class=c1></td></tr>
+<?php
 $tot_point = 0;
 $tot_sell_amount = 0;
 $tot_cancel_amount = 0;
@@ -229,10 +229,10 @@ if ($i == 0) {
     echo "<input type=hidden name=records value='$i'>";
 }
 ?>
-<tr><td colspan='<?=$colspan?>' height=2 bgcolor=#94D7E7></td></tr>
+<tr><td colspan='<?php echo $colspan; ?>' height=2 bgcolor=#94D7E7></td></tr>
 <tr>
-    <td colspan='<?=$colspan?>' align=center>
-    <?
+    <td colspan='<?php echo $colspan; ?>' align=center>
+    <?php
     if ($s_page == "cart.php") {
         if ($i == 0) {
             echo "<br><a href='".G4_SHOP_URL."'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0'></a>";
@@ -253,9 +253,9 @@ if ($i == 0) {
 
 
 
-<? if ($s_page == "cart.php") { ?>
+<?php if ($s_page == "cart.php") { ?>
     <script language='javascript'>
-    <? if ($i != 0) { ?>
+    <?php if ($i != 0) { ?>
         function form_check(act) {
             var f = document.frmcartlist;
             var cnt = f.records.value;
@@ -264,7 +264,7 @@ if ($i == 0) {
             {
                 f.act.value = act;
 
-                <?
+                <?php
                 if (get_session('ss_mb_id')) // 회원인 겨우
                 {
                     echo "f.action = './orderform.php';";
@@ -277,7 +277,7 @@ if ($i == 0) {
             else if (act == "alldelete")
             {
                 f.act.value = act;
-                f.action = "<?="./cartupdate.php"?>";
+                f.action = "./cartupdate.php";
                 f.submit();
             }
             else if (act == "allupdate")
@@ -316,20 +316,20 @@ if ($i == 0) {
 
             return true;
         }
-    <? } ?>
+    <?php } ?>
     </script>
-<? } ?>
+<?php } ?>
 
-<? if ($s_page == "cart.php") { ?>
+<?php if ($s_page == "cart.php") { ?>
 <br><br>
 <table align=center cellpadding=0 cellspacing=0>
-    <tr><td><img src='<?=G4_SHOP_URL?>/img/info_box01.gif'></td></tr>
-    <tr><td background='<?=G4_SHOP_URL?>/img/info_box03.gif' style='line-height:180%; padding-left:20px'>
+    <tr><td><img src='<?php echo G4_SHOP_URL; ?>/img/info_box01.gif'></td></tr>
+    <tr><td background='<?php echo G4_SHOP_URL; ?>/img/info_box03.gif' style='line-height:180%; padding-left:20px'>
         · <FONT COLOR="#FF8200">상품 주문하기</FONT> : 주문서를 작성하시려면 '주문하기' 버튼을 누르세요.<BR>
         · <FONT COLOR="#FF8200">상품 수량변경</FONT> : 주문수량을 변경하시려면 원하시는 수량을 입력하신 후 '수량변경' 버튼을 누르세요.<BR>
         · <FONT COLOR="#FF8200">상품 삭제하기</FONT> : 모든 주문내용을 삭제하시려면 '삭제하기' 버튼을 누르세요.<BR>
         · <FONT COLOR="#FF8200">쇼핑 계속하기</FONT> : 쇼핑하시던 페이지로 돌아가시려면 '쇼핑 계속하기' 버튼을 누르세요.
         </td></tr>
-    <tr><td><img src='<?=G4_SHOP_URL?>/img/info_box02.gif'></td></tr>
+    <tr><td><img src='<?php echo G4_SHOP_URL; ?>/img/info_box02.gif'></td></tr>
 </table><br><br>
-<? } ?>
+<?php } ?>

@@ -1,10 +1,10 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <table cellpadding=0 cellspacing=0 bgcolor=#FFFFFF>
-<tr><td><a href='<?=$g4[shop_path]?>/cart.php'><img src='<?=G4_SHOP_URL?>/img/bar_cart.gif' border=0></a></td></tr>
-<?
+<tr><td><a href='<?php echo G4_SHOP_URL; ?>/cart.php'><img src='<?php echo G4_SHOP_URL; ?>/img/bar_cart.gif' border=0></a></td></tr>
+<?php
 $hsql = " select a.it_id, b.it_name, a.ct_qty from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
           where a.uq_id = '".get_session('ss_uq_id')."'
             and a.it_id  = b.it_id

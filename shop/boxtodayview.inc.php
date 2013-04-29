@@ -1,4 +1,4 @@
-<?
+<?php
 $tv_idx = get_session("ss_tv_idx");
 
 $tv_div['top'] = 0;
@@ -7,11 +7,11 @@ $tv_div['img_height'] = 70;
 $tv_div['img_length'] = 4; // 보여지는 최대 이미지수
 ?>
 
-<div id='divTodayHidden' style="position:relative; top:<?=$tv_div['top']?>;display:none;"><a href='javascript:todayview_visible();'><img src='<?=G4_SHOP_URL?>/img/todayview.gif' border=0></a></div>
+<div id='divTodayHidden' style="position:relative; top:<?php echo $tv_div['top']; ?>;display:none;"><a href='javascript:todayview_visible();'><img src='<?php echo G4_SHOP_URL; ?>/img/todayview.gif' border=0></a></div>
 <div id='divToday' style="position:relative; top:0;">
 <table cellpadding=0 cellspacing=0 border="0" bgcolor="#FFFFFF">
-<tr><td background='<?=G4_SHOP_URL?>/img/todayview01.gif' height=31 align=right><span id='todayviewcount'></span>&nbsp;&nbsp;</td></tr>
-<?
+<tr><td background='<?php echo G4_SHOP_URL; ?>/img/todayview01.gif' height=31 align=right><span id='todayviewcount'></span>&nbsp;&nbsp;</td></tr>
+<?php
 // 오늘 본 상품이 있다면
 if ($tv_idx)
 {
@@ -38,14 +38,14 @@ else
     echo "<tr><td><img src='".G4_SHOP_URL."/img/todayview04.gif'></td></tr>";
 }
 ?>
-<tr><td><a href='javascript:todayview_hidden();'><img src='<?=G4_SHOP_URL?>/img/todayview06.gif' border=0></a></td></tr>
+<tr><td><a href='javascript:todayview_hidden();'><img src='<?php echo G4_SHOP_URL; ?>/img/todayview06.gif' border=0></a></td></tr>
 </table>
 </div>
 
 <!-- 오늘 본 상품 -->
 <script language="JavaScript">
 var goods_link = new Array();
-<?
+<?php
 echo "var goods_max = ".(int)$tv_idx.";\n";
 echo "var goods_length = ".(int)$tv_div['img_length'].";\n";
 echo "var goods_current = goods_max;\n";
@@ -108,7 +108,7 @@ function todayview_dn()
         todayview_move(goods_current--);
 }
 
-<?
+<?php
 $k=0;
 for ($i=$tv_idx; $i>0; $i--)
 {
@@ -135,11 +135,11 @@ function CheckUIElements()
     yMenuFrom   = parseInt (document.getElementById('divToday').style.top, 10);
     /*
         if ( g4_is_gecko )
-        yMenuTo = top.pageYOffset + <?=$tv_div[top]?>;
+        yMenuTo = top.pageYOffset + <?php echo $tv_div['top']; ?>;
     else if ( g4_is_ie )
-        yMenuTo = document.body.scrollTop + parseInt("<?=$tv_div['top']?>");
+        yMenuTo = document.body.scrollTop + parseInt("<?php echo $tv_div['top']; ?>");
     */
-    yMenuTo = document.body.scrollTop + parseInt("<?=$tv_div['top']?>");
+    yMenuTo = document.body.scrollTop + parseInt("<?php echo $tv_div['top']; ?>");
 
     timeoutNextCheck = 500;
 
@@ -175,7 +175,7 @@ function OnLoad() {
 
 OnLoad();
 
-<?
+<?php
 if ($_COOKIE['ck_tvhidden'])
     echo "todayview_hidden();";
 ?>

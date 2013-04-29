@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("./_common.php");
 
 $w     = substr($_REQUEST['w'],0,1);
@@ -40,31 +40,31 @@ label {width:130px;vertical-align:top;padding:3px 0;}
 
 <div style="padding:10px;">
     <form name="fitemuse" method="post" onsubmit="return fitemuse_submit(this);" autocomplete="off">
-    <input type="hidden" name="w" value="<?=$w?>">
-    <input type="hidden" name="it_id" value="<?=$it_id?>">
-    <input type="hidden" name="is_id" value="<?=$is_id?>">
+    <input type="hidden" name="w" value="<?php echo $w; ?>">
+    <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
+    <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
     <fieldset style="padding:0 10px 10px;">
     <legend><strong>사용후기 쓰기</strong></legend>
     <ul style="padding:10px;">
         <li>
             <label for="is_subject">제목</label>
-            <input type='text' id='is_subject' name='is_subject' size='100' class='ed' minlength='2' required itemname='제목' value='<?=get_text($ps['is_subject'])?>'>
+            <input type='text' id='is_subject' name='is_subject' size='100' class='ed' minlength='2' required itemname='제목' value='<?php echo get_text($ps['is_subject']); ?>'>
         </li>
         <li>
             <label for="" style="width:200px;">내용</label>
-            <?=editor_html('is_content', $ps['is_content']);?>
+            <?php echo editor_html('is_content', $ps['is_content']); ?>
         </li>
         <li>
             <label>평가</label>
-            <input type=radio name=is_score value='10' <?=($is_score==10)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star5.gif' align=absmiddle>
-            <input type=radio name=is_score value='8'  <?=($is_score==8)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star4.gif' align=absmiddle>
-            <input type=radio name=is_score value='6'  <?=($is_score==6)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star3.gif' align=absmiddle>
-            <input type=radio name=is_score value='4'  <?=($is_score==4)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star2.gif' align=absmiddle>
-            <input type=radio name=is_score value='2'  <?=($is_score==2)?"checked='checked'":"";?>><img src='<?=G4_SHOP_URL?>/img/star1.gif' align=absmiddle>
+            <input type=radio name=is_score value='10' <?php echo ($is_score==10)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star5.gif' align=absmiddle>
+            <input type=radio name=is_score value='8'  <?php echo ($is_score==8)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star4.gif' align=absmiddle>
+            <input type=radio name=is_score value='6'  <?php echo ($is_score==6)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star3.gif' align=absmiddle>
+            <input type=radio name=is_score value='4'  <?php echo ($is_score==4)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star2.gif' align=absmiddle>
+            <input type=radio name=is_score value='2'  <?php echo ($is_score==2)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star1.gif' align=absmiddle>
         </li>
         <li>
             <label style="vertical-align:middle;"></label>
-            <?=$captcha_html?>
+            <?php echo $captcha_html; ?>
         </li>
     </ul>
     <input type="submit" value="   확   인   ">
@@ -90,9 +90,9 @@ function fitemuse_submit(f)
         }
     }
 
-    <? echo get_editor_js('is_content'); ?>
+    <?php echo get_editor_js('is_content'); ?>
 
-    <? echo chk_captcha_js(); ?>
+    <?php echo chk_captcha_js(); ?>
 
     f.action = "./itemusewinupdate.php";
 }
@@ -101,6 +101,6 @@ $(function() {
     $("#is_subject").focus();
 });
 </script>
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

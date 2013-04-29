@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
@@ -26,9 +26,9 @@ $g4['title'] = "주문상세내역 : 주문번호 - $od_id";
 include_once('./_head.php');
 ?>
 
-<img src="<?=G4_SHOP_URL?>/img/top_orderinquiryview.gif" border=0><p>
+<img src="<?php echo G4_SHOP_URL; ?>/img/top_orderinquiryview.gif" border=0><p>
 
-<?
+<?php
 $s_uq_id = $od['uq_id'];
 $s_page = 'orderinquiryview.php';
 include './cartsub.inc.php';
@@ -42,35 +42,35 @@ if(openwin != null) {
 </script>
 
 <br>
-<div align=right><img src='<?=G4_SHOP_URL?>/img/status01.gif' align=absmiddle> : 주문대기, <img src='<?=G4_SHOP_URL?>/img/status02.gif' align=absmiddle> : 상품준비중, <img src='<?=G4_SHOP_URL?>/img/status03.gif' align=absmiddle> : 배송중, <img src='<?=G4_SHOP_URL?>/img/status04.gif' align=absmiddle> : 배송완료</div>
+<div align=right><img src='<?php echo G4_SHOP_URL; ?>/img/status01.gif' align=absmiddle> : 주문대기, <img src='<?php echo G4_SHOP_URL; ?>/img/status02.gif' align=absmiddle> : 상품준비중, <img src='<?php echo G4_SHOP_URL; ?>/img/status03.gif' align=absmiddle> : 배송중, <img src='<?php echo G4_SHOP_URL; ?>/img/status04.gif' align=absmiddle> : 배송완료</div>
 
 <table width=98% cellpadding=0 cellspacing=7 align=center>
 <tr><td colspan=2>
-    <img src='<?=G4_SHOP_URL?>/img/my_icon.gif' align=absmiddle> <B>주문번호 : <FONT COLOR="#D60B69"><?=$od['od_id']?></FONT></B></td></tr>
+    <img src='<?php echo G4_SHOP_URL; ?>/img/my_icon.gif' align=absmiddle> <B>주문번호 : <FONT COLOR="#D60B69"><?php echo $od['od_id']; ?></FONT></B></td></tr>
 <tr><td colspan=2 height=2 bgcolor=#94A9E7></td></tr>
-<tr><td align=center bgcolor=#F3F2FF><img src='<?=G4_SHOP_URL?>/img/t_data02.gif'></td>
+<tr><td align=center bgcolor=#F3F2FF><img src='<?php echo G4_SHOP_URL; ?>/img/t_data02.gif'></td>
     <td style='padding:20px'>
         <table cellpadding=4 cellspacing=0>
         <colgroup width=120>
         <colgroup width=''>
-        <tr><td>· 주문일시</td><td>: <b><? echo $od['od_time'] ?></b></td></tr>
-        <tr><td>· 이 름</td><td>: <? echo $od['od_name'] ?></td></tr>
-        <tr><td>· 전화번호</td><td>: <? echo $od['od_tel'] ?></td></tr>
-        <tr><td>· 핸드폰</td><td>: <? echo $od['od_hp'] ?></td></tr>
-        <tr><td>· 주 소</td><td>: <?=sprintf("(%s-%s)&nbsp;%s %s", $od['od_zip1'], $od['od_zip2'], $od['od_addr1'], $od['od_addr2'])?></td></tr>
-        <tr><td>· E-mail</td><td>: <? echo $od['od_email'] ?></td></tr>
+        <tr><td>· 주문일시</td><td>: <b><?php echo $od['od_time']; ?></b></td></tr>
+        <tr><td>· 이 름</td><td>: <?php echo $od['od_name']; ?></td></tr>
+        <tr><td>· 전화번호</td><td>: <?php echo $od['od_tel']; ?></td></tr>
+        <tr><td>· 핸드폰</td><td>: <?php echo $od['od_hp']; ?></td></tr>
+        <tr><td>· 주 소</td><td>: <?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_zip1'], $od['od_zip2'], $od['od_addr1'], $od['od_addr2']); ?></td></tr>
+        <tr><td>· E-mail</td><td>: <?php echo $od['od_email']; ?></td></tr>
     </table></td></tr>
 <tr><td colspan=2 height=1 bgcolor=#738AC6></td></tr>
-<tr><td align=center bgcolor=#F3F2FF><img src='<?=G4_SHOP_URL?>/img/t_data03.gif'></td>
+<tr><td align=center bgcolor=#F3F2FF><img src='<?php echo G4_SHOP_URL; ?>/img/t_data03.gif'></td>
     <td style='padding:20px'>
         <table cellpadding=4 cellspacing=0>
         <colgroup width=120>
         <colgroup width=''>
-        <tr><td>· 이 름</td><td>: <? echo $od['od_b_name'] ?></td></tr>
-        <tr><td>· 전화번호</td><td>: <? echo $od['od_b_tel'] ?></td></tr>
-        <tr><td>· 핸드폰</td><td>: <? echo $od['od_b_hp'] ?></td></tr>
-        <tr><td>· 주 소</td><td>: <?=sprintf("(%s-%s)&nbsp;%s %s", $od['od_b_zip1'], $od['od_b_zip2'], $od['od_b_addr1'], $od['od_b_addr2'])?></td></tr>
-        <?
+        <tr><td>· 이 름</td><td>: <?php echo $od['od_b_name']; ?></td></tr>
+        <tr><td>· 전화번호</td><td>: <?php echo $od['od_b_tel']; ?></td></tr>
+        <tr><td>· 핸드폰</td><td>: <?php echo $od['od_b_hp']; ?></td></tr>
+        <tr><td>· 주 소</td><td>: <?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_b_zip1'], $od['od_b_zip2'], $od['od_b_addr1'], $od['od_b_addr2']); ?></td></tr>
+        <?php
         // 희망배송일을 사용한다면
         if ($default['de_hope_date_use'])
         {
@@ -90,7 +90,7 @@ if(openwin != null) {
         </table></td></tr>
 <tr><td colspan=2 height=1 bgcolor=#738AC6></td></tr>
 
-<?
+<?php
 // 배송회사 정보
 $dl = sql_fetch(" select * from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
@@ -118,7 +118,7 @@ if ($od['od_invoice'] || !$od['misu'])
 }
 ?><p>
 
-<?
+<?php
 $receipt_amount = $od['od_receipt_bank']
                 + $od['od_receipt_card']
                 + $od['od_receipt_hp']
@@ -269,8 +269,8 @@ if ($default['de_taxsave_use']) {
 <tr><td colspan=2 height=1 bgcolor=#94A9E7></td></tr>
 <tr>
     <td colspan=2 align=right bgcolor=#E7EBF7 height=70>
-        <b>결제 합계</b> <? echo $wanbul ?> : <b><? echo display_amount($receipt_amount) ?></b></span>&nbsp;&nbsp;<br>
-        <?
+        <b>결제 합계</b> <?php echo $wanbul; ?> : <b><?php echo display_amount($receipt_amount); ?></b></span>&nbsp;&nbsp;<br>
+        <?php
         if ($od['od_dc_amount'] > 0) {
             echo "<br>DC : ". display_amount($od['od_dc_amount']) . "&nbsp;&nbsp;";
         }
@@ -283,7 +283,7 @@ if ($default['de_taxsave_use']) {
 </table>
 <br><br>
 
-<? if ($od['od_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
+<?php if ($od['od_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
     preg_match("/(\s[^\s]+\s)/", $od['od_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
 ?>
@@ -293,17 +293,17 @@ if ($default['de_taxsave_use']) {
 <legend>모의입금처리</legend>
 <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
 <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
-<input type="text" name="e_trade_no" value="<?=$od['od_escrow1']?>" size="80"><br />
-<input type="text" name="deposit_no" value="<?=$deposit_no?>" size="80"><br />
-<input type="text" name="req_name" value="<?=$od['od_name']?>" size="80"><br />
-<input type="text" name="noti_url" value="<?=G4_SHOP_URL?>/settle_kcp_common.php" size="80"><br /><br />
+<input type="text" name="e_trade_no" value="<?php echo $od['od_escrow1']; ?>" size="80"><br />
+<input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
+<input type="text" name="req_name" value="<?php echo $od['od_name']; ?>" size="80"><br />
+<input type="text" name="noti_url" value="<?php echo G4_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
 <input type="submit" value="입금통보 테스트">
 </form>
 </fieldset>
 </div>
 </center>
-<? } ?>
+<?php } ?>
 
-<?
+<?php
 include_once('./_tail.php');
 ?>

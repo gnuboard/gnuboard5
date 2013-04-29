@@ -16,11 +16,11 @@ for ($i=0; $row_nw=sql_fetch_array($result); $i++)
 ?>
 <div id="hd_pops_<?php echo $nw['nw_id'] ?>" class="hd_pops" style="top:<?php echo $nw['nw_top']?>px;left:<?php echo $nw['nw_left']?>px;width:<?php echo $nw['nw_width'] ?>px;height:<?php echo $nw['nw_height'] ?>px">
     <div class="hd_pops_con">
-        <?=conv_content($nw['nw_content'], 1);?>
+        <?php echo conv_content($nw['nw_content'], 1); ?>
     </div>
     <div class="hd_pops_footer">
-        <button class="hd_pops_reject hd_pops_<?=$nw['nw_id']?> <?=$nw['nw_disable_hours']?>"><strong><?=$nw['nw_disable_hours']?></strong>시간 동안 다시 열람하지 않습니다.</button>
-        <button class="hd_pops_close hd_pops_<?=$nw['nw_id']?>">닫기</button>
+        <button class="hd_pops_reject hd_pops_<?php echo $nw['nw_id']; ?> <?php echo $nw['nw_disable_hours']; ?>"><strong><?php echo $nw['nw_disable_hours']; ?></strong>시간 동안 다시 열람하지 않습니다.</button>
+        <button class="hd_pops_close hd_pops_<?php echo $nw['nw_id']; ?>">닫기</button>
     </div>
 </div>
 <?php }

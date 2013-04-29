@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("./_common.php");
 
 if ($_COOKIE['ck_bn_id'] != $bn_id)

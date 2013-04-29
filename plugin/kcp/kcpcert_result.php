@@ -141,7 +141,6 @@ if( $cert_enc_use == "Y" )
         set_session("ss_kcpcert_no",    $md5_cert_no);
         set_session("ss_kcpcert_time",  G4_TIME_YMDHIS);
         set_session("ss_kcpcert_hash",  $hash_data);
-        //alert_close($phone_no.$user_name.$md5_cert_no);
 
         // 성인인증결과
         $adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
@@ -173,8 +172,7 @@ $(function() {
     // 인증정보
     $opener.$("input[name=mb_hp]").val("<?php echo $phone_no ?>");
     $opener.$("input[name=mb_name]").val("<?php echo $user_name ?>");
-    //$opener.$("input[name=kcpcert_no]").val("<?php echo $md5_cert_no ?>");
-    //$opener.$("input[name=kcpcert_time]").val("<?php echo G4_TIME_YMDHIS ?>");
+    alert("본인의 휴대폰번호로 확인 되었습니다.");
     window.close();
 });
 </script>

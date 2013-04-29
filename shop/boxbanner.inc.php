@@ -1,4 +1,4 @@
-<?
+<?php
 // 배너 출력
 $sql = " select * from {$g4['shop_banner_table']}
           where '".G4_TIME_YMDHIS."' between bn_begin_time and bn_end_time
@@ -7,7 +7,7 @@ $sql = " select * from {$g4['shop_banner_table']}
 $result = sql_query($sql);
 ?>
 <table width=100% cellpadding=0 cellspacing=0>
-<?
+<?php
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     //print_r2($row);

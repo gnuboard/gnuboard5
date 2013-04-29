@@ -10,7 +10,7 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 
 <div id="sidx_img">
-    <img src="<?=G4_DATA_URL?>/common/main_img" alt="">
+    <img src="<?php echo G4_DATA_URL; ?>/common/main_img" alt="">
 </div>
 
 <div>
@@ -58,17 +58,17 @@ if ($default['de_type'.$type.'_list_use'])
 ?>
 </div>
 <div>
-<?=latest('basic', 'qa', 5, 30);?>
+<?php echo latest('basic', 'qa', 5, 30); ?>
 </div>
 <div>
-<?=latest('basic', 'free', 5, 30);?>
+<?php echo latest('basic', 'free', 5, 30); ?>
 </div>
 <div>
 <!-- 공지사항 -->
-<?//=latest('basic', 'notice', 3, 25);?>
+<?php //echo latest('basic', 'notice', 3, 25); ?>
 </div>
 <div>
-<?
+<?php
 // 최신상품
 $type = 3;
 if ($default["de_type{$type}_list_use"])
@@ -80,18 +80,18 @@ if ($default["de_type{$type}_list_use"])
 </div>
 <div>
 <!-- 온라인 투표 -->
-<?=poll('basic');?>
+<?php echo poll('basic'); ?>
 </div>
 <div>
 <!-- 방문자 수 -->
-<?//=visit('basic');?>
+<?php //echo visit('basic'); ?>
 </div>
 
 <div>
 <!-- 메인 배너 -->
-<?=display_banner('메인');?>
+<?php echo display_banner('메인'); ?>
 </div>
 
-<?
+<?php
 include_once(G4_SHOP_PATH.'/shop.tail.php');
 ?>

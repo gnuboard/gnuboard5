@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 
 if (!$fm_id) $fm_id = 1;
@@ -13,9 +13,9 @@ $g4['title'] = $fm['fm_subject'];
 include_once('./_head.php');
 ?>
 
-<img src="<?=G4_SHOP_URL?>/img/top_faq.gif" border=0><p>
+<img src="<?php echo G4_SHOP_URL; ?>/img/top_faq.gif" border=0><p>
 
-<?
+<?php
 $himg = G4_DATA_PATH."/faq/{$fm_id}_h";
 if (file_exists($himg))
     echo "<img src='".G4_DATA_URL."/faq/{$fm_id}_h' border=0><br>";

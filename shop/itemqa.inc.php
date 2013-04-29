@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
@@ -6,24 +6,24 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <a name="qa"></a>
 <div id="item_qa" style="display:block;">
 <table width=100% cellpadding=0 cellspacing=0>
-<tr><td rowspan=2 width=31 valign=top bgcolor=#A7DFE1><img src='<?=G4_SHOP_URL?>/img/item_t03.gif'></td><td height=2 bgcolor=#A7DFE1></td></tr>
+<tr><td rowspan=2 width=31 valign=top bgcolor=#A7DFE1><img src='<?php echo G4_SHOP_URL; ?>/img/item_t03.gif'></td><td height=2 bgcolor=#A7DFE1></td></tr>
 <tr><td style='padding:15px'>
         <table width=100% cellpadding=0 cellspacing=0 border=0>
         <tr>
-            <td width=11><img src='<?=G4_SHOP_URL?>/img/corner01.gif'></td>
+            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner01.gif'></td>
             <td valign=top>
                 <table width=100% height=31 cellpadding=0 cellspacing=0 border=0>
                 <tr align=center>
-                    <td width=40 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>번호</td>
-                    <td background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>제목</td>
-                    <td width=80 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>작성자</td>
-                    <td width=100 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>작성일</td>
-                    <td width=80 background='<?=G4_SHOP_URL?>/img/box_bg01.gif'>답변</td>
+                    <td width=40 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>번호</td>
+                    <td background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>제목</td>
+                    <td width=80 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>작성자</td>
+                    <td width=100 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>작성일</td>
+                    <td width=80 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>답변</td>
                 </tr>
                 </table></td>
-            <td width=11><img src='<?=G4_SHOP_URL?>/img/corner02.gif'></td>
+            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner02.gif'></td>
         </tr>
-        <?
+        <?php
         $sql_common = " from {$g4['shop_item_qa_table']} where it_id = '{$it['it_id']}' ";
 
         // 테이블의 전체 레코드수만 얻음
@@ -158,29 +158,29 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         }
         ?>
         <tr>
-            <td width=11><img src='<?=G4_SHOP_URL?>/img/corner03.gif'></td>
-            <td width=100% background='<?=G4_SHOP_URL?>/img/box_bg04.gif'></td>
-            <td width=11><img src='<?=G4_SHOP_URL?>/img/corner04.gif'></td>
+            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner03.gif'></td>
+            <td width=100% background='<?php echo G4_SHOP_URL; ?>/img/box_bg04.gif'></td>
+            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner04.gif'></td>
         </tr>
         </table>
 
 
         <table width=100% cellpadding=0 cellspacing=0>
         <tr><td colspan=2 height=35>* 이 상품에 대한 궁금한 사항이 있으신 분은 질문해 주십시오.
-            <input type=image src='<?=G4_SHOP_URL?>/img/btn_qa.gif' onclick="itemqa_insert(itemqa);" align=absmiddle></td></tr>
+            <input type=image src='<?php echo G4_SHOP_URL; ?>/img/btn_qa.gif' onclick="itemqa_insert(itemqa);" align=absmiddle></td></tr>
         </table>
 
         <!-- 상품문의 폼-->
         <div id=itemqa style='display:none;'>
         <form name="fitemqa" method="post" onsubmit="return fitemqa_submit(this);" autocomplete=off style="padding:0px;">
         <input type=hidden name=w value=''>
-        <input type=hidden name=token value='<?=$token?>'>
+        <input type=hidden name=token value='<?php echo $token; ?>'>
         <input type=hidden name=iq_id value=''>
-        <input type=hidden name=it_id value='<?=$it['it_id']?>'>
+        <input type=hidden name=it_id value='<?php echo $it['it_id']; ?>'>
         <table width=100% cellpadding=0 cellspacing=0>
         <tr><td height=2 bgcolor=#63BCC0 colspan=2></td></tr>
 
-        <? if (!$is_member) { ?>
+        <?php if (!$is_member) { ?>
         <tr bgcolor=#fafafa>
             <td height=30 align=right>이름&nbsp;</td>
             <td>&nbsp;<input type="text" name="iq_name" class=ed maxlength=20 minlength=2 required itemname="이름"></td></tr>
@@ -188,7 +188,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <td height=30 align=right>패스워드&nbsp;</td>
             <td>&nbsp;<input type="password" name="iq_password" class=ed maxlength=20 minlength=3 required itemname="패스워드">
                 <span class=small>패스워드는 최소 3글자 이상 입력하십시오.</span></td></tr>
-        <? } ?>
+        <?php } ?>
 
         <tr bgcolor=#fafafa>
             <td height=30 align=right>제목&nbsp;</td>
@@ -197,11 +197,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <td align=right>내용&nbsp;</td>
             <td>&nbsp;<textarea name="iq_question" rows="7" style='width:90%;' class=ed required itemname="내용"></textarea></td></tr>
         <tr bgcolor=#fafafa>
-            <td colspan="2"><?=$captcha_html?></td>
+            <td colspan="2"><?php echo $captcha_html; ?></td>
         </tr>
         <tr><td height=5 colspan=2></td></tr>
         <tr><td height=2 bgcolor=#63bcc0 colspan=2></td></tr>
-        <tr><td colspan=2 align=right height=30><input type=image src='<?=G4_SHOP_URL?>/img/btn_confirm.gif' border=0></td></tr>
+        <tr><td colspan=2 align=right height=30><input type=image src='<?php echo G4_SHOP_URL; ?>/img/btn_confirm.gif' border=0></td></tr>
         </table>
         </form>
         <br><br>
@@ -216,7 +216,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <script type="text/javascript">
 function fitemqa_submit(f)
 {
-    <? echo chk_captcha_js(); ?>
+    <?php echo chk_captcha_js(); ?>
 
     f.action = "itemqaupdate.php";
     return true;

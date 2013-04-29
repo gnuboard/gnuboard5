@@ -118,7 +118,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <th scope="row">내용</th>
             <td>
                 <?php if ($comment_min || $comment_max) {  ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
-                <textarea name="wr_content" id="wr_content" required class="required"
+                <textarea name="wr_content" id="wr_content" maxlength="10000" required class="required"
                 <?php if ($comment_min || $comment_max) {  ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
                 <?php if ($comment_min || $comment_max) {  ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
             </td>
