@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#fff;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#fff;color:#3c4043;font-size:0.75em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -14,10 +14,10 @@ p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link,
-a:visited {color:#000;text-decoration:none}
+a:visited {color:#3c4043;text-decoration:none}
 a:hover,
 a:focus,
-a:active {color:#000;text-decoration:underline}
+a:active {color:#3c4043;text-decoration:underline}
 
 /* 화면낭독기 사용자용 */
 #hd_login_msg {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
@@ -155,6 +155,29 @@ a:active {color:#000;text-decoration:underline}
 #container {z-index:4;position:relative;float:left;width:740px;min-height:500px;height:auto !important;height:500px;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
+/* 인덱스 상품 출력 */
+/* 공통 */
+.sidx_it_wrap {margin:0 0 30px;zoom:1}
+.sidx_it_wrap:after {display:block;visibility:hidden;clear:both;content:''}
+.sidx_it_wrap header {margin:0 0 20px;zoom:1}
+.sidx_it_wrap header:after {display:block;visibility:hidden;clear:both;content:''}
+.sidx_it_wrap h2 {float:left;margin:0 20px 0 0;padding:0;line-height:1em}
+.sidx_it_wrap h2 a {text-decoration:none}
+.sidx_it_wrap_hdesc {float:left;margin:0;padding:0;color:#777;line-height:1em}
+
+.sidx_it {margin:0;padding:0;list-style:none;zoom:1}
+.sidx_it:after {display:block;visibility:hidden;clear:both;content:''}
+.sidx_it_li {position:relative}
+
+/* 스킨 10 */
+.sidx_it_10 .sidx_it_li {float:left;margin:0 25px 0 0;width:230px}
+.sidx_it_10 .sidx_it_last {margin:0 !important}
+.sidx_it_10 .sidx_it_a {display:block;font-weight:bold;text-decoration:none}
+.sidx_it_10 span {display:block;margin:0 0 10px}
+.sidx_it_10 b {display:block;margin:0 0 5px;font-weight:normal}
+.sidx_it_10 .sidx_it_sns {position:absolute;top:195px;right:20px}
+
+/* 배너 인덱스 출력 */
 #sbn_idx {}
 #sbn_idx h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sbn_idx ul {margin:0;padding:0;border:0;list-style:none}
