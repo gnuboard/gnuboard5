@@ -28,16 +28,16 @@ function get_image($img, $width=0, $height=0)
             $width = $size[0];
             $height = $size[1];
         }
-        $str = '<img src="'.G4_DATA_URL.'/item/'.$img.'" width="'.$width.'" height="'.$height.'" id="'.$img.'">';
+        $str = '<img src="'.G4_DATA_URL.'/item/'.$img.'" alt="" width="'.$width.'" height="'.$height.'" id="'.$img.'">';
     }
     else
     {
-        $str = '<img id="'.$img.'" src="'.G4_SHOP_URL.'/img/no_image.gif" ';
+        $str = '<img src="'.G4_SHOP_URL.'/img/no_image.gif" alt="" ';
         if ($width)
             $str .= 'width="'.$width.'" height="'.$height.'"';
         else
             $str .= 'width="'.$default['de_mimg_width'].'" height="'.$default['de_mimg_height'].'"';
-        $str .= '>';
+        $str .= ' id="'.$img.'">';
     }
 
 
@@ -152,7 +152,7 @@ function upload_file($srcfile, $destfile, $dir)
     if ($destfile == "") return false;
     // 업로드 한후 , 퍼미션을 변경함
     @move_uploaded_file($srcfile, $dir.'/'.$destfile);
-    @chmod($dir'./.'$destfile, 0606);
+    @chmod($dir.'/'.$destfile, 0606);
     return true;
 }
 
@@ -216,7 +216,7 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
         return false;
     }
 
-    $file = G4_SHOP_PATH.'/'$skin_file;
+    $file = G4_SHOP_PATH.'/'.$skin_file;
     if (!file_exists($file)) {
         echo $file.' 파일을 찾을 수 없습니다.';
     } else {
@@ -690,9 +690,9 @@ function display_relation_item($it_id, $width, $height, $rows=3)
 
         if(is_file($full_img)) {
             $img_url = G4_DATA_URL.'/item/'.$row['it_id'].'_s';
-            $img = '<img src="'.$img_url.'" width="'.$width.'" height="'.$height.'">';
+            $img = '<img src="'.$img_url.'" alt="" width="'.$width.'" height="'.$height.'">';
         } else {
-            $img = '<img src="'.G4_SHOP_URL.'/img/no_image.gif" width="'.$width.'" height="'.$height.'">';
+            $img = '<img src="'.G4_SHOP_URL.'/img/no_image.gif" alt="" width="'.$width.'" height="'.$height.'">';
         }
 
         $str .= '<li><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">'.$img.'</a></li>';
