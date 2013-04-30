@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '500110';
 include_once('./_common.php');
 
@@ -73,17 +73,17 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     <tfoot>
     <tr>
         <td colspan="2">합 계</td>
-        <td><?=number_format($tot['orderamount'])?></td>
-        <td><?=number_format($tot['ordercancel']+ $tot['dc'])?></td>
-        <td><?=number_format($tot['receipt_bank'])?></td>
-        <td><?=number_format($tot['receipt_card'])?></td>
-        <td><?=number_format($tot['receipt_point'])?></td>
-        <td><?=number_format($tot['receiptcancel'])?></td>
-        <td><?=number_format($tot['misu'])?></td>
+        <td><?php echo number_format($tot['orderamount']); ?></td>
+        <td><?php echo number_format($tot['ordercancel']+ $tot['dc']); ?></td>
+        <td><?php echo number_format($tot['receipt_bank']); ?></td>
+        <td><?php echo number_format($tot['receipt_card']); ?></td>
+        <td><?php echo number_format($tot['receipt_point']); ?></td>
+        <td><?php echo number_format($tot['receiptcancel']); ?></td>
+        <td><?php echo number_format($tot['misu']); ?></td>
     </tr>
     </tfoot>
     <tbody>
-    <?
+    <?php
     unset($tot);
     for ($i=0; $i<count($lines); $i++)
     {
@@ -97,17 +97,17 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     ?>
         <tr>
-            <td class="td_odrnum2"><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>"><?=$lines[$i]['od_id']?></a></td>
-            <td class="td_name"><?=$href?><?=$lines[$i]['od_name']?></a></td>
-            <td class="td_num"><?=number_format($lines1[$i]['orderamount'])?></td>
-            <td class="td_num"><?=number_format($lines1[$i]['ordercancel'] + $lines[$i]['od_dc_amount'])?></td>
-            <td class="td_num"><?=number_format($lines[$i]['od_receipt_bank'])?></td>
-            <td class="td_num"><?=number_format($lines[$i]['od_receipt_card'])?></td>
-            <td class="td_num"><?=number_format($lines[$i]['od_receipt_point'])?></td>
-            <td class="td_num"><?=number_format($lines[$i]['receiptcancel'])?></td>
-            <td class="td_num"><?=number_format($misu)?></td>
+            <td class="td_odrnum2"><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a></td>
+            <td class="td_name"><?php echo $href; ?><?php echo $lines[$i]['od_name']; ?></a></td>
+            <td class="td_num"><?php echo number_format($lines1[$i]['orderamount']); ?></td>
+            <td class="td_num"><?php echo number_format($lines1[$i]['ordercancel'] + $lines[$i]['od_dc_amount']); ?></td>
+            <td class="td_num"><?php echo number_format($lines[$i]['od_receipt_bank']); ?></td>
+            <td class="td_num"><?php echo number_format($lines[$i]['od_receipt_card']); ?></td>
+            <td class="td_num"><?php echo number_format($lines[$i]['od_receipt_point']); ?></td>
+            <td class="td_num"><?php echo number_format($lines[$i]['receiptcancel']); ?></td>
+            <td class="td_num"><?php echo number_format($misu); ?></td>
         </tr>
-    <?
+    <?php
     }
 
     if ($i == 0) {
@@ -118,6 +118,6 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     </table>
 </section>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

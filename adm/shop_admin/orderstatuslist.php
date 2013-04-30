@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400410';
 include_once('./_common.php');
 
@@ -92,45 +92,45 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="frmorderlist">
-<input type="hidden" name="doc" value="<?=$doc ?>">
-<input type="hidden" name="sort1" value="<?=$sort1 ?>">
-<input type="hidden" name="page" value="<?=$page ?>">
-<input type="hidden" name="save_search" value="<?=$search?>">
+<input type="hidden" name="doc" value="<?php echo $doc; ?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="save_search" value="<?php echo $search; ?>">
 <fieldset>
     <legend>주문상태별 검색</legend>
     <span>
-        <?=$listall?>
-        전체 주문내역 <?=$total_count ?>건
+        <?php echo $listall; ?>
+        전체 주문내역 <?php echo $total_count; ?>건
     </span>
 
     <ul class="anchor">
-        <li><a href="<?=$_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("준비")?>">준비</a></li>
-        <li><a href="<?=$_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("주문")?>">주문</a></li>
-        <li><a href="<?=$_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("배송")?>">배송</a></li>
-        <li><a href="<?=$_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("완료")?>">완료</a></li>
-        <li><a href="<?=$_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("취소")?>">취소</a></li>
-        <li><a href="<?=$_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("반품")?>">반품</a></li>
-        <li><a href="<?=$_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("품절")?>">품절</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("준비"); ?>">준비</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("주문"); ?>">주문</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("배송"); ?>">배송</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("완료"); ?>">완료</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("취소"); ?>">취소</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("반품"); ?>">반품</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=ct_status&amp;search='.urlencode("품절"); ?>">품절</a></li>
     </ul>
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="od_id" <?=get_selected($sel_field, 'od_id')?>>주문번호</option>
-        <option value="od_name" <?=get_selected($sel_field, 'od_name')?>>주문자</option>
-        <option value="mb_id" <?=get_selected($sel_field, 'mb_id')?>>회원 ID</option>
-        <option value="od_deposit_name" <?=get_selected($sel_field, 'od_deposit_name')?>>입금자</option>
-        <option value="c.it_id" <?=get_selected($sel_field, 'c,it_id')?>>상품코드</option>
-        <option value="c.ca_id" <?=get_selected($sel_field, 'c.ca_id')?>>분류코드</option>
-        <option value="ct_status" <?=get_selected($sel_field, 'ct_status')?>>상태</option>
+        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+        <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
+        <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
+        <option value="od_deposit_name" <?php echo get_selected($sel_field, 'od_deposit_name'); ?>>입금자</option>
+        <option value="c.it_id" <?php echo get_selected($sel_field, 'c,it_id'); ?>>상품코드</option>
+        <option value="c.ca_id" <?php echo get_selected($sel_field, 'c.ca_id'); ?>>분류코드</option>
+        <option value="ct_status" <?php echo get_selected($sel_field, 'ct_status'); ?>>상태</option>
     </select>
     <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="search" value="<?=$search ?>" id="search" required class="required frm_input" autocomplete="off">
+    <input type="text" name="search" value="<?php echo $search; ?>" id="search" required class="required frm_input" autocomplete="off">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
 
 <section class="cbox">
-    <h2><?=$g4['title']?> 목록</h2>
+    <h2><?php echo $g4['title']; ?> 목록</h2>
 
     <div id="btn_add">
         <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
@@ -140,30 +140,30 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <table id="sodr_status">
     <thead>
     <tr>
-        <th scope="col"><a href="<?=title_sort("od_id")."&amp;$qstr1";?>">주문번호<span class="sound_only"> 순 정렬</span></a><br>주문일시</th>
-        <th scope="col"><a href="<?=title_sort("it_name")."&amp;$qstr1";?>">상품명<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("od_name")."&amp;$qstr1";?>">주문자<span class="sound_only"> 순 정렬</span></a><br>입금자</th>
-        <th scope="col"><a href="<?=title_sort("mb_id")."&amp;$qstr1";?>">회원ID<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_amount")."&amp;$qstr1";?>">판매가<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_qty")."&amp;$qstr1";?>">수량<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_sub_amount")."&amp;$qstr1";?>">소계<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_sub_point")."&amp;$qstr1";?>">포인트<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status")."&amp;$qstr1";?>">상태<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_id")."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a><br>주문일시</th>
+        <th scope="col"><a href="<?php echo title_sort("it_name")."&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a><br>입금자</th>
+        <th scope="col"><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_amount")."&amp;$qstr1"; ?>">판매가<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_qty")."&amp;$qstr1"; ?>">수량<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_sub_amount")."&amp;$qstr1"; ?>">소계<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_sub_point")."&amp;$qstr1"; ?>">포인트<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status")."&amp;$qstr1"; ?>">상태<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col">수정</th>
     </tr>
     </thead>
     <tfoot>
     <tr>
         <th scope="row" colspan="4">합 계</td>
-        <td><?=number_format($tot_amount)?></td>
-        <td><?=number_format($tot_qty)?></td>
-        <td><?=number_format($tot_sub_amount)?></td>
-        <td><?=number_format($tot_sub_point)?></td>
+        <td><?php echo number_format($tot_amount); ?></td>
+        <td><?php echo number_format($tot_qty); ?></td>
+        <td><?php echo number_format($tot_sub_amount); ?></td>
+        <td><?php echo number_format($tot_sub_point); ?></td>
         <td colspan="2"></td>
     </tr>
     </tfoot>
     <tbody>
-    <?
+    <?php
     for ($i=0; $i<count($lines); $i++) {
 
         $href = $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=c.it_id&amp;search='.$lines[$i]['it_id'];
@@ -174,23 +174,23 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     <tr>
         <td class="td_odrnum2">
-            <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=od_id&amp;search=<?=$lines[$i]['od_id']?>"><?=$lines[$i]['od_id']?></a><br>
-            <?=$lines[$i]['od_time']?>
+            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_id&amp;search=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a><br>
+            <?php echo $lines[$i]['od_time']; ?>
         </td>
-        <td class="td_it_img"><a href="<?=$href?>"><?=get_it_image($lines[$i]['it_id'].'_s', 50, 50)?><?=$it_name?></a></td>
+        <td class="td_it_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($lines[$i]['it_id'].'_s', 50, 50); ?><?php echo $it_name; ?></a></td>
         <td class="td_name">
-            <a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=od_name&amp;search=<?=$lines[$i]['od_name']?>"><?=cut_str($lines[$i]['od_name'],10,"")?></a>
-            <? if ($lines[$i]['od_deposit_name'] != "") echo '<br>'.$lines[$i]['od_deposit_name']?>
+            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>"><?php echo cut_str($lines[$i]['od_name'],10,""); ?></a>
+            <?php if ($lines[$i]['od_deposit_name'] != "") echo '<br>'.$lines[$i]['od_deposit_name']?>
         </td>
-        <td class="td_name"><a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=mb_id&amp;search=<?=$lines[$i]['mb_id']?>"><?=$lines[$i]['mb_id']?></a></td>
-        <td><?=number_format($lines[$i]['ct_amount'])?></td>
-        <td><?=$lines[$i]['ct_qty']?></td>
-        <td><?=number_format($lines[$i]['ct_sub_amount'])?></td>
-        <td><?=number_format($lines[$i]['ct_sub_point'])?></td>
-        <td><a href="<?=$_SERVER['PHP_SELF']?>?sort1=<?=$sort1?>&amp;sort2=<?=$sort2?>&amp;sel_field=ct_status&amp;search=<?=$lines[$i]['ct_status']?>"><?=$lines[$i]['ct_status']?></a></td>
-        <td><a href="./orderform.php?od_id=<?=$lines[$i]['od_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$lines[$i]['od_id']?> 수정"></a></td>
+        <td class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>"><?php echo $lines[$i]['mb_id']; ?></a></td>
+        <td><?php echo number_format($lines[$i]['ct_amount']); ?></td>
+        <td><?php echo $lines[$i]['ct_qty']; ?></td>
+        <td><?php echo number_format($lines[$i]['ct_sub_amount']); ?></td>
+        <td><?php echo number_format($lines[$i]['ct_sub_point']); ?></td>
+        <td><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=ct_status&amp;search=<?php echo $lines[$i]['ct_status']; ?>"><?php echo $lines[$i]['ct_status']; ?></a></td>
+        <td><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $lines[$i]['od_id']; ?> 수정"></a></td>
     </tr>
-    <?
+    <?php
     }
 
     if ($i == 0) echo '<tr><td colspan="11" class="empty_table">자료가 한건도 없습니다.</td></tr>';
@@ -200,8 +200,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

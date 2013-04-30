@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '500200';
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/icode.sms.lib.php');

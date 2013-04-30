@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // 제대로된 include 시에만 실행
