@@ -46,8 +46,10 @@ if (!isset($board['bo_mobile_content_head'])) {
 }
 
 if (!isset($board['bo_use_cert'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT 'none' AFTER `bo_use_email` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' AFTER `bo_use_email` ", false);
 }
+
+sql_query(" ALTER TABLE `{$g4['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' ", false);
 
 $required = "";
 $readonly = "";
