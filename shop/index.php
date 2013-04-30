@@ -89,29 +89,25 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 
-<div>
-<?php echo latest('shop_basic', 'qa', 5, 30); ?>
-</div>
-<div>
-<?php echo latest('shop_basic', 'free', 5, 30); ?>
-</div>
-<div>
-<!-- 공지사항 -->
-<?php //echo latest('basic', 'notice', 3, 25); ?>
-</div>
-<div>
-<!-- 온라인 투표 -->
-<?php echo poll('basic'); ?>
-</div>
-<div>
-<!-- 방문자 수 -->
-<?php //echo visit('basic'); ?>
-</div>
+<section id="sidx_lat_poll">
+    <h2>커뮤니티 및 투표</h2>
+    <?php echo latest('shop_basic', 'qa', 5, 30); ?>
+    <?php echo latest('shop_basic', 'free', 5, 30); ?>
+    <!-- 공지사항 -->
+    <?php //echo latest('basic', 'notice', 3, 25); ?>
+    <!-- 온라인 투표 -->
+    <?php echo poll('basic'); ?>
+</section>
 
 <section id="sbn_idx">
     <h2>쇼핑몰 메인 배너</h2>
     <!-- 메인 배너 -->
     <?php echo display_banner('메인'); ?>
+</section>
+
+<section id="sidx_visit">
+<!-- 방문자 수 -->
+<?php echo visit('basic'); ?>
 </section>
 
 <?php
