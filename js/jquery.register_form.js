@@ -16,6 +16,25 @@ var reg_mb_id_check = function() {
 }
 
 
+// 추천인 검사
+var reg_mb_recommend_check = function() {
+    var result = "";
+    $.ajax({
+        type: "POST",
+        url: g4_bbs_url+"/ajax.mb_recommend.php",
+        data: {
+            "reg_mb_recommend": encodeURIComponent($("#reg_mb_recommend").val())
+        },
+        cache: false,
+        async: false,
+        success: function(data) {
+            result = data;
+        }
+    });
+    return result;
+}
+
+
 var reg_mb_nick_check = function() {
     var result = "";
     $.ajax({

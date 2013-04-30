@@ -10,7 +10,7 @@ $title = "그누보드4s 설치 3단계 중 2단계 설정";
 include_once ('../config.php');
 include_once ('./install.inc.php');
 
-if ($_POST['agree'] != '동의함') {
+if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
     echo "<div>라이센스(License) 내용에 동의하셔야 설치를 계속하실 수 있습니다.</div>".PHP_EOL;
     echo "<div><a href=\"./\">뒤로가기</a></div>".PHP_EOL;
     exit;

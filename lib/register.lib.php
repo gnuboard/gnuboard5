@@ -28,6 +28,10 @@ function count_mb_id($reg_mb_id)
 function exist_mb_id($reg_mb_id)
 {
     global $g4;
+
+    $reg_mb_id = trim($reg_mb_id);
+    if ($reg_mb_id == "") return "";
+
     $sql = " select count(*) as cnt from `{$g4['member_table']}` where mb_id = '$reg_mb_id' ";
     $row = sql_fetch($sql);
     if ($row['cnt'])
