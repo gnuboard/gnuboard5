@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#fff;color:#3c4043;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#fff;color:#000;font-size:0.75em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -14,10 +14,10 @@ p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link,
-a:visited {color:#3c4043;text-decoration:none}
+a:visited {color:#000;text-decoration:none}
 a:hover,
 a:focus,
-a:active {color:#3c4043;text-decoration:underline}
+a:active {color:#000;text-decoration:underline}
 
 /* 화면낭독기 사용자용 */
 #hd_login_msg {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden}
