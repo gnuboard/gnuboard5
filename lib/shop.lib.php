@@ -28,16 +28,16 @@ function get_image($img, $width=0, $height=0)
             $width = $size[0];
             $height = $size[1];
         }
-        $str = "<img id=\"$img\" src=\"".G4_DATA_URL."/item/$img\" width=\"$width\" height=\"$height\">";
+        $str = '<img src="'.G4_DATA_URL.'/item/'.$img.'" width="'.$width.'" height="'.$height.'" id="'.$img.'">';
     }
     else
     {
-        $str = "<img id=\"$img\" src=\"".G4_SHOP_URL."/img/no_image.gif\" ";
+        $str = '<img id="'.$img.'" src="'.G4_SHOP_URL.'/img/no_image.gif" ';
         if ($width)
-            $str .= "width=\"$width\" height=\"$height\"";
+            $str .= 'width="'.$width.'" height="'.$height.'"';
         else
-            $str .= "width=\"{$default['de_mimg_width']}\" height=\"{$default['de_mimg_height']}\"";
-        $str .= ">";
+            $str .= 'width="'.$default['de_mimg_width'].'" height="'.$default['de_mimg_height'].'"';
+        $str .= '>';
     }
 
 
@@ -80,17 +80,17 @@ function get_large_image($img, $it_id, $btn_image=true)
 {
     global $g4;
 
-    if (file_exists(G4_DATA_PATH."/item/$img") && $img != "")
+    if (file_exists(G4_DATA_PATH.'/item/'.$img) && $img != '')
     {
-        $size   = getimagesize(G4_DATA_PATH."/item/$img");
+        $size   = getimagesize(G4_DATA_PATH.'/item/'.$img);
         $width  = $size[0];
         $height = $size[1];
-        $str = "<a href=\"javascript:popup_large_image('$it_id', '$img', $width, $height, '".G4_SHOP_URL."')\">";
+        $str = '<a href="javascript:popup_large_image(\''.$it_id.'\', \''.$img.'\', '.$width.', '.$height.', \''.G4_SHOP_URL.'\')">';
         if ($btn_image)
-            $str .= "<img src=\"".G4_SHOP_URL."/img/btn_zoom.gif\" border=\"0\"></a>";
+            $str .= '<img src="'.G4_SHOP_URL.'/img/btn_zoom.gif" alt="확대보기"></a>';
     }
     else
-        $str = "";
+        $str = '';
     return $str;
 }
 
@@ -98,9 +98,9 @@ function get_large_image($img, $it_id, $btn_image=true)
 function display_amount($amount, $tel_inq=false)
 {
     if ($tel_inq)
-        $amount = "전화문의";
+        $amount = '전화문의';
     else
-        $amount = number_format($amount, 0) . "원";
+        $amount = number_format($amount, 0).'원';
 
     return $amount;
 }
@@ -129,7 +129,7 @@ function get_amount($it)
 // 포인트 표시
 function display_point($point)
 {
-    return number_format($point, 0) . "점";
+    return number_format($point, 0).'점';
 }
 
 // 포인트를 구한다
@@ -151,8 +151,8 @@ function upload_file($srcfile, $destfile, $dir)
 {
     if ($destfile == "") return false;
     // 업로드 한후 , 퍼미션을 변경함
-    @move_uploaded_file($srcfile, "$dir/$destfile");
-    @chmod("$dir/$destfile", 0606);
+    @move_uploaded_file($srcfile, $dir.'/'.$destfile);
+    @chmod($dir'./.'$destfile, 0606);
     return true;
 }
 
@@ -216,9 +216,9 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
         return false;
     }
 
-    $file = G4_SHOP_PATH."/$skin_file";
+    $file = G4_SHOP_PATH.'/'$skin_file;
     if (!file_exists($file)) {
-        echo "<span class=\"point\">{$file} 파일을 찾을 수 없습니다.</span>";
+        echo $file.' 파일을 찾을 수 없습니다.';
     } else {
         $td_width = (int)(100 / $list_mod);
         include $file;
@@ -243,9 +243,9 @@ function display_category($no, $list_mod, $list_row, $img_width, $img_height, $c
         return false;
     }
 
-    $file = G4_SHOP_PATH."/maintype{$no}.inc.php";
+    $file = G4_SHOP_PATH.'/maintype'.$no.'.inc.php';
     if (!file_exists($file)) {
-        echo "<span class=\"point\">{$file} 파일을 찾을 수 없습니다.</span>";
+        echo $file.' 파일을 찾을 수 없습니다.';
     } else {
         $td_width = (int)(100 / $list_mod);
         include $file;
@@ -255,12 +255,12 @@ function display_category($no, $list_mod, $list_row, $img_width, $img_height, $c
 // 별
 function get_star($score)
 {
-    if ($score > 8) $star = "5";
-    else if ($score > 6) $star = "4";
-    else if ($score > 4) $star = "3";
-    else if ($score > 2) $star = "2";
-    else if ($score > 0) $star = "1";
-    else $star = "5";
+    if ($score > 8) $star = 5;
+    else if ($score > 6) $star = 4;
+    else if ($score > 4) $star = 3;
+    else if ($score > 2) $star = 2;
+    else if ($score > 0) $star = 1;
+    else $star = 5;
 
     return $star;
 }
@@ -324,24 +324,24 @@ function title_sort($col, $type=0)
     global $page;
     global $doc;
 
-    $q1 = "sort1=$col";
+    $q1 = 'sort1='.$col;
     if ($type) {
-        $q2 = "sort2=desc";
+        $q2 = 'sort2=desc';
         if ($sort1 == $col) {
-            if ($sort2 == "desc") {
-                $q2 = "sort2=asc";
+            if ($sort2 == 'desc') {
+                $q2 = 'sort2=asc';
             }
         }
     } else {
-        $q2 = "sort2=asc";
+        $q2 = 'sort2=asc';
         if ($sort1 == $col) {
-            if ($sort2 == "asc") {
-                $q2 = "sort2=desc";
+            if ($sort2 == 'asc') {
+                $q2 = 'sort2=desc';
             }
         }
     }
-    #return "$_SERVER[PHP_SELF]?$q1&$q2&page=$page";
-    return "{$_SERVER['PHP_SELF']}?$q1&$q2&page=$page";
+    #return "$_SERVER[PHP_SELF]?$q1&amp;$q2&amp;page=$page";
+    return "{$_SERVER['PHP_SELF']}?$q1&amp;$q2&amp;page=$page";
 }
 
 
@@ -360,9 +360,9 @@ function get_item_options($subject, $option, $index)
     $subject = trim($subject);
     $option  = trim($option);
 
-    if (!$subject || !$option) return "";
+    if (!$subject || !$option) return '';
 
-    $str = "";
+    $str = '';
 
     $arr = explode("\n", $option);
     // 옵션이 하나일 경우
@@ -372,25 +372,25 @@ function get_item_options($subject, $option, $index)
     }
     else
     {
-        $str = "<select name=\"it_opt{$index}\" onchange=\"amount_change()\">\n";
+        $str = '<select name="it_opt'.$index.'" onchange="amount_change()">'.PHP_EOL;
         for ($k=0; $k<count($arr); $k++)
         {
             $arr[$k] = str_replace("\r", "", $arr[$k]);
             $opt = explode(";", trim($arr[$k]));
-            $str .= "<option value=\"$arr[$k]\">{$opt[0]}";
+            $str .= '<option value="'.$arr[$k].'">'.$opt[0].'</option>';
             // 옵션에 금액이 있다면
             if ($opt[1] != 0)
             {
-                $str .= " (";
+                $str .= ' (';
                 // - 금액이 아니라면 모두 + 금액으로
                 //if (!ereg("[-]", $opt[1]))
                 if (!preg_match("/[-]/", $opt[1]))
-                    $str .= "+";
-                $str .= display_amount($opt[1]) . ")";
+                    $str .= '+';
+                $str .= display_amount($opt[1]) . ')';
             }
-            $str .= "</option>\n";
+            $str .= '</option>'.PHP_EOL;
         }
-        $str .= "</select>\n<input type=\"hidden\" name=\"it_opt{$index}_subject\" value=\"$subject\">\n";
+        $str .= '</select>'.PHP_EOL.'<input type="hidden" name="it_opt'.$index.'_subject" value="'.$subject.'">'.PHP_EOL;
     }
 
     return $str;
@@ -421,19 +421,19 @@ function print_item_options()
         if ($it_opt==null) continue;
 
         $it_name .= $str_split;
-        $it_opt_subject = $it["it_opt{$i}_subject"];
-        $opt = explode( ";", $it_opt );
+        $it_opt_subject = $it['it_opt'.$i.'_subject'];
+        $opt = explode( ';', $it_opt );
         $it_name .= $it_opt_subject.' = '.$opt[0];
 
         if ($opt[1] != 0)
         {
-            $it_name .= " (";
+            $it_name .= ' (';
             //if (ereg("[+]", $opt[1]) == true)
             if (preg_match("/[+]/", $opt[1]) == true)
-                $it_name .= "+";
-            $it_name .= display_amount($opt[1]) . ")";
+                $it_name .= '+';
+            $it_name .= display_amount($opt[1]).')';
         }
-        $str_split = "<br>";
+        $str_split = '<br>';
     }
 
     return $it_name;
@@ -443,25 +443,25 @@ function it_name_icon($it, $it_name="", $url=1)
 {
     global $g4;
 
-    $str = "";
+    $str = '';
     if ($it_name)
         $str = $it_name;
     else
         $str = stripslashes($it['it_name']);
 
     if ($url)
-        $str = "<a href=\"".G4_SHOP_URL."/item.php?it_id={$it['it_id']}\">$str</a>";
+        $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$it['it_id'].'">'.$str.'</a>';
 
-    if ($it['it_type1']) $str .= " <img src=\"".G4_SHOP_URL."/img/icon_type1.gif\" border=\"0\" align=\"absmiddle\" />";
-    if ($it['it_type2']) $str .= " <img src=\"".G4_SHOP_URL."/img/icon_type2.gif\" border=\"0\" align=\"absmiddle\" />";
-    if ($it['it_type3']) $str .= " <img src=\"".G4_SHOP_URL."/img/icon_type3.gif\" border=\"0\" align=\"absmiddle\" />";
-    if ($it['it_type4']) $str .= " <img src=\"".G4_SHOP_URL."/img/icon_type4.gif\" border=\"0\" align=\"absmiddle\" />";
-    if ($it['it_type5']) $str .= " <img src=\"".G4_SHOP_URL."/img/icon_type5.gif\" border=\"0\" align=\"absmiddle\" />";
+    if ($it['it_type1']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type1.gif" alt="">';
+    if ($it['it_type2']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type2.gif" alt="">';
+    if ($it['it_type3']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type3.gif" alt="">';
+    if ($it['it_type4']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type4.gif" alt="">';
+    if ($it['it_type5']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type5.gif" alt="">';
 
     // 품절
     $stock = get_it_stock_qty($it['it_id']);
     if ($stock <= 0)
-        $str .= " <img src=\"".G4_SHOP_URL."/img/icon_pumjul.gif\" border=\"0\" align=\"absmiddle\" /> ";
+        $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_pumjul.gif" alt="품절"> ';
 
     return $str;
 }
@@ -483,7 +483,7 @@ function display_banner($position, $num="")
 {
     global $g4;
 
-    if (!$position) $position = "왼쪽";
+    if (!$position) $position = '왼쪽';
 
     include G4_SHOP_PATH.'/boxbanner'.$num.'.inc.php';
 }
@@ -514,9 +514,9 @@ function display_event($no, $event, $list_mod, $list_row, $img_width, $img_heigh
         return false;
     }
 
-    $file = G4_SHOP_PATH."/maintype{$no}.inc.php";
+    $file = G4_SHOP_PATH.'/maintype'.$no.'.inc.php';
     if (!file_exists($file)) {
-        echo "<span class=\"point\">{$file} 파일을 찾을 수 없습니다.</span>";
+        echo $file.' 파일을 찾을 수 없습니다.';
     } else {
         $td_width = (int)(100 / $list_mod);
         include $file;
@@ -549,7 +549,7 @@ function get_goods($uq_id)
     $row = sql_fetch(" select count(*) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ");
     $cnt = $row['cnt'] - 1;
     if ($cnt)
-        $goods['full_name'] .= " 외 {$cnt}건";
+        $goods['full_name'] .= ' 외 '.$cnt.'건';
     $goods['count'] = $row['cnt'];
 
     return $goods;
