@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '500130';
 include_once('./_common.php');
 
@@ -54,25 +54,25 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="flist">
-<input type="hidden" name="sort1" value="<?=$sort1?>">
-<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
 
 <fieldset>
     <legend>전자결제내역 검색</legend>
 
     <span>
-        <?=$listall?>
-        전체 전자결제내역 <?=$total_count ?>건
+        <?php echo $listall; ?>
+        전체 전자결제내역 <?php echo $total_count; ?>건
     </span>
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="a.od_id" <?=get_selected($_GET['sel_field'], 'a.od_id')?>>주문번호</option>
-        <option value="cd_app_no" <?=get_selected($_GET['sel_field'], 'cd_app_no')?>>승인번호</option>
-        <option value="cd_opt01" <?=get_selected($_GET['sel_field'], 'cd_opt01')?>>결제자</option>
+        <option value="a.od_id" <?php echo get_selected($_GET['sel_field'], 'a.od_id'); ?>>주문번호</option>
+        <option value="cd_app_no" <?php echo get_selected($_GET['sel_field'], 'cd_app_no'); ?>>승인번호</option>
+        <option value="cd_opt01" <?php echo get_selected($_GET['sel_field'], 'cd_opt01'); ?>>결제자</option>
     </select>
     <label for="search" class="sound_only">검색어 <strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="search" value="<?=$search?>" id="search" required class="frm_input required" autocomplete="off">
+    <input type="text" name="search" value="<?php echo $search; ?>" id="search" required class="frm_input required" autocomplete="off">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 
@@ -91,25 +91,25 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><a href="<?=title_sort("od_id") . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("cd_amount") . "&amp;$qstr1"; ?>">승인금액<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("cd_app_no") . "&amp;$qstr1"; ?>">승인번호<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("cd_app_rt") . "&amp;$qstr1"; ?>">승인결과<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("cd_app_time") . "&amp;$qstr1"; ?>">승인일시<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("cd_opt01") . "&amp;$qstr1"; ?>">결제자<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_id") . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("cd_amount") . "&amp;$qstr1"; ?>">승인금액<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("cd_app_no") . "&amp;$qstr1"; ?>">승인번호<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("cd_app_rt") . "&amp;$qstr1"; ?>">승인결과<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("cd_app_time") . "&amp;$qstr1"; ?>">승인일시<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("cd_opt01") . "&amp;$qstr1"; ?>">결제자<span class="sound_only"> 순 정렬</span></a></th>
     </tr>
     </thead>
     <tbody>
-    <? for ($i=0; $row=sql_fetch_array($result); $i++) { ?>
+    <?php for ($i=0; $row=sql_fetch_array($result); $i++) { ?>
     <tr>
-        <td class="td_odrnum2"><a href="./orderform.php?od_id=<?=$row['od_id']?>"><?=$row['od_id']?></a></td>
-        <td><?=display_amount($row['cd_amount'])?></td>
-        <td class="td_num"><?=$row['cd_app_no']?></td>
-        <td class="td_smallmng"><?=$row['cd_app_rt']?></td>
-        <td class="td_time"><?=$row['cd_app_time']?></td>
-        <td class="td_smallmng"><?=$row['cd_opt01']?></td>
+        <td class="td_odrnum2"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
+        <td><?php echo display_amount($row['cd_amount']); ?></td>
+        <td class="td_num"><?php echo $row['cd_app_no']; ?></td>
+        <td class="td_smallmng"><?php echo $row['cd_app_rt']; ?></td>
+        <td class="td_time"><?php echo $row['cd_app_time']; ?></td>
+        <td class="td_smallmng"><?php echo $row['cd_opt01']; ?></td>
     </tr>
-    <?
+    <?php
     }
     if ($i == 0)
         echo '<tr><td colspan="6" class="empty_table">자료가 없습니다.</td></tr>'
@@ -119,8 +119,8 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

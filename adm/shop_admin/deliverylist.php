@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400500';
 include_once('./_common.php');
 
@@ -76,27 +76,27 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="flist" autocomplete="off">
-<input type="hidden" name="doc"  value="<?=$doc?>">
-<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="doc"  value="<?php echo $doc; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
 <fieldset>
     <legend>배송조건 검색</legend>
     <span>
-        <?=$listall?>
-        전체 주문내역 <?=$total_count ?>건
+        <?php echo $listall; ?>
+        전체 주문내역 <?php echo $total_count; ?>건
     </span>
 
     <label for="chk_misu">미수금없음</label>
-    <input type="checkbox" name="chk_misu" value="1" id="chk_misu" <?=$chk_misu?"checked='checked'":"";?> />
+    <input type="checkbox" name="chk_misu" value="1" id="chk_misu" <?php echo $chk_misu?"checked='checked'":""; ?> />
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field">
-        <option value="od_id" <?=get_selected($sel_field, 'od_id')?>>주문번호</option>
-        <option value="od_name" <?=get_selected($sel_field, 'od_name')?>>주문자</option>
-        <option value="od_invoice" <?=get_selected($sel_field, 'od_invoice')?>>운송장번호</option>
+        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+        <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
+        <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
     </select>
 
     <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="search" value="<?=$search ?>" id="search" required class="frm_input required">
+    <input type="text" name="search" value="<?php echo $search; ?>" id="search" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
@@ -110,29 +110,29 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </ul>
 
     <form name="fdeliverylistupate" method="post" action="./deliverylistupdate.php" autocomplete="off">
-    <input type="hidden" name="sel_ca_id" value="<?=$sel_ca_id ?>">
-    <input type="hidden" name="sel_field" value="<?=$sel_field ?>">
-    <input type="hidden" name="search" value="<?=$search ?>">
-    <input type="hidden" name="page" value="<?=$page ?>">
-    <input type="hidden" name="sort1" value="<?=$sort1 ?>">
-    <input type="hidden" name="sort2" value="<?=$sort2 ?>">
+    <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
+    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+    <input type="hidden" name="search" value="<?php echo $search; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
     <table id="sdeli_proc">
     <thead>
     <tr>
-        <th scope="col"><a href="<?=title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("od_name") . "&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("orderamount",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("receiptamount",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("misu",1) . "&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("od_hope_date",1) . "&amp;$qstr1"; ?>">희망배송일<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_name") . "&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("orderamount",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("receiptamount",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("misu",1) . "&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_hope_date",1) . "&amp;$qstr1"; ?>">희망배송일<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col">배송업체</th>
-        <th scope="col"><a href="<?=title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호<span class="sound_only"> 순 정렬</span></a></th>
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $sql  = " select od_id,
                      a.*, "._MISU_QUERY_."
               $sql_common
@@ -159,30 +159,30 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     <tr>
         <td>
-            <input type="hidden" name="od_id[<?=$i?>]" value="<?=$row['od_id']?>">
-            <input type="hidden" name="uq_id[<?=$i?>]" value="<?=$row['uq_id']?>">
-            <a href="./orderform.php?od_id=<?=$row['od_id']?>"><?=$row['od_id']?></a>
+            <input type="hidden" name="od_id[<?php echo $i; ?>]" value="<?php echo $row['od_id']; ?>">
+            <input type="hidden" name="uq_id[<?php echo $i; ?>]" value="<?php echo $row['uq_id']; ?>">
+            <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>
         </td>
-        <td class="td_name"><?=$row['od_name']?></td>
-        <td><?=display_amount($row['orderamount'])?></td>
-        <td><?=display_amount($row['receiptamount'])?></td>
-        <td><?=display_amount($row['misu'])?></td>
-        <td><?=$hope_date?></td>
-        <td><input type="text" name="od_invoice_time[<?=$i?>]" value="<?=$invoice_time?>" class="frm_input" size="20" maxlength="19"></td>
+        <td class="td_name"><?php echo $row['od_name']; ?></td>
+        <td><?php echo display_amount($row['orderamount']); ?></td>
+        <td><?php echo display_amount($row['receiptamount']); ?></td>
+        <td><?php echo display_amount($row['misu']); ?></td>
+        <td><?php echo $hope_date; ?></td>
+        <td><input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="20" maxlength="19"></td>
         <td>
-            <label for="dl_id_<?=$i?>">배송업체</label>
-            <select name="dl_id[<?=$i?>]" id="dl_id_<?=$i?>">
-                <?=conv_selected_option($delivery_options, $row['dl_id'])?>
+            <label for="dl_id_<?php echo $i; ?>">배송업체</label>
+            <select name="dl_id[<?php echo $i; ?>]" id="dl_id_<?php echo $i; ?>">
+                <?php echo conv_selected_option($delivery_options, $row['dl_id']); ?>
             </select>
         </td>
         <td>
             <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
-            <input type="hidden" name="save_dl_id[<?=$i?>]" value="<?=$row['dl_id']?>">
-            <input type="hidden" name="save_od_invoice[<?=$i?>]" value="<?=$row['od_invoice']?>">
-            <input type="text" name="od_invoice[<?=$i?>]" value="<?=$row['od_invoice']?>" class="frm_input" size="10">
+            <input type="hidden" name="save_dl_id[<?php echo $i; ?>]" value="<?php echo $row['dl_id']; ?>">
+            <input type="hidden" name="save_od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>">
+            <input type="text" name="od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>" class="frm_input" size="10">
         </td>
     </tr>
-    <?
+    <?php
         if ($row['dl_id']) {
             //echo "<script> document.fdeliverylistupate.elements('dl_id[$i]').value = '$row[dl_id]'; </script>";
             // FF 3.0 에서 위의 코드는 에러를 발생함 (080626 수정)
@@ -210,8 +210,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page="); ?>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400740';
 include_once('./_common.php');
 
@@ -21,7 +21,7 @@ $result = sql_query($sql);
 <section class="cbox">
 
     <h2>배송업체 목록</h2>
-    <p>등록된 배송업체 <?=$total_count ?>곳</p>
+    <p>등록된 배송업체 <?php echo $total_count; ?>곳</p>
 
      <div id="btn_add">
         <a href="./deliverycodeform.php">배송회사추가</a>
@@ -38,19 +38,19 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <? for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
+    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
     <tr>
-        <td class="td_num"><?=$row['dl_id']?></td>
-        <td><?=stripslashes($row['dl_company'])?></td>
-        <td class="td_bignum"><?=$row['dl_tel']?></td>
-        <td class="td_num"><?=$row['dl_order']?></td>
+        <td class="td_num"><?php echo $row['dl_id']; ?></td>
+        <td><?php echo stripslashes($row['dl_company']); ?></td>
+        <td class="td_bignum"><?php echo $row['dl_tel']; ?></td>
+        <td class="td_num"><?php echo $row['dl_order']; ?></td>
         <td class="td_mng">
-            <a href="<?=$row['dl_url']?>" target="_blank"><img src="./img/icon_view.jpg" alt="<?=stripslashes($row['dl_company'])?> 홈페이지"></a>
-            <a href="./deliverycodeform.php?w=u&amp;dl_id=<?=$row['dl_id']?>"><img src="./img/icon_mod.jpg" alt="<?=stripslashes($row['dl_company'])?> 수정"></a>
-            <a href="./deliverycodeformupdate.php?w=d&amp;dl_id=<?=$row['dl_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=stripslashes($row['dl_company'])?> 삭제"></a>
+            <a href="<?php echo $row['dl_url']; ?>" target="_blank"><img src="./img/icon_view.jpg" alt="<?php echo stripslashes($row['dl_company']); ?> 홈페이지"></a>
+            <a href="./deliverycodeform.php?w=u&amp;dl_id=<?php echo $row['dl_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo stripslashes($row['dl_company']); ?> 수정"></a>
+            <a href="./deliverycodeformupdate.php?w=d&amp;dl_id=<?php echo $row['dl_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo stripslashes($row['dl_company']); ?> 삭제"></a>
         </td>
     </tr>
-    <?
+    <?php
     }
     if ($i == 0)
         echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
@@ -60,6 +60,6 @@ $result = sql_query($sql);
 
 </section>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400610';
 include_once('./_common.php');
 
@@ -80,24 +80,24 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="flist">
-<input type="hidden" name="doc" value="<?=$doc?>">
-<input type="hidden" name="sort1" value="<?=$sort1?>">
-<input type="hidden" name="sort2" value="<?=$sort2?>">
-<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="doc" value="<?php echo $doc; ?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
 
 <fieldset>
     <legend>상품 검색</legend>
 
     <span>
-        <?=$listall?>
-        전체 상품 <?=$total_count ?>개
+        <?php echo $listall; ?>
+        전체 상품 <?php echo $total_count; ?>개
     </span>
 
-    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-22 ?>
+    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-22 ?>
     <label for="sca" class="sound_only">분류선택</label>
     <select name="sca" id="sca">
         <option value="">전체분류</option>
-        <?
+        <?php
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=sql_fetch_array($result1); $i++) {
@@ -108,16 +108,16 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
         }
         ?>
     </select>
-    <? // ##### // 웹 접근성 취약 지점 끝 ?>
+    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
 
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
-        <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
-        <option value="it_id" <?=get_selected($sfl, 'it_id')?>>상품코드</option>
+        <option value="it_name" <?php echo get_selected($sfl, 'it_name'); ?>>상품명</option>
+        <option value="it_id" <?php echo get_selected($sfl, 'it_id'); ?>>상품코드</option>
     </select>
 
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?=$stx ?>" id="stx" required class="frm_input required">
+    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 
@@ -127,44 +127,44 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
     <h2>상품 목록</h2>
 
     <form name="fitemtypelist" method="post" action="./itemtypelistupdate.php">
-    <input type="hidden" name="sca" value="<?=$sca?>">
-    <input type="hidden" name="sst" value="<?=$sst?>">
-    <input type="hidden" name="sod" value="<?=$sod?>">
-    <input type="hidden" name="sfl" value="<?=$sfl?>">
-    <input type="hidden" name="stx" value="<?=$stx?>">
-    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="sca" value="<?php echo $sca; ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst; ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod; ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
 
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><?=subject_sort_link("it_id", $qstr, 1)?>상품코드</a></th>
-        <th scope="col"><?=subject_sort_link("it_name")?>상품명</a></th>
-        <th scope="col"><?=subject_sort_link("it_type1", $qstr, 1)?>히트<br>상품</a></th>
-        <th scope="col"><?=subject_sort_link("it_type2", $qstr, 1)?>추천<br>상품</a></th>
-        <th scope="col"><?=subject_sort_link("it_type3", $qstr, 1)?>신규<br>상품</a></th>
-        <th scope="col"><?=subject_sort_link("it_type4", $qstr, 1)?>인기<br>상품</a></th>
-        <th scope="col"><?=subject_sort_link("it_type5", $qstr, 1)?>할인<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_id", $qstr, 1); ?>상품코드</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_name"); ?>상품명</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type1", $qstr, 1); ?>히트<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type2", $qstr, 1); ?>추천<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type3", $qstr, 1); ?>신규<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type4", $qstr, 1); ?>인기<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type5", $qstr, 1); ?>할인<br>상품</a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
-        <? for ($i=0; $row=sql_fetch_array($result); $i++) {
+        <?php for ($i=0; $row=sql_fetch_array($result); $i++) {
             $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         ?>
         <tr>
             <td class="td_bignum">
-                <input type="hidden" name="it_id[<?=$i?>]" value="<?=$row['it_id']?>">
-                <?=$row['it_id']?>
+                <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
+                <?php echo $row['it_id']; ?>
             </td>
-            <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str(stripslashes($row['it_name']), 60, "&#133")?></a></td>
-            <td class="td_chk"><input type="checkbox" name="it_type1[<?=$i?>]" value="1" <?=($row['it_type1'] ? 'checked' : '')?>></td>
-            <td class="td_chk"><input type="checkbox" name="it_type2[<?=$i?>]" value="1" <?=($row['it_type2'] ? 'checked' : '')?>></td>
-            <td class="td_chk"><input type="checkbox" name="it_type3[<?=$i?>]" value="1" <?=($row['it_type3'] ? 'checked' : '')?>></td>
-            <td class="td_chk"><input type="checkbox" name="it_type4[<?=$i?>]" value="1" <?=($row['it_type4'] ? 'checked' : '')?>></td>
-            <td class="td_chk"><input type="checkbox" name="it_type5[<?=$i?>]" value="1" <?=($row['it_type5'] ? 'checked' : '')?>></td>
-            <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>&amp;ca_id=<?=$row['ca_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=cut_str(stripslashes($row['it_name']), 60, "&#133")?> 수정"></a></td>
+            <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
+            <td class="td_chk"><input type="checkbox" name="it_type1[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type1'] ? 'checked' : ''); ?>></td>
+            <td class="td_chk"><input type="checkbox" name="it_type2[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type2'] ? 'checked' : ''); ?>></td>
+            <td class="td_chk"><input type="checkbox" name="it_type3[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type3'] ? 'checked' : ''); ?>></td>
+            <td class="td_chk"><input type="checkbox" name="it_type4[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type4'] ? 'checked' : ''); ?>></td>
+            <td class="td_chk"><input type="checkbox" name="it_type5[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type5'] ? 'checked' : ''); ?>></td>
+            <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?> 수정"></a></td>
         </tr>
-        <?
+        <?php
         }
 
         if (!$i)
@@ -183,8 +183,8 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

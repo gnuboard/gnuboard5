@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400650';
 include_once('./_common.php');
 
@@ -58,22 +58,22 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="flist">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="save_stx" value="<?=$stx?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
 
 <fieldset>
     <legend>사용후기 검색</legend>
 
     <span>
-        <?=$listall?>
-        전체 문의내역 <?=$total_count ?>건
+        <?php echo $listall; ?>
+        전체 문의내역 <?php echo $total_count; ?>건
     </span>
 
     <label for="sca" class="sound_only">분류선택</label>
-    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
+    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
     <select name="sca" id="sca">
         <option value=''>전체분류</option>
-        <?
+        <?php
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
@@ -84,17 +84,17 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         }
         ?>
     </select>
-    <? // ##### // 웹 접근성 취약 지점 끝 ?>
+    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
 
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
-        <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
-        <option value="a.it_id" <?=get_selected($sfl, 'a.it_id')?>>상품코드</option>
-        <option value="is_name" <?=get_selected($sfl, 'is_name')?>>이름</option>
+        <option value="it_name" <?php echo get_selected($sfl, 'it_name'); ?>>상품명</option>
+        <option value="a.it_id" <?php echo get_selected($sfl, 'a.it_id'); ?>>상품코드</option>
+        <option value="is_name" <?php echo get_selected($sfl, 'is_name'); ?>>이름</option>
     </select>
 
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?=$stx?>" required class="frm_input required">
+    <input type="text" name="stx" value="<?php echo $stx; ?>" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 
 </fieldset>
@@ -107,16 +107,16 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><?=subject_sort_link("it_name"); ?>상품명</a></th>
-        <th scope="col"><?=subject_sort_link("mb_name"); ?>이름</a></th>
-        <th scope="col"><?=subject_sort_link("is_subject"); ?>제목</a></th>
-        <th scope="col"><?=subject_sort_link("is_score"); ?>점수</a></th>
-        <th scope="col"><?=subject_sort_link("is_confirm"); ?>확인</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_name"); ?>상품명</a></th>
+        <th scope="col"><?php echo subject_sort_link("mb_name"); ?>이름</a></th>
+        <th scope="col"><?php echo subject_sort_link("is_subject"); ?>제목</a></th>
+        <th scope="col"><?php echo subject_sort_link("is_score"); ?>점수</a></th>
+        <th scope="col"><?php echo subject_sort_link("is_confirm"); ?>확인</a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $row['is_subject'] = cut_str($row['is_subject'], 30, "...");
@@ -129,18 +129,18 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
 
     <tr>
-        <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str($row['it_name'],30)?></a></td>
-        <td class="td_name"><?=$name?></td>
-        <td class="sit_ps_subject"><?=$row['is_subject']?></td>
-        <td class="td_num"><?=$row['is_score']?></td>
-        <td class="sit_ps_confirm"><?=$confirm?></td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
+        <td class="td_name"><?php echo $name; ?></td>
+        <td class="sit_ps_subject"><?php echo $row['is_subject']; ?></td>
+        <td class="td_num"><?php echo $row['is_score']; ?></td>
+        <td class="sit_ps_confirm"><?php echo $confirm; ?></td>
         <td class="td_smallmng">
-            <a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>&amp;$qstr"><img src="./img/icon_mod.jpg" alt="<?=$row['is_subject']?> 수정"></a>
-            <a href="./itempsformupdate.php?w=d&amp;is_id=<?=$row['is_id']?>&amp;<?=$qstr?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=$row['is_subject']?> 삭제"></a>
+            <a href="./itempsform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;$qstr"><img src="./img/icon_mod.jpg" alt="<?php echo $row['is_subject']; ?> 수정"></a>
+            <a href="./itempsformupdate.php?w=d&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo $row['is_subject']; ?> 삭제"></a>
         </td>
     </tr>
 
-    <?
+    <?php
     }
 
     if ($i == 0) {
@@ -153,8 +153,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 </section>
 
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

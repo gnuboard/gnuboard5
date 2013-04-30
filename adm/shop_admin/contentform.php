@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400700';
 include_once('./_common.php');
 include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
@@ -33,7 +33,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="frmcontentform" action="./contentformupdate.php" onsubmit="return frmcontentform_check(this);" method="post" enctype="MULTIPART/FORM-DATA" >
-<input type="hidden" name="w" value="<?=$w?>">
+<input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="co_html" value="1">
 
 <section class="cbox">
@@ -48,38 +48,38 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="co_id">ID</label></th>
         <td>
-            <?=help('20자 이내의 영문자, 숫자, _ 만 가능합니다.')?>
-            <input type="text" value="<? echo $co['co_id'] ?>" name="co_id" id ="co_id" required <?=$readonly ?> class="required <?=$readonly ?> frm_input" size="20" maxlength="20">
-            <? if ($w == 'u') { ?><a href="<?=G4_SHOP_URL?>/content.php?co_id=<?=$co_id?>" class="btn_frmline">내용확인</a><? } ?>
+            <?php echo help('20자 이내의 영문자, 숫자, _ 만 가능합니다.'); ?>
+            <input type="text" value="<?php echo $co['co_id']; ?>" name="co_id" id ="co_id" required <?php echo $readonly; ?> class="required <?php echo $readonly; ?> frm_input" size="20" maxlength="20">
+            <?php if ($w == 'u') { ?><a href="<?php echo G4_SHOP_URL; ?>/content.php?co_id=<?php echo $co_id; ?>" class="btn_frmline">내용확인</a><?php } ?>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="co_subject">제목</label></th>
-        <td><input type="text" name="co_subject" value="<?=htmlspecialchars2($co['co_subject'])?>" id="co_subject" required class="frm_input required" size="90"></td>
+        <td><input type="text" name="co_subject" value="<?php echo htmlspecialchars2($co['co_subject']); ?>" id="co_subject" required class="frm_input required" size="90"></td>
     </tr>
     <tr>
         <th scope="row">내용</th>
-        <td><?=editor_html('co_content', $co['co_content']);?></td>
+        <td><?php echo editor_html('co_content', $co['co_content']); ?></td>
     </tr>
     <tr>
         <th scope="row"><label for="co_include_head">상단 파일 경로</label></th>
         <td>
-            <?=help("설정값이 없으면 기본 상단 파일을 사용합니다.");?>
-            <input type="text" name="co_include_head" value="<?=$co['co_include_head']?>" id="co_include_head" class="frm_input" size="60">
+            <?php echo help("설정값이 없으면 기본 상단 파일을 사용합니다."); ?>
+            <input type="text" name="co_include_head" value="<?php echo $co['co_include_head']; ?>" id="co_include_head" class="frm_input" size="60">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="co_include_tail">하단 파일 경로</label></th>
         <td>
-            <?=help("설정값이 없으면 기본 하단 파일을 사용합니다.");?>
-            <input type="text" name="co_include_tail" value="<?=$co['co_include_tail']?>" id="co_include_tail" class="frm_input" size="60">
+            <?php echo help("설정값이 없으면 기본 하단 파일을 사용합니다."); ?>
+            <input type="text" name="co_include_tail" value="<?php echo $co['co_include_tail']; ?>" id="co_include_tail" class="frm_input" size="60">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="co_himg">상단이미지</label></th>
         <td>
             <input type="file" name="co_himg" id="co_himg">
-            <?
+            <?php
             $himg = G4_DATA_PATH.'/content/'.$co['co_id'].'_h';
             if (file_exists($himg)) {
                 $size = @getimagesize($himg);
@@ -103,7 +103,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="co_timg">하단이미지</label></th>
         <td>
             <input type="file" name="co_timg" id="co_timg">
-            <?
+            <?php
             $timg = G4_DATA_PATH.'/content/'.$co['co_id'].'_t';
             if (file_exists($timg)) {
                 $size = @getimagesize($timg);
@@ -140,7 +140,7 @@ function frmcontentform_check(f)
     errmsg = "";
     errfld = "";
 
-    <?=get_editor_js('co_content');?>
+    <?php echo get_editor_js('co_content'); ?>
 
     check_field(f.co_id, "ID를 입력하세요.");
     check_field(f.co_subject, "제목을 입력하세요.");
@@ -155,6 +155,6 @@ function frmcontentform_check(f)
 }
 </script>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

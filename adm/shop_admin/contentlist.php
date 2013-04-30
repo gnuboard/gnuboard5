@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400700';
 include_once('./_common.php');
 
@@ -26,8 +26,8 @@ $result = sql_query($sql);
 <section class="cbox">
     <h2>내용관리</h2>
     <p>
-        <? if ($page > 1) {?><a href="<?=$_SERVER['PHP_SELF']?>">처음으로</a><? } ?>
-        <span>전체 내용 <?=$total_count?>건</span>
+        <?php if ($page > 1) {?><a href="<?php echo $_SERVER['PHP_SELF']; ?>">처음으로</a><?php } ?>
+        <span>전체 내용 <?php echo $total_count; ?>건</span>
     </p>
     <div id="btn_add">
         <a href="./contentform.php">내용 추가</a>
@@ -41,17 +41,17 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <? for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
+    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
     <tr>
-        <td class="td_odrnum"><?=$row['co_id']?></td>
-        <td><?=htmlspecialchars2($row['co_subject'])?></td>
+        <td class="td_odrnum"><?php echo $row['co_id']; ?></td>
+        <td><?php echo htmlspecialchars2($row['co_subject']); ?></td>
         <td class="td_mng">
-            <a href="<?=G4_SHOP_URL?>/content.php?co_id=<?=$row['co_id']?>"><img src="./img/icon_view.jpg" alt="<?=htmlspecialchars2($row['co_subject'])?> 보기"></a>
-            <a href="./contentform.php?w=u&amp;co_id=<?=$row['co_id']?>"><img src="./img/icon_mod.jpg" alt="<?=htmlspecialchars2($row['co_subject'])?> 수정"></a>
-            <a href="./contentformupdate.php?w=d&amp;co_id=<?=$row['co_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=htmlspecialchars2($row['co_subject'])?> 삭제"></a>
+            <a href="<?php echo G4_SHOP_URL; ?>/content.php?co_id=<?php echo $row['co_id']; ?>"><img src="./img/icon_view.jpg" alt="<?php echo htmlspecialchars2($row['co_subject']); ?> 보기"></a>
+            <a href="./contentform.php?w=u&amp;co_id=<?php echo $row['co_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo htmlspecialchars2($row['co_subject']); ?> 수정"></a>
+            <a href="./contentformupdate.php?w=d&amp;co_id=<?php echo $row['co_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo htmlspecialchars2($row['co_subject']); ?> 삭제"></a>
         </td>
     </tr>
-    <?
+    <?php
     }
     if ($i == 0) {
         echo '<tr><td colspan="3" class="empty_table">자료가 한건도 없습니다.</td></tr>';
@@ -61,8 +61,8 @@ $result = sql_query($sql);
     </table>
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400000';
 include_once('./_common.php');
 
@@ -17,7 +17,7 @@ $pg_anchor = '<ul class="anchor">
 
 <section id="anc_sidx_rdy" class="cbox">
     <h2>입금완료 미배송내역</h2>
-    <?=$pg_anchor?>
+    <?php echo $pg_anchor; ?>
 
     <table>
     <thead>
@@ -30,7 +30,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     // 미수금이 없고 운송장번호가 없는 자료를 구함
     $sql = " select a.od_id,
                     a.*, "._MISU_QUERY_."
@@ -63,13 +63,13 @@ $pg_anchor = '<ul class="anchor">
         }
     ?>
     <tr>
-        <td class="td_odrnum2"><?=$row['od_id']?></td>
-        <td class="td_name"><?=$name?></td>
-        <td class="td_bignum"><?=display_amount($row['receiptamount'])?></td>
-        <td class="td_payby"><?=$settle_method?></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?=$row['od_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$row['od_id']?> 수정"></a></td>
+        <td class="td_odrnum2"><?php echo $row['od_id']; ?></td>
+        <td class="td_name"><?php echo $name; ?></td>
+        <td class="td_bignum"><?php echo display_amount($row['receiptamount']); ?></td>
+        <td class="td_payby"><?php echo $settle_method; ?></td>
+        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['od_id']; ?> 수정"></a></td>
     </tr>
-    <?
+    <?php
     }
     if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
     ?>
@@ -83,7 +83,7 @@ $pg_anchor = '<ul class="anchor">
 
 <section id="anc_sidx_wait" class="cbox">
     <h2>미입금 주문내역</h2>
-    <?=$pg_anchor?>
+    <?php echo $pg_anchor; ?>
 
     <table>
     <thead>
@@ -96,7 +96,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     // 미수금이 있고 송장번호가 없는 자료를 구함
     $sql = " select a.od_id,
                     a.*, "._MISU_QUERY_."
@@ -128,13 +128,13 @@ $pg_anchor = '<ul class="anchor">
         }
     ?>
     <tr>
-        <td class="td_odrnum2"><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?=$row['od_id']?>"><?=$row['od_id']?></a></td>
-        <td class="td_name"><?=$name?></td>
-        <td class="td_bignum"><?=display_amount($row['orderamount'])?></td>
-        <td class="td_payby"><?=$settle_method?></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?=$row['od_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$row['od_id']?> 수정"></a></td>
+        <td class="td_odrnum2"><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
+        <td class="td_name"><?php echo $name; ?></td>
+        <td class="td_bignum"><?php echo display_amount($row['orderamount']); ?></td>
+        <td class="td_payby"><?php echo $settle_method; ?></td>
+        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['od_id']; ?> 수정"></a></td>
     </tr>
-    <?
+    <?php
     }
     if ($i == 0) echo '<tr><td colspan="5">자료가 없습니다.</td></tr>';
     ?>
@@ -148,7 +148,7 @@ $pg_anchor = '<ul class="anchor">
 
 <section id="anc_sidx_ps" class="cbox">
     <h2>사용후기</h2>
-    <?=$pg_anchor?>
+    <?php echo $pg_anchor; ?>
 
     <table>
     <thead>
@@ -159,7 +159,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $sql = " select * from {$g4[shop_item_ps_table]}
               where is_confirm = 0
               order by is_id desc
@@ -173,11 +173,11 @@ $pg_anchor = '<ul class="anchor">
         $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
     ?>
     <tr>
-        <td class="td_name"><?=$name?></td>
-        <td><?=cut_str($row['is_subject'],40)?></td>
-        <td class="td_smallmng"><a href="./itempsform.php?w=u&amp;is_id=<?=$row['is_id']?>"><img src="./img/icon_mod.jpg" alt="<?=cut_str($row['is_subject'],40)?> 수정"></a></td>
+        <td class="td_name"><?php echo $name; ?></td>
+        <td><?php echo cut_str($row['is_subject'],40); ?></td>
+        <td class="td_smallmng"><a href="./itempsform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
     </tr>
-    <?
+    <?php
     }
     if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
     ?>
@@ -191,7 +191,7 @@ $pg_anchor = '<ul class="anchor">
 
 <section id="anc_sidx_qna" class="cbox">
     <h2>상품문의</h2>
-    <?=$pg_anchor?>
+    <?php echo $pg_anchor; ?>
 
     <table>
     <thead>
@@ -202,7 +202,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $sql = " select * from {$g4['shop_item_qa_table']}
               where iq_answer = ''
               order by iq_id desc
@@ -216,11 +216,11 @@ $pg_anchor = '<ul class="anchor">
         $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
     ?>
     <tr>
-        <td class="td_name"><?=$name?></td>
-        <td><?=cut_str($row['iq_subject'],40)?></td>
-        <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?=$row['iq_id']?>">수정</a></td>
+        <td class="td_name"><?php echo $name; ?></td>
+        <td><?php echo cut_str($row['iq_subject'],40); ?></td>
+        <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
     </tr>
-    <?
+    <?php
     }
 
     if ($i == 0)
@@ -234,6 +234,6 @@ $pg_anchor = '<ul class="anchor">
     </div>
 </section>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

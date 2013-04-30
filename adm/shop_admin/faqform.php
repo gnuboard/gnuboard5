@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400710';
 include_once('./_common.php');
 include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
@@ -30,12 +30,12 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="frmfaqform" action="./faqformupdate.php" onsubmit="return frmfaqform_check(this);" method="post">
-<input type="hidden" name="w" value="<? echo $w ?>">
-<input type="hidden" name="fm_id" value="<? echo $fm_id ?>">
-<input type="hidden" name="fa_id" value="<? echo $fa_id ?>">
+<input type="hidden" name="w" value="<?php echo $w; ?>">
+<input type="hidden" name="fm_id" value="<?php echo $fm_id; ?>">
+<input type="hidden" name="fa_id" value="<?php echo $fa_id; ?>">
 
 <section class="cbox">
-    <h2><?=$html_title?></h2>
+    <h2><?php echo $html_title; ?></h2>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -45,25 +45,25 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="fa_order">출력순서</label></th>
         <td>
-            <?=help('숫자가 작을수록 FAQ 페이지에서 먼저 출력됩니다.')?>
-            <input type="text" name="fa_order" value="<?=$fa['fa_order']?>" id="fa_order" class="frm_input" maxlength="10" size="10">
-            <? if ($w == 'u') { ?><a href="<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$fm_id?>" class="btn_frmline">내용보기</a><? } ?>
+            <?php echo help('숫자가 작을수록 FAQ 페이지에서 먼저 출력됩니다.'); ?>
+            <input type="text" name="fa_order" value="<?php echo $fa['fa_order']; ?>" id="fa_order" class="frm_input" maxlength="10" size="10">
+            <?php if ($w == 'u') { ?><a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">내용보기</a><?php } ?>
         </td>
     </tr>
     <tr>
         <th scope="row">질문</th>
-        <td><?=editor_html('fa_subject', $fa['fa_subject']);?></td>
+        <td><?php echo editor_html('fa_subject', $fa['fa_subject']); ?></td>
     </tr>
     <tr>
         <th scope="row">답변</th>
-        <td><?=editor_html('fa_content', $fa['fa_content']);?></td>
+        <td><?php echo editor_html('fa_content', $fa['fa_content']); ?></td>
     </tr>
     </tbody>
     </table>
 
     <div class="btn_confirm">
         <input type="submit" value="확인" class="btn_submit" accesskey="s">
-        <a href="./faqlist.php?fm_id=<?=$fm_id?>">목록</a>
+        <a href="./faqlist.php?fm_id=<?php echo $fm_id; ?>">목록</a>
     </div>
 
 </section>
@@ -85,8 +85,8 @@ function frmfaqform_check(f)
         return false;
     }
 
-    <?=get_editor_js('fa_subject');?>
-    <?=get_editor_js('fa_content');?>
+    <?php echo get_editor_js('fa_subject'); ?>
+    <?php echo get_editor_js('fa_content'); ?>
 
     return true;
 }
@@ -94,6 +94,6 @@ function frmfaqform_check(f)
 // document.getElementById('fa_order').focus(); 포커스 해제
 </script>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
