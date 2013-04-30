@@ -1,6 +1,7 @@
 <?php
 include_once("./_common.php");
 include_once(G4_LIB_PATH.'/latest.lib.php');
+include_once(G4_LIB_PATH.'/poll.lib.php');
 
 define("_INDEX_", TRUE);
 
@@ -89,10 +90,10 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 </section>
 
 <div>
-<?php echo latest('basic', 'qa', 5, 30); ?>
+<?php echo latest('shop_basic', 'qa', 5, 30); ?>
 </div>
 <div>
-<?php echo latest('basic', 'free', 5, 30); ?>
+<?php echo latest('shop_basic', 'free', 5, 30); ?>
 </div>
 <div>
 <!-- 공지사항 -->
