@@ -75,6 +75,8 @@ if ($w == '' || $w == 'u') {
     if ($w=='') {
         if ($msg = exist_mb_id($mb_id))     alert($msg);
 
+        if (!exist_mb_id($mb_recommend))    alert("추천인이 존재하지 않습니다.");
+
         if (strtolower($mb_id) == strtolower($mb_recommend)) {
             alert('본인을 추천할 수 없습니다.');
         }
