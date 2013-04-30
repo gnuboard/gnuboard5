@@ -101,7 +101,7 @@ a:active {color:#000;text-decoration:underline}
 .stv_item {display:none;text-align:center}
 .stv_item img {margin:5px 0}
 
-#stv_nb {background:#f9faf5}
+#stv_nb {border-top:1px solid #e9e9e9;background:#f9faf5}
 #stv_nb h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #stv_nb ul {margin:0;padding:0;list-style:none}
 #stv_nb li {text-align:center}
