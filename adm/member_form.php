@@ -83,9 +83,11 @@ if ($mb['mb_open']) {
 
 if(!isset($mb['mb_adult'])) {
     sql_query(" ALTER TABLE `{$g4['member_table']}`
-                    ADD `mb_adult` ENUM('Y', 'N') NOT NULL DEFAULT 'N' AFTER `mb_birth`,
-                    ADD `mb_hp_certify` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_lost_certify` ", FALSE);
+                    ADD `mb_adult` ENUM('N', 'Y') NOT NULL DEFAULT 'N' AFTER `mb_birth`,
+                    ADD `mb_hp_certify` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_lost_certify` ", false);
 }
+
+sql_query(" ALTER TABLE `{$g4['member_table']}` CHANGE `mb_adult` `mb_adult` ENUM('N','Y') NOT NULL DEFAULT 'N' ", false);
 
 if ($mb['mb_intercept_date']) $g4['title'] = "차단된 ";
 else $g4['title'] .= "";

@@ -343,6 +343,13 @@ function fregisterform_submit(f)
             f.mb_recommend.focus();
             return false;
         }
+
+        var msg = reg_mb_recommend_check();
+        if (msg) {
+            alert(msg);
+            f.mb_recommend.select();
+            return false;
+        }
     }
 
     <?php if ($config['cf_kcpcert_use']) {  ?>
