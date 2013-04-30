@@ -18,5 +18,5 @@ global $is_admin;
         <dt>전체</dt>
         <dd><?php echo number_format($visit[4]) ?></dd>
     </dl>
-    <?php if ($is_admin == 'super') {  ?><a href="<?php echo G4_ADMIN_URL ?>/visit_list.php">상세보기</a><?php } ?>
+    <?php if ($is_admin == 'super') { ?><a href="<?php echo G4_ADMIN_URL ?>/visit_list.php">상세보기</a><?php } ?>
 </section>
