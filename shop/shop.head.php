@@ -24,9 +24,9 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <aside id="hd_nb">
         <ul>
-            <li><a href=""><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_cart.gif" alt="장바구니"></a></li>
-            <li><a href=""><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_wish.gif" alt="위시리스트"></a></li>
-            <li id="hd_nb_last"><a href=""><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
+            <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_cart.gif" alt="장바구니"></a></li>
+            <li><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_wish.gif" alt="위시리스트"></a></li>
+            <li id="hd_nb_last"><a href="<?php echo G4_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
         </ul>
     </aside>
 
@@ -85,7 +85,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
 <div id="wrapper">
 
-    <aside id="stod">
+    <aside id="stv">
         <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
     </aside>
 

@@ -93,8 +93,18 @@ a:active {color:#000;text-decoration:underline}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
 /* 오늘 본 상품 */
-#stod {float:right}
-#stod span {display:none}
+#stv {float:right;width:90px}
+#stv_list {border:1px solid #e9e9e9}
+#stv_list h2 {padding:10px 0 8px;background:#f7f7f7;text-align:center;letter-spacing:-0.1em}
+#stv_list p {padding:20px 0;text-align:center}
+#stv_ul {margin:0;padding:0;list-style:none}
+.stv_item {display:none}
+
+#stv_nb {background:#f9faf5}
+#stv_nb h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#stv_nb_ul {margin:0;padding:0;list-style:none}
+#stv_nb_ul li {text-align:center}
+#stv_nb_ul a {display:block}
 
 /* aside wrapper */
 #aside {float:left;margin:0 10px 0 0;width:150px}
