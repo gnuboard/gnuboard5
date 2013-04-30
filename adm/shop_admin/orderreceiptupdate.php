@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400400';
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/mailer.lib.php');

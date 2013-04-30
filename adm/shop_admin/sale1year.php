@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '500110';
 include_once('./_common.php');
 
@@ -14,17 +14,17 @@ function print_line($save)
 
     ?>
     <tr>
-        <td><a href="./sale1month.php?fr_month=<?=$save['od_date']?>01&amp;to_month=<?=$save['od_date']?>12"><?=$save['od_date']?></a></td>
-        <td><?=number_format($save['ordercount'])?></td>
-        <td><?=number_format($save['orderamount'])?></td>
-        <td><?=number_format($save['ordercancel'] + $save['dc'])?></td>
-        <td><?=number_format($save['receiptbank'])?></td>
-        <td><?=number_format($save['receiptcard'])?></td>
-        <td><?=number_format($save['receiptpoint'])?></td>
-        <td><?=number_format($save['receiptcancel'])?></td>
-        <td><?=number_format($save['misu'])?></td>
+        <td><a href="./sale1month.php?fr_month=<?php echo $save['od_date']; ?>01&amp;to_month=<?php echo $save['od_date']; ?>12"><?php echo $save['od_date']; ?></a></td>
+        <td><?php echo number_format($save['ordercount']); ?></td>
+        <td><?php echo number_format($save['orderamount']); ?></td>
+        <td><?php echo number_format($save['ordercancel'] + $save['dc']); ?></td>
+        <td><?php echo number_format($save['receiptbank']); ?></td>
+        <td><?php echo number_format($save['receiptcard']); ?></td>
+        <td><?php echo number_format($save['receiptpoint']); ?></td>
+        <td><?php echo number_format($save['receiptcancel']); ?></td>
+        <td><?php echo number_format($save['misu']); ?></td>
     </tr>
-    <?
+    <?php
 }
 
 $lines = $lines1 = array();
@@ -91,18 +91,18 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     <tfoot>
     <tr>
         <td>합 계</td>
-        <td><?=number_format($tot['ordercount'])?></td>
-        <td><?=number_format($tot['orderamount'])?></td>
-        <td><?=number_format($tot['ordercancel'] + $tot['dc'])?></td>
-        <td><?=number_format($tot['receiptbank'])?></td>
-        <td><?=number_format($tot['receiptcard'])?></td>
-        <td><?=number_format($tot['receiptpoint'])?></td>
-        <td><?=number_format($tot['receiptcancel'])?></td>
-        <td><?=number_format($tot['misu'])?></td>
+        <td><?php echo number_format($tot['ordercount']); ?></td>
+        <td><?php echo number_format($tot['orderamount']); ?></td>
+        <td><?php echo number_format($tot['ordercancel'] + $tot['dc']); ?></td>
+        <td><?php echo number_format($tot['receiptbank']); ?></td>
+        <td><?php echo number_format($tot['receiptcard']); ?></td>
+        <td><?php echo number_format($tot['receiptpoint']); ?></td>
+        <td><?php echo number_format($tot['receiptcancel']); ?></td>
+        <td><?php echo number_format($tot['misu']); ?></td>
     </tr>
     </tfoot>
     <tbody>
-    <?
+    <?php
     unset($save);
     unset($tot);
     for ($i=0; $i<count($lines); $i++)
@@ -139,6 +139,6 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     </table>
 </section>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

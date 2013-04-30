@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '500120';
 include_once('./_common.php');
 
@@ -203,7 +203,7 @@ if (mysql_num_rows($result) == 0)
 
 <div id="sodr_print_pop" class="cbox">
     <h1>
-        <?
+        <?php
         if ($case == 1)
             echo $fr_date.' 부터 '.$to_date.' 까지 '.$ct_status.' 내역';
         else
@@ -211,7 +211,7 @@ if (mysql_num_rows($result) == 0)
         ?>
     </h1>
 
-    <?
+    <?php
     $mod = 10;
     $tot_total_amount = 0;
     for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -240,29 +240,29 @@ if (mysql_num_rows($result) == 0)
     ?>
     <!-- 반복시작 - 지운아빠 2013-04-18 -->
     <div class="sodr_print_pop_list">
-        <h2>주문번호 <?=$row1['od_id']?></h2>
-        <h3>보내는 사람 : <?=$row1['od_name']?></h3>
+        <h2>주문번호 <?php echo $row1['od_id']; ?></h2>
+        <h3>보내는 사람 : <?php echo $row1['od_name']; ?></h3>
         <dl>
             <dt>주소</dt>
-            <dd><?=$row1['od_addr']?></dd>
+            <dd><?php echo $row1['od_addr']; ?></dd>
             <dt>휴대폰</dt>
-            <dd><?=$row1['od_hp']?></dd>
+            <dd><?php echo $row1['od_hp']; ?></dd>
             <dt>전화번호</dt>
-            <dd><?=$row1['od_tel']?></dd>
+            <dd><?php echo $row1['od_tel']; ?></dd>
         </dl>
-        <? if ($samesamesame) { ?>
+        <?php if ($samesamesame) { ?>
         <p class="sodr_print_pop_same">보내는 사람과 받는 사람이 동일합니다.</p>
-        <? } else { ?>
-        <h3>받는 사람 : <?=$row1['od_b_name']?></h3>
+        <?php } else { ?>
+        <h3>받는 사람 : <?php echo $row1['od_b_name']; ?></h3>
         <dl>
             <dt>주소</dt>
-            <dd><?=$row1['od_b_addr']?></dd>
+            <dd><?php echo $row1['od_b_addr']; ?></dd>
             <dt>휴대폰</dt>
-            <dd><?=$row1['od_b_hp']?></dd>
+            <dd><?php echo $row1['od_b_hp']; ?></dd>
             <dt>전화번호</dt>
-            <dd><?=$row1['od_b_tel']?></dd>
+            <dd><?php echo $row1['od_b_tel']; ?></dd>
         </dl>
-        <? } ?>
+        <?php } ?>
         <h3>주문목록</h3>
         <table>
         <thead>
@@ -274,7 +274,7 @@ if (mysql_num_rows($result) == 0)
         </tr>
         </thead>
         <tbody>
-        <?
+        <?php
         $sql2 = " select    a.*,
                             b.it_opt1_subject,
                             b.it_opt2_subject,
@@ -332,22 +332,22 @@ if (mysql_num_rows($result) == 0)
 
         ?>
         <tr>
-            <td><?=$it_name?></td>
-            <td class="td_bignum"><?=number_format($row2['ct_amount'])?></td>
-            <td class="td_smallnum"><?=$fontqty1?><?=number_format($row2['ct_qty'])?><?=$fontqty2?></td>
-            <td class="td_bignum"><?=number_format($row2_tot_amount)?></td>
+            <td><?php echo $it_name; ?></td>
+            <td class="td_bignum"><?php echo number_format($row2['ct_amount']); ?></td>
+            <td class="td_smallnum"><?php echo $fontqty1; ?><?php echo number_format($row2['ct_qty']); ?><?php echo $fontqty2; ?></td>
+            <td class="td_bignum"><?php echo number_format($row2_tot_amount); ?></td>
         </tr>
-        <? $cnt++; } ?>
+        <?php $cnt++; } ?>
         </tbody>
         <tfoot>
         <tr>
             <th scope="row" colspan="2">합계</th>
-            <td><?=number_format($sub_tot_qty)?></td>
-            <td><?=number_format($sub_tot_amount)?></td>
+            <td><?php echo number_format($sub_tot_qty); ?></td>
+            <td><?php echo number_format($sub_tot_amount); ?></td>
         </tr>
         </tfoot>
         </table>
-        <?
+        <?php
         $tot_tot_qty    += $sub_tot_qty;
         $tot_tot_amount += $sub_tot_amount;
 
@@ -361,13 +361,13 @@ if (mysql_num_rows($result) == 0)
        ?>
     </div>
     <!-- 반복 끝 -->
-    <? } ?>
+    <?php } ?>
 
     <div id="sodr_print_pop_total">
         <span>
             전체
-            <strong><?=number_format($tot_tot_qty)?></strong>개
-            <strong><?=number_format($tot_tot_amount)?></strong>원
+            <strong><?php echo number_format($tot_tot_qty); ?></strong>개
+            <strong><?php echo number_format($tot_tot_amount); ?></strong>원
         </span>
         &lt;출력 끝&gt;
     </div>

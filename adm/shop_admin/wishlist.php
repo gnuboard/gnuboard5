@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '500140';
 include_once('./_common.php');
 
@@ -51,24 +51,24 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="flist">
-<input type="hidden" name="doc" value="<?=$doc ?>">
-<input type="hidden" name="sort1" value="<?=$sort1 ?>">
-<input type="hidden" name="sort2" value="<?=$sort2 ?>">
-<input type="hidden" name="page" value="<?=$page ?>">
+<input type="hidden" name="doc" value="<?php echo $doc; ?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
 
 <fieldset>
     <legend>보관함현황 검색</legend>
 
     <span>
-        <?=$listall?>
-        전체 보관함 내역 <?=$total_count ?>건
+        <?php echo $listall; ?>
+        전체 보관함 내역 <?php echo $total_count; ?>건
     </span>
 
     <label for="sel_ca_id" class="sound_only">검색대상</label>
-    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-18 ?>
+    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-18 ?>
     <select name="sel_ca_id" id="sel_ca_id">
         <option value=''>전체분류</option>
-        <?
+        <?php
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
@@ -79,12 +79,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         }
         ?>
     </select>
-    <? // ##### // 웹 접근성 취약 지점 끝 ?>
+    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
     기간설정
     <label for="fr_date" class="sound_only">기간 시작일</label>
-    <input type="text" name="fr_date" value="<?=$fr_date?>" id="fr_date" class="frm_input" size="8" maxlength="8"> 부터
+    <input type="text" name="fr_date" value="<?php echo $fr_date; ?>" id="fr_date" class="frm_input" size="8" maxlength="8"> 부터
     <label for="to_date" class="sound_only">기간 종료일</label>
-    <input type="text" name="to_date" value="<?=$to_date?>" id="to_date" class="frm_input" size="8" maxlength="8"> 까지
+    <input type="text" name="to_date" value="<?php echo $to_date; ?>" id="to_date" class="frm_input" size="8" maxlength="8"> 까지
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 
@@ -103,7 +103,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         // $s_mod = icon("수정", "./itemqaform.php?w=u&amp;iq_id={$row['iq_id']}&amp;$qstr");
@@ -113,11 +113,11 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         $num = $rank + $i + 1;
     ?>
     <tr>
-        <td class="td_num"><?=$num?></td>
-        <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str($row['it_name'],30)?></a></td>
-        <td class="td_num"><?=$row['it_id_cnt']?></td>
+        <td class="td_num"><?php echo $num; ?></td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
+        <td class="td_num"><?php echo $row['it_id_cnt']; ?></td>
     </tr>
-    <?
+    <?php
     }
 
     if ($i == 0) {
@@ -126,9 +126,9 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     </tbody>
     </table>
-    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+    <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 </section>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>
