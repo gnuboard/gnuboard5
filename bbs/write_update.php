@@ -8,7 +8,7 @@ $msg = array();
 
 $wr_subject = '';
 if (isset($_POST['wr_subject'])) {
-    $wr_subject = trim($_POST['wr_subject']);
+    $wr_subject = substr(escape_trim($_POST['wr_subject']),0,255);
 }
 if ($wr_subject == '') {
     $msg[] = '<strong>제목</strong>을 입력하세요.';
@@ -16,10 +16,20 @@ if ($wr_subject == '') {
 
 $wr_content = '';
 if (isset($_POST['wr_content'])) {
-    $wr_content = trim($_POST['wr_content']);
+    $wr_content = escape_trim($_POST['wr_content']);
 }
 if ($wr_content == '') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';
+}
+
+$wr_link1 = '';
+if (isset($_POST['wr_link1'])) {
+    $wr_link1 = substr(escape_trim($_POST['wr_link1']),0,1000);
+}
+
+$wr_link2 = '';
+if (isset($_POST['wr_link2'])) {
+    $wr_link2 = substr(escape_trim($_POST['wr_link2']),0,1000);
 }
 
 $msg = implode('<br>', $msg);

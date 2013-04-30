@@ -53,21 +53,18 @@ if (isset($wr_id) && $wr_id) {
     }
 
     // 휴대폰 본인확인을 사용한다면
-    if ($config['cf_kcpcert_use'] != '') {
+    if ($config['cf_kcpcert_use'] != '' && !$is_admin) {
         // 인증된 회원만 가능
-        if ($board['bo_use_cert'] != '') {
-            if ($is_guest) {
-                alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글 읽기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
-            }
+        if ($board['bo_use_cert'] != '' && $is_guest) {
+            alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
+        }
 
-            $hp_certify = substr($member['mb_hp_certify'],0,1) == '0' ? false : true;
-            if ($hp_certify == false) {
-                alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글 읽기가 가능합니다.\\n\\n회원정보 수정에서 휴대폰 본인확인을 해주시기 바랍니다.', G4_URL);
-            }
+        if ($board['bo_use_cert'] == 'cert' && hp_certify($member) != 'Y') {
+            alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 휴대폰 본인확인을 해주시기 바랍니다.', G4_URL);
+        }
 
-            if ($member['mb_adult'] != 'Y') {
-                alert('이 게시판은 휴대폰 성인인증 하신 회원님만 글 읽기가 가능합니다.\\n\\n성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을\\n다시 해주시기 바랍니다.', G4_URL);
-            }
+        if ($board['bo_use_cert'] == 'adult' && $member['mb_adult'] != 'Y') {
+            alert('이 게시판은 휴대폰 본인확인으로 성인 인증된 회원님만 글읽기가 가능합니다.\\n\\n성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을\\n다시 해주시기 바랍니다.', G4_URL);
         }
     }
 
