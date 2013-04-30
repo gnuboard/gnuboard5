@@ -1,37 +1,27 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+// $list_mod 가로 나열 수
 ?>
 
-<table width=100% cellpadding=0 cellspacing=0 border=0>
-<tr>
 <?php
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    if ($i > 0 && $i % $list_mod == 0) {
-        echo "</tr>\n\n<tr>\n";
-    }
-
-    $href = "<a href='".G4_SHOP_URL."/item.php?it_id={$row['it_id']}' class=item>";
+    $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    if (($i+1)%$list_mod == 0) $sidx_it_last = 'sidx_it_last';
+    else $sidx_it_last = '';
+    if ($i == 0) echo '<ul class="sidx_it sidx_it_10">';
 ?>
-    <td width="<?php echo $td_width; ?>%" align=center valign=top>
-        <table width=98% cellpadding=1 cellspacing=0 border=0>
-        <tr><td height=5></td></tr>
-        <tr><td align=center><?php echo $href; ?><?php echo get_it_image($row['it_id']."_s", $img_width, $img_height); ?></a></td></tr>
-        <tr><td align=center><?php echo $href; ?><?php echo stripslashes($row['it_name']); ?></a></td></tr>
-        <!--시중가격<tr><td align=center><strike><?php echo display_amount($row[it_cust_amount]); ?></strike></td></tr>-->
-        <tr><td align=center><span class=amount><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span></td></tr>
-        </table></td>
-<?php
-/*
-// 이미지 오른쪽에 구분선을 두는 경우 (이미지로 대체 가능)
-    if ($i%$list_mod!=$list_mod-1)
-        echo "<td width=1 bgcolor=#eeeeee></td>";
-*/
-}
-
-// 나머지 td 를 채운다.
-if (($cnt = $i%$list_mod) != 0)
-    for ($k=$cnt; $k<$list_mod; $k++)
-        echo "<td>&nbsp;</td>\n";
+    <li class="sidx_it_li <?php echo $sidx_it_last; ?>">
+        <a href="<?php echo $href; ?>" class="sidx_it_a">
+            <span><?php echo get_it_image($row['it_id']."_s", $img_width, $img_height); ?></span>
+            <b><?php echo stripslashes($row['it_name']); ?></b>
+            <?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?>
+        </a>
+        <div class="sidx_it_sns">
+            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_fb.png" alt="페이스북에 공유"></a>
+            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_twt.png" alt="트위터에 공유"></a>
+            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_goo.png" alt="구글플러스에 공유"></a>
+        </div>
+    </li>
+<?php }
+if ($i > 0) echo '</ul>';
 ?>
-</tr>
-</table>
