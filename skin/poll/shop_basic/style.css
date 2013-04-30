@@ -2,7 +2,7 @@
 #poll {margin:0 0 20px}
 #poll header {position:relative}
 #poll h2 {}
-#poll header .btn_admin {margin-top:5px;width:158px;text-align:center}
+#poll header .btn_admin {margin-top:5px;padding:0;width:100%;text-align:center}
 #poll header p {padding:5px 0 0}
 #poll ul {margin:0 0 10px;padding:5px 0;list-style:none}
 #poll li {padding:3px 0}
