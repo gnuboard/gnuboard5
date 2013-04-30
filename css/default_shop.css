@@ -177,6 +177,9 @@ a:active {color:#000;text-decoration:underline}
 .sidx_it_10 b {display:block;margin:0 0 5px;font-weight:normal}
 .sidx_it_10 .sidx_it_sns {position:absolute;top:190px;right:20px}
 
+/* 공지사항 및 커뮤니티 새글 */
+#sidx_lat {}
+
 /* 배너 인덱스 출력 */
 #sbn_idx {}
 #sbn_idx h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}

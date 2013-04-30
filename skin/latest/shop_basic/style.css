@@ -1,6 +1,5 @@
 /* 새글 스킨 (latest) */
-.lat_pc {float:left;margin-left:20px}
-.lat {position:relative;float:left;margin-bottom:20px;padding-bottom:10px;width:354px;height:150px;border-bottom:1px solid #ddd}
+.lat {position:relative;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #ddd}
 .lat ul {margin:0 0 10px;padding:0;list-style:none}
 .lat li {padding:3px 0}
 .lat_title {display:block;padding:10px 0 8px}
