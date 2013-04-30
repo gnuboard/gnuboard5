@@ -90,14 +90,12 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 </section>
 
 <section id="sidx_lat">
-    <h2>공지사항 및 커뮤니티 새글</h2>
+    <h2>커뮤니티 최신글</h2>
     <?php echo latest('shop_basic', '1', 5, 30); ?>
-    <?php echo latest('shop_basic', '1', 5, 30); ?>
-    <!-- 공지사항 -->
-    <?php echo latest('shop_basic', '1', 3, 25); ?>
+    <?php echo latest('shop_basic', '1', 5, 25); ?>
+    <?php echo latest('shop_basic', '1', 5, 20); ?>
 </section>
 
-<!-- 온라인 투표 -->
 <?php echo poll('shop_basic'); ?>
 
 <!-- 방문자 수 -->

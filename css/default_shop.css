@@ -179,7 +179,7 @@ a:active {color:#000;text-decoration:underline}
 
 /* 공지사항 및 커뮤니티 새글 */
 #sidx_lat {padding:15px 0 0;border-top:1px solid #ddd}
-#sidx_lat h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sidx_lat h2 {text-align:center}
 
 /* 배너 인덱스 출력 */
 #sbn_idx {}
