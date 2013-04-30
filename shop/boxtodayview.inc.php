@@ -8,12 +8,14 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
 ?>
 
 <div id="stv_list">
-    <h2>오늘 본 상품</h2>
+    <h2>
+        오늘 본 상품
+        <span id="stv_pg"></span>
+    </h2>
 
     <?php if ($tv_idx) { // 오늘 본 상품이 1개라도 있을 때 ?>
 
-    <div id="btn">
-        <span id="stv_pg"></span>
+    <div id="stv_btn">
         <button id="up">위</button>
         <button id="down">아래</button>
     </div>
@@ -42,14 +44,14 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
         var itemQty = <?php echo $tv_idx; ?>; // 총 아이템 수량
         var itemShow = <?php echo $tv_div['img_length']; ?>; // 한번에 보여줄 아이템 수량
         var Flag = 1; // 페이지
-        var EOFlag = parseInt(<?php echo $i; ?>/itemShow); // 전체 리스트를 3(한 번에 보여줄 값)으로 나눠 페이지 최댓값을 구하고
-        var itemRest = parseInt(<?php echo $i; ?>%itemShow); // 나머지 값을 구한 후
+        var EOFlag = parseInt(<?php echo $i-1; ?>/itemShow); // 전체 리스트를 3(한 번에 보여줄 값)으로 나눠 페이지 최댓값을 구하고
+        var itemRest = parseInt(<?php echo $i-1; ?>%itemShow); // 나머지 값을 구한 후
         if (itemRest > 0) // 나머지 값이 있다면
         {
             EOFlag++; // 페이지 최댓값을 1 증가시킨다.
         }
         $('.c'+Flag).css('display','block');
-        $('#pg').text(Flag+'/'+EOFlag); // 페이지 초기 출력값
+        $('#stv_pg').text(Flag+'/'+EOFlag); // 페이지 초기 출력값
         $('#up').click(function() {
             if (Flag == 1)
             {
@@ -59,7 +61,7 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
                 $('.c'+Flag).css('display','block');
                 $('.c'+(Flag+1)).css('display','none');
             }
-            $('#pg').text(Flag+'/'+EOFlag); // 페이지 값 재설정
+            $('#stv_pg').text(Flag+'/'+EOFlag); // 페이지 값 재설정
         })
         $('#down').click(function() {
             if (Flag == EOFlag)
@@ -70,7 +72,7 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
                 $('.c'+Flag).css('display','block');
                 $('.c'+(Flag-1)).css('display','none');
             }
-            $('#pg').text(Flag+'/'+EOFlag); // 페이지 값 재설정
+            $('#stv_pg').text(Flag+'/'+EOFlag); // 페이지 값 재설정
         });
     });
     </script>
@@ -83,7 +85,7 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
 
     <aside id="stv_nb">
         <h3>빠른 연결</h3>
-        <ul id="stv_nb_ul">
+        <ul>
             <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_cart.gif" alt="장바구니"></a></li>
             <li><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_wish.gif" alt="위시리스트"></a></li>
             <li><a href="<?php echo G4_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_deli.gif" alt="주문/배송조회"></a></li>

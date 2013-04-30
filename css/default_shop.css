@@ -9,11 +9,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;border-radius:0;font-family:"dotum"}
-input[type=text],
-input[type=password],
-input[type=submit],
-input[type=image] {-webkit-appearance:none}
-button {border-radius:0;font-size:1em;-webkit-appearance:none}
+button {border-radius:0;font-size:1em}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
@@ -96,15 +92,20 @@ a:active {color:#000;text-decoration:underline}
 #stv {float:right;width:90px}
 #stv_list {border:1px solid #e9e9e9}
 #stv_list h2 {padding:10px 0 8px;background:#f7f7f7;text-align:center;letter-spacing:-0.1em}
+#stv_pg {display:block;margin:5px 0 0}
 #stv_list p {padding:20px 0;text-align:center}
-#stv_ul {margin:0;padding:0;list-style:none}
-.stv_item {display:none}
+#stv_btn {text-align:center;zoom:1}
+#stv_btn:after {display:block;visibility:hidden;clear:both;content:''}
+#stv_btn button {float:left;padding:5px 0 3px;width:44px;border:0;background:#555;color:#fff;text-align:center}
+#stv_ul {margin:5px 0 10px;padding:0;list-style:none}
+.stv_item {display:none;text-align:center}
+.stv_item img {margin:5px 0}
 
 #stv_nb {background:#f9faf5}
 #stv_nb h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#stv_nb_ul {margin:0;padding:0;list-style:none}
-#stv_nb_ul li {text-align:center}
-#stv_nb_ul a {display:block}
+#stv_nb ul {margin:0;padding:0;list-style:none}
+#stv_nb li {text-align:center}
+#stv_nb a {display:block}
 
 /* aside wrapper */
 #aside {float:left;margin:0 10px 0 0;width:150px}
