@@ -42,7 +42,7 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
         var itemShow = <?php echo $tv_div['img_length']; ?>; // 한번에 보여줄 아이템 수량
         if (itemQty > itemShow)
         {
-            $('#stv_btn').append('<button id="up">위</button><button id="down">아래</button>');
+            $('#stv_btn').append('<button id="up">이전</button><button id="down">다음</button>');
         }
         var Flag = 1; // 페이지
         var EOFlag = parseInt(<?php echo $i-1; ?>/itemShow); // 전체 리스트를 3(한 번에 보여줄 값)으로 나눠 페이지 최댓값을 구하고
