@@ -16,6 +16,7 @@
 #ol_submit {display:inline-block;width:60px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before a {letter-spacing:-0.15em}
 #ol_svc {float:left;margin:5px 0 0}
+#ol_password_lost {display:inline-block;margin:0 0 0 5px}
 #ol_auto {position:relative;float:right;margin:5px 0 0}
 #ol_auto label {letter-spacing:-0.1em}
 #ol_auto input {width:13px;height:13px;vertical-align:bottom}
