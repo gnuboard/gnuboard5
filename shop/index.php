@@ -98,10 +98,10 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 </section>
 
 <!-- 온라인 투표 -->
-<?php echo poll('basic'); ?>
+<?php echo poll('shop_basic'); ?>
 
 <!-- 방문자 수 -->
-<?php echo visit('basic'); ?>
+<?php echo visit('shop_basic'); ?>
 
 <section id="sbn_idx">
     <h2>쇼핑몰 메인 배너</h2>
