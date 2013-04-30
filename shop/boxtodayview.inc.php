@@ -35,7 +35,7 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
     }
     if ($i > 1) echo '</ul>'.PHP_EOL;
     ?>
- 
+
     <script>
     $(function() {
         var itemQty = <?php echo $tv_idx; ?>; // 총 아이템 수량
@@ -75,26 +75,8 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
             }
             $('#stv_pg').text(Flag+'/'+EOFlag); // 페이지 값 재설정
         });
-
-        // 위치 고정
-        var currentPosition = parseInt($("#stv_list").css("top"));
-        $(window).scroll(function() {
-            var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
-            if(position > 233){
-                if($.browser.msie && $.browser.version <= 6){
-                } else {
-                    $("#stv_list").css('top', '20px');
-                }
-            }else{
-                $('#stv_list').attr('style','');
-            }
-        });
     });
     </script>
-
-    <!--[if lte IE 6]>
-    <script src="<?php echo G4_JS_URL ?>/scroll_oldie.js"></script>
-    <![endif]-->
 
     <?php } else { // 오늘 본 상품이 없을 때 ?>
 
@@ -111,3 +93,23 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
         </ul>
     </aside>
 </div>
+
+<script>
+// 위치 고정
+var currentPosition = parseInt($("#stv_list").css("top"));
+$(window).scroll(function() {
+    var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
+    if(position > 233){
+        if($.browser.msie && $.browser.version <= 6){
+        } else {
+            $("#stv_list").css('top', '20px');
+        }
+    }else{
+        $('#stv_list').attr('style','');
+    }
+});
+</script>
+
+<!--[if lte IE 6]>
+<script src="<?php echo G4_JS_URL ?>/scroll_oldie.js"></script>
+<![endif]-->
