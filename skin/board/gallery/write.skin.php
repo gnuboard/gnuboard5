@@ -52,42 +52,42 @@ echo $option_hidden;
 
 <table id="bo_w" class="frm_tbl">
 <tbody>
-<?php if ($is_name) {  ?>
+<?php if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
     <td><input type="text" name="wr_name" value="<?php echo $name ?>"id="wr_name" required class="frm_input required" size="10" maxlength="20"></td>
 </tr>
-<?php }  ?>
+<?php } ?>
 
-<?php if ($is_password) {  ?>
+<?php if ($is_password) { ?>
 <tr>
     <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
     <td><input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> class="frm_input <?php echo $password_required ?>" maxlength="20"></td>
 </tr>
-<?php }  ?>
+<?php } ?>
 
-<?php if ($is_email) {  ?>
+<?php if ($is_email) { ?>
 <tr>
     <th scope="row"><label for="wr_email">이메일</label></th>
     <td><input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email" size="50" maxlength="100"></td>
 </tr>
-<?php }  ?>
+<?php } ?>
 
-<?php if ($is_homepage) {  ?>
+<?php if ($is_homepage) { ?>
 <tr>
     <th scope="row"><label for="wr_homepage">홈페이지</label></th>
     <td><input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input" size="50"></td>
 </tr>
-<?php }  ?>
+<?php } ?>
 
-<?php if ($option) {  ?>
+<?php if ($option) { ?>
 <tr>
     <th scope="row">옵션</th>
     <td><?php echo $option ?></td>
 </tr>
-<?php }  ?>
+<?php } ?>
 
-<?php if ($is_category) {  ?>
+<?php if ($is_category) { ?>
 <tr>
     <th scope="row"><label for="ca_name">분류<strong class="sound_only">필수</strong></label></th>
     <td>
@@ -97,7 +97,7 @@ echo $option_hidden;
         </select>
     </td>
 </tr>
-<?php }  ?>
+<?php } ?>
 
 <tr>
     <th scope="row"><label for="wr_subject">제목<strong class="sound_only">필수</strong></label></th>
@@ -109,24 +109,24 @@ echo $option_hidden;
     <td class="wr_content"><?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출  ?></td>
 </tr>
 
-<?php for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) {  ?>
+<?php for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?php echo $i ?>">링크 #<?php echo $i ?></label></th>
     <td><input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input" size="50"></td>
 </tr>
-<?php }  ?>
+<?php } ?>
 
-<?php for ($i=0; $is_file && $i<$file_count; $i++) {  ?>
+<?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
 <tr>
     <th scope="row">파일 #<?php echo $i+1 ?></th>
     <td>
         <input type="file" name="bf_file[]" title="파일첨부 <?php echo $i+1 ?> :  용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file frm_input">
-        <?php if ($is_file_content) {  ?>
+        <?php if ($is_file_content) { ?>
         <input type="text" name="bf_content[]" value="<?php echo $file[$i]['bf_content'];  ?>" title="파일 설명을 입력해주세요." class="frm_file frm_input" size="50">
         <?php } ?>
-        <?php if($w == 'u' && $file[$i]['file']) {  ?>
+        <?php if($w == 'u' && $file[$i]['file']) { ?>
         <input type="checkbox" name="bf_file_del[<?php echo $i;  ?>]" value="1" id="bf_file_del<?php echo $i ?>"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
-        <?php }  ?>
+        <?php } ?>
     </td>
 </tr>
 <?php } ?>
@@ -138,7 +138,7 @@ echo $option_hidden;
         <?php echo $captcha_html ?>
     </td>
 </tr>
-<?php }  ?>
+<?php } ?>
 
 </tbody>
 </table>
@@ -232,7 +232,7 @@ function fwrite_submit(f)
         return false;
     }
 
-    <?php if ($is_guest) { echo chk_captcha_js(); }  ?>
+    <?php if ($is_guest) { echo chk_captcha_js(); } ?>
 
     return true;
 }

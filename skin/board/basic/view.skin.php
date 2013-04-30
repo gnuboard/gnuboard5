@@ -16,7 +16,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
     <section id="bo_v_info">
         <h2>게시물 정보</h2>
-        작성자 <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; }  ?></strong>
+        작성자 <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
         <span class="sound_only">작성일</span><strong><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong>
         조회<strong><?php echo number_format($view['wr_hit']) ?>회</strong>
         댓글<strong><?php echo number_format($view['wr_comment']) ?>건</strong>
@@ -32,7 +32,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     }
      ?>
 
-    <?php if($cnt) {  ?>
+    <?php if($cnt) { ?>
     <section id="bo_v_file">
         <h2>첨부파일</h2>
         <ul>
@@ -56,7 +56,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
          ?>
         </ul>
     </section>
-    <?php }  ?>
+    <?php } ?>
 
     <?php
     if (implode('', $view['link'])) {
@@ -85,29 +85,29 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
          ?>
         </ul>
     </section>
-    <?php }  ?>
+    <?php } ?>
 
     <nav id="bo_v_top">
         <h2>게시물 상단 버튼</h2>
         <?php
         ob_start();
          ?>
-        <?php if ($prev_href || $next_href) {  ?>
+        <?php if ($prev_href || $next_href) { ?>
         <ul class="bo_v_nb">
-            <?php if ($prev_href) {  ?><li><a href="<?php echo $prev_href ?>" class="btn_b01">이전글</a></li><?php }  ?>
-            <?php if ($next_href) {  ?><li><a href="<?php echo $next_href ?>" class="btn_b01">다음글</a></li><?php }  ?>
+            <?php if ($prev_href) { ?><li><a href="<?php echo $prev_href ?>" class="btn_b01">이전글</a></li><?php } ?>
+            <?php if ($next_href) { ?><li><a href="<?php echo $next_href ?>" class="btn_b01">다음글</a></li><?php } ?>
         </ul>
-        <?php }  ?>
+        <?php } ?>
 
         <ul class="bo_v_com">
-            <?php if ($update_href) {  ?><li><a href="<?php echo $update_href ?>" class="btn_b01">수정</a></li><?php }  ?>
-            <?php if ($delete_href) {  ?><li><a href="<?php echo $delete_href ?>" class="btn_b01" onclick="del(this.href); return false;">삭제</a></li><?php }  ?>
-            <?php if ($copy_href) {  ?><li><a href="<?php echo $copy_href ?>" class="btn_admin" onclick="board_move(this.href); return false;">복사</a></li><?php }  ?>
-            <?php if ($move_href) {  ?><li><a href="<?php echo $move_href ?>" class="btn_admin" onclick="board_move(this.href); return false;">이동</a></li><?php }  ?>
-            <?php if ($search_href) {  ?><li><a href="<?php echo $search_href ?>" class="btn_b01">검색</a></li><?php }  ?>
+            <?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b01">수정</a></li><?php } ?>
+            <?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b01" onclick="del(this.href); return false;">삭제</a></li><?php } ?>
+            <?php if ($copy_href) { ?><li><a href="<?php echo $copy_href ?>" class="btn_admin" onclick="board_move(this.href); return false;">복사</a></li><?php } ?>
+            <?php if ($move_href) { ?><li><a href="<?php echo $move_href ?>" class="btn_admin" onclick="board_move(this.href); return false;">이동</a></li><?php } ?>
+            <?php if ($search_href) { ?><li><a href="<?php echo $search_href ?>" class="btn_b01">검색</a></li><?php } ?>
             <li><a href="<?php echo $list_href ?>" class="btn_b01">목록</a></li>
-            <?php if ($reply_href) {  ?><li><a href="<?php echo $reply_href ?>" class="btn_b01">답변</a></li><?php }  ?>
-            <?php if ($write_href) {  ?><li><a href="<?php echo $write_href ?>" class="btn_b02">글쓰기</a></li><?php }  ?>
+            <?php if ($reply_href) { ?><li><a href="<?php echo $reply_href ?>" class="btn_b01">답변</a></li><?php } ?>
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02">글쓰기</a></li><?php } ?>
         </ul>
         <?php
         $link_buttons = ob_get_contents();
@@ -140,28 +140,28 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
         <?php//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
 
-        <?php if ($is_signature) {  ?><p><?php echo $signature ?></p><?php }  ?>
+        <?php if ($is_signature) { ?><p><?php echo $signature ?></p><?php } ?>
 
-        <?php if ($scrap_href || $good_href || $nogood_href) {  ?>
+        <?php if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
-            <?php if ($scrap_href) {  ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><?php }  ?>
+            <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><?php } ?>
 
             <?php if ($good_href) { ?>
             <a href="<?php echo $good_href.'&amp;'.$qstr ?>" id="good_button" class="btn_b01">추천 <strong><?php echo number_format($view['wr_good']) ?></strong></a>
             <b id="bo_v_act_good"></b>
-            <?php }  ?>
+            <?php } ?>
             <?php if ($nogood_href) { ?>
             <a href="<?php echo $nogood_href.'&amp;'.$qstr ?>" id="nogood_button" class="btn_b01">비추천  <strong><?php echo number_format($view['wr_nogood']) ?></strong></a>
             <b id="bo_v_act_nogood"></b>
-            <?php }  ?>
+            <?php } ?>
 
         </div>
         <?php } else {
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
          ?>
         <div id="bo_v_act">
-            <?php if($board['bo_use_good']) {  ?><span>추천 <strong><?php echo number_format($view['wr_good']) ?></strong></span><?php }  ?>
-            <?php if($board['bo_use_nogood']) {  ?><span>비추천 <strong><?php echo number_format($view['wr_nogood']) ?></strong></span><?php }  ?>
+            <?php if($board['bo_use_good']) { ?><span>추천 <strong><?php echo number_format($view['wr_good']) ?></strong></span><?php } ?>
+            <?php if($board['bo_use_nogood']) { ?><span>비추천 <strong><?php echo number_format($view['wr_nogood']) ?></strong></span><?php } ?>
         </div>
         <?php
             }
@@ -186,7 +186,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 
 <script>
-<?php if ($board['bo_download_point'] < 0) {  ?>
+<?php if ($board['bo_download_point'] < 0) { ?>
 $(function() {
     $("a.view_file_download").click(function() {
         var msg = "파일을 다운로드 하시면 포인트가 차감(<?php echo number_format($board['bo_download_point']) ?>점)됩니다.\n\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\n\n그래도 다운로드 하시겠습니까?";
