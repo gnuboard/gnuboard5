@@ -4,7 +4,7 @@ $tv_idx = get_session("ss_tv_idx");
 $tv_div['top'] = 0;
 $tv_div['img_width'] = 70;
 $tv_div['img_height'] = 70;
-$tv_div['img_length'] = 1; // 한번에 보여줄 이미지 수
+$tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
 ?>
 
 <div id="stv_list">
@@ -19,23 +19,24 @@ $tv_div['img_length'] = 1; // 한번에 보여줄 이미지 수
     </div>
 
     <?php
-    for ($i=0;$i<=$tv_idx;$i++)
+    for ($i=1;$i<=$tv_idx;$i++)
     {
         $tv_it_id = get_session("ss_tv[$i]");
         $rowx = sql_fetch(" select it_name from $g4[shop_item_table] where it_id = '$tv_it_id' ");
-        if ($i%$tv_div['img_length']==0) $k++;
+        $j = $i - 1;
+        if ($j%$tv_div['img_length']==0) $k++;
         $it_name = get_text(addslashes($rowx['it_name']));
         $img = get_it_image($tv_it_id."_s", $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
-        if ($i==0) echo '<ul id="stv_ul">'.PHP_EOL;
+        if ($i==1) echo '<ul id="stv_ul">'.PHP_EOL;
         echo '<li class="stv_item c'.$k.'">'.PHP_EOL;
         echo $img;
         echo '<br>';
         echo cut_str($it_name,10,'').PHP_EOL;
         echo '</li>'.PHP_EOL;
     }
-    if ($i > 0) echo '</ul>'.PHP_EOL;
+    if ($i > 1) echo '</ul>'.PHP_EOL;
     ?>
-
+ 
     <script>
     $(function() {
         var itemQty = <?php echo $tv_idx; ?>; // 총 아이템 수량
