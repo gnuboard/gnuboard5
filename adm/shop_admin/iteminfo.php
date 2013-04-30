@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
@@ -21,10 +21,10 @@ include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <form id="fiteminfo" method="post" action="#" onsubmit="return fiteminfo_submit(this)">
-<input type="hidden" name="it_id" value="<?=$it_id?>">
+<input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
 
 <div class="cbox">
-    <h1><?=$g4['title']?></h1>
+    <h1><?php echo $g4['title']; ?></h1>
     <p>모든 필드를 반드시 입력하셔야 합니다.</p>
     <table class="frm_tbl">
     <colgroup>
@@ -35,10 +35,10 @@ include_once(G4_PATH.'/head.sub.php');
     <tr>
         <th scope="row"><label for="gubun">상품군</label></th>
         <td>
-            <?=help("상품군을 선택하면 자동으로 페이지가 전환됩니다.")?>
-            <select id="gubun" name="gubun" onchange="location.href='?it_id=<?=$it_id?>&amp;gubun='+this.value;">
+            <?php echo help("상품군을 선택하면 자동으로 페이지가 전환됩니다."); ?>
+            <select id="gubun" name="gubun" onchange="location.href='?it_id=<?php echo $it_id; ?>&amp;gubun='+this.value;">
                 <option value="">상품군을 선택하세요.</option>
-                <?
+                <?php
                 foreach($item_info as $key=>$value) {
                     $opt_value = $key;
                     $opt_text  = $value['title'];
@@ -48,7 +48,7 @@ include_once(G4_PATH.'/head.sub.php');
             </select>
         </td>
     </tr>
-    <?
+    <?php
     $article = $item_info[$gubun]['article'];
     if ($article) {
         foreach($article as $key=>$value) {
@@ -62,22 +62,22 @@ include_once(G4_PATH.'/head.sub.php');
     ?>
 
     <tr>
-        <th scope="row"><label for="<?=$el_name.$i?>"><?=$el_title?></label></th>
+        <th scope="row"><label for="<?php echo $el_name.$i?>"><?php echo $el_title; ?></label></th>
         <td>
-        <input type="hidden" name="<?=$el_name?>[]" value="<?=$el_title?>">
-        <? if ($el_example != "") echo help($el_example); ?>
-        <input type="text" name="<?=$el_name?>[]" value="<?=$el_value?>" id="<?=$el_name.$i?>" required class="frm_input required" />
+        <input type="hidden" name="<?php echo $el_name; ?>[]" value="<?php echo $el_title; ?>">
+        <?php if ($el_example != "") echo help($el_example); ?>
+        <input type="text" name="<?php echo $el_name; ?>[]" value="<?php echo $el_value; ?>" id="<?php ehco $el_name.$i; ?>" required class="frm_input required" />
         </td>
     </tr>
-    <?
+    <?php
         }
     }
     ?>
     <tr>
         <th>빈 칸 일괄채우기</th>
         <td>
-            <?=help("상품페이지에 상품요약정보가 포함되어 있어 생략 가능한 경우 선택하십시오.")?>
-            <label for="null">비어있는 칸을 &quot;<?=$null_text?>&quot;로 채우기</label>
+            <?php echo help("상품페이지에 상품요약정보가 포함되어 있어 생략 가능한 경우 선택하십시오."); ?>
+            <label for="null">비어있는 칸을 &quot;<?php echo $null_text; ?>&quot;로 채우기</label>
             <input type="checkbox" id="null">
         </td>
     </tr>
@@ -99,12 +99,12 @@ $(function(){
         if (this.checked) {
             $.each($f, function(){
                 if ($(this).val() == "") {
-                    $(this).val("<?=$null_text?>");
+                    $(this).val("<?php echo $null_text; ?>");
                 }
             });
         } else {
             $.each($f, function(){
-                if ($(this).val() == "<?=$null_text?>") {
+                if ($(this).val() == "<?php echo $null_text; ?>") {
                     $(this).val("");
                 }
             });
@@ -119,6 +119,6 @@ function fiteminfo_submit(f)
 }
 </script>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

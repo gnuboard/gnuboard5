@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '500100';
 include_once('./_common.php');
 
@@ -59,24 +59,24 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="flist">
-<input type="hidden" name="doc" value="<?=$doc?>">
-<input type="hidden" name="sort1" value="<?=$sort1?>">
-<input type="hidden" name="sort2" value="<?=$sort2?>">
-<input type="hidden" name="page" value="<?=$page?>">
+<input type="hidden" name="doc" value="<?php echo $doc; ?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
 
 <fieldset>
     <legend>상품판매순위 검색</legend>
 
     <span>
-        <?=$listall?>
-        등록상품 <?=$total_count ?>건
+        <?php echo $listall; ?>
+        등록상품 <?php echo $total_count; ?>건
     </span>
 
     <label for="sel_ca_id" class="sound_only">검색대상</label>
-    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-17 ?>
+    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-17 ?>
     <select name="sel_ca_id" id="sel_ca_id">
         <option value=''>전체분류</option>
-        <?
+        <?php
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
@@ -87,13 +87,13 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
         }
         ?>
     </select>
-    <? // ##### // 웹 접근성 취약 지점 끝 ?>
+    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
 
     기간설정
     <label for="fr_date" class="sound_only">시작일</label>
-    <input type="text" name="fr_date" value="<?=$fr_date?>" class="frm_input" size="8" maxlength="8"> 에서
+    <input type="text" name="fr_date" value="<?php echo $fr_date; ?>" class="frm_input" size="8" maxlength="8"> 에서
     <label for="to_date" class="sound_only">종료일</label>
-    <input type="text" name="to_date" value="<?=$to_date?>" class="frm_input" size="8" maxlength="8"> 까지
+    <input type="text" name="to_date" value="<?php echo $to_date; ?>" class="frm_input" size="8" maxlength="8"> 까지
 <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
@@ -112,19 +112,19 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <th scope="col">순위</th>
         <th scope="col">상품평</th>
-        <th scope="col"><a href="<?=title_sort("ct_status_1",1)."&amp;$qstr1"?>">쇼핑<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_2",1)."&amp;$qstr1"?>">주문<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_3",1)."&amp;$qstr1"?>">준비<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_4",1)."&amp;$qstr1"?>">배송<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_5",1)."&amp;$qstr1"?>">완료<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_6",1)."&amp;$qstr1"?>">취소<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_7",1)."&amp;$qstr1"?>">반품<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_8",1)."&amp;$qstr1"?>">품절<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?=title_sort("ct_status_sum",1)."&amp;$qstr1"?>">합계<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_1",1)."&amp;$qstr1"; ?>">쇼핑<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_2",1)."&amp;$qstr1"; ?>">주문<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_3",1)."&amp;$qstr1"; ?>">준비<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_4",1)."&amp;$qstr1"; ?>">배송<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_5",1)."&amp;$qstr1"; ?>">완료<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_6",1)."&amp;$qstr1"; ?>">취소<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_7",1)."&amp;$qstr1"; ?>">반품<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_8",1)."&amp;$qstr1"; ?>">품절<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_sum",1)."&amp;$qstr1"; ?>">합계<span class="sound_only"> 순 정렬</span></a></th>
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
@@ -134,19 +134,19 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
         $list = $i%2;
         ?>
         <tr>
-            <td class="td_num"><?=$num?></td>
-            <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str($row['it_name'],30)?></a></td>
-            <td class="td_smallnum"><?=$row['ct_status_1']?></td>
-            <td class="td_smallnum"><?=$row['ct_status_2']?></td>
-            <td class="td_smallnum"><?=$row['ct_status_3']?></td>
-            <td class="td_smallnum"><?=$row['ct_status_4']?></td>
-            <td class="td_smallnum"><?=$row['ct_status_5']?></td>
-            <td class="td_smallnum"><?=$row['ct_status_6']?></td>
-            <td class="td_smallnum"><?=$row['ct_status_7']?></td>
-            <td class="td_smallnum"><?=$row['ct_status_8']?></td>
-            <td class="td_smallnum"><?=$row['ct_status_sum']?></td>
+            <td class="td_num"><?php echo $num; ?></td>
+            <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_1']; ?></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_2']; ?></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_3']; ?></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_4']; ?></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_5']; ?></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_6']; ?></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_7']; ?></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_8']; ?></td>
+            <td class="td_smallnum"><?php echo $row['ct_status_sum']; ?></td>
         </tr>
-        <?
+        <?php
     }
 
     if ($i == 0) {
@@ -157,9 +157,9 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     </table>
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&amp;page="); ?>
 
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

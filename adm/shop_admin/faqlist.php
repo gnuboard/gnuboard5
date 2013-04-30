@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400710';
 include_once('./_common.php');
 
@@ -23,9 +23,9 @@ $result = sql_query($sql);
 ?>
 
 <section class="cbox">
-    <h2><?=$fm_subject?> 목록</h2>
+    <h2><?php echo $fm_subject; ?> 목록</h2>
 
-    <p>등록된 FAQ 상세내용 <?=$total_count ?>건</p>
+    <p>등록된 FAQ 상세내용 <?php echo $total_count; ?>건</p>
 
     <ol>
         <li>FAQ는 무제한으로 등록할 수 있습니다</li>
@@ -33,7 +33,7 @@ $result = sql_query($sql);
     </ol>
 
     <div id="btn_add">
-        <a href="./faqform.php?fm_id=<?=$fm['fm_id']?>">FAQ 상세내용 추가</a>
+        <a href="./faqform.php?fm_id=<?php echo $fm['fm_id']; ?>">FAQ 상세내용 추가</a>
     </div>
 
     <table>
@@ -46,7 +46,7 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $row1 = sql_fetch(" select COUNT(*) as cnt from {$g4['shop_faq_table']} where fm_id = '{$row['fm_id']}' ");
@@ -59,16 +59,16 @@ $result = sql_query($sql);
     ?>
 
         <tr>
-            <td class="td_num"><?=$num?></td>
-            <td><?=stripslashes($row['fa_subject'])?></td>
-            <td class="td_num"><?=$row['fa_order']?></td>
+            <td class="td_num"><?php echo $num; ?></td>
+            <td><?php echo stripslashes($row['fa_subject']); ?></td>
+            <td class="td_num"><?php echo $row['fa_order']; ?></td>
             <td class="td_smallmng">
-                <a href="./faqform.php?w=u&amp;fm_id=<?=$row['fm_id']?>&amp;fa_id=<?=$row['fa_id']?>"><img src="./img/icon_mod.jpg" alt="<?=stripslashes($row['fa_subject'])?> 수정"></a>
-                <a href="javascript:del('./faqformupdate.php?w=d&amp;fm_id=<?=$row['fm_id']?>&amp;fa_id=<?=$row['fa_id']?>');"><img src="./img/icon_del.jpg" alt="<?=stripslashes($row['fa_subject'])?> 삭제"></a>
+                <a href="./faqform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo stripslashes($row['fa_subject']); ?> 수정"></a>
+                <a href="javascript:del('./faqformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>');"><img src="./img/icon_del.jpg" alt="<?php echo stripslashes($row['fa_subject']); ?> 삭제"></a>
             </td>
         </tr>
 
-    <?
+    <?php
     }
 
     if ($i == 0) {
@@ -85,6 +85,6 @@ $result = sql_query($sql);
 </div>
 
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

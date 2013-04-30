@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400400';
 include_once('./_common.php');
 
@@ -121,20 +121,20 @@ $pg_anchor = '<ul class="anchor">
 
 <section id="anc_sodr_list" class="cbox">
     <h2>주문상품 목록</h2>
-    <?=$pg_anchor?>
-    <p>주문일시 <?=substr($od['od_time'],0,16)?> (<?=get_yoil($od['od_time']);?>) / 주문총액 <strong><?=number_format($t_ct_amount['합계']); ?></strong>원</p>
-    <? if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?=$od['od_hope_date']?> (<?=get_yoil($od['od_hope_date'])?>) 입니다.</p><? } ?>
+    <?php echo $pg_anchor; ?>
+    <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($t_ct_amount['합계']); ?></strong>원</p>
+    <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $od['od_hope_date']; ?> (<?php echo get_yoil($od['od_hope_date']); ?>) 입니다.</p><?php } ?>
 
     <form name="frmorderform" method="post" action="./ordercartupdate.php" onsubmit="return form_submit(this);">
-    <input type="hidden" name="uq_id" value="<?=$od['uq_id']?>">
-    <input type="hidden" name="od_id" value="<?=$od_id?>">
-    <input type="hidden" name="mb_id" value="<?=$od['mb_id']?>">
-    <input type="hidden" name="od_email" value="<?=$od['od_email']?>">
-    <input type="hidden" name="sort1" value="<?=$sort1?>">
-    <input type="hidden" name="sort2" value="<?=$sort2?>">
-    <input type="hidden" name="sel_field" value="<?=$sel_field?>">
-    <input type="hidden" name="search" value="<?=$search?>">
-    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
+    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
+    <input type="hidden" name="mb_id" value="<?php echo $od['mb_id']; ?>">
+    <input type="hidden" name="od_email" value="<?php echo $od['od_email']; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+    <input type="hidden" name="search" value="<?php echo $search; ?>">
+    <input type="hidden" name="page" value="<?php echo $page;?>">
 
     <table>
     <thead>
@@ -154,7 +154,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $image_rate = 2.5;
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         $ct_amount['소계'] = $row['ct_amount'] * $row['ct_qty'];
@@ -169,24 +169,24 @@ $pg_anchor = '<ul class="anchor">
 
     <tr>
         <td class="td_chk">
-            <input type="hidden" name="ct_id[<?=$i?>]" value="<?=$row['ct_id']?>">
-            <label for="ct_chk_<?=$i?>" class="sound_only"><?=$row['it_name']?> 체크</label>
-            <input type="checkbox" name="ct_chk[<?=$i?>]" value="1" id="ct_chk_<?=$i?>">
+            <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $row['ct_id']; ?>">
+            <label for="ct_chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['it_name']; ?> 체크</label>
+            <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>">
         </td>
         <td>
-            <a href="./itemform.php?w=u&amp;it_id=<?=$row['it_id']?>"><?=$image?><?=stripslashes($row['it_name'])?></a><br>
-            <?=print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6'])?>
+            <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?><?php echo stripslashes($row['it_name']); ?></a><br>
+            <?php echo print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']); ?>
         </td>
-        <td class="td_small_stats"><?=$row['ct_status']?></td>
-        <td class="td_num"><?=$row['ct_qty']?></td>
-        <td class="td_num"><?=number_format($row['ct_amount'])?></td>
-        <td class="td_num"><?=number_format($ct_amount['소계'])?></td>
-        <td class="td_num"><?=number_format($ct_point['소계'])?></td>
-        <td class="td_small_stats"><?=get_yn($row['dct_point_use'])?></td>
-        <td class="td_small_stats"><?=get_yn($row['ct_stock_use'])?></td>
+        <td class="td_small_stats"><?php echo $row['ct_status']; ?></td>
+        <td class="td_num"><?php echo $row['ct_qty']; ?></td>
+        <td class="td_num"><?php echo number_format($row['ct_amount']); ?></td>
+        <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
+        <td class="td_num"><?php echo number_format($ct_point['소계']); ?></td>
+        <td class="td_small_stats"><?php echo get_yn($row['dct_point_use']); ?></td>
+        <td class="td_small_stats"><?php echo get_yn($row['ct_stock_use']); ?></td>
     </tr>
 
-    <?
+    <?php
         $t_ct_amount['합계'] += $ct_amount['소계'];
         $t_ct_point['합계'] += $ct_point['소계'];
     }
@@ -195,7 +195,7 @@ $pg_anchor = '<ul class="anchor">
     </table>
 
     <div class="btn_list">
-        <input type="hidden" name="chk_cnt" value="<?=$i?>">
+        <input type="hidden" name="chk_cnt" value="<?php echo $i; ?>">
         <input type="submit" name="act_button" value="주문" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="상품준비중" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="배송중" onclick="document.pressed=this.value">
@@ -211,9 +211,9 @@ $pg_anchor = '<ul class="anchor">
 
 <section id="anc_sodr_pay" class="cbox">
     <h2>주문결제 내역</h2>
-    <?=$pg_anchor?>
+    <?php echo $pg_anchor; ?>
 
-    <?
+    <?php
     // 주문금액 = 상품구입금액 + 배송비
     $amount['정상'] = $t_ct_amount['정상'] + $od['od_send_cost'];
 
@@ -230,7 +230,7 @@ $pg_anchor = '<ul class="anchor">
         $s_receipt_way .= "+포인트";
     ?>
 
-    <strong class="sodr_nonpay">미수금 <?=display_amount($amount['미수']) ?></strong>
+    <strong class="sodr_nonpay">미수금 <?php echo display_amount($amount['미수']); ?></strong>
 
     <table>
     <thead>
@@ -247,14 +247,14 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <tr>
-        <td class="td_odrnum2"><?=$od['od_id'] ?><!-- uq_id : <?=$od[uq_id] ?> --></td>
-        <td class="td_payby"><?=$s_receipt_way ?></td>
-        <td class="td_bignum"><?=display_amount($amount['정상']) ?></td>
-        <td class="td_bignum"><?=display_point($od['od_receipt_point'])?></td>
-        <td class="td_bignum"><?=number_format($amount['입금'])?>원</td>
-        <td class="td_bignum"><?=display_amount($od['od_dc_amount'])?></td>
-        <td class="td_bignum"><?=display_amount($od['od_refund_amount'])?></td>
-        <td class="td_bignum"><?=number_format($t_ct_amount['취소'])?>원</td>
+        <td class="td_odrnum2"><?php echo $od['od_id']; ?><!-- uq_id : <?php echo $od['uq_id']; ?> --></td>
+        <td class="td_payby"><?php echo $s_receipt_way; ?></td>
+        <td class="td_bignum"><?php echo display_amount($amount['정상']); ?></td>
+        <td class="td_bignum"><?php echo display_point($od['od_receipt_point']); ?></td>
+        <td class="td_bignum"><?php echo number_format($amount['입금']); ?>원</td>
+        <td class="td_bignum"><?php echo display_amount($od['od_dc_amount']); ?></td>
+        <td class="td_bignum"><?php echo display_amount($od['od_refund_amount']); ?></td>
+        <td class="td_bignum"><?php echo number_format($t_ct_amount['취소']); ?>원</td>
     </tr>
     </tbody>
     </table>
@@ -263,17 +263,17 @@ $pg_anchor = '<ul class="anchor">
 
 <section class="cbox compare_wrap">
     <h2>결제상세정보</h2>
-    <?=$pg_anchor?>
+    <?php echo $pg_anchor; ?>
 
     <form name="frmorderreceiptform" action="./orderreceiptupdate.php" method="post" autocomplete="off">
-    <input type="hidden" name="od_id" value="<?=$od_id?>">
-    <input type="hidden" name="sort1" value="<?=$sort1?>">
-    <input type="hidden" name="sort2" value="<?=$sort2?>">
-    <input type="hidden" name="sel_field" value="<?=$sel_field?>">
-    <input type="hidden" name="search" value="<?=$search?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="od_name" value="<?=$od['od_name']?>">
-    <input type="hidden" name="od_hp" value="<?=$od['od_hp']?>">
+    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+    <input type="hidden" name="search" value="<?php echo $search; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="od_name" value="<?php echo $od['od_name']; ?>">
+    <input type="hidden" name="od_hp" value="<?php echo $od['od_hp']; ?>">
 
     <section id="anc_sodr_chk" class="compare_left">
         <h3>결제상세정보 확인</h3>
@@ -284,133 +284,133 @@ $pg_anchor = '<ul class="anchor">
             <col>
         </colgroup>
         <tbody>
-        <? if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체') { ?>
-        <? if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌') { ?>
+        <?php if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체') { ?>
+        <?php if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌') { ?>
         <tr>
             <th scope="row">계좌번호</th>
-            <td><?=$od['od_bank_account']?></td>
+            <td><?php echo $od['od_bank_account']; ?></td>
         </tr>
-        <? } ?>
+        <?php } ?>
         <tr>
-            <th scope="row"><?=$od['od_settle_case']?> 입금액</th>
-            <td><?=display_amount($od['od_receipt_bank']);?></td>
+            <th scope="row"><?php echo $od['od_settle_case']; ?> 입금액</th>
+            <td><?php echo display_amount($od['od_receipt_bank']); ?></td>
         </tr>
         <tr>
             <th scope="row">입금자</th>
-            <td><?=$od['od_deposit_name']?></td>
+            <td><?php echo $od['od_deposit_name']; ?></td>
         </tr>
         <tr>
             <th scope="row">입금확인일시</th>
             <td>
-                <? if ($od['od_bank_time'] == 0) { ?>입금 확인일시를 체크해 주세요.
-                <? } else { ?><?=$od['od_bank_time']?> (<?=get_yoil($od['od_bank_time'])?>)
-                <? } ?>
+                <?php if ($od['od_bank_time'] == 0) { ?>입금 확인일시를 체크해 주세요.
+                <?php } else { ?><?php echo $od['od_bank_time']; ?> (<?php echo get_yoil($od['od_bank_time']); ?>)
+                <?php } ?>
             </td>
         </tr>
-        <? } ?>
+        <?php } ?>
 
-        <? if ($od['od_settle_case'] == '휴대폰') { ?>
+        <?php if ($od['od_settle_case'] == '휴대폰') { ?>
         <tr>
             <th scope="row">휴대폰번호</th>
-            <td><?=$od['od_escrow2']?></td>
+            <td><?php echo $od['od_escrow2']; ?></td>
             </tr>
         <tr>
-            <th scope="row"><?=$od['od_settle_case']?> 결제액</th>
-            <td><?=display_amount($od['od_receipt_hp']);?></td>
+            <th scope="row"><?php echo $od['od_settle_case']; ?> 결제액</th>
+            <td><?php echo display_amount($od['od_receipt_hp']); ?></td>
         </tr>
         <tr>
             <th scope="row">결제 확인일시</th>
             <td>
-                <? if ($od['od_hp_time'] == 0) { ?>결제 확인일시를 체크해 주세요.
-                <? } else { ?><?=$od['od_hp_time']?> (<?=get_yoil($od['od_hp_time'])?>)
-                <? } ?>
+                <?php if ($od['od_hp_time'] == 0) { ?>결제 확인일시를 체크해 주세요.
+                <?php } else { ?><?php echo $od['od_hp_time']; ?> (<?php echo get_yoil($od['od_hp_time']); ?>)
+                <?php } ?>
             </td>
         </tr>
-        <? } ?>
+        <?php } ?>
 
-        <? if ($od['od_settle_case'] == '신용카드') { ?>
+        <?php if ($od['od_settle_case'] == '신용카드') { ?>
         <tr>
             <th scope="row" class="sodr_sppay">신용카드 입금액</th>
             <td>
-                <? if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>0원
-                <? } else { ?><?=display_amount($od['od_receipt_card'])?>
-                <? } ?>
+                <?php if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>0원
+                <?php } else { ?><?php echo display_amount($od['od_receipt_card']); ?>
+                <?php } ?>
             </td>
         </tr>
         <tr>
             <th scope="row" class="sodr_sppay">카드 승인일시</th>
             <td>
-                <? if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>신용카드 결제 일시 정보가 없습니다.
-                <? } else { ?><?=substr($od['od_card_time'], 0, 20)?>
-                <? } ?>
+                <?php if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>신용카드 결제 일시 정보가 없습니다.
+                <?php } else { ?><?php echo substr($od['od_card_time'], 0, 20); ?>
+                <?php } ?>
             </td>
         </tr>
         <tr>
             <th scope="row" class="sodr_sppay">카드 승인취소</th>
-            <td><?=display_amount($od['od_cancel_card'])?></td>
+            <td><?php echo display_amount($od['od_cancel_card']); ?></td>
         </tr>
-        <? } ?>
+        <?php } ?>
         <tr>
             <th scope="row">포인트</th>
-            <td><?=display_point($od['od_receipt_point'])?></td>
+            <td><?php echo display_point($od['od_receipt_point']); ?></td>
         </tr>
         <tr>
             <th scope="row">DC</th>
-            <td><?=display_amount($od['od_dc_amount'])?></td>
+            <td><?php echo display_amount($od['od_dc_amount']); ?></td>
         </tr>
         <tr>
             <th scope="row">환불액</th>
-            <td><?=display_amount($od['od_refund_amount'])?></td>
+            <td><?php echo display_amount($od['od_refund_amount']); ?></td>
         </tr>
-        <?
+        <?php
         $sql = " select dl_company, dl_url, dl_tel from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ";
         $dl = sql_fetch($sql);
         ?>
         <tr>
             <th scope="row">배송회사</th>
             <td>
-            <?
+            <?php
             if ($od['dl_id'] > 0) {
                  // get 으로 날리는 경우 운송장번호를 넘김
                 if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
             ?>
-            <a href="<?=$dl['dl_url']?><?=$invoice?>" target="_blank"><?=$dl['dl_company']?></a> (고객센터 <?=$dl['dl_tel']?>)
-            <? } else { ?>배송회사를 선택해 주세요.
-            <? } ?>
+            <a href="<?php echo $dl['dl_url']; ?><?php echo $invoice; ?>" target="_blank"><?php echo $dl['dl_company']; ?></a> (고객센터 <?php echo $dl['dl_tel']; ?>)
+            <?php } else { ?>배송회사를 선택해 주세요.
+            <?php } ?>
             </td>
         </tr>
-        <? if ($od['od_invoice']) { ?>
+        <?php if ($od['od_invoice']) { ?>
         <tr>
             <th scope="row">운송장번호</th>
-            <td><?=$od['od_invoice'] ?></td>
+            <td><?php echo $od['od_invoice']; ?></td>
         </tr>
-        <? } ?>
+        <?php } ?>
         <tr>
             <th scope="row">배송일시</th>
-            <td><?=$od['od_invoice_time'] ?></td>
+            <td><?php echo $od['od_invoice_time']; ?></td>
         </tr>
         <tr>
             <th scope="row"><label for="od_send_cost">배송비</label></th>
             <td>
-                <?=help("주문취소시 배송비는 취소되지 않으므로 이 배송비를 0으로 설정하여 미수금을 맞추십시오.");?>
-                <input type="text" name="od_send_cost" value="<?=$od['od_send_cost']?>" id="od_send_cost" class="frm_input" size="10"> 원
+                <?php echo help("주문취소시 배송비는 취소되지 않으므로 이 배송비를 0으로 설정하여 미수금을 맞추십시오."); ?>
+                <input type="text" name="od_send_cost" value="<?php echo $od['od_send_cost']; ?>" id="od_send_cost" class="frm_input" size="10"> 원
             </td>
         </tr>
-        <?
+        <?php
         if ($amount['미수'] == 0) {
             if ($od['od_receipt_bank']) {
         ?>
         <tr>
             <th scope="row">현금영수증</th>
             <td>
-            <? if ($od["od_cash"]) { ?>
-                <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?=$od['od_cash_no']?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인</a>
-            <? } else { ?>
-                <a href="javascript:;" onclick="window.open('<?=G4_SHOP_URL?>/taxsave_kcp.php?od_id=<?=$od_id?>&amp;uq_id=<?=$od['uq_id']?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
-            <? } ?>
+            <?php if ($od["od_cash"]) { ?>
+                <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인</a>
+            <?php } else { ?>
+                <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
+            <?php } ?>
             </td>
         </tr>
-        <?
+        <?php
             }
         }
         ?>
@@ -427,8 +427,8 @@ $pg_anchor = '<ul class="anchor">
             <col>
         </colgroup>
         <tbody>
-        <? if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체') { ########## 시작?>
-        <?
+        <?php if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체') { ########## 시작?>
+        <?php
         // 주문서
         $sql = " select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
         $result = sql_query($sql);
@@ -452,56 +452,56 @@ $pg_anchor = '<ul class="anchor">
             $bank_account = $od['od_settle_case'];
         ?>
 
-        <? if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌') { ?>
+        <?php if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌') { ?>
         <tr>
             <th scope="row"><label for="od_bank_account">계좌번호</label></th>
-            <td><?=$bank_account?></td>
+            <td><?php echo $bank_account; ?></td>
         </tr>
-        <? } ?>
+        <?php } ?>
         <tr>
-            <th scope="row"><label for="od_receipt_bank"><?=$od['od_settle_case']?> 입금액</label></th>
+            <th scope="row"><label for="od_receipt_bank"><?php echo $od['od_settle_case']; ?> 입금액</label></th>
             <td>
-                <input type="text" name="od_receipt_bank" value="<?=$od['od_receipt_bank']?>" id="od_receipt_bank" class="frm_input" size="10"> 원
-                <?
+                <input type="text" name="od_receipt_bank" value="<?php echo $od['od_receipt_bank']; ?>" id="od_receipt_bank" class="frm_input" size="10"> 원
+                <?php
                 if ($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌') {
                     $pg_url = $g4['shop_cardpg'][$default['de_card_pg']];
                 ?>
-                <a href="<?=$pg_url?>" target="_blank">결제대행사</a>
-                <? } ?>
+                <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
+                <?php } ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="od_deposit_name">입금자명</label></th>
             <td>
-                <? if ($default['de_sms_use3']) { ?>
+                <?php if ($default['de_sms_use3']) { ?>
                 <label for="od_sms_ipgum_check">SMS 문자전송</label>
                 <input type="checkbox" name="od_sms_ipgum_check" id="od_sms_ipgum_check">
                 <br>
-                <? } ?>
-                <input type="text" name="od_deposit_name" value="<?=$od['od_deposit_name'] ?>" id="od_deposit_name" class="frm_input">
+                <?php } ?>
+                <input type="text" name="od_deposit_name" value="<?php echo $od['od_deposit_name']; ?>" id="od_deposit_name" class="frm_input">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="od_bank_time">입금 확인일시</label></th>
             <td>
                 <label for="od_bank_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_bank_chk" id="od_bank_chk" value="<?=date("Y-m-d H:i:s", G4_SERVER_TIME)?>" onclick="if (this.checked == true) this.form.od_bank_time.value=this.form.od_bank_chk.value; else this.form.od_bank_time.value = this.form.od_bank_time.defaultValue;"><br>
-                <input type="text" name="od_bank_time" value="<?=is_null_time($od['od_bank_time']) ? "" : $od['od_bank_time'];?>" id="od_bank_time" class="frm_input" maxlength="19">
+                <input type="checkbox" name="od_bank_chk" id="od_bank_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_bank_time.value=this.form.od_bank_chk.value; else this.form.od_bank_time.value = this.form.od_bank_time.defaultValue;"><br>
+                <input type="text" name="od_bank_time" value="<?php echo is_null_time($od['od_bank_time']) ? "" : $od['od_bank_time']; ?>" id="od_bank_time" class="frm_input" maxlength="19">
             </td>
         </tr>
-        <? } ########## 끝 ?>
+        <?php } ########## 끝 ?>
 
-        <? if ($od['od_settle_case'] == '휴대폰') { ?>
+        <?php if ($od['od_settle_case'] == '휴대폰') { ?>
         <tr>
             <th scope="row">휴대폰번호</th>
-            <td><?=$od['od_escrow2']?></td>
+            <td><?php echo $od['od_escrow2']; ?></td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_receipt_hp"><?=$od['od_settle_case']?> 결제액</label></th>
+            <th scope="row"><label for="od_receipt_hp"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
             <td>
-                <input type="text" name="od_receipt_hp" value="<?=$od['od_receipt_hp']?>" id="od_receipt_hp" class="frm_input"> 원
-                <? $pg_url = $g4['shop_cardpg'][$default['de_card_pg']];?>
-                <a href="<?=$pg_url?>" target="_blank">결제대행사</a>
+                <input type="text" name="od_receipt_hp" value="<?php echo $od['od_receipt_hp']; ?>" id="od_receipt_hp" class="frm_input"> 원
+                <?php $pg_url = $g4['shop_cardpg'][$default['de_card_pg']];?>
+                <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
                 ?>
             </td>
         </tr>
@@ -510,48 +510,48 @@ $pg_anchor = '<ul class="anchor">
             <td>
                 <label for="od_card_chk">현재 시간으로 설정</label>
                 <!-- name od_card_chk 를 od_hp_chk 로 수정 - 지운아빠 2013-04-16 -->
-                <input type="checkbox" name="od_hp_chk" id="od_hp_chk" value="<? echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_hp_time.value=this.form.od_card_chk.value; else this.form.od_hp_time.value = this.form.od_hp_time.defaultValue;"><br>
-                <input type="text" name="od_hp_time" value="<?=is_null_time($od['od_hp_time']) ? "" : $od['od_hp_time']; ?>" id="op_hp_time" class="frm_input" size="19" maxlength="19">
+                <input type="checkbox" name="od_hp_chk" id="od_hp_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_hp_time.value=this.form.od_card_chk.value; else this.form.od_hp_time.value = this.form.od_hp_time.defaultValue;"><br>
+                <input type="text" name="od_hp_time" value="<?php echo is_null_time($od['od_hp_time']) ? "" : $od['od_hp_time']; ?>" id="op_hp_time" class="frm_input" size="19" maxlength="19">
             </td>
         </tr>
-        <? } ?>
+        <?php } ?>
 
-        <? if ($od['od_settle_case'] == '신용카드') { ?>
+        <?php if ($od['od_settle_case'] == '신용카드') { ?>
         <tr>
             <th scope="row" class="sodr_sppay"><label for="od_receipt_card">신용카드 결제액</label></th>
             <td>
-                <input type="text" name="od_receipt_card" value="<?=$od['od_receipt_card'] ?>" id="od_receipt_card" class="frm_input" size="10"> 원
-                <? $card_url = $g4['shop_cardpg'][$default['de_card_pg']]; ?>
-                <a href="<?=$card_url ?>" target="_blank">결제대행사</a>
+                <input type="text" name="od_receipt_card" value="<?php echo $od['od_receipt_card']; ?>" id="od_receipt_card" class="frm_input" size="10"> 원
+                <?php $card_url = $g4['shop_cardpg'][$default['de_card_pg']]; ?>
+                <a href="<?php echo $card_url; ?>" target="_blank">결제대행사</a>
             </td>
         </tr>
         <tr>
             <th scope="row" class="sodr_sppay"><label for="od_card_time">카드 승인일시</label></th>
             <td>
                 <label for="od_card_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<? echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_card_time.value=this.form.od_card_chk.value; else this.form.od_card_time.value = this.form.od_card_time.defaultValue;"><br>
-                <input type="text" name="od_card_time" value="<?=is_null_time($od['od_card_time']) ? "" : $od['od_card_time']; ?>" id="od_card_time" class="frm_input" size="19" maxlength="19">
+                <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_card_time.value=this.form.od_card_chk.value; else this.form.od_card_time.value = this.form.od_card_time.defaultValue;"><br>
+                <input type="text" name="od_card_time" value="<?php echo is_null_time($od['od_card_time']) ? "" : $od['od_card_time']; ?>" id="od_card_time" class="frm_input" size="19" maxlength="19">
             </td>
         </tr>
         <tr>
             <th scope="row" class="sodr_sppay"><label for="od_cancel_card">카드 승인취소</label></th>
-            <td><input type="text" name="od_cancel_card" value="<?=$od['od_cancel_card']?>" class="frm_input" size="10"> 원</td>
+            <td><input type="text" name="od_cancel_card" value="<?php echo $od['od_cancel_card']; ?>" class="frm_input" size="10"> 원</td>
         </tr>
-        <? } ?>
+        <?php } ?>
 
         <tr>
             <th scope="row"><label for="od_receipt_point">포인트 결제액</label></th>
-            <td><input type="text" name="od_receipt_point" value="<?=$od['od_receipt_point']?>" id="od_receipt_point" class="frm_input" size="10"> 점</td>
+            <td><input type="text" name="od_receipt_point" value="<?php echo $od['od_receipt_point']; ?>" id="od_receipt_point" class="frm_input" size="10"> 점</td>
         </tr>
         <tr>
             <th scope="row"><label for="od_dc_amount">DC</label></th>
-            <td><input type="text" name="od_dc_amount" value="<?=$od['od_dc_amount']?>" id="od_dc_amount" class="frm_input" size="10"> 원</td>
+            <td><input type="text" name="od_dc_amount" value="<?php echo $od['od_dc_amount']; ?>" id="od_dc_amount" class="frm_input" size="10"> 원</td>
         </tr>
         <tr>
             <th scope="row"><label for="od_refund_amount">환불액</label></th>
             <td>
-                <?=help("카드승인취소를 입력한 경우에는 중복하여 입력하면 미수금이 틀려집니다.");?>
-                <input type="text" name="od_refund_amount" value="<?=$od['od_refund_amount']?>" id="od_refund_amount" class="frm_input" size="10"> 원
+                <?php echo help("카드승인취소를 입력한 경우에는 중복하여 입력하면 미수금이 틀려집니다."); ?>
+                <input type="text" name="od_refund_amount" value="<?php echo $od['od_refund_amount']; ?>" id="od_refund_amount" class="frm_input" size="10"> 원
             </td>
         </tr>
         <tr>
@@ -559,13 +559,13 @@ $pg_anchor = '<ul class="anchor">
             <td>
                 <select name="dl_id" id="dl_id">
                     <option value="">배송시 선택하세요.</option>
-                    <?
+                    <?php
                     $sql = "select * from {$g4['shop_delivery_table']} order by dl_order desc, dl_id desc ";
                     $result = sql_query($sql);
                     for ($i=0; $row=sql_fetch_array($result); $i++) {
                     ?>
-                    <option value="<?=$row['dl_id']?>" <?=get_selected($od['dl_id'], $row['dl_id'])?>><?=$row['dl_company']?></option>
-                    <?
+                    <option value="<?php echo $row['dl_id']; ?>" <?php echo get_selected($od['dl_id'], $row['dl_id']); ?>><?php echo $row['dl_company']; ?></option>
+                    <?php
                     }
                     mysql_free_result($result);
                     ?>
@@ -575,26 +575,26 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="od_invoice">운송장번호</label></th>
             <td>
-                <? if ($default['de_sms_use4']) { ?>
+                <?php if ($default['de_sms_use4']) { ?>
                 <label for="od_sms_baesong_check">SMS 문자전송</label>
                 <input type="checkbox" name="od_sms_baesong_check" id="od_sms_baesong_check">
                 <br>
-                <? } ?>
-                <input type="text" name="od_invoice" value="<?=$od['od_invoice'] ?>" id="od_invoice" class="frm_input">
+                <?php } ?>
+                <input type="text" name="od_invoice" value="<?php echo $od['od_invoice']; ?>" id="od_invoice" class="frm_input">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="od_invoice_time">배송일시</label></th>
             <td>
                 <label for="od_invoice_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_invoice_chk" id="od_invoice_chk" value="<?=date("Y-m-d H:i:s", G4_SERVER_TIME);?>" onclick="if (this.checked == true) this.form.od_invoice_time.value=this.form.od_invoice_chk.value; else this.form.od_invoice_time.value = this.form.od_invoice_time.defaultValue;"><br>
-                <input type="text" name="od_invoice_time" value="<? echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?>" id="od_invoice_time" class="frm_input" maxlength="19">
+                <input type="checkbox" name="od_invoice_chk" id="od_invoice_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_invoice_time.value=this.form.od_invoice_chk.value; else this.form.od_invoice_time.value = this.form.od_invoice_time.defaultValue;"><br>
+                <input type="text" name="od_invoice_time" value="<?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?>" id="od_invoice_time" class="frm_input" maxlength="19">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="od_send_mail">메일발송</label></th>
             <td>
-                <?=help("주문자님께 입금, 배송내역을 메일로 발송합니다.\n메일발송시 상점메모에 기록됩니다.");?>
+                <?php echo help("주문자님께 입금, 배송내역을 메일로 발송합니다.\n메일발송시 상점메모에 기록됩니다."); ?>
                 <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail"> 메일발송
             </td>
         </tr>
@@ -610,24 +610,24 @@ $pg_anchor = '<ul class="anchor">
 
 <section id="anc_sodr_memo" class="cbox">
     <h2>상점메모</h2>
-    <?=$pg_anchor?>
+    <?php echo $pg_anchor; ?>
     <p>
         현재 열람 중인 주문에 대한 내용을 메모하는곳입니다.<br>
         입금, 배송 내역을 메일로 발송할 경우 함께 기록됩니다.
     </p>
 
     <form name="frmorderform2" action="./orderformupdate.php" method="post">
-    <input type="hidden" name="od_id" value="<?=$od_id?>">
-    <input type="hidden" name="sort1" value="<?=$sort1?>">
-    <input type="hidden" name="sort2" value="<?=$sort2?>">
-    <input type="hidden" name="sel_field" value="<?=$sel_field?>">
-    <input type="hidden" name="search" value="<?=$search?>">
-    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+    <input type="hidden" name="search" value="<?php echo $search; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
     <input type="hidden" name="mod_type" value="memo">
 
     <div>
         <label for="od_shop_memo" class="sound_only">상점메모</label>
-        <textarea name="od_shop_memo" id="od_shop_memo" rows="8"><?=stripslashes($od['od_shop_memo']) ?></textarea>
+        <textarea name="od_shop_memo" id="od_shop_memo" rows="8"><?php echo stripslashes($od['od_shop_memo']); ?></textarea>
     </div>
 
     <div class="btn_confirm">
@@ -639,15 +639,15 @@ $pg_anchor = '<ul class="anchor">
 
 <div class="cbox compare_wrap">
     <h2>주문자/배송지 정보</h2>
-    <?=$pg_anchor?>
+    <?php echo $pg_anchor; ?>
 
     <form name="frmorderform3" action="./orderformupdate.php" method="post">
-    <input type="hidden" name="od_id" value="<?=$od_id?>">
-    <input type="hidden" name="sort1" value="<?=$sort1?>">
-    <input type="hidden" name="sort2" value="<?=$sort2?>">
-    <input type="hidden" name="sel_field" value="<?=$sel_field?>">
-    <input type="hidden" name="search" value="<?=$search?>">
-    <input type="hidden" name="page" value="<?=$page?>">
+    <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+    <input type="hidden" name="search" value="<?php echo $search; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
     <input type="hidden" name="mod_type" value="info">
 
     <section id="anc_sodr_payer" class="compare_left">
@@ -661,33 +661,33 @@ $pg_anchor = '<ul class="anchor">
         <tbody>
         <tr>
             <th scope="row"><label for="od_name"><span class="sound_only">주문하신 분 </span>이름</label></th>
-            <td><input type="text" name="od_name" value="<?=$od['od_name']?>" id="od_name" required class="frm_input required"></td>
+            <td><input type="text" name="od_name" value="<?php echo $od['od_name']; ?>" id="od_name" required class="frm_input required"></td>
         </tr>
         <tr>
             <th scope="row"><label for="od_tel"><span class="sound_only">주문하신 분 </span>전화번호</label></th>
-            <td><input type="text" name="od_tel" value="<?=$od['od_tel']?>" id="od_tel" required class="frm_input required"></td>
+            <td><input type="text" name="od_tel" value="<?php echo $od['od_tel']; ?>" id="od_tel" required class="frm_input required"></td>
         </tr>
         <tr>
             <th scope="row"><label for="od_hp"><span class="sound_only">주문하신 분 </span>핸드폰</label></th>
-            <td><input type="text" name="od_hp" value="<?=$od['od_hp']?>" id="od_hp" class="frm_input"></td>
+            <td><input type="text" name="od_hp" value="<?php echo $od['od_hp']; ?>" id="od_hp" class="frm_input"></td>
         </tr>
         <tr>
             <th scope="row"><span class="sound_only">주문하시는 분 </span>주소</th>
             <td>
                 <label for="od_zip1" class="sound_only">우편번호 앞자리</label>
-                <input type="text" name="od_zip1" value="<?=$od['od_zip1']?>" id="od_zip1" required class="frm_input required" size="4">
+                <input type="text" name="od_zip1" value="<?php echo $od['od_zip1']; ?>" id="od_zip1" required class="frm_input required" size="4">
                 -
                 <label for="od_zip2" class="sound_only">우편번호 뒷자리</label>
-                <input type="text" name="od_zip2" value="<?=$od['od_zip2']?>" id="od_zip2" required class="frm_input required" size="4">
+                <input type="text" name="od_zip2" value="<?php echo $od['od_zip2']; ?>" id="od_zip2" required class="frm_input required" size="4">
                 <span id="od_win_zip" style="display:block"></span>
                 <label for="od_addr1" class="sound_only">주소</label>
-                <input type="text" name="od_addr1" value="<?=$od['od_addr1']?>" id="od_addr1" required class="frm_input required" size="30"><br>
+                <input type="text" name="od_addr1" value="<?php echo $od['od_addr1']; ?>" id="od_addr1" required class="frm_input required" size="30"><br>
                 <label for="od_addr2" class="sound_only">상세주소</label>
-                <input type="text" name="od_addr2" value="<?=$od['od_addr2']?>" id="od_addr2" required class="frm_input required" size="30">
+                <input type="text" name="od_addr2" value="<?php echo $od['od_addr2']; ?>" id="od_addr2" required class="frm_input required" size="30">
 
                 <script>
                 // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-                $('<a href="<?=G4_BBS_URL?>/zip.php?frm_name=frmorderform2&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2" id="od_zip_find" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zip');
+                $('<a href="<?php echo G4_BBS_URL; ?>/zip.php?frm_name=frmorderform2&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2" id="od_zip_find" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zip');
                 $("#od_win_zip").css("display", "inline");
                 $("#od_zip1, #od_zip2, #od_addr1").attr('readonly', 'readonly');
                 $("#od_zip1, #od_zip2, #od_addr1").addClass('readonly');
@@ -695,11 +695,11 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <tr>
             <th scope="row"><label for="od_email"><span class="sound_only">주문하신 분 </span>E-mail</label></th>
-            <td><input type="text" name="od_email" value="<?=$od['od_email']?>" id="od_email" required class="frm_input email required" size="30"></td>
+            <td><input type="text" name="od_email" value="<?php echo $od['od_email']; ?>" id="od_email" required class="frm_input email required" size="30"></td>
         </tr>
         <tr>
             <th scope="row"><span class="sound_only">주문하신 분 </span>IP Address</th>
-            <td><?=$od[od_ip]?></td>
+            <td><?php echo $od['od_ip']; ?></td>
         </tr>
         </tbody>
         </table>
@@ -717,33 +717,33 @@ $pg_anchor = '<ul class="anchor">
         <tbody>
         <tr>
             <th scope="row"><label for="od_b_name"><span class="sound_only">받으시는 분 </span>이름</label></th>
-            <td><input type="text" name="od_b_name" value="<?=$od['od_b_name']?>" id="od_b_name" required class="frm_input required"></td>
+            <td><input type="text" name="od_b_name" value="<?php echo $od['od_b_name']; ?>" id="od_b_name" required class="frm_input required"></td>
         </tr>
         <tr>
             <th scope="row"><label for="od_b_tel"><span class="sound_only">받으시는 분 </span>전화번호</label></th>
-            <td><input type="text" name="od_b_tel" value="<?=$od['od_b_tel']?>" id="od_b_tel" required class="frm_input required"></td>
+            <td><input type="text" name="od_b_tel" value="<?php echo $od['od_b_tel']; ?>" id="od_b_tel" required class="frm_input required"></td>
         </tr>
         <tr>
             <th scope="row"><label for="od_b_hp"><span class="sound_only">받으시는 분 </span>핸드폰</label></th>
-            <td><input type="text" name="od_b_hp" value="<?=$od['od_b_hp']?>" id=-"od_b_hp" class="frm_input required"></td>
+            <td><input type="text" name="od_b_hp" value="<?php echo $od['od_b_hp']; ?>" id=-"od_b_hp" class="frm_input required"></td>
         </tr>
         <tr>
             <th scope="row"><span class="sound_only">받으시는 분 </span>주소</th>
             <td>
                 <label for="od_b_zip1" class="sound_only">우편번호 앞자리</label>
-                <input type="text" name="od_b_zip1" value="<?=$od['od_b_zip1']?>" id="od_b_zip1" required class="frm_input required" size="4">
+                <input type="text" name="od_b_zip1" value="<?php echo $od['od_b_zip1']; ?>" id="od_b_zip1" required class="frm_input required" size="4">
                 -
                 <label for="od_b_zip2" class="sound_only">우편번호 뒷자리</label>
-                <input type="text" name="od_b_zip2" value="<?=$od['od_b_zip2']?>" id="od_b_zip2" required class="frm_input required" size="4">
+                <input type="text" name="od_b_zip2" value="<?php echo $od['od_b_zip2']; ?>" id="od_b_zip2" required class="frm_input required" size="4">
                 <span id="od_win_zipb" style="display:block"></span>
                 <label for="od_b_addr1" class="sound_only">주소</label>
-                <input type="text" name="od_b_addr1" value="<?=$od['od_b_addr1']?>" id="od_b_addr1" required class="frm_input required" size="30"><br>
+                <input type="text" name="od_b_addr1" value="<?php echo $od['od_b_addr1']; ?>" id="od_b_addr1" required class="frm_input required" size="30"><br>
                 <label for="od_b_addr2" class="sound_only">상세주소</label>
-                <input type="text" name="od_b_addr2" value="<?=$od['od_b_addr2']?>" id="od_b_addr2" required class="frm_input required" size="30">
+                <input type="text" name="od_b_addr2" value="<?php echo $od['od_b_addr2']; ?>" id="od_b_addr2" required class="frm_input required" size="30">
 
                 <script>
                 // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-                $('<a href="<?=G4_BBS_URL?>/zip.php?frm_name=frmorderform2&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2" id="od_zip_findb" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zipb');
+                $('<a href="<?php echo G4_BBS_URL; ?>/zip.php?frm_name=frmorderform2&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2" id="od_zip_findb" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zipb');
                 $("#od_win_zipb").css("display", "inline");
                 $("#od_b_zip1, #od_b_zip2, #od_b_addr1").attr('readonly', 'readonly');
                 $("#od_b_zip1, #od_b_zip2, #od_b_addr1").addClass('readonly');
@@ -751,18 +751,18 @@ $pg_anchor = '<ul class="anchor">
             </td>
         </tr>
 
-        <? if ($default['de_hope_date_use']) { ?>
+        <?php if ($default['de_hope_date_use']) { ?>
         <tr>
             <th scope="row"><label for="od_hope_date">희망배송일</label></th>
             <td>
-                <input type="text" name="od_hope_date" value="<?=$od['od_hope_date']?>" id="od_hopedate" required class="frm_input required" maxlength="10" minlength="10"> (<?=get_yoil($od['od_hope_date'])?>)
+                <input type="text" name="od_hope_date" value="<?php echo $od['od_hope_date']; ?>" id="od_hopedate" required class="frm_input required" maxlength="10" minlength="10"> (<?php echo get_yoil($od['od_hope_date']); ?>)
             </td>
         </tr>
-        <? } ?>
+        <?php } ?>
 
         <tr>
             <th scope="row">전달 메세지</th>
-            <td><? if ($od['od_memo']) echo nl2br($od['od_memo']);else echo "없음";?></td>
+            <td><?php if ($od['od_memo']) echo nl2br($od['od_memo']);else echo "없음";?></td>
         </tr>
         </tbody>
         </table>
@@ -777,8 +777,8 @@ $pg_anchor = '<ul class="anchor">
 </div>
 
 <div class="btn_confirm">
-    <a href="./orderdelete.php?od_id=<?=$od['od_id']?>&amp;uq_id=<?=$od['uq_id']?>&amo;mb_id=<?=$od['mb_id']?>&amp;<?=$qstr?>" onclick="return del_confirm();">주문서 삭제</a>
-    <a href="./orderlist.php?<?=$qstr?>">목록</a>
+    <a href="./orderdelete.php?od_id=<?php echo $od['od_id']; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>&amo;mb_id=<?php echo $od['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return del_confirm();">주문서 삭제</a>
+    <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
 </div>
 
 <script>
@@ -836,6 +836,6 @@ function del_confirm()
 }
 </script>
 
-<?
+<?php
 include_once(G4_ADMIN_PATH.'/admin.tail.php');
 ?>

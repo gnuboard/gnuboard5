@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400630';
 include_once('./_common.php');
 
@@ -12,7 +12,7 @@ include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <div class="cbox">
-    <h1><?=$g4['title']?></h1>
+    <h1><?php echo $g4['title']; ?></h1>
     <table>
     <thead>
     <tr>
@@ -22,7 +22,7 @@ include_once(G4_PATH.'/head.sub.php');
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $sql = " select b.it_id, b.it_name, b.it_use from {$g4['shop_event_item_table']} a
                left join {$g4['shop_item_table']} b on (a.it_id=b.it_id)
               where a.ev_id = '$ev_id'
@@ -34,15 +34,15 @@ include_once(G4_PATH.'/head.sub.php');
     ?>
     <tr>
         <td>
-            <a href="<?=$href?>" target="_blank">
-                <?=get_it_image($row['it_id'].'_s', 40, 40)?>
-                <?=cut_str(stripslashes($row['it_name']), 60, "&#133")?>
+            <a href="<?php echo $href; ?>" target="_blank">
+                <?php echo get_it_image($row['it_id'].'_s', 40, 40); ?>
+                <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?>
             </a>
         </td>
-        <td class="td_smallmng"><?=($row['it_use']?"사용":"미사용")?></td>
-        <td class="td_smallmng"><a href="javascript:del('./itemeventwindel.php?ev_id=$ev_id&amp;it_id=<?=$row['it_id']?>');"><img src="./img/icon_del.jpg" alt="<?=$ev['ev_subject']?> 이벤트에서 삭제 : <?=cut_str(stripslashes($row['it_name']), 60, "&#133")?>"></a></td>
+        <td class="td_smallmng"><?php echo ($row['it_use']?"사용":"미사용"); ?></td>
+        <td class="td_smallmng"><a href="javascript:del('./itemeventwindel.php?ev_id=$ev_id&amp;it_id=<?php echo $row['it_id']; ?>');"><img src="./img/icon_del.jpg" alt="<?php echo $ev['ev_subject']; ?> 이벤트에서 삭제 : <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?>"></a></td>
     <tr>
-    <?
+    <?php
     }
     if ($i == 0)
         echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
@@ -56,6 +56,6 @@ include_once(G4_PATH.'/head.sub.php');
     <button type="button" onclick="javascript:window.close()">창 닫기</button>
 </div>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

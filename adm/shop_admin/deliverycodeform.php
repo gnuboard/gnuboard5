@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400740';
 include_once('./_common.php');
 
@@ -25,11 +25,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="fdeliverycodeform" action="./deliverycodeformupdate.php" method="post">
-<input type="hidden" name="w" value="<?=$w?>">
-<input type="hidden" name="dl_id" value="<?=$dl_id?>">
+<input type="hidden" name="w" value="<?php echo $w; ?>">
+<input type="hidden" name="dl_id" value="<?php echo $dl_id; ?>">
 
 <section class="cbox">
-    <h2><?=$html_title?></h2>
+    <h2><?php echo $html_title; ?></h2>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -39,26 +39,26 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="dl_company">배송업체명</label></th>
         <td>
-            <input type="text" name="dl_company" value="<?=stripslashes($dl['dl_company']) ?>" id="dl_company" required class="frm_input">
+            <input type="text" name="dl_company" value="<?php echo stripslashes($dl['dl_company']); ?>" id="dl_company" required class="frm_input">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="dl_url">화물추적 URL</label></th>
         <td>
-           <input type="text" class="frm_input" name="dl_url" value="<?=stripslashes($dl['dl_url']) ?>" id="dl_url" size="100">
+           <input type="text" class="frm_input" name="dl_url" value="<?php echo stripslashes($dl['dl_url']); ?>" id="dl_url" size="100">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="dl_tel">고객센터 전화</label></th>
         <td>
-            <input type="text" class="frm_input" name="dl_tel" value="<?=stripslashes($dl['dl_tel']) ?>" id="dl_tel">
+            <input type="text" class="frm_input" name="dl_tel" value="<?php echo stripslashes($dl['dl_tel']); ?>" id="dl_tel">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="dl_order">출력 순서</label></th>
         <td>
-            <?=help("셀렉트박스에서 출력할 때 순서를 정합니다.\n\n숫자가 작을수록 상단에 출력합니다.");?>
-            <?=order_select("dl_order", $dl['dl_order'])?>
+            <?php echo help("셀렉트박스에서 출력할 때 순서를 정합니다.\n\n숫자가 작을수록 상단에 출력합니다."); ?>
+            <?php echo order_select("dl_order", $dl['dl_order']); ?>
         </td>
     </tr>
     </tbody>
@@ -72,6 +72,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 </form>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

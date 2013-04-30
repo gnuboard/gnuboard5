@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400710';
 include_once('./_common.php');
 include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
@@ -26,8 +26,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="frmfaqmasterform" action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);" method="post" enctype="MULTIPART/FORM-DATA">
-<input type="hidden" name="w" value="<? echo $w ?>">
-<input type="hidden" name="fm_id" value="<? echo $fm_id ?>">
+<input type="hidden" name="w" value="<?php echo $w; ?>">
+<input type="hidden" name="fm_id" value="<?php echo $fm_id; ?>">
 
 <section class="cbox">
     <h2>FAQ입력</h2>
@@ -40,18 +40,18 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="fm_subject">제목</label></th>
         <td>
-            <input type="text" value="<?=get_text($fm['fm_subject']) ?>" name="fm_subject" id="fm_subject" required class="frm_input required"  size="70">
-            <? if ($w == 'u') { ?>
-            <a href="<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$fm_id?>" class="btn_frmline">보기</a>
-            <a href="./faqlist.php?fm_id=<?=$fm_id?>" class="btn_frmline">상세보기</a>
-            <? } ?>
+            <input type="text" value="<?php echo get_text($fm['fm_subject']); ?>" name="fm_subject" id="fm_subject" required class="frm_input required"  size="70">
+            <?php if ($w == 'u') { ?>
+            <a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">보기</a>
+            <a href="./faqlist.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">상세보기</a>
+            <?php } ?>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="fm_himg">상단이미지</label></th>
         <td>
             <input type="file" name="fm_himg" id="fm_himg">
-            <?
+            <?php
             $himg = G4_DATA_PATH.'/faq/'.$fm['fm_id'].'_h';
             if (file_exists($himg)) {
                 $size = @getimagesize($himg);
@@ -75,7 +75,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="fm_timg">하단이미지</label></th>
         <td>
             <input type="file" name="fm_timg" id="fm_timg">
-            <?
+            <?php
             $timg = G4_DATA_PATH.'/faq/'.$fm['fm_id'].'_t';
             if (file_exists($timg)) {
                 $size = @getimagesize($timg);
@@ -98,13 +98,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row">상단 내용</th>
         <td>
-            <?=editor_html('fm_head_html', $fm['fm_head_html']);?>
+            <?php echo editor_html('fm_head_html', $fm['fm_head_html']); ?>
         </td>
     </tr>
     <tr>
         <th scope="row">하단 내용</th>
         <td>
-            <?=editor_html('fm_tail_html', $fm['fm_tail_html']);?>
+            <?php echo editor_html('fm_tail_html', $fm['fm_tail_html']); ?>
         </td>
     </tr>
     </tbody>
@@ -121,13 +121,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <script>
 function frmfaqmasterform_check(f)
 {
-    <?=get_editor_js('fm_head_html');?>
-    <?=get_editor_js('fm_tail_html');?>
+    <?php echo get_editor_js('fm_head_html'); ?>
+    <?php echo get_editor_js('fm_tail_html'); ?>
 }
 
 // document.frmfaqmasterform.fm_subject.focus(); 김혜련 2013-04-02 포커스해제
 </script>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

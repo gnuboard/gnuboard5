@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400730';
 include_once('./_common.php');
 
@@ -23,7 +23,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 <section class="cbox">
     <h2>배너관리</h2>
 
-    <p>등록된 배너 <?=$total_count ?>개</p>
+    <p>등록된 배너 <?php echo $total_count; ?>개</p>
 
     <div id="btn_add">
         <a href="./bannerform.php">배너추가</a>
@@ -45,7 +45,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     $sql = " select * from {$g4['shop_banner_table']}
           order by bn_order, bn_id desc
           limit $from_record, $rows  ";
@@ -75,22 +75,22 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     ?>
 
     <tr>
-        <td rowspan="2" class="td_num"><?=$row['bn_id']?></td>
-        <td><?=$row['bn_position']?></td>
-        <td><?=$bn_begin_time?></td>
-        <td><?=$bn_end_time?></td>
-        <td><?=$row['bn_order']?></td>
-        <td><?=$row['bn_hit']?></td>
+        <td rowspan="2" class="td_num"><?php echo $row['bn_id']; ?></td>
+        <td><?php echo $row['bn_position']; ?></td>
+        <td><?php echo $bn_begin_time; ?></td>
+        <td><?php echo $bn_end_time; ?></td>
+        <td><?php echo $row['bn_order']; ?></td>
+        <td><?php echo $row['bn_hit']; ?></td>
         <td class="td_smallmng">
-            <a href="./bannerform.php?w=u&amp;bn_id=<?=$row['bn_id']?>"><img src="./img/icon_mod.jpg" alt="배너수정"></a>
-            <a href="./bannerformupdate.php?w=d&amp;bn_id=<?=$row['bn_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="배너삭제"></a>
+            <a href="./bannerform.php?w=u&amp;bn_id=<?php echo $row['bn_id']; ?>"><img src="./img/icon_mod.jpg" alt="배너수정"></a>
+            <a href="./bannerformupdate.php?w=d&amp;bn_id=<?php echo $row['bn_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="배너삭제"></a>
         </td>
     </tr>
     <tr>
-        <td colspan="6" class="td_img_view"><?=$bn_img?></td>
+        <td colspan="6" class="td_img_view"><?php echo $bn_img; ?></td>
     </tr>
 
-    <?
+    <?php
     }
     if ($i == 0) {
     echo '<tr><td colspan="8" class="empty_table">자료가 없습니다.</td></tr>';
@@ -101,8 +101,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 </section>
 
-<p><?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?></p>
+<p><?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?></p>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

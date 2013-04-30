@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400660';
 include_once('./_common.php');
 
@@ -58,22 +58,22 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="flist">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="save_stx" value="<?=$stx?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
 
 <fieldset>
     <legend>상품문의 검색</legend>
 
     <span>
-        <?=$listall?>
-        전체 문의내역 <?=$total_count ?>건
+        <?php echo $listall; ?>
+        전체 문의내역 <?php echo $total_count; ?>건
     </span>
 
-    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
+    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
     <label for="sca" class="sound_only">분류선택</label>
     <select name="sca" id="sca">
         <option value="">전체분류</option>
-        <?
+        <?php
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
@@ -84,16 +84,16 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
         }
         ?>
     </select>
-    <? // ##### // 웹 접근성 취약 지점 끝 ?>
+    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
 
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
-        <option value="it_name" <?=get_selected($sfl, 'it_name')?>>상품명</option>
-        <option value="a.it_id" <?=get_selected($sfl, 'a.it_id')?>>상품코드</option>
+        <option value="it_name" <?php echo get_selected($sfl, 'it_name'); ?>>상품명</option>
+        <option value="a.it_id" <?php echo get_selected($sfl, 'a.it_id'); ?>>상품코드</option>
     </select>
 
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?=$stx?>" id="stx" required class="frm_input required">
+    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 
 </fieldset>
@@ -106,15 +106,15 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><?=subject_sort_link('it_name'); ?>상품명<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><?=subject_sort_link('mb_name'); ?>이름<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><?=subject_sort_link('iq_subject'); ?>질문<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><?=subject_sort_link('iq_answer'); ?>답변<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><?php echo subject_sort_link('it_name'); ?>상품명<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><?php echo subject_sort_link('mb_name'); ?>이름<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><?php echo subject_sort_link('iq_subject'); ?>질문<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><?php echo subject_sort_link('iq_answer'); ?>답변<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
         $row['iq_subject'] = cut_str($row['iq_subject'], 30, "...");
 
@@ -125,16 +125,16 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
         $answer = $row['iq_answer'] ? 'Y' : '&nbsp;';
      ?>
     <tr>
-        <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?><?=cut_str($row['it_name'],30)?></a></td>
-        <td class="td_name"><?=$name?></td>
-        <td class="sit_qa_subject"><?=$row['iq_subject']?></td>
-        <td class="sit_qa_answer"><?=$answer?></td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
+        <td class="td_name"><?php echo $name; ?></td>
+        <td class="sit_qa_subject"><?php echo $row['iq_subject']; ?></td>
+        <td class="sit_qa_answer"><?php echo $answer; ?></td>
         <td class="td_smallmng">
-            <a href="./itemqaform.php?w=u&amp;iq_id=<?=$row['iq_id']?>&amp;<?=$qstr?>"><img src="./img/icon_mod.jpg" alt="<?=$row['iq_subject']?> 수정"></a>
-            <a href="javascript:del('./itemqaformupdate.php?w=d&amp;iq_id=<?=$row['iq_id']?>&amp;$qstr');"><img src="./img/icon_del.jpg" alt="<?=$row['iq_subject']?> 삭제"></a>
+            <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['iq_subject']; ?> 수정"></a>
+            <a href="javascript:del('./itemqaformupdate.php?w=d&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;$qstr');"><img src="./img/icon_del.jpg" alt="<?php echo $row['iq_subject']; ?> 삭제"></a>
         </td>
     </tr>
-    <?
+    <?php
     }
     if ($i == 0) {
         echo '<tr><td colspan="5" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
@@ -145,8 +145,8 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400720';
 include_once('./_common.php');
 
@@ -20,7 +20,7 @@ $result = sql_query($sql);
 
 <section class="cbox">
     <h2>팝업레이어 관리</h2>
-    <p>추가된 팝업레이어 <? echo $total_count ?>건</p>
+    <p>추가된 팝업레이어 <?php echo $total_count; ?>건</p>
     <div id="btn_add">
         <a href="./newwinform.php">새창관리추가</a>
     </div>
@@ -40,23 +40,23 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <? for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
+    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
         <tr>
-            <td class="td_num"><?=$row['nw_id']?></td>
-            <td><?=$row['nw_subject']?></td>
-            <td class="td_time"><?=substr($row['nw_begin_time'],2,14)?></td>
-            <td class="td_time"><?=substr($row['nw_end_time'],2,14)?></td>
-            <td><?=$row['nw_disable_hours']?>시간</td>
-            <td><?=$row['nw_left']?>px</td>
-            <td><?=$row['nw_top']?>px</td>
-            <td><?=$row['nw_width']?>px</td>
-            <td><?=$row['nw_height']?>px</td>
+            <td class="td_num"><?php echo $row['nw_id']; ?></td>
+            <td><?php echo $row['nw_subject']; ?></td>
+            <td class="td_time"><?php echo substr($row['nw_begin_time'],2,14); ?></td>
+            <td class="td_time"><?php echo substr($row['nw_end_time'],2,14); ?></td>
+            <td><?php echo $row['nw_disable_hours']; ?>시간</td>
+            <td><?php echo $row['nw_left']; ?>px</td>
+            <td><?php echo $row['nw_top']; ?>px</td>
+            <td><?php echo $row['nw_width']; ?>px</td>
+            <td><?php echo $row['nw_height']; ?>px</td>
             <td class="td_smallmng">
-                <a href="./newwinform.php?w=u&amp;nw_id=<?=$row['nw_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$row['nw_subject']?> 수정"></a>
-                <a href="./newwinformupdate.php?w=d&amp;nw_id=<?=$row['nw_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=$row['nw_subject']?> 삭제"></a>
+                <a href="./newwinform.php?w=u&amp;nw_id=<?php echo $row['nw_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['nw_subject']; ?> 수정"></a>
+                <a href="./newwinformupdate.php?w=d&amp;nw_id=<?php echo $row['nw_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo $row['nw_subject']; ?> 삭제"></a>
             </td>
         </tr>
-    <?
+    <?php
     }
 
     if ($i == 0) {
@@ -68,6 +68,6 @@ $result = sql_query($sql);
 </section>
 
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

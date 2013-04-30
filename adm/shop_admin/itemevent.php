@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400630';
 include_once('./_common.php');
 
@@ -18,7 +18,7 @@ $sql = "select * $sql_common order by ev_id desc ";
 $result = sql_query($sql);
 ?>
 
-<p>전체 이벤트 <?=$total_count ?>건</p>
+<p>전체 이벤트 <?php echo $total_count ?>건</p>
 
 <section class="cbox">
     <h2>이벤트 목록</h2>
@@ -38,7 +38,7 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
 
         $href = "";
@@ -53,18 +53,18 @@ $result = sql_query($sql);
     ?>
 
     <tr>
-        <td class="td_bignum"><?=$row['ev_id']?></td>
-        <td><?=$subject?></td>
-        <td class="td_num"><?=$href?><?=$ev['cnt']?><?=$href_close?></td>
-        <td class="td_smallmng"><?=$row['ev_use'] ? '<span class="txt_true">예</span>' : '<span class="txt_false">아니오</span>'?></td>
+        <td class="td_bignum"><?php echo $row['ev_id']; ?></td>
+        <td><?php echo $subject; ?></td>
+        <td class="td_num"><?php echo $href; ?><?php echo $ev['cnt']; ?><?php echo $href_close; ?></td>
+        <td class="td_smallmng"><?php echo $row['ev_use'] ? '<span class="txt_true">예</span>' : '<span class="txt_false">아니오</span>'; ?></td>
         <td class="td_mng">
-            <a href="<?=G4_SHOP_URL?>/event.php?ev_id=<?=$row['ev_id']?>"><img src="./img/icon_view.jpg" alt="<?=$row['ev_subject']?> 보기"></a>
-            <a href="./itemeventform.php?w=u&amp;ev_id=<?=$row['ev_id']?>"><img src="./img/icon_mod.jpg" alt="<?=$row['ev_subject']?> 수정"></a>
-            <a href="./itemeventformupdate.php?w=d&amp;ev_id=<?=$row['ev_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=$row['ev_subject']?> 삭제"></a>
+            <a href="<?php echo G4_SHOP_URL; ?>/event.php?ev_id=<?php echo $row['ev_id']; ?>"><img src="./img/icon_view.jpg" alt="<?php echo $row['ev_subject']; ?> 보기"></a>
+            <a href="./itemeventform.php?w=u&amp;ev_id=<?php echo $row['ev_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['ev_subject']; ?> 수정"></a>
+            <a href="./itemeventformupdate.php?w=d&amp;ev_id=<?php echo $row['ev_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo $row['ev_subject']; ?> 삭제"></a>
         </td>
     </tr>
 
-    <?
+    <?php
     }
 
     if ($i == 0) {
@@ -84,6 +84,6 @@ function itemeventwin(ev_id)
 </SCRIPT>
 
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

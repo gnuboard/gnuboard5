@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400200';
 include_once('./_common.php');
 
@@ -57,25 +57,25 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="flist">
-<input type="hidden" name="page" value="<?=$page?>">
-<input type="hidden" name="save_stx" value="<?=$stx?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
 
 <fieldset>
     <legend>분류 검색</legend>
     <span>
-        <?=$listall?>
-        생성된 분류 수 <?=number_format($total_count)?>개
+        <?php echo $listall; ?>
+        생성된 분류 수 <?php echo number_format($total_count); ?>개
     </span>
 
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
-        <option value="ca_name"<?=get_selected($_GET['sfl'], "ca_name", true);?>>분류명</option>
-        <option value="ca_id"<?=get_selected($_GET['sfl'], "ca_id", true);?>>분류코드</option>
-        <option value="ca_mb_id"<?=get_selected($_GET['sfl'], "ca_mb_id", true);?>>회원아이디</option>
+        <option value="ca_name"<?php echo get_selected($_GET['sfl'], "ca_name", true); ?>>분류명</option>
+        <option value="ca_id"<?php echo get_selected($_GET['sfl'], "ca_id", true); ?>>분류코드</option>
+        <option value="ca_mb_id"<?php echo get_selected($_GET['sfl'], "ca_mb_id", true); ?>>회원아이디</option>
     </select>
 
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?=$stx?>" id="stx" required class="required frm_input">
+    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="required frm_input">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 
@@ -85,31 +85,31 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <h2>생성된 분류 전체 목록</h2>
     <p>생성된 분류 확인, 추가 및 간략 수정을 할 수 있습니다.</p>
 
-    <?if ($is_admin == 'super') {?>
+    <?php if ($is_admin == 'super') {?>
     <div id="btn_add">
         <a href="./categoryform.php" id="cate_add">분류 추가</a>
     </div>
-    <?}?>
+    <?php } ?>
 
     <form name="fcategorylist" method="post" action="./categorylistupdate.php" autocomplete="off">
-    <input type="hidden" name="page"  value="<?=$page ?>">
-    <input type="hidden" name="sort1" value="<?=$sort1 ?>">
-    <input type="hidden" name="sort2" value="<?=$sort2 ?>">
+    <input type="hidden" name="page"  value="<?php echo $page; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><?=subject_sort_link("ca_id");?>분류<br>코드</a></th>
-        <th scope="col"><?=subject_sort_link("ca_name");?>분류명</a></th>
-        <th scope="col"><?=subject_sort_link("ca_mb_id");?>회원아이디</a></th>
-        <th scope="col"><?=subject_sort_link("ca_use");?>판매<br>가능</a></th>
-        <th scope="col"><?=subject_sort_link("ca_stock_qty");?>기본재고</a></th>
+        <th scope="col"><?php echo subject_sort_link("ca_id"); ?>분류<br>코드</a></th>
+        <th scope="col"><?php echo subject_sort_link("ca_name"); ?>분류명</a></th>
+        <th scope="col"><?php echo subject_sort_link("ca_mb_id"); ?>회원아이디</a></th>
+        <th scope="col"><?php echo subject_sort_link("ca_use"); ?>판매<br>가능</a></th>
+        <th scope="col"><?php echo subject_sort_link("ca_stock_qty"); ?>기본재고</a></th>
         <th scope="col">상품수</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
-    <?
+    <?php
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $level = strlen($row['ca_id']) / 2 - 1;
@@ -146,25 +146,25 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     <tr>
         <td class="td_num">
-            <input type="hidden" name="ca_id[<?=$i?>]" value="<?=$row['ca_id']?>">
-            <?=$row['ca_id']?>
+            <input type="hidden" name="ca_id[<?php echo $i; ?>]" value="<?php echo $row['ca_id']; ?>">
+            <?php echo $row['ca_id']; ?>
         </td>
-        <td class="td_scate"><?=$s_level?> <input type="text" name="ca_name[<?=$i?>]" value="<?=get_text($row['ca_name'])?>" id="ca_name_<?=$i?>" required class="frm_input required" size="<?=$s_level_input_size?>"></td>
+        <td class="td_scate"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required" size="<?php echo $s_level_input_size; ?>"></td>
         <td class="td_scate_admin">
-            <? if ($is_admin == 'super') {?>
-            <label for="ca_mb_id<?=$i?>" class="sound_only">회원아이디</label>
-            <input type="text" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>" id="ca_mb_id<?=$i?>" class="frm_input" size="10" maxlength="20">
-            <? } else { ?>
-            <input type="hidden" name="ca_mb_id[<?=$i?>]" value="<?=$row['ca_mb_id']?>">
-            <?=$row['ca_mb_id']?>
-            <? } ?>
+            <?php if ($is_admin == 'super') {?>
+            <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">회원아이디</label>
+            <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="frm_input" size="10" maxlength="20">
+            <?php } else { ?>
+            <input type="hidden" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>">
+            <?php echo $row['ca_mb_id']; ?>
+            <?php } ?>
         </td>
-        <td class="td_chk"><input type="checkbox" name="ca_use[<?=$i?>]" value="1" <?=($row['ca_use'] ? "checked" : "")?>></td>
-        <td class="td_bignum"><input type="text" name="ca_stock_qty[<?=$i?>]" value="<?=$row['ca_stock_qty']?>" class="frm_input" size="6" style="text-align:right"></td>
-        <td class="td_num"><a href="./itemlist.php?sca=<?=$row['ca_id']?>"><?=$row1['cnt']?></a></td>
-        <td class="td_mng"><?=$s_add?> <?=$s_vie?> <?=$s_upd?> <?=$s_del?></td>
+        <td class="td_chk"><input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" <?php echo ($row['ca_use'] ? "checked" : ""); ?>></td>
+        <td class="td_bignum"><input type="text" name="ca_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['ca_stock_qty']; ?>" class="frm_input" size="6" style="text-align:right"></td>
+        <td class="td_num"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
+        <td class="td_mng"><?php echo $s_add; ?> <?php echo $s_vie; ?> <?php echo $s_upd; ?> <?php echo $s_del; ?></td>
     </tr>
-    <? }
+    <?php }
     if ($i == 0) echo "<tr><td colspan=\"7\" class=\"empty_table\">자료가 한 건도 없습니다.</td></tr>\n";
     ?>
     </tbody>
@@ -176,10 +176,10 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 
     </form>
 
-    <?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+    <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 </section>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400710';
 include_once('./_common.php');
 
@@ -27,8 +27,8 @@ $result = sql_query($sql);
     <h2>FAQ관리</h2>
 
     <p>
-        <? if ($page > 1) {?><a href="<?=$_SERVER['PHP_SELF']?>">처음으로</a><? } ?>
-        <span>전체 FAQ <?=$total_count?>건</span>
+        <?php if ($page > 1) {?><a href="<?php echo $_SERVER['PHP_SELF']; ?>">처음으로</a><?php } ?>
+        <span>전체 FAQ <?php echo $total_count; ?>건</span>
     </p>
 
     <ol>
@@ -52,23 +52,23 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <? for ($i=0; $row=mysql_fetch_array($result); $i++) {
+    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
         $sql1 = " select COUNT(*) as cnt from {$g4['shop_faq_table']} where fm_id = '{$row['fm_id']}' ";
         $row1 = sql_fetch($sql1);
         $cnt = $row1['cnt'];
     ?>
     <tr>
-        <td class="td_num"><?=$row['fm_id']?></td>
-        <td><?=stripslashes($row['fm_subject']) ?></td>
-        <td class="td_num"><?=$cnt?></td>
-        <td class="td_smallmng"><a href="./faqlist.php?fm_id=<?=$row['fm_id']?>&amp;fm_subject=<?=$row['fm_subject']?>" class="btn_frmline">상세보기</a></td>
+        <td class="td_num"><?php echo $row['fm_id']; ?></td>
+        <td><?php echo stripslashes($row['fm_subject']); ?></td>
+        <td class="td_num"><?php echo $cnt; ?></td>
+        <td class="td_smallmng"><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>" class="btn_frmline">상세보기</a></td>
         <td class="td_mng">
-            <a href="<?=G4_SHOP_URL?>/faq.php?fm_id=<?=$row['fm_id']?>"><img src="./img/icon_view.jpg" alt="<?=stripslashes($row['fm_subject']) ?> 보기"></a>
-            <a href="./faqmasterform.php?w=u&amp;fm_id=<?=$row['fm_id']?>"><img src="./img/icon_mod.jpg" alt="<?=stripslashes($row['fm_subject']) ?> 수정"></a>
-            <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?=$row['fm_id']?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?=stripslashes($row['fm_subject']) ?> 삭제"></a>
+            <a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><img src="./img/icon_view.jpg" alt="<?php echo stripslashes($row['fm_subject']); ?> 보기"></a>
+            <a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo stripslashes($row['fm_subject']); ?> 수정"></a>
+            <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo stripslashes($row['fm_subject']); ?> 삭제"></a>
         </td>
     </tr>
-    <?
+    <?php
     }
 
     if ($i == 0){
@@ -79,8 +79,8 @@ $result = sql_query($sql);
     </table>
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

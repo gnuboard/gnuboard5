@@ -26,11 +26,11 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <header>
             <h1><?php echo $list[$i]['wr_name'] ?>님의 댓글</h1>
             <?php echo $list[$i]['name'] ?>
-            <?php if ($cmt_depth) { ?><img src="<?php echo $board_skin_url ?>/img/icon_reply.gif" class="icon_reply" alt="댓글의 댓글"><?php }  ?>
-            <?php if ($is_ip_view) {  ?>
+            <?php if ($cmt_depth) { ?><img src="<?php echo $board_skin_url ?>/img/icon_reply.gif" class="icon_reply" alt="댓글의 댓글"><?php } ?>
+            <?php if ($is_ip_view) { ?>
             아이피
             <span class="bo_vc_hdinfo"><?php echo $list[$i]['ip']; ?></span>
-            <?php }  ?>
+            <?php } ?>
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
         </header>
@@ -61,15 +61,15 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
          ?>
         <footer>
             <ul class="bo_vc_act">
-                <?php if ($list[$i]['is_reply']) {  ?><li><a href="<?php echo $c_reply_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;">답변</a></li><?php }  ?>
-                <?php if ($list[$i]['is_edit']) {  ?><li><a href="<?php echo $c_edit_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;">수정</a></li><?php }  ?>
-                <?php if ($list[$i]['is_del'])  {  ?><li><a href="<?php echo $list[$i]['del_link'];  ?>" onclick="return comment_delete();">삭제</a></li><?php }  ?>
+                <?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;">답변</a></li><?php } ?>
+                <?php if ($list[$i]['is_edit']) { ?><li><a href="<?php echo $c_edit_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;">수정</a></li><?php } ?>
+                <?php if ($list[$i]['is_del'])  { ?><li><a href="<?php echo $list[$i]['del_link'];  ?>" onclick="return comment_delete();">삭제</a></li><?php } ?>
             </ul>
         </footer>
         <?php } ?>
     </article>
     <?php } ?>
-    <?php if ($i == 0) { //댓글이 없다면  ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><?php }  ?>
+    <?php if ($i == 0) { //댓글이 없다면  ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><?php } ?>
 
 </section>
 
@@ -94,7 +94,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
         <table class="frm_tbl">
         <tbody>
-        <?php if ($is_guest) {  ?>
+        <?php if ($is_guest) { ?>
         <tr>
             <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
             <td><input type="text" name="wr_name" id="wr_name" required class="frm_input required" size="5" maxLength="20"></td>
@@ -103,24 +103,24 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
             <td><input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="10" maxLength="20"></td>
         </tr>
-        <?php }  ?>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="wr_secret">비밀글사용</label></th>
             <td><input type="checkbox" name="wr_secret" value="secret" id="wr_secret"></td>
         </tr>
-        <?php if ($is_guest) {  ?>
+        <?php if ($is_guest) { ?>
         <tr>
             <th scope="row">자동등록방지</th>
             <td><?php echo $captcha_html; ?></td>
         </tr>
-        <?php }  ?>
+        <?php } ?>
         <tr>
             <th scope="row">내용</th>
             <td>
-                <?php if ($comment_min || $comment_max) {  ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
+                <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
                 <textarea name="wr_content" id="wr_content" maxlength="10000" required class="required"
-                <?php if ($comment_min || $comment_max) {  ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
-                <?php if ($comment_min || $comment_max) {  ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
+                <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
+                <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
             </td>
         </tr>
         </tbody>
@@ -288,4 +288,4 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
     comment_box('', 'c'); // 댓글 입력폼이 보이도록 처리하기위해서 추가 (root님)
     </script>
-    <?php }  ?>
+    <?php } ?>

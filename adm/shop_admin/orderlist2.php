@@ -77,7 +77,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 ?>
 
 <form name="frmorderlist">
-<input type="hidden" name="doc" value="<?php cho $doc; ?>">
+<input type="hidden" name="doc" value="<?php echo $doc; ?>">
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">

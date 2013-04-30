@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
@@ -28,9 +28,9 @@ $item_info_gubun .= $item_info_gubun ? " 등록됨" : "";
 include_once(G4_PATH.'/head.sub.php');
 ?>
 <script type="text/javascript">
-    opener.document.getElementById("item_info_gubun").innerHTML = "<?=$item_info_gubun?>";
+    opener.document.getElementById("item_info_gubun").innerHTML = "<?php echo $item_info_gubun; ?>";
     window.close();
 </script>
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

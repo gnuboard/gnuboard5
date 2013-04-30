@@ -1,4 +1,4 @@
-<?
+<?php
 define('G4_IS_ADMIN', true);
 include_once ('../../common.php');
 

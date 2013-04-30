@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400640';
 include_once('./_common.php');
 
@@ -72,11 +72,11 @@ if (isset($ev_set)) {
     <legend>이벤트 선택</legend>
 
     <form name="flist" autocomplete="off">
-    <input type="hidden" name="page" value="<?=$page?>">
-    전체 이벤트 <?=$total_count ?>건
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+    전체 이벤트 <?php echo $total_count; ?>건
     <label for="ev_set" class="sound_only">이벤트</label>
-    <select name="ev_set" id="ev_set" action="<?=$_SERVER['PHP_SELF']?>">
-        <?
+    <select name="ev_set" id="ev_set" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <?php
         // 이벤트 옵션처리
         $event_option = "<option value=''>이벤트를 선택하세요</option>";
         $sql1 = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
@@ -95,14 +95,14 @@ if (isset($ev_set)) {
     <legend>이벤트 검색</legend>
 
     <form name="flist" autocomplete="off">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <?=$listall?>
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <?php echo $listall; ?>
 
     <label for="sel_ca_id" class="sound_only">분류선택</label>
-    <? // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-15 ?>
+    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-15 ?>
     <select name="sel_ca_id" id="sel_ca_id">
         <option value=''>전체분류</option>
-        <?
+        <?php
         $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++)
@@ -114,16 +114,16 @@ if (isset($ev_set)) {
         }
         ?>
     </select>
-    <? // ##### // 웹 접근성 취약 지점 끝 ?>
+    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="it_name" <?=get_selected($sel_field, 'it_name')?>>상품명</option>
-        <option value="a.it_id" <?=get_selected($sel_field, 'a.it_id')?>>상품코드</option>
+        <option value="it_name" <?php echo get_selected($sel_field, 'it_name'); ?>>상품명</option>
+        <option value="a.it_id" <?php echo get_selected($sel_field, 'a.it_id'); ?>>상품코드</option>
     </select>
 
     <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="search" value="<?=$search?>" id="search" required class="frm_input required">
+    <input type="text" name="search" value="<?php echo $search; ?>" id="search" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 
     </form>
@@ -132,28 +132,28 @@ if (isset($ev_set)) {
 
 <section class="cbox">
     <h2>상품 목록</h2>
-    <p>상품을 이벤트별로 일괄 처리합니다. 현재 선택된 이벤트는 <?=$ev_title?>입니다.</p>
+    <p>상품을 이벤트별로 일괄 처리합니다. 현재 선택된 이벤트는 <?php echo $ev_title; ?>입니다.</p>
 
     <form name="fitemeventlistupdate" method="post" action="./itemeventlistupdate.php" onsubmit="return fitemeventlistupdatecheck(this)">
-    <input type="hidden" name="ev_id" value="<?=$ev_id?>">
-    <input type="hidden" name="ev_set" value="<?=$ev_set?>">
-    <input type="hidden" name="sel_ca_id" value="<?=$sel_ca_id?>">
-    <input type="hidden" name="sel_field" value="<?=$sel_field?>">
-    <input type="hidden" name="search" value="<?=$search?>">
-    <input type="hidden" name="page" value="<?=$page?>">
-    <input type="hidden" name="sort1" value="<?=$sort1?>">
-    <input type="hidden" name="sort2" value="<?=$sort2?>">
+    <input type="hidden" name="ev_id" value="<?php echo $ev_id; ?>">
+    <input type="hidden" name="ev_set" value="<?php echo $ev_set; ?>">
+    <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
+    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+    <input type="hidden" name="search" value="<?php echo $search; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
     <table>
     <thead>
     <tr>
         <th scope="col">이벤트사용</th>
-        <th scope="col"><a href="<?=title_sort("a.it_id") . '&amp;'.$qstr1.'&amp;ev_id='.$ev_id; ?>">상품코드</a></th>
-        <th scope="col"><a href="<?=title_sort("it_name") . '&&amp;'.$qstr1.'&amp;ev_id='.$ev_id; ?>">상품명</a></th>
+        <th scope="col"><a href="<?php echo title_sort("a.it_id") . '&amp;'.$qstr1.'&amp;ev_id='.$ev_id; ?>">상품코드</a></th>
+        <th scope="col"><a href="<?php echo title_sort("it_name") . '&&amp;'.$qstr1.'&amp;ev_id='.$ev_id; ?>">상품명</a></th>
     </tr>
     </thead>
     <tbody>
-    <? for ($i=0; $row=mysql_fetch_array($result); $i++) {
+    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
         $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
         $sql = " select ev_id from {$g4['shop_event_item_table']}
@@ -165,14 +165,14 @@ if (isset($ev_set)) {
 
     <tr>
         <td class="td_mng">
-            <input type="hidden" name="it_id[<?=$i?>]" value="<?=$row['it_id']?>">
-            <input type="checkbox" name="ev_chk[<?=$i?>]" value="1" <?=($row['ev_id'] ? "checked" : "")?>>
+            <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
+            <input type="checkbox" name="ev_chk[<?php echo $i; ?>]" value="1" <?php echo ($row['ev_id'] ? "checked" : ""); ?>>
         </td>
-        <td class="td_bignum"><a href="<?=$href?>"><?=$row['it_id']?></a></td>
-        <td><a href="<?=$href?>"><?=get_it_image($row['it_id'].'_s', 50, 50)?> <?=cut_str(stripslashes($row['it_name']), 60, "&#133")?></a></td>
+        <td class="td_bignum"><a href="<?php echo $href; ?>"><?php echo $row['it_id']; ?></a></td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
     </tr>
 
-    <?
+    <?php
     }
 
     if ($i == 0)
@@ -182,13 +182,13 @@ if (isset($ev_set)) {
     </table>
 
     <p class="btn_confirm_msg">
-        <? if ($ev_title) { ?>
-         현재 선택된 이벤트는 <strong><?=$ev_title?></strong>입니다.<br>
+        <?php if ($ev_title) { ?>
+         현재 선택된 이벤트는 <strong><?php echo $ev_title; ?></strong>입니다.<br>
          선택된 이벤트의 상품 수정 내용을 반영하시려면 일괄수정 버튼을 누르십시오.
-        <? } else { ?>
+        <?php } else { ?>
         이벤트를 선택하지 않으셨습니다. 수정 내용을 반영하기 전에 이벤트를 선택해주십시오.<br>
         <a href="#ev_set">이벤트 선택</a>
-        <? } ?>
+        <?php } ?>
     </p>
     <div class="btn_confirm">
         <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
@@ -197,7 +197,7 @@ if (isset($ev_set)) {
 
 </section>
 
-<?=get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
 function fitemeventlistupdatecheck(f)
@@ -213,6 +213,6 @@ function fitemeventlistupdatecheck(f)
 }
 </script>
 
-<?
+<?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
 ?>

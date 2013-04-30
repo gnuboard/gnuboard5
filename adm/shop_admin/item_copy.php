@@ -1,4 +1,4 @@
-<?
+<?php
 $sub_menu = '400300';
 include_once('./_common.php');
 
@@ -15,13 +15,13 @@ include_once(G4_PATH.'/head.sub.php');
     <tbody>
     <tr>
         <th scope="row"><label for="new_it_id">상품코드</label></th>
-        <td><input type="text" value="<?=time()?>" id="new_it_id" class="frm_input"></td>
+        <td><input type="text" value="<?php echo time(); ?>" id="new_it_id" class="frm_input"></td>
     </tr>
     </tbody>
     </table>
 
     <div class="btn_confirm">
-        <input type="button" value="복사하기" class="btn_submit" onclick="_copy('item_copy_update.php?it_id=<?=$it_id?>&amp;ca_id=<?=$ca_id?>');">
+        <input type="button" value="복사하기" class="btn_submit" onclick="_copy('item_copy_update.php?it_id=<?php echo $it_id; ?>&amp;ca_id=<?php echo $ca_id; ?>');">
         <button type="button" onclick="self.close();">창닫기</button>
     </div>
 
@@ -37,6 +37,6 @@ function _copy(link)
 }
 </script>
 
-<?
+<?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>
