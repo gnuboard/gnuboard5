@@ -27,7 +27,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         else if ($row['bn_url'] && $row['bn_url'] != 'http://') {
             echo '<a href="'.G4_SHOP_URL.'/bannerhit.php?bn_id='.$row['bn_id'].'&amp;url='.urlencode($row['bn_url']).'"'.$bn_new_win.'>';
         }
-        echo '<img src="'.G4_DATA_URL.'/banner/'.$row['bn_id'].'" border="'.$bn_border.'" alt="'.$row['bn_alt'].'" width="'.$size[0].'" height="'.$size[1].'"></a>'.PHP_EOL;
+        echo '<img src="'.G4_DATA_URL.'/banner/'.$row['bn_id'].'" alt="'.$row['bn_alt'].'" width="'.$size[0].'" height="'.$size[1].'"></a>'.PHP_EOL;
         echo '</li>'.PHP_EOL;
     }
 }

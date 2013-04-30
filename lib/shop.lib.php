@@ -18,7 +18,7 @@ function get_image($img, $width=0, $height=0)
 {
     global $g4, $default;
 
-    $full_img = G4_DATA_PATH."/item/$img";
+    $full_img = G4_DATA_PATH.'/item/'.$img;
 
     if (file_exists($full_img) && $img)
     {
