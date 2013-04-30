@@ -23,6 +23,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <?php } ?>
 
     <aside id="hd_nb">
+        <h2>쇼핑몰 퀵메뉴</h2>
         <ul>
             <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_cart.gif" alt="장바구니"></a></li>
             <li><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_wish.gif" alt="위시리스트"></a></li>
@@ -33,6 +34,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <div id="logo"><a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="쇼핑몰 처음으로"></a></div>
 
     <aside id="hd_aside">
+        <h2>전체검색 및 회원메뉴</h2>
         <div>
             <section id="sch_all">
                 <h2>쇼핑몰 검색</h2>
@@ -89,7 +91,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
     </aside>
 
-    <aside id="aside">
+    <div id="aside">
         <?php echo outlogin('shop_outlogin'); // 외부 로그인 ?>
 
         <!-- 상품분류 -->
@@ -112,7 +114,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             <h2>쇼핑몰 배너</h2>
             <?php echo display_banner('왼쪽'); ?>
         </section>
-    </aside>
+    </div>
 
     <div id="container">
         <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><h1 id="wrapper_title"><?php echo $g4['title'] ?></h1><?php } ?>
