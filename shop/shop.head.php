@@ -34,10 +34,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <div id="logo"><a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="쇼핑몰 처음으로"></a></div>
 
     <aside id="hd_aside">
-        <h2>전체검색 및 회원메뉴</h2>
+        <h2>상단 편의메뉴</h2>
         <div>
             <section id="sch_all">
-                <h2>쇼핑몰 검색</h2>
+                <h3>쇼핑몰 검색</h3>
                 <form name="frmsearch1" onsubmit="return search_submit(this);">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">
                 <input type="hidden" name="sop" value="and">
@@ -68,18 +68,21 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 </script>
             </section>
 
-            <ul>
-                <?php if ($is_member) { ?>
-                <li><a href="<?php echo G4_BBS_URL; ?>/logout.php">로그아웃</a></li>
-                <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
-                <?php } else { ?>
-                <li><a href="<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
-                <li><a href="<?php echo G4_BBS_URL; ?>/register.php">회원가입</a></li>
-                <?php } ?>
-                <li><a href="<?php echo G4_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
-                <li><a href="<?php echo G4_SHOP_URL; ?>/faq.php">FAQ</a></li>
-                <li><a href="<?php echo G4_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
-            </ul>
+            <section id="hd_aside_mb">
+                <h3>회원메뉴 및 FAQ</h3>
+                <ul>
+                    <?php if ($is_member) { ?>
+                    <li><a href="<?php echo G4_BBS_URL; ?>/logout.php">로그아웃</a></li>
+                    <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
+                    <?php } else { ?>
+                    <li><a href="<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
+                    <li><a href="<?php echo G4_BBS_URL; ?>/register.php">회원가입</a></li>
+                    <?php } ?>
+                    <li><a href="<?php echo G4_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
+                    <li><a href="<?php echo G4_SHOP_URL; ?>/faq.php">FAQ</a></li>
+                    <li><a href="<?php echo G4_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
+                </ul>
+            </section>
         </div>
     </aside>
 
