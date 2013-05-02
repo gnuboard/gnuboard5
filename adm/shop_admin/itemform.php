@@ -254,15 +254,15 @@ $pg_anchor ='<ul class="anchor">
         <td>
             <?php echo help("메인화면에 유형별로 출력할때 사용합니다.\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다."); ?>
             <input type="checkbox" name="it_type1" value="1" <?php echo ($it['it_type1'] ? "checked" : ""); ?> id="it_type1">
-            <label for="it_type1"><img src="<?php echo G4_SHOP_URL; ?>/img/icon_type1.gif" alt="HIT상품"></label>
+            <label for="it_type1">히트 <img src="<?php echo G4_URL; ?>/img/shop/icon_hit2.gif" alt=""></label>
             <input type="checkbox" name="it_type2" value="1" <?php echo ($it['it_type2'] ? "checked" : ""); ?> id="it_type2">
-            <label for="it_type2"><img src="<?php echo G4_SHOP_URL; ?>/img/icon_type2.gif" alt="추천상품"></label>
+            <label for="it_type2">추천 <img src="<?php echo G4_URL; ?>/img/shop/icon_rec2.gif" alt=""></label>
             <input type="checkbox" name="it_type3" value="1" <?php echo ($it['it_type3'] ? "checked" : ""); ?> id="it_type3">
-            <label for="it_type3"><img src="<?php echo G4_SHOP_URL; ?>/img/icon_type3.gif" alt="NEW상품"></label>
+            <label for="it_type3">신상품 <img src="<?php echo G4_URL; ?>/img/shop/icon_new2.gif" alt=""></label>
             <input type="checkbox" name="it_type4" value="1" <?php echo ($it['it_type4'] ? "checked" : ""); ?> id="it_type4">
-            <label for="it_type4"><img src="<?php echo G4_SHOP_URL; ?>/img/icon_type4.gif" alt="인기상품"></label>
+            <label for="it_type4">인기 <img src="<?php echo G4_URL; ?>/img/shop/icon_best2.gif" alt=""></label>
             <input type="checkbox" name="it_type5" value="1" <?php echo ($it['it_type5'] ? "checked" : ""); ?> id="it_type5">
-            <label for="it_type5"><img src="<?php echo G4_SHOP_URL; ?>/img/icon_type5.gif" alt="DC상품"></label>
+            <label for="it_type5">할인 <img src="<?php echo G4_URL; ?>/img/shop/icon_discount2.gif" alt=""></label>
         </td>
     </tr>
     <tr>
