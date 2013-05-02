@@ -27,23 +27,25 @@ if (!isset($config['cf_mobile_new_skin'])) {
 
 if(!isset($config['cf_gcaptcha_mp3'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", TRUE);
+                    ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
 
 if(!isset($config['cf_kcpcert_site_cd'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", true);
 }
 
 if(!isset($config['cf_kcpcert_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", true);
 }
+
+sql_query(" ALTER TABLE `{$g4['config_table']}` CHANGE `cf_kcpcert_use` `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' ", false);
 
 if(!isset($config['cf_mobile_pages'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", TRUE);
-    sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", TRUE);
+                    ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", true);
+    sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", true);
 }
 
 // uniqid 테이블이 없을 경우 생성

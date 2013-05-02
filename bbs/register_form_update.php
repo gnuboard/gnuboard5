@@ -75,7 +75,7 @@ if ($w == '' || $w == 'u') {
     if ($w=='') {
         if ($msg = exist_mb_id($mb_id))     alert($msg);
 
-        if ($config['cf_use_recommend']) {
+        if ($config['cf_use_recommend'] && $mb_recommend) {
             if (!exist_mb_id($mb_recommend))    
                 alert("추천인이 존재하지 않습니다.");
         }

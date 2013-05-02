@@ -1,4 +1,4 @@
-<?
+<?php
 include './_common.php';
     /* ============================================================================== */
     /* =   PAGE : 결과 처리 PAGE                                                    = */
@@ -6,7 +6,7 @@ include './_common.php';
     /* =   Copyright (c)  2007   KCP Inc.   All Rights Reserverd.                   = */
     /* ============================================================================== */
 ?>
-<?
+<?php
 	/* ============================================================================== */
     /* =   01. KCP 지불 서버 정보 설정                                              = */
     /* = -------------------------------------------------------------------------- = */
@@ -119,13 +119,13 @@ include './_common.php';
                         <td bgcolor="CFCFCF" height="2"></td>
                     </tr>
                     <tr>
-                        <td align="center">결과 페이지(현금영수증 <?=$req_tx_name?>)</td>
+                        <td align="center">결과 페이지(현금영수증 <?php echo $req_tx_name; ?>)</td>
                     </tr>
                     <tr>
                         <td bgcolor="CFCFCF" height="2"></td>
                     </tr>
                 </table>
-<?
+<?php
     if ($req_tx == "pay")                          // 거래 구분 : 등록
     {
         if (!$bSucc == "false")                    // 업체 DB 처리 정상
@@ -136,49 +136,49 @@ include './_common.php';
                 <table width="85%" align="center" border="0" cellpadding="0" cellspacing="1">
                     <tr>
                         <td>결과코드</td>
-                        <td><?=$res_cd?></td>
+                        <td><?php echo $res_cd; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>결과 메세지</td>
-                        <td><?=$res_msg?></td>
+                        <td><?php echo $res_msg; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>현금영수증 거래번호</td>
-                        <td><?=$cash_no?></td>
+                        <td><?php echo $cash_no; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>현금영수증 승인번호</td>
-                        <td><?=$receipt_no?></td>
+                        <td><?php echo $receipt_no; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>등록 상태 코드</td>
-                        <td><?=$reg_stat?></td>
+                        <td><?php echo $reg_stat; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>등록 상태 설명</td>
-                        <td><?=$reg_desc?></td>
+                        <td><?php echo $reg_desc; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>승인시간</td>
-                        <td><?=$app_time?></td>
+                        <td><?php echo $app_time; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>현금영수증 URL</td>
-                        <td><input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('<?=$cash_no?>')"></td>
+                        <td><input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('<?php echo $cash_no; ?>')"></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td colspan="2">※ 영수증 확인은 실 등록의 경우에만 가능합니다.</td>
                     </tr>
                 </table>
-<?
+<?php
             }
             else                                       // 승인 실패
             {
@@ -186,15 +186,15 @@ include './_common.php';
                 <table width="85%" align="center" border="0" cellpadding="0" cellspacing="1">
                     <tr>
                         <td>결과코드</td>
-                        <td><?=$res_cd?></td>
+                        <td><?php echo $res_cd; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>결과 메세지</td>
-                        <td><?=$res_msg?></td>
+                        <td><?php echo $res_msg; ?></td>
                     </tr>
                 </table>
-<?
+<?php
             }
 
         }
@@ -204,18 +204,18 @@ include './_common.php';
                 <table width="85%" align="center" border="0" cellpadding="0" cellspacing="1">
                     <tr>
                         <td nowrap>취소 결과코드</td>
-                        <td><?=$res_cd?></td>
+                        <td><?php echo $res_cd; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td nowrap>취소 결과 메세지</td>
-                        <td><?=$res_msg?></td>
+                        <td><?php echo $res_msg; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td nowrap>상세메세지</td>
                         <td>
-<?
+<?php
             if ($res_cd == "0000")
             {
                 echo "결제는 정상적으로 이루어졌지만 쇼핑몰에서 결제 결과를 처리하는 중 오류가 발생하여 시스템에서 자동으로 취소 요청을 하였습니다. <br> 쇼핑몰로 전화하여 확인하시기 바랍니다.";
@@ -228,7 +228,7 @@ include './_common.php';
                         </td>
                     </tr>
                 </table>
-<?
+<?php
         }
 
     }
@@ -241,49 +241,49 @@ include './_common.php';
                 <table width="85%" align="center" border="0" cellpadding="0" cellspacing="1">
                     <tr>
                         <td>결과코드</td>
-                        <td><?=$res_cd?></td>
+                        <td><?php echo $res_cd; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>결과 메세지</td>
-                        <td><?=$res_msg?></td>
+                        <td><?php echo $res_msg; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>현금영수증 거래번호</td>
-                        <td><?=$cash_no?></td>
+                        <td><?php echo $cash_no; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>현금영수증 승인번호</td>
-                        <td><?=$receipt_no?></td>
+                        <td><?php echo $receipt_no; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>등록 상태 코드</td>
-                        <td><?=$reg_stat?></td>
+                        <td><?php echo $reg_stat; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>등록 상태 설명</td>
-                        <td><?=$reg_desc?></td>
+                        <td><?php echo $reg_desc; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>승인시간</td>
-                        <td><?=$app_time?></td>
+                        <td><?php echo $app_time; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>현금영수증 URL</td>
-                        <td><input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('<?=$cash_no?>')"></td>
+                        <td><input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('<?php echo $cash_no; ?>')"></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td colspan="2">※ 영수증 확인은 실 등록의 경우에만 가능합니다.</td>
                     </tr>
                 </table>
-<?
+<?php
         }
 		else
         {
@@ -291,15 +291,15 @@ include './_common.php';
                 <table width="85%" align="center" border="0" cellpadding="0" cellspacing="1">
                     <tr>
                         <td>결과코드</td>
-                        <td><?=$res_cd?></td>
+                        <td><?php echo $res_cd; ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>결과 메세지</td>
-                        <td><?=$res_msg?></td>
+                        <td><?php echo $res_msg; ?></td>
                     </tr>
                 </table>
-<?
+<?php
         }
     }
 ?>
