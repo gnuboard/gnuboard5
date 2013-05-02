@@ -12,12 +12,15 @@ if ($ca_id)
         $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '$code' ";
         $row = sql_fetch($sql);
 
-        $style = '';
-        if ($ca_id == $code)
-            $style = 'style="font-weight:bold;"';
+        $sct_here = '';
+        if ($ca_id == $code) // 현재 분류와 일치하면
+            $sct_here = 'sct_here';
 
-        $str .= $bar.'<a href="./list.php?ca_id='.$code.'" '.$style.'>'.$row['ca_name'].'</a>';
-        $bar = ' &gt; ';
+        if ($i != $len) // 현재 위치의 마지막 단계가 아니라면
+            $sct_bg = 'sct_bg';
+        else $sct_bg = '';
+
+        $str .= $bar.'<a href="./list.php?ca_id='.$code.'" class="'.$sct_here.' '.$sct_bg.'">'.$row['ca_name'].'</a>';
     }
 }
 else
@@ -27,5 +30,6 @@ else
 ?>
 
 <div id="sct_location">
-    <a href='<?=$g4[path]?>/'>Home</a> > <?=$str?>
+    <a href='<?=$g4[path]?>/' class="sct_bg">Home</a>
+    <?=$str?>
 </div>
