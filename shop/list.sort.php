@@ -1,29 +1,23 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
+$sct_sort_href = $_SERVER['PHP_SELF'].'?ca_id='.$ca_id.'&amp;skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort=';
 ?>
 
-<br>
-<table width=98% cellpadding=0 cellspacing=0 align=center>
-<tr>
-    <td width=50%>총 <span class=point><b><?php echo number_format($total_count); ?></b></span>개의 상품이 있습니다.</td>
-    <td width=50% align=right style='padding-top:3px; padding-bottom:3px;'>
-        <select id=it_sort name=sort onchange="if (this.value=='') return; document.location = '<?php echo "{$_SERVER['PHP_SELF']}?ca_id=$ca_id&skin=$skin&ev_id=$ev_id&sort="; ?>'+this.value;" class=small>
-            <option value=''>출력 순서
-            <option value=''>---------
-            <option value='it_amount asc'>낮은가격순
-            <option value='it_amount desc'>높은가격순
-            <option value='it_name asc'>상품명순
-            <option value='it_type1 desc'>히트상품
-            <option value='it_type2 desc'>추천상품
-            <option value='it_type3 desc'>최신상품
-            <option value='it_type4 desc'>인기상품
-            <option value='it_type5 desc'>할인상품
-        </select>
-    </td>
-</tr>
-<tr><td colspan="2" background='<?php echo G4_SHOP_URL; ?>/img/line_h.gif' height=1></td></tr>
-</table>
+<section id="sct_sort">
+    <h2>상품 정렬</h2>
+    <div>
+        상품 <b><?php echo number_format($total_count); ?></b>개
+    </div>
 
-<script language='JavaScript'>
-document.getElementById('it_sort').value="<?php echo $sort; ?>";
-</script>
+    <ul>
+        <li><a href="<?php echo $sct_sort_href; ?>it_amount desc" class="btn01">낮은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_amount asc" class="btn01">높은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_name asc" class="btn01">상품명순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type1 desc" class="btn01">히트상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type2 desc" class="btn01">추천상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type3 desc" class="btn01">최신상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type4 desc" class="btn01">인기상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type5 desc" class="btn01">할인상품</a></li>
+    </ul>
+</section>
