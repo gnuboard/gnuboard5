@@ -14,10 +14,10 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     <img src="<?php echo G4_DATA_URL; ?>/common/main_img" alt="">
 </div>
 
-<section class="sidx_it_wrap">
+<section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=3">최신상품</a></h2>
-        <p class="sidx_it_wrap_hdesc"><?php echo $config['cf_title']; ?> 최신상품 모음</p>
+        <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 최신상품 모음</p>
     </header>
     <?php
     // 최신상품
@@ -29,10 +29,10 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 
-<section class="sidx_it_wrap">
+<section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=1">히트상품</a></h2>
-        <p class="sidx_it_wrap_hdesc"><?php echo $config['cf_title']; ?> 히트상품 모음</p>
+        <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 히트상품 모음</p>
     </header>
     <?php
     // 히트상품
@@ -44,10 +44,10 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 
-<section class="sidx_it_wrap">
+<section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=2">추천상품</a></h2>
-        <p class="sidx_it_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
+        <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
     </header>
     <?php
     // 추천상품
@@ -59,10 +59,10 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 
-<section class="sidx_it_wrap">
+<section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=4">인기상품</a></h2>
-        <p class="sidx_it_wrap_hdesc"><?php echo $config['cf_title']; ?> 인기상품 모음</p>
+        <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 인기상품 모음</p>
     </header>
     <?php
     // 인기상품
@@ -74,10 +74,10 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 
-<section class="sidx_it_wrap">
+<section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=5">할인상품</a></h2>
-        <p class="sidx_it_wrap_hdesc"><?php echo $config['cf_title']; ?> 할인상품 모음</p>
+        <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 할인상품 모음</p>
     </header>
     <?php
     // 할인상품
