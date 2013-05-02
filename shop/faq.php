@@ -13,59 +13,81 @@ $g4['title'] = $fm['fm_subject'];
 include_once('./_head.php');
 ?>
 
-<img src="<?php echo G4_SHOP_URL; ?>/img/top_faq.gif" border=0><p>
+<?php
+if ($is_admin)
+    echo '<div class="sfaq_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/faqmasterform.php?w=u&amp;fm_id='.$fm_id.'" class="btn_admin">FAQ 수정</a></div>';
+?>
 
 <?php
-$himg = G4_DATA_PATH."/faq/{$fm_id}_h";
+$himg = G4_DATA_PATH.'/faq/'.$fm_id.'_h';
 if (file_exists($himg))
-    echo "<img src='".G4_DATA_URL."/faq/{$fm_id}_h' border=0><br>";
-
-if ($is_admin)
-    echo "<p align=center><a href='".G4_ADMIN_URL."/shop_admin/faqmasterform.php?w=u&fm_id=$fm_id'><img src='".G4_SHOP_URL."/img/btn_admin_modify.gif' border=0></a></p>";
+    echo '<div id="sfaq_himg" class="sfaq_img"><img src="'.G4_DATA_URL.'/faq/'.$fm_id.'_h" alt=""></div>';
 
 // 상단 HTML
-echo stripslashes($fm['fm_head_html']);
-echo "<br>";
+echo '<div id="sfaq_hhtml">'.stripslashes($fm['fm_head_html']).'</div>';
+?>
 
-echo "<table width=95% align=center cellpadding=1 cellspacing=0>\n";
-echo "<tr><td class=bg_faq><table width=100% cellpadding=2 cellspacing=1 border=0 bgcolor=#FFFFFF>\n";
+<article id="sfaq" class="sfaq_<?=$fm_id?>">
+    <header>
+        <h1><?php echo $g4['title']; ?></h1>
+    </header>
 
-$sql = " select * from {$g4['shop_faq_table']}
-          where fm_id = '$fm_id'
-          order by fa_order , fa_id ";
-$result = sql_query($sql);
-$str = "";
-for ($i=1; $row=sql_fetch_array($result); $i++)
-{
-    echo "<tr>";
-    echo "<td width=20 align=right valign=top>$i.</td>";
-    echo "<td valign=top><a href='#faq_{$fm_id}_{$i}' class=faq>" . stripslashes($row['fa_subject']) . "</a></td>";
-    echo "</tr>\n";
+    <div id="sfaq_wrap">
+        <?php // FAQ 목차
+        $sql = " select * from {$g4['shop_faq_table']}
+                  where fm_id = '$fm_id'
+                  order by fa_order , fa_id ";
+        $result = sql_query($sql);
+        for ($i=1; $row=sql_fetch_array($result); $i++)
+        {
+            if ($i == 1)
+            {
+        ?>
+        <section id="sfaq_list">
+            <h2>FAQ 목차</h2>
+            <ol>
+        <?php } ?>
+                <li><a href="#sfaq_<?php echo $fm_id.'_'.$i; ?>"><?php echo stripslashes($row['fa_subject']); ?></a></li>
+        <?php }
+        if ($i > 1) echo '</ol></section>';
+        ?>
 
-    $str .= "<a name='faq_{$fm_id}_{$i}'><br></a><table cellpadding=2 cellspacing=1 width=100%>";
-    $str .= "<tr>";
-    $str .= "<td width=38 valign=top align=right><img src='".G4_SHOP_URL."/img/icon_poll_q.gif'></td>";
-    $str .= "<td class=point valign=top>" . stripslashes($row['fa_subject']) . "</td>";
-    $str .= "</tr>";
-    $str .= "<tr>";
-    $str .= "<td valign=top align=right><img src='".G4_SHOP_URL."/img/icon_answer.gif'></td>";
-    $str .= "<td class=leading valign=top>" . stripslashes($row['fa_content']) . "</td>";
-    $str .= "</tr>";
-    $str .= "<tr>";
-    $str .= "<td colspan=2 align=right><a href='#g4_head'><img src='".G4_SHOP_URL."/img/icon_top.gif' border=0></a></td>";
-    $str .= "</tr>";
-    $str .= "</table>";
-}
-echo "</table></td></tr></table>\n";
+        <?php // FAQ 내용
+        $resultb = sql_query($sql);
+        for ($i=1; $row=sql_fetch_array($resultb); $i++)
+        {
+            if ($i == 1)
+            {
+        ?>
+        <section id="sfaq_con">
+            <h2>FAQ 내용</h2>
+            <ol>
+        <?php } ?>
+            <li id="sfaq_<?php echo $fm_id.'_'.$i; ?>">
+                <h3><?php echo stripslashes($row['fa_subject']); ?></h3>
+                <p>
+                    <?php echo stripslashes($row['fa_content']); ?>
+                </p>
+                <div class="sfaq_tolist"><a href="#sfaq_list" class="btn01">FAQ 목차</a></div>
+            </li>
+        <?php }
+        if ($i > 1) echo '</ol></section>';
 
-echo $str;
+        if ($i == 1) echo '<p>등록된 FAQ가 없습니다.<br><a href="'.G4_ADMIN_URL.'/shop_admin/faqmasterlist.php">FAQ를 새로 등록하시려면 FAQ관리</a> 메뉴를 이용하십시오.</p>';
+        ?>
+    </div>
+</article>
 
-echo "<br>";
-echo stripslashes($fm['fm_tail_html']);
+<?php
+// 하단 HTML
+echo '<div id="sfaq_thtml">'.stripslashes($fm['fm_tail_html']).'</div>';
 
-$timg = G4_DATA_PATH."/faq/{$fm_id}_t";
+$timg = G4_DATA_PATH.'/faq/'.$fm_id.'_t';
 if (file_exists($timg))
-    echo "<br><img src='".G4_DATA_URL."/faq/{$fm_id}_t' border=0><br>";
+    echo '<div id="sfaq_timg" class="sfaq_img"><img src="'.G4_DATA_URL.'/faq/'.$fm_id.'_t" alt=""></div>';
+
+if ($is_admin)
+    echo '<div class="sfaq_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/faqmasterform.php?w=u&amp;fm_id='.$fm_id.'" class="btn_admin">FAQ 수정</a></div>';
 
 include_once('./_tail.php');
 ?>
