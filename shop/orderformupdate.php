@@ -297,7 +297,7 @@ include_once(G4_SHOP_PATH.'/ordermail2.inc.php');
 
 // SMS BEGIN --------------------------------------------------------
 // 주문고객과 쇼핑몰관리자에게 SMS 전송
-if($default['de_sms_use2'] || $default['de_sms_use3']) {
+if($default['de_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])) {
     $sms_contents = array($default['de_sms_cont2'], $default['de_sms_cont3']);
     $recv_numbers = array($od_hp, $default['de_sms_hp']);
     $send_numbers = array($default['de_admin_company_tel'], $od_hp);
