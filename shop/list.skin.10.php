@@ -2,40 +2,42 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<table width=100% cellpadding=2 cellspacing=0>
-<tr>
 <?php
-for ($i=0; $row=sql_fetch_array($result); $i++)
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+// $list_mod 가로 나열 수
+
+for ($i=1; $row=sql_fetch_array($result); $i++)
 {
-    if ( ($i>0) && (($i%$list_mod)==0) )
-    {
-        echo "</tr>\n\n";
-        echo "<tr><td colspan='$list_mod' background='".G4_SHOP_URL."/img/line_h.gif' height=1></td></tr>\n\n";
-        echo "<tr>\n";
+    $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    if ($list_mod >= 2) { // 1줄 이미지 : 2개 이상
+        if ($i%$list_mod == 0) $sct_last = 'sct_last'; // 줄 마지막
+        else if ($i%$list_mod == 1) $sct_last = 'sct_clear'; // 줄 첫번째
+        else $sct_last = '';
+    } else { // 1줄 이미지 : 1개
+        $sct_last = 'sct_clear';
     }
-
-    echo "
-    <td width='{$td_width}%' align=center valign=top>
-        <br>
-        <table width=98% cellpadding=2 cellspacing=0>
-        <tr><td align=center>".get_it_image($row['it_id']."_s", $img_width , $img_height, $row['it_id'])."</td></tr>
-        <tr><td align=center>".it_name_icon($row)."</td></tr>";
-
-    if ($row['it_cust_amount'] && !$row['it_gallery'])
-        echo "<tr><td align=center><strike>".display_amount($row['it_cust_amount'])."</strike></td></tr>";
-
-    echo "<tr><td align=center>";
-
-    if (!$row['it_gallery'])
-        echo "<span class=amount>".display_amount(get_amount($row), $row['it_tel_inq'])."</span>";
-
-    echo "</td></tr></table></td>";
-}
-
-// 나머지 td 를 채운다.
-if (($cnt = $i%$list_mod) != 0)
-    for ($k=$cnt; $k<$list_mod; $k++)
-        echo "    <td>&nbsp;</td>\n";
+    if ($i == 1) echo '<ul class="sct sct_10">';
 ?>
-</tr>
-</table>
+    <li class="sct_li <?php echo $sct_last; ?>">
+        <a href="<?php echo $href; ?>" class="sct_a">
+            <span class="sct_img"><?php echo get_it_image($row['it_id'].'_s', $img_width, $img_height, '', $type); ?></span>
+            <b><?php echo stripslashes($row['it_name']); ?></b>
+            <?php if ($row['it_cust_amount'] && !$row['it_gallery']) { ?>
+            <s><?php echo display_amount($row['it_cust_amount']); ?></s>
+            <?php } ?>
+            <?php if (!$row['it_gallery']) { // 전시 상품이 아닐 때 ?>
+            <span class="sct_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
+            <?php } ?>
+            <span class="sct_icon">
+                <?php echo display_item_icon($row); // 이미지 아이콘?>
+            </span>
+        </a>
+        <div class="sct_sns">
+            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_fb.png" alt="페이스북에 공유"></a>
+            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_twt.png" alt="트위터에 공유"></a>
+            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_goo.png" alt="구글플러스에 공유"></a>
+        </div>
+    </li>
+<?php }
+if ($i > 1) echo '</ul>';
+?>
