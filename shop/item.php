@@ -13,6 +13,28 @@ $rand = rand(4, 6);
 $norobot_key = substr($token, 0, $rand);
 set_session('ss_norobot_key', $norobot_key);
 
+// 분류사용, 상품사용하는 상품의 정보를 얻음
+$sql = " select a.*,
+                b.ca_name,
+                b.ca_use
+           from {$g4['shop_item_table']} a,
+                {$g4['shop_category_table']} b
+          where a.it_id = '$it_id'
+            and a.ca_id = b.ca_id ";
+$it = sql_fetch($sql);
+if (!$it['it_id'])
+    alert("자료가 없습니다.");
+if (!($it['ca_use'] && $it['it_use'])) {
+    if (!$is_admin)
+        alert("판매가능한 상품이 아닙니다.");
+}
+
+// 분류 테이블에서 분류 상단, 하단 코드를 얻음
+$sql = " select ca_include_head, ca_include_tail
+           from {$g4['shop_category_table']}
+          where ca_id = '{$it['ca_id']}' ";
+$ca = sql_fetch($sql);
+
 // 오늘 본 상품 저장 시작
 // tv 는 today view 약자
 $saved = false;
@@ -38,28 +60,6 @@ if ($_COOKIE['ck_it_id'] != $it_id) {
     sql_query(" update {$g4['shop_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
     set_cookie("ck_it_id", $it_id, time() + 3600); // 1시간동안 저장
 }
-
-// 분류사용, 상품사용하는 상품의 정보를 얻음
-$sql = " select a.*,
-                b.ca_name,
-                b.ca_use
-           from {$g4['shop_item_table']} a,
-                {$g4['shop_category_table']} b
-          where a.it_id = '$it_id'
-            and a.ca_id = b.ca_id ";
-$it = sql_fetch($sql);
-if (!$it['it_id'])
-    alert("자료가 없습니다.");
-if (!($it['ca_use'] && $it['it_use'])) {
-    if (!$is_admin)
-        alert("판매가능한 상품이 아닙니다.");
-}
-
-// 분류 테이블에서 분류 상단, 하단 코드를 얻음
-$sql = " select ca_include_head, ca_include_tail
-           from {$g4['shop_category_table']}
-          where ca_id = '{$it['ca_id']}' ";
-$ca = sql_fetch($sql);
 
 $g4['title'] = $it['it_name'].' 상세보기 &gt; '.$it['ca_name'];
 
