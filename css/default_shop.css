@@ -339,6 +339,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .sct_10 .sct_a {display:block;position:relative;text-decoration:none}
 .sct_10 .sct_img {display:block;margin:0 0 15px}
 .sct_10 b {display:block;margin:0 0 8px;font-weight:normal}
+.sct_10 s {display:block}
 .sct_10 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
 .sct_10 .sct_icon {position:absolute;top:10px;left:-5px;margin:0 !important}
 .sct_10 .sct_icon img {display:block}
@@ -351,6 +352,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .sct_11 .sct_a {display:block;position:relative;padding:0 0 5px;background:#f7f7f7;text-decoration:none}
 .sct_11 .sct_img {display:block;margin:0 0 15px}
 .sct_11 b {display:block;margin:0 0 8px;padding:0 5px;font-weight:normal}
+.sct_11 s {display:block}
 .sct_11 .sct_cost {display:block;margin:0 0 10px;padding:0 5px;font-weight:bold}
 .sct_11 .sct_icon {position:absolute;top:10px;left:-5px;margin:0 !important}
 .sct_11 .sct_icon img {display:block}
@@ -365,6 +367,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .sct_12 .sct_img {position:absolute;top:0;left:0}
 .sct_12 b {display:block;margin:0 0 15px;font-size:1.2em;letter-spacing:-0.1em}
 .sct_12 p {margin:0 0 15px;padding:0;line-height:1.5em}
+.sct_12 s {display:block}
 .sct_12 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
 .sct_12 .sct_icon {position:absolute;bottom:25px;left:-5px;margin:0 !important}
 .sct_12 .sct_icon img {display:block}
@@ -379,6 +382,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .sct_13 .sct_img {position:absolute;top:0;left:0}
 .sct_13 b {display:block;margin:0 0 15px;font-size:1.2em;letter-spacing:-0.1em}
 .sct_13 p {margin:0 0 15px;padding:0;line-height:1.5em}
+.sct_13 s {display:block}
 .sct_13 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
 .sct_13 .sct_icon {position:absolute;bottom:25px;left:-5px;margin:0 !important}
 .sct_13 .sct_icon img {display:block}
