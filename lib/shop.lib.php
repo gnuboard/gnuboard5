@@ -454,16 +454,18 @@ function it_name_icon($it, $it_name="", $url=1)
     if ($url)
         $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$it['it_id'].'">'.$str.'</a>';
 
-    if ($it['it_type1']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type1.gif" alt="">';
-    if ($it['it_type2']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type2.gif" alt="">';
-    if ($it['it_type3']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type3.gif" alt="">';
-    if ($it['it_type4']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type4.gif" alt="">';
-    if ($it['it_type5']) $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_type5.gif" alt="">';
-
+    $str .= '<span class="sit_icon">';
     // 품절
     $stock = get_it_stock_qty($it['it_id']);
     if ($stock <= 0)
-        $str .= ' <img src="'.G4_SHOP_URL.'/img/icon_pumjul.gif" alt="품절"> ';
+        $str .= ' <img src="'.G4_SHOP.'/img/icon_soldout2.gif" alt="품절"> ';
+    if ($it['it_type1']) $str .= '<img src="'.G4_URL.'/img/shop/icon_hit2.gif" alt="히트">';
+    if ($it['it_type2']) $str .= '<img src="'.G4_URL.'/img/shop/icon_rec2.gif" alt="추천">';
+    if ($it['it_type3']) $str .= '<img src="'.G4_URL.'/img/shop/icon_new2.gif" alt="신상품">';
+    if ($it['it_type4']) $str .= '<img src="'.G4_URL.'/img/shop/icon_best2.gif" alt="인기">';
+    if ($it['it_type5']) $str .= '<img src="'.G4_URL.'/img/shop/icon_discount2.gif" alt="할인">';
+
+    $str .= '</span>';
 
     return $str;
 }
