@@ -14,7 +14,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         <a href="<?php echo $href; ?>" class="sct_a">
             <span class="sct_img"><?php echo get_it_image($row['it_id']."_s", $img_width, $img_height, '', $type); ?></span>
             <b><?php echo stripslashes($row['it_name']); ?></b>
-            <?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?>
+            <span class="sct_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
             <span class="sct_icon">
             <?php // 이미지 아이콘
             echo display_item_icon($row);
