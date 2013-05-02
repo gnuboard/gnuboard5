@@ -27,7 +27,7 @@ $subject_row = sql_fetch($sql);
 
 $_link = './bbs/board.php?bo_table=%s&wr_id=%s';
 $_sql = "insert into {$g4['syndi_log_table']} (content_id, bbs_id, title, link_alternative, delete_date) values('%s','%s','%s','%s','%s')";
-sql_query(sprintf($_sql, $row['wr_id'], $bo_table, addslashes($subject_row['wr_subject']), sprintf($_link, $bo_table, $row['wr_id']), date('YmdHis')));
+sql_query(sprintf($_sql, $row['wr_id'], $bo_table, addslashes($subject_row['wr_subject']), sprintf($_link, $bo_table, $row['wr_id']), date('YmdHis')), false);
 
 $oPing = new SyndicationPing;
 $oPing->setId(SyndicationHandler::getTag('channel', $bo_table));
