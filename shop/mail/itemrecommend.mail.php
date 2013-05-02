@@ -12,9 +12,9 @@ body, th, td, form, input, select, text, textarea, caption { font-size: 12px; fo
 <body leftmargin="0" topmargin="20" marginwidth="0" marginheight="20">
 <table width=600 cellpadding=0 cellspacing=0>
     <tr>
-        <td rowspan=2 align=right valign=top><img src="<?=G4_SHOP_URL?>/mail/img/mail_left.gif" width="25" height="281"></td>
+        <td rowspan=2 align=right valign=top><img src="<?php echo G4_SHOP_URL; ?>/mail/img/mail_left.gif" width="25" height="281"></td>
         <td height=1 colspan=3 bgcolor=#E3E3E3></td>
-        <td rowspan=2 valign=top><img src="<?=G4_SHOP_URL?>/mail/img/mail_right.gif" width="25" height="281"></td>
+        <td rowspan=2 valign=top><img src="<?php echo G4_SHOP_URL; ?>/mail/img/mail_right.gif" width="25" height="281"></td>
     </tr>
     <tr>
         <td valign=top align=center style='padding-top:15px'>
@@ -23,13 +23,13 @@ body, th, td, form, input, select, text, textarea, caption { font-size: 12px; fo
                     <td>
                         <table width=100% cellpadding=10 cellspacing=0>
                             <tr><td bgcolor=#2396C5 height=50 align=right><font color="#FFFFFF"><B>추천상품메일</B></font></td></tr>
-                            <tr><td bgcolor=#FFFFFF style="padding-left:15px; padding-bottom:15px; text-align:left;" height=30><font color=#5AB0D4><B><?=$from_name?> </B></font>님께서 추천하신 상품입니다.
+                            <tr><td bgcolor=#FFFFFF style="padding-left:15px; padding-bottom:15px; text-align:left;" height=30><font color=#5AB0D4><B><?php echo $from_name; ?> </B></font>님께서 추천하신 상품입니다.
                                     <table width=98% cellpadding=1 cellspacing=0 bgcolor=#DFDFDF>
                                         <tr><td>
                                                 <table width=100% cellpadding=20 cellspacing=0 bgcolor=#F8F8F8>
-                                                    <tr><td style="text-align:left;" height=30><b><a href="<?=G4_SHOP_URL.'/item.php?it_id='.$it_id?>" target=_top><?=$it_name?></a></b></td></tr>
+                                                    <tr><td style="text-align:left;" height=30><b><a href="<?php echo G4_SHOP_URL.'/item.php?it_id='.$it_id; ?>" target=_top><?php echo $it_name; ?></a></b></td></tr>
                                                     <tr>
-                                                        <td valign=top style="padding:10px;line-height:150%; text-align:left;"><a href="<?=G4_SHOP_URL.'/item.php?it_id='.$it_id?>" target="_top"><img src="<?=G4_DATA_URL.'/item/'.$it_mimg?>" border="0" align="left" hspace="10"></a><?=$content?></td>
+                                                        <td valign=top style="padding:10px;line-height:150%; text-align:left;"><a href="<?php echo G4_SHOP_URL.'/item.php?it_id='.$it_id; ?>" target="_top"><img src="<?php echo G4_DATA_URL.'/item/'.$it_mimg; ?>" border="0" align="left" hspace="10"></a><?php echo $content; ?></td>
                                                     </tr>
                                                     <tr><td style="text-align:left;">※ 이 메일은 광고 메일이 아닙니다.</td></tr>
                                                 </table>
