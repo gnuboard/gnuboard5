@@ -71,7 +71,7 @@ th,td		{font-family:굴림; font-size:10pt ; height:15pt}
 </head>
 <body>
 
-<p align=center>상품수 : <?=number_format($total_count)?> 개
+<p align=center>상품수 : <?php echo number_format($total_count); ?> 개
 
 <table border="0" cellspacing="1" cellpadding="5" bgcolor="black" width="90%" align='center'>
 <tr bgcolor="#ededed">
@@ -80,7 +80,7 @@ th,td		{font-family:굴림; font-size:10pt ; height:15pt}
     <th>가격</th>
     <th>재고유무</th>
 </tr>
-<?
+<?php
 // 전체 페이지 계산
 $total_page  = ceil($total_count / $page_rows);
 // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -122,7 +122,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 </table>
 
 <p align=center>
-<?=paging(1000, $page, $total_page, "./enuri.php?ca_id=$caid&page=");?>
+<?php echo paging(1000, $page, $total_page, "./enuri.php?ca_id=$caid&page="); ?>
 
 </body>
 </html>

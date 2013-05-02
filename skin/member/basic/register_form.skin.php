@@ -214,7 +214,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <?php if ($w == "" && $config['cf_use_recommend']) {  ?>
 <tr>
     <th scope="row"><label for="reg_mb_recommend">추천인아이디</label></th>
-    <td><input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input"></td>
+    <td><input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input" required></td>
 </tr>
 <?php }  ?>
 

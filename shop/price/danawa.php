@@ -16,7 +16,7 @@ else
     $delivery = (int)$tmp[0];
 }
 ?>
-<?
+<?php
 // 상품ID^카테고리^상품명^제조사^이미지URL^상품URL^가격^적립금^할인쿠폰^무이자할부^사은품^모델명^추가정보^출시일^배송료
 $str = "";
 $sql = " select * from {$g4['shop_item_table']}

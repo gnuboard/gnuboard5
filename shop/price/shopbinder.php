@@ -68,7 +68,7 @@ body, td {font-family:굴림; font-size:9pt;}
     <td width="80">할인쿠폰</td>
     <td width="80">제조년월</td>
 </tr>
-<?
+<?php
 // 전체 페이지 계산
 $total_page  = ceil($total_count / $page_rows);
 // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -124,7 +124,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 </table>
 <DIV>
 <p align=center>
-<?=paging($page_rows, $page, $total_page, "./shopbinder.php?page=");?>
+<?php echo paging($page_rows, $page, $total_page, "./shopbinder.php?page="); ?>
 </DIV>
 </body>
 </html>

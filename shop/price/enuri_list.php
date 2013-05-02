@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*
 **  가격비교사이트 에누리 분류페이지
 */
@@ -30,7 +30,7 @@ th,td		{font-family:굴림; font-size:10pt ; height:15pt}
 	</tr>
     <tr bgcolor="white">
 
-<?PHP
+<?php
 $url = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
 
 $sql =" SELECT LENGTH(ca_id)=2 AS cnt, ca_id

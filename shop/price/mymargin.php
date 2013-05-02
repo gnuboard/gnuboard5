@@ -78,7 +78,7 @@ body, td {font-family:굴림; font-size:10pt;}
     <td>제조사</td>
     <td>이미지</td>
 </tr>
-<?
+<?php
 // 전체 페이지 계산
 $total_page  = ceil($total_count / $page_rows);
 // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -124,7 +124,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 }
 ?>
 <tr>
-    <td colspan=7><?=paging(1000, $page, $total_page, "./mymargin.php?page=");?> &nbsp;</td>
+    <td colspan=7><?php echo paging(1000, $page, $total_page, "./mymargin.php?page="); ?> &nbsp;</td>
 </tr>
 </table>
 
