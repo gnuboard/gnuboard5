@@ -11,13 +11,13 @@ $sct_sort_href = $_SERVER['PHP_SELF'].'?ca_id='.$ca_id.'&amp;skin='.$skin.'&amp;
     </div>
 
     <ul>
-        <li><a href="<?php echo $sct_sort_href; ?>it_amount%20desc" class="btn01">낮은가격순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_amount%20asc" class="btn01">높은가격순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_name%20asc" class="btn01">상품명순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type1%20desc" class="btn01">히트상품</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type2%20desc" class="btn01">추천상품</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type3%20desc" class="btn01">최신상품</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type4%20desc" class="btn01">인기상품</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type5%20desc" class="btn01">할인상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_amount&amp;sortodr=desc" class="btn01">낮은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_amount&amp;sortodr=asc" class="btn01">높은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_name&amp;sortodr=asc" class="btn01">상품명순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type1&amp;sortodr=desc" class="btn01">히트상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type2&amp;sortodr=desc" class="btn01">추천상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type3&amp;sortodr=desc" class="btn01">최신상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type4&amp;sortodr=desc" class="btn01">인기상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type5&amp;sortodr=desc" class="btn01">할인상품</a></li>
     </ul>
 </section>
