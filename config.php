@@ -6,9 +6,10 @@
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
 
+define('G4_TIMEZONE', 'Asia/Seoul');
+
 if (PHP_VERSION >= '5.3.0') {
-    //if (function_exists("date_default_timezone_set")) date_default_timezone_set("Asia/Seoul");
-    date_default_timezone_set("Asia/Seoul");
+    date_default_timezone_set(G4_TIMEZONE);
 }
 
  //==============================================================================

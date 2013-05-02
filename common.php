@@ -95,6 +95,7 @@ if (file_exists($dbconfig_file)) {
     $connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
     $select_db  = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
     @mysql_query(" set names utf8 ");
+    if (defined(G4_TIMEZONE)) @mysql_query(" set time_zone = '".G4_TIMEZONE."'"); 
 } else {
 ?>
 
