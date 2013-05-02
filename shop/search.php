@@ -1,10 +1,6 @@
 <?php
 include_once('./_common.php');
 
-// 상품이미지 사이즈(폭, 높이)를 몇배 축소 할것인지를 설정
-// 0 으로 설정하면 오류남 : 기본 2
-$image_rate = 2;
-
 $g4['title'] = "상품 검색 결과";
 include_once('./_head.php');
 
@@ -44,92 +40,77 @@ if ($search_ca_id != "")
 $sql = " select COUNT(*) as cnt $sql_common ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
-
-// 임시배열에 저장해 놓고 분류별로 출력한다.
-// write_serarch_save() 함수가 임시배열에 있는 내용을 출력함
-if ($total_count > 0) {
-    if (trim($search_str)) {
-        // 인기검색어
-        $sql = " insert into {$g4['popular_table']}
-                    set pp_word = '$search_str',
-                        pp_date = '".G4_TIME_YMD."',
-                        pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
-        sql_query($sql, FALSE);
-    }
-
-    unset($save); // 임시 저장 배열
-    $sql = " select a.ca_id,
-                    a.it_id
-             $sql_common
-             order by a.ca_id, a.it_id desc ";
-    $result = sql_query($sql);
-    for ($i=0; $row=mysql_fetch_array($result); $i++) {
-        if ($save['ca_id'] != $row['ca_id']) {
-            if ($save['ca_id']) {
-                write_search_save($save);
-                unset($save);
-            }
-            $save['ca_id'] = $row['ca_id'];
-            $save['cnt'] = 0;
-        }
-        $save['it_id'][$save['cnt']] = $row['it_id'];
-        $save[cnt]++;
-    }
-}
 ?>
 
-<p>검색어 <strong><?php echo stripslashes(get_text($search_str)); ?></strong>, 검색 결과 <?php echo $total_count; ?> 건</p>
+<div id="ssch">
 
-<?php
-mysql_free_result($result);
-write_search_save($save);
+    <div id="ssch_ov">검색어 <strong><?php echo ($search_str ? stripslashes(get_text($search_str)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
 
-function write_search_save($save)
-{
-    global $g4, $search_str , $default , $image_rate , $cart_dir;
+    <?php
+    // 임시배열에 저장해 놓고 분류별로 출력한다.
+    // write_serarch_save() 함수가 임시배열에 있는 내용을 출력함
+    if ($total_count > 0) {
+        if (trim($search_str)) {
+            // 인기검색어
+            $sql = " insert into {$g4['popular_table']}
+                        set pp_word = '$search_str',
+                            pp_date = '".G4_TIME_YMD."',
+                            pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+            sql_query($sql, FALSE);
+        }
 
-    $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$save['ca_id']}' ";
-    $row = sql_fetch($sql);
+        unset($save); // 임시 저장 배열
+        $sql = " select a.ca_id,
+                        a.it_id
+                 $sql_common
+                 order by a.ca_id, a.it_id desc ";
+        $result = sql_query($sql);
+        for ($i=0; $row=mysql_fetch_array($result); $i++) {
+            if ($save['ca_id'] != $row['ca_id']) {
+                if ($save['ca_id']) {
+                    write_search_save($save);
+                    unset($save);
+                }
+                $save['ca_id'] = $row['ca_id'];
+                $save['cnt'] = 0;
+            }
+            $save['it_id'][$save['cnt']] = $row['it_id'];
+            $save[cnt]++;
+        }
+    }
 
-    /*
-    echo "
-    <table width=98% cellpadding=0 cellspacing=0 border=0 align=center>
-    <colgroup width=80>
-    <colgroup width=>
-    <colgroup width=150>
-    <colgroup width=100>
-    <tr><td colspan=4 height=2 bgcolor=#0E87F9></td></tr>
+    mysql_free_result($result);
+    write_search_save($save);
+
+    function write_search_save($save)
+    {
+        global $g4, $search_str , $default , $image_rate , $cart_dir;
+
+        $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$save['ca_id']}' ";
+        $row = sql_fetch($sql);
+
+        // 김선용 2006.12 : 중복 하위분류명이 많으므로 대분류 포함하여 출력
+         $ca_temp = "";
+         if(strlen($save['ca_id']) > 2) // 중분류 이하일 경우
+         {
+             $sql2 = " select ca_name from $g4[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
+            $row2 = sql_fetch($sql2);
+            $ca_temp = '<a href="./list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> &gt; ';
+         }
+    ?>
+    <table class="basic_tbl">
+    <caption><?php echo $ca_temp?><a href="./list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo $save['cnt']; ?>개</caption>
+    <thead>
     <tr>
-        <td colspan=2 height='28'>&nbsp;<b><a href='./list.php?ca_id={$save[ca_id]}'>$row[ca_name]</a></b> ($save[cnt])</td>
-        <td align=center>판매가격</td>
-        <td align=center>포인트</td>
+        <th>이미지</td>
+        <th>상품명</th>
+        <th>판매가격</td>
+        <th>포인트</td>
     </tr>
-    <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>
-    ";
-    */
+    </thead>
 
-    // 김선용 2006.12 : 중복 하위분류명이 많으므로 대분류 포함하여 출력
-     $ca_temp = "";
-     if(strlen($save['ca_id']) > 2) // 중분류 이하일 경우
-     {
-         $sql2 = " select ca_name from $g4[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
-        $row2 = sql_fetch($sql2);
-        $ca_temp = "<b><a href='./list.php?ca_id=".substr($save['ca_id'],0,2)."'>{$row2['ca_name']}</a></b> &gt; ";
-     }
-    echo "
-    <table width=98% cellpadding=0 cellspacing=0 border=0 align=center>
-    <colgroup width=80>
-    <colgroup width=>
-    <colgroup width=150>
-    <colgroup width=100>
-    <tr><td colspan=4 height=2 bgcolor=#0E87F9></td></tr>
-    <tr>
-        <td colspan=2 height='28'>&nbsp;{$ca_temp}<b><a href='./list.php?ca_id={$save['ca_id']}'>{$row['ca_name']}</a></b> ({$save['cnt']})</td>
-        <td align=center>판매가격</td>
-        <td align=center>포인트</td>
-    </tr>
-    <tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>";
-
+    <tbody>
+    <?php
     for ($i=0; $i<$save['cnt']; $i++) {
         $sql = " select it_id,
                         it_name,
@@ -146,23 +127,21 @@ function write_search_save($save)
                    from {$g4['shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
         $row = sql_fetch($sql);
 
-        $image = get_it_image("{$row['it_id']}_s", (int)($default['de_simg_width'] / $image_rate), (int)($default['de_simg_height'] / $image_rate), $row['it_id']);
+        $image = get_it_image($row['it_id'].'_s', (int)($default['de_simg_width']), (int)($default['de_simg_height']), $row['it_id']);
+    ?>
+    <tr>
+        <td class="ssch_it_img"><?php echo $image; ?></td>
+        <td><?php echo it_name_icon($row); ?></td>
+        <td class="ssch_num"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></td>
+        <td class="ssch_num"><?php echo display_point($row['it_point']); ?></td>
+    </tr>
+    <?php } // for 끝 ?>
+    </tbody>
+    </table>
+    <?php } // function 끝 ?>
 
-        if ($i > 0)
-            echo "<tr><td height=1></td><td bgcolor=#CCCCCC colspan=3></td></tr>";
+</div>
 
-        echo "
-            <tr>
-                <td align=center style='padding-top:7px; padding-bottom:7px;'>$image</td>
-                <td>&nbsp;".it_name_icon($row)."</td>
-                <!-- <td align=right class=amount>".display_amount($row['it_amount'])."&nbsp;</td> -->
-                <td align=right class=amount>".display_amount(get_amount($row), $row['it_tel_inq'])."&nbsp;</td>
-                <td align=right>".display_point($row['it_point'])."&nbsp;</td>
-            </tr>";
-    }
-    echo "<tr><td colspan=4 height=1 bgcolor=#CCCCCC></td></tr>";
-    echo "</table><br><br>\n";
-}
-
+<?php
 include_once('./_tail.php');
 ?>
