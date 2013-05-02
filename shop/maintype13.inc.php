@@ -11,17 +11,21 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     } else { // 1줄 이미지 : 1개
         $sct_last = 'sct_clear';
     }
-    if ($i == 1) echo '<ul class="sct sct_11">';
+    if ($i == 1) echo '<ul class="sct sct_13">';
 ?>
     <li class="sct_li <?php echo $sct_last; ?>">
         <a href="<?php echo $href; ?>" class="sct_a">
             <span class="sct_img"><?php echo get_it_image($row['it_id'].'_s', $img_width, $img_height, '', $type); ?></span>
             <b><?php echo stripslashes($row['it_name']); ?></b>
+            <p><?php echo $row['it_basic']; ?></p>
             <span class="sct_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
             <span class="sct_icon">
                 <?php echo display_item_icon($row); // 이미지 아이콘?>
             </span>
         </a>
+        <div class="sct_rel">
+            <?php echo display_relation_item($row['it_id'], 70, 70, 5); // 관련 상품 ?>
+        </div>
         <div class="sct_sns">
             <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_fb.png" alt="페이스북에 공유"></a>
             <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_twt.png" alt="트위터에 공유"></a>

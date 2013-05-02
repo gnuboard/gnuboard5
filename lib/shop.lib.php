@@ -663,7 +663,7 @@ function get_new_od_id()
     return $od_id;
 }
 
-// 관련상품출력
+// 상품 목록 : 관련 상품 출력
 function display_relation_item($it_id, $width, $height, $rows=3)
 {
     global $g4;
@@ -681,7 +681,7 @@ function display_relation_item($it_id, $width, $height, $rows=3)
 
     for($i=0; $row=sql_fetch_array($result); $i++) {
         if($i == 0)
-            $str .= '<ul>';
+            $str .= '<ul class="sct_rel_ul">';
 
         $full_img = G4_DATA_PATH.'/item/'.$row['it_id'].'_s';
         $it_name = get_text($row['it_name']); // 상품명
@@ -694,12 +694,12 @@ function display_relation_item($it_id, $width, $height, $rows=3)
 
         if(is_file($full_img)) {
             $img_url = G4_DATA_URL.'/item/'.$row['it_id'].'_s';
-            $img = '<img src="'.$img_url.'" alt="" width="'.$width.'" height="'.$height.'">';
+            $img = '<img src="'.$img_url.'" alt="'.$it_name.' / '.$it_amount.'" width="'.$width.'" height="'.$height.'">';
         } else {
-            $img = '<img src="'.G4_SHOP_URL.'/img/no_image.gif" alt="" width="'.$width.'" height="'.$height.'">';
+            $img = '<img src="'.G4_SHOP_URL.'/img/no_image.gif" alt="'.$it_name.' / '.$it_amount.'" width="'.$width.'" height="'.$height.'">';
         }
 
-        $str .= '<li><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">'.$img.'</a></li>';
+        $str .= '<li class="sct_rel_li"><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'" class="sct_rel_a">'.$img.'</a></li>';
     }
 
     if($i > 0)
