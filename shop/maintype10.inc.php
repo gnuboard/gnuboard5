@@ -12,7 +12,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
     <li class="sidx_it_li <?php echo $sidx_it_last; ?>">
         <a href="<?php echo $href; ?>" class="sidx_it_a">
-            <span><?php echo get_it_image($row['it_id']."_s", $img_width, $img_height); ?></span>
+            <span><?php echo get_it_image($row['it_id']."_s", $img_width, $img_height, $row['it_id'], $type); ?></span>
             <b><?php echo stripslashes($row['it_name']); ?></b>
             <?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?>
         </a>

@@ -164,6 +164,12 @@ $sql = " insert into `{$table_prefix}member`
 @mysql_query($sql);
 
 if($shop_install) {
+    // 이미지 사이즈
+    $simg_width = 130;
+    $simg_height = 130;
+    $mimg_width = 230;
+    $mimg_height = 230;
+
     // 내용관리 생성
     @mysql_query(" insert into `{$shop_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b>' ") or die(mysql_error() . "<p>" . $sql);
     @mysql_query(" insert into `{$shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 취급방침', co_content= '<p align=center><b>개인정보 취급방침에 대한 내용을 입력하십시오.' ") or die(mysql_error() . "<p>" . $sql);
@@ -192,32 +198,32 @@ if($shop_install) {
                     de_type1_list_skin = 'maintype10.inc.php',
                     de_type1_list_mod = '3',
                     de_type1_list_row = '2',
-                    de_type1_img_width = '$simg_width',
-                    de_type1_img_height = '$simg_height',
+                    de_type1_img_width = '$mimg_width',
+                    de_type1_img_height = '$mimg_height',
                     de_type2_list_use = '1',
                     de_type2_list_skin = 'maintype10.inc.php',
                     de_type2_list_mod = '3',
                     de_type2_list_row = '2',
-                    de_type2_img_width = '$simg_width',
-                    de_type2_img_height = '$simg_height',
+                    de_type2_img_width = '$mimg_width',
+                    de_type2_img_height = '$mimg_height',
                     de_type3_list_use = '1',
                     de_type3_list_skin = 'maintype10.inc.php',
                     de_type3_list_mod = '1',
                     de_type3_list_row = '3',
-                    de_type3_img_width = '$simg_width',
-                    de_type3_img_height = '$simg_height',
+                    de_type3_img_width = '$mimg_width',
+                    de_type3_img_height = '$mimg_height',
                     de_type4_list_use = '1',
                     de_type4_list_skin = 'maintype10.inc.php',
                     de_type4_list_mod = '3',
                     de_type4_list_row = '1',
-                    de_type4_img_width = '$simg_width',
-                    de_type4_img_height = '$simg_height',
+                    de_type4_img_width = '$mimg_width',
+                    de_type4_img_height = '$mimg_height',
                     de_type5_list_use = '1',
                     de_type5_list_skin = 'maintype10.inc.php',
                     de_type5_list_mod = '3',
                     de_type5_list_row = '1',
-                    de_type5_img_width = '$simg_width',
-                    de_type5_img_height = '$simg_height',
+                    de_type5_img_width = '$mimg_width',
+                    de_type5_img_height = '$mimg_height',
                     de_bank_use = '1',
                     de_bank_account = 'OO은행 12345-67-89012 예금주명',
                     de_vbank_use = '0',
@@ -238,8 +244,8 @@ if($shop_install) {
                     de_baesong_content = '<b>배송 안내 입력전입니다.</b>',
                     de_change_content = '<b>교환/반품 안내 입력전입니다.</b>',
                     de_rel_list_mod = '4',
-                    de_rel_img_width = '$simg_width',
-                    de_rel_img_height = '$simg_height',
+                    de_rel_img_width = '$mimg_width',
+                    de_rel_img_height = '$mimg_height',
                     de_simg_width = '$simg_width',
                     de_simg_height = '$simg_height',
                     de_mimg_width = '$mimg_width',

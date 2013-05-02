@@ -1,7 +1,5 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-
-global $is_admin;
 ?>
 
 <link rel="stylesheet" href="<?php echo $visit_skin_url ?>/style.css">
