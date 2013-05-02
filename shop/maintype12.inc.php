@@ -12,7 +12,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         $sct_last = 'sct_clear';
     }
 
-    $sns_title = get_text($row['it_name']).' - '.get_text($config['cf_title']);
+    $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
     $sns_send  = G4_SHOP_URL.'/sns_send.php?url='.urlencode(G4_SHOP_URL.'/item.php?it_id='.$row['it_id']);
     $sns_send .= '&amp;title='.urlencode(cut_str($sns_title, 100));
 
