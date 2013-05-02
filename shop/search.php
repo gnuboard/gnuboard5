@@ -5,98 +5,88 @@ include_once('./_common.php');
 // 0 으로 설정하면 오류남 : 기본 2
 $image_rate = 2;
 
-$g4['title'] = "상품 검색";
+$g4['title'] = "상품 검색 결과";
 include_once('./_head.php');
+
+// QUERY 문에 공통적으로 들어가는 내용
+// 상품명에 검색어가 포한된것과 상품판매가능인것만
+$sql_common = " from {$g4['shop_item_table']} a,
+                     {$g4['shop_category_table']} b
+               where a.ca_id=b.ca_id
+                 and a.it_use = 1
+                 and b.ca_use = 1
+               /* 중복검색에 대한 오류로 인해 막음 : where (a.ca_id=b.ca_id or a.ca_id2=b.ca_id or a.ca_id3=b.ca_id) */ ";
+if ($search_str) {
+    $sql_common .= " and ( a.it_id like '$search_str%' or
+                           a.it_name like   '%$search_str%' or
+                           a.it_basic like  '%$search_str%' or
+                           a.it_explan like '%$search_str%' ) ";
+}
+/*
+// 공백을 구분하여 검색을 할때는 이 코드를 사용하십시오. or 조건
+if ($search_str) {
+    $s_str = explode(" ", $search_str);
+    $or = " ";
+    $sql_common .= " and ( ";
+    for ($i=0; $i<count($s_str); $i++) {
+        $sql_common .= " $or (a.it_id like '$s_str[$i]%' or a.it_name like '%$s_str[$i]%' or a.it_basic like  '%$s_str[$i]%' or a.it_explan like '%$s_str[$i]%' ) ";
+        $or = " or ";
+    }
+    $sql_common .= " ) ";
+}
+*/
+
+// 분류선택이 있다면 특정 분류만
+if ($search_ca_id != "")
+    $sql_common .= " and a.ca_id like '$search_ca_id%' ";
+
+// 검색된 내용이 몇행인지를 얻는다
+$sql = " select COUNT(*) as cnt $sql_common ";
+$row = sql_fetch($sql);
+$total_count = $row['cnt'];
+
+// 임시배열에 저장해 놓고 분류별로 출력한다.
+// write_serarch_save() 함수가 임시배열에 있는 내용을 출력함
+if ($total_count > 0) {
+    if (trim($search_str)) {
+        // 인기검색어
+        $sql = " insert into {$g4['popular_table']}
+                    set pp_word = '$search_str',
+                        pp_date = '".G4_TIME_YMD."',
+                        pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        sql_query($sql, FALSE);
+    }
+
+    unset($save); // 임시 저장 배열
+    $sql = " select a.ca_id,
+                    a.it_id
+             $sql_common
+             order by a.ca_id, a.it_id desc ";
+    $result = sql_query($sql);
+    for ($i=0; $row=mysql_fetch_array($result); $i++) {
+        if ($save['ca_id'] != $row['ca_id']) {
+            if ($save['ca_id']) {
+                write_search_save($save);
+                unset($save);
+            }
+            $save['ca_id'] = $row['ca_id'];
+            $save['cnt'] = 0;
+        }
+        $save['it_id'][$save['cnt']] = $row['it_id'];
+        $save[cnt]++;
+    }
+}
 ?>
 
-<img src="<?php echo G4_SHOP_URL; ?>/img/top_search.gif" border="0"><p>
-
-<table width=100% cellpadding=0 cellspacing=0 align=center border=0>
-<tr>
-    <td>
-        &nbsp;&nbsp; 찾으시는 검색어는 &quot;<b><?php echo stripslashes(get_text($search_str)); ?></b>&quot; 입니다.
-        <br><br>
-        <?php
-        // QUERY 문에 공통적으로 들어가는 내용
-        // 상품명에 검색어가 포한된것과 상품판매가능인것만
-        $sql_common = " from {$g4['shop_item_table']} a,
-                             {$g4['shop_category_table']} b
-                       where a.ca_id=b.ca_id
-                         and a.it_use = 1
-                         and b.ca_use = 1
-                       /* 중복검색에 대한 오류로 인해 막음 : where (a.ca_id=b.ca_id or a.ca_id2=b.ca_id or a.ca_id3=b.ca_id) */ ";
-        if ($search_str) {
-            $sql_common .= " and ( a.it_id like '$search_str%' or
-                                   a.it_name like   '%$search_str%' or
-                                   a.it_basic like  '%$search_str%' or
-                                   a.it_explan like '%$search_str%' ) ";
-        }
-        /*
-        // 공백을 구분하여 검색을 할때는 이 코드를 사용하십시오. or 조건
-        if ($search_str) {
-            $s_str = explode(" ", $search_str);
-            $or = " ";
-            $sql_common .= " and ( ";
-            for ($i=0; $i<count($s_str); $i++) {
-                $sql_common .= " $or (a.it_id like '$s_str[$i]%' or a.it_name like '%$s_str[$i]%' or a.it_basic like  '%$s_str[$i]%' or a.it_explan like '%$s_str[$i]%' ) ";
-                $or = " or ";
-            }
-            $sql_common .= " ) ";
-        }
-        */
-
-        // 분류선택이 있다면 특정 분류만
-        if ($search_ca_id != "")
-            $sql_common .= " and a.ca_id like '$search_ca_id%' ";
-
-        // 검색된 내용이 몇행인지를 얻는다
-        $sql = " select COUNT(*) as cnt $sql_common ";
-        $row = sql_fetch($sql);
-        $total_count = $row['cnt'];
-        echo "&nbsp;&nbsp; 입력하신 검색어로 총 <b>{$total_count}건</b>의 상품이 검색 되었습니다.<br><br>";
-
-        // 임시배열에 저장해 놓고 분류별로 출력한다.
-        // write_serarch_save() 함수가 임시배열에 있는 내용을 출력함
-        if ($total_count > 0) {
-            if (trim($search_str)) {
-                // 인기검색어
-                $sql = " insert into {$g4['popular_table']}
-                            set pp_word = '$search_str',
-                                pp_date = '".G4_TIME_YMD."',
-                                pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
-                sql_query($sql, FALSE);
-            }
-
-            unset($save); // 임시 저장 배열
-            $sql = " select a.ca_id,
-                            a.it_id
-                     $sql_common
-                     order by a.ca_id, a.it_id desc ";
-            $result = sql_query($sql);
-            for ($i=0; $row=mysql_fetch_array($result); $i++) {
-                if ($save['ca_id'] != $row['ca_id']) {
-                    if ($save['ca_id']) {
-                        write_search_save($save);
-                        unset($save);
-                    }
-                    $save['ca_id'] = $row['ca_id'];
-                    $save['cnt'] = 0;
-                }
-                $save['it_id'][$save['cnt']] = $row['it_id'];
-                $save[cnt]++;
-            }
-            mysql_free_result($result);
-            write_search_save($save);
-        }
-        ?>
-    </td>
-</tr>
-</table>
+<p>검색어 <strong><?php echo stripslashes(get_text($search_str)); ?></strong>, 검색 결과 <?php echo $total_count; ?> 건</p>
 
 <?php
+mysql_free_result($result);
+write_search_save($save);
+
 function write_search_save($save)
 {
-	global $g4, $search_str , $default , $image_rate , $cart_dir;
+    global $g4, $search_str , $default , $image_rate , $cart_dir;
 
     $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$save['ca_id']}' ";
     $row = sql_fetch($sql);
