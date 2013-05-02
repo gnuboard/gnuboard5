@@ -38,7 +38,7 @@ if ($is_admin)
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_head_html']).'</div>';
 
-    include G4_SHOP_PATH.'/listcategory.inc.php';
+    include G4_SHOP_PATH.'/listcategory3.inc.php';
 
     // 상품 출력순서가 있다면
     if ($sort != "") {

@@ -104,7 +104,7 @@ a:active {color:#000;text-decoration:underline}
 .stv_item {display:none;text-align:center}
 .stv_item img {margin:5px 0}
 
-#stv_nb {border-top:1px solid #e9e9e9;background:#f9faf5}
+#stv_nb {border-top:1px solid #e9e9e9;background:#f7f7f7}
 #stv_nb h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #stv_nb ul {margin:0;padding:0;list-style:none}
 #stv_nb li {text-align:center}
@@ -315,6 +315,19 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 #sct_location a {display:inline-block;padding:10px 10px 8px;text-decoration:none;letter-spacing:0 !important}
 .sct_here {font-weight:bold}
 .sct_bg {padding-right:15px !important;background:url('../img/shop/sct_bg_toright.gif') right 11px no-repeat}
+
+/* 상품 목록 카테고리 목록 */
+.sct_ct {}
+.sct_ct ul {margin:0 0 10px;padding:10px;border-bottom:1px solid #e9e9e9;list-style:none;zoom:1}
+.sct_ct ul:after {display:block;visibility:hidden;clear:both;content:''}
+.sct_ct a {text-decoration:none}
+.sct_ct_parent {font-weight:bold}
+.sct_ct_here {color:#ff3600 !important}
+
+#sct_ct_1 li {float:left;margin:0 10px 10px 0;width:120px}
+#sct_ct_2 li {margin:0 0 10px}
+#sct_ct_2 a {display:inline-block;width:120px}
+#sct_ct_3 li {float:left;margin:0 10px 10px 0;width:120px}
 
 /* 상품 정렬 */
 #sct_sort {margin:0 0 10px;zoom:1}
