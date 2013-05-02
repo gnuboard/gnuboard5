@@ -49,6 +49,9 @@ $dst[] = $default['de_admin_info_email'];
 
 $str = preg_replace($src, $dst, $str);
 
+if ($is_admin)
+    echo '<div class="socc_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
+
 $himg = G4_DATA_PATH.'/content/'.$co_id.'_h';
 if (file_exists($himg)) // 상단 이미지
     echo '<div id="socc_himg" class="socc_img"><img src="'.G4_DATA_URL.'/content/'.$co_id.'_h" alt=""></div>';
@@ -59,25 +62,19 @@ if (file_exists($himg)) // 상단 이미지
         <h1><?php echo $g4['title']; ?></h1>
     </header>
 
-    <?php
-    if ($is_admin)
-        echo '<div class="socc_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
-    ?>
-
     <div id="socc_con">
         <?php echo $str; ?>
     </div>
 
-    <?php
-    if ($is_admin)
-        echo '<div class="socc_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
-    ?>
 </article>
 
 <?php
 $timg = G4_DATA_PATH.'/content/'.$co_id.'_t';
 if (file_exists($timg)) // 하단 이미지
     echo '<div id="socc_timg" class="socc_img"><img src="'.G4_DATA_URL.'/content/'.$co_id.'_t" alt=""></div>';
+
+if ($is_admin)
+    echo '<div class="socc_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
 
 if ($co['co_include_tail'])
     @include_once($co['co_include_tail']);
