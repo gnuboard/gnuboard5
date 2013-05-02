@@ -24,10 +24,11 @@ while ($row=sql_fetch_array($result)) {
 if ($exists) {
 ?>
 
-<div id="sct_ct_1" class="sct_ct">
+<aside id="sct_ct_1" class="sct_ct">
+    <h2>현재 상품 분류와 관련된 분류</h2>
     <ul>
         <?php echo $str; ?>
     </ul>
-</div>
+</aside>
 
 <?php } ?>

@@ -318,6 +318,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 
 /* 상품 목록 카테고리 목록 */
 .sct_ct {}
+.sct_ct h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 .sct_ct ul {margin:0 0 10px;padding:10px;border-bottom:1px solid #e9e9e9;list-style:none;zoom:1}
 .sct_ct ul:after {display:block;visibility:hidden;clear:both;content:''}
 .sct_ct a {text-decoration:none}
