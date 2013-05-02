@@ -5,22 +5,14 @@ include_once('./_common.php');
 $sql = " select * from {$g4['shop_content_table']} where co_id = '$co_id' ";
 $co = sql_fetch($sql);
 if (!$co['co_id'])
-    alert("등록된 내용이 없습니다.");
+    alert('등록된 내용이 없습니다.');
 
 $g4['title'] = $co['co_subject'];
-//include_once("./_head.php");
 
 if ($co['co_include_head'])
     @include_once($co['co_include_head']);
 else
     include_once('./_head.php');
-
-$himg = G4_DATA_PATH."/content/{$co_id}_h";
-if (file_exists($himg))
-    echo "<img src='".G4_DATA_URL."/content/{$co_id}_h' border=0><br>";
-
-if ($is_admin)
-    echo "<p align=center><a href='".G4_ADMIN_URL."/shop_admin/contentform.php?w=u&co_id=$co_id'><img src='".G4_SHOP_URL."/img/btn_admin_modify.gif' border=0></a></p>";
 
 $str = conv_content($co['co_content'], $co['co_html']);
 
@@ -57,16 +49,38 @@ $dst[] = $default['de_admin_info_email'];
 
 $str = preg_replace($src, $dst, $str);
 
-echo $str;
+$himg = G4_DATA_PATH.'/content/'.$co_id.'_h';
+if (file_exists($himg)) // 상단 이미지
+    echo '<div id="socc_himg" class="socc_img"><img src="'.G4_DATA_URL.'/content/'.$co_id.'_h" alt=""></div>';
+?>
 
-$timg = G4_DATA_PATH."/content/{$co_id}_t";
-if (file_exists($timg))
-    echo "<br><img src='".G4_DATA_URL."/content/{$co_id}_t' border=0><br>";
+<article id="socc" class="socc_<?=$co_id?>">
+    <header>
+        <h1><?php echo $g4['title']; ?></h1>
+    </header>
+
+    <?php
+    if ($is_admin)
+        echo '<div class="socc_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
+    ?>
+
+    <div id="socc_con">
+        <?php echo $str; ?>
+    </div>
+
+    <?php
+    if ($is_admin)
+        echo '<div class="socc_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
+    ?>
+</article>
+
+<?php
+$timg = G4_DATA_PATH.'/content/'.$co_id.'_t';
+if (file_exists($timg)) // 하단 이미지
+    echo '<div id="socc_timg" class="socc_img"><img src="'.G4_DATA_URL.'/content/'.$co_id.'_t" alt=""></div>';
 
 if ($co['co_include_tail'])
     @include_once($co['co_include_tail']);
 else
     include_once('./_tail.php');
-
-//include_once("./_tail.php");
 ?>
