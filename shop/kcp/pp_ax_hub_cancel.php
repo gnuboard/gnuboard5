@@ -1,4 +1,4 @@
-<?
+<?php
     if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     $def_locale = setlocale(LC_CTYPE, 0);
