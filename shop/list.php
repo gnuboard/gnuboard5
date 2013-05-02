@@ -29,6 +29,7 @@ if ($is_admin)
     $nav_ca_id = $ca_id;
     include G4_SHOP_PATH.'/navigation1.inc.php';
 
+    // 상단 이미지
     $himg = G4_DATA_URL.'/category/'.$ca_id.'_h';
     if (file_exists($himg)) {
         echo '<div id="sct_himg" class="sct_img"><img src="'.$himg.'" alt=""></div>';
@@ -37,7 +38,7 @@ if ($is_admin)
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_head_html']).'</div>';
 
-    include G4_SHOP_PATH.'/listcategory2.inc.php';
+    include G4_SHOP_PATH.'/listcategory.inc.php';
 
     // 상품 출력순서가 있다면
     if ($sort != "") {
@@ -98,6 +99,7 @@ if ($is_admin)
     // 하단 HTML
     echo '<div id="sct_thtml">'.stripslashes($ca['ca_tail_html']).'</div>';
 
+    // 하단 이미지
     $timg = G4_DATA_PATH.'/category/'.$ca_id.'_t';
     if (file_exists($timg))
         echo '<div id="sct_timg" class="sct_img"><img src="'.G4_DATA_URL.'/category/'.$ca_id.'_t" alt="">';
