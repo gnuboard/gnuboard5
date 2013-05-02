@@ -33,6 +33,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
                 <?php echo display_item_icon($row); // 이미지 아이콘?>
             </span>
         </a>
+        <div class="sct_rel">
+            <?php echo display_relation_item($row['it_id'], 70, 70, 5); // 관련 상품 ?>
+        </div>
         <div class="sct_sns">
             <a href="<?php echo $sns_send; ?>&amp;sns=facebook" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_fb.png" alt="페이스북에 공유"></a>
             <a href="<?php echo $sns_send; ?>&amp;sns=twitter" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_twt.png" alt="트위터에 공유"></a>
