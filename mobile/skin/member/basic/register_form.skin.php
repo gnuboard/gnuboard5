@@ -226,7 +226,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <p>
         작성하신 내용을 제출하시려면 <strong><?php echo $w==''?'회원가입':'정보수정'; ?></strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
     </p>
-    <input type="submit" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" class="btn_submit" accesskey="s">
+    <input type="submit" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" id="btn_submit" class="btn_submit" accesskey="s">
     <a href="<?php echo $g4['path'] ?>/" class="btn_cancel">취소</a>
 </div>
 </form>
@@ -336,10 +336,17 @@ function fregisterform_submit(f)
         }
     }
 
-    if (typeof(f.mb_recommend) != 'undefined') {
+    if (typeof(f.mb_recommend) != 'undefined' && f.mb_recommend.value) {
         if (f.mb_id.value == f.mb_recommend.value) {
             alert('본인을 추천할 수 없습니다.');
             f.mb_recommend.focus();
+            return false;
+        }
+
+        var msg = reg_mb_recommend_check();
+        if (msg) {
+            alert(msg);
+            f.mb_recommend.select();
             return false;
         }
     }
@@ -370,6 +377,8 @@ function fregisterform_submit(f)
     <?php } ?>
 
     <?php echo chk_captcha_js(); ?>
+
+    document.getElementById("btn_submit").disabled = "disabled";
 
     return true;
 }
