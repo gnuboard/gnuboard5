@@ -323,6 +323,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 /* 상품 목록 스킨 10 */
 .sct_10 .sct_li {float:left;margin:0 25px 0 0;width:230px}
 .sct_10 .sct_last {margin:0 !important}
+.sct_13 .sct_clear {clear:both}
 .sct_10 .sct_a {display:block;position:relative;font-weight:bold;text-decoration:none}
 .sct_10 .sct_img {display:block;margin:0 0 15px}
 .sct_10 b {display:block;margin:0 0 8px;font-weight:normal}
@@ -333,6 +334,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 /* 상품 목록 스킨 11 */
 .sct_11 .sct_li {float:left;margin:0 25px 0 0;width:230px}
 .sct_11 .sct_last {margin:0 !important}
+.sct_13 .sct_clear {clear:both}
 .sct_11 .sct_a {display:block;position:relative;padding:0 0 5px;background:#f7f7f7;font-weight:bold;text-decoration:none}
 .sct_11 .sct_img {display:block;margin:0 0 15px}
 .sct_11 b {display:block;margin:0 0 8px;padding:0 5px;font-weight:normal}
@@ -344,6 +346,8 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 /* 상품 목록 스킨 12 */
 .sct_12 .sct_li {float:left;margin:0 16px 16px 0;width:362px}
 .sct_12 .sct_last {margin:0 !important}
+.sct_13 .sct_clear {clear:both}
+.sct_12 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../img/shop/icon_arw_toleft.gif') no-repeat}
 .sct_12 .sct_a {display:block;position:relative;padding:20px 10px 20px 240px;width:110px;height:190px;border:1px solid #e9e9e9;background:#f7f7f7;text-decoration:none}
 .sct_12 .sct_img {position:absolute;top:0;left:0}
 .sct_12 b {display:block;margin:0 0 15px;font-size:1.2em;letter-spacing:-0.1em}
@@ -357,6 +361,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .sct_13 .sct_li {float:left;margin:0 0 16px 0;width:100%}
 .sct_13 .sct_last {}
 .sct_13 .sct_clear {clear:both}
+.sct_13 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../img/shop/icon_arw_toleft.gif') no-repeat}
 .sct_13 .sct_a {display:block;position:relative;padding:20px 10px 20px 240px;height:190px;border:1px solid #e9e9e9;background:#f7f7f7;text-decoration:none}
 .sct_13 .sct_img {position:absolute;top:0;left:0}
 .sct_13 b {display:block;margin:0 0 15px;font-size:1.2em;letter-spacing:-0.1em}
