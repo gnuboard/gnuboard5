@@ -43,7 +43,6 @@ function get_image($img, $width=0, $height=0, $type='')
         $str .= ' id="'.$img_id.'">';
     }
 
-
     return $str;
 }
 
@@ -52,7 +51,7 @@ function get_it_image($img, $width=0, $height=0, $id="", $type='')
 {
     $str = get_image($img, $width, $height, $type);
     if ($id) {
-        $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$id.'" alt="">'.$str.'</a>';
+        $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$id.'">'.$str.'</a>';
     }
     return $str;
 }
