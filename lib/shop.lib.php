@@ -713,22 +713,22 @@ function display_item_icon($it)
 
     if($it['it_gallery'] || $it['it_type1'] || $it['it_type2'] || $it['it_type3'] || $it['it_type4'] || $it['it_type5']) {
         if($it['it_gallery']) // sold out
-            $icon .= '<img src="'.G4_SHOP_URL.'/img/soldout.gif" alt="">';
-
-        if($it['it_type1'])
-            $icon .= '<img src="'.G4_SHOP_URL.'/img/type1.gif" alt="">';
-
-        if($it['it_type2'])
-            $icon .= '<img src="'.G4_SHOP_URL.'/img/type2.gif" alt="">';
+            $icon .= '<img src="'.G4_URL.'/img/shop/icon_soldout.gif" alt="" class="sct_icon_so">';
 
         if($it['it_type3'])
-            $icon .= '<img src="'.G4_SHOP_URL.'/img/type3.gif" alt="">';
+            $icon .= '<img src="'.G4_URL.'/img/shop/icon_new.gif" alt="" class="sct_icon_hit">';
+
+        if($it['it_type1'])
+            $icon .= '<img src="'.G4_URL.'/img/shop/icon_hit.gif" alt="" class="sct_icon_hit">';
+
+        if($it['it_type2'])
+            $icon .= '<img src="'.G4_URL.'/img/shop/icon_rec.gif" alt="" class="sct_icon_rec">';
 
         if($it['it_type4'])
-            $icon .= '<img src="'.G4_SHOP_URL.'/img/type4.gif" alt="">';
+            $icon .= '<img src="'.G4_URL.'/img/shop/icon_best.gif" alt="" class="sct_icon_best">';
 
         if($it['it_type5'])
-            $icon .= '<img src="'.G4_SHOP_URL.'/img/type5.gif" alt="">';
+            $icon .= '<img src="'.G4_URL.'/img/shop/icon_discount.gif" alt="" class="sct_icon_discount">';
     }
 
     return $icon;

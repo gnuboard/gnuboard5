@@ -306,27 +306,29 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 /* 인덱스 이미지 출력 */
 #sidx_img {margin:0 0 20px}
 
-/* 인덱스 상품 출력 */
+/* 상품 목록 */
 /* 공통 */
-.sidx_it_wrap {margin:0 0 30px;zoom:1}
-.sidx_it_wrap:after {display:block;visibility:hidden;clear:both;content:''}
-.sidx_it_wrap header {margin:0 0 20px;zoom:1}
-.sidx_it_wrap header:after {display:block;visibility:hidden;clear:both;content:''}
-.sidx_it_wrap h2 {float:left;margin:0 20px 0 0;padding:0;line-height:1em}
-.sidx_it_wrap h2 a {text-decoration:none}
-.sidx_it_wrap_hdesc {float:left;margin:0;padding:0;color:#777;line-height:1em}
+.sct_wrap {margin:0 0 30px;zoom:1}
+.sct_wrap:after {display:block;visibility:hidden;clear:both;content:''}
+.sct_wrap header {margin:0 0 20px;zoom:1}
+.sct_wrap header:after {display:block;visibility:hidden;clear:both;content:''}
+.sct_wrap h2 {float:left;margin:0 20px 0 0;padding:0;line-height:1em}
+.sct_wrap h2 a {text-decoration:none}
+.sct_wrap_hdesc {float:left;margin:0;padding:0;color:#777;line-height:1em}
 
-.sidx_it {margin:0;padding:0;list-style:none;zoom:1}
-.sidx_it:after {display:block;visibility:hidden;clear:both;content:''}
-.sidx_it_li {position:relative}
+.sct {margin:0;padding:0;list-style:none;zoom:1}
+.sct:after {display:block;visibility:hidden;clear:both;content:''}
+.sct_li {position:relative}
 
-/* 스킨 10 */
-.sidx_it_10 .sidx_it_li {float:left;margin:0 25px 0 0;width:230px}
-.sidx_it_10 .sidx_it_last {margin:0 !important}
-.sidx_it_10 .sidx_it_a {display:block;font-weight:bold;text-decoration:none}
-.sidx_it_10 span {display:block;margin:0 0 10px}
-.sidx_it_10 b {display:block;margin:0 0 5px;font-weight:normal}
-.sidx_it_10 .sidx_it_sns {position:absolute;top:190px;right:20px}
+/* 상품 목록 스킨 10 */
+.sct_10 .sct_li {float:left;margin:0 25px 0 0;width:230px}
+.sct_10 .sct_last {margin:0 !important}
+.sct_10 .sct_a {display:block;position:relative;font-weight:bold;text-decoration:none}
+.sct_10 .sct_img {display:block;margin:0 0 10px}
+.sct_10 b {display:block;margin:0 0 5px;font-weight:normal}
+.sct_10 .sct_icon {position:absolute;top:10px;left:-5px;margin:0 !important}
+.sct_10 .sct_icon img {display:block}
+.sct_10 .sct_sns {position:absolute;top:190px;right:20px}
 
 /* 공지사항 및 커뮤니티 새글 */
 #sidx_lat {padding:15px 0 0;border-top:1px solid #ddd}
