@@ -199,7 +199,7 @@ function is_null_time($datetime)
 // 1.02.01 $ca_id 추가
 function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
 {
-    global $member, $g4;
+    global $member, $g4, $config;
 
     // 상품의 갯수
     $items = $list_mod * $list_row;
