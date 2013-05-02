@@ -21,6 +21,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
             <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_twt.png" alt="트위터에 공유"></a>
             <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_goo.png" alt="구글플러스에 공유"></a>
         </div>
+        <?php // 이미지 아이콘
+        echo display_item_icon($row);
+        ?>
     </li>
 <?php }
 if ($i > 0) echo '</ul>';

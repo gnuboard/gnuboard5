@@ -705,6 +705,34 @@ function display_relation_item($it_id, $width, $height, $rows=3)
 
     return $str;
 }
+
+// 상품이미지에 유형 아이콘 출력
+function display_item_icon($it)
+{
+    $icon = '';
+
+    if($it['it_gallery'] || $it['it_type1'] || $it['it_type2'] || $it['it_type3'] || $it['it_type4'] || $it['it_type5']) {
+        if($it['it_gallery']) // sold out
+            $icon .= '<img src="'.G4_SHOP_URL.'/img/soldout.gif" alt="">';
+
+        if($it['it_type1'])
+            $icon .= '<img src="'.G4_SHOP_URL.'/img/type1.gif" alt="">';
+
+        if($it['it_type2'])
+            $icon .= '<img src="'.G4_SHOP_URL.'/img/type2.gif" alt="">';
+
+        if($it['it_type3'])
+            $icon .= '<img src="'.G4_SHOP_URL.'/img/type3.gif" alt="">';
+
+        if($it['it_type4'])
+            $icon .= '<img src="'.G4_SHOP_URL.'/img/type4.gif" alt="">';
+
+        if($it['it_type5'])
+            $icon .= '<img src="'.G4_SHOP_URL.'/img/type5.gif" alt="">';
+    }
+
+    return $icon;
+}
 //==============================================================================
 // 쇼핑몰 함수 모음 끝
 //==============================================================================
