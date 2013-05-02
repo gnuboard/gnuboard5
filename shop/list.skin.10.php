@@ -16,6 +16,11 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
     } else { // 1줄 이미지 : 1개
         $sct_last = 'sct_clear';
     }
+
+    $sns_title = get_text($row['it_name']).' - '.get_text($config['cf_title']);
+    $sns_send  = G4_SHOP_URL.'/sns_send.php?url='.urlencode(G4_SHOP_URL.'/item.php?it_id='.$row['it_id']);
+    $sns_send .= '&amp;title='.urlencode(cut_str($sns_title, 100));
+
     if ($i == 1) echo '<ul class="sct sct_10">';
 ?>
     <li class="sct_li <?php echo $sct_last; ?>">
@@ -33,9 +38,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
             </span>
         </a>
         <div class="sct_sns">
-            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_fb.png" alt="페이스북에 공유"></a>
-            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_twt.png" alt="트위터에 공유"></a>
-            <a href="#"><img src="<?php echo G4_URL; ?>/img/shop/sns_goo.png" alt="구글플러스에 공유"></a>
+            <a href="<?php echo $sns_send; ?>&amp;sns=facebook" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_fb.png" alt="페이스북에 공유"></a>
+            <a href="<?php echo $sns_send; ?>&amp;sns=twitter" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_twt.png" alt="트위터에 공유"></a>
+            <a href="<?php echo $sns_send; ?>&amp;sns=google" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_goo.png" alt="구글플러스에 공유"></a>
         </div>
     </li>
 <?php }
