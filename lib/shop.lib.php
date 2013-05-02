@@ -680,8 +680,10 @@ function display_relation_item($it_id, $width, $height, $rows=3)
     $result = sql_query($sql);
 
     for($i=0; $row=sql_fetch_array($result); $i++) {
-        if($i == 0)
+        if($i == 0) {
+            $str .= '<span class="sound_only">관련 상품 시작</span>';
             $str .= '<ul class="sct_rel_ul">';
+        }
 
         $full_img = G4_DATA_PATH.'/item/'.$row['it_id'].'_s';
         $it_name = get_text($row['it_name']); // 상품명
@@ -703,7 +705,7 @@ function display_relation_item($it_id, $width, $height, $rows=3)
     }
 
     if($i > 0)
-        $str .= '</ul>';
+        $str .= '</ul><span class="sound_only">관련 상품 끝</span>';
 
     return $str;
 }
