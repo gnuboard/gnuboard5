@@ -147,7 +147,7 @@ echo $option_hidden;
     <p>
        작성하신 내용을 제출하시려면 <strong>글쓰기</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
     </p>
-    <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
+    <input type="submit" value="글쓰기" id="btn_submit" class="btn_submit" accesskey="s">
     <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel">취소</a>
 </div>
 </form>
@@ -218,6 +218,8 @@ function fwrite_submit(f)
 
     <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
 
+    document.getElementById("btn_submit").disabled = "disabled";
+    
     return true;
 }
 </script>
