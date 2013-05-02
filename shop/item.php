@@ -23,10 +23,10 @@ $sql = " select a.*,
             and a.ca_id = b.ca_id ";
 $it = sql_fetch($sql);
 if (!$it['it_id'])
-    alert("자료가 없습니다.");
+    alert('자료가 없습니다.');
 if (!($it['ca_use'] && $it['it_use'])) {
     if (!$is_admin)
-        alert("판매가능한 상품이 아닙니다.");
+        alert('판매가능한 상품이 아닙니다.');
 }
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
@@ -61,7 +61,7 @@ if ($_COOKIE['ck_it_id'] != $it_id) {
     set_cookie("ck_it_id", $it_id, time() + 3600); // 1시간동안 저장
 }
 
-$g4['title'] = $it['it_name'].' 상세보기 &gt; '.$it['ca_name'];
+$g4['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
 // 분류 상단 코드가 있으면 출력하고 없으면 기본 상단 코드 출력
 if ($ca['ca_include_head'])
@@ -74,6 +74,9 @@ else
 $ca_id = $it['ca_id'];
 include G4_SHOP_PATH.'/navigation1.inc.php';
 
+// 이 분류에 속한 하위분류 출력
+include G4_SHOP_PATH.'/listcategory.inc.php';
+
 $himg = G4_DATA_PATH."/item/{$it_id}_h";
 if (file_exists($himg))
     echo "<img src='".G4_DATA_URL."/item/{$it_id}_h' border=0><br>";
@@ -83,9 +86,6 @@ echo stripslashes($it['it_head_html']);
 
 if ($is_admin)
     echo "<p align=center><a href='".G4_ADMIN_URL."/shop_admin/itemform.php?w=u&it_id=$it_id'><img src='".G4_SHOP_URL."/img/btn_admin_modify.gif' border=0></a></p>";
-
-// 이 분류에 속한 하위분류 출력
-include G4_SHOP_PATH.'/listcategory.inc.php';
 
 // 이전 상품보기
 $sql = " select it_id, it_name from {$g4['shop_item_table']}
