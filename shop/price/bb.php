@@ -25,7 +25,7 @@ include_once('./_common.php');
 <meta http-equiv="Pragma" content="no-cache"/>
 </head>
 <body>
-<?
+<?php
 // <p>상품번호^대분류^중분류^소분류^제조사^모델명^상품Url^이미지Url^가격
 $str = "";
 $sql = " select * from {$g4['shop_item_table']}

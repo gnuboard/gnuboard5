@@ -4,7 +4,7 @@
 */
 include_once('./_common.php');
 ?>
-<?
+<?php
 echo $_SERVER['HTTP_HOST'];
 
 // \n상품코드#대분류#소분류#상품명#상품URL#가격

@@ -80,7 +80,7 @@ body, td {font-family:굴림; font-size:10pt;}
     <td>모델명</td>
     <td>상품코드</td>
 </tr>
-<?
+<?php
 // 전체 페이지 계산
 $total_page  = ceil($total_count / $page_rows);
 // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -127,7 +127,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 ?>
 </table>
 
-<p>총 <?=$total_count?>개 &nbsp;<?=paging(1000, $page, $total_page, "./yavis.php?page=");?>
+<p>총 <?php echo $total_count; ?>개 &nbsp;<?php echo paging(1000, $page, $total_page, "./yavis.php?page="); ?>
 
 </body>
 </html>
