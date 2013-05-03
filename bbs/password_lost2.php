@@ -39,14 +39,14 @@ sql_query($sql);
 
 $href = G4_BBS_URL.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_datetime='.$mb_datetime.'&amp;mb_lost_certify='.$mb_lost_certify;
 
-$subject = "[".$config['cf_title']."] 요청하신 회원 아이디/패스워드 정보입니다.";
+$subject = "[".$config['cf_title']."] 요청하신 회원정보 찾기 안내 메일입니다.";
 
 $content = "";
 
 $content .= '<div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">';
 $content .= '<div style="border:1px solid #dedede">';
 $content .= '<h1 style="padding:30px 30px 0;background:#f7f7f7;color:#555;font-size:1.4em">';
-$content .= '회원 패스워드가 변경되었습니다.';
+$content .= '회원정보 찾기 안내';
 $content .= '</h1>';
 $content .= '<span style="display:block;padding:10px 30px 30px;background:#f7f7f7;text-align:right">';
 $content .= '<a href="'.G4_URL.'" target="_blank">'.$config['cf_title'].'</a>';

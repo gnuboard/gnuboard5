@@ -2,9 +2,9 @@
 include_once('./kcpcert_config.php');
 
 set_session('ss_kcpcert_no',    '');
-set_session('ss_kcpcert_time',  '');
 set_session('ss_kcpcert_hash',  '');
-set_session('ss_adult_check',   '');
+set_session('ss_hp_certify',    '');
+set_session('ss_adult',         '');
 
 $site_cd       = "";
 $ordr_idxx     = "";
@@ -139,13 +139,13 @@ if( $cert_enc_use == "Y" )
         $md5_cert_no = md5($cert_no);
         $hash_data = md5($phone_no.$user_name.$md5_cert_no);
         set_session("ss_kcpcert_no",    $md5_cert_no);
-        set_session("ss_kcpcert_time",  G4_TIME_YMDHIS);
         set_session("ss_kcpcert_hash",  $hash_data);
+        set_session("ss_hp_certify",    "1");
 
         // 성인인증결과
         $adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
         if((int)$birth_day <= (int)$adult_day)
-            set_session("ss_adult_check", "Y");
+            set_session("ss_adult", "1");
     }
     else if( $res_cd != "0000" )
     {

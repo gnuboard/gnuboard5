@@ -1004,7 +1004,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         if(!$bo_table)
             return $name;
 
-        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\" title=\"$name 이름으로 검색\"class=\"sv_guest\" onclick=\"return false;\">$name</a>";
+        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\" title=\"$name 이름으로 검색\" class=\"sv_guest\" onclick=\"return false;\">$name</a>";
         $title_mb_id = '[비회원]';
     }
 
@@ -1981,12 +1981,5 @@ function hyphen_hp_number($hp)
 {
     $hp = preg_replace("/[^0-9]/", "", $hp);
     return preg_replace("/([0-9]{3})([0-9]{3,4})([0-9]{4})$/", "\\1-\\2-\\3", $hp);
-}
-
-
-// 휴대폰 본인확인을 받은 회원인지를 가린다.
-function hp_certify($member)
-{
-    return substr($member['mb_hp_certify'],0,1) == '0' ? 'N' : 'Y';
 }
 ?>
