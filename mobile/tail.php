@@ -40,7 +40,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
 </footer>
 
-<a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING'].'&amp;':'?').'device=pc'; ?>" id="device_change">PC 버전으로 보기</a>
+<a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.str_replace("&", "&amp;", $_SERVER['QUERY_STRING']).'&amp;':'?').'device=pc'; ?>" id="device_change">PC 버전으로 보기</a>
 
 <?php
 include_once(G4_PATH."/tail.sub.php");
