@@ -199,7 +199,8 @@ button.btn_cancel {display:inline-block;padding:0 10px;height:24px;border:1px so
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
+.btn_win a,
+.btn_win button {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
 .btn_win a:focus,
 .btn_win a:hover {text-decoration:none}
 /* 게시판용 버튼 */
@@ -445,12 +446,20 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 /* 상품 상세보기 - 이미지 미리보기 */
 #sit_pvi {float:left;padding:15px;width:320px}
 #sit_pvi_big {margin:0 0 10px}
+#sit_pvi_big a {display:block}
 #sit_pvi_big img {width:320px;height:320px}
 #sit_pvi_thumb {margin:0;padding:0;list-style:none;zoom:1}
 #sit_pvi_thumb:after {display:block;visibility:hidden;clear:both;content:''}
 #sit_pvi_thumb li {float:left;margin:0 5px 0 0}
 #sit_pvi_thumb .li_last {margin:0 !important}
 #sit_pvi_thumb img {width:60px;height:60px}
+
+#sit_pvi_nw h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sit_pvi_nwbig {padding:10px 0;text-align:center}
+#sit_pvi_nw ul {margin:0 0 20px;padding:0 10px;list-style:none;zoom:1}
+#sit_pvi_nw ul:after {display:block;visibility:hidden;clear:both;content:''}
+#sit_pvi_nw li {float:left;margin:0 0 0 1px}
+#sit_pvi_nw li img {width:60px;height:60px}
 
 /* 상품 상세보기 - 간략정보 및 구매기능 */
 #sit_ov {position:relative;float:right;padding:50px 15px 15px;width:358px;height:auto !important;height:355px;min-height:355px;background:#f5f6fa}

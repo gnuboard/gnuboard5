@@ -169,11 +169,11 @@ else
                 {
                     echo get_large_image($it_id.'_'.$i, $it['it_id'], false);
                     if ($i==1 && file_exists(G4_DATA_PATH.'/item/'.$it_id.'_s'))
-                        echo '<img src="'.G4_DATA_URL.'/item/'.$it_id.'_s" alt="" id="sit_pvi_t'.$i.'" ';
+                        echo '<a href="#sit_pvi_big" id="'.$it_id.'_s" class="img_thumb"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_s" alt="" id="sit_pvi_t'.$i.'" ';
                     else
-                        echo '<img src="'.G4_DATA_URL.'/item/'.$it_id.'_l'.$i.'" alt="" id="sit_pvi_t'.$i.'" ';
+                        echo '<a href="#sit_pvi_big" id="'.$it_id.'_l'.$i.'" class="img_thumb"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_l'.$i.'" alt="" id="sit_pvi_t'.$i.'" ';
                     //echo ' onmouseover="document.getElementById(\''.$middle_image.'\').src=document.getElementById(\'middle'.$i.'\').src;">';
-                    echo '>';
+                    echo '></a>';
                 }
                 echo '</li>';
             }
@@ -477,6 +477,13 @@ else
     <!-- 관련상품 end -->
 
     <script>
+    $(function(){ // 이미지 미리보기
+        $('#sit_pvi .img_thumb').bind('hover focus', function(){
+            var img_src = $(this).attr('id');
+            $('#sit_pvi_big img').attr('src','<?php echo G4_DATA_URL; ?>/item/'+img_src); // 이미지 소스 교체
+        });
+    });
+
     function qty_add(num)
     {
         var f = document.fitem;

@@ -1,4 +1,5 @@
 <?php
+define('_SHOP_', true);
 include_once('./_common.php');
 
 $sql = " select it_name from {$g4['shop_item_table']} where it_id='$it_id' ";
@@ -11,26 +12,42 @@ $size = getimagesize($imagefile);
 $g4['title'] = "{$row['it_name']} ($it_id)";
 include_once(G4_PATH.'/head.sub.php');
 ?>
-<br>
-<div align=center>
-    <a href='#' onclick='window.close();'><img id='largeimage' src='<?php echo $imagefileurl; ?>' width='<?php echo $size[0]; ?>' height='<?php echo $size[1]; ?>' alt='<?php echo $row['it_name']; ?>' border=0 style='border:1 solid #E4E4E4;'></a>
+
+<div id="sit_pvi_nw">
+    <h1>상품 이미지 새 창 보기</h1>
+
+    <div id="sit_pvi_nwbig">
+        <a href="javascript:window.close();">
+            <img src="<?php echo $imagefileurl; ?>" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>" alt="<?php echo $row['it_name']; ?>" id="largeimage">
+        </a>
+    </div>
+
+    <?php
+    for ($i=1; $i<=5; $i++)
+    {
+        if ($i == 1) echo '<ul>';
+        if (file_exists(G4_DATA_PATH."/item/{$it_id}_l{$i}"))
+    ?>
+        <li><a href="#" id="<?php echo $it_id; ?>_l<?php echo $i; ?>" class="img_thumb"><img id="large<?php echo $i; ?>" src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it_id; ?>_l<?php echo $i; ?>" alt=""></a></li>
+    <?php
+    }
+    if ($i > 1) echo '</ul>';
+    ?>
+
+    <div class="btn_win">
+        <button type="button" onclick="javascript:window.close();">창닫기</button>
+    </div>
 </div>
-<p>
-<table width=100% cellpadding=0 cellspacing=0>
-<tr>
-    <td width=30% align=center><a href='#' onclick='window.close();'><img src='<?php echo G4_SHOP_URL; ?>/img/btn_close.gif' border=0 alt="창닫기"></a></td>
-    <td width=70% align=right>
-        <?php
-        for ($i=1; $i<=5; $i++)
-        {
-            if (file_exists(G4_DATA_PATH."/item/{$it_id}_l{$i}"))
-                echo "<img id='large{$i}' src='".G4_DATA_URL."/item/{$it_id}_l{$i}' border=0 width=50 height=50 style='border:1 solid #E4E4E4;'
-                    onmouseover=\"document.getElementById('largeimage').src=document.getElementById('large{$i}').src;\"> &nbsp;";
-        }
-        ?>
-        &nbsp;</td>
-</tr>
-</table>
+
+<script>
+$(function(){ // 이미지 미리보기
+    $('.img_thumb').bind('hover focus', function(){
+        var img_src = $(this).attr('id');
+        $('#sit_pvi_nwbig img').attr('src','<?php echo G4_DATA_URL; ?>/item/'+img_src); // 이미지 소스 교체
+    });
+});
+</script>
+
 <?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>
