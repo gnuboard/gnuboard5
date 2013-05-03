@@ -233,6 +233,8 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_auth_mbnick {width:200px}
 /* 회원관리 목록 */
 .tbl_mb_list td {text-align:center}
+.mb_leave_msg {color:#b6b6b6}
+.mb_intercept_msg {color:#f59fe4}
 /* 포인트관리 목록 */
 .tbl_pt_list td {text-align:center}
 .tbl_pt_list .td_pt_log {text-align:left}
@@ -273,9 +275,11 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_mbid,
 .td_name,
 .td_mbname {width:100px;text-align:left !important}
+.td_addr {text-align:left !important}
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
 .td_pt {text-align:right !important}
+.td_tdiv {border-bottom:1px solid #c9c9c9 !important}
 
 .txt_true {color:#e8180c}
 .txt_false {color:#ccc}
