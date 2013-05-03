@@ -30,8 +30,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <footer id="ft">
     <h1><?php echo $config['cf_title'] ?> 정보</h1>
     <?php echo popular('basic'); // 인기검색어 ?>
-    <?php echo visit("basic"); // 방문자수 ?>
-    <div id="ft_catch"><a href="<?php echo $g4['url'] ?>/"><img src="<?php echo G4_IMG_URL ?>/ft_catch.jpg" alt="Sharing All Possibilities"></a></div>
+    <?php echo visit('basic'); // 방문자수 ?>
+    <div id="ft_catch"><a href="<?php echo G4_URL; ?>/"><img src="<?php echo G4_IMG_URL; ?>/ft_catch.jpg" alt="Sharing All Possibilities"></a></div>
     <div id="ft_copy">
         <p>
             Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.<br>
@@ -40,7 +40,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
 </footer>
 
-<a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING'].'&amp;':'?').'device=pc'; ?>" id="device_change">PC 버전으로 보기</a>
+<a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.str_replace("&", "&amp;", $_SERVER['QUERY_STRING']).'&amp;':'?').'device=pc'; ?>" id="device_change">PC 버전으로 보기</a>
 
 <?php
 include_once(G4_PATH."/tail.sub.php");

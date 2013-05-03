@@ -115,7 +115,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         ?>
     </nav>
 
-    <article id="bo_v_atc">
+    <article id="bo_v_atc" class="img_resize">
         <header>
             <h1>본문</h1>
         </header>
@@ -182,8 +182,6 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 </div>
 
-
-
 <script>
 <?php if ($board['bo_download_point'] < 0) { ?>
 $(function() {
@@ -237,8 +235,8 @@ $(function() {
 
 function view_image_resize()
 {
-    var $img = $("#bo_v_atc img");
-    var img_wrap = $("#bo_v_atc").width();
+    var $img = $(".img_resize img");
+    var img_wrap = $(".img_resize").width();
 
     $img.each(function() {
         var img_width = $(this).width();
