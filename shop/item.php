@@ -384,22 +384,40 @@ else
     }
     </script>
 
-    <!-- 상품설명 -->
-    <div id="item_explan">
+    <section id="sit_inf">
+        <h2>상품 정보</h2>
+
+        <?php if ($it['it_basic']) { // 상품 기본설명 ?>
+        <div id="sit_inf_basic">
+             <?php echo $it['it_basic']; ?>
+        </div>
+        <?php } ?>
+
+        <?php if ($it['it_explan']) { // 상품 상세설명 ?>
+        <div id="sit_inf_explan">
+            <?php echo conv_content($it['it_explan'], 1); ?>
+        </div>
+        <?php } ?>
+
+        <h3>상품 정보 고시</h3>
         <?php
         $sql = " select * from {$g4['shop_item_info_table']} where it_id = '$it_id' order by ii_id ";
         $result = sql_query($sql, false);
         if (@mysql_num_rows($result)) {
         ?>
         <!-- 상품정보고시 -->
-        <table class="item_info_open">
+        <table id="sit_inf_open">
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
         <tbody>
         <?php
         for ($i=0; $row=sql_fetch_array($result); $i++) {
         ?>
         <tr valign="top">
-            <th scope="row" style="padding:8px 15px;width:30%;border-bottom:1px solid #f6dbab;background:#f8f4ee;font-size:12px;text-align:left"><?php echo $row['ii_title']; ?></th>
-            <td style="padding:8px 15px;border-bottom:1px solid #f6dbab"><?php echo $row['ii_value']; ?></th>
+            <th scope="row"><?php echo $row['ii_title']; ?></th>
+            <td><?php echo $row['ii_value']; ?></th>
         </tr>
         <?php } //for?>
         </tbody>
@@ -407,14 +425,6 @@ else
         <!-- 상품정보고시 end -->
         <?php } //if?>
 
-        <table width=100% cellspacing=0 border=0>
-        <?php if ($it['it_basic']) { ?>
-        <?php echo $it['it_basic']; ?>
-        <?php } ?>
-
-        <?php if ($it['it_explan']) { ?>
-        <div id='div_explan'><?php echo conv_content($it['it_explan'], 1); ?></div>
-        <?php } ?>
     </div>
     <!-- 상품설명 end -->
 
