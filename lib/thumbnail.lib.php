@@ -184,7 +184,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     // Animated GIF는 썸네일 생성하지 않음
     if($size[2] == 1) {
         if(is_animated_gif($source_file))
-            return;
+            return basename($source_file);
     }
 
     $thumb_time = @filemtime($thumb_file);
