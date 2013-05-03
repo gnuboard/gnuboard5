@@ -268,6 +268,9 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .visit_bar {position:relative}
 .visit_bar span {position:absolute;top:-8px;left:0;height:15px;background:#ddd}
 /* 공통 */
+.tr_bg {background:#fafeef}
+.tr_bg td {border-bottom:1px solid #d8e6b6 !important}
+
 .td_chk {width:30px;text-align:center}
 .td_num {width:60px;text-align:center}
 .td_bignum {width:100px;text-align:center}
@@ -279,7 +282,6 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_time {width:150px;text-align:center}
 .td_boolean {width:50px;text-align:center}
 .td_pt {text-align:right !important}
-.td_tdiv {border-bottom:1px solid #c9c9c9 !important}
 
 .txt_true {color:#e8180c}
 .txt_false {color:#ccc}

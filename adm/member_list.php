@@ -185,10 +185,13 @@ $colspan = 15;
             $intercept_title = '차단하기';
 
         $address = $row['mb_zip1'] ? $row['mb_addr1'].' '.$row['mb_addr2'] : '';
+
+        $tr_bg = '';
+        if ($i%2 == 0) $tr_bg = 'class="tr_bg"';
     ?>
 
-    <tr>
-        <td class="td_chk td_tdiv" rowspan="2">
+    <tr <?php echo $tr_bg; ?>>
+        <td class="td_chk" rowspan="2">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
             <label for="chk_<?php echo $i; ?>" class="sound_only">회원선택</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
@@ -201,30 +204,30 @@ $colspan = 15;
         <td colspan="6" class="td_addr"><?php echo $address; ?></td>
         <td><?php echo substr($row['mb_today_login'],2,8); ?></td>
         <td class="td_bignum"><a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
-        <td rowspan="2" class="td_tdiv"><?php echo $s_mod ?><br><?php echo $s_grp ?></td>
+        <td rowspan="2"><?php echo $s_mod ?><br><?php echo $s_grp ?></td>
     </tr>
-    <tr>
-        <td class="td_name td_tdiv"><div><?php echo $mb_nick ?></div></td>
-        <td class=" td_tdiv">
+    <tr <?php echo $tr_bg; ?>>
+        <td class="td_name"><div><?php echo $mb_nick ?></div></td>
+        <td class="">
             <?php
             if ($leave_msg || $intercept_msg) echo $leave_msg.' '.$intercept_msg;
             else echo "정상";
             ?>
             <?php echo get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level']) ?>
         </td>
-        <td class="td_tdiv"><?php echo $row['mb_tel']; ?></td>
-        <td class="td_chk td_tdiv"><?php echo $row['mb_mailling']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td class="td_chk td_tdiv"><?php echo $row['mb_open']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td class="td_chk td_tdiv"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td class="td_chk td_tdiv"><?php echo $row['mb_hp_certify']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td class="td_chk td_tdiv"><?php echo $row['mb_adult']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td class="td_chk td_tdiv">
+        <td><?php echo $row['mb_tel']; ?></td>
+        <td class="td_chk"><?php echo $row['mb_mailling']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
+        <td class="td_chk"><?php echo $row['mb_open']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
+        <td class="td_chk"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
+        <td class="td_chk"><?php echo $row['mb_hp_certify']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
+        <td class="td_chk"><?php echo $row['mb_adult']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
+        <td class="td_chk">
             <?php if(empty($row['mb_leave_date'])){ ?>
             <input type="checkbox" name="mb_intercept_date[<?php echo $i ?>]" <?php echo $row['mb_intercept_date']?'checked':''; ?> value="<?php echo $intercept_date ?>" id="mb_intercept_date_<?php echo $i ?>" title="<?php echo $intercept_title ?>">
             <?php } ?>
         </td>
-        <td class="td_tdiv"><?php echo substr($row['mb_datetime'],2,8); ?></td>
-        <td class="td_chk td_tdiv"><?php echo $group ?></td>
+        <td><?php echo substr($row['mb_datetime'],2,8); ?></td>
+        <td class="td_chk"><?php echo $group ?></td>
     </tr>
 
     <?php
