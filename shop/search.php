@@ -102,10 +102,10 @@ $total_count = $row['cnt'];
     <caption><?php echo $ca_temp?><a href="./list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo $save['cnt']; ?>개</caption>
     <thead>
     <tr>
-        <th>이미지</td>
-        <th>상품명</th>
-        <th>판매가격</td>
-        <th>포인트</td>
+        <th scope="col">이미지</td>
+        <th scope="col">상품명</th>
+        <th scope="col">판매가격</td>
+        <th scope="col">포인트</td>
     </tr>
     </thead>
 
