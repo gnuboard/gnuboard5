@@ -39,6 +39,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
             <a href="<?php echo $sns_send; ?>&amp;sns=google" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_goo.png" alt="구글플러스에 공유"></a>
         </div>
     </li>
-<?php }
+<?php
+}
 if ($i > 1) echo '</ul>';
+
+if($i == 1) echo '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 ?>

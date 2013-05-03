@@ -219,9 +219,11 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
     $sql .= " order by it_order, it_id desc
               limit $items ";
     $result = sql_query($sql);
+    /*
     if (!mysql_num_rows($result)) {
         return false;
     }
+    */
 
     $file = G4_SHOP_PATH.'/'.$skin_file;
     if (!file_exists($file)) {
