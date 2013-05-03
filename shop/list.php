@@ -90,12 +90,6 @@ if ($is_admin)
     {
         echo '<div>'.$error.'</div>';
     }
-
-    $qstr1 .= 'ca_id='.$ca_id;
-    if($skin)
-        $qstr1 .= '&amp;skin='.$skin;
-    $qstr1 .='&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;'.$sortodr;
-    echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
     ?>
 
     <?php
@@ -109,7 +103,15 @@ if ($is_admin)
 ?>
 </div>
 
-<?
+<?php
+$qstr1 .= 'ca_id='.$ca_id;
+if($skin)
+    $qstr1 .= '&amp;skin='.$skin;
+$qstr1 .='&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
+echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
+?>
+
+<?php
 if ($ca['ca_include_tail'])
     @include_once($ca['ca_include_tail']);
 else
