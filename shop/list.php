@@ -42,7 +42,7 @@ if ($is_admin)
 
     // 상품 출력순서가 있다면
     if ($sort != "") {
-        $order_by = $sort . " , ";
+        $order_by = $sort . ' '.$sortodr. ' , ';
     }
 
     // 상품 (하위 분류의 상품을 모두 포함한다.)
@@ -91,7 +91,10 @@ if ($is_admin)
         echo '<div>'.$error.'</div>';
     }
 
-    $qstr1 .= 'ca_id='.$ca_id.'&amp;skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort='.$sort;
+    $qstr1 .= 'ca_id='.$ca_id;
+    if($skin)
+        $qstr1 .= '&amp;skin='.$skin;
+    $qstr1 .='&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;'.$sortodr;
     echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
     ?>
 
