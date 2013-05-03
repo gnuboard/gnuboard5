@@ -89,7 +89,7 @@ function get_large_image($img, $it_id, $btn_image=true)
         $height = $size[1];
         $str = '<a href="javascript:popup_large_image(\''.$it_id.'\', \''.$img.'\', '.$width.', '.$height.', \''.G4_SHOP_URL.'\')">';
         if ($btn_image)
-            $str .= '<img src="'.G4_SHOP_URL.'/img/btn_zoom.gif" alt="확대보기"></a>';
+            $str .= '큰이미지</a>';
     }
     else
         $str = '';
@@ -370,11 +370,11 @@ function get_item_options($subject, $option, $index)
     // 옵션이 하나일 경우
     if (count($arr) == 1)
     {
-        $str = $option;
+        $str = '<input type="text" value='.$option.' id="sit_opt_'.$index.'" readonly class="sit_ov_opt">';
     }
     else
     {
-        $str = '<select name="it_opt'.$index.'" onchange="amount_change()">'.PHP_EOL;
+        $str = '<select name="it_opt'.$index.'" id="sit_opt_'.$index.'" onchange="amount_change()">'.PHP_EOL;
         for ($k=0; $k<count($arr); $k++)
         {
             $arr[$k] = str_replace("\r", "", $arr[$k]);
@@ -448,8 +448,9 @@ function it_name_icon($it, $it_name="", $url=1)
     $str = '';
     if ($it_name)
         $str = $it_name;
-    else
-        $str = stripslashes($it['it_name']);
+    // 제목이 없으면 아이콘만 나오도록 주석처리 - 지운아빠 2013-05-03
+    //else
+    //    $str = stripslashes($it['it_name']);
 
     if ($url)
         $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$it['it_id'].'">'.$str.'</a>';
