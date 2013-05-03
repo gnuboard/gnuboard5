@@ -128,8 +128,8 @@ $colspan = 15;
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
-        <th scope="col"><?php echo subject_sort_link('mb_nick') ?>별명</a></th>
         <th scope="col">상태</th>
+        <th scope="col"><?php echo subject_sort_link('mb_nick') ?>별명</a></th>
         <th scope="col"><?php echo subject_sort_link('mb_datetime', '', 'desc') ?>가입일</a></th>
         <th scope="col">전화번호</th>
         <th scope="col">본인<br>확인</th>
@@ -203,13 +203,13 @@ $colspan = 15;
         <td rowspan="2" class="td_tdiv"><?php echo $s_mod ?><br><?php echo $s_grp ?></td>
     </tr>
     <tr>
-        <td class="td_name td_tdiv"><div><?php echo $mb_nick ?></div></td>
         <td class=" td_tdiv">
             <?php
             if ($leave_msg || $intercept_msg) echo $leave_msg.' '.$intercept_msg;
             else echo "정상";
             ?>
         </td>
+        <td class="td_name td_tdiv"><div><?php echo $mb_nick ?></div></td>
         <td class="td_tdiv"><?php echo substr($row['mb_datetime'],2,8) ?></td>
         <td class="td_tdiv">휴대폰번호</td>
         <td class="td_chk td_tdiv">본인</td>
