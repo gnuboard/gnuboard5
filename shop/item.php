@@ -489,7 +489,7 @@ else
     <script>
     $(function(){ // 이미지 미리보기
         $('#sit_pvi .img_thumb').bind('hover focus', function(){
-            var img_src = $(this).attr('id');
+            var img_src = $(this).attr('id').replace("_s", "_l1");
             $('#sit_pvi_big img').attr('src','<?php echo G4_DATA_URL; ?>/item/'+img_src); // 이미지 소스 교체
         });
     });
