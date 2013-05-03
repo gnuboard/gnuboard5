@@ -372,6 +372,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .sct {margin:0;padding:0;list-style:none;zoom:1}
 .sct:after {display:block;visibility:hidden;clear:both;content:''}
 .sct_li {position:relative}
+.sct_noitem {padding:100px 0;text-align:center}
 
 /* 상품 목록 스킨 10 */
 .sct_10 .sct_li {float:left;margin:0 25px 0 0;width:230px}
