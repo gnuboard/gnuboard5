@@ -66,7 +66,7 @@ include_once(G4_PATH.'/head.sub.php');
         <td>
         <input type="hidden" name="<?php echo $el_name; ?>[]" value="<?php echo $el_title; ?>">
         <?php if ($el_example != "") echo help($el_example); ?>
-        <input type="text" name="<?php echo $el_name; ?>[]" value="<?php echo $el_value; ?>" id="<?php ehco $el_name.$i; ?>" required class="frm_input required" />
+        <input type="text" name="<?php echo $el_name; ?>[]" value="<?php echo $el_value; ?>" id="<?php echo $el_name.$i; ?>" required class="frm_input required" />
         </td>
     </tr>
     <?php
