@@ -21,7 +21,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
 ?>
     <li class="sct_li <?php echo $sct_last; ?>">
         <a href="<?php echo $href; ?>" class="sct_a">
-            <span class="sct_img"><?php echo get_it_image($row['it_id'].'_m', $img_width, $img_height, '', $type); ?></span>
+            <span class="sct_img"><?php echo get_it_image($row['it_id'].'_m', $img_width, $img_height); ?></span>
             <b><?php echo stripslashes($row['it_name']); ?></b>
             <?php if ($row['it_cust_amount'] && !$row['it_gallery']) { ?>
             <s><?php echo display_amount($row['it_cust_amount']); ?></s>
@@ -42,6 +42,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
             <a href="<?php echo $sns_send; ?>&amp;sns=google" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_goo.png" alt="구글플러스에 공유"></a>
         </div>
     </li>
-<?php }
+<?php
+}
 if ($i > 1) echo '</ul>';
+
+if($i == 1) echo '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 ?>

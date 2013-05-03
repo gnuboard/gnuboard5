@@ -1,7 +1,10 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-$sct_sort_href = $_SERVER['PHP_SELF'].'?ca_id='.$ca_id.'&amp;skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort=';
+$sct_sort_href = $_SERVER['PHP_SELF'].'?ca_id='.$ca_id;
+if($skin)
+    $sct_sort_href .= '&amp;skin='.$skin;
+$sct_sort_href .= '&amp;ev_id='.$ev_id.'&amp;sort=';
 ?>
 
 <section id="sct_sort">
@@ -11,8 +14,8 @@ $sct_sort_href = $_SERVER['PHP_SELF'].'?ca_id='.$ca_id.'&amp;skin='.$skin.'&amp;
     </div>
 
     <ul>
-        <li><a href="<?php echo $sct_sort_href; ?>it_amount&amp;sortodr=desc" class="btn01">낮은가격순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_amount&amp;sortodr=asc" class="btn01">높은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_amount&amp;sortodr=asc" class="btn01">낮은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_amount&amp;sortodr=desc" class="btn01">높은가격순</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_name&amp;sortodr=asc" class="btn01">상품명순</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_type1&amp;sortodr=desc" class="btn01">히트상품</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_type2&amp;sortodr=desc" class="btn01">추천상품</a></li>
