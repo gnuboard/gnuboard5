@@ -1004,7 +1004,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         if(!$bo_table)
             return $name;
 
-        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\" title=\"$name 이름으로 검색\"class=\"sv_guest\" onclick=\"return false;\">$name</a>";
+        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\" title=\"$name 이름으로 검색\"class=\"sv_guest\" onclick=\"return false;\">$name</a>";
         $title_mb_id = '[비회원]';
     }
 
@@ -1029,7 +1029,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
             if($mb_id)
                 $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
             else
-                $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\">이름으로 검색</a>\n";
+                $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\">이름으로 검색</a>\n";
         }
         if($mb_id)
             $str2 .= "<a href=\"".G4_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
@@ -1967,7 +1967,7 @@ function html_end()
         $stylesheet .= $link;
         $buffer = preg_replace('#'.$link.'#', '', $buffer);
     }
-    /* 
+    /*
     </title>
     <link rel="stylesheet" href="default.css">
     밑으로 스킨의 스타일시트가 위치하도록 하게 한다.
@@ -1979,7 +1979,7 @@ function html_end()
 // 휴대폰번호의 숫자만 취한 후 중간에 하이픈(-)을 넣는다.
 function hyphen_hp_number($hp)
 {
-    $hp = preg_replace("/[^0-9]/", "", $hp); 
+    $hp = preg_replace("/[^0-9]/", "", $hp);
     return preg_replace("/([0-9]{3})([0-9]{3,4})([0-9]{4})$/", "\\1-\\2-\\3", $hp);
 }
 
