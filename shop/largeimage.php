@@ -26,10 +26,11 @@ include_once(G4_PATH.'/head.sub.php');
     for ($i=1; $i<=5; $i++)
     {
         if ($i == 1) echo '<ul>';
-        if (file_exists(G4_DATA_PATH."/item/{$it_id}_l{$i}"))
+        if (file_exists(G4_DATA_PATH."/item/{$it_id}_l{$i}")) {
     ?>
         <li><a href="#" id="<?php echo $it_id; ?>_l<?php echo $i; ?>" class="img_thumb"><img id="large<?php echo $i; ?>" src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it_id; ?>_l<?php echo $i; ?>" alt=""></a></li>
     <?php
+        }
     }
     if ($i > 1) echo '</ul>';
     ?>
