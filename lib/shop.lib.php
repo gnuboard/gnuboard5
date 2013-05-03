@@ -14,14 +14,11 @@ function get_cart_count($uq_id)
 }
 
 // 이미지를 얻는다
-function get_image($img, $width=0, $height=0, $type='')
+function get_image($img, $width=0, $height=0, $img_id='')
 {
     global $g4, $default;
 
     $full_img = G4_DATA_PATH.'/item/'.$img;
-    if($type != '') {
-        $img_id = 'type'.$type.'_'.$img;
-    }
 
     if (file_exists($full_img) && $img)
     {
@@ -31,7 +28,12 @@ function get_image($img, $width=0, $height=0, $type='')
             $width = $size[0];
             $height = $size[1];
         }
-        $str = '<img src="'.G4_DATA_URL.'/item/'.$img.'" alt="" width="'.$width.'" height="'.$height.'" id="'.$img_id.'">';
+        $str = '<img src="'.G4_DATA_URL.'/item/'.$img.'" alt="" width="'.$width.'" height="'.$height.'"';
+
+        if($img_id)
+            $str .= ' id="'.$img_id.'"';
+
+        $str .= '>';
     }
     else
     {
@@ -40,16 +42,19 @@ function get_image($img, $width=0, $height=0, $type='')
             $str .= 'width="'.$width.'" height="'.$height.'"';
         else
             $str .= 'width="'.$default['de_mimg_width'].'" height="'.$default['de_mimg_height'].'"';
-        $str .= ' id="'.$img_id.'">';
+
+        if($img_id)
+            $str .= ' id="'.$img_id.'"'.
+        $str .= '>';
     }
 
     return $str;
 }
 
 // 상품 이미지를 얻는다
-function get_it_image($img, $width=0, $height=0, $id="", $type='')
+function get_it_image($img, $width=0, $height=0, $id='', $img_id='')
 {
-    $str = get_image($img, $width, $height, $type);
+    $str = get_image($img, $width, $height, $img_id);
     if ($id) {
         $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$id.'">'.$str.'</a>';
     }
