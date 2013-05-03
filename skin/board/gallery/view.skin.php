@@ -215,20 +215,29 @@ $(window).load(function() {
     view_image_resize();
 });
 
-var rtime = new Date();
+var now = new Date();
 var timeout = false;
-var delta = 200;
+var millisec = 200;
+var tid;
+
 $(window).resize(function() {
-    rtime = new Date();
+    now = new Date();
     if (timeout === false) {
         timeout = true;
-        setTimeout(resizeend, delta);
+
+        if(tid != null)
+            clearTimeout(tid);
+
+        tid = setTimeout(resize_check, millisec);
     }
 });
 
-function resizeend() {
-    if (new Date() - rtime < delta) {
-        setTimeout(resizeend, delta);
+function resize_check() {
+    if (new Date() - now < millisec) {
+        if(tid != null)
+            clearTimeout(tid);
+
+        tid = setTimeout(resize_check, millisec);
     } else {
         timeout = false;
         view_image_resize();
