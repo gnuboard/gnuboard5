@@ -35,8 +35,11 @@ $admin = get_admin("super");
     </div>
 </footer>
 
-<?php if(!G4_IS_MOBILE){ ?>
-<a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING'].'&amp;':'?').'device=mobile'; ?>" id="device_change">모바일 버전으로 보기</a>
+<?php
+if(!G4_IS_MOBILE) {
+    $querystring = str_replace("&", "&amp;", $_SERVER['QUERY_STRING']);
+?>
+<a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING'] ? '?'.$querystring.'&amp;' : '?').'device=mobile'; ?>" id="device_change">모바일 버전으로 보기</a>
 <?php } ?>
 
 <?php
