@@ -277,17 +277,24 @@ function view_image_resize()
 
     $img.each(function() {
         var img_width = $(this).width();
+        var img_height = $(this).height();
         var this_width = $(this).data("width");
+        var this_height = $(this).data("height");
 
         if(this_width == undefined) {
             $(this).data("width", img_width); // 원래 이미지 사이즈
+            $(this).data("height", img_height);
             this_width = img_width;
+            this_height = img_height;
         }
 
         if(this_width > res_width) {
             $(this).width(res_width);
+            var res_height = Math.round(res_width * $(this).data("height") / $(this).data("width"));
+            $(this).height(res_height);
         } else {
             $(this).width(this_width);
+            $(this).height(this_height);
         }
     });
 }

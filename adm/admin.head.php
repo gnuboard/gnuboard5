@@ -84,7 +84,7 @@ function imageview(id, w, h)
                         홈페이지 메인
                     </a>
                 </li>
-                <?php if(G4_USE_SHOP) { ?>
+                <?php if(defined('G4_USE_SHOP')) { ?>
                 <li>
                     <a href="<?php echo G4_SHOP_URL ?>/">
                         <img src="<?php echo G4_ADMIN_URL ?>/img/snb_home.jpg" alt="" width="28" height="28">
@@ -134,7 +134,7 @@ function imageview(id, w, h)
 <div id="wrapper">
 
     <ul id="qnb">
-        <? // ### 쇼핑몰 사용일 때만?>
+        <?php if(defined('G4_USE_SHOP')) { ?>
         <li>
             <a href="<?=G4_ADMIN_URL?>/shop_admin/orderlist.php">
                 <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sodr.jpg" alt="" width="40" height="40">
@@ -159,7 +159,7 @@ function imageview(id, w, h)
                 사용후기
             </a>
         </li>
-        <? // ### 쇼핑몰 사용일 때만 끝 ?>
+        <?php } ?>
         <li>
             <a href="<?php echo G4_ADMIN_URL ?>/member_list.php">
                 <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_mb.jpg" alt="" width="40" height="40">
