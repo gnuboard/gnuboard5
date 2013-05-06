@@ -156,7 +156,7 @@ else
             $img_big = $it['it_id'].'_l1'; // 기본이미지(대)
             ?>
             <div id="sit_pvi_big">
-                <?php echo get_large_image($it['it_id'].'_l1', $it['it_id'], false); ?><?php echo get_it_image($img_big); ?><span class="sound_only">새창</span></a>
+                <a href="<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;img=<?php echo $img_big; ?>" id="<?php echo $img_big; ?>" class="popup_item_image" target="_blank"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $img_big; ?>" alt=""></a>
             </div>
             <?php
             // 이미지(중) 썸네일
@@ -487,10 +487,26 @@ else
     <!-- 관련상품 end -->
 
     <script>
-    $(function(){ // 이미지 미리보기
-        $('#sit_pvi .img_thumb').bind('hover focus', function(){
-            var img_src = $(this).attr('id').replace("_s", "_l1");
-            $('#sit_pvi_big img').attr('src','<?php echo G4_DATA_URL; ?>/item/'+img_src); // 이미지 소스 교체
+    $(function(){
+        // 이미지 미리보기
+        $("#sit_pvi .img_thumb").bind("hover focus", function(){
+            var img_src = $(this).attr("id").replace("_s", "_l1");
+            $("#sit_pvi_big img").attr("src","<?php echo G4_DATA_URL; ?>/item/"+img_src); // 이미지 소스 교체
+            $("#sit_pvi_big a").attr("id", img_src);
+        });
+
+        // 상품이미지 크게보기
+        $(".popup_item_image").click(function() {
+            var it_id = "<?php echo $it['it_id']; ?>";
+            var img = $(this).attr("id");
+
+            var top = 10;
+            var left = 10;
+            var url = "<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=" + it_id + "&img=" + img;
+            var opt = 'scrollbars=yes,top='+top+',left='+left;
+            popup_window(url, "largeimage", opt);
+
+            return false;
         });
     });
 
