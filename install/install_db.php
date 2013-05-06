@@ -18,6 +18,7 @@ $mysql_user  = $_POST['mysql_user'];
 $mysql_pass  = $_POST['mysql_pass'];
 $mysql_db    = $_POST['mysql_db'];
 $table_prefix= $_POST['table_prefix'];
+$g4s_install = $_POST['g4s_install'];
 $shop_prefix = $_POST['shop_prefix'];
 $shop_install= $_POST['shop_install'];
 $admin_id    = $_POST['admin_id'];
@@ -48,16 +49,22 @@ if (!$select_db) {
 
 <ol>
 <?php
-// 테이블 생성 ------------------------------------
-$file = implode('', file('./gnuboard4s.sql'));
-eval("\$file = \"$file\";");
+$sql = " desc {$table_prefix}config";
+$result = @mysql_query($sql);
 
-$file = preg_replace('/^--.*$/m', '', $file);
-$file = preg_replace('/`g4s_([^`]+`)/', '`'.$table_prefix.'$1', $file);
-$f = explode(';', $file);
-for ($i=0; $i<count($f); $i++) {
-    if (trim($f[$i]) == '') continue;
-    mysql_query($f[$i]) or die(mysql_error());
+// 그누보드4s 재설치에 체크하였거나 그누보드4s가 설치되어 있지 않다면
+if($g4s_install || !$result) {
+    // 테이블 생성 ------------------------------------
+    $file = implode('', file('./gnuboard4s.sql'));
+    eval("\$file = \"$file\";");
+
+    $file = preg_replace('/^--.*$/m', '', $file);
+    $file = preg_replace('/`g4s_([^`]+`)/', '`'.$table_prefix.'$1', $file);
+    $f = explode(';', $file);
+    for ($i=0; $i<count($f); $i++) {
+        if (trim($f[$i]) == '') continue;
+        mysql_query($f[$i]) or die(mysql_error());
+    }
 }
 
 // 쇼핑몰 테이블 생성 -----------------------------
@@ -71,8 +78,6 @@ if($shop_install) {
         if (trim($f[$i]) == '') continue;
         mysql_query($f[$i]) or die(mysql_error());
     }
-
-    $cf_title = '쇼핑몰';
 }
 // 테이블 생성 ------------------------------------
 ?>
@@ -87,81 +92,83 @@ $download_point = 0;
 
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
-$sql = " insert into `{$table_prefix}config`
-            set cf_title = '$cf_title',
-                cf_admin = '$admin_id',
-                cf_use_point = '1',
-                cf_use_norobot = '1',
-                cf_use_copy_log = '1',
-                cf_login_point = '100',
-                cf_memo_send_point = '500',
-                cf_cut_name = '15',
-                cf_nick_modify = '60',
-                cf_new_skin = 'basic',
-                cf_new_rows = '15',
-                cf_search_skin = 'basic',
-                cf_connect_skin = 'basic',
-                cf_read_point = '$read_point',
-                cf_write_point = '$write_point',
-                cf_comment_point = '$comment_point',
-                cf_download_point = '$download_point',
-                cf_search_bgcolor = 'YELLOW',
-                cf_search_color = 'RED',
-                cf_write_pages = '10',
-                cf_mobile_pages = '5',
-                cf_link_target = '_blank',
-                cf_delay_sec = '30',
-                cf_filter = '18아,18놈,18새끼,18년,18뇬,18노,18것,18넘,개년,개놈,개뇬,개새,개색끼,개세끼,개세이,개쉐이,개쉑,개쉽,개시키,개자식,개좆,게색기,게색끼,광뇬,뇬,눈깔,뉘미럴,니귀미,니기미,니미,도촬,되질래,뒈져라,뒈진다,디져라,디진다,디질래,병쉰,병신,뻐큐,뻑큐,뽁큐,삐리넷,새꺄,쉬발,쉬밸,쉬팔,쉽알,스패킹,스팽,시벌,시부랄,시부럴,시부리,시불,시브랄,시팍,시팔,시펄,실밸,십8,십쌔,십창,싶알,쌉년,썅놈,쌔끼,쌩쑈,썅,써벌,썩을년,쎄꺄,쎄엑,쓰바,쓰발,쓰벌,쓰팔,씨8,씨댕,씨바,씨발,씨뱅,씨봉알,씨부랄,씨부럴,씨부렁,씨부리,씨불,씨브랄,씨빠,씨빨,씨뽀랄,씨팍,씨팔,씨펄,씹,아가리,아갈이,엄창,접년,잡놈,재랄,저주글,조까,조빠,조쟁이,조지냐,조진다,조질래,존나,존니,좀물,좁년,좃,좆,좇,쥐랄,쥐롤,쥬디,지랄,지럴,지롤,지미랄,쫍빱,凸,퍽큐,뻑큐,빠큐,ㅅㅂㄹㅁ',
-                cf_possible_ip = '',
-                cf_intercept_ip = '',
-                cf_member_skin = 'basic',
-                cf_mobile_new_skin = 'basic',
-                cf_mobile_search_skin = 'basic',
-                cf_mobile_connect_skin = 'basic',
-                cf_mobile_member_skin = 'basic',
-                cf_gcaptcha_mp3 = 'basic',
-                cf_register_level = '2',
-                cf_register_point = '1000',
-                cf_icon_level = '2',
-                cf_leave_day = '30',
-                cf_search_part = '10000',
-                cf_email_use = '1',
-                cf_prohibit_id = 'admin,administrator,관리자,운영자,어드민,주인장,webmaster,웹마스터,sysop,시삽,시샵,manager,매니저,메니저,root,루트,su,guest,방문객',
-                cf_prohibit_email = '',
-                cf_new_del = '30',
-                cf_memo_del = '180',
-                cf_visit_del = '180',
-                cf_popular_del = '180',
-                cf_use_member_icon = '2',
-                cf_member_icon_size = '5000',
-                cf_member_icon_width = '22',
-                cf_member_icon_height = '22',
-                cf_login_minutes = '10',
-                cf_image_extension = 'gif|jpg|jpeg|png',
-                cf_flash_extension = 'swf',
-                cf_movie_extension = 'asx|asf|wmv|wma|mpg|mpeg|mov|avi|mp3',
-                cf_formmail_is_member = '1',
-                cf_page_rows = '15',
-                cf_stipulation = '해당 홈페이지에 맞는 회원가입약관을 입력합니다.',
-                cf_privacy = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.'
-                ";
-mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
+if($g4s_install || !$result) {
+    $sql = " insert into `{$table_prefix}config`
+                set cf_title = '그누보드4s',
+                    cf_admin = '$admin_id',
+                    cf_use_point = '1',
+                    cf_use_norobot = '1',
+                    cf_use_copy_log = '1',
+                    cf_login_point = '100',
+                    cf_memo_send_point = '500',
+                    cf_cut_name = '15',
+                    cf_nick_modify = '60',
+                    cf_new_skin = 'basic',
+                    cf_new_rows = '15',
+                    cf_search_skin = 'basic',
+                    cf_connect_skin = 'basic',
+                    cf_read_point = '$read_point',
+                    cf_write_point = '$write_point',
+                    cf_comment_point = '$comment_point',
+                    cf_download_point = '$download_point',
+                    cf_search_bgcolor = 'YELLOW',
+                    cf_search_color = 'RED',
+                    cf_write_pages = '10',
+                    cf_mobile_pages = '5',
+                    cf_link_target = '_blank',
+                    cf_delay_sec = '30',
+                    cf_filter = '18아,18놈,18새끼,18년,18뇬,18노,18것,18넘,개년,개놈,개뇬,개새,개색끼,개세끼,개세이,개쉐이,개쉑,개쉽,개시키,개자식,개좆,게색기,게색끼,광뇬,뇬,눈깔,뉘미럴,니귀미,니기미,니미,도촬,되질래,뒈져라,뒈진다,디져라,디진다,디질래,병쉰,병신,뻐큐,뻑큐,뽁큐,삐리넷,새꺄,쉬발,쉬밸,쉬팔,쉽알,스패킹,스팽,시벌,시부랄,시부럴,시부리,시불,시브랄,시팍,시팔,시펄,실밸,십8,십쌔,십창,싶알,쌉년,썅놈,쌔끼,쌩쑈,썅,써벌,썩을년,쎄꺄,쎄엑,쓰바,쓰발,쓰벌,쓰팔,씨8,씨댕,씨바,씨발,씨뱅,씨봉알,씨부랄,씨부럴,씨부렁,씨부리,씨불,씨브랄,씨빠,씨빨,씨뽀랄,씨팍,씨팔,씨펄,씹,아가리,아갈이,엄창,접년,잡놈,재랄,저주글,조까,조빠,조쟁이,조지냐,조진다,조질래,존나,존니,좀물,좁년,좃,좆,좇,쥐랄,쥐롤,쥬디,지랄,지럴,지롤,지미랄,쫍빱,凸,퍽큐,뻑큐,빠큐,ㅅㅂㄹㅁ',
+                    cf_possible_ip = '',
+                    cf_intercept_ip = '',
+                    cf_member_skin = 'basic',
+                    cf_mobile_new_skin = 'basic',
+                    cf_mobile_search_skin = 'basic',
+                    cf_mobile_connect_skin = 'basic',
+                    cf_mobile_member_skin = 'basic',
+                    cf_gcaptcha_mp3 = 'basic',
+                    cf_register_level = '2',
+                    cf_register_point = '1000',
+                    cf_icon_level = '2',
+                    cf_leave_day = '30',
+                    cf_search_part = '10000',
+                    cf_email_use = '1',
+                    cf_prohibit_id = 'admin,administrator,관리자,운영자,어드민,주인장,webmaster,웹마스터,sysop,시삽,시샵,manager,매니저,메니저,root,루트,su,guest,방문객',
+                    cf_prohibit_email = '',
+                    cf_new_del = '30',
+                    cf_memo_del = '180',
+                    cf_visit_del = '180',
+                    cf_popular_del = '180',
+                    cf_use_member_icon = '2',
+                    cf_member_icon_size = '5000',
+                    cf_member_icon_width = '22',
+                    cf_member_icon_height = '22',
+                    cf_login_minutes = '10',
+                    cf_image_extension = 'gif|jpg|jpeg|png',
+                    cf_flash_extension = 'swf',
+                    cf_movie_extension = 'asx|asf|wmv|wma|mpg|mpeg|mov|avi|mp3',
+                    cf_formmail_is_member = '1',
+                    cf_page_rows = '15',
+                    cf_stipulation = '해당 홈페이지에 맞는 회원가입약관을 입력합니다.',
+                    cf_privacy = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.'
+                    ";
+    mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
-// 관리자 회원가입
-$sql = " insert into `{$table_prefix}member`
-            set mb_id = '$admin_id',
-                 mb_password = PASSWORD('$admin_pass'),
-                 mb_name = '$admin_name',
-                 mb_nick = '$admin_name',
-                 mb_email = '$admin_email',
-                 mb_level = '10',
-                 mb_mailling = '1',
-                 mb_open = '1',
-                 mb_email_certify = '".G4_TIME_YMDHIS."',
-                 mb_datetime = '".G4_TIME_YMDHIS."',
-                 mb_ip = '{$_SERVER['REMOTE_ADDR']}'
-                 ";
-@mysql_query($sql);
+    // 관리자 회원가입
+    $sql = " insert into `{$table_prefix}member`
+                set mb_id = '$admin_id',
+                     mb_password = PASSWORD('$admin_pass'),
+                     mb_name = '$admin_name',
+                     mb_nick = '$admin_name',
+                     mb_email = '$admin_email',
+                     mb_level = '10',
+                     mb_mailling = '1',
+                     mb_open = '1',
+                     mb_email_certify = '".G4_TIME_YMDHIS."',
+                     mb_datetime = '".G4_TIME_YMDHIS."',
+                     mb_ip = '{$_SERVER['REMOTE_ADDR']}'
+                     ";
+    @mysql_query($sql);
+}
 
 if($shop_install) {
     // 이미지 사이즈
@@ -257,7 +264,7 @@ if($shop_install) {
                     de_sms_cont2 = '{이름}님 주문해주셔서 고맙습니다.\n{주문번호}\n{주문금액}원\n{회사명}',
                     de_sms_cont3 = '{이름}님께서 주문하셨습니다.\n{주문번호}\n{주문금액}원\n{회사명}',
                     de_sms_cont4 = '{이름}님 입금 감사합니다.\n{입금액}원\n주문번호:\n{주문번호}\n{회사명}',
-                    de_sms_cont5 = '{이름}님 배송합니다.\n택배:{택배회사}\n운송장번호:\n{운송장번호}\n{회사명}',
+                    de_sms_cont5 = '{이름}님 배송합니다.\n택배:{택배회사}\n운송장번호:\n{운송장번호}\n{회사명}'
                     ";
     mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
@@ -405,14 +412,7 @@ fwrite($f, "define('G4_MYSQL_HOST', '{$mysql_host}');\n");
 fwrite($f, "define('G4_MYSQL_USER', '{$mysql_user}');\n");
 fwrite($f, "define('G4_MYSQL_PASSWORD', '{$mysql_pass}');\n");
 fwrite($f, "define('G4_MYSQL_DB', '{$mysql_db}');\n\n");
-if($shop_install) {
-    fwrite($f, "define('G4_USE_SHOP', true);\n\n");
-    fwrite($f, "define('G4_TABLE_PREFIX', '{$table_prefix}');\n");
-    fwrite($f, "define('SHOP_TABLE_PREFIX', '{$shop_prefix}');\n\n");
-
-} else {
-    fwrite($f, "define('G4_TABLE_PREFIX', '{$table_prefix}');\n\n");
-}
+fwrite($f, "define('G4_TABLE_PREFIX', '{$table_prefix}');\n\n");
 fwrite($f, "\$g4['write_prefix'] = G4_TABLE_PREFIX.'write_'; // 게시판 테이블명 접두사\n\n");
 fwrite($f, "\$g4['auth_table'] = G4_TABLE_PREFIX.'auth'; // 관리권한 설정 테이블\n");
 fwrite($f, "\$g4['config_table'] = G4_TABLE_PREFIX.'config'; // 기본환경 설정 테이블\n");
@@ -435,8 +435,12 @@ fwrite($f, "\$g4['visit_table'] = G4_TABLE_PREFIX.'visit'; // 방문자 테이�
 fwrite($f, "\$g4['visit_sum_table'] = G4_TABLE_PREFIX.'visit_sum'; // 방문자 합계 테이블\n");
 fwrite($f, "\$g4['uniqid_table'] = G4_TABLE_PREFIX.'uniqid'; // 유니크한 값을 만드는 테이블\n");
 fwrite($f, "\$g4['syndi_log_table'] = G4_TABLE_PREFIX.'syndi_log'; // 네이버 신디케이션 컨텐츠 삭제 로그 테이블\n");
+fwrite($f, "?>");
+
 if($shop_install) {
-    fwrite($f, "\n");
+    fwrite($f, "\n\n<?php\n");
+    fwrite($f, "define('G4_USE_SHOP', true);\n\n");
+    fwrite($f, "define('SHOP_TABLE_PREFIX', '{$shop_prefix}');\n\n");
     fwrite($f, "\$g4['shop_default_table'] = SHOP_TABLE_PREFIX.'default'; // 쇼핑몰설정 테이블\n");
     fwrite($f, "\$g4['shop_banner_table'] = SHOP_TABLE_PREFIX.'banner'; // 배너 테이블\n");
     fwrite($f, "\$g4['shop_card_history_table'] = SHOP_TABLE_PREFIX.'card_history'; // 전자결제이력 테이블\n");
@@ -457,8 +461,8 @@ if($shop_install) {
     fwrite($f, "\$g4['shop_order_table'] = SHOP_TABLE_PREFIX.'order'; // 주문서 테이블\n");
     fwrite($f, "\$g4['shop_wish_table'] = SHOP_TABLE_PREFIX.'wish'; // 보관함(위시리스트) 테이블\n");
     fwrite($f, "\$g4['shop_item_info_table'] = SHOP_TABLE_PREFIX.'item_info'; // 상품요약정보 테이블 (상품정보고시)\n");
+    fwrite($f, "?>");
 }
-fwrite($f, "?>");
 
 fclose($f);
 @chmod($file, 0606);
@@ -477,11 +481,18 @@ Deny from all
 EOD;
 fwrite($f, $str);
 fclose($f);
+
+@copy('./logo_img', $data_path.'/common/logo_img');
+@copy('./main_img', $data_path.'/common/main_img');
+
+@copy('./company_h', $data_path.'/content/company_h');
+@copy('./privacy_h', $data_path.'/content/privacy_h');
+@copy('./provision_h', $data_path.'/content/provision_h');
 //-------------------------------------------------------------------------------------------------
 ?>
 </ol>
 
-<p class="st_strong">축하합니다. <?php echo $cf_title; ?> 설치가 완료되었습니다.</p>
+<p class="st_strong">축하합니다. 그누보드4s 설치가 완료되었습니다.</p>
 
 <h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
 

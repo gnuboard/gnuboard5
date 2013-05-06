@@ -89,9 +89,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 
 <section id="sidx_lat">
     <h2>커뮤니티 최신글</h2>
-    <?php echo latest('shop_basic', '1', 5, 30); ?>
-    <?php echo latest('shop_basic', '1', 5, 25); ?>
-    <?php echo latest('shop_basic', '1', 5, 20); ?>
+    <?php echo latest('shop_basic', 'notice', 5, 30); ?>
+    <?php echo latest('shop_basic', 'free', 5, 25); ?>
+    <?php echo latest('shop_basic', 'qa', 5, 20); ?>
 </section>
 
 <?php echo poll('shop_basic'); ?>

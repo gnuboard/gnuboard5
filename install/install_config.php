@@ -64,6 +64,12 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="">그누보드4s 재설치</label></th>
+        <td>
+            <input name="g4s_install" type="checkbox" value="1" id="g4s_install">재설치
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="">쇼핑몰설치</label></th>
         <td>
             <input name="shop_install" type="checkbox" value="1" id="shop_install">설치
