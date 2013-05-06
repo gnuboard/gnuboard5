@@ -40,7 +40,7 @@ if (G4_IS_MOBILE) {
 }
 ?>
 <title><?php echo $g4_head_title; ?></title>
-<?php 
+<?php
 if (defined('G4_IS_ADMIN')) {
     echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/admin.css">'.PHP_EOL;
 } else {
@@ -62,21 +62,22 @@ var g4_is_mobile = "<?php echo G4_IS_MOBILE ?>";
 var g4_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
 var g4_sca       = "<?php echo isset($sca)?$sca:''; ?>";
 var g4_cookie_domain = "<?php echo G4_COOKIE_DOMAIN ?>";
-<?php 
+<?php
 if ($is_admin) {
-    echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'.PHP_EOL; 
-} 
+    echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'.PHP_EOL;
+}
 ?>
 </script>
 <script src="<?php echo G4_JS_URL ?>/jquery-1.8.3.min.js"></script>
 <script src="<?php echo G4_JS_URL ?>/jquery.menu.js"></script>
 <script src="<?php echo G4_JS_URL ?>/common.js"></script>
 <script src="<?php echo G4_JS_URL ?>/wrest.js"></script>
-<?php 
+<?php
 if(G4_IS_MOBILE) {
     echo '<script> set_cookie("device_width", screen.width, 6, g4_cookie_domain); </script>'.PHP_EOL;
 }
-echo $config['cf_add_script'];  
+if(!defined('G4_IS_ADMIN'))
+    echo $config['cf_add_script'];
 ?>
 </head>
 <body>
