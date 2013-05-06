@@ -508,7 +508,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 
 /* 상품 상세보기 - 상품정보 */
 #sit_inf {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
-#sit_inf h2,
+#sit_inf h2 {margin:0 0 10px}
 #sit_inf h3 {position:absolute;font-size:0;line-height:0;content:""}
 
 #sit_inf_basic {margin:0 0 10px}
@@ -520,11 +520,11 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 
 /* 상품 상세보기 - 사용후기 */
 #sit_ps {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
-#sit_ps h2 {position:absolute;font-size:0;line-height:0;content:""}
+#sit_ps h2 {margin:0 0 10px}
 
 /* 상품 상세보기 - 상품문의 */
 #sit_qna {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
-#sit_qna h2 {position:absolute;font-size:0;line-height:0;content:""}
+#sit_qna h2 {margin:0 0 10px}
 #sit_qna h3 {margin:0 0 10px}
 
 #sit_qna_ol {margin:0 0 5px;padding:0;border-top:1px solid #e9e9e9;list-style:none}
@@ -550,15 +550,15 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 
 /* 상품 상세보기 - 배송정보 */
 #sit_dvr {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
-#sit_dvr h2 {position:absolute;font-size:0;line-height:0;content:""}
+#sit_dvr h2 {margin:0 0 10px}
 
 /* 상품 상세보기 - 교환정보 */
 #sit_ex {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
-#sit_ex h2 {position:absolute;font-size:0;line-height:0;content:""}
+#sit_ex h2 {margin:0 0 10px}
 
 /* 상품 상세보기 - 관련상품 */
 #sit_rel {margin:0 0 10px;padding:10px 10px 20px}
-#sit_rel h2 {position:absolute;font-size:0;line-height:0;content:""}
+#sit_rel h2 {margin:0 0 10px}
 
 /* 공지사항 및 커뮤니티 새글 */
 #sidx_lat {padding:15px 0 0;border-top:1px solid #ddd}
