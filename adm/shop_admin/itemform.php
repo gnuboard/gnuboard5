@@ -125,6 +125,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_cate">상품분류</a></li>
 <li><a href="#anc_sitfrm_ini">기본정보</a></li>
+<li><a href="#anc_sitfrm_cost">가격 및 재고</a></li>
 <li><a href="#anc_sitfrm_img">상품이미지</a></li>
 <li><a href="#anc_sitfrm_relation">관련상품</a></li>
 <li><a href="#anc_sitfrm_event">관련이벤트</a></li>
@@ -310,48 +311,6 @@ $pg_anchor ='<ul class="anchor">
     </tr>
     <?php } ?>
     <tr>
-        <th scope="row"><label for="it_amount">비회원가격</label></th>
-        <td>
-            <?php echo help("상품의 기본판매가격(로그인 이전 가격)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다."); ?>
-            <input type="text" name="it_amount" value="<?php echo $it['it_amount']; ?>" id="it_amount" class="frm_input" size="8"> 원
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_amount2">회원가격</label></th>
-        <td>
-            <?php echo help("상품의 로그인 이후 가격(회원 권한 2 에만 적용)되며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n<strong>입력이 없다면 비회원가격으로 대신합니다.</strong>"); ?>
-            <input type="text" name="it_amount2" value="<?php echo $it['it_amount2']; ?>" id="it_amount2" class="frm_input"  size="8"> 원
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_amount3">특별회원가격</label></th>
-        <td>
-            <?php echo help("상품의 로그인 이후 가격(회원 권한 3 이상에 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n<strong>입력이 없다면 회원가격으로 대신합니다. 회원가격도 없다면 비회원가격으로 대신합니다.</strong>"); ?>
-            <input type="text" name="it_amount3" value="<?php echo $it['it_amount3']; ?>" id="it_amount3" class="frm_input" size="8"> 원
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_cust_amount">시중가격</label></th>
-        <td>
-            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
-            <input type="text" name="it_cust_amount" value="<?php echo $it['it_cust_amount']; ?>" id="it_cust_amount" class="frm_input" size="8"> 원
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_point">포인트</label></th>
-        <td>
-            <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n포인트 기능을 사용해야 동작합니다."); ?>
-            <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> 점
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_stock_qty">재고수량</label></th>
-        <td>
-            <?php echo help("<b>주문관리에서 상품별 상태 변경에 따라 자동으로 재고를 가감합니다.</b> 재고는 규격/색상별이 아닌, 상품별로만 관리됩니다."); ?>
-            <input type="text" name="it_stock_qty" value="<?php echo $it['it_stock_qty']; ?>" id="it_stock_qty" class="frm_input" size="8"> 개</span>
-        </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="it_basic">기본설명</label></th>
         <td>
             <?php echo help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다. HTML 입력도 가능합니다."); ?>
@@ -405,6 +364,60 @@ $pg_anchor ='<ul class="anchor">
         </td>
     </tr>
     </tbody>
+    </table>
+</section>
+
+<section id="anc_sitfrm_cost" class="cbox">
+    <h2>가격 및 재고</h2>
+    <?php echo $pg_anchor; ?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="it_amount">비회원가격</label></th>
+        <td>
+            <?php echo help("상품의 기본판매가격(로그인 이전 가격)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다."); ?>
+            <input type="text" name="it_amount" value="<?php echo $it['it_amount']; ?>" id="it_amount" class="frm_input" size="8"> 원
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_amount2">회원가격</label></th>
+        <td>
+            <?php echo help("상품의 로그인 이후 가격(회원 권한 2 에만 적용)되며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n<strong>입력이 없다면 비회원가격으로 대신합니다.</strong>"); ?>
+            <input type="text" name="it_amount2" value="<?php echo $it['it_amount2']; ?>" id="it_amount2" class="frm_input"  size="8"> 원
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_amount3">특별회원가격</label></th>
+        <td>
+            <?php echo help("상품의 로그인 이후 가격(회원 권한 3 이상에 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n<strong>입력이 없다면 회원가격으로 대신합니다. 회원가격도 없다면 비회원가격으로 대신합니다.</strong>"); ?>
+            <input type="text" name="it_amount3" value="<?php echo $it['it_amount3']; ?>" id="it_amount3" class="frm_input" size="8"> 원
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_cust_amount">시중가격</label></th>
+        <td>
+            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+            <input type="text" name="it_cust_amount" value="<?php echo $it['it_cust_amount']; ?>" id="it_cust_amount" class="frm_input" size="8"> 원
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_point">포인트</label></th>
+        <td>
+            <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n포인트 기능을 사용해야 동작합니다."); ?>
+            <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> 점
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_stock_qty">재고수량</label></th>
+        <td>
+            <?php echo help("<b>주문관리에서 상품별 상태 변경에 따라 자동으로 재고를 가감합니다.</b> 재고는 규격/색상별이 아닌, 상품별로만 관리됩니다."); ?>
+            <input type="text" name="it_stock_qty" value="<?php echo $it['it_stock_qty']; ?>" id="it_stock_qty" class="frm_input" size="8"> 개</span>
+        </td>
+    </tr>
     </table>
 </section>
 
