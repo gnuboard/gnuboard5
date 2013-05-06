@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#f9fafe;font-size:0.75em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -180,7 +180,7 @@ td.empty_table {padding:85px 0;text-align:center}
 
 /* 폼 테이블 */
 .frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
-.frm_tbl caption {padding:10px 0;color:#4b8b99;font-weight:bold;text-align:left}
+.frm_tbl caption {padding:10px 0;font-weight:bold;text-align:left}
 .frm_tbl th {padding-left:10px;width:100px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
 .frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
@@ -194,7 +194,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .frm_tbl #captcha input {margin-left:5px;text-align:center}
 .frm_tbl a {text-decoration:none}
 
-.frm_info {display:block;padding:5px 0 0;color:#666;line-height:1.3em}
+.frm_info {display:block;padding:0 0 5px;line-height:1.4em}
 
 /* 테이블 항목별 정의 */
 .td_chk {width:30px;text-align:center}
