@@ -14,30 +14,25 @@ else
     $colspan = 6;
 ?>
 
-<form name=frmcartlist method=post style="padding:0px;">
-<table width=98% cellpadding=0 cellspacing=0 align=center>
-<colgroup width=80>
-<colgroup width=''>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<colgroup width=80>
-<?php if ($colspan == 7) echo '<colgroup width=50>'; ?>
-<tr><td colspan='<?php echo $colspan; ?>' height=2 class=c1></td></tr>
-<tr align=center height=28 class=c2>
-    <td colspan=2>상품명</td>
-    <td>수량</td>
-    <td>판매가</td>
-    <td>소계</td>
-    <td>포인트</td>
+<form name="frmcartlist" method="post">
+<table class="basic_tbl">
+<thead>
+<tr>
+    <th scope="col">상품이미지</th>
+    <th scope="col">상품명</th>
+    <th scope="col">수량</th>
+    <th scope="col">판매가</th>
+    <th scope="col">소계</th>
+    <th scope="col">포인트</th>
 <?php
 if ($s_page == 'cart.php')
-    echo '<td>삭제</td>';
+    echo '<th scope="col">삭제</th>';
 else if ($s_page == 'orderinquiryview.php')
-    echo '<td>상태</td>';
+    echo '<th scope="col">상태</th>';
 ?>
 </tr>
-<tr><td colspan='<?php echo $colspan; ?>' height=1 class=c1></td></tr>
+</thead>
+<tbody>
 <?php
 $tot_point = 0;
 $tot_sell_amount = 0;
@@ -96,63 +91,57 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $continue_ca_id = $row['ca_id'];
     }
 
-    if ($s_page == "cart.php" || $s_page == "orderinquiryview.php") { // 링크를 붙이고
-        $a1 = "<a href='./item.php?it_id=$row[it_id]'>";
-        $a2 = "</a>";
-        $image = get_it_image($row['it_id']."_s", 50, 50, $row['it_id']);
+    if ($s_page == 'cart.php' || $s_page == 'orderinquiryview.php') { // 링크를 붙이고
+        $a1 = '<a href="./item.php?it_id='.$row[it_id].'"><b>';
+        $a2 = '</b></a>';
+        $image = get_it_image($row['it_id'].'_s', 70, 70, $row['it_id']);
     } else { // 붙이지 않고
-        $a1 = "";
-        $a2 = "";
-        $image = get_it_image($row['it_id']."_s", 50, 50);
+        $a1 = '<b>';
+        $a2 = '</b>';
+        $image = get_it_image($row['it_id'].'_s', 50, 50);
     }
 
-    $it_name = $a1 . stripslashes($row['it_name']) . $a2 . "<br>";
-    $it_name .= print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
+    $it_name = $a1 . stripslashes($row['it_name']) . $a2 . '<br>';
+    $it_name .= '<div class="sod_bsk_itopt">'.print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']).'</div>';
 
     $point       = $row['ct_point'] * $row['ct_qty'];
     $sell_amount = $row['ct_amount'] * $row['ct_qty'];
+?>
 
-    if ($i > 0)
-        echo "<tr><td colspan='$colspan' height=1 bgcolor=#E7E9E9></td></tr>";
+<tr>
+    <td class="sod_bsk_img"><?php echo $image; ?></td>
+    <td>
+        <input type="hidden" name="ct_id[<?php echo $i; ?>]"    value="<?php echo $row['ct_id']; ?>">
+        <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
+        <input type="hidden" name="ap_id[<?php echo $i; ?>]"    value="<?php echo $row['ap_id']; ?>">
+        <input type="hidden" name="bi_id[<?php echo $i; ?>]"    value="<?php echo $row['bi_id']; ?>">
+        <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
+        <input type="hidden" name="act" value="">
+        <input type="hidden" name="records" value="<?php echo $i; ?>">
+        <?php echo $it_name; ?>
+    </td>
 
-    echo "<tr>";
-    echo "<td align=left style='padding:5px;'>$image</td><td>";
-    echo "<input type=hidden name='ct_id[$i]'    value='{$row['ct_id']}'>";
-    echo "<input type=hidden name='it_id[$i]'    value='{$row['it_id']}'>";
-    echo "<input type=hidden name='ap_id[$i]'    value='{$row['ap_id']}'>";
-    echo "<input type=hidden name='bi_id[$i]'    value='{$row['bi_id']}'>";
-    echo "<input type=hidden name='it_name[$i]'  value='".get_text($row['it_name'])."'>";
-    echo $it_name;
-    echo "</td>";
-
+    <?php
     // 수량, 입력(수량)
     if ($s_page == "cart.php")
-        echo "<td align=center><input type=text id='ct_qty_{$i}' name='ct_qty[{$i}]' value='{$row['ct_qty']}' size=4 maxlength=6 class=ed style='text-align:right;' autocomplete='off'></td>";
+        echo '<td class="td_num"><input type="text" name="ct_qty['.$i.']" value="'.$row['ct_qty'].'" id="ct_qty_'.$i.'" class="frm_input" size="4" maxlength="6" autocomplete="off"></td>';
     else
-        echo "<td align=center>{$row['ct_qty']}</td>";
+        echo '<td class="td_num">'.$row['ct_qty'].'</td>';
+    ?>
 
-    echo "<td align=right>" . number_format($row['ct_amount']) . "</td>";
-    echo "<td align=right>" . number_format($sell_amount) . "</td>";
-    echo "<td align=right>" . number_format($point) . "&nbsp;</td>";
+    <td class="td_bignum"><?php echo number_format($row['ct_amount']); ?></td>
+    <td class="td_bignum"><?php echo number_format($sell_amount); ?></td>
+    <td class="td_bignum"><?php echo number_format($point); ?></td>
 
-    if ($s_page == "cart.php")
-        echo "<td align=center><a href='./cartupdate.php?act=d&ct_id={$row['ct_id']}'><img src='".G4_SHOP_URL."/img/btn_del.gif' border='0' align=absmiddle alt='삭제'></a></td>";
-    else if ($s_page == "orderinquiryview.php")
-    {
-        switch($row['ct_status'])
-        {
-            case '주문' : $icon = "<img src='".G4_SHOP_URL."/img/status01.gif'>"; break;
-            case '준비' : $icon = "<img src='".G4_SHOP_URL."/img/status02.gif'>"; break;
-            case '배송' : $icon = "<img src='".G4_SHOP_URL."/img/status03.gif'>"; break;
-            case '완료' : $icon = "<img src='".G4_SHOP_URL."/img/status04.gif'>"; break;
-            default     : $icon = $row['ct_status']; break;
-        }
-        echo "<td align=center>$icon</td>";
-    }
+    <?php
+    if ($s_page == 'cart.php')
+        echo '<td class="td_smallmng"><a href="./cartupdate.php?act=d&amp;ct_id='.$row['ct_id'].'">삭제</a></td>';
+    else if ($s_page == 'orderinquiryview.php')
+        echo '<td class="td_smallmng">'.$row['ct_status'].'</td>';
+    ?>
+</tr>
 
-    echo "</tr>";
-    echo "<tr><td colspan='$colspan' class=dotline></td></tr>";
-
+<?php
     //$tot_point       += $point;
     //$tot_sell_amount += $sell_amount;
 
@@ -163,22 +152,13 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $tot_point       += $point;
         $tot_sell_amount += $sell_amount;
     }
-}
 
-if ($goods_count)
-    $goods .= " 외 {$goods_count}건";
-
-if ($i == 0) {
-    echo "<tr>";
-    echo "<td colspan='$colspan' align=center height=100><span class=textpoint>장바구니가 비어 있습니다.</span></td>";
-    echo "</tr>";
-} else {
     // 배송비가 넘어왔다면
     if ($_POST['od_send_cost']) {
         $send_cost = (int)$_POST['od_send_cost'];
     } else {
         // 배송비 계산
-        if ($default['de_send_cost_case'] == "없음")
+        if ($default['de_send_cost_case'] == '없음')
             $send_cost = 0;
         else {
             // 배송비 상한 : 여러단계의 배송비 적용 가능
@@ -200,136 +180,125 @@ if ($i == 0) {
         if ($row['od_send_cost'] > 0)
             $send_cost = $row['od_send_cost'];
     }
+} // for 끝
 
-    // 배송비가 0 보다 크다면 (있다면)
-    if ($send_cost > 0)
-    {
-        echo "<tr><td colspan='$colspan' height=1 bgcolor=#E7E9E9></td></tr>";
-        echo "<tr>";
-        echo "<td height=28 colspan=4 align=right>배송비 : </td>";
-        echo "<td align=right>" . number_format($send_cost) . "</td>";
-        echo "<td>&nbsp;</td>";
-        if ($s_page == "cart.php" || $s_page == "orderinquiryview.php")
-           echo "<td>&nbsp;</td>";
-        echo "  </tr>   ";
-    }
-
-    // 총계 = 주문상품금액합계 + 배송비
-    $tot_amount = $tot_sell_amount + $send_cost;
-
-    echo "<tr><td colspan='$colspan' height=1 bgcolor=#94D7E7></td></tr>";
-    echo "<tr align=center height=28 bgcolor=#E7F3F7>";
-    echo "<td colspan=4 align=right><b>총계 : </b></td>";
-    echo "<td align=right><span class=amount><b>" . number_format($tot_amount) . "</b></span></td>";
-    echo "<td align=right>" . number_format($tot_point) . "&nbsp;</td>";
-    if ($s_page == "cart.php" || $s_page == "orderinquiryview.php")
-        echo "<td> &nbsp;</td>";
-    echo "</tr>";
-    echo "<input type=hidden name=act value=''>";
-    echo "<input type=hidden name=records value='$i'>";
-}
+if ($i == 0) echo '<tr><td colspan="'.$colspan.'" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
 ?>
-<tr><td colspan='<?php echo $colspan; ?>' height=2 bgcolor=#94D7E7></td></tr>
-<tr>
-    <td colspan='<?php echo $colspan; ?>' align=center>
-    <?php
-    if ($s_page == "cart.php") {
-        if ($i == 0) {
-            echo "<br><a href='".G4_SHOP_URL."'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0'></a>";
-        } else {
-            echo "
-            <br><input type=hidden name=url value='./orderform.php'>
-            <a href=\"javascript:form_check('buy')\"><img src='".G4_SHOP_URL."/img/btn_buy.gif' border='0' alt='구매하기'></a>&nbsp;
-            <a href=\"javascript:form_check('allupdate')\"><img src='".G4_SHOP_URL."/img/btn_cart_quan.gif' border='0' alt='장바구니 수량 변경'></a>&nbsp;
-            <a href=\"javascript:form_check('alldelete');\"><img src='".G4_SHOP_URL."/img/btn_cart_out.gif' border='0' alt='장바구니 비우기'></a>&nbsp;
-            <a href='".G4_SHOP_URL."/list.php?ca_id=$continue_ca_id'><img src='".G4_SHOP_URL."/img/btn_shopping.gif' border='0' alt='계속쇼핑하기'></a>";
-        }
-    }
-    ?>
-    </td>
-</tr>
-</form>
+</tbody>
 </table>
 
+<?php if ($goods_count) $goods .= '<div> 외 '.$goods_count.'건</div>'; ?>
 
+<?php
+// 배송비가 0 보다 크다면 (있다면)
+if ($send_cost > 0)
+{
+?>
 
-<?php if ($s_page == "cart.php") { ?>
-    <script language='javascript'>
-    <?php if ($i != 0) { ?>
-        function form_check(act) {
-            var f = document.frmcartlist;
-            var cnt = f.records.value;
+<div id="sod_bsk_dvr" class="sod_bsk_tot">
+    <span>배송비</span>
+    <strong><?php echo number_format($send_cost); ?> 원</strong>
+</div>
 
-            if (act == "buy")
-            {
-                f.act.value = act;
+<?php } ?>
 
-                <?php
-                if (get_session('ss_mb_id')) // 회원인 겨우
-                {
-                    echo "f.action = './orderform.php';";
-                    echo "f.submit();";
-                }
-                else
-                    echo "document.location.href = '".G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/orderform.php")."';";
-                ?>
-            }
-            else if (act == "alldelete")
-            {
-                f.act.value = act;
-                f.action = "./cartupdate.php";
-                f.submit();
-            }
-            else if (act == "allupdate")
-            {
-                for (i=0; i<cnt; i++)
-                {
-                    //if (f.elements("ct_qty[" + i + "]").value == "")
-                    if (document.getElementById('ct_qty_'+i).value == '')
-                    {
-                        alert("수량을 입력해 주십시오.");
-                        //f.elements("ct_qty[" + i + "]").focus();
-                        document.getElementById('ct_qty_'+i).focus();
-                        return;
-                    }
-                    //else if (isNaN(f.elements("ct_qty[" + i + "]").value))
-                    else if (isNaN(document.getElementById('ct_qty_'+i).value))
-                    {
-                        alert("수량을 숫자로 입력해 주십시오.");
-                        //f.elements("ct_qty[" + i + "]").focus();
-                        document.getElementById('ct_qty_'+i).focus();
-                        return;
-                    }
-                    //else if (f.elements("ct_qty[" + i + "]").value < 1)
-                    else if (document.getElementById('ct_qty_'+i).value < 1)
-                    {
-                        alert("수량은 1 이상 입력해 주십시오.");
-                        //f.elements("ct_qty[" + i + "]").focus();
-                        document.getElementById('ct_qty_'+i).focus();
-                        return;
-                    }
-                }
-                f.act.value = act;
-                f.action = "./cartupdate.php";
-                f.submit();
-            }
+<?php
+// 총계 = 주문상품금액합계 + 배송비
+$tot_amount = $tot_sell_amount + $send_cost;
+if ($tot_amount > 0) {
+?>
 
-            return true;
-        }
+<div id="sod_bsk_cnt" class="sod_bsk_tot">
+    <span>총계</span>
+    <strong><?php echo number_format($tot_amount); ?> 원 <?php echo number_format($tot_point); ?> 점</strong>
+</div>
+
+<?php } ?>
+
+<?php if ($s_page == 'cart.php') { ?>
+<div id="sod_bsk_act">
+    <?php if ($i == 0) { ?>
+    <a href="<?php echo G4_SHOP_URL; ?>" class="btn01">쇼핑 계속하기</a>
+    <?php } else { ?>
+    <input type="hidden" name="url" value="./orderform.php">
+    <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
+    <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
+    <a href="javascript:form_check('buy');" class="btn02">주문하기</a>
+    <a href="javascript:form_check('allupdate');" class="btn01">수량변경</a>
+    <a href="javascript:form_check('alldelete');" class="btn01">비우기</a>
     <?php } ?>
-    </script>
+</div>
 <?php } ?>
 
-<?php if ($s_page == "cart.php") { ?>
-<br><br>
-<table align=center cellpadding=0 cellspacing=0>
-    <tr><td><img src='<?php echo G4_SHOP_URL; ?>/img/info_box01.gif'></td></tr>
-    <tr><td background='<?php echo G4_SHOP_URL; ?>/img/info_box03.gif' style='line-height:180%; padding-left:20px'>
-        · <FONT COLOR="#FF8200">상품 주문하기</FONT> : 주문서를 작성하시려면 '주문하기' 버튼을 누르세요.<BR>
-        · <FONT COLOR="#FF8200">상품 수량변경</FONT> : 주문수량을 변경하시려면 원하시는 수량을 입력하신 후 '수량변경' 버튼을 누르세요.<BR>
-        · <FONT COLOR="#FF8200">상품 삭제하기</FONT> : 모든 주문내용을 삭제하시려면 '삭제하기' 버튼을 누르세요.<BR>
-        · <FONT COLOR="#FF8200">쇼핑 계속하기</FONT> : 쇼핑하시던 페이지로 돌아가시려면 '쇼핑 계속하기' 버튼을 누르세요.
-        </td></tr>
-    <tr><td><img src='<?php echo G4_SHOP_URL; ?>/img/info_box02.gif'></td></tr>
-</table><br><br>
-<?php } ?>
+</form>
+
+<?php
+if ($s_page == 'cart.php') {
+    if ($i != 0) {
+?>
+<script>
+function form_check(act) {
+    var f = document.frmcartlist;
+    var cnt = f.records.value;
+
+    if (act == "buy")
+    {
+        f.act.value = act;
+
+        <?php
+        if (get_session('ss_mb_id')) // 회원인 겨우
+        {
+            echo "f.action = './orderform.php';";
+            echo "f.submit();";
+        }
+        else
+            echo "document.location.href = '".G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/orderform.php")."';";
+        ?>
+    }
+    else if (act == "alldelete")
+    {
+        f.act.value = act;
+        f.action = "./cartupdate.php";
+        f.submit();
+    }
+    else if (act == "allupdate")
+    {
+        for (i=0; i<cnt; i++)
+        {
+            //if (f.elements("ct_qty[" + i + "]").value == "")
+            if (document.getElementById('ct_qty_'+i).value == '')
+            {
+                alert("수량을 입력해 주십시오.");
+                //f.elements("ct_qty[" + i + "]").focus();
+                document.getElementById('ct_qty_'+i).focus();
+                return;
+            }
+            //else if (isNaN(f.elements("ct_qty[" + i + "]").value))
+            else if (isNaN(document.getElementById('ct_qty_'+i).value))
+            {
+                alert("수량을 숫자로 입력해 주십시오.");
+                //f.elements("ct_qty[" + i + "]").focus();
+                document.getElementById('ct_qty_'+i).focus();
+                return;
+            }
+            //else if (f.elements("ct_qty[" + i + "]").value < 1)
+            else if (document.getElementById('ct_qty_'+i).value < 1)
+            {
+                alert("수량은 1 이상 입력해 주십시오.");
+                //f.elements("ct_qty[" + i + "]").focus();
+                document.getElementById('ct_qty_'+i).focus();
+                return;
+            }
+        }
+        f.act.value = act;
+        f.action = "./cartupdate.php";
+        f.submit();
+    }
+
+    return true;
+}
+</script>
+<?php
+    }
+}
+?>
