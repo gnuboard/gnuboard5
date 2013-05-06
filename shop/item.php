@@ -477,24 +477,26 @@ else
         <h2>관련상품</h2>
         <?php echo pg_anchor('rel'); ?>
 
-        <?php
-        $list_mod   = $default['de_rel_list_mod'];
-        $img_width  = $default['de_rel_img_width'];
-        $img_height = $default['de_rel_img_height'];
-        $td_width = (int)(100 / $list_mod);
+        <div class="sct_wrap">
+            <?php
+            $list_mod   = $default['de_rel_list_mod'];
+            $img_width  = $default['de_rel_img_width'];
+            $img_height = $default['de_rel_img_height'];
+            $td_width = (int)(100 / $list_mod);
 
-        $sql = " select b.*
-                   from {$g4['shop_item_relation_table']} a
-                   left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
-                  where a.it_id = '{$it['it_id']}'
-                    and b.it_use='1' ";
-        $result = sql_query($sql);
-        $num = @mysql_num_rows($result);
-        if ($num)
-            include G4_SHOP_PATH.'/maintype10.inc.php';
-        else
-            echo '이 상품과 관련된 상품이 없습니다.';
-        ?>
+            $sql = " select b.*
+                       from {$g4['shop_item_relation_table']} a
+                       left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
+                      where a.it_id = '{$it['it_id']}'
+                        and b.it_use='1' ";
+            $result = sql_query($sql);
+            $num = @mysql_num_rows($result);
+            if ($num)
+                include G4_SHOP_PATH.'/maintype10.inc.php';
+            else
+                echo '이 상품과 관련된 상품이 없습니다.';
+            ?>
+        </div>
     </section>
 
     <script>
