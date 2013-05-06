@@ -46,6 +46,43 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $is_time = substr($row['is_time'], 2, 14);
 ?>
 
+    <li class="sit_ps_li">
+        <button type="button" class="sit_ps_li_title" onclick="javascript:qa_menu('sit_ps_con_<?php echo $i; ?>')"><?php echo $num; ?>. <?php echo $iq_subject; ?></button>
+        <dl class="sit_ps_dl">
+            <dt>작성자</dt>
+            <dd><?php echo $iq_name; ?></dd>
+            <dt>작성일</dt>
+            <dd><?php echo $iq_time; ?></dd>
+            <dt>상태</dt>
+            <dd><?php echo $iq_stats; ?></dd>
+        </dl>
+
+        <div id="sit_ps_con_<?php echo $i; ?>" class="sit_ps_con">
+            <p class="sit_ps_qaq">
+                <strong>문의내용</strong><br>
+                <?php echo $iq_question; // 상품 문의 내용 ?>
+            </p>
+            <p class="sit_ps_qaa">
+                <strong>답변</strong><br>
+                <?php echo $iq_answer; ?>
+            </p>
+
+            <textarea id="tmp_iq_id<?php echo $i; ?>"><?php echo $row['iq_id']; ?></textarea>
+            <textarea id="tmp_iq_name<?php echo $i; ?>"><?php echo $row['iq_name']; ?></textarea>
+            <textarea id="tmp_iq_subject<?php echo $i; ?>"><?php echo $row['iq_subject']; ?></textarea>
+            <textarea id="tmp_iq_question<?php echo $i; ?>"><?php echo $row['iq_question']; ?></textarea>
+
+            <?php if ($row['mb_id'] == $member['mb_id'] && $iq_answer == 0) { ?>
+            <div class="sit_ps_cmd">
+                <button onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
+                <button onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button>
+            </div>
+            <?php } ?>
+        </div>
+    </li>
+
+
+
 <tr>
     <td><?php echo $num; ?><span class="sound_only">번</span></td>
     <td>

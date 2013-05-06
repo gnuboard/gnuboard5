@@ -257,7 +257,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .frm_tbl #captcha input {margin-left:5px;text-align:center}
 .frm_tbl a {text-decoration:none}
 
-.frm_info {display:block;padding:5px 0 0;color:#666;line-height:1.3em}
+.frm_info {display:block;padding:0 0 5px;color:#666;line-height:1.3em}
 
 /* 테이블 그리드 padding 0 5px 고려한 넓이 */
 .grid_1 {width:40px}
@@ -542,7 +542,8 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .sit_qna_con textarea {display:none}
 .sit_qna_cmd {text-align:right}
 
-.sit_qna_pw {display:none}
+.sit_qna_pw {display:none;position:absolute;top:30px;left:175px;padding:10px;width:348px;border:1px solid #000;background:#fff;text-align:center}
+.sit_qna_pw span {display:block;margin:0 0 5px}
 
 #sit_qna_wbtn {margin:0 0 5px;text-align:right}
 
