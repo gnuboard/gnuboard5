@@ -2,287 +2,238 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<!-- 상품문의 -->
-<a name="qa"></a>
-<div id="item_qa" style="display:block;">
-<table width=100% cellpadding=0 cellspacing=0>
-<tr><td rowspan=2 width=31 valign=top bgcolor=#A7DFE1><img src='<?php echo G4_SHOP_URL; ?>/img/item_t03.gif'></td><td height=2 bgcolor=#A7DFE1></td></tr>
-<tr><td style='padding:15px'>
-        <table width=100% cellpadding=0 cellspacing=0 border=0>
-        <tr>
-            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner01.gif'></td>
-            <td valign=top>
-                <table width=100% height=31 cellpadding=0 cellspacing=0 border=0>
-                <tr align=center>
-                    <td width=40 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>번호</td>
-                    <td background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>제목</td>
-                    <td width=80 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>작성자</td>
-                    <td width=100 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>작성일</td>
-                    <td width=80 background='<?php echo G4_SHOP_URL; ?>/img/box_bg01.gif'>답변</td>
-                </tr>
-                </table></td>
-            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner02.gif'></td>
-        </tr>
-        <?php
-        $sql_common = " from {$g4['shop_item_qa_table']} where it_id = '{$it['it_id']}' ";
+<section id="sit_qna_list">
+    <h3>등록된 상품문의</h3>
 
-        // 테이블의 전체 레코드수만 얻음
-        $sql = " select COUNT(*) as cnt " . $sql_common;
-        $row = sql_fetch($sql);
-        $qa_total_count = $row['cnt'];
+    <?php
+    $sql_common = " from {$g4['shop_item_qa_table']} where it_id = '{$it['it_id']}' ";
 
-        $qa_total_page  = ceil($qa_total_count / $qa_page_rows); // 전체 페이지 계산
-        if ($qa_page == "") $qa_page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
-        $qa_from_record = ($qa_page - 1) * $qa_page_rows; // 시작 레코드 구함
+    // 테이블의 전체 레코드수만 얻음
+    $sql = " select COUNT(*) as cnt " . $sql_common;
+    $row = sql_fetch($sql);
+    $qa_total_count = $row['cnt'];
 
-        $sql = "select *
-                 $sql_common
-                 order by iq_id desc
-                 limit $qa_from_record, $qa_page_rows ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++)
+    $qa_total_page  = ceil($qa_total_count / $qa_page_rows); // 전체 페이지 계산
+    if ($qa_page == "") $qa_page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+    $qa_from_record = ($qa_page - 1) * $qa_page_rows; // 시작 레코드 구함
+
+    $sql = "select *
+             $sql_common
+             order by iq_id desc
+             limit $qa_from_record, $qa_page_rows ";
+    $result = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+
+        $num = $qa_total_count - ($qa_page - 1) * $qa_page_rows - $i;
+
+        $iq_name  = get_text($row['iq_name']);
+        $iq_subject  = conv_subject($row['iq_subject'],50, '…');
+        $iq_question = conv_content($row['iq_question'],0);
+        $iq_answer   = conv_content($row['iq_answer'],0);
+
+        $iq_time = substr($row['iq_time'], 2, 14);
+
+        //$qa = "<img src='$g4[shop_img_path]/icon_poll_q.gif' border=0>";
+        //if ($row[iq_answer]) $qa .= "<img src='$g4[shop_img_path]/icon_answer.gif' border=0>";
+        //$qa = "$qa";
+
+        $iq_stats = '';
+        $iq_answer = '';
+        $iq_flag = 0;
+        if ($row['iq_answer'])
         {
-            if ($i > 0)
-                echo "<tr><td colspan=3 background='".G4_SHOP_URL."/img/dot_line.gif' height='1'></td></tr>";
-
-            $num = $qa_total_count - ($qa_page - 1) * $qa_page_rows - $i;
-
-            $iq_name  = get_text($row['iq_name']);
-            $iq_subject  = conv_subject($row['iq_subject'],50,"…");
-            $iq_question = conv_content($row['iq_question'],0);
-            $iq_answer   = conv_content($row['iq_answer'],0);
-
-            $iq_time = substr($row['iq_time'], 2, 14);
-
-            //$qa = "<img src='$g4[shop_img_path]/icon_poll_q.gif' border=0>";
-            //if ($row[iq_answer]) $qa .= "<img src='$g4[shop_img_path]/icon_answer.gif' border=0>";
-            //$qa = "$qa";
-
-            $icon_answer = "";
-            $iq_answer = "";
-            if ($row['iq_answer'])
-            {
-                $iq_answer = "<br><hr width=100% size=0><img src='".G4_SHOP_URL."/img/icon_answer.gif' border=0 align=left><font color=#466C8A> : ".conv_content($row['iq_answer'],0) . "</font>";
-                $icon_answer = "<a href='javascript:;' onclick=\"qa_menu('iq$i')\"><img src='".G4_SHOP_URL."/img/icon_answer.gif' border=0></a>";
-            }
-
-            echo "
-            <tr>
-                <td width=11 background='".G4_SHOP_URL."/img/box_bg02.gif'></td>
-                <td valign=top>
-                    <table width=100% cellpadding=0 cellspacing=0 border=0>
-                    <tr align=center>
-                        <td width=40 height=25>$num</td>
-                        <td align=left>
-                            <b><a href='javascript:;' onclick=\"qa_menu('iq$i')\"><b>$iq_subject</b></a></b>
-                        <td width=80>$iq_name</td>
-                        <td width=100>$iq_time</td>
-                        <td width=80>$icon_answer</td>
-                    </tr>
-                    </table>
-
-                    <div id='iq$i' style='display:none;'>
-                    <table width=100% cellpadding=0 cellspacing=0 border=0>
-                    <tr>
-                        <td style='padding:10px;' class=lh>{$iq_question}</td>
-                    </tr>";
-
-            if ($iq_answer)
-                echo "
-                    <tr>
-                        <td style='padding:10px;' class=lh>$iq_answer</td>
-                    </tr>";
-
-            echo "
-                <tr>
-                    <td align=right height=30>
-                        <textarea id='tmp_iq_id{$i}' style='display:none;'>{$row['iq_id']}</textarea>
-                        <textarea id='tmp_iq_name{$i}' style='display:none;'>{$row['iq_name']}</textarea>
-                        <textarea id='tmp_iq_subject{$i}' style='display:none;'>{$row['iq_subject']}</textarea>
-                        <textarea id='tmp_iq_question{$i}' style='display:none;'>{$row['iq_question']}</textarea>";
-
-            if ($row['mb_id'] == $member['mb_id'] && !$iq_answer)
-            {
-                echo "<a href='javascript:itemqa_update({$i});'><span class=small><b>수정</b></span></a>&nbsp;";
-                echo "<a href='javascript:itemqa_delete(fitemqa_password{$i}, {$i});'><span class=small><b>삭제</b></span></a>&nbsp;";
-            }
-
-            echo "
-                    </td>
-                </tr>
-                <!-- 상품문의 삭제 패스워드 입력 폼 -->
-                <tr id='itemqa_password{$i}' style='display:none;'>
-                    <td align=right height=30>
-                        <form name='fitemqa_password{$i}' method='post' action='./itemqaupdate.php' autocomplete=off style='padding:0px;'>
-                        <input type=hidden name=w value=''>
-                        <input type=hidden name=iq_id value=''>
-                        <input type=hidden name=it_id value='{$it['it_id']}'>
-                        패스워드 : <input type=password class=ed name=iq_password required itemname='패스워드'>
-                        <input type=image src='".G4_SHOP_URL."/img/btn_confirm.gif' border=0 align=absmiddle></a>
-                        </form>
-                    </td>
-                </tr>";
-
-            echo "
-                    </table>
-                    </div></td>
-                </td>
-                <td width=11 background='".G4_SHOP_URL."/img/box_bg03.gif'>&nbsp;</td></tr>
-            </tr>
-            ";
+            $iq_answer = conv_content($row['iq_answer'],0);
+            $iq_stats = '답변완료';
+        } else {
+            $iq_stats = '답변전';
+            $iq_answer = '답변이 등록되지 않았습니다.';
+            $iq_flag = 1;
         }
 
+        if ($i == 0) echo '<ol id="sit_qna_ol">';
+    ?>
 
-        if (!$i)
-        {
-            echo "
-            <tr>
-                <td width=11 background='".G4_SHOP_URL."/img/box_bg02.gif'></td>
-                <td height=100 align=center class=lh>
-                    이 상품에 대한 질문이 아직 없습니다.<br>
-                    궁금하신 사항은 이곳에 질문하여 주십시오.</td>
-                <td width=11 background='".G4_SHOP_URL."/img/box_bg03.gif'>&nbsp;</td></tr>
-            </tr>";
-        }
+    <li class="sit_qna_li">
+        <button type="button" class="sit_qna_li_title" onclick="javascript:qa_menu('sit_qna_con_<?php echo $i; ?>')"><?php echo $num; ?>. <?php echo $iq_subject; ?></button>
+        <dl class="sit_qna_dl">
+            <dt>작성자</dt>
+            <dd><?php echo $iq_name; ?></dd>
+            <dt>작성일</dt>
+            <dd><?php echo $iq_time; ?></dd>
+            <dt>상태</dt>
+            <dd><?php echo $iq_stats; ?></dd>
+        </dl>
 
+        <div id="sit_qna_con_<?php echo $i; ?>" class="sit_qna_con">
+            <p class="sit_qna_qaq">
+                <strong>문의내용</strong><br>
+                <?php echo $iq_question; // 상품 문의 내용 ?>
+            </p>
+            <p class="sit_qna_qaa">
+                <strong>답변</strong><br>
+                <?php echo $iq_answer; ?>
+            </p>
 
-        $qa_pages = get_paging(10, $qa_page, $qa_total_page, "./item.php?it_id=$it_id&$qstr&qa_page=", "#qa");
-        if ($qa_pages)
-        {
-            echo "<tr><td colspan=3 background='".G4_SHOP_URL."/img/dot_line.gif'></td></tr>";
-            echo "<tr>";
-            echo "<td width=11 background='".G4_SHOP_URL."/img/box_bg02.gif'></td>";
-            echo "<td height=22 align=center>$qa_pages</td>";
-            echo "<td width=11 background='".G4_SHOP_URL."/img/box_bg03.gif'>&nbsp;</td></tr>";
-            echo "</tr>";
-        }
-        ?>
-        <tr>
-            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner03.gif'></td>
-            <td width=100% background='<?php echo G4_SHOP_URL; ?>/img/box_bg04.gif'></td>
-            <td width=11><img src='<?php echo G4_SHOP_URL; ?>/img/corner04.gif'></td>
-        </tr>
-        </table>
+            <textarea id="tmp_iq_id<?php echo $i; ?>"><?php echo $row['iq_id']; ?></textarea>
+            <textarea id="tmp_iq_name<?php echo $i; ?>"><?php echo $row['iq_name']; ?></textarea>
+            <textarea id="tmp_iq_subject<?php echo $i; ?>"><?php echo $row['iq_subject']; ?></textarea>
+            <textarea id="tmp_iq_question<?php echo $i; ?>"><?php echo $row['iq_question']; ?></textarea>
 
-
-        <table width=100% cellpadding=0 cellspacing=0>
-        <tr><td colspan=2 height=35>* 이 상품에 대한 궁금한 사항이 있으신 분은 질문해 주십시오.
-            <input type=image src='<?php echo G4_SHOP_URL; ?>/img/btn_qa.gif' onclick="itemqa_insert(itemqa);" align=absmiddle></td></tr>
-        </table>
-
-        <!-- 상품문의 폼-->
-        <div id=itemqa style='display:none;'>
-        <form name="fitemqa" method="post" onsubmit="return fitemqa_submit(this);" autocomplete=off style="padding:0px;">
-        <input type=hidden name=w value=''>
-        <input type=hidden name=token value='<?php echo $token; ?>'>
-        <input type=hidden name=iq_id value=''>
-        <input type=hidden name=it_id value='<?php echo $it['it_id']; ?>'>
-        <table width=100% cellpadding=0 cellspacing=0>
-        <tr><td height=2 bgcolor=#63BCC0 colspan=2></td></tr>
-
-        <?php if (!$is_member) { ?>
-        <tr bgcolor=#fafafa>
-            <td height=30 align=right>이름&nbsp;</td>
-            <td>&nbsp;<input type="text" name="iq_name" class=ed maxlength=20 minlength=2 required itemname="이름"></td></tr>
-        <tr bgcolor=#fafafa>
-            <td height=30 align=right>패스워드&nbsp;</td>
-            <td>&nbsp;<input type="password" name="iq_password" class=ed maxlength=20 minlength=3 required itemname="패스워드">
-                <span class=small>패스워드는 최소 3글자 이상 입력하십시오.</span></td></tr>
-        <?php } ?>
-
-        <tr bgcolor=#fafafa>
-            <td height=30 align=right>제목&nbsp;</td>
-            <td>&nbsp;<input type="text" name="iq_subject" style='width:90%;' class=ed required itemname="제목" maxlength=100></td></tr>
-        <tr bgcolor=#fafafa>
-            <td align=right>내용&nbsp;</td>
-            <td>&nbsp;<textarea name="iq_question" rows="7" style='width:90%;' class=ed required itemname="내용"></textarea></td></tr>
-        <tr bgcolor=#fafafa>
-            <td colspan="2"><?php echo $captcha_html; ?></td>
-        </tr>
-        <tr><td height=5 colspan=2></td></tr>
-        <tr><td height=2 bgcolor=#63bcc0 colspan=2></td></tr>
-        <tr><td colspan=2 align=right height=30><input type=image src='<?php echo G4_SHOP_URL; ?>/img/btn_confirm.gif' border=0></td></tr>
-        </table>
-        </form>
-        <br><br>
+            <?php if ($row['mb_id'] == $member['mb_id'] && $iq_answer == 0) { ?>
+            <div class="sit_qna_cmd">
+                <button onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
+                <button onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button>
+            </div>
+            <?php } ?>
         </div>
-    </td>
-</tr>
-<tr><td colspan=2 height=1></td></tr>
-</table>
+
+        <div id="sit_qna_pw_<?php echo $i; ?>" class="sit_qna_pw">
+            <form name="fitemqa_password<?php echo $i; ?>" method="post" action="./itemqaupdate.php" autocomplete="off">
+            <input type="hidden" name="w" value="">
+            <input type="hidden" name="iq_id" value="">
+            <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
+            <label for="iq_password_<?=$i?>">패스워드</label>
+            <input type="password" name="iq_password" id="iq_password_<?=$i?>" required>
+            <input type="submit" value="확인">
+            </form>
+        </div>
+    </li>
+
+    <?php }
+
+    if ($i >= 0) echo '</ol>';
+
+    if (!$i) echo '<p class="sit_empty">상품문의가 없습니다.</p>';
+    ?>
+</section>
+
+<div id="sit_qna_wbtn">
+    <button type="button" id="iq_write" class="btn_submit" onclick="javascript:itemqa_insert();">상품문의 쓰기</button>
 </div>
 
+<section id="sit_qna_w">
+    <h3>상품문의 작성</h3>
 
-<script type="text/javascript">
+    <form name="fitemqa" method="post" onsubmit="return fitemqa_submit(this);" autocomplete="off">
+    <input type="hidden" name="w" value="">
+    <input type="hidden" name="token" value="<?php echo $token; ?>">
+    <input type="hidden" name="iq_id" value="">
+    <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <?php if (!$is_member) { ?>
+    <tr>
+        <th scope="row"><label for="iq_name">이름</label></th>
+        <td><input type="text" name="iq_name" id="iq_name" required maxlength="20" minlength="2"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="iq_password">패스워드</label></th>
+        <td>
+            <span class="frm_info">패스워드는 최소 3글자 이상 입력하십시오.</span>
+            <input type="password" name="iq_password" id="iq_password" maxlength="20" minlength="3" required>
+        </td>
+    </tr>
+    <?php } ?>
+    <tr>
+        <th scope="row"><label for="iq_subject">제목</label></th>
+        <td><input type="text" name="iq_subject" id="iq_subject" required class="frm_input" size="71" maxlength="100"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="iq_question">내용</label></th>
+        <td><textarea name="iq_question" id="iq_question" required></textarea></td>
+    </tr>
+    <tr>
+        <th scope="row">자동등록방지</th>
+        <td><?php echo $captcha_html; ?></td>
+    </tr>
+    </tbody>
+    </table>
+
+    <div class="btn_confirm">
+        <input type="submit" value="작성완료" class="btn_submit">
+    </div>
+    </form>
+</section>
+
+<?php if ($qa_pages) get_paging(10, $qa_page, $qa_total_page, './item.php?it_id='.$it_id.'&amp;'.$qstr.'&amp;qa_page=', '#qa'); // 페이징 ?>
+
+<script>
+$(function() {
+});
+
 function fitemqa_submit(f)
 {
-    <?php echo chk_captcha_js(); ?>
+<?php echo chk_captcha_js(); ?>
 
-    f.action = "itemqaupdate.php";
-    return true;
+f.action = "itemqaupdate.php";
+return true;
 }
 
 function itemqa_insert()
 {
-    /*
-    if (!g4_is_member) {
-        alert("로그인 하시기 바랍니다.");
-        return;
-    }
-    */
+/*
+if (!g4_is_member) {
+    alert("로그인 하시기 바랍니다.");
+    return;
+}
+*/
 
-    var f = document.fitemqa;
-    var id = document.getElementById('itemqa');
+var f = document.fitemqa;
+var id = document.getElementById('sit_qna_w');
 
-    id.style.display = 'block';
+id.style.display = 'block';
 
-    f.w.value = '';
-    f.iq_id.value = '';
-    if (!g4_is_member)
-    {
-        f.iq_name.value = '';
-        f.iq_name.readOnly = false;
-        f.iq_password.value = '';
-    }
-    f.iq_subject.value = '';
-    f.iq_question.value = '';
+f.w.value = '';
+f.iq_id.value = '';
+if (!g4_is_member)
+{
+    f.iq_name.value = '';
+    f.iq_name.readOnly = false;
+    f.iq_password.value = '';
+}
+f.iq_subject.value = '';
+f.iq_question.value = '';
 }
 
 function itemqa_update(idx)
 {
-    var f = document.fitemqa;
-    var id = document.getElementById('itemqa');
+var f = document.fitemqa;
+var id = document.getElementById('sit_qna_w');
 
-    id.style.display = 'block';
+id.style.display = 'block';
 
-    f.w.value = 'u';
-    f.iq_id.value = document.getElementById('tmp_iq_id'+idx).value;
-    if (!g4_is_member)
-    {
-        f.iq_name.value = document.getElementById('tmp_iq_name'+idx).value;
-        f.iq_name.readOnly = true;
-    }
-    f.iq_subject.value = document.getElementById('tmp_iq_subject'+idx).value;
-    f.iq_question.value = document.getElementById('tmp_iq_question'+idx).value;
+f.w.value = 'u';
+f.iq_id.value = document.getElementById('tmp_iq_id'+idx).value;
+if (!g4_is_member)
+{
+    f.iq_name.value = document.getElementById('tmp_iq_name'+idx).value;
+    f.iq_name.readOnly = true;
+}
+f.iq_subject.value = document.getElementById('tmp_iq_subject'+idx).value;
+f.iq_question.value = document.getElementById('tmp_iq_question'+idx).value;
 }
 
 function itemqa_delete(f, idx)
 {
-    var id = document.getElementById('itemqa');
+var id = document.getElementById('sit_qna_w');
 
-    f.w.value = 'd';
-    f.iq_id.value = document.getElementById('tmp_iq_id'+idx).value;
+f.w.value = 'd';
+f.iq_id.value = document.getElementById('tmp_iq_id'+idx).value;
 
-    if (g4_is_member)
-    {
-        if (confirm("삭제하시겠습니까?"))
-            f.submit();
-    }
-    else
-    {
-        id.style.display = 'none';
-        document.getElementById('itemqa_password'+idx).style.display = 'block';
-    }
+if (g4_is_member)
+{
+    if (confirm("삭제하시겠습니까?"))
+        f.submit();
+}
+else
+{
+    id.style.display = 'none';
+    document.getElementById('itemqa_password'+idx).style.display = 'block';
+}
 }
 </script>
-<!-- 상품문의 end -->

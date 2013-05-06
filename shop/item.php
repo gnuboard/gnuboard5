@@ -132,7 +132,6 @@ $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
 ?>
 
-<<<<<<< HEAD
 <?php
 function pg_anchor($anc_id) {
     global $default;
@@ -148,8 +147,6 @@ function pg_anchor($anc_id) {
 <?php } ?>
 
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
-=======
->>>>>>> e996e707806fc6f359cb4e91fb92d84e4386e022
 <script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
 
 <?php
