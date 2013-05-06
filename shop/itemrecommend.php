@@ -14,7 +14,6 @@ if (!$it['it_name'])
     alert_close("등록된 상품이 아닙니다.");
 
 $g4['title'] =  $it['it_name'].' - 추천하기';
-define('_SHOP_', true);
 include_once(G4_PATH.'/head.sub.php');
 ?>
 

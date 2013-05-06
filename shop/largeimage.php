@@ -1,5 +1,4 @@
 <?php
-define('_SHOP_', true);
 include_once('./_common.php');
 
 $it_id = $_GET['it_id'];
