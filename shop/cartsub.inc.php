@@ -94,7 +94,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     if ($s_page == 'cart.php' || $s_page == 'orderinquiryview.php') { // 링크를 붙이고
         $a1 = '<a href="./item.php?it_id='.$row[it_id].'"><b>';
         $a2 = '</b></a>';
-        $image = get_it_image($row['it_id'].'_s', 70, 70, $row['it_id']);
+        $image = get_it_image($row['it_id'].'_s', 70, 70, '');
     } else { // 붙이지 않고
         $a1 = '<b>';
         $a2 = '</b>';
