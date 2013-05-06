@@ -494,7 +494,7 @@ else
             if ($num)
                 include G4_SHOP_PATH.'/maintype10.inc.php';
             else
-                echo '이 상품과 관련된 상품이 없습니다.';
+                echo '<p class="sit_empty">이 상품과 관련된 상품이 없습니다.</p>';
             ?>
         </div>
     </section>
