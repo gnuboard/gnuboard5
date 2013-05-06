@@ -39,20 +39,19 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
-        <div id="msg_hp_certify">
-        <?php if ($member['mb_hp_certify']) { ?>
-            휴대폰 본인확인된 회원입니다.
-            <?php if ($member['mb_hp_certify']) { ?>
-                <br>휴대폰 성인인증된 회원입니다.
-            <?php } ?>
+        <?php if ($w=="u" && $config['cf_kcpcert_use']) { ?>
+        <span class="frm_info">휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되며 수동으로 입력할수 없게 됩니다.</span>
         <?php } ?>
-        </div>
         <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
         <?php if ($w=="u" && $config['cf_kcpcert_use']) { ?>
         <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰 본인확인</button>
         <noscript>휴대폰 본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
-        <span class="frm_info">휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되며 수동으로 입력할수 없게 됩니다.</span>
         <?php } ?>
+        <div id="msg_hp_certify">
+        <?php if ($member['mb_hp_certify']) { ?>
+            휴대폰 <strong>본인확인</strong><?php if ($member['mb_hp_certify']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
+        <?php } ?>
+        </div>
     </td>
 </tr>
 <?php if ($req_nick) {  ?>
