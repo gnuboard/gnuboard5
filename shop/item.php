@@ -132,6 +132,20 @@ $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
 ?>
 
+<?php
+function pg_anchor($anc_id) {
+    global $default;
+?>
+            <ul class="sanchor">
+                <li><a href="#sit_inf" <?php if ($anc_id == 'inf') echo 'class="sanchor_on"'; ?>>상품정보</a></li>
+                <li><a href="#sit_ps" <?php if ($anc_id == 'ps') echo 'class="sanchor_on"'; ?>>사용후기 <span id="item_use_count">0</span></a></li>
+                <li><a href="#sit_qna" <?php if ($anc_id == 'qna') echo 'class="sanchor_on"'; ?>>상품문의 <span id="item_qa_count">0</span></a></li>
+                <?php if ($default['de_baesong_content']) { ?><li><a href="#sit_dvr" <?php if ($anc_id == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
+                <?php if ($default['de_change_content']) { ?><li><a href="#sit_ex" <?php if ($anc_id == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
+                <li><a href="#sit_rel" <?php if ($anc_id == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span id="item_relation_count">0</span></a></li>
+            </ul>
+<?php } ?>
+
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 <script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
 
@@ -349,16 +363,6 @@ else
         ?>
     </aside>
 
-    <!-- pg_anchor -->
-    <ul class="sit_anchor">
-        <li><a href="javascript:click_item('*');">상품정보</a></li>
-        <li><a href="javascript:click_item('item_use');">사용후기<span id="item_use_count">0</span></a></li>
-        <li><a href="javascript:click_item('item_qa');">상품문의 <span id="item_qa_count">0</span></a></li>
-        <?php if ($default['de_baesong_content']) { ?><li><a href="javascript:click_item('item_baesong');">배송정보</a></li><?php } ?>
-        <?php if ($default['de_change_content']) { ?><li><a href="javascript:click_item('item_change');">교환정보</a></li><?php } ?>
-        <li><a href="javascript:click_item('item_relation');">관련상품<span id="item_relation_count">0</span></a></li>
-    </ul>
-
     <script>
     function click_item(id)
     {
@@ -386,6 +390,7 @@ else
 
     <section id="sit_inf">
         <h2>상품 정보</h2>
+        <?php echo pg_anchor('inf'); ?>
 
         <?php if ($it['it_basic']) { // 상품 기본설명 ?>
         <div id="sit_inf_basic">
@@ -425,46 +430,53 @@ else
         <!-- 상품정보고시 end -->
         <?php } //if?>
 
-    </div>
+    </section>
     <!-- 상품설명 end -->
 
-    <div id="item_ps">
+    <section id="sit_ps">
+        <h2>사용후기</h2>
+        <?php echo pg_anchor('ps'); ?>
+
         <?php
-        // 사용후기
-        $use_page_rows = 10;    // 사용후기 페이지당 목록수
+        $use_page_rows = 10; // 페이지당 목록수
         include_once('./itemuse.inc.php');
         ?>
-    </div>
+    </section>
 
-    <div id="item_qna">
+    <section id="sit_qna">
+        <h2>상품문의</h2>
+        <?php echo pg_anchor('qna'); ?>
+
         <?php
-        // 상품문의
-        $qa_page_rows = 10;     // 상품문의 페이지당 목록수
+        $qa_page_rows = 10; // 페이지당 목록수
         include_once('./itemqa.inc.php');
         ?>
-    </div>
+    </section>
 
 
     <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>
-    <!-- 배송정보 -->
-    <div id="item_baesong">
+    <section id="sit_dvr">
+        <h2>배송정보</h2>
+        <?php echo pg_anchor('dvr'); ?>
+
         <?php echo conv_content($default['de_baesong_content'], 1); ?>
-    </div>
-    <!-- 배송정보 end -->
+    </section>
     <?php } ?>
 
 
     <?php if ($default['de_change_content']) { // 교환/반품 내용이 있다면 ?>
-    <!-- 교환/반품 -->
-    <div id="item_change">
+    <section id="sit_ex">
+        <h2>교환/반품</h2>
+        <?php echo pg_anchor('ex'); ?>
+
         <?php echo conv_content($default['de_change_content'], 1); ?>
-    </div>
-    <!-- 교환/반품 end -->
+    </section>
     <?php } ?>
 
+    <section id="sit_rel">
+        <h2>관련상품</h2>
+        <?php echo pg_anchor('rel'); ?>
 
-    <!-- 관련상품 -->
-    <div id="item_relation">
         <?php
         $list_mod   = $default['de_rel_list_mod'];
         $img_width  = $default['de_rel_img_width'];
@@ -483,8 +495,7 @@ else
         else
             echo '이 상품과 관련된 상품이 없습니다.';
         ?>
-    </div>
-    <!-- 관련상품 end -->
+    </section>
 
     <script>
     $(function(){ // 이미지 미리보기
