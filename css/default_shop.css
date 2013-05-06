@@ -611,3 +611,7 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .ssch_it_img {width:100px;text-align:center}
 .ssch_it_img img {width:100px;height:100px}
 #ssch .ssch_num {width:150px;text-align:right}
+
+/* 쇼핑몰 이벤트 */
+#sev {}
+.sev_admin {text-align:right}
