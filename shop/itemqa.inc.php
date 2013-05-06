@@ -55,7 +55,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     ?>
 
     <li class="sit_qna_li">
-        <button type="button" class="sit_qna_li_title" onclick="javascript:qa_menu('sit_qna_con_<?php echo $i; ?>')"><?php echo $num; ?>. <?php echo $iq_subject; ?></button>
+        <button type="button" class="sit_qna_li_title" onclick="javascript:qa_menu('sit_qna_con_<?php echo $i; ?>')"><b><?php echo $num; ?>.</b> <?php echo $iq_subject; ?></button>
         <dl class="sit_qna_dl">
             <dt>작성자</dt>
             <dd><?php echo $iq_name; ?></dd>
