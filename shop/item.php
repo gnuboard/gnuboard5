@@ -138,15 +138,14 @@ function pg_anchor($anc_id) {
 ?>
             <ul class="sanchor">
                 <li><a href="#sit_inf" <?php if ($anc_id == 'inf') echo 'class="sanchor_on"'; ?>>상품정보</a></li>
-                <li><a href="#sit_ps" <?php if ($anc_id == 'ps') echo 'class="sanchor_on"'; ?>>사용후기 <span id="item_use_count">0</span></a></li>
-                <li><a href="#sit_qna" <?php if ($anc_id == 'qna') echo 'class="sanchor_on"'; ?>>상품문의 <span id="item_qa_count">0</span></a></li>
+                <li><a href="#sit_ps" <?php if ($anc_id == 'ps') echo 'class="sanchor_on"'; ?>>사용후기 <span class="item_use_count"></span></a></li>
+                <li><a href="#sit_qna" <?php if ($anc_id == 'qna') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"></span></a></li>
                 <?php if ($default['de_baesong_content']) { ?><li><a href="#sit_dvr" <?php if ($anc_id == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
                 <?php if ($default['de_change_content']) { ?><li><a href="#sit_ex" <?php if ($anc_id == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
-                <li><a href="#sit_rel" <?php if ($anc_id == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span id="item_relation_count">0</span></a></li>
+                <li><a href="#sit_rel" <?php if ($anc_id == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"></span></a></li>
             </ul>
 <?php } ?>
 
-<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 <script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
 
 <?php
@@ -521,6 +520,10 @@ else
 
             return false;
         });
+
+        $(".item_use_count").text("<?php echo $use_total_count; ?>");
+        $(".item_qa_count").text("<?php echo $qa_total_count; ?>");
+        $(".item_relation_count").text("<?php echo $item_relation_count; ?>");
     });
 
     function qty_add(num)
@@ -677,13 +680,6 @@ else
         menu(id);
         save_qa_id = id;
     }
-
-    if (document.getElementById("item_use_count"))
-        document.getElementById("item_use_count").innerHTML = "<?php echo $use_total_count; ?>";
-    if (document.getElementById("item_qa_count"))
-        document.getElementById("item_qa_count").innerHTML = "<?php echo $qa_total_count; ?>";
-    if (document.getElementById("item_relation_count"))
-        document.getElementById("item_relation_count").innerHTML = "<?php echo $item_relation_count; ?>";
 
     // 상품상세설명에 있는 이미지의 사이즈를 줄임
     // 삭제 대상 - 지운아빠 2013-05-03
