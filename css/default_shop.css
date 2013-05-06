@@ -569,6 +569,9 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 #sit_rel {margin:0 0 10px;padding:10px 10px 0}
 #sit_rel h2 {margin:0 0 10px}
 
+/* 주문내역 */
+#sod_v .basic_tbl {text-align:center}
+
 /* 공지사항 및 커뮤니티 새글 */
 #sidx_lat {padding:15px 0 0;border-top:1px solid #ddd}
 #sidx_lat h2 {text-align:center}
