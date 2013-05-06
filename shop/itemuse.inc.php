@@ -4,6 +4,15 @@ include_once(G4_LIB_PATH.'/thumb.lib.php');
 ?>
 
 <table id="sit_ps_tbl">
+<thead>
+<tr>
+    <th>번호</th>
+    <th>제목</th>
+    <th>작성자</th>
+    <th>작성일</th>
+    <th>평점</th>
+</tr>
+</thead>
 <?php
 $sql_common = " from {$g4['shop_item_ps_table']} where it_id = '{$it['it_id']}' and is_confirm = '1' ";
 
@@ -21,9 +30,6 @@ $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    if ($i > 0)
-        echo "<tr><td colspan=3 background='".G4_SHOP_URL."/img/dot_line.gif' height='1'></td></tr>";
-
     $num = $use_total_count - ($use_page - 1) * $use_page_rows - $i;
 
     $star = get_star($row['is_score']);
@@ -41,7 +47,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <tr>
-    <th scope="row"><?php echo $num; ?></th>
+    <td><?php echo $num; ?><span class="sound_only">번</span></td>
     <td>
         <a href="javascript:;" onclick="use_menu('is<?php echo $i; ?>')"><?php echo $is_subject; ?></a>
         <div>
