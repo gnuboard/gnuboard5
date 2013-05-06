@@ -82,8 +82,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
             <?php if ($row['mb_id'] == $member['mb_id'] && $iq_answer == 0) { ?>
             <div class="sit_qna_cmd">
-                <button onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
-                <button onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button>
+                <button type="button" onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
+                <button type="button" onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button>
             </div>
             <?php } ?>
         </div>
@@ -93,9 +93,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <input type="hidden" name="w" value="">
             <input type="hidden" name="iq_id" value="">
             <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
+            <span>삭제하시려면 글 작성 시 입력하신 패스워드를 입력해주세요.</span>
             <label for="iq_password_<?=$i?>">패스워드</label>
-            <input type="password" name="iq_password" id="iq_password_<?=$i?>" required>
-            <input type="submit" value="확인">
+            <input type="password" name="iq_password" id="iq_password_<?=$i?>" required class="frm_input">
+            <input type="submit" value="확인" class="btn_frmline">
             </form>
         </div>
     </li>
@@ -129,13 +130,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <?php if (!$is_member) { ?>
     <tr>
         <th scope="row"><label for="iq_name">이름</label></th>
-        <td><input type="text" name="iq_name" id="iq_name" required maxlength="20" minlength="2"></td>
+        <td><input type="text" name="iq_name" id="iq_name" required class="frm_input" maxlength="20" minlength="2"></td>
     </tr>
     <tr>
         <th scope="row"><label for="iq_password">패스워드</label></th>
         <td>
             <span class="frm_info">패스워드는 최소 3글자 이상 입력하십시오.</span>
-            <input type="password" name="iq_password" id="iq_password" maxlength="20" minlength="3" required>
+            <input type="password" name="iq_password" id="iq_password" required class="frm_input" maxlength="20" minlength="3">
         </td>
     </tr>
     <?php } ?>
