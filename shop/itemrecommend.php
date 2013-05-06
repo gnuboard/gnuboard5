@@ -14,90 +14,52 @@ if (!$it['it_name'])
     alert_close("등록된 상품이 아닙니다.");
 
 $g4['title'] =  $it['it_name'].' - 추천하기';
+define('_SHOP_', true);
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
-<table width="600" height="50" border="0" cellpadding="0" cellspacing="0">
-<tr>
-    <td align="center" valign="middle" bgcolor="#EBEBEB">
-        <table width="590" height="40" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td width="25" align="center" bgcolor="#FFFFFF" ><img src="<?php echo G4_SHOP_URL; ?>/img/icon_01.gif" width="5" height="5"></td>
-            <td width="490" align="left" bgcolor="#FFFFFF" ><font color="#666666"><b><?php echo get_text($g4['title']); ?></b></font></td>
-            <td width="75" bgcolor="#FFFFFF" ></td>
-        </tr>
-        </table></td>
-</tr>
-</table>
+<div id="sit_rec_new" class="new_win">
+    <h1><?php echo $g4['title']; ?></h1>
 
+    <div class="cbox">
+        <form name="fitemrecommend" method="post" action="./itemrecommendmail.php" autocomplete="off" onsubmit="return fitemrecommend_check(this);">
+        <input type="hidden" name="token" value="<?php echo $token; ?>">
+        <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
+        <table class="frm_tbl">
+        <colgroup>
+            <col class="grid_3">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="to_email">추천받는 분 E-mail</label></th>
+            <td><input type="text" name="to_email" id="to_email" required class="frm_input" size="51"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="subject">제목</label></th>
+            <td><input type="text" name="subject" id="subject" required class="frm_input" size="51"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="content">내용</label></th>
+            <td><textarea name="content" id="content" required></textarea></td>
+        </tr>
+        </tbody>
+        </table>
 
-<form name="fitemrecommend" method="post" action="./itemrecommendmail.php" onsubmit="return fitemrecommend_check(this);" style='margin:0px;' autocomplete='off'>
-<input type=hidden name=token value='<?php echo $token; ?>'>
-<input type=hidden name=it_id value='<?php echo $it_id; ?>'>
-<table width="600" border="0" cellspacing="0" cellpadding="0">
-<tr>
-    <td height="300" align="center" valign="top">
-        <table width="540" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td height="20"></td>
-        </tr>
-        <tr>
-            <td height="2" bgcolor="#808080"></td>
-        </tr>
-        <tr>
-            <td width="540" height="2" align="center" valign="top" bgcolor="#FFFFFF">
-                <table width=100% cellpadding=0 cellspacing=0 border=0 height=40 bgcolor='#F6F6F6'>
-                <colgroup width=130>
-                <colgroup width=''>
-                <tr>
-                    <td height="24" rowspan="2">&nbsp; 추천하실 분 E-mail</td>
-                    <td><input type=text id='to_email' name='to_email' required itemname='추천하실 분 E-mail' class=ed style="width:97%;"></td>
-                </tr>
-                <!-- <tr align=center>
-                    <td>※ 추천하실 분이 여러명인 경우 E-mail을 컴마(,)로 구분하세요. 최대 3명</td>
-                </tr> -->
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#F6F6F6">
-                <table width=100% cellpadding=0 cellspacing=0>
-                <colgroup width=130>
-                <colgroup width=''>
-                <tr style='padding-top:7px; padding-bottom:7px;'>
-                	<td>&nbsp; 제목</td>
-                	<td><input type=text name='subject' class=ed style='width:97%;' required itemname='제목'></td>
-                </tr>
-                <tr style='padding-top:7px; padding-bottom:7px;'>
-                	<td>&nbsp; 내용</td>
-                	<td><textarea name='content' rows=10 style='width:97%;' required itemname='내용' class=ed></textarea></td>
-                </tr>
-                </table></td>
-        </tr>
-        </table></td>
-</tr>
-<tr>
-    <td height="2" align="center" valign="top" bgcolor="#D5D5D5"></td>
-</tr>
-<tr>
-    <td height="2" align="center" valign="top" bgcolor="#E6E6E6"></td>
-</tr>
-<tr>
-    <td height="40" align="center" valign="bottom">
-        <input id=btn_submit type=image src="<?php echo G4_SHOP_URL; ?>/img/btn_confirm.gif" border=0>&nbsp;
-        <a href="javascript:window.close();"><img src="<?php echo G4_SHOP_URL; ?>/img/btn_close.gif" border="0"></a>
-    </td>
-</tr>
-</table>
-</form>
+        <div class="btn_win">
+            <input type="submit" id="btn_submit" value="보내기" class="btn_submit">
+            <a href="javascript:window.close();">창닫기</a>
+        </div>
+        </form>
+    </div>
 
-<script language="javascript">
+</div>
+
+<script>
 function fitemrecommend_check(f)
 {
     return true;
 }
-
-document.getElementById('to_email').focus();
 </script>
 
 <?php
