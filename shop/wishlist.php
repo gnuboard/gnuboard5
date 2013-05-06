@@ -95,7 +95,7 @@ include_once('./_head.php');
 
 <script language="JavaScript">
 <!--
-	function out_cd_check(fld, out_cd)
+    function out_cd_check(fld, out_cd)
     {
         if (out_cd == 'no'){
             alert("옵션이 있는 상품입니다.\n\n상품을 클릭하여 상품페이지에서 옵션을 선택한 후 주문하십시오.");
@@ -108,12 +108,12 @@ include_once('./_head.php');
             fld.checked = false;
             return;
         }
-	}
+    }
 
-	function fwishlist_check(f, act)
+    function fwishlist_check(f, act)
     {
         var k = 0;
-		var length = f.elements.length;
+        var length = f.elements.length;
 
         for(i=0; i<length; i++) {
             if (f.elements[i].checked) {
