@@ -132,7 +132,6 @@ $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
 ?>
 
-<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 <script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
 
 <?php
