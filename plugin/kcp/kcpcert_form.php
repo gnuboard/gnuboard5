@@ -52,7 +52,7 @@ if(!$ordr_idxx)
 function auth_type_check(user_name)
 {
     var auth_form = document.form_auth;
-    auth_form.user_name.value = encodeURIComponent(user_name);
+    //auth_form.user_name.value = encodeURIComponent(user_name);
 
     if( auth_form.ordr_idxx.value == "" )
     {

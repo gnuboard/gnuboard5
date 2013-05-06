@@ -3,8 +3,6 @@ include_once('./kcpcert_config.php');
 
 set_session('ss_kcpcert_no',    '');
 set_session('ss_kcpcert_hash',  '');
-set_session('ss_hp_certify',    '');
-set_session('ss_adult',         '');
 
 $site_cd       = "";
 $ordr_idxx     = "";
@@ -130,22 +128,28 @@ if( $cert_enc_use == "Y" )
         $dec_res_cd     = $ct_cert->mf_get_key_value("res_cd"     );                // 암호화된 결과코드
         $dec_mes_msg    = $ct_cert->mf_get_key_value("res_msg"    );                // 암호화된 결과메시지
 
-
         // 정상인증인지 체크
         if(!$phone_no)
             alert_close("정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.");
+
+        $sql = " select count(*) as cnt from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
+        $row = sql_fetch($sql);
+        if ($row['cnt']) {
+            alert_close("이미 가입되어 있는 휴대폰번호 입니다.");
+        }
 
         // hash 데이터
         $md5_cert_no = md5($cert_no);
         $hash_data = md5($phone_no.$user_name.$md5_cert_no);
         set_session("ss_kcpcert_no",    $md5_cert_no);
         set_session("ss_kcpcert_hash",  $hash_data);
-        set_session("ss_hp_certify",    "1");
 
         // 성인인증결과
         $adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
-        if((int)$birth_day <= (int)$adult_day)
-            set_session("ss_adult", "1");
+        $adult = ((int)$birth_day <= (int)$adult_day) ? 1 : 0;
+
+        $sql = " update {$g4['member_table']} set mb_name = '$user_name', mb_hp = '$phone_no', mb_hp_certify = 1, mb_adult = $adult where mb_id = '{$member['mb_id']}' ";
+        sql_query($sql);
     }
     else if( $res_cd != "0000" )
     {
@@ -157,12 +161,11 @@ if( $cert_enc_use == "Y" )
 else if( $cert_enc_use != "Y" )
 {
     // 암호화 인증 안함
+    alert_close("휴대폰 본인확인을 취소 하셨습니다.");
+    exit;
 }
 
 $ct_cert->mf_clear();
-
-// 휴대폰번호 포맷변경
-$phone_no = hyphen_hp_number($phone_no);
 ?>
 
 <script>
@@ -170,8 +173,8 @@ $(function() {
     var $opener = window.opener;
 
     // 인증정보
-    $opener.$("input[name=mb_hp]").val("<?php echo $phone_no ?>");
-    $opener.$("input[name=mb_name]").val("<?php echo $user_name ?>");
+    $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>");
+    $opener.$("input[name=mb_hp]").val("<?php echo hyphen_hp_number($phone_no); ?>").attr("readonly", true);
     alert("본인의 휴대폰번호로 확인 되었습니다.");
     window.close();
 });

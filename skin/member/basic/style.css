@@ -12,6 +12,8 @@
 #fregisterform .cbg {margin-bottom:15px;padding:20px}
 #fregisterform textarea {height:50px}
 
+#msg_hp_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
+
 /* 회원가입 완료 */
 #reg_result {padding:50px 0 0}
 #reg_result_logo {margin-bottom:50px;text-align:center}
