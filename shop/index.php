@@ -8,8 +8,6 @@ define("_INDEX_", TRUE);
 include_once(G4_SHOP_PATH.'/shop.head.php');
 ?>
 
-<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
-
 <div id="sidx_img">
     <img src="<?php echo G4_DATA_URL; ?>/common/main_img" alt="">
 </div>
