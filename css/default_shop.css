@@ -588,7 +588,16 @@ input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important
 .sod_ws_img {width:90px;text-align:center}
 #sod_ws_act {text-align:center}
 
+/* 주문서 작성 */
+#sod_frm {}
+#sod_frm h2 {margin:0 0 10px}
+
+#sod_frm_orderer {margin:20px 0 40px}
+
+#sod_frm_same {margin:0 0 10px}
+
 /* 주문내역 */
+#sod_v {}
 #sod_v .basic_tbl {text-align:center}
 
 /* 공지사항 및 커뮤니티 새글 */
