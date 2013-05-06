@@ -26,9 +26,11 @@ else
 
     // 1.03.00
     // 입력일 경우 기본값으로 대체
-    $ev['ev_img_width']  = $default['de_simg_width'];
-    $ev['ev_img_height'] = $default['de_simg_height'];
-    $ev['ev_list_mod'] = 4;
+    //$ev['ev_img_width']  = $default['de_simg_width'];
+    //$ev['ev_img_height'] = $default['de_simg_height'];
+    $ev['ev_img_width']  = 230;
+    $ev['ev_img_height'] = 230;
+    $ev['ev_list_mod'] = 3;
     $ev['ev_list_row'] = 5;
 }
 
