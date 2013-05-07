@@ -107,6 +107,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_scf_info">사업자정보</a></li>
 <li><a href="#anc_scf_index">쇼핑몰 초기화면</a></li>
+<li><a href="#anc_mscf_index">모바일 초기화면</a></li>
 <li><a href="#anc_scf_payment">결제설정</a></li>
 <li><a href="#anc_scf_delivery">배송설정</a></li>
 <li><a href="#anc_scf_etc">기타설정</a></li>
