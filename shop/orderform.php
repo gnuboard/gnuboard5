@@ -374,15 +374,15 @@ set_session('ss_order_uniqid', $od_id);
             <th scope="row">주소</th>
             <td>
                 <label for="od_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_zip1" value="<?php echo $member['mb_zip1'] ?>" id="od_b_zip1" required class="frm_input required" size="2" maxlength="3">
+                <input type="text" name="od_zip1" value="<?php echo $member['mb_zip1'] ?>" id="od_zip1" required class="frm_input required" size="2" maxlength="3">
                 -
                 <label for="od_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_b_zip2" required class="frm_input required" size="2" maxlength="3">
+                <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_zip2" required class="frm_input required" size="2" maxlength="3">
                 <span id="od_win_zip" style="display:block"></span>
                 <label for="od_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_b_addr1" required class="frm_input frm_address required" size="50">
+                <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="50">
                 <label for="od_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_b_addr2" required class="frm_input frm_address required" size="50">
+                <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" required class="frm_input frm_address required" size="50">
                 <script>
                 // 우편번호 자바스크립트 비활성화 대응을 위한 코드
                 $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zip');
@@ -443,15 +443,15 @@ set_session('ss_order_uniqid', $od_id);
             <th scope="row">주소</th>
             <td>
                 <label for="od_b_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_zip1" value="<?php echo $member['mb_zip1'] ?>" id="od_b_zip1" required class="frm_input required" size="2" maxlength="3">
+                <input type="text" name="od_b_zip1" id="od_b_zip1" required class="frm_input required" size="2" maxlength="3">
                 -
                 <label for="od_b_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_b_zip2" required class="frm_input required" size="2" maxlength="3">
+                <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="2" maxlength="3">
                 <span id="od_winb_zip" style="display:block"></span>
                 <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_b_addr1" required class="frm_input frm_address required" size="50">
+                <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="50">
                 <label for="od_b_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_b_addr2" required class="frm_input frm_address required" size="50">
+                <input type="text" name="od_b_addr2" id="od_b_addr2" required class="frm_input frm_address required" size="50">
                 <script>
                 // 우편번호 자바스크립트 비활성화 대응을 위한 코드
                 $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_winb_zip');
