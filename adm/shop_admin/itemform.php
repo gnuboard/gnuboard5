@@ -68,7 +68,7 @@ if (!isset($it['it_mobile_explan'])) {
     sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
                     ADD `it_mobile_explan` TEXT NOT NULL AFTER `it_explan`,
                     ADD `it_mobile_head_html` TEXT NOT NULL AFTER `it_tail_html`,
-                    ADD `it_mobile_tail_html` TEXT NOT NULL AFTER `it_mobile_head_html` ", true);
+                    ADD `it_mobile_tail_html` TEXT NOT NULL AFTER `it_mobile_head_html` ", false);
 }
 
 //$qstr1 = 'sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search;
