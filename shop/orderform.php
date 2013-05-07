@@ -374,15 +374,15 @@ set_session('ss_order_uniqid', $od_id);
             <th scope="row">주소</th>
             <td>
                 <label for="od_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_zip1" value="<?php echo $member['mb_zip1'] ?>" id="od_b_zip1" required class="frm_input required" size="2" maxlength="3">
+                <input type="text" name="od_zip1" value="<?php echo $member['mb_zip1'] ?>" id="od_zip1" required class="frm_input required" size="2" maxlength="3">
                 -
                 <label for="od_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_b_zip2" required class="frm_input required" size="2" maxlength="3">
+                <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_zip2" required class="frm_input required" size="2" maxlength="3">
                 <span id="od_win_zip" style="display:block"></span>
                 <label for="od_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_b_addr1" required class="frm_input frm_address required" size="50">
+                <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="50">
                 <label for="od_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_b_addr2" required class="frm_input frm_address required" size="50">
+                <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" required class="frm_input frm_address required" size="50">
                 <script>
                 // 우편번호 자바스크립트 비활성화 대응을 위한 코드
                 $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zip');
@@ -471,86 +471,55 @@ set_session('ss_order_uniqid', $od_id);
     <section id="sod_frm_pay">
         <h2>결제정보 입력</h2>
 
-        <!-- div로 - 지운아빠 2013-05-06 -->
-
-        <table class="frm_tbl">
-        <tbody>
-        <tr>
-            <th>
-                <?php
-                $multi_settle == 0;
-                $checked = "";
-
-                $escrow_title = "";
-                if ($default['de_escrow_use']) {
-                    $escrow_title = "에스크로 ";
-                }
-
-                // 무통장입금 사용
-                if ($default['de_bank_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_bank" name="od_settle_case" value="무통장" $checked><label for="od_settle_bank">무통장입금</label>';
-                    $checked = '';
-                }
-
-                // 가상계좌 사용
-                if ($default['de_vbank_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_vbank" name=od_settle_case value="가상계좌" $checked><label for="od_settle_vbank">'.$escrow_title.' 가상계좌</label>';
-                    $checked = '';
-                }
-
-                // 계좌이체 사용
-                if ($default['de_iche_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_iche" name=od_settle_case value="계좌이체" $checked><label for="od_settle_iche">'.$escrow_title.' 계좌이체</label>';
-                    $checked = '';
-                }
-
-                // 휴대폰 사용
-                if ($default['de_hp_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_hp" name=od_settle_case value="휴대폰" $checked><label for="od_settle_hp">휴대폰</label>';
-                    $checked = '';
-                }
-
-                // 신용카드 사용
-                if ($default['de_card_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_card" name=od_settle_case value="신용카드" $checked><label for="od_settle_card">신용카드</label>';
-                    $checked = '';
-                }
-
-                // 회원이면서 포인트사용이면
-                $temp_point = 0;
-                if ($is_member && $config['cf_use_point'])
-                {
-                    // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
-                    if ($member['mb_point'] >= $default['de_point_settle'])
-                    {
-                        $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
-                        $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
-
-                        $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
-                        if ($temp_point > $member_point)
-                            $temp_point = $member_point;
-
-                        echo '<div>결제포인트 : <input type=text id=od_temp_point name=od_temp_point value="0" size=10>점 (100점 단위로 입력하세요.)</div>';
-                        echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong>'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
-                        $multi_settle++;
-                    }
-                }
-
-                if ($multi_settle == 0)
-                    echo "<br><span class=point>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</span>";
-
-                if (!$default['de_card_point'])
-                    echo "<br><br>· '무통장입금' 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.";
-                ?>
-            </td>
-        </tr>
-
         <?php
+        $multi_settle == 0;
+        $checked = '';
+
+        $escrow_title = "";
+        if ($default['de_escrow_use']) {
+            $escrow_title = "에스크로 ";
+        }
+
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
+        echo '<fieldset id="sod_frm_paysel">';
+        echo '<legend>결제방법 선택</legend>';
+        }
+
+        // 무통장입금 사용
+        if ($default['de_bank_use']) {
+            $multi_settle++;
+            echo '<input type="radio" id="od_settle_bank" name="od_settle_case" value="무통장" '.$checked.'> <label for="od_settle_bank">무통장입금</label>'.PHP_EOL;
+            $checked = '';
+        }
+
+        // 가상계좌 사용
+        if ($default['de_vbank_use']) {
+            $multi_settle++;
+            echo '<input type="radio" id="od_settle_vbank" name=od_settle_case value="가상계좌" '.$checked.'> <label for="od_settle_vbank">'.$escrow_title.'가상계좌</label>'.PHP_EOL;
+            $checked = '';
+        }
+
+        // 계좌이체 사용
+        if ($default['de_iche_use']) {
+            $multi_settle++;
+            echo '<input type="radio" id="od_settle_iche" name=od_settle_case value="계좌이체" '.$checked.'> <label for="od_settle_iche">'.$escrow_title.'계좌이체</label>'.PHP_EOL;
+            $checked = '';
+        }
+
+        // 휴대폰 사용
+        if ($default['de_hp_use']) {
+            $multi_settle++;
+            echo '<input type="radio" id="od_settle_hp" name=od_settle_case value="휴대폰" '.$checked.'> <label for="od_settle_hp">휴대폰</label>'.PHP_EOL;
+            $checked = '';
+        }
+
+        // 신용카드 사용
+        if ($default['de_card_use']) {
+            $multi_settle++;
+            echo '<input type="radio" id="od_settle_card" name=od_settle_case value="신용카드" '.$checked.'> <label for="od_settle_card">신용카드</label>'.PHP_EOL;
+            $checked = '';
+        }
+
         if ($default['de_bank_use']) {
             // 은행계좌를 배열로 만든후
             $str = explode("\n", trim($default['de_bank_account']));
@@ -560,29 +529,57 @@ set_session('ss_order_uniqid', $od_id);
             }
             else
             {
-                $bank_account = '<select name="od_bank_account">'.PHP_EOL;
+                $bank_account = '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
                 $bank_account .= '<option value="">선택하십시오.</option>';
                 for ($i=0; $i<count($str); $i++)
                 {
                     //$str[$i] = str_replace("\r", "", $str[$i]);
                     $str[$i] = trim($str[$i]);
-                    $bank_account .= '<option value="'.$str[$i].'">'.$str[$i].PHP_EOL;
+                    $bank_account .= '<option value="'.$str[$i].'">'.$str[$i].'</option>'.PHP_EOL;
                 }
-                $bank_account .= "</select> ";
+                $bank_account .= '</select>'.PHP_EOL;
             }
+            echo '<div id="settle_bank" style="display:none">';
+            echo '<label for="od_bank_account" class="sound_only">입금할 계좌</label>';
+            echo $bank_account;
+            echo '<label for="od_deposit_name" class="sound_only">입금자명</label>';
+            echo '<input type="text" name="od_deposit_name" id="od_deposit_name" class="frm_input" size="10" maxlength="20">';
+            echo '</div>';
+        }
+
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
+        echo '</fieldset>';
+
+        }
+
+        // 회원이면서 포인트사용이면
+        $temp_point = 0;
+        if ($is_member && $config['cf_use_point'])
+        {
+            // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
+            if ($member['mb_point'] >= $default['de_point_settle'])
+            {
+                $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
+                $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+
+                $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
+                if ($temp_point > $member_point)
+                    $temp_point = $member_point;
+
+                echo '<div>결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
+                echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong>'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
+                $multi_settle++;
+            }
+        }
         ?>
-        <tr>
-            <td>계좌정보</td>
-            <td>
-                <div id="settle_bank" style="display:none;">
-                    <?php echo $bank_account; ?>
-                    <input type=text name=od_deposit_name size=10 maxlength=20>
-                </div>
-            </td>
-        </tr>
-        <?php } ?>
-        </tbody>
-        </table>
+
+        <?php
+        if (!$default['de_card_point'])
+            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
+
+        if ($multi_settle == 0)
+            echo '<p>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</p>';
+        ?>
     </section>
 
     <!-- Payplus Plug-in 설치 안내 -->
@@ -599,7 +596,7 @@ set_session('ss_order_uniqid', $od_id);
     </form>
 
     <?php if ($default['de_escrow_use']) { ?>
-    <section>
+    <section id="sod_frm_escrow">
         <h2>에스크로 안내</h2>
         <form name="escrow_foot" method="post" action="http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp">
         <input type="hidden" name="site_cd" value="SR<?php echo $default['de_kcp_mid']; ?>">
