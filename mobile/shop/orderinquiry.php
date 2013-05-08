@@ -1,5 +1,5 @@
 <?php
-include_once("./_common.php");
+include_once('./_common.php');
 
 define("_ORDERINQUIRY_", true);
 
@@ -52,7 +52,7 @@ if (!$is_member)
 }
 
 $g4['title'] = '주문내역조회';
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 ?>
 
 <div id="sod_v">
@@ -60,12 +60,12 @@ include_once('./_head.php');
 
     <?php
     $limit = " limit $from_record, $rows ";
-    include "./orderinquiry.sub.php";
+    include G4_MSHOP_PATH.'/orderinquiry.sub.php';
     ?>
 
     <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 </div>
 
 <?php
-include_once('./_tail.php');
+include_once(G4_MSHOP_PATH.'/_tail.php');
 ?>

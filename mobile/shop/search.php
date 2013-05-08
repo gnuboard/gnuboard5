@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $g4['title'] = "상품 검색 결과";
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
@@ -95,11 +95,11 @@ $total_count = $row['cnt'];
          {
              $sql2 = " select ca_name from $g4[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
             $row2 = sql_fetch($sql2);
-            $ca_temp = '<a href="./list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> &gt; ';
+            $ca_temp = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> &gt; ';
          }
     ?>
     <table class="basic_tbl">
-    <caption><?php echo $ca_temp?><a href="./list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo $save['cnt']; ?>개</caption>
+    <caption><?php echo $ca_temp?><a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo $save['cnt']; ?>개</caption>
     <thead>
     <tr>
         <th scope="col">이미지</td>
@@ -143,5 +143,5 @@ $total_count = $row['cnt'];
 </div>
 
 <?php
-include_once('./_tail.php');
+include_once(G4_MSHOP_PATH.'/_tail.php');
 ?>

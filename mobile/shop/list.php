@@ -11,7 +11,7 @@ if (!$ca['ca_id'])
 
 $g4['title'] = $ca['ca_name'].' 상품리스트';
 
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 
 // 스킨을 지정했다면 지정한 스킨을 사용함 (스킨의 다양화)
 //if ($skin) $ca[ca_skin] = $skin;
@@ -24,7 +24,7 @@ if ($is_admin)
 
     <?
     $nav_ca_id = $ca_id;
-    include G4_SHOP_PATH.'/navigation1.inc.php';
+    include G4_MSHOP_PATH.'/navigation1.inc.php';
 
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_mobile_head_html']).'</div>';
@@ -96,7 +96,7 @@ echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SEL
 ?>
 
 <?php
-include_once('./_tail.php');
+include_once(G4_MSHOP_PATH.'/_tail.php');
 
-echo "\n<!-- {$ca['ca_skin']} -->\n";
+echo "\n<!-- {$ca['ca_mobile_skin']} -->\n";
 ?>

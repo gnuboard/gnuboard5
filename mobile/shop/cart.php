@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $g4['title'] = '장바구니';
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 ?>
 
 <div id="sod_bsk">
@@ -16,5 +16,5 @@ include_once('./_head.php');
 </div>
 
 <?php
-include_once('./_tail.php');
+include_once(G4_MSHOP_PATH.'/_tail.php');
 ?>

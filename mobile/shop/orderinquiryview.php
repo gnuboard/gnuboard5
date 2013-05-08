@@ -23,18 +23,11 @@ $settle_case = $od['od_settle_case'];
 set_session('ss_temp_uq_id', $uq_id);
 
 $g4['title'] = '주문상세내역';
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 
 $s_uq_id = $od['uq_id'];
 $s_page = 'orderinquiryview.php';
 ?>
-
-<script>
-var openwin = window.open( './kcp/proc_win.html', 'proc_win', '' );
-if(openwin != null) {
-    openwin.close();
-}
-</script>
 
 <div id="sod_fin">
 
@@ -53,7 +46,7 @@ if(openwin != null) {
             <dt>완료</dt>
             <dd>상품 배송이 완료되었습니다.</dd>
         </dl>
-        <?php include './cartsub.inc.php'; ?>
+        <?php include G4_MSHOP_PATH.'/cartsub.inc.php'; ?>
     </section>
 
     <div id="sod_fin_view">
@@ -449,7 +442,7 @@ if(openwin != null) {
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
         <div id="sod_fin_cancelfrm">
-            <form method="post" action="./orderinquirycancel.php">
+            <form method="post" action="<?php echo G4_SHOP_URL; ?>/orderinquirycancel.php">
             <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
             <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
@@ -489,5 +482,5 @@ if(openwin != null) {
 </div>
 
 <?php
-include_once('./_tail.php');
+include_once(G4_MSHOP_PATH.'/_tail.php');
 ?>
