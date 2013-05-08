@@ -120,7 +120,7 @@ if ($od_send_mail)
         $content = ob_get_contents();
         ob_end_clean();
 
-        $title = "{$od['od_name']}님께서 주문하신 내역을 다음과 같이 처리하였습니다.";
+        $title = $config['cf_title'].' - '.$od['od_name'].'님 주문 처리 내역 안내';
         $email = $od['od_email'];
 
         // 메일 보낸 내역 상점메모에 update
