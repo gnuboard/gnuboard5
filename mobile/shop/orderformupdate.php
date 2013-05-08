@@ -16,7 +16,7 @@ else
     $tmp_uq_id = get_session('ss_uq_id');
 
 if (get_cart_count($tmp_uq_id) == 0)// 장바구니에 담기
-    alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', './cart.php');
+    alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G4_SHOP_URL.'/cart.php');
 
 $error = "";
 // 장바구니 상품 재고 검사
@@ -116,7 +116,7 @@ if ($od_settle_case == "무통장")
 }
 else if ($od_settle_case == "계좌이체")
 {
-    include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    include G4_MSHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $od_temp_bank       = $i_amount;
     $od_temp_point      = $i_temp_point;
@@ -133,7 +133,7 @@ else if ($od_settle_case == "계좌이체")
 }
 else if ($od_settle_case == "가상계좌")
 {
-    include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    include G4_MSHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $od_temp_bank       = $i_amount;
     $od_temp_point      = $i_temp_point;
@@ -149,7 +149,7 @@ else if ($od_settle_case == "가상계좌")
 }
 else if ($od_settle_case == "휴대폰")
 {
-    include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    include G4_MSHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $od_temp_bank       = $i_amount;
     $od_temp_point      = $i_temp_point;
@@ -163,7 +163,7 @@ else if ($od_settle_case == "휴대폰")
 }
 else if ($od_settle_case == "신용카드")
 {
-    include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    include G4_MSHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $od_temp_card       = $i_amount;
     $od_temp_point      = $i_temp_point;
@@ -185,7 +185,7 @@ else
 if($tno) {
     if((int)$i_amount !== (int)$pg_amount) {
         $cancel_msg = '결제금액 불일치';
-        include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+        include G4_MSHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
 
         die("Receipt Amount Error");
     }
@@ -248,7 +248,7 @@ $result = sql_query($sql, false);
 if(!$result) {
     if($tno) {
         $cancel_msg = '주문정보 입력 오류';
-        include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+        include G4_MSHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
     }
 
     die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
@@ -271,7 +271,7 @@ $result = sql_query($sql, false);
 if(!$result) {
     if($tno) {
         $cancel_msg = '주문상태 변경 오류';
-        include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+        include G4_MSHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
     }
 
     echo "<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}";
