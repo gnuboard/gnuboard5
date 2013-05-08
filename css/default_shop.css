@@ -608,6 +608,40 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sod_v {}
 #sod_v .basic_tbl {text-align:center}
 
+/* 주문상세내역 */
+#sod_fin {}
+#sod_fin_list dl {padding:7px 5px 0;border:1px solid #e9e9e9;zoom:1}
+#sod_fin_list dl:after {display:block;visibility:hidden;clear:both;content:''}
+#sod_fin_list dt {clear:both;float:left;margin:0 0 5px;width:50px;font-weight:bold}
+#sod_fin_list dd {float:left;margin:0}
+
+#sod_fin_view {border:1px solid #e9e9e9}
+#sod_fin_view h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sod_fin_view h3 {margin:0 0 10px}
+#sod_fin_view .basic_tbl th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f5f6fa;text-align:left}
+
+#sod_fin_pay {padding:10px;border-bottom:1px solid #e9e9e9}
+
+#sod_fin_orderer {padding:10px;border-bottom:1px solid #e9e9e9}
+
+#sod_fin_receiver {padding:10px;border-bottom:1px solid #e9e9e9}
+
+#sod_fin_dvr {padding:10px}
+
+#sod_fin_tot {margin:0 0 30px;padding:10px;border:1px solid #e9e9e9;border-top:0;background:#f5f6fa}
+#sod_fin_tot h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sod_fin_tot ul {margin:0;padding:0;list-style:none}
+#sod_fin_tot li {padding:10px;border-bottom:1px solid #e9e9e9;zoom:1}
+#sod_fin_tot li:after {display:block;visibility:hidden;clear:both;content:""}
+#sod_fin_tot #alrdy {border-bottom:0 !important}
+#sod_fin_tot strong {float:right}
+
+#sod_fin_cancel {text-align:center}
+#sod_fin_cancel h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sod_fin_cancel button {padding:10px;border:0;background:#ff3600;color:#fff}
+#sod_fin_cancelfrm {display:none;margin:10px 0 0}
+#sod_fin_cancelfrm .frm_input {background:#fff}
+
 /* 공지사항 및 커뮤니티 새글 */
 #sidx_lat {padding:15px 0 0;border-top:1px solid #ddd}
 #sidx_lat h2 {text-align:center}
