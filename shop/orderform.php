@@ -360,8 +360,8 @@ set_session('ss_order_uniqid', $od_id);
         <tr>
             <th scope="row"><label for="od_pwd">비밀번호</label></th>
             <td>
-                <input type="password" name="od_pwd" id="od_pwd" maxlength="20">
-                영,숫자 3~20자 (주문서 조회시 필요)
+                <span class="frm_info">영,숫자 3~20자 (주문서 조회시 필요)</span>
+                <input type="password" name="od_pwd" id="od_pwd" class="frm_input" maxlength="20">
             </td>
         </tr>
         <?php } ?>
@@ -477,6 +477,9 @@ set_session('ss_order_uniqid', $od_id);
         <h2>결제정보</h2>
 
         <?php
+        if (!$default['de_card_point'])
+            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
+
         $multi_settle == 0;
         $checked = '';
 
@@ -578,9 +581,6 @@ set_session('ss_order_uniqid', $od_id);
         echo '</fieldset>';
 
         }
-
-        if (!$default['de_card_point'])
-            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
 
         if ($multi_settle == 0)
             echo '<p>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</p>';

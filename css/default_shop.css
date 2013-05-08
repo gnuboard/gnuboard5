@@ -644,7 +644,7 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sod_frm_pay .frm_input {background:#fff !important}
 #sod_frm_pay .frm_input:focus {color:#000}
 
-#sod_frm_paysel {padding:10px;border:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
+#sod_frm_paysel {margin:0 0 20px;padding:10px;border:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
 #sod_frm_paysel legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #settle_bank {margin:10px 0 0}
 

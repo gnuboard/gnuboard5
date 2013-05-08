@@ -37,14 +37,29 @@
 #mb_login {margin:0 auto;padding:100px 0;width:500px}
 #mb_login h1 {margin:0 0 20px;font-size:1.3em}
 #mb_login h2 {margin:0}
-#mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
-#mb_login label {letter-spacing:-0.1em}
-#mb_login .login_id {position:absolute;top:26px;left:95px}
-#mb_login .login_pw {position:absolute;top:52px;left:95px}
-#mb_login .frm_input {display:block;margin:0 0 5px 80px}
-#mb_login .btn_submit {position:absolute;top:20px;left:335px;height:49px}
-#mb_login section {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
-#mb_login section div {text-align:right}
+#mb_login_fs {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
+#mb_login_fs legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#mb_login_fs label {letter-spacing:-0.1em}
+#mb_login_fs .login_id {position:absolute;top:26px;left:95px}
+#mb_login_fs .login_pw {position:absolute;top:52px;left:95px}
+#mb_login_fs .frm_input {display:block;margin:0 0 5px 80px}
+#mb_login_fs .btn_submit {position:absolute;top:20px;left:335px;height:49px}
+#mb_login_info {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
+#mb_login_info div {text-align:right}
+
+#mb_login_notmb {position:relative;margin:0 0 20px;padding:20px;border:1px solid #cfded8;background:#fff}
+#mb_login_notmb #guest_privacy {margin:0 0 10px;padding:10px;height:150px;border:1px solid #e9e9e9;overflow:auto}
+#mb_login_notmb .btn_confirm {padding:10px 0 0}
+
+#mb_login_od {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
+#mb_login_od legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#mb_login_od label {letter-spacing:-0.1em}
+#mb_login_od .od_id {position:absolute;top:26px;left:95px}
+#mb_login_od .od_pwd {position:absolute;top:52px;left:95px}
+#mb_login_od .frm_input {display:block;margin:0 0 5px 80px}
+#mb_login_od .btn_submit {position:absolute;top:20px;left:335px;width:52px;height:49px}
+#mb_login_odinfo {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
+#mb_login_odinfo div {text-align:right}
 
 /* 쪽지 */
 #memo_view section {margin:0 auto 20px;padding:20px;width:87%}
