@@ -74,7 +74,6 @@ include_once('./admin.head.php');
     <form name="fmailselectlist" id="fmailselectlist" method="post" action="./mail_select_update.php">
     <input type="hidden" name="token" value="<?php echo $token ?>">
     <input type="hidden" name="ma_id" value="<?php echo $ma_id ?>">
-    <input type="hidden" name="ma_list" value="<?php echo $ma_list ?>">
     <table>
     <thead>
     <tr>
@@ -93,8 +92,7 @@ include_once('./admin.head.php');
     $i=0;
     $ma_list = "";
     $cr = "";
-    while ($row=sql_fetch_array($result))
-    {
+    while ($row=sql_fetch_array($result)) {
         $i++;
         $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row['mb_datetime'];
         $cr = "\n";
@@ -110,6 +108,7 @@ include_once('./admin.head.php');
     <?php } ?>
     </tbody>
     </table>
+    <textarea name="ma_list" style="display:none"><?=$ma_list?></textarea>
 </div>
 
 <div class="btn_confirm">
