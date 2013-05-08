@@ -474,7 +474,7 @@ set_session('ss_order_uniqid', $od_id);
     </section>
 
     <section id="sod_frm_pay">
-        <h2>결제정보 입력</h2>
+        <h2>결제정보</h2>
 
         <?php
         $multi_settle == 0;
@@ -525,6 +525,28 @@ set_session('ss_order_uniqid', $od_id);
             $checked = '';
         }
 
+        // 회원이면서 포인트사용이면
+        $temp_point = 0;
+        if ($is_member && $config['cf_use_point'])
+        {
+            // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
+            if ($member['mb_point'] >= $default['de_point_settle'])
+            {
+                $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
+                $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+
+                $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
+                if ($temp_point > $member_point)
+                    $temp_point = $member_point;
+        ?>
+            <p>보유포인트(<?php echo display_point($member['mb_point']); ?>)중 <strong>최대 <?php echo display_point($temp_point); ?></strong>까지 사용 가능 (주문금액 <?php echo $default['de_point_per']; ?>%)</p>
+            <label for="od_temp_point">사용 포인트</label>
+            <input type="text" name="od_temp_point" value="0" id="od_temp_point" class="frm_input" size="10">점 (100점 단위로 입력하세요.)
+        <?php
+            $multi_settle++;
+            }
+        }
+
         if ($default['de_bank_use']) {
             // 은행계좌를 배열로 만든후
             $str = explode("\n", trim($default['de_bank_account']));
@@ -557,28 +579,6 @@ set_session('ss_order_uniqid', $od_id);
 
         }
 
-        // 회원이면서 포인트사용이면
-        $temp_point = 0;
-        if ($is_member && $config['cf_use_point'])
-        {
-            // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
-            if ($member['mb_point'] >= $default['de_point_settle'])
-            {
-                $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
-                $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
-
-                $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
-                if ($temp_point > $member_point)
-                    $temp_point = $member_point;
-
-                echo '<div>결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
-                echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong>'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
-                $multi_settle++;
-            }
-        }
-        ?>
-
-        <?php
         if (!$default['de_card_point'])
             echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
 
