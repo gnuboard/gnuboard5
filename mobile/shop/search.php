@@ -1,11 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/search.php');
-    return;
-}
-
 $g4['title'] = "상품 검색 결과";
 include_once('./_head.php');
 
