@@ -63,7 +63,7 @@ include_once('./_head.php');
             {
             ?>
             품절
-            <input type="hidden" name="it_id[$i]">
+            <input type="hidden" name="it_id[<?php echo $i; ?>]">
             <?php } else { //품절이 아니면 체크할수 있도록한다 ?>
             <input type="checkbox" name="it_id[<?php echo $i; ?>]"     value="<?php echo $row['it_id']; ?>" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
             <?php } ?>
