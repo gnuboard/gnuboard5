@@ -9,7 +9,7 @@ $title_url = $title.' : '.$url;
 
 switch($_REQUEST['sns']) {
     case 'facebook' :
-        header("Location:http://www.facebook.com/sharer/sharer.php?s=100&p[url]=".$url."&p[title]=".$title);
+        header("Location:http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=".$url."&amp;p[title]=".$title);
         break;
     case 'twitter' :
         header("Location:http://twitter.com/home?status=".$title_url);
@@ -18,7 +18,7 @@ switch($_REQUEST['sns']) {
         header("Location:http://me2day.net/posts/new?new_post[body]=".$title_url);
         break;
     case 'yozm' :
-        header("Location:http://yozm.daum.net/api/popup/prePost?sourceid=41&prefix=".$title_url);
+        header("Location:http://yozm.daum.net/api/popup/prePost?sourceid=41&amp;prefix=".$title_url);
         break;
     case 'google' :
         header("Location:https://plus.google.com/share?url=".$url);
