@@ -63,22 +63,18 @@ if ($_COOKIE['ck_it_id'] != $it_id) {
 
 $g4['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 
 // 분류 위치
 // HOME > 1단계 > 2단계 ... > 6단계 분류
 $ca_id = $it['ca_id'];
-include G4_SHOP_PATH.'/navigation1.inc.php';
+include G4_MSHOP_PATH.'/navigation1.inc.php';
 
 // 이 분류에 속한 하위분류 출력
-include G4_SHOP_PATH.'/listcategory.inc.php';
+include G4_MSHOP_PATH.'/listcategory.inc.php';
 
 if ($is_admin)
     echo '<div class="sit_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
-
-$himg = G4_DATA_PATH.'/item/'.$it_id.'_h';
-if (file_exists($himg))
-    echo '<div id="sit_himg" class="sit_img"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_h" alt=""></div>';
 
 // 상단 HTML
 echo '<div id="sit_hhtml">'.stripslashes($it['it_mobile_head_html']).'</div>';
@@ -93,7 +89,7 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $prev_title = '이전상품보기 '.$row['it_name'];
-    $prev_href = '<a href="./item.php?it_id='.$row['it_id'].'">';
+    $prev_href = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
     $prev_href = '</a>';
 } else {
     $prev_title = '';
@@ -111,7 +107,7 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $next_title = '다음 상품 '.$row['it_name'];
-    $next_href = '<a href="./item.php?it_id='.$row['it_id'].'">';
+    $next_href = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
     $next_href2 = '</a>';
 } else {
     $next_title = '';
@@ -148,7 +144,7 @@ function pg_anchor($anc_id) {
 if (G4_HTTPS_DOMAIN)
     $action_url = G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR.'/cartupdate.php';
 else
-    $action_url = './cartupdate.php';
+    $action_url = G4_SHOP_URL.'/cartupdate.php';
 ?>
 
 <div id="sit">
@@ -335,7 +331,7 @@ else
                 }
                 else
                 {
-                    url = "./itemrecommend.php?it_id=" + it_id;
+                    url = "<?php echo G4_SHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
                     opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
                     popup_window(url, "itemrecommend", opt);
                 }
@@ -393,9 +389,9 @@ else
         </div>
         <?php } ?>
 
-        <?php if ($it['it_explan']) { // 상품 상세설명 ?>
+        <?php if ($it['it_explan'] || $it['it_mobile_explan']) { // 상품 상세설명 ?>
         <div id="sit_inf_explan">
-            <?php echo conv_content($it['it_explan'], 1); ?>
+            <?php echo ($it['it_mobile_explan'] ? conv_content($it['it_mobile_explan'], 1) : conv_content($it['it_explan'], 1)); ?>
         </div>
         <?php } ?>
 
@@ -434,7 +430,7 @@ else
 
         <?php
         $use_page_rows = 10; // 페이지당 목록수
-        include_once('./itemuse.inc.php');
+        include_once(G4_SHOP_PATH.'/itemuse.inc.php');
         ?>
     </section>
 
@@ -444,7 +440,7 @@ else
 
         <?php
         $qa_page_rows = 10; // 페이지당 목록수
-        include_once('./itemqa.inc.php');
+        include_once(G4_SHOP_PATH.'/itemqa.inc.php');
         ?>
     </section>
 
@@ -487,7 +483,7 @@ else
             $result = sql_query($sql);
             $num = @mysql_num_rows($result);
             if ($num)
-                include G4_SHOP_PATH.'/maintype10.inc.php';
+                include G4_MSHOP_PATH.'/maintype10.inc.php';
             else
                 echo '<p class="sit_empty">이 상품과 관련된 상품이 없습니다.</p>';
             ?>
@@ -731,7 +727,7 @@ else
 
 <?php
 // 하단 HTML
-echo stripslashes($it['it_mobiletail_html']);
+echo stripslashes($it['it_mobile_tail_html']);
 
-include_once('./_tail.php');
+include_once(G4_MSHOP_PATH.'/_tail.php');
 ?>

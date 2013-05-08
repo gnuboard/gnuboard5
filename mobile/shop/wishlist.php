@@ -5,7 +5,7 @@ if (!$is_member)
     goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL.'/mypage.php'));
 
 $g4['title'] = "보관함";
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 ?>
 
 <div id="sod_ws">
@@ -73,9 +73,9 @@ include_once('./_head.php');
             <input type="hidden"   name="ct_qty[<?php echo $i; ?>]"    value="1">
         </td>
         <td class="sod_ws_img"><?php echo $image; ?></td>
-        <td><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
+        <td><a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
         <td class="td_datetime"><?php echo $row['wi_time']; ?></td>
-        <td class="td_smallmng"><a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
+        <td class="td_smallmng"><a href="<?php echo G4_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
     </tr>
     <?php
     }
@@ -136,7 +136,7 @@ include_once('./_head.php');
             f.sw_direct.value = 0;
         }
 
-        f.action="./cartupdate.php";
+        f.action="<?php echo G4_SHOP_URL; ?>/cartupdate.php";
 
         f.submit();
     }
@@ -144,5 +144,5 @@ include_once('./_head.php');
 </script>
 
 <?php
-include_once('./_tail.php');
+include_once(G4_MSHOP_PATH.'/_tail.php');
 ?>

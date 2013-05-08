@@ -5,7 +5,7 @@ if (!$is_member)
     goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/mypage.php"));
 
 $g4['title'] = '마이페이지';
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 ?>
 
 <img src="<?php echo G4_SHOP_URL; ?>/img/top_mypage.gif" border=0><p>
@@ -60,7 +60,7 @@ function member_leave()
 <table width=98% cellpadding=0 cellspacing=0 align=center>
 <tr>
     <td height=35><img src='<?php echo G4_SHOP_URL; ?>/img/my_title01.gif'></td>
-    <td align=right><a href='./orderinquiry.php'><img src='<?php echo G4_SHOP_URL; ?>/img/icon_more.gif' border=0></a></td>
+    <td align=right><a href='<?php echo G4_SHOP_URL; ?>/orderinquiry.php'><img src='<?php echo G4_SHOP_URL; ?>/img/icon_more.gif' border=0></a></td>
 </tr>
 </table>
 
@@ -76,7 +76,7 @@ include G4_MSHOP_PATH.'/orderinquiry.sub.php';
 <table width=98% cellpadding=0 cellspacing=0 align=center>
 <tr>
     <td height=35 colspan=2><img src='<?php echo G4_SHOP_URL; ?>/img/my_title02.gif'></td>
-    <td align=right><a href='./wishlist.php'><img src='<?php echo G4_SHOP_URL; ?>/img/icon_more.gif' border=0></a></td>
+    <td align=right><a href='<?php echo G4_SHOP_URL; ?>/wishlist.php'><img src='<?php echo G4_SHOP_URL; ?>/img/icon_more.gif' border=0></a></td>
 </tr>
 <tr><td height=2 colspan=3 class=c1></td></tr>
 <tr align=center height=25 class=c2>
@@ -100,11 +100,11 @@ for ($i=0; $row = sql_fetch_array($result); $i++)
 
     $image = get_it_image($row['it_id']."_s", 50, 50, $row['it_id']);
 
-    echo "<tr align=center height=60>";
-    echo "<td width=100>$image</td>";
-    echo "<td align=left><a href='./item.php?it_id={$row['it_id']}'>".stripslashes($row['it_name'])."</a></td>";
-    echo "<td>$row[wi_time]</td>";
-    echo "</tr>";
+    echo '<tr align=center height=60>';
+    echo '<td width=100>'.$image.'</td>';
+    echo '<td align=left><a href="'.G4_SHOP_URL.'"/item.php?it_id='.$row['it_id'].'">'.stripslashes($row['it_name']).'</a></td>';
+    echo '<td>'.$row['wi_time'].'</td>';
+    echo '</tr>';
 }
 
 if ($i == 0)
@@ -115,5 +115,5 @@ if ($i == 0)
 
 
 <?php
-include_once("./_tail.php");
+include_once(G4_MSHOP_PATH.'/_tail.php');
 ?>
