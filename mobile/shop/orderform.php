@@ -556,6 +556,11 @@ function forderform_check(f)
         return false;
     }
 
+    if(settle_method != "무통장" && f.res_cd.value != "0000") {
+        alert("결제등록요청 후 주문해 주십시오.");
+        return false;
+    }
+
     var tot_amount = <?php echo (int)$tot_amount; ?>;
     var max_point  = <?php echo (int)$temp_point; ?>;
 
