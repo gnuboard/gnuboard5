@@ -23,6 +23,10 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 // 새로운 주문번호 생성
 $od_id = get_uniqid();
 set_session('ss_order_uniqid', $od_id);
+
+// 결제등록 요청시 사용할 입금마감일
+$ipgm_date = date("Ymd", (G4_SERVER_TIME + 86400 * 5));
+$tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
 ?>
 
 <div id="sod_frm">
@@ -40,16 +44,119 @@ set_session('ss_order_uniqid', $od_id);
 
     $good_mny = (int)$tot_sell_amount + (int)$send_cost;
 
-    $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
+    $order_action_url = G4_HTTPS_MSHOP_URL.'/orderformupdate.php';
     ?>
 
+    <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
+    <script src="<?php echo G4_MSHOP_URL; ?>/kcp/approval_key.js"></script>
 
+    <script language="javascript">
+        /* 결제방법에 따른 처리 후 결제등록요청 실행 */
+        function kcp_approval()
+        {
+            var f = document.sm_form;
+            var pf = document.forderform;
+
+            var settle_case = document.getElementsByName("od_settle_case");
+            var settle_check = false;
+            var settle_method = "";
+            for (i=0; i<settle_case.length; i++)
+            {
+                if (settle_case[i].checked)
+                {
+                    settle_check = true;
+                    settle_method = settle_case[i].value;
+                    break;
+                }
+            }
+            if (!settle_check)
+            {
+                alert("결제방식을 선택하십시오.");
+                return false;
+            }
+
+            f.buyr_name.value = pf.od_name.value;
+            f.buyr_mail.value = pf.od_email.value;
+            f.buyr_tel1.value = pf.od_tel.value;
+            f.buyr_tel2.value = pf.od_hp.value;
+            f.rcvr_name.value = pf.od_b_name.value;
+            f.rcvr_tel1.value = pf.od_b_tel.value;
+            f.rcvr_tel2.value = pf.od_b_hp.value;
+            f.rcvr_mail.value = pf.od_email.value;
+            f.rcvr_zipx.value = pf.od_b_zip1.value + pf.od_b_zip2.value;
+            f.rcvr_add1.value = pf.od_b_addr1.value;
+            f.rcvr_add2.value = pf.od_b_addr2.value;
+            f.settle_method.value = settle_method;
+
+            var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
+            f.target = "tar_opener";
+
+            f.submit();
+        }
+    </script>
+
+    <form name="sm_form" method="POST" action="<?php echo G4_MSHOP_URL; ?>/kcp/order_approval_form.php">
+    <input type="hidden" name="good_name"     value="<?php echo $goods; ?>">
+    <input type="hidden" name="good_mny"      value="<?php echo $good_mny; ?>" >
+    <input type="hidden" name="buyr_name"     value="">
+    <input type="hidden" name="buyr_tel1"     value="">
+    <input type="hidden" name="buyr_tel2"     value="">
+    <input type="hidden" name="buyr_mail"     value="">
+    <input type="hidden" name="ipgm_date"     value="<?php echo $ipgm_date; ?>">
+    <input type="hidden" name="settle_method" value="">
+    <!-- 주문번호 -->
+    <input type="hidden" name="ordr_idxx" value="<?php echo $od_id; ?>">
+    <!-- 결제등록 키 -->
+    <input type="hidden" name="approval_key" id="approval">
+    <!-- 수취인이름 -->
+    <input type="hidden" name="rcvr_name" value="">
+    <!-- 수취인 연락처 -->
+    <input type="hidden" name="rcvr_tel1" value="">
+    <!-- 수취인 휴대폰 번호 -->
+    <input type="hidden" name="rcvr_tel2" value="">
+    <!-- 수취인 E-MAIL -->
+    <input type="hidden" name="rcvr_add1" value="">
+    <!-- 수취인 우편번호 -->
+    <input type="hidden" name="rcvr_add2" value="">
+    <!-- 수취인 주소 -->
+    <input type="hidden" name="rcvr_mail" value="">
+    <!-- 수취인 상세 주소 -->
+    <input type="hidden" name="rcvr_zipx" value="">
+    <!-- 장바구니 상품 개수 -->
+    <input type="hidden" name="bask_cntx" value="<?php echo (int)$goods_count + 1; ?>">
+    <!-- 장바구니 정보(상단 스크립트 참조) -->
+    <input type="hidden" name="good_info" value="<?php echo $good_info; ?>">
+    <!-- 배송소요기간 -->
+    <input type="hidden" name="deli_term" value="03">
+    <!-- 기타 파라메터 추가 부분 - Start - -->
+    <input type="hidden" name="param_opt_1"	 value="<?=$param_opt_1?>"/>
+    <input type="hidden" name="param_opt_2"	 value="<?=$param_opt_2?>"/>
+    <input type="hidden" name="param_opt_3"	 value="<?=$param_opt_3?>"/>
+    <!-- 기타 파라메터 추가 부분 - End - -->
+    <!-- 화면 크기조정 부분 - Start - -->
+    <input type="text" name="tablet_size"	 value="<?=$tablet_size?>"/>
+    <!-- 화면 크기조정 부분 - End - -->
+    <!--
+        사용 카드 설정
+        <input type="hidden" name='used_card'    value="CClg:ccDI">
+        /*  무이자 옵션
+                ※ 설정할부    (가맹점 관리자 페이지에 설정 된 무이자 설정을 따른다)                             - "" 로 설정
+                ※ 일반할부    (KCP 이벤트 이외에 설정 된 모든 무이자 설정을 무시한다)                           - "N" 로 설정
+                ※ 무이자 할부 (가맹점 관리자 페이지에 설정 된 무이자 이벤트 중 원하는 무이자 설정을 세팅한다)   - "Y" 로 설정
+        <input type="hidden" name="kcp_noint"       value=""/> */
+
+        /*  무이자 설정
+                ※ 주의 1 : 할부는 결제금액이 50,000 원 이상일 경우에만 가능
+                ※ 주의 2 : 무이자 설정값은 무이자 옵션이 Y일 경우에만 결제 창에 적용
+                예) 전 카드 2,3,6개월 무이자(국민,비씨,엘지,삼성,신한,현대,롯데,외환) : ALL-02:03:04
+                BC 2,3,6개월, 국민 3,6개월, 삼성 6,9개월 무이자 : CCBC-02:03:06,CCKM-03:06,CCSS-03:06:04
+        <input type="hidden" name="kcp_noint_quota" value="CCBC-02:03:06,CCKM-03:06,CCSS-03:06:09"/> */
+    -->
+    </form>
 
     <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
     <input type="hidden" name="od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="od_send_cost" value="<?php echo $send_cost; ?>">
-
-
 
     <section id="sod_frm_orderer">
         <h2>주문하시는 분</h2>
@@ -292,15 +399,35 @@ set_session('ss_order_uniqid', $od_id);
         ?>
     </section>
 
-    <!-- Payplus Plug-in 설치 안내 -->
-    <p id="display_setup_message" style="display:none">
-        <span class="red">결제를 계속 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나<br>
-        <a href="http://pay.kcp.co.kr/plugin/file_vista/PayplusWizard.exe"><span class="bold">[수동설치]</span></a>를 눌러 Payplus Plug-in을 설치하시기 바랍니다.<br>
-        [수동설치]를 눌러 설치하신 경우 <span class="red bold">새로고침(F5)키</span>를 눌러 진행하시기 바랍니다.
-    </p>
+    <input type="hidden" name="req_tx"         value="">      <!-- 요청 구분          -->
+    <input type="hidden" name="res_cd"         value="">      <!-- 결과 코드          -->
+    <input type="hidden" name="tran_cd"        value="">      <!-- 트랜잭션 코드      -->
+    <input type="hidden" name="ordr_idxx"      value="">      <!-- 주문번호           -->
+    <input type="hidden" name="good_mny"       value="">      <!-- 결제금액    -->
+    <input type="hidden" name="good_name"      value="">      <!-- 상품명             -->
+    <input type="hidden" name="buyr_name"      value="">      <!-- 주문자명           -->
+    <input type="hidden" name="buyr_tel1"      value="">      <!-- 주문자 전화번호    -->
+    <input type="hidden" name="buyr_tel2"      value="">      <!-- 주문자 휴대폰번호  -->
+    <input type="hidden" name="buyr_mail"      value="">      <!-- 주문자 E-mail      -->
+    <input type="hidden" name="enc_info"       value="">      <!-- 암호화 정보        -->
+    <input type="hidden" name="enc_data"       value="">      <!-- 암호화 데이터      -->
+    <input type="hidden" name="use_pay_method" value="">      <!-- 요청된 결제 수단   -->
+    <input type="hidden" name="rcvr_name"      value="">      <!-- 수취인 이름        -->
+    <input type="hidden" name="rcvr_tel1"      value="">      <!-- 수취인 전화번호    -->
+    <input type="hidden" name="rcvr_tel2"      value="">      <!-- 수취인 휴대폰번호  -->
+    <input type="hidden" name="rcvr_mail"      value="">      <!-- 수취인 E-Mail      -->
+    <input type="hidden" name="rcvr_zipx"      value="">      <!-- 수취인 우편번호    -->
+    <input type="hidden" name="rcvr_add1"      value="">      <!-- 수취인 주소        -->
+    <input type="hidden" name="rcvr_add2"      value="">      <!-- 수취인 상세 주소   -->
+	<input type="hidden" name="param_opt_1"	   value="">
+	<input type="hidden" name="param_opt_2"	   value="">
+	<input type="hidden" name="param_opt_3"	   value="">
 
-    <div id="display_pay_button" class="btn_confirm" style="display:none">
-        <input type="submit" value="주문하기" class="btn_submit">
+    <p id="show_progress" style="display:none;">반드시 주문하기 버튼을 클릭 하셔야만 결제가 진행됩니다.</p>
+
+    <div id="display_pay_button" class="btn_confirm">
+        <span id="show_req_btn"><input type="button" name="submitChecked" onClick="kcp_approval();" value="결제등록요청" /></span>
+        <span id="show_pay_btn" style="display:none;"><input type="submit" value="주문하기" class="btn_submit"></span>
         <a href="javascript:history.go(-1);" class="btn01">취소</a>
     </div>
     </form>
@@ -497,48 +624,7 @@ function forderform_check(f)
         }
     }
 
-    // pay_method 설정
-    switch(settle_method)
-    {
-        case "계좌이체":
-            f.pay_method.value = "010000000000";
-            break;
-        case "가상계좌":
-            f.pay_method.value = "001000000000";
-            break;
-        case "휴대폰":
-            f.pay_method.value = "000010000000";
-            break;
-        case "신용카드":
-            f.pay_method.value = "100000000000";
-            break;
-        default:
-            f.pay_method.value = "무통장";
-            break;
-    }
-
-    // kcp 결제정보설정
-    f.buyr_name.value = f.od_name.value;
-    f.buyr_mail.value = f.od_email.value;
-    f.buyr_tel1.value = f.od_tel.value;
-    f.buyr_tel2.value = f.od_hp.value;
-    f.rcvr_name.value = f.od_b_name.value;
-    f.rcvr_tel1.value = f.od_b_tel.value;
-    f.rcvr_tel2.value = f.od_b_hp.value;
-    f.rcvr_mail.value = f.od_email.value;
-    f.rcvr_zipx.value = f.od_b_zip1.value + f.od_b_zip2.value;
-    f.rcvr_add1.value = f.od_b_addr1.value;
-    f.rcvr_add2.value = f.od_b_addr2.value;
-
-    if(f.pay_method.value != "무통장") {
-        if(jsf__pay( f )) {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return true;
-    }
+    return true;
 }
 
 // 구매자 정보와 동일합니다.
@@ -557,10 +643,14 @@ $(function() {
     $("#od_settle_bank").bind("click", function() {
         $("[name=od_deposit_name]").val( $("[name=od_b_name]").val() );
         $("#settle_bank").show();
+        $("#show_req_btn").css("display", "none");
+        $("#show_pay_btn").css("display", "inline");
     });
 
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank").bind("click", function() {
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp").bind("click", function() {
         $("#settle_bank").hide();
+        $("#show_req_btn").css("display", "inline");
+        $("#show_pay_btn").css("display", "none");
     });
 });
 </script>
