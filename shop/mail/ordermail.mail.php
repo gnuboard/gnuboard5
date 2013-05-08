@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title><?php echo $config['cf_title'];?> 주문내역 처리 안내</title>
+<title><?php echo $config['cf_title'];?> - 주문내역 처리 안내</title>
 </head>
 
 <body>
@@ -10,7 +10,7 @@
 <div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">
     <div style="border:1px solid #dedede">
         <h1 style="margin:0 0 20px;padding:30px 30px 20px;background:#f7f7f7;color:#555;font-size:1.4em">
-            <?php echo $config['cf_title'];?> 주문내역 처리 안내
+            <?php echo $config['cf_title'];?> - 주문내역 처리 안내
         </h1>
 
         <?php if (count($cart_list)) { ?>
