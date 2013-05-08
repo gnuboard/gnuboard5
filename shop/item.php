@@ -102,9 +102,9 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
           limit 1 ";
 $row = sql_fetch($sql);
 if ($row['it_id']) {
-    $prev_title = '이전상품보기 '.$row['it_name'];
-    $prev_href = '<a href="./item.php?it_id='.$row['it_id'].'">';
-    $prev_href = '</a>';
+    $prev_title = '이전상품<span class="sound_only"> '.$row['it_name'].'</span>';
+    $prev_href = '<a href="./item.php?it_id='.$row['it_id'].'" class="btn01">';
+    $prev_href2 = '</a>'.PHP_EOL;
 } else {
     $prev_title = '';
     $prev_href = '';
@@ -120,9 +120,9 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
           limit 1 ";
 $row = sql_fetch($sql);
 if ($row['it_id']) {
-    $next_title = '다음 상품 '.$row['it_name'];
-    $next_href = '<a href="./item.php?it_id='.$row['it_id'].'">';
-    $next_href2 = '</a>';
+    $next_title = '다음 상품<span class="sound_only"> '.$row['it_name'].'</span>';
+    $next_href = '<a href="./item.php?it_id='.$row['it_id'].'" class="btn01">';
+    $next_href2 = '</a>'.PHP_EOL;
 } else {
     $next_title = '';
     $next_href = '';
