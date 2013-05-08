@@ -1,6 +1,11 @@
 <?php
 include_once('./_common.php');
 
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/orderinquiryview.php');
+    return;
+}
+
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);

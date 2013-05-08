@@ -1,5 +1,10 @@
 <?php
-include_once("./_common.php");
+include_once('./_common.php');
+
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/orderinquiry.php');
+    return;
+}
 
 define("_ORDERINQUIRY_", true);
 

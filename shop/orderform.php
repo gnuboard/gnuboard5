@@ -1,6 +1,11 @@
 <?php
 include_once('./_common.php');
 
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/orderform.php');
+    return;
+}
+
 set_session("ss_direct", $sw_direct);
 // 장바구니가 비어있는가?
 if ($sw_direct) {
