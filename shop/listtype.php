@@ -6,30 +6,24 @@ if (G4_IS_MOBILE) {
     return;
 }
 
-include_once('./_head.php');
-
 $type = $_REQUEST['type'];
 if ($type == 1)      $g4['title'] = "히트상품";
 else if ($type == 2) $g4['title'] = "추천상품";
-else if ($type == 3) $g4['title'] = "신규상품";
-else if ($type == 4) $g4['title'] = "포인트상품";
-else if ($type == 5) $g4['title'] = "사은품상품";
+else if ($type == 3) $g4['title'] = "최신상품";
+else if ($type == 4) $g4['title'] = "인기상품";
+else if ($type == 5) $g4['title'] = "할인상품";
 else
     alert('상품유형이 아닙니다.');
 
+include_once('./_head.php');
+
 // 한페이지에 출력하는 이미지수 = $list_mod * $list_row
-$list_mod   = 4;    // 한줄에 이미지 몇개씩 출력?
+$list_mod   = 3;    // 한줄에 이미지 몇개씩 출력?
 $list_row   = 5;    // 한 페이지에 몇라인씩 출력?
 
-$img_width  = 100;  // 출력이미지 폭
-$img_height = 100;  // 출력이미지 높이
+$img_width  = 230;  // 출력이미지 폭
+$img_height = 230;  // 출력이미지 높이
 ?>
-
-<img src="<?php echo G4_SHOP_URL."/img/top_type{$type}.jpg"; ?>" border="0"><p>
-
-<table width=100% cellpadding=0 cellspacing=0>
-    <tr>
-        <td>
 
 <?php
 // 상품 출력순서가 있다면
@@ -80,17 +74,10 @@ if ($i==0)
 }
 ?>
 
-        </td>
-    </tr>
-</table>
-
-<br>
-<div align=center>
 <?php
 $qstr .= '&amp;type='.$type.'&amp;sort='.$sort;
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
-</div><br>
 
 <?php
 // 테스트
