@@ -1,5 +1,10 @@
 <?php
-include_once("./_common.php");
+include_once('./_common.php');
+
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/list.php');
+    return;
+}
 
 $sql = " select *
            from {$g4['shop_category_table']}

@@ -1,5 +1,11 @@
 <?php
 include_once('./_common.php');
+
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/item.php');
+    return;
+}
+
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 

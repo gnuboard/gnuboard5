@@ -1,9 +1,15 @@
 <?php
-include_once("./_common.php");
-include_once(G4_LIB_PATH.'/latest.lib.php');
-include_once(G4_LIB_PATH.'/poll.lib.php');
+include_once('./_common.php');
+
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/index.php');
+    return;
+}
 
 define("_INDEX_", TRUE);
+
+include_once(G4_LIB_PATH.'/latest.lib.php');
+include_once(G4_LIB_PATH.'/poll.lib.php');
 
 include_once(G4_SHOP_PATH.'/shop.head.php');
 ?>
