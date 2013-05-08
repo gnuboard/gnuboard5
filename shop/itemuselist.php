@@ -23,6 +23,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 <div id="sps">
 
+    <p><?php echo $config['cf_title']; ?> 전체 사용후기 목록입니다.</p>
+
     <?php
     $sql = " select *
               $sql_common
