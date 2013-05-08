@@ -11,8 +11,10 @@ include_once(G4_LIB_PATH.'/shop.lib.php');
 
 define('G4_SHOP_DIR', 'shop');
 
-define('G4_SHOP_PATH', G4_PATH.'/'.G4_SHOP_DIR);
-define('G4_SHOP_URL', G4_URL.'/'.G4_SHOP_DIR);
+define('G4_SHOP_PATH',  G4_PATH.'/'.G4_SHOP_DIR);
+define('G4_SHOP_URL',   G4_URL.'/'.G4_SHOP_DIR);
+define('G4_MSHOP_PATH', G4_MOBILE_PATH.'/'.G4_SHOP_DIR);
+define('G4_MSHOP_URL',  G4_MOBILE_URL.'/'.G4_SHOP_DIR);
 
 // 보안서버주소 설정
 if (G4_HTTPS_DOMAIN) {

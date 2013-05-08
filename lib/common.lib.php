@@ -1933,7 +1933,7 @@ if (!function_exists('file_put_contents')) {
 // HTML 마지막 처리
 function html_end()
 {
-    global $g4;
+    global $config, $g4, $member;
 
     // 현재접속자 처리
     $tmp_sql = " select count(*) as cnt from {$g4['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";

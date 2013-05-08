@@ -1,5 +1,11 @@
 <?php
 include_once('./_common.php');
+
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/listtype.php');
+    return;
+}
+
 include_once('./_head.php');
 
 $type = $_REQUEST['type'];

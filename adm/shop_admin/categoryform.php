@@ -71,6 +71,17 @@ else if ($w == "u")
     $ca['ca_name'] = get_text($ca['ca_name']);
 }
 
+if (!isset($ca['ca_mobile_skin'])) {
+    sql_query(" ALTER TABLE `{$g4['shop_category_table']}`
+                    ADD `ca_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ca_skin`,
+                    ADD `ca_mobile_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `ca_list_row`,
+                    ADD `ca_mobile_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_width`,
+                    ADD `ca_mobile_list_mod` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_height`,
+                    ADD `ca_mobile_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_list_mod`,
+                    ADD `ca_mobile_head_html` TEXT NOT NULL AFTER `ca_tail_html`,
+                    ADD `ca_mobile_tail_html` TEXT NOT NULL AFTER `ca_mobile_head_html` ", false);
+}
+
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 
 $g4['title'] = $html_title;
@@ -143,6 +154,15 @@ $pg_anchor .= '</ul>';
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
+        <td>
+            <?php echo help("기본으로 제공하는 스킨은 ".G4_MOBILE_DIR.'/'.G4_SHOP_DIR."/list.skin.*.php 입니다."); ?>
+            <select id="ca_mobile_skin" name="ca_mobile_skin">
+                <?php echo get_list_skin_options("^list.skin.(.*)\.php", G4_MSHOP_PATH, $ca['ca_mobile_skin']); ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="ca_img_width">출력이미지 폭</label></th>
         <td>
             <?php echo help("쇼핑몰환경설정 &gt; 이미지(중) 넓이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
@@ -168,6 +188,34 @@ $pg_anchor .= '</ul>';
         <td>
             <?php echo help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에서 표시하는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다."); ?>
             <input type="text" name="ca_list_row" value='<?php echo $ca['ca_list_row']; ?>' id="ca_list_row" required class="required frm_input" size="3"> 줄
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="ca_mobile_img_width">모바일 출력이미지 폭</label></th>
+        <td>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(중) 넓이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
+            <input type="text" name="ca_mobile_img_width" value="<?php echo $ca['ca_mobile_img_width']; ?>" id="ca_mobile_img_width" required class="required frm_input" size="5" > 픽셀
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="ca_mobile_img_height">모바일 출력이미지 높이</label></th>
+        <td>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(중) 높이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
+            <input type="text" name="ca_mobile_img_height"  value="<?php echo $ca['ca_mobile_img_height']; ?>" id="ca_mobile_img_height" required class="required frm_input" size="5" > 픽셀
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="ca_mobile_list_mod">모바일 1줄당 이미지 수</label></th>
+        <td>
+            <?php echo help("한 줄에 설정한 값만큼의 상품을 출력하지만 스킨에 따라 한 줄에 하나의 상품만 출력할 수도 있습니다."); ?>
+            <input type="text" name="ca_mobile_list_mod" size="3" value="<?php echo $ca['ca_mobile_list_mod']; ?>" id="ca_mobile_list_mod" required class="required frm_input"> 개
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="ca_mobile_list_row">모바일 이미지 줄 수</label></th>
+        <td>
+            <?php echo help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에서 표시하는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다."); ?>
+            <input type="text" name="ca_mobile_list_row" value='<?php echo $ca['ca_mobile_list_row']; ?>' id="ca_mobile_list_row" required class="required frm_input" size="3"> 줄
         </td>
     </tr>
     <tr>
@@ -313,6 +361,20 @@ $pg_anchor .= '</ul>';
             <?php echo editor_html('ca_tail_html', $ca['ca_tail_html']); ?>
         </td>
     </tr>
+    <tr>
+        <th scope="row">모바일 상단내용</th>
+        <td>
+            <?php echo help("상품리스트 페이지 상단에 출력하는 HTML 내용입니다."); ?>
+            <?php echo editor_html('ca_mobile_head_html', $ca['ca_mobile_head_html']); ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">모바일 하단내용</th>
+        <td>
+            <?php echo help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다.", -150); ?>
+            <?php echo editor_html('ca_mobile_tail_html', $ca['ca_mobile_tail_html']); ?>
+        </td>
+    </tr>
     </tbody>
     </table>
 
@@ -352,6 +414,8 @@ function fcategoryformcheck(f)
 {
     <?php echo get_editor_js('ca_head_html'); ?>
     <?php echo get_editor_js('ca_tail_html'); ?>
+    <?php echo get_editor_js('ca_mobile_head_html'); ?>
+    <?php echo get_editor_js('ca_mobile_tail_html'); ?>
 
     if (f.w.value == "") {
         if (f.codedup.value == '1') {

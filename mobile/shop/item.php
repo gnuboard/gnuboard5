@@ -1,11 +1,5 @@
 <?php
 include_once('./_common.php');
-
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/item.php');
-    return;
-}
-
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
@@ -69,11 +63,7 @@ if ($_COOKIE['ck_it_id'] != $it_id) {
 
 $g4['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
-// 분류 상단 코드가 있으면 출력하고 없으면 기본 상단 코드 출력
-if ($ca['ca_include_head'])
-    @include_once($ca['ca_include_head']);
-else
-    include_once('./_head.php');
+include_once('./_head.php');
 
 // 분류 위치
 // HOME > 1단계 > 2단계 ... > 6단계 분류
@@ -91,7 +81,7 @@ if (file_exists($himg))
     echo '<div id="sit_himg" class="sit_img"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_h" alt=""></div>';
 
 // 상단 HTML
-echo '<div id="sit_hhtml">'.stripslashes($it['it_head_html']).'</div>';
+echo '<div id="sit_hhtml">'.stripslashes($it['it_mobile_head_html']).'</div>';
 
 // 이전 상품보기
 $sql = " select it_id, it_name from {$g4['shop_item_table']}
@@ -741,14 +731,7 @@ else
 
 <?php
 // 하단 HTML
-echo stripslashes($it['it_tail_html']);
+echo stripslashes($it['it_mobiletail_html']);
 
-$timg = G4_DATA_PATH.'/item/'.$it_id.'_t';
-if (file_exists($timg))
-    echo '<div id="sit_timg" class="sit_img"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_t" alt=""></div>';
-
-if ($ca['ca_include_tail'])
-    @include_once($ca['ca_include_tail']);
-else
-    include_once('./_tail.php');
+include_once('./_tail.php');
 ?>

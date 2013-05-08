@@ -4,27 +4,6 @@ include_once('./_common.php');
 include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
-/*
-// 상품테이블에 분류 필드 추가
-sql_query(" ALTER TABLE `$g4[shop_item_table]` ADD `ca_id2` VARCHAR( 255 ) NOT NULL AFTER `ca_id` ", FALSE);
-sql_query(" ALTER TABLE `$g4[shop_item_table]` ADD `ca_id3` VARCHAR( 255 ) NOT NULL AFTER `ca_id2` ", FALSE);
-
-// 사용후기 테이블에 이름, 패스워드 필드 추가
-sql_query(" ALTER TABLE `$g4[shop_item_ps_table]` ADD `is_name` VARCHAR( 255 ) NOT NULL AFTER `mb_id` ", FALSE);
-sql_query(" ALTER TABLE `$g4[shop_item_ps_table]` ADD `is_password` VARCHAR( 255 ) NOT NULL AFTER `is_name` ", FALSE);
-
-// 상품문의 테이블에 이름, 패스워드 필드 추가
-sql_query(" ALTER TABLE `$g4[shop_item_qa_table]` ADD `iq_name` VARCHAR( 255 ) NOT NULL AFTER `mb_id` ", FALSE);
-sql_query(" ALTER TABLE `$g4[shop_item_qa_table]` ADD `iq_password` VARCHAR( 255 ) NOT NULL AFTER `iq_name` ", FALSE);
-
-// 회원권한별 상품가격 틀리게 적용하는 필드 추가
-// it_amount  : 비회원가격
-// it_amount2 : 회원가격
-// it_amount3 : 특별회원가격
-sql_query(" ALTER TABLE `$g4[shop_item_table]` ADD `it_amount2` INT NOT NULL AFTER `it_amount` ", FALSE);
-sql_query(" ALTER TABLE `$g4[shop_item_table]` ADD `it_amount3` INT NOT NULL AFTER `it_amount2` ", FALSE);
-*/
-
 auth_check($auth[$sub_menu], "w");
 
 $html_title = "상품 ";
@@ -83,6 +62,13 @@ else
 if (!$it['it_explan_html'])
 {
     $it['it_explan'] = get_text($it['it_explan'], 1);
+}
+
+if (!isset($it['it_mobile_explan'])) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_mobile_explan` TEXT NOT NULL AFTER `it_explan`,
+                    ADD `it_mobile_head_html` TEXT NOT NULL AFTER `it_tail_html`,
+                    ADD `it_mobile_tail_html` TEXT NOT NULL AFTER `it_mobile_head_html` ", false);
 }
 
 //$qstr1 = 'sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search;
@@ -341,6 +327,10 @@ $pg_anchor ='<ul class="anchor">
     <tr>
         <th scope="row">상품설명</th>
         <td> <?php echo editor_html('it_explan', $it['it_explan']); ?></td>
+    </tr>
+    <tr>
+        <th scope="row">모바일 상품설명</th>
+        <td> <?php echo editor_html('it_mobile_explan', $it['it_mobile_explan']); ?></td>
     </tr>
     <tr>
         <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
@@ -943,6 +933,14 @@ $pg_anchor ='<ul class="anchor">
         <th scope="row">상품하단내용</th>
         <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150); ?><?php echo editor_html('it_tail_html', $it['it_tail_html']); ?></td>
     </tr>
+    <tr>
+        <th scope="row">모바일 상품상단내용</th>
+        <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150); ?><?php echo editor_html('it_mobile_head_html', $it['it_mobile_head_html']); ?></td>
+    </tr>
+    <tr>
+        <th scope="row">모바일 상품하단내용</th>
+        <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150); ?><?php echo editor_html('it_mobile_tail_html', $it['it_mobile_tail_html']); ?></td>
+    </tr>
     <?php if ($w == "u") { ?>
     <tr>
         <th scope="row">입력일시</th>
@@ -1032,8 +1030,11 @@ function fitemformcheck(f)
     }
 
     <?php echo get_editor_js('it_explan'); ?>
+    <?php echo get_editor_js('it_mobile_explan'); ?>
     <?php echo get_editor_js('it_head_html'); ?>
     <?php echo get_editor_js('it_tail_html'); ?>
+    <?php echo get_editor_js('it_mobile_head_html'); ?>
+    <?php echo get_editor_js('it_mobile_tail_html'); ?>
     return true;
 }
 

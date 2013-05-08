@@ -1,11 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/list.php');
-    return;
-}
-
 $sql = " select *
            from {$g4['shop_category_table']}
           where ca_id = '$ca_id'
@@ -16,10 +11,7 @@ if (!$ca['ca_id'])
 
 $g4['title'] = $ca['ca_name'].' 상품리스트';
 
-if ($ca['ca_include_head'])
-    @include_once($ca['ca_include_head']);
-else
-    include_once('./_head.php');
+include_once('./_head.php');
 
 // 스킨을 지정했다면 지정한 스킨을 사용함 (스킨의 다양화)
 //if ($skin) $ca[ca_skin] = $skin;
@@ -34,16 +26,10 @@ if ($is_admin)
     $nav_ca_id = $ca_id;
     include G4_SHOP_PATH.'/navigation1.inc.php';
 
-    // 상단 이미지
-    $himg = G4_DATA_URL.'/category/'.$ca_id.'_h';
-    if (file_exists($himg)) {
-        echo '<div id="sct_himg" class="sct_img"><img src="'.$himg.'" alt=""></div>';
-    }
-
     // 상단 HTML
-    echo '<div id="sct_hhtml">'.stripslashes($ca['ca_head_html']).'</div>';
+    echo '<div id="sct_hhtml">'.stripslashes($ca['ca_mobile_head_html']).'</div>';
 
-    include G4_SHOP_PATH.'/listcategory3.inc.php';
+    include G4_MSHOP_PATH.'/listcategory3.inc.php';
 
     // 상품 출력순서가 있다면
     if ($sort != "") {
@@ -65,17 +51,15 @@ if ($is_admin)
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
     // 리스트 유형별로 출력
-    $list_file = G4_SHOP_PATH.'/'.$ca['ca_skin'];
+    $list_file = G4_SHOP_PATH.'/'.$ca['ca_mobile_skin'];
     if (file_exists($list_file)) {
-        //display_type(2, "maintype10.inc.php", 4, 2, 100, 100, $ca[ca_id]);
+        $list_mod   = $ca['ca_mobile_list_mod'];
+        $list_row   = $ca['ca_mobile_list_row'];
+        $img_width  = $ca['ca_mobile_img_width'];
+        $img_height = $ca['ca_mobile_img_height'];
 
-        $list_mod   = $ca['ca_list_mod'];
-        $list_row   = $ca['ca_list_row'];
-        $img_width  = $ca['ca_img_width'];
-        $img_height = $ca['ca_img_height'];
-
-        include G4_SHOP_PATH.'/list.sub.php';
-        include G4_SHOP_PATH.'/list.sort.php';
+        include G4_MSHOP_PATH.'/list.sub.php';
+        include G4_MSHOP_PATH.'/list.sort.php';
 
         $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";
         $result = sql_query($sql);
@@ -88,7 +72,7 @@ if ($is_admin)
     else
     {
         $i = 0;
-        $error = '<p class="sct_nofile">'.$ca['ca_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
+        $error = '<p class="sct_nofile">'.$ca['ca_mobile_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
     }
 
     if ($i==0)
@@ -99,12 +83,7 @@ if ($is_admin)
 
     <?php
     // 하단 HTML
-    echo '<div id="sct_thtml">'.stripslashes($ca['ca_tail_html']).'</div>';
-
-    // 하단 이미지
-    $timg = G4_DATA_PATH.'/category/'.$ca_id.'_t';
-    if (file_exists($timg))
-        echo '<div id="sct_timg" class="sct_img"><img src="'.G4_DATA_URL.'/category/'.$ca_id.'_t" alt="">';
+    echo '<div id="sct_thtml">'.stripslashes($ca['ca_mobile_tail_html']).'</div>';
 ?>
 </div>
 
@@ -117,10 +96,7 @@ echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SEL
 ?>
 
 <?php
-if ($ca['ca_include_tail'])
-    @include_once($ca['ca_include_tail']);
-else
-    include_once('./_tail.php');
+include_once('./_tail.php');
 
 echo "\n<!-- {$ca['ca_skin']} -->\n";
 ?>

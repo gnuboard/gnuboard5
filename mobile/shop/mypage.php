@@ -1,19 +1,11 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/mypage.php');
-    return;
-}
-
 if (!$is_member)
     goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/mypage.php"));
 
 $g4['title'] = '마이페이지';
 include_once('./_head.php');
-
-//$str = $g4[title];
-//include("./navigation2.inc.php");
 ?>
 
 <img src="<?php echo G4_SHOP_URL; ?>/img/top_mypage.gif" border=0><p>
@@ -77,7 +69,7 @@ function member_leave()
 define("_ORDERINQUIRY_", true);
 
 $limit = " limit 0, 5 ";
-include G4_SHOP_PATH.'/orderinquiry.sub.php';
+include G4_MSHOP_PATH.'/orderinquiry.sub.php';
 ?>
 <br>
 

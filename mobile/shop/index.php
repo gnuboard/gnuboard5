@@ -1,17 +1,11 @@
 <?php
-include_once('./_common.php');
-
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/index.php');
-    return;
-}
-
-define("_INDEX_", TRUE);
-
+include_once("./_common.php");
 include_once(G4_LIB_PATH.'/latest.lib.php');
 include_once(G4_LIB_PATH.'/poll.lib.php');
 
-include_once(G4_SHOP_PATH.'/shop.head.php');
+define("_INDEX_", TRUE);
+
+include_once(G4_MSHOP_PATH.'/shop.head.php');
 ?>
 
 <div id="sidx_img">
@@ -26,9 +20,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     <?php
     // 최신상품
     $type = 3;
-    if ($default["de_type{$type}_list_use"])
+    if ($default['de_mobile_type'.$type.'_list_us'])
     {
-        display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -41,9 +35,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     <?php
     // 히트상품
     $type = 1;
-    if ($default['de_type'.$type.'_list_use'])
+    if ($default['de_mobile_type'.$type.'_list_use'])
     {
-        display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -56,9 +50,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     <?php
     // 추천상품
     $type = 2;
-    if ($default['de_type'.$type.'_list_use'])
+    if ($default['de_mobile_type'.$type.'_list_use'])
     {
-        display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -71,9 +65,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     <?php
     // 인기상품
     $type = 4;
-    if ($default['de_type'.$type.'_list_use'])
+    if ($default['de_mobile_type'.$type.'_list_use'])
     {
-        display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -86,9 +80,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     <?php
     // 할인상품
     $type = 5;
-    if ($default['de_type'.$type.'_list_use'])
+    if ($default['de_mobile_type'.$type.'_list_use'])
     {
-        display_type($type, $default["de_type{$type}_list_skin"], $default["de_type{$type}_list_mod"], $default["de_type{$type}_list_row"], $default["de_type{$type}_img_width"], $default["de_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -113,5 +107,5 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 
 
 <?php
-include_once(G4_SHOP_PATH.'/shop.tail.php');
+include_once(G4_MSHOP_PATH.'/shop.tail.php');
 ?>
