@@ -628,10 +628,10 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 #sod_fin_dvr {padding:10px}
 
-#sod_fin_tot {margin:0 0 30px;padding:10px;border:1px solid #e9e9e9;border-top:0;background:#f5f6fa}
+#sod_fin_tot {margin:0 0 30px;padding:10px;border:1px solid #e9e9e9;border-top:0;background:#565e60;color:#fff}
 #sod_fin_tot h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sod_fin_tot ul {margin:0;padding:0;list-style:none}
-#sod_fin_tot li {padding:10px;border-bottom:1px solid #e9e9e9;zoom:1}
+#sod_fin_tot li {padding:10px;border-bottom:1px solid #6f7a7d;zoom:1}
 #sod_fin_tot li:after {display:block;visibility:hidden;clear:both;content:""}
 #sod_fin_tot #alrdy {border-bottom:0 !important}
 #sod_fin_tot strong {float:right}
