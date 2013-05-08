@@ -234,6 +234,39 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
     }
 }
 
+// 모바일 유형별 상품 출력
+function mobile_display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
+{
+    global $member, $g4, $config;
+
+    // 상품의 갯수
+    $items = $list_mod * $list_row;
+
+    // 1.02.00
+    // it_order 추가
+    $sql = " select *
+               from {$g4['shop_item_table']}
+              where it_use = '1'
+                and it_type{$type} = '1' ";
+    if ($ca_id) $sql .= " and ca_id like '$ca_id%' ";
+    $sql .= " order by it_order, it_id desc
+              limit $items ";
+    $result = sql_query($sql);
+    /*
+    if (!mysql_num_rows($result)) {
+        return false;
+    }
+    */
+
+    $file = G4_MSHOP_PATH.'/'.$skin_file;
+    if (!file_exists($file)) {
+        echo $file.' 파일을 찾을 수 없습니다.';
+    } else {
+        $td_width = (int)(100 / $list_mod);
+        include $file;
+    }
+}
+
 // 분류별 출력
 // 스킨파일번호, 1라인이미지수, 총라인수, 이미지폭, 이미지높이 , 분류번호
 function display_category($no, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
