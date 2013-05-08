@@ -50,51 +50,6 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
     <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
     <script src="<?php echo G4_MSHOP_URL; ?>/kcp/approval_key.js"></script>
 
-    <script language="javascript">
-        /* 결제방법에 따른 처리 후 결제등록요청 실행 */
-        function kcp_approval()
-        {
-            var f = document.sm_form;
-            var pf = document.forderform;
-
-            var settle_case = document.getElementsByName("od_settle_case");
-            var settle_check = false;
-            var settle_method = "";
-            for (i=0; i<settle_case.length; i++)
-            {
-                if (settle_case[i].checked)
-                {
-                    settle_check = true;
-                    settle_method = settle_case[i].value;
-                    break;
-                }
-            }
-            if (!settle_check)
-            {
-                alert("결제방식을 선택하십시오.");
-                return false;
-            }
-
-            f.buyr_name.value = pf.od_name.value;
-            f.buyr_mail.value = pf.od_email.value;
-            f.buyr_tel1.value = pf.od_tel.value;
-            f.buyr_tel2.value = pf.od_hp.value;
-            f.rcvr_name.value = pf.od_b_name.value;
-            f.rcvr_tel1.value = pf.od_b_tel.value;
-            f.rcvr_tel2.value = pf.od_b_hp.value;
-            f.rcvr_mail.value = pf.od_email.value;
-            f.rcvr_zipx.value = pf.od_b_zip1.value + pf.od_b_zip2.value;
-            f.rcvr_add1.value = pf.od_b_addr1.value;
-            f.rcvr_add2.value = pf.od_b_addr2.value;
-            f.settle_method.value = settle_method;
-
-            var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
-            f.target = "tar_opener";
-
-            f.submit();
-        }
-    </script>
-
     <form name="sm_form" method="POST" action="<?php echo G4_MSHOP_URL; ?>/kcp/order_approval_form.php">
     <input type="hidden" name="good_name"     value="<?php echo $goods; ?>">
     <input type="hidden" name="good_mny"      value="<?php echo $good_mny; ?>" >
@@ -483,6 +438,97 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
 </div>
 
 <script>
+/* 결제방법에 따른 처리 후 결제등록요청 실행 */
+function kcp_approval()
+{
+    var f = document.sm_form;
+    var pf = document.forderform;
+
+    var settle_case = document.getElementsByName("od_settle_case");
+    var settle_check = false;
+    var settle_method = "";
+    for (i=0; i<settle_case.length; i++)
+    {
+        if (settle_case[i].checked)
+        {
+            settle_check = true;
+            settle_method = settle_case[i].value;
+            break;
+        }
+    }
+    if (!settle_check)
+    {
+        alert("결제방식을 선택하십시오.");
+        return false;
+    }
+
+    var tot_amount = <?php echo (int)$tot_amount; ?>;
+    var max_point  = <?php echo (int)$temp_point; ?>;
+
+    if (typeof(pf.od_temp_point) != "undefined") {
+        if (pf.od_temp_point.value)
+        {
+            if (pf.od_temp_point.value)
+            {
+                temp_point = parseInt(pf.od_temp_point.value);
+
+                if (temp_point < 0) {
+                    alert("포인트를 0 이상 입력하세요.");
+                    pf.od_temp_point.select();
+                    return false;
+                }
+
+                if (temp_point > tot_amount) {
+                    alert("주문금액 보다 많이 포인트결제할 수 없습니다.");
+                    pf.od_temp_point.select();
+                    return false;
+                }
+
+                if (temp_point > <?php echo (int)$member['mb_point']; ?>) {
+                    alert("회원님의 포인트보다 많이 결제할 수 없습니다.");
+                    pf.od_temp_point.select();
+                    return false;
+                }
+
+                if (temp_point > max_point) {
+                    alert(max_point + "점 이상 결제할 수 없습니다.");
+                    pf.od_temp_point.select();
+                    return false;
+                }
+
+                if (parseInt(parseInt(temp_point / 100) * 100) != temp_point) {
+                    alert("포인트를 100점 단위로 입력하세요.");
+                    pf.od_temp_point.select();
+                    return false;
+                }
+
+                // pg 결제 금액에서 포인트 금액 차감
+                if(settle_method != "무통장" && temp_point > 0) {
+                    f.good_mny.value = parseInt(f.good_mny.value) - temp_point;
+                }
+            }
+        }
+    }
+
+    f.buyr_name.value = pf.od_name.value;
+    f.buyr_mail.value = pf.od_email.value;
+    f.buyr_tel1.value = pf.od_tel.value;
+    f.buyr_tel2.value = pf.od_hp.value;
+    f.rcvr_name.value = pf.od_b_name.value;
+    f.rcvr_tel1.value = pf.od_b_tel.value;
+    f.rcvr_tel2.value = pf.od_b_hp.value;
+    f.rcvr_mail.value = pf.od_email.value;
+    f.rcvr_zipx.value = pf.od_b_zip1.value + pf.od_b_zip2.value;
+    f.rcvr_add1.value = pf.od_b_addr1.value;
+    f.rcvr_add2.value = pf.od_b_addr2.value;
+    f.settle_method.value = settle_method;
+
+    var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
+    f.target = "tar_opener";
+
+    f.submit();
+}
+
 function forderform_check(f)
 {
     errmsg = "";
