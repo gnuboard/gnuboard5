@@ -642,6 +642,15 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sod_fin_cancelfrm {display:none;margin:10px 0 0}
 #sod_fin_cancelfrm .frm_input {background:#fff}
 
+/* 주문상세내역 중 현금영수증 발급 */
+#scash {}
+#scash section {padding:10px 0}
+#scash h2 {margin:0 0 10px;text-align:center}
+#scash .basic_tbl th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f5f6fa;text-align:left}
+#scash_apply {padding:10px 0 20px;text-align:center}
+#scash_apply button {padding:10px;border:0;background:#565e60;color:#fff}
+#scash_copy {text-align:center}
+
 /* 공지사항 및 커뮤니티 새글 */
 #sidx_lat {padding:15px 0 0;border-top:1px solid #ddd}
 #sidx_lat h2 {text-align:center}

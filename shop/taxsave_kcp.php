@@ -1,12 +1,12 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = "현금영수증 발행";
+$g4['title'] = '주문번호 '.$od_id.' 현금영수증 발행';
 include_once(G4_PATH.'/head.sub.php');
 
 $od = sql_fetch(" select * from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id = '$uq_id' ");
 if (!$od)
-    die("주문서가 존재하지 않습니다.");
+    die('<p id="scash_empty">주문서가 존재하지 않습니다.</p>');
 
 $goods = get_goods($od['uq_id']);
 $goods_name = $goods['full_name'];
@@ -28,7 +28,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 //-->
 
 <script>
-	// 현금영수증 MAIN FUNC
+    // 현금영수증 MAIN FUNC
     function  jsf__pay_cash( form )
     {
         jsf__show_progress(true);
@@ -63,7 +63,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
         }
     }
 
-	// 포맷 체크
+    // 포맷 체크
     function  jsf__chk_cash( form )
     {
         if ( form.trad_time.value.length != 14 )
@@ -74,7 +74,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
             return false;
         }
 
-		if ( form.corp_type.value == "1" )
+        if ( form.corp_type.value == "1" )
         {
             if ( form.corp_tax_no.value.length != 10 )
             {
@@ -88,8 +88,8 @@ $amt_tax = (int)($amt_tot - $amt_sup);
         if (  form.tr_code[0].checked )
         {
             if ( form.id_info.value.length != 10 &&
-            	 form.id_info.value.length != 11 &&
-            	 form.id_info.value.length != 13 )
+                 form.id_info.value.length != 11 &&
+                 form.id_info.value.length != 13 )
             {
                 alert("주민번호 또는 휴대폰번호를 정확히 입력해 주시기 바랍니다.");
                 form.id_info.select();
@@ -130,127 +130,122 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 </script>
 </head>
 <body>
-<form name="cash_form" action="<?php echo G4_SHOP_URL; ?>/kcp/pp_cli_hub.php" method="post">
-<input type="hidden" name="corp_type" value="0"> <!-- 사업자 구분 - 0:직접판매 , 1:입점몰판매 -->
-<input type="hidden" name="ordr_idxx">
-<input type="hidden" name="good_name" value="<?php echo addslashes($goods_name); ?>">
-<input type="hidden" name="buyr_name" value="<?php echo $od['od_name']; ?>">
-<input type="hidden" name="buyr_mail" value="<?php echo $od['od_email']; ?>">
-<input type="hidden" name="buyr_tel1" value="<?php echo $od['od_tel']; ?>">
-<input type="hidden" name="trad_time" value="<?php echo $trad_time; ?>">
 
-<input type="hidden" name="amt_tot">
-<input type="hidden" name="amt_sup">
-<input type="hidden" name="amt_svc">
-<input type="hidden" name="amt_tax">
-<table border="0" cellpadding="0" cellspacing="1" width="500" align="center">
+<div id="scash" class="new_win">
+    <h1><?php echo $g4['title']; ?></h1>
 
-    <tr>
-        <td colspan="2">
-            <table width="90%" align="center">
-                <tr>
-                    <td bgcolor="#CFCFCF" height="2"></td>
-                </tr>
-                <tr>
-                    <td align="center"><B>주문 정보</B></td>
-                </tr>
-                <tr>
-                    <td bgcolor="#CFCFCF" height="2"></td>
-                </tr>
-            </table>
-            <table width="90%" align="center">
-                <tr>
-                    <td>주문 번호</td>
-                    <td><?php echo $od['od_id']; ?></td>
-                </tr>
-                <tr>
-                    <td>상품 정보</td>
-                    <td><?php echo $goods_name; ?></td>
-                </tr>
-                <tr>
-                    <td>주문자 이름</td>
-                    <td><?php echo $od['od_name']; ?></td>
-                </tr>
-                <tr>
-                    <td>주문자 E-Mail</td>
-                    <td><?php echo $od['od_email']; ?></td>
-                </tr>
-                <tr>
-                    <td>주문자 전화번호</td>
-                    <td><?php echo $od['od_tel']; ?></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td bgcolor="CFCFCF" height="2" colspan="2"></td>
-                </tr>
-                <tr>
-                    <td align="center" colspan="2"><B>현금영수증 발급 정보</B></td>
-                </tr>
-                <tr>
-                    <td bgcolor="CFCFCF" height="2" colspan="2"></td>
-                </tr>
-                <tr>
-                    <td>원 거래 시각</td>
-                    <td><?php echo $trad_time; ?></td>
-                </tr>
-                <tr><td colspan="2"></td></tr>
-                <tr>
-                	<td>발행 용도</td>
-                	<td>
-                    	<input type="radio" name="tr_code" value="0" onClick="jsf__chk_tr_code( this.form )" checked>소득공제용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    	<input type="radio" name="tr_code" value="1" onClick="jsf__chk_tr_code( this.form )">지출증빙용
-                    </td>
-                </tr>
-                <tr>
-                    <td width="40%">
-                        <span id="span_tr_code_0" style="display:block;">주민(휴대폰)번호</span>
-                        <span id="span_tr_code_1" style="display:none;">사업자번호</span>
-                    </td>
-                    <td width="60%">
-                        <input type="text" name="id_info" size="16" maxlength="13"> ("-" 생략)
-                    </td>
-                </tr>
-                <tr>
-                    <td>거래금액 총합</td>
-                    <td><?php echo number_format($amt_tot); ?>원</td>
-                </tr>
-                <tr>
-                    <td>공급가액</td>
-                    <td><?php echo number_format($amt_sup); ?>원<!-- ((거래금액 총합 * 10) / 11) --></td>
-                </tr>
-                <tr>
-                    <td>봉사료</td>
-                    <td><?php echo number_format($amt_svc); ?>원</td>
-                </tr>
-                <tr>
-                    <td>부가가치세</td>
-                    <td><?php echo number_format($amt_tax); ?>원<!-- 거래금액 총합 - 공급가액 - 봉사료 --></td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <span id="show_pay_btn">
-                            <input type="button" value="등록 요청" onclick="jsf__pay_cash( this.form )" class="box">
-                        </span>
-                        <span id="show_progress" style="display:none">
-                            <b>등록 진행중입니다. 잠시만 기다려주십시오</b>
-                        </span>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td bgcolor="CFCFCF" height="3" colspan="2"></td>
-    </tr>
-    <tr>
-        <td colspan="2" align="center" height="25">ⓒ Copyright 2007. KCP Inc.  All Rights Reserved.</td>
-    </tr>
-</table>
-<!-- 요청종류 승인(pay)/변경(mod) 요청시 사용 -->
-<input type="hidden" name="req_tx" value="pay">
-</form>
+    <section>
+        <h2>주문정보</h2>
+
+        <table class="basic_tbl">
+        <colgroup>
+            <col class="grid_3">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row">주문 번호</th>
+            <td><?php echo $od['od_id']; ?></td>
+        </tr>
+        <tr>
+            <th scope="row">상품 정보</th>
+            <td><?php echo $goods_name; ?></td>
+        </tr>
+        <tr>
+            <th scope="row">주문자 이름</th>
+            <td><?php echo $od['od_name']; ?></td>
+        </tr>
+        <tr>
+            <th scope="row">주문자 E-Mail</th>
+            <td><?php echo $od['od_email']; ?></td>
+        </tr>
+        <tr>
+            <th scope="row">주문자 전화번호</th>
+            <td><?php echo $od['od_tel']; ?></td>
+        </tr>
+        </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>현금영수증 발급 정보</h2>
+
+        <form name="cash_form" action="<?php echo G4_SHOP_URL; ?>/kcp/pp_cli_hub.php" method="post">
+        <input type="hidden" name="corp_type" value="0"> <!-- 사업자 구분 - 0:직접판매 , 1:입점몰판매 -->
+        <input type="hidden" name="ordr_idxx">
+        <input type="hidden" name="good_name" value="<?php echo addslashes($goods_name); ?>">
+        <input type="hidden" name="buyr_name" value="<?php echo $od['od_name']; ?>">
+        <input type="hidden" name="buyr_mail" value="<?php echo $od['od_email']; ?>">
+        <input type="hidden" name="buyr_tel1" value="<?php echo $od['od_tel']; ?>">
+        <input type="hidden" name="trad_time" value="<?php echo $trad_time; ?>">
+
+        <input type="hidden" name="amt_tot">
+        <input type="hidden" name="amt_sup">
+        <input type="hidden" name="amt_svc">
+        <input type="hidden" name="amt_tax">
+
+        <table class="basic_tbl">
+        <colgroup>
+            <col class="grid_3">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row">원 거래 시각</th>
+            <td><?php echo $trad_time; ?></td>
+        </tr>
+        <tr>
+            <th scope="row">발행 용도</th>
+            <td>
+                <input type="radio" name="tr_code" value="0" onClick="jsf__chk_tr_code( this.form )" checked>소득공제용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="tr_code" value="1" onClick="jsf__chk_tr_code( this.form )">지출증빙용
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="id_info">
+                    <span id="span_tr_code_0" style="display:inline">주민(휴대폰)번호</span>
+                    <span id="span_tr_code_1" style="display:none">사업자번호</span>
+                </label>
+            </th>
+            <td>
+                <input type="text" name="id_info" id="id_info" class="frm_input" size="16" maxlength="13"> ("-" 생략)
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">거래금액 총합</th>
+            <td><?php echo number_format($amt_tot); ?>원</td>
+        </tr>
+        <tr>
+            <th scope="row">공급가액</th>
+            <td><?php echo number_format($amt_sup); ?>원<!-- ((거래금액 총합 * 10) / 11) --></td>
+        </tr>
+        <tr>
+            <th scope="row">봉사료</th>
+            <td><?php echo number_format($amt_svc); ?>원</td>
+        </tr>
+        <tr>
+            <th scope="row">부가가치세</th>
+            <td><?php echo number_format($amt_tax); ?>원<!-- 거래금액 총합 - 공급가액 - 봉사료 --></td>
+        </tr>
+        </tbody>
+        </table>
+
+        <div id="scash_apply">
+            <button type="button" onclick="jsf__pay_cash( this.form )">등록요청</button>
+            <span id="show_progress" style="display:none">
+                <b>등록 진행중입니다. 잠시만 기다려주십시오</b>
+            </span>
+        </div>
+
+        <!-- 요청종류 승인(pay)/변경(mod) 요청시 사용 -->
+        <input type="hidden" name="req_tx" value="pay">
+        </form>
+    </section>
+
+    <p id="scash_copy">ⓒ Copyright 2007. KCP Inc.  All Rights Reserved.</p>
+
+</div>
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');
