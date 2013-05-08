@@ -22,16 +22,11 @@ $settle_case = $od['od_settle_case'];
 
 set_session('ss_temp_uq_id', $uq_id);
 
-$g4['title'] = "주문상세내역 : 주문번호 - $od_id";
+$g4['title'] = '주문상세내역';
 include_once('./_head.php');
-?>
 
-<img src="<?php echo G4_SHOP_URL; ?>/img/top_orderinquiryview.gif" border=0><p>
-
-<?php
 $s_uq_id = $od['uq_id'];
 $s_page = 'orderinquiryview.php';
-include './cartsub.inc.php';
 ?>
 
 <script>
@@ -41,268 +36,457 @@ if(openwin != null) {
 }
 </script>
 
-<br>
-<div align=right><img src='<?php echo G4_SHOP_URL; ?>/img/status01.gif' align=absmiddle> : 주문대기, <img src='<?php echo G4_SHOP_URL; ?>/img/status02.gif' align=absmiddle> : 상품준비중, <img src='<?php echo G4_SHOP_URL; ?>/img/status03.gif' align=absmiddle> : 배송중, <img src='<?php echo G4_SHOP_URL; ?>/img/status04.gif' align=absmiddle> : 배송완료</div>
+<div id="sod_fin">
 
-<table width=98% cellpadding=0 cellspacing=7 align=center>
-<tr><td colspan=2>
-    <img src='<?php echo G4_SHOP_URL; ?>/img/my_icon.gif' align=absmiddle> <B>주문번호 : <FONT COLOR="#D60B69"><?php echo $od['od_id']; ?></FONT></B></td></tr>
-<tr><td colspan=2 height=2 bgcolor=#94A9E7></td></tr>
-<tr><td align=center bgcolor=#F3F2FF><img src='<?php echo G4_SHOP_URL; ?>/img/t_data02.gif'></td>
-    <td style='padding:20px'>
-        <table cellpadding=4 cellspacing=0>
-        <colgroup width=120>
-        <colgroup width=''>
-        <tr><td>· 주문일시</td><td>: <b><?php echo $od['od_time']; ?></b></td></tr>
-        <tr><td>· 이 름</td><td>: <?php echo $od['od_name']; ?></td></tr>
-        <tr><td>· 전화번호</td><td>: <?php echo $od['od_tel']; ?></td></tr>
-        <tr><td>· 핸드폰</td><td>: <?php echo $od['od_hp']; ?></td></tr>
-        <tr><td>· 주 소</td><td>: <?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_zip1'], $od['od_zip2'], $od['od_addr1'], $od['od_addr2']); ?></td></tr>
-        <tr><td>· E-mail</td><td>: <?php echo $od['od_email']; ?></td></tr>
-    </table></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#738AC6></td></tr>
-<tr><td align=center bgcolor=#F3F2FF><img src='<?php echo G4_SHOP_URL; ?>/img/t_data03.gif'></td>
-    <td style='padding:20px'>
-        <table cellpadding=4 cellspacing=0>
-        <colgroup width=120>
-        <colgroup width=''>
-        <tr><td>· 이 름</td><td>: <?php echo $od['od_b_name']; ?></td></tr>
-        <tr><td>· 전화번호</td><td>: <?php echo $od['od_b_tel']; ?></td></tr>
-        <tr><td>· 핸드폰</td><td>: <?php echo $od['od_b_hp']; ?></td></tr>
-        <tr><td>· 주 소</td><td>: <?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_b_zip1'], $od['od_b_zip2'], $od['od_b_addr1'], $od['od_b_addr2']); ?></td></tr>
+    <p>주문번호 <strong><?php echo $od_id; ?></strong></p>
+
+    <section id="sod_fin_list">
+        <h2>주문하신 상품</h2>
+        <span class="sound_only">상품 상태 설명</span>
+        <dl>
+            <dt>주문</dt>
+            <dd>주문이 접수되었습니다.</dd>
+            <dt>준비</dt>
+            <dd>상품 준비 중입니다.</dd>
+            <dt>배송</dt>
+            <dd>상품 배송 중입니다.</dd>
+            <dt>완료</dt>
+            <dd>상품 배송이 완료되었습니다.</dd>
+        </dl>
+        <?php include './cartsub.inc.php'; ?>
+    </section>
+
+    <div id="sod_fin_view">
+        <h2>결제/배송 정보</h2>
         <?php
-        // 희망배송일을 사용한다면
-        if ($default['de_hope_date_use'])
+        $receipt_amount = $od['od_receipt_bank']
+                        + $od['od_receipt_card']
+                        + $od['od_receipt_hp']
+                        + $od['od_receipt_point']
+                        - $od['od_cancel_card']
+                        - $od['od_refund_amount'];
+
+        $misu = true;
+
+        if ($tot_amount - $tot_cancel_amount == $receipt_amount) {
+            $wanbul = " (완불)";
+            $misu = false; // 미수금 없음
+        }
+        else
         {
-            echo "<tr>";
-            echo "<td>· 희망배송일</td>";
-            echo "<td>: ".substr($od['od_hope_date'],0,10)." (".get_yoil($od['od_hope_date']).")</td>";
-            echo "</tr>";
+            $wanbul = display_amount($receipt_amount);
         }
 
-        if ($od['od_memo']) {
-            echo "<tr>";
-            echo "<td>· 전하실 말씀</td>";
-            echo "<td>".conv_content($od['od_memo'], 0)."</td>";
-            echo "</tr>";
-        }
+        // 120615 : 취소된 값을 두번 빼주는 결과가 되어 코드 수정 (군포돼지님)
+        //$misu_amount = $tot_amount - $tot_cancel_amount - $receipt_amount - $od[od_dc_amount];
+        $misu_amount = $tot_amount - $receipt_amount - $od['od_dc_amount'];
         ?>
-        </table></td></tr>
-<tr><td colspan=2 height=1 bgcolor=#738AC6></td></tr>
 
-<?php
-// 배송회사 정보
-$dl = sql_fetch(" select * from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+        <section id="sod_fin_pay">
+            <h3>결제정보</h3>
 
-if ($od['od_invoice'] || !$od['misu'])
-{
-    echo "<tr><td align=center bgcolor='#F3F2FF'><img src=\"".G4_SHOP_URL."/img/t_data05.gif\"></td>";
-    echo "<td style='padding:20px'>";
-    if (is_array($dl))
-    {
-        // get 으로 날리는 경우 운송장번호를 넘김
-        if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
-        echo "<table cellpadding=4 cellspacing=0>";
-        echo "<colgroup width=120><colgroup width=''>";
-        echo "<tr><td>· 배송회사</td><td>: {$dl['dl_company']} &nbsp;&nbsp;[<a href=\"{$dl['dl_url']}{$invoice}' target=_new>배송조회하기</a>]</td></tr>";
-        echo "<tr><td>· 운송장번호</td><td>: {$od['od_invoice']}</td></tr>";
-        echo "<tr><td>· 배송일시</td><td>: {$od['od_invoice_time']}</td></tr>";
-        echo "<tr><td>· 고객센터 전화</td><td>: {$dl['dl_tel']}</td></tr>";
-        echo "</table>";
-    }
-    else
-    {
-        echo "<span class=leading>&nbsp;&nbsp;아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</span>";
-    }
-    echo "</td></tr>";
-}
-?><p>
+            <table class="basic_tbl">
+            <colgroup>
+                <col class="grid_3">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="row">주문번호</th>
+                <td><?php echo $od_id; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">주문일시</th>
+                <td><?php echo $od['od_time']; ?></td>
+            </tr>
 
-<?php
-$receipt_amount = $od['od_receipt_bank']
-                + $od['od_receipt_card']
-                + $od['od_receipt_hp']
-                + $od['od_receipt_point']
-                - $od['od_cancel_card']
-                - $od['od_refund_amount'];
+            <?php
+            if ($od['od_settle_case'] == '신용카드')
+            {
+                $sql = " select * from {$g4['shop_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
+                $result = sql_query($sql);
+                $cd = mysql_fetch_array($result);
+            ?>
 
-$misu = true;
+            <tr>
+                <th scope="row">결제방식</th>
+                <td>신용카드 결제</td>
+            </tr>
+            <tr>
+                <th scope="row">결제금액</th>
+                <td><?php echo display_amount($cd['cd_amount']); ?></td>
+            </tr>
+            <tr>
+                <th scope="row">승인일시</th>
+                <td><?php echo $cd['cd_trade_ymd'].' '.$cd['cd_trade_hms']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">승인번호</th>
+                <td><?php echo $cd['cd_app_no']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">영수증</th>
+                <td><a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_escrow1']; ?>', 'winreceipt', 'width=620,height=670')">영수증 출력</a></td>
+            </tr>
 
-if ($tot_amount - $tot_cancel_amount == $receipt_amount) {
-    $wanbul = " (완불)";
-    $misu = false; // 미수금 없음
-}
+            <?php
+            }
+            else if ($od['od_settle_case'] == '휴대폰')
+            {
+                $sql = " select * from {$g4['shop_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
+                $result = sql_query($sql);
+                $cd = mysql_fetch_array($result);
+            ?>
 
-// 120615 : 취소된 값을 두번 빼주는 결과가 되어 코드 수정 (군포돼지님)
-//$misu_amount = $tot_amount - $tot_cancel_amount - $receipt_amount - $od[od_dc_amount];
-$misu_amount = $tot_amount - $receipt_amount - $od['od_dc_amount'];
+            <tr>
+                <th scope="row">결제방식</th>
+                <td>휴대폰 결제</td>
+            </tr>
+            <tr>
+                <th scope="row">결제금액</th>
+                <td><?php echo display_amount($cd['cd_amount']); ?></td>
+            </tr>
+            <tr>
+                <th scope="row">승인일시</th>
+                <td><?php echo $cd['cd_trade_ymd'].' '.$cd['cd_trade_hms']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">휴대폰번호</th>
+                <td><?php echo $cd['cd_opt02']; ?></td>
+            </tr>
+            <?php //echo '<tr><th scope="row">영수증</th><td><a href="javascript:;" onclick="window.open(\'http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no='.$od[od_escrow1].'\', \'winreceipt\', \'width=620,height=670\')">영수증 출력</a></td></tr>'; ?>
+            <tr>
+                <th scope="row">영수증</th>
+                <td><a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no={$od['od_escrow1']}', 'winreceipt', 'width=370,height=550')">영수증 출력</a></td>
+            </tr>
 
-echo "<tr>";
-echo "<td align=center bgcolor=#FFEFFD height=60><img src=\"".G4_SHOP_URL."/img/t_data04.gif\"></td>";
-echo "<td style='padding:20px'>";
-
-if ($od['od_settle_case'] == '신용카드')
-{
-    $sql = " select * from {$g4['shop_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
-    $result = sql_query($sql);
-    $cd = mysql_fetch_array($result);
-
-    echo "<table cellpadding=4 cellspacing=0 width=100%>";
-    echo "<colgroup width=120><colgroup width=''>";
-    echo "<tr><td>· 결제방식</td><td>: 신용카드 결제</td></tr>";
-    echo "<tr><td>· 결제금액</td><td class=amount>: " . display_amount($cd['cd_amount']) . "</td></tr>";
-    echo "<tr><td>· 승인일시</td><td>: {$cd['cd_trade_ymd']} {$cd['cd_trade_hms']}</td>";
-    echo "<tr><td>· 승인번호</td><td>: {$cd['cd_app_no']}</td></tr>";
-    echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no={$od['od_escrow1']}', 'winreceipt', 'width=620,height=670')\">영수증 출력</a></td></tr>";
-    echo "</table><br>";
-}
-else if ($od['od_settle_case'] == '휴대폰')
-{
-    $sql = " select * from {$g4['shop_card_history_table']} where od_id = '{$od['od_id']}' order by cd_id desc ";
-    $result = sql_query($sql);
-    $cd = mysql_fetch_array($result);
-
-    echo "<table cellpadding=4 cellspacing=0 width=100%>";
-    echo "<colgroup width=120><colgroup width=''>";
-    echo "<tr><td>· 결제방식</td><td>: 휴대폰 결제</td></tr>";
-    echo "<tr><td>· 결제금액</td><td class=amount>: " . display_amount($cd['cd_amount']) . "</td></tr>";
-    echo "<tr><td>· 승인일시</td><td>: {$cd['cd_trade_ymd']} {$cd['cd_trade_hms']}</td>";
-    echo "<tr><td>· 휴대폰번호</td><td>: {$cd['cd_opt02']}</td></tr>";
-    //echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=$od[od_escrow1]', 'winreceipt', 'width=620,height=670')\">영수증 출력</a></td></tr>";
-    echo "<tr><td>· 영수증</td><td>: <a href='javascript:;' onclick=\"window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no={$od['od_escrow1']}', 'winreceipt', 'width=370,height=550')\">영수증 출력</a></td></tr>";
-    echo "</table><br>";
-}
-else
-{
-    echo "<table cellpadding=4 cellspacing=0>";
-    echo "<colgroup width=120><colgroup width=''>";
-    echo "<tr><td>· 결제방식</td><td>: {$od['od_settle_case']}</td></tr>";
-
-    if ($od['od_receipt_bank'])
-    {
-        echo "<tr><td>· 입금액</td><td>: " . display_amount($od['od_receipt_bank']) . "</td></tr>";
-        echo "<tr><td>· 입금확인일시</td><td>: {$od['od_bank_time']}</td></tr>";
-    }
-    else
-    {
-        echo "<tr><td>· 입금액</td><td>: 아직 입금되지 않았거나 입금정보를 입력하지 못하였습니다.</td></tr>";
-    }
-
-    if ($od['od_settle_case'] != '계좌이체')
-        echo "<tr><td>· 계좌번호</td><td>: {$od['od_bank_account']}</td></tr>";
-
-    echo "<tr><td>· 입금자명</td><td>: {$od['od_deposit_name']}</td></tr>";
-
-    if ($od['od_escrow1'])
-        echo "<tr><td>· KCP 거래번호</td><td>: {$od['od_escrow1']}</td></tr>";
-
-    echo "</table><br>";
-}
-
-if ($od['od_receipt_point'] > 0)
-{
-    echo "<table cellpadding=4 cellspacing=0 width=100%>";
-    echo "<colgroup width=120><colgroup width=''>";
-    echo "<tr><td>· 포인트사용</td><td>: " . display_point($od['od_receipt_point']) . "</td></tr>";
-    echo "</table>";
-}
-
-if ($od['od_cancel_card'] > 0)
-{
-    echo "<table cellpadding=4 cellspacing=0 width=100%>";
-    echo "<colgroup width=120><colgroup width=''>";
-    echo "<tr><td><b>· 승인취소 금액</td><td>: " . display_amount($od['od_cancel_card']) . "</td></tr>";
-    echo "</table>";
-}
-
-if ($od['od_refund_amount'] > 0)
-{
-    echo "<table cellpadding=4 cellspacing=0 width=100%>";
-    echo "<colgroup width=120><colgroup width=''>";
-    echo "<tr><td>· 환불 금액</td><td>: " . display_amount($od['od_refund_amount']) . "</td></tr>";
-    echo "</table>";
-}
-
-// 취소한 내역이 없다면
-if ($tot_cancel_amount == 0) {
-    if ($od['od_temp_bank'] > 0 && $od['od_receipt_bank'] == 0) {
-        echo "<br><form method='post' action='./orderinquirycancel.php' style='margin:0;'>";
-        echo "<input type=hidden name=od_id  value='{$od['od_id']}'>";
-        echo "<input type=hidden name=uq_id value='{$od['uq_id']}'>";
-        echo "<input type=hidden name=token  value='$token'>";
-        echo "<br><table cellpadding=4 cellspacing=0 width=100%>";
-        echo "<colgroup width=120><colgroup width=''>";
-        echo "<tr><td>· 주문취소</td><td>: <a href='javascript:;' onclick=\"document.getElementById('_ordercancel').style.display='block';\">위의 주문을 취소합니다.</a></td></tr>";
-        echo "<tr id='_ordercancel' style='display:none;'><td>· 취소사유</td><td>: <input type=text name='cancel_memo' size=40 maxlength=100 required itemname='취소사유'></textarea> <input type=submit value='확인'></td></tr>";
-        echo "</table></form>";
-    }
-} else {
-    $misu_amount = $misu_amount - $send_cost;
-
-    echo "<br><table cellpadding=4 cellspacing=0 width=100%>";
-    echo "<colgroup width=120><colgroup width=''>";
-    echo "<tr><td style='color:red;'>· 주문 취소, 반품, 품절된 내역이 있습니다.</td></tr>";
-    echo "</table>";
-}
-
-
-// 현금영수증 발급을 사용하는 경우에만
-if ($default['de_taxsave_use']) {
-    // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-    if ($misu_amount == 0 && $od['od_receipt_bank']) {
-        if ($default['de_card_pg'] == 'kcp') {
-            echo "<br />";
-            echo "<table cellpadding=4 cellspacing=0 width=100%>";
-            echo "<colgroup width=120><colgroup width=''>";
-            echo "<tr><td>· 현금영수증</td><td>: ";
-            if ($od['od_cash'])
-                echo "<a href=\"javascript:;\" onclick=\"window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no={$od['od_cash_no']}', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');\">현금영수증 확인하기</a>";
+            <?php
+            }
             else
-                echo "<a href=\"javascript:;\" onclick=\"window.open('".G4_SHOP_URL."/taxsave_kcp.php?od_id=$od_id&uq_id={$od['uq_id']}', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');\">현금영수증을 발급하시려면 클릭하십시오.</a>";
-            echo "</td></tr>";
-            echo "</table>";
-        }
-    }
-}
-?>
-</td></tr>
-<tr><td colspan=2 height=1 bgcolor=#94A9E7></td></tr>
-<tr>
-    <td colspan=2 align=right bgcolor=#E7EBF7 height=70>
-        <b>결제 합계</b> <?php echo $wanbul; ?> : <b><?php echo display_amount($receipt_amount); ?></b></span>&nbsp;&nbsp;<br>
+            {
+            ?>
+
+            <tr>
+                <th scope="row">결제방식</th>
+                <td><?php echo $od['od_settle_case']; ?></td>
+            </tr>
+                <?php
+                if ($od['od_receipt_bank'])
+                {
+                ?>
+            <tr>
+                <th scope="row">입금액</th>
+                <td><?php echo display_amount($od['od_receipt_bank']); ?></td>
+            </tr>
+            <tr>
+                <td scope="row">입금확인일시</th>
+                <td><?php echo $od['od_bank_time']; ?></td>
+            </tr>
+                <?php
+                }
+                else
+                {
+                ?>
+            <tr>
+                <th scope="row">입금액</th>
+                <td>아직 입금되지 않았거나 입금정보를 입력하지 못하였습니다.</td>
+            </tr>
+                <?php
+                }
+                if ($od['od_settle_case'] != '계좌이체') {
+                ?>
+            <tr>
+                <th scope="row">계좌번호</th>
+                <td><?php echo $od['od_bank_account']; ?></td>
+            </tr>
+                <?php
+                }
+                ?>
+            <tr>
+                <th scope="row">입금자명</th>
+                <td><?php echo $od['od_deposit_name']; ?></td>
+            </tr>
+                <?php
+                if ($od['od_escrow1']) {
+                ?>
+            <tr>
+                <th scope="row">KCP 거래번호</th>
+                <td><?php echo $od['od_escrow1']; ?></td>
+            </tr>
+                <?
+                }
+            }
+
+            if ($od['od_receipt_point'] > 0)
+            {
+            ?>
+            <tr>
+                <th scope="row">포인트사용</th>
+                <td><?php echo display_point($od['od_receipt_point']); ?></td>
+            </tr>
+
+            <?php
+            }
+
+            if ($od['od_cancel_card'] > 0)
+            {
+            ?>
+            <tr>
+                <th scope="row">승인취소 금액</th>
+                <td><?php echo display_amount($od['od_cancel_card']); ?></td>
+            </tr>
+            <?php
+            }
+
+            if ($od['od_refund_amount'] > 0)
+            {
+            ?>
+            <tr>
+                <th scope="row">환불 금액</th>
+                <td><?php echo display_amount($od['od_refund_amount']); ?></td>
+            </tr>
+            <?php
+            }
+
+            // 현금영수증 발급을 사용하는 경우에만
+            if ($default['de_taxsave_use']) {
+                // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
+                if ($misu_amount == 0 && $od['od_receipt_bank']) {
+                    if ($default['de_card_pg'] == 'kcp') {
+            ?>
+            <tr>
+                <th scope="row">현금영수증</th>
+                <td>
+                <?
+                if ($od['od_cash'])
+                {
+                ?>
+                    <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인하기</a>
+                <?php
+                }
+                else
+                {
+                ?>
+                    <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
+                <?php } ?>
+                </td>
+            </tr>
+            <?php
+                    }
+                }
+            }
+            ?>
+            </tbody>
+            </table>
+        </section>
+
+        <section id="sod_fin_orderer">
+            <h3>주문하신 분</h3>
+            <table class="basic_tbl">
+            <colgroup>
+                <col class="grid_3">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="row">이 름</th>
+                <td><?php echo $od['od_name']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">전화번호</th>
+                <td><?php echo $od['od_tel']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">핸드폰</th>
+                <td><?php echo $od['od_hp']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">주 소</th>
+                <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_zip1'], $od['od_zip2'], $od['od_addr1'], $od['od_addr2']); ?></td>
+            </tr>
+            <tr>
+                <th scope="row">E-mail</th>
+                <td><?php echo $od['od_email']; ?></td>
+            </tr>
+            </tbody>
+            </table>
+        </section>
+
+        <section id="sod_fin_receiver">
+            <h3>받으시는 분</h3>
+            <table class="basic_tbl">
+            <colgroup>
+                <col class="grid_3">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="row">이 름</th>
+                <td><?php echo $od['od_b_name']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">전화번호</th>
+                <td><?php echo $od['od_b_tel']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">핸드폰</th>
+                <td><?php echo $od['od_b_hp']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">주 소</th>
+                <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_b_zip1'], $od['od_b_zip2'], $od['od_b_addr1'], $od['od_b_addr2']); ?></td>
+            </tr>
+            <?php
+            // 희망배송일을 사용한다면
+            if ($default['de_hope_date_use'])
+            {
+            ?>
+            <tr>
+                <th scope="row">희망배송일</td>
+                <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
+            </tr>
+            <?php }
+            if ($od['od_memo'])
+            {
+            ?>
+            <tr>
+                <th scope="row">전하실 말씀</td>
+                <td><?php echo conv_content($od['od_memo'], 0); ?></td>
+            </tr>
+            <?php } ?>
+            </tbody>
+            </table>
+        </section>
+
+        <section id="sod_fin_dvr">
+            <h3>배송정보</h3>
+            <table class="basic_tbl">
+            <colgroup>
+                <col class="grid_3">
+                <col>
+            </colgroup>
+            <tbody>
+            <?php
+            // 배송회사 정보
+            $dl = sql_fetch(" select * from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+
+            if ($od['od_invoice'] || !$od['misu'])
+            {
+                if (is_array($dl))
+                {
+                    // get 으로 날리는 경우 운송장번호를 넘김
+                    if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
+            ?>
+            <tr>
+                <th scope="row">배송회사</th>
+                <td><?php echo $dl['dl_company']; ?> [<a href="<?php echo $dl['dl_url'].$invoice; ?>" target="_blank">배송조회하기</a>]</td>
+            </tr>
+            <tr>
+                <th scope="row">운송장번호</th>
+                <td><?php echo $od['od_invoice']; ?></td>
+            </tr>
+            <tr>
+                <th scope="row">배송일시</th>
+                <td><?php echo $od['od_invoice_time']; ?></td>
+            </tr>
+            <tr>
+                <th>고객센터 전화</th>
+                <td><?php echo $dl['dl_tel']; ?></td>
+            </tr>
+            <?php
+                }
+                else
+                {
+            ?>
+            <tr>
+                <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
+            </tr>
+            <?php
+                }
+            }
+            ?>
+            </tbody>
+            </table>
+        </section>
+    </div>
+
+    <section id="sod_fin_tot">
+        <h2>결제합계</h2>
+
+        <ul>
+            <li>
+                총 구매액
+                <strong><?php echo display_amount($tot_amount); ?></strong>
+            </li>
+            <?php
+            if ($od['od_dc_amount'] > 0) {
+            echo '<li>';
+            echo '할인액'.PHP_EOL;
+            echo '<strong>'.display_amount($od['od_dc_amount']).'</strong>';
+            echo '</li>';
+            }
+            if ($misu_amount > 0) {
+            echo '<li>';
+            echo '미결제액'.PHP_EOL;
+            echo '<strong>'.display_amount($misu_amount).'</strong>';
+            echo '</li>';
+            }
+            ?>
+            <li id="alrdy">
+                결제액
+                <strong><?php echo $wanbul; ?></strong>
+            </li>
+        </ul>
+    </section>
+
+    <section id="sod_fin_cancel">
+        <h2>주문취소</h2>
         <?php
-        if ($od['od_dc_amount'] > 0) {
-            echo "<br>DC : ". display_amount($od['od_dc_amount']) . "&nbsp;&nbsp;";
-        }
+        // 취소한 내역이 없다면
+        if ($tot_cancel_amount == 0) {
+            if ($od['od_temp_bank'] > 0 && $od['od_receipt_bank'] == 0) {
+        ?>
+        <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
-        if ($misu_amount > 0) {
-            echo "<br><font color=crimson><b>아직 결제하지 않으신 금액 : ".display_amount($misu_amount)."</b></font>&nbsp;&nbsp;";
-        }
-        ?></td></tr>
-<tr><td colspan=2 height=2 bgcolor=#94A9E7></td></tr>
-</table>
-<br><br>
+        <div id="sod_fin_cancelfrm">
+            <form method="post" action="./orderinquirycancel.php">
+            <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
+            <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
+            <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
-<?php if ($od['od_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
+            <label for="cancel_memo">취소사유</label>
+            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input" size="40" maxlength="100">
+            <input type="submit" value="확인" class="btn_frmline">
+
+            </form>
+        </div>
+        <?php
+            }
+        } else {
+            $misu_amount = $misu_amount - $send_cost;
+        ?>
+        <p>주문 취소, 반품, 품절된 내역이 있습니다.</p>
+        <?php } ?>
+    </section>
+
+    <?php if ($od['od_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
     preg_match("/(\s[^\s]+\s)/", $od['od_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
-?>
-<center>
-<div style="width:500px">
-<fieldset>
-<legend>모의입금처리</legend>
-<p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
-<form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
-<input type="text" name="e_trade_no" value="<?php echo $od['od_escrow1']; ?>" size="80"><br />
-<input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
-<input type="text" name="req_name" value="<?php echo $od['od_name']; ?>" size="80"><br />
-<input type="text" name="noti_url" value="<?php echo G4_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
-<input type="submit" value="입금통보 테스트">
-</form>
-</fieldset>
+    ?>
+    <fieldset>
+    <legend>모의입금처리</legend>
+    <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
+    <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
+    <input type="text" name="e_trade_no" value="<?php echo $od['od_escrow1']; ?>" size="80"><br />
+    <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
+    <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>" size="80"><br />
+    <input type="text" name="noti_url" value="<?php echo G4_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
+    <input type="submit" value="입금통보 테스트">
+    </form>
+    </fieldset>
+    <?php } ?>
+
 </div>
-</center>
-<?php } ?>
 
 <?php
 include_once('./_tail.php');
