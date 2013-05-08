@@ -1,219 +1,196 @@
-<html>
+<?php //관리자님께 ?>
+<!doctype html>
+<html lang="ko">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>관리자님께 주문서 메일 드리기</title>
+<meta charset="utf-8">
+<title><?php echo $config['cf_title']; ?> - 주문 알림 메일</title>
 </head>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table width="100%" cellspacing="0" cellpadding="0" border=0>
-    <tr><td width="25" height="25" colspan=3>&nbsp;</td></tr>
-    <tr><td width="25" valign="top"><img src="<?php echo G4_SHOP_URL; ?>/mail/img/mail_left.gif" width="25" height="281"></td>
-    <td class="line" align=center>
-        <table width="100%" cellspacing="0" cellpadding="0">
-        <tr>
-            <td height="59" background="<?php echo G4_SHOP_URL; ?>/mail/img/mail_bg2.gif" style='padding-left:20px'>
-            <strong><font color="#02253A">본 메일은 <?php echo G4_TIME_YMDHIS; ?> (<?php echo get_yoil(G4_TIME_YMDHIS); ?>)을 기준으로 작성되었습니다.</font></strong>
-            </td>
-        </tr>
-        </table>
-        <p>
-        <!-- 주문내역  -->
-        <table width="95%" cellpadding="0" cellspacing="0">
-        <col width=200>
-        <col width=110>
-        <col width=150>
-        <col width=1>
-        <col width=''>
+<?php
+$cont_st = 'margin:0 auto 20px;width:94%;border:0;border-collapse:collapse';
+$caption_st = 'padding:0 0 5px;font-weight:bold';
+$th_st = 'padding:5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f5f6fa;text-align:left';
+$td_st = 'padding:5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9';
+$empty_st = 'padding:30px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;text-align:center';
+$ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-align:center;text-decoration:none';
+?>
+
+<body>
+
+<div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">
+    <div style="border:1px solid #dedede">
+        <h1 style="margin:0 0 20px;padding:30px 30px 20px;background:#f7f7f7;color:#555;font-size:1.4em">
+            <?php echo $config['cf_title'];?> - 주문이 접수되었습니다.
+        </h1>
+
+        <p style="<?php echo $cont_st; ?>">
+            <strong>주문번호 <?php echo $od_id; ?></strong><br>
+            본 메일은 <?php echo G4_TIME_YMDHIS; ?> (<?php echo get_yoil(G4_TIME_YMDHIS); ?>)을 기준으로 작성되었습니다.
+        </p>
+
+        <table style="<?php echo $cont_st; ?>">
+        <caption style="<?php echo $caption_st; ?>"> 주문 내역</caption>
+        <colgroup>
+            <col style="width:130px">
+            <col>
+        </colgroup>
+        <tbody>
         <?php for ($i=0; $i<count($list); $i++) { ?>
         <tr>
-            <td rowspan=12 align=center><a href="<?php echo G4_SHOP_URL.'/item.php?it_id='.$list[$i]['it_id']; ?>" target="_blank"><?php echo $list[$i]['it_simg']; ?></a></td>
-            <td height=22 style="text-align:left;"> ▒  주문제품명</td>
-            <td colspan=3 style="text-align:left;">: <B><?php echo $list[$i]['it_name']; ?></B></td>
+            <th scope="row" style="<?php echo $th_st; ?>">상품명</th>
+            <td style="<?php echo $td_st; ?>"><a href="<?php echo G4_SHOP_URL.'/item.php?it_id='.$list[$i]['it_id']; ?>" target="_blank" style="text-decoration:none"><span style="display:inline-block;vertical-align:middle"><?php echo $list[$i]['it_simg']; ?></span> <?php echo $list[$i]['it_name']; ?></a></td>
         </tr>
-        <tr><td colspan=4 bgcolor=#DDDDDD height=1></td></tr>
         <tr>
-            <td height=22 style="text-align:left;"> ▒  주문번호</td>
-            <td style="text-align:left;">: <font color=#CC3300><B><?php echo $od_id; ?></B></font></td>
-            <td rowspan=9 bgcolor=#DDDDDD></td>
-            <td style="text-align:left;">&nbsp; ▒  선택옵션 </td>
+            <th scope="row" style="<?php echo $th_st; ?>">선택옵션 </th>
+            <td style="<?php echo $td_st; ?>"><?php echo $list[$i]['it_opt']; ?></td>
         </tr>
-        <tr><td colspan=2 bgcolor=#DDDDDD height=1></td></tr>
         <tr>
-            <td height=22 style="text-align:left;"> ▒  판매가격</td>
-            <td style="text-align:left;">: <?php echo display_amount($list[$i]['ct_amount']); ?></td>
-            <td rowspan=9 valign=top style="padding-left:10px; padding-top:5px; text-align:left;"><?php echo $list[$i]['it_opt']; ?></td>
+            <th scope="row" style="<?php echo $th_st; ?>">판매가격</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_amount($list[$i]['ct_amount']); ?></td>
         </tr>
-        <tr><td colspan=2 bgcolor=#DDDDDD height=1></td></tr>
         <tr>
-            <td height=22 style="text-align:left;"> ▒  수량</td>
-            <td style="text-align:left;">: <b><?php echo number_format($list[$i]['ct_qty']); ?></b>개</td>
+            <th scope="row" style="<?php echo $th_st; ?>">수량</th>
+            <td style="<?php echo $td_st; ?>"><?php echo number_format($list[$i]['ct_qty']); ?>개</td>
         </tr>
-        <tr><td colspan=2 bgcolor=#DDDDDD height=1></td></tr>
         <tr>
-            <td height=22 style="text-align:left;"> ▒  소계</td>
-            <td style="text-align:left;">: <?php echo display_amount($list[$i]['stotal_amount']); ?></td>
+            <th scope="row" style="<?php echo $th_st; ?>">소계</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_amount($list[$i]['stotal_amount']); ?></td>
         </tr>
-        <tr><td colspan=2 bgcolor=#DDDDDD height=1></td></tr>
         <tr>
-            <td height=22 style="text-align:left;"> ▒  포인트</td>
-            <td style="text-align:left;">: <?php echo display_point($list[$i]['stotal_point']); ?></td>
+            <th scope="row" style="<?php echo $th_st; ?>">포인트</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_point($list[$i]['stotal_point']); ?></td>
         </tr>
-        <tr><td colspan=4 bgcolor=#DDDDDD height=1></td></tr>
-        <tr><td colspan=3 height=20></td></tr>
         <?php } ?>
 
         <?php if ($od_send_cost > 0) { // 배송비가 있다면 ?>
         <tr>
-            <td></td>
-            <td height=22 style="text-align:left;"> ▒  배송비</td>
-            <td colspan=3 bgcolor=#F6F6F6 style="text-align:left;">: <?php echo display_amount($od_send_cost); ?></td>
+            <th scope="row" style="<?php echo $th_st; ?>">배송비</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_amount($od_send_cost); ?></td>
         </tr>
         <?php } ?>
 
         <tr>
-            <td></td>
-            <td height=22 style="text-align:left;"> ▒  주문합계</td>
-            <td colspan=3 bgcolor=#F6F6F6 style="text-align:left;">: <font color=#0066CC><b><?php echo display_amount($ttotal_amount); ?></b></font></td>
+            <th scope="row" style="<?php echo $th_st; ?>">주문합계</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_amount($ttotal_amount); ?></td>
         </tr>
         <tr>
-            <td></td>
-            <td height=22 style="text-align:left;"> ▒ 포인트합계</td>
-            <td colspan=3 bgcolor=#F6F6F6 style="text-align:left;">: <b><?php echo display_point($ttotal_point); ?></b></td>
+            <th scope="row" style="<?php echo $th_st; ?>">포인트합계</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_point($ttotal_point); ?></td>
         </tr>
-        </table><p>
-        <!-- 주문내역 END -->
-
-        <!-- 결제정보 -->
-        <table width="95%" align="center" cellpadding="0" cellspacing="0">
-        <tr><td height=30 style="text-align:left;"><B>결제정보</B></td></tr>
-        <tr>
-            <td>
-                <table width=100% cellpadding=4 cellspacing=0>
-                <col width=110>
-                <col width=''>
-                <tr><td colspan=2 height=2 bgcolor=#D4E1EB></td></tr>
-
-                <?php if ($od_receipt_point > 0) { ?>
-                <tr bgcolor="#F2F7FA">
-                    <td style="text-align:left;" height=22> ▒ 포인트 입금액</td>
-                    <td style="text-align:left;">: <font color=#0066CC><B><?php echo display_point($od_receipt_point); ?></B></font></td>
-                </tr>
-                <?php } ?>
-
-                <?php if ($od_receipt_card > 0) { ?>
-                <tr bgcolor="#F2F7FA">
-                    <td style="text-align:left;" height=22> ▒ 신용카드 입금액</td>
-                    <td style="text-align:left;">: <font color=#0066CC><B><?php echo display_amount($od_receipt_card); ?></B><!--  (승인전 금액입니다.) --></font></td>
-                </tr>
-                <?php } ?>
-
-                <?php if ($od_receipt_bank > 0) { ?>
-                <tr bgcolor="#F2F7FA">
-                    <td style="text-align:left;" height=22> ▒ <?php echo $od_settle_case; ?> 입금액</td>
-                    <td style="text-align:left;">: <font color=#0066CC><B><?php echo display_amount($od_receipt_bank); ?></B></font></td>
-                </tr>
-                <tr bgcolor="#F2F7FA">
-                    <td style="text-align:left;" height=22> ▒ 계좌번호</td>
-                    <td style="text-align:left;">: <?php echo $od_bank_account; ?></td>
-                </tr>
-                <tr bgcolor="#F2F7FA">
-                    <td style="text-align:left;" height=22> ▒ 입금자 이름</td>
-                    <td style="text-align:left;">: <?php echo $od_deposit_name; ?></td>
-                </tr>
-                <?php } ?>
-
-                <tr><td colspan=2 height=2 bgcolor=#D4E1EB></td></tr>
-                </table>
-            </td>
-        </tr>
-        </table><p>
-       <!-- 결제정보 END-->
-
-       <!-- 주문자 정보 -->
-        <table width="95%" align="center" cellpadding="0" cellspacing="0">
-        <tr><td height=30 style="text-align:left;"><B>주문하신 분 정보</B></td></td>
-        </tr>
-        <tr>
-            <td>
-                <table width="100%" cellpadding="4" cellspacing="0">
-                <col width=110>
-                <col width=''>
-                <tr><td colspan=2 height=2 bgcolor=#DFDED9></td></tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 이 름</td>
-                    <td style="text-align:left;">: <?php echo $od_name; ?></td>
-                </tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 전화번호</td>
-                    <td style="text-align:left;">: <?php echo $od_tel; ?></td>
-                </tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 핸드폰</td>
-                    <td style="text-align:left;">: <?php echo $od_hp; ?></td>
-                </tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 주 소</td>
-                    <td style="text-align:left;">: <?php echo sprintf("(%s-%s) %s %s", $od_zip1, $od_zip2, $od_addr1, $od_addr2); ?></td>
-                </tr>
-
-                <?php if ($od_hope_date) { ?>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 희망배송일</td>
-                    <td style="text-align:left;">: <?php echo $od_hope_date;?> (<?php echo get_yoil($od_hope_date);?>)</td>
-                </tr>
-                <?php } ?>
-                <tr><td colspan=2 height=2 bgcolor=#DFDED9></td></tr>
-                </table>
-            </td>
-        </tr>
+        </tbody>
         </table>
-        <!-- 주문자 정보 END-->
 
-        <p>
-        <!-- 배송지 정보 -->
-        <table width="95%" align="center" cellpadding="0" cellspacing="0">
-        <tr><td height=30 style="text-align:left;"><B>배송지 정보</B></td></tr>
+        <table style="<?php echo $cont_st; ?>">
+        <caption style="<?php echo $caption_st; ?>">결제정보</caption>
+        <colgroup>
+            <col style="width:130px">
+            <col>
+        </colgroup>
+        <tbody>
+        <?php if ($od_receipt_point > 0) { ?>
         <tr>
-            <td>
-                <table width="100%" cellpadding="4" cellspacing="0">
-                <col width=110>
-                <col width=''>
-                <tr><td colspan=2 height=2 bgcolor=#DFDED9></td></tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 이 름</td>
-                    <td style="text-align:left;">: <?php echo $od_b_name; ?></td>
-                </tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 전화번호</td>
-                    <td style="text-align:left;">: <?php echo $od_b_tel; ?></td>
-                </tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 핸드폰</td>
-                    <td style="text-align:left;">: <?php echo $od_b_hp; ?></td>
-                </tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22>▒ 주 소</td>
-                    <td style="text-align:left;">: <?php echo sprintf("(%s-%s) %s %s", $od_b_zip1, $od_b_zip2, $od_b_addr1, $od_b_addr2); ?></td>
-                </tr>
-                <tr bgcolor="#F8F7F2">
-                    <td style="text-align:left;" height=22> ▒ 전하실 말씀</td>
-                    <td style="text-align:left;">: <?php echo $od_memo; ?></td>
-                </tr>
-                <tr><td colspan=2 height=2 bgcolor=#DFDED9></td></tr>
-                </table>
-            </td>
+            <th scope="row" style="<?php echo $th_st; ?>">포인트 입금액</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_point($od_receipt_point); ?></td>
         </tr>
-        <tr><td height=30 style="color:#A26217; text-align:right;">상세한 내용은 운영자 화면에서 확인하실 수 있습니다. [<a href="<?php echo G4_ADMIN_URL.'/shop_admin/orderform.php?od_id='.$od_id; ?>" target="_blank">바로가기</a>]</td></tr>
-        </table>
-        <!-- 배송지정보 END-->
+        <?php } ?>
 
-        <table width=95%>
-            <tr><td height=30 align=right></td></tr>
+        <?php if ($od_receipt_card > 0) { ?>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">신용카드 입금액</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_amount($od_receipt_card); ?><!--  (승인전 금액입니다.) --></td>
+        </tr>
+        <?php } ?>
+
+        <?php if ($od_receipt_bank > 0) { ?>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>"><?php echo $od_settle_case; ?> 입금액</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_amount($od_receipt_bank); ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">계좌번호</th>
+            <td style="<?php echo $td_st; ?>">: <?php echo $od_bank_account; ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">입금자 이름</th>
+            <td style="<?php echo $td_st; ?>">: <?php echo $od_deposit_name; ?></td>
+        </tr>
+        <?php } ?>
+
+        <?php if (!$od_receipt_point && !$od_receipt_card && !$od_receipt_bank) { ?>
+        <tr>
+            <td colspan="2" style="<?php echo $empty_st; ?>">결제정보가 없습니다.</td>
+        </tr>
+        <?php } ?>
+        </tbody>
         </table>
-    </td>
-    <td width="25" valign="top"><img src="<?php echo G4_SHOP_URL; ?>/mail/img/mail_right.gif" width="25" height="281"></td>
-</tr>
-</table>
-<p>
+
+        <table style="<?php echo $cont_st; ?>">
+        <caption style="<?php echo $caption_st; ?>">주문하신 분 정보</caption>
+        <colgroup>
+            <col style="width:130px">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">이름</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_name; ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">전화번호</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_tel; ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">핸드폰</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_hp; ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">주소</th>
+            <td style="<?php echo $td_st; ?>"><?php echo sprintf("(%s-%s) %s %s", $od_zip1, $od_zip2, $od_addr1, $od_addr2); ?></td>
+        </tr>
+
+        <?php if ($od_hope_date) { ?>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">희망배송일</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_hope_date;?> (<?php echo get_yoil($od_hope_date);?>)</td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
+
+        <table style="<?php echo $cont_st; ?>">
+        <caption style="<?php echo $caption_st; ?>">배송지 정보</caption>
+        <colgroup>
+            <col style="width:130px">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">이 름</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_b_name; ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">전화번호</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_b_tel; ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">핸드폰</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_b_hp; ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">주소</th>
+            <td style="<?php echo $td_st; ?>"><?php echo sprintf("(%s-%s) %s %s", $od_b_zip1, $od_b_zip2, $od_b_addr1, $od_b_addr2); ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">전하실 말씀</th>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_memo; ?></td>
+        </tr>
+        </tbody>
+        </table>
+
+        <a href="<?php echo G4_ADMIN_URL.'/shop_admin/orderform.php?od_id='.$od_id; ?>" target="_blank" style="<?php echo $ft_a_st; ?>">관리자 모드에서 주문 확인</a>
+
+    </div>
+</div>
+
 </body>
 </html>

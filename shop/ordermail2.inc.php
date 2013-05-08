@@ -10,7 +10,7 @@ $admin = get_admin('super');
 //------------------------------------------------------------------------------
 $subject = $config['cf_title'].' - 주문 알림 메일 ('.$od_name.')';
 ob_start();
-include './mail/orderupdate1.mail.php;';
+include './mail/orderupdate1.mail.php';
 $content = ob_get_contents();
 ob_end_clean();
 
