@@ -762,6 +762,11 @@ function forderform_check(f)
                 f.od_temp_point.select();
                 return false;
             }
+
+            // pg 결제 금액에서 포인트 금액 차감
+            if(settle_method != "무통장" && temp_point > 0) {
+                f.good_mny.value = parseInt(f.good_mny.value) - temp_point;
+            }
         }
     }
 
@@ -790,11 +795,6 @@ function forderform_check(f)
                 return false;
             }
         }
-    }
-
-    // pg 결제 금액에서 포인트 금액 차감
-    if(settle_method != "무통장" && temp_point > 0) {
-        f.good_mny.value = parseInt(f.good_mny.value) - temp_point;
     }
 
     // pay_method 설정
