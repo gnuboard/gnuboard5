@@ -18,7 +18,7 @@ if (!$od['od_id']) {
 if ($od['od_temp_bank'] > 0 && $od['od_receipt_bank'] == 0) {
     ;
 } else {
-    alert("취소할 수 있는 주문이 아닙니다.", G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id&uq_id=$uq_id");
+    alert("취소할 수 있는 주문이 아닙니다.", G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uq_id=$uq_id");
 }
 
 // 장바구니 자료 취소
@@ -34,5 +34,5 @@ if ($od['od_receipt_point'] > 0) {
     insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소");
 }
 
-goto_url(G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id&uq_id=$uq_id");
+goto_url(G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uq_id=$uq_id");
 ?>

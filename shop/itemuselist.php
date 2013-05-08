@@ -98,9 +98,7 @@ if ($i == 0)
 </table>
 <br><br>
 
-<div style="text-align:center;">
-    <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page="); ?>
-</div>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <?php
 include_once('./_tail.php');

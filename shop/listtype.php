@@ -87,8 +87,8 @@ if ($i==0)
 <br>
 <div align=center>
 <?php
-$qstr .= "&type=$type&sort=$sort";
-echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page=");
+$qstr .= '&amp;type='.$type.'&amp;sort='.$sort;
+echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 </div><br>
 

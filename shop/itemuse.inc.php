@@ -130,7 +130,7 @@ if (!$i)
 
 <?php
 if ($use_pages) {
-    $use_pages = get_paging(10, $use_page, $use_total_page, "./item.php?it_id=$it_id&$qstr&use_page=", "#use");
+    $use_pages = get_paging(10, $use_page, $use_total_page, "./item.php?it_id=$it_id&amp;$qstr&amp;use_page=", "#use");
 }
 ?>
 
