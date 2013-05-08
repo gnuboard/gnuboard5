@@ -1,25 +1,25 @@
 <?php
 /* ====================================================================== */
-/* =   PAGE : ÀÎÁõ PHP ¶óÀÌºê·¯¸® 1.0.1                                 = */
+/* =   PAGE : ì¸ì¦ PHP ë¼ì´ë¸ŒëŸ¬ë¦¬ 1.0.1                                 = */
 /* = ------------------------------------------------------------------ = */
 /* =   Copyright (c)  2012   KCP Inc.   All Rights Reserverd.           = */
 /* ====================================================================== */
 
 /* ====================================================================== */
-/* =   ÀÎÁõ ¿¬µ¿ CLASS                                                  = */
+/* =   ì¸ì¦ ì—°ë™ CLASS                                                  = */
 /* ====================================================================== */
 class   C_CT_CLI
 {
-    // º¯¼ö ¼±¾ð ºÎºÐ
+    // ë³€ìˆ˜ ì„ ì–¸ ë¶€ë¶„
     var    $m_dec_data;
 
-    // º¯¼ö ÃÊ±âÈ­ ¿µ¿ª
+    // ë³€ìˆ˜ ì´ˆê¸°í™” ì˜ì—­
     function mf_clear()
     {
         $this->m_dec_data="";        
     }
 
-    // hash Ã³¸® ¿µ¿ª
+    // hash ì²˜ë¦¬ ì˜ì—­
     function make_hash_data( $home_dir , $str )
     {
         $hash_data = $this -> mf_exec( $home_dir . "/bin/ct_cli" , 
@@ -32,7 +32,7 @@ class   C_CT_CLI
         return $hash_data;
     }
 
-    // dn_hash Ã¼Å© ÇÔ¼ö
+    // dn_hash ì²´í¬ í•¨ìˆ˜
     function check_valid_hash ($home_dir , $hash_data , $str )
     {
         $ret_val = $this -> mf_exec( $home_dir . "/bin/ct_cli" ,
@@ -46,7 +46,7 @@ class   C_CT_CLI
         return $ret_val;
     }
 
-    // ¾ÏÈ£È­ ÀÎÁõµ¥ÀÌÅÍ º¹È£È­
+    // ì•”í˜¸í™” ì¸ì¦ë°ì´í„° ë³µí˜¸í™”
     function decrypt_enc_cert ( $home_dir, $site_cd , $cert_no , $enc_cert_data , $opt)
     {
         $dec_data = $this -> mf_exec( $home_dir . "/bin/ct_cli" ,
@@ -62,7 +62,7 @@ class   C_CT_CLI
         parse_str( str_replace( chr( 31 ), "&", $dec_data ), $this->m_dec_data );
     }
 
-    // ÀÎÁõµ¥ÀÌÅÍ get data
+    // ì¸ì¦ë°ì´í„° get data
     function mf_get_key_value( $name )
     {
         return  $this->m_dec_data[ $name ];

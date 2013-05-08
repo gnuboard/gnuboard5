@@ -24,7 +24,7 @@ if (PHP_VERSION >= '5.3.0') {
 보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.
 입력예) https://www.domain.com:443/gnuboard4s
 */
-define('G4_DOMAIN', '');
+define('G4_DOMAIN', ''); // 사용하지 않습니다.
 define('G4_HTTPS_DOMAIN', '');
 
 /*
@@ -60,6 +60,12 @@ if (G4_DOMAIN) {
         define('G4_URL', $g4_path['url']);
     else
         define('G4_URL', '');
+}
+
+if (G4_HTTPS_DOMAIN) {
+    define('G4_URL', G4_HTTPS_DOMAIN);
+} else {
+    define('G4_URL', G4_DOMAIN);
 }
 
 if (isset($g4_path['path'])) {
