@@ -8,9 +8,9 @@ $admin = get_admin('super');
 //------------------------------------------------------------------------------
 // 운영자에게 메일보내기
 //------------------------------------------------------------------------------
-$subject = "{$config['cf_title']}에서 주문이 들어 왔습니다. ($od_name)";
+$subject = $config['cf_title'].' - 주문 알림 메일 ('.$od_name.')';
 ob_start();
-include "./mail/orderupdate1.mail.php";
+include './mail/orderupdate1.mail.php;';
 $content = ob_get_contents();
 ob_end_clean();
 
@@ -20,9 +20,9 @@ mailer($od_name, $od_email, $admin['mb_email'], $subject, $content, 1);
 //------------------------------------------------------------------------------
 // 주문자에게 메일보내기
 //------------------------------------------------------------------------------
-$subject = "{$config['cf_title']}에서 다음과 같이 주문하셨습니다.";
+$subject = $config['cf_title'].' - 주문 내역 안내 메일';
 ob_start();
-include "./mail/orderupdate2.mail.php";
+include './mail/orderupdate2.mail.php';
 $content = ob_get_contents();
 ob_end_clean();
 
@@ -59,7 +59,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list['it_opt']  = print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
     $list['ct_qty']  = $row['ct_qty'];
 
-    $subject = "{$config['cf_title']}에서 다음과 같이 주문서가 접수 되었습니다. (주문자 {$od_name}님)";
+    $subject = $config['cf_title'].' - 주문 알림 메일 (주문자 '.$od_name.'님)';
     ob_start();
     include "./mail/orderupdate3.mail.php";
     $content = ob_get_contents();
