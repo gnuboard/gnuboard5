@@ -132,6 +132,8 @@ if( $cert_enc_use == "Y" )
         if(!$phone_no)
             alert_close("정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.");
 
+        $phone_no = hyphen_hp_number($phone_no);
+
         $sql = " select count(*) as cnt from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
         $row = sql_fetch($sql);
         if ($row['cnt']) {
@@ -174,7 +176,7 @@ $(function() {
 
     // 인증정보
     $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>");
-    $opener.$("input[name=mb_hp]").val("<?php echo hyphen_hp_number($phone_no); ?>").attr("readonly", true);
+    $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
     alert("본인의 휴대폰번호로 확인 되었습니다.");
     window.close();
 });

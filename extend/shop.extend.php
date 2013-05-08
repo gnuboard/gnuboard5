@@ -19,8 +19,10 @@ define('G4_MSHOP_URL',  G4_MOBILE_URL.'/'.G4_SHOP_DIR);
 // 보안서버주소 설정
 if (G4_HTTPS_DOMAIN) {
     define('G4_HTTPS_SHOP_URL', G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR);
+    define('G4_HTTPS_MSHOP_URL', G4_HTTPS_DOMAIN.'/'.G4_MOBILE_DIR.'/'.G4_SHOP_DIR);
 } else {
     define('G4_HTTPS_SHOP_URL', G4_SHOP_URL);
+    define('G4_HTTPS_MSHOP_URL', G4_MSHOP_URL);
 }
 
 // 미수금에 대한 QUERY 문

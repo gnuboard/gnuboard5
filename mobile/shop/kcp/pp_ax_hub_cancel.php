@@ -36,41 +36,16 @@ if ( $req_tx == "pay" )
 
             $tran_cd = "00200000";
 
-            /* ============================================================================== */
-            /* =   07-1.자동취소시 에스크로 거래인 경우                                     = */
-            /* = -------------------------------------------------------------------------- = */
-            // 취소시 사용하는 mod_type
-            $bSucc_mod_type = "";
-
-            // 에스크로 가상계좌 건의 경우 가상계좌 발급취소(STE5)
-            if ( $escw_yn == "Y" && $use_pay_method == "001000000000" )
-            {
-                $bSucc_mod_type = "STE5";
-            }
-            // 에스크로 가상계좌 이외 건은 즉시취소(STE2)
-            else if ( $escw_yn == "Y" )
-            {
-                $bSucc_mod_type = "STE2";
-            }
-            // 에스크로 거래 건이 아닌 경우(일반건)(STSC)
-            else
-            {
-                $bSucc_mod_type = "STSC";
-            }
-            /* = -------------------------------------------------------------------------- = */
-            /* =   07-1. 자동취소시 에스크로 거래인 경우 처리 END                           = */
-            /* = ========================================================================== = */
-
             $c_PayPlus->mf_set_modx_data( "tno",      $tno                         );  // KCP 원거래 거래번호
-            $c_PayPlus->mf_set_modx_data( "mod_type", $bSucc_mod_type              );  // 원거래 변경 요청 종류
+            $c_PayPlus->mf_set_modx_data( "mod_type", "STSC"                       );  // 원거래 변경 요청 종류
             $c_PayPlus->mf_set_modx_data( "mod_ip",   $cust_ip                     );  // 변경 요청자 IP
             $c_PayPlus->mf_set_modx_data( "mod_desc", $cancel_msg );  // 변경 사유
 
-            $c_PayPlus->mf_do_tx( $tno,  $g_conf_home_dir, $g_conf_site_cd,
-                                  "",  $tran_cd,    "",
+            $c_PayPlus->mf_do_tx( "",  $g_conf_home_dir, $g_conf_site_cd,
+                                  $g_conf_site_key,  $tran_cd,    "",
                                   $g_conf_gw_url,  $g_conf_gw_port,  "payplus_cli_slib",
-                                  $ordr_idxx, $cust_ip, "3" ,
-                                  0, 0, $g_conf_key_dir, $g_conf_log_dir);
+                                  $ordr_idxx, $cust_ip,    $g_conf_log_level,
+                                  0, 0 );
 
             $res_cd  = $c_PayPlus->m_res_cd;
             $res_msg = $c_PayPlus->m_res_msg;

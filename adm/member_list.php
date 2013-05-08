@@ -151,13 +151,10 @@ $colspan = 15;
         if ($row2['cnt'])
             $group = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">'.$row2['cnt'].'</a>';
 
-        if ($is_admin == 'group')
-        {
+        if ($is_admin == 'group') {
             $s_mod = '';
             $s_del = '';
-        }
-        else
-        {
+        } else {
             $s_mod = '<a href="./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$row['mb_id'].'">수정</a>';
             //$s_del = '<a href="javascript:post_delete(\'member_delete.php\', \''.$row['mb_id'].'\');">삭제</a>';
         }
@@ -197,10 +194,8 @@ $colspan = 15;
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_name"><?php echo $mb_id ?></td>
-        <td class="td_mbname">
-            <?php echo $row['mb_name'] ?>
-        </td>
-        <td><?php echo hyphen_hp_number($row['mb_hp']); ?></td>
+        <td class="td_mbname"><?php echo $row['mb_name']; ?></td>
+        <td><?php echo $row['mb_hp']; ?></td>
         <td colspan="6" class="td_addr"><?php echo $address; ?></td>
         <td><?php echo substr($row['mb_today_login'],2,8); ?></td>
         <td class="td_bignum"><a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>

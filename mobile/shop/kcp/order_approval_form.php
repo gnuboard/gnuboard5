@@ -1,4 +1,5 @@
 <?
+    include_once('./_common.php');
     /* ============================================================================== */
     /* =   PAGE : 결제 요청 PAGE                                                    = */
     /* = -------------------------------------------------------------------------- = */
@@ -20,7 +21,7 @@
     /* =   테스트 및 실결제 연동시 site_conf_inc.php파일을 수정하시기 바랍니다.     = */
     /* = -------------------------------------------------------------------------- = */
 
-     include "../settle_kcp.inc.php";       // 환경설정 파일 include
+     include G4_MSHOP_PATH.'/settle_kcp.inc.php';       // 환경설정 파일 include
 ?>
 <?
     /* = -------------------------------------------------------------------------- = */
@@ -119,7 +120,7 @@
 	.COMMENT { font-family:"굴림","굴림체"; font-size:9pt; line-height:160% }
 </style>
 <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
-<script src="./approval_key.js"></script>
+<script src="<?php echo G4_MSHOP_URL; ?>/kcp/approval_key.js"></script>
 
 
 <script language="javascript">
@@ -171,7 +172,7 @@
 
         if (sm_form.enc_data.value != "" && sm_form.enc_info.value != "" && sm_form.tran_cd.value !="" )
         {
-            var of = window.opener.document.pay_form;
+            var of = window.opener.document.forderform;
 
             of.req_tx.value = "<?=$req_tx?>";
             of.res_cd.value = "<?=$res_cd?>";
@@ -199,7 +200,7 @@
 
             var od = window.opener.document;
             od.getElementById("show_req_btn").style.display = "none";
-            od.getElementById("show_progress").style.display = "inline";
+            od.getElementById("show_progress").style.display = "block";
             od.getElementById("show_pay_btn").style.display = "inline";
 
             window.close();
@@ -246,13 +247,13 @@
 <input type="hidden" name='approval_key' id="approval">
 <!-- 리턴 URL (kcp와 통신후 결제를 요청할 수 있는 암호화 데이터를 전송 받을 가맹점의 주문페이지 URL) -->
 <!-- 반드시 가맹점 주문페이지의 URL을 입력 해주시기 바랍니다. -->
-<input type="hidden" name='Ret_URL'      value="http://chicpro.chin.so/kcp_smart/kcp/order_approval_form.php">
+<input type="hidden" name='Ret_URL'      value="<?php echo G4_MSHOP_URL; ?>/kcp/order_approval_form.php">
 <!-- 인증시 필요한 파라미터(변경불가)-->
 <input type='hidden' name='ActionResult' value='<?=$ActionResult?>'>
 <!-- 에스크로 사용유무 에스크로 사용 업체(가상계좌만 해당)는 Y로 세팅 해주시기 바랍니다.-->
 <input type="hidden" name='escw_used'  value='Y'>
 <!-- 에스크로 결제처리모드 -->
-<input type="hidden" name='pay_mod'   value='O'>
+<input type="hidden" name='pay_mod'   value='<?php echo ($default['de_escrow_use']?"O":"N"); ?>'>
 <!-- 수취인이름 -->
 <input type='hidden' name='rcvr_name' value='<?=$rcvr_name?>'>
 <!-- 수취인 연락처 -->

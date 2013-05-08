@@ -500,28 +500,28 @@ set_session('ss_order_uniqid', $od_id);
         // 가상계좌 사용
         if ($default['de_vbank_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_vbank" name=od_settle_case value="가상계좌" '.$checked.'> <label for="od_settle_vbank">'.$escrow_title.'가상계좌</label>'.PHP_EOL;
+            echo '<input type="radio" id="od_settle_vbank" name="od_settle_case" value="가상계좌" '.$checked.'> <label for="od_settle_vbank">'.$escrow_title.'가상계좌</label>'.PHP_EOL;
             $checked = '';
         }
 
         // 계좌이체 사용
         if ($default['de_iche_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_iche" name=od_settle_case value="계좌이체" '.$checked.'> <label for="od_settle_iche">'.$escrow_title.'계좌이체</label>'.PHP_EOL;
+            echo '<input type="radio" id="od_settle_iche" name="od_settle_case" value="계좌이체" '.$checked.'> <label for="od_settle_iche">'.$escrow_title.'계좌이체</label>'.PHP_EOL;
             $checked = '';
         }
 
         // 휴대폰 사용
         if ($default['de_hp_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_hp" name=od_settle_case value="휴대폰" '.$checked.'> <label for="od_settle_hp">휴대폰</label>'.PHP_EOL;
+            echo '<input type="radio" id="od_settle_hp" name="od_settle_case" value="휴대폰" '.$checked.'> <label for="od_settle_hp">휴대폰</label>'.PHP_EOL;
             $checked = '';
         }
 
         // 신용카드 사용
         if ($default['de_card_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_card" name=od_settle_case value="신용카드" '.$checked.'> <label for="od_settle_card">신용카드</label>'.PHP_EOL;
+            echo '<input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" '.$checked.'> <label for="od_settle_card">신용카드</label>'.PHP_EOL;
             $checked = '';
         }
 
@@ -854,7 +854,7 @@ $(function() {
         $("#settle_bank").show();
     });
 
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank").bind("click", function() {
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp").bind("click", function() {
         $("#settle_bank").hide();
     });
 });

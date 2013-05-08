@@ -86,7 +86,7 @@ if ($w == "") {
     $member['mb_password_a']  = get_text($member['mb_password_a']);
     $member['mb_birth']       = get_text($member['mb_birth']);
     $member['mb_tel']         = get_text($member['mb_tel']);
-    $member['mb_hp']          = hyphen_hp_number($member['mb_hp']);
+    $member['mb_hp']          = get_text($member['mb_hp']);
     $member['mb_addr1']       = get_text($member['mb_addr1']);
     $member['mb_addr2']       = get_text($member['mb_addr2']);
     $member['mb_signature']   = get_text($member['mb_signature']);
