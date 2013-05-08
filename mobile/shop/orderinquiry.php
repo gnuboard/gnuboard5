@@ -47,7 +47,7 @@ if (!$is_member)
     $row = sql_fetch($sql);
     if ($row['od_id']) {
         set_session("ss_uq_id_inquiry", $row['uq_id']);
-        goto_url(G4_ShOP_URL.'/orderinquiryview.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id']);
+        goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id']);
     }
 }
 
