@@ -184,7 +184,7 @@ if(openwin != null) {
                 <td><?php echo display_amount($od['od_receipt_bank']); ?></td>
             </tr>
             <tr>
-                <td scope="row">입금확인일시</th>
+                <th scope="row">입금확인일시</th>
                 <td><?php echo $od['od_bank_time']; ?></td>
             </tr>
                 <?php
