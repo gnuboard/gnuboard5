@@ -47,11 +47,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰 본인확인</button>
         <noscript>휴대폰 본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
         <?php } ?>
-        <div id="msg_hp_certify">
         <?php if ($member['mb_hp_certify']) { ?>
+        <div id="msg_hp_certify">
             휴대폰 <strong>본인확인</strong><?php if ($member['mb_hp_certify']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
-        <?php } ?>
         </div>
+        <?php } ?>
     </td>
 </tr>
 <?php if ($req_nick) {  ?>
@@ -100,7 +100,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <?php if ($config['cf_use_hp']) {  ?>
 <tr>
     <th scope="row"><label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?></label></th>
-    <td><input type="text" name="mb_hp" value="<?php echo $member[mb_hp] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20"></td>
+    <td><input type="text" name="mb_hp" value="<?php echo $member['mb_hp'] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20"></td>
 </tr>
 <?php } ?>
 
