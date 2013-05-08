@@ -85,7 +85,7 @@ include_once('./admin.head.php');
             </select> 에서
             <select name="mb_level_to" id="mb_level_to" title="최대권한">
             <?php for ($i=1; $i<=10; $i++) { ?>
-                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                <option value="<?php echo $i ?>"<?php echo $i==10 ? " selected" : ""; ?>><?php echo $i ?></option>
             <?php } ?>
             </select> 까지
         </td>
@@ -98,8 +98,7 @@ include_once('./admin.head.php');
                 <?php
                 $sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_subject ";
                 $result = sql_query($sql);
-                for ($i=0; $row=sql_fetch_array($result); $i++)
-                {
+                for ($i=0; $row=sql_fetch_array($result); $i++) {
                     echo '<option value="'.$row['gr_id'].'">'.$row['gr_subject'].'</option>';
                 }
                 ?>
