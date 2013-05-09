@@ -262,7 +262,7 @@ function mobile_display_type($type, $skin_file, $list_row, $img_width, $img_heig
     if (!file_exists($file)) {
         echo $file.' 파일을 찾을 수 없습니다.';
     } else {
-        $td_width = (int)(100 / $list_mod);
+        //$td_width = (int)(100 / $list_mod);
         include $file;
     }
 }
