@@ -163,14 +163,8 @@ ini_set("session.cookie_domain", G4_COOKIE_DOMAIN);
 
 @session_start();
 
-// 보안서버주소 설정
-if (G4_HTTPS_DOMAIN) {
-    define('G4_HTTPS_URL', G4_HTTPS_DOMAIN);
-    define('G4_HTTPS_BBS_URL', G4_HTTPS_DOMAIN.'/'.G4_BBS_DIR);
-} else {
-    define('G4_HTTPS_URL', G4_URL);
-    define('G4_HTTPS_BBS_URL', G4_BBS_URL);
-}
+define('G4_HTTP_BBS_URL',   https_url(G4_BBS_DIR, false));
+define('G4_HTTPS_BBS_URL',  https_url(G4_BBS_DIR, true));
 
 //==============================================================================
 // Mobile 모바일 설정
