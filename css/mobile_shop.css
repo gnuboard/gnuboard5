@@ -436,7 +436,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #smb_my_od .td_stat {width:100px}
 
 #smb_my_wish h2 {margin:0 0 10px}
-
+ 
 .smb_my_img {width:90px;text-align:center}
 
 /* 장바구니 */
@@ -476,7 +476,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 
 /* 주문내역 */
 #sod_v {}
-#sod_v .basic_tbl {text-align:center}
+#sod_v .td_stat {width:100px}
 
 /* 주문상세내역 */
 #sod_fin {}
