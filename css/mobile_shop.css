@@ -293,14 +293,20 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #sit_ov_wrap:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 상품 상세보기 - 이미지 미리보기 */
-#sit_pvi {padding:1em 0;text-align:center}
-#sit_pvi_big {margin:0 0 10px}
+#sit_pvi {position:relative;border-bottom:1px solid #e9e9e9;text-align:center}
+/*
+#sit_pvi_big {margin:0 0 1em}
 #sit_pvi_big a {display:inline-block}
 #sit_pvi_big img {width:300px;height:300px}
-#sit_pvi_thumb {margin:0;padding:0;list-style:none}
-#sit_pvi_thumb li {display:inline-block;margin:0 5px 0 0}
-#sit_pvi_thumb .li_last {margin:0 !important}
-#sit_pvi_thumb img {width:56px;height:56px}
+*/
+
+#sit_pvi_prev {position:absolute;top:0;left:0}
+#sit_pvi_next {position:absolute;top:0;right:0}
+.sit_pvi_btn {width:2em;height:280px;border:0;background:#f5f6fa}
+
+#sit_pvi_slide {margin:0;padding:0;list-style:none}
+#sit_pvi_slide li {display:none}
+#sit_pvi_slide img {width:280px;height:280px}
 
 #sit_pvi_nw h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sit_pvi_nwbig {padding:10px 0;text-align:center}

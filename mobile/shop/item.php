@@ -156,31 +156,38 @@ else
         <div id="sit_pvi">
             <?php
             $img_big = $it['it_id'].'_l1'; // 기본이미지(대)
-            ?>
+            /*
             <div id="sit_pvi_big">
                 <a href="<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;img=<?php echo $img_big; ?>" id="<?php echo $img_big; ?>" class="popup_item_image" target="_blank"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $img_big; ?>" alt=""></a>
             </div>
+            */
+            ?>
             <?php
             // 이미지(중) 썸네일
             for ($i=1; $i<=5; $i++)
             {
-                if ($i == 1) echo '<ul id="sit_pvi_thumb">';
+                if ($i == 1) {
+                    echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>'.PHP_EOL;
+                    echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>'.PHP_EOL;
+                }
+                if ($i == 1) echo '<ul id="sit_pvi_slide">';
                 if ($i == 5) $sit_pvi_last = 'class="li_last"';
-                echo '<li '.$sit_pvi_last.'>';
+                echo '<li id="slide_'.$i.'" '.$sit_pvi_last.'>';
                 if (file_exists(G4_DATA_PATH.'/item/'.$it_id.'_l'.$i))
                 {
                     echo get_large_image($it_id.'_'.$i, $it['it_id'], false);
-                    if ($i==1 && file_exists(G4_DATA_PATH.'/item/'.$it_id.'_s'))
-                        echo '<a href="#sit_pvi_big" id="'.$it_id.'_s" class="img_thumb"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_s" alt="" id="sit_pvi_t'.$i.'" ';
-                    else
-                        echo '<a href="#sit_pvi_big" id="'.$it_id.'_l'.$i.'" class="img_thumb"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_l'.$i.'" alt="" id="sit_pvi_t'.$i.'" ';
-                    //echo ' onmouseover="document.getElementById(\''.$middle_image.'\').src=document.getElementById(\'middle'.$i.'\').src;">';
+                    echo '<a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;img='.$img_big.'" id="'.$img_big.'" class="popup_item_image slide_img" target="_blank"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_l'.$i.'" alt="" id="sit_pvi_t'.$i.'" ';
                     echo '></a>';
                 }
                 echo '</li>';
             }
             if ($i > 1) echo '</ul>';
             ?>
+            <script>
+            $(function() {
+                $('#slide_1').css('display', 'block');
+            });
+            </script>
         </div>
 
         <?php //echo it_name_icon($it, false, 0); ?>
