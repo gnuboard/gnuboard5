@@ -94,7 +94,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     </aside>
 
     <div id="aside">
-        <?php echo outlogin('shop_outlogin'); // 외부 로그인 ?>
+        <?php echo outlogin('shop_basic'); // 외부 로그인 ?>
 
         <!-- 상품분류 -->
         <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); ?>
