@@ -220,7 +220,7 @@ if ($tot_amount > 0) {
 <?php if ($s_page == 'cart.php') { ?>
 <div id="sod_bsk_act">
     <?php if ($i == 0) { ?>
-    <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
+    <a href="<?php echo G4_SHOP_URL; ?>/" class="btn01">쇼핑 계속하기</a>
     <?php } else { ?>
     <input type="hidden" name="url" value="./orderform.php">
     <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
