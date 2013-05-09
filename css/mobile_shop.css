@@ -223,7 +223,7 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 /* 상품 목록 현재 위치 */
 #sct_location {border:1px solid #e9e9e9;background:#f5f6fa;letter-spacing:-4px}
-#sct_location a {display:inline-block;padding:10px 10px 8px;text-decoration:none;letter-spacing:0 !important}
+#sct_location a {display:inline-block;padding:0.7em 0.5em;text-decoration:none;letter-spacing:0 !important}
 .sct_here {font-weight:bold}
 .sct_bg {padding-right:15px !important;background:url('../img/shop/sct_bg_toright.gif') right 0.9em no-repeat}
 
