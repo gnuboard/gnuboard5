@@ -29,8 +29,6 @@ if ($is_admin)
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_mobile_head_html']).'</div>';
 
-    include G4_MSHOP_PATH.'/listcategory3.inc.php';
-
     // 상품 출력순서가 있다면
     if ($sort != "") {
         $order_by = $sort . ' '.$sortodr. ' , ';
@@ -59,7 +57,6 @@ if ($is_admin)
         $img_height = $ca['ca_mobile_img_height'];
 
         include G4_MSHOP_PATH.'/list.sub.php';
-        include G4_MSHOP_PATH.'/list.sort.php';
 
         $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";
         $result = sql_query($sql);

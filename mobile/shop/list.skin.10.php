@@ -10,7 +10,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
     $sns_send  = G4_MSHOP_URL.'/sns_send.php?url='.urlencode(G4_MSHOP_URL.'/item.php?it_id='.$row['it_id']);
     $sns_send .= '&amp;title='.urlencode(cut_str($sns_title, 100));
 
-    if ($i == 1) echo '<ul class="sct sct_10">';
+    if ($i == 1) echo '<ul class="sct sct_11">';
 ?>
     <li class="sct_li">
         <a href="<?php echo $href; ?>" class="sct_a">
@@ -21,6 +21,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
             <?php } ?>
             <?php if (!$row['it_gallery']) { // 전시 상품이 아닐 때 ?>
             <span class="sct_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
+            <?php } ?>
+            <?php if ($row['it_basic']) { ?>
+            <p><?php echo $row['it_basic']; ?></p>
             <?php } ?>
             <span class="sct_icon">
                 <?php echo display_item_icon($row); // 이미지 아이콘?>
