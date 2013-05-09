@@ -144,7 +144,7 @@ function pg_anchor($anc_id) {
 if (G4_HTTPS_DOMAIN)
     $action_url = G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR.'/cartupdate.php';
 else
-    $action_url = G4_MSHOP_URL.'/cartupdate.php';
+    $action_url = G4_SHOP_URL.'/cartupdate.php';
 ?>
 
 <div id="sit">
