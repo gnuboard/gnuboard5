@@ -43,7 +43,7 @@ $it_name = $it['it_name'];
 $it_mimg = $it['it_id']."_m";
 
 ob_start();
-include "./mail/itemrecommend.mail.php";
+include G4_SHOP_PATH.'/mail/itemrecommend.mail.php';
 $content = ob_get_contents();
 ob_end_clean();
 
