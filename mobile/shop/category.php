@@ -20,32 +20,57 @@ $sql = " select ca_id, ca_name from {$g4['shop_category_table']}
 $result = sql_query($sql);
 ?>
 
-<?php
-for($i=0; $row=sql_fetch_array($result); $i++) {
-    if($i == 0)
-        echo '<ul>';
+<style>
+#sct_win {}
+#sct_win h1 {padding:1.5em 0;text-align:center}
+#sct_win_nav {margin:0 0 1em}
+#sct_win_nav h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sct_win_nav ul {border-top:1px solid #e9e9e9}
+#sct_win_nav li {position:relative;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
+#sct_win_nav a {display:block;padding:0.5em 1em;text-decoration:none}
+.sct_ct_view {font-weight:bold}
+.sct_list_view {position:absolute;top:0;right:0;width:4em;background:#333;color:#fff !important;text-align:center}
 
-    $ca_href = G4_SHOP_URL.'/category.php?ca='.$row['ca_id'];
-    $list_href = G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'];
-?>
-    <li>
-        <span><a href="<?php echo $ca_href; ?>"><?php echo $row['ca_name']; ?></a></span>
-        <span><a href="<?php echo $list_href; ?>" class="ca_list_view">상품보기</a></span>
-    </li>
-<?php
-}
+#sct_win_empty {margin:0 0 1em;padding:5em 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
+</style>
 
-if($i > 0)
-    echo '</ul>';
+<div id="sct_win">
 
-if($i ==0) {
-    echo '<p>분류가 존재하지 않습니다.</p>';
-}
-?>
+    <h1><?php echo $config['cf_title']; ?> 카테고리</h1>
+
+    <?php
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        if($i == 0)
+            echo '<nav id="sct_win_nav"><h2>카테고리 목록</h2><ul>';
+
+        $ca_href = G4_SHOP_URL.'/category.php?ca='.$row['ca_id'];
+        $list_href = G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'];
+    ?>
+        <li>
+            <a href="<?php echo $ca_href; ?>" class="sct_ct_view"><?php echo $row['ca_name']; ?></a>
+            <a href="<?php echo $list_href; ?>" class="sct_list_view">상품보기</a>
+        </li>
+    <?php
+    }
+
+    if($i > 0)
+        echo '</ul></nav>';
+
+    if($i ==0) {
+        echo '<p id="sct_win_empty">하위 분류가 없습니다.</p>';
+    }
+    ?>
+
+    <div class="btn_win">
+        <?php if ($i == 0 || $ca) { ?><button onclick="javascript:history.back(-1);" class="btn02">돌아가기</button><?php } ?>
+        <button onclick="javascript:window.close();" class="btn01">창닫기</button>
+    </div>
+
+</div>
 
 <script>
 $(function() {
-    $(".ca_list_view").click(function() {
+    $(".sct_list_view").click(function() {
         window.opener.location = $(this).attr("href");
         window.close();
         return false;
