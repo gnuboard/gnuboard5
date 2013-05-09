@@ -33,7 +33,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <div id="logo"><a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="쇼핑몰 처음으로"></a></div>
 
     <aside id="hd_aside">
-        <h2>상단 편의메뉴</h2>
+        <h2>편의메뉴</h2>
         <div>
             <section id="sch_all">
                 <h3>쇼핑몰 검색</h3>
