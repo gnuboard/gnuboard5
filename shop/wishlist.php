@@ -98,7 +98,7 @@ include_once('./_head.php');
     </div>
 </div>
 
-<script language="JavaScript">
+<script>
 <!--
     function out_cd_check(fld, out_cd)
     {

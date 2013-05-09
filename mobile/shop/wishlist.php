@@ -94,7 +94,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     </div>
 </div>
 
-<script language="JavaScript">
+<script>
 <!--
     function out_cd_check(fld, out_cd)
     {
