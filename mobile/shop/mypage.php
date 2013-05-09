@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 if (!$is_member)
-    goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_MSHOP_URL."/mypage.php"));
+    goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/mypage.php"));
 
 $g4['title'] = '마이페이지';
 include_once(G4_MSHOP_PATH.'/_head.php');
