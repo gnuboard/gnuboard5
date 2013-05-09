@@ -484,10 +484,9 @@ else
 
         <div class="sct_wrap">
             <?php
-            $list_mod   = $default['de_rel_list_mod'];
-            $img_width  = $default['de_rel_img_width'];
-            $img_height = $default['de_rel_img_height'];
-            $td_width = (int)(100 / $list_mod);
+            $list_mod   = 3;
+            $img_width  = 230;
+            $img_height = 230;
 
             $sql = " select b.*
                        from {$g4['shop_item_relation_table']} a
