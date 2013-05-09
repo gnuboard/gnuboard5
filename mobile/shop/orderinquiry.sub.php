@@ -9,12 +9,10 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 <table class="basic_tbl">
 <thead>
 <tr>
-    <th scope="col">주문서번호</th>
+    <th scope="col">주문번호</th>
     <th scope="col">주문일시</th>
-    <th scope="col">상품수</th>
     <th scope="col">주문금액</th>
-    <th scope="col">입금액</th>
-    <th scope="col">미입금액</th>
+    <th scope="col">배송상태</th>
 </tr>
 </thead>
 <tbody>
@@ -37,18 +35,16 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $row['ct_id']; ?>">
         <a href="<?php echo G4_MSHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>"><?php echo $row['od_id']; ?></a>
     </td>
-    <td><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
-    <td class="td_bignum"><?php echo $row['itemcount']; ?></td>
+    <td class="td_datetime"><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
     <td class="td_bignum"><?php echo display_amount($row['orderamount']); ?></td>
-    <td class="td_bignum"><?php echo display_amount($row['receiptamount']); ?></td>
-    <td class="td_bignum"><?php echo display_amount($row['misu']); ?></td>
+    <td class="td_stat">배송상태</td>
 </tr>
 
 <?php
 }
 
 if ($i == 0)
-    echo '<tr><td colspan="6" class="empty_table">주문 내역이 없습니다.</td></tr>';
+    echo '<tr><td colspan="4" class="empty_table">주문 내역이 없습니다.</td></tr>';
 ?>
 </tbody>
 </table>
