@@ -24,7 +24,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         <div>
             <section id="sch_all">
                 <h3>쇼핑몰 검색</h3>
-                <form name="frmsearch1" action="<?php echo G4_MSHOP_URL; ?>/search.php">
+                <form name="frmsearch1" action="<?php echo G4_SHOP_URL; ?>/search.php">
 
                 <label for="sch_all_str" class="sound_only">상품명<strong class="sound_only"> 필수</strong></label>
                 <input type="text" name="search_str" value="<?php echo stripslashes(get_text($search_str)); ?>" id="sch_all_str" required>
@@ -41,8 +41,8 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                     <?php } else { ?>
                     <li><a href="<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
                     <?php } ?>
-                    <li><a href="<?php echo G4_MSHOP_URL; ?>/mypage.php">마이페이지</a></li>
-                    <li><a href="<?php echo G4_MSHOP_URL; ?>/cart.php">장바구니</a></li>
+                    <li><a href="<?php echo G4_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
+                    <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php">장바구니</a></li>
                 </ul>
             </section>
         </div>

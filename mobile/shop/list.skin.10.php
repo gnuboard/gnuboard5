@@ -4,10 +4,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 for ($i=1; $row=sql_fetch_array($result); $i++)
 {
-    $href = G4_MSHOP_URL.'/item.php?it_id='.$row['it_id'];
+    $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
     $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
-    $sns_send  = G4_MSHOP_URL.'/sns_send.php?url='.urlencode(G4_MSHOP_URL.'/item.php?it_id='.$row['it_id']);
+    $sns_send  = G4_SHOP_URL.'/sns_send.php?url='.urlencode(G4_SHOP_URL.'/item.php?it_id='.$row['it_id']);
     $sns_send .= '&amp;title='.urlencode(cut_str($sns_title, 100));
 
     if ($i == 1) echo '<ul class="sct sct_11">';

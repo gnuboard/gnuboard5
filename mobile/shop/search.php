@@ -96,7 +96,7 @@ $total_count = $row['cnt'];
          {
             $sql2 = " select ca_name from $g4[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
             $row2 = sql_fetch($sql2);
-            $ca_temp = '<a href="'.G4_MSHOP_URL.'/list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> ';
+            $ca_temp = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> ';
          }
     ?>
     <ul class="ssch_ul">
@@ -123,7 +123,7 @@ $total_count = $row['cnt'];
         <li>
             <span class="ssch_img"><?php echo $image; ?></span>
             <b class="ssch_ct"><?php echo ($ca_temp) ? $ca_temp : $ca_name; ?></b>
-            <a href="<?php echo G4_MSHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo get_text($row['it_name']); ?></a>
+            <a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo get_text($row['it_name']); ?></a>
             <?php echo it_name_icon($row); ?>
             <span class="ssch_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
             <p><?php echo $row['it_basic']; ?></p>

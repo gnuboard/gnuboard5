@@ -20,7 +20,7 @@ else
     $tmp_uq_id = get_session('ss_uq_id');
 
 if (get_cart_count($tmp_uq_id) == 0)// 장바구니에 담기
-    alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G4_MSHOP_URL.'/cart.php');
+    alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G4_SHOP_URL.'/cart.php');
 
 $error = "";
 // 장바구니 상품 재고 검사
@@ -351,5 +351,5 @@ if (get_session('ss_direct'))
 else
     set_session('ss_uq_id', '');
 
-goto_url(G4_MSHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$tmp_uq_id);
+goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$tmp_uq_id);
 ?>
