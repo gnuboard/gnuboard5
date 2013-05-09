@@ -927,19 +927,19 @@ $pg_anchor ='<ul class="anchor">
     </tr>
     <tr>
         <th scope="row">상품상단내용</th>
-        <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150); ?><?php echo editor_html('it_head_html', $it['it_head_html']); ?></td>
+        <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_head_html', $it['it_head_html']); ?></td>
     </tr>
     <tr>
         <th scope="row">상품하단내용</th>
-        <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150); ?><?php echo editor_html('it_tail_html', $it['it_tail_html']); ?></td>
+        <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_tail_html', $it['it_tail_html']); ?></td>
     </tr>
     <tr>
         <th scope="row">모바일 상품상단내용</th>
-        <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다.", -150); ?><?php echo editor_html('it_mobile_head_html', $it['it_mobile_head_html']); ?></td>
+        <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_head_html', $it['it_mobile_head_html']); ?></td>
     </tr>
     <tr>
         <th scope="row">모바일 상품하단내용</th>
-        <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다.", -150); ?><?php echo editor_html('it_mobile_tail_html', $it['it_mobile_tail_html']); ?></td>
+        <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_tail_html', $it['it_mobile_tail_html']); ?></td>
     </tr>
     <?php if ($w == "u") { ?>
     <tr>

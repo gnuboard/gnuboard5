@@ -569,6 +569,8 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 /* 상품 상세보기 - 관련상품 */
 #sit_rel {margin:0 0 10px;padding:10px 10px 0}
 #sit_rel h2 {margin:0 0 10px}
+#sit_rel .sct_wrap li {margin:0 10px 0 0}
+#sit_rel .sct_last {margin:0 !important}
 
 /* 사용후기 모음 */
 #sps {zoom:1}
