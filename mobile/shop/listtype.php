@@ -41,7 +41,7 @@ if ($ca_id) {
     $sql_common .= " and ca_id = '$ca_id' ";
 }
 
-$error = "<img src='".G4_SHOP_URL."/img/no_item.gif' border=0>";
+$error = "<img src='".G4_MSHOP_URL."/img/no_item.gif' border=0>";
 
 if (!$skin)
     $skin = "list.skin.10.php";
@@ -49,10 +49,10 @@ if (!$skin)
 $td_width = (int)($mod / 100);
 
 // 리스트 유형별로 출력
-$list_file = G4_SHOP_PATH.'/'.$skin;
+$list_file = G4_MSHOP_PATH.'/'.$skin;
 if (file_exists($list_file)) {
 
-    include G4_SHOP_PATH."/list.sub.php";
+    include G4_MSHOP_PATH."/list.sub.php";
     //include "$cart_dir/list.sort.php";
 
     $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";

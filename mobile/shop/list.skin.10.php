@@ -4,22 +4,15 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 for ($i=1; $row=sql_fetch_array($result); $i++)
 {
-    $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-    if ($list_mod >= 2) { // 1줄 이미지 : 2개 이상
-        if ($i%$list_mod == 0) $sct_last = 'sct_last'; // 줄 마지막
-        else if ($i%$list_mod == 1) $sct_last = 'sct_clear'; // 줄 첫번째
-        else $sct_last = '';
-    } else { // 1줄 이미지 : 1개
-        $sct_last = 'sct_clear';
-    }
+    $href = G4_MSHOP_URL.'/item.php?it_id='.$row['it_id'];
 
     $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
-    $sns_send  = G4_SHOP_URL.'/sns_send.php?url='.urlencode(G4_SHOP_URL.'/item.php?it_id='.$row['it_id']);
+    $sns_send  = G4_MSHOP_URL.'/sns_send.php?url='.urlencode(G4_MSHOP_URL.'/item.php?it_id='.$row['it_id']);
     $sns_send .= '&amp;title='.urlencode(cut_str($sns_title, 100));
 
     if ($i == 1) echo '<ul class="sct sct_10">';
 ?>
-    <li class="sct_li <?php echo $sct_last; ?>">
+    <li class="sct_li">
         <a href="<?php echo $href; ?>" class="sct_a">
             <span class="sct_img"><?php echo get_it_image($row['it_id'].'_m', $img_width, $img_height); ?></span>
             <b><?php echo stripslashes($row['it_name']); ?></b>

@@ -89,7 +89,7 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $prev_title = '이전상품보기 '.$row['it_name'];
-    $prev_href = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
+    $prev_href = '<a href="'.G4_MSHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
     $prev_href = '</a>';
 } else {
     $prev_title = '';
@@ -107,7 +107,7 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $next_title = '다음 상품 '.$row['it_name'];
-    $next_href = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
+    $next_href = '<a href="'.G4_MSHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
     $next_href2 = '</a>';
 } else {
     $next_title = '';
@@ -144,7 +144,7 @@ function pg_anchor($anc_id) {
 if (G4_HTTPS_DOMAIN)
     $action_url = G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR.'/cartupdate.php';
 else
-    $action_url = G4_SHOP_URL.'/cartupdate.php';
+    $action_url = G4_MSHOP_URL.'/cartupdate.php';
 ?>
 
 <div id="sit">
@@ -161,7 +161,7 @@ else
             $img_big = $it['it_id'].'_l1'; // 기본이미지(대)
             ?>
             <div id="sit_pvi_big">
-                <a href="<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;img=<?php echo $img_big; ?>" id="<?php echo $img_big; ?>" class="popup_item_image" target="_blank"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $img_big; ?>" alt=""></a>
+                <a href="<?php echo G4_MSHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;img=<?php echo $img_big; ?>" id="<?php echo $img_big; ?>" class="popup_item_image" target="_blank"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $img_big; ?>" alt=""></a>
             </div>
             <?php
             // 이미지(중) 썸네일
@@ -196,7 +196,7 @@ else
             <div id="sit_star_sns">
                 <?php
                 $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
-                $sns_send  = G4_SHOP_URL.'/sns_send.php?url='.urlencode(G4_SHOP_URL.'/item.php?it_id='.$it['it_id']);
+                $sns_send  = G4_MSHOP_URL.'/sns_send.php?url='.urlencode(G4_MSHOP_URL.'/item.php?it_id='.$it['it_id']);
                 $sns_send .= '&amp;title='.urlencode(cut_str($sns_title, 100));
                 ?>
                 고객선호도 <span>별<?php echo $score?>개</span>
@@ -316,8 +316,8 @@ else
             // 상품보관
             function item_wish(f, it_id)
             {
-                f.url.value = "<?php echo G4_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
-                f.action = "<?php echo G4_SHOP_URL; ?>/wishupdate.php";
+                f.url.value = "<?php echo G4_MSHOP_URL; ?>/wishupdate.php?it_id="+it_id;
+                f.action = "<?php echo G4_MSHOP_URL; ?>/wishupdate.php";
                 f.submit();
             }
 
@@ -327,11 +327,11 @@ else
                 if (!g4_is_member)
                 {
                     if (confirm("회원만 추천하실 수 있습니다."))
-                        document.location.href = "<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo urlencode(G4_SHOP_URL."/item.php?it_id=$it_id"); ?>";
+                        document.location.href = "<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo urlencode(G4_MSHOP_URL."/item.php?it_id=$it_id"); ?>";
                 }
                 else
                 {
-                    url = "<?php echo G4_SHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
+                    url = "<?php echo G4_MSHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
                     opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
                     popup_window(url, "itemrecommend", opt);
                 }
@@ -430,7 +430,7 @@ else
 
         <?php
         $use_page_rows = 10; // 페이지당 목록수
-        include_once(G4_SHOP_PATH.'/itemuse.inc.php');
+        include_once(G4_MSHOP_PATH.'/itemuse.inc.php');
         ?>
     </section>
 
@@ -440,7 +440,7 @@ else
 
         <?php
         $qa_page_rows = 10; // 페이지당 목록수
-        include_once(G4_SHOP_PATH.'/itemqa.inc.php');
+        include_once(G4_MSHOP_PATH.'/itemqa.inc.php');
         ?>
     </section>
 
@@ -506,7 +506,7 @@ else
 
             var top = 10;
             var left = 10;
-            var url = "<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=" + it_id + "&img=" + img;
+            var url = "<?php echo G4_MSHOP_URL; ?>/largeimage.php?it_id=" + it_id + "&img=" + img;
             var opt = 'scrollbars=yes,top='+top+',left='+left;
             popup_window(url, "largeimage", opt);
 

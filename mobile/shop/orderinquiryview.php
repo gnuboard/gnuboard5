@@ -14,7 +14,7 @@ $sql = "select * from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id
 $od = sql_fetch($sql);
 if (!$od['od_id']) {
     echo "$od_id $uq_id $MxIssueNO";
-    alert("조회하실 주문서가 없습니다.", G4_SHOP_URL);
+    alert("조회하실 주문서가 없습니다.", G4_MSHOP_URL);
 }
 
 // 결제방법
@@ -260,7 +260,7 @@ $s_page = 'orderinquiryview.php';
                 else
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
+                    <a href="javascript:;" onclick="window.open('<?php echo G4_MSHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
                 <?php } ?>
                 </td>
             </tr>
@@ -442,7 +442,7 @@ $s_page = 'orderinquiryview.php';
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
         <div id="sod_fin_cancelfrm">
-            <form method="post" action="<?php echo G4_SHOP_URL; ?>/orderinquirycancel.php">
+            <form method="post" action="<?php echo G4_MSHOP_URL; ?>/orderinquirycancel.php">
             <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
             <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
@@ -473,7 +473,7 @@ $s_page = 'orderinquiryview.php';
     <input type="text" name="e_trade_no" value="<?php echo $od['od_escrow1']; ?>" size="80"><br />
     <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
     <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>" size="80"><br />
-    <input type="text" name="noti_url" value="<?php echo G4_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
+    <input type="text" name="noti_url" value="<?php echo G4_MSHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
     <input type="submit" value="입금통보 테스트">
     </form>
     </fieldset>
