@@ -1,6 +1,11 @@
 <?php
 include_once('./_common.php');
 
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/largeimage.php');
+    return;
+}
+
 $it_id = $_GET['it_id'];
 $img = $_GET['img'];
 
