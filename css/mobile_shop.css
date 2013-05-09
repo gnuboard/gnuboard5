@@ -209,7 +209,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 
 /* ########## 쇼핑몰 컨텐츠 ########## */
 /* 인덱스 이미지 출력 */
-#sidx_img {margin:0 0 20px}
+#sidx {padding:1em}
 
 /* 상품 목록 */
 #sct {}
