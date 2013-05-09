@@ -17,7 +17,7 @@ $sql = " select ca_id, ca_name from {$g4['shop_category_table']}
           $sql_where
             and ca_use = '1'
           order by ca_id ";
-$result = sql_query($hsql);
+$result = sql_query($sql);
 ?>
 
 <?php
