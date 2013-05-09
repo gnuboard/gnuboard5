@@ -70,9 +70,6 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 $ca_id = $it['ca_id'];
 include G4_MSHOP_PATH.'/navigation1.inc.php';
 
-// 이 분류에 속한 하위분류 출력
-include G4_MSHOP_PATH.'/listcategory.inc.php';
-
 if ($is_admin)
     echo '<div class="sit_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
 
@@ -470,10 +467,8 @@ else
 
         <div class="sct_wrap">
             <?php
-            $list_mod   = $default['de_rel_list_mod'];
-            $img_width  = $default['de_rel_img_width'];
-            $img_height = $default['de_rel_img_height'];
-            $td_width = (int)(100 / $list_mod);
+            $img_width  = 230;
+            $img_height = 230;
 
             $sql = " select b.*
                        from {$g4['shop_item_relation_table']} a
