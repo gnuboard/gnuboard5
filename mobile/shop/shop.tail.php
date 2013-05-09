@@ -13,7 +13,7 @@ $admin = get_admin("super");
 <footer id="ft">
     <h1><?php echo $config['cf_title']; ?> 정보</h1>
     <div>
-        <a href="<?php echo G4_MSHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="처음으로"></a>
+        <a href="<?php echo G4_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="처음으로"></a>
         <ul>
             <li><a href="<?php echo G4_MSHOP_URL; ?>/content.php?co_id=company">회사소개</a></li>
             <li><a href="<?php echo G4_MSHOP_URL; ?>/content.php?co_id=provision">서비스이용약관</a></li>

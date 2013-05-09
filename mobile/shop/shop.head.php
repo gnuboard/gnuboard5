@@ -12,11 +12,11 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <div id="to_content"><a href="#container">본문 바로가기</a></div>
 
-    <div id="logo"><a href="<?php echo G4_MSHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="쇼핑몰 처음으로"></a></div>
+    <div id="logo"><a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="쇼핑몰 처음으로"></a></div>
 
     <aside id="hd_ct">
         <h2>쇼핑몰 카테고리</h2>
-        
+
     </aside>
 
     <aside id="hd_aside">
