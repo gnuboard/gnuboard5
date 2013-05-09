@@ -296,8 +296,8 @@ include_once(G4_MSHOP_PATH.'/kcp/pp_ax_hub_result.php');
 $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))) . "&nbsp;";
 
 
-include_once(G4_MSHOP_PATH.'/ordermail1.inc.php');
-include_once(G4_MSHOP_PATH.'/ordermail2.inc.php');
+include_once(G4_SHOP_PATH.'/ordermail1.inc.php');
+include_once(G4_SHOP_PATH.'/ordermail2.inc.php');
 
 // SMS BEGIN --------------------------------------------------------
 // 주문고객과 쇼핑몰관리자에게 SMS 전송

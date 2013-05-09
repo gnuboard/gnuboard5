@@ -10,7 +10,7 @@ $admin = get_admin('super');
 //------------------------------------------------------------------------------
 $subject = $config['cf_title'].' - 주문 알림 메일 ('.$od_name.')';
 ob_start();
-include './mail/orderupdate1.mail.php';
+include G4_SHOP_PATH.'/mail/orderupdate1.mail.php';
 $content = ob_get_contents();
 ob_end_clean();
 
@@ -22,7 +22,7 @@ mailer($od_name, $od_email, $admin['mb_email'], $subject, $content, 1);
 //------------------------------------------------------------------------------
 $subject = $config['cf_title'].' - 주문 내역 안내 메일';
 ob_start();
-include './mail/orderupdate2.mail.php';
+include G4_SHOP_PATH.'/mail/orderupdate2.mail.php';
 $content = ob_get_contents();
 ob_end_clean();
 
@@ -61,7 +61,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $subject = $config['cf_title'].' - 주문 알림 메일 (주문자 '.$od_name.'님)';
     ob_start();
-    include "./mail/orderupdate3.mail.php";
+    include G4_SHOP_PATH.'/mail/orderupdate3.mail.php';
     $content = ob_get_contents();
     ob_end_clean();
 
