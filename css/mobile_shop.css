@@ -250,7 +250,7 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 /* ##### maintype(nn).inc.php, list.skin.(nn).php 공통 적용 시작 ##### */
 /* 공통 */
-.sct_wrap {margin:0 0 30px;zoom:1}
+.sct_wrap {margin:0 2em 2em;zoom:1}
 .sct_wrap:after {display:block;visibility:hidden;clear:both;content:""}
 .sct_wrap header {margin:0 0 20px;zoom:1}
 .sct_wrap header:after {display:block;visibility:hidden;clear:both;content:""}
@@ -277,58 +277,6 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 .sct_10 .sct_icon {position:absolute;top:10px;left:-5px;margin:0 !important}
 .sct_10 .sct_icon img {display:block}
 .sct_10 .sct_sns {position:absolute;top:190px;right:20px}
-
-/* 상품 목록 스킨 11 */
-.sct_11 .sct_li {float:left;margin:0 25px 0 0;width:230px}
-.sct_11 .sct_last {margin:0 !important}
-.sct_11 .sct_clear {clear:both}
-.sct_11 .sct_a {display:block;position:relative;padding:0 0 5px;background:#f5f6fa;text-decoration:none}
-.sct_11 .sct_a:focus,
-.sct_11 .sct_a:hover {text-decoration:none}
-.sct_11 .sct_img {display:block;margin:0 0 15px}
-.sct_11 b {display:block;margin:0 0 8px;padding:0 5px;font-weight:normal}
-.sct_11 s {display:block}
-.sct_11 .sct_cost {display:block;margin:0 0 10px;padding:0 5px;font-weight:bold}
-.sct_11 .sct_icon {position:absolute;top:10px;left:-5px;margin:0 !important}
-.sct_11 .sct_icon img {display:block}
-.sct_11 .sct_sns {position:absolute;bottom:10px;right:10px}
-
-/* 상품 목록 스킨 12 */
-.sct_12 .sct_li {float:left;margin:0 16px 16px 0;width:362px}
-.sct_12 .sct_last {margin:0 !important}
-.sct_12 .sct_clear {clear:both}
-.sct_12 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../img/shop/icon_arw_toleft.gif') no-repeat}
-.sct_12 .sct_a {display:block;position:relative;padding:20px 10px 20px 240px;width:110px;height:190px;border:1px solid #e9e9e9;background:#f5f6fa;text-decoration:none}
-.sct_12 .sct_a:focus,
-.sct_12 .sct_a:hover {text-decoration:none}
-.sct_12 .sct_img {position:absolute;top:0;left:0}
-.sct_12 b {display:block;margin:0 0 15px;font-size:1.2em;letter-spacing:-0.1em}
-.sct_12 p {margin:0 0 15px;padding:0;line-height:1.5em}
-.sct_12 s {display:block}
-.sct_12 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
-.sct_12 .sct_icon {position:absolute;bottom:25px;left:-5px;margin:0 !important}
-.sct_12 .sct_icon img {display:block}
-.sct_12 .sct_sns {position:absolute;bottom:20px;right:10px}
-
-/* 상품 목록 스킨 13 */
-.sct_13 .sct_li {float:left;margin:0 0 16px 0;width:100%}
-.sct_13 .sct_last {}
-.sct_13 .sct_clear {clear:both}
-.sct_13 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../img/shop/icon_arw_toleft.gif') no-repeat}
-.sct_13 .sct_a {display:block;position:relative;padding:20px 10px 20px 240px;height:190px;border:1px solid #e9e9e9;background:#f5f6fa;text-decoration:none}
-.sct_13 .sct_a:focus,
-.sct_13 .sct_a:hover {text-decoration:none}
-.sct_13 .sct_img {position:absolute;top:0;left:0}
-.sct_13 b {display:block;margin:0 0 15px;font-size:1.2em;letter-spacing:-0.1em}
-.sct_13 p {margin:0 0 15px;padding:0;line-height:1.5em}
-.sct_13 s {display:block}
-.sct_13 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
-.sct_13 .sct_icon {position:absolute;bottom:25px;left:-5px;margin:0 !important}
-.sct_13 .sct_icon img {display:block}
-.sct_13 .sct_rel {position:absolute;bottom:20px;right:20px}
-.sct_13 .sct_rel_ul {margin:0;padding:0;list-style:none}
-.sct_13 .sct_rel_li {float:left;margin:0 0 0 10px}
-.sct_13 .sct_sns {position:absolute;top:20px;right:20px}
 /* ##### maintype(nn).inc.php, list.skin.(nn).php 공통 적용 끝 ##### */
 
 /* 상품 상세보기 */
