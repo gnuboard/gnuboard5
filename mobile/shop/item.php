@@ -313,8 +313,8 @@ else
             // 상품보관
             function item_wish(f, it_id)
             {
-                f.url.value = "<?php echo G4_MSHOP_URL; ?>/wishupdate.php?it_id="+it_id;
-                f.action = "<?php echo G4_MSHOP_URL; ?>/wishupdate.php";
+                f.url.value = "<?php echo G4_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
+                f.action = "<?php echo G4_SHOP_URL; ?>/wishupdate.php";
                 f.submit();
             }
 
@@ -324,11 +324,11 @@ else
                 if (!g4_is_member)
                 {
                     if (confirm("회원만 추천하실 수 있습니다."))
-                        document.location.href = "<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo urlencode(G4_MSHOP_URL."/item.php?it_id=$it_id"); ?>";
+                        document.location.href = "<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo urlencode(G4_SHOP_URL."/item.php?it_id=$it_id"); ?>";
                 }
                 else
                 {
-                    url = "<?php echo G4_MSHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
+                    url = "<?php echo G4_SHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
                     opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
                     popup_window(url, "itemrecommend", opt);
                 }
