@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-// ¸ð¹ÙÀÏ ¼îÇÎ¸ô Ä«Å×°í¸® ¼±ÅÃ½Ã¿¡¸¸ »ç¿ëÇÔ
+// ëª¨ë°”ì¼ ì‡¼í•‘ëª° ì¹´í…Œê³ ë¦¬ ì„ íƒì‹œì—ë§Œ ì‚¬ìš©í•¨
 if (G4_IS_MOBILE) {
     include_once(G4_MSHOP_PATH.'/category.php');
     return;
