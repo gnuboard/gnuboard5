@@ -26,4 +26,7 @@ else {
     $g_wsdl = "real_KCPPaymentService.wsdl";
     $g_conf_gw_url = "paygw.kcp.co.kr";
 }
+
+$g_conf_site_cd = $default['de_kcp_mid'];
+$g_conf_site_key = $default['de_kcp_site_key'];
 ?>
