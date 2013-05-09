@@ -76,8 +76,7 @@ if (!isset($ca['ca_mobile_skin'])) {
                     ADD `ca_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ca_skin`,
                     ADD `ca_mobile_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `ca_list_row`,
                     ADD `ca_mobile_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_width`,
-                    ADD `ca_mobile_list_mod` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_height`,
-                    ADD `ca_mobile_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_list_mod`,
+                    ADD `ca_mobile_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_height`,
                     ADD `ca_mobile_head_html` TEXT NOT NULL AFTER `ca_tail_html`,
                     ADD `ca_mobile_tail_html` TEXT NOT NULL AFTER `ca_mobile_head_html` ", false);
 }
@@ -205,17 +204,10 @@ $pg_anchor .= '</ul>';
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ca_mobile_list_mod">모바일 1줄당 이미지 수</label></th>
+        <th scope="row"><label for="ca_mobile_list_row">모바일 이미지 수</label></th>
         <td>
-            <?php echo help("한 줄에 설정한 값만큼의 상품을 출력하지만 스킨에 따라 한 줄에 하나의 상품만 출력할 수도 있습니다."); ?>
-            <input type="text" name="ca_mobile_list_mod" size="3" value="<?php echo $ca['ca_mobile_list_mod']; ?>" id="ca_mobile_list_mod" required class="required frm_input"> 개
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="ca_mobile_list_row">모바일 이미지 줄 수</label></th>
-        <td>
-            <?php echo help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에서 표시하는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다."); ?>
-            <input type="text" name="ca_mobile_list_row" value='<?php echo $ca['ca_mobile_list_row']; ?>' id="ca_mobile_list_row" required class="required frm_input" size="3"> 줄
+            <?php echo help("한 페이지에 출력할 이미지 수를 설정합니다."); ?>
+            <input type="text" name="ca_mobile_list_row" value='<?php echo $ca['ca_mobile_list_row']; ?>' id="ca_mobile_list_row" required class="required frm_input" size="3">
         </td>
     </tr>
     <tr>

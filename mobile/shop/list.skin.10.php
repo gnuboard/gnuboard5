@@ -1,6 +1,6 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-// $list_mod 가로 나열 수
+// $list_row 상품 수
 
 for ($i=1; $row=sql_fetch_array($result); $i++)
 {
