@@ -98,7 +98,7 @@ include_once('./_head.php');
         }
 
         if ($i == 0)
-            echo "<tr><td colspan=3 height=100 align=center><span class=point>보관 내역이 없습니다.</span></td></tr>";
+            echo '<tr><td colspan="3" class="empty_table">보관 내역이 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>

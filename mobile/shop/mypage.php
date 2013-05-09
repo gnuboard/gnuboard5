@@ -32,7 +32,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     </section>
 
     <section id="smb_my_od">
-        <h2>최근 주문내역</h2>
+        <h2><a href="<?php echo G4_MSHOP_URL; ?>/orderinquiry.php">최근 주문내역</a></h2>
         <?php
         // 최근 주문내역
         define("_ORDERINQUIRY_", true);
@@ -43,7 +43,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     </section>
 
     <section id="smb_my_wish">
-        <h2>최근 위시리스트</h2>
+        <h2><a href="<?php echo G4_MSHOP_URL; ?>/wishlist.php">최근 위시리스트</a></h2>
 
         <table class="basic_tbl">
         <thead>
@@ -81,7 +81,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         }
 
         if ($i == 0)
-            echo "<tr><td colspan=3 height=100 align=center><span class=point>보관 내역이 없습니다.</span></td></tr>";
+            echo '<tr><td colspan="3" class="empty_table">보관 내역이 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>
