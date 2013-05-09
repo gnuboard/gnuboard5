@@ -154,7 +154,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .grid_18 {width:890px}
 
 /* 테이블 항목별 정의 */
-.td_chk {width:30px;text-align:center}
+.td_chk {width:50px;text-align:center}
 .td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
 .td_num {width:50px;text-align:center}
@@ -454,6 +454,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 
 /* 위시리스트 */
 #sod_ws {}
+#sod_ws .basic_tbl a {padding-right:0;padding-left:0}
 .sod_ws_img {width:90px;text-align:center}
 #sod_ws_act {text-align:center}
 

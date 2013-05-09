@@ -18,10 +18,9 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <table class="basic_tbl">
     <thead>
     <tr>
-        <th scope="col">선택</th>
         <th scope="col">이미지</th>
         <th scope="col">상품명</th>
-        <th scope="col">보관일시</th>
+        <th scope="col">선택</th>
         <th scope="col">삭제</th>
     </tr>
     </thead>
@@ -55,6 +54,11 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     ?>
 
     <tr>
+        <td class="sod_ws_img"><?php echo $image; ?></td>
+        <td>
+            <a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
+            <small>보관일시 <?php echo $row['wi_time']; ?></small>
+        </td>
         <td class="td_chk">
             <?php
             // 품절검사
@@ -72,9 +76,6 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <input type="hidden"   name="it_point[<?php echo $i; ?>]"  value="<?php echo $row['it_point']; ?>">
             <input type="hidden"   name="ct_qty[<?php echo $i; ?>]"    value="1">
         </td>
-        <td class="sod_ws_img"><?php echo $image; ?></td>
-        <td><a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
-        <td class="td_datetime"><?php echo $row['wi_time']; ?></td>
         <td class="td_smallmng"><a href="<?php echo G4_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
     </tr>
     <?php
@@ -93,7 +94,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     </div>
 </div>
 
-<script language="JavaScript">
+<script>
 <!--
     function out_cd_check(fld, out_cd)
     {
