@@ -122,7 +122,7 @@ $item_relation_count = $row['cnt'];
 ?>
 
 <?php
-function pg_anchor($anc_id) {
+function pg_anchor_m($anc_id) {
     global $default;
 ?>
             <ul class="sanchor">
@@ -378,7 +378,7 @@ else
 
     <section id="sit_inf">
         <h2>상품 정보</h2>
-        <?php echo pg_anchor('inf'); ?>
+        <?php echo pg_anchor_m('inf'); ?>
 
         <?php if ($it['it_basic']) { // 상품 기본설명 ?>
         <div id="sit_inf_basic">
@@ -423,7 +423,7 @@ else
 
     <section id="sit_ps">
         <h2>사용후기</h2>
-        <?php echo pg_anchor('ps'); ?>
+        <?php echo pg_anchor_m('ps'); ?>
 
         <?php
         $use_page_rows = 10; // 페이지당 목록수
@@ -433,7 +433,7 @@ else
 
     <section id="sit_qna">
         <h2>상품문의</h2>
-        <?php echo pg_anchor('qna'); ?>
+        <?php echo pg_anchor_m('qna'); ?>
 
         <?php
         $qa_page_rows = 10; // 페이지당 목록수
@@ -445,7 +445,7 @@ else
     <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>
     <section id="sit_dvr">
         <h2>배송정보</h2>
-        <?php echo pg_anchor('dvr'); ?>
+        <?php echo pg_anchor_m('dvr'); ?>
 
         <?php echo conv_content($default['de_baesong_content'], 1); ?>
     </section>
@@ -455,7 +455,7 @@ else
     <?php if ($default['de_change_content']) { // 교환/반품 내용이 있다면 ?>
     <section id="sit_ex">
         <h2>교환/반품</h2>
-        <?php echo pg_anchor('ex'); ?>
+        <?php echo pg_anchor_m('ex'); ?>
 
         <?php echo conv_content($default['de_change_content'], 1); ?>
     </section>
@@ -463,7 +463,7 @@ else
 
     <section id="sit_rel">
         <h2>관련상품</h2>
-        <?php echo pg_anchor('rel'); ?>
+        <?php echo pg_anchor_m('rel'); ?>
 
         <div class="sct_wrap">
             <?php
