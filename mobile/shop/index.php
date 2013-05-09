@@ -8,10 +8,6 @@ define("_INDEX_", TRUE);
 include_once(G4_MSHOP_PATH.'/shop.head.php');
 ?>
 
-<div id="sidx_img">
-    <img src="<?php echo G4_DATA_URL; ?>/common/main_img" alt="">
-</div>
-
 <section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=3">최신상품</a></h2>
@@ -86,25 +82,6 @@ include_once(G4_MSHOP_PATH.'/shop.head.php');
     }
     ?>
 </section>
-
-<section id="sidx_lat">
-    <h2>커뮤니티 최신글</h2>
-    <?php echo latest('shop_basic', 'notice', 5, 30); ?>
-    <?php echo latest('shop_basic', 'free', 5, 25); ?>
-    <?php echo latest('shop_basic', 'qa', 5, 20); ?>
-</section>
-
-<?php echo poll('shop_basic'); ?>
-
-<!-- 방문자 수 -->
-<?php echo visit('shop_basic'); ?>
-
-<section id="sbn_idx">
-    <h2>쇼핑몰 메인 배너</h2>
-    <!-- 메인 배너 -->
-    <?php echo display_banner('메인'); ?>
-</section>
-
 
 <?php
 include_once(G4_MSHOP_PATH.'/shop.tail.php');
