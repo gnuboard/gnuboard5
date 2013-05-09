@@ -101,7 +101,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $image = get_it_image($row['it_id'].'_s', 50, 50);
     }
 
-    $it_name = $a1 . stripslashes($row['it_name']) . $a2 . '<br>';
+    $it_name = $a1 . stripslashes($row['it_name']) . $a2;
     if ($row['it_opt1'] || $row['it_opt2'] || $row['it_opt3'] || $row['it_opt4'] || $row['it_opt5'] || $row['it_opt6']) { // 상품에 옵션이 있다면
         $it_name .= '<div class="sod_bsk_itopt">'.print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']).'</div>';
     }
