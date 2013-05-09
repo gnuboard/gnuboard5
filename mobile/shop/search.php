@@ -88,56 +88,48 @@ $total_count = $row['cnt'];
 
         $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$save['ca_id']}' ";
         $row = sql_fetch($sql);
+        $ca_name = $row['ca_name'];
 
         // 김선용 2006.12 : 중복 하위분류명이 많으므로 대분류 포함하여 출력
          $ca_temp = "";
          if(strlen($save['ca_id']) > 2) // 중분류 이하일 경우
          {
-             $sql2 = " select ca_name from $g4[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
+            $sql2 = " select ca_name from $g4[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
             $row2 = sql_fetch($sql2);
-            $ca_temp = '<a href="'.G4_MSHOP_URL.'/list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> &gt; ';
+            $ca_temp = '<a href="'.G4_MSHOP_URL.'/list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> ';
          }
     ?>
-    <table class="basic_tbl">
-    <caption><?php echo $ca_temp?><a href="<?php echo G4_MSHOP_URL; ?>/list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo $save['cnt']; ?>개</caption>
-    <thead>
-    <tr>
-        <th scope="col">이미지</td>
-        <th scope="col">상품명</th>
-        <th scope="col">판매가격</td>
-        <th scope="col">포인트</td>
-    </tr>
-    </thead>
+    <ul class="ssch_ul">
+        <?php
+        for ($i=0; $i<$save['cnt']; $i++) {
+            $sql = " select it_id,
+                            it_name,
+                            it_amount,
+                            it_amount2,
+                            it_amount3,
+                            it_basic,
+                            it_tel_inq,
+                            it_point,
+                            it_type1,
+                            it_type2,
+                            it_type3,
+                            it_type4,
+                            it_type5
+                       from {$g4['shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
+            $row = sql_fetch($sql);
 
-    <tbody>
-    <?php
-    for ($i=0; $i<$save['cnt']; $i++) {
-        $sql = " select it_id,
-                        it_name,
-                        it_amount,
-                        it_amount2,
-                        it_amount3,
-                        it_tel_inq,
-                        it_point,
-                        it_type1,
-                        it_type2,
-                        it_type3,
-                        it_type4,
-                        it_type5
-                   from {$g4['shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
-        $row = sql_fetch($sql);
-
-        $image = get_it_image($row['it_id'].'_s', (int)($default['de_simg_width']), (int)($default['de_simg_height']), $row['it_id']);
-    ?>
-    <tr>
-        <td class="ssch_it_img"><?php echo $image; ?></td>
-        <td><?php echo it_name_icon($row); ?></td>
-        <td class="ssch_num"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></td>
-        <td class="ssch_num"><?php echo display_point($row['it_point']); ?></td>
-    </tr>
-    <?php } // for 끝 ?>
-    </tbody>
-    </table>
+            $image = get_it_image($row['it_id'].'_s', (int)($default['de_simg_width']), (int)($default['de_simg_height']), $row['it_id']);
+        ?>
+        <li>
+            <span class="ssch_img"><?php echo $image; ?></span>
+            <b class="ssch_ct"><?php echo ($ca_temp) ? $ca_temp : $ca_name; ?></b>
+            <a href="<?php echo G4_MSHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo get_text($row['it_name']); ?></a>
+            <?php echo it_name_icon($row); ?>
+            <span class="ssch_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
+            <p><?php echo $row['it_basic']; ?></p>
+        </li>
+        <?php } // for 끝 ?>
+    </ul>
     <?php } // function 끝 ?>
 
 </div>
