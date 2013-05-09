@@ -346,7 +346,7 @@ if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
 
 if ($w == "") {
-    goto_url(G4_BBS_URL.'/register_result.php');
+    goto_url(G4_HTTP_BBS_URL.'/register_result.php');
 } else if ($w == 'u') {
     $row  = sql_fetch(" select mb_password from {$g4['member_table']} where mb_id = '{$member['mb_id']}' ");
     $tmp_password = $row['mb_password'];

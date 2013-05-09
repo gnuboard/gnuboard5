@@ -74,8 +74,8 @@ for ($i=0; $i<count($member_list['id']); $i++) {
 
 if ($member_list) {
     $str_nick_list = implode(',', $member_list['nick']);
-    alert($str_nick_list." 님께 쪽지를 전달하였습니다.", "./memo.php?kind=send", false);
+    alert($str_nick_list." 님께 쪽지를 전달하였습니다.", G4_HTTP_BBS_URL."/memo.php?kind=send", false);
 } else {
-    alert("회원아이디 오류 같습니다.", "./memo_form.php", false);
+    alert("회원아이디 오류 같습니다.", G4_HTTP_BBS_URL."/memo_form.php", false);
 }
 ?>

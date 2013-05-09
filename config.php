@@ -24,8 +24,8 @@ if (PHP_VERSION >= '5.3.0') {
 보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.
 입력예) https://www.domain.com:443/gnuboard4s
 */
-define('G4_DOMAIN', ''); // 사용하지 않습니다.
-define('G4_HTTPS_DOMAIN', '');
+define('G4_DOMAIN', 'http://sir.co.kr:80/g4s');
+define('G4_HTTPS_DOMAIN', 'https://sir.co.kr/g4s');
 
 /*
 www.sir.co.kr 과 sir.co.kr 도메인은 서로 다른 도메인으로 인식합니다. 쿠키를 공유하려면 .sir.co.kr 과 같이 입력하세요.
@@ -53,26 +53,13 @@ define('G4_SNS_DIR',        'sns');
 define('G4_SYNDI_DIR',      'syndi');
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
+
 if (G4_DOMAIN) {
     define('G4_URL', G4_DOMAIN);
 } else {
-    if (isset($g4_path['url']))
-        define('G4_URL', $g4_path['url']);
-    else
-        define('G4_URL', '');
+    define('G4_URL', $g4_path['url']);
 }
-
-if (G4_HTTPS_DOMAIN) {
-    define('G4_URL', G4_HTTPS_DOMAIN);
-} else {
-    define('G4_URL', G4_DOMAIN);
-}
-
-if (isset($g4_path['path'])) {
-    define('G4_PATH', $g4_path['path']);
-} else {
-    define('G4_PATH', '');
-}
+define('G4_PATH', $g4_path['path']);
 
 define('G4_ADMIN_URL',      G4_URL.'/'.G4_ADMIN_DIR);
 define('G4_BBS_URL',        G4_URL.'/'.G4_BBS_DIR);
