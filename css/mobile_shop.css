@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#fff;color:#000;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#fff;color:#000;font-size:1em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -53,6 +53,8 @@ a:active {color:#000;text-decoration:underline}
 /* 텍스트 크기 조절 */
 #text_size {display:none;position:absolute;top:-31px;left:-1px}
 #text_size button {padding:0 10px;height:30px;border:1px solid #cfded8;border-bottom:0;background:#000;color:#fff;cursor:pointer}
+
+#wrapper_title {margin-bottom:1em;font-size:1.2em}
 
 /* 목록 바로가기 */
 .sanchor {margin:0 0 10px;padding:0;zoom:1}
@@ -560,11 +562,13 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 .sfaq_img {text-align:center}
 
 /* 상품검색 */
-#ssch_ov {margin:0 0 10px;padding:15px 0;border:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
-#ssch caption {padding:0 0 5px;font-size:1em;font-weight:bold;text-align:left;line-height:1.5em}
-.ssch_it_img {width:100px;text-align:center}
-.ssch_it_img img {width:100px;height:100px}
-#ssch .ssch_num {width:150px;text-align:right}
+#ssch{margin:0 0 2em}
+#ssch_ov {padding:15px 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
+.ssch_ul {margin:0;padding:0;list-style:none}
+.ssch_ul li {padding:1em;min-height:100px;border-bottom:1px solid #e9e9e9}
+.ssch_ul .sit_icon {display:inline-block}
+.ssch_img {float:left;margin:0 1em 0 0}
+.ssch_cost {display:block;margin:0.5em 0 0}
 
 /* 쇼핑몰 이벤트 */
 #sev {}
