@@ -33,7 +33,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td>
         <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $row['ct_id']; ?>">
-        <a href="<?php echo G4_MSHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>"><?php echo $row['od_id']; ?></a>
+        <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>"><?php echo $row['od_id']; ?></a>
     </td>
     <td class="td_datetime"><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
     <td class="td_bignum"><?php echo display_amount($row['orderamount']); ?></td>

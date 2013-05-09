@@ -86,7 +86,7 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $prev_title = '이전상품보기 '.$row['it_name'];
-    $prev_href = '<a href="'.G4_MSHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
+    $prev_href = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
     $prev_href = '</a>';
 } else {
     $prev_title = '';
@@ -104,7 +104,7 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $next_title = '다음 상품 '.$row['it_name'];
-    $next_href = '<a href="'.G4_MSHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
+    $next_href = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
     $next_href2 = '</a>';
 } else {
     $next_title = '';
@@ -158,7 +158,7 @@ else
             $img_big = $it['it_id'].'_l1'; // 기본이미지(대)
             ?>
             <div id="sit_pvi_big">
-                <a href="<?php echo G4_MSHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;img=<?php echo $img_big; ?>" id="<?php echo $img_big; ?>" class="popup_item_image" target="_blank"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $img_big; ?>" alt=""></a>
+                <a href="<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;img=<?php echo $img_big; ?>" id="<?php echo $img_big; ?>" class="popup_item_image" target="_blank"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $img_big; ?>" alt=""></a>
             </div>
             <?php
             // 이미지(중) 썸네일
@@ -193,7 +193,7 @@ else
             <div id="sit_star_sns">
                 <?php
                 $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
-                $sns_send  = G4_MSHOP_URL.'/sns_send.php?url='.urlencode(G4_MSHOP_URL.'/item.php?it_id='.$it['it_id']);
+                $sns_send  = G4_SHOP_URL.'/sns_send.php?url='.urlencode(G4_SHOP_URL.'/item.php?it_id='.$it['it_id']);
                 $sns_send .= '&amp;title='.urlencode(cut_str($sns_title, 100));
                 ?>
                 고객선호도 <span>별<?php echo $score?>개</span>
@@ -501,7 +501,7 @@ else
 
             var top = 10;
             var left = 10;
-            var url = "<?php echo G4_MSHOP_URL; ?>/largeimage.php?it_id=" + it_id + "&img=" + img;
+            var url = "<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=" + it_id + "&img=" + img;
             var opt = 'scrollbars=yes,top='+top+',left='+left;
             popup_window(url, "largeimage", opt);
 

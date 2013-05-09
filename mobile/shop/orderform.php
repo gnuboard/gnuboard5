@@ -11,7 +11,7 @@ else {
 }
 
 if (get_cart_count($tmp_uq_id) == 0)
-    alert('장바구니가 비어 있습니다.', G4_MSHOP_URL.'/cart.php');
+    alert('장바구니가 비어 있습니다.', G4_SHOP_URL.'/cart.php');
 
 // 포인트 결제 대기 필드 추가
 //sql_query(" ALTER TABLE `$g4[shop_order_table]` ADD `od_temp_point` INT NOT NULL AFTER `od_temp_card` ", false);
