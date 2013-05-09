@@ -199,10 +199,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
         $mb_nick = get_sideview($lines[$i]['mb_id'], $lines[$i]['od_name'], $lines[$i]['od_email'], '');
 
+        $od_cnt = 0;
         if ($lines[$i]['mb_id'])
         {
             $sql2 = " select count(*) as cnt from {$g4['shop_order_table']} where mb_id = '{$lines[$i]['mb_id']}' ";
             $row2 = sql_fetch($sql2);
+            $od_cnt = $row2['cnt'];
         }
         ?>
         <tr class="orderlist">
@@ -219,7 +221,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                     <?php echo $lines[$i]['mb_id']; ?>
                 </a>
             </td>
-            <td class="td_sodr_cnt"><b><?php echo $lines[$i]['itemcount']; ?></b>건<br>누적 <?php echo $row2['cnt']; ?>건</td>
+            <td class="td_sodr_cnt"><b><?php echo $lines[$i]['itemcount']; ?></b>건<?php if($od_cnt) { ?><br>누적 <?php echo $od_cnt; ?>건<?php } ?></td>
             <td class="td_sodr_sum"><?php echo number_format($lines[$i]['orderamount']); ?></td>
             <td><?php echo number_format($lines[$i]['ordercancel']); ?></td>
             <td><?php echo number_format($lines[$i]['od_dc_amount']); ?></td>

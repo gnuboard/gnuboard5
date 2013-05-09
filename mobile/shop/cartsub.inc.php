@@ -189,7 +189,7 @@ if ($i == 0) echo '<tr><td colspan="'.$colspan.'" class="empty_table">장바구�
 </tbody>
 </table>
 
-<?php if ($goods_count) $goods .= '<div> 외 '.$goods_count.'건</div>'; ?>
+<?php if ($goods_count) $goods .= ' 외 '.$goods_count.'건'; ?>
 
 <?php
 // 배송비가 0 보다 크다면 (있다면)

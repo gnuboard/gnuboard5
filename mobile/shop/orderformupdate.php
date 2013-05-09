@@ -9,6 +9,10 @@ if(get_magic_quotes_gpc())
 $_GET  = array_map("mysql_real_escape_string", $_GET);
 $_POST = array_map("mysql_real_escape_string", $_POST);
 
+// 결제등록 완료 체크
+if($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == '')
+    alert('결제등록 요청 후 주문해 주십시오.');
+
 // 장바구니가 비어있는가?
 if (get_session("ss_direct"))
     $tmp_uq_id = get_session('ss_uq_direct');
