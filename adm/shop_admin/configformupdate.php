@@ -11,9 +11,11 @@ if (!$de_admin_company_owner) goto_url("./configform.php");
 
 if ($logo_img_del)  @unlink(G4_DATA_PATH."/common/logo_img");
 if ($main_img_del)  @unlink(G4_DATA_PATH."/common/main_img");
+if ($mobile_logo_img_del)  @unlink(G4_DATA_PATH."/common/mobile_logo_img");
 
 if ($_FILES['logo_img']['name']) upload_file($_FILES['logo_img']['tmp_name'], "logo_img", G4_DATA_PATH."/common");
 if ($_FILES['main_img']['name']) upload_file($_FILES['main_img']['tmp_name'], "main_img", G4_DATA_PATH."/common");
+if ($_FILES['mobile_logo_img']['name']) upload_file($_FILES['mobile_logo_img']['tmp_name'], "mobile_logo_img", G4_DATA_PATH."/common");
 
 $de_kcp_mid = substr($_POST['de_kcp_mid'],0,3);
 

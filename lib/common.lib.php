@@ -1981,4 +1981,32 @@ function hyphen_hp_number($hp)
     $hp = preg_replace("/[^0-9]/", "", $hp);
     return preg_replace("/([0-9]{3})([0-9]{3,4})([0-9]{4})$/", "\\1-\\2-\\3", $hp);
 }
+
+
+function login_url($url='')
+{
+    if (!$url) $url = G4_URL;
+    $p = parse_url($url);
+    return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
+}
+
+
+function https_url($dir, $https=true)
+{
+    if ($https) {
+        if (G4_HTTPS_DOMAIN) {
+            $url = G4_HTTPS_DOMAIN.'/'.$dir;
+        } else {
+            $url = G4_URL.'/'.$dir;
+        }
+    } else {
+        if (G4_DOMAIN) {
+            $url = G4_DOMAIN.'/'.$dir;
+        } else {
+            $url = G4_URL.'/'.$dir;
+        }
+    }
+
+    return $url;
+}
 ?>

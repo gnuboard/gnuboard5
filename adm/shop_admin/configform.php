@@ -819,6 +819,30 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
+        <th scope="row">모바일 로고이미지</th>
+        <td>
+            <?php echo help("모바일 쇼핑몰 로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
+            <input type="file" name="mobile_logo_img" id="mobile_logo_img">
+            <?php
+            $mobile_logo_img = G4_DATA_PATH."/common/mobile_logo_img";
+            if (file_exists($mobile_logo_img))
+            {
+                $size = getimagesize($mobile_logo_img);
+            ?>
+            <label for="mobile_logo_img_del"><span class="sound_only">모바일 로고이미지</span> 삭제</label>
+            <input type="checkbox" name="mobile_logo_img_del" value="1" id="mobile_logo_img_del">
+            <span class="scf_img_mobilelogoimg"></span>
+            <div id="mobilelogoimg" class="banner_or_img">
+                <img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="cf_mobilelogoimg_view" class="btn_frmline scf_img_view">로고이미지 확인</button>').appendTo('.scf_img_mobilelogoimg');
+            </script>
+            <?php } ?>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="de_item_ps_use">사용후기</label></th>
         <td>
              <?php echo help("사용후기가 올라오면, 즉시 출력 혹은 관리자 승인 후 출력 여부를 설정합니다.", 50); ?>

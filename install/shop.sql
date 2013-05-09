@@ -110,7 +110,6 @@ CREATE TABLE IF NOT EXISTS `shop_category` (
   `ca_mobile_tail_html` text NOT NULL,
   `ca_list_mod` int(11) NOT NULL DEFAULT '0',
   `ca_list_row` int(11) NOT NULL DEFAULT '0',
-  `ca_mobile_list_mod` int(11) NOT NULL DEFAULT '0',
   `ca_mobile_list_row` int(11) NOT NULL DEFAULT '0',
   `ca_include_head` varchar(255) NOT NULL DEFAULT '',
   `ca_include_tail` varchar(255) NOT NULL DEFAULT '',

@@ -51,7 +51,6 @@ if ($is_admin)
     // 리스트 유형별로 출력
     $list_file = G4_MSHOP_PATH.'/'.$ca['ca_mobile_skin'];
     if (file_exists($list_file)) {
-        $list_mod   = $ca['ca_mobile_list_mod'];
         $list_row   = $ca['ca_mobile_list_row'];
         $img_width  = $ca['ca_mobile_img_width'];
         $img_height = $ca['ca_mobile_img_height'];
