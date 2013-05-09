@@ -194,13 +194,13 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .sv_nojs .sv {display:block}
 
 /* pagination */
-.pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
+.pg_wrap {clear:both;margin:0 0 1em;padding-top:1em;text-align:center}
 .pg {display:inline-block;border:1px solid #cfded8;letter-spacing:-4px}
 .pg a:focus,
 .pg a:hover,
 .pg a:active {text-decoration:none}
 .pg_page,
-.pg_current {display:inline-block;padding:0 12px;height:30px;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
+.pg_current {display:inline-block;padding:0 0.6em;color:#000;letter-spacing:0;line-height:1.9em;vertical-align:middle}
 .pg_page {background:#f9f9f9;text-decoration:none}
 .pg_start,
 .pg_prev {border-right:1px solid #cfded8}
