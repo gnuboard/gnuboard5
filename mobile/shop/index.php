@@ -16,7 +16,7 @@ include_once(G4_MSHOP_PATH.'/shop.head.php');
     $type = 3;
     if ($default['de_mobile_type'.$type.'_list_us'])
     {
-        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -31,7 +31,7 @@ include_once(G4_MSHOP_PATH.'/shop.head.php');
     $type = 1;
     if ($default['de_mobile_type'.$type.'_list_use'])
     {
-        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -46,7 +46,7 @@ include_once(G4_MSHOP_PATH.'/shop.head.php');
     $type = 2;
     if ($default['de_mobile_type'.$type.'_list_use'])
     {
-        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -61,7 +61,7 @@ include_once(G4_MSHOP_PATH.'/shop.head.php');
     $type = 4;
     if ($default['de_mobile_type'.$type.'_list_use'])
     {
-        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>
@@ -76,7 +76,7 @@ include_once(G4_MSHOP_PATH.'/shop.head.php');
     $type = 5;
     if ($default['de_mobile_type'.$type.'_list_use'])
     {
-        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_mod"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
+        mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
     }
     ?>
 </section>

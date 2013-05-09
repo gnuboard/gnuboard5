@@ -56,32 +56,27 @@ if (!isset($default['de_mobile_type1_list_use'])) {
                     ADD `de_mobile_type1_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_type5_img_height`,
                     ADD `de_mobile_type1_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type1_list_use`,
                     ADD `de_mobile_type1_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_skin`,
-                    ADD `de_mobile_type1_list_mod` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_row`,
-                    ADD `de_mobile_type1_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_mod`,
+                    ADD `de_mobile_type1_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_row`,
                     ADD `de_mobile_type1_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_img_width`,
                     ADD `de_mobile_type2_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_img_height`,
                     ADD `de_mobile_type2_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type2_list_use`,
                     ADD `de_mobile_type2_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_list_skin`,
-                    ADD `de_mobile_type2_list_mod` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_list_row`,
-                    ADD `de_mobile_type2_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_list_mod`,
+                    ADD `de_mobile_type2_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_list_row`,
                     ADD `de_mobile_type2_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_img_width`,
                     ADD `de_mobile_type3_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_img_height`,
                     ADD `de_mobile_type3_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type3_list_use`,
                     ADD `de_mobile_type3_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_list_skin`,
-                    ADD `de_mobile_type3_list_mod` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_list_row`,
-                    ADD `de_mobile_type3_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_list_mod`,
+                    ADD `de_mobile_type3_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_list_row`,
                     ADD `de_mobile_type3_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_img_width`,
                     ADD `de_mobile_type4_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_img_height`,
                     ADD `de_mobile_type4_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type4_list_use`,
                     ADD `de_mobile_type4_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_list_skin`,
-                    ADD `de_mobile_type4_list_mod` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_list_row`,
-                    ADD `de_mobile_type4_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_list_mod`,
+                    ADD `de_mobile_type4_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_list_row`,
                     ADD `de_mobile_type4_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_img_width`,
                     ADD `de_mobile_type5_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_img_height`,
                     ADD `de_mobile_type5_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type5_list_use`,
                     ADD `de_mobile_type5_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_list_skin`,
-                    ADD `de_mobile_type5_list_mod` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_list_row`,
-                    ADD `de_mobile_type5_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_list_mod`,
+                    ADD `de_mobile_type5_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_list_row`,
                     ADD `de_mobile_type5_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_img_width`
                     ", true);
 }
@@ -317,10 +312,8 @@ $pg_anchor = '<ul class="anchor">
             <select name="de_mobile_type3_list_skin" id="de_mobile_type3_list_skin">
                 <?php echo get_list_skin_options("^maintype(.*)\.php", G4_MSHOP_PATH, $default['de_mobile_type3_list_skin']); ?>
             </select>
-            <label for="de_mobile_type3_list_row">출력할 줄 수</label>
+            <label for="de_mobile_type3_list_row">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type3_list_row" value="<?php echo $default['de_mobile_type3_list_row']; ?>" id="de_mobile_type3_list_row" class="frm_input" size="3">
-            <label for="de_mobile_type3_list_mod">1줄당 이미지 수</label>
-            <input type="text" name="de_mobile_type3_list_mod" value="<?php echo $default['de_mobile_type3_list_mod']; ?>" id="de_mobile_type3_list_mod" class="frm_input" size="3">
             <label for="de_mobile_type3_img_width">이미지 폭</label>
             <input type="text" name="de_mobile_type3_img_width" value="<?php echo $default['de_mobile_type3_img_width']; ?>" id="de_mobile_type3_img_width" class="frm_input" size="3">
             <label for="de_mobile_type3_img_height">이미지 높이</label>
@@ -335,10 +328,8 @@ $pg_anchor = '<ul class="anchor">
             <select name="de_mobile_type1_list_skin" id="de_mobile_type1_list_skin">
                 <?php echo get_list_skin_options("^maintype(.*)\.php", G4_MSHOP_PATH, $default['de_mobile_type1_list_skin']); ?>
             </select>
-            <label for="de_mobile_type1_list_row">출력할 줄 수</label>
+            <label for="de_mobile_type1_list_row">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type1_list_row" value="<?php echo $default['de_mobile_type1_list_row']; ?>" id="de_mobile_type1_list_row" class="frm_input" size="3">
-            <label for="de_mobile_type1_list_mod">1줄당 이미지 수</label>
-            <input type="text" name="de_mobile_type1_list_mod" value="<?php echo $default['de_mobile_type1_list_mod']; ?>" id="de_mobile_type1_list_mod" class="frm_input" size="3">
             <label for="de_mobile_type1_img_width">이미지 폭</label>
             <input type="text" name="de_mobile_type1_img_width" value="<?php echo $default['de_mobile_type1_img_width']; ?>" id="de_mobile_type1_img_width" class="frm_input" size="3">
             <label for="de_mobile_type1_img_height">이미지 높이</label>
@@ -354,10 +345,8 @@ $pg_anchor = '<ul class="anchor">
             <select name="de_mobile_type2_list_skin" id="de_mobile_type2_list_skin">
                 <?php echo get_list_skin_options("^maintype(.*)\.php", G4_MSHOP_PATH, $default['de_mobile_type2_list_skin']); ?>
             </select>
-            <label for="de_mobile_type2_list_row">출력할 줄 수</label>
+            <label for="de_mobile_type2_list_row">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type2_list_row" value="<?php echo $default['de_mobile_type2_list_row']; ?>" id="de_mobile_type2_list_row" class="frm_input" size="3">
-            <label for="de_mobile_type2_list_mod">1줄당 이미지 수</label>
-            <input type="text" name="de_mobile_type2_list_mod" value="<?php echo $default['de_mobile_type2_list_mod']; ?>" id="de_mobile_type2_list_mod" class="frm_input" size="3">
             <label for="de_mobile_type2_img_width">이미지 폭</label>
             <input type="text" name="de_mobile_type2_img_width" value="<?php echo $default['de_mobile_type2_img_width']; ?>" id="de_mobile_type2_img_width" class="frm_input" size="3">
             <label for="de_mobile_type2_img_height">이미지 높이</label>
@@ -373,10 +362,8 @@ $pg_anchor = '<ul class="anchor">
             <select name="de_mobile_type4_list_skin" id="de_mobile_type4_list_skin">
                 <?php echo get_list_skin_options("^maintype(.*)\.php", G4_MSHOP_PATH, $default['de_mobile_type4_list_skin']); ?>
             </select>
-            <label for="de_mobile_type4_list_row">출력할 줄 수</label>
+            <label for="de_mobile_type4_list_row">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type4_list_row" value="<?php echo $default['de_mobile_type4_list_row']; ?>" id="de_mobile_type4_list_row" class="frm_input" size="3">
-            <label for="de_mobile_type4_list_mod">1줄당 이미지 수</label>
-            <input type="text" name="de_mobile_type4_list_mod" value="<?php echo $default['de_mobile_type4_list_mod']; ?>" id="de_mobile_type4_list_mod" class="frm_input" size="3">
             <label for="de_mobile_type4_img_width">이미지 폭</label>
             <input type="text" name="de_mobile_type4_img_width" value="<?php echo $default['de_mobile_type4_img_width']; ?>" id="de_mobile_type4_img_width" class="frm_input" size="3">
             <label for="de_mobile_type4_img_height">이미지 높이</label>
@@ -392,10 +379,8 @@ $pg_anchor = '<ul class="anchor">
             <select id="de_mobile_type5_list_skin" name="de_mobile_type5_list_skin">
                 <?php echo get_list_skin_options("^maintype(.*)\.php", G4_MSHOP_PATH, $default['de_mobile_type5_list_skin']); ?>
             </select>
-            <label for="de_mobile_type5_list_row">출력할 줄 수</label>
+            <label for="de_mobile_type5_list_row">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type5_list_row" value="<?php echo $default['de_mobile_type5_list_row']; ?>" id="de_mobile_type5_list_row" class="frm_input" size="3">
-            <label for="de_mobile_type5_list_mod">1줄당 이미지 수</label>
-            <input type="text" name="de_mobile_type5_list_mod" value="<?php echo $default['de_mobile_type5_list_mod']; ?>" id="de_mobile_type5_list_mod" class="frm_input" size="3">
             <label for="de_mobile_type5_img_width">이미지 폭</label>
             <input type="text" name="de_mobile_type5_img_width" value="<?php echo $default['de_mobile_type5_img_width']; ?>" id="de_mobile_type5_img_width" class="frm_input" size="3">
             <label for="de_mobile_type5_img_height">이미지 높이</label>

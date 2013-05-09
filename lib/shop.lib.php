@@ -200,14 +200,14 @@ function is_null_time($datetime)
         return false;
 }
 
-// 출력유형, 스킨파일, 1라인이미지수, 총라인수, 이미지폭, 이미지높이
+// 출력유형, 스킨파일, 이미지수, 이미지폭, 이미지높이
 // 1.02.01 $ca_id 추가
-function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
+function display_type($type, $skin_file, $list_row, $img_width, $img_height, $ca_id="")
 {
     global $member, $g4, $config;
 
     // 상품의 갯수
-    $items = $list_mod * $list_row;
+    $items = $list_row;
 
     // 1.02.00
     // it_order 추가
