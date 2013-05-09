@@ -51,7 +51,7 @@ if ($is_admin)
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
     // 리스트 유형별로 출력
-    $list_file = G4_SHOP_PATH.'/'.$ca['ca_mobile_skin'];
+    $list_file = G4_MSHOP_PATH.'/'.$ca['ca_mobile_skin'];
     if (file_exists($list_file)) {
         $list_mod   = $ca['ca_mobile_list_mod'];
         $list_row   = $ca['ca_mobile_list_row'];

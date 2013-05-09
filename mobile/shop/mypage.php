@@ -2,21 +2,21 @@
 include_once('./_common.php');
 
 if (!$is_member)
-    goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/mypage.php"));
+    goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_MSHOP_URL."/mypage.php"));
 
 $g4['title'] = '마이페이지';
 include_once(G4_MSHOP_PATH.'/_head.php');
 ?>
 
-<img src="<?php echo G4_SHOP_URL; ?>/img/top_mypage.gif" border=0><p>
+<img src="<?php echo G4_MSHOP_URL; ?>/img/top_mypage.gif" border=0><p>
 
 <table align=center width=100%>
 <tr>
     <td><B><?php echo $member['mb_name']; ?></B> 님의 마이페이지입니다.</td>
     <td align=right>
-        <?php if ($is_admin == 'super') { echo "<a href='".G4_ADMIN_URL."/'><img src='".G4_SHOP_URL."/img/btn_admin.gif' border=0 align='absmiddle'></a>"; } ?>
-        <a href='<?php echo G4_BBS_URL; ?>/member_confirm.php?url=register_form.php'><img src='<?php echo G4_SHOP_URL; ?>/img/my_modify.gif' border=0 align='absmiddle'></a>
-        <a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=member_leave.php" onclick="return member_leave();"><img src='<?php echo G4_SHOP_URL; ?>/img/my_leave.gif' border=0 align='absmiddle'></a></td>
+        <?php if ($is_admin == 'super') { echo "<a href='".G4_ADMIN_URL."/'><img src='".G4_MSHOP_URL."/img/btn_admin.gif' border=0 align='absmiddle'></a>"; } ?>
+        <a href='<?php echo G4_BBS_URL; ?>/member_confirm.php?url=register_form.php'><img src='<?php echo G4_MSHOP_URL; ?>/img/my_modify.gif' border=0 align='absmiddle'></a>
+        <a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=member_leave.php" onclick="return member_leave();"><img src='<?php echo G4_MSHOP_URL; ?>/img/my_leave.gif' border=0 align='absmiddle'></a></td>
 </tr>
 </table>
 
@@ -27,8 +27,8 @@ function member_leave()
 }
 </script>
 
-<table cellpadding=0 cellspacing=0 align=center background='<?php echo G4_SHOP_URL; ?>/img/my_bg.gif'>
-<tr><td colspan=4><img src='<?php echo G4_SHOP_URL; ?>/img/my_box01.gif'></td></tr>
+<table cellpadding=0 cellspacing=0 align=center background='<?php echo G4_MSHOP_URL; ?>/img/my_bg.gif'>
+<tr><td colspan=4><img src='<?php echo G4_MSHOP_URL; ?>/img/my_box01.gif'></td></tr>
 <tr>
     <td height=25>&nbsp;&nbsp;&nbsp;보유포인트 </td>
     <td>: <a href="<?php echo G4_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></td>
@@ -53,14 +53,14 @@ function member_leave()
     <td>회원가입일시</td>
     <td>: <?php echo $member['mb_datetime']; ?></td>
 </tr>
-<tr><td colspan=4><img src='<?php echo G4_SHOP_URL; ?>/img/my_box02.gif'></td></tr>
+<tr><td colspan=4><img src='<?php echo G4_MSHOP_URL; ?>/img/my_box02.gif'></td></tr>
 </table><BR><BR>
 
 
 <table width=98% cellpadding=0 cellspacing=0 align=center>
 <tr>
-    <td height=35><img src='<?php echo G4_SHOP_URL; ?>/img/my_title01.gif'></td>
-    <td align=right><a href='<?php echo G4_SHOP_URL; ?>/orderinquiry.php'><img src='<?php echo G4_SHOP_URL; ?>/img/icon_more.gif' border=0></a></td>
+    <td height=35><img src='<?php echo G4_MSHOP_URL; ?>/img/my_title01.gif'></td>
+    <td align=right><a href='<?php echo G4_MSHOP_URL; ?>/orderinquiry.php'><img src='<?php echo G4_MSHOP_URL; ?>/img/icon_more.gif' border=0></a></td>
 </tr>
 </table>
 
@@ -75,8 +75,8 @@ include G4_MSHOP_PATH.'/orderinquiry.sub.php';
 
 <table width=98% cellpadding=0 cellspacing=0 align=center>
 <tr>
-    <td height=35 colspan=2><img src='<?php echo G4_SHOP_URL; ?>/img/my_title02.gif'></td>
-    <td align=right><a href='<?php echo G4_SHOP_URL; ?>/wishlist.php'><img src='<?php echo G4_SHOP_URL; ?>/img/icon_more.gif' border=0></a></td>
+    <td height=35 colspan=2><img src='<?php echo G4_MSHOP_URL; ?>/img/my_title02.gif'></td>
+    <td align=right><a href='<?php echo G4_MSHOP_URL; ?>/wishlist.php'><img src='<?php echo G4_MSHOP_URL; ?>/img/icon_more.gif' border=0></a></td>
 </tr>
 <tr><td height=2 colspan=3 class=c1></td></tr>
 <tr align=center height=25 class=c2>
@@ -96,13 +96,13 @@ $result = sql_query($sql);
 for ($i=0; $row = sql_fetch_array($result); $i++)
 {
     if ($i>0)
-        echo "<tr><td colspan=3 height=1 background='".G4_SHOP_URL."/img/dot_line.gif'></td></tr>";
+        echo "<tr><td colspan=3 height=1 background='".G4_MSHOP_URL."/img/dot_line.gif'></td></tr>";
 
     $image = get_it_image($row['it_id']."_s", 50, 50, $row['it_id']);
 
     echo '<tr align=center height=60>';
     echo '<td width=100>'.$image.'</td>';
-    echo '<td align=left><a href="'.G4_SHOP_URL.'"/item.php?it_id='.$row['it_id'].'">'.stripslashes($row['it_name']).'</a></td>';
+    echo '<td align=left><a href="'.G4_MSHOP_URL.'"/item.php?it_id='.$row['it_id'].'">'.stripslashes($row['it_name']).'</a></td>';
     echo '<td>'.$row['wi_time'].'</td>';
     echo '</tr>';
 }

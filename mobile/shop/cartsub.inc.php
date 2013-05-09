@@ -137,7 +137,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     <?php
     if ($s_page == 'cart.php')
-        echo '<td class="td_smallmng"><a href="'.G4_SHOP_URL.'/cartupdate.php?act=d&amp;ct_id='.$row['ct_id'].'">삭제</a></td>';
+        echo '<td class="td_smallmng"><a href="'.G4_MSHOP_URL.'/cartupdate.php?act=d&amp;ct_id='.$row['ct_id'].'">삭제</a></td>';
     else if ($s_page == 'orderinquiryview.php')
         echo '<td class="td_smallmng">'.$row['ct_status'].'</td>';
     ?>
@@ -220,11 +220,11 @@ if ($tot_amount > 0) {
 <?php if ($s_page == 'cart.php') { ?>
 <div id="sod_bsk_act">
     <?php if ($i == 0) { ?>
-    <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
+    <a href="<?php echo G4_MSHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
     <?php } else { ?>
-    <input type="hidden" name="url" value="<?php echo G4_SHOP_URL; ?>/orderform.php">
+    <input type="hidden" name="url" value="<?php echo G4_MSHOP_URL; ?>/orderform.php">
     <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
-    <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
+    <a href="<?php echo G4_MSHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
     <a href="javascript:form_check('buy');" class="btn02">주문하기</a>
     <a href="javascript:form_check('allupdate');" class="btn01">수량변경</a>
     <a href="javascript:form_check('alldelete');" class="btn01">비우기</a>
@@ -250,17 +250,17 @@ function form_check(act) {
         <?php
         if (get_session('ss_mb_id')) // 회원인 겨우
         {
-            echo "f.action = '".G4_SHOP_URL."/orderform.php';";
+            echo "f.action = '".G4_MSHOP_URL."/orderform.php';";
             echo "f.submit();";
         }
         else
-            echo "document.location.href = '".G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/orderform.php")."';";
+            echo "document.location.href = '".G4_BBS_URL."/login.php?url=".urlencode(G4_MSHOP_URL."/orderform.php")."';";
         ?>
     }
     else if (act == "alldelete")
     {
         f.act.value = act;
-        f.action = "<?php echo G4_SHOP_URL; ?>/cartupdate.php";
+        f.action = "<?php echo G4_MSHOP_URL; ?>/cartupdate.php";
         f.submit();
     }
     else if (act == "allupdate")
@@ -293,7 +293,7 @@ function form_check(act) {
             }
         }
         f.act.value = act;
-        f.action = "<?php echo G4_SHOP_URL; ?>/cartupdate.php";
+        f.action = "<?php echo G4_MSHOP_URL; ?>/cartupdate.php";
         f.submit();
     }
 

@@ -16,7 +16,7 @@ else if ($od_id && $od_pwd) // 비회원인 경우 주문서번호와 비밀번�
 }
 else // 그렇지 않다면 로그인으로 가기
 {
-    goto_url(G4_BBS_URL.'/login.php?url='.urlencode(G4_SHOP_URL.'/orderinquiry.php'));
+    goto_url(G4_BBS_URL.'/login.php?url='.urlencode(G4_MSHOP_URL.'/orderinquiry.php'));
 }
 
 // 테이블의 전체 레코드수만 얻음
@@ -29,7 +29,7 @@ $total_count = $row['cnt'];
 if ($total_count == 0)
 {
     if ($is_member) // 회원일 경우는 메인으로 이동
-        alert('주문이 존재하지 않습니다.', G4_SHOP_URL);
+        alert('주문이 존재하지 않습니다.', G4_MSHOP_URL);
     else // 비회원일 경우는 이전 페이지로 이동
         alert('주문이 존재하지 않습니다.');
 }
@@ -47,7 +47,7 @@ if (!$is_member)
     $row = sql_fetch($sql);
     if ($row['od_id']) {
         set_session("ss_uq_id_inquiry", $row['uq_id']);
-        goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id']);
+        goto_url(G4_MSHOP_URL.'/orderinquiryview.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id']);
     }
 }
 
