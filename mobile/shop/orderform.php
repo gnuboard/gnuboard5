@@ -89,7 +89,7 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
     <input type="hidden" name="param_opt_3"	 value="<?=$param_opt_3?>"/>
     <!-- 기타 파라메터 추가 부분 - End - -->
     <!-- 화면 크기조정 부분 - Start - -->
-    <input type="text" name="tablet_size"	 value="<?=$tablet_size?>"/>
+    <input type="hidden" name="tablet_size"	 value="<?=$tablet_size?>"/>
     <!-- 화면 크기조정 부분 - End - -->
     <!--
         사용 카드 설정
