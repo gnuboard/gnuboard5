@@ -394,7 +394,7 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
         <input type="hidden" name="site_cd" value="SR<?php echo $default['de_kcp_mid']; ?>">
         <table border="0" cellspacing="0" cellpadding="0">
         <tr>
-            <td align='center'><img src="<?php echo G4_MSHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
+            <td align='center'><img src="<?php echo G4_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
         </tr>
         <tr>
             <td style='line-height:150%;'>
