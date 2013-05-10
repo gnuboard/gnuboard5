@@ -122,15 +122,6 @@ define('G4_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|skt|nokia|blackberry|and
 
 
 /********************
-    SNS 상수
-********************/
-
-define('G4_FACEBOOK_APPID',     '119146498278078');
-define('G4_FACEBOOK_SECRET',    '311e0d6ff8ff43cfe0e75fe82d71777c');
-define('G4_FACEBOOK_CALLBACK',  G4_SNS_URL.'/facebook/callback.php');
-
-
-/********************
     기타 상수
 ********************/
 
