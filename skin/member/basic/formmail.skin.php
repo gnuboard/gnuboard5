@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <?php if (!$is_member) {  ?>
     <tr>
         <th scope="row"><label for="fnick">이름<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text"name="fnick" id="fnick" required class="frm_input required"></td>
+        <td><input type="text" name="fnick" id="fnick" required class="frm_input required"></td>
     </tr>
     <tr>
         <th scope="row"><label for="fmail">E-mail<strong class="sound_only">필수</strong></label></th>
