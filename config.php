@@ -57,9 +57,18 @@ define('G4_SYNDI_DIR',      'syndi');
 if (G4_DOMAIN) {
     define('G4_URL', G4_DOMAIN);
 } else {
-    define('G4_URL', $g4_path['url']);
+    if (isset($g4_path['url'])) {
+        define('G4_URL', $g4_path['url']);
+    } else {
+        define('G4_URL', '');
+    }
 }
-define('G4_PATH', $g4_path['path']);
+
+if (isset($g4_path['path'])) {
+    define('G4_PATH', $g4_path['path']);
+} else {
+    define('G4_PATH', '');
+}
 
 define('G4_ADMIN_URL',      G4_URL.'/'.G4_ADMIN_DIR);
 define('G4_BBS_URL',        G4_URL.'/'.G4_BBS_DIR);
