@@ -53,7 +53,7 @@ $w = $_POST['w'];
 $wr_link1 = escape_trim(strip_tags($_POST['wr_link1']));
 $wr_link2 = escape_trim(strip_tags($_POST['wr_link2']));
 
-$notice_array = explode(',', trim($board['bo_notice']));
+$notice_array = explode(",", $board['bo_notice']);
 
 if ($w == 'u' || $w == 'r') {
     $wr = get_write($write_table, $wr_id);
@@ -454,6 +454,7 @@ if ($w == '' || $w == 'r') {
     $sql = " update {$write_table} set ca_name = '{$ca_name}' where wr_parent = '{$wr['wr_id']}' ";
     sql_query($sql);
 
+    /*
     if ($notice) {
         //if (!preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board['bo_notice']))
         if (!in_array((int)$wr_id, $notice_array)) {
@@ -469,6 +470,10 @@ if ($w == '' || $w == 'r') {
         //$bo_notice = preg_replace("/^".$wr_id."[\n]?$/m", "", $board['bo_notice']);
         sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
     }
+    */
+
+    $bo_notice = board_notice($board['bo_notice'], $wr_id, $notice);
+    sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
 }
 
 // syndication ping
