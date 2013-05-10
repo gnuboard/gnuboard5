@@ -34,7 +34,7 @@ function outlogin($skin_dir='basic')
             $is_auth = true;
     }
 
-    $outlogin_url        = login_url();
+    $outlogin_url        = login_url($urlencode);
     $outlogin_action_url = G4_HTTPS_BBS_URL.'/login_check.php';
 
     ob_start();
