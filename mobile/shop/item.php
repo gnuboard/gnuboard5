@@ -154,38 +154,60 @@ else
 
     <div id="sit_ov_wrap">
         <div id="sit_pvi">
-            <?php
-            $img_big = $it['it_id'].'_l1'; // 기본이미지(대)
-            /*
-            <div id="sit_pvi_big">
-                <a href="<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;img=<?php echo $img_big; ?>" id="<?php echo $img_big; ?>" class="popup_item_image" target="_blank"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $img_big; ?>" alt=""></a>
-            </div>
-            */
-            ?>
+            <button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>
+            <button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>
             <?php
             // 이미지(중) 썸네일
             for ($i=1; $i<=5; $i++)
             {
-                if ($i == 1) {
-                    echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>'.PHP_EOL;
-                    echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>'.PHP_EOL;
-                }
                 if ($i == 1) echo '<ul id="sit_pvi_slide">';
-                if ($i == 5) $sit_pvi_last = 'class="li_last"';
-                echo '<li id="slide_'.$i.'" '.$sit_pvi_last.'>';
                 if (file_exists(G4_DATA_PATH.'/item/'.$it_id.'_l'.$i))
                 {
+                    $img_id = $it_id.'_l'.$i;
+                    echo '<li>';
                     echo get_large_image($it_id.'_'.$i, $it['it_id'], false);
-                    echo '<a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;img='.$img_big.'" id="'.$img_big.'" class="popup_item_image slide_img" target="_blank"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_l'.$i.'" alt="" id="sit_pvi_t'.$i.'" ';
+                    echo '<a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;img='.$img_id.'" id="'.$img_id.'" class="popup_item_image slide_img" target="_blank"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_l'.$i.'" alt="" id="sit_pvi_t'.$i.'" ';
                     echo '></a>';
+                    echo '</li>';
                 }
-                echo '</li>';
             }
             if ($i > 1) echo '</ul>';
             ?>
             <script>
             $(function() {
-                $('#slide_1').css('display', 'block');
+                var time = 500;
+                var idx = idx2 = 0;
+                var slide_width = $("#sit_pvi_slide").width();
+                var slide_count = $("#sit_pvi_slide li").size();
+                $("#sit_pvi_slide li:first").css("display", "block");
+                if(slide_count > 1)
+                    $(".sit_pvi_btn").css("display", "inline");
+
+                $("#sit_pvi_prev").click(function() {
+                    if(slide_count > 1) {
+                        idx2 = (idx - 1) % slide_count;
+                        if(idx2 < 0)
+                            idx2 = slide_count - 1;
+                        $("#sit_pvi_slide li:hidden").css("left", "-"+slide_width+"px");
+                        $("#sit_pvi_slide li:eq("+idx+")").animate({ left: "+="+slide_width+"px" }, time, function() {
+                            $(this).css("display", "none").css("left", "-"+slide_width+"px");
+                        });
+                        $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").animate({ left: "+="+slide_width+"px" }, time);
+                        idx = idx2;
+                    }
+                });
+
+                $("#sit_pvi_next").click(function() {
+                    if(slide_count > 1) {
+                        idx2 = (idx + 1) % slide_count;
+                        $("#sit_pvi_slide li:hidden").css("left", slide_width+"px");
+                        $("#sit_pvi_slide li:eq("+idx+")").animate({ left: "-="+slide_width+"px" }, time, function() {
+                            $(this).css("display", "none").css("left", slide_width+"px");
+                        });
+                        $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").animate({ left: "-="+slide_width+"px" }, time);
+                        idx = idx2;
+                    }
+                });
             });
             </script>
         </div>

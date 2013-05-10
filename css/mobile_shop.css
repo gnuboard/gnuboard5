@@ -302,10 +302,10 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 
 #sit_pvi_prev {position:absolute;top:0;left:0}
 #sit_pvi_next {position:absolute;top:0;right:0}
-.sit_pvi_btn {width:2em;height:280px;border:0;background:#f5f6fa}
+.sit_pvi_btn {width:2em;height:280px;border:0;background:#f5f6fa;display:none;}
 
-#sit_pvi_slide {margin:0;padding:0;list-style:none}
-#sit_pvi_slide li {display:none}
+#sit_pvi_slide {position:relative;margin:0 auto;padding:0;list-style:none;width:280px;height:280px;overflow-x:hidden}
+#sit_pvi_slide li {display:none;position:absolute;left:0;top:0}
 #sit_pvi_slide img {width:280px;height:280px}
 
 #sit_pvi_nw h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -442,7 +442,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #smb_my_od .td_stat {width:100px}
 
 #smb_my_wish h2 {margin:0 0 10px}
- 
+
 .smb_my_img {width:90px;text-align:center}
 
 /* 장바구니 */
