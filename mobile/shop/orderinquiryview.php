@@ -150,7 +150,7 @@ $s_page = 'orderinquiryview.php';
             <?php //echo '<tr><th scope="row">영수증</th><td><a href="javascript:;" onclick="window.open(\'http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no='.$od[od_escrow1].'\', \'winreceipt\', \'width=620,height=670\')">영수증 출력</a></td></tr>'; ?>
             <tr>
                 <th scope="row">영수증</th>
-                <td><a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no={$od['od_escrow1']}', 'winreceipt', 'width=370,height=550')">영수증 출력</a></td>
+                <td><a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $od['od_escrow1']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a></td>
             </tr>
 
             <?php
