@@ -778,6 +778,27 @@ function display_item_icon($it)
 
     return $icon;
 }
+
+// sns 공유하기
+function get_sns_share_link($sns, $url, $title, $img)
+{
+    if(!$sns)
+        return '';
+
+    switch($sns) {
+        case 'facebook':
+            $str = '<a href="https://www.facebook.com/sharer/sharer.php?u='.urlencode($url).'&amp;t='.urlencode($title).'" class="share-facebook" target="_blank"><img src="'.$img.'" alt="페이스북에 공유"></a>';
+            break;
+        case 'twitter':
+            $str = '<a href="https://twitter.com/share?url='.urlencode($url).'&amp;text='.urlencode($title).'" class="share-twitter" target="_blank"><img src="'.$img.'" alt="트위터에 공유"></a>';
+            break;
+        case 'googleplus':
+            $str = '<a href="https://plus.google.com/share?url='.urlencode($url).'" class="share-googleplus" target="_blank"><img src="'.$img.'" alt="구글플러스에 공유"></a>';
+            break;
+    }
+
+    return $str;
+}
 //==============================================================================
 // 쇼핑몰 함수 모음 끝
 //==============================================================================

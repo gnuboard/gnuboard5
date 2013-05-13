@@ -210,14 +210,13 @@ else
             <div id="sit_star_sns">
                 <?php
                 $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
-                $sns_send  = G4_SHOP_URL.'/sns_send.php?url='.urlencode(G4_SHOP_URL.'/item.php?it_id='.$it['it_id']);
-                $sns_send .= '&amp;title='.urlencode(cut_str($sns_title, 100));
+                $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$it['it_id'];
                 ?>
                 고객선호도 <span>별<?php echo $score?>개</span>
                 <img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $score?>.png" alt="" class="sit_star">
-                <a href="<?php echo $sns_send; ?>&amp;sns=facebook" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_fb2.png" alt="페이스북에 공유"></a>
-                <a href="<?php echo $sns_send; ?>&amp;sns=twitter" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_twt2.png" alt="트위터에 공유"></a>
-                <a href="<?php echo $sns_send; ?>&amp;sns=google" target="_blank"><img src="<?php echo G4_URL; ?>/img/shop/sns_goo2.png" alt="구글플러스에 공유"></a>
+                <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_URL.'/img/shop/sns_fb2.png'); ?>
+                <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_URL.'/img/shop/sns_twt2.png'); ?>
+                <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_URL.'/img/shop/sns_goo2.png'); ?>
             </div>
             <?php } ?>
             <table id="sit_ov_tbl">
