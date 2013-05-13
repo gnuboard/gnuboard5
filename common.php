@@ -288,7 +288,11 @@ if (isset($_REQUEST['url'])) {
     $urlencode = urlencode($url);
 } else {
     $url = '';
-    $urlencode = urlencode(escape_trim($_SERVER['REQUEST_URI']));
+    $urlencode = urlencode($_SERVER['REQUEST_URI']);
+    if (G4_DOMAIN) {
+        $p = parse_url(G4_DOMAIN);
+        $urlencode = G4_DOMAIN.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", $urlencode));
+    }
 }
 
 if (isset($_REQUEST['gr_id'])) {
