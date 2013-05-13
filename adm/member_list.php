@@ -131,9 +131,9 @@ $colspan = 15;
         <th scope="col"><?php echo subject_sort_link('mb_nick') ?>별명</a></th>
         <th scope="col">상태/<?php echo subject_sort_link('mb_level', '', 'desc') ?>권한</a></th>
         <th scope="col">전화번호</th>
+        <th scope="col"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일<br>인증</a></th>
         <th scope="col"><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일<br>수신</a></th>
         <th scope="col"><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보<br>공개</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일<br>인증</a></th>
         <th scope="col"><?php echo subject_sort_link('mb_hp_certify', '', 'desc') ?>본인<br>확인</a></th>
         <th scope="col"><?php echo subject_sort_link('mb_adult', '', 'desc') ?>성인<br>인증</a></th>
         <th scope="col"><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근<br>차단</a></th>
@@ -211,14 +211,14 @@ $colspan = 15;
             <?php echo get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level']) ?>
         </td>
         <td><?php echo $row['mb_tel']; ?></td>
-        <td class="td_chk"><?php echo $row['mb_mailling']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td class="td_chk"><?php echo $row['mb_open']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
         <td class="td_chk"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td class="td_chk"><?php echo $row['mb_hp_certify']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td class="td_chk"><?php echo $row['mb_adult']?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
+        <td class="td_chk"><input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling']?'checked':''; ?> value="1"></td>
+        <td class="td_chk"><input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open']?'checked':''; ?> value="1"></td>
+        <td class="td_chk"><input type="checkbox" name="mb_hp_certify[<?php echo $i; ?>]" <?php echo $row['mb_hp_certify']?'checked':''; ?> value="1"></td>
+        <td class="td_chk"><input type="checkbox" name="mb_adult[<?php echo $i; ?>]" <?php echo $row['mb_adult']?'checked':''; ?> value="1"></td>
         <td class="td_chk">
             <?php if(empty($row['mb_leave_date'])){ ?>
-            <input type="checkbox" name="mb_intercept_date[<?php echo $i ?>]" <?php echo $row['mb_intercept_date']?'checked':''; ?> value="<?php echo $intercept_date ?>" id="mb_intercept_date_<?php echo $i ?>" title="<?php echo $intercept_title ?>">
+            <input type="checkbox" name="mb_intercept_date[<?php echo $i; ?>]" <?php echo $row['mb_intercept_date']?'checked':''; ?> value="<?php echo $intercept_date ?>" id="mb_intercept_date_<?php echo $i ?>" title="<?php echo $intercept_title ?>">
             <?php } ?>
         </td>
         <td><?php echo substr($row['mb_datetime'],2,8); ?></td>
