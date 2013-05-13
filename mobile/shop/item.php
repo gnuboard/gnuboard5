@@ -189,11 +189,14 @@ else
                         if(idx2 < 0)
                             idx2 = slide_count - 1;
                         $("#sit_pvi_slide li:hidden").css("left", "-"+slide_width+"px");
-                        $("#sit_pvi_slide li:eq("+idx+")").animate({ left: "+="+slide_width+"px" }, time, function() {
+                        $("#sit_pvi_slide li:eq("+idx+")").filter(":not(:animated)").animate({ left: "+="+slide_width+"px" }, time, function() {
                             $(this).css("display", "none").css("left", "-"+slide_width+"px");
                         });
-                        $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").animate({ left: "+="+slide_width+"px" }, time);
-                        idx = idx2;
+                        $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").filter(":not(:animated)").animate({ left: "+="+slide_width+"px" }, time,
+                            function() {
+                                idx = idx2;
+                            }
+                        );
                     }
                 });
 
@@ -201,11 +204,14 @@ else
                     if(slide_count > 1) {
                         idx2 = (idx + 1) % slide_count;
                         $("#sit_pvi_slide li:hidden").css("left", slide_width+"px");
-                        $("#sit_pvi_slide li:eq("+idx+")").animate({ left: "-="+slide_width+"px" }, time, function() {
+                        $("#sit_pvi_slide li:eq("+idx+")").filter(":not(:animated)").animate({ left: "-="+slide_width+"px" }, time, function() {
                             $(this).css("display", "none").css("left", slide_width+"px");
                         });
-                        $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").animate({ left: "-="+slide_width+"px" }, time);
-                        idx = idx2;
+                        $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").filter(":not(:animated)").animate({ left: "-="+slide_width+"px" }, time,
+                            function() {
+                                idx = idx2;
+                            }
+                        );
                     }
                 });
             });
