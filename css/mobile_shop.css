@@ -302,7 +302,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 
 #sit_pvi_prev {position:absolute;top:0;left:0}
 #sit_pvi_next {position:absolute;top:0;right:0}
-.sit_pvi_btn {width:2em;height:280px;border:0;background:#f5f6fa;display:none;}
+.sit_pvi_btn {z-index:10;width:2em;height:280px;border:0;background:#f5f6fa;display:none;}
 
 #sit_pvi_slide {position:relative;margin:0 auto;padding:0;list-style:none;width:280px;height:280px;overflow-x:hidden}
 #sit_pvi_slide li {display:none;position:absolute;left:0;top:0}
