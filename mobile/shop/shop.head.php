@@ -16,7 +16,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <aside id="hd_ct">
         <h2>쇼핑몰 카테고리</h2>
-
+        <a href="<?php echo G4_SHOP_URL; ?>/category.php" target="_blank">전체 카테고리 보기</a>
     </aside>
 
     <aside id="hd_aside">
