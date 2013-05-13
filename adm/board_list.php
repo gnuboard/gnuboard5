@@ -167,7 +167,6 @@ $colspan = 15;
         <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
         <?php if ($is_admin == 'super') { ?>
         <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
-        <a href="./board_form.php">게시판추가</a>
         <?php } ?>
     </div>
 

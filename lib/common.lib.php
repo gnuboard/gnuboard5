@@ -1987,8 +1987,16 @@ function hyphen_hp_number($hp)
 function login_url($url='')
 {
     if (!$url) $url = G4_URL;
+<<<<<<< HEAD
     //$p = parse_url($url);
     //return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
+=======
+    /*
+    $p = parse_url($url);
+    echo urlencode($_SERVER['REQUEST_URI']);
+    return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
+    */
+>>>>>>> g4s
     return $url;
 }
 

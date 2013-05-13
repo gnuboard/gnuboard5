@@ -173,14 +173,16 @@ define('G4_HTTPS_BBS_URL',  https_url(G4_BBS_DIR, true));
 // G4_MOBILE_AGENT : config.php 에서 선언
 //------------------------------------------------------------------------------
 $is_mobile = false;
-if ($_REQUEST['device']=='pc')
-    $is_mobile = false;
-else if ($_REQUEST['device']=='mobile')
-    $is_mobile = true;
-else if (isset($_SESSION['ss_is_mobile'])) 
-    $is_mobile = $_SESSION['ss_is_mobile'];
-else if (is_mobile())
-    $is_mobile = true;
+if (G4_USE_MOBILE) {
+    if ($_REQUEST['device']=='pc')
+        $is_mobile = false;
+    else if ($_REQUEST['device']=='mobile')
+        $is_mobile = true;
+    else if (isset($_SESSION['ss_is_mobile'])) 
+        $is_mobile = $_SESSION['ss_is_mobile'];
+    else if (is_mobile())
+        $is_mobile = true;
+}
 
 $_SESSION['ss_is_mobile'] = $is_mobile;
 define('G4_IS_MOBILE', $is_mobile);
@@ -288,7 +290,11 @@ if (isset($_REQUEST['url'])) {
     $urlencode = urlencode($url);
 } else {
     $url = '';
-    $urlencode = urlencode(escape_trim($_SERVER['REQUEST_URI']));
+    $urlencode = urlencode($_SERVER['REQUEST_URI']);
+    if (G4_DOMAIN) {
+        $p = parse_url(G4_DOMAIN);
+        $urlencode = G4_DOMAIN.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", $urlencode));
+    }
 }
 
 if (isset($_REQUEST['gr_id'])) {
