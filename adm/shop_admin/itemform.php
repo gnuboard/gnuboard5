@@ -6,6 +6,20 @@ include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
+// it_id type 수정
+$sql = " SHOW COLUMNS FROM `{$g4['shop_item_table']}` WHERE field = 'it_id' ";
+$row = sql_fetch($sql);
+if(intval(preg_replace("/[^0-9]/", "", $row['Type'])) != 20) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_qa_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_ps_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}` MODIFY COLUMN it_id2 VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_event_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_wish_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+}
+
 $html_title = "상품 ";
 
 if ($w == "")
@@ -204,8 +218,8 @@ $pg_anchor ='<ul class="anchor">
             <?php if ($w == '') { // 추가 ?>
                 <!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
                 <!-- <input type=text class=required name=it_id value="<?php echo 10000000000-time()?>" size=12 maxlength=10 required> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
-                <?php echo help("상품의 코드는 10자리 숫자로 자동생성합니다. <b>직접 상품코드를 입력할 수도 있습니다.</b>\n상품코드는 영문자와 숫자만 입력 가능합니다."); ?>
-                <input type="text" name="it_id" value="<?php echo time(); ?>" id="it_id" required class="frm_input required" size="12" maxlength="10">
+                <?php echo help("상품의 코드는 10자리 숫자로 자동생성합니다. <b>직접 상품코드를 입력할 수도 있습니다.</b>\n상품코드는 영문자, 숫자, - 만 입력 가능합니다."); ?>
+                <input type="text" name="it_id" value="<?php echo time(); ?>" id="it_id" required class="frm_input required" size="20" maxlength="20">
                 <?php if ($default['de_code_dup_use']) { ?><a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src="<?php echo G4_ADMIN_URL; ?>/img/btn_code.gif"></a><?php } ?>
             <?php } else { ?>
                 <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
@@ -970,6 +984,12 @@ function codedupcheck(id)
         alert('상품코드를 입력하십시오.');
         f.it_id.focus();
         return;
+    }
+
+    var it_id = id.replace(/[A-Za-z0-9\-]/g, "");
+    if(it_id.length > 0) {
+        alert("상품코드는 영문자, 숫자, - 만 사용할 수 있습니다.");
+        return false;
     }
 
     $.post(

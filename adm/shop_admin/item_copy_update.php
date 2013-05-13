@@ -10,6 +10,10 @@ if ($is_admin != "super")
 if (!trim($it_id))
 	alert("복사할 상품코드가 없습니다.");
 
+$t_it_id = preg_replace("/[A-Za-z0-9\-]/", "", $new_it_id);
+if($t_it_id)
+    alert("상품코드는 영문자, 숫자, - 만 사용할 수 있습니다.");
+
 $row = sql_fetch(" select count(*) as cnt from {$g4['shop_item_table']} where it_id = '$new_it_id' ");
 if ($row['cnt'])
     alert('이미 존재하는 상품코드 입니다.');
@@ -60,7 +64,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     sql_query($sql);
 }
 
-$qstr = "$ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx)."&amp;save_stx=".urlencode($save_stx);
+$qstr = "ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx)."&amp;save_stx=".urlencode($save_stx);
 
 goto_url("itemlist.php?$qstr");
 ?>
