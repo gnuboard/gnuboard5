@@ -127,7 +127,7 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
         <tr>
             <th scope="row"><label for="od_pwd">비밀번호</label></th>
             <td>
-                <input type="password" name="od_pwd" id="od_pwd" maxlength="20">
+                <input type="password" name="od_pwd" id="od_pwd" required class="frm_input required" maxlength="20">
                 영,숫자 3~20자 (주문서 조회시 필요)
             </td>
         </tr>
@@ -381,9 +381,9 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
     <p id="show_progress" style="display:none;">반드시 주문하기 버튼을 클릭 하셔야만 결제가 진행됩니다.</p>
 
     <div id="display_pay_button" class="btn_confirm">
-        <span id="show_req_btn"><input type="button" name="submitChecked" onClick="kcp_approval();" value="결제등록요청" /></span>
+        <span id="show_req_btn"><input type="button" name="submitChecked" onClick="kcp_approval();" value="결제등록요청"class="btn_submit"></span>
         <span id="show_pay_btn" style="display:none;"><input type="submit" value="주문하기" class="btn_submit"></span>
-        <a href="javascript:history.go(-1);" class="btn01">취소</a>
+        <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
     </div>
     </form>
 
