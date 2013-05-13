@@ -32,6 +32,9 @@ a:active {color:#000;text-decoration:underline}
 
 #logo {text-align:center}
 
+#hd_aside_mb ul {margin:0 1em;text-align:right}
+#hd_aside_mb li {display:inline-block;margin:0 0 0 1em}
+
 /* 중간 레이아웃 */
 #wrapper_title {margin-bottom:1em;font-size:1.2em}
 
