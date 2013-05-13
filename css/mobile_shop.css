@@ -94,7 +94,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 /* 상품 목록 스킨 10 */
 .sct_10 {padding:1em 0 0}
-.sct_10 .sct_li {float:left;margin:0 2em 1em 0;width:230px}
+.sct_10 .sct_li {float:left;margin:0 0.9em 1em 0;width:230px}
 .sct_10 .sct_last {margin:0 !important}
 .sct_10 .sct_clear {clear:both}
 .sct_10 .sct_a {display:block;position:relative;text-decoration:none}
