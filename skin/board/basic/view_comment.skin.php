@@ -76,7 +76,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 <?php if ($is_comment_write) {
         if($w == '')
             $w = 'c';
-     ?>
+    ?>
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
         <form name="fviewcomment" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" method="post" autocomplete="off">
@@ -113,6 +113,47 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <td><?php echo $captcha_html; ?></td>
         </tr>
         <?php } ?>
+        <tr>
+            <th scope="row">SNS 등록</th>
+            <td>
+                <div id="sns_facebook">
+                <?php
+include(G4_SNS_PATH.'/facebook/src/facebook.php');
+
+$facebook = new Facebook(array('appId'=>G4_FACEBOOK_APPID,'secret'=>G4_FACEBOOK_SECRET));
+// Get User ID
+$user = $facebook->getUser();
+
+if ($user) {
+  try {
+    // Proceed knowing you have a logged in user who's authenticated.
+    $user_profile = $facebook->api('/me');
+  } catch (FacebookApiException $e) {
+    error_log($e);
+    $user = null;
+  }
+}
+
+// Login or logout url will be needed depending on current user state.
+if ($user) {
+    //echo $logoutUrl = $facebook->getLogoutUrl();
+    $loginUrl = $facebook->getLogoutUrl();
+} else {
+    //$loginUrl = $facebook->getLoginUrl(array('redirect_uri'=>urlencode(G4_SNS_URL.'/facebook/callback.php')));
+    $loginUrl = $facebook->getLoginUrl(array('redirect_uri'=>(G4_SNS_URL.'/facebook/callback.php')));
+    //$loginUrl = $facebook->getLoginUrl();
+}
+
+                ?>
+                    <div><a href="<?php echo $loginUrl; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/facebook_off.png" id="icon_facebook"></a></div>
+                    <div><input type="checkbox" name="chk_facebook" value="1"></div>
+                </div>
+                <div id="sns_twitter">
+                    <div><img src="<?php echo G4_SNS_URL; ?>/icon/twitter_off.png" id="icon_twitter"></div>
+                    <div><input type="checkbox" name="chk_twitter" value="1"></div>
+                </div>
+            </td>
+        </tr>
         <tr>
             <th scope="row">내용</th>
             <td>

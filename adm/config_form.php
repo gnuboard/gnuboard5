@@ -46,6 +46,13 @@ if(!isset($config['cf_mobile_pages'])) {
     sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", TRUE);
 }
 
+if(!isset($config['cf_facebook_use'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_facebook_use` TINYINT NOT NULL DEFAULT '0' AFTER `cf_kcpcert_use`
+                    ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_facebook_use`,  
+                    ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret` ", true);
+}
+
 // uniqid 테이블이 없을 경우 생성
 if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
@@ -66,6 +73,7 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_article_mail">글작성메일</a></li>
     <li><a href="#anc_cf_join_mail">가입메일</a></li>
     <li><a href="#anc_cf_vote_mail">투표메일</a></li>
+    <li><a href="#anc_cf_sns">SNS</a></li>
     <li><a href="#anc_cf_extra">여분필드</a></li>
 </ul>';
 ?>
@@ -698,6 +706,38 @@ $pg_anchor = '<ul class="anchor">
     </tbody>
     </table>
 </section>
+
+
+<section id="anc_cf_sns" class="cbox">
+    <h2>소셜네트워크서비스(SNS : Social Network Service)</h2>
+    <?php echo $pg_anchor ?>
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_6">
+        <col class="grid_3">
+        <col class="grid_6">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="cf_facebook_use">페이스북 사용</label></th>
+        <td><input type="checkbox" name="cf_facebook_use" value="1" id="cf_facebook_use" <?php echo $config['cf_facebook_use']?'checked':''; ?>> 사용</td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_facebook_appid">페이스북 앱 ID</label></th>
+        <td>
+            <input type="text" name="cf_facebook_appid" value="<?php echo $config['cf_facebook_appid'] ?>" id="cf_facebook_appid" class="frm_input"> <a href="https://developers.facebook.com/apps" target="_blank" class="btn_frmline">앱 등록페이지</a>
+        </td>
+        <th scope="row"><label for="cf_facebook_secret">페이스북 앱 Secret</label></th>
+        <td>
+            <input type="text" name="cf_facebook_secret" value="<?php echo $config['cf_facebook_secret'] ?>" id="cf_facebook_secret" class="frm_input" size="30">
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</section>
+
 
 <section id="anc_cf_extra" class="cbox">
     <h2>여분필드 기본 설정</h2>

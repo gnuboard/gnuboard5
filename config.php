@@ -144,4 +144,4 @@ define('G4_FACEBOOK_CALLBACK',  G4_SNS_URL.'/facebook/callback.php');
 // 게시판에서 링크의 기본갯수를 말합니다.
 // 필드를 추가하면 이 숫자를 필드수에 맞게 늘려주십시오.
 define('G4_LINK_COUNT', 2);
-?>
+?>`
