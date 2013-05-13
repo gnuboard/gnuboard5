@@ -643,6 +643,8 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 #sod_frm_same {margin:0 0 10px}
 
+#sod_frm #od_memo {height:50px}
+
 #sod_frm_pay .frm_input {background:#fff !important}
 #sod_frm_pay .frm_input:focus {color:#000}
 

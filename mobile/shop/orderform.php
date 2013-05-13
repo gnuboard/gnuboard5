@@ -233,7 +233,7 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_memo">전하실말씀</label></th>
+            <th scope="row"><label for="od_memo">전하실 말씀</label></th>
             <td><textarea name="od_memo" id="od_memo"></textarea></td>
         </tr>
         </tbody>
