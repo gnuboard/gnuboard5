@@ -47,6 +47,8 @@ $sec = get_microtime() - $begin_time;
 $file = $_SERVER['PHP_SELF'];
 ?>
 
+<script src="<?php echo G4_JS_URL; ?>/sns.js"></script>
+
 <?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>
