@@ -17,7 +17,7 @@ $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $len = strlen($row['ca_id']) / 2 - 1;
-    $nbsp = "";
+    $nbsp = '';
     for ($i=0; $i<$len; $i++) {
         $nbsp .= '&nbsp;&nbsp;&nbsp;';
     }
@@ -102,8 +102,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         $result1 = sql_query($sql1);
         for ($i=0; $row1=sql_fetch_array($result1); $i++) {
             $len = strlen($row1['ca_id']) / 2 - 1;
-            $nbsp = "";
-            for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+            $nbsp = '';
+            for ($i=0; $i<$len; $i++) $nbsp .= '&nbsp;&nbsp;&nbsp;';
             echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
         }
         ?>
@@ -120,7 +120,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     </select>
 
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx; ?>" required class="frm_input required">
+    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 

@@ -68,7 +68,7 @@ $total_count = $row['cnt'];
         for ($i=0; $row=mysql_fetch_array($result); $i++) {
             if ($save['ca_id'] != $row['ca_id']) {
                 if ($save['ca_id']) {
-                    write_search_save($save);
+                    write_msearch_save($save);
                     unset($save);
                 }
                 $save['ca_id'] = $row['ca_id'];
@@ -80,9 +80,9 @@ $total_count = $row['cnt'];
     }
 
     mysql_free_result($result);
-    write_search_save($save);
+    write_msearch_save($save);
 
-    function write_search_save($save)
+    function write_msearch_save($save)
     {
         global $g4, $search_str , $default , $image_rate , $cart_dir;
 

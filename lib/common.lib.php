@@ -1677,7 +1677,7 @@ function abs_ip2long($ip='')
 
 function get_selected($field, $value)
 {
-    return ($field==$value) ? ' selected="selected"' : '';
+    return ($field==$value) ? ' selected' : '';
 }
 
 
