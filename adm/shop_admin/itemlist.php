@@ -191,7 +191,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td rowspan="2"><?php echo $row['it_hit']; ?></td>
         <td rowspan="2" class="td_mng">
             <a href="<?php echo $href; ?>"><img src="./img/icon_view.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 보기"></a>
-            <a href="javascript:_copy('<?php echo $row['it_id']; ?>', '<?php echo $row['ca_id']; ?>');"><img src="./img/icon_copy.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 복사"></a>
+            <a href="./item_copy.php?it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>" class="item_copy" target="_blank"><img src="./img/icon_copy.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 복사"></a>
             <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 수정"></a>
             <a href="./itemformupdate.php?w=d&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 삭제"></a>
         </td>
@@ -219,34 +219,13 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
-function _trim(str)
-{
-    var pattern = /(^\s*)|(\s*$)/g; // \s 공백 문자
-    return str.replace(pattern, "");
-}
-
-/*
-function _copy(it_name, link)
-{
-    var now = new Date();
-    var time = now.getTime() + '';
-    var new_it_id = prompt("'"+it_name+"' 상품을 복사하시겠습니까? 상품코드를 입력하세요.", time.substring(3,13));
-    if (!new_it_id) {
-        alert('상품코드를 입력하세요.');
-        return;
-    }
-
-    if (g4_charset.toUpperCase() == 'EUC-KR')
-        location.href = link+'&amp;new_it_id='+new_it_id;
-    else
-        location.href = encodeURI(link+'&amp;new_it_id='+new_it_id);
-}
-*/
-
-function _copy(it_id, ca_id)
-{
-    window.open('./item_copy.php?it_id='+it_id+'&amp;ca_id='+ca_id, 'copywin', 'left=100, top=100, width=300, height=200, scrollbars=0');
-}
+$(function() {
+    $(".item_copy").click(function() {
+        var href = $(this).attr("href");
+        window.open(href, "copywin", "left=100, top=100, width=300, height=200, scrollbars=0");
+        return false;
+    });
+});
 </script>
 
 <?php
