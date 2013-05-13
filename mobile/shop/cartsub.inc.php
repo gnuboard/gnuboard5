@@ -23,12 +23,11 @@ else
     <th scope="col">수량</th>
     <th scope="col">판매가</th>
     <th scope="col">소계</th>
-    <th scope="col">포인트</th>
 <?php
-if ($s_page == 'cart.php')
+if ($s_page == 'cart.php') {
+    echo '<th scope="col">포인트</th>';
     echo '<th scope="col">삭제</th>';
-else if ($s_page == 'orderinquiryview.php')
-    echo '<th scope="col">상태</th>';
+}
 ?>
 </tr>
 </thead>
@@ -133,13 +132,12 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     <td class="td_bignum"><?php echo number_format($row['ct_amount']); ?></td>
     <td class="td_bignum"><?php echo number_format($sell_amount); ?></td>
-    <td class="td_bignum"><?php echo number_format($point); ?></td>
 
     <?php
-    if ($s_page == 'cart.php')
+    if ($s_page == 'cart.php') {
+        echo '<td class="td_bignum"><?php echo number_format($point); ?></td>';
         echo '<td class="td_smallmng"><a href="'.G4_SHOP_URL.'/cartupdate.php?act=d&amp;ct_id='.$row['ct_id'].'">삭제</a></td>';
-    else if ($s_page == 'orderinquiryview.php')
-        echo '<td class="td_smallmng">'.$row['ct_status'].'</td>';
+    }
     ?>
 </tr>
 
