@@ -134,7 +134,7 @@ if (isset($wr_id) && $wr_id) {
         if ($member['mb_id'])
             alert('목록을 볼 권한이 없습니다.', G4_URL);
         else
-            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;'.$qstr));
+            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.($qstr?'&amp;':'')));
     }
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
