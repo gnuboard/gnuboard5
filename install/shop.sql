@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS `shop_cart`;
 CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_id` int(11) NOT NULL AUTO_INCREMENT,
   `uq_id` bigint(20) unsigned NOT NULL,
-  `it_id` varchar(10) NOT NULL DEFAULT '0',
+  `it_id` varchar(20) NOT NULL DEFAULT '',
   `it_opt1` varchar(255) NOT NULL DEFAULT '',
   `it_opt2` varchar(255) NOT NULL DEFAULT '',
   `it_opt3` varchar(255) NOT NULL DEFAULT '',
@@ -317,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `shop_event` (
 DROP TABLE IF EXISTS `shop_event_item`;
 CREATE TABLE IF NOT EXISTS `shop_event_item` (
   `ev_id` int(11) NOT NULL DEFAULT '0',
-  `it_id` varchar(10) NOT NULL DEFAULT '',
+  `it_id` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`ev_id`,`it_id`),
   KEY `it_id` (`it_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -363,7 +363,7 @@ CREATE TABLE IF NOT EXISTS `shop_faq_master` (
 
 DROP TABLE IF EXISTS `shop_item`;
 CREATE TABLE IF NOT EXISTS `shop_item` (
-  `it_id` varchar(10) NOT NULL DEFAULT '',
+  `it_id` varchar(20) NOT NULL DEFAULT '',
   `ca_id` varchar(10) NOT NULL DEFAULT '0',
   `ca_id2` varchar(255) NOT NULL DEFAULT '',
   `ca_id3` varchar(255) NOT NULL DEFAULT '',
@@ -424,7 +424,7 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
 DROP TABLE IF EXISTS `shop_item_info`;
 CREATE TABLE IF NOT EXISTS `shop_item_info` (
   `ii_id` int(11) NOT NULL AUTO_INCREMENT,
-  `it_id` varchar(10) NOT NULL,
+  `it_id` varchar(20) NOT NULL,
   `ii_gubun` varchar(50) NOT NULL,
   `ii_article` varchar(50) NOT NULL,
   `ii_title` varchar(255) NOT NULL,
@@ -442,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `shop_item_info` (
 DROP TABLE IF EXISTS `shop_item_ps`;
 CREATE TABLE IF NOT EXISTS `shop_item_ps` (
   `is_id` int(11) NOT NULL AUTO_INCREMENT,
-  `it_id` varchar(10) NOT NULL DEFAULT '0',
+  `it_id` varchar(20) NOT NULL DEFAULT '0',
   `mb_id` varchar(20) NOT NULL DEFAULT '',
   `is_name` varchar(255) NOT NULL DEFAULT '',
   `is_password` varchar(255) NOT NULL DEFAULT '',
@@ -465,7 +465,7 @@ CREATE TABLE IF NOT EXISTS `shop_item_ps` (
 DROP TABLE IF EXISTS `shop_item_qa`;
 CREATE TABLE IF NOT EXISTS `shop_item_qa` (
   `iq_id` int(11) NOT NULL AUTO_INCREMENT,
-  `it_id` varchar(10) NOT NULL DEFAULT '',
+  `it_id` varchar(20) NOT NULL DEFAULT '',
   `mb_id` varchar(20) NOT NULL DEFAULT '',
   `iq_name` varchar(255) NOT NULL DEFAULT '',
   `iq_password` varchar(255) NOT NULL DEFAULT '',
@@ -485,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `shop_item_qa` (
 
 DROP TABLE IF EXISTS `shop_item_relation`;
 CREATE TABLE IF NOT EXISTS `shop_item_relation` (
-  `it_id` varchar(10) NOT NULL DEFAULT '',
+  `it_id` varchar(20) NOT NULL DEFAULT '',
   `it_id2` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`it_id`,`it_id2`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -607,7 +607,7 @@ DROP TABLE IF EXISTS `shop_wish`;
 CREATE TABLE IF NOT EXISTS `shop_wish` (
   `wi_id` int(11) NOT NULL AUTO_INCREMENT,
   `mb_id` varchar(20) NOT NULL DEFAULT '',
-  `it_id` varchar(10) NOT NULL DEFAULT '0',
+  `it_id` varchar(20) NOT NULL DEFAULT '0',
   `wi_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `wi_ip` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`wi_id`),
