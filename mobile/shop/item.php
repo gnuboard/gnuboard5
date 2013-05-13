@@ -702,56 +702,52 @@ else
         menu(id);
         save_qa_id = id;
     }
+    </script>
 
-    // 상품상세설명에 있는 이미지의 사이즈를 줄임
-    // 삭제 대상 - 지운아빠 2013-05-03
-    function explan_resize_image()
+    <!--[if lte IE 6]>
+    <script>
+    // 이미지 등비율 리사이징
+    $(window).load(function() {
+        view_image_resize();
+    });
+
+    function view_image_resize()
     {
-        var image_width = 600;
-        var div_explan = document.getElementById('div_explan');
-        if (div_explan) {
-            var explan_img = div_explan.getElementsByTagName('img');
-            for(i=0;i<explan_img.length;i++)
-            {
-                //document.write(explan_img[i].src+"<br>");
-                img = explan_img[i];
-                if (img.width) {
-                    imgx = parseInt(img.width);
-                    imgy = parseInt(img.height);
-                }
-                else {
-                    imgx = parseInt(img.style.width);
-                    imgy = parseInt(img.style.height);
-                }
-                if (imgx > image_width)
-                {
-                    image_height = parseFloat(imgx / imgy)
-                    if (img.width) {
-                        img.width = image_width;
-                        img.height = parseInt(image_width / image_height);
-                    }
-                    else {
-                        img.style.width = image_width;
-                        img.style.height = parseInt(image_width / image_height);
-                    }
-                }
-                /*
-                // 이미지를 가운데로 정렬하는 경우에 주석을 풀어줌
-                img.style.position = 'relative';
-                img.style.left = '50%';
-                img.style.marginLeft = '-300px'; // image_width 의 절반
-                */
+        var $img = $("#sit_inf_explan img");
+        var img_wrap = $("#sit_inf_explan").width();
+        var win_width = $(window).width() - 35;
+        var res_width = 0;
+
+        if(img_wrap < win_width)
+            res_width = img_wrap;
+        else
+            res_width = win_width;
+
+        $img.each(function() {
+            var img_width = $(this).width();
+            var img_height = $(this).height();
+            var this_width = $(this).data("width");
+            var this_height = $(this).data("height");
+
+            if(this_width == undefined) {
+                $(this).data("width", img_width); // 원래 이미지 사이즈
+                $(this).data("height", img_height);
+                this_width = img_width;
+                this_height = img_height;
             }
-        }
+
+            if(this_width > res_width) {
+                $(this).width(res_width);
+                var res_height = Math.round(res_width * $(this).data("height") / $(this).data("width"));
+                $(this).height(res_height);
+            } else {
+                $(this).width(this_width);
+                $(this).height(this_height);
+            }
+        });
     }
     </script>
-
-    <!-- 삭제 대상 -지운아빠 2013-05-03 -->
-    <script type="text/javascript">
-    $(function() {
-        explan_resize_image();
-    });
-    </script>
+    <![endif]-->
 
 </div><!-- #sit 끝 -->
 
