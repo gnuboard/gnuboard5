@@ -83,7 +83,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 .btn02:focus,
 .btn02:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 1em;height:2.6em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer;-webkit-appearance:none}
+.btn_submit {padding:0 1em;height:2.6em;border:0;background:#333;color:#fff;font-size:1em;letter-spacing:-0.1em;vertical-align:top;cursor:pointer;-webkit-appearance:none}
 .btn_cancel {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2.5em}
 .btn_frmline {display:inline-block;padding:0 0.3em;height:1.9em;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.9em} /* 우편번호검색버튼 등 */
 .btn_win {clear:both;margin-bottom:1.5em;text-align:center} /* 새창용 */
@@ -302,7 +302,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 
 #sit_pvi_prev {position:absolute;top:0;left:0}
 #sit_pvi_next {position:absolute;top:0;right:0}
-.sit_pvi_btn {width:2em;height:280px;border:0;background:#f5f6fa;display:none;}
+.sit_pvi_btn {z-index:10;width:2em;height:280px;border:0;background:#f5f6fa;display:none;}
 
 #sit_pvi_slide {position:relative;margin:0 auto;padding:0;list-style:none;width:280px;height:280px;overflow-x:hidden}
 #sit_pvi_slide li {display:none;position:absolute;left:0;top:0}
@@ -471,6 +471,8 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 #sod_frm_orderer {margin:20px 0 40px}
 
 #sod_frm_same {margin:0 0 10px}
+
+#sod_frm #od_memo {height:7em}
 
 #sod_frm_pay .frm_input {background:#fff !important}
 #sod_frm_pay .frm_input:focus {color:#000}

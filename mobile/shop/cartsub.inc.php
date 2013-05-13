@@ -248,7 +248,7 @@ function form_check(act) {
         f.act.value = act;
 
         <?php
-        if (get_session('ss_mb_id')) // 회원인 겨우
+        if (get_session('ss_mb_id')) // 회원인 경우
         {
             echo "f.action = '".G4_SHOP_URL."/orderform.php';";
             echo "f.submit();";
