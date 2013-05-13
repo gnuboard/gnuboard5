@@ -361,7 +361,7 @@ set_session('ss_order_uniqid', $od_id);
             <th scope="row"><label for="od_pwd">비밀번호</label></th>
             <td>
                 <span class="frm_info">영,숫자 3~20자 (주문서 조회시 필요)</span>
-                <input type="password" name="od_pwd" id="od_pwd" class="frm_input" maxlength="20">
+                <input type="password" name="od_pwd" id="od_pwd" required class="frm_input required" maxlength="20">
             </td>
         </tr>
         <?php } ?>
