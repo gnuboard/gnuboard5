@@ -289,9 +289,9 @@ if ($w == "")
         alert('상품 코드가 없으므로 상품을 추가하실 수 없습니다.');
     }
 
-    $t_it_id = preg_replace("/[A-Za-z0-9\-]/", "", $it_id);
+    $t_it_id = preg_replace("/[A-Za-z0-9\-_]/", "", $it_id);
     if($t_it_id)
-        alert('상품 코드는 영문자, 숫자, - 만 사용할 수 있습니다.');
+        alert('상품 코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.');
 
     $sql = " insert {$g4['shop_item_table']}
                 set it_id = '$it_id',

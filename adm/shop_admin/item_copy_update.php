@@ -10,9 +10,9 @@ if ($is_admin != "super")
 if (!trim($it_id))
 	alert("복사할 상품코드가 없습니다.");
 
-$t_it_id = preg_replace("/[A-Za-z0-9\-]/", "", $new_it_id);
+$t_it_id = preg_replace("/[A-Za-z0-9\-_]/", "", $new_it_id);
 if($t_it_id)
-    alert("상품코드는 영문자, 숫자, - 만 사용할 수 있습니다.");
+    alert("상품코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.");
 
 $row = sql_fetch(" select count(*) as cnt from {$g4['shop_item_table']} where it_id = '$new_it_id' ");
 if ($row['cnt'])
