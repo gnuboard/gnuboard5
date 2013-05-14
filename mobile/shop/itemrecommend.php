@@ -1,11 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/itemrecommend.php');
-    return;
-}
-
 if (!$is_member)
     alert_close('회원만 메일을 발송할 수 있습니다.');
 

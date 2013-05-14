@@ -158,20 +158,25 @@ else
             <button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>
             <?php
             // 이미지(중) 썸네일
-            for ($i=1; $i<=5; $i++)
+            $thumb_count = 0;
+            for ($i=1; $i<=10; $i++)
             {
-                if ($i == 1) echo '<ul id="sit_pvi_slide">';
-                if (file_exists(G4_DATA_PATH.'/item/'.$it_id.'_l'.$i))
-                {
-                    $img_id = $it_id.'_l'.$i;
-                    echo '<li>';
-                    echo get_large_image($it_id.'_'.$i, $it['it_id'], false);
-                    echo '<a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;img='.$img_id.'" id="'.$img_id.'" class="popup_item_image slide_img" target="_blank"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_l'.$i.'" alt="" id="sit_pvi_t'.$i.'" ';
-                    echo '></a>';
-                    echo '</li>';
-                }
+                if(!$it['it_img'.$i])
+                    continue;
+
+                if($thumb_count == 0) echo '<ul id="sit_pvi_slide">';
+                $thumb = get_it_thumbnail($it['it_img'.$i], 280, 280);
+
+                if(!$thumb)
+                    continue;
+
+                echo '<li>';
+                echo '<a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image slide_img" target="_blank">'.$thumb.'</a>';
+                echo '</li>';
+
+                $thumb_count++;
             }
-            if ($i > 1) echo '</ul>';
+            if ($thumb_count > 0) echo '</ul>';
             ?>
             <script>
             $(function() {
@@ -521,21 +526,11 @@ else
 
     <script>
     $(function(){
-        // 이미지 미리보기
-        $("#sit_pvi .img_thumb").bind("hover focus", function(){
-            var img_src = $(this).attr("id").replace("_s", "_l1");
-            $("#sit_pvi_big img").attr("src","<?php echo G4_DATA_URL; ?>/item/"+img_src); // 이미지 소스 교체
-            $("#sit_pvi_big a").attr("id", img_src);
-        });
-
         // 상품이미지 크게보기
         $(".popup_item_image").click(function() {
-            var it_id = "<?php echo $it['it_id']; ?>";
-            var img = $(this).attr("id");
-
+            var url = $(this).attr("href");
             var top = 10;
             var left = 10;
-            var url = "<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=" + it_id + "&img=" + img;
             var opt = 'scrollbars=yes,top='+top+',left='+left;
             popup_window(url, "largeimage", opt);
 
