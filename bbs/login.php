@@ -4,6 +4,8 @@ include_once('./_common.php');
 $g4['title'] = '로그인';
 include_once('./_head.sub.php');
 
+$url = $_GET['url'];
+
 $p = parse_url($url);
 if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
     //print_r2($p);
@@ -19,31 +21,7 @@ if ($is_member) {
         goto_url(G4_URL);
 }
 
-if ($url)
-    $urlencode = urlencode($url);
-else
-    $urlencode = urlencode($_SERVER['REQUEST_URI']);
-
-if (G4_HTTPS_DOMAIN) {
-    $login_url = $_GET['url'];
-    if ($login_url) {
-        if (preg_match("/^\.\.\//", $url)) {
-            $login_url = urlencode(G4_URL."/".preg_replace("/^\.\.\//", "", $login_url));
-        } else {
-            $purl = parse_url(G4_URL);
-            if ($purl['path']) {
-                $path = urlencode($purl['path']);
-                $urlencode = preg_replace("/".$path."/", "", $urlencode);
-            }
-            $login_url = $urlencode;
-        }
-    } else {
-        $login_url = G4_URL;
-    }
-} else {
-    $login_url = $urlencode;
-}
-
+$login_url        = login_url($url);
 $login_action_url = G4_HTTPS_BBS_URL."/login_check.php";
 
 // 로그인 스킨이 없는 경우 관리자 페이지 접속이 안되는 것을 막기 위하여 기본 스킨으로 대체

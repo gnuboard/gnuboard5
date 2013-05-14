@@ -1981,4 +1981,58 @@ function hyphen_hp_number($hp)
     $hp = preg_replace("/[^0-9]/", "", $hp);
     return preg_replace("/([0-9]{3})([0-9]{3,4})([0-9]{4})$/", "\\1-\\2-\\3", $hp);
 }
+
+
+// 로그인 후 이동할 URL
+function login_url($url='')
+{
+    if (!$url) $url = G4_URL;
+    /*
+    $p = parse_url($url);
+    echo urlencode($_SERVER['REQUEST_URI']);
+    return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
+    */
+    return $url;
+}
+
+
+// $dir 을 포함하여 https 또는 http 주소를 반환한다.
+function https_url($dir, $https=true)
+{
+    if ($https) {
+        if (G4_HTTPS_DOMAIN) {
+            $url = G4_HTTPS_DOMAIN.'/'.$dir;
+        } else {
+            $url = G4_URL.'/'.$dir;
+        }
+    } else {
+        if (G4_DOMAIN) {
+            $url = G4_DOMAIN.'/'.$dir;
+        } else {
+            $url = G4_URL.'/'.$dir;
+        }
+    }
+
+    return $url;
+}
+
+
+// 게시판의 공지사항을 , 로 구분하여 업데이트 한다.
+function board_notice($bo_notice, $wr_id, $insert=false)
+{
+    $notice_array = explode(",", trim($bo_notice));
+    $notice_array = array_merge(array($wr_id), $notice_array);
+    $notice_array = array_unique($notice_array);
+    foreach ($notice_array as $key=>$value) {
+        if (!trim($value))
+            unset($notice_array[$key]);
+    }
+    if (!$insert) {
+        foreach ($notice_array as $key=>$value) {
+            if ((int)$value == (int)$wr_id)
+                unset($notice_array[$key]);
+        }
+    }
+    return implode(",", $notice_array);
+}
 ?>

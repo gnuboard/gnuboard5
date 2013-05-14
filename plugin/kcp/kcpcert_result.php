@@ -150,7 +150,7 @@ if( $cert_enc_use == "Y" )
         $adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
         $adult = ((int)$birth_day <= (int)$adult_day) ? 1 : 0;
 
-        $sql = " update {$g4['member_table']} set mb_name = '$user_name', mb_hp = '$phone_no', mb_hp_certify = 1, mb_adult = $adult where mb_id = '{$member['mb_id']}' ";
+        $sql = " update {$g4['member_table']} set mb_name = '$user_name', mb_hp = '$phone_no', mb_hp_certify = 1, mb_adult = $adult, mb_birth = '$birth_day', mb_sex = '$sex_code' where mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
     }
     else if( $res_cd != "0000" )
