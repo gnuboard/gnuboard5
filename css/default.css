@@ -13,39 +13,8 @@ button {border-radius:0;font-size:1em}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
-a:link,
-a:visited {color:#000;text-decoration:none}
-a:hover,
-a:focus,
-a:active {color:#000;text-decoration:underline}
-
-/* 화면낭독기 사용자용 */
-#hd_login_msg {position:absolute;top:0;left:0;font-size:0;line-height:0;overflow:hidden}
-.msg_sound_only,
-.sound_only {display:inline-block !important;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}
-/* 본문 바로가기 */
-#to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
-#to_content a:focus,
-#to_content a:active {width:100%;height:75px;background:#21272e;color:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.3em}
-
-/* 이미지 등비율 리사이징 */
-.img_fix {width:100%;height:auto}
-
-/* 캡챠 자동등록(입력)방지 기본 */
-#captcha img {border:1px solid #cfded8;border-right:0}
-#captcha_mp3 img {border:1px solid #cfded8;border-left:0;background:#494949}
-#mp3_embed {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden} /* 익스 8 이하에서 음성캡챠 실행 스타일 */
-
-/* ckeditor 단축키 */
-.cke_sc {margin:0 0 5px;text-align:right}
-.btn_cke_sc{display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:1.9em;vertical-align:middle}
-.cke_sc_def {margin:0 0 5px;padding:10px;border:1px solid #ccc;background:#f7f7f7;text-align:center}
-.cke_sc_def dl{margin:0 0 5px;text-align:left;zoom:1}
-.cke_sc_def dl:after {display:block;visibility:hidden;clear:both;content:""}
-.cke_sc_def dt,
-.cke_sc_def dd {float:left;margin:0;padding:5px 0;border-bottom:1px solid .e9e9e9}
-.cke_sc_def dt {width:20%;font-weight:bold}
-.cke_sc_def dd {width:30%}
+a:link, a:visited {color:#000;text-decoration:none}
+a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 상단 레이아웃 */
 #hd {border-top:3px solid #151515;background:#fff}
@@ -63,9 +32,7 @@ a:active {color:#000;text-decoration:underline}
 #mb_nb:after {display:block;visibility:hidden;clear:both;content:""}
 #mb_nb li {float:left}
 #mb_nb a {display:block;padding:5px 10px;color:#333;letter-spacing:-0.1em}
-#mb_nb a:focus,
-#mb_nb a:hover,
-#mb_nb a:active {text-decoration:none}
+#mb_nb a:focus, #mb_nb a:hover, #mb_nb a:active {text-decoration:none}
 #mb_nb img {margin-right:3px}
 
 /* gnb js off */
@@ -77,25 +44,23 @@ a:active {color:#000;text-decoration:underline}
 .gnb_1dli {z-index:10;clear:both;zoom:1}
 .gnb_1dli:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1da {display:block;float:left;width:80px;height:35px;font-weight:bold;line-height:2.95em;text-decoration:none}
-.gnb_1da:focus,
-.gnb_1da:hover {text-decoration:none}
+.gnb_1da:focus, .gnb_1da:hover {text-decoration:none}
 .gnb_2dul {float:left;width:auto}
 .gnb_2dli {float:left}
 .gnb_2da {display:block;float:left;width:80px;height:35px;line-height:2.95em;text-decoration:none}
-.gnb_2da:focus,
-.gnb_2da:hover {text-decoration:none}
+.gnb_2da:focus, .gnb_2da:hover {text-decoration:none}
 /* gnb js on */
 .gnb_js {}
 .gnb_js #gnb_1dul {zoom:1}
 .gnb_js #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_js .gnb_1dli {clear:none;position:relative;float:left}
 .gnb_js .gnb_1da {text-align:center}
-.gnb_js .gnb_1dli_air a {float:none;background:#f5f6fa;color:#000}
-.gnb_js .gnb_1dli_on a {float:none;border-color:#e0e5e9;background:#fff;color:#000}
+.gnb_js .gnb_1dli_air a {float:none;background:#34383c;color:#fff}
+.gnb_js .gnb_1dli_on a {float:none;background:#34383c;color:#fff}
 .gnb_js .gnb_2dul {position:absolute;top:35px;width:1px;height:1px;overflow:hidden}
 .gnb_js .gnb_2da {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
-.gnb_1dli_over .gnb_2dul {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
-.gnb_1dli_over2 .gnb_2dul {right:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
+.gnb_1dli_over .gnb_2dul {left:0;width:181px;height:auto}
+.gnb_1dli_over2 .gnb_2dul {right:0;width:181px;height:auto}
 
 .gnb_empty {width:100%;height:35px;text-align:center;line-height:2.95em}
 
@@ -124,6 +89,34 @@ a:active {color:#000;text-decoration:underline}
 #ft_copy b {color:#fff}
 #ft_copy a {position:absolute;top:10px;right:0;color:#fff}
 
+/* 기본 스타일 */
+/* 화면낭독기 사용자용 */
+#hd_login_msg {position:absolute;top:0;left:0;font-size:0;line-height:0;overflow:hidden}
+.msg_sound_only,
+.sound_only {display:inline-block !important;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}
+/* 본문 바로가기 */
+#to_content a {z-index:100000;position:absolute;top:0;left:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+#to_content a:focus, #to_content a:active {width:100%;height:75px;background:#21272e;color:#fff;font-size:2em;font-weight:bold;text-align:center;text-decoration:none;line-height:3.3em}
+
+/* 이미지 등비율 리사이징 */
+.img_fix {width:100%;height:auto}
+
+/* 캡챠 자동등록(입력)방지 기본 */
+#captcha img {border:1px solid #cfded8;border-right:0}
+#captcha_mp3 img {border:1px solid #cfded8;border-left:0;background:#494949}
+#mp3_embed {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden} /* 익스 8 이하에서 음성캡챠 실행 스타일 */
+
+/* ckeditor 단축키 */
+.cke_sc {margin:0 0 5px;text-align:right}
+.btn_cke_sc{display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:1.9em;vertical-align:middle}
+.cke_sc_def {margin:0 0 5px;padding:10px;border:1px solid #ccc;background:#f7f7f7;text-align:center}
+.cke_sc_def dl{margin:0 0 5px;text-align:left;zoom:1}
+.cke_sc_def dl:after {display:block;visibility:hidden;clear:both;content:""}
+.cke_sc_def dt,
+.cke_sc_def dd {float:left;margin:0;padding:5px 0;border-bottom:1px solid .e9e9e9}
+.cke_sc_def dt {width:20%;font-weight:bold}
+.cke_sc_def dd {width:30%}
+
 /* Mobile화면으로 */
 #device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
 
@@ -131,35 +124,28 @@ a:active {color:#000;text-decoration:underline}
 .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
 /* 버튼 */
 .btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn01:focus,
-.btn01:hover {text-decoration:none !important}
+.btn01:focus, .btn01:hover {text-decoration:none !important}
 .btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #333 !important;background:#333 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn02:focus,
-.btn02:hover {text-decoration:none !important}
+.btn02:focus, .btn02:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 button.btn_submit {height:22px !important;font-size:1em}
 fieldset .btn_submit {height:22px;font-size:1em}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 button.btn_cancel {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;line-height:2em}
-.btn_cancel:focus,
-.btn_cancel:hover {text-decoration:none !important}
+.btn_cancel:focus, .btn_cancel:hover {text-decoration:none !important}
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
-.btn_win a:focus,
-.btn_win a:hover {text-decoration:none}
+.btn_win a:focus, .btn_win a:hover {text-decoration:none}
 /* 게시판용 버튼 */
 .btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn_b01:focus,
-.btn_b01:hover {text-decoration:none !important}
+.btn_b01:focus, .btn_b01:hover {text-decoration:none !important}
 .btn_b02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn_b02:focus,
-.btn_b02:hover {text-decoration:none !important}
+.btn_b02:focus, .btn_b02:hover {text-decoration:none !important}
 .btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c !important;background:#e8180c !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
-.btn_admin:focus,
-.btn_admin:hover {text-decoration:none !important}
+.btn_admin:focus, .btn_admin:hover {text-decoration:none !important}
 
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -227,23 +213,16 @@ td.empty_table {padding:85px 0;text-align:center}
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
 .sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #283646;background:#111}
 .sv_wrap .sv a {display:inline-block !important;margin:0 !important;padding:3px !important;width:94px;border-bottom:1px solid #283646;color:#fff !important}
-.sv_wrap a:focus,
-.sv_wrap a:hover,
-.sv_wrap a:active {text-decoration:none !important}
+.sv_wrap a:focus, .sv_wrap a:hover, .sv_wrap a:active {text-decoration:none !important}
 .sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important}
 .sv_nojs .sv {display:block}
 
 /* pagination */
 .pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
 .pg {display:inline-block;border:1px solid #cfded8;letter-spacing:-4px}
-.pg a:focus,
-.pg a:hover,
-.pg a:active {text-decoration:none}
-.pg_page,
-.pg_current {display:inline-block;padding:0 12px;height:30px;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
+.pg a:focus, .pg a:hover, .pg a:active {text-decoration:none}
+.pg_page, .pg_current {display:inline-block;padding:0 12px;height:30px;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
 .pg_page {background:#f9f9f9;text-decoration:none}
-.pg_start,
-.pg_prev {border-right:1px solid #cfded8}
-.pg_end,
-.pg_next {border-left:1px solid #cfded8}
+.pg_start, .pg_prev {border-right:1px solid #cfded8}
+.pg_end, .pg_next {border-left:1px solid #cfded8}
 .pg_current {background:#333;color:#fff;font-weight:bold}
