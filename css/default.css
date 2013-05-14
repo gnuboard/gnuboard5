@@ -36,7 +36,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #mb_nb img {margin-right:3px}
 
 /* gnb js off */
-#gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #f0f0f0;border-bottom:1px solid #cfded8;background:#f0f4f8;zoom:1}
+#gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #f0f0f0;border-bottom:1px solid #d9d9d9;background:#f0f4f8;zoom:1}
 #gnb:after {display:block;visibility:hidden;clear:both;content:""}
 #gnb h2 {position:absolute;margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
 #gnb_1dul {margin:0 auto;padding:0;width:980px;zoom:1}
@@ -65,18 +65,18 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .gnb_empty {width:100%;height:35px;text-align:center;line-height:2.95em}
 
 /* 중간 레이아웃 */
-#wrapper {z-index:5;margin:50px auto;width:980px;zoom:1}
+#wrapper {z-index:5;margin:0 auto;width:980px;border-left:1px solid #d9d9d9;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
-#wrapper #aside {float:right;width:210px;border:1px solid #d9d9d9;background:#fff}
+#wrapper #aside {position:relative;float:right;left:-1px;width:210px;border-left:1px solid #d9d9d9;background:#fff}
 
-#container {z-index:4;position:relative;float:left;padding:25px 14px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #d9d9d9;background:#fff;zoom:1}
+#container {z-index:4;position:relative;float:left;padding:25px 20px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #d9d9d9;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 텍스트 크기 조절 */
-#text_size {position:absolute;top:-31px;left:-1px}
-#text_size button {padding:0 10px;height:30px;border:1px solid #d9d9d9;border-bottom:0;background:#000;color:#fff;cursor:pointer}
+#text_size {z-index:10;position:absolute;top:7px;right:18px}
+#text_size button {padding:0 10px;height:30px;border:0;background:#000;color:#fff;cursor:pointer}
 
 /* 하단 레이아웃 */
 #ft {background:#484848}

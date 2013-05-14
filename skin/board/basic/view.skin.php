@@ -7,10 +7,12 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <div id="bo_v" style="width:<?php echo $width; ?>">
 
-    <p id="bo_v_cate">
-        <?php echo $board['bo_subject'] ?>
-        <?php if ($category_name) { // 분류가 지정되었다면  ?><?php echo ($category_name ? "{$view['ca_name']} " : ""); ?><?php } // 분류 출력 끝  ?>
-    </p>
+    <div id="bo_v_titlecate">
+        <span>
+            <?php if ($category_name) { // 분류가 지정되었다면  ?><?php echo ($category_name ? "{$view['ca_name']} " : ""); ?><?php } // 분류 출력 끝  ?>
+            <?php echo $board['bo_subject'] ?>
+        </span>
+    </div>
 
     <h1 id="bo_v_h1"><?php echo cut_str(get_text($view['wr_subject']), 70) // 글제목 출력 ?></h1>
 
