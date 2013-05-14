@@ -48,7 +48,7 @@ a:active {color:#000;text-decoration:underline}
 .cke_sc_def dd {width:30%}
 
 /* 상단 레이아웃 */
-#hd {height:73px;border-top:3px solid #151515;background:#fff}
+#hd {height:107px;border-top:3px solid #151515;background:#fff}
 #hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
@@ -69,7 +69,8 @@ a:active {color:#000;text-decoration:underline}
 #mb_nb img {margin-right:3px}
 
 /* gnb js off */
-#gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #e7f1ed;border-bottom:1px solid #c3c7c5;background:#f0f4f8}
+#gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #e7f1ed;border-bottom:1px solid #c3c7c5;background:#f0f4f8;zoom:1}
+#gnb:after {display:block;visibility:hidden;clear:both;content:""}
 #gnb h2 {position:absolute;margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
 #gnb_1dul {margin:0 auto;padding:0;width:980px;zoom:1}
 #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
