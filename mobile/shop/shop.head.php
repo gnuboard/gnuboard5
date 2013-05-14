@@ -21,8 +21,8 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         <h2>상품 검색</h2>
         <label for="sch_str" class="sound_only">상품명<strong class="sound_only"> 필수</strong></label>
         <input type="text" name="search_str" value="<?php echo stripslashes(get_text($search_str)); ?>" id="sch_str" required class="frm_input">
-        <input type="submit" value="검색" id="submit">
-        <button type="button" id="pop_close"><span class="sound_only">검색 </span>닫기</button>
+        <input type="submit" value="검색" class="btn_submit">
+        <button type="button" class="pop_close"><span class="sound_only">검색 </span>닫기</button>
     </aside>
     <script>
         $(function (){
@@ -30,7 +30,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             $('#hd_sch_open').click(function(){
                 hd_sch.css('display','block');
             });
-            $('#hd_sch #pop_close').click(function(){
+            $('#hd_sch .pop_close').click(function(){
                 hd_sch.css('display','none');
             });
         });
