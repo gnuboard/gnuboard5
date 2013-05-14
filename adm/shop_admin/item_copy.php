@@ -34,9 +34,9 @@ include_once(G4_PATH.'/head.sub.php');
 function _copy(link)
 {
     var new_it_id = document.getElementById('new_it_id').value;
-    var t_it_id = new_it_id.replace(/[A-Za-z0-9\-]/g, "");
+    var t_it_id = new_it_id.replace(/[A-Za-z0-9\-_]/g, "");
     if(t_it_id.length > 0) {
-        alert("상품코드는 영문자, 숫자, - 만 사용할 수 있습니다.");
+        alert("상품코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.");
         return false;
     }
     opener.parent.location.href = encodeURI(link+'&new_it_id='+new_it_id);

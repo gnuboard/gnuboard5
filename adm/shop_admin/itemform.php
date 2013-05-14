@@ -986,9 +986,9 @@ function codedupcheck(id)
         return;
     }
 
-    var it_id = id.replace(/[A-Za-z0-9\-]/g, "");
+    var it_id = id.replace(/[A-Za-z0-9\-_]/g, "");
     if(it_id.length > 0) {
-        alert("상품코드는 영문자, 숫자, - 만 사용할 수 있습니다.");
+        alert("상품코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.");
         return false;
     }
 
