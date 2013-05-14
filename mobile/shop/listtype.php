@@ -1,11 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/listtype.php');
-    return;
-}
-
 $type = $_REQUEST['type'];
 if ($type == 1)      $g4['title'] = "히트상품";
 else if ($type == 2) $g4['title'] = "추천상품";
@@ -15,7 +10,7 @@ else if ($type == 5) $g4['title'] = "할인상품";
 else
     alert('상품유형이 아닙니다.');
 
-include_once('./_head.php');
+include_once(G4_MSHOP_PATH.'/_head.php');
 
 // 한페이지에 출력하는 이미지수 = $list_mod * $list_row
 $list_mod   = 3;    // 한줄에 이미지 몇개씩 출력?
@@ -99,5 +94,5 @@ for($i=0;$row=sql_fetch_array($result);$i++) {
 ?>
 
 <?php
-include_once('./_tail.php');
+include_once(G4_MSHOP_PATH.'/_tail.php');
 ?>

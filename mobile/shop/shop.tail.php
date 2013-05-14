@@ -7,12 +7,11 @@ $admin = get_admin("super");
 // 우측, 하단 화면을 꾸미려면 이 파일을 수정합니다.
 ?>
 
-    </div><!-- Container End -->
-</div><!-- Wrapper End -->
+</div><!-- container End -->
 
-<footer id="ft">
+<footer id="footer">
     <h1><?php echo $config['cf_title']; ?> 정보</h1>
-    <a href="<?php echo G4_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="처음으로"></a>
+    <a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="처음으로"></a>
     <p>
         <span><?php echo $default['de_admin_company_addr']; ?></span>
         <span><b>대표</b> <?php echo $default['de_admin_company_owner']; ?></span><br>
@@ -24,7 +23,7 @@ $admin = get_admin("super");
         <span><b>개인정보관리책임자</b> <?php echo $default['de_admin_info_name']; ?></span><br>
         Copyright &copy; 2001-2013 <?php echo $default['de_admin_company_name']; ?>. All Rights Reserved.
     </p>
-    <a href="#" id="ft_totop">상단으로</a>
+    <a href="#" id="ft_to_top">상단으로</a>
 </footer>
 
 <?php
