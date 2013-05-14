@@ -90,7 +90,7 @@ a:active {color:#000;text-decoration:underline}
 .gnb_js #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_js .gnb_1dli {clear:none;position:relative;float:left}
 .gnb_js .gnb_1da {text-align:center}
-.gnb_js .gnb_1dli_air a {float:none;background:#f7f7f2;color:#000}
+.gnb_js .gnb_1dli_air a {float:none;background:#f5f6fa;color:#000}
 .gnb_js .gnb_1dli_on a {float:none;border-color:#e0e5e9;background:#fff;color:#000}
 .gnb_js .gnb_2dul {position:absolute;top:35px;width:1px;height:1px;overflow:hidden}
 .gnb_js .gnb_2da {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}

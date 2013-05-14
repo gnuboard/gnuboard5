@@ -2,7 +2,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#f7f7f2;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#f5f6fa;font-size:0.75em;font-family:"dotum"}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -83,7 +83,7 @@ h2 {font-size:1.2em}
 .gnb_js #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_js .gnb_1dli {clear:none;position:relative;float:left;margin:0 0 0 -1px;border:1px solid #222;border-top:0;border-bottom:0}
 .gnb_js .gnb_1dli a {color:#fff;text-align:center}
-.gnb_js .gnb_1dli_air a {float:none;background:#f7f7f2;color:#000}
+.gnb_js .gnb_1dli_air a {float:none;background:#f5f6fa;color:#000}
 .gnb_js .gnb_1dli_on a {float:none;background:#fff;color:#000}
 .gnb_js .gnb_2dul {position:absolute;top:35px;width:1px;height:1px;overflow:hidden}
 .gnb_js .gnb_2dli a {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
