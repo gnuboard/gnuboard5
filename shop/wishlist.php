@@ -54,7 +54,7 @@ include_once('./_head.php');
 
         if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
-        $image = get_it_image($row['it_id'].'_s', 70, 70, '');
+        $image = get_it_image($row['it_id'], 70, 70);
 
         $s_del = '';
     ?>

@@ -177,7 +177,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_id&amp;search=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a><br>
             <?php echo $lines[$i]['od_time']; ?>
         </td>
-        <td class="td_it_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($lines[$i]['it_id'].'_s', 50, 50); ?><?php echo $it_name; ?></a></td>
+        <td class="td_it_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($lines[$i]['it_id'], 50, 50); ?><?php echo $it_name; ?></a></td>
         <td class="td_name">
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>"><?php echo cut_str($lines[$i]['od_name'],10,""); ?></a>
             <?php if ($lines[$i]['od_deposit_name'] != "") echo '<br>'.$lines[$i]['od_deposit_name']?>

@@ -15,7 +15,7 @@ for ($i=0; $row=sql_fetch_array($hresult); $i++)
     echo "<tr><td height=22><nobr style='display:block; overflow:hidden; width:170px;'>&nbsp;&nbsp;· ";
     $it_name = get_text($row['it_name']);
     // 이미지로 할 경우
-    //$it_name = get_it_image($row[it_id]."_s", 50, 50, $row[it_id]);
+    //$it_name = get_it_image($row[it_id], 50, 50, true);
     echo "<a href=\"".G4_SHOP_URL."/wishlist.php\">$it_name</a></nobr></td></tr>\n";
 }
 

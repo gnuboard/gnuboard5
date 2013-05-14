@@ -174,7 +174,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>
         </td>
-        <td rowspan="2"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?></a></td>
+        <td rowspan="2"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?></a></td>
         <td rowspan="2">
             <label for="ca_id_<?php echo $i; ?>" class="sound_only">분류</label>
             <select name="ca_id[<?php echo $i; ?>]" id="ca_id_<?php echo $i; ?>">

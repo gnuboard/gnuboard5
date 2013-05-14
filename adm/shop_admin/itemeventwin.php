@@ -35,7 +35,7 @@ include_once(G4_PATH.'/head.sub.php');
     <tr>
         <td>
             <a href="<?php echo $href; ?>" target="_blank">
-                <?php echo get_it_image($row['it_id'].'_s', 40, 40); ?>
+                <?php echo get_it_image($row['it_id'], 40, 40); ?>
                 <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?>
             </a>
         </td>

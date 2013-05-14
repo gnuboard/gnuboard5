@@ -20,6 +20,33 @@ if(intval(preg_replace("/[^0-9]/", "", $row['Type'])) != 20) {
     sql_query(" ALTER TABLE `{$g4['shop_wish_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
 }
 
+// 상품이미지 필드추가
+$sql = " select it_img1 from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_tel_inq` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img4` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img3` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img4` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img6` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img5` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img7` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img6` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img8` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img7` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img9` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img8` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img10` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img9` ", false);
+}
+
+// it_amount 를 it_price 로 변경
+/*
+$sql = " select it_price from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` CHANGE `it_amount` `it_price` INT(11) NOT NULL DEFAULT '0' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` CHANGE `it_amount2` `it_price2` INT(11) NOT NULL DEFAULT '0' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` CHANGE `it_amount3` `it_price3` INT(11) NOT NULL DEFAULT '0' ", false);
+}
+*/
+
 $html_title = "상품 ";
 
 if ($w == "")
@@ -428,7 +455,6 @@ $pg_anchor ='<ul class="anchor">
 <section id="anc_sitfrm_img" class="cbox">
     <h2>이미지</h2>
     <?php echo $pg_anchor; ?>
-    <p>이미지 자동생성 기능을 이용하시면, 이미지(대) 1장만 업로드 해서 자동으로 이미지(중), 이미지(소) 를 생성할 수 있습니다.</p>
 
     <table class="frm_tbl">
     <colgroup>
@@ -436,111 +462,34 @@ $pg_anchor ='<ul class="anchor">
         <col>
     </colgroup>
     <tbody>
-    <?php if (function_exists("imagecreatefromjpeg")) { ?>
+    <?php for($i=1; $i<=10; $i++) { ?>
     <tr>
-        <th scope="row"><label for="createimage">이미지 자동생성</label></th>
+        <th scope="row"><label for="it_img1">이미지 <?php echo $i; ?></label></th>
         <td>
-            <?php echo help("<strong>JPG 파일만 가능합니다.</strong> 이미지(대) 를 기준으로 이미지(중)과 이미지(소) 의 사이즈를 환경설정에서 정한 폭과 높이로 자동생성합니다.");?>
-            <input type="checkbox" name="createimage" value="1" id="createimage"> 사용
-        </td>
-    </tr>
-    <?php } ?>
-    <tr>
-        <th scope="row"><label for="it_limg1">이미지(대)</label></th>
-        <td>
-            <input type="file" name="it_limg1" id="it_limg1">
+            <input type="file" name="it_img<?php echo $i; ?>" id="it_img<?php echo $i; ?>">
             <?php
-            $limg1 = G4_DATA_PATH.'/item/'.$it['it_id'].'_l1';
-            if (file_exists($limg1)) {
-                $size = getimagesize($limg1);
+            $it_img = G4_DATA_PATH.'/item/'.$it['it_img'.$i];
+            if(is_file($it_img) && $it['it_img'.$i]) {
+                $size = @getimagesize($it_img);
             ?>
-            <label for="it_limg1_del"><span class="sound_only">이미지(대) </span>파일삭제</label>
-            <input type="checkbox" name="it_limg1_del" value="1">
-            <span class="sit_wimg_limg1"></span>
-            <div id="limg1" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_l1" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
-                <button type="button" class="sit_wimg_close">닫기</button>
-            </div>
-            <script>
-            $('<button type="button" id="it_limg1_view" class="btn_frmline sit_wimg_view">이미지(대) 확인</button>').appendTo('.sit_wimg_limg1');
-            </script>
-            <?php } ?>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_mimg">이미지(중)</label></th>
-        <td>
-            <?php echo help("이미지 자동생성 기능을 사용하지 않거나, 이미지를 업로드 하지 않으면 기본 noimage 로 출력합니다."); ?>
-            <input type="file" name="it_mimg" id="it_mimg">
-            <?php
-            $mimg = G4_DATA_PATH.'/item/'.$it['it_id'].'_m';
-            if (file_exists($mimg)) {
-                $size = getimagesize($mimg);
-            ?>
-            <label for="it_mimg_del"><span class="sound_only">이미지(중) </span>파일삭제</label>
-            <input type="checkbox" name="it_mimg_del" value="1" id="it_mimg_del">
-            <span class="sit_wimg_mimg"></span>
-            <div id="mimg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_m" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
-                <button type="button" class="sit_wimg_close">닫기</button>
-            </div>
-            <script>
-            $('<button type="button" id="it_mimg_view" class="btn_frmline sit_wimg_view">이미지(중) 확인</button>').appendTo('.sit_wimg_mimg');
-            </script>
-            <?php } ?>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_simg">이미지(소)</label></th>
-        <td>
-            <?php echo help("이미지 자동생성 기능을 사용하지 않거나, 이미지를 업로드 하지 않으면 기본 noimage 로 출력합니다."); ?>
-            <input type="file" name="it_simg" id="it_simg">
-            <?php
-            $simg = G4_DATA_PATH.'/item/'.$it['it_id'].'_s';
-            if (file_exists($simg)) {
-                $size = getimagesize($simg);
-            ?>
-            <label for="it_simg_del"><span class="sound_only">이미지(소) </span>파일삭제</label>
-            <input type="checkbox" name="it_simg_del" value="1" id="it_simg_del">
-            <span class="sit_wimg_simg"></span>
-            <div id="simg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_s" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
-                <button type="button" class="sit_wimg_close">닫기</button>
-            </div>
-            <script>
-            $('<button type="button" id="it_simg_view" class="btn_frmline sit_wimg_view">이미지(소) 확인</button>').appendTo('.sit_wimg_simg');
-            </script>
-            <?php } ?>
-        </td>
-    </tr>
-    <?php for ($i=2; $i<=5; $i++) { // 이미지(대)는 5개 ?>
-    <tr>
-        <th scope="row"><label for="it_limg<?php echo $i; ?>">이미지(대)<?php echo $i; ?></label></th>
-        <td>
-            <input type="file" name="it_limg<?php echo $i; ?>" id="it_limg<?php echo $i; ?>">
-            <?php
-            $limg = G4_DATA_PATH.'/item/'.$it['it_id'].'_l'.$i;
-            if (file_exists($limg)) {
-                $size = getimagesize($limg);
-            ?>
-            <label for="it_limg<?php echo $i; ?>_del"><span class="sound_only">이미지(대)<?php echo $i; ?> </span>파일삭제</label>
-            <input type="checkbox" name="it_limg<?php echo $i; ?>_del" value="1" id="it_limg<?php echo $i; ?>_del">
+            <label for="it_img<?php echo $i; ?>_del"><span class="sound_only">이미지 <?php echo $i; ?> </span>파일삭제</label>
+            <input type="checkbox" name="it_img<?php echo $i; ?>_del" id="it_img<?php echo $i; ?>_del" value="1">
             <span class="sit_wimg_limg<?php echo $i; ?>"></span>
             <div id="limg<?php echo $i; ?>" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_l<?php echo $i; ?>">
+                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_img'.$i]; ?>" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
-            <?php } ?>
             <script>
-            $('<button type="button" id="it_limg<?php echo $i; ?>_view" class="btn_frmline sit_wimg_view">이미지(대)<?php echo $i; ?> 확인</button>').appendTo('.sit_wimg_limg<?php echo $i; ?>');
+            $('<button type="button" id="it_limg<?php echo $i; ?>_view" class="btn_frmline sit_wimg_view">이미지<?php echo $i; ?> 확인</button>').appendTo('.sit_wimg_limg<?php echo $i; ?>');
             </script>
+            <?php } ?>
         </td>
     </tr>
     <?php } ?>
     </tbody>
     </table>
 
-    <?php if (file_exists($limg1) || file_exists($mimg) || file_exists($simg)) { ?>
+    <?php if ($w == 'u') { ?>
     <script>
     $(".banner_or_img").addClass("sit_wimg");
     $(function() {
@@ -548,16 +497,14 @@ $pg_anchor ='<ul class="anchor">
             var sit_wimg_id = $(this).attr("id").split("_");
             var $img_display = $("#"+sit_wimg_id[1]);
 
-            if(sit_wimg_id[1].search("limg") > -1) {
-                var $img = $("#"+sit_wimg_id[1]);
-                var width = $img_display.width();
-                var height = $img_display.height();
-                if(width > 700) {
-                    var img_width = 700;
-                    var img_height = Math.round((img_width * height) / width);
+            var $img = $("#"+sit_wimg_id[1]);
+            var width = $img_display.width();
+            var height = $img_display.height();
+            if(width > 700) {
+                var img_width = 700;
+                var img_height = Math.round((img_width * height) / width);
 
-                    $img_display.children("img").width(img_width).height(img_height);
-                }
+                $img_display.children("img").width(img_width).height(img_height);
             }
 
             $img_display.toggle();

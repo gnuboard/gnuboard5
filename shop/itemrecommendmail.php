@@ -40,7 +40,7 @@ $from_name = $member['mb_name'];
 $from_email = $member['mb_email'];
 $it_id = $it['it_id'];
 $it_name = $it['it_name'];
-$it_mimg = $it['it_id']."_m";
+$it_mimg = get_it_image($it_id, $default['de_mimg_width'], $default['de_mimg_height']);
 
 ob_start();
 include G4_SHOP_PATH.'/mail/itemrecommend.mail.php';

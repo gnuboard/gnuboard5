@@ -31,7 +31,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $list[$i]['g_dir']         = G4_URL;
     $list[$i]['it_id']         = $row['it_id'];
-    $list[$i]['it_simg']       = get_it_image("{$row['it_id']}_s", $default['de_simg_width'], $default['de_simg_height']);
+    $list[$i]['it_simg']       = get_it_image($row['it_id'], $default['de_simg_width'], $default['de_simg_height']);
     $list[$i]['it_name']       = $row['it_name'];
     $list[$i]['it_origin']     = $row['it_origin'];
     $list[$i]['it_opt']        = print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);

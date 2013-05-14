@@ -40,7 +40,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         $thumb = new g4_thumb(G4_DATA_PATH.'/itemuse', 500);
         $is_content = $thumb->run($row['is_content']);
         $is_time = substr($row['is_time'], 2, 14);
-        $small_image = $row['it_id']."_s";
+        $small_image = $row['it_id'];
 
         $row2 = sql_fetch(" select it_name from {$g4['shop_item_table']} where it_id = '{$row['it_id']}' ");
         $it_href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";

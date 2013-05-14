@@ -132,7 +132,7 @@ $total_count = $row['cnt'];
                    from {$g4['shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
         $row = sql_fetch($sql);
 
-        $image = get_it_image($row['it_id'].'_s', (int)($default['de_simg_width']), (int)($default['de_simg_height']), $row['it_id']);
+        $image = get_it_image($row['it_id'], (int)($default['de_simg_width']), (int)($default['de_simg_height']), true);
     ?>
     <tr>
         <td class="ssch_it_img"><?php echo $image; ?></td>

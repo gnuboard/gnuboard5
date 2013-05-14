@@ -1,4 +1,6 @@
 <?php
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
+
 //==============================================================================
 // 쇼핑몰 함수 모음 시작
 //==============================================================================
@@ -52,12 +54,95 @@ function get_image($img, $width=0, $height=0, $img_id='')
 }
 
 // 상품 이미지를 얻는다
-function get_it_image($img, $width=0, $height=0, $id='', $img_id='')
+function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='')
 {
-    $str = get_image($img, $width, $height, $img_id);
-    if ($id) {
-        $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$id.'">'.$str.'</a>';
+    global $g4;
+
+    if(!$it_id || !$width)
+        return '';
+
+    $sql = " select it_id, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+                from {$g4['shop_item_table']} where it_id = '$it_id' ";
+    $row = sql_fetch($sql);
+
+    if(!$row['it_id'])
+        return '';
+
+    for($i=1;$i<=10; $i++) {
+        $file = G4_DATA_PATH.'/item/'.$row['it_img'.$i];
+        if(is_file($file) && $row['it_img'.$i]) {
+            $size = @getimagesize($file);
+            if($size[2] < 1 || $size[2] > 3)
+                continue;
+
+            $filename = basename($file);
+            $filepath = dirname($file);
+            $img_width = $size[0];
+            $img_height = $size[1];
+
+            break;
+        }
     }
+
+    if($img_width && !$height) {
+        $height = round(($width * $img_height) / $img_width);
+    }
+
+    if($filename) {
+        //thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create, $is_crop=false, $crop_mode='center', $is_sharpen=true, $um_value='80/0.5/3')
+        $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, false, 'center', true, $um_value='80/0.5/3');
+    }
+
+    if($thumb) {
+        $file_url = str_replace(G4_PATH, G4_URL, $filepath.'/'.$thumb);
+        $img = '<img src="'.$file_url.'" width="'.$width.'" height="'.$height.'" alt=""';
+    } else {
+        $img = '<img src="'.G4_SHOP_URL.'/img/no_image.gif" width="'.$width.'"';
+        if($height)
+            $img .= ' height="'.$height.'"';
+        $img .= ' alt=""';
+    }
+
+    if($img_id)
+        $img .= ' id="'.$img_id.'"';
+    $img .= '>';
+
+    if($anchor)
+        $img = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$it_id.'">'.$img.'</a>';
+
+    return $img;
+}
+
+function get_it_thumbnail($img, $width, $height=0, $id='')
+{
+    $str = '';
+
+    $file = G4_DATA_PATH.'/item/'.$img;
+    if(is_file($file))
+        $size = @getimagesize($file);
+
+    if($size[2] < 1 || $size[2] > 3)
+        return '';
+
+    $img_width = $size[0];
+    $img_height = $size[1];
+    $filename = basename($file);
+    $filepath = dirname($file);
+
+    if($img_width && !$height) {
+        $height = round(($width * $img_height) / $img_width);
+    }
+
+    $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, false, 'center', true, $um_value='80/0.5/3');
+
+    if($thumb) {
+        $file_url = str_replace(G4_PATH, G4_URL, $filepath.'/'.$thumb);
+        $str = '<img src="'.$file_url.'" width="'.$width.'" height="'.$height.'"';
+        if($id)
+            $str .= ' id="'.$id.'"';
+        $str .= ' alt="">';
+    }
+
     return $str;
 }
 
@@ -151,6 +236,36 @@ function htmlspecialchars2($str)
     $trans = array("\"" => "&#034;", "'" => "&#039;", "<"=>"&#060;", ">"=>"&#062;");
     $str = strtr($str, $trans);
     return $str;
+}
+
+// 상품이미지 업로드
+function it_img_upload($srcfile, $filename, $dir)
+{
+    if($filename == '')
+        return '';
+
+    $size = @getimagesize($srcfile);
+    if($size[2] < 1 || $size[2] > 3)
+        return '';
+
+    if(!is_dir($dir)) {
+        @mkdir($dir, 0707);
+        @chmod($dir, 0707);
+    }
+
+    $filename = preg_replace("/\s+/", "", $filename);
+    $filename = preg_replace("/[#\&\+\-%@=\/\\:;,'\"\^`~\|\!\?\*\$#<>\(\)\[\]\{\}]/", "", $filename);
+
+    $filename = preg_replace_callback(
+                          "/[가-힣]+/",
+                          create_function('$matches', 'return base64_encode($matches[0]);'),
+                          $filename);
+
+    upload_file($srcfile, $filename, $dir);
+
+    $file = str_replace(G4_DATA_PATH.'/item/', '', $dir.'/'.$filename);
+
+    return $file;
 }
 
 // 파일을 업로드 함

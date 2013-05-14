@@ -125,7 +125,7 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
         $answer = $row['iq_answer'] ? 'Y' : '&nbsp;';
      ?>
     <tr>
-        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
         <td class="td_name"><?php echo $name; ?></td>
         <td class="sit_qa_subject"><?php echo $row['iq_subject']; ?></td>
         <td class="sit_qa_answer"><?php echo $answer; ?></td>

@@ -169,7 +169,7 @@ if (isset($ev_set)) {
             <input type="checkbox" name="ev_chk[<?php echo $i; ?>]" value="1" <?php echo ($row['ev_id'] ? "checked" : ""); ?>>
         </td>
         <td class="td_bignum"><a href="<?php echo $href; ?>"><?php echo $row['it_id']; ?></a></td>
-        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
     </tr>
 
     <?php

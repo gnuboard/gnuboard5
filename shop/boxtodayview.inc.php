@@ -25,7 +25,7 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
         $j = $i - 1;
         if ($j%$tv_div['img_length']==0) $k++;
         $it_name = get_text(addslashes($rowx['it_name']));
-        $img = get_it_image($tv_it_id."_s", $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
+        $img = get_it_image($tv_it_id, $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
         if ($i==1) echo '<ul id="stv_ul">'.PHP_EOL;
         echo '<li class="stv_item c'.$k.'">'.PHP_EOL;
         echo $img;

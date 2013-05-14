@@ -25,7 +25,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
 
         <p style="<?php echo $cont_st; ?>"><b><?php echo $from_name; ?></b> 님께서 추천하신 상품입니다.</p>
 
-        <div style="text-align:center"><a href="<?php echo G4_SHOP_URL.'/item.php?it_id='.$it_id; ?>" target="_blank"><img src="<?php echo G4_DATA_URL.'/item/'.$it_mimg; ?>" alt=""></a></div>
+        <div style="text-align:center"><a href="<?php echo G4_SHOP_URL.'/item.php?it_id='.$it_id; ?>" target="_blank"><?php echo $it_mimg; ?></a></div>
 
         <p style="<?php echo $cont_st; ?>"><strong><?php echo $subject; ?></strong></p>
 

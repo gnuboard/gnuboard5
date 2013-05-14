@@ -114,7 +114,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     <tr>
         <td class="td_num"><?php echo $num; ?></td>
-        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'].'_s', 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
         <td class="td_num"><?php echo $row['it_id_cnt']; ?></td>
     </tr>
     <?php

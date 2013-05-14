@@ -164,7 +164,7 @@ $pg_anchor = '<ul class="anchor">
         else if ($row['ct_status']=='취소' || $row['ct_status']=='반품' || $row['ct_status']=='품절')
             $t_ct_amount['취소'] += $row['ct_amount'] * $row['ct_qty'];
 
-        $image = get_it_image("$row[it_id]_s", (int)($default['de_simg_width'] / $image_rate), (int)($default['de_simg_height'] / $image_rate), '');
+        $image = get_it_image($row['it_id'], (int)($default['de_simg_width'] / $image_rate), (int)($default['de_simg_height'] / $image_rate));
     ?>
 
     <tr>

@@ -236,7 +236,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <tr class="tr_sodr_item">
             <td headers="sodr_all_item" colspan="5">
                 <ul>
-                    <li><a href="<?php echo $href; ?>"><?php echo get_it_image($row2['it_id'].'_s', 50, 50); ?><?php echo $it_name; ?></a></li>
+                    <li><a href="<?php echo $href; ?>"><?php echo get_it_image($row2['it_id'], 50, 50); ?><?php echo $it_name; ?></a></li>
                 </ul>
             </td>
             <td headers="sodr_all_cost"><?php echo number_format($row2['ct_amount']); ?></td>

@@ -7,16 +7,17 @@ if (G4_IS_MOBILE) {
 }
 
 $it_id = $_GET['it_id'];
-$img = $_GET['img'];
+$no = $_GET['no'];
 
-$sql = " select it_id, it_name from {$g4['shop_item_table']} where it_id='$it_id' ";
+$sql = " select it_id, it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+            from {$g4['shop_item_table']} where it_id='$it_id' ";
 $row = sql_fetch_array(sql_query($sql));
 
 if(!$row['it_id'])
     alert_close('상품정보가 존재하지 않습니다.');
 
-$imagefile = G4_DATA_PATH."/item/$img";
-$imagefileurl = G4_DATA_URL."/item/$img";
+$imagefile = G4_DATA_PATH.'/item/'.$row['it_img'.$no];
+$imagefileurl = G4_DATA_URL.'/item/'.$row['it_img'.$no];
 $size = getimagesize($imagefile);
 
 $g4['title'] = "{$row['it_name']} ($it_id)";
@@ -27,23 +28,40 @@ include_once(G4_PATH.'/head.sub.php');
     <h1>상품 이미지 새 창 보기</h1>
 
     <div id="sit_pvi_nwbig">
-        <a href="javascript:window.close();">
-            <img src="<?php echo $imagefileurl; ?>" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>" alt="<?php echo $row['it_name']; ?>" id="largeimage">
-        </a>
+        <?php
+        $thumbnails = array();
+        for($i=1; $i<=10; $i++) {
+            if(!$row['it_img'.$i])
+                continue;
+
+            $file = G4_DATA_PATH.'/item/'.$row['it_img'.$i];
+            if(is_file($file)) {
+                // 썸네일
+                $thumb = get_it_thumbnail($row['it_img'.$i], 60, 60);
+                $thumbnails[$i] = $thumb;
+                $imageurl = G4_DATA_URL.'/item/'.$row['it_img'.$i];
+        ?>
+        <span>
+            <a href="javascript:window.close();">
+                <img src="<?php echo $imageurl; ?>" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>" alt="<?php echo $row['it_name']; ?>" id="largeimage">
+            </a>
+        </span>
+        <?php
+            }
+        }
+        ?>
     </div>
 
     <?php
-    for ($i=1; $i<=5; $i++)
-    {
-        if ($i == 1) echo '<ul>';
-        if (file_exists(G4_DATA_PATH."/item/{$it_id}_l{$i}")) {
-            $id = $it_id.'_l'.$i;
-    ?>
-        <li><a href="<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it_id; ?>&amp;img=<?php echo $id; ?>" id="<?php echo $id; ?>" class="img_thumb"><img id="large<?php echo $i; ?>" src="<?php echo G4_DATA_URL; ?>/item/<?php echo $id; ?>" alt=""></a></li>
-    <?php
+    $total_count = count($thumbnails);
+    $thumb_count = 0;
+    if($total_count > 0) {
+        echo '<ul>';
+        foreach($thumbnails as $key=>$val) {
+            echo '<li><a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it_id.'&amp;no='.$key.'" class="img_thumb">'.$val.'</a></li>';
         }
+        echo '</ul>';
     }
-    if ($i > 1) echo '</ul>';
     ?>
 
     <div class="btn_win">
@@ -58,10 +76,13 @@ $(function(){
     var h = <?php echo $size[1]; ?> + 210;
     window.resizeTo(w, h);
 
+    $("#sit_pvi_nwbig span:eq("+<?php echo ($no - 1); ?>+")").addClass("visible");
+
     // 이미지 미리보기
-    $(".img_thumb").bind("hover focus", function(){
-        var img_src = $(this).attr("id");
-        $("#sit_pvi_nwbig img").attr("src","<?php echo G4_DATA_URL; ?>/item/"+img_src); // 이미지 소스 교체
+    $(".img_thumb").bind("mouseover focus", function(){
+        var idx = $(".img_thumb").index($(this));
+        $("#sit_pvi_nwbig span.visible").removeClass("visible");
+        $("#sit_pvi_nwbig span:eq("+idx+")").addClass("visible");
     });
 });
 </script>

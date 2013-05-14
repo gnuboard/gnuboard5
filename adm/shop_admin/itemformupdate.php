@@ -16,6 +16,11 @@ function itemdelete($it_id)
 {
     global $g4, $is_admin;
 
+    $sql = " select it_explan, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+                from {$g4['shop_item_table']} where it_id = '$it_id' ";
+    $it = sql_fetch($sql);
+
+    /*
     $str = $comma = $od_id = "";
     $sql = " select b.od_id
                from {$g4['shop_cart_table']} a,
@@ -39,16 +44,16 @@ function itemdelete($it_id)
     {
         alert("이 상품과 관련된 주문이 총 {$i} 건 존재하므로 주문서를 삭제한 후 상품을 삭제하여 주십시오.\\n\\n$str", "./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=$od_id");
     }
+    */
 
-
-	// 상품 이미지 삭제
-    @unlink(G4_DATA_PATH."/item/$it_id"."_s");
-    @unlink(G4_DATA_PATH."/item/$it_id"."_m");
-    @unlink(G4_DATA_PATH."/item/$it_id"."_l1");
-    @unlink(G4_DATA_PATH."/item/$it_id"."_l2");
-    @unlink(G4_DATA_PATH."/item/$it_id"."_l3");
-    @unlink(G4_DATA_PATH."/item/$it_id"."_l4");
-    @unlink(G4_DATA_PATH."/item/$it_id"."_l5");
+    // 상품 이미지 삭제
+    for($i=1; $i<=10; $i++) {
+        $file = G4_DATA_PATH.'/item/'.$it['it_img'.$i];
+        if(is_file($file) && $it['it_img'.$i]) {
+            @unlink($file);
+            @rmdir(dirname($file));
+        }
+    }
 
     // 상, 하단 이미지 삭제
     @unlink(G4_DATA_PATH."/item/$it_id"."_h");
@@ -74,17 +79,10 @@ function itemdelete($it_id)
     $sql = " delete from {$g4['shop_item_relation_table']} where it_id = '$it_id' or it_id2 = '$it_id' ";
 	sql_query($sql);
 
-    // 상품요약정보삭제
-    $sql = " delete from {$g4['shop_item_info_table']} where it_id = '$it_id' ";
-	sql_query($sql);
-
 
     //------------------------------------------------------------------------
     // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
     //------------------------------------------------------------------------
-    $sql = " select it_explan from {$g4['shop_item_table']} where it_id = '$it_id' ";
-    $it = sql_fetch($sql);
-
     $imgs = get_editor_image($it['it_explan']);
 
     for($i=0;$i<count($imgs[1]);$i++) {
@@ -162,53 +160,119 @@ if ($cnt > 0) {
 if ($it_himg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_h");
 if ($it_timg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_t");
 
-if ($it_simg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_s");
-if ($it_mimg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_m");
-if ($it_limg1_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l1");
-if ($it_limg2_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l2");
-if ($it_limg3_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l3");
-if ($it_limg4_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l4");
-if ($it_limg5_del) @unlink(G4_DATA_PATH."/item/{$it_id}_l5");
+// 파일정보
+if($w == "u") {
+    $sql = " select it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+                from {$g4['shop_item_table']}
+                where it_id = '$it_id' ";
+    $file = sql_fetch($sql);
 
-// 이미지(대)만 업로드하고 자동생성 체크일 경우 이미지(중,소) 자동생성
-if ($createimage && $_FILES['it_limg1']['name'])
-{
-    upload_file($_FILES['it_limg1']['tmp_name'], $it_id."_l1", G4_DATA_PATH."/item");
+    $it_img1    = $file['it_img1'];
+    $it_img2    = $file['it_img2'];
+    $it_img3    = $file['it_img3'];
+    $it_img4    = $file['it_img4'];
+    $it_img5    = $file['it_img5'];
+    $it_img6    = $file['it_img6'];
+    $it_img7    = $file['it_img7'];
+    $it_img8    = $file['it_img8'];
+    $it_img9    = $file['it_img9'];
+    $it_img10   = $file['it_img10'];
+}
 
-    $image = G4_DATA_PATH."/item/$it_id"."_l1";
-    $size = @getimagesize($image);
-    $src = @imagecreatefromjpeg($image);
+$it_img_dir = G4_DATA_PATH.'/item';
 
-    if (!$src)
-    {
-        echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
-        echo "<script>alert('이미지(대)가 JPG 파일이 아닙니다.');</script>";
-    }
-    else
-    {
-        // gd 버전에 따라
-        if (function_exists("imagecopyresampled")) {
-            // 이미지(소) 생성
-            $dst = imagecreatetruecolor($default['de_simg_width'], $default['de_simg_height']);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $default['de_simg_width'], $default['de_simg_height'], $size[0], $size[1]);
-        } else {
-            // 이미지(소) 생성
-            $dst = imagecreate($default['de_simg_width'], $default['de_simg_height']);
-            imagecopyresized($dst, $src, 0, 0, 0, 0, $default['de_simg_width'], $default['de_simg_height'], $size[0], $size[1]);
-        }
-        imagejpeg($dst, G4_DATA_PATH."/item/$it_id"."_s", 90);
+// 파일삭제
+if ($it_img1_del) {
+    @unlink($it_img_dir.'/'.$it_img1);
+    $it_img1 = '';
+}
+if ($it_img2_del) {
+    @unlink($it_img_dir.'/'.$it_img2);
+    $it_img2 = '';
+}
+if ($it_img3_del) {
+    @unlink($it_img_dir.'/'.$it_img3);
+    $it_img3 = '';
+}
+if ($it_img4_del) {
+    @unlink($it_img_dir.'/'.$it_img4);
+    $it_img4 = '';
+}
+if ($it_img5_del) {
+    @unlink($it_img_dir.'/'.$it_img5);
+    $it_img5 = '';
+}
+if ($it_img6_del) {
+    @unlink($it_img_dir.'/'.$it_img6);
+    $it_img6 = '';
+}
+if ($it_img7_del) {
+    @unlink($it_img_dir.'/'.$it_img7);
+    $it_img7 = '';
+}
+if ($it_img8_del) {
+    @unlink($it_img_dir.'/'.$it_img8);
+    $it_img8 = '';
+}
+if ($it_img9_del) {
+    @unlink($it_img_dir.'/'.$it_img9);
+    $it_img9 = '';
+}
+if ($it_img10_del) {
+    @unlink($it_img_dir.'/'.$it_img10);
+    $it_img10 = '';
+}
 
-        if (function_exists("imagecopyresampled")) {
-            // 이미지(중) 생성
-            $dst = imagecreatetruecolor($default['de_mimg_width'], $default['de_mimg_height']);
-            imagecopyresampled($dst, $src, 0, 0, 0, 0, $default['de_mimg_width'], $default['de_mimg_height'], $size[0], $size[1]);
-        } else {
-            // 이미지(중) 생성
-            $dst = imagecreate($default['de_mimg_width'], $default['de_mimg_height']);
-            imagecopyresized($dst, $src, 0, 0, 0, 0, $default['de_mimg_width'], $default['de_mimg_height'], $size[0], $size[1]);
-        }
-        @imagejpeg($dst, G4_DATA_PATH."/item/$it_id"."_m", 90);
-    }
+// 이미지업로드
+if ($_FILES['it_img1']['name']) {
+    if($w == 'u' && $it_img1)
+        @unlink($it_img_dir.'/'.$it_img1);
+    $it_img1 = it_img_upload($_FILES['it_img1']['tmp_name'], $_FILES['it_img1']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img2']['name']) {
+    if($w == 'u' && $it_img2)
+        @unlink($it_img_dir.'/'.$it_img2);
+    $it_img2 = it_img_upload($_FILES['it_img2']['tmp_name'], $_FILES['it_img2']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img3']['name']) {
+    if($w == 'u' && $it_img3)
+        @unlink($it_img_dir.'/'.$it_img3);
+    $it_img3 = it_img_upload($_FILES['it_img3']['tmp_name'], $_FILES['it_img3']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img4']['name']) {
+    if($w == 'u' && $it_img4)
+        @unlink($it_img_dir.'/'.$it_img4);
+    $it_img4 = it_img_upload($_FILES['it_img4']['tmp_name'], $_FILES['it_img4']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img5']['name']) {
+    if($w == 'u' && $it_img5)
+        @unlink($it_img_dir.'/'.$it_img5);
+    $it_img5 = it_img_upload($_FILES['it_img5']['tmp_name'], $_FILES['it_img5']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img6']['name']) {
+    if($w == 'u' && $it_img6)
+        @unlink($it_img_dir.'/'.$it_img6);
+    $it_img6 = it_img_upload($_FILES['it_img6']['tmp_name'], $_FILES['it_img6']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img7']['name']) {
+    if($w == 'u' && $it_img7)
+        @unlink($it_img_dir.'/'.$it_img7);
+    $it_img7 = it_img_upload($_FILES['it_img7']['tmp_name'], $_FILES['it_img7']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img8']['name']) {
+    if($w == 'u' && $it_img8)
+        @unlink($it_img_dir.'/'.$it_img8);
+    $it_img8 = it_img_upload($_FILES['it_img8']['tmp_name'], $_FILES['it_img8']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img9']['name']) {
+    if($w == 'u' && $it_img9)
+        @unlink($it_img_dir.'/'.$it_img9);
+    $it_img9 = it_img_upload($_FILES['it_img9']['tmp_name'], $_FILES['it_img9']['name'], $it_img_dir.'/'.$it_id);
+}
+if ($_FILES['it_img10']['name']) {
+    if($w == 'u' && $it_img10)
+        @unlink($it_img_dir.'/'.$it_img10);
+    $it_img10 = it_img_upload($_FILES['it_img10']['tmp_name'], $_FILES['it_img10']['name'], $it_img_dir.'/'.$it_id);
 }
 
 if ($w == "" || $w == "u")
@@ -278,7 +342,17 @@ $sql_common = " ca_id               = '$ca_id',
                 it_time             = '".G4_TIME_YMDHIS."',
                 it_ip               = '{$_SERVER['REMOTE_ADDR']}',
                 it_order            = '$it_order',
-                it_tel_inq          = '$it_tel_inq'
+                it_tel_inq          = '$it_tel_inq',
+                it_img1             = '$it_img1',
+                it_img2             = '$it_img2',
+                it_img3             = '$it_img3',
+                it_img4             = '$it_img4',
+                it_img5             = '$it_img5',
+                it_img6             = '$it_img6',
+                it_img7             = '$it_img7',
+                it_img8             = '$it_img8',
+                it_img9             = '$it_img9',
+                it_img10            = '$it_img10'
                 ";
 
 if ($w == "")
@@ -354,17 +428,6 @@ if ($w == "" || $w == "u")
             sql_query($sql, false);
         }
     }
-
-    if ($_FILES['it_simg']['name'])  upload_file($_FILES['it_simg']['tmp_name'],  $it_id."_s",  G4_DATA_PATH."/item");
-    if ($_FILES['it_mimg']['name'])  upload_file($_FILES['it_mimg']['tmp_name'],  $it_id."_m",  G4_DATA_PATH."/item");
-    if ($_FILES['it_limg1']['name']) upload_file($_FILES['it_limg1']['tmp_name'], $it_id."_l1", G4_DATA_PATH."/item");
-    if ($_FILES['it_limg2']['name']) upload_file($_FILES['it_limg2']['tmp_name'], $it_id."_l2", G4_DATA_PATH."/item");
-    if ($_FILES['it_limg3']['name']) upload_file($_FILES['it_limg3']['tmp_name'], $it_id."_l3", G4_DATA_PATH."/item");
-    if ($_FILES['it_limg4']['name']) upload_file($_FILES['it_limg4']['tmp_name'], $it_id."_l4", G4_DATA_PATH."/item");
-    if ($_FILES['it_limg5']['name']) upload_file($_FILES['it_limg5']['tmp_name'], $it_id."_l5", G4_DATA_PATH."/item");
-
-    if ($_FILES['it_himg']['name'])  upload_file($_FILES['it_himg']['tmp_name'], $it_id."_h", G4_DATA_PATH."/item");
-    if ($_FILES['it_timg']['name'])  upload_file($_FILES['it_timg']['tmp_name'], $it_id."_t", G4_DATA_PATH."/item");
 }
 
 $qstr = "$qstr&amp;sca=$sca&amp;page=$page";
@@ -372,7 +435,6 @@ $qstr = "$qstr&amp;sca=$sca&amp;page=$page";
 if ($w == "u") {
     goto_url("./itemform.php?w=u&amp;it_id=$it_id&amp;$qstr");
 } else if ($w == "d")  {
-    // 091123 추가 utf-8
     $qstr = "ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx)."&amp;save_stx=".urlencode($save_stx);
     goto_url("./itemlist.php?$qstr");
 }
@@ -382,7 +444,7 @@ echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
 <script>
     if (confirm("계속 입력하시겠습니까?"))
         //location.href = "<?="./itemform.php?it_id=$it_id&amp;sort1=$sort1&amp;sort2=$sort2&amp;sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page"?>";
-        location.href = "<?php echo "./itemform.php?it_id=$it_id&amp;$qstr"; ?>";
+        location.href = "<?php echo "./itemform.php?$qstr"; ?>";
     else
         location.href = "<?php echo "./itemlist.php?$qstr"; ?>";
 </script>
