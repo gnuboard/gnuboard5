@@ -48,7 +48,7 @@ a:active {color:#000;text-decoration:underline}
 .cke_sc_def dd {width:30%}
 
 /* 상단 레이아웃 */
-#hd {height:73px;border-top:3px solid #151515;background:#fff}
+#hd {border-top:3px solid #151515;background:#fff}
 #hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
