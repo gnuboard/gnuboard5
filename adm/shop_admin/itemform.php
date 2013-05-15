@@ -32,7 +32,8 @@ if(!$result) {
 $sql = " select it_img1 from {$g4['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_info_value`,
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_info_value`,
                     ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1`,
                     ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2`,
                     ADD `it_img4` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img3`,
