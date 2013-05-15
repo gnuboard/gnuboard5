@@ -163,7 +163,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .empty_list {padding:85px 0;text-align:center}
 
 /* 필수입력 */
-.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
+.required {background:url('../img/wrest.gif') #fff top right no-repeat !important}
 
 /* 폼 테이블 */
 .frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -171,7 +171,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .frm_tbl th {padding-left:10px;width:100px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
 .frm_tbl td {padding:7px 10px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;background:transparent}
 .frm_tbl textarea,
-.frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
+.frm_input {padding:2px 2px 3px;border:1px solid #999;background:#fff;vertical-align:middle}
 .frm_tbl textarea {width:90%;height:150px}
 .frm_address {display:block;margin-top:5px}
 .frm_file {display:block;margin-bottom:5px}
