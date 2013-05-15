@@ -1,6 +1,4 @@
 <?php
-include_once(G4_LIB_PATH.'/thumbnail.lib.php');
-
 //==============================================================================
 // 쇼핑몰 함수 모음 시작
 //==============================================================================
@@ -913,6 +911,23 @@ function get_sns_share_link($sns, $url, $title, $img)
     }
 
     return $str;
+}
+
+// 상품이미지 썸네일 삭제
+function delete_item_thumbnail($dir, $file)
+{
+    if(!$dir || !$file)
+        return;
+
+    $filename = preg_replace("/\.[^\.]+$/i", "", $file); // 확장자제거
+
+    $files = glob($dir.'/thumb-'.$filename.'*');
+
+    if(is_array($files)) {
+        foreach($files as $thumb_file) {
+            @unlink($thumb_file);
+        }
+    }
 }
 //==============================================================================
 // 쇼핑몰 함수 모음 끝

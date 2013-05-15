@@ -20,20 +20,29 @@ if(intval(preg_replace("/[^0-9]/", "", $row['Type'])) != 20) {
     sql_query(" ALTER TABLE `{$g4['shop_wish_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
 }
 
+// 상품요약정보 필드추가
+$sql = " select it_info_gubun from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_info_gubun` VARCHAR(50) NOT NULL DEFAULT '' AFTER `it_tel_inq`,
+                    ADD `it_info_value` TEXT NOT NULL AFTER `it_info_gubun` ", false);
+}
+
 // 상품이미지 필드추가
 $sql = " select it_img1 from {$g4['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_tel_inq` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img4` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img3` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img4` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img6` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img5` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img7` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img6` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img8` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img7` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img9` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img8` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img10` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img9` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_info_value`,
+                    ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1`,
+                    ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2`,
+                    ADD `it_img4` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img3`,
+                    ADD `it_img5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img4`,
+                    ADD `it_img6` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img5`,
+                    ADD `it_img7` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img6`,
+                    ADD `it_img8` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img7`,
+                    ADD `it_img9` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img8`,
+                    ADD `it_img10` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img9` ", false);
 }
 
 // it_amount 를 it_price 로 변경
@@ -152,6 +161,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_cate">상품분류</a></li>
 <li><a href="#anc_sitfrm_ini">기본정보</a></li>
+<li><a href="#anc_sitfrm_compact">요약정보</a></li>
 <li><a href="#anc_sitfrm_cost">가격 및 재고</a></li>
 <li><a href="#anc_sitfrm_img">상품이미지</a></li>
 <li><a href="#anc_sitfrm_relation">관련상품</a></li>
@@ -403,6 +413,27 @@ $pg_anchor ='<ul class="anchor">
     </tbody>
     </table>
 </section>
+
+<section id="anc_sitfrm_compact" class="cbox">
+    <h2>상품요약정보</h2>
+    <?php echo $pg_anchor; ?>
+    <div id="compact_info_form"><?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
+</section>
+
+<script>
+$(function(){
+    $("#it_info_gubun").live("change", function() {
+        var gubun = $(this).val();
+        $.post(
+            "<?php echo G4_ADMIN_URL; ?>/shop_admin/iteminfo.php",
+            { it_id: "<?php echo $it['it_id']; ?>", gubun: gubun },
+            function(data) {
+                $("#compact_info_form").empty().html(data);
+            }
+        );
+    });
+});
+</script>
 
 <section id="anc_sitfrm_cost" class="cbox">
     <h2>가격 및 재고</h2>

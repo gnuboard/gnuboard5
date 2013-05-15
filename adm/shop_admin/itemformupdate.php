@@ -16,7 +16,7 @@ function itemdelete($it_id)
 {
     global $g4, $is_admin;
 
-    $sql = " select it_explan, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+    $sql = " select it_explan, it_mobile_explan, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
                 from {$g4['shop_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
@@ -51,7 +51,7 @@ function itemdelete($it_id)
         $file = G4_DATA_PATH.'/item/'.$it['it_img'.$i];
         if(is_file($file) && $it['it_img'.$i]) {
             @unlink($file);
-            @rmdir(dirname($file));
+            delete_item_thumbnail(dirname($file), basename($file));
         }
     }
 
@@ -84,6 +84,21 @@ function itemdelete($it_id)
     // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
     //------------------------------------------------------------------------
     $imgs = get_editor_image($it['it_explan']);
+
+    for($i=0;$i<count($imgs[1]);$i++) {
+        $p = parse_url($imgs[1][$i]);
+        if(strpos($p['path'], "/data/") != 0)
+            $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        else
+            $data_path = $p['path'];
+
+        $destfile = G4_PATH.$data_path;
+
+        if(is_file($destfile))
+            @unlink($destfile);
+    }
+
+    $imgs = get_editor_image($it['it_mobile_explan']);
 
     for($i=0;$i<count($imgs[1]);$i++) {
         $p = parse_url($imgs[1][$i]);
@@ -183,95 +198,145 @@ $it_img_dir = G4_DATA_PATH.'/item';
 
 // 파일삭제
 if ($it_img1_del) {
-    @unlink($it_img_dir.'/'.$it_img1);
+    $file_img1 = $it_img_dir.'/'.$it_img1;
+    @unlink($file_img1);
+    delete_item_thumbnail(dirname($file_img1), basename($file_img1));
     $it_img1 = '';
 }
 if ($it_img2_del) {
-    @unlink($it_img_dir.'/'.$it_img2);
+    $file_img2 = $it_img_dir.'/'.$it_img2;
+    @unlink($file_img2);
+    delete_item_thumbnail(dirname($file_img2), basename($file_img2));
     $it_img2 = '';
 }
 if ($it_img3_del) {
-    @unlink($it_img_dir.'/'.$it_img3);
+    $file_img3 = $it_img_dir.'/'.$it_img3;
+    @unlink($file_img3);
+    delete_item_thumbnail(dirname($file_img3), basename($file_img3));
     $it_img3 = '';
 }
 if ($it_img4_del) {
-    @unlink($it_img_dir.'/'.$it_img4);
+    $file_img4 = $it_img_dir.'/'.$it_img4;
+    @unlink($file_img4);
+    delete_item_thumbnail(dirname($file_img4), basename($file_img4));
     $it_img4 = '';
 }
 if ($it_img5_del) {
-    @unlink($it_img_dir.'/'.$it_img5);
+    $file_img5 = $it_img_dir.'/'.$it_img5;
+    @unlink($file_img5);
+    delete_item_thumbnail(dirname($file_img5), basename($file_img5));
     $it_img5 = '';
 }
 if ($it_img6_del) {
-    @unlink($it_img_dir.'/'.$it_img6);
+    $file_img6 = $it_img_dir.'/'.$it_img6;
+    @unlink($file_img6);
+    delete_item_thumbnail(dirname($file_img6), basename($file_img6));
     $it_img6 = '';
 }
 if ($it_img7_del) {
-    @unlink($it_img_dir.'/'.$it_img7);
+    $file_img7 = $it_img_dir.'/'.$it_img7;
+    @unlink($file_img7);
+    delete_item_thumbnail(dirname($file_img7), basename($file_img7));
     $it_img7 = '';
 }
 if ($it_img8_del) {
-    @unlink($it_img_dir.'/'.$it_img8);
+    $file_img8 = $it_img_dir.'/'.$it_img8;
+    @unlink($file_img8);
+    delete_item_thumbnail(dirname($file_img8), basename($file_img8));
     $it_img8 = '';
 }
 if ($it_img9_del) {
-    @unlink($it_img_dir.'/'.$it_img9);
+    $file_img9 = $it_img_dir.'/'.$it_img9;
+    @unlink($file_img9);
+    delete_item_thumbnail(dirname($file_img9), basename($file_img9));
     $it_img9 = '';
 }
 if ($it_img10_del) {
-    @unlink($it_img_dir.'/'.$it_img10);
+    $file_img10 = $it_img_dir.'/'.$it_img10;
+    @unlink($file_img10);
+    delete_item_thumbnail(dirname($file_img10), basename($file_img10));
     $it_img10 = '';
 }
 
 // 이미지업로드
 if ($_FILES['it_img1']['name']) {
-    if($w == 'u' && $it_img1)
-        @unlink($it_img_dir.'/'.$it_img1);
+    if($w == 'u' && $it_img1) {
+        $file_img1 = $it_img_dir.'/'.$it_img1;
+        @unlink($file_img1);
+        delete_item_thumbnail(dirname($file_img1), basename($file_img1));
+    }
     $it_img1 = it_img_upload($_FILES['it_img1']['tmp_name'], $_FILES['it_img1']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img2']['name']) {
-    if($w == 'u' && $it_img2)
-        @unlink($it_img_dir.'/'.$it_img2);
+    if($w == 'u' && $it_img2) {
+        $file_img2 = $it_img_dir.'/'.$it_img2;
+        @unlink($file_img2);
+        delete_item_thumbnail(dirname($file_img2), basename($file_img2));
+    }
     $it_img2 = it_img_upload($_FILES['it_img2']['tmp_name'], $_FILES['it_img2']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img3']['name']) {
-    if($w == 'u' && $it_img3)
-        @unlink($it_img_dir.'/'.$it_img3);
+    if($w == 'u' && $it_img3) {
+        $file_img3 = $it_img_dir.'/'.$it_img3;
+        @unlink($file_img3);
+        delete_item_thumbnail(dirname($file_img3), basename($file_img3));
+    }
     $it_img3 = it_img_upload($_FILES['it_img3']['tmp_name'], $_FILES['it_img3']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img4']['name']) {
-    if($w == 'u' && $it_img4)
-        @unlink($it_img_dir.'/'.$it_img4);
+    if($w == 'u' && $it_img4) {
+        $file_img4 = $it_img_dir.'/'.$it_img4;
+        @unlink($file_img4);
+        delete_item_thumbnail(dirname($file_img4), basename($file_img4));
+    }
     $it_img4 = it_img_upload($_FILES['it_img4']['tmp_name'], $_FILES['it_img4']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img5']['name']) {
-    if($w == 'u' && $it_img5)
-        @unlink($it_img_dir.'/'.$it_img5);
+    if($w == 'u' && $it_img5) {
+        $file_img5 = $it_img_dir.'/'.$it_img5;
+        @unlink($file_img5);
+        delete_item_thumbnail(dirname($file_img5), basename($file_img5));
+    }
     $it_img5 = it_img_upload($_FILES['it_img5']['tmp_name'], $_FILES['it_img5']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img6']['name']) {
-    if($w == 'u' && $it_img6)
-        @unlink($it_img_dir.'/'.$it_img6);
+    if($w == 'u' && $it_img6) {
+        $file_img6 = $it_img_dir.'/'.$it_img6;
+        @unlink($file_img6);
+        delete_item_thumbnail(dirname($file_img6), basename($file_img6));
+    }
     $it_img6 = it_img_upload($_FILES['it_img6']['tmp_name'], $_FILES['it_img6']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img7']['name']) {
-    if($w == 'u' && $it_img7)
-        @unlink($it_img_dir.'/'.$it_img7);
+    if($w == 'u' && $it_img7) {
+        $file_img7 = $it_img_dir.'/'.$it_img7;
+        @unlink($file_img7);
+        delete_item_thumbnail(dirname($file_img7), basename($file_img7));
+    }
     $it_img7 = it_img_upload($_FILES['it_img7']['tmp_name'], $_FILES['it_img7']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img8']['name']) {
-    if($w == 'u' && $it_img8)
-        @unlink($it_img_dir.'/'.$it_img8);
+    if($w == 'u' && $it_img8) {
+        $file_img8 = $it_img_dir.'/'.$it_img8;
+        @unlink($file_img8);
+        delete_item_thumbnail(dirname($file_img8), basename($file_img8));
+    }
     $it_img8 = it_img_upload($_FILES['it_img8']['tmp_name'], $_FILES['it_img8']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img9']['name']) {
-    if($w == 'u' && $it_img9)
-        @unlink($it_img_dir.'/'.$it_img9);
+    if($w == 'u' && $it_img9) {
+        $file_img9 = $it_img_dir.'/'.$it_img9;
+        @unlink($file_img9);
+        delete_item_thumbnail(dirname($file_img9), basename($file_img9));
+    }
     $it_img9 = it_img_upload($_FILES['it_img9']['tmp_name'], $_FILES['it_img9']['name'], $it_img_dir.'/'.$it_id);
 }
 if ($_FILES['it_img10']['name']) {
-    if($w == 'u' && $it_img10)
-        @unlink($it_img_dir.'/'.$it_img10);
+    if($w == 'u' && $it_img10) {
+        $file_img10 = $it_img_dir.'/'.$it_img10;
+        @unlink($file_img10);
+        delete_item_thumbnail(dirname($file_img10), basename($file_img10));
+    }
     $it_img10 = it_img_upload($_FILES['it_img10']['tmp_name'], $_FILES['it_img10']['name'], $it_img_dir.'/'.$it_id);
 }
 
@@ -297,6 +362,15 @@ sql_query(" delete from {$g4['shop_item_relation_table']} where it_id2 = '$it_id
 
 // 이벤트상품을 우선 삭제함
 sql_query(" delete from {$g4['shop_event_item_table']} where it_id = '$it_id' ");
+
+// 상품요약정보
+$value_array = array();
+for($i=0; $i<count($_POST['ii_article']); $i++) {
+    $key = $_POST['ii_article'][$i];
+    $val = $_POST['ii_value'][$i];
+    $value_array[$key] = $val;
+}
+$it_info_value = serialize($value_array);
 
 
 $sql_common = " ca_id               = '$ca_id',
@@ -343,6 +417,8 @@ $sql_common = " ca_id               = '$ca_id',
                 it_ip               = '{$_SERVER['REMOTE_ADDR']}',
                 it_order            = '$it_order',
                 it_tel_inq          = '$it_tel_inq',
+                it_info_gubun       = '$it_info_gubun',
+                it_info_value       = '$it_info_value',
                 it_img1             = '$it_img1',
                 it_img2             = '$it_img2',
                 it_img3             = '$it_img3',

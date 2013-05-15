@@ -158,6 +158,8 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 #sit_pvi_nw h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sit_pvi_nwbig {padding:1em 0;text-align:center}
+#sit_pvi_nwbig span {display:none}
+#sit_pvi_nwbig span.visible {display:inline}
 #sit_pvi_nw ul {margin:0 0 1.18em;padding:0 1em;list-style:none;zoom:1}
 #sit_pvi_nw ul:after {display:block;visibility:hidden;clear:both;content:""}
 #sit_pvi_nw li {float:left;margin:0 0 0 1px}

@@ -36,10 +36,28 @@ if (!($it['ca_use'] && $it['it_use'])) {
 }
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
-$sql = " select ca_include_head, ca_include_tail
+$sql = " select ca_include_head, ca_include_tail, ca_hp_cert_use, ca_adult_cert_use
            from {$g4['shop_category_table']}
           where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
+
+if(!$is_admin) {
+    // 본인확인체크
+    if($ca['ca_hp_cert_use'] && !$member['mb_hp_certify']) {
+        if($is_member)
+            alert('회원정보 수정에서 휴대폰 본인확인 후 이용해 주십시오.');
+        else
+            alert('휴대폰 본인확인된 로그인 회원만 이용할 수 있습니다.');
+    }
+
+    // 성인인증체크
+    if($ca['ca_adult_cert_use'] && !$member['mb_adult']) {
+        if($is_member)
+            alert('휴대폰 본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 휴대폰 본인확인을 해주십시오.');
+        else
+            alert('휴대폰 본인확인으로 성인인증된 회원만 이용할 수 있습니다.');
+    }
+}
 
 // 오늘 본 상품 저장 시작
 // tv 는 today view 약자
@@ -421,9 +439,10 @@ else
 
         <h3>상품 정보 고시</h3>
         <?php
-        $sql = " select * from {$g4['shop_item_info_table']} where it_id = '$it_id' order by ii_id ";
-        $result = sql_query($sql, false);
-        if (@mysql_num_rows($result)) {
+        if ($it['it_info_value']) {
+            $info_data = unserialize($it['it_info_value']);
+            $gubun = $it['it_info_gubun'];
+            $info_array = $item_info[$gubun]['article'];
         ?>
         <!-- 상품정보고시 -->
         <table id="sit_inf_open">
@@ -433,13 +452,15 @@ else
         </colgroup>
         <tbody>
         <?php
-        for ($i=0; $row=sql_fetch_array($result); $i++) {
+        foreach($info_data as $key=>$val) {
+            $ii_title = $info_array[$key][0];
+            $ii_value = $val;
         ?>
         <tr valign="top">
-            <th scope="row"><?php echo $row['ii_title']; ?></th>
-            <td><?php echo $row['ii_value']; ?></th>
+            <th scope="row"><?php echo $ii_title; ?></th>
+            <td><?php echo $ii_value; ?></th>
         </tr>
-        <?php } //for?>
+        <?php } //foreach?>
         </tbody>
         </table>
         <!-- 상품정보고시 end -->

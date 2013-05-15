@@ -78,7 +78,9 @@ $sql_common = " ca_skin                 = '$ca_skin',
                 ca_tail_html            = '$ca_tail_html',
                 ca_include_head         = '$ca_include_head',
                 ca_include_tail         = '$ca_include_tail',
-                ca_mb_id                = '$ca_mb_id' ";
+                ca_mb_id                = '$ca_mb_id',
+                ca_hp_cert_use          = '$ca_hp_cert_use',
+                ca_adult_cert_use       = '$ca_adult_cert_use' ";
 
 
 if ($w == "")
@@ -141,10 +143,6 @@ else if ($w == "d")
     if ($str)
         alert("이 분류와 관련된 상품이 총 {$i} 건 존재하므로 상품을 삭제한 후 분류를 삭제하여 주십시오.\\n\\n$str");
 
-    // 분류 On, Off 이미지 삭제
-    @unlink("{$g4['category_path']}/$ca_id"."_1");
-    @unlink("{$g4['category_path']}/$ca_id"."_0");
-
     // 상, 하단 이미지 삭제
     @unlink("{$g4['category_path']}/$ca_id"."_h");
     @unlink("{$g4['category_path']}/$ca_id"."_t");
@@ -158,9 +156,6 @@ $qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
 
 if ($w == "" || $w == "u")
 {
-    if ($_FILES['ca_image1']['name']) upload_file($_FILES['ca_image1']['tmp_name'], $ca_id."_1", $g4['category_path']);
-    if ($_FILES['ca_image0']['name']) upload_file($_FILES['ca_image0']['tmp_name'], $ca_id."_0", $g4['category_path']);
-
     if ($_FILES['ca_himg']['name']) upload_file($_FILES['ca_himg']['tmp_name'], $ca_id."_h", $g4['category_path']);
     if ($_FILES['ca_timg']['name']) upload_file($_FILES['ca_timg']['tmp_name'], $ca_id."_t", $g4['category_path']);
 

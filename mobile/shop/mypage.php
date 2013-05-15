@@ -68,7 +68,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             if ($i>0)
                 echo "<tr><td colspan=3 height=1 background='".G4_SHOP_URL."/img/dot_line.gif'></td></tr>";
 
-            $image = get_it_image($row['it_id']."_s", 70, 70, $row['it_id']);
+            $image = get_it_image($row['it_id'], 70, 70, true);
         ?>
 
         <tr>

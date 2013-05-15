@@ -4,6 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
 
 include_once(G4_LIB_PATH.'/shop.lib.php');
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 //------------------------------------------------------------------------------
 // 쇼핑몰 상수 모음 시작
