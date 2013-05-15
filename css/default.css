@@ -23,10 +23,10 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 #logo {padding:17px 0}
 
-#sch_all {position:absolute;top:22px;left:70px;margin:0;padding:0;letter-spacing:-5px}
+#sch_all {position:absolute;top:22px;left:70px;margin:0;padding:0;border:1px solid #c9c9c9}
 #sch_all legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#sch_all_stx {padding-left:5px;width:156px;height:24px;border:1px solid #aaa;border-right:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
-#sch_all_submit {border:1px solid #aaa;border-left:0}
+#sch_all_stx {padding-left:5px;width:156px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
+#sch_all_submit {padding:0 5px;height:26px;border:0;background:#000;color:#fff}
 
 #mb_nb {position:absolute;top:18px;right:0;zoom:1}
 #mb_nb:after {display:block;visibility:hidden;clear:both;content:""}

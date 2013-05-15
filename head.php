@@ -41,7 +41,7 @@ if ($config['cf_include_head']) {
             <input type="hidden" name="sop" value="and">
             <label for="sch_all_stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
             <input type="text" name="stx" id="sch_all_stx" maxlength="20">
-            <input type="image" id="sch_all_submit" src="<?php echo G4_IMG_URL ?>/btn_search.jpg" width="24" height="24" alt="검색">
+            <input type="submit" value="검색" id="sch_all_submit">
             </form>
 
             <script>
