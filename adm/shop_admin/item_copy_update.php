@@ -38,23 +38,6 @@ $sql = " insert {$g4['shop_item_table']}
                 $sql_common ";
 sql_query($sql);
 
-$img_path = G4_DATA_PATH."/item/";
-
-for($i=1; $i<6; $i++) {
-	$limg = $it_id."_l".$i;
-		if(is_file($img_path.$limg))
-			copy($img_path.$limg,$img_path.$new_it_id."_l".$i);
-
-}
-
-$simg = $it_id."_s";
-if(is_file($img_path.$simg))
-    copy($img_path.$simg,$img_path.$new_it_id."_s");
-
-$mimg = $it_id."_m";
-if(is_file($img_path.$mimg))
-    copy($img_path.$mimg,$img_path.$new_it_id."_m");
-
 // 상품요약정보 복사
 $sql = " select * from {$g4['shop_item_info_table']} where it_id = '$it_id' order by ii_id ";
 $result = sql_query($sql);
@@ -63,6 +46,118 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
              VALUES (NULL, '$new_it_id', '{$row['ii_gubun']}', '{$row['ii_article']}', '".addslashes($row['ii_title'])."', '".addslashes($row['ii_value'])."') ";
     sql_query($sql);
 }
+
+// html 에디터로 첨부된 이미지 파일 복사
+if($cp['it_explan']) {
+    $matchs = get_editor_image($cp['it_explan']);
+
+    // 파일의 경로를 얻어 복사
+    for($i=0;$i<count($matchs[1]);$i++) {
+        $p = parse_url($matchs[1][$i]);
+        if(strpos($p['path'], "/data/") != 0)
+            $src_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        else
+            $src_path = $p['path'];
+
+        $srcfile = G4_PATH.$src_path;
+        $dstfile = preg_replace("/\.([^\.]+)$/", "_".$new_it_id.".\\1", $srcfile);
+
+        if(is_file($srcfile)) {
+            copy($srcfile, $dstfile);
+
+            $newfile = preg_replace("/\.([^\.]+)$/", "_".$new_it_id.".\\1", $matchs[1][$i]);
+            $cp['it_explan'] = str_replace($matchs[1][$i], $newfile, $cp['it_explan']);
+        }
+    }
+
+    $sql = " update {$g4['shop_item_table']} set it_explan = '{$cp['it_explan']}' where it_id = '$new_it_id' ";
+    sql_query($sql);
+}
+
+if($cp['it_mobile_explan']) {
+    $matchs = get_editor_image($cp['it_mobile_explan']);
+
+    // 파일의 경로를 얻어 복사
+    for($i=0;$i<count($matchs[1]);$i++) {
+        $p = parse_url($matchs[1][$i]);
+        if(strpos($p['path'], "/data/") != 0)
+            $src_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        else
+            $src_path = $p['path'];
+
+        $srcfile = G4_PATH.$src_path;
+        $dstfile = preg_replace("/\.([^\.]+)$/", "_".$new_it_id.".\\1", $srcfile);
+
+        if(is_file($srcfile)) {
+            copy($srcfile, $dstfile);
+
+            $newfile = preg_replace("/\.([^\.]+)$/", "_".$new_it_id.".\\1", $matchs[1][$i]);
+            $cp['it_mobile_explan'] = str_replace($matchs[1][$i], $newfile, $cp['it_mobile_explan']);
+        }
+    }
+
+    $sql = " update {$g4['shop_item_table']} set it_mobile_explan = '{$cp['it_mobile_explan']}' where it_id = '$new_it_id' ";
+    sql_query($sql);
+}
+
+// 상품이미지 복사
+function copy_directory($src_dir, $dest_dir)
+{
+    if($src_dir == $dest_dir)
+        return false;
+
+    if(!is_dir($src_dir))
+        return false;
+
+    if(!is_dir($dest_dir)) {
+        @mkdir($dest_dir, 0707);
+        @chmod($dest_dir, 0707);
+    }
+
+    $dir = opendir($src_dir);
+    while (false !== ($filename = readdir($dir))) {
+        if($filename == "." || $filename == "..")
+            continue;
+
+        $files[] = $filename;
+    }
+
+    for($i=0; $i<count($files); $i++) {
+        $src_file = $src_dir.'/'.$files[$i];
+        $dest_file = $dest_dir.'/'.$files[$i];
+        if(is_file($src_file)) {
+            copy($src_file, $dest_file);
+            @chmod($dest_file, 0606);
+        }
+    }
+}
+
+// 파일복사
+$dest_path = G4_DATA_PATH.'/item/'.$new_it_id;
+@mkdir($dest_path, 0707);
+@chmod($dest_path, 0707);
+$comma = '';
+$sql_img = '';
+
+for($i=1; $i<=10; $i++) {
+    $file = G4_DATA_PATH.'/item/'.$cp['it_img'.$i];
+    $new_img = '';
+
+    if(is_file($file)) {
+        $dstfile = $dest_path.'/'.basename($file);
+        copy($file, $dstfile);
+        @chmod($dstfile, 0606);
+        $new_img = $new_it_id.'/'.basename($file);
+    }
+
+    $sql_img .= $comma." it_img{$i} = '$new_img' ";
+    $comma = ',';
+}
+
+$sql = " update {$g4['shop_item_table']}
+            set $sql_img
+            where it_id = '$new_it_id' ";
+sql_query($sql);
 
 $qstr = "ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx)."&amp;save_stx=".urlencode($save_stx);
 
