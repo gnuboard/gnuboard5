@@ -11,7 +11,7 @@
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#333;font-size:0.95em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
-#ol_submit {display:inline-block;width:60px;height:24px;border:0;background:#333;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
+#ol_submit {display:inline-block;width:60px;height:24px;border:0;background:#626870;color:#fff;font-size:0.9em;font-weight:bold;vertical-align:top}
 #ol_before a {letter-spacing:-0.15em}
 #ol_svc {float:left;margin:5px 0 0}
 #ol_password_lost {display:inline-block;margin:0 0 0 5px}
