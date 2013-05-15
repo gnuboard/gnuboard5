@@ -127,7 +127,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .btn01:focus, .btn01:hover {text-decoration:none !important}
 .btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #333 !important;background:#333 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn02:focus, .btn02:hover {text-decoration:none !important}
-.btn_confirm {text-align:center} /* 서식단계 진행 */
+.btn_confirm {margin:0 0 20px;text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 button.btn_submit {height:22px !important;font-size:1em}
 fieldset .btn_submit {height:22px;font-size:1em}
@@ -167,11 +167,11 @@ td.empty_table {padding:85px 0;text-align:center}
 
 /* 폼 테이블 */
 .frm_tbl {width:100%;border-collapse:collapse;border-spacing:0}
-.frm_tbl caption {padding:10px 0;background:#f5f6fa;font-weight:bold;text-align:center}
-.frm_tbl th {width:100px;border-bottom:1px solid #f5f6fa;text-align:left}
-.frm_tbl td {padding:7px 10px;border-bottom:1px solid #f5f6fa;background:transparent}
+.frm_tbl caption {padding:10px 0;font-weight:bold;text-align:center}
+.frm_tbl th {width:100px;border-bottom:1px solid #e9e9e9;text-align:left}
+.frm_tbl td {padding:7px 10px;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea,
-.frm_input {padding:2px 2px 3px;border:1px solid #999;background:#fff;vertical-align:middle}
+.frm_input {padding:2px 2px 3px;border:1px solid #d9d9d9;background:#fff;vertical-align:middle}
 .frm_tbl textarea {width:90%;height:150px}
 .frm_address {display:block;margin-top:5px}
 .frm_file {display:block;margin-bottom:5px}
@@ -179,7 +179,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .frm_tbl #captcha input {margin-left:5px;text-align:center}
 .frm_tbl a {text-decoration:none}
 
-.frm_info {display:block;padding:0 0 5px;color:#2ca3ff;line-height:1.2em}
+.frm_info {display:block;padding:0 0 5px;color:#6595b9;line-height:1.2em}
 
 /* 테이블 항목별 정의 */
 .td_chk {width:30px;text-align:center}
