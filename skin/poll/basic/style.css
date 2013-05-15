@@ -7,7 +7,7 @@
 #poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
 #poll li {padding:3px 0}
 #poll footer {padding:0 14px 14px}
-#poll footer input {width:88px;height:24px;border:0;background:#626870;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
+#poll footer input {width:88px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 #poll footer a {display:inline-block;width:86px;height:22px;border:1px solid #ccc;background:#fafafa;text-align:center;line-height:2em}
 #poll footer a:focus,
 #poll footer a:hover {text-decoration:none !important}
