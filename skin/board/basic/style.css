@@ -38,7 +38,7 @@
 /* 게시판 읽기 */
 #bo_v {margin-bottom:20px;padding-bottom:20px}
 
-#bo_v_titlecate {position:absolute;top:0;right:0;padding:15px 0;width:100%;border-bottom:1px solid #f0f0f0;background:#f9fafe}
+#bo_v_titlecate {position:absolute;top:0;right:0;padding:15px 0;width:100%;border-bottom:1px solid #d9e1e5;background:#f9fafe}
 #bo_v_titlecate span {display:inline-block;margin:0 0 0 20px}
 
 #bo_v_h1 {margin:35px 0 0;padding:10px 0;font-size:1.2em}
@@ -74,7 +74,7 @@
 #bo_v_top {margin:0 0 10px;padding:10px 0;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_top ul {list-style:none}
+#bo_v_top ul {margin:0;padding:0;list-style:none}
 
 #bo_v_bot {zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}

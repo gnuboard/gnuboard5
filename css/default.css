@@ -17,26 +17,26 @@ a:link, a:visited {color:#000;text-decoration:none}
 a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 상단 레이아웃 */
-#hd {border-bottom:1px solid #c9c9c9;background:#fff}
+#hd {border-bottom:1px solid #c6d3da;background:#fff}
 #hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
-#logo {padding:30px 0}
+#logo {padding:25px 0}
 
-#mb_nb {position:absolute;top:35px;left:70px;zoom:1}
+#mb_nb {position:absolute;top:30px;left:70px;zoom:1}
 #mb_nb:after {display:block;visibility:hidden;clear:both;content:""}
 #mb_nb li {float:left}
 #mb_nb a {display:block;padding:5px 10px;color:#333;letter-spacing:-0.1em}
 #mb_nb a:focus, #mb_nb a:hover, #mb_nb a:active {text-decoration:none}
 #mb_nb img {margin-right:3px}
 
-#sch_all {position:absolute;top:33px;right:0;margin:0;padding:0;border:1px solid #333}
+#sch_all {position:absolute;top:28px;right:0;margin:0;padding:0;border:1px solid #333}
 #sch_all legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sch_all_stx {padding-left:5px;width:165px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
 #sch_all_submit {padding:0 5px;height:26px;border:0;background:#333;color:#fff}
 
 /* gnb js off */
-#gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #e9e9e9;background:#f5f6fa;zoom:1}
+#gnb {z-index:10;margin:-1px 0 0;background:#f5f6fa;zoom:1}
 #gnb:after {display:block;visibility:hidden;clear:both;content:""}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #gnb_1dul {margin:0 auto;padding:0;width:980px;zoom:1}
@@ -69,13 +69,13 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
-#aside {float:right;width:209px;border:1px solid #cfded8;background:#fff}
+#aside {float:right;width:209px;border:1px solid #d9e1e5;background:#fff}
 
-#container {z-index:4;position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #cfded8;background:#fff;zoom:1}
+#container {z-index:4;position:relative;float:left;padding:25px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #d9e1e5;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 텍스트 크기 조절 */
-#text_size {z-index:10;position:absolute;top:33px;right:220px}
+#text_size {z-index:10;position:absolute;top:28px;right:220px}
 #text_size button {padding:0 10px;height:28px;border:0;background:#333;color:#fff;cursor:pointer}
 
 /* 하단 레이아웃 */
@@ -144,7 +144,7 @@ button.btn_frmline {font-size:1em}
 .btn_b01:focus, .btn_b01:hover {text-decoration:none}
 .btn_b02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #333;background:#333;color:#fff !important;text-decoration:none;line-height:2.15em;vertical-align:middle}
 .btn_b02:focus, .btn_b02:hover {text-decoration:none}
-.btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
+.btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c;background:#e8180c;color:#fff !important;text-decoration:none;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
 .btn_admin:focus, .btn_admin:hover {text-decoration:none}
 
 /* 기본테이블 */
