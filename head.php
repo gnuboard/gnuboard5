@@ -36,7 +36,7 @@ if ($config['cf_include_head']) {
 
         <fieldset id="sch_all">
             <legend>사이트 내 전체검색</legend>
-            <form name="fsearchbox" method="get" action="<?php echo G4_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
+            <form name="fsearchbox" method="get" action="<?php echo G4_BBS_URL; ?>/search.php" onsubmit="return fsearchbox_submit(this);">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
             <input type="hidden" name="sop" value="and">
             <label for="sch_all_stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
@@ -74,53 +74,18 @@ if ($config['cf_include_head']) {
         </fieldset>
 
         <ul id="mb_nb">
-            <li>
-                <a href="<?php echo G4_BBS_URL ?>/current_connect.php" id="snb_cnt">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_cnt.jpg" alt="">
-                    접속자 <?php echo connect(); // 현재 접속자수  ?>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo G4_BBS_URL ?>/new.php" id="snb_new">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_new.jpg" alt="">
-                    새글
-                </a>
-            </li>
-            <?php if ($is_member) {  ?>
-            <?php if ($is_admin) {  ?>
-            <li>
-                <a href="<?php echo G4_ADMIN_URL ?>" id="snb_adm">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_admin.jpg" alt="">
-                    관리자
-                </a>
-            </li>
-            <?php }  ?>
-            <li>
-                <a href="<?php echo G4_BBS_URL ?>/member_confirm.php?url=<?php echo G4_BBS_URL ?>/register_form.php" id="snb_modify">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_modify.jpg" alt="">
-                    내 정보
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo G4_BBS_URL ?>/logout.php" id="snb_logout">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_logout.jpg" alt="">
-                    로그아웃
-                </a>
-            </li>
-            <?php } else {  ?>
-            <li>
-                <a href="<?php echo G4_BBS_URL ?>/register.php" id="snb_join">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_join.jpg" alt="">
-                    회원가입
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo G4_BBS_URL ?>/login.php" id="snb_login">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_login.jpg" alt="">
-                    로그인
-                </a>
-            </li>
-            <?php }  ?>
+            <li><a href="<?php echo G4_BBS_URL; ?>/current_connect.php">접속자 <?php echo connect(); // 현재 접속자수  ?></a></li>
+            <li><a href="<?php echo G4_BBS_URL; ?>/new.php">새글</a></li>
+            <?php if ($is_member) { ?>
+            <?php if ($is_admin) { ?>
+            <li><a href="<?php echo G4_ADMIN_URL ?>">관리자</a></li>
+            <?php } ?>
+            <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=<?php echo G4_BBS_URL; ?>/register_form.php">내 정보</a></li>
+            <li><a href="<?php echo G4_BBS_URL; ?>/logout.php">로그아웃</a></li>
+            <?php } else { ?>
+            <li><a href="<?php echo G4_BBS_URL; ?>/register.php">회원가입</a></li>
+            <li><a href="<?php echo G4_BBS_URL; ?>/login.php">로그인</a></li>
+            <?php } ?>
         </ul>
 
     </div>
@@ -137,19 +102,19 @@ if ($config['cf_include_head']) {
             for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index
              ?>
             <li class="gnb_1dli">
-                <a href="<?php echo G4_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>" class="gnb_1da"><?php echo $row['gr_subject'] ?></a>
+                <a href="<?php echo G4_BBS_URL; ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>" class="gnb_1da"><?php echo $row['gr_subject'] ?></a>
                 <ul class="gnb_2dul">
                     <?php
                     $sql2 = " select * from {$g4['board_table']} where gr_id = '{$row['gr_id']}' and bo_show_menu = '1' and bo_device <> 'mobile' order by bo_order ";
                     $result2 = sql_query($sql2);
                     for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
                      ?>
-                    <li class="gnb_2dli"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>" class="gnb_2da"><?php echo $row2['bo_subject'] ?></a></li>
+                    <li class="gnb_2dli"><a href="<?php echo G4_BBS_URL; ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>" class="gnb_2da"><?php echo $row2['bo_subject'] ?></a></li>
                     <?php } ?>
                 </ul>
             </li>
             <?php } ?>
-            <?php if ($gi == 0) {  ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php }  ?>
+            <?php if ($gi == 0) { ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php } ?>
         </ul>
     </nav>
 
