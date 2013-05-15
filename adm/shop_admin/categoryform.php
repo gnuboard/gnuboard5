@@ -54,11 +54,15 @@ if ($w == "")
         $ca['ca_explan_html'] = 1;
         $ca['ca_img_width']  = $default['de_mimg_width'];
         $ca['ca_img_height'] = $default['de_mimg_height'];
+        $ca['ca_mobile_img_width']  = $default['de_mimg_width'];
+        $ca['ca_mobile_img_height'] = $default['de_mimg_height'];
         $ca['ca_list_mod'] = 3;
         $ca['ca_list_row'] = 5;
+        $ca['ca_mobile_list_row'] = 3;
         $ca['ca_stock_qty'] = 99999;
     }
     $ca['ca_skin'] = "list.skin.10.php";
+    $ca['ca_mobile_skin'] = "list.skin.10.php";
 }
 else if ($w == "u")
 {
@@ -79,6 +83,15 @@ if (!isset($ca['ca_mobile_skin'])) {
                     ADD `ca_mobile_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_height`,
                     ADD `ca_mobile_head_html` TEXT NOT NULL AFTER `ca_tail_html`,
                     ADD `ca_mobile_tail_html` TEXT NOT NULL AFTER `ca_mobile_head_html` ", false);
+}
+
+// 인증사용필드추가
+$sql = " select ca_hp_cert_use from {$g4['shop_category_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_category_table']}`
+                    ADD `ca_hp_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ca_mb_id`,
+                    ADD `ca_adult_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ca_hp_cert_use` ", false);
 }
 
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
@@ -141,6 +154,24 @@ $pg_anchor .= '</ul>';
                 <input type="hidden" name="ca_mb_id" value="<?php echo $ca['ca_mb_id']; ?>">
                 <?php echo $ca['ca_mb_id']; ?>
             <?php } ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">본인확인 체크</th>
+        <td>
+            <input type="radio" name="ca_hp_cert_use" value="1" id="ca_hp_cert_use_yes" <?php if($ca['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_hp_cert_use_yes">사용함</label>
+            <input type="radio" name="ca_hp_cert_use" value="0" id="ca_hp_cert_use_no" <?php if(!$ca['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_hp_cert_use_no">사용안함</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">성인인증 체크</th>
+        <td>
+            <input type="radio" name="ca_adult_cert_use" value="1" id="ca_adult_cert_use_yes" <?php if($ca['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_cert_use_yes">사용함</label>
+            <input type="radio" name="ca_adult_cert_use" value="0" id="ca_adult_cert_use_no" <?php if(!$ca['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_cert_use_no">사용안함</label>
         </td>
     </tr>
     <tr>

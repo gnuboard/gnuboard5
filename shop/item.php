@@ -36,10 +36,28 @@ if (!($it['ca_use'] && $it['it_use'])) {
 }
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
-$sql = " select ca_include_head, ca_include_tail
+$sql = " select ca_include_head, ca_include_tail, ca_hp_cert_use, ca_adult_cert_use
            from {$g4['shop_category_table']}
           where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
+
+if(!$is_admin) {
+    // 본인확인체크
+    if($ca['ca_hp_cert_use'] && !$member['mb_hp_certify']) {
+        if($is_member)
+            alert('회원정보 수정에서 휴대폰 본인확인 후 이용해 주십시오.');
+        else
+            alert('휴대폰 본인확인된 로그인 회원만 이용할 수 있습니다.');
+    }
+
+    // 성인인증체크
+    if($ca['ca_adult_cert_use'] && !$member['mb_adult']) {
+        if($is_member)
+            alert('휴대폰 본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 휴대폰 본인확인을 해주십시오.');
+        else
+            alert('휴대폰 본인확인으로 성인인증된 회원만 이용할 수 있습니다.');
+    }
+}
 
 // 오늘 본 상품 저장 시작
 // tv 는 today view 약자
