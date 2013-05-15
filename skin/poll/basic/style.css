@@ -1,5 +1,5 @@
 /* 설문조사 스킨 */
-#poll {border-top:1px solid #d9d9d9}
+#poll {}
 #poll header {position:relative;padding:15px 0 0 14px}
 #poll h2 {}
 #poll header .btn_admin {margin-top:5px;width:158px;text-align:center}

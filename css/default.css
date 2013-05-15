@@ -36,9 +36,9 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #mb_nb img {margin-right:3px}
 
 /* gnb js off */
-#gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #f0f0f0;border-bottom:1px solid #d9d9d9;background:#f0f4f8;zoom:1}
+#gnb {z-index:10;margin:-1px 0 0;background:#f5f6fa;zoom:1}
 #gnb:after {display:block;visibility:hidden;clear:both;content:""}
-#gnb h2 {position:absolute;margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
+#gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #gnb_1dul {margin:0 auto;padding:0;width:980px;zoom:1}
 #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1dli {z-index:10;clear:both;zoom:1}
@@ -69,9 +69,9 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #wrapper_title {margin-bottom:20px;font-size:1.2em}
 
-#wrapper #aside {position:relative;float:right;left:-1px;width:210px;border-left:1px solid #d9d9d9;background:#fff}
+#wrapper #aside {position:relative;float:right;left:-1px;width:210px;border-left:1px solid #f5f6fa;background:#fff}
 
-#container {z-index:4;position:relative;float:left;padding:25px 20px 15px 0;width:748px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #d9d9d9;background:#fff;zoom:1}
+#container {z-index:4;position:relative;float:left;padding:25px 20px 15px 0;width:748px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #f5f6fa;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 텍스트 크기 조절 */
