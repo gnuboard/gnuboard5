@@ -1,5 +1,5 @@
 /* 방문자 집계 */
-#visit {}
+#visit {background:#515151}
 #visit div {margin:0 auto;width:980px;zoom:1}
 #visit div:after {display:block;visibility:hidden;clear:both;content:""}
 #visit h2 {float:left;padding:10px 45px 10px 0;color:#fff}
