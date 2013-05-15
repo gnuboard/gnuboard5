@@ -17,7 +17,7 @@ a:link, a:visited {color:#000;text-decoration:none}
 a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 상단 레이아웃 */
-#hd {}
+#hd {border-bottom:1px solid #c9c9c9}
 #hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
@@ -36,7 +36,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff}
 
 /* gnb js off */
-#gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f5f6fa;zoom:1}
+#gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #e9e9e9;background:#f5f6fa;zoom:1}
 #gnb:after {display:block;visibility:hidden;clear:both;content:""}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #gnb_1dul {margin:0 auto;padding:0;width:980px;zoom:1}
@@ -55,8 +55,8 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .gnb_js #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_js .gnb_1dli {clear:none;position:relative;float:left}
 .gnb_js .gnb_1da {text-align:center}
-.gnb_js .gnb_1dli_air a {float:none;background:#34383c;color:#fff}
-.gnb_js .gnb_1dli_on a {float:none;background:#34383c;color:#fff}
+.gnb_js .gnb_1dli_air a {float:none;background:#333;color:#fff}
+.gnb_js .gnb_1dli_on a {float:none;background:#333;color:#fff}
 .gnb_js .gnb_2dul {position:absolute;top:35px;width:1px;height:1px;overflow:hidden}
 .gnb_js .gnb_2da {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
 .gnb_1dli_over .gnb_2dul {left:0;width:181px;height:auto}
@@ -67,27 +67,26 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 /* 중간 레이아웃 */
 #wrapper {z-index:5;margin:0 auto;width:980px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
+
+#container {z-index:4;position:relative;float:left;padding:25px 18px 15px 0;width:740px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #e9e9e9;background:#fff;zoom:1}
+#container:after {display:block;visibility:hidden;clear:both;content:""}
 #container_title {margin-bottom:20px;font-size:1.2em;font-weight:bold}
 
-#wrapper #aside {position:relative;float:right;left:-1px;padding:0 0 0 3px;width:210px;border-left:1px solid #f5f6fa;background:#fff}
-
-#container {z-index:4;position:relative;float:left;padding:25px 15px 15px 0;width:750px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #f5f6fa;background:#fff;zoom:1}
-#container:after {display:block;visibility:hidden;clear:both;content:""}
+#aside {position:relative;float:right;left:-1px;width:220px;border-left:1px solid #e9e9e9;background:#fff}
 
 /* 텍스트 크기 조절 */
 #text_size {z-index:10;position:absolute;top:33px;right:220px}
 #text_size button {padding:0 10px;height:28px;border:0;background:#555;color:#fff;cursor:pointer}
 
 /* 하단 레이아웃 */
-#ft {background:#484848}
+#ft {border-top:1px solid #c9c9c9}
 #ft h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
-#ft_catch {position:relative;margin:0 auto;padding:20px 0;width:980px;text-align:center}
+#ft_catch {position:relative;margin:0 auto;padding:30px 0 20px;width:980px;text-align:center}
 
-#ft_copy {background:#414141}
-#ft_copy p {position:relative;margin:0 auto;width:980px;color:#4a9ab8}
-#ft_copy b {color:#fff}
-#ft_copy a {position:absolute;top:10px;right:0;color:#fff}
+#ft_copy {}
+#ft_copy p {position:relative;margin:0 auto;padding:3px 0;width:980px}
+#ft_copy a {position:absolute;top:10px;right:0}
 
 /* 기본 스타일 */
 /* 화면낭독기 사용자용 */
@@ -123,11 +122,11 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 /* 콘텐츠별 스타일 */
 .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
 /* 버튼 */
-.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn01:focus, .btn01:hover {text-decoration:none !important}
-.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #333 !important;background:#333 !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn02:focus, .btn02:hover {text-decoration:none !important}
-.btn_confirm {margin:0 0 20px;text-align:center} /* 서식단계 진행 */
+.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #d9d9d9;background:#f5f6fa;color:#000;text-decoration:none;line-height:2.15em;vertical-align:middle}
+.btn01:focus, .btn01:hover {text-decoration:none}
+.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #333;background:#333;color:#fff;text-decoration:none;line-height:2.15em;vertical-align:middle}
+.btn02:focus, .btn02:hover {text-decoration:none}
+.btn_confirm {margin:20px 0;text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
 button.btn_submit {height:22px !important;font-size:1em}
 fieldset .btn_submit {height:22px;font-size:1em}
@@ -140,12 +139,12 @@ button.btn_frmline {font-size:1em}
 .btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
 .btn_win a:focus, .btn_win a:hover {text-decoration:none}
 /* 게시판용 버튼 */
-.btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn_b01:focus, .btn_b01:hover {text-decoration:none !important}
-.btn_b02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
-.btn_b02:focus, .btn_b02:hover {text-decoration:none !important}
-.btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c !important;background:#e8180c !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
-.btn_admin:focus, .btn_admin:hover {text-decoration:none !important}
+.btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #d9d9d9;background:#f5f6fa;color:#000;text-decoration:none;line-height:2.15em;vertical-align:middle}
+.btn_b01:focus, .btn_b01:hover {text-decoration:none}
+.btn_b02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #333;background:#333;color:#fff !important;text-decoration:none;line-height:2.15em;vertical-align:middle}
+.btn_b02:focus, .btn_b02:hover {text-decoration:none}
+.btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
+.btn_admin:focus, .btn_admin:hover {text-decoration:none}
 
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -168,8 +167,8 @@ td.empty_table {padding:85px 0;text-align:center}
 /* 폼 테이블 */
 .frm_tbl {width:100%;border-collapse:collapse;border-spacing:0}
 .frm_tbl caption {padding:10px 0;font-weight:bold;text-align:center}
-.frm_tbl th {width:100px;border-bottom:1px solid #e9e9e9;text-align:left}
-.frm_tbl td {padding:7px 10px;border-bottom:1px solid #e9e9e9;background:transparent}
+.frm_tbl th {width:100px;border-bottom:1px solid #f7f7f7;text-align:left}
+.frm_tbl td {padding:7px 10px;border-bottom:1px solid #f7f7f7;background:transparent}
 .frm_tbl textarea,
 .frm_input {padding:2px 2px 3px;border:1px solid #d9d9d9;background:#fff;vertical-align:middle}
 .frm_tbl textarea {width:90%;height:150px}

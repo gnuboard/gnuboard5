@@ -1,14 +1,14 @@
 /* 설문조사 스킨 */
-#poll {}
-#poll header {position:relative;padding:15px 0 0 14px}
+#poll {padding:15px 17px;background:#f5f6fa}
+#poll header {position:relative}
 #poll h2 {}
 #poll header .btn_admin {margin-top:5px;width:158px;text-align:center}
 #poll header p {padding:5px 0 0}
-#poll ul {margin:0 0 10px;padding:5px 14px;list-style:none}
+#poll ul {margin:0 0 10px;padding:5px 0;list-style:none}
 #poll li {padding:3px 0}
-#poll footer {padding:0 0 14px 14px}
-#poll footer input {width:95px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
-#poll footer a {display:inline-block;width:95px;height:22px;border:1px solid #ccc;background:#fafafa;text-align:center;line-height:2em}
+#poll footer {}
+#poll footer input {width:90px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
+#poll footer a {display:inline-block;width:89px;height:22px;border:1px solid #ccc;background:#fafafa;text-align:center;line-height:2em}
 #poll footer a:focus,
 #poll footer a:hover {text-decoration:none !important}
 /* 설문조사 결과 (새창) */

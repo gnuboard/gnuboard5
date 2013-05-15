@@ -1,13 +1,13 @@
 /* 아웃로그인 스킨 */
-.ol {position:relative;padding:15px 0 14px 14px}
+.ol {position:relative;padding:15px 17px}
 .ol h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 
 #ol_before {}
 #ol_before fieldset {position:relative}
-#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:183px;height:22px;border:1px solid #999;background:#f7f7f7;line-height:1.6em}
+#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:173px;height:22px;border:1px solid #999;background:#f7f7f7;line-height:1.6em}
 .ol_idlabel {position:absolute;top:6px;left:5px;color:#333;font-size:0.95em}
-#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:183px;height:22px;border:1px solid #999;background:#f7f7f7;vertical-align:top;line-height:1.6em}
+#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:173px;height:22px;border:1px solid #999;background:#f7f7f7;vertical-align:top;line-height:1.6em}
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#333;font-size:0.95em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
