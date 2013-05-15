@@ -31,8 +31,8 @@
 #ol_after_private a:focus strong,
 #ol_after_private a:hover strong {color:#fff;text-decoration:none}
 #ol_after_memo {width:50px;margin-right:1px}
-#ol_after_pt {width:80px;margin-right:1px}
+#ol_after_pt {width:79px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:justify}
-#ol_after_ft a {display:inline-block;width:88px;height:22px;background:#333;color:#fff;text-align:center;line-height:1.8em}
+#ol_after_ft a {display:inline-block;width:87px;height:22px;background:#333;color:#fff;text-align:center;line-height:1.8em}
 #ol_after_ft a:focus, #ol_after_ft a:hover {text-decoration:none !important}

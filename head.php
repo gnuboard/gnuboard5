@@ -135,4 +135,4 @@ if ($config['cf_include_head']) {
         <?php echo poll('basic'); // 설문조사 ?>
     </div>
     <div id="container">
-        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><div id="container_title"><?php echo $g4['title'] ?></div><?php } ?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="container_title"><?php echo $g4['title'] ?></h1><?php } ?>
