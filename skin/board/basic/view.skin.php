@@ -5,24 +5,27 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<div id="bo_v" style="width:<?php echo $width; ?>">
+<div id="bo_v_titlecate">
+    <span>
+        <?php if ($category_name) { // 분류가 지정되었다면  ?><?php echo ($category_name ? "{$view['ca_name']} " : ""); ?><?php } // 분류 출력 끝  ?>
+        <?php echo $board['bo_subject'] ?>
+    </span>
+</div>
 
-    <div id="bo_v_titlecate">
-        <span>
-            <?php if ($category_name) { // 분류가 지정되었다면  ?><?php echo ($category_name ? "{$view['ca_name']} " : ""); ?><?php } // 분류 출력 끝  ?>
-            <?php echo $board['bo_subject'] ?>
-        </span>
-    </div>
+<article id="bo_v" style="width:<?php echo $width; ?>">
 
     <h1 id="bo_v_h1"><?php echo cut_str(get_text($view['wr_subject']), 70) // 글제목 출력 ?></h1>
 
-    <section id="bo_v_info">
-        <h2>게시물 정보</h2>
-        작성자 <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
-        <span class="sound_only">작성일</span><strong><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong>
-        조회<strong><?php echo number_format($view['wr_hit']) ?>회</strong>
-        댓글<strong><?php echo number_format($view['wr_comment']) ?>건</strong>
-    </section>
+    <dl id="bo_v_info">
+        <dt>작성자</dt>
+        <dd><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></dd>
+        <dt>작성일</dt>
+        <dd><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></dd>
+        <dt>조회</dt>
+        <dd><?php echo number_format($view['wr_hit']) ?>회</dd>
+        <dt>댓글</dt>
+        <dd><?php echo number_format($view['wr_comment']) ?>건</dd>
+    </dl>
 
     <?php
     if ($view['file']['count']) {
@@ -89,8 +92,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     </section>
     <?php } ?>
 
-    <nav id="bo_v_top">
-        <h2>게시물 상단 버튼</h2>
+    <div id="bo_v_top">
         <?php
         ob_start();
          ?>
@@ -115,7 +117,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         $link_buttons = ob_get_contents();
         ob_end_flush();
          ?>
-    </nav>
+    </div>
 
     <article id="bo_v_atc">
         <header>
@@ -176,16 +178,13 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     include_once('./view_comment.php');
      ?>
 
-    <nav id="bo_v_bot">
-        <h2>게시물 하단 버튼</h2>
+    <div id="bo_v_bot">
 
         <!-- 링크 버튼 -->
         <?php echo $link_buttons ?>
-    </nav>
+    </div>
 
-</div>
-
-
+</article>
 
 <script>
 <?php if ($board['bo_download_point'] < 0) { ?>

@@ -129,7 +129,7 @@ if ($config['cf_include_head']) {
 
     <nav id="gnb">
         <script>$('#gnb').addClass('gnb_js');</script>
-        <h2>홈페이지 메인메뉴</h2>
+        <h2>메인메뉴</h2>
         <ul id="gnb_1dul">
             <?php
             $sql = " select * from {$g4['group_table']} where gr_show_menu = '1' and gr_device <> 'mobile' order by gr_order ";
@@ -158,12 +158,12 @@ if ($config['cf_include_head']) {
 <hr>
 
 <div id="wrapper">
-    <aside id="aside">
+    <div id="aside">
         <?php echo outlogin('basic'); // 외부 로그인  ?>
         <?php echo poll('basic'); // 설문조사  ?>
-    </aside>
+    </div>
     <div id="container">
-        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="wrapper_title"><?php echo $g4['title'] ?></h1><?php } ?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><div id="container_title"><?php echo $g4['title'] ?></div><?php } ?>
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
             <button class="no_text_resize" onclick="font_default('container');">기본</button>
