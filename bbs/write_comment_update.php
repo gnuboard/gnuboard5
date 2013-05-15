@@ -143,7 +143,7 @@ if ($w == 'c') // 댓글 입력
                      wr_is_comment = 1,
                      wr_comment = '$tmp_comment',
                      wr_comment_reply = '$tmp_comment_reply',
-                     wr_subject = '$wr_subject',
+                     wr_subject = '',
                      wr_content = '$wr_content',
                      mb_id = '$mb_id',
                      wr_password = '$wr_password',
@@ -179,6 +179,40 @@ if ($w == 'c') // 댓글 입력
     // 포인트 부여
     insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 댓글쓰기", $bo_table, $comment_id, '댓글');
 
+    
+    $wr_subject = get_text(stripslashes($wr['wr_subject']));
+
+    if ($config['cf_facebook_use'] && $_POST['facebook_checked']) {
+        include_once(G4_SNS_PATH."/facebook/src/facebook.php");
+
+        $facebook = new Facebook(array(
+            'appId'  => $config['cf_facebook_appid'],
+            'secret' => $config['cf_facebook_secret'],
+            'cookie' => true
+        ));
+
+        $user = $facebook->getUser();
+    
+        if ($user) {
+            try {
+                $link = G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr['wr_parent'].'&#c_'.$comment_id;
+                $attachment = array(
+                    'message'       => stripslashes($wr_content),
+                    'name'          => $wr_subject,
+                    'link'          => $link,
+                    'description'   => stripslashes($wr['wr_content'])
+                 );
+                $facebook->api('/me/feed/', 'post', $attachment);
+                //$errors = error_get_last(); print_r2($errros); exit;
+                $access_token = $facebook->getAccessToken();
+                sql_query(" update {$g4['member_table']} set mb_facebook_token = '{$access_token}', mb_facebook_checked = '{$_POST['facebook_checked']}' where mb_id = '{$member['mb_id']}' ", true);
+            } catch(FacebookApiException $e) {
+                ;;;
+            }
+        }
+    }
+
+
     // 메일발송 사용
     if ($config['cf_email_use'] && $board['bo_use_email'])
     {
@@ -187,7 +221,6 @@ if ($w == 'c') // 댓글 입력
         $group_admin = get_admin('group');
         $board_admin = get_admin('board');
 
-        $wr_subject = get_text(stripslashes($wr['wr_subject']));
         $wr_content = nl2br(get_text(stripslashes("원글\n{$wr['wr_subject']}\n\n\n댓글\n$wr_content")));
 
         $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'댓글 ', 'cu'=>'댓글 수정' );
