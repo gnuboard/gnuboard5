@@ -19,7 +19,7 @@ if (PHP_VERSION >= '5.3.0') {
 
 /*
 보안서버 도메인
-회원가입, 글쓰기에 사용되는 https 로 시작되는 주소를 말합니다.
+회원가입, 글쓰기에 사용되는 https 로 시작되는 주소를 말합니다. 
 포트가 있다면 도메인 뒤에 :443 과 같이 입력하세요.
 보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.
 입력예) https://www.domain.com:443/gnuboard4s
@@ -48,18 +48,25 @@ define('G4_SKIN_DIR',       'skin');
 define('G4_GCAPTCHA_DIR',   'gcaptcha');
 define('G4_CKEDITOR_DIR',   'ckeditor');
 define('G4_MOBILE_DIR',     'mobile');
-define('G4_KCP_DIR',        'kcp');
+define('G4_KCPCERT_DIR',    'kcpcert');
 define('G4_SNS_DIR',        'sns');
 define('G4_SYNDI_DIR',      'syndi');
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
-
 if (G4_DOMAIN) {
     define('G4_URL', G4_DOMAIN);
 } else {
-    define('G4_URL', $g4_path['url']);
+    if (isset($g4_path['url'])) 
+        define('G4_URL', $g4_path['url']);
+    else 
+        define('G4_URL', '');
 }
-define('G4_PATH', $g4_path['path']);
+
+if (isset($g4_path['path'])) {
+    define('G4_PATH', $g4_path['path']);
+} else {
+    define('G4_PATH', '');
+}
 
 define('G4_ADMIN_URL',      G4_URL.'/'.G4_ADMIN_DIR);
 define('G4_BBS_URL',        G4_URL.'/'.G4_BBS_DIR);
@@ -71,7 +78,7 @@ define('G4_SKIN_URL',       G4_URL.'/'.G4_SKIN_DIR);
 define('G4_PLUGIN_URL',     G4_URL.'/'.G4_PLUGIN_DIR);
 define('G4_GCAPTCHA_URL',   G4_PLUGIN_URL.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_URL',   G4_PLUGIN_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
-define('G4_KCP_URL',        G4_PLUGIN_URL.'/'.G4_KCP_DIR);
+define('G4_KCPCERT_URL',    G4_PLUGIN_URL.'/'.G4_KCPCERT_DIR);
 define('G4_SNS_URL',        G4_PLUGIN_URL.'/'.G4_SNS_DIR);
 define('G4_SYNDI_URL',      G4_PLUGIN_URL.'/'.G4_SYNDI_DIR);
 define('G4_MOBILE_URL',     G4_URL.'/'.G4_MOBILE_DIR);
@@ -86,7 +93,7 @@ define('G4_PLUGIN_PATH',    G4_PATH.'/'.G4_PLUGIN_DIR);
 define('G4_SKIN_PATH',      G4_PATH.'/'.G4_SKIN_DIR);
 define('G4_GCAPTCHA_PATH',  G4_PLUGIN_PATH.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_PATH',  G4_PLUGIN_PATH.'/'.G4_CKEDITOR_DIR);
-define('G4_KCP_PATH',       G4_PLUGIN_PATH.'/'.G4_KCP_DIR);
+define('G4_KCPCERT_PATH',   G4_PLUGIN_PATH.'/'.G4_KCPCERT_DIR);
 define('G4_SNS_PATH',       G4_PLUGIN_PATH.'/'.G4_SNS_DIR);
 define('G4_SYNDI_PATH',     G4_PLUGIN_PATH.'/'.G4_SYNDI_DIR);
 define('G4_MOBILE_PATH',    G4_PATH.'/'.G4_MOBILE_DIR);
