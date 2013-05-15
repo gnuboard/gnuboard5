@@ -241,7 +241,7 @@ $pg_anchor ='<ul class="anchor">
     <tbody>
     <tr>
         <th scope="row">상품코드</th>
-        <td>
+        <td colspan="2">
             <?php if ($w == '') { // 추가 ?>
                 <!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
                 <!-- <input type=text class=required name=it_id value="<?php echo 10000000000-time()?>" size=12 maxlength=10 required> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
@@ -259,7 +259,7 @@ $pg_anchor ='<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="it_name">상품명</label></th>
-        <td>
+        <td colspan="2">
             <input type="text" name="it_name" value="<?php echo get_text(cut_str($it['it_name'], 250, "")); ?>" id="it_name" required class="frm_input required" size="95">
         </td>
     </tr>
@@ -269,17 +269,23 @@ $pg_anchor ='<ul class="anchor">
            <?php echo help("이 항목을 체크하면 상품을 전시만 하고, 판매하지 않습니다."); ?>
             <input type="checkbox" name="it_gallery" value="1" id="it_gallery" <?php echo ($it['it_gallery'] ? "checked" : ""); ?>>
         </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_it_gallery" value="1" id="chk_it_gallery">
+            <label for="chk_it_gallery">그룹적용</label>
+            <input type="checkbox" name="chk_all_gallery" value="1" id="chk_all_gallery">
+            <label for="chk_all_gallery">전체적용</label>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_order">출력순서</label></th>
-        <td>
+        <td colspan="2">
             <?php echo help("숫자가 작을 수록 상위에 출력됩니다. 음수 입력도 가능하며 입력 가능 범위는 -2147483648 부터 2147483647 까지입니다.\n<b>입력하지 않으면 자동으로 출력됩니다.</b>"); ?>
             <input type="text" name="it_order" value="<?php echo $it['it_order']; ?>" id="it_order" class="frm_input" size="12">
         </td>
     </tr>
     <tr>
         <th scope="row">상품유형</th>
-        <td>
+        <td colspan="2">
             <?php echo help("메인화면에 유형별로 출력할때 사용합니다.\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다."); ?>
             <input type="checkbox" name="it_type1" value="1" <?php echo ($it['it_type1'] ? "checked" : ""); ?> id="it_type1">
             <label for="it_type1">히트 <img src="<?php echo G4_URL; ?>/img/shop/icon_hit2.gif" alt=""></label>
@@ -295,14 +301,14 @@ $pg_anchor ='<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="it_maker">제조사</label></th>
-        <td>
+        <td colspan="2">
             <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
             <input type="text" name="it_maker" value="<?php echo get_text($it['it_maker']); ?>" id="it_maker" class="frm_input" size="40">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_origin">원산지</label></th>
-        <td>
+        <td colspan="2">
             <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
             <input type="text" name="it_origin" value="<?php echo get_text($it['it_origin']); ?>" id="it_origin" class="frm_input" size="40">
         </td>
@@ -321,7 +327,7 @@ $pg_anchor ='<ul class="anchor">
             <label for="it_opt<?php echo $k1; ?>_subject">상품옵션명 <?php echo $k1; ?></label><br>
             <input type="text" name="it_opt<?php echo $k1; ?>_subject" value="<?php echo get_text($val11); ?>" id="it_opt<?php echo $k1; ?>_subject" class="frm_input" size="15">
         </th>
-        <td>
+        <td colspan="2">
             <label for="it_opt<?php echo $k1; ?>" class="sound_only">상품옵션설정 <?php echo $k1; ?></label>
             <textarea name="it_opt<?php echo $k1; ?>" id="it_opt<?php echo $k1; ?>" class="sit_w_opt"><?php echo $val12; ?></textarea>
         </td>
@@ -331,7 +337,7 @@ $pg_anchor ='<ul class="anchor">
             <label for="it_opt<?php echo $k2; ?>_subject">상품옵션명 <?php echo $k2; ?></label><br>
             <input type="text" name="it_opt<?php echo $k2; ?>_subject" value="<?php echo get_text($val21); ?>" id="it_opt<?php echo $k2; ?>_subject" class="frm_input" size="15">
         </th>
-        <td>
+        <td colspan="2">
             <label for="it_opt<?php echo $k1; ?>" class="sound_only">상품옵션설정 <?php echo $k2; ?></label>
             <textarea name="it_opt<?php echo $k2; ?>" id="it_opt<?php echo $k2; ?>" class="sit_w_opt"><?php echo $val22; ?></textarea>
         </td>
@@ -339,7 +345,7 @@ $pg_anchor ='<ul class="anchor">
     <?php } ?>
     <tr>
         <th scope="row"><label for="it_basic">기본설명</label></th>
-        <td>
+        <td colspan="2">
             <?php echo help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다. HTML 입력도 가능합니다."); ?>
             <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="90">
         </td>
@@ -358,7 +364,7 @@ $pg_anchor ='<ul class="anchor">
     ?>
     <tr>
         <th scope="row">요약상품정보</th>
-        <td>
+        <td colspan="2">
             <?php echo help("<strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다."); ?>
             <button type="button" class="btn_frmline" onclick="window.open('./iteminfo.php?it_id=<?php echo $it['it_id']; ?>', '_blank', 'width=670 height=800 scrollbars=yes');">상품요약정보 설정</button>
             <span id="item_info_gubun"><?php echo $item_info_gubun; ?></span>
@@ -367,29 +373,29 @@ $pg_anchor ='<ul class="anchor">
     <?php } //if?>
     <tr>
         <th scope="row">상품설명</th>
-        <td> <?php echo editor_html('it_explan', $it['it_explan']); ?></td>
+        <td colspan="2"> <?php echo editor_html('it_explan', $it['it_explan']); ?></td>
     </tr>
     <tr>
         <th scope="row">모바일 상품설명</th>
-        <td> <?php echo editor_html('it_mobile_explan', $it['it_mobile_explan']); ?></td>
+        <td colspan="2"> <?php echo editor_html('it_mobile_explan', $it['it_mobile_explan']); ?></td>
     </tr>
     <tr>
         <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
-        <td>
+        <td colspan="2">
             <?php echo help("운영자와 실제 판매자가 다른 경우 실제 판매자의 e-mail을 입력하면, 상품 주문 시점을 기준으로 실제 판매자에게도 주문서를 발송합니다."); ?>
             <input type="text" name="it_sell_email" value="<?php echo $it['it_sell_email']; ?>" id="it_sell_email" class="frm_input" size="40">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_tel_inq">전화문의</label></th>
-        <td>
+        <td colspan="2">
             <?php echo help("상품 금액 대신 전화문의로 표시됩니다."); ?>
             <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <?php echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_use">판매가능</label></th>
-        <td>
+        <td colspan="2">
             <?php echo help("잠시 판매를 중단하거나 재고가 없을 경우에 체크를 해제해 놓으면 출력되지 않으며, 주문도 받지 않습니다."); ?>
             <input type="checkbox" name="it_use" value="1" id="it_use" <?php echo ($it['it_use']) ? "checked" : ""; ?>> 예
         </td>
