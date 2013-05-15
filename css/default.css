@@ -26,7 +26,6 @@ a:active {color:#000;text-decoration:underline}
 
 #logo {padding:17px 0}
 
-
 /* 전체 검색 */
 #sch_all {position:absolute;top:22px;left:70px;margin:0;padding:0;border:1px solid #555}
 #sch_all legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -83,8 +82,11 @@ a:active {color:#000;text-decoration:underline}
 #container_title {margin-bottom:20px;font-size:1.2em}
 
 /* 텍스트 크기 조절 */
-#text_size {position:absolute;top:-33px;left:-1px;letter-spacing:-px}
-#text_size button {margin:0;padding:0 10px;height:28px;border:0;background:#555;color:#fff;cursor:pointer}
+#text_size {position:absolute;top:-33px;left:-1px;letter-spacing:-3px}
+#text_size button {margin:0;padding:0 10px;height:28px;border:0;background:#555;color:#fff;vertical-align:middle;cursor:pointer}
+#text_size_down {font-size:0.9em}
+#text_size_def {font-size:1em}
+#text_size_up {font-size:1.3em}
 
 /* 하단 레이아웃 */
 #ft {background:#484848}
