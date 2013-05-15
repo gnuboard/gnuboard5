@@ -722,7 +722,7 @@ $pg_anchor = '<ul class="anchor">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_facebook_use">페이스북 사용</label></th>
-        <td><input type="checkbox" name="cf_facebook_use" value="1" id="cf_facebook_use" <?php echo $config['cf_facebook_use']?'checked':''; ?>> 사용</td>
+        <td colspan="3"><input type="checkbox" name="cf_facebook_use" value="1" id="cf_facebook_use" <?php echo $config['cf_facebook_use']?'checked':''; ?>> 사용</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_facebook_appid">페이스북 앱 ID</label></th>

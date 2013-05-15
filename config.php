@@ -129,19 +129,10 @@ define('G4_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|skt|nokia|blackberry|and
 
 
 /********************
-    SNS 상수
-********************/
-
-define('G4_FACEBOOK_APPID',     '119146498278078');
-define('G4_FACEBOOK_SECRET',    '311e0d6ff8ff43cfe0e75fe82d71777c');
-define('G4_FACEBOOK_CALLBACK',  G4_SNS_URL.'/facebook/callback.php');
-
-
-/********************
     기타 상수
 ********************/
 
 // 게시판에서 링크의 기본갯수를 말합니다.
 // 필드를 추가하면 이 숫자를 필드수에 맞게 늘려주십시오.
 define('G4_LINK_COUNT', 2);
-?>`
+?>

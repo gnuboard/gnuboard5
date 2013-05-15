@@ -116,8 +116,55 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <tr>
             <th scope="row">SNS 등록</th>
             <td>
-                <div id="sns_facebook">
-                <?php
+<?php 
+// https://developers.facebook.com/docs/reference/php/
+if ($config['cf_facebook_use']) {
+    include_once(G4_SNS_PATH."/facebook/src/facebook.php");
+    
+    $facebook = new Facebook(array(
+      'appId'  => $config['cf_facebook_appid'],
+      'secret' => $config['cf_facebook_secret'],
+    ));
+
+    $user = $facebook->getUser();
+
+
+    /*
+    if ($member['mb_facebook_user']) {
+        $user = $member['mb_facebook_user'];
+    } else {
+        $user = $facebook->getUser();
+
+        if ($user) {
+            try {
+                $user_profile = $facebook->api('/me');
+            } catch (FacebookApiException $e) {
+                error_log($e);
+                $user = null;
+            }
+        }
+    }
+    */
+    $user = $member['mb_facebook_user'] ? $member['mb_facebook_user'] : $facebook->getUser();
+
+    if ($user) {
+        //$facebook_url = $facebook->getLogoutUrl(array("next"=>G4_SNS_URL."/facebook/callback.php"));
+        $facebook_url = $facebook->getLogoutUrl();
+    } else {
+        //$facebook_url = $facebook->getLoginUrl(array("redirect_uri"=>G4_SNS_URL."/facebook/callback.php"));
+        $facebook_url = $facebook->getLoginUrl(array("redirect_uri"=>G4_SNS_URL."/facebook/callback.php", "scope"=>"user_about_me,publish_stream,read_friendlists,offline_access"));
+    }
+
+    echo '<div id="sns_facebook">';
+    $flag = $member['mb_facebook_use_id'] ? 'on' : 'off';
+    echo '<a href="'.$facebook_url.'" target="_blank"><img src="'.G4_SNS_URL.'/icon/facebook_'.$flag.'.png">';
+    echo '<input type="checkbox" name="wr_facebook_checked" '.($member['mb_facebook_checked']?'checked':'').'>';
+    echo '</div>';
+}
+?>
+
+<?php
+/*
 include(G4_SNS_PATH.'/facebook/src/facebook.php');
 
 $facebook = new Facebook(array('appId'=>G4_FACEBOOK_APPID,'secret'=>G4_FACEBOOK_SECRET));
@@ -143,15 +190,15 @@ if ($user) {
     $loginUrl = $facebook->getLoginUrl(array('redirect_uri'=>(G4_SNS_URL.'/facebook/callback.php')));
     //$loginUrl = $facebook->getLoginUrl();
 }
-
-                ?>
-                    <div><a href="<?php echo $loginUrl; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/facebook_off.png" id="icon_facebook"></a></div>
+*/
+?>
+                    <!-- <div><a href="<?php echo $loginUrl; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/facebook_off.png" id="icon_facebook"></a></div>
                     <div><input type="checkbox" name="chk_facebook" value="1"></div>
                 </div>
                 <div id="sns_twitter">
                     <div><img src="<?php echo G4_SNS_URL; ?>/icon/twitter_off.png" id="icon_twitter"></div>
                     <div><input type="checkbox" name="chk_twitter" value="1"></div>
-                </div>
+                </div> -->
             </td>
         </tr>
         <tr>
