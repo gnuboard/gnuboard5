@@ -69,9 +69,9 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #container_title {margin-bottom:20px;font-size:1.2em;font-weight:bold}
 
-#wrapper #aside {position:relative;float:right;left:-1px;width:210px;border-left:1px solid #f5f6fa;background:#fff}
+#wrapper #aside {position:relative;float:right;left:-1px;padding:0 0 0 3px;width:210px;border-left:1px solid #f5f6fa;background:#fff}
 
-#container {z-index:4;position:relative;float:left;padding:25px 20px 15px 0;width:748px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #f5f6fa;background:#fff;zoom:1}
+#container {z-index:4;position:relative;float:left;padding:25px 15px 15px 0;width:750px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #f5f6fa;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 텍스트 크기 조절 */
@@ -166,10 +166,10 @@ td.empty_table {padding:85px 0;text-align:center}
 .required {background:url('../img/wrest.gif') #fff top right no-repeat !important}
 
 /* 폼 테이블 */
-.frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
-.frm_tbl caption {padding:10px 0;font-weight:bold;text-align:left}
-.frm_tbl th {padding-left:10px;width:100px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
-.frm_tbl td {padding:7px 10px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;background:transparent}
+.frm_tbl {width:100%;border-collapse:collapse;border-spacing:0}
+.frm_tbl caption {padding:10px 0;background:#f5f6fa;font-weight:bold;text-align:center}
+.frm_tbl th {width:100px;text-align:left}
+.frm_tbl td {padding:7px 10px;background:transparent}
 .frm_tbl textarea,
 .frm_input {padding:2px 2px 3px;border:1px solid #999;background:#fff;vertical-align:middle}
 .frm_tbl textarea {width:90%;height:150px}
