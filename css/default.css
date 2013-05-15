@@ -179,7 +179,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .frm_tbl #captcha input {margin-left:5px;text-align:center}
 .frm_tbl a {text-decoration:none}
 
-.frm_info {display:block;padding:0 0 5px;line-height:1.4em}
+.frm_info {display:block;padding:0 0 5px;color:#2ca3ff;line-height:1.2em}
 
 /* 테이블 항목별 정의 */
 .td_chk {width:30px;text-align:center}
