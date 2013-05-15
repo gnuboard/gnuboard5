@@ -168,8 +168,8 @@ td.empty_table {padding:85px 0;text-align:center}
 /* 폼 테이블 */
 .frm_tbl {width:100%;border-collapse:collapse;border-spacing:0}
 .frm_tbl caption {padding:10px 0;background:#f5f6fa;font-weight:bold;text-align:center}
-.frm_tbl th {width:100px;text-align:left}
-.frm_tbl td {padding:7px 10px;background:transparent}
+.frm_tbl th {width:100px;border-bottom:1px solid #f5f6fa;text-align:left}
+.frm_tbl td {padding:7px 10px;border-bottom:1px solid #f5f6fa;background:transparent}
 .frm_tbl textarea,
 .frm_input {padding:2px 2px 3px;border:1px solid #999;background:#fff;vertical-align:middle}
 .frm_tbl textarea {width:90%;height:150px}
