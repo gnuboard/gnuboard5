@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $popular_skin_url ?>/style.css">
 
-<section id="popular">
+<aside id="popular">
     <div>
         <h2>인기검색어</h2>
         <ul>
@@ -13,4 +13,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <?php }  ?>
         </ul>
     </div>
-</section>
+</aside>
