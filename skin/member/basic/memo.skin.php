@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_list" class="new_win">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
 
     <ul class="new_win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
@@ -34,7 +34,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <td class="td_mng"><a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;">삭제</a></td>
     </tr>
     <?php }  ?>
-    <?php if ($i==0) { echo "<tr><td colspan=\"4\" class=\"empty_table\">자료가 없습니다.</td></tr>"; }  ?>
+    <?php if ($i==0) { echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>'; }  ?>
     </tbody>
     </table>
 
