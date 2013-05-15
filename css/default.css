@@ -28,7 +28,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #sch_all_stx {padding-left:5px;width:156px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
 #sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff}
 
-#mb_nb {position:absolute;top:18px;right:0;zoom:1}
+#mb_nb {position:absolute;top:20px;right:0;zoom:1}
 #mb_nb:after {display:block;visibility:hidden;clear:both;content:""}
 #mb_nb li {float:left}
 #mb_nb a {display:block;padding:5px 10px;color:#333;letter-spacing:-0.1em}
