@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <label for="login_auto_login">자동로그인</label>
     </fieldset>
 
-    <section id="mb_login_info">
+    <aside id="mb_login_info">
         <h2>회원로그인 안내</h2>
         <p>
             회원아이디 및 패스워드가 기억 안나실 때는 아이디/패스워드 찾기를 이용하십시오.<br>
@@ -31,7 +31,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <a href="<?php echo G4_BBS_URL ?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
             <a href="./register.php" class="btn01">회원 가입</a>
         </div>
-    </section>
+    </aside>
 
     </form>
 
