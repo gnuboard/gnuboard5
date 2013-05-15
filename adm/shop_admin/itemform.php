@@ -24,24 +24,24 @@ if(intval(preg_replace("/[^0-9]/", "", $row['Type'])) != 20) {
 $sql = " select it_info_gubun from {$g4['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_info_gubun` VARCHAR(50) NOT NULL DEFAULT '' AFTER `it_tel_inq` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_info_value` TEXT NOT NULL AFTER `it_info_gubun` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_info_gubun` VARCHAR(50) NOT NULL DEFAULT '' AFTER `it_tel_inq`,
+                    ADD `it_info_value` TEXT NOT NULL AFTER `it_info_gubun` ", false);
 }
 
 // 상품이미지 필드추가
 $sql = " select it_img1 from {$g4['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_info_value` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img4` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img3` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img4` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img6` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img5` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img7` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img6` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img8` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img7` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img9` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img8` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img10` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img9` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_info_value`,
+                    ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1`,
+                    ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2`,
+                    ADD `it_img4` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img3`,
+                    ADD `it_img5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img4`,
+                    ADD `it_img6` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img5`,
+                    ADD `it_img7` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img6`,
+                    ADD `it_img8` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img7`,
+                    ADD `it_img9` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img8`,
+                    ADD `it_img10` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img9` ", false);
 }
 
 // it_amount 를 it_price 로 변경
