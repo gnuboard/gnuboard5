@@ -154,18 +154,6 @@ else // 장바구니에 담기
     if ($_POST['ct_qty'] < 1)
         alert('수량은 1 이상 입력해 주십시오.');
 
-    // 비회원가격과 회원가격이 다르다면
-    if (!$is_member && $default['de_different_msg'])
-    {
-        $sql = " select it_amount, it_amount2 from {$g4['shop_item_table']} where it_id = '{$_POST['it_id']}' ";
-        $row = sql_fetch($sql);
-        if ($row['it_amount2'] && $row['it_amount'] != $row['it_amount2']) {
-            echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
-            echo "<script>alert('비회원가격과 회원가격이 다릅니다. 로그인 후 구입하여 주십시오.');</script>";
-        }
-    }
-
-
     //--------------------------------------------------------
     //  변조 검사
     //--------------------------------------------------------
