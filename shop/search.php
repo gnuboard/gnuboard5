@@ -119,9 +119,7 @@ $total_count = $row['cnt'];
     for ($i=0; $i<$save['cnt']; $i++) {
         $sql = " select it_id,
                         it_name,
-                        it_amount,
-                        it_amount2,
-                        it_amount3,
+                        it_price,
                         it_tel_inq,
                         it_point,
                         it_type1,
@@ -137,7 +135,7 @@ $total_count = $row['cnt'];
     <tr>
         <td class="ssch_it_img"><?php echo $image; ?></td>
         <td><?php echo get_text($row['it_name']).it_name_icon($row); ?></td>
-        <td class="ssch_num"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></td>
+        <td class="ssch_num"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></td>
         <td class="ssch_num"><?php echo display_point($row['it_point']); ?></td>
     </tr>
     <?php } // for 끝 ?>

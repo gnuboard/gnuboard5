@@ -185,34 +185,27 @@ function get_large_image($img, $it_id, $btn_image=true)
 }
 
 // 금액 표시
-function display_amount($amount, $tel_inq=false)
+function display_price($price, $tel_inq=false)
 {
     if ($tel_inq)
-        $amount = '전화문의';
+        $price = '전화문의';
     else
-        $amount = number_format($amount, 0).'원';
+        $price = number_format($price, 0).'원';
 
-    return $amount;
+    return $price;
 }
 
 // 금액표시
 // $it : 상품 배열
-function get_amount($it)
+function get_price($it)
 {
     global $member;
 
     if ($it['it_tel_inq']) return '전화문의';
 
-    if ($member['mb_level'] > 2) // 특별회원
-        $amount = $it['it_amount3'];
+    $price = $it['it_price'];
 
-    if ($member['mb_level'] == 2 || $amount == 0) // 회원가격
-        $amount = $it['it_amount2'];
-
-    if ($member['mb_level'] == 1 || $amount == 0) // 비회원가격
-        $amount = $it['it_amount'];
-
-    return (int)$amount;
+    return (int)$price;
 }
 
 
@@ -541,7 +534,7 @@ function get_item_options($subject, $option, $index)
                 //if (!ereg("[-]", $opt[1]))
                 if (!preg_match("/[-]/", $opt[1]))
                     $str .= '+';
-                $str .= display_amount($opt[1]) . ')';
+                $str .= display_price($opt[1]) . ')';
             }
             $str .= '</option>'.PHP_EOL;
         }
@@ -586,7 +579,7 @@ function print_item_options()
             //if (ereg("[+]", $opt[1]) == true)
             if (preg_match("/[+]/", $opt[1]) == true)
                 $it_name .= '+';
-            $it_name .= display_amount($opt[1]).')';
+            $it_name .= display_price($opt[1]).')';
         }
         $str_split = '<br>';
     }
@@ -827,7 +820,7 @@ function display_relation_item($it_id, $width, $height, $rows=3)
     if(!$it_id)
         return $str;
 
-    $sql = " select b.it_id, b.it_name, b.it_amount, b.it_amount2, b.it_amount3, b.it_tel_inq, b.it_gallery
+    $sql = " select b.it_id, b.it_name, b.it_price, b.it_tel_inq, b.it_gallery
                 from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id )
                 where a.it_id = '$it_id'
                 limit 0, $rows ";
@@ -839,21 +832,15 @@ function display_relation_item($it_id, $width, $height, $rows=3)
             $str .= '<ul class="sct_rel_ul">';
         }
 
-        $full_img = G4_DATA_PATH.'/item/'.$row['it_id'].'_s';
         $it_name = get_text($row['it_name']); // 상품명
-        $it_amount = ''; // 상품가격
+        $it_price = ''; // 상품가격
         if(!$row['it_gallery']) {
-            $it_amount = get_amount($row);
+            $it_price = get_price($row);
             if(!$row['it_tel_inq'])
-                $it_amount = display_amount($it_amount);
+                $it_price = display_price($it_price);
         }
 
-        if(is_file($full_img)) {
-            $img_url = G4_DATA_URL.'/item/'.$row['it_id'].'_s';
-            $img = '<img src="'.$img_url.'" alt="'.$it_name.' / '.$it_amount.'" width="'.$width.'" height="'.$height.'">';
-        } else {
-            $img = '<img src="'.G4_SHOP_URL.'/img/no_image.gif" alt="'.$it_name.' / '.$it_amount.'" width="'.$width.'" height="'.$height.'">';
-        }
+        $img = get_it_image($row['it_id'], $width, $height);
 
         $str .= '<li class="sct_rel_li"><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'" class="sct_rel_a">'.$img.'</a></li>';
     }

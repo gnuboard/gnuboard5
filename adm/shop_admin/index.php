@@ -65,7 +65,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_odrnum2"><?php echo $row['od_id']; ?></td>
         <td class="td_name"><?php echo $name; ?></td>
-        <td class="td_bignum"><?php echo display_amount($row['receiptamount']); ?></td>
+        <td class="td_bignum"><?php echo display_price($row['receiptamount']); ?></td>
         <td class="td_payby"><?php echo $settle_method; ?></td>
         <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['od_id']; ?> 수정"></a></td>
     </tr>
@@ -130,7 +130,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_odrnum2"><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
         <td class="td_name"><?php echo $name; ?></td>
-        <td class="td_bignum"><?php echo display_amount($row['orderamount']); ?></td>
+        <td class="td_bignum"><?php echo display_price($row['orderamount']); ?></td>
         <td class="td_payby"><?php echo $settle_method; ?></td>
         <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['od_id']; ?> 수정"></a></td>
     </tr>

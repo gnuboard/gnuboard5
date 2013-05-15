@@ -46,7 +46,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">판매가격</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_amount($list[$i]['ct_amount']); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($list[$i]['ct_price']); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">수량</th>
@@ -54,7 +54,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">소계</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_amount($list[$i]['stotal_amount']); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($list[$i]['stotal_amount']); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">포인트</th>
@@ -65,13 +65,13 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <?php if ($od_send_cost > 0) { // 배송비가 있다면 ?>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">배송비</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_amount($od_send_cost); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_send_cost); ?></td>
         </tr>
         <?php } ?>
 
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">주문합계</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_amount($ttotal_amount); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($ttotal_amount); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">포인트합계</th>
@@ -97,14 +97,14 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <?php if ($od_receipt_card > 0) { ?>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">신용카드 입금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_amount($od_receipt_card); ?><!--  (승인전 금액입니다.) --></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_receipt_card); ?><!--  (승인전 금액입니다.) --></td>
         </tr>
         <?php } ?>
 
         <?php if ($od_receipt_bank > 0) { ?>
-        <tr> 
+        <tr>
             <th scope="row" style="<?php echo $th_st; ?>"><?php echo $od_settle_case; ?> 입금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_amount($od_receipt_bank); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_receipt_bank); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">계좌번호</th>

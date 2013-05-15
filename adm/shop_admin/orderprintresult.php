@@ -317,7 +317,7 @@ if (mysql_num_rows($result) == 0)
                     if (preg_match("/[+]/", $opt[1]) == true)
                         $it_name .= "+";
                     // 금액을 전화문의 표시로
-                    $it_name .= display_amount($opt[1]) . ")";
+                    $it_name .= display_price($opt[1]) . ")";
                 }
                 $str_split = "<br />";
             }

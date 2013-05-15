@@ -89,7 +89,7 @@ if ($default['de_card_test']) {
 $sql = " select a.ct_id,
                 a.it_id,
                 a.ct_qty,
-                a.ct_amount,
+                a.ct_price,
                 a.ct_point,
                 a.ct_status,
                 a.ct_time,
@@ -160,9 +160,9 @@ $pg_anchor = '<ul class="anchor">
         $ct_amount['소계'] = $row['ct_amount'] * $row['ct_qty'];
         $ct_point['소계'] = $row['ct_point'] * $row['ct_qty'];
         if ($row['ct_status']=='주문' || $row['ct_status']=='준비' || $row['ct_status']=='배송' || $row['ct_status']=='완료')
-            $t_ct_amount['정상'] += $row['ct_amount'] * $row['ct_qty'];
+            $t_ct_amount['정상'] += $row['ct_price'] * $row['ct_qty'];
         else if ($row['ct_status']=='취소' || $row['ct_status']=='반품' || $row['ct_status']=='품절')
-            $t_ct_amount['취소'] += $row['ct_amount'] * $row['ct_qty'];
+            $t_ct_amount['취소'] += $row['ct_price'] * $row['ct_qty'];
 
         $image = get_it_image($row['it_id'], (int)($default['de_simg_width'] / $image_rate), (int)($default['de_simg_height'] / $image_rate));
     ?>
@@ -179,7 +179,7 @@ $pg_anchor = '<ul class="anchor">
         </td>
         <td class="td_small_stats"><?php echo $row['ct_status']; ?></td>
         <td class="td_num"><?php echo $row['ct_qty']; ?></td>
-        <td class="td_num"><?php echo number_format($row['ct_amount']); ?></td>
+        <td class="td_num"><?php echo number_format($row['ct_price']); ?></td>
         <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
         <td class="td_num"><?php echo number_format($ct_point['소계']); ?></td>
         <td class="td_small_stats"><?php echo get_yn($row['dct_point_use']); ?></td>
@@ -230,7 +230,7 @@ $pg_anchor = '<ul class="anchor">
         $s_receipt_way .= "+포인트";
     ?>
 
-    <strong class="sodr_nonpay">미수금 <?php echo display_amount($amount['미수']); ?></strong>
+    <strong class="sodr_nonpay">미수금 <?php echo display_price($amount['미수']); ?></strong>
 
     <table>
     <thead>
@@ -249,11 +249,11 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_odrnum2"><?php echo $od['od_id']; ?><!-- uq_id : <?php echo $od['uq_id']; ?> --></td>
         <td class="td_payby"><?php echo $s_receipt_way; ?></td>
-        <td class="td_bignum"><?php echo display_amount($amount['정상']); ?></td>
+        <td class="td_bignum"><?php echo display_price($amount['정상']); ?></td>
         <td class="td_bignum"><?php echo display_point($od['od_receipt_point']); ?></td>
         <td class="td_bignum"><?php echo number_format($amount['입금']); ?>원</td>
-        <td class="td_bignum"><?php echo display_amount($od['od_dc_amount']); ?></td>
-        <td class="td_bignum"><?php echo display_amount($od['od_refund_amount']); ?></td>
+        <td class="td_bignum"><?php echo display_price($od['od_dc_amount']); ?></td>
+        <td class="td_bignum"><?php echo display_price($od['od_refund_amount']); ?></td>
         <td class="td_bignum"><?php echo number_format($t_ct_amount['취소']); ?>원</td>
     </tr>
     </tbody>
@@ -293,7 +293,7 @@ $pg_anchor = '<ul class="anchor">
         <?php } ?>
         <tr>
             <th scope="row"><?php echo $od['od_settle_case']; ?> 입금액</th>
-            <td><?php echo display_amount($od['od_receipt_bank']); ?></td>
+            <td><?php echo display_price($od['od_receipt_bank']); ?></td>
         </tr>
         <tr>
             <th scope="row">입금자</th>
@@ -316,7 +316,7 @@ $pg_anchor = '<ul class="anchor">
             </tr>
         <tr>
             <th scope="row"><?php echo $od['od_settle_case']; ?> 결제액</th>
-            <td><?php echo display_amount($od['od_receipt_hp']); ?></td>
+            <td><?php echo display_price($od['od_receipt_hp']); ?></td>
         </tr>
         <tr>
             <th scope="row">결제 확인일시</th>
@@ -333,7 +333,7 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row" class="sodr_sppay">신용카드 입금액</th>
             <td>
                 <?php if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>0원
-                <?php } else { ?><?php echo display_amount($od['od_receipt_card']); ?>
+                <?php } else { ?><?php echo display_price($od['od_receipt_card']); ?>
                 <?php } ?>
             </td>
         </tr>
@@ -347,7 +347,7 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <tr>
             <th scope="row" class="sodr_sppay">카드 승인취소</th>
-            <td><?php echo display_amount($od['od_cancel_card']); ?></td>
+            <td><?php echo display_price($od['od_cancel_card']); ?></td>
         </tr>
         <?php } ?>
         <tr>
@@ -356,11 +356,11 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <tr>
             <th scope="row">DC</th>
-            <td><?php echo display_amount($od['od_dc_amount']); ?></td>
+            <td><?php echo display_price($od['od_dc_amount']); ?></td>
         </tr>
         <tr>
             <th scope="row">환불액</th>
-            <td><?php echo display_amount($od['od_refund_amount']); ?></td>
+            <td><?php echo display_price($od['od_refund_amount']); ?></td>
         </tr>
         <?php
         $sql = " select dl_company, dl_url, dl_tel from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ";

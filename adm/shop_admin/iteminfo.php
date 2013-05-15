@@ -6,9 +6,10 @@ $it_id = trim($_POST['it_id']);
 $gubun = $_POST['gubun'] ? $_POST['gubun'] : 'wear';
 if($it['it_id'])
     $it_id = $it['it_id'];
-
-$sql = " select it_id, it_info_gubun, it_info_value from {$g4['shop_item_table']} where it_id = '$it_id' ";
-$it = sql_fetch($sql);
+else {
+    $sql = " select it_id, it_info_gubun, it_info_value from {$g4['shop_item_table']} where it_id = '$it_id' ";
+    $it = sql_fetch($sql);
+}
 
 if(!$_POST['gubun'] && $it['it_info_gubun'])
     $gubun = $it['it_info_gubun'];

@@ -147,16 +147,14 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <th scope="col" rowspan="2"><?php echo subject_sort_link('it_id', 'sca='.$sca); ?>상품코드 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" colspan="2" rowspan="2">분류 및 <?php echo subject_sort_link('it_name', 'sca='.$sca); ?>상품명 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_amt"><?php echo subject_sort_link('it_amount', 'sca='.$sca); ?>비회원가격 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_amt2"><?php echo subject_sort_link('it_amount2', 'sca='.$sca); ?>회원가격 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_amt3"><?php echo subject_sort_link('it_amount3', 'sca='.$sca); ?>특별가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_amt"><?php echo subject_sort_link('it_price', 'sca='.$sca); ?>판매가격 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_camt"><?php echo subject_sort_link('it_cust_price', 'sca='.$sca); ?>시중가격 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" rowspan="2"><?php echo subject_sort_link('it_order', 'sca='.$sca); ?>순서 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" rowspan="2"><?php echo subject_sort_link('it_use', 'sca='.$sca, 1); ?>판매 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" rowspan="2"><?php echo subject_sort_link('it_hit', 'sca='.$sca, 1); ?>조회 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
-        <th scope="col" id="sit_camt"><?php echo subject_sort_link('it_cust_amount', 'sca='.$sca); ?>시중가격 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" id="sit_pt"><?php echo subject_sort_link('it_point', 'sca='.$sca); ?>포인트 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" id="sit_qty"><?php echo subject_sort_link('it_stock_qty', 'sca='.$sca); ?>재고 <span class="sound_only">순 정렬</span></a></th>
     </tr>
@@ -183,9 +181,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <?php echo $tmp_ca_list; ?><br>
             <input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" required class="frm_input frm_sit_title required" size="30">
         </td>
-        <td headers="sit_amt"><input type="text" name="it_amount[<?php echo $i; ?>]" value="<?php echo $row['it_amount']; ?>" class="frm_input sit_amt" size="7"></td>
-        <td headers="sit_amt2"><input type="text" name="it_amount2[<?php echo $i; ?>]" value="<?php echo $row['it_amount2']; ?>" class="frm_input sit_amt2" size="7"></td>
-        <td headers="sit_amt3"><input type="text" name="it_amount3[<?php echo $i; ?>]" value="<?php echo $row['it_amount3']; ?>" class="frm_input sit_amt3" size="7"></td>
+        <td headers="sit_amt"><input type="text" name="it_price[<?php echo $i; ?>]" value="<?php echo $row['it_price']; ?>" class="frm_input sit_amt" size="7"></td>
+        <td headers="sit_camt"><input type="text" name="it_cust_price[<?php echo $i; ?>]" value="<?php echo $row['it_cust_price']; ?>" class="frm_input sit_camt" size="7"></td>
         <td rowspan="2"><input type="text" name="it_order[<?php echo $i; ?>]" value="<?php echo $row['it_order']; ?>" class="frm_input sit_odrby" size="3"></td>
         <td rowspan="2"><input type="checkbox" name="it_use[<?php echo $i; ?>]" <?php echo ($row['it_use'] ? 'checked' : ''); ?> value="1"></td>
         <td rowspan="2"><?php echo $row['it_hit']; ?></td>
@@ -197,7 +194,6 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         </td>
     </tr>
     <tr>
-        <td headers="sit_camt"><input type="text" name="it_cust_amount[<?php echo $i; ?>]" value="<?php echo $row['it_cust_amount']; ?>" class="frm_input sit_camt" size="7"></td>
         <td headers="sit_pt"><input type="text" name="it_point[<?php echo $i; ?>]" value="<?php echo $row['it_point']; ?>" class="frm_input sit_pt" size="7"></td>
         <td headers="sit_qty"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input sit_qty" size="7"></td>
     </tr>

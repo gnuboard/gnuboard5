@@ -103,7 +103,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     <?php for ($i=0; $row=sql_fetch_array($result); $i++) { ?>
     <tr>
         <td class="td_odrnum2"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
-        <td><?php echo display_amount($row['cd_amount']); ?></td>
+        <td><?php echo display_price($row['cd_amount']); ?></td>
         <td class="td_num"><?php echo $row['cd_app_no']; ?></td>
         <td class="td_smallmng"><?php echo $row['cd_app_rt']; ?></td>
         <td class="td_time"><?php echo $row['cd_app_time']; ?></td>

@@ -32,13 +32,13 @@ if (G4_HTTPS_DOMAIN) {
 define(_MISU_QUERY_, "
     count(distinct a.od_id) as ordercount, /* 주문서건수 */
     count(b.ct_id) as itemcount, /* 상품건수 */
-    (SUM(b.ct_amount * b.ct_qty) + a.od_send_cost) as orderamount , /* 주문합계 */
-    (SUM(IF(b.ct_status = '취소' OR b.ct_status = '반품' OR b.ct_status = '품절', b.ct_amount * b.ct_qty, 0))) as ordercancel, /* 주문취소 */
+    (SUM(b.ct_price * b.ct_qty) + a.od_send_cost) as orderamount , /* 주문합계 */
+    (SUM(IF(b.ct_status = '취소' OR b.ct_status = '반품' OR b.ct_status = '품절', b.ct_price * b.ct_qty, 0))) as ordercancel, /* 주문취소 */
     (a.od_receipt_bank + a.od_receipt_card + a.od_receipt_hp + a.od_receipt_point) as receiptamount, /* 입금합계 */
     (a.od_refund_amount + a.od_cancel_card) as receiptcancel, /* 입금취소 */
     (
-        (SUM(b.ct_amount * b.ct_qty) + a.od_send_cost) -
-        (SUM(IF(b.ct_status = '취소' OR b.ct_status = '반품' OR b.ct_status = '품절', b.ct_amount * b.ct_qty, 0))) -
+        (SUM(b.ct_price * b.ct_qty) + a.od_send_cost) -
+        (SUM(IF(b.ct_status = '취소' OR b.ct_status = '반품' OR b.ct_status = '품절', b.ct_price * b.ct_qty, 0))) -
         a.od_dc_amount -
         (a.od_receipt_bank + a.od_receipt_card + a.od_receipt_hp + a.od_receipt_point) +
         (a.od_refund_amount + a.od_cancel_card)
@@ -74,6 +74,18 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}` DROP INDEX index1", false);
+}
+
+// 가격필드명변경
+$sql = " select it_price from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    CHANGE `it_amount` `it_price` INT(11) NOT NULL DEFAULT '0',
+                    CHANGE `it_cust_amount` `it_cust_price` INT(11) NOT NULL DEFAULT '0' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    CHANGE `ct_amount` `ct_price` INT(11) NOT NULL DEFAULT '0',
+                    ADD `ct_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_id` ", false);
 }
 
 //==============================================================================

@@ -45,7 +45,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">판매가격</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_amount($list[$i]['ct_amount']); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($list[$i]['ct_price']); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">수량</th>

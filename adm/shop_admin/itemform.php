@@ -424,31 +424,16 @@ $(function(){
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="it_amount">비회원가격</label></th>
+        <th scope="row"><label for="it_price">판매가격</label></th>
         <td>
-            <?php echo help("상품의 기본판매가격(로그인 이전 가격)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다."); ?>
-            <input type="text" name="it_amount" value="<?php echo $it['it_amount']; ?>" id="it_amount" class="frm_input" size="8"> 원
+            <input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="it_amount2">회원가격</label></th>
-        <td>
-            <?php echo help("상품의 로그인 이후 가격(회원 권한 2 에만 적용)되며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n<strong>입력이 없다면 비회원가격으로 대신합니다.</strong>"); ?>
-            <input type="text" name="it_amount2" value="<?php echo $it['it_amount2']; ?>" id="it_amount2" class="frm_input"  size="8"> 원
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_amount3">특별회원가격</label></th>
-        <td>
-            <?php echo help("상품의 로그인 이후 가격(회원 권한 3 이상에 적용)이며 옵션별로 상품가격이 틀리다면 합산하여 상품상세페이지에 출력합니다.\n<strong>입력이 없다면 회원가격으로 대신합니다. 회원가격도 없다면 비회원가격으로 대신합니다.</strong>"); ?>
-            <input type="text" name="it_amount3" value="<?php echo $it['it_amount3']; ?>" id="it_amount3" class="frm_input" size="8"> 원
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_cust_amount">시중가격</label></th>
+        <th scope="row"><label for="it_cust_price">시중가격</label></th>
         <td>
             <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
-            <input type="text" name="it_cust_amount" value="<?php echo $it['it_cust_amount']; ?>" id="it_cust_amount" class="frm_input" size="8"> 원
+            <input type="text" name="it_cust_price" value="<?php echo $it['it_cust_price']; ?>" id="it_cust_price" class="frm_input" size="8"> 원
         </td>
     </tr>
     <tr>
@@ -576,28 +561,6 @@ $(function(){
             </select>
         </span>
         <select id="relation" class="sit_relation_list" size="8" onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);" onkeyup="relation_add(this);">
-        <?php
-        /*
-        $sql = " select ca_id, it_id, it_name, it_amount
-                   from $g4[shop_item_table]
-                  where it_id <> '$it_id'
-                  order by ca_id, it_name ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
-            $sql2 = " select ca_name from $g4[shop_category_table] where ca_id = '$row[ca_id]' ";
-            $row2 = sql_fetch($sql2);
-
-            // 김선용 2006.10
-            if(file_exists("{$g4['path']}/data/item/{$row['it_id']}_s"))
-                $it_image = "{$row['it_id']}_s";
-            else
-                $it_image = "";
-
-            echo "<option value='$row[it_id]/$it_image/{$row['it_amount']}'>$row2[ca_name] : ".cut_str(get_text(strip_tags($row[it_name])),30);
-        }
-        */
-        ?>
         </select>
         <div>
             <strong class="sound_only">현재 활성화 된 상품</strong>
@@ -713,7 +676,7 @@ $(function(){
         <select name="relationselect" size="8" class="sit_relation_selected" onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);" onkeyup="relation_del(this);">
         <?php
         $str = array();
-        $sql = " select b.ca_id, b.it_id, b.it_name, b.it_amount
+        $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
                    from {$g4['shop_item_relation_table']} a
                    left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
                   where a.it_id = '$it_id'
@@ -730,7 +693,7 @@ $(function(){
             else
                 $it_image = "";
         ?>
-            <option value="<?php echo $row['it_id']; ?>/<?php echo $it_image; ?>/<?php echo $row['it_amount']; ?>"><?php echo $row2['ca_name']; ?> : <?php echo cut_str(get_text(strip_tags($row['it_name'])),30); ?></option>
+            <option value="<?php echo $row['it_id']; ?>/<?php echo $it_image; ?>/<?php echo $row['it_price']; ?>"><?php echo $row2['ca_name']; ?> : <?php echo cut_str(get_text(strip_tags($row['it_name'])),30); ?></option>
         <?php
             $str[] = $row['it_id'];
         }

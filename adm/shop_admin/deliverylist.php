@@ -164,9 +164,9 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>
         </td>
         <td class="td_name"><?php echo $row['od_name']; ?></td>
-        <td><?php echo display_amount($row['orderamount']); ?></td>
-        <td><?php echo display_amount($row['receiptamount']); ?></td>
-        <td><?php echo display_amount($row['misu']); ?></td>
+        <td><?php echo display_price($row['orderamount']); ?></td>
+        <td><?php echo display_price($row['receiptamount']); ?></td>
+        <td><?php echo display_price($row['misu']); ?></td>
         <td><?php echo $hope_date; ?></td>
         <td><input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="20" maxlength="19"></td>
         <td>

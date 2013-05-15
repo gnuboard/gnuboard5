@@ -39,9 +39,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     </td>
     <td><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
     <td class="td_bignum"><?php echo $row['itemcount']; ?></td>
-    <td class="td_bignum"><?php echo display_amount($row['orderamount']); ?></td>
-    <td class="td_bignum"><?php echo display_amount($row['receiptamount']); ?></td>
-    <td class="td_bignum"><?php echo display_amount($row['misu']); ?></td>
+    <td class="td_bignum"><?php echo display_price($row['orderamount']); ?></td>
+    <td class="td_bignum"><?php echo display_price($row['receiptamount']); ?></td>
+    <td class="td_bignum"><?php echo display_price($row['misu']); ?></td>
 </tr>
 
 <?php

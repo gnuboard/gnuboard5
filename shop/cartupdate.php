@@ -82,25 +82,15 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
     {
         if ($_POST['it_id'][$i] == "" || $_POST['ct_qty'][$i] <= 0) { continue; }
 
-        // 비회원가격과 회원가격이 다르다면
-        if (!$is_member && $default['de_different_msg'])
-        {
-            $sql = " select it_amount, it_amount2 from {$g4['shop_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
-            $row = sql_fetch($sql);
-            if ($row['it_amount2'] && $row['it_amount'] != $row['it_amount2']) {
-                $error .= "\"{$_POST['it_name'][$i]}\" 의 비회원가격과 회원가격이 다릅니다. 로그인 후 구입하여 주십시오.\\n\\n";
-            }
-        }
-
         //--------------------------------------------------------
         //  변조 검사
         //--------------------------------------------------------
         $sql = " select * from {$g4['shop_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
         $it = sql_fetch($sql);
 
-        $amount = get_amount($it);
+        $price = get_price($it);
         // 상품가격이 다름
-        if ((int)$amount !== (int)$_POST['it_amount'][$i])
+        if ((int)$price !== (int)$_POST['it_price'][$i])
             die("Error..");
 
         $point = $it['it_point'];
@@ -136,7 +126,7 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
                     set uq_id       = '$tmp_uq_id',
                         it_id        = '{$_POST['it_id'][$i]}',
                         ct_status    = '쇼핑',
-                        ct_amount    = '{$_POST['it_amount'][$i]}',
+                        ct_price     = '{$_POST['it_price'][$i]}',
                         ct_point     = '{$_POST['it_point'][$i]}',
                         ct_point_use = '0',
                         ct_stock_use = '0',
@@ -183,9 +173,9 @@ else // 장바구니에 담기
         }
     }
 
-    $amount = get_amount($it) + $opt_amount;
+    $price = get_price($it) + $opt_amount;
     // 상품가격이 다름
-    if ((int)$amount !== (int)$_POST['it_amount'])
+    if ((int)$price !== (int)$_POST['it_price'])
         die("Error..");
 
     $point = $it['it_point'];
@@ -234,7 +224,7 @@ else // 장바구니에 담기
                     it_opt5      = '{$_POST['it_opt5']}',
                     it_opt6      = '{$_POST['it_opt6']}',
                     ct_status    = '쇼핑',
-                    ct_amount    = '{$_POST['it_amount']}',
+                    ct_price     = '{$_POST['it_price']}',
                     ct_point     = '{$_POST['it_point']}',
                     ct_point_use = '0',
                     ct_stock_use = '0',

@@ -21,7 +21,7 @@ $sql = " select b.it_sell_email,
                 a.it_opt5,
                 a.it_opt6,
                 a.ct_qty,
-                a.ct_amount,
+                a.ct_price,
                 a.ct_point
            from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
           where a.uq_id = '$tmp_uq_id'
@@ -36,8 +36,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['it_origin']     = $row['it_origin'];
     $list[$i]['it_opt']        = print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
     $list[$i]['ct_qty']        = $row['ct_qty'];
-    $list[$i]['ct_amount']     = $row['ct_amount'];
-    $list[$i]['stotal_amount'] = $row['ct_amount'] * $row['ct_qty'];
+    $list[$i]['ct_price']      = $row['ct_price'];
+    $list[$i]['stotal_amount'] = $row['ct_price'] * $row['ct_qty'];
     $list[$i]['stotal_point']  = $row['ct_point'] * $row['ct_qty'];
 
     $ttotal_amount += $list[$i]['stotal_amount'];

@@ -75,7 +75,7 @@ if ($od_send_mail)
     // 신용카드 입금
     if ($od['od_receipt_card'] > 0) {
         $card_list['od_card_time'] = $od['od_card_time'];
-        $card_list['od_receipt_card'] = display_amount($od['od_receipt_card']);
+        $card_list['od_receipt_card'] = display_price($od['od_receipt_card']);
 
         $is_receipt = true;
     }
@@ -83,7 +83,7 @@ if ($od_send_mail)
     // 무통장 입금
     if ($od['od_receipt_bank'] > 0) {
         $bank_list['od_bank_time']    = $od['od_bank_time'];
-        $bank_list['od_receipt_bank'] = display_amount($od['od_receipt_bank']);
+        $bank_list['od_receipt_bank'] = display_price($od['od_receipt_bank']);
         $bank_list['od_deposit_name'] = $od['od_deposit_name'];
 
         $is_receipt = true;

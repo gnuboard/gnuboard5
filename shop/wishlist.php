@@ -50,7 +50,7 @@ include_once('./_head.php');
             }
         }
 
-        $it_amount = get_amount($row);
+        $it_price = get_price($row);
 
         if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
@@ -73,7 +73,7 @@ include_once('./_head.php');
             <input type="checkbox" name="it_id[<?php echo $i; ?>]"     value="<?php echo $row['it_id']; ?>" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
             <?php } ?>
             <input type="hidden"   name="it_name[<?php echo $i; ?>]"   value="<?php echo $row['it_name']; ?>">
-            <input type="hidden"   name="it_amount[<?php echo $i; ?>]" value="<?php echo $it_amount; ?>">
+            <input type="hidden"   name="it_price[<?php echo $i; ?>]" value="<?php echo $it_price; ?>">
             <input type="hidden"   name="it_point[<?php echo $i; ?>]"  value="<?php echo $row['it_point']; ?>">
             <input type="hidden"   name="ct_qty[<?php echo $i; ?>]"    value="1">
         </td>

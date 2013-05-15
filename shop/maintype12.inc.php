@@ -23,7 +23,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
             <span class="sct_img"><?php echo get_it_image($row['it_id'], $img_width, $img_height); ?></span>
             <b><?php echo stripslashes($row['it_name']); ?></b>
             <p><?php echo $row['it_basic']; ?></p>
-            <span class="sct_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
+            <span class="sct_cost"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></span>
             <span class="sct_icon">
                 <?php echo display_item_icon($row); // 이미지 아이콘?>
             </span>

@@ -293,20 +293,20 @@ else
             </tr>
 
             <?php } else { // 전화문의가 아닐 경우?>
-            <?php if ($it['it_cust_amount']) { // 1.00.03?>
+            <?php if ($it['it_cust_price']) { // 1.00.03?>
             <tr>
-                <th scope="row"><label for="disp_cust_amount">시중가격</label></th>
+                <th scope="row"><label for="disp_cust_price">시중가격</label></th>
                 <td>
-                    <input type="text" name="disp_cust_amount" value="<?php echo number_format($it['it_cust_amount']); ?>" id="disp_cust_amount" readonly class="sit_ov_ro" size="8"> 원
+                    <input type="text" name="disp_cust_price" value="<?php echo number_format($it['it_cust_price']); ?>" id="disp_cust_price" readonly class="sit_ov_ro" size="8"> 원
                 </td>
             </tr>
             <?php } // 전화문의 끝?>
 
             <tr>
-                <th scope="row"><label for="disp_sell_amount">판매가격</label></th>
+                <th scope="row"><label for="disp_sell_price">판매가격</label></th>
                 <td>
-                    <input type="text" name="disp_sell_amount" id="disp_sell_amount" readonly class="sit_ov_ro" size="8"> 원
-                    <input type="hidden" name="it_amount" value="0">
+                    <input type="text" name="disp_sell_price" id="disp_sell_price" readonly class="sit_ov_ro" size="8"> 원
+                    <input type="hidden" name="it_price" value="0">
                 </td>
             </tr>
 
@@ -598,9 +598,9 @@ else
 
     function amount_change()
     {
-        var basic_amount = parseInt("<?php echo get_amount($it); ?>");
+        var basic_amount = parseInt("<?php echo get_price($it); ?>");
         var basic_point  = parseFloat("<?php echo $it['it_point']; ?>");
-        var cust_amount  = parseFloat("<?php echo $it['it_cust_amount']; ?>");
+        var cust_amount  = parseFloat("<?php echo $it['it_cust_price']; ?>");
 
         var f = document.fitem;
         var opt1 = 0;
@@ -624,14 +624,14 @@ else
         var amount = basic_amount + opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
         var point  = parseInt(basic_point);
 
-        if (typeof(f.it_amount) != 'undefined')
-            f.it_amount.value = amount;
+        if (typeof(f.it_price) != 'undefined')
+            f.it_price.value = amount;
 
-        if (typeof(f.disp_sell_amount) != 'undefined')
-            f.disp_sell_amount.value = number_format(String(amount * ct_qty));
+        if (typeof(f.disp_sell_price) != 'undefined')
+            f.disp_sell_price.value = number_format(String(amount * ct_qty));
 
-        if (typeof(f.disp_cust_amount) != 'undefined')
-            f.disp_cust_amount.value = number_format(String(cust_amount * ct_qty));
+        if (typeof(f.disp_cust_price) != 'undefined')
+            f.disp_cust_price.value = number_format(String(cust_amount * ct_qty));
 
         if (typeof(f.it_point) != 'undefined') {
             f.it_point.value = point;
@@ -645,7 +645,7 @@ else
     function fitemcheck(f, act)
     {
         // 판매가격이 0 보다 작다면
-        if (f.it_amount.value < 0)
+        if (f.it_price.value < 0)
         {
             alert("전화로 문의해 주시면 감사하겠습니다.");
             return;
