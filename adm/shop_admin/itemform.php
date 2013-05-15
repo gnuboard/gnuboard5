@@ -360,27 +360,6 @@ $pg_anchor ='<ul class="anchor">
             <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="90">
         </td>
     </tr>
-    <?php if ($it['it_id']) { ?>
-    <?php
-    $sql = " select distinct ii_gubun from {$g4['shop_item_info_table']} where it_id = '$it_id' group by ii_gubun ";
-    $ii = sql_fetch($sql, false);
-    if ($ii) {
-        $item_info_gubun = item_info_gubun($ii['ii_gubun']);
-        $item_info_gubun .= $item_info_gubun ? " 등록됨" : "";
-    } else {
-        // 상품상세정보 테이블이 없다고 가정하여 생성
-        create_table_item_info();
-    }
-    ?>
-    <tr>
-        <th scope="row">요약상품정보</th>
-        <td colspan="2">
-            <?php echo help("<strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다."); ?>
-            <button type="button" class="btn_frmline" onclick="window.open('./iteminfo.php?it_id=<?php echo $it['it_id']; ?>', '_blank', 'width=670 height=800 scrollbars=yes');">상품요약정보 설정</button>
-            <span id="item_info_gubun"><?php echo $item_info_gubun; ?></span>
-        </td>
-    </tr>
-    <?php } //if?>
     <tr>
         <th scope="row">상품설명</th>
         <td colspan="2"> <?php echo editor_html('it_explan', $it['it_explan']); ?></td>
