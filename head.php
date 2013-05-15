@@ -49,6 +49,13 @@ if ($config['cf_include_head']) {
             <li><a href="<?php echo G4_BBS_URL; ?>/new.php">새글</a></li>
         </ul>
 
+        <div id="text_size">
+            <span class="sound_only">본문 영역 글자 크기 조절</span>
+            <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
+            <button class="no_text_resize" onclick="font_default('container');">기본</button>
+            <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
+        </div>
+
         <fieldset id="sch_all">
             <legend>사이트 내 전체검색</legend>
             <form name="fsearchbox" method="get" action="<?php echo G4_BBS_URL; ?>/search.php" onsubmit="return fsearchbox_submit(this);">
@@ -129,8 +136,3 @@ if ($config['cf_include_head']) {
     </div>
     <div id="container">
         <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><div id="container_title"><?php echo $g4['title'] ?></div><?php } ?>
-        <div id="text_size">
-            <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
-            <button class="no_text_resize" onclick="font_default('container');">기본</button>
-            <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
-        </div>
