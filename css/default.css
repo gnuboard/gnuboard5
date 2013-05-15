@@ -21,19 +21,19 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
-#logo {padding:17px 0}
+#logo {padding:30px 0}
 
-#sch_all {position:absolute;top:22px;left:70px;margin:0;padding:0;border:1px solid #555}
-#sch_all legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#sch_all_stx {padding-left:5px;width:156px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
-#sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff}
-
-#mb_nb {position:absolute;top:20px;right:0;zoom:1}
+#mb_nb {position:absolute;top:35px;left:70px;zoom:1}
 #mb_nb:after {display:block;visibility:hidden;clear:both;content:""}
 #mb_nb li {float:left}
 #mb_nb a {display:block;padding:5px 10px;color:#333;letter-spacing:-0.1em}
 #mb_nb a:focus, #mb_nb a:hover, #mb_nb a:active {text-decoration:none}
 #mb_nb img {margin-right:3px}
+
+#sch_all {position:absolute;top:33px;right:0;margin:0;padding:0;border:1px solid #555}
+#sch_all legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sch_all_stx {padding-left:5px;width:165px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
+#sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff}
 
 /* gnb js off */
 #gnb {z-index:10;margin:-1px 0 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f5f6fa;zoom:1}

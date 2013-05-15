@@ -34,6 +34,21 @@ if ($config['cf_include_head']) {
             <a href="<?php echo G4_URL ?>"><img src="<?php echo G4_IMG_URL ?>/logo.jpg" alt="처음으로" width="53" height="37"></a>
         </div>
 
+        <ul id="mb_nb">
+            <?php if ($is_member) { ?>
+            <?php if ($is_admin) { ?>
+            <li><a href="<?php echo G4_ADMIN_URL ?>">관리자</a></li>
+            <?php } ?>
+            <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=<?php echo G4_BBS_URL; ?>/register_form.php">내 정보</a></li>
+            <li><a href="<?php echo G4_BBS_URL; ?>/logout.php">로그아웃</a></li>
+            <?php } else { ?>
+            <li><a href="<?php echo G4_BBS_URL; ?>/register.php">회원가입</a></li>
+            <li><a href="<?php echo G4_BBS_URL; ?>/login.php">로그인</a></li>
+            <?php } ?>
+            <li><a href="<?php echo G4_BBS_URL; ?>/current_connect.php">접속자 <?php echo connect(); // 현재 접속자수  ?></a></li>
+            <li><a href="<?php echo G4_BBS_URL; ?>/new.php">새글</a></li>
+        </ul>
+
         <fieldset id="sch_all">
             <legend>사이트 내 전체검색</legend>
             <form name="fsearchbox" method="get" action="<?php echo G4_BBS_URL; ?>/search.php" onsubmit="return fsearchbox_submit(this);">
@@ -72,21 +87,6 @@ if ($config['cf_include_head']) {
             }
             </script>
         </fieldset>
-
-        <ul id="mb_nb">
-            <li><a href="<?php echo G4_BBS_URL; ?>/current_connect.php">접속자 <?php echo connect(); // 현재 접속자수  ?></a></li>
-            <li><a href="<?php echo G4_BBS_URL; ?>/new.php">새글</a></li>
-            <?php if ($is_member) { ?>
-            <?php if ($is_admin) { ?>
-            <li><a href="<?php echo G4_ADMIN_URL ?>">관리자</a></li>
-            <?php } ?>
-            <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=<?php echo G4_BBS_URL; ?>/register_form.php">내 정보</a></li>
-            <li><a href="<?php echo G4_BBS_URL; ?>/logout.php">로그아웃</a></li>
-            <?php } else { ?>
-            <li><a href="<?php echo G4_BBS_URL; ?>/register.php">회원가입</a></li>
-            <li><a href="<?php echo G4_BBS_URL; ?>/login.php">로그인</a></li>
-            <?php } ?>
-        </ul>
 
     </div>
 
