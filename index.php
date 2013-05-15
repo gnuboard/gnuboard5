@@ -28,6 +28,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     else $lt_style = "";
 ?>
     <div style="float:left;<?php echo $lt_style ?>">
+        <h1 class="sound_only">최신글</h1>
         <?php
         // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
         // 스킨은 입력하지 않을 경우 관리자 > 환경설정의 최신글 스킨경로를 기본 스킨으로 합니다.
