@@ -8,10 +8,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <!--[if lte IE 7]>
 <script>
 $(function() {
-    var $td_name = $(".td_name");
-    var count = $td_name.length;
+    var $sv_use = $(".sv_use");
+    var count = $sv_use.length;
 
-    $td_name.each(function() {
+    $sv_use.each(function() {
         $(this).css("z-index", count);
         $(this).css("position", "relative");
         count = count - 1;

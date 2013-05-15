@@ -23,7 +23,7 @@ for ($i=0; $i<count($list); $i++) {
 ?>
     <tr>
         <td class="td_num"><?php echo $list[$i]['num'] ?></td>
-        <td class="td_name"><?php echo $list[$i]['name'] ?></td>
+        <td class="td_name sv_use"><?php echo $list[$i]['name'] ?></td>
         <td><?php echo $display_location ?></td>
     </tr>
 <?php
