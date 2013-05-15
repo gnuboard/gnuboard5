@@ -16,16 +16,16 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
     <h1 id="bo_v_h1"><?php echo cut_str(get_text($view['wr_subject']), 70) // 글제목 출력 ?></h1>
 
-    <dl id="bo_v_info">
-        <dt>작성자</dt>
-        <dd><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></dd>
-        <dt>작성일</dt>
-        <dd><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></dd>
-        <dt>조회</dt>
-        <dd><?php echo number_format($view['wr_hit']) ?>회</dd>
-        <dt>댓글</dt>
-        <dd><?php echo number_format($view['wr_comment']) ?>건</dd>
-    </dl>
+    <div id="bo_v_info">
+        <span>작성자</span>
+        <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
+        <span>작성일</span>
+        <strong><?php echo date("y년 m월 d일 H시 i분", strtotime($view['wr_datetime'])) ?></strong>
+        <span>조회</span>
+        <strong><?php echo number_format($view['wr_hit']) ?>회</strong>
+        <span>댓글</span>
+        <strong><?php echo number_format($view['wr_comment']) ?>건</strong>
+    </div>
 
     <?php
     if ($view['file']['count']) {
@@ -119,11 +119,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
          ?>
     </div>
 
-    <article id="bo_v_atc">
-        <header>
-            <h1>본문</h1>
-        </header>
-
+    <section id="bo_v_atc">
+        <h2 id="bo_v_atc">본문</h2>
         <?php
         // 파일 출력
         $v_img_count = count($view['file']);
@@ -171,7 +168,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             }
         }
          ?>
-    </article>
+    </section>
 
     <?php
     // 코멘트 입출력

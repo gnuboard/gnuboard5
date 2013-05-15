@@ -131,8 +131,8 @@ if ($config['cf_include_head']) {
 
 <div id="wrapper">
     <div id="aside">
-        <?php echo outlogin('basic'); // 외부 로그인  ?>
-        <?php echo poll('basic'); // 설문조사  ?>
+        <?php echo outlogin('basic'); // 외부 로그인 ?>
+        <?php echo poll('basic'); // 설문조사 ?>
     </div>
     <div id="container">
         <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><div id="container_title"><?php echo $g4['title'] ?></div><?php } ?>
