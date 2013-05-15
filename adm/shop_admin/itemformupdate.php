@@ -16,7 +16,7 @@ function itemdelete($it_id)
 {
     global $g4, $is_admin;
 
-    $sql = " select it_explan, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+    $sql = " select it_explan, it_mobile_explan, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
                 from {$g4['shop_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
@@ -84,6 +84,21 @@ function itemdelete($it_id)
     // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
     //------------------------------------------------------------------------
     $imgs = get_editor_image($it['it_explan']);
+
+    for($i=0;$i<count($imgs[1]);$i++) {
+        $p = parse_url($imgs[1][$i]);
+        if(strpos($p['path'], "/data/") != 0)
+            $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        else
+            $data_path = $p['path'];
+
+        $destfile = G4_PATH.$data_path;
+
+        if(is_file($destfile))
+            @unlink($destfile);
+    }
+
+    $imgs = get_editor_image($it['it_mobile_explan']);
 
     for($i=0;$i<count($imgs[1]);$i++) {
         $p = parse_url($imgs[1][$i]);
