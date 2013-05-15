@@ -557,29 +557,4 @@ $item_info = array(
         )
     ),
 );
-
-
-// 상품상세정보 테이블 생성
-function create_table_item_info()
-{
-    global $g4;
-    return sql_query("
-        CREATE TABLE IF NOT EXISTS `{$g4['shop_item_info_table']}` (
-          `ii_id` int(11) NOT NULL AUTO_INCREMENT,
-          `it_id` varchar(10) NOT NULL,
-          `ii_gubun` varchar(50) NOT NULL,
-          `ii_article` varchar(50) NOT NULL,
-          `ii_title` varchar(255) NOT NULL,
-          `ii_value` varchar(255) NOT NULL,
-          PRIMARY KEY (`ii_id`),
-          UNIQUE KEY `it_id` (`it_id`,`ii_gubun`,`ii_article`)
-        )
-    ", false);
-}
-
-function item_info_gubun($gubun)
-{
-    global $item_info;
-    return $item_info[$gubun]['title'];
-}
 ?>

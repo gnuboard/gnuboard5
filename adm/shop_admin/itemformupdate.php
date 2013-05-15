@@ -363,6 +363,15 @@ sql_query(" delete from {$g4['shop_item_relation_table']} where it_id2 = '$it_id
 // 이벤트상품을 우선 삭제함
 sql_query(" delete from {$g4['shop_event_item_table']} where it_id = '$it_id' ");
 
+// 상품요약정보
+$value_array = array();
+for($i=0; $i<count($_POST['ii_article']); $i++) {
+    $key = $_POST['ii_article'][$i];
+    $val = $_POST['ii_value'][$i];
+    $value_array[$key] = $val;
+}
+$it_info_value = serialize($value_array);
+
 
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
@@ -408,6 +417,8 @@ $sql_common = " ca_id               = '$ca_id',
                 it_ip               = '{$_SERVER['REMOTE_ADDR']}',
                 it_order            = '$it_order',
                 it_tel_inq          = '$it_tel_inq',
+                it_info_gubun       = '$it_info_gubun',
+                it_info_value       = '$it_info_value',
                 it_img1             = '$it_img1',
                 it_img2             = '$it_img2',
                 it_img3             = '$it_img3',

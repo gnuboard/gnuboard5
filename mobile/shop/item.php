@@ -433,9 +433,10 @@ else
 
         <h3>상품 정보 고시</h3>
         <?php
-        $sql = " select * from {$g4['shop_item_info_table']} where it_id = '$it_id' order by ii_id ";
-        $result = sql_query($sql, false);
-        if (@mysql_num_rows($result)) {
+        if ($it['it_info_value']) {
+            $info_data = unserialize($it['it_info_value']);
+            $gubun = $it['it_info_gubun'];
+            $info_array = $item_info[$gubun]['article'];
         ?>
         <!-- 상품정보고시 -->
         <table id="sit_inf_open">
@@ -445,13 +446,15 @@ else
         </colgroup>
         <tbody>
         <?php
-        for ($i=0; $row=sql_fetch_array($result); $i++) {
+        foreach($info_data as $key=>$val) {
+            $ii_title = $info_array[$key][0];
+            $ii_value = $val;
         ?>
         <tr valign="top">
-            <th scope="row"><?php echo $row['ii_title']; ?></th>
-            <td><?php echo $row['ii_value']; ?></th>
+            <th scope="row"><?php echo $ii_title; ?></th>
+            <td><?php echo $ii_value; ?></th>
         </tr>
-        <?php } //for?>
+        <?php } //foreach?>
         </tbody>
         </table>
         <!-- 상품정보고시 end -->
