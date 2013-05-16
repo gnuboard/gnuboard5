@@ -26,7 +26,7 @@ for($i=0;$row=sql_fetch_array($result);$i++) {
     else
         $it_image = "";
 
-    $options .= "<option value=\"".$row['it_id']."/".$it_image."/".$row['it_price']."\">$ca_name : $it_name</option>\n";
+    $options .= "<option value=\"".$row['it_id']."\">$ca_name : $it_name</option>\n";
 }
 
 echo $options;

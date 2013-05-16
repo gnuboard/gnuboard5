@@ -823,6 +823,7 @@ function display_relation_item($it_id, $width, $height, $rows=3)
     $sql = " select b.it_id, b.it_name, b.it_price, b.it_tel_inq, b.it_gallery
                 from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id )
                 where a.it_id = '$it_id'
+                order by ir_no asc
                 limit 0, $rows ";
     $result = sql_query($sql);
 

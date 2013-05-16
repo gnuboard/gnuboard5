@@ -45,16 +45,13 @@ if(!$result) {
                     ADD `it_img10` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img9` ", false);
 }
 
-// it_amount 를 it_price 로 변경
-/*
-$sql = " select it_price from {$g4['shop_item_table']} limit 1 ";
+// 관련상품 정렬을 위한 ir_no 필드 추가
+$sql = " select ir_no from {$g4['shop_item_relation_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` CHANGE `it_amount` `it_price` INT(11) NOT NULL DEFAULT '0' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` CHANGE `it_amount2` `it_price2` INT(11) NOT NULL DEFAULT '0' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` CHANGE `it_amount3` `it_price3` INT(11) NOT NULL DEFAULT '0' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}`
+                    ADD `ir_no` INT(11) NOT NULL DEFAULT '0' AFTER `it_id2` ", false);
 }
-*/
 
 $html_title = "상품 ";
 
@@ -582,20 +579,16 @@ $(function(){
         <script>
 
             // 김선용 2006.10
-            function relation_img(name, id)
+            function relation_img(it_id, id)
             {
-                var item_image_url = "";
-                if(!name) return;
-                temp = name.split("/");
-                if(temp[1] == ''){
-                    temp[1] = "no_image.gif";
-                    item_image_url = "<?php echo G4_SHOP_URL; ?>/img";
-                } else {
-                    item_image_url = "<?php echo G4_DATA_URL; ?>/item";
-                }
-                view_span = document.getElementById(id);
-                item_price = number_format(String(temp[2]));
-                view_span.innerHTML = "<a href=\"<?php echo G4_SHOP_URL; ?>/item.php?it_id="+temp[0]+"\" target=\"_blank\"><img src=\""+item_image_url+"/"+temp[1]+"\"width=\"100\" height=\"80\" border=\"1\" style=\"border-color:#333333;\" title=\"상품 새창으로 보기\"></a><br>"+item_price+" 원";
+                if(!it_id) return;
+                $.post(
+                    "<?php echo G4_ADMIN_URL; ?>/shop_admin/itemformrelationimage.php",
+                    { it_id: it_id, width: "100", height: "80" },
+                    function(data) {
+                        $("#"+id).html(data);
+                    }
+                );
             }
 
             function relation_add(fld)
@@ -680,20 +673,14 @@ $(function(){
                    from {$g4['shop_item_relation_table']} a
                    left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
                   where a.it_id = '$it_id'
-                  order by b.ca_id, b.it_name ";
+                  order by ir_no asc ";
         $result = sql_query($sql);
         while($row=sql_fetch_array($result))
         {
             $sql2 = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['ca_id']}' ";
             $row2 = sql_fetch($sql2);
-
-            // 김선용 2006.10
-            if(file_exists(G4_DATA_PATH."/item/{$row['it_id']}_s"))
-                $it_image = "{$row['it_id']}_s";
-            else
-                $it_image = "";
         ?>
-            <option value="<?php echo $row['it_id']; ?>/<?php echo $it_image; ?>/<?php echo $row['it_price']; ?>"><?php echo $row2['ca_name']; ?> : <?php echo cut_str(get_text(strip_tags($row['it_name'])),30); ?></option>
+            <option value="<?php echo $row['it_id']; ?>"><?php echo $row2['ca_name']; ?> : <?php echo cut_str(get_text(strip_tags($row['it_name'])),30); ?></option>
         <?php
             $str[] = $row['it_id'];
         }

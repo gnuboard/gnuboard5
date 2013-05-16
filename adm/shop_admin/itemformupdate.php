@@ -479,13 +479,15 @@ if ($w == "" || $w == "u")
         {
             $sql = " insert into {$g4['shop_item_relation_table']}
                         set it_id  = '$it_id',
-                            it_id2 = '$it_id2[$i]' ";
+                            it_id2 = '$it_id2[$i]',
+                            ir_no = '$i' ";
             sql_query($sql, false);
 
             // 관련상품의 반대로도 등록
             $sql = " insert into {$g4['shop_item_relation_table']}
                         set it_id  = '$it_id2[$i]',
-                            it_id2 = '$it_id' ";
+                            it_id2 = '$it_id',
+                            ir_no = '$i' ";
             sql_query($sql, false);
         }
     }
