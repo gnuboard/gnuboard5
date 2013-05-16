@@ -86,26 +86,25 @@ if ($default['de_card_test']) {
     $g4['shop_cardpg']['kcp'] = "http://testadmin8.kcp.co.kr";
 }
 
-$sql = " select a.ct_id,
-                a.it_id,
-                a.it_name,
-                a.ct_qty,
-                a.ct_price,
-                a.ct_point,
-                a.ct_status,
-                a.ct_time,
-                a.ct_point_use,
-                a.ct_stock_use,
-                a.it_opt1,
-                a.it_opt2,
-                a.it_opt3,
-                a.it_opt4,
-                a.it_opt5,
-                a.it_opt6
-           from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
-          where a.uq_id = '{$od['uq_id']}'
-            and a.it_id  = b.it_id
-          order by a.ct_id ";
+$sql = " select ct_id,
+                it_id,
+                it_name,
+                ct_qty,
+                ct_price,
+                ct_point,
+                ct_status,
+                ct_time,
+                ct_point_use,
+                ct_stock_use,
+                it_opt1,
+                it_opt2,
+                it_opt3,
+                it_opt4,
+                it_opt5,
+                it_opt6
+           from {$g4['shop_cart_table']}
+          where uq_id = '{$od['uq_id']}'
+          order by ct_id ";
 $result = sql_query($sql);
 
 $pg_anchor = '<ul class="anchor">
