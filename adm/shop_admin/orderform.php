@@ -107,6 +107,13 @@ $sql = " select ct_id,
           order by ct_id ";
 $result = sql_query($sql);
 
+$lines = array();
+$total_order = 0;
+for($i=0; $row=sql_fetch_array($result); $i++) {
+    $lines[$i] = $row;
+    $total_order += ($row['ct_price'] * $row['ct_qty']);
+}
+
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_list">주문상품 목록</a></li>
 <li><a href="#anc_sodr_pay">주문결제 내역</a></li>
@@ -121,7 +128,7 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_sodr_list" class="cbox">
     <h2>주문상품 목록</h2>
     <?php echo $pg_anchor; ?>
-    <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($t_ct_amount['합계']); ?></strong>원</p>
+    <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($total_order); ?></strong>원</p>
     <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $od['od_hope_date']; ?> (<?php echo get_yoil($od['od_hope_date']); ?>) 입니다.</p><?php } ?>
 
     <form name="frmorderform" method="post" action="./ordercartupdate.php" onsubmit="return form_submit(this);">
@@ -154,35 +161,34 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
-    $image_rate = 2.5;
-    for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $ct_amount['소계'] = $row['ct_price'] * $row['ct_qty'];
-        $ct_point['소계'] = $row['ct_point'] * $row['ct_qty'];
-        if ($row['ct_status']=='주문' || $row['ct_status']=='준비' || $row['ct_status']=='배송' || $row['ct_status']=='완료')
-            $t_ct_amount['정상'] += $row['ct_price'] * $row['ct_qty'];
-        else if ($row['ct_status']=='취소' || $row['ct_status']=='반품' || $row['ct_status']=='품절')
-            $t_ct_amount['취소'] += $row['ct_price'] * $row['ct_qty'];
+    for ($i=0; $i<count($lines); $i++) {
+        $ct_amount['소계'] = $lines[$i]['ct_price'] * $lines[$i]['ct_qty'];
+        $ct_point['소계'] = $lines[$i]['ct_point'] * $lines[$i]['ct_qty'];
+        if ($lines[$i]['ct_status']=='주문' || $lines[$i]['ct_status']=='준비' || $lines[$i]['ct_status']=='배송' || $lines[$i]['ct_status']=='완료')
+            $t_ct_amount['정상'] += $lines[$i]['ct_price'] * $lines[$i]['ct_qty'];
+        else if ($lines[$i]['ct_status']=='취소' || $lines[$i]['ct_status']=='반품' || $lines[$i]['ct_status']=='품절')
+            $t_ct_amount['취소'] += $lines[$i]['ct_price'] * $lines[$i]['ct_qty'];
 
-        $image = get_it_image($row['it_id'], (int)($default['de_simg_width'] / $image_rate), (int)($default['de_simg_height'] / $image_rate));
+        $image = get_it_image($lines[$i]['it_id'], 50, 50);
     ?>
 
     <tr>
         <td class="td_chk">
             <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $row['ct_id']; ?>">
-            <label for="ct_chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['it_name']; ?> 체크</label>
+            <label for="ct_chk_<?php echo $i; ?>" class="sound_only"><?php echo $lines[$i]['it_name']; ?> 체크</label>
             <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>">
         </td>
         <td>
-            <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?><?php echo stripslashes($row['it_name']); ?></a><br>
-            <?php echo print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']); ?>
+            <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?><?php echo stripslashes($lines[$i]['it_name']); ?></a><br>
+            <?php echo print_item_options($lines[$i]['it_id'], $lines[$i]['it_opt1'], $lines[$i]['it_opt2'], $lines[$i]['it_opt3'], $lines[$i]['it_opt4'], $lines[$i]['it_opt5'], $lines[$i]['it_opt6']); ?>
         </td>
-        <td class="td_small_stats"><?php echo $row['ct_status']; ?></td>
-        <td class="td_num"><?php echo $row['ct_qty']; ?></td>
-        <td class="td_num"><?php echo number_format($row['ct_price']); ?></td>
+        <td class="td_small_stats"><?php echo $lines[$i]['ct_status']; ?></td>
+        <td class="td_num"><?php echo $lines[$i]['ct_qty']; ?></td>
+        <td class="td_num"><?php echo number_format($lines[$i]['ct_price']); ?></td>
         <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
         <td class="td_num"><?php echo number_format($ct_point['소계']); ?></td>
-        <td class="td_small_stats"><?php echo get_yn($row['dct_point_use']); ?></td>
-        <td class="td_small_stats"><?php echo get_yn($row['ct_stock_use']); ?></td>
+        <td class="td_small_stats"><?php echo get_yn($lines[$i]['ct_point_use']); ?></td>
+        <td class="td_small_stats"><?php echo get_yn($lines[$i]['ct_stock_use']); ?></td>
     </tr>
 
     <?php
