@@ -191,6 +191,7 @@ else
         <div id="sit_pvi">
             <div id="sit_pvi_big">
             <?php
+            $big_img_count = 0;
             $thumbnails = array();
             for($i=1; $i<=10; $i++) {
                 if(!$it['it_img'.$i])
@@ -202,11 +203,15 @@ else
                     // 썸네일
                     $thumb = get_it_thumbnail($it['it_img'.$i], 60, 60);
                     $thumbnails[] = $thumb;
+                    $big_img_count++;
             ?>
                 <a href="<?php echo G4_SHOP_URL; ?>/largeimage.php?it_id=<?php echo $it['it_id']; ?>&amp;no=<?php echo $i; ?>" class="popup_item_image" target="_blank"><?php echo $img; ?></a>
             <?php
                 }
             }
+
+            if($big_img_count == 0)
+                echo '<img src="'.G4_SHOP_URL.'/img/no_image.gif" alt="">';
             ?>
             </div>
             <?php
