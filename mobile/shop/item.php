@@ -629,8 +629,8 @@ else
         if (typeof(f.it_price) != 'undefined')
             f.it_price.value = amount;
 
-        if (typeof(f.disp_sell_amount) != 'undefined')
-            f.disp_sell_amount.value = number_format(String(amount * ct_qty));
+        if (typeof(f.disp_sell_price) != 'undefined')
+            f.disp_sell_price.value = number_format(String(amount * ct_qty));
 
         if (typeof(f.disp_cust_price) != 'undefined')
             f.disp_cust_price.value = number_format(String(cust_amount * ct_qty));
