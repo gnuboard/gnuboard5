@@ -43,6 +43,7 @@ $goods_count = -1;
 
 // $s_uq_id 로 현재 장바구니 자료 쿼리
 $sql = " select a.ct_id,
+                a.it_name,
                 a.it_opt1,
                 a.it_opt2,
                 a.it_opt3,
@@ -54,7 +55,6 @@ $sql = " select a.ct_id,
                 a.ct_qty,
                 a.ct_status,
                 b.it_id,
-                b.it_name,
                 b.ca_id
            from {$g4['shop_cart_table']} a,
                 {$g4['shop_item_table']} b

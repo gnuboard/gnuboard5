@@ -18,7 +18,6 @@ if ($od_send_mail)
     unset($delivery_list);
 
     $sql = " select a.*,
-                    b.it_name,
                     b.it_opt1_subject,
                     b.it_opt2_subject,
                     b.it_opt3_subject,

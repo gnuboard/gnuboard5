@@ -125,6 +125,7 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
         $sql = " insert {$g4['shop_cart_table']}
                     set uq_id       = '$tmp_uq_id',
                         it_id        = '{$_POST['it_id'][$i]}',
+                        it_name      = '{$_POST['it_name'][$i]}',
                         ct_status    = '쇼핑',
                         ct_price     = '{$_POST['it_price'][$i]}',
                         ct_point     = '{$_POST['it_point'][$i]}',
@@ -217,6 +218,7 @@ else // 장바구니에 담기
     $sql = " insert {$g4['shop_cart_table']}
                 set uq_id       = '$tmp_uq_id',
                     it_id        = '{$_POST['it_id']}',
+                    it_name      = '{$_POST['it_name']}',
                     it_opt1      = '{$_POST['it_opt1']}',
                     it_opt2      = '{$_POST['it_opt2']}',
                     it_opt3      = '{$_POST['it_opt3']}',

@@ -88,6 +88,7 @@ if ($default['de_card_test']) {
 
 $sql = " select a.ct_id,
                 a.it_id,
+                a.it_name,
                 a.ct_qty,
                 a.ct_price,
                 a.ct_point,
@@ -100,8 +101,7 @@ $sql = " select a.ct_id,
                 a.it_opt3,
                 a.it_opt4,
                 a.it_opt5,
-                a.it_opt6,
-                b.it_name
+                a.it_opt6
            from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
           where a.uq_id = '{$od['uq_id']}'
             and a.it_id  = b.it_id

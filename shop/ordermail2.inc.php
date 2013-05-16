@@ -36,7 +36,7 @@ mailer($config['cf_title'], $admin['mb_email'], $od_email, $subject, $content, 1
 
 $sql = " select b.it_sell_email,
                 a.it_id,
-                b.it_name,
+                a.it_name,
                 a.it_opt1,
                 a.it_opt2,
                 a.it_opt3,

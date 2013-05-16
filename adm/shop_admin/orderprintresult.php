@@ -39,10 +39,9 @@ if ($csv == 'csv')
     $to_date = date_conv($to_date);
 
 
-    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice
-               FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b, {$g4['shop_item_table']} c
-              where a.uq_id = b.uq_id
-                and b.it_id = c.it_id ";
+    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice
+               FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
+              where a.uq_id = b.uq_id ";
     if ($case == 1) // 출력기간
         $sql .= " and a.od_time between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
     else // 주문번호구간
@@ -95,10 +94,9 @@ if ($csv == 'xls')
     $to_date = date_conv($to_date);
 
 
-    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.it_opt1, b.it_opt2, b.it_opt3, b.it_opt4, b.it_opt5, b.it_opt6
-               FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b, {$g4['shop_item_table']} c
-              where a.uq_id = b.uq_id
-                and b.it_id = c.it_id ";
+    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.it_opt1, b.it_opt2, b.it_opt3, b.it_opt4, b.it_opt5, b.it_opt6
+               FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
+              where a.uq_id = b.uq_id ";
     if ($case == 1) // 출력기간
         $sql .= " and a.od_time between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
     else // 주문번호구간
@@ -281,8 +279,7 @@ if (mysql_num_rows($result) == 0)
                             b.it_opt3_subject,
                             b.it_opt4_subject,
                             b.it_opt5_subject,
-                            b.it_opt6_subject,
-                            b.it_name
+                            b.it_opt6_subject
                     from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
                    where a.it_id = b.it_id
                      and a.uq_id = '{$row['uq_id']}' ";

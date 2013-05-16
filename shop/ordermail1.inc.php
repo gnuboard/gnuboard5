@@ -12,7 +12,7 @@ $ttotal_point = 0;
 // Loop 배열 자료를 만들고
 $sql = " select b.it_sell_email,
                 a.it_id,
-                b.it_name,
+                a.it_name,
                 b.it_origin,
                 a.it_opt1,
                 a.it_opt2,

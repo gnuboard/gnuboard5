@@ -217,8 +217,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
         <?php
         // 상품개별출력
-        $sql2 = " select c.it_name,
-                         b.*
+        $sql2 = " select b.*
                     from {$g4['shop_order_table']} a
                     left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
                     left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)

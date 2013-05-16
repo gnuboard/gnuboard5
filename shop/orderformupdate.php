@@ -23,7 +23,7 @@ $error = "";
 // 1.03.07 : and a.it_id = b.it_id : where 조건문에 이 부분 추가
 $sql = " select a.it_id,
                 a.ct_qty,
-                b.it_name
+                a.it_name
            from {$g4['shop_cart_table']} a,
                 {$g4['shop_item_table']} b
           where a.uq_id = '$tmp_uq_id'
