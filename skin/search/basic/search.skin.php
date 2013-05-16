@@ -122,7 +122,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             </li>
         <?php }  ?>
         </ul>
-        <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><?php echo $bo_subject[$idx] ?> 더보기</a></div>
+        <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><strong><?php echo $bo_subject[$idx] ?></strong> 결과 더보기</a></div>
 
         <hr>
     <?php }  ?>
