@@ -8,9 +8,7 @@
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_cate li {float:left;margin-bottom:-1px}
 #bo_cate a {display:block;position:relative;margin-left:-1px;padding:6px 0 5px;width:90px;border:1px solid #ddd;background:#f7f7f7;color:#888;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
-#bo_cate a:focus,
-#bo_cate a:hover,
-#bo_cate a:active {text-decoration:none}
+#bo_cate a:focus, #bo_cate a:hover, #bo_cate a:active {text-decoration:none}
 #bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
 
 .td_subject img {margin-left:3px}
@@ -73,7 +71,7 @@
 #bo_v_top {margin:0 0 10px;padding:10px 0;zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_top ul {list-style:none}
+#bo_v_top ul {margin:0;padding:0;list-style:none}
 
 #bo_v_bot {zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
