@@ -26,12 +26,12 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     </aside>
     <script>
         $(function (){
-            hd_sch = $('#hd_sch');
-            $('#hd_sch_open').click(function(){
-                hd_sch.css('display','block');
+            var $hd_sch = $("#hd_sch");
+            $("#hd_sch_open").click(function(){
+                $hd_sch.css("display","block");
             });
-            $('#hd_sch .pop_close').click(function(){
-                hd_sch.css('display','none');
+            $("#hd_sch .pop_close").click(function(){
+                $hd_sch.css("display","none");
             });
         });
     </script>
