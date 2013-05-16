@@ -61,7 +61,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <?php if ($stx) { ?>
     <?php if ($board_count) { ?>
     <dl id="sch_result_hd">
-        <dt><strong><?php echo $stx ?></strong>에 대한 검색 결과입니다.</dt>
+        <dt>검색어 <strong><?php echo $stx ?></strong></dt>
         <dd>
             <ul>
                 <li>게시판 <span style="color:<?php echo $config['cf_search_color'] ?>"><?php echo $board_count ?></span>개</li>
