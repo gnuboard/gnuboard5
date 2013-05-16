@@ -47,6 +47,7 @@ $sql  = " select a.od_id,
                  a.od_name,
                  a.od_deposit_name,
                  a.od_time,
+                 a.od_mobile,
                  b.it_opt1,
                  b.it_opt2,
                  b.it_opt3,
@@ -171,9 +172,14 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         $it_name .= print_item_options($lines[$i]['it_id'], $lines[$i]['it_opt1'], $lines[$i]['it_opt2'], $lines[$i]['it_opt3'], $lines[$i]['it_opt4'], $lines[$i]['it_opt5'], $lines[$i]['it_opt6']);
 
         $s_mod = icon("수정", "");
+
+        $od_mobile = '';
+        if($lines[$i]['od_mobile'])
+            $od_mobile = '(M)';
     ?>
     <tr>
         <td class="td_odrnum2">
+            <?php echo $od_mobile; ?>
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_id&amp;search=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a><br>
             <?php echo $lines[$i]['od_time']; ?>
         </td>

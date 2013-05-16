@@ -206,9 +206,15 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $row2 = sql_fetch($sql2);
             $od_cnt = $row2['cnt'];
         }
+
+        // 주문device
+        $od_mobile = '';
+        if($lines[$i]['od_mobile'])
+            $od_mobile = '(M)';
         ?>
         <tr class="orderlist">
             <td class="td_odrnum2">
+                <?php echo $od_mobile; ?>
                 <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>">
                     <?php echo $lines[$i]['od_id']; ?><br>
                     <span class="sound_only">주문일시 </span><?php echo $lines[$i]['od_time']; ?>

@@ -38,8 +38,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select a.od_id,
-                 a.*, "._MISU_QUERY_."
+$sql  = " select a.*, "._MISU_QUERY_."
            $sql_common
            group by a.od_id
            order by $sort1 $sort2
@@ -191,10 +190,17 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
         if ($lines[$i]['od_receipt_point'] > 0)
             $s_receipt_way .= $s_br.'포인트';
+
+        $od_mobile = '';
+        if($lines[$i]['od_mobile'])
+            $od_mobile = '(M)';
         ?>
 
         <tr>
-            <td headers="sodr_all_num"><a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>"><?php echo $lines[$i]['od_id']; ?><br><?php echo $lines[$i]['od_time']; ?></a></td>
+            <td headers="sodr_all_num">
+                <?php echo $od_mobile; ?>
+                <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>"><?php echo $lines[$i]['od_id']; ?><br><?php echo $lines[$i]['od_time']; ?></a>
+            </td>
             <td headers="sodr_all_id" class="td_name">
                 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1;?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>">
                     <?php echo cut_str($lines[$i]['od_name'],30,""); ?>/<?php echo $od_deposit_name; ?>
@@ -210,7 +216,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <td headers="sodr_all_nonpay" class="td_sodr_nonpay"><?php echo number_format($lines[$i]['misu']); ?></td>
             <td headers="sodr_all_payby"><?php echo $s_receipt_way; ?></td>
             <td headers="sodr_all_mng">
-                <a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;$qstr?>"><img src="./img/icon_mod.jpg" alt="주문 수정"></a>
+                <a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="주문 수정"></a>
                 <a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>&amp;list=2" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="주문 삭제"></a>
             </td>
         </tr>
@@ -220,7 +226,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         $sql2 = " select b.*
                     from {$g4['shop_order_table']} a
                     left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
-                    left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
                    where od_id = '{$lines[$i]['od_id']}' ";
         $result2 = sql_query($sql2);
         for ($k=0;$row2=sql_fetch_array($result2);$k++) {

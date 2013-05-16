@@ -130,6 +130,9 @@ $pg_anchor = '<ul class="anchor">
     <?php echo $pg_anchor; ?>
     <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($total_order); ?></strong>원</p>
     <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $od['od_hope_date']; ?> (<?php echo get_yoil($od['od_hope_date']); ?>) 입니다.</p><?php } ?>
+    <?php if($od['od_mobile']) { ?>
+    <p>모바일 쇼핑몰의 주문입니다.</p>
+    <?php } ?>
 
     <form name="frmorderform" method="post" action="./ordercartupdate.php" onsubmit="return form_submit(this);">
     <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">

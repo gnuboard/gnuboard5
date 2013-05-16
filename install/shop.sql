@@ -582,6 +582,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_cash_id_info` varchar(255) NOT NULL,
   `od_cash` tinyint(4) NOT NULL,
   `od_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`od_id`),
   UNIQUE KEY `uq_id` (`uq_id`),

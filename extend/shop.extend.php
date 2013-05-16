@@ -88,6 +88,14 @@ if(!$result) {
                     ADD `it_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_id` ", false);
 }
 
+// od_mobile 추가
+$sql = " select od_mobile from {$g4['shop_order_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_mobile` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_time` ", false);
+}
+
 //==============================================================================
 // 쇼핑몰 필수 실행코드 모음 끝
 //==============================================================================
