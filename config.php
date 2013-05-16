@@ -61,6 +61,7 @@ if (G4_DOMAIN) {
         define('G4_URL', $g4_path['url']);
     else
         define('G4_URL', '');
+}
 
 if (isset($g4_path['path'])) {
     define('G4_PATH', $g4_path['path']);
