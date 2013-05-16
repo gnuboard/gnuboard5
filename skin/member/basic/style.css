@@ -1,7 +1,7 @@
 /* 회원가입 약관 */
 #fregister section {margin:0 0 20px;padding:20px 0;border-bottom:3px solid #eee}
 #fregister h2 {margin:0 0 20px;text-align:center}
-#fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #cfded8;background:#f7f7f7}
+#fregister textarea {display:block;margin-bottom:10px;padding:5px;width:98%;height:150px;border:1px solid #d9d9d9;background:#f7f7f7}
 #fregister textarea:focus {background:#21272e;color:#fff}
 .fregister_agree {padding:10px 0 0;text-align:right}
 .fregister_agree label {display:inline-block;margin-right:5px}
@@ -37,18 +37,19 @@
 #mb_login {margin:0 auto;padding:100px 0;width:500px}
 #mb_login h1 {margin:0 0 20px;font-size:1.3em}
 #mb_login h2 {margin:0}
-#mb_login fieldset {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
-#mb_login label {letter-spacing:-0.1em}
-#mb_login .login_id {position:absolute;top:26px;left:95px}
-#mb_login .login_pw {position:absolute;top:52px;left:95px}
-#mb_login .frm_input {display:block;margin:0 0 5px 80px}
-#mb_login .btn_submit {position:absolute;top:20px;left:335px;height:49px}
-#mb_login section {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
-#mb_login section div {text-align:right}
+#mb_login_fs {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
+#mb_login_fs legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#mb_login_fs label {letter-spacing:-0.1em}
+#mb_login_fs .login_id {position:absolute;top:26px;left:95px}
+#mb_login_fs .login_pw {position:absolute;top:52px;left:95px}
+#mb_login_fs .frm_input {display:block;margin:0 0 5px 80px}
+#mb_login_fs .btn_submit {position:absolute;top:20px;left:335px;height:49px}
+#mb_login_info {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f5f6fa}
+#mb_login_info div {text-align:right}
 
 /* 쪽지 */
-#memo_view section {margin:0 auto 20px;padding:20px;width:87%}
-#memo_view section h2 {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+#memo_view_contents {margin:0 auto 20px;width:90%}
+#memo_view_contents h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #memo_view_ul {margin:0;padding:0 0 10px;border-bottom:1px solid #eee;list-style:none}
 .memo_view_li {position:relative;padding:5px 0}
 .memo_view_subj {display:inline-block;width:65px}
@@ -65,18 +66,18 @@
 /* 회원 패스워드 확인 */
 #mb_confirm {margin:0 auto;padding:100px 0;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
-#mb_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
+#mb_confirm p {padding:20px;border:1px solid #d9d9d9;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
-#mb_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f7f7f2;text-align:center}
+#mb_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #d9d9d9;background:#f5f6fa;text-align:center}
 #mb_confirm label {letter-spacing:-0.1em}
 #mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
 /* 비밀글 패스워드 확인 */
 #pw_confirm {margin:0 auto;padding:100px 0;width:500px}
 #pw_confirm h1 {margin:0 0 20px;font-size:1.3em}
-#pw_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
+#pw_confirm p {padding:20px;border:1px solid #d9d9d9;border-bottom:0;background:#fff}
 #pw_confirm p strong {display:block}
-#pw_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f7f7f2;text-align:center}
+#pw_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #d9d9d9;background:#f5f6fa;text-align:center}
 #pw_confirm label {letter-spacing:-0.1em}
 #pw_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 

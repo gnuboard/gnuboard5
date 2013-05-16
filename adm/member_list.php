@@ -193,7 +193,7 @@ $colspan = 15;
             <label for="chk_<?php echo $i; ?>" class="sound_only">회원선택</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
-        <td class="td_name"><?php echo $mb_id ?></td>
+        <td class="td_name sv_use"><?php echo $mb_id ?></td>
         <td class="td_mbname"><?php echo $row['mb_name']; ?></td>
         <td><?php echo $row['mb_hp']; ?></td>
         <td colspan="6" class="td_addr"><?php echo $address; ?></td>
@@ -202,7 +202,7 @@ $colspan = 15;
         <td rowspan="2"><?php echo $s_mod ?><br><?php echo $s_grp ?></td>
     </tr>
     <tr <?php echo $tr_bg; ?>>
-        <td class="td_name"><div><?php echo $mb_nick ?></div></td>
+        <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
         <td class="">
             <?php
             if ($leave_msg || $intercept_msg) echo $leave_msg.' '.$intercept_msg;

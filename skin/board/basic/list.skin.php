@@ -35,9 +35,9 @@ if ($is_nogood) $colspan++;
 
         <?php if ($rss_href || $write_href) { ?>
         <ul class="btn_bo_user">
-            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01">RSS</a></li><?php } ?>
+            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b02">RSS</a></li><?php } ?>
             <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin">관리자</a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02">글쓰기</a></li><?php } ?>
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01">글쓰기</a></li><?php } ?>
         </ul>
         <?php } ?>
     </div>
@@ -115,7 +115,7 @@ if ($is_nogood) $colspan++;
 
              ?>
         </td>
-        <td class="td_name"><?php echo $list[$i]['name'] ?></td>
+        <td class="td_name sv_use"><?php echo $list[$i]['name'] ?></td>
         <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>
         <td class="td_num"><?php echo $list[$i]['wr_hit'] ?></td>
         <?php if ($is_good) { ?><td class="td_num"><?php echo $list[$i]['wr_good'] ?></td><?php } ?>
@@ -140,7 +140,7 @@ if ($is_nogood) $colspan++;
         </ul>
 
         <ul class="btn_bo_user">
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02">글쓰기</a></li><?php } ?>
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01">글쓰기</a></li><?php } ?>
         </ul>
     </div>
     <?php } ?>
