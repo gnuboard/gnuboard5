@@ -117,8 +117,6 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         <input type="hidden" name="ap_id[<?php echo $i; ?>]"    value="<?php echo $row['ap_id']; ?>">
         <input type="hidden" name="bi_id[<?php echo $i; ?>]"    value="<?php echo $row['bi_id']; ?>">
         <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-        <input type="hidden" name="act" value="">
-        <input type="hidden" name="records" value="<?php echo $i; ?>">
         <?php echo $it_name; ?>
     </td>
 
@@ -221,6 +219,8 @@ if ($tot_amount > 0) {
     <a href="<?php echo G4_SHOP_URL; ?>/" class="btn01">쇼핑 계속하기</a>
     <?php } else { ?>
     <input type="hidden" name="url" value="<?php echo G4_SHOP_URL; ?>/orderform.php">
+    <input type="hidden" name="act" value="">
+    <input type="hidden" name="records" value="<?php echo $i; ?>">
     <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
     <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
     <a href="javascript:form_check('buy');" class="btn02">주문하기</a>
