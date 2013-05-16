@@ -115,7 +115,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 		<td>$num</td>
 		<td>{$row['it_id']}</td>
 		<td><a href='".G4_SHOP_URL."/item.php?it_id={$row['it_id']}'>{$row['it_name']}</a></td>
-		<td>{$row['it_amount']}</td>
+		<td>{$row['it_price']}</td>
 		<td>$category</td>
 		<td>{$row['it_maker']}</td>
 		<td>$image</td>

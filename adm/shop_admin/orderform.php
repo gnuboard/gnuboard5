@@ -157,7 +157,7 @@ $pg_anchor = '<ul class="anchor">
     <?php
     $image_rate = 2.5;
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $ct_amount['소계'] = $row['ct_amount'] * $row['ct_qty'];
+        $ct_amount['소계'] = $row['ct_price'] * $row['ct_qty'];
         $ct_point['소계'] = $row['ct_point'] * $row['ct_qty'];
         if ($row['ct_status']=='주문' || $row['ct_status']=='준비' || $row['ct_status']=='배송' || $row['ct_status']=='완료')
             $t_ct_amount['정상'] += $row['ct_price'] * $row['ct_qty'];

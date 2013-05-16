@@ -123,7 +123,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 	<tr bgcolor="white">
 		<td align="center">'.$num.'</td>
 		<td><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">'.$row['it_name'].'</a></td>
-		<td align="center">'.number_format($row['it_amount']).'</td>
+		<td align="center">'.number_format($row['it_price']).'</td>
 		<td align="center">'.$stock.'</td>
 		<td align="center">'.$send_cost.'</td>
 		<td align="center">'.G4_DATA_URL.'/item/'.$row['it_id'].'_m</td>

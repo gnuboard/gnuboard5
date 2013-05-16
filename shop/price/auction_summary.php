@@ -30,7 +30,7 @@ echo <<< HEREDOC
 {$lt}_BEGIN{$gt}
 {$lt}PRODID{$gt}{$row['it_id']}
 {$lt}PRNAME{$gt}{$row['it_name']}
-{$lt}_PRICE{$gt}{$row['it_amount']}
+{$lt}_PRICE{$gt}{$row['it_price']}
 {$lt}___END{$gt}
 
 HEREDOC;

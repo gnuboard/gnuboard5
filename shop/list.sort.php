@@ -14,8 +14,8 @@ $sct_sort_href .= '&amp;ev_id='.$ev_id.'&amp;sort=';
     </div>
 
     <ul>
-        <li><a href="<?php echo $sct_sort_href; ?>it_amount&amp;sortodr=asc" class="btn01">낮은가격순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_amount&amp;sortodr=desc" class="btn01">높은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=asc" class="btn01">낮은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=desc" class="btn01">높은가격순</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_name&amp;sortodr=asc" class="btn01">상품명순</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_type1&amp;sortodr=desc" class="btn01">히트상품</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_type2&amp;sortodr=desc" class="btn01">추천상품</a></li>

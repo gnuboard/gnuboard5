@@ -229,7 +229,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $it_name = '<a href="'.$href.'">'.cut_str($row2['it_name'],35).'</a><br>';
             $it_name .= print_item_options($row2['it_id'], $row2['it_opt1'], $row2['it_opt2'], $row2['it_opt3'], $row2['it_opt4'], $row2['it_opt5'], $row2['it_opt6']);
 
-            $sub_amount = $row2['ct_qty'] * $row2['ct_amount'];
+            $sub_amount = $row2['ct_qty'] * $row2['ct_price'];
             $sub_point  = $row2['ct_qty'] * $row2['ct_point'];
         ?>
 
@@ -239,7 +239,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                     <li><a href="<?php echo $href; ?>"><?php echo get_it_image($row2['it_id'], 50, 50); ?><?php echo $it_name; ?></a></li>
                 </ul>
             </td>
-            <td headers="sodr_all_cost"><?php echo number_format($row2['ct_amount']); ?></td>
+            <td headers="sodr_all_cost"><?php echo number_format($row2['ct_price']); ?></td>
             <td headers="sodr_all_qty"><?php echo $row2['ct_qty']; ?></td>
             <td headers="sodr_all_pt"><?php echo number_format($sub_point); ?></td>
             <td headers="sodr_all_tot"><?php echo number_format($sub_amount); ?></td>

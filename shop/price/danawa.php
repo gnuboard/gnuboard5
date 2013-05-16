@@ -39,7 +39,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++) {
     $str .= "^{$row['it_maker']}";  // 제조사
     $str .= "^".G4_DATA_URL."/item/{$row['it_id']}_m"; // 이미지URL
     $str .= "^".G4_SHOP_URL."/item.php?it_id={$row['it_id']}"; // 상품URL
-    $str .= "^{$row['it_amount']}"; // 가격
+    $str .= "^{$row['it_price']}"; // 가격
     $str .= "^{$row['it_point']}";  // 적립금
     $str .= "^";  // 할인쿠폰
     $str .= "^";  // 무이자할부

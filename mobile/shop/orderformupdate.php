@@ -54,7 +54,7 @@ $i_temp_point = (int)$_POST['od_temp_point'];
 
 
 // 주문금액이 상이함
-$sql = " select SUM(ct_amount * ct_qty) as od_amount from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' ";
+$sql = " select SUM(ct_price * ct_qty) as od_amount from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' ";
 $row = sql_fetch($sql);
 if ((int)$row['od_amount'] !== $i_amount) {
     die("Error.");

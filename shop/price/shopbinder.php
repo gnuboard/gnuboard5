@@ -101,7 +101,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $delivery = 0;      // 배송료
 
     $qty = (int)get_it_stock_qty($row['it_id']);
-    if ($qty <= 0) $row['it_amount'] = 0;
+    if ($qty <= 0) $row['it_price'] = 0;
 
     echo "<tr>
 		<td width=\"30\">$num&nbsp;</td>
@@ -112,7 +112,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 		<td width=\"70\">{$row['it_maker']}&nbsp;</td>
 		<td width=\"100\"><a href='".G4_SHOP_URL."/item.php?it_id={$row['it_id']}'>{$row['it_name']}&nbsp;</a></td>
 		<td width=\"100\">{$row['it_id']}&nbsp;</td>
-		<td width=\"80\">".number_format($row['it_amount'])."&nbsp;</td>
+		<td width=\"80\">".number_format($row['it_price'])."&nbsp;</td>
 		<td width=\"80\">&nbsp;</td>
 		<td width=\"80\">".G4_DATA_URL."/item/{$row['it_id']}_l1&nbsp;</td>
 		<td width=\"80\">$delivery</td>

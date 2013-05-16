@@ -55,9 +55,9 @@ $sql  = " select a.od_id,
                  b.it_opt6,
                  b.ct_status,
                  b.ct_qty,
-                 b.ct_amount,
+                 b.ct_price,
                  b.ct_point,
-                 (b.ct_qty * b.ct_amount) as ct_sub_amount,
+                 (b.ct_qty * b.ct_price) as ct_sub_amount,
                  (b.ct_qty * b.ct_point)  as ct_sub_point,
                  c.it_id,
                  c.it_name,
@@ -77,7 +77,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $lines[$i] = $row;
 
-    $tot_amount += $row['ct_amount'];
+    $tot_amount += $row['ct_price'];
     $tot_qty    += $row['ct_qty'];
     $tot_sub_amount += $row['ct_sub_amount'];
     $tot_sub_point  += $row['ct_sub_point'];
@@ -144,7 +144,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <th scope="col"><a href="<?php echo title_sort("it_name")."&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col"><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a><br>입금자</th>
         <th scope="col"><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_amount")."&amp;$qstr1"; ?>">판매가<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_price")."&amp;$qstr1"; ?>">판매가<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col"><a href="<?php echo title_sort("ct_qty")."&amp;$qstr1"; ?>">수량<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col"><a href="<?php echo title_sort("ct_sub_amount")."&amp;$qstr1"; ?>">소계<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col"><a href="<?php echo title_sort("ct_sub_point")."&amp;$qstr1"; ?>">포인트<span class="sound_only"> 순 정렬</span></a></th>
@@ -183,7 +183,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <?php if ($lines[$i]['od_deposit_name'] != "") echo '<br>'.$lines[$i]['od_deposit_name']?>
         </td>
         <td class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>"><?php echo $lines[$i]['mb_id']; ?></a></td>
-        <td><?php echo number_format($lines[$i]['ct_amount']); ?></td>
+        <td><?php echo number_format($lines[$i]['ct_price']); ?></td>
         <td><?php echo $lines[$i]['ct_qty']; ?></td>
         <td><?php echo number_format($lines[$i]['ct_sub_amount']); ?></td>
         <td><?php echo number_format($lines[$i]['ct_sub_point']); ?></td>

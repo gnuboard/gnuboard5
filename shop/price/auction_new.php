@@ -94,7 +94,7 @@ echo <<< HEREDOC
 {$lt}_BEGIN{$gt}
 {$lt}PRODID{$gt}{$row['it_id']}
 {$lt}PRNAME{$gt}{$row['it_name']}
-{$lt}_PRICE{$gt}{$row['it_amount']}
+{$lt}_PRICE{$gt}{$row['it_price']}
 {$lt}PRDURL{$gt}$shop_url/item.php?it_id={$row['it_id']}
 {$lt}IMGURL{$gt}$data_url/item/{$row['it_id']}_l1
 {$lt}CATE_1{$gt}$ca_name1

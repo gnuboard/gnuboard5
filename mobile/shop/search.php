@@ -104,9 +104,7 @@ $total_count = $row['cnt'];
         for ($i=0; $i<$save['cnt']; $i++) {
             $sql = " select it_id,
                             it_name,
-                            it_amount,
-                            it_amount2,
-                            it_amount3,
+                            it_price,
                             it_basic,
                             it_tel_inq,
                             it_point,
@@ -125,7 +123,7 @@ $total_count = $row['cnt'];
             <b class="ssch_ct"><?php echo ($ca_temp) ? $ca_temp : $ca_name; ?></b>
             <a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo get_text($row['it_name']); ?></a>
             <?php echo it_name_icon($row); ?>
-            <span class="ssch_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
+            <span class="ssch_cost"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></span>
             <p><?php echo $row['it_basic']; ?></p>
         </li>
         <?php } // for 끝 ?>

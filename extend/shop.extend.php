@@ -85,7 +85,7 @@ if(!$result) {
                     CHANGE `it_cust_amount` `it_cust_price` INT(11) NOT NULL DEFAULT '0' ", false);
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
                     CHANGE `ct_amount` `ct_price` INT(11) NOT NULL DEFAULT '0',
-                    ADD `ct_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_id` ", false);
+                    ADD `it_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_id` ", false);
 }
 
 //==============================================================================

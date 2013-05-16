@@ -47,9 +47,9 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     // 재고검사해서 없으면 상품가격을 0 으로 설정
     $stock = get_it_stock_qty($row['it_id']);
     if ($stock <= 0)
-        $row['it_amount'] = 0;
+        $row['it_price'] = 0;
 
-    $str .= "<p>{$row['it_id']}^{$row2['ca_name']}^{$row3['ca_name']}^{$row4['ca_name']}^{$row['it_maker']}^{$row['it_name']}^".G4_SHOP_URL."/item.php?it_id={$row['it_id']}^$image^{$row['it_amount']}";
+    $str .= "<p>{$row['it_id']}^{$row2['ca_name']}^{$row3['ca_name']}^{$row4['ca_name']}^{$row['it_maker']}^{$row['it_name']}^".G4_SHOP_URL."/item.php?it_id={$row['it_id']}^$image^{$row['it_price']}";
     $str .= "\n";
 }
 

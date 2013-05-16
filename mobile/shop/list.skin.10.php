@@ -15,11 +15,11 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
         <a href="<?php echo $href; ?>" class="sct_a">
             <span class="sct_img"><?php echo get_it_image($row['it_id'], $img_width, $img_height); ?></span>
             <b><?php echo stripslashes($row['it_name']); ?></b>
-            <?php if ($row['it_cust_amount'] && !$row['it_gallery']) { ?>
-            <s><?php echo display_amount($row['it_cust_amount']); ?></s>
+            <?php if ($row['it_cust_price'] && !$row['it_gallery']) { ?>
+            <s><?php echo display_price($row['it_cust_price']); ?></s>
             <?php } ?>
             <?php if (!$row['it_gallery']) { // 전시 상품이 아닐 때 ?>
-            <span class="sct_cost"><?php echo display_amount(get_amount($row), $row['it_tel_inq']); ?></span>
+            <span class="sct_cost"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></span>
             <?php } ?>
             <?php if ($row['it_basic']) { ?>
             <p><?php echo $row['it_basic']; ?></p>

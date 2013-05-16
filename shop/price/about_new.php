@@ -62,7 +62,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 echo "{$lt}{$row['it_id']}{$gt}"; // 쇼핑몰 상품ID
 echo "{$lt}C{$gt}"; // 상품구분 C/U/D 전체EP는 일괄적으로 C
 echo "{$lt}{$row['it_name']}{$gt}"; // 상품명
-echo "{$lt}{$row['it_amount']}{$gt}"; // 판매가격
+echo "{$lt}{$row['it_price']}{$gt}"; // 판매가격
 echo "{$lt}".G4_SHOP_URL."/item.php?it_id={$row['it_id']}{$gt}"; // 상품의 상세페이지 주소
 echo "{$lt}".G4_DATA_URL."/item/{$row['it_id']}_l1{$gt}"; // 이미지 URL
 echo "{$lt}$ca_id1{$gt}"; // 대분류 카테고리 코드

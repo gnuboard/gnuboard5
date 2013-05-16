@@ -48,7 +48,7 @@ $sql = " select a.ct_id,
                 a.it_opt4,
                 a.it_opt5,
                 a.it_opt6,
-                a.ct_amount,
+                a.ct_price,
                 a.ct_point,
                 a.ct_qty,
                 a.ct_status,
@@ -83,7 +83,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $good_info .= "ordr_numb={$od_id}_".sprintf("%04d", $i).chr(31);
         $good_info .= "good_name=".addslashes($row['it_name']).chr(31);
         $good_info .= "good_cntx=".$row['ct_qty'].chr(31);
-        $good_info .= "good_amtx=".$row['ct_amount'].chr(31);
+        $good_info .= "good_amtx=".$row['ct_price'].chr(31);
     }
 
     if ($i==0) { // 계속쇼핑
@@ -106,7 +106,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     $point       = $row['ct_point'] * $row['ct_qty'];
-    $sell_amount = $row['ct_amount'] * $row['ct_qty'];
+    $sell_amount = $row['ct_price'] * $row['ct_qty'];
 ?>
 
 <tr>
@@ -130,7 +130,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         echo '<td class="td_num">'.$row['ct_qty'].'</td>';
     ?>
 
-    <td class="td_bignum"><?php echo number_format($row['ct_amount']); ?></td>
+    <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
     <td class="td_bignum"><?php echo number_format($sell_amount); ?></td>
 
     <?php

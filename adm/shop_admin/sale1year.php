@@ -48,8 +48,8 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $lines[$i] = $row;
 
     // 장바구니 상태별 금액
-    $sql1 = " select (SUM(ct_amount * ct_qty)) as orderamount, /* 주문합계 */
-                     (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_amount * ct_qty, 0))) as ordercancel /* 주문취소 */
+    $sql1 = " select (SUM(ct_price * ct_qty)) as orderamount, /* 주문합계 */
+                     (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_price * ct_qty, 0))) as ordercancel /* 주문취소 */
                 from {$g4['shop_cart_table']}
                where uq_id = '{$row['uq_id']}' ";
     $row1 = sql_fetch($sql1);

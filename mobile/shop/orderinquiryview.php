@@ -67,7 +67,7 @@ $s_page = 'orderinquiryview.php';
         }
         else
         {
-            $wanbul = display_amount($receipt_amount);
+            $wanbul = display_price($receipt_amount);
         }
 
         // 120615 : 취소된 값을 두번 빼주는 결과가 되어 코드 수정 (군포돼지님)
@@ -107,7 +107,7 @@ $s_page = 'orderinquiryview.php';
             </tr>
             <tr>
                 <th scope="row">결제금액</th>
-                <td><?php echo display_amount($cd['cd_amount']); ?></td>
+                <td><?php echo display_price($cd['cd_amount']); ?></td>
             </tr>
             <tr>
                 <th scope="row">승인일시</th>
@@ -137,7 +137,7 @@ $s_page = 'orderinquiryview.php';
             </tr>
             <tr>
                 <th scope="row">결제금액</th>
-                <td><?php echo display_amount($cd['cd_amount']); ?></td>
+                <td><?php echo display_price($cd['cd_amount']); ?></td>
             </tr>
             <tr>
                 <th scope="row">승인일시</th>
@@ -169,7 +169,7 @@ $s_page = 'orderinquiryview.php';
                 ?>
             <tr>
                 <th scope="row">입금액</th>
-                <td><?php echo display_amount($od['od_receipt_bank']); ?></td>
+                <td><?php echo display_price($od['od_receipt_bank']); ?></td>
             </tr>
             <tr>
                 <td scope="row">입금확인일시</th>
@@ -226,7 +226,7 @@ $s_page = 'orderinquiryview.php';
             ?>
             <tr>
                 <th scope="row">승인취소 금액</th>
-                <td><?php echo display_amount($od['od_cancel_card']); ?></td>
+                <td><?php echo display_price($od['od_cancel_card']); ?></td>
             </tr>
             <?php
             }
@@ -236,7 +236,7 @@ $s_page = 'orderinquiryview.php';
             ?>
             <tr>
                 <th scope="row">환불 금액</th>
-                <td><?php echo display_amount($od['od_refund_amount']); ?></td>
+                <td><?php echo display_price($od['od_refund_amount']); ?></td>
             </tr>
             <?php
             }
@@ -409,19 +409,19 @@ $s_page = 'orderinquiryview.php';
         <ul>
             <li>
                 총 구매액
-                <strong><?php echo display_amount($tot_amount); ?></strong>
+                <strong><?php echo display_price($tot_amount); ?></strong>
             </li>
             <?php
             if ($od['od_dc_amount'] > 0) {
             echo '<li>';
             echo '할인액'.PHP_EOL;
-            echo '<strong>'.display_amount($od['od_dc_amount']).'</strong>';
+            echo '<strong>'.display_price($od['od_dc_amount']).'</strong>';
             echo '</li>';
             }
             if ($misu_amount > 0) {
             echo '<li>';
             echo '미결제액'.PHP_EOL;
-            echo '<strong>'.display_amount($misu_amount).'</strong>';
+            echo '<strong>'.display_price($misu_amount).'</strong>';
             echo '</li>';
             }
             ?>

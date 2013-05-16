@@ -40,7 +40,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 업데이트 상품 양식 & 품절 복구 상품 양식
         echo "{$lt}pname{$gt}{$row['it_name']}\n";
-        echo "{$lt}price{$gt}{$row['it_amount']}\n";
+        echo "{$lt}price{$gt}{$row['it_price']}\n";
         echo "{$lt}class{$gt}U\n";
     }
     echo "{$lt}utime{$gt}{$row['it_time']}\n";

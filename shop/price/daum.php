@@ -115,7 +115,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     // 배송비 상한가 미만이면 배송비 적용
     $delivery = 0;
-    if ($row['it_amount'] < $cost_limit) {
+    if ($row['it_price'] < $cost_limit) {
         $delivery = $send_cost;
     }
 
@@ -125,7 +125,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     echo <<< HEREDOC
 {$lt}begin{$gt}
 {$lt}pid{$gt}{$row['it_id']}
-{$lt}price{$gt}{$row['it_amount']}
+{$lt}price{$gt}{$row['it_price']}
 {$lt}pname{$gt}{$row['it_name']}
 {$lt}pgurl{$gt}$shop_url/item.php?it_id={$row['it_id']}
 {$lt}igurl{$gt}$data_url/item/{$row['it_id']}_m

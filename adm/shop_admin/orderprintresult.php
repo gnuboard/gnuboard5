@@ -294,7 +294,7 @@ if (mysql_num_rows($result) == 0)
         $cnt = $sub_tot_qty = $sub_tot_amount = 0;
         while ($row2 = sql_fetch_array($res2))
         {
-            $row2_tot_amount = $row2['ct_amount'] * $row2['ct_qty'];
+            $row2_tot_amount = $row2['ct_price'] * $row2['ct_qty'];
             $sub_tot_qty += $row2['ct_qty'];
             $sub_tot_amount += $row2_tot_amount;
 
@@ -333,7 +333,7 @@ if (mysql_num_rows($result) == 0)
         ?>
         <tr>
             <td><?php echo $it_name; ?></td>
-            <td class="td_bignum"><?php echo number_format($row2['ct_amount']); ?></td>
+            <td class="td_bignum"><?php echo number_format($row2['ct_price']); ?></td>
             <td class="td_smallnum"><?php echo $fontqty1; ?><?php echo number_format($row2['ct_qty']); ?><?php echo $fontqty2; ?></td>
             <td class="td_bignum"><?php echo number_format($row2_tot_amount); ?></td>
         </tr>

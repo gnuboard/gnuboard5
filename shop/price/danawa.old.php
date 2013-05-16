@@ -21,7 +21,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $row3 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
 
     $str .= "\n";
-    $str .= "{$row['it_id']}#{$row2['ca_name']}#{$row3['ca_name']}#{$row['it_name']}#".G4_SHOP_URL."/item.php?it_id={$row['it_id']}#{$row['it_amount']}";
+    $str .= "{$row['it_id']}#{$row2['ca_name']}#{$row3['ca_name']}#{$row['it_name']}#".G4_SHOP_URL."/item.php?it_id={$row['it_id']}#{$row['it_price']}";
 }
 echo $str;
 ?>
