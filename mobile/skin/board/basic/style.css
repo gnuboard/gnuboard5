@@ -76,7 +76,7 @@
 #bo_v_top {margin:0 0 1em;padding:1em}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_top ul {list-style:none}
+#bo_v_top ul {margin:0;padding:0;list-style:none}
 
 #bo_v_bot {padding:0 1em}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
