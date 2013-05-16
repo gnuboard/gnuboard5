@@ -10,8 +10,10 @@ $_GET  = array_map("mysql_real_escape_string", $_GET);
 $_POST = array_map("mysql_real_escape_string", $_POST);
 
 // 결제등록 완료 체크
-if($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == '')
-    alert('결제등록 요청 후 주문해 주십시오.');
+if($od_settle_case != '무통장') {
+    if($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == '')
+        alert('결제등록 요청 후 주문해 주십시오.');
+}
 
 // 장바구니가 비어있는가?
 if (get_session("ss_direct"))
@@ -243,6 +245,7 @@ $sql = " insert {$g4['shop_order_table']}
                 od_shop_memo      = '',
                 od_hope_date      = '$od_hope_date',
                 od_time           = '".G4_TIME_YMDHIS."',
+                od_mobile         = '1',
                 od_ip             = '$REMOTE_ADDR',
                 od_settle_case    = '$od_settle_case'
                 ";
