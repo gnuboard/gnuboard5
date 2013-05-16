@@ -427,24 +427,6 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_item_info`
---
-
-DROP TABLE IF EXISTS `shop_item_info`;
-CREATE TABLE IF NOT EXISTS `shop_item_info` (
-  `ii_id` int(11) NOT NULL AUTO_INCREMENT,
-  `it_id` varchar(20) NOT NULL,
-  `ii_gubun` varchar(50) NOT NULL,
-  `ii_article` varchar(50) NOT NULL,
-  `ii_title` varchar(255) NOT NULL,
-  `ii_value` varchar(255) NOT NULL,
-  PRIMARY KEY (`ii_id`),
-  UNIQUE KEY `it_id` (`it_id`,`ii_gubun`,`ii_article`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `shop_item_ps`
 --
 
