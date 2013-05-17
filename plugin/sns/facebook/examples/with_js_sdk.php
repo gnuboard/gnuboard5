@@ -3,8 +3,8 @@
 require '../src/facebook.php';
 
 $facebook = new Facebook(array(
-  'appId'  => '344617158898614',
-  'secret' => '6dc8ac871858b34798bc2488200e503d',
+  'appId'  => '119146498278078',
+  'secret' => '6ffd7e325e2b4fbd83a2eebf9c6f33f9',
 ));
 
 // See if there is a user from a cookie
@@ -24,6 +24,9 @@ if ($user) {
 <!DOCTYPE html>
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
   <body>
+    <h3>PHP Cookie</h3>
+    <pre><?php print_r($_COOKIE); ?></pre>
+
     <?php if ($user) { ?>
       Your user profile is
       <pre>

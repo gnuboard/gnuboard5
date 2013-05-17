@@ -20,7 +20,7 @@ require '../src/facebook.php';
 // Create our Application instance (replace this with your appId and secret).
 $facebook = new Facebook(array(
   'appId'  => '119146498278078',
-  'secret' => '311e0d6ff8ff43cfe0e75fe82d71777c',
+  'secret' => '6ffd7e325e2b4fbd83a2eebf9c6f33f9',
 ));
 
 // Get User ID
@@ -81,6 +81,9 @@ $naitik = $facebook->api('/naitik');
         <a href="<?php echo $loginUrl; ?>">Login with Facebook</a>
       </div>
     <?php endif ?>
+
+    <h3>PHP Cookie</h3>
+    <pre><?php print_r($_COOKIE); ?></pre>
 
     <h3>PHP Session</h3>
     <pre><?php print_r($_SESSION); ?></pre>

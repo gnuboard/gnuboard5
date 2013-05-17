@@ -187,8 +187,7 @@ if ($w == 'c') // 댓글 입력
 
         $facebook = new Facebook(array(
             'appId'  => $config['cf_facebook_appid'],
-            'secret' => $config['cf_facebook_secret'],
-            'cookie' => true
+            'secret' => $config['cf_facebook_secret']
         ));
 
         $user = $facebook->getUser();
@@ -200,7 +199,7 @@ if ($w == 'c') // 댓글 입력
                     'message'       => stripslashes($wr_content),
                     'name'          => $wr_subject,
                     'link'          => $link,
-                    'description'   => stripslashes($wr['wr_content'])
+                    'description'   => stripslashes(strip_tags($wr['wr_content']))
                  );
                 $facebook->api('/me/feed/', 'post', $attachment);
                 //$errors = error_get_last(); print_r2($errros); exit;
