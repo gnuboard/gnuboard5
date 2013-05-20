@@ -444,7 +444,9 @@ $pg_anchor ='<ul class="anchor">
     <p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
 
     <div id="sit_compact">
-        <?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?>
+        <div id="sit_compact_tbl">
+            <?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?>
+        </div>
         <div id="sit_compact_grpset">
             <input type="checkbox" name="chk_ca_it_info" value="1" id="chk_ca_it_info">
             <label for="chk_ca_it_info">분류적용</label>
@@ -463,7 +465,7 @@ $(function(){
             "<?php echo G4_ADMIN_URL; ?>/shop_admin/iteminfo.php",
             { it_id: "<?php echo $it['it_id']; ?>", gubun: gubun },
             function(data) {
-                $("#sit_compact").empty().html(data);
+                $("#sit_compact_tbl").empty().html(data);
             }
         );
     });
