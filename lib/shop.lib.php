@@ -779,7 +779,7 @@ function conv_selected_option($options, $value)
     if(!$options)
         return '';
 
-    $options = preg_replace('/(value=[\'\"]?'.$value.'[\'\"]?)/i', '\\1 selected', $options);
+    $options = str_replace('value="'.$value.'"', 'value="'.$value.'" selected', $options);
 
     return $options;
 }
