@@ -55,7 +55,7 @@ for ($i=0; $i<count($list); $i++)
     <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
     <td class="td_board"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>"><?php echo $bo_subject ?></a></td>
     <td><a href="<?php echo $list[$i]['href'] ?>"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
-    <td class="td_name"><div><?php echo $list[$i]['name'] ?></div></td>
+    <td class="td_name sv_use"><div><?php echo $list[$i]['name'] ?></div></td>
     <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>
 </tr>
 <?php }  ?>
