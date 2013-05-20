@@ -15,7 +15,6 @@ if(!$_POST['gubun'] && $it['it_info_gubun'])
     $gubun = $it['it_info_gubun'];
 ?>
 
-<p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
 <table class="frm_tbl">
 <colgroup>
     <col class="grid_3">

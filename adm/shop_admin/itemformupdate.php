@@ -372,7 +372,6 @@ for($i=0; $i<count($_POST['ii_article']); $i++) {
 }
 $it_info_value = serialize($value_array);
 
-
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
                 ca_id3              = '$ca_id3',
@@ -504,6 +503,60 @@ if ($w == "" || $w == "u")
             sql_query($sql, false);
         }
     }
+}
+
+// 동일 분류내 상품 동일 옵션 적용
+$ca_fields = '';
+if(is_checked('chk_ca_it_gallery'))             $ca_fields .= " , it_gallery = '$it_gallery' ";
+if(is_checked('chk_ca_it_order'))               $ca_fields .= " , it_order = '$it_order' ";
+if(is_checked('chk_ca_it_type'))                $ca_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
+if(is_checked('chk_ca_it_maker'))               $ca_fields .= " , it_maker = '$it_maker' ";
+if(is_checked('chk_ca_it_origin'))              $ca_fields .= " , it_origin = '$it_origin' ";
+if(is_checked('chk_ca_it_sell_email'))          $ca_fields .= " , it_sell_email = '$it_sell_email' ";
+if(is_checked('chk_ca_it_tel_inq'))             $ca_fields .= " , it_tel_inq = '$it_tel_inq' ";
+if(is_checked('chk_ca_it_use'))                 $ca_fields .= " , it_use = '$it_use' ";
+if(is_checked('chk_ca_it_info'))                $ca_fields .= " , it_info_gubun = '$it_info_gubun', it_info_value = '$it_info_value' ";
+if(is_checked('chk_ca_it_price'))               $ca_fields .= " , it_price = '$it_price' ";
+if(is_checked('chk_ca_it_cust_price'))          $ca_fields .= " , it_cust_price = '$it_cust_price' ";
+if(is_checked('chk_ca_it_point'))               $ca_fields .= " , it_point = '$it_point' ";
+if(is_checked('chk_ca_it_stock_qty'))           $ca_fields .= " , it_stock_qty = '$it_stock_qty' ";
+if(is_checked('chk_ca_it_gallery'))             $ca_fields .= " , it_gallery = '$it_gallery' ";
+if(is_checked('chk_ca_it_head_html'))           $ca_fields .= " , it_head_html = '$it_head_html' ";
+if(is_checked('chk_ca_it_tail_html'))           $ca_fields .= " , it_tail_html = '$it_tail_html' ";
+if(is_checked('chk_ca_it_mobile_head_html'))    $ca_fields .= " , it_mobile_head_html = '$it_mobile_head_html' ";
+if(is_checked('chk_ca_it_mobile_tail_html'))    $ca_fields .= " , it_mobile_tail_html = '$it_mobile_tail_html' ";
+
+if($ca_fields) {
+    sql_query(" update {$g4['shop_item_table']} set it_name = it_name {$ca_fields} where ca_id = '$ca_id' ");
+    if($ca_id2)
+        sql_query(" update {$g4['shop_item_table']} set it_name = it_name {$ca_fields} where ca_id2 = '$ca_id2' ");
+    if($ca_id3)
+        sql_query(" update {$g4['shop_item_table']} set it_name = it_name {$ca_fields} where ca_id3 = '$ca_id3' ");
+}
+
+// 모든 상품 동일 옵션 적용
+$all_fields = '';
+if(is_checked('chk_all_it_gallery'))             $all_fields .= " , it_gallery = '$it_gallery' ";
+if(is_checked('chk_all_it_order'))               $all_fields .= " , it_order = '$it_order' ";
+if(is_checked('chk_all_it_type'))                $all_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
+if(is_checked('chk_all_it_maker'))               $all_fields .= " , it_maker = '$it_maker' ";
+if(is_checked('chk_all_it_origin'))              $all_fields .= " , it_origin = '$it_origin' ";
+if(is_checked('chk_all_it_sell_email'))          $all_fields .= " , it_sell_email = '$it_sell_email' ";
+if(is_checked('chk_all_it_tel_inq'))             $all_fields .= " , it_tel_inq = '$it_tel_inq' ";
+if(is_checked('chk_all_it_use'))                 $all_fields .= " , it_use = '$it_use' ";
+if(is_checked('chk_all_it_info'))                $all_fields .= " , it_info_gubun = '$it_info_gubun', it_info_value = '$it_info_value' ";
+if(is_checked('chk_all_it_price'))               $all_fields .= " , it_price = '$it_price' ";
+if(is_checked('chk_all_it_cust_price'))          $all_fields .= " , it_cust_price = '$it_cust_price' ";
+if(is_checked('chk_all_it_point'))               $all_fields .= " , it_point = '$it_point' ";
+if(is_checked('chk_all_it_stock_qty'))           $all_fields .= " , it_stock_qty = '$it_stock_qty' ";
+if(is_checked('chk_all_it_gallery'))             $all_fields .= " , it_gallery = '$it_gallery' ";
+if(is_checked('chk_all_it_head_html'))           $all_fields .= " , it_head_html = '$it_head_html' ";
+if(is_checked('chk_all_it_tail_html'))           $all_fields .= " , it_tail_html = '$it_tail_html' ";
+if(is_checked('chk_all_it_mobile_head_html'))    $all_fields .= " , it_mobile_head_html = '$it_mobile_head_html' ";
+if(is_checked('chk_all_it_mobile_tail_html'))    $all_fields .= " , it_mobile_tail_html = '$it_mobile_tail_html' ";
+
+if($all_fields) {
+    sql_query(" update {$g4['shop_item_table']} set it_name = it_name {$all_fields} ");
 }
 
 $qstr = "$qstr&amp;sca=$sca&amp;page=$page";

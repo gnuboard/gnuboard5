@@ -277,22 +277,28 @@ $pg_anchor ='<ul class="anchor">
             <input type="checkbox" name="it_gallery" value="1" id="it_gallery" <?php echo ($it['it_gallery'] ? "checked" : ""); ?>>
         </td>
         <td class="group_setting">
-            <input type="checkbox" name="chk_it_gallery" value="1" id="chk_it_gallery">
-            <label for="chk_it_gallery">그룹적용</label>
-            <input type="checkbox" name="chk_all_gallery" value="1" id="chk_all_gallery">
-            <label for="chk_all_gallery">전체적용</label>
+            <input type="checkbox" name="chk_ca_it_gallery" value="1" id="chk_ca_it_gallery">
+            <label for="chk_ca_it_gallery">분류적용</label>
+            <input type="checkbox" name="chk_all_it_gallery" value="1" id="chk_all_it_gallery">
+            <label for="chk_all_it_gallery">전체적용</label>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_order">출력순서</label></th>
-        <td colspan="2">
+        <td>
             <?php echo help("숫자가 작을 수록 상위에 출력됩니다. 음수 입력도 가능하며 입력 가능 범위는 -2147483648 부터 2147483647 까지입니다.\n<b>입력하지 않으면 자동으로 출력됩니다.</b>"); ?>
             <input type="text" name="it_order" value="<?php echo $it['it_order']; ?>" id="it_order" class="frm_input" size="12">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_order" value="1" id="chk_ca_it_order">
+            <label for="chk_ca_it_order">분류적용</label>
+            <input type="checkbox" name="chk_all_it_order" value="1" id="chk_all_it_order">
+            <label for="chk_all_it_order">전체적용</label>
         </td>
     </tr>
     <tr>
         <th scope="row">상품유형</th>
-        <td colspan="2">
+        <td>
             <?php echo help("메인화면에 유형별로 출력할때 사용합니다.\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다."); ?>
             <input type="checkbox" name="it_type1" value="1" <?php echo ($it['it_type1'] ? "checked" : ""); ?> id="it_type1">
             <label for="it_type1">히트 <img src="<?php echo G4_URL; ?>/img/shop/icon_hit2.gif" alt=""></label>
@@ -305,19 +311,37 @@ $pg_anchor ='<ul class="anchor">
             <input type="checkbox" name="it_type5" value="1" <?php echo ($it['it_type5'] ? "checked" : ""); ?> id="it_type5">
             <label for="it_type5">할인 <img src="<?php echo G4_URL; ?>/img/shop/icon_discount2.gif" alt=""></label>
         </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_type" value="1" id="chk_ca_it_type">
+            <label for="chk_ca_it_type">분류적용</label>
+            <input type="checkbox" name="chk_all_it_type" value="1" id="chk_all_it_type">
+            <label for="chk_all_it_type">전체적용</label>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_maker">제조사</label></th>
-        <td colspan="2">
+        <td>
             <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
             <input type="text" name="it_maker" value="<?php echo get_text($it['it_maker']); ?>" id="it_maker" class="frm_input" size="40">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_maker" value="1" id="chk_ca_it_maker">
+            <label for="chk_ca_it_maker">분류적용</label>
+            <input type="checkbox" name="chk_all_it_maker" value="1" id="chk_all_it_maker">
+            <label for="chk_all_it_maker">전체적용</label>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_origin">원산지</label></th>
-        <td colspan="2">
+        <td>
             <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
             <input type="text" name="it_origin" value="<?php echo get_text($it['it_origin']); ?>" id="it_origin" class="frm_input" size="40">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_origin" value="1" id="chk_ca_it_origin">
+            <label for="chk_ca_it_origin">분류적용</label>
+            <input type="checkbox" name="chk_all_it_origin" value="1" id="chk_all_it_origin">
+            <label for="chk_all_it_origin">전체적용</label>
         </td>
     </tr>
     <?php
@@ -352,9 +376,15 @@ $pg_anchor ='<ul class="anchor">
     <?php } ?>
     <tr>
         <th scope="row"><label for="it_basic">기본설명</label></th>
-        <td colspan="2">
+        <td>
             <?php echo help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다. HTML 입력도 가능합니다."); ?>
-            <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="90">
+            <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="80">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
+            <label for="chk_ca_it_basic">분류적용</label>
+            <input type="checkbox" name="chk_all_it_basic" value="1" id="chk_all_it_basic">
+            <label for="chk_all_it_basic">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -367,23 +397,41 @@ $pg_anchor ='<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
-        <td colspan="2">
+        <td>
             <?php echo help("운영자와 실제 판매자가 다른 경우 실제 판매자의 e-mail을 입력하면, 상품 주문 시점을 기준으로 실제 판매자에게도 주문서를 발송합니다."); ?>
             <input type="text" name="it_sell_email" value="<?php echo $it['it_sell_email']; ?>" id="it_sell_email" class="frm_input" size="40">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_sell_email" value="1" id="chk_ca_it_sell_email">
+            <label for="chk_ca_it_sell_email">분류적용</label>
+            <input type="checkbox" name="chk_all_it_sell_email" value="1" id="chk_all_it_sell_email">
+            <label for="chk_all_it_sell_email">전체적용</label>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_tel_inq">전화문의</label></th>
-        <td colspan="2">
+        <td>
             <?php echo help("상품 금액 대신 전화문의로 표시됩니다."); ?>
             <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <?php echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_tel_inq" value="1" id="chk_ca_it_tel_inq">
+            <label for="chk_ca_it_tel_inq">분류적용</label>
+            <input type="checkbox" name="chk_all_it_tel_inq" value="1" id="chk_all_it_tel_inq">
+            <label for="chk_all_it_tel_inq">전체적용</label>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_use">판매가능</label></th>
-        <td colspan="2">
+        <td>
             <?php echo help("잠시 판매를 중단하거나 재고가 없을 경우에 체크를 해제해 놓으면 출력되지 않으며, 주문도 받지 않습니다."); ?>
             <input type="checkbox" name="it_use" value="1" id="it_use" <?php echo ($it['it_use']) ? "checked" : ""; ?>> 예
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_use" value="1" id="chk_ca_it_use">
+            <label for="chk_ca_it_use">분류적용</label>
+            <input type="checkbox" name="chk_all_it_use" value="1" id="chk_all_it_use">
+            <label for="chk_all_it_use">전체적용</label>
         </td>
     </tr>
     </tbody>
@@ -393,7 +441,24 @@ $pg_anchor ='<ul class="anchor">
 <section id="anc_sitfrm_compact" class="cbox">
     <h2>상품요약정보</h2>
     <?php echo $pg_anchor; ?>
-    <div id="compact_info_form"><?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
+    <p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <td id="compact_info_form"><?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_info" value="1" id="chk_ca_it_info">
+            <label for="chk_ca_it_info">분류적용</label>
+            <input type="checkbox" name="chk_all_it_info" value="1" id="chk_all_it_info">
+            <label for="chk_all_it_info">전체적용</label>
+        </td>
+    </tr>
+    </tbody>
+    </table>
 </section>
 
 <script>
@@ -425,12 +490,24 @@ $(function(){
         <td>
             <input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
         </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_price" value="1" id="chk_ca_it_price">
+            <label for="chk_ca_it_price">분류적용</label>
+            <input type="checkbox" name="chk_all_it_price" value="1" id="chk_all_it_price">
+            <label for="chk_all_it_price">전체적용</label>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_cust_price">시중가격</label></th>
         <td>
             <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
             <input type="text" name="it_cust_price" value="<?php echo $it['it_cust_price']; ?>" id="it_cust_price" class="frm_input" size="8"> 원
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_cust_price" value="1" id="chk_ca_it_cust_price">
+            <label for="chk_ca_it_cust_price">분류적용</label>
+            <input type="checkbox" name="chk_all_it_cust_price" value="1" id="chk_all_it_cust_price">
+            <label for="chk_all_it_cust_price">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -439,6 +516,12 @@ $(function(){
             <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n포인트 기능을 사용해야 동작합니다."); ?>
             <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> 점
         </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_point" value="1" id="chk_ca_it_point">
+            <label for="chk_ca_it_point">분류적용</label>
+            <input type="checkbox" name="chk_all_it_point" value="1" id="chk_all_it_point">
+            <label for="chk_all_it_point">전체적용</label>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="it_stock_qty">재고수량</label></th>
@@ -446,7 +529,14 @@ $(function(){
             <?php echo help("<b>주문관리에서 상품별 상태 변경에 따라 자동으로 재고를 가감합니다.</b> 재고는 규격/색상별이 아닌, 상품별로만 관리됩니다."); ?>
             <input type="text" name="it_stock_qty" value="<?php echo $it['it_stock_qty']; ?>" id="it_stock_qty" class="frm_input" size="8"> 개</span>
         </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_stock_qty" value="1" id="chk_ca_it_stock_qty">
+            <label for="chk_ca_it_stock_qty">분류적용</label>
+            <input type="checkbox" name="chk_all_it_stock_qty" value="1" id="chk_all_it_stock_qty">
+            <label for="chk_all_it_stock_qty">전체적용</label>
+        </td>
     </tr>
+    </tbody>
     </table>
 </section>
 
@@ -822,7 +912,7 @@ $(function(){
     <tbody>
     <tr>
         <th scope="row">상단이미지</th>
-        <td>
+        <td colspan="2">
             <?php echo help("상품상세설명 페이지 상단에 출력하는 이미지입니다."); ?>
             <input type="file" name="it_himg">
             <?php
@@ -838,7 +928,7 @@ $(function(){
     </tr>
     <tr>
         <th scope="row">하단이미지</th>
-        <td>
+        <td colspan="2">
             <?php echo help("상품상세설명 페이지 하단에 출력하는 이미지입니다."); ?>
             <input type="file" name="it_timg">
             <?php
@@ -855,23 +945,47 @@ $(function(){
     <tr>
         <th scope="row">상품상단내용</th>
         <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_head_html', $it['it_head_html']); ?></td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_head_html" value="1" id="chk_ca_it_head_html">
+            <label for="chk_ca_it_head_html">분류적용</label>
+            <input type="checkbox" name="chk_all_it_head_html" value="1" id="chk_all_it_head_html">
+            <label for="chk_all_it_head_html">전체적용</label>
+        </td>
     </tr>
     <tr>
         <th scope="row">상품하단내용</th>
         <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_tail_html', $it['it_tail_html']); ?></td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_tail_html" value="1" id="chk_ca_it_tail_html">
+            <label for="chk_ca_it_tail_html">분류적용</label>
+            <input type="checkbox" name="chk_all_it_tail_html" value="1" id="chk_all_it_tail_html">
+            <label for="chk_all_it_tail_html">전체적용</label>
+        </td>
     </tr>
     <tr>
         <th scope="row">모바일 상품상단내용</th>
         <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_head_html', $it['it_mobile_head_html']); ?></td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_mobile_head_html" value="1" id="chk_ca_it_mobile_head_html">
+            <label for="chk_ca_it_mobile_head_html">분류적용</label>
+            <input type="checkbox" name="chk_all_it_mobile_head_html" value="1" id="chk_all_it_mobile_head_html">
+            <label for="chk_all_it_mobile_head_html">전체적용</label>
+        </td>
     </tr>
     <tr>
         <th scope="row">모바일 상품하단내용</th>
         <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_tail_html', $it['it_mobile_tail_html']); ?></td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_mobile_tail_html" value="1" id="chk_ca_it_mobile_tail_html">
+            <label for="chk_ca_it_mobile_tail_html">분류적용</label>
+            <input type="checkbox" name="chk_all_it_mobile_tail_html" value="1" id="chk_all_it_mobile_tail_html">
+            <label for="chk_all_it_mobile_tail_html">전체적용</label>
+        </td>
     </tr>
     <?php if ($w == "u") { ?>
     <tr>
         <th scope="row">입력일시</th>
-        <td>
+        <td colspan="2">
             <?php echo help("상품을 처음 입력(등록)한 시간입니다."); ?>
             <?php echo $it['it_time']; ?>
         </td>
