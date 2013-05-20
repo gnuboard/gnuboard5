@@ -254,12 +254,6 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
                     }
                     break;
             }
-        } else {
-            if($size[1] / $size[0] >= $ratio) {
-                $src_h = round($src_w * $ratio);
-            } else {
-                $src_w = round($size[1] / $ratio);
-            }
         }
 
         $dst = imagecreatetruecolor($dst_w, $dst_h);
