@@ -11,7 +11,7 @@ else {
     $it = sql_fetch($sql);
 }
 
-if(!$_POST['gubun'] && $it['it_info_gubun'])
+if(!$gubun && $it['it_info_gubun'])
     $gubun = $it['it_info_gubun'];
 ?>
 
@@ -19,29 +19,17 @@ if(!$_POST['gubun'] && $it['it_info_gubun'])
 <colgroup>
     <col class="grid_3">
     <col>
+    <col>
 </colgroup>
 <tbody>
-<tr>
-    <th scope="row"><label for="it_info_gubun">상품군</label></th>
-    <td>
-        <?php echo help("상품군을 선택하면 자동으로 항목이 변환됩니다."); ?>
-        <select id="it_info_gubun" name="it_info_gubun">
-            <option value="">상품군을 선택하세요.</option>
-            <?php
-            foreach($item_info as $key=>$value) {
-                $opt_value = $key;
-                $opt_text  = $value['title'];
-                echo '<option value="'.$opt_value.'" '.get_selected($gubun, $opt_value).'>'.$opt_text.'</option>'.PHP_EOL;
-            }
-            ?>
-        </select>
-    </td>
-</tr>
 <?php
 if($it['it_info_value'])
     $info_value = unserialize($it['it_info_value']);
 $article = $item_info[$gubun]['article'];
 if ($article) {
+    // $el_no : 분류적용, 전체적용을 한번만 넣기 위해, $el_length : 수직병합할 셀 값 - 지운아빠 2013-05-20
+    $el_no = 0;
+    $el_length = count($article);
     foreach($article as $key=>$value) {
         $el_name    = $key;
         $el_title   = $value[0];
@@ -59,6 +47,14 @@ if ($article) {
         <?php if ($el_example != "") echo help($el_example); ?>
         <input type="text" name="ii_value[]" value="<?php echo $el_value; ?>" id="ii_article_<?php echo $el_name; ?>" required class="frm_input required" />
     </td>
+    <?php if ($el_no == 0) { ?>
+    <td rowspan="<?php echo $el_length; ?>" class="group_setting">
+        <input type="checkbox" name="chk_ca_it_info" value="1" id="chk_ca_it_info">
+        <label for="chk_ca_it_info">분류적용</label>
+        <input type="checkbox" name="chk_all_it_info" value="1" id="chk_all_it_info">
+        <label for="chk_all_it_info">전체적용</label>
+    </td>
+    <?php } $el_no++; ?>
 </tr>
 <?php
     }
