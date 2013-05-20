@@ -444,7 +444,32 @@ $pg_anchor ='<ul class="anchor">
     <p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
 
     <div id="sit_compact">
-        <?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?>
+        <table class="frm_tbl">
+        <colgroup>
+            <col class="grid_3">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="it_info_gubun">상품군</label></th>
+            <td>
+                <?php echo help("상품군을 선택하면 자동으로 항목이 변환됩니다."); ?>
+                <select id="it_info_gubun" name="it_info_gubun">
+                    <option value="">상품군을 선택하세요.</option>
+                    <?php
+                    if(!$it['it_info_gubun']) $it['it_info_gubun'] = 'wear';
+                    foreach($item_info as $key=>$value) {
+                        $opt_value = $key;
+                        $opt_text  = $value['title'];
+                        echo '<option value="'.$opt_value.'" '.get_selected($opt_value, $it['it_info_gubun']).'>'.$opt_text.'</option>'.PHP_EOL;
+                    }
+                    ?>
+                </select>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        <div id="sit_compact_fields"><?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
         <div id="sit_compact_grpset">
             <input type="checkbox" name="chk_ca_it_info" value="1" id="chk_ca_it_info">
             <label for="chk_ca_it_info">분류적용</label>
@@ -463,7 +488,7 @@ $(function(){
             "<?php echo G4_ADMIN_URL; ?>/shop_admin/iteminfo.php",
             { it_id: "<?php echo $it['it_id']; ?>", gubun: gubun },
             function(data) {
-                $("#sit_compact").empty().html(data);
+                $("#sit_compact_fields").empty().html(data);
             }
         );
     });

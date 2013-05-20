@@ -11,7 +11,7 @@ else {
     $it = sql_fetch($sql);
 }
 
-if(!$_POST['gubun'] && $it['it_info_gubun'])
+if(!$gubun && $it['it_info_gubun'])
     $gubun = $it['it_info_gubun'];
 ?>
 
@@ -21,22 +21,6 @@ if(!$_POST['gubun'] && $it['it_info_gubun'])
     <col>
 </colgroup>
 <tbody>
-<tr>
-    <th scope="row"><label for="it_info_gubun">상품군</label></th>
-    <td>
-        <?php echo help("상품군을 선택하면 자동으로 항목이 변환됩니다."); ?>
-        <select id="it_info_gubun" name="it_info_gubun">
-            <option value="">상품군을 선택하세요.</option>
-            <?php
-            foreach($item_info as $key=>$value) {
-                $opt_value = $key;
-                $opt_text  = $value['title'];
-                echo '<option value="'.$opt_value.'" '.get_selected($gubun, $opt_value).'>'.$opt_text.'</option>'.PHP_EOL;
-            }
-            ?>
-        </select>
-    </td>
-</tr>
 <?php
 if($it['it_info_value'])
     $info_value = unserialize($it['it_info_value']);
