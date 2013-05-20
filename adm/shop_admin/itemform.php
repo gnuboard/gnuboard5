@@ -442,23 +442,17 @@ $pg_anchor ='<ul class="anchor">
     <h2>상품요약정보</h2>
     <?php echo $pg_anchor; ?>
     <p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <td id="compact_info_form"><?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></td>
-        <td class="group_setting">
+
+    <div id="sit_compact">
+        <?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?>
+        <div id="sit_compact_grpset">
             <input type="checkbox" name="chk_ca_it_info" value="1" id="chk_ca_it_info">
             <label for="chk_ca_it_info">분류적용</label>
             <input type="checkbox" name="chk_all_it_info" value="1" id="chk_all_it_info">
             <label for="chk_all_it_info">전체적용</label>
-        </td>
-    </tr>
-    </tbody>
-    </table>
+        </div>
+        <span id="sit_compact_line"></span>
+    </div>
 </section>
 
 <script>
@@ -469,7 +463,7 @@ $(function(){
             "<?php echo G4_ADMIN_URL; ?>/shop_admin/iteminfo.php",
             { it_id: "<?php echo $it['it_id']; ?>", gubun: gubun },
             function(data) {
-                $("#compact_info_form").empty().html(data);
+                $("#sit_compact").empty().html(data);
             }
         );
     });

@@ -55,9 +55,9 @@ if ($article) {
 <tr>
     <th scope="row"><label for="ii_article_<?php echo $el_name; ?>"><?php echo $el_title; ?></label></th>
     <td>
-    <input type="hidden" name="ii_article[]" value="<?php echo $el_name; ?>">
-    <?php if ($el_example != "") echo help($el_example); ?>
-    <input type="text" name="ii_value[]" value="<?php echo $el_value; ?>" id="ii_article_<?php echo $el_name; ?>" required class="frm_input required" />
+        <input type="hidden" name="ii_article[]" value="<?php echo $el_name; ?>">
+        <?php if ($el_example != "") echo help($el_example); ?>
+        <input type="text" name="ii_value[]" value="<?php echo $el_value; ?>" id="ii_article_<?php echo $el_name; ?>" required class="frm_input required" />
     </td>
 </tr>
 <?php
