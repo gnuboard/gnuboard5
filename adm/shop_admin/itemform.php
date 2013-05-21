@@ -338,36 +338,6 @@ $pg_anchor ='<ul class="anchor">
             <label for="chk_all_it_origin">전체적용</label>
         </td>
     </tr>
-    <?php
-    for ($i=1; $i<=3; $i++) {
-        $k1=$i*2-1;
-        $k2=$i*2;
-        $val11 = stripslashes($it["it_opt".$k1."_subject"]);
-        $val12 = stripslashes($it["it_opt".$k1]);
-        $val21 = stripslashes($it["it_opt".$k2."_subject"]);
-        $val22 = stripslashes($it["it_opt".$k2]);
-    ?>
-    <tr>
-        <th scope="row">
-            <label for="it_opt<?php echo $k1; ?>_subject">상품옵션명 <?php echo $k1; ?></label><br>
-            <input type="text" name="it_opt<?php echo $k1; ?>_subject" value="<?php echo get_text($val11); ?>" id="it_opt<?php echo $k1; ?>_subject" class="frm_input" size="15">
-        </th>
-        <td colspan="2">
-            <label for="it_opt<?php echo $k1; ?>" class="sound_only">상품옵션설정 <?php echo $k1; ?></label>
-            <textarea name="it_opt<?php echo $k1; ?>" id="it_opt<?php echo $k1; ?>" class="sit_w_opt"><?php echo $val12; ?></textarea>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">
-            <label for="it_opt<?php echo $k2; ?>_subject">상품옵션명 <?php echo $k2; ?></label><br>
-            <input type="text" name="it_opt<?php echo $k2; ?>_subject" value="<?php echo get_text($val21); ?>" id="it_opt<?php echo $k2; ?>_subject" class="frm_input" size="15">
-        </th>
-        <td colspan="2">
-            <label for="it_opt<?php echo $k1; ?>" class="sound_only">상품옵션설정 <?php echo $k2; ?></label>
-            <textarea name="it_opt<?php echo $k2; ?>" id="it_opt<?php echo $k2; ?>" class="sit_w_opt"><?php echo $val22; ?></textarea>
-        </td>
-    </tr>
-    <?php } ?>
     <tr>
         <th scope="row"><label for="it_basic">기본설명</label></th>
         <td>
