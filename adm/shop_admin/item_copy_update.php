@@ -38,15 +38,6 @@ $sql = " insert {$g4['shop_item_table']}
                 $sql_common ";
 sql_query($sql);
 
-// 상품요약정보 복사
-$sql = " select * from {$g4['shop_item_info_table']} where it_id = '$it_id' order by ii_id ";
-$result = sql_query($sql);
-for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $sql = " INSERT INTO `{$g4['shop_item_info_table']}` (`ii_id`, `it_id`, `ii_gubun`, `ii_article`, `ii_title`, `ii_value`)
-             VALUES (NULL, '$new_it_id', '{$row['ii_gubun']}', '{$row['ii_article']}', '".addslashes($row['ii_title'])."', '".addslashes($row['ii_value'])."') ";
-    sql_query($sql);
-}
-
 // html 에디터로 첨부된 이미지 파일 복사
 if($cp['it_explan']) {
     $matchs = get_editor_image($cp['it_explan']);

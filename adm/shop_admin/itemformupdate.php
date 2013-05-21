@@ -20,32 +20,6 @@ function itemdelete($it_id)
                 from {$g4['shop_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
-    /*
-    $str = $comma = $od_id = "";
-    $sql = " select b.od_id
-               from {$g4['shop_cart_table']} a,
-                    {$g4['shop_order_table']} b
-              where a.uq_id = b.uq_id
-                and a.it_id = '$it_id'
-                and a.ct_status != '쇼핑' ";
-    $result = sql_query($sql);
-    $i=0;
-    while ($row = sql_fetch_array($result))
-    {
-        if (!$od_id)
-            $od_id = $row['od_id'];
-
-        $i++;
-        if ($i % 10 == 0) $str .= "\\n";
-        $str .= "$comma{$row['od_id']}";
-        $comma = " , ";
-    }
-    if ($str)
-    {
-        alert("이 상품과 관련된 주문이 총 {$i} 건 존재하므로 주문서를 삭제한 후 상품을 삭제하여 주십시오.\\n\\n$str", "./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=$od_id");
-    }
-    */
-
     // 상품 이미지 삭제
     for($i=1; $i<=10; $i++) {
         $file = G4_DATA_PATH.'/item/'.$it['it_img'.$i];
@@ -120,54 +94,6 @@ function itemdelete($it_id)
 	sql_query($sql);
 }
 
-
-//------------------------------------------------------------------------------
-// 금액 오류 검사
-$line1 = true;
-$cnt = 0;
-if ($w == "" || $w == "u")
-{
-    for ($i=1; $i<=6; $i++)
-    {
-        $it_opt = $_POST["it_opt{$i}"];
-        unset($opt);
-        $opt = explode("\n", $it_opt);
-        for ($k=0; $k<count($opt); $k++)
-        {
-            // 첫라인에는 금액옵션을 줄 수 없음
-            if ($k == 0)
-            {
-                // 첫라인에 '셑'과 같은 문자를 입력할 수 없음
-                // if (preg_match("/;/", $opt[$k])) {
-                if (!preg_match("/&/", $opt[$k]) && preg_match("/;/", $opt[$k]))
-                {
-                    $line1 = false;
-                    break;
-                }
-            }
-
-            // 옵션금액에 + 또는 - 부호가 없다면 오류
-            unset($exp);
-            $exp = explode(";", $opt[$k]);
-            if ($exp[1] > 0)
-            {
-                if (!preg_match("/^([+|-])/", $exp[1])) {
-                    $cnt++;
-                    break;
-                }
-            }
-        }
-    }
-}
-
-if (!$line1) {
-    alert("옵션의 첫라인에는 금액을 입력할 수 없습니다.");
-}
-
-if ($cnt > 0) {
-    alert("옵션의 금액 입력 오류입니다.\\n\\n추가되는 금액은 + 부호를\\n\\n할인되는 금액은 - 부호를 붙여 주십시오.");
-}
-//------------------------------------------------------------------------------
 
 @mkdir(G4_DATA_PATH."/item", 0707);
 @chmod(G4_DATA_PATH."/item", 0707);
@@ -379,18 +305,9 @@ $sql_common = " ca_id               = '$ca_id',
                 it_gallery          = '$it_gallery',
                 it_maker            = '$it_maker',
                 it_origin           = '$it_origin',
-                it_opt1_subject     = '$it_opt1_subject',
-                it_opt2_subject     = '$it_opt2_subject',
-                it_opt3_subject     = '$it_opt3_subject',
-                it_opt4_subject     = '$it_opt4_subject',
-                it_opt5_subject     = '$it_opt5_subject',
-                it_opt6_subject     = '$it_opt6_subject',
-                it_opt1             = '$it_opt1',
-                it_opt2             = '$it_opt2',
-                it_opt3             = '$it_opt3',
-                it_opt4             = '$it_opt4',
-                it_opt5             = '$it_opt5',
-                it_opt6             = '$it_opt6',
+                it_option_subject   = '$it_option_subject',
+                it_option           = '$it_option',
+                it_supply_subject   = '$it_supply_subject',
                 it_type1            = '$it_type1',
                 it_type2            = '$it_type2',
                 it_type3            = '$it_type3',

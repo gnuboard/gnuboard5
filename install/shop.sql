@@ -91,12 +91,6 @@ CREATE TABLE IF NOT EXISTS `shop_category` (
   `ca_name` varchar(255) NOT NULL DEFAULT '',
   `ca_skin` varchar(255) NOT NULL DEFAULT '',
   `ca_mobile_skin` varchar(255) NOT NULL DEFAULT '',
-  `ca_opt1_subject` varchar(255) NOT NULL DEFAULT '',
-  `ca_opt2_subject` varchar(255) NOT NULL DEFAULT '',
-  `ca_opt3_subject` varchar(255) NOT NULL DEFAULT '',
-  `ca_opt4_subject` varchar(255) NOT NULL DEFAULT '',
-  `ca_opt5_subject` varchar(255) NOT NULL DEFAULT '',
-  `ca_opt6_subject` varchar(255) NOT NULL DEFAULT '',
   `ca_img_width` int(11) NOT NULL DEFAULT '0',
   `ca_img_height` int(11) NOT NULL DEFAULT '0',
   `ca_mobile_img_width` int(11) NOT NULL DEFAULT '0',
@@ -372,18 +366,9 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
   `it_gallery` tinyint(4) NOT NULL DEFAULT '0',
   `it_maker` varchar(255) NOT NULL DEFAULT '',
   `it_origin` varchar(255) NOT NULL DEFAULT '',
-  `it_opt1_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_opt2_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_opt3_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_opt4_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_opt5_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_opt6_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_opt1` text NOT NULL,
-  `it_opt2` text NOT NULL,
-  `it_opt3` text NOT NULL,
-  `it_opt4` text NOT NULL,
-  `it_opt5` text NOT NULL,
-  `it_opt6` text NOT NULL,
+  `it_option_subject` varchar(255) NOT NULL DEFAULT '',
+  `it_option` varchar(255) NOT NULL DEFAULT '',
+  `it_supply_subject` varchar(255) NOT NULL DEFAULT '',
   `it_type1` tinyint(4) NOT NULL DEFAULT '0',
   `it_type2` tinyint(4) NOT NULL DEFAULT '0',
   `it_type3` tinyint(4) NOT NULL DEFAULT '0',
@@ -422,6 +407,27 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
   KEY `ca_id` (`ca_id`),
   KEY `it_name` (`it_name`),
   KEY `it_order` (`it_order`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shop_item_option`
+--
+
+DROP TABLE IF EXISTS `shop_item_option`;
+CREATE TABLE IF NOT EXISTS `shop_item_option` (
+  `io_no` INT(11) NOT NULL AUTO_INCREMENT,
+  `io_id` VARCHAR(255) NOT NULL DEFAULT '0',
+  `io_type` TINYINT(4) NOT NULL DEFAULT '0',                    
+  `it_id` VARCHAR(20) NOT NULL DEFAULT '',
+  `io_price` INT(11) NOT NULL DEFAULT '0',
+  `io_stock_qty` INT(11) NOT NULL DEFAULT '0',
+  `io_noti_qty` INT(11) NOT NULL DEFAULT '0',
+  `io_use` TINYINT(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`io_no`),
+  KEY `io_id` (`io_id`),
+  KEY `it_id` (`it_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
