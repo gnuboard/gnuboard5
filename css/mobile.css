@@ -142,12 +142,10 @@ td.empty_table {padding:5em 0;text-align:center}
 /* 폼 테이블 */
 .frm_tbl {margin-bottom:1.5em;width:100%;border-collapse:collapse;border-spacing:0}
 .frm_tbl caption {padding:1em;color:#4b8b99;font-weight:bold;text-align:left}
-.frm_tbl th {padding-left:1em;width:110px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
+.frm_tbl th {padding:0.4em;width:110px;border:1px solid #e9e9e9;border-left:0;vertical-align:top;text-align:left}
 .frm_tbl td {padding:0.4em 0.5em;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
-.frm_tbl textarea,
-.frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em;-webkit-appearance:none}
-.frm_input:focus,
-input.required:focus {border:0;background:#21272e !important;color:#fff;line-height:1.8em}
+.frm_tbl textarea, .frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em;-webkit-appearance:none}
+.frm_input:focus, input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;color:#fff;line-height:1.8em}
 .frm_tbl textarea {width:90%;height:150px}
 .frm_address {display:block;margin-top:0.3em}
 .frm_file {display:block;margin-bottom:0.3em}
@@ -169,7 +167,7 @@ input.required:focus {border:0;background:#21272e !important;color:#fff;line-hei
 .new_win_ul {margin:-1.8em 0 1.5em 0;padding:0 0 0 1.5em;border-bottom:1px solid #455255;background:#484848;list-style:none}
 .new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win_ul li {float:left;margin-left:-1px}
-.new_win_ul a {display:block;padding:1em 1em 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
+.new_win_ul a {display:block;padding:1em 1em 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-weight:bold;text-decoration:none}
 .new_win_desc {padding:1em}
 
 /* 사이드뷰 */

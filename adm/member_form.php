@@ -57,37 +57,40 @@ else if ($w == 'u')
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
-$mailling_no_checked = '';
-$sms_no_checked = '';
-$open_no_checked = '';
-if ($mb['mb_mailling'] == 1) {
-    $mailling_checked = 'checked="checked"'; //메일수신
+// 휴대폰 본인확인
+$mb_hp_certify_yes  =  $mb['mb_hp_certify'] ? 'checked="checked"' : '';
+$mb_hp_certify_no   = !$mb['mb_hp_certify'] ? 'checked="checked"' : '';
+
+// 휴대폰 성인인증
+$mb_adult_yes       =  $mb['mb_adult']      ? 'checked="checked"' : '';
+$mb_adult_no        = !$mb['mb_adult']      ? 'checked="checked"' : '';
+
+//메일수신
+$mb_mailling_yes    =  $mb['mb_mailling']   ? 'checked="checked"' : '';
+$mb_mailling_no     = !$mb['mb_mailling']   ? 'checked="checked"' : '';
+
+// SMS 수신
+$mb_sms_yes         =  $mb['mb_sms']        ? 'checked="checked"' : '';
+$mb_sms_no          = !$mb['mb_sms']        ? 'checked="checked"' : '';
+
+// 정보 공개
+$mb_open_yes        =  $mb['mb_open']       ? 'checked="checked"' : '';
+$mb_open_no         = !$mb['mb_open']       ? 'checked="checked"' : '';
+
+if (isset($mb['mb_hp_certify'])) {
+    // 날짜시간형이라면 drop 시킴
+    if (preg_match("/-/", $mb['mb_hp_certify'])) { 
+        sql_query(" ALTER TABLE `{$g4['member_table']}` DROP `mb_hp_certify` ", false);
+    } 
 } else {
-    $mailing_checked = '';
-    $mailling_no_checked = 'checked="checked"';
+    sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_hp_certify` TINYINT NOT NULL DEFAULT '0' AFTER `mb_hp` ", false);
 }
 
-if ($mb['mb_sms']) {
-    $sms_checked = 'checked="checked"'; // SMS 수신
+if(isset($mb['mb_adult'])) {
+    sql_query(" ALTER TABLE `{$g4['member_table']}` CHANGE `mb_adult` `mb_adult` TINYINT NOT NULL DEFAULT '0' ", false);
 } else {
-    $sms_checked = '';
-    $sms_no_checked = 'checked="checked"';
+    sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_adult` TINYINT NOT NULL DEFAULT '0' AFTER `mb_hp_certify` ", false);
 }
-
-if ($mb['mb_open']) {
-    $open_checked = 'checked="checked"'; // 정보 공개
-} else {
-    $open_checked = '';
-    $open_no_checked = 'checked="checked"';
-}
-
-if(!isset($mb['mb_adult'])) {
-    sql_query(" ALTER TABLE `{$g4['member_table']}`
-                    ADD `mb_adult` ENUM('N', 'Y') NOT NULL DEFAULT 'N' AFTER `mb_birth`,
-                    ADD `mb_hp_certify` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `mb_lost_certify` ", false);
-}
-
-sql_query(" ALTER TABLE `{$g4['member_table']}` CHANGE `mb_adult` `mb_adult` ENUM('N','Y') NOT NULL DEFAULT 'N' ", false);
 
 if ($mb['mb_intercept_date']) $g4['title'] = "차단된 ";
 else $g4['title'] .= "";
@@ -141,10 +144,26 @@ include_once('./admin.head.php');
         <td><input type="text" name="mb_homepage" value="<?php echo $mb['mb_homepage'] ?>" id="mb_homepage" class="frm_input" maxlength="255" size="15"></td>
     </tr>
     <tr>
-        <th scope="row"><label for="mb_tel">전화번호</label></th>
-        <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
         <th scope="row"><label for="mb_hp">휴대폰번호</label></th>
         <td><input type="text" name="mb_hp" value="<?php echo $mb['mb_hp'] ?>" id="mb_hp" class="frm_input" size="15" maxlength="20"></td>
+        <th scope="row"><label for="mb_tel">전화번호</label></th>
+        <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
+    </tr>
+    <tr>
+        <th scope="row">휴대폰 본인확인</th>
+        <td>
+            <input type="radio" name="mb_hp_certify" value="1" id="mb_hp_certify_yes" <?php echo $mb_hp_certify_yes; ?>>
+            <label for="mb_hp_certify_yes">예</label>
+            <input type="radio" name="mb_hp_certify" value="0" id="mb_hp_certify_no" <?php echo $mb_hp_certify_no; ?>>
+            <label for="mb_hp_certify_no">아니오</label>
+        </td>
+        <th scope="row"><label for="mb_adult">휴대폰 성인인증</label></th>
+        <td>
+            <input type="radio" name="mb_adult" value="1" id="mb_adult_yes" <?php echo $mb_adult_yes; ?>>
+            <label for="mb_adult_yes">예</label>
+            <input type="radio" name="mb_adult" value="0" id="mb_adult_no" <?php echo $mb_adult_no; ?>>
+            <label for="mb_adult_no">아니오</label>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_zip1">주소</label></th>
@@ -181,25 +200,25 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row">메일 수신</th>
         <td>
-            <input type="radio" name="mb_mailling" value="1" id="mb_mailling_yes" <?php echo $mailling_checked ?>>
+            <input type="radio" name="mb_mailling" value="1" id="mb_mailling_yes" <?php echo $mb_mailling_yes; ?>>
             <label for="mb_mailling_yes">예</label>
-            <input type="radio" name="mb_mailling" value="0" id="mb_mailling_no" <?php echo $mailling_no_checked ?>>
+            <input type="radio" name="mb_mailling" value="0" id="mb_mailling_no" <?php echo $mb_mailling_no; ?>>
             <label for="mb_mailling_no">아니오</label>
         </td>
         <th scope="row"><label for="mb_sms_yes">SMS 수신</label></th>
         <td>
-            <input type="radio" name="mb_sms" value="1" id="mb_sms_yes" <?php echo $sms_checked ?>>
+            <input type="radio" name="mb_sms" value="1" id="mb_sms_yes" <?php echo $mb_sms_yes; ?>>
             <label for="mb_sms_yes">예</label>
-            <input type="radio" name="mb_sms" value="0" id="mb_sms_no" <?php echo $sms_no_checked ?>>
+            <input type="radio" name="mb_sms" value="0" id="mb_sms_no" <?php echo $mb_sms_no; ?>>
             <label for="mb_sms_no">아니오</label>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_open">정보 공개</label></th>
         <td colspan="3">
-            <input type="radio" name="mb_open" value="1" id="mb_open" <?php echo $open_checked ?>>
+            <input type="radio" name="mb_open" value="1" id="mb_open_yes" <?php echo $mb_open_yes; ?>>
             <label for="mb_open">예</label>
-            <input type="radio" name="mb_open" value="0" id="mb_open_no" <?php echo $open_no_checked ?>>
+            <input type="radio" name="mb_open" value="0" id="mb_open_no" <?php echo $mb_open_no; ?>>
             <label for="mb_open_no">아니오</label>
         </td>
     </tr>
@@ -275,13 +294,6 @@ include_once('./admin.head.php');
     </table>
 
 </div>
-
-<fieldset id="admin_confirm">
-    <legend>XSS 혹은 CSRF 방지</legend>
-    <p>관리자 권한을 탈취 당하는 경우를 대비하여 관리자의 패스워드를 다시 한번 확인합니다.</p>
-    <label for="admin_password">관리자 패스워드<strong class="sound_only">필수</strong></label>
-    <input type="password" name="admin_password" id="admin_password" required class="required frm_input">
-</fieldset>
 
 <div class="btn_confirm">
     <p>

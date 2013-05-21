@@ -27,23 +27,25 @@ if (!isset($config['cf_mobile_new_skin'])) {
 
 if(!isset($config['cf_gcaptcha_mp3'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", TRUE);
+                    ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
 
 if(!isset($config['cf_kcpcert_site_cd'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", true);
 }
 
 if(!isset($config['cf_kcpcert_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", TRUE);
+                    ADD `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", true);
 }
+
+sql_query(" ALTER TABLE `{$g4['config_table']}` CHANGE `cf_kcpcert_use` `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' ", false);
 
 if(!isset($config['cf_mobile_pages'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", TRUE);
-    sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", TRUE);
+                    ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", true);
+    sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", true);
 }
 
 if(!isset($config['cf_facebook_use'])) {
@@ -764,13 +766,6 @@ $pg_anchor = '<ul class="anchor">
     </tbody>
     </table>
 </section>
-
-<fieldset id="admin_confirm">
-    <legend>XSS 혹은 CSRF 방지</legend>
-    <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
-    <label for="admin_password">관리자 패스워드<strong class="sound_only">필수</strong></label>
-    <input type="password" name="admin_password" id="admin_password" required class="required frm_input">
-</fieldset>
 
 <div class="btn_confirm">
     <p>

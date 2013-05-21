@@ -116,7 +116,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <th scope="row">내용</th>
             <td>
                 <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
-                <textarea id="wr_content" name="wr_content" required
+                <textarea id="wr_content" name="wr_content" required title="댓글 내용"
                 <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content; ?></textarea>
                 <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
             </td>
@@ -125,7 +125,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </table>
 
         <div class="btn_confirm">
-            <input type="submit" class="btn_submit" value="댓글등록">
+            <input type="submit" value="댓글등록" id="btn_submit" class="btn_submit" accesskey="s">
         </div>
 
         </form>
@@ -232,6 +232,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         }
 
         <?php if($is_guest) echo chk_captcha_js(); ?>
+
+        document.getElementById("btn_submit").disabled = "disabled";
 
         return true;
     }

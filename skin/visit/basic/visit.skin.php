@@ -6,7 +6,7 @@ global $is_admin;
 
 <link rel="stylesheet" href="<?php echo $visit_skin_url ?>/style.css">
 
-<section id="visit">
+<aside id="visit">
     <div>
         <h2>접속자집계</h2>
         <dl>
@@ -21,4 +21,4 @@ global $is_admin;
         </dl>
         <?php if ($is_admin == "super") {  ?><a href="<?php echo G4_ADMIN_URL ?>/visit_list.php">상세보기</a><?php } ?>
     </div>
-</section>
+</aside>

@@ -7,7 +7,7 @@
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
 
-if (PHP_VERSION >= '5.3.0') {
+if (PHP_VERSION >= '5.1.0') {
     //if (function_exists("date_default_timezone_set")) date_default_timezone_set("Asia/Seoul");
     date_default_timezone_set("Asia/Seoul");
 }
@@ -48,7 +48,11 @@ define('G4_SKIN_DIR',       'skin');
 define('G4_GCAPTCHA_DIR',   'gcaptcha');
 define('G4_CKEDITOR_DIR',   'ckeditor');
 define('G4_MOBILE_DIR',     'mobile');
+<<<<<<< HEAD
 define('G4_KCP_DIR',        'kcp');
+=======
+define('G4_KCPCERT_DIR',    'kcpcert');
+>>>>>>> master
 define('G4_SNS_DIR',        'sns');
 define('G4_SYNDI_DIR',      'syndi');
 
@@ -78,7 +82,11 @@ define('G4_SKIN_URL',       G4_URL.'/'.G4_SKIN_DIR);
 define('G4_PLUGIN_URL',     G4_URL.'/'.G4_PLUGIN_DIR);
 define('G4_GCAPTCHA_URL',   G4_PLUGIN_URL.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_URL',   G4_PLUGIN_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
+<<<<<<< HEAD
 define('G4_KCP_URL',        G4_PLUGIN_URL.'/'.G4_KCP_DIR);
+=======
+define('G4_KCPCERT_URL',    G4_PLUGIN_URL.'/'.G4_KCPCERT_DIR);
+>>>>>>> master
 define('G4_SNS_URL',        G4_PLUGIN_URL.'/'.G4_SNS_DIR);
 define('G4_SYNDI_URL',      G4_PLUGIN_URL.'/'.G4_SYNDI_DIR);
 define('G4_MOBILE_URL',     G4_URL.'/'.G4_MOBILE_DIR);
@@ -93,7 +101,11 @@ define('G4_PLUGIN_PATH',    G4_PATH.'/'.G4_PLUGIN_DIR);
 define('G4_SKIN_PATH',      G4_PATH.'/'.G4_SKIN_DIR);
 define('G4_GCAPTCHA_PATH',  G4_PLUGIN_PATH.'/'.G4_GCAPTCHA_DIR);
 define('G4_CKEDITOR_PATH',  G4_PLUGIN_PATH.'/'.G4_CKEDITOR_DIR);
+<<<<<<< HEAD
 define('G4_KCP_PATH',       G4_PLUGIN_PATH.'/'.G4_KCP_DIR);
+=======
+define('G4_KCPCERT_PATH',   G4_PLUGIN_PATH.'/'.G4_KCPCERT_DIR);
+>>>>>>> master
 define('G4_SNS_PATH',       G4_PLUGIN_PATH.'/'.G4_SNS_DIR);
 define('G4_SYNDI_PATH',     G4_PLUGIN_PATH.'/'.G4_SYNDI_DIR);
 define('G4_MOBILE_PATH',    G4_PATH.'/'.G4_MOBILE_DIR);

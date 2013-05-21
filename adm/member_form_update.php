@@ -10,10 +10,6 @@ auth_check($auth[$sub_menu], 'w');
 
 check_token();
 
-if ($member['mb_password'] != sql_password($_POST['admin_password'])) {
-    alert('패스워드가 다릅니다.');
-}
-
 $mb_id = escape_trim($_POST['mb_id']);
 
 // 휴대폰번호 체크
@@ -29,7 +25,9 @@ $sql_common = "  mb_name = '{$_POST['mb_name']}',
                  mb_email = '{$_POST['mb_email']}',
                  mb_homepage = '{$_POST['mb_homepage']}',
                  mb_tel = '{$_POST['mb_tel']}',
-                 mb_hp = '$mb_hp',
+                 mb_hp = '{$_POST['mb_hp']}',
+                 mb_hp_certify = '{$_POST['mb_hp_certify']}',
+                 mb_adult = '{$_POST['mb_adult']}',
                  mb_zip1 = '{$_POST['mb_zip1']}',
                  mb_zip2 = '{$_POST['mb_zip2']}',
                  mb_addr1 = '{$_POST['mb_addr1']}',

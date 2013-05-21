@@ -81,7 +81,7 @@ if ($w == 'c') // 댓글 입력
                     where wr_id = '$comment_id' ";
         $reply_array = sql_fetch($sql);
         if (!$reply_array['wr_id'])
-            alert('답변할 댓글가 없습니다.\\n\\n답변하는 동안 댓글가 삭제되었을 수 있습니다.');
+            alert('답변할 댓글이 없습니다.\\n\\n답변하는 동안 댓글이 삭제되었을 수 있습니다.');
 
         $tmp_comment = $reply_array['wr_comment'];
 

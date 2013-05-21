@@ -37,7 +37,7 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
             if ($cur_page != $k)
                 $str .= '<a href="'.$url.$k.$add.'" class="pg_page">'.$k.'</a><span class="sound_only">페이지</span>'.PHP_EOL;
             else
-                $str .= '<span class="sound_only">선택된</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span>'.PHP_EOL;
+                $str .= '<span class="sound_only">열린</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span>'.PHP_EOL;
         }
     }
 
@@ -48,7 +48,7 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
     }
 
     if ($str)
-        return "<div class=\"pg_wrap\"><span class=\"pg\">{$str}</span></div>";
+        return "<nav class=\"pg_wrap\"><span class=\"pg\">{$str}</span></nav>";
     else
         return "";
 }
@@ -982,7 +982,8 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $tmp_name = "";
     if ($mb_id) {
-        $tmp_name = "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
+        //$tmp_name = "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
+        $tmp_name = '<a href="'.G4_BBS_URL.'/profile.php?mb_id='.$mb_id.'" class="sv_member" title="'.$name.' 자기소개" target="_blank" onclick="return false;">';
 
         if ($config['cf_use_member_icon']) {
             $mb_dir = substr($mb_id,0,2);
@@ -992,19 +993,22 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
                 $icon_file_url = G4_DATA_URL.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
-                $tmp_name = '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt="">';
+                $tmp_name .= '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt="">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
-                    $tmp_name = $tmp_name . " <a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
+                    $tmp_name = $tmp_name.' '.$name;
             }
+        } else {
+            $tmp_name = $tmp_name.' '.$name;
         }
+        $tmp_name .= '</a>';
 
         $title_mb_id = '['.$mb_id.']';
     } else {
         if(!$bo_table)
             return $name;
 
-        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\" title=\"$name 이름으로 검색\"class=\"sv_guest\" onclick=\"return false;\">$name</a>";
+        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\" title=\"$name 이름으로 검색\" class=\"sv_guest\" onclick=\"return false;\">$name</a>";
         $title_mb_id = '[비회원]';
     }
 
@@ -1029,7 +1033,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
             if($mb_id)
                 $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
             else
-                $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&stx=".$name."\">이름으로 검색</a>\n";
+                $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\">이름으로 검색</a>\n";
         }
         if($mb_id)
             $str2 .= "<a href=\"".G4_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
@@ -1933,18 +1937,17 @@ if (!function_exists('file_put_contents')) {
 // HTML 마지막 처리
 function html_end()
 {
-    global $g4;
+    global $config, $g4, $member;
 
     // 현재접속자 처리
     $tmp_sql = " select count(*) as cnt from {$g4['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
     $tmp_row = sql_fetch($tmp_sql);
 
-    //sql_query(" lock table $g4['login_table'] write ", false);
     if ($tmp_row['cnt']) {
-        $tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G4_TIME_YMDHIS."', lo_location = '$lo_location', lo_url = '$lo_url' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G4_TIME_YMDHIS."', lo_location = '{$g4['lo_location']}', lo_url = '{$g4['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($tmp_sql, FALSE);
     } else {
-        $tmp_sql = " insert into {$g4['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G4_TIME_YMDHIS."', '$lo_location',  '$lo_url' ) ";
+        $tmp_sql = " insert into {$g4['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G4_TIME_YMDHIS."', '{$g4['lo_location']}',  '{$g4['lo_url']}' ) ";
         sql_query($tmp_sql, FALSE);
 
         // 시간이 지난 접속은 삭제한다
@@ -1967,7 +1970,7 @@ function html_end()
         $stylesheet .= $link;
         $buffer = preg_replace('#'.$link.'#', '', $buffer);
     }
-    /* 
+    /*
     </title>
     <link rel="stylesheet" href="default.css">
     밑으로 스킨의 스타일시트가 위치하도록 하게 한다.
@@ -1979,14 +1982,61 @@ function html_end()
 // 휴대폰번호의 숫자만 취한 후 중간에 하이픈(-)을 넣는다.
 function hyphen_hp_number($hp)
 {
-    $hp = preg_replace("/[^0-9]/", "", $hp); 
+    $hp = preg_replace("/[^0-9]/", "", $hp);
     return preg_replace("/([0-9]{3})([0-9]{3,4})([0-9]{4})$/", "\\1-\\2-\\3", $hp);
 }
 
 
-// 휴대폰 본인확인을 받은 회원인지를 가린다.
-function hp_certify($member)
+// 로그인 후 이동할 URL
+function login_url($url='')
 {
-    return substr($member['mb_hp_certify'],0,1) == '0' ? 'N' : 'Y';
+    if (!$url) $url = G4_URL;
+    /*
+    $p = parse_url($url);
+    echo urlencode($_SERVER['REQUEST_URI']);
+    return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
+    */
+    return $url;
+}
+
+
+// $dir 을 포함하여 https 또는 http 주소를 반환한다.
+function https_url($dir, $https=true)
+{
+    if ($https) {
+        if (G4_HTTPS_DOMAIN) {
+            $url = G4_HTTPS_DOMAIN.'/'.$dir;
+        } else {
+            $url = G4_URL.'/'.$dir;
+        }
+    } else {
+        if (G4_DOMAIN) {
+            $url = G4_DOMAIN.'/'.$dir;
+        } else {
+            $url = G4_URL.'/'.$dir;
+        }
+    }
+
+    return $url;
+}
+
+
+// 게시판의 공지사항을 , 로 구분하여 업데이트 한다.
+function board_notice($bo_notice, $wr_id, $insert=false)
+{
+    $notice_array = explode(",", trim($bo_notice));
+    $notice_array = array_merge(array($wr_id), $notice_array);
+    $notice_array = array_unique($notice_array);
+    foreach ($notice_array as $key=>$value) {
+        if (!trim($value))
+            unset($notice_array[$key]);
+    }
+    if (!$insert) {
+        foreach ($notice_array as $key=>$value) {
+            if ((int)$value == (int)$wr_id)
+                unset($notice_array[$key]);
+        }
+    }
+    return implode(",", $notice_array);
 }
 ?>

@@ -7,6 +7,9 @@ include_once(G4_LIB_PATH.'/register.lib.php');
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
 
+set_session("ss_kcpcert_no", "");
+set_session("ss_kcpcert_hash", "");
+
 if ($w == "") {
 
     // 회원 로그인을 한 경우 회원가입 할 수 없다
@@ -74,6 +77,9 @@ if ($w == "") {
 
     $g4['title'] = '회원 정보 수정';
 
+    set_session("ss_reg_mb_name", $member['mb_name']);
+    set_session("ss_reg_mb_hp", $member['mb_hp']);
+
     $member['mb_email']       = get_text($member['mb_email']);
     $member['mb_homepage']    = get_text($member['mb_homepage']);
     $member['mb_password_q']  = get_text($member['mb_password_q']);
@@ -103,7 +109,8 @@ if ($w == "") {
 include_once('./_head.php');
 
 // 회원아이콘 경로
-$mb_icon = G4_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
+$mb_icon_path = G4_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
+$mb_icon_url  = G4_DATA_URL.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
 
 $register_action_url = G4_HTTPS_BBS_URL.'/register_form_update.php';
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400)));

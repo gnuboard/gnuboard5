@@ -11,17 +11,9 @@
 #bo_cate a:active {text-decoration:none}
 #bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
 
-.bo_list table {margin-bottom:1.5em;width:100%;border-collapse:collapse;border-spacing:0}
-
-.bo_list th {}
-.bo_list th a {color:#fff;text-decoration:none}
-
-.bo_list td {border-bottom:1px solid #ddd}
-
-.bo_list img {margin-right:4px}
-.bo_list img:nth-last-of-type(1) {margin-right:0}
-
 /* 관리자일 때 */
+#bo_list_admin th label {position:absolute;font-size:0;line-height:0;overflow:hidden}
+
 #bo_list_admin th:nth-of-type(1) {width:40px}
 #bo_list_admin th:nth-of-type(3) {width:100px}
 
@@ -58,7 +50,7 @@
 
 #bo_v_cate {padding:0 1em;color:#999;font-size:0.9em;font-weight:bold}
 
-#bo_v_h1 {padding:0 0.7em 0.5em;font-size:1.2em}
+#bo_v_title {padding:0 0.7em 0.5em;font-size:1.2em}
 
 #bo_v_info {padding:0 0.9em 1em;border-bottom:1px solid #ddd}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
@@ -69,26 +61,22 @@
 #bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
 #bo_v_file li {padding:0 1em;border-bottom:1px solid #eee;background:#f7f7f7}
-#bo_v_file a {display:inline-block;padding:0.5em 0;color:#000}
-#bo_v_file a:focus,
-#bo_v_file a:hover,
-#bo_v_file a:active {text-decoration:none}
+#bo_v_file a {display:inline-block;padding:0.5em 0;color:#000;text-decoration:none}
+#bo_v_file a:focus, #bo_v_file a:hover, #bo_v_file a:active {text-decoration:none}
 .bo_v_file_cnt {display:inline-block;margin:0 1em}
 
 #bo_v_link {}
 #bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
 #bo_v_link li {padding:0 1em;border-bottom:1px solid #eee;background:#f7f7f7}
-#bo_v_link a {display:inline-block;padding:0.5em 0;color:#000}
-#bo_v_link a:focus,
-#bo_v_link a:hover,
-#bo_v_link a:active {text-decoration:none}
+#bo_v_link a {display:inline-block;padding:0.5em 0;color:#000;text-decoration:none}
+#bo_v_link a:focus, #bo_v_link a:hover, #bo_v_link a:active {text-decoration:none}
 .bo_v_link_cnt {display:inline-block;margin:0 1em}
 
 #bo_v_top {margin:0 0 1em;padding:1em}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
-#bo_v_top ul {list-style:none}
+#bo_v_top ul {margin:0;padding:0;list-style:none}
 
 #bo_v_bot {padding:0 1em}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
@@ -101,7 +89,7 @@
 .bo_v_com li {float:left;margin-left:0.3em}
 
 #bo_v_atc {min-height:200px;padding:0 1em;min-height:200px}
-#bo_v_atc h1 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_atc_title {margin:0;padding:0;height:0;overflow:hidden}
 
 #bo_v_img {margin:0 0 1em;width:100%;overflow:hidden:zoom:1}
 #bo_v_img:after {display:block;visibility:hidden;clear:both;content:""}
@@ -115,8 +103,7 @@
 #bo_v_act a {margin-right:0.3em;vertical-align:top}
 #bo_v_act span {display:inline-block;margin-right:0.3em;padding:0 1em;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2em;vertical-align:top}
 #bo_v_act strong {color:#ff3061}
-#bo_v_act_good,
-#bo_v_act_nogood {display:inline-block;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+#bo_v_act_good, #bo_v_act_nogood {display:inline-block;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 
 #bo_v form {padding-top:1.5em}
 
@@ -126,8 +113,7 @@
 #bo_vc article {padding:0 0 0.5em;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:1.3em 0 0.3em}
 #bo_vc header .icon_reply {position:absolute;top:1.5em;left:-1.3em}
-#bo_vc .sv_member,
-#bo_vc .sv_guest {font-weight:bold}
+#bo_vc .sv_member, #bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo {display:inline-block;margin:0 1em 0 0.3em}
 #bo_vc h1 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 #bo_vc a {color:#000;text-decoration:none}

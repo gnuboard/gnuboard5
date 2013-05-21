@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="scrap_do" class="new_win">
-    <h1>스크랩하기</h1>
+    <h1 id="new_win_title">스크랩하기</h1>
 
     <form name="f_scrap_popin" action="./scrap_popin_update.php" method="post">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">

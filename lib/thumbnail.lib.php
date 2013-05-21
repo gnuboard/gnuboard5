@@ -3,11 +3,6 @@ if (!defined('_GNUBOARD_')) exit;
 
 @ini_set('memory_limit', '512M');
 
-function it_img_thumb($filename, $filepath, $thumb_width, $thumb_height, $is_create=false)
-{
-    return thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create);
-}
-
 // 게시글리스트 썸네일 생성
 function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=true, $crop_mode='center', $is_sharpen=true, $um_value='80/0.5/3')
 {
@@ -184,7 +179,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     // Animated GIF는 썸네일 생성하지 않음
     if($size[2] == 1) {
         if(is_animated_gif($source_file))
-            return;
+            return basename($source_file);
     }
 
     $thumb_time = @filemtime($thumb_file);
@@ -258,12 +253,6 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
                         $src_w = round($size[1] / $ratio);
                     }
                     break;
-            }
-        } else {
-            if($size[1] / $size[0] >= $ratio) {
-                $src_h = round($src_w * $ratio);
-            } else {
-                $src_w = round($size[1] / $ratio);
             }
         }
 

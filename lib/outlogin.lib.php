@@ -34,29 +34,7 @@ function outlogin($skin_dir='basic')
             $is_auth = true;
     }
 
-    if (G4_HTTPS_DOMAIN) {
-        $outlogin_url = $_GET['url'];
-        if ($outlogin_url) {
-            if (preg_match("/^\.\.\//", $outlogin_url)) {
-                $outlogin_url = urlencode(G4_URL."/".preg_replace("/^\.\.\//", "", $outlogin_url));
-            }
-            else {
-                $purl = parse_url(G4_URL);
-                if ($purl['path']) {
-                    $path = urlencode($purl['path']);
-                    $urlencode = preg_replace("/".$path."/", "", $urlencode);
-                }
-                $outlogin_url = $urlencode;
-            }
-        }
-        else {
-            $outlogin_url = G4_URL;
-        }
-    }
-    else {
-        $outlogin_url = $urlencode;
-    }
-
+    $outlogin_url        = login_url();
     $outlogin_action_url = G4_HTTPS_BBS_URL.'/login_check.php';
 
     ob_start();

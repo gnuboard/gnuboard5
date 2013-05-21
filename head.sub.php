@@ -15,11 +15,11 @@ else {
 
 // 현재 접속자
 // 게시판 제목에 ' 포함되면 오류 발생
-$lo_location = addslashes($g4['title']);
-if (!$lo_location)
-    $lo_location = $_SERVER['REQUEST_URI'];
-$lo_url = $_SERVER['REQUEST_URI'];
-if (strstr($lo_url, '/'.G4_ADMIN_DIR.'/') || $is_admin == 'super') $lo_url = '';
+$g4['lo_location'] = addslashes($g4['title']);
+if (!$g4['lo_location'])
+    $g4['lo_location'] = $_SERVER['REQUEST_URI'];
+$g4['lo_url'] = $_SERVER['REQUEST_URI'];
+if (strstr($g4['lo_url'], '/'.G4_ADMIN_DIR.'/') || $is_admin == 'super') $g4['lo_url'] = '';
 
 /*
 // 만료된 페이지로 사용하시는 경우
@@ -40,7 +40,7 @@ if (G4_IS_MOBILE) {
 }
 ?>
 <title><?php echo $g4_head_title; ?></title>
-<?php 
+<?php
 if (defined('G4_IS_ADMIN')) {
     echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/admin.css">'.PHP_EOL;
 } else {
@@ -62,21 +62,22 @@ var g4_is_mobile = "<?php echo G4_IS_MOBILE ?>";
 var g4_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
 var g4_sca       = "<?php echo isset($sca)?$sca:''; ?>";
 var g4_cookie_domain = "<?php echo G4_COOKIE_DOMAIN ?>";
-<?php 
+<?php
 if ($is_admin) {
-    echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'.PHP_EOL; 
-} 
+    echo 'var g4_admin_url = "'.G4_ADMIN_URL.'";'.PHP_EOL;
+}
 ?>
 </script>
 <script src="<?php echo G4_JS_URL ?>/jquery-1.8.3.min.js"></script>
 <script src="<?php echo G4_JS_URL ?>/jquery.menu.js"></script>
 <script src="<?php echo G4_JS_URL ?>/common.js"></script>
 <script src="<?php echo G4_JS_URL ?>/wrest.js"></script>
-<?php 
+<?php
 if(G4_IS_MOBILE) {
     echo '<script> set_cookie("device_width", screen.width, 6, g4_cookie_domain); </script>'.PHP_EOL;
 }
-echo $config['cf_add_script'];  
+if(!defined('G4_IS_ADMIN'))
+    echo $config['cf_add_script'];
 ?>
 </head>
 <body>

@@ -5,21 +5,24 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<div id="bo_v" style="width:<?php echo $width; ?>">
+<div id="bo_v_table"><?php echo $board['bo_subject']; ?></div>
 
-    <p id="bo_v_cate">
-        <?php echo $board['bo_subject'] ?>
-        <?php if ($category_name) { // 분류가 지정되었다면 ?><?php echo ($category_name ? "{$view['ca_name']} " : ""); ?><?php } // 분류 출력 끝 ?>
-    </p>
-
-    <h1 id="bo_v_h1"><?php echo cut_str(get_text($view['wr_subject']), 70) // 글제목 출력 ?></h1>
+<article id="bo_v" style="width:<?php echo $width; ?>">
+    <header>
+        <h1 id="bo_v_title">
+            <?php
+            if ($category_name) echo ($category_name ? $view['ca_name'].' | ' : ''); // 분류 출력 끝
+            echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력
+            ?>
+        </h1>
+    </header>
 
     <section id="bo_v_info">
-        <h2>게시물 정보</h2>
-        작성자 <strong><?php echo $view['wr_name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong><br>
-        작성일 <strong><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong><br>
-        조회 <strong><?php echo number_format($view['wr_hit']) ?>회</strong><br>
-        댓글 <strong><?php echo number_format($view['wr_comment']) ?>건</strong>
+        <h2>페이지 정보</h2>
+        작성자 <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
+        <span class="sound_only">작성일</span><strong><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong>
+        조회<strong><?php echo number_format($view['wr_hit']) ?>회</strong>
+        댓글<strong><?php echo number_format($view['wr_comment']) ?>건</strong>
     </section>
 
     <?php
@@ -30,7 +33,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
                 $cnt++;
         }
     }
-    ?>
+     ?>
 
     <?php if($cnt) { ?>
     <section id="bo_v_file">
@@ -40,12 +43,12 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         // 가변 파일
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
-        ?>
+         ?>
             <li>
-                <a href="<?php echo $view['file'][$i]['href']; ?>" class="view_file_download">
-                    <img src="<?php echo $board_skin_url ?>/img/icon_file.gif" alt="첨부파일">
+                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download">
+                    <img src="<?php echo $board_skin_url ?>/img/icon_file.gif" alt="첨부">
                     <strong><?php echo $view['file'][$i]['source'] ?></strong>
-                    <span> (<?php echo $view['file'][$i]['size'] ?>)</span>
+                    <?php echo $view['file'][$i]['bf_content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
                 </a>
                 <span class="bo_v_file_cnt"><?php echo $view['file'][$i]['download'] ?>회 다운로드</span>
                 <span>DATE : <?php echo $view['file'][$i]['datetime'] ?></span>
@@ -53,14 +56,14 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <?php
             }
         }
-        ?>
+         ?>
         </ul>
     </section>
     <?php } ?>
 
     <?php
     if (implode('', $view['link'])) {
-    ?>
+     ?>
     <section id="bo_v_link">
         <h2>관련링크</h2>
         <ul>
@@ -71,7 +74,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             if ($view['link'][$i]) {
                 $cnt++;
                 $link = cut_str($view['link'][$i], 70);
-        ?>
+         ?>
             <li>
                 <a href="<?php echo $view['link_href'][$i] ?>" target="_blank">
                     <img src="<?php echo $board_skin_url ?>/img/icon_link.gif" alt="관련링크">
@@ -82,16 +85,15 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <?php
             }
         }
-        ?>
+         ?>
         </ul>
     </section>
     <?php } ?>
 
-    <nav id="bo_v_top">
-        <h2>게시물 상단 버튼</h2>
+    <div id="bo_v_top">
         <?php
         ob_start();
-        ?>
+         ?>
         <?php if ($prev_href || $next_href) { ?>
         <ul class="bo_v_nb">
             <?php if ($prev_href) { ?><li><a href="<?php echo $prev_href ?>" class="btn_b01">이전글</a></li><?php } ?>
@@ -112,13 +114,11 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <?php
         $link_buttons = ob_get_contents();
         ob_end_flush();
-        ?>
-    </nav>
+         ?>
+    </div>
 
-    <article id="bo_v_atc">
-        <header>
-            <h1>본문</h1>
-        </header>
+    <section id="bo_v_atc">
+        <h2 id="bo_v_atc_title">본문</h2>
 
         <?php
         // 파일 출력
@@ -135,7 +135,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
             echo "</div>\n";
         }
-        ?>
+         ?>
 
         <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
         <?php//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
@@ -145,7 +145,6 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <?php if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
             <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href; ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><?php } ?>
-
             <?php if ($good_href) { ?>
             <a href="<?php echo $good_href.'&amp;'.$qstr ?>" id="good_button" class="btn_b01">추천 <strong><?php echo number_format($view['wr_good']) ?></strong></a>
             <b id="bo_v_act_good"></b>
@@ -166,23 +165,19 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             }
         }
         ?>
-    </article>
+    </section>
 
     <?php
     // 코멘트 입출력
     include_once('./view_comment.php');
-    ?>
+     ?>
 
-    <nav id="bo_v_bot">
-        <h2>게시물 하단 버튼</h2>
-
+    <div id="bo_v_bot">
         <!-- 링크 버튼 -->
         <?php echo $link_buttons ?>
-    </nav>
+    </div>
 
-</div>
-
-
+</article>
 
 <script>
 <?php if ($board['bo_download_point'] < 0) { ?>
@@ -211,14 +206,9 @@ function board_move(href)
 <!-- 게시글 보기 끝 -->
 
 <script>
-// 이미지 등비율 리사이징
-$(window).load(function() {
-    view_image_resize();
-});
-
 $(function() {
     $("a.view_image").click(function() {
-        window.open(this.href, "large_image", "top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
+        window.open(this.href, "large_image", "location=yes,links=no,toolbar=no,top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
         return false;
     });
 
@@ -234,22 +224,6 @@ $(function() {
         return false;
     });
 });
-
-function view_image_resize()
-{
-    var $img = $("#bo_v_atc img");
-    var img_wrap = $("#bo_v_atc").width();
-
-    $img.each(function() {
-        var img_width = $(this).width();
-        $(this).data("width", img_width); // 원래 이미지 사이즈
-        if (img_width > img_wrap) {
-            $(this).addClass("img_fix");
-        } else if (img_width <= img_wrap && img_width >= $(this).data("width")) {
-            $(this).removeClass("img_fix");
-        }
-    });
-}
 
 function excute_good(href, $el, $tx)
 {
