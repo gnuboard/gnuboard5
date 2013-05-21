@@ -478,6 +478,7 @@ if($shop_install) {
     fwrite($f, "\$g4['shop_faq_table'] = SHOP_TABLE_PREFIX.'faq'; // 자주하시는 질문 테이블\n");
     fwrite($f, "\$g4['shop_faq_master_table'] = SHOP_TABLE_PREFIX.'faq_master'; // 자주하시는 질문 마스터 테이블\n");
     fwrite($f, "\$g4['shop_item_table'] = SHOP_TABLE_PREFIX.'item'; // 상품 테이블\n");
+    fwrite($f, "\$g4['shop_item_option_table'] = SHOP_TABLE_PREFIX.'item_option'; // 상품옵션 테이블\n");
     fwrite($f, "\$g4['shop_item_ps_table'] = SHOP_TABLE_PREFIX.'item_ps'; // 상품 사용후기 테이블\n");
     fwrite($f, "\$g4['shop_item_qa_table'] = SHOP_TABLE_PREFIX.'item_qa'; // 상품 질문답변 테이블\n");
     fwrite($f, "\$g4['shop_item_relation_table'] = SHOP_TABLE_PREFIX.'item_relation'; // 관련 상품 테이블\n");

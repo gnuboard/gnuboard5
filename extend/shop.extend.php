@@ -62,6 +62,27 @@ if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
                 ) ", false);
 }
 
+// 상품옵션 테이블 생성
+if(!sql_query(" select io_id from {$g4['shop_item_option_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_item_option_table']}` (
+                    `io_no` INT(11) NOT NULL AUTO_INCREMENT,
+                    `io_id` VARCHAR(255) NOT NULL DEFAULT '',
+                    `io_type` TINYINT(4) NOT NULL DEFAULT '0',
+                    `it_id` VARCHAR(20) NOT NULL DEFAULT '',
+                    `io_price` INT(11) NOT NULL DEFAULT '0',
+                    `io_stock_qty` INT(11) NOT NULL DEFAULT '0',
+                    `io_noti_qty` INT(11) NOT NULL DEFAULT '0',
+                    `io_use` TINYINT(4) NOT NULL DEFAULT '0',
+                    PRIMARY KEY (`io_no`),
+                    KEY `io_id` (`io_id`),
+                    KEY `it_id` (`it_id`)
+                ) ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_option_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
+                    ADD `it_option` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_option_subject`,
+                    ADD `it_supply_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_option` ", false);
+}
+
 // uq_id 필드추가
 $sql = " select uq_id from {$g4['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
@@ -95,6 +116,17 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
                     ADD `od_mobile` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_time` ", false);
 }
+
+// it_brand 추가
+/*
+$sql = " select it_brand from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_brand` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
+                    ADD `it_model` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_brand` ", false);
+}
+*/
 
 //==============================================================================
 // 쇼핑몰 필수 실행코드 모음 끝
