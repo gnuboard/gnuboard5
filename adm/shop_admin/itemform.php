@@ -338,6 +338,129 @@ $pg_anchor ='<ul class="anchor">
             <label for="chk_all_it_origin">전체적용</label>
         </td>
     </tr>
+    <?php
+    $opt_subject = explode(',', $it['it_option_subject']);
+    ?>
+    <tr>
+        <th scope="row">상품선택옵션</th>
+        <td colspan="2">
+            <table class="frm_tbl">
+            <tbody>
+            <tr>
+                <th>옵션명</th>
+                <th>옵션항목(,로 구분)</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="opt1_subject" name="opt1_subject" value="<?php echo $opt_subject[0]; ?>" class="frm_input" size="15" /></td>
+                <td><input type="text" id="opt1" name="opt1" value="" class="frm_input" size="50" /></td>
+                <td rowspan="3"><button type="button" id="option_table_create">옵션목록생성</button></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="opt2_subject" name="opt2_subject" value="<?php echo $opt_subject[1]; ?>" class="frm_input" size="15" /></td>
+                <td><input type="text" id="opt2" name="opt2" value="" class="frm_input" size="50" /></td>
+            </tr>
+             <tr>
+                <td><input type="text" id="opt3_subject" name="opt3_subject" value="<?php echo $opt_subject[2]; ?>" class="frm_input" size="15" /></td>
+                <td><input type="text" id="opt3" name="opt3" value="" class="frm_input" size="50" /></td>
+            </tr>
+            </tbody>
+            </table>
+            <div id="option_table"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemoption.php'); ?></div>
+        </td>
+    </tr>
+    <script>
+    $(function() {
+        <?php if($it['it_id'] && $po_run) { ?>
+        //옵션항목설정
+        var arr_opt1 = new Array();
+        var arr_opt2 = new Array();
+        var arr_opt3 = new Array();
+        var opt1 = opt2 = opt3 = '';
+
+        $(".opt1-cell").each(function() {
+            opt1 = $(this).text();
+            if(opt1 && $.inArray(opt1, arr_opt1) == -1)
+                arr_opt1.push(opt1);
+        });
+
+        $(".opt2-cell").each(function() {
+            opt2 = $(this).text();
+            if(opt2 && $.inArray(opt2, arr_opt2) == -1)
+                arr_opt2.push(opt2);
+        });
+
+        $(".opt3-cell").each(function() {
+            opt3 = $(this).text();
+            if(opt3 && $.inArray(opt3, arr_opt3) == -1)
+                arr_opt3.push(opt3);
+        });
+
+        $("input[name=opt1]").val(arr_opt1.join());
+        $("input[name=opt2]").val(arr_opt2.join());
+        $("input[name=opt3]").val(arr_opt3.join());
+        <?php } ?>
+        // 옵션목록생성
+        $("#option_table_create").click(function() {
+            var opt1_subject = $.trim($("#opt1_subject").val());
+            var opt2_subject = $.trim($("#opt2_subject").val());
+            var opt3_subject = $.trim($("#opt3_subject").val());
+            var opt1 = $.trim($("#opt1").val());
+            var opt2 = $.trim($("#opt2").val());
+            var opt3 = $.trim($("#opt3").val());
+            var $option_table = $("#option_table");
+
+            if(!opt1_subject || !opt1) {
+                alert("옵션명과 옵션항목을 입력해 주십시오.");
+                return false;
+            }
+
+            $.post(
+                "<?php echo G4_ADMIN_URL; ?>/shop_admin/itemoption.php",
+                { opt1_subject: opt1_subject, opt2_subject: opt2_subject, opt3_subject: opt3_subject, opt1: opt1, opt2: opt2, opt3: opt3 },
+                function(data) {
+                    $option_table.removeClass("a");
+                    $option_table.empty().html(data);
+                    if($option_table.height() > 500) {
+                        $option_table.addClass("a");
+                    }
+                }
+            );
+        });
+
+        // 모두선택
+        $("input[name=opt_chk_all]").live("click", function() {
+            if($(this).is(":checked")) {
+                $("input[name='opt_chk[]']").attr("checked", true);
+            } else {
+                $("input[name='opt_chk[]']").attr("checked", false);
+            }
+        });
+
+        // 선택삭제
+        $("#sel_option_delete").live("click", function() {
+            var $el = $("input[name='opt_chk[]']:checked");
+            if($el.size() < 1) {
+                alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
+                return false;
+            }
+
+            $el.closest("tr").remove();
+        });
+
+        // 일괄적용
+        $("#opt_value_apply").live("click", function() {
+            var opt_price = $.trim($("#opt_com_price").val());
+            var opt_stock = $.trim($("#opt_com_stock").val());
+            var opt_noti = $.trim($("#opt_com_noti").val());
+            var opt_use = $("#opt_com_use").val();
+
+            $("input[name='opt_price[]']").val(opt_price);
+            $("input[name='opt_stock_qty[]']").val(opt_stock);
+            $("input[name='opt_noti_qty[]']").val(opt_noti);
+            $("select[name='opt_use[]']").val(opt_use);
+        });
+    });
+    </script>
     <tr>
         <th scope="row"><label for="it_basic">기본설명</label></th>
         <td>
@@ -1058,12 +1181,6 @@ function categorychange(f)
         //f.it_explan_html[ca_explan_html[idx]].checked = true;
         f.it_stock_qty.value = ca_stock_qty[idx];
         f.it_sell_email.value = ca_sell_email[idx];
-        f.it_opt1_subject.value = ca_opt1_subject[idx];
-        f.it_opt2_subject.value = ca_opt2_subject[idx];
-        f.it_opt3_subject.value = ca_opt3_subject[idx];
-        f.it_opt4_subject.value = ca_opt4_subject[idx];
-        f.it_opt5_subject.value = ca_opt5_subject[idx];
-        f.it_opt6_subject.value = ca_opt6_subject[idx];
     }
 }
 

@@ -289,6 +289,33 @@ sql_query(" delete from {$g4['shop_item_relation_table']} where it_id2 = '$it_id
 // 이벤트상품을 우선 삭제함
 sql_query(" delete from {$g4['shop_event_item_table']} where it_id = '$it_id' ");
 
+// 선택옵션
+sql_query(" delete from {$g4['shop_item_option_table']} where io_type = '0' and it_id = '$it_id' "); // 기존선택옵션삭제
+
+$option_count = count($_POST['opt_id']);
+if($option_count) {
+    // 실재하는 1차 옵션항목
+    $arr_opt1 = array();
+    $opt2_cnt = $opt3_cnt = 0;
+    for($i=0; $i<$option_count; $i++) {
+        $opt_val = explode(chr(30), $_POST['opt_id'][$i]);
+        if(!in_array($opt_val[0], $arr_opt1))
+            $arr_opt1[] = $opt_val[0];
+        if($opt_val[1])
+            $opt2_cnt++;
+        if($opt_val[2])
+            $opt3_cnt++;
+    }
+
+    $it_option_subject = $opt1_subject;
+    if($opt2_subject && $opt2_cnt)
+        $it_option_subject .= ','.$opt2_subject;
+    if($opt3_subject && $opt3_cnt)
+        $it_option_subject .= ','.$opt3_subject;
+
+    $it_option = implode(',', $arr_opt1);
+}
+
 // 상품요약정보
 $value_array = array();
 for($i=0; $i<count($_POST['ii_article']); $i++) {
@@ -420,6 +447,19 @@ if ($w == "" || $w == "u")
             sql_query($sql, false);
         }
     }
+}
+
+// 선택옵션등록
+for($i=0; $i<$option_count; $i++) {
+    $sql = " insert into {$g4['shop_item_option_table']}
+                set io_id           = '{$_POST['opt_id'][$i]}',
+                    io_type         = '0',
+                    it_id           = '$it_id',
+                    io_price        = '{$_POST['opt_price'][$i]}',
+                    io_stock_qty    = '{$_POST['opt_stock_qty'][$i]}',
+                    io_noti_qty     = '{$_POST['opt_noti_qty'][$i]}',
+                    io_use          = '{$_POST['opt_use'][$i]}' ";
+    sql_query($sql);
 }
 
 // 동일 분류내 상품 동일 옵션 적용
