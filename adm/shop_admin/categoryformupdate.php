@@ -57,12 +57,6 @@ if ($ca_timg_del)   @unlink("{$g4['category_path']}/{$ca_id}_t");
 
 $sql_common = " ca_skin                 = '$ca_skin',
                 ca_mobile_skin          = '$ca_mobile_skin',
-                ca_opt1_subject         = '$ca_opt1_subject',
-                ca_opt2_subject         = '$ca_opt2_subject',
-                ca_opt3_subject         = '$ca_opt3_subject',
-                ca_opt4_subject         = '$ca_opt4_subject',
-                ca_opt5_subject         = '$ca_opt5_subject',
-                ca_opt6_subject         = '$ca_opt6_subject',
                 ca_img_width            = '$ca_img_width',
                 ca_img_height           = '$ca_img_height',
 				ca_list_mod             = '$ca_list_mod',

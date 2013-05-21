@@ -242,48 +242,6 @@ $pg_anchor .= '</ul>';
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ca_opt1_subject">옵션 제목 1</label></th>
-        <td>
-            <?php echo help("제조사, 원산지 이외 옵션을 사용하실 수 있습니다.\n이곳에 입력한 옵션 제목은 상품입력 시 옵션 제목1 로 기본입력됩니다."); ?>
-            <input type="text" name="ca_opt1_subject" value="<?php echo $ca['ca_opt1_subject']; ?>" id="ca_opt1_subject" class="frm_input">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="ca_opt2_subject">옵션 제목 2</label></th>
-        <td>
-            <?php echo help("제조사, 원산지 이외 옵션을 사용하실 수 있습니다.\n이곳에 입력한 옵션 제목은 상품입력 시 옵션 제목2 로 기본입력됩니다."); ?>
-            <input type="text" name="ca_opt2_subject" value="<?php echo $ca['ca_opt2_subject']; ?>" id="ca_opt2_subject" class="frm_input">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="ca_opt3_subject">옵션 제목 3</label></th>
-        <td>
-            <?php echo help("제조사, 원산지 이외 옵션을 사용하실 수 있습니다.\n이곳에 입력한 옵션 제목은 상품입력 시 옵션 제목3 으로 기본입력됩니다."); ?>
-            <input type="text" name="ca_opt3_subject" value="<?php echo $ca['ca_opt3_subject']; ?>" id="ca_opt3_subject" class="frm_input">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="ca_opt4_subject">옵션 제목 4</label></th>
-        <td>
-            <?php echo help("제조사, 원산지 이외 옵션을 사용하실 수 있습니다.\n이곳에 입력한 옵션 제목은 상품입력 시 옵션 제목4 로 기본입력됩니다."); ?>
-            <input type="text" name="ca_opt4_subject" value="<?php echo $ca['ca_opt4_subject']; ?>" id="ca_opt4_subject" class="frm_input">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="ca_opt5_subject">옵션 제목 5</label></th>
-        <td>
-            <?php echo help("제조사, 원산지 이외 옵션을 사용하실 수 있습니다.\n이곳에 입력한 옵션 제목은 상품입력 시 옵션 제목5 로 기본입력됩니다."); ?>
-            <input type="text" name="ca_opt5_subject" value="<?php echo $ca['ca_opt5_subject']; ?>" id="ca_opt5_subject" class="frm_input">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="ca_opt6_subject">옵션 제목 6</label></th>
-        <td>
-            <?php echo help("제조사, 원산지 이외 옵션을 사용하실 수 있습니다.\n이곳에 입력한 옵션 제목은 상품입력 시 옵션 제목6 으로 기본입력됩니다."); ?>
-            <input type="text" name="ca_opt6_subject" value="<?php echo $ca['ca_opt6_subject']; ?>" id="ca_opt6_subject" class="frm_input">
-        </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="ca_stock_qty">재고수량</label></th>
         <td>
             <?php echo help("상품의 기본재고 수량을 설정합니다.\n재고를 사용하지 않는다면 숫자를 크게 입력하여 주십시오. 예) 999999"); ?>
