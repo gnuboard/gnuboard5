@@ -207,13 +207,6 @@ function point_clear()
     </tbody>
     </table>
 
-    <fieldset id="admin_confirm">
-        <legend>XSS 혹은 CSRF 방지</legend>
-        <p>관리자 권한을 탈취당하는 경우를 대비하여 패스워드를 다시 한번 확인합니다.</p>
-        <label for="admin_password">관리자패스워드<strong class="sound_only">필수</strong></label>
-        <input type="password" name="admin_password" id="admin_password" required class="required frm_input">
-    </fieldset>
-
     <div class="btn_confirm">
         <input type="submit" value="확인" class="btn_submit">
     </div>

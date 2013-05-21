@@ -331,7 +331,7 @@ fieldset button:focus, .fieldset_submit:focus {padding:0 15px;height:23px;border
 .adm_field_explain {display:block;padding:0 0 5px;color:#5b747e}
 
 /* 목록 바로가기 */
-.anchor {margin:0 0 10px;padding:0;zoom:1}
+.anchor {margin:0 0 10px 1px;padding:0;zoom:1}
 .anchor:after {display:block;visibility:hidden;clear:both;content:""}
 .anchor li {float:left;margin-left:-1px;list-style:none}
 .anchor a {display:inline-block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;text-decoration:none;line-height:2.6em}
