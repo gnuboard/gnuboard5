@@ -399,21 +399,20 @@ $pg_anchor ='<ul class="anchor">
         var arr_opt2 = new Array();
         var arr_opt3 = new Array();
         var opt1 = opt2 = opt3 = '';
+        var opt_val;
 
-        $(".opt1-cell").each(function() {
-            opt1 = $(this).text();
+        $(".opt-cell").each(function() {
+            opt_val = $(this).text().split(" > ");
+            opt1 = opt_val[0];
+            opt2 = opt_val[1];
+            opt3 = opt_val[2];
+
             if(opt1 && $.inArray(opt1, arr_opt1) == -1)
                 arr_opt1.push(opt1);
-        });
 
-        $(".opt2-cell").each(function() {
-            opt2 = $(this).text();
             if(opt2 && $.inArray(opt2, arr_opt2) == -1)
                 arr_opt2.push(opt2);
-        });
 
-        $(".opt3-cell").each(function() {
-            opt3 = $(this).text();
             if(opt3 && $.inArray(opt3, arr_opt3) == -1)
                 arr_opt3.push(opt3);
         });
