@@ -420,9 +420,6 @@ $pg_anchor ='<ul class="anchor">
         $("input[name=opt1]").val(arr_opt1.join());
         $("input[name=opt2]").val(arr_opt2.join());
         $("input[name=opt3]").val(arr_opt3.join());
-
-        if($("#option_table").height() > 500)
-            $("#option_table").addClass("a");
         <?php } ?>
         // 옵션목록생성
         $("#option_table_create").click(function() {
@@ -432,7 +429,7 @@ $pg_anchor ='<ul class="anchor">
             var opt1 = $.trim($("#opt1").val());
             var opt2 = $.trim($("#opt2").val());
             var opt3 = $.trim($("#opt3").val());
-            var $option_table = $("#option_table");
+            var $option_table = $("#sit_option_frm");
 
             if(!opt1_subject || !opt1) {
                 alert("옵션명과 옵션항목을 입력해 주십시오.");
@@ -443,11 +440,7 @@ $pg_anchor ='<ul class="anchor">
                 "<?php echo G4_ADMIN_URL; ?>/shop_admin/itemoption.php",
                 { opt1_subject: opt1_subject, opt2_subject: opt2_subject, opt3_subject: opt3_subject, opt1: opt1, opt2: opt2, opt3: opt3 },
                 function(data) {
-                    $option_table.removeClass("a");
                     $option_table.empty().html(data);
-                    if($option_table.height() > 500) {
-                        $option_table.addClass("a");
-                    }
                 }
             );
         });
