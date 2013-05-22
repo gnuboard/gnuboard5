@@ -22,7 +22,7 @@ if($ps_run) {
     <td><input type="checkbox" name="spl_chk_all" value="1"></td>
     <td>옵션명</td>
     <td>옵션항목</td>
-    <td>추가금액</td>
+    <td>상품금액</td>
     <td>재고수량</td>
     <td>통보수량</td>
     <td>사용여부</td>
@@ -96,7 +96,7 @@ if($it['it_id']) {
 </table>
 <div><button type="button" id="sel_supply_delete">선택삭제</button></div>
 <div>
-    <label for="spl_com_price">추가금액</label><input type="text" name="spl_com_price" value="0" id="spl_com_price" class="frm_input" size="5">
+    <label for="spl_com_price">상품금액</label><input type="text" name="spl_com_price" value="0" id="spl_com_price" class="frm_input" size="5">
     <label for="spl_com_stock">재고수량</label><input type="text" name="spl_com_stock" value="0" id="spl_com_stock" class="frm_input" size="5">
     <label for="spl_com_noti">통보수량</label><input type="text" name="spl_com_noti" value="0" id="spl_com_noti" class="frm_input" size="5">
     <label for="spl_com_use">사용여부</label>

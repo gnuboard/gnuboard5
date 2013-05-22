@@ -568,6 +568,39 @@ $pg_anchor ='<ul class="anchor">
                 }
             );
         });
+
+        // 모두선택
+        $("input[name=spl_chk_all]").live("click", function() {
+            if($(this).is(":checked")) {
+                $("input[name='spl_chk[]']").attr("checked", true);
+            } else {
+                $("input[name='spl_chk[]']").attr("checked", false);
+            }
+        });
+
+        // 선택삭제
+        $("#sel_supply_delete").live("click", function() {
+            var $el = $("input[name='spl_chk[]']:checked");
+            if($el.size() < 1) {
+                alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
+                return false;
+            }
+
+            $el.closest("tr").remove();
+        });
+
+        // 일괄적용
+        $("#spl_value_apply").live("click", function() {
+            var spl_price = $.trim($("#spl_com_price").val());
+            var spl_stock = $.trim($("#spl_com_stock").val());
+            var spl_noti = $.trim($("#spl_com_noti").val());
+            var spl_use = $("#spl_com_use").val();
+
+            $("input[name='spl_price[]']").val(spl_price);
+            $("input[name='spl_stock_qty[]']").val(spl_stock);
+            $("input[name='spl_noti_qty[]']").val(spl_noti);
+            $("select[name='spl_use[]']").val(spl_use);
+        });
     });
     </script>
     <tr>
