@@ -77,7 +77,7 @@ if($it['it_id']) {
         <input type="hidden" name="opt_id[]" value="<?php echo $opt_id; ?>">
         <input type="checkbox" name="opt_chk[]" value="1">
     </td>
-    <td class="opt1-cell"><?php echo $opt_1; if ($opt_2) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3) echo ' <small>&gt;</small> '.$opt_3; ?></td>
+    <td class="opt-cell"><?php echo $opt_1; if ($opt_2) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3) echo ' <small>&gt;</small> '.$opt_3; ?></td>
     <td class="td_bignum"><input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" class="frm_input" size="5"></td>
     <td class="td_num"><input type="text" name="opt_stock_qty[]" value="<?php echo $opt_stock_qty; ?>" class="frm_input" size="5"></td>
     <td class="td_num"><input type="text" name="opt_noti_qty[]" value="<?php echo $opt_noti_qty; ?>" class="frm_input" size="5"></td>
@@ -96,9 +96,9 @@ if($it['it_id']) {
         do {
             $k = 0;
             do {
-                $opt_1 = trim($opt1[$i]);
-                $opt_2 = trim($opt2[$j]);
-                $opt_3 = trim($opt3[$k]);
+                $opt_1 = strip_tags(trim($opt1[$i]));
+                $opt_2 = strip_tags(trim($opt2[$j]));
+                $opt_3 = strip_tags(trim($opt3[$k]));
 
                 $opt_id = $opt_1;
                 if($opt_2)
