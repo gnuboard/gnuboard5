@@ -997,17 +997,11 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
                     $tmp_name = $tmp_name.' '.$name;
-<<<<<<< HEAD
-            }
-        } else {
-            $tmp_name = $tmp_name.' '.$name;
-=======
             } else { 
                 $tmp_name = $tmp_name.' '.$name; 
             } 
         } else { 
             $tmp_name = $tmp_name.' '.$name; 
->>>>>>> a51735e00ddf29bead8ea199ffa91d1234792320
         }
         $tmp_name .= '</a>';
 
