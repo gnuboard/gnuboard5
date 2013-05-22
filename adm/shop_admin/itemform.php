@@ -347,8 +347,8 @@ $pg_anchor ='<ul class="anchor">
             <table class="frm_tbl">
             <tbody>
             <tr>
-                <th>옵션명</th>
-                <th>옵션항목(,로 구분)</th>
+                <th>선택옵션명</th>
+                <th colspan="2">선택옵션항목(,로 구분)</th>
             </tr>
             <tr>
                 <td><input type="text" id="opt1_subject" name="opt1_subject" value="<?php echo $opt_subject[0]; ?>" class="frm_input" size="15" /></td>
@@ -398,6 +398,9 @@ $pg_anchor ='<ul class="anchor">
         $("input[name=opt1]").val(arr_opt1.join());
         $("input[name=opt2]").val(arr_opt2.join());
         $("input[name=opt3]").val(arr_opt3.join());
+
+        if($("#option_table").height() > 500)
+            $("#option_table").addClass("a");
         <?php } ?>
         // 옵션목록생성
         $("#option_table_create").click(function() {
@@ -458,6 +461,90 @@ $pg_anchor ='<ul class="anchor">
             $("input[name='opt_stock_qty[]']").val(opt_stock);
             $("input[name='opt_noti_qty[]']").val(opt_noti);
             $("select[name='opt_use[]']").val(opt_use);
+        });
+    });
+    </script>
+    <tr>
+        <th scope="row">상품추가옵션</th>
+        <td colspan="2">
+            <table class="frm_tbl">
+            <tbody>
+            <tr>
+                <th>추가옵션명</th>
+                <th colspan="2">추가옵션항목(,로 구분)</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="spl_subject[]" value="" class="frm_input" size="15"></td>
+                <td><input type="text" name="spl[]" value="" class="frm_input" size="50"></td>
+                <td><button type="button" id="supply_table_create">옵션목록생성</button></td>
+            </tr>
+            <tr>
+                <td colspan="3"><button type="button" id="add_supply_row">입력필드추가</button></td>
+            </tr>
+            </tbody>
+            </table>
+            <div id="supply_table"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemsupply.php'); ?></div>
+        </td>
+    </tr>
+    <script>
+    $(function() {
+        // 입력필드추가
+        $("#add_supply_row").click(function() {
+            var $el = $(this).closest("tr");
+            var fld = "<tr><td><input type=\"text\" name=\"spl_subject[]\" value=\"\" class=\"frm_input\" size=\"15\"></td>";
+            fld += "<td><input type=\"text\" name=\"spl[]\" value=\"\" class=\"frm_input\" size=\"50\">";
+            fld += "<button type=\"button\" id=\"del_supply_row\">삭제</button></td></tr>";
+
+            $el.before(fld);
+
+            var rowspan = $("input[name='spl[]']").size();
+            $("#supply_table_create").parent().attr("rowspan", rowspan);
+        });
+
+        // 입력필드삭제
+        $("#del_supply_row").live("click", function() {
+            $(this).closest("tr").remove();
+            var rowspan = $("input[name='spl[]']").size();
+            $("#supply_table_create").parent().attr("rowspan", rowspan);
+        });
+
+        // 옵션목록생성
+        $("#supply_table_create").click(function() {
+            var subject = new Array();
+            var supply = new Array();
+            var subj, spl;
+            var count = 0;
+            var $el_subj = $("input[name='spl_subject[]']");
+            var $el_spl = $("input[name='spl[]']");
+            var $supply_table = $("#supply_table");
+
+            $el_subj.each(function(index) {
+                subj = $.trim($(this).val());
+                spl = $.trim($el_spl.eq(index).val());
+
+                if(subj && spl) {
+                    subject.push(subj);
+                    supply.push(spl);
+                    count++;
+                }
+            });
+
+            if(!count) {
+                alert("추가옵션명과 추가옵션항목을 입력해 주십시오.");
+                return false;
+            }
+
+            $.post(
+                "<?php echo G4_ADMIN_URL; ?>/shop_admin/itemsupply.php",
+                { 'subject[]': subject, 'supply[]': supply },
+                function(data) {
+                    $supply_table.removeClass("b");
+                    $supply_table.empty().html(data);
+                    if($supply_table.height() > 500) {
+                        $supply_table.addClass("b");
+                    }
+                }
+            );
         });
     });
     </script>
