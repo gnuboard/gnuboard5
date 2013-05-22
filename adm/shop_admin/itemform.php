@@ -416,7 +416,7 @@ $pg_anchor ='<ul class="anchor">
                         arr_opt3.push(opt3);
                 });
 
-                
+
                 $("input[name=opt1]").val(arr_opt1.join());
                 $("input[name=opt2]").val(arr_opt2.join());
                 $("input[name=opt3]").val(arr_opt3.join());
@@ -481,10 +481,14 @@ $pg_anchor ='<ul class="anchor">
             </script>
         </td>
     </tr>
+    <?php
+    $spl_subject = explode(',', $it['it_supply_subject']);
+    $spl_count = count($spl_subject);
+    ?>
     <tr>
         <th scope="row">상품추가옵션</th>
         <td colspan="2">
-            <div class="sit_option">
+            <div id="sit_supply_frm" class="sit_option">
                 <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰'); ?>
                 <table class="frm_tbl">
                 <colgroup>
@@ -492,16 +496,29 @@ $pg_anchor ='<ul class="anchor">
                     <col>
                 </colgroup>
                 <tbody>
+                <?php
+                $i = 0;
+                do {
+                    $seq = $i + 1;
+                ?>
                 <tr>
-                    <th>
-                        <label for="">추가<!-- ##################################################### 여기에 순번 삽입 --></label>
-                        <input type="text" name="spl_subject[]" id="name" value="" class="frm_input" size="15">
-                    </td>
+                    <th scope="row">
+                        <label for="spl_subject_<?php echo $seq; ?>">추가<?php echo $seq; ?></label>
+                        <input type="text" name="spl_subject[]" id="spl_subject_<?php echo $seq; ?>" value="<?php echo $spl_subject[$i]; ?>" class="frm_input" size="15">
+                    </th>
                     <td>
-                        <label for=""><b>추가<!-- ##################################################### 여기에 순번 삽입 --> 항목</b></label>
-                        <input type="text" name="spl[]" value="" class="frm_input" size="50">
+                        <label for="spl_item_<?php echo $seq; ?>"><b>추가<?php echo $seq; ?> 항목</b></label>
+                        <input type="text" name="spl[]" id="spl_item_<?php echo $seq; ?>" value="" class="frm_input" size="40">
+                        <?php
+                        if($i > 0)
+                            echo '<button type="button" id="del_supply_row" class="btn_frmline">삭제</button>';
+                        ?>
                     </td>
                 </tr>
+                <?php
+                    $i++;
+                } while($i < $spl_count);
+                ?>
                 </tbody>
                 </table>
                 <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
@@ -509,30 +526,59 @@ $pg_anchor ='<ul class="anchor">
                     <button type="button" id="supply_table_create">옵션목록생성</button>
                 </div>
             </div>
-            <!-- ##################################################### supply_table 을 sit_option_addfrm 으로 변경했으면 합니다. -->
-            <div id="supply_table"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemsupply.php'); ?></div>
+            <div id="sit_option_addfrm"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemsupply.php'); ?></div>
 
-            <!-- ##################################################### tr 추가되는 위치를 새로 설정해야 할 것 같습니다. ㅠ -->
             <script>
             $(function() {
+                <?php if($it['it_id'] && $ps_run) { ?>
+                // 추가옵션의 항목 설정
+                var arr_subj = new Array();
+                var subj, spl;
+
+                $("input[name='spl_subject[]']").each(function() {
+                    subj = $.trim($(this).val());
+                    if(subj && $.inArray(subj, arr_subj) == -1)
+                        arr_subj.push(subj);
+                });
+
+                for(i=0; i<arr_subj.length; i++) {
+                    var arr_spl = new Array();
+                    $(".spl-subject-cell").each(function(index) {
+                        subj = $(this).text();
+                        if(subj == arr_subj[i]) {
+                            spl = $(".spl-cell:eq("+index+")").text();
+                            arr_spl.push(spl);
+                        }
+                    });
+
+                    $("input[name='spl[]']:eq("+i+")").val(arr_spl.join());
+                }
+                <?php } ?>
                 // 입력필드추가
                 $("#add_supply_row").click(function() {
-                    var $el = $(this).closest("tr");
-                    var fld = "<tr><td><input type=\"text\" name=\"spl_subject[]\" value=\"\" class=\"frm_input\" size=\"15\"></td>";
-                    fld += "<td><input type=\"text\" name=\"spl[]\" value=\"\" class=\"frm_input\" size=\"50\">";
-                    fld += "<button type=\"button\" id=\"del_supply_row\" class=\"btn_frmline\">삭제</button></td></tr>";
+                    var $el = $("#sit_supply_frm tr:last");
+                    var fld = "<tr>\n";
+                    fld += "<th scope=\"row\">\n";
+                    fld += "<label for=\"\">추가</label>\n";
+                    fld += "<input type=\"text\" name=\"spl_subject[]\" value=\"\" class=\"frm_input\" size=\"15\">\n";
+                    fld += "</th>\n";
+                    fld += "<td>\n";
+                    fld += "<label for=\"\"><b>추가 항목</b></label>\n";
+                    fld += "<input type=\"text\" name=\"spl[]\" value=\"\" class=\"frm_input\" size=\"40\">\n";
+                    fld += "<button type=\"button\" id=\"del_supply_row\" class=\"btn_frmline\">삭제</button>\n";
+                    fld += "</td>\n";
+                    fld += "</tr>";
 
-                    $el.before(fld);
+                    $el.after(fld);
 
-                    var rowspan = $("input[name='spl[]']").size();
-                    $("#supply_table_create").parent().attr("rowspan", rowspan);
+                    supply_sequence();
                 });
 
                 // 입력필드삭제
                 $("#del_supply_row").live("click", function() {
                     $(this).closest("tr").remove();
-                    var rowspan = $("input[name='spl[]']").size();
-                    $("#supply_table_create").parent().attr("rowspan", rowspan);
+
+                    supply_sequence();
                 });
 
                 // 옵션목록생성
@@ -543,7 +589,7 @@ $pg_anchor ='<ul class="anchor">
                     var count = 0;
                     var $el_subj = $("input[name='spl_subject[]']");
                     var $el_spl = $("input[name='spl[]']");
-                    var $supply_table = $("#supply_table");
+                    var $supply_table = $("#sit_option_addfrm");
 
                     $el_subj.each(function(index) {
                         subj = $.trim($(this).val());
@@ -565,11 +611,7 @@ $pg_anchor ='<ul class="anchor">
                         "<?php echo G4_ADMIN_URL; ?>/shop_admin/itemsupply.php",
                         { 'subject[]': subject, 'supply[]': supply },
                         function(data) {
-                            $supply_table.removeClass("b");
                             $supply_table.empty().html(data);
-                            if($supply_table.height() > 500) {
-                                $supply_table.addClass("b");
-                            }
                         }
                     );
                 });
@@ -607,6 +649,22 @@ $pg_anchor ='<ul class="anchor">
                     $("select[name='spl_use[]']").val(spl_use);
                 });
             });
+
+            function supply_sequence()
+            {
+                var $tr = $("#sit_supply_frm tr");
+                var seq;
+                var th_label, td_label;
+
+                $tr.each(function(index) {
+                    seq = index + 1;
+                    $(this).find("th label").attr("for", "spl_subject_"+seq).text("추가"+seq);
+                    $(this).find("th input").attr("id", "spl_subject_"+seq);
+                    $(this).find("td label").attr("for", "spl_item_"+seq);
+                    $(this).find("td label b").text("추가"+seq+" 항목");
+                    $(this).find("td input").attr("id", "spl_item_"+seq);
+                });
+            }
             </script>
         </td>
     </tr>

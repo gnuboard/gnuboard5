@@ -46,12 +46,12 @@ if($ps_run) {
     ?>
     <tr>
         <td class="td_chk">
-            <input type="hidden" name="spl_id[]" value="<?php echo $spl_id; ?>">]
+            <input type="hidden" name="spl_id[]" value="<?php echo $spl_id; ?>">
             <label for="spl_chk_<?php echo $i; ?>" class="sound_only"><?php echo $spl_subject.' '.$spl; ?></label>
             <input type="checkbox" name="spl_chk[]" id="spl_chk_<?php echo $i; ?>" value="1">
         </td>
-        <td><?php echo $spl_subject; ?></td>
-        <td><?php echo $spl; ?></td>
+        <td class="spl-subject-cell"><?php echo $spl_subject; ?></td>
+        <td class="spl-cell"><?php echo $spl; ?></td>
         <td class="td_bignum">
             <label for="spl_price_<?php echo $i; ?>" class="sound_only">상품금액</label>
             <input type="text" name="spl_price[]" value="<?php echo $spl_price; ?>" id="spl_price_<?php echo $i; ?>" class="frm_input" size="5">
@@ -95,8 +95,8 @@ if($ps_run) {
             <label for="spl_chk_<?php echo $i; ?>" class="sound_only"><?php echo $spl_subject.' '.$spl; ?></label>
             <input type="checkbox" name="spl_chk[]" id="spl_chk_<?php echo $i; ?>" value="1">
         </td>
-        <td><?php echo $spl_subject; ?></td>
-        <td><?php echo $spl; ?></td>
+        <td class="spl-subject-cell"><?php echo $spl_subject; ?></td>
+        <td class="spl-cell"><?php echo $spl; ?></td>
         <td class="td_bignum">
             <label for="spl_price_<?php echo $i; ?>" class="sound_only">상품금액</label>
             <input type="text" name="spl_price[]" value="<?php echo $spl_price; ?>" id="spl_price_<?php echo $i; ?>" class="frm_input" size="9">
