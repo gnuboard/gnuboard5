@@ -388,7 +388,7 @@ $pg_anchor ='<ul class="anchor">
                     <button type="button" id="option_table_create" class="btn_frmline">옵션목록생성</button>
                 </div>
             </div>
-            <div id="option_table"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemoption.php'); ?></div>
+            <div id="sit_option_frm"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemoption.php'); ?></div>
         </td>
     </tr>
     <script>

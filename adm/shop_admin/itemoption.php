@@ -16,13 +16,13 @@ if($it['it_id']) {
 } else if(!empty($_POST)) {
     $po_run = true;
 
-    $opt1_subject = strip_tags(trim($_POST['opt1_subject']));
-    $opt2_subject = strip_tags(trim($_POST['opt2_subject']));
-    $opt3_subject = strip_tags(trim($_POST['opt3_subject']));
+    $opt1_subject = trim($_POST['opt1_subject']);
+    $opt2_subject = trim($_POST['opt2_subject']);
+    $opt3_subject = trim($_POST['opt3_subject']);
 
-    $opt1_val = strip_tags(trim($_POST['opt1']));
-    $opt2_val = strip_tags(trim($_POST['opt2']));
-    $opt3_val = strip_tags(trim($_POST['opt3']));
+    $opt1_val = trim($_POST['opt1']);
+    $opt2_val = trim($_POST['opt2']);
+    $opt3_val = trim($_POST['opt3']);
     $opt1_count = $opt2_count = $opt3_count = 0;
 
     if($opt1_val) {
@@ -44,7 +44,7 @@ if($it['it_id']) {
 if($po_run) {
 ?>
 
-<div id="option_table_frm">
+<div id="sit_option_frm_wrapper">
     <table>
     <thead>
     <tr>
