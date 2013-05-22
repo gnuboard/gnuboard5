@@ -137,8 +137,14 @@ if($it['it_id']) {
 ?>
 </tbody>
 </table>
-<div><button type="button" id="sel_option_delete">선택삭제</button></div>
-<div>
+
+<div class="btn_list">
+    <input type="button" value="선택삭제" id="sel_option_delete">
+</div>
+
+<fieldset>
+    <legend>옵션 일괄 적용</legend>
+    <?php echo help('전체 옵션의 추가금액, 재고/통보수량 및 사용여부를 일괄 적용할 수 있습니다.'); ?>
     <label for="opt_com_price">추가금액</label><input type="text" name="opt_com_price" value="0" id="opt_com_price" class="frm_input" size="5">
     <label for="opt_com_stock">재고수량</label><input type="text" name="opt_com_stock" value="0" id="opt_com_stock" class="frm_input" size="5">
     <label for="opt_com_noti">통보수량</label><input type="text" name="opt_com_noti" value="0" id="opt_com_noti" class="frm_input" size="5">
@@ -147,8 +153,8 @@ if($it['it_id']) {
         <option value="1">사용함</option>
         <option value="0">사용안함</option>
     </select>
-    <button type="button" id="opt_value_apply">일괄적용</button>
-</div>
+    <button type="button" id="opt_value_apply" class="btn_frmline">일괄적용</button>
+</fieldset>
 <?php
 }
 ?>
