@@ -38,6 +38,14 @@ $sql = " insert {$g4['shop_item_table']}
                 $sql_common ";
 sql_query($sql);
 
+// 선택/추가 옵션 copy
+$opt_sql = " insert ignore into {$g4['shop_item_option_table']} ( io_id, io_type, it_id, io_price, io_stock_qty, io_noti_qty, io_use )
+                select io_id, io_type, '$new_it_id', io_price, io_stock_qty, io_noti_qty, io_use
+                    from {$g4['shop_item_option_table']}
+                    where it_id = '$it_id'
+                    order by io_no asc ";
+sql_query($opt_sql);
+
 // html 에디터로 첨부된 이미지 파일 복사
 if($cp['it_explan']) {
     $matchs = get_editor_image($cp['it_explan']);
