@@ -28,7 +28,7 @@ a:active {color:#000;text-decoration:underline}
 
 /* 전체 검색 */
 #sch_all {position:absolute;top:22px;left:70px;margin:0;padding:0;border:1px solid #555}
-#sch_all legend {position:absolute;text-indent:-9999em;overflow:hidden}
+#sch_all legend {position:absolute;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #sch_all_stx {padding-left:5px;width:165px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
 #sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff}
 
