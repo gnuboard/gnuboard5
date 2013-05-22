@@ -44,12 +44,12 @@ if($it['it_id']) {
 if($po_run) {
 ?>
 
-<div id="sit_option_frm_wrapper">
+<div class="sit_option_frm_wrapper">
     <table>
     <thead>
     <tr>
         <th scope="col">
-            <label for="opt_chk_all" class="sound_only">전체 옵션 선택</label>
+            <label for="opt_chk_all" class="sound_only">전체 옵션</label>
             <input type="checkbox" name="opt_chk_all" value="1" id="opt_chk_all">
         </th>
         <th scope="col">옵션</th>
@@ -76,14 +76,25 @@ if($po_run) {
     <tr>
         <td class="td_chk">
             <input type="hidden" name="opt_id[]" value="<?php echo $opt_id; ?>">
-            <input type="checkbox" name="opt_chk[]" value="1">
+            <label for="opt_chk_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" value="1">
         </td>
         <td class="opt-cell"><?php echo $opt_1; if ($opt_2) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3) echo ' <small>&gt;</small> '.$opt_3; ?></td>
-        <td class="td_bignum"><input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" class="frm_input" size="9"></td>
-        <td class="td_num"><input type="text" name="opt_stock_qty[]" value="<?php echo $opt_stock_qty; ?>" class="frm_input" size="5"></td>
-        <td class="td_num"><input type="text" name="opt_noti_qty[]" value="<?php echo $opt_noti_qty; ?>" class="frm_input" size="5"></td>
+        <td class="td_bignum">
+            <label for="opt_price_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" id="opt_price_<?php echo $i; ?>" class="frm_input" size="9">
+        </td>
+        <td class="td_num">
+            <label for="opt_stock_qty_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="text" name="opt_stock_qty[]" value="<?php echo $opt_stock_qty; ?>" id="op_stock_qty_<?php echo $i; ?>" class="frm_input" size="5">
+        </td>
+        <td class="td_num">
+            <label for="opt_noti_qty_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="text" name="opt_noti_qty[]" value="<?php echo $opt_noti_qty; ?>" id="opt_noti_qty_<?php echo $i; ?>" class="frm_input" size="5">
+        </td>
         <td class="td_mng">
-            <select name="opt_use[]">
+            <label for="opt_use_<?php echo $i; ?>" class="sound_only"></label>
+            <select name="opt_use[]" id="opt_use_<?php echo $i; ?>">
                 <option value="1" <?php echo get_selected('1', $opt_use); ?>>사용함</option>
                 <option value="0" <?php echo get_selected('0', $opt_use); ?>>사용안함</option>
             </select>
@@ -114,14 +125,25 @@ if($po_run) {
     <tr>
         <td class="td_chk">
             <input type="hidden" name="opt_id[]" value="<?php echo $opt_id; ?>">
-            <input type="checkbox" name="opt_chk[]" value="1">
+            <label for="opt_chk_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" value="1">
         </td>
         <td class="opt1-cell"><?php echo $opt_1; if ($opt_2) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3) echo ' <small>&gt;</small> '.$opt_3; ?></td>
-        <td class="td_bignum"><input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" class="frm_input" size="9"></td>
-        <td class="td_num"><input type="text" name="opt_stock_qty[]" value="<?php echo $opt_stock_qty; ?>" class="frm_input" size="5"></td>
-        <td class="td_num"><input type="text" name="opt_noti_qty[]" value="<?php echo $opt_noti_qty; ?>" class="frm_input" size="5"></td>
+        <td class="td_bignum">
+            <label for="opt_price_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" id="opt_price_<?php echo $i; ?>" class="frm_input" size="9">
+        </td>
+        <td class="td_num">
+            <label for="opt_stock_qty_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="text" name="opt_stock_qty[]" value="<?php echo $opt_stock_qty; ?>" id="opt_stock_qty_<?php echo $i; ?>" class="frm_input" size="5">
+        </td>
+        <td class="td_num">
+            <label for="opt_noti_qty_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="text" name="opt_noti_qty[]" value="<?php echo $opt_noti_qty; ?>" id="opt_noti_qty_<?php echo $i; ?>" class="frm_input" size="5">
+        </td>
         <td class="td_mng">
-            <select name="opt_use[]">
+            <label for="opt_use_<?php echo $i; ?>" class="sound_only"></label>
+            <select name="opt_use[]" id="opt_use_<?php echo $i; ?>">
                 <option value="1" <?php echo get_selected('1', $opt_use); ?>>사용함</option>
                 <option value="0" <?php echo get_selected('0', $opt_use); ?>>사용안함</option>
             </select>
