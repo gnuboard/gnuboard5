@@ -1008,7 +1008,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         if(!$bo_table)
             return $name;
 
-        $tmp_name = "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\" title=\"$name 이름으로 검색\" class=\"sv_guest\" onclick=\"return false;\">$name</a>";
+        $tmp_name = '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.$sca.'&amp;sfl=wr_name,1&amp;stx='.$name.'" title="'.$name.' 이름으로 검색" class="sv_guest" onclick="return false;">'.$name.'</a>';
         $title_mb_id = '[비회원]';
     }
 
