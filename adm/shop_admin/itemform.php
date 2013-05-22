@@ -344,27 +344,50 @@ $pg_anchor ='<ul class="anchor">
     <tr>
         <th scope="row">상품선택옵션</th>
         <td colspan="2">
-            <table class="frm_tbl">
-            <tbody>
-            <tr>
-                <th>선택옵션명</th>
-                <th colspan="2">선택옵션항목(,로 구분)</th>
-            </tr>
-            <tr>
-                <td><input type="text" id="opt1_subject" name="opt1_subject" value="<?php echo $opt_subject[0]; ?>" class="frm_input" size="15" /></td>
-                <td><input type="text" id="opt1" name="opt1" value="" class="frm_input" size="50" /></td>
-                <td rowspan="3"><button type="button" id="option_table_create">옵션목록생성</button></td>
-            </tr>
-            <tr>
-                <td><input type="text" id="opt2_subject" name="opt2_subject" value="<?php echo $opt_subject[1]; ?>" class="frm_input" size="15" /></td>
-                <td><input type="text" id="opt2" name="opt2" value="" class="frm_input" size="50" /></td>
-            </tr>
-             <tr>
-                <td><input type="text" id="opt3_subject" name="opt3_subject" value="<?php echo $opt_subject[2]; ?>" class="frm_input" size="15" /></td>
-                <td><input type="text" id="opt3" name="opt3" value="" class="frm_input" size="50" /></td>
-            </tr>
-            </tbody>
-            </table>
+            <div id="sit_option">
+                <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰'); ?>
+                <table class="frm_tbl">
+                <colgroup>
+                    <col class="grid_4">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">
+                        <label for="opt1_subject">옵션1</label>
+                        <input type="text" name="opt1_subject" value="<?php echo $opt_subject[0]; ?>" id="opt1_subject" class="frm_input" size="15">
+                    </th>
+                    <td>
+                        <label for="opt1"><b>옵션1 항목</b></label>
+                        <input type="text" name="opt1" value="" id="opt1" class="frm_input" size="50">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="opt2_subject">옵션2</label>
+                        <input type="text" name="opt2_subject" value="<?php echo $opt_subject[1]; ?>" id="opt2_subject" class="frm_input" size="15">
+                    </th>
+                    <td>
+                        <label for="opt2"><b>옵션2 항목</b></label>
+                        <input type="text" name="opt2" value="" id="opt2" class="frm_input" size="50">
+                    </td>
+                </tr>
+                 <tr>
+                    <th scope="row">
+                        <label for="opt3_subject">옵션3</label>
+                        <input type="text" name="opt3_subject" value="<?php echo $opt_subject[2]; ?>" id="opt3_subject" class="frm_input" size="15">
+                    </th>
+                    <td>
+                        <label for="opt3"><b>옵션3 항목</b></label>
+                        <input type="text" name="opt3" value="" id="opt3" class="frm_input" size="50">
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+                <div class="btn_confirm">
+                    <button type="button" id="option_table_create" class="btn_frmline">옵션목록생성</button>
+                </div>
+            </div>
             <div id="option_table"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemoption.php'); ?></div>
         </td>
     </tr>
