@@ -316,6 +316,22 @@ if($option_count) {
     $it_option = implode(',', $arr_opt1);
 }
 
+// 추가옵션
+sql_query(" delete from {$g4['shop_item_option_table']} where io_type = '1' and it_id = '$it_id' "); // 기존추가옵션삭제
+
+$supply_count = count($_POST['spl_id']);
+if($supply_count) {
+    // 추가옵션명
+    $arr_spl = array();
+    for($i=0; $i<$supply_count; $i++) {
+        $spl_val = explode(chr(30), $_POST['spl_id'][$i]);
+        if(!in_array($spl_val[0], $arr_spl))
+            $arr_spl[] = $spl_val[0];
+    }
+
+    $it_supply_subject = implode(',', $arr_spl);
+}
+
 // 상품요약정보
 $value_array = array();
 for($i=0; $i<count($_POST['ii_article']); $i++) {
@@ -450,15 +466,30 @@ if ($w == "" || $w == "u")
 }
 
 // 선택옵션등록
-for($i=0; $i<$option_count; $i++) {
-    $sql = " insert into {$g4['shop_item_option_table']}
-                set io_id           = '{$_POST['opt_id'][$i]}',
-                    io_type         = '0',
-                    it_id           = '$it_id',
-                    io_price        = '{$_POST['opt_price'][$i]}',
-                    io_stock_qty    = '{$_POST['opt_stock_qty'][$i]}',
-                    io_noti_qty     = '{$_POST['opt_noti_qty'][$i]}',
-                    io_use          = '{$_POST['opt_use'][$i]}' ";
+if($option_count) {
+    $comma = '';
+    $sql = " INSERT INTO {$g4['shop_item_option_table']}
+                    ( `io_id`, `io_type`, `it_id`, `io_price`, `io_stock_qty`, `io_noti_qty`, `io_use` )
+                VALUES ";
+    for($i=0; $i<$option_count; $i++) {
+        $sql .= $comma . " ( '{$_POST['opt_id'][$i]}', '0', '$it_id', '{$_POST['opt_price'][$i]}', '{$_POST['opt_stock_qty'][$i]}', '{$_POST['opt_noti_qty'][$i]}', '{$_POST['opt_use'][$i]}' )";
+        $comma = ' , ';
+    }
+
+    sql_query($sql);
+}
+
+// 추가옵션등록
+if($supply_count) {
+    $comma = '';
+    $sql = " INSERT INTO {$g4['shop_item_option_table']}
+                    ( `io_id`, `io_type`, `it_id`, `io_price`, `io_stock_qty`, `io_noti_qty`, `io_use` )
+                VALUES ";
+    for($i=0; $i<$supply_count; $i++) {
+        $sql .= $comma . " ( '{$_POST['spl_id'][$i]}', '1', '$it_id', '{$_POST['spl_price'][$i]}', '{$_POST['spl_stock_qty'][$i]}', '{$_POST['spl_noti_qty'][$i]}', '{$_POST['spl_use'][$i]}' )";
+        $comma = ' , ';
+    }
+
     sql_query($sql);
 }
 
