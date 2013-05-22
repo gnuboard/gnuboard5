@@ -114,7 +114,7 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_scf_info" class="cbox">
     <h2>사업자정보</h2>
     <?php echo $pg_anchor; ?>
-    <p><?php echo help("사업자정보는 tail.php 와 content.php 에서 표시합니다."); ?></p>
+    <p>사업자정보는 tail.php 와 content.php 에서 표시합니다.</p>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -187,7 +187,10 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_scf_index" class="cbox">
     <h2>쇼핑몰 초기화면</h2>
     <?php echo $pg_anchor; ?>
-    <p><?php echo help("상품관리에서 선택한 상품의 타입대로 쇼핑몰 초기화면에 출력합니다. (상품 타입 히트/추천/최신/인기/할인)\n각 타입별로 선택된 상품이 없으면 쇼핑몰 초기화면에 출력하지 않습니다."); ?></p>
+    <p>
+        상품관리에서 선택한 상품의 타입대로 쇼핑몰 초기화면에 출력합니다. (상품 타입 히트/추천/최신/인기/할인)<br>
+        각 타입별로 선택된 상품이 없으면 쇼핑몰 초기화면에 출력하지 않습니다.
+    </p>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -296,7 +299,10 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_mscf_index" class="cbox">
     <h2>모바일 쇼핑몰 초기화면</h2>
     <?php echo $pg_anchor; ?>
-    <p><?php echo help("상품관리에서 선택한 상품의 타입대로 쇼핑몰 초기화면에 출력합니다. (상품 타입 히트/추천/최신/인기/할인)\n각 타입별로 선택된 상품이 없으면 쇼핑몰 초기화면에 출력하지 않습니다."); ?></p>
+    <p>
+        상품관리에서 선택한 상품의 타입대로 쇼핑몰 초기화면에 출력합니다. (상품 타입 히트/추천/최신/인기/할인)<br>
+        각 타입별로 선택된 상품이 없으면 쇼핑몰 초기화면에 출력하지 않습니다.
+    </p>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
