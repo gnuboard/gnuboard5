@@ -34,7 +34,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <section class="cbox">
     <h2><?php echo $html_title; ?></h2>
-    <p><?php echo help("쇼핑몰 초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다."); ?></p>
+    <p>쇼핑몰 초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다.</p>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
