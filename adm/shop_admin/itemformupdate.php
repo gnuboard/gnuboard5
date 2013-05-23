@@ -28,7 +28,9 @@ function itemdelete($it_id)
             @unlink($file);
             $dir = dirname($file);
             delete_item_thumbnail($dir, basename($file));
-            $dir_list[] = $dir;
+
+            if(!in_array($dir, $dir_list))
+                $dir_list[] = $dir;
         }
     }
 
