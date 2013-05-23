@@ -12,7 +12,7 @@ if($it['it_id']) {
     $subject_count = count($_POST['subject']);
     $supply_count = count($_POST['supply']);
 
-    if(!$subject_count || $supply_count) {
+    if(!$subject_count || !$supply_count) {
         echo '추가옵션명과 추가옵션항목을 입력해 주십시오.';
         exit;
     }
