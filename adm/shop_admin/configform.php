@@ -734,7 +734,7 @@ $pg_anchor = '<ul class="anchor">
 </section>
 
 <section id="anc_scf_etc" class="cbox">
-    <h2>기타정보</h2>
+    <h2>기타설정</h2>
     <?php echo $pg_anchor; ?>
     <table class="frm_tbl">
     <colgroup>
