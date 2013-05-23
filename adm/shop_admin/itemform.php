@@ -248,7 +248,7 @@ $pg_anchor ='<ul class="anchor">
                 <!-- <input type=text class=required name=it_id value="<?php echo 10000000000-time()?>" size=12 maxlength=10 required> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
                 <?php echo help("상품의 코드는 10자리 숫자로 자동생성합니다. <b>직접 상품코드를 입력할 수도 있습니다.</b>\n상품코드는 영문자, 숫자, - 만 입력 가능합니다."); ?>
                 <input type="text" name="it_id" value="<?php echo time(); ?>" id="it_id" required class="frm_input required" size="20" maxlength="20">
-                <?php if ($default['de_code_dup_use']) { ?><a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src="<?php echo G4_ADMIN_URL; ?>/img/btn_code.gif"></a><?php } ?>
+                <?php if ($default['de_code_dup_use']) { ?><button type="button" class="btn_frmline" onclick="codedupcheck(document.all.it_id.value)">중복검사</a><?php } ?>
             <?php } else { ?>
                 <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
                 <span class="frm_ca_id"><?php echo $it['it_id']; ?></span>
