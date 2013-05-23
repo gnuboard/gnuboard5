@@ -21,12 +21,21 @@ function itemdelete($it_id)
     $it = sql_fetch($sql);
 
     // 상품 이미지 삭제
+    $dir_list = array();
     for($i=1; $i<=10; $i++) {
         $file = G4_DATA_PATH.'/item/'.$it['it_img'.$i];
         if(is_file($file) && $it['it_img'.$i]) {
             @unlink($file);
-            delete_item_thumbnail(dirname($file), basename($file));
+            $dir = dirname($file);
+            delete_item_thumbnail($dir, basename($file));
+            $dir_list[] = $dir;
         }
+    }
+
+    // 이미지디렉토리 삭제
+    for($i=0; $i<count($dir_list); $i++) {
+        if(is_dir($dir_list[$i]))
+            rmdir($dir_list[$i]);
     }
 
     // 상, 하단 이미지 삭제
