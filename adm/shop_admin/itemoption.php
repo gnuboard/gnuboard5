@@ -14,8 +14,6 @@ if($it['it_id']) {
     if(mysql_num_rows($result))
         $po_run = true;
 } else if(!empty($_POST)) {
-    $po_run = true;
-
     $opt1_subject = trim($_POST['opt1_subject']);
     $opt2_subject = trim($_POST['opt2_subject']);
     $opt3_subject = trim($_POST['opt3_subject']);
@@ -23,6 +21,14 @@ if($it['it_id']) {
     $opt1_val = trim($_POST['opt1']);
     $opt2_val = trim($_POST['opt2']);
     $opt3_val = trim($_POST['opt3']);
+
+    if(!$opt1_subject || !$opt1_val) {
+        echo '옵션1과 옵션1 항목을 입력해 주십시오.';
+        exit;
+    }
+
+    $po_run = true;
+
     $opt1_count = $opt2_count = $opt3_count = 0;
 
     if($opt1_val) {

@@ -7,6 +7,7 @@ html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
+<<<<<<< HEAD
 label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;border-radius:0;font-family:"dotum"}
 button {border-radius:0;font-size:1em;font-family:"dotum"}
@@ -16,6 +17,15 @@ input[type=submit],
 input[type=image],
 button {border-radius:0 !important;font-size:1em} /* 모바일에서만 사용 */
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
+=======
+legend {position:absolute;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+label, input, select, img {vertical-align:middle}
+input,button {margin:0;padding:0}
+input[type=text], input[type=password], input[type=submit], input[type=image], button {border-radius:0 !important;font-size:1em} /* 모바일에서만 사용 */
+select, textarea {font-size:1em}
+textarea {border-radius:0;-webkit-appearance:none}
+p {margin:0;padding:1em 0;line-height:1.7em;word-break:break-all}
+>>>>>>> g4s
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link,
@@ -26,8 +36,7 @@ a:active {color:#000;text-decoration:underline}
 
 /* 화면낭독기 사용자용 */
 #hd_login_msg {position:absolute;top:0;left:0;width:0;height:0;overflow:hidden}
-.msg_sound_only,
-.sound_only {display:inline-block;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;width:1px !important;height:1px !important;font-size:0 !important;line-height:0 !important;overflow:hidden}
+.msg_sound_only, .sound_only {display:inline-block;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;width:1px !important;height:1px !important;font-size:0 !important;line-height:0 !important;overflow:hidden}
 /* 본문 바로가기 */
 .to_content a {z-index:100000;position:absolute;top:0;left:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
@@ -104,11 +113,9 @@ a:active {color:#000;text-decoration:underline}
 
 /* 버튼 */
 .btn01 {display:inline-block;padding:0 0.5em;height:2em;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;font-size:1em;text-decoration:none !important;line-height:2em;vertical-align:middle}
-.btn01:focus,
-.btn01:hover {text-decoration:none !important}
+.btn01:focus, .btn01:hover {text-decoration:none !important}
 .btn02 {display:inline-block;padding:0 0.5em;height:2em;border:1px solid #333 !important;background:#333 !important;color:#fff !important;font-size:1em;text-decoration:none !important;line-height:2em;vertical-align:middle}
-.btn02:focus,
-.btn02:hover {text-decoration:none !important}
+.btn02:focus, .btn02:hover {text-decoration:none !important}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 .btn_submit {padding:0 1em;height:2.6em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer;-webkit-appearance:none}
 .btn_cancel {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2.5em}
@@ -117,14 +124,11 @@ a:active {color:#000;text-decoration:underline}
 .btn_win a {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em;cursor:pointer}
 /* 게시판용 버튼 */
 .btn_b01 {display:inline-block;margin:0 0 0.3em;padding:0 1em;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2em;vertical-align:middle}
-.btn_b01:focus,
-.btn_b01:hover {text-decoration:none !important}
+.btn_b01:focus, .btn_b01:hover {text-decoration:none !important}
 .btn_b02 {display:inline-block;margin:0 0 0.3em;padding:0 1em;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2em;vertical-align:middle}
-.btn_b02:focus,
-.btn_b02:hover {text-decoration:none !important}
+.btn_b02:focus, .btn_b02:hover {text-decoration:none !important}
 .btn_admin {display:inline-block;margin:0 0 0.3em;padding:0 1em;border:1px solid #e8180c !important;background:#e8180c !important;color:#fff !important;text-decoration:none !important;line-height:2em;vertical-align:middle} /* 관리자 전용 버튼 */
-.btn_admin:focus,
-.btn_admin:hover {text-decoration:none !important}
+.btn_admin:focus, .btn_admin:hover {text-decoration:none !important}
 
 /* 기본테이블 */
 .basic_tbl {margin-bottom:1em;width:100%;border-collapse:collapse;border-spacing:0}
@@ -183,14 +187,9 @@ td.empty_table {padding:5em 0;text-align:center}
 /* pagination */
 .pg_wrap {clear:both;margin:0 0 1em;padding-top:1em;text-align:center}
 .pg {display:inline-block;border:1px solid #cfded8;letter-spacing:-4px}
-.pg a:focus,
-.pg a:hover,
-.pg a:active {text-decoration:none}
-.pg_page,
-.pg_current {display:inline-block;padding:0 0.6em;color:#000;letter-spacing:0;line-height:1.9em;vertical-align:middle}
+.pg a:focus, .pg a:hover, .pg a:active {text-decoration:none}
+.pg_page, .pg_current {display:inline-block;padding:0 0.6em;color:#000;letter-spacing:0;line-height:1.9em;vertical-align:middle}
 .pg_page {background:#f9f9f9;text-decoration:none}
-.pg_start,
-.pg_prev {border-right:1px solid #cfded8}
-.pg_end,
-.pg_next {border-left:1px solid #cfded8}
+.pg_start, .pg_prev {border-right:1px solid #cfded8}
+.pg_end, .pg_next {border-left:1px solid #cfded8}
 .pg_current {background:#333;color:#fff;font-weight:bold}

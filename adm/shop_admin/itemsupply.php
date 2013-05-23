@@ -9,8 +9,15 @@ if($it['it_id']) {
     if(mysql_num_rows($result))
         $ps_run = true;
 } else if(!empty($_POST)) {
-    $ps_run = true;
     $subject_count = count($_POST['subject']);
+    $supply_count = count($_POST['supply']);
+
+    if(!$subject_count || !$supply_count) {
+        echo '추가옵션명과 추가옵션항목을 입력해 주십시오.';
+        exit;
+    }
+
+    $ps_run = true;
 }
 
 if($ps_run) {
