@@ -502,43 +502,123 @@ function session_check()
         gotourl(G4_SHOP_URL);
 }
 
-// 상품 옵션
-function get_item_options($subject, $option, $index)
+// 상품 선택옵션
+function get_item_options($it_id, $subject)
 {
-    $subject = trim($subject);
-    $option  = trim($option);
+    global $g4;
 
-    if (!$subject || !$option) return '';
+    if(!$it_id || !$subject)
+        return '';
+
+    $sql = " select * from {$g4['shop_item_option_table']} where io_type = '0' and it_id = '$it_id' and io_use = '1' order by io_no asc ";
+    $result = sql_query($sql);
+    if(!mysql_num_rows($result))
+        return '';
 
     $str = '';
+    $subj = explode(',', $subject);
+    $subj_count = count($subj);
+    $options = array();
 
-    $arr = explode("\n", $option);
-    // 옵션이 하나일 경우
-    if (count($arr) == 1)
-    {
-        $str = '<input type="text" value='.$option.' id="sit_opt_'.$index.'" readonly class="sit_ov_opt">';
-    }
-    else
-    {
-        $str = '<select name="it_opt'.$index.'" id="sit_opt_'.$index.'" onchange="amount_change()">'.PHP_EOL;
-        for ($k=0; $k<count($arr); $k++)
-        {
-            $arr[$k] = str_replace("\r", "", $arr[$k]);
-            $opt = explode(";", trim($arr[$k]));
-            $str .= '<option value="'.$arr[$k].'">'.$opt[0].'</option>';
-            // 옵션에 금액이 있다면
-            if ($opt[1] != 0)
-            {
-                $str .= ' (';
-                // - 금액이 아니라면 모두 + 금액으로
-                //if (!ereg("[-]", $opt[1]))
-                if (!preg_match("/[-]/", $opt[1]))
-                    $str .= '+';
-                $str .= display_price($opt[1]) . ')';
-            }
-            $str .= '</option>'.PHP_EOL;
+    // 옵션항목 배열에 저장
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        $opt_id = explode(chr(30), $row['io_id']);
+
+        for($k=0; $k<$subj_count; $k++) {
+            if(!is_array($options[$k]))
+                $options[$k] = array();
+
+            if($opt_id[$k] && !in_array($opt_id[$k], $options[$k]))
+                $options[$k][] = $opt_id[$k];
         }
-        $str .= '</select>'.PHP_EOL.'<input type="hidden" name="it_opt'.$index.'_subject" value="'.$subject.'">'.PHP_EOL;
+    }
+
+    // 옵션선택목록 만들기
+    for($i=0; $i<$subj_count; $i++) {
+        $opt = $options[$i];
+        $opt_count = count($opt);
+        $disabled = '';
+        if($opt_count) {
+            $seq = $i + 1;
+            if($i > 0)
+                $disabled = ' disabled="disabled"';
+            $str .= '<tr>'.PHP_EOL;
+            $str .= '<th><label for="it_option_'.$seq.'">'.$subj[$i].'</label></th>'.PHP_EOL;
+
+            $select = '<select name="it_option[]" id="it_option_'.$seq.'"'.$disabled.'>'.PHP_EOL;
+            $select .= '<option value="">선택</option>'.PHP_EOL;
+            for($k=0; $k<$opt_count; $k++) {
+                $opt_val = $opt[$k];
+                if($opt_val) {
+                    $select .= '<option value="'.$opt_val.'">'.$opt_val.'</option>'.PHP_EOL;
+                }
+            }
+            $select .= '</select>'.PHP_EOL;
+
+            $str .= '<td>'.$select.'</td>'.PHP_EOL;
+            $str .= '</tr>'.PHP_EOL;
+        }
+    }
+
+    return $str;
+}
+
+// 상품 추가옵션
+function get_item_supply($it_id, $subject)
+{
+    global $g4;
+
+    if(!$it_id || !$subject)
+        return '';
+
+    $sql = " select * from {$g4['shop_item_option_table']} where io_type = '1' and it_id = '$it_id' and io_use = '1' order by io_no asc ";
+    $result = sql_query($sql);
+    if(!mysql_num_rows($result))
+        return '';
+
+    $str = '';
+    $str .= '<tr>'.PHP_EOL;
+    $str .= '<th>추가상품</th>'.PHP_EOL;
+    $str .= '<td>추가구매를 원하시면 선택하세요.</td>'.PHP_EOL;
+    $str .= '</tr>'.PHP_EOL;
+
+    $subj = explode(',', $subject);
+    $subj_count = count($subj);
+    $options = array();
+
+    // 옵션항목 배열에 저장
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        $opt_id = explode(chr(30), $row['io_id']);
+
+        if($opt_id[0] && !array_key_exists($opt_id[0], $options))
+            $options[$opt_id[0]] = array();
+
+        if($opt_id[1] && !in_array($opt_id[1], $options[$opt_id[0]]))
+            $options[$opt_id[0]][] = $opt_id[1];
+    }
+
+    // 옵션항목 만들기
+    for($i=0; $i<$subj_count; $i++) {
+        $opt = $options[$subj[$i]];
+        $opt_count = count($opt);
+        if($opt_count) {
+            $seq = $i + 1;
+            $str .= '<tr>'.PHP_EOL;
+            $str .= '<th><label for="it_supply_'.$seq.'">'.$subj[$i].'</label></th>'.PHP_EOL;
+
+            $select = '<select name="it_supply[]" id="it_supply_'.$seq.'">'.PHP_EOL;
+            $select .= '<option value="">선택</option>'.PHP_EOL;
+            for($k=0; $k<$opt_count; $k++) {
+                $opt_val = $opt[$k];
+                if($opt_val) {
+                    $select .= '<option value="'.$opt_val.'">'.$opt_val.'</option>'.PHP_EOL;
+                }
+            }
+            $select .= '</select>'.PHP_EOL;
+
+            $str .= '<td>'.$select.'</td>'.PHP_EOL;
+            $str .= '</tr>'.PHP_EOL;
+        }
     }
 
     return $str;

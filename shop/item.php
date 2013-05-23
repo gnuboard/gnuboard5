@@ -273,22 +273,6 @@ else
             </tr>
             <?php } ?>
 
-            <?php
-            // 선택옵션 출력
-            for ($i=1; $i<=6; $i++)
-            {
-                // 옵션에 문자가 존재한다면
-                $str = get_item_options(trim($it['it_opt'.$i.'_subject']), trim($it['it_opt'.$i]), $i);
-                if ($str)
-                {
-                    echo '<tr>'.PHP_EOL;
-                    echo '<th scope="row"><label for="sit_opt_'.$i.'">'.$it['it_opt'.$i.'_subject'].'</label></th>'.PHP_EOL;
-                    echo '<td style="word-break:break-all;">'.$str.'</td>'.PHP_EOL;
-                    echo '</tr>'.PHP_EOL;
-                }
-            }
-            ?>
-
             <?php if (!$it['it_gallery']) { // 갤러리 형식이라면 가격, 구매하기 출력하지 않음 ?>
             <?php if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
 
@@ -333,6 +317,14 @@ else
                 </td>
             </tr>
             <?php } ?>
+
+            <?php // 선택옵션
+            echo get_item_options($it['it_id'], $it['it_option_subject']);
+            ?>
+
+            <?php // 추가옵션
+            echo get_item_supply($it['it_id'], $it['it_supply_subject']);
+            ?>
 
             <tr>
                 <th scope="row">수량</th>
