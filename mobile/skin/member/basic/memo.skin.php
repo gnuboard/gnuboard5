@@ -42,5 +42,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         쪽지 보관일수는 최장 <strong><?php echo $config['cf_memo_del'] ?></strong>일 입니다.
     </p>
 
-    <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
+    <div class="btn_win">
+        <button type="button" onclick="window.close();">창닫기</button>
+    </div>
 </div>
