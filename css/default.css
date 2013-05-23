@@ -137,7 +137,9 @@ button.btn_cancel {display:inline-block;padding:0 10px;height:24px;border:1px so
 .btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
+.btn_win button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;vertical-align:top;line-height:2em;cursor:pointer}
+.btn_win input {height:30px;line-height:2em}
+.btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
 .btn_win a:focus, .btn_win a:hover {text-decoration:none}
 /* 게시판용 버튼 */
 .btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #d9ded9;background:#f5f6fa;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
