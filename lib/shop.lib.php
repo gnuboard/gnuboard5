@@ -518,46 +518,67 @@ function get_item_options($it_id, $subject)
     $str = '';
     $subj = explode(',', $subject);
     $subj_count = count($subj);
-    $options = array();
 
-    // 옵션항목 배열에 저장
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        $opt_id = explode(chr(30), $row['io_id']);
+    if($subj_count > 1) {
+        $options = array();
 
-        for($k=0; $k<$subj_count; $k++) {
-            if(!is_array($options[$k]))
-                $options[$k] = array();
+        // 옵션항목 배열에 저장
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+            $opt_id = explode(chr(30), $row['io_id']);
 
-            if($opt_id[$k] && !in_array($opt_id[$k], $options[$k]))
-                $options[$k][] = $opt_id[$k];
-        }
-    }
+            for($k=0; $k<$subj_count; $k++) {
+                if(!is_array($options[$k]))
+                    $options[$k] = array();
 
-    // 옵션선택목록 만들기
-    for($i=0; $i<$subj_count; $i++) {
-        $opt = $options[$i];
-        $opt_count = count($opt);
-        $disabled = '';
-        if($opt_count) {
-            $seq = $i + 1;
-            if($i > 0)
-                $disabled = ' disabled="disabled"';
-            $str .= '<tr>'.PHP_EOL;
-            $str .= '<th><label for="it_option_'.$seq.'">'.$subj[$i].'</label></th>'.PHP_EOL;
-
-            $select = '<select name="it_option[]" id="it_option_'.$seq.'"'.$disabled.'>'.PHP_EOL;
-            $select .= '<option value="">선택</option>'.PHP_EOL;
-            for($k=0; $k<$opt_count; $k++) {
-                $opt_val = $opt[$k];
-                if($opt_val) {
-                    $select .= '<option value="'.$opt_val.'">'.$opt_val.'</option>'.PHP_EOL;
-                }
+                if($opt_id[$k] && !in_array($opt_id[$k], $options[$k]))
+                    $options[$k][] = $opt_id[$k];
             }
-            $select .= '</select>'.PHP_EOL;
-
-            $str .= '<td>'.$select.'</td>'.PHP_EOL;
-            $str .= '</tr>'.PHP_EOL;
         }
+
+        // 옵션선택목록 만들기
+        for($i=0; $i<$subj_count; $i++) {
+            $opt = $options[$i];
+            $opt_count = count($opt);
+            $disabled = '';
+            if($opt_count) {
+                $seq = $i + 1;
+                if($i > 0)
+                    $disabled = ' disabled="disabled"';
+                $str .= '<tr>'.PHP_EOL;
+                $str .= '<th><label for="it_option_'.$seq.'">'.$subj[$i].'</label></th>'.PHP_EOL;
+
+                $select = '<select name="it_option[]" id="it_option_'.$seq.'"'.$disabled.'>'.PHP_EOL;
+                $select .= '<option value="">선택</option>'.PHP_EOL;
+                for($k=0; $k<$opt_count; $k++) {
+                    $opt_val = $opt[$k];
+                    if($opt_val) {
+                        $select .= '<option value="'.$opt_val.'">'.$opt_val.'</option>'.PHP_EOL;
+                    }
+                }
+                $select .= '</select>'.PHP_EOL;
+
+                $str .= '<td>'.$select.'</td>'.PHP_EOL;
+                $str .= '</tr>'.PHP_EOL;
+            }
+        }
+    } else {
+        $str .= '<tr>'.PHP_EOL;
+        $str .= '<th><label for="it_option_1">'.$subj[0].'</label></th>'.PHP_EOL;
+
+        $select = '<select name="it_option[]" id="it_option_1">'.PHP_EOL;
+        $select .= '<option value="">선택</option>'.PHP_EOL;
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+            if($row['io_price'] >= 0)
+                $price = '&nbsp;&nbsp;+ '.number_format($row['io_price']).'원';
+            else
+                $price = '&nbsp;&nbsp; '.number_format($row['io_price']).'원';
+
+            $select .= '<option value="'.$row['io_id'].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$row['io_id'].$price.'</option>'.PHP_EOL;
+        }
+        $select .= '</select>'.PHP_EOL;
+
+        $str .= '<td>'.$select.'</td>'.PHP_EOL;
+        $str .= '</tr>'.PHP_EOL;
     }
 
     return $str;
@@ -593,8 +614,14 @@ function get_item_supply($it_id, $subject)
         if($opt_id[0] && !array_key_exists($opt_id[0], $options))
             $options[$opt_id[0]] = array();
 
-        if($opt_id[1] && !in_array($opt_id[1], $options[$opt_id[0]]))
-            $options[$opt_id[0]][] = $opt_id[1];
+        if($opt_id[1]) {
+            if($row['io_price'] >= 0)
+                $price = '&nbsp;&nbsp;+ '.number_format($row['io_price']).'원';
+            else
+                $price = '&nbsp;&nbsp; '.number_format($row['io_price']).'원';
+
+            $options[$opt_id[0]][] = '<option value="'.$opt_id[1].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$opt_id[1].$price.'</option>';
+        }
     }
 
     // 옵션항목 만들기
@@ -611,7 +638,7 @@ function get_item_supply($it_id, $subject)
             for($k=0; $k<$opt_count; $k++) {
                 $opt_val = $opt[$k];
                 if($opt_val) {
-                    $select .= '<option value="'.$opt_val.'">'.$opt_val.'</option>'.PHP_EOL;
+                    $select .= $opt_val.PHP_EOL;
                 }
             }
             $select .= '</select>'.PHP_EOL;

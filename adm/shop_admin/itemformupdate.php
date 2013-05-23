@@ -305,26 +305,25 @@ sql_query(" delete from {$g4['shop_item_option_table']} where io_type = '0' and 
 
 $option_count = count($_POST['opt_id']);
 if($option_count) {
-    // 실재하는 1차 옵션항목
-    $arr_opt1 = array();
-    $opt2_cnt = $opt3_cnt = 0;
+    // 옵션명
+    $opt1_cnt = $opt2_cnt = $opt3_cnt = 0;
     for($i=0; $i<$option_count; $i++) {
         $opt_val = explode(chr(30), $_POST['opt_id'][$i]);
-        if(!in_array($opt_val[0], $arr_opt1))
-            $arr_opt1[] = $opt_val[0];
+        if($opt_val[0])
+            $opt1_cnt++;
         if($opt_val[1])
             $opt2_cnt++;
         if($opt_val[2])
             $opt3_cnt++;
     }
 
-    $it_option_subject = $opt1_subject;
-    if($opt2_subject && $opt2_cnt)
-        $it_option_subject .= ','.$opt2_subject;
-    if($opt3_subject && $opt3_cnt)
-        $it_option_subject .= ','.$opt3_subject;
-
-    $it_option = implode(',', $arr_opt1);
+    if($opt1_subject && $opt1_cnt) {
+        $it_option_subject = $opt1_subject;
+        if($opt2_subject && $opt2_cnt)
+            $it_option_subject .= ','.$opt2_subject;
+        if($opt3_subject && $opt3_cnt)
+            $it_option_subject .= ','.$opt3_subject;
+    }
 }
 
 // 추가옵션
@@ -360,7 +359,6 @@ $sql_common = " ca_id               = '$ca_id',
                 it_maker            = '$it_maker',
                 it_origin           = '$it_origin',
                 it_option_subject   = '$it_option_subject',
-                it_option           = '$it_option',
                 it_supply_subject   = '$it_supply_subject',
                 it_type1            = '$it_type1',
                 it_type2            = '$it_type2',
