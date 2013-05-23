@@ -79,7 +79,7 @@ a:active {color:#000;text-decoration:underline}
 
 /* 텍스트 크기 조절 */
 #text_size {position:absolute;top:-33px;left:-1px;letter-spacing:-3px}
-#text_size button {margin:0;padding:0 10px;height:28px;border:0;background:#555;color:#fff;vertical-align:middle;cursor:pointer}
+#text_size button {margin:0;padding:0 10px;height:28px;border:0;background:#555;color:#fff;vertical-align:middle;letter-spacing:0;cursor:pointer}
 #text_size_down {font-size:0.9em}
 #text_size_def {font-size:1em}
 #text_size_up {font-size:1.3em}
