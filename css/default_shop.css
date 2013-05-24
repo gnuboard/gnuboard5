@@ -506,8 +506,11 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 .sit_ov_input {margin:0 1px 0 0;padding:2px 2px 3px;border:1px solid #b8c9c2;background:transparent;vertical-align:middle}
 #sit_ov_tbl button {margin:0 1px 0 0}
 
-.sit_sel_btn {position:relative} /* 선택/추가옵션용 추가 버튼 */
-.sit_sel_btn button {position:absolute;top:-51px;right:0}
+.sit_sel_btn {position:relative} /* 선택옵션용 추가 버튼 */
+.sit_sel_btn button {position:absolute;top:-51px;right:0 !important;right:15px}
+
+.td_sit_sel {position:relative}
+.sit_sel_submit {position:absolute;top:8px;right:0}
 
 #sit_ov_btn {margin:0 0 0 34px !important;margin:0 0 0 33px;padding:0;list-style:none;zoom:1}
 #sit_ov_btn:after {display:block;visibility:hidden;clear:both;content:""}
@@ -528,7 +531,7 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sit_inf h3 {position:absolute;font-size:0;line-height:0;content:""}
 
 #sit_inf_basic {margin:0 0 10px}
-#sit_inf_explan {margin:0 0 10px}
+#sit_inf_explan {margin:0 0 10px;width:718px;overflow:hidden} /* ie6 미대응시 #sit_inf_explan {margin:0 0 10px} 만으로 충분 */
 #sit_inf_explan img {max-width:100%;height:auto}
 
 #sit_inf_open {width:100%;border:0;border-collapse:collapse}

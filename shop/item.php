@@ -358,9 +358,6 @@ else
                 ?>
                 </tbody>
                 </table>
-                <div class="sit_sel_btn">
-                    <button type="button" id="sit_selsub_submit" class="btn_frmline">추가</button>
-                </div>
             </section>
             <!-- ########## 추가옵션이 있을 때만 출력 끝 -->
 
