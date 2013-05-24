@@ -32,7 +32,12 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         else
             $price = '&nbsp;&nbsp; '.number_format($row['io_price']).'원';
 
-        $str .= PHP_EOL.'<option value="'.$val[$key].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$val[$key].$price.'</otpion>';
+        if(!$row['io_stock_qty'])
+            $soldout = '&nbsp;&nbsp;[품절]';
+        else
+            $soldout = '';
+
+        $str .= PHP_EOL.'<option value="'.$val[$key].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$val[$key].$price.$soldout.'</otpion>';
     }
 }
 
