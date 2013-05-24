@@ -173,7 +173,7 @@ function get_option_stock_qty($it_id, $io_id)
 
     $sql = " select io_stock_qty from {$g4['shop_item_option_table']} where it_id = '$it_id' and io_id = '$io_id' and io_use = '1' ";
     $row = sql_fetch($sql);
-    $jaego = (int)$row['it_stock_qty'];
+    $jaego = (int)$row['io_stock_qty'];
 
     // 재고에서 빼지 않았고 주문인것만
     $sql = " select SUM(ct_qty) as sum_qty

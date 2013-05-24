@@ -185,6 +185,7 @@ else
     <form name="fitem" action="<?php echo $action_url; ?>" method="post">
     <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
     <input type="hidden" name="it_name" value="<?php echo $it['it_name']; ?>">
+    <input type="hidden" name="total_price" value="">
     <input type="hidden" name="sw_direct">
     <input type="hidden" name="url">
 
@@ -299,7 +300,7 @@ else
                 <th scope="row">판매가격</th>
                 <td>
                     <?php echo number_format($it['it_price']); ?> 원
-                    <input type="hidden" name="it_price" value="<?php echo $it['it_price']; ?>">
+                    <input type="hidden" name="it_price" value="<?php echo get_price($it); ?>">
                 </td>
             </tr>
 
@@ -688,6 +689,7 @@ else
                     }
                 });
 
+                $("input[name=total_price]").val(total);
                 $("#sit_tot_price").empty().html("총 금액 : "+number_format(String(total))+"원");
             }
             </script>
@@ -922,16 +924,10 @@ else
             return;
         }
 
-        for (i=1; i<=6; i++)
+        if($("input[name='io_id[]']").size() < 1)
         {
-            if (typeof(f.elements["it_opt"+i]) != 'undefined')
-            {
-                if (f.elements["it_opt"+i].value == '선택') {
-                    alert(f.elements["it_opt"+i+"_subject"].value + '을(를) 선택하여 주십시오.');
-                    f.elements["it_opt"+i].focus();
-                    return;
-                }
-            }
+            alert("상품의 선택옵션을 선택해 주십시오.");
+            return false;
         }
 
         if (act == "direct_buy") {
@@ -940,22 +936,31 @@ else
             f.sw_direct.value = 0;
         }
 
-        if (!f.ct_qty.value) {
-            alert("수량을 입력해 주십시오.");
-            f.ct_qty.focus();
-            return;
-        } else if (isNaN(f.ct_qty.value)) {
-            alert("수량을 숫자로 입력해 주십시오.");
-            f.ct_qty.select();
-            f.ct_qty.focus();
-            return;
-        } else if (parseInt(f.ct_qty.value) < 1) {
-            alert("수량은 1 이상 입력해 주십시오.");
-            f.ct_qty.focus();
-            return;
-        }
+        var val, result = true;
+        $("input[name='ct_qty[]']").each(function() {
+            val = $(this).val();
 
-        amount_change();
+            if(val.length < 1) {
+                alert("수량을 입력해 주십시오.");
+                result = false;
+                return false;
+            }
+
+            if(val.replace(/[0-9]/g, "").length > 0) {
+                alert("수량은 숫자로 입력해 주십시오.");
+                result = false;
+                return false;
+            }
+
+            if(parseInt(val.replace(/[^0-9]/g, "")) < 1) {
+                alert("수량은 1이상 입력해 주십시오.");
+                result = false;
+                return false;
+            }
+        });
+
+        if(!result)
+            return false;
 
         f.submit();
     }

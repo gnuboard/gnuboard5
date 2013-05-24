@@ -157,7 +157,7 @@ else // 장바구니에 담기
 
     // 옵션정보를 얻어서 배열에 저장
     $opt_list = array();
-    $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$_POST['it_id']}' and io_use = '1' order io_no asc ";
+    $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$_POST['it_id']}' and io_use = '1' order by io_no asc ";
     $result = sql_query($sql);
     for($i=0; $row=sql_fetch_array($result); $i++) {
         $opt_list[$row['io_type']][$row['io_id']]['price'] = $row['io_price'];
@@ -197,7 +197,7 @@ else // 장바구니에 담기
     for($i=0; $i<$option_count; $i++) {
         $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
                   where it_id = '{$_POST['it_id']}'
-                    and uq_id = '$tmp_uq_id',
+                    and uq_id = '$tmp_uq_id'
                     and io_id = '{$_POST['io_id'][$i]}' ";
         $row = sql_fetch($sql);
         $sum_qty = $row['cnt'];
@@ -233,7 +233,7 @@ else // 장바구니에 담기
                 VALUES ";
 
     for($i=0; $i<$option_count; $i++) {
-        $sql .= $comma."( '$tmp_uq_id', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST[['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price']}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
+        $sql .= $comma."( '$tmp_uq_id', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
         $comma = ' , ';
     }
 
