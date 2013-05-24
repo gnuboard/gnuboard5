@@ -367,7 +367,6 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
   `it_maker` varchar(255) NOT NULL DEFAULT '',
   `it_origin` varchar(255) NOT NULL DEFAULT '',
   `it_option_subject` varchar(255) NOT NULL DEFAULT '',
-  `it_option` varchar(255) NOT NULL DEFAULT '',
   `it_supply_subject` varchar(255) NOT NULL DEFAULT '',
   `it_type1` tinyint(4) NOT NULL DEFAULT '0',
   `it_type2` tinyint(4) NOT NULL DEFAULT '0',

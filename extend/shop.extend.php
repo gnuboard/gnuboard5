@@ -79,7 +79,6 @@ if(!sql_query(" select io_id from {$g4['shop_item_option_table']} limit 1 ", fal
                 ) ", false);
     sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
                     ADD `it_option_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
-                    ADD `it_option` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_option_subject`,
                     ADD `it_supply_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_option` ", false);
 }
 
