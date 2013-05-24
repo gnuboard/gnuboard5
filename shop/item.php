@@ -291,17 +291,15 @@ else
             <?php if ($it['it_cust_price']) { // 1.00.03?>
             <tr>
                 <th scope="row"><label for="disp_cust_price">시중가격</label></th>
-                <td>
-                    <input type="text" name="disp_cust_price" value="<?php echo number_format($it['it_cust_price']); ?>" id="disp_cust_price" readonly class="sit_ov_ro" size="8"> 원
-                </td>
+                <td><?php echo display_price($it['it_cust_price']); ?></td>
             </tr>
             <?php } // 시중가격 끝 ?>
 
             <tr>
-                <th scope="row"><label for="disp_sell_price">판매가격</label></th>
+                <th scope="row">판매가격</th>
                 <td>
-                    <input type="text" name="disp_sell_price" id="disp_sell_price" readonly class="sit_ov_ro" size="8"> 원
-                    <input type="hidden" name="it_price" value="0">
+                    <?php echo number_format($it['it_price']); ?> 원
+                    <input type="hidden" name="it_price" value="<?php echo $it['it_price']; ?>">
                 </td>
             </tr>
 
@@ -316,10 +314,10 @@ else
 
             <?php if ($config['cf_use_point']) { // 포인트 사용한다면 ?>
             <tr>
-                <th scope="row"><label for="disp_point">포인트</label></th>
+                <th scope="row">포인트</th>
                 <td>
-                    <input type="text" name="disp_point" id="disp_point" readonly class="sit_ov_ro" size="8"> 점
-                    <input type="hidden" name="it_point" value="0">
+                    <?php echo number_format($it['it_point']); ?> 점
+                    <input type="hidden" name="it_point" value="<?php echo $it['it_point']; ?>">
                 </td>
             </tr>
             <?php } ?>
@@ -835,86 +833,6 @@ else
         $(".item_qa_count").text("<?php echo $qa_total_count; ?>");
         $(".item_relation_count").text("<?php echo $item_relation_count; ?>");
     });
-
-    function qty_add(num)
-    {
-        var f = document.fitem;
-        var qty = parseInt(f.ct_qty.value);
-        if (num < 0 && qty <= 1)
-        {
-            alert("수량은 1 이상만 가능합니다.");
-            qty = 1;
-        }
-        else if (num > 0 && qty >= 9999)
-        {
-            alert("수량은 9999 이하만 가능합니다.");
-            qty = 9999;
-        }
-        else
-        {
-            qty = qty + num;
-        }
-
-        f.ct_qty.value = qty;
-
-        amount_change();
-    }
-
-    function get_amount(data)
-    {
-        var str = data.split(";");
-        var num = parseInt(str[1]);
-        if (isNaN(num)) {
-            return 0;
-        } else {
-            return num;
-        }
-    }
-
-    function amount_change()
-    {
-        var basic_amount = parseInt("<?php echo get_price($it); ?>");
-        var basic_point  = parseFloat("<?php echo $it['it_point']; ?>");
-        var cust_amount  = parseFloat("<?php echo $it['it_cust_price']; ?>");
-
-        var f = document.fitem;
-        var opt1 = 0;
-        var opt2 = 0;
-        var opt3 = 0;
-        var opt4 = 0;
-        var opt5 = 0;
-        var opt6 = 0;
-        var ct_qty = 0;
-
-        if (typeof(f.ct_qty) != 'undefined')
-            ct_qty = parseInt(f.ct_qty.value);
-
-        if (typeof(f.it_opt1) != 'undefined') opt1 = get_amount(f.it_opt1.value);
-        if (typeof(f.it_opt2) != 'undefined') opt2 = get_amount(f.it_opt2.value);
-        if (typeof(f.it_opt3) != 'undefined') opt3 = get_amount(f.it_opt3.value);
-        if (typeof(f.it_opt4) != 'undefined') opt4 = get_amount(f.it_opt4.value);
-        if (typeof(f.it_opt5) != 'undefined') opt5 = get_amount(f.it_opt5.value);
-        if (typeof(f.it_opt6) != 'undefined') opt6 = get_amount(f.it_opt6.value);
-
-        var amount = basic_amount + opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
-        var point  = parseInt(basic_point);
-
-        if (typeof(f.it_price) != 'undefined')
-            f.it_price.value = amount;
-
-        if (typeof(f.disp_sell_price) != 'undefined')
-            f.disp_sell_price.value = number_format(String(amount * ct_qty));
-
-        if (typeof(f.disp_cust_price) != 'undefined')
-            f.disp_cust_price.value = number_format(String(cust_amount * ct_qty));
-
-        if (typeof(f.it_point) != 'undefined') {
-            f.it_point.value = point;
-            f.disp_point.value = number_format(String(point * ct_qty));
-        }
-    }
-
-    <?php if (!$it['it_gallery']) { echo "amount_change();"; } // 처음시작시 한번 실행 ?>
 
     // 바로구매 또는 장바구니 담기
     function fitemcheck(f, act)
