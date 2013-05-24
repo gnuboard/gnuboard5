@@ -440,6 +440,7 @@ else
                         });
                     });
 
+                    // 선택된 옵션 출력
                     function add_sel_option(type, id, option, price, stock)
                     {
                         var opt = "";
@@ -473,8 +474,79 @@ else
                         } else{
                             $("#sit_sel_option > ul li:last").after(opt);
                         }
+
+                        price_calculate();
+                    }
+
+                    // 수량변경 및 삭제
+                    $("#sit_sel_option li button").live("click", function() {
+                        var mode = $(this).text();
+                        var this_qty, max_qty = 9999, min_qty = 1;
+                        var $el_qty = $(this).closest("li").find("input[name='ct_qty[]']");
+
+                        switch(mode) {
+                            case "증가":
+                                this_qty = parseInt($el_qty.val().replace(/[^0-9]/, "")) + 1;
+                                if(this_qty > max_qty) {
+                                    this_qty = max_qty;
+                                    alert("최대 구매수량은 "+number_format(String(max_qty))+" 입니다.");
+                                }
+                                $el_qty.val(this_qty);
+                                price_calculate();
+                                break;
+
+                            case "감소":
+                                this_qty = parseInt($el_qty.val().replace(/[^0-9]/, "")) - 1;
+                                if(this_qty < min_qty) {
+                                    this_qty = min_qty;
+                                    alert("최소 구매수량은 "+number_format(String(min_qty))+" 입니다.");
+                                }
+                                $el_qty.val(this_qty);
+                                price_calculate();
+                                break;
+
+                            case "삭제":
+                                if(confirm("선택하신 옵션항목을 삭제하시겠습니까?")) {
+                                    $(this).closest("li").remove();
+                                    price_calculate();
+                                }
+                                break;
+
+                            default:
+                                alert("올바른 방법으로 이용해 주십시오.");
+                                break;
+                        }
+                    });
+
+                    // 가격계산
+                    function price_calculate()
+                    {
+                        var it_price = parseInt("<?php echo $it['it_price']; ?>");
+                        var $el_prc = $("input[name='io_price[]']");
+                        var $el_qty = $("input[name='ct_qty[]']");
+                        var $el_type = $("input[name='io_type[]']");
+                        var price, type, qty, total = 0;
+
+                        $el_prc.each(function(index) {
+                            price = parseInt($(this).val());
+                            qty = parseInt($el_qty.eq(index).val());
+                            type = $el_type.eq(index).val();
+
+                            if(type == "0") { // 선택옵션
+                                total += (it_price + price) * qty;
+                            } else { // 추가옵션
+                                total += price * qty;
+                            }
+                        });
+
+                        $("#sit_tot_price").empty().html("총 금액 : "+number_format(String(total))+"원");
                     }
                     </script>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div id="sit_tot_price"></div>
                 </td>
             </tr>
 
