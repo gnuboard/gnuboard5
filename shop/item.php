@@ -489,6 +489,30 @@ else
                         });
 
                         // 수량직접입력
+                        $("input[name='ct_qty[]']").live("keyup", function() {
+                            var val= $(this).val();
+
+                            if(val != "") {
+                                if(val.replace(/[0-9]/g, "").length > 0) {
+                                    alert("수량은 숫자만 입력해 주십시오.");
+                                    $(this).val(1);
+                                } else {
+                                    var d_val = parseInt(val);
+                                    if(d_val < 1 || d_val > 9999) {
+                                        alert("수량은 1에서 9999 사이의 값으로 입력해 주십시오.");
+                                        $(this).val(1);
+                                    } else {
+                                        var stock = parseInt($(this).closest("li").find("input[name='io_stock[]']").val());
+                                        if(d_val > stock) {
+                                            alert("재고수량 보다 많은 수량을 구매할 수 없습니다.");
+                                            $(this).val(stock);
+                                        }
+                                    }
+                                }
+
+                                price_calculate();
+                            }
+                        });
                     });
 
                     // 선택된 옵션 출력
