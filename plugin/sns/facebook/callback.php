@@ -39,11 +39,12 @@ if ($user) {
     echo <<<EOT
     <script>
     $(function() {
+        document.write("<strong>페이스북 승인이 되었습니다.</strong>");
+
         var opener = window.opener;
         opener.$("#facebook_icon").attr("src", "{$g4_sns_url}/icon/facebook_on.png");
         opener.$("#facebook_checked").attr("disabled", false);
         opener.$("#facebook_checked").attr("checked", true);
-        //alert("페이스북 승인이 되었습니다.");
         window.close();
     });
     </script>

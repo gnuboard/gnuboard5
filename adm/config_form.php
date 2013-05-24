@@ -729,11 +729,25 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="cf_facebook_appid">페이스북 앱 ID</label></th>
         <td>
-            <input type="text" name="cf_facebook_appid" value="<?php echo $config['cf_facebook_appid'] ?>" id="cf_facebook_appid" class="frm_input"> <a href="https://developers.facebook.com/apps" target="_blank" class="btn_frmline">앱 등록페이지</a>
+            <input type="text" name="cf_facebook_appid" value="<?php echo $config['cf_facebook_appid'] ?>" id="cf_facebook_appid" class="frm_input"> <a href="https://developers.facebook.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
         </td>
         <th scope="row"><label for="cf_facebook_secret">페이스북 앱 Secret</label></th>
         <td>
-            <input type="text" name="cf_facebook_secret" value="<?php echo $config['cf_facebook_secret'] ?>" id="cf_facebook_secret" class="frm_input" size="30">
+            <input type="text" name="cf_facebook_secret" value="<?php echo $config['cf_facebook_secret'] ?>" id="cf_facebook_secret" class="frm_input" size="35">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_twitter_use">트위터 사용</label></th>
+        <td colspan="3"><input type="checkbox" name="cf_twitter_use" value="1" id="cf_twitter_use" <?php echo $config['cf_twitter_use']?'checked':''; ?>> 사용</td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_twitter_key">트위터 컨슈머 Key</label></th>
+        <td>
+            <input type="text" name="cf_twitter_key" value="<?php echo $config['cf_twitter_key'] ?>" id="cf_twitter_key" class="frm_input"> <a href="https://dev.twitter.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
+        </td>
+        <th scope="row"><label for="cf_twitter_secret">트위터 컨슈머 Secret</label></th>
+        <td>
+            <input type="text" name="cf_twitter_secret" value="<?php echo $config['cf_twitter_secret'] ?>" id="cf_twitter_secret" class="frm_input" size="35">
         </td>
     </tr>
     </tbody>

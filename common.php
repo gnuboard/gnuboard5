@@ -134,8 +134,8 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
 //==============================================================================
 // SESSION 설정
 //------------------------------------------------------------------------------
-ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
-ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
+@ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
+@ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
 session_save_path(G4_DATA_PATH.'/session');
 
@@ -143,15 +143,6 @@ if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
 else
     @session_cache_limiter("no-cache, must-revalidate");
-//==============================================================================
-
-
-//==============================================================================
-// 공용 변수
-//------------------------------------------------------------------------------
-// 기본환경설정
-// 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
-$config = sql_fetch(" select * from {$g4['config_table']} ");
 
 ini_set("session.cache_expire", 180); // 세션 캐쉬 보관시간 (분)
 ini_set("session.gc_maxlifetime", 10800); // session data의 garbage collection 존재 기간을 지정 (초)
@@ -162,6 +153,15 @@ session_set_cookie_params(0, '/');
 ini_set("session.cookie_domain", G4_COOKIE_DOMAIN);
 
 @session_start();
+//==============================================================================
+
+
+//==============================================================================
+// 공용 변수
+//------------------------------------------------------------------------------
+// 기본환경설정
+// 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
+$config = sql_fetch(" select * from {$g4['config_table']} ");
 
 define('G4_HTTP_BBS_URL',   https_url(G4_BBS_DIR, false));
 define('G4_HTTPS_BBS_URL',  https_url(G4_BBS_DIR, true));

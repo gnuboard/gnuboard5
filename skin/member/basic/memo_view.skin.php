@@ -14,18 +14,14 @@ else {
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_view" class="new_win">
-    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
-
+    <h1><?php echo $g4['title'] ?></h1>
     <ul class="new_win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
         <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
     </ul>
-
-    <article id="memo_view_contents">
-        <header>
-            <h1>쪽지 내용</h1>
-        </header>
+    <section>
+        <h2>쪽지 내용</h2>
         <ul id="memo_view_ul">
             <li class="memo_view_li">
                 <span class="memo_view_subj"><?php echo $kind_str ?>사람</span>
@@ -39,7 +35,7 @@ else {
         <p>
             <?php echo conv_content($memo['me_memo'], 0) ?>
         </p>
-    </article>
+    </section>
     <div class="btn_win">
         <?php if($prev_link) {  ?>
         <a href="<?php echo $prev_link ?>">이전쪽지</a>
