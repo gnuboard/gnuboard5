@@ -240,12 +240,12 @@ else
         <section id="sit_ov">
             <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?></h2>
             <p id="sit_desc"><?php echo $it['it_basic']; ?></p>
-            <!-- ########## 상품 기본옵션/추가옵션에 따른 출력 - 지운아빠 2013-05-24 -->
+            <!-- ########## 상품 선택옵션/추가옵션에 따른 출력 - 지운아빠 2013-05-24 -->
             <!-- 스크린리더에서만 출력할 예정 -->
             <p id="sit_opt_info">
-                상품 기본옵션 n 개, 추가옵션 n 개
+                상품 선택옵션 n 개, 추가옵션 n 개
             </p>
-            <!-- ########## 상품 기본옵션/추가옵션에 따른 출력 끝 -->
+            <!-- ########## 상품 선택옵션/추가옵션에 따른 출력 끝 -->
             <?php if ($score = get_star_image($it['it_id'])) { ?>
             <div id="sit_star_sns">
                 <?php
@@ -259,7 +259,7 @@ else
                 <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_URL.'/img/shop/sns_goo2.png'); ?>
             </div>
             <?php } ?>
-            <table id="sit_ov_tbl">
+            <table class="sit_ov_tbl">
             <colgroup>
                 <col class="grid_3">
                 <col>
@@ -321,23 +321,57 @@ else
                 </td>
             </tr>
             <?php } ?>
+            </tbody>
+            </table>
 
-            <?php // 선택옵션
-            echo get_item_options($it['it_id'], $it['it_option_subject']);
-            ?>
+            <!-- ########## 선택옵션이 있을 때만 출력 - 지운아빠 2013-05-24 -->
+            <section>
+                <h3>선택옵션</h3>
+                <table class="sit_ov_tbl">
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <?php // 선택옵션
+                echo get_item_options($it['it_id'], $it['it_option_subject']);
+                ?>
+                </tbody>
+                </table>
+                <div class="sit_sel_btn">
+                    <button type="button" id="sit_sel_submit" class="btn_frmline">추가</button>
+                </div>
+            </section>
+            <!-- ########## 선택옵션이 있을 때만 출력 끝 -->
 
-            <?php // 추가옵션
-            echo get_item_supply($it['it_id'], $it['it_supply_subject']);
-            ?>
+            <!-- ########## 추가옵션이 있을 때만 출력 - 지운아빠 2013-05-24 -->
+            <section>
+                <h3>추가옵션</h3>
+                <table class="sit_ov_tbl">
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <?php // 추가옵션
+                echo get_item_supply($it['it_id'], $it['it_supply_subject']);
+                ?>
+                </tbody>
+                </table>
+                <div class="sit_sel_btn">
+                    <button type="button" id="sit_sel_submit" class="btn_frmline">추가</button>
+                </div>
+            </section>
+            <!-- ########## 추가옵션이 있을 때만 출력 끝 -->
 
-            <tr>
+            <!-- <tr> ##### 삭제대상 - 지운아빠 2013-05-24
                 <th scope="row">수량</th>
                 <td>
                     <input type="text" name="ct_qty" value="1" class="sit_ov_input" size="4" maxlength="4" autocomplete="off" onkeyup="amount_change()">
                     <button type="button" onclick="javascript:qty_add(+1);" class="btn_frmline"><span class="sound_only">수량 1개 </span>증가</button>
                     <button type="button" onclick="javascript:qty_add(-1);" class="btn_frmline"><span class="sound_only">수량 1개 </span>감소</button>
                 </td>
-            </tr>
+            </tr> -->
             <?php } // 전화문의가 아닐 경우 끝 ?>
 
             <?php } // 갤러리가 아닐 경우 끝 ?>

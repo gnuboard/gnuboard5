@@ -603,10 +603,6 @@ function get_item_supply($it_id, $subject)
         return '';
 
     $str = '';
-    $str .= '<tr>'.PHP_EOL;
-    $str .= '<th>추가상품</th>'.PHP_EOL;
-    $str .= '<td>추가구매를 원하시면 선택하세요.</td>'.PHP_EOL;
-    $str .= '</tr>'.PHP_EOL;
 
     $subj = explode(',', $subject);
     $subj_count = count($subj);
