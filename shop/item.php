@@ -437,8 +437,58 @@ else
                             var price = info[1];
                             var stock = info[2];
 
-                            add_sel_option(1, id, option, price, stock);
+                            if(!same_option_check(option))
+                                add_sel_option(1, id, option, price, stock);
                         });
+
+                        // 수량변경 및 삭제
+                        $("#sit_sel_option li button").live("click", function() {
+                            var mode = $(this).text();
+                            var this_qty, max_qty = 9999, min_qty = 1;
+                            var $el_qty = $(this).closest("li").find("input[name='ct_qty[]']");
+                            var stock = parseInt($(this).closest("li").find("input[name='io_stock[]']").val());
+
+                            switch(mode) {
+                                case "증가":
+                                    this_qty = parseInt($el_qty.val().replace(/[^0-9]/, "")) + 1;
+                                    if(this_qty > stock) {
+                                        alert("재고수량 보다 많은 수량을 구매할 수 없습니다.");
+                                        this_qty = stock;
+                                    }
+
+                                    if(this_qty > max_qty) {
+                                        this_qty = max_qty;
+                                        alert("최대 구매수량은 "+number_format(String(max_qty))+" 입니다.");
+                                    }
+
+                                    $el_qty.val(this_qty);
+                                    price_calculate();
+                                    break;
+
+                                case "감소":
+                                    this_qty = parseInt($el_qty.val().replace(/[^0-9]/, "")) - 1;
+                                    if(this_qty < min_qty) {
+                                        this_qty = min_qty;
+                                        alert("최소 구매수량은 "+number_format(String(min_qty))+" 입니다.");
+                                    }
+                                    $el_qty.val(this_qty);
+                                    price_calculate();
+                                    break;
+
+                                case "삭제":
+                                    if(confirm("선택하신 옵션항목을 삭제하시겠습니까?")) {
+                                        $(this).closest("li").remove();
+                                        price_calculate();
+                                    }
+                                    break;
+
+                                default:
+                                    alert("올바른 방법으로 이용해 주십시오.");
+                                    break;
+                            }
+                        });
+
+                        // 수량직접입력
                     });
 
                     // 선택된 옵션 출력
@@ -473,58 +523,14 @@ else
                             $("#sit_sel_option").html("<ul></ul>");
                             $("#sit_sel_option > ul").html(opt);
                         } else{
-                            $("#sit_sel_option > ul li:last").after(opt);
+                            if($("#sit_sel_option > ul li").size() < 1)
+                                $("#sit_sel_option > ul").html(opt);
+                            else
+                                $("#sit_sel_option > ul li:last").after(opt);
                         }
 
                         price_calculate();
                     }
-
-                    // 수량변경 및 삭제
-                    $("#sit_sel_option li button").live("click", function() {
-                        var mode = $(this).text();
-                        var this_qty, max_qty = 9999, min_qty = 1;
-                        var $el_qty = $(this).closest("li").find("input[name='ct_qty[]']");
-                        var stock = parseInt($(this).closest("li").find("input[name='io_stock[]']").val());
-
-                        switch(mode) {
-                            case "증가":
-                                this_qty = parseInt($el_qty.val().replace(/[^0-9]/, "")) + 1;
-                                if(this_qty > stock) {
-                                    alert("재고수량 보다 많은 수량을 구매할 수 없습니다.");
-                                    this_qty = stock;
-                                }
-
-                                if(this_qty > max_qty) {
-                                    this_qty = max_qty;
-                                    alert("최대 구매수량은 "+number_format(String(max_qty))+" 입니다.");
-                                }
-
-                                $el_qty.val(this_qty);
-                                price_calculate();
-                                break;
-
-                            case "감소":
-                                this_qty = parseInt($el_qty.val().replace(/[^0-9]/, "")) - 1;
-                                if(this_qty < min_qty) {
-                                    this_qty = min_qty;
-                                    alert("최소 구매수량은 "+number_format(String(min_qty))+" 입니다.");
-                                }
-                                $el_qty.val(this_qty);
-                                price_calculate();
-                                break;
-
-                            case "삭제":
-                                if(confirm("선택하신 옵션항목을 삭제하시겠습니까?")) {
-                                    $(this).closest("li").remove();
-                                    price_calculate();
-                                }
-                                break;
-
-                            default:
-                                alert("올바른 방법으로 이용해 주십시오.");
-                                break;
-                        }
-                    });
 
                     // 동일선택옵션있는지
                     function same_option_check(val)
@@ -538,7 +544,7 @@ else
                         });
 
                         if(result)
-                            alert(val+" 은(는) 이미 선택하신 옵션입니다.");
+                            alert(val+" 은(는) 이미 추가하신 옵션상품입니다.");
 
                         return result;
                     }
