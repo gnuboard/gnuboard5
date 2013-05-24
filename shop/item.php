@@ -325,6 +325,10 @@ else
             </table>
 
             <!-- ########## 선택옵션이 있을 때만 출력 - 지운아빠 2013-05-24 -->
+            <?php
+            $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
+            if($option_1) {
+            ?>
             <section>
                 <h3>선택옵션</h3>
                 <table class="sit_ov_tbl">
@@ -334,7 +338,7 @@ else
                 </colgroup>
                 <tbody>
                 <?php // 선택옵션
-                echo get_item_options($it['it_id'], $it['it_option_subject']);
+                echo $option_1;
                 ?>
                 </tbody>
                 </table>
@@ -342,9 +346,16 @@ else
                     <button type="button" id="sit_selopt_submit" class="btn_frmline">추가</button>
                 </div>
             </section>
+            <?php
+            }
+            ?>
             <!-- ########## 선택옵션이 있을 때만 출력 끝 -->
 
             <!-- ########## 추가옵션이 있을 때만 출력 - 지운아빠 2013-05-24 -->
+            <?php
+            $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
+            if($option_2) {
+            ?>
             <section>
                 <h3>추가옵션</h3>
                 <table class="sit_ov_tbl">
@@ -354,11 +365,14 @@ else
                 </colgroup>
                 <tbody>
                 <?php // 추가옵션
-                echo get_item_supply($it['it_id'], $it['it_supply_subject']);
+                echo $option_2;
                 ?>
                 </tbody>
                 </table>
             </section>
+            <?php
+            }
+            ?>
             <!-- ########## 추가옵션이 있을 때만 출력 끝 -->
 
             <?php } // 전화문의가 아닐 경우 끝 ?>
@@ -420,62 +434,27 @@ else
                             return false;
                         }
 
-                        var id = "";
-                        var value, sel_opt, item, price, stock, run_error = false;
-                        var option = sep = "";
-                        $("select[name='it_option[]']").each(function(index) {
-                            value = $(this).val();
-                            item = $(this).closest("tr").find("th label").text();
-
-                            if(!value) {
-                                run_error = true;
-                                return false;
-                            }
-
-                            // 옵션선택정보
-                            sel_opt = value.split(",")[0];
-                            if(id == "") {
-                                id = sel_opt;
-                            } else {
-                                id += chr(30)+sel_opt;
-                                sep = " / ";
-                            }
-
-                            option += sep + item + ":" + sel_opt;
-                        });
-
-                        if(run_error) {
-                            alert(item+"을(를) 선택해 주십시오.");
-                            return false;
-                        }
-
-                        price = info[1];
-                        stock = info[2];
-
-                        if(!same_option_check(option))
-                            add_sel_option(0, id, option, price, stock);
+                        // 선택옵션 자동추가 기능을 사용하려면 아래 false를 true로 설정
+                        sel_option_process(false);
                     }
                 });
 
                 // 추가옵션
                 $("select[name='it_supply[]']").change(function() {
-                    var val = $(this).val();
-                    var info = val.split(",");
+                    var $el = $(this);
+                    // 선택옵션 자동추가 기능을 사용하려면 아래 false를 true로 설정
+                    sel_supply_process($el, false);
+                });
 
-                    // 재고체크
-                    if(parseInt(info[2]) < 1) {
-                        alert("선택하신 추가옵션상품은 재고가 부족하여 구매할 수 없습니다.");
-                        return false;
-                    }
+                // 선택옵션 추가
+                $("#sit_selopt_submit").click(function() {
+                    sel_option_process(true);
+                });
 
-                    var item = $(this).closest("tr").find("th label").text();
-                    var id = item+chr(30)+info[0];
-                    var option = item+":"+info[0];
-                    var price = info[1];
-                    var stock = info[2];
-
-                    if(!same_option_check(option))
-                        add_sel_option(1, id, option, price, stock);
+                // 추가옵션 추가
+                $("button.sit_sel_submit").click(function() {
+                    var $el = $(this).closest("td").find("select[name='it_supply[]']");
+                    sel_supply_process($el, true);
                 });
 
                 // 수량변경 및 삭제
@@ -551,6 +530,84 @@ else
                     }
                 });
             });
+
+            // 선택옵션 추가처리
+            function sel_option_process(add_exec)
+            {
+                var id = "";
+                var value, info, sel_opt, item, price, stock, run_error = false;
+                var option = sep = "";
+                info = $("select[name='it_option[]']:last").val().split(",");
+
+                $("select[name='it_option[]']").each(function(index) {
+                    value = $(this).val();
+                    item = $(this).closest("tr").find("th label").text();
+
+                    if(!value) {
+                        run_error = true;
+                        return false;
+                    }
+
+                    // 옵션선택정보
+                    sel_opt = value.split(",")[0];
+
+                    if(id == "") {
+                        id = sel_opt;
+                    } else {
+                        id += chr(30)+sel_opt;
+                        sep = " / ";
+                    }
+
+                    option += sep + item + ":" + sel_opt;
+                });
+
+                if(run_error) {
+                    alert(item+"을(를) 선택해 주십시오.");
+                    return false;
+                }
+
+                price = info[1];
+                stock = info[2];
+
+                if(add_exec) {
+                    if(same_option_check(option))
+                        return;
+
+                    add_sel_option(0, id, option, price, stock);
+                }
+            }
+
+            // 추가옵션 추가처리
+            function sel_supply_process($el, add_exec)
+            {
+                var val = $el.val();
+                var item = $el.closest("tr").find("th label").text();
+
+                if(!val) {
+                    alert(item+"을(를) 선택해 주십시오.");
+                    return;
+                }
+
+                var info = val.split(",");
+
+                // 재고체크
+                if(parseInt(info[2]) < 1) {
+                    alert(info[0]+"은(는) 재고가 부족하여 구매할 수 없습니다.");
+                    return false;
+                }
+
+                var id = item+chr(30)+info[0];
+                var option = item+":"+info[0];
+                var price = info[1];
+                var stock = info[2];
+
+                if(add_exec) {
+                    if(same_option_check(option))
+                        return;
+
+                    add_sel_option(1, id, option, price, stock);
+                }
+            }
 
             // 선택된 옵션 출력
             function add_sel_option(type, id, option, price, stock)
