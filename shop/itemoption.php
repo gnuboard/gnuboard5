@@ -1,6 +1,11 @@
 <?php
 include_once('./_common.php');
 
+$it_id = $_POST['it_id'];
+$opt_id = $_POST['opt_id'];
+$idx = $_POST['idx'];
+$sel_count = $_POST['sel_count'];
+
 $sql = " select * from {$g4['shop_item_option_table']}
                 where io_type = '0'
                   and it_id = '$it_id'
