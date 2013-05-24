@@ -330,14 +330,6 @@ else
             echo get_item_supply($it['it_id'], $it['it_supply_subject']);
             ?>
 
-            <tr>
-                <th scope="row">수량</th>
-                <td>
-                    <input type="text" name="ct_qty" value="1" class="sit_ov_input" size="4" maxlength="4" autocomplete="off" onkeyup="amount_change()">
-                    <button type="button" onclick="javascript:qty_add(+1);" class="btn_frmline"><span class="sound_only">수량 1개 </span>증가</button>
-                    <button type="button" onclick="javascript:qty_add(-1);" class="btn_frmline"><span class="sound_only">수량 1개 </span>감소</button>
-                </td>
-            </tr>
             <?php } // 전화문의가 아닐 경우 끝 ?>
 
             <?php } // 갤러리가 아닐 경우 끝 ?>
