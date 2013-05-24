@@ -83,7 +83,7 @@ function imageview(id, w, h)
                 <li>
                     <a href="<?php echo G4_URL ?>/">
                         <img src="<?php echo G4_ADMIN_URL ?>/img/snb_home.jpg" alt="" width="28" height="28">
-                        홈페이지 메인
+                        홈페이지
                     </a>
                 </li>
                 <li>
