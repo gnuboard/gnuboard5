@@ -47,8 +47,8 @@ else {
         <?php if($next_link) {  ?>
         <a href="<?php echo $next_link ?>">다음쪽지</a>
         <?php }  ?>
-        <?php if ($kind == 'recv') {  ?><a href="./memo_form.php?me_recv_mb_id=<?php echo $mb['mb_id'] ?>&amp;me_id=<?php echo $memo['me_id'] ?>" class="btn01">답장</a><?php }  ?>
+        <?php if ($kind == 'recv') {  ?><a href="./memo_form.php?me_recv_mb_id=<?php echo $mb['mb_id'] ?>&amp;me_id=<?php echo $memo['me_id'] ?>">답장</a><?php }  ?>
         <a href="./memo.php?kind=<?php echo $kind ?>">목록보기</a>
-        <a href="javascript:;" onclick="window.close();">창닫기</a>
+        <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>

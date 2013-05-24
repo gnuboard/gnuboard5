@@ -18,7 +18,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <?php echo captcha_html(); ?>
     <div class="btn_win">
         <input type="submit" class="btn_submit" value="확인">
-        <a href="javascript:window.close();" class="btn_cancel">창닫기</a>
+        <button type="button" onclick="window.close();">창닫기</button>
     </div>
     </form>
 </div>

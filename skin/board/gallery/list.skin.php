@@ -58,7 +58,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
          ?>
         <li class="bo_img_list_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<?php } ?>" style="<?php echo $style ?>width:<?php echo $board['bo_gallery_width'] ?>px">
             <?php if ($is_checkbox) { ?>
-            <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['wr_subject'] ?></label>
+            <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
             <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
             <?php } ?>
             <span class="sound_only">
