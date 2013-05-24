@@ -69,37 +69,19 @@ function imageview(id, w, h)
 <header id="hd">
     <div id="hd_wrap">
         <h1><?php echo $config['cf_title'] ?></h1>
+
         <div id="logo"><a href="<?php echo G4_ADMIN_URL ?>"><img src="<?php echo G4_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자 처음으로"></a></div>
-        <div id="mb_nb">
-            <ul>
-                <li>
-                    <a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">
-                        <img src="<?php echo G4_ADMIN_URL ?>/img/snb_modify.jpg" alt="" width="28" height="28">
-                        관리자 정보수정
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo G4_URL ?>/">
-                        <img src="<?php echo G4_ADMIN_URL ?>/img/snb_home.jpg" alt="" width="28" height="28">
-                        홈페이지 메인
-                    </a>
-                </li>
-                <?php if(defined('G4_USE_SHOP')) { ?>
-                <li>
-                    <a href="<?php echo G4_SHOP_URL ?>/">
-                        <img src="<?php echo G4_ADMIN_URL ?>/img/snb_home.jpg" alt="" width="28" height="28">
-                        쇼핑몰 메인
-                    </a>
-                </li>
-                <?php } ?>
-                <li>
-                    <a href="<?php echo G4_BBS_URL ?>/logout.php">
-                        <img src="<?php echo G4_ADMIN_URL ?>/img/snb_logout.jpg" alt="로그아웃" width="28" height="28">
-                        로그아웃
-                    </a>
-                </li>
-            </ul>
-        </div>
+
+        <ul id="tnb">
+            <li><a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>" id="tnb_modify"><span>관리자정보</span></a></li>
+            <li><a href="<?php echo G4_ADMIN_URL ?>/config_form.php" id="tnb_chome_cf"><span>기본환경</span></a></li>
+            <li><a href="<?php echo G4_URL ?>/" id="tnb_chome"><span>커뮤니티</span></a></li>
+            <?php if(defined('G4_USE_SHOP')) { ?>
+            <li><a href="<?php echo G4_ADMIN_URL ?>/shop_admin/configform.php" id="tnb_shome_cf"><span>쇼핑몰환경</span></a></li>
+            <li><a href="<?php echo G4_SHOP_URL ?>/" id="tnb_shome"><span>쇼핑몰</span></a></li>
+            <?php } ?>
+            <li><a href="<?php echo G4_BBS_URL ?>/logout.php" id="tnb_logout"><span>로그아웃</span></a></li>
+        </ul>
 
         <nav id="gnb">
             <h2>관리자 주메뉴</h2>
