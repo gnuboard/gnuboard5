@@ -48,23 +48,11 @@ include_once(G4_PATH.'/head.sub.php');
 
 if (200 == $connection->http_code) {
 
-    /*
-    $access_token = $facebook->getAccessToken();
-
-    $appid = $config['cf_facebook_appid'];
-
-    setcookie('fbs_'.$appid,                 1,                                        G4_SERVER_TIME + 86400 * 31, '/', G4_COOKIE_DOMAIN);
-    setcookie('fbs_'.$appid.'_code',         $_SESSION['fb_'.$appid.'_code'],          G4_SERVER_TIME + 86400 * 31, '/', G4_COOKIE_DOMAIN);
-    setcookie('fbs_'.$appid.'_access_token', $_SESSION['fb_'.$appid.'_access_token'],  G4_SERVER_TIME + 86400 * 31, '/', G4_COOKIE_DOMAIN);
-    setcookie('fbs_'.$appid.'_user_id',      $_SESSION['fb_'.$appid.'_user_id'],       G4_SERVER_TIME + 86400 * 31, '/', G4_COOKIE_DOMAIN);
-
-    sql_query(" update {$g4['member_table']} set mb_facebook_token = '{$access_token}' where mb_id = '{$member['mb_id']}' ", true);
-    
-    */
-
-    sql_query(" update {$g4['member_table']} set mb_twitter_token = '{$access_token['oauth_token']}', mb_twitter_token_secret = '{$access_token['oauth_token_secret']}' where mb_id = '{$member['mb_id']}' ", true);
-
+    $content    = $connection->get('account/verify_credentials');
+    $sns_name   = $content->name;
     $g4_sns_url = G4_SNS_URL;
+
+    set_cookie('ck_sns_name', $sns_name);
 
     echo <<<EOT
     <script>
@@ -72,6 +60,7 @@ if (200 == $connection->http_code) {
         document.write("<strong>트위터에 승인이 되었습니다.</strong>");
 
         var opener = window.opener;
+        opener.$("#wr_name").val("{$sns_name}");
         opener.$("#twitter_icon").attr("src", "{$g4_sns_url}/icon/twitter_on.png");
         opener.$("#twitter_checked").attr("disabled", false);
         opener.$("#twitter_checked").attr("checked", true);

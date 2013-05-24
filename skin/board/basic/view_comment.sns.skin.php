@@ -1,49 +1,57 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-if (!$is_member) return;
-if (!$config['cf_facebook_use'] && !$config['cf_twitter_use']) return;
+//if (!$is_member) return;
+if (!$config['cf_sns_use']) return;
 ?>
 <tr>
     <th scope="row">SNS 등록</th>
     <td>
         <div id="sns_facebook">
         <?php
-        if ($config['cf_facebook_use']) {
+        //============================================================================
+        // 페이스북
+        //----------------------------------------------------------------------------
+        if ($config['cf_facebook_appid']) {
             include_once(G4_SNS_PATH."/facebook/src/facebook.php");
             $facebook = new Facebook(array(
                 'appId'  => $config['cf_facebook_appid'],
                 'secret' => $config['cf_facebook_secret']
             ));
 
-            $user = $facebook->getUser();
+            $facebook_user = $facebook->getUser();
 
-            if ($user) {
+            if ($facebook_user) {
                 try {
-                    $user_profile = $facebook->api('/me');
+                    $facebook_user_profile = $facebook->api('/me');
                 } catch (FacebookApiException $e) {
                     error_log($e);
-                    $user = null;
+                    $facebook_user = null;
                 }
             }
 
-            if ($user) {
+            if ($facebook_user) {
                 echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" '.($member['mb_facebook_checked']?'checked':'').' value="1">';
                 echo '<img src="'.G4_SNS_URL.'/icon/facebook_on.png" id="facebook_icon">';
             } else {
                 $facebook_url = $facebook->getLoginUrl(array("redirect_uri"=>G4_SNS_URL."/facebook/callback.php", "scope"=>"publish_stream,read_stream,offline_access", "display"=>"popup"));
 
                 echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" disabled value="1">';
-                echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/facebook_'.($user?'on':'off').'.png" id="facebook_icon">';
+                echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/facebook_'.($facebook_user?'on':'off').'.png" id="facebook_icon"></a>';
                 echo '<script>$(function(){ $("#facebook_url").click(function(){ window.open(this.href, "facebook_url", "width=600,height=250"); }); });</script>';
             }
         }
+        //============================================================================
 
-        if ($config['cf_twitter_use']) {
+
+        //============================================================================
+        // 트위터
+        //----------------------------------------------------------------------------
+        if ($config['cf_twitter_key']) {
             include_once(G4_SNS_PATH."/twitter/twitteroauth/twitteroauth.php");
             include_once(G4_SNS_PATH."/twitter/config.php");
 
-            $user = false;
+            $twitter_user = false;
             if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
                 $twitter_url = G4_SNS_URL."/twitter/redirect.php";
             } else {
@@ -54,7 +62,7 @@ if (!$config['cf_facebook_use'] && !$config['cf_twitter_use']) return;
 
                 switch ($connection->http_code) {
                     case 200:
-                        $user = true;
+                        $twitter_user = true;
                         $twitter_url = $connection->getAuthorizeURL($token);
                         break;
                     default : 
@@ -64,22 +72,23 @@ if (!$config['cf_facebook_use'] && !$config['cf_twitter_use']) return;
                             $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $member['mb_twitter_token'], $member['mb_twitter_token_secret']);
                             $content = $connection->get('account/verify_credentials');
                             if (200 == $connection->http_code) {
-                                $user = true;
+                                $twitter_user = true;
                                 $twitter_url = $connection->getAuthorizeURL($token);
                             }
                         }
                 }
             }
 
-            if ($user) {
+            if ($twitter_user) {
                 echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" '.($member['mb_twitter_checked']?'checked':'').' value="1">';
                 echo '<img src="'.G4_SNS_URL.'/icon/twitter_on.png" id="twitter_icon">';
             } else {
                 echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" disabled value="1">';
-                echo '<a href="'.$twitter_url.'" id="twitter_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/twitter_'.($user?'on':'off').'.png" id="twitter_icon">';
+                echo '<a href="'.$twitter_url.'" id="twitter_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/twitter_'.($twitter_user?'on':'off').'.png" id="twitter_icon"></a>';
                 echo '<script>$(function(){ $("#twitter_url").click(function(){ window.open(this.href, "twitter_url", "width=600,height=250"); }); });</script>';
             }
         }
+        //============================================================================
         ?>
         </div>
     </td>

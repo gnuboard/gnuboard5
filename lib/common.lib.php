@@ -2041,4 +2041,37 @@ function board_notice($bo_notice, $wr_id, $insert=false)
     }
     return implode(",", $notice_array);
 }
+
+
+// goo.gl 짧은주소 만들기
+function googl_short_url($longUrl) 
+{
+    global $config;
+
+    // Get API key from : http://code.google.com/apis/console/
+    // URL Shortener API ON
+    $apiKey = $config['cf_googl_shorturl_apikey'];
+
+    $postData = array('longUrl' => $longUrl, 'key' => $apiKey);
+    $jsonData = json_encode($postData);
+
+    $curlObj = curl_init();
+
+    curl_setopt($curlObj, CURLOPT_URL, 'https://www.googleapis.com/urlshortener/v1/url');
+    curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curlObj, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($curlObj, CURLOPT_HEADER, 0);
+    curl_setopt($curlObj, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
+    curl_setopt($curlObj, CURLOPT_POST, 1);
+    curl_setopt($curlObj, CURLOPT_POSTFIELDS, $jsonData);
+
+    $response = curl_exec($curlObj);
+
+    //change the response json string to object
+    $json = json_decode($response);
+
+    curl_close($curlObj);
+
+    return $json->id;
+}
 ?>

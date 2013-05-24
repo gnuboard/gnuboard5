@@ -182,35 +182,8 @@ if ($w == 'c') // 댓글 입력
     
     $wr_subject = get_text(stripslashes($wr['wr_subject']));
 
-    if ($config['cf_facebook_use'] && $_POST['facebook_checked']) {
-        include_once(G4_SNS_PATH."/facebook/src/facebook.php");
-
-        $facebook = new Facebook(array(
-            'appId'  => $config['cf_facebook_appid'],
-            'secret' => $config['cf_facebook_secret']
-        ));
-
-        $user = $facebook->getUser();
-    
-        if ($user) {
-            try {
-                $link = G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr['wr_parent'].'&#c_'.$comment_id;
-                $attachment = array(
-                    'message'       => stripslashes($wr_content),
-                    'name'          => $wr_subject,
-                    'link'          => $link,
-                    'description'   => stripslashes(strip_tags($wr['wr_content']))
-                 );
-                $facebook->api('/me/feed/', 'post', $attachment);
-                //$errors = error_get_last(); print_r2($errros); exit;
-                $access_token = $facebook->getAccessToken();
-                sql_query(" update {$g4['member_table']} set mb_facebook_token = '{$access_token}', mb_facebook_checked = '{$_POST['facebook_checked']}' where mb_id = '{$member['mb_id']}' ", true);
-            } catch(FacebookApiException $e) {
-                ;;;
-            }
-        }
-    }
-
+    // SNS 등록
+    include_once("./write_comment_update.sns.php");
 
     // 메일발송 사용
     if ($config['cf_email_use'] && $board['bo_use_email'])

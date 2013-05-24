@@ -30,6 +30,11 @@ if(!isset($config['cf_gcaptcha_mp3'])) {
                     ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
 
+if(!isset($config['cf_googl_shorturl_apikey'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_googl_shorturl_apikey` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
+}
+
 if(!isset($config['cf_kcpcert_site_cd'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", true);
@@ -48,11 +53,13 @@ if(!isset($config['cf_mobile_pages'])) {
     sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", true);
 }
 
-if(!isset($config['cf_facebook_use'])) {
+if(!isset($config['cf_sns_use'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_facebook_use` TINYINT NOT NULL DEFAULT '0' AFTER `cf_kcpcert_use`
+                    ADD `cf_sns_use` TINYINT NOT NULL DEFAULT '0' AFTER `cf_kcpcert_use`
                     ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_facebook_use`,  
-                    ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret` ", true);
+                    ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
+                    ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
+                    ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key` ", true);
 }
 
 // uniqid 테이블이 없을 경우 생성
@@ -723,8 +730,8 @@ $pg_anchor = '<ul class="anchor">
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="cf_facebook_use">페이스북 사용</label></th>
-        <td colspan="3"><input type="checkbox" name="cf_facebook_use" value="1" id="cf_facebook_use" <?php echo $config['cf_facebook_use']?'checked':''; ?>> 사용</td>
+        <th scope="row"><label for="cf_facebook_use">SNS 사용</label></th>
+        <td colspan="3"><input type="checkbox" name="cf_sns_use" value="1" id="cf_sns_use" <?php echo $config['cf_sns_use']?'checked':''; ?>> 사용</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_facebook_appid">페이스북 앱 ID</label></th>
@@ -735,10 +742,6 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <input type="text" name="cf_facebook_secret" value="<?php echo $config['cf_facebook_secret'] ?>" id="cf_facebook_secret" class="frm_input" size="35">
         </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_twitter_use">트위터 사용</label></th>
-        <td colspan="3"><input type="checkbox" name="cf_twitter_use" value="1" id="cf_twitter_use" <?php echo $config['cf_twitter_use']?'checked':''; ?>> 사용</td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_twitter_key">트위터 컨슈머 Key</label></th>
