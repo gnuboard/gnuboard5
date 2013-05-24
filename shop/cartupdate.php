@@ -207,7 +207,7 @@ else // 장바구니에 담기
         if(!$_POST['io_id'][$i])
             $it_stock_qty = get_it_stock_qty($_POST['it_id']);
         else
-            $it_stock_qty = get_option_stock_qty($_POST['io_id'][$i]);
+            $it_stock_qty = get_option_stock_qty($_POST['it_id'], $_POST['io_id'][$i]);
 
         if ($ct_qty + $sum_qty > $it_stock_qty)
         {
@@ -227,25 +227,16 @@ else // 장바구니에 담기
     if (!$config['cf_use_point']) { $_POST['it_point'] = 0; }
 
     // 장바구니에 Insert
-    $sql = " insert {$g4['shop_cart_table']}
-                set uq_id       = '$tmp_uq_id',
-                    it_id        = '{$_POST['it_id']}',
-                    it_name      = '{$_POST['it_name']}',
-                    it_opt1      = '{$_POST['it_opt1']}',
-                    it_opt2      = '{$_POST['it_opt2']}',
-                    it_opt3      = '{$_POST['it_opt3']}',
-                    it_opt4      = '{$_POST['it_opt4']}',
-                    it_opt5      = '{$_POST['it_opt5']}',
-                    it_opt6      = '{$_POST['it_opt6']}',
-                    ct_status    = '쇼핑',
-                    ct_price     = '{$_POST['it_price']}',
-                    ct_point     = '{$_POST['it_point']}',
-                    ct_point_use = '0',
-                    ct_stock_use = '0',
-                    ct_qty       = '{$_POST['ct_qty']}',
-                    ct_time      = '".G4_TIME_YMDHIS."',
-                    ct_ip        = '$REMOTE_ADDR',
-                    ct_direct    = '$sw_direct' ";
+    $comma = '';
+    $sql = " INSERT INTO {$g4['shop_cart_table']}
+                    ( uq_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, io_id, io_type, io_price, ct_time, ct_ip, ct_direct )
+                VALUES ";
+
+    for($i=0; $i<$option_count; $i++) {
+        $sql .= $comma."( '$tmp_uq_id', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST[['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price']}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
+        $comma = ' , ';
+    }
+
     sql_query($sql);
 }
 
