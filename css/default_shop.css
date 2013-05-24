@@ -532,8 +532,8 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sit_inf_explan img {max-width:100%;height:auto}
 
 #sit_inf_open {width:100%;border:0;border-collapse:collapse}
-#sit_inf_open th {padding:7px 10px;border:1px solid #fff;background:#f5f6fa;text-align:left}
-#sit_inf_open td {padding:7px 10px;border:1px solid #fff;background:#f5f6fa}
+#sit_inf_open th {padding:7px 10px;border:1px solid #fff;background:#f5f6fa;vertical-align:top;text-align:left}
+#sit_inf_open td {padding:7px 10px;border:1px solid #fff;background:#f5f6fa;vertical-align:top}
 
 /* 상품 상세보기 - 사용후기 */
 #sit_ps {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}

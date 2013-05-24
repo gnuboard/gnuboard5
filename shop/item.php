@@ -339,7 +339,7 @@ else
                 </tbody>
                 </table>
                 <div class="sit_sel_btn">
-                    <button type="button" id="sit_sel_submit" class="btn_frmline">추가</button>
+                    <button type="button" id="sit_selopt_submit" class="btn_frmline">추가</button>
                 </div>
             </section>
             <!-- ########## 선택옵션이 있을 때만 출력 끝 -->
@@ -359,24 +359,14 @@ else
                 </tbody>
                 </table>
                 <div class="sit_sel_btn">
-                    <button type="button" id="sit_sel_submit" class="btn_frmline">추가</button>
+                    <button type="button" id="sit_selsub_submit" class="btn_frmline">추가</button>
                 </div>
             </section>
             <!-- ########## 추가옵션이 있을 때만 출력 끝 -->
 
-            <!-- <tr> ##### 삭제대상 - 지운아빠 2013-05-24
-                <th scope="row">수량</th>
-                <td>
-                    <input type="text" name="ct_qty" value="1" class="sit_ov_input" size="4" maxlength="4" autocomplete="off" onkeyup="amount_change()">
-                    <button type="button" onclick="javascript:qty_add(+1);" class="btn_frmline"><span class="sound_only">수량 1개 </span>증가</button>
-                    <button type="button" onclick="javascript:qty_add(-1);" class="btn_frmline"><span class="sound_only">수량 1개 </span>감소</button>
-                </td>
-            </tr> -->
             <?php } // 전화문의가 아닐 경우 끝 ?>
 
             <?php } // 갤러리가 아닐 경우 끝 ?>
-            </tbody>
-            </table>
 
             <div id="sit_sel_option"></div>
 
@@ -763,9 +753,9 @@ else
             $ii_title = $info_array[$key][0];
             $ii_value = $val;
         ?>
-        <tr valign="top">
+        <tr>
             <th scope="row"><?php echo $ii_title; ?></th>
-            <td><?php echo $ii_value; ?></th>
+            <td><?php echo $ii_value; ?></td>
         </tr>
         <?php } //foreach?>
         </tbody>
