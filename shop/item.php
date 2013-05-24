@@ -484,14 +484,21 @@ else
                         var mode = $(this).text();
                         var this_qty, max_qty = 9999, min_qty = 1;
                         var $el_qty = $(this).closest("li").find("input[name='ct_qty[]']");
+                        var stock = parseInt($(this).closest("li").find("input[name='io_stock[]']").val());
 
                         switch(mode) {
                             case "증가":
                                 this_qty = parseInt($el_qty.val().replace(/[^0-9]/, "")) + 1;
+                                if(this_qty > stock) {
+                                    alert("재고수량 보다 많은 수량을 구매할 수 없습니다.");
+                                    this_qty = stock;
+                                }
+
                                 if(this_qty > max_qty) {
                                     this_qty = max_qty;
                                     alert("최대 구매수량은 "+number_format(String(max_qty))+" 입니다.");
                                 }
+
                                 $el_qty.val(this_qty);
                                 price_calculate();
                                 break;
