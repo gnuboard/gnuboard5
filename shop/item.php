@@ -415,7 +415,8 @@ else
                                 price = info[1];
                                 stock = info[2];
 
-                                add_sel_option(0, id, option, price, stock);
+                                if(!same_option_check(option))
+                                    add_sel_option(0, id, option, price, stock);
                             }
                         });
 
@@ -517,6 +518,23 @@ else
                                 break;
                         }
                     });
+
+                    // 동일선택옵션있는지
+                    function same_option_check(val)
+                    {
+                        var result = false;
+                        $("input[name='io_value[]']").each(function() {
+                            if(val == $(this).val()) {
+                                result = true;
+                                return false;
+                            }
+                        });
+
+                        if(result)
+                            alert(val+" 은(는) 이미 선택하신 옵션입니다.");
+
+                        return result;
+                    }
 
                     // 가격계산
                     function price_calculate()
