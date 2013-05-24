@@ -1,6 +1,11 @@
 <?php
 include_once('./_common.php');
 
+$it_id = $_POST['it_id'];
+$opt_id = $_POST['opt_id'];
+$idx = $_POST['idx'];
+$sel_count = $_POST['sel_count'];
+
 $sql = " select * from {$g4['shop_item_option_table']}
                 where io_type = '0'
                   and it_id = '$it_id'
@@ -32,7 +37,12 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         else
             $price = '&nbsp;&nbsp; '.number_format($row['io_price']).'원';
 
-        $str .= PHP_EOL.'<option value="'.$val[$key].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$val[$key].$price.'</otpion>';
+        if(!$row['io_stock_qty'])
+            $soldout = '&nbsp;&nbsp;[품절]';
+        else
+            $soldout = '';
+
+        $str .= PHP_EOL.'<option value="'.$val[$key].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$val[$key].$price.$soldout.'</otpion>';
     }
 }
 

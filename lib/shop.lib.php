@@ -573,7 +573,12 @@ function get_item_options($it_id, $subject)
             else
                 $price = '&nbsp;&nbsp; '.number_format($row['io_price']).'원';
 
-            $select .= '<option value="'.$row['io_id'].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$row['io_id'].$price.'</option>'.PHP_EOL;
+            if(!$row['io_stock_qty'])
+                $soldout = '&nbsp;&nbsp;[품절]';
+            else
+                $soldout = '';
+
+            $select .= '<option value="'.$row['io_id'].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$row['io_id'].$price.$soldout.'</option>'.PHP_EOL;
         }
         $select .= '</select>'.PHP_EOL;
 

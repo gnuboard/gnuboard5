@@ -79,7 +79,6 @@ if(!sql_query(" select io_id from {$g4['shop_item_option_table']} limit 1 ", fal
                 ) ", false);
     sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
                     ADD `it_option_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
-                    ADD `it_option` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_option_subject`,
                     ADD `it_supply_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_option` ", false);
 }
 
@@ -115,6 +114,17 @@ $result = sql_query($sql, false);
 if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
                     ADD `od_mobile` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_time` ", false);
+}
+
+// ct_option 추가
+$sql = " select ct_option from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `ct_option` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ct_stock_use`,
+                    ADD `io_id` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ct_qty`,
+                    ADD `io_type` TINYINT(4) NOT NULL DEFAULT '0' AFTER `io_id`,
+                    ADD `io_price` INT(11) NOT NULL DEFAULT '0' AFTER `io_type` ", false);
 }
 
 // it_brand 추가
