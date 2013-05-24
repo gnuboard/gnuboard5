@@ -485,10 +485,10 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 /* 상품 상세보기 - 간략정보 및 구매기능 */
 #sit_ov {position:relative;float:right;padding:50px 15px 15px;width:358px;height:auto !important;height:355px;min-height:355px}
-#sit_ov h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
-#sit_title {display:inline-block;margin:0 0 5px;font-size:1.3em}
-#sit_desc {display:inline-block;margin:0 0 10px;color:#999}
+#sit_title {margin:0 0 5px;font-size:1.3em}
+#sit_desc {margin:0 0 5px;padding:0;color:#999}
+#sit_opt_info {/* sound_only 처리 필요 */}
 .sit_icon {display:block;margin:5px 0 0}
 .sit_icon img {margin:0 1px 0 0;border:1px solid #fff}
 
