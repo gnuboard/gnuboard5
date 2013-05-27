@@ -325,7 +325,6 @@ else
             </tbody>
             </table>
 
-            <!-- ########## 선택옵션이 있을 때만 출력 - 지운아빠 2013-05-24 -->
             <?php
             $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
             if($option_1) {
@@ -350,9 +349,7 @@ else
             <?php
             }
             ?>
-            <!-- ########## 선택옵션이 있을 때만 출력 끝 -->
 
-            <!-- ########## 추가옵션이 있을 때만 출력 - 지운아빠 2013-05-24 -->
             <?php
             $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
             if($option_2) {
@@ -374,13 +371,14 @@ else
             <?php
             }
             ?>
-            <!-- ########## 추가옵션이 있을 때만 출력 끝 -->
 
             <?php } // 전화문의가 아닐 경우 끝 ?>
 
             <?php } // 갤러리가 아닐 경우 끝 ?>
 
+            <?php if ($option_1 || $option_2) { // 선택옵션이나 추가옵션이 있다면 ?>
             <div id="sit_sel_option"></div>
+            <?php } ?>
 
             <script>
             $(function() {
@@ -651,10 +649,10 @@ else
                 opt += "<input type=\"hidden\" name=\"io_stock[]\" value=\""+stock+"\">\n";
                 opt += "<span class=\"sit_opt_subj\">"+option+"</span>\n";
                 opt += "<span class=\"sit_opt_prc\">"+opt_prc+"</span>\n";
-                opt += "<input type=\"text\" name=\"ct_qty[]\" value=\"1\" size=\"5\">\n";
-                opt += "<button type=\"button\" class=\"sit_qty_plus\">증가</button>\n";
-                opt += "<button type=\"button\" class=\"sit_qty_minus\">감소</button>\n";
-                opt += "<button type=\"button\" class=\"sit_opt_del\">삭제</button>\n";
+                opt += "<div><input type=\"text\" name=\"ct_qty[]\" value=\"1\" class=\"frm_input\" size=\"5\">\n";
+                opt += "<button type=\"button\" class=\"sit_qty_plus btn_frmline\">증가</button>\n";
+                opt += "<button type=\"button\" class=\"sit_qty_minus btn_frmline\">감소</button>\n";
+                opt += "<button type=\"button\" class=\"sit_opt_del btn_frmline\">삭제</button></div>\n";
                 opt += "</li>\n";
 
                 if($("#sit_sel_option > ul").size() < 1) {
