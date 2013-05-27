@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_stock_use` tinyint(4) NOT NULL DEFAULT '0',
   `ct_option` varchar(255) NOT NULL DEFAULT '',
   `ct_qty` int(11) NOT NULL DEFAULT '0',
+  `ct_num` int(11) NOT NULL DEFAULT '0',
   `io_id` varchar(255) NOT NULL DEFAULT '',
   `io_type` tinyint(4) NOT NULL DEFAULT '0',
   `io_price` int(11) NOT NULL DEFAULT '0',
