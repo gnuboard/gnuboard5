@@ -20,7 +20,7 @@ else
 <tr>
     <th scope="col">상품이미지</th>
     <th scope="col">상품명</th>
-    <th scope="col">수량</th>
+    <th scope="col">총수량</th>
     <th scope="col">판매가</th>
     <th scope="col">소계</th>
     <th scope="col">포인트</th>
@@ -62,7 +62,8 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     // 합계금액 계산
     $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-                    SUM(ct_point * ct_qty) as point
+                    SUM(ct_point * ct_qty) as point,
+                    SUM(ct_qty) as qty
                 from {$g4['shop_cart_table']}
                 where it_id = '{$row['it_id']}' ";
     $sum = sql_fetch($sql);
@@ -122,15 +123,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
         <?php echo $it_name; ?>
     </td>
-
-    <?php
-    // 수량, 입력(수량)
-    if ($s_page == "cart.php")
-        echo '<td class="td_num"><input type="text" name="ct_qty['.$i.']" value="'.$row['ct_qty'].'" id="ct_qty_'.$i.'" class="frm_input" size="4" maxlength="6" autocomplete="off"></td>';
-    else
-        echo '<td class="td_num">'.$row['ct_qty'].'</td>';
-    ?>
-
+    <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
     <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
     <td class="td_bignum"><?php echo number_format($sell_amount); ?></td>
     <td class="td_bignum"><?php echo number_format($point); ?></td>
