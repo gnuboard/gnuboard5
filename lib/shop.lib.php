@@ -683,7 +683,7 @@ function print_item_options($it_id, $uq_id)
 {
     global $g4;
 
-    $sql = " select ct_option from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$uq_id' order by ct_num asc ";
+    $sql = " select ct_option from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$uq_id' order by io_type asc, ct_num asc, ct_id asc ";
     $result = sql_query($sql);
 
     $str = '';
