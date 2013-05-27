@@ -967,7 +967,7 @@ else
             return;
         }
 
-        if($("input[name='io_id[]']").size() < 1)
+        if($(".sit_opt_list").size() < 1)
         {
             alert("상품의 선택옵션을 선택해 주십시오.");
             return false;

@@ -142,6 +142,9 @@ else // 장바구니에 담기
     if (!$_POST['it_id'])
         alert('장바구니에 담을 상품을 선택하여 주십시오.');
 
+    if($_POST['io_type'][0] != 0)
+        alert('상품의 선택옵션을 선택해 주십시오.');
+
     for($i=0; $i<count($_POST['ct_qty']); $i++) {
         if ($_POST['ct_qty'][$i] < 1)
             alert('수량은 1 이상 입력해 주십시오.');
