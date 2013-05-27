@@ -244,7 +244,16 @@ else
             <!-- ########## 상품 선택옵션/추가옵션에 따른 출력 - 지운아빠 2013-05-24 -->
             <!-- 스크린리더에서만 출력할 예정 -->
             <p id="sit_opt_info">
-                상품 선택옵션 n 개, 추가옵션 n 개
+            <?php
+            $sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '0' and io_use = '1' ";
+            $row = sql_fetch($sql);
+            $opt_count = $row['cnt'];
+
+            $sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '1' and io_use = '1' ";
+            $row = sql_fetch($sql);
+            $spl_count = $row['cnt'];
+            ?>
+                상품 선택옵션 <?php echo $opt_count; ?> 개, 추가옵션 <?php echo $spl_count; ?> 개
             </p>
             <!-- ########## 상품 선택옵션/추가옵션에 따른 출력 끝 -->
             <?php if ($score = get_star_image($it['it_id'])) { ?>
@@ -958,7 +967,7 @@ else
             return;
         }
 
-        if($("input[name='io_id[]']").size() < 1)
+        if($(".sit_opt_list").size() < 1)
         {
             alert("상품의 선택옵션을 선택해 주십시오.");
             return false;
