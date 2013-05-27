@@ -497,13 +497,15 @@ else
                                 var $el = $(this).closest("li");
                                 var del_exec = true;
 
-                                // 선택옵션이 하나이상인지
-                                if($el.hasClass("sit_opt_list")) {
-                                    if($(".sit_opt_list").size() <= 1)
-                                        del_exec = false;
-                                } else {
-                                    if($(".sit_opt_list").size() < 1)
-                                        del_exec = false;
+                                if($("#sit_sel_option .sit_spl_list").size() > 0) {
+                                    // 선택옵션이 하나이상인지
+                                    if($el.hasClass("sit_opt_list")) {
+                                        if($(".sit_opt_list").size() <= 1)
+                                            del_exec = false;
+                                    } else {
+                                        if($(".sit_opt_list").size() < 1)
+                                            del_exec = false;
+                                    }
                                 }
 
                                 if(del_exec) {
@@ -656,13 +658,30 @@ else
                 opt += "</li>\n";
 
                 if($("#sit_sel_option > ul").size() < 1) {
-                    $("#sit_sel_option").html('<ul id="sit_opt_added"></ul>');
+                    $("#sit_sel_option").html("<ul id=\"sit_opt_added\"></ul>");
                     $("#sit_sel_option > ul").html(opt);
                 } else{
-                    if($("#sit_sel_option > ul li").size() < 1)
-                        $("#sit_sel_option > ul").html(opt);
-                    else
-                        $("#sit_sel_option > ul li:last").after(opt);
+                    if(type) {
+                        if($("#sit_sel_option .sit_spl_list").size() > 0) {
+                            $("#sit_sel_option .sit_spl_list:last").after(opt);
+                        } else {
+                            if($("#sit_sel_option .sit_opt_list").size() > 0) {
+                                $("#sit_sel_option .sit_opt_list:last").after(opt);
+                            } else {
+                                $("#sit_sel_option > ul").html(opt);
+                            }
+                        }
+                    } else {
+                        if($("#sit_sel_option .sit_opt_list").size() > 0) {
+                            $("#sit_sel_option .sit_opt_list:last").after(opt);
+                        } else {
+                            if($("#sit_sel_option .sit_spl_list").size() > 0) {
+                                $("#sit_sel_option .sit_spl_list:first").before(opt);
+                            } else {
+                                $("#sit_sel_option > ul").html(opt);
+                            }
+                        }
+                    }
                 }
 
                 price_calculate();
