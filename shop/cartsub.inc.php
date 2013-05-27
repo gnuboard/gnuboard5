@@ -241,9 +241,9 @@ $(function() {
     // 모두선택
     $("input[name=ct_all]").click(function() {
         if($(this).is(":checked"))
-            $("input[name='ct_chk[]']").attr("checked", true);
+            $("input[name^=ct_chk]").attr("checked", true);
         else
-            $("input[name='ct_chk[]']").attr("checked", false);
+            $("input[name^=ct_chk]").attr("checked", false);
     });
 });
 
