@@ -31,13 +31,13 @@ if (!$config['cf_sns_use']) return;
             }
 
             if ($facebook_user) {
-                echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" '.($member['mb_facebook_checked']?'checked':'').' value="1">';
-                echo '<img src="'.G4_SNS_URL.'/icon/facebook_on.png" id="facebook_icon">';
+                echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" '.(get_cookie('ck_facebook_checked')?'checked':'').' value="1">';
+                echo '<img src="'.G4_SNS_URL.'/icon/facebook.png" id="facebook_icon">';
             } else {
                 $facebook_url = $facebook->getLoginUrl(array("redirect_uri"=>G4_SNS_URL."/facebook/callback.php", "scope"=>"publish_stream,read_stream,offline_access", "display"=>"popup"));
 
                 echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" disabled value="1">';
-                echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/facebook_'.($facebook_user?'on':'off').'.png" id="facebook_icon"></a>';
+                echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/facebook'.($facebook_user?'':'_off').'.png" id="facebook_icon"></a>';
                 echo '<script>$(function(){ $("#facebook_url").click(function(){ window.open(this.href, "facebook_url", "width=600,height=250"); }); });</script>';
             }
         }
@@ -80,12 +80,36 @@ if (!$config['cf_sns_use']) return;
             }
 
             if ($twitter_user) {
-                echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" '.($member['mb_twitter_checked']?'checked':'').' value="1">';
-                echo '<img src="'.G4_SNS_URL.'/icon/twitter_on.png" id="twitter_icon">';
+                echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" '.(get_cookie('ck_twitter_checked')?'checked':'').' value="1">';
+                echo '<img src="'.G4_SNS_URL.'/icon/twitter.png" id="twitter_icon">';
             } else {
                 echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" disabled value="1">';
-                echo '<a href="'.$twitter_url.'" id="twitter_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/twitter_'.($twitter_user?'on':'off').'.png" id="twitter_icon"></a>';
+                echo '<a href="'.$twitter_url.'" id="twitter_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/twitter'.($twitter_user?'':'_off').'.png" id="twitter_icon"></a>';
                 echo '<script>$(function(){ $("#twitter_url").click(function(){ window.open(this.href, "twitter_url", "width=600,height=250"); }); });</script>';
+            }
+        }
+        //============================================================================
+
+
+        //============================================================================
+        // 미투데이
+        //----------------------------------------------------------------------------
+        if ($config['cf_me2day_key']) {
+            $me2day_user = false;
+            if (empty($_SESSION['me2day']['user_id']) || empty($_SESSION['me2day']['user_key'])) {
+                $result = json_decode(file_get_contents("http://me2day.net/api/get_auth_url.json?akey=".$config['cf_me2day_key']));
+                $me2day_url = $result->url;
+            } else {
+                $me2day_user = true;
+            }
+
+            if ($me2day_user) {
+                echo '<input type="checkbox" name="me2day_checked" id="me2day_checked" '.(get_cookie('ck_me2day_checked')?'checked':'').' value="1">';
+                echo '<img src="'.G4_SNS_URL.'/icon/me2day.png" id="me2day_icon">';
+            } else {
+                echo '<input type="checkbox" name="me2day_checked" id="me2day_checked" disabled value="1">';
+                echo '<a href="'.$me2day_url.'" id="me2day_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/me2day'.($me2day_user?'':'_off').'.png" id="me2day_icon"></a>';
+                echo '<script>$(function(){ $("#me2day_url").click(function(){ window.open(this.href, "me2day_url", "width=1000,height=800"); }); });</script>';
             }
         }
         //============================================================================

@@ -753,6 +753,18 @@ $pg_anchor = '<ul class="anchor">
             <input type="text" name="cf_twitter_secret" value="<?php echo $config['cf_twitter_secret'] ?>" id="cf_twitter_secret" class="frm_input" size="35">
         </td>
     </tr>
+    <tr>
+        <th scope="row"><label for="cf_me2day_key">미투데이 Key</label></th>
+        <td colspan="3">
+            <input type="text" name="cf_me2day_key" value="<?php echo $config['cf_me2day_key'] ?>" id="cf_me2day_key" class="frm_input"> <a href="http://me2day.net/me2/app/get_appkey" target="_blank" class="btn_frmline">앱 등록하기</a>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_googl_shorturl_apikey">구글 짧은주소 API Key</label></th>
+        <td>
+            <input type="text" name="cf_googl_shorturl_apikey" value="<?php echo $config['cf_googl_shorturl_apikey'] ?>" id="cf_googl_shorturl_apikey" class="frm_input"> <a href="http://code.google.com/apis/console/" target="_blank" class="btn_frmline">API Key 등록하기</a>
+        </td>
+    </tr>
     </tbody>
     </table>
 </section>
