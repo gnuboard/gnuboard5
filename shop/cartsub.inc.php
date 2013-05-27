@@ -43,23 +43,16 @@ $goods_count = -1;
 
 // $s_uq_id 로 현재 장바구니 자료 쿼리
 $sql = " select a.ct_id,
+                a.it_id,
                 a.it_name,
-                a.it_opt1,
-                a.it_opt2,
-                a.it_opt3,
-                a.it_opt4,
-                a.it_opt5,
-                a.it_opt6,
                 a.ct_price,
                 a.ct_point,
                 a.ct_qty,
                 a.ct_status,
-                b.it_id,
                 b.ca_id
-           from {$g4['shop_cart_table']} a,
-                {$g4['shop_item_table']} b
+           from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
           where a.uq_id = '$s_uq_id'
-            and a.it_id  = b.it_id
+            and a.ct_num = '0'
           order by a.ct_id ";
 $result = sql_query($sql);
 
@@ -67,6 +60,13 @@ $good_info = '';
 
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
+    // 합계금액 계산
+    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                    SUM(ct_point * ct_qty) as point
+                from {$g4['shop_cart_table']}
+                where it_id = '{$row['it_id']}' ";
+    $sum = sql_fetch($sql);
+
     if (!$goods)
     {
         //$goods = addslashes($row[it_name]);
@@ -102,12 +102,16 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     $it_name = $a1 . stripslashes($row['it_name']) . $a2;
-    if ($row['it_opt1'] || $row['it_opt2'] || $row['it_opt3'] || $row['it_opt4'] || $row['it_opt5'] || $row['it_opt6']) { // 상품에 옵션이 있다면
-        $it_name .= '<div class="sod_bsk_itopt">'.print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']).'</div>';
+    $it_options = print_item_options($row['it_id'], $s_uq_id);
+    if($it_options) {
+        $mod_options = '';
+        if($s_page == 'cart.php')
+            $mod_options = '<button type="button" class="mod_options">선택사항수정</button>';
+        $it_name .= '<div class="sod_bsk_itopt">'.$it_options.$mod_options.'</div>';
     }
 
-    $point       = $row['ct_point'] * $row['ct_qty'];
-    $sell_amount = $row['ct_price'] * $row['ct_qty'];
+    $point       = $sum['point'];
+    $sell_amount = $sum['price'];
 ?>
 
 <tr>
@@ -237,6 +241,11 @@ if ($s_page == 'cart.php') {
     if ($i != 0) {
 ?>
 <script>
+$(function() {
+    $(".mod_options").click(function() {
+    });
+});
+
 function form_check(act) {
     var f = document.frmcartlist;
     var cnt = f.records.value;

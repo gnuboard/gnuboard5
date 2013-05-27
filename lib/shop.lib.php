@@ -676,47 +676,24 @@ function get_item_supply($it_id, $subject)
     return $str;
 }
 
-// 인수는 $it_id, $it_opt1, ..., $it_opt6 까지 넘어옴
-function print_item_options()
+function print_item_options($it_id, $uq_id)
 {
     global $g4;
 
-    $it_id = func_get_arg(0);
-    $sql = " select it_opt1_subject,
-                    it_opt2_subject,
-                    it_opt3_subject,
-                    it_opt4_subject,
-                    it_opt5_subject,
-                    it_opt6_subject
-               from {$g4['shop_item_table']}
-              where it_id = '$it_id' ";
-    $it = sql_fetch($sql);
+    $sql = " select ct_option from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$uq_id' order by ct_num asc ";
+    $result = sql_query($sql);
 
-    $it_name = $str_split = '';
-    for ($i=1; $i<=6; $i++)
-    {
-        if ($i == 1) $str_split .= '<span class="sound_only">상품옵션 </span>';
-        $it_opt = trim(func_get_arg($i));
-        // 상품옵션에서 0은 제외되는 현상을 수정
-        if ($it_opt==null) continue;
-
-        $it_name .= $str_split;
-        $it_opt_subject = $it['it_opt'.$i.'_subject'];
-        $opt = explode( ';', $it_opt );
-        $it_name .= $it_opt_subject.' = '.$opt[0];
-
-        if ($opt[1] != 0)
-        {
-            $it_name .= ' (';
-            //if (ereg("[+]", $opt[1]) == true)
-            if (preg_match("/[+]/", $opt[1]) == true)
-                $it_name .= '+';
-            $it_name .= display_price($opt[1]).')';
-        }
-        $str_split = '<br>';
+    $str = '';
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        if($i == 0)
+            $str .= '<ul>'.PHP_EOL;
+        $str .= '<li>'.$row['ct_option'].'</li>'.PHP_EOL;
     }
 
-    return $it_name;
+    if($i > 0)
+        $str .= '</ul>';
+
+    return $str;
 }
 
 function it_name_icon($it, $it_name="", $url=1)
