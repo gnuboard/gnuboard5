@@ -43,32 +43,19 @@ else if ($act == "alldelete") // 모두 삭제이면
               where uq_id = '$tmp_uq_id' ";
     sql_query($sql);
 }
-else if ($act == "allupdate") // 수량 변경이면 : 모두 수정이면
+else if ($act == "seldelete") // 선택삭제
 {
-    $fldcnt = count($_POST['ct_id']);
+    $fldcnt = count($_POST['it_id']);
+    if(!$fldcnt)
+        alert("삭제하실 상품을 하나이상 선택해 주십시오.");
 
-    // 수량 변경, 재고등을 검사
-    $error = "";
-	for ($i=0; $i<$fldcnt; $i++)
-    {
-        // 재고 구함
-        $stock_qty = get_it_stock_qty($_POST['it_id'][$i]);
-
-        // 변경된 수량이 재고수량보다 크면 오류
-        if ($_POST['ct_qty'][$i] > $stock_qty)
-            $error .= "{$_POST['it_name'][$i]} 의 재고수량이 부족합니다. 현재 재고수량 : $stock_qty 개\\n\\n";
-    }
-
-    // 오류가 있다면 오류메세지 출력
-    if ($error != "") { alert($error); }
-
-	for ($i=0; $i<$fldcnt; $i++)
-    {
-        $sql = " update {$g4['shop_cart_table']}
-                    set ct_qty = '{$_POST['ct_qty'][$i]}'
-                  where ct_id  = '{$_POST['ct_id'][$i]}'
-                    and uq_id = '$tmp_uq_id' ";
-        sql_query($sql);
+    for($i=0; $i<$fldcnt; $i++) {
+        $ct_chk = $_POST['ct_chk'][$i];
+        if($ct_chk) {
+            $it_id = $_POST['it_id'][$i];
+            $sql = " delete from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$tmp_uq_id' ";
+            sql_query($sql);
+        }
     }
 }
 else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 한꺼번에 들어옴.
