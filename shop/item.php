@@ -494,8 +494,25 @@ else
 
                         case "삭제":
                             if(confirm("선택하신 옵션항목을 삭제하시겠습니까?")) {
-                                $(this).closest("li").remove();
-                                price_calculate();
+                                var $el = $(this).closest("li");
+                                var del_exec = true;
+
+                                // 선택옵션이 하나이상인지
+                                if($el.hasClass("sit_opt_list")) {
+                                    if($(".sit_opt_list").size() <= 1)
+                                        del_exec = false;
+                                } else {
+                                    if($(".sit_opt_list").size() < 1)
+                                        del_exec = false;
+                                }
+
+                                if(del_exec) {
+                                    $(this).closest("li").remove();
+                                    price_calculate();
+                                } else {
+                                    alert("선택옵션은 하나이상이어야 합니다.");
+                                    return false;
+                                }
                             }
                             break;
 
