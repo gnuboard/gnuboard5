@@ -197,7 +197,7 @@ else // 장바구니에 담기
         if(!$_POST['io_id'][$i])
             $it_stock_qty = get_it_stock_qty($_POST['it_id']);
         else
-            $it_stock_qty = get_option_stock_qty($_POST['it_id'], $_POST['io_id'][$i]);
+            $it_stock_qty = get_option_stock_qty($_POST['it_id'], $_POST['io_id'][$i], $_POST['io_type'][$i]);
 
         if ($ct_qty + $sum_qty > $it_stock_qty)
         {

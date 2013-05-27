@@ -167,11 +167,13 @@ function get_it_stock_qty($it_id)
 }
 
 // 옵션의 재고 (창고재고수량 - 주문대기수량)
-function get_option_stock_qty($it_id, $io_id)
+function get_option_stock_qty($it_id, $io_id, $type)
 {
     global $g4;
 
-    $sql = " select io_stock_qty from {$g4['shop_item_option_table']} where it_id = '$it_id' and io_id = '$io_id' and io_use = '1' ";
+    $sql = " select io_stock_qty
+                from {$g4['shop_item_option_table']}
+                where it_id = '$it_id' and io_id = '$io_id' and io_type = '$type' and io_use = '1' ";
     $row = sql_fetch($sql);
     $jaego = (int)$row['io_stock_qty'];
 
@@ -180,6 +182,7 @@ function get_option_stock_qty($it_id, $io_id)
                from {$g4['shop_cart_table']}
               where it_id = '$it_id'
                 and io_id = '$io_id'
+                and io_type = '$type'
                 and ct_stock_use = 0
                 and ct_status in ('주문', '준비') ";
     $row = sql_fetch($sql);
