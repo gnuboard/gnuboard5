@@ -48,7 +48,7 @@ if (!$board['bo_use_sns']) return;
         //----------------------------------------------------------------------------
         if ($config['cf_twitter_key']) {
             include_once(G4_SNS_PATH."/twitter/twitteroauth/twitteroauth.php");
-            include_once(G4_SNS_PATH."/twitter/config.php");
+            include_once(G4_SNS_PATH."/twitter/twitterconfig.php");
 
             $twitter_user = false;
             if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {

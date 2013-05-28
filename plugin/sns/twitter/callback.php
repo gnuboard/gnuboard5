@@ -10,7 +10,7 @@ include_once("./_common.php");
 /* Start session and load lib */
 //session_start();
 require_once(G4_SNS_PATH.'/twitter/twitteroauth/twitteroauth.php');
-require_once(G4_SNS_PATH.'/twitter/config.php');
+require_once(G4_SNS_PATH.'/twitter/twitterconfig.php');
 
 //print_r2($_SESSION); print_r2($_REQUEST); exit;
 

@@ -49,7 +49,7 @@ if ($_POST['facebook_checked']) {
 //----------------------------------------------------------------------------
 if ($_POST['twitter_checked']) {
     include_once(G4_SNS_PATH."/twitter/twitteroauth/twitteroauth.php");
-    include_once(G4_SNS_PATH."/twitter/config.php");
+    include_once(G4_SNS_PATH."/twitter/twitterconfig.php");
     
     if ( !(empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) ) {
         $post = googl_short_url($comment_url).' '.$wr_content;
