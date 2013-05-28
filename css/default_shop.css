@@ -492,7 +492,7 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 #sit_title {margin:0 0 5px;font-size:1.3em}
 #sit_desc {margin:0 0 5px;padding:0;color:#999}
-#sit_opt_info {/* sound_only 처리 필요 */}
+#sit_opt_info {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
 #sit_star_sns {position:absolute;top:15px;right:15px;color:#b8afa2;font-size:0.95em;letter-spacing:-0.1em}
 #sit_star_sns span {display:inline-block;margin:0 5px 0 0;color:#666;letter-spacing:0}
