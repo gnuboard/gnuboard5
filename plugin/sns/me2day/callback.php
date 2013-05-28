@@ -18,7 +18,7 @@ if ($result->code == 0) {
     $sns_name   = $user->nickname;
     $g4_sns_url = G4_SNS_URL;
 
-    set_cookie('ck_sns_name', $sns_name);
+    set_cookie('ck_sns_name', $sns_name, 86400);
 
     echo <<<EOT
     <script>
@@ -27,7 +27,7 @@ if ($result->code == 0) {
 
         var opener = window.opener;
         opener.$("#wr_name").val("{$sns_name}");
-        opener.$("#me2day_icon").attr("src", "{$g4_sns_url}/icon/me2day_on.png");
+        opener.$("#me2day_icon").attr("src", "{$g4_sns_url}/icon/me2day.png");
         opener.$("#me2day_checked").attr("disabled", false);
         opener.$("#me2day_checked").attr("checked", true);
         window.close();

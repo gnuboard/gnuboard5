@@ -25,7 +25,7 @@ if ($user) {
     $sns_name   = $user_profile['name'];
     $g4_sns_url = G4_SNS_URL;
 
-    set_cookie('ck_sns_name', $sns_name);
+    set_cookie('ck_sns_name', $sns_name, 86400);
 
     echo <<<EOT
     <script>
@@ -34,7 +34,7 @@ if ($user) {
 
         var opener = window.opener;
         opener.$("#wr_name").val("{$sns_name}");
-        opener.$("#facebook_icon").attr("src", "{$g4_sns_url}/icon/facebook_on.png");
+        opener.$("#facebook_icon").attr("src", "{$g4_sns_url}/icon/facebook.png");
         opener.$("#facebook_checked").attr("disabled", false);
         opener.$("#facebook_checked").attr("checked", true);
         window.close();

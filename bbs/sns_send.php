@@ -1,7 +1,6 @@
 <?php
 include_once("./_common.php");
 
-
 $title    =  str_replace('\"', '"',$_REQUEST['title']);
 $short_url = googl_short_url($_REQUEST['longurl']);
 $title_url = $title.' : '.$short_url;

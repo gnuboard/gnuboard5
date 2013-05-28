@@ -52,7 +52,7 @@ if (200 == $connection->http_code) {
     $sns_name   = $content->name;
     $g4_sns_url = G4_SNS_URL;
 
-    set_cookie('ck_sns_name', $sns_name);
+    set_cookie('ck_sns_name', $sns_name, 86400);
 
     echo <<<EOT
     <script>
@@ -61,7 +61,7 @@ if (200 == $connection->http_code) {
 
         var opener = window.opener;
         opener.$("#wr_name").val("{$sns_name}");
-        opener.$("#twitter_icon").attr("src", "{$g4_sns_url}/icon/twitter_on.png");
+        opener.$("#twitter_icon").attr("src", "{$g4_sns_url}/icon/twitter.png");
         opener.$("#twitter_checked").attr("disabled", false);
         opener.$("#twitter_checked").attr("checked", true);
         window.close();

@@ -96,7 +96,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <?php if ($is_guest) { ?>
         <tr>
             <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="wr_name" id="wr_name"  required class="frm_input required" size="5" maxLength="20"></td>
+            <td><input type="text" name="wr_name" id="wr_name"  required class="frm_input required" size="5" maxLength="20" value="<?php echo get_cookie("ck_sns_name"); ?>"></td>
         </tr>
         <tr>
             <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>

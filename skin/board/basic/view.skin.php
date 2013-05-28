@@ -169,17 +169,9 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
          ?>
     </article>
 
-    <?php
-    $sns_send  = G4_BBS_URL.'/sns_send.php?longurl='.urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-    $sns_send .= '&amp;title='.urlencode(utf8_strcut(get_text($view['wr_subject']),140));
+    <?php 
+    include_once($board_skin_path."/view.sns.skin.php");
     ?>
-    <ul>
-        <li><a href="<?=$sns_send?>&amp;sns=facebook" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/facebook.png" alt="이 글을 내 페이스북 계정으로 보내기"></a></li>
-        <li><a href="<?=$sns_send?>&amp;sns=twitter"  target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/twitter.png"  alt="이 글을 내 트위터 계정으로 보내기"></a></li>
-        <li><a href="<?=$sns_send?>&amp;sns=me2day"   target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/me2day.png"   alt="이 글을 내 미투데이 계정으로 보내기"></a></li>
-        <li><a href="<?=$sns_send?>&amp;sns=gplus"   target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/gplus.png"    alt="이 글을 내 구글플러스 계정으로 보내기"></a></li>
-    </ul>
-
 
     <?php
     // 코멘트 입출력
