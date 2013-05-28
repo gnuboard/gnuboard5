@@ -43,7 +43,7 @@
 #poll_result_cmt footer {text-align:right}
 #poll_result_wcmt {margin-bottom:10px;width:93%}
 .poll_cmt_del a {display:inline-block;padding-bottom:10px}
-#poll_result_oth {margin:0 auto 20px}
+#poll_result_oth {margin:0 auto 20px;width:93%}
 #poll_result_oth h2 {padding:0 0 10px}
 #poll_result_oth ul {margin:0;padding:0;list-style:none}
 #poll_result_oth a {display:block;padding:10px 0;border-bottom:1px solid #eee}

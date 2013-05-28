@@ -55,7 +55,7 @@
 .bo_current {color:#e8180c}
 
 #bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}
-#bo_sch legend {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+#bo_sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 
 /* 게시판 읽기 */
 #bo_v {margin-bottom:20px;padding-bottom:20px}

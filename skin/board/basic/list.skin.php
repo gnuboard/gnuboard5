@@ -86,7 +86,7 @@ if ($is_nogood) $colspan++;
         </td>
         <?php if ($is_checkbox) { ?>
         <td class="td_chk">
-            <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['wr_subject'] ?></label>
+            <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
             <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
         </td>
         <?php } ?>

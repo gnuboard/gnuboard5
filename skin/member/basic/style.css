@@ -38,7 +38,7 @@
 #mb_login h1 {margin:0 0 20px;font-size:1.3em}
 #mb_login h2 {margin:0}
 #mb_login_fs {position:relative;margin:0;padding:20px 20px 20px 95px;border:1px solid #cfded8;border-bottom:0;background:#fff}
-#mb_login_fs legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#mb_login_fs legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #mb_login_fs label {letter-spacing:-0.1em}
 #mb_login_fs .login_id {position:absolute;top:26px;left:95px}
 #mb_login_fs .login_pw {position:absolute;top:52px;left:95px}
