@@ -1,11 +1,11 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
 
-if (!$config['cf_sns_use']) return;
+if (!$board['bo_use_sns']) return;
 
-set_cookie('ck_facebook_checked', false);
-set_cookie('ck_twitter_checked' , false);
-set_cookie('ck_me2day_checked'  , false);
+set_cookie('ck_facebook_checked', false, 86400*31);
+set_cookie('ck_twitter_checked' , false, 86400*31);
+set_cookie('ck_me2day_checked'  , false, 86400*31);
 
 //============================================================================
 // 페이스북
@@ -38,6 +38,8 @@ if ($_POST['facebook_checked']) {
             ;;;
         }
     }
+
+    $wr_sns[] = "fb";
 }
 //============================================================================
 
@@ -60,6 +62,8 @@ if ($_POST['twitter_checked']) {
     
         set_cookie('ck_twitter_checked', true, 86400*31);
     }
+
+    $wr_sns[] = "tw";
 }
 //============================================================================
 
@@ -76,6 +80,8 @@ if ($_POST['me2day_checked']) {
 
         set_cookie('ck_me2day_checked', true, 86400*31);
     }
+
+    $wr_sns[] = "me";
 }
 //============================================================================
 ?>

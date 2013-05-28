@@ -1,7 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-if (!$config['cf_sns_use']) return;
+if (!$board['bo_use_sns']) return;
 ?>
 <tr>
     <th scope="row">SNS 등록</th>

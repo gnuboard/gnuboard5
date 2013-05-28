@@ -167,8 +167,13 @@ if ($w == 'c') // 댓글 입력
 
     $comment_id = mysql_insert_id();
 
+    // SNS 등록
+    $wr_sns = array();
+    include_once("./write_comment_update.sns.php");
+    $wr_sns = implode(",", $wr_sns);
+
     // 원글에 댓글수 증가 & 마지막 시간 반영
-    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_last = '".G4_TIME_YMDHIS."' where wr_id = '$wr_id' ");
+    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_sns = '$wr_sns', wr_last = '".G4_TIME_YMDHIS."' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
     sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '".G4_TIME_YMDHIS."', '{$member['mb_id']}' ) ");
@@ -181,9 +186,6 @@ if ($w == 'c') // 댓글 입력
 
     
     $wr_subject = get_text(stripslashes($wr['wr_subject']));
-
-    // SNS 등록
-    include_once("./write_comment_update.sns.php");
 
     // 메일발송 사용
     if ($config['cf_email_use'] && $board['bo_use_email'])
