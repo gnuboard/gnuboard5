@@ -6,7 +6,7 @@ if (!$board['bo_use_sns']) return;
 <tr>
     <th scope="row">SNS 등록</th>
     <td>
-        <div id="sns_facebook">
+        <ul id="bo_vc_sns">
         <?php
         //============================================================================
         // 페이스북
@@ -29,16 +29,20 @@ if (!$board['bo_use_sns']) return;
                 }
             }
 
+            echo '<li>';
             if ($facebook_user) {
-                echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" '.(get_cookie('ck_facebook_checked')?'checked':'').' value="1">';
                 echo '<img src="'.G4_SNS_URL.'/icon/facebook.png" id="facebook_icon">';
+                echo '<label for="" class="sound_only">페이스북 동시 등록</label>';
+                echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" '.(get_cookie('ck_facebook_checked')?'checked':'').' value="1">';
             } else {
                 $facebook_url = $facebook->getLoginUrl(array("redirect_uri"=>G4_SNS_URL."/facebook/callback.php", "scope"=>"publish_stream,read_stream,offline_access", "display"=>"popup"));
 
-                echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" disabled value="1">';
                 echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/facebook'.($facebook_user?'':'_off').'.png" id="facebook_icon"></a>';
+                echo '<label for="" class="sound_only">페이스북 동시 등록</label>';
+                echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" disabled value="1">';
                 echo '<script>$(function(){ $("#facebook_url").click(function(){ window.open(this.href, "facebook_url", "width=600,height=250"); }); });</script>';
             }
+            echo '</li>';
         }
         //============================================================================
 
@@ -78,14 +82,18 @@ if (!$board['bo_use_sns']) return;
                 }
             }
 
+            echo '<li>';
             if ($twitter_user) {
-                echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" '.(get_cookie('ck_twitter_checked')?'checked':'').' value="1">';
                 echo '<img src="'.G4_SNS_URL.'/icon/twitter.png" id="twitter_icon">';
+                echo '<label for="" class="sound_only">트위터 동시 등록</label>';
+                echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" '.(get_cookie('ck_twitter_checked')?'checked':'').' value="1">';
             } else {
-                echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" disabled value="1">';
                 echo '<a href="'.$twitter_url.'" id="twitter_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/twitter'.($twitter_user?'':'_off').'.png" id="twitter_icon"></a>';
+                echo '<label for="" class="sound_only">트위터 동시 등록</label>';
+                echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" disabled value="1">';
                 echo '<script>$(function(){ $("#twitter_url").click(function(){ window.open(this.href, "twitter_url", "width=600,height=250"); }); });</script>';
             }
+            echo '</li>';
         }
         //============================================================================
 
@@ -102,17 +110,21 @@ if (!$board['bo_use_sns']) return;
                 $me2day_user = true;
             }
 
+            echo '<li>';
             if ($me2day_user) {
-                echo '<input type="checkbox" name="me2day_checked" id="me2day_checked" '.(get_cookie('ck_me2day_checked')?'checked':'').' value="1">';
                 echo '<img src="'.G4_SNS_URL.'/icon/me2day.png" id="me2day_icon">';
+                echo '<label for="" class="sound_only">미투데이 동시 등록</label>';
+                echo '<input type="checkbox" name="me2day_checked" id="me2day_checked" '.(get_cookie('ck_me2day_checked')?'checked':'').' value="1">';
             } else {
-                echo '<input type="checkbox" name="me2day_checked" id="me2day_checked" disabled value="1">';
                 echo '<a href="'.$me2day_url.'" id="me2day_url" onclick="return false;"><img src="'.G4_SNS_URL.'/icon/me2day'.($me2day_user?'':'_off').'.png" id="me2day_icon"></a>';
+                echo '<label for="" class="sound_only">미투데이 동시 등록</label>';
+                echo '<input type="checkbox" name="me2day_checked" id="me2day_checked" disabled value="1">';
                 echo '<script>$(function(){ $("#me2day_url").click(function(){ window.open(this.href, "me2day_url", "width=1000,height=800"); }); });</script>';
             }
+            echo '</li>';
         }
         //============================================================================
         ?>
-        </div>
+        </ul>
     </td>
 </tr>

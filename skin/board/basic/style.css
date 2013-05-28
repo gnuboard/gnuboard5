@@ -98,6 +98,10 @@
 #bo_v_act_good,
 #bo_v_act_nogood {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
+#bo_v_sns {margin:0 0 20px;padding:0;list-style:none;zoom:1}
+#bo_v_sns:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_sns li {float:left;margin:0 5px 0 0}
+
 #bo_v form {padding-top:20px}
 
 /* 게시판 댓글 */
@@ -126,5 +130,10 @@
 #bo_vc_w {position:relative;margin:0 0 10px;padding:0 0 20px;border-bottom:1px solid #cfded8}
 #bo_vc_w h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #bo_vc_w #char_cnt {display:block;margin:0 0 5px}
+
+#bo_vc_sns {margin:0;padding:0;list-style:none;zoom:1}
+#bo_vc_sns:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_vc_sns li {float:left;margin:0 20px 0 0}
+#bo_vc_sns input {margin:0 0 0 5px}
 
 #bo_vc form {padding:0}
