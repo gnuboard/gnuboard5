@@ -5,20 +5,17 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<div id="bo_v_table"><?php echo $board['bo_subject']; ?></div>
+<div id="bo_v" style="width:<?php echo $width; ?>">
 
-<article id="bo_v" style="width:<?php echo $width; ?>">
-    <header>
-        <h1 id="bo_v_title">
-            <?php
-            if ($category_name) echo ($category_name ? $view['ca_name'].' | ' : ''); // 분류 출력 끝
-            echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력
-            ?>
-        </h1>
-    </header>
+    <p id="bo_v_cate">
+        <?php echo $board['bo_subject'] ?>
+        <?php if ($category_name) { // 분류가 지정되었다면  ?><?php echo ($category_name ? "{$view['ca_name']} " : ""); ?><?php } // 분류 출력 끝  ?>
+    </p>
+
+    <h1 id="bo_v_h1"><?php echo cut_str(get_text($view['wr_subject']), 70) // 글제목 출력 ?></h1>
 
     <section id="bo_v_info">
-        <h2>페이지 정보</h2>
+        <h2>게시물 정보</h2>
         작성자 <strong><?php echo $view['name'] ?><?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></strong>
         <span class="sound_only">작성일</span><strong><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?></strong>
         조회<strong><?php echo number_format($view['wr_hit']) ?>회</strong>
@@ -90,7 +87,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     </section>
     <?php } ?>
 
-    <div id="bo_v_top">
+    <nav id="bo_v_top">
+        <h2>게시물 상단 버튼</h2>
         <?php
         ob_start();
          ?>
@@ -115,10 +113,12 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         $link_buttons = ob_get_contents();
         ob_end_flush();
          ?>
-    </div>
+    </nav>
 
-    <section id="bo_v_atc">
-        <h2 id="bo_v_atc_title">본문</h2>
+    <article id="bo_v_atc">
+        <header>
+            <h1>본문</h1>
+        </header>
 
         <?php
         // 파일 출력
@@ -145,6 +145,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <?php if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
             <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><?php } ?>
+
             <?php if ($good_href) { ?>
             <a href="<?php echo $good_href.'&amp;'.$qstr ?>" id="good_button" class="btn_b01">추천 <strong><?php echo number_format($view['wr_good']) ?></strong></a>
             <b id="bo_v_act_good"></b>
@@ -153,10 +154,11 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             <a href="<?php echo $nogood_href.'&amp;'.$qstr ?>" id="nogood_button" class="btn_b01">비추천  <strong><?php echo number_format($view['wr_nogood']) ?></strong></a>
             <b id="bo_v_act_nogood"></b>
             <?php } ?>
+
         </div>
         <?php } else {
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
-        ?>
+         ?>
         <div id="bo_v_act">
             <?php if($board['bo_use_good']) { ?><span>추천 <strong><?php echo number_format($view['wr_good']) ?></strong></span><?php } ?>
             <?php if($board['bo_use_nogood']) { ?><span>비추천 <strong><?php echo number_format($view['wr_nogood']) ?></strong></span><?php } ?>
@@ -164,20 +166,28 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <?php
             }
         }
-        ?>
-    </section>
+         ?>
+    </article>
+
+    <?php 
+    include_once($board_skin_path."/view.sns.skin.php");
+    ?>
 
     <?php
     // 코멘트 입출력
     include_once('./view_comment.php');
      ?>
 
-    <div id="bo_v_bot">
+    <nav id="bo_v_bot">
+        <h2>게시물 하단 버튼</h2>
+
         <!-- 링크 버튼 -->
         <?php echo $link_buttons ?>
-    </div>
+    </nav>
 
-</article>
+</div>
+
+
 
 <script>
 <?php if ($board['bo_download_point'] < 0) { ?>
@@ -211,35 +221,6 @@ $(window).load(function() {
     view_image_resize();
 });
 
-var now = new Date();
-var timeout = false;
-var millisec = 200;
-var tid;
-
-$(window).resize(function() {
-    now = new Date();
-    if (timeout === false) {
-        timeout = true;
-
-        if(tid != null)
-            clearTimeout(tid);
-
-        tid = setTimeout(resize_check, millisec);
-    }
-});
-
-function resize_check() {
-    if (new Date() - now < millisec) {
-        if(tid != null)
-            clearTimeout(tid);
-
-        tid = setTimeout(resize_check, millisec);
-    } else {
-        timeout = false;
-        view_image_resize();
-    }
-}
-
 $(function() {
     $("a.view_image").click(function() {
         window.open(this.href, "large_image", "location=yes,links=no,toolbar=no,top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
@@ -263,34 +244,14 @@ function view_image_resize()
 {
     var $img = $("#bo_v_atc img");
     var img_wrap = $("#bo_v_atc").width();
-    var win_width = $(window).width() - 35;
-    var res_width = 0;
-
-    if(img_wrap < win_width)
-        res_width = img_wrap;
-    else
-        res_width = win_width;
 
     $img.each(function() {
         var img_width = $(this).width();
-        var img_height = $(this).height();
-        var this_width = $(this).data("width");
-        var this_height = $(this).data("height");
-
-        if(this_width == undefined) {
-            $(this).data("width", img_width); // 원래 이미지 사이즈
-            $(this).data("height", img_height);
-            this_width = img_width;
-            this_height = img_height;
-        }
-
-        if(this_width > res_width) {
-            $(this).width(res_width);
-            var res_height = Math.round(res_width * $(this).data("height") / $(this).data("width"));
-            $(this).height(res_height);
-        } else {
-            $(this).width(this_width);
-            $(this).height(this_height);
+        $(this).data("width", img_width); // 원래 이미지 사이즈
+        if (img_width > img_wrap) {
+            $(this).addClass("img_fix");
+        } else if (img_width <= img_wrap && img_width >= $(this).data("width")) {
+            $(this).removeClass("img_fix");
         }
     });
 }

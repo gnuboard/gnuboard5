@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="post_code" class="new_win">
-    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
+    <h1><?php echo $g4['title'] ?></h1>
 
     <form name="fzip" method="get" autocomplete="off">
     <input type="hidden" name="frm_name" value="<?php echo $frm_name ?>">
@@ -31,14 +31,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <dl>
         <dt>총 <?php echo $search_count ?>건 가나다순 정렬</dt>
         <dd>
-            <?php
-            for ($i=0; $i<count($list); $i++) {
-                if ($i == 0) echo '<ul>';
-            ?>
+            <ul>
+                <?php for ($i=0; $i<count($list); $i++) {  ?>
                 <li><a href='javascript:;' onclick="find_zip('<?php echo $list[$i][zip1] ?>', '<?php echo $list[$i][zip2] ?>', '<?php echo $list[$i][addr] ?>');"><span class="post_code"><?php echo $list[$i][zip1] ?>-<?php echo $list[$i][zip2] ?></span> <?php echo $list[$i][addr] ?> <?php echo $list[$i][bunji] ?></a></li>
-            <?php }
-            if ($i > 0) echo '</ul>';
-            ?>
+                <?php }  ?>
+            </ul>
         </dd>
     </dl>
 

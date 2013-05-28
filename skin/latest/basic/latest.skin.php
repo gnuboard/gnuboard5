@@ -4,8 +4,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $latest_skin_url ?>/style.css">
 
-<section class="lat">
-    <h2 class="lat_title"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject ?></a></h2>
+<div class="lt">
+    <strong class="lt_title"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject ?></a></strong>
     <ul>
     <?php for ($i=0; $i<count($list); $i++) {  ?>
         <li>
@@ -37,5 +37,5 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <li>게시물이 없습니다.</li>
     <?php }  ?>
     </ul>
-    <div class="lat_more"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
-</section>
+    <div class="lt_more"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
+</div>

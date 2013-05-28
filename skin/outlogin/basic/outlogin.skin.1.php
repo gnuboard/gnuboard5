@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $outlogin_skin_url ?>/style.css">
 
-<aside id="ol_before" class="ol">
+<section id="ol_before" class="ol">
     <h2>회원로그인</h2>
     <!-- 로그인 전 외부로그인 시작 -->
     <form name="foutlogin" action="<?php echo $outlogin_action_url ?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
@@ -25,12 +25,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </div>
     </fieldset>
     </form>
-</aside>
+</section>
 
 <script>
 $omi = $('#ol_id');
 $omp = $('#ol_pw');
-$omp.css('display','inline-block').css('width',103);
+$omp.css('display','inline-block').css('width',104);
 $omi_label = $('#ol_idlabel');
 $omi_label.addClass('ol_idlabel');
 $omp_label = $('#ol_pwlabel');
