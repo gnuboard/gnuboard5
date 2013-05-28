@@ -53,9 +53,8 @@ if(!isset($config['cf_mobile_pages'])) {
     sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", true);
 }
 
-if(!isset($config['cf_sns_use'])) {
+if(!isset($config['cf_facebook_appid'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_sns_use` TINYINT NOT NULL DEFAULT '0' AFTER `cf_kcpcert_use`
                     ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_facebook_use`,  
                     ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
                     ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
@@ -729,10 +728,6 @@ $pg_anchor = '<ul class="anchor">
         <col class="grid_6">
     </colgroup>
     <tbody>
-    <tr>
-        <th scope="row"><label for="cf_facebook_use">SNS 사용</label></th>
-        <td colspan="3"><input type="checkbox" name="cf_sns_use" value="1" id="cf_sns_use" <?php echo $config['cf_sns_use']?'checked':''; ?>> 사용</td>
-    </tr>
     <tr>
         <th scope="row"><label for="cf_facebook_appid">페이스북 앱 ID</label></th>
         <td>

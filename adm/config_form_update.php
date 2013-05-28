@@ -104,7 +104,6 @@ $sql = " update {$g4['config_table']}
                  cf_googl_shorturl_apikey = '{$_POST['cf_googl_shorturl_apikey']}',
                  cf_kcpcert_site_cd = '{$_POST['cf_kcpcert_site_cd']}',
                  cf_kcpcert_use = '{$_POST['cf_kcpcert_use']}',
-                 cf_sns_use = '{$_POST['cf_sns_use']}',
                  cf_facebook_appid = '{$_POST['cf_facebook_appid']}',
                  cf_facebook_secret = '{$_POST['cf_facebook_secret']}',
                  cf_twitter_key = '{$_POST['cf_twitter_key']}',
