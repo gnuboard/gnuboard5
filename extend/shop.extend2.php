@@ -1,0 +1,201 @@
+<?php
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
+if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
+// uniqid 테이블이 없을 경우 생성
+if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
+                  `uq_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`uq_id`)
+                ) ", false);
+}
+
+// 상품옵션 테이블 생성
+if(!sql_query(" select io_id from {$g4['shop_item_option_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_item_option_table']}` (
+                    `io_no` INT(11) NOT NULL AUTO_INCREMENT,
+                    `io_id` VARCHAR(255) NOT NULL DEFAULT '',
+                    `io_type` TINYINT(4) NOT NULL DEFAULT '0',
+                    `it_id` VARCHAR(20) NOT NULL DEFAULT '',
+                    `io_price` INT(11) NOT NULL DEFAULT '0',
+                    `io_stock_qty` INT(11) NOT NULL DEFAULT '0',
+                    `io_noti_qty` INT(11) NOT NULL DEFAULT '0',
+                    `io_use` TINYINT(4) NOT NULL DEFAULT '0',
+                    PRIMARY KEY (`io_no`),
+                    KEY `io_id` (`io_id`),
+                    KEY `it_id` (`it_id`)
+                ) ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_option_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
+                    ADD `it_supply_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_option` ", false);
+}
+
+// uq_id 필드추가
+$sql = " select uq_id from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_card_history_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_card_history_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` DROP INDEX index1", false);
+}
+
+// 가격필드명변경
+$sql = " select it_price from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    CHANGE `it_amount` `it_price` INT(11) NOT NULL DEFAULT '0',
+                    CHANGE `it_cust_amount` `it_cust_price` INT(11) NOT NULL DEFAULT '0' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    CHANGE `ct_amount` `ct_price` INT(11) NOT NULL DEFAULT '0',
+                    ADD `it_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_id` ", false);
+}
+
+// od_mobile 추가
+$sql = " select od_mobile from {$g4['shop_order_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_mobile` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_time` ", false);
+}
+
+// ct_option 추가
+$sql = " select ct_option from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `ct_option` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ct_stock_use`,
+                    ADD `ct_num` INT(11) NOT NULL DEFAULT '0' AFTER `ct_qty`,
+                    ADD `io_id` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ct_qty`,
+                    ADD `io_type` TINYINT(4) NOT NULL DEFAULT '0' AFTER `io_id`,
+                    ADD `io_price` INT(11) NOT NULL DEFAULT '0' AFTER `io_type` ", false);
+}
+
+// ct_num 추가
+$sql = " select ct_num from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `ct_num` INT(11) NOT NULL DEFAULT '0' AFTER `ct_qty` ", false);
+}
+
+// ct_order 추가
+$sql = " select ct_order from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `ct_order` INT(11) NOT NULL DEFAULT '0' AFTER `ct_direct` ", false);
+}
+
+// it_brand 추가
+/*
+$sql = " select it_brand from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_brand` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
+                    ADD `it_model` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_brand` ", false);
+}
+*/
+
+// sms_cont5 필드추가
+$sql = " select de_sms_cont5 from {$g4['shop_default_table']} ";
+$result = sql_query($sql, false);
+if (!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    ADD `de_sms_cont5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_sms_cont4`,
+                    ADD `de_sms_use5` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_sms_use4` ", false);
+}
+
+// 모바일 상품유형 필드 추가
+$sql = " select de_mobile_type1_list_use from {$g4['shop_default_table']} ";
+$result = sql_query($sql, false);
+if (!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    ADD `de_mobile_type1_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_type5_img_height`,
+                    ADD `de_mobile_type1_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type1_list_use`,
+                    ADD `de_mobile_type1_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_skin`,
+                    ADD `de_mobile_type1_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_row`,
+                    ADD `de_mobile_type1_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_img_width`,
+                    ADD `de_mobile_type2_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_img_height`,
+                    ADD `de_mobile_type2_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type2_list_use`,
+                    ADD `de_mobile_type2_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_list_skin`,
+                    ADD `de_mobile_type2_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_list_row`,
+                    ADD `de_mobile_type2_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_img_width`,
+                    ADD `de_mobile_type3_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_img_height`,
+                    ADD `de_mobile_type3_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type3_list_use`,
+                    ADD `de_mobile_type3_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_list_skin`,
+                    ADD `de_mobile_type3_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_list_row`,
+                    ADD `de_mobile_type3_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_img_width`,
+                    ADD `de_mobile_type4_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_img_height`,
+                    ADD `de_mobile_type4_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type4_list_use`,
+                    ADD `de_mobile_type4_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_list_skin`,
+                    ADD `de_mobile_type4_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_list_row`,
+                    ADD `de_mobile_type4_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_img_width`,
+                    ADD `de_mobile_type5_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_img_height`,
+                    ADD `de_mobile_type5_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type5_list_use`,
+                    ADD `de_mobile_type5_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_list_skin`,
+                    ADD `de_mobile_type5_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_list_row`,
+                    ADD `de_mobile_type5_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_img_width`
+                    ", false);
+}
+
+// it_id type 수정
+$sql = " SHOW COLUMNS FROM `{$g4['shop_item_table']}` WHERE field = 'it_id' ";
+$row = sql_fetch($sql);
+if(intval(preg_replace("/[^0-9]/", "", $row['Type'])) != 20) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_qa_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_ps_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}` MODIFY COLUMN it_id2 VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_event_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_wish_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+}
+
+// 상품요약정보 필드추가
+$sql = " select it_info_gubun from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_info_gubun` VARCHAR(50) NOT NULL DEFAULT '' AFTER `it_tel_inq`,
+                    ADD `it_info_value` TEXT NOT NULL AFTER `it_info_gubun` ", false);
+}
+
+// 상품이미지 필드추가
+$sql = " select it_img1 from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_info_value`,
+                    ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1`,
+                    ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2`,
+                    ADD `it_img4` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img3`,
+                    ADD `it_img5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img4`,
+                    ADD `it_img6` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img5`,
+                    ADD `it_img7` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img6`,
+                    ADD `it_img8` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img7`,
+                    ADD `it_img9` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img8`,
+                    ADD `it_img10` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img9` ", false);
+}
+
+// 관련상품 정렬을 위한 ir_no 필드 추가
+$sql = " select ir_no from {$g4['shop_item_relation_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}`
+                    ADD `ir_no` INT(11) NOT NULL DEFAULT '0' AFTER `it_id2` ", false);
+}
+
+if (!isset($it['it_mobile_explan'])) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_mobile_explan` TEXT NOT NULL AFTER `it_explan`,
+                    ADD `it_mobile_head_html` TEXT NOT NULL AFTER `it_tail_html`,
+                    ADD `it_mobile_tail_html` TEXT NOT NULL AFTER `it_mobile_head_html` ", false);
+}
+?>

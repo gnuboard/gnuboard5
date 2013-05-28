@@ -6,53 +6,6 @@ include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
-// it_id type 수정
-$sql = " SHOW COLUMNS FROM `{$g4['shop_item_table']}` WHERE field = 'it_id' ";
-$row = sql_fetch($sql);
-if(intval(preg_replace("/[^0-9]/", "", $row['Type'])) != 20) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_qa_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_ps_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}` MODIFY COLUMN it_id2 VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_event_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_wish_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-}
-
-// 상품요약정보 필드추가
-$sql = " select it_info_gubun from {$g4['shop_item_table']} limit 1 ";
-$result = sql_query($sql, false);
-if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_info_gubun` VARCHAR(50) NOT NULL DEFAULT '' AFTER `it_tel_inq`,
-                    ADD `it_info_value` TEXT NOT NULL AFTER `it_info_gubun` ", false);
-}
-
-// 상품이미지 필드추가
-$sql = " select it_img1 from {$g4['shop_item_table']} limit 1 ";
-$result = sql_query($sql, false);
-if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
-                    ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_info_value`,
-                    ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1`,
-                    ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2`,
-                    ADD `it_img4` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img3`,
-                    ADD `it_img5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img4`,
-                    ADD `it_img6` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img5`,
-                    ADD `it_img7` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img6`,
-                    ADD `it_img8` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img7`,
-                    ADD `it_img9` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img8`,
-                    ADD `it_img10` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img9` ", false);
-}
-
-// 관련상품 정렬을 위한 ir_no 필드 추가
-$sql = " select ir_no from {$g4['shop_item_relation_table']} limit 1 ";
-$result = sql_query($sql, false);
-if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}`
-                    ADD `ir_no` INT(11) NOT NULL DEFAULT '0' AFTER `it_id2` ", false);
-}
-
 $html_title = "상품 ";
 
 if ($w == "")
@@ -109,13 +62,6 @@ else
 if (!$it['it_explan_html'])
 {
     $it['it_explan'] = get_text($it['it_explan'], 1);
-}
-
-if (!isset($it['it_mobile_explan'])) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
-                    ADD `it_mobile_explan` TEXT NOT NULL AFTER `it_explan`,
-                    ADD `it_mobile_head_html` TEXT NOT NULL AFTER `it_tail_html`,
-                    ADD `it_mobile_tail_html` TEXT NOT NULL AFTER `it_mobile_head_html` ", false);
 }
 
 //$qstr1 = 'sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search;

@@ -45,42 +45,6 @@ if (!function_exists("get_sock")) {
     }
 }
 
-if (!isset($default['de_sms_cont5'])) {
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
-                    ADD `de_sms_cont5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_sms_cont4`,
-                    ADD `de_sms_use5` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_sms_use4` ", true);
-}
-
-if (!isset($default['de_mobile_type1_list_use'])) {
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
-                    ADD `de_mobile_type1_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_type5_img_height`,
-                    ADD `de_mobile_type1_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type1_list_use`,
-                    ADD `de_mobile_type1_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_skin`,
-                    ADD `de_mobile_type1_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_row`,
-                    ADD `de_mobile_type1_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_img_width`,
-                    ADD `de_mobile_type2_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_img_height`,
-                    ADD `de_mobile_type2_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type2_list_use`,
-                    ADD `de_mobile_type2_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_list_skin`,
-                    ADD `de_mobile_type2_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_list_row`,
-                    ADD `de_mobile_type2_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_img_width`,
-                    ADD `de_mobile_type3_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type2_img_height`,
-                    ADD `de_mobile_type3_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type3_list_use`,
-                    ADD `de_mobile_type3_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_list_skin`,
-                    ADD `de_mobile_type3_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_list_row`,
-                    ADD `de_mobile_type3_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_img_width`,
-                    ADD `de_mobile_type4_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type3_img_height`,
-                    ADD `de_mobile_type4_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type4_list_use`,
-                    ADD `de_mobile_type4_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_list_skin`,
-                    ADD `de_mobile_type4_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_list_row`,
-                    ADD `de_mobile_type4_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_img_width`,
-                    ADD `de_mobile_type5_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type4_img_height`,
-                    ADD `de_mobile_type5_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type5_list_use`,
-                    ADD `de_mobile_type5_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_list_skin`,
-                    ADD `de_mobile_type5_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_list_row`,
-                    ADD `de_mobile_type5_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_img_width`
-                    ", true);
-}
-
 if (!$default['de_icode_server_ip'])   $default['de_icode_server_ip'] = '211.172.232.124';
 if (!$default['de_icode_server_port']) $default['de_icode_server_port'] = '7295';
 
