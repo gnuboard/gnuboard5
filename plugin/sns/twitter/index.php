@@ -9,7 +9,7 @@ include_once("./_common.php");
 /* Load required lib files. */
 //session_start();
 require_once(G4_SNS_PATH.'/twitter/twitteroauth/twitteroauth.php');
-require_once(G4_SNS_PATH.'/twitter/config.php');
+require_once(G4_SNS_PATH.'/twitter/twitterconfig.php');
 
 /* If access tokens are not available redirect to connect page. */
 if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {

@@ -4,7 +4,7 @@ include_once("./_common.php");
 /* Start session and load library. */
 //session_start();
 require_once(G4_SNS_PATH.'/twitter/twitteroauth/twitteroauth.php');
-require_once(G4_SNS_PATH.'/twitter/config.php');
+require_once(G4_SNS_PATH.'/twitter/twitterconfig.php');
 
 /* Build TwitterOAuth object with client credentials. */
 $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
