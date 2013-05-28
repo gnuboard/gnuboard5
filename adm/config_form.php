@@ -58,7 +58,8 @@ if(!isset($config['cf_facebook_appid'])) {
                     ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_kcpcert_use`,  
                     ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_appid`,
                     ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
-                    ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key` ", true);
+                    ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key`,
+                    ADD `cf_me2day_key` VARCHAR(255) NOT NULL AFTER `cf_twitter_secret` ", true);
 }
 
 // uniqid 테이블이 없을 경우 생성
