@@ -17,42 +17,15 @@ if ($od_send_mail)
     unset($point_list);
     unset($delivery_list);
 
-    $sql = " select a.*,
-                    b.it_opt1_subject,
-                    b.it_opt2_subject,
-                    b.it_opt3_subject,
-                    b.it_opt4_subject,
-                    b.it_opt5_subject,
-                    b.it_opt6_subject
-               from {$g4['shop_cart_table']} a inner join {$g4['shop_item_table']} b on (b.it_id=a.it_id)
-              where a.uq_id = '{$od['uq_id']}'
-              order by a.ct_id ";
+    $sql = " select *
+               from {$g4['shop_cart_table']}
+              where uq_id = '{$od['uq_id']}'
+              order by ct_id ";
     $result = sql_query($sql);
     for ($i=0; $ct=mysql_fetch_array($result); $i++) {
-        // 상품 옵션
-        $s_option = "";
-        $str_split = "";
-        for ($k=1; $k<=6; $k++) {
-            if ($ct["it_opt{$k}"] == "") {
-                continue;
-            }
-
-            $s_option .= $str_split;
-            $it_opt_subject = $ct["it_opt{$k}_subject"];
-
-            unset($opt);
-            $opt = explode( ";", trim($ct["it_opt{$k}"]) );
-            $s_option .= "$it_opt_subject = $opt[0]";
-            $str_split = "<br>";
-        }
-
-        if ($s_option == "") {
-            $s_option = "없음";
-        }
-
         $cart_list[$i]['it_id']   = $ct['it_id'];
         $cart_list[$i]['it_name'] = $ct['it_name'];
-        $cart_list[$i]['it_opt']  = $s_option;
+        $cart_list[$i]['it_opt']  = $ct['ct_option'];
 
         $ct_status = $ct['ct_status'];
         if ($ct_status == "준비") {

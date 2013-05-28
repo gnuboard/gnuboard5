@@ -46,10 +46,27 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     unset($list);
 
+    // 옵션정보
+    $sql2 = " select ct_option, ct_qty
+                from {$g4['shop_cart_table']}
+                where it_id = '{$row['it_id']}' and uq_id = '$tmp_uq_id'
+                order by io_type asc, ct_num asc, ct_id asc ";
+    $result2 = sql_query($sql2);
+
+    $options = '';
+    for($k=0; $row2=sql_fetch_array($result2); $k++) {
+        if($k == 0)
+            $options .= '<ul>'.PHP_EOL;
+        $options .= '<li>'.$row2['ct_option'].' '.$row2['ct_qty'].'개</li>'.PHP_EOL;
+    }
+
+    if($k > 0)
+        $options .= '</ul>';
+
     $list['it_id']   = $row['it_id'];
     $list['it_simg'] = get_it_image($row['it_id'], $default['de_simg_width'], $default['de_simg_height']);
     $list['it_name'] = $row['it_name'];
-    $list['it_opt']  = print_item_options($row['it_id'], $tmp_uq_id);
+    $list['it_opt']  = $options;
 
     $subject = $config['cf_title'].' - 주문 알림 메일 (주문자 '.$od_name.'님)';
     ob_start();
