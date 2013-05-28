@@ -145,6 +145,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <?php if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
             <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><?php } ?>
+
             <?php if ($good_href) { ?>
             <a href="<?php echo $good_href.'&amp;'.$qstr ?>" id="good_button" class="btn_b01">추천 <strong><?php echo number_format($view['wr_good']) ?></strong></a>
             <b id="bo_v_act_good"></b>
@@ -153,6 +154,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             <a href="<?php echo $nogood_href.'&amp;'.$qstr ?>" id="nogood_button" class="btn_b01">비추천  <strong><?php echo number_format($view['wr_nogood']) ?></strong></a>
             <b id="bo_v_act_nogood"></b>
             <?php } ?>
+
         </div>
         <?php } else {
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
@@ -166,6 +168,10 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         }
          ?>
     </article>
+
+    <?php 
+    include_once($board_skin_path."/view.sns.skin.php");
+    ?>
 
     <?php
     // 코멘트 입출력

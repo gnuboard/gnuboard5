@@ -21,8 +21,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             $str = $str;
         }
         $str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $str);
-    ?>
-    <article id="c_<?php echo $comment_id; ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
+     ?>
+    <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
         <header>
             <h1><?php echo $list[$i]['wr_name'] ?>님의 댓글</h1>
             <?php echo $list[$i]['name'] ?>
@@ -44,7 +44,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <span id="edit_<?php echo $comment_id ?>"></span><!-- 수정 -->
         <span id="reply_<?php echo $comment_id ?>"></span><!-- 답변 -->
 
-        <input  type="hidden" value="<?php echo strstr($list[$i]['wr_option'],"secret") ?>" id="secret_comment_<?php echo $comment_id ?>">
+        <input type="hidden" value="<?php echo strstr($list[$i]['wr_option'],"secret") ?>" id="secret_comment_<?php echo $comment_id ?>">
         <textarea id="save_comment_<?php echo $comment_id ?>" style="display:none"><?php echo get_text($list[$i]['content1'], 0) ?></textarea>
 
         <?php if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
@@ -73,15 +73,14 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
 </section>
 
-<?php 
-    if ($is_comment_write) {
+<?php if ($is_comment_write) {
         if($w == '')
             $w = 'c';
-?>
+    ?>
     <aside id="bo_vc_w">
         <h2>댓글쓰기</h2>
         <form name="fviewcomment" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" method="post" autocomplete="off">
-        <input type="hidden" name="w" value="<?php echo $w ?>" id="w" >
+        <input type="hidden" name="w" value="<?php echo $w ?>" id="w">
         <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
         <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
         <input type="hidden" name="comment_id" value="<?php echo $c_id ?>" id="comment_id">
@@ -97,11 +96,11 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <?php if ($is_guest) { ?>
         <tr>
             <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="wr_name" id="wr_name" required class="frm_input required" size="5" maxLength="20"></td>
+            <td><input type="text" name="wr_name" id="wr_name"  required class="frm_input required" size="5" maxLength="20" value="<?php echo get_cookie("ck_sns_name"); ?>"></td>
         </tr>
         <tr>
             <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
-            <td><input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="10" maxLength="20"></td>
+            <td><input type="password" name="wr_password" id="wr_password"  required class="frm_input required" size="10" maxLength="20"></td>
         </tr>
         <?php } ?>
         <tr>
@@ -114,13 +113,28 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <td><?php echo $captcha_html; ?></td>
         </tr>
         <?php } ?>
+
+        <?php 
+        include_once($board_skin_path."/view_comment.sns.skin.php");
+        ?>
+
         <tr>
             <th scope="row">내용</th>
             <td>
                 <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
-                <textarea name="wr_content" id="wr_content" maxlength="10000" required class="required"
+                <textarea id="wr_content" name="wr_content" maxlength="10000" required class="required"
                 <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
                 <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
+                <script>
+                $("textarea#wr_content[maxlength]").live("keyup change", function() {  
+                    var str = $(this).val()  
+                    var mx = parseInt($(this).attr("maxlength"))  
+                    if (str.length > mx) {  
+                        $(this).val(str.substr(0, mx));
+                        return false;  
+                    }  
+                });
+                </script>
             </td>
         </tr>
         </tbody>
