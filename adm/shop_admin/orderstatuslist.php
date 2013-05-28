@@ -48,26 +48,15 @@ $sql  = " select a.od_id,
                  a.od_deposit_name,
                  a.od_time,
                  a.od_mobile,
-                 b.it_opt1,
-                 b.it_opt2,
-                 b.it_opt3,
-                 b.it_opt4,
-                 b.it_opt5,
-                 b.it_opt6,
                  b.ct_status,
                  b.ct_qty,
                  b.ct_price,
                  b.ct_point,
-                 (b.ct_qty * b.ct_price) as ct_sub_amount,
+                 b.ct_option,
+                 (IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty)) as ct_sub_amount,
                  (b.ct_qty * b.ct_point)  as ct_sub_point,
                  b.it_id,
-                 b.it_name,
-                 c.it_opt1_subject,
-                 c.it_opt2_subject,
-                 c.it_opt3_subject,
-                 c.it_opt4_subject,
-                 c.it_opt5_subject,
-                 c.it_opt6_subject
+                 b.it_name
            $sql_common
            order by $sort1 $sort2
            limit $from_record, $rows ";
@@ -183,7 +172,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_id&amp;search=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a><br>
             <?php echo $lines[$i]['od_time']; ?>
         </td>
-        <td class="td_it_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($lines[$i]['it_id'], 50, 50); ?><?php echo $it_name; ?></a></td>
+        <td class="td_it_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($lines[$i]['it_id'], 50, 50); ?><?php echo $it_name; ?></a><br><?php echo $lines[$i]['ct_option']; ?></td>
         <td class="td_name">
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>"><?php echo cut_str($lines[$i]['od_name'],10,""); ?></a>
             <?php if ($lines[$i]['od_deposit_name'] != "") echo '<br>'.$lines[$i]['od_deposit_name']?>

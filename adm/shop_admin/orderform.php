@@ -90,18 +90,16 @@ $sql = " select ct_id,
                 it_id,
                 it_name,
                 ct_qty,
+                ct_option,
                 ct_price,
                 ct_point,
                 ct_status,
                 ct_time,
                 ct_point_use,
                 ct_stock_use,
-                it_opt1,
-                it_opt2,
-                it_opt3,
-                it_opt4,
-                it_opt5,
-                it_opt6
+                io_type,
+                io_price,
+                ct_num
            from {$g4['shop_cart_table']}
           where uq_id = '{$od['uq_id']}'
           order by ct_id ";
@@ -111,7 +109,12 @@ $lines = array();
 $total_order = 0;
 for($i=0; $row=sql_fetch_array($result); $i++) {
     $lines[$i] = $row;
-    $total_order += ($row['ct_price'] * $row['ct_qty']);
+    if($row['io_type'])
+        $total_price = $row['io_price'] * $row['ct_qty'];
+    else
+        $total_price = ($row['ct_price'] + $row['io_price']) * $row['ct_qty'];
+    $lines[$i]['price'] = $total_price;
+    $total_order += $total_price;
 }
 
 $pg_anchor = '<ul class="anchor">
@@ -165,26 +168,28 @@ $pg_anchor = '<ul class="anchor">
     <tbody>
     <?php
     for ($i=0; $i<count($lines); $i++) {
-        $ct_amount['소계'] = $lines[$i]['ct_price'] * $lines[$i]['ct_qty'];
+        $ct_amount['소계'] = $lines[$i]['price'];
         $ct_point['소계'] = $lines[$i]['ct_point'] * $lines[$i]['ct_qty'];
         if ($lines[$i]['ct_status']=='주문' || $lines[$i]['ct_status']=='준비' || $lines[$i]['ct_status']=='배송' || $lines[$i]['ct_status']=='완료')
-            $t_ct_amount['정상'] += $lines[$i]['ct_price'] * $lines[$i]['ct_qty'];
+            $t_ct_amount['정상'] += $lines[$i]['price'];
         else if ($lines[$i]['ct_status']=='취소' || $lines[$i]['ct_status']=='반품' || $lines[$i]['ct_status']=='품절')
-            $t_ct_amount['취소'] += $lines[$i]['ct_price'] * $lines[$i]['ct_qty'];
+            $t_ct_amount['취소'] += $lines[$i]['price'];
 
         $image = get_it_image($lines[$i]['it_id'], 50, 50);
     ?>
 
+     <? if($lines[$i]['ct_num'] == 0) { ?>
+     <tr>
+        <td colspan="9"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?><?php echo stripslashes($lines[$i]['it_name']); ?></a></td>
+    </tr>
+    <?php } ?>
     <tr>
         <td class="td_chk">
-            <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $row['ct_id']; ?>">
+            <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $lines[$i]['ct_id']; ?>">
             <label for="ct_chk_<?php echo $i; ?>" class="sound_only"><?php echo $lines[$i]['it_name']; ?> 체크</label>
             <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>">
         </td>
-        <td>
-            <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?><?php echo stripslashes($lines[$i]['it_name']); ?></a><br>
-            <?php echo print_item_options($lines[$i]['it_id'], $lines[$i]['it_opt1'], $lines[$i]['it_opt2'], $lines[$i]['it_opt3'], $lines[$i]['it_opt4'], $lines[$i]['it_opt5'], $lines[$i]['it_opt6']); ?>
-        </td>
+        <td><?php echo $lines[$i]['ct_option']; ?></td>
         <td class="td_small_stats"><?php echo $lines[$i]['ct_status']; ?></td>
         <td class="td_num"><?php echo $lines[$i]['ct_qty']; ?></td>
         <td class="td_num"><?php echo number_format($lines[$i]['ct_price']); ?></td>
