@@ -237,19 +237,22 @@ if ($s_page == 'cart.php') {
 ?>
 <script>
 $(function() {
+    var close_btn_idx;
+
     // 선택사항수정
     $(".mod_options").click(function() {
         var it_id = $(this).closest("tr").find("input[name^=it_id]").val();
-        var idx = $(".mod_options").index($(this));
+        var $this = $(this);
+        close_btn_idx = $(".mod_options").index($(this));
 
         winMask(); // 모달 윈도우 배경 출력
 
         $.post(
             "./cartoption.php",
-            { it_id: it_id, idx: idx },
+            { it_id: it_id },
             function(data) {
                 $("#mod_option_frm").remove();
-                $(".mod_options:eq("+idx+")").after("<div id=\"mod_option_frm\"></div>");
+                $this.after("<div id=\"mod_option_frm\"></div>");
                 $("#mod_option_frm").html(data);
                 price_calculate();
             }
@@ -267,10 +270,13 @@ $(function() {
     // 옵션수정 닫기
     $("#mod_option_close").live("click", function() {
         $("#mod_option_frm").remove();
-        $('#win_mask, .window').hide();
+        $("#win_mask, .window").hide();
+        $(".mod_options").eq(close_btn_idx).focus();
     });
-    $('#win_mask').click(function () {
-        $('#win_mask, #mod_option_frm').hide();
+    $("#win_mask").click(function () {
+        $("#mod_option_frm").remove();
+        $("#win_mask").hide();
+        $(".mod_options").eq(close_btn_idx).focus();
     });
 
 });
