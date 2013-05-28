@@ -26,7 +26,8 @@ if ($result->code == 0) {
         document.write("<strong>미투데이에 승인이 되었습니다.</strong>");
 
         var opener = window.opener;
-        opener.$("#wr_name").val("{$sns_name}");
+        if (opener.document.getElementById("#wr_name"))
+            opener.document.getElementById("#wr_name").val("{$sns_name}");
         opener.$("#me2day_icon").attr("src", "{$g4_sns_url}/icon/me2day.png");
         opener.$("#me2day_checked").attr("disabled", false);
         opener.$("#me2day_checked").attr("checked", true);
