@@ -13,6 +13,7 @@ $menu['menu400'] = array (
     array('400650', '사용후기', G4_ADMIN_URL.'/shop_admin/itempslist.php', 'scf_ps'),
     array('400620', '상품재고관리', G4_ADMIN_URL.'/shop_admin/itemstocklist.php', 'scf_item_stock'),
     array('400610', '상품유형관리', G4_ADMIN_URL.'/shop_admin/itemtypelist.php', 'scf_item_type'),
+    array('400500', '상품옵션재고관리', G4_ADMIN_URL.'/shop_admin/optionstocklist.php', 'scf_item_option'),
     array('400500', '배송일괄처리', G4_ADMIN_URL.'/shop_admin/deliverylist.php', 'scf_deli', 1),
     array('400740', '배송업체관리', G4_ADMIN_URL.'/shop_admin/deliverycodelist.php', 'scf_deli_co', 1),
     array('400630', '이벤트관리', G4_ADMIN_URL.'/shop_admin/itemevent.php', 'scf_event'),

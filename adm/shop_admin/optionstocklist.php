@@ -1,10 +1,10 @@
 <?php
-$sub_menu = '400620';
+$sub_menu = '400500';
 include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '상품재고관리';
+$g4['title'] = '상품옵션재고관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 $sql_search = " where 1 ";
@@ -15,14 +15,14 @@ if ($search != "") {
 }
 
 if ($sel_ca_id != "") {
-    $sql_search .= " and ca_id like '$sel_ca_id%' ";
+    $sql_search .= " and b.ca_id like '$sel_ca_id%' ";
 }
 
-if ($sel_field == "")  $sel_field = "it_name";
-if ($sort1 == "") $sort1 = "it_id";
-if ($sort2 == "") $sort2 = "desc";
+if ($sel_field == "")  $sel_field = "b.it_name";
+if ($sort1 == "") $sort1 = "a.io_stock_qty";
+if ($sort2 == "") $sort2 = "asc";
 
-$sql_common = "  from $g4[shop_item_table] ";
+$sql_common = "  from {$g4['shop_item_option_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id ) ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
@@ -35,10 +35,14 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select it_id,
-                 it_name,
-                 it_use,
-                 it_stock_qty
+$sql  = " select a.it_id,
+                 a.io_id,
+                 a.io_type,
+                 a.io_stock_qty,
+                 a.io_noti_qty,
+                 a.io_use,
+                 b.it_name,
+                 b.it_option_subject
            $sql_common
           order by $sort1 $sort2
           limit $from_record, $rows ";
@@ -85,8 +89,8 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="it_name" <?php echo get_selected($sel_field, 'it_name'); ?>>상품명</option>
-        <option value="it_id" <?php echo get_selected($sel_field, 'it_id'); ?>>상품코드</option>
+        <option value="it_name" <?php echo get_selected($sel_field, 'b.it_name'); ?>>상품명</option>
+        <option value="it_id" <?php echo get_selected($sel_field, 'a.it_id'); ?>>상품코드</option>
     </select>
 
     <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
@@ -97,14 +101,14 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 </form>
 
 <section class="cbox">
-    <h2>상품재고 목록</h2>
+    <h2>상품옵션재고 목록</h2>
     <p>재고수정의 수치를 수정하시면 창고재고의 수치가 변경됩니다.</p>
 
     <div id="btn_add">
         <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
     </div>
 
-    <form name="fitemstocklist" action="./itemstocklistupdate.php" method="post">
+    <form name="fitemstocklist" action="./optionstocklistupdate.php" method="post">
     <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
     <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
     <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
@@ -115,13 +119,14 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><a href="<?php echo title_sort("it_id") . "&amp;$qstr1"; ?>">상품코드<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("it_name") . "&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("it_stock_qty") . "&amp;$qstr1"; ?>">창고재고<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("b.it_name") . "&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">옵션항목</th>
+        <th scope="col">옵션타입</th>
+        <th scope="col"><a href="<?php echo title_sort("a.io_stock_qty") . "&amp;$qstr1"; ?>">창고재고<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col">주문대기</th>
         <th scope="col">가재고</th>
         <th scope="col">재고수정</th>
-        <th scope="col"><a href="<?php echo title_sort("it_use") . "&amp;$qstr1"; ?>">판매<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col"><a href="<?php echo title_sort("a.io_use") . "&amp;$qstr1"; ?>">판매<span class="sound_only"> 순 정렬</span></a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -131,35 +136,54 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     {
         $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
-        // 선택옵션이 있을 경우 주문대기 수량 계산하지 않음
-        $sql2 = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' ";
-        $row2 = sql_fetch($sql2);
-
-        if(!$row2['cnt']) {
-            $sql1 = " select SUM(ct_qty) as sum_qty
-                        from {$g4['shop_cart_table']}
-                       where it_id = '{$row['it_id']}'
-                         and ct_stock_use = '0'
-                         and ct_status in ('주문', '준비') ";
-            $row1 = sql_fetch($sql1);
-            $wait_qty = $row1['sum_qty'];
-        }
+        $sql1 = " select SUM(ct_qty) as sum_qty
+                    from {$g4['shop_cart_table']}
+                   where it_id = '{$row['it_id']}'
+                     and io_id = '{$row['io_id']}'
+                     and ct_stock_use = '0'
+                     and ct_status in ('주문', '준비') ";
+        $row1 = sql_fetch($sql1);
+        $wait_qty = $row1['sum_qty'];
 
         // 가재고 (미래재고)
-        $temporary_qty = $row['it_stock_qty'] - $wait_qty;
+        $temporary_qty = $row['io_stock_qty'] - $wait_qty;
+
+        $option = '';
+        $nbsp = '';
+        if($row['io_type']) {
+            $opt = explode(chr(30), $row['io_id']);
+            if($opt[0] && $opt[1])
+                $option .= $opt[0].' : '.$opt[1];
+        } else {
+            $subj = explode(',', $row['it_option_subject']);
+            $opt = explode(chr(30), $row['io_id']);
+            for($k=0; $k<count($subj); $k++) {
+                if($subj[$k] && $opt[$k]) {
+                    $option .= $nbsp.$subj[$k].' : '.$opt[$k];
+                    $nbsp = '&nbsp;';
+                }
+            }
+        }
+
+        $type = '선택옵션';
+        if($row['io_type'])
+            $type = '추가옵션';
 
     ?>
     <tr>
         <td class="td_bignum">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
-            <?php echo $row['it_id']; ?>
+            <input type="hidden" name="io_id[<?php echo $i; ?>]" value="<?php echo $row['io_id']; ?>">
+            <input type="hidden" name="io_type[<?php echo $i; ?>]" value="<?php echo $row['io_type']; ?>">
+            <a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a>
         </td>
-        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
-        <td class="td_num"><?php echo number_format($row['it_stock_qty']); ?></td>
+        <td><?php echo $option; ?></td>
+        <td><?php echo $type; ?></td>
+        <td class="td_num"><?php echo number_format($row['io_stock_qty']); ?></td>
         <td class="td_num"><?php echo number_format($wait_qty); ?></td>
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
-        <td class="td_num"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input" size="10" autocomplete="off"></td>
-        <td class="td_chk"><input type="checkbox" name="it_use[<?php echo $i; ?>]" value="1" <?php echo ($row['it_use'] ? "checked" : ""); ?>></td>
+        <td class="td_num"><input type="text" name="io_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['io_stock_qty']; ?>" class="frm_input" size="10" autocomplete="off"></td>
+        <td class="td_chk"><input type="checkbox" name="io_use[<?php echo $i; ?>]" value="1" <?php echo ($row['io_use'] ? "checked" : ""); ?>></td>
         <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>">수정</a></td>
     </tr><tr>
     <?php
