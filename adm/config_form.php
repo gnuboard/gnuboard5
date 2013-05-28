@@ -55,8 +55,8 @@ if(!isset($config['cf_mobile_pages'])) {
 
 if(!isset($config['cf_facebook_appid'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_facebook_use`,  
-                    ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
+                    ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_kcpcert_use`,  
+                    ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_appid`,
                     ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
                     ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key` ", true);
 }
