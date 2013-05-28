@@ -56,26 +56,47 @@ for ($i=0; $i<$cnt; $i++)
             {
                 $stock_use = 0;
                 // 재고에 다시 더한다.
-                $sql =" update {$g4['shop_item_table']} set it_stock_qty = it_stock_qty + '{$ct['ct_qty']}' where it_id = '{$ct['it_id']}' ";
+                if($ct['io_id']) {
+                    $sql = " update {$g4['shop_item_option_table']}
+                                set io_stock_qty = io_stock_qty + '{$ct['ct_qty']}'
+                                where it_id = '{$ct['it_id']}'
+                                  and io_id = '{$ct['io_id']}'
+                                  and io_type = '{$ct['io_type']}' ";
+                } else {
+                    $sql = " update {$g4['shop_item_table']}
+                                set it_stock_qty = it_stock_qty + '{$ct['ct_qty']}'
+                                where it_id = '{$ct['it_id']}' ";
+                }
+
                 sql_query($sql);
             }
         }
         else
         {
             // 재고 오류로 인한 수정
-            // if ($ct_status == '주문' || $ct_status == '준비' || $ct_status == '배송' || $ct_status == '완료') {
             if ($ct_status == '배송' || $ct_status == '완료')
             {
                 $stock_use = 1;
                 // 재고에서 뺀다.
-                $sql =" update {$g4['shop_item_table']} set it_stock_qty = it_stock_qty - '{$ct['ct_qty']}' where it_id = '{$ct['it_id']}' ";
+                if($ct['io_id']) {
+                    $sql = " update {$g4['shop_item_option_table']}
+                                set io_stock_qty = io_stock_qty - '{$ct['ct_qty']}'
+                                where it_id = '{$ct['it_id']}'
+                                  and io_id = '{$ct['io_id']}'
+                                  and io_type = '{$ct['io_type']}' ";
+                } else {
+                    $sql = " update {$g4['shop_item_table']}
+                                set it_stock_qty = it_stock_qty - '{$ct['ct_qty']}'
+                                where it_id = '{$ct['it_id']}' ";
+                }
+
                 sql_query($sql);
             }
             /* 주문 수정에서 "품절" 선택시 해당 상품 자동 품절 처리하기
             else if ($ct_status == '품절') {
                 $stock_use = 1;
                 // 재고에서 뺀다.
-                $sql =" update $g4[shop_item_table] set it_stock_qty = 0 where it_id = '$ct[it_id]' ";
+                $sql =" update {$g4['shop_item_table']} set it_stock_qty = 0 where it_id = '{$ct['it_id']}' ";
                 sql_query($sql);
             } */
         }
