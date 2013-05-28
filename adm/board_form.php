@@ -51,6 +51,11 @@ if (!isset($board['bo_use_cert'])) {
 
 if (!isset($board['bo_use_sns'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_sns` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_cert` ", false);
+
+    $result = sql_query(" select bo_table from `{$g4['board_table']}` ");
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}` ADD `wr_sns` SET( 'fb', 'tw', 'me', 'gp' ) NOT NULL AFTER `wr_ip` ", false);
+    }
 }
 
 sql_query(" ALTER TABLE `{$g4['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' ", false);
