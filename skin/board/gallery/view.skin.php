@@ -117,7 +117,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
     <article id="bo_v_atc">
         <header>
-            <h1>본문</h1>
+            <h1 id="bo_v_atc_title">본문</h1>
         </header>
 
         <?php
