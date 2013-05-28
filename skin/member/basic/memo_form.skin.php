@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_write" class="new_win">
-    <h1>쪽지보내기</h1>
+    <h1 id="new_win_title">쪽지보내기</h1>
 
     <ul class="new_win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
@@ -13,8 +13,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
     </ul>
 
-    <form name="fmemoform" action="./memo_form_update.php" onsubmit="return fmemoform_submit(this);" method="post" autocomplete="off">
-    <div class="cbox">
+    <form name="fmemoform" action="<?php echo $memo_action_url; ?>" onsubmit="return fmemoform_submit(this);" method="post" autocomplete="off">
+    <div>
         <table class="frm_tbl">
         <caption>쪽지쓰기</caption>
         <tbody>

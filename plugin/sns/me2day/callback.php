@@ -25,11 +25,11 @@ if ($result->code == 0) {
     $(function() {
         document.write("<strong>미투데이에 승인이 되었습니다.</strong>");
 
-        if (parent.document.getElementById("wr_name"))
-            parent.document.getElementById("wr_name").value = "{$sns_name}";
-        opener.document.getElementById("me2day_icon").setAttribute("src", "{$g4_sns_url}/icon/me2day.png");
-        parent.document.getElementById("me2day_checked").disabled = false;
-        parent.document.getElementById("me2day_checked").checked = true;
+        var opener = window.opener;
+        opener.$("#wr_name").val("{$sns_name}");
+        opener.$("#me2day_icon").attr("src", "{$g4_sns_url}/icon/me2day.png");
+        opener.$("#me2day_checked").attr("disabled", false);
+        opener.$("#me2day_checked").attr("checked", true);
         window.close();
     });
     </script>
