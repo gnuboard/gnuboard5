@@ -693,7 +693,7 @@ function print_item_options($it_id, $uq_id)
     for($i=0; $row=sql_fetch_array($result); $i++) {
         if($i == 0)
             $str .= '<ul>'.PHP_EOL;
-        $str .= '<li>'.$row['ct_option'].'&nbsp;&nbsp;'.$row['ct_qty'].'개</li>'.PHP_EOL;
+        $str .= '<li>'.$row['ct_option'].' '.$row['ct_qty'].'개</li>'.PHP_EOL;
     }
 
     if($i > 0)

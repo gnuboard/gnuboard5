@@ -122,9 +122,9 @@ if($option_2) {
 </div>
 
 <div id="sit_tot_price"></div>
-<div>
-    <input type="submit" value="선택사항적용">
-    <button type="button" id="mod_option_close">닫기</button>
+<div class="btn_confirm">
+    <input type="submit" value="선택사항적용" class="btn_submit">
+    <button type="button" id="mod_option_close" class="btn_cancel">닫기</button>
 </div>
 </form>
 

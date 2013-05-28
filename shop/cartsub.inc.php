@@ -16,7 +16,7 @@ else
 
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 
-<form name="frmcartlist" method="post">
+<form name="frmcartlist" id="sod_bsk_list" method="post">
 <table class="basic_tbl">
 <thead>
 <tr>
@@ -110,8 +110,8 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     if($it_options) {
         $mod_options = '';
         if($s_page == 'cart.php')
-            $mod_options = '<button type="button" class="mod_options">선택사항수정</button>';
-        $it_name .= '<div class="sod_bsk_itopt">'.$it_options.$mod_options.'</div>';
+            $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
+        $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
     }
 
     $point       = $sum['point'];
@@ -123,7 +123,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     <td>
         <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
         <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-        <?php echo $it_name; ?>
+        <?php echo $it_name.$mod_options; ?>
     </td>
     <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
     <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
@@ -242,6 +242,8 @@ $(function() {
         var it_id = $(this).closest("tr").find("input[name^=it_id]").val();
         var idx = $(".mod_options").index($(this));
 
+        winMask(); // 모달 윈도우 배경 출력
+
         $.post(
             "./cartoption.php",
             { it_id: it_id, idx: idx },
@@ -265,7 +267,12 @@ $(function() {
     // 옵션수정 닫기
     $("#mod_option_close").live("click", function() {
         $("#mod_option_frm").remove();
+        $('#win_mask, .window').hide();
     });
+    $('#win_mask').click(function () {
+        $('#win_mask, #mod_option_frm').hide();
+    });
+
 });
 
 function form_check(act) {
@@ -277,7 +284,7 @@ function form_check(act) {
         f.act.value = act;
 
         <?php
-        if (get_session('ss_mb_id')) // 회원인 겨우
+        if (get_session('ss_mb_id')) // 회원인 경우
         {
             echo "f.action = './orderform.php';";
             echo "f.submit();";

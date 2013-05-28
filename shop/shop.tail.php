@@ -35,6 +35,8 @@ $admin = get_admin("super");
     </div>
 </footer>
 
+<div id="win_mask"><!-- 모달 레이어 배경 http://mytory.net/archives/783 참조 --></div>
+
 <?php
 if(!G4_IS_MOBILE) {
     $querystring = str_replace("&", "&amp;", $_SERVER['QUERY_STRING']);
