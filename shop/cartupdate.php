@@ -211,24 +211,17 @@ else if ($act == "optionmod") // 장바구니에서 옵션변경
         }
         //--------------------------------------------------------
 
-        // 바로구매에 있던 장바구니 자료를 지운다.
-        $result = sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and ct_direct = 1 ", false);
-        if (!$result) {
-            // 삭제중 에러가 발생했다면 필드가 없다는 것이므로 바로구매 필드를 생성한다.
-            sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD `ct_direct` TINYINT NOT NULL ");
-        }
-
         // 포인트 사용하지 않는다면
         if (!$config['cf_use_point']) { $_POST['it_point'] = 0; }
 
         // 장바구니에 Insert
         $comma = '';
         $sql = " INSERT INTO {$g4['shop_cart_table']}
-                        ( uq_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_direct )
+                        ( uq_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_direct, ct_order )
                     VALUES ";
 
         for($i=0; $i<$option_count; $i++) {
-            $sql .= $comma."( '$tmp_uq_id', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '$i', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
+            $sql .= $comma."( '$tmp_uq_id', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '$i', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct', '{$_POST['ct_order']}' )";
             $comma = ' , ';
         }
 

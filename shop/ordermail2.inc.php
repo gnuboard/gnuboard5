@@ -36,17 +36,10 @@ mailer($config['cf_title'], $admin['mb_email'], $od_email, $subject, $content, 1
 
 $sql = " select b.it_sell_email,
                 a.it_id,
-                a.it_name,
-                a.it_opt1,
-                a.it_opt2,
-                a.it_opt3,
-                a.it_opt4,
-                a.it_opt5,
-                a.it_opt6,
-                a.ct_qty
-           from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
+                a.it_name
+           from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
           where a.uq_id = '$tmp_uq_id'
-            and a.it_id = b.it_id
+            and a.ct_num = '0'
             and b.it_sell_email <> '' ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -56,8 +49,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list['it_id']   = $row['it_id'];
     $list['it_simg'] = get_it_image($row['it_id'], $default['de_simg_width'], $default['de_simg_height']);
     $list['it_name'] = $row['it_name'];
-    $list['it_opt']  = print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
-    $list['ct_qty']  = $row['ct_qty'];
+    $list['it_opt']  = print_item_options($row['it_id'], $tmp_uq_id);
 
     $subject = $config['cf_title'].' - 주문 알림 메일 (주문자 '.$od_name.'님)';
     ob_start();

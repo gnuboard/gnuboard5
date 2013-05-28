@@ -28,14 +28,12 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
             <col>
             <col style="width:100px">
             <col style="width:70px">
-            <col style="width:50px">
         </colgroup>
         <thead>
         <tr>
             <th scope="col" style="<?php echo $th_st; ?>">품명</th>
             <th scope="col" style="<?php echo $th_st; ?>">옵션</th>
             <th scope="col" style="<?php echo $th_st; ?>">상태</th>
-            <th scope="col" style="<?php echo $th_st; ?>">수량</th>
         </tr>
         <thead>
         <tbody>
@@ -44,7 +42,6 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
             <td style="<?php echo $td_st; ?>"><a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $cart_list[$i]['it_id']; ?>" target="_blank" style="text-decoration:none"><?php echo $cart_list[$i]['it_name']; ?></a></td>
             <td style="<?php echo $td_st; ?>;text-align:center"><?php echo $cart_list[$i]['it_opt']; ?></td>
             <td style="<?php echo $td_st; ?>;text-align:center"><?php echo $cart_list[$i]['ct_status']; ?></td>
-            <td style="<?php echo $td_st; ?>;text-align:center"><?php echo $cart_list[$i]['ct_qty']; ?></td>
         </tr>
         <?php } // end for ?>
         </tbody>

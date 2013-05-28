@@ -47,10 +47,6 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
             <th scope="row" style="<?php echo $th_st; ?>">판매가격</th>
             <td style="<?php echo $td_st; ?>"><?php echo display_price($list[$i]['ct_price']); ?></td>
         </tr>
-        <tr>
-            <th scope="row" style="<?php echo $th_st; ?>">수량</th>
-            <td style="<?php echo $td_st; ?>"><?php echo number_format($list[$i]['ct_qty']); ?>개</td>
-        </tr>
         </tbody>
         </table>
 

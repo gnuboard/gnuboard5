@@ -33,6 +33,7 @@ if(!mysql_num_rows($result))
 <input type="hidden" name="it_name" value="<?php echo $row2['it_name']; ?>">
 <input type="hidden" name="total_price" value="">
 <input type="hidden" name="sw_direct">
+<input type="hidden" name="ct_order" value="<?php echo $idx; ?>">
 <?php
 $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
 if($option_1) {

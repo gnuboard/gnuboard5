@@ -10,35 +10,37 @@ $ttotal_point = 0;
 // 메일보내기
 //------------------------------------------------------------------------------
 // Loop 배열 자료를 만들고
-$sql = " select b.it_sell_email,
-                a.it_id,
+$sql = " select a.it_id,
                 a.it_name,
-                b.it_origin,
-                a.it_opt1,
-                a.it_opt2,
-                a.it_opt3,
-                a.it_opt4,
-                a.it_opt5,
-                a.it_opt6,
                 a.ct_qty,
                 a.ct_price,
-                a.ct_point
-           from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
+                a.ct_point,
+                b.it_sell_email,
+                b.it_origin
+           from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
           where a.uq_id = '$tmp_uq_id'
-            and a.it_id = b.it_id ";
+            and a.ct_num = '0' ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
+    // 합계금액 계산
+    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                    SUM(ct_point * ct_qty) as point,
+                    SUM(ct_qty) as qty
+                from {$g4['shop_cart_table']}
+                where it_id = '{$row['it_id']}'
+                  and uq_id = '$tmp_uq_id' ";
+    $sum = sql_fetch($sql);
+
     $list[$i]['g_dir']         = G4_URL;
     $list[$i]['it_id']         = $row['it_id'];
     $list[$i]['it_simg']       = get_it_image($row['it_id'], $default['de_simg_width'], $default['de_simg_height']);
     $list[$i]['it_name']       = $row['it_name'];
     $list[$i]['it_origin']     = $row['it_origin'];
-    $list[$i]['it_opt']        = print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
-    $list[$i]['ct_qty']        = $row['ct_qty'];
+    $list[$i]['it_opt']        = print_item_options($row['it_id'], $tmp_uq_id);
     $list[$i]['ct_price']      = $row['ct_price'];
-    $list[$i]['stotal_amount'] = $row['ct_price'] * $row['ct_qty'];
-    $list[$i]['stotal_point']  = $row['ct_point'] * $row['ct_qty'];
+    $list[$i]['stotal_amount'] = $sum['price'];
+    $list[$i]['stotal_point']  = $sum['point'];
 
     $ttotal_amount += $list[$i]['stotal_amount'];
     $ttotal_point  += $list[$i]['stotal_point'];

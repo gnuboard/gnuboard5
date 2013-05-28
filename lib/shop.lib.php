@@ -683,14 +683,17 @@ function print_item_options($it_id, $uq_id)
 {
     global $g4;
 
-    $sql = " select ct_option from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$uq_id' order by io_type asc, ct_num asc, ct_id asc ";
+    $sql = " select ct_option, ct_qty
+                from {$g4['shop_cart_table']}
+                where it_id = '$it_id' and uq_id = '$uq_id'
+                order by io_type asc, ct_num asc, ct_id asc ";
     $result = sql_query($sql);
 
     $str = '';
     for($i=0; $row=sql_fetch_array($result); $i++) {
         if($i == 0)
             $str .= '<ul>'.PHP_EOL;
-        $str .= '<li>'.$row['ct_option'].'</li>'.PHP_EOL;
+        $str .= '<li>'.$row['ct_option'].'&nbsp;&nbsp;'.$row['ct_qty'].'개</li>'.PHP_EOL;
     }
 
     if($i > 0)

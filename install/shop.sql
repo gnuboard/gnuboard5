@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_ip` varchar(25) NOT NULL DEFAULT '',
   `ct_send_cost` varchar(255) NOT NULL,
   `ct_direct` tinyint(4) NOT NULL,
+  `ct_order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ct_id`),
   KEY `uq_id` (`uq_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
