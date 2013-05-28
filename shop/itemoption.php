@@ -41,8 +41,9 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
             $soldout = '&nbsp;&nbsp;[품절]';
         else
             $soldout = '';
+        $io_stock_qty = get_option_stock_qty($it_id, $row['io_id'], $row['io_type']);
 
-        $str .= PHP_EOL.'<option value="'.$val[$key].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$val[$key].$price.$soldout.'</otpion>';
+        $str .= PHP_EOL.'<option value="'.$val[$key].','.$row['io_price'].','.$io_stock_qty.'">'.$val[$key].$price.$soldout.'</otpion>';
     }
 }
 

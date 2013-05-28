@@ -646,8 +646,9 @@ function get_item_supply($it_id, $subject)
                 $price = '&nbsp;&nbsp;+ '.number_format($row['io_price']).'원';
             else
                 $price = '&nbsp;&nbsp; '.number_format($row['io_price']).'원';
+            $io_stock_qty = get_option_stock_qty($it_id, $row['io_id'], $row['io_type']);
 
-            $options[$opt_id[0]][] = '<option value="'.$opt_id[1].','.$row['io_price'].','.$row['io_stock_qty'].'">'.$opt_id[1].$price.'</option>';
+            $options[$opt_id[0]][] = '<option value="'.$opt_id[1].','.$row['io_price'].','.$io_stock_qty.'">'.$opt_id[1].$price.'</option>';
         }
     }
 
