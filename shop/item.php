@@ -644,7 +644,7 @@ else
         if($(".sit_opt_list").size() < 1)
         {
             alert("상품의 선택옵션을 선택해 주십시오.");
-            return false;
+            return;
         }
 
         if (act == "direct_buy") {
@@ -677,7 +677,7 @@ else
         });
 
         if(!result)
-            return false;
+            return;
 
         f.submit();
     }
