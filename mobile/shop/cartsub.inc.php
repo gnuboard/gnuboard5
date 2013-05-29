@@ -29,6 +29,8 @@ else
 <?php
 if ($s_page == 'cart.php') {
     echo '<th scope="col"><input type="checkbox" name="ct_all" value="1"></th>';
+} else if($s_page == 'orderinquiryview.php') {
+    echo '<th scope="col">상태</th>';
 }
 ?>
 </tr>
