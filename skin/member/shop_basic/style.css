@@ -44,7 +44,7 @@
 #mb_login_fs .login_pw {position:absolute;top:52px;left:95px}
 #mb_login_fs .frm_input {display:block;margin:0 0 5px 80px}
 #mb_login_fs .btn_submit {position:absolute;top:20px;left:335px;height:49px}
-#mb_login_info {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
+#mb_login_info {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f5f6fa}
 #mb_login_info div {text-align:right}
 
 #mb_login_notmb {position:relative;margin:0 0 20px;padding:20px;border:1px solid #cfded8;background:#fff}
@@ -58,7 +58,7 @@
 #mb_login_od .od_pwd {position:absolute;top:52px;left:95px}
 #mb_login_od .frm_input {display:block;margin:0 0 5px 80px}
 #mb_login_od .btn_submit {position:absolute;top:20px;left:335px;width:52px;height:49px}
-#mb_login_odinfo {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f7f7f2}
+#mb_login_odinfo {margin:0 0 30px;padding:20px;border:1px solid #cfded8;background:#f5f6fa}
 #mb_login_odinfo div {text-align:right}
 
 /* 쪽지 */
@@ -82,7 +82,7 @@
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
 #mb_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
-#mb_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f7f7f2;text-align:center}
+#mb_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f5f6fa;text-align:center}
 #mb_confirm label {letter-spacing:-0.1em}
 #mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
@@ -91,7 +91,7 @@
 #pw_confirm h1 {margin:0 0 20px;font-size:1.3em}
 #pw_confirm p {padding:20px;border:1px solid #cfded8;border-bottom:0;background:#fff}
 #pw_confirm p strong {display:block}
-#pw_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f7f7f2;text-align:center}
+#pw_confirm fieldset {margin:0 0 30px;padding:30px 0;border:1px solid #cfded8;background:#f5f6fa;text-align:center}
 #pw_confirm label {letter-spacing:-0.1em}
 #pw_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
