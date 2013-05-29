@@ -284,6 +284,32 @@ $pg_anchor ='<ul class="anchor">
             <label for="chk_all_it_origin">전체적용</label>
         </td>
     </tr>
+     <tr>
+        <th scope="row"><label for="it_brand">브랜드</label></th>
+        <td>
+            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+            <input type="text" name="it_brand" value="<?php echo get_text($it['it_brand']); ?>" id="it_brand" class="frm_input" size="40">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_brand" value="1" id="chk_ca_it_brand">
+            <label for="chk_ca_it_brand">분류적용</label>
+            <input type="checkbox" name="chk_all_it_brand" value="1" id="chk_all_it_brand">
+            <label for="chk_all_it_brand">전체적용</label>
+        </td>
+    </tr>
+     <tr>
+        <th scope="row"><label for="it_model">모델</label></th>
+        <td>
+            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+            <input type="text" name="it_model" value="<?php echo get_text($it['it_model']); ?>" id="it_model" class="frm_input" size="40">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_model" value="1" id="chk_ca_it_model">
+            <label for="chk_ca_it_model">분류적용</label>
+            <input type="checkbox" name="chk_all_it_model" value="1" id="chk_all_it_model">
+            <label for="chk_all_it_model">전체적용</label>
+        </td>
+    </tr>
     <?php
     $opt_subject = explode(',', $it['it_option_subject']);
     ?>

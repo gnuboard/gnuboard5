@@ -358,6 +358,8 @@ $sql_common = " ca_id               = '$ca_id',
                 it_gallery          = '$it_gallery',
                 it_maker            = '$it_maker',
                 it_origin           = '$it_origin',
+                it_brand            = '$it_brand',
+                it_model            = '$it_model',
                 it_option_subject   = '$it_option_subject',
                 it_supply_subject   = '$it_supply_subject',
                 it_type1            = '$it_type1',
@@ -509,6 +511,8 @@ if(is_checked('chk_ca_it_order'))               $ca_fields .= " , it_order = '$i
 if(is_checked('chk_ca_it_type'))                $ca_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
 if(is_checked('chk_ca_it_maker'))               $ca_fields .= " , it_maker = '$it_maker' ";
 if(is_checked('chk_ca_it_origin'))              $ca_fields .= " , it_origin = '$it_origin' ";
+if(is_checked('chk_ca_it_brand'))               $ca_fields .= " , it_brand = '$it_brand' ";
+if(is_checked('chk_ca_it_model'))               $ca_fields .= " , it_model = '$it_model' ";
 if(is_checked('chk_ca_it_sell_email'))          $ca_fields .= " , it_sell_email = '$it_sell_email' ";
 if(is_checked('chk_ca_it_tel_inq'))             $ca_fields .= " , it_tel_inq = '$it_tel_inq' ";
 if(is_checked('chk_ca_it_use'))                 $ca_fields .= " , it_use = '$it_use' ";
@@ -538,6 +542,8 @@ if(is_checked('chk_all_it_order'))               $all_fields .= " , it_order = '
 if(is_checked('chk_all_it_type'))                $all_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
 if(is_checked('chk_all_it_maker'))               $all_fields .= " , it_maker = '$it_maker' ";
 if(is_checked('chk_all_it_origin'))              $all_fields .= " , it_origin = '$it_origin' ";
+if(is_checked('chk_all_it_brand'))               $all_fields .= " , it_brand = '$it_brand' ";
+if(is_checked('chk_all_it_model'))               $all_fields .= " , it_model = '$it_model' ";
 if(is_checked('chk_all_it_sell_email'))          $all_fields .= " , it_sell_email = '$it_sell_email' ";
 if(is_checked('chk_all_it_tel_inq'))             $all_fields .= " , it_tel_inq = '$it_tel_inq' ";
 if(is_checked('chk_all_it_use'))                 $all_fields .= " , it_use = '$it_use' ";

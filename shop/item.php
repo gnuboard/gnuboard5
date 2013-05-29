@@ -241,8 +241,6 @@ else
         <section id="sit_ov">
             <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?></h2>
             <p id="sit_desc"><?php echo $it['it_basic']; ?></p>
-            <!-- ########## 상품 선택옵션/추가옵션에 따른 출력 - 지운아빠 2013-05-24 -->
-            <!-- 스크린리더에서만 출력할 예정 -->
             <p id="sit_opt_info">
             <?php
             $sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '0' and io_use = '1' ";
@@ -255,7 +253,6 @@ else
             ?>
                 상품 선택옵션 <?php echo $opt_count; ?> 개, 추가옵션 <?php echo $spl_count; ?> 개
             </p>
-            <!-- ########## 상품 선택옵션/추가옵션에 따른 출력 끝 -->
             <?php if ($score = get_star_image($it['it_id'])) { ?>
             <div id="sit_star_sns">
                 <?php
@@ -286,6 +283,20 @@ else
             <tr>
                 <th scope="row">원산지</th>
                 <td><?php echo $it['it_origin']; ?></td>
+            </tr>
+            <?php } ?>
+
+            <?php if ($it['it_brand']) { ?>
+            <tr>
+                <th scope="row">브랜드</th>
+                <td><?php echo $it['it_brand']; ?></td>
+            </tr>
+            <?php } ?>
+
+            <?php if ($it['it_model']) { ?>
+            <tr>
+                <th scope="row">모델</th>
+                <td><?php echo $it['it_model']; ?></td>
             </tr>
             <?php } ?>
 
