@@ -154,6 +154,7 @@ function pg_anchor_m($anc_id) {
 <?php } ?>
 
 <script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
+<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 
 <?php
 if (G4_HTTPS_DOMAIN)
@@ -167,6 +168,7 @@ else
     <form name="fitem" action="<?php echo $action_url; ?>" method="post">
     <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
     <input type="hidden" name="it_name" value="<?php echo $it['it_name']; ?>">
+    <input type="hidden" name="total_price" value="">
     <input type="hidden" name="sw_direct">
     <input type="hidden" name="url">
 
@@ -280,22 +282,6 @@ else
             </tr>
             <?php } ?>
 
-            <?php
-            // 선택옵션 출력
-            for ($i=1; $i<=6; $i++)
-            {
-                // 옵션에 문자가 존재한다면
-                $str = get_item_options(trim($it['it_opt'.$i.'_subject']), trim($it['it_opt'.$i]), $i);
-                if ($str)
-                {
-                    echo '<tr>'.PHP_EOL;
-                    echo '<th scope="row"><label for="sit_opt_'.$i.'">'.$it['it_opt'.$i.'_subject'].'</label></th>'.PHP_EOL;
-                    echo '<td style="word-break:break-all;">'.$str.'</td>'.PHP_EOL;
-                    echo '</tr>'.PHP_EOL;
-                }
-            }
-            ?>
-
             <?php if (!$it['it_gallery']) { // 갤러리 형식이라면 가격, 구매하기 출력하지 않음 ?>
             <?php if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
 
@@ -307,18 +293,16 @@ else
             <?php } else { // 전화문의가 아닐 경우?>
             <?php if ($it['it_cust_price']) { // 1.00.03?>
             <tr>
-                <th scope="row"><label for="disp_cust_price">시중가격</label></th>
-                <td>
-                    <input type="text" name="disp_cust_price" value="<?php echo number_format($it['it_cust_price']); ?>" id="disp_cust_price" readonly class="sit_ov_ro" size="8"> 원
-                </td>
+                <th scope="row">시중가격</th>
+                <td><?php echo display_price($it['it_cust_price']); ?></td>
             </tr>
             <?php } // 전화문의 끝?>
 
             <tr>
-                <th scope="row"><label for="disp_sell_price">판매가격</label></th>
+                <th scope="row">판매가격</th>
                 <td>
-                    <input type="text" name="disp_sell_price" id="disp_sell_price" readonly class="sit_ov_ro" size="8"> 원
-                    <input type="hidden" name="it_price" value="0">
+                    <?php echo number_format($it['it_price']); ?> 원
+                    <input type="hidden" name="it_price" value="<?php echo get_price($it); ?>">
                 </td>
             </tr>
 
@@ -335,25 +319,92 @@ else
             <tr>
                 <th scope="row"><label for="disp_point">포인트</label></th>
                 <td>
-                    <input type="text" name="disp_point" id="disp_point" readonly class="sit_ov_ro" size="8"> 점
-                    <input type="hidden" name="it_point" value="0">
+                    <?php echo number_format($it['it_point']); ?> 점
+                    <input type="hidden" name="it_point" value="<?php echo $it['it_point']; ?>">
                 </td>
             </tr>
-            <?php } ?>
-
-            <tr>
-                <th scope="row">수량</th>
-                <td>
-                    <input type="text" name="ct_qty" value="1" class="sit_ov_input" size="4" maxlength="4" autocomplete="off" onkeyup="amount_change()">
-                    <button type="button" onclick="javascript:qty_add(+1);" class="btn_frmline"><span class="sound_only">수량 1개 </span>증가</button>
-                    <button type="button" onclick="javascript:qty_add(-1);" class="btn_frmline"><span class="sound_only">수량 1개 </span>감소</button>
-                </td>
-            </tr>
-            <?php } ?>
-
             <?php } ?>
             </tbody>
             </table>
+
+            <?php
+            $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
+            if($option_1) {
+            ?>
+            <section>
+                <h3>선택옵션</h3>
+                <table class="sit_ov_tbl">
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <?php // 선택옵션
+                echo $option_1;
+                ?>
+                </tbody>
+                </table>
+                <div class="sit_sel_btn">
+                    <button type="button" id="sit_selopt_submit" class="btn_frmline">추가</button>
+                </div>
+            </section>
+            <?php
+            }
+            ?>
+
+            <?php
+            $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
+            if($option_2) {
+            ?>
+            <section>
+                <h3>추가옵션</h3>
+                <table class="sit_ov_tbl">
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <?php // 추가옵션
+                echo $option_2;
+                ?>
+                </tbody>
+                </table>
+            </section>
+            <?php
+            }
+            ?>
+
+            <?php } ?>
+
+            <?php } ?>
+
+            <div id="sit_sel_option">
+            <?php if(!$option_1 && !$option_2) { ?>
+                <ul id="sit_opt_added">
+                    <li class="sit_opt_list">
+                        <input type="hidden" name="io_type[]" value="0">
+                        <input type="hidden" name="io_id[]" value="">
+                        <input type="hidden" name="io_value[]" value="<?php echo $it['it_name']; ?>">
+                        <input type="hidden" name="io_price[]" value="0">
+                        <input type="hidden" name="io_stock[]" value="<?php echo $it['it_stock_qty']; ?>">
+                        <span class="sit_opt_subj"><?php echo $it['it_name']; ?></span>
+                        <span class="sit_opt_prc">(+0원)</span>
+                        <div>
+                            <input type="text" name="ct_qty[]" value="1" class="frm_input" size="5">
+                            <button type="button" class="sit_qty_plus btn_frmline">증가</button>
+                            <button type="button" class="sit_qty_minus btn_frmline">감소</button>
+                        </div>
+                    </li>
+                </ul>
+                <script>
+                $(function() {
+                    price_calculate();
+                });
+                </script>
+            <?php } ?>
+            </div>
+
+            <div id="sit_tot_price"></div>
 
             <ul id="sit_ov_btn">
                 <?php if (!$it['it_tel_inq'] && !$it['it_gallery']) { ?>
@@ -563,86 +614,6 @@ else
         $(".item_relation_count").text("<?php echo $item_relation_count; ?>");
     });
 
-    function qty_add(num)
-    {
-        var f = document.fitem;
-        var qty = parseInt(f.ct_qty.value);
-        if (num < 0 && qty <= 1)
-        {
-            alert("수량은 1 이상만 가능합니다.");
-            qty = 1;
-        }
-        else if (num > 0 && qty >= 9999)
-        {
-            alert("수량은 9999 이하만 가능합니다.");
-            qty = 9999;
-        }
-        else
-        {
-            qty = qty + num;
-        }
-
-        f.ct_qty.value = qty;
-
-        amount_change();
-    }
-
-    function get_amount(data)
-    {
-        var str = data.split(";");
-        var num = parseInt(str[1]);
-        if (isNaN(num)) {
-            return 0;
-        } else {
-            return num;
-        }
-    }
-
-    function amount_change()
-    {
-        var basic_amount = parseInt("<?php echo get_price($it); ?>");
-        var basic_point  = parseFloat("<?php echo $it['it_point']; ?>");
-        var cust_amount  = parseFloat("<?php echo $it['it_cust_price']; ?>");
-
-        var f = document.fitem;
-        var opt1 = 0;
-        var opt2 = 0;
-        var opt3 = 0;
-        var opt4 = 0;
-        var opt5 = 0;
-        var opt6 = 0;
-        var ct_qty = 0;
-
-        if (typeof(f.ct_qty) != 'undefined')
-            ct_qty = parseInt(f.ct_qty.value);
-
-        if (typeof(f.it_opt1) != 'undefined') opt1 = get_amount(f.it_opt1.value);
-        if (typeof(f.it_opt2) != 'undefined') opt2 = get_amount(f.it_opt2.value);
-        if (typeof(f.it_opt3) != 'undefined') opt3 = get_amount(f.it_opt3.value);
-        if (typeof(f.it_opt4) != 'undefined') opt4 = get_amount(f.it_opt4.value);
-        if (typeof(f.it_opt5) != 'undefined') opt5 = get_amount(f.it_opt5.value);
-        if (typeof(f.it_opt6) != 'undefined') opt6 = get_amount(f.it_opt6.value);
-
-        var amount = basic_amount + opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
-        var point  = parseInt(basic_point);
-
-        if (typeof(f.it_price) != 'undefined')
-            f.it_price.value = amount;
-
-        if (typeof(f.disp_sell_price) != 'undefined')
-            f.disp_sell_price.value = number_format(String(amount * ct_qty));
-
-        if (typeof(f.disp_cust_price) != 'undefined')
-            f.disp_cust_price.value = number_format(String(cust_amount * ct_qty));
-
-        if (typeof(f.it_point) != 'undefined') {
-            f.it_point.value = point;
-            f.disp_point.value = number_format(String(point * ct_qty));
-        }
-    }
-
-    <?php if (!$it['it_gallery']) { echo "amount_change();"; } // 처음시작시 한번 실행 ?>
-
     // 바로구매 또는 장바구니 담기
     function fitemcheck(f, act)
     {
@@ -653,16 +624,10 @@ else
             return;
         }
 
-        for (i=1; i<=6; i++)
+        if($(".sit_opt_list").size() < 1)
         {
-            if (typeof(f.elements["it_opt"+i]) != 'undefined')
-            {
-                if (f.elements["it_opt"+i].value == '선택') {
-                    alert(f.elements["it_opt"+i+"_subject"].value + '을(를) 선택하여 주십시오.');
-                    f.elements["it_opt"+i].focus();
-                    return;
-                }
-            }
+            alert("상품의 선택옵션을 선택해 주십시오.");
+            return;
         }
 
         if (act == "direct_buy") {
@@ -671,22 +636,31 @@ else
             f.sw_direct.value = 0;
         }
 
-        if (!f.ct_qty.value) {
-            alert("수량을 입력해 주십시오.");
-            f.ct_qty.focus();
-            return;
-        } else if (isNaN(f.ct_qty.value)) {
-            alert("수량을 숫자로 입력해 주십시오.");
-            f.ct_qty.select();
-            f.ct_qty.focus();
-            return;
-        } else if (parseInt(f.ct_qty.value) < 1) {
-            alert("수량은 1 이상 입력해 주십시오.");
-            f.ct_qty.focus();
-            return;
-        }
+        var val, result = true;
+        $("input[name='ct_qty[]']").each(function() {
+            val = $(this).val();
 
-        amount_change();
+            if(val.length < 1) {
+                alert("수량을 입력해 주십시오.");
+                result = false;
+                return false;
+            }
+
+            if(val.replace(/[0-9]/g, "").length > 0) {
+                alert("수량은 숫자로 입력해 주십시오.");
+                result = false;
+                return false;
+            }
+
+            if(parseInt(val.replace(/[^0-9]/g, "")) < 1) {
+                alert("수량은 1이상 입력해 주십시오.");
+                result = false;
+                return false;
+            }
+        });
+
+        if(!result)
+            return;
 
         f.submit();
     }

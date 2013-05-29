@@ -300,7 +300,7 @@ else
             <?php } else { // 전화문의가 아닐 경우?>
             <?php if ($it['it_cust_price']) { // 1.00.03?>
             <tr>
-                <th scope="row"><label for="disp_cust_price">시중가격</label></th>
+                <th scope="row">시중가격</th>
                 <td><?php echo display_price($it['it_cust_price']); ?></td>
             </tr>
             <?php } // 시중가격 끝 ?>

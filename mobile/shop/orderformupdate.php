@@ -26,22 +26,26 @@ if (get_cart_count($tmp_uq_id) == 0)// 장바구니에 담기
 
 $error = "";
 // 장바구니 상품 재고 검사
-// 1.03.07 : and a.it_id = b.it_id : where 조건문에 이 부분 추가
-$sql = " select a.it_id,
-                a.ct_qty,
-                a.it_name
-           from {$g4['shop_cart_table']} a,
-                {$g4['shop_item_table']} b
-          where a.uq_id = '$tmp_uq_id'
-            and a.it_id = b.it_id ";
+$sql = " select it_id,
+                ct_qty,
+                it_name,
+                io_id,
+                io_type,
+                ct_option
+           from {$g4['shop_cart_table']}
+          where uq_id = '$tmp_uq_id' ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     // 상품에 대한 현재고수량
-    $it_stock_qty = (int)get_it_stock_qty($row['it_id']);
+    if($row['io_id']) {
+        $it_stock_qty = (int)get_option_stock_qty($row['it_id'], $row['io_id'], $row['io_type']);
+    } else {
+        $it_stock_qty = (int)get_it_stock_qty($row['it_id']);
+    }
     // 장바구니 수량이 재고수량보다 많다면 오류
     if ($row['ct_qty'] > $it_stock_qty)
-        $error .= "{$row['it_name']} 의 재고수량이 부족합니다. 현재고수량 : $it_stock_qty 개\\n\\n";
+        $error .= "{$row['ct_option']} 의 재고수량이 부족합니다. 현재고수량 : $it_stock_qty 개\\n\\n";
 }
 
 if ($error != "")
@@ -56,7 +60,8 @@ $i_temp_point = (int)$_POST['od_temp_point'];
 
 
 // 주문금액이 상이함
-$sql = " select SUM(ct_price * ct_qty) as od_amount from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' ";
+$sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as od_amount
+            from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' ";
 $row = sql_fetch($sql);
 if ((int)$row['od_amount'] !== $i_amount) {
     die("Error.");

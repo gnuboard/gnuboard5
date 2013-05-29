@@ -14,19 +14,21 @@ else
     $colspan = 6;
 ?>
 
+<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
+
 <form name="frmcartlist" method="post">
 <table class="basic_tbl">
 <thead>
 <tr>
     <th scope="col">상품이미지</th>
     <th scope="col">상품명</th>
-    <th scope="col">수량</th>
+    <th scope="col">총수량</th>
     <th scope="col">판매가</th>
     <th scope="col">소계</th>
+    <th scope="col">포인트</th>
 <?php
 if ($s_page == 'cart.php') {
-    echo '<th scope="col">포인트</th>';
-    echo '<th scope="col">삭제</th>';
+    echo '<th scope="col"><input type="checkbox" name="ct_all" value="1"></th>';
 }
 ?>
 </tr>
@@ -42,30 +44,32 @@ $goods_count = -1;
 
 // $s_uq_id 로 현재 장바구니 자료 쿼리
 $sql = " select a.ct_id,
+                a.it_id,
                 a.it_name,
-                a.it_opt1,
-                a.it_opt2,
-                a.it_opt3,
-                a.it_opt4,
-                a.it_opt5,
-                a.it_opt6,
                 a.ct_price,
                 a.ct_point,
                 a.ct_qty,
                 a.ct_status,
-                b.it_id,
                 b.ca_id
-           from {$g4['shop_cart_table']} a,
-                {$g4['shop_item_table']} b
+           from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
           where a.uq_id = '$s_uq_id'
-            and a.it_id  = b.it_id
-          order by a.ct_id ";
+            and a.ct_num = '0'
+          order by a.ct_order, a.ct_id ";
 $result = sql_query($sql);
 
 $good_info = '';
 
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
+    // 합계금액 계산
+    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                    SUM(ct_point * ct_qty) as point,
+                    SUM(ct_qty) as qty
+                from {$g4['shop_cart_table']}
+                where it_id = '{$row['it_id']}'
+                  and uq_id = '$s_uq_id' ";
+    $sum = sql_fetch($sql);
+
     if (!$goods)
     {
         //$goods = addslashes($row[it_name]);
@@ -101,41 +105,36 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     $it_name = $a1 . stripslashes($row['it_name']) . $a2;
-    if ($row['it_opt1'] || $row['it_opt2'] || $row['it_opt3'] || $row['it_opt4'] || $row['it_opt5'] || $row['it_opt6']) { // 상품에 옵션이 있다면
-        $it_name .= '<div class="sod_bsk_itopt">'.print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']).'</div>';
+    $it_options = print_item_options($row['it_id'], $s_uq_id);
+    if($it_options) {
+        $mod_options = '';
+        if($s_page == 'cart.php')
+            $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
+        $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
     }
 
-    $point       = $row['ct_point'] * $row['ct_qty'];
-    $sell_amount = $row['ct_price'] * $row['ct_qty'];
+    $point       = $sum['point'];
+    $sell_amount = $sum['price'];
 ?>
 
 <tr>
     <td class="sod_bsk_img"><?php echo $image; ?></td>
     <td>
-        <input type="hidden" name="ct_id[<?php echo $i; ?>]"    value="<?php echo $row['ct_id']; ?>">
         <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
-        <input type="hidden" name="ap_id[<?php echo $i; ?>]"    value="<?php echo $row['ap_id']; ?>">
-        <input type="hidden" name="bi_id[<?php echo $i; ?>]"    value="<?php echo $row['bi_id']; ?>">
         <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-        <?php echo $it_name; ?>
+        <?php echo $it_name.$mod_options; ?>
     </td>
 
-    <?php
-    // 수량, 입력(수량)
-    if ($s_page == "cart.php")
-        echo '<td class="td_num"><input type="text" name="ct_qty['.$i.']" value="'.$row['ct_qty'].'" id="ct_qty_'.$i.'" class="frm_input" size="4" maxlength="6" autocomplete="off"></td>';
-    else
-        echo '<td class="td_num">'.$row['ct_qty'].'</td>';
-    ?>
-
+    <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
     <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
     <td class="td_bignum"><?php echo number_format($sell_amount); ?></td>
+    <td class="td_num"><?php echo number_format($sum['point']); ?></td>
 
     <?php
-    if ($s_page == 'cart.php') {
-        echo '<td class="td_bignum"><?php echo number_format($point); ?></td>';
-        echo '<td class="td_smallmng"><a href="'.G4_SHOP_URL.'/cartupdate.php?act=d&amp;ct_id='.$row['ct_id'].'">삭제</a></td>';
-    }
+    if ($s_page == 'cart.php')
+        echo '<td class="td_smallmng"><input type="checkbox" name="ct_chk['.$i.']" value="1"></td>';
+    else if ($s_page == 'orderinquiryview.php')
+        echo '<td class="td_smallmng">'.$row['ct_status'].'</td>';
     ?>
 </tr>
 
@@ -224,7 +223,7 @@ if ($tot_amount > 0) {
     <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
     <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
     <a href="javascript:form_check('buy');" class="btn02">주문하기</a>
-    <a href="javascript:form_check('allupdate');" class="btn01">수량변경</a>
+    <a href="javascript:form_check('seldelete');" class="btn01">선택삭제</a>
     <a href="javascript:form_check('alldelete');" class="btn01">비우기</a>
     <?php } ?>
 </div>
@@ -237,6 +236,51 @@ if ($s_page == 'cart.php') {
     if ($i != 0) {
 ?>
 <script>
+$(function() {
+    var close_btn_idx;
+
+    // 선택사항수정
+    $(".mod_options").click(function() {
+        var it_id = $(this).closest("tr").find("input[name^=it_id]").val();
+        var $this = $(this);
+        close_btn_idx = $(".mod_options").index($(this));
+
+        winMask(); // 모달 윈도우 배경 출력
+
+        $.post(
+            "./cartoption.php",
+            { it_id: it_id },
+            function(data) {
+                $("#mod_option_frm").remove();
+                $this.after("<div id=\"mod_option_frm\"></div>");
+                $("#mod_option_frm").html(data);
+                price_calculate();
+            }
+        );
+    });
+
+    // 모두선택
+    $("input[name=ct_all]").click(function() {
+        if($(this).is(":checked"))
+            $("input[name^=ct_chk]").attr("checked", true);
+        else
+            $("input[name^=ct_chk]").attr("checked", false);
+    });
+
+    // 옵션수정 닫기
+    $("#mod_option_close").live("click", function() {
+        $("#mod_option_frm").remove();
+        $("#win_mask, .window").hide();
+        $(".mod_options").eq(close_btn_idx).focus();
+    });
+    $("#win_mask").click(function () {
+        $("#mod_option_frm").remove();
+        $("#win_mask").hide();
+        $(".mod_options").eq(close_btn_idx).focus();
+    });
+
+});
+
 function form_check(act) {
     var f = document.frmcartlist;
     var cnt = f.records.value;
@@ -248,7 +292,7 @@ function form_check(act) {
         <?php
         if (get_session('ss_mb_id')) // 회원인 경우
         {
-            echo "f.action = '".G4_SHOP_URL."/orderform.php';";
+            echo "f.action = './orderform.php';";
             echo "f.submit();";
         }
         else
@@ -258,40 +302,18 @@ function form_check(act) {
     else if (act == "alldelete")
     {
         f.act.value = act;
-        f.action = "<?php echo G4_SHOP_URL; ?>/cartupdate.php";
+        f.action = "./cartupdate.php";
         f.submit();
     }
-    else if (act == "allupdate")
+    else if (act == "seldelete")
     {
-        for (i=0; i<cnt; i++)
-        {
-            //if (f.elements("ct_qty[" + i + "]").value == "")
-            if (document.getElementById('ct_qty_'+i).value == '')
-            {
-                alert("수량을 입력해 주십시오.");
-                //f.elements("ct_qty[" + i + "]").focus();
-                document.getElementById('ct_qty_'+i).focus();
-                return;
-            }
-            //else if (isNaN(f.elements("ct_qty[" + i + "]").value))
-            else if (isNaN(document.getElementById('ct_qty_'+i).value))
-            {
-                alert("수량을 숫자로 입력해 주십시오.");
-                //f.elements("ct_qty[" + i + "]").focus();
-                document.getElementById('ct_qty_'+i).focus();
-                return;
-            }
-            //else if (f.elements("ct_qty[" + i + "]").value < 1)
-            else if (document.getElementById('ct_qty_'+i).value < 1)
-            {
-                alert("수량은 1 이상 입력해 주십시오.");
-                //f.elements("ct_qty[" + i + "]").focus();
-                document.getElementById('ct_qty_'+i).focus();
-                return;
-            }
+        if($("input[name^=ct_chk]:checked").size() < 1) {
+            alert("삭제하실 상품을 하나이상 선택해 주십시오.");
+            return false;
         }
+
         f.act.value = act;
-        f.action = "<?php echo G4_SHOP_URL; ?>/cartupdate.php";
+        f.action = "./cartupdate.php";
         f.submit();
     }
 
