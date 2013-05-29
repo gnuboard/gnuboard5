@@ -35,14 +35,14 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <?php } ?>
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
+            <?php if (strstr($list[$i]['wr_sns'], "fb")) { ?><img src="<?php echo G4_SNS_URL; ?>/icon/facebook.png" alt="페이스북에도 등록됨"><?php } ?>
+            <?php if (strstr($list[$i]['wr_sns'], "tw")) { ?><img src="<?php echo G4_SNS_URL; ?>/icon/twitter.png" alt="트위터에도 등록됨"><?php } ?>
+            <?php if (strstr($list[$i]['wr_sns'], "me")) { ?><img src="<?php echo G4_SNS_URL; ?>/icon/me2day.png" alt="미투데이에도 등록됨"><?php } ?>
         </header>
 
         <!-- 댓글 출력 -->
         <p>
-            <?php if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"".$board_skin_url."/img/icon_secret.gif\" alt=\"비밀글\">"; ?>
-            <?php if (strstr($list[$i]['wr_sns'], "fb")) echo "<img src=\"".G4_SNS_URL."/icon/facebook.png\" alt=\"페이스북에도 등록됨\">"; ?>
-            <?php if (strstr($list[$i]['wr_sns'], "tw")) echo "<img src=\"".G4_SNS_URL."/icon/twitter.png\" alt=\"트위터에도 등록됨\">"; ?>
-            <?php if (strstr($list[$i]['wr_sns'], "me")) echo "<img src=\"".G4_SNS_URL."/icon/me2day.png\" alt=\"미투데이에도 등록됨\">"; ?>
+            <?php if (strstr($list[$i]['wr_option'], "secret")) { ?><img src="<?php echo $board_skin_url; ?>/img/icon_secret.gif" alt="비밀글"><?php } ?>
             <?php echo $comment ?>
         </p>
 
