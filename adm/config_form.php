@@ -30,6 +30,11 @@ if(!isset($config['cf_gcaptcha_mp3'])) {
                     ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
 
+if(!isset($config['cf_googl_shorturl_apikey'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_googl_shorturl_apikey` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
+}
+
 if(!isset($config['cf_kcpcert_site_cd'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", true);
@@ -46,6 +51,15 @@ if(!isset($config['cf_mobile_pages'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", true);
     sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", true);
+}
+
+if(!isset($config['cf_facebook_appid'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_kcpcert_use`,  
+                    ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_appid`,
+                    ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
+                    ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key`,
+                    ADD `cf_me2day_key` VARCHAR(255) NOT NULL AFTER `cf_twitter_secret` ", true);
 }
 
 // uniqid 테이블이 없을 경우 생성
@@ -68,6 +82,7 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_article_mail">글작성메일</a></li>
     <li><a href="#anc_cf_join_mail">가입메일</a></li>
     <li><a href="#anc_cf_vote_mail">투표메일</a></li>
+    <li><a href="#anc_cf_sns">SNS</a></li>
     <li><a href="#anc_cf_extra">여분필드</a></li>
 </ul>';
 ?>
@@ -700,6 +715,56 @@ $pg_anchor = '<ul class="anchor">
     </tbody>
     </table>
 </section>
+
+
+<section id="anc_cf_sns" class="cbox">
+    <h2>소셜네트워크서비스(SNS : Social Network Service)</h2>
+    <?php echo $pg_anchor ?>
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_6">
+        <col class="grid_3">
+        <col class="grid_6">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="cf_facebook_appid">페이스북 앱 ID</label></th>
+        <td>
+            <input type="text" name="cf_facebook_appid" value="<?php echo $config['cf_facebook_appid'] ?>" id="cf_facebook_appid" class="frm_input"> <a href="https://developers.facebook.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
+        </td>
+        <th scope="row"><label for="cf_facebook_secret">페이스북 앱 Secret</label></th>
+        <td>
+            <input type="text" name="cf_facebook_secret" value="<?php echo $config['cf_facebook_secret'] ?>" id="cf_facebook_secret" class="frm_input" size="35">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_twitter_key">트위터 컨슈머 Key</label></th>
+        <td>
+            <input type="text" name="cf_twitter_key" value="<?php echo $config['cf_twitter_key'] ?>" id="cf_twitter_key" class="frm_input"> <a href="https://dev.twitter.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
+        </td>
+        <th scope="row"><label for="cf_twitter_secret">트위터 컨슈머 Secret</label></th>
+        <td>
+            <input type="text" name="cf_twitter_secret" value="<?php echo $config['cf_twitter_secret'] ?>" id="cf_twitter_secret" class="frm_input" size="35">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_me2day_key">미투데이 Key</label></th>
+        <td colspan="3">
+            <input type="text" name="cf_me2day_key" value="<?php echo $config['cf_me2day_key'] ?>" id="cf_me2day_key" class="frm_input"> <a href="http://me2day.net/me2/app/get_appkey" target="_blank" class="btn_frmline">앱 등록하기</a>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_googl_shorturl_apikey">구글 짧은주소 API Key</label></th>
+        <td>
+            <input type="text" name="cf_googl_shorturl_apikey" value="<?php echo $config['cf_googl_shorturl_apikey'] ?>" id="cf_googl_shorturl_apikey" class="frm_input"> <a href="http://code.google.com/apis/console/" target="_blank" class="btn_frmline">API Key 등록하기</a>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</section>
+
 
 <section id="anc_cf_extra" class="cbox">
     <h2>여분필드 기본 설정</h2>

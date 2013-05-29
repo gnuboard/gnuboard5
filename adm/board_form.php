@@ -49,6 +49,15 @@ if (!isset($board['bo_use_cert'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' AFTER `bo_use_email` ", false);
 }
 
+if (!isset($board['bo_use_sns'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_sns` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_cert` ", false);
+
+    $result = sql_query(" select bo_table from `{$g4['board_table']}` ");
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}` ADD `wr_sns` SET( 'fb', 'tw', 'me', 'gp' ) NOT NULL AFTER `wr_ip` ", false);
+    }
+}
+
 sql_query(" ALTER TABLE `{$g4['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' ", false);
 
 $required = "";
@@ -666,6 +675,20 @@ $pg_anchor = '<ul class="anchor">
             <label for="chk_grp_comment_max">그룹적용</label>
             <input type="checkbox" name="chk_all_comment_max" value="1" id="chk_all_comment_max">
             <label for="chk_all_comment_max">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_use_sns">SNS 사용</label></th>
+        <td>
+            <?php echo help("사용에 체크하시면 소셜네트워크서비스(SNS)에 글을 퍼가거나 댓글을 동시에 등록할수 있습니다.<br>기본환경설정의 SNS 설정을 하셔야 사용이 가능합니다.") ?>
+            <input type="checkbox" name="bo_use_sns" value="1" id="bo_use_sns" <?php echo $board['bo_use_sns']?'checked':''; ?>>
+            사용
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_grp_use_sns" value="1" id="chk_grp_use_sns">
+            <label for="chk_grp_use_sns">그룹적용</label>
+            <input type="checkbox" name="chk_all_use_sns" value="1" id="chk_all_use_sns">
+            <label for="chk_all_use_sns">전체적용</label>
         </td>
     </tr>
     <tr>

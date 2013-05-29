@@ -40,6 +40,7 @@ else {
             <?php echo conv_content($memo['me_memo'], 0) ?>
         </p>
     </article>
+
     <div class="btn_win">
         <?php if($prev_link) {  ?>
         <a href="<?php echo $prev_link ?>">이전쪽지</a>

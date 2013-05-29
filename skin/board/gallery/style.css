@@ -48,7 +48,7 @@
 .btn_bo_adm {float:left}
 .btn_bo_adm li {float:left;margin-right:5px}
 .btn_bo_adm input {padding:0 10px;height:25px;border:1px solid #e8180c !important;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle;cursor:pointer}
-.bo_notice td {background:#f5f6fa}
+.bo_notice td {background:#f7f7f2}
 .bo_notice td a {font-weight:bold}
 .td_num strong {color:#000}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
@@ -122,6 +122,10 @@
 #bo_v_act_good,
 #bo_v_act_nogood {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
+#bo_v_sns {margin:0 0 20px;padding:0;list-style:none;zoom:1}
+#bo_v_sns:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_sns li {float:left;margin:0 5px 0 0}
+
 #bo_v form {padding-top:20px}
 
 /* 게시판 댓글 */
@@ -150,5 +154,10 @@
 #bo_vc_w {position:relative;margin:0 0 10px;padding:0 0 20px;border-bottom:1px solid #cfded8}
 #bo_vc_w h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #bo_vc_w #char_cnt {display:block;margin:0 0 5px}
+
+#bo_vc_sns {margin:0;padding:0;list-style:none;zoom:1}
+#bo_vc_sns:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_vc_sns li {float:left;margin:0 20px 0 0}
+#bo_vc_sns input {margin:0 0 0 5px}
 
 #bo_vc form {padding:0}

@@ -143,7 +143,7 @@ if ($w == 'c') // 댓글 입력
                      wr_is_comment = 1,
                      wr_comment = '$tmp_comment',
                      wr_comment_reply = '$tmp_comment_reply',
-                     wr_subject = '$wr_subject',
+                     wr_subject = '',
                      wr_content = '$wr_content',
                      mb_id = '$mb_id',
                      wr_password = '$wr_password',
@@ -167,8 +167,13 @@ if ($w == 'c') // 댓글 입력
 
     $comment_id = mysql_insert_id();
 
+    // SNS 등록
+    $wr_sns = array();
+    include_once("./write_comment_update.sns.php");
+    $wr_sns = implode(",", $wr_sns);
+
     // 원글에 댓글수 증가 & 마지막 시간 반영
-    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_last = '".G4_TIME_YMDHIS."' where wr_id = '$wr_id' ");
+    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_sns = '$wr_sns', wr_last = '".G4_TIME_YMDHIS."' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
     sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '".G4_TIME_YMDHIS."', '{$member['mb_id']}' ) ");
@@ -179,6 +184,9 @@ if ($w == 'c') // 댓글 입력
     // 포인트 부여
     insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 댓글쓰기", $bo_table, $comment_id, '댓글');
 
+    
+    $wr_subject = get_text(stripslashes($wr['wr_subject']));
+
     // 메일발송 사용
     if ($config['cf_email_use'] && $board['bo_use_email'])
     {
@@ -187,7 +195,6 @@ if ($w == 'c') // 댓글 입력
         $group_admin = get_admin('group');
         $board_admin = get_admin('board');
 
-        $wr_subject = get_text(stripslashes($wr['wr_subject']));
         $wr_content = nl2br(get_text(stripslashes("원글\n{$wr['wr_subject']}\n\n\n댓글\n$wr_content")));
 
         $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'댓글 ', 'cu'=>'댓글 수정' );

@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<h1 id="container_title"><?php echo $g4['title'] ?></h1>
+<h1 id="wrapper_title"><?php echo $g4['title'] ?></h1>
 
 <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
 <input type="hidden" name="w" value="<?php echo $w ?>">
@@ -147,7 +147,7 @@ echo $option_hidden;
     <p>
        작성하신 내용을 제출하시려면 <strong>글쓰기</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
     </p>
-    <input type="submit" value="글쓰기" id="btn_submit" class="btn_submit" accesskey="s">
+    <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
     <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel">취소</a>
 </div>
 </form>
@@ -218,8 +218,6 @@ function fwrite_submit(f)
 
     <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
 
-    document.getElementById("btn_submit").disabled = "disabled";
-    
     return true;
 }
 </script>

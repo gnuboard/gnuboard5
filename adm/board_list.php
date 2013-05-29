@@ -103,6 +103,7 @@ $colspan = 15;
         <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
         <th scope="col">댓글P<span class="sound_only">포인트</span></th>
         <th scope="col">다운P<span class="sound_only">포인트</span></th>
+        <th scope="col"><?php echo subject_sort_link('bo_use_sns') ?>SNS<br>사용</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_use_search') ?>검색<br>사용</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_show_menu') ?>메뉴<br>보임</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_order') ?>출력<br>순서</a></th>
@@ -143,6 +144,7 @@ $colspan = 15;
         <td><input type="text" name="bo_write_point[<?php echo $i ?>]" value="<?php echo $row['bo_write_point'] ?>" title="쓰기포인트" class="frm_input" size="2"></td>
         <td><input type="text" name="bo_comment_point[<?php echo $i ?>]" value="<?php echo $row['bo_comment_point'] ?>" title="댓글포인트" class="frm_input" size="2"></td>
         <td><input type="text" name="bo_download_point[<?php echo $i ?>]" value="<?php echo $row['bo_download_point'] ?>" title="다운포인트" class="frm_input" size="2"></td>
+        <td><input type="checkbox" name="bo_use_sns[<?php echo $i ?>]" value="1" id="bo_use_sns<?php echo $i ?>" <?php echo $row['bo_use_sns']?"checked":"" ?> title="선택시 SNS 사용"></td>
         <td><input type="checkbox" name="bo_use_search[<?php echo $i ?>]" value="1" id="bo_use_search_<?php echo $i ?>" <?php echo $row['bo_use_search']?"checked":"" ?> title="선택시 검색사용"></td>
         <td><input type="checkbox" name="bo_show_menu[<?php echo $i ?>]" value="1" id="bo_show_menu_<?php echo $i ?>" <?php echo $row['bo_show_menu']?"checked":"" ?> title="선택시 메뉴보이기"></td>
         <td><input type="text" name="bo_order[<?php echo $i ?>]" value="<?php echo $row['bo_order'] ?>" id="bo_order<?php echo $i ?>" title="출력순서" class="frm_input" size="2"></td>

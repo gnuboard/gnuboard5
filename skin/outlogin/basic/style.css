@@ -5,9 +5,11 @@
 
 #ol_before {}
 #ol_before fieldset {position:relative}
-#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:167px;height:22px;border:1px solid #b8c9c2;line-height:1.6em}
+#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;line-height:1.6em}
+#ol_id:focus {border-color:#333;background:#21272e;color:#fff}
 .ol_idlabel {position:absolute;top:6px;left:5px;color:#333;font-size:0.95em}
-#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:167px;height:22px;border:1px solid #b8c9c2;vertical-align:top;line-height:1.6em}
+#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:168px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:top;line-height:1.6em}
+#ol_pw:focus {border-color:#333;background:#21272e;color:#fff}
 .ol_pwlabel {position:absolute;top:35px;left:5px;color:#333;font-size:0.95em}
 #auto_login {}
 #auto_login_label {letter-spacing:-0.1em}
@@ -27,12 +29,14 @@
 #ol_after_private li {float:left}
 #ol_after_private a {display:block;padding-top:8px;height:37px;background:#f7f7f7;text-align:center}
 #ol_after_private a strong {display:block;padding-top:3px;color:#000;font-weight:normal}
-#ol_after_private a:focus, #ol_after_private a:hover {background:#333;color:#fff;text-decoration:none}
+#ol_after_private a:focus,
+#ol_after_private a:hover {background:#333;color:#fff;text-decoration:none}
 #ol_after_private a:focus strong,
 #ol_after_private a:hover strong {color:#fff;text-decoration:none}
 #ol_after_memo {width:50px;margin-right:1px}
-#ol_after_pt {width:79px;margin-right:1px}
+#ol_after_pt {width:80px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:justify}
-#ol_after_ft a {display:inline-block;width:87px;height:22px;background:#333;color:#fff;text-align:center;line-height:1.8em}
-#ol_after_ft a:focus, #ol_after_ft a:hover {text-decoration:none !important}
+#ol_after_ft a {display:inline-block;width:88px;height:22px;background:#333;color:#fff;text-align:center;line-height:1.8em}
+#ol_after_ft a:focus,
+#ol_after_ft a:hover {text-decoration:none !important}

@@ -168,6 +168,11 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     </section>
 
     <?php
+    // SNS 보내기
+    include_once($board_skin_path."/view.sns.skin.php");
+    ?>
+
+    <?php
     // 코멘트 입출력
     include_once('./view_comment.php');
      ?>

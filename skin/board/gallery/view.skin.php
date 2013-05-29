@@ -156,7 +156,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         </div>
         <?php } else {
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
-         ?>
+        ?>
         <div id="bo_v_act">
             <?php if($board['bo_use_good']) { ?><span>추천 <strong><?php echo number_format($view['wr_good']) ?></strong></span><?php } ?>
             <?php if($board['bo_use_nogood']) { ?><span>비추천 <strong><?php echo number_format($view['wr_nogood']) ?></strong></span><?php } ?>
@@ -164,8 +164,13 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         <?php
             }
         }
-         ?>
+        ?>
     </section>
+
+    <?php
+    // SNS 보내기
+    include_once($board_skin_path."/view.sns.skin.php");
+    ?>
 
     <?php
     // 코멘트 입출력

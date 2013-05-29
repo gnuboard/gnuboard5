@@ -5,9 +5,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $outlogin_skin_url ?>/style.css">
 
 <!-- 로그인 후 외부로그인 시작 -->
-<aside id="ol_after" class="ol">
+<section id="ol_after" class="ol">
     <header id="ol_after_hd">
-        <h2>회원정보</h2>
+        <h2>나의 회원정보</h2>
         <strong><?php echo $nick ?>님</strong>
         <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo G4_ADMIN_URL ?>" class="btn_admin">관리자 모드</a><?php }  ?>
     </header>
@@ -32,7 +32,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <a href="<?php echo G4_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info">정보수정</a>
         <a href="<?php echo G4_BBS_URL ?>/logout.php" id="ol_after_logout">로그아웃</a>
     </footer>
-</aside>
+</section>
 
 <script>
 // 탈퇴의 경우 아래 코드를 연동하시면 됩니다.
