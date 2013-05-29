@@ -149,7 +149,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         $temporary_qty = $row['io_stock_qty'] - $wait_qty;
 
         $option = '';
-        $nbsp = '';
+        $option_br = '';
         if($row['io_type']) {
             $opt = explode(chr(30), $row['io_id']);
             if($opt[0] && $opt[1])
@@ -159,8 +159,8 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
             $opt = explode(chr(30), $row['io_id']);
             for($k=0; $k<count($subj); $k++) {
                 if($subj[$k] && $opt[$k]) {
-                    $option .= $nbsp.$subj[$k].' : '.$opt[$k];
-                    $nbsp = '&nbsp;';
+                    $option .= $option_br.$subj[$k].' : '.$opt[$k];
+                    $option_br = '<br>';
                 }
             }
         }
@@ -171,21 +171,21 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 
     ?>
     <tr>
-        <td class="td_bignum">
+        <td>
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <input type="hidden" name="io_id[<?php echo $i; ?>]" value="<?php echo $row['io_id']; ?>">
             <input type="hidden" name="io_type[<?php echo $i; ?>]" value="<?php echo $row['io_type']; ?>">
             <a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a>
         </td>
-        <td><?php echo $option; ?></td>
-        <td><?php echo $type; ?></td>
+        <td class="grid_3"><?php echo $option; ?></td>
+        <td class="td_mng"><?php echo $type; ?></td>
         <td class="td_num"><?php echo number_format($row['io_stock_qty']); ?></td>
         <td class="td_num"><?php echo number_format($wait_qty); ?></td>
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
-        <td class="td_num"><input type="text" name="io_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['io_stock_qty']; ?>" class="frm_input" size="10" autocomplete="off"></td>
+        <td class="td_num"><input type="text" name="io_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['io_stock_qty']; ?>" class="frm_input" size="8" autocomplete="off"></td>
         <td class="td_chk"><input type="checkbox" name="io_use[<?php echo $i; ?>]" value="1" <?php echo ($row['io_use'] ? "checked" : ""); ?>></td>
         <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>">수정</a></td>
-    </tr><tr>
+    </tr>
     <?php
     }
     if (!$i)
