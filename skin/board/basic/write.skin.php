@@ -218,6 +218,8 @@ function fwrite_submit(f)
 
     <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
 
+    document.getElementById("btn_submit").disabled = "disabled";
+
     return true;
 }
 </script>

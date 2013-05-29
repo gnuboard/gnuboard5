@@ -244,6 +244,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
         <?php if($is_guest) echo chk_captcha_js();  ?>
 
+        document.getElementById("btn_submit").disabled = "disabled";
+
         return true;
     }
 
