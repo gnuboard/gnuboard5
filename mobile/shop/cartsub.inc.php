@@ -16,7 +16,7 @@ else
 
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 
-<form name="frmcartlist" method="post">
+<form name="frmcartlist" id="sod_bsk_list" method="post">
 <table class="basic_tbl">
 <thead>
 <tr>

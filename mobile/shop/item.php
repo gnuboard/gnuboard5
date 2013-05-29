@@ -262,7 +262,7 @@ else
                 <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_URL.'/img/shop/sns_goo2.png'); ?>
             </div>
             <?php } ?>
-            <table id="sit_ov_tbl">
+            <table class="sit_ov_tbl">
             <colgroup>
                 <col class="grid_3">
                 <col>
