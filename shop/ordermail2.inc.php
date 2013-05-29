@@ -34,6 +34,7 @@ mailer($config['cf_title'], $admin['mb_email'], $od_email, $subject, $content, 1
 // 판매자에게 메일 보내기 (상품별로 보낸다.)
 //------------------------------------------------------------------------------
 
+unset($list);
 $sql = " select b.it_sell_email,
                 a.it_id,
                 a.it_name
@@ -44,8 +45,6 @@ $sql = " select b.it_sell_email,
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    unset($list);
-
     // 옵션정보
     $sql2 = " select ct_option, ct_qty
                 from {$g4['shop_cart_table']}
@@ -65,10 +64,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     if($k > 0)
         $options .= '</ul>';
 
-    $list['it_id']   = $row['it_id'];
-    $list['it_simg'] = get_it_image($row['it_id'], $default['de_simg_width'], $default['de_simg_height']);
-    $list['it_name'] = $row['it_name'];
-    $list['it_opt']  = $options;
+    $list[$i]['it_id']   = $row['it_id'];
+    $list[$i]['it_simg'] = get_it_image($row['it_id'], $default['de_simg_width'], $default['de_simg_height']);
+    $list[$i]['it_name'] = $row['it_name'];
+    $list[$i]['it_opt']  = $options;
 
     $subject = $config['cf_title'].' - 주문 알림 메일 (주문자 '.$od_name.'님)';
     ob_start();
