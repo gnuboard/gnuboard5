@@ -105,6 +105,7 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     <div id="btn_add">
         <a href="./itemlist.php" class="btn_add_optional">상품등록</a>
         <a href="./itemstocklist.php" class="btn_add_optional">상품재고관리</a>
+        <a href="./optionstocklist.php" class="btn_add_optional">상품옵션재고관리</a>
     </div>
 
     <table>

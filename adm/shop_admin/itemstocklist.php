@@ -161,7 +161,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         <td class="td_num"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input" size="10" autocomplete="off"></td>
         <td class="td_chk"><input type="checkbox" name="it_use[<?php echo $i; ?>]" value="1" <?php echo ($row['it_use'] ? "checked" : ""); ?>></td>
         <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>">수정</a></td>
-    </tr><tr>
+    </tr>
     <?php
     }
     if (!$i)
