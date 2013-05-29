@@ -379,6 +379,8 @@ function fregisterform_submit(f)
 
     <?php echo chk_captcha_js();  ?>
 
+    document.getElementById("btn_submit").disabled = "disabled";
+
     return true;
 }
 </script>
