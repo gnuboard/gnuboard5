@@ -54,7 +54,10 @@ if (!isset($board['bo_use_sns'])) {
 
     $result = sql_query(" select bo_table from `{$g4['board_table']}` ");
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}` ADD `wr_sns` SET( 'fb', 'tw', 'me', 'gp' ) NOT NULL AFTER `wr_ip` ", false);
+        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}` 
+                    ADD `wr_facebook_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_ip`,
+                    ADD `wr_twitter_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_facebook_user`,
+                    ADD `wr_me2day_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_twitter_user` ", false);
     }
 }
 
