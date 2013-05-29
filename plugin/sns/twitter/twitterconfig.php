@@ -6,5 +6,5 @@
 
 define('CONSUMER_KEY', $config['cf_twitter_key']);
 define('CONSUMER_SECRET', $config['cf_twitter_secret']);
-//define('OAUTH_CALLBACK', G4_SNS_URL.'/twitter/callback.php');
-define('OAUTH_CALLBACK', '');
+define('OAUTH_CALLBACK', G4_SNS_URL.'/twitter/callback.php');
+//define('OAUTH_CALLBACK', '');
