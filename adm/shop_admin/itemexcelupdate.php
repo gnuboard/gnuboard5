@@ -60,6 +60,7 @@ if($_FILES['excelfile']['tmp_name']) {
     error_reporting(E_ALL ^ E_NOTICE);
 
     $dup_it_id = array();
+    $fail_it_id = array();
     $dup_count = 0;
     $total_count = 0;
     $fail_count = 0;
@@ -119,6 +120,7 @@ if($_FILES['excelfile']['tmp_name']) {
         $sql2 = " select count(*) as cnt from {$g4['shop_item_table']} where it_id = '$it_id' ";
         $row2 = sql_fetch($sql2);
         if($row2['cnt']) {
+            $fail_it_id[] = $it_id;
             $dup_it_id[] = $it_id;
             $dup_count++;
             $fail_count++;
@@ -129,6 +131,7 @@ if($_FILES['excelfile']['tmp_name']) {
         $sql2 = " select count(*) as cnt from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
         $row2 = sql_fetch($sql2);
         if(!$row2['cnt']) {
+            $fail_it_id[] = $it_id;
             $fail_count++;
             continue;
         }
@@ -159,6 +162,8 @@ include_once(G4_PATH.'/head.sub.php');
         <dd><?php echo number_format($succ_count); ?></dd>
         <dt>실패건수</dt>
         <dd><?php echo number_format($fail_count); ?></dd>
+        <dt>실패상품코드</dt>
+        <dd><?php echo implode(', ', $fail_it_id); ?></dd>
         <?php if($dup_count > 0) { ?>
         <dt>상품코드중복건수</dt>
         <dd><?php echo number_format($dup_count); ?></dd>
