@@ -282,6 +282,20 @@ else
             </tr>
             <?php } ?>
 
+            <?php if ($it['it_brand']) { ?>
+            <tr>
+                <th scope="row">브랜드</th>
+                <td><?php echo $it['it_brand']; ?></td>
+            </tr>
+            <?php } ?>
+
+            <?php if ($it['it_model']) { ?>
+            <tr>
+                <th scope="row">모델</th>
+                <td><?php echo $it['it_model']; ?></td>
+            </tr>
+            <?php } ?>
+
             <?php if (!$it['it_gallery']) { // 갤러리 형식이라면 가격, 구매하기 출력하지 않음 ?>
             <?php if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
 

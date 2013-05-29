@@ -93,7 +93,6 @@ if(!$result) {
 }
 
 // it_brand 추가
-/*
 $sql = " select it_brand from {$g4['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
@@ -101,7 +100,6 @@ if(!$result) {
                     ADD `it_brand` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
                     ADD `it_model` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_brand` ", false);
 }
-*/
 
 // sms_cont5 필드추가
 $sql = " select de_sms_cont5 from {$g4['shop_default_table']} ";
