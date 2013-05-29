@@ -143,33 +143,35 @@ if($_FILES['excelfile']['tmp_name']) {
         sql_query($sql);
 }
 
-$g4['title'] = '상품 엑셀일괄등록';
+$g4['title'] = '상품 엑셀일괄등록 결과';
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
-<p>
-상품등록을 완료했습니다.
-</p>
-<p>
-총상품수 : <?php echo number_format($total_count); ?>
-</p>
-<p>
-완료건수 : <?php echo number_format($succ_count); ?>
-</p>
-<p>
-실패건수 : <?php echo number_format($fail_count); ?>
-</p>
-<?php if($dup_count > 0) { ?>
-<p>
-상품코드중복건수 : <?php echo number_format($dup_count); ?>
-</p>
-<p>
-중복상품코드 : <?php echo implode(', ', $dup_it_id); ?>
-</p>
-<p>
-    <button type="button" onclick="window.close();">닫기</button>
-</p>
-<?php } ?>
+<div class="new_win">
+    <h1><?php echo $g4['title']; ?></h1>
+
+    <p class="new_win_desc">상품등록을 완료했습니다.</p>
+
+    <dl id="excelfile_result">
+        <dt>총상품수</dt>
+        <dd><?php echo number_format($total_count); ?></dd>
+        <dt>완료건수</dt>
+        <dd><?php echo number_format($succ_count); ?></dd>
+        <dt>실패건수</dt>
+        <dd><?php echo number_format($fail_count); ?></dd>
+        <?php if($dup_count > 0) { ?>
+        <dt>상품코드중복건수</dt>
+        <dd><?php echo number_format($dup_count); ?></dd>
+        <dt>중복상품코드</dt>
+        <dd><?php echo implode(', ', $dup_it_id); ?></dd>
+        <?php } ?>
+    </dl>
+
+    <div class="btn_win">
+        <button type="button" onclick="window.close();">창닫기</button>
+    </div>
+
+</div>
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');
