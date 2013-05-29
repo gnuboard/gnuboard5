@@ -70,15 +70,6 @@ if (!$board['bo_use_sns']) return;
                         break;
                     default : 
                         $twitter_url = G4_SNS_URL."/twitter/redirect.php";
-                        // 안먹히는 코드 ㅠㅠ
-                        if ($member['mb_twitter_token'] && $member['mb_twitter_token_secret']) {
-                            $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $member['mb_twitter_token'], $member['mb_twitter_token_secret']);
-                            $content = $connection->get('account/verify_credentials');
-                            if (200 == $connection->http_code) {
-                                $twitter_user = true;
-                                $twitter_url = $connection->getAuthorizeURL($token);
-                            }
-                        }
                 }
             }
 

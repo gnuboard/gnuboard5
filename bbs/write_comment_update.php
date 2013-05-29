@@ -134,6 +134,11 @@ if ($w == 'c') // 댓글 입력
         $tmp_comment_reply = '';
     }
 
+    // SNS 등록
+    $wr_sns = array();
+    include_once("./write_comment_update.sns.php");
+    $wr_sns = implode(",", $wr_sns);
+
     $sql = " insert into $write_table
                 set ca_name = '{$wr['ca_name']}',
                      wr_option = '$wr_secret',
@@ -153,6 +158,7 @@ if ($w == 'c') // 댓글 입력
                      wr_datetime = '".G4_TIME_YMDHIS."',
                      wr_last = '',
                      wr_ip = '{$_SERVER['REMOTE_ADDR']}',
+                     wr_sns = '$wr_sns',
                      wr_1 = '$wr_1',
                      wr_2 = '$wr_2',
                      wr_3 = '$wr_3',
@@ -167,13 +173,8 @@ if ($w == 'c') // 댓글 입력
 
     $comment_id = mysql_insert_id();
 
-    // SNS 등록
-    $wr_sns = array();
-    include_once("./write_comment_update.sns.php");
-    $wr_sns = implode(",", $wr_sns);
-
     // 원글에 댓글수 증가 & 마지막 시간 반영
-    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_sns = '$wr_sns', wr_last = '".G4_TIME_YMDHIS."' where wr_id = '$wr_id' ");
+    sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_last = '".G4_TIME_YMDHIS."' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
     sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '".G4_TIME_YMDHIS."', '{$member['mb_id']}' ) ");

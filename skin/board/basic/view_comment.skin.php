@@ -16,11 +16,13 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         $comment_id = $list[$i]['wr_id'];
         $cmt_depth = ""; // 댓글단계
         $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 20;
-        $str = $list[$i]['content'];
+        $comment = $list[$i]['content'];
+        /*
         if (strstr($list[$i]['wr_option'], "secret")) {
             $str = $str;
         }
-        $str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $str);
+        */
+        $comment = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $comment);
      ?>
     <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
         <header>
@@ -38,7 +40,10 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <!-- 댓글 출력 -->
         <p>
             <?php if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"".$board_skin_url."/img/icon_secret.gif\" alt=\"비밀글\">"; ?>
-            <?php echo $str ?>
+            <?php if (strstr($list[$i]['wr_sns'], "fb")) echo "<img src=\"".G4_SNS_URL."/icon/facebook.png\" alt=\"페이스북에도 등록됨\">"; ?>
+            <?php if (strstr($list[$i]['wr_sns'], "tw")) echo "<img src=\"".G4_SNS_URL."/icon/twitter.png\" alt=\"트위터에도 등록됨\">"; ?>
+            <?php if (strstr($list[$i]['wr_sns'], "me")) echo "<img src=\"".G4_SNS_URL."/icon/me2day.png\" alt=\"미투데이에도 등록됨\">"; ?>
+            <?php echo $comment ?>
         </p>
 
         <span id="edit_<?php echo $comment_id ?>"></span><!-- 수정 -->
@@ -167,16 +172,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         var pattern = /(^\s*)|(\s*$)/g; // \s 공백 문자
 
         f.is_good.value = 0;
-
-        /*
-        var s;
-        if (s = word_filter_check(document.getElementById('wr_content').value))
-        {
-            alert("내용에 금지단어('"+s+"')가 포함되어있습니다");
-            document.getElementById('wr_content').focus();
-            return false;
-        }
-        */
 
         var subject = "";
         var content = "";
