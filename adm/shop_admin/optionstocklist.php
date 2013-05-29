@@ -169,6 +169,10 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         if($row['io_type'])
             $type = '추가옵션';
 
+        // 통보수량보다 재고수량이 작을 때
+        $io_stock_qty = number_format($row['io_stock_qty']);
+        if($row['io_stock_qty'] <= $row['io_noti_qty'])
+            $io_stock_qty = '<span>'.$io_stock_qty.'</span>';
     ?>
     <tr>
         <td>
@@ -179,7 +183,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         </td>
         <td class="grid_3"><?php echo $option; ?></td>
         <td class="td_mng"><?php echo $type; ?></td>
-        <td class="td_num"><?php echo number_format($row['io_stock_qty']); ?></td>
+        <td class="td_num"><?php echo $io_stock_qty; ?></td>
         <td class="td_num"><?php echo number_format($wait_qty); ?></td>
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
         <td class="td_num"><input type="text" name="io_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['io_stock_qty']; ?>" class="frm_input" size="8" autocomplete="off"></td>
