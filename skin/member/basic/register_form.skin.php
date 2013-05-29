@@ -41,10 +41,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
-        <?php /* if ($w=='') { echo "<span class=\"frm_info\">공백없이 한글만 입력하세요.</span>"; } */ ?>
-        <?php echo $config['cf_kcpcert_use'] ? '<span class="frm_info">이름과 휴대폰번호는 아래의 휴대폰 본인확인 기능을 사용하여 입력해 주십시오.</span>' : '';  ?>
-        <?php echo ($config['cf_kcpcert_use']=='test') ? '<span class="frm_info">테스트의 경우 이동통신사는 반드시 KT를 선택해 주십시오. 나머지 항목은 임의로 입력하시면 됩니다.</span>' : '';  ?>
-        <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($config['cf_kcpcert_use']!=''||$w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
+        <?php if ($w=="u" && $config['cf_kcpcert_use']) { ?>
+        <span class="frm_info">휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되며 수동으로 입력할수 없게 됩니다.</span>
+        <?php } ?>
+        <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
+        <?php if ($member['mb_hp_certify']) { ?>
+        <div id="msg_hp_certify">
+            휴대폰 <strong>본인확인</strong><?php if ($member['mb_hp_certify']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
+        </div>
+        <?php } ?>
     </td>
 </tr>
 <?php if ($req_nick) {  ?>
@@ -228,7 +233,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <p>
         작성하신 내용를 발송하시려면 <strong><?php echo $w==''?'회원가입':'정보수정'; ?></strong> 버튼을, 작성을 취소하고 창을 닫으시려면 <strong>취소</strong> 링크를 누르세요.
     </p>
-    <input type="submit" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" class="btn_submit" accesskey="s">
+    <input type="submit" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" id="btn_submit" class="btn_submit" accesskey="s">
     <a href="<?php echo $g4['path'] ?>/" class="btn_cancel">취소</a>
 </div>
 </form>
@@ -379,7 +384,7 @@ function fregisterform_submit(f)
 
     <?php echo chk_captcha_js();  ?>
 
-    document.getElementById("btn_submit").disabled = "disabled";
+    document.getElementById("btn_submit").disabled = true;
 
     return true;
 }
