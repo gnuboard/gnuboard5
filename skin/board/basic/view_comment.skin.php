@@ -35,9 +35,9 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <?php } ?>
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
-            <?php if (strstr($list[$i]['wr_sns'], "fb")) { ?><img src="<?php echo G4_SNS_URL; ?>/icon/facebook.png" alt="페이스북에도 등록됨"><?php } ?>
-            <?php if (strstr($list[$i]['wr_sns'], "tw")) { ?><img src="<?php echo G4_SNS_URL; ?>/icon/twitter.png" alt="트위터에도 등록됨"><?php } ?>
-            <?php if (strstr($list[$i]['wr_sns'], "me")) { ?><img src="<?php echo G4_SNS_URL; ?>/icon/me2day.png" alt="미투데이에도 등록됨"><?php } ?>
+            <?php if ($list[$i]['wr_facebook_user']) { ?><a href="https://www.facebook.com/profile.php?id=<?php echo $list[$i]['wr_facebook_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/facebook.png" alt="페이스북에도 등록됨"></a><?php } ?>
+            <?php if ($list[$i]['wr_twitter_user']) { ?><a href="https://www.twitter.com/<?php echo $list[$i]['wr_twitter_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/twitter.png" alt="트위터에도 등록됨"></a><?php } ?>
+            <?php if ($list[$i]['wr_me2day_user']) { ?><a href="http://me2day.net/<?php echo $list[$i]['wr_me2day_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/me2day.png" alt="미투데이에도 등록됨"></a><?php } ?>
         </header>
 
         <!-- 댓글 출력 -->
@@ -127,7 +127,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <th scope="row">내용</th>
             <td>
                 <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
-                <textarea id="wr_content" name="wr_content" maxlength="10000" required class="required"
+                <textarea id="wr_content" name="wr_content" maxlength="10000" required class="required" title="내용"
                 <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
                 <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
                 <script>
@@ -146,7 +146,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </table>
 
         <div class="btn_confirm">
-            <input type="submit" class="btn_submit" value="댓글등록">
+            <input type="submit" id="btn_submit" class="btn_submit" value="댓글등록">
         </div>
 
         </form>

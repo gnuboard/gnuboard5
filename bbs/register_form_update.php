@@ -156,16 +156,22 @@ if ($config['cf_kcpcert_use'] && $md5_cert_no) {
         $sql_hp_certify .= " , mb_hp = '{$mb_hp}' ";
         $sql_hp_certify .= " , mb_hp_certify  = '{$_SESSION['ss_kcpcert_hp_certify']}' ";
         $sql_hp_certify .= " , mb_adult = '{$_SESSION['ss_kcpcert_adult']}' ";
+        $sql_hp_certify .= " , mb_birth = '{$_SESSION['ss_kcpcert_birth']}' ";
+        $sql_hp_certify .= " , mb_sex = '{$_SESSION['ss_kcpcert_sex']}' ";
     } else {
         $sql_hp_certify .= " , mb_hp = '' ";
         $sql_hp_certify .= " , mb_hp_certify  = 0 ";
         $sql_hp_certify .= " , mb_adult = 0 ";
+        $sql_hp_certify .= " , mb_birth = '' ";
+        $sql_hp_certify .= " , mb_sex = '' ";
     }
 } else {
     if (get_session("ss_reg_mb_name") != $mb_name || get_session("ss_reg_mb_hp") != $mb_hp) {
         $sql_hp_certify .= " , mb_hp = '{$mb_hp}' ";
         $sql_hp_certify .= " , mb_hp_certify = 0 ";
         $sql_hp_certify .= " , mb_adult = 0 ";
+        $sql_hp_certify .= " , mb_birth = '' ";
+        $sql_hp_certify .= " , mb_sex = '' ";
     }
 }
 //===============================================================

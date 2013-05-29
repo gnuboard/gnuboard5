@@ -102,7 +102,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php if ($config['cf_kcpcert_use']) { ?>
         <span class="frm_info">휴대폰번호는 휴대폰 본인확인 기능을 이용하여 입력하세요.</span>
         <?php } ?>
-        <input type="text" name="mb_hp" value="<?php echo $member[mb_hp] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp']||$config['cf_kcpcert_use'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp']||$config['cf_kcpcert_use'])?"required":""; ?>" <?php echo $config['cf_kcpcert_use']?"readonly":""; ?>  maxlength="20">
+        <input type="text" name="mb_hp" value="<?php echo $member[mb_hp] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" <?php echo $config['cf_kcpcert_use']?"readonly":""; ?>  maxlength="20">
         <?php if ($config['cf_kcpcert_use']) { ?>
         <input type="hidden" name="old_mb_hp" value="<?php echo $member['mb_hp'] ?>">
         <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰 본인확인</button>
@@ -272,32 +272,32 @@ function fregisterform_submit(f)
         }
     }
 
-    if (f.w.value == '') {
+    if (f.w.value == "") {
         if (f.mb_password.value.length < 3) {
-            alert('패스워드를 3글자 이상 입력하십시오.');
+            alert("패스워드를 3글자 이상 입력하십시오.");
             f.mb_password.focus();
             return false;
         }
     }
 
     if (f.mb_password.value != f.mb_password_re.value) {
-        alert('패스워드가 같지 않습니다.');
+        alert("패스워드가 같지 않습니다.");
         f.mb_password_re.focus();
         return false;
     }
 
     if (f.mb_password.value.length > 0) {
         if (f.mb_password_re.value.length < 3) {
-            alert('패스워드를 3글자 이상 입력하십시오.');
+            alert("패스워드를 3글자 이상 입력하십시오.");
             f.mb_password_re.focus();
             return false;
         }
     }
 
     // 이름 검사
-    if (f.w.value=='') {
+    if (f.w.value=="") {
         if (f.mb_name.value.length < 1) {
-            alert('이름을 입력하십시오.');
+            alert("이름을 입력하십시오.");
             f.mb_name.focus();
             return false;
         }
@@ -305,7 +305,7 @@ function fregisterform_submit(f)
         /*
         var pattern = /([^가-힣\x20])/i;
         if (pattern.test(f.mb_name.value)) {
-            alert('이름은 한글로 입력하십시오.');
+            alert("이름은 한글로 입력하십시오.");
             f.mb_name.select();
             return false;
         }
@@ -332,19 +332,19 @@ function fregisterform_submit(f)
         }
     }
 
-    if (typeof f.mb_icon != 'undefined') {
+    if (typeof f.mb_icon != "undefined") {
         if (f.mb_icon.value) {
             if (!f.mb_icon.value.toLowerCase().match(/.(gif)$/i)) {
-                alert('회원아이콘이 gif 파일이 아닙니다.');
+                alert("회원아이콘이 gif 파일이 아닙니다.");
                 f.mb_icon.focus();
                 return false;
             }
         }
     }
 
-    if (typeof(f.mb_recommend) != 'undefined') {
+    if (typeof(f.mb_recommend) != "undefined") {
         if (f.mb_id.value == f.mb_recommend.value) {
-            alert('본인을 추천할 수 없습니다.');
+            alert("본인을 추천할 수 없습니다.");
             f.mb_recommend.focus();
             return false;
         }
@@ -357,34 +357,34 @@ function fregisterform_submit(f)
         }
     }
 
-    <?php if ($config['cf_kcpcert_use']) {  ?>
-    var error = "";
-    $.ajax({
-        url: "<?php echo G4_KCP_URL ?>/kcpcert.ajax.php",
-        type: "POST",
-        data: {
-            "w":        f.w.value,
-            "mb_name":  f.mb_name.value,
-            "mb_hp":    f.mb_hp.value,
-            "old_mb_hp":f.old_mb_hp.value
-        },
-        dataType: "json",
-        async: false,
-        cache: false,
-        success: function(data, textStatus) {
-            error = data.error;
-        }
-    });
+    if (typeof(f.mb_hp) != "undefined" && f.mb_hp.value) {
+        var error = "";
+        $.ajax({
+            url: "<?php echo G4_KCPCERT_URL ?>/kcpcert.ajax.php",
+            type: "POST",
+            data: {
+                "w":        f.w.value,
+                "mb_name":  f.mb_name.value,
+                "mb_hp":    f.mb_hp.value,
+                "old_mb_hp":f.old_mb_hp.value
+            },
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function(data, textStatus) {
+                error = data.error;
+            }
+        });
 
-    if (error) {
-        alert(error);
-        return false;
+        if (error) {
+            alert(error);
+            return false;
+        }
     }
-    <?php } ?>
 
     <?php echo chk_captcha_js();  ?>
 
-    document.getElementById("btn_submit").disabled = true;
+    document.getElementById("btn_submit").disabled = "disabled";
 
     return true;
 }

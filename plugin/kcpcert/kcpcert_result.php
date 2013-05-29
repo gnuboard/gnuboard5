@@ -131,10 +131,10 @@ if( $cert_enc_use == "Y" )
 
         $phone_no = hyphen_hp_number($phone_no);
 
-        $sql = " select count(*) as cnt from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
+        $sql = " select mb_id from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
         $row = sql_fetch($sql);
-        if ($row['cnt']) {
-            alert_close("이미 가입되어 있는 휴대폰번호 입니다.");
+        if ($row['mb_id']) {
+            alert_close("이미 가입되어 있는 휴대폰번호 입니다.\\n회원아이디 : ".$row['mb_id']);
         }
 
         // hash 데이터
@@ -149,6 +149,8 @@ if( $cert_enc_use == "Y" )
         set_session("ss_kcpcert_hash",       $hash_data);
         set_session("ss_kcpcert_hp_certify", 1);
         set_session("ss_kcpcert_adult",      $adult);
+        set_session("ss_kcpcert_birth",      $birth_day);
+        set_session("ss_kcpcert_sex",        ($sex_code=="01"?"M":"F"));
 
         /*
         $sql = " update {$g4['member_table']} set mb_name = '$user_name', mb_hp = '$phone_no', mb_hp_certify = 1, mb_adult = $adult, mb_birth = '$birth_day', mb_sex = '$sex_code' where mb_id = '{$member['mb_id']}' ";

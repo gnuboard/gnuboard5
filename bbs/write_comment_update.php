@@ -135,9 +135,7 @@ if ($w == 'c') // 댓글 입력
     }
 
     // SNS 등록
-    $wr_sns = array();
     include_once("./write_comment_update.sns.php");
-    $wr_sns = implode(",", $wr_sns);
 
     $sql = " insert into $write_table
                 set ca_name = '{$wr['ca_name']}',
@@ -158,7 +156,9 @@ if ($w == 'c') // 댓글 입력
                      wr_datetime = '".G4_TIME_YMDHIS."',
                      wr_last = '',
                      wr_ip = '{$_SERVER['REMOTE_ADDR']}',
-                     wr_sns = '$wr_sns',
+                     wr_facebook_user = '$wr_facebook_user',
+                     wr_twitter_user  = '$wr_twitter_user',
+                     wr_me2day_user   = '$wr_me2day_user',
                      wr_1 = '$wr_1',
                      wr_2 = '$wr_2',
                      wr_3 = '$wr_3',

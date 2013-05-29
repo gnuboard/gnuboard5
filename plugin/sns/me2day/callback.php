@@ -14,11 +14,14 @@ include_once(G4_PATH.'/head.sub.php');
 $result = json_decode(file_get_contents("http://me2day.net/api/noop.json?uid={$user_id}&ukey={$auth_key}&akey=".$config['cf_me2day_key']));
 if ($result->code == 0) {
 
-    $user = json_decode(file_get_contents("http://me2day.net/api/get_person/{$user_id}.json"));
-    $sns_name   = $user->nickname;
-    $g4_sns_url = G4_SNS_URL;
+    $user     = json_decode(file_get_contents("http://me2day.net/api/get_person/{$user_id}.json"));
+    $sns_name = $user->nickname;
+    $sns_user = $user->id;
 
     set_cookie('ck_sns_name', $sns_name, 86400);
+    set_session('ss_me2day_user', $sns_user);
+
+    $g4_sns_url = G4_SNS_URL;
 
     echo <<<EOT
     <script>
