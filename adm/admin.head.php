@@ -74,7 +74,7 @@ function imageview(id, w, h)
 
         <ul id="tnb">
             <li><a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>" id="tnb_modify"><span>관리자정보</span></a></li>
-            <li><a href="<?php echo G4_ADMIN_URL ?>/config_form.php" id="tnb_chome_cf"><span>기본환경</span></a></li>
+            <li><a href="<?php echo G4_ADMIN_URL ?>/config_form.php" id="tnb_chome_cf"><span>환경설정</span></a></li>
             <li><a href="<?php echo G4_URL ?>/" id="tnb_chome"><span>홈페이지</span></a></li>
             <li><a href="<?php echo G4_BBS_URL ?>/logout.php" id="tnb_logout"><span>로그아웃</span></a></li>
         </ul>
