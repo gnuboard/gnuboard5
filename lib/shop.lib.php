@@ -680,7 +680,7 @@ function get_item_supply($it_id, $subject)
     return $str;
 }
 
-function print_item_options($it_id, $uq_id, $ul_id)
+function print_item_options($it_id, $uq_id)
 {
     global $g4;
 
