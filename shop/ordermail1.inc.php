@@ -40,10 +40,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $result2 = sql_query($sql2);
 
     $options = '';
+    $options_ul = ' style="margin:0;padding:0"'; // ul style
+    $options_li = ' style="padding:5px 0;list-style:none"'; // li style
     for($k=0; $row2=sql_fetch_array($result2); $k++) {
         if($k == 0)
-            $options .= '<ul>'.PHP_EOL;
-        $options .= '<li>'.$row2['ct_option'].' '.$row2['ct_qty'].'개</li>'.PHP_EOL;
+            $options .= '<ul'.$options_ul.'>'.PHP_EOL;
+        $options .= '<li'.$options_li.'>'.$row2['ct_option'].' '.$row2['ct_qty'].'개</li>'.PHP_EOL;
     }
 
     if($k > 0)
