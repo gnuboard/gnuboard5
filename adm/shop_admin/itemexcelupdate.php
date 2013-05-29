@@ -162,8 +162,10 @@ include_once(G4_PATH.'/head.sub.php');
         <dd><?php echo number_format($succ_count); ?></dd>
         <dt>실패건수</dt>
         <dd><?php echo number_format($fail_count); ?></dd>
+        <?php if($fail_count > 0) { ?>
         <dt>실패상품코드</dt>
         <dd><?php echo implode(', ', $fail_it_id); ?></dd>
+        <?php } ?>
         <?php if($dup_count > 0) { ?>
         <dt>상품코드중복건수</dt>
         <dd><?php echo number_format($dup_count); ?></dd>
