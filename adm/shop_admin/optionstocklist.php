@@ -102,7 +102,10 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 
 <section class="cbox">
     <h2>상품옵션재고 목록</h2>
-    <p>재고수정의 수치를 수정하시면 창고재고의 수치가 변경됩니다.</p>
+    <p>
+        재고수정의 수치를 수정하시면 창고재고의 수치가 변경됩니다.<br>
+        창고재고가 부족한 경우 재고수량 뒤에 <span class="sit_stock_qty_alert">!</span><span class="sound_only"> 혹은 재고부족</span>으로 표시됩니다.
+    </p>
 
     <div id="btn_add">
         <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
@@ -171,8 +174,11 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
 
         // 통보수량보다 재고수량이 작을 때
         $io_stock_qty = number_format($row['io_stock_qty']);
-        if($row['io_stock_qty'] <= $row['io_noti_qty'])
-            $io_stock_qty = '<span>'.$io_stock_qty.'</span>';
+        $io_stock_qty_st = ''; // 스타일 정의
+        if($row['io_stock_qty'] <= $row['io_noti_qty']) {
+            $io_stock_qty_st = 'sit_stock_qty_alert';
+            $io_stock_qty = ''.$io_stock_qty.' !<span class="sound_only"> 재고부족 </span>';
+        }
     ?>
     <tr>
         <td>
@@ -183,7 +189,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         </td>
         <td class="grid_3"><?php echo $option; ?></td>
         <td class="td_mng"><?php echo $type; ?></td>
-        <td class="td_num"><?php echo $io_stock_qty; ?></td>
+        <td class="td_num <?php echo $io_stock_qty_st; ?>"><?php echo $io_stock_qty; ?></td>
         <td class="td_num"><?php echo number_format($wait_qty); ?></td>
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
         <td class="td_num"><input type="text" name="io_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['io_stock_qty']; ?>" class="frm_input" size="8" autocomplete="off"></td>

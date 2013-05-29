@@ -199,6 +199,9 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sit_ps_subject {width:290px}
 .sit_ps_confirm {width:30px;text-align:center}
 
+/* 상품옵션재고관리 */
+.sit_stock_qty_alert {color:#ff1133;font-weight:bold}
+
 /* 배송일괄처리 */
 #sdeli_proc {text-align:center}
 #sdeli_proc_fs {padding:20px 0;border-bottom:1px solid #f7f7f7;text-align:center}
