@@ -857,6 +857,13 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="de_guest_cart_use">비회원 장바구니</label></th>
+        <td>
+             <?php echo help("비회원 장바구니 기능을 사용하려면 체크하십시오."); ?>
+            <input type="checkbox" name="de_guest_cart_use" value="1" id="de_guest_cart_use"<?php echo $default['de_guest_cart_use']?' checked':''; ?>> 사용
+        </td>
+    </tr>
+    <tr>
         <th scope="row">비회원에 대한<br/>개인정보수집 내용</th>
         <td><?php echo editor_html('de_guest_privacy', $default['de_guest_privacy']); ?></td>
     </tr>
