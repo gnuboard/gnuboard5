@@ -114,8 +114,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </tr>
         <?php } ?>
 
-        <?php
-        include_once($board_skin_path."/view_comment.sns.skin.php");
+        <?php 
+        @include(G4_SKIN_PATH."/board/basic/view_comment.sns.skin.php");
         ?>
 
         <tr>
@@ -167,16 +167,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         var pattern = /(^\s*)|(\s*$)/g; // \s 공백 문자
 
         f.is_good.value = 0;
-
-        /*
-        var s;
-        if (s = word_filter_check(document.getElementById('wr_content').value))
-        {
-            alert("내용에 금지단어('"+s+"')가 포함되어있습니다");
-            document.getElementById('wr_content').focus();
-            return false;
-        }
-        */
 
         var subject = "";
         var content = "";
@@ -248,6 +238,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         }
 
         <?php if($is_guest) echo chk_captcha_js();  ?>
+
+        document.getElementById("btn_submit").disabled = "disabled";
 
         return true;
     }

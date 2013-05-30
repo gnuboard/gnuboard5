@@ -153,19 +153,6 @@ echo $option_hidden;
 </form>
 
 <script>
-<?php
-// 관리자라면 분류 선택에 '공지' 옵션을 추가함
-if ($is_admin)
-{
-    echo '
-    if (ca_name_select = document.getElementById("ca_name")) {
-        ca_name_select.options.length += 1;
-        ca_name_select.options[ca_name_select.options.length-1].value = "공지";
-        ca_name_select.options[ca_name_select.options.length-1].text = "공지";
-    }';
-}
-?>
-
 function html_auto_br(obj)
 {
     if (obj.checked) {
@@ -217,6 +204,8 @@ function fwrite_submit(f)
     }
 
     <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
+
+    document.getElementById("btn_submit").disabled = "disabled";
 
     return true;
 }

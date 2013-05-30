@@ -16,11 +16,13 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         $comment_id = $list[$i]['wr_id'];
         $cmt_depth = ""; // 댓글단계
         $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 20;
-        $str = $list[$i]['content'];
+        $comment = $list[$i]['content'];
+        /*
         if (strstr($list[$i]['wr_option'], "secret")) {
             $str = $str;
         }
-        $str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $str);
+        */
+        $comment = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $comment);
      ?>
     <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
         <header>
@@ -33,12 +35,15 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <?php } ?>
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
+            <?php if ($list[$i]['wr_facebook_user']) { ?><a href="https://www.facebook.com/profile.php?id=<?php echo $list[$i]['wr_facebook_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/facebook.png" alt="페이스북에도 등록됨"></a><?php } ?>
+            <?php if ($list[$i]['wr_twitter_user']) { ?><a href="https://www.twitter.com/<?php echo $list[$i]['wr_twitter_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/twitter.png" alt="트위터에도 등록됨"></a><?php } ?>
+            <?php if ($list[$i]['wr_me2day_user']) { ?><a href="http://me2day.net/<?php echo $list[$i]['wr_me2day_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/me2day.png" alt="미투데이에도 등록됨"></a><?php } ?>
         </header>
 
         <!-- 댓글 출력 -->
         <p>
-            <?php if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"".$board_skin_url."/img/icon_secret.gif\" alt=\"비밀글\">"; ?>
-            <?php echo $str ?>
+            <?php if (strstr($list[$i]['wr_option'], "secret")) { ?><img src="<?php echo $board_skin_url; ?>/img/icon_secret.gif" alt="비밀글"><?php } ?>
+            <?php echo $comment ?>
         </p>
 
         <span id="edit_<?php echo $comment_id ?>"></span><!-- 수정 -->
@@ -113,16 +118,14 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <td><?php echo $captcha_html; ?></td>
         </tr>
         <?php } ?>
-
         <?php 
         include_once($board_skin_path."/view_comment.sns.skin.php");
         ?>
-
         <tr>
             <th scope="row">내용</th>
             <td>
                 <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
-                <textarea id="wr_content" name="wr_content" maxlength="10000" required class="required"
+                <textarea id="wr_content" name="wr_content" maxlength="10000" required class="required" title="내용"
                 <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
                 <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
                 <script>
@@ -141,7 +144,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </table>
 
         <div class="btn_confirm">
-            <input type="submit" class="btn_submit" value="댓글등록">
+            <input type="submit" id="btn_submit" class="btn_submit" value="댓글등록">
         </div>
 
         </form>
@@ -167,16 +170,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         var pattern = /(^\s*)|(\s*$)/g; // \s 공백 문자
 
         f.is_good.value = 0;
-
-        /*
-        var s;
-        if (s = word_filter_check(document.getElementById('wr_content').value))
-        {
-            alert("내용에 금지단어('"+s+"')가 포함되어있습니다");
-            document.getElementById('wr_content').focus();
-            return false;
-        }
-        */
 
         var subject = "";
         var content = "";
@@ -248,6 +241,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         }
 
         <?php if($is_guest) echo chk_captcha_js();  ?>
+
+        document.getElementById("btn_submit").disabled = "disabled";
 
         return true;
     }

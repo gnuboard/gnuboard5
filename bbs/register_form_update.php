@@ -145,6 +145,36 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
 // 관리자님 회원정보
 $admin = get_admin('super');
 
+//===============================================================
+//  휴대폰 본인확인
+//---------------------------------------------------------------
+$sql_hp_certify = "";
+$md5_cert_no = get_session("ss_kcpcert_no");
+if ($config['cf_kcpcert_use'] && $md5_cert_no) {
+    // 해시값이 같은 경우에만 휴대폰 본인확인 값을 저장한다.
+    if (get_session("ss_kcpcert_hash") == md5($mb_hp.$mb_name.$md5_cert_no)) {
+        $sql_hp_certify .= " , mb_hp = '{$mb_hp}' ";
+        $sql_hp_certify .= " , mb_hp_certify  = '{$_SESSION['ss_kcpcert_hp_certify']}' ";
+        $sql_hp_certify .= " , mb_adult = '{$_SESSION['ss_kcpcert_adult']}' ";
+        $sql_hp_certify .= " , mb_birth = '{$_SESSION['ss_kcpcert_birth']}' ";
+        $sql_hp_certify .= " , mb_sex = '{$_SESSION['ss_kcpcert_sex']}' ";
+    } else {
+        $sql_hp_certify .= " , mb_hp = '' ";
+        $sql_hp_certify .= " , mb_hp_certify  = 0 ";
+        $sql_hp_certify .= " , mb_adult = 0 ";
+        $sql_hp_certify .= " , mb_birth = '' ";
+        $sql_hp_certify .= " , mb_sex = '' ";
+    }
+} else {
+    if (get_session("ss_reg_mb_name") != $mb_name || get_session("ss_reg_mb_hp") != $mb_hp) {
+        $sql_hp_certify .= " , mb_hp = '{$mb_hp}' ";
+        $sql_hp_certify .= " , mb_hp_certify = 0 ";
+        $sql_hp_certify .= " , mb_adult = 0 ";
+        $sql_hp_certify .= " , mb_birth = '' ";
+        $sql_hp_certify .= " , mb_sex = '' ";
+    }
+}
+//===============================================================
 
 if ($w == '') {
 
@@ -159,7 +189,6 @@ if ($w == '') {
                      mb_email = '{$mb_email}',
                      mb_homepage = '{$mb_homepage}',
                      mb_tel = '{$mb_tel}',
-                     mb_hp = '{$mb_hp}',
                      mb_zip1 = '{$mb_zip1}',
                      mb_zip2 = '{$mb_zip2}',
                      mb_addr1 = '{$mb_addr1}',
@@ -185,7 +214,9 @@ if ($w == '') {
                      mb_7 = '{$mb_7}',
                      mb_8 = '{$mb_8}',
                      mb_9 = '{$mb_9}',
-                     mb_10 = '{$mb_10}' ";
+                     mb_10 = '{$mb_10}' 
+                     {$sql_hp_certify} ";
+
     // 이메일 인증을 사용하지 않는다면 이메일 인증시간을 바로 넣는다
     if (!$config['cf_use_email_certify'])
         $sql .= " , mb_email_certify = '".G4_TIME_YMDHIS."' ";
@@ -264,29 +295,6 @@ if ($w == '') {
     if ($old_email != $mb_email && $config['cf_use_email_certify'])
         $sql_email_certify = " , mb_email_certify = '' ";
 
-    /////////////////////////////////////////////////////////////////
-    //  휴대폰 본인확인
-    /////////////////////////////////////////////////////////////////
-    $sql_hp_certify = "";
-    $md5_cert_no = get_session("ss_kcpcert_no");
-    if ($config['cf_kcpcert_use'] && $md5_cert_no) {
-        $hash_data = md5($mb_hp.$mb_name.$md5_cert_no);
-        // 해시값이 틀린 경우에는 휴대폰 인증 값을 무효화 한다.
-        if (get_session("ss_kcpcert_hash") != $hash_data) {
-            $sql_hp_certify .= " , mb_hp = '' ";
-            $sql_hp_certify .= " , mb_hp_certify  = 0 ";
-            $sql_hp_certify .= " , mb_adult = 0 ";
-        }
-    } else {
-        if (get_session("ss_reg_mb_name") != $mb_name || 
-            get_session("ss_reg_mb_hp") != $mb_hp) {
-            $sql_hp_certify .= " , mb_hp = '{$mb_hp}' ";
-            $sql_hp_certify .= " , mb_hp_certify  = 0 ";
-            $sql_hp_certify .= " , mb_adult = 0 ";
-        }
-    }
-    /////////////////////////////////////////////////////////////////
-
     $sql = " update {$g4['member_table']}
                 set mb_nick = '{$mb_nick}',
                     mb_mailling = '{$mb_mailling}',
@@ -341,6 +349,10 @@ if ($w == '') {
 // 사용자 코드 실행
 @include_once ($member_skin_path.'/register_form_update.tail.skin.php');
 
+unset($_SESSION['ss_kcpcert_no']);
+unset($_SESSION['ss_kcpcert_hash']);
+unset($_SESSION['ss_kcpcert_hp_certify']);
+unset($_SESSION['ss_kcpcert_adult']);
 
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';

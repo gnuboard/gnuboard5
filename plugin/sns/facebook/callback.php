@@ -22,10 +22,13 @@ $g4['title'] = '페이스북 콜백';
 include_once(G4_PATH.'/head.sub.php');
 
 if ($user) {
-    $sns_name   = $user_profile['name'];
-    $g4_sns_url = G4_SNS_URL;
+    $sns_name = $user_profile['name'];
+    $sns_user = $user;
 
     set_cookie('ck_sns_name', $sns_name, 86400);
+    set_session('ss_facebook_user', $user);
+
+    $g4_sns_url = G4_SNS_URL;
 
     echo <<<EOT
     <script>

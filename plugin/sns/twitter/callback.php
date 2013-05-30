@@ -16,8 +16,8 @@ require_once(G4_SNS_PATH.'/twitter/twitterconfig.php');
 
 /* If the oauth_token is old redirect to the connect page. */
 if (isset($_REQUEST['oauth_token']) && $_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
-  $_SESSION['oauth_status'] = 'oldtoken';
-  header('Location: ./clearsessions.php');
+    $_SESSION['oauth_status'] = 'oldtoken';
+    header('Location: ./clearsessions.php');
 }
 
 /* Create TwitteroAuth object with app key/secret and token key/secret from default phase */
@@ -47,12 +47,14 @@ $g4['title'] = '트위터 콜백';
 include_once(G4_PATH.'/head.sub.php');
 
 if (200 == $connection->http_code) {
-
-    $content    = $connection->get('account/verify_credentials');
-    $sns_name   = $content->name;
-    $g4_sns_url = G4_SNS_URL;
+    $content  = $connection->get('account/verify_credentials');
+    $sns_name = $content->name;
+    $sns_user = $content->screen_name;
 
     set_cookie('ck_sns_name', $sns_name, 86400);
+    set_session('ss_twitter_user', $sns_user);
+
+    $g4_sns_url = G4_SNS_URL;
 
     echo <<<EOT
     <script>
