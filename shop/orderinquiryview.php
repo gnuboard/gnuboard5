@@ -29,9 +29,6 @@ set_session('ss_temp_uq_id', $uq_id);
 
 $g4['title'] = '주문상세내역';
 include_once('./_head.php');
-
-$s_uq_id = $od['uq_id'];
-$s_page = 'orderinquiryview.php';
 ?>
 
 <script>
@@ -58,7 +55,103 @@ if(openwin != null) {
             <dt>완료</dt>
             <dd>상품 배송이 완료되었습니다.</dd>
         </dl>
-        <?php include './cartsub.inc.php'; ?>
+        <?php
+        $sql = " select it_id, it_name
+                    from {$g4['shop_cart_table']}
+                    where uq_id = '$uq_id'
+                      and ct_num = '0'
+                    order by ct_id ";
+        $result = sql_query($sql);
+        ?>
+        <ul>
+            <?php
+            for($i=0; $row=sql_fetch_array($result); $i++) {
+                $image = get_it_image($row['it_id'], 70, 70);
+            ?>
+            <li>
+                <span><?php echo $image; ?></span>
+                <span><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><b><?php echo $row['it_name']; ?></b></a></span>
+                <table class="basic_tbl">
+                <thead>
+                <tr>
+                    <th scope="col">옵션항목</th>
+                    <th scope="col">수량</th>
+                    <th scope="col">판매가</th>
+                    <th scope="col">소계</th>
+                    <th scope="col">포인트</th>
+                    <th scope="col">상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $sql = " select ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
+                            from {$g4['shop_cart_table']}
+                            where uq_id = '$uq_id'
+                              and it_id = '{$row['it_id']}'
+                            order by ct_num ";
+                $res = sql_query($sql);
+
+                for($k=0; $opt=sql_fetch_array($res); $k++) {
+                    if($opt['io_type'])
+                        $opt_price = $opt['io_price'];
+                    else
+                        $opt_price = $opt['ct_price'] + $opt['io_price'];
+
+                    $sell_amount = $opt_price * $opt['ct_qty'];
+                    $point = $opt['ct_point'] * $opt['ct_qty'];
+                ?>
+                <tr>
+                    <td><?php echo $opt['ct_option']; ?></td>
+                    <td><?php echo number_format($opt['ct_qty']); ?></td>
+                    <td><?php echo number_format($opt_price); ?></td>
+                    <td><?php echo number_format($sell_amount); ?></td>
+                    <td><?php echo number_format($point); ?></td>
+                    <td><?php echo $opt['ct_status']; ?></td>
+                </tr>
+                <?php
+                    if ($opt['ct_status'] == '취소' || $opt['ct_status'] == '반품' || $opt['ct_status'] == '품절') {
+                        $tot_cancel_amount += $sell_amount;
+                    }
+                    else {
+                        $tot_point       += $point;
+                        $tot_sell_amount += $sell_amount;
+                    }
+                }
+                ?>
+                </tbody>
+                </table>
+            </li>
+            <?php
+            }
+
+            $send_cost = $od['od_send_cost'];
+            ?>
+        </ul>
+        <?php
+        // 배송비가 0 보다 크다면 (있다면)
+        if ($send_cost > 0)
+        {
+        ?>
+
+        <div id="sod_bsk_dvr" class="sod_bsk_tot">
+            <span>배송비</span>
+            <strong><?php echo number_format($send_cost); ?> 원</strong>
+        </div>
+
+        <?php } ?>
+
+        <?php
+        // 총계 = 주문상품금액합계 + 배송비
+        $tot_amount = $tot_sell_amount + $send_cost;
+        if ($tot_amount > 0) {
+        ?>
+
+        <div id="sod_bsk_cnt" class="sod_bsk_tot">
+            <span>총계</span>
+            <strong><?php echo number_format($tot_amount); ?> 원 <?php echo number_format($tot_point); ?> 점</strong>
+        </div>
+
+        <?php } ?>
     </section>
 
     <div id="sod_fin_view">
