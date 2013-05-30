@@ -857,6 +857,13 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="de_cart_keep_term">장바구니 보관기간</label></th>
+        <td>
+             <?php echo help("장바구니 상품의 보관 기간을 설정하십시오."); ?>
+            <input type="text" name="de_cart_keep_term" value="<?php echo $default['de_cart_keep_term']; ?>" id="de_cart_keep_term" class="frm_input" size="5"> 일
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="de_guest_cart_use">비회원 장바구니</label></th>
         <td>
              <?php echo help("비회원 장바구니 기능을 사용하려면 체크하십시오."); ?>

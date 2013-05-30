@@ -336,7 +336,7 @@ else // 장바구니에 담기
         $ct_count = 0;
         $comma = '';
         $sql = " INSERT INTO {$g4['shop_cart_table']}
-                        ( uq_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_direct )
+                        ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_direct )
                     VALUES ";
 
         for($i=0; $i<$option_count; $i++) {
@@ -357,7 +357,7 @@ else // 장바구니에 담기
                 continue;
             }
 
-            $sql .= $comma."( '$tmp_uq_id', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '$ct_num', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
+            $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '$ct_num', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
             $comma = ' , ';
             $ct_num++;
             $ct_count++;

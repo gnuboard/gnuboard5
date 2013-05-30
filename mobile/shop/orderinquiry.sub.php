@@ -21,7 +21,7 @@ $sql = " select a.od_id,
                 a.*, "._MISU_QUERY_."
            from {$g4['shop_order_table']} a
            left join {$g4['shop_cart_table']} b on (b.uq_id=a.uq_id)
-          where mb_id = '{$member['mb_id']}'
+          where a.mb_id = '{$member['mb_id']}'
           group by a.od_id
           order by a.od_id desc
           $limit ";

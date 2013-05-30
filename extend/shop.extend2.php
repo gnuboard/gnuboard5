@@ -204,6 +204,7 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
                     ADD `mb_id` VARCHAR(255) NOT NULL DEFAULT '' AFTER `uq_id` ", false);
     sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
-                    ADD `de_guest_cart_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_code_dup_use` ", false);
+                    ADD `de_cart_keep_term` INT(11) NOT NULL DEFAULT '0' AFTER `de_code_dup_use`,
+                    ADD `de_guest_cart_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_cart_keep_term` ", false);
 }
 ?>
