@@ -151,7 +151,11 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $tot_point       += $point;
         $tot_sell_amount += $sell_amount;
     }
+} // for 끝
 
+if ($i == 0) {
+    echo '<tr><td colspan="'.$colspan.'" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+} else {
     // 배송비가 넘어왔다면
     if ($_POST['od_send_cost']) {
         $send_cost = (int)$_POST['od_send_cost'];
@@ -179,9 +183,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         if ($row['od_send_cost'] > 0)
             $send_cost = $row['od_send_cost'];
     }
-} // for 끝
-
-if ($i == 0) echo '<tr><td colspan="'.$colspan.'" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+}
 ?>
 </tbody>
 </table>
