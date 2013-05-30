@@ -138,6 +138,13 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #anc_sodr_addressee #od_b_addr1,
 #anc_sodr_addressee #od_b_addr2 {margin:5px 0 0}
 
+#sodr_ul {margin:0;padding:0;list-style:none}
+#sodr_ul li {background:#f5f6fa;color:#000}
+#sodr_ul th {border-top:0;text-align:center}
+#sodr_ul td {background:#fff;color:#000}
+#sodr_ul p {margin:5px 0 0;padding:14px;background:#565e60;color:#fff}
+#sodr_ul p a {color:#fff;font-weight:bold;text-decoration:none}
+
 /* 주문개별내역 */
 #sodr_status {text-align:center}
 
