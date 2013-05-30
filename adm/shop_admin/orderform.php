@@ -86,36 +86,21 @@ if ($default['de_card_test']) {
     $g4['shop_cardpg']['kcp'] = "http://testadmin8.kcp.co.kr";
 }
 
-$sql = " select ct_id,
-                it_id,
-                it_name,
-                ct_qty,
-                ct_option,
-                ct_price,
-                ct_point,
-                ct_status,
-                ct_time,
-                ct_point_use,
-                ct_stock_use,
-                io_type,
-                io_price,
-                ct_num
+// 주문총액
+$sql = " select SUM(IF(io_type = 1, io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_order
+            from {$g4['shop_cart_table']}
+            where uq_id = '{$od['uq_id']}' ";
+$row = sql_fetch($sql);
+$total_order = $row['sum_order'];
+
+// 상품목록
+$sql = " select it_id,
+                it_name
            from {$g4['shop_cart_table']}
           where uq_id = '{$od['uq_id']}'
+            and ct_num = '0'
           order by ct_id ";
 $result = sql_query($sql);
-
-$lines = array();
-$total_order = 0;
-for($i=0; $row=sql_fetch_array($result); $i++) {
-    $lines[$i] = $row;
-    if($row['io_type'])
-        $total_price = $row['io_price'] * $row['ct_qty'];
-    else
-        $total_price = ($row['ct_price'] + $row['io_price']) * $row['ct_qty'];
-    $lines[$i]['price'] = $total_price;
-    $total_order += $total_price;
-}
 
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_list">주문상품 목록</a></li>
@@ -148,64 +133,85 @@ $pg_anchor = '<ul class="anchor">
     <input type="hidden" name="search" value="<?php echo $search; ?>">
     <input type="hidden" name="page" value="<?php echo $page;?>">
 
-    <table>
-    <thead>
-    <tr>
-        <th scope="col">
-            <label for="sit_select_all" class="sound_only">현재 상품 목록 전체선택</label>
-            <input type="checkbox" id="sit_select_all" onclick="select_all();">
-        </th>
-        <th scope="col">상품명</th>
-        <th scope="col">상태</th>
-        <th scope="col">수량</th>
-        <th scope="col">판매가</th>
-        <th scope="col">소계</th>
-        <th scope="col">포인트</th>
-        <th scope="col">포인트<br>반영</th>
-        <th scope="col">재고<br>반영</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    for ($i=0; $i<count($lines); $i++) {
-        $ct_amount['소계'] = $lines[$i]['price'];
-        $ct_point['소계'] = $lines[$i]['ct_point'] * $lines[$i]['ct_qty'];
-        if ($lines[$i]['ct_status']=='주문' || $lines[$i]['ct_status']=='준비' || $lines[$i]['ct_status']=='배송' || $lines[$i]['ct_status']=='완료')
-            $t_ct_amount['정상'] += $lines[$i]['price'];
-        else if ($lines[$i]['ct_status']=='취소' || $lines[$i]['ct_status']=='반품' || $lines[$i]['ct_status']=='품절')
-            $t_ct_amount['취소'] += $lines[$i]['price'];
+    <label for="sit_select_all" class="sound_only">현재 상품 목록 전체선택</label>
+    <input type="checkbox" id="sit_select_all">
 
-        $image = get_it_image($lines[$i]['it_id'], 50, 50);
-    ?>
+    <ul>
+        <?php
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+            // 상품이미지
+            $image = get_it_image($row['it_id'], 50, 50);
+        ?>
+        <li>
+            <span><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?></a></span>
+            <span>
+                <label for="sit_sel_<?php echo $i; ?>" class="sound_only"><?php echo $row['it_name']; ?> 옵션 전체선택</label>
+                <input type="checkbox" id="sit_sel_<?php echo $i; ?>" name="it_sel[]">
+                <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
+            </span>
+            <table>
+            <thead>
+            <tr>
+                <th scope="col">옵션항목</th>
+                <th scope="col">상태</th>
+                <th scope="col">수량</th>
+                <th scope="col">판매가</th>
+                <th scope="col">소계</th>
+                <th scope="col">포인트</th>
+                <th scope="col">포인트<br>반영</th>
+                <th scope="col">재고<br>반영</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            // 상품의 옵션정보
+            $sql = " select ct_id, it_id, ct_price, ct_qty, ct_option, ct_status, ct_stock_use, ct_point_use, io_type, io_price
+                        from {$g4['shop_cart_table']}
+                        where uq_id = '{$od['uq_id']}'
+                          and it_id = '{$row['it_id']}'
+                        order by ct_num ";
+            $res = sql_query($sql);
 
-     <? if($lines[$i]['ct_num'] == 0) { ?>
-     <tr>
-        <td colspan="9"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?><?php echo stripslashes($lines[$i]['it_name']); ?></a></td>
-    </tr>
-    <?php } ?>
-    <tr>
-        <td class="td_chk">
-            <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $lines[$i]['ct_id']; ?>">
-            <label for="ct_chk_<?php echo $i; ?>" class="sound_only"><?php echo $lines[$i]['it_name']; ?> 체크</label>
-            <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>">
-        </td>
-        <td><?php echo $lines[$i]['ct_option']; ?></td>
-        <td class="td_small_stats"><?php echo $lines[$i]['ct_status']; ?></td>
-        <td class="td_num"><?php echo $lines[$i]['ct_qty']; ?></td>
-        <td class="td_num"><?php echo number_format($lines[$i]['ct_price']); ?></td>
-        <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
-        <td class="td_num"><?php echo number_format($ct_point['소계']); ?></td>
-        <td class="td_small_stats"><?php echo get_yn($lines[$i]['ct_point_use']); ?></td>
-        <td class="td_small_stats"><?php echo get_yn($lines[$i]['ct_stock_use']); ?></td>
-    </tr>
+            for($k=0; $opt=sql_fetch_array($res); $k++) {
+                if($opt['io_type'])
+                    $opt_price = $opt['io_price'];
+                else
+                    $opt_price = $opt['ct_price'] + $opt['io_price'];
 
-    <?php
-        $t_ct_amount['합계'] += $ct_amount['소계'];
-        $t_ct_point['합계'] += $ct_point['소계'];
-    }
-    ?>
-    </tbody>
-    </table>
+                $ct_amount['소계'] = $opt_price * $opt['ct_qty'];
+                $ct_point['소계'] = $opt['ct_point'] * $opt['ct_qty'];
+                if ($opt['ct_status']=='주문' || $opt['ct_status']=='준비' || $opt['ct_status']=='배송' || $opt['ct_status']=='완료')
+                    $t_ct_amount['정상'] += $ct_amount['소계'];
+                else if ($opt['ct_status']=='취소' || $opt['ct_status']=='반품' || $opt['ct_status']=='품절')
+                    $t_ct_amount['취소'] += $ct_amount['소계'];
+            ?>
+            <tr>
+                <td>
+                    <input type="hidden" name="ct_id[]" value="<?php echo $opt['ct_id']; ?>">
+                    <label for="ct_opt_chk_<?php echo $i.$k; ?>" class="sound_only"><?php echo $opt['ct_option']; ?> 체크</label>
+                    <input type="checkbox" name="ct_chk[]" id="ct_opt_chk_<?php echo $i.$k; ?>" value="1">
+                    <?php echo $opt['ct_option']; ?>
+                </td>
+                <td class="td_small_stats"><?php echo $opt['ct_status']; ?></td>
+                <td class="td_num"><?php echo $opt['ct_qty']; ?></td>
+                <td class="td_num"><?php echo number_format($opt_price); ?></td>
+                <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
+                <td class="td_num"><?php echo number_format($ct_point['소계']); ?></td>
+                <td class="td_small_stats"><?php echo get_yn($opt['ct_point_use']); ?></td>
+                <td class="td_small_stats"><?php echo get_yn($opt['ct_stock_use']); ?></td>
+            </tr>
+            <?php
+            }
+            ?>
+            </tbody>
+            </table>
+        </li>
+        <?
+            $t_ct_amount['합계'] += $ct_amount['소계'];
+            $t_ct_point['합계'] += $ct_point['소계'];
+        }
+        ?>
+    </ul>
 
     <div class="btn_list">
         <input type="hidden" name="chk_cnt" value="<?php echo $i; ?>">
@@ -795,27 +801,27 @@ $pg_anchor = '<ul class="anchor">
 </div>
 
 <script>
-var select_all_sw = false;
-var visible_sw = false;
+$(function() {
+    // 전체 옵션선택
+    $("#sit_select_all").click(function() {
+        if($(this).is(":checked")) {
+            $("input[name='it_sel[]']").attr("checked", true);
+            $("input[name='ct_chk[]']").attr("checked", true);
+        } else {
+            $("input[name='it_sel[]']").attr("checked", false);
+            $("input[name='ct_chk[]']").attr("checked", false);
+        }
+    });
 
-// 전체선택, 전체해제
-function select_all()
-{
-    var f = document.frmorderform;
-
-    for (i=0; i<f.chk_cnt.value; i++)
-    {
-        if (select_all_sw == false)
-            document.getElementById('ct_chk_'+i).checked = true;
+    // 상품의 옵션선택
+    $("input[name='it_sel[]']").click(function() {
+        var $chk = $(this).closest("li").find("input[name='ct_chk[]']");
+        if($(this).is(":checked"))
+            $chk.attr("checked", true);
         else
-            document.getElementById('ct_chk_'+i).checked = false;
-    }
-
-    if (select_all_sw == false)
-        select_all_sw = true;
-    else
-        select_all_sw = false;
-}
+            $chk.attr("checked", false);
+    });
+});
 
 function form_submit(f)
 {
