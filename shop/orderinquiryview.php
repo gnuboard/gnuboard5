@@ -63,14 +63,16 @@ if(openwin != null) {
                     order by ct_id ";
         $result = sql_query($sql);
         ?>
-        <ul>
+        <ul id="sod_ul">
             <?php
             for($i=0; $row=sql_fetch_array($result); $i++) {
                 $image = get_it_image($row['it_id'], 70, 70);
             ?>
             <li>
-                <span><?php echo $image; ?></span>
-                <span><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><b><?php echo $row['it_name']; ?></b></a></span>
+                <p>
+                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?><?php echo $row['it_name']; ?></a>
+                </p>
+
                 <table class="basic_tbl">
                 <thead>
                 <tr>
@@ -102,11 +104,11 @@ if(openwin != null) {
                 ?>
                 <tr>
                     <td><?php echo $opt['ct_option']; ?></td>
-                    <td><?php echo number_format($opt['ct_qty']); ?></td>
-                    <td><?php echo number_format($opt_price); ?></td>
-                    <td><?php echo number_format($sell_amount); ?></td>
-                    <td><?php echo number_format($point); ?></td>
-                    <td><?php echo $opt['ct_status']; ?></td>
+                    <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
+                    <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
+                    <td class="td_num"><?php echo number_format($sell_amount); ?></td>
+                    <td class="td_num"><?php echo number_format($point); ?></td>
+                    <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
                 </tr>
                 <?php
                     if ($opt['ct_status'] == '취소' || $opt['ct_status'] == '반품' || $opt['ct_status'] == '품절') {

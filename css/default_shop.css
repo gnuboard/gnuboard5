@@ -287,7 +287,7 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 .td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
 .td_num {width:50px;text-align:center}
-.td_bignum {width:80px;text-align:center}
+.td_bignum {width:100px;text-align:center}
 .td_mb_id {width:100px;text-align:center}
 .td_nick {width:100px;text-align:center}
 .td_name {width:100px;text-align:left}
@@ -690,6 +690,14 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sod_fin_list dl:after {display:block;visibility:hidden;clear:both;content:''}
 #sod_fin_list dt {clear:both;float:left;margin:0 0 5px;width:50px;font-weight:bold}
 #sod_fin_list dd {float:left;margin:0}
+
+#sod_ul {margin:10px 0;padding:0;border-top:1px solid #565e60;list-style:none}
+#sod_ul li {border-bottom:1px solid #565e60}
+#sod_ul table {margin:0}
+#sod_ul th {text-align:center}
+#sod_ul td {background:#fff;color:#000}
+#sod_ul p {padding:5px 14px}
+#sod_ul p a {font-weight:bold;text-decoration:none}
 
 #sod_fin_view {border:1px solid #e9e9e9}
 #sod_fin_view h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
