@@ -105,6 +105,10 @@
 #bo_v_act strong {color:#ff3061}
 #bo_v_act_good, #bo_v_act_nogood {display:inline-block;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 
+#bo_v_sns {margin:0 0 2em;padding:0;list-style:none;zoom:1}
+#bo_v_sns:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_sns li {float:left;margin:0 0.5em 0 0}
+
 #bo_v form {padding-top:1.5em}
 
 /* 게시판 댓글 */
@@ -133,5 +137,10 @@
 #bo_vc_w h2 {padding:1em 0 0.3em}
 #bo_vc_w #char_cnt {display:block;margin-bottom:0.3em}
 #bo_vc_w textarea {width:99%}
+
+#bo_vc_sns {margin:0;padding:0;list-style:none;zoom:1}
+#bo_vc_sns:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_vc_sns li {float:left;margin:0 1em 0 0}
+#bo_vc_sns input {margin:0 0 0 0.5em}
 
 #bo_vc form {padding:0}
