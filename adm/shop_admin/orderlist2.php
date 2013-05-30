@@ -87,7 +87,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </select>
 
     <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="search" value="<?php echo $search; ?>" id="search" autocomplete="off">
+    <input type="text" name="search" value="<?php echo $search; ?>" id="search" class="frm_input" autocomplete="off">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
