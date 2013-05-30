@@ -12,7 +12,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
     <th scope="col">주문번호</th>
     <th scope="col">주문일시</th>
     <th scope="col">주문금액</th>
-    <th scope="col">배송상태</th>
+    <th scope="col">입금액</th>
 </tr>
 </thead>
 <tbody>
@@ -37,7 +37,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     </td>
     <td class="td_datetime"><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
     <td class="td_bignum"><?php echo display_price($row['orderamount']); ?></td>
-    <td class="td_stat">배송상태</td>
+    <td class="td_stat"><?php echo display_price($row['receiptamount']); ?></td>
 </tr>
 
 <?php
