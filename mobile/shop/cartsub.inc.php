@@ -56,7 +56,7 @@ $sql = " select a.ct_id,
            from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
           where a.uq_id = '$s_uq_id'
             and a.ct_num = '0'
-          order by a.ct_order, a.ct_id ";
+          order by a.ct_id ";
 $result = sql_query($sql);
 
 $good_info = '';

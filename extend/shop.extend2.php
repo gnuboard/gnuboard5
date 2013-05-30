@@ -84,14 +84,6 @@ if(!$result) {
                     ADD `ct_num` INT(11) NOT NULL DEFAULT '0' AFTER `ct_qty` ", false);
 }
 
-// ct_order 추가
-$sql = " select ct_order from {$g4['shop_cart_table']} limit 1 ";
-$result = sql_query($sql, false);
-if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
-                    ADD `ct_order` INT(11) NOT NULL DEFAULT '0' AFTER `ct_direct` ", false);
-}
-
 // it_brand 추가
 $sql = " select it_brand from {$g4['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
@@ -195,5 +187,16 @@ if (!isset($it['it_mobile_explan'])) {
                     ADD `it_mobile_explan` TEXT NOT NULL AFTER `it_explan`,
                     ADD `it_mobile_head_html` TEXT NOT NULL AFTER `it_tail_html`,
                     ADD `it_mobile_tail_html` TEXT NOT NULL AFTER `it_mobile_head_html` ", false);
+}
+
+// de_guest_cart_use 필드추가
+$sql = " select de_guest_cart_use from {$g4['shop_default_table']} ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `mb_id` VARCHAR(255) NOT NULL DEFAULT '' AFTER `uq_id` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    ADD `de_cart_keep_term` INT(11) NOT NULL DEFAULT '0' AFTER `de_code_dup_use`,
+                    ADD `de_guest_cart_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_cart_keep_term` ", false);
 }
 ?>

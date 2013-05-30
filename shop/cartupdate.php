@@ -1,6 +1,21 @@
 <?php
 include_once('./_common.php');
 
+// 비회원장바구니 uq_id 쿠키설정
+if($default['de_guest_cart_use']) {
+    $g_cart_uq_id = get_cookie('ck_guest_cart_uqid');
+    if($g_cart_uq_id) {
+        set_session('ss_uq_id', $g_cart_uq_id);
+        set_cookie('ck_guest_cart_uqid', $g_cart_uq_id, ($default['de_cart_keep_term'] * 86400));
+    } else {
+        if(!$sw_direct) {
+            $tmp_uq_id = get_uniqid();
+            set_session('ss_uq_id', $tmp_uq_id);
+            set_cookie('ck_guest_cart_uqid', $tmp_uq_id, ($default['de_cart_keep_term'] * 86400));
+        }
+    }
+}
+
 if ($sw_direct) {
     $tmp_uq_id = get_session('ss_uq_direct');
     if(!$tmp_uq_id) {
@@ -336,7 +351,7 @@ else // 장바구니에 담기
         $ct_count = 0;
         $comma = '';
         $sql = " INSERT INTO {$g4['shop_cart_table']}
-                        ( uq_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_direct )
+                        ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_direct )
                     VALUES ";
 
         for($i=0; $i<$option_count; $i++) {
@@ -357,7 +372,7 @@ else // 장바구니에 담기
                 continue;
             }
 
-            $sql .= $comma."( '$tmp_uq_id', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '$ct_num', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
+            $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '$ct_num', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
             $comma = ' , ';
             $ct_num++;
             $ct_count++;

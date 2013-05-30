@@ -56,6 +56,7 @@ DROP TABLE IF EXISTS `shop_cart`;
 CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_id` int(11) NOT NULL AUTO_INCREMENT,
   `uq_id` bigint(20) unsigned NOT NULL,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
   `it_id` varchar(20) NOT NULL DEFAULT '',
   `it_name` varchar(255) NOT NULL DEFAULT '',
   `ct_status` enum('쇼핑','주문','준비','배송','완료','취소','반품','품절') NOT NULL DEFAULT '쇼핑',
@@ -248,6 +249,8 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_iche_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_item_ps_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_code_dup_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_cart_keep_term` int(11) NOT NULL DEFAULT '0',
+  `de_guest_cart_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_point_per` tinyint(4) NOT NULL DEFAULT '0',
   `de_admin_buga_no` varchar(255) NOT NULL DEFAULT '',
   `de_different_msg` tinyint(4) NOT NULL DEFAULT '0',
