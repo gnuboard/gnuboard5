@@ -118,11 +118,9 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <td><?php echo $captcha_html; ?></td>
         </tr>
         <?php } ?>
-
         <?php 
         include_once($board_skin_path."/view_comment.sns.skin.php");
         ?>
-
         <tr>
             <th scope="row">내용</th>
             <td>

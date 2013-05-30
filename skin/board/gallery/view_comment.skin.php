@@ -114,8 +114,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </tr>
         <?php } ?>
 
-        <?php
-        include_once($board_skin_path."/view_comment.sns.skin.php");
+        <?php 
+        @include(G4_SKIN_PATH."/board/basic/view_comment.sns.skin.php");
         ?>
 
         <tr>
