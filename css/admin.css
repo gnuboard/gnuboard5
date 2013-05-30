@@ -150,10 +150,40 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sodr_status {text-align:center}
 
 /* 주문통합내역 */
-#sodr_all {text-align:center}
-#sodr_all ul {margin:0;padding:0;list-style:none}
-#sodr_all ul li {text-align:left}
-.tr_sodr_item td {border-bottom-color:#aaa}
+#sodr_all {}
+#sodr_all #btn_add {float:right}
+
+#sodr_all_sort {float:left;margin:0;padding-left:1px;list-style:none;zoom:1}
+#sodr_all_sort:after {display:block;visibility:hidden;clear:both;content:""}
+#sodr_all_sort li {float:left;margin-bottom:-1px}
+#sodr_all_sort a {display:block;position:relative;margin-left:-1px;padding:8px 0 6px;width:70px;border:1px solid #e9e9e9;background:#f5f6fa;color:#000;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
+#sodr_all_sort a:focus, #sodr_all_sort a:hover, #sodr_all_sort a:active {text-decoration:none}
+
+#sodr_all_list {clear:both;margin:0;padding:10px 0 0;border-top:25px solid #f7f7f7;list-style:none}
+#sodr_all_list li {margin:0 0 10px;border-bottom:25px solid #f7f7f7}
+#sodr_all_list th {text-align:center}
+
+#sodr_all_list .sodr_basic {float:left;zoom:1}
+#sodr_all_list .sodr_basic:after {display:block;visibility:hidden;clear:both;content:""}
+#sodr_all_list .sodr_basic dt {float:left;margin:0 10px 0 0}
+#sodr_all_list .sodr_basic dd {float:left;margin:0 30px 0 0}
+
+#sodr_all_list .sodr_person {float:right;zoom:1}
+#sodr_all_list .sodr_person:after {display:block;visibility:hidden;clear:both;content:""}
+#sodr_all_list .sodr_person dt {float:left;margin:0 0 0 30px}
+#sodr_all_list .sodr_person dd {float:left;margin:0 0 0 10px}
+
+#sodr_all_list .sodr_pay {clear:both;margin:0;background:#505050;color:#fff;zoom:1}
+#sodr_all_list .sodr_pay:after {display:block;visibility:hidden;clear:both;content:""}
+#sodr_all_list .sodr_pay dt {float:left;padding:10px;width:60px}
+#sodr_all_list .sodr_pay dd {float:left;margin:0;padding:10px;width:125px}
+#sodr_all_list .sodr_pay_1 {border-bottom:1px solid #606060}
+
+#sodr_all_list .sodr_itname a {display:inline-block;text-decoration:none}
+#sodr_all_list .sodr_mng {margin:0 10px 10px;text-align:right}
+
+#sodr_total table {text-align:center}
+#sodr_total th {width:125px}
 
 /* 분류관리 목록 */
 .cate_list_lbl {display:inline-block;padding-left:15px;background:url('../adm/shop_admin/img/icon_reply.gif') 0 2px no-repeat}
