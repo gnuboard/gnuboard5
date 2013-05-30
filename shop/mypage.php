@@ -57,6 +57,10 @@ include_once('./_head.php');
         $limit = " limit 0, 5 ";
         include G4_SHOP_PATH.'/orderinquiry.sub.php';
         ?>
+
+        <div id="smb_my_more">
+            <a href="./orderinquiry.php" class="btn01">주문내역 더보기</a>
+        </div>
     </section>
 
     <section id="smb_my_wish">
@@ -102,6 +106,10 @@ include_once('./_head.php');
         ?>
         </tbody>
         </table>
+
+        <div id="smb_my_more">
+            <a href="./wishlist.php" class="btn01">위시리스트 더보기</a>
+        </div>
     </section>
 
 </div>

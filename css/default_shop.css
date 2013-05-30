@@ -633,6 +633,8 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 #smb_my_wish h2 {margin:0 0 10px}
 
+#smb_my_more {text-align:right}
+
 .smb_my_img {width:90px;text-align:center}
 
 /* 장바구니 */
