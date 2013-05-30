@@ -249,6 +249,7 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_iche_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_item_ps_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_code_dup_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_guest_cart_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_point_per` tinyint(4) NOT NULL DEFAULT '0',
   `de_admin_buga_no` varchar(255) NOT NULL DEFAULT '',
   `de_different_msg` tinyint(4) NOT NULL DEFAULT '0',
