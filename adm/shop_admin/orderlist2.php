@@ -53,18 +53,6 @@ $tot_dc_amount     = 0;
 $tot_receiptamount = 0;
 $tot_receiptcancel = 0;
 $tot_misuamount    = 0;
-for ($i=0; $row=mysql_fetch_array($result); $i++)
-{
-    $lines[$i] = $row;
-
-    $tot_itemcount     += $row['itemcount'];
-    $tot_orderamount   += $row['orderamount'];
-    $tot_ordercancel   += $row['ordercancel'];
-    $tot_dc_amount     += $row['od_dc_amount'];
-    $tot_receiptamount += $row['receiptamount'];
-    $tot_receiptcancel += $row['receiptcancel'];
-    $tot_misu          += $row['misu'];
-}
 
 //$qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search";
 $qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
@@ -140,6 +128,141 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <th colspan="2" id="sodr_all_stats">상태</th>
     </tr>
     </thead>
+    <tbody>
+    <?php
+    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    {
+        // 결제 수단
+        $s_receipt_way = $s_br = "";
+        if ($row['od_settle_case'])
+        {
+            $s_receipt_way = $row['od_settle_case'];
+            $s_br = '<br/>';
+        }
+        else
+        {
+            if ($row['od_temp_bank'] > 0 || $row['od_receipt_bank'] > 0)
+            {
+                //$s_receipt_way = "무통장입금";
+                $s_receipt_way = cut_str($row['od_bank_account'],8,"");
+                $s_br = "<br>";
+            }
+
+            if ($row['od_temp_card'] > 0 || $row['od_receipt_card'] > 0)
+            {
+                // 미수금이 없고 카드결제를 하지 않았다면 카드결제를 선택후 무통장 입금한 경우임
+                if ($row['misuamount'] <= 0 && $row['od_receipt_card'] == 0)
+                    ; // 화면 출력하지 않음
+                else
+                {
+                    $s_receipt_way .= $s_br."카드";
+                    if ($row['od_receipt_card'] == 0)
+                        $s_receipt_way .= '<span class="small"><span class="point" style="font-size:8pt;">(미승인)</span></span>';
+                    $s_br = '<br>';
+                }
+            }
+        }
+
+        if ($row['od_receipt_point'] > 0)
+            $s_receipt_way .= $s_br.'포인트';
+
+        $od_mobile = '';
+        if($row['od_mobile'])
+            $od_mobile = '(M)';
+
+        $tot_itemcount     += $row['itemcount'];
+        $tot_orderamount   += $row['orderamount'];
+        $tot_ordercancel   += $row['ordercancel'];
+        $tot_dc_amount     += $row['od_dc_amount'];
+        $tot_receiptamount += $row['receiptamount'];
+        $tot_receiptcancel += $row['receiptcancel'];
+        $tot_misu          += $row['misu'];
+        ?>
+
+        <tr>
+            <td headers="sodr_all_num">
+                <?php echo $od_mobile; ?>
+                <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>"><?php echo $row['od_id']; ?><br><?php echo $row['od_time']; ?></a>
+            </td>
+            <td headers="sodr_all_id" class="td_name">
+                <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1;?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $row['od_name']; ?>">
+                    <?php echo cut_str($row['od_name'],30,""); ?>/<?php echo $od_deposit_name; ?>
+                </a><br>
+                <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a>
+            </td>
+            <td headers="sodr_all_cnt"><?php echo $row['itemcount']; ?>건</td>
+            <td headers="sodr_all_calc" class="td_sodr_sum"><?php echo number_format($row['orderamount']); ?></td>
+            <td headers="sodr_all_cancel"><?php echo number_format($row['ordercancel']); ?></td>
+            <td headers="sodr_all_dc"><?php echo number_format($row['od_dc_amount']); ?></td>
+            <td headers="sodr_all_inc" class="td_sodr_sum"><?php echo number_format($row['receiptamount']); ?></td>
+            <td headers="sodr_all_inc_cancel"><?php echo number_format($row['receiptcancel']); ?></td>
+            <td headers="sodr_all_nonpay" class="td_sodr_nonpay"><?php echo number_format($row['misu']); ?></td>
+            <td headers="sodr_all_payby"><?php echo $s_receipt_way; ?></td>
+            <td headers="sodr_all_mng">
+                <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="주문 수정"></a>
+                <a href="./orderdelete.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>&amp;mb_id=<?php echo $row['mb_id']; ?>&amp;<?php echo $qstr; ?>&amp;list=2" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="주문 삭제"></a>
+            </td>
+        </tr>
+
+        <?php
+        // 상품개별출력
+        $sql2 = " select it_id, it_name
+                    from {$g4['shop_cart_table']}
+                    where uq_id = '{$row['uq_id']}'
+                      and ct_num = '0'
+                    order by ct_num ";
+        $result2 = sql_query($sql2);
+
+        for ($k=0;$row2=sql_fetch_array($result2);$k++) {
+            $href = G4_SHOP_URL."/item.php?it_id={$row2['it_id']}";
+            $it_name = '<a href="'.$href.'">'.cut_str($row2['it_name'],35).'</a><br>';
+
+            // 옵션항목
+            $sql3 = " select *
+                        from {$g4['shop_cart_table']}
+                        where uq_id = '{$row['uq_id']}'
+                          and it_id = '{$row2['it_id']}'
+                        order by ct_num ";
+            $result3 = sql_query($sql3);
+            $rowspan = mysql_num_rows($result3) + 1;
+
+            for($j=0;$row3=sql_fetch_array($result3);$j++) {
+                if($row3['io_type'])
+                    $ct_price = $row3['io_price'];
+                else
+                    $ct_price = ($row3['ct_price'] + $row3['io_price']);
+
+                $sub_amount = $row3['ct_qty'] * $ct_price;
+                $sub_point  = $row3['ct_qty'] * $row3['ct_point'];
+        ?>
+
+        <?php if($row3['ct_num'] == 0) { ?>
+        <tr class="tr_sodr_item">
+            <td headers="sodr_all_item" rowspan="<?php echo $rowspan; ?>">
+                <a href="<?php echo $href; ?>"><?php echo get_it_image($row2['it_id'], 50, 50); ?></a>
+            </td>
+            <td headers="sodr_all_item" colspan="10"><a href="<?php echo $href; ?>"><?php echo $it_name; ?></a></td>
+        </tr>
+        <?php } ?>
+
+        <tr class="tr_sodr_item">
+            <td headers="sodr_all_item" colspan="4"><?php echo $row3['ct_option']; ?></td>
+            <td headers="sodr_all_cost"><?php echo number_format($ct_price); ?></td>
+            <td headers="sodr_all_qty"><?php echo $row3['ct_qty']; ?></td>
+            <td headers="sodr_all_pt"><?php echo number_format($sub_point); ?></td>
+            <td headers="sodr_all_tot"><?php echo number_format($sub_amount); ?></td>
+            <td headers="sodr_all_stats" colspan="2"><?php echo $row3['ct_status']; ?></td>
+        </tr>
+
+        <?php
+            }
+        }
+    }
+
+    if ($i == 0)
+        echo '<tr><td colspan="11" class="empty_table">자료가 한건도 없습니다.</td></tr>';
+    ?>
+    </tbody>
     <tfoot>
     <tr>
         <th scope="row" colspan="2">합 계</td>
@@ -153,111 +276,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td colspan="2"></td>
     </tr>
     </tfoot>
-    <tbody>
-    <?php
-    for ($i=0; $i<count($lines); $i++)
-    {
-        // 결제 수단
-        $s_receipt_way = $s_br = "";
-        if ($lines[$i]['od_settle_case'])
-        {
-            $s_receipt_way = $lines[$i]['od_settle_case'];
-            $s_br = '<br/>';
-        }
-        else
-        {
-            if ($lines[$i]['od_temp_bank'] > 0 || $lines[$i]['od_receipt_bank'] > 0)
-            {
-                //$s_receipt_way = "무통장입금";
-                $s_receipt_way = cut_str($lines[$i]['od_bank_account'],8,"");
-                $s_br = "<br>";
-            }
-
-            if ($lines[$i]['od_temp_card'] > 0 || $lines[$i]['od_receipt_card'] > 0)
-            {
-                // 미수금이 없고 카드결제를 하지 않았다면 카드결제를 선택후 무통장 입금한 경우임
-                if ($lines[$i]['misuamount'] <= 0 && $lines[$i]['od_receipt_card'] == 0)
-                    ; // 화면 출력하지 않음
-                else
-                {
-                    $s_receipt_way .= $s_br."카드";
-                    if ($lines[$i]['od_receipt_card'] == 0)
-                        $s_receipt_way .= '<span class="small"><span class="point" style="font-size:8pt;">(미승인)</span></span>';
-                    $s_br = '<br>';
-                }
-            }
-        }
-
-        if ($lines[$i]['od_receipt_point'] > 0)
-            $s_receipt_way .= $s_br.'포인트';
-
-        $od_mobile = '';
-        if($lines[$i]['od_mobile'])
-            $od_mobile = '(M)';
-        ?>
-
-        <tr>
-            <td headers="sodr_all_num">
-                <?php echo $od_mobile; ?>
-                <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>"><?php echo $lines[$i]['od_id']; ?><br><?php echo $lines[$i]['od_time']; ?></a>
-            </td>
-            <td headers="sodr_all_id" class="td_name">
-                <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1;?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>">
-                    <?php echo cut_str($lines[$i]['od_name'],30,""); ?>/<?php echo $od_deposit_name; ?>
-                </a><br>
-                <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>"><?php echo $lines[$i]['mb_id']; ?></a>
-            </td>
-            <td headers="sodr_all_cnt"><?php echo $lines[$i]['itemcount']; ?>건</td>
-            <td headers="sodr_all_calc" class="td_sodr_sum"><?php echo number_format($lines[$i]['orderamount']); ?></td>
-            <td headers="sodr_all_cancel"><?php echo number_format($lines[$i]['ordercancel']); ?></td>
-            <td headers="sodr_all_dc"><?php echo number_format($lines[$i]['od_dc_amount']); ?></td>
-            <td headers="sodr_all_inc" class="td_sodr_sum"><?php echo number_format($lines[$i]['receiptamount']); ?></td>
-            <td headers="sodr_all_inc_cancel"><?php echo number_format($lines[$i]['receiptcancel']); ?></td>
-            <td headers="sodr_all_nonpay" class="td_sodr_nonpay"><?php echo number_format($lines[$i]['misu']); ?></td>
-            <td headers="sodr_all_payby"><?php echo $s_receipt_way; ?></td>
-            <td headers="sodr_all_mng">
-                <a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="주문 수정"></a>
-                <a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>&amp;list=2" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="주문 삭제"></a>
-            </td>
-        </tr>
-
-        <?php
-        // 상품개별출력
-        $sql2 = " select b.*
-                    from {$g4['shop_order_table']} a
-                    left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
-                   where od_id = '{$lines[$i]['od_id']}' ";
-        $result2 = sql_query($sql2);
-        for ($k=0;$row2=sql_fetch_array($result2);$k++) {
-            $href = G4_SHOP_URL."/item.php?it_id={$row2['it_id']}";
-            $it_name = '<a href="'.$href.'">'.cut_str($row2['it_name'],35).'</a><br>';
-            $it_name .= print_item_options($row2['it_id'], $row2['it_opt1'], $row2['it_opt2'], $row2['it_opt3'], $row2['it_opt4'], $row2['it_opt5'], $row2['it_opt6']);
-
-            $sub_amount = $row2['ct_qty'] * $row2['ct_price'];
-            $sub_point  = $row2['ct_qty'] * $row2['ct_point'];
-        ?>
-
-        <tr class="tr_sodr_item">
-            <td headers="sodr_all_item" colspan="5">
-                <ul>
-                    <li><a href="<?php echo $href; ?>"><?php echo get_it_image($row2['it_id'], 50, 50); ?><?php echo $it_name; ?></a></li>
-                </ul>
-            </td>
-            <td headers="sodr_all_cost"><?php echo number_format($row2['ct_price']); ?></td>
-            <td headers="sodr_all_qty"><?php echo $row2['ct_qty']; ?></td>
-            <td headers="sodr_all_pt"><?php echo number_format($sub_point); ?></td>
-            <td headers="sodr_all_tot"><?php echo number_format($sub_amount); ?></td>
-            <td headers="sodr_all_stats" colspan="2"><?php echo $row2['ct_status']; ?></td>
-        </tr>
-
-        <?php
-        }
-    }
-
-    if ($i == 0)
-        echo '<tr><td colspan="12" class="empty_table">자료가 한건도 없습니다.</td></tr>';
-    ?>
-    </tbody>
     </table>
 </section>
 
