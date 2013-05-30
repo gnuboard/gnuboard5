@@ -136,30 +136,32 @@ $pg_anchor = '<ul class="anchor">
     <label for="sit_select_all" class="sound_only">현재 상품 목록 전체선택</label>
     <input type="checkbox" id="sit_select_all">
 
-    <ul>
+    <ul id="sodr_ul">
         <?php
         for($i=0; $row=sql_fetch_array($result); $i++) {
             // 상품이미지
             $image = get_it_image($row['it_id'], 50, 50);
         ?>
         <li>
-            <span><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?></a></span>
-            <span>
-                <label for="sit_sel_<?php echo $i; ?>" class="sound_only"><?php echo $row['it_name']; ?> 옵션 전체선택</label>
-                <input type="checkbox" id="sit_sel_<?php echo $i; ?>" name="it_sel[]">
-                <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
-            </span>
+            <p>
+                <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
+            </p>
+
             <table>
             <thead>
             <tr>
+                <th scope="col">
+                    <label for="sit_sel_<?php echo $i; ?>" class="sound_only"><?php echo $row['it_name']; ?> 옵션 전체선택</label>
+                    <input type="checkbox" id="sit_sel_<?php echo $i; ?>" name="it_sel[]">
+                </th>
                 <th scope="col">옵션항목</th>
                 <th scope="col">상태</th>
                 <th scope="col">수량</th>
                 <th scope="col">판매가</th>
                 <th scope="col">소계</th>
                 <th scope="col">포인트</th>
-                <th scope="col">포인트<br>반영</th>
-                <th scope="col">재고<br>반영</th>
+                <th scope="col">포인트반영</th>
+                <th scope="col">재고반영</th>
             </tr>
             </thead>
             <tbody>
@@ -186,25 +188,26 @@ $pg_anchor = '<ul class="anchor">
                     $t_ct_amount['취소'] += $ct_amount['소계'];
             ?>
             <tr>
-                <td>
+                <td class="td_chk">
+                    <label for="ct_opt_chk_<?php echo $i.$k; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
                     <input type="hidden" name="ct_id[]" value="<?php echo $opt['ct_id']; ?>">
-                    <label for="ct_opt_chk_<?php echo $i.$k; ?>" class="sound_only"><?php echo $opt['ct_option']; ?> 체크</label>
                     <input type="checkbox" name="ct_chk[]" id="ct_opt_chk_<?php echo $i.$k; ?>" value="1">
-                    <?php echo $opt['ct_option']; ?>
                 </td>
-                <td class="td_small_stats"><?php echo $opt['ct_status']; ?></td>
+                <td><?php echo $opt['ct_option']; ?></td>
+                <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
                 <td class="td_num"><?php echo $opt['ct_qty']; ?></td>
-                <td class="td_num"><?php echo number_format($opt_price); ?></td>
+                <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
                 <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
-                <td class="td_num"><?php echo number_format($ct_point['소계']); ?></td>
-                <td class="td_small_stats"><?php echo get_yn($opt['ct_point_use']); ?></td>
-                <td class="td_small_stats"><?php echo get_yn($opt['ct_stock_use']); ?></td>
+                <td class="td_bignum"><?php echo number_format($ct_point['소계']); ?></td>
+                <td class="td_smallmng"><?php echo get_yn($opt['ct_point_use']); ?></td>
+                <td class="td_smallmng"<?php echo get_yn($opt['ct_stock_use']); ?></td>
             </tr>
             <?php
             }
             ?>
             </tbody>
             </table>
+
         </li>
         <?
             $t_ct_amount['합계'] += $ct_amount['소계'];
