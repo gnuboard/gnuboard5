@@ -16,8 +16,6 @@ if (!$bo_table) {
 
 check_device($board['bo_device']);
 
-@include_once ($board_skin_path.'/write.head.skin.php');
-
 $notice_array = explode(',', trim($board['bo_notice']));
 
 if (!($w == '' || $w == 'u' || $w == 'r')) {
@@ -375,6 +373,7 @@ if (!G4_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $bo
 $editor_html = editor_html('wr_content', $content, $is_dhtml_editor);
 
 include_once(G4_PATH.'/head.sub.php');
+@include_once ($board_skin_path.'/write.head.skin.php');
 include_once('./board_head.php');
 
 $action_url = https_url(G4_BBS_DIR)."/write_update.php";
@@ -383,7 +382,6 @@ echo '<!-- skin : '.$board_skin_path.' -->';
 include_once ($board_skin_path.'/write.skin.php');
 
 include_once('./board_tail.php');
-include_once(G4_PATH.'/tail.sub.php');
-
 @include_once ($board_skin_path.'/write.tail.skin.php');
+include_once(G4_PATH.'/tail.sub.php');
 ?>
