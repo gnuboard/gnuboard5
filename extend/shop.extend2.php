@@ -84,14 +84,6 @@ if(!$result) {
                     ADD `ct_num` INT(11) NOT NULL DEFAULT '0' AFTER `ct_qty` ", false);
 }
 
-// ct_order 추가
-$sql = " select ct_order from {$g4['shop_cart_table']} limit 1 ";
-$result = sql_query($sql, false);
-if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
-                    ADD `ct_order` INT(11) NOT NULL DEFAULT '0' AFTER `ct_direct` ", false);
-}
-
 // it_brand 추가
 $sql = " select it_brand from {$g4['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
