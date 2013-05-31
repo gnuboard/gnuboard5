@@ -445,6 +445,13 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="de_mileage_use">마일리지 사용</label></th>
+        <td>
+            <?php echo help("마일리지는 주문완료에 의해 적립되는 포인트입니다.\n마일리지 사용으로 설정하시면 기존 포인트 대신 마일리지가 주문 결제에 사용됩니다."); ?>
+            <input type="checkbox" name="de_mileage_use" value="1" id="de_mileaget_use"<?php echo $default['de_mileage_use']?' checked':''; ?>> 사용
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="cf_use_point">포인트 사용</label></th>
         <td>
             <?php echo help("<a href=\"".G4_ADMIN_URL."/config_form.php#frm_board\" target=\"_blank\">환경설정 &gt; 기본환경설정</a>과 동일한 설정입니다."); ?>

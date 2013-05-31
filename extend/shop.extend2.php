@@ -220,4 +220,12 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
                     ADD `it_point_type` TINYINT(4) NOT NULL DEFAULT '0' AFTER `it_point` ", false);
 }
+
+// 마일리지 사용설정 필드추가
+$sql = " select de_mileage_use from {$g4['shop_default_table']} ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    ADD `de_mileage_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_point_settle` ", false);
+}
 ?>

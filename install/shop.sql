@@ -218,6 +218,7 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_banktown_auth_key` varchar(255) NOT NULL DEFAULT '',
   `de_telec_mid` varchar(255) NOT NULL DEFAULT '',
   `de_point_settle` int(11) NOT NULL DEFAULT '0',
+  `de_mileage_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_level_sell` int(11) NOT NULL DEFAULT '0',
   `de_send_cost_case` varchar(255) NOT NULL DEFAULT '',
   `de_send_cost_limit` varchar(255) NOT NULL DEFAULT '',

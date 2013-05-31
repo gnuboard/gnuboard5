@@ -263,6 +263,7 @@ if($shop_install) {
                     de_card_use = '0',
                     de_card_max_amount = '1000',
                     de_point_settle = '10000',
+                    de_mileage_use = '1',
                     de_cart_keep_term = '15',
                     de_point_per = '5',
                     de_card_point = '0',

@@ -101,6 +101,7 @@ $sql = " update {$g4['shop_default_table']}
                 de_banktown_mid             = '$de_banktown_mid',
                 de_banktown_auth_key        = '$de_banktown_auth_key',
                 de_telec_mid                = '$de_telec_mid',
+                de_mileage_use              = '$de_mileage_use',
                 de_point_settle             = '$de_point_settle',
                 de_level_sell               = '$de_level_sell',
                 de_send_cost_case           = '$de_send_cost_case',
