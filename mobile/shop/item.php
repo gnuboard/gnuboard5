@@ -333,8 +333,16 @@ else
             <tr>
                 <th scope="row"><label for="disp_point">포인트</label></th>
                 <td>
-                    <?php echo number_format($it['it_point']); ?> 점
-                    <input type="hidden" name="it_point" value="<?php echo $it['it_point']; ?>">
+                    <?php
+                    if($it['it_point_type']) {
+                        $it_point = floor(($it['it_price'] * ($it['it_point'] / 100) / 10)) * 10;
+                    } else {
+                        $it_point = $it['it_point'];
+                    }
+
+                    echo number_format($it_point);
+                    ?> 점
+                    <input type="hidden" name="it_point" value="<?php echo $it_point; ?>">
                 </td>
             </tr>
             <?php } ?>
