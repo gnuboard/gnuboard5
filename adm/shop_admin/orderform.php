@@ -54,7 +54,7 @@ if (!isset($order_not_point)) {
             insert_point($tmp_row['mb_id'], $po_point, $po_content, "@delivery", $tmp_row['mb_id'], "{$tmp_row['od_id']},{$row['uq_id']},{$row['ct_id']}");
             */
 
-            // 주문완료 쇼핑몰 포인트로 적립
+            // 주문완료 마일리지 적립
             $ml_point = $row['ct_point'] * $row['ct_qty'];
             $ml_content = "$cart_title3 {$tmp_row['od_id']} ({$row['ct_id']}) $cart_title4";
             insert_mileage($tmp_row['mb_id'], $ml_point, $ml_content, $tmp_row['od_id'], $row['ct_id']);
