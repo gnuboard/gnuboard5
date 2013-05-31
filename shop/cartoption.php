@@ -25,7 +25,7 @@ if(!mysql_num_rows($result))
     die('no-cart');
 ?>
 
-<form name="foption" method="post" action="<?php echo G4_SHOP_URL; ?>/cartupdate.php" onsubmit="return formcheck();">
+<form name="foption" method="post" action="<?php echo G4_SHOP_URL; ?>/cartupdate.php" onsubmit="return formcheck(this);">
 <input type="hidden" name="act" value="optionmod">
 <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
 <input type="hidden" name="it_price" value="<?php echo $row2['ct_price']; ?>">
@@ -127,7 +127,7 @@ if($option_2) {
 </form>
 
 <script>
-function formcheck()
+function formcheck(f)
 {
     var val, result = true;
     $("li input[name='ct_qty[]']").each(function() {
