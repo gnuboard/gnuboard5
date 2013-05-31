@@ -528,6 +528,7 @@ set_session('ss_order_uniqid', $od_id);
             $checked = '';
         }
 
+        /** 포인트를 사용하려면 주석제거
         // 회원이면서 포인트사용이면
         $temp_point = 0;
         if ($is_member && $config['cf_use_point'])
@@ -543,6 +544,29 @@ set_session('ss_order_uniqid', $od_id);
                     $temp_point = $member_point;
         ?>
             <p>보유포인트(<?php echo display_point($member['mb_point']); ?>)중 <strong>최대 <?php echo display_point($temp_point); ?></strong>까지 사용 가능 (주문금액 <?php echo $default['de_point_per']; ?>%)</p>
+            <label for="od_temp_point">사용 포인트</label>
+            <input type="text" name="od_temp_point" value="0" id="od_temp_point" class="frm_input" size="10">점 (100점 단위로 입력하세요.)
+        <?php
+            $multi_settle++;
+            }
+        }
+        */
+
+        // 회원이면
+        $temp_point = 0;
+        if ($is_member)
+        {
+            // 포인트 결제 사용 포인트보다 회원의 마일리지가 크다면
+            if ($member['mb_mileage'] >= $default['de_point_settle'])
+            {
+                $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
+                $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+
+                $member_mileage = (int)((int)($member['mb_mileage'] / 100) * 100); // 100점 단위
+                if ($temp_point > $member_mileage)
+                    $temp_point = $member_mileage;
+        ?>
+            <p>보유마일리지(<?php echo display_point($member['mb_mileage']); ?>)중 <strong>최대 <?php echo display_point($temp_point); ?></strong>까지 사용 가능 (주문금액 <?php echo $default['de_point_per']; ?>%)</p>
             <label for="od_temp_point">사용 포인트</label>
             <input type="text" name="od_temp_point" value="0" id="od_temp_point" class="frm_input" size="10">점 (100점 단위로 입력하세요.)
         <?php
