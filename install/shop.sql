@@ -384,6 +384,7 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
   `it_cust_price` int(11) NOT NULL DEFAULT '0',
   `it_price` int(11) NOT NULL DEFAULT '0',
   `it_point` int(11) NOT NULL DEFAULT '0',
+  `it_point_type` tinyint(4) NOT NULL DEFAULT '0',
   `it_sell_email` varchar(255) NOT NULL DEFAULT '',
   `it_use` tinyint(4) NOT NULL DEFAULT '0',
   `it_stock_qty` int(11) NOT NULL DEFAULT '0',
@@ -599,6 +600,23 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `shop_mileage`
+--
+
+DROP TABLE IF EXISTS `shop_mileage`;
+CREATE TABLE IF NOT EXISTS `shop_mileage` (
+  `ml_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `mb_id` VARCHAR(255) NOT NULL DEFAULT '',
+  `od_id` BIGINT(20) unsigned NOT NULL,
+  `ct_id` INT(11) NOT NULL DEFAULT '0',
+  `ml_content` VARCHAR(255) NOT NULL DEFAULT '',
+  `ml_point` INT(11) NOT NULL DEFAULT '0',
+  `ml_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ml_id`),
+  KEY `mb_id` (`mb_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `shop_wish`

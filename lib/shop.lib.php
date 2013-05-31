@@ -1070,6 +1070,52 @@ function delete_item_thumbnail($dir, $file)
         }
     }
 }
+
+// 마일리지 부여
+function insert_mileage($mb_id, $point, $content='', $od_id, $ct_id)
+{
+    global $g4;
+
+    // 포인트가 없다면 업데이트 할 필요 없음
+    if ($point == 0) { return 0; }
+
+    // 회원아이디가 없다면 업데이트 할 필요 없음
+    if ($mb_id == '') { return 0; }
+    $mb = sql_fetch(" select mb_id from {$g4['member_table']} where mb_id = '$mb_id' ");
+    if (!$mb['mb_id']) { return 0; }
+
+    // 이미 등록된 내역이라면 건너뜀
+    if($od_id && $ct_id) {
+        $sql = " select count(*) as cnt from {$g4['shop_mileage_table']}
+                  where mb_id = '$mb_id'
+                    and od_id = '$od_id'
+                    and ct_id = '$ct_id' ";
+        $row = sql_fetch($sql);
+        if ($row['cnt'])
+            return -1;
+    }
+
+    // 마일리지 건별 생성
+    $sql = " insert into {$g4['shop_mileage_table']}
+                set mb_id = '$mb_id',
+                    od_id = '$od_id',
+                    ct_id = '$ct_id',
+                    ml_content = '".addslashes($content)."',
+                    ml_point = '$point',
+                    ml_datetime = '".G4_TIME_YMDHIS."' ";
+    sql_query($sql);
+
+    // 포인트 내역의 합을 구하고
+    $sql = " select sum(ml_point) as sum_mileage from {$g4['shop_mileage_table']} where mb_id = '$mb_id' ";
+    $row = sql_fetch($sql);
+    $sum_mileage = $row['sum_mileage'];
+
+    // 포인트 UPDATE
+    $sql = " update {$g4['member_table']} set mb_mileage = '$sum_mileage' where mb_id = '$mb_id' ";
+    sql_query($sql);
+
+    return 1;
+}
 //==============================================================================
 // 쇼핑몰 함수 모음 끝
 //==============================================================================

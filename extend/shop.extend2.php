@@ -199,4 +199,25 @@ if(!$result) {
                     ADD `de_cart_keep_term` INT(11) NOT NULL DEFAULT '0' AFTER `de_code_dup_use`,
                     ADD `de_guest_cart_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_cart_keep_term` ", false);
 }
+
+// 마일리지관련 필드 추가
+$sql = " select it_point_type from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_mileage_table']}` (
+                  `ml_id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `mb_id` VARCHAR(255) NOT NULL DEFAULT '',
+                  `od_id` BIGINT(20) unsigned NOT NULL,
+                  `ct_id` INT(11) NOT NULL DEFAULT '0',
+                  `ml_content` VARCHAR(255) NOT NULL DEFAULT '',
+                  `ml_point` INT(11) NOT NULL DEFAULT '0',
+                  `ml_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  PRIMARY KEY (`ml_id`),
+                  KEY `mb_id` (`mb_id`)
+                ) ", false);
+    sql_query(" ALTER TABLE `{$g4['member_table']}`
+                    ADD `mb_mileage` INT(11) NOT NULL DEFAULT '0' AFTER `mb_point` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_point_type` TINYINT(4) NOT NULL DEFAULT '0' AFTER `it_point` ", false);
+}
 ?>

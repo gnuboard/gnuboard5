@@ -267,7 +267,11 @@ else // 장바구니에 담기
         if ((int)$_POST['total_price'] !== (int)$total_price)
             die("Error..");
 
-        $point = $it['it_point'];
+        if($it['it_point_type']) {
+            $point = floor(($it['it_price'] * ($it['it_point'] / 100) / 10)) * 10;
+        } else {
+            $point = $it['it_point'];
+        }
         // 포인트가 다름
         if ((int)$point !== (int)$_POST['it_point'] && $config['cf_use_point'])
             die("Error...");

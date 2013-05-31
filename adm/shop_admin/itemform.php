@@ -776,10 +776,36 @@ $(function(){
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="it_point_type">포인트 유형</label></th>
+        <td>
+            <?php echo help("포인트 유형을 설정할 수 있습니다. 비율로 설정했을 경우 판매가격의 %비율로 포인트가 지급됩니다."); ?>
+            <select name="it_point_type" id="it_point_type">
+                <option value="0"<?php echo get_selected('0', $it['it_point_type']); ?>>금액</option>
+                <option value="1"<?php echo get_selected('1', $it['it_point_type']); ?>>비율</option>
+            </select>
+            <script>
+            $(function() {
+                $("#it_point_type").change(function() {
+                    if($(this).val() == "1")
+                        $("#it_point_unit").text("%");
+                    else
+                        $("#it_point_unit").text("점");
+                });
+            });
+            </script>
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_point_type" value="1" id="chk_ca_it_point_type">
+            <label for="chk_ca_it_point_type">분류적용</label>
+            <input type="checkbox" name="chk_all_it_point_type" value="1" id="chk_all_it_point_type">
+            <label for="chk_all_it_point_type">전체적용</label>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="it_point">포인트</label></th>
         <td>
-            <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n포인트 기능을 사용해야 동작합니다."); ?>
-            <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> 점
+            <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n게시판의 포인트 기능과는 별개로 동작합니다."); ?>
+            <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> <span id="it_point_unit"><?php if($it['it_point_type']) echo '%'; else echo '점'; ?></span>
         </td>
         <td class="group_setting">
             <input type="checkbox" name="chk_ca_it_point" value="1" id="chk_ca_it_point">
@@ -1314,30 +1340,11 @@ function fitemformcheck(f)
         }
     }
 
-    // 옵션값 검사
-    for (var i=1; i<=6; i++) {
-        var opt = document.getElementsByName("it_opt"+i)[0];
-        var arr = opt.value.split("\n");
-        for (var k=0; k<arr.length; k++) {
-            var str = arr[k];
-            if (k==0) {
-                if (str.indexOf("&") == -1 && str.indexOf(";") != -1) {
-                    alert("옵션의 첫 번째 라인에는 금액을 입력할 수 없습니다.\n\n또는 ; 를 입력할 수 없습니다.");
-                    opt.focus();
-                    return false;
-                }
-            }
-            else {
-                var exp = str.split(";");
-                if (typeof exp[1] != "undefined") {
-                    var c = exp[1].substr(0,1);
-                    if (!(c == "+" || c == "-")) {
-                        alert("옵션의 금액 입력 오류입니다.\n\n추가되는 금액은 + 부호를\n\n할인되는 금액은 - 부호를 붙여 주십시오.");
-                        opt.focus();
-                        return false;
-                    }
-                }
-            }
+    if(f.it_point_type.value == "1") {
+        var point = parseInt(f.it_point.value);
+        if(point > 99) {
+            alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
+            return false;
         }
     }
 

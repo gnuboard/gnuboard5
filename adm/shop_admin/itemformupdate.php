@@ -351,6 +351,10 @@ for($i=0; $i<count($_POST['ii_article']); $i++) {
 }
 $it_info_value = serialize($value_array);
 
+// 포인트 비율 값 체크
+if($it_point_type == 1 && $it_point > 99)
+    alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
+
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
                 ca_id3              = '$ca_id3',
@@ -374,6 +378,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_cust_price       = '$it_cust_price',
                 it_price            = '$it_price',
                 it_point            = '$it_point',
+                it_point_type       = '$it_point_type',
                 it_sell_email       = '$it_sell_email',
                 it_use              = '$it_use',
                 it_stock_qty        = '$it_stock_qty',

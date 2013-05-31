@@ -48,9 +48,16 @@ if (!isset($order_not_point)) {
         // 회원이면서 포인트가 0보다 크다면
         if ($tmp_row['mb_id'] && $row['ct_point'] > 0)
         {
+            /** 주문완료 포인트를 게시판 포인트와 연동하려면 주석제거
             $po_point = $row['ct_point'] * $row['ct_qty'];
             $po_content = "$cart_title3 {$tmp_row['od_id']} ({$row['ct_id']}) $cart_title4";
             insert_point($tmp_row['mb_id'], $po_point, $po_content, "@delivery", $tmp_row['mb_id'], "{$tmp_row['od_id']},{$row['uq_id']},{$row['ct_id']}");
+            */
+
+            // 주문완료 쇼핑몰 포인트로 적립
+            $ml_point = $row['ct_point'] * $row['ct_qty'];
+            $ml_content = "$cart_title3 {$tmp_row['od_id']} ({$row['ct_id']}) $cart_title4";
+            insert_mileage($tmp_row['mb_id'], $ml_point, $ml_content, $tmp_row['od_id'], $row['ct_id']);
         }
 
         sql_query("update {$g4['shop_cart_table']} set ct_point_use = '1' where ct_id = '{$row['ct_id']}' ");
