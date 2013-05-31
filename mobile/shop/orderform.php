@@ -324,6 +324,7 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
 
         }
 
+        /** 포인트를 사용하려면 주석제거
         // 회원이면서 포인트사용이면
         $temp_point = 0;
         if ($is_member && $config['cf_use_point'])
@@ -340,6 +341,27 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
 
                 echo '<div>결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
                 echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong>'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
+                $multi_settle++;
+            }
+        }
+        */
+
+        // 회원이면
+        $temp_point = 0;
+        if ($is_member)
+        {
+            // 포인트 결제 사용 포인트보다 회원의 마일리지가 크다면
+            if ($member['mb_mileage'] >= $default['de_point_settle'])
+            {
+                $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
+                $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+
+                $member_mileage = (int)((int)($member['mb_mileage'] / 100) * 100); // 100점 단위
+                if ($temp_point > $member_mileage)
+                    $temp_point = $member_mileage;
+
+                echo '<div>결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
+                echo '<div>회원님의 보유포인트('.display_point($member['mb_mileage']).')중 <strong>'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
                 $multi_settle++;
             }
         }

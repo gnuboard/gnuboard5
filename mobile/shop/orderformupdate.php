@@ -295,7 +295,8 @@ if(!$result) {
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가
 if ($is_member && $od_receipt_point) {
-    insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
+    //insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
+    insert_mileage($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제", $od_id);
 }
 
 // PG 결제내역기록
@@ -358,6 +359,10 @@ if (get_session('ss_direct'))
     set_session('ss_uq_direct', '');
 else
     set_session('ss_uq_id', '');
+
+// 비회원장바구니 쿠키 초기화
+if(get_cookie('ck_guest_cart_uqid'))
+    set_cookie('ck_guest_cart_uqid', '', 0);
 
 goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$tmp_uq_id);
 ?>
