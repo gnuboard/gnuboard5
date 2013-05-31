@@ -295,7 +295,8 @@ if(!$result) {
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가
 if ($is_member && $od_receipt_point) {
-    //insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
+    if(!$default['de_mileage_use'])
+        insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
     insert_mileage($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제", $od_id);
 }
 
