@@ -849,14 +849,6 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_different_msg">장바구니 메세지</label></th>
-        <td>
-            <?php echo help("장바구니에 담긴 상품의 가격 수정은 불가능합니다. 따라서 비회원가격과 회원가격이 다른 경우, 장바구니에 담기 전에 미리 메세지를 출력하여 로그인하도록 안내합니다.", -150); ?>
-            <input type="checkbox" name="de_different_msg" value="1" id="de_different_msg"<?php echo $default['de_different_msg']?'checked':''; ?>>
-            안내메세지 출력 사용
-        </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="de_cart_keep_term">장바구니 보관기간</label></th>
         <td>
              <?php echo help("장바구니 상품의 보관 기간을 설정하십시오."); ?>
