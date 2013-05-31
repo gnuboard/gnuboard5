@@ -353,5 +353,9 @@ if (get_session('ss_direct'))
 else
     set_session('ss_uq_id', '');
 
+// 비회원장바구니 쿠키 초기화
+if(get_cookie('ck_guest_cart_uqid'))
+    set_cookie('ck_guest_cart_uqid', '', 0);
+
 goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$tmp_uq_id);
 ?>
