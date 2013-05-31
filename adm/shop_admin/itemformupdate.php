@@ -525,6 +525,7 @@ if(is_checked('chk_ca_it_info'))                $ca_fields .= " , it_info_gubun 
 if(is_checked('chk_ca_it_price'))               $ca_fields .= " , it_price = '$it_price' ";
 if(is_checked('chk_ca_it_cust_price'))          $ca_fields .= " , it_cust_price = '$it_cust_price' ";
 if(is_checked('chk_ca_it_point'))               $ca_fields .= " , it_point = '$it_point' ";
+if(is_checked('chk_ca_it_point_type'))          $ca_fields .= " , it_point_type = '$it_point_type' ";
 if(is_checked('chk_ca_it_stock_qty'))           $ca_fields .= " , it_stock_qty = '$it_stock_qty' ";
 if(is_checked('chk_ca_it_gallery'))             $ca_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_ca_it_head_html'))           $ca_fields .= " , it_head_html = '$it_head_html' ";
@@ -556,6 +557,7 @@ if(is_checked('chk_all_it_info'))                $all_fields .= " , it_info_gubu
 if(is_checked('chk_all_it_price'))               $all_fields .= " , it_price = '$it_price' ";
 if(is_checked('chk_all_it_cust_price'))          $all_fields .= " , it_cust_price = '$it_cust_price' ";
 if(is_checked('chk_all_it_point'))               $all_fields .= " , it_point = '$it_point' ";
+if(is_checked('chk_all_it_point_type'))          $all_fields .= " , it_point_type = '$it_point_type' ";
 if(is_checked('chk_all_it_stock_qty'))           $all_fields .= " , it_stock_qty = '$it_stock_qty' ";
 if(is_checked('chk_all_it_gallery'))             $all_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_all_it_head_html'))           $all_fields .= " , it_head_html = '$it_head_html' ";
