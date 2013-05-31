@@ -1,35 +1,9 @@
 <?php
 include_once('./_common.php');
 
-// 비회원장바구니 uq_id 쿠키설정
-if($default['de_guest_cart_use']) {
-    $g_cart_uq_id = get_cookie('ck_guest_cart_uqid');
-    if($g_cart_uq_id) {
-        set_session('ss_uq_id', $g_cart_uq_id);
-        set_cookie('ck_guest_cart_uqid', $g_cart_uq_id, ($default['de_cart_keep_term'] * 86400));
-    } else {
-        if(!$sw_direct) {
-            $tmp_uq_id = get_uniqid();
-            set_session('ss_uq_id', $tmp_uq_id);
-            set_cookie('ck_guest_cart_uqid', $tmp_uq_id, ($default['de_cart_keep_term'] * 86400));
-        }
-    }
-}
-
-if ($sw_direct) {
-    $tmp_uq_id = get_session('ss_uq_direct');
-    if(!$tmp_uq_id) {
-        $tmp_uq_id = get_uniqid();
-        set_session('ss_uq_direct', $tmp_uq_id);
-    }
-}
-else {
-    $tmp_uq_id = get_session('ss_uq_id');
-    if(!$tmp_uq_id) {
-        $tmp_uq_id = get_uniqid();
-        set_session('ss_uq_id', $tmp_uq_id);
-    }
-}
+// uq_id 설정
+set_unique_id($sw_direct);
+$tmp_uq_id = get_session('ss_uq_id');
 
 // 브라우저에서 쿠키를 허용하지 않은 경우라고 볼 수 있음.
 if (!$tmp_uq_id)

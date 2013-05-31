@@ -6,7 +6,6 @@ include_once('./_common.php');
 $html_title = '주문 내역 수정';
 $alt_msg1 = '주문번호 오류입니다.';
 $mb_guest = '비회원';
-$hours = 6; // 설정 시간이 지난 주문서 없는 장바구니 자료 삭제
 
 $cart_title1 = '쇼핑';
 $cart_title2 = '완료';
@@ -22,7 +21,7 @@ include_once(G4_ADMIN_PATH.'/admin.head.php');
 // 설정 시간이 지난 주문서 없는 장바구니 자료 삭제
 //------------------------------------------------------------------------------
 $keep_term = $default['de_cart_keep_term'];
-if (!$keep_term) $keep_term = 15; // 기본값 15일
+if (!$keep_term) $keep_term = 1; // 기본값 1일
 $beforetime = date('Y-m-d H:i:s', ( G4_SERVER_TIME - (86400 * $keep_term) ) );
 $sql = " delete from {$g4['shop_cart_table']} where ct_status = '$cart_title1' and ct_time <= '$beforetime' ";
 sql_query($sql);

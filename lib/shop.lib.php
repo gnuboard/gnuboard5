@@ -5,11 +5,15 @@
 // 장바구니 건수 검사
 function get_cart_count($uq_id)
 {
-    global $g4;
+    global $g4, $default;
 
     $sql = " select count(ct_id) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ";
+    if($default['de_cart_keep_term']) {
+        $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+        $sql .= " and ct_time > '$ctime' ";
+    }
     $row = sql_fetch($sql);
-    $cnt = (int)$row[cnt];
+    $cnt = (int)$row['cnt'];
     return $cnt;
 }
 
@@ -924,6 +928,39 @@ function get_new_od_id()
     sql_query(" UNLOCK TABLES ", FALSE);
 
     return $od_id;
+}
+
+// uq_id 설정
+function set_unique_id($direct)
+{
+    global $default;
+
+    if ($direct) {
+        $tmp_uq_id = get_session('ss_uq_direct');
+        if(!$tmp_uq_id) {
+            $tmp_uq_id = get_uniqid();
+            set_session('ss_uq_direct', $tmp_uq_id);
+        }
+    } else {
+        // 비회원장바구니 uq_id 쿠키설정
+        if($default['de_guest_cart_use']) {
+            $g_cart_uq_id = get_cookie('ck_guest_cart_uqid');
+            if($g_cart_uq_id) {
+                set_session('ss_uq_id', $g_cart_uq_id);
+                set_cookie('ck_guest_cart_uqid', $g_cart_uq_id, ($default['de_cart_keep_term'] * 86400));
+            } else {
+                $tmp_uq_id = get_uniqid();
+                set_session('ss_uq_id', $tmp_uq_id);
+                set_cookie('ck_guest_cart_uqid', $tmp_uq_id, ($default['de_cart_keep_term'] * 86400));
+            }
+        } else {
+            $tmp_uq_id = get_session('ss_uq_id');
+            if(!$tmp_uq_id) {
+                $tmp_uq_id = get_uniqid();
+                set_session('ss_uq_id', $tmp_uq_id);
+            }
+        }
+    }
 }
 
 // 상품 목록 : 관련 상품 출력

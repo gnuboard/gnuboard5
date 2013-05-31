@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// uq_id 설정
+set_unique_id($sw_direct);
+
 // 회원일 경우 자신의 장바구니 상품 uq_id 값을 변경
 if($is_member) {
     $tmp_uq_id = get_session('ss_uq_id');
