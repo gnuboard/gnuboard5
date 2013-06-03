@@ -182,8 +182,6 @@ if ($w == '') {
                 set mb_id = '{$mb_id}',
                      mb_password = '".sql_password($mb_password)."',
                      mb_name = '{$mb_name}',
-                     mb_sex = '{$mb_sex}',
-                     mb_birth = '{$mb_birth}',
                      mb_nick = '{$mb_nick}',
                      mb_nick_date = '".G4_TIME_YMD."',
                      mb_email = '{$mb_email}',
