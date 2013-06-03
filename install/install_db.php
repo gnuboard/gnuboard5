@@ -384,8 +384,8 @@ if($shop_install) {
     }
 
     // mb_mileage 필드추가
-    sql_query(" ALTER TABLE `{$table_prefix}member`
-                    ADD `mb_mileage` INT(11) NOT NULL DEFAULT '0' AFTER `mb_point` ", false);
+    @mysql_query(" ALTER TABLE `{$table_prefix}member`
+                    ADD `mb_mileage` INT(11) NOT NULL DEFAULT '0' AFTER `mb_point` ");
 }
 ?>
 
