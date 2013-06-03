@@ -87,27 +87,52 @@ if ((int)$send_cost !== $i_send_cost) {
 $tot_amount = $tot_sell_amount + $send_cost;
 // 회원이면서 포인트사용이면
 $temp_point = 0;
-if ($is_member && $config['cf_use_point'])
-{
-    // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
-    if ($member['mb_point'] >= $default['de_point_settle'])
+if($default['de_mileage_use']) {
+    if ($is_member)
     {
-        $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
-        $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+        // 포인트 결제 사용 포인트보다 회원의 마일리지가 크다면
+        if ($member['mb_mileage'] >= $default['de_point_settle'])
+        {
+            $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
+            $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
 
-        $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
-        if ($temp_point > $member_point)
-            $temp_point = $member_point;
+            $member_mileage = (int)((int)($member['mb_mileage'] / 100) * 100); // 100점 단위
+            if ($temp_point > $member_mileage)
+                $temp_point = $member_mileage;
+        }
     }
-}
 
-if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_point'])
-    die("Error...");
+    if (($i_temp_point > (int)$temp_point || $i_temp_point < 0))
+        die("Error...");
 
-if ($od_temp_point)
-{
-    if ($member['mb_point'] < $od_temp_point)
-        alert('회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.');
+    if ($od_temp_point)
+    {
+        if ($member['mb_mileage'] < $od_temp_point)
+            alert('회원님의 마일리지가 부족하여 마일리지로 결제 할 수 없습니다.');
+    }
+} else {
+    if ($is_member && $config['cf_use_point'])
+    {
+        // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
+        if ($member['mb_point'] >= $default['de_point_settle'])
+        {
+            $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
+            $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+
+            $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
+            if ($temp_point > $member_point)
+                $temp_point = $member_point;
+        }
+    }
+
+    if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_point'])
+        die("Error...");
+
+    if ($od_temp_point)
+    {
+        if ($member['mb_point'] < $od_temp_point)
+            alert('회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.');
+    }
 }
 
 $i_amount = $i_amount + $i_send_cost - $i_temp_point;
