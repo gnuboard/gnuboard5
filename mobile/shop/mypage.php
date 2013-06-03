@@ -16,8 +16,13 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <dl>
             <dt>회원권한</dt>
             <dd><?php echo $member['mb_level']; ?></dd>
+            <?php if($default['de_mileage_use']) { ?>
+            <dt>마일리지</dt>
+            <dd><a href="<?php echo G4_SHOP_URL; ?>/mileage.php" target="_blank" class="win_point"><?php echo number_format($member['mb_mileage']); ?>점</a></dd>
+            <?php } else { ?>
             <dt>보유포인트</dt>
             <dd><a href="<?php echo G4_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></dd>
+            <?php } ?>
             <dt>연락처</dt>
             <dd><?php echo ($member['mb_tel'] ? $member['mb_tel'] : '미등록'); ?></dd>
             <dt>E-Mail</dt>
