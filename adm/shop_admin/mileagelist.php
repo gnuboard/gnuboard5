@@ -53,7 +53,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 
 $mb = array();
 if ($sfl == 'mb_id' && $stx)
-    $mb = get_member(isset($stx));
+    $mb = get_member($stx);
 
 $g4['title'] = '마일리지관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
