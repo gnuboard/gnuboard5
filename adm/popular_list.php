@@ -82,7 +82,8 @@ var list_delete_php = 'popular_list.php';
         <option value="pp_word"<?php echo get_selected($_GET['sfl'], "pp_word"); ?>>검색어</option>
         <option value="pp_date"<?php echo get_selected($_GET['sfl'], "pp_date"); ?>>등록일</option>
     </select>
-    <input type="text" name="stx" value="<?php echo $stx ?>" title="검색어(필수)" required class="required frm_input">
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
