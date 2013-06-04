@@ -317,7 +317,6 @@ if ($w == '') {
                     {$sql_icon}
                     {$sql_nick_date}
                     {$sql_open_date}
-                    {$sql_sex}
                     {$sql_email_certify}
                     {$sql_hp_certify}
               where mb_id = '$mb_id' ";
