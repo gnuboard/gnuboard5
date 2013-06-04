@@ -9,10 +9,30 @@ $html_title = '회원검색';
 $g4['title'] = $html_title;
 include_once(G4_PATH.'/head.sub.php');
 
-if($_GET['mb_name']) {
-    $sql = " select mb_id, mb_name from {$g4['member_table']} where mb_leave_date = '' and mb_intercept_date ='' and mb_name like '%$mb_name%' ";
-    $result = sql_query($sql);
-}
+$sql_common = " from {$g4['member_table']} ";
+$sql_where = " where mb_leave_date = '' and mb_intercept_date ='' ";
+
+if($_GET['mb_name'])
+    $sql_where .= " and mb_name like '%$mb_name%' ";
+
+// 테이블의 전체 레코드수만 얻음
+$sql = " select count(*) as cnt " . $sql_common . $sql_where;
+$row = sql_fetch($sql);
+$total_count = $row['cnt'];
+
+$rows = $config['cf_page_rows'];
+$total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
+if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
+$from_record = ($page - 1) * $rows; // 시작 열을 구함
+
+$sql = " select mb_id, mb_name
+            $sql_common
+            $sql_where
+            order by mb_id
+            limit $from_record, $rows ";
+$result = sql_query($sql);
+
+$qstr1 = 'mb_name='.$_GET['mb_name'];
 ?>
 
 <div id="sch_member_frm" class="new_win scp_new_win">
@@ -21,10 +41,9 @@ if($_GET['mb_name']) {
     <form name="fmember" method="get">
     <div id="scp_list_find">
         <label for="mb_name">회원이름</label>
-        <input type="text" name="mb_name" id="mb_name" class="frm_input required" required size="20">
+        <input type="text" name="mb_name" id="mb_name" value="<?php echo $mb_name; ?>" class="frm_input required" required size="20">
         <input type="submit" value="검색" class="btn_frmline">
     </div>
-    <?php if($_GET['mb_name']) { ?>
     <table>
     <caption>검색결과</caption>
     <thead>
@@ -51,7 +70,7 @@ if($_GET['mb_name']) {
     ?>
     </tbody>
     </table>
-    <?php } ?>
+    <div><?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?></div>
     </form>
 
     <div class="btn_confirm">

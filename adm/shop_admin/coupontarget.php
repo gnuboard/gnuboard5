@@ -5,34 +5,59 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], "w");
 
 if($_GET['sch_target'] == 1) {
-    $html_title = '분류검색';
+    $html_title = '분류';
     $t_name = '분류명';
     $t_id = '분류코드';
+    $t_desc1 = '분류를';
+    $t_desc2 = '분류가';
 } else {
-    $html_title = '상품검색';
+    $html_title = '상품';
     $t_name = '상품명';
     $t_id = '상품코드';
+    $t_desc1 = '상품을';
+    $t_desc2 = '상품이';
 }
 
-$g4['title'] = $html_title;
+$g4['title'] = $html_title.'검색';
 include_once(G4_PATH.'/head.sub.php');
 
-if($_GET['sch_word']) {
-    if($_GET['sch_target'] == 1) {
-        $sql = " select ca_id as t_id, ca_name as t_name from {$g4['shop_category_table']} where ca_use = '1' and ca_name like '%$sch_word%' ";
-    } else {
-        $sql = " select it_id as t_id, it_name as t_name from {$g4['shop_item_table']} where it_use = '1' and it_name like '%$sch_word%' ";
-    }
-
-    $result = sql_query($sql);
+if($_GET['sch_target'] == 1) {
+    $sql_common = " from {$g4['shop_category_table']} ";
+    $sql_where = " where ca_use = '1' ";
+    if($_GET['sch_word'])
+        $sql_where .= " and ca_name like '%$sch_word%' ";
+    $sql_select = " select ca_id as t_id, ca_name as t_name ";
+    $sql_order = " order by ca_came ";
+} else {
+    $sql_common = " from {$g4['shop_item_table']} ";
+    $sql_where = " where it_use = '1' ";
+    if($GET['sch_word'])
+        $sql_where .= " and it_name like '%$sch_word%' ";
+    $sql_select = " select it_id as t_id, it_name as t_name ";
+    $sql_order = " order by it_name ";
 }
+
+// 테이블의 전체 레코드수만 얻음
+$sql = " select count(*) as cnt " . $sql_common . $sql_where;
+$row = sql_fetch($sql);
+$total_count = $row['cnt'];
+
+$rows = $config['cf_page_rows'];
+$total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
+if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
+$from_record = ($page - 1) * $rows; // 시작 열을 구함
+
+$sql = $sql_select . $sql_common . $sql_where . $sql_order . " limit $from_record, $rows ";
+$result = sql_query($sql);
+
+$qstr1 = 'sch_target='.$_GET['sch_target'].'&amp;sch_word='.$_GET['sch_word'];
 ?>
 
 <div id="sch_target_frm" class="new_win scp_new_win">
-    <h1>쿠폰 적용 상품선택</h1>
+    <h1>쿠폰 적용 <?php echo $html_title; ?>선택</h1>
 
     <p class="new_win_desc">
-        쿠폰을 적용할 상품을 선택하세요. 상품이 많을 경우에는 검색 기능을 이용하세요.
+        쿠폰을 적용할 <?php echo $t_desc1; ?> 선택하세요. <?php echo $t_desc2; ?> 많을 경우에는 검색 기능을 이용하세요.
     </p>
 
     <form name="ftarget" method="get">
@@ -40,11 +65,10 @@ if($_GET['sch_word']) {
 
     <div id="scp_list_find">
         <label for="sch_word"><?php echo $t_name; ?></label>
-        <input type="text" name="sch_word" id="sch_word" class="frm_input required" required size="20">
+        <input type="text" name="sch_word" id="sch_word" value="<?php echo $sch_word; ?>" class="frm_input required" required size="20">
         <input type="submit" value="검색" class="btn_frmline">
     </div>
 
-    <?php if($_GET['sch_word']) { ?>
     <table>
     <caption>검색결과</caption>
     <thead>
@@ -71,7 +95,7 @@ if($_GET['sch_word']) {
     ?>
     </tbody>
     </table>
-    <?php } ?>
+    <div><?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?></div>
     </form>
 
     <div class="btn_confirm">

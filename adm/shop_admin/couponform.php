@@ -175,7 +175,7 @@ $(function() {
 
     $("#sch_target").click(function() {
         var cp_method = $("#cp_method").val();
-        var opt = "left=50,top=50,width=500,height=400";
+        var opt = "left=50,top=50,width=500,height=600";
         var url = "./coupontarget.php?sch_target=";
 
         if(cp_method == "0") {
@@ -193,7 +193,7 @@ $(function() {
             return false;
         }
 
-        var opt = "left=50,top=50,width=500,height=400";
+        var opt = "left=50,top=50,width=500,height=600";
         var url = "./couponmember.php";
         window.open(url, "win_member", opt);
     });
