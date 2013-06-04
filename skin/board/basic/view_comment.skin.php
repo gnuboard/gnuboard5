@@ -35,9 +35,9 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <?php } ?>
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
-            <?php if ($list[$i]['wr_facebook_user']) { ?><a href="https://www.facebook.com/profile.php?id=<?php echo $list[$i]['wr_facebook_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/facebook.png" alt="페이스북에도 등록됨"></a><?php } ?>
-            <?php if ($list[$i]['wr_twitter_user']) { ?><a href="https://www.twitter.com/<?php echo $list[$i]['wr_twitter_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/twitter.png" alt="트위터에도 등록됨"></a><?php } ?>
-            <?php if ($list[$i]['wr_me2day_user']) { ?><a href="http://me2day.net/<?php echo $list[$i]['wr_me2day_user']; ?>" target="_blank"><img src="<?php echo G4_SNS_URL; ?>/icon/me2day.png" alt="미투데이에도 등록됨"></a><?php } ?>
+            <?php 
+            include(G4_SNS_PATH."/view_comment_list.sns.skin.php");
+            ?>
         </header>
 
         <!-- 댓글 출력 -->
@@ -119,7 +119,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </tr>
         <?php } ?>
         <?php 
-        include_once($board_skin_path."/view_comment.sns.skin.php");
+        include(G4_SNS_PATH."/view_comment_write.sns.skin.php");
         ?>
         <tr>
             <th scope="row">내용</th>
