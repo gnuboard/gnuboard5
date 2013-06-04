@@ -3,7 +3,11 @@ include_once('./_common.php');
 
 // uq_id 설정
 set_unique_id($sw_direct);
-$tmp_uq_id = get_session('ss_uq_id');
+
+if($sw_direct)
+    $tmp_uq_id = get_session('ss_uq_direct');
+else
+    $tmp_uq_id = get_session('ss_uq_id');
 
 // 브라우저에서 쿠키를 허용하지 않은 경우라고 볼 수 있음.
 if (!$tmp_uq_id)

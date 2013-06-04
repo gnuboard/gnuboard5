@@ -17,6 +17,7 @@ if($is_member) {
                 set uq_id = '$tmp_uq_id'
                 where mb_id = '{$member['mb_id']}'
                   and ct_status = '쇼핑'
+                  and ct_direct = '0'
                   and ct_time > '$ctime' ";
     sql_query($sql);
 }
