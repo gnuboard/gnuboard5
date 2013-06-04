@@ -38,7 +38,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <div id="point" class="new_win">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
 
     <table class="basic_tbl">
     <caption>포인트 사용내역 목록</caption>
