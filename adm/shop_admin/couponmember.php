@@ -15,40 +15,48 @@ if($_GET['mb_name']) {
 }
 ?>
 
-<div id="sch_member_frm">
-<form name="fmember" method="get">
-<div>
-    <label for="mb_name">회원이름</label>
-    <input type="text" name="mb_name" id="mb_name" class="frm_input required" required size="20">
-</div>
-<?php if($_GET['mb_name']) { ?>
-<table>
-<tr>
-    <th>회원이름</th>
-    <th>회원아이디</th>
-    <th>선택</th>
-</tr>
-<?php
-for($i=0; $row=sql_fetch_array($result); $i++) {
-?>
-<tr>
-    <td><?php echo $row['mb_name']; ?></td>
-    <td><?php echo $row['mb_id']; ?></td>
-    <td><button type="button" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button>
-</tr>
-<?php
-}
+<div id="sch_member_frm" class="new_win scp_new_win">
+    <h1>쿠폰 적용 회원선택</h1>
 
-if($i ==0)
-    echo '<tr><td colspan="3">검색된 자료가 없습니다.</td></tr>';
-?>
-</table>
-<?php } ?>
-<div>
-    <input type="submit" value="검색">
-    <button type="button" onclick="window.close();">닫기</button>
-</div>
-</form>
+    <form name="fmember" method="get">
+    <div id="scp_list_find">
+        <label for="mb_name">회원이름</label>
+        <input type="text" name="mb_name" id="mb_name" class="frm_input required" required size="20">
+        <input type="submit" value="검색" class="btn_frmline">
+    </div>
+    <?php if($_GET['mb_name']) { ?>
+    <table>
+    <caption>검색결과</caption>
+    <thead>
+    <tr>
+        <th>회원이름</th>
+        <th>회원아이디</th>
+        <th>선택</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+    ?>
+    <tr>
+        <td class="td_mbname"><?php echo $row['mb_name']; ?></td>
+        <td><?php echo $row['mb_id']; ?></td>
+        <td class="scp_find_select"><button type="button" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button>
+    </tr>
+    <?php
+    }
+
+    if($i ==0)
+        echo '<tr><td colspan="3" class="empty_table">검색된 자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
+    <?php } ?>
+    </form>
+
+    <div class="btn_confirm">
+        <button type="button" onclick="window.close();">닫기</button>
+    </div>
 </div>
 
 <script>
