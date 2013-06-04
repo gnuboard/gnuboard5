@@ -13,7 +13,6 @@ if (!defined('_GNUBOARD_')) exit;
 </div>
 
 <footer id="ft">
-    <h1><?php echo $config['cf_title'] ?> 라이센스</h1>
     <p>
         Copyright &copy; 소유하신 도메인. All rights reserved.<br>
         <a href="#">상단으로</a>
