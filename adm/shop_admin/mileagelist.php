@@ -80,7 +80,8 @@ $colspan = 8;
         <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
         <option value="sp_content"<?php echo get_selected($_GET['sfl'], "ml_content"); ?>>내용</option>
     </select>
-    <input type="text" name="stx" value="<?php echo $stx ?>" title="검색어(필수)" required class="required frm_input">
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
