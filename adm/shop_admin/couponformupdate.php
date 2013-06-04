@@ -62,6 +62,9 @@ if($w == '') {
         if($i == 0)
             alert('관리자를 제외한 쿠폰 발급 가능 회원이 없습니다.');
     } else {
+        if($_POST['mb_id'] == $config['cf_admin'])
+            alert('관리자를 제외한 회원의 아이디를 입력해 주십시오.');
+
         $arr_mb_id[] = $_POST['mb_id'];
     }
 
