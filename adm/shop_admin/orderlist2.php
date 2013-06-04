@@ -122,7 +122,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             if ($row['od_settle_case'])
             {
                 $s_receipt_way = $row['od_settle_case'];
-                $s_br = '<br/>';
+                $s_br = '+';
             }
             else
             {
@@ -130,7 +130,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 {
                     //$s_receipt_way = "무통장입금";
                     $s_receipt_way = cut_str($row['od_bank_account'],8,"");
-                    $s_br = "<br>";
+                    $s_br = "+";
                 }
 
                 if ($row['od_temp_card'] > 0 || $row['od_receipt_card'] > 0)
@@ -281,7 +281,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
        </li>
 
-       <?php 
+       <?php
        } // for 부모 끝
 
         if ($i == 0)
