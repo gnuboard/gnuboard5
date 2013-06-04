@@ -19,6 +19,7 @@ $menu['menu400'] = array (
     array('400740', '배송업체관리', G4_ADMIN_URL.'/shop_admin/deliverycodelist.php', 'scf_deli_co', 1),
     array('400630', '이벤트관리', G4_ADMIN_URL.'/shop_admin/itemevent.php', 'scf_event'),
     array('400640', '이벤트일괄처리', G4_ADMIN_URL.'/shop_admin/itemeventlist.php', 'scf_event_mng'),
+    array('400650', '쿠폰관리', G4_ADMIN_URL.'/shop_admin/couponlist.php', 'scf_coupon'),
     array('400700', '내용관리', G4_ADMIN_URL.'/shop_admin/contentlist.php', 'scf_contents', 1),
     array('400710', 'FAQ관리', G4_ADMIN_URL.'/shop_admin/faqmasterlist.php', 'scf_faq', 1),
     array('400730', '배너관리', G4_ADMIN_URL.'/shop_admin/bannerlist.php', 'scf_banner', 1),

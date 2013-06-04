@@ -493,6 +493,7 @@ if($shop_install) {
     fwrite($f, "\$g4['shop_order_table'] = SHOP_TABLE_PREFIX.'order'; // 주문서 테이블\n");
     fwrite($f, "\$g4['shop_wish_table'] = SHOP_TABLE_PREFIX.'wish'; // 보관함(위시리스트) 테이블\n");
     fwrite($f, "\$g4['shop_mileage_table'] = SHOP_TABLE_PREFIX.'mileage'; // 마일리지 테이블\n");
+    fwrite($f, "\$g4['shop_coupon_table'] = SHOP_TABLE_PREFIX.'coupon'; // 쿠폰정보 테이블\n");
     fwrite($f, "?>");
 }
 

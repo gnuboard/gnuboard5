@@ -134,6 +134,34 @@ CREATE TABLE IF NOT EXISTS `shop_content` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shop_coupon`
+--
+
+DROP TABLE IF EXISTS `shop_coupon`;
+CREATE TABLE IF NOT EXISTS `shop_coupon` (
+  `cp_no` INT(11) NOT NULL AUTO_INCREMENT,
+  `cp_id` VARCHAR(255) NOT NULL DEFAULT '',
+  `cp_subject` VARCHAR(255) NOT NULL DEFAULT '',
+  `cp_method` TINYINT(4) NOT NULL DEFAULT '0',  
+  `cp_target` VARCHAR(255) NOT NULL DEFAULT '',
+  `mb_id` VARCHAR(255) NOT NULL DEFAULT '',
+  `cp_start` DATE NOT NULL DEFAULT '0000-00-00',
+  `cp_end` DATE NOT NULL DEFAULT '0000-00-00',
+  `cp_amount` INT(11) NOT NULL DEFAULT '0',
+  `cp_type` TINYINT(4) NOT NULL DEFAULT '0',
+  `cp_trunc` INT(11) NOT NULL DEFAULT '0',
+  `cp_minimum` INT(11) NOT NULL DEFAULT '0',
+  `cp_maximum` INT(11) NOT NULL DEFAULT '0',
+  `cp_used` TINYINT(4) NOT NULL DEFAULT '0',
+  `cp_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`cp_no`),
+  UNIQUE KEY `cp_id` (`cp_id`),
+  KEY `mb_id` (`mb_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `shop_default`
 --
 

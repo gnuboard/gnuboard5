@@ -228,4 +228,30 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
                     ADD `de_mileage_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_point_settle` ", false);
 }
+
+// 쿠폰테이블
+$sql = " DESCRIBE `{$g4['shop_coupon_table']}` ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_coupon_table']}` (
+                  `cp_no` INT(11) NOT NULL AUTO_INCREMENT,
+                  `cp_id` VARCHAR(255) NOT NULL DEFAULT '',
+                  `cp_subject` VARCHAR(255) NOT NULL DEFAULT '',
+                  `cp_method` TINYINT(4) NOT NULL DEFAULT '0',
+                  `cp_target` VARCHAR(255) NOT NULL DEFAULT '',
+                  `mb_id` VARCHAR(255) NOT NULL DEFAULT '',
+                  `cp_start` DATE NOT NULL DEFAULT '0000-00-00',
+                  `cp_end` DATE NOT NULL DEFAULT '0000-00-00',
+                  `cp_type` TINYINT(4) NOT NULL DEFAULT '0',
+                  `cp_amount` INT(11) NOT NULL DEFAULT '0',
+                  `cp_trunc` INT(11) NOT NULL DEFAULT '0',
+                  `cp_minimum` INT(11) NOT NULL DEFAULT '0',
+                  `cp_maximum` INT(11) NOT NULL DEFAULT '0',
+                  `cp_used` TINYINT(4) NOT NULL DEFAULT '0',
+                  `cp_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  PRIMARY KEY (`cp_no`),
+                  UNIQUE KEY `cp_id` (`cp_id`),
+                  KEY `mb_id` (`mb_id`)
+                )", false);
+}
 ?>
