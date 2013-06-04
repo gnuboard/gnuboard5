@@ -62,11 +62,6 @@ $colspan = 8;
 ?>
 
 <script>
-var list_update_php = '';
-var list_delete_php = 'point_list_delete.php';
-</script>
-
-<script>
 function point_clear()
 {
     if (confirm('포인트 정리를 하시면 최근 50건 이전의 포인트 부여 내역을 삭제하므로 포인트 부여 내역을 필요로 할때 찾지 못할 수도 있습니다. 그래도 진행하시겠습니까?'))
@@ -105,7 +100,7 @@ function point_clear()
 <section class="cbox">
     <h2>포인트 내역</h2>
 
-    <form name="fpointlist" id="fpointlist" method="post">
+    <form name="fpointlist" id="fpointlist" method="post" action="./point_list_delete.php" onsubmit="return fpointlist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
@@ -168,7 +163,7 @@ function point_clear()
     </table>
 
     <div class="btn_list">
-        <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
     </div>
 
     </form>
@@ -215,6 +210,24 @@ function point_clear()
     </form>
 
 </section>
+
+<script>
+function fpointlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    return true;
+}
+</script>
 
 <?php
 include_once ('./admin.tail.php');

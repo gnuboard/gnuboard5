@@ -10,7 +10,7 @@ check_token();
 
 $count = count($_POST['chk']);
 if(!$count)
-    alert("선택삭제 하실 항목을 하나이상 선택해 주세요.");
+    alert($_POST['act_button']." 하실 항목을 하나 이상 체크하세요.");
 
 for ($i=0; $i<$count; $i++)
 {
