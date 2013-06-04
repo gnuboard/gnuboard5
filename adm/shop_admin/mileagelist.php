@@ -61,11 +61,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 $colspan = 8;
 ?>
 
-<script>
-var list_update_php = '';
-var list_delete_php = 'mileagelist_delete.php';
-</script>
-
 <form name="fsearch" id="fsearch" method="get">
 <fieldset>
     <legend>마일리지 내역 검색</legend>
@@ -93,7 +88,7 @@ var list_delete_php = 'mileagelist_delete.php';
 <section class="cbox">
     <h2>마일리지 내역</h2>
 
-    <form name="fpointlist" id="fpointlist" method="post">
+    <form name="fpointlist" id="fpointlist" method="post" action="./mileagelist_delete.php" onsubmit="return fmileagelist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst; ?>">
     <input type="hidden" name="sod" value="<?php echo $sod; ?>">
     <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
@@ -153,7 +148,7 @@ var list_delete_php = 'mileagelist_delete.php';
     </table>
 
     <div class="btn_list">
-        <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
     </div>
 
     </form>
@@ -200,6 +195,24 @@ var list_delete_php = 'mileagelist_delete.php';
     </form>
 
 </section>
+
+<script>
+function fmileagelist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    return true;
+}
+</script>
 
 <?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
