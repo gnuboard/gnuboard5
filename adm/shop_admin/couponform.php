@@ -52,7 +52,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="cp_method">쿠폰종류</label></th>
         <td>
-            <?php echo help("쿠폰 종류를 변경하시면 입력 서식도 일부 변경됩니다."); ?>
+           <?php echo help("쿠폰 종류를 변경하시면 입력 서식도 일부 변경됩니다."); ?>
            <select name="cp_method" id="cp_method">
                 <option value="0"<?php echo get_selected('0', $cp['cp_method']); ?>>개별상품할인</option>
                 <option value="1"<?php echo get_selected('1', $cp['cp_method']); ?>>카테고리할인</option>
@@ -95,10 +95,12 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="cp_type">쿠폰타입</label></th>
         <td>
+           <?php echo help("쿠폰 타입을 변경하시면 입력 서식도 일부 변경됩니다."); ?>
            <select name="cp_type" id="cp_type">
                 <option value="0"<?php echo get_selected('0', $cp['cp_type']); ?>>정액할인(원)</option>
                 <option value="1"<?php echo get_selected('1', $cp['cp_type']); ?>>정률할인(%)</option>
            </select>
+           <button type="button" id="cp_type_btn" class="btn_frmline">변경</button>
         </td>
     </tr>
     <tr>
@@ -149,38 +151,27 @@ $(function() {
     <?php if($cp['cp_type'] != 1) { ?>
     $("#tr_cp_trunc").hide();
     <?php } ?>
+    $("#cp_method_btn").click(function() {
+        var cp_method = $("#cp_method").val();
+        change_method(cp_method);
+    });
 
+    $("#cp_type_btn").click(function() {
+        var cp_type = $("#cp_type").val();
+        change_type(cp_type);
+    });
+
+    /** select 변경때 반영하려면 주서 제거
     $("#cp_method").change(function() {
         var cp_method = $(this).val();
-        $("#sch_target_frm").hide();
-        if(cp_method == "0") {
-            $("#sch_target").text("상품검색");
-            $("#tr_cp_target").find("label").text("적용상품");
-            $("#tr_cp_target").find("input").attr("required", true).addClass("required");
-            $("#tr_cp_target").show();
-        } else if(cp_method == "1") {
-            $("#sch_target").text("분류검색");
-            $("#tr_cp_target").find("label").text("적용분류");
-            $("#tr_cp_target").find("input").attr("required", true).addClass("required");
-            $("#tr_cp_target").show();
-        } else {
-            $("#tr_cp_target").hide();
-            $("#tr_cp_target").find("input").attr("required", false).removeClass("required");
-        }
+        change_method(cp_method);
     });
 
     $("#cp_type").change(function() {
         var cp_type = $(this).val();
-        if(cp_type == "0") {
-            $("#cp_amount_unit").text("원");
-            $("#cp_amount_unit").closest("tr").find("label").text("할인금액");
-            $("#tr_cp_trunc").hide();
-        } else {
-            $("#cp_amount_unit").text("%");
-            $("#cp_amount_unit").closest("tr").find("label").text("할인비율");
-            $("#tr_cp_trunc").show();
-        }
+        change_type(cp_type);
     });
+    */
 
     $("#sch_target").click(function() {
         var cp_method = $("#cp_method").val();
@@ -207,6 +198,37 @@ $(function() {
         window.open(url, "win_member", opt);
     });
 });
+
+function change_method(cp_method)
+{
+    if(cp_method == "0") {
+        $("#sch_target").text("상품검색");
+        $("#tr_cp_target").find("label").text("적용상품");
+        $("#tr_cp_target").find("input").attr("required", true).addClass("required");
+        $("#tr_cp_target").show();
+    } else if(cp_method == "1") {
+        $("#sch_target").text("분류검색");
+        $("#tr_cp_target").find("label").text("적용분류");
+        $("#tr_cp_target").find("input").attr("required", true).addClass("required");
+        $("#tr_cp_target").show();
+    } else {
+        $("#tr_cp_target").hide();
+        $("#tr_cp_target").find("input").attr("required", false).removeClass("required");
+    }
+}
+
+function change_type(cp_type)
+{
+    if(cp_type == "0") {
+        $("#cp_amount_unit").text("원");
+        $("#cp_amount_unit").closest("tr").find("label").text("할인금액");
+        $("#tr_cp_trunc").hide();
+    } else {
+        $("#cp_amount_unit").text("%");
+        $("#cp_amount_unit").closest("tr").find("label").text("할인비율");
+        $("#tr_cp_trunc").show();
+    }
+}
 
 function form_check(f)
 {
