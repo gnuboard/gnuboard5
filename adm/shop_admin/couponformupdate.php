@@ -9,10 +9,10 @@ $_POST = array_map('trim', $_POST);
 if(!$_POST['cp_subject'])
     alert('쿠폰이름을 입력해 주십시오.');
 
-if(!$_POST['cp_method'] == 0 && !$_POST['cp_target'])
+if($_POST['cp_method'] == 0 && !$_POST['cp_target'])
     alert('적용상품을 입력해 주십시오.');
 
-if(!$_POST['cp_method'] == 1 && !$_POST['cp_target'])
+if($_POST['cp_method'] == 1 && !$_POST['cp_target'])
     alert('적용분류를 입력해 주십시오.');
 
 if(!$_POST['mb_id'] && !$_POST['chk_all_mb'])
@@ -58,6 +58,9 @@ if($w == '') {
         for($i=0; $row=sql_fetch_array($result); $i++) {
             $arr_mb_id[] = $row['mb_id'];
         }
+
+        if($i == 0)
+            alert('관리자를 제외한 쿠폰 발급 가능 회원이 없습니다.');
     } else {
         $arr_mb_id[] = $_POST['mb_id'];
     }
@@ -107,7 +110,7 @@ if($w == '') {
                 set cp_subject  = '$cp_subject',
                     cp_method   = '$cp_method',
                     cp_target   = '$cp_target',
-                    mb_id       = '$cp_mb_id',
+                    mb_id       = '$mb_id',
                     cp_start    = '$cp_start',
                     cp_end      = '$cp_end',
                     cp_type     = '$cp_type',
