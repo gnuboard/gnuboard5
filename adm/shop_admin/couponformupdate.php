@@ -65,6 +65,11 @@ if($w == '') {
         if($_POST['mb_id'] == $config['cf_admin'])
             alert('관리자를 제외한 회원의 아이디를 입력해 주십시오.');
 
+        $sql2 = " select mb_id from {$g4['member_table']} where mb_id = '{$_POST['mb_id']}' and mb_leave_date = '' and mb_intercept_date = '' ";
+        $row2 = sql_fetch($sql2);
+        if(!$row2['mb_id'])
+            alert('입력하신 회원아이디는 존재하지 않거나 탈퇴 또는 차단된 회원아이디입니다.');
+
         $arr_mb_id[] = $_POST['mb_id'];
     }
 
@@ -72,13 +77,6 @@ if($w == '') {
 
     for($i=0; $i<$mb_id_count; $i++) {
         $mb_id = $arr_mb_id[$i];
-
-        if(!$_POST['chk_all_mb']) {
-            $sql2 = " select mb_id from {$g4['member_table']} where mb_id = '$mb_id' and mb_leave_date = '' and mb_intercept_date = '' ";
-            $row2 = sql_fetch($sql2);
-            if(!$row2['mb_id'])
-                alert('입력하신 회원아이디는 존재하지 않거나 탈퇴 또는 차단된 회원아이디입니다.');
-        }
 
         $j = 0;
         do {
