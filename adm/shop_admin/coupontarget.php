@@ -95,8 +95,9 @@ $qstr1 = 'sch_target='.$_GET['sch_target'].'&amp;sch_word='.$_GET['sch_word'];
     ?>
     </tbody>
     </table>
-    <div><?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?></div>
     </form>
+
+    <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
 
     <div class="btn_confirm">
         <button type="button" onclick="window.close();">닫기</button>

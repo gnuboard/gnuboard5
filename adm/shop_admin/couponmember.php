@@ -70,8 +70,9 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
     ?>
     </tbody>
     </table>
-    <div><?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?></div>
     </form>
+
+    <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
 
     <div class="btn_confirm">
         <button type="button" onclick="window.close();">닫기</button>
