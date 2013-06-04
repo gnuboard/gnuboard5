@@ -24,6 +24,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         */
         $comment = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $comment);
      ?>
+
     <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
         <header>
             <h1><?php echo $list[$i]['wr_name'] ?>님의 댓글</h1>
@@ -35,8 +36,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <?php } ?>
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
-            <?php 
-            include(G4_SNS_PATH."/view_comment_list.sns.skin.php");
+            <?php
+            include(G4_SNS_PATH.'/view_comment_list.sns.skin.php');
             ?>
         </header>
 
