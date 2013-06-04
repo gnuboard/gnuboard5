@@ -9,10 +9,10 @@ $_POST = array_map('trim', $_POST);
 if(!$_POST['cp_subject'])
     alert('쿠폰이름을 입력해 주십시오.');
 
-if(!$_POST['cp_method'] == 0 && !$_POST['cp_target'])
+if($_POST['cp_method'] == 0 && !$_POST['cp_target'])
     alert('적용상품을 입력해 주십시오.');
 
-if(!$_POST['cp_method'] == 1 && !$_POST['cp_target'])
+if($_POST['cp_method'] == 1 && !$_POST['cp_target'])
     alert('적용분류를 입력해 주십시오.');
 
 if(!$_POST['mb_id'] && !$_POST['chk_all_mb'])
@@ -58,7 +58,18 @@ if($w == '') {
         for($i=0; $row=sql_fetch_array($result); $i++) {
             $arr_mb_id[] = $row['mb_id'];
         }
+
+        if($i == 0)
+            alert('관리자를 제외한 쿠폰 발급 가능 회원이 없습니다.');
     } else {
+        if($_POST['mb_id'] == $config['cf_admin'])
+            alert('관리자를 제외한 회원의 아이디를 입력해 주십시오.');
+
+        $sql2 = " select mb_id from {$g4['member_table']} where mb_id = '{$_POST['mb_id']}' and mb_leave_date = '' and mb_intercept_date = '' ";
+        $row2 = sql_fetch($sql2);
+        if(!$row2['mb_id'])
+            alert('입력하신 회원아이디는 존재하지 않거나 탈퇴 또는 차단된 회원아이디입니다.');
+
         $arr_mb_id[] = $_POST['mb_id'];
     }
 
@@ -66,13 +77,6 @@ if($w == '') {
 
     for($i=0; $i<$mb_id_count; $i++) {
         $mb_id = $arr_mb_id[$i];
-
-        if(!$_POST['chk_all_mb']) {
-            $sql2 = " select mb_id from {$g4['member_table']} where mb_id = '$mb_id' and mb_leave_date = '' and mb_intercept_date = '' ";
-            $row2 = sql_fetch($sql2);
-            if(!$row2['mb_id'])
-                alert('입력하신 회원아이디는 존재하지 않거나 탈퇴 또는 차단된 회원아이디입니다.');
-        }
 
         $j = 0;
         do {
@@ -107,7 +111,7 @@ if($w == '') {
                 set cp_subject  = '$cp_subject',
                     cp_method   = '$cp_method',
                     cp_target   = '$cp_target',
-                    mb_id       = '$cp_mb_id',
+                    mb_id       = '$mb_id',
                     cp_start    = '$cp_start',
                     cp_end      = '$cp_end',
                     cp_type     = '$cp_type',
