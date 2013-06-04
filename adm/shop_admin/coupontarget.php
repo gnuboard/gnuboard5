@@ -28,41 +28,55 @@ if($_GET['sch_word']) {
 }
 ?>
 
-<div id="sch_target_frm">
-<form name="ftarget" method="get">
-<input type="hidden" name="sch_target" value="<?php echo $_GET['sch_target']; ?>">
-<div>
-    <label for="sch_word"><?php echo $t_name; ?></label>
-    <input type="text" name="sch_word" id="sch_word" class="frm_input required" required size="20">
-</div>
-<?php if($_GET['sch_word']) { ?>
-<table>
-<tr>
-    <th><?php echo $t_name; ?></th>
-    <th><?php echo $t_id; ?></th>
-    <th>선택</th>
-</tr>
-<?php
-for($i=0; $row=sql_fetch_array($result); $i++) {
-?>
-<tr>
-    <td><?php echo $row['t_name']; ?></td>
-    <td><?php echo $row['t_id']; ?></td>
-    <td><button type="button" onclick="sel_target_id('<?php echo $row['t_id']; ?>');">선택</button>
-</tr>
-<?php
-}
+<div id="sch_target_frm" class="new_win scp_new_win">
+    <h1>쿠폰 적용 상품선택</h1>
 
-if($i ==0)
-    echo '<tr><td colspan="3">검색된 자료가 없습니다.</td></tr>';
-?>
-</table>
-<?php } ?>
-<div>
-    <input type="submit" value="검색">
-    <button type="button" onclick="window.close();">닫기</button>
-</div>
-</form>
+    <p class="new_win_desc">
+        쿠폰을 적용할 상품을 선택하세요. 상품이 많을 경우에는 검색 기능을 이용하세요.
+    </p>
+
+    <form name="ftarget" method="get">
+    <input type="hidden" name="sch_target" value="<?php echo $_GET['sch_target']; ?>">
+
+    <div id="scp_list_find">
+        <label for="sch_word"><?php echo $t_name; ?></label>
+        <input type="text" name="sch_word" id="sch_word" class="frm_input required" required size="20">
+        <input type="submit" value="검색" class="btn_frmline">
+    </div>
+
+    <?php if($_GET['sch_word']) { ?>
+    <table>
+    <caption>검색결과</caption>
+    <thead>
+    <tr>
+        <th><?php echo $t_name; ?></th>
+        <th><?php echo $t_id; ?></th>
+        <th>선택</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+    ?>
+    <tr>
+        <td><?php echo $row['t_name']; ?></td>
+        <td class="scp_target_code"><?php echo $row['t_id']; ?></td>
+        <td class="scp_target_select"><button type="button" onclick="sel_target_id('<?php echo $row['t_id']; ?>');">선택</button>
+    </tr>
+    <?php
+    }
+
+    if($i ==0)
+        echo '<tr><td colspan="3" class="empty_table">검색된 자료가 없습니다.</td></tr>';
+    ?>
+    </tbody>
+    </table>
+    <?php } ?>
+    </form>
+
+    <div class="btn_confirm">
+        <button type="button" onclick="window.close();">닫기</button>
+    </div>
 </div>
 
 <script>

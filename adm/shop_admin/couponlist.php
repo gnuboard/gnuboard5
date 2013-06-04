@@ -76,7 +76,7 @@ $colspan = 8;
 </fieldset>
 </form>
 
-<section class="cbox">
+<section id="scp_list" class="cbox">
     <h2>쿠폰 내역</h2>
 
     <div id="btn_add">
@@ -142,13 +142,13 @@ $colspan = 8;
             <input type="hidden" id="cp_id_<?php echo $i; ?>" name="cp_id[<?php echo $i; ?>]" value="<?php echo $row['cp_id']; ?>">
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">
         </td>
-        <td class="td_mbid"><?php echo $row['cp_id']; ?></td>
-        <td class="td_mbname"><?php echo $row['cp_subject']; ?></td>
+        <td class="scp_list_id"><?php echo $row['cp_id']; ?></td>
+        <td class="scp_list_name"><?php echo $row['cp_subject']; ?></td>
         <td><?php echo $cp_target; ?></td>
         <td class="td_name sv_use"><div><?php echo $row['mb_id']; ?></div></td>
         <td class="td_time"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
-        <td class="td_pt_log"><?php echo $row['cp_used'] ? '예' : '아니오'; ?></td>
-        <td class="td_num td_pt"><a href="./couponform.php?w=u&amp;cp_id=<?php echo $row['cp_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['cp_id']; ?> 수정"></a></td>
+        <td class="td_boolean"><?php echo $row['cp_used'] ? '예' : '아니오'; ?></td>
+        <td class="td_mng"><a href="./couponform.php?w=u&amp;cp_id=<?php echo $row['cp_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['cp_id']; ?> 수정"></a></td>
     </tr>
 
     <?php

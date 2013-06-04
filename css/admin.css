@@ -255,6 +255,20 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 이벤트 입력/수정 */
 .frm_ev_id {display:inline-block;margin:0 10px 0 0;font-weight:bold}
 
+/* 쿠폰관리 */
+#scp_list {}
+#scp_list .scp_list_id {width:170px}
+#scp_list .scp_list_name {width:90px}
+
+.scp_new_win .empty_table {padding:30px 0}
+
+#scp_list_find {margin:10px auto 20px;padding:20px;width:86%;border:1px solid #e9e9e9;background:#fff}
+#scp_list_find .btn_frmline {line-height:1.5em !important}
+#scp_list_find label {font-weight:bold}
+
+.scp_find_code {width:110px;text-align:center}
+.scp_find_select {width:50px;text-align:center}
+
 /* 배너관리 */
 #tbl_bn_list {text-align:center}
 
