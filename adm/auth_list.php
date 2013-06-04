@@ -73,7 +73,7 @@ $colspan = 5;
     <h2>설정된 관리권한 내역</h2>
     <p>권한 <strong>r</strong>은 읽기권한, <strong>w</strong>는 쓰기권한, <strong>d</strong>는 삭제권한입니다.</p>
 
-    <form name="fauthlist" id="fauthlist" method="post" action="./auth_list_delete.php">
+    <form name="fauthlist" id="fauthlist" method="post" action="./auth_list_delete.php" onsubmit="return fauthlist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
@@ -129,7 +129,7 @@ $colspan = 5;
     </table>
 
     <div class="btn_list">
-        <button onclick="btn_check(this.form, 'delete')">선택삭제</button>
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
     </div>
 
     <?php
@@ -211,16 +211,21 @@ $colspan = 5;
 </form>
 
 <script>
-$(function() {
-    $('#fauthlist').submit(function() {
-        if (!is_checked("chk[]")) {
-            alert("선택삭제 하실 항목을 하나 이상 선택하세요.");
+function fauthlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
             return false;
         }
+    }
 
-        return true;
-    });
-});
+    return true;
+}
 </script>
 
 <?php

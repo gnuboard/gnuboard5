@@ -58,10 +58,6 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         }
          ?>
         </ul>
-        <?php
-        // SNS 보내기
-        @include(G4_SKIN_PATH."/board/basic/view.sns.skin.php");
-        ?>
     </section>
     <?php } ?>
 
@@ -172,8 +168,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     </section>
 
     <?php
-    // SNS 보내기
-    include_once($board_skin_path."/view.sns.skin.php");
+    include(G4_SNS_PATH."/view.sns.skin.php");
     ?>
 
     <?php
