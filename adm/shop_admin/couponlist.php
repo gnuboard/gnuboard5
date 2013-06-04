@@ -58,11 +58,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 $colspan = 8;
 ?>
 
-<script>
-var list_update_php = '';
-var list_delete_php = 'couponlist_delete.php';
-</script>
-
 <form name="fsearch" id="fsearch" method="get">
 <fieldset>
     <legend>쿠폰 검색</legend>
