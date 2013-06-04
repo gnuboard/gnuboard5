@@ -52,26 +52,28 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="cp_method">쿠폰종류</label></th>
         <td>
+            <?php echo help("쿠폰 종류를 변경하시면 입력 서식도 일부 변경됩니다."); ?>
            <select name="cp_method" id="cp_method">
-            <option value="0"<?php echo get_selected('0', $cp['cp_method']); ?>>개별상품할인</option>
-            <option value="1"<?php echo get_selected('1', $cp['cp_method']); ?>>카테고리할인</option>
-            <option value="2"<?php echo get_selected('2', $cp['cp_method']); ?>>주문금액할인</option>
-            <option value="3"<?php echo get_selected('3', $cp['cp_method']); ?>>배송비할인</option>
+                <option value="0"<?php echo get_selected('0', $cp['cp_method']); ?>>개별상품할인</option>
+                <option value="1"<?php echo get_selected('1', $cp['cp_method']); ?>>카테고리할인</option>
+                <option value="2"<?php echo get_selected('2', $cp['cp_method']); ?>>주문금액할인</option>
+                <option value="3"<?php echo get_selected('3', $cp['cp_method']); ?>>배송비할인</option>
            </select>
+           <button type="button" id="cp_method_btn" class="btn_frmline">변경</button>
         </td>
     </tr>
     <tr id="tr_cp_target">
         <th scope="row"><label for="cp_target"><?php echo $cp_target_label; ?></label></th>
         <td>
            <input type="text" name="cp_target" value="<?php echo stripslashes($cp['cp_target']); ?>" id="cp_target" required class="required frm_input">
-           <button type="button" id="sch_target"><?php echo $cp_target_btn; ?></button>
+           <button type="button" id="sch_target" class="btn_frmline"><?php echo $cp_target_btn; ?></button>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_id">회원아이디</label></th>
         <td>
-            <input type="text" class="frm_input" name="mb_id" value="<?php echo stripslashes($cp['mb_id']); ?>" id="mb_id">
-            <button type="button" id="sch_member">회원검색</button>
+            <input type="text" name="mb_id" value="<?php echo stripslashes($cp['mb_id']); ?>" id="mb_id" class="frm_input">
+            <button type="button" id="sch_member" class="btn_frmline">회원검색</button>
             <input type="checkbox" name="chk_all_mb" id="chk_all_mb" value="1">
             <label for="chk_all_mb">전체회원</label>
         </td>
@@ -79,28 +81,30 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="cp_start">사용시작일</label></th>
         <td>
-            <input type="text" class="frm_input required" name="cp_start" value="<?php echo stripslashes($cp['cp_start']); ?>" id="cp_start" required> 입력예: <?php echo date('Y-m-d'); ?>
+            <?php echo help('입력 예: '.date('Y-m-d')); ?>
+            <input type="text" name="cp_start" value="<?php echo stripslashes($cp['cp_start']); ?>" id="cp_start" required class="frm_input required">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cp_end">사용종료일</label></th>
         <td>
-            <input type="text" class="frm_input required" name="cp_end" value="<?php echo stripslashes($cp['cp_end']); ?>" id="cp_end" required> 입력예: <?php echo date('Y-m-d'); ?>
+            <?php echo help('입력 예: '.date('Y-m-d')); ?>
+            <input type="text" name="cp_end" value="<?php echo stripslashes($cp['cp_end']); ?>" id="cp_end" required class="frm_input required">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cp_type">쿠폰타입</label></th>
         <td>
            <select name="cp_type" id="cp_type">
-            <option value="0"<?php echo get_selected('0', $cp['cp_type']); ?>>정액할인(원)</option>
-            <option value="1"<?php echo get_selected('1', $cp['cp_type']); ?>>정률할인(%)</option>
+                <option value="0"<?php echo get_selected('0', $cp['cp_type']); ?>>정액할인(원)</option>
+                <option value="1"<?php echo get_selected('1', $cp['cp_type']); ?>>정률할인(%)</option>
            </select>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cp_amount"><?php echo $cp['cp_type'] ? '할인비율' : '할인금액'; ?></label></th>
         <td>
-            <input type="text" class="frm_input required" name="cp_amount" value="<?php echo stripslashes($cp['cp_amount']); ?>" id="cp_amount" required> <span id="cp_amount_unit"><?php echo $cp['cp_type'] ? '%' : '원'; ?></span>
+            <input type="text" name="cp_amount" value="<?php echo stripslashes($cp['cp_amount']); ?>" id="cp_amount" required class="frm_input required"> <span id="cp_amount_unit"><?php echo $cp['cp_type'] ? '%' : '원'; ?></span>
         </td>
     </tr>
     <tr id="tr_cp_trunc">
@@ -117,13 +121,13 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="cp_minimum">최소주문금액</label></th>
         <td>
-            <input type="text" class="frm_input" name="cp_minimum" value="<?php echo stripslashes($cp['cp_minimum']); ?>" id="cp_minimum"> 원
+            <input type="text" name="cp_minimum" value="<?php echo stripslashes($cp['cp_minimum']); ?>" id="cp_minimum" class="frm_input"> 원
         </td>
     </tr>
     <tr id="tr_cp_maximum">
         <th scope="row"><label for="cp_maximum">최대할인금액</label></th>
         <td>
-            <input type="text" class="frm_input" name="cp_maximum" value="<?php echo stripslashes($cp['cp_maximum']); ?>" id="cp_maximum"> 원
+            <input type="text" name="cp_maximum" value="<?php echo stripslashes($cp['cp_maximum']); ?>" id="cp_maximum" class="frm_input"> 원
         </td>
     </tr>
     </tbody>
