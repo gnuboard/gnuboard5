@@ -70,7 +70,8 @@ $colspan = 8;
         <option value="cp_subject"<?php echo get_selected($_GET['sfl'], "cp_subject"); ?>>쿠폰이름</option>
         <option value="cp_id"<?php echo get_selected($_GET['sfl'], "cp_id"); ?>>쿠폰코드</option>
     </select>
-    <input type="text" name="stx" value="<?php echo $stx ?>" title="검색어(필수)" required class="required frm_input">
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
     <input type="submit" class="btn_submit" value="검색">
 </fieldset>
 </form>
