@@ -8,7 +8,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     $s_uq_id 는 유일한 키
 */
 
-if ($s_page == 'cart.php' || $s_page == 'orderinquiryview.php')
+if ($s_page == 'cart.php' || $s_page == 'orderinquiryview.php' || $s_page == 'orderform.php')
     $colspan = 7;
 else
     $colspan = 6;
@@ -24,6 +24,9 @@ else
     <th scope="col">상품명</th>
     <th scope="col">총수량</th>
     <th scope="col">판매가</th>
+    <?php if($s_page =='orderform.php') { ?>
+    <th scope="col">쿠폰</th>
+    <?php } ?>
     <th scope="col">소계</th>
     <th scope="col">포인트</th>
 <?php
@@ -51,7 +54,9 @@ $sql = " select a.ct_id,
                 a.ct_point,
                 a.ct_qty,
                 a.ct_status,
-                b.ca_id
+                b.ca_id,
+                b.ca_id2,
+                b.ca_id3
            from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
           where a.uq_id = '$s_uq_id'
             and a.ct_num = '0' ";
@@ -120,6 +125,27 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     $point       = $sum['point'];
     $sell_amount = $sum['price'];
+
+    // 쿠폰
+    if($s_page == 'orderform.php' && $is_member) {
+        $cp_button = '';
+
+        $sql = " select count(*) as cnt
+                    from {$g4['shop_coupon_table']}
+                    where mb_id = '{$member['mb_id']}'
+                      and cp_used = '0'
+                      and cp_start <= '".G4_TIME_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."'
+                      and (
+                            ( cp_method = '0' and cp_target = '{$row['it_id']}' )
+                            OR
+                            ( cp_method = '1' and ( cp_target IN ( '{$row['ca_id']}', '{$row['ca_id2']}', '{$row['ca_id3']}' ) ) )
+                          ) ";
+        $cp = sql_fetch($sql);
+
+        if($cp['cnt'])
+            $cp_button = '<button type="button" class="od_coupon_btn">적용</button>';
+    }
 ?>
 
 <tr>
@@ -131,6 +157,9 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     </td>
     <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
     <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
+    <?php if($s_page == 'orderform.php') { ?>
+    <td><?php echo $cp_button; ?></td>
+    <?php } ?>
     <td class="td_bignum"><?php echo number_format($sell_amount); ?></td>
     <td class="td_bignum"><?php echo number_format($point); ?></td>
 
