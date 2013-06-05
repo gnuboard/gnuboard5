@@ -83,6 +83,7 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_join_mail">가입메일</a></li>
     <li><a href="#anc_cf_vote_mail">투표메일</a></li>
     <li><a href="#anc_cf_sns">SNS</a></li>
+    <li><a href="#anc_cf_lay">레이아웃 추가설정</a></li>
     <li><a href="#anc_cf_extra">여분필드</a></li>
 </ul>';
 ?>
@@ -107,34 +108,6 @@ $pg_anchor = '<ul class="anchor">
         <td><input type="text" name="cf_title" value="<?php echo $config['cf_title'] ?>" id="cf_title" required class="required frm_input" size="40"></td>
         <th scope="row"><label for="cf_admin">최고관리자<strong class="sound_only">필수</strong></label></th>
         <td><?php echo get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required') ?></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_include_index">초기화면 파일 경로</label></th>
-        <td colspan="3">
-            <?php echo help('입력이 없으면 index.php가 초기화면 파일의 기본 경로로 설정됩니다.') ?>
-            <input type="text" name="cf_include_index" value="<?php echo $config['cf_include_index'] ?>" id="cf_include_index" class="frm_input" size="50">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_include_head">상단 파일 경로</label></th>
-        <td colspan="3">
-            <?php echo help('입력이 없으면 head.php가 상단 파일의 기본 경로로 설정됩니다.') ?>
-            <input type="text" name="cf_include_head" value="<?php echo $config['cf_include_head'] ?>" id="cf_include_head" class="frm_input" size="50">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_include_tail">하단 파일 경로</label></th>
-        <td colspan="3">
-            <?php echo help('입력이 없으면 tail.php가 상단 파일의 기본 경로로 설정됩니다.') ?>
-            <input type="text" name="cf_include_tail" value="<?php echo $config['cf_include_tail'] ?>" id="cf_include_tail" class="frm_input" size="50">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_add_script">추가 script, css</label></th>
-        <td colspan="3">
-            <?php echo help('HTML의 &lt;/HEAD&gt; 태그위로 추가될 JavaScript와 css 코드를 설정합니다.<br>관리자 페이지에서는 이 코드를 사용하지 않습니다.') ?>
-            <textarea name="cf_add_script" id="cf_add_script"><?php echo $config['cf_add_script'] ?></textarea>
-        </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_use_point">포인트 사용</label></th>
@@ -765,6 +738,47 @@ $pg_anchor = '<ul class="anchor">
     </table>
 </section>
 
+<section id="anc_cf_lay" class="cbox">
+    <h2>레이아웃 추가설정</h2>
+    <?php echo $pg_anchor; ?>
+    <p>기본 설정된 파일 경로 및 script, css 를 추가하거나 변경할 수 있습니다.</p>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_15">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="cf_include_index">초기화면 파일 경로</label></th>
+        <td>
+            <?php echo help('입력이 없으면 index.php가 초기화면 파일의 기본 경로로 설정됩니다.') ?>
+            <input type="text" name="cf_include_index" value="<?php echo $config['cf_include_index'] ?>" id="cf_include_index" class="frm_input" size="50">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_include_head">상단 파일 경로</label></th>
+        <td>
+            <?php echo help('입력이 없으면 head.php가 상단 파일의 기본 경로로 설정됩니다.') ?>
+            <input type="text" name="cf_include_head" value="<?php echo $config['cf_include_head'] ?>" id="cf_include_head" class="frm_input" size="50">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_include_tail">하단 파일 경로</label></th>
+        <td>
+            <?php echo help('입력이 없으면 tail.php가 상단 파일의 기본 경로로 설정됩니다.') ?>
+            <input type="text" name="cf_include_tail" value="<?php echo $config['cf_include_tail'] ?>" id="cf_include_tail" class="frm_input" size="50">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_add_script">추가 script, css</label></th>
+        <td>
+            <?php echo help('HTML의 &lt;/HEAD&gt; 태그위로 추가될 JavaScript와 css 코드를 설정합니다.<br>관리자 페이지에서는 이 코드를 사용하지 않습니다.') ?>
+            <textarea name="cf_add_script" id="cf_add_script"><?php echo $config['cf_add_script'] ?></textarea>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</section>
 
 <section id="anc_cf_extra" class="cbox">
     <h2>여분필드 기본 설정</h2>
