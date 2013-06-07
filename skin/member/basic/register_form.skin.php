@@ -357,6 +357,7 @@ function fregisterform_submit(f)
         }
     }
 
+    /*
     if (typeof(f.mb_hp) != "undefined" && f.mb_hp.value) {
         var error = "";
         $.ajax({
@@ -381,6 +382,7 @@ function fregisterform_submit(f)
             return false;
         }
     }
+    */
 
     <?php echo chk_captcha_js();  ?>
 
