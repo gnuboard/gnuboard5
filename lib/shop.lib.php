@@ -1139,6 +1139,28 @@ function get_coupon_id()
 
     return $str;
 }
+
+// array_map() 대체
+function array_add_callback($func, $array)
+{
+    if(!$func) {
+        return;
+    }
+
+    if(is_array($array)) {
+        foreach($array as $key => $value) {
+            if(is_array($value)) {
+                $array[$key] = array_add_callback($func, $value);
+            } else {
+                $array[$key] = call_user_func($func, $value);
+            }
+        }
+    } else {
+        $array = call_user_func($func, $array);
+    }
+
+    return $array;
+}
 //==============================================================================
 // 쇼핑몰 함수 모음 끝
 //==============================================================================

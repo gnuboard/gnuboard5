@@ -254,4 +254,15 @@ if(!$result) {
                   KEY `mb_id` (`mb_id`)
                 )", false);
 }
+
+// 쿠폰관련필드 추가
+$sql = " select cp_amount from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `cp_amount` INT(11) NOT NULL DEFAULT '0' AFTER `ct_point` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_coupon` INT(11) NOT NULL DEFAULT '0' AFTER `od_dc_amount`,
+                    ADD `od_send_coupon` INT(11) NOT NULL DEFAULT '0' AFTER `od_send_cost` ", false);
+}
 ?>
