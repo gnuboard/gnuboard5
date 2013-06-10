@@ -122,9 +122,6 @@ else if ($act == "optionmod") // 장바구니에서 옵션변경
     if (!$_POST['it_id'])
         alert('장바구니에 담을 상품을 선택하여 주십시오.');
 
-    // 기존 장바구니 자료를 먼저 삭제
-    sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and it_id = '$it_id' ");
-
     $option_count = count($_POST['io_id']);
 
     if($option_count) {
@@ -171,7 +168,7 @@ else if ($act == "optionmod") // 장바구니에서 옵션변경
         if ((int)$_POST['total_price'] !== (int)$total_price)
             die("Error..");
 
-        $point = $it['it_point'];
+        $point = get_item_point($it);
         // 포인트가 다름
         if ((int)$point !== (int)$_POST['it_point'] && $config['cf_use_point'])
             die("Error...");
@@ -203,6 +200,9 @@ else if ($act == "optionmod") // 장바구니에서 옵션변경
             }
         }
         //--------------------------------------------------------
+
+        // 기존 장바구니 자료를 먼저 삭제
+        sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and it_id = '$it_id' ");
 
         // 포인트 사용하지 않는다면
         if (!$config['cf_use_point']) { $_POST['it_point'] = 0; }

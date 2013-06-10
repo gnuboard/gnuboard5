@@ -13,9 +13,6 @@ else {
 if (get_cart_count($tmp_uq_id) == 0)
     alert('장바구니가 비어 있습니다.', G4_SHOP_URL.'/cart.php');
 
-// 포인트 결제 대기 필드 추가
-//sql_query(" ALTER TABLE `$g4[shop_order_table]` ADD `od_temp_point` INT NOT NULL AFTER `od_temp_card` ", false);
-
 $g4['title'] = '주문서 작성';
 
 include_once(G4_MSHOP_PATH.'/_head.php');
@@ -24,35 +21,214 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 $od_id = get_uniqid();
 set_session('ss_order_uniqid', $od_id);
 
+$s_uq_id = $tmp_uq_id;
+$order_action_url = G4_HTTPS_MSHOP_URL.'/orderformupdate.php';
+if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
+    include './settle_'.$default['de_card_pg'].'.inc.php';
+}
+
 // 결제등록 요청시 사용할 입금마감일
 $ipgm_date = date("Ymd", (G4_SERVER_TIME + 86400 * 5));
 $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
 ?>
 
-<div id="sod_frm">
+<div id="sod_approval_frm">
+<?php
+ob_start();
+?>
+    <p>주문하실 상품을 확인하세요.</p>
+    <table class="basic_tbl">
+    <thead>
+    <tr>
+        <th scope="col">상품이미지</th>
+        <th scope="col">상품명</th>
+        <th scope="col">총수량</th>
+        <th scope="col">판매가</th>
+        <th scope="col">쿠폰</th>
+        <th scope="col">소계</th>
+        <th scope="col">포인트</th>
+        <th scope="col"><input type="checkbox" name="ct_all" value="1"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    $tot_point = 0;
+    $tot_sell_amount = 0;
+
+    $goods = $goods_it_id = "";
+    $goods_count = -1;
+
+    // $s_uq_id 로 현재 장바구니 자료 쿼리
+    $sql = " select a.ct_id,
+                    a.it_id,
+                    a.it_name,
+                    a.ct_price,
+                    a.ct_point,
+                    a.ct_qty,
+                    a.ct_status,
+                    b.ca_id
+               from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
+              where a.uq_id = '$s_uq_id'
+                and a.ct_num = '0' ";
+    if($default['de_cart_keep_term']) {
+        $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+        $sql .= " and a.ct_time > '$ctime' ";
+    }
+    $sql .= " order by a.ct_id ";
+    $result = sql_query($sql);
+
+    $good_info = '';
+
+    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    {
+        // 합계금액 계산
+        $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                        SUM(ct_point * ct_qty) as point,
+                        SUM(ct_qty) as qty
+                    from {$g4['shop_cart_table']}
+                    where it_id = '{$row['it_id']}'
+                      and uq_id = '$s_uq_id' ";
+        $sum = sql_fetch($sql);
+
+        if (!$goods)
+        {
+            //$goods = addslashes($row[it_name]);
+            //$goods = get_text($row[it_name]);
+            $goods = preg_replace("/\'|\"|\||\,|\&|\;/", "", $row['it_name']);
+            $goods_it_id = $row['it_id'];
+        }
+        $goods_count++;
+
+        // 에스크로 상품정보
+        if($default['de_escrow_use']) {
+            if ($i>0)
+                $good_info .= chr(30);
+            $good_info .= "seq=".($i+1).chr(31);
+            $good_info .= "ordr_numb={$od_id}_".sprintf("%04d", $i).chr(31);
+            $good_info .= "good_name=".addslashes($row['it_name']).chr(31);
+            $good_info .= "good_cntx=".$row['ct_qty'].chr(31);
+            $good_info .= "good_amtx=".$row['ct_price'].chr(31);
+        }
+
+        $a1 = '<b>';
+        $a2 = '</b>';
+        $image = get_it_image($row['it_id'], 50, 50);
+
+        $it_name = $a1 . stripslashes($row['it_name']) . $a2;
+        $it_options = print_item_options($row['it_id'], $s_uq_id);
+        if($it_options) {
+            $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
+        }
+
+        $point       = $sum['point'];
+        $sell_amount = $sum['price'];
+
+        // 쿠폰
+        if($is_member) {
+            $cp_button = '';
+
+            $sql = " select count(*) as cnt
+                        from {$g4['shop_coupon_table']}
+                        where mb_id = '{$member['mb_id']}'
+                          and cp_used = '0'
+                          and cp_start <= '".G4_TIME_YMD."'
+                          and cp_end >= '".G4_TIME_YMD."'
+                          and (
+                                ( cp_method = '0' and cp_target = '{$row['it_id']}' )
+                                OR
+                                ( cp_method = '1' and ( cp_target IN ( '{$row['ca_id']}', '{$row['ca_id2']}', '{$row['ca_id3']}' ) ) )
+                              ) ";
+            $cp = sql_fetch($sql);
+
+            if($cp['cnt'])
+                $cp_button = '<button type="button" class="it_coupon_btn">적용</button>';
+        }
+    ?>
+
+    <tr>
+        <td class="sod_bsk_img"><?php echo $image; ?></td>
+        <td>
+            <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
+            <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
+            <input type="hidden" name="it_amount[<?php echo $i; ?>]" value="<?php echo $sell_amount; ?>">
+            <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
+            <input type="hidden" name="cp_amount[<?php echo $i; ?>]" value="0">
+            <?php echo $it_name.$mod_options; ?>
+        </td>
+        <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
+        <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
+        <td><?php echo $cp_button; ?></td>
+        <td class="td_bignum"><span class="ct_sell_amount"><?php echo number_format($sell_amount); ?></span></td>
+        <td class="td_num"><?php echo number_format($sum['point']); ?></td>
+    </tr>
 
     <?php
-    $s_page = 'orderform.php';
-    $s_uq_id = $tmp_uq_id;
+        $tot_point       += $point;
+        $tot_sell_amount += $sell_amount;
+    } // for 끝
 
-    echo '<p>주문하실 상품을 확인하세요.</p>';
-    include_once(G4_MSHOP_PATH.'/cartsub.inc.php');
-
-    if (file_exists(G4_MSHOP_PATH.'/settle_'.$default['de_card_pg'].'.inc.php')) {
-        include G4_MSHOP_PATH.'/settle_'.$default['de_card_pg'].'.inc.php';
+    if ($i == 0) {
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+    } else {
+        // 배송비 계산
+        if ($default['de_send_cost_case'] == '없음')
+            $send_cost = 0;
+        else {
+            // 배송비 상한 : 여러단계의 배송비 적용 가능
+            $send_cost_limit = explode(";", $default['de_send_cost_limit']);
+            $send_cost_list  = explode(";", $default['de_send_cost_list']);
+            $send_cost = 0;
+            for ($k=0; $k<count($send_cost_limit); $k++) {
+                // 총판매금액이 배송비 상한가 보다 작다면
+                if ($tot_sell_amount < $send_cost_limit[$k]) {
+                    $send_cost = $send_cost_list[$k];
+                    break;
+                }
+            }
+        }
     }
-
-    $good_mny = (int)$tot_sell_amount + (int)$send_cost;
-
-    $order_action_url = G4_HTTPS_MSHOP_URL.'/orderformupdate.php';
     ?>
+    </tbody>
+    </table>
+
+    <?php if ($goods_count) $goods .= ' 외 '.$goods_count.'건'; ?>
+
+    <?php
+    // 배송비가 0 보다 크다면 (있다면)
+    if ($send_cost > 0)
+    {
+    ?>
+
+    <div id="sod_bsk_dvr" class="sod_bsk_tot">
+        <span>배송비</span>
+        <strong><?php echo number_format($send_cost); ?> 원</strong>
+    </div>
+
+    <?php } ?>
+
+    <?php
+    // 총계 = 주문상품금액합계 + 배송비
+    $tot_amount = $tot_sell_amount + $send_cost;
+    if ($tot_amount > 0) {
+    ?>
+
+    <div id="sod_bsk_cnt" class="sod_bsk_tot">
+        <span>총계</span>
+        <strong><span id="ct_tot_amount"><?php echo number_format($tot_amount); ?></span> 원 <?php echo number_format($tot_point); ?> 점</strong>
+    </div>
+
+    <?php } ?>
+<?php
+$content = ob_get_contents();
+ob_end_clean();
+?>
 
     <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
     <script src="<?php echo G4_MSHOP_URL; ?>/kcp/approval_key.js"></script>
 
     <form name="sm_form" method="POST" action="<?php echo G4_MSHOP_URL; ?>/kcp/order_approval_form.php">
     <input type="hidden" name="good_name"     value="<?php echo $goods; ?>">
-    <input type="hidden" name="good_mny"      value="<?php echo $good_mny; ?>" >
+    <input type="hidden" name="good_mny"      value="<?php echo $tot_amount ?>" >
     <input type="hidden" name="buyr_name"     value="">
     <input type="hidden" name="buyr_tel1"     value="">
     <input type="hidden" name="buyr_tel2"     value="">
@@ -108,10 +284,16 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
         <input type="hidden" name="kcp_noint_quota" value="CCBC-02:03:06,CCKM-03:06,CCSS-03:06:09"/> */
     -->
     </form>
+</div>
 
+<div id="sod_frm">
     <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
     <input type="hidden" name="od_amount"    value="<?php echo $tot_sell_amount; ?>">
+    <input type="hidden" name="org_od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="od_send_cost" value="<?php echo $send_cost; ?>">
+    <input type="hidden" name="org_send_cost" value="<?php echo $send_cost; ?>">
+
+    <?php echo $content; ?>
 
     <section id="sod_frm_orderer">
         <h2>주문하시는 분</h2>
@@ -240,8 +422,63 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
         </table>
     </section>
 
+    <?php
+    if($is_member) {
+        // 주문쿠폰
+        $sql = " select count(*) as cnt
+                    from {$g4['shop_coupon_table']}
+                    where mb_id = '{$member['mb_id']}'
+                      and cp_method = '2'
+                      and cp_start <= '".G4_TIM_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."'
+                      and cp_used = '0' ";
+        $row = sql_fetch($sql);
+        $oc_cnt = $row['cnt'];
+
+        if($send_cost > 0) {
+            // 배송비쿠폰
+            $sql = " select count(*) as cnt
+                        from {$g4['shop_coupon_table']}
+                        where mb_id = '{$member['mb_id']}'
+                          and cp_method = '3'
+                          and cp_start <= '".G4_TIM_YMD."'
+                          and cp_end >= '".G4_TIME_YMD."'
+                          and cp_used = '0' ";
+            $row = sql_fetch($sql);
+            $sc_cnt = $row['cnt'];
+        }
+    }
+    ?>
+
     <section id="sod_frm_pay">
         <h2>결제정보 입력</h2>
+
+        <table class="frm_tbl">
+        <tbody>
+        <?php if($oc_cnt > 0) { ?>
+        <tr>
+            <th scope="row">결제할인쿠폰</th>
+            <td>
+                <input type="hidden" name="od_cp_id" value="">
+                <button type="button" id="od_coupon_btn">쿠폰적용</button>
+            </td>
+        </tr>
+        <?php } ?>
+        <?php if($sc_cnt > 0) { ?>
+        <tr>
+            <th scope="row">배송비할인쿠폰</th>
+            <td>
+                <input type="hidden" name="sc_cp_id" value="">
+                <button type="button" id="sc_coupon_btn">쿠폰적용</button>
+            </td>
+        </tr>
+        <?php } ?>
+        <tr>
+            <th>총 주문금액</th>
+            <td><span id="od_tot_amount"><?php echo number_format($tot_amount); ?></span>원</td>
+        </tr>
+        </tbody>
+        </table>
 
         <?php
         $multi_settle == 0;
@@ -340,7 +577,7 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
                         $temp_point = $member_mileage;
 
                     echo '<div>결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
-                    echo '<div>회원님의 보유포인트('.display_point($member['mb_mileage']).')중 <strong>'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
+                    echo '<div>회원님의 보유포인트('.display_point($member['mb_mileage']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
                     $multi_settle++;
                 }
             }
@@ -358,8 +595,8 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
                     if ($temp_point > $member_point)
                         $temp_point = $member_point;
 
-                    echo '<div>결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
-                    echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong>'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
+                    echo '<div><input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>"><input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
+                    echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
                     $multi_settle++;
                 }
             }
@@ -459,6 +696,279 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
 </div>
 
 <script>
+$(function() {
+    var $cp_btn_el;
+    var $cp_row_el;
+
+    $(".it_coupon_btn").click(function() {
+        $cp_btn_el = $(this);
+        $cp_row_el = $(this).closest("tr");
+        $("#it_coupon_frm").remove();
+        var it_id = $cp_btn_el.closest("tr").find("input[name^=it_id]").val();
+
+        $.post(
+            "./orderitemcoupon.php",
+            { it_id: it_id },
+            function(data) {
+                $cp_btn_el.after(data);
+            }
+        );
+    });
+
+    $(".cp_apply").live("click", function() {
+        var $el = $(this).closest("li");
+        var cp_id = $el.find("input[name='f_cp_id[]']").val();
+        var amount = $el.find("input[name='f_cp_amt[]']").val();
+        var subj = $el.find("input[name='f_cp_subj[]']").val();
+        var sell_amount;
+
+        if(parseInt(amount) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                return false;
+            }
+        }
+
+        // 이미 사용한 쿠폰이 있는지
+        var cp_dup = false;
+        var cp_dup_idx;
+        var $cp_dup_el;
+        $("input[name^=cp_id]").each(function(index) {
+            var id = $(this).val();
+
+            if(id == cp_id) {
+                cp_dup_idx = index;
+                cp_dup = true;
+                $cp_dup_el = $(this).closest("tr");;
+
+                return false;
+            }
+        });
+
+        if(cp_dup) {
+            var it_name = $("input[name='it_name["+cp_dup_idx+"]']").val();
+            if(!confirm(subj+ "쿠폰은 "+it_name+"에 사용되었습니다.\n"+it_name+"의 쿠폰을 취소한 후 적용하시겠습니까?")) {
+                return false;
+            } else {
+                coupon_cancel($cp_dup_el);
+            }
+        }
+
+        var $s_el = $cp_row_el.find(".ct_sell_amount");;
+        sell_amount = parseInt($cp_row_el.find("input[name^=it_amount]").val());
+        sell_amount = sell_amount - parseInt(amount);
+        $s_el.text(number_format(String(sell_amount)));
+        $cp_row_el.find("input[name^=cp_id]").val(cp_id);
+        $cp_row_el.find("input[name^=cp_amount]").val(amount);
+
+        calculate_total_amount();
+        $("#it_coupon_frm").remove();
+        $cp_btn_el.focus();
+    });
+
+    $("#it_coupon_close").live("click", function() {
+        $("#it_coupon_frm").remove();
+        $cp_btn_el.focus();
+    });
+
+    $("#it_coupon_cancel").live("click", function() {
+        coupon_cancel($cp_row_el);
+        calculate_total_amount();
+        $("#it_coupon_frm").remove();
+        $cp_btn_el.focus();
+    });
+
+    $("#od_coupon_btn").click(function() {
+        $("#od_coupon_frm").remove();
+        var $this = $(this);
+        var amount = parseInt($("input[name=org_od_amount]").val());
+        var send_cost = parseInt($("input[name=org_send_cost]").val());
+        $.post(
+            "./ordercoupon.php",
+            { amount: (amount + send_cost) },
+            function(data) {
+                $this.after(data);
+            }
+        );
+    });
+
+    $(".od_cp_apply").live("click", function() {
+        var $el = $(this).closest("li");
+        var cp_id = $el.find("input[name='o_cp_id[]']").val();
+        var amount = parseInt($el.find("input[name='o_cp_amt[]']").val());
+        var subj = $el.find("input[name='o_cp_subj[]']").val();
+        var od_amount = parseInt($("input[name=org_od_amount]").val());
+        var send_cost = $("input[name=org_send_cost]").val();
+
+        if(parseInt(amount) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                return false;
+            }
+        }
+
+        $("input[name=od_send_cost]").val(send_cost);
+        $("input[name=sc_cp_id]").val("");
+
+        $("input[name=od_amount]").val(od_amount - amount);
+        $("input[name=od_cp_id]").val(cp_id);
+        calculate_order_amount();
+        $("#od_coupon_frm").remove();
+        $("#od_coupon_btn").focus();
+    });
+
+    $("#od_coupon_close").live("click", function() {
+        $("#od_coupon_frm").remove();
+        $("#od_coupon_btn").focus();
+    });
+
+    $("#od_coupon_cancel").live("click", function() {
+        var org_amount = $("input[name=org_od_amount]").val();
+        $("input[name=od_amount]").val(org_amount);
+        calculate_order_amount();
+        $("#od_coupon_frm").remove();
+        $("#od_coupon_btn").focus();
+    });
+
+    $("#sc_coupon_btn").click(function() {
+        $("#sc_coupon_frm").remove();
+        var $this = $(this);
+        var amount = parseInt($("input[name=od_amount]").val());
+        var send_cost = parseInt($("input[name=org_send_cost]").val());
+        $.post(
+            "./ordersendcostcoupon.php",
+            { amount: (amount + send_cost), send_cost: send_cost },
+            function(data) {
+                $this.after(data);
+            }
+        );
+    });
+
+    $(".sc_cp_apply").live("click", function() {
+        var $el = $(this).closest("li");
+        var cp_id = $el.find("input[name='s_cp_id[]']").val();
+        var amount = parseInt($el.find("input[name='s_cp_amt[]']").val());
+        var subj = $el.find("input[name='s_cp_subj[]']").val();
+        var send_cost = parseInt($("input[name=org_send_cost]").val());
+
+        if(parseInt(amount) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                return false;
+            }
+        }
+
+        $("input[name=od_send_cost]").val(send_cost - amount);
+        $("input[name=sc_cp_id]").val(cp_id);
+        calculate_order_amount();
+        $("#sc_coupon_frm").remove();
+        $("#sc_coupon_btn").focus();
+    });
+
+    $("#sc_coupon_close").live("click", function() {
+        $("#sc_coupon_frm").remove();
+        $("#sc_coupon_btn").focus();
+    });
+
+    $("#sc_coupon_cancel").live("click", function() {
+        var send_cost = $("input[name=org_send_cost]").val();
+        $("input[name=od_send_cost]").val(send_cost);
+        calculate_order_amount();
+        $("#sc_coupon_frm").remove();
+        $("#sc_coupon_btn").focus();
+    });
+
+    $("#od_settle_bank").bind("click", function() {
+        $("[name=od_deposit_name]").val( $("[name=od_b_name]").val() );
+        $("#settle_bank").show();
+        $("#show_req_btn").css("display", "none");
+        $("#show_pay_btn").css("display", "inline");
+    });
+
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp").bind("click", function() {
+        $("#settle_bank").hide();
+        $("#show_req_btn").css("display", "inline");
+        $("#show_pay_btn").css("display", "none");
+    });
+});
+
+function coupon_cancel($el)
+{
+    var $dup_sell_el = $el.find(".ct_sell_amount");
+    var $dup_amount_el = $el.find("input[name^=cp_amount]");
+    var org_sell_amount = $el.find("input[name^=it_amount]").val();
+
+    $dup_sell_el.text(number_format(String(org_sell_amount)));
+    $dup_amount_el.val(0);
+    $el.find("input[name^=cp_id]").val("");
+}
+
+function calculate_total_amount()
+{
+    var $it_amt = $("input[name^=it_amount]");
+    var $cp_amt = $("input[name^=cp_amount]");
+    var tot_sell_amount = sell_amount = 0;
+    var it_amount, cp_amount;
+    var send_cost = parseInt($("input[name=org_send_cost]").val());
+
+    $it_amt.each(function(index) {
+        it_amount = parseInt($(this).val());
+        cp_amount = parseInt($cp_amt.eq(index).val());
+        sell_amount += (it_amount - cp_amount);
+    });
+
+    tot_sell_amount = sell_amount + send_cost;
+
+    $("#ct_tot_amount").text(number_format(String(tot_sell_amount)));
+    $("form[name=sm_form] input[name=good_mny]").val(tot_sell_amount);
+    $("input[name=od_amount]").val(sell_amount);
+    $("input[name=org_od_amount]").val(sell_amount);
+    $("input[name=od_send_cost]").val(send_cost);
+    <?php if($od_cnt > 0) { ?>
+    $("input[name=od_cp_id]").val("");
+    <?php } ?>
+    <?php if($sc_cnt > 0) { ?>
+    $("input[name=sc_cp_id]").val("");
+    <?php } ?>
+    $("input[name=od_temp_point]").val(0);
+    <?php if($temp_point > 0 && $is_member) { ?>
+    calculate_temp_point();
+    <?php } ?>
+    calculate_order_amount();
+}
+
+function calculate_order_amount()
+{
+    var sell_amount = parseInt($("input[name=od_amount]").val());
+    var send_cost = parseInt($("input[name=od_send_cost]").val());
+    var tot_amount = sell_amount + send_cost;
+
+    $("form[name=sm_form] input[name=good_mny]").val(tot_amount);
+    $("#od_tot_amount").text(number_format(String(tot_amount)));
+    <?php if($temp_point > 0 && $is_member) { ?>
+    calculate_temp_point();
+    <?php } ?>
+}
+
+function calculate_temp_point()
+{
+    <?php
+    if($default['de_mileage_use']) {
+        $point = (int)$member_mileage;
+    } else {
+        $point = (int)$member_point;
+    }
+    ?>
+    var sell_amount = parseInt($("input[name=od_amount]").val());
+    var send_cost = parseInt($("input[name=od_send_cost]").val());
+    var point_per = <?php echo $default['de_point_per']; ?>;
+    var temp_point = parseInt((sell_amount + send_cost) * (point_per / 100) / 100) * 100;
+    var point = <?php echo $point; ?>
+
+    if(temp_point > point)
+        temp_point = point;
+
+    $("#use_max_point").text(number_format(String(temp_point))+"점");
+    $("input[name=max_temp_point]").val(temp_point);
+}
+
 /* 결제방법에 따른 처리 후 결제등록요청 실행 */
 function kcp_approval()
 {
@@ -484,7 +994,9 @@ function kcp_approval()
     }
 
     var tot_amount = <?php echo (int)$tot_amount; ?>;
-    var max_point  = <?php echo (int)$temp_point; ?>;
+    var max_point = 0;
+    if (typeof(f.max_temp_point) != "undefined")
+        max_point  = parseInt(f.max_temp_point.value);
 
     if (typeof(pf.od_temp_point) != "undefined") {
         if (pf.od_temp_point.value)
@@ -505,8 +1017,18 @@ function kcp_approval()
                     return false;
                 }
 
-                if (temp_point > <?php echo (int)$member['mb_point']; ?>) {
-                    alert("회원님의 포인트보다 많이 결제할 수 없습니다.");
+                <?php
+                if($default['de_mileage_use']) {
+                    $mb_point = $member['mb_mileage'];
+                    $p_msg = '마일리지';
+                } else {
+                    $mb_point = $member['mb_point'];
+                    $p_msg = '포인트';
+                }
+                ?>
+
+                if (temp_point > <?php echo (int)$mb_point; ?>) {
+                    alert("회원님의 <?php echo $p_msg; ?>보다 많이 결제할 수 없습니다.");
                     pf.od_temp_point.select();
                     return false;
                 }
@@ -629,7 +1151,8 @@ function forderform_check(f)
     }
 
     var tot_amount = <?php echo (int)$tot_amount; ?>;
-    var max_point  = <?php echo (int)$temp_point; ?>;
+    if (typeof(f.max_temp_point) != "undefined")
+        var max_point  = parseInt(f.max_temp_point.value);
 
     var temp_point = 0;
     if (typeof(f.od_temp_point) != "undefined") {
@@ -649,8 +1172,18 @@ function forderform_check(f)
                 return false;
             }
 
-            if (temp_point > <?php echo (int)$member['mb_point']; ?>) {
-                alert("회원님의 포인트보다 많이 결제할 수 없습니다.");
+            <?php
+            if($default['de_mileage_use']) {
+                $mb_point = $member['mb_mileage'];
+                $p_msg = '마일리지';
+            } else {
+                $mb_point = $member['mb_point'];
+                $p_msg = '포인트';
+            }
+            ?>
+
+            if (temp_point > <?php echo (int)$mb_point; ?>) {
+                alert("회원님의 <?php echo $p_msg; ?>보다 많이 결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
             }
@@ -710,21 +1243,6 @@ function gumae2baesong(f)
     f.od_b_addr1.value = f.od_addr1.value;
     f.od_b_addr2.value = f.od_addr2.value;
 }
-
-$(function() {
-    $("#od_settle_bank").bind("click", function() {
-        $("[name=od_deposit_name]").val( $("[name=od_b_name]").val() );
-        $("#settle_bank").show();
-        $("#show_req_btn").css("display", "none");
-        $("#show_pay_btn").css("display", "inline");
-    });
-
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp").bind("click", function() {
-        $("#settle_bank").hide();
-        $("#show_req_btn").css("display", "inline");
-        $("#show_pay_btn").css("display", "none");
-    });
-});
 </script>
 
 <?php

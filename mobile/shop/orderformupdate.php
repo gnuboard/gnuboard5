@@ -3,11 +3,15 @@ include_once('./_common.php');
 
 if(get_magic_quotes_gpc())
 {
-    $_GET  = array_map("stripslashes", $_GET);
-    $_POST = array_map("stripslashes", $_POST);
+    //$_GET  = array_map("stripslashes", $_GET);
+    //$_POST = array_map("stripslashes", $_POST);
+    $_GET  = array_add_callback("stripslashes", $_GET);
+    $_POST = array_add_callback("stripslashes", $_POST);
 }
-$_GET  = array_map("mysql_real_escape_string", $_GET);
-$_POST = array_map("mysql_real_escape_string", $_POST);
+//$_GET  = array_map("mysql_real_escape_string", $_GET);
+//$_POST = array_map("mysql_real_escape_string", $_POST);
+$_GET  = array_add_callback("mysql_real_escape_string", $_GET);
+$_POST = array_add_callback("mysql_real_escape_string", $_POST);
 
 // 결제등록 완료 체크
 if($od_settle_case != '무통장') {
@@ -63,7 +67,106 @@ $i_temp_point = (int)$_POST['od_temp_point'];
 $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as od_amount
             from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' ";
 $row = sql_fetch($sql);
-if ((int)$row['od_amount'] !== $i_amount) {
+$tot_ct_amount = $row['od_amount'];
+
+// 쿠폰금액계산
+$tot_cp_amount = 0;
+if($is_member) {
+    // 상품쿠폰
+    $tot_it_cp_amount = $tot_od_cp_amount = 0;
+    $it_cp_cnt = count($_POST['cp_id']);
+    $arr_it_cp_amt = array();
+    for($i=0; $i<$it_cp_cnt; $i++) {
+        $cid = $_POST['cp_id'][$i];
+        $it_id = $_POST['it_id'][$i];
+        $sql = " select cp_id, cp_method, cp_target, cp_type, cp_amount, cp_trunc, cp_minimum, cp_maximum
+                    from {$g4['shop_coupon_table']}
+                    where cp_id = '$cid'
+                      and mb_id = '{$member['mb_id']}'
+                      and cp_start <= '".G4_TIME_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."'
+                      and cp_used = '0'
+                      and cp_method IN ( 0, 1 ) ";
+        $cp = sql_fetch($sql);
+        if(!$cp['cp_id'])
+            continue;
+
+        // 분류할인인지
+        if($cp['cp_method']) {
+            $sql2 = " select it_id, ca_id, ca_id2, ca_id3
+                        from {$g4['shop_item_table']}
+                        where it_id = '$it_id' ";
+            $row2 = sql_fetch($sql2);
+
+            if(!$row2['it_id'])
+                continue;
+
+            if($row2['ca_id'] != $cp['cp_target'] && $row2['ca_id2'] != $cp['cp_target'] && $row2['ca_id3'] != $cp['cp_target'])
+                continue;
+        } else {
+            if($cp['cp_target'] != $it_id)
+                continue;
+        }
+
+        // 상품금액
+        $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
+                    from {$g4['shop_cart_table']}
+                    where uq_id = '$tmp_uq_id'
+                      and it_id = '$it_id' ";
+        $ct = sql_fetch($sql);
+        $item_price = $ct['sum_price'];
+
+        if($cp['cp_minimum'] > $item_price)
+            continue;
+
+        $dc = 0;
+        if($cp['cp_type']) {
+            $dc = floor(($item_price * ($cp['cp_amount'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+        } else {
+            $dc = $cp['cp_amount'];
+        }
+
+        if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+            $dc = $cp['cp_maximum'];
+
+        $tot_it_cp_amount += $dc;
+        $arr_it_cp_amt[$it_id] = $dc;
+    }
+
+    $tot_od_amount = $tot_ct_amount - $tot_it_cp_amount;
+
+    // 주문쿠폰
+    if($_POST['od_cp_id']) {
+        $sql = " select cp_id, cp_type, cp_amount, cp_trunc, cp_minimum, cp_maximum
+                    from {$g4['shop_coupon_table']}
+                    where cp_id = '{$_POST['od_cp_id']}'
+                      and mb_id = '{$member['mb_id']}'
+                      and cp_start <= '".G4_TIME_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."'
+                      and cp_used = '0'
+                      and cp_method = '2' ";
+        $cp = sql_fetch($sql);
+
+        $dc = 0;
+        if($cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_amount)) {
+            if($cp['cp_type']) {
+                $dc = floor(($tot_od_amount * ($cp['cp_amount'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+            } else {
+                $dc = $cp['cp_amount'];
+            }
+
+            if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+                $dc = $cp['cp_maximum'];
+
+            $tot_od_cp_amount = $dc;
+            $tot_od_amount -= $tot_od_cp_amount;
+        }
+    }
+
+    $tot_cp_amount = $tot_it_cp_amount + $tot_od_cp_amount;
+}
+
+if ((int)($row['od_amount'] - $tot_cp_amount) !== $i_amount) {
     die("Error.");
 }
 
@@ -85,7 +188,41 @@ if ($default['de_send_cost_case'] == "없음") {
         }
     }
 }
-if ((int)$send_cost !== $i_send_cost) {
+
+$tot_sc_cp_amount = 0;
+if($is_member && $send_cost > 0) {
+    // 배송쿠폰
+    if($_POST['sc_cp_id']) {
+        $sql = " select cp_id, cp_type, cp_amount, cp_trunc, cp_minimum, cp_maximum
+                    from {$g4['shop_coupon_table']}
+                    where cp_id = '{$_POST['sc_cp_id']}'
+                      and mb_id = '{$member['mb_id']}'
+                      and cp_start <= '".G4_TIME_YMD."'
+                      and cp_end >= '".G4_TIME_YMD."'
+                      and cp_used = '0'
+                      and cp_method = '3' ";
+        $cp = sql_fetch($sql);
+
+        $dc = 0;
+        if($cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_amount)) {
+            if($cp['cp_type']) {
+                $dc = floor(($tot_od_amount * ($cp['cp_amount'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+            } else {
+                $dc = $cp['cp_amount'];
+            }
+
+            if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+                $dc = $cp['cp_maximum'];
+
+            if($dc > $send_cost)
+                $dc = $send_cost;
+
+            $tot_sc_cp_amount = $dc;
+        }
+    }
+}
+
+if ((int)($send_cost - $tot_sc_cp_amount) !== $i_send_cost) {
     die("Error..");
 }
 
@@ -259,6 +396,8 @@ $sql = " insert {$g4['shop_order_table']}
                 od_deposit_name   = '$od_deposit_name',
                 od_memo           = '$od_memo',
                 od_send_cost      = '$od_send_cost',
+                od_send_coupon    = '$tot_sc_cp_amount',
+                od_coupon         = '$tot_od_cp_amount',
                 od_temp_bank      = '$od_temp_bank',
                 od_temp_card      = '$od_receipt_card',
                 od_temp_hp        = '$od_receipt_hp',
@@ -329,6 +468,54 @@ if ($is_member && $od_receipt_point) {
 include_once(G4_MSHOP_PATH.'/kcp/pp_ax_hub_result.php');
 
 $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))) . "&nbsp;";
+
+// 쿠폰사용내역기록
+if($is_member) {
+    $it_cp_cnt = count($_POST['cp_id']);
+    for($i=0; $i<$it_cp_cnt; $i++) {
+        $cid = $_POST['cp_id'][$i];
+        $cp_it_id = $_POST['it_id'][$i];
+        $sql = " update {$g4['shop_coupon_table']}
+                    set od_id = '$od_id',
+                        cp_used = '1',
+                        cp_used_time = '".G4_TIME_YMDHIS."'
+                    where cp_id = '$cid'
+                      and mb_id = '{$member['mb_id']}'
+                      and cp_method IN ( 0, 1 ) ";
+        sql_query($sql);
+
+        // 쿠폰사용금액 cart에 기록
+        $cp_amt = (int)$arr_it_cp_amt[$cp_it_id];
+        $sql = " update {$g4['shop_cart_table']}
+                    set cp_amount = '$cp_amt'
+                    where uq_id = '$tmp_uq_id'
+                      and it_id = '$cp_it_id'
+                      and ct_num = '0' ";
+        sql_query($sql);
+    }
+
+    if($_POST['od_cp_id']) {
+        $sql = " update {$g4['shop_coupon_table']}
+                    set od_id = '$od_id',
+                        cp_used = '1',
+                        cp_used_time = '".G4_TIME_YMDHIS."'
+                    where cp_id = '{$_POST['od_cp_id']}'
+                      and mb_id = '{$member['mb_id']}'
+                      and cp_method = '2' ";
+        sql_query($sql);
+    }
+
+    if($_POST['sc_cp_id']) {
+        $sql = " update {$g4['shop_coupon_table']}
+                    set od_id = '$od_id',
+                        cp_used = '1',
+                        cp_used_time = '".G4_TIME_YMDHIS."'
+                    where cp_id = '{$_POST['sc_cp_id']}'
+                      and mb_id = '{$member['mb_id']}'
+                      and cp_method = '3' ";
+        sql_query($sql);
+    }
+}
 
 
 include_once(G4_SHOP_PATH.'/ordermail1.inc.php');
