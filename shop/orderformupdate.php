@@ -69,14 +69,14 @@ if($is_member) {
     // 상품쿠폰
     $tot_it_cp_amount = $tot_od_cp_amount = 0;
     $it_cp_cnt = count($_POST['cp_id']);
+    $arr_it_cp_amt = array();
     for($i=0; $i<$it_cp_cnt; $i++) {
         $cid = $_POST['cp_id'][$i];
         $it_id = $_POST['it_id'][$i];
-        $sql = " select cp_id, cp_type, cp_amount, cp_trunc, cp_minimum, cp_maximum
+        $sql = " select cp_id, cp_method, cp_target, cp_type, cp_amount, cp_trunc, cp_minimum, cp_maximum
                     from {$g4['shop_coupon_table']}
                     where cp_id = '$cid'
                       and mb_id = '{$member['mb_id']}'
-                      and cp_target = '$it_id'
                       and cp_start <= '".G4_TIME_YMD."'
                       and cp_end >= '".G4_TIME_YMD."'
                       and cp_used = '0'
@@ -84,6 +84,23 @@ if($is_member) {
         $cp = sql_fetch($sql);
         if(!$cp['cp_id'])
             continue;
+
+        // 분류할인인지
+        if($cp['cp_method']) {
+            $sql2 = " select it_id, ca_id, ca_id2, ca_id3
+                        from {$g4['shop_item_table']}
+                        where it_id = '$it_id' ";
+            $row2 = sql_fetch($sql2);
+
+            if(!$row2['it_id'])
+                continue;
+
+            if($row2['ca_id'] != $cp['cp_target'] && $row2['ca_id2'] != $cp['cp_target'] && $row2['ca_id3'] != $cp['cp_target'])
+                continue;
+        } else {
+            if($cp['cp_target'] != $it_id)
+                continue;
+        }
 
         // 상품금액
         $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
@@ -107,6 +124,7 @@ if($is_member) {
             $dc = $cp['cp_maximum'];
 
         $tot_it_cp_amount += $dc;
+        $arr_it_cp_amt[$it_id] = $dc;
     }
 
     $tot_od_amount = $tot_ct_amount - $tot_it_cp_amount;
@@ -166,7 +184,7 @@ if ($default['de_send_cost_case'] == "없음") {
 }
 
 $tot_sc_cp_amount = 0;
-if($is_member) {
+if($is_member && $send_cost > 0) {
     // 배송쿠폰
     if($_POST['sc_cp_id']) {
         $sql = " select cp_id, cp_type, cp_amount, cp_trunc, cp_minimum, cp_maximum
@@ -372,6 +390,8 @@ $sql = " insert {$g4['shop_order_table']}
                 od_deposit_name   = '$od_deposit_name',
                 od_memo           = '$od_memo',
                 od_send_cost      = '$od_send_cost',
+                od_send_coupon    = '$tot_sc_cp_amount',
+                od_coupon         = '$tot_od_cp_amount',
                 od_temp_bank      = '$od_temp_bank',
                 od_temp_card      = '$od_receipt_card',
                 od_temp_hp        = '$od_receipt_hp',
@@ -448,17 +468,31 @@ if($is_member) {
     $it_cp_cnt = count($_POST['cp_id']);
     for($i=0; $i<$it_cp_cnt; $i++) {
         $cid = $_POST['cp_id'][$i];
+        $cp_it_id = $_POST['it_id'][$i];
         $sql = " update {$g4['shop_coupon_table']}
-                    set cp_used = '1'
+                    set od_id = '$od_id',
+                        cp_used = '1',
+                        cp_used_time = '".G4_TIME_YMDHIS."'
                     where cp_id = '$cid'
                       and mb_id = '{$member['mb_id']}'
                       and cp_method IN ( 0, 1 ) ";
+        sql_query($sql);
+
+        // 쿠폰사용금액 cart에 기록
+        $cp_amt = (int)$arr_it_cp_amt[$cp_it_id];
+        $sql = " update {$g4['shop_cart_table']}
+                    set cp_amount = '$cp_amt'
+                    where uq_id = '$tmp_uq_id'
+                      and it_id = '$cp_it_id'
+                      and ct_num = '0' ";
         sql_query($sql);
     }
 
     if($_POST['od_cp_id']) {
         $sql = " update {$g4['shop_coupon_table']}
-                    set cp_used = '1'
+                    set od_id = '$od_id',
+                        cp_used = '1',
+                        cp_used_time = '".G4_TIME_YMDHIS."'
                     where cp_id = '{$_POST['od_cp_id']}'
                       and mb_id = '{$member['mb_id']}'
                       and cp_method = '2' ";
@@ -467,7 +501,9 @@ if($is_member) {
 
     if($_POST['sc_cp_id']) {
         $sql = " update {$g4['shop_coupon_table']}
-                    set cp_used = '1'
+                    set od_id = '$od_id',
+                        cp_used = '1',
+                        cp_used_time = '".G4_TIME_YMDHIS."'
                     where cp_id = '{$_POST['sc_cp_id']}'
                       and mb_id = '{$member['mb_id']}'
                       and cp_method = '3' ";

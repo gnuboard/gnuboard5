@@ -929,6 +929,12 @@ $(function() {
         var subj = $el.find("input[name='f_cp_subj[]']").val();
         var sell_amount;
 
+        if(parseInt(amount) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                return false;
+            }
+        }
+
         // 이미 사용한 쿠폰이 있는지
         var cp_dup = false;
         var cp_dup_idx;
@@ -1224,7 +1230,8 @@ function forderform_check(f)
     }
 
     var tot_amount = <?php echo (int)$tot_amount; ?>;
-    var max_point  = parseInt(f.max_temp_point.value);
+    if (typeof(f.max_temp_point) != "undefined")
+        var max_point  = parseInt(f.max_temp_point.value);
 
     var temp_point = 0;
     if (typeof(f.od_temp_point) != "undefined") {

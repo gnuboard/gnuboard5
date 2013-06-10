@@ -100,7 +100,8 @@ $total_order = $row['sum_order'];
 
 // 상품목록
 $sql = " select it_id,
-                it_name
+                it_name,
+                cp_amount
            from {$g4['shop_cart_table']}
           where uq_id = '{$od['uq_id']}'
             and ct_num = '0'
@@ -215,6 +216,7 @@ $pg_anchor = '<ul class="anchor">
 
         </li>
         <?
+            $t_cp_amount += $row['cp_amount']; // 쿠폰사용금액
             $t_ct_amount['합계'] += $ct_amount['소계'];
             $t_ct_point['합계'] += $ct_point['소계'];
         }
@@ -247,8 +249,11 @@ $pg_anchor = '<ul class="anchor">
     // 입금액 = 무통장(가상계좌, 계좌이체 포함) + 신용카드 + 휴대폰 + 포인트
     $amount['입금'] = $od['od_receipt_bank'] + $od['od_receipt_card'] + $od['od_receipt_hp'] + $od['od_receipt_point'];
 
-    // 미수금 = (주문금액 - DC + 환불액) - (입금액 - 신용카드승인취소)
-    $amount['미수'] = ($amount['정상'] - $od['od_dc_amount'] + $od['od_refund_amount']) - ($amount['입금'] - $od['od_cancel_card']);
+    // 쿠폰금액
+    $amount['쿠폰'] = $t_cp_amount + $od['od_coupon'];
+
+    // 미수금 = (주문금액 - DC + 환불액) - (입금액 - 신용카드승인취소) - 쿠폰금액
+    $amount['미수'] = ($amount['정상'] - $od['od_dc_amount'] + $od['od_refund_amount']) - ($amount['입금'] - $od['od_cancel_card']) - $amount['쿠폰'];
 
     // 결제방법
     $s_receipt_way = $od['od_settle_case'];
@@ -267,6 +272,7 @@ $pg_anchor = '<ul class="anchor">
         <th scope="col">주문총액</th>
         <th scope="col">포인트결제</th>
         <th scope="col">총결제액</th>
+        <th scope="col">쿠폰</th>
         <th scope="col">DC</th>
         <th scope="col">환불액</th>
         <th scope="col">주문취소</th>
@@ -279,6 +285,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="td_bignum"><?php echo display_price($amount['정상']); ?></td>
         <td class="td_bignum"><?php echo display_point($od['od_receipt_point']); ?></td>
         <td class="td_bignum"><?php echo number_format($amount['입금']); ?>원</td>
+        <td class="td_bignum"><?php echo display_price($amount['쿠폰']); ?></td>
         <td class="td_bignum"><?php echo display_price($od['od_dc_amount']); ?></td>
         <td class="td_bignum"><?php echo display_price($od['od_refund_amount']); ?></td>
         <td class="td_bignum"><?php echo number_format($t_ct_amount['취소']); ?>원</td>
