@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<section id="sit_qna_list">
+<section id="sit_qa_list">
     <h3>등록된 상품문의</h3>
 
     <?php
@@ -51,12 +51,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             $iq_flag = 1;
         }
 
-        if ($i == 0) echo '<ol id="sit_qna_ol">';
+        if ($i == 0) echo '<ol id="sit_qa_ol">';
     ?>
 
-    <li class="sit_qna_li">
-        <button type="button" class="sit_qna_li_title" onclick="javascript:qa_menu('sit_qna_con_<?php echo $i; ?>')"><b><?php echo $num; ?>.</b> <?php echo $iq_subject; ?></button>
-        <dl class="sit_qna_dl">
+    <li class="sit_qa_li">
+        <button type="button" class="sit_qa_li_title" onclick="javascript:qa_menu('sit_qa_con_<?php echo $i; ?>')"><b><?php echo $num; ?>.</b> <?php echo $iq_subject; ?></button>
+        <dl class="sit_qa_dl">
             <dt>작성자</dt>
             <dd><?php echo $iq_name; ?></dd>
             <dt>작성일</dt>
@@ -65,12 +65,12 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <dd><?php echo $iq_stats; ?></dd>
         </dl>
 
-        <div id="sit_qna_con_<?php echo $i; ?>" class="sit_qna_con">
-            <p class="sit_qna_qaq">
+        <div id="sit_qa_con_<?php echo $i; ?>" class="sit_qa_con">
+            <p class="sit_qa_qaq">
                 <strong>문의내용</strong><br>
                 <?php echo $iq_question; // 상품 문의 내용 ?>
             </p>
-            <p class="sit_qna_qaa">
+            <p class="sit_qa_qaa">
                 <strong>답변</strong><br>
                 <?php echo $iq_answer; ?>
             </p>
@@ -81,14 +81,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <textarea id="tmp_iq_question<?php echo $i; ?>"><?php echo $row['iq_question']; ?></textarea>
 
             <?php if ($row['mb_id'] == $member['mb_id'] && $iq_answer == 0) { ?>
-            <div class="sit_qna_cmd">
+            <div class="sit_qa_cmd">
                 <button type="button" onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
                 <button type="button" onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button>
             </div>
             <?php } ?>
         </div>
 
-        <div id="sit_qna_pw_<?php echo $i; ?>" class="sit_qna_pw">
+        <div id="sit_qa_pw_<?php echo $i; ?>" class="sit_qa_pw">
             <form name="fitemqa_password<?php echo $i; ?>" method="post" action="./itemqaupdate.php" autocomplete="off">
             <input type="hidden" name="w" value="">
             <input type="hidden" name="iq_id" value="">
@@ -109,11 +109,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     ?>
 </section>
 
-<div id="sit_qna_wbtn">
+<div id="sit_qa_wbtn">
     <button type="button" id="iq_write" class="btn_submit" onclick="javascript:itemqa_insert();">상품문의 쓰기</button>
 </div>
 
-<section id="sit_qna_w">
+<section id="sit_qa_w">
     <h3>상품문의 작성</h3>
 
     <form name="fitemqa" method="post" onsubmit="return fitemqa_submit(this);" autocomplete="off">
@@ -185,7 +185,7 @@ if (!g4_is_member) {
 */
 
 var f = document.fitemqa;
-var id = document.getElementById('sit_qna_w');
+var id = document.getElementById('sit_qa_w');
 
 id.style.display = 'block';
 
@@ -204,7 +204,7 @@ f.iq_question.value = '';
 function itemqa_update(idx)
 {
 var f = document.fitemqa;
-var id = document.getElementById('sit_qna_w');
+var id = document.getElementById('sit_qa_w');
 
 id.style.display = 'block';
 
@@ -221,7 +221,7 @@ f.iq_question.value = document.getElementById('tmp_iq_question'+idx).value;
 
 function itemqa_delete(f, idx)
 {
-var id = document.getElementById('sit_qna_w');
+var id = document.getElementById('sit_qa_w');
 
 f.w.value = 'd';
 f.iq_id.value = document.getElementById('tmp_iq_id'+idx).value;
