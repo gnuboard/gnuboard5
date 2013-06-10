@@ -161,6 +161,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $tot_dc_amount     += $row['od_dc_amount'];
             $tot_receiptamount += $row['receiptamount'];
             $tot_receiptcancel += $row['receiptcancel'];
+            $tot_couponamount  += $row['couponamount'];
             $tot_misu          += $row['misu'];
         ?>
         <li>
@@ -200,6 +201,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 <dd class="sodr_pay_1"><?php echo number_format($row['od_dc_amount']); ?></dd>
                 <dt class="sodr_pay_1">입금합계</dt>
                 <dd class="sodr_pay_1"><?php echo number_format($row['receiptamount']); ?></dd>
+                <dt>쿠폰사용</dt>
+                <dd><?php echo number_format($row['couponamount']); ?></dd>
                 <dt>주문취소</dt>
                 <dd><?php echo number_format($row['ordercancel']); ?></dd>
                 <dt>입금취소</dt>
@@ -300,6 +303,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <th scope="col">주문건수</th>
         <th scope="col">주문액</th>
+        <th scope="col">쿠폰</th>
         <th scope="col">취소</th>
         <th scope="col">DC</th>
         <th scope="col">입금완료</th>
@@ -311,6 +315,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <td><?php echo (int)$tot_itemcount; ?>건</td>
         <td><?php echo number_format($tot_orderamount); ?></td>
+        <td><?php echo number_format($tot_couponamount); ?></td>
         <td><?php echo number_format($tot_ordercancel); ?></td>
         <td><?php echo number_format($tot_dc_amount); ?></td>
         <td><?php echo number_format($tot_receiptamount); ?></td>

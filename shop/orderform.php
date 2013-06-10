@@ -929,6 +929,12 @@ $(function() {
         var subj = $el.find("input[name='f_cp_subj[]']").val();
         var sell_amount;
 
+        if(parseInt(amount) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                return false;
+            }
+        }
+
         // 이미 사용한 쿠폰이 있는지
         var cp_dup = false;
         var cp_dup_idx;
@@ -994,8 +1000,15 @@ $(function() {
         var $el = $(this).closest("li");
         var cp_id = $el.find("input[name='o_cp_id[]']").val();
         var amount = parseInt($el.find("input[name='o_cp_amt[]']").val());
+        var subj = $el.find("input[name='o_cp_subj[]']").val();
         var od_amount = parseInt($("input[name=org_od_amount]").val());
         var send_cost = $("input[name=org_send_cost]").val();
+
+        if(parseInt(amount) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                return false;
+            }
+        }
 
         $("input[name=od_send_cost]").val(send_cost);
         $("input[name=sc_cp_id]").val("");
@@ -1038,7 +1051,14 @@ $(function() {
         var $el = $(this).closest("li");
         var cp_id = $el.find("input[name='s_cp_id[]']").val();
         var amount = parseInt($el.find("input[name='s_cp_amt[]']").val());
+        var subj = $el.find("input[name='s_cp_subj[]']").val();
         var send_cost = parseInt($("input[name=org_send_cost]").val());
+
+        if(parseInt(amount) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+                return false;
+            }
+        }
 
         $("input[name=od_send_cost]").val(send_cost - amount);
         $("input[name=sc_cp_id]").val(cp_id);
@@ -1224,7 +1244,8 @@ function forderform_check(f)
     }
 
     var tot_amount = <?php echo (int)$tot_amount; ?>;
-    var max_point  = parseInt(f.max_temp_point.value);
+    if (typeof(f.max_temp_point) != "undefined")
+        var max_point  = parseInt(f.max_temp_point.value);
 
     var temp_point = 0;
     if (typeof(f.od_temp_point) != "undefined") {

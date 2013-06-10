@@ -265,4 +265,13 @@ if(!$result) {
                     ADD `od_coupon` INT(11) NOT NULL DEFAULT '0' AFTER `od_dc_amount`,
                     ADD `od_send_coupon` INT(11) NOT NULL DEFAULT '0' AFTER `od_send_cost` ", false);
 }
+
+// 쿠폰사용정보필드추가
+$sql = " select od_id from {$g4['shop_coupon_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_coupon_table']}`
+                    ADD `od_id` BIGINT(20) UNSIGNED NOT NULL AFTER `cp_maximum`,
+                    ADD `cp_used_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `cp_used` ", false);
+}
 ?>

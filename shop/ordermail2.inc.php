@@ -45,6 +45,15 @@ $sql = " select b.it_sell_email,
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
+    // 합계금액 계산
+    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                    SUM(ct_point * ct_qty) as point,
+                    SUM(ct_qty) as qty
+                from {$g4['shop_cart_table']}
+                where it_id = '{$row['it_id']}'
+                  and uq_id = '$tmp_uq_id' ";
+    $sum = sql_fetch($sql);
+
     // 옵션정보
     $sql2 = " select ct_option, ct_qty
                 from {$g4['shop_cart_table']}
@@ -68,6 +77,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['it_simg'] = get_it_image($row['it_id'], $default['de_simg_width'], $default['de_simg_height']);
     $list[$i]['it_name'] = $row['it_name'];
     $list[$i]['it_opt']  = $options;
+    $list[$i]['ct_price'] = $sum['price'];
 
     $subject = $config['cf_title'].' - 주문 알림 메일 (주문자 '.$od_name.'님)';
     ob_start();

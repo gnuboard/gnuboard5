@@ -46,6 +46,7 @@ $count = mysql_num_rows($result);
         <li>
             <input type="hidden" name="s_cp_id[]" value="<?php echo $row['cp_id']; ?>">
             <input type="hidden" name="s_cp_amt[]" value="<?php echo $dc; ?>">
+            <input type="hidden" name="s_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
             <span><?php echo get_text($row['cp_subject']); ?></span>
             <span><?php echo number_format($dc); ?></span>
             <span><button type="button" class="sc_cp_apply">적용</button></span>
