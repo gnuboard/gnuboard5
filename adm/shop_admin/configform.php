@@ -571,74 +571,6 @@ $pg_anchor = '<ul class="anchor">
         <td>
           <input type="text" name="de_dacom_mertkey" value="<?php echo $default['de_dacom_mertkey']; ?>" id="de_dacom_mertkey" size="40">
     </td>
-    <!-- <td>LG텔레콤 테스트 모드</td>
-    <td>
-        <input type="checkbox" name="de_dacom_test" value="1" <?php echo $default['de_dacom_test']?"checked":""; ?>>
-        테스트로 결제하실 경우에 체크하세요.
-    </td> -->
-    </tr>
-    <tr style="display:none;">
-        <th scope="row"><label for="de_inicis_mid">이니시스 아이디</label></th>
-        <td>
-         <input type="text" name="de_inicis_mid" value="<?php echo $default['de_inicis_mid']; ?>" id="de_inicis_mid" size="40">
-    </td>
-        <th scope="row"><label for="de_inicis_passwd">이니시스 패스워드</label></th>
-        <td>
-            <input type="text" name="de_inicis_passwd" value="<?php echo $default['de_inicis_passwd']; ?>" id="de_inicis_passwd">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_banktown_mid">뱅크타운 상점ID</label></th>
-        <td>
-            <input type="text" name="de_banktown_mid" value="<?php echo $default['de_banktown_mid']; ?>" id="de_banktown_mid" size="40">
-        </td>
-        <th scope="row"><label for="de_banktown_auth_key">뱅크타운 라이센스 키<!-- AuthKey --></label></th>
-        <td>
-            <input type="text" name="de_banktown_auth_key" value="<?php echo $default['de_banktown_auth_key']; ?>" id="de_banktown_auth_key" size="40" maxlength="32">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_allthegate_mid">올더게이트 몰ID</label></th>
-        <td>
-           <input type="text" name="de_allthegate_mid" value="<?php echo $default['de_allthegate_mid']; ?>" id="de_allthegate_mid" size="40">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_allat_partner_id">올앳 파트너 ID</label></th>
-        <td>
-          <input type="text" name="de_allat_partner_id" value="<?php echo $default['de_allat_partner_id']; ?>" id="de_allat_partner_id" size="40">
-        </td>
-        <th scope="row"><label for="de_allat_prefix">주문번호 Prefix</label></th>
-        <td>
-            <input type="text" name="de_allat_prefix" value="<?php echo $default['de_allat_prefix']; ?>" id="de_allat_prefix"> 3자리
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_allat_formkey">올앳 FormKey 값</label></th>
-        <td>
-           <input type="text" name="de_allat_formkey" value="<?php echo $default['de_allat_formkey']; ?>" id="de_allat_formkey" size="40">
-        </td>
-        <th scope="row"><label for="de_allat_crosskey">올앳 CrossKey 값</label></th>
-        <td>
-            <input type="text" name="de_allat_crosskey" value="<?php echo $default['de_allat_crosskey']; ?>" id="de_allat_crosskey" size="40">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_tgcorp_mxid">티지코프 ID</label></th>
-        <td>
-          <input type="text" name="de_tgcorp_mxid" value="<?php echo $default['de_tgcorp_mxid']; ?>" id="de_tgcorp_mxid" size="40">
-        </td>
-        <th scope="row"><label for="de_tgcorp_mxotp">티지코프 접근키</label></th>
-        <td>
-           <input type="text" name="de_tgcorp_mxotp" value="<?php echo $default['de_tgcorp_mxotp']; ?>" id="de_tgcorp_mxotp" size="40">
-        </td>
-    </tr>
-    <tr style="display:none">
-        <th scope="row"><label for="de_kspay_id">KSPAY 상점아이디</label></th>
-        <td>
-           <input type="text" name="de_kspay_id" value="<?php echo $default['de_kspay_id']; ?>" id="de_kspay_id" size="40">
-        </td>
-    </tr>
     </tbody>
     </table>
 </section>
@@ -884,13 +816,6 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row">서버 IP</th>
         <td><?php echo ($_SERVER['SERVER_ADDR']?$_SERVER['SERVER_ADDR']:$_SERVER['LOCAL_ADDR']); ?></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="de_register">프로그램 등록번호</label></th>
-        <td>
-            <?php echo help("정품에 한해 발급해 드립니다. 등록번호가 없거나 틀리면, 주문서를 확인할 수 없습니다.\n등록번호는 서버 IP, MYSQL USER, DB 를 알려주셔야 발급이 가능합니다.", -180, -160); ?>
-            <input type="text" name="de_register" value="<?php echo $default['de_register']; ?>" id="de_register" class="frm_input required" required size="30">
-        </td>
     </tr>
     </tbody>
     </table>
