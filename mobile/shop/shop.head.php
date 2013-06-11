@@ -7,6 +7,9 @@ include_once(G4_LIB_PATH.'/connect.lib.php');
 include_once(G4_LIB_PATH.'/popular.lib.php');
 ?>
 
+<!-- overflow scroll 감지 -->
+<script src="<?php echo G4_URL; ?>/js/modernizr.custom.70111.js"></script>
+
 <header id="header">
     <?php if ((!$bo_table || $w == 's' ) && defined('_INDEX_')) { ?><h1><?php echo $config['cf_title'] ?></h1><?php } ?>
 
