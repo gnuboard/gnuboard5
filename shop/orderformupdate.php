@@ -200,7 +200,7 @@ if($is_member && $send_cost > 0) {
         $dc = 0;
         if($cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_amount)) {
             if($cp['cp_type']) {
-                $dc = floor(($tot_od_amount * ($cp['cp_amount'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+                $dc = floor(($send_cost * ($cp['cp_amount'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
             } else {
                 $dc = $cp['cp_amount'];
             }
