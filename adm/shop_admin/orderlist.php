@@ -13,6 +13,9 @@ if ($search != "")
 {
     if ($sel_field != "")
     {
+        if($sel_field == 'mb_id')
+            $sel_field = 'a.'.$sel_field;
+
         $sql_search .= " $where $sel_field like '%$search%' ";
         $where = " and ";
     }
