@@ -3,11 +3,12 @@ include_once('./_common.php');
 
 $it_id = $_POST['it_id'];
 
-$sql = " select it_id, it_option_subject, it_supply_subject
+$sql = " select it_id, it_option_subject, it_supply_subject, it_price, it_point, it_point_type
             from {$g4['shop_item_table']}
             where it_id = '$it_id'
               and it_use = '1' ";
 $it = sql_fetch($sql);
+$it_point = get_item_point($it);
 
 if(!$it['it_id'])
     die('no-item');
@@ -18,7 +19,7 @@ $sql = " select * from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id
 $result = sql_query($sql);
 
 // 판매가격
-$sql2 = " select ct_price, it_name from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '$it_id' and ct_num = '0' ";
+$sql2 = " select ct_price, it_name, ct_point from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '$it_id' and ct_num = '0' ";
 $row2 = sql_fetch($sql2);
 
 if(!mysql_num_rows($result))
@@ -30,6 +31,7 @@ if(!mysql_num_rows($result))
 <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
 <input type="hidden" name="it_price" value="<?php echo $row2['ct_price']; ?>">
 <input type="hidden" name="it_name" value="<?php echo $row2['it_name']; ?>">
+<input type="hidden" name="it_point" value="<?php echo $it_point; ?>">
 <input type="hidden" name="total_price" value="">
 <input type="hidden" name="sw_direct">
 <?php

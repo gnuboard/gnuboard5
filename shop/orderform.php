@@ -131,7 +131,6 @@ setTimeout("init_pay_button();",300);
     <?php
     $tot_point = 0;
     $tot_sell_amount = 0;
-    $tot_cancel_amount = 0;
 
     $goods = $goods_it_id = "";
     $goods_count = -1;
@@ -180,7 +179,7 @@ setTimeout("init_pay_button();",300);
         $goods_count++;
 
         // 에스크로 상품정보
-        if($s_page == 'orderform.php' && $default['de_escrow_use']) {
+        if($default['de_escrow_use']) {
             if ($i>0)
                 $good_info .= chr(30);
             $good_info .= "seq=".($i+1).chr(31);
@@ -236,7 +235,7 @@ setTimeout("init_pay_button();",300);
         <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
         <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
         <td><?php echo $cp_button; ?></td>
-        <td class="td_bignum"><span id="sell_amount_<?php echo $i; ?>"><?php echo number_format($sell_amount); ?></span></td>
+        <td class="td_bignum"><span class="ct_sell_amount"><?php echo number_format($sell_amount); ?></span></td>
         <td class="td_bignum"><?php echo number_format($point); ?></td>
     </tr>
 
@@ -905,19 +904,20 @@ setTimeout("init_pay_button();",300);
 
 <script>
 $(function() {
-    var item_index;
+    var $cp_btn_el;
+    var $cp_row_el;
 
     $(".it_coupon_btn").click(function() {
-        var $this = $(this);
+        $cp_btn_el = $(this);
+        $cp_row_el = $(this).closest("tr");
         $("#it_coupon_frm").remove();
-        item_index = $(".it_coupon_btn").index($this);
-        var it_id = $("input[name='it_id["+item_index+"]']").val();
+        var it_id = $cp_btn_el.closest("tr").find("input[name^=it_id]").val();
 
         $.post(
             "./orderitemcoupon.php",
             { it_id: it_id },
             function(data) {
-                $this.after(data);
+                $cp_btn_el.after(data);
             }
         );
     });
@@ -938,12 +938,14 @@ $(function() {
         // 이미 사용한 쿠폰이 있는지
         var cp_dup = false;
         var cp_dup_idx;
+        var $cp_dup_el;
         $("input[name^=cp_id]").each(function(index) {
             var id = $(this).val();
 
             if(id == cp_id) {
                 cp_dup_idx = index;
                 cp_dup = true;
+                $cp_dup_el = $(this).closest("tr");;
 
                 return false;
             }
@@ -954,32 +956,32 @@ $(function() {
             if(!confirm(subj+ "쿠폰은 "+it_name+"에 사용되었습니다.\n"+it_name+"의 쿠폰을 취소한 후 적용하시겠습니까?")) {
                 return false;
             } else {
-                coupon_cancel(cp_dup_idx);
+                coupon_cancel($cp_dup_el);
             }
         }
 
-        var $s_el = $("#sell_amount_"+item_index);
-        sell_amount = parseInt($("input[name='it_amount["+item_index+"]']").val());
+        var $s_el = $cp_row_el.find(".ct_sell_amount");;
+        sell_amount = parseInt($cp_row_el.find("input[name^=it_amount]").val());
         sell_amount = sell_amount - parseInt(amount);
         $s_el.text(number_format(String(sell_amount)));
-        $("input[name='cp_id["+item_index+"]']").val(cp_id);
-        $("input[name='cp_amount["+item_index+"]']").val(amount);
+        $cp_row_el.find("input[name^=cp_id]").val(cp_id);
+        $cp_row_el.find("input[name^=cp_amount]").val(amount);
 
         calculate_total_amount();
         $("#it_coupon_frm").remove();
-        $(".it_coupon_btn").eq(item_index).focus();
+        $cp_btn_el.focus();
     });
 
     $("#it_coupon_close").live("click", function() {
         $("#it_coupon_frm").remove();
-        $(".it_coupon_btn").eq(item_index).focus();
+        $cp_btn_el.focus();
     });
 
     $("#it_coupon_cancel").live("click", function() {
-        coupon_cancel(item_index);
+        coupon_cancel($cp_row_el);
         calculate_total_amount();
         $("#it_coupon_frm").remove();
-        $(".it_coupon_btn").eq(item_index).focus();
+        $cp_btn_el.focus();
     });
 
     $("#od_coupon_btn").click(function() {
@@ -989,7 +991,7 @@ $(function() {
         var send_cost = parseInt($("input[name=org_send_cost]").val());
         $.post(
             "./ordercoupon.php",
-            { amount: (amount + send_cost) },
+            { amount: amount },
             function(data) {
                 $this.after(data);
             }
@@ -1090,15 +1092,15 @@ $(function() {
     });
 });
 
-function coupon_cancel(idx)
+function coupon_cancel($el)
 {
-    var $dup_sell_el = $("#sell_amount_"+idx);
-    var $dup_amount_el = $("input[name='cp_amount["+idx+"]']");
-    var org_sell_amount = $("input[name='it_amount["+idx+"]']").val();
+    var $dup_sell_el = $el.find(".ct_sell_amount");
+    var $dup_amount_el = $el.find("input[name^=cp_amount]");
+    var org_sell_amount = $el.find("input[name^=it_amount]").val();
 
     $dup_sell_el.text(number_format(String(org_sell_amount)));
     $dup_amount_el.val(0);
-    $("input[name='cp_id["+idx+"]']").val("");
+    $el.find("input[name^=cp_id]").val("");
 }
 
 function calculate_total_amount()
@@ -1244,8 +1246,9 @@ function forderform_check(f)
     }
 
     var tot_amount = <?php echo (int)$tot_amount; ?>;
+    var max_point = 0;
     if (typeof(f.max_temp_point) != "undefined")
-        var max_point  = parseInt(f.max_temp_point.value);
+        max_point  = parseInt(f.max_temp_point.value);
 
     var temp_point = 0;
     if (typeof(f.od_temp_point) != "undefined") {
@@ -1253,20 +1256,30 @@ function forderform_check(f)
         {
             temp_point = parseInt(f.od_temp_point.value);
 
+            <?php
+            if($default['de_mileage_use']) {
+                $mb_point = $member['mb_mileage'];
+                $p_msg = '마일리지';
+            } else {
+                $mb_point = $member['mb_point'];
+                $p_msg = '포인트';
+            }
+            ?>
+
             if (temp_point < 0) {
-                alert("포인트를 0 이상 입력하세요.");
+                alert("<?php echo $p_msg; ?>를 0 이상 입력하세요.");
                 f.od_temp_point.select();
                 return false;
             }
 
             if (temp_point > tot_amount) {
-                alert("주문금액 보다 많이 포인트결제할 수 없습니다.");
+                alert("주문금액 보다 많이 <?php echo $p_msg; ?>결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
             }
 
-            if (temp_point > <?php echo (int)$member['mb_point']; ?>) {
-                alert("회원님의 포인트보다 많이 결제할 수 없습니다.");
+            if (temp_point > <?php echo (int)$mb_point; ?>) {
+                alert("회원님의 <?php echo $p_msg; ?>보다 많이 결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
             }
@@ -1278,7 +1291,7 @@ function forderform_check(f)
             }
 
             if (parseInt(parseInt(temp_point / 100) * 100) != temp_point) {
-                alert("포인트를 100점 단위로 입력하세요.");
+                alert("<?php echo $p_msg; ?>를 100점 단위로 입력하세요.");
                 f.od_temp_point.select();
                 return false;
             }
