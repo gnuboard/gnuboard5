@@ -608,15 +608,45 @@ $(function(){
         sv_hide = true;
     });
 
+    // 셀렉트 ul
+    var sel_hide = false;
+    $('.sel_btn').click(function() {
+        $('.sel_ul').removeClass('sel_on');
+        $(this).siblings('.sel_ul').addClass('sel_on');
+    });
+
+    $(".sel_wrap").hover(
+        function() {
+            sel_hide = false;
+        },
+        function() {
+            sel_hide = true;
+        }
+    );
+
+    $('.sel_a').focusin(function() {
+        sel_hide = false;
+    });
+
+    $('.sel_a').focusout(function() {
+        sel_hide = true;
+    });
+
     $(document).click(function() {
-        if(sv_hide) {
+        if(sv_hide) { // 사이드뷰 해제
             $(".sv").removeClass("sv_on");
+        }
+        if (sel_hide) { // 셀렉트 ul 해제
+            $('.sel_ul').removeClass('sel_on');
         }
     });
 
     $(document).focusin(function() {
-        if(sv_hide) {
+        if(sv_hide) { // 사이드뷰 해제
             $(".sv").removeClass("sv_on");
+        }
+        if (sel_hide) { // 셀렉트 ul 해제
+            $('.sel_ul').removeClass('sel_on');
         }
     });
 
