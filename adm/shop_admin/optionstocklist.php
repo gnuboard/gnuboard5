@@ -198,7 +198,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
             <div class="sel_wrap">
                 <button type="button" class="sel_btn">관리하기</button>
                 <ul class="sel_ul">
-                    <li class="sel_li"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a">수정</a></li>
+                   <li class="sel_li"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a">수정</a></li>
                 </ul>
             </div>
         </td>
