@@ -132,7 +132,7 @@
 #bo_vc {padding:20px 20px 10px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f5f6fa}
 #bo_vc h2 {margin-bottom:10px}
 #bo_vc article {padding:0 0 10px;border-top:1px dotted #ccc}
-#bo_vc header {z-index:2;position:relative;padding:15px 0 5px}
+#bo_vc header {position:relative;padding:15px 0 5px}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
 #bo_vc .sv_wrap {margin-right:15px}
 #bo_vc .member, #bo_vc .guest, #bo_vc .sv_member, #bo_vc .sv_guest {font-weight:bold}
