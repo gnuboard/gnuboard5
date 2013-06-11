@@ -43,7 +43,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <div id="copymove" class="new_win">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
 
     <form name="fboardmoveall" method="post" action="./move_update.php" onsubmit="return fboardmoveall_submit(this);">
     <input type="hidden" name="sw" value="<?php echo $sw ?>">
