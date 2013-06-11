@@ -115,7 +115,7 @@ if ($is_nogood) $colspan++;
 
              ?>
         </td>
-        <td class="td_name"><?php echo $list[$i]['name'] ?></td>
+        <td class="td_name sv_use"><?php echo $list[$i]['name'] ?></td>
         <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>
         <td class="td_num"><?php echo $list[$i]['wr_hit'] ?></td>
         <?php if ($is_good) { ?><td class="td_num"><?php echo $list[$i]['wr_good'] ?></td><?php } ?>
