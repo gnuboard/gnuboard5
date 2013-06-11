@@ -511,7 +511,7 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 .sit_sel_btn button {position:absolute;top:-51px;right:0 !important;right:15px}
 
 .td_sit_sel {position:relative}
-.sit_sel_submit {position:absolute;top:8px;right:0}
+.sit_sel_submit {position:static !important;position:absolute;float:right !important;float:none;top:8px;right:0}
 
 #sit_opt_added {margin:0;padding:0;border:1px solid #e9e9e9;border-bottom:0;background:#fff;list-style:none}
 #sit_opt_added li {padding:10px 20px;border-bottom:1px solid #e9e9e9}
