@@ -780,7 +780,6 @@ $(function() {
         $("#od_coupon_frm").remove();
         var $this = $(this);
         var amount = parseInt($("input[name=org_od_amount]").val());
-        var send_cost = parseInt($("input[name=org_send_cost]").val());
         $.post(
             "./ordercoupon.php",
             { amount: amount },
