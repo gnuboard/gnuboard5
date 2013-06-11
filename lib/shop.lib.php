@@ -1139,6 +1139,42 @@ function get_coupon_id()
 
     return $str;
 }
+
+// array_map() 대체
+function array_add_callback($func, $array)
+{
+    if(!$func) {
+        return;
+    }
+
+    if(is_array($array)) {
+        foreach($array as $key => $value) {
+            if(is_array($value)) {
+                $array[$key] = array_add_callback($func, $value);
+            } else {
+                $array[$key] = call_user_func($func, $value);
+            }
+        }
+    } else {
+        $array = call_user_func($func, $array);
+    }
+
+    return $array;
+}
+
+// 상품포인트
+function get_item_point($it)
+{
+    $it_point = 0;
+
+    if($it['it_point_type']) {
+        $it_point = floor(($it['it_price'] * ($it['it_point'] / 100) / 10)) * 10;
+    } else {
+        $it_point = $it['it_point'];
+    }
+
+    return $it_point;
+}
 //==============================================================================
 // 쇼핑몰 함수 모음 끝
 //==============================================================================

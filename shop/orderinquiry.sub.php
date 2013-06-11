@@ -13,6 +13,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
     <th scope="col">주문일시</th>
     <th scope="col">상품수</th>
     <th scope="col">주문금액</th>
+    <th scope="col">쿠폰</th>
     <th scope="col">입금액</th>
     <th scope="col">미입금액</th>
 </tr>
@@ -40,6 +41,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <td><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
     <td class="td_bignum"><?php echo $row['itemcount']; ?></td>
     <td class="td_bignum"><?php echo display_price($row['orderamount']); ?></td>
+    <td class="td_bignum"><?php echo display_price($row['couponamount']); ?></td>
     <td class="td_bignum"><?php echo display_price($row['receiptamount']); ?></td>
     <td class="td_bignum"><?php echo display_price($row['misu']); ?></td>
 </tr>

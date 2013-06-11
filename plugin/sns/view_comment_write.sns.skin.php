@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 if (!$board['bo_use_sns']) return;
 ?>
 <tr>
-    <th scope="row">SNS 등록</th>
+    <th scope="row">SNS 동시등록</th>
     <td>
         <ul id="bo_vc_sns">
         <?php

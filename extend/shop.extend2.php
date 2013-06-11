@@ -254,4 +254,24 @@ if(!$result) {
                   KEY `mb_id` (`mb_id`)
                 )", false);
 }
+
+// 쿠폰관련필드 추가
+$sql = " select cp_amount from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `cp_amount` INT(11) NOT NULL DEFAULT '0' AFTER `ct_point` ", false);
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_coupon` INT(11) NOT NULL DEFAULT '0' AFTER `od_dc_amount`,
+                    ADD `od_send_coupon` INT(11) NOT NULL DEFAULT '0' AFTER `od_send_cost` ", false);
+}
+
+// 쿠폰사용정보필드추가
+$sql = " select od_id from {$g4['shop_coupon_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_coupon_table']}`
+                    ADD `od_id` BIGINT(20) UNSIGNED NOT NULL AFTER `cp_maximum`,
+                    ADD `cp_used_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `cp_used` ", false);
+}
 ?>

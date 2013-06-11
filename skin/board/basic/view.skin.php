@@ -167,9 +167,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         ?>
     </section>
 
-    <?php
-    // SNS 보내기
-    include_once($board_skin_path."/view.sns.skin.php");
+    <?php 
+    include(G4_SNS_PATH."/view.sns.skin.php"); 
     ?>
 
     <?php

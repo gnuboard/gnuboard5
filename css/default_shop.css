@@ -545,36 +545,36 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sit_inf_open th {padding:7px 10px;border:1px solid #fff;background:#f5f6fa;vertical-align:top;text-align:left}
 #sit_inf_open td {padding:7px 10px;border:1px solid #fff;background:#f5f6fa;vertical-align:top}
 
-/* 상품 상세보기 - 사용후기 */
-#sit_ps {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
-#sit_ps h2 {margin:0 0 10px}
+/* 상품 상세보기 - 이용후기 */
+#sit_use {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
+#sit_use h2 {margin:0 0 10px}
 
 /* 상품 상세보기 - 상품문의 */
-#sit_qna {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
-#sit_qna h2 {margin:0 0 10px}
-#sit_qna h3 {margin:0 0 10px}
+#sit_qa {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
+#sit_qa h2 {margin:0 0 10px}
+#sit_qa h3 {margin:0 0 10px}
 
-#sit_qna_ol {margin:0 0 5px;padding:0;border-top:1px solid #e9e9e9;list-style:none}
-.sit_qna_li {position:relative;padding:0 0 10px;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
-.sit_qna_li_title {display:block;margin:0;padding:10px;width:100%;border:0;background:transparent;text-align:left;cursor:pointer}
+#sit_qa_ol {margin:0 0 5px;padding:0;border-top:1px solid #e9e9e9;list-style:none}
+.sit_qa_li {position:relative;padding:0 0 10px;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
+.sit_qa_li_title {display:block;margin:0;padding:10px;width:100%;border:0;background:transparent;text-align:left;cursor:pointer}
 
-.sit_qna_dl {margin:0;padding:0 10px;zoom:1}
-.sit_qna_dl:after {display:block;visibility:hidden;clear:both;content:""}
-.sit_qna_dl dt {float:left}
-.sit_qna_dl dd {float:left;margin:0 20px 0 5px}
+.sit_qa_dl {margin:0;padding:0 10px;zoom:1}
+.sit_qa_dl:after {display:block;visibility:hidden;clear:both;content:""}
+.sit_qa_dl dt {float:left}
+.sit_qa_dl dd {float:left;margin:0 20px 0 5px}
 
-.sit_qna_con {display:none;padding:10px 10px 0}
-.sit_qna_con p {padding:0}
-.sit_qna_qaq {margin:0 0 5px}
-.sit_qna_con textarea {display:none}
-.sit_qna_cmd {text-align:right}
+.sit_qa_con {display:none;padding:10px 10px 0}
+.sit_qa_con p {padding:0}
+.sit_qa_qaq {margin:0 0 5px}
+.sit_qa_con textarea {display:none}
+.sit_qa_cmd {text-align:right}
 
-.sit_qna_pw {display:none;position:absolute;top:30px;left:175px;padding:10px;width:348px;border:1px solid #000;background:#fff;text-align:center}
-.sit_qna_pw span {display:block;margin:0 0 5px}
+.sit_qa_pw {display:none;position:absolute;top:30px;left:175px;padding:10px;width:348px;border:1px solid #000;background:#fff;text-align:center}
+.sit_qa_pw span {display:block;margin:0 0 5px}
 
-#sit_qna_wbtn {margin:0 0 5px;text-align:right}
+#sit_qa_wbtn {margin:0 0 5px;text-align:right}
 
-#sit_qna_w {display:none}
+#sit_qa_w {display:none}
 
 /* 상품 상세보기 - 배송정보 */
 #sit_dvr {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}

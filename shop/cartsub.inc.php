@@ -153,6 +153,8 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     <td>
         <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
         <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
+        <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
+        <input type="hidden" name="cp_amount[<?php echo $i; ?>]" value="">
         <?php echo $it_name.$mod_options; ?>
     </td>
     <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
@@ -160,7 +162,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     <?php if($s_page == 'orderform.php') { ?>
     <td><?php echo $cp_button; ?></td>
     <?php } ?>
-    <td class="td_bignum"><?php echo number_format($sell_amount); ?></td>
+    <td class="td_bignum"><span id="sell_amount_<?php echo $i; ?>"><?php echo number_format($sell_amount); ?></span></td>
     <td class="td_bignum"><?php echo number_format($point); ?></td>
 
     <?php
@@ -267,8 +269,8 @@ if ($tot_amount > 0) {
 </form>
 
 <?php
-if ($s_page == 'cart.php') {
-    if ($i != 0) {
+if ($i != 0) {
+    if ($s_page == 'cart.php') {
 ?>
 <script>
 $(function() {
@@ -354,6 +356,83 @@ function form_check(act) {
 
     return true;
 }
+</script>
+<?php
+    }
+
+    if($s_page == 'orderform.php') {
+?>
+<script>
+$(function() {
+    var item_index;
+
+    $(".od_coupon_btn").click(function() {
+        var $this = $(this);
+        $("#it_coupon_frm").remove();
+        item_index = $(".od_coupon_btn").index($this);
+        var it_id = $("input[name^=it_id]:eq("+item_index+")").val();
+
+        $.post(
+            "./orderitemcoupon.php",
+            { it_id: it_id },
+            function(data) {
+                $this.after(data);
+            }
+        );
+    });
+
+    $(".cp_apply").live("click", function() {
+        var $el = $(this).closest("li");
+        var cp_id = $el.find("input[name='f_cp_id[]']").val();
+        var amount = $el.find("input[name='f_cp_amt[]']").val();
+        var subj = $el.find("input[name='f_cp_subj[]']").val();
+        var sell_amount;
+
+        // 이미 사용한 쿠폰이 있는지
+        var cp_dup = false;
+        var cp_dup_idx;
+        $("input[name^=cp_id]").each(function(index) {
+            var id = $(this).val();
+
+            if(id == cp_id) {
+                cp_dup_idx = index;
+                cp_dup = true;
+
+                return false;
+            }
+        });
+
+        if(cp_dup) {
+            var it_name = $("input[name='it_name["+cp_dup_idx+"]']").val();
+            if(!confirm(subj+ "쿠폰은 "+it_name+"에 사용되었습니다.\n"+it_name+"의 쿠폰을 취소한 후 적용하시겠습니까?")) {
+                return false;
+            } else {
+                var $dup_sell_el = $("#sell_amount_"+cp_dup_idx);
+                var $dup_amount_el = $("input[name='cp_amount["+cp_dup_idx+"]']");
+                sell_amount = parseInt($dup_sell_el.text().replace(/[^0-9]/g, ""));
+                var cp_amount = parseInt($dup_amount_el.val());
+                var org_sell = sell_amount + cp_amount;
+
+                $dup_sell_el.text(number_format(String(org_sell)));
+                $dup_amount_el.val("");
+                $("input[name='cp_id["+cp_dup_idx+"]']").val("");
+            }
+        }
+
+        var $s_el = $("#sell_amount_"+item_index);
+        sell_amount = parseInt($s_el.text().replace(/[^0-9]/g, ""));
+        sell_amount = sell_amount - parseInt(amount);
+        $s_el.text(number_format(String(sell_amount)));
+        $("input[name='cp_id["+item_index+"]']").val(cp_id);
+        $("input[name='cp_amount["+item_index+"]']").val(amount);
+
+        $("#it_coupon_frm").remove();
+    });
+
+    $("#it_coupon_close").live("click", function() {
+        $("#it_coupon_frm").remove();
+    });
+});
 </script>
 <?php
     }

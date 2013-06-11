@@ -123,7 +123,7 @@ include_once('./admin.head.php');
     </tr>
     <?php for ($i=1;$i<=10;$i++) { ?>
     <tr>
-        <th scope="row">회원여분필드<?php echo $i ?></th>
+        <th scope="row">여분필드<?php echo $i ?></th>
         <td class="td_gr_extra">
             <label for="gr_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
             <input type="text" name="gr_<?php echo $i ?>_subj" value="<?php echo get_text($group['gr_'.$i.'_subj']) ?>" id="gr_<?php echo $i ?>_subj" class="frm_input">

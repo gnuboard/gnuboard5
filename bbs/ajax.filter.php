@@ -1,8 +1,6 @@
 <?php
 include_once('./_common.php');
 
-header("Content-Type: text/html; charset=utf-8");
-
 $subject = strtolower($_POST['subject']);
 $content = strtolower(strip_tags($_POST['content']));
 

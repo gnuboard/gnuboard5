@@ -162,8 +162,8 @@ function pg_anchor($anc_id) {
 ?>
             <ul class="sanchor">
                 <li><a href="#sit_inf" <?php if ($anc_id == 'inf') echo 'class="sanchor_on"'; ?>>상품정보</a></li>
-                <li><a href="#sit_ps" <?php if ($anc_id == 'ps') echo 'class="sanchor_on"'; ?>>사용후기 <span class="item_use_count"></span></a></li>
-                <li><a href="#sit_qna" <?php if ($anc_id == 'qna') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"></span></a></li>
+                <li><a href="#sit_use" <?php if ($anc_id == 'use') echo 'class="sanchor_on"'; ?>>이용후기 <span class="item_use_count"></span></a></li>
+                <li><a href="#sit_qa" <?php if ($anc_id == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"></span></a></li>
                 <?php if ($default['de_baesong_content']) { ?><li><a href="#sit_dvr" <?php if ($anc_id == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
                 <?php if ($default['de_change_content']) { ?><li><a href="#sit_ex" <?php if ($anc_id == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
                 <li><a href="#sit_rel" <?php if ($anc_id == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"></span></a></li>
@@ -338,12 +338,7 @@ else
                 <th scope="row">포인트</th>
                 <td>
                     <?php
-                    if($it['it_point_type']) {
-                        $it_point = floor(($it['it_price'] * ($it['it_point'] / 100) / 10)) * 10;
-                    } else {
-                        $it_point = $it['it_point'];
-                    }
-
+                    $it_point = get_item_point($it);
                     echo number_format($it_point);
                     ?> 점
                     <input type="hidden" name="it_point" value="<?php echo $it_point; ?>">
@@ -558,9 +553,9 @@ else
     </section>
     <!-- 상품설명 end -->
 
-    <section id="sit_ps">
-        <h2>사용후기</h2>
-        <?php echo pg_anchor('ps'); ?>
+    <section id="sit_use">
+        <h2>이용후기</h2>
+        <?php echo pg_anchor('use'); ?>
 
         <?php
         $use_page_rows = 10; // 페이지당 목록수
@@ -568,9 +563,9 @@ else
         ?>
     </section>
 
-    <section id="sit_qna">
+    <section id="sit_qa">
         <h2>상품문의</h2>
-        <?php echo pg_anchor('qna'); ?>
+        <?php echo pg_anchor('qa'); ?>
 
         <?php
         $qa_page_rows = 10; // 페이지당 목록수

@@ -135,7 +135,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
     </div>
 
-    <form name="fitemlistupdate" method="post" action="./itemlistupdate.php" autocomplete="off">
+    <form name="fitemlistupdate" method="post" action="./itemlistupdate.php" onsubmit="return fitemlist_submit(this);" autocomplete="off">
     <input type="hidden" name="sca" value="<?php echo $sca; ?>">
     <input type="hidden" name="sst" value="<?php echo $sst; ?>">
     <input type="hidden" name="sod" value="<?php echo $sod; ?>">
@@ -146,6 +146,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <table>
     <thead>
     <tr>
+        <th scope="col" rowspan="2"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 게시판 전체선택" onclick="check_all(this.form)"></th>
         <th scope="col" rowspan="2"><?php echo subject_sort_link('it_id', 'sca='.$sca); ?>상품코드 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" colspan="2" rowspan="2">분류 및 <?php echo subject_sort_link('it_name', 'sca='.$sca); ?>상품명 <span class="sound_only">순 정렬</span></a></th>
         <th scope="col" id="sit_amt"><?php echo subject_sort_link('it_price', 'sca='.$sca); ?>판매가격 <span class="sound_only">순 정렬</span></a></th>
@@ -170,6 +171,9 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     <tr>
         <td rowspan="2">
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>" title="<?php echo get_text($row['bo_subject']) ?> 게시판선택">
+        </td>
+        <td rowspan="2">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>
         </td>
@@ -191,7 +195,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="<?php echo $href; ?>"><img src="./img/icon_view.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 보기"></a>
             <a href="./item_copy.php?it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>" class="item_copy" target="_blank"><img src="./img/icon_copy.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 복사"></a>
             <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 수정"></a>
-            <a href="./itemformupdate.php?w=d&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 삭제"></a>
+            <!-- <a href="./itemformupdate.php?w=d&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> 삭제"></a> -->
         </td>
     </tr>
     <tr>
@@ -206,9 +210,15 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     </tbody>
     </table>
 
-    <div class="btn_confirm">
-        <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
+    <div class="btn_list">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+        <?php if ($is_admin == 'super') { ?>
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+        <?php } ?>
     </div>
+    <!-- <div class="btn_confirm">
+        <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
+    </div> -->
     </form>
 
 </section>
@@ -216,6 +226,22 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
+function fitemlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 $(function() {
     $(".item_copy").click(function() {
         var href = $(this).attr("href");

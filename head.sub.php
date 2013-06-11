@@ -78,7 +78,7 @@ if ($is_admin) {
 if(G4_IS_MOBILE) {
     echo '<script> set_cookie("device_width", screen.width, 6, g4_cookie_domain); </script>'.PHP_EOL;
 }
-if(!defined('G4_IS_ADMIN'))
+//if(!defined('G4_IS_ADMIN'))
     echo $config['cf_add_script'];
 ?>
 </head>
