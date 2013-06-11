@@ -132,86 +132,9 @@ if (!$i)
 if ($use_pages) {
     $use_pages = get_paging(10, $use_page, $use_total_page, "./item.php?it_id=$it_id&amp;$qstr&amp;use_page=", "#use");
 }
+
+$itemuse_write = G4_BBS_URL.'/write.php?bo_table=itemuse&amp;wr_1='.$it_id.'&amp;wr_2='.urlencode($it_name);
 ?>
 
-<a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
-
-<script>
-function itemusewin(query_string)
-{
-    window.open("./itemusewin.php?"+query_string, "itemusewin", "width=800,height=700");
-}
-
-function fitemuse_submit(f) 
-{
-    if (!check_kcaptcha(f.is_key)) { 
-        return false; 
-    } 
-
-    f.action = "itemuseupdate.php"
-    return true;
-}
-
-function itemuse_insert()
-{
-    /*
-    if (!g4_is_member) {
-        alert("로그인 하시기 바랍니다.");
-        return;
-    }
-    */
-
-    var f = document.fitemuse;
-    var id = document.getElementById('itemuse');
-
-    id.style.display = 'block';
-
-    f.w.value = '';
-    f.is_id.value = '';
-    if (!g4_is_member)
-    {
-        f.is_name.value = '';
-        f.is_name.readOnly = false;
-        f.is_password.value = '';
-    }
-    f.is_subject.value = '';
-    f.is_content.value = '';
-}
-
-function itemuse_update(idx)
-{
-    var f = document.fitemuse;
-    var id = document.getElementById('itemuse');
-
-    id.style.display = 'block';
-
-    f.w.value = 'u';
-    f.is_id.value = document.getElementById('tmp_is_id'+idx).value;
-    if (!g4_is_member)
-    {
-        f.is_name.value = document.getElementById('tmp_is_name'+idx).value;
-        f.is_name.readOnly = true;
-    }
-    f.is_subject.value = document.getElementById('tmp_is_subject'+idx).value;
-    f.is_content.value = document.getElementById('tmp_is_content'+idx).value;
-}
-
-function itemuse_delete(f, idx)
-{
-    var id = document.getElementById('itemuse');
-
-    f.w.value = 'd';
-    f.is_id.value = document.getElementById('tmp_is_id'+idx).value;
-
-    if (g4_is_member)
-    {
-        if (confirm("삭제하시겠습니까?"))
-            f.submit();
-    }
-    else 
-    {
-        id.style.display = 'none';
-        document.getElementById('itemuse_password'+idx).style.display = 'block';
-    }
-}
-</script>
+<!-- <a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a> -->
+<a href="<?php echo $itemuse_write; ?>" onclick="window.open(this.href); return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
