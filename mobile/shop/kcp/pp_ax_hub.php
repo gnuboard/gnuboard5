@@ -151,6 +151,18 @@
         $c_PayPlus->m_res_msg = "연동 오류|tran_cd값이 설정되지 않았습니다.";
     }
 
+    if ($res_cd != '0000')
+    {
+        $res_msg = iconv("euc-kr", "utf-8", $res_msg);
+
+        echo "<script>
+        var openwin = window.open( './kcp/proc_win.php', 'proc_win', '' );
+        openwin.close();
+        </script>";
+        alert("$res_cd : $res_msg");
+        exit;
+    }
+
 
     /* = -------------------------------------------------------------------------- = */
     /* =   04. 실행 END                                                             = */

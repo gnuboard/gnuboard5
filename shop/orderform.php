@@ -991,7 +991,7 @@ $(function() {
         var send_cost = parseInt($("input[name=org_send_cost]").val());
         $.post(
             "./ordercoupon.php",
-            { amount: (amount + send_cost) },
+            { amount: amount },
             function(data) {
                 $this.after(data);
             }
@@ -1256,27 +1256,30 @@ function forderform_check(f)
         {
             temp_point = parseInt(f.od_temp_point.value);
 
+            <?php
+            if($default['de_mileage_use']) {
+                $mb_point = $member['mb_mileage'];
+                $p_msg = '마일리지';
+            } else {
+                $mb_point = $member['mb_point'];
+                $p_msg = '포인트';
+            }
+            ?>
+
             if (temp_point < 0) {
-                alert("포인트를 0 이상 입력하세요.");
+                alert("<?php echo $p_msg; ?>를 0 이상 입력하세요.");
                 f.od_temp_point.select();
                 return false;
             }
 
             if (temp_point > tot_amount) {
-                alert("주문금액 보다 많이 포인트결제할 수 없습니다.");
+                alert("주문금액 보다 많이 <?php echo $p_msg; ?>결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
             }
 
-            <?php
-            if($default['de_mileage_use'])
-                $mb_point = $member['mb_mileage'];
-            else
-                $mb_point = $member['mb_point'];
-            ?>
-
             if (temp_point > <?php echo (int)$mb_point; ?>) {
-                alert("회원님의 포인트보다 많이 결제할 수 없습니다.");
+                alert("회원님의 <?php echo $p_msg; ?>보다 많이 결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
             }
@@ -1288,7 +1291,7 @@ function forderform_check(f)
             }
 
             if (parseInt(parseInt(temp_point / 100) * 100) != temp_point) {
-                alert("포인트를 100점 단위로 입력하세요.");
+                alert("<?php echo $p_msg; ?>를 100점 단위로 입력하세요.");
                 f.od_temp_point.select();
                 return false;
             }

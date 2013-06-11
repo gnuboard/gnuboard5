@@ -47,7 +47,6 @@ ob_start();
         <th scope="col">쿠폰</th>
         <th scope="col">소계</th>
         <th scope="col">포인트</th>
-        <th scope="col"><input type="checkbox" name="ct_all" value="1"></th>
     </tr>
     </thead>
     <tbody>
@@ -576,7 +575,7 @@ ob_end_clean();
                     if ($temp_point > $member_mileage)
                         $temp_point = $member_mileage;
 
-                    echo '<div>결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
+                    echo '<div><input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
                     echo '<div>회원님의 보유포인트('.display_point($member['mb_mileage']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
                     $multi_settle++;
                 }
@@ -595,7 +594,7 @@ ob_end_clean();
                     if ($temp_point > $member_point)
                         $temp_point = $member_point;
 
-                    echo '<div><input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>"><input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
+                    echo '<div><input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
                     echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
                     $multi_settle++;
                 }
@@ -784,7 +783,7 @@ $(function() {
         var send_cost = parseInt($("input[name=org_send_cost]").val());
         $.post(
             "./ordercoupon.php",
-            { amount: (amount + send_cost) },
+            { amount: amount },
             function(data) {
                 $this.after(data);
             }
@@ -995,8 +994,8 @@ function kcp_approval()
 
     var tot_amount = <?php echo (int)$tot_amount; ?>;
     var max_point = 0;
-    if (typeof(f.max_temp_point) != "undefined")
-        max_point  = parseInt(f.max_temp_point.value);
+    if (typeof(pf.max_temp_point) != "undefined")
+        max_point  = parseInt(pf.max_temp_point.value);
 
     if (typeof(pf.od_temp_point) != "undefined") {
         if (pf.od_temp_point.value)
@@ -1004,18 +1003,6 @@ function kcp_approval()
             if (pf.od_temp_point.value)
             {
                 temp_point = parseInt(pf.od_temp_point.value);
-
-                if (temp_point < 0) {
-                    alert("포인트를 0 이상 입력하세요.");
-                    pf.od_temp_point.select();
-                    return false;
-                }
-
-                if (temp_point > tot_amount) {
-                    alert("주문금액 보다 많이 포인트결제할 수 없습니다.");
-                    pf.od_temp_point.select();
-                    return false;
-                }
 
                 <?php
                 if($default['de_mileage_use']) {
@@ -1026,6 +1013,18 @@ function kcp_approval()
                     $p_msg = '포인트';
                 }
                 ?>
+
+                if (temp_point < 0) {
+                    alert("<?php echo $p_msg; ?>를 0 이상 입력하세요.");
+                    pf.od_temp_point.select();
+                    return false;
+                }
+
+                if (temp_point > tot_amount) {
+                    alert("주문금액 보다 많이 <?php echo $p_msg; ?>결제할 수 없습니다.");
+                    pf.od_temp_point.select();
+                    return false;
+                }
 
                 if (temp_point > <?php echo (int)$mb_point; ?>) {
                     alert("회원님의 <?php echo $p_msg; ?>보다 많이 결제할 수 없습니다.");
@@ -1040,7 +1039,7 @@ function kcp_approval()
                 }
 
                 if (parseInt(parseInt(temp_point / 100) * 100) != temp_point) {
-                    alert("포인트를 100점 단위로 입력하세요.");
+                    alert("<?php echo $p_msg; ?>를 100점 단위로 입력하세요.");
                     pf.od_temp_point.select();
                     return false;
                 }
@@ -1160,18 +1159,6 @@ function forderform_check(f)
         {
             temp_point = parseInt(f.od_temp_point.value);
 
-            if (temp_point < 0) {
-                alert("포인트를 0 이상 입력하세요.");
-                f.od_temp_point.select();
-                return false;
-            }
-
-            if (temp_point > tot_amount) {
-                alert("주문금액 보다 많이 포인트결제할 수 없습니다.");
-                f.od_temp_point.select();
-                return false;
-            }
-
             <?php
             if($default['de_mileage_use']) {
                 $mb_point = $member['mb_mileage'];
@@ -1181,6 +1168,18 @@ function forderform_check(f)
                 $p_msg = '포인트';
             }
             ?>
+
+            if (temp_point < 0) {
+                alert("<?php echo $p_msg; ?>를 0 이상 입력하세요.");
+                f.od_temp_point.select();
+                return false;
+            }
+
+            if (temp_point > tot_amount) {
+                alert("주문금액 보다 많이 <?php echo $p_msg; ?>결제할 수 없습니다.");
+                f.od_temp_point.select();
+                return false;
+            }
 
             if (temp_point > <?php echo (int)$mb_point; ?>) {
                 alert("회원님의 <?php echo $p_msg; ?>보다 많이 결제할 수 없습니다.");
@@ -1195,7 +1194,7 @@ function forderform_check(f)
             }
 
             if (parseInt(parseInt(temp_point / 100) * 100) != temp_point) {
-                alert("포인트를 100점 단위로 입력하세요.");
+                alert("<?php echo $p_msg; ?>를 100점 단위로 입력하세요.");
                 f.od_temp_point.select();
                 return false;
             }
