@@ -10,7 +10,7 @@ $g4['title'] = $html_title;
 include_once(G4_PATH.'/head.sub.php');
 
 $sql_common = " from {$g4['member_table']} ";
-$sql_where = " where mb_leave_date = '' and mb_intercept_date ='' ";
+$sql_where = " where mb_id <> '{$config['cf_admin']}' and mb_leave_date = '' and mb_intercept_date ='' ";
 
 if($_GET['mb_name'])
     $sql_where .= " and mb_name like '%$mb_name%' ";
