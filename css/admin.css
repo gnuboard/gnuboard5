@@ -226,7 +226,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 #point_mng {margin-top:50px}
 /* 회원메일발송 목록 */
 .td_test, .td_send {width:50px;text-align:center}
-.td_mng {width:110px;text-align:center}
+.td_mng {width:100px;text-align:center}
 .td_smallmng {width:50px;text-align:center}
 /* 투표관리 목록 */
 .td_etc {width:80px;text-align:center}
@@ -310,6 +310,15 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .sv_wrap a:focus, .sv_wrap a:hover, .sv_wrap a:active {text-decoration:none !important}
 .sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important}
 .sv_nojs .sv {display:block}
+
+/* 셀렉트 스타일 UL */
+.sel_wrap {position:relative;width:100px}
+.sel_btn {width:100px;height:25px;border:1px solid #000;background:#333;color:#fff}
+.sel_ul {display:none;position:absolute;top:10px;right:-20px;margin:0;padding:0;width:88px;border:1px solid #999;border-bottom:0;background:#fff;list-style:none}
+.sel_on {display:block;z-index:2}
+.sel_li {border-bottom:1px solid #999}
+.sel_a {display:block;height:23px;text-align:center;line-height:2em !important;line-height:1.9em}
+.sel_a:focus, .sel_a:hover {background:#f5f6fa;text-decoration:none}
 
 /* pagination */
 .pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}

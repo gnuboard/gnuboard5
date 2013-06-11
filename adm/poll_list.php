@@ -103,7 +103,7 @@ $colspan = 6;
         $row2 = sql_fetch($sql2);
         $po_etc = ($row['po_etc']) ? "사용" : "미사용";
 
-        $s_mod = '<a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row['po_id'].'">수정</a>';
+        $s_mod = '<li class="sel_li"><a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row['po_id'].'" class="sel_a">수정</a></li>';
         //$s_del = '<a href="javascript:post_delete(\'poll_form_update.php\', \''.$row['po_id'].'\');">삭제</a>';
     ?>
 
@@ -116,7 +116,14 @@ $colspan = 6;
         <td class="td_num"><?php echo $row['po_level'] ?></td>
         <td class="td_num"><?php echo $row2['sum_po_cnt'] ?></td>
         <td class="td_etc"><?php echo $po_etc ?></td>
-        <td class="td_mng"><?php echo $s_mod ?></td>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <?php echo $s_mod ?>
+                </ul>
+            </div>
+        </td>
     </tr>
 
     <?php

@@ -127,7 +127,7 @@ $colspan = 8;
         $sql2 = " select count(*) as cnt from {$g4['board_table']} where gr_id = '{$row['gr_id']}' ";
         $row2 = sql_fetch($sql2);
 
-        $s_upd = '<a href="./boardgroup_form.php?'.$qstr.'&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
+        $s_upd = '<li class="sel_li"><a href="./boardgroup_form.php?'.$qstr.'&amp;w=u&amp;gr_id='.$row['gr_id'].'" class="sel_a">수정</a></li>';
     ?>
 
     <tr>
@@ -160,7 +160,14 @@ $colspan = 8;
                 <option value="mobile"<?php echo get_selected($row['gr_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
-        <td class="td_smallmng"><?php echo $s_upd ?></td>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <?php echo $s_upd ?>
+                </ul>
+            </div>
+        </td>
     </tr>
 
     <?php
