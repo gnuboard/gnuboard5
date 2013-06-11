@@ -134,9 +134,14 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td class="sit_ps_subject"><?php echo $row['is_subject']; ?></td>
         <td class="td_num"><?php echo $row['is_score']; ?></td>
         <td class="sit_ps_confirm"><?php echo $confirm; ?></td>
-        <td class="td_smallmng">
-            <a href="./itempsform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;$qstr"><img src="./img/icon_mod.jpg" alt="<?php echo $row['is_subject']; ?> 수정"></a>
-            <a href="./itempsformupdate.php?w=d&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo $row['is_subject']; ?> 삭제"></a>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <li class="sel_li"><a href="./itempsform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;$qstr" class="sel_a"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>수정</a></li>
+                    <li class="sel_li"><a href="./itempsformupdate.php?w=d&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>삭제</a></li>
+                </ul>
+            </div>
         </td>
     </tr>
 

@@ -194,7 +194,14 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
         <td class="td_num"><input type="text" name="io_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['io_stock_qty']; ?>" class="frm_input" size="8" autocomplete="off"></td>
         <td class="td_chk"><input type="checkbox" name="io_use[<?php echo $i; ?>]" value="1" <?php echo ($row['io_use'] ? "checked" : ""); ?>></td>
-        <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>">수정</a></td>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <li class="sel_li"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a">수정</a></li>
+                </ul>
+            </div>
+        </td>
     </tr>
     <?php
     }

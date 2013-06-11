@@ -45,10 +45,15 @@ $result = sql_query($sql);
     <tr>
         <td class="td_odrnum"><?php echo $row['co_id']; ?></td>
         <td><?php echo htmlspecialchars2($row['co_subject']); ?></td>
-        <td class="td_mng">
-            <a href="<?php echo G4_SHOP_URL; ?>/content.php?co_id=<?php echo $row['co_id']; ?>"><img src="./img/icon_view.jpg" alt="<?php echo htmlspecialchars2($row['co_subject']); ?> 보기"></a>
-            <a href="./contentform.php?w=u&amp;co_id=<?php echo $row['co_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo htmlspecialchars2($row['co_subject']); ?> 수정"></a>
-            <a href="./contentformupdate.php?w=d&amp;co_id=<?php echo $row['co_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo htmlspecialchars2($row['co_subject']); ?> 삭제"></a>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <li class="sel_li"><a href="<?php echo G4_SHOP_URL; ?>/content.php?co_id=<?php echo $row['co_id']; ?>" class="sel_a"><span class="sound_only"><?php echo htmlspecialchars2($row['co_subject']); ?> </span> 보기</a></li>
+                    <li class="sel_li"><a href="./contentform.php?w=u&amp;co_id=<?php echo $row['co_id']; ?>" class="sel_a"><span class="sound_only"><?php echo htmlspecialchars2($row['co_subject']); ?> </span>수정</a></li>
+                    <li class="sel_li"><a href="./contentformupdate.php?w=d&amp;co_id=<?php echo $row['co_id']; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo htmlspecialchars2($row['co_subject']); ?> </span>삭제</a></li>
+                </ul>
+            </div>
         </td>
     </tr>
     <?php
