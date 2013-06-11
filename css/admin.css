@@ -76,7 +76,7 @@ h2 {font-size:1.2em}
 #qnb {float:right;margin:0;padding:0;list-style:none}
 #qnb li {margin-bottom:20px}
 
-#qnb a {display:block;width:40px;font-size:0.9em;text-align:center}
+#qnb a {display:block;width:40px;font-size:0.9em;text-align:center;letter-spacing:-0.1em}
 #qnb a:focus, #qnb a:hover, #qnb a:active {text-decoration:none}
 
 #qnb img {margin-bottom:5px}
