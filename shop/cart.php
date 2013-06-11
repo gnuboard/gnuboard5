@@ -5,7 +5,6 @@ include_once('./_common.php');
 set_unique_id($sw_direct);
 
 // 회원일 경우 자신의 장바구니 상품 uq_id 값을 변경
-/*
 if($is_member && $sw_direct != 1) {
     $tmp_uq_id = get_session('ss_uq_id');
     if(!$tmp_uq_id) {
@@ -22,7 +21,6 @@ if($is_member && $sw_direct != 1) {
                   and ct_time > '$ctime' ";
     sql_query($sql);
 }
-*/
 
 if (G4_IS_MOBILE) {
     include_once(G4_MSHOP_PATH.'/cart.php');
