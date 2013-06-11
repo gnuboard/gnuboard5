@@ -6,11 +6,16 @@ if($is_guest)
 
 // 상품정보
 $it_id = $_POST['it_id'];
+$sw_direct = $_POST['sw_direct'];
 $sql = " select it_id, ca_id, ca_id2, ca_id3 from {$g4['shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 
 // 상품 총 금액
-$uq_id = get_session('ss_uq_id');
+if($sw_direct)
+    $uq_id = get_session('ss_uq_direct');
+else
+    $uq_id = get_session('ss_uq_id');
+
 $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
             from {$g4['shop_cart_table']}
             where uq_id = '$uq_id'
