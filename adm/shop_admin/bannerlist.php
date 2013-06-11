@@ -81,9 +81,14 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         <td><?php echo $bn_end_time; ?></td>
         <td><?php echo $row['bn_order']; ?></td>
         <td><?php echo $row['bn_hit']; ?></td>
-        <td class="td_smallmng">
-            <a href="./bannerform.php?w=u&amp;bn_id=<?php echo $row['bn_id']; ?>"><img src="./img/icon_mod.jpg" alt="배너수정"></a>
-            <a href="./bannerformupdate.php?w=d&amp;bn_id=<?php echo $row['bn_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="배너삭제"></a>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <li class="sel_li"><a href="./bannerform.php?w=u&amp;bn_id=<?php echo $row['bn_id']; ?>" class="sel_a">수정</a></li>
+                    <li class="sel_li"><a href="./bannerformupdate.php?w=d&amp;bn_id=<?php echo $row['bn_id']; ?>" class="sel_a" onclick="return delete_confirm();">삭제</a></li>
+                </ul>
+            </div>
         </td>
     </tr>
     <tr>

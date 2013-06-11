@@ -148,28 +148,35 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
     </tr>
     </thead>
     <tbody>
-        <?php for ($i=0; $row=sql_fetch_array($result); $i++) {
-            $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-        ?>
-        <tr>
-            <td class="td_bignum">
-                <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
-                <?php echo $row['it_id']; ?>
-            </td>
-            <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
-            <td class="td_chk"><input type="checkbox" name="it_type1[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type1'] ? 'checked' : ''); ?>></td>
-            <td class="td_chk"><input type="checkbox" name="it_type2[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type2'] ? 'checked' : ''); ?>></td>
-            <td class="td_chk"><input type="checkbox" name="it_type3[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type3'] ? 'checked' : ''); ?>></td>
-            <td class="td_chk"><input type="checkbox" name="it_type4[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type4'] ? 'checked' : ''); ?>></td>
-            <td class="td_chk"><input type="checkbox" name="it_type5[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type5'] ? 'checked' : ''); ?>></td>
-            <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?> 수정"></a></td>
-        </tr>
-        <?php
-        }
+    <?php for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    ?>
+    <tr>
+        <td class="td_bignum">
+            <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
+            <?php echo $row['it_id']; ?>
+        </td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
+        <td class="td_chk"><input type="checkbox" name="it_type1[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type1'] ? 'checked' : ''); ?>></td>
+        <td class="td_chk"><input type="checkbox" name="it_type2[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type2'] ? 'checked' : ''); ?>></td>
+        <td class="td_chk"><input type="checkbox" name="it_type3[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type3'] ? 'checked' : ''); ?>></td>
+        <td class="td_chk"><input type="checkbox" name="it_type4[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type4'] ? 'checked' : ''); ?>></td>
+        <td class="td_chk"><input type="checkbox" name="it_type5[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type5'] ? 'checked' : ''); ?>></td>
+        <td class="td_mng sv_use">
+        <div class="sel_wrap">
+            <button type="button" class="sel_btn">관리하기</button>
+            <ul class="sel_ul">
+                <li class="sel_li"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a"><span class="sound_only"><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?> </span>수정</a></li>
+            </ul>
+        </div>
+         </td>
+    </tr>
+    <?php
+    }
 
-        if (!$i)
-            echo '<tr><td colspan="8" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
-        ?>
+    if (!$i)
+        echo '<tr><td colspan="8" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
+    ?>
     </tbody>
     <tfoot>
 
