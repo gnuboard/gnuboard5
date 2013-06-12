@@ -274,4 +274,12 @@ if(!$result) {
                     ADD `od_id` BIGINT(20) UNSIGNED NOT NULL AFTER `cp_maximum`,
                     ADD `cp_used_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `cp_used` ", false);
 }
+
+// 장바구니 선택필드추가
+$sql = " select ct_select from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `ct_select` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ct_direct` ", true);
+}
 ?>

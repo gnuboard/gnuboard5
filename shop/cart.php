@@ -22,6 +22,13 @@ if($is_member && $sw_direct != 1) {
     sql_query($sql);
 }
 
+$s_uq_id = get_session('ss_uq_id');
+// 선택필드 초기화
+$sql = " update {$g4['shop_cart_table']} set ct_select = '0' where uq_id = '$s_uq_id' ";
+sql_query($sql);
+
+$cart_action_url = G4_SHOP_URL.'/cartupdate.php';
+
 if (G4_IS_MOBILE) {
     include_once(G4_MSHOP_PATH.'/cart.php');
     return;
@@ -29,14 +36,13 @@ if (G4_IS_MOBILE) {
 
 $g4['title'] = '장바구니';
 include_once('./_head.php');
-$s_uq_id = get_session('ss_uq_id');
 ?>
 
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 
 <div id="sod_bsk">
 
-    <form name="frmcartlist" id="sod_bsk_list" method="post">
+    <form name="frmcartlist" id="sod_bsk_list" method="post" action="<?php echo $cart_action_url; ?>">
     <table class="basic_tbl">
     <thead>
     <tr>
@@ -46,7 +52,7 @@ $s_uq_id = get_session('ss_uq_id');
         <th scope="col">판매가</th>
         <th scope="col">소계</th>
         <th scope="col">포인트</th>
-        <th scope="col"><input type="checkbox" name="ct_all" value="1"></th>
+        <th scope="col"><input type="checkbox" name="ct_all" value="1" checked="checked"></th>
     </tr>
     </thead>
     <tbody>
@@ -122,7 +128,7 @@ $s_uq_id = get_session('ss_uq_id');
         <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
         <td class="td_bignum"><span id="sell_amount_<?php echo $i; ?>"><?php echo number_format($sell_amount); ?></span></td>
         <td class="td_bignum"><?php echo number_format($point); ?></td>
-        <td class="td_smallmng"><input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1"></td>
+        <td class="td_smallmng"><input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" checked="checked"></td>
     </tr>
 
     <?php
@@ -196,9 +202,9 @@ $s_uq_id = get_session('ss_uq_id');
         <input type="hidden" name="act" value="">
         <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
         <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
-        <a href="javascript:form_check('buy');" class="btn02">주문하기</a>
-        <a href="javascript:form_check('seldelete');" class="btn01">선택삭제</a>
-        <a href="javascript:form_check('alldelete');" class="btn01">비우기</a>
+        <button type="button" onclick="return form_check('buy');" class="btn02">주문하기</button>
+        <button type="button" onclick="return form_check('seldelete');" class="btn01">선택삭제</button>
+        <button type="button" onclick="return form_check('alldelete');" class="btn01">비우기</button>
         <?php } ?>
     </div>
 
@@ -258,22 +264,17 @@ function form_check(act) {
 
     if (act == "buy")
     {
-        f.act.value = act;
-
-        <?php
-        if (get_session('ss_mb_id')) // 회원인 경우
-        {
-            echo "f.action = './orderform.php';";
-            echo "f.submit();";
+        if($("input[name^=ct_chk]:checked").size() < 1) {
+            alert("주문하실 상품을 하나이상 선택해 주십시오.");
+            return false;
         }
-        else
-            echo "document.location.href = '".G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/orderform.php")."';";
-        ?>
+
+        f.act.value = act;
+        f.submit();
     }
     else if (act == "alldelete")
     {
         f.act.value = act;
-        f.action = "./cartupdate.php";
         f.submit();
     }
     else if (act == "seldelete")
@@ -284,7 +285,6 @@ function form_check(act) {
         }
 
         f.act.value = act;
-        f.action = "./cartupdate.php";
         f.submit();
     }
 

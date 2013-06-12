@@ -68,6 +68,7 @@ ob_start();
                     b.ca_id
                from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
               where a.uq_id = '$s_uq_id'
+                and a.ct_select = '1'
                 and a.ct_num = '0' ";
     if($default['de_cart_keep_term']) {
         $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
@@ -167,7 +168,8 @@ ob_start();
     } // for 끝
 
     if ($i == 0) {
-        echo '<tr><td colspan="'.$colspan.'" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+        //echo '<tr><td colspan="'.$colspan.'" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+        alert('장바구니가 비어 있습니다.', G4_SHOP_URL.'/cart.php');
     } else {
         // 배송비 계산
         if ($default['de_send_cost_case'] == '없음')
