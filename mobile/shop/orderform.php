@@ -707,7 +707,7 @@ $(function() {
 
         $.post(
             "./orderitemcoupon.php",
-            { it_id: it_id },
+            { it_id: it_id, sw_direct: "<?php echo $sw_direct; ?>" },
             function(data) {
                 $cp_btn_el.after(data);
             }
