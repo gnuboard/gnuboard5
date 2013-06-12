@@ -582,10 +582,12 @@ else
         <h2>이용후기</h2>
         <?php echo pg_anchor('use'); ?>
 
-        <?php
-        $use_page_rows = 10; // 페이지당 목록수
-        include_once('./itemuse.inc.php');
-        ?>
+        <div id="itemuse"></div>
+        <script>
+        $(function(){
+            $("#itemuse").load("./itemuse.php", {it_id:<?php echo $it_id; ?>});
+        });
+        </script>
     </section>
 
     <section id="sit_qa">
