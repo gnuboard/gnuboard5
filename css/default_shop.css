@@ -662,7 +662,8 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sod_frm #od_memo {height:50px}
 
 #sod_frm_pay {position:relative}
-#sod_frm_pay th {font-weight:bold;text-align:center !important}
+#sod_frm_pay .basic_tbl th {width:auto !important;font-weight:bold;text-align:center !important}
+#sod_frm_pay .basic_tbl td {padding:8px 5px 6px !important;border-top:1px solid #e9e9e9 !important;border-bottom:1px solid #e9e9e9 !important;line-height:1.5em !important;word-break:break-all !important}
 #sod_frm_pay .frm_input {background:#fff !important}
 #sod_frm_pay .frm_input:focus {color:#000}
 
