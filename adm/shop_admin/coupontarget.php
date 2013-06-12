@@ -27,7 +27,7 @@ if($_GET['sch_target'] == 1) {
     if($_GET['sch_word'])
         $sql_where .= " and ca_name like '%$sch_word%' ";
     $sql_select = " select ca_id as t_id, ca_name as t_name ";
-    $sql_order = " order by ca_came ";
+    $sql_order = " order by ca_name ";
 } else {
     $sql_common = " from {$g4['shop_item_table']} ";
     $sql_where = " where it_use = '1' ";

@@ -100,6 +100,7 @@ $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_ini">기본정보</a></li>
 <li><a href="#anc_sitfrm_compact">요약정보</a></li>
 <li><a href="#anc_sitfrm_cost">가격 및 재고</a></li>
+<li><a href="#anc_sitfrm_sendcost">배송비</a></li>
 <li><a href="#anc_sitfrm_img">상품이미지</a></li>
 <li><a href="#anc_sitfrm_relation">관련상품</a></li>
 <li><a href="#anc_sitfrm_event">관련이벤트</a></li>
@@ -831,6 +832,99 @@ $(function(){
     </table>
 </section>
 
+<section id="anc_sitfrm_sendcost" class="cbox">
+    <h2>배송비</h2>
+    <?php echo $pg_anchor; ?>
+    <p><?php echo help('쇼핑몰설정 &gt; 배송비유형 설정에서 개별배송으로 설정해야만 아래 설정이 적용됩니다.'); ?></p>
+    <div>
+        <table class="frm_tbl">
+        <colgroup>
+            <col class="grid_3">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="it_sc_type">배송비 유형</label></th>
+            <td>
+                <?php echo help("배송비 유형을 선택하면 자동으로 항목이 변환됩니다."); ?>
+                <select name="it_sc_type" id="it_sc_type">
+                    <option value="0"<?php echo get_selected('0', $it['it_sc_type']); ?>>무료배송</option>
+                    <option value="1"<?php echo get_selected('1', $it['it_sc_type']); ?>>조건부 무료배송</option>
+                    <option value="2"<?php echo get_selected('2', $it['it_sc_type']); ?>>유료배송</option>
+                    <option value="3"<?php echo get_selected('3', $it['it_sc_type']); ?>>수량별 부과</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_sc_method">배송비 결제</label></th>
+            <td>
+                <select name="it_sc_method" id="it_sc_method">
+                    <option value="0"<?php echo get_selected('0', $it['it_sc_method']); ?>>선불</option>
+                    <option value="1"<?php echo get_selected('1', $it['it_sc_method']); ?>>착불</option>
+                    <option value="2"<?php echo get_selected('2', $it['it_sc_method']); ?>>사용자선택</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_sc_amount">기본배송비</label></th>
+            <td>
+                <?php echo help("무료배송 이외의 설정에 적용되는 배송비 금액입니다."); ?>
+                <input type="text" name="it_sc_amount" value="<?php echo $it['it_sc_amount']; ?>" id="it_sc_amount" class="frm_input" size="8"> 원
+            </td>
+        </tr>
+        <tr id="sc_con_minimum">
+            <th scope="row"><label for="it_sc_minimum">배송비 상세조건</label></th>
+            <td>
+                주문금액 <input type="text" name="it_sc_minimum" value="<?php echo $it['it_sc_minimum']; ?>" id="it_sc_minimum" class="frm_input" size="8"> 이상 무료 배송
+            </td>
+        </tr>
+        <tr id="sc_con_qty">
+            <th scope="row"><label for="it_sc_qty">배송비 상세조건</label></th>
+            <td>
+                <?php echo help("상품의 주문 수량에 따라 배송비가 부과됩니다. 예를 들어 기본배송비가 3,000원 수량을 3으로 설정했을 경우 상품의 주문수량이 5개이면 6,000원 배송비가 부과됩니다."); ?>
+                주문수량 <input type="text" name="it_sc_qty" value="<?php echo $it['it_sc_qty']; ?>" id="it_sc_qty" class="frm_input" size="8"> 마다 배송비 부과
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        <script>
+        $(function() {
+            <?php
+            if($it['it_sc_type'] == 1) {
+                echo '$("#sc_con_minimum").show();'.PHP_EOL;
+                echo '$("#sc_con_qty").hide();'.PHP_EOL;
+            } else if($it['it_sc_type'] == 3) {
+                echo '$("#sc_con_minimum").show();'.PHP_EOL;
+                echo '$("#sc_con_qty").hide();'.PHP_EOL;
+            } else {
+                echo '$("#sc_con_minimum").hide();'.PHP_EOL;
+                echo '$("#sc_con_qty").hide();'.PHP_EOL;
+            }
+            ?>
+            $("#it_sc_type").change(function() {
+                var type = $(this).val();
+                if(type == "1") {
+                    $("#sc_con_minimum").show();
+                    $("#sc_con_qty").hide();
+                } else if(type == "3") {
+                    $("#sc_con_minimum").hide();
+                    $("#sc_con_qty").show();
+                } else {
+                    $("#sc_con_minimum").hide();
+                    $("#sc_con_qty").hide();
+                }
+            });
+        });
+        </script>
+    </div>
+    <div>
+        <input type="checkbox" name="chk_ca_it_sendcost" value="1" id="chk_ca_it_sendcost">
+        <label for="chk_ca_it_sendcost">분류적용</label>
+        <input type="checkbox" name="chk_all_it_sendcost" value="1" id="chk_all_it_sendcost">
+        <label for="chk_all_it_sendcost">전체적용</label>
+    </div>
+</section>
+
 <section id="anc_sitfrm_img" class="cbox">
     <h2>이미지</h2>
     <?php echo $pg_anchor; ?>
@@ -1359,6 +1453,23 @@ function fitemformcheck(f)
         var point = parseInt(f.it_point.value);
         if(point > 99) {
             alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
+            return false;
+        }
+    }
+
+    if(f.it_sc_type.value != "0") {
+        if(!f.it_sc_amount.value || f.it_sc_amount.value == "0") {
+            alert("기본배송비를 입력해 주십시오.");
+            return false;
+        }
+
+        if(f.it_sc_type.value == "1" && (!f.it_sc_minimum.value || f.it_sc_minimum.value == "0")) {
+            alert("배송비 상세조건의 주문금액을 입력해 주십시오.");
+            return false;
+        }
+
+        if(f.it_sc_type.value == "3" && (!f.it_sc_qty.value || f.it_sc_qty.value == "0")) {
+            alert("배송비 상세조건의 주문수량을 입력해 주십시오.");
             return false;
         }
     }
