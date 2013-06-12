@@ -125,26 +125,36 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <h2>주문내역 목록</h2>
     <p><strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.</p>
 
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
         <a href="./ordercardhistory.php" class="btn_add_optional">전자결제내역</a>
     </div>
 
+    <ul id="sort_sodr" class="sort_odr">
+        <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("itemcount", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("orderamount", 1)."&amp;$qstr1"; ?>">주문합계<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("ordercancel", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_dc_amount", 1)."&amp;$qstr1"; ?>">DC<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("receiptamount")."&amp;$qstr1"; ?>">입금합계<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("receiptcancel", 1)."&amp;$qstr1"; ?>">입금취소<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("misu", 1)."&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <table id="sodr_list">
     <thead>
     <tr>
-        <th scope="col"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span><br>주문일시</a></th>
-        <th scope="col">
-            <a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a><br>
-            <a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span>
-        </th>
-        <th scope="col"><a href="<?php echo title_sort("itemcount", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("orderamount", 1)."&amp;$qstr1"; ?>" class="order_sum">주문합계<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("ordercancel", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("od_dc_amount", 1)."&amp;$qstr1"; ?>">DC<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("receiptamount")."&amp;$qstr1"; ?>" class="order_sum">입금합계<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("receiptcancel", 1)."&amp;$qstr1"; ?>">입금취소<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("misu", 1)."&amp;$qstr1"; ?>" class="order_outstanding">미수금<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">주문번호<br>주문일시</th>
+        <th scope="col">주문자<br>회원ID</th>
+        <th scope="col">건수</th>
+        <th scope="col">주문합계</th>
+        <th scope="col">주문취소</th>
+        <th scope="col">DC</th>
+        <th scope="col">입금합계</th>
+        <th scope="col">입금취소</th>
+        <th scope="col">미수금</th>
         <th scope="col">결제수단</th>
         <th scope="col">관리</th>
     </tr>

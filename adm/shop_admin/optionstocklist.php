@@ -107,9 +107,16 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         창고재고가 부족한 경우 재고수량 뒤에 <span class="sit_stock_qty_alert">!</span><span class="sound_only"> 혹은 재고부족</span>으로 표시됩니다.
     </p>
 
-    <div id="btn_add">
+    <div class="btn_add sort_with">
+        <a href="./itemstocklist.php" class="btn_add_optional">상품재고관리</a>
         <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
     </div>
+
+    <ul class="sort_odr">
+        <li><a href="<?php echo title_sort("b.it_name") . "&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("a.io_stock_qty") . "&amp;$qstr1"; ?>">창고재고<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("a.io_use") . "&amp;$qstr1"; ?>">판매<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
 
     <form name="fitemstocklist" action="./optionstocklistupdate.php" method="post">
     <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
@@ -122,14 +129,14 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><a href="<?php echo title_sort("b.it_name") . "&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">상품명</th>
         <th scope="col">옵션항목</th>
         <th scope="col">옵션타입</th>
-        <th scope="col"><a href="<?php echo title_sort("a.io_stock_qty") . "&amp;$qstr1"; ?>">창고재고<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">창고재고</th>
         <th scope="col">주문대기</th>
         <th scope="col">가재고</th>
         <th scope="col">재고수정</th>
-        <th scope="col"><a href="<?php echo title_sort("a.io_use") . "&amp;$qstr1"; ?>">판매<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">판매</th>
         <th scope="col">관리</th>
     </tr>
     </thead>

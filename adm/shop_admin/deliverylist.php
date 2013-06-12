@@ -109,6 +109,17 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <li>배송일시, 배송회사는 입력의 편의성을 위하여 기본값으로 설정되어 있습니다. 운송장번호만 없는것이 미배송 주문자료입니다.</li>
     </ul>
 
+    <ul class="sort_odr">
+        <li><a href="<?php echo title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_name") . "&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("orderamount",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("receiptamount",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("misu",1) . "&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_hope_date",1) . "&amp;$qstr1"; ?>">희망배송일<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <form name="fdeliverylistupate" method="post" action="./deliverylistupdate.php" autocomplete="off">
     <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
     <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
@@ -120,15 +131,15 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <table id="sdeli_proc">
     <thead>
     <tr>
-        <th scope="col"><a href="<?php echo title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("od_name") . "&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("orderamount",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("receiptamount",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("misu",1) . "&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("od_hope_date",1) . "&amp;$qstr1"; ?>">희망배송일<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">주문번호</th>
+        <th scope="col">주문자</th>
+        <th scope="col">주문액</th>
+        <th scope="col">입금액</th>
+        <th scope="col">미수금</th>
+        <th scope="col">희망배송일</th>
+        <th scope="col">배송일시</th>
         <th scope="col">배송업체</th>
-        <th scope="col"><a href="<?php echo title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">운송장번호</th>
     </tr>
     </thead>
     <tbody>

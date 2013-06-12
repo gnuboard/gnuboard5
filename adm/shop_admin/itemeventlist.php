@@ -134,6 +134,11 @@ if (isset($ev_set)) {
     <h2>상품 목록</h2>
     <p>상품을 이벤트별로 일괄 처리합니다. 현재 선택된 이벤트는 <?php echo $ev_title; ?>입니다.</p>
 
+    <ul class="sort_odr">
+        <li><a href="<?php echo title_sort("a.it_id") . '&amp;'.$qstr1.'&amp;ev_id='.$ev_id; ?>">상품코드<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("it_name") . '&&amp;'.$qstr1.'&amp;ev_id='.$ev_id; ?>">상품명<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <form name="fitemeventlistupdate" method="post" action="./itemeventlistupdate.php" onsubmit="return fitemeventlistupdatecheck(this)">
     <input type="hidden" name="ev_id" value="<?php echo $ev_id; ?>">
     <input type="hidden" name="ev_set" value="<?php echo $ev_set; ?>">
@@ -148,8 +153,8 @@ if (isset($ev_set)) {
     <thead>
     <tr>
         <th scope="col">이벤트사용</th>
-        <th scope="col"><a href="<?php echo title_sort("a.it_id") . '&amp;'.$qstr1.'&amp;ev_id='.$ev_id; ?>">상품코드</a></th>
-        <th scope="col"><a href="<?php echo title_sort("it_name") . '&&amp;'.$qstr1.'&amp;ev_id='.$ev_id; ?>">상품명</a></th>
+        <th scope="col">상품코드</th>
+        <th scope="col">상품명</th>
     </tr>
     </thead>
     <tbody>
@@ -166,7 +171,8 @@ if (isset($ev_set)) {
     <tr>
         <td class="td_mng">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
-            <input type="checkbox" name="ev_chk[<?php echo $i; ?>]" value="1" <?php echo ($row['ev_id'] ? "checked" : ""); ?>>
+            <label for="ev_chk_<?php echo $i; ?>" class="sound_only">이벤트 사용</label>
+            <input type="checkbox" name="ev_chk[<?php echo $i; ?>]" value="1" id="ev_chk_<?php echo $i; ?>" <?php echo ($row['ev_id'] ? "checked" : ""); ?>>
         </td>
         <td class="td_bignum"><a href="<?php echo $href; ?>"><?php echo $row['it_id']; ?></a></td>
         <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>

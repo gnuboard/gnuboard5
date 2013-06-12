@@ -96,14 +96,14 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <h2>주문통합내역 목록</h2>
     <p><strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.</p>
 
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
         <a href="./ordercardhistory.php" class="btn_add_optional">전자결제내역</a>
     </div>
 
-    <ul id="sodr_all_sort">
+    <ul class="sort_odr">
         <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a><br></li>
+        <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("itemcount", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("orderamount", 1)."&amp;$qstr1"; ?>">주문합계<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("ordercancel", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></li>
@@ -278,8 +278,9 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
        ?>
 
             <div class="sodr_mng">
-                <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="주문 수정"></a>
-                <a href="./orderdelete.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>&amp;mb_id=<?php echo $row['mb_id']; ?>&amp;<?php echo $qstr; ?>&amp;list=2" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="주문 삭제"></a>
+                <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>">주문 수정</a>
+                |
+                <a href="./orderdelete.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>&amp;mb_id=<?php echo $row['mb_id']; ?>&amp;<?php echo $qstr; ?>&amp;list=2" onclick="return delete_confirm();">주문 삭제</a>
             </div>
 
        </li>

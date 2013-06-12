@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<section id="sev">
+<aside id="sev">
     <h2>쇼핑몰 이벤트</h2>
 
     <ul>
@@ -35,4 +35,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     ?>
     </ul>
 
-</section>
+</aside>

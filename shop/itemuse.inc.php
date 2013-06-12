@@ -1,7 +1,13 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
+$itemuse_write = G4_BBS_URL.'/write.php?bo_table=itemuse&amp;wr_1='.$it_id;
+$itemuse_board = G4_BBS_URL.'/board.php?bo_table=itemuse&amp;wr_1='.$it_id;
+
 include_once(G4_LIB_PATH.'/thumb.lib.php');
 ?>
+
+<a href="<?php echo $itemuse_board; ?>">더보기</a>
 
 <table id="sit_ps_tbl">
 <thead>
@@ -14,7 +20,15 @@ include_once(G4_LIB_PATH.'/thumb.lib.php');
 </tr>
 </thead>
 <?php
-$sql_common = " from {$g4['shop_item_ps_table']} where it_id = '{$it['it_id']}' and is_confirm = '1' ";
+/*
+    여분필드 용도 
+    wr_1 : 상품코드
+    wr_2 : 상품명
+    wr_3 : 평점 1~5
+    wr_4 : 관리자확인
+*/
+//$sql_common = " from `{$g4['write_prefix']}itemuse` where wr_is_comment = 0 and wr_1 = '{$it['it_id']}' and wr_4 = '1' ";
+$sql_common = " from `{$g4['write_prefix']}itemuse` where wr_is_comment = 0 and wr_1 = '{$it['it_id']}' ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select COUNT(*) as cnt " . $sql_common;
@@ -25,104 +39,39 @@ $use_total_page  = ceil($use_total_count / $use_page_rows); // 전체 페이지 
 if ($use_page == "") $use_page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $use_from_record = ($use_page - 1) * $use_page_rows; // 시작 레코드 구함
 
-$sql = "select * $sql_common order by is_id desc limit $use_from_record, $use_page_rows ";
+$sql = "select * $sql_common order by wr_num limit $use_from_record, $use_page_rows ";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $num = $use_total_count - ($use_page - 1) * $use_page_rows - $i;
+    $use_num     = $use_total_count - ($use_page - 1) * $use_page_rows - $i;
+    $use_star    = get_star($row['wr_3']);
+    $use_name    = get_text($row['wr_name']);
+    $use_subject = conv_subject($row['wr_subject'],50,"…");
+    $use_content = $row['wr_content'];
+    $use_time    = substr($row['wr_datetime'], 2, 8);
+    $use_href    = G4_BBS_URL.'/board.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
 
-    $star = get_star($row['is_score']);
-
-    $is_name = get_text($row['is_name']);
-    $is_subject = conv_subject($row['is_subject'],50,"…");
-    //$is_content = conv_content($row[is_content],0);
-    $is_content = $row['is_content'];
-    //$is_content = preg_replace_callback("#<img[^>]+>#iS", "g4_thumb", $is_content);
-
-    $thumb = new g4_thumb(G4_DATA_PATH.'/itemuse', 500);
-    $is_content = $thumb->run($is_content);
-
-    $is_time = substr($row['is_time'], 2, 14);
+    // http://stackoverflow.com/questions/6967081/show-hide-multiple-divs-with-jquery?answertab=votes#tab-top
 ?>
 
-    <li class="sit_ps_li">
-        <button type="button" class="sit_ps_li_title" onclick="javascript:qa_menu('sit_ps_con_<?php echo $i; ?>')"><?php echo $num; ?>. <?php echo $iq_subject; ?></button>
-        <dl class="sit_ps_dl">
-            <dt>작성자</dt>
-            <dd><?php echo $iq_name; ?></dd>
-            <dt>작성일</dt>
-            <dd><?php echo $iq_time; ?></dd>
-            <dt>상태</dt>
-            <dd><?php echo $iq_stats; ?></dd>
-        </dl>
-
-        <div id="sit_ps_con_<?php echo $i; ?>" class="sit_ps_con">
-            <p class="sit_ps_qaq">
-                <strong>문의내용</strong><br>
-                <?php echo $iq_question; // 상품 문의 내용 ?>
-            </p>
-            <p class="sit_ps_qaa">
-                <strong>답변</strong><br>
-                <?php echo $iq_answer; ?>
-            </p>
-
-            <textarea id="tmp_iq_id<?php echo $i; ?>"><?php echo $row['iq_id']; ?></textarea>
-            <textarea id="tmp_iq_name<?php echo $i; ?>"><?php echo $row['iq_name']; ?></textarea>
-            <textarea id="tmp_iq_subject<?php echo $i; ?>"><?php echo $row['iq_subject']; ?></textarea>
-            <textarea id="tmp_iq_question<?php echo $i; ?>"><?php echo $row['iq_question']; ?></textarea>
-
-            <?php if ($row['mb_id'] == $member['mb_id'] && $iq_answer == 0) { ?>
-            <div class="sit_ps_cmd">
-                <button onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
-                <button onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button>
-            </div>
-            <?php } ?>
-        </div>
-    </li>
-
-
-
 <tr>
-    <td><?php echo $num; ?><span class="sound_only">번</span></td>
+    <td><?php echo $use_num; ?><span class="sound_only">번</span></td>
     <td>
-        <a href="javascript:;" onclick="use_menu('is<?php echo $i; ?>')"><?php echo $is_subject; ?></a>
-        <div>
-            <div>
-                <?php echo $is_content; ?>
-            </div>
-            <textarea id="tmp_is_id<?php echo $i; ?>"><?php echo $row['is_id']; ?></textarea>
-            <textarea id="tmp_is_name<?php echo $i; ?>"><?php echo $row['is_name']; ?></textarea>
-            <textarea id="tmp_is_subject<?php echo $i; ?>"><?php echo $row['is_subject']; ?></textarea>
-            <textarea id="tmp_is_content<?php echo $i; ?>"><?php echo $row['is_content']; ?></textarea>
-
-            <?php if ($row[mb_id] == $member[mb_id]) { ?>
-            <a href="javascript:itemusewin('is_id=<?php echo $row['is_id']; ?>&amp;w=u');">수정</a>
-            <a href="javascript:itemuse_delete(fitemuse_password<?php echo $i; ?>, <?php echo $i; ?>);">삭제</a>
-            <?php } ?>
-            <div id="is<?php echo $i; ?>">
-            <!-- 사용후기 삭제 패스워드 입력 폼 -->
-                    <form name="fitemuse_password<?php echo $i; ?>" method="post" action="./itemuseupdate.php" autocomplete="off">
-                    <input type="hidden" name="w" value="">
-                    <input type="hidden" name="is_id" value="">
-                    <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
-                    <label for="is_password_<?php echo $i; ?>">패스워드</label>
-                    <input type="password" name="is_password" id="is_password_<?php echo $i; ?>" required>
-                    <input type="submit" value="확인">
-                    </form>
-            </div>
+        <a href="<?php echo $use_href; ?>" class="use_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $use_subject; ?></a>
+        <div id="use_div<?php echo $i; ?>" class="use_div" style="display:none;">
+            <?php echo $use_content; ?>
         </div>
     </td>
-    <td><?php echo $is_name; ?></td>
-    <td><?php echo $is_time; ?></td>
-    <td><img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $star; ?>.png" alt="별<?php echo $star; ?>개"></td>
+    <td><?php echo $use_name; ?></td>
+    <td><?php echo $use_time; ?></td>
+    <td><img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $use_star; ?>.png" alt="별<?php echo $use_star; ?>개"></td>
 </tr>
 
-<?
+<?php
 }
 
-if (!$i)
-{
+if (!$i) {
     echo '<tr><td class="empty_class">등록된 사용후기가 없습니다.</td></tr>';
 }
 ?>
@@ -134,84 +83,14 @@ if ($use_pages) {
 }
 ?>
 
-<a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+<!-- <a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a> -->
+<a href="<?php echo $itemuse_write; ?>" onclick="window.open(this.href); return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
 
 <script>
-function itemusewin(query_string)
-{
-    window.open("./itemusewin.php?"+query_string, "itemusewin", "width=800,height=700");
-}
-
-function fitemuse_submit(f) 
-{
-    if (!check_kcaptcha(f.is_key)) { 
-        return false; 
-    } 
-
-    f.action = "itemuseupdate.php"
-    return true;
-}
-
-function itemuse_insert()
-{
-    /*
-    if (!g4_is_member) {
-        alert("로그인 하시기 바랍니다.");
-        return;
-    }
-    */
-
-    var f = document.fitemuse;
-    var id = document.getElementById('itemuse');
-
-    id.style.display = 'block';
-
-    f.w.value = '';
-    f.is_id.value = '';
-    if (!g4_is_member)
-    {
-        f.is_name.value = '';
-        f.is_name.readOnly = false;
-        f.is_password.value = '';
-    }
-    f.is_subject.value = '';
-    f.is_content.value = '';
-}
-
-function itemuse_update(idx)
-{
-    var f = document.fitemuse;
-    var id = document.getElementById('itemuse');
-
-    id.style.display = 'block';
-
-    f.w.value = 'u';
-    f.is_id.value = document.getElementById('tmp_is_id'+idx).value;
-    if (!g4_is_member)
-    {
-        f.is_name.value = document.getElementById('tmp_is_name'+idx).value;
-        f.is_name.readOnly = true;
-    }
-    f.is_subject.value = document.getElementById('tmp_is_subject'+idx).value;
-    f.is_content.value = document.getElementById('tmp_is_content'+idx).value;
-}
-
-function itemuse_delete(f, idx)
-{
-    var id = document.getElementById('itemuse');
-
-    f.w.value = 'd';
-    f.is_id.value = document.getElementById('tmp_is_id'+idx).value;
-
-    if (g4_is_member)
-    {
-        if (confirm("삭제하시겠습니까?"))
-            f.submit();
-    }
-    else 
-    {
-        id.style.display = 'none';
-        document.getElementById('itemuse_password'+idx).style.display = 'block';
-    }
-}
+$(function(){
+    $(".use_href").click(function(){
+        $(".use_div").hide();
+        $("#use_div"+$(this).attr("target")).show();
+    });
+});
 </script>

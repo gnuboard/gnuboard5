@@ -31,7 +31,7 @@ else
     <th scope="col">포인트</th>
 <?php
 if ($s_page == 'cart.php')
-    echo '<th scope="col"><input type="checkbox" name="ct_all" value="1"></th>';
+    echo '<th scope="col"><label for="ct_all" class="sound_only">상품 전체</label><input type="checkbox" name="ct_all" value="1" id="ct_all"></th>';
 else if ($s_page == 'orderinquiryview.php')
     echo '<th scope="col">상태</th>';
 ?>
@@ -167,7 +167,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     <?php
     if ($s_page == 'cart.php')
-        echo '<td class="td_smallmng"><input type="checkbox" name="ct_chk['.$i.']" value="1"></td>';
+        echo '<td class="td_chk"><label for="ct_chk_'.$i.'" class="sound_only">상품</label><input type="checkbox" name="ct_chk['.$i.']" value="1" id="ct_chk_'.$i.'"></td>';
     else if ($s_page == 'orderinquiryview.php')
         echo '<td class="td_smallmng">'.$row['ct_status'].'</td>';
     ?>

@@ -162,7 +162,7 @@ function pg_anchor($anc_id) {
 ?>
             <ul class="sanchor">
                 <li><a href="#sit_inf" <?php if ($anc_id == 'inf') echo 'class="sanchor_on"'; ?>>상품정보</a></li>
-                <li><a href="#sit_use" <?php if ($anc_id == 'use') echo 'class="sanchor_on"'; ?>>이용후기 <span class="item_use_count"></span></a></li>
+                <li><a href="#sit_use" <?php if ($anc_id == 'use') echo 'class="sanchor_on"'; ?>>사용후기 <span class="item_use_count"></span></a></li>
                 <li><a href="#sit_qa" <?php if ($anc_id == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"></span></a></li>
                 <?php if ($default['de_baesong_content']) { ?><li><a href="#sit_dvr" <?php if ($anc_id == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
                 <?php if ($default['de_change_content']) { ?><li><a href="#sit_ex" <?php if ($anc_id == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
@@ -579,13 +579,57 @@ else
     <!-- 상품설명 end -->
 
     <section id="sit_use">
-        <h2>이용후기</h2>
+        <h2>사용후기</h2>
         <?php echo pg_anchor('use'); ?>
 
         <?php
+        /*
+        <script>
+        function autoResize(id){
+            var newheight;
+            var newwidth;
+
+            if(document.getElementById){
+                newheight=document.getElementById(id).contentWindow.document .body.scrollHeight;
+                newwidth=document.getElementById(id).contentWindow.document .body.scrollWidth;
+            }
+
+            document.getElementById(id).height= (newheight) + "px";
+            document.getElementById(id).width= (newwidth) + "px";
+        }
+        </script>
+
+        <iframe src="./itemuse.php?it_id=<?php echo $it_id; ?>" id="iframe1" frameborder="0" scrolling="no" onLoad="autoResize('iframe1');">
+        </iframe>
+        */
+        ?>
+
+        <?php
+        /*
         $use_page_rows = 10; // 페이지당 목록수
         include_once('./itemuse.inc.php');
+        */
         ?>
+        <div id="itemuse"></div>
+        <script>
+        $(function(){
+            /*
+            $.get("./itemuse.php", {it_id:<?php echo $it_id; ?>}, function(data){
+                $("#itemuse").html(data);
+            });
+            $('#itemuse').live('click', function(e) {
+                //alert((this).attr('href'));
+                //e.preventDefault();
+                $.get((this).attr('href'), {it_id:<?php echo $it_id; ?>}, function(data) {
+                    //alert(data);
+                    $('#container').html(data);
+                });
+            });
+            */
+
+            $("#itemuse").load("./itemuse.php", {it_id:<?php echo $it_id; ?>});
+        });
+        </script>
     </section>
 
     <section id="sit_qa">

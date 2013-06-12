@@ -126,6 +126,16 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
 <section class="cbox">
     <h2>상품 목록</h2>
 
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link("it_id", $qstr, 1); ?>상품코드<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("it_name"); ?>상품명<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("it_type1", $qstr, 1); ?>히트상품<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("it_type2", $qstr, 1); ?>추천상품<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("it_type3", $qstr, 1); ?>신규상품<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("it_type4", $qstr, 1); ?>인기상품<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("it_type5", $qstr, 1); ?>할인상품<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <form name="fitemtypelist" method="post" action="./itemtypelistupdate.php">
     <input type="hidden" name="sca" value="<?php echo $sca; ?>">
     <input type="hidden" name="sst" value="<?php echo $sst; ?>">
@@ -137,13 +147,13 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><?php echo subject_sort_link("it_id", $qstr, 1); ?>상품코드</a></th>
-        <th scope="col"><?php echo subject_sort_link("it_name"); ?>상품명</a></th>
-        <th scope="col"><?php echo subject_sort_link("it_type1", $qstr, 1); ?>히트<br>상품</a></th>
-        <th scope="col"><?php echo subject_sort_link("it_type2", $qstr, 1); ?>추천<br>상품</a></th>
-        <th scope="col"><?php echo subject_sort_link("it_type3", $qstr, 1); ?>신규<br>상품</a></th>
-        <th scope="col"><?php echo subject_sort_link("it_type4", $qstr, 1); ?>인기<br>상품</a></th>
-        <th scope="col"><?php echo subject_sort_link("it_type5", $qstr, 1); ?>할인<br>상품</a></th>
+        <th scope="col">상품코드</th>
+        <th scope="col">상품명</th>
+        <th scope="col">히트<br>상품</th>
+        <th scope="col">추천<br>상품</th>
+        <th scope="col">신규<br>상품</th>
+        <th scope="col">인기<br>상품</th>
+        <th scope="col">할인<br>상품</th>
         <th scope="col">관리</th>
     </tr>
     </thead>

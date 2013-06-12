@@ -52,7 +52,10 @@ include_once('./_head.php');
         <th scope="col">판매가</th>
         <th scope="col">소계</th>
         <th scope="col">포인트</th>
-        <th scope="col"><input type="checkbox" name="ct_all" value="1" checked="checked"></th>
+        <th scope="col">
+            <label for="ct_all" class="sound_only">상품 전체</label>
+            <input type="checkbox" name="ct_all" value="1" id="ct_all" checked="checked">
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -128,7 +131,10 @@ include_once('./_head.php');
         <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
         <td class="td_bignum"><span id="sell_amount_<?php echo $i; ?>"><?php echo number_format($sell_amount); ?></span></td>
         <td class="td_bignum"><?php echo number_format($point); ?></td>
-        <td class="td_smallmng"><input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" checked="checked"></td>
+        <td class="td_chk">
+            <label for="ct_chk_<?php echo $i; ?>" class="sound_only">상품</label>
+            <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>" checked="checked">
+        </td>
     </tr>
 
     <?php
@@ -221,8 +227,6 @@ $(function() {
         var it_id = $(this).closest("tr").find("input[name^=it_id]").val();
         var $this = $(this);
         close_btn_idx = $(".mod_options").index($(this));
-
-        winMask(); // 모달 윈도우 배경 출력
 
         $.post(
             "./cartoption.php",

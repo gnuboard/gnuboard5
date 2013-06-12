@@ -50,7 +50,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 
 if ($i == 0)
-    echo '<tr><td colspan="6" class="empty_table">주문 내역이 없습니다.</td></tr>';
+    echo '<tr><td colspan="7" class="empty_table">주문 내역이 없습니다.</td></tr>';
 ?>
 </tbody>
 </table>

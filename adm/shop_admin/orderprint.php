@@ -12,7 +12,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     <h2>주문내역출력</h2>
     <p>기간별 혹은 주문번호구간별 주문내역을 새창으로 출력할 수 있습니다.</p>
 
-    <div id="btn_add">
+    <div class="btn_add">
         <a href="./orderlist.php" class="btn_add_optional">주문내역</a>
         <a href="./orderstatuslist.php" class="btn_add_optional">주문개별내역</a>
         <a href="./orderlist2.php" class="btn_add_optional">주문통합내역</a>

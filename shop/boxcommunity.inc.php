@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<section id="scomm">
+<aside id="scomm">
     <h2>쇼핑몰 커뮤니티</h2>
 
     <ul>
@@ -20,4 +20,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     ?>
     </ul>
 
-</section>
+</aside>

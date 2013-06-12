@@ -122,23 +122,35 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 <section class="cbox">
     <h2><?php echo $g4['title']; ?> 목록</h2>
 
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
         <a href="./ordercardhistory.php" class="btn_add_optional">전자결제내역</a>
     </div>
 
+    <ul class="sort_odr">
+        <li><a href="<?php echo title_sort("od_id")."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
+        <li><a href="<?php echo title_sort("it_name")."&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></th>
+        <li><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("ct_price")."&amp;$qstr1"; ?>">판매가<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("ct_qty")."&amp;$qstr1"; ?>">수량<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("ct_sub_amount")."&amp;$qstr1"; ?>">소계<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("ct_sub_point")."&amp;$qstr1"; ?>">포인트<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("ct_status")."&amp;$qstr1"; ?>">상태<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <table id="sodr_status">
     <thead>
     <tr>
-        <th scope="col"><a href="<?php echo title_sort("od_id")."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a><br>주문일시</th>
-        <th scope="col"><a href="<?php echo title_sort("it_name")."&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a><br>입금자</th>
-        <th scope="col"><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_price")."&amp;$qstr1"; ?>">판매가<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_qty")."&amp;$qstr1"; ?>">수량<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_sub_amount")."&amp;$qstr1"; ?>">소계<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_sub_point")."&amp;$qstr1"; ?>">포인트<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_status")."&amp;$qstr1"; ?>">상태<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">주문번호<br>주문일시</th>
+        <th scope="col">상품명</th>
+        <th scope="col">주문자<br>입금자</th>
+        <th scope="col">회원ID</th>
+        <th scope="col">판매가</th>
+        <th scope="col">수량</th>
+        <th scope="col">소계</th>
+        <th scope="col">포인트</th>
+        <th scope="col">상태</th>
         <th scope="col">수정</th>
     </tr>
     </thead>
@@ -183,7 +195,14 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?php echo number_format($lines[$i]['ct_sub_amount']); ?></td>
         <td><?php echo number_format($lines[$i]['ct_sub_point']); ?></td>
         <td><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=ct_status&amp;search=<?php echo $lines[$i]['ct_status']; ?>"><?php echo $lines[$i]['ct_status']; ?></a></td>
-        <td><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $lines[$i]['od_id']; ?> 수정"></a></td>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <li class="sel_li"><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>" class="sel_a">주문수정</a></li>
+                </ul>
+            </div>
+        </td>
     </tr>
     <?php
     }
