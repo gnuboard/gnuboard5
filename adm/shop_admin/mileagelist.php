@@ -89,6 +89,13 @@ $colspan = 8;
 <section class="cbox">
     <h2>마일리지 내역</h2>
 
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link('mb_id') ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('ml_datetime') ?>일시<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('ml_content') ?>내용<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('ml_point') ?>마일리지<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <form name="fpointlist" id="fpointlist" method="post" action="./mileagelist_delete.php" onsubmit="return fmileagelist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst; ?>">
     <input type="hidden" name="sod" value="<?php echo $sod; ?>">
@@ -100,13 +107,16 @@ $colspan = 8;
     <table class="tbl_pt_list">
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 마일리지 내역 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col"><?php echo subject_sort_link('mb_id') ?>회원아이디</a></th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">마일리지 내역 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
+        <th scope="col">회원아이디</th>
         <th scope="col">이름</th>
         <th scope="col">별명</th>
-        <th scope="col"><?php echo subject_sort_link('ml_datetime') ?>일시</a></th>
-        <th scope="col"><?php echo subject_sort_link('ml_content') ?>마일리지 내용</a></th>
-        <th scope="col"><?php echo subject_sort_link('ml_point') ?>마일리지</a></th>
+        <th scope="col">일시</th>
+        <th scope="col">마일리지 내용</th>
+        <th scope="col">마일리지</th>
         <th scope="col">마일리지합</th>
     </tr>
     </thead>
@@ -126,9 +136,10 @@ $colspan = 8;
 
     <tr>
         <td class="td_chk">
-            <input type="hidden" id="mb_id_<?php echo $i ?>" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>">
-            <input type="hidden" id="ml_id_<?php echo $i ?>" name="ml_id[<?php echo $i ?>]" value="<?php echo $row['ml_id'] ?>">
-            <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $i ?>" title="내역선택">
+            <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
+            <input type="hidden" name="ml_id[<?php echo $i ?>]" value="<?php echo $row['ml_id'] ?>" id="ml_id_<?php echo $i ?>">
+            <label for="chk_<?php echo $i; ?>" class="sound_only">내역</label>
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
         <td class="td_mbname"><?php echo $row2['mb_name'] ?></td>

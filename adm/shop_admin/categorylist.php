@@ -86,10 +86,18 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <p>생성된 분류 확인, 추가 및 간략 수정을 할 수 있습니다.</p>
 
     <?php if ($is_admin == 'super') {?>
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./categoryform.php" id="cate_add">분류 추가</a>
     </div>
     <?php } ?>
+
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link("ca_id"); ?>분류코드<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("ca_name"); ?>분류명<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("ca_mb_id"); ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("ca_use"); ?>판매가능<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link("ca_stock_qty"); ?>기본재고<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
 
     <form name="fcategorylist" method="post" action="./categorylistupdate.php" autocomplete="off">
     <input type="hidden" name="page"  value="<?php echo $page; ?>">
@@ -99,11 +107,11 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><?php echo subject_sort_link("ca_id"); ?>분류<br>코드</a></th>
-        <th scope="col"><?php echo subject_sort_link("ca_name"); ?>분류명</a></th>
-        <th scope="col"><?php echo subject_sort_link("ca_mb_id"); ?>회원아이디</a></th>
-        <th scope="col"><?php echo subject_sort_link("ca_use"); ?>판매<br>가능</a></th>
-        <th scope="col"><?php echo subject_sort_link("ca_stock_qty"); ?>기본재고</a></th>
+        <th scope="col">분류<br>코드</th>
+        <th scope="col">분류명</th>
+        <th scope="col">회원아이디</th>
+        <th scope="col">판매<br>가능</th>
+        <th scope="col">기본재고</th>
         <th scope="col">상품수</th>
         <th scope="col">관리</th>
     </tr>

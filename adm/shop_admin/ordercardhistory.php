@@ -82,21 +82,30 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     <h2>전자결제내역</h2>
     <p>신용카드 혹은 실시간 계좌이체로 결제(승인) 된 내역이며, 주문번호를 클릭하시면 주문상세 페이지로 이동합니다.</p>
 
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./orderlist.php" class="btn_add_optional">주문내역</a>
         <a href="./orderstatuslist.php" class="btn_add_optional">주문개별내역</a>
         <a href="./orderlist2.php" class="btn_add_optional">주문통합내역</a>
     </div>
 
+    <ul class="sort_odr">
+        <li><a href="<?php echo title_sort("od_id") . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("cd_amount") . "&amp;$qstr1"; ?>">승인금액<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("cd_app_no") . "&amp;$qstr1"; ?>">승인번호<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("cd_app_rt") . "&amp;$qstr1"; ?>">승인결과<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("cd_app_time") . "&amp;$qstr1"; ?>">승인일시<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("cd_opt01") . "&amp;$qstr1"; ?>">결제자<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><a href="<?php echo title_sort("od_id") . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("cd_amount") . "&amp;$qstr1"; ?>">승인금액<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("cd_app_no") . "&amp;$qstr1"; ?>">승인번호<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("cd_app_rt") . "&amp;$qstr1"; ?>">승인결과<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("cd_app_time") . "&amp;$qstr1"; ?>">승인일시<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><a href="<?php echo title_sort("cd_opt01") . "&amp;$qstr1"; ?>">결제자<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">주문번호</th>
+        <th scope="col">승인금액</th>
+        <th scope="col">승인번호</th>
+        <th scope="col">승인결과</th>
+        <th scope="col">승인일시</th>
+        <th scope="col">결제자</th>
     </tr>
     </thead>
     <tbody>

@@ -32,7 +32,7 @@ $result = sql_query($sql);
         <li><strong>FAQ 상세내용 추가</strong>를 눌러 자주하는 질문과 답변을 입력합니다.</li>
     </ol>
 
-    <div id="btn_add">
+    <div class="btn_add">
         <a href="./faqform.php?fm_id=<?php echo $fm['fm_id']; ?>">FAQ 상세내용 추가</a>
     </div>
 

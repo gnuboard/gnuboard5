@@ -96,12 +96,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <h2>주문통합내역 목록</h2>
     <p><strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.</p>
 
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
         <a href="./ordercardhistory.php" class="btn_add_optional">전자결제내역</a>
     </div>
 
-    <ul id="sort_odr">
+    <ul class="sort_odr">
         <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("itemcount", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>

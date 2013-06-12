@@ -23,7 +23,7 @@ $result = sql_query($sql);
     <h2>배송업체 목록</h2>
     <p>등록된 배송업체 <?php echo $total_count; ?>곳</p>
 
-     <div id="btn_add">
+     <div class="btn_add">
         <a href="./deliverycodeform.php">배송회사추가</a>
     </div>
 
