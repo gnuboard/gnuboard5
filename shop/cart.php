@@ -247,12 +247,10 @@ $(function() {
     // 옵션수정 닫기
     $("#mod_option_close").live("click", function() {
         $("#mod_option_frm").remove();
-        $("#win_mask, .window").hide();
         $(".mod_options").eq(close_btn_idx).focus();
     });
     $("#win_mask").click(function () {
         $("#mod_option_frm").remove();
-        $("#win_mask").hide();
         $(".mod_options").eq(close_btn_idx).focus();
     });
 
