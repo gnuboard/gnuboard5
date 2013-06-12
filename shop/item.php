@@ -162,7 +162,7 @@ function pg_anchor($anc_id) {
 ?>
             <ul class="sanchor">
                 <li><a href="#sit_inf" <?php if ($anc_id == 'inf') echo 'class="sanchor_on"'; ?>>상품정보</a></li>
-                <li><a href="#sit_use" <?php if ($anc_id == 'use') echo 'class="sanchor_on"'; ?>>사용후기 <span class="item_use_count"></span></a></li>
+                <li><a href="#sit_use" <?php if ($anc_id == 'use') echo 'class="sanchor_on"'; ?>>이용후기 <span class="item_use_count"></span></a></li>
                 <li><a href="#sit_qa" <?php if ($anc_id == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"></span></a></li>
                 <?php if ($default['de_baesong_content']) { ?><li><a href="#sit_dvr" <?php if ($anc_id == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
                 <?php if ($default['de_change_content']) { ?><li><a href="#sit_ex" <?php if ($anc_id == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
@@ -347,22 +347,22 @@ else
             <?php } ?>
             <?php if($default['de_send_cost_case'] == '개별' && $it['it_sc_type'] != 0) { ?>
             <tr>
-                <th><label for="ct_send_cost">배송비결제</label></th>
+                <th><label for="ct_send_cost2">배송비결제</label></th>
                 <td>
                     <?php
                     if($it['it_sc_method'] == 2) {
                     ?>
-                    <select name="ct_send_cost" id="ct_send_cost">
-                        <option value="선불">주문시 결제</option>
-                        <option value="착불">수령후 지불</option>
+                    <select name="ct_send_cost2" id="ct_send_cost2">
+                        <option value="0">주문시 결제</option>
+                        <option value="1">수령후 지불</option>
                     </select>
                     <?php
                     } else {
                         if($it['it_sc_method']) {
-                            echo '<input type="hidden" name="ct_send_cost" value="착불">';
+                            echo '<input type="hidden" name="ct_send_cost2" value="1">';
                             echo '수령후 지불';
                         } else {
-                            echo '<input type="hidden" name="ct_send_cost" value="선불">';
+                            echo '<input type="hidden" name="ct_send_cost2" value="0">';
                             echo '주문시 결제';
                         }
                     }
@@ -579,57 +579,13 @@ else
     <!-- 상품설명 end -->
 
     <section id="sit_use">
-        <h2>사용후기</h2>
+        <h2>이용후기</h2>
         <?php echo pg_anchor('use'); ?>
 
         <?php
-        /*
-        <script>
-        function autoResize(id){
-            var newheight;
-            var newwidth;
-
-            if(document.getElementById){
-                newheight=document.getElementById(id).contentWindow.document .body.scrollHeight;
-                newwidth=document.getElementById(id).contentWindow.document .body.scrollWidth;
-            }
-
-            document.getElementById(id).height= (newheight) + "px";
-            document.getElementById(id).width= (newwidth) + "px";
-        }
-        </script>
-
-        <iframe src="./itemuse.php?it_id=<?php echo $it_id; ?>" id="iframe1" frameborder="0" scrolling="no" onLoad="autoResize('iframe1');">
-        </iframe>
-        */
-        ?>
-
-        <?php
-        /*
         $use_page_rows = 10; // 페이지당 목록수
         include_once('./itemuse.inc.php');
-        */
         ?>
-        <div id="itemuse"></div>
-        <script>
-        $(function(){
-            /*
-            $.get("./itemuse.php", {it_id:<?php echo $it_id; ?>}, function(data){
-                $("#itemuse").html(data);
-            });
-            $('#itemuse').live('click', function(e) {
-                //alert((this).attr('href'));
-                //e.preventDefault();
-                $.get((this).attr('href'), {it_id:<?php echo $it_id; ?>}, function(data) {
-                    //alert(data);
-                    $('#container').html(data);
-                });
-            });
-            */
-
-            $("#itemuse").load("./itemuse.php", {it_id:<?php echo $it_id; ?>});
-        });
-        </script>
     </section>
 
     <section id="sit_qa">
