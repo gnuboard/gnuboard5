@@ -1,5 +1,17 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+// 상품코드
+if (!$wr_1) {
+    alert("wr_1 에 상품코드를 넘겨주세요.");
+}
+
+// 상품명
+if (!$wr_2) {
+    $sql = " select it_name from {$g4['shop_item_table']} where it_id = '$wr_1' ";
+    $row = sql_fetch($sql);
+    $wr_2 = $row['it_name'];
+}
 ?>
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
@@ -175,7 +187,7 @@ function fwrite_submit(f)
     var subject = "";
     var content = "";
     $.ajax({
-        url: g4_bbs_url+"/filter.ajax.php",
+        url: g4_bbs_url+"/ajax.filter.php",
         type: "POST",
         data: {
             "subject": f.wr_subject.value,

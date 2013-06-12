@@ -558,9 +558,53 @@ else
         <?php echo pg_anchor('use'); ?>
 
         <?php
+        /*
+        <script>
+        function autoResize(id){
+            var newheight;
+            var newwidth;
+
+            if(document.getElementById){
+                newheight=document.getElementById(id).contentWindow.document .body.scrollHeight;
+                newwidth=document.getElementById(id).contentWindow.document .body.scrollWidth;
+            }
+
+            document.getElementById(id).height= (newheight) + "px";
+            document.getElementById(id).width= (newwidth) + "px";
+        }
+        </script>
+
+        <iframe src="./itemuse.php?it_id=<?php echo $it_id; ?>" id="iframe1" frameborder="0" scrolling="no" onLoad="autoResize('iframe1');">
+        </iframe>
+        */
+        ?>
+
+        <?php
+        /*
         $use_page_rows = 10; // 페이지당 목록수
         include_once('./itemuse.inc.php');
+        */
         ?>
+        <div id="itemuse"></div>
+        <script>
+        $(function(){
+            /*
+            $.get("./itemuse.php", {it_id:<?php echo $it_id; ?>}, function(data){
+                $("#itemuse").html(data);
+            });
+            $('#itemuse').live('click', function(e) {
+                //alert((this).attr('href'));
+                //e.preventDefault();
+                $.get((this).attr('href'), {it_id:<?php echo $it_id; ?>}, function(data) {
+                    //alert(data);
+                    $('#container').html(data);
+                });
+            });
+            */
+
+            $("#itemuse").load("./itemuse.php", {it_id:<?php echo $it_id; ?>});
+        });
+        </script>
     </section>
 
     <section id="sit_qa">
