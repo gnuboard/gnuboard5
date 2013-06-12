@@ -923,7 +923,7 @@ $(function() {
     });
 
     $(".cp_apply").live("click", function() {
-        var $el = $(this).closest("li");
+        var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='f_cp_id[]']").val();
         var amount = $el.find("input[name='f_cp_amt[]']").val();
         var subj = $el.find("input[name='f_cp_subj[]']").val();
