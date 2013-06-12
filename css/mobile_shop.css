@@ -331,12 +331,22 @@ html.no-overflowscrolling #mod_option_frm {height:auto;max-height:10000px !impor
 #sod_frm {}
 #sod_frm h2 {margin:0 0 1em}
 
+#sod_list {position:relative}
+#sod_list #it_coupon_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
+html.no-overflowscrolling #it_coupon_frm {height:auto;max-height:10000px !important}
+
 #sod_frm_orderer {margin:1.8em 0 3.6em}
 
 #sod_frm_same {margin:0 0 1em}
 
 #sod_frm #od_memo {height:7em}
 
+#sod_frm_pay {position:relative}
+#sod_frm_pay .basic_tbl caption {font-size:0;line-height:0;overflow:hidden}
+#sod_frm_pay .basic_tbl th {width:auto !important;font-weight:bold;text-align:center !important}
+#sod_frm_pay .basic_tbl td {border-top:1px solid #e9e9e9 !important;border-bottom:1px solid #e9e9e9 !important;line-height:1.5em !important;word-break:break-all !important}
+#sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
+html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_frm {height:auto;max-height:10000px !important}
 #sod_frm_pay .frm_input {background:#fff !important}
 #sod_frm_pay .frm_input:focus {color:#000}
 

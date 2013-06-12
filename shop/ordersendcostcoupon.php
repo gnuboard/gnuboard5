@@ -27,8 +27,8 @@ $count = mysql_num_rows($result);
     <thead>
     <tr>
         <th scope="col">쿠폰명</th>
-        <th>할인금액</th>
-        <th>적용</th>
+        <th scope="col">할인금액</th>
+        <th scope="col">적용</th>
     </tr>
     </thead>
     <tbody>
@@ -54,8 +54,8 @@ $count = mysql_num_rows($result);
             <input type="hidden" name="s_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
             <?php echo get_text($row['cp_subject']); ?>
         </td>
-        <td><?php echo number_format($dc); ?></td>
-        <td><button type="button" class="sc_cp_apply">적용</button></td>
+        <td class="td_bignum"><?php echo number_format($dc); ?></td>
+        <td class="td_smallmng"><button type="button" class="sc_cp_apply btn_frmline">적용</button></td>
     </tr>
     <?php
     }

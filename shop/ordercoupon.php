@@ -50,8 +50,8 @@ $count = mysql_num_rows($result);
             <input type="hidden" name="o_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
             <?php echo get_text($row['cp_subject']); ?>
         </td>
-        <td><?php echo number_format($dc); ?></td>
-        <td><button type="button" class="od_cp_apply" class="btn_frmline">적용</button></td>
+        <td class="td_bignum"><?php echo number_format($dc); ?></td>
+        <td class="td_smallmng"><button type="button" class="od_cp_apply btn_frmline">적용</button></td>
     </tr>
     <?php
     }
