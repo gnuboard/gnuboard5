@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="post_code" class="new_win">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
 
     <form name="fzip" method="get" autocomplete="off">
     <input type="hidden" name="frm_name" value="<?php echo $frm_name ?>">
