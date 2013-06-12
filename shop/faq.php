@@ -27,56 +27,50 @@ if (file_exists($himg))
 echo '<div id="sfaq_hhtml">'.stripslashes($fm['fm_head_html']).'</div>';
 ?>
 
-<article id="sfaq" class="sfaq_<?=$fm_id?>">
-    <header>
-        <h1><?php echo $g4['title']; ?></h1>
-    </header>
-
-    <div id="sfaq_wrap">
-        <?php // FAQ 목차
-        $sql = " select * from {$g4['shop_faq_table']}
-                  where fm_id = '$fm_id'
-                  order by fa_order , fa_id ";
-        $result = sql_query($sql);
-        for ($i=1; $row=sql_fetch_array($result); $i++)
+<div id="sfaq_wrap" class="sfaq_<?php echo $fm_id; ?>">
+    <?php // FAQ 목차
+    $sql = " select * from {$g4['shop_faq_table']}
+              where fm_id = '$fm_id'
+              order by fa_order , fa_id ";
+    $result = sql_query($sql);
+    for ($i=1; $row=sql_fetch_array($result); $i++)
+    {
+        if ($i == 1)
         {
-            if ($i == 1)
-            {
-        ?>
-        <section id="sfaq_list">
-            <h2>FAQ 목차</h2>
-            <ol>
-        <?php } ?>
-                <li><a href="#sfaq_<?php echo $fm_id.'_'.$i; ?>"><?php echo stripslashes($row['fa_subject']); ?></a></li>
-        <?php }
-        if ($i > 1) echo '</ol></section>';
-        ?>
+    ?>
+    <section id="sfaq_list">
+        <h2><?php echo $g4['title']; ?> 목차</h2>
+        <ol>
+    <?php } ?>
+            <li><a href="#sfaq_<?php echo $fm_id.'_'.$i; ?>"><?php echo stripslashes($row['fa_subject']); ?></a></li>
+    <?php }
+    if ($i > 1) echo '</ol></section>';
+    ?>
 
-        <?php // FAQ 내용
-        $resultb = sql_query($sql);
-        for ($i=1; $row=sql_fetch_array($resultb); $i++)
+    <?php // FAQ 내용
+    $resultb = sql_query($sql);
+    for ($i=1; $row=sql_fetch_array($resultb); $i++)
+    {
+        if ($i == 1)
         {
-            if ($i == 1)
-            {
-        ?>
-        <section id="sfaq_con">
-            <h2>FAQ 내용</h2>
-            <ol>
-        <?php } ?>
-            <li id="sfaq_<?php echo $fm_id.'_'.$i; ?>">
-                <h3><?php echo stripslashes($row['fa_subject']); ?></h3>
-                <p>
-                    <?php echo stripslashes($row['fa_content']); ?>
-                </p>
-                <div class="sfaq_tolist"><a href="#sfaq_list" class="btn01">FAQ 목차</a></div>
-            </li>
-        <?php }
-        if ($i > 1) echo '</ol></section>';
+    ?>
+    <section id="sfaq_con">
+        <h2><?php echo $g4['title']; ?> 내용</h2>
+        <ol>
+    <?php } ?>
+        <li id="sfaq_<?php echo $fm_id.'_'.$i; ?>">
+            <h3><?php echo stripslashes($row['fa_subject']); ?></h3>
+            <p>
+                <?php echo stripslashes($row['fa_content']); ?>
+            </p>
+            <div class="sfaq_tolist"><a href="#sfaq_list" class="btn01">FAQ 목차</a></div>
+        </li>
+    <?php }
+    if ($i > 1) echo '</ol></section>';
 
-        if ($i == 1) echo '<p>등록된 FAQ가 없습니다.<br><a href="'.G4_ADMIN_URL.'/shop_admin/faqmasterlist.php">FAQ를 새로 등록하시려면 FAQ관리</a> 메뉴를 이용하십시오.</p>';
-        ?>
-    </div>
-</article>
+    if ($i == 1) echo '<p>등록된 FAQ가 없습니다.<br><a href="'.G4_ADMIN_URL.'/shop_admin/faqmasterlist.php">FAQ를 새로 등록하시려면 FAQ관리</a> 메뉴를 이용하십시오.</p>';
+    ?>
+</div>
 
 <?php
 // 하단 HTML

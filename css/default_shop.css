@@ -104,9 +104,7 @@ a:active {color:#000;text-decoration:underline}
 .stv_item {display:none;text-align:center}
 .stv_item img {margin:5px 0}
 
-#stv_nb {border-top:1px solid #e9e9e9;background:#f5f6fa}
-#stv_nb h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#stv_nb ul {margin:0;padding:0;list-style:none}
+#stv_nb {margin:0;padding:0;border-top:1px solid #e9e9e9;background:#f5f6fa;list-style:none}
 #stv_nb li {text-align:center}
 #stv_nb a {display:block}
 
@@ -754,11 +752,9 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 .socc_img {text-align:center}
 
 /* FAQ 관리 */
-#sfaq {}
-.sfaq_admin {text-align:right}
-#sfaq header h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sfaq_wrap {margin:10px 0}
 #sfaq_wrap h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+.sfaq_admin {text-align:right}
 #sfaq_wrap ol {margin:0;padding:0;list-style:none}
 #sfaq_list {margin:0 0 10px;border:1px solid #ccc}
 #sfaq_list li {border-bottom:1px solid #fff;background:#f5f6fa}

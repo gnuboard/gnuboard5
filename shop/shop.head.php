@@ -112,10 +112,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         <?php // include_once(G4_SHOP_PATH.'/boxwish.inc.php'); ?>
 
         <!-- 왼쪽 배너 -->
-        <section id="sbn_aside">
+        <aside id="sbn_aside">
             <h2>쇼핑몰 배너</h2>
             <?php echo display_banner('왼쪽'); ?>
-        </section>
+        </aside>
     </div>
 
     <div id="container">
