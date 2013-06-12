@@ -152,12 +152,6 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sodr_all {}
 #sodr_all #btn_add {float:right}
 
-#sodr_all_sort {float:left;margin:0;padding-left:1px;list-style:none;zoom:1}
-#sodr_all_sort:after {display:block;visibility:hidden;clear:both;content:""}
-#sodr_all_sort li {float:left;margin-bottom:-1px}
-#sodr_all_sort a {display:block;position:relative;margin-left:-1px;padding:8px 0 6px;width:70px;border:1px solid #e9e9e9;background:#f5f6fa;color:#000;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
-#sodr_all_sort a:focus, #sodr_all_sort a:hover, #sodr_all_sort a:active {text-decoration:none}
-
 #sodr_all_list {clear:both;margin:0;padding:10px 0 0;border-top:25px solid #f7f7f7;list-style:none}
 #sodr_all_list li {margin:0 0 10px;border-bottom:25px solid #f7f7f7}
 #sodr_all_list th {text-align:center}
@@ -419,6 +413,13 @@ fieldset button {padding:0 15px;height:23px;border:0;background:#617d46;color:#f
 .anchor li {float:left;margin-left:-1px;list-style:none}
 .anchor a {display:inline-block;border:1px solid #586267;background:#667379;padding:0 7px;height:30px;color:#fff;text-decoration:none;line-height:2.6em}
 .anchor a:focus, .anchor a:hover {background:#434f54;text-decoration:none}
+
+/* 리스트 정렬 */
+#sort_odr {float:left;margin:0;padding-left:1px;list-style:none;zoom:1}
+#sort_odr:after {display:block;visibility:hidden;clear:both;content:""}
+#sort_odr li {float:left;margin-bottom:-1px}
+#sort_odr a {display:block;position:relative;margin-left:-1px;padding:8px 0 6px;width:70px;border:1px solid #e9e9e9;background:#f5f6fa;color:#000;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
+#sort_odr a:focus, #sort_odr a:hover, #sort_odr a:active {text-decoration:none}
 
 /* 테이블 */
 table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
