@@ -112,7 +112,7 @@ setTimeout("init_pay_button();",300);
 <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
 <div id="sod_frm">
     <p>주문하실 상품을 확인하세요.</p>
-    <table class="basic_tbl">
+    <table id="sod_list" class="basic_tbl">
     <thead>
     <tr>
         <th scope="col">상품이미지</th>
@@ -217,7 +217,7 @@ setTimeout("init_pay_button();",300);
             $cp = sql_fetch($sql);
 
             if($cp['cnt'])
-                $cp_button = '<button type="button" class="it_coupon_btn">적용</button>';
+                $cp_button = '<button type="button" class="it_coupon_btn btn_frmline">적용</button>';
         }
     ?>
 
@@ -233,7 +233,7 @@ setTimeout("init_pay_button();",300);
         </td>
         <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
         <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
-        <td><?php echo $cp_button; ?></td>
+        <td class="td_smallmng"><?php echo $cp_button; ?></td>
         <td class="td_bignum"><span class="ct_sell_amount"><?php echo number_format($sell_amount); ?></span></td>
         <td class="td_bignum"><?php echo number_format($point); ?></td>
     </tr>

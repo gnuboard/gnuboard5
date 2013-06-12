@@ -42,45 +42,54 @@ $count = mysql_num_rows($result);
 
 <div id="it_coupon_frm">
     <?php if($count > 0) { ?>
-    <ul>
-        <li>
-            <span>쿠폰명</span>
-            <span>할인금액</span>
-            <span>적용</span>
-        </li>
-        <?php
-        for($i=0; $row=sql_fetch_array($result); $i++) {
-            $dc = 0;
-            if($row['cp_type']) {
-                $dc = floor(($item_price * ($row['cp_amount'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
-            } else {
-                $dc = $row['cp_amount'];
-            }
+    <table class="basic_tbl">
+    <caption>쿠폰 선택</caption>
+    <colgroup>
+    </colgroup>
+    <thead>
+    <tr>
+        <th scope="col">쿠폰명</th>
+        <th scope="col">할인금액</th>
+        <th scope="col">적용</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        $dc = 0;
+        if($row['cp_type']) {
+            $dc = floor(($item_price * ($row['cp_amount'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
+        } else {
+            $dc = $row['cp_amount'];
+        }
 
-            if($row['cp_maximum'] && $dc > $row['cp_maximum'])
-                $dc = $row['cp_maximum'];
-        ?>
-        <li>
+        if($row['cp_maximum'] && $dc > $row['cp_maximum'])
+            $dc = $row['cp_maximum'];
+    ?>
+    <tr>
+        <td>
             <input type="hidden" name="f_cp_id[]" value="<?php echo $row['cp_id']; ?>">
             <input type="hidden" name="f_cp_amt[]" value="<?php echo $dc; ?>">
             <input type="hidden" name="f_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
             <span><?php echo get_text($row['cp_subject']); ?></span>
-            <span><?php echo number_format($dc); ?></span>
-            <span><button type="button" class="cp_apply">적용</button></span>
-        </li>
-        <?php
-        }
-        ?>
-    </ul>
+        </td>
+        <td class="td_bignum"><?php echo number_format($dc); ?></td>
+        <td class="td_smallmng"><button type="button" class="cp_apply btn_frmline">적용</button></td>
+    </tr>
+    <?php
+    }
+    ?>
+    </tbody>
+    </table>
     <?php
     } else {
         echo '사용할 수 있는 쿠폰이 없습니다.';
     }
     ?>
-    <div>
-        <button type="button" id="it_coupon_close">닫기</button>
+    <div class="btn_confirm">
+        <button type="button" id="it_coupon_close" class="btn_submit">닫기</button>
         <?php if($count > 0) { ?>
-        <button type="button" id="it_coupon_cancel">쿠폰적용취소</button>
+        <button type="button" id="it_coupon_cancel" class="btn_cancel">쿠폰적용취소</button>
         <?php } ?>
     </div>
 </div>

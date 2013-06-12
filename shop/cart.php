@@ -222,8 +222,6 @@ $(function() {
         var $this = $(this);
         close_btn_idx = $(".mod_options").index($(this));
 
-        winMask(); // 모달 윈도우 배경 출력
-
         $.post(
             "./cartoption.php",
             { it_id: it_id },
