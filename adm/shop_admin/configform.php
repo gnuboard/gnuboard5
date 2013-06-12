@@ -587,10 +587,11 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="de_send_cost_case">배송비유형</label></th>
         <td>
-            <?php echo help("<strong>상한</strong>으로 설정한 경우, 주문총액이 배송비상한가 미만일 경우 배송비를 받습니다.\n<strong>없음</strong>으로 설정한 경우, 배송비상한가 및 배송비를 무시하며 착불의 경우도 없음으로 설정됩니다.", 50); ?>
+            <?php echo help("<strong>상한</strong>으로 설정한 경우, 주문총액이 배송비상한가 미만일 경우 배송비를 받습니다.\n<strong>없음</strong>으로 설정한 경우, 배송비상한가 및 배송비를 무시하며 착불의 경우도 없음으로 설정됩니다.\n<strong>개별배송비</strong>로 설정한 경우, 개별 상품의 배송비 설정이 적용됩니다.", 50); ?>
             <select name="de_send_cost_case" id="de_send_cost_case">
                 <option value="상한" <?php echo get_selected($default['de_send_cost_case'], "상한"); ?>>상한</option>
                 <option value="없음" <?php echo get_selected($default['de_send_cost_case'], "없음"); ?>>없음</option>
+                <option value="개별" <?php echo get_selected($default['de_send_cost_case'], "개별"); ?>>개별배송비</option>
             </select>
         </td>
     </tr>

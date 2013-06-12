@@ -345,6 +345,31 @@ else
                 </td>
             </tr>
             <?php } ?>
+            <?php if($default['de_send_cost_case'] == '개별' && $it['it_sc_type'] != 0) { ?>
+            <tr>
+                <th><label for="ct_send_cost">배송비결제</label></th>
+                <td>
+                    <?php
+                    if($it['it_sc_method'] == 2) {
+                    ?>
+                    <select name="ct_send_cost" id="ct_send_cost">
+                        <option value="선불">주문시 결제</option>
+                        <option value="착불">수령후 지불</option>
+                    </select>
+                    <?php
+                    } else {
+                        if($it['it_sc_method']) {
+                            echo '<input type="hidden" name="ct_send_cost" value="착불">';
+                            echo '수령후 지불';
+                        } else {
+                            echo '<input type="hidden" name="ct_send_cost" value="선불">';
+                            echo '주문시 결제';
+                        }
+                    }
+                    ?>
+                </td>
+            </tr>
+            <?php } ?>
             </tbody>
             </table>
 
@@ -397,8 +422,6 @@ else
 
             <?php } // 전화문의가 아닐 경우 끝 ?>
 
-            <?php } // 갤러리가 아닐 경우 끝 ?>
-
             <div id="sit_sel_option">
             <?php if(!$option_1 && !$option_2) { ?>
                 <ul id="sit_opt_added">
@@ -426,6 +449,8 @@ else
             </div>
 
             <div id="sit_tot_price"></div>
+
+            <?php } // 갤러리가 아닐 경우 끝 ?>
 
             <ul id="sit_ov_btn">
                 <?php if (!$it['it_tel_inq'] && !$it['it_gallery']) { ?>

@@ -1175,6 +1175,57 @@ function get_item_point($it)
 
     return $it_point;
 }
+
+// 상품별 배송비
+function get_item_sendcost($it_id, $uq_id)
+{
+    global $g4, $default;
+
+    if($default['de_send_cost_case'] != '개별')
+        return false;
+
+    $sql = " select it_id, it_sc_type, it_sc_method, it_sc_amount, it_sc_minimum, it_sc_qty
+                from {$g4['shop_item_table']}
+                where it_id = '$it_id' ";
+    $it = sql_fetch($sql);
+    if(!$it['it_id'])
+        return false;
+
+    if($it['it_sc_type']) {
+        if($it['it_sc_type'] == 1) { // 조건부무료
+            $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
+                        from {$g4['shop_cart_table']}
+                        where uq_id = '$uq_id'
+                          and it_id = '$it_id' ";
+            $ct = sql_fetch($sql);
+            $item_price = $ct['sum_price'];
+
+            if($item_price >= $it['it_sc_minimum'])
+                $sendcost = 0;
+            else
+                $sendcost = $it['it_sc_amount'];
+        } else if($it['it_sc_type'] == 2) { // 유료배송
+            $sendcost = $it['it_sc_amount'];
+        } else { // 수량별 부과
+            $sql = " select SUM(ct_qty) as item_count
+                        from {$g4['shop_cart_table']}
+                        where uq_id = '$uq_id'
+                          and it_id = '$it_id' ";
+            $ct = sql_fetch($sql);
+            $item_count = $ct['item_count'];
+
+            if(!$it['it_sc_qty'])
+                $it['it_sc_qty'] = 1;
+
+            $q = ceil((int)$item_count / (int)$it['it_sc_qty']);
+            $sendcost = (int)$it['it_sc_amount'] * $q;
+        }
+    } else {
+        $sendcost = 0;
+    }
+
+    return $sendcost;
+}
 //==============================================================================
 // 쇼핑몰 함수 모음 끝
 //==============================================================================

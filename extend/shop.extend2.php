@@ -282,4 +282,16 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
                     ADD `ct_select` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ct_direct` ", true);
 }
+
+// 개별배송비 필드 추가
+$sql = " select it_sc_type from {$g4['shop_item_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_sc_type` TINYINT(4) NOT NULL DEFAULT '0' AFTER `it_stock_qty`,
+                    ADD `it_sc_method` TINYINT(4) NOT NULL DEFAULT '0' AFTER `it_sc_type`,
+                    ADD `it_sc_amount` INT(11) NOT NULL DEFAULT '0' AFTER `it_sc_method`,
+                    ADD `it_sc_minimum` INT(11) NOT NULL DEFAULT '0' AFTER `it_sc_amount`,
+                    ADD `it_sc_qty` INT(11) NOT NULL DEFAULT '0' AFTER `it_sc_minimum` ", false);
+}
 ?>
