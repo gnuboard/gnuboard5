@@ -10,18 +10,17 @@ $itemuse_board = G4_BBS_URL.'/board.php?bo_table=itemuse&amp;wr_1='.$it_id;
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
-<a href="<?php echo $itemuse_board; ?>" target="_blank">더보기</a>
-
-<table id="sit_ps_tbl">
+<table id="sit_use_tbl" class="basic_tbl">
 <thead>
 <tr>
-    <th>번호</th>
-    <th>제목</th>
-    <th>작성자</th>
-    <th>작성일</th>
-    <th>평점</th>
+    <th scope="col">번호</th>
+    <th scope="col">제목</th>
+    <th scope="col">작성자</th>
+    <th scope="col">작성일</th>
+    <th scope="col">평점</th>
 </tr>
 </thead>
+<tbody>
 <?php
 /*
     여분필드 용도 
@@ -60,7 +59,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <tr>
-    <td><?php echo $use_num; ?><span class="sound_only">번</span></td>
+    <td class="td_num"><?php echo $use_num; ?><span class="sound_only">번</span></td>
     <td>
         <a href="<?php echo $use_href; ?>" class="use_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $use_subject; ?></a>
         <div id="use_div<?php echo $i; ?>" class="use_div" style="display:none;">
@@ -76,9 +75,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 }
 
 if (!$i) {
-    echo '<tr><td class="empty_class">등록된 사용후기가 없습니다.</td></tr>';
+    echo '<tr><td colspan="5" class="empty_table">등록된 사용후기가 없습니다.</td></tr>';
 }
 ?>
+</tbody>
 </table>
 
 <?php
@@ -123,8 +123,11 @@ function itemuse_page($write_pages, $cur_page, $total_page, $url, $add="")
 echo itemuse_page(10, $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
 ?>
 
-<!-- <a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a> -->
-<a href="<?php echo $itemuse_write; ?>" onclick="window.open(this.href); return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+<div class="sit_use_btn">
+    <!-- <a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a> -->
+    <a href="<?php echo $itemuse_write; ?>" onclick="window.open(this.href); return false;" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_board; ?>" target="_blank" class="btn01">더보기</a>
+</div>
 
 <script>
 $(function(){
