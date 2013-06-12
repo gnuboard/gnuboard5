@@ -37,7 +37,8 @@ $sql = " select it_id,
                 io_type,
                 ct_option
            from {$g4['shop_cart_table']}
-          where uq_id = '$tmp_uq_id' ";
+          where uq_id = '$tmp_uq_id'
+            and ct_select = '1' ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
@@ -52,6 +53,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $error .= "{$row['ct_option']} 의 재고수량이 부족합니다. 현재고수량 : $it_stock_qty 개\\n\\n";
 }
 
+if($i == 0)
+    alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G4_SHOP_URL.'/cart.php');
+
 if ($error != "")
 {
     $error .= "다른 고객님께서 {$od_name}님 보다 먼저 주문하신 경우입니다. 불편을 끼쳐 죄송합니다.";
@@ -65,7 +69,7 @@ $i_temp_point = (int)$_POST['od_temp_point'];
 
 // 주문금액이 상이함
 $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as od_amount
-            from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' ";
+            from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and ct_select = '1' ";
 $row = sql_fetch($sql);
 $tot_ct_amount = $row['od_amount'];
 
@@ -112,7 +116,8 @@ if($is_member) {
         $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
                     from {$g4['shop_cart_table']}
                     where uq_id = '$tmp_uq_id'
-                      and it_id = '$it_id' ";
+                      and it_id = '$it_id'
+                      and ct_select = '1' ";
         $ct = sql_fetch($sql);
         $item_price = $ct['sum_price'];
 
@@ -206,7 +211,7 @@ if($is_member && $send_cost > 0) {
         $dc = 0;
         if($cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_amount)) {
             if($cp['cp_type']) {
-                $dc = floor(($tot_od_amount * ($cp['cp_amount'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+                $dc = floor(($send_cost * ($cp['cp_amount'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
             } else {
                 $dc = $cp['cp_amount'];
             }
@@ -372,10 +377,13 @@ else
 // 주문번호를 얻는다.
 $od_id = get_session('ss_order_uniqid');
 
+// 주문상품의 uq_id 변경을 위한 uq_id를 얻는다.
+$uq_id = get_uniqid();
+
 // 주문서에 입력
 $sql = " insert {$g4['shop_order_table']}
             set od_id             = '$od_id',
-                uq_id             = '$tmp_uq_id',
+                uq_id             = '$uq_id',
                 mb_id             = '{$member['mb_id']}',
                 od_pwd            = '$od_pwd',
                 od_name           = '$od_name',
@@ -438,9 +446,11 @@ if (($od_receipt_card > 0 || $od_receipt_hp > 0) && $default['de_card_point'] ==
     $sql_card_point = " , ct_point = '0' ";
 }
 $sql = "update {$g4['shop_cart_table']}
-           set ct_status = '주문'
+           set uq_id = '$uq_id',
+               ct_status = '주문'
                $sql_card_point
-         where uq_id = '$tmp_uq_id' ";
+         where uq_id = '$tmp_uq_id'
+           and ct_select = '1' ";
 $result = sql_query($sql, false);
 
 // 주문정보 입력 오류시 kcp 결제 취소
@@ -453,7 +463,7 @@ if(!$result) {
     echo "<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}";
 
     // 주문삭제
-    sql_query(" delete from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id = '$tmp_uq_id' ");
+    sql_query(" delete from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id = '$uq_id' ");
     exit;
 }
 
@@ -488,8 +498,9 @@ if($is_member) {
         $cp_amt = (int)$arr_it_cp_amt[$cp_it_id];
         $sql = " update {$g4['shop_cart_table']}
                     set cp_amount = '$cp_amt'
-                    where uq_id = '$tmp_uq_id'
+                    where uq_id = '$uq_id'
                       and it_id = '$cp_it_id'
+                      and ct_select = '1'
                       and ct_num = '0' ";
         sql_query($sql);
     }
@@ -562,20 +573,14 @@ if($default['de_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3']
 
 
 // orderview 에서 사용하기 위해 tmp에 넣고
-set_session('ss_temp_uq_id', $tmp_uq_id);
+set_session('ss_temp_uq_id', $uq_id);
 
 // 주문번호제거
 set_session('ss_order_uniqid', '');
 
-// ss_uq_id 기존자료 세션에서 제거
+// 기존자료 세션에서 제거
 if (get_session('ss_direct'))
     set_session('ss_uq_direct', '');
-else
-    set_session('ss_uq_id', '');
 
-// 비회원장바구니 쿠키 초기화
-if(get_cookie('ck_guest_cart_uqid'))
-    set_cookie('ck_guest_cart_uqid', '', 0);
-
-goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$tmp_uq_id);
+goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$uq_id);
 ?>

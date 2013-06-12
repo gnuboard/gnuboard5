@@ -34,7 +34,7 @@ $result = sql_query($sql);
     <ol>
         <li>FAQ는 무제한으로 등록할 수 있습니다</li>
         <li><strong>FAQ추가</strong>를 눌러 FAQ Master를 생성합니다. (하나의 FAQ 타이틀 생성 : 자주하시는 질문, 이용안내..등 )</li>
-        <li>생성한 FAQ Master 의 <strong>상세보기</strong>를 눌러 세부 내용을 관리할 수 있습니다.</li>
+        <li>생성한 FAQ Master 의 <strong>제목</strong>을 눌러 세부 내용을 관리할 수 있습니다.</li>
     </ol>
 
     <div id="btn_add">
@@ -47,7 +47,6 @@ $result = sql_query($sql);
         <th scope="col">ID</th>
         <th scope="col">제목</th>
         <th scope="col">FAQ수</th>
-        <th scope="col">상세보기</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -59,13 +58,17 @@ $result = sql_query($sql);
     ?>
     <tr>
         <td class="td_num"><?php echo $row['fm_id']; ?></td>
-        <td><?php echo stripslashes($row['fm_subject']); ?></td>
+        <td><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>"><?php echo stripslashes($row['fm_subject']); ?></a></td>
         <td class="td_num"><?php echo $cnt; ?></td>
-        <td class="td_smallmng"><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>" class="btn_frmline">상세보기</a></td>
-        <td class="td_mng">
-            <a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><img src="./img/icon_view.jpg" alt="<?php echo stripslashes($row['fm_subject']); ?> 보기"></a>
-            <a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo stripslashes($row['fm_subject']); ?> 수정"></a>
-            <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo stripslashes($row['fm_subject']); ?> 삭제"></a>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <li class="sel_li"><a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>" class="sel_a"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a></li>
+                    <li class="sel_li"><a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>" class="sel_a"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>수정</a></li>
+                    <li class="sel_li"><a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>삭제</a></li>
+                </ul>
+            </div>
         </td>
     </tr>
     <?php

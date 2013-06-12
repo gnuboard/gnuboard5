@@ -13,6 +13,9 @@ if ($search != "")
 {
     if ($sel_field != "")
     {
+        if($sel_field == 'mb_id')
+            $sel_field = 'a.'.$sel_field;
+
         $sql_search .= " $where $sel_field like '%$search%' ";
         $where = " and ";
     }
@@ -211,35 +214,40 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         $od_mobile = '';
         if($lines[$i]['od_mobile'])
             $od_mobile = '(M)';
-        ?>
-        <tr class="orderlist">
-            <td class="td_odrnum2">
-                <?php echo $od_mobile; ?>
-                <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>">
-                    <?php echo $lines[$i]['od_id']; ?><br>
-                    <span class="sound_only">주문일시 </span><?php echo $lines[$i]['od_time']; ?>
-                </a>
-            </td>
-            <!-- <td align=center><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=$sort1&amp;sort2=$sort2&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>'><span title="<?php echo $od_deposit_name; ?>"><?php echo cut_str($lines[$i]['od_name'],8,""); ?></span></a></td> -->
-            <td class="td_name">
-                <?php echo $mb_nick; ?><br>
-                <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>">
-                    <?php echo $lines[$i]['mb_id']; ?>
-                </a>
-            </td>
-            <td class="td_sodr_cnt"><b><?php echo $lines[$i]['itemcount']; ?></b>건<?php if($od_cnt) { ?><br>누적 <?php echo $od_cnt; ?>건<?php } ?></td>
-            <td class="td_sodr_sum"><?php echo number_format($lines[$i]['orderamount']); ?></td>
-            <td><?php echo number_format($lines[$i]['ordercancel']); ?></td>
-            <td><?php echo number_format($lines[$i]['od_dc_amount']); ?></td>
-            <td class="td_sodr_sum"><?php echo number_format($lines[$i]['receiptamount']); ?></td>
-            <td><?php echo number_format($lines[$i]['receiptcancel']); ?></td>
-            <td class="td_sodr_nonpay"><?php echo number_format($lines[$i]['misu']); ?></td>
-            <td><?php echo $s_receipt_way; ?></td>
-            <td>
-                <a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;<?php echo $qstr; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $lines[$i]['od_id']; ?> 수정"></a>
-                <a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo $lines[$i]['od_id']; ?> 삭제"></a>
-            </td>
-        </tr>
+    ?>
+    <tr class="orderlist">
+        <td class="td_odrnum2">
+            <?php echo $od_mobile; ?>
+            <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>">
+                <?php echo $lines[$i]['od_id']; ?><br>
+                <span class="sound_only">주문일시 </span><?php echo $lines[$i]['od_time']; ?>
+            </a>
+        </td>
+        <!-- <td align=center><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=$sort1&amp;sort2=$sort2&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>'><span title="<?php echo $od_deposit_name; ?>"><?php echo cut_str($lines[$i]['od_name'],8,""); ?></span></a></td> -->
+        <td class="td_name">
+            <?php echo $mb_nick; ?><br>
+            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>">
+                <?php echo $lines[$i]['mb_id']; ?>
+            </a>
+        </td>
+        <td class="td_sodr_cnt"><b><?php echo $lines[$i]['itemcount']; ?></b>건<?php if($od_cnt) { ?><br>누적 <?php echo $od_cnt; ?>건<?php } ?></td>
+        <td class="td_sodr_sum"><?php echo number_format($lines[$i]['orderamount']); ?></td>
+        <td><?php echo number_format($lines[$i]['ordercancel']); ?></td>
+        <td><?php echo number_format($lines[$i]['od_dc_amount']); ?></td>
+        <td class="td_sodr_sum"><?php echo number_format($lines[$i]['receiptamount']); ?></td>
+        <td><?php echo number_format($lines[$i]['receiptcancel']); ?></td>
+        <td class="td_sodr_nonpay"><?php echo number_format($lines[$i]['misu']); ?></td>
+        <td><?php echo $s_receipt_way; ?></td>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <li class="sel_li"><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>수정</a></li>
+                    <li class="sel_li"><a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>삭제</a></li>
+                </ul>
+            </div>
+        </td>
+    </tr>
     <?php
     }
     mysql_free_result($result);

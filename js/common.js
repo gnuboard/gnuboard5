@@ -608,15 +608,45 @@ $(function(){
         sv_hide = true;
     });
 
+    // 셀렉트 ul
+    var sel_hide = false;
+    $('.sel_btn').click(function() {
+        $('.sel_ul').removeClass('sel_on');
+        $(this).siblings('.sel_ul').addClass('sel_on');
+    });
+
+    $(".sel_wrap").hover(
+        function() {
+            sel_hide = false;
+        },
+        function() {
+            sel_hide = true;
+        }
+    );
+
+    $('.sel_a').focusin(function() {
+        sel_hide = false;
+    });
+
+    $('.sel_a').focusout(function() {
+        sel_hide = true;
+    });
+
     $(document).click(function() {
-        if(sv_hide) {
+        if(sv_hide) { // 사이드뷰 해제
             $(".sv").removeClass("sv_on");
+        }
+        if (sel_hide) { // 셀렉트 ul 해제
+            $('.sel_ul').removeClass('sel_on');
         }
     });
 
     $(document).focusin(function() {
-        if(sv_hide) {
+        if(sv_hide) { // 사이드뷰 해제
             $(".sv").removeClass("sv_on");
+        }
+        if (sel_hide) { // 셀렉트 ul 해제
+            $('.sel_ul').removeClass('sel_on');
         }
     });
 
@@ -629,17 +659,3 @@ $(function(){
         }
     });
 });
-
-// 모달 레이어 http://mytory.net/archives/783 참조
-function winMask(){ // 모달 레이어 배경
-    //화면의 높이와 너비를 구한다.
-    var maskHeight = $(document).height();
-    var maskWidth = $(window).width();
-
-    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-    $('#win_mask').css({'width':maskWidth,'height':maskHeight});
-
-    //애니메이션 효과
-    $('#win_mask').fadeTo("fast",0.8);
-}
-// 모달 레이어 끝

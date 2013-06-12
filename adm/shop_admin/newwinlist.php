@@ -41,21 +41,26 @@ $result = sql_query($sql);
     </thead>
     <tbody>
     <?php for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
-        <tr>
-            <td class="td_num"><?php echo $row['nw_id']; ?></td>
-            <td><?php echo $row['nw_subject']; ?></td>
-            <td class="td_time"><?php echo substr($row['nw_begin_time'],2,14); ?></td>
-            <td class="td_time"><?php echo substr($row['nw_end_time'],2,14); ?></td>
-            <td><?php echo $row['nw_disable_hours']; ?>시간</td>
-            <td><?php echo $row['nw_left']; ?>px</td>
-            <td><?php echo $row['nw_top']; ?>px</td>
-            <td><?php echo $row['nw_width']; ?>px</td>
-            <td><?php echo $row['nw_height']; ?>px</td>
-            <td class="td_smallmng">
-                <a href="./newwinform.php?w=u&amp;nw_id=<?php echo $row['nw_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['nw_subject']; ?> 수정"></a>
-                <a href="./newwinformupdate.php?w=d&amp;nw_id=<?php echo $row['nw_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo $row['nw_subject']; ?> 삭제"></a>
-            </td>
-        </tr>
+    <tr>
+        <td class="td_num"><?php echo $row['nw_id']; ?></td>
+        <td><?php echo $row['nw_subject']; ?></td>
+        <td class="td_time"><?php echo substr($row['nw_begin_time'],2,14); ?></td>
+        <td class="td_time"><?php echo substr($row['nw_end_time'],2,14); ?></td>
+        <td><?php echo $row['nw_disable_hours']; ?>시간</td>
+        <td><?php echo $row['nw_left']; ?>px</td>
+        <td><?php echo $row['nw_top']; ?>px</td>
+        <td><?php echo $row['nw_width']; ?>px</td>
+        <td><?php echo $row['nw_height']; ?>px</td>
+        <td class="td_mng sv_use">
+            <div class="sel_wrap">
+                <button type="button" class="sel_btn">관리하기</button>
+                <ul class="sel_ul">
+                    <li class="sel_li"><a href="./newwinform.php?w=u&amp;nw_id=<?php echo $row['nw_id']; ?>" class="sel_a"><span class="sound_only"><?php echo $row['nw_subject']; ?> </span>수정</a></li>
+                    <li class="sel_li"><a href="./newwinformupdate.php?w=d&amp;nw_id=<?php echo $row['nw_id']; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo $row['nw_subject']; ?> </span>삭제</a><li class="sel_li">
+                </ul>
+            </div>
+        </td>
+    </tr>
     <?php
     }
 

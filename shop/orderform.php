@@ -18,9 +18,6 @@ else {
 if (get_cart_count($tmp_uq_id) == 0)
     alert('장바구니가 비어 있습니다.', G4_SHOP_URL.'/cart.php');
 
-// 포인트 결제 대기 필드 추가
-//sql_query(" ALTER TABLE `$g4[shop_order_table]` ADD `od_temp_point` INT NOT NULL AFTER `od_temp_card` ", false);
-
 $g4['title'] = '주문서 작성';
 
 include_once('./_head.php');
@@ -148,6 +145,7 @@ setTimeout("init_pay_button();",300);
                     b.ca_id3
                from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
               where a.uq_id = '$s_uq_id'
+                and a.ct_select = '1'
                 and a.ct_num = '0' ";
     if($default['de_cart_keep_term']) {
         $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
@@ -245,7 +243,8 @@ setTimeout("init_pay_button();",300);
     } // for 끝
 
     if ($i == 0) {
-        echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+        //echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+        alert('장바구니가 비어 있습니다.', G4_SHOP_URL.'/cart.php');
     } else {
         // 배송비 계산
         if ($default['de_send_cost_case'] == '없음')
@@ -915,7 +914,7 @@ $(function() {
 
         $.post(
             "./orderitemcoupon.php",
-            { it_id: it_id },
+            { it_id: it_id,  sw_direct: "<?php echo $sw_direct; ?>" },
             function(data) {
                 $cp_btn_el.after(data);
             }
@@ -988,7 +987,6 @@ $(function() {
         $("#od_coupon_frm").remove();
         var $this = $(this);
         var amount = parseInt($("input[name=org_od_amount]").val());
-        var send_cost = parseInt($("input[name=org_send_cost]").val());
         $.post(
             "./ordercoupon.php",
             { amount: amount },

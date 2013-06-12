@@ -22,8 +22,29 @@ if ($member['mb_level'] < $default['de_level_sell'])
     alert('상품을 구입할 수 있는 권한이 없습니다.');
 }
 
+if($act == "buy")
+{
+    if(!count($_POST['ct_chk']))
+        alert("주문하실 상품을 하나이상 선택해 주십시오.");
 
-if ($act == "d") // 삭제이면
+    $fldcnt = count($_POST['it_id']);
+    for($i=0; $i<$fldcnt; $i++) {
+        $ct_chk = $_POST['ct_chk'][$i];
+        if($ct_chk) {
+            $it_id = $_POST['it_id'][$i];
+            $sql = " update {$g4['shop_cart_table']}
+                        set ct_select = '1'
+                        where it_id = '$it_id' and uq_id = '$tmp_uq_id' ";
+            sql_query($sql);
+        }
+    }
+
+    if ($is_member) // 회원인 경우
+        goto_url(G4_SHOP_URL.'/orderform.php');
+    else
+        goto_url(G4_BBS_URL.'/login.php?url='.urlencode(G4_SHOP_URL.'/orderform.php'));
+}
+else if ($act == "d") // 삭제이면
 {
     $sql = " delete from {$g4['shop_cart_table']}
               where ct_id = '$ct_id'
@@ -38,10 +59,10 @@ else if ($act == "alldelete") // 모두 삭제이면
 }
 else if ($act == "seldelete") // 선택삭제
 {
-    $fldcnt = count($_POST['it_id']);
-    if(!$fldcnt)
+    if(!count($_POST['ct_chk']))
         alert("삭제하실 상품을 하나이상 선택해 주십시오.");
 
+    $fldcnt = count($_POST['it_id']);
     for($i=0; $i<$fldcnt; $i++) {
         $ct_chk = $_POST['ct_chk'][$i];
         if($ct_chk) {
@@ -326,10 +347,15 @@ else // 장바구니에 담기
         else
             $ct_num = 0;
 
+        if($sw_direct)
+            $ct_select = 1;
+        else
+            $ct_select = 0;
+
         $ct_count = 0;
         $comma = '';
         $sql = " INSERT INTO {$g4['shop_cart_table']}
-                        ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_direct )
+                        ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_direct, ct_select )
                     VALUES ";
 
         for($i=0; $i<$option_count; $i++) {
@@ -350,7 +376,7 @@ else // 장바구니에 담기
                 continue;
             }
 
-            $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '$ct_num', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct' )";
+            $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$_POST['it_id']}', '{$_POST['it_name']}', '쇼핑', '{$_POST['it_price']}', '{$_POST['it_point']}', '0', '0', '{$_POST['io_value'][$i]}', '{$_POST['ct_qty'][$i]}', '$ct_num', '{$_POST['io_id'][$i]}', '{$_POST['io_type'][$i]}', '{$_POST['io_price'][$i]}', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct', '$ct_select' )";
             $comma = ' , ';
             $ct_num++;
             $ct_count++;

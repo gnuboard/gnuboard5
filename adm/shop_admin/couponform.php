@@ -149,6 +149,7 @@ $(function() {
     $("#tr_cp_target").find("input").attr("required", false).removeClass("required");
     <?php } ?>
     <?php if($cp['cp_type'] != 1) { ?>
+    $("#tr_cp_maximum").hide();
     $("#tr_cp_trunc").hide();
     <?php } ?>
     $("#cp_method_btn").click(function() {
@@ -222,10 +223,12 @@ function change_type(cp_type)
     if(cp_type == "0") {
         $("#cp_amount_unit").text("원");
         $("#cp_amount_unit").closest("tr").find("label").text("할인금액");
+        $("#tr_cp_maximum").hide();
         $("#tr_cp_trunc").hide();
     } else {
         $("#cp_amount_unit").text("%");
         $("#cp_amount_unit").closest("tr").find("label").text("할인비율");
+        $("#tr_cp_maximum").show();
         $("#tr_cp_trunc").show();
     }
 }
