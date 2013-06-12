@@ -19,7 +19,8 @@ $sql = " select * from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id
 $result = sql_query($sql);
 
 // 판매가격
-$sql2 = " select ct_price, it_name, ct_send_cost from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '$it_id' and ct_num = '0' ";
+$sql2 = " select ct_price, it_name, ct_send_cost, ct_send_cost2
+            from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '$it_id' and ct_num = '0' ";
 $row2 = sql_fetch($sql2);
 
 if(!mysql_num_rows($result))
@@ -33,6 +34,7 @@ if(!mysql_num_rows($result))
 <input type="hidden" name="it_name" value="<?php echo $row2['it_name']; ?>">
 <input type="hidden" name="it_point" value="<?php echo $it_point; ?>">
 <input type="hidden" name="ct_send_cost" value="<?php echo $row2['ct_send_cost']; ?>">
+<input type="hidden" name="ct_send_cost2" value="<?php echo $row2['ct_send_cost2']; ?>">
 <input type="hidden" name="total_price" value="">
 <input type="hidden" name="sw_direct">
 <?php

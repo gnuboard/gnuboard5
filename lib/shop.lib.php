@@ -1182,14 +1182,14 @@ function get_item_sendcost($it_id, $uq_id)
     global $g4, $default;
 
     if($default['de_send_cost_case'] != '개별')
-        return false;
+        return 0;
 
     $sql = " select it_id, it_sc_type, it_sc_method, it_sc_amount, it_sc_minimum, it_sc_qty
                 from {$g4['shop_item_table']}
                 where it_id = '$it_id' ";
     $it = sql_fetch($sql);
     if(!$it['it_id'])
-        return false;
+        return 0;
 
     if($it['it_sc_type']) {
         if($it['it_sc_type'] == 1) { // 조건부무료
