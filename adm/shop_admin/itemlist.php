@@ -129,11 +129,22 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 <section class="cbox">
     <h2>상품 목록</h2>
 
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./itemform.php">상품등록</a>
         <a href="./itemexcel.php" onclick="return excelform(this.href);" target="_blank">상품일괄등록</a>
-        <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
     </div>
+
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link('it_id', 'sca='.$sca); ?>상품코드<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('it_name', 'sca='.$sca); ?>상품명<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('it_price', 'sca='.$sca); ?>판매가격<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('it_cust_price', 'sca='.$sca); ?>시중가격<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('it_order', 'sca='.$sca); ?>순서<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('it_use', 'sca='.$sca, 1); ?>판매<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('it_hit', 'sca='.$sca, 1); ?>조회<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('it_point', 'sca='.$sca); ?>포인트<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('it_stock_qty', 'sca='.$sca); ?>재고<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
 
     <form name="fitemlistupdate" method="post" action="./itemlistupdate.php" onsubmit="return fitemlist_submit(this);" autocomplete="off">
     <input type="hidden" name="sca" value="<?php echo $sca; ?>">
@@ -146,19 +157,22 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <table>
     <thead>
     <tr>
-        <th scope="col" rowspan="2"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 게시판 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col" rowspan="2"><?php echo subject_sort_link('it_id', 'sca='.$sca); ?>상품코드 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" colspan="2" rowspan="2">분류 및 <?php echo subject_sort_link('it_name', 'sca='.$sca); ?>상품명 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_amt"><?php echo subject_sort_link('it_price', 'sca='.$sca); ?>판매가격 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_camt"><?php echo subject_sort_link('it_cust_price', 'sca='.$sca); ?>시중가격 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" rowspan="2"><?php echo subject_sort_link('it_order', 'sca='.$sca); ?>순서 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" rowspan="2"><?php echo subject_sort_link('it_use', 'sca='.$sca, 1); ?>판매 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" rowspan="2"><?php echo subject_sort_link('it_hit', 'sca='.$sca, 1); ?>조회 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" rowspan="2">
+            <label for="chkall" class="sound_only">게시판 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
+        <th scope="col" rowspan="2">상품코드</th>
+        <th scope="col" colspan="2" rowspan="2">분류 및 상품명</th>
+        <th scope="col" id="sit_amt">판매가격</th>
+        <th scope="col" id="sit_camt">시중가격</th>
+        <th scope="col" rowspan="2">순서</th>
+        <th scope="col" rowspan="2">판매</th>
+        <th scope="col" rowspan="2">조회</th>
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
-        <th scope="col" id="sit_pt"><?php echo subject_sort_link('it_point', 'sca='.$sca); ?>포인트 <span class="sound_only">순 정렬</span></a></th>
-        <th scope="col" id="sit_qty"><?php echo subject_sort_link('it_stock_qty', 'sca='.$sca); ?>재고 <span class="sound_only">순 정렬</span></a></th>
+        <th scope="col" id="sit_pt">포인트</th>
+        <th scope="col" id="sit_qty">재고</th>
     </tr>
     </thead>
     <tbody>
@@ -171,7 +185,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     <tr>
         <td rowspan="2">
-            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>" title="<?php echo get_text($row['bo_subject']) ?> 게시판선택">
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['bo_subject']) ?> 게시판</label>
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
         </td>
         <td rowspan="2">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">

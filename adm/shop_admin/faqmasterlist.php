@@ -37,7 +37,7 @@ $result = sql_query($sql);
         <li>생성한 FAQ Master 의 <strong>제목</strong>을 눌러 세부 내용을 관리할 수 있습니다.</li>
     </ol>
 
-    <div id="btn_add">
+    <div class="btn_add">
         <a href="./faqmasterform.php">FAQ추가</a>
     </div>
 

@@ -104,14 +104,22 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 <section class="cbox">
     <h2>사용후기 목록</h2>
 
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link("it_name"); ?>상품명</a></li>
+        <li><?php echo subject_sort_link("mb_name"); ?>이름</a></li>
+        <li><?php echo subject_sort_link("is_subject"); ?>제목</a></li>
+        <li><?php echo subject_sort_link("is_score"); ?>점수</a></li>
+        <li><?php echo subject_sort_link("is_confirm"); ?>확인</a></li>
+    </ul>
+
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><?php echo subject_sort_link("it_name"); ?>상품명</a></th>
-        <th scope="col"><?php echo subject_sort_link("mb_name"); ?>이름</a></th>
-        <th scope="col"><?php echo subject_sort_link("is_subject"); ?>제목</a></th>
-        <th scope="col"><?php echo subject_sort_link("is_score"); ?>점수</a></th>
-        <th scope="col"><?php echo subject_sort_link("is_confirm"); ?>확인</a></th>
+        <th scope="col">상품명</th>
+        <th scope="col">이름</th>
+        <th scope="col">제목</th>
+        <th scope="col">점수</th>
+        <th scope="col">확인</th>
         <th scope="col">관리</th>
     </tr>
     </thead>

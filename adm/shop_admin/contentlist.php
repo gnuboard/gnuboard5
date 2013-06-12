@@ -29,7 +29,7 @@ $result = sql_query($sql);
         <?php if ($page > 1) {?><a href="<?php echo $_SERVER['PHP_SELF']; ?>">처음으로</a><?php } ?>
         <span>전체 내용 <?php echo $total_count; ?>건</span>
     </p>
-    <div id="btn_add">
+    <div class="btn_add">
         <a href="./contentform.php">내용 추가</a>
     </div>
     <table>

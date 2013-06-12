@@ -21,7 +21,7 @@ $result = sql_query($sql);
 <section class="cbox">
     <h2>팝업레이어 관리</h2>
     <p>추가된 팝업레이어 <?php echo $total_count; ?>건</p>
-    <div id="btn_add">
+    <div class="btn_add">
         <a href="./newwinform.php">새창관리추가</a>
     </div>
     <table id="spop_list">

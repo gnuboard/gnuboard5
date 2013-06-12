@@ -103,13 +103,20 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
 <section class="cbox">
     <h2>상품문의 목록</h2>
 
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link('it_name'); ?>상품명<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_name'); ?>이름<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('iq_subject'); ?>질문<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('iq_answer'); ?>답변<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col"><?php echo subject_sort_link('it_name'); ?>상품명<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_name'); ?>이름<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><?php echo subject_sort_link('iq_subject'); ?>질문<span class="sound_only"> 순 정렬</span></a></th>
-        <th scope="col"><?php echo subject_sort_link('iq_answer'); ?>답변<span class="sound_only"> 순 정렬</span></a></th>
+        <th scope="col">상품명</th>
+        <th scope="col">이름</th>
+        <th scope="col">질문</th>
+        <th scope="col">답변</th>
         <th scope="col">관리</th>
     </tr>
     </thead>

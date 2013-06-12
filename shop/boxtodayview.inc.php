@@ -84,14 +84,11 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
 
     <?php } ?>
 
-    <aside id="stv_nb">
-        <h3>빠른 연결</h3>
-        <ul>
-            <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_cart.gif" alt="장바구니"></a></li>
-            <li><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_wish.gif" alt="위시리스트"></a></li>
-            <li><a href="<?php echo G4_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
-        </ul>
-    </aside>
+    <ul id="stv_nb">
+        <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_cart.gif" alt="장바구니"></a></li>
+        <li><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_wish.gif" alt="위시리스트"></a></li>
+        <li><a href="<?php echo G4_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G4_URL; ?>/img/shop/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
+    </ul>
 </div>
 
 <script>

@@ -79,9 +79,15 @@ $colspan = 8;
 <section id="scp_list" class="cbox">
     <h2>쿠폰 내역</h2>
 
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./couponform.php" id="coupon_add">쿠폰 추가</a>
     </div>
+
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link('mb_id') ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('cp_end') ?>사용기한<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('cp_used') ?>사용<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
 
     <form name="fcouponlist" id="fcouponlist" method="post" action="./couponlist_delete.php" onsubmit="return fcouponlist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst; ?>">
@@ -94,13 +100,16 @@ $colspan = 8;
     <table class="tbl_pt_list">
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 쿠폰 내역 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">쿠폰 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col">쿠폰코드</th>
         <th scope="col">쿠폰이름</th>
         <th scope="col">적용대상</th>
-        <th scope="col"><?php echo subject_sort_link('mb_id') ?>회원아이디</a></th>
-        <th scope="col"><?php echo subject_sort_link('cp_end') ?>사용기한</a></th>
-        <th scope="col"><?php echo subject_sort_link('cp_used') ?>사용</a></th>
+        <th scope="col">회원아이디</a></th>
+        <th scope="col">사용기한</a></th>
+        <th scope="col">사용</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
