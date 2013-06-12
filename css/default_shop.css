@@ -661,8 +661,12 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 #sod_frm #od_memo {height:50px}
 
+#sod_frm_pay {position:relative}
+#sod_frm_pay th {font-weight:bold;text-align:center !important}
 #sod_frm_pay .frm_input {background:#fff !important}
 #sod_frm_pay .frm_input:focus {color:#000}
+
+#sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;left:99px;padding:20px;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
 
 #sod_frm_paysel {margin:0 0 20px;padding:10px;border:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
 #sod_frm_paysel legend {position:absolute;font-size:0;line-height:0;overflow:hidden}

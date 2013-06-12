@@ -85,7 +85,7 @@ $qstr1 = 'sch_target='.$_GET['sch_target'].'&amp;sch_word='.$_GET['sch_word'];
     <tr>
         <td><?php echo $row['t_name']; ?></td>
         <td class="scp_target_code"><?php echo $row['t_id']; ?></td>
-        <td class="scp_target_select"><button type="button" onclick="sel_target_id('<?php echo $row['t_id']; ?>');">선택</button>
+        <td class="scp_target_select"><button type="button" class="btn_frmline" onclick="sel_target_id('<?php echo $row['t_id']; ?>');">선택</button>
     </tr>
     <?php
     }

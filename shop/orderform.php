@@ -683,7 +683,7 @@ setTimeout("init_pay_button();",300);
             <th scope="row">결제할인쿠폰</th>
             <td>
                 <input type="hidden" name="od_cp_id" value="">
-                <button type="button" id="od_coupon_btn">쿠폰적용</button>
+                <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
             </td>
         </tr>
         <?php } ?>
@@ -692,7 +692,7 @@ setTimeout("init_pay_button();",300);
             <th scope="row">배송비할인쿠폰</th>
             <td>
                 <input type="hidden" name="sc_cp_id" value="">
-                <button type="button" id="sc_coupon_btn">쿠폰적용</button>
+                <button type="button" id="sc_coupon_btn" class="btn_frmline">쿠폰적용</button>
             </td>
         </tr>
         <?php } ?>
