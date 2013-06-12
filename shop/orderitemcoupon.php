@@ -44,8 +44,6 @@ $count = mysql_num_rows($result);
     <?php if($count > 0) { ?>
     <table class="basic_tbl">
     <caption>쿠폰 선택</caption>
-    <colgroup>
-    </colgroup>
     <thead>
     <tr>
         <th scope="col">쿠폰명</th>
@@ -71,7 +69,7 @@ $count = mysql_num_rows($result);
             <input type="hidden" name="f_cp_id[]" value="<?php echo $row['cp_id']; ?>">
             <input type="hidden" name="f_cp_amt[]" value="<?php echo $dc; ?>">
             <input type="hidden" name="f_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
-            <span><?php echo get_text($row['cp_subject']); ?></span>
+            <?php echo get_text($row['cp_subject']); ?>
         </td>
         <td class="td_bignum"><?php echo number_format($dc); ?></td>
         <td class="td_smallmng"><button type="button" class="cp_apply btn_frmline">적용</button></td>
@@ -83,7 +81,7 @@ $count = mysql_num_rows($result);
     </table>
     <?php
     } else {
-        echo '사용할 수 있는 쿠폰이 없습니다.';
+        echo '<p>사용할 수 있는 쿠폰이 없습니다.</p>';
     }
     ?>
     <div class="btn_confirm">
