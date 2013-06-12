@@ -342,7 +342,7 @@ function fregisterform_submit(f)
         }
     }
 
-    if (typeof(f.mb_recommend) != "undefined") {
+    if (typeof(f.mb_recommend) != "undefined" && f.mb_recommend.value) {
         if (f.mb_id.value == f.mb_recommend.value) {
             alert("본인을 추천할 수 없습니다.");
             f.mb_recommend.focus();
@@ -357,6 +357,7 @@ function fregisterform_submit(f)
         }
     }
 
+    /*
     if (typeof(f.mb_hp) != "undefined" && f.mb_hp.value) {
         var error = "";
         $.ajax({
@@ -381,6 +382,7 @@ function fregisterform_submit(f)
             return false;
         }
     }
+    */
 
     <?php echo chk_captcha_js();  ?>
 

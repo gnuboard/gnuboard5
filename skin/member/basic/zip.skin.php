@@ -22,11 +22,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <!-- 검색결과 여기서부터 -->
 
-    <script>
-    document.fzip.addr1.focus();
-    </script>
-
-
     <?php if ($search_count > 0) {  ?>
     <dl>
         <dt>총 <?php echo $search_count ?>건 가나다순 정렬</dt>

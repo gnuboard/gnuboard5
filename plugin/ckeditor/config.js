@@ -106,8 +106,8 @@ CKEDITOR.editorConfig = function( config ) {
         'Arial;Comic Sans MS;Courier New;Lucida Sans Unicode;monospace;sans-serif;serif;Tahoma;Times New Roman;Verdana';
     config.fontSize_defaultLabel = "10pt";
     config.fontSize_sizes = "7pt/9px;8pt/11px;9pt/12px;10pt/13px;11pt/15px;14pt/19px;18pt/24px;24pt/32px;36/48px;";
-    config.enterMode = CKEDITOR.ENTER_BR;
-    config.shiftEnterMode = CKEDITOR.ENTER_P;
+    config.enterMode = CKEDITOR.ENTER_DIV;
+    config.shiftEnterMode = CKEDITOR.ENTER_DIV;
     config.filebrowserUploadUrl = g4_ckeditor_url+"/upload.php?type=Images";
     config.keystrokes=[
         // Formatting

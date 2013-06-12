@@ -12,18 +12,23 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 <section id="bo_vc">
     <h2>댓글목록</h2>
     <?php
-    for ($i=0; $i<count($list); $i++) {
+    $cmt_amt = count($list);
+    for ($i=0; $i<$cmt_amt; $i++) {
         $comment_id = $list[$i]['wr_id'];
         $cmt_depth = ""; // 댓글단계
         $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 20;
-        $str = $list[$i]['content'];
+        $comment = $list[$i]['content'];
+        /*
         if (strstr($list[$i]['wr_option'], "secret")) {
             $str = $str;
         }
-        $str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $str);
+        */
+        $comment = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $comment);
+        $cmt_sv = $cmt_amt - $i + 1; // 댓글 헤더 z-index 재설정 ie8 이하 사이드뷰 겹침 문제 해결
      ?>
+
     <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
-        <header>
+        <header style="z-index:<?php echo $cmt_sv; ?>">
             <h1><?php echo $list[$i]['wr_name'] ?>님의 댓글</h1>
             <?php echo $list[$i]['name'] ?>
             <?php if ($cmt_depth) { ?><img src="<?php echo $board_skin_url ?>/img/icon_reply.gif" class="icon_reply" alt="댓글의 댓글"><?php } ?>
@@ -34,14 +39,14 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
             <?php
-            include(G4_SNS_PATH."/view_comment_list.sns.skin.php");
+            include(G4_SNS_PATH.'/view_comment_list.sns.skin.php');
             ?>
         </header>
 
         <!-- 댓글 출력 -->
         <p>
-            <?php if (strstr($list[$i]['wr_option'], "secret")) echo "<img src=\"".$board_skin_url."/img/icon_secret.gif\" alt=\"비밀글\">"; ?>
-            <?php echo $str ?>
+            <?php if (strstr($list[$i]['wr_option'], "secret")) { ?><img src="<?php echo $board_skin_url; ?>/img/icon_secret.gif" alt="비밀글"><?php } ?>
+            <?php echo $comment ?>
         </p>
 
         <span id="edit_<?php echo $comment_id ?>"></span><!-- 수정 -->
@@ -127,7 +132,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <th scope="row">내용</th>
             <td>
                 <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
-                <textarea id="wr_content" name="wr_content" maxlength="10000" required class="required"
+                <textarea id="wr_content" name="wr_content" maxlength="10000" required class="required" title="내용"
                 <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
                 <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
                 <script>
@@ -176,7 +181,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         var subject = "";
         var content = "";
         $.ajax({
-            url: g4_bbs_url+"/filter.ajax.php",
+            url: g4_bbs_url+"/ajax.filter.php",
             type: "POST",
             data: {
                 "subject": "",
