@@ -532,9 +532,12 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sit_inf_open th {padding:7px 10px;border:1px solid #fff;background:#f5f6fa;vertical-align:top;text-align:left}
 #sit_inf_open td {padding:7px 10px;border:1px solid #fff;background:#f5f6fa;vertical-align:top}
 
-/* 상품 상세보기 - 이용후기 */
+/* 상품 상세보기 - 사용후기 */
 #sit_use {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
 #sit_use h2 {margin:0 0 10px}
+.sit_use_btn {text-align:right}
+
+#sit_use_tbl .td_star {width:100px !important;text-align:center !important}
 
 /* 상품 상세보기 - 상품문의 */
 #sit_qa {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
