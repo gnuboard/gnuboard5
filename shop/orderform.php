@@ -208,6 +208,7 @@ setTimeout("init_pay_button();",300);
                           and cp_used = '0'
                           and cp_start <= '".G4_TIME_YMD."'
                           and cp_end >= '".G4_TIME_YMD."'
+                          and cp_minimum <= '$sell_amount'
                           and (
                                 ( cp_method = '0' and cp_target = '{$row['it_id']}' )
                                 OR

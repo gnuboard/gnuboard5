@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], "r");
 
 $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $date);
 
-$g4['title'] = "$date 일일 매출현황";
+$g4['title'] = "$date 일 매출현황";
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 unset($tot);
@@ -31,8 +31,8 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $lines[$i] = $row;
 
     // 장바구니 상태별 금액
-    $sql1 = " select (SUM(ct_price * ct_qty)) as orderamount, /* 주문합계 */
-                     (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', ct_price * ct_qty, 0))) as ordercancel /* 주문취소 */
+    $sql1 = " select (SUM(IF(io_type = 1, io_price * ct_qty, (ct_price + io_price) * ct_qty))) as orderamount, /* 주문합계 */
+                     (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', IF(io_type = 1, io_price * ct_qty, (ct_price + io_price) * ct_qty), 0))) as ordercancel /* 주문취소 */
                 from {$g4['shop_cart_table']}
                where uq_id = '{$row['uq_id']}' ";
     $row1 = sql_fetch($sql1);
