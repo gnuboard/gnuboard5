@@ -14,7 +14,7 @@ $goods_name = $goods['full_name'];
 
 $trad_time = date("YmdHis");
 
-$amt_tot = (int)$od['od_receipt_bank'];
+$amt_tot = (int)$od['od_receipt_amount'];
 $amt_sup = (int)round(($amt_tot * 10) / 11);
 $amt_svc = 0;
 $amt_tax = (int)($amt_tot - $amt_sup);

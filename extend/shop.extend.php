@@ -35,13 +35,13 @@ define(_MISU_QUERY_, "
     (SUM(IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty))  + a.od_send_cost) as orderamount, /* 주문합계 */
     (SUM(b.cp_amount) + a.od_coupon) as couponamount, /* 쿠폰합계*/
     (SUM(IF(b.ct_status = '취소' OR b.ct_status = '반품' OR b.ct_status = '품절', (IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty)), 0))) as ordercancel, /* 주문취소 */
-    (a.od_receipt_bank + a.od_receipt_card + a.od_receipt_hp + a.od_receipt_point) as receiptamount, /* 입금합계 */
+    (a.od_receipt_amount + a.od_receipt_point) as receiptamount, /* 입금합계 */
     (a.od_refund_amount + a.od_cancel_card) as receiptcancel, /* 입금취소 */
     (
         (SUM(IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty))  + a.od_send_cost) -
         (SUM(IF(b.ct_status = '취소' OR b.ct_status = '반품' OR b.ct_status = '품절', (IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty)), 0))) -
         a.od_dc_amount -
-        (a.od_receipt_bank + a.od_receipt_card + a.od_receipt_hp + a.od_receipt_point) +
+        (a.od_receipt_amount + a.od_receipt_point) +
         (a.od_refund_amount + a.od_cancel_card) -
         (SUM(b.cp_amount) + a.od_coupon)
     ) as misu /* 미수금 = 주문합계 - 주문취소 - DC - 입금합계 + 입금취소 - 쿠폰합계 */");

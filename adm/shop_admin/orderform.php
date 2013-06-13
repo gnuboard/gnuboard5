@@ -244,8 +244,8 @@ $pg_anchor = '<ul class="anchor">
     // 주문금액 = 상품구입금액 + 배송비
     $amount['정상'] = $t_ct_amount['정상'] + $od['od_send_cost'];
 
-    // 입금액 = 무통장(가상계좌, 계좌이체 포함) + 신용카드 + 휴대폰 + 포인트
-    $amount['입금'] = $od['od_receipt_bank'] + $od['od_receipt_card'] + $od['od_receipt_hp'] + $od['od_receipt_point'];
+    // 입금액 = 결제금액 + 포인트
+    $amount['입금'] = $od['od_receipt_amount'] + $od['od_receipt_point'];
 
     // 쿠폰금액
     $amount['쿠폰'] = $t_cp_amount + $od['od_coupon'];
@@ -325,7 +325,7 @@ $pg_anchor = '<ul class="anchor">
         <?php } ?>
         <tr>
             <th scope="row"><?php echo $od['od_settle_case']; ?> 입금액</th>
-            <td><?php echo display_price($od['od_receipt_bank']); ?></td>
+            <td><?php echo display_price($od['od_receipt_amount']); ?></td>
         </tr>
         <tr>
             <th scope="row">입금자</th>
@@ -334,8 +334,8 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row">입금확인일시</th>
             <td>
-                <?php if ($od['od_bank_time'] == 0) { ?>입금 확인일시를 체크해 주세요.
-                <?php } else { ?><?php echo $od['od_bank_time']; ?> (<?php echo get_yoil($od['od_bank_time']); ?>)
+                <?php if ($od['od_receipt_time'] == 0) { ?>입금 확인일시를 체크해 주세요.
+                <?php } else { ?><?php echo $od['od_receipt_time']; ?> (<?php echo get_yoil($od['od_receipt_time']); ?>)
                 <?php } ?>
             </td>
         </tr>
@@ -348,13 +348,13 @@ $pg_anchor = '<ul class="anchor">
             </tr>
         <tr>
             <th scope="row"><?php echo $od['od_settle_case']; ?> 결제액</th>
-            <td><?php echo display_price($od['od_receipt_hp']); ?></td>
+            <td><?php echo display_price($od['od_receipt_amount']); ?></td>
         </tr>
         <tr>
             <th scope="row">결제 확인일시</th>
             <td>
-                <?php if ($od['od_hp_time'] == 0) { ?>결제 확인일시를 체크해 주세요.
-                <?php } else { ?><?php echo $od['od_hp_time']; ?> (<?php echo get_yoil($od['od_hp_time']); ?>)
+                <?php if ($od['od_receipt_time'] == 0) { ?>결제 확인일시를 체크해 주세요.
+                <?php } else { ?><?php echo $od['od_receipt_time']; ?> (<?php echo get_yoil($od['od_receipt_time']); ?>)
                 <?php } ?>
             </td>
         </tr>
@@ -364,16 +364,16 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row" class="sodr_sppay">신용카드 입금액</th>
             <td>
-                <?php if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>0원
-                <?php } else { ?><?php echo display_price($od['od_receipt_card']); ?>
+                <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") {?>0원
+                <?php } else { ?><?php echo display_price($od['od_receipt_amount']); ?>
                 <?php } ?>
             </td>
         </tr>
         <tr>
             <th scope="row" class="sodr_sppay">카드 승인일시</th>
             <td>
-                <?php if ($od['od_card_time'] == "0000-00-00 00:00:00") {?>신용카드 결제 일시 정보가 없습니다.
-                <?php } else { ?><?php echo substr($od['od_card_time'], 0, 20); ?>
+                <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") {?>신용카드 결제 일시 정보가 없습니다.
+                <?php } else { ?><?php echo substr($od['od_receipt_time'], 0, 20); ?>
                 <?php } ?>
             </td>
         </tr>
@@ -430,12 +430,12 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <?php
         if ($amount['미수'] == 0) {
-            if ($od['od_receipt_bank']) {
+            if ($od['od_receipt_amount'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
         ?>
         <tr>
             <th scope="row">현금영수증</th>
             <td>
-            <?php if ($od["od_cash"]) { ?>
+            <?php if ($od['od_cash']) { ?>
                 <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인</a>
             <?php } else { ?>
                 <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
@@ -476,7 +476,7 @@ $pg_anchor = '<ul class="anchor">
                 $str[$i] = str_replace("\r", "", $str[$i]);
                 $bank_account .= '<option value="'.$str[$i].'" '.get_selected($od['od_bank_account'], $str[$i]).'>'.$str[$i].'</option>'.PHP_EOL;
             }
-            $bank_account .= "</select> ";
+            $bank_account .= '</select> ';
         }
         else if ($od['od_settle_case'] == '가상계좌')
             $bank_account = $od['od_bank_account'].'<input type="hidden" name="od_bank_account" value="'.$od['od_bank_account'].'">';
@@ -491,9 +491,9 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <?php } ?>
         <tr>
-            <th scope="row"><label for="od_receipt_bank"><?php echo $od['od_settle_case']; ?> 입금액</label></th>
+            <th scope="row"><label for="od_receipt_amount"><?php echo $od['od_settle_case']; ?> 입금액</label></th>
             <td>
-                <input type="text" name="od_receipt_bank" value="<?php echo $od['od_receipt_bank']; ?>" id="od_receipt_bank" class="frm_input" size="10"> 원
+                <input type="text" name="od_receipt_amount" value="<?php echo $od['od_receipt_amount']; ?>" id="od_receipt_amount" class="frm_input" size="10"> 원
                 <?php
                 if ($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌') {
                     $pg_url = $g4['shop_cardpg'][$default['de_card_pg']];
@@ -514,11 +514,11 @@ $pg_anchor = '<ul class="anchor">
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_bank_time">입금 확인일시</label></th>
+            <th scope="row"><label for="od_receipt_time">입금 확인일시</label></th>
             <td>
                 <label for="od_bank_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_bank_chk" id="od_bank_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_bank_time.value=this.form.od_bank_chk.value; else this.form.od_bank_time.value = this.form.od_bank_time.defaultValue;"><br>
-                <input type="text" name="od_bank_time" value="<?php echo is_null_time($od['od_bank_time']) ? "" : $od['od_bank_time']; ?>" id="od_bank_time" class="frm_input" maxlength="19">
+                <input type="checkbox" name="od_bank_chk" id="od_bank_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_bank_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;"><br>
+                <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="od_receipt_time" class="frm_input" maxlength="19">
             </td>
         </tr>
         <?php } ########## 끝 ?>
@@ -529,39 +529,39 @@ $pg_anchor = '<ul class="anchor">
             <td><?php echo $od['od_escrow2']; ?></td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_receipt_hp"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
+            <th scope="row"><label for="od_receipt_amount"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
             <td>
-                <input type="text" name="od_receipt_hp" value="<?php echo $od['od_receipt_hp']; ?>" id="od_receipt_hp" class="frm_input"> 원
+                <input type="text" name="od_receipt_amount" value="<?php echo $od['od_receipt_amount']; ?>" id="od_receipt_amount" class="frm_input"> 원
                 <?php $pg_url = $g4['shop_cardpg'][$default['de_card_pg']];?>
                 <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="op_hp_time">휴대폰 결제일시</label></th>
+            <th scope="row"><label for="op_receipt_time">휴대폰 결제일시</label></th>
             <td>
                 <label for="od_card_chk">현재 시간으로 설정</label>
                 <!-- name od_card_chk 를 od_hp_chk 로 수정 - 지운아빠 2013-04-16 -->
-                <input type="checkbox" name="od_hp_chk" id="od_hp_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_hp_time.value=this.form.od_card_chk.value; else this.form.od_hp_time.value = this.form.od_hp_time.defaultValue;"><br>
-                <input type="text" name="od_hp_time" value="<?php echo is_null_time($od['od_hp_time']) ? "" : $od['od_hp_time']; ?>" id="op_hp_time" class="frm_input" size="19" maxlength="19">
+                <input type="checkbox" name="od_hp_chk" id="od_hp_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_hp_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;"><br>
+                <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="op_receipt_time" class="frm_input" size="19" maxlength="19">
             </td>
         </tr>
         <?php } ?>
 
         <?php if ($od['od_settle_case'] == '신용카드') { ?>
         <tr>
-            <th scope="row" class="sodr_sppay"><label for="od_receipt_card">신용카드 결제액</label></th>
+            <th scope="row" class="sodr_sppay"><label for="od_receipt_amount">신용카드 결제액</label></th>
             <td>
-                <input type="text" name="od_receipt_card" value="<?php echo $od['od_receipt_card']; ?>" id="od_receipt_card" class="frm_input" size="10"> 원
+                <input type="text" name="od_receipt_amount" value="<?php echo $od['od_receipt_amount']; ?>" id="od_receipt_amount" class="frm_input" size="10"> 원
                 <?php $card_url = $g4['shop_cardpg'][$default['de_card_pg']]; ?>
                 <a href="<?php echo $card_url; ?>" target="_blank">결제대행사</a>
             </td>
         </tr>
         <tr>
-            <th scope="row" class="sodr_sppay"><label for="od_card_time">카드 승인일시</label></th>
+            <th scope="row" class="sodr_sppay"><label for="od_receipt_time">카드 승인일시</label></th>
             <td>
                 <label for="od_card_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_card_time.value=this.form.od_card_chk.value; else this.form.od_card_time.value = this.form.od_card_time.defaultValue;"><br>
-                <input type="text" name="od_card_time" value="<?php echo is_null_time($od['od_card_time']) ? "" : $od['od_card_time']; ?>" id="od_card_time" class="frm_input" size="19" maxlength="19">
+                <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_card_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;"><br>
+                <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="od_receipt_time" class="frm_input" size="19" maxlength="19">
             </td>
         </tr>
         <tr>

@@ -185,26 +185,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         }
         else
         {
-            if ($lines[$i]['od_temp_bank'] > 0 || $lines[$i]['od_receipt_bank'] > 0)
-            {
-                //$s_receipt_way = "무통장입금";
-                $s_receipt_way = cut_str($lines[$i]['od_bank_account'],8,"");
-                $s_br = "<br />";
-            }
-
-            if ($lines[$i]['od_temp_card'] > 0 || $lines[$i]['od_receipt_card'] > 0)
-            {
-                // 미수금이 없고 카드결제를 하지 않았다면 카드결제를 선택후 무통장 입금한 경우임
-                if ($lines[$i]['misuamount'] <= 0 && $lines[$i]['od_receipt_card'] == 0)
-                    ; // 화면 출력하지 않음
-                else
-                {
-                    $s_receipt_way .= $s_br."카드";
-                    if ($lines[$i]['od_receipt_card'] == 0)
-                        $s_receipt_way .= "<span><span>(미승인)</span></span>";
-                    $s_br = "<br />";
-                }
-            }
+            $s_receipt_way = '결제수단없음';
+            $s_br = '<br />';
         }
 
         if ($lines[$i]['od_receipt_point'] > 0)

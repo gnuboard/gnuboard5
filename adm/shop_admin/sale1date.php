@@ -38,11 +38,11 @@ $lines = $lines1 = array();
 $sql = " select uq_id,
             SUBSTRING(od_time,1,10) as od_date,
             od_send_cost,
-            od_receipt_bank,
-            od_receipt_card,
+            od_settle_case,
+            od_receipt_amount,
             od_receipt_point,
             od_dc_amount,
-            (od_receipt_bank + od_receipt_card + od_receipt_point) as receiptamount,
+            (od_receipt_amount + od_receipt_point) as receiptamount,
             (od_refund_amount + od_cancel_card) as receiptcancel
        from {$g4['shop_order_table']}
       where SUBSTRING(od_time,1,10) between '$fr_date' and '$to_date'
@@ -67,8 +67,10 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $tot['orderamount']    += $row1['orderamount'];
     $tot['ordercancel']    += $row1['ordercancel'];
     $tot['dc']             += $row['od_dc_amount'];
-    $tot['receiptbank']    += $row['od_receipt_bank'];
-    $tot['receiptcard']    += $row['od_receipt_card'];
+    if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
+        $tot['receiptbank']    += $row['od_receipt_amount'];
+    if($row['od_settle_case'] == '신용카드')
+        $tot['receiptcard']    += $row['od_receipt_amount'];
     $tot['receiptpoint ']  += $row['od_receipt_point'];
     $tot['receiptamount']  += $row['receiptamount'];
     $tot['receiptcancel']  += $row['receiptcancel'];
@@ -127,8 +129,10 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
         $save['orderamount']   += $lines1[$i]['orderamount'];
         $save['ordercancel']   += $lines1[$i]['ordercancel'];
         $save['dc']            += $lines[$i]['od_dc_amount'];
-        $save['receiptbank']   += $lines[$i]['od_receipt_bank'];
-        $save['receiptcard']   += $lines[$i]['od_receipt_card'];
+        if($lines[$i]['od_settle_case'] == '무통장' || $lines[$i]['od_settle_case'] == '가상계좌' || $lines[$i]['od_settle_case'] == '계좌이체')
+            $save['receiptbank']   += $lines[$i]['od_receipt_amount'];
+        if($lines[$i]['od_settle_case'] == '신용카드')
+            $save['receiptcard']   += $lines[$i]['od_receipt_amount'];
         $save['receiptpoint']  += $lines[$i]['od_receipt_point'];
         $save['receiptcancel'] += $lines[$i]['receiptcancel'];
         $save['misu']          += $misu;
