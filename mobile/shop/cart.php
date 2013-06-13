@@ -35,6 +35,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                     a.ct_point,
                     a.ct_qty,
                     a.ct_status,
+                    a.ct_send_cost,
                     b.ca_id
                from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
               where a.uq_id = '$s_uq_id'
@@ -75,7 +76,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         }
 
         // 개별배송비 계산
-        if($default['de_send_cost_case'] == '개별') {
+        if($default['de_send_cost_case'] == '개별' && !$row['ct_send_cost']) {
             $it_send_cost += get_item_sendcost($row['it_id'], $sum['price'], $sum['qty']);
         }
 

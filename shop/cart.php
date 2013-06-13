@@ -72,6 +72,7 @@ include_once('./_head.php');
                     a.ct_point,
                     a.ct_qty,
                     a.ct_status,
+                    a.ct_send_cost,
                     b.ca_id,
                     b.ca_id2,
                     b.ca_id3
@@ -114,7 +115,7 @@ include_once('./_head.php');
         }
 
         // 개별배송비 계산
-        if($default['de_send_cost_case'] == '개별') {
+        if($default['de_send_cost_case'] == '개별' && !$row['ct_send_cost']) {
             $it_send_cost += get_item_sendcost($row['it_id'], $sum['price'], $sum['qty']);
         }
 
