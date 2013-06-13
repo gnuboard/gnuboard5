@@ -296,12 +296,10 @@ if(!$result) {
 }
 
 // 장바구니 배송비필드 추가
-$sql = " select ct_send_cost2 from {$g4['shop_cart_table']} limit 1 ";
+$sql = " select ct_send_cost from {$g4['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
-                    DROP `ct_send_cost`,
-                    ADD `ct_send_cost` INT(11) NOT NULL DEFAULT '0' AFTER `io_price`,
-                    ADD `ct_send_cost2` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ct_send_cost` ", false);
+                    ADD `ct_send_cost` TINYINT(11) NOT NULL DEFAULT '0' AFTER `io_price` ", false);
 }
 ?>

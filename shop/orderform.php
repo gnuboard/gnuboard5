@@ -140,6 +140,7 @@ setTimeout("init_pay_button();",300);
                     a.ct_point,
                     a.ct_qty,
                     a.ct_status,
+                    a.ct_send_cost,
                     b.ca_id,
                     b.ca_id2,
                     b.ca_id3
@@ -155,6 +156,7 @@ setTimeout("init_pay_button();",300);
     $result = sql_query($sql);
 
     $good_info = '';
+    $it_send_cost = 0;
 
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
@@ -193,6 +195,11 @@ setTimeout("init_pay_button();",300);
         $it_options = print_item_options($row['it_id'], $s_uq_id);
         if($it_options) {
             $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
+        }
+
+        // 개별배송비 계산
+        if($default['de_send_cost_case'] == '개별' && !$row['ct_send_cost']) {
+            $it_send_cost += get_item_sendcost($row['it_id'], $sum['price'], $sum['qty']);
         }
 
         $point       = $sum['point'];
@@ -250,18 +257,20 @@ setTimeout("init_pay_button();",300);
         // 배송비 계산
         if ($default['de_send_cost_case'] == '없음')
             $send_cost = 0;
-        else {
+        else if($default['de_send_cost_case'] == '상한') {
             // 배송비 상한 : 여러단계의 배송비 적용 가능
             $send_cost_limit = explode(";", $default['de_send_cost_limit']);
             $send_cost_list  = explode(";", $default['de_send_cost_list']);
             $send_cost = 0;
             for ($k=0; $k<count($send_cost_limit); $k++) {
                 // 총판매금액이 배송비 상한가 보다 작다면
-                if ($tot_sell_amount < $send_cost_limit[$k]) {
-                    $send_cost = $send_cost_list[$k];
+                if ($tot_sell_amount < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
+                    $send_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
                     break;
                 }
             }
+        } else {
+            $send_cost = $it_send_cost;
         }
     }
     ?>
