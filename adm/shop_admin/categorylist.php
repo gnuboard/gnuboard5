@@ -140,7 +140,6 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">추가</a> '; // 분류는 5단계까지만 가능
         else $s_add = '';
         $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'"><span class="sound_only">'.get_text($row['ca_name']).' </span>수정</a> ';
-        //$s_vie = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'"><span class="sound_only">'.get_text($row['ca_name']).' </span>이동</a> ';
 
         if ($is_admin == 'super')
             $s_del = '<a href="./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'" onclick="return delete_confirm();"><span class="sound_only">'.get_text($row['ca_name']).' </span>삭제</a> ';
@@ -155,7 +154,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <td class="td_num">
             <input type="hidden" name="ca_id[<?php echo $i; ?>]" value="<?php echo $row['ca_id']; ?>">
-            <?php echo $row['ca_id']; ?>
+            <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $row['ca_id']; ?>"><?php echo $row['ca_id']; ?></a>
         </td>
         <td class="td_scate"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required" size="<?php echo $s_level_input_size; ?>"></td>
         <td class="td_scate_admin">
