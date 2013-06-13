@@ -48,7 +48,7 @@ if ($is_admin)
 
 <div id="sct">
 
-    <?
+    <?php
     $nav_ca_id = $ca_id;
     include G4_SHOP_PATH.'/navigation1.inc.php';
 
