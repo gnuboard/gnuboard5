@@ -192,15 +192,17 @@ include_once('./_head.php');
     <?php
     // 총계 = 주문상품금액합계 + 배송비
     $tot_amount = $tot_sell_amount + $send_cost;
-    if ($tot_amount > 0) {
     ?>
 
     <div id="sod_bsk_cnt" class="sod_bsk_tot">
         <span>총계</span>
-        <strong><?php echo number_format($tot_amount); ?> 원 <?php echo number_format($tot_point); ?> 점</strong>
+        <strong><?php echo number_format($tot_amount); ?> 원</strong>
     </div>
 
-    <?php } ?>
+    <div id="sod_bsk_cnt" class="sod_bsk_tot">
+        <span>포인트</span>
+        <strong><?php echo number_format($tot_point); ?> 점</strong>
+    </div>
 
     <div id="sod_bsk_act">
         <?php if ($i == 0) { ?>
