@@ -49,7 +49,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </p>
 
         <div id="guest_privacy">
-            <?=$default[de_guest_privacy]?>
+            <?php echo $default['de_guest_privacy']; ?>
         </div>
 
         <label for="agree">개인정보수집에 대한 내용을 읽었으며 이에 동의합니다.</label>
@@ -69,10 +69,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 }
             }
 
-            //f.url.value = "<?=$g4[shop_path]?>/orderform.php";
-            //f.action = "<?=$g4[shop_path]?>/orderform.php";
-            f.url.value = "<?=$url?>";
-            f.action = "<?=$url?>";
+            f.url.value = "<?php echo $url; ?>";
+            f.action = "<?php echo $url; ?>";
             f.submit();
         }
         </script>
@@ -83,7 +81,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <fieldset id="mb_login_od">
         <legend>비회원 주문조회</legend>
 
-        <form name="forderinquiry" method="post" action="<?=urldecode($url)?>" autocomplete="off">
+        <form name="forderinquiry" method="post" action="<?php echo urldecode($url); ?>" autocomplete="off">
 
         <label for="od_id" class="od_id">주문서번호<strong class="sound_only"> 필수</strong></label>
         <input type="text" name="od_id" value="<? echo $od_id ?>" id="od_id" required class="frm_input required" size="20">

@@ -266,12 +266,12 @@ ob_end_clean();
     <!-- 배송소요기간 -->
     <input type="hidden" name="deli_term" value="03">
     <!-- 기타 파라메터 추가 부분 - Start - -->
-    <input type="hidden" name="param_opt_1"	 value="<?=$param_opt_1?>"/>
-    <input type="hidden" name="param_opt_2"	 value="<?=$param_opt_2?>"/>
-    <input type="hidden" name="param_opt_3"	 value="<?=$param_opt_3?>"/>
+    <input type="hidden" name="param_opt_1"	 value="<?php echo $param_opt_1; ?>"/>
+    <input type="hidden" name="param_opt_2"	 value="<?php echo $param_opt_2; ?>"/>
+    <input type="hidden" name="param_opt_3"	 value="<?php echo $param_opt_3; ?>"/>
     <!-- 기타 파라메터 추가 부분 - End - -->
     <!-- 화면 크기조정 부분 - Start - -->
-    <input type="hidden" name="tablet_size"	 value="<?=$tablet_size?>"/>
+    <input type="hidden" name="tablet_size"	 value="<?php echo $tablet_size; ?>"/>
     <!-- 화면 크기조정 부분 - End - -->
     <!--
         사용 카드 설정

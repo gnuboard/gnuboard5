@@ -118,26 +118,26 @@ function imageview(id, w, h)
     <ul id="qnb">
         <?php if(defined('G4_USE_SHOP')) { ?>
         <li>
-            <a href="<?=G4_ADMIN_URL?>/shop_admin/orderlist.php">
-                <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sodr.jpg" alt="" width="40" height="40">
+            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/orderlist.php">
+                <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sodr.jpg" alt="" width="40" height="40">
                 주문관리
             </a>
         </li>
         <li>
-            <a href="<?=G4_ADMIN_URL?>/shop_admin/itemlist.php">
-                <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sit.jpg" alt="" width="40" height="40">
+            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemlist.php">
+                <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sit.jpg" alt="" width="40" height="40">
                 상품관리
             </a>
         </li>
         <li>
-            <a href="<?=G4_ADMIN_URL?>/shop_admin/itemqalist.php">
-                <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sqna.jpg" alt="" width="40" height="40">
+            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemqalist.php">
+                <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sqna.jpg" alt="" width="40" height="40">
                 상품문의
             </a>
         </li>
         <li>
-            <a href="<?=G4_ADMIN_URL?>/shop_admin/itempslist.php">
-                <img src="<?=G4_ADMIN_URL?>/shop_admin/img/qnb_sps.jpg" alt="" width="40" height="40">
+            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itempslist.php">
+                <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sps.jpg" alt="" width="40" height="40">
                 사용후기
             </a>
         </li>

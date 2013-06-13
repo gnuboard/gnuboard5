@@ -495,7 +495,7 @@ echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
 ?>
 <script>
     if (confirm("계속 입력하시겠습니까?"))
-        //location.href = "<?="./itemform.php?it_id=$it_id&amp;sort1=$sort1&amp;sort2=$sort2&amp;sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page"?>";
+        //location.href = "<?php echo "./itemform.php?it_id=$it_id&amp;sort1=$sort1&amp;sort2=$sort2&amp;sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page"?>";
         location.href = "<?php echo "./itemform.php?$qstr"; ?>";
     else
         location.href = "<?php echo "./itemlist.php?$qstr"; ?>";
