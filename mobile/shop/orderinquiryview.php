@@ -33,7 +33,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <section id="sod_fin_list">
         <h2>주문하신 상품</h2>
         <span class="sound_only">상품 상태 설명</span>
-        <dl>
+        <dl id="sod_fin_legend">
             <dt>주문</dt>
             <dd>주문이 접수되었습니다.</dd>
             <dt>준비</dt>
@@ -127,48 +127,36 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         $tot_amount = $tot_sell_amount + $send_cost - $tot_cp_amount - $od_coupon;
         ?>
 
-        <div id="sod_bsk_dvr" class="sod_bsk_tot">
-            <span>주문총액</span>
-            <strong><?php echo number_format($tot_sell_amount); ?> 원</strong>
-        </div>
+        <dl id="sod_bsk_tot">
+            <dt class="sod_bsk_dvr">주문총액</dt>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($tot_sell_amount); ?> 원</strong></dd>
 
-        <?php if($tot_cp_amount > 0) { ?>
-        <div id="sod_bsk_dvr" class="sod_bsk_tot">
-            <span>상품할인</span>
-            <strong><?php echo number_format($tot_cp_amount); ?> 원</strong>
-        </div>
-        <?php } ?>
+            <?php if($tot_cp_amount > 0) { ?>
+            <dt class="sod_bsk_dvr">상품할인</dt>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($tot_cp_amount); ?> 원</strong></dd>
+            <?php } ?>
 
-        <?php if($od_coupon > 0) { ?>
-        <div id="sod_bsk_dvr" class="sod_bsk_tot">
-            <span>결제할인</span>
-            <strong><?php echo number_format($od_coupon); ?> 원</strong>
-        </div>
-        <?php } ?>
+            <?php if($od_coupon > 0) { ?>
+            <dt class="sod_bsk_dvr">결제할인</dt>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od_coupon); ?> 원</strong></dd>
+            <?php } ?>
 
-        <?php if ($org_send_cost > 0) { ?>
-        <div id="sod_bsk_dvr" class="sod_bsk_tot">
-            <span>배송비</span>
-            <strong><?php echo number_format($org_send_cost); ?> 원</strong>
-        </div>
-        <?php } ?>
+            <?php if ($org_send_cost > 0) { ?>
+            <dt class="sod_bsk_dvr">배송비</dt>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($org_send_cost); ?> 원</strong></dd>
+            <?php } ?>
 
-        <?php if($send_coupon > 0) { ?>
-        <div id="sod_bsk_dvr" class="sod_bsk_tot">
-            <span>배송비할인</span>
-            <strong><?php echo number_format($send_coupon); ?> 원</strong>
-        </div>
-        <?php } ?>
+            <?php if($send_coupon > 0) { ?>
+            <dt class="sod_bsk_dvr">배송비할인</dt>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_coupon); ?> 원</strong></dd>
+            <?php } ?>
 
-        <div id="sod_bsk_cnt" class="sod_bsk_tot">
-            <span>총계</span>
-            <strong><?php echo number_format($tot_amount); ?> 원</strong>
-        </div>
+            <dt class="sod_bsk_cnt">총계</dt>
+            <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_amount); ?> 원</strong></dd>
 
-        <div id="sod_bsk_cnt" class="sod_bsk_tot">
-            <span>포인트</span>
-            <strong><?php echo number_format($tot_point); ?> 점</strong>
-        </div>
+            <dt class="sod_bsk_point">포인트</dt>
+            <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+        </dl>
     </section>
 
     <div id="sod_fin_view">

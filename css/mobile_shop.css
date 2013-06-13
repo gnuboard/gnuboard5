@@ -313,10 +313,13 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sod_bsk_list #mod_option_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
 html.no-overflowscrolling #mod_option_frm {height:auto;max-height:10000px !important}
 
-#sod_bsk_dvr {padding:0.3em 0 1em;border-bottom:1px solid #e9e9e9}
-#sod_bsk_cnt {margin:0 0 1em;padding:1em 0;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
-.sod_bsk_tot span {display:inline-block;width:64%;text-align:right}
-.sod_bsk_tot strong {display:inline-block;width:35%;text-align:right}
+#sod_bsk_tot {margin:0;padding:1em;border:1px solid #e9e9e9;background:#f5f6fa;zoom:1}
+#sod_bsk_tot:after {display:block;visibility:hidden;clear:both;content:""}
+#sod_bsk_tot dt, #sod_bsk_tot dd {float:left;padding:1em 0;border-bottom:1px solid #e9e9e9}
+#sod_bsk_tot dt {padding-left:2%;width:48%;font-weight:bold}
+#sod_bsk_tot dd {margin:0;padding-right:2%;width:47%;text-align:right}
+.sod_bsk_cnt {background:#333;color:#fff}
+.sod_bsk_point {border-bottom:0 !important}
 
 #sod_bsk_act {margin:0 0 2em;text-align:center}
 #sod_bsk_act p {margin:0}
@@ -362,13 +365,13 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 
 /* 주문상세내역 */
 #sod_fin {}
-#sod_fin_list dl {padding:0.6em 0.3em 0;border:1px solid #e9e9e9;zoom:1}
-#sod_fin_list dl:after {display:block;visibility:hidden;clear:both;content:''}
-#sod_fin_list dt {clear:both;float:left;margin:0 0 0.3em;width:50px;font-weight:bold}
-#sod_fin_list dd {float:left;margin:0}
+#sod_fin_legend {margin:1em;padding:0.6em 0.3em 0;border:1px solid #e9e9e9;zoom:1}
+#sod_fin_legend:after {display:block;visibility:hidden;clear:both;content:''}
+#sod_fin_legend dt {clear:both;float:left;margin:0 0 0.3em;width:50px;font-weight:bold}
+#sod_fin_legend dd {float:left;margin:0}
 
 #sod_ul {margin:0 0 0.5em;padding:0;border-top:1px solid #565e60;list-style:none}
-#sod_ul li {border-bottom:1px solid #565e60}
+#sod_ul li {padding:0 1em;border-bottom:1px solid #565e60}
 #sod_ul table {margin:0}
 #sod_ul th {text-align:center}
 #sod_ul td {background:#fff;color:#000}

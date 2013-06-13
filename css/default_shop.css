@@ -638,10 +638,13 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 #sod_bsk_list {position:relative}
 #sod_bsk_list #mod_option_frm {z-index:10000;position:absolute;top:0;left:99px;padding:20px;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
 
-#sod_bsk_dvr {padding:5px 0 12px;border-bottom:1px solid #e9e9e9}
-#sod_bsk_cnt {margin:0 0 10px;padding:12px 0 12px;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
-.sod_bsk_tot span {display:inline-block;width:64%;text-align:right}
-.sod_bsk_tot strong {display:inline-block;width:35%;text-align:right}
+#sod_bsk_tot {margin:0;padding:10px;border:1px solid #e9e9e9;background:#f5f6fa;zoom:1}
+#sod_bsk_tot:after {display:block;visibility:hidden;clear:both;content:""}
+#sod_bsk_tot dt, #sod_bsk_tot dd {float:left;padding:12px 0;border-bottom:1px solid #e9e9e9}
+#sod_bsk_tot dt {padding-left:2%;width:48%;font-weight:bold}
+#sod_bsk_tot dd {margin:0;padding-right:2%;width:47%;text-align:right}
+.sod_bsk_cnt {background:#333;color:#fff}
+.sod_bsk_point {border-bottom:0 !important}
 
 #sod_bsk_act {text-align:center}
 #sod_bsk_act p {margin:0 0 10px}
@@ -684,10 +687,12 @@ input.required:focus {border:1px solid #b8c9c2;background:#21272e !important;col
 
 /* 주문상세내역 */
 #sod_fin {}
-#sod_fin_list dl {padding:7px 5px 0;border:1px solid #e9e9e9;zoom:1}
-#sod_fin_list dl:after {display:block;visibility:hidden;clear:both;content:''}
-#sod_fin_list dt {clear:both;float:left;margin:0 0 5px;width:50px;font-weight:bold}
-#sod_fin_list dd {float:left;margin:0}
+#sod_fin_legend {padding:7px 5px 0;border:1px solid #e9e9e9;zoom:1}
+#sod_fin_legend:after {display:block;visibility:hidden;clear:both;content:''}
+#sod_fin_legend dt {clear:both;float:left;margin:0 0 5px;width:50px;font-weight:bold}
+#sod_fin_legend dd {float:left;margin:0}
+
+#sod_fin #sod_bsk_tot {border-bottom:0 !important}
 
 #sod_ul {margin:10px 0;padding:0;border-top:1px solid #565e60;list-style:none}
 #sod_ul li {border-bottom:1px solid #565e60}
