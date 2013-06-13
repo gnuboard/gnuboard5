@@ -155,10 +155,10 @@ $colspan = 15;
             $s_mod = '';
             $s_del = '';
         } else {
-            $s_mod = '<li class="sel_li"><a href="./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$row['mb_id'].'" class="sel_a">수정</a></li>';
-            //$s_del = '<li class="sel_li"><a href="javascript:post_delete(\'member_delete.php\', \''.$row['mb_id'].'\');" class="sel_a">삭제</a></li>';
+            $s_mod = '<a href="./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$row['mb_id'].'">수정</a>';
+            //$s_del = '<a href="javascript:post_delete(\'member_delete.php\', \''.$row['mb_id'].'\');">삭제</a>';
         }
-        $s_grp = '<li class="sel_li"><a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'" class="sel_a">그룹</a></li>';
+        $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">그룹</a>';
 
         $leave_date = $row['mb_leave_date'] ? $row['mb_leave_date'] : date('Ymd', G4_SERVER_TIME);
         $intercept_date = $row['mb_intercept_date'] ? $row['mb_intercept_date'] : date('Ymd', G4_SERVER_TIME);
@@ -199,14 +199,9 @@ $colspan = 15;
         <td colspan="6" class="td_addr"><?php echo $address; ?></td>
         <td><?php echo substr($row['mb_today_login'],2,8); ?></td>
         <td class="td_bignum"><a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
-        <td class="td_mng sv_use" rowspan="2">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <?php echo $s_mod ?>
-                    <?php echo $s_grp ?>
-                </ul>
-            </div>
+        <td class="td_smallmng" rowspan="2">
+            <?php echo $s_mod ?>
+            <?php echo $s_grp ?>
         </td>
     </tr>
     <tr <?php echo $tr_bg; ?>>

@@ -172,13 +172,8 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
         <td class="td_chk"><input type="checkbox" name="it_type3[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type3'] ? 'checked' : ''); ?>></td>
         <td class="td_chk"><input type="checkbox" name="it_type4[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type4'] ? 'checked' : ''); ?>></td>
         <td class="td_chk"><input type="checkbox" name="it_type5[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type5'] ? 'checked' : ''); ?>></td>
-        <td class="td_mng sv_use">
-        <div class="sel_wrap">
-            <button type="button" class="sel_btn">관리하기</button>
-            <ul class="sel_ul">
-                <li class="sel_li"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a"><span class="sound_only"><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?> </span>수정</a></li>
-            </ul>
-        </div>
+        <td class="td_smallmng">
+            <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a"><span class="sound_only"><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?> </span>수정</a>
          </td>
     </tr>
     <?php

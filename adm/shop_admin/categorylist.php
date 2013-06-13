@@ -137,13 +137,13 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         $s_level = '<label for="ca_name_'.$i.'" '.$class.'><span class="sound_only">'.$p_ca_name.'</span>'.($level+1).'단 분류</label>';
         $s_level_input_size = 40 - $level *5; // 하위 분류일 수록 입력칸 넓이 작아짐 - 지운아빠 2013-04-02
 
-        if ($level+2 < 6) $s_add = '<li class="sel_li"><a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'" class="sel_a">'.($level+2).'단 추가</a></li>'; // 분류는 5단계까지만 가능
+        if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'" class="sel_a">추가</a> '; // 분류는 5단계까지만 가능
         else $s_add = '';
-        $s_upd = '<li class="sel_li"><a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'" class="sel_a"><span class="sound_only">'.get_text($row['ca_name']).' </span>수정</a></li>';
-        $s_vie = '<li class="sel_li"><a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'" class="sel_a"><span class="sound_only">'.get_text($row['ca_name']).' </span>이동</a></li>';
+        $s_upd = '<a href="./categoryform.php?w=u&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'" class="sel_a"><span class="sound_only">'.get_text($row['ca_name']).' </span>수정</a> ';
+        //$s_vie = '<a href="'.G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'].'" class="sel_a"><span class="sound_only">'.get_text($row['ca_name']).' </span>이동</a> ';
 
         if ($is_admin == 'super')
-            $s_del = '<li class="sel_li"><a href="./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'" class="sel_a" onclick="return delete_confirm();"><span class="sound_only">'.get_text($row['ca_name']).' </span>삭제</a></li>';
+            $s_del = '<a href="./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'" class="sel_a" onclick="return delete_confirm();"><span class="sound_only">'.get_text($row['ca_name']).' </span>삭제</a> ';
 
         // 해당 분류에 속한 상품의 갯수
         $sql1 = " select COUNT(*) as cnt from {$g4['shop_item_table']}
@@ -170,16 +170,11 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td class="td_chk"><input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" <?php echo ($row['ca_use'] ? "checked" : ""); ?>></td>
         <td class="td_bignum"><input type="text" name="ca_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['ca_stock_qty']; ?>" class="frm_input" size="6" style="text-align:right"></td>
         <td class="td_num"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
-        <td class="td_mng sv_use">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <?php echo $s_add; ?>
-                    <?php echo $s_vie; ?>
-                    <?php echo $s_upd; ?>
-                    <?php echo $s_del; ?>
-                </ul>
-            </div>
+        <td class="td_mng">
+            <?php echo $s_add; ?>
+            <?php echo $s_vie; ?>
+            <?php echo $s_upd; ?>
+            <?php echo $s_del; ?>
         </td>
     </tr>
     <?php }

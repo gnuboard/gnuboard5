@@ -62,14 +62,9 @@ $result = sql_query($sql);
         <td class="td_num"><?php echo $num; ?></td>
         <td><?php echo stripslashes($row['fa_subject']); ?></td>
         <td class="td_num"><?php echo $row['fa_order']; ?></td>
-        <td class="td_mng sv_use">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <li class="sel_li"><a href="./faqform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" class="sel_a"><span class="sound_only"><?php echo stripslashes($row['fa_subject']); ?> </span>수정</a></li>
-                    <li class="sel_li"><a href="javascript:del('./faqformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>');" class="sel_a"><span class="sound_only"><?php echo stripslashes($row['fa_subject']); ?> </span>삭제</a></li>
-                </ul>
-            </div>
+        <td class="td_smallmng">
+            <a href="./faqform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fa_subject']); ?> </span>수정</a>
+            <a href="javascript:del('./faqformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>');"><span class="sound_only"><?php echo stripslashes($row['fa_subject']); ?> </span>삭제</a>
         </td>
     </tr>
 

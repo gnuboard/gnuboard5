@@ -115,8 +115,8 @@ $colspan = 15;
     <tbody>
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $one_update = '<li class="sel_li"><a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'" class="sel_a">수정</a></li>';
-        $one_copy = '<li class="sel_li"><a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy sel_a" target="win_board_copy">복사</a></li>';
+        $one_update = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
+        $one_copy = '<a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy" target="win_board_copy">복사</a>';
     ?>
 
     <tr>
@@ -156,15 +156,7 @@ $colspan = 15;
                 <option value="mobile"<?php echo get_selected($row['bo_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
-        <td class="td_mng sv_use">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <?php echo $one_update ?>
-                    <?php echo $one_copy ?>
-                </ul>
-            </div>
-        </td>
+        <td class="td_smallmng"><?php echo $one_update ?> <?php echo $one_copy ?></td>
     </tr>
     <?php
     }
