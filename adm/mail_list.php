@@ -29,7 +29,7 @@ $colspan = 6;
         현재 등록된 메일은 총 <?php echo $total_count ?>건입니다.
     </p>
 
-    <div id="btn_add">
+    <div class="btn_add">
         <a href="./mail_form.php" id="mail_add">메일내용추가</a>
     </div>
 

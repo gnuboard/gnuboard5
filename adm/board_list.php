@@ -79,10 +79,22 @@ $colspan = 15;
     <p>여러개의 게시판 설정을 한번에 바꾸실 때는 게시판 체크기능을 이용하세요.</p>
 
     <?php if ($is_admin == 'super') { ?>
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./board_form.php" id="bo_add">게시판 추가</a>
     </div>
     <?php } ?>
+
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link('a.gr_id') ?>그룹<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('bo_table') ?>TABLE<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('bo_skin', '', 'desc') ?>스킨<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('bo_mobile_skin', '', 'desc') ?>모바일<span class="sound_only"> 스킨 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('bo_subject') ?>제목<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('bo_use_sns') ?>SNS<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('bo_use_search') ?>검색사용<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('bo_show_menu') ?>메뉴보임<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('bo_order') ?>출력순서<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
 
     <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -94,20 +106,23 @@ $colspan = 15;
     <table class="tbl_bo_list">
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 게시판 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col"><?php echo subject_sort_link('a.gr_id') ?>그룹</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_table') ?>TABLE</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_skin', '', 'desc') ?>스킨</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_mobile_skin', '', 'desc') ?>모바일<br>스킨</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_subject') ?>제목</a></th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">게시판 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
+        <th scope="col">그룹</th>
+        <th scope="col">TABLE</th>
+        <th scope="col">스킨</th>
+        <th scope="col">모바일<br>스킨</th>
+        <th scope="col">제목</th>
         <th scope="col">읽기P<span class="sound_only">포인트</span></th>
         <th scope="col">쓰기P<span class="sound_only">포인트</span></th>
         <th scope="col">댓글P<span class="sound_only">포인트</span></th>
         <th scope="col">다운P<span class="sound_only">포인트</span></th>
-        <th scope="col"><?php echo subject_sort_link('bo_use_sns') ?>SNS<br>사용</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_use_search') ?>검색<br>사용</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_show_menu') ?>메뉴<br>보임</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_order') ?>출력<br>순서</a></th>
+        <th scope="col">SNS<br>사용</th>
+        <th scope="col">검색<br>사용</th>
+        <th scope="col">메뉴<br>보임</th>
+        <th scope="col">출력<br>순서</th>
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
@@ -115,13 +130,14 @@ $colspan = 15;
     <tbody>
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $one_update = '<li class="sel_li"><a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'" class="sel_a">수정</a></li>';
-        $one_copy = '<li class="sel_li"><a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy sel_a" target="win_board_copy">복사</a></li>';
+        $one_update = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
+        $one_copy = '<a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy" target="win_board_copy">복사</a>';
     ?>
 
     <tr>
         <td>
-            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>" title="<?php echo get_text($row['bo_subject']) ?> 게시판선택">
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['bo_subject']) ?></label>
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td>
             <?php if ($is_admin == 'super'){ ?>
@@ -156,15 +172,7 @@ $colspan = 15;
                 <option value="mobile"<?php echo get_selected($row['bo_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
-        <td class="td_mng sv_use">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <?php echo $one_update ?>
-                    <?php echo $one_copy ?>
-                </ul>
-            </div>
-        </td>
+        <td><?php echo $one_update ?> <?php echo $one_copy ?></td>
     </tr>
     <?php
     }

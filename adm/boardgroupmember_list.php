@@ -70,7 +70,16 @@ $colspan = 7;
 </form>
 
 <section class="cbox">
-    <h2><?php echo $gr['gr_subject'] ?> 그룹에 접근가능한 회원 목록 (그룹아이디:<?php echo $gr['gr_id'] ?>)</h2>
+    <h2><?php echo $gr['gr_subject'] ?> 그룹 접근가능 회원 목록 (그룹아이디:<?php echo $gr['gr_id'] ?>)</h2>
+
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link('b.mb_id', 'gr_id='.$gr_id) ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('b.mb_name', 'gr_id='.$gr_id) ?>이름<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('b.mb_nick', 'gr_id='.$gr_id) ?>별명<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('b.mb_today_login', 'gr_id='.$gr_id) ?>최종접속<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('a.gm_datetime', 'gr_id='.$gr_id) ?>처리일시<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <form name="fboardgroupmember" id="fboardgroupmember" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);" method="post">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
@@ -83,13 +92,16 @@ $colspan = 7;
     <table>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 접근가능회원 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">접근가능회원 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col">그룹</th>
-        <th scope="col"><?php echo subject_sort_link('b.mb_id', 'gr_id='.$gr_id) ?>회원아이디</a></th>
-        <th scope="col"><?php echo subject_sort_link('b.mb_name', 'gr_id='.$gr_id) ?>이름</a></th>
-        <th scope="col"><?php echo subject_sort_link('b.mb_nick', 'gr_id='.$gr_id) ?>별명</a></th>
-        <th scope="col"><?php echo subject_sort_link('b.mb_today_login', 'gr_id='.$gr_id) ?>최종접속</a></th>
-        <th scope="col"><?php echo subject_sort_link('a.gm_datetime', 'gr_id='.$gr_id) ?>처리일시</a></th>
+        <th scope="col">회원아이디</th>
+        <th scope="col">이름</th>
+        <th scope="col">별명</th>
+        <th scope="col">최종접속</th>
+        <th scope="col">처리일시</th>
     </tr>
     </thead>
     <tbody>
@@ -108,7 +120,10 @@ $colspan = 7;
         $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
     ?>
     <tr>
-        <td class="td_chk"><input type="checkbox" name="chk[]" value="<?php echo $row['gm_id'] ?>" id="chk_<?php echo $i ?>" title="<?php echo $row['mb_nick'] ?> 회원 선택"></td>
+        <td class="td_chk">
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_nick'] ?> 회원</label>
+            <input type="checkbox" name="chk[]" value="<?php echo $row['gm_id'] ?>" id="chk_<?php echo $i ?>">
+        </td>
         <td class="td_grid"><?php echo $group ?></td>
         <td class="td_mbid"><?php echo $row['mb_id'] ?></td>
         <td class="td_mbname"><?php echo $row['mb_name'] ?></td>

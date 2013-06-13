@@ -73,6 +73,11 @@ $colspan = 5;
     <h2>설정된 관리권한 내역</h2>
     <p>권한 <strong>r</strong>은 읽기권한, <strong>w</strong>는 쓰기권한, <strong>d</strong>는 삭제권한입니다.</p>
 
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link('a.mb_id') ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_nick') ?>별명<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
     <form name="fauthlist" id="fauthlist" method="post" action="./auth_list_delete.php" onsubmit="return fauthlist_submit(this);">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
@@ -83,9 +88,12 @@ $colspan = 5;
     <table>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 권한설정 내역 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col"><?php echo subject_sort_link('a.mb_id') ?>회원아이디</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_nick') ?>별명</a></th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
+        <th scope="col">회원아이디</th>
+        <th scope="col">별명</th>
         <th scope="col">메뉴</th>
         <th scope="col">권한</th>
     </tr>
@@ -109,7 +117,8 @@ $colspan = 5;
             <td class="td_chk">
                 <input type="hidden" name="au_menu[<?php echo $i ?>]" value="<?php echo $row['au_menu'] ?>">
                 <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>">
-                <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>" title="<?php echo $row['mb_nick'] ?>님의 권한체크">
+                <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_nick'] ?>님 권한</label>
+                <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
             </td>
             <td class="td_mbid"><a href="?sfl=a.mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
             <td class="td_auth_mbnick"><?php echo $mb_nick ?></td>
