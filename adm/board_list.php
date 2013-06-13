@@ -172,7 +172,7 @@ $colspan = 15;
                 <option value="mobile"<?php echo get_selected($row['bo_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
-        <td><?php echo $one_update ?> <?php echo $one_copy ?></td>
+        <td class="td_smallmng"><?php echo $one_update ?> <?php echo $one_copy ?></td>
     </tr>
     <?php
     }

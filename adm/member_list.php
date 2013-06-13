@@ -218,7 +218,10 @@ $colspan = 15;
         <td colspan="6" class="td_addr"><?php echo $address; ?></td>
         <td><?php echo substr($row['mb_today_login'],2,8); ?></td>
         <td class="td_bignum"><a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
-        <td rowspan="2"><?php echo $s_mod ?><br><?php echo $s_grp ?></td>
+        <td class="td_smallmng" rowspan="2">
+            <?php echo $s_mod ?>
+            <?php echo $s_grp ?>
+        </td>
     </tr>
     <tr <?php echo $tr_bg; ?>>
         <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>

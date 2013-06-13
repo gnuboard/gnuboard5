@@ -44,15 +44,10 @@ $result = sql_query($sql);
         <td><?php echo stripslashes($row['dl_company']); ?></td>
         <td class="td_bignum"><?php echo $row['dl_tel']; ?></td>
         <td class="td_num"><?php echo $row['dl_order']; ?></td>
-        <td class="td_mng sv_use">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <li class="sel_li"><a href="<?php echo $row['dl_url']; ?>" target="_blank" class="sel_a"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>홈페이지</a></li>
-                    <li class="sel_li"><a href="./deliverycodeform.php?w=u&amp;dl_id=<?php echo $row['dl_id']; ?>" class="sel_a"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>수정</a></li>
-                    <li class="sel_li"><a href="./deliverycodeformupdate.php?w=d&amp;dl_id=<?php echo $row['dl_id']; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>삭제</a></li>
-                </ul>
-            </div>
+        <td class="td_smallmng">
+            <a href="<?php echo $row['dl_url']; ?>" target="_blank"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>홈페이지</a>
+            <a href="./deliverycodeform.php?w=u&amp;dl_id=<?php echo $row['dl_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>수정</a>
+            <a href="./deliverycodeformupdate.php?w=d&amp;dl_id=<?php echo $row['dl_id']; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>삭제</a>
         </td>
     </tr>
     <?php

@@ -195,14 +195,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?php echo number_format($lines[$i]['ct_sub_amount']); ?></td>
         <td><?php echo number_format($lines[$i]['ct_sub_point']); ?></td>
         <td><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=ct_status&amp;search=<?php echo $lines[$i]['ct_status']; ?>"><?php echo $lines[$i]['ct_status']; ?></a></td>
-        <td class="td_mng sv_use">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <li class="sel_li"><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>" class="sel_a">주문수정</a></li>
-                </ul>
-            </div>
-        </td>
+        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>">주문수정</a></td>
     </tr>
     <?php
     }

@@ -279,35 +279,21 @@ setTimeout("init_pay_button();",300);
 
     <?php if ($goods_count) $goods .= ' 외 '.$goods_count.'건'; ?>
 
-    <div id="sod_bsk_sell" class="sod_bsk_tot">
-        <span>주문</span>
-        <strong><?php echo number_format($tot_sell_amount); ?> 원</strong>
-    </div>
-
-    <div id="sod_bsk_coupon" class="sod_bsk_tot">
-        <span>쿠폰</span>
-        <strong id="ct_tot_coupon">0 원</strong>
-    </div>
-
-    <div id="sod_bsk_dvr" class="sod_bsk_tot">
-        <span>배송비</span>
-        <strong><?php echo number_format($send_cost); ?> 원</strong>
-    </div>
-
-    <?php
-    // 총계 = 주문상품금액합계 + 배송비
-    $tot_amount = $tot_sell_amount + $send_cost;
-    ?>
-
-    <div id="sod_bsk_cnt" class="sod_bsk_tot">
-        <span>총계</span>
-        <strong id="ct_tot_amount"><?php echo number_format($tot_amount); ?> 원</strong>
-    </div>
-
-    <div id="sod_bsk_point" class="sod_bsk_tot">
-        <span><?php echo $default['de_mileage_use'] ? '마일리지' : '포인트'; ?></span>
-        <strong><?php echo number_format($tot_point); ?> 점</strong>
-    </div>
+    <dl id="sod_bsk_tot">
+        <dt class="sod_bsk_sell">주문</dt>
+        <dd class="sod_bsk_sell"><strong><?php echo number_format($tot_sell_amount); ?> 원</strong></dd>
+        <dt class="sod_bsk_coupon">쿠폰할인</dt>
+        <dd class="sod_bsk_coupon"><strong id="ct_tot_coupon">0 원</strong></dd>
+        <dt class="sod_bsk_dvr">배송비</dt>
+        <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
+        <dt class="sod_bsk_cnt">총계</dt>
+        <dd class="sod_bsk_cnt">
+            <?php $tot_amount = $tot_sell_amount + $send_cost; // 총계 = 주문상품금액합계 + 배송비 ?>
+            <strong id="ct_tot_amount"><?php echo number_format($tot_amount); ?> 원</strong>
+        </dd>
+        <dt class="sod_bsk_point"><?php echo $default['de_mileage_use'] ? '마일리지' : '포인트'; ?></dt>
+        <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+    </dl>
 
     <input type="hidden" name="od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="org_od_amount"    value="<?php echo $tot_sell_amount; ?>">

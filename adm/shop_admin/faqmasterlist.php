@@ -60,15 +60,10 @@ $result = sql_query($sql);
         <td class="td_num"><?php echo $row['fm_id']; ?></td>
         <td><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>"><?php echo stripslashes($row['fm_subject']); ?></a></td>
         <td class="td_num"><?php echo $cnt; ?></td>
-        <td class="td_mng sv_use">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <li class="sel_li"><a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>" class="sel_a"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a></li>
-                    <li class="sel_li"><a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>" class="sel_a"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>수정</a></li>
-                    <li class="sel_li"><a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>삭제</a></li>
-                </ul>
-            </div>
+        <td class="td_smallmng">
+            <a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a>
+            <a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>수정</a>
+            <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>삭제</a>
         </td>
     </tr>
     <?php
