@@ -73,24 +73,26 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
 }
 
 // 게시글보기 썸네일 생성
-function get_view_thumbnail($contents)
+function get_view_thumbnail($contents, $thumb_width=0)
 {
     global $board, $config;
-    $dvc_width = intval($_COOKIE['device_width']);
 
-    if(G4_IS_MOBILE && $dvc_width) {
-        // 썸네일 width 설정
-        $thumb_width = 320;
+    if (!$thumb_width) {
+        $dvc_width = intval($_COOKIE['device_width']);
+        if(G4_IS_MOBILE && $dvc_width) {
+            // 썸네일 width 설정
+            $thumb_width = 320;
 
-        if($dvc_width >= 1000) {
-            return $contents;
-        } else if($dvc_width >= 760 && $dvc_width < 1000) {
-            $thumb_width = 760;
-        } else if($dvc_width >= 480 && $dvc_width < 760) {
-            $thumb_width = 480;
+            if($dvc_width >= 1000) {
+                return $contents;
+            } else if($dvc_width >= 760 && $dvc_width < 1000) {
+                $thumb_width = 760;
+            } else if($dvc_width >= 480 && $dvc_width < 760) {
+                $thumb_width = 480;
+            }
+        } else {
+            $thumb_width = $board['bo_image_width'];
         }
-    } else {
-        $thumb_width = $board['bo_image_width'];
     }
 
     // $contents 중 img 태그 추출
