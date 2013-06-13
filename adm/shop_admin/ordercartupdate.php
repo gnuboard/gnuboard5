@@ -36,12 +36,12 @@ switch($_POST['act_button'])
         break;
 }
 
-$cnt = count($_POST['ct_id']);
+$cnt = count($_POST['ct_chk']);
 for ($i=0; $i<$cnt; $i++)
 {
     if ($_POST['ct_chk'][$i])
     {
-        $ct_id = $_POST['ct_id'][$i];
+        $ct_id = $_POST['ct_chk'][$i];
 
         $sql = " select * from {$g4['shop_cart_table']}
                   where uq_id = '$uq_id'
