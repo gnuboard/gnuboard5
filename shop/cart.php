@@ -177,32 +177,25 @@ include_once('./_head.php');
     </table>
 
     <?php
-    // 배송비가 0 보다 크다면 (있다면)
-    if ($send_cost > 0)
-    {
+    $tot_amount = $tot_sell_amount + $send_cost; // 총계 = 주문상품금액합계 + 배송비
+    if ($tot_amount > 0 || $send_cost > 0) {
     ?>
+    <dl id="sod_bsk_tot">
+        <?php if ($send_cost > 0) { // 배송비가 0 보다 크다면 (있다면) ?>
+        <dt class="sod_bsk_dvr">배송비</dt>
+        <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
+        <?php } ?>
 
-    <div id="sod_bsk_dvr" class="sod_bsk_tot">
-        <span>배송비</span>
-        <strong><?php echo number_format($send_cost); ?> 원</strong>
-    </div>
+        <?php
+        if ($tot_amount > 0) {
+        ?>
 
+        <dt class="sod_bsk_cnt">총계</dt>
+        <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_amount); ?> 원 <?php echo number_format($tot_point); ?> 점</strong></dd>
+        <?php } ?>
+
+    </dl>
     <?php } ?>
-
-    <?php
-    // 총계 = 주문상품금액합계 + 배송비
-    $tot_amount = $tot_sell_amount + $send_cost;
-    ?>
-
-    <div id="sod_bsk_cnt" class="sod_bsk_tot">
-        <span>총계</span>
-        <strong><?php echo number_format($tot_amount); ?> 원</strong>
-    </div>
-
-    <div id="sod_bsk_cnt" class="sod_bsk_tot">
-        <span>포인트</span>
-        <strong><?php echo number_format($tot_point); ?> 점</strong>
-    </div>
 
     <div id="sod_bsk_act">
         <?php if ($i == 0) { ?>
