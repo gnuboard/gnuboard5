@@ -249,8 +249,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td class="td_sodr_nonpay"><?php echo number_format($lines[$i]['misu']); ?></td>
         <td><?php echo $s_receipt_way; ?></td>
         <td class="td_mng">
-            <a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>수정</a>
-            <a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>삭제</a>
+            <a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>수정</a>
+            <a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>삭제</a>
         </td>
     </tr>
     <?php

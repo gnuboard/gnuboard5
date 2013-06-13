@@ -137,8 +137,8 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
         <td class="sit_qa_subject"><?php echo $row['iq_subject']; ?></td>
         <td class="sit_qa_answer"><?php echo $answer; ?></td>
         <td class="td_smallmng">
-            <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>" class="sel_a"><span class="sound_only"><?php echo $row['iq_subject']; ?> </span>수정</a>
-            <a href="javascript:del('./itemqaformupdate.php?w=d&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;$qstr');" class="sel_a"><span class="sound_only"><?php echo $row['iq_subject']; ?> </span>삭제</a>
+            <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['iq_subject']; ?> </span>수정</a>
+            <a href="javascript:del('./itemqaformupdate.php?w=d&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;$qstr');"><span class="sound_only"><?php echo $row['iq_subject']; ?> </span>삭제</a>
         </td>
     </tr>
     <?php

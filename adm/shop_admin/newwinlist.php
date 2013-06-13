@@ -52,8 +52,8 @@ $result = sql_query($sql);
         <td><?php echo $row['nw_width']; ?>px</td>
         <td><?php echo $row['nw_height']; ?>px</td>
         <td class="td_smallmng">
-            <a href="./newwinform.php?w=u&amp;nw_id=<?php echo $row['nw_id']; ?>" class="sel_a"><span class="sound_only"><?php echo $row['nw_subject']; ?> </span>수정</a>
-            <a href="./newwinformupdate.php?w=d&amp;nw_id=<?php echo $row['nw_id']; ?>" class="sel_a" onclick="return delete_confirm();"><span class="sound_only"><?php echo $row['nw_subject']; ?> </span>삭제</a>
+            <a href="./newwinform.php?w=u&amp;nw_id=<?php echo $row['nw_id']; ?>"><span class="sound_only"><?php echo $row['nw_subject']; ?> </span>수정</a>
+            <a href="./newwinformupdate.php?w=d&amp;nw_id=<?php echo $row['nw_id']; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo $row['nw_subject']; ?> </span>삭제</a>
         </td>
     </tr>
     <?php
