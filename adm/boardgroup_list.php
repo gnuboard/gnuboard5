@@ -86,10 +86,17 @@ $colspan = 8;
     </p>
 
     <?php if ($is_admin == 'super') { ?>
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
     </div>
     <?php } ?>
+
+    <ul class="sort_odr">
+        <li><?php echo subject_sort_link('gr_id') ?>그룹아이디<span class="sound_only"> 순 정렬</span></a></th>
+        <li><?php echo subject_sort_link('gr_subject') ?>제목<span class="sound_only"> 순 정렬</span></a></th>
+        <?php if ($is_admin == 'super'){ ?><li><?php echo subject_sort_link('gr_admin') ?>그룹관리자<span class="sound_only"> 순 정렬</span></a></th><?php } ?>
+        <li><?php echo subject_sort_link('gr_order') ?>출력순서<span class="sound_only"> 순 정렬</span></a></th>
+    </ul>
 
     <form name="fboardgrouplist" id="fboardgrouplist" action="./boardgroup_list_update.php" onsubmit="return fboardgrouplist_submit(this);" method="post">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -102,15 +109,18 @@ $colspan = 8;
     <table class="tbl_gr_list">
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 그룹 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col"><?php echo subject_sort_link('gr_id') ?>그룹아이디</a></th>
-        <th scope="col"><?php echo subject_sort_link('gr_subject') ?>제목</a></th>
-        <?php if ($is_admin == 'super'){ ?><th scope="col"><?php echo subject_sort_link('gr_admin') ?>그룹관리자</a></th><?php } ?>
+        <th scope="col">
+            <label for="chkall" class="sound_only">그룹 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
+        <th scope="col">그룹아이디</th>
+        <th scope="col">제목</th>
+        <?php if ($is_admin == 'super'){ ?><th scope="col">그룹관리자</th><?php } ?>
         <th scope="col">게시판<br>갯수</th>
         <th scope="col">접근<br>사용</th>
         <th scope="col">접근<br>회원수</th>
         <th scope="col">메뉴<br>보임</th>
-        <th scope="col"><?php echo subject_sort_link('gr_order') ?>출력<br>순서</a></th>
+        <th scope="col">출력<br>순서</th>
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
     </tr>
@@ -132,8 +142,9 @@ $colspan = 8;
 
     <tr>
         <td class="td_chk">
-            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>" title="<?php echo $row['gr_subject'] ?> 그룹선택">
             <input type="hidden" name="group_id[<?php echo $i ?>]" value="<?php echo $row['gr_id'] ?>">
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['gr_subject'] ?> 그룹</label>
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_grid"><a href="<?php echo G4_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
         <td>

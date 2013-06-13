@@ -86,8 +86,5 @@ $count = mysql_num_rows($result);
     ?>
     <div class="btn_confirm">
         <button type="button" id="it_coupon_close" class="btn_submit">닫기</button>
-        <?php if($count > 0) { ?>
-        <button type="button" id="it_coupon_cancel" class="btn_cancel">쿠폰적용취소</button>
-        <?php } ?>
     </div>
 </div>

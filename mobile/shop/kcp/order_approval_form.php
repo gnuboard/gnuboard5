@@ -108,7 +108,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Cache-Control" content="No-Cache">
 <meta http-equiv="Pragma" content="No-Cache">
-<meta name="viewport" content="width=device-width; user-scalable=<?=$tablet_size?>; initial-scale=<?=$tablet_size?>; maximum-scale=<?=$tablet_size?>; minimum-scale=<?=$tablet_size?>">
+<meta name="viewport" content="width=device-width; user-scalable=<?php echo $tablet_size; ?>; initial-scale=<?php echo $tablet_size; ?>; maximum-scale=<?php echo $tablet_size; ?>; minimum-scale=<?php echo $tablet_size; ?>">
 
 <style type="text/css">
 	.LINE { background-color:#afc3ff }
@@ -174,29 +174,29 @@
         {
             var of = window.opener.document.forderform;
 
-            of.req_tx.value         = "<?=$req_tx?>";
-            of.res_cd.value         = "<?=$res_cd?>";
-            of.tran_cd.value        = "<?=$tran_cd?>";
-            of.ordr_idxx.value      = "<?=$ordr_idxx?>";
-            of.good_mny.value       = "<?=$good_mny?>";
-            of.good_name.value      = "<?=$good_name?>";
-            of.buyr_name.value      = "<?=$buyr_name?>";
-            of.buyr_tel1.value      = "<?=$buyr_tel1?>";
-            of.buyr_tel2.value      = "<?=$buyr_tel2?>";
-            of.buyr_mail.value      = "<?=$buyr_mail?>";
-            of.enc_info.value       = "<?=$enc_info?>";
-            of.enc_data.value       = "<?=$enc_data?>";
-            of.use_pay_method.value = "<?=$use_pay_method?>";
-            of.rcvr_name.value      = "<?=$rcvr_name?>";
-            of.rcvr_tel1.value      = "<?=$rcvr_tel1?>";
-            of.rcvr_tel2.value      = "<?=$rcvr_tel2?>";
-            of.rcvr_mail.value      = "<?=$rcvr_mail?>";
-            of.rcvr_zipx.value      = "<?=$rcvr_zipx?>";
-            of.rcvr_add1.value      = "<?=$rcvr_add1?>";
-            of.rcvr_add2.value      = "<?=$rcvr_add2?>";
-            of.param_opt_1.value    = "<?=$param_opt_1?>";
-            of.param_opt_2.value    = "<?=$param_opt_2?>";
-            of.param_opt_3.value    = "<?=$param_opt_3?>";
+            of.req_tx.value         = "<?php echo $req_tx; ?>";
+            of.res_cd.value         = "<?php echo $res_cd; ?>";
+            of.tran_cd.value        = "<?php echo $tran_cd; ?>";
+            of.ordr_idxx.value      = "<?php echo $ordr_idxx; ?>";
+            of.good_mny.value       = "<?php echo $good_mny; ?>";
+            of.good_name.value      = "<?php echo $good_name; ?>";
+            of.buyr_name.value      = "<?php echo $buyr_name; ?>";
+            of.buyr_tel1.value      = "<?php echo $buyr_tel1; ?>";
+            of.buyr_tel2.value      = "<?php echo $buyr_tel2; ?>";
+            of.buyr_mail.value      = "<?php echo $buyr_mail; ?>";
+            of.enc_info.value       = "<?php echo $enc_info; ?>";
+            of.enc_data.value       = "<?php echo $enc_data; ?>";
+            of.use_pay_method.value = "<?php echo $use_pay_method; ?>";
+            of.rcvr_name.value      = "<?php echo $rcvr_name; ?>";
+            of.rcvr_tel1.value      = "<?php echo $rcvr_tel1; ?>";
+            of.rcvr_tel2.value      = "<?php echo $rcvr_tel2; ?>";
+            of.rcvr_mail.value      = "<?php echo $rcvr_mail; ?>";
+            of.rcvr_zipx.value      = "<?php echo $rcvr_zipx; ?>";
+            of.rcvr_add1.value      = "<?php echo $rcvr_add1; ?>";
+            of.rcvr_add2.value      = "<?php echo $rcvr_add2; ?>";
+            of.param_opt_1.value    = "<?php echo $param_opt_1; ?>";
+            of.param_opt_2.value    = "<?php echo $param_opt_2; ?>";
+            of.param_opt_3.value    = "<?php echo $param_opt_3; ?>";
 
             var od = window.opener.document;
             od.getElementById("show_req_btn").style.display = "none";
@@ -217,70 +217,70 @@
 
 <form name="sm_form" method="POST" accept-charset="euc-kr">
 
-<input type="hidden" name='good_name' value='<?=$good_name?>'>
-<input type="hidden" name='good_mny'  value='<?=$good_mny?>' >
-<input type="hidden" name='buyr_name' value="<?=$buyr_name?>">
-<input type="hidden" name='buyr_tel1' value='<?=$buyr_tel1?>'>
-<input type="hidden" name='buyr_tel2' value='<?=$buyr_tel2?>'>
-<input type="hidden" name='buyr_mail' value='<?=$buyr_mail?>'>
-<input type="hidden" name='ipgm_date' value='<?=$ipgm_date?>'>
+<input type="hidden" name="good_name" value="<?php echo $good_name; ?>">
+<input type="hidden" name="good_mny"  value="<?php ehco $good_mny; ?>" >
+<input type="hidden" name='buyr_name' value="<?php echo $buyr_name; ?>">
+<input type="hidden" name="buyr_tel1" value="<?php echo $buyr_tel1; ?>">
+<input type="hidden" name="buyr_tel2" value="<?php echo $buyr_tel2; ?>">
+<input type="hidden" name="buyr_mail" value="<?php echo $buyr_mail; ?>">
+<input type="hidden" name="ipgm_date" value="<?php echo $ipgm_date; ?>">
 
 <!-- 필수 사항 -->
 
 <!-- 요청 구분 -->
-<input type='hidden' name='req_tx'       value='pay'>
+<input type="hidden" name="req_tx"       value="pay">
 <!-- 사이트 코드 -->
-<input type="hidden" name='site_cd'      value="<?=$g_conf_site_cd?>">
+<input type="hidden" name="site_cd"      value="<?php echo $g_conf_site_cd; ?>">
 <!-- 사이트 키 -->
-<input type='hidden' name='site_key'     value='<?=$g_conf_site_key?>'>
+<input type="hidden" name="site_key"     value="<?php echo $g_conf_site_key; ?>">
  <!-- 사이트 이름 -->
-<input type="hidden" name='shop_name'    value="<?=$g_conf_site_name?>">
+<input type="hidden" name="shop_name"    value="<?php echo $g_conf_site_name; ?>">
 <!-- 결제수단-->
-<input type="hidden" name='pay_method'   value="<?=$pay_method?>">
+<input type="hidden" name="pay_method"   value="<?php echo $pay_method; ?>">
 <!-- 주문번호 -->
-<input type="hidden"   name='ordr_idxx'    value="<?=$ordr_idxx?>">
+<input type="hidden"   name="ordr_idxx"    value="<?php echo $ordr_idxx; ?>">
 <!-- 최대 할부개월수 -->
-<input type="hidden" name='quotaopt'     value="12">
+<input type="hidden" name="quotaopt"     value="12">
 <!-- 통화 코드 -->
-<input type="hidden" name='currency'     value="410">
+<input type="hidden" name="currency"     value="410">
 <!-- 결제등록 키 -->
-<input type="hidden" name='approval_key' id="approval">
+<input type="hidden" name="approval_key" id="approval">
 <!-- 리턴 URL (kcp와 통신후 결제를 요청할 수 있는 암호화 데이터를 전송 받을 가맹점의 주문페이지 URL) -->
 <!-- 반드시 가맹점 주문페이지의 URL을 입력 해주시기 바랍니다. -->
-<input type="hidden" name='Ret_URL'      value="<?php echo G4_MSHOP_URL; ?>/kcp/order_approval_form.php">
+<input type="hidden" name="Ret_URL"      value="<?php echo G4_MSHOP_URL; ?>/kcp/order_approval_form.php">
 <!-- 인증시 필요한 파라미터(변경불가)-->
-<input type='hidden' name='ActionResult' value='<?=$ActionResult?>'>
+<input type="hidden" name="ActionResult" value="<?php echo $ActionResult; ?>">
 <!-- 에스크로 사용유무 에스크로 사용 업체(가상계좌만 해당)는 Y로 세팅 해주시기 바랍니다.-->
-<input type="hidden" name='escw_used'  value='Y'>
+<input type="hidden" name="escw_used"  value="Y">
 <!-- 에스크로 결제처리모드 -->
-<input type="hidden" name='pay_mod'   value='<?php echo ($default['de_escrow_use']?"O":"N"); ?>'>
+<input type="hidden" name="pay_mod"   value="<?php echo ($default["de_escrow_use"]?"O":"N"); ?>">
 <!-- 수취인이름 -->
-<input type='hidden' name='rcvr_name' value='<?=$rcvr_name?>'>
+<input type="hidden" name="rcvr_name" value="<?php echo $rcvr_name; ?>">
 <!-- 수취인 연락처 -->
-<input type='hidden' name='rcvr_tel1' value='<?=$rcvr_tel1?>'>
+<input type="hidden" name="rcvr_tel1" value="<?php echo $rcvr_tel1; ?>">
 <!-- 수취인 휴대폰 번호 -->
-<input type='hidden' name='rcvr_tel2' value='<?=$rcvr_tel2?>'>
+<input type="hidden" name="rcvr_tel2" value="<?php echo $rcvr_tel2; ?>">
 <!-- 수취인 E-MAIL -->
-<input type='hidden' name='rcvr_add1' value='<?=$rcvr_add1?>'>
+<input type="hidden" name="rcvr_add1" value="<?php echo $rcvr_add1; ?>">
 <!-- 수취인 우편번호 -->
-<input type='hidden' name='rcvr_add2' value='<?=$rcvr_add2?>'>
+<input type="hidden" name="rcvr_add2" value="<?php echo $rcvr_add2; ?>">
 <!-- 수취인 주소 -->
-<input type='hidden' name='rcvr_mail' value='<?=$rcvr_mail?>'>
+<input type="hidden" name="rcvr_mail" value="<?php echo $rcvr_mail; ?>">
 <!-- 수취인 상세 주소 -->
-<input type='hidden' name='rcvr_zipx' value='<?=$rcvr_zipx?>'>
+<input type="hidden" name="rcvr_zipx" value="<?php echo $rcvr_zipx; ?>">
 <!-- 장바구니 상품 개수 -->
-<input type='hidden' name='bask_cntx' value="<?=$bask_cntx?>">
+<input type="hidden" name="bask_cntx" value="<?php echo $bask_cntx; ?>">
 <!-- 장바구니 정보(상단 스크립트 참조) -->
-<input type='hidden' name='good_info' value="<?=$good_info?>">
+<input type="hidden" name="good_info" value="<?php echo $good_info; ?>">
 <!-- 배송소요기간 -->
-<input type="hidden" name='deli_term' value='03'>
+<input type="hidden" name="deli_term" value="03">
 <!-- 기타 파라메터 추가 부분 - Start - -->
-<input type="hidden" name='param_opt_1'	 value="<?=$param_opt_1?>"/>
-<input type="hidden" name='param_opt_2'	 value="<?=$param_opt_2?>"/>
-<input type="hidden" name='param_opt_3'	 value="<?=$param_opt_3?>"/>
+<input type="hidden" name="param_opt_1"	 value="<?php echo $param_opt_1; ?>"/>
+<input type="hidden" name="param_opt_2"	 value="<?php echo $param_opt_2; ?>"/>
+<input type="hidden" name="param_opt_3"	 value="<?php echo $param_opt_3; ?>"/>
 <!-- 기타 파라메터 추가 부분 - End - -->
 <!-- 화면 크기조정 부분 - Start - -->
-<input type="hidden" name='tablet_size'	 value="<?=$tablet_size?>"/>
+<input type="hidden" name="tablet_size"	 value="<?php echo $tablet_size; ?>"/>
 <!-- 화면 크기조정 부분 - End - -->
 <!--
 	사용 카드 설정
@@ -299,10 +299,10 @@
     <input type="hidden" name="kcp_noint_quota" value="CCBC-02:03:06,CCKM-03:06,CCSS-03:06:09"/> */
 -->
 
-<input type="hidden" name="res_cd"         value="<?=$res_cd?>">      <!-- 결과 코드          -->
-<input type="hidden" name="tran_cd"        value="<?=$tran_cd?>">     <!-- 트랜잭션 코드      -->
-<input type="hidden" name="enc_info"       value="<?=$enc_info?>">    <!-- 암호화 정보        -->
-<input type="hidden" name="enc_data"       value="<?=$enc_data?>">    <!-- 암호화 데이터      -->
+<input type="hidden" name="res_cd"         value="<?php echo $res_cd; ?>">      <!-- 결과 코드          -->
+<input type="hidden" name="tran_cd"        value="<?php echo $tran_cd; ?>">     <!-- 트랜잭션 코드      -->
+<input type="hidden" name="enc_info"       value="<?php echo $enc_info; ?>">    <!-- 암호화 정보        -->
+<input type="hidden" name="enc_data"       value="<?php echo $enc_data; ?>">    <!-- 암호화 데이터      -->
 </form>
 </div>
 

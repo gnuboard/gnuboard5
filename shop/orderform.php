@@ -270,31 +270,35 @@ setTimeout("init_pay_button();",300);
 
     <?php if ($goods_count) $goods .= ' 외 '.$goods_count.'건'; ?>
 
-    <?php
-    // 배송비가 0 보다 크다면 (있다면)
-    if ($send_cost > 0)
-    {
-    ?>
+    <div id="sod_bsk_sell" class="sod_bsk_tot">
+        <span>주문</span>
+        <strong><?php echo number_format($tot_sell_amount); ?> 원</strong>
+    </div>
+
+    <div id="sod_bsk_coupon" class="sod_bsk_tot">
+        <span>쿠폰</span>
+        <strong id="ct_tot_coupon">0 원</strong>
+    </div>
 
     <div id="sod_bsk_dvr" class="sod_bsk_tot">
         <span>배송비</span>
         <strong><?php echo number_format($send_cost); ?> 원</strong>
     </div>
 
-    <?php } ?>
-
     <?php
     // 총계 = 주문상품금액합계 + 배송비
     $tot_amount = $tot_sell_amount + $send_cost;
-    if ($tot_amount > 0) {
     ?>
 
     <div id="sod_bsk_cnt" class="sod_bsk_tot">
         <span>총계</span>
-        <strong><span id="ct_tot_amount"><?php echo number_format($tot_amount); ?></span> 원 <?php echo number_format($tot_point); ?> 점</strong>
+        <strong id="ct_tot_amount"><?php echo number_format($tot_amount); ?> 원</strong>
     </div>
 
-    <?php } ?>
+    <div id="sod_bsk_point" class="sod_bsk_tot">
+        <span><?php echo $default['de_mileage_use'] ? '마일리지' : '포인트'; ?></span>
+        <strong><?php echo number_format($tot_point); ?> 점</strong>
+    </div>
 
     <input type="hidden" name="od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="org_od_amount"    value="<?php echo $tot_sell_amount; ?>">
@@ -969,7 +973,9 @@ $(function() {
 
         calculate_total_amount();
         $("#it_coupon_frm").remove();
-        $cp_btn_el.focus();
+        $cp_btn_el.text("변경").focus();
+        if(!$cp_row_el.find(".it_coupon_cancel").size())
+            $cp_btn_el.after("<button type=\"button\" class=\"it_coupon_cancel btn_frmline\">취소</button>");
     });
 
     $("#it_coupon_close").live("click", function() {
@@ -977,11 +983,12 @@ $(function() {
         $cp_btn_el.focus();
     });
 
-    $("#it_coupon_cancel").live("click", function() {
-        coupon_cancel($cp_row_el);
+    $(".it_coupon_cancel").live("click", function() {
+        coupon_cancel($(this).closest("tr"));
         calculate_total_amount();
         $("#it_coupon_frm").remove();
-        $cp_btn_el.focus();
+        $(this).closest("tr").find(".it_coupon_btn").text("적용").focus();
+        $(this).remove();
     });
 
     $("#od_coupon_btn").click(function() {
@@ -998,7 +1005,7 @@ $(function() {
     });
 
     $(".od_cp_apply").live("click", function() {
-        var $el = $(this).closest("li");
+        var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='o_cp_id[]']").val();
         var amount = parseInt($el.find("input[name='o_cp_amt[]']").val());
         var subj = $el.find("input[name='o_cp_subj[]']").val();
@@ -1018,7 +1025,9 @@ $(function() {
         $("input[name=od_cp_id]").val(cp_id);
         calculate_order_amount();
         $("#od_coupon_frm").remove();
-        $("#od_coupon_btn").focus();
+        $("#od_coupon_btn").text("쿠폰변경").focus();
+        if(!$("#od_coupon_cancel").size())
+            $("#od_coupon_btn").after("<button type=\"button\" id=\"od_coupon_cancel\" class=\"btn_frmline\">쿠폰취소</button>");
     });
 
     $("#od_coupon_close").live("click", function() {
@@ -1031,7 +1040,8 @@ $(function() {
         $("input[name=od_amount]").val(org_amount);
         calculate_order_amount();
         $("#od_coupon_frm").remove();
-        $("#od_coupon_btn").focus();
+        $("#od_coupon_btn").text("쿠폰적용").focus();
+        $(this).remove();
     });
 
     $("#sc_coupon_btn").click(function() {
@@ -1049,7 +1059,7 @@ $(function() {
     });
 
     $(".sc_cp_apply").live("click", function() {
-        var $el = $(this).closest("li");
+        var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='s_cp_id[]']").val();
         var amount = parseInt($el.find("input[name='s_cp_amt[]']").val());
         var subj = $el.find("input[name='s_cp_subj[]']").val();
@@ -1065,7 +1075,9 @@ $(function() {
         $("input[name=sc_cp_id]").val(cp_id);
         calculate_order_amount();
         $("#sc_coupon_frm").remove();
-        $("#sc_coupon_btn").focus();
+        $("#sc_coupon_btn").text("쿠폰변경").focus();
+        if(!$("#sc_coupon_cancel").size())
+            $("#sc_coupon_btn").after("<button type=\"button\" id=\"sc_coupon_cancel\" class=\"btn_frmline\">쿠폰취소</button>");
     });
 
     $("#sc_coupon_close").live("click", function() {
@@ -1078,7 +1090,8 @@ $(function() {
         $("input[name=od_send_cost]").val(send_cost);
         calculate_order_amount();
         $("#sc_coupon_frm").remove();
-        $("#sc_coupon_btn").focus();
+        $("#sc_coupon_btn").text("쿠폰적용").focus();
+        $(this).remove();
     });
 
     $("#od_settle_bank").bind("click", function() {
@@ -1106,19 +1119,22 @@ function calculate_total_amount()
 {
     var $it_amt = $("input[name^=it_amount]");
     var $cp_amt = $("input[name^=cp_amount]");
-    var tot_sell_amount = sell_amount = 0;
+    var tot_sell_amount = sell_amount = tot_cp_amount = 0;
     var it_amount, cp_amount;
     var send_cost = parseInt($("input[name=org_send_cost]").val());
 
     $it_amt.each(function(index) {
         it_amount = parseInt($(this).val());
         cp_amount = parseInt($cp_amt.eq(index).val());
-        sell_amount += (it_amount - cp_amount);
+        sell_amount += it_amount;
+        tot_cp_amount += cp_amount;
     });
 
-    tot_sell_amount = sell_amount + send_cost;
+    tot_sell_amount = sell_amount - tot_cp_amount + send_cost;
 
-    $("#ct_tot_amount").text(number_format(String(tot_sell_amount)));
+    $("#ct_tot_coupon").text(number_format(String(tot_cp_amount))+" 원");
+    $("#ct_tot_amount").text(number_format(String(tot_sell_amount))+" 원");
+
     $("input[name=good_mny]").val(tot_sell_amount);
     $("input[name=od_amount]").val(sell_amount);
     $("input[name=org_od_amount]").val(sell_amount);

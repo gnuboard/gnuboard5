@@ -57,7 +57,7 @@ if (file_exists($himg)) // 상단 이미지
     echo '<div id="socc_himg" class="socc_img"><img src="'.G4_DATA_URL.'/content/'.$co_id.'_h" alt=""></div>';
 ?>
 
-<article id="socc" class="socc_<?=$co_id?>">
+<article id="socc" class="socc_<?php echo $co_id; ?>">
     <header>
         <h1><?php echo $g4['title']; ?></h1>
     </header>

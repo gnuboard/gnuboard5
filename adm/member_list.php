@@ -103,10 +103,26 @@ $colspan = 15;
     <p>회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.</p>
 
     <?php if ($is_admin == 'super') { ?>
-    <div id="btn_add">
+    <div class="btn_add sort_with">
         <a href="./member_form.php" id="member_add">회원추가</a>
     </div>
     <?php } ?>
+
+    <ul id="sort_mb" class="sort_odr">
+        <li><?php echo subject_sort_link('mb_id') ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_name') ?>이름<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_today_login', '', 'desc') ?>최종접속<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_point', '', 'desc') ?> 포인트<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_nick') ?>별명<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_level', '', 'desc') ?>권한<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일인증<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일수신<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보공개<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_hp_certify', '', 'desc') ?>본인확인<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_adult', '', 'desc') ?>성인인증<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근차단<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_datetime', '', 'desc') ?>가입일<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
 
     <form name="fmemberlist" id="fmemberlist" action="./member_list_update.php" onsubmit="return fmemberlist_submit(this);" method="post">
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -118,26 +134,29 @@ $colspan = 15;
     <table class="tbl_mb_list">
     <thead>
     <tr>
-        <th scope="col" rowspan="2"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 회원 전체선택" onclick="check_all(this.form)"></th>
-        <th scope="col"><?php echo subject_sort_link('mb_id') ?>회원아이디</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_name') ?>이름</a></th>
+        <th scope="col" rowspan="2">
+            <label for="chkall" class="sound_only">회원 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
+        <th scope="col">회원아이디</th>
+        <th scope="col">이름</th>
         <th scope="col">휴대폰</th>
         <th scope="col" colspan="6">주소</th>
-        <th scope="col"><?php echo subject_sort_link('mb_today_login', '', 'desc') ?>최종접속</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_point', '', 'desc') ?> 포인트</a></th>
+        <th scope="col">최종접속</th>
+        <th scope="col">포인트</th>
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
-        <th scope="col"><?php echo subject_sort_link('mb_nick') ?>별명</a></th>
-        <th scope="col">상태/<?php echo subject_sort_link('mb_level', '', 'desc') ?>권한</a></th>
+        <th scope="col">별명</th>
+        <th scope="col">상태/권한</th>
         <th scope="col">전화번호</th>
-        <th scope="col"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일<br>인증</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일<br>수신</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보<br>공개</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_hp_certify', '', 'desc') ?>본인<br>확인</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_adult', '', 'desc') ?>성인<br>인증</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근<br>차단</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_datetime', '', 'desc') ?>가입일</a></th>
+        <th scope="col">메일<br>인증</th>
+        <th scope="col">메일<br>수신</th>
+        <th scope="col">정보<br>공개</th>
+        <th scope="col">본인<br>확인</th>
+        <th scope="col">성인<br>인증</th>
+        <th scope="col">접근<br>차단</th>
+        <th scope="col">가입일</th>
         <th scope="col" title="접근가능한 그룹수">접근그룹</th>
     </tr>
     </thead>
@@ -190,7 +209,7 @@ $colspan = 15;
     <tr <?php echo $tr_bg; ?>>
         <td class="td_chk" rowspan="2">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
-            <label for="chk_<?php echo $i; ?>" class="sound_only">회원선택</label>
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_name']; ?> <?php echo $row['mb_nick']; ?>님</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_name sv_use"><?php echo $mb_id ?></td>

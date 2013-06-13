@@ -30,6 +30,6 @@ else
 ?>
 
 <div id="sct_location">
-    <a href='<?=$g4[path]?>/' class="sct_bg">Home</a>
-    <?=$str?>
+    <a href='<?php echo G4_SHOP_URL; ?>/' class="sct_bg">Home</a>
+    <?php echo $str; ?>
 </div>

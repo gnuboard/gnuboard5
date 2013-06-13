@@ -73,7 +73,7 @@ $colspan = 6;
 <section class="cbox">
     <h2>투표목록</h2>
 
-    <div id="btn_add">
+    <div class="btn_add">
         <a href="./poll_form.php" id="poll_add">투표 추가</a>
     </div>
 

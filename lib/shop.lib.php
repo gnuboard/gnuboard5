@@ -1177,7 +1177,7 @@ function get_item_point($it)
 }
 
 // 상품별 배송비
-function get_item_sendcost($it_id, $uq_id)
+function get_item_sendcost($it_id, $price, $qty)
 {
     global $g4, $default;
 
@@ -1193,31 +1193,17 @@ function get_item_sendcost($it_id, $uq_id)
 
     if($it['it_sc_type']) {
         if($it['it_sc_type'] == 1) { // 조건부무료
-            $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
-                        from {$g4['shop_cart_table']}
-                        where uq_id = '$uq_id'
-                          and it_id = '$it_id' ";
-            $ct = sql_fetch($sql);
-            $item_price = $ct['sum_price'];
-
-            if($item_price >= $it['it_sc_minimum'])
+            if($price >= $it['it_sc_minimum'])
                 $sendcost = 0;
             else
                 $sendcost = $it['it_sc_amount'];
         } else if($it['it_sc_type'] == 2) { // 유료배송
             $sendcost = $it['it_sc_amount'];
         } else { // 수량별 부과
-            $sql = " select SUM(ct_qty) as item_count
-                        from {$g4['shop_cart_table']}
-                        where uq_id = '$uq_id'
-                          and it_id = '$it_id' ";
-            $ct = sql_fetch($sql);
-            $item_count = $ct['item_count'];
-
             if(!$it['it_sc_qty'])
                 $it['it_sc_qty'] = 1;
 
-            $q = ceil((int)$item_count / (int)$it['it_sc_qty']);
+            $q = ceil((int)$qty / (int)$it['it_sc_qty']);
             $sendcost = (int)$it['it_sc_amount'] * $q;
         }
     } else {
