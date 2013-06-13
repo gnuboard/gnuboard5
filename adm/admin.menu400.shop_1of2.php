@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
 
 $menu['menu400'] = array (
