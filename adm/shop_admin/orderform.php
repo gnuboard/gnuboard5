@@ -196,8 +196,7 @@ $pg_anchor = '<ul class="anchor">
             <tr>
                 <td class="td_chk">
                     <label for="ct_opt_chk_<?php echo $i.$k; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
-                    <input type="hidden" name="ct_id[]" value="<?php echo $opt['ct_id']; ?>">
-                    <input type="checkbox" name="ct_chk[]" id="ct_opt_chk_<?php echo $i.$k; ?>" value="1">
+                    <input type="checkbox" name="ct_chk[]" id="ct_opt_chk_<?php echo $i.$k; ?>" value="<?php echo $opt['ct_id']; ?>">
                 </td>
                 <td><?php echo $opt['ct_option']; ?></td>
                 <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
@@ -215,7 +214,7 @@ $pg_anchor = '<ul class="anchor">
             </table>
 
         </li>
-        <?
+        <?php
             $t_cp_amount += $row['cp_amount']; // 쿠폰사용금액
             $t_ct_amount['합계'] += $ct_amount['소계'];
             $t_ct_point['합계'] += $ct_point['소계'];
@@ -224,7 +223,6 @@ $pg_anchor = '<ul class="anchor">
     </ul>
 
     <div class="btn_list">
-        <input type="hidden" name="chk_cnt" value="<?php echo $i; ?>">
         <input type="submit" name="act_button" value="주문" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="상품준비중" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="배송중" onclick="document.pressed=this.value">
@@ -536,7 +534,6 @@ $pg_anchor = '<ul class="anchor">
                 <input type="text" name="od_receipt_hp" value="<?php echo $od['od_receipt_hp']; ?>" id="od_receipt_hp" class="frm_input"> 원
                 <?php $pg_url = $g4['shop_cardpg'][$default['de_card_pg']];?>
                 <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
-                ?>
             </td>
         </tr>
         <tr>
