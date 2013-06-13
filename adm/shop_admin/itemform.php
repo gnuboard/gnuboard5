@@ -835,7 +835,7 @@ $(function(){
 <section id="anc_sitfrm_sendcost" class="cbox">
     <h2>배송비</h2>
     <?php echo $pg_anchor; ?>
-    <p><?php echo help('쇼핑몰설정 &gt; 배송비유형 설정에서 개별배송으로 설정해야만 아래 설정이 적용됩니다.'); ?></p>
+    <p><?php echo help('쇼핑몰설정 &gt; 배송비유형 설정에서 <strong>개별배송비</strong>로 설정해야만 아래 설정이 적용됩니다.'); ?></p>
     <div>
         <table class="frm_tbl">
         <colgroup>
