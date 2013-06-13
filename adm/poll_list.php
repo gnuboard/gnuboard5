@@ -116,14 +116,7 @@ $colspan = 6;
         <td class="td_num"><?php echo $row['po_level'] ?></td>
         <td class="td_num"><?php echo $row2['sum_po_cnt'] ?></td>
         <td class="td_etc"><?php echo $po_etc ?></td>
-        <td class="td_mng sv_use">
-            <div class="sel_wrap">
-                <button type="button" class="sel_btn">관리하기</button>
-                <ul class="sel_ul">
-                    <?php echo $s_mod ?>
-                </ul>
-            </div>
-        </td>
+        <td class="td_smallmng"><?php echo $s_mod ?></td>
     </tr>
 
     <?php
