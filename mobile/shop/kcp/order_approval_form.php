@@ -1,4 +1,4 @@
-<?
+<?php
     include_once('./_common.php');
     /* ============================================================================== */
     /* =   PAGE : 결제 요청 PAGE                                                    = */
@@ -13,7 +13,7 @@
     /* =   Copyright (c)  2010.05   KCP Inc.   All Rights Reserved.                 = */
     /* ============================================================================== */
 ?>
-<?
+<?php
 	/* ============================================================================== */
     /* =   환경 설정 파일 Include                                                   = */
     /* = -------------------------------------------------------------------------- = */
@@ -23,12 +23,12 @@
 
      include G4_MSHOP_PATH.'/settle_kcp.inc.php';       // 환경설정 파일 include
 ?>
-<?
+<?php
     /* = -------------------------------------------------------------------------- = */
     /* =   환경 설정 파일 Include END                                               = */
     /* ============================================================================== */
 ?>
-<?
+<?php
     /* kcp와 통신후 kcp 서버에서 전송되는 결제 요청 정보*/
     $req_tx          = $_POST[ "req_tx"         ]; // 요청 종류
     $res_cd          = $_POST[ "res_cd"         ]; // 응답 코드
@@ -218,7 +218,7 @@
 <form name="sm_form" method="POST" accept-charset="euc-kr">
 
 <input type="hidden" name="good_name" value="<?php echo $good_name; ?>">
-<input type="hidden" name="good_mny"  value="<?php ehco $good_mny; ?>" >
+<input type="hidden" name="good_mny"  value="<?php echo $good_mny; ?>" >
 <input type="hidden" name='buyr_name' value="<?php echo $buyr_name; ?>">
 <input type="hidden" name="buyr_tel1" value="<?php echo $buyr_tel1; ?>">
 <input type="hidden" name="buyr_tel2" value="<?php echo $buyr_tel2; ?>">
@@ -253,7 +253,7 @@
 <!-- 에스크로 사용유무 에스크로 사용 업체(가상계좌만 해당)는 Y로 세팅 해주시기 바랍니다.-->
 <input type="hidden" name="escw_used"  value="Y">
 <!-- 에스크로 결제처리모드 -->
-<input type="hidden" name="pay_mod"   value="<?php echo ($default["de_escrow_use"]?"O":"N"); ?>">
+<input type="hidden" name="pay_mod"   value="<?php echo ($default['de_escrow_use']?'O':'N'); ?>">
 <!-- 수취인이름 -->
 <input type="hidden" name="rcvr_name" value="<?php echo $rcvr_name; ?>">
 <!-- 수취인 연락처 -->
@@ -284,7 +284,7 @@
 <!-- 화면 크기조정 부분 - End - -->
 <!--
 	사용 카드 설정
-	<input type="hidden" name='used_card'    value="CClg:ccDI">
+	<input type="hidden" name="used_card"    value="CClg:ccDI">
     /*  무이자 옵션
             ※ 설정할부    (가맹점 관리자 페이지에 설정 된 무이자 설정을 따른다)                             - "" 로 설정
             ※ 일반할부    (KCP 이벤트 이외에 설정 된 모든 무이자 설정을 무시한다)                           - "N" 로 설정

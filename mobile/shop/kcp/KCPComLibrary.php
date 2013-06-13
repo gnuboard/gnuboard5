@@ -108,9 +108,9 @@ class PayService extends  SoapClient
                 $options[ 'classmap' ][ $key ] = $value;
             }
         }
-    
+
         parent::__construct( $wsdl, $options );
-        
+
         $accessCredentialType = null;
         $baseRequestType      = null;
         $approveReq           = null;
@@ -160,7 +160,7 @@ class PayService extends  SoapClient
         $this->approveReq = new ApproveReq();
 
         $productName_utf8 = ( $this->chatsetType == "euc-kr" ) ? iconv( "EUC-KR", "UTF-8", $productName ) : $productName;
-        
+
         $this->approveReq->accessCredentialType = $this->accessCredentialType;
         $this->approveReq->baseRequestType      = $this->baseRequestType;
         $this->approveReq->escrow               = $escrow;
@@ -175,7 +175,7 @@ class PayService extends  SoapClient
     public  function  approve()
     {
         $approve = new approve();
-        
+
         $approve->req = $this->approveReq;
 
         $this->approveResponse = $this->__soapCall( "approve", array( $approve ),
@@ -188,5 +188,6 @@ class PayService extends  SoapClient
         $this->resMsg = $this->approveResponse->return->baseResponseType->error->message;
 
         return  $this->approveResponse->return;
-    }        
+    }
 }
+?>

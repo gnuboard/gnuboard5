@@ -2,13 +2,13 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
 
 <div id="mb_login">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1><?php echo $g4['title']; ?></h1>
 
-    <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post">
-    <input type="hidden" name="url" value='<?php echo $login_url ?>'>
+    <form name="flogin" action="<?php echo $login_action_url; ?>" onsubmit="return flogin_submit(this);" method="post">
+    <input type="hidden" name="url" value='<?php echo $login_url; ?>'>
 
     <fieldset id="mb_login_fs">
         <legend>회원로그인</legend>
@@ -28,18 +28,18 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             아직 회원이 아니시라면 회원으로 가입 후 이용해 주십시오.
         </p>
         <div>
-            <a href="<?php echo G4_BBS_URL ?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
+            <a href="<?php echo G4_BBS_URL; ?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
             <a href="./register.php" class="btn01">회원 가입</a>
         </div>
     </section>
 
     </form>
 
-    <? // 쇼핑몰 사용시 여기부터 ?>
-    <? if ($default[de_level_sell] == 1) { // 상품구입 권한 ?>
+    <?php // 쇼핑몰 사용시 여기부터 ?>
+    <?php if ($default['de_level_sell'] == 1) { // 상품구입 권한 ?>
 
         <!-- 주문하기, 신청하기 -->
-        <? if (preg_match("/orderform.php/", $url)) { ?>
+        <?php if (preg_match("/orderform.php/", $url)) { ?>
 
     <section id="mb_login_notmb">
         <h2>비회원 구매</h2>
@@ -76,7 +76,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </script>
     </section>
 
-        <? } else if (preg_match("/orderinquiry.php$/", $url)) { ?>
+        <?php } else if (preg_match("/orderinquiry.php$/", $url)) { ?>
 
     <fieldset id="mb_login_od">
         <legend>비회원 주문조회</legend>
@@ -97,13 +97,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <p>메일로 발송해드린 주문서의 <strong>주문번호</strong> 및 주문 시 입력하신 <strong>비밀번호</strong>를 정확히 입력해주십시오.</p>
     </section>
 
-        <? } ?>
+        <?php } ?>
 
-    <? } ?>
-    <? // 쇼핑몰 사용시 여기까지 반드시 복사해 넣으세요 ?>
+    <?php } ?>
+    <?php // 쇼핑몰 사용시 여기까지 반드시 복사해 넣으세요 ?>
 
     <div class="btn_confirm">
-        <a href="<?php echo G4_URL ?>/">메인으로 돌아가기</a>
+        <a href="<?php echo G4_URL; ?>/">메인으로 돌아가기</a>
     </div>
 
 </div>
