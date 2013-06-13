@@ -368,12 +368,14 @@ $pg_anchor = '<ul class="anchor">
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_15">
+        <col class="grid_6">
+        <col class="grid_3">
+        <col class="grid_6">
     </colgroup>
     <tbody>
     <tr>
         <th scope="row"><label for="de_bank_use">무통장입금사용</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("주문시 무통장으로 입금을 가능하게 할것인지를 설정합니다.\n사용할 경우 은행계좌번호를 반드시 입력하여 주십시오.", 50); ?>
             <select id="de_bank_use" name="de_bank_use">
                 <option value="0" <?php echo get_selected($default['de_bank_use'], 0); ?>>사용안함</option>
@@ -383,7 +385,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_bank_account">은행계좌번호</label></th>
-        <td>
+        <td colspan="3">
             <textarea name="de_bank_account" id="de_bank_account"><?php echo $default['de_bank_account']; ?></textarea>
         </td>
     </tr>
@@ -399,7 +401,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_vbank_use">가상계좌 결제사용</label></th>
-        <td>
+        <td colspan="3">
         <?php echo help("주문자가 현금거래를 원할 경우, 해당 거래건에 대해 주문자에게 고유로 발행되는 일회용 계좌번호입니다.", 50); ?>
         <select name="de_vbank_use" id="de_vbank_use">
             <option value="0" <?php echo get_selected($default['de_vbank_use'], 0); ?>>사용안함</option>
@@ -409,7 +411,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_hp_use">휴대폰결제사용</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("주문시 휴대폰 결제를 가능하게 할것인지를 설정합니다.", 50); ?>
             <select id="de_hp_use" name="de_hp_use">
                 <option value="0" <?php echo get_selected($default['de_hp_use'], 0); ?>>사용안함</option>
@@ -419,7 +421,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_card_use">신용카드결제사용</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("주문시 신용카드 결제를 가능하게 할것인지를 설정합니다.", 50); ?>
             <select id="de_card_use" name="de_card_use">
                 <option value="0" <?php echo get_selected($default['de_card_use'], 0); ?>>사용안함</option>
@@ -429,14 +431,14 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_card_max_amount">카드결제최소금액</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("신용카드는 경우 1000원 미만은 결제가 불가능합니다.\n카드결제최소금액을 1000원 이상으로 설정하십시오."); ?>
             <input type="text" name="de_card_max_amount" value="<?php echo $default['de_card_max_amount']; ?>"  id="de_card_max_amount" class="frm_input" size="10"> 원
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_taxsave_use">현금영수증<br>발급사용</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("관리자는 설정에 관계없이 <a href=\"".G4_ADMIN_URL."/shop_admin/orderlist.php\">주문내역</a> &gt; 수정에서 발급이 가능합니다.\n현금영수증 발급 취소는 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.", 50); ?>
             <select id="de_taxsave_use" name="de_taxsave_use">
                 <option value="0" <?php echo get_selected($default['de_taxsave_use'], 0); ?>>사용안함</option>
@@ -446,28 +448,28 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_mileage_use">마일리지 사용</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("마일리지는 주문완료에 의해 적립되는 포인트입니다.\n마일리지 사용으로 설정하시면 기존 포인트 대신 마일리지가 주문 결제에 사용됩니다."); ?>
-            <input type="checkbox" name="de_mileage_use" value="1" id="de_mileaget_use"<?php echo $default['de_mileage_use']?' checked':''; ?>> 사용
+            <input type="checkbox" name="de_mileage_use" value="1" id="de_mileage_use" <?php echo $default['de_mileage_use']?' checked':''; ?>> 사용
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_use_point">포인트 사용</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("<a href=\"".G4_ADMIN_URL."/config_form.php#frm_board\" target=\"_blank\">환경설정 &gt; 기본환경설정</a>과 동일한 설정입니다."); ?>
             <input type="checkbox" name="cf_use_point" value="1" id="cf_use_point"<?php echo $config['cf_use_point']?' checked':''; ?>> 사용
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_point_settle">포인트결제 비율</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("회원의 포인트가 설정값 이상일 경우만 주문시 결제에 사용할 수 있습니다.\n포인트 사용을 하지 않는 경우에는 의미가 없습니다."); ?>
             <input type="text" name="de_point_settle" value="<?php echo $default['de_point_settle']; ?>" id="de_point_settle" class="frm_input" size="10"> 점
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_point_per">포인트결제 %</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("회원 보유 포인트가 결제액보다 많을 경우, 결제액에서 포인트로 결제 가능한 비율을 설정합니다."); ?>
             <select id="de_point_per" name="de_point_per">
             <?php for ($i=100; $i>0; $i=$i-5) echo '<option value="'.$i.'" '.get_selected($default['de_point_per'], $i).'>'.$i.'</option>'.PHP_EOL; ?>
@@ -476,7 +478,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_card_point">포인트부여</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("신용카드, 계좌이체 결제시 포인트를 부여할지를 설정합니다. (기본값은 '아니오')", 50); ?>
             <select id="de_card_point" name="de_card_point">
                 <option value="0" <?php echo get_selected($default['de_card_point'], 0); ?>>아니오</option>
@@ -486,14 +488,14 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_point_days">주문완료 포인트</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("주문자가 회원일 경우에만 주문완료 포인트를 지급합니다. 주문취소, 반품 등을 고려하여 적당한 기간을 입력하십시오. (기본값은 7)\n0 으로 설정하는 경우 주문완료와 동시에 포인트를 부여합니다.", -150); ?>
             주문 완료 <input type="text" name="de_point_days" value="<?php echo $default['de_point_days']; ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 부여
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_kcp_mid">KCP SITE CODE</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SRZ89"); ?>
             <input type="hidden" name="de_card_pg" value="kcp">
             <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
@@ -501,14 +503,14 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row"><label for="de_kcp_site_key">KCP SITE KEY</label></th>
-        <td>
+        <td colspan="3">
             <?php echo help("25자리 영대문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
             <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="32" maxlength="25">
         </td>
     </tr>
     <tr>
         <th scope="row">에스크로 사용</th>
-        <td>
+        <td colspan="3">
             <?php echo help("에스크로 결제를 사용하시려면, 반드시 <strong>KCP 관리자 > 고객센터 > 서비스변경 및 추가 > 에스크로 신청 메뉴에서 에스크로를 사용 선택하고, 결제수단별로 적용 신청한 후 사용</strong>하셔야 합니다.\n에스크로 사용시 배송과의 연동은 되지 않으며 에스크로 결제만 지원됩니다."); ?>
                 <input type="radio" name="de_escrow_use" value="0" <?php echo $default['de_escrow_use']==0?"checked":""; ?> id="de_escrow_use1">
                 <label for="de_escrow_use1">일반결제 사용</label>
@@ -518,7 +520,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row">신용카드 결제테스트</th>
-        <td>
+        <td colspan="3">
             <?php echo help("신용카드를 테스트 하실 경우에 체크하세요. 결제단위 최소 1,000원"); ?>
             <label for="de_card_test1">실결제 </label>
             <input type="radio" name="de_card_test" value="0" <?php echo $default['de_card_test']==0?"checked":""; ?> id="de_card_test1">
@@ -556,7 +558,7 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row">공통 URL</th>
-        <td>
+        <td colspan="3">
             <?php echo help("가상계좌 사용시 다음 주소를 <strong>KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
             <?php echo G4_SHOP_URL; ?>/settle_kcp_common.php
         </td>
@@ -565,12 +567,11 @@ $pg_anchor = '<ul class="anchor">
         <th scope="row"><label for="de_dacom_mid">LG텔레콤 상점아이디</label></th>
         <td>
             <input type="text" name="de_dacom_mid" value="<?php echo $default['de_dacom_mid']; ?>" id="de_dacom_mid" size="40">
-        <?php echo help("tsi_ 로 시작되는 상점아이디로만 테스트 결제가 가능합니다."); ?>
+            <?php echo help("tsi_ 로 시작되는 상점아이디로만 테스트 결제가 가능합니다."); ?>
         </td>
         <th scope="row"><label for="de_dacom_mertkey">LG텔레콤 mertkey</label></th>
-        <td>
-          <input type="text" name="de_dacom_mertkey" value="<?php echo $default['de_dacom_mertkey']; ?>" id="de_dacom_mertkey" size="40">
-    </td>
+        <td><input type="text" name="de_dacom_mertkey" value="<?php echo $default['de_dacom_mertkey']; ?>" id="de_dacom_mertkey" size="40"></td>
+    </tr>
     </tbody>
     </table>
 </section>
@@ -762,7 +763,7 @@ $pg_anchor = '<ul class="anchor">
             </select>
         </td>
     </tr>
-    <?php/*?>
+    <?php /* ?>
     <tr>
         <th scope="row"><label for="de_scroll_banner_use">스크롤배너 사용</label></th>
         <td>
@@ -773,7 +774,7 @@ $pg_anchor = '<ul class="anchor">
             </select>
         </td>
     </tr>
-    <?php*/?>
+    <?php */ ?>
     <tr>
         <th scope="row"><label for="de_level_sell">상품구입 권한</label></th>
         <td>
@@ -911,10 +912,6 @@ function byte_check(el_cont, el_byte)
     }
 }
 </script>
-
-<style>
-
-</style>
 
 <section id="anc_scf_sms" class="cbox" >
     <h2>SMS설정</h2>
