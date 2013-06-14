@@ -316,7 +316,7 @@ if (mysql_num_rows($result) == 0)
             <td class="td_bignum"><?php echo number_format($row2['ct_price']); ?></td>
             <td class="td_smallnum"><?php echo $fontqty1; ?><?php echo number_format($row2['ct_qty']); ?><?php echo $fontqty2; ?></td>
             <td class="td_bignum"><?php echo number_format($row2_tot_amount); ?></td>
-            <td><?php echo $ct_send_cost; ?></td>
+            <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
         </tr>
         <?php $cnt++; } ?>
         </tbody>

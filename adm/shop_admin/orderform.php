@@ -205,7 +205,7 @@ $pg_anchor = '<ul class="anchor">
                 <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
                 <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
                 <td class="td_bignum"><?php echo number_format($ct_point['소계']); ?></td>
-                <td class="td_smallmng"><?php echo $opt['ct_send_cost'] ? '착불' : '선불'; ?></td>
+                <td class="td_sendcost_by"><?php echo $opt['ct_send_cost'] ? '착불' : '선불'; ?></td>
                 <td class="td_smallmng"><?php echo get_yn($opt['ct_point_use']); ?></td>
                 <td class="td_smallmng"><?php echo get_yn($opt['ct_stock_use']); ?></td>
             </tr>

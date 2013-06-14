@@ -249,7 +249,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 <td class="td_num"><?php echo $row3['ct_qty']; ?></td>
                 <td class="td_num"><?php echo number_format($sub_point); ?></td>
                 <td class="td_bignum"><?php echo number_format($sub_amount); ?></td>
-                <td><?php echo $ct_send_cost; ?></td>
+                <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
                 <td class="td_smallmng"><?php echo $row3['ct_status']; ?></td>
             </tr>
 
