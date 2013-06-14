@@ -652,6 +652,26 @@ CREATE TABLE IF NOT EXISTS `shop_mileage` (
   KEY `mb_id` (`mb_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shop_sendcost`
+--
+
+DROP TABLE IF EXISTS `shop_sendcost`;
+CREATE TABLE IF NOT EXISTS `shop_sendcost` (
+  `sc_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `sc_name` VARCHAR(255) NOT NULL DEFAULT '',
+  `sc_zip1` VARCHAR(10) NOT NULL DEFAULT '',
+  `sc_zip2` VARCHAR(10) NOT NULL DEFAULT '',
+  `sc_amount` INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`sc_id`),
+  KEY `sc_zip1` (`sc_zip1`),
+  KEY `sc_zip2` (`sc_zip2`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `shop_wish`
 --
