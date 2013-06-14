@@ -6,7 +6,7 @@ include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 auth_check($auth[$sub_menu], "w");
 
 $sql = " select *
-           from {$g4['shop_item_ps_table']} a
+           from {$g4['shop_item_use_table']} a
            left join {$g4['member_table']} b on (a.mb_id = b.mb_id)
            left join {$g4['shop_item_table']} c on (a.it_id = c.it_id)
           where is_id = '$is_id' ";
@@ -16,13 +16,17 @@ if (!$is['is_id'])
 
 $name = get_sideview($is['mb_id'], get_text($is['is_name']), $is['mb_email'], $is['mb_homepage']);
 
+// 확인
+$is_confirm_yes  =  $is['is_confirm'] ? 'checked="checked"' : '';
+$is_confirm_no   = !$is['is_confirm'] ? 'checked="checked"' : '';
+
 $g4['title'] = '사용후기';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 ?>
 
-<form name="fitemps" method="post" onsubmit="return fitemps_submit(this);">
+<form name="fitemuseform" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuseform_submit(this);">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
@@ -62,11 +66,10 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     <tr>
         <th scope="row">확인</th>
         <td>
-            <?php if($is['is_confirm']) { ?>
-            <input type="submit" name="btn_no_display" value="사용후기 보이지 않기" class="btn_frmline">
-            <?php } else { ?>
-            <input type="submit" name="btn_confirm" value="사용후기 보이기" class="btn_frmline">
-            <?php } ?>
+            <input type="radio" name="is_confirm" value="1" id="is_confirm_yes" <?php echo $is_confirm_yes; ?>>
+            <label for="is_confirm_yes">예</label>
+            <input type="radio" name="is_confirm" value="0" id="is_confirm_no" <?php echo $is_confirm_no; ?>>
+            <label for="is_confirm_no">아니오</label>
         </td>
     </tr>
     </tbody>
@@ -75,16 +78,15 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 
 <div class="btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./itempslist.php?<?php echo $qstr; ?>">목록</a>
+    <a href="./itemuselist.php?<?php echo $qstr; ?>">목록</a>
 </div>
 </form>
 
 <script>
-function fitemps_submit(f)
+function fitemuseform_submit(f)
 {
     <?php echo get_editor_js('is_content'); ?>
-
-    f.action="./itempsformupdate.php";
+    
     return true;
 }
 </script>

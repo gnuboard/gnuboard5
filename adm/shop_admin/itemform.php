@@ -201,7 +201,7 @@ $pg_anchor ='<ul class="anchor">
                 <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
                 <span class="frm_ca_id"><?php echo $it['it_id']; ?></span>
                 <a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $it_id; ?>" class="btn_frmline">상품확인</a>
-                <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itempslist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">사용후기</a>
+                <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemuselist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">사용후기</a>
                 <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemqalist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">상품문의</a>
             <?php } ?>
         </td>

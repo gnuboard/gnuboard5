@@ -136,7 +136,7 @@ function imageview(id, w, h)
             </a>
         </li>
         <li>
-            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itempslist.php">
+            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemuselist.php">
                 <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sps.jpg" alt="" width="40" height="40">
                 사용후기
             </a>

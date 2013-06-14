@@ -4,8 +4,8 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 $it_id = $_REQUEST['it_id'];
 
-$itemuse_write = G4_BBS_URL.'/write.php?bo_table=itemuse&amp;wr_1='.$it_id;
-$itemuse_board = G4_BBS_URL.'/board.php?bo_table=itemuse&amp;wr_1='.$it_id;
+$itemuse_form = "./itemuseform.php?it_id=".$it_id;
+$itemuse_list = "./itemuselist.php";
 
 include_once(G4_PATH.'/head.sub.php');
 ?>
@@ -30,7 +30,7 @@ include_once(G4_PATH.'/head.sub.php');
     wr_4 : 관리자확인
 */
 //$sql_common = " from `{$g4['write_prefix']}itemuse` where wr_is_comment = 0 and wr_1 = '{$it['it_id']}' and wr_4 = '1' ";
-$sql_common = " from `{$g4['write_prefix']}itemuse` where wr_is_comment = 0 and wr_1 = '{$it_id}' ";
+$sql_common = " from `{$g4['shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select COUNT(*) as cnt " . $sql_common;
@@ -42,34 +42,34 @@ $total_page  = ceil($total_count / $rows); // 전체 페이지 계산
 if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 레코드 구함
 
-$sql = "select * $sql_common order by wr_num limit $from_record, $rows ";
+$sql = "select * $sql_common order by is_id desc limit $from_record, $rows ";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $use_num     = $total_count - ($page - 1) * $rows - $i;
-    $use_star    = get_star($row['wr_3']);
-    $use_name    = get_text($row['wr_name']);
-    $use_subject = conv_subject($row['wr_subject'],50,"…");
-    //$use_content = ($row['wr_content']);
-    $use_content = get_view_thumbnail($row['wr_content'], 300);
-    $use_time    = substr($row['wr_datetime'], 2, 8);
-    $use_href    = G4_BBS_URL.'/board.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
+    $is_num     = $total_count - ($page - 1) * $rows - $i;
+    $is_star    = get_star($row['is_score']);
+    $is_name    = get_text($row['is_name']);
+    $is_subject = conv_subject($row['is_subject'],50,"…");
+    //$is_content = ($row['wr_content']);
+    $is_content = get_view_thumbnail($row['is_content'], 300);
+    $is_time    = substr($row['is_time'], 2, 8);
+    $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
 
     // http://stackoverflow.com/questions/6967081/show-hide-multiple-divs-with-jquery?answertab=votes#tab-top
 ?>
 
 <tr>
-    <td class="td_num"><?php echo $use_num; ?><span class="sound_only">번</span></td>
+    <td class="td_num"><?php echo $is_num; ?><span class="sound_only">번</span></td>
     <td>
-        <a href="<?php echo $use_href; ?>" class="use_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $use_subject; ?></a>
+        <a href="#sit_use" class="use_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $is_subject; ?></a>
         <div id="use_div<?php echo $i; ?>" class="use_div" style="display:none;">
-            <?php echo $use_content; ?>
+            <?php echo $is_content; ?>
         </div>
     </td>
-    <td><?php echo $use_name; ?></td>
-    <td><?php echo $use_time; ?></td>
-    <td><img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $use_star; ?>.png" alt="별<?php echo $use_star; ?>개"></td>
+    <td><?php echo $is_name; ?></td>
+    <td><?php echo $is_time; ?></td>
+    <td><img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></td>
 </tr>
 
 <?php
@@ -126,23 +126,25 @@ echo itemuse_page(10, $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page="
 
 <div class="sit_use_btn">
     <!-- <a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a> -->
-    <a href="<?php echo $itemuse_write; ?>" id="itemuse_write" onclick="return false;" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
-    <a href="<?php echo $itemuse_board; ?>" id="itemuse_board" target="_blank" class="btn01">더보기</a>
+    <a href="<?php echo $itemuse_form; ?>" id="itemuse_form" onclick="return false;" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기</a>
 </div>
 
 <script>
 $(function(){
-    $("#itemuse_write").click(function(){
-        window.open(this.href, "itemuse_write", "width=800,height=550"); 
-    });
-
-    $("#itemuse_board").click(function(){
-        window.open(this.href, "itemuse_board", "width=800,height=550"); 
+    $("#itemuse_form").click(function(){
+        window.open(this.href, "itemuse_form", "width=800,height=550"); 
     });
 
     $(".use_href").click(function(){
-        $(".use_div").hide();
-        $("#use_div"+$(this).attr("target")).show();
+        var $content = $("#use_div"+$(this).attr("target"));
+        $(".use_div").each(function(index, value){
+            if ($(this).get(0) == $content.get(0)) { // 객체의 비교시 .get(0) 를 사용한다.
+                $(this).is(":hidden") ? $(this).show() : $(this).hide();
+            } else {
+                $(this).hide();
+            }
+        });
     });
 
     $(".pg_page").click(function(){

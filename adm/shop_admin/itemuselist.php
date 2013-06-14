@@ -28,7 +28,7 @@ if (!$sst) {
     $sod = "desc";
 }
 
-$sql_common = "  from {$g4['shop_item_ps_table']} a
+$sql_common = "  from {$g4['shop_item_use_table']} a
                  left join {$g4['shop_item_table']} b on (a.it_id = b.it_id)
                  left join {$g4['member_table']} c on (a.mb_id = c.mb_id) ";
 $sql_common .= $sql_search;
@@ -66,7 +66,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 
     <span>
         <?php echo $listall; ?>
-        전체 문의내역 <?php echo $total_count; ?>건
+        전체 후기내역 <?php echo $total_count; ?>건
     </span>
 
     <label for="sca" class="sound_only">분류선택</label>
@@ -112,9 +112,21 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <li><?php echo subject_sort_link("is_confirm"); ?>확인</a></li>
     </ul>
 
+    <form name="fitemuselist" method="post" action="./itemuselistupdate.php" onsubmit="return fitemuselist_submit(this);" autocomplete="off">
+    <input type="hidden" name="sca" value="<?php echo $sca; ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst; ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod; ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+
     <table class="frm_basic">
     <thead>
     <tr>
+        <th scope="col">
+            <label for="chkall" class="sound_only">사용후기 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col">상품명</th>
         <th scope="col">이름</th>
         <th scope="col">제목</th>
@@ -125,26 +137,31 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     </thead>
     <tbody>
     <?php
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
         $row['is_subject'] = cut_str($row['is_subject'], 30, "...");
-
         $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-
         $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row['mb_email'], $row['mb_homepage']);
-
-        $confirm = $row['is_confirm'] ? 'Y' : '&nbsp;';
+        $is_content = get_view_thumbnail($row['is_content'], 300);
     ?>
 
     <tr>
+        <td>
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['is_subject']) ?> 사용후기</label>
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
+            <input type="hidden" name="is_id[<?php echo $i; ?>]" value="<?php echo $row['is_id']; ?>">
+        </td>
         <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
         <td class="td_name"><?php echo $name; ?></td>
-        <td class="sit_ps_subject"><?php echo $row['is_subject']; ?></td>
+        <td class="sit_use_subject">
+            <a href="#" class="use_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $row['is_subject']; ?></a>
+            <div id="use_div<?php echo $i; ?>" class="use_div" style="display:none;">
+                <?php echo $is_content; ?>
+            </div>
+        </td>
         <td class="td_num"><?php echo $row['is_score']; ?></td>
-        <td class="sit_ps_confirm"><?php echo $confirm; ?></td>
+        <td class="sit_use_confirm"><input type="checkbox" name="is_confirm[<?php echo $i; ?>]" <?php echo ($row['is_confirm'] ? 'checked' : ''); ?> value="1"></td>
         <td class="td_smallmng">
-            <a href="./itempsform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;$qstr"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>수정</a>
-            <a href="./itempsformupdate.php?w=d&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>삭제</a>
+            <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;$qstr"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>수정</a>
         </td>
     </tr>
 
@@ -152,16 +169,52 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="6" class="empty_table">자료가 없습니다.</td></tr>';
+        echo '<tr><td colspan="7" class="empty_table">자료가 없습니다.</td></tr>';
     }
     ?>
     </tbody>
     </table>
 
+    <div class="btn_list">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+    </div>
+    </form>
+
 </section>
 
-
 <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+
+<script>
+function fitemuselist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+$(function(){
+    $(".use_href").click(function(){
+        var $content = $("#use_div"+$(this).attr("target"));
+        $(".use_div").each(function(index, value){
+            if ($(this).get(0) == $content.get(0)) { // 객체의 비교시 .get(0) 를 사용한다.
+                $(this).is(":hidden") ? $(this).show() : $(this).hide();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
+</script>
 
 <?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');

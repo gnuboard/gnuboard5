@@ -754,12 +754,12 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_item_ps_use">사용후기</label></th>
+        <th scope="row"><label for="de_item_use_use">사용후기</label></th>
         <td>
              <?php echo help("사용후기가 올라오면, 즉시 출력 혹은 관리자 승인 후 출력 여부를 설정합니다.", 50); ?>
-            <select name="de_item_ps_use" id="de_item_ps_use">
-                <option value="0" <?php echo get_selected($default['de_item_ps_use'], 0); ?>>즉시 출력</option>
-                <option value="1" <?php echo get_selected($default['de_item_ps_use'], 1); ?>>관리자 승인 후 출력</option>
+            <select name="de_item_use_use" id="de_item_use_use">
+                <option value="0" <?php echo get_selected($default['de_item_use_use'], 0); ?>>즉시 출력</option>
+                <option value="1" <?php echo get_selected($default['de_item_use_use'], 1); ?>>관리자 승인 후 출력</option>
             </select>
         </td>
     </tr>

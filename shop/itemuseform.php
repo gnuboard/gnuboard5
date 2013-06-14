@@ -1,37 +1,35 @@
 <?php
 include_once("./_common.php");
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
-$w     = substr($_REQUEST['w'],0,1);
-$it_id = substr($_REQUEST['it_id'],0,10);
-$is_id = (int)$_REQUEST['is_id'];
+// 사용후기의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
+$is_content_max_length = 10000;
+
+$w     = escape_trim($_REQUEST['w']);
+$it_id = escape_trim($_REQUEST['it_id']);
+$is_id = escape_trim($_REQUEST['is_id']);
 
 if (!$is_member) {
-    alert_close("사용후기는 회원만 평가가 가능합니다.");
+    alert("사용후기는 회원만 평가가 가능합니다.", G4_BBS_URL."/login.php");
 }
 
 if ($w == "") {
     $is_score = 10;
 } else if ($w == "u") {
-    $ps = sql_fetch(" select * from {$g4['shop_item_ps_table']} where is_id = '$is_id' ");
-    if (!$ps) {
+    $use = sql_fetch(" select * from {$g4['shop_item_use_table']} where is_id = '$is_id' ");
+    if (!$use) {
         alert_close("사용후기 정보가 없습니다.");
     }
 
-    $it_id    = $ps['it_id'];
-    $is_score = $ps['is_score'];
-}
+    $it_id    = $use['it_id'];
+    $is_score = $use['is_score'];
 
-if ($w == "u") {
-    if (!$is_admin && $ps['mb_id'] != $member['mb_id']) {
+    if (!$is_admin && $use['mb_id'] != $member['mb_id']) {
         alert_close("자신의 사용후기만 수정이 가능합니다.");
     }
 }
 
-include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 include_once(G4_PATH.'/head.sub.php');
-
-$captcha_html = captcha_html();
 ?>
 <style>
 ul {list-style:none;margin:0px;padding:0px;}
@@ -39,7 +37,7 @@ label {width:130px;vertical-align:top;padding:3px 0;}
 </style>
 
 <div style="padding:10px;">
-    <form name="fitemuse" method="post" onsubmit="return fitemuse_submit(this);" autocomplete="off">
+    <form name="fitemuse" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuse_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
@@ -48,11 +46,11 @@ label {width:130px;vertical-align:top;padding:3px 0;}
     <ul style="padding:10px;">
         <li>
             <label for="is_subject">제목</label>
-            <input type='text' id='is_subject' name='is_subject' size='100' class='ed' minlength='2' required itemname='제목' value='<?php echo get_text($ps['is_subject']); ?>'>
+            <input type="text" id="is_subject" name="is_subject" size="100" class="ed" minlength="2" maxlength="250" required itemname="제목" value="<?php echo get_text($use['is_subject']); ?>">
         </li>
         <li>
             <label for="" style="width:200px;">내용</label>
-            <?php echo editor_html('is_content', $ps['is_content']); ?>
+            <?php echo editor_html('is_content', $use['is_content']); ?>
         </li>
         <li>
             <label>평가</label>
@@ -61,10 +59,6 @@ label {width:130px;vertical-align:top;padding:3px 0;}
             <input type=radio name=is_score value='6'  <?php echo ($is_score==6)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star3.gif' align=absmiddle>
             <input type=radio name=is_score value='4'  <?php echo ($is_score==4)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star2.gif' align=absmiddle>
             <input type=radio name=is_score value='2'  <?php echo ($is_score==2)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star1.gif' align=absmiddle>
-        </li>
-        <li>
-            <label style="vertical-align:middle;"></label>
-            <?php echo $captcha_html; ?>
         </li>
     </ul>
     <input type="submit" value="   확   인   ">
@@ -77,30 +71,37 @@ self.focus();
 
 function fitemuse_submit(f)
 {
+    /*
     if (document.getElementById('tx_is_content')) {
         var len = ed_is_content.inputLength();
         if (len == 0) {
             alert('내용을 입력하십시오.');
             ed_is_content.returnFalse();
             return false;
-        } else if (len > 5000) {
-            alert('내용은 5000글자 까지만 입력해 주세요.');
+        } else if (len > 1000) {
+            alert('내용은 1000글자 까지만 입력해 주세요.');
             ed_is_content.returnFalse();
             return false;
         }
     }
+    */
 
     <?php echo get_editor_js('is_content'); ?>
 
-    <?php echo chk_captcha_js(); ?>
+    if (is_content_editor_data.length > <?php echo $is_content_max_length; ?>) {
+        alert("내용은 <?php echo $is_content_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+is_content_editor_data.length+" 글자");
+        CKEDITOR.instances.is_content.focus(); 
+        return false;
+    }
 
-    f.action = "./itemusewinupdate.php";
+    return true;
 }
 
 $(function() {
     $("#is_subject").focus();
 });
 </script>
+
 <?php
 include_once(G4_PATH.'/tail.sub.php');
 ?>

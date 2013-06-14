@@ -49,7 +49,7 @@ if (!function_exists("itemdelete")) {
         sql_query($sql);
 
         // 사용후기삭제
-        $sql = " delete from {$g4['shop_item_ps_table']} where it_id = '$it_id' ";
+        $sql = " delete from {$g4['shop_item_use_table']} where it_id = '$it_id' ";
         sql_query($sql);
 
         // 상품문의삭제
