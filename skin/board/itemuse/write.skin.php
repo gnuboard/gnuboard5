@@ -1,17 +1,10 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once($board_skin_path."/_common.skin.php");
 
-// 상품코드
-if (!$wr_1) {
-    alert("wr_1 에 상품코드를 넘겨주세요.");
-}
-
-// 상품명
-if (!$wr_2) {
-    $sql = " select it_name from {$g4['shop_item_table']} where it_id = '$wr_1' ";
-    $row = sql_fetch($sql);
-    $wr_2 = $row['it_name'];
-}
+$sql = " select it_name from {$g4['shop_item_table']} where it_id = '$wr_1' ";
+$row = sql_fetch($sql);
+$wr_2 = $row['it_name'];
 ?>
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
@@ -80,36 +73,10 @@ echo $option_hidden;
 </tr>
 <?php } ?>
 
-<?php if ($is_email) { ?>
-<tr>
-    <th scope="row"><label for="wr_email">이메일</label></th>
-    <td><input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email" size="50" maxlength="100"></td>
-</tr>
-<?php } ?>
-
-<?php if ($is_homepage) { ?>
-<tr>
-    <th scope="row"><label for="wr_homepage">홈페이지</label></th>
-    <td><input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input" size="50"></td>
-</tr>
-<?php } ?>
-
 <?php if ($option) { ?>
 <tr>
     <th scope="row">옵션</th>
     <td><?php echo $option ?></td>
-</tr>
-<?php } ?>
-
-<?php if ($is_category) { ?>
-<tr>
-    <th scope="row"><label for="ca_name">분류<strong class="sound_only">필수</strong></label></th>
-    <td>
-        <select name="ca_name" id="ca_name" required class="required" >
-            <option value="">선택하세요</option>
-            <?php echo $category_option ?>
-        </select>
-    </td>
 </tr>
 <?php } ?>
 
@@ -122,28 +89,6 @@ echo $option_hidden;
     <th scope="row"><label for="wr_content">내용<strong class="sound_only">필수</strong></label></th>
     <td class="wr_content"><?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출  ?></td>
 </tr>
-
-<?php for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
-<tr>
-    <th scope="row"><label for="wr_link<?php echo $i ?>">링크 #<?php echo $i ?></label></th>
-    <td><input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input" size="50"></td>
-</tr>
-<?php } ?>
-
-<?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
-<tr>
-    <th scope="row">파일 #<?php echo $i+1 ?></th>
-    <td>
-        <input type="file" name="bf_file[]" title="파일첨부 <?php echo $i+1 ?> :  용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file frm_input">
-        <?php if ($is_file_content) { ?>
-        <input type="text" name="bf_content[]" value="<?php echo $file[$i]['bf_content'];  ?>" title="파일 설명을 입력해주세요." class="frm_file frm_input" size="50">
-        <?php } ?>
-        <?php if($w == 'u' && $file[$i]['file']) { ?>
-        <input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
-        <?php } ?>
-    </td>
-</tr>
-<?php } ?>
 
 <?php if ($is_guest) { //자동등록방지  ?>
 <tr>
