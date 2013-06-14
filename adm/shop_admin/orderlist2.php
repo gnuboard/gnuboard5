@@ -217,6 +217,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 <th scope="col">수량</th>
                 <th scope="col">포인트</th>
                 <th scope="col">소계</th>
+                <th scope="col">배송비</th>
                 <th scope="col">상태</th>
             </tr>
             </thead>
@@ -239,6 +240,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
                     $sub_amount = $row3['ct_qty'] * $ct_price;
                     $sub_point  = $row3['ct_qty'] * $row3['ct_point'];
+                    $ct_send_cost = ($row3['ct_send_cost'] ? '착불' : '선불');
             ?>
 
             <tr>
@@ -247,6 +249,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 <td class="td_num"><?php echo $row3['ct_qty']; ?></td>
                 <td class="td_num"><?php echo number_format($sub_point); ?></td>
                 <td class="td_bignum"><?php echo number_format($sub_amount); ?></td>
+                <td><?php echo $ct_send_cost; ?></td>
                 <td class="td_smallmng"><?php echo $row3['ct_status']; ?></td>
             </tr>
 
