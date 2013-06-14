@@ -178,6 +178,8 @@ $colspan = 8;
     </form>
 </section>
 
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&page="); ?>
+
 <script>
 function fcouponlist_submit(f)
 {
