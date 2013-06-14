@@ -39,7 +39,7 @@ if ($csv == 'csv')
     $to_date = date_conv($to_date);
 
 
-    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option
+    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost
                FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
               where a.uq_id = b.uq_id ";
     if ($case == 1) // 출력기간
@@ -62,9 +62,11 @@ if ($csv == 'csv')
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
     //echo "우편번호,주소,이름,전화1,전화2,상품명,수량,비고,전하실말씀\n";
-    echo "우편번호,주소,이름,전화1,전화2,상품명,수량,선택사항,상품코드,주문번호,운송장번호,전하실말씀\n";
+    echo "우편번호,주소,이름,전화1,전화2,상품명,수량,선택사항,배송비,상품코드,주문번호,운송장번호,전하실말씀\n";
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
+        $ct_send_cost = ($row['ct_send_cost'] ? '착불' : '선불');
+
         echo '"'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'"'.',';
         echo '"'.$row['od_b_addr1'].' '.$row['od_b_addr2'].'"'.',';
         echo '"'.$row['od_b_name'].'"'.',';
@@ -75,6 +77,7 @@ if ($csv == 'csv')
         echo '"'.preg_replace("/\"/", "&#034;", $row['it_name']) . '"'.',';
         echo '"'.$row['ct_qty'].'"'.',';
         echo '"'.$row['ct_option'].'"'.',';
+        echo '"'.$ct_send_cost.'"'.',';
         echo '"\''.$row['it_id'].'\'"'.',';
         echo '"\''.$row['od_id'].'\'"'.',';
         echo '"'.$row['od_invoice'].'"'.',';
@@ -95,7 +98,7 @@ if ($csv == 'xls')
     $to_date = date_conv($to_date);
 
 
-    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option
+    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost
                FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
               where a.uq_id = b.uq_id ";
     if ($case == 1) // 출력기간
@@ -132,6 +135,7 @@ if ($csv == 'xls')
     echo '<td>상품명</td>';
     echo '<td>수량</td>';
     echo '<td>선택사항</td>';
+    echo '<td>배송비</td>';
     echo '<td>상품코드</td>';
     echo '<td>주문번호</td>';
     echo '<td>운송장번호</td>';
@@ -140,8 +144,7 @@ if ($csv == 'xls')
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         $it_name = stripslashes($row['it_name']) . "<br />";
-        $it_name .= print_item_options($row['it_id'], $row['it_opt1'], $row['it_opt2'], $row['it_opt3'], $row['it_opt4'], $row['it_opt5'], $row['it_opt6']);
-
+        $ct_send_cost = ($row['ct_send_cost'] ? '착불' : '선불');
         echo '<tr>';
         echo '<td>'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'</td>';
         echo '<td>'.$row['od_b_addr1'].' '.$row['od_b_addr2'].'</td>';
@@ -151,6 +154,7 @@ if ($csv == 'xls')
         echo '<td>'.$it_name.'</td>';
         echo '<td>'.$row['ct_qty'].'</td>';
         echo '<td>'.$row['ct_option'].'</td>';
+        echo '<td>'.$ct_send_cost.'</td>';
         echo '<td class="mso_txt">'.$row['it_id'].'</td>';
         echo '<td class="mso_txt">'. urlencode($row['od_id']).'</td>';
         echo '<td class="mso_txt">'.$row['od_invoice'].'</td>';
@@ -272,17 +276,17 @@ if (mysql_num_rows($result) == 0)
             <th scope="col">판매가</th>
             <th scope="col">수량</th>
             <th scope="col">소계</th>
+            <th scope="col">배송비</th>
         </tr>
         </thead>
         <tbody>
         <?php
-        $sql2 = " select    a.*
-                    from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
-                   where a.it_id = b.it_id
-                     and a.uq_id = '{$row['uq_id']}' ";
+        $sql2 = " select *
+                    from {$g4['shop_cart_table']}
+                   where uq_id = '{$row['uq_id']}' ";
         if ($ct_status)
-            $sql2 .= " and a.ct_status = '$ct_status' ";
-        $sql2 .= "  order by a.ct_id ";
+            $sql2 .= " and ct_status = '$ct_status' ";
+        $sql2 .= "  order by ct_id ";
 
         $res2 = sql_query($sql2);
         $cnt = $sub_tot_qty = $sub_tot_amount = 0;
@@ -297,6 +301,7 @@ if (mysql_num_rows($result) == 0)
 
             $it_name = stripslashes($row2['it_name']);
             $it_name = "$it_name ({$row2['ct_option']})";
+            $ct_send_cost = ($row2['ct_send_cost'] ? '착불' : '선불');
 
             $fontqty1 = $fontqty2 = "";
             if ($row2['ct_qty'] >= 2)
@@ -311,6 +316,7 @@ if (mysql_num_rows($result) == 0)
             <td class="td_bignum"><?php echo number_format($row2['ct_price']); ?></td>
             <td class="td_smallnum"><?php echo $fontqty1; ?><?php echo number_format($row2['ct_qty']); ?><?php echo $fontqty2; ?></td>
             <td class="td_bignum"><?php echo number_format($row2_tot_amount); ?></td>
+            <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
         </tr>
         <?php $cnt++; } ?>
         </tbody>
@@ -319,6 +325,7 @@ if (mysql_num_rows($result) == 0)
             <th scope="row" colspan="2">합계</th>
             <td><?php echo number_format($sub_tot_qty); ?></td>
             <td><?php echo number_format($sub_tot_amount); ?></td>
+            <td></td>
         </tr>
         </tfoot>
         </table>

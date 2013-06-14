@@ -15,7 +15,7 @@ if ($od_receipt_time)
 $sql = " update {$g4['shop_order_table']}
             set od_deposit_name    = '$od_deposit_name',
                 od_bank_account    = '$od_bank_account',
-                od_receipt_time    = '$od_bank_time',
+                od_receipt_time    = '$od_receipt_time',
                 od_receipt_amount  = '$od_receipt_amount',
                 od_receipt_point   = '$od_receipt_point',
                 od_cancel_card     = '$od_cancel_card',

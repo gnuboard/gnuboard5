@@ -352,7 +352,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             // 현금영수증 발급을 사용하는 경우에만
             if ($default['de_taxsave_use']) {
                 // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-                if ($misu_amount == 0 && $od['od_receipt_bank'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
+                if ($misu_amount == 0 && $od['od_receipt_amount'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
                     if ($default['de_card_pg'] == 'kcp') {
             ?>
             <tr>

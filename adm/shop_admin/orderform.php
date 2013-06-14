@@ -166,6 +166,7 @@ $pg_anchor = '<ul class="anchor">
                 <th scope="col">판매가</th>
                 <th scope="col">소계</th>
                 <th scope="col">포인트</th>
+                <th scope="col">배송비</th>
                 <th scope="col">포인트반영</th>
                 <th scope="col">재고반영</th>
             </tr>
@@ -173,7 +174,7 @@ $pg_anchor = '<ul class="anchor">
             <tbody>
             <?php
             // 상품의 옵션정보
-            $sql = " select ct_id, it_id, ct_price, ct_qty, ct_option, ct_status, ct_stock_use, ct_point_use, io_type, io_price
+            $sql = " select ct_id, it_id, ct_price, ct_qty, ct_option, ct_status, ct_stock_use, ct_point_use, ct_send_cost, io_type, io_price
                         from {$g4['shop_cart_table']}
                         where uq_id = '{$od['uq_id']}'
                           and it_id = '{$row['it_id']}'
@@ -204,6 +205,7 @@ $pg_anchor = '<ul class="anchor">
                 <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
                 <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
                 <td class="td_bignum"><?php echo number_format($ct_point['소계']); ?></td>
+                <td class="td_sendcost_by"><?php echo $opt['ct_send_cost'] ? '착불' : '선불'; ?></td>
                 <td class="td_smallmng"><?php echo get_yn($opt['ct_point_use']); ?></td>
                 <td class="td_smallmng"><?php echo get_yn($opt['ct_stock_use']); ?></td>
             </tr>

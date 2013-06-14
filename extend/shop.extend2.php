@@ -312,4 +312,20 @@ if(!$result) {
                     ADD `od_receipt_amount` INT(11) NOT NULL DEFAULT '0' AFTER `od_temp_point`,
                     ADD `od_receipt_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `od_bank_account` ", false);
 }
+
+// 추가배송비 테이블
+$sql = " select sc_id from {$g4['shop_sendcost_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_sendcost_table']}` (
+                  `sc_id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `sc_name` VARCHAR(255) NOT NULL DEFAULT '',
+                  `sc_zip1` VARCHAR(10) NOT NULL DEFAULT '',
+                  `sc_zip2` VARCHAR(10) NOT NULL DEFAULT '',
+                  `sc_amount` INT(11) NOT NULL DEFAULT '0',
+                  PRIMARY KEY (`sc_id`),
+                  KEY `sc_zip1` (`sc_zip1`),
+                  KEY `sc_zip2` (`sc_zip2`)
+                )", true);
+}
 ?>

@@ -57,9 +57,8 @@ $pg_anchor = '<ul class="anchor">
         }
         else
         {
-            if ($row['od_receipt_bank'])  $settle_method .= "무통장";
-            if ($row['od_receipt_card'])  $settle_method .= "카드";
-            if ($row['od_receipt_point']) $settle_method .= "포인트";
+            $settle_method .= '미입력';
+            if ($row['od_receipt_point']) $settle_method .= '포인트';
         }
     ?>
     <tr>
@@ -67,7 +66,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="td_name"><?php echo $name; ?></td>
         <td class="td_bignum"><?php echo display_price($row['receiptamount']); ?></td>
         <td class="td_payby"><?php echo $settle_method; ?></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['od_id']; ?> 수정"></a></td>
+        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
     </tr>
     <?php
     }
@@ -122,9 +121,8 @@ $pg_anchor = '<ul class="anchor">
         }
         else
         {
-            if ($row['od_temp_bank'])   $settle_method  .= "무통장";
-            if ($row['od_temp_card'])   $settle_method .= "카드";
-            if ($row['od_temp_milage']) $settle_method .= "포인트";
+            $settle_method .= '미입력';
+            if ($row['od_temp_point']) $settle_method .= '포인트';
         }
     ?>
     <tr>
@@ -132,7 +130,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="td_name"><?php echo $name; ?></td>
         <td class="td_bignum"><?php echo display_price($row['orderamount']); ?></td>
         <td class="td_payby"><?php echo $settle_method; ?></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['od_id']; ?> 수정"></a></td>
+        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
     </tr>
     <?php
     }
@@ -160,7 +158,11 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
+<<<<<<< HEAD
     $sql = " select * from {$g4[shop_item_use_table]}
+=======
+    $sql = " select * from {$g4['shop_item_ps_table']}
+>>>>>>> master
               where is_confirm = 0
               order by is_id desc
               limit $max_limit ";
@@ -175,7 +177,11 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_name"><?php echo $name; ?></td>
         <td><?php echo cut_str($row['is_subject'],40); ?></td>
+<<<<<<< HEAD
         <td class="td_smallmng"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
+=======
+        <td class="td_smallmng"><a href="./itempsform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>">수정</a></td>
+>>>>>>> master
     </tr>
     <?php
     }
