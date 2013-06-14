@@ -143,8 +143,8 @@ if(!$default['de_card_test']) {
     {
         // 주문서 UPDATE
         $sql = " update {$g4['shop_order_table']}
-                    set od_receipt_bank = '$ipgm_mnyx',
-                        od_bank_time = '$tx_tm'
+                    set od_receipt_amount = '$ipgm_mnyx',
+                        od_receipt_time = '$tx_tm'
                   where od_id = '$order_no'
                     and od_escrow1 = '$tno' ";
         sql_query($sql, FALSE);

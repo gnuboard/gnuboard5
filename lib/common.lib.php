@@ -1964,7 +1964,7 @@ function html_end()
     $buffer = ob_get_contents();
     ob_end_clean();
     preg_match('#<body>(.*)</body>#is', $buffer, $bodys);
-    preg_match_all('/(\r|\n)<link[^>]+>/i', $bodys[0], $links);
+    preg_match_all('/(\r|\n)?<link[^>]+>/i', $bodys[0], $links);
     $stylesheet = '';
     $links[0] = array_unique($links[0]);
     foreach ($links[0] as $key=>$link) {

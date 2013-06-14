@@ -302,4 +302,14 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
                     ADD `ct_send_cost` TINYINT(11) NOT NULL DEFAULT '0' AFTER `io_price` ", false);
 }
+
+// 결제필드 변경
+$sql = " select od_temp_amount from {$g4['shop_order_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_temp_amount` INT(11) NOT NULL DEFAULT '0' AFTER `od_send_coupon`,
+                    ADD `od_receipt_amount` INT(11) NOT NULL DEFAULT '0' AFTER `od_temp_point`,
+                    ADD `od_receipt_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `od_bank_account` ", false);
+}
 ?>

@@ -162,9 +162,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <div id="sod_fin_view">
         <h2>결제/배송 정보</h2>
         <?php
-        $receipt_amount = $od['od_receipt_bank']
-                        + $od['od_receipt_card']
-                        + $od['od_receipt_hp']
+        $receipt_amount = $od['od_receipt_amount']
                         + $od['od_receipt_point']
                         - $od['od_cancel_card']
                         - $od['od_refund_amount'];
@@ -274,16 +272,16 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                 <td><?php echo $od['od_settle_case']; ?></td>
             </tr>
                 <?php
-                if ($od['od_receipt_bank'])
+                if ($od['od_receipt_amount'])
                 {
                 ?>
             <tr>
                 <th scope="row">입금액</th>
-                <td><?php echo display_price($od['od_receipt_bank']); ?></td>
+                <td><?php echo display_price($od['od_receipt_amount']); ?></td>
             </tr>
             <tr>
                 <td scope="row">입금확인일시</th>
-                <td><?php echo $od['od_bank_time']; ?></td>
+                <td><?php echo $od['od_receipt_time']; ?></td>
             </tr>
                 <?php
                 }
@@ -354,7 +352,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             // 현금영수증 발급을 사용하는 경우에만
             if ($default['de_taxsave_use']) {
                 // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-                if ($misu_amount == 0 && $od['od_receipt_bank']) {
+                if ($misu_amount == 0 && $od['od_receipt_bank'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
                     if ($default['de_card_pg'] == 'kcp') {
             ?>
             <tr>
@@ -547,7 +545,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <?php
         // 취소한 내역이 없다면
         if ($tot_cancel_amount == 0) {
-            if ($od['od_temp_bank'] > 0 && $od['od_receipt_bank'] == 0) {
+            if ($od['od_temp_amount'] > 0 && $od['od_receipt_amount'] == 0) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 

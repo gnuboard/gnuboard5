@@ -301,22 +301,22 @@ $i_amount = $i_amount + $i_send_cost - $i_temp_point;
 
 if ($od_settle_case == "무통장")
 {
-    $od_temp_bank       = $i_amount;
+    $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
     $od_receipt_point   = $i_temp_point;
-    $od_receipt_bank    = 0;
+    $od_receipt_amount  = 0;
 }
 else if ($od_settle_case == "계좌이체")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
-    $od_temp_bank       = $i_amount;
+    $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
 
     $od_escrow1         = $tno;
-    $od_receipt_bank    = $amount;
+    $od_receipt_amount  = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_bank_time       = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $od_bank_account    = $od_settle_case;
     $od_deposit_name    = $od_name;
     $bank_name          = iconv("cp949", "utf8", $bank_name);
@@ -327,7 +327,7 @@ else if ($od_settle_case == "가상계좌")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
-    $od_temp_bank       = $i_amount;
+    $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
     $od_receipt_point   = 0;
 
@@ -343,13 +343,13 @@ else if ($od_settle_case == "휴대폰")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
-    $od_temp_bank       = $i_amount;
+    $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
 
     $od_escrow1         = $tno;
-    $od_receipt_hp      = $amount;
+    $od_receipt_amount  = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_hp_time         = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $od_bank_account    = $commid.' '.$mobile_no;
     $pg_amount          = $amount;
 }
@@ -357,13 +357,13 @@ else if ($od_settle_case == "신용카드")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
-    $od_temp_card       = $i_amount;
+    $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
 
     $od_escrow1         = $tno;
-    $od_receipt_card    = $amount;
+    $od_receipt_amount  = $amount;
     $od_receipt_point   = $i_temp_point;
-    $od_card_time       = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $card_name          = iconv("cp949", "utf8", $card_name);
     $od_bank_account    = $card_name;
     $pg_amount          = $amount;
@@ -420,18 +420,12 @@ $sql = " insert {$g4['shop_order_table']}
                 od_send_cost      = '$od_send_cost',
                 od_send_coupon    = '$tot_sc_cp_amount',
                 od_coupon         = '$tot_od_cp_amount',
-                od_temp_bank      = '$od_temp_bank',
-                od_temp_card      = '$od_receipt_card',
-                od_temp_hp        = '$od_receipt_hp',
+                od_temp_amount    = '$od_temp_amount',
                 od_temp_point     = '$od_temp_point',
-                od_receipt_bank   = '$od_receipt_bank',
-                od_receipt_card   = '$od_receipt_card',
-                od_receipt_hp     = '$od_receipt_hp',
+                od_receipt_amount = '$od_receipt_amount',
                 od_receipt_point  = '$od_receipt_point',
                 od_bank_account   = '$od_bank_account',
-                od_bank_time      = '$od_bank_time',
-                od_card_time      = '$od_card_time',
-                od_hp_time        = '$od_hp_time',
+                od_receipt_time   = '$od_receipt_time',
                 od_escrow1        = '$od_escrow1',
                 od_shop_memo      = '',
                 od_hope_date      = '$od_hope_date',

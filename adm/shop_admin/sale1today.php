@@ -16,11 +16,11 @@ $sql = " select od_id,
                 od_name,
                 uq_id,
                 od_send_cost,
-                od_receipt_bank,
-                od_receipt_card,
+                od_settle_case,
+                od_receipt_amount,
                 od_receipt_point,
                 od_dc_amount,
-                (od_receipt_bank + od_receipt_card + od_receipt_point) as receiptamount,
+                (od_receipt_amount + od_receipt_point) as receiptamount,
                 (od_refund_amount + od_cancel_card) as receiptcancel
            from {$g4['shop_order_table']}
           where SUBSTRING(od_time,1,10) = '$date'
@@ -44,8 +44,10 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $tot['orderamount']   += $row1['orderamount'];
     $tot['ordercancel']   += $row1['ordercancel'];
     $tot['dc']            += $row['od_dc_amount'];
-    $tot['receipt_bank']  += $row['od_receipt_bank'];
-    $tot['receipt_card']  += $row['od_receipt_card'];
+    if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
+        $tot['receipt_bank']  += $row['od_receipt_amount'];
+    if($row['od_settle_case'] == '신용카드')
+        $tot['receipt_card']  += $row['od_receipt_amount'];
     $tot['receipt_point'] += $row['od_receipt_point'];
     $tot['receiptamount'] += $row['receiptamount'];
     $tot['receiptcancel'] += $row['receiptcancel'];
@@ -74,7 +76,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     <tr>
         <td colspan="2">합 계</td>
         <td><?php echo number_format($tot['orderamount']); ?></td>
-        <td><?php echo number_format($tot['ordercancel']+ $tot['dc']); ?></td>
+        <td><?php echo number_format($tot['ordercancel'] + $tot['dc']); ?></td>
         <td><?php echo number_format($tot['receipt_bank']); ?></td>
         <td><?php echo number_format($tot['receipt_card']); ?></td>
         <td><?php echo number_format($tot['receipt_point']); ?></td>
@@ -95,14 +97,20 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
         $misu = $lines1[$i]['orderamount'] - $lines1[$i]['ordercancel'] - $lines[$i]['od_dc_amount'] - $lines[$i]['receiptamount'] + $lines[$i]['receiptcancel'];
 
+        $receipt_bank = $receipt_card = 0;
+        if($lines[$i]['od_settle_case'] == '무통장' || $lines[$i]['od_settle_case'] == '가상계좌' || $lines[$i]['od_settle_case'] == '계좌이체')
+            $receipt_bank = $lines[$i]['od_receipt_amount'];
+        if($lines[$i]['od_settle_case'] == '신용카드')
+            $receipt_card = $lines[$i]['od_receipt_amount'];
+
     ?>
         <tr>
             <td class="td_odrnum2"><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a></td>
             <td class="td_name"><?php echo $href; ?><?php echo $lines[$i]['od_name']; ?></a></td>
             <td class="td_num"><?php echo number_format($lines1[$i]['orderamount']); ?></td>
             <td class="td_num"><?php echo number_format($lines1[$i]['ordercancel'] + $lines[$i]['od_dc_amount']); ?></td>
-            <td class="td_num"><?php echo number_format($lines[$i]['od_receipt_bank']); ?></td>
-            <td class="td_num"><?php echo number_format($lines[$i]['od_receipt_card']); ?></td>
+            <td class="td_num"><?php echo number_format($receipt_bank); ?></td>
+            <td class="td_num"><?php echo number_format($receipt_card); ?></td>
             <td class="td_num"><?php echo number_format($lines[$i]['od_receipt_point']); ?></td>
             <td class="td_num"><?php echo number_format($lines[$i]['receiptcancel']); ?></td>
             <td class="td_num"><?php echo number_format($misu); ?></td>

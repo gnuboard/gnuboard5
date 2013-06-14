@@ -58,11 +58,11 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <tbody>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">승인일시</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $card_list['od_card_time']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo $card_list['od_receipt_time']; ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">승인금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $card_list['od_receipt_card']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo $card_list['od_receipt_amount']; ?></td>
         </tr>
         </tbody>
         </table>
@@ -79,11 +79,11 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <tbody>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">확인일시</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $bank_list['od_bank_time']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo $bank_list['od_receipt_time']; ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">입금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $bank_list['od_receipt_bank']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo $bank_list['od_receipt_amount']; ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">입금자명</th>
