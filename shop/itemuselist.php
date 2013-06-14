@@ -2,11 +2,42 @@
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/thumb.lib.php');
 
+$sfl = escape_trim($_REQUEST['sfl']);
+$stx = escape_trim($_REQUEST['stx']);
+
 $g4['title'] = '사용후기';
 include_once('./_head.php');
 
-$sql_common = " from {$g4['shop_item_ps_table']} where is_confirm = '1' ";
-$sql_order = " order by is_time desc ";
+$sql_common = " from `{$g4['shop_item_use_table']}` a join `{$g4['shop_item_table']}` b on (a.it_id=b.it_id) ";
+$sql_search = " where a.is_confirm = '1' ";
+
+if ($stx) {
+    $sql_search .= " and ( ";
+    switch ($sfl) {
+        case "a.it_id" :
+            $sql_search .= " ($sfl like '$stx%') ";
+            break;
+        case "a.is_name" :
+        case "a.mb_id" :
+            $sql_search .= " ($sfl = '$stx') ";
+            break;
+        default :
+            $sql_search .= " ($sfl like '%$stx%') ";
+            break;
+    }
+    $sql_search .= " ) ";
+}
+
+if (!$sst) {
+    $sst  = "a.is_id";
+    $sod = "desc";
+}
+$sql_order = " order by $sst $sod ";
+
+/*
+$sql_common = " from {$g4['shop_item_use_table']} where is_confirm = '1' ";
+$sql_order = " order by is_id desc ";
+*/
 
 $sql = " select count(*) as cnt
          $sql_common
@@ -21,9 +52,25 @@ if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페�
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
+<a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
+
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<select name="sfl" required title="검색항목선택">
+<option value="">선택</option>
+<option value="b.it_name"   <?php echo get_selected($_GET['sfl'], "b.it_name", true); ?>>상품명</option>
+<option value="a.it_id"     <?php echo get_selected($_GET['sfl'], "a.it_id"); ?>>상품코드</option>
+<option value="a.is_subject"<?php echo get_selected($_GET['sfl'], "a.is_subject"); ?>>후기제목</option>
+<option value="a.is_content">후기제목</option>
+<option value="a.is_name">작성자명</option>
+<option value="a.mb_id">작성자아이디</option>
+</select>
+<input type="text" name="stx" required title="검색어" value="<?php echo $stx; ?>">
+<input type="submit" value="검색">
+</form>
+
 <div id="sps">
 
-    <p><?php echo $config['cf_title']; ?> 전체 사용후기 목록입니다.</p>
+    <!-- <p><?php echo $config['cf_title']; ?> 전체 사용후기 목록입니다.</p> -->
 
     <?php
     $sql = " select *
@@ -37,8 +84,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         $num = $total_count - ($page - 1) * $rows - $i;
         $star = get_star($row['is_score']);
 
-        $thumb = new g4_thumb(G4_DATA_PATH.'/itemuse', 500);
-        $is_content = $thumb->run($row['is_content']);
+        $is_content = get_view_thumbnail($row['is_content'], 500);
         $is_time = substr($row['is_time'], 2, 14);
         $small_image = $row['it_id'];
 
@@ -68,11 +114,11 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
                 <dd><img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $star; ?>.png" alt="별<?php echo $star; ?>개"></dd>
             </dl>
 
-            <p id="sps_con_<?php echo $i; ?>">
+            <div id="sps_con_<?php echo $i; ?>" style="display:none;">
                 <?php echo $is_content; // 상품 문의 내용 ?>
-            </p>
+            </div>
 
-            <div class="sps_con_btn"><button class="sps_con_<?php echo $i; ?>">더보기</button></div>
+            <div class="sps_con_btn"><button class="sps_con_<?php echo $i; ?>">보기</button></div>
         </section>
 
     </li>
@@ -89,15 +135,15 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 <script>
 $(function(){
     // 사용후기 더보기
-    $('.sps_con_btn button').click(function(){
-        $this = $(this);
-        sps_con_no = $this.attr('class');
-        $('#'+sps_con_no).toggleClass('sps_con_full');
+    $(".sps_con_btn button").click(function(){
+        var sps_con_no = $(this).attr("class");
+        $("#"+sps_con_no).is(":hidden") ? $("#"+sps_con_no).show() : $("#"+sps_con_no).hide();
     });
-    $('.sps_con_btn button').toggle(function(){
-        $this.text('닫기');
+
+    $(".sps_con_btn button").toggle(function(){
+        $(this).text("닫기");
     }, function(){
-        $this.text('더보기');
+        $(this).text("보기");
     });
 });
 </script>

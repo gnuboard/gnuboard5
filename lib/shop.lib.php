@@ -448,7 +448,7 @@ function get_star_image($it_id)
 {
     global $g4;
 
-    $sql = "select (SUM(is_score) / COUNT(*)) as score from {$g4['shop_item_ps_table']} where it_id = '$it_id' ";
+    $sql = "select (SUM(is_score) / COUNT(*)) as score from {$g4['shop_item_use_table']} where it_id = '$it_id' ";
     $row = sql_fetch($sql);
 
     return (int)get_star($row['score']);

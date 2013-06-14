@@ -280,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_sms_hp` varchar(255) NOT NULL DEFAULT '',
   `de_kcp_mid` varchar(255) NOT NULL DEFAULT '',
   `de_iche_use` tinyint(4) NOT NULL DEFAULT '0',
-  `de_item_ps_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_item_use_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_code_dup_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_cart_keep_term` int(11) NOT NULL DEFAULT '0',
   `de_guest_cart_use` tinyint(4) NOT NULL DEFAULT '0',
@@ -475,11 +475,11 @@ CREATE TABLE IF NOT EXISTS `shop_item_option` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_item_ps`
+-- Table structure for table `shop_item_use`
 --
 
-DROP TABLE IF EXISTS `shop_item_ps`;
-CREATE TABLE IF NOT EXISTS `shop_item_ps` (
+DROP TABLE IF EXISTS `shop_item_use`;
+CREATE TABLE IF NOT EXISTS `shop_item_use` (
   `is_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(20) NOT NULL DEFAULT '0',
   `mb_id` varchar(20) NOT NULL DEFAULT '',

@@ -160,7 +160,7 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g4[shop_item_ps_table]}
+    $sql = " select * from {$g4[shop_item_use_table]}
               where is_confirm = 0
               order by is_id desc
               limit $max_limit ";
@@ -175,7 +175,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_name"><?php echo $name; ?></td>
         <td><?php echo cut_str($row['is_subject'],40); ?></td>
-        <td class="td_smallmng"><a href="./itempsform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
+        <td class="td_smallmng"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
     </tr>
     <?php
     }
@@ -185,7 +185,7 @@ $pg_anchor = '<ul class="anchor">
     </table>
 
     <div class="btn_ft">
-        <a href="./itempslist.php?sort1=is_confirm&amp;sort2=asc">사용후기 더보기</a>
+        <a href="./itemuselist.php?sort1=is_confirm&amp;sort2=asc">사용후기 더보기</a>
     </div>
 </section>
 

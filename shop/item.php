@@ -147,6 +147,16 @@ if ($row['it_id']) {
     $next_href2 = '';
 }
 
+// 관리자가 확인하 사용후기의 갯수를 얻음
+$sql = " select count(*) as cnt from `{$g4['shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+$row = sql_fetch($sql);
+$item_use_count = $row['cnt'];
+
+// 상품문의의 갯수를 얻음
+$sql = " select count(*) as cnt from `{$g4['shop_item_qa_table']}` where it_id = '{$it_id}' ";
+$row = sql_fetch($sql);
+$item_qa_count = $row['cnt'];
+
 // 관련상품의 갯수를 얻음
 $sql = " select count(*) as cnt
            from {$g4['shop_item_relation_table']} a
@@ -159,14 +169,15 @@ $item_relation_count = $row['cnt'];
 <?php
 function pg_anchor($anc_id) {
     global $default;
+    global $item_use_count, $item_qa_count, $item_relation_count;
 ?>
             <ul class="sanchor">
                 <li><a href="#sit_inf" <?php if ($anc_id == 'inf') echo 'class="sanchor_on"'; ?>>상품정보</a></li>
-                <li><a href="#sit_use" <?php if ($anc_id == 'use') echo 'class="sanchor_on"'; ?>>사용후기 <span class="item_use_count"></span></a></li>
-                <li><a href="#sit_qa" <?php if ($anc_id == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"></span></a></li>
+                <li><a href="#sit_use" <?php if ($anc_id == 'use') echo 'class="sanchor_on"'; ?>>사용후기 <span class="item_use_count"><?php echo $item_use_count; ?></span></a></li>
+                <li><a href="#sit_qa" <?php if ($anc_id == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"><?php echo $item_qa_count; ?></span></a></li>
                 <?php if ($default['de_baesong_content']) { ?><li><a href="#sit_dvr" <?php if ($anc_id == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
                 <?php if ($default['de_change_content']) { ?><li><a href="#sit_ex" <?php if ($anc_id == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
-                <li><a href="#sit_rel" <?php if ($anc_id == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"></span></a></li>
+                <li><a href="#sit_rel" <?php if ($anc_id == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
             </ul>
 <?php } ?>
 
@@ -659,9 +670,9 @@ else
             return false;
         });
 
-        $(".item_use_count").text("<?php echo $use_total_count; ?>");
-        $(".item_qa_count").text("<?php echo $qa_total_count; ?>");
-        $(".item_relation_count").text("<?php echo $item_relation_count; ?>");
+        //$(".item_use_count").text("<?php echo $use_total_count; ?>");
+        //$(".item_qa_count").text("<?php echo $qa_total_count; ?>");
+        //$(".item_relation_count").text("<?php echo $item_relation_count; ?>");
     });
 
     // 바로구매 또는 장바구니 담기

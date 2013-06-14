@@ -10,7 +10,7 @@ $menu['menu400'] = array (
     array('400200', '분류관리', G4_ADMIN_URL.'/shop_admin/categorylist.php', 'scf_cate'),
     array('400300', '상품관리', G4_ADMIN_URL.'/shop_admin/itemlist.php', 'scf_item'),
     array('400660', '상품문의', G4_ADMIN_URL.'/shop_admin/itemqalist.php', 'scf_item_qna'),
-    array('400650', '사용후기', G4_ADMIN_URL.'/shop_admin/itempslist.php', 'scf_ps'),
+    array('400650', '사용후기', G4_ADMIN_URL.'/shop_admin/itemuselist.php', 'scf_ps'),
     array('400620', '상품재고관리', G4_ADMIN_URL.'/shop_admin/itemstocklist.php', 'scf_item_stock'),
     array('400610', '상품유형관리', G4_ADMIN_URL.'/shop_admin/itemtypelist.php', 'scf_item_type'),
     array('400500', '상품옵션재고관리', G4_ADMIN_URL.'/shop_admin/optionstocklist.php', 'scf_item_option'),
