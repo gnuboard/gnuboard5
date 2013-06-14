@@ -57,9 +57,8 @@ $pg_anchor = '<ul class="anchor">
         }
         else
         {
-            if ($row['od_receipt_bank'])  $settle_method .= "무통장";
-            if ($row['od_receipt_card'])  $settle_method .= "카드";
-            if ($row['od_receipt_point']) $settle_method .= "포인트";
+            $settle_method .= '미입력';
+            if ($row['od_receipt_point']) $settle_method .= '포인트';
         }
     ?>
     <tr>
@@ -122,9 +121,8 @@ $pg_anchor = '<ul class="anchor">
         }
         else
         {
-            if ($row['od_temp_bank'])   $settle_method  .= "무통장";
-            if ($row['od_temp_card'])   $settle_method .= "카드";
-            if ($row['od_temp_milage']) $settle_method .= "포인트";
+            $settle_method .= '미입력';
+            if ($row['od_temp_point']) $settle_method .= '포인트';
         }
     ?>
     <tr>
@@ -160,7 +158,7 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g4[shop_item_ps_table]}
+    $sql = " select * from {$g4['shop_item_ps_table']}
               where is_confirm = 0
               order by is_id desc
               limit $max_limit ";
