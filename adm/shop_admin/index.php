@@ -158,11 +158,7 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
-<<<<<<< HEAD
     $sql = " select * from {$g4[shop_item_use_table]}
-=======
-    $sql = " select * from {$g4['shop_item_ps_table']}
->>>>>>> master
               where is_confirm = 0
               order by is_id desc
               limit $max_limit ";
@@ -177,11 +173,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_name"><?php echo $name; ?></td>
         <td><?php echo cut_str($row['is_subject'],40); ?></td>
-<<<<<<< HEAD
         <td class="td_smallmng"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
-=======
-        <td class="td_smallmng"><a href="./itempsform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>">수정</a></td>
->>>>>>> master
     </tr>
     <?php
     }
