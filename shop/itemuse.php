@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/thumb.lib.php');
+include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 $it_id = $_REQUEST['it_id'];
 
@@ -37,7 +37,7 @@ $sql = " select COUNT(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$rows = 2;
+$rows = 5;
 $total_page  = ceil($total_count / $rows); // 전체 페이지 계산
 if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 레코드 구함
@@ -51,7 +51,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $use_star    = get_star($row['wr_3']);
     $use_name    = get_text($row['wr_name']);
     $use_subject = conv_subject($row['wr_subject'],50,"…");
-    $use_content = $row['wr_content'];
+    //$use_content = ($row['wr_content']);
+    $use_content = get_view_thumbnail($row['wr_content'], 300);
     $use_time    = substr($row['wr_datetime'], 2, 8);
     $use_href    = G4_BBS_URL.'/board.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
 
@@ -125,12 +126,20 @@ echo itemuse_page(10, $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page="
 
 <div class="sit_use_btn">
     <!-- <a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a> -->
-    <a href="<?php echo $itemuse_write; ?>" onclick="window.open(this.href); return false;" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
-    <a href="<?php echo $itemuse_board; ?>" target="_blank" class="btn01">더보기</a>
+    <a href="<?php echo $itemuse_write; ?>" id="itemuse_write" onclick="return false;" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_board; ?>" id="itemuse_board" target="_blank" class="btn01">더보기</a>
 </div>
 
 <script>
 $(function(){
+    $("#itemuse_write").click(function(){
+        window.open(this.href, "itemuse_write", "width=800,height=550"); 
+    });
+
+    $("#itemuse_board").click(function(){
+        window.open(this.href, "itemuse_board", "width=800,height=550"); 
+    });
+
     $(".use_href").click(function(){
         $(".use_div").hide();
         $("#use_div"+$(this).attr("target")).show();
