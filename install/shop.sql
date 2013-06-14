@@ -280,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_sms_hp` varchar(255) NOT NULL DEFAULT '',
   `de_kcp_mid` varchar(255) NOT NULL DEFAULT '',
   `de_iche_use` tinyint(4) NOT NULL DEFAULT '0',
-  `de_item_use_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_item_ps_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_code_dup_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_cart_keep_term` int(11) NOT NULL DEFAULT '0',
   `de_guest_cart_use` tinyint(4) NOT NULL DEFAULT '0',
