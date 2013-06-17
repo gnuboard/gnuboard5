@@ -7,9 +7,6 @@ if (G4_IS_MOBILE) {
 }
 
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-
-$captcha_html = captcha_html();
 
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
 $token = md5(uniqid(rand(), true));
@@ -597,10 +594,12 @@ else
         <h2>상품문의</h2>
         <?php echo pg_anchor('qa'); ?>
 
-        <?php
-        $qa_page_rows = 10; // 페이지당 목록수
-        include_once('./itemqa.inc.php');
-        ?>
+        <div id="itemqa"></div>
+        <script>
+        $(function(){
+            $("#itemqa").load("./itemqa.php", {it_id:"<?php echo $it_id; ?>"});
+        });
+        </script>
     </section>
 
     <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>

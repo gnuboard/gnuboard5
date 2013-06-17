@@ -582,10 +582,12 @@ else
         <h2>상품문의</h2>
         <?php echo pg_anchor_m('qa'); ?>
 
-        <?php
-        $qa_page_rows = 10; // 페이지당 목록수
-        include_once(G4_MSHOP_PATH.'/itemqa.inc.php');
-        ?>
+        <div id="itemqa"></div>
+        <script>
+        $(function(){
+            $("#itemqa").load("./itemqa.php", {it_id:"<?php echo $it_id; ?>"});
+        });
+        </script>
     </section>
 
 

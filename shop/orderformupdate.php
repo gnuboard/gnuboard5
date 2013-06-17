@@ -58,6 +58,7 @@ if ($error != "")
 
 $i_amount     = (int)$_POST['od_amount'];
 $i_send_cost  = (int)$_POST['od_send_cost'];
+$i_send_cost2  = (int)$_POST['od_send_cost2'];
 $i_temp_point = (int)$_POST['od_temp_point'];
 
 
@@ -245,6 +246,17 @@ if ((int)($send_cost - $tot_sc_cp_amount) !== $i_send_cost) {
     die("Error..");
 }
 
+// 추가배송비가 상이함
+$zipcode = $od_b_zip1 . $od_b_zip2;
+$sql = " select sc_id, sc_amount from {$g4['shop_sendcost_table']} where sc_zip1 <= '$zipcode' and sc_zip2 >= '$zipcode' ";
+$tmp = sql_fetch($sql);
+if(!$tmp['sc_id'])
+    $send_cost2 = 0;
+else
+    $send_cost2 = (int)$tmp['sc_amount'];
+if($send_cost2 !== $i_send_cost2)
+    die("Error...");
+
 // 결제포인트가 상이함
 $tot_amount = $tot_od_amount + ($send_cost - $tot_sc_cp_amount);
 // 회원이면서 포인트사용이면
@@ -265,7 +277,7 @@ if($default['de_mileage_use']) {
     }
 
     if (($i_temp_point > (int)$temp_point || $i_temp_point < 0))
-        die("Error...");
+        die("Error....");
 
     if ($od_temp_point)
     {
@@ -288,7 +300,7 @@ if($default['de_mileage_use']) {
     }
 
     if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_point'])
-        die("Error...");
+        die("Error....");
 
     if ($od_temp_point)
     {
@@ -297,7 +309,7 @@ if($default['de_mileage_use']) {
     }
 }
 
-$i_amount = $i_amount + $i_send_cost - $i_temp_point;
+$i_amount = $i_amount + $i_send_cost + $i_send_cost2 - $i_temp_point;
 
 if ($od_settle_case == "무통장")
 {
@@ -419,6 +431,7 @@ $sql = " insert {$g4['shop_order_table']}
                 od_memo           = '$od_memo',
                 od_send_cost      = '$od_send_cost',
                 od_send_coupon    = '$tot_sc_cp_amount',
+                od_send_cost2     = '$od_send_cost2',
                 od_coupon         = '$tot_od_cp_amount',
                 od_temp_amount    = '$od_temp_amount',
                 od_temp_point     = '$od_temp_point',

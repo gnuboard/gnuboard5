@@ -65,6 +65,13 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <?php } ?>
 
+        <?php if ($od_send_cost2 > 0) { // 추가배송비가 있다면 ?>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">추가배송비</th>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_send_cost2); ?></td>
+        </tr>
+        <?php } ?>
+
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">주문합계</th>
             <td style="<?php echo $td_st; ?>"><?php echo display_price($ttotal_amount); ?></td>

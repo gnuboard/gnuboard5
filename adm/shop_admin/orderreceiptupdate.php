@@ -26,6 +26,8 @@ $sql = " update {$g4['shop_order_table']}
                 od_invoice_time    = '$od_invoice_time' ";
 if (isset($od_send_cost))
     $sql .= " , od_send_cost = '$od_send_cost' ";
+if (isset($od_send_cost2))
+    $sql .= " , od_send_cost2 = '$od_send_cost2' ";
 $sql .= " where od_id = '$od_id' ";
 sql_query($sql);
 
