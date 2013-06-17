@@ -144,7 +144,7 @@ button.btn_frmline {font-size:1em}
 /* 게시판용 버튼 */
 .btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #d9ded9;background:#f5f6fa;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn_b01:focus, .btn_b01:hover {text-decoration:none !important}
-.btn_b02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee;background:#333;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
+.btn_b02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #007eff;background:#008aff;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}
 .btn_b02:focus, .btn_b02:hover {text-decoration:none !important}
 .btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c;background:#e8180c;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
 .btn_admin:focus, .btn_admin:hover {text-decoration:none !important}
