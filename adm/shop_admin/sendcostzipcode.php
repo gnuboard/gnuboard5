@@ -39,7 +39,7 @@ if($addr) {
 
         foreach($list as $value) {
             $code = substr($value, 0, 7);
-            $result[] = '<input type="hidden" name="code[]" value="'.$code.'">'.$value.' <button type="button" class="select_btn">선택</button>'.PHP_EOL;
+            $result[] = '<input type="hidden" name="code[]" value="'.$code.'">'.$value.' <button type="button" class="select_btn btn_frmline">선택</button>'.PHP_EOL;
         }
     }
 }
@@ -49,46 +49,39 @@ include_once(G4_PATH.'/head.sub.php');
 ?>
 
 
-<div>
-<form name="fzipcode" id="fzipcode" method="get">
-<input type="hidden" name="no" value="<?php echo $no; ?>">
-<table>
-<tr>
-    <td>우편번호 찾기</td>
-</tr>
-<tr>
-    <td>주소지의 시/군을 입력하세요.</td>
-</tr>
-<tr>
-    <td>
-        <label for="addr">주소</label>
-        <input type="text" id="addr" name="addr" value="<? echo stripslashes($addr); ?>" size="20" />
-        <input type="submit" value=" 검색 " />
-    </td>
-</tr>
-</table>
-</form>
+<div id="sendcost_postal_win" class="new_win">
+    <h1 id="new_win_title"><?php echo $g4['title']; ?></h1>
 
-<?php
-if($search_count) {
-?>
-<p>검색결과<p>
-<ul>
-    <?php
-    for($i=0; $i<$search_count; $i++) {
-    ?>
-    <li><?php echo $result[$i]; ?></li>
-    <?php
-    }
-    ?>
-</ul>
-<?php
-} else {
-?>
-<p>검색된 결과가 없습니다.</p>
-<?php
-}
-?>
+
+    <form name="fzipcode" id="fzipcode" method="get">
+    <input type="hidden" name="no" value="<?php echo $no; ?>">
+
+    <p class="new_win_desc">주소지의 시/군을 입력하세요.</p>
+
+    <fieldset>
+        <label for="addr">주소</label>
+        <input type="text" name="addr" value="<?php echo stripslashes($addr); ?>" id="addr" class="frm_input" size="20">
+        <input type="submit" value=" 검색 " class="btn_frmline">
+    </fieldset>
+
+    </form>
+
+    <?php if($search_count) { ?>
+    <strong class="new_win_desc">검색결과</strong>
+    <ul>
+        <?php
+        for($i=0; $i<$search_count; $i++) {
+        ?>
+        <li><?php echo $result[$i]; ?></li>
+        <?php } ?>
+    </ul>
+    <?php } else { ?>
+    <p class="new_win_desc">검색된 결과가 없습니다.</p>
+    <?php } ?>
+
+    <div class="btn_win">
+        <a href="javascript:window.close();">창닫기</a>
+    </div>
 </div>
 
 <script>
