@@ -58,7 +58,7 @@ include_once('./admin.head.php');
             if ($w=='')
                 echo '영문자, 숫자, _ 만 가능 (공백없이)';
             else 
-                echo '<a href="'.G4_BBS_URL.'/group.php?gr_id='.$group['gr_id'].'">게시판그룹 바로가기</a>';
+                echo '<a href="'.G4_BBS_URL.'/group.php?gr_id='.$group['gr_id'].'" class="btn_frmline">게시판그룹 바로가기</a>';
             ?>
         </td>
     </tr>
@@ -68,7 +68,7 @@ include_once('./admin.head.php');
             <input type="text" name="gr_subject" value="<?php echo get_text($group['gr_subject']) ?>" id="gr_subject" required class="required frm_input" size="80">
             <?php
             if ($w == 'u')
-                echo '<a href="./board_form.php?gr_id='.$gr_id.'">게시판생성</a>';
+                echo '<a href="./board_form.php?gr_id='.$gr_id.'" class="btn_frmline">게시판생성</a>';
             ?>
         </td>
     </tr>
