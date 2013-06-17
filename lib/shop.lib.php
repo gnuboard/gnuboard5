@@ -884,8 +884,8 @@ function alert_opener($msg='', $url='')
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
 
-    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset={$g4['charset']}\">";
-    echo "<script type='text/javascript'>";
+    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
+    echo "<script>";
     echo "alert(\"$msg\");";
     echo "opener.location.href=\"$url\";";
     echo "self.close();";
