@@ -603,7 +603,6 @@ else
         ?>
     </section>
 
-
     <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>
     <section id="sit_dvr">
         <h2>배송정보</h2>

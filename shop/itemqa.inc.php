@@ -54,52 +54,52 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         if ($i == 0) echo '<ol id="sit_qa_ol">';
     ?>
 
-    <li class="sit_qa_li">
-        <button type="button" class="sit_qa_li_title" onclick="javascript:qa_menu('sit_qa_con_<?php echo $i; ?>')"><b><?php echo $num; ?>.</b> <?php echo $iq_subject; ?></button>
-        <dl class="sit_qa_dl">
-            <dt>작성자</dt>
-            <dd><?php echo $iq_name; ?></dd>
-            <dt>작성일</dt>
-            <dd><?php echo $iq_time; ?></dd>
-            <dt>상태</dt>
-            <dd><?php echo $iq_stats; ?></dd>
-        </dl>
+        <li class="sit_qa_li">
+            <button type="button" class="sit_qa_li_title" onclick="javascript:qa_menu('sit_qa_con_<?php echo $i; ?>')"><b><?php echo $num; ?>.</b> <?php echo $iq_subject; ?></button>
+            <dl class="sit_qa_dl">
+                <dt>작성자</dt>
+                <dd><?php echo $iq_name; ?></dd>
+                <dt>작성일</dt>
+                <dd><?php echo $iq_time; ?></dd>
+                <dt>상태</dt>
+                <dd><?php echo $iq_stats; ?></dd>
+            </dl>
 
-        <div id="sit_qa_con_<?php echo $i; ?>" class="sit_qa_con">
-            <p class="sit_qa_qaq">
-                <strong>문의내용</strong><br>
-                <?php echo $iq_question; // 상품 문의 내용 ?>
-            </p>
-            <p class="sit_qa_qaa">
-                <strong>답변</strong><br>
-                <?php echo $iq_answer; ?>
-            </p>
+            <div id="sit_qa_con_<?php echo $i; ?>" class="sit_qa_con">
+                <p class="sit_qa_qaq">
+                    <strong>문의내용</strong><br>
+                    <?php echo $iq_question; // 상품 문의 내용 ?>
+                </p>
+                <p class="sit_qa_qaa">
+                    <strong>답변</strong><br>
+                    <?php echo $iq_answer; ?>
+                </p>
 
-            <textarea id="tmp_iq_id<?php echo $i; ?>"><?php echo $row['iq_id']; ?></textarea>
-            <textarea id="tmp_iq_name<?php echo $i; ?>"><?php echo $row['iq_name']; ?></textarea>
-            <textarea id="tmp_iq_subject<?php echo $i; ?>"><?php echo $row['iq_subject']; ?></textarea>
-            <textarea id="tmp_iq_question<?php echo $i; ?>"><?php echo $row['iq_question']; ?></textarea>
+                <textarea id="tmp_iq_id<?php echo $i; ?>"><?php echo $row['iq_id']; ?></textarea>
+                <textarea id="tmp_iq_name<?php echo $i; ?>"><?php echo $row['iq_name']; ?></textarea>
+                <textarea id="tmp_iq_subject<?php echo $i; ?>"><?php echo $row['iq_subject']; ?></textarea>
+                <textarea id="tmp_iq_question<?php echo $i; ?>"><?php echo $row['iq_question']; ?></textarea>
 
-            <?php if ($row['mb_id'] == $member['mb_id'] && $iq_answer == 0) { ?>
-            <div class="sit_qa_cmd">
-                <button type="button" onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
-                <button type="button" onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button>
+                <?php if ($row['mb_id'] == $member['mb_id'] && $iq_answer == 0) { ?>
+                <div class="sit_qa_cmd">
+                    <button type="button" onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
+                    <button type="button" onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button>
+                </div>
+                <?php } ?>
             </div>
-            <?php } ?>
-        </div>
 
-        <div id="sit_qa_pw_<?php echo $i; ?>" class="sit_qa_pw">
-            <form name="fitemqa_password<?php echo $i; ?>" method="post" action="./itemqaupdate.php" autocomplete="off">
-            <input type="hidden" name="w" value="">
-            <input type="hidden" name="iq_id" value="">
-            <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
-            <span>삭제하시려면 글 작성 시 입력하신 패스워드를 입력해주세요.</span>
-            <label for="iq_password_<?=$i?>">패스워드</label>
-            <input type="password" name="iq_password" id="iq_password_<?=$i?>" required class="frm_input">
-            <input type="submit" value="확인" class="btn_frmline">
-            </form>
-        </div>
-    </li>
+            <div id="sit_qa_pw_<?php echo $i; ?>" class="sit_qa_pw">
+                <form name="fitemqa_password<?php echo $i; ?>" method="post" action="./itemqaupdate.php" autocomplete="off">
+                <input type="hidden" name="w" value="">
+                <input type="hidden" name="iq_id" value="">
+                <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
+                <span>삭제하시려면 글 작성 시 입력하신 패스워드를 입력해주세요.</span>
+                <label for="iq_password_<?=$i?>">패스워드</label>
+                <input type="password" name="iq_password" id="iq_password_<?=$i?>" required class="frm_input">
+                <input type="submit" value="확인" class="btn_frmline">
+                </form>
+            </div>
+        </li>
 
     <?php }
 
