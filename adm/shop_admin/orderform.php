@@ -243,8 +243,8 @@ $pg_anchor = '<ul class="anchor">
     <?php echo $pg_anchor; ?>
 
     <?php
-    // 주문금액 = 상품구입금액 + 배송비
-    $amount['정상'] = $t_ct_amount['정상'] + $od['od_send_cost'];
+    // 주문금액 = 상품구입금액 + 배송비 + 추가배송비
+    $amount['정상'] = $t_ct_amount['정상'] + $od['od_send_cost'] + $od['od_send_cost2'];
 
     // 입금액 = 결제금액 + 포인트
     $amount['입금'] = $od['od_receipt_amount'] + $od['od_receipt_point'];
@@ -428,6 +428,12 @@ $pg_anchor = '<ul class="anchor">
             <td>
                 <?php echo help("주문취소시 배송비는 취소되지 않으므로 이 배송비를 0으로 설정하여 미수금을 맞추십시오."); ?>
                 <input type="text" name="od_send_cost" value="<?php echo $od['od_send_cost']; ?>" id="od_send_cost" class="frm_input" size="10"> 원
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="od_send_cost2">추가배송비</label></th>
+            <td>
+                <input type="text" name="od_send_cost2" value="<?php echo $od['od_send_cost2']; ?>" id="od_send_cost2" class="frm_input" size="10"> 원
             </td>
         </tr>
         <?php

@@ -326,6 +326,14 @@ if(!$result) {
                   PRIMARY KEY (`sc_id`),
                   KEY `sc_zip1` (`sc_zip1`),
                   KEY `sc_zip2` (`sc_zip2`)
-                )", true);
+                )", false);
+}
+
+// od_send_cost2 추가
+$sql = " select od_send_cost2 from {$g4['shop_order_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_send_cost2` INT(11) NOT NULL DEFAULT '0' AFTER `od_send_coupon` ", false);
 }
 ?>

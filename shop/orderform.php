@@ -299,6 +299,8 @@ setTimeout("init_pay_button();",300);
     <input type="hidden" name="org_od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="od_send_cost" value="<?php echo $send_cost; ?>">
     <input type="hidden" name="org_send_cost" value="<?php echo $send_cost; ?>">
+    <input type="hidden" name="od_send_cost2" value="0">
+    <input type="hidden" name="item_coupon" value="0">
 
     <?php
         /* ============================================================================== */
@@ -699,6 +701,10 @@ setTimeout("init_pay_button();",300);
             <th>총 주문금액</th>
             <td><span id="od_tot_amount"><?php echo number_format($tot_amount); ?></span>원</td>
         </tr>
+        <tr>
+            <th>추가배송비</th>
+            <td><span id="od_send_cost2">0</span>원 (지역에 따라 추가되는 도선료 등의 배송비입니다.)</td>
+        </tr>
         </tbody>
         </table>
 
@@ -905,6 +911,7 @@ setTimeout("init_pay_button();",300);
 $(function() {
     var $cp_btn_el;
     var $cp_row_el;
+    var zipcode = "";
 
     $(".it_coupon_btn").click(function() {
         $cp_btn_el = $(this);
@@ -1006,6 +1013,7 @@ $(function() {
         var subj = $el.find("input[name='o_cp_subj[]']").val();
         var od_amount = parseInt($("input[name=org_od_amount]").val());
         var send_cost = $("input[name=org_send_cost]").val();
+        var item_coupon = parseInt($("input[name=item_coupon]").val());
 
         if(parseInt(amount) == 0) {
             if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
@@ -1015,8 +1023,10 @@ $(function() {
 
         $("input[name=od_send_cost]").val(send_cost);
         $("input[name=sc_cp_id]").val("");
+        $("#sc_coupon_btn").text("쿠폰적용");
+        $("#sc_coupon_cancel").remove();
 
-        $("input[name=od_amount]").val(od_amount - amount);
+        $("input[name=od_amount]").val(od_amount - item_coupon - amount);
         $("input[name=od_cp_id]").val(cp_id);
         calculate_order_amount();
         $("#od_coupon_frm").remove();
@@ -1032,11 +1042,16 @@ $(function() {
 
     $("#od_coupon_cancel").live("click", function() {
         var org_amount = $("input[name=org_od_amount]").val();
-        $("input[name=od_amount]").val(org_amount);
+        var item_coupon = parseInt($("input[name=item_coupon]").val());
+        $("input[name=od_amount]").val(org_amount - item_coupon);
+        $("input[name=od_send_cost]").val($("input[name=org_send_cost]").val());
+        $("input[name=sc_cp_id]").val("");
         calculate_order_amount();
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("쿠폰적용").focus();
         $(this).remove();
+        $("#sc_coupon_btn").text("쿠폰적용");
+        $("#sc_coupon_cancel").remove();
     });
 
     $("#sc_coupon_btn").click(function() {
@@ -1089,6 +1104,21 @@ $(function() {
         $(this).remove();
     });
 
+    $("#od_b_addr2").focus(function() {
+        var zip1 = $("#od_b_zip1").val().replace(/[^0-9]/g, "");
+        var zip2 = $("#od_b_zip2").val().replace(/[^0-9]/g, "");
+        if(zip1 == "" || zip2 == "")
+            return false;
+
+        var code = String(zip1) + String(zip2);
+
+        if(zipcode == code)
+            return false;
+
+        zipcode = code;
+        calculate_sendcost(code);
+    });
+
     $("#od_settle_bank").bind("click", function() {
         $("[name=od_deposit_name]").val( $("[name=od_b_name]").val() );
         $("#settle_bank").show();
@@ -1131,14 +1161,22 @@ function calculate_total_amount()
     $("#ct_tot_amount").text(number_format(String(tot_sell_amount))+" 원");
 
     $("input[name=good_mny]").val(tot_sell_amount);
-    $("input[name=od_amount]").val(sell_amount);
-    $("input[name=org_od_amount]").val(sell_amount);
+    $("input[name=od_amount]").val(sell_amount - tot_cp_amount);
     $("input[name=od_send_cost]").val(send_cost);
-    <?php if($od_cnt > 0) { ?>
+    $("input[name=item_coupon]").val(tot_cp_amount);
+    <?php if($oc_cnt > 0) { ?>
     $("input[name=od_cp_id]").val("");
+    if($("#od_coupon_cancel").size()) {
+        $("#od_coupon_btn").text("쿠폰적용");
+        $("#od_coupon_cancel").remove();
+    }
     <?php } ?>
     <?php if($sc_cnt > 0) { ?>
     $("input[name=sc_cp_id]").val("");
+    if($("#sc_coupon_cancel").size()) {
+        $("#sc_coupon_btn").text("쿠폰적용");
+        $("#sc_coupon_cancel").remove();
+    }
     <?php } ?>
     $("input[name=od_temp_point]").val(0);
     <?php if($temp_point > 0 && $is_member) { ?>
@@ -1151,7 +1189,8 @@ function calculate_order_amount()
 {
     var sell_amount = parseInt($("input[name=od_amount]").val());
     var send_cost = parseInt($("input[name=od_send_cost]").val());
-    var tot_amount = sell_amount + send_cost;
+    var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
+    var tot_amount = sell_amount + send_cost + send_cost2;
 
     $("input[name=good_mny]").val(tot_amount);
     $("#od_tot_amount").text(number_format(String(tot_amount)));
@@ -1180,6 +1219,20 @@ function calculate_temp_point()
 
     $("#use_max_point").text("최대 "+number_format(String(temp_point))+"점");
     $("input[name=max_temp_point]").val(temp_point);
+}
+
+function calculate_sendcost(code)
+{
+    $.post(
+        "./ordersendcost.php",
+        { zipcode: code },
+        function(data) {
+            $("input[name=od_send_cost2]").val(data);
+            $("#od_send_cost2").text(number_format(String(data)));
+
+            calculate_order_amount();
+        }
+    );
 }
 
 function forderform_check(f)
@@ -1394,6 +1447,8 @@ function gumae2baesong(f)
     f.od_b_zip2.value = f.od_zip2.value;
     f.od_b_addr1.value = f.od_addr1.value;
     f.od_b_addr2.value = f.od_addr2.value;
+
+    calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
 }
 </script>
 
