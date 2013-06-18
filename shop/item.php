@@ -600,16 +600,6 @@ else
             $("#itemqa").load("./itemqa.php", {it_id:"<?php echo $it_id; ?>"});
         });
         </script>
-<<<<<<< HEAD
-
-        <?php
-        /*
-        $qa_page_rows = 10; // 페이지당 목록수
-        include_once('./itemqa.inc.php');
-        */
-        ?>
-=======
->>>>>>> 8ba2a84198461168008549042bbfc2d01e738d03
     </section>
 
     <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>

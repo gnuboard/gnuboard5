@@ -110,9 +110,21 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
         <li><?php echo subject_sort_link('iq_answer'); ?>답변<span class="sound_only"> 순 정렬</span></a></li>
     </ul>
 
+    <form name="fitemqalist" method="post" action="./itemqalistupdate.php" onsubmit="return fitemqalist_submit(this);" autocomplete="off">
+    <input type="hidden" name="sca" value="<?php echo $sca; ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst; ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod; ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx; ?>">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+
     <table class="frm_basic">
     <thead>
     <tr>
+        <th scope="col">
+            <label for="chkall" class="sound_only">상품문의 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col">상품명</th>
         <th scope="col">이름</th>
         <th scope="col">질문</th>
@@ -124,35 +136,83 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
     <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
         $row['iq_subject'] = cut_str($row['iq_subject'], 30, "...");
-
         $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-
         $name = get_sideview($row['mb_id'], $row['iq_name'], $row['mb_email'], $row['mb_homepage']);
-
         $answer = $row['iq_answer'] ? 'Y' : '&nbsp;';
+        $iq_question = get_view_thumbnail($row['iq_question'], 300);
+        $iq_answer = $row['iq_answer'] ? get_view_thumbnail($row['iq_answer'], 300) : "답변이 등록되지 않았습니다.";
      ?>
     <tr>
+        <td>
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['iq_subject']) ?> 상품문의</label>
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
+            <input type="hidden" name="iq_id[<?php echo $i; ?>]" value="<?php echo $row['iq_id']; ?>">
+        </td>
         <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
         <td class="td_name"><?php echo $name; ?></td>
-        <td class="sit_qa_subject"><?php echo $row['iq_subject']; ?></td>
+        <td class="sit_qa_subject">
+            <a href="#" class="qa_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $row['iq_subject']; ?></a>
+            <div id="qa_div<?php echo $i; ?>" class="qa_div" style="display:none;">
+                <strong>문의내용</strong><br>
+                <?php echo $iq_question; ?>
+                <strong>답변</strong><br>
+                <?php echo $iq_answer; ?>
+            </div>
+        </td>
         <td class="sit_qa_answer"><?php echo $answer; ?></td>
         <td class="td_smallmng">
             <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['iq_subject']; ?> </span>수정</a>
-            <a href="javascript:del('./itemqaformupdate.php?w=d&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;$qstr');"><span class="sound_only"><?php echo $row['iq_subject']; ?> </span>삭제</a>
         </td>
     </tr>
     <?php
     }
     if ($i == 0) {
-        echo '<tr><td colspan="5" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="6" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
     }
     ?>
     </tbody>
     </table>
 
+    <div class="btn_list">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+    </div>
+    </form>
+
 </section>
 
 <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+
+<script>
+function fitemqalist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed  == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+$(function(){
+    $(".qa_href").click(function(){
+        var $content = $("#qa_div"+$(this).attr("target"));
+        $(".qa_div").each(function(index, value){
+            if ($(this).get(0) == $content.get(0)) { // 객체의 비교시 .get(0) 를 사용한다.
+                $(this).is(":hidden") ? $(this).show() : $(this).hide();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
+</script>
 
 <?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');

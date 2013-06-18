@@ -4,10 +4,9 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 $it_id = $_REQUEST['it_id'];
 
-$itemuse_form = "./itemuseform.php?it_id=".$it_id;
 $itemuse_list = "./itemuselist.php";
-
-//include_once(G4_PATH.'/head.sub.php');
+$itemuse_form = "./itemuseform.php?it_id=".$it_id;
+$itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
 ?>
 
 <section id="sit_use_list">
@@ -48,6 +47,8 @@ $itemuse_list = "./itemuselist.php";
         $is_time    = substr($row['is_time'], 2, 8);
         $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
 
+        $hash = md5($row['is_id'].$row['is_time'].$row['is_ip']);
+
         // http://stackoverflow.com/questions/6967081/show-hide-multiple-divs-with-jquery?answertab=votes#tab-top
 
         if ($i == 0) echo '<ol id="sit_use_ol">';
@@ -68,6 +69,13 @@ $itemuse_list = "./itemuselist.php";
                 <p>
                     <?php echo $is_content; // 사용후기 내용 ?>
                 </p>
+
+                <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
+                <div class="sit_use_cmd">
+                    <a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form" onclick="return false;">수정</a>
+                    <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete">삭제</a>
+                </div>
+                <?php } ?>
             </div>
         </li>
 
@@ -122,16 +130,23 @@ echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?
 ?>
 
 <div id="sit_use_wbtn">
-    <!-- <a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a> -->
     <a href="<?php echo $itemuse_form; ?>" id="itemuse_form" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
     <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기</a>
 </div>
 
 <script>
 $(function(){
-    $("#itemuse_form").click(function(){
-        window.open(this.href, "itemuse_form", "width=800,height=550");
+    $(".itemuse_form").click(function(){
+        window.open(this.href, "itemuse_form", "width=800,height=500");
         return false;
+    });
+
+    $(".itemuse_delete").click(function(){
+        if (confirm("정말 삭제 하시겠습니까?\n\n삭제후에는 되돌릴수 없습니다.")) {
+            return true;
+        } else {
+            return false;
+        }
     });
 
     $(".use_href").click(function(){
@@ -151,7 +166,3 @@ $(function(){
     });
 });
 </script>
-
-<?php
-//include_once(G4_PATH.'/tail.sub.php');
-?>
