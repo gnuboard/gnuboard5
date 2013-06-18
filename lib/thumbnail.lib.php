@@ -34,6 +34,9 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
             else
                 $data_path = $p['path'];
 
+            if(!preg_match('/^\/'.G4_DATA_DIR.'/', $data_path))
+                continue;
+
             $srcfile = G4_PATH.$data_path;
 
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
@@ -108,6 +111,9 @@ function get_view_thumbnail($contents, $thumb_width=0)
             $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
         else
             $data_path = $p['path'];
+
+        if(!preg_match('/^\/'.G4_DATA_DIR.'/', $data_path))
+            continue;
 
         $srcfile = G4_PATH.$data_path;
 

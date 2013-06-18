@@ -41,7 +41,7 @@ h2 {font-size:1.2em}
 
 /* gnb js off */
 #gnb {z-index:12;background:#383a3f}
-#gnb h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+#gnb h2 {margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
 #gnb_1dul {margin:0 auto;padding:0;width:1000px;zoom:1}
 #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1dli {z-index:13;clear:both;zoom:1}
@@ -59,10 +59,10 @@ h2 {font-size:1.2em}
 .gnb_js .gnb_1dli a {color:#fff;text-align:center}
 .gnb_js .gnb_1dli_air a {float:none;background:#f5f6fa;color:#000}
 .gnb_js .gnb_1dli_on a {float:none;background:#fff;color:#000}
-.gnb_js .gnb_2dul {position:absolute;top:35px;width:1px;height:1px;overflow:hidden}
+.gnb_js .gnb_2dul {display:none;position:absolute;top:35px}
 .gnb_js .gnb_2dli a {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
-.gnb_1dli_over .gnb_2dul {left:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
-.gnb_1dli_over2 .gnb_2dul {right:-1px;width:181px;height:auto;border:1px solid #c3c7c5;border-top:0;background:#fff}
+.gnb_1dli_over .gnb_2dul {display:block;left:-1px;width:181px;border:1px solid #c3c7c5;border-top:0;background:#fff}
+.gnb_1dli_over2 .gnb_2dul {display:block;right:-1px;width:181px;border:1px solid #c3c7c5;border-top:0;background:#fff}
 
 .gnb_js .gnb_grp_style {background:#f7f7f7 !important}
 .gnb_js .gnb_grp_div {border-top:1px solid #eee}
@@ -184,7 +184,7 @@ fieldset button {padding:0 15px;height:23px;border:0;background:#617d46;color:#f
 #sort_mb {width:800px}
 
 /* 테이블 */
-table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
+table {clear:both;margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
 caption {padding:10px 0 15px;font-weight:bold;text-align:left}
 thead th {padding:12px 0 8px;border-bottom:1px solid #666;background:#565e60;color:#fff}
 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
