@@ -135,6 +135,9 @@ if($is_member) {
         if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
             $dc = $cp['cp_maximum'];
 
+        if($item_price < $dc)
+            continue;
+
         $tot_it_cp_amount += $dc;
         $arr_it_cp_amt[$it_id] = $dc;
     }
@@ -163,6 +166,9 @@ if($is_member) {
 
             if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
                 $dc = $cp['cp_maximum'];
+
+            if($tot_od_amount < $dc)
+                die('Order coupon error.');
 
             $tot_od_cp_amount = $dc;
             $tot_od_amount -= $tot_od_cp_amount;

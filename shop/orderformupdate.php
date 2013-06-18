@@ -129,6 +129,9 @@ if($is_member) {
         if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
             $dc = $cp['cp_maximum'];
 
+        if($item_price < $dc)
+            continue;
+
         $tot_it_cp_amount += $dc;
         $arr_it_cp_amt[$it_id] = $dc;
     }
@@ -157,6 +160,9 @@ if($is_member) {
 
             if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
                 $dc = $cp['cp_maximum'];
+
+            if($tot_od_amount < $dc)
+                die('Order coupon error.');
 
             $tot_od_cp_amount = $dc;
             $tot_od_amount -= $tot_od_cp_amount;
@@ -605,3 +611,29 @@ if (get_session('ss_direct'))
 
 goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$uq_id);
 ?>
+
+<html>
+    <head>
+        <title>*** KCP [AX-HUB Version] ***</title>
+        <script>
+            // 결제 중 새로고침 방지 샘플 스크립트 (중복결제 방지)
+            function noRefresh()
+            {
+                /* CTRL + N키 막음. */
+                if ((event.keyCode == 78) && (event.ctrlKey == true))
+                {
+                    event.keyCode = 0;
+                    return false;
+                }
+                /* F5 번키 막음. */
+                if(event.keyCode == 116)
+                {
+                    event.keyCode = 0;
+                    return false;
+                }
+            }
+
+            document.onkeydown = noRefresh ;
+        </script>
+    </head>
+</html>

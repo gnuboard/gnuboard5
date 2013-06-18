@@ -58,6 +58,10 @@
     $bask_cntx       = $_POST[ "bask_cntx"      ]; // 장바구니 상품수
     $tablet_size     = $_POST[ "tablet_size"    ]; // 모바일기기 화면비율
 
+    $comm_tax_mny    = $_POST[ "comm_tax_mny"   ]; // 과세금액
+    $comm_vat_mny    = $_POST[ "comm_vat_mny"   ]; // 부가세
+    $comm_free_mny   = $_POST["comm_free_mny"   ]; // 비과세금액
+
 	/*
      * 기타 파라메터 추가 부분 - Start -
      */
@@ -203,6 +207,7 @@
             od.getElementById("show_progress").style.display = "block";
             od.getElementById("show_pay_btn").style.display = "inline";
 
+            alert("주문하기를 클릭하셔야 주문이 완료됩니다.");
             window.close();
         } else {
             kcp_AJAX();
@@ -298,6 +303,26 @@
             BC 2,3,6개월, 국민 3,6개월, 삼성 6,9개월 무이자 : CCBC-02:03:06,CCKM-03:06,CCSS-03:06:04
     <input type="hidden" name="kcp_noint_quota" value="CCBC-02:03:06,CCKM-03:06,CCSS-03:06:09"/> */
 -->
+
+<?php
+if($default['de_tax_flag_use']) {
+    /* KCP는 과세상품과 비과세상품을 동시에 판매하는 업체들의 결제관리에 대한 편의성을 제공해드리고자,
+       복합과세 전용 사이트코드를 지원해 드리며 총 금액에 대해 복합과세 처리가 가능하도록 제공하고 있습니다
+
+       복합과세 전용 사이트 코드로 계약하신 가맹점에만 해당이 됩니다
+
+       상품별이 아니라 금액으로 구분하여 요청하셔야 합니다
+
+       총결제 금액은 과세금액 + 부과세 + 비과세금액의 합과 같아야 합니다.
+       (good_mny = comm_tax_mny + comm_vat_mny + comm_free_mny) */
+?>
+<input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
+<input type="hidden" name="comm_tax_mny"	  value="<? echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
+<input type="hidden" name="comm_vat_mny"      value="<? echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
+<input type="hidden" name="comm_free_mny"     value="<? echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
+<?php
+}
+?>
 
 <input type="hidden" name="res_cd"         value="<?php echo $res_cd; ?>">      <!-- 결과 코드          -->
 <input type="hidden" name="tran_cd"        value="<?php echo $tran_cd; ?>">     <!-- 트랜잭션 코드      -->
