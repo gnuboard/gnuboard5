@@ -428,7 +428,7 @@ fieldset button {padding:0 15px;height:23px;border:0;background:#617d46;color:#f
 
 
 /* 테이블 */
-table {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
+table {clear:both;margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
 caption {padding:10px 0 15px;font-weight:bold;text-align:left}
 thead th {padding:12px 0 8px;border-bottom:1px solid #666;background:#565e60;color:#fff}
 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
