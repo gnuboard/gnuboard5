@@ -597,9 +597,18 @@ else
         <h2>상품문의</h2>
         <?php echo pg_anchor('qa'); ?>
 
+        <div id="itemqa"></div>
+        <script>
+        $(function(){
+            $("#itemqa").load("./itemqa.php", {it_id:"<?php echo $it_id; ?>"});
+        });
+        </script>
+
         <?php
+        /*
         $qa_page_rows = 10; // 페이지당 목록수
         include_once('./itemqa.inc.php');
+        */
         ?>
     </section>
 

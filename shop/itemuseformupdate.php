@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 if (!$is_member) {
-    alert_close("사용후기는 회원만 등록이 가능합니다.");
+    alert_close("사용후기는 회원만 작성이 가능합니다.");
 }
 
 $is_subject = trim($_REQUEST['is_subject']);
