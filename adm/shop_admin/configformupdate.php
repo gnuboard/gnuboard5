@@ -149,7 +149,8 @@ $sql = " update {$g4['shop_default_table']}
                 de_taxsave_use              = '$de_taxsave_use',
                 de_guest_privacy            = '$de_guest_privacy',
                 de_hp_use                   = '$de_hp_use',
-                de_escrow_use               = '$de_escrow_use'
+                de_escrow_use               = '$de_escrow_use',
+                de_tax_flag_use             = '$de_tax_flag_use'
                 ";
 sql_query($sql);
 

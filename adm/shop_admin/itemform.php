@@ -286,7 +286,7 @@ $pg_anchor ='<ul class="anchor">
             <label for="chk_all_it_origin">전체적용</label>
         </td>
     </tr>
-     <tr>
+    <tr>
         <th scope="row"><label for="it_brand">브랜드</label></th>
         <td>
             <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
@@ -299,7 +299,7 @@ $pg_anchor ='<ul class="anchor">
             <label for="chk_all_it_brand">전체적용</label>
         </td>
     </tr>
-     <tr>
+    <tr>
         <th scope="row"><label for="it_model">모델</label></th>
         <td>
             <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
@@ -310,6 +310,22 @@ $pg_anchor ='<ul class="anchor">
             <label for="chk_ca_it_model">분류적용</label>
             <input type="checkbox" name="chk_all_it_model" value="1" id="chk_all_it_model">
             <label for="chk_all_it_model">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_notax">상품과세 유형</label></th>
+        <td>
+            <?php echo help("상품의 과세유형(과세, 비과세)을 설정합니다."); ?>
+            <select name="it_notax" id="it_notax">
+                <option value="0"<?php echo get_selected('0', $it['it_notax']); ?>>과세</option>
+                <option value="1"<?php echo get_selected('1', $it['it_notax']); ?>>비과세</option>
+            </select>
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_notax" value="1" id="chk_ca_it_notax">
+            <label for="chk_ca_it_notax">분류적용</label>
+            <input type="checkbox" name="chk_all_it_notax" value="1" id="chk_all_it_notax">
+            <label for="chk_all_it_notax">전체적용</label>
         </td>
     </tr>
     <?php
