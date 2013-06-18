@@ -7,7 +7,7 @@ $it_id = $_REQUEST['it_id'];
 $itemuse_form = "./itemuseform.php?it_id=".$it_id;
 $itemuse_list = "./itemuselist.php";
 
-include_once(G4_PATH.'/head.sub.php');
+//include_once(G4_PATH.'/head.sub.php');
 ?>
 
 <section id="sit_use_list">
@@ -15,7 +15,7 @@ include_once(G4_PATH.'/head.sub.php');
 
     <?php
     /*
-        여분필드 용도 
+        여분필드 용도
         wr_1 : 상품코드
         wr_2 : 상품명
         wr_3 : 평점 1~5
@@ -118,19 +118,20 @@ function itemuse_page($write_pages, $cur_page, $total_page, $url, $add="")
         return "";
 }
 
-echo itemuse_page(10, $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
+echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
 ?>
 
 <div id="sit_use_wbtn">
     <!-- <a href="javascript:itemusewin('it_id=<?php echo $it_id; ?>');">사용후기 쓰기<span class="sound_only"> 새 창</span></a> -->
-    <a href="<?php echo $itemuse_form; ?>" id="itemuse_form" onclick="return false;" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_form; ?>" id="itemuse_form" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
     <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기</a>
 </div>
 
 <script>
 $(function(){
     $("#itemuse_form").click(function(){
-        window.open(this.href, "itemuse_form", "width=800,height=550"); 
+        window.open(this.href, "itemuse_form", "width=800,height=550");
+        return false;
     });
 
     $(".use_href").click(function(){
@@ -152,5 +153,5 @@ $(function(){
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+//include_once(G4_PATH.'/tail.sub.php');
 ?>

@@ -1,5 +1,11 @@
 <?php
 include_once('./_common.php');
+
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/itemuselist.php');
+    return;
+}
+
 include_once(G4_LIB_PATH.'/thumb.lib.php');
 
 $sfl = escape_trim($_REQUEST['sfl']);

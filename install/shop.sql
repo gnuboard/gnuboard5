@@ -280,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_sms_hp` varchar(255) NOT NULL DEFAULT '',
   `de_kcp_mid` varchar(255) NOT NULL DEFAULT '',
   `de_iche_use` tinyint(4) NOT NULL DEFAULT '0',
-  `de_item_ps_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_item_use_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_code_dup_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_cart_keep_term` int(11) NOT NULL DEFAULT '0',
   `de_guest_cart_use` tinyint(4) NOT NULL DEFAULT '0',
@@ -296,7 +296,8 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_taxsave_use` tinyint(4) NOT NULL,
   `de_guest_privacy` text NOT NULL,
   `de_hp_use` tinyint(4) NOT NULL DEFAULT '0',
-  `de_escrow_use` tinyint(4) NOT NULL DEFAULT '0'
+  `de_escrow_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_tax_flag_use` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -418,6 +419,7 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
   `it_price` int(11) NOT NULL DEFAULT '0',
   `it_point` int(11) NOT NULL DEFAULT '0',
   `it_point_type` tinyint(4) NOT NULL DEFAULT '0',
+  `it_notax` tinyint(4) NOT NULL DEFAULT '0',
   `it_sell_email` varchar(255) NOT NULL DEFAULT '',
   `it_use` tinyint(4) NOT NULL DEFAULT '0',
   `it_stock_qty` int(11) NOT NULL DEFAULT '0',
@@ -598,6 +600,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_memo` text NOT NULL,
   `od_send_cost` int(11) NOT NULL DEFAULT '0',
   `od_send_coupon` int(11) NOT NULL DEFAULT '0',
+  `od_send_cost2` int(11) NOT NULL DEFAULT '0',
   `od_temp_amount` int(11) NOT NULL DEFAULT '0',
   `od_temp_point` int(11) NOT NULL DEFAULT '0',
   `od_receipt_amount` int(11) NOT NULL DEFAULT '0',

@@ -7,9 +7,6 @@ if (G4_IS_MOBILE) {
 }
 
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-
-$captcha_html = captcha_html();
 
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
 $token = md5(uniqid(rand(), true));
@@ -603,6 +600,7 @@ else
             $("#itemqa").load("./itemqa.php", {it_id:"<?php echo $it_id; ?>"});
         });
         </script>
+<<<<<<< HEAD
 
         <?php
         /*
@@ -610,6 +608,8 @@ else
         include_once('./itemqa.inc.php');
         */
         ?>
+=======
+>>>>>>> 8ba2a84198461168008549042bbfc2d01e738d03
     </section>
 
     <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>

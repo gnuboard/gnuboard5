@@ -63,8 +63,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="1" title="내역선택">
         </td>
         <td><?php echo $row['sc_name']; ?></td>
-        <td><?php echo preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip1']).' ~ '.preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip2']); ?></td>
-        <td><?php echo number_format($row['sc_amount']); ?></td>
+        <td class="td_bigpostal"><?php echo preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip1']).' ~ '.preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip2']); ?></td>
+        <td class="td_sendcost_add"><?php echo number_format($row['sc_amount']); ?></td>
     </tr>
     <?php
     }
@@ -84,7 +84,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<section id="point_mng" class="cbox">
+<section id="sendcost_postal" class="cbox">
     <h2>추가배송비 등록</h2>
 
     <form name="fsendcost2" method="post" id="fsendcost2" action="./sendcostupdate.php" autocomplete="off">
@@ -104,14 +104,14 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="sc_zip1">우편번호 시작<strong class="sound_only">필수</strong></label></th>
         <td>
             <input type="text" name="sc_zip1" id="sc_zip1" required class="required frm_input" size="10">
-            <button type="button" class="sch_zipcode">우편번호검색</button>
+            <button type="button" class="sch_zipcode btn_frmline">우편번호검색</button>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="sc_zip2">우편번호 끝<strong class="sound_only">필수</strong></label></th>
         <td>
             <input type="text" name="sc_zip2" id="sc_zip2" required class="required frm_input" size="10">
-            <button type="button" class="sch_zipcode">우편번호검색</button>
+            <button type="button" class="sch_zipcode btn_frmline">우편번호검색</button>
         </td>
     </tr>
     <tr>

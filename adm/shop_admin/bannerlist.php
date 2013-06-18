@@ -101,7 +101,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 </section>
 
-<p><?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?></p>
+<p><?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?></p>
 
 <?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');

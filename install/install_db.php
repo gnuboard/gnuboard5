@@ -284,7 +284,7 @@ if($shop_install) {
                     de_simg_height = '$simg_height',
                     de_mimg_width = '$mimg_width',
                     de_mimg_height = '$mimg_height',
-                    de_item_ps_use = '1',
+                    de_item_use_use = '1',
                     de_level_sell = '1',
                     de_code_dup_use = '1',
                     de_sms_cont1 = '{이름}님의 회원가입을 축하드립니다.\nID:{회원아이디}\n{회사명}',

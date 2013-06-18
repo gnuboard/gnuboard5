@@ -1,5 +1,11 @@
 <?php
-include_once("./_common.php");
+include_once('./_common.php');
+
+if (G4_IS_MOBILE) {
+    include_once(G4_MSHOP_PATH.'/itemuseform.php');
+    return;
+}
+
 include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 // 사용후기의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
@@ -90,7 +96,7 @@ function fitemuse_submit(f)
 
     if (is_content_editor_data.length > <?php echo $is_content_max_length; ?>) {
         alert("내용은 <?php echo $is_content_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+is_content_editor_data.length+" 글자");
-        CKEDITOR.instances.is_content.focus(); 
+        CKEDITOR.instances.is_content.focus();
         return false;
     }
 

@@ -133,7 +133,7 @@ $sql = " update {$g4['shop_default_table']}
                 de_sms_use4                 = '$de_sms_use4',
                 de_sms_use5                 = '$de_sms_use5',
                 de_sms_hp                   = '$de_sms_hp',
-                de_item_use_use              = '$de_item_use_use',
+                de_item_use_use             = '$de_item_use_use',
                 de_code_dup_use             = '$de_code_dup_use',
                 de_cart_keep_term           = '$de_cart_keep_term',
                 de_guest_cart_use           = '$de_guest_cart_use',
@@ -149,7 +149,8 @@ $sql = " update {$g4['shop_default_table']}
                 de_taxsave_use              = '$de_taxsave_use',
                 de_guest_privacy            = '$de_guest_privacy',
                 de_hp_use                   = '$de_hp_use',
-                de_escrow_use               = '$de_escrow_use'
+                de_escrow_use               = '$de_escrow_use',
+                de_tax_flag_use             = '$de_tax_flag_use'
                 ";
 sql_query($sql);
 
