@@ -169,7 +169,7 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     </table>
 </section>
 
-<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&amp;page="); ?>
+<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&amp;page="); ?>
 
 
 <?php

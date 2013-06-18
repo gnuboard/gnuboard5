@@ -61,7 +61,7 @@ $result = sql_query($sql);
     </table>
 </section>
 
-<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
