@@ -169,6 +169,21 @@ function alert_close($msg, $error=true)
     exit;
 }
 
+
+// 경고메세지 출력후 창을 닫음
+function alert_login($msg, $url)
+{
+    global $g4;
+
+    $header = '';
+    if (isset($g4['title'])) {
+        $header = $g4['title'];
+    }
+    include_once(G4_BBS_PATH.'/alert_login.php');
+    exit;
+}
+
+
 // confirm 창
 function confirm($msg, $url1='', $url2='', $url3='')
 {

@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 if (!$is_member) {
-    alert_close("사용후기는 회원만 등록이 가능합니다.");
+    alert_close("사용후기는 회원만 작성이 가능합니다.");
 }
 
 $is_subject = trim($_REQUEST['is_subject']);
@@ -16,9 +16,10 @@ if ($w == "" || $w == "u") {
     if (!$is_content) alert("내용을 입력하여 주십시오.");
 }
 
-$url = "./item.php?it_id=$it_id";
+$url = "./item.php?it_id=$it_id&amp;_=".get_token()."#sit_use";
 
-if ($w == "") {
+if ($w == "") 
+{
     /*
     $sql = " select max(is_id) as max_is_id from {$g4['shop_item_use_table']} ";
     $row = sql_fetch($sql);
@@ -49,7 +50,9 @@ if ($w == "") {
     }  else {
         alert_opener("사용후기가 등록 되었습니다.", $url);
     }
-} else if ($w == "u") {
+} 
+else if ($w == "u") 
+{
     $sql = " select is_password from {$g4['shop_item_use_table']} where is_id = '$is_id' ";
     $row = sql_fetch($sql);
     if ($row['is_password'] != $is_password)
@@ -64,4 +67,19 @@ if ($w == "") {
 
     alert_opener("사용후기가 수정 되었습니다.", $url);
 }
+else if ($w == "d") 
+{
+    if (!$is_admin) 
+    {
+        $sql = " select count(*) as cnt from {$g4['shop_item_use_table']} where mb_id = '{$member['mb_id']}' and is_id = '$is_id' ";
+        $row = sql_fetch($sql);
+        if (!$row['cnt'])
+            alert("자신의 사용후기만 삭제하실 수 있습니다.");
+    }
+
+    $sql = " delete from {$g4['shop_item_use_table']} where is_id = '$is_id' and md5(concat(is_id,is_time,is_ip)) = '{$hash}' ";
+    sql_query($sql);
+
+    alert("사용후기를 삭제 하였습니다.", $url);
+} 
 ?>

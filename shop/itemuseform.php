@@ -16,7 +16,7 @@ $it_id = escape_trim($_REQUEST['it_id']);
 $is_id = escape_trim($_REQUEST['is_id']);
 
 if (!$is_member) {
-    alert("사용후기는 회원만 평가가 가능합니다.", G4_BBS_URL."/login.php");
+    alert_close("사용후기는 회원만 작성 가능합니다.");
 }
 
 if ($w == "") {

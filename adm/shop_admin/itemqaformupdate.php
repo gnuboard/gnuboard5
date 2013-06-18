@@ -9,14 +9,10 @@ if ($w == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
-$iq = sql_fetch(" select * from {$g4['shop_item_qa_table']} where iq_id = '$iq_id' ");
-if (!$iq['iq_id']) {
-    alert('등록된 자료가 없습니다.');
-}
-
 $qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
 
-if ($w == "u") {
+if ($w == "u") 
+{
     $sql = "update {$g4['shop_item_qa_table']}
                set iq_subject = '$iq_subject',
                    iq_question = '$iq_question',
@@ -25,12 +21,8 @@ if ($w == "u") {
     sql_query($sql);
 
     goto_url("./itemqaform.php?w=$w&amp;iq_id=$iq_id&amp;$qstr");
-} else if ($w == "d") {
-    $sql = "delete from {$g4['shop_item_qa_table']} where iq_id = '$iq_id' ";
-    sql_query($sql);
-
-    goto_url("./itemqalist.php?$qstr");
-} else {
+} 
+else {
     alert();
 }
 ?>

@@ -32,7 +32,6 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-<input type="hidden" name="is_confirm" value="<?php echo $is['is_confirm']; ?>">
 
 <section class="cbox">
     <h2>사용후기 수정</h2>

@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '400660';
 include_once('./_common.php');
+include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -20,6 +21,13 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 ?>
 
 <?php//=subtitle($g4['title'])?>
+
+<form name="fitemqaform" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqaform_submit(this);">
+<input type="hidden" name="w" value="<?php echo $w; ?>">
+<input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
 <section class="cbox">
     <h2>상품문의 수정/답변</h2>
@@ -48,11 +56,12 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     </tr>
     <tr>
         <th scope="row"><label for="iq_question">질문</label></th>
-        <td><textarea name="iq_question" id="iq_question" rows="7" required class="required"><?php echo get_text($iq['iq_question']); ?></textarea></td>
+        <td><?php echo editor_html('iq_question', $iq['iq_question']); ?></td>
     </tr>
     <tr>
         <th scope="row"><label for="iq_answer">답변</label></th>
-        <td><textarea name="iq_answer" id="iq_answer" rows="7"><?php echo get_text($iq['iq_answer']); ?></textarea></td>
+        <td><?php echo editor_html('iq_answer', $iq['iq_answer']); ?></td>
+        <!-- <td><textarea name="iq_answer" id="iq_answer" rows="7"><?php echo get_text($iq['iq_answer']); ?></textarea></td> -->
     </tr>
     </tbody>
     </table>
@@ -64,6 +73,16 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     </form>
 
 </section>
+
+<script>
+function fitemqaform_submit(f)
+{
+    <?php echo get_editor_js('iq_question'); ?>
+    <?php echo get_editor_js('iq_answer'); ?>
+    
+    return true;
+}
+</script>
 
 <?php
 include_once (G4_ADMIN_PATH.'/admin.tail.php');
