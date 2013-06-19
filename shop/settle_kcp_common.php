@@ -146,7 +146,7 @@ if(!$default['de_card_test']) {
                     set od_receipt_amount = '$ipgm_mnyx',
                         od_receipt_time = '$tx_tm'
                   where od_id = '$order_no'
-                    and od_escrow1 = '$tno' ";
+                    and od_tno = '$tno' ";
         sql_query($sql, FALSE);
     }
 

@@ -246,7 +246,7 @@ if(openwin != null) {
             </tr>
             <tr>
                 <th scope="row">영수증</th>
-                <td><a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_escrow1']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a></td>
+                <td><a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a></td>
             </tr>
 
             <?php
@@ -274,10 +274,10 @@ if(openwin != null) {
                 <th scope="row">휴대폰번호</th>
                 <td><?php echo $cd['cd_opt02']; ?></td>
             </tr>
-            <?php //echo '<tr><th scope="row">영수증</th><td><a href="javascript:;" onclick="window.open(\'http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no='.$od[od_escrow1].'\', \'winreceipt\', \'width=620,height=670\')">영수증 출력</a></td></tr>'; ?>
+            <?php //echo '<tr><th scope="row">영수증</th><td><a href="javascript:;" onclick="window.open(\'http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no='.$od[tno].'\', \'winreceipt\', \'width=620,height=670\')">영수증 출력</a></td></tr>'; ?>
             <tr>
                 <th scope="row">영수증</th>
-                <td><a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $od['od_escrow1']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a></td>
+                <td><a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a></td>
             </tr>
 
             <?php
@@ -327,11 +327,11 @@ if(openwin != null) {
                 <td><?php echo $od['od_deposit_name']; ?></td>
             </tr>
                 <?php
-                if ($od['od_escrow1']) {
+                if ($od['od_tno']) {
                 ?>
             <tr>
                 <th scope="row">KCP 거래번호</th>
-                <td><?php echo $od['od_escrow1']; ?></td>
+                <td><?php echo $od['od_tno']; ?></td>
             </tr>
                 <?
                 }
@@ -597,7 +597,7 @@ if(openwin != null) {
     <legend>모의입금처리</legend>
     <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
     <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
-    <input type="text" name="e_trade_no" value="<?php echo $od['od_escrow1']; ?>" size="80"><br />
+    <input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>" size="80"><br />
     <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
     <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>" size="80"><br />
     <input type="text" name="noti_url" value="<?php echo G4_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />

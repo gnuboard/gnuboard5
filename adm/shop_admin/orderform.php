@@ -346,7 +346,7 @@ $pg_anchor = '<ul class="anchor">
         <?php if ($od['od_settle_case'] == '휴대폰') { ?>
         <tr>
             <th scope="row">휴대폰번호</th>
-            <td><?php echo $od['od_escrow2']; ?></td>
+            <td><?php echo $od['od_bank_account']; ?></td>
             </tr>
         <tr>
             <th scope="row"><?php echo $od['od_settle_case']; ?> 결제액</th>
@@ -534,7 +534,7 @@ $pg_anchor = '<ul class="anchor">
         <?php if ($od['od_settle_case'] == '휴대폰') { ?>
         <tr>
             <th scope="row">휴대폰번호</th>
-            <td><?php echo $od['od_escrow2']; ?></td>
+            <td><?php echo $od['od_bank_account']; ?></td>
         </tr>
         <tr>
             <th scope="row"><label for="od_receipt_amount"><?php echo $od['od_settle_case']; ?> 결제액</label></th>

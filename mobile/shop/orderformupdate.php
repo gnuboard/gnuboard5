@@ -337,7 +337,7 @@ else if ($od_settle_case == "계좌이체")
     $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
 
-    $od_escrow1         = $tno;
+    $od_tno             = $tno;
     $od_receipt_amount  = $amount;
     $od_receipt_point   = $i_temp_point;
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
@@ -355,7 +355,7 @@ else if ($od_settle_case == "가상계좌")
     $od_temp_point      = $i_temp_point;
     $od_receipt_point   = 0;
 
-    $od_escrow1         = $tno;
+    $od_tno             = $tno;
     $od_receipt_amount  = 0;
     $bankname           = iconv("cp949", "utf8", $bankname);
     $depositor          = iconv("cp949", "utf8", $depositor);
@@ -370,7 +370,7 @@ else if ($od_settle_case == "휴대폰")
     $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
 
-    $od_escrow1         = $tno;
+    $od_tno             = $tno;
     $od_receipt_amount  = $amount;
     $od_receipt_point   = $i_temp_point;
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
@@ -384,7 +384,7 @@ else if ($od_settle_case == "신용카드")
     $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
 
-    $od_escrow1         = $tno;
+    $od_tno             = $tno;
     $od_receipt_amount  = $amount;
     $od_receipt_point   = $i_temp_point;
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
@@ -417,6 +417,10 @@ $od_id = get_session('ss_order_uniqid');
 
 // 주문상품의 uq_id 변경을 위한 uq_id를 얻는다.
 $uq_id = get_uniqid();
+
+$od_escrow = 0;
+if($escw_yn == 'Y')
+    $od_escrow = 1;
 
 // 주문서에 입력
 $sql = " insert {$g4['shop_order_table']}
@@ -451,7 +455,8 @@ $sql = " insert {$g4['shop_order_table']}
                 od_receipt_point  = '$od_receipt_point',
                 od_bank_account   = '$od_bank_account',
                 od_receipt_time   = '$od_receipt_time',
-                od_escrow1        = '$od_escrow1',
+                od_tno            = '$od_tno',
+                od_escrow         = '$od_escrow',
                 od_shop_memo      = '',
                 od_hope_date      = '$od_hope_date',
                 od_time           = '".G4_TIME_YMDHIS."',
