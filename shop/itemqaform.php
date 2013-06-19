@@ -29,36 +29,39 @@ if ($w == "u")
 
 include_once(G4_PATH.'/head.sub.php');
 ?>
-<style>
-ul {list-style:none;margin:0px;padding:0px;}
-label {width:130px;vertical-align:top;padding:3px 0;}
-</style>
 
-<div style="padding:10px;">
+<div id="sit_qa_write" class="new_win">
+    <h1 class="new_win_title">상품문의 쓰기</h1>
+
     <form name="fitemqa" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqa_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
-    <fieldset style="padding:0 10px 10px;">
-    <legend><strong>상품문의 쓰기</strong></legend>
-    <ul style="padding:10px;">
-        <li>
-            <label for="iq_subject">제목</label>
-            <input type="text" id="iq_subject" name="iq_subject" size="100" class="ed" minlength="2" maxlength="250" required itemname="제목" value="<?php echo get_text($qa['iq_subject']); ?>">
-        </li>
-        <li>
-            <label for="" style="width:200px;">질문</label>
-            <?php echo editor_html('iq_question', $qa['iq_question']); ?>
-        </li>
-    </ul>
-    <input type="submit" value="   확   인   ">
-    </fieldset>
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="iq_subject">제목</label></th>
+        <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="frm_input" minlength="2" maxlength="250"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="iq_question">질문</label></th>
+        <td><?php echo editor_html('iq_question', $qa['iq_question']); ?></td>
+    </tr>
+    </tbody>
+    </table>
+
+    <div class="btn_win">
+        <input type="submit" value="작성완료" class="btn_submit">
+    </div>
     </form>
 </div>
 
 <script type="text/javascript">
-self.focus();
-
 function fitemqa_submit(f)
 {
     <?php echo get_editor_js('iq_question'); ?>
@@ -71,10 +74,6 @@ function fitemqa_submit(f)
 
     return true;
 }
-
-$(function() {
-    $("#iq_subject").focus();
-});
 </script>
 
 <?php
