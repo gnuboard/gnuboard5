@@ -479,8 +479,7 @@ if(!$result) {
 // 장바구니 쇼핑에서 주문으로
 // 신용카드로 주문하면서 신용카드 포인트 사용하지 않는다면 포인트 부여하지 않음
 $sql_card_point = "";
-//if ($od_receipt_card > 0 && $default[de_card_point] == false) {
-if (($od_receipt_card > 0 || $od_receipt_hp > 0) && $default['de_card_point'] == false) {
+if ($od_receipt_amount > 0 && !$default['de_card_point']) {
     $sql_card_point = " , ct_point = '0' ";
 }
 $sql = "update {$g4['shop_cart_table']}
