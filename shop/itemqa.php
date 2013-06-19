@@ -45,14 +45,17 @@ $thumbnail_width = 500;
         // http://stackoverflow.com/questions/6967081/show-hide-multiple-divs-with-jquery?answertab=votes#tab-top
 
         $iq_stats = '';
+        $iq_style = '';
         $iq_answer = '';
         if ($row['iq_answer'])
         {
             $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
             $iq_stats = '답변완료';
+            $iq_style = 'sit_qaa_done';
             $is_answer = true;
         } else {
             $iq_stats = '답변전';
+            $iq_style = 'sit_qaa_yet';
             $iq_answer = '답변이 등록되지 않았습니다.';
             $is_answer = false;
         }
@@ -61,35 +64,36 @@ $thumbnail_width = 500;
     ?>
 
         <li class="sit_qa_li">
-            <button type="button" class="sit_qa_li_title" onclick="javascript:qa_menu('sit_qa_con_<?php echo $i; ?>')"><b><?php echo $num; ?>.</b> <?php echo $iq_subject; ?></button>
+            <button type="button" class="sit_qa_li_title" onclick="javascript:qa_menu('sit_qa_con_<?php echo $i; ?>')"><b><?php echo $iq_num; ?>.</b> <?php echo $iq_subject; ?></button>
             <dl class="sit_qa_dl">
                 <dt>작성자</dt>
                 <dd><?php echo $iq_name; ?></dd>
                 <dt>작성일</dt>
                 <dd><?php echo $iq_time; ?></dd>
                 <dt>상태</dt>
-                <dd><?php echo $iq_stats; ?></dd>
+                <dd class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></dd>
             </dl>
 
             <div id="sit_qa_con_<?php echo $i; ?>" class="sit_qa_con">
-                <p class="sit_qa_qaq">
-                    <strong>문의내용</strong><br>
-                    <?php echo $iq_question; // 상품 문의 내용 ?>
-                </p>
+                <div class="sit_qa_p">
+                    <div class="sit_qa_qaq">
+                        <strong>문의내용</strong><br>
+                        <?php echo $iq_question; // 상품 문의 내용 ?>
+                    </div>
+                    <div class="sit_qa_qaa">
+                        <strong>답변</strong><br>
+                        <?php echo $iq_answer; ?>
+                    </div>
+                </div>
 
                 <?php if ($is_admin || ($row['mb_id'] == $member['mb_id'] && !$is_answer)) { ?>
                 <div class="sit_qa_cmd">
-                    <a href="<?php echo $itemqa_form."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="itemqa_form" onclick="return false;">수정</a>
-                    <a href="<?php echo $itemqa_formupdate."&amp;iq_id={$row['iq_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemqa_delete">삭제</a>
+                    <a href="<?php echo $itemqa_form."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="itemqa_form btn01" onclick="return false;">수정</a>
+                    <a href="<?php echo $itemqa_formupdate."&amp;iq_id={$row['iq_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemqa_delete btn01">삭제</a>
                     <!-- <button type="button" onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
                     <button type="button" onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button> -->
                 </div>
                 <?php } ?>
-
-                <p class="sit_qa_qaa">
-                    <strong>답변</strong><br>
-                    <?php echo $iq_answer; ?>
-                </p>
             </div>
             </div>
         </li>
@@ -146,7 +150,7 @@ echo itemqa_page(10, $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", 
 
 <div id="sit_qa_wbtn">
     <!-- <a href="javascript:itemqawin('it_id=<?php echo $it_id; ?>');">상품문의 쓰기<span class="sound_only"> 새 창</span></a> -->
-    <a href="<?php echo $itemqa_form; ?>" onclick="return false;" class="btn02 itemqa_form">상품문의 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemqa_form; ?>" class="btn02 itemqa_form" onclick="return false;">상품문의 쓰기<span class="sound_only"> 새 창</span></a>
     <a href="<?php echo $itemqa_list; ?>" id="itemqa_list" class="btn01">더보기</a>
 </div>
 

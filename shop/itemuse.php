@@ -66,14 +66,14 @@ $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
             </dl>
 
             <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">
-                <p>
+                <div class="sit_use_p">
                     <?php echo $is_content; // 사용후기 내용 ?>
-                </p>
+                </div>
 
                 <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
                 <div class="sit_use_cmd">
-                    <a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form" onclick="return false;">수정</a>
-                    <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete">삭제</a>
+                    <a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">수정</a>
+                    <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete btn01">삭제</a>
                 </div>
                 <?php } ?>
             </div>
@@ -130,8 +130,8 @@ echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?
 ?>
 
 <div id="sit_use_wbtn">
-    <a href="<?php echo $itemuse_form; ?>" id="itemuse_form" class="btn02">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
-    <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기</a>
+    <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form" onclick="return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_list; ?>" class="btn01 itemuse_list">더보기</a>
 </div>
 
 <script>
