@@ -1079,7 +1079,7 @@ function calculate_order_amount()
     var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
     var tot_amount = sell_amount + send_cost + send_cost2;
 
-    $("input[name=good_mny]").val(tot_amount);
+    $("form[name=sm_form] input[name=good_mny]").val(tot_amount);
     $("#od_tot_amount").text(number_format(String(tot_amount)));
     <?php if($temp_point > 0 && $is_member) { ?>
     calculate_temp_point();
