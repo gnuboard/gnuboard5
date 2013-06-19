@@ -759,18 +759,6 @@ $pg_anchor = '<ul class="anchor">
             </select>
         </td>
     </tr>
-    <?php /* ?>
-    <tr>
-        <th scope="row"><label for="de_scroll_banner_use">스크롤배너 사용</label></th>
-        <td>
-            <?php echo help("'예'로 설정한 경우 쇼핑몰 우측에 스크롤배너가 출력됩니다.", 50); ?>
-            <select name="de_scroll_banner_use" id="de_scroll_banner_use">
-                <option value="0" <?php echo get_selected($default['de_scroll_banner_use'], 0); ?>>사용안함</option>
-                <option value="1" <?php echo get_selected($default['de_scroll_banner_use'], 1); ?>>사용</option>
-            </select>
-        </td>
-    </tr>
-    <?php */ ?>
     <tr>
         <th scope="row"><label for="de_level_sell">상품구입 권한</label></th>
         <td>

@@ -269,7 +269,7 @@ if($shop_install) {
                     de_card_point = '0',
                     de_point_days = '7',
                     de_card_pg = 'kcp',
-                    de_kcp_mid = 'T0000',
+                    de_kcp_mid = '',
                     de_send_cost_case = '상한',
                     de_send_cost_limit = '20000;30000;40000',
                     de_send_cost_list = '4000;3000;2000',
