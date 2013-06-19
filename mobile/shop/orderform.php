@@ -84,6 +84,11 @@ ob_start();
     $good_info = '';
     $it_send_cost = 0;
 
+    $comm_tax_mny = 0; // 과세금액
+    $comm_vat_mny = 0; // 부가세
+    $comm_free_mny = 0; // 면세금액
+    $tot_tax_mny = 0;
+
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         // 합계금액 계산
@@ -130,18 +135,12 @@ ob_start();
             $it_send_cost += get_item_sendcost($row['it_id'], $sum['price'], $sum['qty']);
         }
 
-        // 복합과세금액 계산
+        // 복합과세금액
         if($default['de_tax_flag_use']) {
-            $tax_mny = $vat_mnt = $free_mny = 0;
             if($row['it_notax']) {
-                $free_mny = $sum['price'];
-                $comm_free_mny += $free_mny;
+                $comm_free_mny += $sum['price'];
             } else {
-                $tax_mny = round((int)$sum['price'] / 1.1);
-                $vat_mny = (int)$sum['price'] - $tax_mny;
-
-                $comm_tax_mny += $tax_mny;
-                $comm_vat_mny += $vat_mny;
+                $tot_tax_mny += $sum['price'];
             }
         }
 
@@ -220,13 +219,10 @@ ob_start();
         }
     }
 
-    // 배송비 복합과세처리
-    if($default['de_tax_flag_use'] && $send_cost > 0) {
-        $send_tax = round((int)$send_cost / 1.1);
-        $send_vat = (int)$send_cost - $send_tax;
-
-        $comm_tax_mny += $send_tax;
-        $comm_vat_mny += $send_vat;
+    // 복합과세처리
+    if($default['de_tax_flag_use']) {
+        $comm_tax_mny = round(($tot_tax_mny + $send_cost) / 1.1);
+        $comm_vat_mnt = ($tot_tax_mny + $send_cost) - $comm_tax_mny;
     }
     ?>
     </tbody>
@@ -1023,14 +1019,6 @@ function calculate_total_amount()
         cp_amount = parseInt($cp_amt.eq(index).val());
         sell_amount += it_amount;
         tot_cp_amount += cp_amount;
-        <?php if($default['de_tax_flag_use']) { ?>
-        it_notax = $("input[name^=it_notax]").eq(index).val();
-        if(it_notax == "1") {
-            comm_free_mny += (it_amount - cp_amount);
-        } else {
-            tot_mny += (it_amount - cp_amount);
-        }
-        <?php } ?>
     });
 
     tot_sell_amount = sell_amount - tot_cp_amount + send_cost;
@@ -1044,13 +1032,6 @@ function calculate_total_amount()
     $("input[name=item_coupon]").val(tot_cp_amount);
     $("input[name=od_coupon]").val(0);
     $("input[name=od_send_coupon]").val(0);
-    <?php if($default['de_tax_flag_use']) { ?>
-    comm_tax_mny = Math.round((tot_mny + send_cost) / 1.1);
-    comm_vat_mny = (tot_mny + send_cost) - comm_tax_mny;
-    $("input[name=comm_tax_mny]").val(comm_tax_mny);
-    $("input[name=comm_vat_mny]").val(comm_vat_mny);
-    $("input[name=comm_free_mny]").val(comm_free_mny);
-    <?php } ?>
     <?php if($oc_cnt > 0) { ?>
     $("input[name=od_cp_id]").val("");
     if($("#od_coupon_cancel").size()) {
@@ -1079,7 +1060,7 @@ function calculate_order_amount()
     var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
     var tot_amount = sell_amount + send_cost + send_cost2;
 
-    $("input[name=good_mny]").val(tot_amount);
+    $("form[name=sm_form] input[name=good_mny]").val(tot_amount);
     $("#od_tot_amount").text(number_format(String(tot_amount)));
     <?php if($temp_point > 0 && $is_member) { ?>
     calculate_temp_point();
