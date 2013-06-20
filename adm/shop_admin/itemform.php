@@ -1005,13 +1005,11 @@ $(function(){
 
             $img_display.toggle();
 
-            /*
             if($img_display.is(":visible")) {
                 $(this).text($(this).text().replace("확인", "닫기"));
             } else {
                 $(this).text($(this).text().replace("닫기", "확인"));
             }
-            */
         });
         $(".sit_wimg_close").bind("click", function() {
             var $img_display = $(this).parents(".banner_or_img");
