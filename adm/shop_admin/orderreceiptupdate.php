@@ -42,6 +42,25 @@ define("_ORDERSMS_", true);
 include "./ordersms.inc.php";
 
 
+// 에스크로 배송처리
+if($_POST['od_tno'] && $_POST['od_escrow'] == 1) {
+    $arr_tno = array();
+    $arr_corp = array();
+    $arr_numb = array();
+
+    // 배송회사정보
+    $sql = " select dl_company from {$g4['shop_delivery_table']} where dl_id = '$dl_id' ";
+    $row = sql_fetch($sql);
+
+    $arr_tno[0] = $_POST['od_tno'];
+    $arr_corp[0] = $row['dl_company'];
+    $arr_numb[0] = $od_invoice;
+    $cust_ip = getenv('REMOTE_ADDR');
+
+    include_once('./orderescrow.inc.php');
+}
+
+
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 goto_url("./orderform.php?od_id=$od_id&amp;$qstr");

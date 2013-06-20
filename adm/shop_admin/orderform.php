@@ -308,6 +308,8 @@ $pg_anchor = '<ul class="anchor">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
     <input type="hidden" name="od_name" value="<?php echo $od['od_name']; ?>">
     <input type="hidden" name="od_hp" value="<?php echo $od['od_hp']; ?>">
+    <input type="hidden" name="od_tno" value="<?php echo $od['od_tno']; ?>">
+    <input type="hidden" name="od_escrow" value="<?php echo $od['od_escrow']; ?>">
 
     <section id="anc_sodr_chk" class="compare_left">
         <h3>결제상세정보 확인</h3>
