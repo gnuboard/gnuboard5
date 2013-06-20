@@ -94,9 +94,19 @@ if ($csv == 'csv')
 // MS엑셀 XLS 데이터로 다운로드 받음
 if ($csv == 'xls')
 {
+    /*================================================================================
+    php_writeexcel http://www.bettina-attack.de/jonny/view.php/projects/php_writeexcel/
+    =================================================================================*/
+
+    include_once(G4_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_workbook.inc.php');
+    include_once(G4_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_worksheet.inc.php');
+
+    $fname = tempnam(G4_DATA_PATH, "tmp-orderlist.xls");
+    $workbook = new writeexcel_workbook($fname);
+    $worksheet = $workbook->addworksheet();
+
     $fr_date = date_conv($fr_date);
     $to_date = date_conv($to_date);
-
 
     $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost
                FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
@@ -113,59 +123,39 @@ if ($csv == 'xls')
     if (!$cnt)
         alert("출력할 내역이 없습니다.");
 
-    header("Content-charset=utf-8");
-    header('Content-Type: application/vnd.ms-excel');
-    header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-    header('Content-Disposition: attachment; filename="' . date("ymd", time()) . '.xls"');
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    header('Pragma: public');
-    echo '<html>';
-    echo '<head>';
-    echo '<title>xls</title>';
-    echo '<style>.mso_txt {mso-number-format:"\\@"}</style>';
-    echo '</head>';
-    echo '<body>';
-    echo '<table class="frm_tbl">';
-    echo '<tr>';
-    echo '<td>우편번호</td>';
-    echo '<td>주소</td>';
-    echo '<td>이름</td>';
-    echo '<td>전화1</td>';
-    echo '<td>전화2</td>';
-    echo '<td>상품명</td>';
-    echo '<td>수량</td>';
-    echo '<td>선택사항</td>';
-    echo '<td>배송비</td>';
-    echo '<td>상품코드</td>';
-    echo '<td>주문번호</td>';
-    echo '<td>운송장번호</td>';
-    echo '<td>전하실말씀</td>';
-    echo '</tr>';
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
-    {
-        $it_name = stripslashes($row['it_name']) . "<br />";
-        $ct_send_cost = ($row['ct_send_cost'] ? '착불' : '선불');
-        echo '<tr>';
-        echo '<td>'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'</td>';
-        echo '<td>'.$row['od_b_addr1'].' '.$row['od_b_addr2'].'</td>';
-        echo '<td>'.$row['od_b_name'].'</td>';
-        echo '<td class="mso_txt">'.$row['od_b_tel'].'</td>';
-        echo '<td class="mso_txt">'.$row['od_b_hp'].'</td>';
-        echo '<td>'.$it_name.'</td>';
-        echo '<td>'.$row['ct_qty'].'</td>';
-        echo '<td>'.$row['ct_option'].'</td>';
-        echo '<td>'.$ct_send_cost.'</td>';
-        echo '<td class="mso_txt">'.$row['it_id'].'</td>';
-        echo '<td class="mso_txt">'. urlencode($row['od_id']).'</td>';
-        echo '<td class="mso_txt">'.$row['od_invoice'].'</td>';
-        echo '<td>'.$row['od_memo'].'</td>';
-        echo '</tr>';
+    // Put Excel data
+    $data = array('우편번호', '주소', '이름', '전화1', '전화2', '상품명', '수량', '선택사항', '배송비', '상품코드', '주문번호', '운송장번호', '전하실말씀');
+
+    $col = 0;
+    foreach($data as $cell) {
+        $worksheet->write(0, $col++, iconv('utf-8', 'euc-kr', $cell));
     }
-    if ($i == 0)
-        echo '<tr><td colspan="11">자료가 없습니다.</td></tr>';
-    echo '</table>';
-    echo '</body>';
-    echo '</html>';
+
+    for($i=1; $row=sql_fetch_array($result); $i++) {
+        $ct_send_cost = ($row['ct_send_cost'] ? '착불' : '선불');
+
+        $worksheet->write($i, 0, $row['od_b_zip1'].'-'.$row['od_b_zip2']);
+        $worksheet->write($i, 1, iconv('utf-8', 'euc-kr', $row['od_b_addr1'].' '.$row['od_b_addr2']));
+        $worksheet->write($i, 2, iconv('utf-8', 'euc-kr', $row['od_b_name']));
+        $worksheet->write($i, 3, iconv('utf-8', 'euc-kr', $row['od_b_tel']));
+        $worksheet->write($i, 4, iconv('utf-8', 'euc-kr', $row['od_b_hp']));
+        $worksheet->write($i, 5, iconv('utf-8', 'euc-kr', $row['it_name']));
+        $worksheet->write($i, 6, iconv('utf-8', 'euc-kr', $row['ct_qty']));
+        $worksheet->write($i, 7, iconv('utf-8', 'euc-kr', $row['ct_option']));
+        $worksheet->write($i, 8, iconv('utf-8', 'euc-kr', $ct_send_cost));
+        $worksheet->write($i, 9, iconv('utf-8', 'euc-kr', $row['it_id']));
+        $worksheet->write($i, 10, iconv('utf-8', 'euc-kr', $row['od_id']));
+        $worksheet->write($i, 11, iconv('utf-8', 'euc-kr', $row['od_invoice']));
+        $worksheet->write($i, 12, iconv('utf-8', 'euc-kr', $row['od_memo']));
+    }
+
+    $workbook->close();
+
+    header("Content-Type: application/x-msexcel; name=\"orderlist.xls\"");
+    header("Content-Disposition: inline; filename=\"orderlist.xls\"");
+    $fh=fopen($fname, "rb");
+    fpassthru($fh);
+    unlink($fname);
 
     exit;
 }
