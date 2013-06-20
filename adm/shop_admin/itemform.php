@@ -966,10 +966,11 @@ $(function(){
             $it_img = G4_DATA_PATH.'/item/'.$it['it_img'.$i];
             if(is_file($it_img) && $it['it_img'.$i]) {
                 $size = @getimagesize($it_img);
+                $thumb = get_it_thumbnail($it['it_img'.$i], 25, 25);
             ?>
             <label for="it_img<?php echo $i; ?>_del"><span class="sound_only">이미지 <?php echo $i; ?> </span>파일삭제</label>
             <input type="checkbox" name="it_img<?php echo $i; ?>_del" id="it_img<?php echo $i; ?>_del" value="1">
-            <span class="sit_wimg_limg<?php echo $i; ?>"></span>
+            <span class="sit_wimg_limg<?php echo $i; ?>"><?php echo $thumb; ?></span>
             <div id="limg<?php echo $i; ?>" class="banner_or_img">
                 <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_img'.$i]; ?>" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
                 <button type="button" class="sit_wimg_close">닫기</button>
@@ -1004,11 +1005,13 @@ $(function(){
 
             $img_display.toggle();
 
+            /*
             if($img_display.is(":visible")) {
                 $(this).text($(this).text().replace("확인", "닫기"));
             } else {
                 $(this).text($(this).text().replace("닫기", "확인"));
             }
+            */
         });
         $(".sit_wimg_close").bind("click", function() {
             var $img_display = $(this).parents(".banner_or_img");
