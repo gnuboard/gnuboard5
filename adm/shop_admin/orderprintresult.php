@@ -125,28 +125,30 @@ if ($csv == 'xls')
 
     // Put Excel data
     $data = array('우편번호', '주소', '이름', '전화1', '전화2', '상품명', '수량', '선택사항', '배송비', '상품코드', '주문번호', '운송장번호', '전하실말씀');
+    $data = array_map('iconv_euckr', $data);
 
     $col = 0;
     foreach($data as $cell) {
-        $worksheet->write(0, $col++, iconv('utf-8', 'euc-kr', $cell));
+        $worksheet->write(0, $col++, $cell);
     }
 
     for($i=1; $row=sql_fetch_array($result); $i++) {
-        $ct_send_cost = ($row['ct_send_cost'] ? '착불' : '선불');
+        $ct_send_cost = iconv_euckr(($row['ct_send_cost'] ? '착불' : '선불'));
+        $row = array_map('iconv_euckr', $row);
 
         $worksheet->write($i, 0, $row['od_b_zip1'].'-'.$row['od_b_zip2']);
-        $worksheet->write($i, 1, iconv('utf-8', 'euc-kr', $row['od_b_addr1'].' '.$row['od_b_addr2']));
-        $worksheet->write($i, 2, iconv('utf-8', 'euc-kr', $row['od_b_name']));
-        $worksheet->write($i, 3, iconv('utf-8', 'euc-kr', $row['od_b_tel']));
-        $worksheet->write($i, 4, iconv('utf-8', 'euc-kr', $row['od_b_hp']));
-        $worksheet->write($i, 5, iconv('utf-8', 'euc-kr', $row['it_name']));
-        $worksheet->write($i, 6, iconv('utf-8', 'euc-kr', $row['ct_qty']));
-        $worksheet->write($i, 7, iconv('utf-8', 'euc-kr', $row['ct_option']));
-        $worksheet->write($i, 8, iconv('utf-8', 'euc-kr', $ct_send_cost));
-        $worksheet->write($i, 9, iconv('utf-8', 'euc-kr', $row['it_id']));
-        $worksheet->write($i, 10, iconv('utf-8', 'euc-kr', $row['od_id']));
-        $worksheet->write($i, 11, iconv('utf-8', 'euc-kr', $row['od_invoice']));
-        $worksheet->write($i, 12, iconv('utf-8', 'euc-kr', $row['od_memo']));
+        $worksheet->write($i, 1, $row['od_b_addr1'].' '.$row['od_b_addr2']);
+        $worksheet->write($i, 2, $row['od_b_name']);
+        $worksheet->write($i, 3, $row['od_b_tel']);
+        $worksheet->write($i, 4, $row['od_b_hp']);
+        $worksheet->write($i, 5, $row['it_name']);
+        $worksheet->write($i, 6, $row['ct_qty']);
+        $worksheet->write($i, 7, $row['ct_option']);
+        $worksheet->write($i, 8, $ct_send_cost);
+        $worksheet->write($i, 9, $row['it_id']);
+        $worksheet->write($i, 10, $row['od_id']);
+        $worksheet->write($i, 11, $row['od_invoice']);
+        $worksheet->write($i, 12, $row['od_memo']);
     }
 
     $workbook->close();
