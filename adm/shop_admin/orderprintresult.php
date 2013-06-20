@@ -94,17 +94,6 @@ if ($csv == 'csv')
 // MS엑셀 XLS 데이터로 다운로드 받음
 if ($csv == 'xls')
 {
-    /*================================================================================
-    php_writeexcel http://www.bettina-attack.de/jonny/view.php/projects/php_writeexcel/
-    =================================================================================*/
-
-    include_once(G4_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_workbook.inc.php');
-    include_once(G4_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_worksheet.inc.php');
-
-    $fname = tempnam(G4_DATA_PATH, "tmp-orderlist.xls");
-    $workbook = new writeexcel_workbook($fname);
-    $worksheet = $workbook->addworksheet();
-
     $fr_date = date_conv($fr_date);
     $to_date = date_conv($to_date);
 
@@ -122,6 +111,17 @@ if ($csv == 'xls')
     $cnt = @mysql_num_rows($result);
     if (!$cnt)
         alert("출력할 내역이 없습니다.");
+
+    /*================================================================================
+    php_writeexcel http://www.bettina-attack.de/jonny/view.php/projects/php_writeexcel/
+    =================================================================================*/
+
+    include_once(G4_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_workbook.inc.php');
+    include_once(G4_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_worksheet.inc.php');
+
+    $fname = tempnam(G4_DATA_PATH, "tmp-orderlist.xls");
+    $workbook = new writeexcel_workbook($fname);
+    $worksheet = $workbook->addworksheet();
 
     // Put Excel data
     $data = array('우편번호', '주소', '이름', '전화1', '전화2', '상품명', '수량', '선택사항', '배송비', '상품코드', '주문번호', '운송장번호', '전하실말씀');
@@ -153,8 +153,8 @@ if ($csv == 'xls')
 
     $workbook->close();
 
-    header("Content-Type: application/x-msexcel; name=\"orderlist.xls\"");
-    header("Content-Disposition: inline; filename=\"orderlist.xls\"");
+    header("Content-Type: application/x-msexcel; name=\"orderlist-".date("ymd", time()).".xls\"");
+    header("Content-Disposition: inline; filename=\"orderlist-".date("ymd", time()).".xls\"");
     $fh=fopen($fname, "rb");
     fpassthru($fh);
     unlink($fname);
