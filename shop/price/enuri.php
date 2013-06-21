@@ -116,8 +116,26 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
     if ($default['de_send_cost_case'] == '없음')
         $send_cost = '무료';
-    else
+    else if($default['de_send_cost_case'] == '상한')
         $send_cost = '유료';
+
+    // 개별배송비계산
+    if($default['de_send_cost_case'] == '개별') {
+        $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
+
+        if($delivery)
+            $send_cost = '유료';
+        else
+            $send_cost = '무료';
+    }
+
+    // 상품이미지
+    $img_url = '';
+    for($k=1; $k<=10; $k++) {
+        $img_url = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
+        if($img_url)
+            break;
+    }
 
     echo '
 	<tr bgcolor="white">
@@ -126,7 +144,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 		<td align="center">'.number_format($row['it_price']).'</td>
 		<td align="center">'.$stock.'</td>
 		<td align="center">'.$send_cost.'</td>
-		<td align="center">'.G4_DATA_URL.'/item/'.$row['it_id'].'_m</td>
+		<td align="center">'.$img_url.'</td>
 		<td align="center">1</td>
 		<td align="center">N</td>
 		<td align="center">'.get_text($row['it_maker']).'</td>

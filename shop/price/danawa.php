@@ -9,7 +9,7 @@ $nl = ""; // new line \n
 // 배송비
 if ($default['de_send_cost_case'] == '없음')
     $delivery = 0;
-else
+else if($default['de_send_cost_case'] == '상한')
 {
     // 배송비 상한일 경우 제일 앞에 배송비
     $tmp = explode(';', $default['de_send_cost_list']);
@@ -32,12 +32,25 @@ for ($i=0; $row=mysql_fetch_array($result); $i++) {
         $ca_name .= "|" . $row3['ca_name'];
     }
 
+    // 개별배송비계산
+    if($default['de_send_cost_case'] == '개별') {
+        $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
+    }
+
+    // 상품이미지
+    $img_url = '';
+    for($k=1; $k<=10; $k++) {
+        $img_url = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
+        if($img_url)
+            break;
+    }
+
     $str .= $nl;
     $str .= $row['it_id'];    // 상품ID
     $str .= "^$ca_name";        // 카테고리
     $str .= "^{$row['it_name']}";   // 상품명
     $str .= "^{$row['it_maker']}";  // 제조사
-    $str .= "^".G4_DATA_URL."/item/{$row['it_id']}_m"; // 이미지URL
+    $str .= "^".$img_url; // 이미지URL
     $str .= "^".G4_SHOP_URL."/item.php?it_id={$row['it_id']}"; // 상품URL
     $str .= "^{$row['it_price']}"; // 가격
     $str .= "^{$row['it_point']}";  // 적립금

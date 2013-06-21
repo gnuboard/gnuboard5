@@ -9,7 +9,7 @@ $gt = "<!>";
 // 배송비
 if ($default['de_send_cost_case'] == '없음')
     $delivery = 0;
-else
+else if($default['de_send_cost_case'] == '상한')
 {
     // 배송비 상한일 경우 제일 앞에 배송비 얼마 금액 이하
     $tmp = explode(';', $default['de_send_cost_limit']);
@@ -59,12 +59,25 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $PRDATE = substr($row['it_time'], 0, 10);
 
+    // 개별배송비계산
+    if($default['de_send_cost_case'] == '개별') {
+        $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
+    }
+
+    // 상품이미지
+    $img_url = '';
+    for($k=1; $k<=10; $k++) {
+        $img_url = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
+        if($img_url)
+            break;
+    }
+
 echo "{$lt}{$row['it_id']}{$gt}"; // 쇼핑몰 상품ID
 echo "{$lt}C{$gt}"; // 상품구분 C/U/D 전체EP는 일괄적으로 C
 echo "{$lt}{$row['it_name']}{$gt}"; // 상품명
 echo "{$lt}{$row['it_price']}{$gt}"; // 판매가격
 echo "{$lt}".G4_SHOP_URL."/item.php?it_id={$row['it_id']}{$gt}"; // 상품의 상세페이지 주소
-echo "{$lt}".G4_DATA_URL."/item/{$row['it_id']}_l1{$gt}"; // 이미지 URL
+echo "{$lt}".$img_url."{$gt}"; // 이미지 URL
 echo "{$lt}$ca_id1{$gt}"; // 대분류 카테고리 코드
 echo "{$lt}$ca_id2{$gt}"; // 중분류 카테고리 코드
 echo "{$lt}$ca_id3{$gt}"; // 소분류 카테고리 코드

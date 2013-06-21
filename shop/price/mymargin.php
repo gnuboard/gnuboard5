@@ -93,8 +93,6 @@ $sql = " select * from {$g4['shop_item_table']}
 $result = sql_query($sql);
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $image = it_image($row['it_id'].'_m');
-
     $num = (($page - 1) * $page_rows) + $i;
 
     $category = $bar = "";
@@ -108,6 +106,19 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
         $category .= $bar . $row3['ca_name'];
         $bar = "/";
+    }
+
+    // 개별배송비계산
+    if($default['de_send_cost_case'] == '개별') {
+        $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
+    }
+
+    // 상품이미지
+    $image = '';
+    for($k=1; $k<=10; $k++) {
+        $image = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
+        if($image)
+            break;
     }
 
     echo "

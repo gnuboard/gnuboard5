@@ -46,7 +46,7 @@ $data_url = G4_DATA_URL;
 if ($default['de_send_cost_case'] == '없음') {
     $send_cost = 0;
 }
-else {
+else if($default['de_send_cost_case'] == '상한') {
     // 배송비 상한일 경우 제일 앞에 배송비
     $send_cost_limit = explode(";", $default['de_send_cost_limit']);
     $send_cost_list  = explode(";", $default['de_send_cost_list']);
@@ -89,8 +89,21 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     // 배송비 상한가 미만이면 배송비 적용
     $delivery = 0;
-    if ($row['it_price'] < $cost_limit) {
+    if ($default['de_send_cost_case'] == '상한' && $row['it_price'] < $cost_limit) {
         $delivery = $send_cost;
+    }
+
+    // 개별배송비계산
+    if($default['de_send_cost_case'] == '개별') {
+        $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
+    }
+
+    // 상품이미지
+    $img_url = '';
+    for($k=1; $k<=10; $k++) {
+        $img_url = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
+        if($img_url)
+            break;
     }
 
     echo <<< HEREDOC
@@ -99,7 +112,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {$lt}pname{$gt}{$row['it_name']}
 {$lt}price{$gt}{$row['it_price']}
 {$lt}pgurl{$gt}$shop_url/item.php?it_id={$row['it_id']}
-{$lt}igurl{$gt}$data_url/item/{$row['it_id']}_m
+{$lt}igurl{$gt}$img_url
 {$lt}cate1{$gt}$cate1
 {$lt}cate2{$gt}$cate2
 {$lt}cate3{$gt}$cate3

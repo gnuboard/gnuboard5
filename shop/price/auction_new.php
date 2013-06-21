@@ -53,7 +53,7 @@ $data_url = G4_DATA_URL;
 // 배송비
 if ($default['de_send_cost_case'] == '없음')
     $delivery = 0;
-else
+else if($default['de_send_cost_case'] == '상한')
 {
     // 배송비 상한일 경우 제일 앞에 배송비 얼마 금액 이하
     $tmp = explode(';', $default['de_send_cost_limit']);
@@ -90,13 +90,26 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $PRDATE = substr($row['it_time'], 0, 10);
 
+    // 개별배송비계산
+    if($default['de_send_cost_case'] == '개별') {
+        $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
+    }
+
+    // 상품이미지
+    $img_url = '';
+    for($k=1; $k<=10; $k++) {
+        $img_url = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
+        if($img_url)
+            break;
+    }
+
 echo <<< HEREDOC
 {$lt}_BEGIN{$gt}
 {$lt}PRODID{$gt}{$row['it_id']}
 {$lt}PRNAME{$gt}{$row['it_name']}
 {$lt}_PRICE{$gt}{$row['it_price']}
 {$lt}PRDURL{$gt}$shop_url/item.php?it_id={$row['it_id']}
-{$lt}IMGURL{$gt}$data_url/item/{$row['it_id']}_l1
+{$lt}IMGURL{$gt}$img_url
 {$lt}CATE_1{$gt}$ca_name1
 {$lt}CATE_2{$gt}$ca_name2
 {$lt}CATE_3{$gt}$ca_name3

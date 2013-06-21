@@ -103,6 +103,14 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $qty = (int)get_it_stock_qty($row['it_id']);
     if ($qty <= 0) $row['it_price'] = 0;
 
+    // 상품이미지
+    $img_url = '';
+    for($k=1; $k<=10; $k++) {
+        $img_url = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
+        if($img_url)
+            break;
+    }
+
     echo "<tr>
 		<td width=\"30\">$num&nbsp;</td>
 		<td width=\"65\">{$row2['ca_name']}</td>
@@ -114,7 +122,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 		<td width=\"100\">{$row['it_id']}&nbsp;</td>
 		<td width=\"80\">".number_format($row['it_price'])."&nbsp;</td>
 		<td width=\"80\">&nbsp;</td>
-		<td width=\"80\">".G4_DATA_URL."/item/{$row['it_id']}_l1&nbsp;</td>
+		<td width=\"80\">".$img_url."&nbsp;</td>
 		<td width=\"80\">$delivery</td>
 		<td width=\"80\">&nbsp;</td>
 		<td width=\"80\">&nbsp;</td>

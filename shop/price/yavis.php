@@ -95,8 +95,6 @@ $sql = " select * from {$g4['shop_item_table']}
 $result = sql_query($sql);
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    $image = it_image($row['it_id'].'_m');
-
     $category = $bar = "";
     $len = strlen($row['ca_id']) / 2;
     for ($i=1; $i<=$len; $i++)
@@ -108,6 +106,14 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 
         $category .= $bar . $row3['ca_name'];
         $bar = " > ";
+    }
+
+    // 상품이미지
+    $image = '';
+    for($k=1; $k<=10; $k++) {
+        $image = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
+        if($image)
+            break;
     }
 
     echo "

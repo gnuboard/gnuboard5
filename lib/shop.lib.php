@@ -148,6 +148,35 @@ function get_it_thumbnail($img, $width, $height=0, $id='')
     return $str;
 }
 
+//
+function get_it_imageurl($img, $width, $height=0)
+{
+    $str = '';
+
+    $file = G4_DATA_PATH.'/item/'.$img;
+    if(is_file($file))
+        $size = @getimagesize($file);
+
+    if($size[2] < 1 || $size[2] > 3)
+        return '';
+
+    $img_width = $size[0];
+    $img_height = $size[1];
+    $filename = basename($file);
+    $filepath = dirname($file);
+
+    if($img_width && !$height) {
+        $height = round(($width * $img_height) / $img_width);
+    }
+
+    $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, false, 'center', true, $um_value='80/0.5/3');
+
+    if($thumb)
+        $str = str_replace(G4_PATH, G4_URL, $filepath.'/'.$thumb);
+
+    return $str;
+}
+
 // 상품의 재고 (창고재고수량 - 주문대기수량)
 function get_it_stock_qty($it_id)
 {
