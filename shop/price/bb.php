@@ -34,11 +34,7 @@ $sql = " select * from {$g4['shop_item_table']}
 $result = sql_query($sql);
 for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
-    for($k=1; $k<=10; $k++) {
-        $imgage = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
-        if($image)
-            break;
-    }
+    $image = get_it_imageurl($row['it_id']);
 
     $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
 

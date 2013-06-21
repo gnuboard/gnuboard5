@@ -65,12 +65,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
 
     // 상품이미지
-    $img_url = '';
-    for($k=1; $k<=10; $k++) {
-        $img_url = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
-        if($img_url)
-            break;
-    }
+    $img_url = get_it_imageurl($row['it_id']);
 
 echo "{$lt}{$row['it_id']}{$gt}"; // 쇼핑몰 상품ID
 echo "{$lt}C{$gt}"; // 상품구분 C/U/D 전체EP는 일괄적으로 C

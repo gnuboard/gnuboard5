@@ -149,30 +149,33 @@ function get_it_thumbnail($img, $width, $height=0, $id='')
 }
 
 //
-function get_it_imageurl($img, $width, $height=0)
+function get_it_imageurl($it_id)
 {
-    $str = '';
+    global $g4;
 
-    $file = G4_DATA_PATH.'/item/'.$img;
-    if(is_file($file))
+    $sql = " select it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
+                from {$g4['shop_item_table']}
+                where it_id = '$it_id' ";
+    $row = sql_fetch($sql);
+    $filepath = '';
+
+    for($i=1; $i<=10; $i++) {
+        $img = $row['it_img'.$i];
+        $file = G4_DATA_PATH.'/item/'.$img;
+        if(!is_file($file))
+            continue;
+
         $size = @getimagesize($file);
+        if($size[2] < 1 || $size[2] > 3)
+            continue;
 
-    if($size[2] < 1 || $size[2] > 3)
-        return '';
-
-    $img_width = $size[0];
-    $img_height = $size[1];
-    $filename = basename($file);
-    $filepath = dirname($file);
-
-    if($img_width && !$height) {
-        $height = round(($width * $img_height) / $img_width);
+        $filepath = $file;
     }
 
-    $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, false, 'center', true, $um_value='80/0.5/3');
-
-    if($thumb)
-        $str = str_replace(G4_PATH, G4_URL, $filepath.'/'.$thumb);
+    if($filepath)
+        $str = str_replace(G4_PATH, G4_URL, $filepath);
+    else
+        $str = G4_SHOP_URL.'/img/no_image.gif';
 
     return $str;
 }

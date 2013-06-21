@@ -109,12 +109,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     }
 
     // 상품이미지
-    $image = '';
-    for($k=1; $k<=10; $k++) {
-        $image = get_it_imageurl($row['it_img'.$k], $default['de_mimg_width'], $default['de_mimg_height']);
-        if($image)
-            break;
-    }
+    $image = get_it_imageurl($row['it_id']);
 
     echo "
 	<tr>
