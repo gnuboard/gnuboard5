@@ -264,10 +264,6 @@ else // 장바구니에 담기
         $sql = " select * from {$g4['shop_item_table']} where it_id = '{$_POST['it_id']}' ";
         $it = sql_fetch($sql);
 
-        $it_send_cost = 0;
-        if($default['de_send_cost_case'] == '개별')
-            $it_send_cost = get_item_sendcost($it['it_id'], $tmp_uq_id);
-
         // 옵션정보를 얻어서 배열에 저장
         $opt_list = array();
         $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$_POST['it_id']}' and io_use = '1' order by io_no asc ";
