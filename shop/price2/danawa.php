@@ -1,0 +1,108 @@
+<?php
+/*
+**  가격비교사이트 다나와 엔진페이지
+*/
+include_once('./_common.php');
+
+$nl = ""; // new line \n
+
+// 배송비
+if ($default['de_send_cost_case'] == '없음')
+    $delivery = 0;
+else if($default['de_send_cost_case'] == '상한')
+{
+    // 배송비 상한일 경우 제일 앞에 배송비
+    $tmp = explode(';', $default['de_send_cost_list']);
+    $delivery = (int)$tmp[0];
+}
+?>
+<?php
+// 상품ID^카테고리^상품명^제조사^이미지URL^상품URL^가격^적립금^할인쿠폰^무이자할부^사은품^모델명^추가정보^출시일^배송료
+$str = "";
+$sql = " select * from {$g4['shop_item_table']}
+          where it_use = '1'
+          order by ca_id ";
+$result = sql_query($sql);
+for ($i=0; $row=mysql_fetch_array($result); $i++) {
+    $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
+    $ca_name = $row2['ca_name'];
+
+    if (strlen($row['ca_id']) >= 4) {
+        $row3 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
+        $ca_name .= "|" . $row3['ca_name'];
+    }
+
+    // 상품이미지
+    $img_url = get_it_imageurl($row['it_id']);
+
+    // 상품별옵션
+    $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
+    $result2 = sql_query($sql);
+    $opt_count = @mysql_num_rows($result2);
+
+    if(!$opt_count) {
+        $it_name = $row['it_name'];
+        $buy_url = G4_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
+        if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
+            $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
+        $it_price = $row['it_price'];
+
+        $str .= $nl;
+        $str .= $row['it_id'];    // 상품ID
+        $str .= "^$ca_name";        // 카테고리
+        $str .= "^{$it_name}";   // 상품명
+        $str .= "^{$row['it_maker']}";  // 제조사
+        $str .= "^".$img_url; // 이미지URL
+        $str .= "^{$buy_url}"; // 상품URL
+        $str .= "^{$it_price}"; // 가격
+        $str .= "^{$row['it_point']}";  // 적립금
+        $str .= "^";  // 할인쿠폰
+        $str .= "^";  // 무이자할부
+        $str .= "^";  // 사은품
+        $str .= "^{$row['it_model']}";  // 모델명
+        $str .= "^";  // 추가정보
+        $str .= "^";  // 출시일
+        $str .= "^$delivery";       // 배송료
+
+        $nl = "\n";
+
+    } else {
+        $subj = explode(',', $row['it_option_subject']);
+        for($k=0; $row2=sql_fetch_array($result2); $k++) {
+            $it_name = $row['it_name'].' ';
+            $opt = explode(chr(30), $row2['io_id']);
+            $sep = '';
+            for($j=0; $j<count($subj); $j++) {
+                $it_name .= $sep.$subj[$j].':'.$opt[$j];
+                $sep = ' ';
+            }
+            $buy_url = G4_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
+            $it_price = $row['it_price'] + $row2['io_price'];
+            if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
+                $delivery = get_item_sendcost($row['it_id'], ($row['it_price'] + $row2['io_price']), 1);
+
+            $str .= $nl;
+            $str .= $row['it_id'];    // 상품ID
+            $str .= "^$ca_name";        // 카테고리
+            $str .= "^{$it_name}";   // 상품명
+            $str .= "^{$row['it_maker']}";  // 제조사
+            $str .= "^".$img_url; // 이미지URL
+            $str .= "^{$buy_url}"; // 상품URL
+            $str .= "^{$it_price}"; // 가격
+            $str .= "^{$row['it_point']}";  // 적립금
+            $str .= "^";  // 할인쿠폰
+            $str .= "^";  // 무이자할부
+            $str .= "^";  // 사은품
+            $str .= "^{$row['it_model']}";  // 모델명
+            $str .= "^";  // 추가정보
+            $str .= "^";  // 출시일
+            $str .= "^$delivery";       // 배송료
+
+            $nl = "\n";
+
+        }
+    }
+}
+
+echo $str;
+?>
