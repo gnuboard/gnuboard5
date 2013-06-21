@@ -144,10 +144,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </thead>
     <tbody>
     <?php
-    $sql  = " select od_id,
+    $sql  = " select a.od_id,
                      a.*, "._MISU_QUERY_."
               $sql_common
-              group by od_id ";
+              group by a.od_id ";
     if ($chk_misu)
         $sql .= " having  misu <= 0 ";
     $sql .= "  order by $sort1 $sort2/* 김선용 심각한 트래픽으로 미사용, a.od_invoice asc*/
@@ -172,6 +172,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td>
             <input type="hidden" name="od_id[<?php echo $i; ?>]" value="<?php echo $row['od_id']; ?>">
             <input type="hidden" name="uq_id[<?php echo $i; ?>]" value="<?php echo $row['uq_id']; ?>">
+            <input type="hidden" name="od_tno[<?php echo $i; ?>]" value="<?php echo $row['od_tno']; ?>">
+            <input type="hidden" name="od_escrow[<?php echo $i; ?>]" value="<?php echo $row['od_escrow']; ?>">
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>
         </td>
         <td class="td_name"><?php echo $row['od_name']; ?></td>
@@ -211,6 +213,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail" checked>
         <label for="od_send_sms">SMS</label>
         <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked>
+        <label for="od_send_escrow">에스크로배송시작</label>
+        <input type="checkbox" name="send_escrow" value="1" id="od_send_escrow">
     </fieldset>
 
     <div class="btn_confirm">

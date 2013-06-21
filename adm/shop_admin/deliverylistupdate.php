@@ -18,6 +18,21 @@ if ($default['de_sms_use'] == "icode")
 	$SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
 }
 
+if($_POST['send_escrow']) {
+    $sql = " select dl_id, dl_company from {$g4['shop_delivery_table']} order by dl_id asc ";
+    $result = sql_query($sql);
+    $dl_comp = array();
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        if($row['dl_id'] && $row['dl_company'])
+            $dl_comp[$row['dl_id']] = $row['dl_company'];
+    }
+
+    $arr_tno = array();
+    $arr_corp = array();
+    $arr_numb = array();
+    $arr_idx = 0;
+}
+
 for ($m=0; $m<count($_POST['od_id']); $m++)
 {
     // 배송회사와 운송장번호가 있는것만 수정
@@ -89,6 +104,14 @@ for ($m=0; $m<count($_POST['od_id']); $m++)
 				}
             }
             //---------------------------------------
+
+            // 에스크로배송연동
+            if($_POST['send_escrow'] && $_POST['od_tno'][$m] && $_POST['od_escrow'][$m]) {
+                $arr_tno[$arr_idx] = $_POST['od_tno'][$m];
+                $arr_numb[$arr_idx] = $_POST['od_invoice'][$m];
+                $arr_corp[$arr_idx] = $dl_comp[$_POST['dl_id'][$m]];
+                $arr_idx++;
+            }
         }
     }
     else
@@ -105,6 +128,11 @@ for ($m=0; $m<count($_POST['od_id']); $m++)
 if ($default['de_sms_use'] == "icode")
 {
 	$SMS->Send();
+}
+
+if($_POST['send_escrow']) {
+    $cust_ip = getenv('REMOTE_ADDR');
+    include_once('./orderescrow.inc.php');
 }
 
 goto_url("./deliverylist.php?sort1=$sort1&amp;sort2=$sort2&amp;sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page");
