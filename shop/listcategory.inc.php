@@ -6,11 +6,7 @@ $ca_id_len = strlen($ca_id);
 $len2 = $ca_id_len + 2;
 $len4 = $ca_id_len + 4;
 
-$sql = " select ca_id, ca_name from {$g4['shop_category_table']}
-          where ca_id like '$ca_id%'
-            and length(ca_id) = $len2
-            and ca_use = '1'
-          order by ca_id ";
+$sql = " select ca_id, ca_name from {$g4['shop_category_table']} where ca_id like '$ca_id%' and length(ca_id) = $len2 and ca_use = '1' order by ca_id ";
 $result = sql_query($sql);
 while ($row=sql_fetch_array($result)) {
 
