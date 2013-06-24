@@ -70,7 +70,7 @@ while ($row=sql_fetch_array($result)) {
                 $link2 = '';
                 $key = '직접';
             } else {
-                $link = '<a href="./visit_list.php?$qstr&amp;domain='.$key.'">';
+                $link = '<a href="./visit_list.php?'.$qstr.'&amp;domain='.$key.'">';
                 $link2 = '</a>';
             }
 
