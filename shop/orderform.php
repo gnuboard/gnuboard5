@@ -106,6 +106,7 @@ function init_pay_button()
 * setTimeout 에 2번째 변수 0은 딜레이 시간 0은 딜래이 없음을 의미
 * - 김민수 - 20101018 -
 */
+/* 문서로딩 후 체크하도록 아래 스크립트를 문서하단으로 이동 */
 //setTimeout("init_pay_button();",500);
 </script>
 
