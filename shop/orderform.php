@@ -106,7 +106,7 @@ function init_pay_button()
 * setTimeout 에 2번째 변수 0은 딜레이 시간 0은 딜래이 없음을 의미
 * - 김민수 - 20101018 -
 */
-setTimeout("init_pay_button();",300);
+setTimeout("init_pay_button();",1000);
 </script>
 
 <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
