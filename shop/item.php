@@ -561,14 +561,10 @@ else
         <h2>사용후기</h2>
         <?php echo pg_anchor('use'); ?>
 
-        <div id="itemuse">
-        <?php 
-        include G4_SHOP_PATH.'/itemuse.php';
-        ?>
-        </div>
+        <div id="itemuse"></div>
         <script>
         $(function(){
-            //$("#itemuse").load("./itemuse.php", {it_id:"<?php echo $it_id; ?>"});
+            $("#itemuse").load("./itemuse.php", {it_id:"<?php echo $it_id; ?>"});
         });
         </script>
     </section>
@@ -577,14 +573,10 @@ else
         <h2>상품문의</h2>
         <?php echo pg_anchor('qa'); ?>
 
-        <div id="itemqa">
-        <?php 
-        include G4_SHOP_PATH.'/itemqa.php';
-        ?>
-        </div>
+        <div id="itemqa"></div>
         <script>
         $(function(){
-            //$("#itemqa").load("./itemqa.php", {it_id:"<?php echo $it_id; ?>"});
+            $("#itemqa").load("./itemqa.php", {it_id:"<?php echo $it_id; ?>"});
         });
         </script>
     </section>
