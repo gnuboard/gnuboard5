@@ -168,7 +168,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     </section>
 
     <?php 
-    include(G4_SNS_PATH."/view.sns.skin.php"); 
+    include_once(G4_SNS_PATH."/view.sns.skin.php"); 
     ?>
 
     <?php
