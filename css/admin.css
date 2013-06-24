@@ -32,7 +32,7 @@ h2 {font-size:1.2em}
 #tnb {float:right;margin:0;padding:0;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left}
-#tnb a {display:block;position:relative;width:68px;height:68px;color:#e0e0e0;font-size:0.9em;text-decoration:none}
+#tnb a {display:block;position:relative;width:68px;height:68px;color:#e0e0e0;font-size:0.95em;text-decoration:none}
 #tnb span {position:absolute;bottom:10px;left:0;width:100%;text-align:center}
 #tnb_modify {background:url('../adm/img/tnb_modify.jpg')}
 #tnb_chome_cf {background:url('../adm/img/tnb_chome_cf.jpg')}
