@@ -2,6 +2,8 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
+
+/*
 // uniqid 테이블이 없을 경우 생성
 if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
@@ -355,4 +357,5 @@ if(!$result) {
                     ADD `od_tno` VARCHAR(255) NOT NULL DEFAULT '' AFTER `od_settle_case`,
                     ADD `od_escrow` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_tno` ", true);
 }
+*/
 ?>
