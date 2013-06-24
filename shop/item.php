@@ -17,13 +17,7 @@ $norobot_key = substr($token, 0, $rand);
 set_session('ss_norobot_key', $norobot_key);
 
 // 분류사용, 상품사용하는 상품의 정보를 얻음
-$sql = " select a.*,
-                b.ca_name,
-                b.ca_use
-           from {$g4['shop_item_table']} a,
-                {$g4['shop_category_table']} b
-          where a.it_id = '$it_id'
-            and a.ca_id = b.ca_id ";
+$sql = " select a.*, b.ca_name, b.ca_use from {$g4['shop_item_table']} a, {$g4['shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id ";
 $it = sql_fetch($sql);
 if (!$it['it_id'])
     alert('자료가 없습니다.');
@@ -33,9 +27,7 @@ if (!($it['ca_use'] && $it['it_use'])) {
 }
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
-$sql = " select ca_include_head, ca_include_tail, ca_hp_cert_use, ca_adult_cert_use
-           from {$g4['shop_category_table']}
-          where ca_id = '{$it['ca_id']}' ";
+$sql = " select ca_include_head, ca_include_tail, ca_hp_cert_use, ca_adult_cert_use from {$g4['shop_category_table']} where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
 
 if(!$is_admin) {
@@ -109,12 +101,7 @@ if (file_exists($himg))
 echo '<div id="sit_hhtml">'.stripslashes($it['it_head_html']).'</div>';
 
 // 이전 상품보기
-$sql = " select it_id, it_name from {$g4['shop_item_table']}
-          where it_id > '$it_id'
-            and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
-            and it_use = '1'
-          order by it_id asc
-          limit 1 ";
+$sql = " select it_id, it_name from {$g4['shop_item_table']} where it_id > '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id asc limit 1 ";
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $prev_title = '이전상품<span class="sound_only"> '.$row['it_name'].'</span>';
@@ -127,12 +114,7 @@ if ($row['it_id']) {
 }
 
 // 다음 상품보기
-$sql = " select it_id, it_name from {$g4['shop_item_table']}
-          where it_id < '$it_id'
-            and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
-            and it_use = '1'
-          order by it_id desc
-          limit 1 ";
+$sql = " select it_id, it_name from {$g4['shop_item_table']} where it_id < '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id desc limit 1 ";
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $next_title = '다음 상품<span class="sound_only"> '.$row['it_name'].'</span>';
@@ -155,10 +137,7 @@ $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 
 // 관련상품의 갯수를 얻음
-$sql = " select count(*) as cnt
-           from {$g4['shop_item_relation_table']} a
-           left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
-          where a.it_id = '{$it['it_id']}' ";
+$sql = " select count(*) as cnt from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1') where a.it_id = '{$it['it_id']}' ";
 $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
 ?>
@@ -631,11 +610,7 @@ else
             $img_width  = 230;
             $img_height = 230;
 
-            $sql = " select b.*
-                       from {$g4['shop_item_relation_table']} a
-                       left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
-                      where a.it_id = '{$it['it_id']}'
-                        and b.it_use='1' ";
+            $sql = " select b.* from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
             $result = sql_query($sql);
             $num = @mysql_num_rows($result);
             if ($num)

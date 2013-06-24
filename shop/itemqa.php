@@ -2,7 +2,7 @@
 include_once('./_common.php');
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
-$it_id = $_REQUEST['it_id'];
+//$it_id = $_REQUEST['it_id'];
 
 $itemqa_list = "./itemqalist.php";
 $itemqa_form = "./itemqaform.php?it_id=".$it_id;
