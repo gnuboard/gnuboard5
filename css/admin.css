@@ -147,6 +147,9 @@ fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 /* 외부서비스 사이트코드 */
 .sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
 
+/* 주의문구 */
+.str_caution {color:#ff3061}
+
 /* 폼 */
 label {vertical-align:middle}
 textarea, .frm_input {padding:2px;border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
