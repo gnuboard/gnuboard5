@@ -132,6 +132,7 @@ a:active {color:#000;text-decoration:underline}
 .basic_tbl thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .basic_tbl tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
 .basic_tbl tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
+.basic_tbl tbody th {}
 .basic_tbl td {padding:0.5em;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
 .basic_tbl a {display:block;padding:0.5em;color:#000;text-decoration:none}
 .bo_sideview td {} /* 사이드뷰 사용하는 테이블 셀 패딩값 */

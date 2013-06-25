@@ -19,14 +19,15 @@ $result = sql_query($sql);
 $g4['title'] = '회원메일발송';
 include_once('./admin.head.php');
 
-$colspan = 6;
+$colspan = 7;
 ?>
 
 <section class="cbox">
     <h2>등록된 메일내용 목록</h2>
     <p>
         <strong>테스트</strong>는 등록된 최고관리자의 이메일로 테스트 메일을 발송합니다.<br>
-        현재 등록된 메일은 총 <?php echo $total_count ?>건입니다.
+        현재 등록된 메일은 총 <?php echo $total_count ?>건입니다.<br>
+        <span class="str_caution">주의) 수신자가 동의하지 않은 대량 메일 발송에는 적합하지 않습니다. 수십건 단위로 발송해 주십시오.</span>
     </p>
 
     <div class="btn_add">
