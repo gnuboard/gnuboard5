@@ -434,6 +434,8 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
   `it_ip` varchar(25) NOT NULL DEFAULT '',
   `it_order` int(11) NOT NULL DEFAULT '0',
   `it_tel_inq` tinyint(4) NOT NULL DEFAULT '0',
+  `it_info_gubun` varchar(5) NOT NULL DEFAULT '',
+  `it_info_value` text NOT NULL,
   `it_img1` varchar(255) NOT NULL DEFAULT '',
   `it_img2` varchar(255) NOT NULL DEFAULT '',
   `it_img3` varchar(255) NOT NULL DEFAULT '',
