@@ -137,7 +137,7 @@ echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?
 <script>
 $(function(){
     $(".itemuse_form").click(function(){
-        window.open(this.href, "itemuse_form", "width=800,height=500");
+        window.open(this.href, "itemuse_form", "width=800,height=500,scrollbars=1");
         return false;
     });
 
