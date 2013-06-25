@@ -145,10 +145,10 @@ else if ($act == "optionmod") // 장바구니에서 옵션변경
 
     $option_count = count($_POST['io_id']);
 
-    if($option_count) {
-        if($_POST['io_type'][0] != 0)
-            alert('상품의 선택옵션을 선택해 주십시오.');
+    if($_POST['io_type'][0] != 0)
+        alert('상품의 선택옵션을 선택해 주십시오.');
 
+    if($option_count) {
         for($i=0; $i<count($_POST['ct_qty']); $i++) {
             if ($_POST['ct_qty'][$i] < 1)
                 alert('수량은 1 이상 입력해 주십시오.');
@@ -240,6 +240,9 @@ else if ($act == "optionmod") // 장바구니에서 옵션변경
         }
 
         sql_query($sql);
+    } else {
+        // 기존 장바구니 자료 삭제
+        sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and it_id = '$it_id' ");
     }
 }
 else // 장바구니에 담기
