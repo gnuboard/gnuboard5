@@ -525,7 +525,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .td_smallnum {width:40px;text-align:center}
 .td_bignum {width:100px;text-align:center}
 .td_odrnum {width:250px;text-align:center}
-.td_odrnum2 {text-align:center}
+.td_odrnum2 {width:200px;text-align:center}
 .td_grid {width:60px;text-align:center}
 .td_mbid, .td_name, .td_mbname {width:100px;text-align:left !important}
 .td_addr {text-align:left !important}
