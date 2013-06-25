@@ -4,6 +4,11 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
+function only_number($n)
+{
+    return preg_replace('/[^0-9]/', '', $n);
+}
+
 if($_FILES['excelfile']['tmp_name']) {
     $file = $_FILES['excelfile']['tmp_name'];
 
@@ -92,14 +97,14 @@ if($_FILES['excelfile']['tmp_name']) {
         $it_basic           = addslashes($data->sheets[0]['cells'][$i][16]);
         $it_explan          = addslashes($data->sheets[0]['cells'][$i][17]);
         $it_mobile_explan   = addslashes($data->sheets[0]['cells'][$i][18]);
-        $it_cust_price      = addslashes($data->sheets[0]['cells'][$i][19]);
-        $it_price           = addslashes($data->sheets[0]['cells'][$i][20]);
+        $it_cust_price      = addslashes(only_number($data->sheets[0]['cells'][$i][19]));
+        $it_price           = addslashes(only_number($data->sheets[0]['cells'][$i][20]));
         $it_tel_inq         = addslashes($data->sheets[0]['cells'][$i][21]);
-        $it_point           = addslashes($data->sheets[0]['cells'][$i][22]);
+        $it_point           = addslashes(only_number($data->sheets[0]['cells'][$i][22]));
         $it_sell_email      = addslashes($data->sheets[0]['cells'][$i][23]);
         $it_use             = addslashes($data->sheets[0]['cells'][$i][24]);
-        $it_stock_qty       = addslashes($data->sheets[0]['cells'][$i][25]);
-        $it_order           = addslashes($data->sheets[0]['cells'][$i][26]);
+        $it_stock_qty       = addslashes(only_number($data->sheets[0]['cells'][$i][25]));
+        $it_order           = addslashes(only_number($data->sheets[0]['cells'][$i][26]));
         $it_img1            = addslashes($data->sheets[0]['cells'][$i][27]);
         $it_img2            = addslashes($data->sheets[0]['cells'][$i][28]);
         $it_img3            = addslashes($data->sheets[0]['cells'][$i][29]);
