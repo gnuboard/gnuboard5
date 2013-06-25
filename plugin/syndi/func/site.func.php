@@ -110,7 +110,6 @@ function _Syndi_getNextChannelId($channel_id=null)
 		$sql .= " order by b.gr_id,b.bo_table limit 1";
 
 		$row = sql_fetch($sql);
-		sql_free_result($result);
 
 		return $row['bo_table'];
 	}
