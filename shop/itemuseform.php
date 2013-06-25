@@ -63,7 +63,7 @@ include_once(G4_PATH.'/head.sub.php');
     <tr>
         <th scope="row">평가</th>
         <td>
-            <ul>
+            <ul id="sit_use_write_star">
                 <li>
                     <input type="radio" name="is_score" value="10" id="is_score10" <?php echo ($is_score==10)?'checked="checked"':''; ?>>
                     <label for="is_score10">매우만족</label>

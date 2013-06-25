@@ -540,6 +540,7 @@ td.empty_table {padding:85px 0;text-align:center}
 #sit_use_write ul {margin:5px 0 0}
 #sit_use_write li {margin:0 0 5px}
 #sit_use_write li label {display:inline-block;width:80px}
+#sit_use_write_star {margin:0;padding:0;list-style:none}
 
 /* 상품 상세보기 - 상품문의 */
 #sit_qa {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
