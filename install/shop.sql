@@ -527,6 +527,7 @@ DROP TABLE IF EXISTS `shop_item_relation`;
 CREATE TABLE IF NOT EXISTS `shop_item_relation` (
   `it_id` varchar(20) NOT NULL DEFAULT '',
   `it_id2` varchar(10) NOT NULL DEFAULT '',
+  `ir_no` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`it_id`,`it_id2`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
