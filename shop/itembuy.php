@@ -8,6 +8,13 @@ $io_id = $_GET['opt'];
 $sql = " select * from {$g4['shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 
+// 상품옵션체크
+$sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '$it_id' and io_type = '0' and io_use = '1' ";
+$cnt = sql_fetch($sql);
+
+if(($io_id && !$cnt['cnt']) || (!$io_id && $cnt['cnt']))
+    alert('상품의 옵션정보가 변경됐습니다.\\n상품페이지에서 다시 주문해 주십시오.', G4_SHOP_URL.'/item.php?it_id='.$it_id);
+
 // 옵션정보
 if($io_id && $it['it_option_subject']) {
     $sql = " select * from {$g4['shop_item_option_table']} where it_id = '$it_id' and io_id = '$io_id' ";

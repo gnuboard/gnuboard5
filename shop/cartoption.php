@@ -53,9 +53,6 @@ if($option_1) {
     ?>
     </tbody>
     </table>
-    <div class="sit_sel_btn">
-        <button type="button" id="sit_selopt_submit" class="btn_frmline">추가</button>
-    </div>
 </section>
 <?php
 }

@@ -124,10 +124,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <?php 
         include(G4_SNS_PATH."/view_comment_write.sns.skin.php");
         ?>
-        <?php 
-        @include(G4_SKIN_PATH."/board/basic/view_comment.sns.skin.php");
-        ?>
-
         <tr>
             <th scope="row">내용</th>
             <td>

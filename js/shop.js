@@ -1,5 +1,27 @@
+var option_add = false;
+var supply_add = false;
+
 $(function() {
     // 선택옵션
+    $("select[name='it_option[]']").live("keydown", function(e) {
+        var sel_count = $("select[name='it_option[]']").size();
+        var idx = $("select[name='it_option[]']").index($(this));
+        var code = e.keyCode;
+        var val = $(this).val();
+
+        option_add = false;
+        if(code == 13 && sel_count == idx + 1) {
+            if(val == "")
+                return;
+
+            sel_option_process(true);
+        }
+    });
+
+    $("select[name='it_option[]']").live("mousedown", function() {
+        option_add = true;
+    });
+
     $("select[name='it_option[]']").live("change", function() {
         var sel_count = $("select[name='it_option[]']").size();
         var idx = $("select[name='it_option[]']").index($(this));
@@ -44,6 +66,9 @@ $(function() {
                 }
             );
         } else if((idx + 1) == sel_count) { // 선택옵션처리
+            if(option_add && val == "")
+                return;
+
             var info = val.split(",");
             // 재고체크
             if(parseInt(info[2]) < 1) {
@@ -51,27 +76,39 @@ $(function() {
                 return false;
             }
 
-            // 선택옵션 자동추가 기능을 사용하려면 아래 false를 true로 설정
-            sel_option_process(false);
+            if(option_add)
+                sel_option_process(true);
         }
     });
 
     // 추가옵션
+    $("select[name='it_supply[]']").live("keydown", function(e) {
+        var $el = $(this);
+        var code = e.keyCode;
+        var val = $(this).val();
+
+        supply_add = false;
+        if(code == 13) {
+            if(val == "")
+                return;
+
+            sel_supply_process($el, true);
+        }
+    });
+
+    $("select[name='it_supply[]']").live("mousedown", function() {
+        supply_add = true;
+    });
+
     $("select[name='it_supply[]']").live("change", function() {
         var $el = $(this);
-        // 선택옵션 자동추가 기능을 사용하려면 아래 false를 true로 설정
-        sel_supply_process($el, false);
-    });
+        var val = $(this).val();
 
-    // 선택옵션 추가
-    $("#sit_selopt_submit").live("click", function() {
-        sel_option_process(true);
-    });
+        if(val == "")
+            return;
 
-    // 추가옵션 추가
-    $("button.sit_sel_submit").live("click", function() {
-        var $el = $(this).closest("td").find("select[name='it_supply[]']");
-        sel_supply_process($el, true);
+        if(supply_add)
+            sel_supply_process($el, true);
     });
 
     // 수량변경 및 삭제
