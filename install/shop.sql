@@ -434,6 +434,8 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
   `it_ip` varchar(25) NOT NULL DEFAULT '',
   `it_order` int(11) NOT NULL DEFAULT '0',
   `it_tel_inq` tinyint(4) NOT NULL DEFAULT '0',
+  `it_info_gubun` varchar(50) NOT NULL DEFAULT '',
+  `it_info_value` text NOT NULL,
   `it_img1` varchar(255) NOT NULL DEFAULT '',
   `it_img2` varchar(255) NOT NULL DEFAULT '',
   `it_img3` varchar(255) NOT NULL DEFAULT '',
@@ -524,7 +526,8 @@ CREATE TABLE IF NOT EXISTS `shop_item_qa` (
 DROP TABLE IF EXISTS `shop_item_relation`;
 CREATE TABLE IF NOT EXISTS `shop_item_relation` (
   `it_id` varchar(20) NOT NULL DEFAULT '',
-  `it_id2` varchar(10) NOT NULL DEFAULT '',
+  `it_id2` varchar(20) NOT NULL DEFAULT '',
+  `ir_no` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`it_id`,`it_id2`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

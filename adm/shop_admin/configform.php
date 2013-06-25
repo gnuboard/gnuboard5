@@ -423,7 +423,7 @@ $pg_anchor = '<ul class="anchor">
             <?php echo help("주문시 신용카드 결제를 가능하게 할것인지를 설정합니다.", 50); ?>
             <select id="de_card_use" name="de_card_use">
                 <option value="0" <?php echo get_selected($default['de_card_use'], 0); ?>>사용안함</option>
-                <option value="1" <?php echo get_selected($default['de_card_use'], 1); ?>>사용<option>
+                <option value="1" <?php echo get_selected($default['de_card_use'], 1); ?>>사용</option>
             </select>
         </td>
     </tr>
