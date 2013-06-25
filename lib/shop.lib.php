@@ -705,7 +705,6 @@ function get_item_supply($it_id, $subject)
                 }
             }
             $select .= '</select>'.PHP_EOL;
-            $select .= '<button type="button" id="sit_sel_submit_'.$i.'" class="btn_frmline sit_sel_submit">추가</button>'.PHP_EOL;
 
             $str .= '<td class="td_sit_sel">'.$select.'</td>'.PHP_EOL;
             $str .= '</tr>'.PHP_EOL;
