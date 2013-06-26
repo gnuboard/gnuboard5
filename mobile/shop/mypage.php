@@ -70,9 +70,6 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         $result = sql_query($sql);
         for ($i=0; $row = sql_fetch_array($result); $i++)
         {
-            if ($i>0)
-                echo "<tr><td colspan=3 height=1 background='".G4_SHOP_URL."/img/dot_line.gif'></td></tr>";
-
             $image = get_it_image($row['it_id'], 70, 70, true);
         ?>
 
