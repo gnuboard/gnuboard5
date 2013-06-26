@@ -9,7 +9,7 @@ if (G4_IS_MOBILE) {
 if (!$is_member)
     goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL.'/mypage.php'));
 
-$g4['title'] = "보관함";
+$g4['title'] = "위시리스트";
 include_once('./_head.php');
 ?>
 
