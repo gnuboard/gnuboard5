@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `g4s_board` (
   `bo_use_ip_view` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_trackback` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_list_view` tinyint(4) NOT NULL DEFAULT '0',
+  `bo_use_list_file` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_list_content` tinyint(4) NOT NULL DEFAULT '0',
   `bo_table_width` int(11) NOT NULL DEFAULT '0',
   `bo_subject_len` int(11) NOT NULL DEFAULT '0',

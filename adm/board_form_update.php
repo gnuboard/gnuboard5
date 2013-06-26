@@ -74,6 +74,7 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_use_signature    = '{$_POST['bo_use_signature']}',
                 bo_use_ip_view      = '{$_POST['bo_use_ip_view']}',
                 bo_use_list_view    = '{$_POST['bo_use_list_view']}',
+                bo_use_list_file    = '{$_POST['bo_use_list_file']}',
                 bo_use_list_content = '{$_POST['bo_use_list_content']}',
                 bo_use_email        = '{$_POST['bo_use_email']}',
                 bo_use_cert         = '{$_POST['bo_use_cert']}',
@@ -252,6 +253,7 @@ if (is_checked('chk_grp_use_name'))             $grp_fields .= " , bo_use_name =
 if (is_checked('chk_grp_use_signature'))        $grp_fields .= " , bo_use_signature = '{$bo_use_signature}' ";
 if (is_checked('chk_grp_use_ip_view'))          $grp_fields .= " , bo_use_ip_view = '{$bo_use_ip_view}' ";
 if (is_checked('chk_grp_use_list_view'))        $grp_fields .= " , bo_use_list_view = '{$bo_use_list_view}' ";
+if (is_checked('chk_grp_use_list_file'))        $grp_fields .= " , bo_use_list_file = '{$bo_use_list_file}' ";
 if (is_checked('chk_grp_use_list_content'))     $grp_fields .= " , bo_use_list_content = '{$bo_use_list_content}' ";
 if (is_checked('chk_grp_use_email'))            $grp_fields .= " , bo_use_email = '{$bo_use_email}' ";
 if (is_checked('chk_grp_use_cert'))             $grp_fields .= " , bo_use_cert = '{$bo_use_cert}' ";
@@ -336,6 +338,7 @@ if (is_checked('chk_all_use_name'))             $all_fields .= " , bo_use_name =
 if (is_checked('chk_all_use_signature'))        $all_fields .= " , bo_use_signature = '{$bo_use_signature}' ";
 if (is_checked('chk_all_use_ip_view'))          $all_fields .= " , bo_use_ip_view = '{$bo_use_ip_view}' ";
 if (is_checked('chk_all_use_list_view'))        $all_fields .= " , bo_use_list_view = '{$bo_use_list_view}' ";
+if (is_checked('chk_all_use_list_file'))        $all_fields .= " , bo_use_list_view = '{$bo_use_list_file}' ";
 if (is_checked('chk_all_use_list_content'))     $all_fields .= " , bo_use_list_content = '{$bo_use_list_content}' ";
 if (is_checked('chk_all_use_email'))            $all_fields .= " , bo_use_email = '{$bo_use_email}' ";
 if (is_checked('chk_all_use_cert'))             $all_fields .= " , bo_use_cert = '{$bo_use_cert}' ";
