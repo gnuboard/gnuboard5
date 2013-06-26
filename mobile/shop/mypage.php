@@ -37,7 +37,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     </section>
 
     <section id="smb_my_od">
-        <h2><a href="<?php echo G4_MSHOP_URL; ?>/orderinquiry.php">최근 주문내역</a></h2>
+        <h2><a href="<?php echo G4_SHOP_URL; ?>/orderinquiry.php">최근 주문내역</a></h2>
         <?php
         // 최근 주문내역
         define("_ORDERINQUIRY_", true);
@@ -48,7 +48,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     </section>
 
     <section id="smb_my_wish">
-        <h2><a href="<?php echo G4_MSHOP_URL; ?>/wishlist.php">최근 위시리스트</a></h2>
+        <h2><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php">최근 위시리스트</a></h2>
 
         <table class="basic_tbl">
         <thead>
