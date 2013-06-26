@@ -95,7 +95,6 @@ $thumbnail_width = 500;
                 </div>
                 <?php } ?>
             </div>
-            </div>
         </li>
 
     <?php }
@@ -157,7 +156,7 @@ echo itemqa_page(10, $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", 
 <script>
 $(function(){
     $(".itemqa_form").click(function(){
-        window.open(this.href, "itemqa_form", "width=800,height=500,scrollbars=1"); 
+        window.open(this.href, "itemqa_form", "width=800,height=500,scrollbars=1");
     });
 
     $(".itemqa_delete").click(function(){

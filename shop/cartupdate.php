@@ -72,9 +72,8 @@ else if ($act == "seldelete") // 선택삭제
         }
     }
 }
-else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 한꺼번에 들어옴.
+else if ($act == "multi") // 여러개의 상품이 한꺼번에 들어옴.
 {
-    // 보관함에서 금액이 제대로 반영되지 않던 오류를 수정
     $fldcnt = count($_POST['it_name']);
 
     // 재고등을 검사
@@ -82,6 +81,11 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
 	for ($i=0; $i<$fldcnt; $i++)
     {
         if ($_POST['it_id'][$i] == "" || $_POST['ct_qty'][$i] <= 0) { continue; }
+
+        //옵션있는 상품은 건너뜀
+        $sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$_POST['it_id'][$i]}' and io_type = '0' ";
+        $tmp = sql_fetch($sql);
+        if($tmp['cnt']) continue;
 
         //--------------------------------------------------------
         //  변조 검사
@@ -94,7 +98,7 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
         if ((int)$price !== (int)$_POST['it_price'][$i])
             die("Error..");
 
-        $point = $it['it_point'];
+        $point = get_item_point($it);
         // 포인트가 다름
         if ((int)$point !== (int)$_POST['it_point'][$i] && $config['cf_use_point'])
             die("Error...");
@@ -115,6 +119,15 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
     // 오류가 있다면 오류메세지 출력
     if ($error != "") { alert($error); }
 
+    $ct_count = 0;
+    $comma = '';
+    $sql = " INSERT INTO {$g4['shop_cart_table']}
+                    ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
+                VALUES ";
+    $ct_select = 0;
+    if($sw_direct)
+        $ct_select = 1;
+
 	for ($i=0; $i<$fldcnt; $i++)
     {
         if ($_POST['it_id'][$i] == "" || $_POST['ct_qty'][$i] <= 0) continue;
@@ -122,21 +135,29 @@ else if ($act == "multi") // 온라인견적(등)에서 여러개의 상품이 �
         // 포인트 사용하지 않는다면
         if (!$config['cf_use_point']) $_POST['it_point'][$i] = 0;
 
-        // 장바구니에 Insert
-        $sql = " insert {$g4['shop_cart_table']}
-                    set uq_id       = '$tmp_uq_id',
-                        it_id        = '{$_POST['it_id'][$i]}',
-                        it_name      = '{$_POST['it_name'][$i]}',
-                        ct_status    = '쇼핑',
-                        ct_price     = '{$_POST['it_price'][$i]}',
-                        ct_point     = '{$_POST['it_point'][$i]}',
-                        ct_point_use = '0',
-                        ct_stock_use = '0',
-                        ct_qty       = '{$_POST['ct_qty'][$i]}',
-                        ct_time      = '".G4_TIME_YMDHIS."',
-                        ct_ip        = '$REMOTE_ADDR' ";
-        sql_query($sql);
+        // 동일옵션의 상품이 있으면 수량 더함
+        $sql2 = " select ct_id
+                    from {$g4['shop_cart_table']}
+                    where uq_id = '$tmp_uq_id'
+                      and it_id = '{$_POST['it_id'][$i]}'
+                      and ct_status = '쇼핑' ";
+        $row2 = sql_fetch($sql2);
+        if($row2['ct_id']) {
+            $sql3 = " update {$g4['shop_cart_table']}
+                        set ct_qty = ct_qty + {$_POST['ct_qty'][$i]}
+                        where ct_id = '{$row2['ct_id']}' ";
+            sql_query($sql3);
+
+            continue;
+        }
+
+        $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$_POST['it_id'][$i]}', '{$_POST['it_name'][$i]}', '쇼핑', '{$_POST['it_price'][$i]}', '{$_POST['it_point'][$i]}', '0', '0', '{$_POST['it_name'][$i]}', '{$_POST['ct_qty'][$i]}', '0', '', '0', '0', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
+        $comma = ' , ';
+        $ct_count++;
     }
+
+    if($ct_count > 0)
+        sql_query($sql);
 }
 else if ($act == "optionmod") // 장바구니에서 옵션변경
 {

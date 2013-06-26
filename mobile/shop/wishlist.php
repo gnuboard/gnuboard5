@@ -10,7 +10,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 
 <div id="sod_ws">
 
-    <form name="fwishlist" method="post" action="">
+    <form name="fwishlist" method="post" action="./cartupdate.php">
     <input type="hidden" name="act"       value="multi">
     <input type="hidden" name="sw_direct" value="">
     <input type="hidden" name="prog"      value="wish">
@@ -26,31 +26,25 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     </thead>
     <tbody>
     <?php
-    $sql = " select *
-               from {$g4['shop_wish_table']} a,
-                    {$g4['shop_item_table']} b
+    $sql = " select a.wi_id, a.wi_time, b.*
+               from {$g4['shop_wish_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
               where a.mb_id = '{$member['mb_id']}'
-                and a.it_id  = b.it_id
               order by a.wi_id desc ";
     $result = sql_query($sql);
     for ($i=0; $row = mysql_fetch_array($result); $i++) {
 
         $out_cd = '';
-        for($k=1; $k<=6; $k++){
-            $opt = trim($row['it_opt'.$k]);
-            if(preg_match("/\n/", $opt)||preg_match("/;/" , $opt)) {
-                $out_cd = 'no';
-                break;
-            }
-        }
+        $sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
+        $tmp = sql_fetch($sql);
+        if($tmp['cnt'])
+            $out_cd = 'no';
 
         $it_price = get_price($row);
 
         if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
         $image = get_it_image($row['it_id'], 70, 70);
-
-        $s_del = '';
+        $it_point = get_item_point($row);
     ?>
 
     <tr>
@@ -73,7 +67,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <?php } ?>
             <input type="hidden"   name="it_name[<?php echo $i; ?>]"   value="<?php echo $row['it_name']; ?>">
             <input type="hidden"   name="it_price[<?php echo $i; ?>]" value="<?php echo $it_price; ?>">
-            <input type="hidden"   name="it_point[<?php echo $i; ?>]"  value="<?php echo $row['it_point']; ?>">
+            <input type="hidden"   name="it_point[<?php echo $i; ?>]"  value="<?php echo $it_point; ?>">
             <input type="hidden"   name="ct_qty[<?php echo $i; ?>]"    value="1">
         </td>
         <td class="td_smallmng"><a href="<?php echo G4_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
@@ -86,11 +80,10 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     ?>
     </tr>
     </table>
-    </form>
 
     <div id="sod_ws_act">
-        <a href="javascript:fwishlist_check(document.fwishlist,'');" class="btn01">장바구니 담기</a>
-        <a href="javascript:fwishlist_check(document.fwishlist,'direct_buy');" class="btn02">주문하기</a>
+        <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">장바구니 담기</button>
+        <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">주문하기</button>
     </div>
 </div>
 
@@ -125,7 +118,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         if(k == 0)
         {
             alert("상품을 하나 이상 체크 하십시오");
-            return;
+            return false;
         }
 
         if (act == "direct_buy")
@@ -137,9 +130,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             f.sw_direct.value = 0;
         }
 
-        f.action="<?php echo G4_SHOP_URL; ?>/cartupdate.php";
-
-        f.submit();
+        return true;
     }
 //-->
 </script>
