@@ -44,8 +44,8 @@ $result = sql_query($sql);
         <td><?php echo stripslashes($row['dl_company']); ?></td>
         <td class="td_bignum"><?php echo $row['dl_tel']; ?></td>
         <td class="td_num"><?php echo $row['dl_order']; ?></td>
-        <td class="td_smallmng">
-            <a href="<?php echo $row['dl_url']; ?>" target="_blank"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>홈페이지</a>
+        <td class="td_mng">
+            <a href="<?php echo $row['dl_url']; ?>" target="_blank"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>사이트</a>
             <a href="./deliverycodeform.php?w=u&amp;dl_id=<?php echo $row['dl_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>수정</a>
             <a href="./deliverycodeformupdate.php?w=d&amp;dl_id=<?php echo $row['dl_id']; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>삭제</a>
         </td>

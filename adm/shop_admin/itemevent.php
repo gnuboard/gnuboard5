@@ -34,7 +34,7 @@ $result = sql_query($sql);
         <th scope="col">제목</th>
         <th scope="col">연결상품</th>
         <th scope="col">사용</th>
-        <th scope="col">구분</th>
+        <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
@@ -58,9 +58,9 @@ $result = sql_query($sql);
         <td class="td_num"><?php echo $href; ?><?php echo $ev['cnt']; ?><?php echo $href_close; ?></td>
         <td class="td_smallmng"><?php echo $row['ev_use'] ? '<span class="txt_true">예</span>' : '<span class="txt_false">아니오</span>'; ?></td>
         <td class="td_mng">
-            <a href="<?php echo G4_SHOP_URL; ?>/event.php?ev_id=<?php echo $row['ev_id']; ?>"><img src="./img/icon_view.jpg" alt="<?php echo $row['ev_subject']; ?> 보기"></a>
-            <a href="./itemeventform.php?w=u&amp;ev_id=<?php echo $row['ev_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php echo $row['ev_subject']; ?> 수정"></a>
-            <a href="./itemeventformupdate.php?w=d&amp;ev_id=<?php echo $row['ev_id']; ?>" onclick="return delete_confirm();"><img src="./img/icon_del.jpg" alt="<?php echo $row['ev_subject']; ?> 삭제"></a>
+            <a href="<?php echo G4_SHOP_URL; ?>/event.php?ev_id=<?php echo $row['ev_id']; ?>">보기</a>
+            <a href="./itemeventform.php?w=u&amp;ev_id=<?php echo $row['ev_id']; ?>">수정</a>
+            <a href="./itemeventformupdate.php?w=d&amp;ev_id=<?php echo $row['ev_id']; ?>" onclick="return delete_confirm();">삭제</a>
         </td>
     </tr>
 
