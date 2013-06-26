@@ -121,12 +121,14 @@ if ($config['cf_include_head']) {
                     새글
                 </a>
             </li>
+
             <li>
                 <a href="<?php echo G4_SHOP_URL ?>/">
                     <img src="<?php echo G4_IMG_URL ?>/tnb_shop.jpg" alt="">
                     쇼핑몰
                 </a>
             </li>
+
         </ul>
 
     </div>
