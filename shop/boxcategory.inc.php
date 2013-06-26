@@ -15,7 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         {
             $gnb_zindex -= 1; // html 구조에서 앞선 gnb_1dli 에 더 높은 z-index 값 부여
         ?>
-        <li class="gnb_1dli" style="z-index:<?php echo $gnb_zindex; ?>">
+        <li class="gnb_1dli">
             <a href="<?php echo G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id']; ?>" class="gnb_1da"><?php echo $row['ca_name']; ?></a>
             <?php
             // 2단계 분류 판매 가능한 것만
@@ -23,7 +23,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             $result2 = sql_query($sql2);
             for ($j=0; $row2=sql_fetch_array($result2); $j++)
             {
-            if ($j==0) echo '<ul class="gnb_2dul">';
+            if ($j==0) echo '<ul class="gnb_2dul" style="z-index:'.$gnb_zindex.'">';
             ?>
                 <li class="gnb_2dli"><a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $row2['ca_id']; ?>" class="gnb_2da"><?php echo $row2['ca_name']; ?></a></li>
             <?php }
