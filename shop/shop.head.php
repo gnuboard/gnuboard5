@@ -80,6 +80,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                     <li><a href="<?php echo G4_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
                     <li><a href="<?php echo G4_SHOP_URL; ?>/faq.php">FAQ</a></li>
                     <li><a href="<?php echo G4_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
+                    <li><a href="<?php echo G4_URL; ?>/">커뮤니티</a></li>
                 </ul>
             </section>
         </div>
