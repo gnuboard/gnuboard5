@@ -74,53 +74,53 @@ if ($config['cf_include_head']) {
         </fieldset>
 
         <ul id="tnb">
-            <li>
-                <a href="<?php echo G4_BBS_URL ?>/current_connect.php">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_cnt.jpg" alt="">
-                    접속자 <?php echo connect(); // 현재 접속자수  ?>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo G4_BBS_URL ?>/new.php">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_new.jpg" alt="">
-                    새글
-                </a>
-            </li>
             <?php if ($is_member) {  ?>
             <?php if ($is_admin) {  ?>
             <li>
                 <a href="<?php echo G4_ADMIN_URL ?>">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_admin.jpg" alt="">
+                    <img src="<?php echo G4_IMG_URL ?>/tnb_admin.jpg" alt="">
                     관리자
                 </a>
             </li>
             <?php }  ?>
             <li>
                 <a href="<?php echo G4_BBS_URL ?>/member_confirm.php?url=<?php echo G4_BBS_URL ?>/register_form.php">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_modify.jpg" alt="">
+                    <img src="<?php echo G4_IMG_URL ?>/tnb_modify.jpg" alt="">
                     내 정보
                 </a>
             </li>
             <li>
                 <a href="<?php echo G4_BBS_URL ?>/logout.php">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_logout.jpg" alt="">
+                    <img src="<?php echo G4_IMG_URL ?>/tnb_logout.jpg" alt="">
                     로그아웃
                 </a>
             </li>
             <?php } else {  ?>
             <li>
                 <a href="<?php echo G4_BBS_URL ?>/register.php">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_join.jpg" alt="">
+                    <img src="<?php echo G4_IMG_URL ?>/tnb_join.jpg" alt="">
                     회원가입
                 </a>
             </li>
             <li>
                 <a href="<?php echo G4_BBS_URL ?>/login.php">
-                    <img src="<?php echo G4_IMG_URL ?>/snb_login.jpg" alt="">
+                    <img src="<?php echo G4_IMG_URL ?>/tnb_login.jpg" alt="">
                     로그인
                 </a>
             </li>
             <?php }  ?>
+            <li>
+                <a href="<?php echo G4_BBS_URL ?>/current_connect.php">
+                    <img src="<?php echo G4_IMG_URL ?>/tnb_cnt.jpg" alt="">
+                    접속자 <?php echo connect(); // 현재 접속자수  ?>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo G4_BBS_URL ?>/new.php">
+                    <img src="<?php echo G4_IMG_URL ?>/tnb_new.jpg" alt="">
+                    새글
+                </a>
+            </li>
         </ul>
 
     </div>
