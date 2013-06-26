@@ -12,7 +12,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 <header id="hd">
     <h1><?php echo $config['cf_title'] ?></h1>
 
-    <div id="to_content"><a href="#container">본문 바로가기</a></div>
+    <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
     <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
     <div id="hd_pop">
