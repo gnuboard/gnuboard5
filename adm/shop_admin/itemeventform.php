@@ -21,7 +21,7 @@ if ($w == "u")
 else
 {
     $html_title .= " 입력";
-    $ev['ev_skin'] = 0;
+    $ev['ev_skin'] = '';
     $ev['ev_use'] = 1;
 
     // 1.03.00
@@ -32,11 +32,6 @@ else
     $ev['ev_img_height'] = 230;
     $ev['ev_list_mod'] = 3;
     $ev['ev_list_row'] = 5;
-}
-
-if(!isset($ev['ev_subject_strong'])) {
-    sql_query(" ALTER TABLE `{$g4['shop_event_table']}`
-                    ADD `ev_subject_strong` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ev_subject` ", false);
 }
 
 include_once (G4_ADMIN_PATH.'/admin.head.php');
