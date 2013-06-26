@@ -49,7 +49,6 @@ $(function(){
     $(".gnb_2da").focusin(function() {
         $(".gnb_1dli").removeClass("gnb_1dli_over gnb_1dli_over2 gnb_1dli_on");
         var $gnb_li = $(this).closest(".gnb_1dli").addClass("gnb_1dli_over gnb_1dli_on");
-        menu_rearrange($(this).closest(".gnb_1dli"));
         hide_menu = false;
     });
 
