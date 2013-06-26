@@ -124,23 +124,22 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
     <?php if ($list_href || $is_checkbox || $write_href) { ?>
     <div class="bo_fx">
+        <?php if ($is_checkbox) { ?>
         <ul class="btn_bo_adm">
-            <?php if ($list_href) { ?>
-            <li><a href="<?php echo $list_href ?>" class="btn_b01"> 목록</a></li>
-            <?php } ?>
-            <?php if ($is_checkbox) { ?>
             <li><input type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"></li>
             <li><input type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value"></li>
             <li><input type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value"></li>
-            <?php } ?>
         </ul>
+        <?php } ?>
 
+        <?php if ($list_href || $write_href) { ?>
         <ul class="btn_bo_user">
-            <li><?php if ($write_href) { ?><a href="<?php echo $write_href ?>" class="btn_b02">글쓰기</a><?php } ?></li>
+            <?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn_b01">목록</a></li><?php } ?>
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02">글쓰기</a></li><?php } ?>
         </ul>
+        <?php } ?>
     </div>
     <?php } ?>
-
     </form>
 </div>
 

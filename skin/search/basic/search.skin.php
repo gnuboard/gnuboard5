@@ -21,7 +21,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </select>
 
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $text_stx ?>" class="frm_input" required class="required" maxlength="20">
+    <input type="text" name="stx" value="<?php echo $text_stx ?>" id="stx" required class="frm_input required" maxlength="20">
     <input type="submit" class="btn_submit" value="검색">
 
     <script>
@@ -113,6 +113,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 $comment_href = "#c_".$list[$idx][$i][wr_id];
             }
          ?>
+
             <li>
                 <a href="<?php echo $list[$idx][$i][href] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i][subject] ?></a>
                 <a href="<?php echo $list[$idx][$i][href] ?><?php echo $comment_href ?>" target="_blank">새창</a>
