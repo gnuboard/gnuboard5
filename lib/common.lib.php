@@ -417,7 +417,11 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     }
 
     // 가변 파일
-    $list['file'] = get_file($board['bo_table'], $list['wr_id']);
+    if ($board['bo_use_list_file'] || ($list['wr_file'] && $subject_len == 255) /* view 인 경우 */) {
+        $list['file'] = get_file($board['bo_table'], $list['wr_id']);
+    } else {
+        $list['file']['count'] = $list['wr_file'];
+    }
 
     if ($list['file']['count'])
         $list['icon_file'] = '<img src="'.$skin_url.'/img/icon_file.gif" alt="첨부파일">';
@@ -426,9 +430,9 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
 }
 
 // get_list 의 alias
-function get_view($write_row, $board, $skin_url, $subject_len=125)
+function get_view($write_row, $board, $skin_url)
 {
-    return get_list($write_row, $board, $skin_url, $subject_len);
+    return get_list($write_row, $board, $skin_url, 255);
 }
 
 

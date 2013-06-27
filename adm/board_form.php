@@ -22,35 +22,35 @@ if (!isset($board['bo_device'])) {
 }
 
 if (!isset($board['bo_show_menu'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_order_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_order_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", false);
 }
 
 if (!isset($board['bo_mobile_skin'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", false);
 }
 
 if (!isset($board['bo_gallery_width'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_width`,  ADD `bo_mobile_gallery_cols` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_width` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_cols`,  ADD `bo_mobile_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_width` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_width`,  ADD `bo_mobile_gallery_cols` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_width` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_cols`,  ADD `bo_mobile_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_width` ", false);
 }
 
 if (!isset($board['bo_mobile_subject_len'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_subject_len` INT(11) NOT NULL DEFAULT '0' AFTER `bo_subject_len` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_mobile_subject_len` INT(11) NOT NULL DEFAULT '0' AFTER `bo_subject_len` ", false);
 }
 
 if (!isset($board['bo_mobile_page_rows'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_page_rows` INT(11) NOT NULL DEFAULT '0' AFTER `bo_page_rows` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_mobile_page_rows` INT(11) NOT NULL DEFAULT '0' AFTER `bo_page_rows` ", false);
 }
 
 if (!isset($board['bo_mobile_content_head'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_mobile_content_head` TEXT NOT NULL AFTER `bo_content_head`, ADD `bo_mobile_content_tail` TEXT NOT NULL AFTER `bo_content_tail`", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_mobile_content_head` TEXT NOT NULL AFTER `bo_content_head`, ADD `bo_mobile_content_tail` TEXT NOT NULL AFTER `bo_content_tail`", false);
 }
 
 if (!isset($board['bo_use_cert'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' AFTER `bo_use_email` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' AFTER `bo_use_email` ", false);
 }
 
 if (!isset($board['bo_use_sns'])) {
-    sql_query(" ALTER TABLE `{$g4['board_table']}`  ADD `bo_use_sns` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_cert` ", false);
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_use_sns` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_cert` ", false);
 
     $result = sql_query(" select bo_table from `{$g4['board_table']}` ");
     for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -62,6 +62,16 @@ if (!isset($board['bo_use_sns'])) {
 }
 
 sql_query(" ALTER TABLE `{$g4['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' ", false);
+
+if (!isset($board['bo_use_list_file'])) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_use_list_file` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_list_view` ", false);
+
+    $result = sql_query(" select bo_table from `{$g4['board_table']}` ");
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}` 
+                    ADD `wr_file` TINYINT NOT NULL DEFAULT '0' AFTER `wr_datetime` ", false);
+    }
+}
 
 $required = "";
 $readonly = "";
@@ -526,14 +536,29 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="bo_use_list_content">목록에서 내용 사용</label></th>
         <td>
+            <?php echo help("목록에서 게시판 제목외에 내용도 읽어와야 할 경우에 설정하는 옵션입니다. 기본은 사용하지 않습니다."); ?>
             <input type="checkbox" name="bo_use_list_content" value="1" id="bo_use_list_content" <?php echo $board['bo_use_list_content']?'checked':''; ?>>
-            사용 (사용시 속도 느려질 수 있습니다.)
+            사용 (사용시 속도가 느려질 수 있습니다.)
         </td>
         <td class="group_setting">
             <input type="checkbox" name="chk_grp_use_list_content" value="1" id="chk_grp_use_list_content">
             <label for="chk_grp_use_list_content">그룹적용</label>
             <input type="checkbox" name="chk_all_use_list_content" value="1" id="chk_all_use_list_content">
             <label for="chk_all_use_list_content">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="bo_use_list_file">목록에서 파일 사용</label></th>
+        <td>
+            <?php echo help("목록에서 게시판 첨부파일을 읽어와야 할 경우에 설정하는 옵션입니다. 기본은 사용하지 않습니다."); ?>
+            <input type="checkbox" name="bo_use_list_file" value="1" id="bo_use_list_file" <?php echo $board['bo_use_list_file']?'checked':''; ?>>
+            사용 (사용시 속도가 느려질 수 있습니다.)
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_grp_use_list_file" value="1" id="chk_grp_use_list_file">
+            <label for="chk_grp_use_list_file">그룹적용</label>
+            <input type="checkbox" name="chk_all_use_list_file" value="1" id="chk_all_use_list_file">
+            <label for="chk_all_use_list_file">전체적용</label>
         </td>
     </tr>
     <tr>

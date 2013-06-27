@@ -224,18 +224,11 @@ $sql_common = " from {$g4['point_table']} ";
 $sql_search = " where (1) ";
 $sql_order = " order by po_id desc ";
 
-$sql = " select count(*) as cnt
-            {$sql_common}
-            {$sql_search}
-            {$sql_order} ";
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} {$sql_order} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$sql = " select *
-            {$sql_common}
-            {$sql_search}
-            {$sql_order}
-            limit {$new_point_rows} ";
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$new_point_rows} ";
 $result = sql_query($sql);
 
 $colspan = 7;
