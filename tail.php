@@ -19,8 +19,7 @@ if ($config['cf_include_tail']) {
 
 <hr>
 
-<footer id="ft">
-    <h1><?php echo $config['cf_title'] ?> 정보</h1>
+<div id="ft">
     <?php echo popular('basic'); // 인기검색어  ?>
     <?php echo visit('basic'); // 방문자수  ?>
     <div id="ft_catch"><img src="<?php echo G4_IMG_URL; ?>/ft_catch.jpg" alt="gnuboard4 second edition"></div>
@@ -30,7 +29,7 @@ if ($config['cf_include_tail']) {
             <a href="#">상단으로</a>
         </p>
     </div>
-</footer>
+</div>
 
 <?php if(!G4_IS_MOBILE) { ?>
 <a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.str_replace("&", "&amp;", $_SERVER['QUERY_STRING']).'&amp;':'?').'device=mobile'; ?>" id="device_change">모바일 버전으로 보기</a>
