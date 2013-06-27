@@ -33,8 +33,10 @@ h1 {padding:20px 0 0;text-align:center}
 ul {margin:30px;padding:0;border:1px solid #aaa;border:1px solid #aaa;list-style:none;zoom:1}
 ul:after {display:block;visibility:hidden;clear:both;content:""}
 li {float:left;width:50%;border-bottom:1px solid #e9e9e9}
-a {display:block;padding:1em;height:2em;border-left:1px solid #e9e9e9;background:#fff;color:#000;font-weight:bold;text-decoration:none}
+a {display:block;padding:1em;height:2em;background:#fff;color:#000;font-weight:bold;text-decoration:none}
 a:focus, a:hover {background:#333;color:#fff;text-decoration:none}
+.left_line {border-left:1px solid #e9e9e9}
+.no_bottom_line {border-bottom:0 !important}
 .bg {background:#f7f7f7}
 </style>
 </head>
@@ -44,15 +46,15 @@ a:focus, a:hover {background:#333;color:#fff;text-decoration:none}
 
 <ul>
     <li><a href="http://dev.naver.com/openapi/apis/function/syndication">Syndication API</a></li>
-    <li><a href="http://syndication.openapi.naver.com/status/?site=<?php echo $syndi_tag_domain; ?>">Naver Syndication 연결확인</a></li>
+    <li><a href="http://syndication.openapi.naver.com/status/?site=<?php echo $syndi_tag_domain; ?>" class="left_line">Naver Syndication 연결확인</a></li>
     <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=site" class="bg">사이트 정보</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=channel" class="bg">특정 채널 정보</a></li>
+    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=channel" class="bg left_line">특정 채널 정보</a></li>
     <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=channel" class="bg">채널 목록</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=article">사이트의 모든 문서 목록</a></li>
+    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=article" class="left_line">사이트의 모든 문서 목록</a></li>
     <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=article">특정 채널의 문서 목록</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:article:<?php echo $channel['bo_table']; ?>-<?php echo $article['wr_id']; ?>&type=article">특정 문서 정보</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=deleted" class="bg">사이트의 모든 삭제문서 목록</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=deleted" class="bg">특정 채널의 삭제 문서 목록</a></li>
+    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:article:<?php echo $channel['bo_table']; ?>-<?php echo $article['wr_id']; ?>&type=article" class="left_line">특정 문서 정보</a></li>
+    <li class="no_bottom_line"><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=deleted" class="bg">사이트의 모든 삭제문서 목록</a></li>
+    <li class="no_bottom_line"><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=deleted" class="bg left_line">특정 채널의 삭제 문서 목록</a></li>
 </ul>
 
 </body>
