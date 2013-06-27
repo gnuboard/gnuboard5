@@ -46,8 +46,6 @@ if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
 /* ============================================================================== */
 ?>
 <script>
-//StartSmartUpdate();
-
 function CheckPayplusInstall()
 {
     if(!ChkBrowser())
@@ -82,9 +80,7 @@ function CheckPayplusInstall()
                 alert("플러그인이 업데이트 되었습니다. 재설치 하시고 진행해 주시기 바랍니다. 재설치 후에는 반드시 브라우저를 재시작 하십시오.");
             }
 
-            //document.location.href = GetInstallFile();
-            var down_win = window.open(GetInstallFile(), "_self");
-            down_win.close();
+            document.location.href = GetInstallFile();
             return false;
         }
     }
@@ -1001,8 +997,6 @@ function get_intall_file()
 </div>
 
 <script>
-CheckPayplusInstall();
-
 $(function() {
     var $cp_btn_el;
     var $cp_row_el;
@@ -1614,3 +1608,7 @@ function gumae2baesong(f)
 <?php
 include_once('./_tail.php');
 ?>
+
+<script>
+CheckPayplusInstall();
+</script>
