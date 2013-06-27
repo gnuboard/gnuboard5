@@ -46,15 +46,62 @@ if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
 /* ============================================================================== */
 ?>
 <script>
-/* 플러그인 설치(확인) */
-StartSmartUpdate();
-
-/*  해당 스크립트는 타브라우져에서 적용이 되지 않습니다.
-if( document.Payplus.object == null )
+function CheckPayplusInstall()
 {
-    openwin = window.open( "chk_plugin.html", "chk_plugin", "width=420, height=100, top=300, left=300" );
+    if (ChkBrowser())
+    {
+        document.writeln(KCPUX_OBJ); //-- inner 형식 변경
+        //setTimeout("plugin_Set_Time_Out('ie');", 100);
+    }
+    else
+    {
+        var inst = 0;
+        for (var i = 0; i < navigator.plugins.length; i++)
+        {
+            if (navigator.plugins[i].name == "KCP")
+            {
+                if (navigator.mimeTypes && navigator.mimeTypes[GetPluginVersion()])
+                {
+                    inst = 1;
+                }
+                else
+                {
+                    inst = 2;
+                }
+
+                break;
+            }
+        }
+
+        if (inst != 1)
+        {
+            if (inst == 0)
+            {
+                alert("Microsoft Internet Exploer 외의 환경에서 이용하시려면 KCP 플러그인을 설치하셔야 합니다. 확인을 누르시면 플러그인 다운로드창이 호출됩니다. 설치후에는 반드시 브라우저를 재시작 하십시오.");
+                document.getElementById("display_setup_message").scrollIntoView();
+            }
+            else if (inst == 2)
+            {
+                alert("플러그인이 업데이트 되었습니다. 재설치 하시고 진행해 주시기 바랍니다. 재설치 후에는 반드시 브라우저를 재시작 하십시오.");
+            }
+
+            document.location.href = GetInstallFile();
+            return false;
+        }
+        else
+        {
+            //var plugin_info = "<embed id='plugin' " + "type=" + KCP_GetPluginVersion() + " pluginspage='' width='0' height='0'></embed>";
+            //document.write(plugin_info);
+
+            setTimeout("plugin_Set_Time_Out('mozilra');", 100);
+        }
+    }
+
+    StartSmartUpdate();
+    setTimeout("init_pay_button();",300);
+
+    return true;
 }
-*/
 
 /* Payplus Plug-in 실행 */
 function  jsf__pay( form )
@@ -94,20 +141,20 @@ function init_pay_button()
     // 체크 방법이 변경
     if( GetPluginObject() == null ){
         document.getElementById("display_setup_message").style.display = "block" ;
+        document.getElementById("display_pay_button").style.display = "none" ;
     }
     else{
+        document.getElementById("display_setup_message").style.display = "none" ;
         document.getElementById("display_pay_button").style.display = "block" ;
     }
 }
 
-/*
-* 인터넷 익스플로러와 파이어폭스(사파리, 크롬.. 등등)는 javascript 파싱법이 틀리기 때문에 object 가 인식 전에 실행 되는 문제
-* 기존에는 onload 부분에 추가를 했지만 setTimeout 부분에 추가
-* setTimeout 에 2번째 변수 0은 딜레이 시간 0은 딜래이 없음을 의미
-* - 김민수 - 20101018 -
-*/
-/* 문서로딩 후 체크하도록 아래 스크립트를 문서하단으로 이동 */
-//setTimeout("init_pay_button();",500);
+
+function get_intall_file()
+{
+    document.location.href = GetInstallFile();
+    return false;
+}
 </script>
 
 <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
@@ -892,9 +939,9 @@ function init_pay_button()
     </section>
 
     <!-- Payplus Plug-in 설치 안내 -->
-    <p id="display_setup_message" style="display:none">
+    <p id="display_setup_message" style="display:block">
         <span class="red">결제를 계속 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나<br>
-        <a href="http://pay.kcp.co.kr/plugin/file_vista/PayplusWizard.exe"><span class="bold">[수동설치]</span></a>를 눌러 Payplus Plug-in을 설치하시기 바랍니다.<br>
+        <a href="https://pay.kcp.co.kr/plugin_new/file/KCPPluginSetup.exe" onclick="return get_intall_file();"><span class="bold">[수동설치]</span></a>를 눌러 Payplus Plug-in을 설치하시기 바랍니다.<br>
         [수동설치]를 눌러 설치하신 경우 <span class="red bold">새로고침(F5)키</span>를 눌러 진행하시기 바랍니다.
     </p>
 
@@ -955,7 +1002,7 @@ function init_pay_button()
 </div>
 
 <script>
-setTimeout("init_pay_button();",300);
+CheckPayplusInstall();
 
 $(function() {
     var $cp_btn_el;
