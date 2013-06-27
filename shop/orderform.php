@@ -157,6 +157,13 @@ function get_intall_file()
 }
 </script>
 
+    <!-- Payplus Plug-in 설치 안내 -->
+    <p id="display_setup_message" style="display:block">
+        <strong>결제안내</strong>
+        <span class="red">결제를 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나, <a href="https://pay.kcp.co.kr/plugin_new/file/KCPPluginSetup.exe" onclick="return get_intall_file();"><span class="bold">[수동설치]</span></a>를 눌러 Payplus Plug-in을 설치하시기 바랍니다.<br>
+        [수동설치]를 눌러 설치하신 경우 <span class="red bold">새로고침(F5)키</span>를 눌러 진행하시기 바랍니다.
+    </p>
+
 <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
 <div id="sod_frm">
     <p>주문하실 상품을 확인하세요.</p>
@@ -937,13 +944,6 @@ function get_intall_file()
             echo '<p>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</p>';
         ?>
     </section>
-
-    <!-- Payplus Plug-in 설치 안내 -->
-    <p id="display_setup_message" style="display:block">
-        <span class="red">결제를 계속 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나<br>
-        <a href="https://pay.kcp.co.kr/plugin_new/file/KCPPluginSetup.exe" onclick="return get_intall_file();"><span class="bold">[수동설치]</span></a>를 눌러 Payplus Plug-in을 설치하시기 바랍니다.<br>
-        [수동설치]를 눌러 설치하신 경우 <span class="red bold">새로고침(F5)키</span>를 눌러 진행하시기 바랍니다.
-    </p>
 
     <div id="display_pay_button" class="btn_confirm" style="display:none">
         <input type="submit" value="주문하기" class="btn_submit">
