@@ -3,6 +3,23 @@ var supply_add = false;
 
 $(function() {
     // 선택옵션
+    /* 가상서커 ctrl keyup 이베트 대응 */
+    $("select[name='it_option[]']").live("keyup", function(e) {
+        var sel_count = $("select[name='it_option[]']").size();
+        var idx = $("select[name='it_option[]']").index($(this));
+        var code = e.keyCode;
+        var val = $(this).val();
+
+        option_add = false;
+        if(code == 17 && sel_count == idx + 1) {
+            if(val == "")
+                return;
+
+            sel_option_process(true);
+        }
+    });
+
+    /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
     $("select[name='it_option[]']").live("keydown", function(e) {
         var sel_count = $("select[name='it_option[]']").size();
         var idx = $("select[name='it_option[]']").index($(this));
@@ -82,6 +99,22 @@ $(function() {
     });
 
     // 추가옵션
+    /* 가상서커 ctrl keyup 이베트 대응 */
+    $("select[name='it_supply[]']").live("keyup", function(e) {
+        var $el = $(this);
+        var code = e.keyCode;
+        var val = $(this).val();
+
+        supply_add = false;
+        if(code == 17) {
+            if(val == "")
+                return;
+
+            sel_supply_process($el, true);
+        }
+    });
+
+    /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
     $("select[name='it_supply[]']").live("keydown", function(e) {
         var $el = $(this);
         var code = e.keyCode;
