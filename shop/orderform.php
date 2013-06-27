@@ -46,14 +46,11 @@ if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
 /* ============================================================================== */
 ?>
 <script>
+//StartSmartUpdate();
+
 function CheckPayplusInstall()
 {
-    if (ChkBrowser())
-    {
-        document.writeln(KCPUX_OBJ); //-- inner 형식 변경
-        //setTimeout("plugin_Set_Time_Out('ie');", 100);
-    }
-    else
+    if(!ChkBrowser())
     {
         var inst = 0;
         for (var i = 0; i < navigator.plugins.length; i++)
@@ -85,22 +82,15 @@ function CheckPayplusInstall()
                 alert("플러그인이 업데이트 되었습니다. 재설치 하시고 진행해 주시기 바랍니다. 재설치 후에는 반드시 브라우저를 재시작 하십시오.");
             }
 
-            document.location.href = GetInstallFile();
+            //document.location.href = GetInstallFile();
+            var down_win = window.open(GetInstallFile(), "_self");
+            down_win.close();
             return false;
-        }
-        else
-        {
-            //var plugin_info = "<embed id='plugin' " + "type=" + KCP_GetPluginVersion() + " pluginspage='' width='0' height='0'></embed>";
-            //document.write(plugin_info);
-
-            setTimeout("plugin_Set_Time_Out('mozilra');", 100);
         }
     }
 
     StartSmartUpdate();
     setTimeout("init_pay_button();",300);
-
-    return true;
 }
 
 /* Payplus Plug-in 실행 */
