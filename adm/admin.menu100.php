@@ -9,6 +9,7 @@ $menu['menu100'] = array (
     array('100900', '캐쉬파일 일괄삭제',G4_ADMIN_URL.'/cache_file_delete.php',   'cf_cache', 1),
     array('100910', '캡챠파일 일괄삭제',G4_ADMIN_URL.'/gcaptcha_file_delete.php',   'cf_captcha', 1),
     array('100920', '썸네일파일 일괄삭제',G4_ADMIN_URL.'/thumbnail_file_delete.php',   'cf_thumbnail', 1),
+    array('100930', '네이버 신디케이션 핑',G4_SYNDI_URL.'/ping.php',   'cf_syndi_ping', 1),
     array('100500', 'phpinfo()',        G4_ADMIN_URL.'/phpinfo.php',       'cf_phpinfo'),
     //array('100600', '업그레이드', G4_ADMIN_URL.'/upgrade.php', 'cf_upgrade'),
     //array('100700', '복구/최적화', G4_ADMIN_URL.'/repair.php', 'cf_repair'),
