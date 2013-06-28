@@ -32,7 +32,7 @@ a:active {color:#000;text-decoration:underline}
 #sch_all_stx {padding-left:5px;width:165px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
 #sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff}
 
-#tnb {position:absolute;top:18px;right:0;zoom:1}
+#tnb {position:absolute;top:18px;right:0;margin:0;padding:0;list-style:none;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left}
 #tnb a {display:block;padding:5px 10px;color:#333;letter-spacing:-0.1em}
@@ -75,7 +75,7 @@ a:active {color:#000;text-decoration:underline}
 
 #container {z-index:4;position:relative;float:left;padding:25px 14px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border:1px solid #cfded8;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
-#container_title {margin-bottom:20px;font-size:1.2em}
+#container_title {margin-bottom:20px;font-size:1.2em;font-weight:bold}
 
 /* 텍스트 크기 조절 */
 #text_size {position:absolute;top:-33px;left:-1px;letter-spacing:-3px}

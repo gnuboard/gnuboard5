@@ -23,8 +23,8 @@ if ($config['cf_include_head']) {
 }
 ?>
 
-<header id="hd">
-    <h1><?php echo $config['cf_title'] ?></h1>
+<div id="hd">
+    <h1 id="hd_h1"><?php echo $g4['title'] ?></h1>
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
@@ -161,7 +161,7 @@ if ($config['cf_include_head']) {
         </ul>
     </nav>
 
-</header>
+</div>
 
 <hr>
 
@@ -171,7 +171,7 @@ if ($config['cf_include_head']) {
         <?php echo poll('basic'); // 설문조사  ?>
     </div>
     <div id="container">
-        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="container_title"><?php echo $g4['title'] ?></h1><?php } ?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><div id="container_title"><?php echo $g4['title'] ?></div><?php } ?>
         <div id="text_size">
             <button id="text_size_down" class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
             <button id="text_size_def" class="no_text_resize" onclick="font_default('container');">기본</button>
