@@ -15,7 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         {
             $gnb_zindex -= 1; // html 구조에서 앞선 gnb_1dli 에 더 높은 z-index 값 부여
         ?>
-        <li class="gnb_1dli">
+        <li class="gnb_1dli" style="z-index:<?php echo $gnb_zindex; ?>">
             <a href="<?php echo G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id']; ?>" class="gnb_1da"><?php echo $row['ca_name']; ?></a>
             <?php
             // 2단계 분류 판매 가능한 것만

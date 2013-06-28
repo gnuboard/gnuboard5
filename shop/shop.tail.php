@@ -10,8 +10,7 @@ $admin = get_admin("super");
     </div><!-- Container End -->
 </div><!-- Wrapper End -->
 
-<footer id="ft">
-    <h1><?php echo $config['cf_title']; ?> 정보</h1>
+<div id="ft">
     <div>
         <a href="<?php echo G4_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="처음으로"></a>
         <ul>
@@ -33,7 +32,7 @@ $admin = get_admin("super");
         </p>
         <a href="#" id="ft_totop">상단으로</a>
     </div>
-</footer>
+</div>
 
 <?php
 $sec = get_microtime() - $begin_time;
