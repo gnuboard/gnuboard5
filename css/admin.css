@@ -176,7 +176,7 @@ fieldset button {padding:0 15px;height:23px;border:0;background:#617d46;color:#f
 .anchor a:focus, .anchor a:hover {background:#434f54;text-decoration:none}
 
 /* 리스트 정렬 */
-.sort_odr {float:left;margin:0 0 10px;padding-left:1px;list-style:none;zoom:1}
+.sort_odr {margin:0 0 10px;padding-left:1px;list-style:none;zoom:1}
 .sort_odr:after {display:block;visibility:hidden;clear:both;content:""}
 .sort_odr li {float:left;margin-bottom:-1px}
 .sort_odr a {display:inline-block;position:relative;margin-left:-1px;padding:8px 0 6px;width:70px;border:1px solid #e9e9e9;background:#f5f6fa;color:#000;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
