@@ -18,6 +18,7 @@ if ($config['cf_include_index']) {
 include_once('./_head.php');
 ?>
 
+<h2 class="sound_only">최신글</h2>
 <!-- 최신글 시작 { -->
 <?php
 //  최신글
