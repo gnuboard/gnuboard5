@@ -30,7 +30,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </ul>
     <footer id="ol_after_ft">
         <a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=register_form.php" id="ol_after_info">정보수정</a>
-        <a href="<?php echo G4_BBS_URL; ?>/logout.php" id="ol_after_logout">로그아웃</a>
+        <a href="<?php echo G4_BBS_URL; ?>/logout.php?url=shop" id="ol_after_logout">로그아웃</a>
     </footer>
 </section>
 

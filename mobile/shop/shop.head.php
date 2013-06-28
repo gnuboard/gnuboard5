@@ -42,7 +42,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <ul id="hd_mb">
         <?php if ($is_member) { ?>
-        <li><a href="<?php echo G4_BBS_URL; ?>/logout.php">로그아웃</a></li>
+        <li><a href="<?php echo G4_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
         <?php } else { ?>
         <li><a href="<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
         <?php } ?>
