@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 폼메일 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="formmail" class="new_win">
@@ -94,3 +95,4 @@ function fformmail_submit(f)
     return true;
 }
 </script>
+<!-- } 폼메일 끝 -->

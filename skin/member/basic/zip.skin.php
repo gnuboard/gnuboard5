@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
 ?>
 
+<!-- 우편번호 찾기 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="post_code" class="new_win">
@@ -14,13 +15,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="frm_addr1" value="<?php echo $frm_addr1 ?>">
     <input type="hidden" name="frm_addr2" value="<?php echo $frm_addr2 ?>">
 
+    <!-- 검색어 입력 시작 { -->
     <fieldset>
         <label for="addr1">동/읍/면/리 검색</label>
         <input type="text" name="addr1" value="<?php echo $addr1 ?>" id="addr1" required  class="required frm_input" minlength="2">
         <input type="submit" value="검색" class="btn_submit">
     </fieldset>
+    <!-- } 검색어 입력 끝 -->
 
-    <!-- 검색결과 여기서부터 -->
+    <!-- 검색결과 시작 { -->
 
     <?php if ($search_count > 0) {  ?>
     <dl>
@@ -38,6 +41,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </dl>
 
     <p>검색결과가 끝났습니다.</p>
+    <!-- } 검색결과 끝 -->
 
     <div class="btn_win">
         <button type="button" onclick="window.close();">창닫기</button>
@@ -60,3 +64,4 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </script>
     <?php }  ?>
 </div>
+<!-- } 우편번호 찾기 끝 -->

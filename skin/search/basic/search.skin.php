@@ -2,6 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
+<!-- 전체검색 시작 { -->
 <link rel="stylesheet" href="<?php echo $search_skin_url ?>/style.css">
 
 <form name="fsearch" onsubmit="return fsearch_submit(this);" method="get">
@@ -132,3 +133,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <?php echo $write_pages ?>
 
 </div>
+<!-- } 전체검색 끝 -->
