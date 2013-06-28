@@ -121,6 +121,7 @@ if ($config['cf_include_head']) {
                     새글
                 </a>
             </li>
+            <?php if (defined('G4_USE_SHOP') && G4_USE_SHOP) { ?>
 
             <li>
                 <a href="<?php echo G4_SHOP_URL ?>/">
@@ -128,6 +129,7 @@ if ($config['cf_include_head']) {
                     쇼핑몰
                 </a>
             </li>
+            <?php } ?>
 
         </ul>
 
