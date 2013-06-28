@@ -6,7 +6,7 @@ body {margin:0;padding:0;background:#fff;color:#000;font-size:0.75em;font-family
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
-header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
+#hd ul, nav ul, #ft ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
 input {margin:0;padding:0;border-radius:0;font-family:"dotum"}
 button {border-radius:0;font-size:1em;font-family:"dotum"}
@@ -42,7 +42,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .cke_sc_def dd {width:30%}
 
 /* 상단 레이아웃 */
-#hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#hd_h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
 #hd_pop {z-index:1000;position:relative;margin:0 auto;width:1000px;height:0}
 #hd_pop h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -83,7 +83,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 /* 중간 레이아웃 */
 #wrapper {z-index:5;margin:30px auto;width:1000px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
-#wrapper_title {margin-bottom:20px;font-size:1.2em}
+#wrapper_title {margin-bottom:20px;font-size:1.2em;font-weight:bold}
 
 /* 오늘 본 상품 */
 #stv {z-index:1001;float:right;position:relative;width:88px}

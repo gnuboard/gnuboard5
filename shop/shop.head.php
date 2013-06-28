@@ -9,8 +9,8 @@ include_once(G4_LIB_PATH.'/connect.lib.php');
 include_once(G4_LIB_PATH.'/popular.lib.php');
 ?>
 
-<header id="hd">
-    <h1><?php echo $config['cf_title'] ?></h1>
+<div id="hd">
+    <h1 id="hd_h1"><?php echo $g4['title'] ?></h1>
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
@@ -86,7 +86,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         </div>
     </aside>
 
-</header>
+</div>
 
 <div id="wrapper">
 
@@ -120,7 +120,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     </div>
 
     <div id="container">
-        <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><h1 id="wrapper_title"><?php echo $g4['title'] ?></h1><?php } ?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g4['title'] ?></div><?php } ?>
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
             <button class="no_text_resize" onclick="font_default('container');">기본</button>
