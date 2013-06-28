@@ -226,7 +226,7 @@ else
         <?php //echo it_name_icon($it, false, 0); ?>
 
         <section id="sit_ov">
-            <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?></h2>
+            <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?> 요약정보 및 구매</h2>
             <p id="sit_desc"><?php echo $it['it_basic']; ?></p>
             <p id="sit_opt_info">
             <?php
@@ -510,12 +510,14 @@ else
         <h2>상품 정보</h2>
         <?php echo pg_anchor('inf'); ?>
 
+        <h3>상품 기본설명</h3>
         <?php if ($it['it_basic']) { // 상품 기본설명 ?>
         <div id="sit_inf_basic">
              <?php echo $it['it_basic']; ?>
         </div>
         <?php } ?>
 
+        <h3>상품 상세설명</h3>
         <?php if ($it['it_explan']) { // 상품 상세설명 ?>
         <div id="sit_inf_explan">
             <?php echo conv_content($it['it_explan'], 1); ?>
