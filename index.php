@@ -18,7 +18,7 @@ if ($config['cf_include_index']) {
 include_once('./_head.php');
 ?>
 
-<!-- 메인화면 최신글 시작 -->
+<!-- 최신글 시작 { -->
 <?php
 //  최신글
 $sql = " select bo_table from `{$g4['board_table']}` a left join `{$g4['group_table']}` b on (a.gr_id=b.gr_id)  where a.bo_device <> 'mobile' order by b.gr_order, a.bo_order ";
@@ -37,7 +37,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <?php
 }
 ?>
-<!-- 메인화면 최신글 끝 -->
+<!-- } 최신글 끝 -->
 
 <?php
 include_once('./_tail.php');

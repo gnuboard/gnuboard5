@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
 ?>
 
+<!-- 회원가입약관 동의 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 <form  name="fregister" id="fregister" action="<?php echo $register_action_url ?>" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">
 
@@ -49,3 +50,4 @@ function fregister_submit(f)
     return true;
 }
 </script>
+<!-- } 회원가입 약관 동의 끝 -->

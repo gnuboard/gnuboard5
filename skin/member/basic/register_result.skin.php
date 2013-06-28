@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 회원가입결과 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="reg_result">
@@ -43,3 +44,4 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
 
 </div>
+<!-- } 회원가입결과 끝 -->

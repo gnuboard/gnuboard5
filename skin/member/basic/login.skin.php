@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 로그인 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="mb_login">
@@ -55,3 +56,4 @@ function flogin_submit(f)
     return true;
 }
 </script>
+<!-- } 로그인 끝 -->
