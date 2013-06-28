@@ -48,47 +48,20 @@ if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
 <script>
 function CheckPayplusInstall()
 {
-    if(!ChkBrowser())
+    StartSmartUpdate();
+
+    if(ChkBrowser())
     {
-        var inst = 0;
-        for (var i = 0; i < navigator.plugins.length; i++)
-        {
-            if (navigator.plugins[i].name == "KCP")
-            {
-                if (navigator.mimeTypes && navigator.mimeTypes[GetPluginVersion()])
-                {
-                    inst = 1;
-                }
-                else
-                {
-                    inst = 2;
-                }
-
-                break;
-            }
-        }
-
-        if (inst != 1)
-        {
-            if (inst == 0)
-            {
-                alert("Microsoft Internet Exploer 외의 환경에서 이용하시려면 KCP 플러그인을 설치하셔야 합니다. 확인을 누르시면 플러그인 다운로드창이 호출됩니다. 설치후에는 반드시 브라우저를 재시작 하십시오.");
-                document.getElementById("display_setup_message_top").style.display = "block" ;
-                document.getElementById("display_setup_message").style.display = "block" ;
-                document.getElementById("display_setup_message").scrollIntoView();
-                document.location.href = GetInstallFile();
-            }
-            else if (inst == 2)
-            {
-                alert("플러그인이 업데이트 되었습니다. 재설치 하시고 진행해 주시기 바랍니다. 재설치 후에는 반드시 브라우저를 재시작 하십시오.");
-            }
-
-            return false;
+        if(document.Payplus.object != null) {
+            document.getElementById("display_setup_message_top").style.display = "none" ;
+            document.getElementById("display_setup_message").style.display = "none" ;
+            document.getElementById("display_pay_button").style.display = "block" ;
         }
     }
-
-    StartSmartUpdate();
-    setTimeout("init_pay_button();",300);
+    else
+    {
+        setTimeout("init_pay_button();",300);
+    }
 }
 
 /* Payplus Plug-in 실행 */
@@ -120,17 +93,11 @@ function  jsf__pay( form )
 // Payplus Plug-in 설치 안내
 function init_pay_button()
 {
-    /*
-    if( document.Payplus.object == null )
-        document.getElementById("display_setup_message").style.display = "block" ;
-    else
-        document.getElementById("display_pay_button").style.display = "block" ;
-    */
-    // 체크 방법이 변경
     if( GetPluginObject() == null ){
         document.getElementById("display_setup_message_top").style.display = "block" ;
         document.getElementById("display_setup_message").style.display = "block" ;
         document.getElementById("display_pay_button").style.display = "none" ;
+        document.getElementById("display_setup_message").scrollIntoView();
     }
     else{
         document.getElementById("display_setup_message_top").style.display = "none" ;
@@ -138,7 +105,6 @@ function init_pay_button()
         document.getElementById("display_pay_button").style.display = "block" ;
     }
 }
-
 
 function get_intall_file()
 {
