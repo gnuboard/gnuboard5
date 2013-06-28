@@ -941,7 +941,10 @@ function get_intall_file()
         브라우저가 익스플로러가 아닌 경우 Payplus Plug-in 설치에 문제가 있을수 있음을 알려 드립니다.
     </p>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7c3b78792011aaf93dbbe968034d2ca094405b1f
 =======
 >>>>>>> 7c3b78792011aaf93dbbe968034d2ca094405b1f
     <div id="display_pay_button" class="btn_confirm" style="display:none">
@@ -1615,4 +1618,8 @@ include_once('./_tail.php');
 
 <script>
 CheckPayplusInstall();
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> 7c3b78792011aaf93dbbe968034d2ca094405b1f
