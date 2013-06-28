@@ -293,12 +293,6 @@ function doc_write(cont)
     document.write(cont);
 }
 
-// php chr() 대응
-function chr(code)
-{
-    return String.fromCharCode(code);
-}
-
 var win_password_lost = function(href) {
     window.open(href, "win_password_lost", "left=50, top=50, width=617, height=330, scrollbars=1");
 }
@@ -404,18 +398,10 @@ function font_resize(id, act)
 {
     var $elements = $("#"+id+" *").not("select").not("option");
     $elements.removeClass("applied");
-    var count = parseInt(get_cookie("ck_font_resize_count"));
-    if(isNaN(count))
-        count = 0;
-
     // 엘리먼트의 기본 폰트사이즈 저장
     if(!default_font_size_saved) {
         save_default_font_size($elements);
     }
-
-    // 크롬의 최소 폰트사이즈 버그로 작게는 한단계만 가능
-    if(act == "decrease" && count == -1)
-        return;
 
     $elements.each(function() {
         if($(this).hasClass("no_text_resize"))
@@ -426,54 +412,7 @@ function font_resize(id, act)
         }
     });
 
-    // 텍스트 리사이즈 회수 쿠키에 기록
-    if(act == "increase")
-        count++;
-    else
-        count--;
-
-    set_cookie("ck_font_resize_count", count, 1, g4_cookie_domain);
-}
-
-
-/**
- * 텍스트 기본사이즈
-**/
-function font_default(id)
-{
-    var act;
-    var count = parseInt(get_cookie("ck_font_resize_count"));
-    if(isNaN(count))
-        count = 0;
-
-    if(count > 0) {
-        act = "decrease";
-    } else {
-        act = "increase";
-        // 작게 후 기본 크기가 되지 않는 문제해결을 위해 추가
-        set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
-    }
-
-    for(i=0; i<Math.abs(count); i++) {
-        font_resize(id, act);
-    }
-
-    // font resize 카운트 초기화
-    set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
-}
-
-
-/**
- * font_resize 함수를 반복 할 때 사용
-**/
-function font_resize2(id, act, loop)
-{
-    // font resize 카운트 초기화
-    set_cookie("ck_font_resize_count", 0, 1, g4_cookie_domain);
-
-    for(i=0; i<loop; i++) {
-        font_resize(id, act);
-    }
+    set_cookie("ck_font_resize_act", act, 1, g4_cookie_domain);
 }
 
 
@@ -497,16 +436,21 @@ function set_font_size($el, act)
     if(unit == "em")
         x = 1;
 
-    if(act == "increase") {
-        nfsize = (fsize * 1.2);
-    } else {
-        nfsize = (fsize / 1.2);
+    switch(act) {
+        case "large":
+            nfsize = fsize * 1.5;
+            break;
+        case "larger":
+            nfsize = fsize * 2;
+            break;
+        default:
+            nfsize = fsize;
+            break;
     }
 
     nfsize = nfsize.toFixed(x);
 
     $el.css("font-size", nfsize+unit).addClass("applied");
-    $el.data("fs", nfsize+unit);
 }
 
 
@@ -650,12 +594,12 @@ $(function(){
         }
     });
 
-    $("textarea#wr_content[maxlength]").live("keyup change", function() {  
-        var str = $(this).val()  
-        var mx = parseInt($(this).attr("maxlength"))  
-        if (str.length > mx) {  
+    $("textarea#wr_content[maxlength]").live("keyup change", function() {
+        var str = $(this).val()
+        var mx = parseInt($(this).attr("maxlength"))
+        if (str.length > mx) {
             $(this).val(str.substr(0, mx));
-            return false;  
-        }  
+            return false;
+        }
     });
 });
