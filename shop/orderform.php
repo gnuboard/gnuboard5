@@ -945,7 +945,6 @@ function get_intall_file()
         ?>
     </section>
 
-<<<<<<< HEAD
     <!-- Payplus Plug-in 설치 안내 -->
     <p id="display_setup_message" style="display:block">
         <span class="red">결제를 계속 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나 <a href="https://pay.kcp.co.kr/plugin_new/file/KCPPluginSetup.exe" onclick="return get_intall_file();"><b><u>[수동설치]</u></b></a>를 눌러 다운로드 된 Payplus Plug-in을 설치하시기 바랍니다.<br>
@@ -954,8 +953,6 @@ function get_intall_file()
         브라우저가 익스플로러가 아닌 경우 Payplus Plug-in 설치에 문제가 있을수 있음을 알려 드립니다.
     </p>
 
-=======
->>>>>>> 225fa4a75dd51016367658455d6c416890c90b64
     <div id="display_pay_button" class="btn_confirm" style="display:none">
         <input type="submit" value="주문하기" class="btn_submit">
         <a href="javascript:history.go(-1);" class="btn01">취소</a>
