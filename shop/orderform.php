@@ -73,14 +73,16 @@ function CheckPayplusInstall()
             if (inst == 0)
             {
                 alert("Microsoft Internet Exploer 외의 환경에서 이용하시려면 KCP 플러그인을 설치하셔야 합니다. 확인을 누르시면 플러그인 다운로드창이 호출됩니다. 설치후에는 반드시 브라우저를 재시작 하십시오.");
+                document.getElementById("display_setup_message_top").style.display = "block" ;
+                document.getElementById("display_setup_message").style.display = "block" ;
                 document.getElementById("display_setup_message").scrollIntoView();
+                document.location.href = GetInstallFile();
             }
             else if (inst == 2)
             {
                 alert("플러그인이 업데이트 되었습니다. 재설치 하시고 진행해 주시기 바랍니다. 재설치 후에는 반드시 브라우저를 재시작 하십시오.");
             }
 
-            document.location.href = GetInstallFile();
             return false;
         }
     }
