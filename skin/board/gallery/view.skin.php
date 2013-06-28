@@ -5,6 +5,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
+<!-- 게시물 읽기 시작 { -->
 <div id="bo_v_table"><?php echo $board['bo_subject']; ?></div>
 
 <article id="bo_v" style="width:<?php echo $width; ?>">
@@ -36,6 +37,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
      ?>
 
     <?php if($cnt) { ?>
+    <!-- 첨부파일 시작 { -->
     <section id="bo_v_file">
         <h2>첨부파일</h2>
         <ul>
@@ -59,11 +61,13 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
          ?>
         </ul>
     </section>
+    <!-- } 첨부파일 끝 -->
     <?php } ?>
 
     <?php
     if (implode('', $view['link'])) {
      ?>
+     <!-- 관련링크 시작 { -->
     <section id="bo_v_link">
         <h2>관련링크</h2>
         <ul>
@@ -88,8 +92,10 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
          ?>
         </ul>
     </section>
+    <!-- } 관련링크 끝 -->
     <?php } ?>
 
+    <!-- 게시물 상단 버튼 시작 { -->
     <div id="bo_v_top">
         <?php
         ob_start();
@@ -116,6 +122,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         ob_end_flush();
          ?>
     </div>
+    <!-- } 게시물 상단 버튼 끝 -->
 
     <section id="bo_v_atc">
         <h2 id="bo_v_atc_title">본문</h2>
@@ -137,11 +144,14 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
         }
          ?>
 
+        <!-- 본문 내용 시작 { -->
         <div id="bo_v_con"><?php echo get_view_thumbnail($view['content']); ?></div>
         <?php//echo $view[rich_content]; // {이미지:0} 과 같은 코드를 사용할 경우 ?>
+        <!-- } 본문 내용 끝 -->
 
         <?php if ($is_signature) { ?><p><?php echo $signature ?></p><?php } ?>
 
+        <!-- 스크랩 추천 비추천 시작 { -->
         <?php if ($scrap_href || $good_href || $nogood_href) { ?>
         <div id="bo_v_act">
             <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><?php } ?>
@@ -165,10 +175,11 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
             }
         }
         ?>
+        <!-- } 스크랩 추천 비추천 끝 -->
     </section>
 
-    <?php
-    include(G4_SNS_PATH."/view.sns.skin.php");
+    <?php 
+    include_once(G4_SNS_PATH."/view.sns.skin.php"); 
     ?>
 
     <?php
@@ -176,12 +187,14 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     include_once('./view_comment.php');
      ?>
 
+    <!-- 링크 버튼 시작 { -->
     <div id="bo_v_bot">
-        <!-- 링크 버튼 -->
         <?php echo $link_buttons ?>
     </div>
+    <!-- } 링크 버튼 끝 -->
 
 </article>
+<!-- } 게시판 읽기 끝 -->
 
 <script>
 <?php if ($board['bo_download_point'] < 0) { ?>
@@ -206,8 +219,6 @@ function board_move(href)
     window.open(href, "boardmove", "left=50, top=50, width=500, height=550, scrollbars=1");
 }
 </script>
-
-<!-- 게시글 보기 끝 -->
 
 <script>
 // 이미지 등비율 리사이징
@@ -322,3 +333,4 @@ function excute_good(href, $el, $tx)
     );
 }
 </script>
+<!-- } 게시글 읽기 끝 --> 

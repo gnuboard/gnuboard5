@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
 ?>
 
+<!-- 회원정보 찾기 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="find_info" class="new_win">
@@ -42,3 +43,4 @@ $(function() {
     moveTo(left, top);
 });
 </script>
+<!-- } 회원정보 찾기 끝 -->

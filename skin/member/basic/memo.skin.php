@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 쪽지 목록 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_list" class="new_win">
@@ -46,3 +47,4 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>
+<!-- } 쪽지 목록 끝 -->

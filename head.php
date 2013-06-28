@@ -23,6 +23,7 @@ if ($config['cf_include_head']) {
 }
 ?>
 
+<!-- 상단 시작 { -->
 <div id="hd">
     <h1 id="hd_h1"><?php echo $g4['title'] ?></h1>
 
@@ -154,9 +155,11 @@ if ($config['cf_include_head']) {
     </nav>
 
 </div>
+<!-- } 상단 끝 -->
 
 <hr>
 
+<!-- 콘텐츠 시작 { -->
 <div id="wrapper">
     <div id="aside">
         <?php echo outlogin('basic'); // 외부 로그인  ?>

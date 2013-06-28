@@ -11,16 +11,19 @@ else {
 }
 ?>
 
+<!-- 쪽지보기 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_view" class="new_win">
     <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
 
+    <!-- 쪽지함 선택 시작 { -->
     <ul class="new_win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
         <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
     </ul>
+    <!-- } 쪽지함 선택 끝 -->
 
     <article id="memo_view_contents">
         <header>
@@ -53,3 +56,4 @@ else {
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>
+<!-- } 쪽지보기 끝 -->

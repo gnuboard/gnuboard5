@@ -2,11 +2,13 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 설문조사 결과 시작 { -->
 <link rel="stylesheet" href="<?php echo $poll_skin_url ?>/style.css">
 
 <div id="poll_result" class="new_win">
     <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
 
+    <!-- 설문조사 결과 그래프 시작 { -->
     <section id="poll_result_list">
         <h2><?php echo $po_subject ?> 결과</h2>
 
@@ -30,7 +32,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             </dd>
         </dl>
     </section>
+    <!-- } 설문조사 결과 그래프 끝 -->
 
+    <!-- 설문조사 기타의견 시작 { -->
     <?php if ($is_etc) {  ?>
     <section id="poll_result_cmt">
         <h2>이 설문에 대한 기타의견</h2>
@@ -87,7 +91,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     </section>
     <?php }  ?>
+    <!-- } 설문조사 기타의견 끝 -->
 
+    <!-- 설문조사 다른 결과 보기 시작 { -->
     <aside id="poll_result_oth">
         <h2>다른 투표 결과 보기</h2>
         <ul>
@@ -96,6 +102,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <?php }  ?>
         </ul>
     </aside>
+    <!-- } 설문조사 다른 결과 보기 끝 -->
 
     <div class="btn_win">
         <button type="button" onclick="window.close();">창닫기</button>
@@ -117,3 +124,4 @@ function fpollresult_submit(f)
     return true;
 }
 </script>
+<!-- } 설문조사 결과 끝 -->
