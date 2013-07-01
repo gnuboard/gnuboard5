@@ -181,6 +181,10 @@ if ($_FILES['it_img10']['name']) {
     $it_img10 = it_img_upload($_FILES['it_img10']['tmp_name'], $_FILES['it_img10']['name'], $it_img_dir.'/'.$it_id);
 }
 
+// 상, 하단 이미지 업로드
+if ($_FILES['it_himg']['name'])  upload_file($_FILES['it_himg']['tmp_name'], $it_id . "_h", G4_DATA_PATH.'/item');
+if ($_FILES['it_timg']['name'])  upload_file($_FILES['it_timg']['tmp_name'], $it_id . "_t", G4_DATA_PATH.'/item');
+
 if ($w == "" || $w == "u")
 {
     // 다음 입력을 위해서 옵션값을 쿠키로 한달동안 저장함
