@@ -144,6 +144,7 @@ $pg_anchor = '<ul class="anchor">
 
     <ul id="sodr_ul">
         <?php
+        $chk_cnt = 0;
         for($i=0; $row=sql_fetch_array($result); $i++) {
             // 상품이미지
             $image = get_it_image($row['it_id'], 50, 50);
@@ -197,7 +198,7 @@ $pg_anchor = '<ul class="anchor">
             <tr>
                 <td class="td_chk">
                     <label for="ct_opt_chk_<?php echo $i.$k; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
-                    <input type="checkbox" name="ct_chk[]" id="ct_opt_chk_<?php echo $i.$k; ?>" value="<?php echo $opt['ct_id']; ?>">
+                    <input type="checkbox" name="ct_chk[]" id="ct_chk_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_id']; ?>">
                 </td>
                 <td><?php echo $opt['ct_option']; ?></td>
                 <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
@@ -210,6 +211,7 @@ $pg_anchor = '<ul class="anchor">
                 <td class="td_smallmng"><?php echo get_yn($opt['ct_stock_use']); ?></td>
             </tr>
             <?php
+                $chk_cnt++;
             }
             ?>
             </tbody>
@@ -225,6 +227,7 @@ $pg_anchor = '<ul class="anchor">
     </ul>
 
     <div class="btn_list">
+        <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
         <input type="submit" name="act_button" value="주문" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="상품준비중" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="배송중" onclick="document.pressed=this.value">
