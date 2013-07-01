@@ -815,24 +815,24 @@ $(function() {
         var sit_wimg_id = $(this).attr("id").split("_");
         var $img_display = $("#"+sit_wimg_id[1]);
 
-        if(sit_wimg_id[1].search("mainimg") > -1) {
-            var $img = $("#"+sit_wimg_id[1]);
-            var width = $img_display.width();
-            var height = $img_display.height();
-            if(width > 700) {
-                var img_width = 700;
-                var img_height = Math.round((img_width * height) / width);
-
-                $img_display.children("img").width(img_width).height(img_height);
-            }
-        }
-
         $img_display.toggle();
 
         if($img_display.is(":visible")) {
             $(this).text($(this).text().replace("확인", "닫기"));
         } else {
             $(this).text($(this).text().replace("닫기", "확인"));
+        }
+
+        if(sit_wimg_id[1].search("mainimg") > -1) {
+            var $img = $("#"+sit_wimg_id[1]).children("img");
+            var width = $img.width();
+            var height = $img.height();
+            if(width > 700) {
+                var img_width = 700;
+                var img_height = Math.round((img_width * height) / width);
+
+                $img.width(img_width).height(img_height);
+            }
         }
     });
     $(".sit_wimg_close").bind("click", function() {
