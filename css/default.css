@@ -35,7 +35,7 @@ a:active {color:#000;text-decoration:underline}
 #tnb {position:absolute;top:18px;right:0;margin:0;padding:0;list-style:none;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left}
-#tnb a {display:block;padding:5px 10px;color:#333;letter-spacing:-0.1em}
+#tnb a {display:inline-block;padding:5px 10px;color:#333;letter-spacing:-0.1em;line-height:2em}
 #tnb a:focus, #tnb a:hover, #tnb a:active {text-decoration:none}
 #tnb img {margin-right:3px}
 
