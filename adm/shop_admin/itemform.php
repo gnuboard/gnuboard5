@@ -984,44 +984,6 @@ $(function(){
     <?php } ?>
     </tbody>
     </table>
-
-    <?php if ($w == 'u') { ?>
-    <script>
-    $(".banner_or_img").addClass("sit_wimg");
-    $(function() {
-        $(".sit_wimg_view").bind("click", function() {
-            var sit_wimg_id = $(this).attr("id").split("_");
-            var $img_display = $("#"+sit_wimg_id[1]);
-
-            var $img = $("#"+sit_wimg_id[1]);
-            var width = $img_display.width();
-            var height = $img_display.height();
-            if(width > 700) {
-                var img_width = 700;
-                var img_height = Math.round((img_width * height) / width);
-
-                $img_display.children("img").width(img_width).height(img_height);
-            }
-
-            $img_display.toggle();
-
-            if($img_display.is(":visible")) {
-                $(this).text($(this).text().replace("확인", "닫기"));
-            } else {
-                $(this).text($(this).text().replace("닫기", "확인"));
-            }
-        });
-        $(".sit_wimg_close").bind("click", function() {
-            var $img_display = $(this).parents(".banner_or_img");
-            var id = $img_display.attr("id");
-            $img_display.toggle();
-            var $button = $("#it_"+id+"_view");
-            $button.text($button.text().replace("닫기", "확인"));
-        });
-    });
-    </script>
-    <?php } ?>
-
 </section>
 
 <div class="btn_confirm">
@@ -1331,7 +1293,14 @@ $(function(){
             ?>
             <label for="it_himg_del">상단이미지 삭제</label>
             <input type="checkbox" name="it_himg_del" value="1" id="it_himg_del">
-            <div class="banner_or_img"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_h" alt=""></div>
+            <span class="sit_wimg_himg"></span>
+            <div id="himg" class="banner_or_img">
+                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_h" alt="">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="it_himg_view" class="btn_frmline sit_wimg_view">상단이미지 확인</button>').appendTo('.sit_wimg_himg');
+            </script>
             <?php } ?>
         </td>
     </tr>
@@ -1347,7 +1316,14 @@ $(function(){
             ?>
             <label for="it_timg_del">삭제</label>
             <input type="checkbox" name="it_timg_del" value="1" id="it_timg_del">
-            <div class="banner_or_img"><img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_t" alt=""></div>
+            <span class="sit_wimg_timg"></span>
+            <div id="timg" class="banner_or_img">
+                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_t" alt="">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="it_timg_view" class="btn_frmline sit_wimg_view">하단이미지 확인</button>').appendTo('.sit_wimg_timg');
+            </script>
             <?php } ?>
         </td>
     </tr>
@@ -1413,6 +1389,41 @@ $(function(){
 
 <script>
 var f = document.fitemform;
+
+<?php if ($w == 'u') { ?>
+$(".banner_or_img").addClass("sit_wimg");
+$(function() {
+    $(".sit_wimg_view").bind("click", function() {
+        var sit_wimg_id = $(this).attr("id").split("_");
+        var $img_display = $("#"+sit_wimg_id[1]);
+
+        var $img = $("#"+sit_wimg_id[1]);
+        var width = $img_display.width();
+        var height = $img_display.height();
+        if(width > 700) {
+            var img_width = 700;
+            var img_height = Math.round((img_width * height) / width);
+
+            $img_display.children("img").width(img_width).height(img_height);
+        }
+
+        $img_display.toggle();
+
+        if($img_display.is(":visible")) {
+            $(this).text($(this).text().replace("확인", "닫기"));
+        } else {
+            $(this).text($(this).text().replace("닫기", "확인"));
+        }
+    });
+    $(".sit_wimg_close").bind("click", function() {
+        var $img_display = $(this).parents(".banner_or_img");
+        var id = $img_display.attr("id");
+        $img_display.toggle();
+        var $button = $("#it_"+id+"_view");
+        $button.text($button.text().replace("닫기", "확인"));
+    });
+});
+<?php } ?>
 
 function codedupcheck(id)
 {
