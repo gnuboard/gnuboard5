@@ -122,6 +122,7 @@ function get_intall_file()
 
 <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
 <div id="sod_frm">
+    <!-- 주문상품 확인 시작 { -->
     <p>주문하실 상품을 확인하세요.</p>
     <table id="sod_list" class="basic_tbl">
     <thead>
@@ -313,7 +314,9 @@ function get_intall_file()
     </table>
 
     <?php if ($goods_count) $goods .= ' 외 '.$goods_count.'건'; ?>
+    <!-- } 주문상품 확인 끝 -->
 
+    <!-- 주문상품 합계 시작 { -->
     <dl id="sod_bsk_tot">
         <dt class="sod_bsk_sell">주문</dt>
         <dd class="sod_bsk_sell"><strong><?php echo number_format($tot_sell_amount); ?> 원</strong></dd>
@@ -329,6 +332,7 @@ function get_intall_file()
         <dt class="sod_bsk_point"><?php echo $default['de_mileage_use'] ? '마일리지' : '포인트'; ?></dt>
         <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
     </dl>
+    <!-- } 주문상품 합계 끝 -->
 
     <input type="hidden" name="od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="org_od_amount"    value="<?php echo $tot_sell_amount; ?>">
@@ -576,6 +580,7 @@ function get_intall_file()
         /* ============================================================================== */
     ?>
 
+    <!-- 주문하시는 분 입력 시작 { -->
     <section id="sod_frm_orderer">
         <h2>주문하시는 분</h2>
 
@@ -650,7 +655,9 @@ function get_intall_file()
         </tbody>
         </table>
     </section>
+    <!-- } 주문하시는 분 입력 끝 -->
 
+    <!-- 받으시는 분 입력 시작 { -->
     <section id="sod_frm_taker">
         <h2>받으시는 분</h2>
 
@@ -702,7 +709,9 @@ function get_intall_file()
         </tbody>
         </table>
     </section>
+    <!-- } 받으시는 분 입력 끝 -->
 
+    <!-- 결제정보 입력 시작 { -->
     <?php
     if($is_member) {
         // 주문쿠폰
@@ -900,14 +909,17 @@ function get_intall_file()
             echo '<p>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</p>';
         ?>
     </section>
+    <!-- } 결제 정보 입력 끝 -->
 
-    <!-- Payplus Plug-in 설치 안내 -->
+    <!-- Payplus Plug-in 설치 안내 시작 { -->
     <p id="display_setup_message" style="display:block">
         <span class="red">결제를 계속 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나 <a href="https://pay.kcp.co.kr/plugin_new/file/KCPPluginSetup.exe" onclick="return get_intall_file();"><b><u>[수동설치]</u></b></a>를 눌러 다운로드 된 Payplus Plug-in을 설치하시기 바랍니다.<br>
         [수동설치]를 눌러 설치하신 경우 <span class="red bold">새로고침(F5)키</span>를 눌러 진행하시기 바랍니다.<br>
         새로고침(F5) 한후에도 계속 설치파일이 다운로드 되거나 결제가 되지 않으면 브라우저를 새로 열어서 주문해 주시기 바랍니다.<br>
         브라우저가 익스플로러가 아닌 경우 Payplus Plug-in 설치에 문제가 있을수 있음을 알려 드립니다.
     </p>
+    <!-- } Payplus Plug-in 설치 안내 끝 -->
+
     <div id="display_pay_button" class="btn_confirm" style="display:none">
         <input type="submit" value="주문하기" class="btn_submit">
         <a href="javascript:history.go(-1);" class="btn01">취소</a>
@@ -915,6 +927,7 @@ function get_intall_file()
     </form>
 
     <?php if ($default['de_escrow_use']) { ?>
+    <!-- 에스크로 안내 시작 { -->
     <section id="sod_frm_escrow">
         <h2>에스크로 안내</h2>
         <form name="escrow_foot" method="post" action="http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp">
@@ -958,6 +971,7 @@ function get_intall_file()
         document.escrow_foot.submit();
     }
     </script>
+    <!-- } 에스크로 안내 끝 -->
     <?php } ?>
 
     <!-- <?php if ($default[de_card_use] || $default[de_iche_use]) { echo "결제대행사 : $default[de_card_pg]"; } ?> -->

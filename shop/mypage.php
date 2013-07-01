@@ -16,8 +16,10 @@ include_once('./_head.php');
 //include("./navigation2.inc.php");
 ?>
 
+<!-- 마이페이지 시작 { -->
 <div id="smb_my">
 
+    <!-- 회원정보 개요 시작 { -->
     <section id="smb_my_ov">
         <h2>회원정보 개요</h2>
 
@@ -52,7 +54,9 @@ include_once('./_head.php');
             <dd id="smb_my_ovaddd"><?php echo sprintf("(%s-%s) %s %s", $member['mb_zip1'], $member['mb_zip2'], $member['mb_addr1'], $member['mb_addr2']); ?></dd>
         </dl>
     </section>
+    <!-- } 회원정보 개요 끝 -->
 
+    <!-- 최근 주문내역 시작 { -->
     <section id="smb_my_od">
         <h2>최근 주문내역</h2>
         <?php
@@ -67,7 +71,9 @@ include_once('./_head.php');
             <a href="./orderinquiry.php" class="btn01">주문내역 더보기</a>
         </div>
     </section>
+    <!-- } 최근 주문내역 끝 -->
 
+    <!-- 최근 위시리스트 시작 { -->
     <section id="smb_my_wish">
         <h2>최근 위시리스트</h2>
 
@@ -113,6 +119,7 @@ include_once('./_head.php');
             <a href="./wishlist.php" class="btn01">위시리스트 더보기</a>
         </div>
     </section>
+    <!-- } 최근 위시리스트 끝 -->
 
 </div>
 
@@ -122,6 +129,7 @@ function member_leave()
     return confirm('정말 회원에서 탈퇴 하시겠습니까?')
 }
 </script>
+<!-- } 마이페이지 끝 -->
 
 <?php
 include_once("./_tail.php");

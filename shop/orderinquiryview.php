@@ -31,6 +31,7 @@ $g4['title'] = '주문상세내역';
 include_once('./_head.php');
 ?>
 
+<!-- 주문상세내역 시작 { -->
 <script>
 var openwin = window.open( './kcp/proc_win.html', 'proc_win', '' );
 if(openwin != null) {
@@ -583,6 +584,7 @@ if(openwin != null) {
     <?php } ?>
 
 </div>
+<!-- } 주문상세내역 끝 -->
 
 <?php
 include_once('./_tail.php');

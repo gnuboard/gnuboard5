@@ -46,6 +46,7 @@ if ($is_admin)
     echo '<div class="sct_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
 ?>
 
+<!-- 상품 목록 시작 { -->
 <div id="sct">
 
     <?php
@@ -133,6 +134,7 @@ if($skin)
 $qstr1 .='&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
 echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
 ?>
+<!-- } 상품 목록 끝 -->
 
 <?php
 if ($ca['ca_include_tail'])

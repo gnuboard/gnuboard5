@@ -2,6 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 쇼핑몰 커뮤니티 시작 { -->
 <aside id="scomm">
     <h2>쇼핑몰 커뮤니티</h2>
 
@@ -21,3 +22,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </ul>
 
 </aside>
+<!-- } 쇼핑몰 커뮤니티 끝 -->

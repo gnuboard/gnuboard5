@@ -37,11 +37,11 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 }
 ?>
 
+<!-- 마일리지 내역 시작 { -->
 <div id="point" class="new_win">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
 
     <table class="basic_tbl">
-    <caption>마일리지 사용내역 목록</caption>
     <thead>
     <tr>
         <th scope="col">일시</th>
@@ -106,6 +106,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>
+<!-- } 마일리지 내역 끝 -->
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');

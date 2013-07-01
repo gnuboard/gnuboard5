@@ -13,6 +13,7 @@ $g4['title'] = "위시리스트";
 include_once('./_head.php');
 ?>
 
+<!-- 위시리스트 시작 { -->
 <div id="sod_ws">
 
     <form name="fwishlist" method="post" action="./cartupdate.php">
@@ -139,6 +140,7 @@ include_once('./_head.php');
     }
 //-->
 </script>
+<!-- } 위시리스트 끝 -->
 
 <?php
 include_once('./_tail.php');

@@ -7,6 +7,7 @@ if($skin)
 $sct_sort_href .= '&amp;ev_id='.$ev_id.'&amp;sort=';
 ?>
 
+<!-- 상품 정렬 선택 시작 { -->
 <section id="sct_sort">
     <h2>상품 정렬</h2>
     <div>
@@ -24,3 +25,4 @@ $sct_sort_href .= '&amp;ev_id='.$ev_id.'&amp;sort=';
         <li><a href="<?php echo $sct_sort_href; ?>it_type5&amp;sortodr=desc" class="btn01">할인상품</a></li>
     </ul>
 </section>
+<!-- } 상품 정렬 선택 끝 -->

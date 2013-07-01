@@ -27,6 +27,7 @@ if(!mysql_num_rows($result))
     die('no-cart');
 ?>
 
+<!-- 장바구니 옵션 시작 { -->
 <form name="foption" method="post" action="<?php echo G4_SHOP_URL; ?>/cartupdate.php" onsubmit="return formcheck(this);">
 <input type="hidden" name="act" value="optionmod">
 <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
@@ -159,3 +160,4 @@ function formcheck(f)
     f.submit();
 }
 </script>
+<!-- } 장바구니 옵션 끝 -->

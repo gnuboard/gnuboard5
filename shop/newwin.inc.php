@@ -14,6 +14,8 @@ for ($i=0; $row_nw=sql_fetch_array($result); $i++)
     $sql = " select * from {$g4['shop_new_win_table']} where nw_id = '{$row_nw['nw_id']}' ";
     $nw = sql_fetch($sql);
 ?>
+
+<!-- 팝업레이어 시작 { -->
 <div id="hd_pops_<?php echo $nw['nw_id'] ?>" class="hd_pops" style="top:<?php echo $nw['nw_top']?>px;left:<?php echo $nw['nw_left']?>px;width:<?php echo $nw['nw_width'] ?>px;height:<?php echo $nw['nw_height'] ?>px">
     <div class="hd_pops_con">
         <?php echo conv_content($nw['nw_content'], 1); ?>
@@ -42,3 +44,4 @@ $(function() {
     });
 });
 </script>
+<!-- } 팝업레이어 끝 -->

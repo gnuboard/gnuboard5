@@ -2,6 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 쇼핑몰 카테고리 시작 { -->
 <nav id="gnb">
     <h2>쇼핑몰 카테고리</h2>
     <ul id="gnb_1dul">
@@ -33,3 +34,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <?php } ?>
     </ul>
 </nav>
+<!-- } 쇼핑몰 카테고리 끝 -->

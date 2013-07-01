@@ -17,6 +17,7 @@ $g4['title'] =  $it['it_name'].' - 추천하기';
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
+<!-- 상품 추천하기 시작 { -->
 <div id="sit_rec_new" class="new_win">
     <h1><?php echo $g4['title']; ?></h1>
 
@@ -60,6 +61,7 @@ function fitemrecommend_check(f)
     return true;
 }
 </script>
+<!-- } 상품 추천하기 끝 -->
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');

@@ -30,6 +30,7 @@ if ($w == "u")
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
+<!-- 상품문의 쓰기 시작 { -->
 <div id="sit_qa_write" class="new_win">
     <h1 class="new_win_title">상품문의 쓰기</h1>
 
@@ -75,6 +76,7 @@ function fitemqa_submit(f)
     return true;
 }
 </script>
+<!-- } 상품문의 쓰기 끝 -->
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');

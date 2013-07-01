@@ -47,6 +47,7 @@ $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 ?>
 
+<!-- 검색결과 시작 { -->
 <div id="ssch">
 
     <div id="ssch_ov">검색어 <strong><?php echo ($search_str ? stripslashes(get_text($search_str)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
@@ -144,6 +145,7 @@ $total_count = $row['cnt'];
     <?php } // function 끝 ?>
 
 </div>
+<!-- } 검색결과 끝 -->
 
 <?php
 include_once('./_tail.php');

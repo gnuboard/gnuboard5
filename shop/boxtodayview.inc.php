@@ -7,6 +7,7 @@ $tv_div['img_height'] = 70;
 $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
 ?>
 
+<!-- 오늘 본 상품 시작 { -->
 <div id="stv_list">
     <h2>
         오늘 본 상품
@@ -110,3 +111,4 @@ $(window).scroll(function() {
 <!--[if lte IE 6]>
 <script src="<?php echo G4_JS_URL ?>/scroll_oldie.js"></script>
 <![endif]-->
+<!-- } 오늘 본 상품 끝 -->

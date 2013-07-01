@@ -4,6 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 주문 내역 목록 시작 { -->
 <?php if (!$limit) { ?>총 <?php echo $cnt; ?> 건<?php } ?>
 
 <table class="basic_tbl">
@@ -54,3 +55,4 @@ if ($i == 0)
 ?>
 </tbody>
 </table>
+<!-- } 주문 내역 목록 끝 -->

@@ -38,6 +38,7 @@ if ($w == "") {
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
+<!-- 사용후기 쓰기 시작 { -->
 <div id="sit_use_write" class="new_win">
     <h1 class="new_win_title">사용후기 쓰기</h1>
 
@@ -131,6 +132,7 @@ function fitemuse_submit(f)
     return true;
 }
 </script>
+<!-- } 사용후기 쓰기 끝 -->
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');

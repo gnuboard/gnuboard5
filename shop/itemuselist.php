@@ -58,6 +58,7 @@ if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페�
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
+<!-- 사용후기 목록 시작 { -->
 <a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -121,7 +122,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
             </dl>
 
             <div id="sps_con_<?php echo $i; ?>" style="display:none;">
-                <?php echo $is_content; // 상품 문의 내용 ?>
+                <?php echo $is_content; // 사용후기 내용 ?>
             </div>
 
             <div class="sps_con_btn"><button class="sps_con_<?php echo $i; ?>">보기</button></div>
@@ -132,9 +133,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     if ($i > 0) echo '</ol>';
     if ($i == 0) echo '<p id="sps_empty">자료가 없습니다.</p>';
     ?>
-
 </div>
-
 
 <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
@@ -153,6 +152,7 @@ $(function(){
     });
 });
 </script>
+<!-- } 사용후기 목록 끝 -->
 
 <?php
 include_once('./_tail.php');

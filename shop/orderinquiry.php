@@ -60,6 +60,7 @@ $g4['title'] = '주문내역조회';
 include_once('./_head.php');
 ?>
 
+<!-- 주문 내역 시작 { -->
 <div id="sod_v">
     <p>주문서번호 링크를 누르시면 주문상세내역을 조회하실 수 있습니다.</p>
 
@@ -70,6 +71,7 @@ include_once('./_head.php');
 
     <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 </div>
+<!-- } 주문 내역 끝 -->
 
 <?php
 include_once('./_tail.php');

@@ -40,6 +40,7 @@ $result = sql_query($sql);
 $count = mysql_num_rows($result);
 ?>
 
+<!-- 쿠폰 선택 시작 { -->
 <div id="it_coupon_frm">
     <?php if($count > 0) { ?>
     <table class="basic_tbl">
@@ -88,3 +89,4 @@ $count = mysql_num_rows($result);
         <button type="button" id="it_coupon_close" class="btn_submit">닫기</button>
     </div>
 </div>
+<!-- } 쿠폰 선택 끝 -->

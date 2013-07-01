@@ -1,7 +1,10 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 // $list_mod 가로 나열 수
+?>
 
+<!-- 상품진열 12 시작 { -->
+<?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
     if ($list_mod >= 2) { // 1줄 이미지 : 2개 이상
@@ -40,3 +43,4 @@ if ($i > 1) echo '</ul>';
 
 if($i == 1) echo '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 ?>
+<!-- } 상품진열 12 끝 -->

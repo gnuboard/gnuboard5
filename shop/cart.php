@@ -38,6 +38,7 @@ $g4['title'] = '장바구니';
 include_once('./_head.php');
 ?>
 
+<!-- 장바구니 시작 { -->
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 
 <div id="sod_bsk">
@@ -291,6 +292,7 @@ function form_check(act) {
     return true;
 }
 </script>
+<!-- } 장바구니 끝 -->
 
 <?php
 include_once('./_tail.php');

@@ -11,6 +11,7 @@ $itemqa_formupdate = "./itemqaformupdate.php?it_id=".$it_id;
 $thumbnail_width = 500;
 ?>
 
+<!-- 상품문의 목록 시작 { -->
 <section id="sit_qa_list">
     <h3>등록된 상품문의</h3>
 
@@ -180,3 +181,4 @@ $(function(){
     });
 });
 </script>
+<!-- } 상품문의 목록 끝 -->

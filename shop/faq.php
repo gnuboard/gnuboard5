@@ -18,6 +18,7 @@ if ($is_admin)
     echo '<div class="sfaq_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/faqmasterform.php?w=u&amp;fm_id='.$fm_id.'" class="btn_admin">FAQ 수정</a></div>';
 ?>
 
+<!-- FAQ 시작 { -->
 <?php
 $himg = G4_DATA_PATH.'/faq/'.$fm_id.'_h';
 if (file_exists($himg))
@@ -79,7 +80,10 @@ echo '<div id="sfaq_thtml">'.stripslashes($fm['fm_tail_html']).'</div>';
 $timg = G4_DATA_PATH.'/faq/'.$fm_id.'_t';
 if (file_exists($timg))
     echo '<div id="sfaq_timg" class="sfaq_img"><img src="'.G4_DATA_URL.'/faq/'.$fm_id.'_t" alt=""></div>';
+?>
+<!-- } FAQ 끝 -->
 
+<?php
 if ($is_admin)
     echo '<div class="sfaq_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/faqmasterform.php?w=u&amp;fm_id='.$fm_id.'" class="btn_admin">FAQ 수정</a></div>';
 

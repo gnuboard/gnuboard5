@@ -13,16 +13,17 @@ include_once('./_head.php');
 
 if ($is_admin)
     echo '<div class="sev_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin">이벤트 관리</a></div>';
+?>
 
+<!-- 이벤트 시작 { -->
+<?php
 $himg = G4_DATA_PATH.'/event/'.$ev_id.'_h';
 if (file_exists($himg))
     echo '<div id="sev_himg" class="sev_img"><img src="'.G4_DATA_URL.'/event/'.$ev_id.'_h" alt=""></div>';
 
 // 상단 HTML
 echo '<div id="sev_hhtml">'.stripslashes($ev['ev_head_html']).'</div>';
-?>
 
-<?php
 // 상품 출력순서가 있다면
 if ($sort != "")
     $order_by = $sort . " , ";
@@ -110,6 +111,9 @@ echo '<div id="sev_thtml">'.stripslashes($ev['ev_tail_html']).'</div>';
 $timg = G4_DATA_PATH.'/event/'.$ev_id.'_t';
 if (file_exists($timg))
     echo '<div id="sev_timg" class="sev_img"><img src="'.G4_DATA_URL.'/event/'.$ev_id.'_t" alt=""></div>';
+?>
+<!-- } 이벤트 끝 -->
 
+<?php
 include_once('./_tail.php');
 ?>

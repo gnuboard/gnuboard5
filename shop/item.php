@@ -92,7 +92,10 @@ include G4_SHOP_PATH.'/listcategory.inc.php';
 
 if ($is_admin)
     echo '<div class="sit_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
+?>
 
+<!-- 상품 상세보기 시작 { -->
+<?php
 $himg = G4_DATA_PATH.'/item/'.$it_id.'_h';
 if (file_exists($himg))
     echo '<div id="sit_himg" class="sit_img"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_h" alt=""></div>';
@@ -177,6 +180,7 @@ else
     <input type="hidden" name="url">
 
     <div id="sit_ov_wrap">
+        <!-- 상품이미지 미리보기 시작 { -->
         <div id="sit_pvi">
             <div id="sit_pvi_big">
             <?php
@@ -222,9 +226,11 @@ else
             }
             ?>
         </div>
+        <!-- } 상품이미지 미리보기 끝 -->
 
         <?php //echo it_name_icon($it, false, 0); ?>
 
+        <!-- 상품 요약정보 및 구매 시작 { -->
         <section id="sit_ov">
             <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?> 요약정보 및 구매</h2>
             <p id="sit_desc"><?php echo $it['it_basic']; ?></p>
@@ -356,6 +362,7 @@ else
             $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
             if($option_1) {
             ?>
+            <!-- 선택옵션 시작 { -->
             <section>
                 <h3>선택옵션</h3>
                 <table class="sit_ov_tbl">
@@ -370,6 +377,7 @@ else
                 </tbody>
                 </table>
             </section>
+            <!-- } 선택옵션 끝 -->
             <?php
             }
             ?>
@@ -378,6 +386,7 @@ else
             $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
             if($option_2) {
             ?>
+            <!-- 추가옵션 시작 { -->
             <section>
                 <h3>추가옵션</h3>
                 <table class="sit_ov_tbl">
@@ -392,12 +401,14 @@ else
                 </tbody>
                 </table>
             </section>
+            <!-- } 추가옵션 끝 -->
             <?php
             }
             ?>
 
             <?php } // 전화문의가 아닐 경우 끝 ?>
 
+            <!-- 선택된 옵션 시작 { -->
             <section id="sit_sel_option">
                 <h3>선택된 옵션</h3>
                 <?php if(!$option_1 && !$option_2) { ?>
@@ -424,7 +435,9 @@ else
                 </script>
                 <?php } ?>
             </section>
+            <!-- } 선택된 옵션 끝 -->
 
+            <!-- 총 구매액 -->
             <div id="sit_tot_price"></div>
 
             <?php } // 갤러리가 아닐 경우 끝 ?>
@@ -466,10 +479,12 @@ else
             }
             </script>
         </section>
+        <!-- } 상품 요약정보 및 구매 끝 -->
     </div>
 
     </form>
 
+    <!-- 다른 상품 보기 시작 { -->
     <aside id="sit_siblings">
         <h2>다른 상품 보기</h2>
         <?php
@@ -481,6 +496,7 @@ else
         }
         ?>
     </aside>
+    <!-- } 다른 상품 보기 끝 -->
 
     <script>
     function click_item(id)
@@ -507,6 +523,7 @@ else
     }
     </script>
 
+    <!-- 상품 정보 시작 { -->
     <section id="sit_inf">
         <h2>상품 정보</h2>
         <?php echo pg_anchor('inf'); ?>
@@ -555,8 +572,9 @@ else
         <?php } //if?>
 
     </section>
-    <!-- 상품설명 end -->
+    <!-- } 상품 정보 끝 -->
 
+    <!-- 사용후기 시작 { -->
     <section id="sit_use">
         <h2>사용후기</h2>
         <?php echo pg_anchor('use'); ?>
@@ -568,7 +586,9 @@ else
         });
         </script>
     </section>
+    <!-- } 사용후기 끝 -->
 
+    <!-- 상품문의 시작 { -->
     <section id="sit_qa">
         <h2>상품문의</h2>
         <?php echo pg_anchor('qa'); ?>
@@ -580,26 +600,32 @@ else
         });
         </script>
     </section>
+    <!-- } 상품문의 끝 -->
 
     <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>
+    <!-- 배송정보 시작 { -->
     <section id="sit_dvr">
         <h2>배송정보</h2>
         <?php echo pg_anchor('dvr'); ?>
 
         <?php echo conv_content($default['de_baesong_content'], 1); ?>
     </section>
+    <!-- } 배송정보 끝 -->
     <?php } ?>
 
 
     <?php if ($default['de_change_content']) { // 교환/반품 내용이 있다면 ?>
+    <!-- 교환/반품 시작 { -->
     <section id="sit_ex">
         <h2>교환/반품</h2>
         <?php echo pg_anchor('ex'); ?>
 
         <?php echo conv_content($default['de_change_content'], 1); ?>
     </section>
+    <!-- } 교환/반품 끝 -->
     <?php } ?>
 
+    <!-- 관련상품 시작 { -->
     <section id="sit_rel">
         <h2>관련상품</h2>
         <?php echo pg_anchor('rel'); ?>
@@ -620,6 +646,7 @@ else
             ?>
         </div>
     </section>
+    <!-- } 관련상품 끝 -->
 
     <script>
     $(function(){
@@ -772,7 +799,7 @@ else
     </script>
     <![endif]-->
 
-</div><!-- #sit 끝 -->
+</div>
 
 <?php
 // 하단 HTML
@@ -781,7 +808,10 @@ echo stripslashes($it['it_tail_html']);
 $timg = G4_DATA_PATH.'/item/'.$it_id.'_t';
 if (file_exists($timg))
     echo '<div id="sit_timg" class="sit_img"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_t" alt=""></div>';
+?>
+<!-- } 상품 상세보기 끝 -->
 
+<?php
 if ($ca['ca_include_tail'])
     @include_once($ca['ca_include_tail']);
 else
