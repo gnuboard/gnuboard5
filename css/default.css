@@ -138,6 +138,7 @@ button.btn_cancel {display:inline-block;padding:0 10px;height:24px;border:1px so
 button.btn_frmline {font-size:1em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win input {height:30px;line-height:2em}
+.btn_win button {display:inline-block;padding:0 10px;height:30px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
 .btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
 
 .btn_win a:focus, .btn_win a:hover {text-decoration:none}
