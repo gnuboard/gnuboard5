@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 스크랩 목록 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="scrap" class="new_win">
@@ -39,3 +40,4 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>
+<!-- } 스크랩 목록 끝 -->

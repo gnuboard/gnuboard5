@@ -4,6 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 global $is_admin;
 ?>
 
+<!-- 접속자집계 시작 { -->
 <link rel="stylesheet" href="<?php echo $visit_skin_url ?>/style.css">
 
 <section id="visit">
@@ -22,3 +23,4 @@ global $is_admin;
         <?php if ($is_admin == "super") {  ?><a href="<?php echo G4_ADMIN_URL ?>/visit_list.php">상세보기</a><?php } ?>
     </div>
 </section>
+<!-- } 접속자집계 끝 -->

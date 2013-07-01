@@ -7,6 +7,7 @@ else if ($w == 'd' || $w == 'x') $g4['title'] = $delete_str."글 삭제";
 else $g4['title'] = $g4['title'];
 ?>
 
+<!-- 비밀번호 확인 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="pw_confirm">
@@ -45,3 +46,4 @@ else $g4['title'] = $g4['title'];
     </div>
 
 </div>
+<!-- } 비밀번호 확인 끝 -->

@@ -17,8 +17,11 @@ if ($config['cf_include_tail']) {
     </div>
 </div>
 
+<!-- } 콘텐츠 끝 -->
+
 <hr>
 
+<!-- 하단 시작 { -->
 <div id="ft">
     <?php echo popular('basic'); // 인기검색어  ?>
     <?php echo visit('basic'); // 방문자수  ?>
@@ -34,6 +37,8 @@ if ($config['cf_include_tail']) {
 <?php if(!G4_IS_MOBILE) { ?>
 <a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.str_replace("&", "&amp;", $_SERVER['QUERY_STRING']).'&amp;':'?').'device=mobile'; ?>" id="device_change">모바일 버전으로 보기</a>
 <?php } ?>
+
+<!-- } 하단 끝 -->
 
 <?php
 include_once(G4_PATH."/tail.sub.php");
