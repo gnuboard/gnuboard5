@@ -7,8 +7,11 @@ $admin = get_admin("super");
 // 우측, 하단 화면을 꾸미려면 이 파일을 수정합니다.
 ?>
 
-    </div><!-- Container End -->
-</div><!-- Wrapper End -->
+    </div>
+    <!-- } 콘텐츠 끝 -->
+
+<!-- 하단 시작 { -->
+</div>
 
 <div id="ft">
     <div>
@@ -40,6 +43,7 @@ $file = $_SERVER['PHP_SELF'];
 ?>
 
 <script src="<?php echo G4_JS_URL; ?>/sns.js"></script>
+<!-- } 하단 끝 -->
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');

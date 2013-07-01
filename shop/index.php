@@ -14,10 +14,13 @@ include_once(G4_LIB_PATH.'/poll.lib.php');
 include_once(G4_SHOP_PATH.'/shop.head.php');
 ?>
 
+<!-- 메인이미지 시작 { -->
 <div id="sidx_img">
     <img src="<?php echo G4_DATA_URL; ?>/common/main_img" alt="">
 </div>
+<!-- } 메인이미지 끝 -->
 
+<!-- 최신상품 시작 { -->
 <section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=3">최신상품</a></h2>
@@ -32,7 +35,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     }
     ?>
 </section>
+<!-- } 최신상품 끝 -->
 
+<!-- 히트상품 시작 { -->
 <section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=1">히트상품</a></h2>
@@ -47,7 +52,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     }
     ?>
 </section>
+<!-- } 히트상품 끝 -->
 
+<!-- 추천상품 시작 { -->
 <section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=2">추천상품</a></h2>
@@ -62,7 +69,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     }
     ?>
 </section>
+<!-- } 추천상품 끝 -->
 
+<!-- 인기상품 시작 { -->
 <section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=4">인기상품</a></h2>
@@ -77,7 +86,9 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     }
     ?>
 </section>
+<!-- } 인기상품 끝 -->
 
+<!-- 할인상품 시작 { -->
 <section class="sct_wrap">
     <header>
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=5">할인상품</a></h2>
@@ -92,25 +103,27 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
     }
     ?>
 </section>
+<!-- } 할인상품 끝 -->
 
+<!-- 커뮤니티 최신글 시작 { -->
 <section id="sidx_lat">
     <h2>커뮤니티 최신글</h2>
     <?php echo latest('shop_basic', 'notice', 5, 30); ?>
     <?php echo latest('shop_basic', 'free', 5, 25); ?>
     <?php echo latest('shop_basic', 'qa', 5, 20); ?>
 </section>
+<!-- } 커뮤니티 최신글 끝 -->
 
-<?php echo poll('shop_basic'); ?>
+<?php echo poll('shop_basic'); // 설문조사 ?>
 
-<!-- 방문자 수 -->
-<?php echo visit('shop_basic'); ?>
+<?php echo visit('shop_basic'); // 접속자 ?>
 
+<!-- 메인배너 시작 { -->
 <section id="sbn_idx">
     <h2>쇼핑몰 메인 배너</h2>
-    <!-- 메인 배너 -->
     <?php echo display_banner('메인'); ?>
 </section>
-
+<!-- } 메인배너 끝 -->
 
 <?php
 include_once(G4_SHOP_PATH.'/shop.tail.php');
