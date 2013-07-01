@@ -199,7 +199,8 @@ button.btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px so
 button.btn_frmline {font-size:1em;cursor:pointer}
 button.btn_frmline2 {font-size:1em;cursor:pointer}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win a, .btn_win button {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
+.btn_win button {display:inline-block;padding:0 10px;height:30px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
+.btn_win a {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
 .btn_win a:focus, .btn_win a:hover {text-decoration:none}
 /* 게시판용 버튼 */
 .btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle}

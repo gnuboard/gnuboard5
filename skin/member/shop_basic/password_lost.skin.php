@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="find_info" class="new_win">
-    <h1>회원정보 찾기</h1>
+    <h1 id="new_win_title">회원정보 찾기</h1>
 
     <form name="fpasswordlost" action="<?php echo $action_url ?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
     <fieldset id="find_info_fs">
@@ -19,7 +19,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <?php echo captcha_html();  ?>
     <div class="btn_win">
         <input type="submit" value="확인" class="btn_submit">
-        <a href="javascript:window.close();" class="btn_cancel">창닫기</a>
+        <button type="button" onclick="window.close();">창닫기</button>
     </div>
     </form>
 </div>
