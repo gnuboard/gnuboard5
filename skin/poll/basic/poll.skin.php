@@ -2,6 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 설문조사 시작 { -->
 <link rel="stylesheet" href="<?php echo $poll_skin_url ?>/style.css">
 
 <form name="fpoll" action="<?php echo G4_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
@@ -62,3 +63,4 @@ function poll_result(url)
     win_poll(url);
 }
 </script>
+<!-- } 설문조사 끝 -->

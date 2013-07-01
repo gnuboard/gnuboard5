@@ -398,8 +398,9 @@ else
 
             <?php } // 전화문의가 아닐 경우 끝 ?>
 
-            <div id="sit_sel_option">
-            <?php if(!$option_1 && !$option_2) { ?>
+            <section id="sit_sel_option">
+                <h3>선택된 옵션</h3>
+                <?php if(!$option_1 && !$option_2) { ?>
                 <ul id="sit_opt_added">
                     <li class="sit_opt_list">
                         <input type="hidden" name="io_type[]" value="0">
@@ -421,8 +422,8 @@ else
                     price_calculate();
                 });
                 </script>
-            <?php } ?>
-            </div>
+                <?php } ?>
+            </section>
 
             <div id="sit_tot_price"></div>
 

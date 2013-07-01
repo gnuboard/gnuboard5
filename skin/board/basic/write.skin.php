@@ -4,8 +4,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<h1 id="wrapper_title"><?php echo $g4['title'] ?></h1>
+<h2 id="wrapper_title"><?php echo $g4['title'] ?></h2>
 
+<!-- 게시물 작성/수정 시작 { -->
 <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
 <input type="hidden" name="w" value="<?php echo $w ?>">
 <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -210,3 +211,4 @@ function fwrite_submit(f)
     return true;
 }
 </script>
+<!-- } 게시물 작성/수정 끝 -->

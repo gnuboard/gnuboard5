@@ -71,7 +71,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 <h3>회원메뉴 및 FAQ</h3>
                 <ul>
                     <?php if ($is_member) { ?>
-                    <li><a href="<?php echo G4_BBS_URL; ?>/logout.php">로그아웃</a></li>
+                    <li><a href="<?php echo G4_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
                     <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
                     <?php } else { ?>
                     <li><a href="<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>

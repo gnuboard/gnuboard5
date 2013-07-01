@@ -2,11 +2,11 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 로그인 전 아웃로그인 시작 { -->
 <link rel="stylesheet" href="<?php echo $outlogin_skin_url ?>/style.css">
 
 <section id="ol_before" class="ol">
     <h2>회원로그인</h2>
-    <!-- 로그인 전 외부로그인 시작 -->
     <form name="foutlogin" action="<?php echo $outlogin_action_url ?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
     <fieldset>
         <input type="hidden" name="url" value="<?php echo $outlogin_url ?>">
@@ -65,4 +65,4 @@ function fhead_submit(f)
     return true;
 }
 </script>
-<!-- 로그인 전 외부로그인 끝 -->
+<!-- } 로그인 전 아웃로그인 끝 -->

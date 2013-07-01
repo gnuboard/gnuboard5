@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 자기소개 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="profile" class="new_win">
@@ -43,3 +44,4 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>
+<!-- } 자기소개 끝 -->

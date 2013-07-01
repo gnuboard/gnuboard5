@@ -53,9 +53,9 @@ if ($is_admin)
     include G4_SHOP_PATH.'/navigation1.inc.php';
 
     // 상단 이미지
-    $himg = G4_DATA_URL.'/category/'.$ca_id.'_h';
+    $himg = G4_DATA_PATH.'/category/'.$ca_id.'_h';
     if (file_exists($himg)) {
-        echo '<div id="sct_himg" class="sct_img"><img src="'.$himg.'" alt=""></div>';
+        echo '<div id="sct_himg" class="sct_img"><img src="'.G4_DATA_URL.'/category/'.$ca_id.'_h" alt=""></div>';
     }
 
     // 상단 HTML

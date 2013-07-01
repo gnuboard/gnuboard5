@@ -23,8 +23,9 @@ if ($config['cf_include_head']) {
 }
 ?>
 
-<header id="hd">
-    <h1><?php echo $config['cf_title'] ?></h1>
+<!-- 상단 시작 { -->
+<div id="hd">
+    <h1 id="hd_h1"><?php echo $g4['title'] ?></h1>
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
@@ -121,6 +122,7 @@ if ($config['cf_include_head']) {
                     새글
                 </a>
             </li>
+            <?php if (defined('G4_USE_SHOP') && G4_USE_SHOP) { ?>
 
             <li>
                 <a href="<?php echo G4_SHOP_URL ?>/">
@@ -128,6 +130,7 @@ if ($config['cf_include_head']) {
                     쇼핑몰
                 </a>
             </li>
+            <?php } ?>
 
         </ul>
 
@@ -161,19 +164,21 @@ if ($config['cf_include_head']) {
         </ul>
     </nav>
 
-</header>
+</div>
+<!-- } 상단 끝 -->
 
 <hr>
 
+<!-- 콘텐츠 시작 { -->
 <div id="wrapper">
     <div id="aside">
         <?php echo outlogin('basic'); // 외부 로그인  ?>
         <?php echo poll('basic'); // 설문조사  ?>
     </div>
     <div id="container">
-        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="container_title"><?php echo $g4['title'] ?></h1><?php } ?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><div id="container_title"><?php echo $g4['title'] ?></div><?php } ?>
         <div id="text_size">
-            <button id="text_size_down" class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
-            <button id="text_size_def" class="no_text_resize" onclick="font_default('container');">기본</button>
-            <button id="text_size_up" class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
+            <button id="text_size_down" class="no_text_resize" onclick="font_resize('container', 'default');">기본</button>
+            <button id="text_size_def" class="no_text_resize" onclick="font_resize('container', 'large');">크게</button>
+            <button id="text_size_up" class="no_text_resize" onclick="font_resize('container', 'larger');">더크게</button>
         </div>

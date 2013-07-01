@@ -4,6 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $connect_skin_url ?>/style.css">
 
+<!-- 현재접속자 목록 시작 { -->
 <table id="current_connect_tbl" class="basic_tbl">
 <thead>
 <tr>
@@ -33,3 +34,4 @@ if ($i == 0)
 ?>
 </tbody>
 </table>
+<!-- } 현재접속자 목록 끝 -->

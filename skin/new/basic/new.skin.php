@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $new_skin_url ?>/style.css">
 
-<!-- 검색 -->
+<!-- 전체게시물 검색 시작 { -->
 <fieldset id="new_sch">
     <legend>상세검색</legend>
     <form name="fnew" method="get">
@@ -30,9 +30,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     document.getElementById("view").value = "<?php echo $view ?>";
     </script>
 </fieldset>
-<!-- 검색 끝 -->
+<!-- } 전체게시물 검색 끝 -->
 
-<!-- 제목 시작 -->
+<!-- 전체게시물 목록 시작 { -->
 <table class="basic_tbl">
 <thead>
 <tr>
@@ -65,5 +65,6 @@ for ($i=0; $i<count($list); $i++)
 ?>
 </tbody>
 </table>
+<!-- } 전체게시물 목록 끝 -->
 
 <?php echo $write_pages ?>

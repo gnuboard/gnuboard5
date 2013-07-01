@@ -4,8 +4,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<h1 id="wrapper_title"><?php echo $g4['title'] ?></h1>
+<h2 id="wrapper_title"><?php echo $g4['title'] ?></h2>
 
+<!-- 게시물 작성/수정 시작 { -->
 <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
 <input type="hidden" name="w" value="<?php echo $w ?>">
 <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -55,7 +56,7 @@ echo $option_hidden;
 <?php if ($is_name) { ?>
 <tr>
     <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" name="wr_name" value="<?php echo $name ?>"id="wr_name" required class="frm_input required" size="10" maxlength="20"></td>
+    <td><input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input required" size="10" maxlength="20"></td>
 </tr>
 <?php } ?>
 
@@ -91,7 +92,7 @@ echo $option_hidden;
 <tr>
     <th scope="row"><label for="ca_name">분류<strong class="sound_only">필수</strong></label></th>
     <td>
-        <select name="ca_name" id="ca_name" required class="required">
+        <select name="ca_name" id="ca_name" required class="required" >
             <option value="">선택하세요</option>
             <?php echo $category_option ?>
         </select>
@@ -101,7 +102,7 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_subject">제목<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" name="wr_subject"  value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50"></td>
+    <td><input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255"></td>
 </tr>
 
 <tr>
@@ -125,7 +126,7 @@ echo $option_hidden;
         <input type="text" name="bf_content[]" value="<?php echo $file[$i]['bf_content'];  ?>" title="파일 설명을 입력해주세요." class="frm_file frm_input" size="50">
         <?php } ?>
         <?php if($w == 'u' && $file[$i]['file']) { ?>
-        <input type="checkbox" name="bf_file_del[<?php echo $i;  ?>]" value="1" id="bf_file_del<?php echo $i ?>"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
+        <input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i;  ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')';  ?> 파일 삭제</label>
         <?php } ?>
     </td>
 </tr>
@@ -145,7 +146,7 @@ echo $option_hidden;
 
 <div class="btn_confirm">
     <p>
-        작성하신 내용을 제출하시려면 <strong>글쓰기</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
+       작성하신 내용을 제출하시려면 <strong>글쓰기</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
     </p>
     <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
     <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel">취소</a>
@@ -153,34 +154,6 @@ echo $option_hidden;
 </form>
 
 <script>
-<?php
-// 관리자라면 분류 선택에 '공지' 옵션을 추가함
-if ($is_admin)
-{
-    echo '
-    if (ca_name_select = document.getElementById("ca_name")) {
-        ca_name_select.options.length += 1;
-        ca_name_select.options[ca_name_select.options.length-1].value = "공지";
-        ca_name_select.options[ca_name_select.options.length-1].text = "공지";
-    }';
-}
-?>
-
-with (document.fwrite)
-{
-    if (typeof(wr_name) != "undefined")
-        wr_name.focus();
-    else if (typeof(wr_subject) != "undefined")
-        wr_subject.focus();
-    else if (typeof(wr_content) != "undefined")
-        wr_content.focus();
-
-    if (typeof(ca_name) != "undefined")
-        if (w.value == "u") {
-            ca_name.value = "<?php echo isset($write['ca_name'])?$write['ca_name']:''; ?>";
-    }
-}
-
 function html_auto_br(obj)
 {
     if (obj.checked) {
@@ -196,8 +169,7 @@ function html_auto_br(obj)
 
 function fwrite_submit(f)
 {
-    <?php echo get_editor_js('wr_content', $is_dhtml_editor);  ?>
-    <?php echo chk_editor_js('wr_content', $is_dhtml_editor);  ?>
+    <?php echo $editor_js; // 에디터 사용시 자바스크립트에서 내용을 폼필드로 넣어주며 내용이 입력되었는지 검사함   ?>
 
     var subject = "";
     var content = "";
@@ -232,10 +204,11 @@ function fwrite_submit(f)
         return false;
     }
 
-    <?php if ($is_guest) { echo chk_captcha_js(); } ?>
+    <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
 
     document.getElementById("btn_submit").disabled = "disabled";
 
     return true;
 }
 </script>
+<!-- } 게시물 작성/수정 끝 -->

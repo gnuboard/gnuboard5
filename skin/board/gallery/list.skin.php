@@ -5,9 +5,9 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $board['bo_subject'] ?></h1><?php } ?>
+<?php if (!$wr_id) { ?><h2 id="bo_list_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2><?php } ?>
 
-<!-- 게시판 목록 시작 -->
+<!-- 게시판 목록 시작 { -->
 <div id="bo_img" style="width:<?php echo $width; ?>">
 
     <?php if ($is_category) { ?>
@@ -43,8 +43,6 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     <input type="hidden" name="spt" value="<?php echo $spt ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
-
-    <h2>이미지 목록</h2>
 
     <ul id="bo_img_list">
         <?php for ($i=0; $i<count($list); $i++) {
@@ -152,6 +150,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 <!-- 페이지 -->
 <?php echo $write_pages;  ?>
 
+<!-- 게시물 검색 시작 { -->
 <fieldset id="bo_sch">
     <legend>게시물 검색</legend>
 
@@ -174,6 +173,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </fieldset>
+<!-- } 게시물 검색 끝 -->
 
 <?php if ($is_checkbox) { ?>
 <script>
@@ -235,4 +235,4 @@ function select_copy(sw) {
 }
 </script>
 <?php } ?>
-<!-- 게시판 목록 끝 -->
+<!-- } 게시판 목록 끝 -->

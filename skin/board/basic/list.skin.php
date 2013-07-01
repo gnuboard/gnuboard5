@@ -11,11 +11,12 @@ if ($is_nogood) $colspan++;
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $board['bo_subject'] ?></h1><?php } ?>
+<?php if (!$wr_id) { ?><h2 id="bo_list_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2><?php } ?>
 
-<!-- 게시판 목록 시작 -->
+<!-- 게시판 목록 시작 { -->
 <div id="bo_list" style="width:<?php echo $width; ?>">
 
+    <!-- 게시판 카테고리 시작 { -->
     <?php if ($is_category) { ?>
     <form name="fcategory" id="fcategory" method="get">
     <nav id="bo_cate">
@@ -26,7 +27,9 @@ if ($is_nogood) $colspan++;
     </nav>
     </form>
     <?php } ?>
+    <!-- } 게시판 카테고리 끝 -->
 
+    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div class="bo_fx">
         <div id="bo_list_total">
             <span>Total <?php echo number_format($total_count) ?>건</span>
@@ -41,6 +44,7 @@ if ($is_nogood) $colspan++;
         </ul>
         <?php } ?>
     </div>
+    <!-- } 게시판 페이지 정보 및 버튼 끝 -->
 
     <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -156,6 +160,7 @@ if ($is_nogood) $colspan++;
 <!-- 페이지 -->
 <?php echo $write_pages;  ?>
 
+<!-- 게시판 검색 시작 { -->
 <fieldset id="bo_sch">
     <legend>게시물 검색</legend>
 
@@ -178,6 +183,7 @@ if ($is_nogood) $colspan++;
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </fieldset>
+<!-- } 게시판 검색 끝 -->
 
 <?php if ($is_checkbox) { ?>
 <script>
@@ -239,4 +245,4 @@ function select_copy(sw) {
 }
 </script>
 <?php } ?>
-<!-- 게시판 목록 끝 -->
+<!-- } 게시판 목록 끝 -->

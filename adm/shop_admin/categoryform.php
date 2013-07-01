@@ -297,15 +297,19 @@ $pg_anchor .= '</ul>';
             <?php
             $himg_str = "";
             $himg = "{$category_path}/{$ca['ca_id']}_h";
-            if (file_exists($himg))
-            {
-                echo "<input type=checkbox name=ca_himg_del value='1'>삭제";
-                $himg_str = "<img src='".G4_DATA_URL."/category/{$ca['ca_id']}_h' border=0>";
-                //$size = getimagesize($himg);
-                //echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('himg', $size[0], $size[1]);\">";
-                //echo "<div id='himg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$himg' border=1></div>";
-            }
+            if (file_exists($himg)) {
             ?>
+            <label for="ca_himg_del">상단이미지 삭제</label>
+            <input type="checkbox" name="ca_himg_del" value="1" id="ca_himg_del">
+            <span class="sit_wimg_himg"></span>
+            <div id="himg" class="banner_or_img">
+                <img src="<?php echo G4_DATA_URL; ?>/category/<?php echo $ca['ca_id']; ?>_h" alt="">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="ca_himg_view" class="btn_frmline sit_wimg_view">상단이미지 확인</button>').appendTo('.sit_wimg_himg');
+            </script>
+            <?php } ?>
         </td>
     </tr>
     <?php if ($himg_str) { echo "<tr><td colspan=4>$himg_str</td></tr>"; } ?>
@@ -315,16 +319,21 @@ $pg_anchor .= '</ul>';
             <?php echo help("상품리스트 페이지 하단에 출력하는 이미지입니다."); ?>
             <input type="file" name="ca_timg">
             <?php
-                $timg_str = "";
-                $timg = "{$category_path}/{$ca['ca_id']}_t";
-                if (file_exists($timg)) {
-                echo "<input type=checkbox name=ca_timg_del value='1'>삭제";
-                $timg_str = "<img src='".G4_DATA_URL."/category/{$ca['ca_id']}_t' border=0>";
-                //$size = getimagesize($timg);
-                //echo "<img src='$g4[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('timg', $size[0], $size[1]);\"><input type=checkbox name=ca_timg_del value='1'>삭제";
-                //echo "<div id='timg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$timg' border=1></div>";
-            }
+            $timg_str = "";
+            $timg = "{$category_path}/{$ca['ca_id']}_t";
+            if (file_exists($timg)) {
             ?>
+            <label for="ca_timg_del">하단이미지 삭제</label>
+            <input type="checkbox" name="ca_timg_del" value="1" id="ca_timg_del">
+            <span class="sit_wimg_timg"></span>
+            <div id="timg" class="banner_or_img">
+                <img src="<?php echo G4_DATA_URL; ?>/category/<?php echo $ca['ca_id']; ?>_t" alt="">
+                <button type="button" class="sit_wimg_close">닫기</button>
+            </div>
+            <script>
+            $('<button type="button" id="ca_timg_view" class="btn_frmline sit_wimg_view">하단이미지 확인</button>').appendTo('.sit_wimg_timg');
+            </script>
+            <?php } ?>
         </td>
     </tr>
     <?php if ($timg_str) { echo "<tr><td colspan=4>$timg_str</td></tr>"; } ?>
@@ -391,6 +400,41 @@ $pg_anchor .= '</ul>';
 </form>
 
 <script>
+<?php if ($w == 'u') { ?>
+$(".banner_or_img").addClass("sit_wimg");
+$(function() {
+    $(".sit_wimg_view").bind("click", function() {
+        var sit_wimg_id = $(this).attr("id").split("_");
+        var $img_display = $("#"+sit_wimg_id[1]);
+
+        $img_display.toggle();
+
+        if($img_display.is(":visible")) {
+            $(this).text($(this).text().replace("확인", "닫기"));
+        } else {
+            $(this).text($(this).text().replace("닫기", "확인"));
+        }
+
+        var $img = $("#"+sit_wimg_id[1]).children("img");
+        var width = $img.width();
+        var height = $img.height();
+        if(width > 700) {
+            var img_width = 700;
+            var img_height = Math.round((img_width * height) / width);
+
+            $img.width(img_width).height(img_height);
+        }
+    });
+    $(".sit_wimg_close").bind("click", function() {
+        var $img_display = $(this).parents(".banner_or_img");
+        var id = $img_display.attr("id");
+        $img_display.toggle();
+        var $button = $("#ca_"+id+"_view");
+        $button.text($button.text().replace("닫기", "확인"));
+    });
+});
+<?php } ?>
+
 function fcategoryformcheck(f)
 {
     if (f.w.value == "") {

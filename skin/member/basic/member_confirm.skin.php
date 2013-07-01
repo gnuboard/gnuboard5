@@ -2,6 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 회원 패스워드 확인 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="mb_confirm">
@@ -45,3 +46,4 @@ function fmemberconfirm_submit(f)
     return true;
 }
 </script>
+<!-- } 회원 패스워드 확인 끝 -->

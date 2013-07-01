@@ -2,10 +2,11 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 쪽지 보내기 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_write" class="new_win">
-    <h1 id="new_win_title">쪽지보내기</h1>
+    <h1 id="new_win_title">쪽지 보내기</h1>
 
     <ul class="new_win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
@@ -57,3 +58,4 @@ function fmemoform_submit(f)
     return true;
 }
 </script>
+<!-- } 쪽지 보내기 끝 -->

@@ -2,6 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
+<!-- 인기검색어 시작 { -->
 <link rel="stylesheet" href="<?php echo $popular_skin_url ?>/style.css">
 
 <section id="popular">
@@ -14,3 +15,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         </ul>
     </div>
 </section>
+<!-- } 인기검색어 끝 -->
