@@ -908,13 +908,6 @@ function get_intall_file()
         새로고침(F5) 한후에도 계속 설치파일이 다운로드 되거나 결제가 되지 않으면 브라우저를 새로 열어서 주문해 주시기 바랍니다.<br>
         브라우저가 익스플로러가 아닌 경우 Payplus Plug-in 설치에 문제가 있을수 있음을 알려 드립니다.
     </p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 7c3b78792011aaf93dbbe968034d2ca094405b1f
-=======
->>>>>>> 7c3b78792011aaf93dbbe968034d2ca094405b1f
     <div id="display_pay_button" class="btn_confirm" style="display:none">
         <input type="submit" value="주문하기" class="btn_submit">
         <a href="javascript:history.go(-1);" class="btn01">취소</a>
@@ -1586,8 +1579,4 @@ include_once('./_tail.php');
 
 <script>
 CheckPayplusInstall();
-<<<<<<< HEAD
 </script>
-=======
-</script>
->>>>>>> 7c3b78792011aaf93dbbe968034d2ca094405b1f
