@@ -9,6 +9,7 @@ include_once(G4_LIB_PATH.'/connect.lib.php');
 include_once(G4_LIB_PATH.'/popular.lib.php');
 ?>
 
+<!-- 상단 시작 { -->
 <div id="hd">
     <h1 id="hd_h1"><?php echo $g4['title'] ?></h1>
 
@@ -118,7 +119,9 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             <?php echo display_banner('왼쪽'); ?>
         </aside>
     </div>
+<!-- } 상단 끝 -->
 
+    <!-- 콘텐츠 시작 { -->
     <div id="container">
         <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g4['title'] ?></div><?php } ?>
         <div id="text_size">
