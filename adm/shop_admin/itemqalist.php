@@ -174,7 +174,6 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
     </table>
 
     <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
     </div>
     </form>
