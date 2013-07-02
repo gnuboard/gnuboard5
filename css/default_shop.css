@@ -517,7 +517,7 @@ td.empty_table {padding:85px 0;text-align:center}
 #sit_btn_rec {background:#888;color:#fff}
 
 /* 상품 상세보기 - 다른 상품 보기 */
-#sit_siblings {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9;text-align:center}
+#sit_siblings {clear:both;margin:0 0 10px;padding:30px 10px 10px;text-align:center}
 #sit_siblings h2 {position:absolute;font-size:0;line-height:0;content:""}
 
 /* 상품 상세보기 - 상품정보 */
