@@ -232,7 +232,9 @@ $amt_tax = (int)($amt_tot - $amt_sup);
         </table>
 
         <div id="scash_apply">
-            <button type="button" onclick="jsf__pay_cash( this.form )">등록요청</button>
+            <span id="show_pay_btn">
+                <button type="button" onclick="jsf__pay_cash( this.form )">등록요청</button>
+            </span>
             <span id="show_progress" style="display:none">
                 <b>등록 진행중입니다. 잠시만 기다려주십시오</b>
             </span>
