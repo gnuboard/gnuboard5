@@ -18,12 +18,21 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 <strong><?php echo $memo_not_read; ?></strong>
             </a>
         </li>
+        <?php if($default['de_mileage_use']) { ?>
+        <li>
+            <a href="<?php echo G4_SHOP_URL; ?>/mileage.php" target="_blank" id="ol_after_pt" class="win_point">
+                마일리지
+                <strong><?php echo number_format($member['mb_mileage']); ?></strong>
+            </a>
+        </li>
+        <?php } else { ?>
         <li>
             <a href="<?php echo G4_BBS_URL; ?>/point.php" target="_blank" id="ol_after_pt" class="win_point">
                 포인트
                 <strong><?php echo $point; ?></strong>
             </a>
         </li>
+        <?php } ?>
         <li>
             <a href="<?php echo G4_BBS_URL ?>/scrap.php" target="_blank" id="ol_after_scrap" class="win_scrap">스크랩</a>
         </li>

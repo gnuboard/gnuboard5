@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit;
 // 외부로그인
 function outlogin($skin_dir='basic')
 {
-    global $config, $member, $g4, $urlencode, $is_admin, $is_member;
+    global $config, $default, $member, $g4, $urlencode, $is_admin, $is_member;
 
     if (array_key_exists('mb_nick', $member)) {
         $nick  = cut_str($member['mb_nick'], $config['cf_cut_name']);
