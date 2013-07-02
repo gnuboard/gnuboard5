@@ -16,7 +16,7 @@ include_once(G4_MSHOP_PATH.'/shop.head.php');
         <?php
         // 최신상품
         $type = 3;
-        if ($default['de_mobile_type'.$type.'_list_us'])
+        if ($default['de_mobile_type'.$type.'_list_use'])
         {
             mobile_display_type($type, $default["de_mobile_type{$type}_list_skin"], $default["de_mobile_type{$type}_list_row"], $default["de_mobile_type{$type}_img_width"], $default["de_mobile_type{$type}_img_height"]);
         }
