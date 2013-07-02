@@ -9,6 +9,7 @@ $itemuse_form = "./itemuseform.php?it_id=".$it_id;
 $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
 ?>
 
+<!-- 상품 사용후기 시작 { -->
 <section id="sit_use_list">
     <h3>등록된 사용후기</h3>
 
@@ -166,3 +167,4 @@ $(function(){
     });
 });
 </script>
+<!-- } 상품 사용후기 끝 -->
