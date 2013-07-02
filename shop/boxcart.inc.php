@@ -9,9 +9,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <ul>
     <?php
     $hsql = "
-        select a.it_id, a.it_name, a.ct_qty from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b
+        select a.it_id, a.it_name, a.ct_qty
+            from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
         where a.uq_id = '".get_session('ss_uq_id')."'
-        and a.it_id  = b.it_id
+        and a.ct_num  = '0'
         order by a.ct_id
     ";
     $hresult = sql_query($hsql);
@@ -20,7 +21,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         echo '<li>';
         $it_name = get_text($row['it_name']);
         // 이미지로 할 경우
-        //$it_name = get_it_image($row[it_id], 50, 50, true);
+        //$it_name = get_it_image($row['it_id'], 50, 50, true);
         echo '<a href="'.G4_SHOP_URL.'/cart.php">'.$it_name.'</a>';
         echo '</li>';
     }
