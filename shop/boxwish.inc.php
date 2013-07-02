@@ -2,24 +2,33 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<table cellpadding=0 cellspacing=0 bgcolor=#FFFFFF>
-<tr><td><a href='<?php echo G4_SHOP_URL; ?>/wishlist.php'><img src='<?php echo G4_SHOP_URL; ?>/img/bar_wishlist.gif' border=0></a></td></tr>
-<?php
-$hsql = " select a.it_id, b.it_name from {$g4['shop_wish_table']} a, {$g4['shop_item_table']} b
-          where a.mb_id = '{$member['mb_id']}'
-            and a.it_id  = b.it_id
-          order by a.wi_id desc ";
-$hresult = sql_query($hsql);
-for ($i=0; $row=sql_fetch_array($hresult); $i++)
-{
-    echo "<tr><td height=22><nobr style='display:block; overflow:hidden; width:170px;'>&nbsp;&nbsp;· ";
-    $it_name = get_text($row['it_name']);
-    // 이미지로 할 경우
-    //$it_name = get_it_image($row[it_id], 50, 50, true);
-    echo "<a href=\"".G4_SHOP_URL."/wishlist.php\">$it_name</a></nobr></td></tr>\n";
-}
+<!-- 위시리스트 간략 보기 시작 { -->
+<aside id="swish">
+    <h2>위시리스트</h2>
 
-if ($i==0)
-    echo "<tr><td><img src='".G4_SHOP_URL."/img/nowishlist.gif'></td></tr>\n";
+    <ul>
+    <?php
+    $hsql = "
+        select a.it_id, b.it_name from {$g4['shop_wish_table']} a, {$g4['shop_item_table']} b
+        where a.mb_id = '{$member['mb_id']}'
+        and a.it_id  = b.it_id
+        order by a.wi_id desc
+    ";
+    $hresult = sql_query($hsql);
+    for ($i=0; $row=sql_fetch_array($hresult); $i++)
+    {
+        echo '<li>';
+        $it_name = get_text($row['it_name']);
+        // 이미지로 할 경우
+        //$it_name = get_it_image($row[it_id], 50, 50, true);
+        echo '<a href="'.G4_SHOP_URL.'/wishlist.php">'.$it_name.'</a>';
+        echo '</li>';
+    }
+
+    if ($i==0)
+        echo '<li id="swish_empty">위시리스트 없음</li>'.PHP_EOL;
 ?>
-</table>
+    </ul>
+
+</aside>
+<!-- } 위시리스트 간략 보기 끝 -->
