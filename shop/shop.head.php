@@ -96,36 +96,34 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     </aside>
 
     <div id="aside">
-        <?php echo outlogin('shop_basic'); // 외부 로그인 ?>
+        <?php echo outlogin('shop_basic'); // 아웃로그인 ?>
 
-        <!-- 상품분류 -->
-        <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); ?>
+        <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); // 상품분류 ?>
 
-        <!-- 이벤트 -->
-        <?php include_once(G4_SHOP_PATH.'/boxevent.inc.php'); ?>
+        <?php include_once(G4_SHOP_PATH.'/boxcart.inc.php'); // 장바구니 ?>
 
-        <!-- 커뮤니티 -->
-        <?php include_once(G4_SHOP_PATH.'/boxcommunity.inc.php'); ?>
+        <?php include_once(G4_SHOP_PATH.'/boxwish.inc.php'); // 위시리스트 ?>
 
-        <!-- 장바구니 -->
-        <?php // include_once(G4_SHOP_PATH.'/boxcart.inc.php'); ?>
+        <?php include_once(G4_SHOP_PATH.'/boxevent.inc.php'); // 이벤트 ?>
 
-        <!-- 보관함 -->
-        <?php // include_once(G4_SHOP_PATH.'/boxwish.inc.php'); ?>
+        <?php include_once(G4_SHOP_PATH.'/boxcommunity.inc.php'); // 커뮤니티 ?>
 
-        <!-- 왼쪽 배너 -->
+        <!-- 쇼핑몰 배너 시작 { -->
         <aside id="sbn_aside">
             <h2>쇼핑몰 배너</h2>
             <?php echo display_banner('왼쪽'); ?>
         </aside>
+        <!-- } 쇼핑몰 배너 끝 -->
     </div>
 <!-- } 상단 끝 -->
 
     <!-- 콘텐츠 시작 { -->
     <div id="container">
         <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g4['title'] ?></div><?php } ?>
+        <!-- 글자크기 조정 display:none 되어 있음 시작 { -->
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
             <button class="no_text_resize" onclick="font_default('container');">기본</button>
             <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
         </div>
+        <!-- } 글자크기 조정 display:none 되어 있음 끝 -->

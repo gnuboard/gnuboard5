@@ -143,6 +143,22 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #sbn_aside ul {margin:0;padding:0;border:0;list-style:none}
 #sbn_aside li {margin:0 0 1px}
 
+/* aside:장바구니 */
+#sbsk {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f5f6fa}
+#sbsk h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sbsk ul {margin:0;padding:0;border:0;background:#fff;list-style:none}
+#sbsk a {display:block;padding:7px 10px 6px;border-bottom:1px solid #f4f4f4;text-decoration:none}
+#sbsk a:focus, #sbsk a:hover {background:#f9f9f9}
+#sbsk_empty {padding:15px 0;text-align:center}
+
+/* aside:위시리스트 */
+#swish {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f5f6fa}
+#swish h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#swish ul {margin:0;padding:0;border:0;background:#fff;list-style:none}
+#swish a {display:block;padding:7px 10px 6px;border-bottom:1px solid #f4f4f4;text-decoration:none}
+#swish a:focus, #swish a:hover {background:#f9f9f9}
+#swish_empty {padding:15px 0;text-align:center}
+
 #container {position:relative;float:left;width:740px;min-height:500px;height:auto !important;height:500px;background:#fff;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 
