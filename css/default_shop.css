@@ -808,6 +808,9 @@ td.empty_table {padding:85px 0;text-align:center}
 .ssch_it_img img {width:100px;height:100px}
 #ssch .ssch_num {width:150px;text-align:right}
 
+#ssch .sit_icon {display:inline-block;margin:0 0 0 5px}
+#ssch .sit_icon img {margin:0 1px 0 0}
+
 /* 쇼핑몰 이벤트 */
 #sev {}
 .sev_admin {text-align:right}
