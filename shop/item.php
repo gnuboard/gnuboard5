@@ -480,23 +480,22 @@ else
             </script>
         </section>
         <!-- } 상품 요약정보 및 구매 끝 -->
+
+            <!-- 다른 상품 보기 시작 { -->
+            <div id="sit_siblings">
+                <?php
+                if ($prev_href || $next_href) {
+                    echo $prev_href.$prev_title.$prev_href2;
+                    echo $next_href.$next_title.$next_href2;
+                } else {
+                    echo '<span class="sound_only">이 분류에 등록된 다른 상품이 없습니다.</span>';
+                }
+                ?>
+            </div>
+            <!-- } 다른 상품 보기 끝 -->
     </div>
 
     </form>
-
-    <!-- 다른 상품 보기 시작 { -->
-    <aside id="sit_siblings">
-        <h2>다른 상품 보기</h2>
-        <?php
-        if ($prev_href || $next_href) {
-            echo $prev_href.$prev_title.$prev_href2;
-            echo $next_href.$next_title.$next_href2;
-        } else {
-            echo '<span class="sound_only">이 분류에 등록된 다른 상품이 없습니다.</span>';
-        }
-        ?>
-    </aside>
-    <!-- } 다른 상품 보기 끝 -->
 
     <script>
     function click_item(id)
