@@ -94,8 +94,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <input type="hidden" name="iq_id" value="">
             <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
             <span>삭제하시려면 글 작성 시 입력하신 패스워드를 입력해주세요.</span>
-            <label for="iq_password_<?=$i?>">패스워드</label>
-            <input type="password" name="iq_password" id="iq_password_<?=$i?>" required class="frm_input">
+            <label for="iq_password_<?php echo $i; ?>">패스워드</label>
+            <input type="password" name="iq_password" id="iq_password_<?php echo $i; ?>" required class="frm_input">
             <input type="submit" value="확인" class="btn_frmline">
             </form>
         </div>

@@ -317,9 +317,9 @@ if($default['de_tax_flag_use']) {
        (good_mny = comm_tax_mny + comm_vat_mny + comm_free_mny) */
 ?>
 <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
-<input type="hidden" name="comm_tax_mny"	  value="<? echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
-<input type="hidden" name="comm_vat_mny"      value="<? echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
-<input type="hidden" name="comm_free_mny"     value="<? echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
+<input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
+<input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
+<input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
 <?php
 }
 ?>
