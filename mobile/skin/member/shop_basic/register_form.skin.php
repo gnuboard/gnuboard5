@@ -2,17 +2,17 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<script src="<?php echo G4_JS_URL ?>/jquery.register_form.js"></script>
+<script src="<?php echo G4_JS_URL; ?>/jquery.register_form.js"></script>
 
-<form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
-<input type="hidden" name="w" value="<?php echo $w ?>">
-<input type="hidden" name="url" value="<?php echo $urlencode ?>">
-<input type="hidden" name="agree" value="<?php echo $agree ?>">
-<input type="hidden" name="agree2" value="<?php echo $agree2 ?>">
-<?php if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php } ?>
+<form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url; ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
+<input type="hidden" name="w" value="<?php echo $w; ?>">
+<input type="hidden" name="url" value="<?php echo $urlencode; ?>">
+<input type="hidden" name="agree" value="<?php echo $agree; ?>">
+<input type="hidden" name="agree2" value="<?php echo $agree2; ?>">
+<?php if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex']; ?>"><?php } ?>
 <?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
-<input type="hidden" name="mb_nick_default" value="<?php echo $member['mb_nick'] ?>">
-<input type="hidden" name="mb_nick" value="<?php echo $member['mb_nick'] ?>">
+<input type="hidden" name="mb_nick_default" value="<?php echo $member['mb_nick']; ?>">
+<input type="hidden" name="mb_nick" value="<?php echo $member['mb_nick']; ?>">
 <?php } ?>
 
 <table class="frm_tbl">
@@ -21,17 +21,17 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
     <td>
         <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
-        <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" class="frm_input minlength_3 <?php echo $required ?> <?php echo $readonly ?>" maxlength="20" <?php echo $required ?> <?php echo $readonly ?>>
+        <input type="text" name="mb_id" value="<?php echo $member['mb_id']; ?>" id="reg_mb_id" class="frm_input minlength_3 <?php echo $required; ?> <?php echo $readonly; ?>" maxlength="20" <?php echo $required; ?> <?php echo $readonly; ?>>
         <span id="msg_mb_id"></span>
     </td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password">패스워드<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input minlength_3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
+    <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input minlength_3 <?php echo $required; ?>" maxlength="20" <?php echo $required; ?>></td>
 </tr>
 <tr>
     <th scope="row"><label for="reg_mb_password_re">패스워드 확인<strong class="sound_only">필수</strong></label></th>
-    <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input minlength_3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
+    <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input minlength_3 <?php echo $required; ?>" maxlength="20" <?php echo $required; ?>></td>
 </tr>
 </table>
 
@@ -43,7 +43,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php if ($w=="u" && $config['cf_kcpcert_use']) { ?>
         <span class="frm_info">휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되며 수동으로 입력할수 없게 됩니다.</span>
         <?php } ?>
-        <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
+        <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name']; ?>" <?php echo $required; ?> <?php if ($w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required; ?> <?php echo $readonly; ?>" size="10">
         <?php if ($w=="u" && $config['cf_kcpcert_use']) { ?>
         <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰 본인확인</button>
         <noscript>휴대폰 본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
@@ -61,7 +61,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <td>
         <span class="frm_info">
             공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br>
-            별명을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.
+            별명을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify']; ?>일 이내에는 변경 할 수 없습니다.
         </span>
         <input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?$member['mb_nick']:''; ?>">
         <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?$member['mb_nick']:''; ?>" id="reg_mb_nick" required class="frm_input required nospace" maxlength="20">
@@ -79,7 +79,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <?php if ($w=='u') { echo "E-mail 주소를 변경하시면 다시 인증하셔야 합니다."; } ?>
         </span>
         <?php } ?>
-        <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
+        <input type="hidden" name="old_email" value="<?php echo $member['mb_email']; ?>">
         <input type="text" name="mb_email" value='<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>' <?php echo $config['cf_use_email_certify']?"required":""; ?> id="reg_mb_email" class="frm_input email <?php echo $config['cf_use_email_certify']?"required":""; ?>" maxlength="100">
     </td>
 </tr>
@@ -101,7 +101,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <?php if ($config['cf_use_hp']) {  ?>
 <tr>
     <th scope="row"><label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?></label></th>
-    <td><input type="text" name="mb_hp" value="<?php echo $member[mb_hp] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20"></td>
+    <td><input type="text" name="mb_hp" value="<?php echo $member['mb_hp'] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20"></td>
 </tr>
 <?php } ?>
 
@@ -113,18 +113,18 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </th>
     <td>
         <label for="reg_mb_zip1" class="sound_only">우편번호 앞자리<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
-        <input type="text" name="mb_zip1" value="<?php echo $member['mb_zip1'] ?>" id="reg_mb_zip1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="3" maxlength="3">
+        <input type="text" name="mb_zip1" value="<?php echo $member['mb_zip1']; ?>" id="reg_mb_zip1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="3" maxlength="3">
         -
         <label for="reg_mb_zip2" class="sound_only">우편번호 뒷자리<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
-        <input type="text" name="mb_zip2" value="<?php echo $member['mb_zip2'] ?>" id="reg_mb_zip2" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="3" maxlength="3">
+        <input type="text" name="mb_zip2" value="<?php echo $member['mb_zip2']; ?>" id="reg_mb_zip2" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="3" maxlength="3">
         <span id="reg_win_zip" style="display:block"></span>
         <label for="reg_mb_addr1" class="sound_only">주소<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
-        <input type="text" name="mb_addr1" value="<?php echo $member['mb_addr1'] ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50">
+        <input type="text" name="mb_addr1" value="<?php echo $member['mb_addr1']; ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50">
         <label for="reg_mb_addr2" class="sound_only">상세주소<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
-        <input type="text" name="mb_addr2" value="<?php echo $member['mb_addr2'] ?>" id="reg_mb_addr2" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50">
+        <input type="text" name="mb_addr2" value="<?php echo $member['mb_addr2']; ?>" id="reg_mb_addr2" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50">
         <script>
         // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-        $('<a href="<?php echo G4_BBS_URL ?>/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#reg_win_zip');
+        $('<a href="<?php echo G4_BBS_URL; ?>/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#reg_win_zip');
         $("#reg_win_zip").css("display", "inline");
         $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr('readonly', 'readonly');
         </script>

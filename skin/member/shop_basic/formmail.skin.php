@@ -2,18 +2,18 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
 
 <div id="formmail" class="new_win">
-    <h1><?php echo $name ?>님께 메일보내기</h1>
+    <h1><?php echo $name; ?>님께 메일보내기</h1>
 
     <form name="fformmail" action="./formmail_send.php" onsubmit="return fformmail_submit(this);" method="post" enctype="multipart/form-data" style="margin:0px;">
-    <input type="hidden" name="to" value="<?php echo $email ?>">
+    <input type="hidden" name="to" value="<?php echo $email; ?>">
     <input type="hidden" name="attach" value="2">
-    <input type="hidden" name="token" value="<?php echo $token ?>">
+    <input type="hidden" name="token" value="<?php echo $token; ?>">
     <?php if ($is_member) { // 회원이면  ?>
-    <input type="hidden" name="fnick" value="<?php echo $member['mb_nick'] ?>">
-    <input type="hidden" name="fmail" value="<?php echo $member['mb_email'] ?>">
+    <input type="hidden" name="fnick" value="<?php echo $member['mb_nick']; ?>">
+    <input type="hidden" name="fmail" value="<?php echo $member['mb_email']; ?>">
     <?php }  ?>
     <table class="frm_tbl">
     <caption>메일쓰기</caption>

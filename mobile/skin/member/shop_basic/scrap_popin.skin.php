@@ -2,21 +2,21 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
 
 <div id="scrap_do" class="new_win">
     <h1>스크랩하기</h1>
 
     <form name="f_scrap_popin" action="./scrap_popin_update.php" method="post">
-    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-    <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
+    <input type="hidden" name="bo_table" value="<?php echo $bo_table; ?>">
+    <input type="hidden" name="wr_id" value="<?php echo $wr_id; ?>">
 
     <table class="frm_tbl">
     <caption>제목 확인 및 댓글 쓰기</caption>
     <tbody>
     <tr>
         <th scope="row">제목</th>
-        <td><?php echo get_text(cut_str($write['wr_subject'], 255)) ?></td>
+        <td><?php echo get_text(cut_str($write['wr_subject'], 255)); ?></td>
     </tr>
     <tr>
         <th scope="row"><label for="wr_content">댓글</label></th>

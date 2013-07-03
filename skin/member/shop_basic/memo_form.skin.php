@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
 
 <div id="memo_write" class="new_win">
     <h1>쪽지보내기</h1>
@@ -21,13 +21,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <tr>
             <th scope="row"><label for="me_recv_mb_id">받는 회원아이디<strong class="sound_only">필수</strong></label></th>
             <td>
-                <input type="text" name="me_recv_mb_id" value="<?php echo $me_recv_mb_id ?>" id="me_recv_mb_id" required class="frm_input required" size="47">
+                <input type="text" name="me_recv_mb_id" value="<?php echo $me_recv_mb_id; ?>" id="me_recv_mb_id" required class="frm_input required" size="47">
                 <span class="frm_info">여러 회원에게 보낼때는 컴마(,)로 구분하세요.</span>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="me_memo">내용</label></th>
-            <td><textarea name="me_memo" id="me_memo" required class="required"><?php echo $content ?></textarea></td>
+            <td><textarea name="me_memo" id="me_memo" required class="required"><?php echo $content; ?></textarea></td>
         </tr>
         <tr>
             <th scope="row">자동등록방지</th>

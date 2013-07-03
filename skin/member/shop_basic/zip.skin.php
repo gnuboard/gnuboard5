@@ -1,5 +1,5 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
@@ -32,7 +32,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <dd>
             <ul>
                 <?php for ($i=0; $i<count($list); $i++) {  ?>
-                <li><a href='javascript:;' onclick="find_zip('<?php echo $list[$i][zip1] ?>', '<?php echo $list[$i][zip2] ?>', '<?php echo $list[$i][addr] ?>');"><span class="post_code"><?php echo $list[$i][zip1] ?>-<?php echo $list[$i][zip2] ?></span> <?php echo $list[$i][addr] ?> <?php echo $list[$i][bunji] ?></a></li>
+                <li><a href='javascript:;' onclick="find_zip('<?php echo $list[$i]['zip1'] ?>', '<?php echo $list[$i]['zip2'] ?>', '<?php echo $list[$i]['addr'] ?>');"><span class="post_code"><?php echo $list[$i]['zip1'] ?>-<?php echo $list[$i]['zip2'] ?></span> <?php echo $list[$i]['addr'] ?> <?php echo $list[$i]['bunji'] ?></a></li>
                 <?php }  ?>
             </ul>
         </dd>

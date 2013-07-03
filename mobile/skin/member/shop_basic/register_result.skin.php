@@ -2,14 +2,14 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
 
 <div id="reg_result">
 
-    <div id="reg_result_logo"><img src="<?php echo $member_skin_url ?>/img/reg_result_logo.jpg" alt=""></div>
+    <div id="reg_result_logo"><img src="<?php echo $member_skin_url; ?>/img/reg_result_logo.jpg" alt=""></div>
 
     <p>
-        <strong><?php echo $mb['mb_name'] ?></strong>님의 회원가입을 진심으로 축하합니다.<br>
+        <strong><?php echo $mb['mb_name']; ?></strong>님의 회원가입을 진심으로 축하합니다.<br>
     </p>
 
     <?php if ($config['cf_use_email_certify']) { ?>
@@ -19,9 +19,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </p>
     <div id="reg_result_email">
         <span>아이디</span>
-        <strong><?php echo $mb['mb_id'] ?></strong><br>
+        <strong><?php echo $mb['mb_id']; ?></strong><br>
         <span>이메일 주소</span>
-        <strong><?php echo $mb['mb_email'] ?></strong>
+        <strong><?php echo $mb['mb_email']; ?></strong>
     </div>
     <p>
         이메일 주소를 잘못 입력하셨다면, 사이트 관리자에게 문의해주시기 바랍니다.
@@ -39,7 +39,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </p>
 
     <div class="btn_confirm">
-        <a href="<?php echo G4_URL ?>/" class="btn02">메인으로</a>
+        <a href="<?php echo G4_URL; ?>/" class="btn02">메인으로</a>
     </div>
 
 </div>

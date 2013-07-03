@@ -1,13 +1,13 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
+<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
 
 <div id="find_info" class="new_win">
     <h1 id="new_win_title">회원정보 찾기</h1>
 
-    <form name="fpasswordlost" action="<?php echo $action_url ?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
+    <form name="fpasswordlost" action="<?php echo $action_url; ?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
     <fieldset id="find_info_fs">
         <p>
             회원가입 시 등록하신 이메일 주소를 입력해 주세요.<br>

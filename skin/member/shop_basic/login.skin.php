@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <h1><?php echo $g4['title']; ?></h1>
 
     <form name="flogin" action="<?php echo $login_action_url; ?>" onsubmit="return flogin_submit(this);" method="post">
-    <input type="hidden" name="url" value='<?php echo $login_url; ?>'>
+    <input type="hidden" name="url" value="<?php echo $login_url; ?>">
 
     <fieldset id="mb_login_fs">
         <legend>회원로그인</legend>
@@ -84,7 +84,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <form name="forderinquiry" method="post" action="<?php echo urldecode($url); ?>" autocomplete="off">
 
         <label for="od_id" class="od_id">주문서번호<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="od_id" value="<? echo $od_id ?>" id="od_id" required class="frm_input required" size="20">
+        <input type="text" name="od_id" value="<? echo $od_id; ?>" id="od_id" required class="frm_input required" size="20">
         <label for="id_pwd" class="od_pwd">패스워드<strong class="sound_only"> 필수</strong></label>
         <input type="password" name="od_pwd" size="20" id="od_pwd" required class="frm_input required">
         <input type="submit" value="확인" class="btn_submit">
