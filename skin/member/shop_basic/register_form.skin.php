@@ -2,17 +2,20 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
+<!-- 회원정보 입력/수정 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 <script src="<?php echo G4_JS_URL ?>/jquery.register_form.js"></script>
 
 <form id="fregisterform" name="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?php echo $w ?>">
 <input type="hidden" name="url" value="<?php echo $urlencode ?>">
-<?php if (isset($member['mb_sex'])) {  ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php } ?>
+<input type="hidden" name="agree" value="<?php echo $agree ?>">
+<input type="hidden" name="agree2" value="<?php echo $agree2 ?>">
+<?php if (isset($member['mb_sex'])) {  ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php }  ?>
 <?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면  ?>
 <input type="hidden" name="mb_nick_default" value="<?php echo $member['mb_nick'] ?>">
 <input type="hidden" name="mb_nick" value="<?php echo $member['mb_nick'] ?>">
-<?php } ?>
+<?php }  ?>
 
 <table class="frm_tbl">
 <caption>사이트 이용정보 입력</caption>
@@ -43,10 +46,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <span class="frm_info">휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되며 수동으로 입력할수 없게 됩니다.</span>
         <?php } ?>
         <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
-        <?php if ($w=="u" && $config['cf_kcpcert_use']) { ?>
-        <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰 본인확인</button>
-        <noscript>휴대폰 본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
-        <?php } ?>
         <?php if ($member['mb_hp_certify']) { ?>
         <div id="msg_hp_certify">
             휴대폰 <strong>본인확인</strong><?php if ($member['mb_hp_certify']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
@@ -67,17 +66,17 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <span id="msg_mb_nick"></span>
     </td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <tr>
     <th scope="row"><label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
     <td>
         <?php if ($config['cf_use_email_certify']) {  ?>
         <span class="frm_info">
-            <?php if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; } ?>
-            <?php if ($w=='u') { echo "E-mail 주소를 변경하시면 다시 인증하셔야 합니다."; } ?>
+            <?php if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; }  ?>
+            <?php if ($w=='u') { echo "E-mail 주소를 변경하시면 다시 인증하셔야 합니다."; }  ?>
         </span>
-        <?php } ?>
+        <?php }  ?>
         <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
         <input type="text" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="frm_input email required" size="50" maxlength="100">
     </td>
@@ -88,27 +87,37 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_homepage">홈페이지<?php if ($config['cf_req_homepage']){ ?><strong class="sound_only">필수</strong><?php } ?></label></th>
     <td><input type="text" name="mb_homepage" value="<?php echo $member['mb_homepage'] ?>" id="reg_mb_homepage" <?php echo $config['cf_req_homepage']?"required":""; ?> class="frm_input <?php echo $config['cf_req_homepage']?"required":""; ?>" size="50" maxlength="255"></td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <?php if ($config['cf_use_tel']) {  ?>
 <tr>
     <th scope="row"><label for="reg_mb_tel">전화번호<?php if ($config['cf_req_tel']) { ?><strong class="sound_only">필수</strong><?php } ?></label></th>
     <td><input type="text" name="mb_tel" value="<?php echo $member['mb_tel'] ?>" id="reg_mb_tel" <?php echo $config['cf_req_tel']?"required":""; ?> class="frm_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20"></td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
-<?php if ($config['cf_use_hp']) {  ?>
+<?php if ($config['cf_use_hp'] || $config['cf_kcpcert_use']) {  ?>
 <tr>
     <th scope="row"><label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?></label></th>
-    <td><input type="text" name="mb_hp" value="<?php echo $member['mb_hp'] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20"></td>
+    <td>
+        <?php if ($config['cf_kcpcert_use']) { ?>
+        <span class="frm_info">휴대폰번호는 휴대폰 본인확인 기능을 이용하여 입력하세요.</span>
+        <?php } ?>
+        <input type="text" name="mb_hp" value="<?php echo $member[mb_hp] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" <?php echo $config['cf_kcpcert_use']?"readonly":""; ?>  maxlength="20">
+        <?php if ($config['cf_kcpcert_use']) { ?>
+        <input type="hidden" name="old_mb_hp" value="<?php echo $member['mb_hp'] ?>">
+        <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰 본인확인</button>
+        <noscript>휴대폰 본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
+        <?php } ?>
+    </td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <?php if ($config['cf_use_addr']) { ?>
 <tr>
     <th scope="row">
         주소
-        <?php if ($config['cf_req_addr']) { ?><strong class="sound_only">필수</strong><?php } ?>
+        <?php if ($config['cf_req_addr']) { ?><strong class="sound_only">필수</strong><?php }  ?>
     </th>
     <td>
         <label for="reg_mb_zip1" class="sound_only">우편번호 앞자리<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
@@ -129,7 +138,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </script>
     </td>
 </tr>
-<?php } ?>
+<?php }  ?>
 </table>
 
 <table class="frm_tbl">
@@ -139,14 +148,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row"><label for="reg_mb_signature">서명<?php if ($config['cf_req_signature']){ ?><strong class="sound_only">필수</strong><?php } ?></label></th>
     <td><textarea name="mb_signature" id="reg_mb_signature" <?php echo $config['cf_req_signature']?"required":""; ?> class="<?php echo $config['cf_req_signature']?"required":""; ?>"><?php echo $member['mb_signature'] ?></textarea></td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <?php if ($config['cf_use_profile']) {  ?>
 <tr>
     <th scope="row"><label for="reg_mb_profile">자기소개</label></th>
     <td><textarea name="mb_profile" id="reg_mb_profile" <?php echo $config['cf_req_profile']?"required":""; ?> class="<?php echo $config['cf_req_profile']?"required":""; ?>"><?php echo $member['mb_profile'] ?></textarea></td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <?php if ($config['cf_use_member_icon'] && $member['mb_level'] >= $config['cf_icon_level']) {  ?>
 <tr>
@@ -157,14 +166,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             gif만 가능하며 용량 <?php echo number_format($config['cf_member_icon_size']) ?>바이트 이하만 등록됩니다.
         </span>
         <input type="file" name="mb_icon" id="reg_mb_icon" class="frm_input">
-        <?php if ($w == 'u' && file_exists($mb_icon_path)) {  ?>
-        <img src="<?php echo $mb_icon_url; ?>" alt="회원아이콘">
+        <?php if ($w == 'u' && file_exists($mb_icon)) {  ?>
         <input type="checkbox" name="del_mb_icon" value="1" id="del_mb_icon">
         <label for="del_mb_icon">삭제</label>
-        <?php } ?>
+        <?php }  ?>
     </td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <tr>
     <th scope="row"><label for="reg_mb_mailling">메일링서비스</label></th>
@@ -182,7 +190,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         휴대폰 문자메세지를 받겠습니다.
     </td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G4_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능  ?>
 <tr>
@@ -207,14 +215,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <input type="hidden" name="mb_open" value="<?php echo $member['mb_open'] ?>">
     </td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <?php if ($w == "" && $config['cf_use_recommend']) {  ?>
 <tr>
     <th scope="row"><label for="reg_mb_recommend">추천인아이디</label></th>
     <td><input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input"></td>
 </tr>
-<?php } ?>
+<?php }  ?>
 
 <tr>
     <th scope="row">자동등록방지</th>
@@ -236,11 +244,15 @@ if ($config['cf_kcpcert_use']) {
     // 휴대폰인증 form
     include_once(G4_KCPCERT_PATH.'/kcpcert_form.php');
 ?>
+
 <script>
 $(function() {
+    $("#reg_zip_find").css("display", "inline-block");
+    $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
+
     // 휴대폰인증
     $('#win_kcpcert').click(function() {
-        auth_type_check();
+        auth_type_check($("#reg_mb_name").val());
         return false;
     });
 });
@@ -248,11 +260,6 @@ $(function() {
 <?php } ?>
 
 <script>
-$(function() {
-    $("#reg_zip_find").css("display", "inline-block");
-    $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
-});
-
 // submit 최종 폼체크
 function fregisterform_submit(f)
 {
@@ -266,35 +273,44 @@ function fregisterform_submit(f)
         }
     }
 
-    if (f.w.value == '') {
+    if (f.w.value == "") {
         if (f.mb_password.value.length < 3) {
-            alert('패스워드를 3글자 이상 입력하십시오.');
+            alert("패스워드를 3글자 이상 입력하십시오.");
             f.mb_password.focus();
             return false;
         }
     }
 
     if (f.mb_password.value != f.mb_password_re.value) {
-        alert('패스워드가 같지 않습니다.');
+        alert("패스워드가 같지 않습니다.");
         f.mb_password_re.focus();
         return false;
     }
 
     if (f.mb_password.value.length > 0) {
         if (f.mb_password_re.value.length < 3) {
-            alert('패스워드를 3글자 이상 입력하십시오.');
+            alert("패스워드를 3글자 이상 입력하십시오.");
             f.mb_password_re.focus();
             return false;
         }
     }
 
     // 이름 검사
-    if (f.w.value=='') {
+    if (f.w.value=="") {
         if (f.mb_name.value.length < 1) {
-            alert('이름을 입력하십시오.');
+            alert("이름을 입력하십시오.");
             f.mb_name.focus();
             return false;
         }
+
+        /*
+        var pattern = /([^가-힣\x20])/i;
+        if (pattern.test(f.mb_name.value)) {
+            alert("이름은 한글로 입력하십시오.");
+            f.mb_name.select();
+            return false;
+        }
+        */
     }
 
     // 별명 검사
@@ -317,19 +333,19 @@ function fregisterform_submit(f)
         }
     }
 
-    if (typeof f.mb_icon != 'undefined') {
+    if (typeof f.mb_icon != "undefined") {
         if (f.mb_icon.value) {
             if (!f.mb_icon.value.toLowerCase().match(/.(gif)$/i)) {
-                alert('회원아이콘이 gif 파일이 아닙니다.');
+                alert("회원아이콘이 gif 파일이 아닙니다.");
                 f.mb_icon.focus();
                 return false;
             }
         }
     }
 
-    if (typeof(f.mb_recommend) != 'undefined' && f.mb_recommend.value) {
+    if (typeof(f.mb_recommend) != "undefined" && f.mb_recommend.value) {
         if (f.mb_id.value == f.mb_recommend.value) {
-            alert('본인을 추천할 수 없습니다.');
+            alert("본인을 추천할 수 없습니다.");
             f.mb_recommend.focus();
             return false;
         }
@@ -342,6 +358,33 @@ function fregisterform_submit(f)
         }
     }
 
+    /*
+    if (typeof(f.mb_hp) != "undefined" && f.mb_hp.value) {
+        var error = "";
+        $.ajax({
+            url: "<?php echo G4_KCPCERT_URL ?>/kcpcert.ajax.php",
+            type: "POST",
+            data: {
+                "w":        f.w.value,
+                "mb_name":  f.mb_name.value,
+                "mb_hp":    f.mb_hp.value,
+                "old_mb_hp":f.old_mb_hp.value
+            },
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function(data, textStatus) {
+                error = data.error;
+            }
+        });
+
+        if (error) {
+            alert(error);
+            return false;
+        }
+    }
+    */
+
     <?php echo chk_captcha_js();  ?>
 
     document.getElementById("btn_submit").disabled = "disabled";
@@ -349,3 +392,4 @@ function fregisterform_submit(f)
     return true;
 }
 </script>
+<!-- } 회원정보 입력/수정 끝 -->
