@@ -4,7 +4,7 @@ include_once('./_common.php');
 if ($is_guest)
     alert_close('회원만 조회하실 수 있습니다.');
 
-$g4['title'] = $member['mb_nick'].' 님의 마일리지 내역';
+$g4['title'] = $member['mb_nick'].' 님의 쿠폰 내역';
 include_once(G4_PATH.'/head.sub.php');
 
 $sql = " select cp_id, cp_subject, cp_method, cp_target, cp_start, cp_end, cp_type, cp_amount
@@ -21,7 +21,10 @@ if(!$count)
     alert_close('보유하신 쿠폰이 없습니다.');
 ?>
 
+<!-- 쿠폰 내역 시작 { -->
 <div id="coupon" class="new_win">
+    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
+
     <table class="basic_tbl">
     <thead>
     <tr>
@@ -56,8 +59,8 @@ if(!$count)
     <tr>
         <td><?php echo $row['cp_subject']; ?></td>
         <td><?php echo $cp_target; ?></td>
-        <td><?php echo $cp_amount; ?></td>
-        <td><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
+        <td class="td_bignum"><?php echo $cp_amount; ?></td>
+        <td class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
     </tr>
     <?php
     }

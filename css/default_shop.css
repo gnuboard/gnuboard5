@@ -815,3 +815,7 @@ td.empty_table {padding:85px 0;text-align:center}
 /* 쇼핑몰 이벤트 */
 #sev {}
 .sev_admin {text-align:right}
+
+/* 쿠폰 */
+#coupon .td_bignum {width:150px}
+#coupon .td_datetime {width:180px}
