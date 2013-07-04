@@ -6,6 +6,15 @@ if (!$is_member)
 
 $g4['title'] = '마이페이지';
 include_once(G4_MSHOP_PATH.'/_head.php');
+
+// 쿠폰
+$sql = " select count(*) as cnt
+            from {$g4['shop_coupon_table']}
+            where mb_id = '{$member['mb_id']}'
+              and cp_used = '0'
+              and cp_start <= '".G4_TIME_YMD."'
+              and cp_end >= '".G4_TIME_YMD."' ";
+$cp = sql_fetch($sql);
 ?>
 
 <div id="smb_my">
@@ -14,8 +23,6 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <h2>회원정보 개요</h2>
 
         <dl>
-            <dt>회원권한</dt>
-            <dd><?php echo $member['mb_level']; ?></dd>
             <?php if($default['de_mileage_use']) { ?>
             <dt>마일리지</dt>
             <dd><a href="<?php echo G4_SHOP_URL; ?>/mileage.php" target="_blank" class="win_point"><?php echo number_format($member['mb_mileage']); ?>점</a></dd>
@@ -23,6 +30,8 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <dt>보유포인트</dt>
             <dd><a href="<?php echo G4_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></dd>
             <?php } ?>
+            <dt>보유쿠폰</dt>
+            <dd><a href="<?php echo G4_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp['cnt']); ?></a></dd>
             <dt>연락처</dt>
             <dd><?php echo ($member['mb_tel'] ? $member['mb_tel'] : '미등록'); ?></dd>
             <dt>E-Mail</dt>
@@ -92,6 +101,14 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 </div>
 
 <script>
+$(function() {
+    $(".win_coupon").click(function() {
+        var new_win = window.open($(this).attr("href"), "win_coupon", "left=100,top=100,width=700, height=600, scrollbars=1");
+        new_win.focus();
+        return false;
+    });
+});
+
 function member_leave()
 {
     return confirm('정말 회원에서 탈퇴 하시겠습니까?')
