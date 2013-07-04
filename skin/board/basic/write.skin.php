@@ -7,7 +7,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <h2 id="wrapper_title"><?php echo $g4['title'] ?></h2>
 
 <!-- 게시물 작성/수정 시작 { -->
-<form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+<form name="fwrite" id="fwrite" class="autosave" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+<input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
 <input type="hidden" name="w" value="<?php echo $w ?>">
 <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
 <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
@@ -102,7 +103,12 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_subject">제목<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255"></td>
+    <td>
+        <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
+        <?php if ($is_member) { ?>
+        임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)
+        <?php } ?>
+    </td>
 </tr>
 
 <tr>
@@ -212,3 +218,30 @@ function fwrite_submit(f)
 }
 </script>
 <!-- } 게시물 작성/수정 끝 -->
+
+<script>
+<?php if ($is_member) { ?>
+function autosave() {
+    jQuery("form.autosave").each(function() {
+        if (typeof(CKEDITOR.instances.wr_content)!="undefined")
+            this.wr_content.value = CKEDITOR.instances.wr_content.getData();
+        jQuery.ajax({
+            url: g4_bbs_url+"/ajax.autosave.php",
+            data: {
+                "uid" : this.uid.value,
+                "subject": this.wr_subject.value,
+                "content": this.wr_content.value
+            },
+            type: "POST",
+            success: function(data){
+                if (data) {
+                    $("#autosave_count").html(data);    
+                }
+            }
+        });
+    });
+}
+ 
+setInterval(autosave, 3 * 1000);
+<?php } ?>
+</script>
