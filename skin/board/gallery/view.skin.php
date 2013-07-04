@@ -12,7 +12,7 @@ include_once(G4_LIB_PATH.'/thumbnail.lib.php');
     <header>
         <h1 id="bo_v_title">
             <?php
-            if ($category_name) echo ($category_name ? $view['ca_name'].' | ' : ''); // 분류 출력 끝
+            if ($category_name) echo $view['ca_name'].' | '; // 분류 출력 끝
             echo cut_str(get_text($view['wr_subject']), 70); // 글제목 출력
             ?>
         </h1>
