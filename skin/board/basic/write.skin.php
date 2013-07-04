@@ -104,10 +104,27 @@ echo $option_hidden;
 <tr>
     <th scope="row"><label for="wr_subject">제목<strong class="sound_only">필수</strong></label></th>
     <td>
-        <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
-        <?php if ($is_member) { ?>
-        임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)
-        <?php } ?>
+        <div id="autosave_wrapper">
+            <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
+            <?php if ($is_member) { ?>
+            <button type="button" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
+            <?php } ?>
+
+            <div id="autosave_pop">
+                <strong class="sound_only">임시 저장된 글 목록</strong>
+                <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
+                <ul>
+                <?php
+                // for 시작
+                ?>
+                <li><a href="">저장제목</a><span>일시 <button type="button" class="autosave_del">삭제</button></span></li>
+                <?php
+                // for 끝
+                ?>
+                </ul>
+                <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
+            </div>
+        </div>
     </td>
 </tr>
 
