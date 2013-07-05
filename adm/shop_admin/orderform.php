@@ -99,13 +99,14 @@ $row = sql_fetch($sql);
 $total_order = $row['sum_order'];
 
 // 상품목록
-$sql = " select it_id,
-                it_name,
-                cp_amount
-           from {$g4['shop_cart_table']}
-          where uq_id = '{$od['uq_id']}'
-            and ct_num = '0'
-          order by ct_id ";
+$sql = " select a.it_id,
+                a.it_name,
+                a.cp_amount,
+                b.it_notax
+           from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
+          where a.uq_id = '{$od['uq_id']}'
+            and a.ct_num = '0'
+          order by a.ct_id ";
 $result = sql_query($sql);
 
 $pg_anchor = '<ul class="anchor">
@@ -152,6 +153,7 @@ $pg_anchor = '<ul class="anchor">
         <li>
             <p>
                 <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
+                <?php if($default['de_tax_flag_use'] && $row['it_notax']) echo '[비과세상품]'; ?>
             </p>
 
             <table>
@@ -255,7 +257,7 @@ $pg_anchor = '<ul class="anchor">
     // 쿠폰금액
     $amount['쿠폰'] = $t_cp_amount + $od['od_coupon'];
 
-    // 미수금 = (주문금액 - DC + 환불액) - (입금액 - 신용카드승인취소) - 쿠폰금액
+    // 미수금 = (주문금액 - DC + 환불액) - (입금액 - 결제승인취소) - 쿠폰금액
     $amount['미수'] = ($amount['정상'] - $od['od_dc_amount'] + $od['od_refund_amount']) - ($amount['입금'] - $od['od_cancel_card']) - $amount['쿠폰'];
 
     // 결제방법
@@ -334,6 +336,12 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><?php echo $od['od_settle_case']; ?> 입금액</th>
             <td><?php echo display_price($od['od_receipt_amount']); ?></td>
         </tr>
+        <?php if($od['od_settle_case'] == '계좌이체') { ?>
+        <tr>
+            <th scope="row" class="sodr_sppay">결제 취소금액</th>
+            <td><?php echo display_price($od['od_cancel_card']); ?></td>
+        </tr>
+        <?php } ?>
         <tr>
             <th scope="row">입금자</th>
             <td><?php echo $od['od_deposit_name']; ?></td>
@@ -515,6 +523,15 @@ $pg_anchor = '<ul class="anchor">
                 <?php } ?>
             </td>
         </tr>
+        <?php if($od['od_settle_case'] == '계좌이체') { ?>
+        <tr>
+            <th scope="row" class="sodr_sppay"><label for="od_cancel_card">결제 취소금액</label></th>
+            <td>
+                <input type="text" name="od_cancel_card" value="<?php echo $od['od_cancel_card']; ?>" class="frm_input" size="10"> 원
+                <a href="./partcancel.php?od_id=<?php echo $od['od_id']; ?>" target="_blank" id="win_partcancel">결제부분취소</a>
+            </td>
+        </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="od_deposit_name">입금자명</label></th>
             <td>
@@ -579,7 +596,10 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <tr>
             <th scope="row" class="sodr_sppay"><label for="od_cancel_card">카드 승인취소</label></th>
-            <td><input type="text" name="od_cancel_card" value="<?php echo $od['od_cancel_card']; ?>" class="frm_input" size="10"> 원</td>
+            <td>
+                <input type="text" name="od_cancel_card" value="<?php echo $od['od_cancel_card']; ?>" class="frm_input" size="10"> 원
+                <a href="./partcancel.php?od_id=<?php echo $od['od_id']; ?>" target="_blank" id="win_partcancel">결제부분취소</a>
+            </td>
         </tr>
         <?php } ?>
 
@@ -845,6 +865,13 @@ $(function() {
             $chk.attr("checked", true);
         else
             $chk.attr("checked", false);
+    });
+
+    // 부분취소
+    $("#win_partcancel").click(function() {
+        var new_win = window.open($(this).attr("href"), "win_partcancel", "left=100,top=100,width=500, height=300");
+        new_win.focus();
+        return false;
     });
 });
 

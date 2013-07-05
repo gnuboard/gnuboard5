@@ -920,8 +920,8 @@ $(function(){
             echo '$("#sc_con_minimum").show();'.PHP_EOL;
             echo '$("#sc_con_qty").hide();'.PHP_EOL;
         } else if($it['it_sc_type'] == 3) {
-            echo '$("#sc_con_minimum").show();'.PHP_EOL;
-            echo '$("#sc_con_qty").hide();'.PHP_EOL;
+            echo '$("#sc_con_minimum").hide();'.PHP_EOL;
+            echo '$("#sc_con_qty").show();'.PHP_EOL;
         } else {
             echo '$("#sc_con_minimum").hide();'.PHP_EOL;
             echo '$("#sc_con_qty").hide();'.PHP_EOL;

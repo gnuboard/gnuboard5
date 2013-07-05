@@ -331,7 +331,7 @@ if(openwin != null) {
             {
             ?>
             <tr>
-                <th scope="row">승인취소 금액</th>
+                <th scope="row">결제취소 금액</th>
                 <td><?php echo display_price($od['od_cancel_card']); ?></td>
             </tr>
             <?php
