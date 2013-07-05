@@ -111,13 +111,13 @@ echo $option_hidden;
             <?php } ?>
 
             <div id="autosave_pop">
-                <strong class="sound_only">임시 저장된 글 목록</strong>
+                <strong>임시 저장된 글 목록</strong>
                 <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
                 <ul>
                 <?php
                 // for 시작
                 ?>
-                <li><a href="">저장제목</a><span>일시 <button type="button" class="autosave_del">삭제</button></span></li>
+                <li><a href="#none" class="autosave_load">저장제목</a><span>일시 <button type="button" class="autosave_del">삭제</button></span></li>
                 <?php
                 // for 끝
                 ?>

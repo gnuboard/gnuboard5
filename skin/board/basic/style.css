@@ -35,7 +35,9 @@
 
 /* 게시판 쓰기 */
 #autosave_wrapper {position:relative}
-#autosave_pop {z-index:10;position:absolute;top:24px;right:117px;padding:8px;width:300px;border:1px solid #565656;background:#fff}
+#autosave_pop {z-index:10;position:absolute;top:24px;right:117px;padding:8px;width:300px;height:auto !important;height:180px;max-height:180px;border:1px solid #565656;background:#fff;overflow-y:scroll}
+html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
+#autosave_pop strong {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #autosave_pop div {text-align:right}
 #autosave_pop button {margin:0;padding:0;border:0;background:transparent}
 #autosave_pop ul {margin:10px 0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
