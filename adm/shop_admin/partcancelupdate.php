@@ -21,9 +21,12 @@ if($od['od_settle_case'] != '신용카드' && $od['od_settle_case'] != '계좌�
 if($od['od_settle_case'] == '계좌이체' && substr(0, 10, $od['od_time']) == G4_TIME_YMD)
     alert('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
 
+if($_POST['mod_type'] != 'RN07' && $_POST['mod_type'] != 'STPA')
+    alert('취소요청 구분이 올바르지 않습니다.mod_type 값을 확인해 주십시오.');
+
 // 취소사유의 한글깨짐 방지처리
 $def_locale = setlocale(LC_CTYPE, 0);
-$_POST['mod_desc'] = iconv("utf-8", "euc-kr", $_POST['mod_desc']);
+$_POST = array_map('iconv_euckr', $_POST);
 $locale_change = false;
 if(preg_match("/utf[\-]?8/i", $def_locale)) {
     setlocale(LC_CTYPE, 'ko_KR.euc-kr');
@@ -47,7 +50,8 @@ else {
     $default['de_kcp_mid'] = "SR".$default['de_kcp_mid'];
 }
 
-$g_conf_site_cd = $default['de_kcp_mid'];
+$g_conf_site_cd   = $default['de_kcp_mid'];
+$g_conf_site_key  = $default['de_kcp_site_key'];
 $g_conf_home_dir  = G4_SHOP_PATH.'/kcp';
 $g_conf_key_dir   = '';
 $g_conf_log_dir   = '';
@@ -70,38 +74,55 @@ else {
 $g_conf_log_level = "3";
 $g_conf_gw_port   = "8090";
 
-include_once(G4_SHOP_PATH.'/kcp/pp_ax_hub_lib.php');
+include G4_SHOP_PATH.'/kcp/pp_cli_hub_lib.php';
 
 $tno            = $_POST['tno'];
 $req_tx         = $_POST['req_tx'];
 $mod_type       = $_POST['mod_type'];
 $mod_desc       = $_POST['mod_desc'];
-$cust_ip        = getenv("REMOTE_ADDR");
+$cust_ip        = getenv('REMOTE_ADDR');
+$rem_mny        = $_POST['rem_mny'];
+$mod_mny        = $_POST['mod_mny'];
+$tax_mny        = $_POST['tax_mny'];
+$mod_free_mny   = $_POST['mod_free_mny'];
 
-$c_PayPlus = new C_PP_CLI;
+if($default['de_tax_flag_use']) {
+    $mod_mny = strval($tax_mny + $mod_free_mny);
+}
+
+$c_PayPlus  = new C_PAYPLUS_CLI;
 $c_PayPlus->mf_clear();
 
 if ( $req_tx == "mod" )
 {
     $tran_cd = "00200000";
 
-    $c_PayPlus->mf_set_modx_data( "tno",      $tno      ); // KCP 원거래 거래번호
-    $c_PayPlus->mf_set_modx_data( "mod_type", $mod_type ); // 원거래 변경 요청 종류
-    $c_PayPlus->mf_set_modx_data( "mod_ip",   $cust_ip  ); // 변경 요청자 IP
-    $c_PayPlus->mf_set_modx_data( "mod_desc", $mod_desc ); // 변경 사유
+    $c_PayPlus->mf_set_modx_data( "tno"          , $tno                  );  // KCP 원거래 거래번호
+    $c_PayPlus->mf_set_modx_data( "mod_type"     , $mod_type			 );  // 원거래 변경 요청 종류
+    $c_PayPlus->mf_set_modx_data( "mod_ip"       , $cust_ip				 );  // 변경 요청자 IP
+    $c_PayPlus->mf_set_modx_data( "mod_desc"     , $mod_desc			 );  // 변경 사유
+    $c_PayPlus->mf_set_modx_data( "rem_mny"      , $rem_mny              );  // 취소 가능 잔액
+    $c_PayPlus->mf_set_modx_data( "mod_mny"      , $mod_mny              );  // 취소 요청 금액
 
-    if ( $mod_type == "RN07" || $mod_type == "STPA" ) // 부분취소의 경우
+    if($default['de_tax_flag_use'])
     {
-        $c_PayPlus->mf_set_modx_data( "mod_mny", $_POST[ "mod_mny" ] ); // 취소요청금액
-        $c_PayPlus->mf_set_modx_data( "rem_mny", $_POST[ "rem_mny" ] ); // 취소가능잔액
+        $mod_tax_mny = round((int)$tax_mny / 1.1);
+        $mod_vat_mny = (int)$tax_mny - $mod_tax_mny;
+
+        $c_PayPlus->mf_set_modx_data( "tax_flag"     , "TG03"				 );  // 복합과세 구분
+        $c_PayPlus->mf_set_modx_data( "mod_tax_mny"  , strval($mod_tax_mny)  );	 // 공급가 부분 취소 요청 금액
+        $c_PayPlus->mf_set_modx_data( "mod_vat_mny"  , strval($mod_vat_mny)	 );  // 부과세 부분 취소 요청 금액
+        $c_PayPlus->mf_set_modx_data( "mod_free_mny" , $mod_free_mny		 );  // 비관세 부분 취소 요청 금액
     }
 }
 
 if ( $tran_cd != "" )
 {
-    $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, "", $tran_cd, "",
-                          $g_conf_gw_url, $g_conf_gw_port, "payplus_cli_slib", $ordr_idxx,
-                          $cust_ip, "3" , 0, 0, $g_conf_key_dir, $g_conf_log_dir); // 응답 전문 처리
+    $c_PayPlus->mf_do_tx( "",                $g_conf_home_dir, $g_conf_site_cd,
+                          $g_conf_site_key,  $tran_cd,         "",
+                          $g_conf_gw_url,    $g_conf_gw_port,  "payplus_cli_slib",
+                          $ordr_idxx,        $cust_ip,         $g_conf_log_level,
+                          "",                0 );
 
     $res_cd  = $c_PayPlus->m_res_cd;  // 결과 코드
     $res_msg = $c_PayPlus->m_res_msg; // 결과 메시지
@@ -128,21 +149,14 @@ if ( $req_tx == "mod" )
     if ( $res_cd == "0000" )
     {
         $tno = $c_PayPlus->mf_get_res_data( "tno" );  // KCP 거래 고유 번호
+        $amount  = $c_PayPlus->mf_get_res_data( "amount"       ); // 원 거래금액
+        $mod_mny = $c_PayPlus->mf_get_res_data( "panc_mod_mny" ); // 취소요청된 금액
+        $rem_mny = $c_PayPlus->mf_get_res_data( "panc_rem_mny" ); // 취소요청후 잔액
 
-/* = -------------------------------------------------------------------------- = */
-/* =       부분취소 결과 처리                                                   = */
-/* = -------------------------------------------------------------------------- = */
-        if ( $mod_type == "RN07" || $mod_type == "STPA" ) // 부분취소의 경우
-        {
-            $amount  = $c_PayPlus->mf_get_res_data( "amount"       ); // 원 거래금액
-            $mod_mny = $c_PayPlus->mf_get_res_data( "panc_mod_mny" ); // 취소요청된 금액
-            $rem_mny = $c_PayPlus->mf_get_res_data( "panc_rem_mny" ); // 취소요청후 잔액
-
-            $sql = " update {$g4['shop_order_table']}
-                        set od_cancel_card = od_cancel_card + '$mod_mny'
-                        where od_id = '{$od['od_id']}' ";
-            sql_query($sql);
-        }
+        $sql = " update {$g4['shop_order_table']}
+                    set od_cancel_card = od_cancel_card + '$mod_mny'
+                    where od_id = '{$od['od_id']}' ";
+        sql_query($sql);
     } // End of [res_cd = "0000"]
 
 /* = -------------------------------------------------------------------------- = */

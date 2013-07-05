@@ -99,14 +99,14 @@ $row = sql_fetch($sql);
 $total_order = $row['sum_order'];
 
 // 상품목록
-$sql = " select a.it_id,
-                a.it_name,
-                a.cp_amount,
-                b.it_notax
-           from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
-          where a.uq_id = '{$od['uq_id']}'
-            and a.ct_num = '0'
-          order by a.ct_id ";
+$sql = " select it_id,
+                it_name,
+                cp_amount,
+                ct_notax
+           from {$g4['shop_cart_table']}
+          where uq_id = '{$od['uq_id']}'
+            and ct_num = '0'
+          order by ct_id ";
 $result = sql_query($sql);
 
 $pg_anchor = '<ul class="anchor">
@@ -153,7 +153,7 @@ $pg_anchor = '<ul class="anchor">
         <li>
             <p>
                 <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
-                <?php if($default['de_tax_flag_use'] && $row['it_notax']) echo '[비과세상품]'; ?>
+                <?php if($default['de_tax_flag_use'] && $row['ct_notax']) echo '[비과세상품]'; ?>
             </p>
 
             <table>
@@ -338,7 +338,7 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <?php if($od['od_settle_case'] == '계좌이체') { ?>
         <tr>
-            <th scope="row" class="sodr_sppay">결제 취소금액</th>
+            <th scope="row">결제 취소금액</th>
             <td><?php echo display_price($od['od_cancel_card']); ?></td>
         </tr>
         <?php } ?>
@@ -525,10 +525,9 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <?php if($od['od_settle_case'] == '계좌이체') { ?>
         <tr>
-            <th scope="row" class="sodr_sppay"><label for="od_cancel_card">결제 취소금액</label></th>
+            <th scope="row"><label for="od_cancel_card">결제 취소금액</label></th>
             <td>
                 <input type="text" name="od_cancel_card" value="<?php echo $od['od_cancel_card']; ?>" class="frm_input" size="10"> 원
-                <a href="./partcancel.php?od_id=<?php echo $od['od_id']; ?>" target="_blank" id="win_partcancel">결제부분취소</a>
             </td>
         </tr>
         <?php } ?>
@@ -598,7 +597,6 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row" class="sodr_sppay"><label for="od_cancel_card">카드 승인취소</label></th>
             <td>
                 <input type="text" name="od_cancel_card" value="<?php echo $od['od_cancel_card']; ?>" class="frm_input" size="10"> 원
-                <a href="./partcancel.php?od_id=<?php echo $od['od_id']; ?>" target="_blank" id="win_partcancel">결제부분취소</a>
             </td>
         </tr>
         <?php } ?>
@@ -667,6 +665,9 @@ $pg_anchor = '<ul class="anchor">
     </section>
 
     <div class="btn_confirm">
+        <?php if($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '신용카드') { ?>
+        <a href="./partcancel.php?od_id=<?php echo $od['od_id']; ?>" target="_blank" id="win_partcancel">결제금액 부분취소</a>
+        <?php } ?>
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
     </div>
     </form>
