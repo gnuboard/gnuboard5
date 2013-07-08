@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <h2 id="wrapper_title"><?php echo $g4['title'] ?></h2>
 
 <!-- 게시물 작성/수정 시작 { -->
-<form name="fwrite" id="fwrite" class="autosave" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
+<form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
 <input type="hidden" name="uid" value="<?php echo get_uniqid(); ?>">
 <input type="hidden" name="w" value="<?php echo $w ?>">
 <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -107,23 +107,18 @@ echo $option_hidden;
         <div id="autosave_wrapper">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
             <?php if ($is_member) { ?>
-            <button type="button" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
-            <?php } ?>
-
+            <button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
             <div id="autosave_pop">
                 <strong>임시 저장된 글 목록</strong>
                 <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
                 <ul>
-                <?php
-                // for 시작
-                ?>
-                <li><a href="#none" class="autosave_load">저장제목</a><span>일시 <button type="button" class="autosave_del">삭제</button></span></li>
-                <?php
-                // for 끝
-                ?>
+                <?php // for 시작 ?>
+                <!-- <li><a href="#none" class="autosave_load">저장제목</a><span>일시 <button type="button" class="autosave_del">삭제</button></span></li> -->
+                <?php // for 끝 ?>
                 </ul>
                 <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
             </div>
+            <?php } ?>
         </div>
     </td>
 </tr>
@@ -238,27 +233,79 @@ function fwrite_submit(f)
 
 <script>
 <?php if ($is_member) { ?>
+// 글의 제목과 내용을 저장하는 변수
+var save_wr_subject = "";
+var save_wr_content = "";
 function autosave() {
-    jQuery("form.autosave").each(function() {
+    $("form#fwrite").each(function() {
         if (typeof(CKEDITOR.instances.wr_content)!="undefined")
             this.wr_content.value = CKEDITOR.instances.wr_content.getData();
-        jQuery.ajax({
-            url: g4_bbs_url+"/ajax.autosave.php",
-            data: {
-                "uid" : this.uid.value,
-                "subject": this.wr_subject.value,
-                "content": this.wr_content.value
-            },
-            type: "POST",
-            success: function(data){
-                if (data) {
-                    $("#autosave_count").html(data);    
+        // 변수에 저장해 놓은 값과 다를 경우에만 임시 저장함
+        if (save_wr_subject != this.wr_subject.value || save_wr_content != this.wr_content.value) {
+            $.ajax({
+                url: g4_bbs_url+"/ajax.autosave.php",
+                data: {
+                    "uid" : this.uid.value,
+                    "subject": this.wr_subject.value,
+                    "content": this.wr_content.value
+                },
+                type: "POST",
+                success: function(data){
+                    if (data) {
+                        $("#autosave_count").html(data);    
+                    }
                 }
-            }
-        });
+            });
+            save_wr_subject = this.wr_subject.value;
+            save_wr_content = this.wr_content.value;
+        }
     });
 }
  
-setInterval(autosave, 3 * 1000);
+setInterval(autosave, 1 * 1000);
+
+$(function(){
+    $("#btn_autosave").click(function(){
+        if ($("#autosave_pop").is(":hidden")) {
+            $.get(g4_bbs_url+"/ajax.autosavelist.php", function(data){
+                //<li><a href="#none" class="autosave_load">저장제목</a><span>일시 <button type="button" class="autosave_del">삭제</button></span></li>
+                //console.log( "JSON Data: " + data );
+                $("#autosave_pop ul").empty();
+                $.each(data.autosave, function(i, as) { 
+                    $("#autosave_pop ul").append('<li class="autosave_load"><a href="#none">'+as.subject+'</a><span>'+as.datetime+' <button type="button" class="autosave_del">삭제</button></span></li>');
+                    $.data(document.body, "autosave_load"+i, as.id);
+                });
+            }, "json");
+            $("#autosave_pop").show();
+        } else {
+            $("#autosave_pop").hide();
+        }
+    });
+
+    $(".autosave_close").click(function(){ $("#autosave_pop").hide(); });
+
+    $(".autosave_load").live("click", function(){
+        var as_id = $.data(document.body, "autosave_load"+$(this).index());
+        $.get(g4_bbs_url+"/ajax.autosaveload.php", {"as_id":as_id}, function(data){
+            //console.log( "JSON Data: " + data );
+            $("#wr_subject").val(data.subject.replace(/\\\'/g, "'"));
+            if (typeof(CKEDITOR.instances.wr_content)!="undefined") {
+                CKEDITOR.instances.wr_content.setData(data.content);
+            }
+        }, "json");
+        $("#autosave_pop").hide();
+    });
+});
+
+
+/*
+$(document).click(function() {
+    $("#autosave_pop").hide();
+});
+
+$(document).focusin(function() {
+    $("#autosave_pop").hide();
+});
+*/
 <?php } ?>
 </script>

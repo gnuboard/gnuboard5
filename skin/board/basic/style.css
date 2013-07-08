@@ -35,7 +35,7 @@
 
 /* 게시판 쓰기 */
 #autosave_wrapper {position:relative}
-#autosave_pop {z-index:10;position:absolute;top:24px;right:117px;padding:8px;width:300px;height:auto !important;height:180px;max-height:180px;border:1px solid #565656;background:#fff;overflow-y:scroll}
+#autosave_pop {display:none;z-index:10;position:absolute;top:24px;right:117px;padding:8px;width:350px;height:auto !important;height:180px;max-height:180px;border:1px solid #565656;background:#fff;overflow-y:scroll}
 html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
 #autosave_pop strong {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #autosave_pop div {text-align:right}
@@ -45,6 +45,8 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #autosave_pop li:after {display:block;visibility:hidden;clear:both;content:""}
 #autosave_pop a {display:block;float:left}
 #autosave_pop span {display:block;float:right}
+.autosave_close {cursor:pointer;}
+.autosave_content {display:none;}
 
 /* 게시판 읽기 */
 #bo_v {margin-bottom:20px;padding-bottom:20px}
