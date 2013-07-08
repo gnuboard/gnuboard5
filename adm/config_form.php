@@ -63,10 +63,31 @@ if(!isset($config['cf_facebook_appid'])) {
 }
 
 // uniqid 테이블이 없을 경우 생성
-if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
+if(!sql_query(" DESC {$g4['uniqid_table']} ", false)) {
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
                   `uq_id` bigint(20) unsigned NOT NULL,
+                  `uq_ip` varchar(255) NOT NULL,
                   PRIMARY KEY (`uq_id`)
+                ) ", false);
+}
+
+if(!sql_query(" SELECT uq_ip from {$g4['uniqid_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE {$g4['uniqid_table']} ADD `uq_ip` VARCHAR(255) NOT NULL ");
+}
+
+
+// 임시저장 테이블이 없을 경우 생성
+if(!sql_query(" DESC {$g4['autosave_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['autosave_table']}` (
+                  `as_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `mb_id` varchar(20) NOT NULL,
+                  `as_uid` bigint(20) unsigned NOT NULL,
+                  `as_subject` varchar(255) NOT NULL,
+                  `as_content` text NOT NULL,
+                  `as_datetime` datetime NOT NULL,
+                  PRIMARY KEY (`as_id`),
+                  UNIQUE KEY `as_uid` (`as_uid`),
+                  KEY `mb_id` (`mb_id`)
                 ) ", false);
 }
 
