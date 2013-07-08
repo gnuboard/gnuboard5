@@ -15,10 +15,45 @@ if (!$od['od_id']) {
     alert("존재하는 주문이 아닙니다.");
 }
 
-if ($od['od_temp_amount'] > 0 && $od['od_receipt_amount'] == 0) {
-    ;
-} else {
+// 주문상품의 상태가 주문인지 체크
+$sql = " select SUM(IF(ct_status = '주문', 1, 0)) as od_count2,
+                COUNT(*) as od_count1
+            from {$g4['shop_cart_table']}
+            where uq_id = '$uq_id' ";
+$ct = sql_fetch($sql);
+
+if($ct['od_count1'] != $ct['od_count2'] || ($od['od_settle_case'] == '가상계좌' && $od['od_receipt_amount'] > 0))
     alert("취소할 수 있는 주문이 아닙니다.", G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uq_id=$uq_id");
+
+// PG 결제 취소
+if($od['od_tno']) {
+    if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
+        include './settle_'.$default['de_card_pg'].'.inc.php';
+    }
+    $_POST['tno'] = $od['od_tno'];
+    $_POST['req_tx'] = 'mod';
+    $_POST['mod_type'] = 'STSC';
+    if($od['od_escrow']) {
+        $_POST['req_tx'] = 'mod_escrow';
+        $_POST['mod_type'] = 'STE2';
+        if($od['od_settle_case'] == '가상계좌')
+            $_POST['mod_type'] = 'STE5';
+    }
+    $_POST['mod_desc'] = iconv("utf-8", "euc-kr", '주문자 본인 취소-'.$cancel_memo);
+    $_POST['site_cd'] = $default['de_kcp_mid'];
+
+    // 취소내역 한글깨짐방지
+    $def_locale = setlocale(LC_CTYPE, 0);
+    $locale_change = false;
+    if(preg_match("/utf[\-]?8/i", $def_locale)) {
+        setlocale(LC_CTYPE, 'ko_KR.euc-kr');
+        $locale_change = true;
+    }
+
+    include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
+
+    if($locale_change)
+        setlocale(LC_CTYPE, $def_locale);
 }
 
 // 장바구니 자료 취소
@@ -27,7 +62,7 @@ sql_query(" update {$g4['shop_cart_table']} set ct_status = '취소' where uq_id
 // 주문 취소
 $cancel_memo = addslashes($cancel_memo);
 //sql_query(" update $g4[shop_order_table] set od_temp_point = '0', od_receipt_point = '0', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - {$g4['time_ymdhis']} (취소이유 : {$cancel_memo})\") where uq_id = '$uq_id' ");
-sql_query(" update {$g4['shop_order_table']} set od_send_cost = '0', od_send_cost2 = '0', od_temp_point = '0', od_receipt_point = '0', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - ".G4_TIME_YMDHIS." (취소이유 : {$cancel_memo})\") where uq_id = '$uq_id' ");
+sql_query(" update {$g4['shop_order_table']} set od_send_cost = '0', od_send_cost2 = '0', od_temp_point = '0', od_receipt_amount = '0', od_receipt_point = '0', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - ".G4_TIME_YMDHIS." (취소이유 : {$cancel_memo})\") where uq_id = '$uq_id' ");
 
 // 주문취소 회원의 포인트를 되돌려 줌
 if ($od['od_receipt_point'] > 0) {

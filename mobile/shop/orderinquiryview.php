@@ -530,18 +530,18 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <?php
         // 취소한 내역이 없다면
         if ($tot_cancel_amount == 0) {
-            if ($od['od_temp_amount'] > 0 && $od['od_receipt_amount'] == 0) {
+            if ($od_count1 == $od_count2 && ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_amount'] == 0)) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
         <div id="sod_fin_cancelfrm">
-            <form method="post" action="<?php echo G4_SHOP_URL; ?>/orderinquirycancel.php">
+            <form method="post" action="<?php echo G4_SHOP_URL; ?>/orderinquirycancel.php" onsubmit="return fcancel_check(this);">
             <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
             <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
             <label for="cancel_memo">취소사유</label>
-            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input" size="40" maxlength="100">
+            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" size="40" maxlength="100">
             <input type="submit" value="확인" class="btn_frmline">
 
             </form>
@@ -573,6 +573,22 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <?php } ?>
 
 </div>
+
+<script>
+function fcancel_check(f)
+{
+    if(!confirm("주문을 정말 취소하시겠습니까?"))
+        return false;
+
+    var memo = f.cancel_memo.value;
+    if(memo == "") {
+        alert("취소사유를 입력해 주십시오.");
+        return false;
+    }
+
+    return true;
+}
+</script>
 
 <?php
 include_once(G4_MSHOP_PATH.'/_tail.php');
