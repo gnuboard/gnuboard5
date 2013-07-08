@@ -6,8 +6,6 @@ if (!$is_member) die('0');
 $uid     = escape_trim($_REQUEST['uid']);
 $subject = escape_trim(stripslashes($_REQUEST['subject']));
 $content = escape_trim(stripslashes($_REQUEST['content']));
-//$subject = escape_trim(htmlentities($_REQUEST['subject'], ENT_QUOTES));
-//$content = escape_trim($_REQUEST['content']);
 
 if ($subject && $content) {
     $sql = " select count(*) as cnt from {$g4['autosave_table']} where mb_id = '{$member['mb_id']}' and as_subject = '$subject' and as_content = '$content' ";

@@ -7,9 +7,12 @@ $as_id = (int)$_REQUEST['as_id'];
 
 $sql = " select as_subject, as_content from {$g4['autosave_table']} where mb_id = '{$member['mb_id']}' and as_id = {$as_id} ";
 $row = sql_fetch($sql);
-//$subject = stripslashes($row['as_subject']);
-//$content = stripslashes($row['as_content']);
-$subject = str_replace("\'", "\\\'", addslashes($row['as_subject']));
-$content = stripslashes($row['as_content']);
-echo "{\"subject\":\"{$subject}\", \"content\":\"{$content}\"}";
+$subject = $row['as_subject'];
+$content = $row['as_content'];
+
+echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+echo "<item>\n";
+echo "<subject><![CDATA[{$subject}]]></subject>\n";
+echo "<content><![CDATA[{$content}]]></content>\n";
+echo "</item>\n";
 ?>

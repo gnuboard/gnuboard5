@@ -234,8 +234,8 @@ function fwrite_submit(f)
 <script>
 <?php if ($is_member) { ?>
 // 글의 제목과 내용을 저장하는 변수
-var save_wr_subject = "";
-var save_wr_content = "";
+var save_wr_subject = null;
+var save_wr_content = null;
 function autosave() {
     $("form#fwrite").each(function() {
         if (typeof(CKEDITOR.instances.wr_content)!="undefined")
@@ -265,47 +265,62 @@ function autosave() {
 setInterval(autosave, 1 * 1000);
 
 $(function(){
+    // 임시저장된 글목록을 가져옴
     $("#btn_autosave").click(function(){
         if ($("#autosave_pop").is(":hidden")) {
             $.get(g4_bbs_url+"/ajax.autosavelist.php", function(data){
-                //<li><a href="#none" class="autosave_load">저장제목</a><span>일시 <button type="button" class="autosave_del">삭제</button></span></li>
-                //console.log( "JSON Data: " + data );
+                //alert(data);
+                //console.log( "Data: " + data);
                 $("#autosave_pop ul").empty();
-                $.each(data.autosave, function(i, as) { 
-                    $("#autosave_pop ul").append('<li class="autosave_load"><a href="#none">'+as.subject+'</a><span>'+as.datetime+' <button type="button" class="autosave_del">삭제</button></span></li>');
-                    $.data(document.body, "autosave_load"+i, as.id);
-                });
-            }, "json");
+                if ($(data).find("list").find("item").length > 0) {
+                    $(data).find("list").find("item").each(function(i) { 
+                        var id = $(this).find("id").text();
+                        var uid = $(this).find("uid").text();
+                        var subject = $(this).find("subject").text();
+                        var datetime = $(this).find("datetime").text();
+                        $("#autosave_pop ul").append('<li><a href="#none" class="autosave_load">'+subject+'</a><span>'+datetime+' <button type="button" class="autosave_del">삭제</button></span></li>');
+                        $.data(document.body, "autosave_id"+i, id);
+                        $.data(document.body, "autosave_uid"+i, uid);
+                    });
+                }
+            }, "xml");
             $("#autosave_pop").show();
         } else {
             $("#autosave_pop").hide();
         }
     });
 
-    $(".autosave_close").click(function(){ $("#autosave_pop").hide(); });
-
+    // 임시저장된 글 제목과 내용을 가져와서 제목과 내용 입력박스에 노출해 줌
     $(".autosave_load").live("click", function(){
-        var as_id = $.data(document.body, "autosave_load"+$(this).index());
+        var i = $(this).parents("li").index();
+        var as_id = $.data(document.body, "autosave_id"+i);
+        var as_uid = $.data(document.body, "autosave_uid"+i);
+        $("#fwrite input[name='uid']").val(as_uid);
         $.get(g4_bbs_url+"/ajax.autosaveload.php", {"as_id":as_id}, function(data){
-            //console.log( "JSON Data: " + data );
-            $("#wr_subject").val(data.subject.replace(/\\\'/g, "'"));
+            var subject = $(data).find("item").find("subject").text();
+            var content = $(data).find("item").find("content").text();
+            $("#wr_subject").val(subject);
             if (typeof(CKEDITOR.instances.wr_content)!="undefined") {
-                CKEDITOR.instances.wr_content.setData(data.content);
+                CKEDITOR.instances.wr_content.setData(content);
             }
-        }, "json");
+        }, "xml");
         $("#autosave_pop").hide();
     });
-});
 
+    $(".autosave_del").live("click", function(){
+        var i = $(this).parents("li").index();
+        var as_id = $.data(document.body, "autosave_id"+i);
+        $.get(g4_bbs_url+"/ajax.autosavedel.php", {"as_id":as_id}, function(data){ 
+            if (data == -1) {
+                alert("임시 저장된글을 삭제중에 오류가 발생하였습니다.");
+            } else {
+                $("#autosave_count").html(data);    
+                $("#autosave_pop ul > li").eq(i).remove();
+            }
+        });
+    });
 
-/*
-$(document).click(function() {
-    $("#autosave_pop").hide();
+    $(".autosave_close").click(function(){ $("#autosave_pop").hide(); });
 });
-
-$(document).focusin(function() {
-    $("#autosave_pop").hide();
-});
-*/
 <?php } ?>
 </script>
