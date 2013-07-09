@@ -91,13 +91,6 @@ if ($default['de_card_test']) {
     $g4['shop_cardpg']['kcp'] = "http://testadmin8.kcp.co.kr";
 }
 
-// 주문총액
-$sql = " select SUM(IF(io_type = 1, io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_order
-            from {$g4['shop_cart_table']}
-            where uq_id = '{$od['uq_id']}' ";
-$row = sql_fetch($sql);
-$total_order = $row['sum_order'];
-
 // 상품목록
 $sql = " select it_id,
                 it_name,
@@ -123,7 +116,7 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_sodr_list" class="cbox">
     <h2>주문상품 목록</h2>
     <?php echo $pg_anchor; ?>
-    <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($total_order); ?></strong>원</p>
+    <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($od['od_temp_amount']); ?></strong>원</p>
     <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $od['od_hope_date']; ?> (<?php echo get_yoil($od['od_hope_date']); ?>) 입니다.</p><?php } ?>
     <?php if($od['od_mobile']) { ?>
     <p>모바일 쇼핑몰의 주문입니다.</p>
