@@ -106,16 +106,13 @@ echo $option_hidden;
     <td>
         <div id="autosave_wrapper">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
-            <?php if ($is_member) { ?>
+            <?php if ($is_member) { // 임시 저장된 글 기능 ?>
+            <script src="<?php echo G4_JS_URL; ?>/autosave.js"></script>
             <button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
             <div id="autosave_pop">
                 <strong>임시 저장된 글 목록</strong>
                 <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
-                <ul>
-                <?php // for 시작 ?>
-                <!-- <li><a href="#none" class="autosave_load">저장제목</a><span>일시 <button type="button" class="autosave_del">삭제</button></span></li> -->
-                <?php // for 끝 ?>
-                </ul>
+                <ul></ul>
                 <div><button type="button" class="autosave_close"><img src="<?php echo $board_skin_url; ?>/img/btn_close.gif" alt="닫기"></button></div>
             </div>
             <?php } ?>
@@ -230,97 +227,3 @@ function fwrite_submit(f)
 }
 </script>
 <!-- } 게시물 작성/수정 끝 -->
-
-<script>
-<?php if ($is_member) { ?>
-// 글의 제목과 내용을 저장하는 변수
-var save_wr_subject = null;
-var save_wr_content = null;
-function autosave() {
-    $("form#fwrite").each(function() {
-        if (typeof(CKEDITOR.instances.wr_content)!="undefined")
-            this.wr_content.value = CKEDITOR.instances.wr_content.getData();
-        // 변수에 저장해 놓은 값과 다를 경우에만 임시 저장함
-        if (save_wr_subject != this.wr_subject.value || save_wr_content != this.wr_content.value) {
-            $.ajax({
-                url: g4_bbs_url+"/ajax.autosave.php",
-                data: {
-                    "uid" : this.uid.value,
-                    "subject": this.wr_subject.value,
-                    "content": this.wr_content.value
-                },
-                type: "POST",
-                success: function(data){
-                    if (data) {
-                        $("#autosave_count").html(data);    
-                    }
-                }
-            });
-            save_wr_subject = this.wr_subject.value;
-            save_wr_content = this.wr_content.value;
-        }
-    });
-}
- 
-setInterval(autosave, 1 * 1000);
-
-$(function(){
-    // 임시저장된 글목록을 가져옴
-    $("#btn_autosave").click(function(){
-        if ($("#autosave_pop").is(":hidden")) {
-            $.get(g4_bbs_url+"/ajax.autosavelist.php", function(data){
-                //alert(data);
-                //console.log( "Data: " + data);
-                $("#autosave_pop ul").empty();
-                if ($(data).find("list").find("item").length > 0) {
-                    $(data).find("list").find("item").each(function(i) { 
-                        var id = $(this).find("id").text();
-                        var uid = $(this).find("uid").text();
-                        var subject = $(this).find("subject").text();
-                        var datetime = $(this).find("datetime").text();
-                        $("#autosave_pop ul").append('<li><a href="#none" class="autosave_load">'+subject+'</a><span>'+datetime+' <button type="button" class="autosave_del">삭제</button></span></li>');
-                        $.data(document.body, "autosave_id"+i, id);
-                        $.data(document.body, "autosave_uid"+i, uid);
-                    });
-                }
-            }, "xml");
-            $("#autosave_pop").show();
-        } else {
-            $("#autosave_pop").hide();
-        }
-    });
-
-    // 임시저장된 글 제목과 내용을 가져와서 제목과 내용 입력박스에 노출해 줌
-    $(".autosave_load").live("click", function(){
-        var i = $(this).parents("li").index();
-        var as_id = $.data(document.body, "autosave_id"+i);
-        var as_uid = $.data(document.body, "autosave_uid"+i);
-        $("#fwrite input[name='uid']").val(as_uid);
-        $.get(g4_bbs_url+"/ajax.autosaveload.php", {"as_id":as_id}, function(data){
-            var subject = $(data).find("item").find("subject").text();
-            var content = $(data).find("item").find("content").text();
-            $("#wr_subject").val(subject);
-            if (typeof(CKEDITOR.instances.wr_content)!="undefined") {
-                CKEDITOR.instances.wr_content.setData(content);
-            }
-        }, "xml");
-        $("#autosave_pop").hide();
-    });
-
-    $(".autosave_del").live("click", function(){
-        var i = $(this).parents("li").index();
-        var as_id = $.data(document.body, "autosave_id"+i);
-        $.get(g4_bbs_url+"/ajax.autosavedel.php", {"as_id":as_id}, function(data){ 
-            if (data == -1) {
-                alert("임시 저장된글을 삭제중에 오류가 발생하였습니다.");
-            } else {
-                $("#autosave_count").html(data);    
-                $("#autosave_pop ul > li").eq(i).remove();
-            }
-        });
-    });
-
-    $(".autosave_close").click(function(){ $("#autosave_pop").hide(); });
-});
-<?php } ?>
-</script>
