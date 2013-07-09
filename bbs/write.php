@@ -380,6 +380,9 @@ if (!G4_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $bo
 }
 $editor_html = editor_html('wr_content', $content, $is_dhtml_editor);
 
+// 임시 저장된 글 갯수
+$autosave_count = autosave_count($member['mb_id']);
+
 include_once(G4_PATH.'/head.sub.php');
 @include_once ($board_skin_path.'/write.head.skin.php');
 include_once('./board_head.php');
