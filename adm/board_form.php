@@ -185,7 +185,7 @@ $pg_anchor = '<ul class="anchor">
         <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
         <td colspan="2">
             <?php echo get_group_select('gr_id', $board['gr_id'], 'required'); ?>
-            <!-- <?php if ($w=='u') { ?><script>document.write("<a href='javascript:;' onclick=\"location.href='./board_list.php?sfl=a.gr_id&amp;stx='+document.getElementById('gr_id').value;\">동일 그룹 목록</a>");</script><?php } ?> -->
+            <?php if ($w=='u') { ?><a href="javascript:document.location.href='./board_list.php?sfl=a.gr_id&stx='+document.fboardform.gr_id.value;" class="btn_frmline">동일그룹 게시판목록</a><?php } ?></td>
         </td>
     </tr>
     <tr>
