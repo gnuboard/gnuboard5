@@ -14,11 +14,8 @@ button {border-radius:0;font-size:1em}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
-a:link,
-a:visited {color:#000;text-decoration:none}
-a:hover,
-a:focus,
-a:active {color:#000;text-decoration:underline}
+a:link, a:visited {color:#000;text-decoration:none}
+a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 상단 레이아웃 */
 #hd {z-index:10;position:relative;border-top:3px solid #151515;background:#fff}
@@ -174,8 +171,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .frm_tbl caption {padding:10px 0;font-weight:bold;text-align:left}
 .frm_tbl th {width:100px;padding:7px 13px;border:1px solid #e9e9e9;border-left:0;background:#f7f7f7;text-align:left}
 .frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
-.frm_tbl textarea, .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
-.frm_input:focus, input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important;color:#fff}
+.frm_tbl textarea, .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;color:#000;vertical-align:middle}
 .frm_tbl textarea {width:98%;height:100px}
 .frm_address {display:block;margin-top:5px}
 .frm_file {display:block;margin-bottom:5px}
