@@ -3,13 +3,13 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#f9fafe;color:#000;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#f9fafe;color:#000;font-size:0.75em;font-family:dotum}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
+h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
-input {margin:0;padding:0;border-radius:0;font-family:"dotum"}
+input {margin:0;padding:0;border-radius:0;font-family:dotum}
 button {border-radius:0;font-size:1em}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
@@ -206,7 +206,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
 .new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win_ul li {float:left;margin-left:-1px}
-.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
+.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
 .new_win_desc {margin:0 auto;width:93%}
 
 /* 자바스크립트 alert 대안 */
