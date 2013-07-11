@@ -19,7 +19,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <div id="hd_wrapper">
 
         <div id="logo">
-            <a href="<?php echo G4_URL ?>"><img src="<?php echo G4_IMG_URL ?>/logo.jpg" alt="처음으로" width="53" height="37"></a>
+            <a href="<?php echo G4_URL ?>"><img src="<?php echo G4_IMG_URL ?>/logo.jpg" alt="처음으로"></a>
         </div>
 
         <fieldset id="schall">
