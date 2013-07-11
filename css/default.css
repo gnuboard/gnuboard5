@@ -3,22 +3,19 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#f9fafe;color:#000;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;background:#f9fafe;color:#000;font-size:0.75em;font-family:dotum}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
+h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
-input {margin:0;padding:0;border-radius:0;font-family:"dotum"}
+input {margin:0;padding:0;border-radius:0;font-family:dotum}
 button {border-radius:0;font-size:1em}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
-a:link,
-a:visited {color:#000;text-decoration:none}
-a:hover,
-a:focus,
-a:active {color:#000;text-decoration:underline}
+a:link, a:visited {color:#000;text-decoration:none}
+a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 상단 레이아웃 */
 #hd {z-index:10;position:relative;border-top:3px solid #151515;background:#fff}
@@ -28,7 +25,7 @@ a:active {color:#000;text-decoration:underline}
 #logo {padding:17px 0}
 
 /* 전체 검색 */
-#sch_all {position:absolute;top:22px;left:70px;margin:0;padding:0;border:1px solid #555}
+#sch_all {position:absolute;top:22px;left:170px;margin:0;padding:0;border:1px solid #555}
 #sch_all legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #sch_all_stx {padding-left:5px;width:165px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
 #sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff}
@@ -174,8 +171,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .frm_tbl caption {padding:10px 0;font-weight:bold;text-align:left}
 .frm_tbl th {width:100px;padding:7px 13px;border:1px solid #e9e9e9;border-left:0;background:#f7f7f7;text-align:left}
 .frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
-.frm_tbl textarea, .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle}
-.frm_input:focus, input.required:focus {padding:3px 3px 4px;border:0;background:#21272e !important;color:#fff}
+.frm_tbl textarea, .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;color:#000;vertical-align:middle}
 .frm_tbl textarea {width:98%;height:100px}
 .frm_address {display:block;margin-top:5px}
 .frm_file {display:block;margin-bottom:5px}
@@ -206,7 +202,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
 .new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win_ul li {float:left;margin-left:-1px}
-.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
+.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
 .new_win_desc {margin:0 auto;width:93%}
 
 /* 자바스크립트 alert 대안 */
