@@ -27,7 +27,7 @@ if (!$od['od_id']) {
     alert("존재하는 주문이 아닙니다.");
 }
 
-$sql = " select count(*) as cnt from {$g4['shop_request_table']} where rq_type = '$rq_type' and od_id = '$od_id' and rq_status = '0' ";
+$sql = " select count(*) as cnt from {$g4['shop_request_table']} where od_id = '$od_id' and rq_status = '0' ";
 $rq = sql_fetch($sql);
 
 if($rq['cnt'])
