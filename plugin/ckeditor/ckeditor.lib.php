@@ -57,7 +57,7 @@ function get_editor_js($id, $ckeditor=true)
 function chk_editor_js($id, $ckeditor=true, $textarea_name="내용을")
 {
     if ( $ckeditor ) {
-        return "if (!{$id}_editor_data) { alert(\"$textarea_name 입력해 주십시오.\"); CKEDITOR.instances.{$id}.focus(); return false; }\n";
+        return "if (!{$id}_editor_data) { alert(\"$textarea_name 입력해 주십시오.\"); CKEDITOR.instances.{$id}.focus(); return false; }\nif (typeof(f.wr_content)!=\"undefined\") f.wr_content.value = {$id}_editor_data;\n";
     } else {
         return "if (!{$id}_editor.value) { alert(\"$textarea_name 입력해 주십시오.\"); {$id}_editor.focus(); return false; }\n";
     }

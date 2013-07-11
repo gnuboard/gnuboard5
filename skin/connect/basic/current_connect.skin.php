@@ -16,7 +16,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tbody>
 <?php
 for ($i=0; $i<count($list); $i++) {
-    $location = conv_content($list[$i]['lo_location'], 0);
+    //$location = conv_content($list[$i]['lo_location'], 0);
+    $location = $list[$i]['lo_location'];
     // 최고관리자에게만 허용
     // 이 조건문은 가능한 변경하지 마십시오.
     if ($list[$i]['lo_url'] && $is_admin == 'super') $display_location = "<a href=\"".$list[$i]['lo_url']."\">".$location."</a>";

@@ -647,3 +647,22 @@ CREATE TABLE IF NOT EXISTS `g4s_syndi_log` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `g4s_autosave`
+--
+
+DROP TABLE IF EXISTS `g4s_autosave`;
+CREATE TABLE IF NOT EXISTS `g4s_autosave` (
+  `as_id` int(11) NOT NULL AUTO_INCREMENT,
+  `mb_id` varchar(20) NOT NULL,
+  `as_uid` bigint(20) unsigned NOT NULL,
+  `as_subject` varchar(255) NOT NULL,
+  `as_content` text NOT NULL,
+  `as_datetime` datetime NOT NULL,
+  PRIMARY KEY (`as_id`),
+  UNIQUE KEY `as_uid` (`as_uid`),
+  KEY `mb_id` (`mb_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------

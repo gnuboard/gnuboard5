@@ -1737,7 +1737,7 @@ function get_uniqid()
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
         $key = date('YmdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
 
-        $result = sql_query(" insert into {$g4['uniqid_table']} values ('$key') ", false);
+        $result = sql_query(" insert into {$g4['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
         if ($result) break; // 쿼리가 정상이면 빠진다.
 
         // insert 하지 못했으면 일정시간 쉰다음 다시 유일키를 만든다.
@@ -2089,5 +2089,19 @@ function googl_short_url($longUrl)
     curl_close($curlObj);
 
     return $json->id;
+}
+
+
+// 임시 저장된 글 갯수
+function autosave_count($mb_id)
+{
+    global $g4;
+
+    if ($mb_id) {
+        $row = sql_fetch(" select count(*) as cnt from {$g4['autosave_table']} where mb_id = '$mb_id' ");
+        return (int)$row['cnt'];
+    } else {
+        return 0;
+    }
 }
 ?>
