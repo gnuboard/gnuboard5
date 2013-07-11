@@ -207,7 +207,7 @@ fwrite($f, "\$g4['visit_sum_table'] = G4_TABLE_PREFIX.'visit_sum'; // 방문자 
 fwrite($f, "\$g4['uniqid_table'] = G4_TABLE_PREFIX.'uniqid'; // 유니크한 값을 만드는 테이블\n");
 fwrite($f, "\$g4['syndi_log_table'] = G4_TABLE_PREFIX.'syndi_log'; // 네이버 신디케이션 컨텐츠 삭제 로그 테이블\n");
 fwrite($f, "\$g4['autosave_table'] = G4_TABLE_PREFIX.'autosave'; // 게시글 작성시 일정시간마다 글을 임시 저장하는 테이블\n");
-fwrite($f, " ?>");
+fwrite($f, "?>");
 
 fclose($f);
 @chmod($file, 0606);
