@@ -369,8 +369,6 @@ html.no-overflowscrolling #it_coupon_frm {height:auto;max-height:10000px !import
 #sod_frm_pay .basic_tbl td {border-top:1px solid #e9e9e9 !important;border-bottom:1px solid #e9e9e9 !important;line-height:1.5em !important;word-break:break-all !important}
 #sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
 html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_frm {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
-#sod_frm_pay .frm_input {background:#fff !important}
-#sod_frm_pay .frm_input:focus {color:#000}
 
 #sod_frm_paysel {margin:0 0 1.8em;padding:1em;border:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
 #sod_frm_paysel legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -517,7 +515,6 @@ td.empty_table {padding:5em 0;text-align:center}
 .frm_tbl th {padding-left:1em;width:110px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
 .frm_tbl td {padding:0.4em 0.5em;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
 .frm_tbl textarea, .frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em;-webkit-appearance:none}
-.frm_input:focus, input.required:focus {border:1px solid #21272e;background:#21272e !important;color:#fff;line-height:1.8em}
 .frm_tbl textarea {width:90%;height:10em}
 .frm_address {display:block;margin-top:0.3em}
 .frm_file {display:block;margin-bottom:0.3em}

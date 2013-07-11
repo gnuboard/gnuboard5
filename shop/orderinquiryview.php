@@ -91,7 +91,8 @@ if(openwin != null) {
                 <table class="basic_tbl">
                 <thead>
                 <tr>
-                    <th scope="col" colspan="2">옵션항목</th>
+                    <th scope="col">선택</th>
+                    <th scope="col">옵션항목</th>
                     <th scope="col">수량</th>
                     <th scope="col">판매가</th>
                     <th scope="col">소계</th>
@@ -118,10 +119,10 @@ if(openwin != null) {
                     $point = $opt['ct_point'] * $opt['ct_qty'];
                 ?>
                 <tr>
-                    <td>
+                    <td class="td_chk">
                         <input type="hidden" name="ct_id[<?php echo $idx; ?>]" value="<?php echo $opt['ct_id']; ?>">
-                        <label for="chk_ct_id_<?php echo $idx; ?>"><?php echo $opt['ct_option']; ?> 선택</label>
-                        <input type="checkbox" name="chk_ct_id[<?php echo $idx; ?>]" id="chk_ct_id_<?php echo $idx; ?>" value="1">
+                        <label for="chk_ct_id_<?php echo $idx; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
+                        <input type="checkbox" name="chk_ct_id[<?php echo $idx; ?>]" value="1" id="chk_ct_id_<?php echo $idx; ?>">
                     </td>
                     <td><?php echo $opt['ct_option']; ?></td>
                     <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
@@ -160,6 +161,21 @@ if(openwin != null) {
             $org_send_cost = $send_cost + $send_coupon;
             ?>
         </ul>
+
+        <div id="request_form">
+            <div>
+                <label for="rq_content">요청내용</label>
+                <input type="text" name="rq_content" value="" id="rq_content" required class="required frm_input">
+                <input type="submit" value="확인" class="btn_frmline">
+                <button type="button" id="request_cancel" class="btn_cancel">닫기</button>
+            </div>
+        </div>
+
+        <div id="sod_req_btn">
+            <button type="button" class="req_button btn_frmline">취소요청</button>
+            <button type="button" class="req_button btn_frmline">교환요청</button>
+            <button type="button" class="req_button btn_frmline">반품요청</button>
+        </div>
 
         <?php
         // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인
@@ -202,23 +218,6 @@ if(openwin != null) {
             <dt class="sod_bsk_point">포인트</dt>
             <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
         </dl>
-
-        <div id="request_form">
-            <div>
-                <label for="rq_content">요청내용</label>
-                <input type="text" name="rq_content" id="rq_content" value="">
-            </div>
-            <div>
-                <input type="submit" value="확인" required class="required">
-                <button type="button" id="request_cancel">취소</button>
-            </div>
-        </div>
-
-        <div>
-            <button type="button" class="req_button">취소요청</button>
-            <button type="button" class="req_button">교환요청</button>
-            <button type="button" class="req_button">반품요청</button>
-        </div>
 
     </form>
     </section>
