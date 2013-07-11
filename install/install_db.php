@@ -520,7 +520,7 @@ fclose($f);
 
 if($shop_install) {
     @copy('./logo_img', $data_path.'/common/logo_img');
-    @copy('./logo_img', $data_path.'/common/mobile_logo_img');
+    @copy('./mobile_logo_img', $data_path.'/common/mobile_logo_img');
     @copy('./main_img', $data_path.'/common/main_img');
 }
 //-------------------------------------------------------------------------------------------------
