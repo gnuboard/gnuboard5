@@ -358,4 +358,29 @@ if(!$result) {
                     ADD `od_escrow` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_tno` ", true);
 }
 */
+
+// shop_request 테이블이 없을 경우 생성
+if(!sql_query(" select rq_id from {$g4['shop_request_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_request_table']}` (
+                  `rq_id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `rq_type` TINYINT(4) NOT NULL DEFAULT '0',
+                  `od_id` BIGINT(20) unsigned NOT NULL,
+                  `ct_id` VARCHAR(255) NOT NULL DEFAULT '',
+                  `mb_id` VARCHAR(20) NOT NULL DEFAULT '',
+                  `rq_content` TEXT NOT NULL,
+                  `rq_reg_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  `rq_ip` VARCHAR(255) NOT NULL DEFAULT '',
+                  `rq_status` TINYINT(4) NOT NULL DEFAULT '0',
+                  `rq_item` TEXT NOT NULL,
+                  `rq_recv` TINYINT(4) NOT NULL DEFAULT '0',
+                  `dl_company` INT(11) NOT NULL DEFAULT '0',
+                  `rq_invoice` VARCHAR(255) NOT NULL DEFAULT '0',
+                  `rq_amount1` INT(11) NOT NULL DEFAULT '0',
+                  `rq_amount2` INT(11) NOT NULL DEFAULT '0',
+                  `rq_account` VARCHAR(255) NOT NULL DEFAULT '0',
+                  `rq_process` TEXT NOT NULL,
+                  `rq_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  PRIMARY KEY (`rq_id`)
+                ) ", false);
+}
 ?>

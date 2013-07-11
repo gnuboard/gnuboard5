@@ -22,6 +22,13 @@ if (!$od['od_id']) {
     alert("조회하실 주문서가 없습니다.", G4_SHOP_URL);
 }
 
+// 처리 중인 요청이 있는지..
+$dsp_request = true;
+$sql = " select count(*) as cnt from {$g4['shop_request_table']} where od_id = '$od_id' and rq_status = '0' ";
+$rq = sql_fetch($sql);
+if($rq['cnt'])
+    $dsp_request = false;
+
 // 결제방법
 $settle_case = $od['od_settle_case'];
 
@@ -44,6 +51,10 @@ if(openwin != null) {
     <p>주문번호 <strong><?php echo $od_id; ?></strong></p>
 
     <section id="sod_fin_list">
+    <form name="forderrequest" method="post" action="./orderrequestupdate.php" onsubmit="return frequest_check(this);">
+    <input type="hidden" name="od_id" value="<?php echo $od['od_id']; ?>">
+    <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
+    <input type="hidden" name="rq_type" value="">
         <h2>주문하신 상품</h2>
         <span class="sound_only">상품 상태 설명</span>
         <dl id="sod_fin_legend">
@@ -58,6 +69,7 @@ if(openwin != null) {
         </dl>
         <?php
         $od_count1 = $od_count2 = 0;
+        $idx = 0;
 
         $sql = " select it_id, it_name, cp_amount
                     from {$g4['shop_cart_table']}
@@ -79,7 +91,7 @@ if(openwin != null) {
                 <table class="basic_tbl">
                 <thead>
                 <tr>
-                    <th scope="col">옵션항목</th>
+                    <th scope="col" colspan="2">옵션항목</th>
                     <th scope="col">수량</th>
                     <th scope="col">판매가</th>
                     <th scope="col">소계</th>
@@ -89,7 +101,7 @@ if(openwin != null) {
                 </thead>
                 <tbody>
                 <?php
-                $sql = " select ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
+                $sql = " select ct_id, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
                             from {$g4['shop_cart_table']}
                             where uq_id = '$uq_id'
                               and it_id = '{$row['it_id']}'
@@ -106,6 +118,11 @@ if(openwin != null) {
                     $point = $opt['ct_point'] * $opt['ct_qty'];
                 ?>
                 <tr>
+                    <td>
+                        <input type="hidden" name="ct_id[<?php echo $idx; ?>]" value="<?php echo $opt['ct_id']; ?>">
+                        <label for="chk_ct_id_<?php echo $idx; ?>"><?php echo $opt['ct_option']; ?> 선택</label>
+                        <input type="checkbox" name="chk_ct_id[<?php echo $idx; ?>]" id="chk_ct_id_<?php echo $idx; ?>" value="1">
+                    </td>
                     <td><?php echo $opt['ct_option']; ?></td>
                     <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
                     <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
@@ -126,6 +143,8 @@ if(openwin != null) {
                     $od_count1++;
                     if($opt['ct_status'] == '주문')
                         $od_count2++;
+
+                    $idx++;
                 }
                 ?>
                 </tbody>
@@ -184,6 +203,24 @@ if(openwin != null) {
             <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
         </dl>
 
+        <div id="request_form">
+            <div>
+                <label for="rq_content">요청내용</label>
+                <input type="text" name="rq_content" id="rq_content" value="">
+            </div>
+            <div>
+                <input type="submit" value="확인" required class="required">
+                <button type="button" id="request_cancel">취소</button>
+            </div>
+        </div>
+
+        <div>
+            <button type="button" class="req_button">취소요청</button>
+            <button type="button" class="req_button">교환요청</button>
+            <button type="button" class="req_button">반품요청</button>
+        </div>
+
+    </form>
     </section>
 
     <div id="sod_fin_view">
@@ -594,6 +631,61 @@ if(openwin != null) {
 <!-- } 주문상세내역 끝 -->
 
 <script>
+var req_act = "";
+
+$(function() {
+    $(".req_button").click(function() {
+        var $chk_item = $("input[name^=chk_ct_id]:checked");
+        req_act = $(this).text();
+        <?php if(!$dsp_request) { ?>
+        alert("관리자가 처리 중인 요청내용이 있어 추가로 요청하실 수 없습니다.");
+        return false;
+        <?php } ?>
+
+        if($chk_item.size() < 1) {
+            alert(req_act+"할 상품을 하나 이상 선택해 주십시오");
+            return false;
+        }
+
+        $("input[name=rq_content]").val("");
+        $("#request_form").show();
+
+    });
+
+    $("#request_cancel").click(function() {
+        $("#request_form").hide();
+    });
+});
+
+function frequest_check(f)
+{
+    var rq_type;
+    var $chk_item = $("input[name^=chk_ct_id]:checked");
+    if($chk_item.size() < 1) {
+        alert(req_act+"할 상품을 하나 이상 선택해 주십시오");
+        return false;
+    }
+
+    if(!confirm("선택하신 상품을 "+req_act+"하시겠습니까?"))
+        return false;
+
+    switch(req_act) {
+        case "교환요청":
+            rq_type = 1;
+            break;
+        case "반품요청":
+            rq_type = 2;
+            break;
+        default:
+            rq_type = 0;
+            break;
+    }
+
+    f.rq_type.value = rq_type;
+
+    return true;
+}
+
 function fcancel_check(f)
 {
     if(!confirm("주문을 정말 취소하시겠습니까?"))
