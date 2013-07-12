@@ -122,6 +122,21 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             ?>
         </ul>
 
+        <div id="request_form">
+            <div>
+                <label for="rq_content">요청내용</label>
+                <input type="text" name="rq_content" value="" id="rq_content" required class="required frm_input">
+                <input type="submit" value="확인" class="btn_frmline">
+                <button type="button" id="request_close" class="btn_cancel">닫기</button>
+            </div>
+        </div>
+
+        <div id="sod_req_btn">
+            <button type="button" class="req_button btn_frmline">취소요청</button>
+            <button type="button" class="req_button btn_frmline">교환요청</button>
+            <button type="button" class="req_button btn_frmline">반품요청</button>
+        </div>
+
         <?php
         // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인
         $od_coupon = $od['od_coupon'];
@@ -575,6 +590,62 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 </div>
 
 <script>
+var req_act = "";
+
+$(function() {
+    $(".req_button").click(function() {
+        var $chk_item = $("input[name^=chk_ct_id]:checked");
+        req_act = $(this).text();
+        <?php if(!$dsp_request) { ?>
+        alert("관리자가 처리 중인 요청내용이 있어 추가로 요청하실 수 없습니다.");
+        return false;
+        <?php } ?>
+
+        if($chk_item.size() < 1) {
+            alert(req_act+"할 상품을 하나 이상 선택해 주십시오");
+            return false;
+        }
+
+        $("input[name=rq_content]").val("");
+        $("#request_form label").text(req_act+"내용");
+        $("#request_form div").css("display", "block");
+
+    });
+
+    $("#request_close").click(function() {
+        $("#request_form div").css("display", "none");
+    });
+});
+
+function frequest_check(f)
+{
+    var rq_type;
+    var $chk_item = $("input[name^=chk_ct_id]:checked");
+    if($chk_item.size() < 1) {
+        alert(req_act+"할 상품을 하나 이상 선택해 주십시오");
+        return false;
+    }
+
+    if(!confirm("선택하신 상품을 "+req_act+"하시겠습니까?"))
+        return false;
+
+    switch(req_act) {
+        case "교환요청":
+            rq_type = 1;
+            break;
+        case "반품요청":
+            rq_type = 2;
+            break;
+        default:
+            rq_type = 0;
+            break;
+    }
+
+    f.rq_type.value = rq_type;
+
+    return true;
+}
+
 function fcancel_check(f)
 {
     if(!confirm("주문을 정말 취소하시겠습니까?"))
