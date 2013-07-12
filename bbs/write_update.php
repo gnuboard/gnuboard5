@@ -557,7 +557,7 @@ $row = sql_fetch(" select count(*) as cnt from {$g4['board_file_table']} where b
 sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
 
 // 자동저장된 레코드를 삭제한다.
-sql_query(" delete from g4s_autosave where as_uid = '{$uid}' ");
+sql_query(" delete from {$g4['autosave_table']} where as_uid = '{$uid}' ");
 //------------------------------------------------------------------------------
 
 // 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 패스워드를 묻지 않기 위함
