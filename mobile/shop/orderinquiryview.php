@@ -17,6 +17,13 @@ if (!$od['od_id']) {
     alert("조회하실 주문서가 없습니다.", G4_SHOP_URL);
 }
 
+// 처리 중인 요청이 있는지..
+$dsp_request = true;
+$sql = " select count(*) as cnt from {$g4['shop_request_table']} where od_id = '$od_id' and rq_status = '0' ";
+$rq = sql_fetch($sql);
+if($rq['cnt'])
+    $dsp_request = false;
+
 // 결제방법
 $settle_case = $od['od_settle_case'];
 
@@ -44,6 +51,9 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <dd>상품 배송이 완료되었습니다.</dd>
         </dl>
         <?php
+        $od_count1 = $od_count2 = 0;
+        $idx = 0;
+
         $sql = " select it_id, it_name, cp_amount
                     from {$g4['shop_cart_table']}
                     where uq_id = '$uq_id'
@@ -64,6 +74,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                 <table class="basic_tbl">
                 <thead>
                 <tr>
+                    <th scope="col">선택</th>
                     <th scope="col">옵션항목</th>
                     <th scope="col">수량</th>
                     <th scope="col">판매가</th>
@@ -91,6 +102,11 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                     $point = $opt['ct_point'] * $opt['ct_qty'];
                 ?>
                 <tr>
+                    <td class="td_chk">
+                        <input type="hidden" name="ct_id[<?php echo $idx; ?>]" value="<?php echo $opt['ct_id']; ?>">
+                        <label for="chk_ct_id_<?php echo $idx; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
+                        <input type="checkbox" name="chk_ct_id[<?php echo $idx; ?>]" value="1" id="chk_ct_id_<?php echo $idx; ?>">
+                    </td>
                     <td><?php echo $opt['ct_option']; ?></td>
                     <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
                     <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
@@ -106,6 +122,13 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                         $tot_point       += $point;
                         $tot_sell_amount += $sell_amount;
                     }
+
+                    // 전체 상품의 상태가 주문인지 비교할 때 사용
+                    $od_count1++;
+                    if($opt['ct_status'] == '주문')
+                        $od_count2++;
+
+                    $idx++;
                 }
                 ?>
                 </tbody>
@@ -545,7 +568,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <?php
         // 취소한 내역이 없다면
         if ($tot_cancel_amount == 0) {
-            if ($od_count1 == $od_count2 && ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_amount'] == 0)) {
+            if ($dsp_request && $od_count1 == $od_count2 && ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_amount'] == 0)) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
