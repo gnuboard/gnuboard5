@@ -167,7 +167,7 @@ if(openwin != null) {
                 <label for="rq_content">요청내용</label>
                 <input type="text" name="rq_content" value="" id="rq_content" required class="required frm_input">
                 <input type="submit" value="확인" class="btn_frmline">
-                <button type="button" id="request_cancel" class="btn_cancel">닫기</button>
+                <button type="button" id="request_close" class="btn_cancel">닫기</button>
             </div>
         </div>
 
@@ -584,7 +584,7 @@ if(openwin != null) {
         <?php
         // 취소한 내역이 없다면
         if ($tot_cancel_amount == 0) {
-            if ($od_count1 == $od_count2 && ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_amount'] == 0)) {
+            if ($dsp_request && $od_count1 == $od_count2 && ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_amount'] == 0)) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
@@ -647,12 +647,13 @@ $(function() {
         }
 
         $("input[name=rq_content]").val("");
-        $("#request_form").show();
+        $("#request_form label").text(req_act+"내용");
+        $("#request_form div").css("display", "block");
 
     });
 
-    $("#request_cancel").click(function() {
-        $("#request_form").hide();
+    $("#request_close").click(function() {
+        $("#request_form div").css("display", "none");
     });
 });
 
