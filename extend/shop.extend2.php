@@ -379,8 +379,14 @@ if(!sql_query(" select rq_id from {$g4['shop_request_table']} limit 1 ", false))
                   `rq_amount2` INT(11) NOT NULL DEFAULT '0',
                   `rq_account` VARCHAR(255) NOT NULL DEFAULT '0',
                   `rq_process` TEXT NOT NULL,
+                  `rq_is_admin` TINYINT(4) NOT NULL DEFAULT '0',
                   `rq_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
                   PRIMARY KEY (`rq_id`)
                 ) ", false);
+}
+
+if(!sql_query(" select rq_parent from {$g4['shop_request_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_request_table']}`
+                    ADD `rq_parent` INT(11) NOT NULL DEFAULT '0' AFTER `rq_ip` ", true);
 }
 ?>

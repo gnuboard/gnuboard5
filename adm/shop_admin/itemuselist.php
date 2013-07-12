@@ -161,7 +161,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td class="td_num"><?php echo $row['is_score']; ?></td>
         <td class="sit_use_confirm"><input type="checkbox" name="is_confirm[<?php echo $i; ?>]" <?php echo ($row['is_confirm'] ? 'checked' : ''); ?> value="1"></td>
         <td class="td_smallmng">
-            <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;$qstr"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>수정</a>
+            <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>수정</a>
         </td>
     </tr>
 

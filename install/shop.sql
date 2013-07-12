@@ -671,6 +671,7 @@ CREATE TABLE IF NOT EXISTS `shop_request` (
   `rq_content` TEXT NOT NULL,
   `rq_reg_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `rq_ip` VARCHAR(255) NOT NULL DEFAULT '',
+  `rq_parent` INT(11) NOT NULL DEFAULT '0',
   `rq_status` TINYINT(4) NOT NULL DEFAULT '0',
   `rq_item` TEXT NOT NULL,
   `rq_recv` TINYINT(4) NOT NULL DEFAULT '0',
