@@ -175,8 +175,8 @@ if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
     alert('제목을 입력하여 주십시오.');
 
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
-@mkdir(G4_DATA_PATH.'/file/'.$bo_table, 0707);
-@chmod(G4_DATA_PATH.'/file/'.$bo_table, 0707);
+@mkdir(G4_DATA_PATH.'/file/'.$bo_table, G4_DIR_PERMISSION);
+@chmod(G4_DATA_PATH.'/file/'.$bo_table, G4_DIR_PERMISSION);
 
 $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
 
@@ -276,7 +276,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         $error_code = move_uploaded_file($tmp_file, $dest_file) or die($_FILES['bf_file']['error'][$i]);
 
         // 올라간 파일의 퍼미션을 변경합니다.
-        chmod($dest_file, 0606);
+        chmod($dest_file, G4_FILE_PERMISSION);
     }
 }
 

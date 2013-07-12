@@ -121,8 +121,8 @@ $sql = " insert into {$g4['board_table']}
 sql_query($sql);
 
 // 게시판 폴더 생성
-@mkdir(G4_DATA_PATH.'/file/'.$target_table, 0707);
-@chmod(G4_DATA_PATH.'/file/'.$target_table, 0707);
+@mkdir(G4_DATA_PATH.'/file/'.$target_table, G4_DIR_PERMISSION);
+@chmod(G4_DATA_PATH.'/file/'.$target_table, G4_DIR_PERMISSION);
 
 // 디렉토리에 있는 파일의 목록을 보이지 않게 한다.
 $board_path = G4_DATA_PATH.'/file/'.$target_table;
@@ -130,7 +130,7 @@ $file = $board_path . '/index.php';
 $f = @fopen($file, 'w');
 @fwrite($f, '');
 @fclose($f);
-@chmod($file, 0606);
+@chmod($file, G4_FILE_PERMISSION);
 
 $copy_file = 0;
 if ($copy_case == 'schema_data_both') {
@@ -141,19 +141,19 @@ if ($copy_case == 'schema_data_both') {
         // 김선용 201007 :
         if(is_dir(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry)){
             $dd = dir(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry);
-            @mkdir(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, 0707);
-            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, 0707);
+            @mkdir(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry G4_DIR_PERMISSION);
+            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry G4_DIR_PERMISSION);
             while ($entry2 = $dd->read()) {
                 if ($entry2 == '.' || $entry2 == '..') continue;
                 @copy(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry.'/'.$entry2, G4_DATA_PATH.'/file/'.$target_table.'/'.$entry.'/'.$entry2);
-                @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry.'/'.$entry2, 0707);
+                @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry.'/'.$entry2, G4_DIR_PERMISSION);
                 $copy_file++;
             }
             $dd->close();
         }
         else {
             @copy(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry, G4_DATA_PATH.'/file/'.$target_table.'/'.$entry);
-            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, 0707);
+            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry G4_DIR_PERMISSION);
             $copy_file++;
         }
     }

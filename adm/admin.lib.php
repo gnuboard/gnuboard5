@@ -159,7 +159,7 @@ function icon($act, $link='', $target='_parent')
 function rm_rf($file)
 {
     if (file_exists($file)) {
-        @chmod($file,0777);
+        @chmod($file, G4_FILE_PERMISSION);
         if (is_dir($file)) {
             $handle = opendir($file);
             while($filename = readdir($handle)) {

@@ -27,15 +27,15 @@ if ($file = $_POST['bo_include_tail']) {
 $board_path = G4_DATA_PATH.'/file/'.$bo_table;
 
 // 게시판 디렉토리 생성
-@mkdir($board_path, 0707);
-@chmod($board_path, 0707);
+@mkdir($board_path, G4_DIR_PERMISSION);
+@chmod($board_path, G4_DIR_PERMISSION);
 
 // 디렉토리에 있는 파일의 목록을 보이지 않게 한다.
 $file = $board_path . '/index.php';
 $f = @fopen($file, 'w');
 @fwrite($f, '');
 @fclose($f);
-@chmod($file, 0606);
+@chmod($file, G4_FILE_PERMISSION);
 
 // 분류에 & 나 = 는 사용이 불가하므로 2바이트로 바꾼다.
 $src_char = array('&', '=');

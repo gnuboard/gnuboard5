@@ -97,7 +97,7 @@ while ($row = sql_fetch_array($result))
                     {
                         // 원본파일을 복사하고 퍼미션을 변경
                         @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$row3['bf_file']);
-                        @chmod($dst_dir/$row3['bf_file'], 0606);
+                        @chmod($dst_dir/$row3['bf_file'], G4_FILE_PERMISSION);
                     }
 
                     $sql = " insert into {$g4['board_file_table']}

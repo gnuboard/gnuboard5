@@ -163,8 +163,8 @@ $dir_arr = array (
 );
 
 for ($i=0; $i<count($dir_arr); $i++) {
-    @mkdir($dir_arr[$i], 0707);
-    @chmod($dir_arr[$i], 0707);
+    @mkdir($dir_arr[$i], G4_DIR_PERMISSION);
+    @chmod($dir_arr[$i], G4_DIR_PERMISSION);
 }
 ?>
 
@@ -175,7 +175,7 @@ for ($i=0; $i<count($dir_arr); $i++) {
 
 // DB 설정 파일 생성
 $file = '../'.G4_DATA_DIR.'/'.G4_DBCONFIG_FILE;
-$f = @fopen($file, 'w');
+$f = @fopen($file, 'a');
 
 fwrite($f, "<?php\n");
 fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
@@ -210,7 +210,7 @@ fwrite($f, "\$g4['autosave_table'] = G4_TABLE_PREFIX.'autosave'; // 게시글 �
 fwrite($f, "?>");
 
 fclose($f);
-@chmod($file, 0606);
+@chmod($file, G4_FILE_PERMISSION);
 ?>
 
     <li>DB설정 파일 생성 완료 (<?php echo $file ?>)</li>

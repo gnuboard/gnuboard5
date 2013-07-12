@@ -114,11 +114,11 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
     if (preg_match("/(\.gif)$/i", $_FILES['mb_icon']['name'])) {
         // 아이콘 용량이 설정값보다 이하만 업로드 가능
         if ($_FILES['mb_icon']['size'] <= $config['cf_member_icon_size']) {
-            @mkdir($mb_dir, 0707);
-            @chmod($mb_dir, 0707);
+            @mkdir($mb_dir, G4_DIR_PERMISSION);
+            @chmod($mb_dir, G4_DIR_PERMISSION);
             $dest_path = $mb_dir.'/'.$mb_id.'.gif';
             move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
-            chmod($dest_path, 0606);
+            chmod($dest_path, G4_FILE_PERMISSION);
             if (file_exists($dest_path)) {
                 //=================================================================\
                 // 090714
