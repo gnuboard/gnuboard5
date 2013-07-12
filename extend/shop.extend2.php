@@ -364,29 +364,23 @@ if(!sql_query(" select rq_id from {$g4['shop_request_table']} limit 1 ", false))
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_request_table']}` (
                   `rq_id` INT(11) NOT NULL AUTO_INCREMENT,
                   `rq_type` TINYINT(4) NOT NULL DEFAULT '0',
+                  `rq_parent` INT(11) NOT NULL DEFAULT '0',
                   `od_id` BIGINT(20) unsigned NOT NULL,
                   `ct_id` VARCHAR(255) NOT NULL DEFAULT '',
                   `mb_id` VARCHAR(20) NOT NULL DEFAULT '',
                   `rq_content` TEXT NOT NULL,
-                  `rq_reg_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-                  `rq_ip` VARCHAR(255) NOT NULL DEFAULT '',
                   `rq_status` TINYINT(4) NOT NULL DEFAULT '0',
                   `rq_item` TEXT NOT NULL,
                   `rq_recv` TINYINT(4) NOT NULL DEFAULT '0',
                   `dl_company` INT(11) NOT NULL DEFAULT '0',
-                  `rq_invoice` VARCHAR(255) NOT NULL DEFAULT '0',
+                  `rq_invoice` VARCHAR(255) NOT NULL DEFAULT '',
                   `rq_amount1` INT(11) NOT NULL DEFAULT '0',
                   `rq_amount2` INT(11) NOT NULL DEFAULT '0',
-                  `rq_account` VARCHAR(255) NOT NULL DEFAULT '0',
-                  `rq_process` TEXT NOT NULL,
-                  `rq_is_admin` TINYINT(4) NOT NULL DEFAULT '0',
+                  `rq_amount3` INT(11) NOT NULL DEFAULT '0',
+                  `rq_account` VARCHAR(255) NOT NULL DEFAULT '',
+                  `rq_ip` VARCHAR(255) NOT NULL DEFAULT '',
                   `rq_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
                   PRIMARY KEY (`rq_id`)
                 ) ", false);
-}
-
-if(!sql_query(" select rq_parent from {$g4['shop_request_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_request_table']}`
-                    ADD `rq_parent` INT(11) NOT NULL DEFAULT '0' AFTER `rq_ip` ", true);
 }
 ?>

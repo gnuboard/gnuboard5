@@ -45,7 +45,7 @@ for($i=0; $i<$count; $i++) {
 }
 
 $sql = " insert into {$g4['shop_request_table']}
-              ( rq_type, od_id, ct_id, mb_id, rq_content, rq_reg_time, rq_ip )
+              ( rq_type, od_id, ct_id, mb_id, rq_content, rq_time, rq_ip )
             values
               ( '$rq_type', '$od_id', '$ct_id', '{$member['mb_id']}', '$rq_content', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR' ) ";
 sql_query($sql);

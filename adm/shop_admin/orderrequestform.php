@@ -1,0 +1,277 @@
+<?php
+$sub_menu = '400430';
+include_once('./_common.php');
+
+auth_check($auth[$sub_menu], "w");
+
+$sql = " select * from {$g4['shop_request_table']} where rq_id = '$rq_id' ";
+$rq = sql_fetch($sql);
+if(!$rq['rq_id']) {
+    if(!isset($_POST['rq_id']))
+        alert('등록된 자료가 없습니다.');
+    else
+        die('등록된 자료가 없습니다.');
+}
+
+switch($rq['rq_type']) {
+    case 0:
+        $type = '취소';
+        break;
+    case 1:
+        $type = '교환';
+        break;
+    case 2:
+        $type = '반품';
+        break;
+    default:
+        $type = '';
+        break;
+}
+
+$item = explode(',', $rq['ct_id']);
+if(!count($item)) {
+    if(!isset($_POST['rq_id']))
+        alert($type.'요청된 상품이 없습니다.');
+    else
+        die($type.'요청된 상품이 없습니다.');
+}
+
+// 주문정보
+if(empty($od)) {
+    $sql = " select * from {$g4['shop_order_table']} where od_id = '{$rq['od_id']}' ";
+    $od = sql_fetch($sql);
+}
+
+if(!$od['od_id']) {
+    if(!isset($_POST['rq_id']))
+        alert('주문정보가 존재하지 않습니다.');
+    else
+        die('주문정보가 존재하지 않습니다.');
+}
+
+// 요청내용
+$cus_content = conv_content($rq['rq_content'], 0);
+if($rq['rq_parent']) {
+    $sql = " select rq_content from {$g4['shop_request_table']} where rq_id = '{$rq['rq_parent']}' ";
+    $cus = sql_fetch($sql);
+    $cus_content = conv_content($cus['rq_content'], 0);
+}
+
+$qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
+?>
+
+<section>
+    <h2><?php echo $type; ?>요청 내용</h2>
+    <div>
+        <?php echo $cus_content; ?>
+    </div>
+</section>
+
+<section>
+    <h2><?php echo $type; ?>요청 처리내역</h2>
+    <p>처리내역을 클릭하시면 상세 내용을 확인할 수 있습니다.</p>
+    <div>
+        <?php
+        $c_rq_id = $rq_id;
+        if($rq['rq_parent'])
+            $c_rq_id = $rq['rq_parent'];
+
+        $sql = " select rq_id, rq_content, rq_time from {$g4['shop_request_table']} where rq_parent = '$c_rq_id' order by rq_id desc ";
+        $result = sql_query($sql);
+
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+        ?>
+        <p id="rq_id_<?php echo $row['rq_id']; ?>" class="od_request_list">
+            <?php echo $row['rq_time'].' '.$row['rq_content']; ?>
+        </p>
+        <?php
+        }
+
+        if($i == 0)
+            echo '<p>처리내역이 없습니다.</p>';
+        ?>
+    </div>
+</section>
+
+<section>
+    <h2><?php echo $type; ?>요청 처리</h2>
+    <form name="forderrequest" method="post" action="./orderrequestformupdate.php">
+    <input type="hidden" name="rq_id" value="<?php echo $rq['rq_parent'] ? $rq['rq_parent'] : $rq['rq_id']; ?>">
+    <input type="hidden" name="disp_list" value="<?php echo $disp_list; ?>">
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <?php if($rq['rq_type'] == 0) { // 취소요청 ?>
+    <tr>
+        <td><label for="rq_status">상태</label></td>
+        <td>
+            <select name="rq_status" id="rq_status">
+                <option value="0"<?php echo get_selected($rq['rq_status'], '0'); ?>>선택</option>
+                <option value="1"<?php echo get_selected($rq['rq_status'], '1'); ?>>입금전 처리완료</option>
+                <option value="2"<?php echo get_selected($rq['rq_status'], '2'); ?>>입금후 처리완료</option>
+                <option value="99"<?php echo get_selected($rq['rq_status'], '99'); ?>>고객취소</option>
+                <option value="100"<?php echo get_selected($rq['rq_status'], '100'); ?>>처리불가</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_amount1">환불금액</label></td>
+        <td>
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1']; ?>">
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_account">환불계좌</label></td>
+        <td>
+            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>">
+        </td>
+    </tr>
+    <?php } // 취소요청 끝 ?>
+    <?php if($rq['rq_type'] == 1) { // 교환요청 ?>
+    <tr>
+        <td><label for="rq_item">교환상품</label></td>
+        <td>
+            <textarea name="rq_item" id="rq_item"><?php echo $rq['rq_item']; ?></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_recv">상품수령</label></td>
+        <td>
+            <input type="checkbox" name="rq_recv" id="rq_recv"> 교환요청상품 수령함
+        </td>
+    </tr>
+    <tr>
+        <td><label for="dl_company">배송회사</label></td>
+        <td>
+            <select name="dl_id" id="dl_id">
+                <option value="">선택</option>
+                <?php
+                $sql = "select * from {$g4['shop_delivery_table']} order by dl_order desc, dl_id desc ";
+                $result = sql_query($sql);
+                for ($i=0; $row=sql_fetch_array($result); $i++) {
+                ?>
+                <option value="<?php echo $row['dl_id']; ?>" <?php echo get_selected($rq['dl_company'], $row['dl_id']); ?>><?php echo $row['dl_company']; ?></option>
+                <?php
+                }
+                mysql_free_result($result);
+                ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_invoice">운송장번호</label></td>
+        <td>
+            <input type="text" name="rq_invoice" id="rq_invoice" value="<?php echo $rq['rq_invoice']; ?>">
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_amount1">상품차액</label></td>
+        <td>
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1']; ?>">
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_account">차액입금계좌</label></td>
+        <td>
+            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>">
+        </td>
+    </tr>
+    <?php } // 교환요청 끝 ?>
+    <?php if($rq['rq_type'] == 2) { // 반품요청 ?>
+    <tr>
+        <td><label for="rq_recv">상품수령</label></td>
+        <td>
+            <input type="checkbox" name="rq_recv" id="rq_recv"> 반품요청상품 수령함
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_amount1">환불금액</label></td>
+        <td>
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1']; ?>">
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_account">환불계좌</label></td>
+        <td>
+            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>">
+        </td>
+    </tr>
+    <?php } // 반품요청 끝 ?>
+    <?php
+    if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') {
+        if($default['de_tax_flag_use']) {
+    ?>
+    <tr>
+        <td><label for="rq_amount2">과세부분취소</label></td>
+        <td>
+            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>">
+        </td>
+    </tr>
+    <tr>
+        <td><label for="rq_amount3">비과세부분취소</label></td>
+        <td>
+            <input type="text" name="rq_amount3" id="rq_amount3" value="<?php echo $rq['rq_amount3']; ?>">
+        </td>
+    </tr>
+    <?php } else { ?>
+    <tr>
+        <td><label for="rq_amount2">부분취소</label></td>
+        <td>
+            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>">
+        </td>
+    </tr>
+    <?php
+        }
+    }
+    ?>
+    <tr>
+        <td><label for="rq_content">처리내용</label></td>
+        <td>
+            <textarea name="rq_content" id="rq_content"><?php echo $rq['rq_parent'] ? $rq['rq_content'] : ''; ?></textarea>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+    <div>
+        <button type="button" id="request_submit">확인</button>
+        <?php if($disp_list) { ?>
+        <a href="./orderrequestlist.php?<?php echo $qstr2; ?>">목록</a>
+        <?php } ?>
+    </div>
+    </form>
+</section>
+
+<script>
+$(function() {
+    $("#request_submit").click(function() {
+        var $form = $("form[name=forderrequest]");
+
+        $.post(
+            "./orderrequestformupdate.php",
+            $form.serialize(),
+            function(data) {
+                if(data != "")
+                    alert(data);
+                else
+                    document.location.reload();
+            }
+        );
+
+        return false;
+    });
+
+    $(".od_request_list").click(function() {
+        var rq_id = $(this).attr("id").replace(/[^0-9]/g, "");
+        $.post(
+            "./orderrequestform.php",
+            { rq_id: rq_id, disp_list: <?php echo $disp_list; ?> },
+            function(data) {
+                $("#order_request").html(data);
+            }
+        );
+    });
+});
+</script>
