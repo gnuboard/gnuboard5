@@ -730,8 +730,8 @@ td.empty_table {padding:85px 0;text-align:center}
 #sod_ul p a {font-weight:bold;text-decoration:none}
 
 #request_form {position:relative}
-#request_form div {display:none;z-index:10000;position:absolute;top:-74px;left:0;padding:20px 0;width:350px;border:1px solid #000;background:#f5f6fa;text-align:center}
-#request_form .frm_input {background:#fff !important}
+#request_form div {display:none;z-index:10000;position:absolute;top:23px;left:0;padding:20px 0;width:520px;border:1px solid #000;background:#f5f6fa;text-align:center}
+#request_form .frm_input {width:300px;background:#fff !important}
 #request_form .btn_frmline, #request_form .btn_cancel {vertical-align:middle !important}
 #request_form .btn_frmline {padding:0 10px;line-height:1.6em}
 
