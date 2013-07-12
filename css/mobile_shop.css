@@ -399,10 +399,10 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_ul p a {font-weight:bold;text-decoration:none}
 
 #request_form {position:relative}
-#request_form div {display:none;z-index:10000;position:absolute;top:23px;left:0;padding:20px 0;border:1px solid #000;background:#f5f6fa;text-align:center}
-#request_form .frm_input {width:250px;background:#fff !important}
-#request_form .btn_frmline, #request_form .btn_cancel {vertical-align:middle !important}
-#request_form .btn_frmline {padding:0 10px;line-height:1.6em}
+#request_form div {display:none;z-index:10000;position:absolute;top:31px;left:0;padding:1em 0;width:290px;border:1px solid #000;background:#f5f6fa;text-align:center}
+#request_form label {letter-spacing:-0.1em}
+#request_form .frm_input {width:170px;background:#fff !important}
+#request_form .btn_frmline, #request_form .btn_cancel {margin:0.5em 0 0;padding:0 0.5em;height:1.9em;vertical-align:middle !important;line-height:1.9em}
 
 #sod_req_btn {margin:0 0 10px}
 #sod_req_btn button {background:#626870}
