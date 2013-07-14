@@ -180,8 +180,8 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         return;
 
     if (!is_dir($target_path)) {
-        @mkdir($target_path, 0707);
-        @chmod($target_path, 0707);
+        @mkdir($target_path, G4_DIR_PERMISSION);
+        @chmod($target_path, G4_DIR_PERMISSION);
     }
 
     // Animated GIF는 썸네일 생성하지 않음
@@ -299,7 +299,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     }
 
     imagejpeg($dst, $thumb_file, 90);
-    chmod($thumb_file, 0606); // 추후 삭제를 위하여 파일모드 변경
+    chmod($thumb_file, G4_FILE_PERMISSION); // 추후 삭제를 위하여 파일모드 변경
 
     imagedestroy($src);
     imagedestroy($dst);

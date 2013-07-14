@@ -99,13 +99,13 @@ else if ($w == 'u')
         }
 
         if (preg_match("/(\.gif)$/i", $_FILES['mb_icon']['name'])) {
-            @mkdir(G4_DATA_PATH.'/member/'.$mb_dir, 0707);
-            @chmod(G4_DATA_PATH.'/member/'.$mb_dir, 0707);
+            @mkdir(G4_DATA_PATH.'/member/'.$mb_dir, G4_DIR_PERMISSION);
+            @chmod(G4_DATA_PATH.'/member/'.$mb_dir, G4_DIR_PERMISSION);
 
             $dest_path = G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
 
             move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
-            chmod($dest_path, 0606);
+            chmod($dest_path, G4_FILE_PERMISSION);
 
             if (file_exists($dest_path)) {
                 $size = getimagesize($dest_path);
