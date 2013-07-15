@@ -1,5 +1,3 @@
-/* 게시판 쓰기 */
-
 /* 게시판 목록 */
 #bo_list_title {margin-bottom:20px;font-size:1.2em;letter-spacing:-0.1em}
 
@@ -45,8 +43,8 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #autosave_pop li:after {display:block;visibility:hidden;clear:both;content:""}
 #autosave_pop a {display:block;float:left}
 #autosave_pop span {display:block;float:right}
-.autosave_close {cursor:pointer;}
-.autosave_content {display:none;}
+.autosave_close {cursor:pointer}
+.autosave_content {display:none}
 
 /* 게시판 읽기 */
 #bo_v {margin-bottom:20px;padding-bottom:20px}
