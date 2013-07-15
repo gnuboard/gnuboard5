@@ -45,7 +45,7 @@ alert("<?php echo strip_tags($msg); ?>");
 <?php if ($url) { ?>
 document.location.replace("<?php echo $url; ?>");
 <?php } else { ?>
-    alert('history.back();');
+//alert('history.back();');
 history.back();
 <?php } ?>
 </script>
