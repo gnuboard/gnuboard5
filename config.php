@@ -128,6 +128,10 @@ define('G4_HANGUL',         16); // 한글
 define('G4_SPACE',          32); // 공백
 define('G4_SPECIAL',        64); // 특수문자
 
+// 퍼미션 
+define('G4_DIR_PERMISSION',  0755); // 디렉토리 생성시 퍼미션
+define('G4_FILE_PERMISSION', 0644); // 파일 생성시 퍼미션
+
 // 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
 define('G4_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|skt|nokia|blackberry|android|sony');
 

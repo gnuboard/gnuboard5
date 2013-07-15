@@ -627,6 +627,7 @@ CREATE TABLE IF NOT EXISTS `g4s_visit_sum` (
 DROP TABLE IF EXISTS `g4s_unique`;
 CREATE TABLE IF NOT EXISTS `g4s_uniqid` (
   `uq_id` bigint(20) unsigned NOT NULL,
+  `uq_ip` varchar(255) NOT NULL,
   PRIMARY KEY (`uq_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

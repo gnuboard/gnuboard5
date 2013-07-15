@@ -163,8 +163,8 @@ $dir_arr = array (
 );
 
 for ($i=0; $i<count($dir_arr); $i++) {
-    @mkdir($dir_arr[$i], 0707);
-    @chmod($dir_arr[$i], 0707);
+    @mkdir($dir_arr[$i], G4_DIR_PERMISSION);
+    @chmod($dir_arr[$i], G4_DIR_PERMISSION);
 }
 ?>
 
@@ -175,7 +175,7 @@ for ($i=0; $i<count($dir_arr); $i++) {
 
 // DB 설정 파일 생성
 $file = '../'.G4_DATA_DIR.'/'.G4_DBCONFIG_FILE;
-$f = @fopen($file, 'w');
+$f = @fopen($file, 'a');
 
 fwrite($f, "<?php\n");
 fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
@@ -207,10 +207,10 @@ fwrite($f, "\$g4['visit_sum_table'] = G4_TABLE_PREFIX.'visit_sum'; // 방문자 
 fwrite($f, "\$g4['uniqid_table'] = G4_TABLE_PREFIX.'uniqid'; // 유니크한 값을 만드는 테이블\n");
 fwrite($f, "\$g4['syndi_log_table'] = G4_TABLE_PREFIX.'syndi_log'; // 네이버 신디케이션 컨텐츠 삭제 로그 테이블\n");
 fwrite($f, "\$g4['autosave_table'] = G4_TABLE_PREFIX.'autosave'; // 게시글 작성시 일정시간마다 글을 임시 저장하는 테이블\n");
-fwrite($f, " ?>");
+fwrite($f, "?>");
 
 fclose($f);
-@chmod($file, 0606);
+@chmod($file, G4_FILE_PERMISSION);
 ?>
 
     <li>DB설정 파일 생성 완료 (<?php echo $file ?>)</li>

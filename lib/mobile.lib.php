@@ -33,7 +33,7 @@ function mobile_create_thumb($srcImg, $width, $thumb)
     imagecopy($target, $source, 0, 0, 0, 0, $size[0], $size[1]);
 
     imagejpeg($target, $thumb, 100);
-    chmod($thumb, 0606); // 추후 삭제를 위하여 파일모드 변경
+    chmod($thumb, G4_FILE_PERMISSION); // 추후 삭제를 위하여 파일모드 변경
 
     return $thumb;
 }
@@ -62,8 +62,8 @@ function mobile_thumb($matches)
 
             $thumb_dir = G4_DATA_PATH.'/thumb/'.$bo_table;
             if (!is_dir($thumb_dir)) {
-                @mkdir($thumb_dir, 0707);
-                @chmod($thumb_dir, 0707);
+                @mkdir($thumb_dir, G4_DIR_PERMISSION);
+                @chmod($thumb_dir, G4_DIR_PERMISSION);
             }
 
             $result = true;

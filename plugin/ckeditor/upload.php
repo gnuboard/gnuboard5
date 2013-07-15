@@ -5,8 +5,8 @@ $ym = date('ym', G4_SERVER_TIME);
 
 $data_dir = G4_DATA_PATH.'/editor/'.$ym;
 $data_url = G4_DATA_URL.'/editor/'.$ym;
-@mkdir($data_dir, 0707);
-@chmod($data_dir, 0707);
+@mkdir($data_dir, G4_DIR_PERMISSION);
+@chmod($data_dir, G4_DIR_PERMISSION);
  
 // 업로드 DIALOG 에서 전송된 값
 $funcNum = $_GET['CKEditorFuncNum'] ;
