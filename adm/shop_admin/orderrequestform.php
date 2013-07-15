@@ -57,6 +57,13 @@ if($rq['rq_parent']) {
     $cus_content = conv_content($cus['rq_content'], 0);
 }
 
+// 요청상품
+$sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_price, ct_status
+            from {$g4['shop_cart_table']}
+            where uq_id = '{$od['uq_id']}'
+            order by ct_id ";
+$result = sql_query($sql);
+
 $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
 ?>
 

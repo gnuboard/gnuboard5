@@ -53,7 +53,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select a.*, b.od_temp_amount, b.od_name
+$sql  = " select a.*, b.uq_id, b.od_temp_amount, b.od_name
           $sql_common
           order by $sst $sod, a.rq_id desc
           limit $from_record, $rows ";

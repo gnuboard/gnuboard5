@@ -80,6 +80,25 @@ if ($od['mb_id'] == "") {
 }
 //------------------------------------------------------------------------------
 
+// 요청정보
+$sql = " select * from {$g4['shop_request_table']} where od_id = '{$od['od_id']}' and rq_parent = '0' order by rq_id desc limit 1 ";
+$rq = sql_fetch($sql);
+if($rq['rq_id']) {
+    switch($rq['rq_type']) {
+        case 0:
+            $request = '취소';
+            break;
+        case 1:
+            $request = '교환';
+            break;
+        case 2:
+            $request = '반품';
+            break;
+        default:
+            $request = '';
+            break;
+    }
+}
 
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
@@ -104,8 +123,10 @@ $result = sql_query($sql);
 
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_list">주문상품 목록</a></li>
-<li><a href="#anc_sodr_pay">주문결제 내역</a></li>
-<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
+<li><a href="#anc_sodr_pay">주문결제 내역</a></li>';
+if($request)
+    $pg_anchor .= '<li><a href="#anc_sodr_request">주문 '.$request.'요청</a></li>';
+$pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 <li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
 <li><a href="#anc_sodr_memo">상점메모</a></li>
 <li><a href="#anc_sodr_payer">주문하신 분</a></li>
@@ -292,6 +313,23 @@ $pg_anchor = '<ul class="anchor">
     </table>
 </section>
 
+<?php
+if($request) {
+    $item = explode(',', $rq['ct_id']);
+?>
+<section id="anc_sodr_request" class="cbox">
+    <h2>주문 <?php echo $request; ?>요청</h2>
+    <?php echo $pg_anchor; ?>
+    <div>
+        <?php
+        // 요청 처리폼 include
+        $rq_id = $rq['rq_id'];
+        $disp_list = 0;
+        include_once('./orderrequestview.inc.php');
+        ?>
+    </div>
+</section>
+<?php } ?>
 
 <section class="cbox compare_wrap">
     <h2>결제상세정보</h2>
