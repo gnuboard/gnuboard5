@@ -5,17 +5,6 @@ if(empty($rq)) {
     $sql = " select * from {$g4['shop_request_table']} where rq_id = '$rq_id' ";
     $rq = sql_fetch($sql);
 }
-if(!$rq['rq_id'])
-    alert('요청 자료가 없습니다.');
-
-$item = explode(',', $rq['ct_id']);
-if(!count($item))
-    alert($type.'요청된 상품이 없습니다.');
-
-if(empty($od)) {
-    $sql = " select * from {$g4['shop_order_table']} where od_id = '{$rq['od_id']}' ";
-    $od = sql_fetch($sql);
-}
 
 $sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_price, ct_status
             from {$g4['shop_cart_table']}

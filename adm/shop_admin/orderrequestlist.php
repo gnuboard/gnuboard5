@@ -175,7 +175,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <input type="hidden" name="rq_id[<?php echo $i; ?>]" value="<?php echo $row['rq_id']; ?>">
         </td>
         <td><?php echo $type; ?></td>
-        <td><a href="<?php echo $order_href; ?>"><?php echo $row['od_id']; ?></a></td>
+        <td><?php echo $row['od_id']; ?></td>
         <td><?php echo number_format($row['od_temp_amount']); ?></td>
         <td><?php echo $row['od_name']; ?></td>
         <td><?php echo $it_name; ?></td>
