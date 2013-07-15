@@ -26,7 +26,7 @@ if($rq['rq_type'] == 0)
 else if($rq['rq_type'] == 2)
     $ct_status = '반품';
 
-if(($rq_status == 1 || $rq_status == 2) && $ct_status != '') {
+if($rq_status == 1 && $ct_status != '') {
     $item = explode(',', $rq['ct_id']);
     for($i=0; $i<count($item); $i++) {
         $sql = " update {$g4['shop_cart_table']}
@@ -37,9 +37,9 @@ if(($rq_status == 1 || $rq_status == 2) && $ct_status != '') {
     }
 }
 
-// 환불금액입력
+// 환불금액입력(입금 금액이 있을 때만)
 $rq_amount1 = preg_replace('/[^0-9]/', '', $rq_amount1);
-if($rq_amount1 > 0) {
+if($od['od_receipt_amount'] > 0 && $rq_amount1 > 0) {
     $sql = " update {$g4['shop_order_table']}
                 set od_refund_amount = '$rq_amount1'
                 where od_id = '{$od['od_id']}' ";
@@ -53,8 +53,8 @@ $sql = " insert into `{$g4['shop_request_table']}`
               ( '{$rq['rq_type']}', '$rq_id', '{$od['od_id']}', '{$rq['ct_id']}', '{$member['mb_id']}', '$rq_content', '$rq_status', '$rq_item', '$dl_company', '$rq_invoice', '$rq_amount1', '$rq_amount2', '$rq_amount3', '$rq_account', '$REMOTE_ADDR', '".G4_TIME_YMDHIS."' ) ";
 sql_query($sql);
 
-// 부분취소처리
-if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') && ($rq_status == 1 || $rq_status == 2))
+// 부분취소처리(결제금액이 있을 때만)
+if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') && $rq_status == 1 && $od['od_receipt_amount'] > 0 && $od['od_tno'])
 {
     $rq_amount2 = preg_replace('/[^0-9]/', '', $rq_amount2);
     $rq_amount3 = preg_replace('/[^0-9]/', '', $rq_amount3);

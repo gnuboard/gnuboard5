@@ -109,7 +109,7 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
         <td>
             <select name="rq_status" id="rq_status">
                 <option value="0"<?php echo get_selected($rq['rq_status'], '0'); ?>>선택</option>
-                <option value="1"<?php echo get_selected($rq['rq_status'], '1'); ?>><?php $type; ?>요청 처리완료</option>
+                <option value="1"<?php echo get_selected($rq['rq_status'], '1'); ?>><?php echo $type; ?>요청 처리완료</option>
                 <option value="99"<?php echo get_selected($rq['rq_status'], '99'); ?>>고객취소</option>
                 <option value="100"<?php echo get_selected($rq['rq_status'], '100'); ?>>처리불가</option>
             </select>
