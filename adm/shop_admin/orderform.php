@@ -154,7 +154,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
     <input type="hidden" name="search" value="<?php echo $search; ?>">
     <input type="hidden" name="page" value="<?php echo $page;?>">
 
-    <label for="sit_select_all" class="sound_only">현재 상품 목록 전체선택</label>
+    <label for="sit_select_all" class="sound_only">주문 상품 전체</label>
     <input type="checkbox" id="sit_select_all">
 
     <ul id="sodr_ul">
@@ -320,7 +320,7 @@ if($request) {
 <section id="anc_sodr_request" class="cbox">
     <h2>주문 <?php echo $request; ?>요청</h2>
     <?php echo $pg_anchor; ?>
-    <div>
+    <div id="sodr_request_frm">
         <?php
         // 요청 처리폼 include
         $rq_id = $rq['rq_id'];
@@ -581,7 +581,7 @@ if($request) {
                 <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="od_receipt_time" class="frm_input" maxlength="19">
             </td>
         </tr>
-        <?php } ########## 끝 ?>
+        <?php } ?>
 
         <?php if ($od['od_settle_case'] == '휴대폰') { ?>
         <tr>
@@ -599,8 +599,7 @@ if($request) {
         <tr>
             <th scope="row"><label for="op_receipt_time">휴대폰 결제일시</label></th>
             <td>
-                <label for="od_card_chk">현재 시간으로 설정</label>
-                <!-- name od_card_chk 를 od_hp_chk 로 수정 - 지운아빠 2013-04-16 -->
+                <label for="od_hp_chk">현재 시간으로 설정</label>
                 <input type="checkbox" name="od_hp_chk" id="od_hp_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_hp_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;"><br>
                 <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="op_receipt_time" class="frm_input" size="19" maxlength="19">
             </td>

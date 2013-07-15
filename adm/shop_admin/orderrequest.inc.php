@@ -13,8 +13,8 @@ $sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_
 $result = sql_query($sql);
 ?>
 
-<section>
-    <h2><?php echo $type; ?>요청 상품</h2>
+<section id="sodr_request_item">
+    <h3><?php echo $type; ?>요청 상품</h3>
     <table>
     <thead>
     <tr>
