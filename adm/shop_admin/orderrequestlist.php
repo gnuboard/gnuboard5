@@ -169,19 +169,19 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
 
     <tr>
-        <td>
+        <td class="td_chk">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $it_name.' '.$type ?> 요청</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
             <input type="hidden" name="rq_id[<?php echo $i; ?>]" value="<?php echo $row['rq_id']; ?>">
         </td>
-        <td><?php echo $type; ?></td>
-        <td><?php echo $row['od_id']; ?></td>
-        <td><?php echo number_format($row['od_temp_amount']); ?></td>
-        <td><?php echo $row['od_name']; ?></td>
+        <td class="td_smallstat"><?php echo $type; ?></td>
+        <td class="td_odrnum3"><?php echo $row['od_id']; ?></td>
+        <td class="td_bignum"><?php echo number_format($row['od_temp_amount']); ?></td>
+        <td class="td_name"><?php echo $row['od_name']; ?></td>
         <td><?php echo $it_name; ?></td>
-        <td><?php echo $reg_date; ?></td>
-        <td><?php echo $done_date; ?></td>
-        <td>
+        <td class="td_date"><?php echo $reg_date; ?></td>
+        <td class="td_date"><?php echo $done_date; ?></td>
+        <td class="td_smallmng">
             <a href="<?php echo $order_href; ?>"><span class="sound_only"><?php echo $it_name. ' '.$type.'요청'; ?> </span>보기</a>
             <a href="./orderrequestdelete.php?w=d&amp;rq_id=<?php echo $row['rq_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return del_confirm();"><span class="sound_only"><?php echo $it_name. ' '.$type.'요청'; ?> </span>삭제</a>
         </td>

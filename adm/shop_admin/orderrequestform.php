@@ -65,17 +65,18 @@ $sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_
 $result = sql_query($sql);
 ?>
 
-<section>
-    <h2><?php echo $type; ?>요청 내용</h2>
-    <div>
+<section id="sodr_requset_content">
+    <h3><?php echo $type; ?>요청 내용</h3>
+    <p>
         <?php echo $cus_content; ?>
-    </div>
+    </p>
 </section>
 
-<section>
-    <h2><?php echo $type; ?>요청 처리내역</h2>
+<section id="sodr_request_log">
+    <h3><?php echo $type; ?>요청 처리내역</h3>
     <p>처리내역을 클릭하시면 상세 내용을 확인할 수 있습니다.</p>
-    <div>
+
+    <div id="sodr_request_log_wrap">
         <?php
         $c_rq_id = $rq_id;
         if($rq['rq_parent'])
@@ -86,8 +87,9 @@ $result = sql_query($sql);
 
         for($i=0; $row=sql_fetch_array($result); $i++) {
         ?>
-        <p id="rq_id_<?php echo $row['rq_id']; ?>" class="od_request_list">
-            <?php echo $row['rq_time'].' '.$row['rq_content']; ?>
+        <p>
+            <span><b><?php echo $row['rq_time']; ?></b> <?php echo $row['rq_content']; ?></span>
+            <button id="rq_id_<?php echo $row['rq_id']; ?>" class="od_request_list">상세보기</button>
         </p>
         <?php
         }
@@ -98,9 +100,10 @@ $result = sql_query($sql);
     </div>
 </section>
 
-<section>
-    <h2><?php echo $type; ?>요청 처리</h2>
-    <form name="forderrequest" method="post" action="./orderrequestformupdate.php">
+<section id="sodr_request_handle">
+    <h3><?php echo $type; ?>요청 처리</h3>
+
+    <form name="forderrequest" id="forderrequest" method="post" action="./orderrequestformupdate.php">
     <input type="hidden" name="rq_id" value="<?php echo $rq['rq_parent'] ? $rq['rq_parent'] : $rq['rq_id']; ?>">
     <input type="hidden" name="disp_list" value="<?php echo $disp_list; ?>">
     <table class="frm_tbl">
@@ -227,10 +230,12 @@ $result = sql_query($sql);
     </tr>
     </tbody>
     </table>
-    <div>
-        <button type="submit" id="request_submit">확인</button>
+
+    <div class="btn_confirm">
+        <button type="submit" id="request_submit" class="btn_submit">확인</button>
         <a href="./orderrequestlist.php?<?php echo $rq_qstr; ?>">목록</a>
     </div>
+
     </form>
 </section>
 
