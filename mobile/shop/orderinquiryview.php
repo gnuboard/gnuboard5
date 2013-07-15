@@ -100,12 +100,16 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 
                     $sell_amount = $opt_price * $opt['ct_qty'];
                     $point = $opt['ct_point'] * $opt['ct_qty'];
+
+                    $disabled = '';
+                    if($opt['ct_status'] == '취소' || $opt['ct_status'] == '반품' || $opt['ct_status'] == '품절')
+                        $disabled = ' disabled="disabled"';
                 ?>
                 <tr>
                     <td class="td_chk">
                         <input type="hidden" name="ct_id[<?php echo $idx; ?>]" value="<?php echo $opt['ct_id']; ?>">
                         <label for="chk_ct_id_<?php echo $idx; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
-                        <input type="checkbox" name="chk_ct_id[<?php echo $idx; ?>]" value="1" id="chk_ct_id_<?php echo $idx; ?>">
+                        <input type="checkbox" name="chk_ct_id[<?php echo $idx; ?>]" value="1" id="chk_ct_id_<?php echo $idx; ?>"<?php echo $disabled; ?>>
                     </td>
                     <td><?php echo $opt['ct_option']; ?></td>
                     <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
