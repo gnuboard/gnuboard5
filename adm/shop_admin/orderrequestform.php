@@ -63,8 +63,6 @@ $sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_
             where uq_id = '{$od['uq_id']}'
             order by ct_id ";
 $result = sql_query($sql);
-
-$qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
 ?>
 
 <section>
@@ -231,9 +229,7 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
     </table>
     <div>
         <button type="submit" id="request_submit">확인</button>
-        <?php if($disp_list) { ?>
-        <a href="./orderrequestlist.php?<?php echo $qstr2; ?>">목록</a>
-        <?php } ?>
+        <a href="./orderrequestlist.php?<?php echo $rq_qstr; ?>">목록</a>
     </div>
     </form>
 </section>

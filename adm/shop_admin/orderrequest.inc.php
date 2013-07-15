@@ -74,7 +74,7 @@ $result = sql_query($sql);
 <div id="order_request">
     <?php
     // 요청 처리폼 include
-    $disp_list = 1;
+    $rq_qstr = "sst=$sst&amp;sod=$sod&amp;sfl=$sfl&amp;stx=$stx&amp;save_stx=$save_stx&amp;page=$page&amp;rq_type=$rq_type";
     include_once('./orderrequestform.php');
     ?>
 </div>

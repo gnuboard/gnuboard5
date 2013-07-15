@@ -164,6 +164,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         $tmp = sql_fetch($sql);
         if($tmp['rq_time'])
             $done_date = substr($tmp['rq_time'], 2, 8);
+
+        $order_href = './orderform.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id'].'&amp;rq_type='.$rq_type.'&amp;'.$qstr;
     ?>
 
     <tr>
@@ -173,14 +175,14 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <input type="hidden" name="rq_id[<?php echo $i; ?>]" value="<?php echo $row['rq_id']; ?>">
         </td>
         <td><?php echo $type; ?></td>
-        <td><?php echo $row['od_id']; ?></td>
+        <td><a href="<?php echo $order_href; ?>"><?php echo $row['od_id']; ?></a></td>
         <td><?php echo number_format($row['od_temp_amount']); ?></td>
         <td><?php echo $row['od_name']; ?></td>
         <td><?php echo $it_name; ?></td>
         <td><?php echo $reg_date; ?></td>
         <td><?php echo $done_date; ?></td>
         <td>
-            <a href="./orderrequestview.php?rq_id=<?php echo $row['rq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $it_name. ' '.$type.'요청'; ?> </span>보기</a>
+            <a href="<?php echo $order_href; ?>"><span class="sound_only"><?php echo $it_name. ' '.$type.'요청'; ?> </span>보기</a>
             <a href="./orderrequestdelete.php?w=d&amp;rq_id=<?php echo $row['rq_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return del_confirm();"><span class="sound_only"><?php echo $it_name. ' '.$type.'요청'; ?> </span>삭제</a>
         </td>
     </tr>

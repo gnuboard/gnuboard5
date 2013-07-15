@@ -325,7 +325,7 @@ if($request) {
         // 요청 처리폼 include
         $rq_id = $rq['rq_id'];
         $disp_list = 0;
-        include_once('./orderrequestview.inc.php');
+        include_once('./orderrequest.inc.php');
         ?>
     </div>
 </section>
