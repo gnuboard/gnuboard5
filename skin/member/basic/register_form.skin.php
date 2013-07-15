@@ -235,7 +235,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         작성하신 내용를 발송하시려면 <strong><?php echo $w==''?'회원가입':'정보수정'; ?></strong> 버튼을, 작성을 취소하고 창을 닫으시려면 <strong>취소</strong> 링크를 누르세요.
     </p>
     <input type="submit" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" id="btn_submit" class="btn_submit" accesskey="s">
-    <a href="<?php echo $g4['path'] ?>/" class="btn_cancel">취소</a>
+    <a href="<?php echo G4_URL; ?>/" class="btn_cancel">취소</a>
 </div>
 </form>
 
