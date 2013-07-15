@@ -672,7 +672,6 @@ CREATE TABLE IF NOT EXISTS `shop_request` (
   `rq_content` TEXT NOT NULL,  
   `rq_status` TINYINT(4) NOT NULL DEFAULT '0',
   `rq_item` TEXT NOT NULL,
-  `rq_recv` TINYINT(4) NOT NULL DEFAULT '0',
   `dl_company` INT(11) NOT NULL DEFAULT '0',
   `rq_invoice` VARCHAR(255) NOT NULL DEFAULT '',
   `rq_amount1` INT(11) NOT NULL DEFAULT '0',

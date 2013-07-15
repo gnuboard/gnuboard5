@@ -104,23 +104,22 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
         <col>
     </colgroup>
     <tbody>
-    <?php if($rq['rq_type'] == 0) { // 취소요청 ?>
     <tr>
         <td><label for="rq_status">상태</label></td>
         <td>
             <select name="rq_status" id="rq_status">
                 <option value="0"<?php echo get_selected($rq['rq_status'], '0'); ?>>선택</option>
-                <option value="1"<?php echo get_selected($rq['rq_status'], '1'); ?>>입금전 처리완료</option>
-                <option value="2"<?php echo get_selected($rq['rq_status'], '2'); ?>>입금후 처리완료</option>
+                <option value="1"<?php echo get_selected($rq['rq_status'], '1'); ?>><?php $type; ?>요청 처리완료</option>
                 <option value="99"<?php echo get_selected($rq['rq_status'], '99'); ?>>고객취소</option>
                 <option value="100"<?php echo get_selected($rq['rq_status'], '100'); ?>>처리불가</option>
             </select>
         </td>
     </tr>
+    <?php if($rq['rq_type'] == 0) { // 취소요청 ?>
     <tr>
         <td><label for="rq_amount1">환불금액</label></td>
         <td>
-            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1']; ?>">
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>">
         </td>
     </tr>
     <tr>
@@ -135,12 +134,6 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
         <td><label for="rq_item">교환상품</label></td>
         <td>
             <textarea name="rq_item" id="rq_item"><?php echo $rq['rq_item']; ?></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td><label for="rq_recv">상품수령</label></td>
-        <td>
-            <input type="checkbox" name="rq_recv" id="rq_recv"> 교환요청상품 수령함
         </td>
     </tr>
     <tr>
@@ -170,7 +163,7 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
     <tr>
         <td><label for="rq_amount1">상품차액</label></td>
         <td>
-            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1']; ?>">
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>">
         </td>
     </tr>
     <tr>
@@ -182,15 +175,9 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
     <?php } // 교환요청 끝 ?>
     <?php if($rq['rq_type'] == 2) { // 반품요청 ?>
     <tr>
-        <td><label for="rq_recv">상품수령</label></td>
-        <td>
-            <input type="checkbox" name="rq_recv" id="rq_recv"> 반품요청상품 수령함
-        </td>
-    </tr>
-    <tr>
         <td><label for="rq_amount1">환불금액</label></td>
         <td>
-            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1']; ?>">
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>">
         </td>
     </tr>
     <tr>
@@ -205,20 +192,20 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
         if($default['de_tax_flag_use']) {
     ?>
     <tr>
-        <td><label for="rq_amount2">과세부분취소</label></td>
+        <td><label for="rq_amount2">과세금액 부분취소</label></td>
         <td>
             <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>">
         </td>
     </tr>
     <tr>
-        <td><label for="rq_amount3">비과세부분취소</label></td>
+        <td><label for="rq_amount3">비과세금액 부분취소</label></td>
         <td>
             <input type="text" name="rq_amount3" id="rq_amount3" value="<?php echo $rq['rq_amount3']; ?>">
         </td>
     </tr>
     <?php } else { ?>
     <tr>
-        <td><label for="rq_amount2">부분취소</label></td>
+        <td><label for="rq_amount2">금액 부분취소</label></td>
         <td>
             <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>">
         </td>
@@ -236,7 +223,7 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
     </tbody>
     </table>
     <div>
-        <button type="button" id="request_submit">확인</button>
+        <button type="submit" id="request_submit">확인</button>
         <?php if($disp_list) { ?>
         <a href="./orderrequestlist.php?<?php echo $qstr2; ?>">목록</a>
         <?php } ?>
@@ -246,12 +233,12 @@ $qstr2  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
 
 <script>
 $(function() {
-    $("#request_submit").click(function() {
-        var $form = $("form[name=forderrequest]");
+    $("form[name=forderrequest]").submit(function(e) {
+        e.preventDefault();
 
         $.post(
             "./orderrequestformupdate.php",
-            $form.serialize(),
+            $(this).serialize(),
             function(data) {
                 if(data != "")
                     alert(data);

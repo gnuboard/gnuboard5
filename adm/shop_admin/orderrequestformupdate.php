@@ -48,9 +48,9 @@ if($rq_amount1 > 0) {
 
 // 처리내용입력
 $sql = " insert into `{$g4['shop_request_table']}`
-              ( rq_type, rq_parent, od_id, ct_id, mb_id, rq_content, rq_status, rq_item, rq_recv, dl_company, rq_invoice, rq_amount1, rq_amount2, rq_amount3, rq_account, rq_ip, rq_time )
+              ( rq_type, rq_parent, od_id, ct_id, mb_id, rq_content, rq_status, rq_item, dl_company, rq_invoice, rq_amount1, rq_amount2, rq_amount3, rq_account, rq_ip, rq_time )
             values
-              ( '{$rq['rq_type']}', '$rq_id', '{$od['od_id']}', '{$rq['ct_id']}', '{$member['mb_id']}', '$rq_content', '$rq_status', '$rq_item', '$rq_recv', '$dl_company', '$rq_invoice', '$rq_amount1', '$rq_amount2', '$rq_amount3', '$rq_account', '$REMOTE_ADDR', '".G4_TIME_YMDHIS."' ) ";
+              ( '{$rq['rq_type']}', '$rq_id', '{$od['od_id']}', '{$rq['ct_id']}', '{$member['mb_id']}', '$rq_content', '$rq_status', '$rq_item', '$dl_company', '$rq_invoice', '$rq_amount1', '$rq_amount2', '$rq_amount3', '$rq_account', '$REMOTE_ADDR', '".G4_TIME_YMDHIS."' ) ";
 sql_query($sql);
 
 // 부분취소처리

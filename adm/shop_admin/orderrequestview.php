@@ -65,6 +65,14 @@ $result = sql_query($sql);
         }
 
         $image = get_it_image($row['it_id'], 50, 50);
+
+        if($row['io_type']) {
+            $price = $row['io_price'];
+            $tot_price = $row['io_price'] * $row['ct_qty'];
+        } else {
+            $price = $row['ct_price'] + $row['io_price'];
+            $tot_price = ($row['ct_price'] + $row['io_price']) * $row['ct_qty'];
+        }
     ?>
     <tr>
         <td><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a></td>

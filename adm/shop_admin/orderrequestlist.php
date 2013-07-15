@@ -59,8 +59,7 @@ $sql  = " select a.*, b.od_temp_amount, b.od_name
           limit $from_record, $rows ";
 $result = sql_query($sql);
 
-$qstr  = $qstr.'&amp;rq_type='.$rq_type.'&amp;save_stx='.$stx;
-$qstr1 = $qstr.'&amp;save_stx='.$stx;
+$qstr = $qstr.'&amp;save_stx='.$stx;
 
 $listall = '';
 if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
@@ -98,12 +97,12 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <h2><?php echo $rq_type_text; ?>내역 목록</h2>
 
     <ul class="sort_odr">
-        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;rq_type=0'; ?>">취소요청</a></li>
-        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;rq_type=1'; ?>">교환요청</a></li>
-        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;rq_type=2'; ?>">반품요청</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;rq_type=0'; ?>">취소요청</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;rq_type=1'; ?>">교환요청</a></li>
+        <li><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;rq_type=2'; ?>">반품요청</a></li>
     </ul>
 
-    <form name="frequestlist" method="post" action="./orderrequrestupdate.php" onsubmit="return frequestlist_submit(this);" autocomplete="off">
+    <form name="frequestlist" method="post" action="./orderrequestdelete.php" onsubmit="return frequestlist_submit(this);" autocomplete="off">
     <input type="hidden" name="sst" value="<?php echo $sst; ?>">
     <input type="hidden" name="sod" value="<?php echo $sod; ?>">
     <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
@@ -182,7 +181,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?php echo $done_date; ?></td>
         <td>
             <a href="./orderrequestview.php?rq_id=<?php echo $row['rq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $it_name. ' '.$type.'요청'; ?> </span>보기</a>
-            <a href="./orderrequestdelete.php?rq_id=<?php echo $row['rq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $it_name. ' '.$type.'요청'; ?> </span>삭제</a>
+            <a href="./orderrequestdelete.php?w=d&amp;rq_id=<?php echo $row['rq_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return del_confirm();"><span class="sound_only"><?php echo $it_name. ' '.$type.'요청'; ?> </span>삭제</a>
         </td>
     </tr>
 
@@ -220,6 +219,11 @@ function frequestlist_submit(f)
     }
 
     return true;
+}
+
+function del_confirm()
+{
+    return confirm('해당 요청을 삭제하시겠습니까?');
 }
 </script>
 
