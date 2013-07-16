@@ -699,9 +699,6 @@ if($request) {
     </section>
 
     <div class="btn_confirm">
-        <?php if($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '신용카드') { ?>
-        <a href="./partcancel.php?od_id=<?php echo $od['od_id']; ?>" target="_blank" id="win_partcancel">결제금액 부분취소</a>
-        <?php } ?>
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
     </div>
     </form>
@@ -900,13 +897,6 @@ $(function() {
             $chk.attr("checked", true);
         else
             $chk.attr("checked", false);
-    });
-
-    // 부분취소
-    $("#win_partcancel").click(function() {
-        var new_win = window.open($(this).attr("href"), "win_partcancel", "left=100,top=100,width=500, height=300");
-        new_win.focus();
-        return false;
     });
 });
 
