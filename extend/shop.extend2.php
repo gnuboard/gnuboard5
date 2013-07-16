@@ -388,4 +388,10 @@ if(!sql_query(" select od_mod_history from {$g4['shop_order_table']} limit 1 ", 
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
                     ADD `od_mod_history` TEXT NOT NULL AFTER `od_shop_memo` ", true);
 }
+
+// 주문정보에 복합결제 필드추가
+if(!sql_query(" select od_tax_flag from {$g4['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_tax_flag` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_escrow` ", true);
+}
 ?>

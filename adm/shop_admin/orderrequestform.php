@@ -197,7 +197,7 @@ $result = sql_query($sql);
     <?php } // 반품요청 끝 ?>
     <?php
     if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') {
-        if($default['de_tax_flag_use']) {
+        if($od['od_tax_flag']) {
     ?>
     <tr>
         <td><label for="rq_amount2">과세금액 부분취소</label></td>

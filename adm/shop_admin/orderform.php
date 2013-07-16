@@ -167,7 +167,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
         <li>
             <p>
                 <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
-                <?php if($default['de_tax_flag_use'] && $row['ct_notax']) echo '[비과세상품]'; ?>
+                <?php if($od['od_tax_flag'] && $row['ct_notax']) echo '[비과세상품]'; ?>
             </p>
 
             <table>

@@ -48,7 +48,7 @@ $result = sql_query($sql);
     <tr>
         <td>
             <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
-            <?php if($default['de_tax_flag_use'] && $row['ct_notax']) echo '[비과세상품]'; ?>
+            <?php if($od['od_tax_flag'] && $row['ct_notax']) echo '[비과세상품]'; ?>
         </td>
         <td><?php echo $row['ct_option']; ?></td>
         <td><?php echo number_format($price); ?></td>

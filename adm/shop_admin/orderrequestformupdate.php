@@ -108,7 +108,7 @@ if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌�
     if($od['od_settle_case'] == '계좌이체')
         $mod_type   = 'STPA';
 
-    if($default['de_tax_flag_use']) {
+    if($od['od_tax_flag']) {
         $mod_mny = $tax_mny + $mod_free_mny;
     }
 
@@ -126,7 +126,7 @@ if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌�
         $c_PayPlus->mf_set_modx_data( "rem_mny"      , strval($rem_mny)      );  // 취소 가능 잔액
         $c_PayPlus->mf_set_modx_data( "mod_mny"      , strval($mod_mny)      );  // 취소 요청 금액
 
-        if($default['de_tax_flag_use'])
+        if($od['od_tax_flag'])
         {
             $mod_tax_mny = round((int)$tax_mny / 1.1);
             $mod_vat_mny = (int)$tax_mny - $mod_tax_mny;

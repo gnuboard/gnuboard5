@@ -621,6 +621,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_settle_case` varchar(255) NOT NULL DEFAULT '',
   `od_tno` varchar(255) NOT NULL DEFAULT '',
   `od_escrow` tinyint(4) NOT NULL DEFAULT '0',
+  `od_tax_flag` tinyint(4) NOT NULL DEFAULT '0',
   `od_cash_no` varchar(255) NOT NULL,
   `od_cash_receipt_no` varchar(255) NOT NULL,
   `od_cash_app_time` varchar(255) NOT NULL,

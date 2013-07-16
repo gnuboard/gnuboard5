@@ -457,6 +457,7 @@ $sql = " insert {$g4['shop_order_table']}
                 od_receipt_time   = '$od_receipt_time',
                 od_tno            = '$od_tno',
                 od_escrow         = '$od_escrow',
+                od_tax_flag       = '{$default['de_tax_flag_use']}',
                 od_shop_memo      = '',
                 od_hope_date      = '$od_hope_date',
                 od_time           = '".G4_TIME_YMDHIS."',
