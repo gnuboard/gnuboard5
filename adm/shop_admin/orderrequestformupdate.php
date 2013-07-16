@@ -19,39 +19,6 @@ if(!$od['od_id'])
 if(!trim($rq_content))
     die('처리내용을 입력해 주십시오.');
 
-// 상품의 상태변경
-$ct_status = '';
-if($rq['rq_type'] == 0)
-    $ct_status = '취소';
-else if($rq['rq_type'] == 2)
-    $ct_status = '반품';
-
-if($rq_status == 1 && $ct_status != '') {
-    $item = explode(',', $rq['ct_id']);
-    for($i=0; $i<count($item); $i++) {
-        $sql = " update {$g4['shop_cart_table']}
-                    set ct_status = '$ct_status'
-                    where uq_id = '{$od['uq_id']}'
-                      and ct_id = '{$item[$i]}' ";
-        sql_query($sql);
-    }
-}
-
-// 환불금액입력(입금 금액이 있을 때만)
-$rq_amount1 = preg_replace('/[^0-9]/', '', $rq_amount1);
-if($od['od_receipt_amount'] > 0 && $rq_amount1 > 0) {
-    $sql = " update {$g4['shop_order_table']}
-                set od_refund_amount = '$rq_amount1'
-                where od_id = '{$od['od_id']}' ";
-    sql_query($sql);
-}
-
-// 처리내용입력
-$sql = " insert into `{$g4['shop_request_table']}`
-              ( rq_type, rq_parent, od_id, ct_id, mb_id, rq_content, rq_status, rq_item, dl_company, rq_invoice, rq_amount1, rq_amount2, rq_amount3, rq_account, rq_ip, rq_time )
-            values
-              ( '{$rq['rq_type']}', '$rq_id', '{$od['od_id']}', '{$rq['ct_id']}', '{$member['mb_id']}', '$rq_content', '$rq_status', '$rq_item', '$dl_company', '$rq_invoice', '$rq_amount1', '$rq_amount2', '$rq_amount3', '$rq_account', '$REMOTE_ADDR', '".G4_TIME_YMDHIS."' ) ";
-sql_query($sql);
 
 // 부분취소처리(결제금액이 있을 때만)
 if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') && $rq_status == 1 && $od['od_receipt_amount'] > 0 && $od['od_tno'])
@@ -74,11 +41,12 @@ if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌�
             break;
     }
 
-    if($od['od_settle_case'] == '계좌이체' && substr(0, 10, $od['od_time']) >= G4_TIME_YMD)
+    if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G4_TIME_YMD)
         die('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
 
     // 취소사유의 한글깨짐 방지처리
     $def_locale = setlocale(LC_CTYPE, 0);
+    $cancel_memo = iconv("utf-8", "euc-kr", '고객 '.$type.'요청으로 인한 부분취소');
     $locale_change = false;
     if(preg_match("/utf[\-]?8/i", $def_locale)) {
         setlocale(LC_CTYPE, 'ko_KR.euc-kr');
@@ -130,7 +98,7 @@ if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌�
 
     $tno            = $od['od_tno'];
     $req_tx         = 'mod';
-    $mod_desc       = '고객 '.$type.'요청으로 인한 부분취소';
+    $mod_desc       = $cancel_memo;
     $cust_ip        = getenv('REMOTE_ADDR');
     $rem_mny        = $od['od_receipt_amount'] - $od['od_cancel_card'];;
     $mod_mny        = $rq_amount2;
@@ -141,7 +109,7 @@ if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌�
         $mod_type   = 'STPA';
 
     if($default['de_tax_flag_use']) {
-        $mod_mny = strval($tax_mny + $mod_free_mny);
+        $mod_mny = $tax_mny + $mod_free_mny;
     }
 
     $c_PayPlus  = new C_PAYPLUS_CLI;
@@ -155,8 +123,8 @@ if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌�
         $c_PayPlus->mf_set_modx_data( "mod_type"     , $mod_type			 );  // 원거래 변경 요청 종류
         $c_PayPlus->mf_set_modx_data( "mod_ip"       , $cust_ip				 );  // 변경 요청자 IP
         $c_PayPlus->mf_set_modx_data( "mod_desc"     , $mod_desc			 );  // 변경 사유
-        $c_PayPlus->mf_set_modx_data( "rem_mny"      , $rem_mny              );  // 취소 가능 잔액
-        $c_PayPlus->mf_set_modx_data( "mod_mny"      , $mod_mny              );  // 취소 요청 금액
+        $c_PayPlus->mf_set_modx_data( "rem_mny"      , strval($rem_mny)      );  // 취소 가능 잔액
+        $c_PayPlus->mf_set_modx_data( "mod_mny"      , strval($mod_mny)      );  // 취소 요청 금액
 
         if($default['de_tax_flag_use'])
         {
@@ -224,4 +192,38 @@ if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌�
     if($locale_change)
         setlocale(LC_CTYPE, $def_locale);
 }
+
+// 상품의 상태변경
+$ct_status = '';
+if($rq['rq_type'] == 0)
+    $ct_status = '취소';
+else if($rq['rq_type'] == 2)
+    $ct_status = '반품';
+
+if($rq_status == 1 && $ct_status != '') {
+    $item = explode(',', $rq['ct_id']);
+    for($i=0; $i<count($item); $i++) {
+        $sql = " update {$g4['shop_cart_table']}
+                    set ct_status = '$ct_status'
+                    where uq_id = '{$od['uq_id']}'
+                      and ct_id = '{$item[$i]}' ";
+        sql_query($sql);
+    }
+}
+
+// 환불금액입력(입금 금액이 있을 때만)
+$rq_amount1 = preg_replace('/[^0-9]/', '', $rq_amount1);
+if($od['od_receipt_amount'] > 0 && $rq_amount1 > 0) {
+    $sql = " update {$g4['shop_order_table']}
+                set od_refund_amount = '$rq_amount1'
+                where od_id = '{$od['od_id']}' ";
+    sql_query($sql);
+}
+
+// 처리내용입력
+$sql = " insert into `{$g4['shop_request_table']}`
+              ( rq_type, rq_parent, od_id, ct_id, mb_id, rq_content, rq_status, rq_item, dl_company, rq_invoice, rq_amount1, rq_amount2, rq_amount3, rq_account, rq_ip, rq_time )
+            values
+              ( '{$rq['rq_type']}', '$rq_id', '{$od['od_id']}', '{$rq['ct_id']}', '{$member['mb_id']}', '$rq_content', '$rq_status', '$rq_item', '$dl_company', '$rq_invoice', '$rq_amount1', '$rq_amount2', '$rq_amount3', '$rq_account', '$REMOTE_ADDR', '".G4_TIME_YMDHIS."' ) ";
+sql_query($sql);
 ?>
