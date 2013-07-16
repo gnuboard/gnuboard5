@@ -111,11 +111,11 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">계좌번호</th>
-            <td style="<?php echo $td_st; ?>">: <?php echo $od_bank_account; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_bank_account; ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">입금자 이름</th>
-            <td style="<?php echo $td_st; ?>">: <?php echo $od_deposit_name; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo $od_deposit_name; ?></td>
         </tr>
         <?php } ?>
 
