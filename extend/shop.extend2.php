@@ -382,4 +382,10 @@ if(!sql_query(" select rq_id from {$g4['shop_request_table']} limit 1 ", false))
                   PRIMARY KEY (`rq_id`)
                 ) ", false);
 }
+
+// 수량변경 history 기록
+if(!sql_query(" select od_mod_history from {$g4['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_mod_history` TEXT NOT NULL AFTER `od_shop_memo` ", true);
+}
 ?>

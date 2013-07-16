@@ -213,12 +213,16 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
             ?>
             <tr>
                 <td class="td_chk">
-                    <label for="ct_opt_chk_<?php echo $i.$k; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
-                    <input type="checkbox" name="ct_chk[]" id="ct_chk_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_id']; ?>">
+                    <label for="ct_opt_chk_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
+                    <input type="checkbox" name="ct_chk[<?php echo $chk_cnt; ?>]" id="ct_chk_<?php echo $chk_cnt; ?>" value="<?php echo $chk_cnt; ?>">
+                    <input type="hidden" name="ct_id[<?php echo $chk_cnt; ?>]" value="<?php echo $opt['ct_id']; ?>">
                 </td>
                 <td><?php echo $opt['ct_option']; ?></td>
                 <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
-                <td class="td_num"><?php echo $opt['ct_qty']; ?></td>
+                <td class="td_num">
+                    <label for="ct_qty_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo $opt['ct_option']; ?> 수량</label>
+                    <input type="text" name="ct_qty[<?php echo $chk_cnt; ?>]" id="ct_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_qty']; ?>" required class="frm_input required" size="5">
+                </td>
                 <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
                 <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
                 <td class="td_bignum"><?php echo number_format($ct_point['소계']); ?></td>
@@ -882,16 +886,16 @@ $(function() {
     $("#sit_select_all").click(function() {
         if($(this).is(":checked")) {
             $("input[name='it_sel[]']").attr("checked", true);
-            $("input[name='ct_chk[]']").attr("checked", true);
+            $("input[name^=ct_chk]").attr("checked", true);
         } else {
             $("input[name='it_sel[]']").attr("checked", false);
-            $("input[name='ct_chk[]']").attr("checked", false);
+            $("input[name^=ct_chk]").attr("checked", false);
         }
     });
 
     // 상품의 옵션선택
     $("input[name='it_sel[]']").click(function() {
-        var $chk = $(this).closest("li").find("input[name='ct_chk[]']");
+        var $chk = $(this).closest("li").find("input[name^=ct_chk]");
         if($(this).is(":checked"))
             $chk.attr("checked", true);
         else

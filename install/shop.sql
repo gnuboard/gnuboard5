@@ -613,6 +613,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_coupon` int(11) NOT NULL DEFAULT '0',
   `od_refund_amount` int(11) NOT NULL DEFAULT '0',
   `od_shop_memo` text NOT NULL,
+  `od_mod_history` text NOT NULL,
   `dl_id` int(11) NOT NULL DEFAULT '0',
   `od_invoice` varchar(255) NOT NULL DEFAULT '',
   `od_invoice_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
