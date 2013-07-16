@@ -6,7 +6,7 @@ if(empty($rq)) {
     $rq = sql_fetch($sql);
 }
 
-$sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_price, ct_status
+$sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_price, ct_status, ct_notax
             from {$g4['shop_cart_table']}
             where uq_id = '{$od['uq_id']}'
             order by ct_id ";
@@ -46,7 +46,10 @@ $result = sql_query($sql);
         }
     ?>
     <tr>
-        <td><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a></td>
+        <td>
+            <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
+            <?php if($default['de_tax_flag_use'] && $row['ct_notax']) echo '[비과세상품]'; ?>
+        </td>
         <td><?php echo $row['ct_option']; ?></td>
         <td><?php echo number_format($price); ?></td>
         <td><?php echo number_format($row['ct_qty']); ?></td>
