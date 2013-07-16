@@ -78,7 +78,7 @@ for ($i=0; $i<$cnt; $i++)
                     where ct_id = '$ct_id'
                       and uq_id = '$uq_id' ";
         sql_query($sql);
-        $mod_history .= $ct['ct_option'].' 수량변경 '.$ct['ct_qty'].' -> '.$ct_qty."\n";
+        $mod_history .= G4_TIME_YMDHIS.' '.$ct['ct_option'].' 수량변경 '.$ct['ct_qty'].' -> '.$ct_qty."\n";
     }
 
     // 재고를 이미 사용했다면 (재고에서 이미 뺐다면)
