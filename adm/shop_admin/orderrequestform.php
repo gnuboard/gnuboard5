@@ -127,13 +127,13 @@ $result = sql_query($sql);
     <tr>
         <td><label for="rq_amount1">환불금액</label></td>
         <td>
-            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>">
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <tr>
         <td><label for="rq_account">환불계좌</label></td>
         <td>
-            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>">
+            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>" class="frm_input" size="30">
         </td>
     </tr>
     <?php } // 취소요청 끝 ?>
@@ -165,19 +165,19 @@ $result = sql_query($sql);
     <tr>
         <td><label for="rq_invoice">운송장번호</label></td>
         <td>
-            <input type="text" name="rq_invoice" id="rq_invoice" value="<?php echo $rq['rq_invoice']; ?>">
+            <input type="text" name="rq_invoice" id="rq_invoice" value="<?php echo $rq['rq_invoice']; ?>" class="frm_input" size="30">
         </td>
     </tr>
     <tr>
         <td><label for="rq_amount1">상품차액</label></td>
         <td>
-            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>">
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <tr>
         <td><label for="rq_account">차액입금계좌</label></td>
         <td>
-            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>">
+            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>" class="frm_input" size="30">
         </td>
     </tr>
     <?php } // 교환요청 끝 ?>
@@ -185,13 +185,13 @@ $result = sql_query($sql);
     <tr>
         <td><label for="rq_amount1">환불금액</label></td>
         <td>
-            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>">
+            <input type="text" name="rq_amount1" id="rq_amount1" value="<?php echo $rq['rq_amount1'] ? $rq['rq_amount1'] : ''; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <tr>
         <td><label for="rq_account">환불계좌</label></td>
         <td>
-            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>">
+            <input type="text" name="rq_account" id="rq_account" value="<?php echo $rq['rq_account']; ?>" class="frm_input" size="30">
         </td>
     </tr>
     <?php } // 반품요청 끝 ?>
@@ -202,20 +202,20 @@ $result = sql_query($sql);
     <tr>
         <td><label for="rq_amount2">과세금액 부분취소</label></td>
         <td>
-            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>">
+            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <tr>
         <td><label for="rq_amount3">비과세금액 부분취소</label></td>
         <td>
-            <input type="text" name="rq_amount3" id="rq_amount3" value="<?php echo $rq['rq_amount3']; ?>">
+            <input type="text" name="rq_amount3" id="rq_amount3" value="<?php echo $rq['rq_amount3']; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <?php } else { ?>
     <tr>
         <td><label for="rq_amount2">금액 부분취소</label></td>
         <td>
-            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>">
+            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <?php
