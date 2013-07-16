@@ -259,13 +259,13 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 
     </form>
 
-    <?php if($od['od_mod_history']) { ?>
-    <div>
-        <p>
-            상품 수량변경 내역
-        </p>
-        <?php echo conv_content($od['od_mod_history'], 0); ?>
-    </div>
+    <?php if ($od['od_mod_history']) { ?>
+    <section id="sodr_qty_log">
+        <h3>상품 수량변경 내역</h3>
+        <div>
+            <?php echo conv_content($od['od_mod_history'], 0); ?>
+        </div>
+    </section>
     <?php } ?>
 
 </section>
