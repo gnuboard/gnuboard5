@@ -202,20 +202,20 @@ $result = sql_query($sql);
     <tr>
         <td><label for="rq_amount2">과세금액 부분취소</label></td>
         <td>
-            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>" class="frm_input" size="15"> 원
+            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2'] ? $rq['rq_amount2'] : ''; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <tr>
         <td><label for="rq_amount3">비과세금액 부분취소</label></td>
         <td>
-            <input type="text" name="rq_amount3" id="rq_amount3" value="<?php echo $rq['rq_amount3']; ?>" class="frm_input" size="15"> 원
+            <input type="text" name="rq_amount3" id="rq_amount3" value="<?php echo $rq['rq_amount3'] ? $rq['rq_amount3'] : ''; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <?php } else { ?>
     <tr>
         <td><label for="rq_amount2">금액 부분취소</label></td>
         <td>
-            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2']; ?>" class="frm_input" size="15"> 원
+            <input type="text" name="rq_amount2" id="rq_amount2" value="<?php echo $rq['rq_amount2'] ? $rq['rq_amount2'] : ''; ?>" class="frm_input" size="15"> 원
         </td>
     </tr>
     <?php
