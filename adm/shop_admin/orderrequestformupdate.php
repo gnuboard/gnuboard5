@@ -193,24 +193,6 @@ if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌�
         setlocale(LC_CTYPE, $def_locale);
 }
 
-// 상품의 상태변경
-$ct_status = '';
-if($rq['rq_type'] == 0)
-    $ct_status = '취소';
-else if($rq['rq_type'] == 2)
-    $ct_status = '반품';
-
-if($rq_status == 1 && $ct_status != '') {
-    $item = explode(',', $rq['ct_id']);
-    for($i=0; $i<count($item); $i++) {
-        $sql = " update {$g4['shop_cart_table']}
-                    set ct_status = '$ct_status'
-                    where uq_id = '{$od['uq_id']}'
-                      and ct_id = '{$item[$i]}' ";
-        sql_query($sql);
-    }
-}
-
 // 환불금액입력(입금 금액이 있을 때만)
 $rq_amount1 = preg_replace('/[^0-9]/', '', $rq_amount1);
 if($od['od_receipt_amount'] > 0 && $rq_amount1 > 0) {
