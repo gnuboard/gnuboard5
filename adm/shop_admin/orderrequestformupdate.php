@@ -21,7 +21,7 @@ if(!trim($rq_content))
 
 
 // 부분취소처리(결제금액이 있을 때만)
-if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') && $rq_status == 1 && $od['od_receipt_amount'] > 0 && $od['od_tno'])
+if(($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') && ($rq_amout2 > 0 || $rq_amount3 > 0) && $rq_status == 1 && $od['od_receipt_amount'] > 0 && $od['od_tno'])
 {
     $rq_amount2 = preg_replace('/[^0-9]/', '', $rq_amount2);
     $rq_amount3 = preg_replace('/[^0-9]/', '', $rq_amount3);
@@ -201,6 +201,12 @@ if($od['od_receipt_amount'] > 0 && $rq_amount1 > 0) {
                 where od_id = '{$od['od_id']}' ";
     sql_query($sql);
 }
+
+// 고객요청 자료에 상태반영
+$sql = " update {$g4['shop_request_table']}
+            set rq_status = '$rq_status'
+            where rq_id = '$rq_id' ";
+sql_query($sql);
 
 // 처리내용입력
 $sql = " insert into `{$g4['shop_request_table']}`
