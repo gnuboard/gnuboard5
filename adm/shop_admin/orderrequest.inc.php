@@ -1,10 +1,10 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-if(empty($rq)) {
-    $sql = " select * from {$g4['shop_request_table']} where rq_id = '$rq_id' ";
-    $rq = sql_fetch($sql);
-}
+// 요청정보
+$sql = " select * from {$g4['shop_request_table']} where rq_id = '$rq_id' ";
+$rq = sql_fetch($sql);
+$item = explode(',', $rq['ct_id']);
 
 $sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_price, ct_status, ct_notax
             from {$g4['shop_cart_table']}
@@ -66,7 +66,6 @@ $result = sql_query($sql);
 <div id="order_request">
     <?php
     // 요청 처리폼 include
-    $rq_qstr = "sst=$sst&amp;sod=$sod&amp;sfl=$sfl&amp;stx=$stx&amp;save_stx=$save_stx&amp;page=$page&amp;rq_type=$rq_type";
     include_once('./orderrequestform.php');
     ?>
 </div>

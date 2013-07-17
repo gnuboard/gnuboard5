@@ -81,24 +81,10 @@ if ($od['mb_id'] == "") {
 //------------------------------------------------------------------------------
 
 // 요청정보
-$sql = " select * from {$g4['shop_request_table']} where od_id = '{$od['od_id']}' and rq_parent = '0' order by rq_id desc limit 1 ";
-$rq = sql_fetch($sql);
-if($rq['rq_id']) {
-    switch($rq['rq_type']) {
-        case 0:
-            $request = '취소';
-            break;
-        case 1:
-            $request = '교환';
-            break;
-        case 2:
-            $request = '반품';
-            break;
-        default:
-            $request = '';
-            break;
-    }
-}
+$sql = " select rq_id, ct_id, rq_type, rq_time
+            from {$g4['shop_request_table']} where od_id = '{$od['od_id']}' and rq_parent = '0' order by rq_id ";
+$rq_result = sql_query($sql);
+$rq_count = mysql_num_rows($rq_result);
 
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
@@ -124,8 +110,8 @@ $result = sql_query($sql);
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_list">주문상품 목록</a></li>
 <li><a href="#anc_sodr_pay">주문결제 내역</a></li>';
-if($request)
-    $pg_anchor .= '<li><a href="#anc_sodr_request">주문 '.$request.'요청</a></li>';
+if($rq_count)
+    $pg_anchor .= '<li><a href="#anc_sodr_request">고객요청 내역</a></li>';
 $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 <li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
 <li><a href="#anc_sodr_memo">상점메모</a></li>
@@ -326,21 +312,57 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
     </table>
 </section>
 
-<?php
-if($request) {
-    $item = explode(',', $rq['ct_id']);
-?>
+<?php if($rq_count) { ?>
 <section id="anc_sodr_request" class="cbox">
-    <h2>주문 <?php echo $request; ?>요청</h2>
+    <h2>고객요청내역</h2>
     <?php echo $pg_anchor; ?>
+    <h3>요청리스트</h3>
+    <div id="sodr_request_list">
+        <?php
+        for($j=0; $rq_row=sql_fetch_array($rq_result); $j++) {
+            $rq_item = explode(',', $rq_row['ct_id']);
+            $rq_item_count = count($rq_item);
+            $rq_ct_id = $rq_item[0];
+
+            switch($rq_row['rq_type']) {
+                case 0:
+                    $type = '취소';
+                    break;
+                case 1:
+                    $type = '교환';
+                    break;
+                case 2:
+                    $type = '반품';
+                    break;
+                default:
+                    $type ='';
+                    break;
+            }
+
+            $sql = " select it_name, ct_option from {$g4['shop_cart_table']} where uq_id = '{$od['uq_id']}' and ct_id = '$rq_ct_id' ";
+            $rq_ct = sql_fetch($sql);
+            $rq_subject = $rq_row['rq_time'].' '.$rq_ct['it_name'].' '.$rq_ct['ct_option'];
+            if($rq_item_count > 1)
+                $rq_subject .= '외 '.($rq_item_count - 1).'건';
+            $rq_subject .= ' '.$type.'요청';
+
+            $order_href = './orderform.php?od_id='.$od['od_id'].'&amp;uq_id='.$od['uq_id'].'&amp;rq_id='.$rq_row['rq_id'].'&amp;'.$qstr.'#anc_sodr_request';
+        ?>
+        <p>
+            <a href="<?php echo $order_href; ?>"><?php echo $rq_subject; ?></a>
+        </p>
+        <?php
+        }
+        ?>
+    </div>
+    <?php if($rq_id) { ?>
     <div id="sodr_request_frm">
         <?php
         // 요청 처리폼 include
-        $rq_id = $rq['rq_id'];
-        $disp_list = 0;
         include_once('./orderrequest.inc.php');
         ?>
     </div>
+    <?php } ?>
 </section>
 <?php } ?>
 

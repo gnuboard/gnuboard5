@@ -4,8 +4,12 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$sql = " select * from {$g4['shop_request_table']} where rq_id = '$rq_id' ";
-$rq = sql_fetch($sql);
+// 요청정보
+if(empty($rq)) {
+    $sql = " select * from {$g4['shop_request_table']} where rq_id = '$rq_id' ";
+    $rq = sql_fetch($sql);
+}
+
 if(!$rq['rq_id']) {
     if(!isset($_POST['rq_id']))
         alert('등록된 자료가 없습니다.');
@@ -63,6 +67,8 @@ $sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_
             where uq_id = '{$od['uq_id']}'
             order by ct_id ";
 $result = sql_query($sql);
+
+$rq_qstr = "sst=$sst&amp;sod=$sod&amp;sfl=$sfl&amp;stx=$stx&amp;save_stx=$save_stx&amp;page=$page&amp;rq_type=$rq_type";
 ?>
 
 <section id="sodr_requset_content">
@@ -233,7 +239,7 @@ $result = sql_query($sql);
 
     <div class="btn_confirm">
         <button type="submit" id="request_submit" class="btn_submit">확인</button>
-        <a href="./orderrequestlist.php?<?php echo $rq_qstr; ?>">목록</a>
+        <a href="./orderrequestlist.php?<?php echo $rq_qstr; ?>">요청목록</a>
     </div>
 
     </form>
@@ -262,7 +268,7 @@ $(function() {
         var rq_id = $(this).attr("id").replace(/[^0-9]/g, "");
         $.post(
             "./orderrequestform.php",
-            { rq_id: rq_id, disp_list: <?php echo $disp_list; ?> },
+            { rq_id: rq_id },
             function(data) {
                 $("#order_request").html(data);
             }

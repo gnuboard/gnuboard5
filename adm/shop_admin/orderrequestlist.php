@@ -165,7 +165,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         if($tmp['rq_time'])
             $done_date = substr($tmp['rq_time'], 2, 8);
 
-        $order_href = './orderform.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id'].'&amp;rq_type='.$rq_type.'&amp;'.$qstr;
+        $order_href = './orderform.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id'].'&amp;rq_id='.$row['rq_id'].'&amp;rq_type='.$rq_type.'&amp;'.$qstr;
     ?>
 
     <tr>
