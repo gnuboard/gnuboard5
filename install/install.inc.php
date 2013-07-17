@@ -71,14 +71,27 @@ if (!is_dir($data_path))
 $write_data_dir = true;
 // data 디렉토리에 파일 생성 가능한지 검사.
 if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-    if (!(is_readable($data_path) && is_writeable($data_path) && is_executable($data_path)))
-    {
-    ?>
-        <p><?php echo G4_DATA_DIR ?> 디렉토리의 퍼미션을 707로 변경하여 주십시오.<br /><br />
-        $> chmod 707 <?php echo G4_DATA_DIR ?> 또는 chmod uo+rwx <?php echo G4_DATA_DIR ?><br /><br />
-        위 명령 실행후 브라우저를 새로고침 하십시오.</p>
-    <?php
-        $write_data_dir = false;
+    $sapi_type = php_sapi_name(); 
+    if (substr($sapi_type, 0, 3) == 'cgi') { 
+        if (!(is_readable($data_path) && is_executable($data_path)))
+        {
+        ?>
+            <p><?php echo G4_DATA_DIR ?> 디렉토리의 퍼미션을 705로 변경하여 주십시오.<br /><br />
+            $> chmod 705 <?php echo G4_DATA_DIR ?> 또는 chmod uo+rx <?php echo G4_DATA_DIR ?><br /><br />
+            위 명령 실행후 브라우저를 새로고침 하십시오.</p>
+        <?php
+            $write_data_dir = false;
+        }
+    } else {
+        if (!(is_readable($data_path) && is_writeable($data_path) && is_executable($data_path)))
+        {
+        ?>
+            <p><?php echo G4_DATA_DIR ?> 디렉토리의 퍼미션을 707로 변경하여 주십시오.<br /><br />
+            $> chmod 707 <?php echo G4_DATA_DIR ?> 또는 chmod uo+rwx <?php echo G4_DATA_DIR ?><br /><br />
+            위 명령 실행후 브라우저를 새로고침 하십시오.</p>
+        <?php
+            $write_data_dir = false;
+        }
     }
 }
 ?>
