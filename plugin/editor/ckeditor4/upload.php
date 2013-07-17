@@ -1,10 +1,11 @@
 <?php
-include_once("../../common.php");
+include_once("../../../common.php");
 
 $ym = date('ym', G4_SERVER_TIME);
 
 $data_dir = G4_DATA_PATH.'/editor/'.$ym;
 $data_url = G4_DATA_URL.'/editor/'.$ym;
+
 @mkdir($data_dir, G4_DIR_PERMISSION);
 @chmod($data_dir, G4_DIR_PERMISSION);
  

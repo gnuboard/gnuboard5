@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once(G4_EDITOR_LIB);
 include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 set_session('ss_bo_table', $_REQUEST['bo_table']);
@@ -371,14 +371,14 @@ if ($is_guest) {
 }
 
 $is_dhtml_editor = false;
-$editor_js = '';
 // 모바일에서는 DHTML 에디터 사용불가
-if (!G4_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
+if ($config['cf_editor'] && !G4_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
     $is_dhtml_editor = true;
-    $editor_js .= get_editor_js('wr_content', $is_dhtml_editor);
-    $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 }
 $editor_html = editor_html('wr_content', $content, $is_dhtml_editor);
+$editor_js = '';
+$editor_js .= get_editor_js('wr_content', $is_dhtml_editor);
+$editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 
 // 임시 저장된 글 갯수
 $autosave_count = autosave_count($member['mb_id']);

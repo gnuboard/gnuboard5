@@ -163,8 +163,12 @@ ini_set("session.cookie_domain", G4_COOKIE_DOMAIN);
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
 $config = sql_fetch(" select * from {$g4['config_table']} ");
 
-define('G4_HTTP_BBS_URL',   https_url(G4_BBS_DIR, false));
-define('G4_HTTPS_BBS_URL',  https_url(G4_BBS_DIR, true));
+define('G4_HTTP_BBS_URL',  https_url(G4_BBS_DIR, false));
+define('G4_HTTPS_BBS_URL', https_url(G4_BBS_DIR, true));
+if ($config['cf_editor']) 
+    define('G4_EDITOR_LIB', G4_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
+else
+    define('G4_EDITOR_LIB', G4_LIB_PATH."/editor.lib.php");
 
 //==============================================================================
 // Mobile 모바일 설정

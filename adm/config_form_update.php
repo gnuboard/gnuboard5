@@ -101,6 +101,7 @@ $sql = " update {$g4['config_table']}
                  cf_mobile_connect_skin = '{$_POST['cf_mobile_connect_skin']}',
                  cf_mobile_member_skin = '{$_POST['cf_mobile_member_skin']}',
                  cf_gcaptcha_mp3 = '{$_POST['cf_gcaptcha_mp3']}',
+                 cf_editor = '{$_POST['cf_editor']}',
                  cf_googl_shorturl_apikey = '{$_POST['cf_googl_shorturl_apikey']}',
                  cf_kcpcert_site_cd = '{$_POST['cf_kcpcert_site_cd']}',
                  cf_kcpcert_use = '{$_POST['cf_kcpcert_use']}',

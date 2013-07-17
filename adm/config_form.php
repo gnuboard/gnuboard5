@@ -30,6 +30,16 @@ if(!isset($config['cf_gcaptcha_mp3'])) {
                     ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
 
+if(!isset($config['cf_gcaptcha_mp3'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
+}
+
+if(!isset($config['cf_editor'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_editor` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
+}
+
 if(!isset($config['cf_googl_shorturl_apikey'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_googl_shorturl_apikey` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
@@ -281,6 +291,21 @@ $pg_anchor = '<ul class="anchor">
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
+            }
+            ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_editor">에디터 선택</label></th>
+        <td colspan="3">
+            <?php echo help(G4_EDITOR_URL.' 밑의 DHTML 에디터 폴더를 선택합니다.') ?>
+            <select name="cf_editor" id="cf_editor">
+            <?php
+            $arr = get_skin_dir('', G4_EDITOR_PATH);
+            for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">사용안함</option>";
+                echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_editor'], $arr[$i]).">".$arr[$i]."</option>\n";
             }
             ?>
             </select>

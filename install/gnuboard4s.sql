@@ -279,6 +279,7 @@ CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_mobile_connect_skin` varchar(255) NOT NULL DEFAULT '',
   `cf_mobile_member_skin` varchar(255) NOT NULL DEFAULT '',
   `cf_gcaptcha_mp3` varchar(255) NOT NULL DEFAULT '',
+  `cf_editor` varchar(255) NOT NULL DEFAULT '',
   `cf_googl_shorturl_apikey` varchar(255) NOT NULL DEFAULT '',
   `cf_kcpcert_site_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_kcpcert_use` enum('','test','service') NOT NULL DEFAULT '',

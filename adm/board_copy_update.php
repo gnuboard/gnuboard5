@@ -18,7 +18,7 @@ if ($row['cnt'])
 // 게시판 테이블 생성
 $sql = get_table_define($g4['write_prefix'] . $bo_table);
 $sql = str_replace($g4['write_prefix'] . $bo_table, $g4['write_prefix'] . $target_table, $sql);
-sql_query($sql);
+sql_query($sql, false);
 
 $file_copy = array();
 
@@ -118,7 +118,7 @@ $sql = " insert into {$g4['board_table']}
                 bo_8 = '{$board['bo_8']}',
                 bo_9 = '{$board['bo_9']}',
                 bo_10 = '{$board['bo_10']}' ";
-sql_query($sql);
+sql_query($sql, false);
 
 // 게시판 폴더 생성
 @mkdir(G4_DATA_PATH.'/file/'.$target_table, G4_DIR_PERMISSION);
@@ -141,8 +141,8 @@ if ($copy_case == 'schema_data_both') {
         // 김선용 201007 :
         if(is_dir(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry)){
             $dd = dir(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry);
-            @mkdir(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry G4_DIR_PERMISSION);
-            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry G4_DIR_PERMISSION);
+            @mkdir(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, G4_DIR_PERMISSION);
+            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, G4_DIR_PERMISSION);
             while ($entry2 = $dd->read()) {
                 if ($entry2 == '.' || $entry2 == '..') continue;
                 @copy(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry.'/'.$entry2, G4_DATA_PATH.'/file/'.$target_table.'/'.$entry.'/'.$entry2);
@@ -153,7 +153,7 @@ if ($copy_case == 'schema_data_both') {
         }
         else {
             @copy(G4_DATA_PATH.'/file/'.$bo_table.'/'.$entry, G4_DATA_PATH.'/file/'.$target_table.'/'.$entry);
-            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry G4_DIR_PERMISSION);
+            @chmod(G4_DATA_PATH.'/file/'.$target_table.'/'.$entry, G4_DIR_PERMISSION);
             $copy_file++;
         }
     }
@@ -161,18 +161,18 @@ if ($copy_case == 'schema_data_both') {
 
     // 글복사
     $sql = " insert into {$g4['write_prefix']}$target_table select * from {$g4['write_prefix']}$bo_table ";
-    sql_query($sql);
+    sql_query($sql, false);
 
     // 게시글수 저장
     $sql = " select bo_count_write, bo_count_comment from {$g4['board_table']} where bo_table = '$bo_table' ";
     $row = sql_fetch($sql);
     $sql = " update {$g4['board_table']} set bo_count_write = '{$row['bo_count_write']}', bo_count_comment = '{$row['bo_count_comment']}' where bo_table = '$target_table' ";
-    sql_query($sql);
+    sql_query($sql, false);
 
     // 4.00.01
     // 위의 코드는 같은 테이블명을 사용하였다는 오류가 발생함. (희한하네 ㅡㅡ;)
     $sql = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' ";
-    $result = sql_query($sql);
+    $result = sql_query($sql, false);
     for ($i=0; $row=sql_fetch_array($result); $i++)
         $file_copy[$i] = $row;
 }
@@ -192,7 +192,7 @@ if (count($file_copy)) {
                          bf_height = '{$file_copy[$i]['bf_height']}',
                          bf_type = '{$file_copy[$i]['bf_type']}',
                          bf_datetime = '{$file_copy[$i]['bf_datetime']}' ";
-        sql_query($sql, FALSE);
+        sql_query($sql, false);
     }
 }
 
