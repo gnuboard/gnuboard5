@@ -46,7 +46,7 @@ define('G4_LIB_DIR',        'lib');
 define('G4_PLUGIN_DIR',     'plugin');
 define('G4_SKIN_DIR',       'skin');
 define('G4_GCAPTCHA_DIR',   'gcaptcha');
-define('G4_CKEDITOR_DIR',   'ckeditor');
+define('G4_EDITOR_DIR',     'editor');
 define('G4_MOBILE_DIR',     'mobile');
 
 define('G4_KCPCERT_DIR',    'kcpcert');
@@ -79,7 +79,7 @@ define('G4_JS_URL',         G4_URL.'/'.G4_JS_DIR);
 define('G4_SKIN_URL',       G4_URL.'/'.G4_SKIN_DIR);
 define('G4_PLUGIN_URL',     G4_URL.'/'.G4_PLUGIN_DIR);
 define('G4_GCAPTCHA_URL',   G4_PLUGIN_URL.'/'.G4_GCAPTCHA_DIR);
-define('G4_CKEDITOR_URL',   G4_PLUGIN_URL.'/'.G4_CKEDITOR_DIR); // CKEDITOR 의 라이브러리 경로
+define('G4_EDITOR_URL',     G4_PLUGIN_URL.'/'.G4_EDITOR_DIR);
 define('G4_KCPCERT_URL',    G4_PLUGIN_URL.'/'.G4_KCPCERT_DIR);
 define('G4_SNS_URL',        G4_PLUGIN_URL.'/'.G4_SNS_DIR);
 define('G4_SYNDI_URL',      G4_PLUGIN_URL.'/'.G4_SYNDI_DIR);
@@ -94,7 +94,7 @@ define('G4_LIB_PATH',       G4_PATH.'/'.G4_LIB_DIR);
 define('G4_PLUGIN_PATH',    G4_PATH.'/'.G4_PLUGIN_DIR);
 define('G4_SKIN_PATH',      G4_PATH.'/'.G4_SKIN_DIR);
 define('G4_GCAPTCHA_PATH',  G4_PLUGIN_PATH.'/'.G4_GCAPTCHA_DIR);
-define('G4_CKEDITOR_PATH',  G4_PLUGIN_PATH.'/'.G4_CKEDITOR_DIR);
+define('G4_EDITOR_PATH',    G4_PLUGIN_PATH.'/'.G4_EDITOR_DIR);
 
 define('G4_KCPCERT_PATH',   G4_PLUGIN_PATH.'/'.G4_KCPCERT_DIR);
 

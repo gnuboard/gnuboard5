@@ -61,6 +61,7 @@ var g4_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
 var g4_is_mobile = "<?php echo G4_IS_MOBILE ?>";
 var g4_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
 var g4_sca       = "<?php echo isset($sca)?$sca:''; ?>";
+var g4_editor    = "<?php echo isset($config['cf_editor'])?$config['cf_editor']:''; ?>";
 var g4_cookie_domain = "<?php echo G4_COOKIE_DOMAIN ?>";
 <?php
 if ($is_admin) {

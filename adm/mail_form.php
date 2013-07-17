@@ -1,7 +1,7 @@
 <?php
 $sub_menu = "200300";
 include_once('./_common.php');
-include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once(G4_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], 'r');
 
@@ -44,7 +44,7 @@ include_once('./admin.head.php');
     </tr>
     <tr>
         <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
-        <td><?php echo editor_html("ma_content", $ma['ma_content'], '400'); ?></td>
+        <td><?php echo editor_html("ma_content", $ma['ma_content']); ?></td>
     </tr>
     </tbody>
     </table>
@@ -65,13 +65,17 @@ function fmailform_check(f)
     errfld = "";
 
     check_field(f.ma_subject, "제목을 입력하세요.");
-    check_field(f.ma_content, "내용을 입력하세요.");
+    //check_field(f.ma_content, "내용을 입력하세요.");
 
     if (errmsg != "") {
         alert(errmsg);
         errfld.focus();
         return false;
     }
+
+    <?php echo get_editor_js("ma_content"); ?>
+    <?php echo chk_editor_js("ma_content"); ?>
+    
     return true;
 }
 
