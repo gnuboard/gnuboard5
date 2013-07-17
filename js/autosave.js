@@ -9,6 +9,8 @@ function autosave() {
     $("form#fwrite").each(function() {
         if (g4_editor=="ckeditor4" && typeof(CKEDITOR.instances.wr_content)!="undefined") {
             this.wr_content.value = CKEDITOR.instances.wr_content.getData();
+        } else if (g4_editor=="cheditor5" && typeof(ed_wr_content)!="undefined") {
+            this.wr_content.value = ed_wr_content.outputBodyHTML();
         }
         // 변수에 저장해 놓은 값과 다를 경우에만 임시 저장함
         if (save_wr_subject != this.wr_subject.value || save_wr_content != this.wr_content.value) {
@@ -75,6 +77,8 @@ $(function(){
             $("#wr_subject").val(subject);
             if (g4_editor=="ckeditor4" && typeof(CKEDITOR.instances.wr_content)!="undefined") {
                 CKEDITOR.instances.wr_content.setData(content);
+            } else if (g4_editor=="cheditor5" && typeof(ed_wr_content)!="undefined") {
+                ed_wr_content.putContents(content);
             } else {
                 $("#fwrite #wr_content").val(content);
             }
