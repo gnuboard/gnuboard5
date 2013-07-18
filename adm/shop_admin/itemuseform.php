@@ -1,7 +1,7 @@
 <?php
 $sub_menu = '400650';
 include_once('./_common.php');
-include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once(G4_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
@@ -85,7 +85,7 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 function fitemuseform_submit(f)
 {
     <?php echo get_editor_js('is_content'); ?>
-    
+
     return true;
 }
 </script>

@@ -1,6 +1,6 @@
 <?php
-include_once("./_common.php");
-include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once('./_common.php');
+include_once(G4_EDITOR_LIB);
 
 // 상품문의의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
 $iq_question_max_length = 10000;
@@ -13,7 +13,7 @@ if (!$is_member) {
     alert_login("상품문의는 회원만 작성 가능합니다.", urlencode($_SERVER['REQUEST_URI']));
 }
 
-if ($w == "u") 
+if ($w == "u")
 {
     $qa = sql_fetch(" select * from {$g4['shop_item_qa_table']} where iq_id = '$iq_id' ");
     if (!$qa) {
@@ -69,7 +69,7 @@ function fitemqa_submit(f)
 
     if (iq_question_editor_data.length > <?php echo $iq_question_max_length; ?>) {
         alert("내용은 <?php echo $iq_question_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+iq_question_editor_data.length+" 글자");
-        CKEDITOR.instances.iq_question.focus(); 
+        CKEDITOR.instances.iq_question.focus();
         return false;
     }
 

@@ -6,7 +6,7 @@ if (G4_IS_MOBILE) {
     return;
 }
 
-include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once(G4_EDITOR_LIB);
 
 // 사용후기의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
 $is_content_max_length = 10000;

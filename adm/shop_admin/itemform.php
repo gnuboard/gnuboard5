@@ -1,7 +1,7 @@
 <?php
 $sub_menu = '400300';
 include_once('./_common.php');
-include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once(G4_EDITOR_LIB);
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
 auth_check($auth[$sub_menu], "w");
