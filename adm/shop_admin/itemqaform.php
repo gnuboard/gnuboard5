@@ -1,7 +1,7 @@
 <?php
 $sub_menu = '400660';
 include_once('./_common.php');
-include_once(G4_CKEDITOR_PATH.'/ckeditor.lib.php');
+include_once(G4_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
@@ -79,7 +79,7 @@ function fitemqaform_submit(f)
 {
     <?php echo get_editor_js('iq_question'); ?>
     <?php echo get_editor_js('iq_answer'); ?>
-    
+
     return true;
 }
 </script>
