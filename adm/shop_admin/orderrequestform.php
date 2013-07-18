@@ -55,10 +55,42 @@ if(!$od['od_id']) {
 
 // 요청내용
 $cus_content = conv_content($rq['rq_content'], 0);
+$cus_status = '';
+
+if(!$rq['rq_parent']) {
+    switch($rq['rq_status']) {
+        case 1:
+            $cus_status = '처리완료';
+            break;
+        case 99:
+            $cus_status = '고객취소';
+            break;
+        case 100:
+            $cus_status = '처리불가';
+            break;
+        default:
+            break;
+    }
+}
+
 if($rq['rq_parent']) {
     $sql = " select rq_content from {$g4['shop_request_table']} where rq_id = '{$rq['rq_parent']}' ";
     $cus = sql_fetch($sql);
     $cus_content = conv_content($cus['rq_content'], 0);
+
+    switch($cus['rq_status']) {
+        case 1:
+            $cus_status = '처리완료';
+            break;
+        case 99:
+            $cus_status = '고객취소';
+            break;
+        case 100:
+            $cus_status = '처리불가';
+            break;
+        default:
+            break;
+    }
 }
 
 // 요청상품
@@ -249,6 +281,11 @@ $rq_qstr = "sst=$sst&amp;sod=$sod&amp;sfl=$sfl&amp;stx=$stx&amp;save_stx=$save_s
 $(function() {
     $("form[name=forderrequest]").submit(function(e) {
         e.preventDefault();
+
+        <?php if($cus_status) { ?>
+        if(!confirm("<?php echo $cus_status; ?> 상태의 요청내역입니다.\n추가로 처리내용을 입력하시겠습니까?"))
+            return false;
+        <?php } ?>
 
         $.post(
             "./orderrequestformupdate.php",
