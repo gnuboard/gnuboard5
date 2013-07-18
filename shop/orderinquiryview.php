@@ -194,116 +194,109 @@ if(openwin != null) {
         if($rq_cnt)
         {
         ?>
-        <h3>요청내역</h3>
-        <ul>
-            <?php
-            for($j=0; $rq_row=sql_fetch_array($rq_res); $j++) {
-                switch($rq_row['rq_type']) {
-                    case 0:
-                        $rq_type = '취소';
-                        break;
-                    case 1:
-                        $rq_type = '교환';
-                        break;
-                    case 2:
-                        $rq_type = '반품';
-                        break;
-                    default:
-                        $rq_type = '';
-                        break;
-                }
-
-                $item = explode(',', $rq_row['ct_id']);
-                $item_count = count($item);
-                $rq_ct_id = $item[0];
-                $rq_subject = $ct_list[$rq_ct_id]['name'].' '.$ct_list[$rq_ct_id]['option'];
-                if($item_count > 1)
-                    $rq_subject .= '외 '.($item_count - 1).'건';
-                $rq_subject .= ' '.$rq_type.'요청';
-            ?>
-            <li>
-                <span><?php echo $rq_subject; ?></span>
-                <button type="button" class="request_view">상세보기</button>
-            </li>
-            <li>
-                <table>
-                <thead>
-                <tr>
-                    <th>구분</th>
-                    <th>상품명</th>
-                    <th>옵션항목</th>
-                    <th>요청일</th>
-                    <th>처리일</th>
-                </tr>
-                </thead>
-                <tbody>
+        <section id="sod_req_log">
+            <h3>요청내역</h3>
+            <ul>
                 <?php
-                for($k=0; $k<$item_count; $k++) {
-                    $ct_idx = $item[$k];
-                    $it_name = $ct_list[$ct_idx]['name'];
-                    $ct_option = $ct_list[$ct_idx]['option'];
+                for($j=0; $rq_row=sql_fetch_array($rq_res); $j++) {
+                    switch($rq_row['rq_type']) {
+                        case 0:
+                            $rq_type = '취소';
+                            break;
+                        case 1:
+                            $rq_type = '교환';
+                            break;
+                        case 2:
+                            $rq_type = '반품';
+                            break;
+                        default:
+                            $rq_type = '';
+                            break;
+                    }
 
-                    $sql = " select rq_time
-                                from {$g4['shop_request_table']}
-                                where rq_parent = '{$rq_row['rq_id']}' and rq_status <> '0'
-                                order by rq_id desc
-                                limit 1 ";
-                    $tmp = sql_fetch($sql);
-                    $done_date = substr($tmp['rq_time'], 2, 8);
+                    $item = explode(',', $rq_row['ct_id']);
+                    $item_count = count($item);
+                    $rq_ct_id = $item[0];
+                    $rq_subject = $ct_list[$rq_ct_id]['name'].' '.$ct_list[$rq_ct_id]['option'];
+                    if($item_count > 1)
+                        $rq_subject .= '외 '.($item_count - 1).'건';
+                    $rq_subject .= ' <span>'.$rq_type.'요청</span>';
                 ?>
-                <tr>
-                    <td><?php echo $rq_type; ?></td>
-                    <td><?php echo $it_name; ?></td>
-                    <td><?php echo $ct_option; ?></td>
-                    <td><?php echo substr($rq_row['rq_time'], 2, 8); ?></td>
-                    <td><?php echo $done_date; ?></td>
-                </tr>
-                <?php
-                }
-                ?>
-                <tr>
-                    <td colspan="5">
+                <li class="sod_req_log_view">
+                    <table class="basic_tbl">
+                    <caption><?php echo $rq_subject; ?></caption>
+                    <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>상품명</th>
+                        <th>옵션항목</th>
+                        <th>요청일</th>
+                        <th>처리일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    for($k=0; $k<$item_count; $k++) {
+                        $ct_idx = $item[$k];
+                        $it_name = $ct_list[$ct_idx]['name'];
+                        $ct_option = $ct_list[$ct_idx]['option'];
+
+                        $sql = " select rq_time
+                                    from {$g4['shop_request_table']}
+                                    where rq_parent = '{$rq_row['rq_id']}' and rq_status <> '0'
+                                    order by rq_id desc
+                                    limit 1 ";
+                        $tmp = sql_fetch($sql);
+                        $done_date = substr($tmp['rq_time'], 2, 8);
+                    ?>
+                    <tr>
+                        <td class="td_smallstat"><?php echo $rq_type; ?></td>
+                        <td class="sod_req_it"><?php echo $it_name; ?></td>
+                        <td><?php echo $ct_option; ?></td>
+                        <td class="td_date"><?php echo substr($rq_row['rq_time'], 2, 8); ?></td>
+                        <td class="td_date"><?php echo $done_date; ?></td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                    </tbody>
+                    </table>
+                    <p>
+                        <strong>요청내용</strong>
                         <?php echo conv_content($rq_row['rq_content'], 0); ?>
                         <?php if($rq_row['rq_status'] == 0) { ?>
-                        <button type="button" id="rq_id_<?php echo $rq_row['rq_id']; ?>" class="request_cancel"><?php echo $rq_type; ?>요청취소</button>
+                        <button type="button" id="rq_id_<?php echo $rq_row['rq_id']; ?>" class="request_cancel"><?php echo $rq_type; ?>요청 취소</button>
                         <?php } ?>
-                    </td>
-                </tr>
-                </tbody>
-                </table>
-            </li>
-            <?php
-            }
-            ?>
-        </ul>
+                    </p>
+                </li>
+                <?php
+                }
+                ?>
+            </ul>
 
-        <script>
-        $(function() {
-            $(".request_view").click(function() {
-                $view = $(this).closest("li").next();
-                $view.slideToggle();
-            });
-
-            $(".request_cancel").click(function() {
-                if(!confirm("요청을 취소하시겠습니까?"))
-                    return false;
-
-                var rq_id = $(this).attr("id").replace("rq_id_", "");
-                $.post(
-                    "./orderrequestcancel.php",
-                    { rq_id: rq_id, od_id: "<?php echo $od['od_id']; ?>" },
-                    function(data) {
-                        if(data != "")
-                            alert(data);
-                        else
-                            alert("고객님의 요청이 취소되었습니다.");
-
+            <script>
+            $(function() {
+                $(".request_cancel").click(function() {
+                    if(!confirm("요청을 취소하시겠습니까?"))
                         return false;
-                    }
-                );
+
+                    var rq_id = $(this).attr("id").replace("rq_id_", "");
+                    $.post(
+                        "./orderrequestcancel.php",
+                        { rq_id: rq_id, od_id: "<?php echo $od['od_id']; ?>" },
+                        function(data) {
+                            if(data != "")
+                                alert(data);
+                            else
+                                alert("고객님의 요청이 취소되었습니다.");
+
+                            return false;
+                        }
+                    );
+                });
             });
-        });
-        </script>
+            </script>
+        </section>
         <?php
         }
         ?>
