@@ -687,7 +687,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <?php
         // 취소한 내역이 없다면
         if ($tot_cancel_amount == 0) {
-            if ($dsp_request && $od_count1 == $od_count2 && ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_amount'] == 0)) {
+            if (!$rq_cnt && $od_count1 == $od_count2 && ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_amount'] == 0)) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
