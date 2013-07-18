@@ -17,6 +17,9 @@ include_once('./_head.php');
 $sql_common = " from `{$g4['shop_item_use_table']}` a join `{$g4['shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where a.is_confirm = '1' ";
 
+if(!$sfl)
+    $sfl = 'b.it_name';
+
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
@@ -40,11 +43,6 @@ if (!$sst) {
 }
 $sql_order = " order by $sst $sod ";
 
-/*
-$sql_common = " from {$g4['shop_item_use_table']} where is_confirm = '1' ";
-$sql_order = " order by is_id desc ";
-*/
-
 $sql = " select count(*) as cnt
          $sql_common
          $sql_search
@@ -64,12 +62,12 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <select name="sfl" required title="검색항목선택">
 <option value="">선택</option>
-<option value="b.it_name"   <?php echo get_selected($_GET['sfl'], "b.it_name", true); ?>>상품명</option>
-<option value="a.it_id"     <?php echo get_selected($_GET['sfl'], "a.it_id"); ?>>상품코드</option>
-<option value="a.is_subject"<?php echo get_selected($_GET['sfl'], "a.is_subject"); ?>>후기제목</option>
-<option value="a.is_content">후기제목</option>
-<option value="a.is_name">작성자명</option>
-<option value="a.mb_id">작성자아이디</option>
+<option value="b.it_name"   <?php echo get_selected($sfl, "b.it_name"); ?>>상품명</option>
+<option value="a.it_id"     <?php echo get_selected($sfl, "a.it_id"); ?>>상품코드</option>
+<option value="a.is_subject"<?php echo get_selected($sfl, "a.is_subject"); ?>>후기제목</option>
+<option value="a.is_content"<?php echo get_selected($sfl, "a.is_content"); ?>>후기내용</option>
+<option value="a.is_name"   <?php echo get_selected($sfl, "a.is_name"); ?>>작성자명</option>
+<option value="a.mb_id"     <?php echo get_selected($sfl, "a.mb_id"); ?>>작성자아이디</option>
 </select>
 <input type="text" name="stx" required title="검색어" value="<?php echo $stx; ?>">
 <input type="submit" value="검색">
@@ -92,7 +90,6 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         $star = get_star($row['is_score']);
 
         $is_content = get_view_thumbnail($row['is_content'], 500);
-        $is_time = substr($row['is_time'], 2, 14);
         $small_image = $row['it_id'];
 
         $row2 = sql_fetch(" select it_name from {$g4['shop_item_table']} where it_id = '{$row['it_id']}' ");

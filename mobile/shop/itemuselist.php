@@ -11,6 +11,9 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 $sql_common = " from `{$g4['shop_item_use_table']}` a join `{$g4['shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where a.is_confirm = '1' ";
 
+if(!$sfl)
+    $sfl = 'b.it_name';
+
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
@@ -34,11 +37,6 @@ if (!$sst) {
 }
 $sql_order = " order by $sst $sod ";
 
-/*
-$sql_common = " from {$g4['shop_item_use_table']} where is_confirm = '1' ";
-$sql_order = " order by is_id desc ";
-*/
-
 $sql = " select count(*) as cnt
          $sql_common
          $sql_search
@@ -52,17 +50,18 @@ if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페�
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
+<!-- 전체 상품 사용후기 목록 시작 { -->
 <a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <select name="sfl" required title="검색항목선택">
 <option value="">선택</option>
-<option value="b.it_name"   <?php echo get_selected($_GET['sfl'], "b.it_name", true); ?>>상품명</option>
-<option value="a.it_id"     <?php echo get_selected($_GET['sfl'], "a.it_id"); ?>>상품코드</option>
-<option value="a.is_subject"<?php echo get_selected($_GET['sfl'], "a.is_subject"); ?>>후기제목</option>
-<option value="a.is_content">후기제목</option>
-<option value="a.is_name">작성자명</option>
-<option value="a.mb_id">작성자아이디</option>
+<option value="b.it_name"   <?php echo get_selected($sfl, "b.it_name"); ?>>상품명</option>
+<option value="a.it_id"     <?php echo get_selected($sfl, "a.it_id"); ?>>상품코드</option>
+<option value="a.is_subject"<?php echo get_selected($sfl, "a.is_subject"); ?>>후기제목</option>
+<option value="a.is_content"<?php echo get_selected($sfl, "a.is_content"); ?>>후기내용</option>
+<option value="a.is_name"   <?php echo get_selected($sfl, "a.is_name"); ?>>작성자명</option>
+<option value="a.mb_id"     <?php echo get_selected($sfl, "a.mb_id"); ?>>작성자아이디</option>
 </select>
 <input type="text" name="stx" required title="검색어" value="<?php echo $stx; ?>">
 <input type="submit" value="검색">
@@ -85,7 +84,6 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         $star = get_star($row['is_score']);
 
         $is_content = get_view_thumbnail($row['is_content'], 500);
-        $is_time = substr($row['is_time'], 2, 14);
         $small_image = $row['it_id'];
 
         $row2 = sql_fetch(" select it_name from {$g4['shop_item_table']} where it_id = '{$row['it_id']}' ");
@@ -115,7 +113,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
             </dl>
 
             <div id="sps_con_<?php echo $i; ?>" style="display:none;">
-                <?php echo $is_content; // 상품 문의 내용 ?>
+                <?php echo $is_content; // 사용후기 내용 ?>
             </div>
 
             <div class="sps_con_btn"><button class="sps_con_<?php echo $i; ?>">보기</button></div>
@@ -126,9 +124,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     if ($i > 0) echo '</ol>';
     if ($i == 0) echo '<p id="sps_empty">자료가 없습니다.</p>';
     ?>
-
 </div>
-
 
 <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
@@ -147,6 +143,7 @@ $(function(){
     });
 });
 </script>
+<!-- } 전체 상품 사용후기 목록 끝 -->
 
 <?php
 include_once(G4_MSHOP_PATH.'/_tail.php');

@@ -1,11 +1,5 @@
 <?php
 include_once('./_common.php');
-
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/itemqaform.php');
-    return;
-}
-
 include_once(G4_EDITOR_LIB);
 
 // 상품문의의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)

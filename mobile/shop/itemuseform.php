@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(G4_EDITOR_LIB);
 
 // 사용후기의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
 $is_content_max_length = 10000;
@@ -9,7 +10,7 @@ $it_id = escape_trim($_REQUEST['it_id']);
 $is_id = escape_trim($_REQUEST['is_id']);
 
 if (!$is_member) {
-    alert("사용후기는 회원만 평가가 가능합니다.", G4_BBS_URL."/login.php");
+    alert_close("사용후기는 회원만 작성 가능합니다.");
 }
 
 if ($w == "") {
@@ -30,44 +31,73 @@ if ($w == "") {
 
 include_once(G4_PATH.'/head.sub.php');
 ?>
-<style>
-ul {list-style:none;margin:0px;padding:0px;}
-label {width:130px;vertical-align:top;padding:3px 0;}
-</style>
 
-<div style="padding:10px;">
+<!-- 사용후기 쓰기 시작 { -->
+<div id="sit_use_write" class="new_win">
+    <h1 class="new_win_title">사용후기 쓰기</h1>
+
     <form name="fitemuse" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuse_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
-    <fieldset style="padding:0 10px 10px;">
-    <legend><strong>사용후기 쓰기</strong></legend>
-    <ul style="padding:10px;">
-        <li>
-            <label for="is_subject">제목</label>
-            <input type="text" id="is_subject" name="is_subject" size="100" class="ed" minlength="2" maxlength="250" required itemname="제목" value="<?php echo get_text($use['is_subject']); ?>">
-        </li>
-        <li>
-            <label for="is_content" style="width:200px;">내용</label>
-            <textarea name="is_content" id="is_content"><?php echo $$use['is_content']; ?></textarea>
-        </li>
-        <li>
-            <label>평가</label>
-            <input type=radio name=is_score value='10' <?php echo ($is_score==10)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star5.gif' align=absmiddle>
-            <input type=radio name=is_score value='8'  <?php echo ($is_score==8)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star4.gif' align=absmiddle>
-            <input type=radio name=is_score value='6'  <?php echo ($is_score==6)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star3.gif' align=absmiddle>
-            <input type=radio name=is_score value='4'  <?php echo ($is_score==4)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star2.gif' align=absmiddle>
-            <input type=radio name=is_score value='2'  <?php echo ($is_score==2)?"checked='checked'":""; ?>><img src='<?php echo G4_SHOP_URL; ?>/img/star1.gif' align=absmiddle>
-        </li>
-    </ul>
-    <input type="submit" value="   확   인   ">
-    </fieldset>
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="is_subject">제목</label></th>
+        <td><input type="text" name="is_subject" value="<?php echo get_text($use['is_subject']); ?>" id="is_subject" required class="frm_input" minlength="2" maxlength="250"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="" style="width:200px;">내용</label></th>
+        <td><?php echo editor_html('is_content', $use['is_content']); ?></td>
+    </tr>
+    <tr>
+        <th scope="row">평가</th>
+        <td>
+            <ul id="sit_use_write_star">
+                <li>
+                    <input type="radio" name="is_score" value="10" id="is_score10" <?php echo ($is_score==10)?'checked="checked"':''; ?>>
+                    <label for="is_score10">매우만족</label>
+                    <img src="<?php echo G4_URL; ?>/img/shop/s_star5.png">
+                </li>
+                <li>
+                    <input type="radio" name="is_score" value="8" id="is_score8" <?php echo ($is_score==8)?'checked="checked"':''; ?>>
+                    <label for="is_score8">만족</label>
+                    <img src="<?php echo G4_URL; ?>/img/shop/s_star4.png">
+                </li>
+                <li>
+                    <input type="radio" name="is_score" value="6" id="is_score6" <?php echo ($is_score==6)?'checked="checked"':''; ?>>
+                    <label for="is_score6">보통</label>
+                    <img src="<?php echo G4_URL; ?>/img/shop/s_star3.png">
+                </li>
+                <li>
+                    <input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
+                    <label for="is_score4">불만</label>
+                    <img src="<?php echo G4_URL; ?>/img/shop/s_star2.png">
+                </li>
+                <li>
+                    <input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
+                    <label for="is_score2">매우불만</label>
+                    <img src="<?php echo G4_URL; ?>/img/shop/s_star1.png">
+                </li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+
+    <div class="btn_win">
+        <input type="submit" value="작성완료" class="btn_submit">
+    </div>
+
     </form>
 </div>
 
 <script type="text/javascript">
-self.focus();
-
 function fitemuse_submit(f)
 {
     /*
@@ -85,6 +115,8 @@ function fitemuse_submit(f)
     }
     */
 
+    <?php echo get_editor_js('is_content'); ?>
+
     if (is_content_editor_data.length > <?php echo $is_content_max_length; ?>) {
         alert("내용은 <?php echo $is_content_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+is_content_editor_data.length+" 글자");
         CKEDITOR.instances.is_content.focus();
@@ -93,11 +125,8 @@ function fitemuse_submit(f)
 
     return true;
 }
-
-$(function() {
-    $("#is_subject").focus();
-});
 </script>
+<!-- } 사용후기 쓰기 끝 -->
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');

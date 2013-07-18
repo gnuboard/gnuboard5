@@ -1,11 +1,5 @@
 <?php
 include_once('./_common.php');
-
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/itemuse.php');
-    return;
-}
-
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 //$it_id = $_REQUEST['it_id'];
@@ -95,49 +89,11 @@ $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
 </section>
 
 <?php
-// 현재페이지, 총페이지수, 한페이지에 보여줄 행, URL
-function itemuse_page($write_pages, $cur_page, $total_page, $url, $add="")
-{
-    $url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
-
-    $str = '';
-    if ($cur_page > 1) {
-        $str .= '<a href="'.$url.'1'.$add.'" class="pg_page pg_start">처음</a>'.PHP_EOL;
-    }
-
-    $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
-    $end_page = $start_page + $write_pages - 1;
-
-    if ($end_page >= $total_page) $end_page = $total_page;
-
-    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="pg_page pg_prev">이전</a>'.PHP_EOL;
-
-    if ($total_page > 1) {
-        for ($k=$start_page;$k<=$end_page;$k++) {
-            if ($cur_page != $k)
-                $str .= '<a href="'.$url.$k.$add.'" class="pg_page">'.$k.'</a><span class="sound_only">페이지</span>'.PHP_EOL;
-            else
-                $str .= '<span class="sound_only">열린</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span>'.PHP_EOL;
-        }
-    }
-
-    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="pg_page pg_next">다음</a>'.PHP_EOL;
-
-    if ($cur_page < $total_page) {
-        $str .= '<a href="'.$url.$total_page.$add.'" class="pg_page pg_end">맨끝</a>'.PHP_EOL;
-    }
-
-    if ($str)
-        return "<nav class=\"pg_wrap\"><span class=\"pg\">{$str}</span></nav>";
-    else
-        return "";
-}
-
-echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
+echo itemuse_page($config['cf_mobile_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
 ?>
 
 <div id="sit_use_wbtn">
-    <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form" onclick="return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
     <a href="<?php echo $itemuse_list; ?>" class="btn01 itemuse_list">더보기</a>
 </div>
 
@@ -168,7 +124,8 @@ $(function(){
     });
 
     $(".pg_page").click(function(){
-        $("#itemuse").load($(this).attr("href"));
+        //alert($(this).attr("href"));
+        $(top.document).find('#itemuse').load($(this).attr("href"));
         return false;
     });
 });

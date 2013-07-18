@@ -1,11 +1,5 @@
 <?php
 include_once('./_common.php');
-
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/itemqa.php');
-    return;
-}
-
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
 //$it_id = $_REQUEST['it_id'];
@@ -112,45 +106,7 @@ $thumbnail_width = 500;
 </section>
 
 <?php
-// 현재페이지, 총페이지수, 한페이지에 보여줄 행, URL
-function itemqa_page($write_pages, $cur_page, $total_page, $url, $add="")
-{
-    $url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
-
-    $str = '';
-    if ($cur_page > 1) {
-        $str .= '<a href="'.$url.'1'.$add.'" class="qa_page qa_start">처음</a>'.PHP_EOL;
-    }
-
-    $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
-    $end_page = $start_page + $write_pages - 1;
-
-    if ($end_page >= $total_page) $end_page = $total_page;
-
-    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="qa_page pg_prev">이전</a>'.PHP_EOL;
-
-    if ($total_page > 1) {
-        for ($k=$start_page;$k<=$end_page;$k++) {
-            if ($cur_page != $k)
-                $str .= '<a href="'.$url.$k.$add.'" class="qa_page">'.$k.'</a><span class="sound_only">페이지</span>'.PHP_EOL;
-            else
-                $str .= '<span class="sound_only">열린</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span>'.PHP_EOL;
-        }
-    }
-
-    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="qa_page pg_next">다음</a>'.PHP_EOL;
-
-    if ($cur_page < $total_page) {
-        $str .= '<a href="'.$url.$total_page.$add.'" class="qa_page pg_end">맨끝</a>'.PHP_EOL;
-    }
-
-    if ($str)
-        return "<nav class=\"pg_wrap\"><span class=\"pg\">{$str}</span></nav>";
-    else
-        return "";
-}
-
-echo itemqa_page($config['cf_write_pages'], $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", "");
+echo itemqa_page($config['cf_mobile_pages'], $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", "");
 ?>
 
 <div id="sit_qa_wbtn">
