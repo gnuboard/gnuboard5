@@ -81,8 +81,8 @@ if ($od['mb_id'] == "") {
 //------------------------------------------------------------------------------
 
 // 요청정보
-$sql = " select rq_id, ct_id, rq_type, rq_time
-            from {$g4['shop_request_table']} where od_id = '{$od['od_id']}' and rq_parent = '0' order by rq_id ";
+$sql = " select rq_id, ct_id, rq_type, rq_time, rq_status
+            from {$g4['shop_request_table']} where od_id = '{$od['od_id']}' and rq_parent = '0' order by rq_id desc ";
 $rq_result = sql_query($sql);
 $rq_count = mysql_num_rows($rq_result);
 
@@ -346,10 +346,28 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
                 $rq_subject .= '외 '.($rq_item_count - 1).'건';
             $rq_subject .= ' '.$type.'요청';
 
-            $order_href = './orderform.php?od_id='.$od['od_id'].'&amp;uq_id='.$od['uq_id'].'&amp;rq_id='.$rq_row['rq_id'].'&amp;'.$qstr.'#anc_sodr_request';
+            if($rq_row['rq_id'] != $rq_id) {
+                $order_href = './orderform.php?od_id='.$od['od_id'].'&amp;uq_id='.$od['uq_id'].'&amp;rq_id='.$rq_row['rq_id'].'&amp;'.$qstr.'#anc_sodr_request';
+                $rq_subject = '<a href="'.$order_href.'">'.$rq_subject.'</a>';
+            }
+
+            switch($rq_row['rq_status']) {
+                case 1:
+                    $rq_status = ' [처리완료]';
+                    break;
+                case 99:
+                    $rq_status = ' [고객취소]';
+                    break;
+                case 100:
+                    $rq_status = ' [처리불가]';
+                    break;
+                default:
+                    $rq_status = ' [요청접수]';
+                    break;
+            }
         ?>
         <p>
-            <a href="<?php echo $order_href; ?>"><?php echo $rq_subject; ?></a>
+            <?php echo $rq_subject.$rq_status; ?>
         </p>
         <?php
         }
