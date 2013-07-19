@@ -613,8 +613,8 @@ td.empty_table {padding:5em 0;text-align:center}
 .pg_wrap {clear:both;margin:0 0 1em;padding-top:1em;text-align:center}
 .pg {display:inline-block;border:1px solid #cfded8;letter-spacing:-4px}
 .pg a:focus, .pg a:hover, .pg a:active {text-decoration:none}
-.pg_page, .pg_current {display:inline-block;padding:0 0.6em;color:#000;letter-spacing:0;line-height:1.9em;vertical-align:middle}
-.pg_page {background:#f9f9f9;text-decoration:none}
-.pg_start, .pg_prev {border-right:1px solid #cfded8}
-.pg_end, .pg_next {border-left:1px solid #cfded8}
+.pg_page, .pg_current, .qa_page {display:inline-block;padding:0 0.6em;color:#000;letter-spacing:0;line-height:1.9em;vertical-align:middle}
+.pg_page, .qa_page {background:#f9f9f9;text-decoration:none}
+.pg_start, .pg_prev, .qa_start, .qa_prev {border-right:1px solid #cfded8}
+.pg_end, .pg_next, .qa_end, .qa_next {border-left:1px solid #cfded8}
 .pg_current {background:#333;color:#fff;font-weight:bold}
