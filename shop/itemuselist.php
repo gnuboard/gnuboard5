@@ -57,20 +57,22 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
 <!-- 전체 상품 사용후기 목록 시작 { -->
-<a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
-
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<select name="sfl" required title="검색항목선택">
-<option value="">선택</option>
-<option value="b.it_name"   <?php echo get_selected($sfl, "b.it_name"); ?>>상품명</option>
-<option value="a.it_id"     <?php echo get_selected($sfl, "a.it_id"); ?>>상품코드</option>
-<option value="a.is_subject"<?php echo get_selected($sfl, "a.is_subject"); ?>>후기제목</option>
-<option value="a.is_content"<?php echo get_selected($sfl, "a.is_content"); ?>>후기내용</option>
-<option value="a.is_name"   <?php echo get_selected($sfl, "a.is_name"); ?>>작성자명</option>
-<option value="a.mb_id"     <?php echo get_selected($sfl, "a.mb_id"); ?>>작성자아이디</option>
-</select>
-<input type="text" name="stx" required title="검색어" value="<?php echo $stx; ?>">
-<input type="submit" value="검색">
+<div id="sps_sch">
+    <a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
+    <select name="sfl" required title="검색항목선택">
+        <option value="">선택</option>
+        <option value="b.it_name"   <?php echo get_selected($sfl, "b.it_name"); ?>>상품명</option>
+        <option value="a.it_id"     <?php echo get_selected($sfl, "a.it_id"); ?>>상품코드</option>
+        <option value="a.is_subject"<?php echo get_selected($sfl, "a.is_subject"); ?>>후기제목</option>
+        <option value="a.is_content"<?php echo get_selected($sfl, "a.is_content"); ?>>후기내용</option>
+        <option value="a.is_name"   <?php echo get_selected($sfl, "a.is_name"); ?>>작성자명</option>
+        <option value="a.mb_id"     <?php echo get_selected($sfl, "a.mb_id"); ?>>작성자아이디</option>
+    </select>
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input">
+    <input type="submit" value="검색" class="btn_submit">
+</div>
 </form>
 
 <div id="sps">
