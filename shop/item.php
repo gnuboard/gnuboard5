@@ -668,10 +668,6 @@ else
 
             return false;
         });
-
-        //$(".item_use_count").text("<?php echo $use_total_count; ?>");
-        //$(".item_qa_count").text("<?php echo $qa_total_count; ?>");
-        //$(".item_relation_count").text("<?php echo $item_relation_count; ?>");
     });
 
     // 바로구매 또는 장바구니 담기
