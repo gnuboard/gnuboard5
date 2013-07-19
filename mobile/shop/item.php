@@ -130,6 +130,16 @@ if ($row['it_id']) {
     $next_href2 = '';
 }
 
+// 관리자가 확인한 사용후기의 갯수를 얻음
+$sql = " select count(*) as cnt from `{$g4['shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+$row = sql_fetch($sql);
+$item_use_count = $row['cnt'];
+
+// 상품문의의 갯수를 얻음
+$sql = " select count(*) as cnt from `{$g4['shop_item_qa_table']}` where it_id = '{$it_id}' ";
+$row = sql_fetch($sql);
+$item_qa_count = $row['cnt'];
+
 // 관련상품의 갯수를 얻음
 $sql = " select count(*) as cnt
            from {$g4['shop_item_relation_table']} a
@@ -138,20 +148,6 @@ $sql = " select count(*) as cnt
 $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
 ?>
-
-<?php
-function pg_anchor_m($anc_id) {
-    global $default;
-?>
-            <ul class="sanchor">
-                <li><a href="#sit_inf" <?php if ($anc_id == 'inf') echo 'class="sanchor_on"'; ?>>상품정보</a></li>
-                <li><a href="#sit_use" <?php if ($anc_id == 'use') echo 'class="sanchor_on"'; ?>>사용후기 <span class="item_use_count"></span></a></li>
-                <li><a href="#sit_qa" <?php if ($anc_id == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"></span></a></li>
-                <?php if ($default['de_baesong_content']) { ?><li><a href="#sit_dvr" <?php if ($anc_id == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
-                <?php if ($default['de_change_content']) { ?><li><a href="#sit_ex" <?php if ($anc_id == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
-                <li><a href="#sit_rel" <?php if ($anc_id == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"></span></a></li>
-            </ul>
-<?php } ?>
 
 <script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
@@ -517,7 +513,7 @@ else
 
     <section id="sit_inf">
         <h2>상품 정보</h2>
-        <?php echo pg_anchor_m('inf'); ?>
+        <?php echo pg_anchor('inf'); ?>
 
         <?php if ($it['it_basic']) { // 상품 기본설명 ?>
         <div id="sit_inf_basic">
@@ -565,7 +561,7 @@ else
 
     <section id="sit_use">
         <h2>사용후기</h2>
-        <?php echo pg_anchor_m('use'); ?>
+        <?php echo pg_anchor('use'); ?>
 
         <div id="itemuse"></div>
         <script>
@@ -577,7 +573,7 @@ else
 
     <section id="sit_qa">
         <h2>상품문의</h2>
-        <?php echo pg_anchor_m('qa'); ?>
+        <?php echo pg_anchor('qa'); ?>
 
         <div id="itemqa"></div>
         <script>
@@ -591,7 +587,7 @@ else
     <?php if ($default['de_baesong_content']) { // 배송정보 내용이 있다면 ?>
     <section id="sit_dvr">
         <h2>배송정보</h2>
-        <?php echo pg_anchor_m('dvr'); ?>
+        <?php echo pg_anchor('dvr'); ?>
 
         <?php echo conv_content($default['de_baesong_content'], 1); ?>
     </section>
@@ -601,7 +597,7 @@ else
     <?php if ($default['de_change_content']) { // 교환/반품 내용이 있다면 ?>
     <section id="sit_ex">
         <h2>교환/반품</h2>
-        <?php echo pg_anchor_m('ex'); ?>
+        <?php echo pg_anchor('ex'); ?>
 
         <?php echo conv_content($default['de_change_content'], 1); ?>
     </section>
@@ -609,7 +605,7 @@ else
 
     <section id="sit_rel">
         <h2>관련상품</h2>
-        <?php echo pg_anchor_m('rel'); ?>
+        <?php echo pg_anchor('rel'); ?>
 
         <div class="sct_wrap">
             <?php
@@ -643,10 +639,6 @@ else
 
             return false;
         });
-
-        $(".item_use_count").text("<?php echo $use_total_count; ?>");
-        $(".item_qa_count").text("<?php echo $qa_total_count; ?>");
-        $(".item_relation_count").text("<?php echo $item_relation_count; ?>");
     });
 
     // 바로구매 또는 장바구니 담기
