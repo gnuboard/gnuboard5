@@ -60,7 +60,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div id="sps_sch">
     <a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
-    <select name="sfl" required title="검색항목선택">
+    <label for="sfl" class="sound_only">검색항목</label>
+    <select name="sfl" required id="sfl">
         <option value="">선택</option>
         <option value="b.it_name"   <?php echo get_selected($sfl, "b.it_name"); ?>>상품명</option>
         <option value="a.it_id"     <?php echo get_selected($sfl, "a.it_id"); ?>>상품코드</option>
