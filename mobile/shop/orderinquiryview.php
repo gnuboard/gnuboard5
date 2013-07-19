@@ -265,10 +265,10 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                         function(data) {
                             if(data != "")
                                 alert(data);
-                            else
+                            else {
                                 alert("고객님의 요청이 취소되었습니다.");
-
-                            return false;
+                                document.location.reload();
+                            }
                         }
                     );
                 });
