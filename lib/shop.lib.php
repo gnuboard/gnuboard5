@@ -1,7 +1,104 @@
 <?php
 //==============================================================================
-// 쇼핑몰 함수 모음 시작
+// 쇼핑몰 라이브러리 모음 시작
 //==============================================================================
+
+
+// 상품 보기
+class item_view
+{
+    protected $it;
+    protected $idx = 1;
+    protected $img_width;
+    protected $img_height;
+    protected $link = "it_name";
+    protected $buffer = array();
+    protected static $index = 0;
+
+    function __construct($it="") {
+        // 배열이 아니면 상품코드로 인식한다.
+        if (!is_array($it)) {
+            $it = $this->get_item($it);
+        }
+        $this->it = $it;
+        $this->set_link();
+    }
+
+    function get_item($it_id) {
+        global $g4;
+        $sql = " select a.*, b.ca_name, b.ca_use from {$g4['shop_item_table']} a, {$g4['shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id ";
+        $this->it = sql_fetch($sql);
+        return $this->it;
+    }
+
+    function set_link($link="all", $href="")
+    {
+        $this->link = $link;
+        if ($href)
+            $this->href = $href;
+        else 
+            $this->href = G4_SHOP_URL."/item.php?it_id=".$this->it['it_id'];
+    }
+
+    function set_img_idx($idx=1) {
+        $this->idx = $idx;
+    }
+
+    function get_href($str) {
+        return "<a href=\"{$this->href}\">".$str."</a>";
+    }
+
+    function it_img($imgw, $imgh=0) {
+        $img = get_it_thumbnail($this->it['it_img'.$this->idx], $imgw, $imgh);
+        // 상품이미지의 경우 링크값이 none 이 아닌 경우 무조건 링크를 건다.
+        if ($this->link != "none") 
+            $img = $this->get_href($img);
+        $this->buffer[] = "<li class=\"it_img\">$img</li>";
+    }
+
+    function it_name($length) {
+        $it_name = utf8_strcut($this->it['it_name'], $length);
+        if ($this->link == "all" || $this->link == "it_name") 
+            $it_name = $this->get_href($it_name);
+        $this->buffer[] = "<li class=\"it_name\">{$it_name}</li>";
+    }
+
+    function it_cust_price($prefix="시중가 : ", $suffix="원") {
+        $it_cust_price = $prefix.number_format($this->it['it_cust_price']).$suffix;
+        if ($this->link == "all") 
+            $it_cust_price = $this->get_href($it_cust_price);
+        $this->buffer[] = "<li class=\"it_cust_price\">{$it_cust_price}</li>";
+    }
+
+    function it_price($prefix="판매가 : ", $suffix="원") {
+        $it_price = $prefix.number_format($this->it['it_price']).$suffix;
+        if ($this->link == "all") 
+            $it_price = $this->get_href($it_price);
+        $this->buffer[] = "<li class=\"it_price\">{$it_price}</li>";
+    }
+
+    function it_point($prefix="포인트 : ") {
+        $suffix = ($this->it['it_point_type'] == 1) ? "%" : "점";
+        $it_point = $prefix.number_format($this->it['it_point']).$suffix;
+        if ($this->link == "all") 
+            $it_point = $this->get_href($it_point);
+        $this->buffer[] = "<li class=\"it_point\">{$it_point}</li>";
+    }
+
+    function it_etc($etc="") {
+        $this->index++;
+        if ($this->link == "all") 
+            $$etc = $this->get_href($etc);
+        $this->buffer[] = "<li class=\"it_etc{$this->index}\">{$etc}</li>";
+    }
+
+    function run() {
+        $id = "it".$this->it['it_id'];
+        return !empty($this->buffer) ? "<ul".($id?" id=\"$id\"":"")." class=\"item_view\">\n".implode("\n", $this->buffer)."\n</ul>\n" : ""; 
+    }
+}
+
+
 // 장바구니 건수 검사
 function get_cart_count($uq_id)
 {
@@ -1266,6 +1363,6 @@ function get_item_sendcost($it_id, $price, $qty)
     return $sendcost;
 }
 //==============================================================================
-// 쇼핑몰 함수 모음 끝
+// 쇼핑몰 라이브러리 모음 끝
 //==============================================================================
 ?>
