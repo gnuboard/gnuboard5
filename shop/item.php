@@ -129,7 +129,7 @@ if ($row['it_id']) {
     $next_href2 = '';
 }
 
-// 관리자가 확인하 사용후기의 갯수를 얻음
+// 관리자가 확인한 사용후기의 갯수를 얻음
 $sql = " select count(*) as cnt from `{$g4['shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 $row = sql_fetch($sql);
 $item_use_count = $row['cnt'];
@@ -668,10 +668,6 @@ else
 
             return false;
         });
-
-        //$(".item_use_count").text("<?php echo $use_total_count; ?>");
-        //$(".item_qa_count").text("<?php echo $qa_total_count; ?>");
-        //$(".item_relation_count").text("<?php echo $item_relation_count; ?>");
     });
 
     // 바로구매 또는 장바구니 담기

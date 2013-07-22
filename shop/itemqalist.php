@@ -57,23 +57,28 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
 <!-- 전체 상품 문의 목록 시작 { -->
-<a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<select name="sfl" required title="검색항목선택">
-<option value="">선택</option>
-<option value="b.it_name"    <?php echo get_selected($sfl, "b.it_name", true); ?>>상품명</option>
-<option value="a.it_id"      <?php echo get_selected($sfl, "a.it_id"); ?>>상품코드</option>
-<option value="a.iq_subject" <?php echo get_selected($sfl, "a.is_subject"); ?>>문의제목</option>
-<option value="a.iq_question"<?php echo get_selected($sfl, "a.iq_question"); ?>>문의내용</option>
-<option value="a.iq_name"    <?php echo get_selected($sfl, "a.it_id"); ?>>작성자명</option>
-<option value="a.mb_id"      <?php echo get_selected($sfl, "a.mb_id"); ?>>작성자아이디</option>
-</select>
-<input type="text" name="stx" required title="검색어" value="<?php echo $stx; ?>">
-<input type="submit" value="검색">
+<div id="sqa_sch">
+    <a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
+    <label for="sfl" class="sound_only">검색항목</label>
+    <select name="sfl" required id="sfl">
+        <option value="">선택</option>
+        <option value="b.it_name"    <?php echo get_selected($sfl, "b.it_name", true); ?>>상품명</option>
+        <option value="a.it_id"      <?php echo get_selected($sfl, "a.it_id"); ?>>상품코드</option>
+        <option value="a.iq_subject" <?php echo get_selected($sfl, "a.is_subject"); ?>>문의제목</option>
+        <option value="a.iq_question"<?php echo get_selected($sfl, "a.iq_question"); ?>>문의내용</option>
+        <option value="a.iq_name"    <?php echo get_selected($sfl, "a.it_id"); ?>>작성자명</option>
+        <option value="a.mb_id"      <?php echo get_selected($sfl, "a.mb_id"); ?>>작성자아이디</option>
+    </select>
+
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input">
+    <input type="submit" value="검색" class="btn_submit">
+</div>
 </form>
 
-<div id="sps">
+<div id="sqa">
 
     <!-- <p><?php echo $config['cf_title']; ?> 전체 상품문의 목록입니다.</p> -->
 
@@ -112,17 +117,17 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     ?>
     <li>
 
-        <div class="sps_img">
+        <div class="sqa_img">
             <a href="<?php echo $it_href; ?>">
                 <?php echo get_it_image($small_image, 70, 70); ?>
                 <span><?php echo $row['it_name']; ?></span>
             </a>
         </div>
 
-        <section class="sps_section">
+        <section class="sqa_section">
             <h2><?php echo $row['iq_subject']; ?></h2>
 
-            <dl class="sps_dl">
+            <dl class="sqa_dl">
                 <dt>작성자</dt>
                 <dd><?php echo $row['iq_name']; ?></dd>
                 <dt>작성일</dt>
@@ -131,7 +136,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
                 <dd class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></dd>
             </dl>
 
-            <div id="sqa_con_<?php echo $i; ?>" style="display:none;">
+            <div id="sqa_con_<?php echo $i; ?>" class="sqa_con" style="display:none;">
                 <div class="sit_qa_qaq">
                     <strong>문의내용</strong><br>
                     <?php echo $iq_question; // 상품 문의 내용 ?>
@@ -148,7 +153,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     </li>
     <?php }
     if ($i > 0) echo '</ol>';
-    if ($i == 0) echo '<p id="sps_empty">자료가 없습니다.</p>';
+    if ($i == 0) echo '<p id="sqa_empty">자료가 없습니다.</p>';
     ?>
 </div>
 
