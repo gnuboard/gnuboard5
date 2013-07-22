@@ -539,7 +539,7 @@ function html_purifier($html)
         // 첫행이 # 이면 주석 처리
         if (!preg_match("/^#/", $domain)) {
             $domain = trim($domain);
-            if ($domain) 
+            if ($domain)
                 array_push($domains, $domain);
         }
     }
@@ -851,7 +851,7 @@ function get_yn_select($name, $selected='1', $event='')
 
 
 // 포인트 부여
-function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $rel_action='')
+function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $rel_action='', $expire='')
 {
     global $config;
     global $g4;
@@ -881,27 +881,96 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
             return -1;
     }
 
+    // 포인트를 사용한 경우 포인트 내역에 사용금액 기록
+    if($point < 0) {
+        $point1 = abs($point);
+        $sql = " select po_id, po_point, po_use_point
+                    from {$g4['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_expired = '0'
+                      and po_point > po_use_point
+                    order by po_datetime asc ";
+        $result = sql_query($sql);
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+            $point2 = $row['po_point'];
+            $point3 = $row['po_use_point'];
+
+            if(($point2 - $point3) >= $point1) {
+                $sql = " update {$g4['point_table']}
+                            set po_use_point = po_use_point + '$point1'
+                            where po_id = '{$row['po_id']}' ";
+                sql_query($sql);
+                break;
+            } else {
+                $point4 = $point2 - $point3;
+                $sql = " update {$g4['point_table']}
+                            set po_use_point = po_use_point + '$point4',
+                                po_expired = '1'
+                            where po_id = '{$row['po_id']}' ";
+                sql_query($sql);
+                $point1 -= $point4;
+            }
+        }
+    }
+
     // 포인트 건별 생성
+    $po_expire_date = '0000-00-00';
+    if($config['cf_point_term'] > 0) {
+        if($expire != '' && $expire > 0)
+            $po_expire_date = date('Y-m-d', strtotime('+'.($expire - 1).' days', G4_SERVER_TIME));
+        else
+            $po_expire_date = date('Y-m-d', strtotime('+'.($config['cf_point_term'] - 1).' days', G4_SERVER_TIME));
+    }
+
+    $po_expired = 0;
+    if($point < 0)
+        $po_expired = 1;
+
     $sql = " insert into {$g4['point_table']}
                 set mb_id = '$mb_id',
                     po_datetime = '".G4_TIME_YMDHIS."',
                     po_content = '".addslashes($content)."',
                     po_point = '$point',
+                    po_use_point = '0',
+                    po_expired = '$po_expired',
+                    po_expire_date = '$po_expire_date',
                     po_rel_table = '$rel_table',
                     po_rel_id = '$rel_id',
                     po_rel_action = '$rel_action' ";
     sql_query($sql);
 
-    // 포인트 내역의 합을 구하고
-    $sql = " select sum(po_point) as sum_po_point from {$g4['point_table']} where mb_id = '$mb_id' ";
-    $row = sql_fetch($sql);
-    $sum_point = $row['sum_po_point'];
+    $sum_point = get_point_sum($mb_id);
 
     // 포인트 UPDATE
     $sql = " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '$mb_id' ";
     sql_query($sql);
 
     return 1;
+}
+
+// 포인트 내역 합계
+function get_point_sum($mb_id)
+{
+    global $g4, $config;
+
+    // 유효기간이 있을 때 기간이 지난 포인트 expired 체크
+    if($config['cf_point_term'] > 0) {
+        $sql = " update {$g4['point_table']}
+                    set po_expired = '1'
+                    where mb_id = '$mb_id'
+                      and po_expire_date <> '0000-00-00'
+                      and po_expire_date < '".G4_TIME_YMD."' ";
+        sql_query($sql);
+    }
+
+    // 포인트합
+    $sql = " select sum(po_point - po_use_point) as sum_po_point
+                from {$g4['point_table']}
+                where mb_id = '$mb_id'
+                  and po_expired = '0' ";
+    $row = sql_fetch($sql);
+
+    return $row['sum_po_point'];
 }
 
 // 포인트 삭제
@@ -963,11 +1032,11 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
                     $tmp_name = $tmp_name.' '.$name;
-            } else { 
-                  $tmp_name = $tmp_name." ".$name; 
-            } 
-        } else { 
-            $tmp_name = $tmp_name.' '.$name; 
+            } else {
+                  $tmp_name = $tmp_name." ".$name;
+            }
+        } else {
+            $tmp_name = $tmp_name.' '.$name;
         }
         $tmp_name .= '</a>';
 
@@ -2010,7 +2079,7 @@ function board_notice($bo_notice, $wr_id, $insert=false)
 
 
 // goo.gl 짧은주소 만들기
-function googl_short_url($longUrl) 
+function googl_short_url($longUrl)
 {
     global $config;
 

@@ -20,9 +20,7 @@ for ($i=0; $i<$count; $i++)
     $sql = " delete from {$g4['point_table']} where po_id = '{$_POST['po_id'][$k]}' ";
     sql_query($sql);
 
-    $sql = " select sum(po_point) as sum_po_point from {$g4['point_table']} where mb_id = '{$_POST['mb_id'][$k]}' ";
-    $row = sql_fetch($sql);
-    $sum_point = $row['sum_po_point'];
+    $sum_point = get_point_sum($_POST['mb_id'][$k]);
 
     $sql= " update {$g4['member_table']} set mb_point = '{$sum_point}' where mb_id = '{$_POST['mb_id'][$k]}' ";
     sql_query($sql);

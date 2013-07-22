@@ -9,6 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['point_table']} ";
 
 $sql_search = " where (1) ";
+
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
@@ -58,7 +59,12 @@ if ($sfl == 'mb_id' && $stx)
 $g4['title'] = '포인트관리';
 include_once ('./admin.head.php');
 
-$colspan = 8;
+$colspan = 9;
+
+$po_expire_term = '';
+if($config['cf_point_term'] > 0) {
+    $po_expire_term = $config['cf_point_term'];
+}
 ?>
 
 <script>
@@ -128,6 +134,7 @@ function point_clear()
         <th scope="col">일시</th>
         <th scope="col">포인트 내용</th>
         <th scope="col">포인트</th>
+        <th scope="col">만료</th>
         <th scope="col">포인트합</th>
     </tr>
     </thead>
@@ -161,6 +168,7 @@ function point_clear()
         <td class="td_time"><?php echo $row['po_datetime'] ?></td>
         <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
+        <td><?php echo $row['po_expired'] ? '예' : '아니오'; ?></td>
         <td class="td_bignum td_pt"><?php echo number_format($row2['mb_point']) ?></td>
     </tr>
 
@@ -211,6 +219,12 @@ function point_clear()
         <th scope="row"><label for="po_point">포인트<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="po_point" id="po_point" required class="required frm_input"></td>
     </tr>
+    <?php if($config['cf_point_term'] > 0) { ?>
+    <tr>
+        <th scope="row"><label for="po_expire_term">포인트 유효기간</label></th>
+        <td><input type="text" name="po_expire_term" value="<?php echo $po_expire_term; ?>" id="po_expire_term" class="frm_input" size="5"> 일</td>
+    </tr>
+    <?php } ?>
     </tbody>
     </table>
 
