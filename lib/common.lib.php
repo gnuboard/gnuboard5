@@ -889,7 +889,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
                     where mb_id = '$mb_id'
                       and po_expired = '0'
                       and po_point > po_use_point
-                    order by po_datetime asc ";
+                    order by po_id asc ";
         $result = sql_query($sql);
         for($i=0; $row=sql_fetch_array($result); $i++) {
             $point2 = $row['po_point'];
