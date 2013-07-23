@@ -68,7 +68,7 @@ for ($i=0; $i<count($member_list['id']); $i++) {
     sql_query($sql);
 
     if (!$is_admin) {
-        insert_point($member['mb_id'], (int)$config['cf_memo_send_point'] * (-1), $recv_mb_nick.'('.$recv_mb_id.')님께 쪽지 발송', '{@memo}', $recv_mb_id, $me_id);
+        insert_point($member['mb_id'], (int)$config['cf_memo_send_point'] * (-1), $recv_mb_nick.'('.$recv_mb_id.')님께 쪽지 발송', '@memo', $recv_mb_id, $me_id);
     }
 }
 
