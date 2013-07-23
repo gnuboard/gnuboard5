@@ -466,9 +466,18 @@ function is_null_time($datetime)
 
 // 출력유형, 스킨파일, 1라인이미지수, 총라인수, 이미지폭, 이미지높이
 // 1.02.01 $ca_id 추가
-function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
+//function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
+function display_type($type, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height='', $ca_id='')
 {
-    global $member, $g4, $config;
+    global $member, $g4, $config, $default, $shop_skin_path, $shop_skin_url;
+
+    if (!$default["de_type{$type}_list_use"]) return "";
+
+    $list_skin  = $list_skin  ? $list_skin  : $default["de_type{$type}_list_skin"];
+    $list_mod   = $list_mod   ? $list_mod   : $default["de_type{$type}_list_mod"];
+    $list_row   = $list_row   ? $list_row   : $default["de_type{$type}_list_row"];
+    $img_width  = $img_width  ? $img_width  : $default["de_type{$type}_img_width"];
+    $img_height = $img_height ? $img_height : $default["de_type{$type}_img_height"];
 
     // 상품의 갯수
     $items = $list_mod * $list_row;
@@ -485,12 +494,17 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
     }
     */
 
-    $file = G4_SHOP_PATH.'/'.$skin_file;
+    //$file = G4_SHOP_PATH.'/'.$skin_file;
+    $file = $shop_skin_path.'/'.$list_skin;
     if (!file_exists($file)) {
-        echo $file.' 파일을 찾을 수 없습니다.';
+        return $shop_skin_url.'/'.$list_skin.' 파일을 찾을 수 없습니다.';
     } else {
         $td_width = (int)(100 / $list_mod);
+        ob_start();
         include $file;
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
     }
 }
 
@@ -823,36 +837,6 @@ function print_item_options($it_id, $uq_id)
     return $str;
 }
 
-function it_name_icon($it, $it_name="", $url=1)
-{
-    global $g4;
-
-    $str = '';
-    if ($it_name)
-        $str = $it_name;
-    // 제목이 없으면 아이콘만 나오도록 주석처리 - 지운아빠 2013-05-03
-    //else
-    //    $str = stripslashes($it['it_name']);
-
-    if ($url)
-        $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$it['it_id'].'">'.$str.'</a>';
-
-    $str .= '<span class="sit_icon">';
-    // 품절
-    $stock = get_it_stock_qty($it['it_id']);
-    if ($stock <= 0)
-        $str .= ' <img src="'.G4_SHOP.'/img/icon_soldout2.gif" alt="품절"> ';
-    if ($it['it_type1']) $str .= '<img src="'.G4_URL.'/img/shop/icon_hit2.gif" alt="히트">';
-    if ($it['it_type2']) $str .= '<img src="'.G4_URL.'/img/shop/icon_rec2.gif" alt="추천">';
-    if ($it['it_type3']) $str .= '<img src="'.G4_URL.'/img/shop/icon_new2.gif" alt="신상품">';
-    if ($it['it_type4']) $str .= '<img src="'.G4_URL.'/img/shop/icon_best2.gif" alt="인기">';
-    if ($it['it_type5']) $str .= '<img src="'.G4_URL.'/img/shop/icon_discount2.gif" alt="할인">';
-
-    $str .= '</span>';
-
-    return $str;
-}
-
 // 일자형식변환
 function date_conv($date, $case=1)
 {
@@ -1074,7 +1058,7 @@ function set_unique_id($direct)
 }
 
 // 상품 목록 : 관련 상품 출력
-function display_relation_item($it_id, $width, $height, $rows=3)
+function relation_item($it_id, $width, $height, $rows=3)
 {
     global $g4;
 
@@ -1112,29 +1096,54 @@ function display_relation_item($it_id, $width, $height, $rows=3)
 }
 
 // 상품이미지에 유형 아이콘 출력
-function display_item_icon($it)
+function item_icon($it)
 {
+    /*
     $icon = '';
 
-    if($it['it_gallery'] || $it['it_type1'] || $it['it_type2'] || $it['it_type3'] || $it['it_type4'] || $it['it_type5']) {
-        if($it['it_gallery']) // sold out
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_soldout.gif" alt="품절" class="sct_icon_so">';
+    if($it['it_gallery']) // sold out
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_soldout.gif" alt="품절" class="sct_icon_soldout">';
 
-        if($it['it_type3'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_new.gif" alt="신상품" class="sct_icon_new">';
+    if($it['it_type1'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_new.gif" alt="최신상품" class="sct_icon_new">';
 
-        if($it['it_type1'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_hit.gif" alt="히트" class="sct_icon_hit">';
+    if($it['it_type2'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_hit.gif" alt="히트상품" class="sct_icon_hit">';
 
-        if($it['it_type2'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_rec.gif" alt="추천" class="sct_icon_rec">';
+    if($it['it_type3'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_rec.gif" alt="추천상품" class="sct_icon_rec">';
 
-        if($it['it_type4'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_best.gif" alt="인기" class="sct_icon_best">';
+    if($it['it_type4'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_best.gif" alt="인기상품" class="sct_icon_best">';
 
-        if($it['it_type5'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_discount.gif" alt="할인" class="sct_icon_discount">';
-    }
+    if($it['it_type5'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_discount.gif" alt="할인상품" class="sct_icon_discount">';
+
+    return $icon;
+    */
+
+    $icon = '<span class="sit_icon">';
+    // 품절
+    $stock = get_it_stock_qty($it['it_id']);
+    if ($stock <= 0)
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_soldout.gif" alt="품절"> ';
+
+    if ($it['it_type1']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_hit.gif" alt="최신상품">';
+
+    if ($it['it_type2']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_rec.gif" alt="히트상품">';
+
+    if ($it['it_type3']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_new.gif" alt="추천상품">';
+
+    if ($it['it_type4']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_best.gif" alt="인기상품">';
+
+    if ($it['it_type5']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_discount.gif" alt="할인상품">';
+
+    $icon .= '</span>';
 
     return $icon;
 }
