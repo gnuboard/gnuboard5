@@ -20,21 +20,6 @@ $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if (!$page) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
-
-// 포인트소계
-$sql = " select po_point
-            {$sql_common}
-            {$sql_order}
-            limit {$from_record}, {$rows} ";
-$result = sql_query($sql);
-$sum_point1 = $sum_point2 = 0;
-for($i=0; $row=sql_fetch_array($result); $i++) {
-    if($row['po_point'] >= 0) {
-        $sum_point1 += $row['po_point'];
-    } else {
-        $sum_point2 += $row['po_point'];
-    }
-}
 ?>
 
 <div id="point" class="new_win">
@@ -50,20 +35,9 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         <th scope="col">사용포인트</th>
     </tr>
     </thead>
-    <tfoot>
-    <tr>
-        <th scope="row" colspan="2">소계</th>
-        <td><?php echo number_format($sum_point1) ?></td>
-        <td><?php echo number_format($sum_point2) ?></td>
-    </tr>
-    <tr>
-        <th scope="row" colspan="2">보유포인트</th>
-        <td colspan="2"><?php echo number_format($member['mb_point']) ?></td>
-    </tr>
-    </tfoot>
     <tbody>
     <?php
-    $sum_point1 = $sum_point2 = 0;
+    $sum_point1 = $sum_point2 = $sum_point3 = 0;
 
     $sql = " select *
                 {$sql_common}
@@ -80,12 +54,20 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
             $sum_point2 += $row['po_point'];
         }
 
+        $po_content = $row['po_content'];
+
+        // 소멸포인트
+        if($row['po_point'] >= 0 && $row['po_expired'] == 1) {
+            $sum_point3 += $row['po_point'];
+            $po_content = '<span style="color: #999">'.$po_content.'</span>';
+        }
+
     ?>
     <tr>
-        <td class="td_datetime"><?php echo $row['po_datetime'] ?></td>
-        <td><?php echo $row['po_content'] ?></td>
-        <td class="td_bignum"><?php echo $point1 ?></td>
-        <td class="td_bignum"><?php echo $point2 ?></td>
+        <td class="td_datetime"><?php echo $row['po_datetime']; ?></td>
+        <td><?php echo $po_content; ?></td>
+        <td class="td_bignum"><?php echo $point1; ?></td>
+        <td class="td_bignum"><?php echo $point2; ?></td>
     </tr>
     <?php
     }
@@ -99,6 +81,23 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     }
     ?>
     </tbody>
+    <tfoot>
+    <tr>
+        <th scope="row" colspan="2">소계</th>
+        <td><?php echo $sum_point1; ?></td>
+        <td><?php echo $sum_point2; ?></td>
+    </tr>
+    <?php if($sum_point3) { ?>
+    <tr>
+        <th scope="row" colspan="2">소멸포인트</th>
+        <td colspan="2"><?php echo number_format($sum_point3); ?></td>
+    </tr>
+    <?php } ?>
+    <tr>
+        <th scope="row" colspan="2">보유포인트</th>
+        <td colspan="2"><?php echo number_format($member['mb_point']); ?></td>
+    </tr>
+    </tfoot>
     </table>
 
 
