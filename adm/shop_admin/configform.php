@@ -59,12 +59,12 @@ if ($default['de_icode_id'] && $default['de_icode_pw']) {
     );
 }
 
-
 $g4['title'] = '쇼핑몰설정';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_scf_info">사업자정보</a></li>
+<li><a href="#anc_scf_skin">스킨설정</a></li>
 <li><a href="#anc_scf_index">쇼핑몰 초기화면</a></li>
 <li><a href="#anc_mscf_index">모바일 초기화면</a></li>
 <li><a href="#anc_scf_payment">결제설정</a></li>
@@ -144,6 +144,50 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
 
+    </tbody>
+    </table>
+</section>
+
+<section id="anc_scf_skin" class="cbox">
+    <h2>스킨설정</h2>
+    <?php echo $pg_anchor; ?>
+    <p>상품 분류리스트, 상품상세보기 등 에서 사용할 스킨을 설정합니다.</p>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_6">
+        <col class="grid_3">
+        <col class="grid_6">
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="de_shop_skin">PC용 스킨</label></th>
+        <td colspan="3">
+            <select name="de_shop_skin" id="de_shop_skin" required class="required">
+            <?php
+            $arr = get_skin_dir('shop');
+            for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
+                echo "<option value=\"".$arr[$i]."\"".get_selected($default['de_shop_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
+            }
+            ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="de_shop_mobile_skin">모바일용 스킨</label></th>
+        <td colspan="3">
+            <select name="de_shop_mobile_skin" id="de_shop_mobile_skin" required class="required">
+            <?php
+            $arr = get_skin_dir('shop', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            for ($i=0; $i<count($arr); $i++) {
+                if ($i == 0) echo "<option value=\"\">선택</option>";
+                echo "<option value=\"".$arr[$i]."\"".get_selected($default['de_shop_mobile_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
+            }
+            ?>
+            </select>
+        </td>
+    </tr>
     </tbody>
     </table>
 </section>
