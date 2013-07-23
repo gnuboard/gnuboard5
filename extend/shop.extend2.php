@@ -357,7 +357,6 @@ if(!$result) {
                     ADD `od_tno` VARCHAR(255) NOT NULL DEFAULT '' AFTER `od_settle_case`,
                     ADD `od_escrow` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_tno` ", true);
 }
-*/
 
 // shop_request 테이블이 없을 경우 생성
 if(!sql_query(" select rq_id from {$g4['shop_request_table']} limit 1 ", false)) {
@@ -393,5 +392,13 @@ if(!sql_query(" select od_mod_history from {$g4['shop_order_table']} limit 1 ", 
 if(!sql_query(" select od_tax_flag from {$g4['shop_order_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
                     ADD `od_tax_flag` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_escrow` ", true);
+}
+*/
+
+// 쇼핑몰 스킨 필드 추가
+if (!isset($default['de_shop_skin'])) {
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    ADD `de_shop_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_admin_info_email`,
+                    ADD `de_shop_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_shop_skin` ", true);
 }
 ?>
