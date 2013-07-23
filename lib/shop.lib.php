@@ -475,13 +475,9 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
 
     // 1.02.00
     // it_order 추가
-    $sql = " select *
-               from {$g4['shop_item_table']}
-              where it_use = '1'
-                and it_type{$type} = '1' ";
+    $sql = " select * from {$g4['shop_item_table']} where it_use = '1' and it_type{$type} = '1' ";
     if ($ca_id) $sql .= " and ca_id like '$ca_id%' ";
-    $sql .= " order by it_order, it_id desc
-              limit $items ";
+    $sql .= " order by it_order, it_id desc limit $items ";
     $result = sql_query($sql);
     /*
     if (!mysql_num_rows($result)) {
@@ -508,13 +504,9 @@ function mobile_display_type($type, $skin_file, $list_row, $img_width, $img_heig
 
     // 1.02.00
     // it_order 추가
-    $sql = " select *
-               from {$g4['shop_item_table']}
-              where it_use = '1'
-                and it_type{$type} = '1' ";
+    $sql = " select * from {$g4['shop_item_table']} where it_use = '1' and it_type{$type} = '1' ";
     if ($ca_id) $sql .= " and ca_id like '$ca_id%' ";
-    $sql .= " order by it_order, it_id desc
-              limit $items ";
+    $sql .= " order by it_order, it_id desc limit $items ";
     $result = sql_query($sql);
     /*
     if (!mysql_num_rows($result)) {
@@ -815,10 +807,7 @@ function print_item_options($it_id, $uq_id)
 {
     global $g4;
 
-    $sql = " select ct_option, ct_qty
-                from {$g4['shop_cart_table']}
-                where it_id = '$it_id' and uq_id = '$uq_id'
-                order by io_type asc, ct_num asc, ct_id asc ";
+    $sql = " select ct_option, ct_qty from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$uq_id' order by io_type asc, ct_num asc, ct_id asc ";
     $result = sql_query($sql);
 
     $str = '';
@@ -898,15 +887,9 @@ function display_event($no, $event, $list_mod, $list_row, $img_width, $img_heigh
 
     // 1.02.00
     // b.it_order 추가
-    $sql = " select b.*
-               from {$g4['shop_event_item_table']} a,
-                    {$g4['shop_item_table']} b
-              where a.it_id = b.it_id
-                and b.it_use = '1'
-                and a.ev_id = '$event' ";
+    $sql = " select b.* from {$g4['shop_event_item_table']} a, {$g4['shop_item_table']} b where a.it_id = b.it_id and b.it_use = '1' and a.ev_id = '$event' ";
     if ($ca_id) $sql .= " and ca_id = '$ca_id' ";
-    $sql .= " order by b.it_order, a.it_id desc
-              limit $items ";
+    $sql .= " order by b.it_order, a.it_id desc limit $items ";
     $result = sql_query($sql);
     if (!mysql_num_rows($result)) {
         return false;
@@ -1100,11 +1083,7 @@ function display_relation_item($it_id, $width, $height, $rows=3)
     if(!$it_id)
         return $str;
 
-    $sql = " select b.it_id, b.it_name, b.it_price, b.it_tel_inq, b.it_gallery
-                from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id )
-                where a.it_id = '$it_id'
-                order by ir_no asc
-                limit 0, $rows ";
+    $sql = " select b.it_id, b.it_name, b.it_price, b.it_tel_inq, b.it_gallery from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id ) where a.it_id = '$it_id' order by ir_no asc limit 0, $rows ";
     $result = sql_query($sql);
 
     for($i=0; $row=sql_fetch_array($result); $i++) {
@@ -1213,10 +1192,7 @@ function insert_mileage($mb_id, $point, $content='', $od_id, $ct_id)
 
     // 이미 등록된 내역이라면 건너뜀
     if($od_id && $ct_id) {
-        $sql = " select count(*) as cnt from {$g4['shop_mileage_table']}
-                  where mb_id = '$mb_id'
-                    and od_id = '$od_id'
-                    and ct_id = '$ct_id' ";
+        $sql = " select count(*) as cnt from {$g4['shop_mileage_table']} where mb_id = '$mb_id' and od_id = '$od_id' and ct_id = '$ct_id' ";
         $row = sql_fetch($sql);
         if ($row['cnt'])
             return -1;
