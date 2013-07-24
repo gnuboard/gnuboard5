@@ -36,7 +36,7 @@ class item_view
         $this->link = $link;
         if ($href)
             $this->href = $href;
-        else 
+        else
             $this->href = G4_SHOP_URL."/item.php?it_id=".$this->it['it_id'];
     }
 
@@ -51,28 +51,28 @@ class item_view
     function it_img($imgw, $imgh=0) {
         $img = get_it_thumbnail($this->it['it_img'.$this->idx], $imgw, $imgh);
         // 상품이미지의 경우 링크값이 none 이 아닌 경우 무조건 링크를 건다.
-        if ($this->link != "none") 
+        if ($this->link != "none")
             $img = $this->get_href($img);
         $this->buffer[] = "<li class=\"it_img\">$img</li>";
     }
 
     function it_name($length) {
         $it_name = utf8_strcut($this->it['it_name'], $length);
-        if ($this->link == "all" || $this->link == "it_name") 
+        if ($this->link == "all" || $this->link == "it_name")
             $it_name = $this->get_href($it_name);
         $this->buffer[] = "<li class=\"it_name\">{$it_name}</li>";
     }
 
     function it_cust_price($prefix="시중가 : ", $suffix="원") {
         $it_cust_price = $prefix.number_format($this->it['it_cust_price']).$suffix;
-        if ($this->link == "all") 
+        if ($this->link == "all")
             $it_cust_price = $this->get_href($it_cust_price);
         $this->buffer[] = "<li class=\"it_cust_price\">{$it_cust_price}</li>";
     }
 
     function it_price($prefix="판매가 : ", $suffix="원") {
         $it_price = $prefix.number_format($this->it['it_price']).$suffix;
-        if ($this->link == "all") 
+        if ($this->link == "all")
             $it_price = $this->get_href($it_price);
         $this->buffer[] = "<li class=\"it_price\">{$it_price}</li>";
     }
@@ -80,21 +80,21 @@ class item_view
     function it_point($prefix="포인트 : ") {
         $suffix = ($this->it['it_point_type'] == 1) ? "%" : "점";
         $it_point = $prefix.number_format($this->it['it_point']).$suffix;
-        if ($this->link == "all") 
+        if ($this->link == "all")
             $it_point = $this->get_href($it_point);
         $this->buffer[] = "<li class=\"it_point\">{$it_point}</li>";
     }
 
     function it_etc($etc="") {
         $this->index++;
-        if ($this->link == "all") 
+        if ($this->link == "all")
             $$etc = $this->get_href($etc);
         $this->buffer[] = "<li class=\"it_etc{$this->index}\">{$etc}</li>";
     }
 
     function run() {
         $id = "it".$this->it['it_id'];
-        return !empty($this->buffer) ? "<ul".($id?" id=\"$id\"":"")." class=\"item_view\">\n".implode("\n", $this->buffer)."\n</ul>\n" : ""; 
+        return !empty($this->buffer) ? "<ul".($id?" id=\"$id\"":"")." class=\"item_view\">\n".implode("\n", $this->buffer)."\n</ul>\n" : "";
     }
 }
 
@@ -1196,75 +1196,6 @@ function delete_item_thumbnail($dir, $file)
             @unlink($thumb_file);
         }
     }
-}
-
-// 마일리지 부여
-function insert_mileage($mb_id, $point, $content='', $od_id, $ct_id)
-{
-    global $g4;
-
-    // 포인트가 없다면 업데이트 할 필요 없음
-    if ($point == 0) { return 0; }
-
-    // 회원아이디가 없다면 업데이트 할 필요 없음
-    if ($mb_id == '') { return 0; }
-    $mb = sql_fetch(" select mb_id from {$g4['member_table']} where mb_id = '$mb_id' ");
-    if (!$mb['mb_id']) { return 0; }
-
-    // 이미 등록된 내역이라면 건너뜀
-    if($od_id && $ct_id) {
-        $sql = " select count(*) as cnt from {$g4['shop_mileage_table']}
-                  where mb_id = '$mb_id'
-                    and od_id = '$od_id'
-                    and ct_id = '$ct_id' ";
-        $row = sql_fetch($sql);
-        if ($row['cnt'])
-            return -1;
-    }
-
-    // 마일리지 건별 생성
-    $sql = " insert into {$g4['shop_mileage_table']}
-                set mb_id = '$mb_id',
-                    od_id = '$od_id',
-                    ct_id = '$ct_id',
-                    ml_content = '".addslashes($content)."',
-                    ml_point = '$point',
-                    ml_datetime = '".G4_TIME_YMDHIS."' ";
-    sql_query($sql);
-
-    // 마일리지 내역의 합을 구하고
-    $sql = " select sum(ml_point) as sum_mileage from {$g4['shop_mileage_table']} where mb_id = '$mb_id' ";
-    $row = sql_fetch($sql);
-    $sum_mileage = $row['sum_mileage'];
-
-    // 마일리지 UPDATE
-    $sql = " update {$g4['member_table']} set mb_mileage = '$sum_mileage' where mb_id = '$mb_id' ";
-    sql_query($sql);
-
-    return 1;
-}
-
-// 마일리지 삭제
-function delete_mileage($mb_id, $od_id, $ct_id)
-{
-    global $g4;
-
-    $sql = " delete from {$g4['shop_mileage_table']}
-                 where mb_id = '$mb_id'
-                   and od_id = '$od_id'
-                   and ct_id = '$ct_id' ";
-    sql_query($sql);
-
-    // 마일리지 내역의 합을 구하고
-    $sql = " select sum(ml_point) as sum_mileage from {$g4['shop_mileage_table']} where mb_id = '$mb_id' ";
-    $row = sql_fetch($sql);
-    $sum_mileage = $row['sum_mileage'];
-
-    // 마일리지 UPDATE
-    $sql = " update {$g4['member_table']} set mb_mileage = '$sum_mileage' where mb_id = '$mb_id' ";
-    sql_query($sql);
-
-    return 1;
 }
 
 // 쿠폰번호 생성함수

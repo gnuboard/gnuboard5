@@ -141,11 +141,7 @@ for ($i=0; $i<$cnt; $i++)
     {
         $point_use = 0;
         //insert_point($mb_id, (-1) * ($ct[ct_point] * $ct[ct_qty]), "주문번호 $od_id ($ct_id) 취소");
-        if(!$default['de_mileage_use'])
-            delete_point($mb_id, "@delivery", $mb_id, "$od_id,$uq_id,$ct_id");
-
-        // 마일리지 삭제
-        delete_mileage($mb_id, $od_id, $ct_id);
+        delete_point($mb_id, "@delivery", $mb_id, "$od_id,$uq_id,$ct_id");
     }
 
     // 히스토리에 남김

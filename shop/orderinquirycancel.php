@@ -65,11 +65,8 @@ $cancel_memo = addslashes($cancel_memo);
 sql_query(" update {$g4['shop_order_table']} set od_send_cost = '0', od_send_cost2 = '0', od_temp_point = '0', od_receipt_amount = '0', od_receipt_point = '0', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - ".G4_TIME_YMDHIS." (취소이유 : {$cancel_memo})\") where uq_id = '$uq_id' ");
 
 // 주문취소 회원의 포인트를 되돌려 줌
-if ($od['od_receipt_point'] > 0) {
-    if(!$default['de_mileage_use'])
-        insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소");
-    insert_mileage($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소", $od_id);
-}
+if ($od['od_receipt_point'] > 0)
+    insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소");
 
 goto_url(G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uq_id=$uq_id");
 ?>

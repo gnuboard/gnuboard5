@@ -329,7 +329,7 @@ function get_intall_file()
             <?php $tot_amount = $tot_sell_amount + $send_cost; // 총계 = 주문상품금액합계 + 배송비 ?>
             <strong id="ct_tot_amount"><?php echo number_format($tot_amount); ?> 원</strong>
         </dd>
-        <dt class="sod_bsk_point"><?php echo $default['de_mileage_use'] ? '마일리지' : '포인트'; ?></dt>
+        <dt class="sod_bsk_point">포인트</dt>
         <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
     </dl>
     <!-- } 주문상품 합계 끝 -->
@@ -827,49 +827,25 @@ function get_intall_file()
         }
 
         $temp_point = 0;
-        if($default['de_mileage_use']) {
-            // 마일리지 사용
-            if ($is_member)
+        // 회원이면서 포인트사용이면
+        if ($is_member && $config['cf_use_point'])
+        {
+            // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
+            if ($member['mb_point'] >= $default['de_point_settle'])
             {
-                // 포인트 결제 사용 포인트보다 회원의 마일리지가 크다면
-                if ($member['mb_mileage'] >= $default['de_point_settle'])
-                {
-                    $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
-                    $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+                $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
+                $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
 
-                    $member_mileage = (int)((int)($member['mb_mileage'] / 100) * 100); // 100점 단위
-                    if ($temp_point > $member_mileage)
-                        $temp_point = $member_mileage;
-            ?>
-                <p>보유마일리지(<?php echo display_point($member['mb_mileage']); ?>)중 <strong id="use_max_point">최대 <?php echo display_point($temp_point); ?></strong>까지 사용 가능 (주문금액 <?php echo $default['de_point_per']; ?>%)</p>
-                <input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">
-                <label for="od_temp_point">사용 포인트</label>
-                <input type="text" name="od_temp_point" value="0" id="od_temp_point" class="frm_input" size="10">점 (100점 단위로 입력하세요.)
-            <?php
-                $multi_settle++;
-                }
-            }
-        } else {
-            // 회원이면서 포인트사용이면
-            if ($is_member && $config['cf_use_point'])
-            {
-                // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
-                if ($member['mb_point'] >= $default['de_point_settle'])
-                {
-                    $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
-                    $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
-
-                    $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
-                    if ($temp_point > $member_point)
-                        $temp_point = $member_point;
-            ?>
-                <p>보유포인트(<?php echo display_point($member['mb_point']); ?>)중 <strong id="use_max_point">최대 <?php echo display_point($temp_point); ?></strong>까지 사용 가능 (주문금액 <?php echo $default['de_point_per']; ?>%)</p>
-                <input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">
-                <label for="od_temp_point">사용 포인트</label>
-                <input type="text" name="od_temp_point" value="0" id="od_temp_point" class="frm_input" size="10">점 (100점 단위로 입력하세요.)
-            <?php
-                $multi_settle++;
-                }
+                $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
+                if ($temp_point > $member_point)
+                    $temp_point = $member_point;
+        ?>
+            <p>보유포인트(<?php echo display_point($member['mb_point']); ?>)중 <strong id="use_max_point">최대 <?php echo display_point($temp_point); ?></strong>까지 사용 가능 (주문금액 <?php echo $default['de_point_per']; ?>%)</p>
+            <input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">
+            <label for="od_temp_point">사용 포인트</label>
+            <input type="text" name="od_temp_point" value="0" id="od_temp_point" class="frm_input" size="10">점 (100점 단위로 입력하세요.)
+        <?php
+            $multi_settle++;
             }
         }
 
@@ -1289,18 +1265,11 @@ function calculate_order_amount()
 
 function calculate_temp_point()
 {
-    <?php
-    if($default['de_mileage_use']) {
-        $point = (int)$member_mileage;
-    } else {
-        $point = (int)$member_point;
-    }
-    ?>
     var sell_amount = parseInt($("input[name=od_amount]").val());
     var send_cost = parseInt($("input[name=od_send_cost]").val());
     var point_per = <?php echo $default['de_point_per']; ?>;
     var temp_point = parseInt((sell_amount + send_cost) * (point_per / 100) / 100) * 100;
-    var point = <?php echo $point; ?>
+    var point = <?php echo (int)$member_point; ?>;
 
     if(temp_point > point)
         temp_point = point;
@@ -1449,30 +1418,20 @@ function forderform_check(f)
         {
             temp_point = parseInt(f.od_temp_point.value);
 
-            <?php
-            if($default['de_mileage_use']) {
-                $mb_point = $member['mb_mileage'];
-                $p_msg = '마일리지';
-            } else {
-                $mb_point = $member['mb_point'];
-                $p_msg = '포인트';
-            }
-            ?>
-
             if (temp_point < 0) {
-                alert("<?php echo $p_msg; ?>를 0 이상 입력하세요.");
+                alert("포인트를 0 이상 입력하세요.");
                 f.od_temp_point.select();
                 return false;
             }
 
             if (temp_point > tot_amount) {
-                alert("주문금액 보다 많이 <?php echo $p_msg; ?>결제할 수 없습니다.");
+                alert("주문금액 보다 많이 포인트결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
             }
 
-            if (temp_point > <?php echo (int)$mb_point; ?>) {
-                alert("회원님의 <?php echo $p_msg; ?>보다 많이 결제할 수 없습니다.");
+            if (temp_point > <?php echo (int)$member['mb_point']; ?>) {
+                alert("회원님의 포인트보다 많이 결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
             }
@@ -1484,7 +1443,7 @@ function forderform_check(f)
             }
 
             if (parseInt(parseInt(temp_point / 100) * 100) != temp_point) {
-                alert("<?php echo $p_msg; ?>를 100점 단위로 입력하세요.");
+                alert("포인트를 100점 단위로 입력하세요.");
                 f.od_temp_point.select();
                 return false;
             }
