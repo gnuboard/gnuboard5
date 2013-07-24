@@ -1027,18 +1027,32 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
     $result = false;
     if ($rel_table || $rel_id || $rel_action)
     {
+        // 포인트정보
+        $sql = " select po_id, mb_id, po_use_point, po_expired
+                    from {$g4['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_rel_table = '$rel_table'
+                      and po_rel_id = '$rel_id'
+                      and po_rel_action = '$rel_action' ";
+        $row = sql_fetch($sql);
+
         $result = sql_query(" delete from {$g4['point_table']}
-                     where mb_id = '$mb_id'
-                       and po_rel_table = '$rel_table'
-                       and po_rel_id = '$rel_id'
-                       and po_rel_action = '$rel_action' ", false);
+                    where mb_id = '$mb_id'
+                      and po_rel_table = '$rel_table'
+                      and po_rel_id = '$rel_id'
+                      and po_rel_action = '$rel_action' ", false);
 
         // 포인트 내역의 합을 구하고
         $sum_point = get_point_sum($mb_id);
 
         // 포인트 UPDATE
         $sql = " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '$mb_id' ";
-        $result = sql_query($sql);
+        $result = sql_query($sql, false);
+
+        // 포인트 사용 값이 있으면 다른 포인트 내역으로 이동시킴
+        if($result && $row['po_expired'] != 1 && $row['po_use_point'] > 0) {
+            insert_use_point($row['mb_id'], $row['po_use_point'], $row['po_id']);
+        }
     }
 
     return $result;

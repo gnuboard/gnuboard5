@@ -33,7 +33,7 @@ for ($i=0; $i<$count; $i++)
             delete_use_point($mb_id, $po_point);
         }
     } else {
-        if($row['po_expired'] == 0 && $row['po_use_point'] > 0) {
+        if($row['po_expired'] != 1 && $row['po_use_point'] > 0) {
             insert_use_point($row['mb_id'], $row['po_use_point'], $row['po_id']);
         }
     }

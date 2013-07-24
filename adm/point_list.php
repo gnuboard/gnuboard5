@@ -168,7 +168,7 @@ function point_clear()
         <td class="td_time"><?php echo $row['po_datetime'] ?></td>
         <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
-        <td><?php echo $row['po_expired'] ? '예' : '아니오'; ?></td>
+        <td><?php echo $row['po_expired'] == 1 ? '예' : '아니오'; ?></td>
         <td class="td_bignum td_pt"><?php echo number_format($row2['mb_point']) ?></td>
     </tr>
 
