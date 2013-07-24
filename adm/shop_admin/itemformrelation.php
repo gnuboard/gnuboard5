@@ -21,11 +21,6 @@ for($i=0;$row=sql_fetch_array($result);$i++) {
     $ca_name = addslashes($row2['ca_name']);
 
     $it_name = addslashes($row['it_name']);
-    if(file_exists(G4_DATA_PATH."/item/{$row['it_id']}_s"))
-        $it_image = "{$row['it_id']}_s";
-    else
-        $it_image = "";
-
     $options .= "<option value=\"".$row['it_id']."\">$ca_name : $it_name</option>\n";
 }
 
