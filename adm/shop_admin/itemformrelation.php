@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 $sql = " select ca_id, it_id, it_name, it_price
            from {$g4['shop_item_table']}
-          where ca_id like '$ca_id%'
-            and it_id <> '$it_id'
+          where it_id <> '$it_id'
+            and ( ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%' )
           order by ca_id, it_name ";
 $result = sql_query($sql);
 
