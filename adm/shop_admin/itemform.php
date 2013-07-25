@@ -1016,7 +1016,9 @@ $(function(){
                 ?>
             </select>
         </span>
-        <div id="relation" class="srel_list"></div>
+        <div id="relation" class="srel_list">
+            <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
+        </div>
         <script>
         $(function() {
             $("#sch_relation").change(function() {
