@@ -378,6 +378,6 @@ if(!sql_query(" select od_tax_flag from {$g4['shop_order_table']} limit 1 ", fal
 if (!isset($default['de_shop_skin'])) {
     sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
                     ADD `de_shop_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_admin_info_email`,
-                    ADD `de_shop_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_shop_skin` ", true);
+                    ADD `de_shop_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_shop_skin` ", false);
 }
 ?>
