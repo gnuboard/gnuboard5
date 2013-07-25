@@ -9,20 +9,25 @@ $sql = " select ca_id, it_id, it_name, it_price
           order by ca_id, it_name ";
 $result = sql_query($sql);
 
+$list = '';
+
 for($i=0;$row=sql_fetch_array($result);$i++) {
-    //$sql2 = " select count(*) as cnt from $g4[shop_item_relation_table] where it_id = '$row[it_id]' ";
     $sql2 = " select count(*) as cnt from {$g4['shop_item_relation_table']} where it_id = '$it_id' and it_id2 = '{$row['it_id']}' ";
     $row2 = sql_fetch($sql2);
     if ($row2['cnt'])
         continue;
 
-    $sql2 = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['ca_id']}' ";
-    $row2 = sql_fetch($sql2);
-    $ca_name = addslashes($row2['ca_name']);
+    $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
 
-    $it_name = addslashes($row['it_name']);
-    $options .= "<option value=\"".$row['it_id']."\">$ca_name : $it_name</option>\n";
+    $list .= '<li>';
+    $list .= '<input type="hidden" name="re_it_id[]" value="'.$row['it_id'].'">';
+    $list .= $it_name;
+    $list .= '<button type="button" class="add_item">추가</button>';
+    $list .= '</li>'.PHP_EOL;
 }
 
-echo $options;
+if($list)
+    $list = '<ul>'.$list.'</ul>';
+
+echo $list;
 ?>
