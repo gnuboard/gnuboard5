@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+//print_r2($_POST); exit;
+
 // uq_id 설정
 set_unique_id($sw_direct);
 
@@ -22,6 +24,7 @@ if ($member['mb_level'] < $default['de_level_sell'])
     alert('상품을 구입할 수 있는 권한이 없습니다.');
 }
 
+/*
 // notax 필드추가
 $sql = " select ct_notax from {$g4['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
@@ -29,6 +32,7 @@ if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
                     ADD `ct_notax` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ct_num` ", true);
 }
+*/
 
 if($act == "buy")
 {
