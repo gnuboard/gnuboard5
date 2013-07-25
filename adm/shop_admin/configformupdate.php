@@ -100,7 +100,6 @@ $sql = " update {$g4['shop_default_table']}
                 de_card_point               = '$de_card_point',
                 de_card_pg                  = '$de_card_pg',
                 de_card_max_amount          = '$de_card_max_amount',
-                de_mileage_use              = '$de_mileage_use',
                 de_point_settle             = '$de_point_settle',
                 de_level_sell               = '$de_level_sell',
                 de_send_cost_case           = '$de_send_cost_case',

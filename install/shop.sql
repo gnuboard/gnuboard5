@@ -250,7 +250,6 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
   `de_card_pg` varchar(255) NOT NULL DEFAULT '',
   `de_card_max_amount` int(11) NOT NULL DEFAULT '0',
   `de_point_settle` int(11) NOT NULL DEFAULT '0',
-  `de_mileage_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_level_sell` int(11) NOT NULL DEFAULT '0',
   `de_send_cost_case` varchar(255) NOT NULL DEFAULT '',
   `de_send_cost_limit` varchar(255) NOT NULL DEFAULT '',
@@ -639,25 +638,6 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   UNIQUE KEY `uq_id` (`uq_id`),
   KEY `index2` (`mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `shop_mileage`
---
-
-DROP TABLE IF EXISTS `shop_mileage`;
-CREATE TABLE IF NOT EXISTS `shop_mileage` (
-  `ml_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `mb_id` VARCHAR(255) NOT NULL DEFAULT '',
-  `od_id` BIGINT(20) unsigned NOT NULL,
-  `ct_id` INT(11) NOT NULL DEFAULT '0',
-  `ml_content` VARCHAR(255) NOT NULL DEFAULT '',
-  `ml_point` INT(11) NOT NULL DEFAULT '0',
-  `ml_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`ml_id`),
-  KEY `mb_id` (`mb_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

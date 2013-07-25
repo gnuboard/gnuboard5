@@ -119,8 +119,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <option value="it_sell_email" <?php echo get_selected($sfl, 'it_sell_email'); ?>>판매자 e-mail</option>
     </select>
 
-    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input required">
+    <label for="stx" class="sound_only">검색어</label>
+    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" class="frm_input">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 

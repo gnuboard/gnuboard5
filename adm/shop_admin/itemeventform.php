@@ -17,6 +17,12 @@ if ($w == "u")
     $ev = sql_fetch($sql);
     if (!$ev['ev_id'])
         alert("등록된 자료가 없습니다.");
+
+    // 등록된 이벤트 상품
+    $sql = " select b.it_id, b.it_name
+                from {$g4['shop_event_item_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
+                where a.ev_id = '$ev_id' ";
+    $res_item = sql_query($sql);
 }
 else
 {
@@ -34,12 +40,31 @@ else
     $ev['ev_list_row'] = 5;
 }
 
+// 분류리스트
+$category_select = '';
+$sql = " select * from {$g4['shop_category_table']} ";
+if ($is_admin != 'super')
+    $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
+$sql .= " order by ca_id ";
+$result = sql_query($sql);
+for ($i=0; $row=sql_fetch_array($result); $i++)
+{
+    $len = strlen($row['ca_id']) / 2 - 1;
+
+    $nbsp = "";
+    for ($i=0; $i<$len; $i++)
+        $nbsp .= "&nbsp;&nbsp;&nbsp;";
+
+    $category_select .= "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
+}
+
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="feventform" action="./itemeventformupdate.php" onsubmit="return feventform_check(this);" method="post" enctype="MULTIPART/FORM-DATA">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="ev_id" value="<?php echo $ev_id; ?>">
+<input type="hidden" name="ev_item" value="">
 
 <section class="cbox">
     <h2><?php echo $html_title; ?></h2>
@@ -138,6 +163,46 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
+        <td colspan="2">
+            <section>
+                <h3>상품검색</h3>
+                <div>
+                    <select name="ca_id" id="sch_ca_id">
+                        <option value="">분류선택</option>
+                        <?php echo $category_select; ?>
+                    </select>
+                </div>
+                <div id="sch_item_list">
+                </div>
+            </section>
+            <section>
+                <h3>등록된 상품</h3>
+                <div id="reg_item_list">
+                    <?php
+                    for($i=0; $row=sql_fetch_array($res_item); $i++) {
+                        $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
+
+                        if($i==0)
+                            echo '<ul>';
+                    ?>
+                        <li>
+                            <input type="hidden" name="it_id[]" value="<?php echo $row['it_id']; ?>">
+                            <?php echo $it_name; ?>
+                            <button type="button" class="del_item">삭제</button>
+                        </li>
+                    <?php
+                    }
+
+                    if($i > 0)
+                        echo '</ul>';
+                    else
+                        echo '등록된 상품이 없습니다.';
+                    ?>
+                </div>
+            </section>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="ev_himg">상단이미지</label></th>
         <td>
             <?php echo help("이벤트 페이지 상단에 업로드 한 이미지를 출력합니다."); ?>
@@ -211,8 +276,69 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 </form>
 
 <script>
+$(function() {
+    $("#sch_ca_id").change(function() {
+        var ca_id = $(this).val();
+
+        $("#sch_item_list").load(
+            "./itemeventsearch.php",
+            { w: "<?php echo $w; ?>", ev_id: "<?php echo $ev_id; ?>", ca_id: ca_id }
+        );
+    });
+
+    $("#sch_item_list .add_item").live("click", function() {
+        // 이미 등록된 상품인지 체크
+        var it_id = $(this).closest("li").find("input:hidden").val();
+        var it_id2;
+        var dup = false;
+        $("#reg_item_list input[name='it_id[]']").each(function() {
+            it_id2 = $(this).val();
+            if(it_id == it_id2) {
+                dup = true;
+                return false;
+            }
+        });
+
+        if(dup) {
+            alert("이미 등록된 상품입니다.");
+            return false;
+        }
+
+        var cont = "<li>"+$(this).closest("li").html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
+        var count = $("#reg_item_list li").size();
+
+        if(count > 0) {
+            $("#reg_item_list li:last").after(cont);
+        } else {
+            $("#reg_item_list").html("<ul>"+cont+"</ul>");
+        }
+    });
+
+    $("#reg_item_list .del_item").live("click", function() {
+        if(!confirm("상품을 삭제하시겠습니까?"))
+            return false;
+
+        $(this).closest("li").remove();
+    });
+});
 function feventform_check(f)
 {
+    var item = new Array();
+    var ev_item = it_id = "";
+
+    $("#reg_item_list input[name='it_id[]']").each(function() {
+        it_id = $(this).val();
+        if(it_id == "")
+            return true;
+
+        item.push(it_id);
+    });
+
+    if(item.length > 0)
+        ev_item = item.join();
+
+    $("input[name=ev_item]").val(ev_item);
+
     <?php echo get_editor_js('ev_head_html'); ?>
     <?php echo get_editor_js('ev_tail_html'); ?>
 

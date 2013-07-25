@@ -489,13 +489,6 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_mileage_use">마일리지 사용</label></th>
-        <td>
-            <?php echo help("마일리지는 주문완료에 의해 적립되는 포인트입니다.\n마일리지 사용으로 설정하시면 기존 포인트 대신 마일리지가 주문 결제에 사용됩니다."); ?>
-            <input type="checkbox" name="de_mileage_use" value="1" id="de_mileage_use" <?php echo $default['de_mileage_use']?' checked':''; ?>> 사용
-        </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="cf_use_point">포인트 사용</label></th>
         <td>
             <?php echo help("<a href=\"".G4_ADMIN_URL."/config_form.php#frm_board\" target=\"_blank\">환경설정 &gt; 기본환경설정</a>과 동일한 설정입니다."); ?>
@@ -561,13 +554,6 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_tax_flag_use">복합과세 결제</label></th>
-        <td>
-             <?php echo help("복합과세(과세, 비과세) 결제를 사용하려면 체크하십시오.\n복합과세 결제를 사용하기 전 KCP에 결제 신청을 해주셔야 합니다."); ?>
-            <input type="checkbox" name="de_tax_flag_use" value="1" id="de_tax_flag_use"<?php echo $default['de_tax_flag_use']?' checked':''; ?>> 사용
-        </td>
-    </tr>
-    <tr>
         <th scope="row">신용카드 결제테스트</th>
         <td>
             <?php echo help("신용카드를 테스트 하실 경우에 체크하세요. 결제단위 최소 1,000원"); ?>
@@ -603,6 +589,13 @@ $pg_anchor = '<ul class="anchor">
             $('#scf_cardtest_tip').attr('class','scf_cardtest_tip');
             $('<button type="button" id="scf_cardtest_btn">테스트결제 팁 더보기</button>').appendTo('#scf_cardtest');
             </script>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="de_tax_flag_use">복합과세 결제</label></th>
+        <td>
+             <?php echo help("복합과세(과세, 비과세) 결제를 사용하려면 체크하십시오.\n복합과세 결제를 사용하기 전 KCP에 결제 신청을 해주셔야 합니다."); ?>
+            <input type="checkbox" name="de_tax_flag_use" value="1" id="de_tax_flag_use"<?php echo $default['de_tax_flag_use']?' checked':''; ?>> 사용
         </td>
     </tr>
     <tr>

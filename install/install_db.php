@@ -263,7 +263,6 @@ if($shop_install) {
                     de_card_use = '0',
                     de_card_max_amount = '1000',
                     de_point_settle = '10000',
-                    de_mileage_use = '1',
                     de_cart_keep_term = '15',
                     de_point_per = '5',
                     de_card_point = '0',
@@ -382,10 +381,6 @@ if($shop_install) {
         $sql = preg_replace($source, $target, $sql);
         @mysql_query($sql);
     }
-
-    // mb_mileage 필드추가
-    @mysql_query(" ALTER TABLE `{$table_prefix}member`
-                    ADD `mb_mileage` INT(11) NOT NULL DEFAULT '0' AFTER `mb_point` ");
 }
 ?>
 
@@ -493,7 +488,6 @@ if($shop_install) {
     fwrite($f, "\$g4['shop_onlinecalc_table'] = SHOP_TABLE_PREFIX.'onlinecalc'; // 온라인견적 테이블\n");
     fwrite($f, "\$g4['shop_order_table'] = SHOP_TABLE_PREFIX.'order'; // 주문서 테이블\n");
     fwrite($f, "\$g4['shop_wish_table'] = SHOP_TABLE_PREFIX.'wish'; // 보관함(위시리스트) 테이블\n");
-    fwrite($f, "\$g4['shop_mileage_table'] = SHOP_TABLE_PREFIX.'mileage'; // 마일리지 테이블\n");
     fwrite($f, "\$g4['shop_coupon_table'] = SHOP_TABLE_PREFIX.'coupon'; // 쿠폰정보 테이블\n");
     fwrite($f, "\$g4['shop_sendcost_table'] = SHOP_TABLE_PREFIX.'sendcost'; // 추가배송비 테이블\n");
     fwrite($f, "\$g4['shop_request_table'] = SHOP_TABLE_PREFIX.'request'; // 주문 취소, 교환, 반품 요청테이블\n");
