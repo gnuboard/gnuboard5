@@ -991,7 +991,7 @@ $(function(){
     <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
 </div>
 
-<section id="anc_sitfrm_relation" class="cbox compare_wrap">
+<section id="anc_sitfrm_relation" class="cbox compare_wrap srel">
     <h2>관련상품</h2>
     <?php echo $pg_anchor; ?>
 
@@ -1004,7 +1004,7 @@ $(function(){
     <section class="compare_left">
         <h3>등록된 전체상품 목록</h3>
         <label for="sch_relation" class="sound_only">상품분류</label>
-        <span class="sit_relation_selwrap">
+        <span class="srel_pad">
             <select id="sch_relation" onchange="search_relation(this)">
                 <option value=''>분류별 상품</option>
                 <?php
@@ -1016,7 +1016,7 @@ $(function(){
                 ?>
             </select>
         </span>
-        <div id="relation"></div>
+        <div id="relation" class="srel_list"></div>
         <script>
         $(function() {
             $("#sch_relation").change(function() {
@@ -1071,8 +1071,8 @@ $(function(){
 
     <section class="compare_right">
         <h3>선택된 관련상품 목록</h3>
-        <span class="sit_relation_selwrap"></span>
-        <div id="reg_relation">
+        <span class="srel_pad"></span>
+        <div id="reg_relation" class="srel_sel">
             <?php
             $str = array();
             $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
@@ -1109,13 +1109,13 @@ $(function(){
 
 </section>
 
-<section id="anc_sitfrm_event" class="cbox compare_wrap">
+<section id="anc_sitfrm_event" class="cbox compare_wrap srel">
     <h2>관련이벤트</h2>
     <?php echo $pg_anchor; ?>
 
     <section class="compare_left">
         <h3>등록된 전체이벤트 목록</h3>
-        <div id="event_list">
+        <div id="event_list" class="srel_list srel_noneimg">
             <?php
             $sql = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
             $result = sql_query($sql);
@@ -1180,7 +1180,7 @@ $(function(){
 
     <section class="compare_right">
         <h3>선택된 관련이벤트 목록</h3>
-        <div id="reg_event_list">
+        <div id="reg_event_list" class="srel_sel srel_noneimg">
             <?php
             $str = "";
             $comma = "";

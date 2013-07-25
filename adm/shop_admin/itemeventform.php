@@ -164,21 +164,24 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row">관련상품</th>
-        <td id="sev_it_rel" class="compare_wrap">
+        <td id="sev_it_rel" class="compare_wrap srel">
 
             <section class="compare_left">
                 <h3>상품검색</h3>
-                <select name="ca_id" id="sch_ca_id">
-                    <option value="">분류선택</option>
-                    <?php echo $category_select; ?>
-                </select>
-                <div id="sch_item_list">
+                <span class="srel_pad">
+                    <select name="ca_id" id="sch_ca_id">
+                        <option value="">분류선택</option>
+                        <?php echo $category_select; ?>
+                    </select>
+                </span>
+                <div id="sch_item_list" class="srel_list">
                 </div>
             </section>
 
             <section class="compare_right">
                 <h3>등록된 상품</h3>
-                <div id="reg_item_list">
+                <span class="srel_pad"></span>
+                <div id="reg_item_list" class="srel_sel">
                     <?php
                     for($i=0; $row=sql_fetch_array($res_item); $i++) {
                         $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
