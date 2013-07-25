@@ -175,6 +175,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     </select>
                 </span>
                 <div id="sch_item_list" class="srel_list">
+                    <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
                 </div>
             </section>
 
