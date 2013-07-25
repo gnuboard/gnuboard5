@@ -212,7 +212,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type1_list_use" value="1" id="de_type1_list_use" <?php echo $default['de_type1_list_use']?"checked":""; ?>>
             <label for="de_type1_list_skin">스킨</label>
             <select name="de_type1_list_skin" id="de_type1_list_skin">
-                <?php echo get_list_skin_options("^type[0-9]+.skin\.php", $shop_skin_path, $default['de_type1_list_skin']); ?>
+                <?php echo get_list_skin_options("^type[^\.]+\.skin\.php", $shop_skin_path, $default['de_type1_list_skin']); ?>
             </select>
             <label for="de_type1_list_row">출력할 줄 수</label>
             <input type="text" name="de_type1_list_row" value="<?php echo $default['de_type1_list_row']; ?>" id="de_type1_list_row" class="frm_input" size="3">
@@ -231,7 +231,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type2_list_use" value="1" id="de_type2_list_use" <?php echo $default['de_type2_list_use']?"checked":""; ?>>
             <label for="de_type2_list_skin">스킨</label>
             <select name="de_type2_list_skin" id="de_type2_list_skin">
-                <?php echo get_list_skin_options("^type[0-9]+.skin\.php", $shop_skin_path, $default['de_type2_list_skin']); ?>
+                <?php echo get_list_skin_options("^type[^\.]+\.skin\.php", $shop_skin_path, $default['de_type2_list_skin']); ?>
             </select>
             <label for="de_type2_list_row">출력할 줄 수</label>
             <input type="text" name="de_type2_list_row" value="<?php echo $default['de_type2_list_row']; ?>" id="de_type2_list_row" class="frm_input" size="3">
@@ -250,7 +250,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type3_list_use" value="1" id="de_type3_list_use" <?php echo $default['de_type3_list_use']?"checked":""; ?>>
             <label for="de_type3_list_skin">스킨</label>
             <select name="de_type3_list_skin" id="de_type3_list_skin">
-                <?php echo get_list_skin_options("^type[0-9]+.skin\.php", $shop_skin_path, $default['de_type3_list_skin']); ?>
+                <?php echo get_list_skin_options("^type[^\.]+\.skin\.php", $shop_skin_path, $default['de_type3_list_skin']); ?>
             </select>
             <label for="de_type3_list_row">출력할 줄 수</label>
             <input type="text" name="de_type3_list_row" value="<?php echo $default['de_type3_list_row']; ?>" id="de_type3_list_row" class="frm_input" size="3">
@@ -269,7 +269,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type4_list_use" value="1" id="de_type4_list_use" <?php echo $default['de_type4_list_use']?"checked":""; ?>>
             <label for="de_type4_list_skin">스킨</label>
             <select name="de_type4_list_skin" id="de_type4_list_skin">
-                <?php echo get_list_skin_options("^type[0-9]+.skin\.php", $shop_skin_path, $default['de_type4_list_skin']); ?>
+                <?php echo get_list_skin_options("^type[^\.]+\.skin\.php", $shop_skin_path, $default['de_type4_list_skin']); ?>
             </select>
             <label for="de_type4_list_row">출력할 줄 수</label>
             <input type="text" name="de_type4_list_row" value="<?php echo $default['de_type4_list_row']; ?>" id="de_type4_list_row" class="frm_input" size="3">
@@ -288,7 +288,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type5_list_use" value="1" id="de_type5_list_use" <?php echo $default['de_type5_list_use']?"checked":""; ?>>
             <label for="de_type5_list_skin">스킨</label>
             <select name="de_type5_list_skin" id="de_type5_list_skin">
-                <?php echo get_list_skin_options("^type[0-9]+.skin\.php", $shop_skin_path, $default['de_type5_list_skin']); ?>
+                <?php echo get_list_skin_options("^type[^\.]+\.skin\.php", $shop_skin_path, $default['de_type5_list_skin']); ?>
             </select>
             <label for="de_type5_list_row">출력할 줄 수</label>
             <input type="text" name="de_type5_list_row" value="<?php echo $default['de_type5_list_row']; ?>" id="de_type5_list_row" class="frm_input" size="3">

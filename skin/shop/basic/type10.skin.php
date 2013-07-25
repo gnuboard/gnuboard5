@@ -1,6 +1,5 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-// $list_mod 가로 나열 수
 ?>
 
 <link rel="stylesheet" href="<?php echo $shop_skin_url ?>/style.css">
@@ -8,34 +7,69 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- 상품진열 10 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
-    if ($list_mod >= 2) { // 1줄 이미지 : 2개 이상
-        if ($i%$list_mod == 0) $sct_last = 'sct_last'; // 줄 마지막
-        else if ($i%$list_mod == 1) $sct_last = 'sct_clear'; // 줄 첫번째
+    if ($this->list_mod >= 2) { // 1줄 이미지 : 2개 이상
+        if ($i%$this->list_mod == 0) $sct_last = 'sct_last'; // 줄 마지막
+        else if ($i%$this->list_mod == 1) $sct_last = 'sct_clear'; // 줄 첫번째
         else $sct_last = '';
     } else { // 1줄 이미지 : 1개
         $sct_last = 'sct_clear';
     }
 
-    $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-    $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-    $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
+    if ($i == 1) {
+        if ($this->css) {
+            echo "<ul class=\"{$this->css}\">\n";
+        } else {
+            echo "<ul class=\"sct sct_10\">\n";
+        }
+    }
 
-    if ($i == 1) echo '<ul class="sct sct_10">';
-?>
-    <li class="sct_li <?php echo $sct_last; ?>">
-        <a href="<?php echo $href; ?>" class="sct_a">
-            <span class="sct_img"><?php echo get_it_image($row['it_id'], $img_width, $img_height); ?></span>
-            <b><?php echo stripslashes($row['it_name']); ?></b>
-            <span class="sct_cost"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></span>
-            <span class="sct_icon">
-                <?php echo item_icon($row); // 이미지 아이콘?>
-            </span>
-        </a>
-    </li>
-<?php
+    echo "<li class=\"sct_li {$sct_last}\">\n";
+
+    if ($this->href) {
+        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
+    }
+
+    if ($this->view_it_img) {
+        echo "<span class=\"sct_img\">".get_it_image($row['it_id'], $this->img_width, $this->img_height)."</span>\n";
+    }
+
+    if ($this->view_it_id) {
+        echo "<b>".stripslashes($row['it_id'])."</b>\n";
+    }
+
+    if ($this->view_it_name) {
+        echo "<b>".stripslashes($row['it_name'])."</b>\n";
+    }
+
+    if ($this->view_it_cust_price) {
+        echo "<span class=\"sct_cost\">".display_price($row['it_cust_price'])."</span>\n";
+    }
+
+    if ($this->view_it_price) {
+        echo "<span class=\"sct_cost\">".display_price(get_price($row), $row['it_tel_inq'])."</span>\n";
+    }
+
+    if ($this->view_it_icon) {
+        echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
+    }
+
+    if ($this->view_sns) {
+        echo "<div class=\"sct_sns\">";
+        echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb.png');
+        echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt.png');
+        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo.png');
+        echo "</div>\n";
+    }
+
+    if ($this->href) {
+        echo "</a>\n";
+    }
+
+    echo "</li>\n";
 }
-if ($i > 1) echo '</ul>';
 
-if($i == 1) echo '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
+if ($i > 1) echo "</ul>\n";
+
+if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
 <!-- } 상품진열 10 끝 -->

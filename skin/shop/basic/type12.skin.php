@@ -17,27 +17,63 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         $sct_last = 'sct_clear';
     }
 
-    $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
-    $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    if ($i == 1) {
+        if ($this->css) {
+            echo "<ul class=\"{$this->css}\">\n";
+        } else {
+            echo "<ul class=\"sct sct_12\">\n";
+        }
+    }
 
-    if ($i == 1) echo '<ul class="sct sct_12">';
-?>
-    <li class="sct_li <?php echo $sct_last; ?>">
-        <a href="<?php echo $href; ?>" class="sct_a">
-            <span class="sct_arw_toleft"></span>
-            <span class="sct_img"><?php echo get_it_image($row['it_id'], $img_width, $img_height); ?></span>
-            <b><?php echo stripslashes($row['it_name']); ?></b>
-            <p><?php echo $row['it_basic']; ?></p>
-            <span class="sct_cost"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></span>
-            <span class="sct_icon">
-                <?php// echo display_item_icon($row); // 이미지 아이콘?>
-            </span>
-        </a>
-    </li>
-<?php
+    echo "<li class=\"sct_li {$sct_last}\">\n";
+
+    if ($this->href) {
+        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
+    }
+
+    echo "<span class=\"sct_arw_toleft\"></span>\n";
+
+    if ($this->view_it_img) {
+        echo "<span class=\"sct_img\">".get_it_image($row['it_id'], $this->img_width, $this->img_height)."</span>\n";
+    }
+
+    if ($this->view_it_id) {
+        echo "<b>".stripslashes($row['it_id'])."</b>\n";
+    }
+
+    if ($this->view_it_name) {
+        echo "<b>".stripslashes($row['it_name'])."</b>\n";
+    }
+
+    if ($this->view_it_cust_price) {
+        echo "<span class=\"sct_cost\">".display_price($row['it_cust_price'])."</span>\n";
+    }
+
+    if ($this->view_it_price) {
+        echo "<span class=\"sct_cost\">".display_price(get_price($row), $row['it_tel_inq'])."</span>\n";
+    }
+
+    if ($this->view_it_icon) {
+        echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
+    }
+
+    if ($this->view_sns) {
+        echo "<div class=\"sct_sns\">";
+        echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb.png');
+        echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt.png');
+        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo.png');
+        echo "</div>\n";
+    }
+
+    if ($this->href) {
+        echo "</a>\n";
+    }
+
+    echo "</li>\n";
 }
-if ($i > 1) echo '</ul>';
 
-if($i == 1) echo '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
+if ($i > 1) echo "</ul>\n";
+
+if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
 <!-- } 상품진열 12 끝 -->
