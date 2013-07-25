@@ -1282,52 +1282,6 @@ $(function(){
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row">상단이미지</th>
-        <td colspan="2">
-            <?php echo help("상품상세설명 페이지 상단에 출력하는 이미지입니다."); ?>
-            <input type="file" name="it_himg">
-            <?php
-            $himg_str = "";
-            $himg = G4_DATA_PATH."/item/{$it['it_id']}_h";
-            if (file_exists($himg)) {
-            ?>
-            <label for="it_himg_del">상단이미지 삭제</label>
-            <input type="checkbox" name="it_himg_del" value="1" id="it_himg_del">
-            <span class="sit_wimg_himg"></span>
-            <div id="himg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_h" alt="">
-                <button type="button" class="sit_wimg_close">닫기</button>
-            </div>
-            <script>
-            $('<button type="button" id="it_himg_view" class="btn_frmline sit_wimg_view">상단이미지 확인</button>').appendTo('.sit_wimg_himg');
-            </script>
-            <?php } ?>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">하단이미지</th>
-        <td colspan="2">
-            <?php echo help("상품상세설명 페이지 하단에 출력하는 이미지입니다."); ?>
-            <input type="file" name="it_timg">
-            <?php
-            $timg_str = "";
-            $timg = G4_DATA_PATH."/item/{$it['it_id']}_t";
-            if (file_exists($timg)) {
-            ?>
-            <label for="it_timg_del">하단이미지 삭제</label>
-            <input type="checkbox" name="it_timg_del" value="1" id="it_timg_del">
-            <span class="sit_wimg_timg"></span>
-            <div id="timg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_id']; ?>_t" alt="">
-                <button type="button" class="sit_wimg_close">닫기</button>
-            </div>
-            <script>
-            $('<button type="button" id="it_timg_view" class="btn_frmline sit_wimg_view">하단이미지 확인</button>').appendTo('.sit_wimg_timg');
-            </script>
-            <?php } ?>
-        </td>
-    </tr>
-    <tr>
         <th scope="row">상품상단내용</th>
         <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_head_html', $it['it_head_html']); ?></td>
         <td class="group_setting">
