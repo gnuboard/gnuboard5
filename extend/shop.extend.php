@@ -56,6 +56,14 @@ define(_MISU_QUERY_, "
 // 쇼핑몰 설정값 배열변수
 $default = sql_fetch(" select * from {$g4['shop_default_table']} ");
 
+if (G4_IS_MOBILE) {
+    $shop_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin'];
+    $shop_skin_url  = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin'];
+} else {
+    $shop_skin_path = G4_PATH.'/'.G4_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin'];
+    $shop_skin_url  = G4_URL .'/'.G4_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin'];
+}
+
 //==============================================================================
 // 쇼핑몰 필수 실행코드 모음 끝
 //==============================================================================

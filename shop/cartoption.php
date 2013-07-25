@@ -3,10 +3,7 @@ include_once('./_common.php');
 
 $it_id = $_POST['it_id'];
 
-$sql = " select it_id, it_option_subject, it_supply_subject, it_price, it_point, it_point_type
-            from {$g4['shop_item_table']}
-            where it_id = '$it_id'
-              and it_use = '1' ";
+$sql = " select it_id, it_option_subject, it_supply_subject, it_price, it_point, it_point_type from {$g4['shop_item_table']} where it_id = '$it_id' and it_use = '1' ";
 $it = sql_fetch($sql);
 $it_point = get_item_point($it);
 
@@ -19,8 +16,7 @@ $sql = " select * from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id
 $result = sql_query($sql);
 
 // 판매가격
-$sql2 = " select ct_price, it_name, ct_send_cost
-            from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '$it_id' and ct_num = '0' ";
+$sql2 = " select ct_price, it_name, ct_send_cost from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '$it_id' and ct_num = '0' ";
 $row2 = sql_fetch($sql2);
 
 if(!mysql_num_rows($result))

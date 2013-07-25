@@ -34,9 +34,7 @@ if ($sort != "")
 $sql_list1 = " select * ";
 $sql_list2 = " order by $order_by it_order, it_id desc ";
 
-$sql_common = " from {$g4['shop_item_table']}
-               where it_type{$type} = '1'
-                 and it_use = '1' ";
+$sql_common = " from {$g4['shop_item_table']} where it_type{$type} = '1' and it_use = '1' ";
 if ($ca_id) {
     $sql_common .= " and ca_id = '$ca_id' ";
 }
@@ -84,11 +82,7 @@ echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_S
 // 분류를 링크하는 코드
 /*
 $bar = "";
-$sql = " select ca_id from $g4[shop_item_table]
-               where it_type{$type} = '1'
-                 and it_use = '1'
-          group by ca_id
-          order by ca_id ";
+$sql = " select ca_id from $g4[shop_item_table] where it_type{$type} = '1' and it_use = '1' group by ca_id order by ca_id ";
 $result = sql_query($sql);
 for($i=0;$row=sql_fetch_array($result);$i++) {
     $row2 = sql_fetch(" select ca_name from $g4[shop_category_table] where ca_id = '$row[ca_id]' ");

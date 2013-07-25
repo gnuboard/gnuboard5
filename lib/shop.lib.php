@@ -3,116 +3,268 @@
 // 쇼핑몰 라이브러리 모음 시작
 //==============================================================================
 
+/*
+간편 사용법 : 상품유형을 1~5 사이로 지정합니다.
+$disp = new display_item(1);
+echo $disp->run();
 
-// 상품 보기
-class item_view
+
+유형+분류별로 노출하는 경우 상세 사용법 : 상품유형을 지정하는 것은 동일합니다.
+$disp = new display_item(1);
+// 사용할 스킨을 바꿉니다.
+$disp->set_list_skin("type_user.skin.php");
+// 1단계분류를 20으로 시작되는 분류로 지정합니다.
+$disp->set_ca_id("20", 1);
+echo $disp->run();
+
+
+분류별로 노출하는 경우 상세 사용법
+// type13.skin.php 스킨으로 3개씩 2줄을 폭 150 사이즈로 분류코드 30 으로 시작되는 상품을 노출합니다.
+$disp = new display_item(0, "type13.skin.php", 3, 2, 150, 0, "30");
+echo $disp->run();
+
+
+이벤트로 노출하는 경우 상세 사용법
+// type13.skin.php 스킨으로 3개씩 2줄을 폭 150 사이즈로 상품을 노출합니다.
+$disp = new display_item(0, "type13.skin.php", 3, 2, 150, 0);
+// 이벤토번호를 설정합니다.
+$disp->set_event("12345678");
+echo $disp->run();
+
+참고) 영카트4의 display_type 함수와 사용방법이 비슷한 class 입니다.
+      display_category 나 display_event 로 사용하기 위해서는 $type 값만 넘기지 않으면 됩니다.
+*/
+
+class display_item
 {
-    protected $it;
-    protected $idx = 1;
+    // 상품유형 : 기본적으로 1~5 까지 사용할수 있으며 0 으로 설정하는 경우 상품유형별로 노출하지 않습니다.
+    // 분류나 이벤트로 노출하는 경우 상품유형을 0 으로 설정하면 됩니다.
+    protected $type;
+
+    protected $list_skin;
+    protected $list_mod;
+    protected $list_row;
     protected $img_width;
     protected $img_height;
-    protected $link = "it_name";
-    protected $buffer = array();
-    protected static $index = 0;
 
-    function __construct($it="") {
-        // 배열이 아니면 상품코드로 인식한다.
-        if (!is_array($it)) {
-            $it = $this->get_item($it);
+    // 상품상세보기 경로
+    protected $href = "";
+
+    // select 에 사용되는 필드
+    protected $fields = "*";
+
+    // 분류코드로만 사용하는 경우 상품유형($type)을 0 으로 설정하면 됩니다.    
+    protected $ca_id = "";
+    protected $ca_id2 = "";
+    protected $ca_id3 = "";
+
+    // 노출순서
+    protected $order_by = "it_order, it_id desc";
+
+    // 상품의 이벤트번호를 저장합니다.
+    protected $event = "";
+
+    // 스킨의 기본 css 를 다른것으로 사용하고자 할 경우에 사용합니다.
+    protected $css = "";
+
+    // 상품의 사용여부를 따져 노출합니다. 0 인 경우 모든 상품을 노출합니다.
+    protected $use = 1;
+
+    // 모바일에서 노출하고자 할 경우에 true 로 설정합니다.
+    protected $is_mobile = false;
+
+    // 기본으로 보여지는 필드들
+    protected $view_it_id    = false;       // 상품코드
+    protected $view_it_img   = true;        // 상품이미지
+    protected $view_it_name  = true;        // 상품명
+    protected $view_it_price = true;        // 판매가격
+    protected $view_it_cust_price = false;  // 소비자가
+    protected $view_it_icon = false;        // 아이콘
+    protected $view_sns = false;            // SNS
+
+    protected $count = 1; // 몇번째 class 호출인지를 저장합니다.
+
+    // $type        : 상품유형 (기본으로 1~5까지 사용)
+    // $list_skin   : 상품리스트를 노출할 스킨을 설정합니다. 스킨위치는 skin/shop/쇼핑몰설정스킨/type??.skin.php
+    // $list_mod    : 1줄에 몇개의 상품을 노출할지를 설정합니다.
+    // $list_row    : 상품을 몇줄에 노출할지를 설정합니다.
+    // $img_width   : 상품이미지의 폭을 설정합니다.
+    // $img_height  : 상품이미지의 높이을 설정합니다. 0 으로 설정하는 경우 썸네일 이미지의 높이는 폭에 비례하여 생성합니다.
+    function __construct($type=0, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0) {
+        
+        global $default;
+
+        $this->type = $type;
+        if ($type) {
+            $this->set_list_skin($list_skin);
+            $this->set_list_mod($list_mod);
+            $this->set_list_row($list_row);
+            $this->set_img_size($img_width);
         }
-        $this->it = $it;
-        $this->set_link();
+        $this->ca_id = $ca_id;
+
+        $this->set_href(G4_SHOP_URL.'/item.php?it_id=');
+
+        $this->count++;
     }
 
-    function get_item($it_id) {
-        global $g4;
-        $sql = " select a.*, b.ca_name, b.ca_use from {$g4['shop_item_table']} a, {$g4['shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id ";
-        $this->it = sql_fetch($sql);
-        return $this->it;
+    // 리스트 스킨을 바꾸고자 하는 경우에 사용합니다.
+    // 리스트 스킨의 위치는 skin/shop/쇼핑몰설정스킨/type??.skin.php 입니다.
+    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
+    function set_list_skin($list_skin) {
+        global $default;
+        $this->list_skin = $list_skin ? $list_skin : $default['de_type'.$this->type.'_list_skin'];
     }
 
-    function set_link($link="all", $href="")
-    {
-        $this->link = $link;
-        if ($href)
-            $this->href = $href;
-        else
-            $this->href = G4_SHOP_URL."/item.php?it_id=".$this->it['it_id'];
+    // 1줄에 몇개를 노출할지를 사용한다.
+    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
+    function set_list_mod($list_mod) {
+        global $default;
+        $this->list_mod = $list_mod ? $list_mod : $default['de_type'.$this->type.'_list_mod'];
     }
 
-    function set_img_idx($idx=1) {
-        $this->idx = $idx;
+    // 몇줄을 노출할지를 사용한다.
+    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
+    function set_list_row($list_row) {
+        global $default;
+        $this->list_row = $list_row ? $list_row : $default['de_type'.$this->type.'_list_row'];
     }
 
-    function get_href($str) {
-        return "<a href=\"{$this->href}\">".$str."</a>";
+    // 노출이미지(썸네일생성)의 폭, 높이를 설정합니다. 높이를 0 으로 설정하는 경우 쎰네일 비율에 따릅니다.
+    // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
+    function set_img_size($img_width, $img_height=0) {
+        global $default;
+        $this->img_width = $img_width ? $img_width : $default['de_type'.$this->type.'_img_width'];
+        $this->img_height = $img_height ? $img_height : $default['de_type'.$this->type.'_img_height'];
     }
 
-    function it_img($imgw, $imgh=0) {
-        $img = get_it_thumbnail($this->it['it_img'.$this->idx], $imgw, $imgh);
-        // 상품이미지의 경우 링크값이 none 이 아닌 경우 무조건 링크를 건다.
-        if ($this->link != "none")
-            $img = $this->get_href($img);
-        $this->buffer[] = "<li class=\"it_img\">$img</li>";
+    // 특정 필드만 select 하는 경우에는 필드명을 , 로 구분하여 "field1, field2, field3, ... fieldn" 으로 인수를 넘겨줍니다.
+    function set_fields($str) {
+        $this->fields = $str;
     }
 
-    function it_name($length) {
-        $it_name = utf8_strcut($this->it['it_name'], $length);
-        if ($this->link == "all" || $this->link == "it_name")
-            $it_name = $this->get_href($it_name);
-        $this->buffer[] = "<li class=\"it_name\">{$it_name}</li>";
+    // 특정 필드로 정렬을 하는 경우 필드와 정렬순서를 , 로 구분하여 "field1 desc, field2 asc, ... fieldn desc " 으로 인수를 넘겨줍니다.
+    function set_order_by($str) {
+        $this->order_by = $str;
     }
 
-    function it_cust_price($prefix="시중가 : ", $suffix="원") {
-        $it_cust_price = $prefix.number_format($this->it['it_cust_price']).$suffix;
-        if ($this->link == "all")
-            $it_cust_price = $this->get_href($it_cust_price);
-        $this->buffer[] = "<li class=\"it_cust_price\">{$it_cust_price}</li>";
+    // 사용하는 상품외에 모든 상품을 노출하려면 0 을 인수로 넘겨줍니다.
+    function set_use($use) {
+        $this->use = $use;
     }
 
-    function it_price($prefix="판매가 : ", $suffix="원") {
-        $it_price = $prefix.number_format($this->it['it_price']).$suffix;
-        if ($this->link == "all")
-            $it_price = $this->get_href($it_price);
-        $this->buffer[] = "<li class=\"it_price\">{$it_price}</li>";
+    // 모바일로 사용하려는 경우 true 를 인수로 넘겨줍니다.
+    function set_mobile($mobile=true) {
+        $this->is_mobile = $mobile;
     }
 
-    function it_point($prefix="포인트 : ") {
-        $suffix = ($this->it['it_point_type'] == 1) ? "%" : "점";
-        $it_point = $prefix.number_format($this->it['it_point']).$suffix;
-        if ($this->link == "all")
-            $it_point = $this->get_href($it_point);
-        $this->buffer[] = "<li class=\"it_point\">{$it_point}</li>";
+    // 분류코드로 검색을 하고자 하는 경우 아래와 같이 인수를 넘겨줍니다.
+    // 1단계 분류는 (분류코드, 1)
+    // 2단계 분류는 (분류코드, 2)
+    // 3단계 분류는 (분류코드, 3) 
+    function set_ca_id($ca_id, $level=1) {
+        if ($level == 2) {
+            $this->ca_id2 = $ca_id;
+        } else if ($level == 3) {
+            $this->ca_id3 = $ca_id;
+        } else {
+            $this->ca_id = $ca_id;
+        }
     }
 
-    function it_etc($etc="") {
-        $this->index++;
-        if ($this->link == "all")
-            $$etc = $this->get_href($etc);
-        $this->buffer[] = "<li class=\"it_etc{$this->index}\">{$etc}</li>";
+    // 스킨에서 특정 필드를 노출하거나 하지 않게 할수 있습니다.
+    // 가령 소비자가는 처음에 노출되지 않도록 설정되어 있짐나 노출을 하려면
+    // ("it_cust_price", true) 와 같이 인수를 넘겨줍니다.
+    // 이때 인수로 넘겨주는 값은 스킨에 정의된 필드만 가능하다는 것입니다.
+    function set_view($field, $view=true) {
+        $this->{"view_".$field} = $view;
     }
 
+    // anchor 태그에 하이퍼링크를 다른 주소로 걸거나 아예 링크를 걸지 않을 수 있습니다.
+    // 인수를 "" 공백으로 넘기면 링크를 걸지 않습니다.
+    function set_href($href) {
+        $this->href = $href;        
+    }
+
+    // 이벤트코드를 인수로 넘기게 되면 해당 이벤트에 속한 상품을 노출합니다.
+    function set_event($ev_id) {
+        $this->event = $ev_id;        
+    }
+
+    // ul 태그의 css 를 교체할수 있다. "sct sct_abc" 를 인수로 넘기게 되면 
+    // 기존의 ul 태그에 걸린 css 는 무시되며 인수로 넘긴 css 가 사용됩니다.
+    function set_css($css) {
+        $this->css = $css;        
+    }
+
+    // class 에 설정된 값으로 최종 실행합니다.
     function run() {
-        $id = "it".$this->it['it_id'];
-        return !empty($this->buffer) ? "<ul".($id?" id=\"$id\"":"")." class=\"item_view\">\n".implode("\n", $this->buffer)."\n</ul>\n" : "";
+
+        global $g4, $config, $member, $default, $shop_skin_path, $shop_skin_url;
+
+        $where = array();
+        if ($this->use) {
+            $where[] = " it_use = '1' ";
+        }
+        
+        if ($this->type) {
+            $where[] = " it_type{$this->type} = '1' ";
+        }
+
+        if ($this->ca_id || $this->ca_id2 || $this->ca_id3) {
+            $where_ca_id = array();
+            if ($this->ca_id) {
+                $where_ca_id[] = " ca_id like '{$this->ca_id}%' ";
+            }
+            if ($this->ca_id2) {
+                $where_ca_id[] = " ca_id2 like '{$this->ca_id2}%' ";
+            }
+            if ($this->ca_id3) {
+                $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
+            }
+            $where[] = implode(" or ", $where_ca_id);
+        }
+
+        if ($this->order_by) {
+            $sql_order = " order by {$this->order_by} ";
+        }
+
+        if ($this->event) {
+            //$sql_common = " select {$this->fields} from `{$g4['shop_event_item_table']}` a left join `{$g4['shop_item_table']}` b on (a.it_id = b.it_id and a.ev_id = '{$this->event}') ";
+            $sql_common = " select {$this->fields} from `{$g4['shop_event_item_table']}` a left join `{$g4['shop_item_table']}` b on (a.it_id = b.it_id) ";
+            $where[] = " a.ev_id = '{$this->event}' ";
+        } else {
+            $sql_common = " select {$this->fields} from `{$g4['shop_item_table']}` ";
+        }
+        $sql_where  = " where " . implode(" and ", $where);
+
+        $sql = $sql_common . $sql_where . " limit " . ($this->list_mod * $this->list_row);
+        $result = sql_query($sql);
+        //echo (int)mysql_num_rows($result);
+
+        $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
+
+        if ($this->is_mobile) {
+            $file = G4_MSHOP_PATH."/{$this->list_skin}";
+        } else {
+            $file = "{$shop_skin_path}/{$this->list_skin}";
+        }
+        if ($this->list_skin == "") {
+            return $this->count."번 display_item() 의 스킨파일이 지정되지 않았습니다.";
+        } else if (!file_exists($file)) {
+            return "{$shop_skin_url}/{$this->list_skin} 파일을 찾을 수 없습니다.";
+        } else {
+            ob_start();
+            $list_mod = $this->list_mod;
+            include($file);
+            $content = ob_get_contents();
+            ob_end_clean();
+            return $content;
+        }
     }
 }
 
-
-// 장바구니 건수 검사
-function get_cart_count($uq_id)
-{
-    global $g4, $default;
-
-    $sql = " select count(ct_id) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ";
-    if($default['de_cart_keep_term']) {
-        $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
-        $sql .= " and ct_time > '$ctime' ";
-    }
-    $row = sql_fetch($sql);
-    $cnt = (int)$row['cnt'];
-    return $cnt;
-}
 
 // 이미지를 얻는다
 function get_image($img, $width=0, $height=0, $img_id='')
@@ -466,22 +618,27 @@ function is_null_time($datetime)
 
 // 출력유형, 스킨파일, 1라인이미지수, 총라인수, 이미지폭, 이미지높이
 // 1.02.01 $ca_id 추가
-function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
+//function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
+function display_type($type, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height='', $ca_id='')
 {
-    global $member, $g4, $config;
+    global $member, $g4, $config, $default, $shop_skin_path, $shop_skin_url;
+
+    if (!$default["de_type{$type}_list_use"]) return "";
+
+    $list_skin  = $list_skin  ? $list_skin  : $default["de_type{$type}_list_skin"];
+    $list_mod   = $list_mod   ? $list_mod   : $default["de_type{$type}_list_mod"];
+    $list_row   = $list_row   ? $list_row   : $default["de_type{$type}_list_row"];
+    $img_width  = $img_width  ? $img_width  : $default["de_type{$type}_img_width"];
+    $img_height = $img_height ? $img_height : $default["de_type{$type}_img_height"];
 
     // 상품의 갯수
     $items = $list_mod * $list_row;
 
     // 1.02.00
     // it_order 추가
-    $sql = " select *
-               from {$g4['shop_item_table']}
-              where it_use = '1'
-                and it_type{$type} = '1' ";
+    $sql = " select * from {$g4['shop_item_table']} where it_use = '1' and it_type{$type} = '1' ";
     if ($ca_id) $sql .= " and ca_id like '$ca_id%' ";
-    $sql .= " order by it_order, it_id desc
-              limit $items ";
+    $sql .= " order by it_order, it_id desc limit $items ";
     $result = sql_query($sql);
     /*
     if (!mysql_num_rows($result)) {
@@ -489,12 +646,17 @@ function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_
     }
     */
 
-    $file = G4_SHOP_PATH.'/'.$skin_file;
+    //$file = G4_SHOP_PATH.'/'.$skin_file;
+    $file = $shop_skin_path.'/'.$list_skin;
     if (!file_exists($file)) {
-        echo $file.' 파일을 찾을 수 없습니다.';
+        return $shop_skin_url.'/'.$list_skin.' 파일을 찾을 수 없습니다.';
     } else {
         $td_width = (int)(100 / $list_mod);
+        ob_start();
         include $file;
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
     }
 }
 
@@ -508,13 +670,9 @@ function mobile_display_type($type, $skin_file, $list_row, $img_width, $img_heig
 
     // 1.02.00
     // it_order 추가
-    $sql = " select *
-               from {$g4['shop_item_table']}
-              where it_use = '1'
-                and it_type{$type} = '1' ";
+    $sql = " select * from {$g4['shop_item_table']} where it_use = '1' and it_type{$type} = '1' ";
     if ($ca_id) $sql .= " and ca_id like '$ca_id%' ";
-    $sql .= " order by it_order, it_id desc
-              limit $items ";
+    $sql .= " order by it_order, it_id desc limit $items ";
     $result = sql_query($sql);
     /*
     if (!mysql_num_rows($result)) {
@@ -815,10 +973,7 @@ function print_item_options($it_id, $uq_id)
 {
     global $g4;
 
-    $sql = " select ct_option, ct_qty
-                from {$g4['shop_cart_table']}
-                where it_id = '$it_id' and uq_id = '$uq_id'
-                order by io_type asc, ct_num asc, ct_id asc ";
+    $sql = " select ct_option, ct_qty from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$uq_id' order by io_type asc, ct_num asc, ct_id asc ";
     $result = sql_query($sql);
 
     $str = '';
@@ -830,36 +985,6 @@ function print_item_options($it_id, $uq_id)
 
     if($i > 0)
         $str .= '</ul>';
-
-    return $str;
-}
-
-function it_name_icon($it, $it_name="", $url=1)
-{
-    global $g4;
-
-    $str = '';
-    if ($it_name)
-        $str = $it_name;
-    // 제목이 없으면 아이콘만 나오도록 주석처리 - 지운아빠 2013-05-03
-    //else
-    //    $str = stripslashes($it['it_name']);
-
-    if ($url)
-        $str = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$it['it_id'].'">'.$str.'</a>';
-
-    $str .= '<span class="sit_icon">';
-    // 품절
-    $stock = get_it_stock_qty($it['it_id']);
-    if ($stock <= 0)
-        $str .= ' <img src="'.G4_SHOP.'/img/icon_soldout2.gif" alt="품절"> ';
-    if ($it['it_type1']) $str .= '<img src="'.G4_URL.'/img/shop/icon_hit2.gif" alt="히트">';
-    if ($it['it_type2']) $str .= '<img src="'.G4_URL.'/img/shop/icon_rec2.gif" alt="추천">';
-    if ($it['it_type3']) $str .= '<img src="'.G4_URL.'/img/shop/icon_new2.gif" alt="신상품">';
-    if ($it['it_type4']) $str .= '<img src="'.G4_URL.'/img/shop/icon_best2.gif" alt="인기">';
-    if ($it['it_type5']) $str .= '<img src="'.G4_URL.'/img/shop/icon_discount2.gif" alt="할인">';
-
-    $str .= '</span>';
 
     return $str;
 }
@@ -898,15 +1023,9 @@ function display_event($no, $event, $list_mod, $list_row, $img_width, $img_heigh
 
     // 1.02.00
     // b.it_order 추가
-    $sql = " select b.*
-               from {$g4['shop_event_item_table']} a,
-                    {$g4['shop_item_table']} b
-              where a.it_id = b.it_id
-                and b.it_use = '1'
-                and a.ev_id = '$event' ";
+    $sql = " select b.* from {$g4['shop_event_item_table']} a, {$g4['shop_item_table']} b where a.it_id = b.it_id and b.it_use = '1' and a.ev_id = '$event' ";
     if ($ca_id) $sql .= " and ca_id = '$ca_id' ";
-    $sql .= " order by b.it_order, a.it_id desc
-              limit $items ";
+    $sql .= " order by b.it_order, a.it_id desc limit $items ";
     $result = sql_query($sql);
     if (!mysql_num_rows($result)) {
         return false;
@@ -1091,7 +1210,7 @@ function set_unique_id($direct)
 }
 
 // 상품 목록 : 관련 상품 출력
-function display_relation_item($it_id, $width, $height, $rows=3)
+function relation_item($it_id, $width, $height, $rows=3)
 {
     global $g4;
 
@@ -1100,11 +1219,7 @@ function display_relation_item($it_id, $width, $height, $rows=3)
     if(!$it_id)
         return $str;
 
-    $sql = " select b.it_id, b.it_name, b.it_price, b.it_tel_inq, b.it_gallery
-                from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id )
-                where a.it_id = '$it_id'
-                order by ir_no asc
-                limit 0, $rows ";
+    $sql = " select b.it_id, b.it_name, b.it_price, b.it_tel_inq, b.it_gallery from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id ) where a.it_id = '$it_id' order by ir_no asc limit 0, $rows ";
     $result = sql_query($sql);
 
     for($i=0; $row=sql_fetch_array($result); $i++) {
@@ -1133,29 +1248,54 @@ function display_relation_item($it_id, $width, $height, $rows=3)
 }
 
 // 상품이미지에 유형 아이콘 출력
-function display_item_icon($it)
+function item_icon($it)
 {
+    /*
     $icon = '';
 
-    if($it['it_gallery'] || $it['it_type1'] || $it['it_type2'] || $it['it_type3'] || $it['it_type4'] || $it['it_type5']) {
-        if($it['it_gallery']) // sold out
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_soldout.gif" alt="품절" class="sct_icon_so">';
+    if($it['it_gallery']) // sold out
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_soldout.gif" alt="품절" class="sct_icon_soldout">';
 
-        if($it['it_type3'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_new.gif" alt="신상품" class="sct_icon_new">';
+    if($it['it_type1'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_new.gif" alt="최신상품" class="sct_icon_new">';
 
-        if($it['it_type1'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_hit.gif" alt="히트" class="sct_icon_hit">';
+    if($it['it_type2'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_hit.gif" alt="히트상품" class="sct_icon_hit">';
 
-        if($it['it_type2'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_rec.gif" alt="추천" class="sct_icon_rec">';
+    if($it['it_type3'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_rec.gif" alt="추천상품" class="sct_icon_rec">';
 
-        if($it['it_type4'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_best.gif" alt="인기" class="sct_icon_best">';
+    if($it['it_type4'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_best.gif" alt="인기상품" class="sct_icon_best">';
 
-        if($it['it_type5'])
-            $icon .= '<img src="'.G4_URL.'/img/shop/icon_discount.gif" alt="할인" class="sct_icon_discount">';
-    }
+    if($it['it_type5'])
+        $icon .= '<img src="'.G4_URL.'/img/shop/icon_discount.gif" alt="할인상품" class="sct_icon_discount">';
+
+    return $icon;
+    */
+
+    $icon = '<span class="sit_icon">';
+    // 품절
+    $stock = get_it_stock_qty($it['it_id']);
+    if ($stock <= 0)
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_soldout.gif" alt="품절"> ';
+
+    if ($it['it_type1']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_hit.gif" alt="최신상품">';
+
+    if ($it['it_type2']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_rec.gif" alt="히트상품">';
+
+    if ($it['it_type3']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_new.gif" alt="추천상품">';
+
+    if ($it['it_type4']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_best.gif" alt="인기상품">';
+
+    if ($it['it_type5']) 
+        $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_discount.gif" alt="할인상품">';
+
+    $icon .= '</span>';
 
     return $icon;
 }
