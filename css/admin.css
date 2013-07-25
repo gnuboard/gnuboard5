@@ -9,6 +9,7 @@ h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, aside ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
+select {margin:0}
 input {margin:0;padding:0;border-radius:0;font-family:dotum}
 input[type=text], input[type=password], input[type=submit], input[type=image] {-webkit-appearance:none}
 button {border-radius:0;font-size:1em;-webkit-appearance:none}
@@ -262,6 +263,15 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 
 /* 이벤트 입력/수정 */
 .frm_ev_id {display:inline-block;margin:0 10px 0 0;font-weight:bold}
+
+#sev_it_rel #sch_item_list {margin:5px 0 0;background:#f6f6f6}
+#sev_it_rel ul {margin:0;padding:10px;list-style:none}
+#sev_it_rel #reg_item_list {border:1px solid #ced9de;background:#fcfff2}
+#sev_it_rel #reg_item_list p {text-align:center}
+#sev_it_rel .compare_left ul {margin:0;border:1px solid #ced9de;list-style:none}
+#sev_it_rel .compare_right h3 {margin:10px 0 45px}
+#sev_it_rel li {position:relative;border-bottom:1px solid #e9e9e9}
+#sev_it_rel button {position:absolute;top:12px;right:0}
 
 /* 쿠폰관리 */
 #scp_list {}
