@@ -40,7 +40,7 @@ include_once(G4_PATH.'/head.sub.php');
             </a>
         </td>
         <td class="td_smallmng"><?php echo ($row['it_use']?"사용":"미사용"); ?></td>
-        <td class="td_smallmng"><a href="javascript:del('./itemeventwindel.php?ev_id=<?php echo $ev_id; ?>&amp;it_id=<?php echo $row['it_id']; ?>');"><img src="./img/icon_del.jpg" alt="<?php echo $ev['ev_subject']; ?> 이벤트에서 삭제 : <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?>"></a></td>
+        <td class="td_smallmng"><a href="javascript:del('./itemeventwindel.php?ev_id=<?php echo $ev_id; ?>&amp;it_id=<?php echo $row['it_id']; ?>');">삭제</a></td>
     <tr>
     <?php
     }
