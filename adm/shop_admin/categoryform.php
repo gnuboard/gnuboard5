@@ -179,7 +179,7 @@ $pg_anchor .= '</ul>';
         <td>
             <?php echo help("기본으로 제공하는 스킨은 ".G4_SHOP_DIR."/list.skin.*.php 입니다."); ?>
             <select id="ca_skin" name="ca_skin">
-                <?php echo get_list_skin_options("^list.skin.(.*)\.php", G4_SHOP_PATH, $ca['ca_skin']); ?>
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $ca['ca_skin']); ?>
             </select>
         </td>
     </tr>

@@ -52,8 +52,9 @@ exit;
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 히트상품 모음</p>
     </header>
     <?php 
-    $disp = new display_item(1);
-    echo $disp->run();
+    $list = new item_list();
+    $list->set_type(1);
+    echo $list->run();
     ?>
 </section>
 <!-- } 히트상품 끝 -->
@@ -65,8 +66,9 @@ exit;
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
     </header>
     <?php 
-    $disp = new display_item(2);
-    echo $disp->run();
+    $list = new item_list();
+    $list->set_type(2);
+    echo $list->run();
     ?>
 </section>
 <!-- } 추천상품 끝 -->
@@ -78,8 +80,9 @@ exit;
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 최신상품 모음</p>
     </header>
     <?php 
-    $disp = new display_item(3);
-    echo $disp->run();
+    $list = new item_list();
+    $list->set_type(3);
+    echo $list->run();
     ?>
 </section>
 <!-- } 최신상품 끝 -->
@@ -91,8 +94,9 @@ exit;
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 인기상품 모음</p>
     </header>
     <?php 
-    $disp = new display_item(4);
-    echo $disp->run();
+    $list = new item_list();
+    $list->set_type(4);
+    echo $list->run();
     ?>
 </section>
 <!-- } 인기상품 끝 -->
@@ -104,8 +108,9 @@ exit;
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 할인상품 모음</p>
     </header>
     <?php 
-    $disp = new display_item(5);
-    echo $disp->run();
+    $list = new item_list();
+    $list->set_type(5);
+    echo $list->run();
     ?>
 </section>
 <!-- } 할인상품 끝 -->

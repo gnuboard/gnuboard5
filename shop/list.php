@@ -80,7 +80,7 @@ if ($is_admin)
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
     // 리스트 유형별로 출력
-    $list_file = G4_SHOP_PATH.'/'.$ca['ca_skin'];
+    $list_file = G4_SHOP_SKIN_PATH.'/'.$ca['ca_skin'];
     if (file_exists($list_file)) {
         //display_type(2, "maintype10.inc.php", 4, 2, 100, 100, $ca[ca_id]);
 
@@ -101,9 +101,23 @@ if ($is_admin)
         echo '</div>';
         */
 
-        $list = new item_list(0, "type10.skin.php", $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height'], $ca_id);
+        // 총몇개 = 한줄에 몇개 * 몇줄
+        $items = $ca['ca_list_mod'] * $ca['ca_list_row'];
+        // 페이지가 없으면 첫 페이지 (1 페이지)
+        if ($page == "") $page = 1;
+        // 시작 레코드 구함
+        $from_record = ($page - 1) * $items;
+
+        $list = new item_list($ca['ca_skin'], $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height']);
+        $list->set_category($ca['ca_id']);
+        $list->set_is_page(true);
+        $list->set_from_record($from_record);
         echo $list->run();
 
+        // where 된 전체 상품수
+        $total_count = $list->total_count;
+        // 전체 페이지 계산
+        $total_page  = ceil($total_count / $items);
     }
     else
     {

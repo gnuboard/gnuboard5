@@ -252,10 +252,10 @@ else
                 $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$it['it_id'];
                 ?>
                 고객선호도 <span>별<?php echo $score?>개</span>
-                <img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $score?>.png" alt="" class="sit_star">
-                <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_URL.'/img/shop/sns_fb2.png'); ?>
-                <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_URL.'/img/shop/sns_twt2.png'); ?>
-                <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_URL.'/img/shop/sns_goo2.png'); ?>
+                <img src="<?php echo G4_SHOP_URL; ?>/img/s_star<?php echo $score?>.png" alt="" class="sit_star">
+                <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb2.png'); ?>
+                <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt2.png'); ?>
+                <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo2.png'); ?>
             </div>
             <?php } ?>
             <table class="sit_ov_tbl">
@@ -609,6 +609,7 @@ else
 
         <div class="sct_wrap">
             <?php
+            /*
             $img_width  = 230;
             $img_height = 230;
 
@@ -619,10 +620,21 @@ else
                         and b.it_use='1' ";
             $result = sql_query($sql);
             $num = @mysql_num_rows($result);
+            */
+
+            $sql = " select b.* from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
+
+            $list = new item_list("list.10.skin.php", 3, 1, 150, 0);
+            $list->set_mobile(true);
+            $list->set_query($sql);
+            echo $list->run();
+
+            /*
             if ($num)
                 include G4_MSHOP_PATH.'/maintype10.inc.php';
             else
                 echo '<p class="sit_empty">이 상품과 관련된 상품이 없습니다.</p>';
+            */
             ?>
         </div>
     </section>
