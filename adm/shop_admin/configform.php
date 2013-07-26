@@ -695,7 +695,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row">이미지(소)</th>
         <td>
-            <?php echo help("상품관리의 상품입력에서 이미지(대) 를 기준 자동생성해 줄때 이미지(소)의 폭과 높이를 설정한 값(단위:픽셀)로 생성합니다."); ?>
+            <?php echo help("분류리스트에서 보여지는 사이즈를 설정하시면 됩니다. 분류관리의 출력 이미지폭, 높이의 기본값으로 사용됩니다. 높이를 0 으로 설정하시면 폭에 비례하여 높이를 썸네일로 생성합니다."); ?>
             <label for="de_simg_width"><span class="sound_only">이미지(소) </span>폭</label>
             <input type="text" name="de_simg_width" value="<?php echo $default['de_simg_width']; ?>" id="de_simg_width" class="frm_input" size="5"> 픽셀
             /
@@ -706,7 +706,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row">이미지(중)</th>
         <td>
-            <?php echo help("상품관리의 상품입력에서 이미지(대) 를 기준 자동생성해 줄때 이미지(중)의 폭과 높이를 설정한 값(단위:픽셀)로 생성합니다."); ?>
+            <?php echo help("상품상세보기에서 보여지는 상품이미지의 사이즈를 픽셀로 설정합니다. 높이를 0 으로 설정하시면 폭에 비례하여 높이를 썸네일로 생성합니다."); ?>
             <label for="de_mimg_width"><span class="sound_only">이미지(중) </span>폭</label>
             <input type="text" name="de_mimg_width" value="<?php echo $default['de_mimg_width']; ?>" id="de_mimg_width" class="frm_input" size="5"> 픽셀
             /
