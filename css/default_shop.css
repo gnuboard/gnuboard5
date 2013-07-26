@@ -375,16 +375,16 @@ td.empty_table {padding:85px 0;text-align:center}
 #sit_ov_wrap:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 상품 상세보기 - 이미지 미리보기 */
-#sit_pvi {float:left;padding:15px;width:320px}
+#sit_pvi {float:left;padding:15px;}
 #sit_pvi_big {margin:0 0 10px}
 #sit_pvi_big a {display:none}
 #sit_pvi_big a.visible {display:block}
-#sit_pvi_big img {width:320px;height:320px}
+#sit_pvi_big img {}
 #sit_pvi_thumb {margin:0;padding:0;list-style:none;zoom:1}
 #sit_pvi_thumb:after {display:block;visibility:hidden;clear:both;content:""}
 #sit_pvi_thumb li {float:left;margin:0 5px 5px 0}
 #sit_pvi_thumb .li_last {margin:0 !important}
-#sit_pvi_thumb img {width:60px;height:60px}
+#sit_pvi_thumb img {}
 
 #sit_pvi_nw h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sit_pvi_nwbig {padding:10px 0;text-align:center}
