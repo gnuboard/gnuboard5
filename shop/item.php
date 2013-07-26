@@ -179,7 +179,7 @@ else
                 if(!$it['it_img'.$i])
                     continue;
 
-                $img = get_it_thumbnail($it['it_img'.$i], 320, 320);
+                $img = get_it_thumbnail($it['it_img'.$i], $default['de_mimg_width'], $default['de_mimg_height']);
 
                 if($img) {
                     // 썸네일
