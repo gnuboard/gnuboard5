@@ -991,280 +991,252 @@ $(function(){
     <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
 </div>
 
-<section id="anc_sitfrm_relation" class="cbox compare_wrap">
+<section id="anc_sitfrm_relation" class="cbox compare_wrap srel">
     <h2>관련상품</h2>
     <?php echo $pg_anchor; ?>
 
     <p>
         등록된 전체상품 목록에서 상품분류를 선택하면 해당 상품 리스트가 연이어 나타납니다.<br>
-        상품리스트에서 관련 상품으로 추가하길 원하는 상품을 마우스 더블클릭하거나 키보드 스페이스바를 누르면, 선택된 관련상품 목록에 <strong>함께</strong> 추가됩니다.<br>
-        예를 들어, A 상품에 B 상품을 관련상품으로 등록하면 B 상품에도 A 상품이 관련상품으로 자동 추가되며, <strong>확인 버튼을 누르셔야 정상 반영됩니다.</strong><br>
-        선택된 관련상품 목록에서 상품을 마우스 더블클릭하거나 키보드 스페이스바를 누르면 선택된 관련상품 목록에서 제거됩니다.
+        상품리스트에서 관련 상품으로 추가하시면 선택된 관련상품 목록에 <strong>함께</strong> 추가됩니다.<br>
+        예를 들어, A 상품에 B 상품을 관련상품으로 등록하면 B 상품에도 A 상품이 관련상품으로 자동 추가되며, <strong>확인 버튼을 누르셔야 정상 반영됩니다.</strong>
     </p>
 
     <section class="compare_left">
         <h3>등록된 전체상품 목록</h3>
         <label for="sch_relation" class="sound_only">상품분류</label>
-        <span class="sit_relation_selwrap">
-            <select id="sch_relation" onchange="search_relation(this)">
-                <option value=''>분류별 관련상품</option>
+        <span class="srel_pad">
+            <select id="sch_relation">
+                <option value=''>분류별 상품</option>
                 <?php
-                    $sql = " select ca_id, ca_name from {$g4['shop_category_table']} where length(ca_id) = 2 order by ca_id ";
+                    $sql = " select * from {$g4['shop_category_table']} ";
+                    if ($is_admin != 'super')
+                        $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
+                    $sql .= " order by ca_id ";
                     $result = sql_query($sql);
-                    for ($i=0; $row=sql_fetch_array($result); $i++)  {
-                        echo "<option value='{$row['ca_id']}'>{$row['ca_name']}\n";
+                    for ($i=0; $row=sql_fetch_array($result); $i++)
+                    {
+                        $len = strlen($row['ca_id']) / 2 - 1;
+
+                        $nbsp = "";
+                        for ($i=0; $i<$len; $i++)
+                            $nbsp .= "&nbsp;&nbsp;&nbsp;";
+
+                        echo "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
                     }
                 ?>
             </select>
         </span>
-        <select id="relation" class="sit_relation_list" size="8" onclick="relation_img(this.value, 'add_span')" ondblclick="relation_add(this);" onkeyup="relation_add(this);">
-        </select>
-        <div>
-            <strong class="sound_only">현재 활성화 된 상품</strong>
-            <span id="add_span"></span>
+        <div id="relation" class="srel_list">
+            <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
         </div>
         <script>
-        function search_relation(fld) {
-            if (fld.value) {
-                $.post(
-                    './itemformrelation.php',
-                    { it_id: '<?php echo $it_id; ?>', ca_id: fld.value },
-                    function(data) {
-                        $("#relation").html(data);
-                    }
-                );
-            }
-        }
-        </script>
-        <script>
+        $(function() {
+            $("#sch_relation").change(function() {
+                var ca_id = $(this).val();
+                var $relation = $("#relation");
 
-            // 김선용 2006.10
-            function relation_img(it_id, id)
-            {
-                if(!it_id) return;
-                $.post(
-                    "<?php echo G4_ADMIN_URL; ?>/shop_admin/itemformrelationimage.php",
-                    { it_id: it_id, width: "100", height: "80" },
-                    function(data) {
-                        $("#"+id).html(data);
-                    }
-                );
-            }
+                if(ca_id == "") {
+                    $relation.html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
+                    return false;
+                }
 
-            function relation_add(fld)
-            {
-                if(window.event.keyCode && window.event.keyCode != 32)
+                $("#relation").load(
+                    "./itemformrelation.php",
+                    { it_id: "<?php echo $it_id; ?>", ca_id: ca_id }
+                );
+            });
+
+            $("#relation .add_item").live("click", function() {
+                // 이미 등록된 상품인지 체크
+                var $li = $(this).closest("li");
+                var it_id = $li.find("input:hidden").val();
+                var it_id2;
+                var dup = false;
+                $("#reg_relation input[name='re_it_id[]']").each(function() {
+                    it_id2 = $(this).val();
+                    if(it_id == it_id2) {
+                        dup = true;
+                        return false;
+                    }
+                });
+
+                if(dup) {
+                    alert("이미 선택된 상품입니다.");
+                    return false;
+                }
+
+                var cont = "<li>"+$li.html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
+                var count = $("#reg_relation li").size();
+
+                if(count > 0) {
+                    $("#reg_relation li:last").after(cont);
+                } else {
+                    $("#reg_relation").html("<ul>"+cont+"</ul>");
+                }
+
+                $li.remove();
+            });
+
+            $("#reg_relation .del_item").live("click", function() {
+                if(!confirm("상품을 삭제하시겠습니까?"))
                     return false;
 
-                var f = document.fitemform;
-                var len = f.relationselect.length;
-                var find = false;
+                $(this).closest("li").remove();
 
-                for (i=0; i<len; i++) {
-                    if (fld.options[fld.selectedIndex].value == f.relationselect.options[i].value) {
-                        find = true;
-                        break;
-                    }
-                }
-
-                // 같은 이벤트를 찾지못하였다면 입력
-                if (!find) {
-                    f.relationselect.length += 1;
-                    f.relationselect.options[len].value = fld.options[fld.selectedIndex].value;
-                    f.relationselect.options[len].text  = fld.options[fld.selectedIndex].text;
-                }
-
-                relation_hidden();
-            }
-
-            function relation_del(fld)
-            {
-                if(window.event.keyCode && window.event.keyCode != 32)
-                    return false;
-
-                if (fld.length == 0) {
-                    return;
-                }
-
-                if (fld.selectedIndex < 0)
-                    return;
-
-                for (i=0; i<fld.length; i++) {
-                    // 선택된것과 값이 같다면 1을 더한값을 현재것에 복사
-                    if (fld.options[i].value == fld.options[fld.selectedIndex].value) {
-                        for (k=i; k<fld.length-1; k++) {
-                            fld.options[k].value = fld.options[k+1].value;
-                            fld.options[k].text  = fld.options[k+1].text;
-                        }
-                        break;
-                    }
-                }
-                fld.length -= 1;
-
-                relation_hidden();
-            }
-
-            // hidden 값을 변경 : 김선용 2006.10 일부수정
-            function relation_hidden()
-            {
-                var f = fitemform;
-                //var str = '';
-                //var comma = '';
-                var str = new Array();
-                for (i=0; i<f.relationselect.length; i++) {
-                    //str += comma + f.relationselect.options[i].value;
-                    //comma = ',';
-                    temp = f.relationselect.options[i].value.split("/");
-                    str[i] = temp[0]; // 상품ID 만 저장
-                }
-                //f.it_list.value = str;
-                f.it_list.value = str.join(",");
-            }
+                var count = $("#reg_relation li").size();
+                if(count < 1)
+                    $("#reg_relation").html("<p>선택된 상품이 없습니다.</p>");
+            });
+        });
         </script>
     </section>
 
     <section class="compare_right">
         <h3>선택된 관련상품 목록</h3>
-        <span class="sit_relation_selwrap"></span>
-        <select name="relationselect" size="8" class="sit_relation_selected" onclick="relation_img(this.value, 'sel_span')" ondblclick="relation_del(this);" onkeyup="relation_del(this);">
-        <?php
-        $str = array();
-        $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
-                   from {$g4['shop_item_relation_table']} a
-                   left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
-                  where a.it_id = '$it_id'
-                  order by ir_no asc ";
-        $result = sql_query($sql);
-        while($row=sql_fetch_array($result))
-        {
-            $sql2 = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['ca_id']}' ";
-            $row2 = sql_fetch($sql2);
-        ?>
-            <option value="<?php echo $row['it_id']; ?>"><?php echo $row2['ca_name']; ?> : <?php echo cut_str(get_text(strip_tags($row['it_name'])),30); ?></option>
-        <?php
-            $str[] = $row['it_id'];
-        }
-        $str = implode(",", $str);
-        ?>
-        </select>
-        <div>
-            <strong class="sound_only">현재 활성화 된 상품</strong>
-            <span id="sel_span"></span>
+        <span class="srel_pad"></span>
+        <div id="reg_relation" class="srel_sel">
+            <?php
+            $str = array();
+            $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
+                       from {$g4['shop_item_relation_table']} a
+                       left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
+                      where a.it_id = '$it_id'
+                      order by ir_no asc ";
+            $result = sql_query($sql);
+            for($g=0; $row=sql_fetch_array($result); $g++)
+            {
+                $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
+
+                if($g==0)
+                    echo '<ul>';
+            ?>
+                <li>
+                    <input type="hidden" name="re_it_id[]" value="<?php echo $row['it_id']; ?>">
+                    <?php echo $it_name; ?>
+                    <button type="button" class="del_item">삭제</button>
+                </li>
+            <?php
+                $str[] = $row['it_id'];
+            }
+            $str = implode(",", $str);
+
+            if($g > 0)
+                echo '</ul>';
+            else
+                echo '<p>선택된 상품이 없습니다.</p>';
+            ?>
         </div>
         <input type="hidden" name="it_list" value="<?php echo $str; ?>">
     </section>
 
 </section>
 
-<section id="anc_sitfrm_event" class="cbox compare_wrap">
+<section id="anc_sitfrm_event" class="cbox compare_wrap srel">
     <h2>관련이벤트</h2>
     <?php echo $pg_anchor; ?>
-    <p>
-        등록된 전체이벤트 목록에서 추가하길 원하는 이벤트를 마우스 더블클릭하거나 키보드 스페이스바를 누르면, 선택된 관련이벤트 목록에 추가됩니다.<br>
-        선택된 관련이벤트 목록에서 이벤트 선택 후 마우스 더블클릭하거나 키보드 스페이스바를 누르면 선택된 관련이벤트 목록에서 제거됩니다.
-    </p>
 
-    <script> var eventselect = new Array(); </script>
     <section class="compare_left">
         <h3>등록된 전체이벤트 목록</h3>
-        <select size="8" class="sit_relation_list" ondblclick="event_add(this);" onkeyup="event_add(this);">
-        <?php
-        $sql = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
-        $result = sql_query($sql);
-        while ($row=sql_fetch_array($result)) {
-            echo "<option value='{$row['ev_id']}'>".get_text($row['ev_subject']);
-        }
-        ?>
-        </select>
+        <div id="event_list" class="srel_list srel_noneimg">
+            <?php
+            $sql = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
+            $result = sql_query($sql);
+            for ($g=0; $row=sql_fetch_array($result); $g++) {
+                if($g == 0)
+                    echo '<ul>';
+            ?>
+                <li>
+                    <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
+                    <?php echo get_text($row['ev_subject']); ?>
+                    <button type="button" class="add_event">추가</button>
+                </li>
+            <?php
+            }
+
+            if($g > 0)
+                echo '</ul>';
+            else
+                echo '<p>등록된 이벤트가 없습니다.</p>';
+            ?>
+        </div>
         <script>
-            function event_add(fld)
-            {
-                if(window.event.keyCode && window.event.keyCode != 32)
+        $(function() {
+            $("#event_list .add_event").live("click", function() {
+                // 이미 등록된 이벤트인지 체크
+                var $li = $(this).closest("li");
+                var ev_id = $li.find("input:hidden").val();
+                var ev_id2;
+                var dup = false;
+                $("#reg_event_list input[name='ev_id[]']").each(function() {
+                    ev_id2 = $(this).val();
+                    if(ev_id == ev_id2) {
+                        dup = true;
+                        return false;
+                    }
+                });
+
+                if(dup) {
+                    alert("이미 선택된 이벤트입니다.");
+                    return false;
+                }
+
+                var cont = "<li>"+$li.html().replace("add_event", "del_event").replace("추가", "삭제")+"</li>";
+                var count = $("#reg_event_list li").size();
+
+                if(count > 0) {
+                    $("#reg_event_list li:last").after(cont);
+                } else {
+                    $("#reg_event_list").html("<ul>"+cont+"</ul>");
+                }
+            });
+
+            $("#reg_event_list .del_event").live("click", function() {
+                if(!confirm("상품을 삭제하시겠습니까?"))
                     return false;
 
-                var f = document.fitemform;
-                var len = f.eventselect.length;
-                var find = false;
+                $(this).closest("li").remove();
 
-                for (i=0; i<len; i++) {
-                    if (fld.options[fld.selectedIndex].value == f.eventselect.options[i].value) {
-                        find = true;
-                        break;
-                    }
-                }
-
-                // 같은 이벤트를 찾지못하였다면 입력
-                if (!find) {
-                    f.eventselect.length += 1;
-                    f.eventselect.options[len].value = fld.options[fld.selectedIndex].value;
-                    f.eventselect.options[len].text  = fld.options[fld.selectedIndex].text;
-                }
-
-                event_hidden();
-            }
-
-            function event_del(fld)
-            {
-                if(window.event.keyCode && window.event.keyCode != 32)
-                    return false;
-
-                if (fld.length == 0) {
-                    return;
-                }
-
-                if (fld.selectedIndex < 0)
-                    return;
-
-                for (i=0; i<fld.length; i++) {
-                    // 선택된것과 값이 같다면 1을 더한값을 현재것에 복사
-                    if (fld.options[i].value == fld.options[fld.selectedIndex].value) {
-                        for (k=i; k<fld.length-1; k++) {
-                            fld.options[k].value = fld.options[k+1].value;
-                            fld.options[k].text  = fld.options[k+1].text;
-                        }
-                        break;
-                    }
-                }
-                fld.length -= 1;
-
-                event_hidden();
-            }
-
-            // hidden 값을 변경
-            function event_hidden()
-            {
-                var f = fitemform;
-
-                var str = '';
-                var comma = '';
-                for (i=0; i<f.eventselect.length; i++) {
-                    str += comma + f.eventselect.options[i].value;
-                    comma = ',';
-                }
-                f.ev_list.value = str;
-            }
+                var count = $("#reg_event_list li").size();
+                if(count < 1)
+                    $("#reg_event_list").html("<p>선택된 이벤트가 없습니다.</p>");
+            });
+        });
         </script>
     </section>
 
     <section class="compare_right">
         <h3>선택된 관련이벤트 목록</h3>
-        <select name="eventselect" class="sit_relation_selected" size="8" ondblclick="event_del(this);" onkeyup="event_del(this);">
-        <?php
-        $str = "";
-        $comma = "";
-        $sql = " select b.ev_id, b.ev_subject
-                   from {$g4['shop_event_item_table']} a
-                   left join {$g4['shop_event_table']} b on (a.ev_id=b.ev_id)
-                  where a.it_id = '$it_id'
-                  order by b.ev_id desc ";
-        $result = sql_query($sql);
-        while ($row=sql_fetch_array($result)) {
-            echo "<option value='{$row['ev_id']}'>".get_text($row['ev_subject']);
-            $str .= $comma . $row['ev_id'];
-            $comma = ",";
-        }
-        ?>
-        </select>
+        <div id="reg_event_list" class="srel_sel srel_noneimg">
+            <?php
+            $str = "";
+            $comma = "";
+            $sql = " select b.ev_id, b.ev_subject
+                       from {$g4['shop_event_item_table']} a
+                       left join {$g4['shop_event_table']} b on (a.ev_id=b.ev_id)
+                      where a.it_id = '$it_id'
+                      order by b.ev_id desc ";
+            $result = sql_query($sql);
+            for ($g=0; $row=sql_fetch_array($result); $g++) {
+                $str .= $comma . $row['ev_id'];
+                $comma = ",";
+
+                if($g == 0)
+                    echo '<ul>';
+            ?>
+                <li>
+                    <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
+                    <?php echo get_text($row['ev_subject']); ?>
+                    <button type="button" class="del_event">삭제</button>
+                </li>
+            <?php
+            }
+
+            if($g > 0)
+                echo '</ul>';
+            else
+                echo '<p>선택된 이벤트가 없습니다.</p>';
+            ?>
+        </div>
         <input type="hidden" name="ev_list" value="<?php echo $str; ?>">
 
     </section>
@@ -1463,12 +1435,47 @@ function fitemformcheck(f)
         }
     }
 
+    // 관련상품처리
+    var item = new Array();
+    var re_item = it_id = "";
+
+    $("#reg_relation input[name='re_it_id[]']").each(function() {
+        it_id = $(this).val();
+        if(it_id == "")
+            return true;
+
+        item.push(it_id);
+    });
+
+    if(item.length > 0)
+        re_item = item.join();
+
+    $("input[name=it_list]").val(re_item);
+
+    // 이벤트처리
+    var evnt = new Array();
+    var ev = ev_id = "";
+
+    $("#reg_event_list input[name='ev_id[]']").each(function() {
+        ev_id = $(this).val();
+        if(ev_id == "")
+            return true;
+
+        evnt.push(ev_id);
+    });
+
+    if(evnt.length > 0)
+        ev = evnt.join();
+
+    $("input[name=ev_list]").val(ev);
+
     <?php echo get_editor_js('it_explan'); ?>
     <?php echo get_editor_js('it_mobile_explan'); ?>
     <?php echo get_editor_js('it_head_html'); ?>
     <?php echo get_editor_js('it_tail_html'); ?>
     <?php echo get_editor_js('it_mobile_head_html'); ?>
     <?php echo get_editor_js('it_mobile_tail_html'); ?>
+
     return true;
 }
 

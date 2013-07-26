@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '400630';
+$sub_menu = '500300';
 include_once('./_common.php');
 include_once(G4_EDITOR_LIB);
 
@@ -164,21 +164,25 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row">관련상품</th>
-        <td id="sev_it_rel" class="compare_wrap">
+        <td id="sev_it_rel" class="compare_wrap srel">
 
             <section class="compare_left">
                 <h3>상품검색</h3>
-                <select name="ca_id" id="sch_ca_id">
-                    <option value="">분류선택</option>
-                    <?php echo $category_select; ?>
-                </select>
-                <div id="sch_item_list">
+                <span class="srel_pad">
+                    <select name="ca_id" id="sch_ca_id">
+                        <option value="">분류선택</option>
+                        <?php echo $category_select; ?>
+                    </select>
+                </span>
+                <div id="sch_item_list" class="srel_list">
+                    <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
                 </div>
             </section>
 
             <section class="compare_right">
                 <h3>등록된 상품</h3>
-                <div id="reg_item_list">
+                <span class="srel_pad"></span>
+                <div id="reg_item_list" class="srel_sel">
                     <?php
                     for($i=0; $row=sql_fetch_array($res_item); $i++) {
                         $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
@@ -281,6 +285,11 @@ $(function() {
     $("#sch_ca_id").change(function() {
         var ca_id = $(this).val();
 
+        if(ca_id == "") {
+            $("#sch_item_list").html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
+            return false;
+        }
+
         $("#sch_item_list").load(
             "./itemeventsearch.php",
             { w: "<?php echo $w; ?>", ev_id: "<?php echo $ev_id; ?>", ca_id: ca_id }
@@ -289,7 +298,8 @@ $(function() {
 
     $("#sch_item_list .add_item").live("click", function() {
         // 이미 등록된 상품인지 체크
-        var it_id = $(this).closest("li").find("input:hidden").val();
+        var $li = $(this).closest("li");
+        var it_id = $li.find("input:hidden").val();
         var it_id2;
         var dup = false;
         $("#reg_item_list input[name='it_id[]']").each(function() {
@@ -305,7 +315,7 @@ $(function() {
             return false;
         }
 
-        var cont = "<li>"+$(this).closest("li").html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
+        var cont = "<li>"+$li.html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
         var count = $("#reg_item_list li").size();
 
         if(count > 0) {
@@ -313,6 +323,8 @@ $(function() {
         } else {
             $("#reg_item_list").html("<ul>"+cont+"</ul>");
         }
+
+        $li.remove();
     });
 
     $("#reg_item_list .del_item").live("click", function() {
@@ -320,6 +332,10 @@ $(function() {
             return false;
 
         $(this).closest("li").remove();
+
+        var count = $("#reg_item_list li").size();
+        if(count < 1)
+            $("#reg_item_list").html("<p>등록된 상품이 없습니다.</p>");
     });
 });
 function feventform_check(f)

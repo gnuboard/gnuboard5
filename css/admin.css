@@ -219,7 +219,6 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sit_wimg {display:none}
 .sit_relation_list {width:100%;background:#f6f6f6}
 .sit_relation_selected {width:100%;background:#fcfff2}
-.sit_relation_selwrap {display:block;height:30px}
 #add_span img, #sel_span img {margin:5px 0}
 
 .sit_option {margin:0 0 10px;padding:10px 10px 0;border:1px solid #e9e9e9;background:#f7f7f7}
@@ -264,14 +263,17 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 이벤트 입력/수정 */
 .frm_ev_id {display:inline-block;margin:0 10px 0 0;font-weight:bold}
 
-#sev_it_rel #sch_item_list {margin:5px 0 0;background:#f6f6f6}
-#sev_it_rel ul {margin:0;padding:10px;list-style:none}
-#sev_it_rel #reg_item_list {border:1px solid #ced9de;background:#fcfff2}
-#sev_it_rel #reg_item_list p {text-align:center}
-#sev_it_rel .compare_left ul {margin:0;border:1px solid #ced9de;list-style:none}
-#sev_it_rel .compare_right h3 {margin:10px 0 45px}
-#sev_it_rel li {position:relative;border-bottom:1px solid #e9e9e9}
-#sev_it_rel button {position:absolute;top:12px;right:0}
+/* 관련 상품, 관련 이벤트 입력/수정 */
+.srel ul {margin:0;padding:10px;list-style:none}
+.srel li {position:relative;border-bottom:1px solid #e9e9e9}
+.srel .srel_list {height:auto !important;height:200px;max-height:200px;border:1px solid #ced9de;background:#f6f6f6;overflow-y:scroll}
+.srel .srel_sel {border:1px solid #ced9de;background:#fcfff2}
+.srel .srel_list p, .srel .srel_sel p {text-align:center}
+.srel .compare_left ul {margin:0;list-style:none}
+.srel button {position:absolute;top:12px;right:0}
+.srel .srel_noneimg li {padding:7px 0}
+.srel .srel_noneimg button {top:0;right:0}
+.srel .srel_pad {display:block;height:30px}
 
 /* 쿠폰관리 */
 #scp_list {}
@@ -422,7 +424,6 @@ fieldset .btn_submit:focus {height:21px;background:#555;line-height:1.7em}
 /* 폼 */
 label {vertical-align:middle}
 textarea, .frm_input {padding:2px;border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
-textarea:focus, .frm_input:focus, input.required:focus {border-color:#000;background:#434f54 !important;color:#fff}
 textarea {width:90%}
 select {border:1px solid #ced9de}
 button {padding:3px;border:1px solid #ced9de;background:#f6f9fa;cursor:pointer}
