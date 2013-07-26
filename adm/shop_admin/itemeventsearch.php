@@ -33,6 +33,8 @@ for($i=0;$row=sql_fetch_array($result);$i++) {
 
 if($list)
     $list = '<ul>'.$list.'</ul>';
+else
+    $list = '<p>등록된 상품이 없습니다.</p>';
 
 echo $list;
 ?>
