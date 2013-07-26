@@ -113,28 +113,16 @@ function point_clear()
         <li><?php echo subject_sort_link('po_point') ?>포인트<span class="sound_only"> 순 정렬</span></a></li>
     </ul>
 
-    <form name="fpointlist" id="fpointlist" method="post" action="./point_list_delete.php" onsubmit="return fpointlist_submit(this);">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="token" value="<?php echo $token ?>">
-
     <table class="tbl_pt_list">
     <thead>
     <tr>
-        <th scope="col">
-            <label for="chkall" class="sound_only">포인트 내역 전체</label>
-            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
-        </th>
         <th scope="col">회원아이디</th>
         <th scope="col">이름</th>
         <th scope="col">별명</th>
-        <th scope="col">일시</th>
         <th scope="col">포인트 내용</th>
         <th scope="col">포인트</th>
-        <th scope="col">만료</th>
+        <th scope="col">일시</th>
+        <th scope="col">만료일</th>
         <th scope="col">포인트합</th>
     </tr>
     </thead>
@@ -156,20 +144,14 @@ function point_clear()
     ?>
 
     <tr>
-        <td class="td_chk">
-            <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
-            <input type="hidden" name="po_id[<?php echo $i ?>]" value="<?php echo $row['po_id'] ?>" id="po_id_<?php echo $i ?>">
-            <label for="chk_<?php echo $i; ?>" class="sound_only">내역</label>
-            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
-        </td>
         <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
         <td class="td_mbname"><?php echo $row2['mb_name'] ?></td>
         <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
-        <td class="td_time"><?php echo $row['po_datetime'] ?></td>
         <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
-        <td><?php echo $row['po_expired'] == 1 ? '예' : '아니오'; ?></td>
-        <td class="td_bignum td_pt"><?php echo number_format($row2['mb_point']) ?></td>
+        <td class="td_time"><?php echo $row['po_datetime'] ?></td>
+        <td><?php echo $row['po_expire_date'] == '0000-00-00' ? '&nbsp;' : $row['po_expire_date']; ?></td>
+        <td class="td_bignum td_pt"><?php echo number_format($row['po_mb_point']) ?></td>
     </tr>
 
     <?php
@@ -180,12 +162,6 @@ function point_clear()
     ?>
     </tbody>
     </table>
-
-    <div class="btn_list">
-        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
-    </div>
-
-    </form>
 </section>
 
 <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
@@ -235,24 +211,6 @@ function point_clear()
     </form>
 
 </section>
-
-<script>
-function fpointlist_submit(f)
-{
-    if (!is_checked("chk[]")) {
-        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
-        return false;
-    }
-
-    if(document.pressed == "선택삭제") {
-        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
-            return false;
-        }
-    }
-
-    return true;
-}
-</script>
 
 <?php
 include_once ('./admin.tail.php');

@@ -59,8 +59,7 @@ if ($row['cnt'] && !$is_admin)
     alert('이 코멘트와 관련된 답변코멘트가 존재하므로 삭제 할 수 없습니다.');
 
 // 코멘트 삭제
-if (!delete_point($write['mb_id'], $bo_table, $comment_id, '댓글'))
-    insert_point($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_parent']}-{$comment_id} 코멘트삭제");
+insert_point($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_parent']}-{$comment_id} 코멘트삭제");
 
 // 코멘트 삭제
 sql_query(" delete from {$write_table} where wr_id = '{$comment_id}' ");
