@@ -1005,13 +1005,23 @@ $(function(){
         <h3>등록된 전체상품 목록</h3>
         <label for="sch_relation" class="sound_only">상품분류</label>
         <span class="srel_pad">
-            <select id="sch_relation" onchange="search_relation(this)">
+            <select id="sch_relation">
                 <option value=''>분류별 상품</option>
                 <?php
-                    $sql = " select ca_id, ca_name from {$g4['shop_category_table']} where length(ca_id) = 2 order by ca_id ";
+                    $sql = " select * from {$g4['shop_category_table']} ";
+                    if ($is_admin != 'super')
+                        $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
+                    $sql .= " order by ca_id ";
                     $result = sql_query($sql);
-                    for ($i=0; $row=sql_fetch_array($result); $i++)  {
-                        echo "<option value='{$row['ca_id']}'>{$row['ca_name']}\n";
+                    for ($i=0; $row=sql_fetch_array($result); $i++)
+                    {
+                        $len = strlen($row['ca_id']) / 2 - 1;
+
+                        $nbsp = "";
+                        for ($i=0; $i<$len; $i++)
+                            $nbsp .= "&nbsp;&nbsp;&nbsp;";
+
+                        echo "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
                     }
                 ?>
             </select>
@@ -1023,6 +1033,12 @@ $(function(){
         $(function() {
             $("#sch_relation").change(function() {
                 var ca_id = $(this).val();
+                var $relation = $("#relation");
+
+                if(ca_id == "") {
+                    $relation.html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
+                    return false;
+                }
 
                 $("#relation").load(
                     "./itemformrelation.php",
@@ -1066,6 +1082,10 @@ $(function(){
                     return false;
 
                 $(this).closest("li").remove();
+
+                var count = $("#reg_relation li").size();
+                if(count < 1)
+                    $("#reg_relation").html("<p>선택된 상품이 없습니다.</p>");
             });
         });
         </script>
@@ -1175,6 +1195,10 @@ $(function(){
                     return false;
 
                 $(this).closest("li").remove();
+
+                var count = $("#reg_event_list li").size();
+                if(count < 1)
+                    $("#reg_event_list").html("<p>선택된 이벤트가 없습니다.</p>");
             });
         });
         </script>

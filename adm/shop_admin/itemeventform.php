@@ -285,6 +285,11 @@ $(function() {
     $("#sch_ca_id").change(function() {
         var ca_id = $(this).val();
 
+        if(ca_id == "") {
+            $("#sch_item_list").html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
+            return false;
+        }
+
         $("#sch_item_list").load(
             "./itemeventsearch.php",
             { w: "<?php echo $w; ?>", ev_id: "<?php echo $ev_id; ?>", ca_id: ca_id }
@@ -327,6 +332,10 @@ $(function() {
             return false;
 
         $(this).closest("li").remove();
+
+        var count = $("#reg_item_list li").size();
+        if(count < 1)
+            $("#reg_item_list").html("<p>등록된 상품이 없습니다.</p>");
     });
 });
 function feventform_check(f)
