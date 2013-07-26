@@ -75,11 +75,7 @@ if ($is_admin)
 
     // 하위분류 포함
     // 판매가능한 상품만
-    $sql_common = " from {$g4['shop_item_table']}
-                   where (ca_id like '{$ca_id}%'
-                       or ca_id2 like '{$ca_id}%'
-                       or ca_id3 like '{$ca_id}%')
-                     and it_use = '1' ";
+    $sql_common = " from {$g4['shop_item_table']} where (ca_id like '{$ca_id}%' or ca_id2 like '{$ca_id}%' or ca_id3 like '{$ca_id}%') and it_use = '1' ";
 
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
@@ -88,6 +84,7 @@ if ($is_admin)
     if (file_exists($list_file)) {
         //display_type(2, "maintype10.inc.php", 4, 2, 100, 100, $ca[ca_id]);
 
+        /*
         $list_mod   = $ca['ca_list_mod'];
         $list_row   = $ca['ca_list_row'];
         $img_width  = $ca['ca_img_width'];
@@ -99,9 +96,13 @@ if ($is_admin)
         $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";
         $result = sql_query($sql);
 
-    echo '<div class="sct_wrap">';
-    include $list_file;
-    echo '</div>';
+        echo '<div class="sct_wrap">';
+        include $list_file;
+        echo '</div>';
+        */
+
+        $list = new item_list(0, "type10.skin.php", $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height'], $ca_id);
+        echo $list->run();
 
     }
     else
