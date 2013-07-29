@@ -8,14 +8,6 @@ if (G4_IS_MOBILE) {
 
 include_once(G4_LIB_PATH.'/iteminfo.lib.php');
 
-// 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
-$token = md5(uniqid(rand(), true));
-set_session("ss_token", $token);
-
-$rand = rand(4, 6);
-$norobot_key = substr($token, 0, $rand);
-set_session('ss_norobot_key', $norobot_key);
-
 // 분류사용, 상품사용하는 상품의 정보를 얻음
 $sql = " select a.*, b.ca_name, b.ca_use from {$g4['shop_item_table']} a, {$g4['shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id ";
 $it = sql_fetch($sql);
@@ -23,7 +15,7 @@ if (!$it['it_id'])
     alert('자료가 없습니다.');
 if (!($it['ca_use'] && $it['it_use'])) {
     if (!$is_admin)
-        alert('판매가능한 상품이 아닙니다.');
+        alert('현재 판매가능한 상품이 아닙니다.');
 }
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
@@ -90,16 +82,13 @@ include G4_SHOP_PATH.'/navigation1.inc.php';
 // 이 분류에 속한 하위분류 출력
 include G4_SHOP_PATH.'/listcategory.inc.php';
 
-if ($is_admin)
+if ($is_admin) {
     echo '<div class="sit_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
+}
 ?>
 
 <!-- 상품 상세보기 시작 { -->
 <?php
-$himg = G4_DATA_PATH.'/item/'.$it_id.'_h';
-if (file_exists($himg))
-    echo '<div id="sit_himg" class="sit_img"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_h" alt=""></div>';
-
 // 상단 HTML
 echo '<div id="sit_hhtml">'.stripslashes($it['it_head_html']).'</div>';
 
@@ -190,7 +179,7 @@ else
                 if(!$it['it_img'.$i])
                     continue;
 
-                $img = get_it_thumbnail($it['it_img'.$i], 320, 320);
+                $img = get_it_thumbnail($it['it_img'.$i], $default['de_mimg_width'], $default['de_mimg_height']);
 
                 if($img) {
                     // 썸네일
@@ -631,17 +620,25 @@ else
 
         <div class="sct_wrap">
             <?php
+            /*
             $list_mod   = 3;
             $img_width  = 230;
             $img_height = 230;
+            */
 
             $sql = " select b.* from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
-            $result = sql_query($sql);
-            $num = @mysql_num_rows($result);
+
+            $list = new item_list("list.10.skin.php", 3, 1, 150, 0);
+            $list->set_mobile(true);
+            $list->set_query($sql);
+            echo $list->run();
+
+            /*
             if ($num)
                 include G4_SHOP_PATH.'/maintype10.inc.php';
             else
                 echo '<p class="sit_empty">이 상품과 관련된 상품이 없습니다.</p>';
+            */
             ?>
         </div>
     </section>
@@ -799,10 +796,6 @@ else
 <?php
 // 하단 HTML
 echo stripslashes($it['it_tail_html']);
-
-$timg = G4_DATA_PATH.'/item/'.$it_id.'_t';
-if (file_exists($timg))
-    echo '<div id="sit_timg" class="sit_img"><img src="'.G4_DATA_URL.'/item/'.$it_id.'_t" alt=""></div>';
 ?>
 <!-- } 상품 상세보기 끝 -->
 

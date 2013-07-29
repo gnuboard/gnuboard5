@@ -52,10 +52,10 @@ if ($w == "")
         $html_title = "1단계분류추가";
         $ca['ca_use'] = 1;
         $ca['ca_explan_html'] = 1;
-        $ca['ca_img_width']  = $default['de_mimg_width'];
-        $ca['ca_img_height'] = $default['de_mimg_height'];
-        $ca['ca_mobile_img_width']  = $default['de_mimg_width'];
-        $ca['ca_mobile_img_height'] = $default['de_mimg_height'];
+        $ca['ca_img_width']  = $default['de_simg_width'];
+        $ca['ca_img_height'] = $default['de_simg_height'];
+        $ca['ca_mobile_img_width']  = $default['de_simg_width'];
+        $ca['ca_mobile_img_height'] = $default['de_simg_height'];
         $ca['ca_list_mod'] = 3;
         $ca['ca_list_row'] = 5;
         $ca['ca_mobile_list_row'] = 3;
@@ -179,7 +179,7 @@ $pg_anchor .= '</ul>';
         <td>
             <?php echo help("기본으로 제공하는 스킨은 ".G4_SHOP_DIR."/list.skin.*.php 입니다."); ?>
             <select id="ca_skin" name="ca_skin">
-                <?php echo get_list_skin_options("^list.skin.(.*)\.php", G4_SHOP_PATH, $ca['ca_skin']); ?>
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $ca['ca_skin']); ?>
             </select>
         </td>
     </tr>
@@ -195,14 +195,14 @@ $pg_anchor .= '</ul>';
     <tr>
         <th scope="row"><label for="ca_img_width">출력이미지 폭</label></th>
         <td>
-            <?php echo help("쇼핑몰환경설정 &gt; 이미지(중) 넓이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 넓이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
             <input type="text" name="ca_img_width" value="<?php echo $ca['ca_img_width']; ?>" id="ca_img_width" required class="required frm_input" size="5" > 픽셀
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ca_img_height">출력이미지 높이</label></th>
         <td>
-            <?php echo help("쇼핑몰환경설정 &gt; 이미지(중) 높이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 높이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
             <input type="text" name="ca_img_height"  value="<?php echo $ca['ca_img_height']; ?>" id="ca_img_height" required class="required frm_input" size="5" > 픽셀
         </td>
     </tr>
@@ -223,14 +223,14 @@ $pg_anchor .= '</ul>';
     <tr>
         <th scope="row"><label for="ca_mobile_img_width">모바일 출력이미지 폭</label></th>
         <td>
-            <?php echo help("쇼핑몰환경설정 &gt; 이미지(중) 넓이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 넓이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
             <input type="text" name="ca_mobile_img_width" value="<?php echo $ca['ca_mobile_img_width']; ?>" id="ca_mobile_img_width" required class="required frm_input" size="5" > 픽셀
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ca_mobile_img_height">모바일 출력이미지 높이</label></th>
         <td>
-            <?php echo help("쇼핑몰환경설정 &gt; 이미지(중) 높이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 높이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
             <input type="text" name="ca_mobile_img_height"  value="<?php echo $ca['ca_mobile_img_height']; ?>" id="ca_mobile_img_height" required class="required frm_input" size="5" > 픽셀
         </td>
     </tr>

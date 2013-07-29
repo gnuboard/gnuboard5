@@ -268,7 +268,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .srel li {position:relative;border-bottom:1px solid #e9e9e9}
 .srel .srel_list {height:auto !important;height:200px;max-height:200px;border:1px solid #ced9de;background:#f6f6f6;overflow-y:scroll}
 .srel .srel_sel {border:1px solid #ced9de;background:#fcfff2}
-.srel .srel_sel p {text-align:center}
+.srel .srel_list p, .srel .srel_sel p {text-align:center}
 .srel .compare_left ul {margin:0;list-style:none}
 .srel button {position:absolute;top:12px;right:0}
 .srel .srel_noneimg li {padding:7px 0}

@@ -2,9 +2,9 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo $shop_skin_url ?>/style.css">
+<link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
 
-<!-- 상품진열 11 시작 { -->
+<!-- 상품진열 10 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     if ($this->list_mod >= 2) { // 1줄 이미지 : 2개 이상
@@ -19,14 +19,14 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         if ($this->css) {
             echo "<ul class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct sct_11\">\n";
+            echo "<ul class=\"sct sct_10\">\n";
         }
     }
 
     echo "<li class=\"sct_li {$sct_last}\">\n";
 
     if ($this->href) {
-        echo "<a href=\"{$this->href}\" class=\"sct_a\">\n";
+        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
     }
 
     if ($this->view_it_img) {
@@ -72,4 +72,4 @@ if ($i > 1) echo "</ul>\n";
 
 if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
-<!-- } 상품진열 11 끝 -->
+<!-- } 상품진열 10 끝 -->

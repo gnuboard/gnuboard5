@@ -14,7 +14,7 @@ $disp = new display_item(1);
 // 사용할 스킨을 바꿉니다.
 $disp->set_list_skin("type_user.skin.php");
 // 1단계분류를 20으로 시작되는 분류로 지정합니다.
-$disp->set_ca_id("20", 1);
+$disp->set_category("20", 1);
 echo $disp->run();
 
 
@@ -35,7 +35,7 @@ echo $disp->run();
       display_category 나 display_event 로 사용하기 위해서는 $type 값만 넘기지 않으면 됩니다.
 */
 
-class display_item
+class item_list
 {
     // 상품유형 : 기본적으로 1~5 까지 사용할수 있으며 0 으로 설정하는 경우 상품유형별로 노출하지 않습니다.
     // 분류나 이벤트로 노출하는 경우 상품유형을 0 으로 설정하면 됩니다.
@@ -82,7 +82,21 @@ class display_item
     protected $view_it_icon = false;        // 아이콘
     protected $view_sns = false;            // SNS
 
-    protected $count = 1; // 몇번째 class 호출인지를 저장합니다.
+    // 몇번째 class 호출인지를 저장합니다.
+    protected $count = 0; 
+
+    // true 인 경우 페이지를 구한다.
+    protected $is_page = false;
+
+    // 페이지 표시를 위하여 총 상품 갯수를 구합니다.
+    public $total_count = 0;
+
+    // sql limit 의 시작 레코드
+    protected $from_record = 0;
+
+    // 외부에서 쿼리문을 넘겨줄 경우에 담아두는 변수
+    protected $query = "";
+
 
     // $type        : 상품유형 (기본으로 1~5까지 사용)
     // $list_skin   : 상품리스트를 노출할 스킨을 설정합니다. 스킨위치는 skin/shop/쇼핑몰설정스킨/type??.skin.php
@@ -90,10 +104,18 @@ class display_item
     // $list_row    : 상품을 몇줄에 노출할지를 설정합니다.
     // $img_width   : 상품이미지의 폭을 설정합니다.
     // $img_height  : 상품이미지의 높이을 설정합니다. 0 으로 설정하는 경우 썸네일 이미지의 높이는 폭에 비례하여 생성합니다.
-    function __construct($type=0, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0) {
-        
-        global $default;
+    //function __construct($type=0, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0, $ca_id='') {
+    function __construct($list_skin='', $list_mod='', $list_row='', $img_width='', $img_height=0) {
+        $this->list_skin  = $list_skin;
+        $this->list_mod   = $list_mod;
+        $this->list_row   = $list_row;
+        $this->img_width  = $img_width;
+        $this->img_height = $img_height;
+        $this->set_href(G4_SHOP_URL.'/item.php?it_id=');
+        $this->count++;
+    }
 
+    function set_type($type) {
         $this->type = $type;
         if ($type) {
             $this->set_list_skin($list_skin);
@@ -101,11 +123,25 @@ class display_item
             $this->set_list_row($list_row);
             $this->set_img_size($img_width);
         }
-        $this->ca_id = $ca_id;
+    }
 
-        $this->set_href(G4_SHOP_URL.'/item.php?it_id=');
+    // 분류코드로 검색을 하고자 하는 경우 아래와 같이 인수를 넘겨줍니다.
+    // 1단계 분류는 (분류코드, 1)
+    // 2단계 분류는 (분류코드, 2)
+    // 3단계 분류는 (분류코드, 3) 
+    function set_category($ca_id, $level=1) {
+        if ($level == 2) {
+            $this->ca_id2 = $ca_id;
+        } else if ($level == 3) {
+            $this->ca_id3 = $ca_id;
+        } else {
+            $this->ca_id = $ca_id;
+        }
+    }
 
-        $this->count++;
+    // 이벤트코드를 인수로 넘기게 되면 해당 이벤트에 속한 상품을 노출합니다.
+    function set_event($ev_id) {
+        $this->event = $ev_id;        
     }
 
     // 리스트 스킨을 바꾸고자 하는 경우에 사용합니다.
@@ -113,29 +149,48 @@ class display_item
     // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
     function set_list_skin($list_skin) {
         global $default;
-        $this->list_skin = $list_skin ? $list_skin : $default['de_type'.$this->type.'_list_skin'];
+        if ($this->is_mobile) {
+            $this->list_skin = $list_skin ? $list_skin : $default['de_mobile_type'.$this->type.'_list_skin'];
+        } else {
+            $this->list_skin = $list_skin ? $list_skin : $default['de_type'.$this->type.'_list_skin'];
+        }
     }
 
     // 1줄에 몇개를 노출할지를 사용한다.
     // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
     function set_list_mod($list_mod) {
         global $default;
-        $this->list_mod = $list_mod ? $list_mod : $default['de_type'.$this->type.'_list_mod'];
+        if ($this->is_mobile) {
+            $this->list_mod = $list_mod ? $list_mod : $default['de_mobile_type'.$this->type.'_list_mod'];
+        } else {
+            $this->list_mod = $list_mod ? $list_mod : $default['de_type'.$this->type.'_list_mod'];
+        }
     }
 
     // 몇줄을 노출할지를 사용한다.
     // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
     function set_list_row($list_row) {
         global $default;
-        $this->list_row = $list_row ? $list_row : $default['de_type'.$this->type.'_list_row'];
+        if ($this->is_mobile) {
+            $this->list_row = $list_row ? $list_row : $default['de_mobile_type'.$this->type.'_list_row'];
+        } else {
+            $this->list_row = $list_row ? $list_row : $default['de_type'.$this->type.'_list_row'];
+        }
+        if (!$this->list_row) 
+            $this->list_row = 1;
     }
 
     // 노출이미지(썸네일생성)의 폭, 높이를 설정합니다. 높이를 0 으로 설정하는 경우 쎰네일 비율에 따릅니다.
     // 특별히 설정하지 않는 경우 상품유형을 사용하는 경우는 쇼핑몰설정 값을 그대로 따릅니다.
     function set_img_size($img_width, $img_height=0) {
         global $default;
-        $this->img_width = $img_width ? $img_width : $default['de_type'.$this->type.'_img_width'];
-        $this->img_height = $img_height ? $img_height : $default['de_type'.$this->type.'_img_height'];
+        if ($this->is_mobile) {
+            $this->img_width = $img_width ? $img_width : $default['de_mobile_type'.$this->type.'_img_width'];
+            $this->img_height = $img_height ? $img_height : $default['de_mobile_type'.$this->type.'_img_height'];
+        } else {
+            $this->img_width = $img_width ? $img_width : $default['de_type'.$this->type.'_img_width'];
+            $this->img_height = $img_height ? $img_height : $default['de_type'.$this->type.'_img_height'];
+        }
     }
 
     // 특정 필드만 select 하는 경우에는 필드명을 , 로 구분하여 "field1, field2, field3, ... fieldn" 으로 인수를 넘겨줍니다.
@@ -158,20 +213,6 @@ class display_item
         $this->is_mobile = $mobile;
     }
 
-    // 분류코드로 검색을 하고자 하는 경우 아래와 같이 인수를 넘겨줍니다.
-    // 1단계 분류는 (분류코드, 1)
-    // 2단계 분류는 (분류코드, 2)
-    // 3단계 분류는 (분류코드, 3) 
-    function set_ca_id($ca_id, $level=1) {
-        if ($level == 2) {
-            $this->ca_id2 = $ca_id;
-        } else if ($level == 3) {
-            $this->ca_id3 = $ca_id;
-        } else {
-            $this->ca_id = $ca_id;
-        }
-    }
-
     // 스킨에서 특정 필드를 노출하거나 하지 않게 할수 있습니다.
     // 가령 소비자가는 처음에 노출되지 않도록 설정되어 있짐나 노출을 하려면
     // ("it_cust_price", true) 와 같이 인수를 넘겨줍니다.
@@ -186,74 +227,102 @@ class display_item
         $this->href = $href;        
     }
 
-    // 이벤트코드를 인수로 넘기게 되면 해당 이벤트에 속한 상품을 노출합니다.
-    function set_event($ev_id) {
-        $this->event = $ev_id;        
-    }
-
     // ul 태그의 css 를 교체할수 있다. "sct sct_abc" 를 인수로 넘기게 되면 
     // 기존의 ul 태그에 걸린 css 는 무시되며 인수로 넘긴 css 가 사용됩니다.
     function set_css($css) {
         $this->css = $css;        
     }
 
+    // 페이지를 노출하기 위해 true 로 설정할때 사용합니다.
+    function set_is_page($is_page) {
+        $this->is_page = $is_page;
+    }
+
+    // select ... limit 의 시작값
+    function set_from_record($from_record) {
+        $this->from_record = $from_record;
+    }
+
+    // 외부에서 쿼리문을 넘겨줄 경우에 담아둡니다.
+    function set_query($query) {
+        $this->query = $query;
+    }
+
     // class 에 설정된 값으로 최종 실행합니다.
     function run() {
 
-        global $g4, $config, $member, $default, $shop_skin_path, $shop_skin_url;
+        global $g4, $config, $member, $default;
 
-        $where = array();
-        if ($this->use) {
-            $where[] = " it_use = '1' ";
-        }
-        
-        if ($this->type) {
-            $where[] = " it_type{$this->type} = '1' ";
-        }
+        if ($this->query) {
+            
+            $sql = $this->query;
+            $result = sql_query($sql);
+            $this->total_count = @mysql_num_rows($result);
 
-        if ($this->ca_id || $this->ca_id2 || $this->ca_id3) {
-            $where_ca_id = array();
-            if ($this->ca_id) {
-                $where_ca_id[] = " ca_id like '{$this->ca_id}%' ";
-            }
-            if ($this->ca_id2) {
-                $where_ca_id[] = " ca_id2 like '{$this->ca_id2}%' ";
-            }
-            if ($this->ca_id3) {
-                $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
-            }
-            $where[] = implode(" or ", $where_ca_id);
-        }
-
-        if ($this->order_by) {
-            $sql_order = " order by {$this->order_by} ";
-        }
-
-        if ($this->event) {
-            //$sql_common = " select {$this->fields} from `{$g4['shop_event_item_table']}` a left join `{$g4['shop_item_table']}` b on (a.it_id = b.it_id and a.ev_id = '{$this->event}') ";
-            $sql_common = " select {$this->fields} from `{$g4['shop_event_item_table']}` a left join `{$g4['shop_item_table']}` b on (a.it_id = b.it_id) ";
-            $where[] = " a.ev_id = '{$this->event}' ";
         } else {
-            $sql_common = " select {$this->fields} from `{$g4['shop_item_table']}` ";
-        }
-        $sql_where  = " where " . implode(" and ", $where);
 
-        $sql = $sql_common . $sql_where . " limit " . ($this->list_mod * $this->list_row);
-        $result = sql_query($sql);
-        //echo (int)mysql_num_rows($result);
+            $where = array();
+            if ($this->use) {
+                $where[] = " it_use = '1' ";
+            }
+            
+            if ($this->type) {
+                $where[] = " it_type{$this->type} = '1' ";
+            }
+
+            if ($this->ca_id || $this->ca_id2 || $this->ca_id3) {
+                $where_ca_id = array();
+                if ($this->ca_id) {
+                    $where_ca_id[] = " ca_id like '{$this->ca_id}%' ";
+                }
+                if ($this->ca_id2) {
+                    $where_ca_id[] = " ca_id2 like '{$this->ca_id2}%' ";
+                }
+                if ($this->ca_id3) {
+                    $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
+                }
+                $where[] = implode(" or ", $where_ca_id);
+            }
+
+            if ($this->order_by) {
+                $sql_order = " order by {$this->order_by} ";
+            }
+
+            if ($this->event) {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g4['shop_event_item_table']}` a left join `{$g4['shop_item_table']}` b on (a.it_id = b.it_id) ";
+                $where[] = " a.ev_id = '{$this->event}' ";
+            } else {
+                $sql_select = " select {$this->fields} ";
+                $sql_common = " from `{$g4['shop_item_table']}` ";
+            }
+            $sql_where = " where " . implode(" and ", $where);
+            $sql_limit = " limit " . $this->from_record . " , " . ($this->list_mod * $this->list_row);
+
+            $sql = $sql_select . $sql_common . $sql_where . $sql_limit;
+            $result = sql_query($sql);
+
+            if ($this->is_page) {
+                $sql2 = " select count(*) as cnt " . $sql_common . $sql_where;
+                $row2 = sql_fetch($sql2);
+                $this->total_count = $row2['cnt'];
+            }
+
+        }
 
         $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
 
         if ($this->is_mobile) {
-            $file = G4_MSHOP_PATH."/{$this->list_skin}";
+            $file = G4_MSHOP_SKIN_PATH."/{$this->list_skin}";
         } else {
-            $file = "{$shop_skin_path}/{$this->list_skin}";
+            $file = G4_SHOP_SKIN_PATH."/{$this->list_skin}";
         }
+
         if ($this->list_skin == "") {
-            return $this->count."번 display_item() 의 스킨파일이 지정되지 않았습니다.";
+            return $this->count."번 item_list() 의 스킨파일이 지정되지 않았습니다.";
         } else if (!file_exists($file)) {
-            return "{$shop_skin_url}/{$this->list_skin} 파일을 찾을 수 없습니다.";
+            return $file." 파일을 찾을 수 없습니다.";
         } else {
             ob_start();
             $list_mod = $this->list_mod;
@@ -621,7 +690,7 @@ function is_null_time($datetime)
 //function display_type($type, $skin_file, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
 function display_type($type, $list_skin='', $list_mod='', $list_row='', $img_width='', $img_height='', $ca_id='')
 {
-    global $member, $g4, $config, $default, $shop_skin_path, $shop_skin_url;
+    global $member, $g4, $config, $default;
 
     if (!$default["de_type{$type}_list_use"]) return "";
 
@@ -647,9 +716,9 @@ function display_type($type, $list_skin='', $list_mod='', $list_row='', $img_wid
     */
 
     //$file = G4_SHOP_PATH.'/'.$skin_file;
-    $file = $shop_skin_path.'/'.$list_skin;
+    $file = G4_SHOP_SKIN_PATH.'/'.$list_skin;
     if (!file_exists($file)) {
-        return $shop_skin_url.'/'.$list_skin.' 파일을 찾을 수 없습니다.';
+        return G4_SHOP_SKIN_URL.'/'.$list_skin.' 파일을 찾을 수 없습니다.';
     } else {
         $td_width = (int)(100 / $list_mod);
         ob_start();

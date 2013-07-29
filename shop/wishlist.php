@@ -33,10 +33,8 @@ include_once('./_head.php');
     </thead>
     <tbody>
     <?php
-    $sql = " select a.wi_id, a.wi_time, b.*
-               from {$g4['shop_wish_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
-              where a.mb_id = '{$member['mb_id']}'
-              order by a.wi_id desc ";
+    $sql  = " select a.wi_id, a.wi_time, b.* from {$g4['shop_wish_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id ) ";
+    $sql .= " where a.mb_id = '{$member['mb_id']}' order by a.wi_id desc ";
     $result = sql_query($sql);
     for ($i=0; $row = mysql_fetch_array($result); $i++) {
 

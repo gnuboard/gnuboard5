@@ -13,9 +13,6 @@ else if ($w == 'd')
 @mkdir(G4_DATA_PATH."/item", 0707);
 @chmod(G4_DATA_PATH."/item", 0707);
 
-if ($it_himg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_h");
-if ($it_timg_del)  @unlink(G4_DATA_PATH."/item/{$it_id}_t");
-
 // 파일정보
 if($w == "u") {
     $sql = " select it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
@@ -180,10 +177,6 @@ if ($_FILES['it_img10']['name']) {
     }
     $it_img10 = it_img_upload($_FILES['it_img10']['tmp_name'], $_FILES['it_img10']['name'], $it_img_dir.'/'.$it_id);
 }
-
-// 상, 하단 이미지 업로드
-if ($_FILES['it_himg']['name'])  upload_file($_FILES['it_himg']['tmp_name'], $it_id . "_h", G4_DATA_PATH.'/item');
-if ($_FILES['it_timg']['name'])  upload_file($_FILES['it_timg']['tmp_name'], $it_id . "_t", G4_DATA_PATH.'/item');
 
 if ($w == "" || $w == "u")
 {

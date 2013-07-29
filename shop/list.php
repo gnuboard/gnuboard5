@@ -75,19 +75,16 @@ if ($is_admin)
 
     // 하위분류 포함
     // 판매가능한 상품만
-    $sql_common = " from {$g4['shop_item_table']}
-                   where (ca_id like '{$ca_id}%'
-                       or ca_id2 like '{$ca_id}%'
-                       or ca_id3 like '{$ca_id}%')
-                     and it_use = '1' ";
+    $sql_common = " from {$g4['shop_item_table']} where (ca_id like '{$ca_id}%' or ca_id2 like '{$ca_id}%' or ca_id3 like '{$ca_id}%') and it_use = '1' ";
 
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
     // 리스트 유형별로 출력
-    $list_file = G4_SHOP_PATH.'/'.$ca['ca_skin'];
+    $list_file = G4_SHOP_SKIN_PATH.'/'.$ca['ca_skin'];
     if (file_exists($list_file)) {
         //display_type(2, "maintype10.inc.php", 4, 2, 100, 100, $ca[ca_id]);
 
+        /*
         $list_mod   = $ca['ca_list_mod'];
         $list_row   = $ca['ca_list_row'];
         $img_width  = $ca['ca_img_width'];
@@ -99,10 +96,28 @@ if ($is_admin)
         $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";
         $result = sql_query($sql);
 
-    echo '<div class="sct_wrap">';
-    include $list_file;
-    echo '</div>';
+        echo '<div class="sct_wrap">';
+        include $list_file;
+        echo '</div>';
+        */
 
+        // 총몇개 = 한줄에 몇개 * 몇줄
+        $items = $ca['ca_list_mod'] * $ca['ca_list_row'];
+        // 페이지가 없으면 첫 페이지 (1 페이지)
+        if ($page == "") $page = 1;
+        // 시작 레코드 구함
+        $from_record = ($page - 1) * $items;
+
+        $list = new item_list($ca['ca_skin'], $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height']);
+        $list->set_category($ca['ca_id']);
+        $list->set_is_page(true);
+        $list->set_from_record($from_record);
+        echo $list->run();
+
+        // where 된 전체 상품수
+        $total_count = $list->total_count;
+        // 전체 페이지 계산
+        $total_page  = ceil($total_count / $items);
     }
     else
     {
