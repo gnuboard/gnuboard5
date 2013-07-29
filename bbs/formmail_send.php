@@ -34,7 +34,7 @@ if ($type == 2) {
 // html 이면
 if ($type) {
     $current_url = G4_URL;
-    $mail_content = '<!doctype html><html lang="ko"><head><meta charset="'.$g4['charset'].'"><title>메일보내기</title><link rel="stylesheet" href="'.$current_url.'/style.css"></head><body>'.$content.'</body></html>';
+    $mail_content = '<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>메일보내기</title><link rel="stylesheet" href="'.$current_url.'/style.css"></head><body>'.$content.'</body></html>';
 }
 else
     $mail_content = $content;
