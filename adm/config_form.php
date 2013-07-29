@@ -101,17 +101,6 @@ if(!sql_query(" DESC {$g4['autosave_table']} ", false)) {
                 ) ", false);
 }
 
-// 포인트유효기간 필드추가
-if(!sql_query(" select cf_point_term from {$g4['config_table']} ", false)) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_point_term` int(11) NOT NULL DEFAULT '0' AFTER `cf_use_point` ", false);
-    sql_query(" ALTER TABLE `{$g4['point_table']}`
-                    ADD `po_use_point` int(11) NOT NULL DEFAULT '0' AFTER `po_point`,
-                    ADD `po_expired` tinyint(4) NOT NULL DEFAULT '0' AFTER `po_use_point`,
-                    ADD `po_expire_date` date NOT NULL DEFAULT '0000-00-00' AFTER `po_expired`
-                    ADD `po_mb_point` int(11) NOT NULL DEFAULT '0' AFTER `po_expire_date` ", false);
-}
-
 $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 

@@ -868,6 +868,9 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     $mb = sql_fetch(" select mb_id from {$g4['member_table']} where mb_id = '$mb_id' ");
     if (!$mb['mb_id']) { return 0; }
 
+    // 회원포인트
+    $mb_point = get_point_sum($mb_id);
+
     // 이미 등록된 내역이라면 건너뜀
     if ($rel_table || $rel_id || $rel_action)
     {
@@ -895,6 +898,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
         $po_expired = 1;
         $po_expire_date = G4_TIME_YMD;
     }
+    $po_mb_point = $mb_point + $point;
 
     $sql = " insert into {$g4['point_table']}
                 set mb_id = '$mb_id',
@@ -902,29 +906,21 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
                     po_content = '".addslashes($content)."',
                     po_point = '$point',
                     po_use_point = '0',
+                    po_mb_point = '$po_mb_point',
                     po_expired = '$po_expired',
                     po_expire_date = '$po_expire_date',
                     po_rel_table = '$rel_table',
                     po_rel_id = '$rel_id',
                     po_rel_action = '$rel_action' ";
     sql_query($sql);
-    $po_id = mysql_insert_id();
 
     // 포인트를 사용한 경우 포인트 내역에 사용금액 기록
     if($point < 0) {
         insert_use_point($mb_id, $point);
     }
 
-    // 회원포인트
-    $sum_mb_point = get_point_sum($mb_id);
-
     // 포인트 UPDATE
-    $sql = " update {$g4['member_table']} set mb_point = '$sum_mb_point' where mb_id = '$mb_id' ";
-    sql_query($sql);
-
-    $sql = " update {$g4['point_table']}
-                set po_mb_point = '$sum_mb_point'
-                where po_id = '$po_id' ";
+    $sql = " update {$g4['member_table']} set mb_point = '$po_mb_point' where mb_id = '$mb_id' ";
     sql_query($sql);
 
     return 1;
@@ -953,7 +949,7 @@ function insert_use_point($mb_id, $point, $po_id='')
         $point2 = $row['po_point'];
         $point3 = $row['po_use_point'];
 
-        if(($point2 - $point3) >= $point1) {
+        if(($point2 - $point3) > $point1) {
             $sql = " update {$g4['point_table']}
                         set po_use_point = po_use_point + '$point1'
                         where po_id = '{$row['po_id']}' ";
@@ -971,6 +967,49 @@ function insert_use_point($mb_id, $point, $po_id='')
     }
 }
 
+// 사용포인트 삭제
+function delete_use_point($mb_id, $point)
+{
+    global $g4, $config;
+
+    if($config['cf_point_term'])
+        $sql_order = " order by po_expire_date desc, po_id desc ";
+    else
+        $sql_order = " order by po_id desc ";
+
+    $point1 = abs($point);
+    $sql = " select po_id, po_use_point, po_expired, po_expire_date
+                from {$g4['point_table']}
+                where mb_id = '$mb_id'
+                  and po_use_point > 0
+                $sql_order ";
+    $result = sql_query($sql);
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        $point2 = $row['po_use_point'];
+
+        $po_expired = $row['po_expired'];
+        if($row['po_expired'] == 100 && ($row['po_expire_date'] == '9999-12-31' || $row['po_expire_date'] >= G4_TIME_YMD))
+            $po_expired = 0;
+
+        if($point2 > $point1) {
+            $sql = " update {$g4['point_table']}
+                        set po_use_point = po_use_point - '$point1',
+                            po_expired = '$po_expired'
+                        where po_id = '{$row['po_id']}' ";
+            sql_query($sql);
+            break;
+        } else {
+            $sql = " update {$g4['point_table']}
+                        set po_use_point = '0',
+                            po_expired = '$po_expired'
+                        where po_id = '{$row['po_id']}' ";
+            sql_query($sql);
+
+            $point1 -= $point2;
+        }
+    }
+}
+
 // 포인트 내역 합계
 function get_point_sum($mb_id)
 {
@@ -980,7 +1019,34 @@ function get_point_sum($mb_id)
         // 소멸포인트가 있으면 내역 추가
         $expire_point = get_expire_point($mb_id);
         if($expire_point > 0) {
-            insert_point($mb_id, -1*$expire_point, '포인트 소멸', '@expire', $mb_id, 'expire'.'-'.uniqid(''));
+            $mb = get_member($mb_id, 'mb_point');
+            $content = '포인트 소멸';
+            $rel_table = '@expire';
+            $rel_id = $mb_id;
+            $rel_action = 'expire'.'-'.uniqid('');
+            $point = $expire_point * (-1);
+            $po_mb_point = $mb['mb_point'] + $point;
+            $po_expire_date = G4_TIME_YMD;
+            $po_expired = 1;
+
+            $sql = " insert into {$g4['point_table']}
+                        set mb_id = '$mb_id',
+                            po_datetime = '".G4_TIME_YMDHIS."',
+                            po_content = '".addslashes($content)."',
+                            po_point = '$point',
+                            po_use_point = '0',
+                            po_mb_point = '$po_mb_point',
+                            po_expired = '$po_expired',
+                            po_expire_date = '$po_expire_date',
+                            po_rel_table = '$rel_table',
+                            po_rel_id = '$rel_id',
+                            po_rel_action = '$rel_action' ";
+            sql_query($sql);
+
+            // 포인트를 사용한 경우 포인트 내역에 사용금액 기록
+            if($point < 0) {
+                insert_use_point($mb_id, $point);
+            }
         }
 
         // 유효기간이 있을 때 기간이 지난 포인트 expired 체크
@@ -994,16 +1060,12 @@ function get_point_sum($mb_id)
     }
 
     // 포인트합
-    $sql = " select sum(po_point - po_use_point) as sum_po_point
+    $sql = " select sum(po_point) as sum_po_point
                 from {$g4['point_table']}
-                where mb_id = '$mb_id'
-                  and po_expired = '0' ";
+                where mb_id = '$mb_id' ";
     $row = sql_fetch($sql);
 
-    if($row['sum_po_point'] < 0)
-        return 0;
-    else
-        return $row['sum_po_point'];
+    return $row['sum_po_point'];
 }
 
 // 소멸 포인트
@@ -1023,6 +1085,59 @@ function get_expire_point($mb_id)
     $row = sql_fetch($sql);
 
     return $row['sum_point'];
+}
+
+// 포인트 삭제
+function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
+{
+    global $g4;
+
+    $result = false;
+    if ($rel_table || $rel_id || $rel_action)
+    {
+        // 포인트 내역정보
+        $sql = " select * from {$g4['point_table']}
+                    where mb_id = '$mb_id'
+                      and po_rel_table = '$rel_table'
+                      and po_rel_id = '$rel_id'
+                      and po_rel_action = '$rel_action' ";
+        $row = sql_fetch($sql);
+
+        if($row['po_point'] < 0) {
+            if($row['po_rel_table'] != '@expire') {
+                $mb_id = $row['mb_id'];
+                $po_point = abs($row['po_point']);
+
+                delete_use_point($mb_id, $po_point);
+            }
+        } else {
+            if($row['po_expired'] != 1 && $row['po_use_point'] > 0) {
+                insert_use_point($row['mb_id'], $row['po_use_point'], $row['po_id']);
+            }
+        }
+
+        $result = sql_query(" delete from {$g4['point_table']}
+                     where mb_id = '$mb_id'
+                       and po_rel_table = '$rel_table'
+                       and po_rel_id = '$rel_id'
+                       and po_rel_action = '$rel_action' ", false);
+
+        // po_mb_point에 반영
+        $sql = " update {$g4['point_table']}
+                    set po_mb_point = po_mb_point - '{$row['po_point']}'
+                    where mb_id = '$mb_id'
+                      and po_id > '{$row['po_id']}' ";
+        sql_query($sql);
+
+        // 포인트 내역의 합을 구하고
+        $sum_point = get_point_sum($mb_id);
+
+        // 포인트 UPDATE
+        $sql = " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '$mb_id' ";
+        $result = sql_query($sql);
+    }
+
+    return $result;
 }
 
 // 회원 레이어

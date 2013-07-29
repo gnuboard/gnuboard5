@@ -501,7 +501,8 @@ CREATE TABLE IF NOT EXISTS `g4s_point` (
   `po_rel_id` varchar(20) NOT NULL default '',
   `po_rel_action` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`po_id`),
-  KEY `index1` (`mb_id`,`po_rel_table`,`po_rel_id`,`po_rel_action`)
+  KEY `index1` (`mb_id`,`po_rel_table`,`po_rel_id`,`po_rel_action`),
+  KEY `index2` (`po_expire_date`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

@@ -55,13 +55,6 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         }
 
         $po_content = $row['po_content'];
-
-        // 소멸포인트
-        if($row['po_point'] >= 0 && $row['po_expired'] == 1) {
-            $sum_point3 += $row['po_point'];
-            $po_content = '<span style="color: #999">'.$po_content.'</span>';
-        }
-
     ?>
     <tr>
         <td class="td_datetime"><?php echo $row['po_datetime']; ?></td>
@@ -87,12 +80,6 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         <td><?php echo $sum_point1; ?></td>
         <td><?php echo $sum_point2; ?></td>
     </tr>
-    <?php if($sum_point3) { ?>
-    <tr>
-        <th scope="row" colspan="2">소멸포인트</th>
-        <td colspan="2"><?php echo number_format($sum_point3); ?></td>
-    </tr>
-    <?php } ?>
     <tr>
         <th scope="row" colspan="2">보유포인트</th>
         <td colspan="2"><?php echo number_format($member['mb_point']); ?></td>
