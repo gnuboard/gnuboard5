@@ -150,7 +150,7 @@ function point_clear()
         <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
         <td class="td_time"><?php echo $row['po_datetime'] ?></td>
-        <td><?php echo $row['po_expire_date'] == '0000-00-00' ? '&nbsp;' : $row['po_expire_date']; ?></td>
+        <td><?php echo $row['po_expire_date'] == '9999-12-31' ? '&nbsp;' : $row['po_expire_date']; ?></td>
         <td class="td_bignum td_pt"><?php echo number_format($row['po_mb_point']) ?></td>
     </tr>
 

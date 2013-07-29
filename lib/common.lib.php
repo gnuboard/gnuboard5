@@ -882,7 +882,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     }
 
     // 포인트 건별 생성
-    $po_expire_date = '0000-00-00';
+    $po_expire_date = '9999-12-31';
     if($config['cf_point_term'] > 0) {
         if($expire > 0)
             $po_expire_date = date('Y-m-d', strtotime('+'.($expire - 1).' days', G4_SERVER_TIME));
@@ -933,7 +933,12 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 // 사용포인트 입력
 function insert_use_point($mb_id, $point, $po_id='')
 {
-    global $g4;
+    global $g4, $config;
+
+    if($config['cf_point_term'])
+        $sql_order = " order by po_expire_date asc, po_id asc ";
+    else
+        $sql_order = " order by po_id asc ";
 
     $point1 = abs($point);
     $sql = " select po_id, po_point, po_use_point
@@ -942,7 +947,7 @@ function insert_use_point($mb_id, $point, $po_id='')
                   and po_id <> '$po_id'
                   and po_expired = '0'
                   and po_point > po_use_point
-                order by po_id asc ";
+                $sql_order ";
     $result = sql_query($sql);
     for($i=0; $row=sql_fetch_array($result); $i++) {
         $point2 = $row['po_point'];
@@ -983,7 +988,7 @@ function get_point_sum($mb_id)
                     set po_expired = '1'
                     where mb_id = '$mb_id'
                       and po_expired <> '1'
-                      and po_expire_date <> '0000-00-00'
+                      and po_expire_date <> '9999-12-31'
                       and po_expire_date < '".G4_TIME_YMD."' ";
         sql_query($sql);
     }
@@ -1013,7 +1018,7 @@ function get_expire_point($mb_id)
                 from {$g4['point_table']}
                 where mb_id = '$mb_id'
                   and po_expired = '0'
-                  and po_expire_date <> '0000-00-00'
+                  and po_expire_date <> '9999-12-31'
                   and po_expire_date < '".G4_TIME_YMD."' ";
     $row = sql_fetch($sql);
 
