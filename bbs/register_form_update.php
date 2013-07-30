@@ -361,22 +361,6 @@ if ($w == "") {
         alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', G4_URL);
     } else {
         alert('회원 정보가 수정 되었습니다.', G4_URL);
-        /*
-        echo '
-        <html><title>회원정보수정</title><meta http-equiv="Content-Type" content="text/html; charset=$g4[charset]"></html><body>
-        <form name="fregisterupdate" method="post" action="'.$g4['bbs_url'].'/register_form.php">
-        <input type="hidden" name="w" value="u">
-        <input type="hidden" name="mb_id" value="'.$mb_id.'">
-        <input type="hidden" name="mb_password" value="'.$tmp_password.'">
-        <input type="hidden" name="is_update" value="1">
-        </form>
-        <script>
-        alert("회원 정보가 수정 되었습니다.");
-        document.fregisterupdate.submit();
-        </script>
-        </body>
-        </html>';
-        */
     }
 }
 ?>
