@@ -335,6 +335,17 @@ class item_list
 }
 
 
+// 장바구니 건수 검사
+function get_cart_count($uq_id)
+{
+    global $g4;
+
+    $sql = " select count(ct_id) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ";
+    $row = sql_fetch($sql);
+    return (int)$row['cnt'];
+}
+
+
 // 이미지를 얻는다
 function get_image($img, $width=0, $height=0, $img_id='')
 {
