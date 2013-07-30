@@ -25,14 +25,15 @@ for ($i=0; $i<$count; $i++)
         continue;
 
     if($row['po_point'] < 0) {
-        if($row['po_rel_table'] != '@expire') {
-            $mb_id = $row['mb_id'];
-            $po_point = abs($row['po_point']);
+        $mb_id = $row['mb_id'];
+        $po_point = abs($row['po_point']);
 
+        if($row['po_rel_table'] == '@expire')
+            delete_expire_point($mb_id, $po_point);
+        else
             delete_use_point($mb_id, $po_point);
-        }
     } else {
-        if($row['po_expired'] != 1 && $row['po_use_point'] > 0) {
+        if($row['po_use_point'] > 0) {
             insert_use_point($row['mb_id'], $row['po_use_point'], $row['po_id']);
         }
     }
@@ -44,10 +45,11 @@ for ($i=0; $i<$count; $i++)
     // po_mb_point에 반영
     $sql = " update {$g4['point_table']}
                 set po_mb_point = po_mb_point - '{$row['po_point']}'
-                where mb_id = '$mb_id'
-                  and po_id > '{$row['po_id']}' ";
+                where mb_id = '{$_POST['mb_id'][$k]}'
+                  and po_id > '{$_POST['po_id'][$k]}' ";
     sql_query($sql);
 
+    // 포인트 UPDATE
     $sum_point = get_point_sum($_POST['mb_id'][$k]);
     $sql= " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '{$_POST['mb_id'][$k]}' ";
     sql_query($sql);

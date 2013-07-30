@@ -981,6 +981,7 @@ function delete_use_point($mb_id, $point)
     $sql = " select po_id, po_use_point, po_expired, po_expire_date
                 from {$g4['point_table']}
                 where mb_id = '$mb_id'
+                  and po_expired <> '1'
                   and po_use_point > 0
                 $sql_order ";
     $result = sql_query($sql);
@@ -1002,6 +1003,48 @@ function delete_use_point($mb_id, $point)
             $sql = " update {$g4['point_table']}
                         set po_use_point = '0',
                             po_expired = '$po_expired'
+                        where po_id = '{$row['po_id']}' ";
+            sql_query($sql);
+
+            $point1 -= $point2;
+        }
+    }
+}
+
+// 소멸포인트 삭제
+function delete_expire_point($mb_id, $point)
+{
+    global $g4, $config;
+
+    $point1 = abs($point);
+    $sql = " select po_id, po_use_point, po_expired, po_expire_date
+                from {$g4['point_table']}
+                where mb_id = '$mb_id'
+                  and po_expired = '1'
+                  and po_point >= 0
+                  and po_use_point > 0
+                order by po_expire_date desc, po_id desc ";
+    $result = sql_query($sql);
+    for($i=0; $row=sql_fetch_array($result); $i++) {
+        $point2 = $row['po_use_point'];
+        $po_expired = '0';
+        $po_expire_date = '9999-12-31';
+        if($config['cf_point_term'] > 0)
+            $po_expire_date = date('Y-m-d', strtotime('+'.($config['cf_point_term'] - 1).' days', G4_SERVER_TIME));
+
+        if($point2 > $point1) {
+            $sql = " update {$g4['point_table']}
+                        set po_use_point = po_use_point - '$point1',
+                            po_expired = '$po_expired',
+                            po_expire_date = '$po_expire_date'
+                        where po_id = '{$row['po_id']}' ";
+            sql_query($sql);
+            break;
+        } else {
+            $sql = " update {$g4['point_table']}
+                        set po_use_point = '0',
+                            po_expired = '$po_expired',
+                            po_expire_date = '$po_expire_date'
                         where po_id = '{$row['po_id']}' ";
             sql_query($sql);
 
@@ -1104,14 +1147,12 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
         $row = sql_fetch($sql);
 
         if($row['po_point'] < 0) {
-            if($row['po_rel_table'] != '@expire') {
-                $mb_id = $row['mb_id'];
-                $po_point = abs($row['po_point']);
+            $mb_id = $row['mb_id'];
+            $po_point = abs($row['po_point']);
 
-                delete_use_point($mb_id, $po_point);
-            }
+            delete_use_point($mb_id, $po_point);
         } else {
-            if($row['po_expired'] != 1 && $row['po_use_point'] > 0) {
+            if($row['po_use_point'] > 0) {
                 insert_use_point($row['mb_id'], $row['po_use_point'], $row['po_id']);
             }
         }
