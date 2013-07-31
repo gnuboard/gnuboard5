@@ -380,4 +380,14 @@ if (!isset($default['de_shop_skin'])) {
                     ADD `de_shop_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_admin_info_email`,
                     ADD `de_shop_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_shop_skin` ", false);
 }
+
+// 모바일 상품유형 필드 수정
+if (!sql_query(" select de_mobile_type1_list_mod from {$g4['shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    CHANGE `de_mobile_type1_list_row` `de_mobile_type1_list_mod` INT(11) NOT NULL DEFAULT '0',
+                    CHANGE `de_mobile_type2_list_row` `de_mobile_type2_list_mod` INT(11) NOT NULL DEFAULT '0',
+                    CHANGE `de_mobile_type3_list_row` `de_mobile_type3_list_mod` INT(11) NOT NULL DEFAULT '0',
+                    CHANGE `de_mobile_type4_list_row` `de_mobile_type4_list_mod` INT(11) NOT NULL DEFAULT '0',
+                    CHANGE `de_mobile_type5_list_row` `de_mobile_type5_list_mod` INT(11) NOT NULL DEFAULT '0' ", true);
+}
 ?>
