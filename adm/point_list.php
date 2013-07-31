@@ -65,6 +65,11 @@ $po_expire_term = '';
 if($config['cf_point_term'] > 0) {
     $po_expire_term = $config['cf_point_term'];
 }
+
+if (strstr($sfl, "mb_id"))
+    $mb_id = $stx;
+else
+    $mb_id = "";
 ?>
 
 <script>
@@ -153,6 +158,10 @@ function point_clear()
             $link1 = '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
             $link2 = '</a>';
         }
+
+        $expr = '';
+        if($row['po_expired'] == 1)
+            $expr = ' po_expr';
     ?>
 
     <tr>
@@ -168,7 +177,7 @@ function point_clear()
         <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
         <td class="td_time"><?php echo $row['po_datetime'] ?></td>
-        <td class="td_date"><?php echo $row['po_expire_date'] == '9999-12-31' ? '&nbsp;' : $row['po_expire_date']; ?></td>
+        <td class="td_date<?php echo $expr; ?>"><?php echo $row['po_expire_date'] == '9999-12-31' ? '&nbsp;' : $row['po_expire_date']; ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_mb_point']) ?></td>
     </tr>
 
