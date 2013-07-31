@@ -374,6 +374,16 @@ if(!sql_query(" select od_tax_flag from {$g4['shop_order_table']} limit 1 ", fal
 }
 */
 
+/*
+// notax 필드추가
+$sql = " select ct_notax from {$g4['shop_cart_table']} limit 1 ";
+$result = sql_query($sql, false);
+if(!$result) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    ADD `ct_notax` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ct_num` ", true);
+}
+*/
+
 // 쇼핑몰 스킨 필드 추가
 if (!isset($default['de_shop_skin'])) {
     sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
