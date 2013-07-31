@@ -31,6 +31,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     <tr>
         <th scope="col">일시</th>
         <th scope="col">내용</th>
+        <th scope="col">만료일</th>
         <th scope="col">지급포인트</th>
         <th scope="col">사용포인트</th>
     </tr>
@@ -55,10 +56,19 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         }
 
         $po_content = $row['po_content'];
+
+        $expr = '';
+        if($row['po_expired'] == 1)
+            $expr = ' txt_expired';
     ?>
     <tr>
         <td class="td_datetime"><?php echo $row['po_datetime']; ?></td>
         <td><?php echo $po_content; ?></td>
+        <td class="td_date<?php echo $expr; ?>">
+            <?php if ($row['po_expired'] == 1) { ?>
+            만료<?php echo substr(str_replace('-', '', $row['po_expire_date']), 2); ?>
+            <?php } else echo $row['po_expire_date'] == '9999-12-31' ? '&nbsp;' : $row['po_expire_date']; ?>
+        </td>
         <td class="td_bignum"><?php echo $point1; ?></td>
         <td class="td_bignum"><?php echo $point2; ?></td>
     </tr>
@@ -76,12 +86,12 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     </tbody>
     <tfoot>
     <tr>
-        <th scope="row" colspan="2">소계</th>
+        <th scope="row" colspan="3">소계</th>
         <td><?php echo $sum_point1; ?></td>
         <td><?php echo $sum_point2; ?></td>
     </tr>
     <tr>
-        <th scope="row" colspan="2">보유포인트</th>
+        <th scope="row" colspan="3">보유포인트</th>
         <td colspan="2"><?php echo number_format($member['mb_point']); ?></td>
     </tr>
     </tfoot>
