@@ -1483,8 +1483,7 @@ function forderform_check(f)
     }
 
     <?php if($default['de_tax_flag_use']) { ?>
-    if(settle_method != "무통장")
-        calculate_tax();
+    calculate_tax();
     <?php } ?>
 
     // pay_method 설정

@@ -1205,8 +1205,7 @@ function kcp_approval()
     f.settle_method.value = settle_method;
 
     <?php if($default['de_tax_flag_use']) { ?>
-    if(settle_method != "무통장")
-        calculate_tax();
+    calculate_tax();
     <?php } ?>
 
     var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");

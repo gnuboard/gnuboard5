@@ -400,4 +400,12 @@ if (!sql_query(" select de_mobile_type1_list_mod from {$g4['shop_default_table']
                     CHANGE `de_mobile_type4_list_row` `de_mobile_type4_list_mod` INT(11) NOT NULL DEFAULT '0',
                     CHANGE `de_mobile_type5_list_row` `de_mobile_type5_list_mod` INT(11) NOT NULL DEFAULT '0' ", true);
 }
+
+// 과세, 비과세 금액 필드 추가
+if(!sql_query(" select od_tax_mny from {$g4['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_tax_mny` INT(11) NOT NULL DEFAULT '0' AFTER `od_tax_flag`,
+                    ADD `od_vat_mny` INT(11) NOT NULL DEFAULT '0' AFTER `od_tax_mny`,
+                    ADD `od_free_mny` INT(11) NOT NULL DEFAULT '0' AFTER `od_vat_mny` ", true);
+}
 ?>

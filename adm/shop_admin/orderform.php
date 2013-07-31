@@ -474,6 +474,20 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
             <td><?php echo display_price($od['od_cancel_card']); ?></td>
         </tr>
         <?php } ?>
+        <?php if($od['od_tax_flag']) { ?>
+        <tr>
+            <th scope="row">과세공급가액</th>
+            <td><?php echo display_price($od['od_tax_mny']); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">과세부가세액</th>
+            <td><?php echo display_price($od['od_vat_mny']); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">비과세공급가액</th>
+            <td><?php echo display_price($od['od_free_mny']); ?></td>
+        </tr>
+        <?php } ?>
         <tr>
             <th scope="row">포인트</th>
             <td><?php echo display_point($od['od_receipt_point']); ?></td>
