@@ -194,6 +194,9 @@ td.empty_table {padding:85px 0;text-align:center}
 .td_datetime {width:110px;text-align:center}
 .td_mng {width:80px;text-align:center}
 
+.txt_active {color:#5d910b}
+.txt_expired {color:#ccc}
+
 /* 새창 기본 스타일 */
 .new_win {}
 .new_win #new_win_title {margin-bottom:20px;padding:0 20px;height:60px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em;line-height:5em}
