@@ -1052,7 +1052,7 @@ function calculate_temp_point()
     var send_cost = parseInt($("input[name=od_send_cost]").val());
     var point_per = <?php echo $default['de_point_per']; ?>;
     var temp_point = parseInt((sell_amount + send_cost) * (point_per / 100) / 100) * 100;
-    var point = <?php echo $member_point; ?>
+    var point = <?php echo (int)$member_point; ?>
 
     if(temp_point > point)
         temp_point = point;
