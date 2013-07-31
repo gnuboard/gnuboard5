@@ -307,7 +307,7 @@ function get_intall_file()
     // 복합과세처리
     if($default['de_tax_flag_use']) {
         $comm_tax_mny = round(($tot_tax_mny + $send_cost) / 1.1);
-        $comm_vat_mnt = ($tot_tax_mny + $send_cost) - $comm_tax_mny;
+        $comm_vat_mny = ($tot_tax_mny + $send_cost) - $comm_tax_mny;
     }
     ?>
     </tbody>
