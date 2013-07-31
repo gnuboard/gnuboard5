@@ -16,4 +16,6 @@ if(!sql_query(" select cf_point_term from {$g4['config_table']} ", false)) {
                     set po_expire_date = '9999-12-31'
                     where po_expire_date = '0000-00-00' ");
 }
+
+die("테이블 또는 필드 추가 업그레이드가 완료 되었습니다.");
 ?>
