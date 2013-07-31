@@ -65,7 +65,7 @@ if(!isset($config['cf_mobile_pages'])) {
 
 if(!isset($config['cf_facebook_appid'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_kcpcert_use`,  
+                    ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_kcpcert_use`,
                     ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_appid`,
                     ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
                     ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key`,
@@ -331,6 +331,13 @@ $pg_anchor = '<ul class="anchor">
         <td colspan="3">
             <?php echo help('게시물 아래에 누구로 부터 복사, 이동됨 표시') ?>
             <input type="checkbox" name="cf_use_copy_log" value="1" id="cf_use_copy_log" <?php echo $config['cf_use_copy_log']?'checked':''; ?>> 남김
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_point_term">포인트 유효기간</label></th>
+        <td colspan="3">
+            <?php echo help('기간을 0으로 설정시 포인트 유효기간이 적용되지 않습니다.') ?>
+            <input type="text" name="cf_point_term" value="<?php echo $config['cf_point_term']; ?>" id="cf_point_term" required class="required frm_input" size="5"> 일
         </td>
     </tr>
     <tr>

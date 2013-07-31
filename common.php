@@ -25,7 +25,7 @@ if (!get_magic_quotes_gpc()) {
             foreach ($value as &$v) $fn($v, $fn);
         }
     ');
-    
+
     // Escape data
     $addslashes_deep($_POST, $addslashes_deep);
     $addslashes_deep($_GET, $addslashes_deep);
@@ -95,7 +95,7 @@ if (file_exists($dbconfig_file)) {
     $connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
     $select_db  = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
     @mysql_query(" set names utf8 ");
-    if (defined(G4_TIMEZONE)) @mysql_query(" set time_zone = '".G4_TIMEZONE."'"); 
+    if (defined(G4_TIMEZONE)) @mysql_query(" set time_zone = '".G4_TIMEZONE."'");
 } else {
 ?>
 
@@ -165,7 +165,7 @@ $config = sql_fetch(" select * from {$g4['config_table']} ");
 
 define('G4_HTTP_BBS_URL',  https_url(G4_BBS_DIR, false));
 define('G4_HTTPS_BBS_URL', https_url(G4_BBS_DIR, true));
-if ($config['cf_editor']) 
+if ($config['cf_editor'])
     define('G4_EDITOR_LIB', G4_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
 else
     define('G4_EDITOR_LIB', G4_LIB_PATH."/editor.lib.php");
@@ -182,7 +182,7 @@ if (G4_USE_MOBILE) {
         $is_mobile = false;
     else if ($_REQUEST['device']=='mobile')
         $is_mobile = true;
-    else if (isset($_SESSION['ss_is_mobile'])) 
+    else if (isset($_SESSION['ss_is_mobile']))
         $is_mobile = $_SESSION['ss_is_mobile'];
     else if (is_mobile())
         $is_mobile = true;
@@ -263,7 +263,7 @@ if (isset($_REQUEST['spt']))  { // search part (검색 파트[구간])
 
 if (isset($_REQUEST['page'])) { // 리스트 페이지
     $page = (int)$_REQUEST['page'];
-    if ($page) 
+    if ($page)
         $qstr .= '&amp;page=' . urlencode($page);
 } else {
     $page = '';

@@ -40,6 +40,14 @@ set_session('ss_mb_id', $mb['mb_id']);
 // FLASH XSS 공격에 대응하기 위하여 회원의 고유키를 생성해 놓는다. 관리자에서 검사함 - 110106
 set_session('ss_mb_key', md5($mb['mb_datetime'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']));
 
+// 포인트 체크
+if($config['cf_use_point']) {
+    $sum_point = get_point_sum($mb['mb_id']);
+
+    $sql= " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '{$mb['mb_id']}' ";
+    sql_query($sql);
+}
+
 // 3.26
 // 아이디 쿠키에 한달간 저장
 if ($auto_login) {

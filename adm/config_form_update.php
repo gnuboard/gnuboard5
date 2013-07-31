@@ -23,6 +23,7 @@ $sql = " update {$g4['config_table']}
                  cf_include_tail = '{$_POST['cf_include_tail']}',
                  cf_add_script = '{$_POST['cf_add_script']}',
                  cf_use_point = '{$_POST['cf_use_point']}',
+                 cf_point_term = '{$_POST['cf_point_term']}',
                  cf_use_norobot = '{$_POST['cf_use_norobot']}',
                  cf_use_copy_log = '{$_POST['cf_use_copy_log']}',
                  cf_use_email_certify = '{$_POST['cf_use_email_certify']}',
