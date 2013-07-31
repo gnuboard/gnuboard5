@@ -53,7 +53,7 @@ class item_list
     // select 에 사용되는 필드
     protected $fields = "*";
 
-    // 분류코드로만 사용하는 경우 상품유형($type)을 0 으로 설정하면 됩니다.    
+    // 분류코드로만 사용하는 경우 상품유형($type)을 0 으로 설정하면 됩니다.
     protected $ca_id = "";
     protected $ca_id2 = "";
     protected $ca_id3 = "";
@@ -83,7 +83,7 @@ class item_list
     protected $view_sns = false;            // SNS
 
     // 몇번째 class 호출인지를 저장합니다.
-    protected $count = 0; 
+    protected $count = 0;
 
     // true 인 경우 페이지를 구한다.
     protected $is_page = false;
@@ -128,7 +128,7 @@ class item_list
     // 분류코드로 검색을 하고자 하는 경우 아래와 같이 인수를 넘겨줍니다.
     // 1단계 분류는 (분류코드, 1)
     // 2단계 분류는 (분류코드, 2)
-    // 3단계 분류는 (분류코드, 3) 
+    // 3단계 분류는 (분류코드, 3)
     function set_category($ca_id, $level=1) {
         if ($level == 2) {
             $this->ca_id2 = $ca_id;
@@ -141,7 +141,7 @@ class item_list
 
     // 이벤트코드를 인수로 넘기게 되면 해당 이벤트에 속한 상품을 노출합니다.
     function set_event($ev_id) {
-        $this->event = $ev_id;        
+        $this->event = $ev_id;
     }
 
     // 리스트 스킨을 바꾸고자 하는 경우에 사용합니다.
@@ -176,7 +176,7 @@ class item_list
         } else {
             $this->list_row = $list_row ? $list_row : $default['de_type'.$this->type.'_list_row'];
         }
-        if (!$this->list_row) 
+        if (!$this->list_row)
             $this->list_row = 1;
     }
 
@@ -224,13 +224,13 @@ class item_list
     // anchor 태그에 하이퍼링크를 다른 주소로 걸거나 아예 링크를 걸지 않을 수 있습니다.
     // 인수를 "" 공백으로 넘기면 링크를 걸지 않습니다.
     function set_href($href) {
-        $this->href = $href;        
+        $this->href = $href;
     }
 
-    // ul 태그의 css 를 교체할수 있다. "sct sct_abc" 를 인수로 넘기게 되면 
+    // ul 태그의 css 를 교체할수 있다. "sct sct_abc" 를 인수로 넘기게 되면
     // 기존의 ul 태그에 걸린 css 는 무시되며 인수로 넘긴 css 가 사용됩니다.
     function set_css($css) {
-        $this->css = $css;        
+        $this->css = $css;
     }
 
     // 페이지를 노출하기 위해 true 로 설정할때 사용합니다.
@@ -254,7 +254,7 @@ class item_list
         global $g4, $config, $member, $default;
 
         if ($this->query) {
-            
+
             $sql = $this->query;
             $result = sql_query($sql);
             $this->total_count = @mysql_num_rows($result);
@@ -265,7 +265,7 @@ class item_list
             if ($this->use) {
                 $where[] = " it_use = '1' ";
             }
-            
+
             if ($this->type) {
                 $where[] = " it_type{$this->type} = '1' ";
             }
@@ -338,11 +338,16 @@ class item_list
 // 장바구니 건수 검사
 function get_cart_count($uq_id)
 {
-    global $g4;
+    global $g4, $default;
 
     $sql = " select count(ct_id) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ";
+    if($default['de_cart_keep_term']) {
+        $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+        $sql .= " and ct_time > '$ctime' ";
+    }
     $row = sql_fetch($sql);
-    return (int)$row['cnt'];
+    $cnt = (int)$row['cnt'];
+    return $cnt;
 }
 
 
@@ -1360,19 +1365,19 @@ function item_icon($it)
     if ($stock <= 0)
         $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_soldout.gif" alt="품절"> ';
 
-    if ($it['it_type1']) 
+    if ($it['it_type1'])
         $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_hit.gif" alt="최신상품">';
 
-    if ($it['it_type2']) 
+    if ($it['it_type2'])
         $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_rec.gif" alt="히트상품">';
 
-    if ($it['it_type3']) 
+    if ($it['it_type3'])
         $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_new.gif" alt="추천상품">';
 
-    if ($it['it_type4']) 
+    if ($it['it_type4'])
         $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_best.gif" alt="인기상품">';
 
-    if ($it['it_type5']) 
+    if ($it['it_type5'])
         $icon .= '<img src="'.G4_SHOP_URL.'/img/icon_discount.gif" alt="할인상품">';
 
     $icon .= '</span>';

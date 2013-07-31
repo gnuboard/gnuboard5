@@ -163,8 +163,6 @@ else
 
     <form name="fitem" action="<?php echo $action_url; ?>" method="post">
     <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
-    <input type="hidden" name="it_name" value="<?php echo $it['it_name']; ?>">
-    <input type="hidden" name="total_price" value="">
     <input type="hidden" name="sw_direct">
     <input type="hidden" name="url">
 
@@ -323,7 +321,6 @@ else
                     $it_point = get_item_point($it);
                     echo number_format($it_point);
                     ?> 점
-                    <input type="hidden" name="it_point" value="<?php echo $it_point; ?>">
                 </td>
             </tr>
             <?php } ?>

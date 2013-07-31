@@ -9,6 +9,7 @@ $token = get_token();
 $sql_common = " from {$g4['point_table']} ";
 
 $sql_search = " where (1) ";
+
 if ($stx) {
     $sql_search .= " and ( ";
     switch ($sfl) {
@@ -58,7 +59,17 @@ if ($sfl == 'mb_id' && $stx)
 $g4['title'] = '포인트관리';
 include_once ('./admin.head.php');
 
-$colspan = 8;
+$colspan = 9;
+
+$po_expire_term = '';
+if($config['cf_point_term'] > 0) {
+    $po_expire_term = $config['cf_point_term'];
+}
+
+if (strstr($sfl, "mb_id"))
+    $mb_id = $stx;
+else
+    $mb_id = "";
 ?>
 
 <script>
@@ -125,9 +136,10 @@ function point_clear()
         <th scope="col">회원아이디</th>
         <th scope="col">이름</th>
         <th scope="col">별명</th>
-        <th scope="col">일시</th>
         <th scope="col">포인트 내용</th>
         <th scope="col">포인트</th>
+        <th scope="col">일시</th>
+        <th scope="col">만료일</th>
         <th scope="col">포인트합</th>
     </tr>
     </thead>
@@ -146,6 +158,10 @@ function point_clear()
             $link1 = '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
             $link2 = '</a>';
         }
+
+        $expr = '';
+        if($row['po_expired'] == 1)
+            $expr = ' txt_expired';
     ?>
 
     <tr>
@@ -158,10 +174,15 @@ function point_clear()
         <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
         <td class="td_mbname"><?php echo $row2['mb_name'] ?></td>
         <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
-        <td class="td_time"><?php echo $row['po_datetime'] ?></td>
         <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
-        <td class="td_bignum td_pt"><?php echo number_format($row2['mb_point']) ?></td>
+        <td class="td_time"><?php echo $row['po_datetime'] ?></td>
+        <td class="td_date<?php echo $expr; ?>">
+            <?php if ($row['po_expired'] == 1) { ?>
+            만료<?php echo date('ymd', strtotime($row['po_expire_date'])); ?>
+            <?php } else echo $row['po_expire_date'] == '9999-12-31' ? '&nbsp;' : $row['po_expire_date']; ?>
+        </td>
+        <td class="td_num td_pt"><?php echo number_format($row['po_mb_point']) ?></td>
     </tr>
 
     <?php
@@ -211,6 +232,12 @@ function point_clear()
         <th scope="row"><label for="po_point">포인트<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="po_point" id="po_point" required class="required frm_input"></td>
     </tr>
+    <?php if($config['cf_point_term'] > 0) { ?>
+    <tr>
+        <th scope="row"><label for="po_expire_term">포인트 유효기간</label></th>
+        <td><input type="text" name="po_expire_term" value="<?php echo $po_expire_term; ?>" id="po_expire_term" class="frm_input" size="5"> 일</td>
+    </tr>
+    <?php } ?>
     </tbody>
     </table>
 

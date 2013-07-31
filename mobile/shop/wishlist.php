@@ -65,9 +65,6 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <?php } else { //품절이 아니면 체크할수 있도록한다 ?>
             <input type="checkbox" name="it_id[<?php echo $i; ?>]"     value="<?php echo $row['it_id']; ?>" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
             <?php } ?>
-            <input type="hidden"   name="it_name[<?php echo $i; ?>]"   value="<?php echo $row['it_name']; ?>">
-            <input type="hidden"   name="it_price[<?php echo $i; ?>]" value="<?php echo $it_price; ?>">
-            <input type="hidden"   name="it_point[<?php echo $i; ?>]"  value="<?php echo $it_point; ?>">
             <input type="hidden"   name="ct_qty[<?php echo $i; ?>]"    value="1">
         </td>
         <td class="td_smallmng"><a href="<?php echo G4_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>

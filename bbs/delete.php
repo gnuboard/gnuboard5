@@ -101,8 +101,8 @@ while ($row = sql_fetch_array($result))
     else
     {
         // 코멘트 포인트 삭제
-        if (!delete_point($row['mb_id'], $bo_table, $row['wr_id'], '코멘트'))
-            insert_point($row['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_id']}-{$row['wr_id']} 코멘트삭제");
+        if (!delete_point($row['mb_id'], $bo_table, $row['wr_id'], '댓글'))
+            insert_point($row['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_id']}-{$row['wr_id']} 댓글삭제");
 
         $count_comment++;
     }
