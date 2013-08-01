@@ -26,12 +26,9 @@ if(!mysql_num_rows($result))
 <!-- 장바구니 옵션 시작 { -->
 <form name="foption" method="post" action="<?php echo G4_SHOP_URL; ?>/cartupdate.php" onsubmit="return formcheck(this);">
 <input type="hidden" name="act" value="optionmod">
-<input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
+<input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
 <input type="hidden" name="it_price" value="<?php echo $row2['ct_price']; ?>">
-<input type="hidden" name="it_name" value="<?php echo $row2['it_name']; ?>">
-<input type="hidden" name="it_point" value="<?php echo $it_point; ?>">
 <input type="hidden" name="ct_send_cost" value="<?php echo $row2['ct_send_cost']; ?>">
-<input type="hidden" name="total_price" value="">
 <input type="hidden" name="sw_direct">
 <?php
 $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
@@ -96,16 +93,15 @@ if($option_2) {
                 $cls = 'spl';
         ?>
         <li class="sit_<?php echo $cls; ?>_list">
-            <input type="hidden" name="ct_id[]" value="<?php echo $row['ct_id']; ?>">
-            <input type="hidden" name="io_type[]" value="<?php echo $row['io_type']; ?>">
-            <input type="hidden" name="io_id[]" value="<?php echo $row['io_id']; ?>">
-            <input type="hidden" name="io_value[]" value="<?php echo $row['ct_option']; ?>">
+            <input type="hidden" name="io_type[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['io_type']; ?>">
+            <input type="hidden" name="io_id[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['io_id']; ?>">
+            <input type="hidden" name="io_value[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['ct_option']; ?>">
             <input type="hidden" name="io_price[]" value="<?php echo $row['io_price']; ?>">
             <input type="hidden" name="io_stock[]" value="<?php echo $it_stock_qty; ?>">
             <span class="sit_opt_subj"><?php echo $row['ct_option']; ?></span>
             <span class="sit_opt_prc"><?php echo $io_price; ?></span>
             <div>
-                <input type="text" name="ct_qty[]" value="<?php echo $row['ct_qty']; ?>" class="frm_input" size="5">
+                <input type="text" name="ct_qty[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['ct_qty']; ?>" class="frm_input" size="5">
                 <button type="button" class="sit_qty_plus btn_frmline">증가</button>
                 <button type="button" class="sit_qty_minus btn_frmline">감소</button>
                 <button type="button" class="btn_frmline">삭제</button>
@@ -128,7 +124,7 @@ if($option_2) {
 function formcheck(f)
 {
     var val, result = true;
-    $("li input[name='ct_qty[]']").each(function() {
+    $("li input[name^=ct_qty]").each(function() {
         val = $(this).val();
 
         if(val.length < 1) {

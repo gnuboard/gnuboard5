@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-//print_r2($_POST); exit;
+// print_r2($_POST); exit;
 
 // uq_id 설정
 set_unique_id($sw_direct);
@@ -74,217 +74,45 @@ else if ($act == "seldelete") // 선택삭제
         }
     }
 }
-else if ($act == "multi") // 여러개의 상품이 한꺼번에 들어옴.
-{
-    $fldcnt = count($_POST['it_id']);
-    $arr_item = array();
-
-    // 재고등을 검사
-    $error = "";
-	for ($i=0; $i<$fldcnt; $i++)
-    {
-        if ($_POST['it_id'][$i] == "" || $_POST['ct_qty'][$i] <= 0) { continue; }
-
-        //옵션있는 상품은 건너뜀
-        $arr_item[$i]['opt_skip'] = 0;
-        $sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$_POST['it_id'][$i]}' and io_type = '0' ";
-        $tmp = sql_fetch($sql);
-        if($tmp['cnt']) {
-            $arr_item[$i]['opt_skip'] = 1;
-            continue;
-        }
-
-        // 상품정보
-        $sql = " select * from {$g4['shop_item_table']} where it_id = '{$_POST['it_id'][$i]}' ";
-        $it = sql_fetch($sql);
-        if(!$it['it_id'])
-            continue;
-
-        $arr_item[$i]['id'] = $it['it_id'];
-        $arr_item[$i]['name'] = $it['it_name'];
-        $arr_item[$i]['price'] = get_price($it);
-        $arr_item[$i]['point'] = $config['cf_use_point'] ? get_item_point($it) : 0;
-        $arr_item[$i]['notax'] = $it['it_notax'];
-
-        // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-        $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']} where it_id = '{$_POST['it_id'][$i]}' and uq_id = '$tmp_uq_id' ";
-        $row = sql_fetch($sql);
-        $sum_qty = $row['cnt'];
-
-        // 재고 구함
-        $it_stock_qty = get_it_stock_qty($_POST['it_id'][$i]);
-        if ($_POST['ct_qty'][$i] + $sum_qty > $it_stock_qty) {
-            $error .= "{$_POST['it_name'][$i]} 의 재고수량이 부족합니다. 현재 재고수량 : $it_stock_qty\\n\\n";
-        }
-    }
-
-    // 오류가 있다면 오류메세지 출력
-    if ($error != "") { alert($error); }
-
-    $ct_count = 0;
-    $comma = '';
-    $sql = " INSERT INTO {$g4['shop_cart_table']}
-                    ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
-                VALUES ";
-    $ct_select = 0;
-    if($sw_direct)
-        $ct_select = 1;
-
-	for ($i=0; $i<$fldcnt; $i++)
-    {
-        if ($_POST['it_id'][$i] == "" || $_POST['ct_qty'][$i] <= 0) continue;
-
-        // 옵션있는 상품이라면 건너뜀
-        if($arr_item[$i]['opt_skip'])
-            continue;
-
-        // 동일옵션의 상품이 있으면 수량 더함
-        $sql2 = " select ct_id
-                    from {$g4['shop_cart_table']}
-                    where uq_id = '$tmp_uq_id'
-                      and it_id = '{$_POST['it_id'][$i]}'
-                      and ct_status = '쇼핑' ";
-        $row2 = sql_fetch($sql2);
-        if($row2['ct_id']) {
-            $sql3 = " update {$g4['shop_cart_table']}
-                        set ct_qty = ct_qty + {$_POST['ct_qty'][$i]}
-                        where ct_id = '{$row2['ct_id']}' ";
-            sql_query($sql3);
-
-            continue;
-        }
-
-        $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$arr_item[$i]['id']}', '{$arr_item[$i]['name']}', '쇼핑', '{$arr_item[$i]['price']}', '{$arr_item[$i]['point']}', '0', '0', '{$arr_item[$i]['name']}', '{$_POST['ct_qty'][$i]}', '0', '{$arr_item[$i]['notax']}', '', '0', '0', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
-        $comma = ' , ';
-        $ct_count++;
-    }
-
-    if($ct_count > 0)
-        sql_query($sql);
-}
-else if ($act == "optionmod") // 장바구니에서 옵션변경
-{
-    if (!$_POST['it_id'])
-        alert('장바구니에 담을 상품을 선택하여 주십시오.');
-
-    $option_count = count($_POST['io_id']);
-
-    if($_POST['io_type'][0] != 0)
-        alert('상품의 선택옵션을 선택해 주십시오.');
-
-    if($option_count) {
-        for($i=0; $i<count($_POST['ct_qty']); $i++) {
-            if ($_POST['ct_qty'][$i] < 1)
-                alert('수량은 1 이상 입력해 주십시오.');
-        }
-
-        // 상품정보
-        $sql = " select * from {$g4['shop_item_table']} where it_id = '{$_POST['it_id']}' ";
-        $it = sql_fetch($sql);
-        if(!$it['it_id'])
-            alert('상품정보가 존재하지 않습니다.');
-
-        // 옵션정보를 얻어서 배열에 저장
-        $opt_list = array();
-        $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$_POST['it_id']}' and io_use = '1' order by io_no asc ";
-        $result = sql_query($sql);
-        for($i=0; $row=sql_fetch_array($result); $i++) {
-            $opt_list[$row['io_type']][$row['io_id']]['id'] = $row['io_id'];
-            $opt_list[$row['io_type']][$row['io_id']]['price'] = $row['io_price'];
-            $opt_list[$row['io_type']][$row['io_id']]['stock'] = $row['io_stock_qty'];
-        }
-
-        // 포인트
-        $point = 0;
-        if($config['cf_use_point'])
-            $point = get_item_point($it);
-
-        //--------------------------------------------------------
-        //  재고 검사
-        //--------------------------------------------------------
-        // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-        for($i=0; $i<$option_count; $i++) {
-            $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
-                      where it_id = '{$_POST['it_id']}'
-                        and uq_id = '$tmp_uq_id'
-                        and io_id = '{$_POST['io_id'][$i]}' ";
-            $row = sql_fetch($sql);
-            $sum_qty = $row['cnt'];
-
-            // 재고 구함
-            $ct_qty = $_POST['ct_qty'][$i];
-            if(!$_POST['io_id'][$i])
-                $it_stock_qty = get_it_stock_qty($_POST['it_id']);
-            else
-                $it_stock_qty = get_option_stock_qty($_POST['it_id'], $_POST['io_id'][$i], $_POST['io_type'][$i]);
-
-            if ($ct_qty + $sum_qty > $it_stock_qty)
-            {
-                alert($_POST['io_value'][$i]." 의 재고수량이 부족합니다.\\n\\n현재 재고수량 : " . number_format($it_stock_qty) . " 개");
-            }
-        }
-        //--------------------------------------------------------
-
-        // 기존 장바구니 자료를 먼저 삭제
-        sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and it_id = '$it_id' ");
-
-        // 장바구니에 Insert
-        $comma = '';
-        $sql = " INSERT INTO {$g4['shop_cart_table']}
-                        ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_direct, ct_send_cost )
-                    VALUES ";
-
-        for($i=0; $i<$option_count; $i++) {
-            $opt_id = $_POST['io_id'][$i];
-            $opt_type = $_POST['io_type'][$i];
-
-            // 옵션테이블에 정보가 없으면 건너뜀
-            if($opt_id && !$opt_list[$opt_type][$opt_id]['id'])
-                continue;
-
-            $opt_price = $opt_list[$opt_type][$opt_id]['price'];
-            $opt_qty = $_POST['ct_qty'][$i];
-
-            $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '{$_POST['io_value'][$i]}', '$opt_qty', '$i', '{$it['it_notax']}', '$opt_id', '$opt_type', '$opt_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$sw_direct', '$ct_send_cost' )";
-            $comma = ' , ';
-        }
-
-        sql_query($sql);
-    } else {
-        // 기존 장바구니 자료 삭제
-        sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and it_id = '$it_id' ");
-    }
-}
 else // 장바구니에 담기
 {
-    if (!$_POST['it_id'])
+    $count = count($_POST['it_id']);
+    if ($count < 1)
         alert('장바구니에 담을 상품을 선택하여 주십시오.');
 
-    $option_count = count($_POST['io_id']);
-    if($option_count) {
-        if($_POST['io_type'][0] != 0)
+    for($i=0; $i<$count; $i++) {
+        // 보관함의 상품을 담을 때 체크되지 않은 상품 건너뜀
+        if($act == 'multi' && !$_POST['chk_it_id'][$i])
+            continue;
+
+        $it_id = $_POST['it_id'][$i];
+        $opt_count = count($_POST['io_id'][$it_id]);
+
+        if($opt_count && $_POST['io_type'][$it_id][0] != 0)
             alert('상품의 선택옵션을 선택해 주십시오.');
 
-        for($i=0; $i<count($_POST['ct_qty']); $i++) {
-            if ($_POST['ct_qty'][$i] < 1)
+        for($k=0; $k<$opt_count; $k++) {
+            if ($_POST['ct_qty'][$it_id][$k] < 1)
                 alert('수량은 1 이상 입력해 주십시오.');
         }
 
         // 상품정보
-        $total_price = 0;
-        $sql = " select * from {$g4['shop_item_table']} where it_id = '{$_POST['it_id']}' ";
+        $sql = " select * from {$g4['shop_item_table']} where it_id = '$it_id' ";
         $it = sql_fetch($sql);
         if(!$it['it_id'])
             alert('상품정보가 존재하지 않습니다.');
 
         // 옵션정보를 얻어서 배열에 저장
         $opt_list = array();
-        $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$_POST['it_id']}' and io_use = '1' order by io_no asc ";
+        $sql = " select * from {$g4['shop_item_option_table']} where it_id = '$it_id' order by io_no asc ";
         $result = sql_query($sql);
-        for($i=0; $row=sql_fetch_array($result); $i++) {
+        $lst_count = 0;
+        for($k=0; $row=sql_fetch_array($result); $k++) {
             $opt_list[$row['io_type']][$row['io_id']]['id'] = $row['io_id'];
+            $opt_list[$row['io_type']][$row['io_id']]['use'] = $row['io_use'];
             $opt_list[$row['io_type']][$row['io_id']]['price'] = $row['io_price'];
             $opt_list[$row['io_type']][$row['io_id']]['stock'] = $row['io_stock_qty'];
+            $lst_count++;
         }
 
         // 포인트
@@ -296,35 +124,44 @@ else // 장바구니에 담기
         //  재고 검사
         //--------------------------------------------------------
         // 이미 장바구니에 있는 같은 상품의 수량합계를 구한다.
-        for($i=0; $i<$option_count; $i++) {
+        for($k=0; $k<$opt_count; $k++) {
+            $io_id = $_POST['io_id'][$it_id][$k];
+            $io_type = $_POST['io_type'][$it_id][$k];
+            $io_value = $_POST['io_value'][$it_id][$k];
+
             $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
-                      where it_id = '{$_POST['it_id']}'
+                      where it_id = '$it_id'
                         and uq_id = '$tmp_uq_id'
-                        and io_id = '{$_POST['io_id'][$i]}' ";
+                        and io_id = '$io_id' ";
             $row = sql_fetch($sql);
             $sum_qty = $row['cnt'];
 
             // 재고 구함
-            $ct_qty = $_POST['ct_qty'][$i];
-            if(!$_POST['io_id'][$i])
-                $it_stock_qty = get_it_stock_qty($_POST['it_id']);
+            $ct_qty = $_POST['ct_qty'][$it_id][$k];
+            if(!$io_id)
+                $it_stock_qty = get_it_stock_qty($it_id);
             else
-                $it_stock_qty = get_option_stock_qty($_POST['it_id'], $_POST['io_id'][$i], $_POST['io_type'][$i]);
+                $it_stock_qty = get_option_stock_qty($it_id, $io_id, $io_type);
 
             if ($ct_qty + $sum_qty > $it_stock_qty)
             {
-                alert($_POST['io_value'][$i]." 의 재고수량이 부족합니다.\\n\\n현재 재고수량 : " . number_format($it_stock_qty) . " 개");
+                alert($io_value." 의 재고수량이 부족합니다.\\n\\n현재 재고수량 : " . number_format($it_stock_qty) . " 개");
             }
         }
         //--------------------------------------------------------
 
         // 바로구매에 있던 장바구니 자료를 지운다.
-        sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and ct_direct = 1 ", false);
+        if($i == 0)
+            sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and ct_direct = 1 ", false);
+
+        // 옵션수정일 때 기존 장바구니 자료를 먼저 삭제
+        if($act == 'optionmod')
+            sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and it_id = '$it_id' ");
 
         // 장바구니에 Insert
         $sql = " select ct_num
                     from {$g4['shop_cart_table']}
-                    where it_id = '{$_POST['it_id']}'
+                    where it_id = '$it_id'
                       and uq_id = '$tmp_uq_id'
                     order by ct_num desc ";
         $row = sql_fetch($sql);
@@ -344,35 +181,39 @@ else // 장바구니에 담기
                         ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
                     VALUES ";
 
-        for($i=0; $i<$option_count; $i++) {
-            $opt_id = $_POST['io_id'][$i];
-            $opt_type = $_POST['io_type'][$i];
+        for($k=0; $k<$opt_count; $k++) {
+            $io_id = $_POST['io_id'][$it_id][$k];
+            $io_type = $_POST['io_type'][$it_id][$k];
+            $io_value = $_POST['io_value'][$it_id][$k];
 
-            // 옵션테이블에 정보가 없으면 건너뜀
-            if($opt_id && !$opt_list[$opt_type][$opt_id]['id'])
+            // 옵션정보가 존재하는데 선택된 옵션이 없으면 건너뜀
+            if($lst_count && $io_id == '')
                 continue;
 
-            $opt_price = $opt_list[$opt_type][$opt_id]['price'];
-            $opt_qty = $_POST['ct_qty'][$i];
+            // 구매할 수 없는 옵션은 건너뜀
+            if($io_id && !$opt_list[$io_type][$io_id]['use'])
+                continue;
+
+            $io_price = $opt_list[$io_type][$io_id]['price'];
+            $ct_qty = $_POST['ct_qty'][$it_id][$k];
 
             // 동일옵션의 상품이 있으면 수량 더함
             $sql2 = " select ct_id
                         from {$g4['shop_cart_table']}
                         where uq_id = '$tmp_uq_id'
-                          and it_id = '{$_POST['it_id']}'
-                          and io_id = '{$_POST['io_id'][$i]}'
+                          and it_id = '$it_id'
+                          and io_id = '$io_id'
                           and ct_status = '쇼핑' ";
             $row2 = sql_fetch($sql2);
             if($row2['ct_id']) {
                 $sql3 = " update {$g4['shop_cart_table']}
-                            set ct_qty = ct_qty + {$_POST['ct_qty'][$i]}
+                            set ct_qty = ct_qty + '$ct_qty'
                             where ct_id = '{$row2['ct_id']}' ";
                 sql_query($sql3);
-
                 continue;
             }
 
-            $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '{$_POST['io_value'][$i]}', '$opt_qty', '$ct_num', '{$it['it_notax']}', '$opt_id', '$opt_type', '$opt_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
+            $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '$ct_num', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
             $comma = ' , ';
             $ct_num++;
             $ct_count++;
