@@ -203,11 +203,13 @@
             of.param_opt_3.value    = "<?php echo $param_opt_3; ?>";
 
             var od = window.opener.document;
-            od.getElementById("show_req_btn").style.display = "none";
-            od.getElementById("show_progress").style.display = "block";
-            od.getElementById("show_pay_btn").style.display = "inline";
+            od.getElementById("display_pay_button").style.display = "none";
+            //od.getElementById("show_req_btn").style.display = "none";
+            //od.getElementById("show_progress").style.display = "block";
+            //od.getElementById("show_pay_btn").style.display = "inline";
 
-            alert("주문하기를 클릭하셔야 주문이 완료됩니다.");
+            //alert("주문하기를 클릭하셔야 주문이 완료됩니다.");
+            window.opener.forderform_check();
             window.close();
         } else {
             kcp_AJAX();

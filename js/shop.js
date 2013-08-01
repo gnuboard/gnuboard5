@@ -1,5 +1,6 @@
 var option_add = false;
 var supply_add = false;
+var isAndroid = (navigator.userAgent.toLowerCase().indexOf("android") > -1);
 
 $(function() {
     // 선택옵션
@@ -35,9 +36,15 @@ $(function() {
         }
     });
 
-    $("select[name='it_option[]']").live("mousedown", function() {
-        option_add = true;
-    });
+    if(isAndroid) {
+        $("select[name='it_option[]']").live("touchend", function() {
+            option_add = true;
+        });
+    } else {
+        $("select[name='it_option[]']").live("mousedown", function() {
+            option_add = true;
+        });
+    }
 
     $("select[name='it_option[]']").live("change", function() {
         var sel_count = $("select[name='it_option[]']").size();
@@ -129,9 +136,15 @@ $(function() {
         }
     });
 
-    $("select[name='it_supply[]']").live("mousedown", function() {
-        supply_add = true;
-    });
+    if(isAndroid) {
+        $("select[name='it_supply[]']").live("touchend", function() {
+            supply_add = true;
+        });
+    } else {
+        $("select[name='it_supply[]']").live("mousedown", function() {
+            supply_add = true;
+        });
+    }
 
     $("select[name='it_supply[]']").live("change", function() {
         var $el = $(this);

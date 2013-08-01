@@ -338,7 +338,7 @@ ob_end_clean();
 </div>
 
 <div id="sod_frm">
-    <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
+    <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
     <input type="hidden" name="od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="org_od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="od_send_cost" value="<?php echo $send_cost; ?>">
@@ -634,7 +634,7 @@ ob_end_clean();
                 if ($temp_point > $member_point)
                     $temp_point = $member_point;
 
-                echo '<div><input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
+                echo '<div><input type="hidden" name="max_temp_point" value="'.$temp_point.'">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
                 echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
                 $multi_settle++;
             }
@@ -673,12 +673,18 @@ ob_end_clean();
 	<input type="hidden" name="param_opt_1"	   value="">
 	<input type="hidden" name="param_opt_2"	   value="">
 	<input type="hidden" name="param_opt_3"	   value="">
+    <?php if($default['de_tax_flag_use']) { ?>
+    <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
+    <input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
+    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
+    <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
+    <?php } ?>
 
     <p id="show_progress" style="display:none;">반드시 주문하기 버튼을 클릭 하셔야만 결제가 진행됩니다.</p>
 
     <div id="display_pay_button" class="btn_confirm">
         <span id="show_req_btn"><input type="button" name="submitChecked" onClick="kcp_approval();" value="결제등록요청"class="btn_submit"></span>
-        <span id="show_pay_btn" style="display:none;"><input type="submit" value="주문하기" class="btn_submit"></span>
+        <span id="show_pay_btn" style="display:none;"><input type="button" onClick="forderform_check();" value="주문하기" class="btn_submit"></span>
         <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
     </div>
     </form>
@@ -1118,77 +1124,25 @@ function calculate_tax()
 }
 
 /* 결제방법에 따른 처리 후 결제등록요청 실행 */
+var settle_method = "";
+var temp_point = 0;
+
 function kcp_approval()
 {
     var f = document.sm_form;
     var pf = document.forderform;
 
-    var settle_case = document.getElementsByName("od_settle_case");
-    var settle_check = false;
-    var settle_method = "";
-    for (i=0; i<settle_case.length; i++)
-    {
-        if (settle_case[i].checked)
-        {
-            settle_check = true;
-            settle_method = settle_case[i].value;
-            break;
-        }
-    }
-    if (!settle_check)
-    {
-        alert("결제방식을 선택하십시오.");
+    // 필드체크
+    if(!orderfield_check(pf))
         return false;
-    }
 
-    var tot_amount = <?php echo (int)$tot_amount; ?>;
-    var max_point = 0;
-    if (typeof(pf.max_temp_point) != "undefined")
-        max_point  = parseInt(pf.max_temp_point.value);
+    // 금액체크
+    if(!payment_check(pf))
+        return false;
 
-    if (typeof(pf.od_temp_point) != "undefined") {
-        if (pf.od_temp_point.value)
-        {
-            if (pf.od_temp_point.value)
-            {
-                temp_point = parseInt(pf.od_temp_point.value);
-
-                if (temp_point < 0) {
-                    alert("포인트를 0 이상 입력하세요.");
-                    pf.od_temp_point.select();
-                    return false;
-                }
-
-                if (temp_point > tot_amount) {
-                    alert("주문금액 보다 많이 포인트결제할 수 없습니다.");
-                    pf.od_temp_point.select();
-                    return false;
-                }
-
-                if (temp_point > <?php echo (int)$member['mb_point']; ?>) {
-                    alert("회원님의 포인트보다 많이 결제할 수 없습니다.");
-                    pf.od_temp_point.select();
-                    return false;
-                }
-
-                if (temp_point > max_point) {
-                    alert(max_point + "점 이상 결제할 수 없습니다.");
-                    pf.od_temp_point.select();
-                    return false;
-                }
-
-                if (parseInt(parseInt(temp_point / 100) * 100) != temp_point) {
-                    alert("포인트를 100점 단위로 입력하세요.");
-                    pf.od_temp_point.select();
-                    return false;
-                }
-
-                // pg 결제 금액에서 포인트 금액 차감
-                if(settle_method != "무통장" && temp_point > 0) {
-                    f.good_mny.value = parseInt(f.good_mny.value) - temp_point;
-                }
-            }
-        }
+    // pg 결제 금액에서 포인트 금액 차감
+    if(settle_method != "무통장" && temp_point > 0) {
+        f.good_mny.value = parseInt(f.good_mny.value) - temp_point;
     }
 
     f.buyr_name.value = pf.od_name.value;
@@ -1204,17 +1158,34 @@ function kcp_approval()
     f.rcvr_add2.value = pf.od_b_addr2.value;
     f.settle_method.value = settle_method;
 
-    <?php if($default['de_tax_flag_use']) { ?>
-    calculate_tax();
-    <?php } ?>
-
     var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
     f.target = "tar_opener";
 
     f.submit();
 }
 
-function forderform_check(f)
+function forderform_check()
+{
+    var f = document.forderform;
+
+    // 필드체크
+    if(!orderfield_check(f))
+        return false;
+
+    // 금액체크
+    if(!payment_check(f))
+        return false;
+
+    if(settle_method != "무통장" && f.res_cd.value != "0000") {
+        alert("결제등록요청 후 주문해 주십시오.");
+        return false;
+    }
+
+    f.submit();
+}
+
+// 주문폼 필드체크
+function orderfield_check(f)
 {
     errmsg = "";
     errfld = "";
@@ -1271,7 +1242,6 @@ function forderform_check(f)
 
     var settle_case = document.getElementsByName("od_settle_case");
     var settle_check = false;
-    var settle_method = "";
     for (i=0; i<settle_case.length; i++)
     {
         if (settle_case[i].checked)
@@ -1287,16 +1257,17 @@ function forderform_check(f)
         return false;
     }
 
-    if(settle_method != "무통장" && f.res_cd.value != "0000") {
-        alert("결제등록요청 후 주문해 주십시오.");
-        return false;
-    }
+    return true;
+}
 
+// 결제체크
+function payment_check(f)
+{
+    temp_point = 0;
     var tot_amount = <?php echo (int)$tot_amount; ?>;
     if (typeof(f.max_temp_point) != "undefined")
         var max_point  = parseInt(f.max_temp_point.value);
 
-    var temp_point = 0;
     if (typeof(f.od_temp_point) != "undefined") {
         if (f.od_temp_point.value)
         {
@@ -1360,6 +1331,10 @@ function forderform_check(f)
             }
         }
     }
+
+    <?php if($default['de_tax_flag_use']) { ?>
+    calculate_tax();
+    <?php } ?>
 
     return true;
 }
