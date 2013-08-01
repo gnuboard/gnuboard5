@@ -397,6 +397,16 @@ $od_escrow = 0;
 if($escw_yn == 'Y')
     $od_escrow = 1;
 
+// 복합과세 금액
+$od_tax_mny = round($od_temp_amount / 1.1);
+$od_vat_mny = $od_temp_amount - $od_tax_mny;
+$od_free_mny = 0;
+if($default['de_tax_flag_use']) {
+    $od_tax_mny = (int)$_POST['comm_tax_mny'];
+    $od_vat_mny = (int)$_POST['comm_vat_mny'];
+    $od_free_mny = (int)$_POST['comm_free_mny'];
+}
+
 // 주문서에 입력
 $sql = " insert {$g4['shop_order_table']}
             set od_id             = '$od_id',
@@ -433,6 +443,9 @@ $sql = " insert {$g4['shop_order_table']}
                 od_tno            = '$od_tno',
                 od_escrow         = '$od_escrow',
                 od_tax_flag       = '{$default['de_tax_flag_use']}',
+                od_tax_mny        = '$od_tax_mny',
+                od_vat_mny        = '$od_vat_mny',
+                od_free_mny       = '$od_free_mny',
                 od_shop_memo      = '',
                 od_hope_date      = '$od_hope_date',
                 od_time           = '".G4_TIME_YMDHIS."',

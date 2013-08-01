@@ -179,7 +179,7 @@ function point_clear()
         <td class="td_time"><?php echo $row['po_datetime'] ?></td>
         <td class="td_date<?php echo $expr; ?>">
             <?php if ($row['po_expired'] == 1) { ?>
-            만료<?php echo date('ymd', strtotime($row['po_expire_date'])); ?>
+            만료<?php echo substr(str_replace('-', '', $row['po_expire_date']), 2); ?>
             <?php } else echo $row['po_expire_date'] == '9999-12-31' ? '&nbsp;' : $row['po_expire_date']; ?>
         </td>
         <td class="td_num td_pt"><?php echo number_format($row['po_mb_point']) ?></td>

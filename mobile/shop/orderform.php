@@ -222,7 +222,7 @@ ob_start();
     // 복합과세처리
     if($default['de_tax_flag_use']) {
         $comm_tax_mny = round(($tot_tax_mny + $send_cost) / 1.1);
-        $comm_vat_mnt = ($tot_tax_mny + $send_cost) - $comm_tax_mny;
+        $comm_vat_mny = ($tot_tax_mny + $send_cost) - $comm_tax_mny;
     }
     ?>
     </tbody>
@@ -1205,8 +1205,7 @@ function kcp_approval()
     f.settle_method.value = settle_method;
 
     <?php if($default['de_tax_flag_use']) { ?>
-    if(settle_method != "무통장")
-        calculate_tax();
+    calculate_tax();
     <?php } ?>
 
     var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
