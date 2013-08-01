@@ -673,6 +673,12 @@ ob_end_clean();
 	<input type="hidden" name="param_opt_1"	   value="">
 	<input type="hidden" name="param_opt_2"	   value="">
 	<input type="hidden" name="param_opt_3"	   value="">
+    <?php if($default['de_tax_flag_use']) { ?>
+    <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
+    <input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
+    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
+    <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
+    <?php } ?>
 
     <p id="show_progress" style="display:none;">반드시 주문하기 버튼을 클릭 하셔야만 결제가 진행됩니다.</p>
 
