@@ -84,14 +84,14 @@ if ($is_admin)
         echo '</div>';
         */
 
-        // 총몇개 = 한줄에 몇개 * 몇줄
-        $items = $ca['ca_list_mod'] * $ca['ca_list_row'];
+        // 총몇개
+        $items = $ca['ca_mobile_list_mod'];
         // 페이지가 없으면 첫 페이지 (1 페이지)
         if ($page == "") $page = 1;
         // 시작 레코드 구함
         $from_record = ($page - 1) * $items;
 
-        $list = new item_list($ca['ca_skin'], $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height']);
+        $list = new item_list($ca['ca_mobile_skin'], $ca['ca_mobile_list_mod'], 1, $ca['ca_mobile_img_width'], $ca['ca_mobile_img_height']);
         $list->set_category($ca['ca_id']);
         $list->set_is_page(true);
         $list->set_from_record($from_record);
