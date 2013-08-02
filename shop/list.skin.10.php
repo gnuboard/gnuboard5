@@ -36,9 +36,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
             </span>
         </a>
         <div class="sct_sns">
-            <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_URL.'/img/shop/sns_fb.png'); ?>
-            <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_URL.'/img/shop/sns_twt.png'); ?>
-            <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_URL.'/img/shop/sns_goo.png'); ?>
+            <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_URL.'/shop/img/sns_fb.png'); ?>
+            <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_URL.'/shop/img/sns_twt.png'); ?>
+            <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_URL.'/shop/img/sns_goo.png'); ?>
         </div>
     </li>
 <?php
