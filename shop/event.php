@@ -26,52 +26,18 @@ echo '<div id="sev_hhtml">'.stripslashes($ev['ev_head_html']).'</div>';
 
 // 상품 출력순서가 있다면
 if ($sort != "")
-    $order_by = $sort . " , ";
-
-// 상품 (하위 분류의 상품을 모두 포함한다.)
-// 1.02.00
-// a.it_order 추가
-/*
-$sql_list1 = " select a.ca_id,
-                      a.it_id,
-                      a.it_name,
-                      a.it_maker,
-                      a.it_point,
-                      a.it_price,
-                      a.it_stock_qty,
-                      a.it_cust_price,
-                      it_basic,
-                      it_opt1,
-                      it_opt2,
-                      it_opt3,
-                      it_opt4,
-                      it_opt5,
-                      it_opt6,
-                      a.it_type1,
-                      a.it_type2,
-                      a.it_type3,
-                      a.it_type4,
-                      a.it_type5 ";
-*/
-$sql_list1 = " select * ";
-$sql_list2 = " order by $order_by a.it_order, a.it_id desc ";
-
-$sql_common = " from {$g4['shop_item_table']} a
-                left join {$g4['shop_event_item_table']} b on (a.it_id=b.it_id)
-               where b.ev_id = '$ev_id'
-                 and a.it_use = '1' ";
+    $order_by = $sort.' '.$sortodr.' , b.it_order, b.it_id desc';
 
 $error = "<img src='".G4_SHOP_URL."/img/no_item.gif' border=0>";
 
 if ($skin)
     $ev['ev_skin'] = $skin;
 
-$td_width = (int)($mod / 100);
-
 // 리스트 유형별로 출력
-$list_file = G4_SHOP_PATH."/{$ev['ev_skin']}";
+$list_file = G4_SHOP_SKIN_PATH."/{$ev['ev_skin']}";
 if (file_exists($list_file))
 {
+    /*
     $list_mod   = $ev['ev_list_mod'];
     $list_row   = $ev['ev_list_row'];
     $img_width  = $ev['ev_img_width'];
@@ -84,7 +50,32 @@ if (file_exists($list_file))
     $result = sql_query($sql);
 
     include $list_file;
+    */
 
+    $list_mod   = $ev['ev_list_mod'];
+    $list_row   = $ev['ev_list_row'];
+
+    include G4_SHOP_PATH.'/list.sub.php';
+    include G4_SHOP_PATH.'/list.sort.php';
+
+    // 총몇개 = 한줄에 몇개 * 몇줄
+    $items = $ev['ev_list_mod'] * $ev['ev_list_row'];
+    // 페이지가 없으면 첫 페이지 (1 페이지)
+    if ($page == "") $page = 1;
+    // 시작 레코드 구함
+    $from_record = ($page - 1) * $items;
+
+    $list = new item_list($ev['ev_skin'], $list_mod, $list_row, $ev['ev_img_width'], $ev['ev_img_height']);
+    $list->set_event($ev['ev_id']);
+    $list->set_is_page(true);
+    $list->set_order_by($order_by);
+    $list->set_from_record($from_record);
+    echo $list->run();
+
+    // where 된 전체 상품수
+    $total_count = $list->total_count;
+    // 전체 페이지 계산
+    $total_page  = ceil($total_count / $items);
 }
 else
 {
