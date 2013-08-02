@@ -110,7 +110,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #gnb {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f5f6fa}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 .gnb_1dul {margin:0;border:0;background:#fff;list-style:none}
-.gnb_1dli {position:relative;background:url('../img/shop/gnb_bg.gif') top right repeat-x}
+.gnb_1dli {position:relative;background:url('../shop/img/gnb_bg.gif') top right repeat-x}
 .gnb_1dli_on {background-position:right -33px;color:#fff;text-decoration:none}
 .gnb_1da {display:inline-block;padding:0 10px;width:128px;height:33px;border-bottom:1px solid #f4f4f4;font-weight:bold;text-decoration:none;line-height:2.9em !important;line-height:2.7em}
 .gnb_1dli_on .gnb_1da {color:#fff !important;text-decoration:none !important}
@@ -340,7 +340,7 @@ td.empty_table {padding:85px 0;text-align:center}
 #sct_location {margin:0 0 10px;border:1px solid #e9e9e9;background:#f5f6fa;letter-spacing:-4px}
 #sct_location a {display:inline-block;padding:10px 10px 8px;text-decoration:none;letter-spacing:0 !important}
 .sct_here {font-weight:bold}
-.sct_bg {padding-right:15px !important;background:url('../img/shop/sct_bg_toright.gif') right 11px no-repeat}
+.sct_bg {padding-right:15px !important;background:url('../shop/img/sct_bg_toright.gif') right 11px no-repeat}
 
 /* 상품 목록 카테고리 목록 */
 .sct_ct {}
