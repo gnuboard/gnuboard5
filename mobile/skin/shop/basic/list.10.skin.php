@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
+<link rel="stylesheet" href="<?php echo G4_MSHOP_SKIN_URL; ?>/style.css">
 
 <!-- 상품진열 10 시작 { -->
 <?php
