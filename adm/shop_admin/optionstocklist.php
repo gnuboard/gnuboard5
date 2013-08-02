@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = '상품옵션재고관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$sql_search = " where 1 ";
+$sql_search = " where b.it_id is not NULL ";
 if ($search != "") {
 	if ($sel_field != "") {
     	$sql_search .= " and $sel_field like '%$search%' ";
