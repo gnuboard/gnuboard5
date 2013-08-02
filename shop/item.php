@@ -687,7 +687,7 @@ else
         }
 
         var val, result = true;
-        $("input[name='ct_qty[]']").each(function() {
+        $("input[name^=ct_qty]").each(function() {
             val = $(this).val();
 
             if(val.length < 1) {
