@@ -135,7 +135,7 @@ $total_count = $row['cnt'];
     ?>
     <tr>
         <td class="ssch_it_img"><?php echo $image; ?></td>
-        <td><?php echo get_text($row['it_name']).it_name_icon($row); ?></td>
+        <td><?php echo get_text($row['it_name']); ?></td>
         <td class="ssch_num"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></td>
         <td class="ssch_num"><?php echo display_point($row['it_point']); ?></td>
     </tr>

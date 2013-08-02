@@ -215,8 +215,6 @@ else
         </div>
         <!-- } 상품이미지 미리보기 끝 -->
 
-        <?php //echo it_name_icon($it, false, 0); ?>
-
         <!-- 상품 요약정보 및 구매 시작 { -->
         <section id="sit_ov">
             <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?> 요약정보 및 구매</h2>

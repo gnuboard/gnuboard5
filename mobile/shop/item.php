@@ -237,8 +237,6 @@ else
             </script>
         </div>
 
-        <?php //echo it_name_icon($it, false, 0); ?>
-
         <section id="sit_ov">
             <h2>상품간략정보 및 구매기능</h2>
             <strong id="sit_title"><?php echo stripslashes($it['it_name']); ?></strong><br>
