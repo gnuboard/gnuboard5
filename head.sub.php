@@ -46,8 +46,8 @@ if (defined('G4_IS_ADMIN')) {
 } else {
     echo '<link rel="stylesheet" href="'.G4_CSS_URL.'/'.(G4_IS_MOBILE?'mobile':'default').'.css">'.PHP_EOL;
 }
-// echo '<meta http-equiv="imagetoolbar" content="no">';
-// echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge" />';
+echo '<meta http-equiv="imagetoolbar" content="no">';
+echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge">';
 ?>
 <!--[if lte IE 8]>
 <script src="<?php echo G4_JS_URL ?>/html5.js"></script>
