@@ -46,7 +46,7 @@
 .sct_12 .sct_li {float:left;margin:0 16px 15px 0;}
 .sct_12 .sct_last {margin:0 0 15px !important}
 .sct_12 .sct_clear {clear:both}
-.sct_12 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../img/shop/icon_arw_toleft.gif') no-repeat}
+.sct_12 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../shop/img/icon_arw_toleft.gif') no-repeat}
 .sct_12 .sct_a {display:block;position:relative;padding:20px 10px 20px 240px;width:110px;height:190px;border:1px solid #e9e9e9;background:#f5f6fa;text-decoration:none}
 .sct_12 .sct_a:focus, .sct_12 .sct_a:hover {text-decoration:none}
 .sct_12 .sct_img {position:absolute;top:0;left:0}
@@ -62,7 +62,7 @@
 .sct_13 .sct_li {float:left;margin:0 0 16px 0;width:100%}
 .sct_13 .sct_last {}
 .sct_13 .sct_clear {clear:both}
-.sct_13 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../img/shop/icon_arw_toleft.gif') no-repeat}
+.sct_13 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../shop/img/icon_arw_toleft.gif') no-repeat}
 .sct_13 .sct_a {display:block;position:relative;padding:20px 10px 20px 240px;height:190px;border:1px solid #e9e9e9;background:#f5f6fa;text-decoration:none}
 .sct_13 .sct_a:focus, .sct_13 .sct_a:hover {text-decoration:none}
 .sct_13 .sct_img {position:absolute;top:0;left:0}
