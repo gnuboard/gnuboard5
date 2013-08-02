@@ -177,7 +177,7 @@ $pg_anchor .= '</ul>';
     <tr>
         <th scope="row"><label for="ca_skin">출력스킨</label></th>
         <td>
-            <?php echo help("기본으로 제공하는 스킨은 ".G4_SHOP_DIR."/list.skin.*.php 입니다."); ?>
+            <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G4_PATH.'/', '', G4_SHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
             <select id="ca_skin" name="ca_skin">
                 <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $ca['ca_skin']); ?>
             </select>
@@ -186,9 +186,9 @@ $pg_anchor .= '</ul>';
     <tr>
         <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
         <td>
-            <?php echo help("기본으로 제공하는 스킨은 ".G4_MOBILE_DIR.'/'.G4_SHOP_DIR."/list.skin.*.php 입니다."); ?>
+            <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G4_PATH.'/', '', G4_MSHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
             <select id="ca_mobile_skin" name="ca_mobile_skin">
-                <?php echo get_list_skin_options("^list.skin.(.*)\.php", G4_MSHOP_PATH, $ca['ca_mobile_skin']); ?>
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_MSHOP_SKIN_PATH, $ca['ca_mobile_skin']); ?>
             </select>
         </td>
     </tr>
