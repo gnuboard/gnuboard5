@@ -65,41 +65,15 @@ if ($is_admin)
     include G4_SHOP_PATH.'/listcategory3.inc.php';
 
     // 상품 출력순서가 있다면
-    if ($sort != "") {
-        $order_by = $sort . ' '.$sortodr. ' , ';
-    }
-
-    // 상품 (하위 분류의 상품을 모두 포함한다.)
-    $sql_list1 = " select * ";
-    $sql_list2 = " order by $order_by it_order, it_id desc ";
-
-    // 하위분류 포함
-    // 판매가능한 상품만
-    $sql_common = " from {$g4['shop_item_table']} where (ca_id like '{$ca_id}%' or ca_id2 like '{$ca_id}%' or ca_id3 like '{$ca_id}%') and it_use = '1' ";
+    if ($sort != "")
+        $order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
 
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
     // 리스트 유형별로 출력
     $list_file = G4_SHOP_SKIN_PATH.'/'.$ca['ca_skin'];
     if (file_exists($list_file)) {
-        //display_type(2, "maintype10.inc.php", 4, 2, 100, 100, $ca[ca_id]);
-
-        /*
-        $list_mod   = $ca['ca_list_mod'];
-        $list_row   = $ca['ca_list_row'];
-        $img_width  = $ca['ca_img_width'];
-        $img_height = $ca['ca_img_height'];
-
-        include G4_SHOP_PATH.'/list.sub.php';
         include G4_SHOP_PATH.'/list.sort.php';
-
-        $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";
-        $result = sql_query($sql);
-
-        echo '<div class="sct_wrap">';
-        include $list_file;
-        echo '</div>';
-        */
 
         // 총몇개 = 한줄에 몇개 * 몇줄
         $items = $ca['ca_list_mod'] * $ca['ca_list_row'];
@@ -111,6 +85,7 @@ if ($is_admin)
         $list = new item_list($ca['ca_skin'], $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height']);
         $list->set_category($ca['ca_id']);
         $list->set_is_page(true);
+        $list->set_order_by($order_by);
         $list->set_from_record($from_record);
         echo $list->run();
 

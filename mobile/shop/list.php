@@ -48,42 +48,14 @@ if ($is_admin)
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_mobile_head_html']).'</div>';
 
     // 상품 출력순서가 있다면
-    if ($sort != "") {
-        $order_by = $sort . ' '.$sortodr. ' , ';
-    }
-
-    // 상품 (하위 분류의 상품을 모두 포함한다.)
-    $sql_list1 = " select * ";
-    $sql_list2 = " order by $order_by it_order, it_id desc ";
-
-    // 하위분류 포함
-    // 판매가능한 상품만
-    $sql_common = " from {$g4['shop_item_table']}
-                   where (ca_id like '{$ca_id}%'
-                       or ca_id2 like '{$ca_id}%'
-                       or ca_id3 like '{$ca_id}%')
-                     and it_use = '1' ";
+    if ($sort != "")
+        $order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
 
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
     // 리스트 유형별로 출력
     $list_file = G4_MSHOP_SKIN_PATH.'/'.$ca['ca_mobile_skin'];
     if (file_exists($list_file)) {
-        /*
-        $list_row   = $ca['ca_mobile_list_row'];
-        $img_width  = $ca['ca_mobile_img_width'];
-        $img_height = $ca['ca_mobile_img_height'];
-
-        include G4_MSHOP_PATH.'/list.sub.php';
-
-        $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";
-        $result = sql_query($sql);
-
-        echo '<div class="sct_wrap">';
-        include $list_file;
-        echo '</div>';
-        */
-
         // 총몇개
         $items = $ca['ca_mobile_list_mod'];
         // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -94,6 +66,8 @@ if ($is_admin)
         $list = new item_list($ca['ca_mobile_skin'], $ca['ca_mobile_list_mod'], 1, $ca['ca_mobile_img_width'], $ca['ca_mobile_img_height']);
         $list->set_category($ca['ca_id']);
         $list->set_is_page(true);
+        $list->set_mobile(true);
+        $list->set_order_by($order_by);
         $list->set_from_record($from_record);
         echo $list->run();
 
