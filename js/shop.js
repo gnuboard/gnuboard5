@@ -50,7 +50,7 @@ $(function() {
         var sel_count = $("select[name='it_option[]']").size();
         var idx = $("select[name='it_option[]']").index($(this));
         var val = $(this).val();
-        var it_id = $("input[name=it_id]").val();
+        var it_id = $("input[name='it_id[]']").val();
 
         // 선택값이 없을 경우 하위 옵션은 disabled
         if(val == "") {
@@ -161,7 +161,7 @@ $(function() {
     $("#sit_sel_option li button").live("click", function() {
         var mode = $(this).text();
         var this_qty, max_qty = 9999, min_qty = 1;
-        var $el_qty = $(this).closest("li").find("input[name='ct_qty[]']");
+        var $el_qty = $(this).closest("li").find("input[name^=ct_qty]");
         var stock = parseInt($(this).closest("li").find("input[name='io_stock[]']").val());
 
         switch(mode) {
@@ -221,7 +221,7 @@ $(function() {
     });
 
     // 수량직접입력
-    $("input[name='ct_qty[]']").live("keyup", function() {
+    $("input[name^=ct_qty]").live("keyup", function() {
         var val= $(this).val();
 
         if(val != "") {
@@ -328,6 +328,7 @@ function sel_supply_process($el, add_exec)
 // 선택된 옵션 출력
 function add_sel_option(type, id, option, price, stock)
 {
+    var item_code = $("input[name='it_id[]']").val();
     var opt = "";
     var li_class = "sit_opt_list";
     if(type)
@@ -340,14 +341,14 @@ function add_sel_option(type, id, option, price, stock)
         opt_prc = "("+number_format(String(price))+"원)";
 
     opt += "<li class=\""+li_class+"\">\n";
-    opt += "<input type=\"hidden\" name=\"io_type[]\" value=\""+type+"\">\n";
-    opt += "<input type=\"hidden\" name=\"io_id[]\" value=\""+id+"\">\n";
-    opt += "<input type=\"hidden\" name=\"io_value[]\" value=\""+option+"\">\n";
+    opt += "<input type=\"hidden\" name=\"io_type["+item_code+"][]\" value=\""+type+"\">\n";
+    opt += "<input type=\"hidden\" name=\"io_id["+item_code+"][]\" value=\""+id+"\">\n";
+    opt += "<input type=\"hidden\" name=\"io_value["+item_code+"][]\" value=\""+option+"\">\n";
     opt += "<input type=\"hidden\" name=\"io_price[]\" value=\""+price+"\">\n";
     opt += "<input type=\"hidden\" name=\"io_stock[]\" value=\""+stock+"\">\n";
     opt += "<span class=\"sit_opt_subj\">"+option+"</span>\n";
     opt += "<span class=\"sit_opt_prc\">"+opt_prc+"</span>\n";
-    opt += "<div><input type=\"text\" name=\"ct_qty[]\" value=\"1\" class=\"frm_input\" size=\"5\">\n";
+    opt += "<div><input type=\"text\" name=\"ct_qty["+item_code+"][]\" value=\"1\" class=\"frm_input\" size=\"5\">\n";
     opt += "<button type=\"button\" class=\"sit_qty_plus btn_frmline\">증가</button>\n";
     opt += "<button type=\"button\" class=\"sit_qty_minus btn_frmline\">감소</button>\n";
     opt += "<button type=\"button\" class=\"sit_opt_del btn_frmline\">삭제</button></div>\n";
@@ -387,7 +388,7 @@ function add_sel_option(type, id, option, price, stock)
 function same_option_check(val)
 {
     var result = false;
-    $("input[name='io_value[]']").each(function() {
+    $("input[name^=io_value]").each(function() {
         if(val == $(this).val()) {
             result = true;
             return false;
@@ -404,9 +405,9 @@ function same_option_check(val)
 function price_calculate()
 {
     var it_price = parseInt($("input[name=it_price]").val());
-    var $el_prc = $("input[name='io_price[]']");
-    var $el_qty = $("input[name='ct_qty[]']");
-    var $el_type = $("input[name='io_type[]']");
+    var $el_prc = $("input[name^=io_price]");
+    var $el_qty = $("input[name^=ct_qty]");
+    var $el_type = $("input[name^=io_type]");
     var price, type, qty, total = 0;
 
     $el_prc.each(function(index) {
@@ -421,7 +422,6 @@ function price_calculate()
         }
     });
 
-    $("input[name=total_price]").val(total);
     $("#sit_tot_price").empty().html("총 금액 : "+number_format(String(total))+"원");
 }
 

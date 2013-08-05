@@ -63,7 +63,7 @@ $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
                 <dt>작성일</dt>
                 <dd><?php echo $is_time; ?></dd>
                 <dt>선호도<dt>
-                <dd class="sit_use_star"><img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></dd>
+                <dd class="sit_use_star"><img src="<?php echo G4_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></dd>
             </dl>
 
             <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">

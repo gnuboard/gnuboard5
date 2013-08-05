@@ -162,7 +162,7 @@ else
 <div id="sit">
 
     <form name="fitem" action="<?php echo $action_url; ?>" method="post">
-    <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
+    <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
     <input type="hidden" name="sw_direct">
     <input type="hidden" name="url">
 
@@ -214,8 +214,6 @@ else
             ?>
         </div>
         <!-- } 상품이미지 미리보기 끝 -->
-
-        <?php //echo it_name_icon($it, false, 0); ?>
 
         <!-- 상품 요약정보 및 구매 시작 { -->
         <section id="sit_ov">
@@ -400,15 +398,15 @@ else
                 <?php if(!$option_1 && !$option_2) { ?>
                 <ul id="sit_opt_added">
                     <li class="sit_opt_list">
-                        <input type="hidden" name="io_type[]" value="0">
-                        <input type="hidden" name="io_id[]" value="">
-                        <input type="hidden" name="io_value[]" value="<?php echo $it['it_name']; ?>">
+                        <input type="hidden" name="io_type[<?php echo $it_id; ?>][]" value="0">
+                        <input type="hidden" name="io_id[<?php echo $it_id; ?>][]" value="">
+                        <input type="hidden" name="io_value[<?php echo $it_id; ?>][]" value="<?php echo $it['it_name']; ?>">
                         <input type="hidden" name="io_price[]" value="0">
                         <input type="hidden" name="io_stock[]" value="<?php echo $it['it_stock_qty']; ?>">
                         <span class="sit_opt_subj"><?php echo $it['it_name']; ?></span>
                         <span class="sit_opt_prc">(+0원)</span>
                         <div>
-                            <input type="text" name="ct_qty[]" value="1" class="frm_input" size="5">
+                            <input type="text" name="ct_qty[<?php echo $it_id; ?>][]" value="1" class="frm_input" size="5">
                             <button type="button" class="sit_qty_plus btn_frmline">증가</button>
                             <button type="button" class="sit_qty_minus btn_frmline">감소</button>
                         </div>
@@ -687,7 +685,7 @@ else
         }
 
         var val, result = true;
-        $("input[name='ct_qty[]']").each(function() {
+        $("input[name^=ct_qty]").each(function() {
             val = $(this).val();
 
             if(val.length < 1) {

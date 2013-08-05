@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = '상품옵션재고관리';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$sql_search = " where 1 ";
+$sql_search = " where b.it_id is not NULL ";
 if ($search != "") {
 	if ($sel_field != "") {
     	$sql_search .= " and $sel_field like '%$search%' ";
@@ -192,7 +192,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <input type="hidden" name="io_id[<?php echo $i; ?>]" value="<?php echo $row['io_id']; ?>">
             <input type="hidden" name="io_type[<?php echo $i; ?>]" value="<?php echo $row['io_type']; ?>">
-            <a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a>
+            <a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a>
         </td>
         <td class="grid_3"><?php echo $option; ?></td>
         <td class="td_mng"><?php echo $type; ?></td>

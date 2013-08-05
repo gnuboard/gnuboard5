@@ -122,7 +122,6 @@ $total_count = $row['cnt'];
             <span class="ssch_img"><?php echo $image; ?></span>
             <b class="ssch_ct"><?php echo ($ca_temp) ? $ca_temp : $ca_name; ?></b>
             <a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo get_text($row['it_name']); ?></a>
-            <?php echo it_name_icon($row); ?>
             <span class="ssch_cost"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></span>
             <p><?php echo $row['it_basic']; ?></p>
         </li>

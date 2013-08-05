@@ -68,27 +68,27 @@ include_once(G4_PATH.'/head.sub.php');
                 <li>
                     <input type="radio" name="is_score" value="10" id="is_score10" <?php echo ($is_score==10)?'checked="checked"':''; ?>>
                     <label for="is_score10">매우만족</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star5.png">
+                    <img src="<?php echo G4_URL; ?>/shop/img/s_star5.png">
                 </li>
                 <li>
                     <input type="radio" name="is_score" value="8" id="is_score8" <?php echo ($is_score==8)?'checked="checked"':''; ?>>
                     <label for="is_score8">만족</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star4.png">
+                    <img src="<?php echo G4_URL; ?>/shop/img/s_star4.png">
                 </li>
                 <li>
                     <input type="radio" name="is_score" value="6" id="is_score6" <?php echo ($is_score==6)?'checked="checked"':''; ?>>
                     <label for="is_score6">보통</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star3.png">
+                    <img src="<?php echo G4_URL; ?>/shop/img/s_star3.png">
                 </li>
                 <li>
                     <input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
                     <label for="is_score4">불만</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star2.png">
+                    <img src="<?php echo G4_URL; ?>/shop/img/s_star2.png">
                 </li>
                 <li>
                     <input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
                     <label for="is_score2">매우불만</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star1.png">
+                    <img src="<?php echo G4_URL; ?>/shop/img/s_star1.png">
                 </li>
             </ul>
         </td>

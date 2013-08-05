@@ -118,7 +118,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
                 <dt>작성일</dt>
                 <dd><?php echo substr($row['is_time'],0,10); ?></dd>
                 <dt>평가점수</dt>
-                <dd><img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $star; ?>.png" alt="별<?php echo $star; ?>개"></dd>
+                <dd><img src="<?php echo G4_URL; ?>/shop/img/s_star<?php echo $star; ?>.png" alt="별<?php echo $star; ?>개"></dd>
             </dl>
 
             <div id="sps_con_<?php echo $i; ?>" style="display:none;">
