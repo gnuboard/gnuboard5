@@ -10,9 +10,6 @@ $sct_sort_href .= '&amp;ev_id='.$ev_id.'&amp;sort=';
 <!-- 상품 정렬 선택 시작 { -->
 <section id="sct_sort">
     <h2>상품 정렬</h2>
-    <div>
-        상품 <b><?php echo number_format($total_count); ?></b>개
-    </div>
 
     <ul>
         <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=asc" class="btn01">낮은가격순</a></li>
