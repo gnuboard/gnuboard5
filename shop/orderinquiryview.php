@@ -85,7 +85,7 @@ if(openwin != null) {
             ?>
             <li>
                 <p>
-                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?><?php echo $row['it_name']; ?></a>
+                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo $row['it_name']; ?></a>
                 </p>
 
                 <table class="basic_tbl">
