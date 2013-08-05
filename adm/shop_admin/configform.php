@@ -681,7 +681,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row">관련상품출력</th>
         <td>
-            <?php echo help(G4_SHOP_DIR.'/item.php 에서 '.G4_SHOP_DIR.'/maintype10.inc.php 를 include 하여 출력합니다.'); ?>
+            <?php echo help(G4_SHOP_DIR.'/item.php 에서 스킨설정에서 설정된 스킨의 list.10.skin.php 를 include 하여 출력합니다.'); ?>
             <label for="de_rel_list_mod">1줄당 이미지 수</label>
             <input type="text" name="de_rel_list_mod" value="<?php echo $default['de_rel_list_mod']; ?>" id="de_rel_list_mod" class="frm_input" size="3">
             <label for="de_rel_img_width">이미지폭</label>
