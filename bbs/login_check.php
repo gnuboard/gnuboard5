@@ -30,8 +30,9 @@ if ($mb['mb_leave_date'] && $mb['mb_leave_date'] <= date("Ymd", G4_SERVER_TIME))
     alert('탈퇴한 아이디이므로 접근하실 수 없습니다.\n탈퇴일 : '.$date);
 }
 
-if ($config['cf_use_email_certify'] && !preg_match("/[1-9]/", $mb['mb_email_certify']))
-    alert('메일인증을 받으셔야 로그인 하실 수 있습니다.\\n회원님의 메일주소는 '.$mb['mb_email'].' 입니다.');
+if ($config['cf_use_email_certify'] && !preg_match("/[1-9]/", $mb['mb_email_certify'])) {
+    confirm("{$mb['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다. 다른 메일주소로 인증하시려면 취소를 클릭하시기 바랍니다.", G4_URL, G4_BBS_URL.'/register_email.php?mb_id='.$mb_id);
+}
 
 @include_once($member_skin_path.'/login_check.skin.php');
 

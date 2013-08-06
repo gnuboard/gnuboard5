@@ -3,6 +3,16 @@ include_once('./_common.php');
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
+<script>
+var conf = "<?php echo strip_tags($msg); ?>";
+if (confirm(conf)) {
+    document.location.replace("<?php echo $url1; ?>");
+} else {
+    document.location.replace("<?php echo $url2; ?>");
+}
+</script>
+
+<noscript>
 <article id="confirm_check">
 <header>
     <hgroup>
@@ -18,6 +28,7 @@ include_once(G4_PATH.'/head.sub.php');
 <a href="<?php echo $url2; ?>">취소</a><br><br>
 <a href="<?php echo $url3; ?>">돌아가기</a>
 </article>
+</noscript>
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');
