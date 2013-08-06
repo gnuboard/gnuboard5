@@ -64,7 +64,9 @@ if ($is_admin)
         $from_record = ($page - 1) * $items;
 
         $list = new item_list($ca['ca_mobile_skin'], $ca['ca_mobile_list_mod'], 1, $ca['ca_mobile_img_width'], $ca['ca_mobile_img_height']);
-        $list->set_category($ca['ca_id']);
+        $list->set_category($ca['ca_id'], 1);
+        $list->set_category($ca['ca_id'], 2);
+        $list->set_category($ca['ca_id'], 3);
         $list->set_is_page(true);
         $list->set_mobile(true);
         $list->set_order_by($order_by);
