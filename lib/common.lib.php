@@ -570,6 +570,7 @@ function html_purifier($html)
     $config->set('HTML.SafeObject', true);
     $config->set('HTML.SafeIframe', true);
     $config->set('URI.SafeIframeRegexp','%^(https?:)?//('.$safeiframe.')%');
+    $config->set('Attr.AllowedFrameTargets', array('_blank'));
     $purifier = new HTMLPurifier($config);
     return $purifier->purify($html);
 }
