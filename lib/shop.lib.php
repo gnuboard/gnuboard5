@@ -281,7 +281,7 @@ class item_list
                 if ($this->ca_id3) {
                     $where_ca_id[] = " ca_id3 like '{$this->ca_id3}%' ";
                 }
-                $where[] = implode(" or ", $where_ca_id);
+                $where[] = "( ".implode(" or ", $where_ca_id)." )";
             }
 
             if ($this->order_by) {
