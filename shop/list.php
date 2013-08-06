@@ -83,7 +83,9 @@ if ($is_admin)
         $from_record = ($page - 1) * $items;
 
         $list = new item_list($ca['ca_skin'], $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height']);
-        $list->set_category($ca['ca_id']);
+        $list->set_category($ca['ca_id'], 1);
+        $list->set_category($ca['ca_id'], 2);
+        $list->set_category($ca['ca_id'], 3);
         $list->set_is_page(true);
         $list->set_order_by($order_by);
         $list->set_from_record($from_record);
