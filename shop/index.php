@@ -51,7 +51,7 @@ exit;
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=1">히트상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 히트상품 모음</p>
     </header>
-    <?php 
+    <?php
     $list = new item_list();
     $list->set_type(1);
     echo $list->run();
@@ -65,7 +65,7 @@ exit;
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=2">추천상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
     </header>
-    <?php 
+    <?php
     $list = new item_list();
     $list->set_type(2);
     echo $list->run();
@@ -79,7 +79,7 @@ exit;
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=3">최신상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 최신상품 모음</p>
     </header>
-    <?php 
+    <?php
     $list = new item_list();
     $list->set_type(3);
     echo $list->run();
@@ -93,7 +93,7 @@ exit;
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=4">인기상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 인기상품 모음</p>
     </header>
-    <?php 
+    <?php
     $list = new item_list();
     $list->set_type(4);
     echo $list->run();
@@ -107,7 +107,7 @@ exit;
         <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=5">할인상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 할인상품 모음</p>
     </header>
-    <?php 
+    <?php
     $list = new item_list();
     $list->set_type(5);
     echo $list->run();
