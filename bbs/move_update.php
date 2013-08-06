@@ -68,6 +68,7 @@ while ($row = sql_fetch_array($result))
                              wr_email = '".addslashes($row2['wr_email'])."',
                              wr_homepage = '".addslashes($row2['wr_homepage'])."',
                              wr_datetime = '{$row2['wr_datetime']}',
+                             wr_file = '{$row2['wr_file']}',
                              wr_last = '{$row2['wr_last']}',
                              wr_ip = '{$row2['wr_ip']}',
                              wr_1 = '".addslashes($row2['wr_1'])."',
