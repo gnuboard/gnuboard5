@@ -99,10 +99,18 @@ $(function() {
     var smt<?php echo $itemtype; ?>_a_time = 800;
     var smt<?php echo $itemtype; ?>_delay = 300;
     var smt<?php echo $itemtype; ?>_interval = null;
+    var delay = 0;
 
     // 초기실행
-    if(smt<?php echo $itemtype; ?>_count > 0)
-        item_drop();
+    if(smt<?php echo $itemtype; ?>_count > 0) {
+        $smt<?php echo $itemtype; ?>.eq(0).find("div").each(function() {
+            $(this).delay(delay).animate(
+                { top: "+="+$smt<?php echo $itemtype; ?>_height+"px" }, smt<?php echo $itemtype; ?>_a_time
+            );
+
+            delay += smt<?php echo $itemtype; ?>_delay;
+        });
+    }
 
     if(smt<?php echo $itemtype; ?>_count > 1)
         smt<?php echo $itemtype; ?>_interval = setInterval(item_drop, smt<?php echo $itemtype; ?>_time);
@@ -135,7 +143,7 @@ $(function() {
     });
 
     function item_drop() {
-        var delay = 0;
+        delay = 0;
         $smt<?php echo $itemtype; ?>.eq(smt<?php echo $itemtype; ?>_o_idx).css("display", "none");
         $smt<?php echo $itemtype; ?>.eq(smt<?php echo $itemtype; ?>_o_idx).find("div").css("top", "-"+$smt<?php echo $itemtype; ?>_height+"px");
 
