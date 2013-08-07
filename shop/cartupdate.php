@@ -46,13 +46,6 @@ if($act == "buy")
     else
         goto_url(G4_BBS_URL.'/login.php?url='.urlencode(G4_SHOP_URL.'/orderform.php'));
 }
-else if ($act == "d") // 삭제이면
-{
-    $sql = " delete from {$g4['shop_cart_table']}
-              where ct_id = '$ct_id'
-                and uq_id = '$tmp_uq_id' ";
-    sql_query($sql);
-}
 else if ($act == "alldelete") // 모두 삭제이면
 {
     $sql = " delete from {$g4['shop_cart_table']}
@@ -170,6 +163,7 @@ else // 장바구니에 담기
         else
             $ct_num = 0;
 
+        // 바로구매일 경우 장바구니가 체크된것으로 강제 설정
         if($sw_direct)
             $ct_select = 1;
         else
