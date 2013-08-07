@@ -11,8 +11,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <!-- 상품진열 40 시작 { -->
 <?php
-$itemtype = $this->type;
-
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     $sct_last = '';
     if($i>1 && $i%$this->list_mod == 0)
@@ -20,9 +18,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($i == 1) {
         if ($this->css) {
-            echo "<ul id=\"smt_{$itemtype}\" class=\"{$this->css}\">\n";
+            echo "<ul id=\"smt_{$this->type}\" class=\"{$this->css}\">\n";
         } else {
-            echo "<ul id=\"smt_{$itemtype}\" class=\"sct smt_40\">\n";
+            echo "<ul id=\"smt_{$this->type}\" class=\"sct smt_40\">\n";
         }
         echo "<li class=\"sct_li sct_li_first\">\n";
     }
@@ -86,50 +84,70 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 ?>
 
 <script>
-$(function() {
-    var $smt<?php echo $itemtype; ?> = $("#smt_<?php echo $itemtype; ?> li.sct_li");
-    var $smt<?php echo $itemtype; ?>_a = $("#smt_<?php echo $itemtype; ?> li.sct_li a");
-    var smt<?php echo $itemtype; ?>_count = $smt<?php echo $itemtype; ?>.size();
-    var smt<?php echo $itemtype; ?>_c_idx = smt<?php echo $itemtype; ?>_o_idx = 0;
-    var smt<?php echo $itemtype; ?>_time = 3000;
-    var smt<?php echo $itemtype; ?>_interval = null;
+$.fn.itemlistShow = function(option)
+{
+    var $smt = this.find("li.sct_li");
+    var $smt_a = $smt.find("a");
+    var count = $smt.size();
+    var c_idx = o_idx = 0;
+    var fx = null;
 
-    if(smt<?php echo $itemtype; ?>_count > 1)
-        smt<?php echo $itemtype; ?>_interval = setInterval(itemlist_show, smt<?php echo $itemtype; ?>_time);
+    // 기본 설정값
+    var settings = $.extend({
+        interval: 3000
+    }, option);
 
-    $smt<?php echo $itemtype; ?>.hover(
+    if(count < 2)
+        return;
+
+    fx = setInterval(itemlist_show, settings.interval);
+
+    $smt.hover(
         function() {
-            if(smt<?php echo $itemtype; ?>_interval != null)
-                clearInterval(smt<?php echo $itemtype; ?>_interval);
+            if(fx != null)
+                clearInterval(fx);
         },
         function() {
-            if(smt<?php echo $itemtype; ?>_interval != null)
-                clearInterval(smt<?php echo $itemtype; ?>_interval);
+            if(fx != null)
+                clearInterval(fx);
 
-            if(smt<?php echo $itemtype; ?>_count > 1)
-                smt<?php echo $itemtype; ?>_interval = setInterval(itemlist_show, smt<?php echo $itemtype; ?>_time);
+            if(count > 1)
+                fx = setInterval(itemlist_show, settings.interval);
         }
     );
 
-    $smt<?php echo $itemtype; ?>_a.on("focusin", function() {
-        if(smt<?php echo $itemtype; ?>_interval != null)
-            clearInterval(smt<?php echo $itemtype; ?>_interval);
+    $smt_a.on("focusin", function() {
+        if(fx != null)
+            clearInterval(fx);
     });
 
-    $smt<?php echo $itemtype; ?>_a.on("focusout", function() {
-        if(smt<?php echo $itemtype; ?>_interval != null)
-            clearInterval(smt<?php echo $itemtype; ?>_interval);
+    $smt_a.on("focusout", function() {
+        if(fx != null)
+            clearInterval(fx);
 
-        if(smt<?php echo $itemtype; ?>_count > 1)
-            smt<?php echo $itemtype; ?>_interval = setInterval(itemlist_show, smt<?php echo $itemtype; ?>_time);
+        if(count > 1)
+            fx = setInterval(itemlist_show, settings.interval);
     });
 
     function itemlist_show() {
-        $smt<?php echo $itemtype; ?>.eq(smt<?php echo $itemtype; ?>_o_idx).css("display", "none");
-        smt<?php echo $itemtype; ?>_c_idx = (smt<?php echo $itemtype; ?>_o_idx + 1) % smt<?php echo $itemtype; ?>_count;
-        $smt<?php echo $itemtype; ?>.eq(smt<?php echo $itemtype; ?>_c_idx).css("display", "block");
-        smt<?php echo $itemtype; ?>_o_idx = smt<?php echo $itemtype; ?>_c_idx;
+        $smt.each(function(index) {
+            if($(this).is(":visible")) {
+                o_idx = index;
+                return false;
+            }
+        });
+
+        $smt.eq(o_idx).css("display", "none");
+        c_idx = (o_idx + 1) % count;
+        $smt.eq(c_idx).css("display", "block");
+        o_idx = c_idx;
     }
+}
+
+$(function() {
+    $("#smt_<?php echo $this->type; ?>").itemlistShow();
+    // 기본 설정값을 변경하려면 아래처럼 사용
+    //$("#smt_<?php echo $this->type; ?>").itemlistShow({ interval: 3000 });
 });
 </script>
 <!-- } 상품진열 40 끝 -->

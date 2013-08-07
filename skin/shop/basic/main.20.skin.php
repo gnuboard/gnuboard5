@@ -11,8 +11,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <!-- 상품진열 20 시작 { -->
 <?php
-$itemtype = $this->type;
-
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     $sct_last = '';
     if($i>1 && $i%$this->list_mod == 0)
@@ -20,9 +18,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($i == 1) {
         if ($this->css) {
-            echo "<ul id=\"smt_{$itemtype}\" class=\"{$this->css}\">\n";
+            echo "<ul id=\"smt_{$this->type}\" class=\"{$this->css}\">\n";
         } else {
-            echo "<ul id=\"smt_{$itemtype}\" class=\"sct smt_20\">\n";
+            echo "<ul id=\"smt_{$this->type}\" class=\"sct smt_20\">\n";
         }
         echo "<li class=\"sct_li sct_li_first\">\n";
     }
@@ -86,61 +84,83 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 ?>
 
 <script>
-$(function() {
-    var $smt<?php echo $itemtype; ?> = $("#smt_<?php echo $itemtype; ?> li.sct_li");
-    var $smt<?php echo $itemtype; ?>_a = $("#smt_<?php echo $itemtype; ?> li.sct_li a");
-    var smt<?php echo $itemtype; ?>_height = $smt<?php echo $itemtype; ?>.closest("ul").height();
-    var smt<?php echo $itemtype; ?>_count = $smt<?php echo $itemtype; ?>.size();
-    var smt<?php echo $itemtype; ?>_c_idx = smt<?php echo $itemtype; ?>_o_idx = 0;
-    var smt<?php echo $itemtype; ?>_time = 5000;
-    var smt<?php echo $itemtype; ?>_a_time = 800;
-    var smt<?php echo $itemtype; ?>_interval = null;
+$.fn.topRolling = function(option)
+{
+    var $smt = this.find("li.sct_li");
+    var $smt_a = $smt.find("a");
+    var height = $smt.closest("ul").height();
+    var count = $smt.size();
+    var c_idx = o_idx = 0;
+    var fx = null;
 
-    if(smt<?php echo $itemtype; ?>_count > 1)
-        smt<?php echo $itemtype; ?>_interval = setInterval(top_rolling, smt<?php echo $itemtype; ?>_time);
+    // 기본 설정값
+    var settings = $.extend({
+        interval: 5000,
+        duration: 800
+    }, option);
 
-    $smt<?php echo $itemtype; ?>.hover(
+    if(count < 2)
+        return;
+
+    fx = setInterval(top_rolling, settings.interval);
+
+    $smt.hover(
         function() {
-            if(smt<?php echo $itemtype; ?>_interval != null)
-                clearInterval(smt<?php echo $itemtype; ?>_interval);
+            if(fx != null)
+                clearInterval(fx);
         },
         function() {
-            if(smt<?php echo $itemtype; ?>_interval != null)
-                clearInterval(smt<?php echo $itemtype; ?>_interval);
+            if(fx != null)
+                clearInterval(fx);
 
-            if(smt<?php echo $itemtype; ?>_count > 1)
-                smt<?php echo $itemtype; ?>_interval = setInterval(top_rolling, smt<?php echo $itemtype; ?>_time);
+            if(count > 1)
+                fx = setInterval(top_rolling, settings.interval);
         }
     );
 
-    $smt<?php echo $itemtype; ?>_a.on("focusin", function() {
-        if(smt<?php echo $itemtype; ?>_interval != null)
-            clearInterval(smt<?php echo $itemtype; ?>_interval);
+    $smt_a.on("focusin", function() {
+        if(fx != null)
+            clearInterval(fx);
     });
 
-    $smt<?php echo $itemtype; ?>_a.on("focusout", function() {
-        if(smt<?php echo $itemtype; ?>_interval != null)
-            clearInterval(smt<?php echo $itemtype; ?>_interval);
+    $smt_a.on("focusout", function() {
+        if(fx != null)
+            clearInterval(fx);
 
-        if(smt<?php echo $itemtype; ?>_count > 1)
-            smt<?php echo $itemtype; ?>_interval = setInterval(top_rolling, smt<?php echo $itemtype; ?>_time);
+        if(count > 1)
+            fx = setInterval(top_rolling, settings.interval);
     });
 
     function top_rolling() {
-        $smt<?php echo $itemtype; ?>.eq(smt<?php echo $itemtype; ?>_o_idx).animate(
-            { top: "-="+smt<?php echo $itemtype; ?>_height+"px" }, smt<?php echo $itemtype; ?>_a_time
+        $smt.each(function(index) {
+            if($(this).is(":visible")) {
+                o_idx = index;
+                return false;
+            }
+        });
+
+        $smt.eq(o_idx).animate(
+            { top: "-="+height+"px" }, settings.duration,
+            function() {
+                $(this).css("display", "none").css("top", height+"px");
+            }
         );
 
-        smt<?php echo $itemtype; ?>_c_idx = (smt<?php echo $itemtype; ?>_o_idx + 1) % smt<?php echo $itemtype; ?>_count;
+        c_idx = (o_idx + 1) % count;
 
-        $smt<?php echo $itemtype; ?>.eq(smt<?php echo $itemtype; ?>_c_idx).css("display", "block").animate(
-            { top: "-="+smt<?php echo $itemtype; ?>_height+"px" }, smt<?php echo $itemtype; ?>_a_time,
+        $smt.eq(c_idx).css("display", "block").animate(
+            { top: "-="+height+"px" }, settings.duration,
             function() {
-                $smt<?php echo $itemtype; ?>.eq(smt<?php echo $itemtype; ?>_o_idx).css("display", "none").css("top", smt<?php echo $itemtype; ?>_height+"px");
-                smt<?php echo $itemtype; ?>_o_idx = smt<?php echo $itemtype; ?>_c_idx;
+                o_idx = c_idx;
             }
         );
     }
+}
+
+$(function() {
+    $("#smt_<?php echo $this->type; ?>").topRolling();
+    // 기본 설정값을 변경하려면 아래처럼 사용
+    //$("#smt_<?php echo $this->type; ?>").topRolling({ interval: 5000, duration: 800 });
 });
 </script>
 <!-- } 상품진열 20 끝 -->
