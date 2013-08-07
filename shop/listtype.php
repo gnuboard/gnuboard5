@@ -48,6 +48,7 @@ if (file_exists($list_file)) {
 
     $list = new item_list();
     $list->set_type($type);
+    $list->set_list_skin('list.10.skin.php');
     $list->set_list_mod($list_mod);
     $list->set_list_row($list_row);
     $list->set_img_size($img_width, $img_height);
