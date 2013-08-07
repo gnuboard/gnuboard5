@@ -83,7 +83,6 @@
 .smt_20 .sct_li_first {top:0;display:block}
 .smt_20 .sct_div {float:left;margin:0 25px 15px 0;}
 .smt_20 .sct_last {margin:0 0 15px !important}
-.smt_20 .sct_clear {clear:both}
 .smt_20 .sct_a {display:block;position:relative;text-decoration:none}
 .smt_20 .sct_a:focus, .smt_20 .sct_a:hover {text-decoration:none}
 .smt_20 .sct_img {display:block;margin:0 0 15px}
@@ -99,7 +98,6 @@
 .smt_30 .sct_li {position:absolute;top:0;left:765px;width:765px;display:none}
 .smt_30 .sct_li_first {left:0;display:block}
 .smt_30 .sct_div {float:left;margin:0 25px 15px 0;}
-.smt_30 .sct_clear {clear:both}
 .smt_30 .sct_a {display:block;position:relative;text-decoration:none}
 .smt_30 .sct_a:focus, .smt_30 .sct_a:hover {text-decoration:none}
 .smt_30 .sct_img {display:block;margin:0 0 15px}
@@ -116,7 +114,6 @@
 .smt_40 .sct_li_first {display:block}
 .smt_40 .sct_div {float:left;margin:0 25px 15px 0;}
 .smt_40 .sct_last {margin:0 0 15px !important}
-.smt_40 .sct_clear {clear:both}
 .smt_40 .sct_a {display:block;position:relative;text-decoration:none}
 .smt_40 .sct_a:focus, .smt_40 .sct_a:hover {text-decoration:none}
 .smt_40 .sct_img {display:block;margin:0 0 15px}
@@ -133,7 +130,6 @@
 .smt_50 .sct_li_first {display:block}
 .smt_50 .sct_div {float:left;position:relative;top:-306px;margin:0 25px 15px 0}
 .smt_50 .sct_last {margin:0 0 15px}
-.smt_50 .sct_clear {clear:both}
 .smt_50 .sct_a {display:block;position:relative;text-decoration:none}
 .smt_50 .sct_a:focus, .smt_50 .sct_a:hover {text-decoration:none}
 .smt_50 .sct_img {display:block;margin:0 0 15px}
