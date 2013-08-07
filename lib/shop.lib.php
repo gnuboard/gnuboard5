@@ -299,7 +299,7 @@ class item_list
             $sql_where = " where " . implode(" and ", $where);
             $sql_limit = " limit " . $this->from_record . " , " . ($this->list_mod * $this->list_row);
 
-            $sql = $sql_select . $sql_common . $sql_where . $sql_order . $sql_limit;
+            $sql = $sql_select . $sql_common . $sql_where . $sql_limit;
             $result = sql_query($sql);
 
             if ($this->is_page) {
@@ -1264,7 +1264,7 @@ function get_new_od_id()
 // uq_id 설정
 function set_unique_id($direct)
 {
-    global $g4, $default, $member;
+    global $default;
 
     if ($direct) {
         $tmp_uq_id = get_session('ss_uq_direct');
@@ -1275,10 +1275,10 @@ function set_unique_id($direct)
     } else {
         // 비회원장바구니 uq_id 쿠키설정
         if($default['de_guest_cart_use']) {
-            $tmp_uq_id = get_cookie('ck_guest_cart_uqid');
-            if($tmp_uq_id) {
-                set_session('ss_uq_id', $tmp_uq_id);
-                set_cookie('ck_guest_cart_uqid', $tmp_uq_id, ($default['de_cart_keep_term'] * 86400));
+            $g_cart_uq_id = get_cookie('ck_guest_cart_uqid');
+            if($g_cart_uq_id) {
+                set_session('ss_uq_id', $g_cart_uq_id);
+                set_cookie('ck_guest_cart_uqid', $g_cart_uq_id, ($default['de_cart_keep_term'] * 86400));
             } else {
                 $tmp_uq_id = get_uniqid();
                 set_session('ss_uq_id', $tmp_uq_id);
@@ -1290,20 +1290,6 @@ function set_unique_id($direct)
                 $tmp_uq_id = get_uniqid();
                 set_session('ss_uq_id', $tmp_uq_id);
             }
-        }
-
-        // 보관된 회원장바구니 자료 uq_id 변경
-        if($member['mb_id'] && $tmp_uq_id) {
-            $sql = " update {$g4['shop_cart_table']}
-                        set uq_id = '$tmp_uq_id'
-                        where mb_id = '{$member['mb_id']}'
-                          and ct_status = '쇼핑' ";
-            if($default['de_cart_keep_term']) {
-                $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
-                $sql .= " and ct_time > '$ctime' ";
-            }
-
-            sql_query($sql);
         }
     }
 }
