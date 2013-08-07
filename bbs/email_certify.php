@@ -13,7 +13,7 @@ if ($mb_md5)
     {
         sql_query(" update {$g4['member_table']} set mb_email_certify = '".G4_TIME_YMDHIS."' where mb_id = '{$mb_id}' ");
 
-        alert('E-mail 인증 처리를 완료 하였습니다.', G4_URL);
+        alert("메일인증 처리를 완료 하였습니다.\\n\\n지금부터 {$mb_id} 아이디로 로그인 가능합니다.", G4_URL);
     }
 }
 

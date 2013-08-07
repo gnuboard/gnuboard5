@@ -1,5 +1,5 @@
 
-/* ##### maintype(nn).inc.php, list.skin.(nn).php 공통 적용 시작 ##### */
+/* ##### main(nn).skin.php, list.(nn).skin..php 공통 적용 시작 ##### */
 /* 공통 */
 .sct_wrap {margin:0 0 30px;zoom:1}
 .sct_wrap:after {display:block;visibility:hidden;clear:both;content:""}
@@ -76,4 +76,68 @@
 .sct_13 .sct_rel_ul {margin:0;padding:0;list-style:none}
 .sct_13 .sct_rel_li {float:left;margin:0 0 0 10px}
 .sct_13 .sct_sns {position:absolute;top:20px;right:20px}
-/* ##### maintype(nn).inc.php, list.skin.(nn).php 공통 적용 끝 ##### */
+
+/* 메인 상품 목록 스킨 20 */
+.smt_20 {position:relative;height:306px;overflow-y:hidden}
+.smt_20 .sct_li {position:absolute;top:306px;left:0;display:none}
+.smt_20 .sct_li_first {top:0;display:block}
+.smt_20 .sct_div {float:left;margin:0 25px 15px 0;}
+.smt_20 .sct_last {margin:0 0 15px !important}
+.smt_20 .sct_a {display:block;position:relative;text-decoration:none}
+.smt_20 .sct_a:focus, .smt_20 .sct_a:hover {text-decoration:none}
+.smt_20 .sct_img {display:block;margin:0 0 15px}
+.smt_20 b {display:block;margin:0 0 8px;font-weight:normal}
+.smt_20 s {display:block}
+.smt_20 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
+.smt_20 .sct_icon {}
+.smt_20 .sct_icon img {}
+.smt_20 .sct_sns {position:absolute;top:190px;right:20px}
+
+/* 메인 상품 목록 스킨 30 */
+.smt_30 {position:relative;width:740px;height:308px;overflow-x:hidden}
+.smt_30 .sct_li {position:absolute;top:0;left:765px;width:765px;display:none}
+.smt_30 .sct_li_first {left:0;display:block}
+.smt_30 .sct_div {float:left;margin:0 25px 15px 0;}
+.smt_30 .sct_a {display:block;position:relative;text-decoration:none}
+.smt_30 .sct_a:focus, .smt_30 .sct_a:hover {text-decoration:none}
+.smt_30 .sct_img {display:block;margin:0 0 15px}
+.smt_30 b {display:block;margin:0 0 8px;font-weight:normal}
+.smt_30 s {display:block}
+.smt_30 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
+.smt_30 .sct_icon {}
+.smt_30 .sct_icon img {}
+.smt_30 .sct_sns {position:absolute;top:190px;right:20px}
+
+/* 메인 상품 목록 스킨 40 */
+.smt_40 {position:relative;height:306px}
+.smt_40 .sct_li {position:absolute;top:0;left:0;display:none}
+.smt_40 .sct_li_first {display:block}
+.smt_40 .sct_div {float:left;margin:0 25px 15px 0;}
+.smt_40 .sct_last {margin:0 0 15px !important}
+.smt_40 .sct_a {display:block;position:relative;text-decoration:none}
+.smt_40 .sct_a:focus, .smt_40 .sct_a:hover {text-decoration:none}
+.smt_40 .sct_img {display:block;margin:0 0 15px}
+.smt_40 b {display:block;margin:0 0 8px;font-weight:normal}
+.smt_40 s {display:block}
+.smt_40 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
+.smt_40 .sct_icon {}
+.smt_40 .sct_icon img {}
+.smt_40 .sct_sns {position:absolute;top:190px;right:20px}
+
+/* 메인 상품 목록 스킨 50 */
+.smt_50 {position:relative;height:306px}
+.smt_50 .sct_li {position:absolute;top:0;left:0;height:306px;display:none;overflow-y:hidden}
+.smt_50 .sct_li_first {display:block}
+.smt_50 .sct_div {float:left;position:relative;top:-306px;margin:0 25px 15px 0}
+.smt_50 .sct_last {margin:0 0 15px}
+.smt_50 .sct_a {display:block;position:relative;text-decoration:none}
+.smt_50 .sct_a:focus, .smt_50 .sct_a:hover {text-decoration:none}
+.smt_50 .sct_img {display:block;margin:0 0 15px}
+.smt_50 b {display:block;margin:0 0 8px;font-weight:normal}
+.smt_50 s {display:block}
+.smt_50 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
+.smt_50 .sct_icon {}
+.smt_50 .sct_icon img {}
+.smt_50 .sct_sns {position:absolute;top:190px;right:20px}
+
+/* ##### main(nn).skin.php, list.(nn).skin..php 공통 적용 끝 ##### */

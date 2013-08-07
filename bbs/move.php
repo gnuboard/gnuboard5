@@ -26,10 +26,9 @@ else {
     }
 }
 
-$sql = " select * from {$g4['board_table']} a,
-            {$g4['group_table']} b
-            where a.gr_id = b.gr_id
-            and bo_table <> '$bo_table' ";
+//$sql = " select * from {$g4['board_table']} a, {$g4['group_table']} b where a.gr_id = b.gr_id and bo_table <> '$bo_table' ";
+// 원본 게시판을 선택 할 수 있도록 함.
+$sql = " select * from {$g4['board_table']} a, {$g4['group_table']} b where a.gr_id = b.gr_id ";
 if ($is_admin == 'group')
     $sql .= " and b.gr_admin = '{$member['mb_id']}' ";
 else if ($is_admin == 'board')
@@ -59,7 +58,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <caption><?php echo $act ?>할 게시판을 한개 이상 선택하여 주십시오.</caption>
     <thead>
     <tr>
-        <th scope="col">선택</th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
+            <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+        </th>
         <th scope="col">게시판</th>
     </tr>
     </thead>
@@ -67,6 +69,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <?php for ($i=0; $i<count($list); $i++) { ?>
     <tr>
         <td class="td_chk">
+            <label for="chk<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['bo_table'] ?></label>
             <input type="checkbox" id="chk<?php echo $i ?>" name="chk_bo_table[]" value="<?php echo $list[$i]['bo_table'] ?>">
         </td>
         <td>
@@ -76,6 +79,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
             $save_gr_subject = $list[$i]['gr_subject'];
             ?>
             <?php echo $list[$i]['bo_subject'] ?> (<?php echo $list[$i]['bo_table'] ?>)
+            <?php 
+            if ($list[$i]['bo_table'] == $bo_table) {
+                echo " <- 원본 게시판";
+            }
+            ?>
             </label>
         </td>
     </tr>
@@ -98,6 +106,15 @@ $(function() {
         window.close();
     });
 });
+
+function all_checked(sw) {
+    var f = document.fboardmoveall;
+
+    for (var i=0; i<f.length; i++) {
+        if (f.elements[i].name == "chk_bo_table[]")
+            f.elements[i].checked = sw;
+    }
+}
 
 function fboardmoveall_submit(f)
 {

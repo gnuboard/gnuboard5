@@ -34,7 +34,6 @@ $colspan = 4;
         <th scope="col">그룹아이디</th>
         <th scope="col">그룹</th>
         <th scope="col">처리일시</th>
-        <th scope="col">삭제</th>
     </tr>
     </thead>
     <tbody>
@@ -54,7 +53,6 @@ $colspan = 4;
         <td class="td_grid"><a href="<?php echo $g4['bbs_path'] ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
         <td class="td_category"><?php echo $row['gr_subject'] ?></td>
         <td class="td_time"><?php echo $row['gm_datetime'] ?></td>
-        <td class="td_mng"><?php echo $s_del ?></td>
     </tr>
     <?php
     }

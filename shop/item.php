@@ -615,25 +615,11 @@ else
 
         <div class="sct_wrap">
             <?php
-            /*
-            $list_mod   = 3;
-            $img_width  = 230;
-            $img_height = 230;
-            */
-
             $sql = " select b.* from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
 
-            $list = new item_list("list.10.skin.php", 3, 1, 150, 0);
-            $list->set_mobile(true);
+            $list = new item_list("list.10.skin.php", $default['de_rel_list_mod'], 1, $default['de_rel_img_width'], $default['de_rel_img_height']);
             $list->set_query($sql);
             echo $list->run();
-
-            /*
-            if ($num)
-                include G4_SHOP_PATH.'/maintype10.inc.php';
-            else
-                echo '<p class="sit_empty">이 상품과 관련된 상품이 없습니다.</p>';
-            */
             ?>
         </div>
     </section>

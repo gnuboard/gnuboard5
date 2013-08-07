@@ -37,25 +37,6 @@ if ($skin)
 $list_file = G4_SHOP_SKIN_PATH."/{$ev['ev_skin']}";
 if (file_exists($list_file))
 {
-    /*
-    $list_mod   = $ev['ev_list_mod'];
-    $list_row   = $ev['ev_list_row'];
-    $img_width  = $ev['ev_img_width'];
-    $img_height = $ev['ev_img_height'];
-
-    include G4_SHOP_PATH.'/list.sub.php';
-    include G4_SHOP_PATH.'/list.sort.php';
-
-    $sql = $sql_list1 . $sql_common . $sql_list2 . " limit $from_record, $items ";
-    $result = sql_query($sql);
-
-    include $list_file;
-    */
-
-    $list_mod   = $ev['ev_list_mod'];
-    $list_row   = $ev['ev_list_row'];
-
-    include G4_SHOP_PATH.'/list.sub.php';
     include G4_SHOP_PATH.'/list.sort.php';
 
     // 총몇개 = 한줄에 몇개 * 몇줄
@@ -65,7 +46,7 @@ if (file_exists($list_file))
     // 시작 레코드 구함
     $from_record = ($page - 1) * $items;
 
-    $list = new item_list($ev['ev_skin'], $list_mod, $list_row, $ev['ev_img_width'], $ev['ev_img_height']);
+    $list = new item_list($ev['ev_skin'], $ev['ev_list_mod'], $ev['ev_list_row'], $ev['ev_img_width'], $ev['ev_img_height']);
     $list->set_event($ev['ev_id']);
     $list->set_is_page(true);
     $list->set_order_by($order_by);

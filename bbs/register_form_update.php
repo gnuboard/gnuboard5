@@ -321,21 +321,23 @@ if ($w == '') {
                     {$sql_hp_certify}
               where mb_id = '$mb_id' ";
     sql_query($sql);
+}
 
-    // 인증메일 발송
-    if ($old_email != $mb_email && $config['cf_use_email_certify']) {
-        $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
-        $mb_md5 = md5($mb_id.$mb_email.$member['mb_datetime']);
-        $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+// 인증메일 발송
+if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
+    $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
-        ob_start();
-        include_once ('./register_form_update_mail3.php');
-        $content = ob_get_contents();
-        ob_end_clean();
+    $mb_datetime = $member['mb_datetime'] ? $member['mb_datetime'] : G4_TIME_YMDHIS;
+    $mb_md5 = md5($mb_id.$mb_email.$mb_datetime);
+    $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
-        mailer($admin['mb_nick'], $admin['mb_email'], $mb_email, $subject, $content, 1);
-    }
+    ob_start();
+    include_once ('./register_form_update_mail3.php');
+    $content = ob_get_contents();
+    ob_end_clean();
+
+    mailer($admin['mb_nick'], $admin['mb_email'], $mb_email, $subject, $content, 1);
 }
 
 
