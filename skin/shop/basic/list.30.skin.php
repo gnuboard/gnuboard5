@@ -13,18 +13,18 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         else if ($i%$list_mod == 1) $sct_last = ' sct_clear'; // 줄 첫번째
         else $sct_last = '';
     } else { // 1줄 이미지 : 1개
-        $sct_last = 'sct_clear';
+        $sct_last = ' sct_clear';
     }
 
     if ($i == 1) {
         if ($this->css) {
             echo "<ul class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct sct_12\">\n";
+            echo "<ul class=\"sct sct_30\">\n";
         }
     }
 
-    echo "<li class=\"sct_li{$sct_last}\" style=\"width:{$this->img_width}px\">\n";
+    echo "<li class=\"sct_li{$sct_last}\">\n";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";

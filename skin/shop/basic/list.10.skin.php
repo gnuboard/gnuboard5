@@ -12,7 +12,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         else if ($i%$this->list_mod == 1) $sct_last = ' sct_clear'; // 줄 첫번째
         else $sct_last = '';
     } else { // 1줄 이미지 : 1개
-        $sct_last = 'sct_clear';
+        $sct_last = ' sct_clear';
     }
 
     if ($i == 1) {
