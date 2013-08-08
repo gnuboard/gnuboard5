@@ -9,22 +9,22 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
     if ($list_mod >= 2) { // 1줄 이미지 : 2개 이상
-        if ($i%$list_mod == 0) $sct_last = 'sct_last'; // 줄 마지막
-        else if ($i%$list_mod == 1) $sct_last = 'sct_clear'; // 줄 첫번째
+        if ($i%$list_mod == 0) $sct_last = ' sct_last'; // 줄 마지막
+        else if ($i%$list_mod == 1) $sct_last = ' sct_clear'; // 줄 첫번째
         else $sct_last = '';
     } else { // 1줄 이미지 : 1개
-        $sct_last = 'sct_clear';
+        $sct_last = ' sct_clear';
     }
 
     if ($i == 1) {
         if ($this->css) {
             echo "<ul class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct sct_12\">\n";
+            echo "<ul class=\"sct sct_30\">\n";
         }
     }
 
-    echo "<li class=\"sct_li {$sct_last}\">\n";
+    echo "<li class=\"sct_li{$sct_last}\">\n";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
@@ -56,16 +56,16 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
     }
 
+    if ($this->href) {
+        echo "</a>\n";
+    }
+
     if ($this->view_sns) {
         echo "<div class=\"sct_sns\">";
         echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb.png');
         echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt.png');
         echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo.png');
         echo "</div>\n";
-    }
-
-    if ($this->href) {
-        echo "</a>\n";
     }
 
     echo "</li>\n";

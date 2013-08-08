@@ -93,6 +93,11 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #ft_copy b {color:#fff}
 #ft_copy a {position:absolute;top:10px;right:0;color:#fff}
 
+/* 게시물 선택복사 선택이동 */
+#copymove {}
+.copymove_current {float:right;color:#ff3061}
+.copymove_currentbg {background:#f4f4f4}
+
 /* 화면낭독기 사용자용 */
 #hd_login_msg {position:absolute;top:0;left:0;font-size:0;line-height:0;overflow:hidden}
 .msg_sound_only, .sound_only {display:inline-block !important;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}
