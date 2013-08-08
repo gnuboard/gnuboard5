@@ -25,6 +25,7 @@ $.fn.listType = function(type)
             }
         });
         set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "gallery", 1, g4_cookie_domain);
+        $("button.sct_lst_gallery span").addClass("sct_lst_on").html("<b class=\"sound_only\">활성</b>");
     } else {
         this.addClass("sct_40");
         $el.each(function() {
@@ -33,6 +34,7 @@ $.fn.listType = function(type)
             }
         });
         set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "list", 1, g4_cookie_domain);
+        $("button.sct_lst_list span").addClass("sct_lst_on").html("<b class=\"sound_only\">활성</b>");
     }
 }
 
@@ -72,6 +74,9 @@ $(function() {
             });
             set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "list", 1, g4_cookie_domain);
         }
+
+        $("button.sct_lst_view span").removeClass("sct_lst_on").html("");
+        $(this).children("span").addClass("sct_lst_on").html("<b class=\"sound_only\">활성</b>");
     });
 });
 </script>
