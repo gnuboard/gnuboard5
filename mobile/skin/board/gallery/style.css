@@ -1,3 +1,6 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
 /* 갤러리 목록 */
 #bo_img h2 {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 #bo_img_list {margin:1em 0 0;padding:0 1em;list-style:none}
