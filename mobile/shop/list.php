@@ -98,18 +98,18 @@ if ($is_admin)
     ?>
 
     <?php
+    $qstr1 .= 'ca_id='.$ca_id;
+    if($skin)
+        $qstr1 .= '&amp;skin='.$skin;
+    $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
+    echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
+    ?>
+
+    <?php
     // 하단 HTML
     echo '<div id="sct_thtml">'.stripslashes($ca['ca_mobile_tail_html']).'</div>';
 ?>
 </div>
-
-<?php
-$qstr1 .= 'ca_id='.$ca_id;
-if($skin)
-    $qstr1 .= '&amp;skin='.$skin;
-$qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
-echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
-?>
 
 <?php
 include_once(G4_MSHOP_PATH.'/_tail.php');

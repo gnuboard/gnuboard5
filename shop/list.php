@@ -75,6 +75,9 @@ if ($is_admin)
     if (file_exists($list_file)) {
         include G4_SHOP_PATH.'/list.sort.php';
 
+        // 상품 보기 타입 변경 버튼
+        include G4_SHOP_PATH.'/list.sub.php';
+
         // 총몇개 = 한줄에 몇개 * 몇줄
         $items = $ca['ca_list_mod'] * $ca['ca_list_row'];
         // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -115,18 +118,16 @@ if ($is_admin)
     }
     ?>
 
-    <script>
-    // 리스트 타입 쿠키가 있을 경우 바로 적용
-    if(itemlist_type = get_cookie("ck_itemlist_type")) {
-        if(itemlist_type == "gallery") {
-            $("ul.sct").removeClass("sct_13");
-            set_cookie("ck_itemlist_type", "gallery", 1, g4_cookie_domain);
-        } else {
-            $("ul.sct").addClass("sct_13");
-            set_cookie("ck_itemlist_type", "list", 1, g4_cookie_domain);
-        }
-    }
-    </script>
+    <?php
+    // 상품 보기 타입 변경 처리 스크립트
+    include G4_SHOP_PATH.'/list.sub2.php';
+
+    $qstr1 .= 'ca_id='.$ca_id;
+    if($skin)
+        $qstr1 .= '&amp;skin='.$skin;
+    $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
+    echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
+    ?>
 
     <?php
     // 하단 HTML
@@ -138,14 +139,6 @@ if ($is_admin)
         echo '<div id="sct_timg" class="sct_img"><img src="'.G4_DATA_URL.'/category/'.$ca_id.'_t" alt="">';
 ?>
 </div>
-
-<?php
-$qstr1 .= 'ca_id='.$ca_id;
-if($skin)
-    $qstr1 .= '&amp;skin='.$skin;
-$qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
-echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
-?>
 <!-- } 상품 목록 끝 -->
 
 <?php
