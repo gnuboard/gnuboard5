@@ -12,7 +12,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- 상품유형 30 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
-
     if ($i == 1) {
         if ($this->css) {
             echo "<div id=\"smt_{$this->type}\" class=\"{$this->css}\">\n";
@@ -23,8 +22,8 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($i>1 && $i%$this->list_mod == 1) {
-        echo "</ul>\n";
-        echo "<ul class=\"sct_ul\">\n";
+        echo "</ul>";
+        echo "<ul class=\"sct_ul\">";
     }
 
     echo "<li class=\"sct_li\">\n";
@@ -85,7 +84,7 @@ $.fn.leftRolling = function(option)
 {
     var $smt = this.find("ul.sct_ul");
     var $smt_a = $smt.find("a.sct_a");
-    var width = ($smt.find("li.sct_li:first").outerWidth(true) * <?php echo $this->list_mod; ?>);
+    var width = $smt.eq(0).width();
     var count = $smt.size();
     var c_idx = smt_o_idx = 0;
     var fx = null;
