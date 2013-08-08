@@ -1,3 +1,6 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
 /* 최근게시물 스킨 (latest) */
 .lat {position:relative;margin:0 0 1em;padding:0 1em 1.5em;border-bottom:1px solid #ddd}
 .lat ul {margin:0 0 1em;padding:0;list-style:none}

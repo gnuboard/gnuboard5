@@ -81,7 +81,6 @@ include_once('./admin.head.php');
         <th scope="col">회원아이디</th>
         <th scope="col">이름</th>
         <th scope="col">별명</th>
-        <th scope="col">생일</th>
         <th scope="col">E-mail</th>
     </tr>
     </thead>
@@ -102,7 +101,6 @@ include_once('./admin.head.php');
         <td class="td_mbid"><?php echo $row['mb_id'] ?></td>
         <td class="td_mbname"><?php echo $row['mb_name'] ?></td>
         <td class="td_mbnick"><?php echo $row['mb_nick'] ?></td>
-        <td class="td_time"><?php echo $row['mb_birth'] ?></td>
         <td><?php echo $row['mb_email'] ?></td>
     </tr>
     <?php } ?>
