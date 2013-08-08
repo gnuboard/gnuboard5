@@ -101,6 +101,11 @@ if(!sql_query(" DESC {$g4['autosave_table']} ", false)) {
                 ) ", false);
 }
 
+if(!isset($config['cf_admin_email'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_admin_email` VARCHAR(255) NOT NULL AFTER `cf_admin` ", true);
+}
+
 $g4['title'] = '환경설정';
 include_once ('./admin.head.php');
 
@@ -136,9 +141,18 @@ $pg_anchor = '<ul class="anchor">
     <tbody>
     <tr>
         <th scope="row"><label for="cf_title">홈페이지 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="cf_title" value="<?php echo $config['cf_title'] ?>" id="cf_title" required class="required frm_input" size="40"></td>
+        <td colspan="3"><input type="text" name="cf_title" value="<?php echo $config['cf_title'] ?>" id="cf_title" required class="required frm_input" size="40"></td>
+    </tr>
+    <tr>
         <th scope="row"><label for="cf_admin">최고관리자<strong class="sound_only">필수</strong></label></th>
-        <td><?php echo get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required') ?></td>
+        <td colspan="3"><?php echo get_member_id_select('cf_admin', 10, $config['cf_admin'], 'required') ?></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_admin_email">관리자 메일 주소<strong class="sound_only">필수</strong></label></th>
+        <td colspan="3">
+            <?php echo help('관리자가 보내고 받는 용도로 사용하는 메일 주소를 입력합니다. (회원가입, 인증메일, 테스트, 회원메일발송 등에서 사용)') ?>
+            <input type="text" name="cf_admin_email" value="<?php echo $config['cf_admin_email'] ?>" id="cf_admin_email" required class="required email frm_input" size="40">
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="cf_use_point">포인트 사용</label></th>
