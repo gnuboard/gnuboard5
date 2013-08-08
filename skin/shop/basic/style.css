@@ -1,5 +1,7 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
 
-/* ##### main(nn).skin.php, list.(nn).skin..php 공통 적용 시작 ##### */
+/* ##### main(nn).skin.php, list.(nn).skin.php 공통 적용 시작 ##### */
 /* 공통 */
 .sct_wrap {margin:0 0 30px;zoom:1}
 .sct_wrap:after {display:block;visibility:hidden;clear:both;content:""}
@@ -13,9 +15,10 @@
 .sct:after {display:block;visibility:hidden;clear:both;content:""}
 .sct_li {position:relative}
 .sct_noitem {padding:100px 0;text-align:center}
+.sct img {position:relative} /* 리스트뷰 갤러리뷰 변경 시 ie6,7 에서 이미지 사라지는 문제 해결하기 위해 */
 
 /* 상품 목록 스킨 10 */
-.sct_10 .sct_li {float:left;margin:0 25px 15px 0;}
+.sct_10 .sct_li {float:left;margin:0 25px 15px 0}
 .sct_10 .sct_last {margin:0 0 15px !important}
 .sct_10 .sct_clear {clear:both}
 .sct_10 .sct_a {display:block;position:relative;text-decoration:none}
@@ -29,7 +32,7 @@
 .sct_10 .sct_sns {position:absolute;top:190px;right:20px}
 
 /* 상품 목록 스킨 11 */
-.sct_11 .sct_li {float:left;margin:0 25px 15px 0;}
+.sct_11 .sct_li {float:left;margin:0 25px 15px 0}
 .sct_11 .sct_last {margin:0 0 15px !important}
 .sct_11 .sct_clear {clear:both}
 .sct_11 .sct_a {display:block;position:relative;padding:0 0 5px;background:#f5f6fa;text-decoration:none}
@@ -43,7 +46,7 @@
 .sct_11 .sct_sns {position:absolute;bottom:10px;right:10px}
 
 /* 상품 목록 스킨 12 */
-.sct_12 .sct_li {float:left;margin:0 16px 15px 0;}
+.sct_12 .sct_li {float:left;margin:0 16px 15px 0}
 .sct_12 .sct_last {margin:0 0 15px !important}
 .sct_12 .sct_clear {clear:both}
 .sct_12 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('../shop/img/icon_arw_toleft.gif') no-repeat}
@@ -81,7 +84,7 @@
 .smt_20 {position:relative;height:306px;overflow-y:hidden}
 .smt_20 .sct_li {position:absolute;top:306px;left:0;display:none}
 .smt_20 .sct_li_first {top:0;display:block}
-.smt_20 .sct_div {float:left;margin:0 25px 15px 0;}
+.smt_20 .sct_div {float:left;margin:0 25px 15px 0}
 .smt_20 .sct_last {margin:0 0 15px !important}
 .smt_20 .sct_a {display:block;position:relative;text-decoration:none}
 .smt_20 .sct_a:focus, .smt_20 .sct_a:hover {text-decoration:none}
@@ -94,10 +97,11 @@
 .smt_20 .sct_sns {position:absolute;top:190px;right:20px}
 
 /* 메인 상품 목록 스킨 30 */
-.smt_30 {position:relative;width:740px;height:308px;overflow-x:hidden}
-.smt_30 .sct_li {position:absolute;top:0;left:765px;width:765px;display:none}
-.smt_30 .sct_li_first {left:0;display:block}
-.smt_30 .sct_div {float:left;margin:0 25px 15px 0;}
+.smt_30 {position:relative;width:100%;height:330px;overflow-x:hidden}
+.smt_30 .sct_ul {position:absolute;top:0;left:765px;margin:0;padding:0;width:100%;zoom:1}
+.smt_30 .sct_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.smt_30 .sct_ul_first {display:block;left:0}
+.smt_30 .sct_li {float:left}
 .smt_30 .sct_a {display:block;position:relative;text-decoration:none}
 .smt_30 .sct_a:focus, .smt_30 .sct_a:hover {text-decoration:none}
 .smt_30 .sct_img {display:block;margin:0 0 15px}
@@ -110,9 +114,9 @@
 
 /* 메인 상품 목록 스킨 40 */
 .smt_40 {position:relative;height:306px}
-.smt_40 .sct_li {position:absolute;top:0;left:0;display:none}
+.smt_40 .sct_li {display:none;position:absolute;top:0;left:0}
 .smt_40 .sct_li_first {display:block}
-.smt_40 .sct_div {float:left;margin:0 25px 15px 0;}
+.smt_40 .sct_div {float:left;margin:0 25px 15px 0}
 .smt_40 .sct_last {margin:0 0 15px !important}
 .smt_40 .sct_a {display:block;position:relative;text-decoration:none}
 .smt_40 .sct_a:focus, .smt_40 .sct_a:hover {text-decoration:none}
@@ -126,7 +130,7 @@
 
 /* 메인 상품 목록 스킨 50 */
 .smt_50 {position:relative;height:306px}
-.smt_50 .sct_li {position:absolute;top:0;left:0;height:306px;display:none;overflow-y:hidden}
+.smt_50 .sct_li {display:none;position:absolute;top:0;left:0;height:306px;overflow-y:hidden}
 .smt_50 .sct_li_first {display:block}
 .smt_50 .sct_div {float:left;position:relative;top:-306px;margin:0 25px 15px 0}
 .smt_50 .sct_last {margin:0 0 15px}
