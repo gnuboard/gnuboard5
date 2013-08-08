@@ -19,13 +19,14 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
             echo "<div id=\"smt_{$this->type}\" class=\"smt_30\">\n";
         }
         echo "<ul class=\"sct_ul sct_ul_first\">\n";
-        echo "<li class=\"sct_li\">\n";
     }
 
-    if ($i > 1) {
-        echo "</li>\n";
-        echo "<li class=\"sct_li\">\n";
+    if ($i>1 && $i%$this->list_mod == 1) {
+        echo "</ul>";
+        echo "<ul class=\"sct_ul\">";
     }
+
+    echo "<li class=\"sct_li\">\n";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
@@ -67,14 +68,10 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "</div>\n";
     }
 
-    if ($i%$this->list_mod == 0) {
-        echo "</ul>";
-        echo "<ul class=\"sct_ul\">";
-    }
+    echo "</li>\n";
 }
 
 if ($i > 1) {
-    echo "</li>\n";
     echo "</ul>\n";
     echo "</div>\n";
 }
@@ -85,9 +82,9 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 <script>
 $.fn.leftRolling = function(option)
 {
-    var $smt = this.find("li.sct_li");
-    var $smt_a = $smt.find("a");
-    var width = $smt.width();
+    var $smt = this.find("ul.sct_ul");
+    var $smt_a = $smt.find("a.sct_a");
+    var width = ($smt.find("li.sct_li:first").outerWidth(true) * <?php echo $this->list_mod; ?>);
     var count = $smt.size();
     var c_idx = smt_o_idx = 0;
     var fx = null;
@@ -100,6 +97,9 @@ $.fn.leftRolling = function(option)
 
     if(count < 2)
         return;
+
+    // $smt width 설정
+    $smt.width(width);
 
     fx = setInterval(left_rolling, settings.interval);
 
