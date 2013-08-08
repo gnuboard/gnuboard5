@@ -21,5 +21,19 @@ $sct_sort_href .= '&amp;ev_id='.$ev_id.'&amp;sort=';
         <li><a href="<?php echo $sct_sort_href; ?>it_type4&amp;sortodr=desc" class="btn01">인기상품</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_type5&amp;sortodr=desc" class="btn01">할인상품</a></li>
     </ul>
+    <button type="button" class="sct_lst_view sct_lst_list">리스트뷰</button>
+    <button type="button" class="sct_lst_view sct_lst_gallery">갤러리뷰</button>
 </section>
+
+<script>
+$(function() {
+    $("button.sct_lst_view").on("click", function() {
+        if($(this).hasClass("sct_lst_gallery")) {
+            $("ul.sct").removeClass("sct_13");
+        } else {
+            $("ul.sct").addClass("sct_13");
+        }
+    });
+});
+</script>
 <!-- } 상품 정렬 선택 끝 -->
