@@ -102,7 +102,7 @@ $.fn.itemDrop = function(option)
 
     // 초기실행
     if(count > 0) {
-        $smt.eq(0).find("div").each(function() {
+        $smt.eq(0).find("div.sct_div").each(function() {
             $(this).delay(delay).animate(
                 { top: "+="+height+"px" }, settings.duration
             );
@@ -152,12 +152,12 @@ $.fn.itemDrop = function(option)
         delay = 0;
 
         $smt.eq(o_idx).css("display", "none");
-        $smt.eq(o_idx).find("div").css("top", "-"+height+"px");
+        $smt.eq(o_idx).find("div.sct_div").css("top", "-"+height+"px");
 
         c_idx = (o_idx + 1) % count;
 
         $smt.eq(c_idx).css("display", "block");
-        $smt.eq(c_idx).find("div").each(function() {
+        $smt.eq(c_idx).find("div.sct_div").each(function() {
             $(this).delay(delay).animate(
                 { top: "+="+height+"px" }, settings.duration
             );
