@@ -43,33 +43,31 @@ $sql = "select ma_subject, ma_content from {$g4['mail_table']} where ma_id = '$m
 $ma = sql_fetch($sql);
 
 $subject = $ma['ma_subject'];
-$admin = get_admin('super', 'mb_email');
-$from_email = $admin['mb_email'];
 
 $cnt = 0;
 for ($i=0; $i<count($member_list); $i++)
 {
-    list($email, $mb_id, $name, $nick, $datetime) = explode("||", trim($member_list[$i]));
+    list($to_email, $mb_id, $name, $nick, $datetime) = explode("||", trim($member_list[$i]));
 
-    $sw = preg_match("/[0-9a-zA-Z_]+(\.[0-9a-zA-Z_]+)*@[0-9a-zA-Z_]+(\.[0-9a-zA-Z_]+)*/", $email);
+    $sw = preg_match("/[0-9a-zA-Z_]+(\.[0-9a-zA-Z_]+)*@[0-9a-zA-Z_]+(\.[0-9a-zA-Z_]+)*/", $to_email);
     // 올바른 메일 주소만
     if ($sw == true)
     {
         $cnt++;
 
-        $mb_md5 = md5($mb_id.$email.$datetime);
+        $mb_md5 = md5($mb_id.$to_email.$datetime);
 
         $content = $ma['ma_content'];
         $content = preg_replace("/{이름}/", $name, $content);
         $content = preg_replace("/{별명}/", $nick, $content);
         $content = preg_replace("/{회원아이디}/", $mb_id, $content);
-        $content = preg_replace("/{이메일}/", $email, $content);
+        $content = preg_replace("/{이메일}/", $to_email, $content);
 
         $content = $content . "<hr size=0><p><span style='font-size:9pt; font-familye:굴림'>▶ 더 이상 정보 수신을 원치 않으시면 [<a href='".G4_BBS_URL."/email_stop.php?mb_id={$mb_id}&amp;mb_md5={$mb_md5}' target='_blank'>수신거부</a>] 해 주십시오.</span></p>";
 
-        mailer($config['cf_title'], $from_email, $email, $subject, $content, 1);
+        mailer($config['cf_title'], $config['cf_admin_email'], $to_email, $subject, $content, 1);
 
-        echo "<script> document.all.cont.innerHTML += '$cnt. $email ($mb_id : $name)<br>'; </script>\n";
+        echo "<script> document.all.cont.innerHTML += '$cnt. $to_email ($mb_id : $name)<br>'; </script>\n";
         //echo "+";
         flush();
         ob_flush();

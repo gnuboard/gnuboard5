@@ -135,6 +135,11 @@ define('G4_FILE_PERMISSION', 0644); // 파일 생성시 퍼미션
 // 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
 define('G4_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|skt|nokia|blackberry|android|sony');
 
+// SMTP 
+// lib/mailer.lib.php 에서 사용
+define('G4_SMTP', '127.0.0.1');
+
+
 /********************
     기타 상수
 ********************/

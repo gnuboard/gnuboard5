@@ -192,6 +192,7 @@ DROP TABLE IF EXISTS `g4s_config`;
 CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_title` varchar(255) NOT NULL DEFAULT '',
   `cf_admin` varchar(255) NOT NULL DEFAULT '',
+  `cf_admin_email` varchar(255) NOT NULL DEFAULT '',
   `cf_include_index` varchar(255) NOT NULL DEFAULT '',
   `cf_include_head` varchar(255) NOT NULL DEFAULT '',
   `cf_include_tail` varchar(255) NOT NULL DEFAULT '',
