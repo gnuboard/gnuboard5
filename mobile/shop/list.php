@@ -56,6 +56,11 @@ if ($is_admin)
     // 리스트 유형별로 출력
     $list_file = G4_MSHOP_SKIN_PATH.'/'.$ca['ca_mobile_skin'];
     if (file_exists($list_file)) {
+        include G4_MSHOP_PATH.'/list.sort.php';
+
+        // 상품 보기 타입 변경 버튼
+        include G4_SHOP_PATH.'/list.sub.php';
+
         // 총몇개
         $items = $ca['ca_mobile_list_mod'];
         // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -98,6 +103,9 @@ if ($is_admin)
     ?>
 
     <?php
+    // 상품 보기 타입 변경 처리 스크립트
+    include G4_SHOP_PATH.'/list.sub2.php';
+
     $qstr1 .= 'ca_id='.$ca_id;
     if($skin)
         $qstr1 .= '&amp;skin='.$skin;
