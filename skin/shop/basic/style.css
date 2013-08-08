@@ -16,6 +16,7 @@
 .sct_li {position:relative}
 .sct_noitem {padding:100px 0;text-align:center}
 .sct img {position:relative} /* 리스트뷰 갤러리뷰 변경 시 ie6,7 에서 이미지 사라지는 문제 해결하기 위해 */
+.sct_icon img {margin:0 1px 0 0}
 
 /* 상품 목록 스킨 10 */
 .sct_10 .sct_li {float:left;margin:0 25px 15px 0}
@@ -97,8 +98,8 @@
 .smt_20 .sct_sns {position:absolute;top:190px;right:20px}
 
 /* 메인 상품 목록 스킨 30 */
-.smt_30 {position:relative;width:100%;height:330px;overflow-x:hidden}
-.smt_30 .sct_ul {position:absolute;top:0;left:765px;margin:0;padding:0;width:100%;list-style:none;zoom:1}
+.smt_30 {position:relative;height:330px;overflow-x:hidden}
+.smt_30 .sct_ul {position:absolute;top:0;left:765px;margin:0;padding:0;width:765px;list-style:none;zoom:1}
 .smt_30 .sct_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .smt_30 .sct_ul_first {display:block;left:0}
 .smt_30 .sct_li {float:left;margin-right:25px}
@@ -111,6 +112,7 @@
 .smt_30 .sct_icon {}
 .smt_30 .sct_icon img {}
 .smt_30 .sct_sns {position:absolute;top:190px;right:20px}
+.smt_30 .sct_sns a {display:inline-block;margin:0 0 0 2px}
 
 /* 메인 상품 목록 스킨 40 */
 .smt_40 {position:relative;height:306px}
