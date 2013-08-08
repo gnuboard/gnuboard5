@@ -22,11 +22,11 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         if ($this->css) {
             echo "<ul class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct sct_13\">\n";
+            echo "<ul class=\"sct sct_40\">\n";
         }
     }
 
-    echo "<li class=\"sct_li{$sct_last}\" style=\"width:{$this->img_width}px\">\n";
+    echo "<li class=\"sct_li{$sct_last}\">\n";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
