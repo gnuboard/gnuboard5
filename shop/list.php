@@ -143,7 +143,7 @@ if ($is_admin)
 $qstr1 .= 'ca_id='.$ca_id;
 if($skin)
     $qstr1 .= '&amp;skin='.$skin;
-$qstr1 .='&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
+$qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
 echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
 ?>
 <!-- } 상품 목록 끝 -->

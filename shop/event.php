@@ -72,7 +72,7 @@ if ($i==0)
 ?>
 
 <?php
-$qstr .= 'ca_id='.$ca_id.'&amp;skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort='.$sort;
+$qstr .= 'skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 
