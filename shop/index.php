@@ -14,31 +14,6 @@ include_once(G4_LIB_PATH.'/poll.lib.php');
 include_once(G4_SHOP_PATH.'/shop.head.php');
 ?>
 
-<?php
-/*
-$disp = new display_item(1);
-echo $disp->run();
-
-
-$disp = new display_item(1);
-$disp->set_img_size(60, 0);
-$disp->set_view("it_price", false);
-$disp->set_view("it_id", true);
-$disp->set_view("it_icon", true);
-echo $disp->run();
-
-
-$disp = new display_item();
-$disp->set_event("1366852726");
-$disp->set_list_skin("type10.skin.php");
-$disp->set_img_size(125, 0);
-$disp->set_list_mod(3);
-$disp->set_list_row(4);
-echo $disp->run();
-exit;
-*/
-?>
-
 <!-- 메인이미지 시작 { -->
 <div id="sidx_img">
     <img src="<?php echo G4_DATA_URL; ?>/common/main_img" alt="">
@@ -54,6 +29,13 @@ exit;
     <?php
     $list = new item_list();
     $list->set_type(1);
+    $list->set_view('it_img', true);
+    $list->set_view('it_id', false);
+    $list->set_view('it_name', true);
+    $list->set_view('it_cust_price', false);
+    $list->set_view('it_price', true);
+    $list->set_view('it_icon', true);
+    $list->set_view('sns', true);
     echo $list->run();
     ?>
 </section>
@@ -68,6 +50,12 @@ exit;
     <?php
     $list = new item_list();
     $list->set_type(2);
+    $list->set_view('it_id', false);
+    $list->set_view('it_name', true);
+    $list->set_view('it_cust_price', false);
+    $list->set_view('it_price', true);
+    $list->set_view('it_icon', true);
+    $list->set_view('sns', true);
     echo $list->run();
     ?>
 </section>
@@ -82,6 +70,12 @@ exit;
     <?php
     $list = new item_list();
     $list->set_type(3);
+    $list->set_view('it_id', false);
+    $list->set_view('it_name', true);
+    $list->set_view('it_cust_price', false);
+    $list->set_view('it_price', true);
+    $list->set_view('it_icon', true);
+    $list->set_view('sns', true);
     echo $list->run();
     ?>
 </section>
@@ -96,6 +90,12 @@ exit;
     <?php
     $list = new item_list();
     $list->set_type(4);
+    $list->set_view('it_id', false);
+    $list->set_view('it_name', true);
+    $list->set_view('it_cust_price', false);
+    $list->set_view('it_price', true);
+    $list->set_view('it_icon', true);
+    $list->set_view('sns', true);
     echo $list->run();
     ?>
 </section>
@@ -110,6 +110,12 @@ exit;
     <?php
     $list = new item_list();
     $list->set_type(5);
+    $list->set_view('it_id', false);
+    $list->set_view('it_name', true);
+    $list->set_view('it_cust_price', false);
+    $list->set_view('it_price', true);
+    $list->set_view('it_icon', true);
+    $list->set_view('sns', true);
     echo $list->run();
     ?>
 </section>

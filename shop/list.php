@@ -89,6 +89,13 @@ if ($is_admin)
         $list->set_is_page(true);
         $list->set_order_by($order_by);
         $list->set_from_record($from_record);
+        $list->set_view('it_img', true);
+        $list->set_view('it_id', false);
+        $list->set_view('it_name', true);
+        $list->set_view('it_cust_price', false);
+        $list->set_view('it_price', true);
+        $list->set_view('it_icon', true);
+        $list->set_view('sns', true);
         echo $list->run();
 
         // where 된 전체 상품수
