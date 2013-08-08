@@ -24,7 +24,7 @@ $.fn.listType = function(type)
                 $(this).attr("style", $(this).data("style"));
             }
         });
-        set_cookie("ck_itemlist_type", "gallery", 1, g4_cookie_domain);
+        set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "gallery", 1, g4_cookie_domain);
     } else {
         this.addClass("sct_40");
         $el.each(function() {
@@ -32,12 +32,12 @@ $.fn.listType = function(type)
                 $(this).attr("style", "");
             }
         });
-        set_cookie("ck_itemlist_type", "list", 1, g4_cookie_domain);
+        set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "list", 1, g4_cookie_domain);
     }
 }
 
 // 리스트 타입 쿠키가 있을 경우 바로 적용
-if(itemlist_type = get_cookie("ck_itemlist_type")) {
+if(itemlist_type = get_cookie("ck_itemlist<?php echo $ca_id; ?>_type")) {
     $("ul.sct").listType(itemlist_type);
 }
 
@@ -62,7 +62,7 @@ $(function() {
                     $(this).attr("style", $(this).data("style"));
                 }
             });
-            set_cookie("ck_itemlist_type", "gallery", 1, g4_cookie_domain);
+            set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "gallery", 1, g4_cookie_domain);
         } else {
             $("ul.sct").addClass("sct_40");
             $el.each(function() {
@@ -70,7 +70,7 @@ $(function() {
                     $(this).attr("style", "");
                 }
             });
-            set_cookie("ck_itemlist_type", "list", 1, g4_cookie_domain);
+            set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "list", 1, g4_cookie_domain);
         }
     });
 });
