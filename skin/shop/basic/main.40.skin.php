@@ -20,7 +20,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         if ($this->css) {
             echo "<div id=\"smt_{$this->type}\" class=\"{$this->css}\">\n";
         } else {
-            echo "<div id=\"smt_{$this->type}\" class=\"sct smt_50\">\n";
+            echo "<div id=\"smt_{$this->type}\" class=\"sct smt_40\">\n";
         }
         echo "<ul class=\"sct_ul sct_ul_first\">\n";
     }

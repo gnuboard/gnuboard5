@@ -20,7 +20,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         if ($this->css) {
             echo "<div id=\"smt_{$this->type}\" class=\"{$this->css}\">\n";
         } else {
-            echo "<div id=\"smt_{$this->type}\" class=\"sct smt_50\">\n";
+            echo "<div id=\"smt_{$this->type}\" class=\"sct smt_20\">\n";
         }
         echo "<ul class=\"sct_ul sct_ul_first\">\n";
     }
@@ -31,13 +31,6 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     echo "<li class=\"sct_li{$sct_last}\">";
-
-    if ($i > 1 && $i%$this->list_mod == 1) {
-        echo "</li>\n";
-        echo "<li class=\"sct_li\">\n";
-    }
-
-    echo "<div class=\"sct_div{$sct_last}\">";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
