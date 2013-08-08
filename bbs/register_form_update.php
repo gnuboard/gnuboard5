@@ -141,10 +141,6 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
     }
 }
 
-
-// 관리자님 회원정보
-$admin = get_admin('super');
-
 //===============================================================
 //  휴대폰 본인확인
 //---------------------------------------------------------------
@@ -239,7 +235,7 @@ if ($w == '') {
         $content = ob_get_contents();
         ob_end_clean();
 
-        mailer($admin['mb_nick'], $admin['mb_email'], $mb_email, $subject, $content, 1);
+        mailer($config['cf_title'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
     }
 
     // 최고관리자님께 메일 발송
@@ -251,7 +247,7 @@ if ($w == '') {
         $content = ob_get_contents();
         ob_end_clean();
 
-        mailer($mb_nick, $mb_email, $admin['mb_email'], $subject, $content, 1);
+        mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
     }
 
     // 메일인증 사용하지 않는 경우에만 로그인
@@ -337,7 +333,7 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     $content = ob_get_contents();
     ob_end_clean();
 
-    mailer($admin['mb_nick'], $admin['mb_email'], $mb_email, $subject, $content, 1);
+    mailer($config['cf_title'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
 }
 
 

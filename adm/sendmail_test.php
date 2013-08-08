@@ -12,14 +12,10 @@ include_once(G4_LIB_PATH.'/mailer.lib.php');
 $g4['title'] = '메일 테스트';
 include_once('./admin.head.php');
 
-if (isset($_POST['mail'])) {
-    $from_name  = '메일검사';
-    $admin = get_admin('super', 'mb_email');
-    $from_email = $admin['mb_email'];
-
-    $email = explode(',', $mail);
+if (isset($_POST['email'])) {
+    $email = explode(',', $_POST['email']);
     for ($i=0; $i<count($email); $i++)
-        mailer($from_name, $from_email, trim($email[$i]), '[메일검사] 제목', '<span style="font-size:9pt;">[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>'.date("Y-m-d H:i:s").'<p>이 메일 주소로는 회신되지 않습니다.</span>', 1);
+        mailer($config['cf_title'], $config['cf_admin_email'], trim($email[$i]), '[메일검사] 제목', '<span style="font-size:9pt;">[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>'.G4_TIME_YMDHIS.'<p>이 메일 주소로는 회신되지 않습니다.</span>', 1);
 
     echo '<section class=\'cbox\'>';
     echo '<h2>결과메세지</h2>';
@@ -45,13 +41,12 @@ if (isset($_POST['mail'])) {
     <p>
         메일서버가 정상적으로 동작 중인지 확인할 수 있습니다.<br>
         아래 입력칸에 테스트 메일을 발송하실 메일 주소를 입력하시면, [메일검사] 라는 제목으로 테스트 메일을 발송합니다.<br>
-        여러 곳으로 테스트 메일을 발송하시려면 , 로 메일을 구분하십시오.
     </p>
     <form name="fsendmailtest" method="post">
     <fieldset id="fsendmailtest">
         <legend>테스트메일 발송</legend>
-        <label for="mail">받는 메일주소<strong class="sound_only">필수</strong></label>
-        <input type="text" name="mail" value="<?php echo $member['mb_email'] ?>" id="mail" required class="required frm_input" size="80">
+        <label for="email">받는 메일주소<strong class="sound_only">필수</strong></label>
+        <input type="text" name="email" value="<?php echo $member['mb_email'] ?>" id="email" required class="required email frm_input" size="80">
         <input type="submit" value="발송" class="btn_submit">
     </fieldset>
     </form>
