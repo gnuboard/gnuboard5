@@ -98,7 +98,7 @@
 
 /* 메인 상품 목록 스킨 30 */
 .smt_30 {position:relative;width:100%;height:330px;overflow-x:hidden}
-.smt_30 .sct_ul {position:absolute;top:0;left:765px;margin:0;padding:0;width:100%;zoom:1}
+.smt_30 .sct_ul {position:absolute;top:0;left:765px;margin:0;padding:0;width:100%;list-style:none;zoom:1}
 .smt_30 .sct_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .smt_30 .sct_ul_first {display:block;left:0}
 .smt_30 .sct_li {float:left}

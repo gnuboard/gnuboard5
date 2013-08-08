@@ -22,7 +22,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "<li class=\"sct_li\">\n";
     }
 
-    if ($i > 1 && $i%$this->list_mod == 1) {
+    if ($i > 1) {
         echo "</li>\n";
         echo "<li class=\"sct_li\">\n";
     }
@@ -65,6 +65,11 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt.png');
         echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo.png');
         echo "</div>\n";
+    }
+
+    if ($i%$this->list_mod == 0) {
+        echo "</ul>";
+        echo "<ul class=\"sct_ul\">";
     }
 }
 
