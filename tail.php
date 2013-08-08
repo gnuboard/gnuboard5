@@ -34,9 +34,30 @@ if ($config['cf_include_tail']) {
     </div>
 </div>
 
-<?php if(!G4_IS_MOBILE) { ?>
-<a href="<?php echo $_SERVER['PHP_SELF'].($_SERVER['QUERY_STRING']?'?'.str_replace("&", "&amp;", $_SERVER['QUERY_STRING']).'&amp;':'?').'device=mobile'; ?>" id="device_change">모바일 버전으로 보기</a>
-<?php } ?>
+<?php
+if(!G4_IS_MOBILE) {
+    $seq = 0;
+    $href = $_SERVER['PHP_SELF'];
+    if($_SERVER['QUERY_STRING']) {
+        $sep = '?';
+        foreach($_GET as $key=>$val) {
+            if($key == 'device')
+                continue;
+
+            $href .= $sep.$key.'='.$val;
+            $sep = '&amp;';
+            $seq++;
+        }
+    }
+    if($seq)
+        $href .= '&amp;device=mobile';
+    else
+        $href .= '?device=mobile';
+?>
+<a href="<?php echo $href; ?>" id="device_change">모바일 버전으로 보기</a>
+<?php
+}
+?>
 
 <!-- } 하단 끝 -->
 
