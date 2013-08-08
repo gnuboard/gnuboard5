@@ -6,7 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
 
-<!-- 상품진열 13 시작 { -->
+<!-- 상품진열 40 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];

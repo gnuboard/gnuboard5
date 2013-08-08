@@ -4,7 +4,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
 
-<!-- 상품진열 11 시작 { -->
+<!-- 상품진열 20 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     if ($this->list_mod >= 2) { // 1줄 이미지 : 2개 이상
