@@ -27,7 +27,7 @@ $.fn.listType = function(type)
             }
         });
 
-        $("button.sct_lst_gallery span").addClass("sct_lst_on").html("<b class=\"sound_only\">활성</b>");
+        $("button.sct_lst_gallery span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
     } else {
         this.addClass("sct_40");
         $el.each(function() {
@@ -36,7 +36,7 @@ $.fn.listType = function(type)
             }
         });
 
-        $("button.sct_lst_list span").addClass("sct_lst_on").html("<b class=\"sound_only\">활성</b>");
+        $("button.sct_lst_list span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
     }
 
     set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", type, 1, g4_cookie_domain);
