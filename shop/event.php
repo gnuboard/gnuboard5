@@ -39,6 +39,9 @@ if (file_exists($list_file))
 {
     include G4_SHOP_PATH.'/list.sort.php';
 
+    // 상품 보기 타입 변경 버튼
+    include G4_SHOP_PATH.'/list.sub.php';
+
     // 총몇개 = 한줄에 몇개 * 몇줄
     $items = $ev['ev_list_mod'] * $ev['ev_list_row'];
     // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -51,6 +54,13 @@ if (file_exists($list_file))
     $list->set_is_page(true);
     $list->set_order_by($order_by);
     $list->set_from_record($from_record);
+    $list->set_view('it_img', true);
+    $list->set_view('it_id', false);
+    $list->set_view('it_name', true);
+    $list->set_view('it_cust_price', false);
+    $list->set_view('it_price', true);
+    $list->set_view('it_icon', true);
+    $list->set_view('sns', true);
     echo $list->run();
 
     // where 된 전체 상품수
@@ -72,7 +82,10 @@ if ($i==0)
 ?>
 
 <?php
-$qstr .= 'ca_id='.$ca_id.'&amp;skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort='.$sort;
+// 상품 보기 타입 변경 처리 스크립트
+include G4_SHOP_PATH.'/list.sub2.php';
+
+$qstr .= 'skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 
