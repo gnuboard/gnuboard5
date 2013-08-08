@@ -59,31 +59,34 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <thead>
     <tr>
         <th scope="col">
-            <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
+            <label for="chkall" class="sound_only">게시판 전체</label>
             <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
         </th>
         <th scope="col">게시판</th>
     </tr>
     </thead>
     <tbody>
-    <?php for ($i=0; $i<count($list); $i++) { ?>
-    <tr>
+    <?php for ($i=0; $i<count($list); $i++) {
+        $atc_mark = '';
+        $atc_bg = '';
+        if ($list[$i]['bo_table'] == $bo_table) { // 게시물이 현재 속해 있는 게시판이라면
+            $atc_mark = '<span class="copymove_current">현재<span class="sound_only">게시판</span></span>';
+            $atc_bg = 'copymove_currentbg';
+        }
+    ?>
+    <tr class="<?php echo $atc_bg; ?>">
         <td class="td_chk">
             <label for="chk<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['bo_table'] ?></label>
-            <input type="checkbox" id="chk<?php echo $i ?>" name="chk_bo_table[]" value="<?php echo $list[$i]['bo_table'] ?>">
+            <input type="checkbox" value="<?php echo $list[$i]['bo_table'] ?>" id="chk<?php echo $i ?>" name="chk_bo_table[]">
         </td>
         <td>
             <label for="chk<?php echo $i ?>">
-            <?php
-            echo $list[$i]['gr_subject'] . " &gt; ";
-            $save_gr_subject = $list[$i]['gr_subject'];
-            ?>
-            <?php echo $list[$i]['bo_subject'] ?> (<?php echo $list[$i]['bo_table'] ?>)
-            <?php 
-            if ($list[$i]['bo_table'] == $bo_table) {
-                echo " <- 원본 게시판";
-            }
-            ?>
+                <?php
+                echo $list[$i]['gr_subject'] . ' &gt; ';
+                $save_gr_subject = $list[$i]['gr_subject'];
+                ?>
+                <?php echo $list[$i]['bo_subject'] ?> (<?php echo $list[$i]['bo_table'] ?>)
+                <?php echo $atc_mark; ?>
             </label>
         </td>
     </tr>
@@ -92,7 +95,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     </table>
 
     <div class="btn_win btn_confirm">
-        <input type="submit" id="btn_submit" class="btn_submit" value="<?php echo $act ?>">
+        <input type="submit" value="<?php echo $act ?>" id="btn_submit" class="btn_submit">
     </div>
     </form>
 
@@ -100,9 +103,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 <script>
 $(function() {
-    $(".btn_win").append("<a class=\"btn_cancel\">창닫기</a>");
+    $(".btn_win").append("<button type=\"button\" class=\"btn_cancel\">창닫기</button>");
 
-    $(".btn_win a").click(function() {
+    $(".btn_win button").click(function() {
         window.close();
     });
 });
@@ -147,8 +150,6 @@ function fboardmoveall_submit(f)
     return true;
 }
 </script>
-
-</td></tr></table>
 
 <?php
 include_once(G4_PATH.'/tail.sub.php');

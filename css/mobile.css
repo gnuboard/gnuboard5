@@ -101,6 +101,11 @@ a:active {color:#000;text-decoration:underline}
 #ft_copy b {color:#fff}
 #ft_copy a {color:#fff;text-decoration:none}
 
+/* 게시물 선택복사 선택이동 */
+#copymove {}
+.copymove_current {float:right;color:#ff3061}
+.copymove_currentbg {background:#f4f4f4}
+
 /* PC화면으로 */
 #device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;color:#000;font-size:1em;text-decoration:none;text-align:center}
 

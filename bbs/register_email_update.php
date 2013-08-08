@@ -6,7 +6,7 @@ include_once(G4_LIB_PATH.'/mailer.lib.php');
 $mb_id    = escape_trim($_POST['mb_id']);
 $mb_email = escape_trim($_POST['mb_email']);
 
-$sql = " select mb_datetime from {$g4['member_table']} where mb_id = '{$mb_id}' and mb_email_certify <> '' ";
+$sql = " select mb_name, mb_datetime from {$g4['member_table']} where mb_id = '{$mb_id}' and mb_email_certify <> '' ";
 $mb = sql_fetch($sql);
 if (!$mb) {
     alert("이미 메일인증 하신 회원입니다.", G4_URL);
@@ -25,6 +25,7 @@ if ($row['cnt']) {
 // 인증메일 발송
 $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
+$mb_name = $mb['mb_name'];
 $mb_datetime = $mb['mb_datetime'] ? $mb['mb_datetime'] : G4_TIME_YMDHIS;
 $mb_md5 = md5($mb_id.$mb_email.$mb_datetime);
 $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
@@ -34,11 +35,10 @@ include_once ('./register_form_update_mail3.php');
 $content = ob_get_contents();
 ob_end_clean();
 
-$admin = get_admin('super');
-mailer($admin['mb_nick'], $admin['mb_email'], $mb_email, $subject, $content, 1);
+mailer($config['cf_title'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
 
 $sql = " update {$g4['member_table']} set mb_email = '$mb_email' where mb_id = '$mb_id' ";
 sql_query($sql);
 
-alert("인증메일을 {$mb_email} 메일로 다시 보내 드렸습니다.\\n\\n{$mb_email} 메일을 확인하여 주십시오.", G4_URL);
+alert("인증메일을 {$mb_email} 메일로 다시 보내 드렸습니다.\\n\\n잠시후 {$mb_email} 메일을 확인하여 주십시오.", G4_URL);
 ?>
