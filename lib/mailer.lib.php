@@ -191,6 +191,7 @@ function verify_email($address, &$error)
 
 
 # jsboard 의 메일보내기 class를 추가합니다. 130808
+# http://kldp.net/projects/jsboard/
 
 # mail 보내기 함수 2001.11.30 김정균
 # $Id: include/sendmail.php,v 1.4 2009/11/19 05:29:51 oops Exp $
