@@ -17,6 +17,8 @@ $.fn.listType = function(type)
         }
     });
 
+    $("button.sct_lst_view span").removeClass("sct_lst_on").html("");
+
     if(type == "gallery") {
         this.removeClass("sct_40");
         $el.each(function() {
@@ -45,38 +47,11 @@ if(itemlist_type = get_cookie("ck_itemlist<?php echo $ca_id; ?>_type")) {
 
 $(function() {
     $("button.sct_lst_view").on("click", function() {
-        var $el = $("ul.sct").find("li.sct_li");
-        var count = $el.size();
-        if(count < 1)
-            return false;
-
-        $el.each(function() {
-            var st = $(this).attr("style");
-            if(st) {
-                $(this).data("style", st);
-            }
-        });
-
         if($(this).hasClass("sct_lst_gallery")) {
-            $("ul.sct").removeClass("sct_40");
-            $el.each(function() {
-                if($(this).data("style")) {
-                    $(this).attr("style", $(this).data("style"));
-                }
-            });
-            set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "gallery", 1, g4_cookie_domain);
+            $("ul.sct").listType("gallery");
         } else {
-            $("ul.sct").addClass("sct_40");
-            $el.each(function() {
-                if($(this).data("style")) {
-                    $(this).attr("style", "");
-                }
-            });
-            set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", "list", 1, g4_cookie_domain);
+            $("ul.sct").listType("list");
         }
-
-        $("button.sct_lst_view span").removeClass("sct_lst_on").html("");
-        $(this).children("span").addClass("sct_lst_on").html("<b class=\"sound_only\">활성</b>");
     });
 });
 </script>
