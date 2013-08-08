@@ -1,5 +1,5 @@
 
-/* ##### maintype(nn).inc.php, list.skin.(nn).php 공통 적용 시작 ##### */
+/* ##### maint.(nn).skin.php, list.(nn)skin.php 공통 적용 시작 ##### */
 /* 공통 */
 .sct_wrap {margin:0 0 30px;zoom:1}
 .sct_wrap:after {display:block;visibility:hidden;clear:both;content:""}
@@ -76,4 +76,4 @@
 .sct_13 .sct_rel_ul {margin:0;padding:0;list-style:none}
 .sct_13 .sct_rel_li {float:left;margin:0 0 0 10px}
 .sct_13 .sct_sns {position:absolute;top:20px;right:20px}
-/* ##### maintype(nn).inc.php, list.skin.(nn).php 공통 적용 끝 ##### */
+/* ##### maint.(nn).skin.php, list.(nn)skin.php 공통 적용 끝 ##### */
