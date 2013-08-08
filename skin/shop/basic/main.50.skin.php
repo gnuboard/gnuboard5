@@ -17,19 +17,19 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($i == 1) {
         if ($this->css) {
-            echo "<ul id=\"smt_{$this->type}\" class=\"{$this->css}\">\n";
+            echo "<div id=\"smt_{$this->type}\" class=\"{$this->css}\">\n";
         } else {
-            echo "<ul id=\"smt_{$this->type}\" class=\"sct smt_50\">\n";
+            echo "<div id=\"smt_{$this->type}\" class=\"sct smt_50\">\n";
         }
-        echo "<li class=\"sct_li sct_li_first\">\n";
+        echo "<ul class=\"sct_ul sct_ul_first\">\n";
     }
 
-    if ($i > 1 && $i%$this->list_mod == 1) {
-        echo "</li>\n";
-        echo "<li class=\"sct_li\">\n";
+    if ($i>1 && $i%$this->list_mod == 1) {
+        echo "</ul>\n";
+        echo "<ul class=\"sct_ul\">\n";
     }
 
-    echo "<div class=\"sct_div{$sct_last}\">";
+    echo "<li class=\"sct_li{$sct_last}\">";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
@@ -59,6 +59,10 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
     }
 
+    if ($this->href) {
+        echo "</a>\n";
+    }
+
     if ($this->view_sns) {
         echo "<div class=\"sct_sns\">";
         echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb.png');
@@ -67,16 +71,12 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "</div>\n";
     }
 
-    if ($this->href) {
-        echo "</a>\n";
-    }
-
-    echo "</div>\n";
+    echo "</li>\n";
 }
 
 if ($i > 1) {
-    echo "</li>\n";
     echo "</ul>\n";
+    echo "</div>\n";
 }
 
 if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
@@ -85,7 +85,7 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 <script>
 $.fn.itemDrop = function(option)
 {
-    var $smt = this.find("li.sct_li");
+    var $smt = this.find("ul.sct_ul");
     var $smt_a = $smt.find("a");
     var count = $smt.size();
     var height = $smt.height();
@@ -102,7 +102,7 @@ $.fn.itemDrop = function(option)
 
     // 초기실행
     if(count > 0) {
-        $smt.eq(0).find("div.sct_div").each(function() {
+        $smt.eq(0).find("li.sct_li").each(function() {
             $(this).delay(delay).animate(
                 { top: "+="+height+"px" }, settings.duration
             );
@@ -152,12 +152,12 @@ $.fn.itemDrop = function(option)
         delay = 0;
 
         $smt.eq(o_idx).css("display", "none");
-        $smt.eq(o_idx).find("div.sct_div").css("top", "-"+height+"px");
+        $smt.eq(o_idx).find("li.sct_li").css("top", "-"+height+"px");
 
         c_idx = (o_idx + 1) % count;
 
         $smt.eq(c_idx).css("display", "block");
-        $smt.eq(c_idx).find("div.sct_div").each(function() {
+        $smt.eq(c_idx).find("li.sct_li").each(function() {
             $(this).delay(delay).animate(
                 { top: "+="+height+"px" }, settings.duration
             );

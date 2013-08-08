@@ -12,6 +12,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- 상품유형 30 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
+    $sct_last = '';
+    if($i>1 && $i%$this->list_mod == 0)
+        $sct_last = ' sct_last'; // 줄 마지막
+
     if ($i == 1) {
         if ($this->css) {
             echo "<div id=\"smt_{$this->type}\" class=\"{$this->css}\">\n";
@@ -22,11 +26,11 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($i>1 && $i%$this->list_mod == 1) {
-        echo "</ul>";
-        echo "<ul class=\"sct_ul\">";
+        echo "</ul>\n";
+        echo "<ul class=\"sct_ul\">\n";
     }
 
-    echo "<li class=\"sct_li\">\n";
+    echo "<li class=\"sct_li{$sct_last}\">\n";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
