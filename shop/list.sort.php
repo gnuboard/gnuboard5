@@ -30,8 +30,10 @@ $(function() {
     $("button.sct_lst_view").on("click", function() {
         if($(this).hasClass("sct_lst_gallery")) {
             $("ul.sct").removeClass("sct_13");
+            set_cookie("ck_itemlist_type", "gallery", 1, g4_cookie_domain);
         } else {
             $("ul.sct").addClass("sct_13");
+            set_cookie("ck_itemlist_type", "list", 1, g4_cookie_domain);
         }
     });
 });
