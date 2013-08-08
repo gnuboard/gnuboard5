@@ -375,8 +375,8 @@ td.empty_table {padding:85px 0;text-align:center}
 #sit_ov_wrap:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 상품 상세보기 - 이미지 미리보기 */
-#sit_pvi {float:left;padding:15px;}
-#sit_pvi_big {margin:0 0 10px}
+#sit_pvi {float:left;padding:15px;width:320px}
+#sit_pvi_big {margin:0 0 10px;text-align:center}
 #sit_pvi_big a {display:none}
 #sit_pvi_big a.visible {display:block}
 #sit_pvi_big img {}
