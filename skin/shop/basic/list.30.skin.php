@@ -9,8 +9,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
     if ($list_mod >= 2) { // 1줄 이미지 : 2개 이상
-        if ($i%$list_mod == 0) $sct_last = 'sct_last'; // 줄 마지막
-        else if ($i%$list_mod == 1) $sct_last = 'sct_clear'; // 줄 첫번째
+        if ($i%$list_mod == 0) $sct_last = ' sct_last'; // 줄 마지막
+        else if ($i%$list_mod == 1) $sct_last = ' sct_clear'; // 줄 첫번째
         else $sct_last = '';
     } else { // 1줄 이미지 : 1개
         $sct_last = 'sct_clear';
@@ -24,7 +24,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         }
     }
 
-    echo "<li class=\"sct_li {$sct_last}\">\n";
+    echo "<li class=\"sct_li{$sct_last}\" style=\"width:{$this->img_width}px\">\n";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
