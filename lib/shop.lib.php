@@ -1023,7 +1023,12 @@ function get_item_supply($it_id, $subject)
                 $price = '&nbsp;&nbsp; '.number_format($row['io_price']).'원';
             $io_stock_qty = get_option_stock_qty($it_id, $row['io_id'], $row['io_type']);
 
-            $options[$opt_id[0]][] = '<option value="'.$opt_id[1].','.$row['io_price'].','.$io_stock_qty.'">'.$opt_id[1].$price.'</option>';
+            if($io_stock_qty < 1)
+                $soldout = '&nbsp;&nbsp;[품절]';
+            else
+                $soldout = '';
+
+            $options[$opt_id[0]][] = '<option value="'.$opt_id[1].','.$row['io_price'].','.$io_stock_qty.'">'.$opt_id[1].$price.$soldout.'</option>';
         }
     }
 
