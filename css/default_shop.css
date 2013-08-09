@@ -381,7 +381,9 @@ td.empty_table {padding:85px 0;text-align:center}
 #sct_sort li {float:left;position:relative;margin-left:-1px}
 
 /* 상품 리스트 스타일 선택 */
-#sct_lst {float:right;margin:0 0 10px;letter-spacing:-5px}
+#sct_lst {float:right;margin:0 0 10px;padding:0;list-style:none;zoom:1}
+#sct_lst:after {display:block;visibility:hidden;clear:both;content:""}
+#sct_lst li {position:relative;float:left;margin:0 0 0 -1px}
 #sct_lst button {position:relative;margin:0;padding:0;width:25px;height:25px;border:0;cursor:pointer}
 #sct_lst button span {position:absolute;top:0;left:0;width:23px;height:23px;border:1px solid #ccc;background:url('../shop/img/is_button.gif')}
 #sct_lst button.sct_lst_list span {background-position:0 0}
