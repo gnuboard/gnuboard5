@@ -10,11 +10,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
 
 <!-- 이전 재생 정지 다음 버튼 시작 { -->
-<ul class="sctrl">
-    <li><button type="button" class="sctrl_prev">이전<span></span></button></li>
+<ul id="btn_smt_<?php echo $this->type; ?>" class="sctrl">
     <li><button type="button" class="sctrl_play">효과재생<span></span></button></li>
     <li><button type="button" class="sctrl_stop">효과정지<span></span></button></li>
-    <li><button type="button" class="sctrl_next">다음<span></span></button></li>
 </ul>
 <!-- } 이전 재생 정지 다음 버튼 끝 -->
 
@@ -93,83 +91,131 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 ?>
 
 <script>
-$.fn.topRolling = function(option)
-{
-    var $smt = this.find("ul.sct_ul");
-    var $smt_a = $smt.find("a.sct_a");
-    var height = $smt.closest("ul").height();
-    var count = $smt.size();
-    var c_idx = o_idx = 0;
-    var fx = null;
+(function($) {
+    var intervals = {};
 
-    // 기본 설정값
-    var settings = $.extend({
-        interval: 5000,
-        duration: 800
-    }, option);
+    var methods = {
+        init: function(option)
+        {
+            var $smt = this.find("ul.sct_ul");
+            var $smt_a = $smt.find("a.sct_a");
+            var height = $smt.closest("ul").height();
+            var count = $smt.size();
+            var c_idx = o_idx = 0;
+            var fx = null;
+            var el_id = this[0].id;
 
-    if(count < 2)
-        return;
+            // 기본 설정값
+            var settings = $.extend({
+                interval: 5000,
+                duration: 800
+            }, option);
 
-    fx = setInterval(top_rolling, settings.interval);
+            if(count < 2)
+                return;
 
-    $smt.hover(
-        function() {
-            if(fx != null)
-                clearInterval(fx);
+            set_interval();
+
+            $smt.hover(
+                function() {
+                    clear_interval();
+                },
+                function() {
+                    set_interval();
+                }
+            );
+
+            $smt_a.on("focusin", function() {
+                clear_interval();
+            });
+
+            $smt_a.on("focusout", function() {
+                set_interval();
+            });
+
+            function top_rolling() {
+                $smt.each(function(index) {
+                    if($(this).is(":visible")) {
+                        o_idx = index;
+                        return false;
+                    }
+                });
+
+                $smt.eq(o_idx).animate(
+                    { top: "-="+height+"px" }, settings.duration,
+                    function() {
+                        $(this).css("display", "none").css("top", height+"px");
+                    }
+                );
+
+                c_idx = (o_idx + 1) % count;
+
+                $smt.eq(c_idx).css("display", "block").animate(
+                    { top: "-="+height+"px" }, settings.duration,
+                    function() {
+                        o_idx = c_idx;
+                    }
+                );
+            }
+
+            function set_interval() {
+                if(count > 1) {
+                    clear_interval();
+                    intervals[el_id] = setInterval(top_rolling, settings.interval);
+
+                    // control 버튼 class
+                    $("#btn_"+el_id).find("button span").removeClass("sctrl_on").html("")
+                        .end().find("button.sctrl_play span").addClass("sctrl_on").html("<b class=\"sound_only\">선택됨</b>");
+                }
+            }
+
+            function clear_interval() {
+                if(intervals[el_id]) {
+                    clearInterval(intervals[el_id]);
+
+                    // control 버튼 class
+                    $("#btn_"+el_id).find("button span").removeClass("sctrl_on").html("")
+                        .end().find("button.sctrl_stop span").addClass("sctrl_on").html("<b class=\"sound_only\">선택됨</b>");
+                }
+            }
         },
-        function() {
-            if(fx != null)
-                clearInterval(fx);
-
-            if(count > 1)
-                fx = setInterval(top_rolling, settings.interval);
+        stop: function()
+        {
+            var el_id = this[0].id;
+            if(intervals[el_id])
+                clearInterval(intervals[el_id]);
         }
-    );
+    };
 
-    $smt_a.on("focusin", function() {
-        if(fx != null)
-            clearInterval(fx);
-    });
-
-    $smt_a.on("focusout", function() {
-        if(fx != null)
-            clearInterval(fx);
-
-        if(count > 1)
-            fx = setInterval(top_rolling, settings.interval);
-    });
-
-    function top_rolling() {
-        $smt.each(function(index) {
-            if($(this).is(":visible")) {
-                o_idx = index;
-                return false;
-            }
-        });
-
-        $smt.eq(o_idx).animate(
-            { top: "-="+height+"px" }, settings.duration,
-            function() {
-                $(this).css("display", "none").css("top", height+"px");
-            }
-        );
-
-        c_idx = (o_idx + 1) % count;
-
-        $smt.eq(c_idx).css("display", "block").animate(
-            { top: "-="+height+"px" }, settings.duration,
-            function() {
-                o_idx = c_idx;
-            }
-        );
+    $.fn.topRolling = function(option) {
+        if (methods[option])
+            return methods[option].apply(this, Array.prototype.slice.call(arguments, 1));
+        else
+            return methods.init.apply(this, arguments);
     }
-}
+}(jQuery));
 
 $(function() {
     $("#smt_<?php echo $this->type; ?>").topRolling();
     // 기본 설정값을 변경하려면 아래처럼 사용
-    //$("#smt_<?php echo $this->type; ?>").topRolling({ interval: 5000, duration: 800 });
+    //$("#smt_<?php echo $this->type; ?>").topRolling({ interval: 2000, duration: 800 });
+
+    // 애니메이션 play
+    $("#btn_smt_<?php echo $this->type; ?> button.sctrl_play").on("click", function() {
+        var id = $(this).closest(".sctrl").attr("id").replace("btn_", "");
+        $("#"+id).topRolling();
+        //$("#"+id).topRolling({ interval: 2000, duration: 800 });
+    });
+
+    // 애니메이션 stop
+    $("#btn_smt_<?php echo $this->type; ?> button.sctrl_stop").on("click", function() {
+        if($(this).parent().siblings().find(".sctrl_on").size() > 0) {
+            $(this).parent().siblings().find("span").removeClass("sctrl_on").html("");
+            $(this).children().addClass("sctrl_on").html("<b class=\"sound_only\">선택됨</b>");
+            var id = $(this).closest(".sctrl").attr("id").replace("btn_", "");
+            $("#"+id).topRolling("stop");
+        }
+    });
 });
 </script>
 <!-- } 상품진열 20 끝 -->

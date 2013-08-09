@@ -9,11 +9,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
 
 <!-- 이전 재생 정지 다음 버튼 시작 { -->
-<ul class="sctrl">
-    <li><button type="button" class="sctrl_prev">이전<span></span></button></li>
+<ul id="btn_smt_<?php echo $this->type; ?>" class="sctrl">
     <li><button type="button" class="sctrl_play">효과재생<span></span></button></li>
     <li><button type="button" class="sctrl_stop">효과정지<span></span></button></li>
-    <li><button type="button" class="sctrl_next">다음<span></span></button></li>
 </ul>
 <!-- } 이전 재생 정지 다음 버튼 끝 -->
 
@@ -92,95 +90,143 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 ?>
 
 <script>
-$.fn.itemDrop = function(option)
-{
-    var $smt = this.find("ul.sct_ul");
-    var $smt_a = $smt.find("a.sct_a");
-    var count = $smt.size();
-    var height = $smt.height();
-    var c_idx = o_idx = 0;
-    var fx = null;
-    var delay = 0;
+(function() {
+    var intervals = {};
 
-    // 기본 설정값
-    var settings = $.extend({
-        interval: 6000,
-        duration: 800,
-        delay: 300
-    }, option);
+    var methods = {
+        init: function(option)
+        {
+            var $smt = this.find("ul.sct_ul");
+            var $smt_a = $smt.find("a.sct_a");
+            var count = $smt.size();
+            var height = $smt.height();
+            var c_idx = o_idx = 0;
+            var fx = null;
+            var delay = 0;
+            var el_id = this[0].id;
 
-    // 초기실행
-    if(count > 0) {
-        $smt.eq(0).find("li.sct_li").each(function() {
-            $(this).delay(delay).animate(
-                { top: "+="+height+"px" }, settings.duration
-            );
+            // 기본 설정값
+            var settings = $.extend({
+                interval: 6000,
+                duration: 800,
+                delay: 300
+            }, option);
 
-            delay += settings.delay;
-        });
-    }
+            // 초기실행
+            if(count > 0 && intervals[el_id] == undefined) {
+                $smt.eq(0).find("li.sct_li").each(function() {
+                    $(this).delay(delay).animate(
+                        { top: "+="+height+"px" }, settings.duration
+                    );
 
-    if(count > 1)
-        fx = setInterval(item_drop, settings.interval);
-
-    $smt.hover(
-        function() {
-            if(fx != null)
-                clearInterval(fx);
-        },
-        function() {
-            if(fx != null)
-                clearInterval(fx);
-
-            if(count > 1)
-                fx = setInterval(item_drop, settings.interval);
-        }
-    );
-
-    $smt_a.on("focusin", function() {
-        if(fx != null)
-            clearInterval(fx);
-    });
-
-    $smt_a.on("focusout", function() {
-        if(fx != null)
-            clearInterval(fx);
-
-        if(count > 1)
-            fx = setInterval(item_drop, settings.interval);
-    });
-
-    function item_drop() {
-        $smt.each(function(index) {
-            if($(this).is(":visible")) {
-                o_idx = index;
-                return false;
+                    delay += settings.delay;
+                });
             }
-        });
 
-        delay = 0;
+            set_interval();
 
-        $smt.eq(o_idx).css("display", "none");
-        $smt.eq(o_idx).find("li.sct_li").css("top", "-"+height+"px");
-
-        c_idx = (o_idx + 1) % count;
-
-        $smt.eq(c_idx).css("display", "block");
-        $smt.eq(c_idx).find("li.sct_li").each(function() {
-            $(this).delay(delay).animate(
-                { top: "+="+height+"px" }, settings.duration
+            $smt.hover(
+                function() {
+                    clear_interval();
+                },
+                function() {
+                    set_interval();
+                }
             );
 
-            delay += settings.delay;
-        });
+            $smt_a.on("focusin", function() {
+                clear_interval();
+            });
 
-        o_idx = c_idx;
+            $smt_a.on("focusout", function() {
+                set_interval();
+            });
+
+            function item_drop() {
+                $smt.each(function(index) {
+                    if($(this).is(":visible")) {
+                        o_idx = index;
+                        return false;
+                    }
+                });
+
+                delay = 0;
+
+                $smt.eq(o_idx).css("display", "none");
+                $smt.eq(o_idx).find("li.sct_li").css("top", "-"+height+"px");
+
+                c_idx = (o_idx + 1) % count;
+
+                $smt.eq(c_idx).css("display", "block");
+                $smt.eq(c_idx).find("li.sct_li").each(function() {
+                    $(this).delay(delay).animate(
+                        { top: "+="+height+"px" }, settings.duration
+                    );
+
+                    delay += settings.delay;
+                });
+
+                o_idx = c_idx;
+            }
+
+            function set_interval() {
+                if(count > 1) {
+                    clear_interval();
+                    intervals[el_id] = setInterval(item_drop, settings.interval);
+
+                    // control 버튼 class
+                    $("#btn_"+el_id).find("button span").removeClass("sctrl_on").html("")
+                        .end().find("button.sctrl_play span").addClass("sctrl_on").html("<b class=\"sound_only\">선택됨</b>");
+                }
+            }
+
+            function clear_interval() {
+                if(intervals[el_id]) {
+                    clearInterval(intervals[el_id]);
+
+                    // control 버튼 class
+                    $("#btn_"+el_id).find("button span").removeClass("sctrl_on").html("")
+                        .end().find("button.sctrl_stop span").addClass("sctrl_on").html("<b class=\"sound_only\">선택됨</b>");
+                }
+            }
+        },
+        stop: function()
+        {
+            var el_id = this[0].id;
+            if(intervals[el_id])
+                clearInterval(intervals[el_id]);
+        }
+    };
+
+    $.fn.itemDrop = function(option) {
+        if (methods[option])
+            return methods[option].apply(this, Array.prototype.slice.call(arguments, 1));
+        else
+            return methods.init.apply(this, arguments);
     }
-}
+}(jQuery));
+
 $(function() {
     $("#smt_<?php echo $this->type; ?>").itemDrop();
     // 기본 설정값을 변경하려면 아래처럼 사용
     //$("#smt_<?php echo $this->type; ?>").itemDrop({ interval: 6000, duration: 800, delay: 300 });
+
+    // 애니메이션 play
+    $("#btn_smt_<?php echo $this->type; ?> button.sctrl_play").on("click", function() {
+        var id = $(this).closest(".sctrl").attr("id").replace("btn_", "");
+        $("#"+id).itemDrop();
+        //$("#"+id).itemDrop({ interval: 3000, duration: 800, delay: 300 });
+    });
+
+    // 애니메이션 stop
+    $("#btn_smt_<?php echo $this->type; ?> button.sctrl_stop").on("click", function() {
+        if($(this).parent().siblings().find(".sctrl_on").size() > 0) {
+            $(this).parent().siblings().find("span").removeClass("sctrl_on").html("");
+            $(this).children().addClass("sctrl_on").html("<b class=\"sound_only\">선택됨</b>");
+            var id = $(this).closest(".sctrl").attr("id").replace("btn_", "");
+            $("#"+id).itemDrop("stop");
+        }
+    });
 });
 </script>
 <!-- } 상품진열 50 끝 -->
