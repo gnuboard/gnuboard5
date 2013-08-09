@@ -32,7 +32,7 @@ $.fn.listType = function(type)
         this.addClass("sct_40");
         $el.each(function() {
             if($(this).data("style")) {
-                $(this).attr("style", "");
+                $(this).removeAttr("style");
             }
         });
 
