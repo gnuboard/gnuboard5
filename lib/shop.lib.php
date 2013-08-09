@@ -948,7 +948,7 @@ function get_item_options($it_id, $subject)
                 $str .= '<tr>'.PHP_EOL;
                 $str .= '<th><label for="it_option_'.$seq.'">'.$subj[$i].'</label></th>'.PHP_EOL;
 
-                $select = '<select name="it_option[]" id="it_option_'.$seq.'"'.$disabled.'>'.PHP_EOL;
+                $select = '<select id="it_option_'.$seq.'" class="it_option"'.$disabled.'>'.PHP_EOL;
                 $select .= '<option value="">선택</option>'.PHP_EOL;
                 for($k=0; $k<$opt_count; $k++) {
                     $opt_val = $opt[$k];
@@ -966,7 +966,7 @@ function get_item_options($it_id, $subject)
         $str .= '<tr>'.PHP_EOL;
         $str .= '<th><label for="it_option_1">'.$subj[0].'</label></th>'.PHP_EOL;
 
-        $select = '<select name="it_option[]" id="it_option_1">'.PHP_EOL;
+        $select = '<select id="it_option_1" class="it_option">'.PHP_EOL;
         $select .= '<option value="">선택</option>'.PHP_EOL;
         for($i=0; $row=sql_fetch_array($result); $i++) {
             if($row['io_price'] >= 0)
@@ -1036,7 +1036,7 @@ function get_item_supply($it_id, $subject)
             $str .= '<tr>'.PHP_EOL;
             $str .= '<th><label for="it_supply_'.$seq.'">'.$subj[$i].'</label></th>'.PHP_EOL;
 
-            $select = '<select name="it_supply[]" id="it_supply_'.$seq.'">'.PHP_EOL;
+            $select = '<select id="it_supply_'.$seq.'" class="it_supply">'.PHP_EOL;
             $select .= '<option value="">선택</option>'.PHP_EOL;
             for($k=0; $k<$opt_count; $k++) {
                 $opt_val = $opt[$k];

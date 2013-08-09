@@ -5,9 +5,9 @@ var isAndroid = (navigator.userAgent.toLowerCase().indexOf("android") > -1);
 $(function() {
     // 선택옵션
     /* 가상서커 ctrl keyup 이베트 대응 */
-    $("select[name='it_option[]']").live("keyup", function(e) {
-        var sel_count = $("select[name='it_option[]']").size();
-        var idx = $("select[name='it_option[]']").index($(this));
+    $("select.it_option").live("keyup", function(e) {
+        var sel_count = $("select.it_option").size();
+        var idx = $("select.it_option").index($(this));
         var code = e.keyCode;
         var val = $(this).val();
 
@@ -21,9 +21,9 @@ $(function() {
     });
 
     /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
-    $("select[name='it_option[]']").live("keydown", function(e) {
-        var sel_count = $("select[name='it_option[]']").size();
-        var idx = $("select[name='it_option[]']").index($(this));
+    $("select.it_option").live("keydown", function(e) {
+        var sel_count = $("select.it_option").size();
+        var idx = $("select.it_option").index($(this));
         var code = e.keyCode;
         var val = $(this).val();
 
@@ -37,24 +37,24 @@ $(function() {
     });
 
     if(isAndroid) {
-        $("select[name='it_option[]']").live("touchend", function() {
+        $("select.it_option").live("touchend", function() {
             option_add = true;
         });
     } else {
-        $("select[name='it_option[]']").live("mousedown", function() {
+        $("select.it_option").live("mousedown", function() {
             option_add = true;
         });
     }
 
-    $("select[name='it_option[]']").live("change", function() {
-        var sel_count = $("select[name='it_option[]']").size();
-        var idx = $("select[name='it_option[]']").index($(this));
+    $("select.it_option").live("change", function() {
+        var sel_count = $("select.it_option").size();
+        var idx = $("select.it_option").index($(this));
         var val = $(this).val();
         var it_id = $("input[name='it_id[]']").val();
 
         // 선택값이 없을 경우 하위 옵션은 disabled
         if(val == "") {
-            $("select[name='it_option[]']:gt("+idx+")").val("").attr("disabled", true);
+            $("select.it_option:gt("+idx+")").val("").attr("disabled", true);
             return;
         }
 
@@ -64,7 +64,7 @@ $(function() {
 
             // 상위 옵션의 값을 읽어 옵션id 만듬
             if(idx > 0) {
-                $("select[name='it_option[]']:lt("+idx+")").each(function() {
+                $("select.it_option:lt("+idx+")").each(function() {
                     if(!opt_id)
                         opt_id = $(this).val();
                     else
@@ -80,12 +80,12 @@ $(function() {
                 "./itemoption.php",
                 { it_id: it_id, opt_id: opt_id, idx: idx, sel_count: sel_count },
                 function(data) {
-                    $("select[name='it_option[]']").eq(idx+1).empty().html(data).attr("disabled", false);
+                    $("select.it_option").eq(idx+1).empty().html(data).attr("disabled", false);
 
                     // select의 옵션이 변경됐을 경우 하위 옵션 disabled
                     if(idx+1 < sel_count) {
                         var idx2 = idx + 1;
-                        $("select[name='it_option[]']:gt("+idx2+")").val("").attr("disabled", true);
+                        $("select.it_option:gt("+idx2+")").val("").attr("disabled", true);
                     }
                 }
             );
@@ -107,7 +107,7 @@ $(function() {
 
     // 추가옵션
     /* 가상서커 ctrl keyup 이베트 대응 */
-    $("select[name='it_supply[]']").live("keyup", function(e) {
+    $("select.it_supply").live("keyup", function(e) {
         var $el = $(this);
         var code = e.keyCode;
         var val = $(this).val();
@@ -122,7 +122,7 @@ $(function() {
     });
 
     /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
-    $("select[name='it_supply[]']").live("keydown", function(e) {
+    $("select.it_supply").live("keydown", function(e) {
         var $el = $(this);
         var code = e.keyCode;
         var val = $(this).val();
@@ -137,16 +137,16 @@ $(function() {
     });
 
     if(isAndroid) {
-        $("select[name='it_supply[]']").live("touchend", function() {
+        $("select.it_supply").live("touchend", function() {
             supply_add = true;
         });
     } else {
-        $("select[name='it_supply[]']").live("mousedown", function() {
+        $("select.it_supply").live("mousedown", function() {
             supply_add = true;
         });
     }
 
-    $("select[name='it_supply[]']").live("change", function() {
+    $("select.it_supply").live("change", function() {
         var $el = $(this);
         var val = $(this).val();
 
@@ -162,7 +162,7 @@ $(function() {
         var mode = $(this).text();
         var this_qty, max_qty = 9999, min_qty = 1;
         var $el_qty = $(this).closest("li").find("input[name^=ct_qty]");
-        var stock = parseInt($(this).closest("li").find("input[name='io_stock[]']").val());
+        var stock = parseInt($(this).closest("li").find("input.io_stock").val());
 
         switch(mode) {
             case "증가":
@@ -234,7 +234,7 @@ $(function() {
                     alert("수량은 1에서 9999 사이의 값으로 입력해 주십시오.");
                     $(this).val(1);
                 } else {
-                    var stock = parseInt($(this).closest("li").find("input[name='io_stock[]']").val());
+                    var stock = parseInt($(this).closest("li").find("input.io_stock").val());
                     if(d_val > stock) {
                         alert("재고수량 보다 많은 수량을 구매할 수 없습니다.");
                         $(this).val(stock);
@@ -253,9 +253,9 @@ function sel_option_process(add_exec)
     var id = "";
     var value, info, sel_opt, item, price, stock, run_error = false;
     var option = sep = "";
-    info = $("select[name='it_option[]']:last").val().split(",");
+    info = $("select.it_option:last").val().split(",");
 
-    $("select[name='it_option[]']").each(function(index) {
+    $("select.it_option").each(function(index) {
         value = $(this).val();
         item = $(this).closest("tr").find("th label").text();
 
@@ -344,8 +344,8 @@ function add_sel_option(type, id, option, price, stock)
     opt += "<input type=\"hidden\" name=\"io_type["+item_code+"][]\" value=\""+type+"\">\n";
     opt += "<input type=\"hidden\" name=\"io_id["+item_code+"][]\" value=\""+id+"\">\n";
     opt += "<input type=\"hidden\" name=\"io_value["+item_code+"][]\" value=\""+option+"\">\n";
-    opt += "<input type=\"hidden\" name=\"io_price[]\" value=\""+price+"\">\n";
-    opt += "<input type=\"hidden\" name=\"io_stock[]\" value=\""+stock+"\">\n";
+    opt += "<input type=\"hidden\" class=\"io_price\" value=\""+price+"\">\n";
+    opt += "<input type=\"hidden\" class=\"io_stock\" value=\""+stock+"\">\n";
     opt += "<span class=\"sit_opt_subj\">"+option+"</span>\n";
     opt += "<span class=\"sit_opt_prc\">"+opt_prc+"</span>\n";
     opt += "<div><input type=\"text\" name=\"ct_qty["+item_code+"][]\" value=\"1\" class=\"frm_input\" size=\"5\">\n";
@@ -404,8 +404,8 @@ function same_option_check(val)
 // 가격계산
 function price_calculate()
 {
-    var it_price = parseInt($("input[name=it_price]").val());
-    var $el_prc = $("input[name^=io_price]");
+    var it_price = parseInt($("input#it_price").val());
+    var $el_prc = $("input.io_price");
     var $el_qty = $("input[name^=ct_qty]");
     var $el_type = $("input[name^=io_type]");
     var price, type, qty, total = 0;
