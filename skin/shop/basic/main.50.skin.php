@@ -97,7 +97,7 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
         init: function(option)
         {
             var $smt = this.find("ul.sct_ul");
-            var $smt_a = $smt.find("a.sct_a");
+            var $smt_a = $smt.find("a");
             var count = $smt.size();
             var height = $smt.height();
             var c_idx = o_idx = 0;
