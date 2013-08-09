@@ -88,8 +88,12 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         $sql2 .= " order by bo_order ";
         $result2 = sql_query($sql2);
         for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
+            $bo_subject = $row2['bo_subject'];
+            if (G4_IS_MOBILE && $row2['bo_mobile_subject']) {
+                $bo_subject = $row2['bo_mobile_subject'];
+            }
         ?>
-        <li><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>"><?php echo $row2['bo_subject'] ?></a></li>
+        <li><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>"><?php echo $bo_subject; ?></a></li>
         <?php } ?>
     </ul>
 </nav>
