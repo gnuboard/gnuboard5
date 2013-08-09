@@ -10,17 +10,29 @@ $.fn.listType = function(type)
     if(count < 1)
         return;
 
+    // class 있다면 저장
+    var cl = this.attr("class");
+    if(cl && !this.data("class")) {
+        this.data("class", cl);
+    }
+
+    // 각 element의 inline 스타일 저장
     $el.each(function() {
         var st = $(this).attr("style");
-        if(st) {
+        if(st && !$(this).data("style")) {
             $(this).data("style", st);
         }
     });
 
+    // 버튼의 class on class 제거
     $("button.sct_lst_view span").removeClass("sct_lst_on").html("");
 
     if(type == "gallery") {
-        this.removeClass("sct_40");
+        this.removeClass("sct sct_40");
+        if(this.data("class")) {
+            this.attr("class", this.data("class"));
+        }
+
         $el.each(function() {
             if($(this).data("style")) {
                 $(this).attr("style", $(this).data("style"));
@@ -29,7 +41,11 @@ $.fn.listType = function(type)
 
         $("button.sct_lst_gallery span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
     } else {
-        this.addClass("sct_40");
+        if(this.data("class")) {
+            this.removeAttr("class");
+        }
+        this.addClass("sct sct_40");
+
         $el.each(function() {
             if($(this).data("style")) {
                 $(this).removeAttr("style");
