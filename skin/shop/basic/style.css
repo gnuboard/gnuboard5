@@ -11,6 +11,8 @@
 .sct_wrap h2 a {text-decoration:none}
 .sct_wrap_hdesc {float:left;margin:0;padding:0;color:#777;line-height:1em}
 
+#sct {clear:both}
+
 .sct {margin:0;padding:0;list-style:none;zoom:1}
 .sct:after {display:block;visibility:hidden;clear:both;content:""}
 .sct_li {position:relative}
