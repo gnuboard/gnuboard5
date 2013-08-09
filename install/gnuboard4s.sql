@@ -632,7 +632,7 @@ CREATE TABLE IF NOT EXISTS `g4s_visit_sum` (
 -- Table structure for table `g4s_unique`
 --
 
-DROP TABLE IF EXISTS `g4s_unique`;
+DROP TABLE IF EXISTS `g4s_uniqid`;
 CREATE TABLE IF NOT EXISTS `g4s_uniqid` (
   `uq_id` bigint(20) unsigned NOT NULL,
   `uq_ip` varchar(255) NOT NULL,
