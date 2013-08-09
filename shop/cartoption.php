@@ -27,7 +27,7 @@ if(!mysql_num_rows($result))
 <form name="foption" method="post" action="<?php echo G4_SHOP_URL; ?>/cartupdate.php" onsubmit="return formcheck(this);">
 <input type="hidden" name="act" value="optionmod">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
-<input type="hidden" name="it_price" value="<?php echo $row2['ct_price']; ?>">
+<input type="hidden" id="it_price" value="<?php echo $row2['ct_price']; ?>">
 <input type="hidden" name="ct_send_cost" value="<?php echo $row2['ct_send_cost']; ?>">
 <input type="hidden" name="sw_direct">
 <?php
@@ -96,8 +96,8 @@ if($option_2) {
             <input type="hidden" name="io_type[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['io_type']; ?>">
             <input type="hidden" name="io_id[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['io_id']; ?>">
             <input type="hidden" name="io_value[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['ct_option']; ?>">
-            <input type="hidden" name="io_price[]" value="<?php echo $row['io_price']; ?>">
-            <input type="hidden" name="io_stock[]" value="<?php echo $it_stock_qty; ?>">
+            <input type="hidden" class="io_price" value="<?php echo $row['io_price']; ?>">
+            <input type="hidden" class="io_stock" value="<?php echo $it_stock_qty; ?>">
             <span class="sit_opt_subj"><?php echo $row['ct_option']; ?></span>
             <span class="sit_opt_prc"><?php echo $io_price; ?></span>
             <div>

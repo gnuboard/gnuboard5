@@ -308,7 +308,7 @@ else
                 <th scope="row">판매가격</th>
                 <td>
                     <?php echo number_format(get_price($it)); ?> 원
-                    <input type="hidden" name="it_price" value="<?php echo get_price($it); ?>">
+                    <input type="hidden" id="it_price" value="<?php echo get_price($it); ?>">
                 </td>
             </tr>
 
@@ -405,8 +405,8 @@ else
                         <input type="hidden" name="io_type[<?php echo $it_id; ?>][]" value="0">
                         <input type="hidden" name="io_id[<?php echo $it_id; ?>][]" value="">
                         <input type="hidden" name="io_value[<?php echo $it_id; ?>][]" value="<?php echo $it['it_name']; ?>">
-                        <input type="hidden" name="io_price[]" value="0">
-                        <input type="hidden" name="io_stock[]" value="<?php echo $it['it_stock_qty']; ?>">
+                        <input type="hidden" class="io_price" value="0">
+                        <input type="hidden" class="io_stock" value="<?php echo $it['it_stock_qty']; ?>">
                         <span class="sit_opt_subj"><?php echo $it['it_name']; ?></span>
                         <span class="sit_opt_prc">(+0원)</span>
                         <div>
@@ -632,7 +632,7 @@ else
     function fitemcheck(f, act)
     {
         // 판매가격이 0 보다 작다면
-        if (f.it_price.value < 0)
+        if (document.getElementById("it_price").value < 0)
         {
             alert("전화로 문의해 주시면 감사하겠습니다.");
             return;
