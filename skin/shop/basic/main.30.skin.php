@@ -9,6 +9,15 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
 
+<!-- 이전 재생 정지 다음 버튼 시작 { -->
+<ul class="sctrl">
+    <li><button type="button" class="sctrl_prev">이전<span></span></button></li>
+    <li><button type="button" class="sctrl_play">효과재생<span></span></button></li>
+    <li><button type="button" class="sctrl_stop">효과정지<span></span></button></li>
+    <li><button type="button" class="sctrl_next">다음<span></span></button></li>
+</ul>
+<!-- } 이전 재생 정지 다음 버튼 끝 -->
+
 <!-- 상품유형 30 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {

@@ -3,7 +3,8 @@
 
 /* ##### main(nn).skin.php, list.(nn).skin.php 공통 적용 시작 ##### */
 /* 공통 */
-.sct_wrap {margin:0 0 30px;zoom:1}
+.sct_wrap {position:relative;margin:0 0 30px;zoom:1}
+.sct_wrap .sctrl {position:absolute;top:0;right:0} /* 애니메이션 효과 사용 시 재생 정지 버튼 등 */
 .sct_wrap:after {display:block;visibility:hidden;clear:both;content:""}
 .sct_wrap header {margin:0 0 20px;zoom:1}
 .sct_wrap header:after {display:block;visibility:hidden;clear:both;content:""}
