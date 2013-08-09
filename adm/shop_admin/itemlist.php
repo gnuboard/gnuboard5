@@ -199,7 +199,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
                 <?php echo conv_selected_option($ca_list, $row['ca_id']); ?>
             </select>
             <?php echo $tmp_ca_list; ?><br>
-            <input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" required class="frm_input frm_sit_title required" size="30">
+            <input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" required class="frm_input frm_sit_title required" size="30"><br>
+            <input type="text" name="it_mobile_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_mobile_name'],250, "")); ?>" class="frm_input frm_sit_title" size="30">
         </td>
         <td headers="sit_amt"><input type="text" name="it_price[<?php echo $i; ?>]" value="<?php echo $row['it_price']; ?>" class="frm_input sit_amt" size="7"></td>
         <td headers="sit_camt"><input type="text" name="it_cust_price[<?php echo $i; ?>]" value="<?php echo $row['it_cust_price']; ?>" class="frm_input sit_camt" size="7"></td>
@@ -208,7 +209,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         <td rowspan="2"><?php echo $row['it_hit']; ?></td>
         <td rowspan="2" class="td_mng">
             <a href="<?php echo $href; ?>"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>보기</a>
-            <a href="./item_copy.php?it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>" class="item_copy" target="_blank"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>복사</a>
+            <a href="./itemcopy.php?it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>" class="itemcopy" target="_blank"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>복사</a>
             <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>수정</a>
             <!-- <a href="./itemformupdate.php?w=d&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>삭제</a> -->
         </td>
@@ -258,7 +259,7 @@ function fitemlist_submit(f)
 }
 
 $(function() {
-    $(".item_copy").click(function() {
+    $(".itemcopy").click(function() {
         var href = $(this).attr("href");
         window.open(href, "copywin", "left=100, top=100, width=300, height=200, scrollbars=0");
         return false;
