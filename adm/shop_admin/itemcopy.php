@@ -22,7 +22,7 @@ include_once(G4_PATH.'/head.sub.php');
     </table>
 
     <div class="btn_confirm">
-        <input type="button" value="복사하기" class="btn_submit" onclick="_copy('item_copy_update.php?it_id=<?php echo $it_id; ?>&amp;ca_id=<?php echo $ca_id; ?>');">
+        <input type="button" value="복사하기" class="btn_submit" onclick="_copy('itemcopyupdate.php?it_id=<?php echo $it_id; ?>&amp;ca_id=<?php echo $ca_id; ?>');">
         <button type="button" onclick="self.close();">창닫기</button>
     </div>
 
