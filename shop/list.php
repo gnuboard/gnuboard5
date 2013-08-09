@@ -73,10 +73,13 @@ if ($is_admin)
     // 리스트 유형별로 출력
     $list_file = G4_SHOP_SKIN_PATH.'/'.$ca['ca_skin'];
     if (file_exists($list_file)) {
+
+		echo '<div id="sct_sortlst">';
         include G4_SHOP_PATH.'/list.sort.php';
 
         // 상품 보기 타입 변경 버튼
         include G4_SHOP_PATH.'/list.sub.php';
+		echo '</div>';
 
         // 총몇개 = 한줄에 몇개 * 몇줄
         $items = $ca['ca_list_mod'] * $ca['ca_list_row'];
