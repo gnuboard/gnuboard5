@@ -2,18 +2,6 @@
 $sub_menu = '400200';
 include_once('./_common.php');
 
-if ($img = $_FILES['ca_himg']['name']) {
-    if (!preg_match("/\.(gif|jpg|png)$/i", $img)) {
-        alert("상단 이미지가 gif, jpg, png 파일이 아닙니다.");
-    }
-}
-
-if ($img = $_FILES['ca_timg']['name']) {
-    if (!preg_match("/\.(gif|jpg|png)$/i", $img)) {
-        alert("하단 이미지가 gif, jpg, png 파일이 아닙니다.");
-    }
-}
-
 if ($file = $_POST['ca_include_head']) {
     if (!preg_match("/\.(php|htm[l]?)$/i", $file)) {
         alert("상단 파일 경로가 php, html 파일이 아닙니다.");
@@ -51,9 +39,6 @@ $g4['category_path'] = G4_DATA_PATH."/category";
 
 if ($ca_image1_del) @unlink("{$g4['category_path']}/{$ca_id}_1");
 if ($ca_image0_del) @unlink("{$g4['category_path']}/{$ca_id}_0");
-
-if ($ca_himg_del)   @unlink("{$g4['category_path']}/{$ca_id}_h");
-if ($ca_timg_del)   @unlink("{$g4['category_path']}/{$ca_id}_t");
 
 $sql_common = " ca_skin                 = '$ca_skin',
                 ca_mobile_skin          = '$ca_mobile_skin',
@@ -152,9 +137,6 @@ $qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
 
 if ($w == "" || $w == "u")
 {
-    if ($_FILES['ca_himg']['name']) upload_file($_FILES['ca_himg']['tmp_name'], $ca_id."_h", $g4['category_path']);
-    if ($_FILES['ca_timg']['name']) upload_file($_FILES['ca_timg']['tmp_name'], $ca_id."_t", $g4['category_path']);
-
     goto_url("./categoryform.php?w=u&amp;ca_id=$ca_id&amp;$qstr");
 } else {
     goto_url("./categorylist.php?$qstr");
