@@ -290,54 +290,6 @@ $pg_anchor .= '</ul>';
         </td>
     </tr>
     <tr>
-        <th scope="row">상단이미지</th>
-        <td>
-            <?php echo help("상품리스트 페이지 상단에 출력하는 이미지입니다."); ?>
-            <input type="file" name="ca_himg">
-            <?php
-            $himg_str = "";
-            $himg = "{$category_path}/{$ca['ca_id']}_h";
-            if (file_exists($himg)) {
-            ?>
-            <label for="ca_himg_del">상단이미지 삭제</label>
-            <input type="checkbox" name="ca_himg_del" value="1" id="ca_himg_del">
-            <span class="sit_wimg_himg"></span>
-            <div id="himg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/category/<?php echo $ca['ca_id']; ?>_h" alt="">
-                <button type="button" class="sit_wimg_close">닫기</button>
-            </div>
-            <script>
-            $('<button type="button" id="ca_himg_view" class="btn_frmline sit_wimg_view">상단이미지 확인</button>').appendTo('.sit_wimg_himg');
-            </script>
-            <?php } ?>
-        </td>
-    </tr>
-    <?php if ($himg_str) { echo "<tr><td colspan=4>$himg_str</td></tr>"; } ?>
-    <tr>
-        <th scope="row">하단이미지</th>
-        <td>
-            <?php echo help("상품리스트 페이지 하단에 출력하는 이미지입니다."); ?>
-            <input type="file" name="ca_timg">
-            <?php
-            $timg_str = "";
-            $timg = "{$category_path}/{$ca['ca_id']}_t";
-            if (file_exists($timg)) {
-            ?>
-            <label for="ca_timg_del">하단이미지 삭제</label>
-            <input type="checkbox" name="ca_timg_del" value="1" id="ca_timg_del">
-            <span class="sit_wimg_timg"></span>
-            <div id="timg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/category/<?php echo $ca['ca_id']; ?>_t" alt="">
-                <button type="button" class="sit_wimg_close">닫기</button>
-            </div>
-            <script>
-            $('<button type="button" id="ca_timg_view" class="btn_frmline sit_wimg_view">하단이미지 확인</button>').appendTo('.sit_wimg_timg');
-            </script>
-            <?php } ?>
-        </td>
-    </tr>
-    <?php if ($timg_str) { echo "<tr><td colspan=4>$timg_str</td></tr>"; } ?>
-    <tr>
         <th scope="row">상단내용</th>
         <td>
             <?php echo help("상품리스트 페이지 상단에 출력하는 HTML 내용입니다."); ?>

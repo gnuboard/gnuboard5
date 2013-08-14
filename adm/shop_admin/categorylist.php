@@ -107,13 +107,21 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <table class="frm_basic">
     <thead>
     <tr>
-        <th scope="col">분류<br>코드</th>
-        <th scope="col">분류명</th>
+        <th scope="col" rowspan="2">분류<br>코드</th>
+        <th scope="col" rowspan="2">분류명</th>
+        <th scope="col">출력스킨</th>
+        <th scope="col">출력이미지폭<br>(픽셀)</th>
+        <th scope="col">출력이미지높이<br>(픽셀)</th>
+        <th scope="col">1줄당<br>이미지 수</th>
+        <th scope="col">이미지<br>줄 수</th>
+        <th scope="col" rowspan="2">관리</th>
+    </tr>
+    <tr>
         <th scope="col">회원아이디</th>
-        <th scope="col">판매<br>가능</th>
-        <th scope="col">기본재고</th>
+        <th scope="col">본인인증</th>
+        <th scope="col">성인인증</th>
+        <th scope="col">판매가능</th>
         <th scope="col">상품수</th>
-        <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
@@ -134,8 +142,8 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             $class = '';
         }
 
-        $s_level = '<label for="ca_name_'.$i.'" '.$class.'><span class="sound_only">'.$p_ca_name.'</span>'.($level+1).'단 분류</label>';
-        $s_level_input_size = 40 - $level *5; // 하위 분류일 수록 입력칸 넓이 작아짐 - 지운아빠 2013-04-02
+        $s_level = '<label for="ca_name_'.$i.'" '.$class.'><span class="sound_only">'.$p_ca_name.''.($level+1).'단 분류</span></label>';
+        $s_level_input_size = 25 - $level *2; // 하위 분류일 수록 입력칸 넓이 작아짐 - 지운아빠 2013-04-02
 
         if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">추가</a> '; // 분류는 5단계까지만 가능
         else $s_add = '';
@@ -152,29 +160,73 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         $row1 = sql_fetch($sql1);
     ?>
     <tr>
-        <td class="td_num">
+        <td class="td_code" rowspan="2">
             <input type="hidden" name="ca_id[<?php echo $i; ?>]" value="<?php echo $row['ca_id']; ?>">
             <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $row['ca_id']; ?>"><?php echo $row['ca_id']; ?></a>
         </td>
-        <td class="td_scate"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required" size="<?php echo $s_level_input_size; ?>"></td>
+        <td class="td_scate" rowspan="2"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required" size="<?php echo $s_level_input_size; ?>"></td>
         <td class="td_scate_admin">
-            <?php if ($is_admin == 'super') {?>
-            <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">회원아이디</label>
-            <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="frm_input" size="10" maxlength="20">
-            <?php } else { ?>
-            <input type="hidden" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>">
-            <?php echo $row['ca_mb_id']; ?>
-            <?php } ?>
+            <label for="ca_skin<?php echo $i; ?>" class="sound_only">출력스킨</label>
+            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+            </select>
         </td>
-        <td class="td_chk"><input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" <?php echo ($row['ca_use'] ? "checked" : ""); ?>></td>
-        <td class="td_bignum"><input type="text" name="ca_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['ca_stock_qty']; ?>" class="frm_input" size="6" style="text-align:right"></td>
-        <td class="td_num"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
-        <td class="td_mng">
+        <td class="td_output">
+            <label for="ca_out_width<?php echo $i; ?>" class="sound_only">출력이미지 폭</label>
+            <input type="text" name="ca_img_width[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_img_width']); ?>" id="ca_out_width<?php echo $i; ?>" required class="required frm_input" size="3" > <span class="sound_only">픽셀</span>
+        </td>
+        <td class="td_output">
+            <label for="ca_img_height<?php echo $i; ?>" class="sound_only">출력이미지 높이</label>
+            <input type="text" name="ca_img_height[<?php echo $i; ?>]" value="<?php echo $row['ca_img_height']; ?>" id="ca_img_height<?php echo $i; ?>" required class="required frm_input" size="3" > <span class="sound_only">픽셀</span>
+        </td>
+        <td class="td_imgline">
+            <label for="ca_lineimg_num<?php echo $i; ?>" class="sound_only">1줄당 이미지 수</label>
+            <input type="text" name="ca_list_mod[<?php echo $i; ?>]" size="3" value="<?php echo $row['ca_list_mod']; ?>" id="ca_lineimg_num<?php echo $i; ?>" required class="required frm_input"> <span class="sound_only">개</span>
+        </td>
+        <td class="td_imgline">
+            <label for="ca_imgline_num<?php echo $i; ?>" class="sound_only">이미지 줄 수</label>
+            <input type="text" name="ca_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_list_row']; ?>' id="ca_imgline_num<?php echo $i; ?>" required class="required frm_input" size="3"> <span class="sound_only">줄</span>
+        </td>
+        <td class="td_mng" rowspan="2">
             <?php echo $s_add; ?>
             <?php echo $s_vie; ?>
             <?php echo $s_upd; ?>
             <?php echo $s_del; ?>
         </td>
+    </tr>
+    <tr>
+        <td class="td_scate_admin">
+            <?php if ($is_admin == 'super') {?>
+            <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">회원아이디</label>
+            <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="frm_input" size="15" maxlength="20">
+            <?php } else { ?>
+            <input type="hidden" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>">
+            <?php echo $row['ca_mb_id']; ?>
+            <?php } ?>
+        </td>
+        <td class="td_confirm">
+            <input type="checkbox" name="ca_hp_cert_use[<?php echo $i; ?>]" value="1" id="ca_hp_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_hp_cert_use_yes<?php echo $i; ?>">사용</label>
+            
+            <!-- <input type="radio" name="ca_hp_cert_use[<?php echo $i; ?>]" value="1" id="ca_hp_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_hp_cert_use_yes<?php echo $i; ?>">사용함</label>
+            <input type="radio" name="ca_hp_cert_use[<?php echo $i; ?>]" value="0" id="ca_hp_cert_use_no<?php echo $i; ?>" <?php if(!$row['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_hp_cert_use_no<?php echo $i; ?>">사용안함</label> -->
+        </td>
+        <td class="td_confirm">
+            <input type="checkbox" name="ca_adult_cert_use[<?php echo $i; ?>]" value="1" id="ca_adult_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_cert_use_yes<?php echo $i; ?>">사용</label>
+            
+            <!-- <input type="radio" name="ca_adult_cert_use[<?php echo $i; ?>]" value="1" id="ca_adult_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_cert_use_yes<?php echo $i; ?>">사용함</label>
+            <input type="radio" name="ca_adult_cert_use[<?php echo $i; ?>]" value="0" id="ca_adult_cert_use_no<?php echo $i; ?>" <?php if(!$row['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_cert_use_no<?php echo $i; ?>">사용안함</label> -->
+        </td>
+        <td class="td_possible">
+            <input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" id="ca_use<?php echo $i; ?>" <?php echo ($row['ca_use'] ? "checked" : ""); ?>>
+            <label for="ca_use<?php echo $i; ?>">판매</label>
+        </td>
+        <td class="td_amount"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
     </tr>
     <?php }
     if ($i == 0) echo "<tr><td colspan=\"7\" class=\"empty_table\">자료가 한 건도 없습니다.</td></tr>\n";
