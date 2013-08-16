@@ -38,7 +38,11 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->view_it_name) {
-        echo "<b>".stripslashes($row['it_name'])."</b>\n";
+        $it_name = $row['it_name'];
+        if ($this->is_mobile && $row['it_mobile_name'])  {
+            $it_name = $row['it_mobile_name'];
+        }
+        echo "<b>".stripslashes($it_name)."</b>\n";
     }
 
     if ($this->view_it_cust_price) {
