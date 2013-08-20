@@ -58,8 +58,8 @@ else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
 // 휴대폰 본인확인
-$mb_hp_certify_yes  =  $mb['mb_hp_certify'] ? 'checked="checked"' : '';
-$mb_hp_certify_no   = !$mb['mb_hp_certify'] ? 'checked="checked"' : '';
+$mb_certify_yes  =  $mb['mb_certify'] ? 'checked="checked"' : '';
+$mb_certify_no   = !$mb['mb_certify'] ? 'checked="checked"' : '';
 
 // 휴대폰 성인인증
 $mb_adult_yes       =  $mb['mb_adult']      ? 'checked="checked"' : '';
@@ -77,19 +77,19 @@ $mb_sms_no          = !$mb['mb_sms']        ? 'checked="checked"' : '';
 $mb_open_yes        =  $mb['mb_open']       ? 'checked="checked"' : '';
 $mb_open_no         = !$mb['mb_open']       ? 'checked="checked"' : '';
 
-if (isset($mb['mb_hp_certify'])) {
+if (isset($mb['mb_certify'])) {
     // 날짜시간형이라면 drop 시킴
-    if (preg_match("/-/", $mb['mb_hp_certify'])) { 
-        sql_query(" ALTER TABLE `{$g4['member_table']}` DROP `mb_hp_certify` ", false);
-    } 
+    if (preg_match("/-/", $mb['mb_certify'])) {
+        sql_query(" ALTER TABLE `{$g4['member_table']}` DROP `mb_certify` ", false);
+    }
 } else {
-    sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_hp_certify` TINYINT NOT NULL DEFAULT '0' AFTER `mb_hp` ", false);
+    sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_certify` TINYINT(4) NOT NULL DEFAULT '0' AFTER `mb_hp` ", false);
 }
 
 if(isset($mb['mb_adult'])) {
-    sql_query(" ALTER TABLE `{$g4['member_table']}` CHANGE `mb_adult` `mb_adult` TINYINT NOT NULL DEFAULT '0' ", false);
+    sql_query(" ALTER TABLE `{$g4['member_table']}` CHANGE `mb_adult` `mb_adult` TINYINT(4) NOT NULL DEFAULT '0' ", false);
 } else {
-    sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_adult` TINYINT NOT NULL DEFAULT '0' AFTER `mb_hp_certify` ", false);
+    sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_adult` TINYINT NOT NULL DEFAULT '0' AFTER `mb_certify` ", false);
 }
 
 if ($mb['mb_intercept_date']) $g4['title'] = "차단된 ";
@@ -150,14 +150,14 @@ include_once('./admin.head.php');
         <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
     </tr>
     <tr>
-        <th scope="row">휴대폰 본인확인</th>
+        <th scope="row">본인확인</th>
         <td>
-            <input type="radio" name="mb_hp_certify" value="1" id="mb_hp_certify_yes" <?php echo $mb_hp_certify_yes; ?>>
-            <label for="mb_hp_certify_yes">예</label>
-            <input type="radio" name="mb_hp_certify" value="0" id="mb_hp_certify_no" <?php echo $mb_hp_certify_no; ?>>
-            <label for="mb_hp_certify_no">아니오</label>
+            <input type="radio" name="mb_certify" value="1" id="mb_certify_yes" <?php echo $mb_certify_yes; ?>>
+            <label for="mb_certify_yes">예</label>
+            <input type="radio" name="mb_certify" value="0" id="mb_certify_no" <?php echo $mb_certify_no; ?>>
+            <label for="mb_certify_no">아니오</label>
         </td>
-        <th scope="row"><label for="mb_adult">휴대폰 성인인증</label></th>
+        <th scope="row"><label for="mb_adult">성인인증</label></th>
         <td>
             <input type="radio" name="mb_adult" value="1" id="mb_adult_yes" <?php echo $mb_adult_yes; ?>>
             <label for="mb_adult_yes">예</label>

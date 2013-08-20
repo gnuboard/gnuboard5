@@ -11,6 +11,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="url" value="<?php echo $urlencode ?>">
 <input type="hidden" name="agree" value="<?php echo $agree ?>">
 <input type="hidden" name="agree2" value="<?php echo $agree2 ?>">
+<input type="hidden" name="cert_type" value="">
 <?php if (isset($member['mb_sex'])) {  ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php }  ?>
 <?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면  ?>
 <input type="hidden" name="mb_nick_default" value="<?php echo $member['mb_nick'] ?>">
@@ -42,13 +43,23 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <tr>
     <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
     <td>
-        <?php if ($w=="u" && $config['cf_kcpcert_use']) { ?>
-        <span class="frm_info">휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되며 수동으로 입력할수 없게 됩니다.</span>
+        <?php if ($w=="u" && $config['cf_cert_use']) { ?>
+        <span class="frm_info">아이핀 본인확인 후에는 이름이 자동 입력되고 휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되어 수동으로 입력할수 없게 됩니다.</span>
         <?php } ?>
         <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
-        <?php if ($member['mb_hp_certify']) { ?>
-        <div id="msg_hp_certify">
-            휴대폰 <strong>본인확인</strong><?php if ($member['mb_hp_certify']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
+        <?php
+        if($config['cf_cert_use']) {
+            if($config['cf_cert_ipin'])
+                echo '<button type="button" id="win_ipin_cert" class="btn_frmline">아이핀 본인확인</button>'.PHP_EOL;
+            if($config['cf_cert_hp'])
+                echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>'.PHP_EOL;
+
+            echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
+        }
+        ?>
+        <?php if ($config['cf_cert_use'] && $member['mb_certify']) { ?>
+        <div id="msg_certify">
+            <strong>본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
         </div>
         <?php } ?>
     </td>
@@ -96,18 +107,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </tr>
 <?php }  ?>
 
-<?php if ($config['cf_use_hp'] || $config['cf_kcpcert_use']) {  ?>
+<?php if ($config['cf_use_hp'] || $config['cf_cert_hp']) {  ?>
 <tr>
     <th scope="row"><label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?></label></th>
     <td>
-        <?php if ($config['cf_kcpcert_use']) { ?>
-        <span class="frm_info">휴대폰번호는 휴대폰 본인확인 기능을 이용하여 입력하세요.</span>
-        <?php } ?>
-        <input type="text" name="mb_hp" value="<?php echo $member[mb_hp] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" <?php echo $config['cf_kcpcert_use']?"readonly":""; ?>  maxlength="20">
-        <?php if ($config['cf_kcpcert_use']) { ?>
+        <input type="text" name="mb_hp" value="<?php echo $member['mb_hp'] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20">
+        <?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
         <input type="hidden" name="old_mb_hp" value="<?php echo $member['mb_hp'] ?>">
-        <button type="button" id="win_kcpcert" class="btn_frmline">휴대폰 본인확인</button>
-        <noscript>휴대폰 본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>
         <?php } ?>
     </td>
 </tr>
@@ -239,27 +245,70 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </div>
 </form>
 
-<?php 
-if ($config['cf_kcpcert_use']) {
-    // 휴대폰인증 form
-    include_once(G4_KCPCERT_PATH.'/kcpcert_form.php');
+<?php
+if ($config['cf_cert_use']) {
+    // KCP 휴대폰인증 form
+    if($config['cf_cert_hp'] == 'kcp')
+        include_once(G4_KCPCERT_PATH.'/kcpcert_form.php');
+}
 ?>
 
 <script>
 $(function() {
     $("#reg_zip_find").css("display", "inline-block");
     $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
+    <?php if($config['cf_cert_use']) { ?>
+    <?php if($config['cf_cert_ipin'] == 'kcb') { ?>
+    // KCB 아이핀인증
+    $("#win_ipin_cert").click(function() {
+        if($("input[name=cert_type]").val() == "hp") {
+            if(confirm("이미 휴대폰 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
+                $("input[name=cert_type]").val("");
+            else
+                return false;
+        }
 
-    // 휴대폰인증
-    $('#win_kcpcert').click(function() {
+        var url = "<?php echo G4_OKNAME_URL; ?>/ipin1.php";
+        var popupWindow = window.open( url, "kcbPop", "left=200, top=100, status=0, width=450, height=550" );
+        popupWindow.focus();
+        return;
+    });
+    <?php } ?>
+
+    <?php if($config['cf_cert_hp'] == 'kcb') { ?>
+    // KCB 휴대폰인증
+    $("#win_hp_cert").click(function() {
+        if($("input[name=cert_type]").val() == "ipin") {
+            if(confirm("이미 아이핀 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
+                $("input[name=cert_type]").val("");
+            else
+                return false;
+        }
+
+        var url = "<?php echo G4_OKNAME_URL; ?>/hpcert1.php";
+        var popupWindow = window.open( url, "auth_popup", "left=200, top=100, width=430, height=590, scrollbar=yes" );
+        popupWindow.focus();
+        return;
+    });
+    <?php } ?>
+
+    <?php if($config['cf_cert_hp'] == 'kcp') { ?>
+    // KCP 휴대폰인증
+    $("#win_hp_cert").click(function() {
+        if($("input[name=cert_type]").val() == "ipin") {
+            if(confirm("이미 아이핀 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
+                $("input[name=cert_type]").val("");
+            else
+                return false;
+        }
+
         auth_type_check($("#reg_mb_name").val());
         return false;
     });
+    <?php } ?>
+    <?php } ?>
 });
-</script>
-<?php } ?>
 
-<script>
 // submit 최종 폼체크
 function fregisterform_submit(f)
 {

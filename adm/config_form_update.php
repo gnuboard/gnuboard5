@@ -15,6 +15,10 @@ if (!$mb['mb_id'])
 
 check_token();
 
+// 본인확인을 사용할 경우 아이핀, 휴대폰인증 중 하나는 선택되어야 함
+if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'])
+    alert('본인확인을 위해 아이핀 또는 휴대폰 본인학인 서비스를 하나이상 선택해 주십시오');
+
 $sql = " update {$g4['config_table']}
             set cf_title = '{$_POST['cf_title']}',
                 cf_admin = '{$_POST['cf_admin']}',
@@ -104,9 +108,12 @@ $sql = " update {$g4['config_table']}
                 cf_mobile_member_skin = '{$_POST['cf_mobile_member_skin']}',
                 cf_gcaptcha_mp3 = '{$_POST['cf_gcaptcha_mp3']}',
                 cf_editor = '{$_POST['cf_editor']}',
+                cf_cert_use = '{$_POST['cf_cert_use']}',
+                cf_cert_ipin = '{$_POST['cf_cert_ipin']}',
+                cf_cert_hp = '{$_POST['cf_cert_hp']}',
+                cf_cert_kcb_cd = '{$_POST['cf_cert_kcb_cd']}',
+                cf_cert_kcp_cd = '{$_POST['cf_cert_kcp_cd']}',
                 cf_googl_shorturl_apikey = '{$_POST['cf_googl_shorturl_apikey']}',
-                cf_kcpcert_site_cd = '{$_POST['cf_kcpcert_site_cd']}',
-                cf_kcpcert_use = '{$_POST['cf_kcpcert_use']}',
                 cf_facebook_appid = '{$_POST['cf_facebook_appid']}',
                 cf_facebook_secret = '{$_POST['cf_facebook_secret']}',
                 cf_twitter_key = '{$_POST['cf_twitter_key']}',
