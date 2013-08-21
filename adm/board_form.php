@@ -61,7 +61,11 @@ if (!isset($board['bo_use_sns'])) {
     }
 }
 
-sql_query(" ALTER TABLE `{$g4['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' ", false);
+$sql = " SHOW COLUMNS FROM `{$g4['board_table']}` WHERE field = 'bo_use_cert' ";
+$row = sql_fetch($sql);
+if(strpos($row['Type'], 'hp-') === false) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '' ", false);
+}
 
 if (!isset($board['bo_use_list_file'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_use_list_file` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_list_view` ", false);
@@ -605,9 +609,11 @@ $pg_anchor = '<ul class="anchor">
             <select id="bo_use_cert" name="bo_use_cert">
                 <?php
                 echo option_selected("",  $board['bo_use_cert'], "사용안함");
-                if ($config['cf_cert_use'] != '') {
+                if ($config['cf_cert_use']) {
                     echo option_selected("cert",  $board['bo_use_cert'], "본인확인된 회원전체");
                     echo option_selected("adult", $board['bo_use_cert'], "본인확인된 성인회원만");
+                    echo option_selected("hp-cert",  $board['bo_use_cert'], "휴대폰 본인확인된 회원전체");
+                    echo option_selected("hp-adult", $board['bo_use_cert'], "휴대폰 본인확인된 성인회원만");
                 }
                 ?>
             </select>

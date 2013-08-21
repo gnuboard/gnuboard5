@@ -183,7 +183,7 @@ if (!empty($group['gr_use_access'])) {
 }
 
 // 본인확인을 사용한다면
-if ($config['cf_cert_use'] != '' && !$is_admin) {
+if ($config['cf_cert_use'] && !$is_admin) {
     // 인증된 회원만 가능
     if ($board['bo_use_cert'] != '' && $is_guest) {
         alert('이 게시판은 본인확인 하신 회원님만 글쓰기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
@@ -195,6 +195,14 @@ if ($config['cf_cert_use'] != '' && !$is_admin) {
 
     if ($board['bo_use_cert'] == 'adult' && !$member['mb_adult']) {
         alert('이 게시판은 본인확인으로 성인인증 된 회원님만 글쓰기가 가능합니다.\\n\\n성인인데 글쓰기가 안된다면 회원정보 수정에서 본인확인을 다시 해주시기 바랍니다.', G4_URL);
+    }
+
+    if ($board['bo_use_cert'] == 'hp-cert' && $member['mb_certify'] != 'hp') {
+        alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 휴대폰 본인확인을 해주시기 바랍니다.', G4_URL);
+    }
+
+    if ($board['bo_use_cert'] == 'hp-adult' && (!$member['mb_adult'] || $member['mb_certify'] != 'hp')) {
+        alert('이 게시판은 휴대폰 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을 다시 해주시기 바랍니다.', G4_URL);
     }
 }
 
