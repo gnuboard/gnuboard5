@@ -145,7 +145,7 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
 //  본인확인
 //---------------------------------------------------------------
 $mb_hp = hyphen_hp_number($mb_hp);
-if($_SESSION['ss_cert_type'] != 'hp') {
+if($_SESSION['ss_cert_type'] != 'hp' && $mb_hp) {
     // 휴대폰번호 중복체크
     $sql = " select mb_id from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$mb_hp}' ";
     $row = sql_fetch($sql);
@@ -354,7 +354,7 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
 unset($_SESSION['ss_cert_type']);
 unset($_SESSION['ss_cert_no']);
 unset($_SESSION['ss_cert_hash']);
-unset($_SESSION['ss_cert_certify']);
+unset($_SESSION['ss_cert_birth']);
 unset($_SESSION['ss_cert_adult']);
 
 if ($msg)
