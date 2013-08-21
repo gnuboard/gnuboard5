@@ -620,7 +620,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="cf_cert_service">
             <select name="cf_cert_hp" id="cf_cert_hp">
                 <?php echo option_selected("",    $config['cf_cert_hp'], "사용안함"); ?>
-                <?php echo option_selected("kcb", $config['cf_cert_hp'], "KCB 휴대폰본인확인"); ?>
+                <?php echo option_selected("kcb", $config['cf_cert_hp'], "KCB OKNAME 휴대폰본인확인"); ?>
                 <?php echo option_selected("kcp", $config['cf_cert_hp'], "KCP 휴대폰본인확인"); ?>
             </select>
         </td>
@@ -628,7 +628,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row" class="cf_cert_service"><label for="cf_cert_kcb_cd">KCB 회원사ID</label></th>
         <td class="cf_cert_service">
-            <?php echo help('KCB 회원사ID를 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, KCB와 계약체결  후 회원사ID를 발급 받으실 수 있습니다.<br>이용하시려는 서비스에 대한 계약을 각각 체결해주셔야 합니다.<br>KCB 휴대폰본인확인 서비스는 테스트일 경우에도 회원사ID가 필요합니다.') ?>
+            <?php echo help('KCB 회원사ID를 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, KCB와 계약체결 후 회원사ID를 발급 받으실 수 있습니다.<br>이용하시려는 서비스에 대한 계약을 각각 체결해주셔야 합니다.<br>KCB 휴대폰본인확인 서비스는 테스트일 경우에도 회원사ID가 필요합니다.') ?>
             <input type="text" name="cf_cert_kcb_cd" value="<?php echo $config['cf_cert_kcb_cd'] ?>" id="cf_cert_kcb_cd" class="frm_input" size="20"> <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">아이핀 이용계약서</a>
             <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">본인확인서비스 이용계약서</a>
         </td>
