@@ -55,9 +55,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
         }
         ?>
-        <?php if ($config['cf_cert_use'] && $member['mb_certify']) { ?>
+        <?php
+        if ($config['cf_cert_use'] && $member['mb_certify']) {
+            if($member['mb_certify'] == 'ipin')
+                $mb_cert = '아이핀';
+            else
+                $mb_cert = '휴대폰';
+        ?>
         <div id="msg_certify">
-            <strong>본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
+            <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
         </div>
         <?php } ?>
     </td>
@@ -256,16 +262,14 @@ if ($config['cf_cert_use']) {
 $(function() {
     $("#reg_zip_find").css("display", "inline-block");
     $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
+
     <?php if($config['cf_cert_use']) { ?>
+
     <?php if($config['cf_cert_ipin'] == 'kcb') { ?>
     // KCB 아이핀인증
     $("#win_ipin_cert").click(function() {
-        if($("input[name=cert_type]").val() == "hp") {
-            if(confirm("이미 휴대폰 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
-                $("input[name=cert_type]").val("");
-            else
-                return false;
-        }
+        if(!cert_confirm())
+            return false;
 
         var url = "<?php echo G4_OKNAME_URL; ?>/ipin1.php";
         var popupWindow = window.open( url, "kcbPop", "left=200, top=100, status=0, width=450, height=550" );
@@ -277,12 +281,8 @@ $(function() {
     <?php if($config['cf_cert_hp'] == 'kcb') { ?>
     // KCB 휴대폰인증
     $("#win_hp_cert").click(function() {
-        if($("input[name=cert_type]").val() == "ipin") {
-            if(confirm("이미 아이핀 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
-                $("input[name=cert_type]").val("");
-            else
-                return false;
-        }
+        if(!cert_confirm())
+            return false;
 
         var url = "<?php echo G4_OKNAME_URL; ?>/hpcert1.php";
         var popupWindow = window.open( url, "auth_popup", "left=200, top=100, width=430, height=590, scrollbar=yes" );
@@ -294,19 +294,39 @@ $(function() {
     <?php if($config['cf_cert_hp'] == 'kcp') { ?>
     // KCP 휴대폰인증
     $("#win_hp_cert").click(function() {
-        if($("input[name=cert_type]").val() == "ipin") {
-            if(confirm("이미 아이핀 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
-                $("input[name=cert_type]").val("");
-            else
-                return false;
-        }
+        if(!cert_confirm())
+            return false;
 
         auth_type_check($("#reg_mb_name").val());
         return false;
     });
     <?php } ?>
+
     <?php } ?>
 });
+
+// 인증체크
+function cert_confirm()
+{
+    var val = document.fregisterform.cert_type.value;
+    var type;
+
+    switch(val) {
+        case "ipin":
+            type = "아이핀";
+            break;
+        case "hp":
+            type = "휴대폰";
+            break;
+        default:
+            return true;
+    }
+
+    if(confirm("이미 "+type+" 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
+        return true;
+    else
+        return false;
+}
 
 // submit 최종 폼체크
 function fregisterform_submit(f)
