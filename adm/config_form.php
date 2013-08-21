@@ -638,7 +638,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="cf_cert_service">
             <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
             <span class="sitecode">SM</span>
-            <input type="text" name="cf_cert_kcp_cd" value="<?php echo $config['cf_cert_kcp_cd'] ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">본인확인 서비스 신청페이지</a>
+            <input type="text" name="cf_cert_kcp_cd" value="<?php echo $config['cf_cert_kcp_cd'] ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/g4s/kcpcert.php" target="_blank" class="btn_frmline">본인확인 서비스 신청페이지</a>
         </td>
     </tr>
     </tbody>
