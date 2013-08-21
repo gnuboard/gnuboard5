@@ -98,6 +98,8 @@ if(!isset($config['cf_cert_use'])) {
                     ADD `cf_cert_kcp_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kcb_cd` ", true);
     sql_query(" ALTER TABLE `{$g4['member_table']}`
                     CHANGE `mb_hp_certify` `mb_certify` VARCHAR(20) NOT NULL DEFAULT '' ", true);
+    sql_query(" update {$g4['member_table']} set mb_certify = 'hp' where mb_certify = '1' ");
+    sql_query(" update {$g4['member_table']} set mb_certify = '' where mb_certify = '0' ");
 }
 
 $g4['title'] = '환경설정';
