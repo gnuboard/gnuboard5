@@ -10,6 +10,10 @@ $cmd = "$exe $keypath $memid \"{$reserved1}\" \"{$reserved2}\" $EndPointURL $log
 // 실행
 exec($cmd, $out, $ret);
 
+if($ret == 126 || $ret == -1) {
+    alert_close('모듈 파일의 실행권한이 없습니다.\\n\\nchmod 755 okname 과 같이 실행권한을 부여해 주십시오');
+}
+
 $pubkey = "";
 $sig = "";
 $curtime = "";
