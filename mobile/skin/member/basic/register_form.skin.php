@@ -9,7 +9,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="url" value="<?php echo $urlencode ?>">
 <input type="hidden" name="agree" value="<?php echo $agree ?>">
 <input type="hidden" name="agree2" value="<?php echo $agree2 ?>">
-<input type="hidden" name="cert_type" value="">
+<input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
 <?php if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php } ?>
 <?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
 <input type="hidden" name="mb_nick_default" value="<?php echo $member['mb_nick'] ?>">
