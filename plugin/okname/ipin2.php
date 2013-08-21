@@ -29,7 +29,7 @@ if($ret != 0) {
     else
         $resultCd=sprintf("S%03d", $ret);
 
-    alert_close('복호화 요청 호출 오류. 오류코드 : '.$resultCd);
+    alert_close('아이핀 본인확인 중 오류가 발생했습니다. 오류코드 : '.$resultCd.'\\n\\n문의는 코리아크레딧뷰로 고객센터 02-708-1000 로 해주십시오.');
 }
 
 // 결과라인에서 값을 추출
