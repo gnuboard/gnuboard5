@@ -10,8 +10,8 @@ if ($w == '' || $w == 'u')
 else if ($w == 'd')
     auth_check($auth[$sub_menu], "d");
 
-@mkdir(G4_DATA_PATH."/item", 0707);
-@chmod(G4_DATA_PATH."/item", 0707);
+@mkdir(G4_DATA_PATH."/item", G4_DIR_PERMISSION);
+@chmod(G4_DATA_PATH."/item", G4_DIR_PERMISSION);
 
 // 파일정보
 if($w == "u") {

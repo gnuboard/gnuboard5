@@ -10,8 +10,8 @@ if ($w == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
-@mkdir(G4_DATA_PATH."/event", 0707);
-@chmod(G4_DATA_PATH."/event", 0707);
+@mkdir(G4_DATA_PATH."/event", G4_DIR_PERMISSION);
+@chmod(G4_DATA_PATH."/event", G4_DIR_PERMISSION);
 
 if ($ev_mimg_del)  @unlink(G4_DATA_PATH."/event/{$ev_id}_m");
 if ($ev_himg_del)  @unlink(G4_DATA_PATH."/event/{$ev_id}_h");

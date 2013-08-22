@@ -635,8 +635,8 @@ function it_img_upload($srcfile, $filename, $dir)
         return '';
 
     if(!is_dir($dir)) {
-        @mkdir($dir, 0707);
-        @chmod($dir, 0707);
+        @mkdir($dir, G4_DIR_PERMISSION);
+        @chmod($dir, G4_DIR_PERMISSION);
     }
 
     $filename = preg_replace("/\s+/", "", $filename);
@@ -660,7 +660,7 @@ function upload_file($srcfile, $destfile, $dir)
     if ($destfile == "") return false;
     // 업로드 한후 , 퍼미션을 변경함
     @move_uploaded_file($srcfile, $dir.'/'.$destfile);
-    @chmod($dir.'/'.$destfile, 0606);
+    @chmod($dir.'/'.$destfile, G4_FILE_PERMISSION);
     return true;
 }
 

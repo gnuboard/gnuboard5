@@ -34,8 +34,8 @@ if ($w == "" || $w == "u")
 }
 
 $g4['category_path'] = G4_DATA_PATH."/category";
-@mkdir($g4['category_path'], 0707);
-@chmod($g4['category_path'], 0707);
+@mkdir($g4['category_path'], G4_DIR_PERMISSION);
+@chmod($g4['category_path'], G4_DIR_PERMISSION);
 
 if ($ca_image1_del) @unlink("{$g4['category_path']}/{$ca_id}_1");
 if ($ca_image0_del) @unlink("{$g4['category_path']}/{$ca_id}_0");

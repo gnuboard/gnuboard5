@@ -9,8 +9,8 @@ if ($W == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
-@mkdir(G4_DATA_PATH."/banner", 0707);
-@chmod(G4_DATA_PATH."/banner", 0707);
+@mkdir(G4_DATA_PATH."/banner", G4_DIR_PERMISSION);
+@chmod(G4_DATA_PATH."/banner", G4_DIR_PERMISSION);
 
 $bn_bimg      = $_FILES['bn_bimg']['tmp_name'];
 $bn_bimg_name = $_FILES['bn_bimg']['name'];

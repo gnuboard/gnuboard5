@@ -10,8 +10,8 @@ if ($W == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
-@mkdir(G4_DATA_PATH."/faq", 0707);
-@chmod(G4_DATA_PATH."/faq", 0707);
+@mkdir(G4_DATA_PATH."/faq", G4_DIR_PERMISSION);
+@chmod(G4_DATA_PATH."/faq", G4_DIR_PERMISSION);
 
 if ($fm_himg_del)  @unlink(G4_DATA_PATH."/faq/{$fm_id}_h");
 if ($fm_timg_del)  @unlink(G4_DATA_PATH."/faq/{$fm_id}_t");

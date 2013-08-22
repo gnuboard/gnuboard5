@@ -419,8 +419,8 @@ if($shop_install) {
     );
 
     for ($i=0; $i<count($dir_arr); $i++) {
-        @mkdir($dir_arr[$i], 0707);
-        @chmod($dir_arr[$i], 0707);
+        @mkdir($dir_arr[$i], G4_DIR_PERMISSION);
+        @chmod($dir_arr[$i], G4_DIR_PERMISSION);
     }
 }
 ?>

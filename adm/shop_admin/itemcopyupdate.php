@@ -109,8 +109,8 @@ function copy_directory($src_dir, $dest_dir)
         return false;
 
     if(!is_dir($dest_dir)) {
-        @mkdir($dest_dir, 0707);
-        @chmod($dest_dir, 0707);
+        @mkdir($dest_dir, G4_DIR_PERMISSION);
+        @chmod($dest_dir, G4_DIR_PERMISSION);
     }
 
     $dir = opendir($src_dir);
@@ -126,15 +126,15 @@ function copy_directory($src_dir, $dest_dir)
         $dest_file = $dest_dir.'/'.$files[$i];
         if(is_file($src_file)) {
             copy($src_file, $dest_file);
-            @chmod($dest_file, 0606);
+            @chmod($dest_file, G4_FILE_PERMISSION);
         }
     }
 }
 
 // 파일복사
 $dest_path = G4_DATA_PATH.'/item/'.$new_it_id;
-@mkdir($dest_path, 0707);
-@chmod($dest_path, 0707);
+@mkdir($dest_path, G4_DIR_PERMISSION);
+@chmod($dest_path, G4_DIR_PERMISSION);
 $comma = '';
 $sql_img = '';
 
@@ -145,7 +145,7 @@ for($i=1; $i<=10; $i++) {
     if(is_file($file)) {
         $dstfile = $dest_path.'/'.basename($file);
         copy($file, $dstfile);
-        @chmod($dstfile, 0606);
+        @chmod($dstfile, G4_FILE_PERMISSION);
         $new_img = $new_it_id.'/'.basename($file);
     }
 
