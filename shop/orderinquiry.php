@@ -51,7 +51,7 @@ if (!$is_member)
     $sql = " select od_id, uq_id from {$g4['shop_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
     $row = sql_fetch($sql);
     if ($row['od_id']) {
-        set_session("ss_uq_id_inquiry", $row['uq_id']);
+        set_session("ss_temp_uq_id", $row['uq_id']);
         goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id']);
     }
 }
