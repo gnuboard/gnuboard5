@@ -11,14 +11,13 @@ $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
 
 if (!$is_member) {
-    if (get_session("ss_temp_uq_id") != $_GET['uq_id'])
+    if (get_session('ss_orderview_uid') != $_GET['uid'])
         alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.", G4_SHOP_URL);
 }
 
-$sql = "select * from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id = '$uq_id' ";
+$sql = "select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
-if (!$od['od_id']) {
-    echo "$od_id $uq_id $MxIssueNO";
+if (!$od['od_id'] || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
     alert("조회하실 주문서가 없습니다.", G4_SHOP_URL);
 }
 
@@ -31,8 +30,6 @@ if($rq['cnt'])
 
 // 결제방법
 $settle_case = $od['od_settle_case'];
-
-set_session('ss_temp_uq_id', $uq_id);
 
 $g4['title'] = '주문상세내역';
 include_once('./_head.php');

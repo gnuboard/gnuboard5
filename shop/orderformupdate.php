@@ -589,8 +589,9 @@ if($default['de_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3']
 // SMS END   --------------------------------------------------------
 
 
-// orderview 에서 사용하기 위해 tmp에 넣고
-set_session('ss_temp_uq_id', $uq_id);
+// orderview 에서 사용하기 위해 session에 넣고
+$uid = md5($od_id.G4_TIME_YMDHIS.$REMOTE_ADDR);
+set_session('ss_orderview_uid', $uid);
 
 // 주문번호제거
 set_session('ss_order_uniqid', '');
@@ -599,7 +600,7 @@ set_session('ss_order_uniqid', '');
 if (get_session('ss_direct'))
     set_session('ss_uq_direct', '');
 
-goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$uq_id);
+goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 ?>
 
 <html>

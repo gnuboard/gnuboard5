@@ -32,12 +32,13 @@ $sql = " select a.od_id,
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
+    $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
 ?>
 
 <tr>
     <td>
         <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $row['ct_id']; ?>">
-        <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>"><?php echo $row['od_id']; ?></a>
+        <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a>
     </td>
     <td><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
     <td class="td_num"><?php echo $row['itemcount']; ?></td>

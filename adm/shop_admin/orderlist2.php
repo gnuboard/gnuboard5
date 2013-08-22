@@ -145,6 +145,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $tot_receiptcancel += $row['receiptcancel'];
             $tot_couponamount  += $row['couponamount'];
             $tot_misu          += $row['misu'];
+
+            $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
         ?>
         <li>
             <dl class="sodr_basic">
@@ -152,7 +154,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 <dd>
                     <strong>
                         <?php echo $od_mobile; ?>
-                        <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>"><?php echo $row['od_id']; ?></a>
+                        <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a>
                     </strong>
                 </dd>
                 <dt>주문일시</dt>
