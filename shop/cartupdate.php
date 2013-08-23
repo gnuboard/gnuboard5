@@ -73,6 +73,7 @@ else // 장바구니에 담기
     if ($count < 1)
         alert('장바구니에 담을 상품을 선택하여 주십시오.');
 
+    $ct_count = 0;
     for($i=0; $i<$count; $i++) {
         // 보관함의 상품을 담을 때 체크되지 않은 상품 건너뜀
         if($act == 'multi' && !$_POST['chk_it_id'][$i])
@@ -158,7 +159,7 @@ else // 장바구니에 담기
         else
             $ct_select = 0;
 
-        $ct_count = 0;
+        $ct_num = 0;
         $comma = '';
         $sql = " INSERT INTO {$g4['shop_cart_table']}
                         ( od_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
@@ -196,8 +197,9 @@ else // 장바구니에 담기
                 continue;
             }
 
-            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '$k', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
+            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '$ct_num', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
             $comma = ' , ';
+            $ct_num++;
             $ct_count++;
         }
 
