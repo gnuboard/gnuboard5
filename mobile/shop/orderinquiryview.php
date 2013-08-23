@@ -35,6 +35,9 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <p>주문번호 <strong><?php echo $od_id; ?></strong></p>
 
     <section id="sod_fin_list">
+    <form name="forderrequest" method="post" action="./orderrequestupdate.php" onsubmit="return frequest_check(this);">
+    <input type="hidden" name="od_id" value="<?php echo $od['od_id']; ?>">
+    <input type="hidden" name="rq_type" value="">
         <h2>주문하신 상품</h2>
         <span class="sound_only">상품 상태 설명</span>
         <dl id="sod_fin_legend">
@@ -82,12 +85,13 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                 </thead>
                 <tbody>
                 <?php
-                $sql = " select ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
+                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
                             from {$g4['shop_cart_table']}
                             where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
                             order by ct_num ";
                 $res = sql_query($sql);
+                $ct_list = array();
 
                 for($k=0; $opt=sql_fetch_array($res); $k++) {
                     if($opt['io_type'])
@@ -101,6 +105,9 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                     $disabled = '';
                     if($opt['ct_status'] == '취소' || $opt['ct_status'] == '반품' || $opt['ct_status'] == '품절')
                         $disabled = ' disabled="disabled"';
+
+                    $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
+                    $ct_list[$opt['ct_id']]['option'] = $opt['ct_option'];
                 ?>
                 <tr>
                     <td class="td_chk">
@@ -317,6 +324,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <dt class="sod_bsk_point">포인트</dt>
             <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
         </dl>
+    </form>
     </section>
 
     <div id="sod_fin_view">
