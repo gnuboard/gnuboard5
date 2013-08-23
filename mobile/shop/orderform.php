@@ -409,7 +409,7 @@ ob_end_clean();
         <tr>
             <th scope="row"><label for="od_hope_date">희망배송일</label></th>
             <td>
-                <select name="od_hope_date" id="od_hope_date">
+                <!-- <select name="od_hope_date" id="od_hope_date">
                 <option value="">선택하십시오.</option>
                 <?php
                 for ($i=0; $i<7; $i++) {
@@ -417,7 +417,8 @@ ob_end_clean();
                     echo '<option value="'.$sdate.'">'.$sdate.' ('.get_yoil($sdate).')</option>'.PHP_EOL;
                 }
                 ?>
-                </select>
+                </select> -->
+                <input type="text" name="od_hope_date" value="" id="od_hope_date" class="frm_input" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
             </td>
         </tr>
         <?php } ?>
@@ -1352,6 +1353,12 @@ function gumae2baesong(f)
 
     calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
 }
+
+<?php if ($default['de_hope_date_use']) { ?>
+$(function(){
+    $("#od_hope_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", minDate: "+<?php echo (int)$default['de_hope_date_after']; ?>d;", maxDate: "+<?php echo (int)$default['de_hope_date_after'] + 6; ?>d;" });
+});
+<?php } ?>
 </script>
 
 <?php
