@@ -96,7 +96,7 @@ if($rq['rq_parent']) {
 // 요청상품
 $sql = " select ct_id, it_id, it_name, ct_option, ct_price, ct_qty, io_type, io_price, ct_status
             from {$g4['shop_cart_table']}
-            where uq_id = '{$od['uq_id']}'
+            where od_id = '{$od['od_id']}'
             order by ct_id ";
 $result = sql_query($sql);
 

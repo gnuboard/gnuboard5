@@ -26,8 +26,6 @@ if($rq['cnt'])
 // 결제방법
 $settle_case = $od['od_settle_case'];
 
-set_session('ss_temp_uq_id', $uq_id);
-
 $g4['title'] = '주문상세내역';
 include_once(G4_MSHOP_PATH.'/_head.php');
 ?>
@@ -55,7 +53,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 
         $sql = " select it_id, it_name, cp_amount
                     from {$g4['shop_cart_table']}
-                    where uq_id = '$uq_id'
+                    where od_id = '$od_id'
                       and ct_num = '0'
                     order by ct_id ";
         $result = sql_query($sql);
@@ -86,7 +84,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                 <?php
                 $sql = " select ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
                             from {$g4['shop_cart_table']}
-                            where uq_id = '$uq_id'
+                            where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
                             order by ct_num ";
                 $res = sql_query($sql);
@@ -510,7 +508,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                 else
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
+                    <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
                 <?php } ?>
                 </td>
             </tr>
@@ -693,7 +691,6 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <div id="sod_fin_cancelfrm">
             <form method="post" action="<?php echo G4_SHOP_URL; ?>/orderinquirycancel.php" onsubmit="return fcancel_check(this);">
             <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
-            <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
             <label for="cancel_memo">취소사유</label>

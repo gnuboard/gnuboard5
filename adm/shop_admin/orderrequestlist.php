@@ -53,7 +53,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == '') { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select a.*, b.uq_id, b.od_temp_amount, b.od_name
+$sql  = " select a.*, b.od_temp_amount, b.od_name
           $sql_common
           order by $sst $sod, a.rq_id desc
           limit $from_record, $rows ";
@@ -165,7 +165,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
         if($tmp['rq_time'])
             $done_date = substr($tmp['rq_time'], 2, 8);
 
-        $order_href = './orderform.php?od_id='.$row['od_id'].'&amp;uq_id='.$row['uq_id'].'&amp;rq_id='.$row['rq_id'].'&amp;rq_type='.$rq_type.'&amp;'.$qstr;
+        $order_href = './orderform.php?od_id='.$row['od_id'].'&amp;rq_id='.$row['rq_id'].'&amp;rq_type='.$rq_type.'&amp;'.$qstr;
     ?>
 
     <tr>

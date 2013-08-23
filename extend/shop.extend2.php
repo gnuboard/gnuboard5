@@ -414,4 +414,10 @@ if(!sql_query(" select od_tax_mny from {$g4['shop_order_table']} limit 1 ", fals
                     ADD `od_vat_mny` INT(11) NOT NULL DEFAULT '0' AFTER `od_tax_mny`,
                     ADD `od_free_mny` INT(11) NOT NULL DEFAULT '0' AFTER `od_vat_mny` ", true);
 }
+
+// cart uq_id를 od_id로 변경
+if(!sql_query(" select od_id from {$g4['shop_cart_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    CHANGE `uq_id` `od_id` BIGINT(2) UNSIGNED NOT NULL ", true);
+}
 ?>

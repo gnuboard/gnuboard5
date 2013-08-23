@@ -19,7 +19,7 @@ if ($od_send_mail)
 
     $sql = " select *
                from {$g4['shop_cart_table']}
-              where uq_id = '{$od['uq_id']}'
+              where od_id = '{$od['od_id']}'
               order by ct_id ";
     $result = sql_query($sql);
     for ($i=0; $ct=mysql_fetch_array($result); $i++) {

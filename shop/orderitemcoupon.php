@@ -12,13 +12,13 @@ $it = sql_fetch($sql);
 
 // 상품 총 금액
 if($sw_direct)
-    $uq_id = get_session('ss_uq_direct');
+    $cart_id = get_session('ss_cart_direct');
 else
-    $uq_id = get_session('ss_uq_id');
+    $cart_id = get_session('ss_cart_id');
 
 $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
             from {$g4['shop_cart_table']}
-            where uq_id = '$uq_id'
+            where od_id = '$od_id'
               and it_id = '$it_id' ";
 $ct = sql_fetch($sql);
 $item_price = $ct['sum_price'];

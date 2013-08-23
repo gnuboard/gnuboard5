@@ -43,7 +43,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 // 비회원 주문확인의 경우 바로 주문서 상세조회로 이동
 if (!$is_member)
 {
-    $sql = " select od_id, uq_id from {$g4['shop_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
+    $sql = " select od_id, od_time, od_ip from {$g4['shop_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
     $row = sql_fetch($sql);
     if ($row['od_id']) {
         $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);

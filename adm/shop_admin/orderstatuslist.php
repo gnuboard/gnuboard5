@@ -23,12 +23,12 @@ if ($search != "") {
         $page = 1;
 }
 
-if ($sel_field == "")  $sel_field = "od_id";
-if ($sort1 == "") $sort1 = "od_id";
+if ($sel_field == "")  $sel_field = "a.od_id";
+if ($sort1 == "") $sort1 = "a.od_id";
 if ($sort2 == "") $sort2 = "desc";
 
 $sql_common = " from {$g4['shop_order_table']} a
-                          left join {$g4['shop_cart_table']} b on (a.uq_id = b.uq_id)
+                          left join {$g4['shop_cart_table']} b on (a.od_id = b.od_id)
                           left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
                           $sql_search ";
 
@@ -105,7 +105,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+        <option value="a.od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
         <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
         <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
         <option value="od_deposit_name" <?php echo get_selected($sel_field, 'od_deposit_name'); ?>>입금자</option>
@@ -128,7 +128,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </div>
 
     <ul class="sort_odr">
-        <li><a href="<?php echo title_sort("od_id")."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
+        <li><a href="<?php echo title_sort("a.od_id")."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
         <li><a href="<?php echo title_sort("it_name")."&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></th>
         <li><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></li>
@@ -170,9 +170,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
         $href = $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=c.it_id&amp;search='.$lines[$i]['it_id'];
         $it_name = '<a href="'.$href.'">'.cut_str($lines[$i]['it_name'],35).'</a><br>';
-        $it_name .= print_item_options($lines[$i]['it_id'], $lines[$i]['it_opt1'], $lines[$i]['it_opt2'], $lines[$i]['it_opt3'], $lines[$i]['it_opt4'], $lines[$i]['it_opt5'], $lines[$i]['it_opt6']);
-
-        $s_mod = icon("수정", "");
 
         $od_mobile = '';
         if($lines[$i]['od_mobile'])

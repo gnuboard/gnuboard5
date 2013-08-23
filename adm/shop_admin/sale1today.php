@@ -14,7 +14,6 @@ $lines = $lines1 = array();
 $sql = " select od_id,
                 mb_id,
                 od_name,
-                uq_id,
                 od_send_cost,
                 od_settle_case,
                 od_receipt_amount,
@@ -34,7 +33,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $sql1 = " select (SUM(IF(io_type = 1, io_price * ct_qty, (ct_price + io_price) * ct_qty))) as orderamount, /* 주문합계 */
                      (SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', IF(io_type = 1, io_price * ct_qty, (ct_price + io_price) * ct_qty), 0))) as ordercancel /* 주문취소 */
                 from {$g4['shop_cart_table']}
-               where uq_id = '{$row['uq_id']}' ";
+               where od_id = '{$row['od_id']}' ";
     $row1 = sql_fetch($sql1);
 
     $row1['orderamount'] += $row['od_send_cost'];

@@ -21,12 +21,12 @@ if ($search != "")
         $page = 1;
 }
 
-if ($sel_field == "")  $sel_field = "od_id";
-if ($sort1 == "") $sort1 = "od_id";
+if ($sel_field == "")  $sel_field = "a.od_id";
+if ($sort1 == "") $sort1 = "a.od_id";
 if ($sort2 == "") $sort2 = "desc";
 
 $sql_common = " from {$g4['shop_order_table']} a
-                left join {$g4['shop_cart_table']} b on (a.uq_id=b.uq_id)
+                left join {$g4['shop_cart_table']} b on (a.od_id=b.od_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -78,7 +78,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+        <option value="a.od_id" <?php echo get_selected($sel_field, 'a.od_id'); ?>>주문번호</option>
         <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
         <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
         <option value="od_b_name" <?php echo get_selected($sel_field, 'od_b_name'); ?>>받는분</option>
@@ -102,7 +102,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </div>
 
     <ul class="sort_odr">
-        <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("a.od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("itemcount", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("orderamount", 1)."&amp;$qstr1"; ?>">주문합계<span class="sound_only"> 순 정렬</span></a></li>
@@ -198,7 +198,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             // 상품개별출력
             $sql2 = " select it_id, it_name
                         from {$g4['shop_cart_table']}
-                        where uq_id = '{$row['uq_id']}'
+                        where od_id = '{$row['od_id']}'
                           and ct_num = '0'
                         order by ct_num ";
             $result2 = sql_query($sql2);
@@ -229,7 +229,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 // 옵션항목
                 $sql3 = " select *
                             from {$g4['shop_cart_table']}
-                            where uq_id = '{$row['uq_id']}'
+                            where od_id = '{$row['od_id']}'
                               and it_id = '{$row2['it_id']}'
                             order by ct_num ";
                 $result3 = sql_query($sql3);
@@ -267,7 +267,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <div class="sodr_mng">
                 <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>">주문 수정</a>
                 |
-                <a href="./orderdelete.php?od_id=<?php echo $row['od_id']; ?>&amp;uq_id=<?php echo $row['uq_id']; ?>&amp;mb_id=<?php echo $row['mb_id']; ?>&amp;<?php echo $qstr; ?>&amp;list=2" onclick="return delete_confirm();">주문 삭제</a>
+                <a href="./orderdelete.php?od_id=<?php echo $row['od_id']; ?>&amp;mb_id=<?php echo $row['mb_id']; ?>&amp;<?php echo $qstr; ?>&amp;list=2" onclick="return delete_confirm();">주문 삭제</a>
             </div>
 
        </li>

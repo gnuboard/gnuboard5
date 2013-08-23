@@ -34,7 +34,7 @@ if ($sel_ca_id != "") {
 if ($sel_field == "")  $sel_field = "od_id";
 
 $sql_common = " from {$g4['shop_order_table']} a
-                left join {$g4['shop_cart_table']} b on (a.uq_id=b.uq_id)
+                left join {$g4['shop_cart_table']} b on (a.od_id=b.od_id)
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -171,7 +171,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <td>
             <input type="hidden" name="od_id[<?php echo $i; ?>]" value="<?php echo $row['od_id']; ?>">
-            <input type="hidden" name="uq_id[<?php echo $i; ?>]" value="<?php echo $row['uq_id']; ?>">
             <input type="hidden" name="od_tno[<?php echo $i; ?>]" value="<?php echo $row['od_tno']; ?>">
             <input type="hidden" name="od_escrow[<?php echo $i; ?>]" value="<?php echo $row['od_escrow']; ?>">
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>

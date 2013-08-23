@@ -43,14 +43,14 @@ if (!isset($order_not_point)) {
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 회원 ID 를 얻는다.
-        $tmp_row = sql_fetch("select od_id, mb_id from {$g4['shop_order_table']} where uq_id = '{$row['uq_id']}' ");
+        $tmp_row = sql_fetch("select od_id, mb_id from {$g4['shop_order_table']} where od_id = '{$row['od_id']}' ");
 
         // 회원이면서 포인트가 0보다 크다면
         if ($tmp_row['mb_id'] && $row['ct_point'] > 0)
         {
             $po_point = $row['ct_point'] * $row['ct_qty'];
             $po_content = "$cart_title3 {$tmp_row['od_id']} ({$row['ct_id']}) $cart_title4";
-            insert_point($tmp_row['mb_id'], $po_point, $po_content, "@delivery", $tmp_row['mb_id'], "{$tmp_row['od_id']},{$row['uq_id']},{$row['ct_id']}");
+            insert_point($tmp_row['mb_id'], $po_point, $po_content, "@delivery", $tmp_row['mb_id'], "{$tmp_row['od_id']},{$row['ct_id']}");
         }
 
         sql_query("update {$g4['shop_cart_table']} set ct_point_use = '1' where ct_id = '{$row['ct_id']}' ");
@@ -95,7 +95,7 @@ $sql = " select it_id,
                 cp_amount,
                 ct_notax
            from {$g4['shop_cart_table']}
-          where uq_id = '{$od['uq_id']}'
+          where od_id = '{$od['od_id']}'
             and ct_num = '0'
           order by ct_id ";
 $result = sql_query($sql);
@@ -123,7 +123,6 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
     <?php } ?>
 
     <form name="frmorderform" method="post" action="./ordercartupdate.php" onsubmit="return form_submit(this);">
-    <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
     <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
     <input type="hidden" name="mb_id" value="<?php echo $od['mb_id']; ?>">
     <input type="hidden" name="od_email" value="<?php echo $od['od_email']; ?>">
@@ -172,7 +171,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
             // 상품의 옵션정보
             $sql = " select ct_id, it_id, ct_price, ct_qty, ct_option, ct_status, ct_stock_use, ct_point_use, ct_send_cost, io_type, io_price
                         from {$g4['shop_cart_table']}
-                        where uq_id = '{$od['uq_id']}'
+                        where od_id = '{$od['od_id']}'
                           and it_id = '{$row['it_id']}'
                         order by ct_num ";
             $res = sql_query($sql);
@@ -291,7 +290,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
     </thead>
     <tbody>
     <tr>
-        <td class="td_odrnum2"><?php echo $od['od_id']; ?><!-- uq_id : <?php echo $od['uq_id']; ?> --></td>
+        <td class="td_odrnum2"><?php echo $od['od_id']; ?></td>
         <td class="td_payby"><?php echo $s_receipt_way; ?></td>
         <td class="td_bignum"><?php echo display_price($amount['정상']); ?></td>
         <td class="td_bignum"><?php echo display_point($od['od_receipt_point']); ?></td>
@@ -332,7 +331,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
                     break;
             }
 
-            $sql = " select it_name, ct_option from {$g4['shop_cart_table']} where uq_id = '{$od['uq_id']}' and ct_id = '$rq_ct_id' ";
+            $sql = " select it_name, ct_option from {$g4['shop_cart_table']} where od_id = '{$od['od_id']}' and ct_id = '$rq_ct_id' ";
             $rq_ct = sql_fetch($sql);
             $rq_subject = $rq_row['rq_time'].' '.$rq_ct['it_name'].' '.$rq_ct['ct_option'];
             if($rq_item_count > 1)
@@ -340,7 +339,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
             $rq_subject .= ' '.$type.'요청';
 
             if($rq_row['rq_id'] != $rq_id) {
-                $order_href = './orderform.php?od_id='.$od['od_id'].'&amp;uq_id='.$od['uq_id'].'&amp;rq_id='.$rq_row['rq_id'].'&amp;'.$qstr.'#anc_sodr_request';
+                $order_href = './orderform.php?od_id='.$od['od_id'].'&amp;rq_id='.$rq_row['rq_id'].'&amp;'.$qstr.'#anc_sodr_request';
                 $rq_subject = '<a href="'.$order_href.'">'.$rq_subject.'</a>';
             }
 
@@ -550,7 +549,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
             <?php if ($od['od_cash']) { ?>
                 <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인</a>
             <?php } else { ?>
-                <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
+                <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
             <?php } ?>
             </td>
         </tr>
@@ -929,7 +928,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 </div>
 
 <div class="btn_confirm">
-    <a href="./orderdelete.php?od_id=<?php echo $od['od_id']; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>&amo;mb_id=<?php echo $od['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return del_confirm();">주문서 삭제</a>
+    <a href="./orderdelete.php?od_id=<?php echo $od['od_id']; ?>&amo;mb_id=<?php echo $od['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return del_confirm();">주문서 삭제</a>
     <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
 </div>
 

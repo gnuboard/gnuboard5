@@ -19,7 +19,6 @@ if ( $req_tx == "pay" )
             // 카드내역 INSERT
             $sql = "insert {$g4['shop_card_history_table']}
                        set od_id = '$ordr_idxx',
-                           uq_id = '$tmp_uq_id',
                            cd_mall_id = '$g_conf_site_cd',
                            cd_amount = '$good_mny',
                            cd_app_no = '$app_no',
@@ -40,7 +39,6 @@ if ( $req_tx == "pay" )
             // 계좌이체내역 INSERT
             $sql = "insert {$g4['shop_card_history_table']}
                        set od_id = '$ordr_idxx',
-                           uq_id = '$tmp_uq_id',
                            cd_mall_id = '$g_conf_site_cd',
                            cd_amount = '$good_mny',
                            cd_app_no = '$tno',
@@ -63,7 +61,6 @@ if ( $req_tx == "pay" )
             // 가상계좌내역 INSERT
             $sql = "insert {$g4['shop_card_history_table']}
                        set od_id = '$ordr_idxx',
-                           uq_id = '$tmp_uq_id',
                            cd_mall_id = '$g_conf_site_cd',
                            cd_amount = '0',
                            cd_app_no = '$tno',
@@ -88,7 +85,6 @@ if ( $req_tx == "pay" )
             // 휴대폰결제내역 INSERT
             $sql = "insert {$g4['shop_card_history_table']}
                        set od_id = '$ordr_idxx',
-                           uq_id = '$tmp_uq_id',
                            cd_mall_id = '$g_conf_site_cd',
                            cd_amount = '$good_mny',
                            cd_app_no = '$tno',

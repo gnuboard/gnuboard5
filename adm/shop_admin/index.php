@@ -35,7 +35,7 @@ $pg_anchor = '<ul class="anchor">
     $sql = " select a.od_id,
                     a.*, "._MISU_QUERY_."
                from {$g4['shop_order_table']} a
-               left join {$g4['shop_cart_table']} b on (b.uq_id=a.uq_id)
+               left join {$g4['shop_cart_table']} b on (b.od_id=a.od_id)
               group by a.od_id
               /*having misu <= 0 and a.od_invoice = '' and ordercancel = 0*/
               /*having orderamount - receiptamount = 0 and a.od_invoice = ''*/
@@ -100,7 +100,7 @@ $pg_anchor = '<ul class="anchor">
     $sql = " select a.od_id,
                     a.*, "._MISU_QUERY_."
                from {$g4['shop_order_table']} a
-               left join {$g4['shop_cart_table']} b on (b.uq_id=a.uq_id)
+               left join {$g4['shop_cart_table']} b on (b.od_id=a.od_id)
               group by a.od_id
               /* having receiptamount <= 0 */
               having misu > 0

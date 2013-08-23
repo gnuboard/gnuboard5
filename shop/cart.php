@@ -1,30 +1,12 @@
 <?php
 include_once('./_common.php');
 
-// uq_id 설정
-set_unique_id($sw_direct);
+// cart id 설정
+set_cart_id($sw_direct);
 
-// 회원일 경우 자신의 장바구니 상품 uq_id 값을 변경
-if($is_member && $sw_direct != 1) {
-    $tmp_uq_id = get_session('ss_uq_id');
-    if(!$tmp_uq_id) {
-        $tmp_uq_id = get_uniqid();
-        set_session('ss_uq_id', $tmp_uq_id);
-    }
-
-    $ctime = date('Y-m-d H:i:s', (G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400)));
-    $sql = " update {$g4['shop_cart_table']}
-                set uq_id = '$tmp_uq_id'
-                where mb_id = '{$member['mb_id']}'
-                  and ct_status = '쇼핑'
-                  and ct_direct = '0'
-                  and ct_time > '$ctime' ";
-    sql_query($sql);
-}
-
-$s_uq_id = get_session('ss_uq_id');
+$s_cart_id = get_session('ss_cart_id');
 // 선택필드 초기화
-$sql = " update {$g4['shop_cart_table']} set ct_select = '0' where uq_id = '$s_uq_id' ";
+$sql = " update {$g4['shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
 sql_query($sql);
 
 $cart_action_url = G4_SHOP_URL.'/cartupdate.php';
@@ -65,7 +47,7 @@ include_once('./_head.php');
     $tot_sell_amount = 0;
     $tot_cancel_amount = 0;
 
-    // $s_uq_id 로 현재 장바구니 자료 쿼리
+    // $s_cart_id 로 현재 장바구니 자료 쿼리
     $sql = " select a.ct_id,
                     a.it_id,
                     a.it_name,
@@ -78,7 +60,7 @@ include_once('./_head.php');
                     b.ca_id2,
                     b.ca_id3
                from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
-              where a.uq_id = '$s_uq_id'
+              where a.od_id = '$s_cart_id'
                 and a.ct_num = '0' ";
     if($default['de_cart_keep_term']) {
         $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
@@ -97,7 +79,7 @@ include_once('./_head.php');
                         SUM(ct_qty) as qty
                     from {$g4['shop_cart_table']}
                     where it_id = '{$row['it_id']}'
-                      and uq_id = '$s_uq_id' ";
+                      and od_id = '$s_cart_id' ";
         $sum = sql_fetch($sql);
 
         if ($i==0) { // 계속쇼핑
@@ -109,7 +91,7 @@ include_once('./_head.php');
         $image = get_it_image($row['it_id'], 70, 70);
 
         $it_name = $a1 . stripslashes($row['it_name']) . $a2;
-        $it_options = print_item_options($row['it_id'], $s_uq_id);
+        $it_options = print_item_options($row['it_id'], $s_cart_id);
         if($it_options) {
             $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
             $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';

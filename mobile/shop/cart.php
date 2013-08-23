@@ -27,7 +27,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     $tot_point = 0;
     $tot_sell_amount = 0;
 
-    // $s_uq_id 로 현재 장바구니 자료 쿼리
+    // $s_cart_id 로 현재 장바구니 자료 쿼리
     $sql = " select a.ct_id,
                     a.it_id,
                     a.it_name,
@@ -38,7 +38,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                     a.ct_send_cost,
                     b.ca_id
                from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
-              where a.uq_id = '$s_uq_id'
+              where a.od_id = '$s_cart_id'
                 and a.ct_num = '0' ";
     if($default['de_cart_keep_term']) {
         $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
@@ -57,7 +57,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                         SUM(ct_qty) as qty
                     from {$g4['shop_cart_table']}
                     where it_id = '{$row['it_id']}'
-                      and uq_id = '$s_uq_id' ";
+                      and od_id = '$s_cart_id' ";
         $sum = sql_fetch($sql);
 
         if ($i==0) { // 계속쇼핑
@@ -69,7 +69,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         $image = get_it_image($row['it_id'], 70, 70);
 
         $it_name = $a1 . stripslashes($row['it_name']) . $a2;
-        $it_options = print_item_options($row['it_id'], $s_uq_id);
+        $it_options = print_item_options($row['it_id'], $s_cart_id);
         if($it_options) {
             $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
             $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';

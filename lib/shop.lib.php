@@ -336,11 +336,11 @@ class item_list
 
 
 // 장바구니 건수 검사
-function get_cart_count($uq_id)
+function get_cart_count($cart_id)
 {
     global $g4, $default;
 
-    $sql = " select count(ct_id) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ";
+    $sql = " select count(ct_id) as cnt from {$g4['shop_cart_table']} where od_id = '$cart_id' ";
     if($default['de_cart_keep_term']) {
         $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
         $sql .= " and ct_time > '$ctime' ";
@@ -1059,11 +1059,11 @@ function get_item_supply($it_id, $subject)
     return $str;
 }
 
-function print_item_options($it_id, $uq_id)
+function print_item_options($it_id, $cart_id)
 {
     global $g4;
 
-    $sql = " select ct_option, ct_qty from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$uq_id' order by io_type asc, ct_num asc, ct_id asc ";
+    $sql = " select ct_option, ct_qty from {$g4['shop_cart_table']} where it_id = '$it_id' and od_id = '$cart_id' order by io_type asc, ct_num asc, ct_id asc ";
     $result = sql_query($sql);
 
     $str = '';
@@ -1140,12 +1140,12 @@ function get_yn($val, $case='')
 }
 
 // 상품명과 건수를 반환
-function get_goods($uq_id)
+function get_goods($cart_id)
 {
     global $g4;
 
     // 상품명만들기
-    $row = sql_fetch(" select a.it_id, b.it_name from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b where a.it_id = b.it_id and a.uq_id = '$uq_id' order by ct_id limit 1 ");
+    $row = sql_fetch(" select a.it_id, b.it_name from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b where a.it_id = b.it_id and a.od_id = '$cart_id' order by ct_id limit 1 ");
     // 상품명에 "(쌍따옴표)가 들어가면 오류 발생함
     $goods['it_id'] = $row['it_id'];
     $goods['full_name']= $goods['name'] = addslashes($row['it_name']);
@@ -1153,7 +1153,7 @@ function get_goods($uq_id)
     $goods['full_name'] = preg_replace ("/[ #\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i", "",  $goods['full_name']);
 
     // 상품건수
-    $row = sql_fetch(" select count(*) as cnt from {$g4['shop_cart_table']} where uq_id = '$uq_id' ");
+    $row = sql_fetch(" select count(*) as cnt from {$g4['shop_cart_table']} where od_id = '$cart_id' ");
     $cnt = $row['cnt'] - 1;
     if ($cnt)
         $goods['full_name'] .= ' 외 '.$cnt.'건';
@@ -1266,41 +1266,41 @@ function get_new_od_id()
     return $od_id;
 }
 
-// uq_id 설정
-function set_unique_id($direct)
+// cart id 설정
+function set_cart_id($direct)
 {
     global $g4, $default, $member;
 
     if ($direct) {
-        $tmp_uq_id = get_session('ss_uq_direct');
-        if(!$tmp_uq_id) {
-            $tmp_uq_id = get_uniqid();
-            set_session('ss_uq_direct', $tmp_uq_id);
+        $tmp_cart_id = get_session('ss_cart_direct');
+        if(!$tmp_cart_id) {
+            $tmp_cart_id = get_uniqid();
+            set_session('ss_cart_direct', $tmp_cart_id);
         }
     } else {
-        // 비회원장바구니 uq_id 쿠키설정
+        // 비회원장바구니 cart id 쿠키설정
         if($default['de_guest_cart_use']) {
-            $tmp_uq_id = get_cookie('ck_guest_cart_uqid');
-            if($tmp_uq_id) {
-                set_session('ss_uq_id', $tmp_uq_id);
-                set_cookie('ck_guest_cart_uqid', $tmp_uq_id, ($default['de_cart_keep_term'] * 86400));
+            $tmp_cart_id = get_cookie('ck_guest_cart_id');
+            if($tmp_cart_id) {
+                set_session('ss_cart_id', $tmp_cart_id);
+                set_cookie('ck_guest_cart_id', $tmp_cart_id, ($default['de_cart_keep_term'] * 86400));
             } else {
-                $tmp_uq_id = get_uniqid();
-                set_session('ss_uq_id', $tmp_uq_id);
-                set_cookie('ck_guest_cart_uqid', $tmp_uq_id, ($default['de_cart_keep_term'] * 86400));
+                $tmp_cart_id = get_uniqid();
+                set_session('ss_cart_id', $tmp_cart_id);
+                set_cookie('ck_guest_cart_id', $tmp_cart_id, ($default['de_cart_keep_term'] * 86400));
             }
         } else {
-            $tmp_uq_id = get_session('ss_uq_id');
-            if(!$tmp_uq_id) {
-                $tmp_uq_id = get_uniqid();
-                set_session('ss_uq_id', $tmp_uq_id);
+            $tmp_cart_id = get_session('ss_cart_id');
+            if(!$tmp_cart_id) {
+                $tmp_cart_id = get_uniqid();
+                set_session('ss_cart_id', $tmp_cart_id);
             }
         }
 
-        // 보관된 회원장바구니 자료 uq_id 변경
-        if($member['mb_id'] && $tmp_uq_id) {
+        // 보관된 회원장바구니 자료 cart id 변경
+        if($member['mb_id'] && $tmp_cart_id) {
             $sql = " update {$g4['shop_cart_table']}
-                        set uq_id = '$tmp_uq_id'
+                        set od_id = '$tmp_cart_id'
                         where mb_id = '{$member['mb_id']}'
                           and ct_status = '쇼핑' ";
             if($default['de_cart_keep_term']) {

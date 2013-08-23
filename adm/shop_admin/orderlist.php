@@ -24,12 +24,12 @@ if ($search != "")
         $page = 1;
 }
 
-if ($sel_field == "")  $sel_field = "od_id";
-if ($sort1 == "") $sort1 = "od_id";
+if ($sel_field == "")  $sel_field = "a.od_id";
+if ($sort1 == "") $sort1 = "a.od_id";
 if ($sort2 == "") $sort2 = "desc";
 
 $sql_common = " from {$g4['shop_order_table']} a
-                left join {$g4['shop_cart_table']} b on (a.uq_id=b.uq_id)
+                left join {$g4['shop_cart_table']} b on (a.od_id=b.od_id)
                 $sql_search ";
 
 // 김선용 200805 : 조인 사용으로 전체카운트가 일정레코드 이상일 때 지연시간 문제가 심각하므로 변경
@@ -37,7 +37,7 @@ $sql_common = " from {$g4['shop_order_table']} a
 $result = sql_query(" select DISTINCT od_id ".$sql_common);
 $total_count = mysql_num_rows($result);
 */
-$sql = " select count(distinct od_id) as cnt " . $sql_common;
+$sql = " select count(distinct a.od_id) as cnt " . $sql_common;
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
@@ -103,7 +103,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+        <option value="a.od_id" <?php echo get_selected($sel_field, 'a.od_id'); ?>>주문번호</option>
         <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
         <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
         <option value="od_tel" <?php echo get_selected($sel_field, 'od_tel'); ?>>주문자전화</option>
@@ -234,7 +234,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?php echo $s_receipt_way; ?></td>
         <td class="td_mng">
             <a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>수정</a>
-            <a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uq_id=<?php echo $lines[$i]['uq_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>삭제</a>
+            <a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>삭제</a>
         </td>
     </tr>
     <?php

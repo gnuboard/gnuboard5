@@ -2,7 +2,6 @@
 include_once('./_common.php');
 
 $od_id = $_POST['od_id'];
-$uq_id = $_POST['uq_id'];
 $rq_type = $_POST['rq_type'];
 $rq_content = $_POST['rq_content'];
 
@@ -21,7 +20,7 @@ switch($rq_type) {
 if(!count($_POST['chk_ct_id']))
     alert($req_act.'하실 상품을 하나이상 선택해 주십시오.');
 
-$od = sql_fetch(" select od_id from {$g4['shop_order_table']} where od_id = '$od_id' and uq_id = '$uq_id' and mb_id = '{$member['mb_id']}' ");
+$od = sql_fetch(" select od_id, od_time, od_ip from {$g4['shop_order_table']} where od_id = '$od_id' and mb_id = '{$member['mb_id']}' ");
 
 if (!$od['od_id']) {
     alert("존재하는 주문이 아닙니다.");
@@ -50,5 +49,5 @@ $sql = " insert into {$g4['shop_request_table']}
               ( '$rq_type', '$od_id', '$ct_id', '{$member['mb_id']}', '$rq_content', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR' ) ";
 sql_query($sql);
 
-goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uq_id='.$uq_id);
+goto_url(G4_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.md5($od['od_id'].$od['od_time'].$od['od_ip']));
 ?>

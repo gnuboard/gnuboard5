@@ -12,13 +12,13 @@ if (G4_IS_MOBILE) {
 set_session("ss_direct", $sw_direct);
 // 장바구니가 비어있는가?
 if ($sw_direct) {
-    $tmp_uq_id = get_session("ss_uq_direct");
+    $tmp_cart_id = get_session('ss_cart_direct');
 }
 else {
-    $tmp_uq_id = get_session("ss_uq_id");
+    $tmp_cart_id = get_session('ss_cart_id');
 }
 
-if (get_cart_count($tmp_uq_id) == 0)
+if (get_cart_count($tmp_cart_id) == 0)
     alert('장바구니가 비어 있습니다.', G4_SHOP_URL.'/cart.php');
 
 $g4['title'] = '주문서 작성';
@@ -27,8 +27,8 @@ include_once('./_head.php');
 
 // 새로운 주문번호 생성
 $od_id = get_uniqid();
-set_session('ss_order_uniqid', $od_id);
-$s_uq_id = $tmp_uq_id;
+set_session('ss_order_id', $od_id);
+$s_cart_id = $tmp_cart_id;
 $order_action_url = G4_HTTPS_SHOP_URL.'/orderformupdate.php';
 if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
     include './settle_'.$default['de_card_pg'].'.inc.php';
@@ -147,7 +147,7 @@ function get_intall_file()
     $goods = $goods_it_id = "";
     $goods_count = -1;
 
-    // $s_uq_id 로 현재 장바구니 자료 쿼리
+    // $s_cart_id 로 현재 장바구니 자료 쿼리
     $sql = " select a.ct_id,
                     a.it_id,
                     a.it_name,
@@ -161,7 +161,7 @@ function get_intall_file()
                     b.ca_id3,
                     b.it_notax
                from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
-              where a.uq_id = '$s_uq_id'
+              where a.od_id = '$s_cart_id'
                 and a.ct_select = '1'
                 and a.ct_num = '0' ";
     if($default['de_cart_keep_term']) {
@@ -187,7 +187,7 @@ function get_intall_file()
                         SUM(ct_qty) as qty
                     from {$g4['shop_cart_table']}
                     where it_id = '{$row['it_id']}'
-                      and uq_id = '$s_uq_id' ";
+                      and od_id = '$s_cart_id' ";
         $sum = sql_fetch($sql);
 
         if (!$goods)
@@ -213,7 +213,7 @@ function get_intall_file()
         $image = get_it_image($row['it_id'], 50, 50);
 
         $it_name = '<b>' . stripslashes($row['it_name']) . '</b>';
-        $it_options = print_item_options($row['it_id'], $s_uq_id);
+        $it_options = print_item_options($row['it_id'], $s_cart_id);
         if($it_options) {
             $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
         }
@@ -1550,7 +1550,7 @@ function gumae2baesong(f)
 
 <?php if ($default['de_hope_date_use']) { ?>
 $(function(){
-    $("#od_hope_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", minDate: "+<?php echo (int)$default['de_hope_date_after']; ?>d;", maxDate: "+<?php echo (int)$default['de_hope_date_after'] + 6; ?>d;" }); 
+    $("#od_hope_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", minDate: "+<?php echo (int)$default['de_hope_date_after']; ?>d;", maxDate: "+<?php echo (int)$default['de_hope_date_after'] + 6; ?>d;" });
 });
 <?php } ?>
 </script>

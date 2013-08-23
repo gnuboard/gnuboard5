@@ -50,7 +50,6 @@ if(openwin != null) {
     <section id="sod_fin_list">
     <form name="forderrequest" method="post" action="./orderrequestupdate.php" onsubmit="return frequest_check(this);">
     <input type="hidden" name="od_id" value="<?php echo $od['od_id']; ?>">
-    <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
     <input type="hidden" name="rq_type" value="">
         <h2>주문하신 상품</h2>
         <span class="sound_only">상품 상태 설명</span>
@@ -70,7 +69,7 @@ if(openwin != null) {
 
         $sql = " select it_id, it_name, cp_amount
                     from {$g4['shop_cart_table']}
-                    where uq_id = '$uq_id'
+                    where od_id = '$od_id'
                       and ct_num = '0'
                     order by ct_id ";
         $result = sql_query($sql);
@@ -101,7 +100,7 @@ if(openwin != null) {
                 <?php
                 $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
                             from {$g4['shop_cart_table']}
-                            where uq_id = '$uq_id'
+                            where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
                             order by ct_num ";
                 $res = sql_query($sql);
@@ -529,7 +528,7 @@ if(openwin != null) {
                 else
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>&amp;uq_id=<?php echo $od['uq_id']; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');" class="btn_frmline">현금영수증을 발급하시려면 클릭하십시오.</a>
+                    <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');" class="btn_frmline">현금영수증을 발급하시려면 클릭하십시오.</a>
                 <?php } ?>
                 </td>
             </tr>
@@ -712,7 +711,6 @@ if(openwin != null) {
         <div id="sod_fin_cancelfrm">
             <form method="post" action="./orderinquirycancel.php" onsubmit="return fcancel_check(this);">
             <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
-            <input type="hidden" name="uq_id" value="<?php echo $od['uq_id']; ?>">
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
             <label for="cancel_memo">취소사유</label>

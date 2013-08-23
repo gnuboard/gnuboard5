@@ -3,16 +3,16 @@ include_once('./_common.php');
 
 // print_r2($_POST); exit;
 
-// uq_id 설정
-set_unique_id($sw_direct);
+// cart id 설정
+set_cart_id($sw_direct);
 
 if($sw_direct)
-    $tmp_uq_id = get_session('ss_uq_direct');
+    $tmp_cart_id = get_session('ss_cart_direct');
 else
-    $tmp_uq_id = get_session('ss_uq_id');
+    $tmp_cart_id = get_session('ss_cart_id');
 
 // 브라우저에서 쿠키를 허용하지 않은 경우라고 볼 수 있음.
-if (!$tmp_uq_id)
+if (!$tmp_cart_id)
 {
     alert('더 이상 작업을 진행할 수 없습니다.\\n\\n브라우저의 쿠키 허용을 사용하지 않음으로 설정한것 같습니다.\\n\\n브라우저의 인터넷 옵션에서 쿠키 허용을 사용으로 설정해 주십시오.\\n\\n그래도 진행이 되지 않는다면 쇼핑몰 운영자에게 문의 바랍니다.');
 }
@@ -36,7 +36,7 @@ if($act == "buy")
             $it_id = $_POST['it_id'][$i];
             $sql = " update {$g4['shop_cart_table']}
                         set ct_select = '1'
-                        where it_id = '$it_id' and uq_id = '$tmp_uq_id' ";
+                        where it_id = '$it_id' and od_id = '$tmp_cart_id' ";
             sql_query($sql);
         }
     }
@@ -49,7 +49,7 @@ if($act == "buy")
 else if ($act == "alldelete") // 모두 삭제이면
 {
     $sql = " delete from {$g4['shop_cart_table']}
-              where uq_id = '$tmp_uq_id' ";
+              where od_id = '$tmp_cart_id' ";
     sql_query($sql);
 }
 else if ($act == "seldelete") // 선택삭제
@@ -62,7 +62,7 @@ else if ($act == "seldelete") // 선택삭제
         $ct_chk = $_POST['ct_chk'][$i];
         if($ct_chk) {
             $it_id = $_POST['it_id'][$i];
-            $sql = " delete from {$g4['shop_cart_table']} where it_id = '$it_id' and uq_id = '$tmp_uq_id' ";
+            $sql = " delete from {$g4['shop_cart_table']} where it_id = '$it_id' and od_id = '$tmp_cart_id' ";
             sql_query($sql);
         }
     }
@@ -124,7 +124,7 @@ else // 장바구니에 담기
 
             $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
                       where it_id = '$it_id'
-                        and uq_id = '$tmp_uq_id'
+                        and od_id = '$tmp_cart_id'
                         and io_id = '$io_id' ";
             $row = sql_fetch($sql);
             $sum_qty = $row['cnt'];
@@ -145,24 +145,13 @@ else // 장바구니에 담기
 
         // 바로구매에 있던 장바구니 자료를 지운다.
         if($i == 0)
-            sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and ct_direct = 1 ", false);
+            sql_query(" delete from {$g4['shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
 
         // 옵션수정일 때 기존 장바구니 자료를 먼저 삭제
         if($act == 'optionmod')
-            sql_query(" delete from {$g4['shop_cart_table']} where uq_id = '$tmp_uq_id' and it_id = '$it_id' ");
+            sql_query(" delete from {$g4['shop_cart_table']} where od_id = '$tmp_cart_id' and it_id = '$it_id' ");
 
         // 장바구니에 Insert
-        $sql = " select ct_num
-                    from {$g4['shop_cart_table']}
-                    where it_id = '$it_id'
-                      and uq_id = '$tmp_uq_id'
-                    order by ct_num desc ";
-        $row = sql_fetch($sql);
-        if($row['ct_num'] != '')
-            $ct_num = (int)$row['ct_num'] + 1;
-        else
-            $ct_num = 0;
-
         // 바로구매일 경우 장바구니가 체크된것으로 강제 설정
         if($sw_direct)
             $ct_select = 1;
@@ -172,7 +161,7 @@ else // 장바구니에 담기
         $ct_count = 0;
         $comma = '';
         $sql = " INSERT INTO {$g4['shop_cart_table']}
-                        ( uq_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
+                        ( od_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
                     VALUES ";
 
         for($k=0; $k<$opt_count; $k++) {
@@ -194,7 +183,7 @@ else // 장바구니에 담기
             // 동일옵션의 상품이 있으면 수량 더함
             $sql2 = " select ct_id
                         from {$g4['shop_cart_table']}
-                        where uq_id = '$tmp_uq_id'
+                        where od_id = '$tmp_cart_id'
                           and it_id = '$it_id'
                           and io_id = '$io_id'
                           and ct_status = '쇼핑' ";
@@ -207,9 +196,8 @@ else // 장바구니에 담기
                 continue;
             }
 
-            $sql .= $comma."( '$tmp_uq_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '$ct_num', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
+            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '$k', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
             $comma = ' , ';
-            $ct_num++;
             $ct_count++;
         }
 

@@ -11,12 +11,12 @@ if(!$it['it_id'])
     die('no-item');
 
 // 장바구니 자료
-$uq_id = get_session('ss_uq_id');
-$sql = " select * from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '$it_id' order by io_type asc, ct_num asc, ct_id asc ";
+$cart_id = get_session('ss_cart_id');
+$sql = " select * from {$g4['shop_cart_table']} where od_id = '$cart_id' and it_id = '$it_id' order by io_type asc, ct_num asc, ct_id asc ";
 $result = sql_query($sql);
 
 // 판매가격
-$sql2 = " select ct_price, it_name, ct_send_cost from {$g4['shop_cart_table']} where uq_id = '$uq_id' and it_id = '$it_id' and ct_num = '0' ";
+$sql2 = " select ct_price, it_name, ct_send_cost from {$g4['shop_cart_table']} where od_id = '$cart_id' and it_id = '$it_id' and ct_num = '0' ";
 $row2 = sql_fetch($sql2);
 
 if(!mysql_num_rows($result))

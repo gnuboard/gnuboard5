@@ -30,7 +30,6 @@ DROP TABLE IF EXISTS `shop_card_history`;
 CREATE TABLE IF NOT EXISTS `shop_card_history` (
   `cd_id` int(11) NOT NULL AUTO_INCREMENT,
   `od_id` bigint(20) unsigned NOT NULL,
-  `uq_id` bigint(20) unsigned NOT NULL,
   `cd_mall_id` varchar(20) NOT NULL DEFAULT '',
   `cd_amount` int(11) NOT NULL DEFAULT '0',
   `cd_app_no` varchar(20) NOT NULL DEFAULT '',
@@ -55,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `shop_card_history` (
 DROP TABLE IF EXISTS `shop_cart`;
 CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_id` int(11) NOT NULL AUTO_INCREMENT,
-  `uq_id` bigint(20) unsigned NOT NULL,
+  `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
   `it_id` varchar(20) NOT NULL DEFAULT '',
   `it_name` varchar(255) NOT NULL DEFAULT '',
@@ -79,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_direct` tinyint(4) NOT NULL DEFAULT '0',
   `ct_select` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ct_id`),
-  KEY `uq_id` (`uq_id`),
+  KEY `od_id` (`od_id`),
   KEY `ct_num` (`ct_num`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -581,7 +580,6 @@ CREATE TABLE IF NOT EXISTS `shop_onlinecalc` (
 DROP TABLE IF EXISTS `shop_order`;
 CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_id` bigint(20) unsigned NOT NULL,
-  `uq_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(20) NOT NULL DEFAULT '',
   `od_pwd` varchar(255) NOT NULL DEFAULT '',
   `od_name` varchar(20) NOT NULL DEFAULT '',
@@ -639,7 +637,6 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`od_id`),
-  UNIQUE KEY `uq_id` (`uq_id`),
   KEY `index2` (`mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
