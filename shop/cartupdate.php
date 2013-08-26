@@ -160,13 +160,14 @@ else // 장바구니에 담기
             $ct_select = 0;
 
         // 장바구니에 Insert
-        $sql = " select max(ct_num) as max_ct_num
+        $sql = " select ct_num
                     from {$g4['shop_cart_table']}
                     where it_id = '$it_id'
-                      and od_id = '$tmp_cart_id' ";
+                      and od_id = '$tmp_cart_id'
+                    order by ct_num desc ";
         $row = sql_fetch($sql);
-        if($row['max_ct_num'] > 0)
-            $ct_num = (int)$row['max_ct_num'] + 1;
+        if($row['ct_num'] != '')
+            $ct_num = (int)$row['ct_num'] + 1;
         else
             $ct_num = 0;
 
