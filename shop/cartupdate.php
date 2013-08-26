@@ -159,7 +159,17 @@ else // 장바구니에 담기
         else
             $ct_select = 0;
 
-        $ct_num = 0;
+        // 장바구니에 Insert
+        $sql = " select max(ct_num) as max_ct_num
+                    from {$g4['shop_cart_table']}
+                    where it_id = '$it_id'
+                      and od_id = '$tmp_cart_id' ";
+        $row = sql_fetch($sql);
+        if($row['max_ct_num'] > 0)
+            $ct_num = (int)$row['max_ct_num'] + 1;
+        else
+            $ct_num = 0;
+
         $comma = '';
         $sql = " INSERT INTO {$g4['shop_cart_table']}
                         ( od_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
