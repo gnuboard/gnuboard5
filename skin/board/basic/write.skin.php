@@ -2,12 +2,6 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<script>
-// 글자수 제한
-var char_min = parseInt(<?php echo $write_min; ?>); // 최소
-var char_max = parseInt(<?php echo $write_max; ?>); // 최대
-</script>
-
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
 <h2 id="wrapper_title"><?php echo $g4['title'] ?></h2>
