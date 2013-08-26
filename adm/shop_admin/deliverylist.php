@@ -39,7 +39,7 @@ $sql_common = " from {$g4['shop_order_table']} a
 
 // 테이블의 전체 레코드수만 얻음
 if ($chk_misu) {
-    $sql  = " select od_id, a.*, "._MISU_QUERY_." $sql_common group by od_id having  misu <= 0 ";
+    $sql  = " select a.od_id, a.*, "._MISU_QUERY_." $sql_common group by od_id having  misu <= 0 ";
     $result = sql_query($sql);
     $total_count = mysql_num_rows($result);
 }
@@ -90,13 +90,13 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field">
-        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+        <option value="a.od_id" <?php echo get_selected($sel_field, 'a.od_id'); ?>>주문번호</option>
         <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
         <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
     </select>
 
-    <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="search" value="<?php echo $search; ?>" id="search" required class="frm_input required">
+    <label for="search" class="sound_only">검색어</label>
+    <input type="text" name="search" value="<?php echo $search; ?>" id="search" class="frm_input">
     <input type="submit" value="검색" class="btn_submit">
 </fieldset>
 </form>
