@@ -39,12 +39,15 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <ul id="hd_mb">
         <?php if ($is_member) { ?>
+        <li><a href="<?php echo G4_BBS_URL ?>/member_confirm.php?url=<?php echo G4_BBS_URL ?>/register_form.php">내 정보</a></li>
         <li><a href="<?php echo G4_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
         <?php } else { ?>
+        <li><a href="<?php echo G4_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>
         <li><a href="<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
         <?php } ?>
         <li><a href="<?php echo G4_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
         <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php">장바구니</a></li>
+        <li><a href="<?php echo G4_URL; ?>/">커뮤니티</a></li>
     </ul>
 
 </header>

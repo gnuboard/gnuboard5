@@ -73,6 +73,9 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
             <li><a href="<?php echo G4_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>
             <li><a href="<?php echo G4_BBS_URL ?>/login.php" id="snb_login">로그인</a></li>
             <?php } ?>
+            <?php if (defined('G4_USE_SHOP') && G4_USE_SHOP) { ?>
+            <li><a href="<?php echo G4_SHOP_URL ?>/">쇼핑몰</a></li>
+            <?php } ?>
         </ul>
 
     </div>
