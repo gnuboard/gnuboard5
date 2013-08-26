@@ -70,6 +70,5 @@ sql_query(" update {$g4['shop_order_table']} set od_send_cost = '0', od_send_cos
 if ($od['od_receipt_point'] > 0)
     insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소");
 
-$
 goto_url(G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
 ?>
