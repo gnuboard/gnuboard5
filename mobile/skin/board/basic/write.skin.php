@@ -106,7 +106,11 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_content">내용<strong class="sound_only">필수</strong></label></th>
-    <td class="wr_content"><?php echo editor_html("wr_content", $content, $is_dhtml_editor); ?></td>
+    <td class="wr_content">
+        <!-- 최소/최대 글자 수 사용 시 --><p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 초과, 최대 <strong><?php echo $write_max; ?></strong>글자 미만까지 글을 쓰실 수 있습니다.</p>
+        <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+        <!-- 최소/최대 글자 수 사용 시 --><div id="char_count_wrp"><span id="char_count"></span>글자</div>
+    </td>
 </tr>
 
 <?php for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
