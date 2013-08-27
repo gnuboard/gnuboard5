@@ -48,7 +48,7 @@ if ($csv == 'csv')
         $sql .= " and a.od_id between '$fr_od_id' and '$to_od_id' ";
     if ($ct_status)
         $sql .= " and b.ct_status = '$ct_status' ";
-    $sql .="  order by od_time asc ";
+    $sql .="  order by od_time asc, b.it_id, b.io_type, b.ct_id ";
     $result = sql_query($sql);
     $cnt = @mysql_num_rows($result);
     if (!$cnt)
@@ -106,7 +106,7 @@ if ($csv == 'xls')
         $sql .= " and a.od_id between '$fr_od_id' and '$to_od_id' ";
     if ($ct_status)
         $sql .= " and b.ct_status = '$ct_status' ";
-    $sql .="  order by od_time asc ";
+    $sql .="  order by od_time asc, b.it_id, b.io_type, b.ct_id ";
     $result = sql_query($sql);
     $cnt = @mysql_num_rows($result);
     if (!$cnt)
@@ -278,7 +278,7 @@ if (mysql_num_rows($result) == 0)
                    where od_id = '{$row['od_id']}' ";
         if ($ct_status)
             $sql2 .= " and ct_status = '$ct_status' ";
-        $sql2 .= "  order by ct_id ";
+        $sql2 .= "  order by it_id, io_type, ct_id ";
 
         $res2 = sql_query($sql2);
         $cnt = $sub_tot_qty = $sub_tot_amount = 0;

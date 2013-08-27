@@ -96,7 +96,7 @@ $sql = " select it_id,
                 ct_notax
            from {$g4['shop_cart_table']}
           where od_id = '{$od['od_id']}'
-            and ct_num = '0'
+          group by it_id
           order by ct_id ";
 $result = sql_query($sql);
 
@@ -173,7 +173,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
                         from {$g4['shop_cart_table']}
                         where od_id = '{$od['od_id']}'
                           and it_id = '{$row['it_id']}'
-                        order by ct_num ";
+                        order by io_type asc, ct_id asc ";
             $res = sql_query($sql);
 
             for($k=0; $opt=sql_fetch_array($res); $k++) {

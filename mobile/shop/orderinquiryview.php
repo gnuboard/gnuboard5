@@ -57,7 +57,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         $sql = " select it_id, it_name, cp_amount
                     from {$g4['shop_cart_table']}
                     where od_id = '$od_id'
-                      and ct_num = '0'
+                    group by it_id
                     order by ct_id ";
         $result = sql_query($sql);
         ?>
@@ -89,7 +89,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                             from {$g4['shop_cart_table']}
                             where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
-                            order by ct_num ";
+                            order by it_type asc, ct_id asc ";
                 $res = sql_query($sql);
                 $ct_list = array();
 

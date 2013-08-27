@@ -160,20 +160,9 @@ else // 장바구니에 담기
             $ct_select = 0;
 
         // 장바구니에 Insert
-        $sql = " select ct_num
-                    from {$g4['shop_cart_table']}
-                    where it_id = '$it_id'
-                      and od_id = '$tmp_cart_id'
-                    order by ct_num desc ";
-        $row = sql_fetch($sql);
-        if($row['ct_num'] != '')
-            $ct_num = (int)$row['ct_num'] + 1;
-        else
-            $ct_num = 0;
-
         $comma = '';
         $sql = " INSERT INTO {$g4['shop_cart_table']}
-                        ( od_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_num, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
+                        ( od_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
                     VALUES ";
 
         for($k=0; $k<$opt_count; $k++) {
@@ -208,9 +197,8 @@ else // 장바구니에 담기
                 continue;
             }
 
-            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '$ct_num', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
+            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
             $comma = ' , ';
-            $ct_num++;
             $ct_count++;
         }
 

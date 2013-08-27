@@ -195,11 +195,10 @@ if ($default['de_send_cost_case'] == '없음') {
     }
 } else { // 개별배송비
     $send_cost = 0;
-    $sql = " select it_id
+    $sql = " select distinct it_id
                 from {$g4['shop_cart_table']}
                 where od_id = '$tmp_cart_id'
                   and ct_select = '1'
-                  and ct_num = '0'
                   and ct_send_cost = '0' ";
     $result = sql_query($sql);
     for($i=0; $sc=sql_fetch_array($result); $i++) {
@@ -514,7 +513,8 @@ if($is_member) {
                     where od_id = '$od_id'
                       and it_id = '$cp_it_id'
                       and ct_select = '1'
-                      and ct_num = '0' ";
+                    order by ct_id asc
+                    limit 1 ";
         sql_query($sql);
     }
 

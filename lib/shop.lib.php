@@ -1063,7 +1063,7 @@ function print_item_options($it_id, $cart_id)
 {
     global $g4;
 
-    $sql = " select ct_option, ct_qty from {$g4['shop_cart_table']} where it_id = '$it_id' and od_id = '$cart_id' order by io_type asc, ct_num asc, ct_id asc ";
+    $sql = " select ct_option, ct_qty from {$g4['shop_cart_table']} where it_id = '$it_id' and od_id = '$cart_id' order by io_type asc, ct_id asc ";
     $result = sql_query($sql);
 
     $str = '';

@@ -67,7 +67,6 @@ CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_stock_use` tinyint(4) NOT NULL DEFAULT '0',
   `ct_option` varchar(255) NOT NULL DEFAULT '',
   `ct_qty` int(11) NOT NULL DEFAULT '0',
-  `ct_num` int(11) NOT NULL DEFAULT '0',
   `ct_notax` tinyint(4) NOT NULL DEFAULT '0',
   `io_id` varchar(255) NOT NULL DEFAULT '',
   `io_type` tinyint(4) NOT NULL DEFAULT '0',
@@ -78,8 +77,7 @@ CREATE TABLE IF NOT EXISTS `shop_cart` (
   `ct_direct` tinyint(4) NOT NULL DEFAULT '0',
   `ct_select` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ct_id`),
-  KEY `od_id` (`od_id`),
-  KEY `ct_num` (`ct_num`)
+  KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

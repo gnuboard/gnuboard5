@@ -199,8 +199,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $sql2 = " select it_id, it_name
                         from {$g4['shop_cart_table']}
                         where od_id = '{$row['od_id']}'
-                          and ct_num = '0'
-                        order by ct_num ";
+                        group by it_id
+                        order by ct_id asc ";
             $result2 = sql_query($sql2);
 
             for ($k=0;$row2=sql_fetch_array($result2);$k++) { // for 자식 시작
@@ -231,7 +231,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                             from {$g4['shop_cart_table']}
                             where od_id = '{$row['od_id']}'
                               and it_id = '{$row2['it_id']}'
-                            order by ct_num ";
+                            order by io_type asc, ct_id asc ";
                 $result3 = sql_query($sql3);
 
                 for($j=0;$row3=sql_fetch_array($result3);$j++) { // for 손자 시작

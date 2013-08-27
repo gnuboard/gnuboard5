@@ -67,10 +67,10 @@ if(openwin != null) {
         $od_count1 = $od_count2 = 0;
         $idx = 0;
 
-        $sql = " select it_id, it_name, cp_amount
+        $sql = " select it_id, it_name
                     from {$g4['shop_cart_table']}
                     where od_id = '$od_id'
-                      and ct_num = '0'
+                    group by it_id
                     order by ct_id ";
         $result = sql_query($sql);
         ?>
@@ -98,11 +98,11 @@ if(openwin != null) {
                 </thead>
                 <tbody>
                 <?php
-                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
+                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, cp_amount, io_type, io_price
                             from {$g4['shop_cart_table']}
                             where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
-                            order by ct_num ";
+                            order by io_type asc, ct_id asc ";
                 $res = sql_query($sql);
                 $ct_list = array();
 
@@ -150,13 +150,13 @@ if(openwin != null) {
                         $od_count2++;
 
                     $idx++;
+                    $tot_cp_amount += $opt['cp_amount'];
                 }
                 ?>
                 </tbody>
                 </table>
             </li>
             <?php
-                $tot_cp_amount += $row['cp_amount'];
             }
 
             $send_cost = $od['od_send_cost'];

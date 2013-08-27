@@ -60,12 +60,12 @@ include_once('./_head.php');
                     b.ca_id2,
                     b.ca_id3
                from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
-              where a.od_id = '$s_cart_id'
-                and a.ct_num = '0' ";
+              where a.od_id = '$s_cart_id' ";
     if($default['de_cart_keep_term']) {
         $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
         $sql .= " and a.ct_time > '$ctime' ";
     }
+    $sql .= " group by a.it_id ";
     $sql .= " order by a.ct_id ";
     $result = sql_query($sql);
 

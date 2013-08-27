@@ -20,7 +20,8 @@ $sql = " select a.it_id,
            from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
           where a.od_id = '$od_id'
             and a.ct_select = '1'
-            and a.ct_num = '0' ";
+          group by a.it_id
+          order by a.ct_id asc ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
@@ -38,7 +39,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $sql2 = " select ct_option, ct_qty
                 from {$g4['shop_cart_table']}
                 where it_id = '{$row['it_id']}' and od_id = '$od_id' and ct_select = '1'
-                order by io_type asc, ct_num asc, ct_id asc ";
+                order by io_type asc, ct_id asc ";
     $result2 = sql_query($sql2);
 
     $options = '';

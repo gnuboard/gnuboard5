@@ -8,8 +8,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <ul>
     <?php
-    $hsql  = " select a.it_id, a.it_name, a.ct_qty from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id ) ";
-    $hsql .= " where a.od_id = '".get_session('ss_cart_id')."' and a.ct_num  = '0' order by a.ct_id ";
+    $hsql  = " select it_id, it_name from {$g4['shop_cart_table']} ";
+    $hsql .= " where od_id = '".get_session('ss_cart_id')."' group by it_id ";
     $hresult = sql_query($hsql);
     for ($i=0; $row=sql_fetch_array($hresult); $i++)
     {
