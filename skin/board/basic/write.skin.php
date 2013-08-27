@@ -122,7 +122,17 @@ echo $option_hidden;
 
 <tr>
     <th scope="row"><label for="wr_content">내용<strong class="sound_only">필수</strong></label></th>
-    <td class="wr_content"><?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출  ?></td>
+    <td class="wr_content">
+        <?php if($write_min || $write_max) { ?>
+        <!-- 최소/최대 글자 수 사용 시 -->
+        <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>
+        <?php } ?>
+        <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+        <?php if($write_min || $write_max) { ?>
+        <!-- 최소/최대 글자 수 사용 시 -->
+        <div id="char_count_wrp"><span id="char_count"></span>글자</div>
+        <?php } ?>
+    </td>
 </tr>
 
 <?php for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
@@ -169,6 +179,19 @@ echo $option_hidden;
 </form>
 
 <script>
+<?php if($write_min || $write_max) { ?>
+// 글자수 제한
+var char_min = parseInt(<?php echo $write_min; ?>); // 최소
+var char_max = parseInt(<?php echo $write_max; ?>); // 최대
+check_byte("wr_content", "char_count");
+
+$(function() {
+    $("#wr_content").on("keyup", function() {
+        check_byte("wr_content", "char_count");
+    });
+});
+
+<?php } ?>
 function html_auto_br(obj)
 {
     if (obj.checked) {
@@ -217,6 +240,20 @@ function fwrite_submit(f)
         else
             f.wr_content.focus();
         return false;
+    }
+
+    if (document.getElementById("char_count")) {
+        if (char_min > 0 || char_max > 0) {
+            var cnt = parseInt(check_byte("wr_content", "char_count"));
+            if (char_min > 0 && char_min > cnt) {
+                alert("내용은 "+char_min+"글자 이상 쓰셔야 합니다.");
+                return false;
+            }
+            else if (char_max > 0 && char_max < cnt) {
+                alert("내용은 "+char_max+"글자 이하로 쓰셔야 합니다.");
+                return false;
+            }
+        }
     }
 
     <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
