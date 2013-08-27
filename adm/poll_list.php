@@ -103,7 +103,7 @@ $colspan = 6;
         $row2 = sql_fetch($sql2);
         $po_etc = ($row['po_etc']) ? "사용" : "미사용";
 
-        $s_mod = '<li class="sel_li"><a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row['po_id'].'" class="sel_a">수정</a></li>';
+        $s_mod = '<a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row['po_id'].'">수정</a>';
         //$s_del = '<a href="javascript:post_delete(\'poll_form_update.php\', \''.$row['po_id'].'\');">삭제</a>';
     ?>
 
