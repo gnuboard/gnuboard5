@@ -18,7 +18,7 @@ else
 
 $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
             from {$g4['shop_cart_table']}
-            where od_id = '$od_id'
+            where od_id = '$cart_id'
               and it_id = '$it_id' ";
 $ct = sql_fetch($sql);
 $item_price = $ct['sum_price'];
