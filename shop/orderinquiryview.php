@@ -162,7 +162,6 @@ if(openwin != null) {
             $send_cost = $od['od_send_cost'];
             $send_cost2 = $od['od_send_cost2'];
             $send_coupon = $od['od_send_coupon'];
-            $org_send_cost = $send_cost + $send_coupon;
             ?>
         </ul>
 
@@ -298,9 +297,9 @@ if(openwin != null) {
         ?>
 
         <?php
-        // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인
+        // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
         $od_coupon = $od['od_coupon'];
-        $tot_amount = $tot_sell_amount + $send_cost + $send_cost2 - $tot_cp_amount - $od_coupon;
+        $tot_amount = $tot_sell_amount + $send_cost + $send_cost2 - $tot_cp_amount - $od_coupon - $send_coupon;
         ?>
 
         <dl id="sod_bsk_tot">
@@ -317,9 +316,9 @@ if(openwin != null) {
             <dd class="sod_bsk_dvr"><strong><?php echo number_format($od_coupon); ?> 원</strong></dd>
             <?php } ?>
 
-            <?php if ($org_send_cost > 0) { ?>
+            <?php if ($send_cost > 0) { ?>
             <dt class="sod_bsk_dvr">배송비</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($org_send_cost); ?> 원</strong></dd>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
             <?php } ?>
 
             <?php if($send_coupon > 0) { ?>

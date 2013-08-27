@@ -59,6 +59,7 @@ if ($error != "")
 $i_amount     = (int)$_POST['od_amount'];
 $i_send_cost  = (int)$_POST['od_send_cost'];
 $i_send_cost2  = (int)$_POST['od_send_cost2'];
+$i_send_coupon  = (int)$_POST['od_send_coupon'];
 $i_temp_point = (int)$_POST['od_temp_point'];
 
 
@@ -247,7 +248,7 @@ if($is_member && $send_cost > 0) {
     }
 }
 
-if ((int)($send_cost - $tot_sc_cp_amount) !== $i_send_cost) {
+if ((int)($send_cost - $tot_sc_cp_amount) !== (int)($i_send_cost - $i_send_coupon)) {
     die("Error..");
 }
 
@@ -289,7 +290,7 @@ if ($od_temp_point)
         alert('회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.');
 }
 
-$i_amount = $i_amount + $i_send_cost + $i_send_cost2 - $i_temp_point;
+$i_amount = $i_amount + $i_send_cost + $i_send_cost2 - $i_temp_point - $i_send_coupon;
 
 if ($od_settle_case == "무통장")
 {
