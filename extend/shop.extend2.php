@@ -411,4 +411,10 @@ if(!sql_query(" select od_id from {$g4['shop_cart_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
                     CHANGE `uq_id` `od_id` BIGINT(2) UNSIGNED NOT NULL ", true);
 }
+
+// it_mobile_name 필드추가
+if(!sql_query(" select it_mobile_name from {$g4['shop_item_table']} limit 1 ", false)) {
+    sql_query( " ALTER TABLE `{$g4['shop_item_table']}`
+                    ADD `it_mobile_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_name` ", true);
+}
 ?>
