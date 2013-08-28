@@ -328,7 +328,7 @@ else if ($od_settle_case == "가상계좌")
 
     $od_temp_amount     = $i_amount;
     $od_temp_point      = $i_temp_point;
-    $od_receipt_point   = 0;
+    $od_receipt_point   = $i_temp_point;
 
     $od_tno             = $tno;
     $od_receipt_amount  = 0;
