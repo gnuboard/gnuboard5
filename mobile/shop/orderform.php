@@ -1138,7 +1138,11 @@ function kcp_approval()
 
     // pg 결제 금액에서 포인트 금액 차감
     if(settle_method != "무통장" && temp_point > 0) {
-        f.good_mny.value = parseInt(f.good_mny.value) - temp_point;
+        var od_amount = parseInt(pf.od_amount.value);
+        var send_cost = parseInt(pf.od_send_cost.value);
+        var send_cost2 = parseInt(pf.od_send_cost2.value);
+        var send_coupon = parseInt(pf.od_send_coupon.value);
+        f.good_mny.value = od_amount + send_cost + send_cost2 - send_coupon - temp_point;
     }
 
     f.buyr_name.value = pf.od_name.value;
