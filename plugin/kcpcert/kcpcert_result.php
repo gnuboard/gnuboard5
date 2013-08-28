@@ -138,24 +138,20 @@ if( $cert_enc_use == "Y" )
         }
 
         // hash 데이터
+        $cert_type = 'hp';
         $md5_cert_no = md5($cert_no);
-        $hash_data   = md5($phone_no.$user_name.$md5_cert_no);
+        $hash_data   = md5($user_name.$cert_type.$birth_day.$md5_cert_no);
 
         // 성인인증결과
         $adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
         $adult = ((int)$birth_day <= (int)$adult_day) ? 1 : 0;
 
-        set_session("ss_kcpcert_no",         $md5_cert_no);
-        set_session("ss_kcpcert_hash",       $hash_data);
-        set_session("ss_kcpcert_hp_certify", 1);
-        set_session("ss_kcpcert_adult",      $adult);
-        set_session("ss_kcpcert_birth",      $birth_day);
-        set_session("ss_kcpcert_sex",        ($sex_code=="01"?"M":"F"));
-
-        /*
-        $sql = " update {$g4['member_table']} set mb_name = '$user_name', mb_hp = '$phone_no', mb_hp_certify = 1, mb_adult = $adult, mb_birth = '$birth_day', mb_sex = '$sex_code' where mb_id = '{$member['mb_id']}' ";
-        sql_query($sql);
-        */
+        set_session("ss_cert_type",    $cert_type);
+        set_session("ss_cert_no",      $md5_cert_no);
+        set_session("ss_cert_hash",    $hash_data);
+        set_session("ss_cert_adult",   $adult);
+        set_session("ss_cert_birth",   $birth_day);
+        set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F"));
     }
     else if( $res_cd != "0000" )
     {

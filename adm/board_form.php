@@ -54,21 +54,25 @@ if (!isset($board['bo_use_sns'])) {
 
     $result = sql_query(" select bo_table from `{$g4['board_table']}` ");
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}` 
+        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}`
                     ADD `wr_facebook_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_ip`,
                     ADD `wr_twitter_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_facebook_user`,
                     ADD `wr_me2day_user` VARCHAR(255) NOT NULL DEFAULT '' AFTER `wr_twitter_user` ", false);
     }
 }
 
-sql_query(" ALTER TABLE `{$g4['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult') NOT NULL DEFAULT '' ", false);
+$sql = " SHOW COLUMNS FROM `{$g4['board_table']}` WHERE field = 'bo_use_cert' ";
+$row = sql_fetch($sql);
+if(strpos($row['Type'], 'hp-') === false) {
+    sql_query(" ALTER TABLE `{$g4['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '' ", false);
+}
 
 if (!isset($board['bo_use_list_file'])) {
     sql_query(" ALTER TABLE `{$g4['board_table']}` ADD `bo_use_list_file` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_list_view` ", false);
 
     $result = sql_query(" select bo_table from `{$g4['board_table']}` ");
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}` 
+        sql_query(" ALTER TABLE `{$g4['write_prefix']}{$row['bo_table']}`
                     ADD `wr_file` TINYINT NOT NULL DEFAULT '0' AFTER `wr_datetime` ", false);
     }
 }
@@ -599,15 +603,17 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="bo_use_cert">휴대폰 본인확인 사용</label></th>
+        <th scope="row"><label for="bo_use_cert">본인확인 사용</label></th>
         <td>
             <?php echo help("본인확인 여부에 따라 게시물을 조회 할 수 있도록 합니다."); ?>
             <select id="bo_use_cert" name="bo_use_cert">
-                <?php 
+                <?php
                 echo option_selected("",  $board['bo_use_cert'], "사용안함");
-                if ($config['cf_kcpcert_use'] != '') {
+                if ($config['cf_cert_use']) {
                     echo option_selected("cert",  $board['bo_use_cert'], "본인확인된 회원전체");
                     echo option_selected("adult", $board['bo_use_cert'], "본인확인된 성인회원만");
+                    echo option_selected("hp-cert",  $board['bo_use_cert'], "휴대폰 본인확인된 회원전체");
+                    echo option_selected("hp-adult", $board['bo_use_cert'], "휴대폰 본인확인된 성인회원만");
                 }
                 ?>
             </select>

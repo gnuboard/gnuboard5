@@ -8,10 +8,10 @@ $home_dir = G4_KCPCERT_PATH; // ct_cli 절대경로 ( bin 전까지 )
 //web_siteid 값이 없으면 KCP 에서 지정한 값으로 설정됨
 $web_siteid = '';
 
-if ($config['cf_kcpcert_use'] == 'service') { // 실서비스
-    $site_cd = 'SM'.$config['cf_kcpcert_site_cd'];
+if ($config['cf_cert_use'] == 2) { // 실서비스
+    $site_cd = 'SM'.$config['cf_cert_kcp_cd'];
     $cert_url = 'https://cert.kcp.co.kr/kcp_cert/cert_view.jsp';
-} else if ($config['cf_kcpcert_use'] == 'test') { // 테스트사용
+} else if ($config['cf_cert_use'] == 1) { // 테스트사용
     $site_cd = 'S6186';
     $cert_url = 'https://testcert.kcp.co.kr/kcp_cert/cert_view.jsp';
 } else { // 사용안함

@@ -118,7 +118,7 @@ $colspan = 15;
         <li><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일인증<span class="sound_only"> 순 정렬</span></a></li>
         <li><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일수신<span class="sound_only"> 순 정렬</span></a></li>
         <li><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보공개<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('mb_hp_certify', '', 'desc') ?>본인확인<span class="sound_only"> 순 정렬</span></a></li>
+        <li><?php echo subject_sort_link('mb_certify', '', 'desc') ?>본인확인<span class="sound_only"> 순 정렬</span></a></li>
         <li><?php echo subject_sort_link('mb_adult', '', 'desc') ?>성인인증<span class="sound_only"> 순 정렬</span></a></li>
         <li><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근차단<span class="sound_only"> 순 정렬</span></a></li>
         <li><?php echo subject_sort_link('mb_datetime', '', 'desc') ?>가입일<span class="sound_only"> 순 정렬</span></a></li>
@@ -233,7 +233,7 @@ $colspan = 15;
         <td headers="mb_list_mailc" class="td_chk"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
         <td headers="mb_list_mailr" class="td_chk"><input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling']?'checked':''; ?> value="1"></td>
         <td headers="mb_list_open" class="td_chk"><input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open']?'checked':''; ?> value="1"></td>
-        <td headers="mb_list_selfc" class="td_chk"><input type="checkbox" name="mb_hp_certify[<?php echo $i; ?>]" <?php echo $row['mb_hp_certify']?'checked':''; ?> value="1"></td>
+        <td headers="mb_list_selfc" class="td_chk"><input type="checkbox" name="mb_certify[<?php echo $i; ?>]" <?php echo $row['mb_certify']?'checked':''; ?> value="1"></td>
         <td headers="mb_list_adultc" class="td_chk"><input type="checkbox" name="mb_adult[<?php echo $i; ?>]" <?php echo $row['mb_adult']?'checked':''; ?> value="1"></td>
         <td headers="mb_list_deny" class="td_chk">
             <?php if(empty($row['mb_leave_date'])){ ?>

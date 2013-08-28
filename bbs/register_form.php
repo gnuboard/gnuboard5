@@ -7,8 +7,9 @@ include_once(G4_LIB_PATH.'/register.lib.php');
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
 
-set_session("ss_kcpcert_no", "");
-set_session("ss_kcpcert_hash", "");
+set_session("ss_cert_no",   "");
+set_session("ss_cert_hash", "");
+set_session("ss_cert_type", "");
 
 if ($w == "") {
 
@@ -47,7 +48,7 @@ if ($w == "") {
 
 } else if ($w == 'u') {
 
-    if ($is_admin) 
+    if ($is_admin)
         alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', G4_URL);
 
     if (!$member[mb_id])

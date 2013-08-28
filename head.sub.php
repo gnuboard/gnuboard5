@@ -76,7 +76,7 @@ if ($is_admin) {
 <?php
 if(G4_IS_MOBILE) {
     echo '<script> set_cookie("device_width", screen.width, 6, g4_cookie_domain); </script>'.PHP_EOL;
-    echo '<script src="<?php echo G4_URL; ?>/js/modernizr.custom.70111.js"></script>'.PHP_EOL; // overflow scroll 감지
+    echo '<script src="'.G4_JS_URL.'/modernizr.custom.70111.js"></script>'.PHP_EOL; // overflow scroll 감지
 }
 //if(!defined('G4_IS_ADMIN'))
     echo $config['cf_add_script'];
