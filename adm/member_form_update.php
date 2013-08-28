@@ -16,7 +16,7 @@ $mb_id = escape_trim($_POST['mb_id']);
 $mb_hp = $_POST['mb_hp'];
 if($mb_hp) {
     $result = exist_mb_hp($mb_hp, $mb_id);
-    if ($result) 
+    if ($result)
         alert($result);
 }
 
@@ -26,7 +26,7 @@ $sql_common = "  mb_name = '{$_POST['mb_name']}',
                  mb_homepage = '{$_POST['mb_homepage']}',
                  mb_tel = '{$_POST['mb_tel']}',
                  mb_hp = '{$_POST['mb_hp']}',
-                 mb_hp_certify = '{$_POST['mb_hp_certify']}',
+                 mb_certify = '{$_POST['mb_certify']}',
                  mb_adult = '{$_POST['mb_adult']}',
                  mb_zip1 = '{$_POST['mb_zip1']}',
                  mb_zip2 = '{$_POST['mb_zip2']}',
