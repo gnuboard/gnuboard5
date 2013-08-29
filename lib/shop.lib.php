@@ -1302,6 +1302,7 @@ function set_cart_id($direct)
             $sql = " update {$g4['shop_cart_table']}
                         set od_id = '$tmp_cart_id'
                         where mb_id = '{$member['mb_id']}'
+                          and ct_direct = '0'
                           and ct_status = '쇼핑' ";
             if($default['de_cart_keep_term']) {
                 $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
