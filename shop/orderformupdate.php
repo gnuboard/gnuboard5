@@ -295,7 +295,6 @@ $i_amount = $i_amount + $i_send_cost + $i_send_cost2 - $i_temp_point - $i_send_c
 if ($od_settle_case == "무통장")
 {
     $od_temp_amount     = $i_amount;
-    $od_temp_point      = $i_temp_point;
     $od_receipt_point   = $i_temp_point;
     $od_receipt_amount  = 0;
 }
@@ -304,7 +303,6 @@ else if ($od_settle_case == "계좌이체")
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $od_temp_amount     = $i_amount;
-    $od_temp_point      = $i_temp_point;
 
     $od_tno             = $tno;
     $od_receipt_amount  = $amount;
@@ -321,7 +319,6 @@ else if ($od_settle_case == "가상계좌")
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $od_temp_amount     = $i_amount;
-    $od_temp_point      = $i_temp_point;
     $od_receipt_point   = $i_temp_point;
 
     $od_tno             = $tno;
@@ -337,7 +334,6 @@ else if ($od_settle_case == "휴대폰")
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $od_temp_amount     = $i_amount;
-    $od_temp_point      = $i_temp_point;
 
     $od_tno             = $tno;
     $od_receipt_amount  = $amount;
@@ -351,7 +347,6 @@ else if ($od_settle_case == "신용카드")
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $od_temp_amount     = $i_amount;
-    $od_temp_point      = $i_temp_point;
 
     $od_tno             = $tno;
     $od_receipt_amount  = $amount;
@@ -425,7 +420,6 @@ $sql = " insert {$g4['shop_order_table']}
                 od_send_cost2     = '$od_send_cost2',
                 od_coupon         = '$tot_od_cp_amount',
                 od_temp_amount    = '$od_temp_amount',
-                od_temp_point     = '$od_temp_point',
                 od_receipt_amount = '$od_receipt_amount',
                 od_receipt_point  = '$od_receipt_point',
                 od_bank_account   = '$od_bank_account',

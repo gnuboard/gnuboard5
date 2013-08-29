@@ -601,7 +601,6 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_send_coupon` int(11) NOT NULL DEFAULT '0',
   `od_send_cost2` int(11) NOT NULL DEFAULT '0',
   `od_temp_amount` int(11) NOT NULL DEFAULT '0',
-  `od_temp_point` int(11) NOT NULL DEFAULT '0',
   `od_receipt_amount` int(11) NOT NULL DEFAULT '0',
   `od_receipt_point` int(11) NOT NULL DEFAULT '0',
   `od_bank_account` varchar(255) NOT NULL DEFAULT '',

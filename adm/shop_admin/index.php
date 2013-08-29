@@ -122,7 +122,7 @@ $pg_anchor = '<ul class="anchor">
         else
         {
             $settle_method .= '미입력';
-            if ($row['od_temp_point']) $settle_method .= '포인트';
+            if ($row['od_receipt_point']) $settle_method .= '포인트';
         }
     ?>
     <tr>
