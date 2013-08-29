@@ -1,5 +1,8 @@
 <?php
-include_once('./_common.php');
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+// 금일 인증시도 회수 체크
+certify_count_check($member['mb_id'], 'hp');
 
 // 서버상 bin 폴더 이전까지 경로
 $home_dir = G4_KCPCERT_PATH; // ct_cli 절대경로 ( bin 전까지 )

@@ -57,11 +57,31 @@ else if ($w == 'u')
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
-// 휴대폰 본인확인
+// 본인확인방법
+switch($mb['mb_certify']) {
+    case 'hp':
+        $mb_certify_case = '휴대폰';
+        $mb_certify_val = 'hp';
+        break;
+    case 'ipin':
+        $mb_certify_case = '아이핀';
+        $mb_certify_val = 'ipin';
+        break;
+    case 'admin':
+        $mb_certify_case = '관리자 수정';
+        $mb_certify_val = 'admin';
+        break;
+    default:
+        $mb_certify_case = '';
+        $mb_certify_val = 'admin';
+        break;
+}
+
+// 본인확인
 $mb_certify_yes  =  $mb['mb_certify'] ? 'checked="checked"' : '';
 $mb_certify_no   = !$mb['mb_certify'] ? 'checked="checked"' : '';
 
-// 휴대폰 성인인증
+// 성인인증
 $mb_adult_yes       =  $mb['mb_adult']      ? 'checked="checked"' : '';
 $mb_adult_no        = !$mb['mb_adult']      ? 'checked="checked"' : '';
 
@@ -150,11 +170,20 @@ include_once('./admin.head.php');
         <td><input type="text" name="mb_tel" value="<?php echo $mb['mb_tel'] ?>" id="mb_tel" class="frm_input" size="15" maxlength="20"></td>
     </tr>
     <tr>
+        <th scope="row">본인확인방법</th>
+        <td colspan="3">
+            <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" <?php if($mb['mb_certify'] == 'ipin') echo 'checked="checked"'; ?>>
+            <label for="mb_certify_ipin">아이핀</label>
+            <input type="radio" name="mb_certify_case" value="hp" id="mb_certify_hp" <?php if($mb['mb_certify'] == 'hp') echo 'checked="checked"'; ?>>
+            <label for="mb_certify_hp">휴대폰</label>
+        </td>
+    </tr>
+    <tr>
         <th scope="row">본인확인</th>
         <td>
             <input type="radio" name="mb_certify" value="1" id="mb_certify_yes" <?php echo $mb_certify_yes; ?>>
             <label for="mb_certify_yes">예</label>
-            <input type="radio" name="mb_certify" value="0" id="mb_certify_no" <?php echo $mb_certify_no; ?>>
+            <input type="radio" name="mb_certify" value="" id="mb_certify_no" <?php echo $mb_certify_no; ?>>
             <label for="mb_certify_no">아니오</label>
         </td>
         <th scope="row"><label for="mb_adult">성인인증</label></th>

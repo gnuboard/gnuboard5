@@ -206,6 +206,17 @@ if ($config['cf_cert_use'] && !$is_admin) {
     }
 }
 
+// 글자수 제한 설정값
+if ($is_admin || $board['bo_use_dhtml_editor'])
+{
+    $write_min = $write_max = 0;
+}
+else
+{
+    $write_min = (int)$board['bo_write_min'];
+    $write_max = (int)$board['bo_write_max'];
+}
+
 $g4['title'] = $board['bo_subject']." ".$title_msg;
 
 $is_notice = false;
