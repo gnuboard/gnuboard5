@@ -28,17 +28,14 @@ h2 {font-size:1.2em}
 #logo {position:relative;height:70px}
 #logo img {position:absolute;top:15px;left:0}
 
-#tnb {z-index:2;position:absolute;top:1px;right:0;zoom:1}
+#tnb {z-index:2;position:absolute;top:20px;right:0;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb {float:right;margin:0;padding:0;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
-#tnb li {float:left}
-#tnb a {display:block;position:relative;width:68px;height:68px;color:#e0e0e0;font-size:0.95em;text-decoration:none}
+#tnb li {float:left;margin:0 0 0 1px}
+#tnb a {display:block;position:relative;padding:0 15px;height:33px;background:#383a3f;color:#e0e0e0;text-decoration:none;line-height:2.8em}
+#tnb a:focus, #tnb a:hover {background:#fff;color:#383a3f}
 #tnb span {position:absolute;bottom:10px;left:0;width:100%;text-align:center}
-#tnb_modify {background:url('../adm/img/tnb_modify.jpg')}
-#tnb_chome_cf {background:url('../adm/img/tnb_chome_cf.jpg')}
-#tnb_chome {background:url('../adm/img/tnb_chome.jpg')}
-#tnb_logout {background:url('../adm/img/tnb_logout.jpg')}
 
 /* gnb js off */
 #gnb {z-index:12;background:#383a3f}
@@ -72,17 +69,11 @@ h2 {font-size:1.2em}
 #wrapper {z-index:5;margin:30px auto;width:1000px;min-height:630px;height:auto !important;height:630px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 
-#qnb {float:right;margin:0;padding:0;list-style:none}
-#qnb li {margin-bottom:20px}
-#qnb a {display:block;width:40px;font-size:0.9em;text-align:center;letter-spacing:-0.1em}
-#qnb a:focus, #qnb a:hover, #qnb a:active {text-decoration:none}
-#qnb img {margin-bottom:5px}
-
-#container {z-index:4;position:relative;float:left;width:942px}
+#container {z-index:4;position:relative}
 
 /* 텍스트 크기 조절 */
 #text_size {position:absolute;top:0;right:0}
-#text_size button {padding:0 10px;height:30px;background:#000;color:#fff;cursor:pointer}
+#text_size button {padding:0 10px;height:30px;border:0;background:#000;color:#fff;cursor:pointer}
 
 /* 하단 레이아웃 */
 #ft {margin:20px 0;padding:5px 0;border-top:1px solid #d0d6d8}
