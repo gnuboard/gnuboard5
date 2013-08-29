@@ -26,7 +26,7 @@ h2 {font-size:1.2em}
 #hd h1, #hd h2 {margin:0;padding:0;font-size:0;line-height:0;border:0;overflow:hidden}
 #hd_wrap {z-index:11;position:relative;margin:0 auto;width:1000px}
 #logo {position:relative;height:70px}
-#logo img {position:absolute;top:15px;left:0}
+#logo img {position:absolute;top:13px;left:0}
 
 #tnb {z-index:2;position:absolute;top:20px;right:0;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
@@ -59,10 +59,12 @@ h2 {font-size:1.2em}
 .gnb_js .gnb_1dli_on a {float:none;background:#fff;color:#000}
 .gnb_js .gnb_2dul {display:none;position:absolute;top:35px}
 .gnb_js .gnb_2dli a {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
+.gnb_js .gnb_2dli a:focus, .gnb_js .gnb_2dli a:hover {background:#484848;color:#fff}
 .gnb_1dli_over .gnb_2dul {display:block;left:-1px;width:181px;border:1px solid #c3c7c5;border-top:0;background:#fff}
 .gnb_1dli_over2 .gnb_2dul {display:block;right:-1px;width:181px;border:1px solid #c3c7c5;border-top:0;background:#fff}
 
 .gnb_js .gnb_grp_style {background:#f7f7f7 !important}
+.gnb_js .gnb_grp_style:focus, .gnb_js .gnb_grp_style:hover {background:#484848 !important}
 .gnb_js .gnb_grp_div {border-top:1px solid #eee}
 
 /* 중간 레이아웃 */
