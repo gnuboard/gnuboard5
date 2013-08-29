@@ -342,7 +342,6 @@ ob_end_clean();
     <input type="hidden" name="od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="org_od_amount"    value="<?php echo $tot_sell_amount; ?>">
     <input type="hidden" name="od_send_cost" value="<?php echo $send_cost; ?>">
-    <input type="hidden" name="org_send_cost" value="<?php echo $send_cost; ?>">
     <input type="hidden" name="od_send_cost2" value="0">
     <input type="hidden" name="item_coupon" value="0">
     <input type="hidden" name="od_coupon" value="0">
@@ -848,7 +847,7 @@ $(function() {
         var cp_id = $el.find("input[name='o_cp_id[]']").val();
         var amount = parseInt($el.find("input[name='o_cp_amt[]']").val());
         var subj = $el.find("input[name='o_cp_subj[]']").val();
-        var send_cost = $("input[name=org_send_cost]").val();
+        var send_cost = $("input[name=od_send_cost]").val();
         var item_coupon = parseInt($("input[name=item_coupon]").val());
         var od_amount = parseInt($("input[name=org_od_amount]").val()) - item_coupon;
 
@@ -863,7 +862,6 @@ $(function() {
             return false;
         }
 
-        $("input[name=od_send_cost]").val(send_cost);
         $("input[name=sc_cp_id]").val("");
         $("#sc_coupon_btn").text("쿠폰적용");
         $("#sc_coupon_cancel").remove();
@@ -887,7 +885,6 @@ $(function() {
         var org_amount = $("input[name=org_od_amount]").val();
         var item_coupon = parseInt($("input[name=item_coupon]").val());
         $("input[name=od_amount]").val(org_amount - item_coupon);
-        $("input[name=od_send_cost]").val($("input[name=org_send_cost]").val());
         $("input[name=sc_cp_id]").val("");
         $("input[name=od_coupon]").val(0);
         $("input[name=od_send_coupon]").val(0);
@@ -903,10 +900,10 @@ $(function() {
         $("#sc_coupon_frm").remove();
         var $this = $(this);
         var amount = parseInt($("input[name=od_amount]").val());
-        var send_cost = parseInt($("input[name=org_send_cost]").val());
+        var send_cost = parseInt($("input[name=od_send_cost]").val());
         $.post(
             "./ordersendcostcoupon.php",
-            { amount: (amount + send_cost), send_cost: send_cost },
+            { amount: amount, send_cost: send_cost },
             function(data) {
                 $this.after(data);
             }
@@ -918,7 +915,7 @@ $(function() {
         var cp_id = $el.find("input[name='s_cp_id[]']").val();
         var amount = parseInt($el.find("input[name='s_cp_amt[]']").val());
         var subj = $el.find("input[name='s_cp_subj[]']").val();
-        var send_cost = parseInt($("input[name=org_send_cost]").val());
+        var send_cost = parseInt($("input[name=od_send_cost]").val());
 
         if(parseInt(amount) == 0) {
             if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
@@ -926,7 +923,6 @@ $(function() {
             }
         }
 
-        $("input[name=od_send_cost]").val(send_cost - amount);
         $("input[name=sc_cp_id]").val(cp_id);
         $("input[name=od_send_coupon]").val(amount);
         calculate_order_amount();
@@ -942,8 +938,6 @@ $(function() {
     });
 
     $("#sc_coupon_cancel").live("click", function() {
-        var send_cost = $("input[name=org_send_cost]").val();
-        $("input[name=od_send_cost]").val(send_cost);
         $("input[name=od_send_coupon]").val(0);
         calculate_order_amount();
         $("#sc_coupon_frm").remove();
@@ -998,7 +992,7 @@ function calculate_total_amount()
     var tot_sell_amount = sell_amount = tot_cp_amount = 0;
     var it_amount, cp_amount, it_notax;
     var tot_mny = comm_tax_mny = comm_vat_mny = comm_free_mny = tax_mny = vat_mny = 0;
-    var send_cost = parseInt($("input[name=org_send_cost]").val());
+    var send_cost = parseInt($("input[name=od_send_cost]").val());
 
     $it_amt.each(function(index) {
         it_amount = parseInt($(this).val());
@@ -1014,7 +1008,6 @@ function calculate_total_amount()
 
     $("input[name=good_mny]").val(tot_sell_amount);
     $("input[name=od_amount]").val(sell_amount - tot_cp_amount);
-    $("input[name=od_send_cost]").val(send_cost);
     $("input[name=item_coupon]").val(tot_cp_amount);
     $("input[name=od_coupon]").val(0);
     $("input[name=od_send_coupon]").val(0);
@@ -1044,7 +1037,8 @@ function calculate_order_amount()
     var sell_amount = parseInt($("input[name=od_amount]").val());
     var send_cost = parseInt($("input[name=od_send_cost]").val());
     var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
-    var tot_amount = sell_amount + send_cost + send_cost2;
+    var send_coupon = parseInt($("input[name=od_send_coupon").val());
+    var tot_amount = sell_amount + send_cost + send_cost2 - send_coupon;
 
     $("form[name=sm_form] input[name=good_mny]").val(tot_amount);
     $("#od_tot_amount").text(number_format(String(tot_amount)));
@@ -1057,8 +1051,9 @@ function calculate_temp_point()
 {
     var sell_amount = parseInt($("input[name=od_amount]").val());
     var send_cost = parseInt($("input[name=od_send_cost]").val());
+    var send_coupon = parseInt($("input[name=od_send_coupon]").val());
     var point_per = <?php echo $default['de_point_per']; ?>;
-    var temp_point = parseInt((sell_amount + send_cost) * (point_per / 100) / 100) * 100;
+    var temp_point = parseInt((sell_amount + send_cost - send_coupon) * (point_per / 100) / 100) * 100;
     var point = <?php echo (int)$member_point; ?>
 
     if(temp_point > point)
@@ -1089,7 +1084,7 @@ function calculate_tax()
     var sell_amount = tot_cp_amount = 0;
     var it_amount, cp_amount, it_notax;
     var tot_mny = comm_free_mny = tax_mny = vat_mny = 0;
-    var send_cost = parseInt($("input[name=org_send_cost]").val());
+    var send_cost = parseInt($("input[name=od_send_cost]").val());
     var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
     var od_coupon = parseInt($("input[name=od_coupon]").val());
     var send_coupon = parseInt($("input[name=od_send_coupon]").val());
@@ -1143,7 +1138,11 @@ function kcp_approval()
 
     // pg 결제 금액에서 포인트 금액 차감
     if(settle_method != "무통장" && temp_point > 0) {
-        f.good_mny.value = parseInt(f.good_mny.value) - temp_point;
+        var od_amount = parseInt(pf.od_amount.value);
+        var send_cost = parseInt(pf.od_send_cost.value);
+        var send_cost2 = parseInt(pf.od_send_cost2.value);
+        var send_coupon = parseInt(pf.od_send_coupon.value);
+        f.good_mny.value = od_amount + send_cost + send_cost2 - send_coupon - temp_point;
     }
 
     f.buyr_name.value = pf.od_name.value;

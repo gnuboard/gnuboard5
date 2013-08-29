@@ -169,7 +169,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
             <tbody>
             <?php
             // 상품의 옵션정보
-            $sql = " select ct_id, it_id, ct_price, ct_qty, ct_option, ct_status, ct_stock_use, ct_point_use, ct_send_cost, io_type, io_price
+            $sql = " select ct_id, it_id, ct_price, ct_qty, ct_option, ct_status, cp_amount, ct_stock_use, ct_point_use, ct_send_cost, io_type, io_price
                         from {$g4['shop_cart_table']}
                         where od_id = '{$od['od_id']}'
                           and it_id = '{$row['it_id']}'
@@ -210,6 +210,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
             </tr>
             <?php
                 $chk_cnt++;
+                $t_cp_amount += $opt['cp_amount']; // 쿠폰사용금액
             }
             ?>
             </tbody>
@@ -217,7 +218,6 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 
         </li>
         <?php
-            $t_cp_amount += $row['cp_amount']; // 쿠폰사용금액
             $t_ct_amount['합계'] += $ct_amount['소계'];
             $t_ct_point['합계'] += $ct_point['소계'];
         }
@@ -259,8 +259,8 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
     // 입금액 = 결제금액 + 포인트
     $amount['입금'] = $od['od_receipt_amount'] + $od['od_receipt_point'];
 
-    // 쿠폰금액
-    $amount['쿠폰'] = $t_cp_amount + $od['od_coupon'];
+    // 쿠폰금액 od_send_cost에는 배송비 할인 쿠폰이 적용된 금액이 기록되므로 계산에 추가하지 않음
+    $amount['쿠폰'] = $t_cp_amount + $od['od_coupon'] + $od['od_send_coupon'];
 
     // 미수금 = (주문금액 - DC + 환불액) - (입금액 - 결제승인취소) - 쿠폰금액
     $amount['미수'] = ($amount['정상'] - $od['od_dc_amount'] + $od['od_refund_amount']) - ($amount['입금'] - $od['od_cancel_card']) - $amount['쿠폰'];
@@ -533,6 +533,12 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
                 <input type="text" name="od_send_cost" value="<?php echo $od['od_send_cost']; ?>" id="od_send_cost" class="frm_input" size="10"> 원
             </td>
         </tr>
+        <?php if($od['od_send_coupon']) { ?>
+        <tr>
+            <th scope="row">배송비할인</th>
+            <td><?php echo display_price($od['od_send_coupon']); ?></td>
+        </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="od_send_cost2">추가배송비</label></th>
             <td>
