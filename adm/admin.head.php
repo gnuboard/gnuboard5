@@ -73,14 +73,14 @@ function imageview(id, w, h)
         <div id="logo"><a href="<?php echo G4_ADMIN_URL ?>"><img src="<?php echo G4_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자 처음으로"></a></div>
 
         <ul id="tnb">
-            <li><a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>" id="tnb_modify"><span>관리자정보</span></a></li>
-            <li><a href="<?php echo G4_ADMIN_URL ?>/config_form.php" id="tnb_chome_cf"><span>기본환경</span></a></li>
-            <li><a href="<?php echo G4_URL ?>/" id="tnb_chome"><span>커뮤니티</span></a></li>
+            <li><a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">관리자정보</a></li>
+            <li><a href="<?php echo G4_ADMIN_URL ?>/config_form.php">기본환경</a></li>
+            <li><a href="<?php echo G4_URL ?>/">커뮤니티</a></li>
             <?php if(defined('G4_USE_SHOP')) { ?>
-            <li><a href="<?php echo G4_ADMIN_URL ?>/shop_admin/configform.php" id="tnb_shome_cf"><span>쇼핑몰환경</span></a></li>
-            <li><a href="<?php echo G4_SHOP_URL ?>/" id="tnb_shome"><span>쇼핑몰</span></a></li>
+            <li><a href="<?php echo G4_ADMIN_URL ?>/shop_admin/configform.php">쇼핑몰환경</a></li>
+            <li><a href="<?php echo G4_SHOP_URL ?>/">쇼핑몰</a></li>
             <?php } ?>
-            <li><a href="<?php echo G4_BBS_URL ?>/logout.php" id="tnb_logout"><span>로그아웃</span></a></li>
+            <li><a href="<?php echo G4_BBS_URL ?>/logout.php">로그아웃</a></li>
         </ul>
 
         <nav id="gnb">
@@ -114,53 +114,6 @@ function imageview(id, w, h)
 </header>
 
 <div id="wrapper">
-
-    <ul id="qnb">
-        <?php if(defined('G4_USE_SHOP')) { ?>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/orderlist.php">
-                <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sodr.jpg" alt="" width="40" height="40">
-                주문관리
-            </a>
-        </li>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemlist.php">
-                <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sit.jpg" alt="" width="40" height="40">
-                상품관리
-            </a>
-        </li>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemqalist.php">
-                <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sqna.jpg" alt="" width="40" height="40">
-                상품문의
-            </a>
-        </li>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemuselist.php">
-                <img src="<?php echo G4_ADMIN_URL; ?>/shop_admin/img/qnb_sps.jpg" alt="" width="40" height="40">
-                사용후기
-            </a>
-        </li>
-        <?php } ?>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL ?>/member_list.php">
-                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_mb.jpg" alt="" width="40" height="40">
-                회원
-            </a>
-        </li>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL ?>/board_list.php">
-                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_board.jpg" alt="" width="40" height="40">
-                게시판
-            </a>
-        </li>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL ?>/visit_list.php">
-                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_log.jpg" alt="" width="40" height="40">
-                접속자
-            </a>
-        </li>
-    </ul>
 
     <div id="container">
         <div id="text_size">
