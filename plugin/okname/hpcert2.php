@@ -52,6 +52,9 @@ $cmd = "$exe $keypath $idcfMbrComCd $endPointUrl $WEBPUBKEY $WEBSIGNATURE $encIn
 // 실행
 exec($cmd, $out, $ret);
 
+// 인증내역기록
+@insert_cert_history($member['mb_id'], 'kcb', 'hp');
+
 if($ret == 0) {
     // 결과라인에서 값을 추출
     foreach($out as $a => $b) {
@@ -124,6 +127,7 @@ $(function() {
     $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
     $opener.$("input[name=mb_name]").val("<?php echo $mb_name; ?>").attr("readonly", true);
     $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
+    alert("본인의 휴대폰번호로 확인 되었습니다.");
     window.close();
 });
 </script>

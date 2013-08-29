@@ -2305,4 +2305,57 @@ function autosave_count($mb_id)
         return 0;
     }
 }
+
+// 본인확인내역 기록
+function insert_cert_history($mb_id, $company, $method)
+{
+    global $g4;
+
+    $sql = " insert into {$g4['cert_history_table']}
+                set mb_id = '$mb_id',
+                    cr_company = '$company',
+                    cr_method = '$method',
+                    cr_ip = '{$_SERVER['REMOTE_ADDR']}',
+                    cr_date = '".G4_TIME_YMD."',
+                    cr_time = '".G4_TIME_HIS."' ";
+    sql_query($sql);
+}
+
+// 인증시도회수 체크
+function certify_count_check($mb_id, $type)
+{
+    global $g4, $config;
+
+    if($config['cf_cert_use'] != 2)
+        return;
+
+    if($config['cf_cert_limit'] == 0)
+        return;
+
+    $sql = " select count(*) as cnt from {$g4['cert_history_table']} ";
+
+    if($mb_id) {
+        $sql .= " where mb_id = '$mb_id' ";
+    } else {
+        $sql .= " where cr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+    }
+
+    $sql .= " and cr_method = '".$type."' and cr_date = '".G4_TIME_YMD."' ";
+
+    $row = sql_fetch($sql);
+
+    switch($type) {
+        case 'hp':
+            $cert = '휴대폰';
+            break;
+        case 'ipin':
+            $cert = '아이핀';
+            break;
+        default:
+            break;
+    }
+
+    if((int)$row['cnt'] >= (int)$config['cf_cert_limit'])
+        alert_close('오늘 '.$cert.' 본인확인을 '.$row['cnt'].'회 이용하셔서 더 이상 이용할 수 없습니다.');
+}
 ?>

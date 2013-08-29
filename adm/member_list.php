@@ -141,7 +141,7 @@ $colspan = 15;
         <th scope="col" id="mb_list_id">회원아이디</th>
         <th scope="col" id="mb_list_name">이름</th>
         <th scope="col" id="mb_list_mobile">휴대폰</th>
-        <th scope="col" colspan="6" id="mb_list_addr">주소</th>
+        <th scope="col" colspan="7" id="mb_list_addr">주소</th>
         <th scope="col" id="mb_list_lastcall">최종접속</th>
         <th scope="col" id="mb_list_point">포인트</th>
         <th scope="col" rowspan="2" id="mb_list_mng">관리</th>
@@ -153,7 +153,8 @@ $colspan = 15;
         <th scope="col" id="mb_list_mailc">메일<br>인증</th>
         <th scope="col" id="mb_list_mailr">메일<br>수신</th>
         <th scope="col" id="mb_list_open">정보<br>공개</th>
-        <th scope="col" id="mb_list_selfc">본인<br>확인</th>
+        <th scope="col" id="mb_list_cert">아이핀<br>인증</th>
+        <th scope="col" id="mb_list_selfc">휴대폰<br>인증</th>
         <th scope="col" id="mb_list_adultc">성인<br>인증</th>
         <th scope="col" id="mb_list_deny">접근<br>차단</th>
         <th scope="col" id="mb_list_join">가입일</th>
@@ -204,6 +205,25 @@ $colspan = 15;
 
         $tr_bg = '';
         if ($i%2 == 0) $tr_bg = 'class="tr_bg"';
+
+        switch($row['mb_certify']) {
+            case 'hp':
+                $mb_certify_case = '휴대폰';
+                $mb_certify_val = 'hp';
+                break;
+            case 'ipin':
+                $mb_certify_case = '아이핀';
+                $mb_certify_val = '';
+                break;
+            case 'admin':
+                $mb_certify_case = '관리자';
+                $mb_certify_val = 'admin';
+                break;
+            default:
+                $mb_certify_case = '&nbsp;';
+                $mb_certify_val = 'admin';
+                break;
+        }
     ?>
 
     <tr <?php echo $tr_bg; ?>>
@@ -215,7 +235,7 @@ $colspan = 15;
         <td headers="mb_list_id" class="td_name sv_use"><?php echo $mb_id ?></td>
         <td headers="mb_list_name" class="td_mbname"><?php echo $row['mb_name']; ?></td>
         <td headers="mb_list_mobile"><?php echo $row['mb_hp']; ?></td>
-        <td colspan="6" headers="mb_list_addr" class="td_addr"><?php echo $address; ?></td>
+        <td colspan="7" headers="mb_list_addr" class="td_addr"><?php echo $address; ?></td>
         <td headers="mb_list_lastcall"><?php echo substr($row['mb_today_login'],2,8); ?></td>
         <td headers="mb_list_point" class="td_bignum"><a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
         <td rowspan="2" headers="mb_list_mng"><?php echo $s_mod ?><br><?php echo $s_grp ?></td>
@@ -233,7 +253,8 @@ $colspan = 15;
         <td headers="mb_list_mailc" class="td_chk"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
         <td headers="mb_list_mailr" class="td_chk"><input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling']?'checked':''; ?> value="1"></td>
         <td headers="mb_list_open" class="td_chk"><input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open']?'checked':''; ?> value="1"></td>
-        <td headers="mb_list_selfc" class="td_chk"><input type="checkbox" name="mb_certify[<?php echo $i; ?>]" <?php echo $row['mb_certify']?'checked':''; ?> value="1"></td>
+        <td headers="mb_list_ipinc" class="td_chk"><input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>></td>
+        <td headers="mb_list_hpc" class="td_chk"><input type="radio" name="mb_certify[<?php echo $i; ?>]" <?php echo $row['mb_certify']=='hp'?'checked':''; ?> value="hp"></td>
         <td headers="mb_list_adultc" class="td_chk"><input type="checkbox" name="mb_adult[<?php echo $i; ?>]" <?php echo $row['mb_adult']?'checked':''; ?> value="1"></td>
         <td headers="mb_list_deny" class="td_chk">
             <?php if(empty($row['mb_leave_date'])){ ?>

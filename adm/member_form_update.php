@@ -20,14 +20,23 @@ if($mb_hp) {
         alert($result);
 }
 
+// 인증정보처리
+if($_POST['mb_certify_case'] && $_POST['mb_certify']) {
+    $mb_certify = $_POST['mb_certify_case'];
+    $mb_adult = $_POST['mb_adult'];
+} else {
+    $mb_certify = '';
+    $mb_adult = 0;
+}
+
 $sql_common = "  mb_name = '{$_POST['mb_name']}',
                  mb_nick = '{$_POST['mb_nick']}',
                  mb_email = '{$_POST['mb_email']}',
                  mb_homepage = '{$_POST['mb_homepage']}',
                  mb_tel = '{$_POST['mb_tel']}',
                  mb_hp = '{$_POST['mb_hp']}',
-                 mb_certify = '{$_POST['mb_certify']}',
-                 mb_adult = '{$_POST['mb_adult']}',
+                 mb_certify = '{$mb_certify}',
+                 mb_adult = '{$mb_adult}',
                  mb_zip1 = '{$_POST['mb_zip1']}',
                  mb_zip2 = '{$_POST['mb_zip2']}',
                  mb_addr1 = '{$_POST['mb_addr1']}',
