@@ -134,26 +134,29 @@ $colspan = 15;
     <table class="tbl_mb_list">
     <thead>
     <tr>
-        <th scope="col" rowspan="2" id=""><input type="checkbox"></th>
-        <th scope="col" rowspan="2" id="">아이디</th>
-        <th scope="col" id="">이름</th>
-        <th scope="col" colspan="5" id="">본인확인</th>
-        <th scope="col" id="">휴대폰</th>
-        <th scope="col" id="">상태/권한</th>
-        <th scope="col" id="">최종접속</th>
-        <th scope="col" rowspan="2" id="">접근<br>그룹</th>
-        <th scope="col" rowspan="2" id="">관리</th>
+        <th scope="col" rowspan="2" id="mb_list_chk">
+            <label for="chkall" class="sound_only">회원 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
+        <th scope="col" rowspan="2" id="mb_list_id">아이디</th>
+        <th scope="col" id="mb_list_name">이름</th>
+        <th scope="col" colspan="5" id="mb_list_cert">본인확인</th>
+        <th scope="col" id="mb_list_mobile">휴대폰</th>
+        <th scope="col" id="mb_list_auth">상태/권한</th>
+        <th scope="col" id="mb_list_lastcall">최종접속</th>
+        <th scope="col" rowspan="2" id="mb_list_grp">접근<br>그룹</th>
+        <th scope="col" rowspan="2" id="mb_list_mng">관리</th>
     </tr>
     <tr>
-        <th scope="col" id="">별명</th>
-        <th scope="col" id="">메일<br>수신</th>
-        <th scope="col" id="">정보<br>공개</th>
-        <th scope="col" id="">메일<br>인증</th>
-        <th scope="col" id="">성인<br>인증</th>
-        <th scope="col" id="">접근<br>차단</th>
-        <th scope="col" id="">전화번호</th>
-        <th scope="col" id="">포인트</th>
-        <th scope="col" id="">가입일</th>
+        <th scope="col" id="mb_list_nick">별명</th>
+        <th scope="col" id="mb_list_mailr">메일<br>수신</th>
+        <th scope="col" id="mb_list_open">정보<br>공개</th>
+        <th scope="col" id="mb_list_mailc">메일<br>인증</th>
+        <th scope="col" id="mb_list_adultc">성인<br>인증</th>
+        <th scope="col" id="mb_list_deny">접근<br>차단</th>
+        <th scope="col" id="mb_list_tel">전화번호</th>
+        <th scope="col" id="mb_list_point">포인트</th>
+        <th scope="col" id="mb_list_join">가입일</th>
     </tr>
     </thead>
     <tbody>
@@ -229,7 +232,7 @@ $colspan = 15;
         </td>
         <td headers="mb_list_id" rowspan="2" class="td_name sv_use"><?php echo $mb_id ?></td>
         <td headers="mb_list_name" class="td_mbname"><?php echo $row['mb_name']; ?></td>
-        <td headers="" colspan="5">
+        <td headers="mb_list_cert" colspan="5">
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" id="mb_certify_ipin_<?php echo $i; ?>" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>>
             <label for="mb_certify_ipin_<?php echo $i; ?>">아이핀</label>
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="hp" id="mb_certify_hp_<?php echo $i; ?>" <?php echo $row['mb_certify']=='hp'?'checked':''; ?>>
