@@ -417,7 +417,7 @@ ob_end_clean();
                 }
                 ?>
                 </select> -->
-                <input type="text" name="od_hope_date" value="" id="od_hope_date" class="frm_input" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
+                <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
             </td>
         </tr>
         <?php } ?>
