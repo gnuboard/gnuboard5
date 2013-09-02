@@ -216,7 +216,7 @@ $pg_anchor ='<ul class="anchor">
         <th scope="row"><label for="it_mobile_name">모바일 상품명</label></th>
         <td colspan="2">
             <?php echo help("모바일에서 보여지는 상품명이 다른 경우에 입력합니다. 입력이 없으면 기본 상품명이 출력됩니다."); ?>
-            <input type="text" name="it_mobile_name" value="<?php echo get_text(cut_str($it['it_mobile_name'], 250, "")); ?>" id="it_mobile_name" required class="frm_input">
+            <input type="text" name="it_mobile_name" value="<?php echo get_text(cut_str($it['it_mobile_name'], 250, "")); ?>" id="it_mobile_name" class="frm_input">
         </td>
     </tr>
     <tr>
