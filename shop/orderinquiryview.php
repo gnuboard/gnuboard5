@@ -372,11 +372,8 @@ if(openwin != null) {
         $disp_bank = true;
         $disp_receipt = false;
         if($od['od_settle_case'] == '신용카드') {
-            $sql = " select * from {$g4['shop_card_history_table']} where od_id = '{$od['od_id']}' ";
-            $cd = sql_fetch($sql);
-
             $app_no_subj = '승인번호';
-            $app_no = $cd['cd_app_no'];
+            $app_no = $od['od_app_no'];
             $disp_bank = false;
             $disp_receipt = true;
         } else if($od['od_settle_case'] == '휴대폰') {

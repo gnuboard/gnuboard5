@@ -6,7 +6,6 @@ $menu['menu500'] = array (
     array('500110', '매출현황', G4_ADMIN_URL.'/shop_admin/sale1.php', 'sst_order_stats'),
     array('500100', '상품판매순위', G4_ADMIN_URL.'/shop_admin/itemsellrank.php', 'sst_rank'),
     array('500120', '주문내역출력', G4_ADMIN_URL.'/shop_admin/orderprint.php', 'sst_print_order', 1),
-    array('500130', '전자결제내역', G4_ADMIN_URL.'/shop_admin/ordercardhistory.php', 'sst_pg', 1),
     array('500300', '이벤트관리', G4_ADMIN_URL.'/shop_admin/itemevent.php', 'scf_event'),
     array('500310', '이벤트일괄처리', G4_ADMIN_URL.'/shop_admin/itemeventlist.php', 'scf_event_mng'),
     array('500400', '내용관리', G4_ADMIN_URL.'/shop_admin/contentlist.php', 'scf_contents', 1),

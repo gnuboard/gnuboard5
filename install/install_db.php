@@ -472,7 +472,6 @@ if($shop_install) {
     fwrite($f, "define('SHOP_TABLE_PREFIX', '{$shop_prefix}');\n\n");
     fwrite($f, "\$g4['shop_default_table'] = SHOP_TABLE_PREFIX.'default'; // 쇼핑몰설정 테이블\n");
     fwrite($f, "\$g4['shop_banner_table'] = SHOP_TABLE_PREFIX.'banner'; // 배너 테이블\n");
-    fwrite($f, "\$g4['shop_card_history_table'] = SHOP_TABLE_PREFIX.'card_history'; // 전자결제이력 테이블\n");
     fwrite($f, "\$g4['shop_cart_table'] = SHOP_TABLE_PREFIX.'cart'; // 장바구니 테이블\n");
     fwrite($f, "\$g4['shop_category_table'] = SHOP_TABLE_PREFIX.'category'; // 상품분류 테이블\n");
     fwrite($f, "\$g4['shop_content_table'] = SHOP_TABLE_PREFIX.'content'; // 내용(컨텐츠)정보 테이블\n");

@@ -38,9 +38,7 @@ $result = sql_query($sql, false);
 if(!$result) {
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_card_history_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_card_history_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
     sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}` DROP INDEX index1", false);
@@ -416,5 +414,11 @@ if(!sql_query(" select od_id from {$g4['shop_cart_table']} limit 1 ", false)) {
 if(!sql_query(" select it_mobile_name from {$g4['shop_item_table']} limit 1 ", false)) {
     sql_query( " ALTER TABLE `{$g4['shop_item_table']}`
                     ADD `it_mobile_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_name` ", true);
+}
+
+// od_app_no 필드 추가
+if(!sql_query(" select od_app_no from {$g4['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_app_no` varchar(20) NOT NULL DEFAULT '' AFTER `od_tno` ", true);
 }
 ?>

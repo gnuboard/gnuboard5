@@ -349,6 +349,7 @@ else if ($od_settle_case == "신용카드")
     $od_temp_amount     = $i_amount;
 
     $od_tno             = $tno;
+    $od_app_no          = $app_no;
     $od_receipt_amount  = $amount;
     $od_receipt_point   = $i_temp_point;
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
@@ -425,6 +426,7 @@ $sql = " insert {$g4['shop_order_table']}
                 od_bank_account   = '$od_bank_account',
                 od_receipt_time   = '$od_receipt_time',
                 od_tno            = '$od_tno',
+                od_app_no         = '$od_app_no',
                 od_escrow         = '$od_escrow',
                 od_tax_flag       = '{$default['de_tax_flag_use']}',
                 od_tax_mny        = '$od_tax_mny',
@@ -479,9 +481,6 @@ if(!$result) {
 // 회원이면서 포인트를 사용했다면 테이블에 사용을 추가
 if ($is_member && $od_receipt_point)
     insert_point($member['mb_id'], (-1) * $od_receipt_point, "주문번호 $od_id 결제");
-
-// PG 결제내역기록
-include_once(G4_SHOP_PATH.'/kcp/pp_ax_hub_result.php');
 
 $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))) . "&nbsp;";
 

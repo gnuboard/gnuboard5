@@ -11,9 +11,6 @@ if ($od_id)
     // 장바구니 삭제
     sql_query(" delete from {$g4['shop_cart_table']} where od_id = '$od_id' ");
 
-    // 카드결제내역 삭제
-    sql_query(" delete from {$g4['shop_card_history_table']} where od_id = '$od_id' ");
-
     // 주문서 삭제
     sql_query(" delete from {$g4['shop_order_table']} where od_id = '$od_id' ");
 }

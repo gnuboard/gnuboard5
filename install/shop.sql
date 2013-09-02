@@ -23,31 +23,6 @@ CREATE TABLE IF NOT EXISTS `shop_banner` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_card_history`
---
-
-DROP TABLE IF EXISTS `shop_card_history`;
-CREATE TABLE IF NOT EXISTS `shop_card_history` (
-  `cd_id` int(11) NOT NULL AUTO_INCREMENT,
-  `od_id` bigint(20) unsigned NOT NULL,
-  `cd_mall_id` varchar(20) NOT NULL DEFAULT '',
-  `cd_amount` int(11) NOT NULL DEFAULT '0',
-  `cd_app_no` varchar(20) NOT NULL DEFAULT '',
-  `cd_app_rt` varchar(8) NOT NULL DEFAULT '',
-  `cd_trade_ymd` date NOT NULL DEFAULT '0000-00-00',
-  `cd_trade_hms` time NOT NULL DEFAULT '00:00:00',
-  `cd_quota` char(2) NOT NULL DEFAULT '',
-  `cd_opt01` varchar(255) NOT NULL DEFAULT '',
-  `cd_opt02` varchar(255) NOT NULL DEFAULT '',
-  `cd_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `cd_ip` varchar(25) NOT NULL DEFAULT '',
-  PRIMARY KEY (`cd_id`),
-  KEY `od_id` (`od_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `shop_cart`
 --
 
@@ -617,6 +592,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_hope_date` date NOT NULL DEFAULT '0000-00-00',  
   `od_settle_case` varchar(255) NOT NULL DEFAULT '',
   `od_tno` varchar(255) NOT NULL DEFAULT '',
+  `od_app_no` varchar(20) NOT NULL DEFAULT '',
   `od_escrow` tinyint(4) NOT NULL DEFAULT '0',
   `od_tax_flag` tinyint(4) NOT NULL DEFAULT '0',
   `od_tax_mny` int(11) NOT NULL DEFAULT '0',
