@@ -26,6 +26,15 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
 $hash_data = md5($pp['pp_id'].$pp['pp_amount'].$pp['pp_time']);
 set_session('ss_personalpay_id', $pp['pp_id']);
 set_session('ss_personalpay_hash', $hash_data);
+
+// 에스크로 상품정보
+if($default['de_escrow_use']) {
+    $good_info .= "seq=1".chr(31);
+    $good_info .= "ordr_numb={$pp_id}_".sprintf("%04d", 1).chr(31);
+    $good_info .= "good_name=".addslashes($pp['pp_name'].'님 개인결제').chr(31);
+    $good_info .= "good_cntx=1".chr(31);
+    $good_info .= "good_amtx=".$pp['pp_amount'].chr(31);
+}
 ?>
 
 <div id="sod_approval_frm">
@@ -62,7 +71,7 @@ set_session('ss_personalpay_hash', $hash_data);
     <!-- 장바구니 상품 개수 -->
     <input type="hidden" name="bask_cntx" value="1">
     <!-- 장바구니 정보(상단 스크립트 참조) -->
-    <input type="hidden" name="good_info" value="<?php echo $pp['pp_name'].'님 개인결제'; ?>">
+    <input type="hidden" name="good_info" value="<?php echo $good_info; ?>">
     <!-- 배송소요기간 -->
     <input type="hidden" name="deli_term" value="03">
     <!-- 기타 파라메터 추가 부분 - Start - -->
